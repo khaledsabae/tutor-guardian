@@ -9,7 +9,7 @@
   "intervention_type": "إرشادي",
   "severity": "خفيف",
   "reference_type": "كتاب_تربوي",
-  "reference_info": "حقوق الأولاد على الوالدين - عماد عبدالعظيم (الألوكة)",
+  "reference_info": "Al-Murabbi guidance · Sahih al-Bukhari (2442)",
   "text_original": "ـــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ :ينًُطلما عٚست تييا تاعقسفلما ٚأ حلاطياب بعًيا ٔع دلاٚلأا ٢ٜٗٓٚ اَمٜمصَ دَ مطَ :لَ امىَ ،مغَ مْٞ مًَ ك ِ مسأَ ـ ِ مسْ ـ ِ حمَ ْ ر َ مًا دبْ مقَ ـْ مقَ حمٞحص دامٜمؾم٢مس دواد قمسأ جرمظأ ؼَ مَٚ مَٓ مْٟاموَ ؿ مُٝ ْمٜمُ ؾٌ مضُ ر اَمٜموَ ، ﷺ لبَمٜمًا عَ مُ سيَ اقمُٟاميَ ؿ َمحُ بُ احَ صْ أَ دُ لُ يََ َلا« :ﷺ للها لُ قمؾ لَ امَ٘ موَ ،عَ ز ِ مَٗ موَ هُ ذَ مظَ م٠ َ موَ فُ مَٕ مُ ؾٍ بْ مطَ ممَ ِ إ ؿ مُٝ مُْ مْٕ مسَ هوخأ َ لىَ ِ إ ر « :ﷺ ؿِ مؾامَ٘ مًْا قمسُأَ لَ امىَ :لامى ،ﭬ ةَ ر أ ُ وَ ه ِ وِب َ لأ ِ هُ اخَ أ َ نَ اكَ نْ ِ إوَ هُ عَ دَ ي ىتَ حَ ,هُ ُنعَ لْ تَ ةَ كَ ِ ئلاَ دَْ ا نَ ِ إفَ ,ة ٍ دَ يد ِ حَ ِب َلا« :لَ امىَ ،ﷺ ل ِ بَمٜمًا ـ ِ مقَ ،ﭬ ةَ ر .)2(» ر ِ اَنلا نَ م ِ ة ٍ ر فْ حُ فِ ِ عُ قَ و فِ ِ عُ ز ِ ْني شَ لا لَ عَ لَ ,ير ِ دْ ي َلا هُ ىَِ إفَ ,حِ لاَ س ءاقمؾ هقحمٟو حلاسمس ؿمٚسمُ ممإ ةرامؿلإا ـمق لمٝمٜمًا بامس « ً :ٟٚٛٓيا ّاَلإا ٍاق .» اً مطزامُ وأ اًدامض ناميأ سَ و ْ لَ فَ حَ لاَ س ِ لا اَنو ْ لَ عَ لَ",
   "text_simplified": "Parents must teach their children the adab of dealing with others, such as not mocking or harming them. The Prophet ﷺ said: 'A Muslim is the brother of another Muslim; he does not wrong him nor surrender him' (Sahih al-Bukhari 2442). He also urged tolerance and avoiding anger. These values help build healthy relationships.",
   "labels": [
@@ -50,5 +50,10 @@
       "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
     },
     "revalidated_at": "2026-10-04T16:52:31+00:00"
-  }
+  },
+  "source_kind": "authored_guidance",
+  "authored_references": [
+    "صحيح البخاري 2442 — «المسلم أخو المسلم، لا يظلمه ولا يسلمه»، مطابَق لفظًا ورقمًا بحارس الحديث"
+  ],
+  "source_note": "text_original is the PDF passage this unit was first generated from. The current text was rewritten as the app's guidance in PR #27 — 2224ade1 and is not a summary of that passage (KB fidelity review 2026-10-04)."
 }

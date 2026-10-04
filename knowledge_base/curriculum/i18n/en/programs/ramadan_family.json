@@ -394,8 +394,7 @@
       "Decide whether the parents will read one juz' a day to complete the Quran; the app shows each day's juz'."
     ],
     "unit_ids": [
-      "isl-3d476538",
-      "isl-d15d1a95"
+      "isl-3d476538"
     ]
   },
   "fasting_ladder": {
@@ -567,9 +566,7 @@
       }
     },
     "unit_ids": [
-      "isl-d15d1a95",
       "isl-3d476538",
-      "isl-5cf45742",
       "med-408796d1"
     ],
     "evidence_ids": [
@@ -827,7 +824,6 @@
       "parent_note": {
         "text": "The attached hadith says there is blessing in suhoor, so make it a calm moment for the children who are practising fasting. Little ones are not woken for suhoor: enough sleep is part of their health, and their usual breakfast is all they need. The program's fasting ladder sets the right step for each age, so no child is asked for more than suits his age and health.",
         "unit_ids": [
-          "isl-d15d1a95",
           "med-fb24deba"
         ],
         "evidence_ids": [
@@ -899,7 +895,6 @@
       "parent_note": {
         "text": "Fasting is not only going without food. The two attached hadiths tie it to speech and behaviour: no shouting and no foul words, and whoever is provoked says that he is fasting. The hardest time is the last hour before iftar, so be the example then. Children learn a calm tongue when they see it in their parents while they are tired.",
         "unit_ids": [
-          "isl-50f95326",
           "isl-dfa52092"
         ],
         "evidence_ids": [
@@ -972,7 +967,7 @@
       "parent_note": {
         "text": "The Prophet ﷺ was at his most generous in Ramadan, as the attached hadith tells us, and the other hadith counts even half a date as charity that matters. What counts is the habit of giving, not the size of the gift. Let your child choose what to give, and never force him to part with a toy he loves: giving under pressure teaches the opposite of what we want.",
         "unit_ids": [
-          "isl-bd250b64"
+          "isl-1bceeaf6"
         ],
         "evidence_ids": [
           "h_generous",
@@ -1042,8 +1037,7 @@
       "parent_note": {
         "text": "In the attached hadith, kindness to parents comes right after prayer on time among the deeds most beloved to Allah. Children learn birr al-walidayn (dutiful kindness to parents) from what they see more than from what they hear: when they see you call and honour your own parents, they understand that this is how this home lives. Call your parents today in front of your children if you can.",
         "unit_ids": [
-          "isl-9b6fc547",
-          "isl-4e0db0bd"
+          "isl-b8207e53"
         ],
         "evidence_ids": [
           "h_parents"
@@ -1193,7 +1187,7 @@
       "parent_note": {
         "text": "The attached hadith shows how much Jibril urged the Prophet ﷺ to care for the neighbour. When a child carries the plate himself and sees the neighbour's delight, he learns the neighbour's right by doing, not by being told. Teaching children the rights of others is one of the foundations of upbringing.",
         "unit_ids": [
-          "isl-82c3c96e"
+          "isl-0ee49139"
         ],
         "evidence_ids": [
           "h_neighbor"
@@ -1265,7 +1259,6 @@
       "parent_note": {
         "text": "After ten days of Ramadan a child sees the value of water and food around him more than ever, and a child practising fasting feels it himself. Use that to build the habit of gratitude and contentment with what he has: gratitude reduces complaining and constant demands. Today's theme verse is about gratitude.",
         "unit_ids": [
-          "isl-e622ac43",
           "isl-b793e864"
         ],
         "evidence_ids": []
@@ -1342,8 +1335,7 @@
       "parent_note": {
         "text": "In Ramadan a child practises patience every day: with hunger if he is practising fasting, with waiting his turn, with things he does not like. Children learn patience when their patience is noticed and praised: 'I saw you wait for iftar so calmly. Well done.' Praise the patience itself, not only the result. The seed that sprouts slowly is a reminder he sees every day.",
         "unit_ids": [
-          "isl-c0274dd3",
-          "isl-b5620aee"
+          "isl-74580658"
         ],
         "evidence_ids": []
       },
@@ -1418,7 +1410,6 @@
       "parent_note": {
         "text": "The strong person in the attached hadith is not the one who overpowers others but the one who controls himself when angry. The last hour before iftar is the tensest time at home, so a plan agreed in advance prevents a lot of shouting. And if you lose your temper and get it wrong, apologise to your child: that teaches him more than any advice.",
         "unit_ids": [
-          "isl-50f95326",
           "seed-tantrum-46"
         ],
         "evidence_ids": [
@@ -1715,7 +1706,7 @@
       "parent_note": {
         "text": "The attached hadith links keeping family ties (silat al-rahim) with wider provision and a longer life. A child who sees his parents reach out to relatives, keep in touch and forgive learns that the wider family is part of his life. Keep the call short and cheerful, and never load the adults' disagreements onto the children.",
         "unit_ids": [
-          "isl-82c3c96e"
+          "isl-22169daa"
         ],
         "evidence_ids": [
           "h_kinship"
@@ -1787,7 +1778,6 @@
       "parent_note": {
         "text": "Mercy in the attached hadith is a rule that covers everything, and the Prophet ﷺ was kissing his grandson when he spoke of it. Mercy to animals and birds is part of mercy to people. Hug and kiss your children today: that is the mercy we want them to learn.",
         "unit_ids": [
-          "isl-82c3c96e",
           "isl-f3270ea2"
         ],
         "evidence_ids": [
@@ -1857,7 +1847,8 @@
       "parent_note": {
         "text": "Keeping trusts and promises is a quality of the believers, and today's theme verse is about it. A child learns loyalty when he sees his parents keep their promises to him: if you promise something, deliver it, and if you can't, apologise and explain. Example speaks louder here than any words.",
         "unit_ids": [
-          "isl-7b7cda4e"
+          "isl-6e3ef777",
+          "isl-22169daa"
         ],
         "evidence_ids": []
       },
@@ -2004,7 +1995,6 @@
       "parent_note": {
         "text": "The two attached hadiths encourage seeking Laylat al-Qadr in the odd nights of the last ten, and standing in prayer on it with faith and hope of reward. No one knows which night it is, so give every one of the ten nights a special touch. A small child can sit or play quietly near you if he gets tired; what matters is that he loves these nights.",
         "unit_ids": [
-          "isl-d5f85bee",
           "isl-597a1018"
         ],
         "evidence_ids": [
@@ -2078,7 +2068,7 @@
       "parent_note": {
         "text": "The dhikr in the attached hadith is short, easy to learn and greatly rewarded, which makes it ideal for children. Keep it light and joyful, filling the waiting times, not a heavy duty or a number the child is held to.",
         "unit_ids": [
-          "isl-f6342250"
+          "isl-1bceeaf6"
         ],
         "evidence_ids": [
           "h_two_words"
@@ -2230,8 +2220,7 @@
       "parent_note": {
         "text": "The attached hadith counts a good word among the charities anyone can give. This challenge teaches a child to notice the people many overlook, to thank them and to respect their work. A good word costs nothing, and its effect on the heart is great.",
         "unit_ids": [
-          "isl-b793e864",
-          "isl-82c3c96e"
+          "isl-b793e864"
         ],
         "evidence_ids": [
           "h_kind_word"
@@ -2378,7 +2367,6 @@
       "parent_note": {
         "text": "The attached hadith says each of us is a shepherd, responsible for those in his care, and a child learns responsibility when he has a real job at home rather than just orders. At the end of Ramadan those who are fasting get tired, so the children's help is a mercy to everyone, and it builds their confidence.",
         "unit_ids": [
-          "isl-6d93523b",
           "dev-8ad4980e"
         ],
         "evidence_ids": [
@@ -2521,7 +2509,7 @@
       "parent_note": {
         "text": "The attached hadith mentions the young and the old together in Zakat al-Fitr, so it is given for children too, which is a chance for your child to feel part of this act of worship. The same hadith commands that it be given before the people go out to the Eid prayer. Involve him in the act itself, and leave the details of the rulings to the scholars where you live.",
         "unit_ids": [
-          "isl-bd250b64"
+          "isl-0ee49139"
         ],
         "evidence_ids": [
           "h_zakat_fitr"

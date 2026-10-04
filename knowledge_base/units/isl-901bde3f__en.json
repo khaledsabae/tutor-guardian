@@ -9,7 +9,7 @@
   "intervention_type": "إرشادي",
   "severity": "متوسط",
   "reference_type": "كتاب_تربوي",
-  "reference_info": "كيف تربي ولدك",
+  "reference_info": "Al-Murabbi guidance — calm, logical consequences, never hitting",
   "text_original": "بيهرتللو * . هجويو ملعي لب لفطلا بقاعي لاف ةرم لوأ ثدح اذإ أطلخا نأ * ،هكولس أطخ لفطلا ماهفإو اهببس نايب عم ةرشابم أطلخا دعب ةبوقّعلا عاقّيإ بيج * . ةبوقّعلا ترخأت اذإ لعف ام ىسني ابمر هنلأ نلأ ،مهمامأ هتبقاعم نوكتف تيبلا لهأو هناوخإ مامأ رهاظ لفطلا أطخ ناك اذإ * . اهلك ةرسلأل ةيوبرت ةفيظو ققّحيس كلذ بنجتي نأو ،ديعولاو ريذحتلا اهقّبسي نأ يغبنيف برضلا يه ةبوقّعلا تناك اذإ * ةلدتعمو ةظيلغ يرغ اصعلا نوكت نأو ،نطبلا وأ هجولا وأ ردصلا وأ سأرلا ىلع برضلا لاف اهقرفيو ،غولبلا نود ناك اذإ ثلاث لىإ ةدحاو نم برضلا نوكي نأو ،ةبوطرلا هنلأ برضلا فاقّيإ بجيف هب ثاغتساو هبر لفطلا ركذ اذإو ،دحاو لمح في نوكت .26 -2 ص ،كوبس ،تاهملأا ثيدح :رظنا ) ( . 6 ص ،ثراحاب ناندع ،دلولا ةيبرت في ملسلما بلأا ةيلوئسم :رظنا )2( .36 -32 ص ،نادحم دايز دممح ،لافط بيرن فيك :رظنا )3( .64 -63 ص ،يويدب يلع دحمأ ،باقّعلاو باوثلا :رظنا )4( .33 ،رماعلا بينج ،ةيبرتلا في لوسرلا بيلاسأ :رظنا ) ( . 2 - 2 /2 ،ناولع حصان للها دبع ،ملاسلإا في دلاولأا ةيبرت :رظنا )6( .32 ،ديوس رون دممح ،ةيوبنلا ةيبرتلا جهنم نع لاقّن ، 3 ،نياوهلأل ،ةيبرتلا :رظنا ) ( .للها ميظعت لفطلا سفن في سرغي كلذب . ضعب ىلع مهضعب دقّيح لا تىح هسفنب برضلا بيرلما لىوتي نأ بيجو * . باقّعلا في ديزي دق هنلأ بضغلا لاح هبقاعي لاأ * . كلذ نايب يفكيو أطلخا ببسب لمأ هباصأ اذإ هتبقاعم كرتي نأ * بيهرتلاو بيغرتلاب ةيبرتلا طباوض ثلاثلا",
   "text_simplified": "When a child makes a mistake, let the consequence come soon after it, with an explanation of why, making clear that the behaviour is wrong, not the child — a young child may forget what they did if it is delayed. Keep the consequence logical and calm, such as repairing what they damaged or briefly losing a privilege. Correct them in private, not in front of their siblings; embarrassment wounds rather than teaches. Almorabbi never recommends hitting.",
   "labels": [
@@ -51,5 +51,10 @@
       "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
     },
     "revalidated_at": "2026-10-04T16:52:31+00:00"
-  }
+  },
+  "source_kind": "authored_guidance",
+  "authored_references": [
+    "موقف «المربّي»: لا ضرب — backend/guardrails/policies.v1.yaml"
+  ],
+  "source_note": "text_original is the PDF passage this unit was first generated from. The current text was rewritten as the app's guidance in PR #27 — 70f2df67 and is not a summary of that passage (KB fidelity review 2026-10-04)."
 }

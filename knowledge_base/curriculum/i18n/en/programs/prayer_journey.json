@@ -242,7 +242,6 @@
       }
     ],
     "unit_ids": [
-      "isl-d5f85bee",
       "isl-toddler-prayer",
       "isl-af807518",
       "isl-f2bef952"
@@ -322,7 +321,6 @@
         ]
       },
       "unit_ids": [
-        "isl-d5f85bee",
         "isl-1bceeaf6",
         "isl-f3270ea2"
       ],
@@ -399,7 +397,6 @@
         ]
       },
       "unit_ids": [
-        "isl-ca9f1de7",
         "isl-1bceeaf6"
       ],
       "evidence_ids": [
@@ -475,8 +472,6 @@
         ]
       },
       "unit_ids": [
-        "isl-ca9f1de7",
-        "isl-d5f85bee",
         "isl-77ba4991"
       ],
       "evidence_ids": [
@@ -566,8 +561,7 @@
         ]
       },
       "unit_ids": [
-        "isl-ca9f1de7",
-        "isl-d5f85bee"
+        "isl-1bceeaf6"
       ],
       "evidence_ids": [
         "h_prayer_on_time"
@@ -643,7 +637,6 @@
       },
       "unit_ids": [
         "isl-1bceeaf6",
-        "isl-ca9f1de7",
         "isl-b793e864"
       ],
       "evidence_ids": [
@@ -808,7 +801,6 @@
     "if_struggling": "If he falls short or stops, look for the reason before anything else: sleep, school, friends or questions of faith. Go back to praying alongside him and to an earlier stage without announcing it, and avoid punishment and shaming: they tie prayer to fear.",
     "unit_ids": [
       "isl-f2bef952",
-      "isl-ca9f1de7",
       "8451bbb0-4617-4252-a206-e442c533fac3"
     ],
     "evidence_ids": [

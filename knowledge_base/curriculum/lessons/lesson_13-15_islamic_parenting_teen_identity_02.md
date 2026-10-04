@@ -12,7 +12,7 @@
 | **Order** | 2 |
 | **Path Id** | path_13-15_islamic_parenting_teen_identity |
 | **Reflection Prompts** | `أي آية لامست قلب ابنك؟`, `هل لاحظت تغييراً في خشوعه؟` |
-| **Unit Ids** | `isl-8b35ad26`, `isl-946dd770`, `isl-91162ead`, `isl-c1f0ce4d` |
+| **Unit Ids** | `isl-8b35ad26`, `isl-91162ead`, `isl-c1f0ce4d` |
 | **Version** | 1.0.0 |
 | **Warning Flags** |  |
 
@@ -38,7 +38,6 @@
   "domain": "islamic_parenting",
   "unit_ids": [
     "isl-8b35ad26",
-    "isl-946dd770",
     "isl-91162ead",
     "isl-c1f0ce4d"
   ],

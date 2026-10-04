@@ -15,6 +15,8 @@ on:
       - 'knowledge_base/**'
       - 'ops/tools/**'
       - 'ops/scripts/**'
+      - 'ops/data/kb_fidelity/**'
+      - 'ops/data/en_unpublished/**'
       - 'pytest.ini'
       - '.github/workflows/backend.yml'
       - '.github/actions/backend-env/**'
@@ -45,6 +47,9 @@ on:
       - 'ops/data/hadith_*.json.gz'
       # The English gate's queue and adjudications (ops/tools/review_en_parity.py).
       - 'ops/data/en_parity_*.json'
+      # KB fidelity verdicts and the archive of withdrawn units (check_kb_fidelity.py).
+      - 'ops/data/kb_fidelity/**'
+      - 'ops/data/en_unpublished/**'
       - 'ops/tools/**'
       - 'pytest.ini'
       - '.github/workflows/backend.yml'
@@ -159,6 +164,18 @@ jobs:
         run: |
           cd "$GITHUB_WORKSPACE"
           python ops/tools/review_en_parity.py check
+
+      # KB fidelity — the assistant cites text_simplified as evidence, and nothing
+      # compared it with the unit's own source until 2026-10-04, when 210 units were
+      # withdrawn for summaries written over reversed-letter PDF text (topic, chain
+      # or figure invented). Fails if a withdrawn unit is live again — by path, by
+      # id under another file name, or by translation (the b1100ae2 regression) —
+      # or if a unit the detector flags is live without a verdict recorded on its
+      # current text. Stdlib only, a few seconds; exit 2 = its self-tests broke.
+      - name: Run KB fidelity guard (check_kb_fidelity.py check)
+        run: |
+          cd "$GITHUB_WORKSPACE"
+          python ops/tools/check_kb_fidelity.py check
 
   lint:
     # deploy.yml's gate requires this job BY NAME (ops/tools/deploy_gate.py).

@@ -1,0 +1,2706 @@
+{
+ "_doc": [
+  "Knowledge units the detector flags (reversed or broken PDF extraction, a model meta-framing, or a name / figure / claim not found in the source) that were read on 2026-10-04 and judged FAITHFUL to their source anyway — an ugly extraction is not an unfaithful summary.",
+  "Each verdict is bound to the exact text that was judged (sha256 of title, text_simplified, text_original — first 16 hex). Edit the unit and the verdict no longer holds: check_kb_fidelity.py check fails until it is re-read and re-recorded (or the unit is withdrawn).",
+  "A unit that is not flagged needs no record; a new flagged unit with no record fails the check — that is how a new reversed-PDF unit is caught without an id list."
+ ],
+ "units": {
+  "29932bc2-ac51-4b79-b7c7-2d226004dfa6": {
+   "fingerprint": "6cb0ac46628f3273",
+   "judged_on": "2026-10-04",
+   "source_file": "",
+   "flags": [
+    "introduces_number"
+   ],
+   "why": "Matches its CDC source: milestone checklists track development; early autism signs include lack of eye contact, delayed speech, repetitive behaviours and unusual sensory reactions."
+  },
+  "95e7a228-ce19-494e-99c0-18e4f6402566": {
+   "fingerprint": "71d0da1ba077f50d",
+   "judged_on": "2026-10-04",
+   "source_file": "",
+   "flags": [
+    "introduces_scripture",
+    "introduces_companion"
+   ],
+   "why": "Matches its source (al-Minhaj): the Prophet's playfulness with children contains and protects them; he kissed al-Hasan before al-Aqra' ibn Habis ('I have ten children and never kissed one') and said 'whoever shows no mercy is shown none' (Sahih al-Bukhari 5997, guard-verified)."
+  },
+  "a1d7697e-c8d5-45c3-89b8-6c89954ce9b0": {
+   "fingerprint": "2b011dded6561aa0",
+   "judged_on": "2026-10-04",
+   "source_file": "",
+   "flags": [
+    "introduces_number"
+   ],
+   "why": "Matches CDC Positive Parenting Tips for preschoolers (3-5): clear simple rules, praise good behaviour, creative play, avoid yelling, model calm handling of emotions."
+  },
+  "a2bd4f0d-1a09-4229-820f-1a409401b45b": {
+   "fingerprint": "59a3788383630b53",
+   "judged_on": "2026-10-04",
+   "source_file": "",
+   "flags": [],
+   "why": "The chunk is the NIMH DMDD treatment section; the summary's 'not diagnosed before six' is stated in the same NIMH document ('diagnosed between the ages of 6 and 10'), and it advises seeing a pediatrician. Consistent with its source document."
+  },
+  "aqe-6dd8b600": {
+   "fingerprint": "e2845e4d2b2c0dbf",
+   "judged_on": "2026-10-04",
+   "source_file": "aqidah_unified_manifest.md",
+   "flags": [],
+   "why": "Matches its source item on sincerity and showing off (al-An'am 162); the source's Ahmad narration on 'minor shirk' was replaced by an authentic one on the same theme - 'whoever shows off, Allah will expose him' (Sahih al-Bukhari 6499, guard-verified)."
+  },
+  "aqe-b1e103fc": {
+   "fingerprint": "13cff349f81bac6d",
+   "judged_on": "2026-10-04",
+   "source_file": "aqidah_unified_manifest.md",
+   "flags": [],
+   "why": "Matches its source item: Allah the One Creator (al-Ikhlas), 'whoever dies knowing there is no god but Allah enters Paradise' - correctly cited as Sahih Muslim 26 - linking each blessing to Allah, and 'Allah is above the heavens and sees us everywhere'."
+  },
+  "aqe-c078677c": {
+   "fingerprint": "b7a0bcb92e5ab1af",
+   "judged_on": "2026-10-04",
+   "source_file": "aqidah_unified_manifest.md",
+   "flags": [
+    "introduces_scripture"
+   ],
+   "why": "Matches its source item: the Prophet as the last prophet and the best example (al-Ahzab 21), a weekly short prophetic story with an activity, sira as lived example rather than history."
+  },
+  "aqe-c28835f1": {
+   "fingerprint": "5ec96cf633ea0412",
+   "judged_on": "2026-10-04",
+   "source_file": "aqidah_unified_manifest.md",
+   "flags": [
+    "introduces_scripture"
+   ],
+   "why": "Authored aqeedah item identical in substance to its source: love of Allah before fear, al-A'raf 180 (the Most Merciful), a nightly gratitude habit, do not start young children with Hell."
+  },
+  "aqe-d34c31d5": {
+   "fingerprint": "6bdaf4c932867208",
+   "judged_on": "2026-10-04",
+   "source_file": "aqidah_unified_manifest.md",
+   "flags": [],
+   "why": "Matches its source item: the six pillars of faith in the hadith of Jibril (Sahih Muslim 8), recited at bedtime on the fingers in that order."
+  },
+  "aqe-e3092aff": {
+   "fingerprint": "f9bb93373981bf90",
+   "judged_on": "2026-10-04",
+   "source_file": "aqidah_unified_manifest.md",
+   "flags": [
+    "introduces_scripture"
+   ],
+   "why": "Matches its source item: belief in angels, books and messengers (al-Najm 3-4), Jibril with revelation, the angel of death, the two recording angels - presented gently, not as a threat."
+  },
+  "c456b140-4520-4e47-a089-26d6f4877c32": {
+   "fingerprint": "fc375002c4a04055",
+   "judged_on": "2026-10-04",
+   "source_file": "",
+   "flags": [],
+   "why": "Authored speech-development unit identical to its source text (articulation milestones, when to see a speech therapist, home tips). The meta_unreadable flag was a false positive on 'speech not understood by others'."
+  },
+  "c59870c1-0083-4c48-84d8-60da0b6cf1b0": {
+   "fingerprint": "b43ff38e9e7be86a",
+   "judged_on": "2026-10-04",
+   "source_file": "",
+   "flags": [],
+   "why": "Matches its source (al-Minhaj): the author's comment that the Prophet carrying Umama in prayer is a message to those who hit children or expel them from mosques. The hadith is cited as Sahih al-Bukhari 516, which the scripture guard verifies."
+  },
+  "cyb-e2c8532b": {
+   "fingerprint": "c3148a70638cd3fd",
+   "judged_on": "2026-10-04",
+   "source_file": "",
+   "flags": [],
+   "why": "Matches Common Sense Education's family tips: review privacy settings together, ask before posting a teen's photo to model the behaviour, search the teen's name periodically."
+  },
+  "cyb-f815145d": {
+   "fingerprint": "b3e91a9f12d9e5aa",
+   "judged_on": "2026-10-04",
+   "source_file": "",
+   "flags": [],
+   "why": "Matches the Kaplan 2021 survey as cited by Common Sense: 36% of admissions officers checked applicants' social media, and of those 57% reported a negative impact versus 38% positive."
+  },
+  "dev-08a810de": {
+   "fingerprint": "176d9a79fade21e3",
+   "judged_on": "2026-10-04",
+   "source_file": "",
+   "flags": [],
+   "why": "Matches ASCA's Mindsets & Behaviors standards: structured self-exploration of strengths, interests and values with real information about fields; ruling out an unsuitable path is progress, not failure."
+  },
+  "dev-2cafbad7": {
+   "fingerprint": "04f4c4a0b0b7098f",
+   "judged_on": "2026-10-04",
+   "source_file": "Alliance_Positive_Parenting_Guide_Arabic.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "why": "Matches the NSPCC guide p.5: infants' crying and 'stubbornness' are how they communicate needs, school-age children test boundaries as they grow independent, teens become more challenging; the NSPCC helpline for more."
+  },
+  "dev-49a18746": {
+   "fingerprint": "77a6c416a34a1d38",
+   "judged_on": "2026-10-04",
+   "source_file": "Alliance_Positive_Parenting_Guide_Arabic.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "why": "Matches the NSPCC guide p.7: children develop at different rates, set simple limits from early on, share and acknowledge feelings, avoid threats and ultimatums, listen, and adjust expectations to each child's age."
+  },
+  "dev-52f5d319": {
+   "fingerprint": "cf7f4b1d49739e44",
+   "judged_on": "2026-10-04",
+   "source_file": "",
+   "flags": [],
+   "why": "Matches NHTSA/HealthyChildren's Parent-Teen Driving Agreement: written rules on curfews, passengers, phone use and weather with clear consequences, enforced by parents."
+  },
+  "dev-7117419a": {
+   "fingerprint": "2c555fb5187e9526",
+   "judged_on": "2026-10-04",
+   "source_file": "Alliance_Positive_Parenting_Guide_Arabic.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "why": "Matches the NSPCC guide p.11: stress can make parents say or do things they regret (including smacking); manage stress and anger, prepare for stressful moments, seek support from family, friends or online."
+  },
+  "dev-7b2f411e": {
+   "fingerprint": "3479f9b1931b6e48",
+   "judged_on": "2026-10-04",
+   "source_file": "Alliance_Positive_Parenting_Guide_Arabic.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "why": "Matches the NSPCC guide p.9: praise and reward positive behaviour, agree rewards and consequences beforehand, listen, model, avoid decisions in anger, and the harms of smacking."
+  },
+  "dev-7d13f16a": {
+   "fingerprint": "64a41b1841868e86",
+   "judged_on": "2026-10-04",
+   "source_file": "Alliance_Positive_Parenting_Guide_Arabic.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "why": "Matches the NSPCC guide p.12: when the relationship breaks down - unconditional love, time together, small achievable steps, neither giving up nor being too harsh, compromise and admitting mistakes."
+  },
+  "dev-7fb63252": {
+   "fingerprint": "0f58b370f9edcdf6",
+   "judged_on": "2026-10-04",
+   "source_file": "Alliance_Positive_Parenting_Guide_Arabic.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "why": "Matches the NSPCC guide pp.15-16: contact details for NSPCC's helpline and other advice services, and 'parenting is not easy, no one gets it right all the time'."
+  },
+  "dev-a3cf002d": {
+   "fingerprint": "91ad3e30a89c8028",
+   "judged_on": "2026-10-04",
+   "source_file": "Alliance_Positive_Parenting_Guide_Arabic.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "why": "Matches the NSPCC guide pp.11-12: take time for yourself, notice small successes, asking for help is not weakness, talk to a doctor or the NSPCC if you feel stressed."
+  },
+  "dev-a6be8275": {
+   "fingerprint": "933e07d6868cfc45",
+   "judged_on": "2026-10-04",
+   "source_file": "",
+   "flags": [],
+   "why": "Matches AAP's toothbrushing tips (song, taking turns, child picks brush and flavour, brushing together) and the NHS's 'supervise brushing up to age 7'."
+  },
+  "dev-a97a6769": {
+   "fingerprint": "2c7881fd6cc710e0",
+   "judged_on": "2026-10-04",
+   "source_file": "Alliance_Positive_Parenting_Guide_Arabic.pdf",
+   "flags": [
+    "reversed",
+    "meta_framing"
+   ],
+   "why": "Matches the NSPCC guide (pp.13-14): feeling stressed is normal, many places offer help - the Northern Ireland parenting helpline, Family Information Services Wales, Cry-sis, Family Lives - and the GP, health visitor or school. UK-specific resources, faithfully summarised."
+  },
+  "dev-adc61608": {
+   "fingerprint": "00d67682534001cd",
+   "judged_on": "2026-10-04",
+   "source_file": "WHO_Nurturing_Care_ECD.pdf",
+   "flags": [
+    "meta_framing"
+   ],
+   "why": "Accurate description of the Nurturing Care copyright and licence page (binding edition, WIPO mediation, third-party material). Boilerplate but nothing invented."
+  },
+  "dev-b7ae9202": {
+   "fingerprint": "0b3648f03dce06a2",
+   "judged_on": "2026-10-04",
+   "source_file": "WHO_Nurturing_Care_ECD.pdf",
+   "flags": [
+    "meta_framing"
+   ],
+   "why": "Matches the WHO Nurturing Care text: strengthen community services, raise awareness to reduce stigma, parents' groups, caregiver training on play, routines and communication, confidence with challenging behaviour."
+  },
+  "dev-bae98ba2": {
+   "fingerprint": "9a4a7a7e00f84250",
+   "judged_on": "2026-10-04",
+   "source_file": "WHO_Nurturing_Care_ECD.pdf",
+   "flags": [
+    "meta_framing"
+   ],
+   "why": "Matches the Nurturing Care indicator table (birth registration SDG 16.9.1, safe drinking water SDG 6.1.1, sanitation with soap and water SDG 6.2.1) and the document's theme of early childhood and lifelong health."
+  },
+  "dev-da66b3a7": {
+   "fingerprint": "19629a1f7b2706cf",
+   "judged_on": "2026-10-04",
+   "source_file": "WHO_Nurturing_Care_ECD.pdf",
+   "flags": [
+    "meta_framing"
+   ],
+   "why": "Accurately describes the reference list it summarises (studies on adverse childhood experiences and adult depression and inflammation, consequences of child abuse, post-partum depression); it reports topics, not invented findings."
+  },
+  "dev-e129e5e9": {
+   "fingerprint": "c2c0d548712ff5e5",
+   "judged_on": "2026-10-04",
+   "source_file": "Alliance_Positive_Parenting_Guide_Arabic.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "why": "Matches the NSPCC guide p.5: as children form their identities in adolescence they become more challenging - a normal part of development, not done to upset you - and still need love and clear limits."
+  },
+  "dev-ff2c707a": {
+   "fingerprint": "d61ac61283247fa8",
+   "judged_on": "2026-10-04",
+   "source_file": "",
+   "flags": [],
+   "why": "Matches AAP 'Ask the Pediatrician': a predictable 'bath, book, brush, bed' sequence, a sticker calendar, and bringing the toothbrush to the child in bed or the car seat instead of a bathroom battle."
+  },
+  "dev-ffce138f": {
+   "fingerprint": "6c9fa83bbaebe1b1",
+   "judged_on": "2026-10-04",
+   "source_file": "Alliance_Positive_Parenting_Guide_Arabic.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "why": "Matches the NSPCC guide p.7: simple consistent guidelines, explain what you want instead, share feelings, be present and listen, avoid commands and ultimatums, reject the behaviour not the child, avoid pointless arguments, ask a GP or teacher if stuck."
+  },
+  "e6e490f8-1e6e-5764-939e-e039beb4d7c9": {
+   "fingerprint": "f3c9cfcd8b22ae98",
+   "judged_on": "2026-10-04",
+   "source_file": "",
+   "flags": [],
+   "why": "Matches its DSM-5/CDC source: in preschoolers high activity and short attention are often normal; concern rises when symptoms appear in several settings and impair daily life. Not a diagnosis, consult a specialist."
+  },
+  "isl-0020cb29": {
+   "fingerprint": "3342591ce2769b07",
+   "judged_on": "2026-10-04",
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "flags": [
+    "reversed",
+    "glyph_substituted"
+   ],
+   "why": "Central claim supported on p.85: Ibn al-Qayyim - parents who neglect teaching children the obligations and sunan of the religion ruin them young and lose their benefit later; with the Prophet teaching Ibn Abbas. 'Parents as role models' is generic, unattributed filler."
+  },
+  "isl-003e7702": {
+   "fingerprint": "1a0ebfc7f439b93f",
+   "judged_on": "2026-10-04",
+   "source_file": "Manhaj_Nabawi_Khulayfi.pdf",
+   "flags": [
+    "reversed",
+    "missing_glyphs",
+    "meta_framing"
+   ],
+   "why": "Matches Khulayfi p.2: 'manhaj/minhaj' in language (the clear road), in the Quran and hadith, and as the rules that organise scientific research."
+  },
+  "isl-00ca8ce8": {
+   "fingerprint": "1eabe8ce1f7891cb",
+   "judged_on": "2026-10-04",
+   "source_file": "Tarbiya_Al_Banat.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "why": "Matches Tarbiyat al-Banat pp.20-21: open dialogue so the daughter talks, guide her by what you hear, lighter rebuke and more praise, useful books and tapes, and the father giving his children the larger share of his free time."
+  },
+  "isl-0243bed4": {
+   "fingerprint": "94e2eaf1f81b5616",
+   "judged_on": "2026-10-04",
+   "source_file": "Manhaj_Nabawi_Khulayfi.pdf",
+   "flags": [
+    "reversed",
+    "missing_glyphs",
+    "meta_framing"
+   ],
+   "why": "Matches Khulayfi pp.10-11: education through moving events - the captive mother clutching her child ('Allah is more merciful to His servants than she is to her child') and the sermon at the grave; preceded by the hadith on guarding Fajr and Asr."
+  },
+  "isl-034b141a": {
+   "fingerprint": "6e2b28d081859796",
+   "judged_on": "2026-10-04",
+   "source_file": "Tarbiya_Al_Banat.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "why": "Matches Tarbiyat al-Banat p.17: creed and enjoining good, the Prophet teaching young al-Hasan about the charity date, controlling anger, the limits Islam set on hitting, and the author's 'replacing hitting with encouragement or deprivation is better for you and your daughter'."
+  },
+  "isl-047ad111": {
+   "fingerprint": "091f6fe055902883",
+   "judged_on": "2026-10-04",
+   "source_file": "sahih_bukhari_1423.txt",
+   "flags": [],
+   "why": "Authored unit on the 'seven shaded by Allah' hadith; the summary quotes the Bukhari 660 wording ('نشأ في عبادة ربه') and cites 660 correctly, while the source quotes the 1423 narration - both are Sahih al-Bukhari. Detector hits (Prophet, number) were false positives."
+  },
+  "isl-07cd6cf0": {
+   "fingerprint": "06b38092822bbd38",
+   "judged_on": "2026-10-04",
+   "source_file": "Rakaiz_Tarbiya.pdf",
+   "flags": [
+    "reversed",
+    "missing_glyphs",
+    "meta_framing"
+   ],
+   "why": "Matches Rakaiz p.5: 'each of you is a shepherd and responsible for his flock', and scholars' saying that Allah will ask the father about his child before asking the child about his father. (reference_info mislabels this book as 'Tarbiyat al-Banat'.)"
+  },
+  "isl-08b656f3": {
+   "fingerprint": "42405e5351a43f9e",
+   "judged_on": "2026-10-04",
+   "source_file": "Kayfa_Turabbi_Waladak.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "why": "Matches Kayfa p.57: choose age-appropriate righteous companions, do not take a hostile stance toward a friend the child likes, strengthen good friendships with visits and outings, and with a bad friend give the child chances for new friendships without his noticing."
+  },
+  "isl-09afb431": {
+   "fingerprint": "18908c29c99e6918",
+   "judged_on": "2026-10-04",
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "why": "Consistent with p.105: fathers teaching sons prayer and mosque etiquette - al-Ala's father urging him to go early to Jumu'a with Abu Sa'id's hadith of the angels recording, Urwa on reciting al-Fatiha behind the imam. General, nothing added."
+  },
+  "isl-0d5120d9": {
+   "fingerprint": "07fd282ee3c3de58",
+   "judged_on": "2026-10-04",
+   "source_file": "Tarbiya_Al_Banat.pdf",
+   "flags": [
+    "reversed",
+    "meta_framing"
+   ],
+   "why": "Matches Tarbiyat al-Banat p.23: the satellite dish and films of romance and crime, choosing a righteous husband and marrying a daughter early to protect her (al-Sha'bi; Abu Bakr and Umar offering their daughters), no extravagance at weddings."
+  },
+  "isl-0eb77048": {
+   "fingerprint": "abadebaa169499e8",
+   "judged_on": "2026-10-04",
+   "source_file": "Rakaiz_Tarbiya.pdf",
+   "flags": [
+    "reversed",
+    "missing_glyphs",
+    "introduces_companion"
+   ],
+   "why": "Matches Rakaiz p.12: rooting creed builds the child's awareness that Allah watches him, especially with today's devices; the Prophet's counsel to young Ibn Abbas ('guard Allah... if you seek help, seek it from Allah')."
+  },
+  "isl-0ee49139": {
+   "fingerprint": "0d678a04b67d9cfd",
+   "judged_on": "2026-10-04",
+   "source_file": "Manhaj_Nabawi_Khulayfi.pdf",
+   "flags": [
+    "reversed",
+    "missing_glyphs"
+   ],
+   "why": "Matches Khulayfi pp.8-9: teaching the Book and wisdom, turning education into practice through participation - Abu Bakr's da'wa, involving the Companions in military and political choices - to build belonging."
+  },
+  "isl-0f6abe5d": {
+   "fingerprint": "8e764b4085b8f23b",
+   "judged_on": "2026-10-04",
+   "source_file": "Kayfa_Turabbi_Waladak.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "why": "Matches Kayfa pp.9-10: justice between children in treatment, gifts and kisses (al-Nu'man's hadith), justice is not identical treatment - the young, disabled or sick may be treated differently - and parents should explain any special treatment gently."
+  },
+  "isl-0faa18cf": {
+   "fingerprint": "c2d2e77184c08c4b",
+   "judged_on": "2026-10-04",
+   "source_file": "Kayfa_Turabbi_Waladak.pdf",
+   "flags": [
+    "reversed",
+    "meta_framing"
+   ],
+   "why": "Matches Kayfa pp.63-64: the orphan's needs (emotional fulfilment, security, a substitute), the cases of orphanhood, the elder brother or the mother's family as a firm substitute guardian."
+  },
+  "isl-10541fe2": {
+   "fingerprint": "38ac5e41fd3ae2dc",
+   "judged_on": "2026-10-04",
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "why": "Matches pp.68-69: justice between children in gifts - Ibn Daqiq al-Eid (favouritism breeds estrangement), Ibn Uthaymin (needs-based spending vs. gifts), 'your child has a right over you', Abu Bakr taking back his gift to Aisha."
+  },
+  "isl-1057f72f": {
+   "fingerprint": "b11b5ac9df4efb43",
+   "judged_on": "2026-10-04",
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "why": "Matches p.80: Amr ibn Salama leading his people as a boy for knowing the most Quran, al-Dahhak ibn Qays 'teach your families the Quran... read and ascend the levels of Paradise'. Presented as the text's statement, not as a hadith."
+  },
+  "isl-11c1bec0": {
+   "fingerprint": "7fb990c931ae6aa0",
+   "judged_on": "2026-10-04",
+   "source_file": "Manhaj_Nabawi_Khulayfi.pdf",
+   "flags": [
+    "reversed",
+    "missing_glyphs",
+    "meta_framing"
+   ],
+   "why": "Matches Khulayfi p.7: the Prophet fitted his teaching to each person's capacity (Mu'adh vs. the Bedouin) and standing (Sa'd ibn Mu'adh, Abu Sufyan's house as a refuge, Khalid's banner). Applied to the Companions, not specifically children."
+  },
+  "isl-14009a8e": {
+   "fingerprint": "e6af5e164d270b56",
+   "judged_on": "2026-10-04",
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "why": "Matches pp.90-91: chapter on teaching children prayer - Taha 132, Luqman 17, the 'command them at seven' narration (Abu Dawud), Abu Qirsafa waking his son Iyad for Fajr, Ibn Mas'ud on guarding children's prayer."
+  },
+  "isl-14bc16f5": {
+   "fingerprint": "0e80eaa3697f438f",
+   "judged_on": "2026-10-04",
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing",
+    "introduces_companion"
+   ],
+   "why": "Facts are on pp.53-54: the Prophet's love for al-Hasan (and Usama), 'whoever loves al-Hasan and al-Husayn loves me' (Ibn Majah), Abu Bakr's love for Aisha. The chapter's point is loving children; the summary's closing lesson (love of Ahl al-Bayt) is a narrower reading, not an invented claim."
+  },
+  "isl-156cff0e": {
+   "fingerprint": "fb6b446bcf8a9f40",
+   "judged_on": "2026-10-04",
+   "source_file": "Kayfa_Turabbi_Waladak.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "why": "Matches Kayfa pp.26-27: the child's need for love and tenderness at each stage; deprivation brings insecurity, a gap with the parents and attachment to others; over-indulgence spoils him and weakens his independence."
+  },
+  "isl-162e28c1": {
+   "fingerprint": "2d9de51ef6fb9640",
+   "judged_on": "2026-10-04",
+   "source_file": "Tarbiya_Al_Banat.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "why": "Matches Tarbiyat al-Banat pp.5-6: children are a great blessing and adornment (al-Kahf 46) and a trust parents will be asked about ('each of you is a shepherd', al-Ahzab 72); neglect ruins them; raising daughters well shields from the Fire."
+  },
+  "isl-17710349": {
+   "fingerprint": "df12f642fc480b34",
+   "judged_on": "2026-10-04",
+   "source_file": "Tarbiya_Al_Banat.pdf",
+   "flags": [
+    "reversed",
+    "meta_framing"
+   ],
+   "why": "Matches Tarbiyat al-Banat p.30: upbringing is worship and guidance is from Allah; we chase school problems but neglect the hereafter - a teacher's account of a mother worried about grades rather than her daughter's morals."
+  },
+  "isl-18fa1a80": {
+   "fingerprint": "c1c1337ab374ad15",
+   "judged_on": "2026-10-04",
+   "source_file": "Rakaiz_Tarbiya.pdf",
+   "flags": [
+    "reversed",
+    "missing_glyphs"
+   ],
+   "why": "Matches Rakaiz pp.7-8: the first pillar is choosing a wife known for uprightness, who helps raise the children - and even if she did not help, she would not harm their religion (garbled in the summary as 'even if she is not their mother')."
+  },
+  "isl-1b1c38d3": {
+   "fingerprint": "da03b7ef0f01ba19",
+   "judged_on": "2026-10-04",
+   "source_file": "Manhaj_Nabawi_Khulayfi.pdf",
+   "flags": [
+    "reversed",
+    "missing_glyphs",
+    "meta_framing"
+   ],
+   "why": "Matches Khulayfi p.1: modern educational methods swing between indulging desires and unrealistic ideals and have produced behavioural and moral disorders; the paper calls for the comprehensive prophetic method."
+  },
+  "isl-1bceeaf6": {
+   "fingerprint": "e4cd880f27e369e5",
+   "judged_on": "2026-10-04",
+   "source_file": "Kayfa_Turabbi_Waladak.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "why": "Matches Kayfa p.21: prayer commanded at seven, the father taking his children to the mosque, the middle way for reluctant children, training in worship as the Companions did, encouragement and reward without tying the child to gifts but to Allah and the Prophet's example. 'Not by force' slightly softens 'he must oblige them'."
+  },
+  "isl-1f696f30": {
+   "fingerprint": "639792c113396012",
+   "judged_on": "2026-10-04",
+   "source_file": "Kayfa_Turabbi_Waladak.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "why": "Matches Kayfa pp.14-15: one consistent method across home, school and mosque, the mother not contradicting the father before the child but settling it privately, and the mosque's and school's roles - building the child's love of the mosque."
+  },
+  "isl-20cf8569": {
+   "fingerprint": "cea0b490e1933e91",
+   "judged_on": "2026-10-04",
+   "source_file": "Kayfa_Turabbi_Waladak.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "why": "Matches Kayfa p.58: forbidding all friendship backfires; offer alternatives to television (trips, pools, games, Quran circles); turn TV and the computer into constructive tools (thinking, confidence) with firm control of time and content and without excess."
+  },
+  "isl-22169daa": {
+   "fingerprint": "ab6281cca499aa8b",
+   "judged_on": "2026-10-04",
+   "source_file": "Rakaiz_Tarbiya.pdf",
+   "flags": [
+    "reversed",
+    "missing_glyphs"
+   ],
+   "why": "Matches Rakaiz p.31: the educator must practise what he commands (Shu'ayb in Hud 88, the salaf 'if you command something be the first to do it') so that children see his deeds match his words."
+  },
+  "isl-223fedeb": {
+   "fingerprint": "f9a8cefaa3eb44bf",
+   "judged_on": "2026-10-04",
+   "source_file": "Kayfa_Turabbi_Waladak.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "why": "Matches Kayfa pp.66-67: with a sick child hide excessive pity and questions about the pain, keep him busy with suitable play, give medicine gently and honestly, and stop the pampering after recovery so bad habits do not stick."
+  },
+  "isl-22f68950": {
+   "fingerprint": "c09bfe5b4cb3f6e3",
+   "judged_on": "2026-10-04",
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "flags": [
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "why": "General but on-theme for p.52 (mercy and love for children): the Prophet stopping his sermon to carry al-Hasan and al-Husayn, mercy to daughters as a shield from the Fire, Ya'qub's compassion. Claims nothing the page lacks."
+  },
+  "isl-232f3ebf": {
+   "fingerprint": "588a25b7326ce64b",
+   "judged_on": "2026-10-04",
+   "source_file": "Kayfa_Turabbi_Waladak.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "why": "Matches Kayfa p.54 (with p.51): fit deterrence to the child's age, mistake and personality (a sensitive child needs only a look), ignore a hidden mistake, punish a mistake made before relatives or strangers privately so he is not broken; immediate rather than delayed consequence."
+  },
+  "isl-23c2dd25": {
+   "fingerprint": "6f8f19b648422090",
+   "judged_on": "2026-10-04",
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "why": "Gist matches pp.8-9: parents answer for their household (shepherd hadith), most corruption in children comes from parents' neglect of teaching them the obligations of the religion (Ibn al-Qayyim), al-Sa'di's neglected-garden analogy. 'Justice between them' is one unsupported clause, not attributed."
+  },
+  "isl-24dda124": {
+   "fingerprint": "592970de3edb46a7",
+   "judged_on": "2026-10-04",
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "flags": [
+    "glyph_substituted"
+   ],
+   "source_kind": "authored_guidance",
+   "why": "Authored guidance, rewritten in PR #27 — 2224ade1 and reviewed there; not a summary of its PDF chunk, so it is not judged against it. Read on its own: correct, and states the app's position as the app's. Provenance relabelled to the references the text actually rests on."
+  },
+  "isl-257951bb": {
+   "fingerprint": "aae332443f7544ac",
+   "judged_on": "2026-10-04",
+   "source_file": "Manhaj_Nabawi_Khulayfi.pdf",
+   "flags": [
+    "reversed",
+    "missing_glyphs",
+    "meta_framing",
+    "introduces_prophet"
+   ],
+   "why": "Matches Khulayfi pp.9-10: education by example - the model educator turns concepts into deeds quickly, and the Prophet is the highest model in character, mission and shared hardship."
+  },
+  "isl-25aad8e0": {
+   "fingerprint": "f437cbb962051f6f",
+   "judged_on": "2026-10-04",
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "flags": [
+    "reversed",
+    "glyph_substituted"
+   ],
+   "why": "Matches p.53, the chapter 'loving children and being affectionate to them': the Prophet's love for al-Hasan and Usama, seating them on his thighs, 'whoever loves al-Hasan and al-Husayn loves me'. General wording, same point."
+  },
+  "isl-25e3d1bc": {
+   "fingerprint": "aad39b8e77f7c166",
+   "judged_on": "2026-10-04",
+   "source_file": "Rakaiz_Tarbiya.pdf",
+   "flags": [
+    "reversed",
+    "missing_glyphs"
+   ],
+   "why": "Matches Rakaiz p.29: new 'companions' - satellite channels, the internet and social media on the phones children carry - endanger minds, religion and morals unless parents supervise."
+  },
+  "isl-27372b44": {
+   "fingerprint": "96a1511e3bb32e08",
+   "judged_on": "2026-10-04",
+   "source_file": "Tarbiya_Al_Banat.pdf",
+   "flags": [
+    "reversed",
+    "meta_framing"
+   ],
+   "why": "Matches Tarbiyat al-Banat pp.13-14: a father's righteousness benefits his children (al-Kahf 82), mothers' frequent outings and protecting girls at home, not leaving girls alone with drivers or in shops, patience, guidance is from Allah."
+  },
+  "isl-276074bc": {
+   "fingerprint": "bb63d3de509dc223",
+   "judged_on": "2026-10-04",
+   "source_file": "Tarbiya_Al_Banat.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "why": "Matches Tarbiyat al-Banat p.10: Ibn Uthaymin - raising your children well is worship; sincerity to Allah in upbringing, not schooling merely for degrees and posts."
+  },
+  "isl-2a3f0ed3": {
+   "fingerprint": "f5a2143ca1d0ce2f",
+   "judged_on": "2026-10-04",
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "flags": [
+    "reversed",
+    "glyph_substituted"
+   ],
+   "why": "Matches the author's introduction (pp.7-8): upbringing and good character are a right of children (al-Tahrim 6, al-Nisa 11 - children are a trust), teach Quran, Sunnah and sound creed from young, keep them from fitna, train them to obey Allah and His Messenger; every shepherd will be asked."
+  },
+  "isl-2aa57245": {
+   "fingerprint": "688c390c4ddb1b53",
+   "judged_on": "2026-10-04",
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "why": "Consistent with p.56: Umar ibn Abd al-Aziz's love for his son, and the chapter on playing and joking with children - the Prophet sticking out his tongue for al-Husayn, who laughed. General, adds nothing specific."
+  },
+  "isl-2bbafb5d": {
+   "fingerprint": "f2f30664a80b32d0",
+   "judged_on": "2026-10-04",
+   "source_file": "Rakaiz_Tarbiya.pdf",
+   "flags": [
+    "reversed",
+    "missing_glyphs"
+   ],
+   "why": "Matches Rakaiz p.22 on gentleness and avoiding harshness with children from an early age. The source quotes 'gentleness adorns everything' (Muslim); the summary quotes another authentic hadith on self-control in anger (Sahih al-Bukhari 6114, guard-verified) - a substitution, not an invention."
+  },
+  "isl-2be190f6": {
+   "fingerprint": "c107905113f2023c",
+   "judged_on": "2026-10-04",
+   "source_file": "Tarbiya_Al_Banat.pdf",
+   "flags": [
+    "reversed",
+    "meta_framing"
+   ],
+   "why": "Matches Tarbiyat al-Banat p.25: the fatwa that whoever provides for daughters, sisters or aunts and treats them well has them as a shield from the Fire, and the reward of patience when children die."
+  },
+  "isl-2c787a2b": {
+   "fingerprint": "b220bee59f73ff5b",
+   "judged_on": "2026-10-04",
+   "source_file": "Kayfa_Turabbi_Waladak.pdf",
+   "flags": [
+    "reversed",
+    "meta_framing"
+   ],
+   "why": "Matches Kayfa p.40: forbidden and disliked names (king of kings, sayyid of mankind, self-praising names), naming after Companions and righteous women, and the lineage rights (guardianship, custody, nursing, inheritance) with the six-month rule."
+  },
+  "isl-2d7f2303": {
+   "fingerprint": "4b21d0e06fdcc28d",
+   "judged_on": "2026-10-04",
+   "source_file": "Kayfa_Turabbi_Waladak.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "why": "Matches Kayfa p.49: use daily events to teach, address the child at his level at the right moment (alone, at ease, even when ill), avoid over-preaching, and the role of reward and deterrence in the early years."
+  },
+  "isl-2fee1086": {
+   "fingerprint": "75867cf03f72cfd2",
+   "judged_on": "2026-10-04",
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "why": "Consistent with p.133: the Prophet rebuking mothers for painfully pressing children's throats for udhra and prescribing Indian costus instead - his gentleness with children and care for them. General wording; 'teaching manners' is the only unsupported word."
+  },
+  "isl-303f1e46": {
+   "fingerprint": "0d8c495f36358b26",
+   "judged_on": "2026-10-04",
+   "source_file": "",
+   "flags": [
+    "meta_framing"
+   ],
+   "why": "Faithful to its source, Ulwan's introduction: Islam brought a comprehensive method for raising souls and generations, from shirk and ignorance to tawhid, knowledge and guidance. A meta description of the preface; one of three near-identical units on the same text."
+  },
+  "isl-30476c63": {
+   "fingerprint": "748091fb567582fb",
+   "judged_on": "2026-10-04",
+   "source_file": "Manhaj_Nabawi_Khulayfi.pdf",
+   "flags": [
+    "reversed",
+    "missing_glyphs"
+   ],
+   "why": "Matches Khulayfi pp.7-8: prophetic upbringing rests on revealed knowledge, tazkiya through reciting and living the Quran (the Companions whom the Prophet purified), and the natural and social environment's effect on behaviour."
+  },
+  "isl-343ab724": {
+   "fingerprint": "bde198d4916d38f4",
+   "judged_on": "2026-10-04",
+   "source_file": "Kayfa_Turabbi_Waladak.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "why": "Matches Kayfa pp.11-12: a parent's du'a for his child (and the warning against cursing them), upbringing needs constant follow-up and presence, an often-absent father must choose a strong righteous wife, and firmness puts things in their place."
+  },
+  "isl-34fc82de": {
+   "fingerprint": "bf4bdaa70b3491c7",
+   "judged_on": "2026-10-04",
+   "source_file": "Al_Hady_Al_Nabawi.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "why": "Matches Kayfa p.3: the book's plan - upbringing in Islam, its status, the educator's traits, the mosque and school, and its aims including rooting creed from childhood."
+  },
+  "isl-369ae871": {
+   "fingerprint": "6eedcb3a7ed76700",
+   "judged_on": "2026-10-04",
+   "source_file": "Rakaiz_Tarbiya.pdf",
+   "flags": [
+    "reversed",
+    "missing_glyphs",
+    "introduces_prophet"
+   ],
+   "why": "Matches Rakaiz p.20: injustice between children breeds enmity and envy while justice wins their love and dutifulness - al-Nu'man's hadith 'fear Allah and be just between your children' (Sahih al-Bukhari 2587)."
+  },
+  "isl-379cccef": {
+   "fingerprint": "411bedd5ea10a78b",
+   "judged_on": "2026-10-04",
+   "source_file": "Kayfa_Turabbi_Waladak.pdf",
+   "flags": [
+    "reversed",
+    "meta_framing"
+   ],
+   "why": "Matches Kayfa pp.10-11: comparisons and hidden favouritism breed resentment and selfishness, overprotection makes a child dependent and weak-willed; true care is du'a and steady follow-up."
+  },
+  "isl-39499300": {
+   "fingerprint": "4427e029dc541a65",
+   "judged_on": "2026-10-04",
+   "source_file": "Tarbiya_Al_Banat.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "why": "Matches Tarbiyat al-Banat p.9: the root of upbringing is establishing the worship of Allah in children's hearts (born on the fitra), 'whoever guides to good has its reward', and spending on one's family as the greatest dinar."
+  },
+  "isl-3a04cacb": {
+   "fingerprint": "45d0362032e072f0",
+   "judged_on": "2026-10-04",
+   "source_file": "Kayfa_Turabbi_Waladak.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "why": "Matches Kayfa p.35: suitable books and a home library, lessons and scholars, knowledge for action with the sharia sciences first, and discovering and growing the child's talents through play and work (Ibn al-Qayyim on the child's aptitude)."
+  },
+  "isl-3afa9af8": {
+   "fingerprint": "ebd56bad8e6084fa",
+   "judged_on": "2026-10-04",
+   "source_file": "Kayfa_Turabbi_Waladak.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "why": "Matches Kayfa p.62: constructive competition between children close in level, no comparisons that demean or punish, and using the four-year-old's turn to group play to teach cooperation."
+  },
+  "isl-3b349626": {
+   "fingerprint": "4ed6c990fa82216f",
+   "judged_on": "2026-10-04",
+   "source_file": "Kayfa_Turabbi_Waladak.pdf",
+   "flags": [
+    "reversed",
+    "meta_framing"
+   ],
+   "why": "The source (Kayfa p.79) is the book's table of contents; the summary accurately reports the chapter titles it lists (the orphan between firmness and tenderness, using environment and heredity in choosing a wife, the sick or disabled child). An overview, nothing invented."
+  },
+  "isl-3c03e3e6": {
+   "fingerprint": "4fe4a560ffbdd7a4",
+   "judged_on": "2026-10-04",
+   "source_file": "Manhaj_Nabawi_Khulayfi.pdf",
+   "flags": [
+    "reversed",
+    "missing_glyphs",
+    "introduces_scripture"
+   ],
+   "why": "Matches Khulayfi p.3: the definitions of tarbiya, the Islamic aim of preparing a Muslim to apply knowledge in individual and collective life, tazkiya and teaching wisdom from the Quran and Sunnah, and what the prophetic method includes."
+  },
+  "isl-3d476538": {
+   "fingerprint": "1af74c93b84c74c3",
+   "judged_on": "2026-10-04",
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "why": "Matches p.93: al-Rubayyi' - the Companions made their children fast and gave them wool toys until iftar; Ibn Battal - worship is not binding before puberty but scholars recommended training children; Umar on the man who broke the fast 'while our children fast'."
+  },
+  "isl-3e91893e": {
+   "fingerprint": "87af440c62db42bb",
+   "judged_on": "2026-10-04",
+   "source_file": "Kayfa_Turabbi_Waladak.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "why": "Matches Kayfa p.56: give the eldest child special care because the younger ones imitate him, parents must live their Islam, link the child to the Prophet as the first model, and avoid clothes and items bearing images of deviant celebrities."
+  },
+  "isl-3f7359b4": {
+   "fingerprint": "82c07edea3ee451a",
+   "judged_on": "2026-10-04",
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "why": "Re-judged under the book-level allowance for general characterisations: the main topic matches pp.111-112 (the chapter permitting children's play - Ibn Abbas, Abu Hurayra, children in the mosque); 'the Prophet played with children' is documented elsewhere in the same book (Abu Umayr p.44, al-Husayn p.56, Mahmud p.57) and is not a specific invented narration."
+  },
+  "isl-3ff7f46d": {
+   "fingerprint": "440b1b583f39b130",
+   "judged_on": "2026-10-04",
+   "source_file": "Manhaj_Nabawi_Khulayfi.pdf",
+   "flags": [
+    "reversed",
+    "missing_glyphs"
+   ],
+   "why": "Matches Khulayfi pp.7-8: the general environment (social, political, economic, cultural, natural) shapes behaviour and the Prophet purified it; teaching the Book and wisdom, with al-Razi's theoretical and practical wisdom."
+  },
+  "isl-410bbaa8": {
+   "fingerprint": "3f0577d0d798ac82",
+   "judged_on": "2026-10-04",
+   "source_file": "Manhaj_Nabawi_Khulayfi.pdf",
+   "flags": [
+    "reversed",
+    "missing_glyphs",
+    "meta_framing"
+   ],
+   "why": "Matches Khulayfi p.7 ('rabbaniyya'): the prophetic method draws on revelation, the Prophet as the educator sent to teach and purify, aiming at the highest human ends."
+  },
+  "isl-426e674e": {
+   "fingerprint": "ee2f436cc6a45ec3",
+   "judged_on": "2026-10-04",
+   "source_file": "Kayfa_Turabbi_Waladak.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "why": "Matches Kayfa p.69 (conclusion): keep reading on upbringing, reform society to protect the child from bad influences, be wise, and remember upbringing is instruction plus a living example to imitate."
+  },
+  "isl-44227dfe": {
+   "fingerprint": "10bb32d0b3e284f1",
+   "judged_on": "2026-10-04",
+   "source_file": "",
+   "flags": [],
+   "why": "Matches its source (Ibn Baz's fatwa as quoted): contact with an unrelated man before marriage without sharia limits is forbidden and must stop, handled with wisdom and good counsel, not exposure or scandal, offering the lawful alternative."
+  },
+  "isl-44443cd2": {
+   "fingerprint": "5f0c1b9510df4c2d",
+   "judged_on": "2026-10-04",
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing",
+    "introduces_prophet"
+   ],
+   "why": "Re-judged: the main topic matches p.89 (teaching tawhid as a child's first words - Ali ibn al-Husayn, Ibn al-Qayyim); 'the Prophet taught children gently' is a general characterisation documented in the same book (Ibn Abbas p.85, Umar ibn Abi Salama 'taught him gently' p.98); prayer is generic filler."
+  },
+  "isl-44bbed14": {
+   "fingerprint": "8b744c612f5cef77",
+   "judged_on": "2026-10-04",
+   "source_file": "Rakaiz_Tarbiya.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "why": "Matches Rakaiz p.36: Ibn al-Qayyim - children are mostly ruined by their parents' neglect - and the father relying on Allah for his children's righteousness while taking the means."
+  },
+  "isl-47643ca5": {
+   "fingerprint": "6f5cd2fddce12f0b",
+   "judged_on": "2026-10-04",
+   "source_file": "Tarbiya_Al_Banat.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "why": "Matches Tarbiyat al-Banat p.29: Quran schools for girls, and the warning that girls raised in revealing clothes grow used to it - the Muslim woman's covering dress, 'clothed yet naked' (Muslim)."
+  },
+  "isl-487be1c7": {
+   "fingerprint": "bf9f780c22fd423d",
+   "judged_on": "2026-10-04",
+   "source_file": "Kayfa_Turabbi_Waladak.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "why": "Matches Kayfa pp.4-5: upbringing as cultivating (the farmer pulling thorns), al-Tahrim 6 with Qatada's commentary (command them to obey Allah, restrain them from sin), 'each of you is a shepherd', disciplining a child is better than charity, raising daughters shields from the Fire."
+  },
+  "isl-48e32cae": {
+   "fingerprint": "4b41cebc2694ccc7",
+   "judged_on": "2026-10-04",
+   "source_file": "Kayfa_Turabbi_Waladak.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "why": "Matches Kayfa pp.16-17: the school's social and moral roles, staying in touch with the school, persuading the child that people err and that a bad habit is bad, and vocational preparation for both boys and girls."
+  },
+  "isl-4c9c61c3": {
+   "fingerprint": "6f10c3f8b8fd04f4",
+   "judged_on": "2026-10-04",
+   "source_file": "Manhaj_Nabawi_Khulayfi.pdf",
+   "flags": [
+    "reversed",
+    "missing_glyphs",
+    "meta_framing"
+   ],
+   "why": "Matches Khulayfi pp.11-12: the Prophet's sermon at the grave ('seek refuge with Allah from the punishment of the grave') and the family as the first educational institution."
+  },
+  "isl-4f1029a3": {
+   "fingerprint": "7e6a32ec714e6598",
+   "judged_on": "2026-10-04",
+   "source_file": "Kayfa_Turabbi_Waladak.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "why": "Matches Kayfa pp.36-37: do not push a child into study he is not suited for - give him freedom of choice after knowing his abilities; the sharia's rulings protect the child's life and rights, encourage having many children, and permit contraception to secure nursing and care."
+  },
+  "isl-4fd89060": {
+   "fingerprint": "e1bce3100eaf07ae",
+   "judged_on": "2026-10-04",
+   "source_file": "Tarbiya_Al_Banat.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "why": "Matches Tarbiyat al-Banat p.28: justice between children in gifts, money and affection, al-Nu'man's hadith, and the Prophet's 'why did you not treat them equally?' to a man who kissed and seated his son but not his daughter."
+  },
+  "isl-52462ce7": {
+   "fingerprint": "59e6877f9c3c418b",
+   "judged_on": "2026-10-04",
+   "source_file": "Rakaiz_Tarbiya.pdf",
+   "flags": [
+    "reversed",
+    "missing_glyphs",
+    "meta_framing",
+    "introduces_prophet"
+   ],
+   "why": "Matches Rakaiz p.14: the parent's du'a is among the answered ones, the warning against praying against one's children in anger, and the Prophet's prohibition."
+  },
+  "isl-52c6e496": {
+   "fingerprint": "d15239a2d1e799d3",
+   "judged_on": "2026-10-04",
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "why": "The source (p.185) is the table of contents for rights 17-34 (cleanliness, Quran, creed, prayer and fasting, scholars, play, separating beds, ruqya, warning against innovation and bad company); the summary is an accurate general overview."
+  },
+  "isl-54836d16": {
+   "fingerprint": "73fcaace1c1e5e75",
+   "judged_on": "2026-10-04",
+   "source_file": "Rakaiz_Tarbiya.pdf",
+   "flags": [
+    "missing_glyphs",
+    "meta_framing"
+   ],
+   "why": "Matches Rakaiz p.31: the preacher must practise first - Shu'ayb 'I do not wish to do what I forbid you', the salaf 'if you command something, be the first to do it', the verse 'O you who teach others...'. 'Self-learning' in the title is a mislabel of 'practise what you preach'."
+  },
+  "isl-552b4f5a": {
+   "fingerprint": "d4b84f9e464fd4e2",
+   "judged_on": "2026-10-04",
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "why": "Consistent with p.78: Sa'd praying over his sons, Ibn Mas'ud correcting his son's silk shirt, and the chapter on teaching children the Quran opening with Muslim's hadith on the house where Allah is remembered. General, adds no specific claim."
+  },
+  "isl-55a861c7": {
+   "fingerprint": "bb42e8139a2f7af0",
+   "judged_on": "2026-10-04",
+   "source_file": "Kayfa_Turabbi_Waladak.pdf",
+   "flags": [
+    "reversed",
+    "meta_framing"
+   ],
+   "why": "Matches Kayfa p.12: firmness puts things in their place, not harsh and not lax; Ibn al-Jawzi on not yielding to crying; the lax parent spoils the child into weak will; do not give in to crying or anger; keep household order for sleep and meals."
+  },
+  "isl-55ec7f83": {
+   "fingerprint": "504d242607d26a12",
+   "judged_on": "2026-10-04",
+   "source_file": "",
+   "flags": [
+    "meta_framing"
+   ],
+   "why": "Matches Ulwan's opening: the path to reform and a virtuous, strong society lies in tarbiya - of the individual, family, society and humanity."
+  },
+  "isl-59686545": {
+   "fingerprint": "d8d9c5e028928806",
+   "judged_on": "2026-10-04",
+   "source_file": "",
+   "flags": [],
+   "why": "Matches its source: a woman's work outside the home is not forbidden in itself, conditioned on modesty, no forbidden mixing, suitable work, not at the expense of duties; scholars differ - and the summary defers to a trusted scholar."
+  },
+  "isl-5a728c81": {
+   "fingerprint": "0cc8a9377a1fb580",
+   "judged_on": "2026-10-04",
+   "source_file": "Manhaj_Nabawi_Khulayfi.pdf",
+   "flags": [
+    "reversed",
+    "missing_glyphs",
+    "meta_framing"
+   ],
+   "why": "Matches Khulayfi pp.2-3: tarbiya in language (growth and increase), its Quranic and hadith uses for nurturing a child, and the differing technical definitions."
+  },
+  "isl-5b861419": {
+   "fingerprint": "2b8abcae6dce21cf",
+   "judged_on": "2026-10-04",
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "introduces_number"
+   ],
+   "why": "Matches p.128: the 'command them to pray at seven, discipline at ten, separate their beds' narration, and the author's warning about phone and computer games that waste time and distract from prayer. The narration is labelled as Abu Dawud's and the app's stance is stated as the app's."
+  },
+  "isl-5bf1878f": {
+   "fingerprint": "44b432378221836c",
+   "judged_on": "2026-10-04",
+   "source_file": "Manhaj_Nabawi_Khulayfi.pdf",
+   "flags": [
+    "reversed",
+    "missing_glyphs"
+   ],
+   "why": "Matches Khulayfi pp.12-13: the mosque as a comprehensive educational and social institution in the Prophet's time - teaching, guidance, settling disputes, receiving delegations, women attending."
+  },
+  "isl-5c664643": {
+   "fingerprint": "453bf9589874fe94",
+   "judged_on": "2026-10-04",
+   "source_file": "Kayfa_Turabbi_Waladak.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "why": "Matches Kayfa p.8: the father's strength and qiwama, what breaks it (the mother complaining or defying him before the children, hiding his refusals), and the mother's duty to uphold his leadership. The opening 'security is the basis' is a loose rendering of the preceding section."
+  },
+  "isl-5d4a3253": {
+   "fingerprint": "87c4c07ceb5c5a0f",
+   "judged_on": "2026-10-04",
+   "source_file": "",
+   "flags": [
+    "meta_framing"
+   ],
+   "why": "Faithful to the same Ulwan introduction as isl-303f1e46 (Islam's comprehensive method of upbringing, tawhid, knowledge and guidance); duplicate coverage, not invented content."
+  },
+  "isl-5d8ffb6e": {
+   "fingerprint": "3f235335cb940c55",
+   "judged_on": "2026-10-04",
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "flags": [
+    "partially_reversed",
+    "glyph_substituted"
+   ],
+   "why": "Matches pp.47-48: 'I never saw anyone more merciful to children than the Prophet' (Anas), the Prophet kissing al-Hasan and answering al-Aqra' and the Bedouins, al-Qurtubi defining mercy as tenderness that leads to kindness, Abu Bakr and Umar kissing their children."
+  },
+  "isl-5e099094": {
+   "fingerprint": "f76806ab23b83e98",
+   "judged_on": "2026-10-04",
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "flags": [
+    "reversed",
+    "glyph_substituted"
+   ],
+   "why": "Matches p.62: narrations from the salaf on disciplining children and orphans including hitting (Aisha, Maymun, Luqman 'a father's hitting is like fertiliser'), 'the child's right is good adab'. The limits are attributed to the jurists and the app's stance is stated as its own."
+  },
+  "isl-602bfb05": {
+   "fingerprint": "f229d21a7deaa088",
+   "judged_on": "2026-10-04",
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "flags": [
+    "glyph_substituted",
+    "meta_framing",
+    "introduces_number"
+   ],
+   "source_kind": "authored_guidance",
+   "why": "Authored guidance, rewritten in PR #27 — 70f2df67, 3ab8dae1 and reviewed there; not a summary of its PDF chunk, so it is not judged against it. Read on its own: correct, and states the app's position as the app's. Provenance relabelled to the references the text actually rests on."
+  },
+  "isl-61e09b66": {
+   "fingerprint": "68ccddef01e8c2a4",
+   "judged_on": "2026-10-04",
+   "source_file": "Rakaiz_Tarbiya.pdf",
+   "flags": [
+    "reversed",
+    "missing_glyphs"
+   ],
+   "why": "Matches Rakaiz pp.35-36 (conclusion): the father is first to reap the fruit of upbringing, a dutiful child continues his reward ('when a person dies his deeds end except three... a righteous child who prays for him'), and parents' neglect is the main cause of corruption (Ibn al-Qayyim)."
+  },
+  "isl-620730b0": {
+   "fingerprint": "b4a9a48522211c8d",
+   "judged_on": "2026-10-04",
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "flags": [
+    "partially_reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "why": "Gist matches Alukah p.50: the Prophet carried Umama while praying (Abu Qatada) and took al-Hasan and al-Husayn gently off his back in sujud (Abu Hurayra); Ibn Hajar's note on mercy vs. khushu'."
+  },
+  "isl-624104ea": {
+   "fingerprint": "60a12c36c98610f0",
+   "judged_on": "2026-10-04",
+   "source_file": "",
+   "flags": [],
+   "why": "Matches its source: 'whoever believes in Allah and the Last Day, let him speak good or keep silent' (agreed upon, Bukhari 6018, Muslim 47), with practical advice for 7-9 year olds on checking their words."
+  },
+  "isl-64e37a2f": {
+   "fingerprint": "b91e36234bb8a793",
+   "judged_on": "2026-10-04",
+   "source_file": "Kayfa_Turabbi_Waladak.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "why": "Matches Kayfa pp.59-60: heredity shapes the child's body, health and temperament; choosing a wife; the 'hadith' against cousin marriage is really Umar's statement, some doctors link it to hereditary disease, hence premarital testing; upbringing can redirect inherited traits."
+  },
+  "isl-65823c35": {
+   "fingerprint": "b2183453fdf00237",
+   "judged_on": "2026-10-04",
+   "source_file": "Rakaiz_Tarbiya.pdf",
+   "flags": [
+    "reversed",
+    "missing_glyphs"
+   ],
+   "why": "Matches Rakaiz p.28: watching over children's companions - the musk-bearer and bellows hadith, and 'a man is upon the religion of his close friend'."
+  },
+  "isl-65e723b9": {
+   "fingerprint": "48389e2fbe7d173c",
+   "judged_on": "2026-10-04",
+   "source_file": "Manhaj_Nabawi_Khulayfi.pdf",
+   "flags": [
+    "reversed",
+    "missing_glyphs",
+    "meta_framing"
+   ],
+   "why": "Consistent with Khulayfi p.5: behavioural education turning belief into daily practice, social education (rights and duties, family and social relations from the Sunnah) and aesthetic education."
+  },
+  "isl-65ecd339": {
+   "fingerprint": "460840f5e672208a",
+   "judged_on": "2026-10-04",
+   "source_file": "Kayfa_Turabbi_Waladak.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "why": "Matches Kayfa p.64: the orphan or child of divorce needs a substitute guardian (grandfather or uncle) who is aware and responsible, meets his need for love, is firm without spoiling, lets him mix with others; divorced parents must respect each other before the child."
+  },
+  "isl-67c4622e": {
+   "fingerprint": "529c084fa788735c",
+   "judged_on": "2026-10-04",
+   "source_file": "Kayfa_Turabbi_Waladak.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "why": "Matches Kayfa p.41: the child's financial rights - inheritance if born alive, maintenance (a boy until he can earn, a girl until marriage), justice in spending by need (school supplies), gifts divided as Allah divided inheritance, and a share of a waqf."
+  },
+  "isl-680b8d50": {
+   "fingerprint": "6e9e661af656b578",
+   "judged_on": "2026-10-04",
+   "source_file": "Manhaj_Nabawi_Khulayfi.pdf",
+   "flags": [
+    "reversed",
+    "missing_glyphs"
+   ],
+   "why": "Matches Khulayfi pp.2-3: 'manhaj' in language (the clear straight road, al-Ma'ida 48), in research, and the educational curriculum defined as a plan or a system in which teacher, learner and content interact."
+  },
+  "isl-689dde49": {
+   "fingerprint": "39edb0413f7eb9e7",
+   "judged_on": "2026-10-04",
+   "source_file": "Kayfa_Turabbi_Waladak.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "why": "Matches Kayfa p.19: start with memorising and reflecting on the Quran, then the sira and the Companions' lives, teach adhkar and du'a in every state, and build tawhid by reflecting on creation."
+  },
+  "isl-68c41eea": {
+   "fingerprint": "2b1292be85509cef",
+   "judged_on": "2026-10-04",
+   "source_file": "Kayfa_Turabbi_Waladak.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "why": "Matches Kayfa p.53: balance reward and deterrence, do not over-frighten the child with Hell and divine punishment (mention Allah's mercy and provision too), and fit the method to the child's age and personality."
+  },
+  "isl-6a157c3f": {
+   "fingerprint": "27e61971d0cc6a72",
+   "judged_on": "2026-10-04",
+   "source_file": "Manhaj_Nabawi_Khulayfi.pdf",
+   "flags": [
+    "reversed",
+    "missing_glyphs"
+   ],
+   "why": "Matches Khulayfi pp.11-12: the family as the first nucleus, the parents' responsibility for their children's upbringing, and the Prophet as educator in his own household ('the best of you is best to his family')."
+  },
+  "isl-6a8c2563": {
+   "fingerprint": "05fb6b3c846e0d99",
+   "judged_on": "2026-10-04",
+   "source_file": "Rakaiz_Tarbiya.pdf",
+   "flags": [
+    "reversed",
+    "missing_glyphs",
+    "meta_framing"
+   ],
+   "why": "Matches Rakaiz p.36: Ibn al-Qayyim's 'whoever neglects teaching his child... most children are ruined by their fathers', and relying on Allah for one's children's righteousness while taking the means."
+  },
+  "isl-6ae600bf": {
+   "fingerprint": "e06203366659080a",
+   "judged_on": "2026-10-04",
+   "source_file": "Manhaj_Nabawi_Khulayfi.pdf",
+   "flags": [
+    "reversed",
+    "missing_glyphs",
+    "meta_framing"
+   ],
+   "why": "Matches Khulayfi p.10: the Prophet as a model in character ('you are of a great character'), in love for his mission and bearing harm for it, and in sharing his Companions' daily and hard times."
+  },
+  "isl-6c69c835": {
+   "fingerprint": "1e872683d845dd16",
+   "judged_on": "2026-10-04",
+   "source_file": "Kayfa_Turabbi_Waladak.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "why": "Matches Kayfa pp.22-23: protect children from corrupting songs, romances and films and from seeing anything immodest at home, because a young child imitates his parents innocently; instil moral habits early. One sentence garbles the scolding point without inventing content."
+  },
+  "isl-6d5e1c7f": {
+   "fingerprint": "5409a127584fa7db",
+   "judged_on": "2026-10-04",
+   "source_file": "Kayfa_Turabbi_Waladak.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "why": "Matches Kayfa p.66: integrate gifted children in public schools with suitable classes; the sick child needs care that differs by illness, encouragement to patience and courage, and parents hiding excessive pity."
+  },
+  "isl-6d8f26e2": {
+   "fingerprint": "b1c88130478a729a",
+   "judged_on": "2026-10-04",
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "why": "General but on-theme for p.83, the chapter on teaching children sound creed and warning them from shirk (Nuh calling his son, Nuh's will of tawhid, Ibrahim and Ya'qub's will). Adds no specific claim."
+  },
+  "isl-6e3ef777": {
+   "fingerprint": "dceaf931c3712891",
+   "judged_on": "2026-10-04",
+   "source_file": "Rakaiz_Tarbiya.pdf",
+   "flags": [
+    "reversed",
+    "missing_glyphs"
+   ],
+   "why": "Matches Rakaiz p.7: every child is born on the fitra; if he learns lying or other evils it is from poor upbringing or bad company; hence the ten pillars, and a du'a that Allah protects our children from trials."
+  },
+  "isl-6e577f4f": {
+   "fingerprint": "02884d92cdb3b675",
+   "judged_on": "2026-10-04",
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "why": "Matches p.60: Ibn Uthaymin - hitting for prayer at ten is for discipline not pain, light and non-injurious, injurious hitting is forbidden. The app's no-hitting stance and its reason are stated as the app's, not the source's."
+  },
+  "isl-71334e77": {
+   "fingerprint": "cd7b9c663eec5bf1",
+   "judged_on": "2026-10-04",
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "flags": [
+    "reversed",
+    "glyph_substituted"
+   ],
+   "why": "Matches pp.121-122: the author's conclusion that the salaf's children did not play for hours, that today's children are addicted to play, that their play was purposeful (girls trained for home, boys for courage, horsemanship, intelligence and strength), plus forbidden games."
+  },
+  "isl-7269b6d8": {
+   "fingerprint": "7a7d7dbc38fa5636",
+   "judged_on": "2026-10-04",
+   "source_file": "Manhaj_Nabawi_Khulayfi.pdf",
+   "flags": [
+    "reversed",
+    "missing_glyphs",
+    "meta_framing"
+   ],
+   "why": "Matches Khulayfi pp.6-7: physical education ('the strong believer is better', racing Aisha, wrestling Rukana) and the realism of the prophetic method - not burdening beyond capacity, balance and no excess in worship."
+  },
+  "isl-72893770": {
+   "fingerprint": "b99619312f2414fd",
+   "judged_on": "2026-10-04",
+   "source_file": "Manhaj_Nabawi_Khulayfi.pdf",
+   "flags": [
+    "reversed",
+    "missing_glyphs",
+    "meta_framing"
+   ],
+   "why": "Matches Khulayfi p.4: the comprehensiveness of the prophetic method - spirit and body, mind and heart, this world and the next, the person's relation with his Lord, himself and his surroundings."
+  },
+  "isl-7349e59c": {
+   "fingerprint": "e482f918a6d07543",
+   "judged_on": "2026-10-04",
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "why": "The source (p.184) is the book's table of contents; the summary accurately lists rights it covers - choosing a righteous mother, upbringing, teaching prayer, justice between children, protection from Satan. An overview, nothing invented."
+  },
+  "isl-73905b43": {
+   "fingerprint": "e64ca5a7d1372e42",
+   "judged_on": "2026-10-04",
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "flags": [
+    "partially_reversed",
+    "glyph_substituted",
+    "meta_framing",
+    "introduces_companion"
+   ],
+   "why": "Matches pp.63-64: Ahmad on hitting a child for adab and prayer, Abu Bakr disciplining Aisha over the lost necklace, the jurists' limits (light, not injurious, limited number). The app's no-hitting stance is stated as the app's, separate from the source."
+  },
+  "isl-74580658": {
+   "fingerprint": "1fe6014ac4b49921",
+   "judged_on": "2026-10-04",
+   "source_file": "Kayfa_Turabbi_Waladak.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "why": "Matches Kayfa pp.31-32: teach the manners of gatherings and speech (let him answer for himself), strengthen his will by patience and briefly delaying his demands, accustom him to the guiding authority and accepted social customs."
+  },
+  "isl-752169b4": {
+   "fingerprint": "8fe4355733cd45ed",
+   "judged_on": "2026-10-04",
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "flags": [
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "why": "Vague but on-theme for p.103: fathers teaching sons the sunna of prayer - Abu Bakra teaching his son the Prophet's du'a after every prayer, Usama ibn Umayr telling his son the Prophet ordered prayer in one's dwelling on a rainy day."
+  },
+  "isl-76f9459f": {
+   "fingerprint": "cdef51e01968fc42",
+   "judged_on": "2026-10-04",
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "flags": [
+    "reversed",
+    "glyph_substituted"
+   ],
+   "why": "Two of three sentences match pp.12-13 (right one: choosing a righteous wife - she shapes the children; 'choose the religious one' and 'the best enjoyment of this world is a righteous woman' with Ibn Uthaymin and Ibn Hajar). The opening sentence is generic."
+  },
+  "isl-77ba4991": {
+   "fingerprint": "8d388a94e93dfbd5",
+   "judged_on": "2026-10-04",
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "flags": [
+    "reversed",
+    "glyph_substituted"
+   ],
+   "why": "Consistent with pp.80-81: Amr ibn Salama, al-Dahhak's 'teach your families the Quran', Abu Hurayra on the house where Quran is read, fathers taking sons to learn Quran (Sa'id ibn Jubayr). General advice, nothing added."
+  },
+  "isl-79b5db35": {
+   "fingerprint": "d86b80bde00172b2",
+   "judged_on": "2026-10-04",
+   "source_file": "Tarbiya_Al_Banat.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "why": "Matches Tarbiyat al-Banat p.21: make the home a haven of faith (Quran, sira, competitions), 'the orphan is not one whose parents died' (verse), and a daughter's need for her father's tenderness - the Prophet rising for Fatima, kissing her and seating her beside him."
+  },
+  "isl-7ad7d768": {
+   "fingerprint": "9ca54728ec7dc2e7",
+   "judged_on": "2026-10-04",
+   "source_file": "Manhaj_Nabawi_Khulayfi.pdf",
+   "flags": [
+    "reversed",
+    "missing_glyphs"
+   ],
+   "why": "Matches Khulayfi pp.10-11: the educator uses events and natural phenomena - the Prophet pointing to the full moon ('you will see your Lord as you see this moon') to urge guarding the Fajr and Asr prayers."
+  },
+  "isl-7bfdefb2": {
+   "fingerprint": "3c96eb5e1203ef1a",
+   "judged_on": "2026-10-04",
+   "source_file": "Rakaiz_Tarbiya.pdf",
+   "flags": [
+    "reversed",
+    "missing_glyphs"
+   ],
+   "why": "Matches Rakaiz p.8: choosing a righteous wife of religion and character, with the hadith 'a woman is married for four... choose the one with religion'."
+  },
+  "isl-7c088c1a": {
+   "fingerprint": "6c3db8059e7031e7",
+   "judged_on": "2026-10-04",
+   "source_file": "Kayfa_Turabbi_Waladak.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "why": "Matches Kayfa p.34: prepare the child for learning from the cradle (shahada, the three questions, short surahs, sira), love of knowledge from parents, choose a good school and avoid missionary schools, Quran circles and a home library. 'Avoid excessive homework' slightly misreads 'don't complain about homework in front of him'."
+  },
+  "isl-7ec75c52": {
+   "fingerprint": "ffb4da76c8ed523d",
+   "judged_on": "2026-10-04",
+   "source_file": "Rakaiz_Tarbiya.pdf",
+   "flags": [
+    "reversed",
+    "missing_glyphs"
+   ],
+   "why": "Matches Rakaiz pp.10-11: creed and faith are the foundation on which deeds rest (the good tree, Ibrahim 24); instil sound creed from childhood, as in Luqman's warning to his son against shirk."
+  },
+  "isl-7f2cd105": {
+   "fingerprint": "41b268df7a02a462",
+   "judged_on": "2026-10-04",
+   "source_file": "Manhaj_Nabawi_Khulayfi.pdf",
+   "flags": [
+    "reversed",
+    "missing_glyphs",
+    "meta_framing"
+   ],
+   "why": "Matches Khulayfi p.1 (introduction): the paper sets out to extract the general characteristics of the prophetic educational method and its main means, against the shortcomings of modern methods."
+  },
+  "isl-7f3a1d9b": {
+   "fingerprint": "0d260ccd45772ffc",
+   "judged_on": "2026-10-04",
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "why": "Consistent with pp.81-82: narrations of fathers and scholars teaching the young the Quran - Abu Hurayra on the house where Quran is read, Ibrahim al-Taymi, Yunus ibn Ubayd, Sa'id ibn Jubayr, boys memorising at four and five. General, nothing added beyond 'patience'."
+  },
+  "isl-7f82819c": {
+   "fingerprint": "2fade90157b6ef6b",
+   "judged_on": "2026-10-04",
+   "source_file": "Kayfa_Turabbi_Waladak.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "why": "Matches Kayfa p.47: habits form early - waking an infant to feed creates a night-feeding habit, laughing at forbidden words reinforces them - and good habits and worship are built by repetition, encouragement and example."
+  },
+  "isl-80a33332": {
+   "fingerprint": "fee1b875ed608060",
+   "judged_on": "2026-10-04",
+   "source_file": "Tarbiya_Al_Banat.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "why": "Matches Tarbiyat al-Banat pp.22-23: the internet and screens are a double-edged sword for adolescent girls and need supervision, and choosing a righteous husband and marrying a daughter early to protect her."
+  },
+  "isl-8251f498": {
+   "fingerprint": "a7cfe953f9a09f81",
+   "judged_on": "2026-10-04",
+   "source_file": "Tarbiya_Al_Banat.pdf",
+   "flags": [
+    "reversed",
+    "meta_framing"
+   ],
+   "why": "Matches Tarbiyat al-Banat pp.26-27: the fatwa that 'treating daughters well' means raising them on Islam, teaching them and guarding their chastity, not only feeding and clothing them; and avoiding places of evil (Ibn Taymiyya)."
+  },
+  "isl-837af34f": {
+   "fingerprint": "c9778cc395a27a24",
+   "judged_on": "2026-10-04",
+   "source_file": "Kayfa_Turabbi_Waladak.pdf",
+   "flags": [
+    "reversed",
+    "meta_framing"
+   ],
+   "why": "Matches Kayfa pp.3-4: the book's plan (concept and aims of Islamic upbringing, rulings about the child, methods, the mosque and school) and the definition of tarbiya as building a whole person - health, mind, faith."
+  },
+  "isl-84538ea0": {
+   "fingerprint": "93b47e8b07d8592e",
+   "judged_on": "2026-10-04",
+   "source_file": "Tarbiya_Al_Banat.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "why": "Matches Tarbiyat al-Banat p.13: parents as models, mothers cutting down outings to attend to the children, seeking advice and books on Islamic upbringing, and 'do not let buying a car or device matter more than your daughter's upbringing'."
+  },
+  "isl-85e3c490": {
+   "fingerprint": "f1bac21da081e24c",
+   "judged_on": "2026-10-04",
+   "source_file": "Kayfa_Turabbi_Waladak.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "why": "Matches Kayfa p.33 (raising high aspiration): respect and consult the child rather than demean him, seek excellence in character not luxuries, tie him to lofty aims (knowledge, courage to strive in Allah's way, spending in good), and to high models."
+  },
+  "isl-85efb0a3": {
+   "fingerprint": "a505781826f7fd7c",
+   "judged_on": "2026-10-04",
+   "source_file": "",
+   "flags": [],
+   "why": "Matches its Ulwan paraphrase: adolescence moves from dependence to growing independence, the educator's role shifts from direction to accompaniment and counsel, and the values planted early remain the inner reference."
+  },
+  "isl-87ab426e": {
+   "fingerprint": "1def2345d345f5e3",
+   "judged_on": "2026-10-04",
+   "source_file": "Manhaj_Nabawi_Khulayfi.pdf",
+   "flags": [
+    "reversed",
+    "missing_glyphs",
+    "meta_framing"
+   ],
+   "why": "Matches Khulayfi p.4: comprehensive educational aims covering spirit, mind and body, this world and the next, the individual and the community, grounded in a general philosophy."
+  },
+  "isl-898aaacc": {
+   "fingerprint": "8faf2ec5262fb580",
+   "judged_on": "2026-10-04",
+   "source_file": "",
+   "flags": [
+    "meta_framing"
+   ],
+   "why": "Faithful to Ulwan's preface to the new edition: a new chapter on the responsibility of sexual education for adolescence and puberty, and an invitation to educators to send corrections."
+  },
+  "isl-8a046b9b": {
+   "fingerprint": "9c1f806ba41e0064",
+   "judged_on": "2026-10-04",
+   "source_file": "Kayfa_Turabbi_Waladak.pdf",
+   "flags": [
+    "reversed",
+    "meta_framing"
+   ],
+   "why": "Matches Kayfa pp.6-7: the educator needs sharia knowledge and knowledge of childhood stages, methods differ by age and temperament, he must understand his era's currents, and be trustworthy in practising what he teaches."
+  },
+  "isl-8aa15666": {
+   "fingerprint": "87f008dc733942e7",
+   "judged_on": "2026-10-04",
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "why": "Matches pp.115-116: permitted play - Aisha's dolls and the friends the Prophet sent to play with her, the winged horse, Abu Umayr's bird, buying toys without extravagance. 'Play aids growth' is an unattributed general remark."
+  },
+  "isl-8b35ad26": {
+   "fingerprint": "766878dc1d2bb452",
+   "judged_on": "2026-10-04",
+   "source_file": "",
+   "flags": [
+    "meta_framing"
+   ],
+   "why": "Faithful to Ulwan's closing preface: the completed three-part book sets out the foundations for preparing the child spiritually, mentally and physically on sound creed and the Quran (the first-person voice is the author's)."
+  },
+  "isl-8b3e09ef": {
+   "fingerprint": "1ca28ec40796f3c9",
+   "judged_on": "2026-10-04",
+   "source_file": "Manhaj_Nabawi_Khulayfi.pdf",
+   "flags": [
+    "reversed",
+    "missing_glyphs",
+    "meta_framing"
+   ],
+   "why": "Matches Khulayfi p.3: the linguistic sense of tarbiya with its Quranic uses (al-Shu'ara 18, al-Isra 24), the etymological, individual-centred and society-centred definitions, and the Islamic one."
+  },
+  "isl-8bf01cae": {
+   "fingerprint": "ba9a62242af28e81",
+   "judged_on": "2026-10-04",
+   "source_file": "Rakaiz_Tarbiya.pdf",
+   "flags": [
+    "reversed",
+    "missing_glyphs"
+   ],
+   "why": "Matches Rakaiz p.14: a parent's du'a for his child is answered, so parents must not hasten to pray against their children lest it be answered and they regret it - the Prophet's 'do not pray against yourselves, your children or your wealth'."
+  },
+  "isl-8bf4e7a3": {
+   "fingerprint": "d7776c773ea5ca4c",
+   "judged_on": "2026-10-04",
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "flags": [
+    "reversed",
+    "glyph_substituted"
+   ],
+   "why": "Core matches p.66: justice between children brings love and its absence breeds envy and hatred (al-Nisa 11 with Ibn Kathir), and the note against hitting the face. The no-hitting line is stated as the app's stance."
+  },
+  "isl-8cade404": {
+   "fingerprint": "8e68aee5bde8b2a3",
+   "judged_on": "2026-10-04",
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "flags": [
+    "reversed",
+    "glyph_substituted"
+   ],
+   "why": "Matches pp.46-47 (chapter on parents' mercy): Quraysh women praised for tenderness to children, the Prophet kissing Ibrahim and al-Hasan, 'whoever shows no mercy is shown none'. Only the clause on teaching prayer is unsupported, and it is not attributed."
+  },
+  "isl-8d62cfd1": {
+   "fingerprint": "a7c1c775c6da611c",
+   "judged_on": "2026-10-04",
+   "source_file": "Manhaj_Nabawi_Khulayfi.pdf",
+   "flags": [
+    "reversed",
+    "missing_glyphs",
+    "meta_framing"
+   ],
+   "why": "Matches Khulayfi p.9: Abu Bakr as a fruit of prophetic upbringing - active in da'wa from the first day - and the Prophet involving the Companions in military and political decisions to build belonging."
+  },
+  "isl-8df11735": {
+   "fingerprint": "f0c5578016b55683",
+   "judged_on": "2026-10-04",
+   "source_file": "Rakaiz_Tarbiya.pdf",
+   "flags": [
+    "reversed",
+    "missing_glyphs",
+    "meta_framing"
+   ],
+   "why": "The source (Rakaiz p.38) is the table of contents of the ten pillars (choosing a wife, creed, du'a, adhkar, names, justice, gentleness, advice, good company, example); the summary reflects it accurately."
+  },
+  "isl-8f8f836b": {
+   "fingerprint": "4698a5820b314b19",
+   "judged_on": "2026-10-04",
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "why": "Matches p.173: training children in night prayer (Mu'tamir's father waking the household in Ramadan, Talha ibn Musarrif ordering his daughters to pray at night) and teaching them to speak the truth. The models are Successors rather than Companions - a category slip, no invented event."
+  },
+  "isl-901bde3f": {
+   "fingerprint": "a2600b20d38aa6ae",
+   "judged_on": "2026-10-04",
+   "source_file": "Kayfa_Turabbi_Waladak.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "source_kind": "authored_guidance",
+   "why": "Authored guidance, rewritten in PR #27 — 70f2df67 and reviewed there; not a summary of its PDF chunk, so it is not judged against it. Read on its own: correct, and states the app's position as the app's. Provenance relabelled to the references the text actually rests on."
+  },
+  "isl-908e4c80": {
+   "fingerprint": "9e1fea2b7d59045b",
+   "judged_on": "2026-10-04",
+   "source_file": "Tarbiya_Al_Banat.pdf",
+   "flags": [
+    "reversed",
+    "meta_framing"
+   ],
+   "why": "Matches Tarbiyat al-Banat pp.2-3: the introduction on raising daughters for the good of this world and the next, and 'whoever supports two girls until they come of age will come on the Day of Resurrection with me like these two' (Muslim) with Ibn Battal."
+  },
+  "isl-91162ead": {
+   "fingerprint": "de31b704f34958ca",
+   "judged_on": "2026-10-04",
+   "source_file": "",
+   "flags": [
+    "meta_framing"
+   ],
+   "why": "Faithful to Ulwan's preface to the second edition: the Muslim generation turning back to Islam out of conviction, and the call to form a believing Quranic generation."
+  },
+  "isl-94a01203": {
+   "fingerprint": "4203666843c95be5",
+   "judged_on": "2026-10-04",
+   "source_file": "Manhaj_Nabawi_Khulayfi.pdf",
+   "flags": [
+    "reversed",
+    "missing_glyphs",
+    "introduces_prophet"
+   ],
+   "why": "Matches Khulayfi p.13: the mosque as a centre of teaching (women included, 'do not prevent Allah's handmaidens from the mosques'), private gatherings of dhikr, and the Companions raised there becoming callers and leaders."
+  },
+  "isl-94d2e5ad": {
+   "fingerprint": "917d6bd1bced17bf",
+   "judged_on": "2026-10-04",
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "flags": [
+    "reversed",
+    "glyph_substituted"
+   ],
+   "why": "Matches p.85: the Prophet teaching young Ibn Abbas 'guard Allah and He will guard you... if you ask, ask Allah; if you seek help, seek it from Allah', and his ta'widh for al-Hasan and al-Husayn. 'Warn against injustice' is minor unattributed filler."
+  },
+  "isl-9738d757": {
+   "fingerprint": "3e03682c5ee975a1",
+   "judged_on": "2026-10-04",
+   "source_file": "Tarbiya_Al_Banat.pdf",
+   "flags": [
+    "reversed",
+    "meta_framing"
+   ],
+   "why": "Matches Tarbiyat al-Banat p.18: choose your daughter's friends ('a man is upon the religion of his close friend'), keep her from places of evil, instil modesty and chastity, and do not let girls go out without a parent."
+  },
+  "isl-990bc4e1": {
+   "fingerprint": "55fba71e4e58b9d8",
+   "judged_on": "2026-10-04",
+   "source_file": "",
+   "flags": [
+    "meta_framing"
+   ],
+   "why": "Faithful to Ulwan's introduction: raising children is a branch of raising the individual, and the book lays out Islam's comprehensive method for it."
+  },
+  "isl-9933c64e": {
+   "fingerprint": "ae632ebc47e2788f",
+   "judged_on": "2026-10-04",
+   "source_file": "",
+   "flags": [],
+   "why": "Authored unit whose text_original is a Tirmidhi narration on obscene speech; the summary's advice (stay calm, replace the word) is the app's and its hadith was swapped for an authentic one - 'the Muslim is he from whose tongue and hand Muslims are safe' (Sahih al-Bukhari 10) - which check_hadith_citations verifies. No invented attribution."
+  },
+  "isl-9b3b5acd": {
+   "fingerprint": "19f717062636c31a",
+   "judged_on": "2026-10-04",
+   "source_file": "Kayfa_Turabbi_Waladak.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "why": "Matches Kayfa p.65: parents insulting each other shakes the child's trust and the ideal image he holds; the gifted child needs special care, balanced praise and an environment for his talents, or he may suffer psychologically."
+  },
+  "isl-9d71a2f5": {
+   "fingerprint": "dafbf8f0018603f2",
+   "judged_on": "2026-10-04",
+   "source_file": "Kayfa_Turabbi_Waladak.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "why": "Matches Kayfa p.32 (with p.31): a girl's preparation differs from a boy's (modesty, hijab, housework, the mother befriending her daughter); the father takes his son on errands and to prayer but not on his friends' trips; honour the child, strengthen his will and patience."
+  },
+  "isl-9fb4e310": {
+   "fingerprint": "6326d8c4951deccb",
+   "judged_on": "2026-10-04",
+   "source_file": "",
+   "flags": [
+    "meta_framing"
+   ],
+   "why": "Faithful to Ulwan's plan of the book: part one covers the ideal marriage and its link to upbringing and the psychological feelings toward children, toward a virtuous society."
+  },
+  "isl-a0528213": {
+   "fingerprint": "02dfa05041ed9f1f",
+   "judged_on": "2026-10-04",
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "flags": [
+    "reversed",
+    "glyph_substituted"
+   ],
+   "why": "Matches p.84: Ya'qub urging his sons never to despair of Allah's mercy (Yusuf 87 with Ibn Kathir) and not to imitate disbelievers, Ibrahim's du'a to keep his sons from idols (Ibrahim 35), Luqman forbidding his son shirk."
+  },
+  "isl-a0625782": {
+   "fingerprint": "85c047a234d964a4",
+   "judged_on": "2026-10-04",
+   "source_file": "Kayfa_Turabbi_Waladak.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "why": "Matches Kayfa p.46: upbringing must be comprehensive, observation must not become spying (searching the child's room), do not hem the child in - give him trust and responsibility, and at eighteen months to three years ignore provocations rather than react. The current opening 'the child's room should be spacious' is a garble that PR #20 corrects; both texts judged."
+  },
+  "isl-a10b175c": {
+   "fingerprint": "6cf59d0e90cc1991",
+   "judged_on": "2026-10-04",
+   "source_file": "Kayfa_Turabbi_Waladak.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "why": "Matches Kayfa pp.19-20: build tawhid by drawing the child's attention to creation and its glorification of Allah, teach adhkar and reliance on Allah, protect him from shirk and showing off so he worships for Allah alone."
+  },
+  "isl-a444db2a": {
+   "fingerprint": "c340d035e27a0485",
+   "judged_on": "2026-10-04",
+   "source_file": "Rakaiz_Tarbiya.pdf",
+   "flags": [
+    "reversed",
+    "missing_glyphs",
+    "meta_framing"
+   ],
+   "why": "Matches Rakaiz p.13: praying for children before and after they come is among the greatest causes of their righteousness, after the example of the prophets (Ibrahim's du'a, al-Saffat 100, Ibrahim 40, Zakariyya)."
+  },
+  "isl-a445a1c4": {
+   "fingerprint": "48808c89008452b4",
+   "judged_on": "2026-10-04",
+   "source_file": "Kayfa_Turabbi_Waladak.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "why": "Matches Kayfa pp.24-25: respect and acceptance (the Prophet greeting children, asking the boy's permission), listen to him, praise him, let him defend himself, befriend him in play, work and travel, calm dialogue in disagreement, praise good deeds more than criticising faults."
+  },
+  "isl-a48ec3a4": {
+   "fingerprint": "36863af06ac66d2a",
+   "judged_on": "2026-10-04",
+   "source_file": "Manhaj_Nabawi_Khulayfi.pdf",
+   "flags": [
+    "reversed",
+    "missing_glyphs",
+    "meta_framing"
+   ],
+   "why": "Consistent with Khulayfi's conclusion: the prophetic method, drawn from the Book and the Prophet's unique experience, is distinct from modern Western methods and comprehensive; the chunk also covers the mosque and private gatherings as means."
+  },
+  "isl-a7f9d1f3": {
+   "fingerprint": "65e642ebce4f7562",
+   "judged_on": "2026-10-04",
+   "source_file": "Manhaj_Nabawi_Khulayfi.pdf",
+   "flags": [
+    "reversed",
+    "missing_glyphs",
+    "meta_framing"
+   ],
+   "why": "Matches its source: Khulayfi cites Mu'adh's hadith - 'the head of the matter is Islam, its pillar the prayer, its peak jihad' - with the deeds that bring one into Paradise, as an example of fitting teaching to capacity."
+  },
+  "isl-a8fadfa1": {
+   "fingerprint": "0205d2210da96089",
+   "judged_on": "2026-10-04",
+   "source_file": "Kayfa_Turabbi_Waladak.pdf",
+   "flags": [
+    "reversed",
+    "meta_framing"
+   ],
+   "why": "Matches Kayfa pp.39-40: the most beloved names are Abdullah and Abd al-Rahman, then prophets and righteous people; names of disbelievers, devils, self-praising names and angels' names are forbidden or disliked."
+  },
+  "isl-a9397134": {
+   "fingerprint": "8149c2a999ed32cf",
+   "judged_on": "2026-10-04",
+   "source_file": "Al_Hady_Al_Nabawi.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "why": "Matches Kayfa p.2: the author's introduction (praise, guidance is Allah's, a concise practical model drawn from the two revelations). Its labels (anxiety, nervous exhaustion) are unrelated noise, but the summary is faithful."
+  },
+  "isl-ac1de08a": {
+   "fingerprint": "46b898342f1b370c",
+   "judged_on": "2026-10-04",
+   "source_file": "Kayfa_Turabbi_Waladak.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "why": "Matches Kayfa p.45: Islamic upbringing is continuous and suited to each age; 'may Allah have mercy on a man who helps his child to be dutiful' - do not demand what is hard; education by observation means steady attention to the child's moral, mental and social formation."
+  },
+  "isl-adf40f0b": {
+   "fingerprint": "cde8add4436aa05f",
+   "judged_on": "2026-10-04",
+   "source_file": "Kayfa_Turabbi_Waladak.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "why": "Matches Kayfa pp.29-30: an open play space for safety, not buying war toys that raise aggression, and building confidence by respecting the child - no mockery, praise for success, consulting him, gentle guidance."
+  },
+  "isl-af807518": {
+   "fingerprint": "af9fdaff07d551af",
+   "judged_on": "2026-10-04",
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "flags": [
+    "reversed",
+    "glyph_substituted"
+   ],
+   "source_kind": "authored_guidance",
+   "why": "Authored guidance, rewritten in PR #27 — 3ab8dae1 and reviewed there; not a summary of its PDF chunk, so it is not judged against it. Read on its own: correct, and states the app's position as the app's. Provenance relabelled to the references the text actually rests on."
+  },
+  "isl-b04140c3": {
+   "fingerprint": "b14f036e5d44e133",
+   "judged_on": "2026-10-04",
+   "source_file": "Manhaj_Nabawi_Khulayfi.pdf",
+   "flags": [
+    "reversed",
+    "missing_glyphs",
+    "meta_framing"
+   ],
+   "why": "Matches Khulayfi pp.12-13: the Prophet as educator in his household, and the mosque as a full educational institution where he taught men and women and corrected mistakes."
+  },
+  "isl-b1e6de34": {
+   "fingerprint": "01254c160e951ca0",
+   "judged_on": "2026-10-04",
+   "source_file": "Al_Hady_Al_Nabawi.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "why": "Matches Kayfa p.6: the reward for raising daughters and the opening of the chapter on the successful educator's traits; the quoted 'whoever supports two girls...' is Sahih Muslim 2631 (guard-verified). Labels are unrelated noise."
+  },
+  "isl-b2d0f3e5": {
+   "fingerprint": "5df615e88d2fb1eb",
+   "judged_on": "2026-10-04",
+   "source_file": "Kayfa_Turabbi_Waladak.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "why": "Matches Kayfa pp.58-59: control of screens and video (choose educational material, strict viewing time), the recorder for Quran and purposeful nasheeds, and varied age-appropriate educational aids (pictures, magazines, stories)."
+  },
+  "isl-b720986d": {
+   "fingerprint": "6f92ac783d3917bd",
+   "judged_on": "2026-10-04",
+   "source_file": "Manhaj_Nabawi_Khulayfi.pdf",
+   "flags": [
+    "reversed",
+    "missing_glyphs"
+   ],
+   "why": "Matches Khulayfi pp.6-7: the Prophet did not burden anyone beyond capacity and fitted his guidance to individual differences (Mu'adh vs. the Bedouin); the summary applies this to children."
+  },
+  "isl-b793e864": {
+   "fingerprint": "9bf9eb2f5999a4ae",
+   "judged_on": "2026-10-04",
+   "source_file": "Kayfa_Turabbi_Waladak.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "why": "Matches Kayfa p.50: moral reward (smile, hug, praise) before material, rewards must not become a condition for duties, prefer unannounced rewards, then lead the child toward Allah's reward."
+  },
+  "isl-b8207e53": {
+   "fingerprint": "e66decaf5be9800b",
+   "judged_on": "2026-10-04",
+   "source_file": "Rakaiz_Tarbiya.pdf",
+   "flags": [
+    "reversed",
+    "missing_glyphs"
+   ],
+   "why": "Matches Rakaiz p.32: children grow up imitating their parents' conduct; the father is a model, and what a crime it is when he models abandoning obligations (al-Fudayl's remark on mercy to one's household)."
+  },
+  "isl-b8f7662c": {
+   "fingerprint": "a35ac4ee6459cd97",
+   "judged_on": "2026-10-04",
+   "source_file": "Kayfa_Turabbi_Waladak.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "why": "Matches Kayfa pp.27-28: play releases energy, teaches right and wrong, cooperation and others' rights through group play, signals intelligence and builds skills; its sharia limits (dice, gambling, pigeon play, insults, neglected duties) and health limits."
+  },
+  "isl-ba66715b": {
+   "fingerprint": "ee36dfa91c43d16a",
+   "judged_on": "2026-10-04",
+   "source_file": "Rakaiz_Tarbiya.pdf",
+   "flags": [
+    "reversed",
+    "missing_glyphs"
+   ],
+   "why": "Matches Rakaiz p.9: the righteous wife is among the greatest causes of happiness (the hadith on the four kinds of happiness), her virtues and her care for the children; then the pillar of creed."
+  },
+  "isl-bd142357": {
+   "fingerprint": "acea51af4dbefadc",
+   "judged_on": "2026-10-04",
+   "source_file": "Rakaiz_Tarbiya.pdf",
+   "flags": [
+    "reversed",
+    "missing_glyphs"
+   ],
+   "why": "Matches Rakaiz pp.11-12: Luqman's admonition beginning with the warning against shirk ('a great injustice'), and rooting the child's awareness that Allah watches him, especially with today's devices."
+  },
+  "isl-bdbed783": {
+   "fingerprint": "2c0288a4283a3060",
+   "judged_on": "2026-10-04",
+   "source_file": "Kayfa_Turabbi_Waladak.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "why": "Matches Kayfa pp.62-63: around four the child turns to group play, so use cooperation (eating together, carrying, tidying toys); the orphan needs special upbringing - emotional fulfilment, security and a substitute guardian."
+  },
+  "isl-be38b357": {
+   "fingerprint": "713cb5db9b7f1d2d",
+   "judged_on": "2026-10-04",
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "flags": [
+    "partially_reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "why": "Matches p.113: the Prophet screening Aisha while the Abyssinians played in the mosque, the girls singing on Eid ('every people has an Eid'), al-Qurtubi and al-Muhallab on permitted play. 'The Prophet played with children' is a general characterisation documented elsewhere in the book."
+  },
+  "isl-beb6b0f0": {
+   "fingerprint": "ea4db302a29a1357",
+   "judged_on": "2026-10-04",
+   "source_file": "Kayfa_Turabbi_Waladak.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "why": "Matches Kayfa p.6: the successful educator's traits (knowledge, trustworthiness, strength, justice, firmness, righteousness, truthfulness, wisdom); without sharia knowledge children grow up on innovations and superstitions."
+  },
+  "isl-bf36ef72": {
+   "fingerprint": "88f94d1b5174f928",
+   "judged_on": "2026-10-04",
+   "source_file": "Tarbiya_Al_Banat.pdf",
+   "flags": [
+    "reversed",
+    "meta_framing"
+   ],
+   "why": "Matches Tarbiyat al-Banat pp.24-25: teaching a daughter to run a home (the husband loves a capable wife), the hadiths on treating daughters well as a shield from the Fire, and the fatwa that the mother shares the reward."
+  },
+  "isl-bfbe3bbe": {
+   "fingerprint": "8371fc3c9b1dc9ac",
+   "judged_on": "2026-10-04",
+   "source_file": "Al_Hady_Al_Nabawi.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "why": "Matches Kayfa pp.8-9: one clear authority in the family, the mother upholding the father's decisions rather than covering for children who defy him, since many deviations start there; the chunk continues into justice between children."
+  },
+  "isl-c03dced7": {
+   "fingerprint": "23895c0979a01a11",
+   "judged_on": "2026-10-04",
+   "source_file": "Manhaj_Nabawi_Khulayfi.pdf",
+   "flags": [
+    "reversed",
+    "missing_glyphs",
+    "meta_framing",
+    "introduces_prophet"
+   ],
+   "why": "Matches Khulayfi p.5: the Ibn Abbas hadith rooting reliance on Allah ('nothing benefits or harms you except what Allah has written'), and behavioural education linking all of life to worship."
+  },
+  "isl-c0936200": {
+   "fingerprint": "0dfc5bfd4328a54f",
+   "judged_on": "2026-10-04",
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "why": "Matches p.181: the chapter on parents' dying wills - Nuh's will to his son of 'la ilaha illa Allah' and warning against shirk and pride (the Prophet's hadith in Ahmad), Ya'qub's will (al-Baqara 133) - and explaining to children why something is forbidden (Ibn Battal)."
+  },
+  "isl-c0adb8a0": {
+   "fingerprint": "e3581e6071d92057",
+   "judged_on": "2026-10-04",
+   "source_file": "Tarbiya_Al_Banat.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "why": "Matches Tarbiyat al-Banat p.12: guard the household from unlawful earnings (wasted work hours), hold regular faith sessions (tafsir, hadith, sira), give girls models from the Mothers of the Believers against corrupt media, and the mother's lap as first school of dhikr."
+  },
+  "isl-c1f0ce4d": {
+   "fingerprint": "3e495d047a2d785f",
+   "judged_on": "2026-10-04",
+   "source_file": "",
+   "flags": [
+    "meta_framing"
+   ],
+   "why": "Faithful to the same Ulwan introduction (tawhid, knowledge and guidance in raising generations and reforming humanity); duplicate coverage, not invented content."
+  },
+  "isl-c3ebb142": {
+   "fingerprint": "9897eb0571ba0fca",
+   "judged_on": "2026-10-04",
+   "source_file": "Manhaj_Nabawi_Khulayfi.pdf",
+   "flags": [
+    "reversed",
+    "missing_glyphs",
+    "meta_framing"
+   ],
+   "why": "Matches Khulayfi pp.9-10: education by example - the Prophet as the living model of the Quran in character and conduct - and its effect on the Companions."
+  },
+  "isl-c4d83813": {
+   "fingerprint": "38fa7b61e0257b1c",
+   "judged_on": "2026-10-04",
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "introduces_number"
+   ],
+   "source_kind": "authored_guidance",
+   "why": "Authored guidance, rewritten in PR #27 — 70f2df67, 3ab8dae1 and reviewed there; not a summary of its PDF chunk, so it is not judged against it. Read on its own: correct, and states the app's position as the app's. Provenance relabelled to the references the text actually rests on."
+  },
+  "isl-c5b93252": {
+   "fingerprint": "17c8001823da0e14",
+   "judged_on": "2026-10-04",
+   "source_file": "Tarbiya_Al_Banat.pdf",
+   "flags": [
+    "reversed",
+    "meta_framing"
+   ],
+   "why": "Matches Tarbiyat al-Banat p.3: the hadiths on supporting daughters - two girls until they come of age, Aisha's account of the mother who split her one date between her daughters ('they will be a screen from the Fire') - with Ibn Hajar and al-Nawawi."
+  },
+  "isl-c7590415": {
+   "fingerprint": "0e4de4f8628cafc1",
+   "judged_on": "2026-10-04",
+   "source_file": "Kayfa_Turabbi_Waladak.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "why": "Matches Kayfa p.16: the school as the second educational institution, its social role (equality, cooperation, respecting others, leadership) and moral role when parents choose a good school and coordinate with it. 'After the mosque' slightly misplaces the order."
+  },
+  "isl-c8183443": {
+   "fingerprint": "b4cde5056e859357",
+   "judged_on": "2026-10-04",
+   "source_file": "Tarbiya_Al_Banat.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "why": "Matches Tarbiyat al-Banat p.11: teach dutifulness to parents as worship, keep a good intention in spending, play and patience, pray for one's children as the prophets did (al-Furqan 74, Ibrahim 35) and never against them."
+  },
+  "isl-cd4d1888": {
+   "fingerprint": "b16c6aeaeaa36a50",
+   "judged_on": "2026-10-04",
+   "source_file": "Rakaiz_Tarbiya.pdf",
+   "flags": [
+    "reversed",
+    "missing_glyphs"
+   ],
+   "why": "Matches Rakaiz p.3: children are among the weightiest trusts a person bears - raising, disciplining, advising them - with the verses on those who keep their trusts (al-Mu'minun 8, al-Anfal 27)."
+  },
+  "isl-ce1b71bd": {
+   "fingerprint": "f3db527f60b3b643",
+   "judged_on": "2026-10-04",
+   "source_file": "Rakaiz_Tarbiya.pdf",
+   "flags": [
+    "reversed",
+    "missing_glyphs"
+   ],
+   "why": "Matches Rakaiz p.5: 'each of you is a shepherd', Allah will ask the father about his child, and Ibn Umar's 'discipline your son, for you are responsible for him'."
+  },
+  "isl-ce5bf696": {
+   "fingerprint": "0c16426485cc2ae6",
+   "judged_on": "2026-10-04",
+   "source_file": "Kayfa_Turabbi_Waladak.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "why": "Matches Kayfa pp.25-26: studies show well-adjusted children had parents who praised more than criticised and befriended them; contempt alienates the child; independence with help only when needed."
+  },
+  "isl-cea29cdc": {
+   "fingerprint": "e3b8632e84f652ae",
+   "judged_on": "2026-10-04",
+   "source_file": "Kayfa_Turabbi_Waladak.pdf",
+   "flags": [
+    "reversed",
+    "meta_framing"
+   ],
+   "why": "The source (Kayfa p.78) is the table of contents; the summary accurately lists what the book covers (concept and aims of upbringing, mosque and school, rulings on lineage, nursing, custody, firmness with tenderness)."
+  },
+  "isl-d126e483": {
+   "fingerprint": "c036da1cb8e625c8",
+   "judged_on": "2026-10-04",
+   "source_file": "Rakaiz_Tarbiya.pdf",
+   "flags": [
+    "reversed",
+    "missing_glyphs"
+   ],
+   "why": "Matches Rakaiz p.27: commanding one's family to pray (Ismail, Taha 132) and warning children from what harms their morals and religion - songs, channels - and from bad company."
+  },
+  "isl-d16b57ea": {
+   "fingerprint": "295dbc66abdd2989",
+   "judged_on": "2026-10-04",
+   "source_file": "Kayfa_Turabbi_Waladak.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "why": "Matches Kayfa p.67: the chronically ill or disabled child may feel inferior - treat him with respect and love, build on his intelligence and talents, treat his illness, still correct wrong behaviour. The title's 'psychologically ill' is looser than the source's 'chronically ill'."
+  },
+  "isl-d291bca7": {
+   "fingerprint": "126abadd1be2d3e4",
+   "judged_on": "2026-10-04",
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "flags": [
+    "reversed",
+    "glyph_substituted"
+   ],
+   "why": "Consistent with pp.97-98: children taken to the mosque and Eid prayer (Rafi' ibn Khadij's sons, Ka'b ibn Ujra), and al-Nawawi - the father must teach the child the duties of the religion before puberty. 'Without coercion' is unattributed filler."
+  },
+  "isl-d4327cab": {
+   "fingerprint": "f50de0f7a48a4376",
+   "judged_on": "2026-10-04",
+   "source_file": "Kayfa_Turabbi_Waladak.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "why": "Matches Kayfa pp.30-31: build confidence, avoid demeaning comparisons, use the early drive for independence (washing, dressing), give tasks and responsibility by age, let him mix with people, and teach the manners of speech and gatherings."
+  },
+  "isl-d4dbc6b8": {
+   "fingerprint": "bc6d053c6bc1bdbe",
+   "judged_on": "2026-10-04",
+   "source_file": "Tarbiya_Al_Banat.pdf",
+   "flags": [
+    "reversed",
+    "meta_framing"
+   ],
+   "why": "Matches Tarbiyat al-Banat pp.19-20: modesty from the example of Fatima, girls learning good deeds by seeing them (a charity box), and opening dialogue so the daughter speaks and is guided."
+  },
+  "isl-d54fd8e8": {
+   "fingerprint": "9d17248c17b2e249",
+   "judged_on": "2026-10-04",
+   "source_file": "Kayfa_Turabbi_Waladak.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "why": "Matches Kayfa pp.20-21: the educator raises the child on worship, prayer is the chief act of heart and body, it is a mistake to neglect a child then impose duties at puberty, command at seven. The narration is labelled as Abu Dawud's and the app's stance as its own; 'take him early to the mosque' overstates the source's middle way."
+  },
+  "isl-d631779d": {
+   "fingerprint": "993408c38820b5f7",
+   "judged_on": "2026-10-04",
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "introduces_companion"
+   ],
+   "why": "Matches p.115: dolls and play permitted for girls - Aisha playing with dolls in the Prophet's house, the friends he sent to play with her, dolls with music forbidden. 'The Prophet played with Aisha' is a loose rendering of his engagement in her play, not a different story."
+  },
+  "isl-d6faddeb": {
+   "fingerprint": "bda336833e945880",
+   "judged_on": "2026-10-04",
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "why": "General but on-theme for pp.176-177: parents' supervision against outside influences - Bakr Abu Zayd warning against mixing in kindergartens 'away from parents' supervision', immodest clothing for girls, joking that belittles. Adds no specific claim."
+  },
+  "isl-d7b55818": {
+   "fingerprint": "6dd78e62cd417b68",
+   "judged_on": "2026-10-04",
+   "source_file": "",
+   "flags": [],
+   "why": "Matches its source (Ibn Baz's fatwa as quoted): a feeling of attraction is not sinful in itself, secret messaging and seclusion are forbidden and must stop, the lawful path is a proposal with the families' knowledge."
+  },
+  "isl-d7c56adc": {
+   "fingerprint": "8c309e39c7fe5c0d",
+   "judged_on": "2026-10-04",
+   "source_file": "Manhaj_Nabawi_Khulayfi.pdf",
+   "flags": [
+    "reversed",
+    "missing_glyphs",
+    "meta_framing"
+   ],
+   "why": "Matches Khulayfi p.8: after teaching the Book and wisdom, the paper turns to the prophetic means - didactic and institutional - beginning with participation as a way of transmitting values."
+  },
+  "isl-d9ea1e3c": {
+   "fingerprint": "fbaa891f34fe3e98",
+   "judged_on": "2026-10-04",
+   "source_file": "Manhaj_Nabawi_Khulayfi.pdf",
+   "flags": [
+    "reversed",
+    "missing_glyphs"
+   ],
+   "why": "Matches Khulayfi p.10: after the truce of al-Hudaybiya the Companions held back until the Prophet, on Umm Salama's advice, slaughtered and had his head shaved himself - teaching by example and by using events."
+  },
+  "isl-dd822140": {
+   "fingerprint": "54b8a26669342969",
+   "judged_on": "2026-10-04",
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "why": "Matches the reviewer's preface (p.4): much is written on parents' rights but little on children's, neglecting children's rights is a cause of their later disobedience, and the author gathered narrations of the salaf to spur parents to care for their upbringing."
+  },
+  "isl-ddc58cc5": {
+   "fingerprint": "c436b4e8c39eac43",
+   "judged_on": "2026-10-04",
+   "source_file": "Rakaiz_Tarbiya.pdf",
+   "flags": [
+    "reversed",
+    "missing_glyphs"
+   ],
+   "why": "Matches Rakaiz p.4: children are a gift and a test from Allah, parents who fulfil their duties earn great reward and those who neglect them face accountability, with al-Tahrim 6."
+  },
+  "isl-dfa52092": {
+   "fingerprint": "2c056dde548c3505",
+   "judged_on": "2026-10-04",
+   "source_file": "Kayfa_Turabbi_Waladak.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "why": "Matches Kayfa pp.13-14: parents must never lie to their child (the Prophet's warning to the mother who called her son to give him something), must keep promises, and should agree on one consistent method so the child is not torn."
+  },
+  "isl-e0cb0e7b": {
+   "fingerprint": "79a1f24424886b8d",
+   "judged_on": "2026-10-04",
+   "source_file": "Rakaiz_Tarbiya.pdf",
+   "flags": [
+    "reversed",
+    "introduces_companion"
+   ],
+   "why": "Matches Rakaiz pp.25-26: the pillar of constant advice and guidance (creed, obligations, morals, warning from major sins first) and Luqman's counsel to his son (shirk, kindness to parents, Allah's watchfulness, prayer)."
+  },
+  "isl-e2248a74": {
+   "fingerprint": "93a703c4f3cd265a",
+   "judged_on": "2026-10-04",
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "flags": [
+    "partially_reversed",
+    "glyph_substituted"
+   ],
+   "why": "Matches p.98: the Prophet teaching Umar ibn Abi Salama 'boy, say bismillah, eat with your right hand and from what is in front of you', Ibn Uthaymin on teaching eating manners gently, al-Nawawi on the father's duty to teach. 'Avoid excess' is minor unattributed filler."
+  },
+  "isl-e34c25ab": {
+   "fingerprint": "a317103bdd638382",
+   "judged_on": "2026-10-04",
+   "source_file": "",
+   "flags": [
+    "meta_framing"
+   ],
+   "why": "Faithful to Ulwan's preface to the third edition: the hope that the book helps everyone raising children on the foundations of Islam."
+  },
+  "isl-e40ef2fa": {
+   "fingerprint": "81b5d7c5849409bd",
+   "judged_on": "2026-10-04",
+   "source_file": "Tarbiya_Al_Banat.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "why": "Matches Tarbiyat al-Banat p.7: some parents raise sons and neglect daughters though the trust is one; thank Allah for daughters, not like the jahiliyya (al-Nahl 58-59), and 'Allah has disliked for you... burying daughters alive'."
+  },
+  "isl-e4672a9e": {
+   "fingerprint": "b8b09a44f0a8a17f",
+   "judged_on": "2026-10-04",
+   "source_file": "Rakaiz_Tarbiya.pdf",
+   "flags": [
+    "partially_reversed",
+    "missing_glyphs"
+   ],
+   "why": "Matches Rakaiz p.21: al-Nu'man's hadith ('I will not witness injustice', 'fear Allah and be just between your children') and the warning that injustice between children breeds estrangement."
+  },
+  "isl-e837f328": {
+   "fingerprint": "6a74632e220b0c41",
+   "judged_on": "2026-10-04",
+   "source_file": "Tarbiya_Al_Banat.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "why": "Matches Tarbiyat al-Banat p.8: accept Allah's gift of daughters and sons (al-Shura 49-50 with Ibn al-Qayyim), Ahmad's 'the prophets were fathers of daughters'."
+  },
+  "isl-eaeb0ee0": {
+   "fingerprint": "cb7663709bbf7728",
+   "judged_on": "2026-10-04",
+   "source_file": "Kayfa_Turabbi_Waladak.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "why": "Matches Kayfa p.61: the educator models courage and patience and steers the child away from admiring singers and actors; play teaches thinking, leadership, obedience and future roles; imitation builds social manners and can treat fear. 'Sound effects' is a loose rendering."
+  },
+  "isl-ec65b64c": {
+   "fingerprint": "e0b8810cf4c614b1",
+   "judged_on": "2026-10-04",
+   "source_file": "Kayfa_Turabbi_Waladak.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "why": "Matches Kayfa p.60: the 'hadith' against cousin marriage is Umar's statement, some doctors link it to hereditary illness so premarital testing helps, upbringing can redirect inherited traits, and a righteous environment (Muslim neighbourhoods abroad) matters."
+  },
+  "isl-ee097ab9": {
+   "fingerprint": "bffb9dda222f8cad",
+   "judged_on": "2026-10-04",
+   "source_file": "Manhaj_Nabawi_Khulayfi.pdf",
+   "flags": [
+    "reversed",
+    "missing_glyphs"
+   ],
+   "why": "Matches Khulayfi pp.4-5: the comprehensiveness of prophetic upbringing (spirit, mind, body, this world and the next) and rooting reliance on Allah and seeking His help - the Prophet's 'if you seek help, seek it from Allah... the pens are lifted'."
+  },
+  "isl-f1d62436": {
+   "fingerprint": "e04938d02139de45",
+   "judged_on": "2026-10-04",
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "flags": [
+    "reversed",
+    "glyph_substituted"
+   ],
+   "why": "Matches p.24: the chapter 'praying for children's righteousness before and after birth' (al-Furqan 74 with al-Qurtubi, Zakariyya's du'a), after the hadiths forbidding killing children. General but faithful to the chapter's point."
+  },
+  "isl-f2bef952": {
+   "fingerprint": "c2b20691f5d65b17",
+   "judged_on": "2026-10-04",
+   "source_file": "sahih_abi_dawud_495.txt",
+   "flags": [],
+   "why": "Authored unit on the hadith 'command your children to pray at seven' (Abu Dawud 495, graded by al-Albani, wording kept in text_original). The summary paraphrases the stage at ten as firm follow-up - an interpretive, unquoted summary that does not contradict the hadith - and applies it to peer mockery. Detector hit was a false positive (the source is a hadith, 'رواه')."
+  },
+  "isl-f3270ea2": {
+   "fingerprint": "102dc6c0a6e50a5c",
+   "judged_on": "2026-10-04",
+   "source_file": "Rakaiz_Tarbiya.pdf",
+   "flags": [
+    "reversed",
+    "missing_glyphs"
+   ],
+   "why": "Matches Rakaiz p.32: parents are their children's model; a father of bad character or who neglects prayer is imitated, and the greatest crime against children is to model the forbidden for them."
+  },
+  "isl-f3f09dc7": {
+   "fingerprint": "cedeaded64d49332",
+   "judged_on": "2026-10-04",
+   "source_file": "Kayfa_Turabbi_Waladak.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "why": "Matches Kayfa pp.5-6: 'each of you is a shepherd', Ibn Umar 'discipline your son, you are responsible', disciplining a child is better than charity, and Jabir's hadith on whoever shelters, provides for and is merciful to three daughters. 'Disciplines them well' borrows a sister narration's wording."
+  },
+  "isl-f4accfb8": {
+   "fingerprint": "666dcc8c36e363a1",
+   "judged_on": "2026-10-04",
+   "source_file": "Kayfa_Turabbi_Waladak.pdf",
+   "flags": [
+    "reversed",
+    "meta_framing"
+   ],
+   "why": "Matches Kayfa pp.23-24: urge the child to noble character toward Allah, people and creatures; teach truthfulness through stories of the truthful and their reward; strengthen his will and self-control; then building the social personality through his psychological needs."
+  },
+  "isl-f4e75ff2": {
+   "fingerprint": "677ccec5f8c76c8b",
+   "judged_on": "2026-10-04",
+   "source_file": "Tarbiya_Al_Banat.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "why": "Matches Tarbiyat al-Banat pp.16-17: Quran memorisation and individual talents, sound creed, enjoining good, controlling anger when disciplining, and the author's note that Islam set limits to punishment; the no-hitting line is the app's stance, stated as such."
+  },
+  "isl-f60db728": {
+   "fingerprint": "d411ba1b72f76c24",
+   "judged_on": "2026-10-04",
+   "source_file": "Kayfa_Turabbi_Waladak.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "why": "Matches Kayfa p.48: education by a look or hint when the child errs before guests (punishing him in front of people can make him stubborn), indirect speech that preserves his dignity, and admonition through story and dialogue."
+  },
+  "isl-f6bbab53": {
+   "fingerprint": "6f257c70f7ec66a7",
+   "judged_on": "2026-10-04",
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "why": "Matches pp.127-128: the author forbids weapon play and fireworks that frighten Muslims, card games and dominoes, and phone/computer games that waste time and distract from prayer; wrestling raising youth on cruelty. The summary is a softened but faithful rendering."
+  },
+  "isl-f6c0c64a": {
+   "fingerprint": "61846d2be8df6ac3",
+   "judged_on": "2026-10-04",
+   "source_file": "Al_Hady_Al_Nabawi.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "why": "Matches Kayfa pp.5-6: 'no father gives his child anything better than good manners' and the reward for raising daughters; the summary quotes the authentic 'whoever is tried with daughters... they will be a screen from the Fire' (Sahih al-Bukhari 1418, guard-verified) in place of the source's Jabir narration."
+  },
+  "isl-f769f5cd": {
+   "fingerprint": "c880f3c9330f3a18",
+   "judged_on": "2026-10-04",
+   "source_file": "Kayfa_Turabbi_Waladak.pdf",
+   "flags": [
+    "reversed",
+    "meta_framing",
+    "introduces_scripture"
+   ],
+   "why": "Matches Kayfa pp.2-3: the introduction presents a practical, concise model drawn from the Quran and Sunnah and names earlier books (Ulwan's 'Tarbiyat al-Awlad fi al-Islam', Suwayd's 'al-Tarbiya al-Nabawiyya lil-Tifl'), with the mosque and school among its chapters."
+  },
+  "isl-f77b3ed4": {
+   "fingerprint": "eccce10ad5eb3e60",
+   "judged_on": "2026-10-04",
+   "source_file": "Tarbiya_Al_Banat.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "why": "Matches Tarbiyat al-Banat p.6: Ibn al-Qayyim on parents' neglect ruining children, and the prophets' care for their children's faith - Ya'qub's question (al-Baqara 133), Ibrahim and Ismail's du'a, al-Furqan 74 with Ibn Kathir."
+  },
+  "isl-f782f2ed": {
+   "fingerprint": "ecb92e78ddb15d8a",
+   "judged_on": "2026-10-04",
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "why": "Matches the author's introduction (p.7): upbringing and good character are children's right (al-Tahrim 6, al-Nisa 11), teach them the Quran, Sunnah and sound creed from young, so they grow into a generation that obeys Allah and His Messenger."
+  },
+  "isl-f8bc202e": {
+   "fingerprint": "fcf4f96f726435ce",
+   "judged_on": "2026-10-04",
+   "source_file": "Manhaj_Nabawi_Khulayfi.pdf",
+   "flags": [
+    "reversed",
+    "missing_glyphs"
+   ],
+   "why": "Matches Khulayfi p.14 (conclusion): the prophetic method is distinctive and comprehensive, raises a person balanced in religion and worldly life, and Muslims today need to draw on that experience."
+  },
+  "isl-fb04bcd3": {
+   "fingerprint": "62508200fa94f690",
+   "judged_on": "2026-10-04",
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "flags": [
+    "partially_reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "why": "Matches p.30: rights at birth - Aisha praising Allah for a healthy newborn regardless of sex, naming the child (the Prophet naming Ibrahim, Abdullah ibn Abi Talha, al-Mundhir) and Samura's hadith 'slaughtered for on the seventh day and named'."
+  },
+  "isl-fb584945": {
+   "fingerprint": "bcb79faa458c9c74",
+   "judged_on": "2026-10-04",
+   "source_file": "Manhaj_Nabawi_Khulayfi.pdf",
+   "flags": [
+    "reversed",
+    "missing_glyphs"
+   ],
+   "why": "Matches Khulayfi pp.5-6: education of taste and beauty, behavioural education, and physical education ('the strong believer is better', racing, wrestling, refuge from incapacity and laziness), with the Ibn Abbas hadith."
+  },
+  "isl-fb6a8582": {
+   "fingerprint": "21e20d224765357d",
+   "judged_on": "2026-10-04",
+   "source_file": "Al_Hady_Al_Nabawi.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "why": "Matches Kayfa p.10: justice between children allows a small difference for one who needs special care (illness, being away for study, work or treatment), explained gently to the siblings so they accept it."
+  },
+  "isl-fd937511": {
+   "fingerprint": "4a3232541e39fd94",
+   "judged_on": "2026-10-04",
+   "source_file": "Kayfa_Turabbi_Waladak.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "why": "Matches Kayfa p.52: the educator handles discipline himself, never punishes in anger, drops the punishment if the mistake already hurt the child, moderation in reward and deterrence and against relying on physical punishment. The app-safe wording replaces 'administer the hitting himself' without inventing content."
+  },
+  "isl-fe05a9ce": {
+   "fingerprint": "e47e0595645aa518",
+   "judged_on": "2026-10-04",
+   "source_file": "Tarbiya_Al_Banat.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "why": "Matches Tarbiyat al-Banat pp.15-16: prayer with encouragement and small rewards on the prayer mat and making the girl watch prayer times, the 'command at seven' narration and Ibn Taymiyya; then individual differences and channelling talents into Quran memorisation."
+  },
+  "isl-fe2f3c39": {
+   "fingerprint": "b207ba98e1d5d480",
+   "judged_on": "2026-10-04",
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "why": "Consistent with p.121: the salaf's children's play was purposeful and built intelligence and strength, unlike today's long hours of play. The opening (morals, following the Sunnah, the Companions teaching their children) is general and unattributed to a specific report."
+  },
+  "isl-fe625918": {
+   "fingerprint": "bf396c0e60eb71be",
+   "judged_on": "2026-10-04",
+   "source_file": "Kayfa_Turabbi_Waladak.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "why": "Matches Kayfa p.15: make the adhan a cue for prayer, take the child to the mosque once he knows toilet manners, command him to pray with the congregation at seven, let the imam and worshippers treat him kindly and keep his place in the row, join Quran circles. 'Without force' softens 'command him'."
+  },
+  "isl-fef5f702": {
+   "fingerprint": "02c453b1620ada6a",
+   "judged_on": "2026-10-04",
+   "source_file": "Manhaj_Nabawi_Khulayfi.pdf",
+   "flags": [
+    "reversed",
+    "missing_glyphs",
+    "meta_framing"
+   ],
+   "why": "Matches Khulayfi pp.12-13: the family (the Prophet calling his household and kin first) and the mosque as the centre of teaching, guidance and consultation."
+  },
+  "med-2bf09c13": {
+   "fingerprint": "d7b2fc1d86581afa",
+   "judged_on": "2026-10-04",
+   "source_file": "",
+   "flags": [],
+   "why": "Matches AAP/HealthyChildren on separation anxiety: use concrete time cues ('after nap'), do not return on a plea or cancel plans, and keep your word on return to build trust."
+  },
+  "med-34deb628": {
+   "fingerprint": "abf1cdc98c5bdcda",
+   "judged_on": "2026-10-04",
+   "source_file": "",
+   "flags": [
+    "introduces_number"
+   ],
+   "why": "Matches the AAP 2014 policy statement: around puberty sleep phase shifts up to two hours later from delayed melatonin, making sleep before 11 pm hard though teens still need enough sleep."
+  },
+  "med-34e1fc29": {
+   "fingerprint": "49803946117bc458",
+   "judged_on": "2026-10-04",
+   "source_file": "WHO_Physical_Activity_Sleep_Under5.pdf",
+   "flags": [
+    "meta_framing"
+   ],
+   "why": "Matches the WHO evidence summary on screen time and sedentary behaviour (96 studies; associations with adiposity, motor and cognitive development, psychosocial health); omits the very-low-quality caveat but invents nothing and agrees with the guideline's recommendation to limit screen time."
+  },
+  "med-408796d1": {
+   "fingerprint": "18684d97df5f58a4",
+   "judged_on": "2026-10-04",
+   "source_file": "",
+   "flags": [],
+   "why": "Matches NIMH 'Eating Disorders': warning signs (abrupt weight change, preoccupation with calories, restriction, excessive exercise, distorted body image), not a choice, potentially life-threatening - see a specialist promptly."
+  },
+  "med-48273aa4": {
+   "fingerprint": "de755b385b83bb2d",
+   "judged_on": "2026-10-04",
+   "source_file": "SFDA_Healthy_Nutrition_Guide.pdf",
+   "flags": [
+    "reversed",
+    "missing_glyphs"
+   ],
+   "why": "Matches the SFDA guide: prefer healthy fats over saturated and trans fats, lean proteins (poultry, fish, legumes), low-fat dairy for calcium at every age, and varied vegetables and fruit for vitamins and minerals."
+  },
+  "med-6b42585c": {
+   "fingerprint": "71a94d85656b56d4",
+   "judged_on": "2026-10-04",
+   "source_file": "WHO_Physical_Activity_Sleep_Under5.pdf",
+   "flags": [
+    "meta_framing"
+   ],
+   "why": "Accurate description of the WHO guideline's glossary (adiposity, BMI, body composition, cognitive development, emotional regulation). An overview, nothing invented."
+  },
+  "med-87cc2468": {
+   "fingerprint": "cf0b38006f6b80db",
+   "judged_on": "2026-10-04",
+   "source_file": "SFDA_Healthy_Nutrition_Guide.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "why": "Re-read after PR #20 (merged 2026-10-04) corrected the inverted rule: the summary now says keep cold food below 5 °C and hot food above 60 °C, which matches the SFDA guide's food-safety lines, alongside its sugar, label and allergen advice."
+  },
+  "med-8c767fc1": {
+   "fingerprint": "1cbe26896e3a058f",
+   "judged_on": "2026-10-04",
+   "source_file": "NIMH_Depression.pdf",
+   "flags": [
+    "meta_framing"
+   ],
+   "why": "Matches the NIMH depression booklet: FDA-approved brain stimulation (ECT, rTMS), no natural product approved, do not take vitamin D or St John's wort without a health-care provider, then self-care (activity, healthy routine)."
+  },
+  "med-bc0d8492": {
+   "fingerprint": "b8a259324a36d381",
+   "judged_on": "2026-10-04",
+   "source_file": "",
+   "flags": [],
+   "why": "Matches its NIMH source (The Teen Brain, 2023): brain changes make teens focus on peers and social standing, so comparisons over money and possessions feel urgent. The age band is the unit's own; the advice follows from the source."
+  },
+  "med-c0eb2588": {
+   "fingerprint": "42c21f0664e1396e",
+   "judged_on": "2026-10-04",
+   "source_file": "",
+   "flags": [],
+   "why": "Matches AAP/HealthyChildren 'Kids & Money': a regular allowance teaches a child to tell what she really wants from what she wants because a friend has it."
+  },
+  "med-ccf5e011": {
+   "fingerprint": "e92cc58418972275",
+   "judged_on": "2026-10-04",
+   "source_file": "Autism_CDC.pdf",
+   "flags": [
+    "introduces_number"
+   ],
+   "why": "Matches the CDC milestone checklist this chunk comes from: squealing, rolling from tummy to back, pushing up on straight arms, leaning on hands to sit - the CDC's 6-month list, so the age PR #20 added is right even though this chunk does not print it."
+  },
+  "med-cfeefc11": {
+   "fingerprint": "c778f8ecaade4ff0",
+   "judged_on": "2026-10-04",
+   "source_file": "SFDA_Healthy_Nutrition_Guide.pdf",
+   "flags": [
+    "reversed",
+    "missing_glyphs"
+   ],
+   "why": "Matches the SFDA guide's fats-and-balance page: replace saturated fats with healthier oils, lean meat and fish, low-fat milk, balance food intake with physical activity to protect from disease and excess weight."
+  },
+  "med-e6dfd6c2": {
+   "fingerprint": "a916372468be841f",
+   "judged_on": "2026-10-04",
+   "source_file": "WHO_Physical_Activity_Sleep_Under5.pdf",
+   "flags": [
+    "meta_framing"
+   ],
+   "why": "Faithful description of the WHO guideline's methodology (GDG updated the systematic reviews, GRADE evidence-to-decision framework, varied exposure and outcome measures). Low value for parents but nothing invented."
+  },
+  "med-f241abaf": {
+   "fingerprint": "4d29dd245fc06852",
+   "judged_on": "2026-10-04",
+   "source_file": "NIMH_Teen_Brain_2023.pdf",
+   "flags": [
+    "introduces_number"
+   ],
+   "why": "Authored application of the quoted NIMH point (peer relationships plus ongoing prefrontal development make social benefits outweigh consequences; development continues into the mid-to-late 20s) to an older teen and smoking; nothing contradicts the source."
+  }
+ }
+}

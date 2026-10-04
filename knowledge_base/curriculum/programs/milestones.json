@@ -231,8 +231,6 @@
         }
       ],
       "unit_ids": [
-        "isl-7b7cda4e",
-        "isl-82c3c96e",
         "gap-med-child-touch-01"
       ],
       "evidence_ids": [
@@ -305,8 +303,7 @@
       ],
       "unit_ids": [
         "isl-f2bef952",
-        "isl-1bceeaf6",
-        "isl-ca9f1de7"
+        "isl-1bceeaf6"
       ],
       "evidence_ids": [
         "h_pray_as_seen",
@@ -386,7 +383,6 @@
         "تقييد شديد للطعام، أو ترك الإفطار، أو انشغال بالوزن، خاصة عند الأكبر سنًا ← التحدّث مع الطبيب."
       ],
       "unit_ids": [
-        "isl-d15d1a95",
         "isl-3d476538",
         "med-408796d1"
       ],
@@ -601,7 +597,6 @@
       ],
       "unit_ids": [
         "isl-f2bef952",
-        "isl-ca9f1de7",
         "8451bbb0-4617-4252-a206-e442c533fac3"
       ],
       "evidence_ids": [

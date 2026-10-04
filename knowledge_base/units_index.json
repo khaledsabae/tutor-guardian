@@ -1,11 +1,11 @@
 {
-  "total_units": 1718,
+  "total_units": 1336,
   "generated_at": "2026-10-04T12:44:11.421466+00:00",
   "by_domain": {
-    "medical": 361,
-    "cyber": 281,
-    "islamic_parenting": 920,
-    "development": 135,
+    "medical": 354,
+    "cyber": 279,
+    "islamic_parenting": 551,
+    "development": 131,
     "aqeedah": 21
   },
   "units": [
@@ -1640,18 +1640,6 @@
       "behavior_type": "التوحد",
       "needs_ocr": false,
       "size_chars": 204
-    },
-    {
-      "id": "b64ed3c8-59e3-4b79-a7ad-ed558212f087",
-      "domain": "medical",
-      "title": "الاحتياجات النفسية للطفل من 4 إلى 6 سنوات",
-      "source_file": "",
-      "language": "",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "الصحة_النفسية_للأطفال",
-      "needs_ocr": false,
-      "size_chars": 599
     },
     {
       "id": "b7bd9ca3-382c-40b2-8829-8175379be248",
@@ -4774,30 +4762,6 @@
       "size_chars": 1506
     },
     {
-      "id": "cyb-fc24ccce",
-      "domain": "cyber",
-      "title": "الكبار والطفل الصغير: استخدام وسائل الإعلام وفرط الحركة",
-      "source_file": "Screen_Time_2025.pdf",
-      "language": "ar",
-      "original_age_group": "prenatal-1",
-      "normalized_age_group": "prenatal-1",
-      "behavior_type": "وقت الشاشة",
-      "needs_ocr": false,
-      "size_chars": 824
-    },
-    {
-      "id": "cyb-fc24ccce__en",
-      "domain": "cyber",
-      "title": "The Adults and the Young Child: Media Use and Hyperactivity",
-      "source_file": "Screen_Time_2025.pdf",
-      "language": "en",
-      "original_age_group": "prenatal-1",
-      "normalized_age_group": "prenatal-1",
-      "behavior_type": "وقت الشاشة",
-      "needs_ocr": false,
-      "size_chars": 824
-    },
-    {
       "id": "cyb-fc26d931",
       "domain": "cyber",
       "title": "إرشادات حماية الطفل من التحرش عبر الإنترنت",
@@ -4988,30 +4952,6 @@
       "behavior_type": "التردد في اختيار التخصص الجامعي",
       "needs_ocr": false,
       "size_chars": 421
-    },
-    {
-      "id": "dev-0a5739fc",
-      "domain": "development",
-      "title": "فهم القلق من خلال الفن التعبيري",
-      "source_file": "Adolescent_Brain_UNICEF.pdf",
-      "language": "ar",
-      "original_age_group": "13-15",
-      "normalized_age_group": "13-15",
-      "behavior_type": "قلق",
-      "needs_ocr": false,
-      "size_chars": 1628
-    },
-    {
-      "id": "dev-0a5739fc__en",
-      "domain": "development",
-      "title": "Understanding Anxiety through Expressive Art",
-      "source_file": "Adolescent_Brain_UNICEF.pdf",
-      "language": "en",
-      "original_age_group": "13-15",
-      "normalized_age_group": "13-15",
-      "behavior_type": "قلق",
-      "needs_ocr": false,
-      "size_chars": 1628
     },
     {
       "id": "dev-10a2fcc0",
@@ -5228,30 +5168,6 @@
       "behavior_type": "تعلم القيادة والاستقلالية",
       "needs_ocr": false,
       "size_chars": 356
-    },
-    {
-      "id": "dev-586b39f9",
-      "domain": "development",
-      "title": "الفن والذكاء: نمو الدماغ لدى المراهقين وتأثير الفقر",
-      "source_file": "Adolescent_Brain_UNICEF.pdf",
-      "language": "ar",
-      "original_age_group": "13-15",
-      "normalized_age_group": "13-15",
-      "behavior_type": "نمو دماغ المراهق",
-      "needs_ocr": false,
-      "size_chars": 1674
-    },
-    {
-      "id": "dev-586b39f9__en",
-      "domain": "development",
-      "title": "Art and Intelligence: Brain Development in Adolescents and t",
-      "source_file": "Adolescent_Brain_UNICEF.pdf",
-      "language": "en",
-      "original_age_group": "13-15",
-      "normalized_age_group": "13-15",
-      "behavior_type": "نمو دماغ المراهق",
-      "needs_ocr": false,
-      "size_chars": 1674
     },
     {
       "id": "dev-5eb8959c",
@@ -7102,54 +7018,6 @@
       "size_chars": 328
     },
     {
-      "id": "isl-05aa623c",
-      "domain": "islamic_parenting",
-      "title": "طلب الطفل للتحكم في النفس",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "7-9",
-      "normalized_age_group": "7-9",
-      "behavior_type": "اندفاعية",
-      "needs_ocr": false,
-      "size_chars": 758
-    },
-    {
-      "id": "isl-05aa623c__en",
-      "domain": "islamic_parenting",
-      "title": "A Child’s Du'a for Self-Control",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "7-9",
-      "normalized_age_group": "7-9",
-      "behavior_type": "اندفاعية",
-      "needs_ocr": false,
-      "size_chars": 758
-    },
-    {
-      "id": "isl-06b8336f",
-      "domain": "islamic_parenting",
-      "title": "تعليم الأطفال حقوق الدين والعبادات",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تربية دينية",
-      "needs_ocr": false,
-      "size_chars": 993
-    },
-    {
-      "id": "isl-06b8336f__en",
-      "domain": "islamic_parenting",
-      "title": "Teaching Children the Rights of the Deen and 'Ibadat",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تربية دينية",
-      "needs_ocr": false,
-      "size_chars": 993
-    },
-    {
       "id": "isl-06fef96a",
       "domain": "islamic_parenting",
       "title": "كيف صنع النبي ﷺ أصحابه: التثقيف بالقدوة والعمل",
@@ -7222,54 +7090,6 @@
       "size_chars": 1316
     },
     {
-      "id": "isl-08be6045",
-      "domain": "islamic_parenting",
-      "title": "حقوق الأطفال على الوالدين في التربية",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية الأطفال",
-      "needs_ocr": false,
-      "size_chars": 1292
-    },
-    {
-      "id": "isl-08be6045__en",
-      "domain": "islamic_parenting",
-      "title": "The Rights of Children upon Their Parents in Tarbiyah",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية الأطفال",
-      "needs_ocr": false,
-      "size_chars": 1292
-    },
-    {
-      "id": "isl-094f42cd",
-      "domain": "islamic_parenting",
-      "title": "العدل بين الأبناء وأهميته في التربية",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "العدل بين الأبناء",
-      "needs_ocr": false,
-      "size_chars": 1361
-    },
-    {
-      "id": "isl-094f42cd__en",
-      "domain": "islamic_parenting",
-      "title": "Al-ʿAdl bayna al-Abnaʾ wa Ahammiyatuhu fi al-Tarbiyah",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "العدل بين الأبناء",
-      "needs_ocr": false,
-      "size_chars": 1361
-    },
-    {
       "id": "isl-09afb431",
       "domain": "islamic_parenting",
       "title": "تعليم الأطفال الصلاة وأدب المسجد",
@@ -7292,78 +7112,6 @@
       "behavior_type": "تربية دينية",
       "needs_ocr": false,
       "size_chars": 1428
-    },
-    {
-      "id": "isl-0b607846",
-      "domain": "islamic_parenting",
-      "title": "أهمية التوكل على الله والثقة به",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تعزيز الإيمان والتوكل",
-      "needs_ocr": false,
-      "size_chars": 914
-    },
-    {
-      "id": "isl-0b607846__en",
-      "domain": "islamic_parenting",
-      "title": "The Importance of Tawakkul (Reliance) upon Allah and Trust i",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تعزيز الإيمان والتوكل",
-      "needs_ocr": false,
-      "size_chars": 914
-    },
-    {
-      "id": "isl-0ca172e2",
-      "domain": "islamic_parenting",
-      "title": "مراعاة الفروق الفردية وأهمية القدوة في التربية",
-      "source_file": "Kayfa_Turabbi_Waladak.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "فروق فردية في التربية",
-      "needs_ocr": false,
-      "size_chars": 1378
-    },
-    {
-      "id": "isl-0ca172e2__en",
-      "domain": "islamic_parenting",
-      "title": "Considering Individual Differences and the Importance of the",
-      "source_file": "Kayfa_Turabbi_Waladak.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "فروق فردية في التربية",
-      "needs_ocr": false,
-      "size_chars": 1378
-    },
-    {
-      "id": "isl-0d1334e8",
-      "domain": "islamic_parenting",
-      "title": "حقوق الأطفال على الآباء في الإسلام",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية أطفال",
-      "needs_ocr": false,
-      "size_chars": 1053
-    },
-    {
-      "id": "isl-0d1334e8__en",
-      "domain": "islamic_parenting",
-      "title": "The Rights of Children upon Parents in Islam",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية أطفال",
-      "needs_ocr": false,
-      "size_chars": 1053
     },
     {
       "id": "isl-0d5120d9",
@@ -7412,30 +7160,6 @@
       "behavior_type": "تربية دينية",
       "needs_ocr": false,
       "size_chars": 938
-    },
-    {
-      "id": "isl-0ecac170",
-      "domain": "islamic_parenting",
-      "title": "أهمية التربية الأخلاقية للأبناء",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية أخلاقية",
-      "needs_ocr": false,
-      "size_chars": 1154
-    },
-    {
-      "id": "isl-0ecac170__en",
-      "domain": "islamic_parenting",
-      "title": "The Importance of Akhlaq Tarbiyah for Children",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية أخلاقية",
-      "needs_ocr": false,
-      "size_chars": 1154
     },
     {
       "id": "isl-0ee49139",
@@ -7558,18 +7282,6 @@
       "size_chars": 1289
     },
     {
-      "id": "isl-11a3cb7e",
-      "domain": "islamic_parenting",
-      "title": "تربية الأطفال على الصلاة والصدق",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تربية دينية وأخلاقية",
-      "needs_ocr": false,
-      "size_chars": 1326
-    },
-    {
       "id": "isl-11c1bec0",
       "domain": "islamic_parenting",
       "title": "المنهج التربوي النبوي ومراعاة الفروق الفردية",
@@ -7594,30 +7306,6 @@
       "size_chars": 1153
     },
     {
-      "id": "isl-12f1f119",
-      "domain": "islamic_parenting",
-      "title": "توجيه الأطفال نحو القيم الدينية والأخلاقية",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية دينية وأخلاقية",
-      "needs_ocr": false,
-      "size_chars": 1078
-    },
-    {
-      "id": "isl-12f1f119__en",
-      "domain": "islamic_parenting",
-      "title": "Guiding Children towards Religious and Moral Values",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية دينية وأخلاقية",
-      "needs_ocr": false,
-      "size_chars": 1078
-    },
-    {
       "id": "isl-14009a8e",
       "domain": "islamic_parenting",
       "title": "تعليم الأطفال الصلاة وأهمية الالتزام بها",
@@ -7640,30 +7328,6 @@
       "behavior_type": "تربية دينية",
       "needs_ocr": false,
       "size_chars": 1094
-    },
-    {
-      "id": "isl-14202095",
-      "domain": "islamic_parenting",
-      "title": "أهمية التربية الأخلاقية للأبناء",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية أخلاقية",
-      "needs_ocr": false,
-      "size_chars": 1187
-    },
-    {
-      "id": "isl-14202095__en",
-      "domain": "islamic_parenting",
-      "title": "The Importance of Akhlaq Tarbiyah for Children",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية أخلاقية",
-      "needs_ocr": false,
-      "size_chars": 1187
     },
     {
       "id": "isl-14bc16f5",
@@ -7810,18 +7474,6 @@
       "size_chars": 1069
     },
     {
-      "id": "isl-19074fe7",
-      "domain": "islamic_parenting",
-      "title": "أسس تأديب الأطفال باللطف والحكمة",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تربية الأطفال وتأديبهم",
-      "needs_ocr": false,
-      "size_chars": 1306
-    },
-    {
       "id": "isl-199c7aaf",
       "domain": "islamic_parenting",
       "title": "العبادة والقرب من الله في بناء الإنسان",
@@ -7844,30 +7496,6 @@
       "behavior_type": "التأمل والتفكير",
       "needs_ocr": false,
       "size_chars": 1241
-    },
-    {
-      "id": "isl-1a3e7f6f",
-      "domain": "islamic_parenting",
-      "title": "تعليم الطفل الصلاة وأهمية القدوة الحسنة",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "7-9",
-      "normalized_age_group": "7-9",
-      "behavior_type": "تربية دينية",
-      "needs_ocr": false,
-      "size_chars": 1282
-    },
-    {
-      "id": "isl-1a3e7f6f__en",
-      "domain": "islamic_parenting",
-      "title": "Teaching the Child Salah and the Importance of the Righteous",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "7-9",
-      "normalized_age_group": "7-9",
-      "behavior_type": "تربية دينية",
-      "needs_ocr": false,
-      "size_chars": 1282
     },
     {
       "id": "isl-1b1c38d3",
@@ -7894,30 +7522,6 @@
       "size_chars": 1427
     },
     {
-      "id": "isl-1b230a64",
-      "domain": "islamic_parenting",
-      "title": "حقوق الأطفال وفضل الصلاة في التربية",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية دينية",
-      "needs_ocr": false,
-      "size_chars": 1074
-    },
-    {
-      "id": "isl-1b230a64__en",
-      "domain": "islamic_parenting",
-      "title": "The Rights of Children and the Virtue of Salah in Tarbiyah",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية دينية",
-      "needs_ocr": false,
-      "size_chars": 1074
-    },
-    {
       "id": "isl-1bceeaf6",
       "domain": "islamic_parenting",
       "title": "تعويد الطفل على الصلاة والعبادات بالتدريج",
@@ -7940,66 +7544,6 @@
       "behavior_type": "تعويد على الصلاة والعبادات",
       "needs_ocr": false,
       "size_chars": 1392
-    },
-    {
-      "id": "isl-1c2554f4",
-      "domain": "islamic_parenting",
-      "title": "حقوق الطفل وواجبات الأهل في التربية",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية أطفال",
-      "needs_ocr": false,
-      "size_chars": 1201
-    },
-    {
-      "id": "isl-1d89f7df",
-      "domain": "islamic_parenting",
-      "title": "حقوق الأطفال على الآباء",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "حقوق الطفل",
-      "needs_ocr": false,
-      "size_chars": 953
-    },
-    {
-      "id": "isl-1d89f7df__en",
-      "domain": "islamic_parenting",
-      "title": "The Rights of Children upon Their Parents",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "حقوق الطفل",
-      "needs_ocr": false,
-      "size_chars": 953
-    },
-    {
-      "id": "isl-1efbc747",
-      "domain": "islamic_parenting",
-      "title": "حقوق الأطفال على الوالدين في التربية",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية إيجابية",
-      "needs_ocr": false,
-      "size_chars": 1135
-    },
-    {
-      "id": "isl-1efbc747__en",
-      "domain": "islamic_parenting",
-      "title": "The Rights of Children upon Their Parents in Tarbiyah",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية إيجابية",
-      "needs_ocr": false,
-      "size_chars": 1135
     },
     {
       "id": "isl-1f696f30",
@@ -8026,54 +7570,6 @@
       "size_chars": 1384
     },
     {
-      "id": "isl-2010ce26",
-      "domain": "islamic_parenting",
-      "title": "أهمية العقل والتفكير في تربية الأطفال",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية فكرية",
-      "needs_ocr": false,
-      "size_chars": 1245
-    },
-    {
-      "id": "isl-2010ce26__en",
-      "domain": "islamic_parenting",
-      "title": "The Importance of the Intellect and Sound Thinking in the Ta",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية فكرية",
-      "needs_ocr": false,
-      "size_chars": 1245
-    },
-    {
-      "id": "isl-20cd665c",
-      "domain": "islamic_parenting",
-      "title": "تعليم الأطفال الصلاة والتربية الدينية",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تربية دينية",
-      "needs_ocr": false,
-      "size_chars": 989
-    },
-    {
-      "id": "isl-20cd665c__en",
-      "domain": "islamic_parenting",
-      "title": "Teaching Children Salah and Religious Tarbiyah",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تربية دينية",
-      "needs_ocr": false,
-      "size_chars": 989
-    },
-    {
       "id": "isl-20cf8569",
       "domain": "islamic_parenting",
       "title": "توجيه الأطفال نحو الصداقات الجيدة وتنظيم استخدام التكنولوجيا",
@@ -8084,30 +7580,6 @@
       "behavior_type": "إدمان ألعاب إلكترونية",
       "needs_ocr": false,
       "size_chars": 1438
-    },
-    {
-      "id": "isl-21b63f71",
-      "domain": "islamic_parenting",
-      "title": "تعليم الأطفال حب النبي محمد صلى الله عليه وسلم",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تربية دينية",
-      "needs_ocr": false,
-      "size_chars": 1287
-    },
-    {
-      "id": "isl-21b63f71__en",
-      "domain": "islamic_parenting",
-      "title": "Teaching Children Love for the Prophet Muhammad ﷺ",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تربية دينية",
-      "needs_ocr": false,
-      "size_chars": 1287
     },
     {
       "id": "isl-22169daa",
@@ -8156,30 +7628,6 @@
       "behavior_type": "السلوك أثناء المرض",
       "needs_ocr": false,
       "size_chars": 1396
-    },
-    {
-      "id": "isl-22d62ea2",
-      "domain": "islamic_parenting",
-      "title": "توجيه الطفل العدواني لضبط الغضب",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "عدوانية واندفاع",
-      "needs_ocr": false,
-      "size_chars": 1051
-    },
-    {
-      "id": "isl-22d62ea2__en",
-      "domain": "islamic_parenting",
-      "title": "Guiding the Aggressive Child to Control Anger",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "عدوانية واندفاع",
-      "needs_ocr": false,
-      "size_chars": 1051
     },
     {
       "id": "isl-22f68950",
@@ -8422,30 +7870,6 @@
       "size_chars": 1289
     },
     {
-      "id": "isl-2935b46f",
-      "domain": "islamic_parenting",
-      "title": "أهمية التربية الدينية للأبناء",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية دينية",
-      "needs_ocr": false,
-      "size_chars": 1285
-    },
-    {
-      "id": "isl-2935b46f__en",
-      "domain": "islamic_parenting",
-      "title": "The Importance of Tarbiyah upon the Din for Children",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية دينية",
-      "needs_ocr": false,
-      "size_chars": 1285
-    },
-    {
       "id": "isl-2a3f0ed3",
       "domain": "islamic_parenting",
       "title": "أهمية التربية الدينية للأطفال",
@@ -8590,30 +8014,6 @@
       "size_chars": 1375
     },
     {
-      "id": "isl-2c98ee30",
-      "domain": "islamic_parenting",
-      "title": "حقوق الأطفال على الآباء في التربية والتعليم",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية الأطفال",
-      "needs_ocr": false,
-      "size_chars": 1286
-    },
-    {
-      "id": "isl-2c98ee30__en",
-      "domain": "islamic_parenting",
-      "title": "The Rights of Children over Their Parents in Tarbiyah and Ed",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية الأطفال",
-      "needs_ocr": false,
-      "size_chars": 1286
-    },
-    {
       "id": "isl-2d7f2303",
       "domain": "islamic_parenting",
       "title": "أصول التربية الإسلامية وتوجيه الطفل",
@@ -8636,66 +8036,6 @@
       "behavior_type": "تربية إسلامية",
       "needs_ocr": false,
       "size_chars": 1409
-    },
-    {
-      "id": "isl-2d96bbf3",
-      "domain": "islamic_parenting",
-      "title": "حقوق الأبناء على الآباء في التربية",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية دينية وأخلاقية",
-      "needs_ocr": false,
-      "size_chars": 835
-    },
-    {
-      "id": "isl-2d96bbf3__en",
-      "domain": "islamic_parenting",
-      "title": "The Rights of Children upon Parents in Tarbiyah",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية دينية وأخلاقية",
-      "needs_ocr": false,
-      "size_chars": 835
-    },
-    {
-      "id": "isl-2f563178",
-      "domain": "islamic_parenting",
-      "title": "تعليم الأطفال الصبر والتحكم في الغضب",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "التربية السلوكية",
-      "needs_ocr": false,
-      "size_chars": 1105
-    },
-    {
-      "id": "isl-2f563178__en",
-      "domain": "islamic_parenting",
-      "title": "Teaching Children Patience and Anger Management",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "التربية السلوكية",
-      "needs_ocr": false,
-      "size_chars": 1105
-    },
-    {
-      "id": "isl-2fafe289",
-      "domain": "islamic_parenting",
-      "title": "تعليم الأطفال الصلاة والعبادات منذ الصغر",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "7-9",
-      "normalized_age_group": "7-9",
-      "behavior_type": "تربية دينية",
-      "needs_ocr": false,
-      "size_chars": 1370
     },
     {
       "id": "isl-2fee1086",
@@ -8758,78 +8098,6 @@
       "size_chars": 1520
     },
     {
-      "id": "isl-3110e6c7",
-      "domain": "islamic_parenting",
-      "title": "تحليل نص قديم غير محدد السلوك",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "غير محدد",
-      "needs_ocr": false,
-      "size_chars": 1346
-    },
-    {
-      "id": "isl-3110e6c7__en",
-      "domain": "islamic_parenting",
-      "title": "Analysis of an Unspecified-Behavior Ancient Text",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "غير محدد",
-      "needs_ocr": false,
-      "size_chars": 1346
-    },
-    {
-      "id": "isl-31ba95cb",
-      "domain": "islamic_parenting",
-      "title": "تعليم الأطفال حقوق الوالدين والبر بهما",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "7-9",
-      "normalized_age_group": "7-9",
-      "behavior_type": "تربية دينية وأخلاقية",
-      "needs_ocr": false,
-      "size_chars": 1523
-    },
-    {
-      "id": "isl-31ba95cb__en",
-      "domain": "islamic_parenting",
-      "title": "Teaching Children the Rights of Parents and al-Birr (birr al",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "7-9",
-      "normalized_age_group": "7-9",
-      "behavior_type": "تربية دينية وأخلاقية",
-      "needs_ocr": false,
-      "size_chars": 1523
-    },
-    {
-      "id": "isl-32871fdb",
-      "domain": "islamic_parenting",
-      "title": "حقوق الأطفال والعدل بينهم في الإسلام",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية الأطفال والعدل بينهم",
-      "needs_ocr": false,
-      "size_chars": 1514
-    },
-    {
-      "id": "isl-32871fdb__en",
-      "domain": "islamic_parenting",
-      "title": "The Rights of Children and Justice Among Them in Islam",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية الأطفال والعدل بينهم",
-      "needs_ocr": false,
-      "size_chars": 1514
-    },
-    {
       "id": "isl-343ab724",
       "domain": "islamic_parenting",
       "title": "أصول التربية الإسلامية ومتابعة الأبناء",
@@ -8878,54 +8146,6 @@
       "size_chars": 1606
     },
     {
-      "id": "isl-35bd0931",
-      "domain": "islamic_parenting",
-      "title": "تعليم الأطفال الصلاة وأهميتها في التربية",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "7-9",
-      "normalized_age_group": "7-9",
-      "behavior_type": "تربية دينية",
-      "needs_ocr": false,
-      "size_chars": 1551
-    },
-    {
-      "id": "isl-35bd0931__en",
-      "domain": "islamic_parenting",
-      "title": "Teaching Children Salah and Its Importance in Tarbiyah",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "7-9",
-      "normalized_age_group": "7-9",
-      "behavior_type": "تربية دينية",
-      "needs_ocr": false,
-      "size_chars": 1551
-    },
-    {
-      "id": "isl-36917162",
-      "domain": "islamic_parenting",
-      "title": "تعويد الأطفال على الصلاة وتجنب التعلق بالهاتف",
-      "source_file": "Tarbiya_Al_Banat.pdf",
-      "language": "ar",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تربية دينية",
-      "needs_ocr": false,
-      "size_chars": 1308
-    },
-    {
-      "id": "isl-36917162__en",
-      "domain": "islamic_parenting",
-      "title": "Accustoming Children to Salah and Avoiding Attachment to the",
-      "source_file": "Tarbiya_Al_Banat.pdf",
-      "language": "en",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تربية دينية",
-      "needs_ocr": false,
-      "size_chars": 1308
-    },
-    {
       "id": "isl-369ae871",
       "domain": "islamic_parenting",
       "title": "أهمية العدل بين الأبناء في التربية",
@@ -8948,54 +8168,6 @@
       "behavior_type": "العدل بين الأبناء",
       "needs_ocr": false,
       "size_chars": 750
-    },
-    {
-      "id": "isl-3703ac71",
-      "domain": "islamic_parenting",
-      "title": "تعزيز التواصل بين الأهل والأطفال الصغار",
-      "source_file": "Al_Hady_Al_Nabawi.pdf",
-      "language": "ar",
-      "original_age_group": "prenatal-1",
-      "normalized_age_group": "prenatal-1",
-      "behavior_type": "السلوك الاجتماعي",
-      "needs_ocr": false,
-      "size_chars": 1454
-    },
-    {
-      "id": "isl-3703ac71__en",
-      "domain": "islamic_parenting",
-      "title": "Strengthening Communication between Parents and Young Childr",
-      "source_file": "Al_Hady_Al_Nabawi.pdf",
-      "language": "en",
-      "original_age_group": "prenatal-1",
-      "normalized_age_group": "prenatal-1",
-      "behavior_type": "السلوك الاجتماعي",
-      "needs_ocr": false,
-      "size_chars": 1454
-    },
-    {
-      "id": "isl-37320362",
-      "domain": "islamic_parenting",
-      "title": "حقوق الأطفال في الإسلام من الأحاديث النبوية",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية إسلامية",
-      "needs_ocr": false,
-      "size_chars": 1451
-    },
-    {
-      "id": "isl-37320362__en",
-      "domain": "islamic_parenting",
-      "title": "The Rights of Children in Islam from the Prophetic Ahadith",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية إسلامية",
-      "needs_ocr": false,
-      "size_chars": 1451
     },
     {
       "id": "isl-379cccef",
@@ -9022,30 +8194,6 @@
       "size_chars": 1473
     },
     {
-      "id": "isl-390466e2",
-      "domain": "islamic_parenting",
-      "title": "تعليم الأطفال حقوق الآخرين والصدق",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "7-9",
-      "normalized_age_group": "7-9",
-      "behavior_type": "تربية أخلاقية",
-      "needs_ocr": false,
-      "size_chars": 933
-    },
-    {
-      "id": "isl-390466e2__en",
-      "domain": "islamic_parenting",
-      "title": "Teaching Children the Rights of Others and Truthfulness",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "7-9",
-      "normalized_age_group": "7-9",
-      "behavior_type": "تربية أخلاقية",
-      "needs_ocr": false,
-      "size_chars": 933
-    },
-    {
       "id": "isl-39499300",
       "domain": "islamic_parenting",
       "title": "أساس تربية الأبناء على عبادة الله",
@@ -9068,30 +8216,6 @@
       "behavior_type": "تربية إسلامية",
       "needs_ocr": false,
       "size_chars": 1334
-    },
-    {
-      "id": "isl-39616856",
-      "domain": "islamic_parenting",
-      "title": "سلوك الطفل العدواني وإيذاء الذات",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "سلوك عدواني وإيذاء ذاتي",
-      "needs_ocr": false,
-      "size_chars": 1319
-    },
-    {
-      "id": "isl-39616856__en",
-      "domain": "islamic_parenting",
-      "title": "Child Aggressive Behaviour and Self-Harm",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "سلوك عدواني وإيذاء ذاتي",
-      "needs_ocr": false,
-      "size_chars": 1319
     },
     {
       "id": "isl-3a04cacb",
@@ -9164,54 +8288,6 @@
       "behavior_type": "تربية إسلامية",
       "needs_ocr": false,
       "size_chars": 1447
-    },
-    {
-      "id": "isl-3c246978",
-      "domain": "islamic_parenting",
-      "title": "أهمية التربية الدينية في حماية الأبناء",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية دينية وأخلاقية",
-      "needs_ocr": false,
-      "size_chars": 1284
-    },
-    {
-      "id": "isl-3c246978__en",
-      "domain": "islamic_parenting",
-      "title": "The Importance of Tarbiyah in Protecting Our Children",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية دينية وأخلاقية",
-      "needs_ocr": false,
-      "size_chars": 1284
-    },
-    {
-      "id": "isl-3c91c800",
-      "domain": "islamic_parenting",
-      "title": "أساسيات تربية الأطفال وتعليمهم",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية وتعليم",
-      "needs_ocr": false,
-      "size_chars": 1461
-    },
-    {
-      "id": "isl-3c91c800__en",
-      "domain": "islamic_parenting",
-      "title": "Foundations of Tarbiyah and Teaching Children",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية وتعليم",
-      "needs_ocr": false,
-      "size_chars": 1461
     },
     {
       "id": "isl-3d476538",
@@ -9322,18 +8398,6 @@
       "size_chars": 1449
     },
     {
-      "id": "isl-41e80342",
-      "domain": "islamic_parenting",
-      "title": "حقوق الأبناء في التربية الإسلامية",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية إيجابية",
-      "needs_ocr": false,
-      "size_chars": 1219
-    },
-    {
       "id": "isl-422bf31f",
       "domain": "islamic_parenting",
       "title": "نصائح تربوية مختارة لإعداد الأبناء للحياة",
@@ -9368,54 +8432,6 @@
       "behavior_type": "تربية إسلامية",
       "needs_ocr": false,
       "size_chars": 1356
-    },
-    {
-      "id": "isl-42741535",
-      "domain": "islamic_parenting",
-      "title": "حقوق الأطفال على الوالدين في الإسلام",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية إسلامية",
-      "needs_ocr": false,
-      "size_chars": 979
-    },
-    {
-      "id": "isl-432f1164",
-      "domain": "islamic_parenting",
-      "title": "حقوق الأطفال على الآباء في الإسلام",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية أطفال",
-      "needs_ocr": false,
-      "size_chars": 1299
-    },
-    {
-      "id": "isl-432f1164__en",
-      "domain": "islamic_parenting",
-      "title": "The Rights of Children upon Their Parents in Islam",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية أطفال",
-      "needs_ocr": false,
-      "size_chars": 1299
-    },
-    {
-      "id": "isl-43bfb6da",
-      "domain": "islamic_parenting",
-      "title": "توجيهات نبوية في تربية الأبناء",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية أخلاقية",
-      "needs_ocr": false,
-      "size_chars": 1227
     },
     {
       "id": "isl-440cdac2",
@@ -9488,78 +8504,6 @@
       "behavior_type": "إهمال تربوي",
       "needs_ocr": false,
       "size_chars": 928
-    },
-    {
-      "id": "isl-44d556e6",
-      "domain": "islamic_parenting",
-      "title": "تعليم الطفل الصبر على المرض والألم",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "7-9",
-      "normalized_age_group": "7-9",
-      "behavior_type": "تربية إيمانية وصبر",
-      "needs_ocr": false,
-      "size_chars": 825
-    },
-    {
-      "id": "isl-44d556e6__en",
-      "domain": "islamic_parenting",
-      "title": "Teaching the Child Sabr in Illness and Pain",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "7-9",
-      "normalized_age_group": "7-9",
-      "behavior_type": "تربية إيمانية وصبر",
-      "needs_ocr": false,
-      "size_chars": 825
-    },
-    {
-      "id": "isl-460a62af",
-      "domain": "islamic_parenting",
-      "title": "تعليم الأطفال حقوق الله والوالدين",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تربية دينية وأخلاقية",
-      "needs_ocr": false,
-      "size_chars": 1241
-    },
-    {
-      "id": "isl-460a62af__en",
-      "domain": "islamic_parenting",
-      "title": "Teaching Children the Rights of Allah and the Parents",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تربية دينية وأخلاقية",
-      "needs_ocr": false,
-      "size_chars": 1241
-    },
-    {
-      "id": "isl-466fef9d",
-      "domain": "islamic_parenting",
-      "title": "تحليل سلوك فرط الحركة لدى الطفل",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "فرط حركة",
-      "needs_ocr": false,
-      "size_chars": 739
-    },
-    {
-      "id": "isl-466fef9d__en",
-      "domain": "islamic_parenting",
-      "title": "Analysing Hyperactive Behaviour in the Child",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "فرط حركة",
-      "needs_ocr": false,
-      "size_chars": 739
     },
     {
       "id": "isl-47643ca5",
@@ -9646,126 +8590,6 @@
       "size_chars": 1393
     },
     {
-      "id": "isl-49217cf3",
-      "domain": "islamic_parenting",
-      "title": "تعليم الأطفال حقوقهم الدينية والأخلاقية",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "7-9",
-      "normalized_age_group": "7-9",
-      "behavior_type": "تربية دينية وأخلاقية",
-      "needs_ocr": false,
-      "size_chars": 1160
-    },
-    {
-      "id": "isl-49217cf3__en",
-      "domain": "islamic_parenting",
-      "title": "Teaching Children Their Religious and Moral Rights",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "7-9",
-      "normalized_age_group": "7-9",
-      "behavior_type": "تربية دينية وأخلاقية",
-      "needs_ocr": false,
-      "size_chars": 1160
-    },
-    {
-      "id": "isl-4a91d5da",
-      "domain": "islamic_parenting",
-      "title": "حقوق الأطفال على الآباء في التربية",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية الأطفال",
-      "needs_ocr": false,
-      "size_chars": 1444
-    },
-    {
-      "id": "isl-4a91d5da__en",
-      "domain": "islamic_parenting",
-      "title": "The Rights of Children upon Parents in Tarbiyah",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية الأطفال",
-      "needs_ocr": false,
-      "size_chars": 1444
-    },
-    {
-      "id": "isl-4bd24438",
-      "domain": "islamic_parenting",
-      "title": "حقوق الأبناء على الآباء في التربية",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية الأبناء",
-      "needs_ocr": false,
-      "size_chars": 1236
-    },
-    {
-      "id": "isl-4bd24438__en",
-      "domain": "islamic_parenting",
-      "title": "The Rights of Children upon Parents in Tarbiyah",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية الأبناء",
-      "needs_ocr": false,
-      "size_chars": 1236
-    },
-    {
-      "id": "isl-4c08bd7d",
-      "domain": "islamic_parenting",
-      "title": "تعليم العدل والمساواة بين الأبناء في التربية الإسلامية",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية إسلامية وعدل بين الأبناء",
-      "needs_ocr": false,
-      "size_chars": 1162
-    },
-    {
-      "id": "isl-4c08bd7d__en",
-      "domain": "islamic_parenting",
-      "title": "Teaching Justice and Equality Among Children in Islamic Tarb",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية إسلامية وعدل بين الأبناء",
-      "needs_ocr": false,
-      "size_chars": 1162
-    },
-    {
-      "id": "isl-4c1cd031",
-      "domain": "islamic_parenting",
-      "title": "أهمية التربية الدينية والتوازن في التعامل مع الأطفال",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية دينية",
-      "needs_ocr": false,
-      "size_chars": 1266
-    },
-    {
-      "id": "isl-4c1cd031__en",
-      "domain": "islamic_parenting",
-      "title": "The Importance of Tarbiyah and Balance in Dealing with Child",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية دينية",
-      "needs_ocr": false,
-      "size_chars": 1266
-    },
-    {
       "id": "isl-4c9c61c3",
       "domain": "islamic_parenting",
       "title": "دور الأسرة في التربية الإسلامية",
@@ -9788,102 +8612,6 @@
       "behavior_type": "تربية إسلامية",
       "needs_ocr": false,
       "size_chars": 1494
-    },
-    {
-      "id": "isl-4d3a645f",
-      "domain": "islamic_parenting",
-      "title": "أهمية الحزم والصدق في تربية الأبناء",
-      "source_file": "Kayfa_Turabbi_Waladak.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية الأبناء",
-      "needs_ocr": false,
-      "size_chars": 1377
-    },
-    {
-      "id": "isl-4d3a645f__en",
-      "domain": "islamic_parenting",
-      "title": "The Importance of Firmness and Truthfulness in the Tarbiyah ",
-      "source_file": "Kayfa_Turabbi_Waladak.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية الأبناء",
-      "needs_ocr": false,
-      "size_chars": 1377
-    },
-    {
-      "id": "isl-4e0db0bd",
-      "domain": "islamic_parenting",
-      "title": "قصة عن بر الوالدين وأهمية الأخلاق",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "7-9",
-      "normalized_age_group": "7-9",
-      "behavior_type": "تربية أخلاقية",
-      "needs_ocr": false,
-      "size_chars": 1221
-    },
-    {
-      "id": "isl-4e0db0bd__en",
-      "domain": "islamic_parenting",
-      "title": "A Story about Birr al-Walidayn and the Importance of Akhlaq",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "7-9",
-      "normalized_age_group": "7-9",
-      "behavior_type": "تربية أخلاقية",
-      "needs_ocr": false,
-      "size_chars": 1221
-    },
-    {
-      "id": "isl-4e356b57",
-      "domain": "islamic_parenting",
-      "title": "أهمية الصحة النفسية للأطفال والمراهقين",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "صحة نفسية",
-      "needs_ocr": false,
-      "size_chars": 817
-    },
-    {
-      "id": "isl-4e356b57__en",
-      "domain": "islamic_parenting",
-      "title": "The Importance of Mental Well-being for Children and Adolesc",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "صحة نفسية",
-      "needs_ocr": false,
-      "size_chars": 817
-    },
-    {
-      "id": "isl-4ecbbad1",
-      "domain": "islamic_parenting",
-      "title": "تربية الأبناء على الأخلاق والصبر عند الغضب",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية أخلاقية",
-      "needs_ocr": false,
-      "size_chars": 1210
-    },
-    {
-      "id": "isl-4ecbbad1__en",
-      "domain": "islamic_parenting",
-      "title": "Tarbiyah of Children upon Akhlaq and Patience at Anger",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية أخلاقية",
-      "needs_ocr": false,
-      "size_chars": 1210
     },
     {
       "id": "isl-4f1029a3",
@@ -9910,30 +8638,6 @@
       "size_chars": 1404
     },
     {
-      "id": "isl-4f1f6411",
-      "domain": "islamic_parenting",
-      "title": "حقوق الأطفال على الآباء في التربية",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية الأطفال",
-      "needs_ocr": false,
-      "size_chars": 1516
-    },
-    {
-      "id": "isl-4f1f6411__en",
-      "domain": "islamic_parenting",
-      "title": "The Rights of Children upon Their Parents in Tarbiyah",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية الأطفال",
-      "needs_ocr": false,
-      "size_chars": 1516
-    },
-    {
       "id": "isl-4fd89060",
       "domain": "islamic_parenting",
       "title": "العدل بين الأبناء وأثره في تربيتهم",
@@ -9958,30 +8662,6 @@
       "size_chars": 1262
     },
     {
-      "id": "isl-50818e97",
-      "domain": "islamic_parenting",
-      "title": "قصة عن ضبط الغضب وتجنب العنف",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "7-9",
-      "normalized_age_group": "7-9",
-      "behavior_type": "عدوانية",
-      "needs_ocr": false,
-      "size_chars": 1026
-    },
-    {
-      "id": "isl-50818e97__en",
-      "domain": "islamic_parenting",
-      "title": "A Story about Controlling Anger and Avoiding Violence",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "7-9",
-      "normalized_age_group": "7-9",
-      "behavior_type": "عدوانية",
-      "needs_ocr": false,
-      "size_chars": 1026
-    },
-    {
       "id": "isl-50943526",
       "domain": "islamic_parenting",
       "title": "العبودية لله: غاية التربية الإسلامية",
@@ -9992,66 +8672,6 @@
       "behavior_type": "الحوار",
       "needs_ocr": false,
       "size_chars": 1256
-    },
-    {
-      "id": "isl-50f95326",
-      "domain": "islamic_parenting",
-      "title": "أهمية الصبر وضبط النفس عند الغضب",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "إدارة الغضب",
-      "needs_ocr": false,
-      "size_chars": 790
-    },
-    {
-      "id": "isl-50f95326__en",
-      "domain": "islamic_parenting",
-      "title": "The Importance of Patience and Self-Control When Angry",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "إدارة الغضب",
-      "needs_ocr": false,
-      "size_chars": 790
-    },
-    {
-      "id": "isl-516d879f",
-      "domain": "islamic_parenting",
-      "title": "أدعية دينية لتعزيز التوحيد",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تعليم ديني",
-      "needs_ocr": false,
-      "size_chars": 814
-    },
-    {
-      "id": "isl-51abde6d",
-      "domain": "islamic_parenting",
-      "title": "قلق أم على سلوك ابنتها المدرسي",
-      "source_file": "Tarbiya_Al_Banat.pdf",
-      "language": "ar",
-      "original_age_group": "10-12",
-      "normalized_age_group": "10-12",
-      "behavior_type": "قلق تربوي",
-      "needs_ocr": false,
-      "size_chars": 601
-    },
-    {
-      "id": "isl-51abde6d__en",
-      "domain": "islamic_parenting",
-      "title": "A Mother’s Concern Over Her Daughter’s School Behavior",
-      "source_file": "Tarbiya_Al_Banat.pdf",
-      "language": "en",
-      "original_age_group": "10-12",
-      "normalized_age_group": "10-12",
-      "behavior_type": "قلق تربوي",
-      "needs_ocr": false,
-      "size_chars": 601
     },
     {
       "id": "isl-52462ce7",
@@ -10076,18 +8696,6 @@
       "behavior_type": "تربية إيمانية",
       "needs_ocr": false,
       "size_chars": 844
-    },
-    {
-      "id": "isl-5296fd5a",
-      "domain": "islamic_parenting",
-      "title": "أهمية التربية الحسنة للأبناء",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية الأبناء",
-      "needs_ocr": false,
-      "size_chars": 1261
     },
     {
       "id": "isl-52c6e496",
@@ -10282,30 +8890,6 @@
       "size_chars": 1387
     },
     {
-      "id": "isl-5b61587e",
-      "domain": "islamic_parenting",
-      "title": "دور الأم في القيادة والعدل بين الأبناء",
-      "source_file": "Kayfa_Turabbi_Waladak.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية الأبناء والعدل بينهم",
-      "needs_ocr": false,
-      "size_chars": 1358
-    },
-    {
-      "id": "isl-5b61587e__en",
-      "domain": "islamic_parenting",
-      "title": "The Mother’s Role in Leadership and Justice Among the Childr",
-      "source_file": "Kayfa_Turabbi_Waladak.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية الأبناء والعدل بينهم",
-      "needs_ocr": false,
-      "size_chars": 1358
-    },
-    {
       "id": "isl-5b861419",
       "domain": "islamic_parenting",
       "title": "تعليم الأطفال الصلاة والآداب الإسلامية",
@@ -10316,54 +8900,6 @@
       "behavior_type": "تربية دينية وأخلاقية",
       "needs_ocr": false,
       "size_chars": 1479
-    },
-    {
-      "id": "isl-5b8d2dc3",
-      "domain": "islamic_parenting",
-      "title": "تعليم الصلاة للأطفال بالرفق والقدوة",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "7-9",
-      "normalized_age_group": "7-9",
-      "behavior_type": "تربية دينية",
-      "needs_ocr": false,
-      "size_chars": 1155
-    },
-    {
-      "id": "isl-5b8d2dc3__en",
-      "domain": "islamic_parenting",
-      "title": "Teaching Salah to Children with Rifq and the Example of the ",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "7-9",
-      "normalized_age_group": "7-9",
-      "behavior_type": "تربية دينية",
-      "needs_ocr": false,
-      "size_chars": 1155
-    },
-    {
-      "id": "isl-5bb84e07",
-      "domain": "islamic_parenting",
-      "title": "تعليم الطفل ذبح الأضحية في العيد",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "7-9",
-      "normalized_age_group": "7-9",
-      "behavior_type": "تعليم التضحية",
-      "needs_ocr": false,
-      "size_chars": 1446
-    },
-    {
-      "id": "isl-5bb84e07__en",
-      "domain": "islamic_parenting",
-      "title": "Teaching the Child to Slaughter the Udhiyah for Eid",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "7-9",
-      "normalized_age_group": "7-9",
-      "behavior_type": "تعليم التضحية",
-      "needs_ocr": false,
-      "size_chars": 1446
     },
     {
       "id": "isl-5bf1878f",
@@ -10400,30 +8936,6 @@
       "behavior_type": "تربية الأبناء",
       "needs_ocr": false,
       "size_chars": 1400
-    },
-    {
-      "id": "isl-5cf45742",
-      "domain": "islamic_parenting",
-      "title": "تعليم الصيام للأطفال وأحكامه",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "7-9",
-      "normalized_age_group": "7-9",
-      "behavior_type": "تعليم ديني",
-      "needs_ocr": false,
-      "size_chars": 1359
-    },
-    {
-      "id": "isl-5cf45742__en",
-      "domain": "islamic_parenting",
-      "title": "Teaching Children Sawm and Its Rulings",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "7-9",
-      "normalized_age_group": "7-9",
-      "behavior_type": "تعليم ديني",
-      "needs_ocr": false,
-      "size_chars": 1359
     },
     {
       "id": "isl-5d4a3253",
@@ -10496,18 +9008,6 @@
       "behavior_type": "الحوار",
       "needs_ocr": false,
       "size_chars": 1262
-    },
-    {
-      "id": "isl-602280fa",
-      "domain": "islamic_parenting",
-      "title": "تعليم الأطفال حقوق الآخرين بلطف",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "سلوك عدواني",
-      "needs_ocr": false,
-      "size_chars": 993
     },
     {
       "id": "isl-602bfb05",
@@ -10606,30 +9106,6 @@
       "size_chars": 121
     },
     {
-      "id": "isl-642d3763",
-      "domain": "islamic_parenting",
-      "title": "حقوق الأطفال وتربيتهم على القيم",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية أخلاقية",
-      "needs_ocr": false,
-      "size_chars": 1433
-    },
-    {
-      "id": "isl-642d3763__en",
-      "domain": "islamic_parenting",
-      "title": "The Rights of Children and Their Tarbiyah upon Values",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية أخلاقية",
-      "needs_ocr": false,
-      "size_chars": 1433
-    },
-    {
       "id": "isl-64e37a2f",
       "domain": "islamic_parenting",
       "title": "تأثير الوراثة في شخصية الطفل وأهمية اختيار الزوجة",
@@ -10678,30 +9154,6 @@
       "size_chars": 776
     },
     {
-      "id": "isl-65b250d1",
-      "domain": "islamic_parenting",
-      "title": "أهمية التربية الدينية والأخلاقية للأبناء",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية دينية وأخلاقية",
-      "needs_ocr": false,
-      "size_chars": 1077
-    },
-    {
-      "id": "isl-65b250d1__en",
-      "domain": "islamic_parenting",
-      "title": "The Importance of Tarbiyah and Akhlaq for Children",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية دينية وأخلاقية",
-      "needs_ocr": false,
-      "size_chars": 1077
-    },
-    {
       "id": "isl-65e723b9",
       "domain": "islamic_parenting",
       "title": "أهمية الصلاة والتربية الاجتماعية في الإسلام",
@@ -10736,42 +9188,6 @@
       "behavior_type": "تربية الأيتام والتعامل مع انفصال الوالدين",
       "needs_ocr": false,
       "size_chars": 1426
-    },
-    {
-      "id": "isl-66f08676",
-      "domain": "islamic_parenting",
-      "title": "حقوق الأبناء في التربية الدينية والأخلاقية",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية دينية وأخلاقية",
-      "needs_ocr": false,
-      "size_chars": 1104
-    },
-    {
-      "id": "isl-6792dd0f",
-      "domain": "islamic_parenting",
-      "title": "اللعب مع الأطفال في التربية النبوية",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تربية الأطفال",
-      "needs_ocr": false,
-      "size_chars": 1200
-    },
-    {
-      "id": "isl-6792dd0f__en",
-      "domain": "islamic_parenting",
-      "title": "Play with Children in the Prophetic Tarbiyah",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تربية الأطفال",
-      "needs_ocr": false,
-      "size_chars": 1200
     },
     {
       "id": "isl-67c4622e",
@@ -10868,30 +9284,6 @@
       "behavior_type": "تربية دينية",
       "needs_ocr": false,
       "size_chars": 1264
-    },
-    {
-      "id": "isl-68df90c4",
-      "domain": "islamic_parenting",
-      "title": "أهمية الصدق في تربية الأطفال من خلال القصص",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية أخلاقية",
-      "needs_ocr": false,
-      "size_chars": 1274
-    },
-    {
-      "id": "isl-68df90c4__en",
-      "domain": "islamic_parenting",
-      "title": "The Importance of Truthfulness in the Tarbiyah of Children T",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية أخلاقية",
-      "needs_ocr": false,
-      "size_chars": 1274
     },
     {
       "id": "isl-6a157c3f",
@@ -11050,30 +9442,6 @@
       "size_chars": 799
     },
     {
-      "id": "isl-6d93523b",
-      "domain": "islamic_parenting",
-      "title": "تعليم الأطفال تحمل المسؤولية منذ الصغر",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تربية ومسؤولية",
-      "needs_ocr": false,
-      "size_chars": 1267
-    },
-    {
-      "id": "isl-6d93523b__en",
-      "domain": "islamic_parenting",
-      "title": "Teaching Children to Bear Responsibility from a Young Age",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تربية ومسؤولية",
-      "needs_ocr": false,
-      "size_chars": 1267
-    },
-    {
       "id": "isl-6e3ef777",
       "domain": "islamic_parenting",
       "title": "أهمية تربية الطفل على الصدق والأمانة",
@@ -11134,54 +9502,6 @@
       "size_chars": 0
     },
     {
-      "id": "isl-6fe42624",
-      "domain": "islamic_parenting",
-      "title": "أهمية التربية بالحكمة والموعظة الحسنة",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية الأطفال",
-      "needs_ocr": false,
-      "size_chars": 1197
-    },
-    {
-      "id": "isl-6fe42624__en",
-      "domain": "islamic_parenting",
-      "title": "The Importance of Tarbiyah with Wisdom and Good Counsel",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية الأطفال",
-      "needs_ocr": false,
-      "size_chars": 1197
-    },
-    {
-      "id": "isl-707601b0",
-      "domain": "islamic_parenting",
-      "title": "فضل تعليم القرآن للأطفال",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تعليم ديني",
-      "needs_ocr": false,
-      "size_chars": 1407
-    },
-    {
-      "id": "isl-707601b0__en",
-      "domain": "islamic_parenting",
-      "title": "The Virtue of Teaching the Qur'an to Children",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تعليم ديني",
-      "needs_ocr": false,
-      "size_chars": 1407
-    },
-    {
       "id": "isl-71334e77",
       "domain": "islamic_parenting",
       "title": "توجيه الآباء لاختيار الألعاب المناسبة للأطفال",
@@ -11204,30 +9524,6 @@
       "behavior_type": "إدمان ألعاب",
       "needs_ocr": false,
       "size_chars": 1361
-    },
-    {
-      "id": "isl-714f9e97",
-      "domain": "islamic_parenting",
-      "title": "تحذير من العنف الجسدي تجاه الأطفال",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "عنف ضد الأطفال",
-      "needs_ocr": false,
-      "size_chars": 1254
-    },
-    {
-      "id": "isl-714f9e97__en",
-      "domain": "islamic_parenting",
-      "title": "A Warning against Physical Violence towards Children",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "عنف ضد الأطفال",
-      "needs_ocr": false,
-      "size_chars": 1254
     },
     {
       "id": "isl-71d65f43",
@@ -11288,30 +9584,6 @@
       "behavior_type": "تربية نبوية",
       "needs_ocr": false,
       "size_chars": 1242
-    },
-    {
-      "id": "isl-72787824",
-      "domain": "islamic_parenting",
-      "title": "قصة بلال بن رباح والصبر على الأذى",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "7-9",
-      "normalized_age_group": "7-9",
-      "behavior_type": "تعزيز القيم الدينية",
-      "needs_ocr": false,
-      "size_chars": 768
-    },
-    {
-      "id": "isl-72787824__en",
-      "domain": "islamic_parenting",
-      "title": "The Story of Bilal ibn Rabah and Patience in the Face of Har",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "7-9",
-      "normalized_age_group": "7-9",
-      "behavior_type": "تعزيز القيم الدينية",
-      "needs_ocr": false,
-      "size_chars": 768
     },
     {
       "id": "isl-72893770",
@@ -11398,30 +9670,6 @@
       "size_chars": 1233
     },
     {
-      "id": "isl-740684b1",
-      "domain": "islamic_parenting",
-      "title": "تعليم الطفل الصلاة والصبر بالقدوة والدعاء",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تربية دينية",
-      "needs_ocr": false,
-      "size_chars": 1278
-    },
-    {
-      "id": "isl-740684b1__en",
-      "domain": "islamic_parenting",
-      "title": "Teaching the Child Salah and Sabr through Uswah and Du'a",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تربية دينية",
-      "needs_ocr": false,
-      "size_chars": 1278
-    },
-    {
       "id": "isl-74580658",
       "domain": "islamic_parenting",
       "title": "تعليم الطفل آداب الحديث والصبر",
@@ -11470,30 +9718,6 @@
       "size_chars": 874
     },
     {
-      "id": "isl-756e7d81",
-      "domain": "islamic_parenting",
-      "title": "توجيه نبوي حول الأخلاق والصدق",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "توجيه أخلاقي",
-      "needs_ocr": false,
-      "size_chars": 813
-    },
-    {
-      "id": "isl-756e7d81__en",
-      "domain": "islamic_parenting",
-      "title": "Prophetic Guidance on Akhlaq and Truthfulness",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "توجيه أخلاقي",
-      "needs_ocr": false,
-      "size_chars": 813
-    },
-    {
       "id": "isl-76f9459f",
       "domain": "islamic_parenting",
       "title": "حقوق الأبناء على الآباء في التربية الصالحة",
@@ -11530,30 +9754,6 @@
       "size_chars": 1262
     },
     {
-      "id": "isl-778dc8f5",
-      "domain": "islamic_parenting",
-      "title": "تعليم الصدق والأمانة للأطفال",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تربية أخلاقية",
-      "needs_ocr": false,
-      "size_chars": 972
-    },
-    {
-      "id": "isl-778dc8f5__en",
-      "domain": "islamic_parenting",
-      "title": "Teaching Children as-Sidq (Truthfulness) and al-Amanah (Trus",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تربية أخلاقية",
-      "needs_ocr": false,
-      "size_chars": 972
-    },
-    {
       "id": "isl-77ba4991",
       "domain": "islamic_parenting",
       "title": "أهمية تعليم القرآن للأطفال",
@@ -11564,18 +9764,6 @@
       "behavior_type": "تربية دينية",
       "needs_ocr": false,
       "size_chars": 1440
-    },
-    {
-      "id": "isl-79b2424f",
-      "domain": "islamic_parenting",
-      "title": "أهمية التربية الدينية والأخلاقية للأطفال",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية أخلاقية ودينية",
-      "needs_ocr": false,
-      "size_chars": 901
     },
     {
       "id": "isl-79b5db35",
@@ -11626,30 +9814,6 @@
       "size_chars": 1286
     },
     {
-      "id": "isl-7b7cda4e",
-      "domain": "islamic_parenting",
-      "title": "تعليم الأطفال الصدق والأمانة",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تربية أخلاقية",
-      "needs_ocr": false,
-      "size_chars": 1155
-    },
-    {
-      "id": "isl-7b7cda4e__en",
-      "domain": "islamic_parenting",
-      "title": "Teaching Children Ṣidq and Amanah",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تربية أخلاقية",
-      "needs_ocr": false,
-      "size_chars": 1155
-    },
-    {
       "id": "isl-7bfdefb2",
       "domain": "islamic_parenting",
       "title": "أهمية اختيار الزوجة الصالحة في الإسلام",
@@ -11674,30 +9838,6 @@
       "size_chars": 955
     },
     {
-      "id": "isl-7bff5e2c",
-      "domain": "islamic_parenting",
-      "title": "تقنيات التحكم في انتباه الطفل المصاب بفرط الحركة",
-      "source_file": "Al_Hady_Al_Nabawi.pdf",
-      "language": "ar",
-      "original_age_group": "10-12",
-      "normalized_age_group": "10-12",
-      "behavior_type": "فرط حركة",
-      "needs_ocr": false,
-      "size_chars": 1367
-    },
-    {
-      "id": "isl-7bff5e2c__en",
-      "domain": "islamic_parenting",
-      "title": "Techniques for Managing the Attention of a Child with Hypera",
-      "source_file": "Al_Hady_Al_Nabawi.pdf",
-      "language": "en",
-      "original_age_group": "10-12",
-      "normalized_age_group": "10-12",
-      "behavior_type": "فرط حركة",
-      "needs_ocr": false,
-      "size_chars": 1367
-    },
-    {
       "id": "isl-7c088c1a",
       "domain": "islamic_parenting",
       "title": "توجيه الأهل لتربية الطفل على حب العلم",
@@ -11720,42 +9860,6 @@
       "behavior_type": "تربية وتعليم",
       "needs_ocr": false,
       "size_chars": 1448
-    },
-    {
-      "id": "isl-7dbd2226",
-      "domain": "islamic_parenting",
-      "title": "أهمية الصبر والثبات على الدين",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "توجيه ديني وأخلاقي",
-      "needs_ocr": false,
-      "size_chars": 1038
-    },
-    {
-      "id": "isl-7dbd2226__en",
-      "domain": "islamic_parenting",
-      "title": "The Importance of Sabr and Steadfastness upon the Deen",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "توجيه ديني وأخلاقي",
-      "needs_ocr": false,
-      "size_chars": 1038
-    },
-    {
-      "id": "isl-7e0815a2",
-      "domain": "islamic_parenting",
-      "title": "تربية الأبناء على حب النبي",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تربية إيمانية",
-      "needs_ocr": false,
-      "size_chars": 1425
     },
     {
       "id": "isl-7ec75c52",
@@ -11830,30 +9934,6 @@
       "size_chars": 1418
     },
     {
-      "id": "isl-801dbc52",
-      "domain": "islamic_parenting",
-      "title": "حوار ديني وأخلاقي بين شخصين",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "غير محدد",
-      "needs_ocr": false,
-      "size_chars": 1021
-    },
-    {
-      "id": "isl-801dbc52__en",
-      "domain": "islamic_parenting",
-      "title": "A Religious and Moral Dialogue Between Two Individuals",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "غير محدد",
-      "needs_ocr": false,
-      "size_chars": 1021
-    },
-    {
       "id": "isl-80a33332",
       "domain": "islamic_parenting",
       "title": "تأثير الأجهزة الإلكترونية على الفتيات وأهمية التوجيه",
@@ -11902,54 +9982,6 @@
       "size_chars": 1319
     },
     {
-      "id": "isl-82829528",
-      "domain": "islamic_parenting",
-      "title": "حقوق الأبناء على الآباء في التربية",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية الأبناء",
-      "needs_ocr": false,
-      "size_chars": 1198
-    },
-    {
-      "id": "isl-82829528__en",
-      "domain": "islamic_parenting",
-      "title": "The Rights of Children upon Parents in Tarbiyah",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية الأبناء",
-      "needs_ocr": false,
-      "size_chars": 1198
-    },
-    {
-      "id": "isl-82c3c96e",
-      "domain": "islamic_parenting",
-      "title": "تعليم الأطفال حقوق الآخرين والتسامح",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تربية أخلاقية",
-      "needs_ocr": false,
-      "size_chars": 1545
-    },
-    {
-      "id": "isl-82c3c96e__en",
-      "domain": "islamic_parenting",
-      "title": "Teaching Children the Rights of Others and Tolerance",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تربية أخلاقية",
-      "needs_ocr": false,
-      "size_chars": 1545
-    },
-    {
       "id": "isl-837af34f",
       "domain": "islamic_parenting",
       "title": "مفهوم التربية في الإسلام وأهدافها",
@@ -11986,54 +10018,6 @@
       "size_chars": 1265
     },
     {
-      "id": "isl-841d1ede",
-      "domain": "islamic_parenting",
-      "title": "أهمية التربية الأخلاقية للأطفال",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تربية أخلاقية",
-      "needs_ocr": false,
-      "size_chars": 1443
-    },
-    {
-      "id": "isl-841d1ede__en",
-      "domain": "islamic_parenting",
-      "title": "The Importance of Akhlaq Tarbiyah for Children",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تربية أخلاقية",
-      "needs_ocr": false,
-      "size_chars": 1443
-    },
-    {
-      "id": "isl-842e0f60",
-      "domain": "islamic_parenting",
-      "title": "أهمية التربية الأسرية السليمة وتوجيه الأبناء",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية أسرية",
-      "needs_ocr": false,
-      "size_chars": 1440
-    },
-    {
-      "id": "isl-842e0f60__en",
-      "domain": "islamic_parenting",
-      "title": "The Importance of Sound Usrati (Family) Tarbiyah and Guiding",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية أسرية",
-      "needs_ocr": false,
-      "size_chars": 1440
-    },
-    {
       "id": "isl-84538ea0",
       "domain": "islamic_parenting",
       "title": "أهمية القدوة الحسنة في تربية الأبناء",
@@ -12058,30 +10042,6 @@
       "size_chars": 1333
     },
     {
-      "id": "isl-848acb1e",
-      "domain": "islamic_parenting",
-      "title": "أهمية التربية الدينية والأخلاقية للأطفال",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية دينية وأخلاقية",
-      "needs_ocr": false,
-      "size_chars": 923
-    },
-    {
-      "id": "isl-848acb1e__en",
-      "domain": "islamic_parenting",
-      "title": "The Importance of Tarbiyah and Akhlaq for Children",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية دينية وأخلاقية",
-      "needs_ocr": false,
-      "size_chars": 923
-    },
-    {
       "id": "isl-85e3c490",
       "domain": "islamic_parenting",
       "title": "أساسيات تربية الطفل باحترام وتوجيه",
@@ -12104,30 +10064,6 @@
       "behavior_type": "الاستقلالية المتنامية وبر الوالدين",
       "needs_ocr": false,
       "size_chars": 310
-    },
-    {
-      "id": "isl-85fcbc9d",
-      "domain": "islamic_parenting",
-      "title": "تعليم الأطفال الحقوق الدينية والأخلاقية",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تربية دينية",
-      "needs_ocr": false,
-      "size_chars": 1066
-    },
-    {
-      "id": "isl-85fcbc9d__en",
-      "domain": "islamic_parenting",
-      "title": "Teaching Children Their Religious and Moral Rights",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تربية دينية",
-      "needs_ocr": false,
-      "size_chars": 1066
     },
     {
       "id": "isl-87ab426e",
@@ -12164,30 +10100,6 @@
       "behavior_type": "اختيار الزوجة",
       "needs_ocr": false,
       "size_chars": 926
-    },
-    {
-      "id": "isl-89eaf8dd",
-      "domain": "islamic_parenting",
-      "title": "حقوق الوالدين وتربية الأبناء في الإسلام",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية إسلامية",
-      "needs_ocr": false,
-      "size_chars": 1378
-    },
-    {
-      "id": "isl-89eaf8dd__en",
-      "domain": "islamic_parenting",
-      "title": "The Rights of Parents and the Tarbiyah of Children in Islam",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية إسلامية",
-      "needs_ocr": false,
-      "size_chars": 1378
     },
     {
       "id": "isl-8a046b9b",
@@ -12236,78 +10148,6 @@
       "behavior_type": "حقوق الطفل واللعب",
       "needs_ocr": false,
       "size_chars": 1382
-    },
-    {
-      "id": "isl-8adb5078",
-      "domain": "islamic_parenting",
-      "title": "تعليم الأطفال احترام ممتلكات الآخرين",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تربية أخلاقية",
-      "needs_ocr": false,
-      "size_chars": 1311
-    },
-    {
-      "id": "isl-8adb5078__en",
-      "domain": "islamic_parenting",
-      "title": "Teaching Children to Respect the Belongings of Others",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تربية أخلاقية",
-      "needs_ocr": false,
-      "size_chars": 1311
-    },
-    {
-      "id": "isl-8adc1c25",
-      "domain": "islamic_parenting",
-      "title": "أخطاء التربية الإسلامية وأساليب النبي",
-      "source_file": "Kayfa_Turabbi_Waladak.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية إسلامية",
-      "needs_ocr": false,
-      "size_chars": 1740
-    },
-    {
-      "id": "isl-8adc1c25__en",
-      "domain": "islamic_parenting",
-      "title": "Mistakes in Islamic Tarbiyah and the Prophetic Methods",
-      "source_file": "Kayfa_Turabbi_Waladak.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية إسلامية",
-      "needs_ocr": false,
-      "size_chars": 1740
-    },
-    {
-      "id": "isl-8b182486",
-      "domain": "islamic_parenting",
-      "title": "حقوق الأطفال في الإسلام من الأحاديث النبوية",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية إسلامية",
-      "needs_ocr": false,
-      "size_chars": 1392
-    },
-    {
-      "id": "isl-8b182486__en",
-      "domain": "islamic_parenting",
-      "title": "The Rights of Children in Islam from the Prophetic Ahadith",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية إسلامية",
-      "needs_ocr": false,
-      "size_chars": 1392
     },
     {
       "id": "isl-8b35ad26",
@@ -12430,30 +10270,6 @@
       "size_chars": 1351
     },
     {
-      "id": "isl-8de863a3",
-      "domain": "islamic_parenting",
-      "title": "أهمية الصبر والحوار في تربية الأبناء",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية الأبناء",
-      "needs_ocr": false,
-      "size_chars": 1221
-    },
-    {
-      "id": "isl-8de863a3__en",
-      "domain": "islamic_parenting",
-      "title": "The Importance of Patience and Dialogue in the Tarbiyah of C",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية الأبناء",
-      "needs_ocr": false,
-      "size_chars": 1221
-    },
-    {
       "id": "isl-8df11735",
       "domain": "islamic_parenting",
       "title": "تربية الأبناء وتوجيههم وفق القيم الإسلامية",
@@ -12538,18 +10354,6 @@
       "size_chars": 1258
     },
     {
-      "id": "isl-908a2da0",
-      "domain": "islamic_parenting",
-      "title": "تعليم الأطفال الصلاة وأهمية القدوة",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تربية دينية",
-      "needs_ocr": false,
-      "size_chars": 1198
-    },
-    {
       "id": "isl-908e4c80",
       "domain": "islamic_parenting",
       "title": "أهمية تربية البنات في الإسلام",
@@ -12584,138 +10388,6 @@
       "behavior_type": "الحوار",
       "needs_ocr": false,
       "size_chars": 1328
-    },
-    {
-      "id": "isl-91f5606a",
-      "domain": "islamic_parenting",
-      "title": "قصة شفاء الطفل بدعاء النبي",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "سلوك طلب المساعدة",
-      "needs_ocr": false,
-      "size_chars": 750
-    },
-    {
-      "id": "isl-91f5606a__en",
-      "domain": "islamic_parenting",
-      "title": "The Story of a Child’s Healing Through the Du‘a of the Proph",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "سلوك طلب المساعدة",
-      "needs_ocr": false,
-      "size_chars": 750
-    },
-    {
-      "id": "isl-9238038f",
-      "domain": "islamic_parenting",
-      "title": "حقوق الأبناء على الوالدين في التربية الدينية",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تربية دينية وأخلاقية",
-      "needs_ocr": false,
-      "size_chars": 1447
-    },
-    {
-      "id": "isl-9238038f__en",
-      "domain": "islamic_parenting",
-      "title": "The Rights of Children upon Parents in Tarbiyah (religious u",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تربية دينية وأخلاقية",
-      "needs_ocr": false,
-      "size_chars": 1447
-    },
-    {
-      "id": "isl-927b1dd2",
-      "domain": "islamic_parenting",
-      "title": "حقوق الأبناء في التربية والعدل",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية الأبناء",
-      "needs_ocr": false,
-      "size_chars": 1448
-    },
-    {
-      "id": "isl-927b1dd2__en",
-      "domain": "islamic_parenting",
-      "title": "The Rights of Children in Tarbiyah and Justice",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية الأبناء",
-      "needs_ocr": false,
-      "size_chars": 1448
-    },
-    {
-      "id": "isl-941f7bfb",
-      "domain": "islamic_parenting",
-      "title": "حقوق الطفل وتربيته على الأخلاق",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تربية أخلاقية",
-      "needs_ocr": false,
-      "size_chars": 1269
-    },
-    {
-      "id": "isl-9469b324",
-      "domain": "islamic_parenting",
-      "title": "حقوق الأطفال في الإسلام وتربيتهم",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية إسلامية",
-      "needs_ocr": false,
-      "size_chars": 2005
-    },
-    {
-      "id": "isl-9469b324__en",
-      "domain": "islamic_parenting",
-      "title": "The Rights of Children in Islam and Their Tarbiyah",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية إسلامية",
-      "needs_ocr": false,
-      "size_chars": 2005
-    },
-    {
-      "id": "isl-946dd770",
-      "domain": "islamic_parenting",
-      "title": "استراتيجيات تحسين سلوكيات الأسرة وتحسين الاتصال بين الآباء و",
-      "source_file": "Al_Hady_Al_Nabawi.pdf",
-      "language": "ar",
-      "original_age_group": "13-15",
-      "normalized_age_group": "13-15",
-      "behavior_type": "سلوكيات الأسرة",
-      "needs_ocr": false,
-      "size_chars": 1274
-    },
-    {
-      "id": "isl-946dd770__en",
-      "domain": "islamic_parenting",
-      "title": "Strategies for Improving Family Behaviours and Enhancing Com",
-      "source_file": "Al_Hady_Al_Nabawi.pdf",
-      "language": "en",
-      "original_age_group": "13-15",
-      "normalized_age_group": "13-15",
-      "behavior_type": "سلوكيات الأسرة",
-      "needs_ocr": false,
-      "size_chars": 1274
     },
     {
       "id": "isl-94a01203",
@@ -12764,54 +10436,6 @@
       "behavior_type": "تربية دينية وأخلاقية",
       "needs_ocr": false,
       "size_chars": 1152
-    },
-    {
-      "id": "isl-94d9d405",
-      "domain": "islamic_parenting",
-      "title": "تعليم الأطفال الحقوق الدينية والأخلاقية",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تربية دينية وأخلاقية",
-      "needs_ocr": false,
-      "size_chars": 986
-    },
-    {
-      "id": "isl-94d9d405__en",
-      "domain": "islamic_parenting",
-      "title": "Teaching Children Their Religious and Moral Rights",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تربية دينية وأخلاقية",
-      "needs_ocr": false,
-      "size_chars": 986
-    },
-    {
-      "id": "isl-969f83c1",
-      "domain": "islamic_parenting",
-      "title": "أهمية التربية الأخلاقية للأطفال",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية أخلاقية",
-      "needs_ocr": false,
-      "size_chars": 1424
-    },
-    {
-      "id": "isl-969f83c1__en",
-      "domain": "islamic_parenting",
-      "title": "The Importance of Tarbiyah al-Akhlaqiyyah for Children",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية أخلاقية",
-      "needs_ocr": false,
-      "size_chars": 1424
     },
     {
       "id": "isl-9738d757",
@@ -12874,66 +10498,6 @@
       "size_chars": 132
     },
     {
-      "id": "isl-995b1515",
-      "domain": "islamic_parenting",
-      "title": "تعليم الأطفال حقوق الآخرين",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تربية أخلاقية",
-      "needs_ocr": false,
-      "size_chars": 1091
-    },
-    {
-      "id": "isl-995b1515__en",
-      "domain": "islamic_parenting",
-      "title": "Teaching Children the Rights of Others",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تربية أخلاقية",
-      "needs_ocr": false,
-      "size_chars": 1091
-    },
-    {
-      "id": "isl-9a173156",
-      "domain": "islamic_parenting",
-      "title": "قصة عن الصبر والحكمة في تربية الأطفال",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تربية أخلاقية",
-      "needs_ocr": false,
-      "size_chars": 878
-    },
-    {
-      "id": "isl-9aa2ab45",
-      "domain": "islamic_parenting",
-      "title": "التوكل مع الأخذ بالأسباب في التربية",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية إيمانية",
-      "needs_ocr": false,
-      "size_chars": 1000
-    },
-    {
-      "id": "isl-9aa2ab45__en",
-      "domain": "islamic_parenting",
-      "title": "Al-Tawakkul ma‘a al-Akhdh bi-l-Asbab fi al-Tarbiyah",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية إيمانية",
-      "needs_ocr": false,
-      "size_chars": 1000
-    },
-    {
       "id": "isl-9b3b5acd",
       "domain": "islamic_parenting",
       "title": "تربية الطفل الذكي وأهمية احترام الوالدين",
@@ -12958,54 +10522,6 @@
       "size_chars": 1458
     },
     {
-      "id": "isl-9b6fc547",
-      "domain": "islamic_parenting",
-      "title": "حقوق الوالدين على الأبناء في الإسلام",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "بر الوالدين",
-      "needs_ocr": false,
-      "size_chars": 850
-    },
-    {
-      "id": "isl-9b6fc547__en",
-      "domain": "islamic_parenting",
-      "title": "The Rights of Parents over Their Children in Islam (Ḥuqūq al",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "بر الوالدين",
-      "needs_ocr": false,
-      "size_chars": 850
-    },
-    {
-      "id": "isl-9b8e8ff5",
-      "domain": "islamic_parenting",
-      "title": "تعليم الأطفال حقوقهم وواجباتهم",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تربية إسلامية",
-      "needs_ocr": false,
-      "size_chars": 1071
-    },
-    {
-      "id": "isl-9b8e8ff5__en",
-      "domain": "islamic_parenting",
-      "title": "Teaching Children Their Rights and Duties",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تربية إسلامية",
-      "needs_ocr": false,
-      "size_chars": 1071
-    },
-    {
       "id": "isl-9baf6011",
       "domain": "islamic_parenting",
       "title": "الرفق بالطفل: نهج النبي صلى الله عليه وسلم",
@@ -13028,30 +10544,6 @@
       "behavior_type": "الرفق والحنان",
       "needs_ocr": false,
       "size_chars": 958
-    },
-    {
-      "id": "isl-9c60af92",
-      "domain": "islamic_parenting",
-      "title": "حقوق الأطفال على الآباء في التربية",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية إيجابية",
-      "needs_ocr": false,
-      "size_chars": 1024
-    },
-    {
-      "id": "isl-9c60af92__en",
-      "domain": "islamic_parenting",
-      "title": "The Rights of Children over Parents in Tarbiyah",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية إيجابية",
-      "needs_ocr": false,
-      "size_chars": 1024
     },
     {
       "id": "isl-9d71a2f5",
@@ -13150,30 +10642,6 @@
       "size_chars": 1385
     },
     {
-      "id": "isl-a0f25a05",
-      "domain": "islamic_parenting",
-      "title": "أهمية التربية الدينية والأخلاقية للأطفال",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تربية دينية وأخلاقية",
-      "needs_ocr": false,
-      "size_chars": 1464
-    },
-    {
-      "id": "isl-a0f25a05__en",
-      "domain": "islamic_parenting",
-      "title": "The Importance of Religious and Moral Tarbiyah for Children",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تربية دينية وأخلاقية",
-      "needs_ocr": false,
-      "size_chars": 1464
-    },
-    {
       "id": "isl-a10b175c",
       "domain": "islamic_parenting",
       "title": "تعليم الطفل التوحيد من خلال التأمل في الكون",
@@ -13196,102 +10664,6 @@
       "behavior_type": "تربية دينية وتعزيز التوحيد",
       "needs_ocr": false,
       "size_chars": 1394
-    },
-    {
-      "id": "isl-a22f04cd",
-      "domain": "islamic_parenting",
-      "title": "تعليم الأطفال آداب الطعام والعبادات",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تربية دينية وسلوكية",
-      "needs_ocr": false,
-      "size_chars": 1008
-    },
-    {
-      "id": "isl-a22f04cd__en",
-      "domain": "islamic_parenting",
-      "title": "Teaching Children the Adab of Eating and 'Ibadat",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تربية دينية وسلوكية",
-      "needs_ocr": false,
-      "size_chars": 1008
-    },
-    {
-      "id": "isl-a36a8295",
-      "domain": "islamic_parenting",
-      "title": "حقوق الأطفال في التربية الإسلامية",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية الأطفال",
-      "needs_ocr": false,
-      "size_chars": 1160
-    },
-    {
-      "id": "isl-a36a8295__en",
-      "domain": "islamic_parenting",
-      "title": "The Rights of Children in Islamic Tarbiyah",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية الأطفال",
-      "needs_ocr": false,
-      "size_chars": 1160
-    },
-    {
-      "id": "isl-a387bea4",
-      "domain": "islamic_parenting",
-      "title": "حقوق الأبناء على الآباء في الإسلام",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية إسلامية",
-      "needs_ocr": false,
-      "size_chars": 1390
-    },
-    {
-      "id": "isl-a387bea4__en",
-      "domain": "islamic_parenting",
-      "title": "The Rights of Children upon Their Parents in Islam",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية إسلامية",
-      "needs_ocr": false,
-      "size_chars": 1390
-    },
-    {
-      "id": "isl-a3a4ff7e",
-      "domain": "islamic_parenting",
-      "title": "خطر العنف الجسدي على الأطفال وأهمية التربية بالرفق",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "عنف جسدي ضد الأطفال",
-      "needs_ocr": false,
-      "size_chars": 1250
-    },
-    {
-      "id": "isl-a3a4ff7e__en",
-      "domain": "islamic_parenting",
-      "title": "The Danger of Physical Violence against Children and the Imp",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "عنف جسدي ضد الأطفال",
-      "needs_ocr": false,
-      "size_chars": 1250
     },
     {
       "id": "isl-a444db2a",
@@ -13414,30 +10786,6 @@
       "size_chars": 965
     },
     {
-      "id": "isl-a8a4dd9a",
-      "domain": "islamic_parenting",
-      "title": "أحاديث نبوية في تربية الأطفال",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية دينية",
-      "needs_ocr": false,
-      "size_chars": 1050
-    },
-    {
-      "id": "isl-a8a4dd9a__en",
-      "domain": "islamic_parenting",
-      "title": "Prophetic Hadiths on the Tarbiyah of Children",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية دينية",
-      "needs_ocr": false,
-      "size_chars": 1050
-    },
-    {
       "id": "isl-a8fadfa1",
       "domain": "islamic_parenting",
       "title": "أحكام تسمية الأبناء في الإسلام",
@@ -13486,30 +10834,6 @@
       "size_chars": 1470
     },
     {
-      "id": "isl-ab49af82",
-      "domain": "islamic_parenting",
-      "title": "أحكام الطهارة والوضوء في الإسلام",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تعليم ديني",
-      "needs_ocr": false,
-      "size_chars": 826
-    },
-    {
-      "id": "isl-ab49af82__en",
-      "domain": "islamic_parenting",
-      "title": "Rulings of Taharah and Wudu in Islam",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تعليم ديني",
-      "needs_ocr": false,
-      "size_chars": 826
-    },
-    {
       "id": "isl-ac1de08a",
       "domain": "islamic_parenting",
       "title": "التربية الإسلامية بالملاحظة والتوجيه",
@@ -13532,54 +10856,6 @@
       "behavior_type": "تربية إسلامية",
       "needs_ocr": false,
       "size_chars": 1412
-    },
-    {
-      "id": "isl-ac2f2fd1",
-      "domain": "islamic_parenting",
-      "title": "حقوق الأبناء في التربية الدينية",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تربية دينية",
-      "needs_ocr": false,
-      "size_chars": 1124
-    },
-    {
-      "id": "isl-ac2f2fd1__en",
-      "domain": "islamic_parenting",
-      "title": "The Rights of Children in Religious Tarbiyah",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تربية دينية",
-      "needs_ocr": false,
-      "size_chars": 1124
-    },
-    {
-      "id": "isl-ac6398a4",
-      "domain": "islamic_parenting",
-      "title": "حقوق الأبناء على الآباء في التربية والتعليم",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية الأبناء",
-      "needs_ocr": false,
-      "size_chars": 1220
-    },
-    {
-      "id": "isl-ac6398a4__en",
-      "domain": "islamic_parenting",
-      "title": "The Rights of Children over Parents in Tarbiyah and Educatio",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية الأبناء",
-      "needs_ocr": false,
-      "size_chars": 1220
     },
     {
       "id": "isl-ac979c60",
@@ -13606,54 +10882,6 @@
       "size_chars": 256
     },
     {
-      "id": "isl-ad149e0b",
-      "domain": "islamic_parenting",
-      "title": "تعليم الطفل حقوقه وواجباته",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "7-9",
-      "normalized_age_group": "7-9",
-      "behavior_type": "تربية أخلاقية",
-      "needs_ocr": false,
-      "size_chars": 1589
-    },
-    {
-      "id": "isl-ad149e0b__en",
-      "domain": "islamic_parenting",
-      "title": "Teaching the Child Their Rights and Duties",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "7-9",
-      "normalized_age_group": "7-9",
-      "behavior_type": "تربية أخلاقية",
-      "needs_ocr": false,
-      "size_chars": 1589
-    },
-    {
-      "id": "isl-add301df",
-      "domain": "islamic_parenting",
-      "title": "أخطاء التربية في تقليد الطفل وتأثير الرفقة",
-      "source_file": "Kayfa_Turabbi_Waladak.pdf",
-      "language": "ar",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تقليد أعمى",
-      "needs_ocr": false,
-      "size_chars": 1357
-    },
-    {
-      "id": "isl-add301df__en",
-      "domain": "islamic_parenting",
-      "title": "Mistakes in Tarbiyah: Imitation of the Child and the Impact ",
-      "source_file": "Kayfa_Turabbi_Waladak.pdf",
-      "language": "en",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تقليد أعمى",
-      "needs_ocr": false,
-      "size_chars": 1357
-    },
-    {
       "id": "isl-adf40f0b",
       "domain": "islamic_parenting",
       "title": "تعزيز ثقة الطفل وتجنب ألعاب الحرب",
@@ -13664,30 +10892,6 @@
       "behavior_type": "عدوانية",
       "needs_ocr": false,
       "size_chars": 1339
-    },
-    {
-      "id": "isl-aeca7eab",
-      "domain": "islamic_parenting",
-      "title": "الرفق بالأطفال في الحديث النبوي",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية أخلاقية",
-      "needs_ocr": false,
-      "size_chars": 1166
-    },
-    {
-      "id": "isl-aeca7eab__en",
-      "domain": "islamic_parenting",
-      "title": "Al-Rifq bi-l-Atfal fi-l-Hadith al-Nabawi",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية أخلاقية",
-      "needs_ocr": false,
-      "size_chars": 1166
     },
     {
       "id": "isl-af807518",
@@ -13726,18 +10930,6 @@
       "size_chars": 1350
     },
     {
-      "id": "isl-b0534fbc",
-      "domain": "islamic_parenting",
-      "title": "قصة صراع وعنف بين شخصيات قديمة",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "صراع وعنف",
-      "needs_ocr": false,
-      "size_chars": 1362
-    },
-    {
       "id": "isl-b1e1577f",
       "domain": "islamic_parenting",
       "title": "النبي محمد ﷺ نموذج الإسلام الحي: قراءة سيد قطب",
@@ -13774,30 +10966,6 @@
       "size_chars": 1346
     },
     {
-      "id": "isl-b290bf9e",
-      "domain": "islamic_parenting",
-      "title": "حقوق الأطفال على الوالدين في التربية",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية الأطفال",
-      "needs_ocr": false,
-      "size_chars": 1080
-    },
-    {
-      "id": "isl-b290bf9e__en",
-      "domain": "islamic_parenting",
-      "title": "The Rights of Children upon Their Parents in Tarbiyah",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية الأطفال",
-      "needs_ocr": false,
-      "size_chars": 1080
-    },
-    {
       "id": "isl-b2d0f3e5",
       "domain": "islamic_parenting",
       "title": "الاستخدام المتوازن للتكنولوجيا للأطفال",
@@ -13820,78 +10988,6 @@
       "behavior_type": "إدمان ألعاب إلكترونية",
       "needs_ocr": false,
       "size_chars": 1409
-    },
-    {
-      "id": "isl-b328d5a2",
-      "domain": "islamic_parenting",
-      "title": "تعليم الأطفال الصلاة والتربية الدينية",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تربية دينية",
-      "needs_ocr": false,
-      "size_chars": 1127
-    },
-    {
-      "id": "isl-b328d5a2__en",
-      "domain": "islamic_parenting",
-      "title": "Teaching Children Salah and Religious Tarbiyah",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تربية دينية",
-      "needs_ocr": false,
-      "size_chars": 1127
-    },
-    {
-      "id": "isl-b479d931",
-      "domain": "islamic_parenting",
-      "title": "حقوق الأبناء على الآباء في التربية",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية أخلاقية ودينية",
-      "needs_ocr": false,
-      "size_chars": 1231
-    },
-    {
-      "id": "isl-b479d931__en",
-      "domain": "islamic_parenting",
-      "title": "The Rights of Children upon Parents in Tarbiyah",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية أخلاقية ودينية",
-      "needs_ocr": false,
-      "size_chars": 1231
-    },
-    {
-      "id": "isl-b5620aee",
-      "domain": "islamic_parenting",
-      "title": "تعليم الطفل الصبر وعدم الإلحاح",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تربية إيجابية",
-      "needs_ocr": false,
-      "size_chars": 1076
-    },
-    {
-      "id": "isl-b5620aee__en",
-      "domain": "islamic_parenting",
-      "title": "Teaching the Child Ṣabr and Avoiding Insistence",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تربية إيجابية",
-      "needs_ocr": false,
-      "size_chars": 1076
     },
     {
       "id": "isl-b720986d",
@@ -13918,18 +11014,6 @@
       "size_chars": 1043
     },
     {
-      "id": "isl-b782e64c",
-      "domain": "islamic_parenting",
-      "title": "تعليم الأطفال الجهاد والثبات منذ الصغر",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "7-9",
-      "normalized_age_group": "7-9",
-      "behavior_type": "تربية دينية",
-      "needs_ocr": false,
-      "size_chars": 1199
-    },
-    {
       "id": "isl-b793e864",
       "domain": "islamic_parenting",
       "title": "أهمية التحفيز المعنوي في تربية الطفل",
@@ -13952,30 +11036,6 @@
       "behavior_type": "تحفيز الطفل",
       "needs_ocr": false,
       "size_chars": 1362
-    },
-    {
-      "id": "isl-b7ed60a1",
-      "domain": "islamic_parenting",
-      "title": "تعليم الأطفال حب النبي محمد ﷺ",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تربية دينية",
-      "needs_ocr": false,
-      "size_chars": 1357
-    },
-    {
-      "id": "isl-b7ed60a1__en",
-      "domain": "islamic_parenting",
-      "title": "Teaching Children the Love of the Prophet Muhammad ﷺ",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تربية دينية",
-      "needs_ocr": false,
-      "size_chars": 1357
     },
     {
       "id": "isl-b8207e53",
@@ -14026,54 +11086,6 @@
       "size_chars": 1375
     },
     {
-      "id": "isl-ba3f4e04",
-      "domain": "islamic_parenting",
-      "title": "تعليم الأبناء حقوق الوالدين والإحسان",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية إسلامية",
-      "needs_ocr": false,
-      "size_chars": 1272
-    },
-    {
-      "id": "isl-ba3f4e04__en",
-      "domain": "islamic_parenting",
-      "title": "Teaching Children the Rights of Parents and Ihsan (Excellenc",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية إسلامية",
-      "needs_ocr": false,
-      "size_chars": 1272
-    },
-    {
-      "id": "isl-ba5acfd6",
-      "domain": "islamic_parenting",
-      "title": "حقوق الأطفال على والديهم في التربية",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية أطفال",
-      "needs_ocr": false,
-      "size_chars": 1303
-    },
-    {
-      "id": "isl-ba5acfd6__en",
-      "domain": "islamic_parenting",
-      "title": "The Rights of Children over Their Parents in Tarbiyah",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية أطفال",
-      "needs_ocr": false,
-      "size_chars": 1303
-    },
-    {
       "id": "isl-ba66715b",
       "domain": "islamic_parenting",
       "title": "أهمية المرأة الصالحة في الأسرة وتربية الأبناء",
@@ -14098,78 +11110,6 @@
       "size_chars": 1050
     },
     {
-      "id": "isl-ba8618fc",
-      "domain": "islamic_parenting",
-      "title": "حقوق الأطفال على الآباء في التربية والرعاية",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية الأطفال",
-      "needs_ocr": false,
-      "size_chars": 1329
-    },
-    {
-      "id": "isl-ba8618fc__en",
-      "domain": "islamic_parenting",
-      "title": "The Rights of Children upon Parents in Tarbiyah and Care",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية الأطفال",
-      "needs_ocr": false,
-      "size_chars": 1329
-    },
-    {
-      "id": "isl-bb001a48",
-      "domain": "islamic_parenting",
-      "title": "حقوق الأطفال وتربيتهم على الدين والأخلاق",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية دينية وأخلاقية",
-      "needs_ocr": false,
-      "size_chars": 1308
-    },
-    {
-      "id": "isl-bb001a48__en",
-      "domain": "islamic_parenting",
-      "title": "The Rights of Children and Their Tarbiyah upon the Deen and ",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية دينية وأخلاقية",
-      "needs_ocr": false,
-      "size_chars": 1308
-    },
-    {
-      "id": "isl-bb91ec1b",
-      "domain": "islamic_parenting",
-      "title": "تعليم الأطفال قيمة المال والإنفاق الحكيم",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "7-9",
-      "normalized_age_group": "7-9",
-      "behavior_type": "تربية مالية",
-      "needs_ocr": false,
-      "size_chars": 1285
-    },
-    {
-      "id": "isl-bb91ec1b__en",
-      "domain": "islamic_parenting",
-      "title": "Teaching Children the Value of Money and Wise Spending",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "7-9",
-      "normalized_age_group": "7-9",
-      "behavior_type": "تربية مالية",
-      "needs_ocr": false,
-      "size_chars": 1285
-    },
-    {
       "id": "isl-bd142357",
       "domain": "islamic_parenting",
       "title": "تعليم الأطفال مراقبة الله والتحذير من الشرك",
@@ -14192,30 +11132,6 @@
       "behavior_type": "تربية دينية",
       "needs_ocr": false,
       "size_chars": 900
-    },
-    {
-      "id": "isl-bd250b64",
-      "domain": "islamic_parenting",
-      "title": "تعليم الأطفال الصدقة وأثرها التربوي",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تربية دينية",
-      "needs_ocr": false,
-      "size_chars": 987
-    },
-    {
-      "id": "isl-bd250b64__en",
-      "domain": "islamic_parenting",
-      "title": "Teaching Children Ṣadaqah and Its Tarbiyah Impact",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تربية دينية",
-      "needs_ocr": false,
-      "size_chars": 987
     },
     {
       "id": "isl-bdbed783",
@@ -14264,30 +11180,6 @@
       "behavior_type": "تربية ولعب",
       "needs_ocr": false,
       "size_chars": 1197
-    },
-    {
-      "id": "isl-be5c0b84",
-      "domain": "islamic_parenting",
-      "title": "حقوق الأطفال على والديهم في التربية",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية الأطفال",
-      "needs_ocr": false,
-      "size_chars": 1511
-    },
-    {
-      "id": "isl-be5c0b84__en",
-      "domain": "islamic_parenting",
-      "title": "The Rights of Children upon Their Parents in Tarbiyah",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية الأطفال",
-      "needs_ocr": false,
-      "size_chars": 1511
     },
     {
       "id": "isl-beb6b0f0",
@@ -14362,30 +11254,6 @@
       "size_chars": 1358
     },
     {
-      "id": "isl-c0274dd3",
-      "domain": "islamic_parenting",
-      "title": "أهمية الصبر في تربية الأبناء",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية إسلامية",
-      "needs_ocr": false,
-      "size_chars": 1246
-    },
-    {
-      "id": "isl-c0274dd3__en",
-      "domain": "islamic_parenting",
-      "title": "The Importance of Patience in the Tarbiyah of Children",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية إسلامية",
-      "needs_ocr": false,
-      "size_chars": 1246
-    },
-    {
       "id": "isl-c03dced7",
       "domain": "islamic_parenting",
       "title": "أهمية التوكل على الله والتربية السلوكية الإسلامية",
@@ -14458,30 +11326,6 @@
       "size_chars": 1304
     },
     {
-      "id": "isl-c10d43e4",
-      "domain": "islamic_parenting",
-      "title": "حقوق الأطفال وتربيتهم على القيم",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية أخلاقية",
-      "needs_ocr": false,
-      "size_chars": 1002
-    },
-    {
-      "id": "isl-c10d43e4__en",
-      "domain": "islamic_parenting",
-      "title": "The Rights of Children and Their Tarbiyah upon Values",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية أخلاقية",
-      "needs_ocr": false,
-      "size_chars": 1002
-    },
-    {
       "id": "isl-c1f0ce4d",
       "domain": "islamic_parenting",
       "title": "التوحيد والعلم والهدى في إصلاح المجتمع",
@@ -14492,30 +11336,6 @@
       "behavior_type": "تربية الأبناء",
       "needs_ocr": false,
       "size_chars": 1401
-    },
-    {
-      "id": "isl-c32410ab",
-      "domain": "islamic_parenting",
-      "title": "تربية الأبناء على القيم الإسلامية والآداب",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية إسلامية",
-      "needs_ocr": false,
-      "size_chars": 1508
-    },
-    {
-      "id": "isl-c32410ab__en",
-      "domain": "islamic_parenting",
-      "title": "Tarbiyah of Children upon Islamic Values and Adab",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية إسلامية",
-      "needs_ocr": false,
-      "size_chars": 1508
     },
     {
       "id": "isl-c3ebb142",
@@ -14540,30 +11360,6 @@
       "behavior_type": "قدوة تربوية",
       "needs_ocr": false,
       "size_chars": 1282
-    },
-    {
-      "id": "isl-c4a536a4",
-      "domain": "islamic_parenting",
-      "title": "تحليل سلوك فرط الحركة وتشتت الانتباه لدى الطفل",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "7-9",
-      "normalized_age_group": "7-9",
-      "behavior_type": "فرط حركة وتشتت انتباه",
-      "needs_ocr": false,
-      "size_chars": 726
-    },
-    {
-      "id": "isl-c4a536a4__en",
-      "domain": "islamic_parenting",
-      "title": "Analysing Hyperactivity and Attention Deficit Behaviour in t",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "7-9",
-      "normalized_age_group": "7-9",
-      "behavior_type": "فرط حركة وتشتت انتباه",
-      "needs_ocr": false,
-      "size_chars": 726
     },
     {
       "id": "isl-c4b3fccc",
@@ -14626,30 +11422,6 @@
       "size_chars": 1216
     },
     {
-      "id": "isl-c5c7c609",
-      "domain": "islamic_parenting",
-      "title": "تعليم الأطفال حقوق الآخرين والاحترام",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "التربية الأخلاقية والسلوكية",
-      "needs_ocr": false,
-      "size_chars": 1421
-    },
-    {
-      "id": "isl-c5c7c609__en",
-      "domain": "islamic_parenting",
-      "title": "Teaching Children the Rights of Others and Respect",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "التربية الأخلاقية والسلوكية",
-      "needs_ocr": false,
-      "size_chars": 1421
-    },
-    {
       "id": "isl-c68e6b95",
       "domain": "islamic_parenting",
       "title": "الرعيل الأول: حين تحوّل القرآن إلى واقع معاش",
@@ -14698,30 +11470,6 @@
       "size_chars": 1400
     },
     {
-      "id": "isl-c81c58e1",
-      "domain": "islamic_parenting",
-      "title": "أهمية الصلاة وبر الوالدين في تربية الأطفال",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تربية دينية",
-      "needs_ocr": false,
-      "size_chars": 733
-    },
-    {
-      "id": "isl-c81c58e1__en",
-      "domain": "islamic_parenting",
-      "title": "The Importance of Salah and Birr al-Walidayn in the Tarbiyah",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تربية دينية",
-      "needs_ocr": false,
-      "size_chars": 733
-    },
-    {
       "id": "isl-c8cae71a",
       "domain": "islamic_parenting",
       "title": "صدق الأنبياء والصالحين مع الله: قدوة للمربين",
@@ -14732,54 +11480,6 @@
       "behavior_type": "الحوار",
       "needs_ocr": false,
       "size_chars": 1242
-    },
-    {
-      "id": "isl-ca9f1de7",
-      "domain": "islamic_parenting",
-      "title": "أهمية تربية الأبناء على الصلاة بأساليب إيجابية",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "7-9",
-      "normalized_age_group": "7-9",
-      "behavior_type": "تربية دينية",
-      "needs_ocr": false,
-      "size_chars": 1116
-    },
-    {
-      "id": "isl-ca9f1de7__en",
-      "domain": "islamic_parenting",
-      "title": "The Importance of Tarbiyah of Children upon Salah with Posit",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "7-9",
-      "normalized_age_group": "7-9",
-      "behavior_type": "تربية دينية",
-      "needs_ocr": false,
-      "size_chars": 1116
-    },
-    {
-      "id": "isl-cbc7891a",
-      "domain": "islamic_parenting",
-      "title": "حقوق الأطفال في التربية الإسلامية",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية إسلامية",
-      "needs_ocr": false,
-      "size_chars": 1526
-    },
-    {
-      "id": "isl-cbc7891a__en",
-      "domain": "islamic_parenting",
-      "title": "The Rights of Children in Islamic Tarbiyah",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية إسلامية",
-      "needs_ocr": false,
-      "size_chars": 1526
     },
     {
       "id": "isl-cc4ee988",
@@ -14816,30 +11516,6 @@
       "behavior_type": "تربية الأبناء",
       "needs_ocr": false,
       "size_chars": 1011
-    },
-    {
-      "id": "isl-cdac63e0",
-      "domain": "islamic_parenting",
-      "title": "حقوق الأطفال على الآباء في التربية والعدل",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية أطفال",
-      "needs_ocr": false,
-      "size_chars": 1346
-    },
-    {
-      "id": "isl-cdac63e0__en",
-      "domain": "islamic_parenting",
-      "title": "The Rights of Children upon Parents in Tarbiyah and Justice",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية أطفال",
-      "needs_ocr": false,
-      "size_chars": 1346
     },
     {
       "id": "isl-ce1b71bd",
@@ -14914,78 +11590,6 @@
       "size_chars": 2502
     },
     {
-      "id": "isl-d0227f8b",
-      "domain": "islamic_parenting",
-      "title": "العدل بين الأبناء في الحب والعطاء",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "التمييز بين الأبناء",
-      "needs_ocr": false,
-      "size_chars": 1084
-    },
-    {
-      "id": "isl-d0227f8b__en",
-      "domain": "islamic_parenting",
-      "title": "Justice Between Children in Love and Giving",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "التمييز بين الأبناء",
-      "needs_ocr": false,
-      "size_chars": 1084
-    },
-    {
-      "id": "isl-d06a6717",
-      "domain": "islamic_parenting",
-      "title": "أهمية التربية الدينية والأخلاقية للأبناء",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية دينية وأخلاقية",
-      "needs_ocr": false,
-      "size_chars": 1106
-    },
-    {
-      "id": "isl-d06a6717__en",
-      "domain": "islamic_parenting",
-      "title": "The Importance of Tarbiyah and Akhlaq for Children",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية دينية وأخلاقية",
-      "needs_ocr": false,
-      "size_chars": 1106
-    },
-    {
-      "id": "isl-d0a71a62",
-      "domain": "islamic_parenting",
-      "title": "أهمية التربية الأخلاقية للأبناء في الإسلام",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية أخلاقية",
-      "needs_ocr": false,
-      "size_chars": 1609
-    },
-    {
-      "id": "isl-d0a71a62__en",
-      "domain": "islamic_parenting",
-      "title": "The Importance of Tarbiyah al-Akhlaqiyyah for Children in Is",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية أخلاقية",
-      "needs_ocr": false,
-      "size_chars": 1609
-    },
-    {
       "id": "isl-d126e483",
       "domain": "islamic_parenting",
       "title": "توجيه الأبناء للصلاة والأخلاق واختيار الصحبة",
@@ -15010,30 +11614,6 @@
       "size_chars": 890
     },
     {
-      "id": "isl-d15d1a95",
-      "domain": "islamic_parenting",
-      "title": "تعليم الأطفال الصيام تدريجياً",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "7-9",
-      "normalized_age_group": "7-9",
-      "behavior_type": "تعويد على الصيام",
-      "needs_ocr": false,
-      "size_chars": 1479
-    },
-    {
-      "id": "isl-d15d1a95__en",
-      "domain": "islamic_parenting",
-      "title": "Teaching Children to Fast Gradually",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "7-9",
-      "normalized_age_group": "7-9",
-      "behavior_type": "تعويد على الصيام",
-      "needs_ocr": false,
-      "size_chars": 1479
-    },
-    {
       "id": "isl-d16b57ea",
       "domain": "islamic_parenting",
       "title": "كيفية التعامل مع الطفل المريض نفسياً",
@@ -15044,30 +11624,6 @@
       "behavior_type": "اضطراب نفسي",
       "needs_ocr": false,
       "size_chars": 1331
-    },
-    {
-      "id": "isl-d192e37a",
-      "domain": "islamic_parenting",
-      "title": "أهمية التربية الدينية والأخلاقية للأبناء",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية دينية وأخلاقية",
-      "needs_ocr": false,
-      "size_chars": 1178
-    },
-    {
-      "id": "isl-d192e37a__en",
-      "domain": "islamic_parenting",
-      "title": "The Importance of Tarbiyah and Akhlaq for Children",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية دينية وأخلاقية",
-      "needs_ocr": false,
-      "size_chars": 1178
     },
     {
       "id": "isl-d291bca7",
@@ -15094,18 +11650,6 @@
       "size_chars": 1401
     },
     {
-      "id": "isl-d4007010",
-      "domain": "islamic_parenting",
-      "title": "أهمية التربية الأخلاقية للأطفال",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تربية أخلاقية",
-      "needs_ocr": false,
-      "size_chars": 861
-    },
-    {
       "id": "isl-d4327cab",
       "domain": "islamic_parenting",
       "title": "تعزيز ثقة الطفل واستقلاليته منذ الصغر",
@@ -15116,54 +11660,6 @@
       "behavior_type": "تنمية الثقة بالنفس والاستقلالية",
       "needs_ocr": false,
       "size_chars": 1456
-    },
-    {
-      "id": "isl-d44d24f5",
-      "domain": "islamic_parenting",
-      "title": "حقوق الأطفال على الآباء في التربية",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية أطفال",
-      "needs_ocr": false,
-      "size_chars": 1464
-    },
-    {
-      "id": "isl-d44d24f5__en",
-      "domain": "islamic_parenting",
-      "title": "The Rights of Children over Parents in Tarbiyah",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية أطفال",
-      "needs_ocr": false,
-      "size_chars": 1464
-    },
-    {
-      "id": "isl-d44e6fe8",
-      "domain": "islamic_parenting",
-      "title": "خطر المخدرات وأهمية القدوة الحسنة",
-      "source_file": "Rakaiz_Tarbiya.pdf",
-      "language": "ar",
-      "original_age_group": "13-15",
-      "normalized_age_group": "13-15",
-      "behavior_type": "وقاية من المخدرات",
-      "needs_ocr": false,
-      "size_chars": 828
-    },
-    {
-      "id": "isl-d44e6fe8__en",
-      "domain": "islamic_parenting",
-      "title": "The Danger of Drugs and the Importance of the Good Example (",
-      "source_file": "Rakaiz_Tarbiya.pdf",
-      "language": "en",
-      "original_age_group": "13-15",
-      "normalized_age_group": "13-15",
-      "behavior_type": "وقاية من المخدرات",
-      "needs_ocr": false,
-      "size_chars": 828
     },
     {
       "id": "isl-d4dbc6b8",
@@ -15190,30 +11686,6 @@
       "size_chars": 1265
     },
     {
-      "id": "isl-d4e2e2dc",
-      "domain": "islamic_parenting",
-      "title": "حقوق الأطفال في الإسلام وأهمية التربية",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية إسلامية",
-      "needs_ocr": false,
-      "size_chars": 1364
-    },
-    {
-      "id": "isl-d4e2e2dc__en",
-      "domain": "islamic_parenting",
-      "title": "The Rights of Children in Islam and the Importance of Tarbiy",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية إسلامية",
-      "needs_ocr": false,
-      "size_chars": 1364
-    },
-    {
       "id": "isl-d54fd8e8",
       "domain": "islamic_parenting",
       "title": "تعويد الطفل على الصلاة وأهمية التربية الدينية",
@@ -15236,54 +11708,6 @@
       "behavior_type": "تربية دينية وتعويد على الصلاة",
       "needs_ocr": false,
       "size_chars": 1358
-    },
-    {
-      "id": "isl-d5f85bee",
-      "domain": "islamic_parenting",
-      "title": "تعليم الأطفال الصلاة بالرفق والقدوة",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تربية دينية",
-      "needs_ocr": false,
-      "size_chars": 1065
-    },
-    {
-      "id": "isl-d5f85bee__en",
-      "domain": "islamic_parenting",
-      "title": "Teaching Children Salah with Rifq and the Good Example",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تربية دينية",
-      "needs_ocr": false,
-      "size_chars": 1065
-    },
-    {
-      "id": "isl-d5f87105",
-      "domain": "islamic_parenting",
-      "title": "حقوق الأطفال على الوالدين في التربية",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية الأطفال",
-      "needs_ocr": false,
-      "size_chars": 1435
-    },
-    {
-      "id": "isl-d5f87105__en",
-      "domain": "islamic_parenting",
-      "title": "The Rights of Children upon Their Parents in Tarbiyah",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية الأطفال",
-      "needs_ocr": false,
-      "size_chars": 1435
     },
     {
       "id": "isl-d631779d",
@@ -15334,30 +11758,6 @@
       "size_chars": 1350
     },
     {
-      "id": "isl-d739a357",
-      "domain": "islamic_parenting",
-      "title": "أسس المكافأة والعقاب في تربية الطفل",
-      "source_file": "Kayfa_Turabbi_Waladak.pdf",
-      "language": "ar",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تربية سلوكية",
-      "needs_ocr": false,
-      "size_chars": 1367
-    },
-    {
-      "id": "isl-d739a357__en",
-      "domain": "islamic_parenting",
-      "title": "Foundations of Reward and Discipline in the Tarbiyah of the ",
-      "source_file": "Kayfa_Turabbi_Waladak.pdf",
-      "language": "en",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تربية سلوكية",
-      "needs_ocr": false,
-      "size_chars": 1367
-    },
-    {
       "id": "isl-d7872363",
       "domain": "islamic_parenting",
       "title": "التأسي بأصحاب النبي ﷺ في الإخاء والحب",
@@ -15368,30 +11768,6 @@
       "behavior_type": "حوار",
       "needs_ocr": false,
       "size_chars": 1391
-    },
-    {
-      "id": "isl-d7a2d117",
-      "domain": "islamic_parenting",
-      "title": "حقوق الأطفال على الآباء في التربية والتعليم",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية أطفال",
-      "needs_ocr": false,
-      "size_chars": 1039
-    },
-    {
-      "id": "isl-d7a2d117__en",
-      "domain": "islamic_parenting",
-      "title": "The Rights of Children over Parents in Tarbiyah and Educatio",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية أطفال",
-      "needs_ocr": false,
-      "size_chars": 1039
     },
     {
       "id": "isl-d7b55818",
@@ -15430,78 +11806,6 @@
       "size_chars": 1477
     },
     {
-      "id": "isl-d8ac2c78",
-      "domain": "islamic_parenting",
-      "title": "أحكام الإجهاض في الفقه الإسلامي",
-      "source_file": "Kayfa_Turabbi_Waladak.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "إجهاض وأحكام شرعية",
-      "needs_ocr": false,
-      "size_chars": 1344
-    },
-    {
-      "id": "isl-d8ac2c78__en",
-      "domain": "islamic_parenting",
-      "title": "Rulings on Abortion in Islamic Jurisprudence",
-      "source_file": "Kayfa_Turabbi_Waladak.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "إجهاض وأحكام شرعية",
-      "needs_ocr": false,
-      "size_chars": 1344
-    },
-    {
-      "id": "isl-d8e6e42f",
-      "domain": "islamic_parenting",
-      "title": "أهمية التربية الأخلاقية للأطفال",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية أخلاقية",
-      "needs_ocr": false,
-      "size_chars": 1449
-    },
-    {
-      "id": "isl-d8e6e42f__en",
-      "domain": "islamic_parenting",
-      "title": "The Importance of Akhlaq Tarbiyah for Children",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية أخلاقية",
-      "needs_ocr": false,
-      "size_chars": 1449
-    },
-    {
-      "id": "isl-d939e551",
-      "domain": "islamic_parenting",
-      "title": "أهمية الصبر في التربية الأسرية",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية دينية",
-      "needs_ocr": false,
-      "size_chars": 921
-    },
-    {
-      "id": "isl-d939e551__en",
-      "domain": "islamic_parenting",
-      "title": "The Importance of Patience in Family Tarbiyah",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية دينية",
-      "needs_ocr": false,
-      "size_chars": 921
-    },
-    {
       "id": "isl-d9ea1e3c",
       "domain": "islamic_parenting",
       "title": "التربية بالقدوة في السيرة النبوية",
@@ -15526,66 +11830,6 @@
       "size_chars": 1244
     },
     {
-      "id": "isl-dab3c9f4",
-      "domain": "islamic_parenting",
-      "title": "حقوق الأطفال على الوالدين في التربية",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية الأطفال",
-      "needs_ocr": false,
-      "size_chars": 1371
-    },
-    {
-      "id": "isl-dab3c9f4__en",
-      "domain": "islamic_parenting",
-      "title": "The Rights of Children upon Parents in Tarbiyah",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية الأطفال",
-      "needs_ocr": false,
-      "size_chars": 1371
-    },
-    {
-      "id": "isl-dc441991",
-      "domain": "islamic_parenting",
-      "title": "توجيه أبوي لتصحيح سلوك الطفل",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "سلوك عام",
-      "needs_ocr": false,
-      "size_chars": 1423
-    },
-    {
-      "id": "isl-dc441991__en",
-      "domain": "islamic_parenting",
-      "title": "Parental Guidance for Correcting a Child’s Behaviour",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "سلوك عام",
-      "needs_ocr": false,
-      "size_chars": 1423
-    },
-    {
-      "id": "isl-dc9d1503",
-      "domain": "islamic_parenting",
-      "title": "تعليم الأطفال الصلاة وحقوقهم التربوية",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "7-9",
-      "normalized_age_group": "7-9",
-      "behavior_type": "تربية دينية",
-      "needs_ocr": false,
-      "size_chars": 1746
-    },
-    {
       "id": "isl-dcb6d4e8",
       "domain": "islamic_parenting",
       "title": "النهي عن السخرية بمن يلتزم بالصلاة",
@@ -15608,30 +11852,6 @@
       "behavior_type": "التعامل مع سخرية الآخرين من الالتزام الديني",
       "needs_ocr": false,
       "size_chars": 187
-    },
-    {
-      "id": "isl-dd395fbb",
-      "domain": "islamic_parenting",
-      "title": "حقوق الأطفال على والديهم في الإسلام",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية الأطفال",
-      "needs_ocr": false,
-      "size_chars": 1119
-    },
-    {
-      "id": "isl-dd395fbb__en",
-      "domain": "islamic_parenting",
-      "title": "The Rights of Children over Their Parents in Islam",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية الأطفال",
-      "needs_ocr": false,
-      "size_chars": 1119
     },
     {
       "id": "isl-dd822140",
@@ -15694,30 +11914,6 @@
       "size_chars": 1255
     },
     {
-      "id": "isl-ded5466d",
-      "domain": "islamic_parenting",
-      "title": "أفضل هدية للولد: التأديب الحسن والعدل",
-      "source_file": "Rakaiz_Tarbiya.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية الأبناء",
-      "needs_ocr": false,
-      "size_chars": 734
-    },
-    {
-      "id": "isl-ded5466d__en",
-      "domain": "islamic_parenting",
-      "title": "The Best Gift for a Child: Good Adab and Justice",
-      "source_file": "Rakaiz_Tarbiya.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية الأبناء",
-      "needs_ocr": false,
-      "size_chars": 734
-    },
-    {
       "id": "isl-dfa52092",
       "domain": "islamic_parenting",
       "title": "أهمية الصدق والاتفاق التربوي بين الوالدين",
@@ -15766,30 +11962,6 @@
       "size_chars": 825
     },
     {
-      "id": "isl-e20d927a",
-      "domain": "islamic_parenting",
-      "title": "تربية الأبناء على حب النبي واتباع سنته",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية دينية",
-      "needs_ocr": false,
-      "size_chars": 1545
-    },
-    {
-      "id": "isl-e20d927a__en",
-      "domain": "islamic_parenting",
-      "title": "Tarbiyah of Children upon Love of the Prophet ﷺ and Followin",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية دينية",
-      "needs_ocr": false,
-      "size_chars": 1545
-    },
-    {
       "id": "isl-e2248a74",
       "domain": "islamic_parenting",
       "title": "تعليم آداب الطعام للأطفال من السنة النبوية",
@@ -15812,30 +11984,6 @@
       "behavior_type": "آداب الطعام والشراب",
       "needs_ocr": false,
       "size_chars": 1044
-    },
-    {
-      "id": "isl-e2711973",
-      "domain": "islamic_parenting",
-      "title": "حقوق الأبناء على الآباء في التربية",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية أبناء",
-      "needs_ocr": false,
-      "size_chars": 1465
-    },
-    {
-      "id": "isl-e2711973__en",
-      "domain": "islamic_parenting",
-      "title": "The Rights of Children upon Their Parents in Tarbiyah",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية أبناء",
-      "needs_ocr": false,
-      "size_chars": 1465
     },
     {
       "id": "isl-e34c25ab",
@@ -15898,102 +12046,6 @@
       "size_chars": 822
     },
     {
-      "id": "isl-e4c8a66d",
-      "domain": "islamic_parenting",
-      "title": "حقوق الأبناء على الآباء في التربية",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية الأبناء",
-      "needs_ocr": false,
-      "size_chars": 1132
-    },
-    {
-      "id": "isl-e4c8a66d__en",
-      "domain": "islamic_parenting",
-      "title": "The Rights of Children upon Parents in Tarbiyah",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية الأبناء",
-      "needs_ocr": false,
-      "size_chars": 1132
-    },
-    {
-      "id": "isl-e622ac43",
-      "domain": "islamic_parenting",
-      "title": "قصة الأب والابن: تعليم الشكر والرضا",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "7-9",
-      "normalized_age_group": "7-9",
-      "behavior_type": "سلوك طلب المال وعدم التقدير",
-      "needs_ocr": false,
-      "size_chars": 1351
-    },
-    {
-      "id": "isl-e622ac43__en",
-      "domain": "islamic_parenting",
-      "title": "The Story of the Father and Son: Teaching Gratitude and Cont",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "7-9",
-      "normalized_age_group": "7-9",
-      "behavior_type": "سلوك طلب المال وعدم التقدير",
-      "needs_ocr": false,
-      "size_chars": 1351
-    },
-    {
-      "id": "isl-e7a5622f",
-      "domain": "islamic_parenting",
-      "title": "تعليم الطفل حقوق الآخرين",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تربية أخلاقية",
-      "needs_ocr": false,
-      "size_chars": 1122
-    },
-    {
-      "id": "isl-e7a5622f__en",
-      "domain": "islamic_parenting",
-      "title": "Teaching the Child the Rights of Others",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تربية أخلاقية",
-      "needs_ocr": false,
-      "size_chars": 1122
-    },
-    {
-      "id": "isl-e81562ec",
-      "domain": "islamic_parenting",
-      "title": "تعليم الأطفال الصلاة وأهميتها في التربية",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تربية دينية",
-      "needs_ocr": false,
-      "size_chars": 973
-    },
-    {
-      "id": "isl-e81562ec__en",
-      "domain": "islamic_parenting",
-      "title": "Teaching Children Salah and Its Importance in Tarbiyah",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تربية دينية",
-      "needs_ocr": false,
-      "size_chars": 973
-    },
-    {
       "id": "isl-e837f328",
       "domain": "islamic_parenting",
       "title": "فضل تربية البنات والرضا بهن",
@@ -16030,78 +12082,6 @@
       "size_chars": 1262
     },
     {
-      "id": "isl-e856f88f",
-      "domain": "islamic_parenting",
-      "title": "تحليل سلوك طفل في سياق تربوي تاريخي",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "سلوك تربوي تاريخي",
-      "needs_ocr": false,
-      "size_chars": 1297
-    },
-    {
-      "id": "isl-e856f88f__en",
-      "domain": "islamic_parenting",
-      "title": "Analysing a Child’s Behaviour in a Historical Tarbiyah Conte",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "سلوك تربوي تاريخي",
-      "needs_ocr": false,
-      "size_chars": 1297
-    },
-    {
-      "id": "isl-e872dad0",
-      "domain": "islamic_parenting",
-      "title": "قصة التمرة وأجر التربية الصالحة",
-      "source_file": "Rakaiz_Tarbiya.pdf",
-      "language": "ar",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تربية دينية وأخلاقية",
-      "needs_ocr": false,
-      "size_chars": 970
-    },
-    {
-      "id": "isl-e872dad0__en",
-      "domain": "islamic_parenting",
-      "title": "The Story of the Date and the Reward of Righteous Tarbiyah",
-      "source_file": "Rakaiz_Tarbiya.pdf",
-      "language": "en",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تربية دينية وأخلاقية",
-      "needs_ocr": false,
-      "size_chars": 970
-    },
-    {
-      "id": "isl-ea569b55",
-      "domain": "islamic_parenting",
-      "title": "أهمية التربية الأخلاقية والدينية للأطفال",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "7-9",
-      "normalized_age_group": "7-9",
-      "behavior_type": "تربية أخلاقية",
-      "needs_ocr": false,
-      "size_chars": 1459
-    },
-    {
-      "id": "isl-ea569b55__en",
-      "domain": "islamic_parenting",
-      "title": "The Importance of Tarbiyah in Akhlaq and the Religious Dimen",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "7-9",
-      "normalized_age_group": "7-9",
-      "behavior_type": "تربية أخلاقية",
-      "needs_ocr": false,
-      "size_chars": 1459
-    },
-    {
       "id": "isl-eaeb0ee0",
       "domain": "islamic_parenting",
       "title": "دور المربي في تربية الطفل بالقدوة واللعب",
@@ -16124,42 +12104,6 @@
       "behavior_type": "تربية سلوكية",
       "needs_ocr": false,
       "size_chars": 1418
-    },
-    {
-      "id": "isl-ebc1b275",
-      "domain": "islamic_parenting",
-      "title": "غرس حب النبي في قلب الطفل",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تربية دينية",
-      "needs_ocr": false,
-      "size_chars": 1340
-    },
-    {
-      "id": "isl-ebc1b275__en",
-      "domain": "islamic_parenting",
-      "title": "Planting the Love of the Prophet ﷺ in the Child’s Heart",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تربية دينية",
-      "needs_ocr": false,
-      "size_chars": 1340
-    },
-    {
-      "id": "isl-ec2f1d58",
-      "domain": "islamic_parenting",
-      "title": "أهمية التربية الأخلاقية للأبناء",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية أخلاقية",
-      "needs_ocr": false,
-      "size_chars": 1207
     },
     {
       "id": "isl-ec65b64c",
@@ -16186,30 +12130,6 @@
       "size_chars": 1413
     },
     {
-      "id": "isl-ecd6521f",
-      "domain": "islamic_parenting",
-      "title": "أهمية تربية الأبناء على القيم الإسلامية",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية أخلاقية",
-      "needs_ocr": false,
-      "size_chars": 1574
-    },
-    {
-      "id": "isl-ecd6521f__en",
-      "domain": "islamic_parenting",
-      "title": "The Importance of Tarbiyah of Children upon Islamic Values",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية أخلاقية",
-      "needs_ocr": false,
-      "size_chars": 1574
-    },
-    {
       "id": "isl-ee097ab9",
       "domain": "islamic_parenting",
       "title": "التربية النبوية وتوجيه السلوك الإيماني",
@@ -16232,138 +12152,6 @@
       "behavior_type": "تربية إيمانية",
       "needs_ocr": false,
       "size_chars": 1381
-    },
-    {
-      "id": "isl-ee271b17",
-      "domain": "islamic_parenting",
-      "title": "احترام خصوصية الأبناء والعدل في التربية",
-      "source_file": "Tarbiya_Al_Banat.pdf",
-      "language": "ar",
-      "original_age_group": "10-12",
-      "normalized_age_group": "10-12",
-      "behavior_type": "تربية الأبناء والعدل بينهم",
-      "needs_ocr": false,
-      "size_chars": 1311
-    },
-    {
-      "id": "isl-ee373ffe",
-      "domain": "islamic_parenting",
-      "title": "حقوق الأبناء على الآباء في الإسلام",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية دينية",
-      "needs_ocr": false,
-      "size_chars": 1059
-    },
-    {
-      "id": "isl-ee373ffe__en",
-      "domain": "islamic_parenting",
-      "title": "The Rights of Children upon Their Parents in Islam",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية دينية",
-      "needs_ocr": false,
-      "size_chars": 1059
-    },
-    {
-      "id": "isl-ee380fa3",
-      "domain": "islamic_parenting",
-      "title": "أهمية التربية الأخلاقية للأبناء",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية أخلاقية",
-      "needs_ocr": false,
-      "size_chars": 821
-    },
-    {
-      "id": "isl-ee380fa3__en",
-      "domain": "islamic_parenting",
-      "title": "The Importance of Akhlaq Tarbiyah for Children",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية أخلاقية",
-      "needs_ocr": false,
-      "size_chars": 821
-    },
-    {
-      "id": "isl-f0c08a57",
-      "domain": "islamic_parenting",
-      "title": "حقوق الأطفال في الإسلام وتربيتهم",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية دينية",
-      "needs_ocr": false,
-      "size_chars": 1297
-    },
-    {
-      "id": "isl-f0c08a57__en",
-      "domain": "islamic_parenting",
-      "title": "The Rights of Children in Islam and Their Tarbiyah",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية دينية",
-      "needs_ocr": false,
-      "size_chars": 1297
-    },
-    {
-      "id": "isl-f0ecb056",
-      "domain": "islamic_parenting",
-      "title": "أهمية التربية الدينية للأطفال",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تربية دينية",
-      "needs_ocr": false,
-      "size_chars": 1511
-    },
-    {
-      "id": "isl-f0ecb056__en",
-      "domain": "islamic_parenting",
-      "title": "The Importance of Tarbiyah al-Diniyyah for Children",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تربية دينية",
-      "needs_ocr": false,
-      "size_chars": 1511
-    },
-    {
-      "id": "isl-f1213a76",
-      "domain": "islamic_parenting",
-      "title": "تحليل سلوك فرط الحركة لدى الطفل",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "فرط حركة",
-      "needs_ocr": false,
-      "size_chars": 1131
-    },
-    {
-      "id": "isl-f1213a76__en",
-      "domain": "islamic_parenting",
-      "title": "Analysing Hyperactive Behaviour in the Child",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "فرط حركة",
-      "needs_ocr": false,
-      "size_chars": 1131
     },
     {
       "id": "isl-f1d62436",
@@ -16414,30 +12202,6 @@
       "size_chars": 164
     },
     {
-      "id": "isl-f2ccdca6",
-      "domain": "islamic_parenting",
-      "title": "استجابة الأهل لبكاء الطفل وتخفيف ألمه",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "استجابة عاطفية",
-      "needs_ocr": false,
-      "size_chars": 1361
-    },
-    {
-      "id": "isl-f2ccdca6__en",
-      "domain": "islamic_parenting",
-      "title": "Parental Response to a Child’s Crying and Alleviating Their ",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "استجابة عاطفية",
-      "needs_ocr": false,
-      "size_chars": 1361
-    },
-    {
       "id": "isl-f3270ea2",
       "domain": "islamic_parenting",
       "title": "أهمية القدوة الحسنة في تربية الأبناء",
@@ -16460,30 +12224,6 @@
       "behavior_type": "القدوة الأبوية وتأثيرها على الأبناء",
       "needs_ocr": false,
       "size_chars": 776
-    },
-    {
-      "id": "isl-f3c9f4ab",
-      "domain": "islamic_parenting",
-      "title": "حقوق الأطفال على الآباء في التربية والتعليم",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية الأطفال",
-      "needs_ocr": false,
-      "size_chars": 1226
-    },
-    {
-      "id": "isl-f3c9f4ab__en",
-      "domain": "islamic_parenting",
-      "title": "The Rights of Children over Parents in Tarbiyah and Educatio",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية الأطفال",
-      "needs_ocr": false,
-      "size_chars": 1226
     },
     {
       "id": "isl-f3f09dc7",
@@ -16510,30 +12250,6 @@
       "size_chars": 1220
     },
     {
-      "id": "isl-f3f7d74e",
-      "domain": "islamic_parenting",
-      "title": "حقوق الأبناء على الآباء في التربية",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية الأبناء",
-      "needs_ocr": false,
-      "size_chars": 1172
-    },
-    {
-      "id": "isl-f3f7d74e__en",
-      "domain": "islamic_parenting",
-      "title": "The Rights of Children upon Parents in Tarbiyah",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية الأبناء",
-      "needs_ocr": false,
-      "size_chars": 1172
-    },
-    {
       "id": "isl-f4accfb8",
       "domain": "islamic_parenting",
       "title": "أساسيات التربية الأخلاقية للأطفال",
@@ -16556,30 +12272,6 @@
       "behavior_type": "تربية أخلاقية",
       "needs_ocr": false,
       "size_chars": 1461
-    },
-    {
-      "id": "isl-f4c611da",
-      "domain": "islamic_parenting",
-      "title": "تجنب ترهيب الطفل بالله والنار في التربية",
-      "source_file": "Kayfa_Turabbi_Waladak.pdf",
-      "language": "ar",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تربية دينية خاطئة",
-      "needs_ocr": false,
-      "size_chars": 1306
-    },
-    {
-      "id": "isl-f4c611da__en",
-      "domain": "islamic_parenting",
-      "title": "Avoiding Intimidating the Child with Allah and the Fire in T",
-      "source_file": "Kayfa_Turabbi_Waladak.pdf",
-      "language": "en",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تربية دينية خاطئة",
-      "needs_ocr": false,
-      "size_chars": 1306
     },
     {
       "id": "isl-f4e75ff2",
@@ -16606,54 +12298,6 @@
       "size_chars": 1291
     },
     {
-      "id": "isl-f5f9ceac",
-      "domain": "islamic_parenting",
-      "title": "أهمية اللعب في تربية الأطفال",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "لعب وتربية",
-      "needs_ocr": false,
-      "size_chars": 1416
-    },
-    {
-      "id": "isl-f5f9ceac__en",
-      "domain": "islamic_parenting",
-      "title": "The Importance of Play in the Tarbiyah of Children",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "لعب وتربية",
-      "needs_ocr": false,
-      "size_chars": 1416
-    },
-    {
-      "id": "isl-f5fca662",
-      "domain": "islamic_parenting",
-      "title": "تعليم آداب الطعام للأطفال من السنة النبوية",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تربية سلوكية",
-      "needs_ocr": false,
-      "size_chars": 1386
-    },
-    {
-      "id": "isl-f5fca662__en",
-      "domain": "islamic_parenting",
-      "title": "Teaching Children the Adab of Eating from the Prophetic Sunn",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تربية سلوكية",
-      "needs_ocr": false,
-      "size_chars": 1386
-    },
-    {
       "id": "isl-f60db728",
       "domain": "islamic_parenting",
       "title": "أساليب التوجيه الفعالة بدلاً من العقاب",
@@ -16664,18 +12308,6 @@
       "behavior_type": "توجيه سلوكي",
       "needs_ocr": false,
       "size_chars": 1432
-    },
-    {
-      "id": "isl-f6342250",
-      "domain": "islamic_parenting",
-      "title": "تعليم الأطفال ذكر الله والأخلاق الحسنة",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تربية دينية وأخلاقية",
-      "needs_ocr": false,
-      "size_chars": 1507
     },
     {
       "id": "isl-f6bbab53",
@@ -16724,30 +12356,6 @@
       "behavior_type": "تأديب_الأبناء",
       "needs_ocr": false,
       "size_chars": 1220
-    },
-    {
-      "id": "isl-f6f7676b",
-      "domain": "islamic_parenting",
-      "title": "حقوق الأطفال على الوالدين في التربية",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية الأطفال",
-      "needs_ocr": false,
-      "size_chars": 1413
-    },
-    {
-      "id": "isl-f6f7676b__en",
-      "domain": "islamic_parenting",
-      "title": "The Rights of Children upon Their Parents in Tarbiyah",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية الأطفال",
-      "needs_ocr": false,
-      "size_chars": 1413
     },
     {
       "id": "isl-f769f5cd",
@@ -16822,54 +12430,6 @@
       "size_chars": 1358
     },
     {
-      "id": "isl-f84ef732",
-      "domain": "islamic_parenting",
-      "title": "حقوق الأبناء على الآباء في الإسلام",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية إسلامية",
-      "needs_ocr": false,
-      "size_chars": 1424
-    },
-    {
-      "id": "isl-f84ef732__en",
-      "domain": "islamic_parenting",
-      "title": "The Rights of Children upon Their Parents in Islam",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية إسلامية",
-      "needs_ocr": false,
-      "size_chars": 1424
-    },
-    {
-      "id": "isl-f8bb1f42",
-      "domain": "islamic_parenting",
-      "title": "إشارات إلى مصادر إسلامية متنوعة",
-      "source_file": "Manhaj_Nabawi_Khulayfi.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "غير محدد",
-      "needs_ocr": false,
-      "size_chars": 678
-    },
-    {
-      "id": "isl-f8bb1f42__en",
-      "domain": "islamic_parenting",
-      "title": "References to Various Islamic Sources",
-      "source_file": "Manhaj_Nabawi_Khulayfi.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "غير محدد",
-      "needs_ocr": false,
-      "size_chars": 678
-    },
-    {
       "id": "isl-f8bc202e",
       "domain": "islamic_parenting",
       "title": "التربية الإسلامية والتوازن الشامل",
@@ -16892,42 +12452,6 @@
       "behavior_type": "تربية إسلامية",
       "needs_ocr": false,
       "size_chars": 1405
-    },
-    {
-      "id": "isl-fab3255f",
-      "domain": "islamic_parenting",
-      "title": "أساليب التربية الإيجابية للأطفال",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية الأطفال",
-      "needs_ocr": false,
-      "size_chars": 1536
-    },
-    {
-      "id": "isl-fab3255f__en",
-      "domain": "islamic_parenting",
-      "title": "Positive Tarbiyah Methods for Children",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية الأطفال",
-      "needs_ocr": false,
-      "size_chars": 1536
-    },
-    {
-      "id": "isl-fac650ff",
-      "domain": "islamic_parenting",
-      "title": "حقوق الأطفال في التربية الإسلامية",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية دينية",
-      "needs_ocr": false,
-      "size_chars": 1230
     },
     {
       "id": "isl-fb04bcd3",
@@ -17000,30 +12524,6 @@
       "behavior_type": "العدل_بين_الأولاد",
       "needs_ocr": false,
       "size_chars": 1473
-    },
-    {
-      "id": "isl-fd6abf48",
-      "domain": "islamic_parenting",
-      "title": "تعليم الأطفال حب الله والرسول",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تربية دينية وأخلاقية",
-      "needs_ocr": false,
-      "size_chars": 1353
-    },
-    {
-      "id": "isl-fd6abf48__en",
-      "domain": "islamic_parenting",
-      "title": "Teaching Children Love of Allah and His Messenger ﷺ",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تربية دينية وأخلاقية",
-      "needs_ocr": false,
-      "size_chars": 1353
     },
     {
       "id": "isl-fd937511",
@@ -17108,18 +12608,6 @@
       "behavior_type": "تربية دينية",
       "needs_ocr": false,
       "size_chars": 1390
-    },
-    {
-      "id": "isl-fedf4c8c",
-      "domain": "islamic_parenting",
-      "title": "تعليم الأخلاق للأطفال",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تربية أخلاقية",
-      "needs_ocr": false,
-      "size_chars": 1177
     },
     {
       "id": "isl-fef5f702",
@@ -17348,30 +12836,6 @@
       "behavior_type": "نشر التوعية",
       "needs_ocr": false,
       "size_chars": 1605
-    },
-    {
-      "id": "med-0b39e5a8",
-      "domain": "medical",
-      "title": "نشاط بدني وتغذية صحية للأطفال",
-      "source_file": "SFDA_Healthy_Nutrition_Guide.pdf",
-      "language": "ar",
-      "original_age_group": "7-9",
-      "normalized_age_group": "7-9",
-      "behavior_type": "نشاط بدني وتغذية صحية",
-      "needs_ocr": false,
-      "size_chars": 1848
-    },
-    {
-      "id": "med-0b39e5a8__en",
-      "domain": "medical",
-      "title": "Physical Activity and Healthy Nutrition for Children",
-      "source_file": "SFDA_Healthy_Nutrition_Guide.pdf",
-      "language": "en",
-      "original_age_group": "7-9",
-      "normalized_age_group": "7-9",
-      "behavior_type": "نشاط بدني وتغذية صحية",
-      "needs_ocr": false,
-      "size_chars": 1848
     },
     {
       "id": "med-0b53717c",
@@ -17624,18 +13088,6 @@
       "behavior_type": "صحة نفسية",
       "needs_ocr": false,
       "size_chars": 1706
-    },
-    {
-      "id": "med-2fb28d90",
-      "domain": "medical",
-      "title": "أهمية النوم والنشاط البدني للأطفال",
-      "source_file": "WHO_Physical_Activity_Sleep_Under5.pdf",
-      "language": "ar",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "نشاط بدني ونوم",
-      "needs_ocr": false,
-      "size_chars": 1601
     },
     {
       "id": "med-31a98e14",
@@ -18550,18 +14002,6 @@
       "size_chars": 745
     },
     {
-      "id": "med-87fc7c8c",
-      "domain": "medical",
-      "title": "حقوق النشر والترخيص لمنظمة الصحة العالمية",
-      "source_file": "WHO_Physical_Activity_Sleep_Under5.pdf",
-      "language": "mixed",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "غير محدد",
-      "needs_ocr": false,
-      "size_chars": 1608
-    },
-    {
       "id": "med-88c1469a",
       "domain": "medical",
       "title": "علامات بلوغ ظهرت على بنتي قبل سن الثامنة",
@@ -18824,30 +14264,6 @@
       "behavior_type": "ADHD",
       "needs_ocr": false,
       "size_chars": 1638
-    },
-    {
-      "id": "med-a1df6423",
-      "domain": "medical",
-      "title": "أهمية الرياضة والتغذية للأطفال",
-      "source_file": "SFDA_Healthy_Nutrition_Guide.pdf",
-      "language": "ar",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "نشاط بدني وتغذية صحية",
-      "needs_ocr": false,
-      "size_chars": 1837
-    },
-    {
-      "id": "med-a1df6423__en",
-      "domain": "medical",
-      "title": "The Importance of Sport and Nutrition for Children",
-      "source_file": "SFDA_Healthy_Nutrition_Guide.pdf",
-      "language": "en",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "نشاط بدني وتغذية صحية",
-      "needs_ocr": false,
-      "size_chars": 1837
     },
     {
       "id": "med-a2c98c5b",
