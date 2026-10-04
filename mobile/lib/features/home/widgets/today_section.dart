@@ -1,5 +1,5 @@
-/// The scaffolding of the «اليوم» tab: a titled block, the divider below the
-/// three primary blocks, and the slot the loop cards will land in.
+/// The scaffolding of the «اليوم» tab: a titled block, and the divider below
+/// the three primary blocks.
 ///
 /// The tab was cut to three blocks (2026-10) because «مش عارف أبدأ منين» was
 /// the first complaint parents wrote. Each block is introduced by a plain title
@@ -77,39 +77,6 @@ class TodayMoreDivider extends StatelessWidget {
           Expanded(child: Divider(color: color.withValues(alpha: .35))),
         ],
       ),
-    );
-  }
-}
-
-/// Where the loop cards go: «خطة الأسبوع» (plan §1.3) and «المتابعة» —
-/// "جرّبت النصيحة؟" (plan §1.2). Their backend is being built separately; a
-/// later mobile pass adds the cards to [cards].
-///
-/// It sits directly under «خطوة اليوم» on purpose: the weekly plan is the
-/// week-sized version of today's step, and a follow-up is time-sensitive, so
-/// both belong above «اسأل المربّي» — but never above today's step, which is
-/// the card that took lesson_opened/child_added from 39% to 54%.
-///
-/// Contract for a card added here:
-///  * it hides itself (`SizedBox.shrink`) when it has nothing to say, while
-///    loading, and when its endpoint is missing (an older server) or failing —
-///    no spinner and no error on the one screen that should stay calm;
-///  * it logs `Analytics.todayBlockTapped('loop', <action>)` when acted on.
-class TodayLoopSlot extends StatelessWidget {
-  const TodayLoopSlot({super.key});
-
-  /// Rendered in order. Empty until the loop cards ship.
-  static const List<Widget> cards = <Widget>[];
-
-  @override
-  Widget build(BuildContext context) {
-    if (cards.isEmpty) return const SizedBox.shrink();
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        for (final card in cards)
-          Padding(padding: const EdgeInsets.only(top: 12), child: card),
-      ],
     );
   }
 }

@@ -10,12 +10,9 @@
 /// screen so the two read as one system.
 library;
 
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../core/analytics.dart';
 import '../../../core/app_routes.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../theme/design_tokens.dart';
@@ -38,9 +35,6 @@ class HomeStatsRow extends ConsumerWidget {
             .length ??
         0;
     final streak = bundle?.dailyLoginStreak ?? 0;
-    if ((bundle?.streakDays ?? 0) >= 3) {
-      unawaited(Analytics.habitStreak3(bundle!.streakDays));
-    }
     final badges = computeBadges(bundle);
     final earned = earnedCount(badges);
     final coins = ref.watch(coinsProvider);

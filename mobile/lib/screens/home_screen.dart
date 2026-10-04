@@ -13,8 +13,8 @@
 ///   ③ مهمة الطفل — [TodayChildBlock]: today's mission, or the child's day for
 ///      the bands that have no mission bank.
 ///
-/// [TodayLoopSlot] under ① is reserved for the weekly plan and the follow-up
-/// cards. Nothing that used to be here was removed from the app: the rest sits
+/// The weekly-plan and follow-up cards go between ① and ② (see the comment
+/// there). Nothing that used to be here was removed from the app: the rest sits
 /// below the divider, and every destination in it is also in «المزيد». The
 /// games banner was the only card dropped from this screen — it duplicated the
 /// games tile two rows below it and the games group in the hub.
@@ -22,6 +22,8 @@
 /// No new business logic — everything reads providers that already
 /// power PathsScreen / PathDetailScreen / BadgesScreen.
 library;
+
+import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -51,6 +53,7 @@ import '../theme/design_tokens.dart';
 import '../widgets/ui/noor_mascot.dart';
 import '../features/whats_new/widgets/whats_new_card.dart';
 
+import '../core/analytics.dart';
 import '../core/app_routes.dart';
 
 class HomeScreen extends ConsumerWidget {
@@ -82,10 +85,17 @@ class HomeScreen extends ConsumerWidget {
         .where((b) => b.earned)
         .map((b) => b.id)
         .toList();
+    final lessonStreak = bundle?.streakDays ?? 0;
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ref.read(coinsProvider.notifier).claimDaily();
       if (earnedBadgeIds.isNotEmpty) {
         ref.read(coinsProvider.notifier).creditBadges(earnedBadgeIds);
+      }
+      // Here, not in HomeStatsRow: since the stats moved below the divider
+      // the row is built only when scrolled near, and the funnel event fired
+      // only for parents who scrolled. Once per install either way.
+      if (lessonStreak >= 3) {
+        unawaited(Analytics.habitStreak3(lessonStreak));
       }
     });
 
@@ -138,9 +148,12 @@ class HomeScreen extends ConsumerWidget {
             ageGroup: ageGroup,
             onStartFirstPath: () => onGoToTab(RootTab.learn),
           ),
-          // Reserved: «خطة الأسبوع» and «المتابعة». Renders nothing until
-          // those cards ship — see TodayLoopSlot for the contract.
-          const TodayLoopSlot(),
+          // «خطة الأسبوع» and «المتابعة» (plan §1.3, §1.2) go here, between
+          // ① and ②: the weekly plan is the week-sized version of today's
+          // step, and a follow-up is time-sensitive — but neither goes above
+          // ①, the card that took lesson_opened/child_added from 39% to 54%.
+          // Each must hide itself while loading, on any failure, and on an
+          // older server; and log today_block_tapped('loop', <action>).
           const SizedBox(height: 24),
 
           // ② اسأل المربّي

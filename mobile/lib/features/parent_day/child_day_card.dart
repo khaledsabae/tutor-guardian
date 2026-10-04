@@ -20,13 +20,25 @@ import '../../state/chat_notifier.dart' show tgClientProvider;
 import '../program/providers/progress_providers.dart' show activeChildIdProvider;
 
 class ChildDayCard extends ConsumerStatefulWidget {
-  const ChildDayCard({super.key, this.whenEmpty, this.onOpened});
+  const ChildDayCard({
+    super.key,
+    this.whenEmpty,
+    this.whenNoMission,
+    this.onOpened,
+  });
 
   /// Shown instead of nothing — while loading, when the backend cannot be
   /// reached, and on a day with nothing to report. The «اليوم» tab passes the
   /// block's call to action here, so «مهمة الطفل» always has something to do;
   /// left null, the card keeps its old behaviour and simply hides.
   final Widget? whenEmpty;
+
+  /// Shown under the day's summary when the day has activity but no mission
+  /// yet. For a band with a mission bank this is the hand-over invitation: a
+  /// child who spent twenty minutes on the screen today has still not been
+  /// given today's mission, and the summary alone would hide the one thing
+  /// the parent can do about it.
+  final Widget? whenNoMission;
 
   /// Called when the parent opens the full day from this card.
   final VoidCallback? onOpened;
@@ -44,11 +56,15 @@ class _ChildDayCardState extends ConsumerState<ChildDayCard> {
     _loadedFor = childId;
     try {
       final day = await ref.read(tgClientProvider).fetchChildDay(childId);
-      if (mounted) setState(() { _day = day; _failed = false; });
+      // Switching child while a request is in flight: the slower, older
+      // answer must not overwrite the newer child's day.
+      if (!mounted || _loadedFor != childId) return;
+      setState(() { _day = day; _failed = false; });
     } catch (_) {
       // The home tab must survive a backend that is down. A card that cannot
       // load hides; it does not put an error in the middle of the day.
-      if (mounted) setState(() => _failed = true);
+      if (!mounted || _loadedFor != childId) return;
+      setState(() => _failed = true);
     }
   }
 
@@ -58,15 +74,18 @@ class _ChildDayCardState extends ConsumerState<ChildDayCard> {
     final childId = ref.watch(activeChildIdProvider);
     if (childId == null) return empty;
     if (_loadedFor != childId) {
+      // A new child: the previous child's day is not shown for a single
+      // frame, and its late answer is discarded by _load.
+      _loadedFor = childId;
+      _day = null;
+      _failed = false;
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (mounted && _loadedFor != childId) _load(childId);
+        if (mounted && _loadedFor == childId) _load(childId);
       });
     }
 
     final day = _day;
-    // A day loaded for the previous child is not this child's day.
     if (_failed || day == null) return empty;
-    if (day['child_id'] != null && day['child_id'] != childId) return empty;
 
     final screen = day['screen'] as Map<String, dynamic>? ?? const {};
     final listening = day['listening'] as Map<String, dynamic>? ?? const {};
@@ -83,7 +102,7 @@ class _ChildDayCardState extends ConsumerState<ChildDayCard> {
 
     final theme = Theme.of(context);
     final l10n = AppLocalizations.of(context);
-    return Card(
+    final card = Card(
       elevation: 0,
       child: InkWell(
         borderRadius: BorderRadius.circular(12),
@@ -121,6 +140,12 @@ class _ChildDayCardState extends ConsumerState<ChildDayCard> {
           ),
         ),
       ),
+    );
+    final invite = widget.whenNoMission;
+    if (mission != null || invite == null) return card;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [card, const SizedBox(height: 10), invite],
     );
   }
 }

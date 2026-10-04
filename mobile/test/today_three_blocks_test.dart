@@ -7,15 +7,19 @@
 /// layout survives English, dark mode and 200% text.
 library;
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:almorabbi/api/tg_client.dart';
+import 'package:almorabbi/features/home/widgets/home_stats_row.dart';
 import 'package:almorabbi/features/home/widgets/today_section.dart';
 import 'package:almorabbi/features/onboarding/data/onboarding_storage.dart';
 import 'package:almorabbi/features/onboarding/providers/onboarding_providers.dart';
+import 'package:almorabbi/features/parent_day/child_day_card.dart';
 import 'package:almorabbi/features/program/providers/progress_providers.dart';
 import 'package:almorabbi/features/shell/root_tab.dart';
 import 'package:almorabbi/l10n/app_localizations.dart';
@@ -31,15 +35,19 @@ void main() {
     WidgetTester tester, {
     String? ageGroup = '7-9',
     Map<String, dynamic>? day,
+    Map<String, dynamic>? progress,
     Locale locale = const Locale('ar'),
     bool dark = false,
     double textScale = 1.0,
+    Size phone = const Size(360, 800),
   }) async {
-    tester.view.physicalSize = const Size(1080, 2400);
-    tester.view.devicePixelRatio = 3.0; // a 360×800 phone
+    tester.view.physicalSize = phone * 3.0;
+    tester.view.devicePixelRatio = 3.0;
     addTearDown(tester.view.reset);
 
-    final fake = _FakeTgClient()..day = day;
+    final fake = _FakeTgClient()
+      ..day = day
+      ..progress = progress;
     SharedPreferences.setMockInitialValues({
       if (ageGroup != null) ...{
         OnboardingStorage.keyActiveChildId: 1,
@@ -100,9 +108,6 @@ void main() {
     await tester.scrollUntilVisible(divider, 300,
         scrollable: find.byType(Scrollable).first);
     expect(topOf(tester, mission), lessThan(topOf(tester, divider)));
-    // The loop slot is reserved and empty until the weekly plan ships.
-    expect(find.byType(TodayLoopSlot), findsOneWidget);
-    expect(TodayLoopSlot.cards, isEmpty);
   });
 
   testWidgets('the ask entry is there even when the tip cannot load',
@@ -175,15 +180,131 @@ void main() {
       expect(find.text(text), findsOneWidget);
     }
   });
+
+  Map<String, dynamic> dayWith({
+    required int childId,
+    int screenSeconds = 0,
+    Map<String, dynamic>? mission,
+  }) =>
+      {
+        'child_id': childId,
+        'child_name': 'سارة',
+        'screen': {'counted_seconds': screenSeconds, 'budget_seconds': 1800},
+        'listening': {'counted_seconds': 0, 'budget_seconds': 3600},
+        'mission': mission,
+      };
+
+  testWidgets('minutes on the screen are not a mission: the hand-over stays',
+      (tester) async {
+    // Item 10: twenty minutes of screen and no mission used to show only the
+    // minutes, hiding the one thing the block exists to offer.
+    await pumpHome(tester, ageGroup: '7-9',
+        day: dayWith(childId: 1, screenSeconds: 1200));
+    await tester.pump(const Duration(milliseconds: 100));
+    await tester.scrollUntilVisible(find.text('افتح مهمة اليوم'), 200,
+        scrollable: find.byType(Scrollable).first);
+    expect(find.text('افتح مهمة اليوم'), findsOneWidget);
+    expect(find.textContaining('20 دقيقة شاشة من 30'), findsOneWidget);
+  });
+
+  testWidgets('a young band with minutes keeps its summary and no mission CTA',
+      (tester) async {
+    await pumpHome(tester, ageGroup: '2-3',
+        day: dayWith(childId: 1, screenSeconds: 600));
+    await tester.pump(const Duration(milliseconds: 100));
+    await tester.scrollUntilVisible(find.textContaining('10 دقيقة شاشة'), 200,
+        scrollable: find.byType(Scrollable).first);
+    expect(find.text('افتح مهمة اليوم'), findsNothing);
+  });
+
+  testWidgets('switching child mid-load never shows the older child\'s day',
+      (tester) async {
+    // Item 16: the slower, older answer used to overwrite the newer child's.
+    final fake = _FakeTgClient()..pendingDays = {};
+    final container = ProviderContainer(overrides: [
+      tgClientProvider.overrideWithValue(fake),
+    ]);
+    addTearDown(container.dispose);
+    container.read(activeChildIdProvider.notifier).state = 1;
+    await tester.pumpWidget(UncontrolledProviderScope(
+      container: container,
+      child: MaterialApp(
+        locale: const Locale('ar'),
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        home: const Scaffold(body: ChildDayCard(whenEmpty: Text('EMPTY'))),
+      ),
+    ));
+    await tester.pump();
+    expect(fake.pendingDays!.keys, [1]);
+
+    container.read(activeChildIdProvider.notifier).state = 2;
+    await tester.pump();
+    await tester.pump();
+    expect(fake.pendingDays!.keys, [1, 2]);
+
+    fake.pendingDays![2]!.complete(dayWith(
+        childId: 2, mission: {'status': 'assigned', 'title_ar': 'مهمة الثاني'}));
+    await tester.pump();
+    await tester.pump();
+    expect(find.textContaining('مهمة الثاني'), findsOneWidget);
+
+    fake.pendingDays![1]!.complete(dayWith(
+        childId: 1, mission: {'status': 'assigned', 'title_ar': 'مهمة الأول'}));
+    await tester.pump();
+    await tester.pump();
+    expect(find.textContaining('مهمة الثاني'), findsOneWidget);
+    expect(find.textContaining('مهمة الأول'), findsNothing);
+  });
+
+  testWidgets('the ask entry stays compact at 200% English on a 320dp phone',
+      (tester) async {
+    // Item 12: a fixed-width CTA beside the body left the body a sliver, and
+    // it wrapped one word per line into a card taller than the screen.
+    await pumpHome(tester,
+        locale: const Locale('en'), textScale: 2.0, phone: const Size(320, 640));
+    final cta = find.text('Ask your question');
+    await tester.scrollUntilVisible(cta, 200,
+        scrollable: find.byType(Scrollable).first);
+    expect(tester.takeException(), isNull);
+    final card = find.ancestor(of: cta, matching: find.byType(InkWell)).first;
+    expect(tester.getSize(card).height, lessThan(320));
+    // And the body reads as text, not as a column of single words.
+    final body = find.textContaining('Tell Al-Murabbi');
+    expect(tester.getSize(body).width, greaterThan(160));
+  });
+
+  testWidgets('habit_streak_3 fires without the stats row being scrolled to',
+      (tester) async {
+    // Item 14: the event was fired from HomeStatsRow, which since the stats
+    // moved below the divider is built only when a parent scrolls down.
+    await pumpHome(tester,
+        phone: const Size(360, 640),
+        progress: {
+          'child_id': 1,
+          'lessons': [],
+          'streak_days': 3,
+          'daily_login_streak': 3,
+          'last_completed_at': null,
+        });
+    await tester.pump(const Duration(milliseconds: 100));
+    expect(find.byType(HomeStatsRow), findsNothing); // never built
+    final prefs = await SharedPreferences.getInstance();
+    expect(prefs.getBool('tg.analytics.once.habit_streak_3'), isTrue);
+  });
 }
 
 class _FakeTgClient extends TgClient {
   Map<String, dynamic>? day;
+  Map<String, dynamic>? progress;
+
+  /// When set, fetchChildDay answers each child only when the test says so.
+  Map<int, Completer<Map<String, dynamic>>>? pendingDays;
 
   @override
   Future<Map<String, dynamic>> getChildProgress(int childId,
           {String? pathId}) async =>
-      {'child_id': childId, 'lessons': []};
+      progress ?? {'child_id': childId, 'lessons': []};
 
   // Everything else the screen reads fails fast, the way an unreachable
   // server does — the blocks must still render and still end in an action.
@@ -207,6 +328,10 @@ class _FakeTgClient extends TgClient {
 
   @override
   Future<Map<String, dynamic>> fetchChildDay(int childId) async {
+    final pending = pendingDays;
+    if (pending != null) {
+      return (pending[childId] = Completer<Map<String, dynamic>>()).future;
+    }
     final d = day;
     if (d == null) throw const TgApiError(503, 'offline');
     return d;

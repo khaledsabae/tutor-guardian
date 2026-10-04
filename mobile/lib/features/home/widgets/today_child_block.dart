@@ -103,8 +103,13 @@ class TodayChildBlock extends StatelessWidget {
         ),
         // The summary when there is a day to summarise; the invitation
         // otherwise (and while loading, and when the server is unreachable).
+        // For a mission band the invitation also stays under a summary that
+        // has screen or listening minutes but no mission yet — minutes are not
+        // a mission, and hiding the hand-over behind them hid the block's
+        // whole point.
         ChildDayCard(
           whenEmpty: invite,
+          whenNoMission: hasMissions ? invite : null,
           onOpened: () =>
               unawaited(Analytics.todayBlockTapped('mission', 'open_day')),
         ),

@@ -54,39 +54,96 @@ class TodayAskBlock extends StatelessWidget {
             },
             child: Padding(
               padding: const EdgeInsets.all(14),
-              child: Row(
-                children: [
-                  Icon(Icons.chat_bubble_outline_rounded,
-                      color: AppTheme.primary, size: 22),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Text(
-                      name == null
-                          ? l10n.todayAskBodyNoName
-                          : l10n.todayAskBody(name),
-                      style: TextStyle(
-                        color: AppTheme.textSecondary,
-                        fontSize: 13,
-                        height: 1.5,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  Text(
-                    l10n.todayAskCta,
-                    style: TextStyle(
-                      color: AppTheme.primary,
-                      fontWeight: FontWeight.w800,
-                      fontSize: 13,
-                    ),
-                  ),
-                  Icon(Icons.arrow_forward, color: AppTheme.primary, size: 16),
-                ],
+              child: _ComposeRow(
+                body: name == null
+                    ? l10n.todayAskBodyNoName
+                    : l10n.todayAskBody(name),
+                cta: l10n.todayAskCta,
               ),
             ),
           ),
         ),
       ],
     );
+  }
+}
+
+/// The compose entry's body and call to action.
+///
+/// Side by side when there is room; the call to action drops under the body
+/// when there is not. At 200% text on a 320dp phone a fixed-width "Ask your
+/// question" beside the body left the body a sliver of width, and it wrapped
+/// one word to a line into a card taller than the screen.
+class _ComposeRow extends StatelessWidget {
+  const _ComposeRow({required this.body, required this.cta});
+
+  final String body;
+  final String cta;
+
+  @override
+  Widget build(BuildContext context) {
+    final bodyText = Text(
+      body,
+      style: TextStyle(
+        color: AppTheme.textSecondary,
+        fontSize: 13,
+        height: 1.5,
+      ),
+    );
+    final action = Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Flexible(
+          child: Text(
+            cta,
+            style: TextStyle(
+              color: AppTheme.primary,
+              fontWeight: FontWeight.w800,
+              fontSize: 13,
+            ),
+          ),
+        ),
+        Icon(Icons.arrow_forward, color: AppTheme.primary, size: 16),
+      ],
+    );
+    final icon = Icon(Icons.chat_bubble_outline_rounded,
+        color: AppTheme.primary, size: 22);
+
+    return LayoutBuilder(builder: (context, constraints) {
+      final scale = MediaQuery.textScalerOf(context).scale(1);
+      final stacked = scale > 1.3 || constraints.maxWidth < 300;
+      if (!stacked) {
+        return Row(
+          children: [
+            icon,
+            const SizedBox(width: 12),
+            Expanded(child: bodyText),
+            const SizedBox(width: 8),
+            // Capped, not flexed: a Flexible beside the Expanded body would
+            // take half the row however short the label is.
+            ConstrainedBox(
+              constraints:
+                  BoxConstraints(maxWidth: constraints.maxWidth * 0.4),
+              child: action,
+            ),
+          ],
+        );
+      }
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              icon,
+              const SizedBox(width: 12),
+              Expanded(child: bodyText),
+            ],
+          ),
+          const SizedBox(height: 8),
+          Align(alignment: AlignmentDirectional.centerEnd, child: action),
+        ],
+      );
+    });
   }
 }
