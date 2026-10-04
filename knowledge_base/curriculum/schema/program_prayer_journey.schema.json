@@ -1,0 +1,794 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tutor-guardian.local/schemas/curriculum/program_prayer_journey.schema.json",
+  "title": "Prayer Journey («رحلة الصلاة»)",
+  "description": "رحلة الصلاة لعمر ٧–١٠ على ١٢ أسبوعًا: الوالد يكلّف ← الطفل ينفّذ ويسجّل في وضع الطفل ← الوالد يثبّت ← عملات ← عهد بمكافأة حقيقية. مهام الطفل بشكل مهام البنك (missions) نفسه حتى تمرّ بدورة claim/confirm الموجودة: id→id، title→title_ar، instruction→instruction_ar. لكنها لا تخضع لعتبة الـ١٥ دقيقة — تلك عتبة مهام «خارج الشاشة» لا عبادة. ملف واحد: programs/prayer_journey.json وترجمته في i18n/en/programs/ بالبنية نفسها.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "program_type",
+    "id",
+    "version",
+    "is_published",
+    "language",
+    "title",
+    "subtitle",
+    "description",
+    "age",
+    "bands",
+    "entry_rules",
+    "basis",
+    "principles",
+    "reward_policy",
+    "evidence",
+    "preparation",
+    "stages",
+    "graduation",
+    "ownership",
+    "generation"
+  ],
+  "properties": {
+    "program_type": {
+      "const": "prayer_journey"
+    },
+    "id": {
+      "const": "prayer_journey"
+    },
+    "version": {
+      "$ref": "#/$defs/semver"
+    },
+    "is_published": {
+      "type": "boolean"
+    },
+    "language": {
+      "enum": [
+        "ar",
+        "en"
+      ]
+    },
+    "title": {
+      "$ref": "#/$defs/text"
+    },
+    "subtitle": {
+      "$ref": "#/$defs/text"
+    },
+    "description": {
+      "$ref": "#/$defs/text"
+    },
+    "age": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "min_years",
+        "max_years",
+        "weeks"
+      ],
+      "properties": {
+        "min_years": {
+          "const": 7
+        },
+        "max_years": {
+          "const": 10
+        },
+        "weeks": {
+          "const": 12
+        }
+      }
+    },
+    "bands": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "covered",
+        "band_map",
+        "text"
+      ],
+      "properties": {
+        "covered": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "4-6",
+              "7-9",
+              "10-12",
+              "13-15"
+            ]
+          }
+        },
+        "band_map": {
+          "type": "object",
+          "description": "حين لا يُعرف العمر بالسنة: كل فئات التطبيق ← أي مسار. null = البرنامج لا يظهر لهذه الفئة (ويقول text ماذا تراه بدلًا منه).",
+          "required": [
+            "prenatal-1",
+            "0-3",
+            "2-3",
+            "4-6",
+            "7-9",
+            "10-12",
+            "13-15",
+            "16-18"
+          ],
+          "propertyNames": {
+            "enum": [
+              "prenatal-1",
+              "0-3",
+              "2-3",
+              "4-6",
+              "7-9",
+              "10-12",
+              "13-15",
+              "16-18"
+            ]
+          },
+          "additionalProperties": {
+            "enum": [
+              "preparation",
+              "journey",
+              "ownership",
+              null
+            ]
+          }
+        },
+        "text": {
+          "$ref": "#/$defs/text"
+        }
+      }
+    },
+    "entry_rules": {
+      "type": "array",
+      "minItems": 3,
+      "description": "حين يُعرف العمر بالسنة (تاريخ الميلاد): أي مسار يبدأ منه الطفل. الفترات متصلة بلا فجوة ولا تداخل.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "min_age_years",
+          "max_age_years",
+          "track"
+        ],
+        "properties": {
+          "min_age_years": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 18
+          },
+          "max_age_years": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 18
+          },
+          "track": {
+            "enum": [
+              "preparation",
+              "journey",
+              "ownership"
+            ]
+          }
+        }
+      }
+    },
+    "basis": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "text",
+        "unit_ids",
+        "evidence_ids"
+      ],
+      "description": "على أي أصل يقوم البرنامج. التوجيه النبوي ببدء تعليم الصلاة في السابعة ليس في الصحيحين، فيُوصَف ولا يُقتبس (القاعدة: لا يُعرض حديث إلا من البخاري ومسلم)، ويُحال إلى وحدة المعرفة التي تحمل تخريجه.",
+      "properties": {
+        "text": {
+          "$ref": "#/$defs/text"
+        },
+        "unit_ids": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/unit_ids"
+            },
+            {
+              "minItems": 1
+            }
+          ]
+        },
+        "evidence_ids": {
+          "$ref": "#/$defs/evidence_ids"
+        }
+      }
+    },
+    "principles": {
+      "$ref": "#/$defs/text_list"
+    },
+    "reward_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "text",
+        "daily_cap",
+        "unit_ids"
+      ],
+      "properties": {
+        "text": {
+          "$ref": "#/$defs/text"
+        },
+        "daily_cap": {
+          "const": 60,
+          "description": "CoinsService.dailyEarnCap في التطبيق. مجموع عملات مهام المرحلة في يوم واحد لا يتجاوزه (يفحصه check_programs)."
+        },
+        "unit_ids": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/unit_ids"
+            },
+            {
+              "minItems": 1
+            }
+          ]
+        }
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/hadith"
+      }
+    },
+    "preparation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "track",
+        "title",
+        "goal",
+        "text",
+        "activities",
+        "unit_ids",
+        "evidence_ids",
+        "lesson_ids"
+      ],
+      "properties": {
+        "track": {
+          "const": "preparation"
+        },
+        "title": {
+          "$ref": "#/$defs/text"
+        },
+        "goal": {
+          "$ref": "#/$defs/text"
+        },
+        "text": {
+          "$ref": "#/$defs/text"
+        },
+        "activities": {
+          "type": "array",
+          "minItems": 3,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "key",
+              "title",
+              "text"
+            ],
+            "properties": {
+              "key": {
+                "$ref": "#/$defs/key"
+              },
+              "title": {
+                "$ref": "#/$defs/text"
+              },
+              "text": {
+                "$ref": "#/$defs/text"
+              }
+            }
+          }
+        },
+        "unit_ids": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/unit_ids"
+            },
+            {
+              "minItems": 1
+            }
+          ]
+        },
+        "evidence_ids": {
+          "$ref": "#/$defs/evidence_ids"
+        },
+        "lesson_ids": {
+          "$ref": "#/$defs/ids"
+        }
+      }
+    },
+    "stages": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 8,
+      "items": {
+        "$ref": "#/$defs/stage"
+      }
+    },
+    "graduation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "title",
+        "text",
+        "certificate_text",
+        "journey_milestone_keys",
+        "covenant"
+      ],
+      "properties": {
+        "title": {
+          "$ref": "#/$defs/text"
+        },
+        "text": {
+          "$ref": "#/$defs/text"
+        },
+        "certificate_text": {
+          "$ref": "#/$defs/text"
+        },
+        "journey_milestone_keys": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "first_prayer",
+              "keeps_prayer"
+            ]
+          },
+          "description": "مفاتيح mobile/assets/content/journey/milestones.ar.json التي يقترح التطبيق تسجيلها."
+        },
+        "covenant": {
+          "$ref": "#/$defs/covenant"
+        },
+        "evidence_ids": {
+          "$ref": "#/$defs/evidence_ids"
+        }
+      }
+    },
+    "ownership": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "track",
+        "title",
+        "goal",
+        "text",
+        "parent_assignments",
+        "child_tasks",
+        "confirmation",
+        "encouragement",
+        "if_struggling",
+        "unit_ids",
+        "evidence_ids",
+        "lesson_ids",
+        "path_ids"
+      ],
+      "properties": {
+        "track": {
+          "const": "ownership"
+        },
+        "title": {
+          "$ref": "#/$defs/text"
+        },
+        "goal": {
+          "$ref": "#/$defs/text"
+        },
+        "text": {
+          "$ref": "#/$defs/text"
+        },
+        "parent_assignments": {
+          "$ref": "#/$defs/assignments"
+        },
+        "child_tasks": {
+          "$ref": "#/$defs/tasks"
+        },
+        "confirmation": {
+          "$ref": "#/$defs/confirmation"
+        },
+        "encouragement": {
+          "$ref": "#/$defs/text_list"
+        },
+        "if_struggling": {
+          "$ref": "#/$defs/text"
+        },
+        "unit_ids": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/unit_ids"
+            },
+            {
+              "minItems": 1
+            }
+          ]
+        },
+        "evidence_ids": {
+          "$ref": "#/$defs/evidence_ids"
+        },
+        "lesson_ids": {
+          "$ref": "#/$defs/ids"
+        },
+        "path_ids": {
+          "$ref": "#/$defs/ids"
+        }
+      }
+    },
+    "generation": {
+      "$ref": "#/$defs/generation"
+    }
+  },
+  "$defs": {
+    "semver": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+    "key": {
+      "type": "string",
+      "pattern": "^[a-z0-9_]+$"
+    },
+    "text": {
+      "type": "string",
+      "minLength": 2
+    },
+    "text_list": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/text"
+      }
+    },
+    "ids": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string"
+      }
+    },
+    "unit_ids": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 3
+      }
+    },
+    "evidence_ids": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^h_[a-z0-9_]+$"
+      }
+    },
+    "hadith": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "kind",
+        "text_ar",
+        "source",
+        "provenance"
+      ],
+      "description": "انظر program_ramadan_family.schema.json — التعريف نفسه.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^h_[a-z0-9_]+$"
+        },
+        "kind": {
+          "const": "hadith"
+        },
+        "text_ar": {
+          "type": "string",
+          "minLength": 8
+        },
+        "source": {
+          "type": "string",
+          "pattern": "^صحيح (البخاري|مسلم) — حديث [٠-٩]+$"
+        },
+        "provenance": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "book",
+            "number"
+          ],
+          "properties": {
+            "book": {
+              "enum": [
+                "البخاري",
+                "مسلم"
+              ]
+            },
+            "number": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        },
+        "context": {
+          "$ref": "#/$defs/text"
+        },
+        "meaning": {
+          "$ref": "#/$defs/text"
+        }
+      }
+    },
+    "quran_range": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "surah",
+        "from",
+        "to"
+      ],
+      "properties": {
+        "surah": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 114
+        },
+        "from": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "to": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "topic": {
+          "$ref": "#/$defs/text"
+        }
+      }
+    },
+    "assignments": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "key",
+          "text"
+        ],
+        "properties": {
+          "key": {
+            "$ref": "#/$defs/key"
+          },
+          "text": {
+            "$ref": "#/$defs/text"
+          }
+        }
+      }
+    },
+    "task": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "title",
+        "instruction",
+        "estimated_minutes",
+        "needs_parent",
+        "per_week",
+        "coins",
+        "skill",
+        "materials"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^prayer_[a-z0-9_]+$"
+        },
+        "title": {
+          "$ref": "#/$defs/text"
+        },
+        "instruction": {
+          "$ref": "#/$defs/text"
+        },
+        "estimated_minutes": {
+          "type": "integer",
+          "minimum": 2,
+          "maximum": 30
+        },
+        "needs_parent": {
+          "type": "boolean"
+        },
+        "per_week": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 35,
+          "description": "الهدف الأسبوعي (عدد مرات التنفيذ المثبَّتة) — هدف لا شرط: أسبوع دونه لا يُعدّ فشلًا."
+        },
+        "coins": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 20
+        },
+        "skill": {
+          "$ref": "#/$defs/text"
+        },
+        "materials": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/text"
+          }
+        }
+      }
+    },
+    "tasks": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/task"
+      }
+    },
+    "confirmation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "how",
+        "counts_when"
+      ],
+      "properties": {
+        "how": {
+          "$ref": "#/$defs/text"
+        },
+        "counts_when": {
+          "$ref": "#/$defs/text"
+        }
+      }
+    },
+    "covenant": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "coins_target",
+        "examples"
+      ],
+      "properties": {
+        "coins_target": {
+          "type": "integer",
+          "minimum": 10
+        },
+        "examples": {
+          "$ref": "#/$defs/text_list"
+        }
+      }
+    },
+    "stage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "stage",
+        "key",
+        "week_from",
+        "week_to",
+        "title",
+        "goal",
+        "parent_assignments",
+        "child_tasks",
+        "confirmation",
+        "encouragement",
+        "if_struggling",
+        "covenant",
+        "unit_ids",
+        "evidence_ids",
+        "lesson_ids",
+        "quran",
+        "journey_milestone_key"
+      ],
+      "properties": {
+        "stage": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 8
+        },
+        "key": {
+          "$ref": "#/$defs/key"
+        },
+        "week_from": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 12
+        },
+        "week_to": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 12
+        },
+        "title": {
+          "$ref": "#/$defs/text"
+        },
+        "goal": {
+          "$ref": "#/$defs/text"
+        },
+        "parent_assignments": {
+          "$ref": "#/$defs/assignments"
+        },
+        "child_tasks": {
+          "$ref": "#/$defs/tasks"
+        },
+        "confirmation": {
+          "$ref": "#/$defs/confirmation"
+        },
+        "encouragement": {
+          "$ref": "#/$defs/text_list"
+        },
+        "if_struggling": {
+          "$ref": "#/$defs/text"
+        },
+        "covenant": {
+          "$ref": "#/$defs/covenant"
+        },
+        "unit_ids": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/unit_ids"
+            },
+            {
+              "minItems": 1
+            }
+          ]
+        },
+        "evidence_ids": {
+          "$ref": "#/$defs/evidence_ids"
+        },
+        "lesson_ids": {
+          "$ref": "#/$defs/ids"
+        },
+        "quran": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/quran_range"
+          }
+        },
+        "journey_milestone_key": {
+          "enum": [
+            "first_prayer",
+            "keeps_prayer",
+            null
+          ]
+        }
+      }
+    },
+    "generation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "drafter_model",
+        "reviewer_model",
+        "reviewed_at",
+        "approved_by"
+      ],
+      "properties": {
+        "drafter_model": {
+          "type": "string"
+        },
+        "reviewer_model": {
+          "type": "string"
+        },
+        "translator_model": {
+          "type": "string"
+        },
+        "reviewed_at": {
+          "type": "string"
+        },
+        "review_rounds": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "defects_fixed": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "approved_by": {
+          "type": "string",
+          "pattern": "^auto-review:"
+        }
+      }
+    }
+  }
+}

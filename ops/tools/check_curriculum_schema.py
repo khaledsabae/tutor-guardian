@@ -53,6 +53,15 @@ KINDS = (
     ("license", "license_scenario"),
 )
 
+# برامج الأسرة: مجلد واحد وثلاثة مخطّطات، والمخطّط يُختار بحقل `program_type` لا
+# باسم المجلد. ملفٌّ بنوعٍ لا مخطّط له يُرفض — لا يمرّ ملف برنامج بلا فحص لأن
+# أحدًا نسي أن يسجّله هنا.
+PROGRAM_SCHEMAS = {
+    "ramadan_family": "program_ramadan_family",
+    "prayer_journey": "program_prayer_journey",
+    "milestones": "program_milestones",
+}
+
 
 def main() -> int:
     print("=" * 66)
@@ -84,6 +93,31 @@ def main() -> int:
                         "/".join(map(str, err.path)) or "(root)",
                         err.message[:100],
                     ))
+
+    validators = {}
+    for ptype, name in PROGRAM_SCHEMAS.items():
+        schema_path = SCHEMA / f"{name}.schema.json"
+        if not schema_path.exists():
+            print(f"  ⛔ مخطّط مفقود: {schema_path.relative_to(ROOT)}")
+            return 1
+        schema = json.loads(schema_path.read_text(encoding="utf-8"))
+        Draft202012Validator.check_schema(schema)
+        validators[ptype] = Draft202012Validator(schema)
+    for tree in (CURRICULUM / "programs", CURRICULUM / "i18n" / "en" / "programs"):
+        for f in sorted(tree.glob("*.json")):
+            total += 1
+            rel = str(f.relative_to(CURRICULUM))
+            try:
+                doc = json.loads(f.read_text(encoding="utf-8"))
+            except json.JSONDecodeError as e:
+                problems.append((rel, "json", str(e)[:80]))
+                continue
+            ptype = doc.get("program_type") if isinstance(doc, dict) else None
+            if ptype not in validators:
+                problems.append((rel, "program_type", f"نوع برنامج بلا مخطّط: {ptype!r}"))
+                continue
+            for err in validators[ptype].iter_errors(doc):
+                problems.append((rel, "/".join(map(str, err.path)) or "(root)", err.message[:100]))
 
     print(f"  ملفات مفحوصة (عربي + إنجليزي): {total}")
 
