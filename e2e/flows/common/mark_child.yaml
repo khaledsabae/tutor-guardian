@@ -42,6 +42,19 @@ appId: com.alsaba.almorabbi
 - takeScreenshot: mark_child_1_edit
 # The app-bar Save: the bottom "Save changes" button can sit under the keyboard.
 - tapOn: '${output.t.save}'
+# A lost tap leaves the edit screen up; saving twice is the same PATCH.
+- extendedWaitUntil:
+    visible: '${output.t.settingsTitle}'
+    timeout: 20000
+    optional: true
+- waitForAnimationToEnd:
+    timeout: 2000
+- runFlow:
+    when:
+      visible: '${output.t.editChildTitle}'
+    commands:
+      - takeScreenshot: mark_child_1b_save_retry
+      - tapOn: '${output.t.save}'
 # Save even if a letter was left over (see below). Back on Settings, the header
 # is re-read from GET /api/children — the server has the new name.
 - extendedWaitUntil:
