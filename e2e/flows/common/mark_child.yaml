@@ -39,18 +39,18 @@ appId: com.alsaba.almorabbi
           commands:
             - eraseText: 1
       - inputText: '${CHILD_NAME}'
-# Exact match — a leftover letter fails here, not in the exclusion query.
-- assertVisible: '${CHILD_NAME}'
 - takeScreenshot: mark_child_1_edit
 # The app-bar Save: the bottom "Save changes" button can sit under the keyboard.
 - tapOn: '${output.t.save}'
-# Back on Settings, the header is re-read from GET /api/children — the server
-# has the new name, not just this screen.
+# Save even if a letter was left over (see below). Back on Settings, the header
+# is re-read from GET /api/children — the server has the new name.
 - extendedWaitUntil:
     visible: '${output.t.settingsTitle}'
     timeout: 30000
+# The name as a whole word: a leftover letter fails here — after Save, so even a
+# flawed rename leaves the device caught by LIKE 'E2E-Maestro%'.
 - extendedWaitUntil:
-    visible: '(?s).*${CHILD_NAME}.*'
+    visible: '(?s)(?:.*\s)?${CHILD_NAME}(?:\s.*)?'
     timeout: 30000
 - takeScreenshot: mark_child_2_saved
 - back

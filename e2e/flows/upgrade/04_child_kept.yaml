@@ -6,6 +6,6 @@ name: upgrade/04 upgrade keeps the child
 - runScript: ../common/l10n.js
 - runFlow: ../common/home.yaml
 - extendedWaitUntil:
-    visible: '(?s).*${CHILD_NAME}.*'
+    visible: '(?s)(?:.*\s)?${CHILD_NAME}(?:\s.*)?'
     timeout: 30000
 - takeScreenshot: upgrade_4_child_kept

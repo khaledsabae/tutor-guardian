@@ -8,6 +8,6 @@ name: fresh/08 child survives the restart
 - runScript: ../common/l10n.js
 - runFlow: ../common/home.yaml
 - extendedWaitUntil:
-    visible: '(?s).*${CHILD_NAME}.*'
+    visible: '(?s)(?:.*\s)?${CHILD_NAME}(?:\s.*)?'
     timeout: 30000
 - takeScreenshot: child_after_restart
