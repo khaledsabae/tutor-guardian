@@ -1,0 +1,4817 @@
+{
+ "_doc": [
+  "Knowledge units withdrawn by the 2026-10-04 fidelity review: each Arabic summary was read against its own source (the PDF text de-reversed, or re-OCR'd page by page where the extraction was unreadable) and found unfaithful (topic invented, attribution or ruling misstated, a figure wrong) or a content-free model note.",
+  "The files live in ops/data/en_unpublished/ (moved with review_en_parity.py unpublish --with-source, which also cleared the English queue). check_kb_fidelity.py check fails if any of them, or its translation, is live again or still listed in units_index.json.",
+  "retrieved = times the unit (Arabic or __en) was among the final retrieved units in production retrieval_log, 2026-06-12 → 2026-10-04 (2,397 retrievals). Sorted by it: the most-cited first.",
+  "To re-publish one: fix the Arabic against its source, move the file back, and delete its entry here in the same commit — a visible decision, never a side effect."
+ ],
+ "units": [
+  {
+   "id": "isl-c4d83813",
+   "category": "unfaithful",
+   "retrieved": 67,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "تعليم الأطفال الصلاة وأهمية التوجيه الحكيم",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "introduces_number"
+   ],
+   "reason": "Topic invented: summary teaches prayer (and the 7/10 narration); the source page (Alukah p.177) is about modest dress for girls and keeping sons from lying (Ibn Sirin, Abd al-Malik ibn Marwan, Awn ibn Abdullah). Nothing on prayer.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-c4d83813.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-c4d83813.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-af807518",
+   "category": "unfaithful",
+   "retrieved": 32,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "تعويد الأطفال على الصلاة بلطف",
+   "flags": [
+    "reversed",
+    "glyph_substituted"
+   ],
+   "reason": "Topic invented: summary is about accustoming children to prayer gently; source (p.104) is fathers passing on knowledge - Dhakwan telling Suhayl to call the adhan when frightened (Satan flees it), Abu Burda's hadith on freeing a slave, Qurra teaching Mu'awiya how to return salam.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-af807518.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-af807518.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-e20d927a",
+   "category": "unfaithful",
+   "retrieved": 26,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "تربية الأبناء على حب النبي واتباع سنته",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Invents 'a man who saw the Prophet in his dream' and a lesson on love of the Prophet/salawat; source (p.153) is greeting children, and raising them on simple living: Fatima taught tasbih 33/33/34 instead of a servant, Abu Musa and Qurra on the Companions' hardship.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-e20d927a.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-e20d927a.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-e20d927a__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-e20d927a__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-707601b0",
+   "category": "unfaithful",
+   "retrieved": 25,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "فضل تعليم القرآن للأطفال",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Adds an eschatological claim absent from the source: 'children who read the Quran intercede for their parents on the Day of Judgement'. Source (pp.79-80) has Uthman's hadith 'the best of you learns and teaches the Quran', Ibn Abbas and Amr ibn Salama learning young, al-Dahhak's exhortation - no intercession.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-707601b0.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-707601b0.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-707601b0__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-707601b0__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-390466e2",
+   "category": "unfaithful",
+   "retrieved": 23,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "تعليم الأطفال حقوق الآخرين والصدق",
+   "flags": [
+    "reversed",
+    "glyph_substituted"
+   ],
+   "reason": "Lessons invented: summary says the story teaches others' rights, truthfulness, keeping promises and that lying destroys trust; source (p.19) is Abu Talha and Umm Sulaym's patience when their son died and the blessing on their later children, then the du'a before intimacy to protect a child from Satan.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-390466e2.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-390466e2.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-390466e2__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-390466e2__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-3110e6c7",
+   "category": "meta_note",
+   "retrieved": 18,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "تحليل نص قديم غير محدد السلوك",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Model meta-note: title 'analysis of an old text, behaviour unspecified', summary says no clear parenting information and advises consulting a specialist. Source (p.165) is Abu Bakra's and Urwa's patience in illness and loss and Ubada ibn al-Samit teaching his son belief in qadar - none of it conveyed.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-3110e6c7.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-3110e6c7.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-3110e6c7__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-3110e6c7__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-68df90c4",
+   "category": "unfaithful",
+   "retrieved": 17,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "أهمية الصدق في تربية الأطفال من خلال القصص",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing",
+    "introduces_companion"
+   ],
+   "reason": "Misattributes the narrator: summary says the Companion Anas ibn Malik tells the story; the source (p.74) is Aslam (Umar's freedman) - Umar checking on his son Abd al-Rahman without warning him lest Satan prompt a lie, and the rooster bribe. Anas is not in it.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-68df90c4.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-68df90c4.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-68df90c4__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-68df90c4__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-756e7d81",
+   "category": "unfaithful",
+   "retrieved": 17,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "توجيه نبوي حول الأخلاق والصدق",
+   "flags": [
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Invents a dialogue in which the Prophet counsels a Companion on good character, truthfulness and patience; the source (p.117) is about permitted competitions and prizes - 'no prize except for hoof, camel and arrow', the horse races the Prophet held (Ibn Umar), wagering.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-756e7d81.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-756e7d81.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-756e7d81__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-756e7d81__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-11a3cb7e",
+   "category": "unfaithful",
+   "retrieved": 16,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "تربية الأطفال على الصلاة والصدق",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Two of three sentences unsupported: truthfulness and 'a child raised this way will be dutiful to his parents' are not in the source; source (p.97) is children attending Eid prayer and the mosque (Rafi' ibn Khadij's sons, Ka'b ibn Ujra) and the heading on teaching children the Sunnah.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-11a3cb7e.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-11a3cb7e.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-19074fe7",
+   "category": "unfaithful",
+   "retrieved": 16,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "أسس تأديب الأطفال باللطف والحكمة",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Inverts the source: summary says the text holds that hitting is not a correct educational means; the source (p.64, Ibn al-Jawzi) permits light disciplinary hitting (for Quran, Arabic, prayer at nine) and discusses ta'zir limits. The app's no-hitting stance is right, but attributing it to this book is false.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-19074fe7.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-19074fe7.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-22d62ea2",
+   "category": "unfaithful",
+   "retrieved": 15,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "توجيه الطفل العدواني لضبط الغضب",
+   "flags": [
+    "reversed",
+    "glyph_substituted"
+   ],
+   "reason": "Invents a case of a violent, impulsive child; the source (p.112) is the chapter permitting children's play - Ibn Abbas playing with boys, Abu Hurayra playing with children, children in the mosque, al-Hasan and al-Husayn with the dates.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-22d62ea2.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-22d62ea2.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-22d62ea2__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-22d62ea2__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-516d879f",
+   "category": "meta_note",
+   "retrieved": 15,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "أدعية دينية لتعزيز التوحيد",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Front matter, not parenting content: the source (p.6) is the author's opening khutbat al-haja (praise, shahada, Al Imran 102, al-Nisa 1, al-Ahzab 70-71). The summary describes it as 'verses and prayers, not related to any behaviour' and invents advice to teach them to children.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-516d879f.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-516d879f.json"
+    }
+   ]
+  },
+  {
+   "id": "med-0b39e5a8",
+   "category": "unfaithful",
+   "retrieved": 12,
+   "source_file": "SFDA_Healthy_Nutrition_Guide.pdf",
+   "title": "نشاط بدني وتغذية صحية للأطفال",
+   "flags": [
+    "reversed"
+   ],
+   "reason": "Misstates a health figure: the SFDA guide (p.34, also p.25) says a child is active with at least 60 minutes of moderate-to-vigorous activity daily and an adult with 30 minutes on five days; the summary tells parents the active child needs 30 minutes a day.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/med-0b39e5a8.json",
+     "to": "ops/data/en_unpublished/kb_units_source/med-0b39e5a8.json"
+    },
+    {
+     "from": "knowledge_base/units/med-0b39e5a8__en.json",
+     "to": "ops/data/en_unpublished/kb_units/med-0b39e5a8__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-0b607846",
+   "category": "unfaithful",
+   "retrieved": 11,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "أهمية التوكل على الله والثقة به",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Topic invented: summary is about tawakkul and paraphrases al-Talaq 3 ('provides from where he does not expect'); source (p.83) is the chapter on teaching children tawhid - Nuh calling his son, Nuh's dying will (la ilaha illa Allah, subhan Allah wa bihamdihi), Ibrahim and Ya'qub's will to their sons (al-Baqara 132-133).",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-0b607846.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-0b607846.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-0b607846__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-0b607846__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-50f95326",
+   "category": "unfaithful",
+   "retrieved": 11,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "أهمية الصبر وضبط النفس عند الغضب",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Anger, regret from rushing to answer and emotions strengthening relationships are not in the source; p.171 is Ibn al-Jawzi's 'patience against what you desire and dislike', Abu Bakr's refusal to speak without knowledge, and the verse on children seeking permission (al-Nur 58).",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-50f95326.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-50f95326.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-50f95326__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-50f95326__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-91f5606a",
+   "category": "unfaithful",
+   "retrieved": 11,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "قصة شفاء الطفل بدعاء النبي",
+   "flags": [
+    "glyph_substituted"
+   ],
+   "reason": "Invents a miracle story attributed to the Prophet (a crying child healed by his du'a); the source text is Anas's hadith of Abu Talha's bread multiplied - 'admit ten' - the guests ate until full. No sick or crying child.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-91f5606a.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-91f5606a.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-91f5606a__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-91f5606a__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-d0227f8b",
+   "category": "unfaithful",
+   "retrieved": 10,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "العدل بين الأبناء في الحب والعطاء",
+   "flags": [
+    "reversed",
+    "glyph_substituted"
+   ],
+   "reason": "Misattributes to the Prophet: 'he urged justice between children even in kisses'. In the source (pp.67-69) that is Ibrahim al-Nakha'i's report of what the Successors preferred; the Prophet's words there are al-Nu'man ibn Bashir's 'fear Allah and be just between your children'.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-d0227f8b.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-d0227f8b.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-d0227f8b__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-d0227f8b__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-2fafe289",
+   "category": "unfaithful",
+   "retrieved": 9,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "تعليم الأطفال الصلاة والعبادات منذ الصغر",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Topic invented: summary cites hadiths on accustoming a child to prayer at seven and gentle discipline; source (p.44) is the Prophet joking with Abu Umayr about his bird, and the chapter on giving a child a kunya (Ibn Battal, Ibn Hajar, Aisha's kunya Umm Abdullah).",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-2fafe289.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-2fafe289.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-f2ccdca6",
+   "category": "unfaithful",
+   "retrieved": 9,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "استجابة الأهل لبكاء الطفل وتخفيف ألمه",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Invents a child crying with stomach pain whose father rushes to him; source (p.58) is Ibn Umar kissing his son Salim, Abu Bakr carrying al-Hasan, Ibn al-Jawzi on rhymes for dandling children, Urwa clinging to al-Zubayr's back.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-f2ccdca6.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-f2ccdca6.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-f2ccdca6__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-f2ccdca6__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-05aa623c",
+   "category": "unfaithful",
+   "retrieved": 8,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "طلب الطفل للتحكم في النفس",
+   "flags": [
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Invents 'a child asking Allah for self-control'; the source text is Abdullah ibn Umar's account of his brother Abd al-Rahman drinking in Egypt, Amr ibn al-As and Umar's letter - an account of a punishment, not a child's prayer.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-05aa623c.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-05aa623c.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-05aa623c__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-05aa623c__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-c4a536a4",
+   "category": "unfaithful",
+   "retrieved": 8,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "تحليل سلوك فرط الحركة وتشتت الانتباه لدى الطفل",
+   "flags": [
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Invents an ADHD case (talks nonstop, cannot sit still); the source text is Aisha's account of her mother bringing her to the house from playing on the swing. Nothing on attention or hyperactivity.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-c4a536a4.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-c4a536a4.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-c4a536a4__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-c4a536a4__en.json"
+    }
+   ]
+  },
+  {
+   "id": "dev-0a5739fc",
+   "category": "meta_note",
+   "retrieved": 7,
+   "source_file": "Adolescent_Brain_UNICEF.pdf",
+   "title": "فهم القلق من خلال الفن التعبيري",
+   "flags": [
+    "meta_framing"
+   ],
+   "reason": "The source is the UNICEF compendium's cover credit and acknowledgements; the unit's title and labels invent an 'understanding anxiety through art' topic and the summary is a content-free note, so it is retrieved for anxiety questions with nothing to give.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/dev-0a5739fc.json",
+     "to": "ops/data/en_unpublished/kb_units_source/dev-0a5739fc.json"
+    },
+    {
+     "from": "knowledge_base/units/dev-0a5739fc__en.json",
+     "to": "ops/data/en_unpublished/kb_units/dev-0a5739fc__en.json"
+    }
+   ]
+  },
+  {
+   "id": "dev-586b39f9",
+   "category": "meta_note",
+   "retrieved": 7,
+   "source_file": "Adolescent_Brain_UNICEF.pdf",
+   "title": "الفن والذكاء: نمو الدماغ لدى المراهقين وتأثير الفقر",
+   "flags": [
+    "meta_framing"
+   ],
+   "reason": "The source is a list of artwork credits (Todd Siler, Ronald Feldman Fine Arts); the title and summary invent research on adolescent brain development and poverty that this chunk does not contain.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/dev-586b39f9.json",
+     "to": "ops/data/en_unpublished/kb_units_source/dev-586b39f9.json"
+    },
+    {
+     "from": "knowledge_base/units/dev-586b39f9__en.json",
+     "to": "ops/data/en_unpublished/kb_units/dev-586b39f9__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-43bfb6da",
+   "category": "unfaithful",
+   "retrieved": 7,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "توجيهات نبوية في تربية الأبناء",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Invents 'prophetic hadiths' on gentleness, patience, tolerance and not getting angry; the source (p.175) is forbidding children religious innovation (Abu Sa'id al-Khudri's burial instructions), qaza' haircuts (Ibn Umar) and curtains on walls.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-43bfb6da.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-43bfb6da.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-801dbc52",
+   "category": "meta_note",
+   "retrieved": 7,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "حوار ديني وأخلاقي بين شخصين",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Meta description ('a dialogue between two people... no specific parenting focus'); the source (p.86) is fathers teaching sons faith - al-Zubayr telling Abdullah to seek Allah's help with his debt, Umar's du'a, Ubada ibn al-Samit teaching al-Walid belief in qadar. None of it conveyed.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-801dbc52.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-801dbc52.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-801dbc52__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-801dbc52__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-901bde3f",
+   "category": "unfaithful",
+   "retrieved": 7,
+   "source_file": "Kayfa_Turabbi_Waladak.pdf",
+   "title": "قواعد العاقبة الفورية الهادئة للأطفال",
+   "flags": [
+    "reversed"
+   ],
+   "reason": "No longer a summary of its source: the 2026-10-04 safety rewrite (70f2df67) replaced Kayfa p.51's rules with the app's guidance, and now contradicts the book - p.51 says a mistake made in front of siblings is punished in front of them; the unit says 'correct him privately, never in front of his siblings'. Sound advice, false provenance; re-home it as authored content.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-901bde3f.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-901bde3f.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-901bde3f__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-901bde3f__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-c81c58e1",
+   "category": "unfaithful",
+   "retrieved": 7,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "أهمية الصلاة وبر الوالدين في تربية الأطفال",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Half the claim is not in the source: p.90 has the verses and narration on teaching prayer, nothing on kindness to parents; 'experts recommend' invents an authority. The same page is covered faithfully by isl-14009a8e.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-c81c58e1.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-c81c58e1.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-c81c58e1__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-c81c58e1__en.json"
+    }
+   ]
+  },
+  {
+   "id": "med-2fb28d90",
+   "category": "unfaithful",
+   "retrieved": 7,
+   "source_file": "WHO_Physical_Activity_Sleep_Under5.pdf",
+   "title": "أهمية النوم والنشاط البدني للأطفال",
+   "flags": [],
+   "reason": "The source is the WHO guideline's reference list; the summary turns paper titles into findings ('following the 24-hour guidelines reduces obesity and improves motor skills') and invents an age band (4-8 years) from a truncated title, in a guideline about children under five.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/med-2fb28d90.json",
+     "to": "ops/data/en_unpublished/kb_units_source/med-2fb28d90.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-5b8d2dc3",
+   "category": "unfaithful",
+   "retrieved": 6,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "تعليم الصلاة للأطفال بالرفق والقدوة",
+   "flags": [
+    "partially_reversed",
+    "glyph_substituted"
+   ],
+   "reason": "Topic invented: summary is about teaching prayer gently; source (p.31) is naming the newborn - al-Hasan and al-Husayn named on the seventh day, naming before birth (Maryam 7, al-Saff 6).",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-5b8d2dc3.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-5b8d2dc3.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-5b8d2dc3__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-5b8d2dc3__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-7dbd2226",
+   "category": "unfaithful",
+   "retrieved": 6,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "أهمية الصبر والثبات على الدين",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Topic invented (patience is the key to relief, Allah is with the patient); source (p.17) is children protected by their parents' righteousness - Ibn Abbas on al-Kahf 82, Muhammad ibn al-Munkadir, Ibn Kathir, al-Tur 21.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-7dbd2226.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-7dbd2226.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-7dbd2226__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-7dbd2226__en.json"
+    }
+   ]
+  },
+  {
+   "id": "cyb-fc24ccce",
+   "category": "unfaithful",
+   "retrieved": 5,
+   "source_file": "Screen_Time_2025.pdf",
+   "title": "الكبار والطفل الصغير: استخدام وسائل الإعلام وفرط الحركة",
+   "flags": [
+    "introduces_number"
+   ],
+   "reason": "Misstates the census figure: the source says children 8 and younger spend about two and a half hours (2:27) a day with screen media; the summary says about five hours, and the title invents 'hyperactivity'.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/cyb-fc24ccce.json",
+     "to": "ops/data/en_unpublished/kb_units_source/cyb-fc24ccce.json"
+    },
+    {
+     "from": "knowledge_base/units/cyb-fc24ccce__en.json",
+     "to": "ops/data/en_unpublished/kb_units/cyb-fc24ccce__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-2f563178",
+   "category": "unfaithful",
+   "retrieved": 5,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "تعليم الأطفال الصبر والتحكم في الغضب",
+   "flags": [
+    "reversed",
+    "glyph_substituted"
+   ],
+   "reason": "Topic invented (anger control, delayed gratification, praise); source (pp.161-162) is fathers' wills on truthfulness and goodwill to Muslims, Sa'd 'we are imams who are followed', Ibn Umar guarding orphans' money, Luqman 17, respecting the Companions and elders.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-2f563178.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-2f563178.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-2f563178__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-2f563178__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-36917162",
+   "category": "unfaithful",
+   "retrieved": 5,
+   "source_file": "Tarbiya_Al_Banat.pdf",
+   "title": "تعويد الأطفال على الصلاة وتجنب التعلق بالهاتف",
+   "flags": [
+    "reversed"
+   ],
+   "reason": "Misreports the source's anecdote and invents its theme: Tarbiyat al-Banat p.14 warns about leaving a girl with the driver (the author saw a driver take a girl into a shop alone) and urges patience; the summary has a mother handing her daughter a phone and titles it 'phone attachment'.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-36917162.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-36917162.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-36917162__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-36917162__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-4e356b57",
+   "category": "unfaithful",
+   "retrieved": 5,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "أهمية الصحة النفسية للأطفال والمراهقين",
+   "flags": [
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Invents a mental-health text (anxiety, addiction, emotional support); source (p.167) is Aisha's account during the ifk and the heading 'raising children on courage' - Anas serving as a boy, Aisha and Umm Sulaym carrying water at Uhud, and a note not to frighten children with darkness or ghouls.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-4e356b57.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-4e356b57.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-4e356b57__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-4e356b57__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-4ecbbad1",
+   "category": "unfaithful",
+   "retrieved": 5,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "تربية الأبناء على الأخلاق والصبر عند الغضب",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing",
+    "introduces_prophet"
+   ],
+   "reason": "Invents a Prophet's hadith ('a man got angry and the Prophet told him to seek refuge from Satan') that is not in the source; p.159 has Anas on giving gifts among children, Umar and al-Rabi's daughter on fearing Allah, and Urwa's father's advice to look at the sky and earth when angry.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-4ecbbad1.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-4ecbbad1.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-4ecbbad1__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-4ecbbad1__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-9a173156",
+   "category": "unfaithful",
+   "retrieved": 5,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "قصة عن الصبر والحكمة في تربية الأطفال",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Generic invented frame ('a dialogue between a father and his son'); the source (p.73) is the Prophet waking Ali and Fatima for night prayer ('man is most argumentative') and Ibrahim checking on Ismail's household (the threshold). Its content is not conveyed.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-9a173156.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-9a173156.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-a3a4ff7e",
+   "category": "unfaithful",
+   "retrieved": 5,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "خطر العنف الجسدي على الأطفال وأهمية التربية بالرفق",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Invented and inverted: 'a man beat his son nearly to death, then regretted it'; the source (pp.167-168) is Safiyya beating the orphan al-Zubayr hard to make him brave, defending it in verse - presented under raising children on courage, with no regret.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-a3a4ff7e.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-a3a4ff7e.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-a3a4ff7e__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-a3a4ff7e__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-d8ac2c78",
+   "category": "unfaithful",
+   "retrieved": 5,
+   "source_file": "Kayfa_Turabbi_Waladak.pdf",
+   "title": "أحكام الإجهاض في الفقه الإسلامي",
+   "flags": [
+    "reversed",
+    "meta_framing"
+   ],
+   "reason": "Misstates a fiqh ruling: Kayfa pp.37-38 say abortion after ensoulment is haram by consensus (no exception given) and before it the scholars range between prohibition and dislike, with piety requiring avoidance; the summary adds a 'danger to the mother' exception and calls early abortion 'permissible with trusted doctors' - the doctor's testimony in the source is about contraception.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-d8ac2c78.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-d8ac2c78.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-d8ac2c78__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-d8ac2c78__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-f1213a76",
+   "category": "unfaithful",
+   "retrieved": 5,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "تحليل سلوك فرط الحركة لدى الطفل",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Invents a hyperactivity/ADHD case; the source (p.154) is on raising children to zuhd - modest houses, 'dinars and dirhams are the reins of hypocrites', Ibn al-Jawzi spending his inheritance on books.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-f1213a76.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-f1213a76.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-f1213a76__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-f1213a76__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-0ecac170",
+   "category": "unfaithful",
+   "retrieved": 4,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "أهمية التربية الأخلاقية للأبناء",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Title and two of three claims are not in the source: p.14 is about choosing a righteous wife (Abu Hurayra's hadith on the best of women, Umar on a good-natured loving wife); moral upbringing and fear of Allah leading to children's righteousness are not there.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-0ecac170.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-0ecac170.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-0ecac170__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-0ecac170__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-4d3a645f",
+   "category": "unfaithful",
+   "retrieved": 4,
+   "source_file": "Kayfa_Turabbi_Waladak.pdf",
+   "title": "أهمية الحزم والصدق في تربية الأبناء",
+   "flags": [
+    "reversed",
+    "introduces_prophet"
+   ],
+   "reason": "Attributes to the Quran and Sunnah a claim the source reverses: Kayfa p.13 says the parents' righteousness raises their offspring to their rank (al-Kahf 82); the summary says 'children's righteousness and dutifulness raise their ranks'. The Prophet's warning in the source is only about lying to a child.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-4d3a645f.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-4d3a645f.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-4d3a645f__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-4d3a645f__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-b5620aee",
+   "category": "unfaithful",
+   "retrieved": 4,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "تعليم الطفل الصبر وعدم الإلحاح",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Invents a story of a child crying for a toy and a father teaching contentment; the source (pp.102-103) is fathers teaching sons worship - al-Bara' ibn Azib showing wudu and prayer, Abu Bakra's du'a against kufr and poverty, Usama ibn Umayr on praying at home in the rain.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-b5620aee.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-b5620aee.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-b5620aee__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-b5620aee__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-d0a71a62",
+   "category": "unfaithful",
+   "retrieved": 4,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "أهمية التربية الأخلاقية للأبناء في الإسلام",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Topic invented (values, patience, obedience, love with firmness); the source (p.147) is the obligation to spend on young children - Thawban's 'best dinar is spent on one's family' - and the jurists' views on maintaining grown children (Malik, al-Shafi'i, al-Thawri).",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-d0a71a62.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-d0a71a62.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-d0a71a62__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-d0a71a62__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-d44e6fe8",
+   "category": "unfaithful",
+   "retrieved": 4,
+   "source_file": "Rakaiz_Tarbiya.pdf",
+   "title": "خطر المخدرات وأهمية القدوة الحسنة",
+   "flags": [
+    "reversed",
+    "missing_glyphs"
+   ],
+   "reason": "Title and lead claim invented: Rakaiz pp.29-30 warn about new media - satellite channels, the internet and social media on the phones children carry - when unsupervised; drugs are not mentioned.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-d44e6fe8.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-d44e6fe8.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-d44e6fe8__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-d44e6fe8__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-d5f85bee",
+   "category": "unfaithful",
+   "retrieved": 4,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "تعليم الأطفال الصلاة بالرفق والقدوة",
+   "flags": [
+    "reversed",
+    "glyph_substituted"
+   ],
+   "reason": "Topic invented (teaching prayer gently); the source (p.116) permits children's toys and pets - Aisha's winged horse, Abu Umayr's bird with Ibn Hajar's commentary, buying toys without extravagance - and horse and camel races (al-Anfal 60).",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-d5f85bee.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-d5f85bee.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-d5f85bee__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-d5f85bee__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-ec2f1d58",
+   "category": "unfaithful",
+   "retrieved": 4,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "أهمية التربية الأخلاقية للأبناء",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Generic moral-upbringing summary unrelated to its source: pp.44-45 are the chapter on giving children a kunya (Ibn Battal, Ibn Hajar, Aisha's kunya, Ibn Mas'ud's 'Abu Shibl', Anas naming Anas ibn Sirin).",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-ec2f1d58.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-ec2f1d58.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-f8bb1f42",
+   "category": "meta_note",
+   "retrieved": 4,
+   "source_file": "Manhaj_Nabawi_Khulayfi.pdf",
+   "title": "إشارات إلى مصادر إسلامية متنوعة",
+   "flags": [
+    "reversed",
+    "missing_glyphs",
+    "meta_framing"
+   ],
+   "reason": "The source (Khulayfi p.15) is the endnotes; the summary itself says it is a list of references with no parenting content.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-f8bb1f42.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-f8bb1f42.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-f8bb1f42__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-f8bb1f42__en.json"
+    }
+   ]
+  },
+  {
+   "id": "med-87fc7c8c",
+   "category": "meta_note",
+   "retrieved": 4,
+   "source_file": "WHO_Physical_Activity_Sleep_Under5.pdf",
+   "title": "حقوق النشر والترخيص لمنظمة الصحة العالمية",
+   "flags": [
+    "meta_framing"
+   ],
+   "reason": "The source is WHO's copyright and licence notice; the summary is a model note that ends 'the text is not related to parenting'. No parenting content to serve.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/med-87fc7c8c.json",
+     "to": "ops/data/en_unpublished/kb_units_source/med-87fc7c8c.json"
+    }
+   ]
+  },
+  {
+   "id": "b64ed3c8-59e3-4b79-a7ad-ed558212f087",
+   "category": "unfaithful",
+   "retrieved": 3,
+   "source_file": "",
+   "title": "الاحتياجات النفسية للطفل من 4 إلى 6 سنوات",
+   "flags": [],
+   "reason": "Generic and unrelated to its source: the chunk is NIMH's list of questions to ask a child's treatment provider (research-supported approaches, parent involvement, homework, progress); the summary invents a claim about 4-6 year olds' psychological needs.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/b64ed3c8-59e3-4b79-a7ad-ed558212f087.json",
+     "to": "ops/data/en_unpublished/kb_units_source/b64ed3c8-59e3-4b79-a7ad-ed558212f087.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-1a3e7f6f",
+   "category": "unfaithful",
+   "retrieved": 3,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "تعليم الطفل الصلاة وأهمية القدوة الحسنة",
+   "flags": [
+    "reversed",
+    "glyph_substituted"
+   ],
+   "reason": "Claims 'the Prophet's hadith urges teaching prayer at seven' - not in the source, which (p.147) is about spending on young children: 'which man is greater in reward than one who spends on small children to keep them chaste' (Muslim) and the jurists on maintenance.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-1a3e7f6f.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-1a3e7f6f.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-1a3e7f6f__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-1a3e7f6f__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-32871fdb",
+   "category": "unfaithful",
+   "retrieved": 3,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "حقوق الأطفال والعدل بينهم في الإسلام",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Topic invented (justice between children, a Companion story of mercy); the source (p.111) is fathers taking their sons to scholars - Hammad ibn Zayd to Ibn Awn, 'go to the jurists and take their manners', Abd al-Razzaq's father, al-Majishun, Shu'ba's mother.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-32871fdb.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-32871fdb.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-32871fdb__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-32871fdb__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-714f9e97",
+   "category": "unfaithful",
+   "retrieved": 3,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "تحذير من العنف الجسدي تجاه الأطفال",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Recasts the source as 'scenes of beating and harsh treatment of children'; p.101 is Sa'd tapping his son Mus'ab's hands to correct how he placed them in ruku' ('we were commanded to put our palms on our knees') and explaining 'heedless of their prayer'.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-714f9e97.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-714f9e97.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-714f9e97__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-714f9e97__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-946dd770",
+   "category": "meta_note",
+   "retrieved": 3,
+   "source_file": "Al_Hady_Al_Nabawi.pdf",
+   "title": "استراتيجيات تحسين سلوكيات الأسرة وتحسين الاتصال بين الآباء والأبناء",
+   "flags": [
+    "reversed",
+    "meta_framing"
+   ],
+   "reason": "Content-free and unrelated: the source (Kayfa p.5) is the status of upbringing - 'each of you is a shepherd', Ibn Umar 'discipline your son', 'no father gives his child anything better than good manners', daughters as a screen from the Fire; the summary speaks vaguely of 'strategies to improve communication'.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-946dd770.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-946dd770.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-946dd770__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-946dd770__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-a22f04cd",
+   "category": "unfaithful",
+   "retrieved": 3,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "تعليم الأطفال آداب الطعام والعبادات",
+   "flags": [
+    "reversed",
+    "glyph_substituted"
+   ],
+   "reason": "Topic invented (eating with the right hand, basmala); the source (p.23) is the child's right to life: the Prophet deferring the Juhaniyya's and the Ghamidiyya's punishment until birth and weaning, and the verses forbidding killing children (al-An'am 151, al-Isra' 31).",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-a22f04cd.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-a22f04cd.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-a22f04cd__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-a22f04cd__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-aeca7eab",
+   "category": "unfaithful",
+   "retrieved": 3,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "الرفق بالأطفال في الحديث النبوي",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Invents a hadith ('whoever does not show mercy to our young and know the right of our elders is not one of us'); the source (p.154) is raising children to zuhd - a father's plain garment, al-Hasan's leaking house, 'dinars and dirhams are the reins of hypocrites'.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-aeca7eab.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-aeca7eab.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-aeca7eab__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-aeca7eab__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-b0534fbc",
+   "category": "unfaithful",
+   "retrieved": 3,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "قصة صراع وعنف بين شخصيات قديمة",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Invented frame ('a story of conflict and violence', resolve disputes by dialogue); the source (pp.54-55) is Mu'awiya's affection for his son Yazid during a friendly wrestling match, Amr ibn Utba's love for his son, Umayya ibn Abi al-Salt's verse to an ungrateful son.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-b0534fbc.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-b0534fbc.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-c10d43e4",
+   "category": "unfaithful",
+   "retrieved": 3,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "حقوق الأطفال وتربيتهم على القيم",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Adds a Quranic citation not in the source ('Allah does not change a people until they change themselves', al-Ra'd 11); p.145 is the fitra practices, circumcision (Ibn al-Qayyim, al-Muhallab) and the chapter on spending on children (al-Baqara 233, al-Talaq 7).",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-c10d43e4.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-c10d43e4.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-c10d43e4__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-c10d43e4__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-ca9f1de7",
+   "category": "unfaithful",
+   "retrieved": 3,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "أهمية تربية الأبناء على الصلاة بأساليب إيجابية",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Inverts the source: summary says the text holds hitting is ineffective and harmful; pp.60-61 are Ibn Uthaymin defending light disciplinary hitting for prayer at ten and refuting educators who reject it, Ibn Taymiyya, and Umar punishing his son for drinking.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-ca9f1de7.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-ca9f1de7.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-ca9f1de7__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-ca9f1de7__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-dc441991",
+   "category": "unfaithful",
+   "retrieved": 3,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "توجيه أبوي لتصحيح سلوك الطفل",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Vague invented frame ('a father fearing for his son's behaviour, dialogue'); the source (pp.69-70) is justice between children - 'your child has a right over you', Abu Bakr taking back his gift to Aisha, Umar ibn Abd al-Aziz equalising his sons, Ata' and Masruq.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-dc441991.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-dc441991.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-dc441991__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-dc441991__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-ebc1b275",
+   "category": "unfaithful",
+   "retrieved": 3,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "غرس حب النبي في قلب الطفل",
+   "flags": [
+    "reversed",
+    "glyph_substituted"
+   ],
+   "reason": "Invents a child crying and kicking a wall who loves the Prophet; the source (p.172) is Amr ibn al-As on his deathbed turning his face to the wall, his son reminding him of the Prophet's glad tidings, and his account of coming to love the Prophet.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-ebc1b275.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-ebc1b275.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-ebc1b275__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-ebc1b275__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-f4c611da",
+   "category": "unfaithful",
+   "retrieved": 3,
+   "source_file": "Kayfa_Turabbi_Waladak.pdf",
+   "title": "تجنب ترهيب الطفل بالله والنار في التربية",
+   "flags": [
+    "reversed"
+   ],
+   "reason": "Its headline contradicts the source: Kayfa p.53 says to make the child fear Allah before everything and warns only against constant 'Allah will put you in Hell' threats without mentioning His mercy, and against frightening him with police or doctors; the summary says to avoid frightening the child with Allah and adds 'do not link punishment to Allah's love or Paradise'.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-f4c611da.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-f4c611da.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-f4c611da__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-f4c611da__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-f84ef732",
+   "category": "unfaithful",
+   "retrieved": 3,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "حقوق الأبناء على الآباء في الإسلام",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Inverts the source and adds 'prophetic hadiths' and du'a: pp.16-17 say the parents' righteousness protects their children (al-Kahf 82 with Ibn Abbas, Ibn al-Munkadir, Ibn Kathir, al-Tur 21) and advise choosing a righteous spouse; the summary says children's righteousness benefits parents.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-f84ef732.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-f84ef732.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-f84ef732__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-f84ef732__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-12f1f119",
+   "category": "unfaithful",
+   "retrieved": 2,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "توجيه الأطفال نحو القيم الدينية والأخلاقية",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Generic dialogue frame plus 'hadiths urging good treatment of children' not in the source; p.168 is al-Zubayr putting his ten-year-old son on a horse, Safiyya's hard upbringing of al-Zubayr, Abdullah ibn al-Zubayr with Asma'.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-12f1f119.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-12f1f119.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-12f1f119__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-12f1f119__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-1b230a64",
+   "category": "unfaithful",
+   "retrieved": 2,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "حقوق الأطفال وفضل الصلاة في التربية",
+   "flags": [
+    "partially_reversed",
+    "glyph_substituted",
+    "meta_framing",
+    "introduces_companion"
+   ],
+   "reason": "Invents a story of Bilal ibn Rabah with the Prophet in prayer; the source (pp.28-29) is what to do at a birth - seeking refuge for the newborn, du'a and tahnik (Abu Musa's son, Abdullah ibn Abi Talha, Ibn al-Zubayr), with a note that no hadith on the adhan in the ear is authentic.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-1b230a64.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-1b230a64.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-1b230a64__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-1b230a64__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-20cd665c",
+   "category": "unfaithful",
+   "retrieved": 2,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "تعليم الأطفال الصلاة والتربية الدينية",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Main topic not in the source: pp.155-156 are about raising children to self-restraint and contentment - Umar refusing his son a ring from the Jalula' treasure, Urwa reciting Taha 131-132 at the sight of worldly luxury, Ahmad refusing a gift. Teaching young children prayer is not the subject.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-20cd665c.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-20cd665c.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-20cd665c__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-20cd665c__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-35bd0931",
+   "category": "unfaithful",
+   "retrieved": 2,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "تعليم الأطفال الصلاة وأهميتها في التربية",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Claims hadiths on commanding prayer at seven; the source (p.106) is the chapter on urging children to learn the sciences of the sharia - Anas 'record knowledge', Urwa 'learn while young', al-Zubayr ibn Bakkar's father, Mutarrif.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-35bd0931.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-35bd0931.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-35bd0931__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-35bd0931__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-3c91c800",
+   "category": "unfaithful",
+   "retrieved": 2,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "أساسيات تربية الأطفال وتعليمهم",
+   "flags": [
+    "reversed",
+    "glyph_substituted"
+   ],
+   "reason": "Garbles the source: p.68 is Ibn Daqiq al-Eid and Ibn Uthaymin on equal gifts between children, with needs-based exceptions (books for a student, medicine for the sick, marrying one who comes of age) and the 2:1 rule. 'Reward instead of punishment' and 'love of reading' are invented; the point (justice in gifts) is lost.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-3c91c800.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-3c91c800.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-3c91c800__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-3c91c800__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-4c1cd031",
+   "category": "unfaithful",
+   "retrieved": 2,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "أهمية التربية الدينية والتوازن في التعامل مع الأطفال",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Invents a story of a child afraid of his harsh father; the source (pp.169-170) is Abu Talha going out to jihad in old age, teaching manners of gatherings (Qurra, Suhayl's father), Thabit al-Bunani's account of a young man's death, a father's will on taqwa.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-4c1cd031.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-4c1cd031.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-4c1cd031__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-4c1cd031__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-5b61587e",
+   "category": "unfaithful",
+   "retrieved": 2,
+   "source_file": "Kayfa_Turabbi_Waladak.pdf",
+   "title": "دور الأم في القيادة والعدل بين الأبناء",
+   "flags": [
+    "reversed"
+   ],
+   "reason": "Inverts the source: Kayfa pp.8-9 say the woman must hand the family's leadership to a man (husband, elder son, uncle) and obey him, and list her usurping it as what breaks the father's authority; the summary says the mother should take leadership of the family when the father is absent or when needed.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-5b61587e.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-5b61587e.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-5b61587e__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-5b61587e__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-6792dd0f",
+   "category": "unfaithful",
+   "retrieved": 2,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "اللعب مع الأطفال في التربية النبوية",
+   "flags": [
+    "partially_reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Misreports a hadith: summary says the Companion Khalid ibn Sa'id played with his son; in the source (p.57, Bukhari) the Prophet let Khalid's little daughter Umm Khalid play with the seal of prophethood and told her father, who scolded her, 'leave her'.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-6792dd0f.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-6792dd0f.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-6792dd0f__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-6792dd0f__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-72787824",
+   "category": "unfaithful",
+   "retrieved": 2,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "قصة بلال بن رباح والصبر على الأذى",
+   "flags": [
+    "glyph_substituted",
+    "introduces_companion"
+   ],
+   "reason": "Bilal ibn Rabah's torture is not in the source; p.139 is Anas on the Prophet tying a stone on his belly from hunger and Abu Talha's household food, and the Prophet's mercy to Anas.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-72787824.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-72787824.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-72787824__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-72787824__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-8de863a3",
+   "category": "unfaithful",
+   "retrieved": 2,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "أهمية الصبر والحوار في تربية الأبناء",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Invents a man struggling with his son and a lesson that harsh punishment fails; the source (p.143) is keeping children indoors at dusk when devils spread, and the midday nap ('nap, for the devils do not nap', Umar telling people to rest).",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-8de863a3.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-8de863a3.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-8de863a3__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-8de863a3__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-a387bea4",
+   "category": "unfaithful",
+   "retrieved": 2,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "حقوق الأبناء على الآباء في الإسلام",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Generic invented summary (hadiths on kindness, justice, avoiding violence); the source (pp.119-120) is teaching children archery and swimming ('teach your boys swimming' - Umar), and foot races (Salama ibn al-Akwa' racing to Madina).",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-a387bea4.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-a387bea4.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-a387bea4__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-a387bea4__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-a8a4dd9a",
+   "category": "meta_note",
+   "retrieved": 2,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "أحاديث نبوية في تربية الأطفال",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Content-free meta description ('prophetic hadiths and Companion reports on raising children'); the source (p.118) is horse racing and teaching children archery - 'no prize except for hoof, camel or arrow', Sa'd 'my sons, learn archery', Hudhayfa and Ibn Umar between the targets - none of it conveyed.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-a8a4dd9a.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-a8a4dd9a.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-a8a4dd9a__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-a8a4dd9a__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-d15d1a95",
+   "category": "unfaithful",
+   "retrieved": 2,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "تعليم الأطفال الصيام تدريجياً",
+   "flags": [
+    "reversed",
+    "glyph_substituted"
+   ],
+   "reason": "Topic invented (teaching children to fast gradually); the source (p.22) is care of the unborn child - a pregnant or nursing woman may break the fast if she fears for her child (al-Baqara 184, Anas's hadith, Ibn Abbas) and punishment deferred for a pregnant woman.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-d15d1a95.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-d15d1a95.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-d15d1a95__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-d15d1a95__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-dab3c9f4",
+   "category": "unfaithful",
+   "retrieved": 2,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "حقوق الأطفال على الوالدين في التربية",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Invents 'hadiths urging obedience and dutifulness'; the source (p.125) is al-Ajurri on telling boys that gambling games are haram, the Prophet calling a man who chased a pigeon 'a devil following a devil' (Ibn Hibban's comment), and the prohibition of dice - none conveyed.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-dab3c9f4.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-dab3c9f4.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-dab3c9f4__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-dab3c9f4__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-ded5466d",
+   "category": "unfaithful",
+   "retrieved": 2,
+   "source_file": "Rakaiz_Tarbiya.pdf",
+   "title": "أفضل هدية للولد: التأديب الحسن والعدل",
+   "flags": [
+    "reversed",
+    "missing_glyphs",
+    "meta_framing"
+   ],
+   "reason": "Invents a hadith citation: 'the best gift a father gives his child is good manners' is not in the source; Rakaiz p.21 is al-Nu'man's hadith on justice between children ('fear Allah', 'I will not witness injustice') and the estrangement that injustice causes.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-ded5466d.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-ded5466d.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-ded5466d__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-ded5466d__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-e856f88f",
+   "category": "unfaithful",
+   "retrieved": 2,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "تحليل سلوك طفل في سياق تربوي تاريخي",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Meta 'analysis' inventing a child named 'Ibn Rafi''; the source (p.140) is Umm Sulaym's hays for the Prophet's wedding, Ibn Umar inviting the poor to his table, and Qays ibn Sa'd slaughtering camels for the hungry army at his father's urging.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-e856f88f.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-e856f88f.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-e856f88f__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-e856f88f__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-f5fca662",
+   "category": "unfaithful",
+   "retrieved": 2,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "تعليم آداب الطعام للأطفال من السنة النبوية",
+   "flags": [
+    "reversed",
+    "glyph_substituted"
+   ],
+   "reason": "Topic invented (eating manners); the source (p.76) is Umar warning his family of double punishment, Ibn Umar on the bay'a and treachery, and the chapter on children's cleanliness - the Prophet waiting while Fatima washed and dressed al-Hasan.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-f5fca662.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-f5fca662.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-f5fca662__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-f5fca662__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-f6342250",
+   "category": "unfaithful",
+   "retrieved": 2,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "تعليم الأطفال ذكر الله والأخلاق الحسنة",
+   "flags": [
+    "reversed",
+    "glyph_substituted"
+   ],
+   "reason": "Front matter turned into advice: the source (pp.4-5) is the reviewer's preface - little is written on children's rights, neglecting them breeds later disobedience, praise for using authentic narrations instead of storytellers' fabrications. Dhikr, love of the Companions and reminding children of parents' rights are invented.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-f6342250.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-f6342250.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-06b8336f",
+   "category": "unfaithful",
+   "retrieved": 1,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "تعليم الأطفال حقوق الدين والعبادات",
+   "flags": [
+    "reversed",
+    "glyph_substituted"
+   ],
+   "reason": "Main topic missed: the source (p.182) is parents' last wills to their children - Abu Bakr to Aisha on the inheritance, Qays ibn Asim 'make your eldest your leader', Ibn Sirin's will with Ibrahim and Ya'qub's (al-Baqara 132). The summary is generic 'teach religion, be role models'.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-06b8336f.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-06b8336f.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-06b8336f__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-06b8336f__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-44d556e6",
+   "category": "unfaithful",
+   "retrieved": 1,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "تعليم الطفل الصبر على المرض والألم",
+   "flags": [
+    "reversed",
+    "glyph_substituted"
+   ],
+   "reason": "Topic changed: the source (p.131) is the chapter on treating sick children by lawful means - ruqya, the Prophet's ta'widh for al-Hasan and al-Husayn - and keeping them from sorcery; the summary is about teaching patience in illness and not complaining.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-44d556e6.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-44d556e6.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-44d556e6__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-44d556e6__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-4c08bd7d",
+   "category": "unfaithful",
+   "retrieved": 1,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "تعليم العدل والمساواة بين الأبناء في التربية الإسلامية",
+   "flags": [
+    "reversed",
+    "glyph_substituted"
+   ],
+   "reason": "Contradicts the source on its own question: the summary says treat boys and girls equally with no preference; pp.66-67 present justice between children with Ibn Kathir explaining the male's double share as divine justice (al-Nisa 11), plus Yusuf's brothers and al-Nu'man's hadith.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-4c08bd7d.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-4c08bd7d.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-4c08bd7d__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-4c08bd7d__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-51abde6d",
+   "category": "unfaithful",
+   "retrieved": 1,
+   "source_file": "Tarbiya_Al_Banat.pdf",
+   "title": "قلق أم على سلوك ابنتها المدرسي",
+   "flags": [
+    "reversed"
+   ],
+   "reason": "Inverts the source's anecdote: on Tarbiyat al-Banat p.30 a teacher recalls a mother worried about half a mark who never asked about her daughter's character or friends - the point is that parents care for grades, not morals; the summary has a mother worried about her daughter's behaviour and respect for the teacher.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-51abde6d.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-51abde6d.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-51abde6d__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-51abde6d__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-5296fd5a",
+   "category": "unfaithful",
+   "retrieved": 1,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "أهمية التربية الحسنة للأبناء",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Topic invented (hadiths on not harming children, patience); the source (p.137) is keeping children from bad company (Ibrahim al-Harbi, Sufyan ibn Uyayna's father, al-Fudayl) and the chapter on training children to give - Umm Sulaym sending bread to the Prophet.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-5296fd5a.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-5296fd5a.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-5bb84e07",
+   "category": "unfaithful",
+   "retrieved": 1,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "تعليم الطفل ذبح الأضحية في العيد",
+   "flags": [
+    "reversed",
+    "glyph_substituted"
+   ],
+   "reason": "Invents 'train children to slaughter the Eid sacrifice from age seven'; the source (pp.40-41) is the aqiqa for a newborn - two sheep for a boy, one for a girl, slaughtered on the seventh DAY after birth (or 14th/21st) - and the bid'a of the subu' and birthday parties.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-5bb84e07.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-5bb84e07.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-5bb84e07__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-5bb84e07__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-65b250d1",
+   "category": "unfaithful",
+   "retrieved": 1,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "أهمية التربية الدينية والأخلاقية للأبناء",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Generic 'prophetic hadiths on morals and manners'; the source (p.109) is fathers taking sons to the Prophet and to scholars to learn - Jabir ibn Samura, Ibn Abbas sending Ikrima to Abu Sa'id, Abu Burda sent to Abdullah ibn Salam, Abu al-Minhal to Abu Barza.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-65b250d1.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-65b250d1.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-65b250d1__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-65b250d1__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-740684b1",
+   "category": "unfaithful",
+   "retrieved": 1,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "تعليم الطفل الصلاة والصبر بالقدوة والدعاء",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Only the du'a point is in the source; pp.26-27 are the chapter on praying for children (Ibrahim's du'a, al-Saffat 100) and the prohibition of cursing them (al-Isra' 11, Muslim's hadith). Teaching prayer and patience and handling mistakes gently are invented.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-740684b1.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-740684b1.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-740684b1__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-740684b1__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-778dc8f5",
+   "category": "unfaithful",
+   "retrieved": 1,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "تعليم الصدق والأمانة للأطفال",
+   "flags": [
+    "reversed",
+    "glyph_substituted"
+   ],
+   "reason": "Topic invented (truthfulness, lying leads to problems); the source (p.157) is instilling humility (Luqman 18-19, Ali naming Abu Bakr and Umar before himself, Salim's old donkey) and raising children on fairness (Anas rebuking his daughter).",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-778dc8f5.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-778dc8f5.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-778dc8f5__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-778dc8f5__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-7bff5e2c",
+   "category": "unfaithful",
+   "retrieved": 1,
+   "source_file": "Al_Hady_Al_Nabawi.pdf",
+   "title": "تقنيات التحكم في انتباه الطفل المصاب بفرط الحركة",
+   "flags": [
+    "reversed"
+   ],
+   "reason": "Invents an attention-deficit case (with a stray English word); the source (Kayfa pp.9-10) is justice between children and the legitimate exceptions - a child away for study or treatment - explained gently to the siblings.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-7bff5e2c.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-7bff5e2c.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-7bff5e2c__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-7bff5e2c__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-9b6fc547",
+   "category": "unfaithful",
+   "retrieved": 1,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "حقوق الوالدين على الأبناء في الإسلام",
+   "flags": [
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Inverts the subject: the summary is about parents' rights over children (birr, obedience); the source (p.25) is praying for righteous offspring - Zakariyya's du'a (Al Imran 38, Maryam 1-6) with al-Sa'di, and the wife of Imran.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-9b6fc547.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-9b6fc547.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-9b6fc547__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-9b6fc547__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-a36a8295",
+   "category": "unfaithful",
+   "retrieved": 1,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "حقوق الأطفال في التربية الإسلامية",
+   "flags": [
+    "partially_reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Invents 'the hadith on justice between children in giving and love'; the source (p.132) is ruqya for children - Abu Bakr on ruqya with the Book, Asma' asking about the evil eye on Ja'far's sons, Anas's ruqya, Umm Salama's 'seek ruqya for her'.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-a36a8295.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-a36a8295.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-a36a8295__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-a36a8295__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-b290bf9e",
+   "category": "meta_note",
+   "retrieved": 1,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "حقوق الأطفال على الوالدين في التربية",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Content-free ('some hadiths urging raising and teaching children'); the source (pp.117-118) is permitted competitions and archery - 'no prize except for hoof, camel or arrow', the Prophet's horse races, Sa'd teaching his sons archery. Nothing of it conveyed.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-b290bf9e.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-b290bf9e.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-b290bf9e__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-b290bf9e__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-b328d5a2",
+   "category": "unfaithful",
+   "retrieved": 1,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "تعليم الأطفال الصلاة والتربية الدينية",
+   "flags": [
+    "reversed",
+    "glyph_substituted"
+   ],
+   "reason": "Only 'keep children from bad company' is in the source (p.136: chapter 30 - the musk-seller and blacksmith hadith, al-Awwam ibn Hawshab, Umayr ibn Habib); the title and lead claim (teaching prayer) and 'love with firmness' are invented.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-b328d5a2.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-b328d5a2.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-b328d5a2__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-b328d5a2__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-c5c7c609",
+   "category": "unfaithful",
+   "retrieved": 1,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "تعليم الأطفال حقوق الآخرين والاحترام",
+   "flags": [
+    "reversed",
+    "glyph_substituted"
+   ],
+   "reason": "Topic invented (others' rights, cooperation, avoiding verbal and physical harm); the source (p.104) is Dhakwan telling Suhayl to call the adhan when frightened, Abu Burda's hadith on freeing a slave, and Qurra teaching Mu'awiya how to return salam.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-c5c7c609.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-c5c7c609.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-c5c7c609__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-c5c7c609__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-cdac63e0",
+   "category": "unfaithful",
+   "retrieved": 1,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "حقوق الأطفال على الآباء في التربية والعدل",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Its distinctive claim (justice between children in giving) is not in the source; pp.45-46 are giving children a kunya (Ibn Mas'ud, Anas ibn Sirin, al-Zuhri) and the opening of the chapter on parents' tenderness (Quraysh women).",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-cdac63e0.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-cdac63e0.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-cdac63e0__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-cdac63e0__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-d06a6717",
+   "category": "unfaithful",
+   "retrieved": 1,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "أهمية التربية الدينية والأخلاقية للأبناء",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Main content not conveyed and prayer invented: pp.125-126 are forbidding children gambling games and pigeon play (al-Ajurri, 'a devil following a devil', al-Munawi), tormenting animals (Ibn Umar) and dogs; the summary is generic morals, teaching prayer and neglect.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-d06a6717.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-d06a6717.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-d06a6717__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-d06a6717__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-e622ac43",
+   "category": "unfaithful",
+   "retrieved": 1,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "قصة الأب والابن: تعليم الشكر والرضا",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Invents a father grieved by an ungrateful son who keeps asking for money; the source (pp.165-166) is contentment with qadar - Abu Bakra and Urwa in illness and loss, Ubada's will, Bashir freeing his slaves when his buffaloes were taken - and keeping secrets (Anas and Umm Sulaym).",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-e622ac43.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-e622ac43.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-e622ac43__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-e622ac43__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-e7a5622f",
+   "category": "unfaithful",
+   "retrieved": 1,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "تعليم الطفل حقوق الآخرين",
+   "flags": [
+    "glyph_substituted"
+   ],
+   "reason": "Topic invented (others' rights, cooperation); the source (p.164) is Anas burying his son and returning to his family, al-Nawawi on wailing, and Umm Sulaym and Abu Talha's patience when their son died.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-e7a5622f.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-e7a5622f.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-e7a5622f__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-e7a5622f__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-e872dad0",
+   "category": "unfaithful",
+   "retrieved": 1,
+   "source_file": "Rakaiz_Tarbiya.pdf",
+   "title": "قصة التمرة وأجر التربية الصالحة",
+   "flags": [
+    "reversed",
+    "missing_glyphs"
+   ],
+   "reason": "Misreports a hadith narrative: in the source (Muslim 2630, Rakaiz p.25) a poor mother gave each of her two daughters a date and split her own between them, and the Prophet said Allah made Paradise due for her; the summary says she gave a date to her little daughter and asked her to eat it 'between them' - the act the hadith praises is lost.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-e872dad0.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-e872dad0.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-e872dad0__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-e872dad0__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-ee373ffe",
+   "category": "unfaithful",
+   "retrieved": 1,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "حقوق الأبناء على الآباء في الإسلام",
+   "flags": [
+    "partially_reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Teaching prayer and 'parents will be asked on the Day of Judgement' are not in the source; p.149 is spending on one's family - the Prophet to Sa'd on leaving heirs rich and the reward even for a morsel, 'your family has a right over you', Hind taking maintenance from Abu Sufyan.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-ee373ffe.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-ee373ffe.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-ee373ffe__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-ee373ffe__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-f6f7676b",
+   "category": "unfaithful",
+   "retrieved": 1,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "حقوق الأطفال على الوالدين في التربية",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Charity and spending on family are not in the source; p.179 is the guardian's duty to stop a child drinking wine or eating pork (Ibn Battal) and Umar refusing his sons a privileged loan (Abdullah and Ubaydullah and Abu Musa's money).",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-f6f7676b.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-f6f7676b.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-f6f7676b__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-f6f7676b__en.json"
+    }
+   ]
+  },
+  {
+   "id": "med-a1df6423",
+   "category": "unfaithful",
+   "retrieved": 1,
+   "source_file": "SFDA_Healthy_Nutrition_Guide.pdf",
+   "title": "أهمية الرياضة والتغذية للأطفال",
+   "flags": [
+    "reversed",
+    "missing_glyphs"
+   ],
+   "reason": "Misstates the SFDA activity figure in a unit titled for children: the guide (p.34) gives children at least 60 minutes of moderate-to-vigorous activity daily and adults 30 minutes of moderate activity on five days; the summary says moderate-to-vigorous activity for 30 minutes daily.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/med-a1df6423.json",
+     "to": "ops/data/en_unpublished/kb_units_source/med-a1df6423.json"
+    },
+    {
+     "from": "knowledge_base/units/med-a1df6423__en.json",
+     "to": "ops/data/en_unpublished/kb_units/med-a1df6423__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-08be6045",
+   "category": "unfaithful",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "حقوق الأطفال على الوالدين في التربية",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Topic invented (justice, equality between children); the source (p.92) is training children in worship - Ali ibn al-Husayn and Urwa having boys pray, Makhul on 'commanded at seven, disciplined at ten', and the Companions training children to fast (al-Rubayyi').",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-08be6045.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-08be6045.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-08be6045__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-08be6045__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-094f42cd",
+   "category": "unfaithful",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "العدل بين الأبناء وأهميته في التربية",
+   "flags": [
+    "reversed",
+    "glyph_substituted"
+   ],
+   "reason": "Asserts a ruling the source's book rejects: 'justice means no distinction between males and females in gifts' - the author adopts Ibn Uthaymin's 2:1 view (p.68). The page itself (p.158) has al-Nu'man's 'be just between your children', Ibn Hajar on harmony, and teaching sincerity.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-094f42cd.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-094f42cd.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-094f42cd__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-094f42cd__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-0ca172e2",
+   "category": "unfaithful",
+   "retrieved": 0,
+   "source_file": "Kayfa_Turabbi_Waladak.pdf",
+   "title": "مراعاة الفروق الفردية وأهمية القدوة في التربية",
+   "flags": [
+    "reversed"
+   ],
+   "reason": "Contradicts its source on the eldest child: Kayfa p.55 says an adolescent or eldest son is corrected in private so his younger siblings keep respecting him; the summary says the eldest is punished more severely because he is a model.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-0ca172e2.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-0ca172e2.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-0ca172e2__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-0ca172e2__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-0d1334e8",
+   "category": "meta_note",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "حقوق الأطفال على الآباء في الإسلام",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Content-free ('children's rights, citing hadiths and verses'); the source (pp.27-28) is the prohibition of praying against one's children (Muslim), seeking children with a good intention, and the sunna at birth (seeking refuge, tahnik). None of it conveyed.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-0d1334e8.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-0d1334e8.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-0d1334e8__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-0d1334e8__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-14202095",
+   "category": "unfaithful",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "أهمية التربية الأخلاقية للأبناء",
+   "flags": [
+    "partially_reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Generic moral-upbringing summary unrelated to its source: p.164 is Anas burying his son with a du'a and returning to his family, al-Nawawi on wailing, and Umm Sulaym and Abu Talha's patience at their son's death.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-14202095.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-14202095.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-14202095__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-14202095__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-1c2554f4",
+   "category": "unfaithful",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "حقوق الطفل وواجبات الأهل في التربية",
+   "flags": [
+    "reversed",
+    "glyph_substituted"
+   ],
+   "reason": "Generic invented advice (rights and duties, avoid violence and neglect, safe environment); the source (p.78) is Sa'd praying over his sons in white shirts, Ibn Mas'ud's son in silk, and the chapter on teaching children the Quran.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-1c2554f4.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-1c2554f4.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-1d89f7df",
+   "category": "unfaithful",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "حقوق الأطفال على الآباء",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Invents 'a child asking his father for something'; the source (p.131) is the chapter on treating sick children by lawful means - the Prophet's ta'widh for al-Hasan and al-Husayn, and Muhammad ibn Hatib brought to him after being burned, 'remove the harm, Lord of mankind'.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-1d89f7df.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-1d89f7df.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-1d89f7df__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-1d89f7df__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-1efbc747",
+   "category": "unfaithful",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "حقوق الأطفال على الوالدين في التربية",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Only 'choose a righteous mother' is in the source (p.14: the best of women, Umar on a good wife); 'a good name and teaching writing and reading' are presented as hadith-backed rights but are not there.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-1efbc747.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-1efbc747.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-1efbc747__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-1efbc747__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-2010ce26",
+   "category": "unfaithful",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "أهمية العقل والتفكير في تربية الأطفال",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Topic invented (reason as the basis of responsibility, charity from a conscious mind); the source (p.146) is spending on one's family - 'start with those you support... the son says: feed me, to whom do you leave me?' (Bukhari) with al-Muhallab and al-Tabari.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-2010ce26.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-2010ce26.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-2010ce26__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-2010ce26__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-21b63f71",
+   "category": "unfaithful",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "تعليم الأطفال حب النبي محمد صلى الله عليه وسلم",
+   "flags": [
+    "partially_reversed",
+    "glyph_substituted"
+   ],
+   "reason": "Topic invented (teaching love of the Prophet); the source (p.49) is mercy shown in kissing and hugging children - 'Allah shows mercy to the merciful', Sa'id ibn Jubayr kissing a boy, the Prophet hugging al-Hasan, 'Allah is more merciful to you than you are to him'.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-21b63f71.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-21b63f71.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-21b63f71__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-21b63f71__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-24dda124",
+   "category": "unfaithful",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "تعليم الأطفال آداب التعامل والتسامح",
+   "flags": [
+    "glyph_substituted"
+   ],
+   "reason": "Does not convey its source and adds content: p.127 forbids children weapon play and fireworks that frighten Muslims ('a Muslim may not frighten a Muslim', not pointing iron at a brother); the quoted 'the Muslim is the brother of the Muslim' (Bukhari 2442) and the urging to tolerance and not getting angry are not there.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-24dda124.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-24dda124.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-24dda124__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-24dda124__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-2935b46f",
+   "category": "unfaithful",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "أهمية التربية الدينية للأبناء",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Garbles the source into 'a man who found an old book about religion'; p.156 is Salih ibn Ahmad finding a letter offering his father 4,000 dirhams and Ahmad ibn Hanbal refusing it - raising children to self-restraint.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-2935b46f.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-2935b46f.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-2935b46f__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-2935b46f__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-2c98ee30",
+   "category": "unfaithful",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "حقوق الأطفال على الآباء في التربية والتعليم",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Invents a hadith: 'a man asked the Prophet about his son's right and was told: a good name and good manners'; the source (pp.108-109) is taking children to scholars - Abu Talha and Umm Sulaym bringing Anas to the Prophet, Jabir ibn Samura, Abu Burda sent to Abdullah ibn Salam.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-2c98ee30.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-2c98ee30.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-2c98ee30__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-2c98ee30__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-2d96bbf3",
+   "category": "meta_note",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "حقوق الأبناء على الآباء في التربية",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Content-free and off-theme ('verses and hadiths on children's rights... health and family care'); the source (pp.18-19) is al-Sa'di on offspring joined to their parents in Paradise, Nuh's son (Hud 42-46) showing a righteous father does not guarantee a righteous child, and Abu Talha and Umm Sulaym.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-2d96bbf3.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-2d96bbf3.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-2d96bbf3__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-2d96bbf3__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-31ba95cb",
+   "category": "unfaithful",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "تعليم الأطفال حقوق الوالدين والبر بهما",
+   "flags": [
+    "reversed",
+    "glyph_substituted"
+   ],
+   "reason": "Title and lead claim (teaching children parents' rights and birr) are not in the source; p.182 is parents' last wills - Abu Bakr to Aisha, Qays ibn Asim, Ibn Sirin's will (fear Allah, obey Allah and His Messenger, truthfulness is better than lying).",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-31ba95cb.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-31ba95cb.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-31ba95cb__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-31ba95cb__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-3703ac71",
+   "category": "meta_note",
+   "retrieved": 0,
+   "source_file": "Al_Hady_Al_Nabawi.pdf",
+   "title": "تعزيز التواصل بين الأهل والأطفال الصغار",
+   "flags": [
+    "reversed"
+   ],
+   "reason": "Content-free and unrelated (parent-child interaction, trust); the source (Kayfa p.7) is the educator's need for sharia knowledge and knowledge of childhood stages and his era, and the trait of trustworthiness.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-3703ac71.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-3703ac71.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-3703ac71__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-3703ac71__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-37320362",
+   "category": "meta_note",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "حقوق الأطفال في الإسلام من الأحاديث النبوية",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Content-free and off-theme ('hadiths on good treatment, children are a trust'); the source (pp.107-108) is about knowledge - al-Hasan ibn Ali urging his sons to learn, Sufyan's father on serving scholars, Ibn al-Jawzi on knowledge raising the lowly (Ata'), Anas brought to the Prophet.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-37320362.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-37320362.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-37320362__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-37320362__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-39616856",
+   "category": "unfaithful",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "سلوك الطفل العدواني وإيذاء الذات",
+   "flags": [
+    "reversed",
+    "glyph_substituted"
+   ],
+   "reason": "Invents a self-harming child who hits his own head with wood; the source (p.122) is rebuking children for forbidden games - Ibn Umar breaking the 'fourteen' board on the head of a family member he caught playing it.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-39616856.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-39616856.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-39616856__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-39616856__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-3c246978",
+   "category": "unfaithful",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "أهمية التربية الدينية في حماية الأبناء",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Topic invented (self-monitoring, deviance, communication, psychological problems); the source (pp.142-143) is keeping children indoors at nightfall when devils spread (Jabir's hadith with al-Muhallab and Ibn al-Jawzi) and the midday nap.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-3c246978.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-3c246978.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-3c246978__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-3c246978__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-41e80342",
+   "category": "meta_note",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "حقوق الأبناء في التربية الإسلامية",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Generic and partly wrong ('du'a for them, avoid violence'); the source (p.130) is about raising children to lead - Hind's retort about her son Mu'awiya, Ibn Umar kissing Salim, Salim refusing al-Hajjaj's order to kill, Abd al-Malik ibn Umar urging his father to justice.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-41e80342.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-41e80342.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-42741535",
+   "category": "meta_note",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "حقوق الأطفال على الوالدين في الإسلام",
+   "flags": [
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Content-free and off-theme (children's rights, values, gentleness); the source (p.138) is Anas sent by Abu Talha to invite the Prophet and the food that fed seventy or eighty ('admit ten').",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-42741535.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-42741535.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-432f1164",
+   "category": "meta_note",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "حقوق الأطفال على الآباء في الإسلام",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Content-free and off-theme (not wronging children, values); the source (p.151) is spending on one's family multiplied 700-fold, a father eating from his son's wealth (Ata'), Hakim ibn Jabir keeping his only slave for his heirs (al-Nisa 9), al-Hasan on spending generously at home.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-432f1164.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-432f1164.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-432f1164__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-432f1164__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-460a62af",
+   "category": "unfaithful",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "تعليم الأطفال حقوق الله والوالدين",
+   "flags": [
+    "reversed",
+    "glyph_substituted"
+   ],
+   "reason": "Topic invented (teaching the rights of Allah and of parents); the source (p.148) is the reward of spending on one's family - 'the dinar spent on your family is greatest in reward' (Muslim), 'it is sin enough to withhold food from those in one's charge', Umm Salama's question.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-460a62af.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-460a62af.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-460a62af__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-460a62af__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-466fef9d",
+   "category": "unfaithful",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "تحليل سلوك فرط الحركة لدى الطفل",
+   "flags": [
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Invents a hyperactive child who cannot sit still; the source (p.139) is Anas on the Prophet binding his belly from hunger and Abu Talha's household feeding him.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-466fef9d.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-466fef9d.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-466fef9d__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-466fef9d__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-49217cf3",
+   "category": "unfaithful",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "تعليم الأطفال حقوقهم الدينية والأخلاقية",
+   "flags": [
+    "reversed",
+    "glyph_substituted"
+   ],
+   "reason": "Topic invented (teaching religious rights, prayer, birr); the source (p.180) is Kulayb al-Jarmi returning threads taken from the spoils after Mujashi''s warning against ghulul, and Ibn Abjar forbidding his son to insult a weaver ('you only shame your father').",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-49217cf3.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-49217cf3.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-49217cf3__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-49217cf3__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-4a91d5da",
+   "category": "meta_note",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "حقوق الأطفال على الآباء في التربية",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Content-free ('hadiths and scholars' sayings on raising and teaching children'); the source (p.91) is specifically about prayer - Abu Qirsafa calling his son to Fajr, Ibn Mas'ud 'guard your children in prayer', Ali ibn al-Husayn 'command Ja'far, he is seven'. The point is not conveyed.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-4a91d5da.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-4a91d5da.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-4a91d5da__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-4a91d5da__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-4bd24438",
+   "category": "meta_note",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "حقوق الأبناء على الآباء في التربية",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Content-free generic summary; the source (p.162) is teaching children to enjoin good and bear harm (Luqman 17, Umayr ibn Habib) and to respect the Companions and elders (Ibn Abbas on Mu'awiya, Ahmad rising for a descendant of Abd al-Rahman ibn Awf).",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-4bd24438.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-4bd24438.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-4bd24438__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-4bd24438__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-4e0db0bd",
+   "category": "unfaithful",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "قصة عن بر الوالدين وأهمية الأخلاق",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Invents a story about kindness to parents; the source (p.179) is the guardian's duty to stop a child taking wine or pork, and Umar refusing his sons Abdullah and Ubaydullah a privileged loan from public money.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-4e0db0bd.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-4e0db0bd.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-4e0db0bd__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-4e0db0bd__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-4f1f6411",
+   "category": "unfaithful",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "حقوق الأطفال على الآباء في التربية",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Themes invented (justice, truthfulness, gentleness, neglect); the source (pp.93-94) is training children in worship - fasting (al-Rubayyi', Ibn Battal, Umar's 'our children are fasting'), urging sons to pay zakat honestly (Jarir), zakat on orphans' money, children's hajj.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-4f1f6411.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-4f1f6411.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-4f1f6411__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-4f1f6411__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-50818e97",
+   "category": "unfaithful",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "قصة عن ضبط الغضب وتجنب العنف",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Invents a child beating his friend; the source (p.134) is ruqya and the chapter on warning children against innovation - Khabbab beating his son for sitting with people who disputed about the Quran, after which the son refused to rejoin them.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-50818e97.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-50818e97.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-50818e97__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-50818e97__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-5cf45742",
+   "category": "unfaithful",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "تعليم الصيام للأطفال وأحكامه",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Fasting is not in the source; pp.152-153 are the chapter on greeting children with salam (Anas, Thabit al-Bunani, Ibn Umar, Urwa) and the start of the chapter on good character (Fatima taught tasbih, the Companions' hardship).",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-5cf45742.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-5cf45742.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-5cf45742__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-5cf45742__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-602280fa",
+   "category": "unfaithful",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "تعليم الأطفال حقوق الآخرين بلطف",
+   "flags": [
+    "partially_reversed",
+    "glyph_substituted"
+   ],
+   "reason": "Invents a story of a child taking his siblings' toys; the source (pp.139-140) is Anas on the Prophet's hunger and Abu Talha's food, Umm Sulaym's hays for the Prophet's wedding, Ibn Umar inviting the poor to his table.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-602280fa.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-602280fa.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-602bfb05",
+   "category": "unfaithful",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "تعليم الصلاة للأطفال وأهمية التوجيه المبكر",
+   "flags": [
+    "glyph_substituted",
+    "meta_framing",
+    "introduces_number"
+   ],
+   "reason": "Topic invented (prayer at seven); the source (p.72) is the chapter on checking on one's children - the Prophet going to Fatima's house asking for Ali and wiping the dust off him in the mosque ('Abu Turab'), and asking for al-Hasan.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-602bfb05.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-602bfb05.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-602bfb05__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-602bfb05__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-642d3763",
+   "category": "unfaithful",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "حقوق الأطفال وتربيتهم على القيم",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Themes invented (justice, mercy, not discriminating between children); the source (p.160) is teaching children good social conduct (al-Asma'i's grandfather's will) and indifference to praise and blame (a father testing his son's learning, Sufyan's father at fifteen).",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-642d3763.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-642d3763.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-642d3763__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-642d3763__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-66f08676",
+   "category": "meta_note",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "حقوق الأبناء في التربية الدينية والأخلاقية",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Content-free and off-theme ('gentleness and wisdom in various situations'); the source (p.75) is Umar disciplining his son for the kunya Abu Isa, advising Hafsa, fathers checking on married daughters, and gathering children to urge them to good (al-Baqara 133).",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-66f08676.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-66f08676.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-6d93523b",
+   "category": "unfaithful",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "تعليم الأطفال تحمل المسؤولية منذ الصغر",
+   "flags": [
+    "reversed",
+    "glyph_substituted"
+   ],
+   "reason": "Topic invented (responsibility, the pampered child's anxiety); the source (pp.11-12) is al-Qurtubi on what 'right' (haqq) means in the sharia and the first right: choosing a righteous wife.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-6d93523b.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-6d93523b.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-6d93523b__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-6d93523b__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-6fe42624",
+   "category": "unfaithful",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "أهمية التربية بالحكمة والموعظة الحسنة",
+   "flags": [
+    "reversed",
+    "glyph_substituted"
+   ],
+   "reason": "Two of three claims unsupported ('wisdom and good admonition', 'avoid harshness and violence'); pp.171-172 are Ibn al-Jawzi on patience against desires, not speaking without knowledge (Abu Bakr), the verses on children seeking permission (al-Nur 58-59) and self-accountability (Amr ibn al-As).",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-6fe42624.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-6fe42624.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-6fe42624__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-6fe42624__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-79b2424f",
+   "category": "meta_note",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "أهمية التربية الدينية والأخلاقية للأطفال",
+   "flags": [
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Content-free and off-theme (dialogue and example build personality); the source (p.132) is ruqya for children - against illness and the evil eye (Aisha, Asma' for Ja'far's sons, Anas's ruqya, Umm Salama).",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-79b2424f.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-79b2424f.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-7b7cda4e",
+   "category": "unfaithful",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "تعليم الأطفال الصدق والأمانة",
+   "flags": [
+    "reversed",
+    "glyph_substituted"
+   ],
+   "reason": "Topic invented (truthfulness, lying destroys trust); the source (p.141) is fathers' generosity (Amr ibn Utba, Bashir al-Tabari, a father giving his iftar to a beggar) and the chapter on teaching children Arabic - Ibn Umar disciplining his son for grammatical mistakes.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-7b7cda4e.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-7b7cda4e.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-7b7cda4e__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-7b7cda4e__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-7e0815a2",
+   "category": "unfaithful",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "تربية الأبناء على حب النبي",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Misrepresents a hadith as 'a woman brought her son to the Prophet for his du'a'; on p.23 the Ghamidiyya brings her weaned child before her punishment is carried out - cited for the child's right to life (al-An'am 151, al-Isra' 31). Love of the Prophet and prayer are invented.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-7e0815a2.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-7e0815a2.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-82829528",
+   "category": "meta_note",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "حقوق الأبناء على الآباء في التربية",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Content-free ('a prophetic hadith urging raising and teaching'); the source (p.102) is al-Bara' ibn Azib showing his son wudu and prayer and Hanifa's will - a Companion's practice, not a prophetic hadith, and not conveyed.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-82829528.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-82829528.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-82829528__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-82829528__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-82c3c96e",
+   "category": "unfaithful",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "تعليم الأطفال حقوق الآخرين والتسامح",
+   "flags": [
+    "partially_reversed",
+    "glyph_substituted"
+   ],
+   "reason": "Topic invented (neighbour's and companion's rights, tolerance); the source (pp.33-34) is naming children - 'name your son Abd al-Rahman', the names most beloved to Allah, naming after prophets (Ibrahim), the Prophet changing bad names.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-82c3c96e.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-82c3c96e.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-82c3c96e__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-82c3c96e__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-841d1ede",
+   "category": "unfaithful",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "أهمية التربية الأخلاقية للأطفال",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Claims a story of the Prophet teaching a child eating manners - not on these pages; pp.86-87 are al-Zubayr teaching his son to seek Allah's help, Ubada teaching al-Walid belief in qadar, and Umm Sulaym teaching young Anas the shahada.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-841d1ede.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-841d1ede.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-841d1ede__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-841d1ede__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-842e0f60",
+   "category": "unfaithful",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "أهمية التربية الأسرية السليمة وتوجيه الأبناء",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Says the text cites hadiths on treating one's wife and children well; p.12 is the first right - choosing a righteous wife because a weak-in-religion wife harms the children ('choose the religious one'). Family stability and gentle guidance are generic additions.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-842e0f60.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-842e0f60.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-842e0f60__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-842e0f60__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-848acb1e",
+   "category": "meta_note",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "أهمية التربية الدينية والأخلاقية للأطفال",
+   "flags": [
+    "reversed",
+    "glyph_substituted"
+   ],
+   "reason": "Generic upbringing summary that misses its source: p.25 is about praying for righteous offspring - Zakariyya's du'a (Al Imran 38, Maryam 1-6) with al-Sa'di, and the wife of Imran's du'a for her child.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-848acb1e.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-848acb1e.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-848acb1e__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-848acb1e__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-85fcbc9d",
+   "category": "unfaithful",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "تعليم الأطفال الحقوق الدينية والأخلاقية",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Calls the source 'the story of Ibrahim raising his son Ismail'; p.26 is Ibrahim's du'a and thanks for his sons (Ibrahim 39-40, al-Saffat 100-101 with Ibn Kathir), Irak's du'a, and the prohibition of cursing one's children. The theme (du'a) is lost.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-85fcbc9d.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-85fcbc9d.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-85fcbc9d__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-85fcbc9d__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-89eaf8dd",
+   "category": "unfaithful",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "حقوق الوالدين وتربية الأبناء في الإسلام",
+   "flags": [
+    "partially_reversed",
+    "glyph_substituted"
+   ],
+   "reason": "Only 'choose good names' is in the source (pp.32-33: Abdullah and Abd al-Rahman most beloved, al-Qurtubi, Sufyan on the child's rights); the title and lead claim (parents' rights), justice between children and 'the Prophet urged praying for children' are not there.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-89eaf8dd.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-89eaf8dd.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-89eaf8dd__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-89eaf8dd__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-8adb5078",
+   "category": "unfaithful",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "تعليم الأطفال احترام ممتلكات الآخرين",
+   "flags": [
+    "reversed",
+    "glyph_substituted"
+   ],
+   "reason": "Topic invented (respecting others' toys and property); the source (p.71) is not favouring sons over daughters - the mother who split her date between her two daughters, 'whoever raises two girls...', three daughters a shield from the Fire.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-8adb5078.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-8adb5078.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-8adb5078__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-8adb5078__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-8adc1c25",
+   "category": "meta_note",
+   "retrieved": 0,
+   "source_file": "Kayfa_Turabbi_Waladak.pdf",
+   "title": "أخطاء التربية الإسلامية وأساليب النبي",
+   "flags": [
+    "reversed",
+    "meta_framing"
+   ],
+   "reason": "The source (Kayfa p.77) is the book's index of hadiths; the summary turns it into 'common upbringing errors and prophetic methods' - a description of nothing on the page.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-8adc1c25.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-8adc1c25.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-8adc1c25__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-8adc1c25__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-8b182486",
+   "category": "meta_note",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "حقوق الأطفال في الإسلام من الأحاديث النبوية",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Content-free and off-theme ('hadiths on raising children, some rulings'); the source (p.110) is children taken young to learn - Sufyan ibn Uyayna brought to Makka, Malik as a boy with Nafi', a father sending his son to seek knowledge.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-8b182486.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-8b182486.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-8b182486__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-8b182486__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-908a2da0",
+   "category": "unfaithful",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "تعليم الأطفال الصلاة وأهمية القدوة",
+   "flags": [
+    "reversed",
+    "glyph_substituted"
+   ],
+   "reason": "Topic invented (teaching prayer with encouragement); the source (p.126) is al-Munawi on the pigeon-chaser, forbidding children to torment animals (Ibn Umar and the hadith cursing whoever makes a living thing a target) and to play with dogs.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-908a2da0.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-908a2da0.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-9238038f",
+   "category": "unfaithful",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "حقوق الأبناء على الوالدين في التربية الدينية",
+   "flags": [
+    "reversed",
+    "glyph_substituted"
+   ],
+   "reason": "Topic invented (teaching prayer and fasting, role models); the source (pp.20-21) is Ibn Daqiq al-Eid, Ibn Hajar and al-Dawudi debating what 'Satan will not harm him' means in the du'a before intimacy.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-9238038f.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-9238038f.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-9238038f__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-9238038f__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-927b1dd2",
+   "category": "unfaithful",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "حقوق الأبناء في التربية والعدل",
+   "flags": [
+    "partially_reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Invents hadiths on teaching prayer and justice and 'the Prophet's will'; the source (p.29) is tahnik and du'a for newborns (Abdullah ibn Abi Talha, Ibn al-Zubayr), Mu'awiya ibn Qurra's gathering for his newborn, Ayyub's congratulation, and a note that the adhan-in-the-ear hadith is not authentic.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-927b1dd2.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-927b1dd2.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-927b1dd2__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-927b1dd2__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-941f7bfb",
+   "category": "unfaithful",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "حقوق الطفل وتربيته على الأخلاق",
+   "flags": [
+    "partially_reversed",
+    "glyph_substituted"
+   ],
+   "reason": "Mostly invented (rights and duties, gentle treatment, prayer); the source (pp.38-39) forbids naming children after disbelievers and enemies and opens the chapter on the aqiqa (two sheep for a boy, one for a girl).",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-941f7bfb.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-941f7bfb.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-9469b324",
+   "category": "meta_note",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "حقوق الأطفال في الإسلام وتربيتهم",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "The source (pp.187-188) is the list of the author's other books (on creed, the khawarij, food rulings, hudud); the summary invents a parenting overview for a bibliography page.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-9469b324.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-9469b324.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-9469b324__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-9469b324__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-94d9d405",
+   "category": "unfaithful",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "تعليم الأطفال الحقوق الدينية والأخلاقية",
+   "flags": [
+    "glyph_substituted"
+   ],
+   "reason": "Topic invented (truthfulness, honesty, self-confidence); the source (pp.175-176) forbids children religious innovation, qaza' haircuts, curtains on walls (Abu Ayyub), joking that belittles them (Ibn al-Munkadir's mother) and mixing in kindergartens (Bakr Abu Zayd).",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-94d9d405.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-94d9d405.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-94d9d405__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-94d9d405__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-969f83c1",
+   "category": "unfaithful",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "أهمية التربية الأخلاقية للأطفال",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Topic invented (worldly preoccupation at the expense of upbringing); the source (p.41) is the timing of the aqiqa (seventh, fourteenth, twenty-first day), the subu' celebration as a bid'a, and the prohibition of birthday parties.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-969f83c1.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-969f83c1.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-969f83c1__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-969f83c1__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-995b1515",
+   "category": "unfaithful",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "تعليم الأطفال حقوق الآخرين",
+   "flags": [
+    "partially_reversed",
+    "glyph_substituted"
+   ],
+   "reason": "Topic invented (others' rights); the source (pp.163-164) is Qays ibn Asim's will, a father showing his son the Companions consulting Urwa, teaching patience in calamity (Luqman 17, the Prophet at his grandchild's death 'to Allah belongs what He took') and Anas burying his son.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-995b1515.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-995b1515.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-995b1515__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-995b1515__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-9aa2ab45",
+   "category": "unfaithful",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "التوكل مع الأخذ بالأسباب في التربية",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Invents a hadith citation: the 'tie your camel, then rely on Allah' exchange is not in the source (PR #20's wording fix leaves it unsourced); p.70 is Umar ibn Abd al-Aziz equalising his sons, Ata' on justice between children, Urwa and Masruq.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-9aa2ab45.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-9aa2ab45.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-9aa2ab45__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-9aa2ab45__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-9b8e8ff5",
+   "category": "unfaithful",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "تعليم الأطفال حقوقهم وواجباتهم",
+   "flags": [
+    "glyph_substituted"
+   ],
+   "reason": "Generic invented summary (rights and duties, self-confidence); the source (p.166) is Bashir freeing his slaves, Umm al-Aswad's du'a in illness, Umm Sulaym teaching Anas to keep the Prophet's secret, and Umar advising Hafsa on her marriage.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-9b8e8ff5.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-9b8e8ff5.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-9b8e8ff5__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-9b8e8ff5__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-9c60af92",
+   "category": "unfaithful",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "حقوق الأطفال على الآباء في التربية",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Claims the text covers a good name and gentle discipline; the source (p.155) is raising children to self-restraint - Ibn al-Jawzi's inheritance spent on knowledge, Umar refusing his son a ring from the Jalula' treasure, Urwa reciting Taha 131.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-9c60af92.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-9c60af92.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-9c60af92__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-9c60af92__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-a0f25a05",
+   "category": "unfaithful",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "أهمية التربية الدينية والأخلاقية للأطفال",
+   "flags": [
+    "reversed",
+    "glyph_substituted"
+   ],
+   "reason": "Generic (teach prayer young, truthfulness) and misses its source: p.170 is preparing children for death through taqwa - Thabit al-Bunani's account of a young man and his mother, a father's will on taqwa and a farewell prayer, al-Hasan and the broken arrow, Ibn al-Jawzi on using one's hours.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-a0f25a05.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-a0f25a05.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-a0f25a05__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-a0f25a05__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-ab49af82",
+   "category": "unfaithful",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "أحكام الطهارة والوضوء في الإسلام",
+   "flags": [
+    "partially_reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Mislabels its source as wudu rulings and du'as; p.144 is al-Zubayr forbidding his sons to sleep after Fajr and the chapter on circumcision - the five practices of the fitra and Ibn Abbas on Ibrahim being tested with them.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-ab49af82.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-ab49af82.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-ab49af82__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-ab49af82__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-ac2f2fd1",
+   "category": "unfaithful",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "حقوق الأبناء في التربية الدينية",
+   "flags": [
+    "reversed",
+    "glyph_substituted"
+   ],
+   "reason": "The source (p.6) is the author's opening khutba and a paragraph that children are a blessing only when parents fulfil their rights and that the Quran and Sunnah urge raising and teaching them. Creed, love of the Messenger, prayer, truthfulness and honesty are not there.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-ac2f2fd1.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-ac2f2fd1.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-ac2f2fd1__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-ac2f2fd1__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-ac6398a4",
+   "category": "unfaithful",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "حقوق الأبناء على الآباء في التربية والتعليم",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Justice between children is not in the source; p.99 is Ibn Umar teaching his sons the salam, not to trail the izar, the sunna of prayer while travelling and of wudu, and Abu Hurayra teaching schoolboys the Sunnah.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-ac6398a4.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-ac6398a4.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-ac6398a4__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-ac6398a4__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-ad149e0b",
+   "category": "unfaithful",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "تعليم الطفل حقوقه وواجباته",
+   "flags": [
+    "reversed",
+    "glyph_substituted"
+   ],
+   "reason": "Topic invented (rights vs. duties, the right to play and learn); the source (p.39) is the aqiqa - Abu Dawud's hadith, Aisha's 'two equal sheep', one ram each for al-Hasan and al-Husayn, and the jurists' views.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-ad149e0b.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-ad149e0b.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-ad149e0b__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-ad149e0b__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-add301df",
+   "category": "unfaithful",
+   "retrieved": 0,
+   "source_file": "Kayfa_Turabbi_Waladak.pdf",
+   "title": "أخطاء التربية في تقليد الطفل وتأثير الرفقة",
+   "flags": [
+    "reversed"
+   ],
+   "reason": "Misreads its source: Kayfa p.56 warns against applauding a child's imitation of deviant figures for fun and buying clothes bearing their images; the summary says the error is rejoicing when the child imitates his parents or peers and invents that it 'plants negative feelings'.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-add301df.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-add301df.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-add301df__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-add301df__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-b479d931",
+   "category": "unfaithful",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "حقوق الأبناء على الآباء في التربية",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Claims are not in the source ('children are a trust', 'good upbringing leads to their later kindness to parents'); pp.17-18 say the reverse direction - a righteous parent protects and raises his offspring (al-Kahf 82, Ibn al-Munkadir, Ibn Kathir, al-Tur 21 with al-Sa'di).",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-b479d931.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-b479d931.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-b479d931__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-b479d931__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-b782e64c",
+   "category": "unfaithful",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "تعليم الأطفال الجهاد والثبات منذ الصغر",
+   "flags": [
+    "reversed",
+    "glyph_substituted"
+   ],
+   "reason": "Distorts the source into 'teach children jihad from a young age, courage and sacrifice'; p.129 is Bakr Abu Zayd on separating beds at ten and the chapter on encouraging children toward high aims, opening with Sulayman's hadith and al-Bukhari's chapter on a parent's intention when seeking a child.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-b782e64c.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-b782e64c.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-b7ed60a1",
+   "category": "unfaithful",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "تعليم الأطفال حب النبي محمد ﷺ",
+   "flags": [
+    "reversed",
+    "glyph_substituted"
+   ],
+   "reason": "Topic invented (love of the Prophet, avoiding what angers him); the source (pp.35-36) is the Prophet changing children's names - Barra to Zaynab, Hazn, al-As, Aziz to Abd al-Rahman, Abd al-Hajar to Abdullah - with Ibn Battal's commentary.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-b7ed60a1.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-b7ed60a1.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-b7ed60a1__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-b7ed60a1__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-ba3f4e04",
+   "category": "unfaithful",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "تعليم الأبناء حقوق الوالدين والإحسان",
+   "flags": [
+    "reversed",
+    "glyph_substituted"
+   ],
+   "reason": "Topic invented (teaching children parents' rights and birr); the source (p.35) is the Prophet changing children's bad names to good ones (Barra to Zaynab and others) with Ibn Battal.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-ba3f4e04.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-ba3f4e04.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-ba3f4e04__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-ba3f4e04__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-ba5acfd6",
+   "category": "meta_note",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "حقوق الأطفال على والديهم في التربية",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Content-free and off-theme (naming, teaching, disciplining); the source (p.123) is the salaf punishing children for dice games - Ibn Umar, Salama ibn al-Akwa', and Muslim's hadith 'whoever plays nardashir is like one who dips his hand in pork'.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-ba5acfd6.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-ba5acfd6.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-ba5acfd6__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-ba5acfd6__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-ba8618fc",
+   "category": "meta_note",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "حقوق الأطفال على الآباء في التربية والرعاية",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Content-free ('hadiths on upbringing, health and psychological care'); the source (p.145) is the fitra practices, circumcision before puberty (Ibn al-Qayyim, al-Muhallab) and the start of the chapter on spending on children (al-Baqara 233, al-Talaq 7).",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-ba8618fc.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-ba8618fc.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-ba8618fc__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-ba8618fc__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-bb001a48",
+   "category": "meta_note",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "حقوق الأطفال وتربيتهم على الدين والأخلاق",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Generic (prayer and virtues, responsibility) and misses its source: p.89 is teaching a child 'la ilaha illa Allah' as his first words (Ali ibn al-Husayn, the Successors, Ibn al-Qayyim) and Ibn Sirin's will; prayer is not there.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-bb001a48.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-bb001a48.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-bb001a48__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-bb001a48__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-bb91ec1b",
+   "category": "unfaithful",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "تعليم الأطفال قيمة المال والإنفاق الحكيم",
+   "flags": [
+    "reversed",
+    "glyph_substituted"
+   ],
+   "reason": "Topic invented (teaching children the value of money and wise spending); the source (pp.150-151) is providing for children - whoever supports three daughters, al-Zubayr's endowment for his children, Ibn Umar's will, al-Sha'bi on wealth left to heirs, spending on family multiplied.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-bb91ec1b.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-bb91ec1b.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-bb91ec1b__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-bb91ec1b__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-bd250b64",
+   "category": "unfaithful",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "تعليم الأطفال الصدقة وأثرها التربوي",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Inverts the source: summary is about teaching children to give charity; p.178 is keeping children from what is unlawful for them - the Prophet taking a charity date out of al-Hasan's mouth ('the family of Muhammad do not eat sadaqa') with Ibn Battal and al-Tabari.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-bd250b64.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-bd250b64.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-bd250b64__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-bd250b64__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-be5c0b84",
+   "category": "meta_note",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "حقوق الأطفال على والديهم في التربية",
+   "flags": [
+    "partially_reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Content-free and off-theme (justice, mercy, avoiding injustice); the source (pp.36-37) is the Prophet changing bad names (al-As to Abdullah, Asi to Muti') and the prohibition of 'king of kings' as a name.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-be5c0b84.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-be5c0b84.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-be5c0b84__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-be5c0b84__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-c0274dd3",
+   "category": "unfaithful",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "أهمية الصبر في تربية الأبناء",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Only half supported: pp.162-163 teach children patience in hardship (Luqman 17, the Prophet at his grandchild's death) and respect for elders; 'children are a trust' and 'patience in raising children has a great reward with Allah' are not in the source.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-c0274dd3.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-c0274dd3.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-c0274dd3__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-c0274dd3__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-c32410ab",
+   "category": "unfaithful",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "تربية الأبناء على القيم الإسلامية والآداب",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Generic (prayer, dhikr, manners) and unrelated to its source: p.119 is teaching children archery and swimming (Anas, 'everything without remembrance of Allah is idle play except four', Umar's letter) and foot races (Salama ibn al-Akwa').",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-c32410ab.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-c32410ab.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-c32410ab__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-c32410ab__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-cbc7891a",
+   "category": "unfaithful",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "حقوق الأطفال في التربية الإسلامية",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Justice between children is not in the source; pp.87-88 are Ubada's will on qadar, Ibn Umar forbidding his sons to rebel against Yazid, Umm Sulaym teaching Anas the shahada, and a mother warning her son against the Qadariyya.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-cbc7891a.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-cbc7891a.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-cbc7891a__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-cbc7891a__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-d192e37a",
+   "category": "unfaithful",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "أهمية التربية الدينية والأخلاقية للأبناء",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Generic (values, neglect causes problems) and unrelated to its source: p.155 is raising children to self-restraint - Ibn al-Jawzi's inheritance, Umar refusing his son a ring from the Jalula' treasure, Urwa reciting Taha 131.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-d192e37a.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-d192e37a.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-d192e37a__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-d192e37a__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-d4007010",
+   "category": "unfaithful",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "أهمية التربية الأخلاقية للأطفال",
+   "flags": [
+    "partially_reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Main topic missed: p.76 is Umar warning his family, Ibn Umar on the bay'a, and the chapter on children's cleanliness (the Prophet waiting while Fatima washed and dressed al-Hasan); patience and truthfulness are invented.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-d4007010.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-d4007010.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-d44d24f5",
+   "category": "meta_note",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "حقوق الأطفال على الآباء في التربية",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Content-free ('hadiths urging care and teaching'); the source (pp.55-56) is parents' affection - Mu'awiya and Yazid's wrestling, Amr ibn Utba's love for his son, Umayya's verse, Umar ibn Abd al-Aziz sleeping beside his son - and the chapter on playing with children.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-d44d24f5.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-d44d24f5.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-d44d24f5__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-d44d24f5__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-d4e2e2dc",
+   "category": "unfaithful",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "حقوق الأطفال في الإسلام وأهمية التربية",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Garbles the book's preamble: pp.10-11 define 'haqq' (al-Fayruzabadi's dictionary senses - truth, justice, Islam, truthfulness...), quote the five/six rights of a Muslim over a Muslim and al-Qurtubi; the summary turns the dictionary words into parenting values and invents rights to love, respect, health care and education.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-d4e2e2dc.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-d4e2e2dc.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-d4e2e2dc__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-d4e2e2dc__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-d5f87105",
+   "category": "meta_note",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "حقوق الأطفال على الوالدين في التربية",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Content-free and off-theme (justice, mercy, health and psychological care); the source (pp.37-38) is forbidden names (king of kings, Pharaoh, Lenin, foreign names of enemies) and the opening of the aqiqa chapter.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-d5f87105.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-d5f87105.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-d5f87105__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-d5f87105__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-d739a357",
+   "category": "unfaithful",
+   "retrieved": 0,
+   "source_file": "Kayfa_Turabbi_Waladak.pdf",
+   "title": "أسس المكافأة والعقاب في تربية الطفل",
+   "flags": [
+    "reversed"
+   ],
+   "reason": "Inverts its source on reward timing: Kayfa p.50 says rewards come immediately in early childhood and are delayed only in the later stage; the summary says delay them in early childhood. 'Hitting is not effective' also overstates p.51's 'avoid it as far as possible'.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-d739a357.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-d739a357.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-d739a357__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-d739a357__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-d7a2d117",
+   "category": "unfaithful",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "حقوق الأطفال على الآباء في التربية والتعليم",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Adds the 'right to a good name and to be taught writing and reading' (a narration not in the source); pp.91-92 are only about training children to pray - Abu Qirsafa, Ibn Mas'ud, 'command Ja'far, he is seven', Makhul.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-d7a2d117.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-d7a2d117.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-d7a2d117__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-d7a2d117__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-d8e6e42f",
+   "category": "unfaithful",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "أهمية التربية الأخلاقية للأطفال",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Theme invented (patience and endurance); the source (pp.51-52) is compassion in carrying children - al-Hasan and al-Husayn climbing on the praying Prophet, 'whoever loves me, let him love these two', al-Hasan on his shoulder, the sermon he interrupted to lift them.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-d8e6e42f.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-d8e6e42f.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-d8e6e42f__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-d8e6e42f__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-d939e551",
+   "category": "unfaithful",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "أهمية الصبر في التربية الأسرية",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Theme invented (patience in family relations); the source (p.16) is the righteous wife likened to a crown (Abd al-Rahman ibn Abza), choosing a righteous husband, and a father's righteousness protecting his children (al-Kahf 82).",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-d939e551.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-d939e551.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-d939e551__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-d939e551__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-dc9d1503",
+   "category": "unfaithful",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "تعليم الأطفال الصلاة وحقوقهم التربوية",
+   "flags": [
+    "reversed",
+    "glyph_substituted"
+   ],
+   "reason": "Softens its source into its opposite: p.59 opens the chapter 'disciplining and hitting children for leaving prayer, lying and the forbidden' (al-Tahrim 6, al-Nawawi on commanding and disciplining one's family); the summary speaks of 'gentle methods'. Age seven is not on the page.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-dc9d1503.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-dc9d1503.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-dd395fbb",
+   "category": "meta_note",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "حقوق الأطفال على والديهم في الإسلام",
+   "flags": [
+    "partially_reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Generic and misses its source: pp.71-72 forbid favouring sons over daughters (the mother who split her date, 'whoever raises two girls', three daughters a shield from the Fire) and open the chapter on checking on one's children.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-dd395fbb.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-dd395fbb.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-dd395fbb__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-dd395fbb__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-e2711973",
+   "category": "unfaithful",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "حقوق الأبناء على الآباء في التربية",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Contradicts its source: the summary speaks of gentle guidance and protecting children's feelings and confidence; pp.134-135 are the chapter on warning children against innovation - Khabbab beating his son for sitting with people disputing about the Quran, Ibrahim al-Taymi's father expelling him, Ibn Tawus covering his son's ears.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-e2711973.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-e2711973.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-e2711973__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-e2711973__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-e4c8a66d",
+   "category": "unfaithful",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "حقوق الأبناء على الآباء في التربية",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Misreads its source: p.96 is taking children on hajj and to the Eid prayer (Ibn Abbas, Ibn Battal); the charity is the Prophet urging women to give at Eid, not teaching children charity, and 'no physical or psychological harm' is invented.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-e4c8a66d.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-e4c8a66d.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-e4c8a66d__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-e4c8a66d__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-e81562ec",
+   "category": "unfaithful",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "تعليم الأطفال الصلاة وأهميتها في التربية",
+   "flags": [
+    "partially_reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Topic invented (hadiths on prayer, 'experts recommend'); the source (p.19) is Abu Talha and Umm Sulaym's patience and the blessing on their children, and the du'a before intimacy to protect a child from Satan.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-e81562ec.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-e81562ec.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-e81562ec__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-e81562ec__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-ea569b55",
+   "category": "unfaithful",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "أهمية التربية الأخلاقية والدينية للأطفال",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Only truthfulness is in the source; the chunk (pp.160-161) is a father's will on truthfulness and goodwill to Muslims, Sa'd 'we are imams who are followed', Ibn Umar guarding orphans' money. Kindness to parents and respecting elders are not there.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-ea569b55.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-ea569b55.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-ea569b55__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-ea569b55__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-ecd6521f",
+   "category": "unfaithful",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "أهمية تربية الأبناء على القيم الإسلامية",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Main topic missed and values invented: pp.135-136 are warning children against innovators (Ibrahim al-Taymi's father, Ibn Tawus covering his son's ears, Ibn al-Qasim forbidding storytellers, al-Awwam ibn Hawshab) and the chapter on bad company; truthfulness and honesty are not there.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-ecd6521f.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-ecd6521f.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-ecd6521f__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-ecd6521f__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-ee271b17",
+   "category": "unfaithful",
+   "retrieved": 0,
+   "source_file": "Tarbiya_Al_Banat.pdf",
+   "title": "احترام خصوصية الأبناء والعدل في التربية",
+   "flags": [
+    "reversed"
+   ],
+   "reason": "Inverts the source: Tarbiyat al-Banat p.27 says the mother should check her daughter's room and open her school bag - scholars permit it and it is not forbidden spying - and handle what she finds wisely; the summary says she must not search her room or belongings because it violates trust.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-ee271b17.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-ee271b17.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-ee380fa3",
+   "category": "meta_note",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "أهمية التربية الأخلاقية للأبناء",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Generic values summary (patience, truthfulness, respect, cooperation) unrelated to its source: p.75 is Umar disciplining his son over the kunya Abu Isa, advising Hafsa, and gathering children to urge them to good (al-Baqara 133).",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-ee380fa3.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-ee380fa3.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-ee380fa3__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-ee380fa3__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-f0c08a57",
+   "category": "meta_note",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "حقوق الأطفال في الإسلام وتربيتهم",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Generic and misses its source: p.150 is the reward for supporting daughters ('whoever has three daughters... Paradise'), al-Zubayr's endowment for his children, Ibn Umar's and al-Sha'bi's views on leaving wealth to heirs. Justice and teaching prayer are not there.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-f0c08a57.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-f0c08a57.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-f0c08a57__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-f0c08a57__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-f0ecb056",
+   "category": "unfaithful",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "أهمية التربية الدينية للأطفال",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Claims hadiths on teaching prayer from young; the source (p.107) is about knowledge - al-Hasan ibn Ali urging his sons and nephews to learn, Sufyan's father on serving scholars, Ibn al-Jawzi on knowledge raising the lowly.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-f0ecb056.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-f0ecb056.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-f0ecb056__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-f0ecb056__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-f3c9f4ab",
+   "category": "unfaithful",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "حقوق الأطفال على الآباء في التربية والتعليم",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Invents 'the child's right to a good name and to be taught writing and reading'; the source (p.133) is the Prophet forbidding painful folk treatment of children's throats (udhra) and prescribing Indian costus.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-f3c9f4ab.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-f3c9f4ab.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-f3c9f4ab__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-f3c9f4ab__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-f3f7d74e",
+   "category": "meta_note",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "حقوق الأبناء على الآباء في التربية",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Content-free generic summary; the source (pp.157-158) is instilling humility (Luqman 18-19, Ali on Abu Bakr and Umar), fairness (Anas rebuking his daughter, Shurayh ruling against his son), sincerity, and al-Nu'man's hadith on love among siblings.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-f3f7d74e.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-f3f7d74e.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-f3f7d74e__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-f3f7d74e__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-f5f9ceac",
+   "category": "unfaithful",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "أهمية اللعب في تربية الأطفال",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Inverts its source: the summary cites 'hadiths encouraging permitted play'; p.124 is about forbidden games - Aisha evicting tenants who kept dice, Ibn al-Zubayr threatening nardashir players, Ibn Sirin and Ata' forbidding children to gamble even with walnuts.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-f5f9ceac.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-f5f9ceac.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-f5f9ceac__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-f5f9ceac__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-fab3255f",
+   "category": "unfaithful",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "أساليب التربية الإيجابية للأطفال",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Inverts the source: summary says the text holds physical punishment is ineffective; pp.62-63 are narrations from the salaf endorsing disciplinary hitting (Aisha, Maymun with the orphan, Luqman's 'like fertiliser', Ahmad on hitting for adab and prayer at ten).",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-fab3255f.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-fab3255f.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-fab3255f__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-fab3255f__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-fac650ff",
+   "category": "meta_note",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "حقوق الأطفال في التربية الإسلامية",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "meta_framing"
+   ],
+   "reason": "Content-free and off-theme (care, gentleness, respect); the source (p.82) is about children learning the Quran early - Amr ibn Ubayd and young Hammad, Abdullah ibn Idris, a four-year-old who had read the Quran, al-Isfahani memorising at five.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-fac650ff.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-fac650ff.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-fd6abf48",
+   "category": "unfaithful",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "تعليم الأطفال حب الله والرسول",
+   "flags": [
+    "reversed",
+    "glyph_substituted"
+   ],
+   "reason": "Only the heading's gist (forbidding bad morals) survives; p.174's content - not seeking fame and leadership (Sa'd: 'Allah loves the pious, self-sufficient, hidden servant'), staying out of fitna and bloodshed, the banner for every traitor - is replaced by love of Allah, truthfulness and honesty.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-fd6abf48.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-fd6abf48.json"
+    },
+    {
+     "from": "knowledge_base/units/isl-fd6abf48__en.json",
+     "to": "ops/data/en_unpublished/kb_units/isl-fd6abf48__en.json"
+    }
+   ]
+  },
+  {
+   "id": "isl-fedf4c8c",
+   "category": "unfaithful",
+   "retrieved": 0,
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "title": "تعليم الأخلاق للأطفال",
+   "flags": [
+    "reversed",
+    "glyph_substituted"
+   ],
+   "reason": "Topic invented (truthfulness, honesty, respecting elders, avoiding violence); the source (pp.100-101) is fathers teaching sons the Sunnah - Abu Bakra's du'a, Abu Malik al-Ashja'i's father calling qunut an innovation, Sa'd teaching the du'as after prayer and correcting his son's ruku'.",
+   "on": "2026-10-04",
+   "files": [
+    {
+     "from": "knowledge_base/units/isl-fedf4c8c.json",
+     "to": "ops/data/en_unpublished/kb_units_source/isl-fedf4c8c.json"
+    }
+   ]
+  }
+ ]
+}
