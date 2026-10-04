@@ -30,6 +30,9 @@ sequential number survives only as an internal alias that names the right number
 in the error — it never makes a citation pass. Anchors (exit 2 on regression):
 Muslim 1631, 1164, 1893, 2699, 55, 2564 · Bukhari 1, 13, 5027, 6018.
 
+Free text everywhere else (lessons, stories, assets, ARB, push and SEO literals…)
+is `check_scripture_coverage.py`, which reuses [check_one]'s matching.
+
 Scope: `kind: 'hadith'` entries in
 mobile/assets/content/adhkar/family_adhkar.ar.json (Dart literals until
 2026-08-13; the move is proven byte-for-byte by

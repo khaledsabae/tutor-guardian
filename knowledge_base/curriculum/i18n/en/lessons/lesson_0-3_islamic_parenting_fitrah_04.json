@@ -5,7 +5,7 @@
   "age_group": "0-3",
   "domain": "aqeedah",
   "unit_ids": [],
-  "summary": "The Prophet ﷺ would kiss children, carry them, and show them mercy, saying: «Whoever does not show mercy will not be shown mercy.» A child who is immersed in tenderness connects deen with safety and love, not with fear. Mercy is the first lesson of iman.",
+  "summary": "The Prophet ﷺ would kiss children, carry them, and show them mercy, saying: «Whoever does not show mercy will not be shown mercy» (Sahih al-Bukhari 5997). A child who is immersed in tenderness connects deen with safety and love, not with fear. Mercy is the first lesson of iman.",
   "try_this": "This week: Increase hugs and gentle touches for your child, and intend that they are from the mercy of Allah by which you raise them (upbringing).",
   "order": 4,
   "estimated_minutes": 6,
@@ -49,6 +49,9 @@
       }
     ],
     "approved_by": null,
-    "revalidated_at": "2026-08-13T17:18:06.582173+00:00"
+    "revalidated_at": "2026-08-13T17:18:06.582173+00:00",
+    "manual_fix_note": "2026-10-04 scripture fix: hadith quoted only from the Sahihayn with book + number (Muslim by Abd al-Baqi); non-Sahihayn or paraphrased quotes replaced, mirrored from the Arabic.",
+    "fixed_at": "2026-10-04T08:15:36.331649+00:00",
+    "fixer_model": "claude-opus-5.5"
   }
 }

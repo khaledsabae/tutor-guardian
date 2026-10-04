@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """Verify every Qur'an citation in the app against the mushaf text.
 
+Verses quoted anywhere else in the app (﴿…﴾, «قال تعالى: …») are checked by
+`check_scripture_coverage.py` against the same mushaf.
+
 Scope: `kind: 'verse'` entries in
 mobile/assets/content/adhkar/family_adhkar.ar.json (they were Dart literals
 until 2026-08-13; the move is proven byte-for-byte by

@@ -70,7 +70,7 @@ class _InviteScreenState extends State<InviteScreen> {
           eyebrow: 'دعوة لوجه الله',
           headline: 'جرّب «المربّي» معي',
           body: 'تطبيق تربية إسلامي ذكي يجاوبك بثقة — مجاني بلا إعلانات.\n'
-              '«الدالُّ على الخير كفاعله»',
+              '«من دلّ على خير فله مثل أجر فاعله» (صحيح مسلم — حديث ١٨٩٣)',
           icon: Icons.favorite_outline,
         ),
       );

@@ -921,7 +921,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get onbTip_7to9 =>
-      'هذا عمر «مُروا أولادكم بالصلاة» — ابدأ بالتشجيع لا بالعقاب، وثبّتا معًا صلاة واحدة يوميًا قبل أن تطلب الخمس.';
+      'في هذا العمر جاءت السنة بتعليم الصلاة — ابدأ بالتشجيع لا بالعقاب، وثبّتا معًا صلاة واحدة يوميًا قبل أن تطلب الخمس.';
 
   @override
   String get onbTip_10to12 =>
@@ -3692,7 +3692,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get notifWird1 =>
-      '«خيركم من تعلّم القرآن وعلّمه» — ابدأ بنفسك، وولدك يشوفك.';
+      '«خيركم من تعلّم القرآن وعلّمه» (صحيح البخاري — حديث ٥٠٢٧) — ابدأ بنفسك، فولدك يراك.';
 
   @override
   String get notifWird2 => 'وردك مستنيك. دقيقتان تفرقان.';
@@ -3819,7 +3819,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get habitMilestoneMsg =>
-      '«أحبُّ الأعمالِ إلى اللهِ أدومُها وإن قلَّ». استمر، فالقليل الدائم خير كثير.';
+      '«أحبُّ الأعمالِ إلى اللهِ أدومُها وإن قلَّ» (صحيح مسلم — حديث ٢٨١٨). استمر، فالقليل الدائم خير كثير.';
 
   @override
   String get habitMilestoneButton => 'الحمد لله';
