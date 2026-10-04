@@ -452,3 +452,25 @@ def test_staged_rule_blocks_new_and_stale_but_lets_the_backlog_be_corrected(rp, 
     legacy_without_prompts = {k: v for k, v in head_legacy.items() if k != "reflection_prompts"}
     monkeypatch.setattr(rp, "_head_en", lambda _it: legacy_without_prompts)
     assert "adds English" in rp.staged_check_item(item)
+
+
+def test_the_cache_is_never_seen_half_loaded(rp, tmp_path, monkeypatch):
+    # Both reviewers start at the same instant; the first loader used to publish
+    # an empty dict and fill it, so the second thread missed cached verdicts.
+    import threading
+    f = tmp_path / "cache.jsonl"
+    f.write_text("".join(json.dumps({"k": f"m|p|{i}", "v": []}) + "\n" for i in range(5000)))
+    monkeypatch.setattr(rp, "CACHE", f)
+    monkeypatch.setattr(rp, "_cache", None)
+    seen, start = [], threading.Barrier(4)
+
+    def load():
+        start.wait()
+        seen.append(len(rp._cache_load()))
+
+    threads = [threading.Thread(target=load) for _ in range(4)]
+    for t in threads:
+        t.start()
+    for t in threads:
+        t.join()
+    assert seen == [5000] * 4

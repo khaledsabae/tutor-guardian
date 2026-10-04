@@ -835,22 +835,32 @@ _cache: dict[str, list] | None = None
 
 
 def _cache_load() -> dict:
+    """يُحمَّل مرة واحدة تحت القفل، ويُنشر كاملًا لا وهو يُملأ.
+
+    النسخة الأولى كانت تُسند `{}` ثم تملؤه: الخيط الثاني (المراجع الآخر يبدأ في
+    اللحظة نفسها) يرى قاموسًا غير فارغ الإسناد فارغ المحتوى، فيُخطئ الكاش. في
+    التشغيل العادي يعني ذلك نداءً مكرّرًا، وفي `--cache-only` عدَّ ٦٠ وحدة «غير
+    مراجَعة» وحكماها محفوظان (2026-10-04).
+    """
     global _cache
-    if _cache is None:
-        _cache = {}
-        if CACHE.exists():
-            for line in CACHE.read_text(encoding="utf-8").splitlines():
-                try:
-                    rec = json.loads(line)
-                    _cache[rec["k"]] = rec["v"]
-                except (json.JSONDecodeError, KeyError):
-                    continue
+    with _cache_lock:
+        if _cache is None:
+            loaded: dict = {}
+            if CACHE.exists():
+                for line in CACHE.read_text(encoding="utf-8").splitlines():
+                    try:
+                        rec = json.loads(line)
+                        loaded[rec["k"]] = rec["v"]
+                    except (json.JSONDecodeError, KeyError):
+                        continue
+            _cache = loaded
     return _cache
 
 
 def _cache_put(k: str, v: list) -> None:
+    cache = _cache_load()
     with _cache_lock:
-        _cache_load()[k] = v
+        cache[k] = v
         CACHE.parent.mkdir(parents=True, exist_ok=True)
         with CACHE.open("a", encoding="utf-8") as f:
             f.write(json.dumps({"k": k, "v": v}, ensure_ascii=False) + "\n")
