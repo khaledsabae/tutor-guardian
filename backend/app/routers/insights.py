@@ -5,6 +5,7 @@ import logging
 from fastapi import APIRouter, HTTPException, Query, Request
 from app.db.init_db import get_conn
 from app.services.ai_gateway import get_gateway
+from app.services.privacy import names_for_device, redact_with_names
 
 logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/insights", tags=["insights"])
@@ -30,7 +31,7 @@ async def get_parenting_insights(
     # 4. Build AI insights prompt
     prompt = f"""
 أنت مساعد وخبير تربوي ذكي للأطفال في العالم العربي الإسلامي.
-بناءً على البيانات التالية للطفل/الطفلة {child["name"]} (العمر: {child["age_group"]}):
+بناءً على البيانات التالية للطفل/الطفلة (العمر: {child["age_group"]}):
 
 1. ملخص الروتين الأسبوعي للطفل (آخر 7 أيام):
 - إجمالي دقائق النوم: {total_sleep} دقيقة
@@ -147,7 +148,12 @@ def _gather_insights_data(device_id: str, child_id: int):
             """,
             (device_id,)
         ).fetchall()
-        chat_texts = [c["content"] for c in chats]
+        # The prompt goes to the primary provider, a cloud API. It used to
+        # carry the child's name in its first line and the parent's questions
+        # verbatim; both now leave with the family's child names replaced
+        # (services/privacy.py), the same rule as the assistant.
+        names = names_for_device(device_id)
+        chat_texts = [redact_with_names(c["content"], names) for c in chats]
 
         return child, total_sleep, feed_count, feed_amount, diaper_count, chat_texts
     finally:

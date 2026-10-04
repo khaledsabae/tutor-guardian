@@ -113,3 +113,29 @@ def test_parenting_insights_falls_back_when_llm_fails(client, fake_gateway):
     insights = r.json()["insights"]
     assert len(insights) >= 3
     assert all(i["type"] in ["positive", "tip", "warning"] for i in insights)
+
+
+def test_child_name_never_reaches_the_insights_prompt(client, monkeypatch):
+    """The insights prompt went to the cloud primary with the child's name in
+    its first line and the parent's questions verbatim. Neither may carry it."""
+    prompts: list[str] = []
+
+    class _Recording(_FakeGateway):
+        async def generate(self, prompt, **kwargs):
+            prompts.append(prompt)
+            return await super().generate(prompt, **kwargs)
+
+    gw = _Recording(text=json.dumps(_LLM_INSIGHTS, ensure_ascii=False))
+    monkeypatch.setattr("app.routers.insights.get_gateway", lambda: gw)
+
+    r = client.post("/api/children", json={"name": "يوسف", "age_group": "4-6"})
+    cid = r.json()["id"]
+    from app.services import conversation_store as store
+    sid = store.create_session("test-device-001")
+    store.add_message(sid, "user", "يوسف لا ينام قبل منتصف الليل، وأخته تقلّده")
+
+    resp = client.get(f"/api/insights/parenting?child_id={cid}")
+    assert resp.status_code == 200
+    assert prompts, "the model was not called"
+    assert "يوسف" not in prompts[-1]
+    assert "طفلي لا ينام قبل منتصف الليل" in prompts[-1]   # the question still arrives
