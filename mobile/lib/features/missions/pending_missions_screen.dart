@@ -15,11 +15,11 @@ library;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../api/tg_client.dart';
 import '../../l10n/app_localizations.dart';
 import '../../state/chat_notifier.dart';
 import '../coins/coins_providers.dart';
-import '../programs/data/prayer_coins_ledger.dart';
+import '../../widgets/ui/error_retry_view.dart';
+import 'mission_confirmations.dart';
 import 'package:almorabbi/widgets/ui/loading_view.dart';
 
 class PendingMissionsScreen extends ConsumerStatefulWidget {
@@ -46,11 +46,34 @@ class _PendingMissionsScreenState extends ConsumerState<PendingMissionsScreen> {
   }
 
   Future<void> _load() async {
+    // Read before the first await: this screen can be gone by the time any
+    // answer comes back, and paying must not depend on it. (Called from
+    // initState, so nothing that reads an inherited widget is taken here.)
+    final client = ref.read(tgClientProvider);
+    final coins = ref.read(coinsProvider.notifier);
+
+    // A batch whose answer was lost goes first. Its cards may no longer be
+    // pending — the server applied them — so this is the only way left to
+    // pay their coins. Offline, it simply waits for the next open.
     try {
-      final items = await ref.read(tgClientProvider).fetchPendingMissions();
+      final flushed = await MissionConfirmations.flush(client);
+      if (flushed != null && flushed.coins > 0) {
+        await coins.refresh();
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text(AppLocalizations.of(context)
+                  .missionCoinsEarned(flushed.coins))));
+        }
+      }
+    } catch (_) {}
+
+    try {
+      final items = await client.fetchPendingMissions();
       if (mounted) setState(() { _pending = items; _error = null; });
-    } on TgApiError catch (e) {
-      if (mounted) setState(() { _error = e.toString(); _pending = const []; });
+    } catch (e) {
+      if (!mounted) return;
+      final message = describeFailure(AppLocalizations.of(context), e);
+      setState(() { _error = message; _pending = const []; });
     }
   }
 
@@ -58,6 +81,10 @@ class _PendingMissionsScreenState extends ConsumerState<PendingMissionsScreen> {
     final pending = _pending;
     if (pending == null || pending.isEmpty || _sending) return;
     setState(() => _sending = true);
+    final client = ref.read(tgClientProvider);
+    final coins = ref.read(coinsProvider.notifier);
+    final messenger = ScaffoldMessenger.of(context);
+    final l10n = AppLocalizations.of(context);
 
     // Every card is settled in one call, including the excluded ones — a card
     // marked "not yet" is answered `confirmed: false`, not left pending. If it
@@ -72,22 +99,23 @@ class _PendingMissionsScreenState extends ConsumerState<PendingMissionsScreen> {
     ];
 
     try {
-      final result = await ref.read(tgClientProvider).settleMissions(items);
       // Prayer Journey cards come back with what they earned (MOBILE_API
-      // §11.4.7). There is no server ledger: the device credits them, through
-      // the same daily cap as every other coin — and each mission once, since
-      // a retried batch lists the same missions again.
-      final earned = await PrayerCoinsLedger.takeNew(result.coins);
-      if (earned > 0) await ref.read(coinsProvider.notifier).earn(earned);
-      if (!mounted) return;
-      if (earned > 0) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text(AppLocalizations.of(context).missionCoinsEarned(earned))));
+      // §11.4.7); the device pays them, each mission once. Outbox, sending and
+      // paying all live outside this screen, so leaving it mid-request no
+      // longer loses the coins.
+      final result = await MissionConfirmations.send(client, items);
+      if (result.coins > 0) {
+        await coins.refresh(); // the wallet outlives this screen
+        messenger.showSnackBar(
+            SnackBar(content: Text(l10n.missionCoinsEarned(result.coins))));
       }
-      Navigator.of(context).pop(true);
-    } on TgApiError catch (e) {
       if (!mounted) return;
-      setState(() { _sending = false; _error = e.toString(); });
+      Navigator.of(context).pop(true);
+    } catch (e) {
+      // Any failure, not just an HTTP one: a spinner with no way out is the
+      // worst answer. The batch stays in the outbox for the next try.
+      if (!mounted) return;
+      setState(() { _sending = false; _error = describeFailure(l10n, e); });
     }
   }
 

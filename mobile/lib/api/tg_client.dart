@@ -2166,16 +2166,16 @@ class TgClient {
 
   /// Child mode: today's prayer tasks (Child-Bearer, live screen session).
   Future<Map<String, dynamic>> fetchChildPrayerToday(String childToken) {
-    return _guard(() async {
-      final uri =
-          Uri.parse('$_baseUrl/api/value-tracking/child-mode/prayer/today')
-              .replace(queryParameters: _programsQuery());
-      final resp = await _http
-          .get(uri, headers: _childAuthHeaders(childToken))
-          .timeout(AppConfig.httpTimeout);
-      if (resp.statusCode != 200) throw _wrap(resp);
-      return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
-    });
+    return _guard(() => _childPrayerCall(
+          childToken,
+          (token) => _http
+              .get(
+                Uri.parse('$_baseUrl/api/value-tracking/child-mode/prayer/today')
+                    .replace(queryParameters: _programsQuery()),
+                headers: _childAuthHeaders(token),
+              )
+              .timeout(AppConfig.httpTimeout),
+        ));
   }
 
   /// Child mode: «صلّيتها». Recorded at once; the parent confirms tonight.
@@ -2183,16 +2183,36 @@ class TgClient {
     required String childToken,
     required String taskId,
   }) {
-    return _guard(() async {
-      final uri =
-          Uri.parse('$_baseUrl/api/value-tracking/child-mode/prayer/claim')
-              .replace(queryParameters: _programsQuery({'task_id': taskId}));
-      final resp = await _http
-          .post(uri, headers: _childAuthHeaders(childToken))
-          .timeout(AppConfig.httpTimeout);
-      if (resp.statusCode != 200) throw _wrap(resp);
-      return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
-    });
+    return _guard(() => _childPrayerCall(
+          childToken,
+          (token) => _http
+              .post(
+                Uri.parse('$_baseUrl/api/value-tracking/child-mode/prayer/claim')
+                    .replace(queryParameters: _programsQuery({'task_id': taskId})),
+                headers: _childAuthHeaders(token),
+              )
+              .timeout(AppConfig.httpTimeout),
+        ));
+  }
+
+  /// One child-mode programs request, with the habit surface's recovery: a
+  /// 401 first renews the child token from the parent's session (as
+  /// [fetchChildTodayHabits] does) and replays once. Only when that fails is
+  /// the 401 reported — [childSessionExpired] — and the caller hides the card.
+  /// A 401 is never a recorded claim, so replaying a claim cannot double it.
+  Future<Map<String, dynamic>> _childPrayerCall(
+    String childToken,
+    Future<http.Response> Function(String token) send,
+  ) async {
+    var resp = await send(childToken);
+    if (resp.statusCode == 401) {
+      final refreshed = await _refreshChildTokenOrFail();
+      if (refreshed == null) throw childSessionExpired;
+      resp = await send(refreshed);
+      if (resp.statusCode == 401) throw childSessionExpired;
+    }
+    if (resp.statusCode != 200) throw _wrap(resp);
+    return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
   }
 
   // ── Internet licence ─────────────────────────────────────────────────────

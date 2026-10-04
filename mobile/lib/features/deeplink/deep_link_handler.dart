@@ -78,6 +78,14 @@ class DeepLinkHandler {
     final context = key.currentContext;
     if (context == null) return;
 
+    // While a child holds the phone, no link opens anything. Every route
+    // below is the parent's: /missions would put the evening confirmation —
+    // the parent's own session — over the child surface, where a child could
+    // confirm their own claims; /license, /inbox, a lesson, a milestone are
+    // parent screens too. The tap is dropped and the child surface stays; the
+    // parent reaches the same screen from the app after leaving child mode.
+    if (_childModeActive(context)) return;
+
     final navigator = Navigator.of(context);
 
     // Referral landing: /go?ref=XXXX → save code + home.
@@ -127,11 +135,10 @@ class DeepLinkHandler {
     // Milestone push: /milestones/{child_id}/{milestone_key} (MOBILE_API
     // §11.5.3) — "turning seven next month". Opens that child's card; the
     // screen falls back to the child's list when the card is not theirs.
-    // Parent-only content, so never on top of a running child surface.
+    // Parent-only content (the child-mode guard above covers it).
     final milestoneMatch =
         RegExp(r'^/milestones/(\d+)/([A-Za-z0-9_\-]+)/?$').firstMatch(path);
     if (milestoneMatch != null) {
-      if (_childModeActive(context)) return;
       final childId = int.parse(milestoneMatch.group(1)!);
       final key = milestoneMatch.group(2)!;
       navigator.popUntil((route) => route.isFirst);

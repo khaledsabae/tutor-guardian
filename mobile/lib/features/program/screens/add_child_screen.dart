@@ -65,6 +65,9 @@ class _AddChildScreenState extends ConsumerState<AddChildScreen> {
       );
       return;
     }
+    // Captured before the request: the summary refreshes even if the parent
+    // has left the screen by the time the server answers.
+    final container = programsContainerOf(context);
     try {
       final child = await ref.read(createChildProvider.notifier).create(
             name: _nameController.text.trim(),
@@ -74,7 +77,7 @@ class _AddChildScreenState extends ConsumerState<AddChildScreen> {
             birthMonth: ref.read(programsAvailableProvider) ? _birthMonth : null,
           );
       // The programs summarise every child; a new one changes the answer.
-      if (mounted) ref.invalidate(programsOverviewProvider);
+      refreshProgramsSummary(container);
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text(AppLocalizations.of(context).addChildAdded(child.name))),

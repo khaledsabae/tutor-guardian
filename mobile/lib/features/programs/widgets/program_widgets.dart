@@ -255,57 +255,68 @@ class ProgramLinkRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final c = context.colors;
-    return Material(
-      color: Colors.transparent,
-      child: InkWell(
-        borderRadius: BorderRadius.circular(14),
-        onTap: onTap,
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(minHeight: Dt.minTouch),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
-            child: Row(
-              children: [
-                if (emoji != null) ...[
-                  ExcludeSemantics(
-                    child: Text(emoji!, style: const TextStyle(fontSize: 20)),
-                  ),
-                  const SizedBox(width: 10),
-                ],
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        label,
-                        style: TextStyle(
-                          color: c.ink,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 14.5,
-                          height: 1.4,
+    // One node, announced as a button: the label, the subtitle and the badge
+    // read together ("The Prayer Journey, stage 2, button"). An InkWell alone
+    // gives a tap action but no role, so a screen reader said only the text.
+    return MergeSemantics(
+      child: Semantics(
+        button: true,
+        child: Material(
+          color: Colors.transparent,
+          child: InkWell(
+            borderRadius: BorderRadius.circular(14),
+            onTap: onTap,
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(minHeight: Dt.minTouch),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
+                child: Row(
+                  children: [
+                    if (emoji != null) ...[
+                      ExcludeSemantics(
+                        child: Text(
+                          emoji!,
+                          style: const TextStyle(fontSize: 20),
                         ),
                       ),
-                      if (subtitle != null) ...[
-                        const SizedBox(height: 2),
-                        Text(
-                          subtitle!,
-                          style: TextStyle(
-                            color: c.textSecondary,
-                            fontSize: 12.5,
-                            height: 1.45,
-                          ),
-                        ),
-                      ],
+                      const SizedBox(width: 10),
                     ],
-                  ),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            label,
+                            style: TextStyle(
+                              color: c.ink,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 14.5,
+                              height: 1.4,
+                            ),
+                          ),
+                          if (subtitle != null) ...[
+                            const SizedBox(height: 2),
+                            Text(
+                              subtitle!,
+                              style: TextStyle(
+                                color: c.textSecondary,
+                                fontSize: 12.5,
+                                height: 1.45,
+                              ),
+                            ),
+                          ],
+                        ],
+                      ),
+                    ),
+                    if (badge != null) ...[
+                      const SizedBox(width: 8),
+                      CountBadge(badge!),
+                    ],
+                    const SizedBox(width: 4),
+                    const DirectionalChevron(),
+                  ],
                 ),
-                if (badge != null) ...[
-                  const SizedBox(width: 8),
-                  CountBadge(badge!),
-                ],
-                const SizedBox(width: 4),
-                const DirectionalChevron(),
-              ],
+              ),
             ),
           ),
         ),

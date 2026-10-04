@@ -1505,10 +1505,10 @@
   "@ramadanDayN": {"placeholders": {"day": {"type": "int"}}},
   "ramadanDayOf": "اليوم {day} من {total} من رمضان",
   "@ramadanDayOf": {"placeholders": {"day": {"type": "int"}, "total": {"type": "int"}}},
-  "ramadanDayPreviewNote": "لم يأتِ هذا اليوم بعد؛ تُعلَّم «تمّ» في يومه.",
+  "ramadanDayPreviewNote": "لم يأتِ هذا اليوم بعد؛ يمكنكم التعليم عليه حين يأتي.",
   "ramadanDays29": "٢٩ يومًا",
   "ramadanDays30": "٣٠ يومًا",
-  "ramadanDaysAuto": "كما يُعلَن في التطبيق",
+  "ramadanDaysAuto": "حسب الإعلان الرسمي",
   "ramadanEidTomorrowTitle": "هل غدًا العيد؟",
   "ramadanEidTomorrowBody": "إن أُعلن العيد غدًا في بلدكم، فاجعلوا الشهر ٢٩ يومًا ليصل البرنامج معكم إلى العيد في وقته.",
   "ramadanErrorDayNotMarkable": "يُعلَّم هذا اليوم حين يأتي.",
@@ -1559,7 +1559,7 @@
   "ramadanSettingsTitle": "رؤية الهلال عندكم",
   "ramadanShiftEarlier": "قبل يوم",
   "ramadanShiftLater": "بعد يوم",
-  "ramadanShiftNone": "كما في التطبيق",
+  "ramadanShiftNone": "في اليوم المُعلَن",
   "ramadanSoFar": "رمضاننا حتى الآن",
   "ramadanStartsOn": "يبدأ في {date}",
   "@ramadanStartsOn": {"placeholders": {"date": {"type": "String"}}},
@@ -1577,7 +1577,7 @@
   "ramadanWirdTheme": "آيات اليوم",
   "ramadanWirdTitle": "ورد القرآن العائلي",
   "ramadanWirdTogether": "نقرؤها معًا",
-  "recapEmpty": "لا عدّادات بعد؛ علّموا «تمّ» في بطاقة اليوم لتظهر هنا.",
+  "recapEmpty": "لا عدّادات بعد. علّموا ما أتممتموه في قسم «ما أتممناه» من بطاقة كل يوم، وستظهر هنا.",
   "recapFamilyOnly": "لأسرتكم فقط",
   "recapFamilyOnlyNote": "هذا لا يظهر في البطاقة ولا يُشارَك؛ فصيام الأطفال شأن خاص بالأسرة.",
   "recapNoSeason": "لا موسم رمضان معروفًا بعد.",
@@ -1589,5 +1589,6 @@
   "recapShareFailed": "تعذّرت المشاركة. حاولوا مرة أخرى.",
   "recapTitle": "رمضان عائلتنا",
   "prayerHandOverNeedsBand": "لكي يسجّل {name} مهامه في وضع الطفل، حدّث فئته العمرية في ملفه لتوافق عمره.",
-  "@prayerHandOverNeedsBand": {"placeholders": {"name": {"type": "String"}}}
+  "@prayerHandOverNeedsBand": {"placeholders": {"name": {"type": "String"}}},
+  "ramadanRecapLastSeason": "بطاقة «رمضان عائلتنا» من رمضان الماضي"
 }

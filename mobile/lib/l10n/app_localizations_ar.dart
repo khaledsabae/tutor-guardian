@@ -4640,7 +4640,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get ramadanDayPreviewNote =>
-      'لم يأتِ هذا اليوم بعد؛ تُعلَّم «تمّ» في يومه.';
+      'لم يأتِ هذا اليوم بعد؛ يمكنكم التعليم عليه حين يأتي.';
 
   @override
   String get ramadanDays29 => '٢٩ يومًا';
@@ -4649,7 +4649,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get ramadanDays30 => '٣٠ يومًا';
 
   @override
-  String get ramadanDaysAuto => 'كما يُعلَن في التطبيق';
+  String get ramadanDaysAuto => 'حسب الإعلان الرسمي';
 
   @override
   String get ramadanEidTomorrowTitle => 'هل غدًا العيد؟';
@@ -4817,7 +4817,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get ramadanShiftLater => 'بعد يوم';
 
   @override
-  String get ramadanShiftNone => 'كما في التطبيق';
+  String get ramadanShiftNone => 'في اليوم المُعلَن';
 
   @override
   String get ramadanSoFar => 'رمضاننا حتى الآن';
@@ -4869,7 +4869,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get recapEmpty =>
-      'لا عدّادات بعد؛ علّموا «تمّ» في بطاقة اليوم لتظهر هنا.';
+      'لا عدّادات بعد. علّموا ما أتممتموه في قسم «ما أتممناه» من بطاقة كل يوم، وستظهر هنا.';
 
   @override
   String get recapFamilyOnly => 'لأسرتكم فقط';
@@ -4905,4 +4905,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String prayerHandOverNeedsBand(String name) {
     return 'لكي يسجّل $name مهامه في وضع الطفل، حدّث فئته العمرية في ملفه لتوافق عمره.';
   }
+
+  @override
+  String get ramadanRecapLastSeason => 'بطاقة «رمضان عائلتنا» من رمضان الماضي';
 }

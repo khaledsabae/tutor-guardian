@@ -78,19 +78,23 @@ class _JourneyBodyState extends ConsumerState<_JourneyBody> {
   ) async {
     if (_busy) return null;
     final l10n = AppLocalizations.of(context);
+    // Captured before the request: if the parent leaves mid-request, `ref` is
+    // gone, and the journey and the overview must still refresh.
+    final container = programsContainerOf(context);
+    final childId = _childId;
     setState(() => _busy = true);
     try {
       final next = PrayerJourney.fromJson(await send());
       unawaited(Analytics.programAction('prayer', action));
-      ref.invalidate(prayerJourneyProvider(_childId));
-      refreshProgramsSummary(ref);
+      container.invalidate(prayerJourneyProvider(childId));
+      refreshProgramsSummary(container);
       return next;
     } catch (e) {
       // A stale screen or a double tap (MOBILE_API §11.4.4–5): the change
       // already happened, or the stage moved under us — show the truth.
       if (e is TgApiError && (e.code == 'stage_changed' || e.code == 'already_graduated')) {
-        ref.invalidate(prayerJourneyProvider(_childId));
-        refreshProgramsSummary(ref);
+        container.invalidate(prayerJourneyProvider(childId));
+        refreshProgramsSummary(container);
         return null;
       }
       if (mounted) showProgramSnack(context, programChangeError(l10n, e));
@@ -217,10 +221,11 @@ class _JourneyBodyState extends ConsumerState<_JourneyBody> {
 
   Future<void> _openPending() async {
     unawaited(Analytics.programAction('prayer', 'confirm_open'));
+    final container = programsContainerOf(context);
+    final childId = _childId;
     await Navigator.of(context).push(AppRoutes.pendingMissions());
-    if (!mounted) return;
-    ref.invalidate(prayerJourneyProvider(_childId));
-    refreshProgramsSummary(ref);
+    container.invalidate(prayerJourneyProvider(childId));
+    refreshProgramsSummary(container);
   }
 
   /// The child surface policy keys on the profile's age group, not on the

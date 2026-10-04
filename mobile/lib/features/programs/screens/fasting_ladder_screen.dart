@@ -69,11 +69,13 @@ class _LadderBodyState extends ConsumerState<_LadderBody> {
 
   Future<void> _setStep(FastingStep step) async {
     final l10n = AppLocalizations.of(context);
+    final container = programsContainerOf(context);
     setState(() => _busyStep = step.key);
     try {
       final json = await ref
           .read(tgClientProvider)
           .updateFasting(widget.childId, stepKey: step.key);
+      _refresh(container); // even if the parent already left this screen
       if (!mounted) return;
       final climbed = json['climbed'] == true;
       unawaited(
@@ -83,7 +85,6 @@ class _LadderBodyState extends ConsumerState<_LadderBody> {
         context,
         climbed ? l10n.fastingClimbed : l10n.fastingStepSaved,
       );
-      _refresh();
     } catch (e) {
       if (mounted) showProgramSnack(context, programChangeError(l10n, e));
     } finally {
@@ -93,11 +94,13 @@ class _LadderBodyState extends ConsumerState<_LadderBody> {
 
   Future<void> _setPuberty(bool value) async {
     final l10n = AppLocalizations.of(context);
+    final container = programsContainerOf(context);
     setState(() => _busy = true);
     try {
       await ref
           .read(tgClientProvider)
           .updateFasting(widget.childId, reachedPuberty: value);
+      _refresh(container);
       if (!mounted) return;
       unawaited(
         Analytics.programAction(
@@ -106,7 +109,6 @@ class _LadderBodyState extends ConsumerState<_LadderBody> {
         ),
       );
       showProgramSnack(context, l10n.programsSaved);
-      _refresh();
     } catch (e) {
       if (mounted) showProgramSnack(context, programChangeError(l10n, e));
     } finally {
@@ -114,10 +116,10 @@ class _LadderBodyState extends ConsumerState<_LadderBody> {
     }
   }
 
-  void _refresh() {
-    ref.invalidate(fastingLadderProvider(widget.childId));
-    ref.invalidate(ramadanTodayProvider(widget.childId));
-    refreshProgramsSummary(ref);
+  void _refresh(ProviderContainer container) {
+    container.invalidate(fastingLadderProvider(widget.childId));
+    container.invalidate(ramadanTodayProvider(widget.childId));
+    refreshProgramsSummary(container);
   }
 
   @override

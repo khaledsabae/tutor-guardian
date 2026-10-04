@@ -336,6 +336,7 @@ class _RamadanMarksPanelState extends ConsumerState<RamadanMarksPanel> {
   Future<void> _toggle(String mark) async {
     if (_busy.contains(mark)) return;
     final l10n = AppLocalizations.of(context);
+    final container = programsContainerOf(context);
     final done = !_marks.isDone(mark);
     setState(() {
       _busy.add(mark);
@@ -350,13 +351,13 @@ class _RamadanMarksPanelState extends ConsumerState<RamadanMarksPanel> {
           .read(tgClientProvider)
           .setRamadanMark(mark: mark, day: widget.day, done: done);
       final fresh = RamadanMarks.fromJson(json['marks']);
-      if (!mounted) return;
-      setState(() => _marks = fresh ?? _marks);
       unawaited(Analytics.programAction('ramadan', done ? 'mark' : 'unmark'));
-      refreshProgramsSummary(ref);
+      refreshProgramsSummary(container);
       // Today's screen keeps its data on screen while it refetches, so a tick
       // made on another day's page is there when the parent comes back.
-      ref.invalidate(ramadanTodayProvider);
+      container.invalidate(ramadanTodayProvider);
+      if (!mounted) return;
+      setState(() => _marks = fresh ?? _marks);
     } catch (e) {
       if (!mounted) return;
       setState(
@@ -375,6 +376,7 @@ class _RamadanMarksPanelState extends ConsumerState<RamadanMarksPanel> {
   Future<void> _chooseWord(int index) async {
     if (_busy.contains('family_word')) return;
     final l10n = AppLocalizations.of(context);
+    final container = programsContainerOf(context);
     setState(() => _busy.add('family_word'));
     try {
       final json = await ref
@@ -385,10 +387,10 @@ class _RamadanMarksPanelState extends ConsumerState<RamadanMarksPanel> {
             choiceIndex: index,
           );
       final fresh = RamadanMarks.fromJson(json['marks']);
+      unawaited(Analytics.programAction('ramadan', 'family_word'));
+      container.invalidate(ramadanTodayProvider);
       if (!mounted) return;
       setState(() => _marks = fresh ?? _marks);
-      unawaited(Analytics.programAction('ramadan', 'family_word'));
-      ref.invalidate(ramadanTodayProvider);
     } catch (e) {
       if (mounted) showProgramSnack(context, programChangeError(l10n, e));
     } finally {
@@ -510,11 +512,13 @@ class _FastingSummaryCardState extends ConsumerState<FastingSummaryCard> {
 
   Future<void> _practise(bool done) async {
     final l10n = AppLocalizations.of(context);
+    final container = programsContainerOf(context);
     setState(() => _busy = true);
     try {
       final json = await ref
           .read(tgClientProvider)
           .recordFastingPractice(widget.childId, done: done);
+      container.invalidate(fastingLadderProvider(widget.childId));
       if (!mounted) return;
       setState(
         () => _f = FastingSummary(
@@ -534,7 +538,6 @@ class _FastingSummaryCardState extends ConsumerState<FastingSummaryCard> {
       unawaited(
         Analytics.programAction('ramadan', done ? 'practised' : 'unpractised'),
       );
-      ref.invalidate(fastingLadderProvider(widget.childId));
     } catch (e) {
       if (mounted) showProgramSnack(context, programChangeError(l10n, e));
     } finally {
@@ -653,6 +656,7 @@ class _RamadanSettingsSheetState extends ConsumerState<RamadanSettingsSheet> {
 
   Future<void> _send({int? shift, int? days, bool resetDays = false}) async {
     final l10n = AppLocalizations.of(context);
+    final container = programsContainerOf(context);
     setState(() => _busy = true);
     try {
       final json = await ref
@@ -663,13 +667,13 @@ class _RamadanSettingsSheetState extends ConsumerState<RamadanSettingsSheet> {
             resetMonthDays: resetDays,
           );
       final season = RamadanSeason.fromJson(json['season']);
+      unawaited(Analytics.programAction('ramadan', 'settings'));
+      refreshProgramsSummary(container);
+      container.invalidate(ramadanTodayProvider);
+      container.invalidate(ramadanDayProvider);
+      container.invalidate(fastingLadderProvider);
       if (!mounted) return;
       setState(() => _season = season ?? _season);
-      unawaited(Analytics.programAction('ramadan', 'settings'));
-      refreshProgramsSummary(ref);
-      ref.invalidate(ramadanTodayProvider);
-      ref.invalidate(ramadanDayProvider);
-      ref.invalidate(fastingLadderProvider);
       showProgramSnack(context, l10n.programsSaved);
     } catch (e) {
       if (mounted) showProgramSnack(context, programChangeError(l10n, e));

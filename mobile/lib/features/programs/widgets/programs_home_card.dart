@@ -21,9 +21,9 @@ import '../../../core/app_routes.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../theme/app_colors.dart';
 import '../../../theme/design_tokens.dart';
-import '../../../widgets/ui/directional_chevron.dart';
 import '../../onboarding/providers/onboarding_providers.dart';
 import '../providers/programs_providers.dart';
+import 'program_widgets.dart';
 import 'programs_text.dart';
 
 class ProgramsHomeCard extends ConsumerStatefulWidget {
@@ -120,85 +120,34 @@ class _ProgramsHomeCardState extends ConsumerState<ProgramsHomeCard>
       );
     }
 
+    // The card itself is not tappable: a header row opens the list and each
+    // line opens its program. Rows nested inside a tappable card read as one
+    // control to a screen reader, and the inner taps were unreachable to it.
     return Padding(
       padding: const EdgeInsets.only(bottom: 24),
       child: Material(
         key: const ValueKey('programs_home_card'),
         color: c.surface,
         borderRadius: BorderRadius.circular(Dt.rCard),
-        child: InkWell(
-          borderRadius: BorderRadius.circular(Dt.rCard),
-          onTap: () => _open(AppRoutes.programs(), 'open'),
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Row(
-                  children: [
-                    const ExcludeSemantics(
-                      child: Text('✨', style: TextStyle(fontSize: 20)),
-                    ),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      child: Text(
-                        l10n.programsTitle,
-                        style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                          fontWeight: FontWeight.w800,
-                          color: c.ink,
-                        ),
-                      ),
-                    ),
-                    const DirectionalChevron(),
-                  ],
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              ProgramLinkRow(
+                key: const ValueKey('programs_home_open'),
+                emoji: '✨',
+                label: l10n.programsTitle,
+                subtitle: lines.isEmpty ? l10n.programsHomeIntro : null,
+                onTap: () => _open(AppRoutes.programs(), 'open'),
+              ),
+              for (final line in lines.take(3))
+                ProgramLinkRow(
+                  emoji: line.emoji,
+                  label: line.text,
+                  onTap: line.onTap,
                 ),
-                const SizedBox(height: 8),
-                if (lines.isEmpty)
-                  Text(
-                    l10n.programsHomeIntro,
-                    style: TextStyle(
-                      color: c.textSecondary,
-                      fontSize: 13.5,
-                      height: 1.55,
-                    ),
-                  )
-                else
-                  for (final line in lines.take(3))
-                    InkWell(
-                      borderRadius: BorderRadius.circular(10),
-                      onTap: line.onTap,
-                      child: ConstrainedBox(
-                        constraints: const BoxConstraints(
-                          minHeight: Dt.minTouch,
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 6),
-                          child: Row(
-                            children: [
-                              ExcludeSemantics(
-                                child: Text(
-                                  line.emoji,
-                                  style: const TextStyle(fontSize: 18),
-                                ),
-                              ),
-                              const SizedBox(width: 10),
-                              Expanded(
-                                child: Text(
-                                  line.text,
-                                  style: TextStyle(
-                                    color: c.ink,
-                                    fontSize: 14,
-                                    height: 1.5,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-              ],
-            ),
+            ],
           ),
         ),
       ),

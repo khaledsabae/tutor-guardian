@@ -4704,7 +4704,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get ramadanDays30 => '30 days';
 
   @override
-  String get ramadanDaysAuto => 'As announced in the app';
+  String get ramadanDaysAuto => 'Follow the official announcement';
 
   @override
   String get ramadanEidTomorrowTitle => 'Is tomorrow Eid?';
@@ -4871,7 +4871,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get ramadanShiftLater => 'A day later';
 
   @override
-  String get ramadanShiftNone => 'As in the app';
+  String get ramadanShiftNone => 'On the announced day';
 
   @override
   String get ramadanSoFar => 'Our Ramadan so far';
@@ -4923,7 +4923,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get recapEmpty =>
-      'No counts yet — tick «Done» on the day\'s card and they\'ll show up here.';
+      'No counts yet. Tick what you did under «What we did» on each day\'s card, and the counts will show up here.';
 
   @override
   String get recapFamilyOnly => 'For your family only';
@@ -4959,4 +4959,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String prayerHandOverNeedsBand(String name) {
     return 'For $name to record tasks in child mode, update their age group in their profile to match their age.';
   }
+
+  @override
+  String get ramadanRecapLastSeason =>
+      'Last Ramadan\'s «Our Family\'s Ramadan» card';
 }

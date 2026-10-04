@@ -156,13 +156,14 @@ class _CompleteProfile extends ConsumerWidget {
                   unawaited(
                     Analytics.programAction('milestones', 'complete_profile'),
                   );
+                  final container = programsContainerOf(context);
                   final saved = await Navigator.of(
                     context,
                   ).push(AppRoutes.editChild(profile));
                   if (saved == true) {
-                    ref.invalidate(milestonesProvider(childId));
-                    ref.invalidate(childrenListProvider);
-                    refreshProgramsSummary(ref);
+                    container.invalidate(milestonesProvider(childId));
+                    container.invalidate(childrenListProvider);
+                    refreshProgramsSummary(container);
                   }
                 },
                 child: Text(l10n.milestonesCompleteProfile),

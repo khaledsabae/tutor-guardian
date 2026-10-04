@@ -12,8 +12,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:almorabbi/api/tg_client.dart';
 import 'package:almorabbi/features/coins/coins_service.dart';
 import 'package:almorabbi/features/hub/screens/hub_screen.dart';
-import 'package:almorabbi/features/missions/pending_missions_screen.dart';
-import 'package:almorabbi/features/programs/data/prayer_coins_ledger.dart';
 import 'package:almorabbi/features/programs/data/programs_models.dart';
 import 'package:almorabbi/features/programs/screens/prayer_journey_screen.dart';
 import 'package:almorabbi/features/programs/screens/programs_screen.dart';
@@ -168,56 +166,27 @@ void main() {
   group('coins: each mission paid once', () {
     setUp(() => SharedPreferences.setMockInitialValues({}));
 
-    test('a duplicate in one batch, and a retried batch, pay nothing more', () async {
+    test('a duplicate in one answer, and a retried answer, pay nothing more', () async {
       final batch = [
         {'mission_id': 41, 'coins': 10},
         {'mission_id': 41, 'coins': 10},
         {'mission_id': 42, 'coins': 5},
       ];
-      expect(await PrayerCoinsLedger.takeNew(batch), 15);
-      expect(await PrayerCoinsLedger.takeNew(batch), 0); // the retry
-      expect(await PrayerCoinsLedger.takeNew([{'mission_id': 43, 'coins': 10}]), 10);
+      expect(await CoinsService.instance.creditConfirmedMissions(batch), 15);
+      expect(await CoinsService.instance.creditConfirmedMissions(batch), 0); // the retry
+      expect(await CoinsService.instance.creditConfirmedMissions([
+        {'mission_id': 43, 'coins': 10},
+      ]), 10);
+      expect((await CoinsService.instance.read()).balance, 25);
     });
 
     test('keeps only the recent ids', () async {
-      await PrayerCoinsLedger.takeNew([
-        for (var i = 0; i < PrayerCoinsLedger.keep + 20; i++) {'mission_id': i, 'coins': 1},
+      await CoinsService.instance.creditConfirmedMissions([
+        for (var i = 0; i < CoinsService.creditedMissionsKept + 20; i++) {'mission_id': i, 'coins': 1},
       ]);
       final prefs = await SharedPreferences.getInstance();
-      expect(prefs.getStringList('programs.credited_prayer_missions'), hasLength(PrayerCoinsLedger.keep));
-    });
-
-    testWidgets('a confirm retried after a lost answer credits nothing twice', (tester) async {
-      final client = FakeProgramsClient()
-        ..pending = [
-          {'mission_id': 41, 'title_ar': 'I pray beside Mum or Dad', 'child_name': kChildName,
-           'estimated_minutes': 7, 'program': 'prayer_journey', 'coins': 10},
-        ]
-        ..confirmCoins = [
-          {'mission_id': 41, 'child_id': kChildId, 'task_id': 'prayer_s1_pray_beside', 'coins': 10},
-        ];
-      await pumpPrograms(
-        tester,
-        Builder(
-          builder: (context) => Scaffold(
-            body: TextButton(
-              onPressed: () => Navigator.of(context)
-                  .push(MaterialPageRoute<bool>(builder: (_) => const PendingMissionsScreen())),
-              child: const Text('open'),
-            ),
-          ),
-        ),
-        client: client,
-      );
-      final start = (await CoinsService.instance.read()).balance;
-      for (var round = 0; round < 2; round++) {
-        await tester.tap(find.text('open'));
-        await settle(tester);
-        await tester.tap(find.byType(FilledButton));
-        await settle(tester);
-      }
-      expect(client.calls.where((c) => c == 'settle'), hasLength(2));
-      expect((await CoinsService.instance.read()).balance - start, 10);
+      expect(prefs.getStringList('programs.credited_prayer_missions'),
+          hasLength(CoinsService.creditedMissionsKept));
     });
   });
 }

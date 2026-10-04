@@ -602,11 +602,39 @@ class FakeProgramsClient extends TgClient {
   @override
   Future<List<Map<String, dynamic>>> fetchPendingMissions() async => pending;
 
+  /// Missions this "server" has confirmed — its `child_missions` status.
+  final Set<int> confirmedIds = {};
+
+  /// Like `confirm_batch` (backend/app/services/child_missions.py): a card it
+  /// settles leaves `pending`; `settled` counts only rows this call changed;
+  /// `coins` lists every prayer mission *in this request* that is confirmed —
+  /// a retry reports them again — once per mission; [confirmCoins] is the
+  /// table of what each prayer mission is worth.
   @override
   Future<({int settled, List<Map<String, dynamic>> coins})> settleMissions(List<Map<String, dynamic>> items) async {
     calls.add('settle');
     bodies.add({'items': items});
-    return (settled: items.length, coins: confirmCoins);
+    return applySettle(items);
+  }
+
+  ({int settled, List<Map<String, dynamic>> coins}) applySettle(List<Map<String, dynamic>> items) {
+    var settled = 0;
+    final coins = <Map<String, dynamic>>[];
+    final seen = <int>{};
+    for (final item in items) {
+      final id = item['mission_id'] as int;
+      if (!seen.add(id)) continue;
+      final wasPending = pending.any((c) => c['mission_id'] == id);
+      if (wasPending) {
+        pending = [for (final c in pending) if (c['mission_id'] != id) c];
+        settled++;
+        if (item['confirmed'] != false) confirmedIds.add(id);
+      }
+      if (item['confirmed'] != false && confirmedIds.contains(id)) {
+        coins.addAll(confirmCoins.where((e) => e['mission_id'] == id));
+      }
+    }
+    return (settled: settled, coins: coins);
   }
 
   @override

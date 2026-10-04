@@ -153,6 +153,56 @@ void main() {
     });
   });
 
+  group('a refused child token is renewed once, like the habit surface does', () {
+    TgClient refreshingClient(List<String> log, {required bool sessionRenews}) {
+      final mock = MockClient((req) async {
+        final auth = req.headers['Authorization'] ?? '';
+        log.add('${req.method} ${req.url.path} $auth');
+        if (req.url.path.endsWith('/child-sessions')) {
+          return sessionRenews
+              ? ok({'token': 'fresh-child', 'session_id': 9})
+              : http.Response('{"detail": "no"}', 403);
+        }
+        if (auth == 'Child-Bearer stale') return http.Response('{"detail": "x"}', 401);
+        return ok({'enrolled': true, 'tasks': [], 'ok': true});
+      });
+      return TgClient.forTesting(
+        baseUrl: 'http://api.test',
+        httpClient: mock,
+        storage: _Storage(),
+        onNeedActiveChildId: () async => 12,
+      );
+    }
+
+    test('today: 401, renew from the parent session, replay with the new token', () async {
+      final log = <String>[];
+      final client = refreshingClient(log, sessionRenews: true);
+      final body = await client.fetchChildPrayerToday('stale');
+      expect(body['enrolled'], isTrue);
+      expect(log, [
+        'GET /api/value-tracking/child-mode/prayer/today Child-Bearer stale',
+        'POST /api/value-tracking/child-sessions Bearer token-1',
+        'GET /api/value-tracking/child-mode/prayer/today Child-Bearer fresh-child',
+      ]);
+    });
+
+    test('claim: the replay carries the same task', () async {
+      final log = <String>[];
+      final client = refreshingClient(log, sessionRenews: true);
+      await client.claimChildPrayer(childToken: 'stale', taskId: 'prayer_s1_pray_beside');
+      expect(log.last, 'POST /api/value-tracking/child-mode/prayer/claim Child-Bearer fresh-child');
+    });
+
+    test('only when renewing fails is the 401 reported', () async {
+      final log = <String>[];
+      final client = refreshingClient(log, sessionRenews: false);
+      final error = await client
+          .fetchChildPrayerToday('stale')
+          .then<Object?>((_) => null, onError: (Object e) => e);
+      expect((error as TgApiError).statusCode, 401);
+    });
+  });
+
   group('old-server compatibility', () {
     test("FastAPI's 404 (no route) means the programs are not offered", () async {
       final client = clientAnswering((_) => http.Response(jsonEncode({'detail': 'Not Found'}), 404));

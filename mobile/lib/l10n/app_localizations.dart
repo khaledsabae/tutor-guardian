@@ -8093,7 +8093,7 @@ abstract class AppLocalizations {
   /// No description provided for @ramadanDayPreviewNote.
   ///
   /// In ar, this message translates to:
-  /// **'لم يأتِ هذا اليوم بعد؛ تُعلَّم «تمّ» في يومه.'**
+  /// **'لم يأتِ هذا اليوم بعد؛ يمكنكم التعليم عليه حين يأتي.'**
   String get ramadanDayPreviewNote;
 
   /// No description provided for @ramadanDays29.
@@ -8111,7 +8111,7 @@ abstract class AppLocalizations {
   /// No description provided for @ramadanDaysAuto.
   ///
   /// In ar, this message translates to:
-  /// **'كما يُعلَن في التطبيق'**
+  /// **'حسب الإعلان الرسمي'**
   String get ramadanDaysAuto;
 
   /// No description provided for @ramadanEidTomorrowTitle.
@@ -8369,7 +8369,7 @@ abstract class AppLocalizations {
   /// No description provided for @ramadanShiftNone.
   ///
   /// In ar, this message translates to:
-  /// **'كما في التطبيق'**
+  /// **'في اليوم المُعلَن'**
   String get ramadanShiftNone;
 
   /// No description provided for @ramadanSoFar.
@@ -8459,7 +8459,7 @@ abstract class AppLocalizations {
   /// No description provided for @recapEmpty.
   ///
   /// In ar, this message translates to:
-  /// **'لا عدّادات بعد؛ علّموا «تمّ» في بطاقة اليوم لتظهر هنا.'**
+  /// **'لا عدّادات بعد. علّموا ما أتممتموه في قسم «ما أتممناه» من بطاقة كل يوم، وستظهر هنا.'**
   String get recapEmpty;
 
   /// No description provided for @recapFamilyOnly.
@@ -8521,6 +8521,12 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'لكي يسجّل {name} مهامه في وضع الطفل، حدّث فئته العمرية في ملفه لتوافق عمره.'**
   String prayerHandOverNeedsBand(String name);
+
+  /// No description provided for @ramadanRecapLastSeason.
+  ///
+  /// In ar, this message translates to:
+  /// **'بطاقة «رمضان عائلتنا» من رمضان الماضي'**
+  String get ramadanRecapLastSeason;
 }
 
 class _AppLocalizationsDelegate

@@ -113,6 +113,9 @@ class _RamadanScreenState extends ConsumerState<RamadanScreen> {
           _UpcomingHeader(today: t),
           if (t.kickoff != null) _KickoffCard(kickoff: t.kickoff!),
           ?fastingCard,
+          // After 1448's bridge this is the 1449 countdown, and last season's
+          // card must stay reachable through it.
+          _LastSeasonRecapLink(counting: t.season),
         ];
       case RamadanState.ramadan:
         final content = t.content;
@@ -311,6 +314,7 @@ class _DayStrip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
+    final c = context.colors;
     return ProgramSection(
       title: l10n.ramadanOtherDays,
       emoji: '🗓️',
@@ -318,17 +322,60 @@ class _DayStrip extends StatelessWidget {
         spacing: 6,
         runSpacing: 6,
         children: [
+          // Action chips, not choice chips: a tap opens the day, it selects
+          // nothing — a choice chip was read out as a toggle. Each says "Day
+          // N" rather than a bare number; today is only highlighted.
           for (var d = 1; d <= season.days; d++)
-            ChoiceChip(
+            ActionChip(
               key: ValueKey('ramadan_day_$d'),
-              label: Text('$d'),
-              selected: d == today,
-              onSelected: (_) {
+              label: Text(
+                '$d',
+                semanticsLabel: l10n.ramadanDayN(d),
+                style: d == today
+                    ? TextStyle(color: c.primary, fontWeight: FontWeight.w800)
+                    : null,
+              ),
+              side: d == today
+                  ? BorderSide(color: c.primary, width: 1.5)
+                  : null,
+              onPressed: () {
                 unawaited(Analytics.programAction('ramadan', 'day'));
                 Navigator.of(context).push(AppRoutes.ramadanDay(childId, d));
               },
             ),
         ],
+      ),
+    );
+  }
+}
+
+/// Last season's «رمضان عائلتنا», during the next season's countdown. Shown
+/// only when the server has a card for an earlier season than the one counted
+/// down to — before the very first season there is nothing to open.
+class _LastSeasonRecapLink extends ConsumerWidget {
+  const _LastSeasonRecapLink({required this.counting});
+  final RamadanSeason? counting;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final recap = ref.watch(ramadanRecapProvider).valueOrNull;
+    final year = recap?.hijriYear;
+    final ahead = counting?.hijriYear;
+    if (recap?.card == null ||
+        year == null ||
+        (ahead != null && year >= ahead)) {
+      return const SizedBox.shrink();
+    }
+    final l10n = AppLocalizations.of(context);
+    return ProgramSection(
+      child: ProgramLinkRow(
+        key: const ValueKey('ramadan_last_recap'),
+        emoji: '🤍',
+        label: l10n.ramadanRecapLastSeason,
+        onTap: () {
+          unawaited(Analytics.programAction('ramadan', 'recap'));
+          Navigator.of(context).push(AppRoutes.ramadanRecap());
+        },
       ),
     );
   }

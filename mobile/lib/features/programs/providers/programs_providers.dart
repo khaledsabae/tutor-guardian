@@ -18,6 +18,7 @@
 /// entry points — not an error to show.
 library;
 
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../api/tg_client.dart';
@@ -117,9 +118,17 @@ final milestoneDetailProvider = FutureProvider.autoDispose
 
 /// Refresh everything that summarises a child's programs — after a change on
 /// one screen the Home card and the programs list must not show the old state.
-void refreshProgramsSummary(WidgetRef ref) {
-  ref.invalidate(programsOverviewProvider);
+///
+/// Takes the container, captured *before* the request: a screen the parent
+/// left mid-request has no usable `ref` when the answer comes back, and the
+/// summary must refresh all the same.
+void refreshProgramsSummary(ProviderContainer container) {
+  container.invalidate(programsOverviewProvider);
 }
+
+/// The container to capture before the first await of a change.
+ProviderContainer programsContainerOf(BuildContext context) =>
+    ProviderScope.containerOf(context, listen: false);
 
 /// A child as the programs screens show them: the API sends ids only.
 class ProgramChild {

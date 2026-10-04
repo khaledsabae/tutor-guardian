@@ -37,12 +37,13 @@ class CoinsNotifier extends StateNotifier<CoinsState> {
     return ok;
   }
 
-  /// Earn coins (e.g. from bedtime routine, or a game). Silently capped at
-  /// the daily ceiling — the caller is not told it hit the cap, because the
-  /// child does not need a number telling them they have run out of reward.
-  Future<void> earn(int amount) async {
-    await CoinsService.instance.earn(amount);
+  /// Earn coins (e.g. from bedtime routine, or a game), capped at the daily
+  /// ceiling. Returns what was actually granted; a child-facing screen need
+  /// not show a number for the cap, but nothing may claim more than this.
+  Future<int> earn(int amount) async {
+    final granted = await CoinsService.instance.earn(amount);
     state = await CoinsService.instance.read();
+    return granted;
   }
 
   Future<void> refresh() async => _load();

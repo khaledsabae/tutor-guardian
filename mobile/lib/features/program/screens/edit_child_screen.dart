@@ -54,6 +54,7 @@ class _EditChildScreenState extends ConsumerState<EditChildScreen> {
 
   Future<void> _submit() async {
     if (!_formKey.currentState!.validate()) return;
+    final container = programsContainerOf(context);
     try {
       // Sent only when it changed: an explicit null removes it, an absent key
       // leaves it alone.
@@ -69,7 +70,7 @@ class _EditChildScreenState extends ConsumerState<EditChildScreen> {
           );
       // The milestones and the journey are timed by the birth month and the
       // age group; the programs summary must not keep the old answer.
-      if (mounted) ref.invalidate(programsOverviewProvider);
+      refreshProgramsSummary(container);
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text(AppLocalizations.of(context).editChildSaved)),

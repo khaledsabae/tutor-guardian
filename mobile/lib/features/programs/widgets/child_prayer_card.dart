@@ -48,18 +48,19 @@ class _ChildPrayerCardState extends ConsumerState<ChildPrayerCard> {
   }
 
   Future<void> _load() async {
-    final token = await ref.read(childPrayerTokenProvider)();
+    // Read before the first await: the card may be gone when the answer comes.
+    final readToken = ref.read(childPrayerTokenProvider);
+    final client = ref.read(tgClientProvider);
+    final token = await readToken();
     if (token == null) return;
     try {
-      final json = await ref
-          .read(tgClientProvider)
-          .fetchChildPrayerToday(token);
+      final json = await client.fetchChildPrayerToday(token);
       if (mounted) setState(() => _today = ChildPrayerToday.fromJson(json));
     } on TgApiError catch (e) {
-      // A token the server no longer accepts for this child (since #32: a
-      // child token from another family is refused at verification, 401)
-      // can record nothing — take the card away rather than keep a button
-      // that fails. Anything else leaves the card as it was.
+      // A 401 reaches here only after the client failed to renew the child
+      // token from the parent's session (another family's child — refused at
+      // verification since #32 — or no parent session left). Such a token can
+      // record nothing: take the card away rather than keep a failing button.
       if (e.statusCode == 401 && mounted) setState(() => _today = null);
     } catch (_) {
       // A child does not get an error card. No card is a state they know.
@@ -71,11 +72,12 @@ class _ChildPrayerCardState extends ConsumerState<ChildPrayerCard> {
     ChildPrayerTask Function(ChildPrayerTask) update,
   ) {
     final today = _today;
-    if (today == null) return;
+    if (today == null || !mounted) return;
     setState(
       () => _today = ChildPrayerToday(
         enrolled: today.enrolled,
         track: today.track,
+        available: today.available,
         tasks: [
           for (final t in today.tasks) t.taskId == taskId ? update(t) : t,
         ],
@@ -85,13 +87,16 @@ class _ChildPrayerCardState extends ConsumerState<ChildPrayerCard> {
 
   Future<void> _claim(ChildPrayerTask task) async {
     if (_claiming.contains(task.taskId) || task.doneForToday) return;
-    final token = await ref.read(childPrayerTokenProvider)();
-    if (token == null || !mounted) return;
+    // Marked busy before any await: a second tap while the token is still
+    // being read must find the task taken — a two-a-day task would otherwise
+    // record both taps.
     setState(() => _claiming.add(task.taskId));
+    final readToken = ref.read(childPrayerTokenProvider);
+    final client = ref.read(tgClientProvider);
     try {
-      final json = await ref
-          .read(tgClientProvider)
-          .claimChildPrayer(childToken: token, taskId: task.taskId);
+      final token = await readToken();
+      if (token == null || !mounted) return;
+      final json = await client.claimChildPrayer(childToken: token, taskId: task.taskId);
       unawaited(Haptics.success());
       unawaited(Analytics.programAction('prayer', 'child_claim'));
       _justRecorded.add(task.taskId);
@@ -108,7 +113,7 @@ class _ChildPrayerCardState extends ConsumerState<ChildPrayerCard> {
       );
     } on TgApiError catch (e) {
       if (e.statusCode == 401) {
-        // Not this child's token (MOBILE_API §11: refused at verification).
+        // The client could not renew the child token (see _load).
         if (mounted) setState(() => _today = null);
         return;
       }

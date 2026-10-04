@@ -105,23 +105,34 @@ class HabitChildModeScreen extends ConsumerWidget {
                 ),
               ),
             Expanded(
-              child: ListView.builder(
-                padding: const EdgeInsets.all(16),
-                itemCount: state.day!.habits.length + 1,
-                itemBuilder: (context, index) {
+              child: CustomScrollView(
+                slivers: [
                   // «صلاتي اليوم» first, for a child on the Prayer Journey —
                   // it renders nothing for everyone else (and on an older
-                  // server), so the habit list is unchanged for them.
-                  if (index == 0) return const ChildPrayerCard();
-                  final item = state.day!.habits[index - 1];
-                  return _HabitChildCard(
-                    item: HabitItem(
-                      category: item.category,
-                      habitName: item.habitName,
+                  // server), so the habit list is unchanged for them. A box
+                  // sliver, not an item of the lazy list: an item scrolled
+                  // away is disposed, and with it a claim in flight.
+                  const SliverPadding(
+                    padding: EdgeInsets.fromLTRB(16, 16, 16, 0),
+                    sliver: SliverToBoxAdapter(child: ChildPrayerCard()),
+                  ),
+                  SliverPadding(
+                    padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+                    sliver: SliverList.builder(
+                      itemCount: state.day!.habits.length,
+                      itemBuilder: (context, index) {
+                        final item = state.day!.habits[index];
+                        return _HabitChildCard(
+                          item: HabitItem(
+                            category: item.category,
+                            habitName: item.habitName,
+                          ),
+                          submitted: state.isSubmitted(item.habitName),
+                        );
+                      },
                     ),
-                    submitted: state.isSubmitted(item.habitName),
-                  );
-                },
+                  ),
+                ],
               ),
             ),
           ],

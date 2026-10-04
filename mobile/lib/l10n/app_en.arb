@@ -1427,7 +1427,7 @@
   "ramadanDayPreviewNote": "This day hasn't come yet — you can tick it on the day.",
   "ramadanDays29": "29 days",
   "ramadanDays30": "30 days",
-  "ramadanDaysAuto": "As announced in the app",
+  "ramadanDaysAuto": "Follow the official announcement",
   "ramadanEidTomorrowTitle": "Is tomorrow Eid?",
   "ramadanEidTomorrowBody": "If Eid was announced for tomorrow where you live, set the month to 29 days so the program reaches Eid with you on time.",
   "ramadanErrorDayNotMarkable": "This day can be ticked once it comes.",
@@ -1470,7 +1470,7 @@
   "ramadanSettingsTitle": "Your moon sighting",
   "ramadanShiftEarlier": "A day earlier",
   "ramadanShiftLater": "A day later",
-  "ramadanShiftNone": "As in the app",
+  "ramadanShiftNone": "On the announced day",
   "ramadanSoFar": "Our Ramadan so far",
   "ramadanStartsOn": "Starts on {date}",
   "ramadanStartsOnEstimate": "Expected to start on {date} — confirmed by the moon sighting",
@@ -1485,7 +1485,7 @@
   "ramadanWirdTheme": "Today's verses",
   "ramadanWirdTitle": "The family's Quran portion",
   "ramadanWirdTogether": "We read it together",
-  "recapEmpty": "No counts yet — tick «Done» on the day's card and they'll show up here.",
+  "recapEmpty": "No counts yet. Tick what you did under «What we did» on each day's card, and the counts will show up here.",
   "recapFamilyOnly": "For your family only",
   "recapFamilyOnlyNote": "This never appears on the card or in the share — the children's fasting is the family's own business.",
   "recapNoSeason": "No Ramadan season is known yet.",
@@ -1495,5 +1495,6 @@
   "recapShare": "Share the card",
   "recapShareFailed": "Sharing didn't work. Please try again.",
   "recapTitle": "Our Family's Ramadan",
-  "prayerHandOverNeedsBand": "For {name} to record tasks in child mode, update their age group in their profile to match their age."
+  "prayerHandOverNeedsBand": "For {name} to record tasks in child mode, update their age group in their profile to match their age.",
+  "ramadanRecapLastSeason": "Last Ramadan's «Our Family's Ramadan» card"
 }
