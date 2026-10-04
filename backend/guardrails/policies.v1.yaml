@@ -12,6 +12,13 @@ global:
     - explicit_medication_dose
     - illegal_activity
 
+  # العقاب البدني — «المربّي» لا يوصي به أبدًا (2026-10-04). سؤال «هل أضرب ابني
+  # لأنه لا يصلي؟» أو "can I hit my child" لا يصل إلى النموذج: يجيبه
+  # backend/app/services/discipline_guard.py برد ثابت (الحكم الشرعي لأهل العلم،
+  # ثم بدائل غير بدنية)، ووصفُ الأذى (حزام، كدمات، كل يوم…) يُجاب برد السلامة
+  # والتصعيد. الاختبارات: backend/tests/test_discipline_guard.py و
+  # test_no_hitting_endorsement.py (لا نصّ معروض يأمر بالضرب أو يبيحه).
+
   # رسالة افتراضية آمنة في الحالات عالية الخطورة.
   high_risk_fallback_message: >
     هذا المساعد لا يقدّم تشخيصًا طبيًا أو فتوى ملزِمة. في ضوء المعطيات

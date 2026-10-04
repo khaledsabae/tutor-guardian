@@ -1,6 +1,6 @@
 """
 Assistant router — Multi-domain ChromaDB retrieval + guardrails + LLM.
-Flow: banned check → emergency check → classify_domains → multi_retrieval → LLM → guardrails.
+Flow: banned check → emergency check → discipline guard → fiqh guard → classify_domains → multi_retrieval → LLM → guardrails.
 """
 import asyncio
 import json
@@ -33,6 +33,7 @@ from app.services.intent_guard import (
     check_abusive_language, check_conversational_shortcut,
 )
 from app.services.fiqh_guard import check_fiqh_guard, SAFE_REPLY as FIQH_SAFE_REPLY
+from app.services.discipline_guard import check_physical_discipline, discipline_reply
 from app.services.domain_classifier import (
     classify_domains, is_uncertain, matched_fast_path,
 )
@@ -278,6 +279,19 @@ async def draft_reply(request: Request, user_message: UserMessage):
     if is_emergency(user_message):
         logger.info("Emergency severity — returning fallback immediately")
         reply = emergency_reply(user_message, policies)
+        await _tag_user_message(user_msg_id, reply.domain, reply.severity)
+        return await asyncio.to_thread(_finalize, reply, session_id)
+
+    # ── Step 1a: Physical discipline — never left to the model ───────
+    # «هل أضرب ابني لأنه لا يصلي؟» gets the ruling deferred to scholars and the
+    # app's non-physical alternatives; described harm gets the safety reply.
+    # After the emergency check (a disclosure that is also an emergency gets the
+    # emergency path), before the fiqh guard (whose generic deflection gives no
+    # alternative to hitting).
+    discipline = check_physical_discipline(query_input)
+    if discipline:
+        logger.info("Discipline guard: %s", discipline)
+        reply = discipline_reply(discipline, query_input)
         await _tag_user_message(user_msg_id, reply.domain, reply.severity)
         return await asyncio.to_thread(_finalize, reply, session_id)
 
@@ -635,6 +649,12 @@ async def stream_reply(request: Request, user_message: UserMessage) -> Streaming
         user_message = user_message.model_copy(update={"severity": "طارئ"})
     if is_emergency(user_message):
         return await _single(emergency_reply(user_message, policies))
+
+    # Physical discipline — same place and reason as /draft.
+    discipline = check_physical_discipline(query_input)
+    if discipline:
+        logger.info("Discipline guard (stream): %s", discipline)
+        return await _single(discipline_reply(discipline, query_input))
 
     # ── FIQH guard (hard block — FIQH_GUARD.md v3) ────────────────────
     fiqh_blocked, fiqh_rule = await asyncio.to_thread(check_fiqh_guard, query_input, caller_device)
