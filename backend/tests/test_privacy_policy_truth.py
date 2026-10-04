@@ -113,8 +113,11 @@ TABLE_DISCLOSURE = {
     "device_proof_sessions": "Phone verification",
     "device_proof_challenges": "Phone-verification codes",
     "device_alerts": "previous phone's notification token",
-    # PR #29: which old phone identifier now points at which (device twins).
+    # PR #29 (device twins; merges first): which folded identifier now points at
+    # which, and the fold's audit log. The phrase for the log is the one the
+    # policy must carry once #29's table exists — a trip-wire until then.
     "device_aliases": "Phone identifier",
+    "device_fold_log": "record of what a repair moved",
     "referral_codes": "invite code",
     "referrals": "which phone invited which",
     "referral_clicks": "browser's user agent",
