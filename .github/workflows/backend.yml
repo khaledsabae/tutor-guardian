@@ -28,6 +28,8 @@ on:
       - 'ops/tools/**'
       - 'pytest.ini'
       - '.github/workflows/backend.yml'
+      - '.github/actions/backend-env/**'
+      - '.github/ci/constraints-prod.txt'
   workflow_dispatch:
 
 # Cancel in-flight runs on the same ref (saves minutes on rapid pushes).
@@ -39,15 +41,31 @@ concurrency:
 permissions:
   contents: read
 
+# Where the jobs run. One runner on the production VPS used to take every pull
+# request: with ~6 open PRs the queue reached ~2 h, and each 15-20 min pytest
+# job ran on the box serving users (load average 6-9 on its 4 cores,
+# 2026-10-04). The repository is public, so GitHub-hosted runners are free and
+# run in parallel:
+#   * main (push, or a manual run on main) -> [self-hosted, production], exactly
+#     as before — the path that sits next to the deploy stays where it was;
+#   * everything else (pull requests, manual runs on other branches) ->
+#     ubuntu-latest, with production's Python and package set, cached models
+#     and a cached knowledge index (.github/actions/backend-env).
+# Steps tell the two apart with runner.environment; the VPS path keeps its
+# original steps. `!= 'github-hosted'` on the VPS side means an empty value
+# still takes the old path rather than skipping it.
+
 jobs:
   # ── 1. Fast unit tests (no docker, no real LLM) ───────────────────────
   pytest:
     name: pytest
-    # C3 (AUDIT_AND_ROADMAP.md): this runner IS the production VPS. Never run
-    # code from a fork PR on it — only pushes, manual runs, and PRs whose
-    # head branch lives in this repository (pushing one needs write access).
+    # C3 (AUDIT_AND_ROADMAP.md): a pull request never reaches the VPS runner —
+    # its ref is refs/pull/N/merge, so runs-on below sends it to GitHub-hosted.
+    # The fork guard stays as a second line: if that expression ever routes a PR
+    # to the VPS again, fork code still cannot run there. Pushes, manual runs and
+    # PRs whose head branch lives in this repository (needs write access) run.
     if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
-    runs-on: [self-hosted, production]
+    runs-on: ${{ github.ref == 'refs/heads/main' && fromJSON('["self-hosted", "production"]') || 'ubuntu-latest' }}
     # 12 was not enough: the first run after re-enabling this workflow was
     # cancelled at 12m12s. Installing backend/requirements.txt (torch, ONNX
     # Runtime, ChromaDB, sentence-transformers) dominates on a cold pip cache,
@@ -63,7 +81,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # ── VPS runner (main): unchanged ──────────────────────────────────
       - name: Set up Python
+        if: runner.environment != 'github-hosted'
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
@@ -71,6 +91,7 @@ jobs:
           cache-dependency-path: backend/requirements.txt
 
       - name: Install dependencies
+        if: runner.environment != 'github-hosted'
         run: |
           python -m pip install --upgrade pip
           pip install -r backend/requirements.txt
@@ -81,6 +102,14 @@ jobs:
         env:
           PYTHONDONTWRITEBYTECODE: '1'
 
+      # ── GitHub-hosted (pull requests) ─────────────────────────────────
+      # Production's Python + exact package set (CPU-only torch), both models
+      # and the knowledge index — see .github/actions/backend-env/action.yml.
+      - name: Production environment, models and knowledge index
+        if: runner.environment == 'github-hosted'
+        uses: ./.github/actions/backend-env
+
+      # ── Both runners: the same command, the same selection ────────────
       - name: Run pytest (full suite; the smoke test honours SKIP_API_SMOKE)
         # One pass over everything. There used to be two: `--ignore` of the
         # smoke test, then the full suite "so a misconfigured ignore doesn't
@@ -94,11 +123,13 @@ jobs:
   # ── 2. Knowledge-base integrity (catches schema drift) ───────────────
   kb-integrity:
     name: KB integrity
-    # C3 (AUDIT_AND_ROADMAP.md): this runner IS the production VPS. Never run
-    # code from a fork PR on it — only pushes, manual runs, and PRs whose
-    # head branch lives in this repository (pushing one needs write access).
+    # C3 (AUDIT_AND_ROADMAP.md): a pull request never reaches the VPS runner —
+    # its ref is refs/pull/N/merge, so runs-on below sends it to GitHub-hosted.
+    # The fork guard stays as a second line: if that expression ever routes a PR
+    # to the VPS again, fork code still cannot run there. Pushes, manual runs and
+    # PRs whose head branch lives in this repository (needs write access) run.
     if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
-    runs-on: [self-hosted, production]
+    runs-on: ${{ github.ref == 'refs/heads/main' && fromJSON('["self-hosted", "production"]') || 'ubuntu-latest' }}
     timeout-minutes: 4
     steps:
       - name: Checkout
@@ -121,11 +152,13 @@ jobs:
 
   lint:
     name: ruff
-    # C3 (AUDIT_AND_ROADMAP.md): this runner IS the production VPS. Never run
-    # code from a fork PR on it — only pushes, manual runs, and PRs whose
-    # head branch lives in this repository (pushing one needs write access).
+    # C3 (AUDIT_AND_ROADMAP.md): a pull request never reaches the VPS runner —
+    # its ref is refs/pull/N/merge, so runs-on below sends it to GitHub-hosted.
+    # The fork guard stays as a second line: if that expression ever routes a PR
+    # to the VPS again, fork code still cannot run there. Pushes, manual runs and
+    # PRs whose head branch lives in this repository (needs write access) run.
     if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
-    runs-on: [self-hosted, production]
+    runs-on: ${{ github.ref == 'refs/heads/main' && fromJSON('["self-hosted", "production"]') || 'ubuntu-latest' }}
     timeout-minutes: 3
     steps:
       - name: Checkout
@@ -145,3 +178,23 @@ jobs:
       # skipped. Keep the two in step.
       - name: Run ruff
         run: ruff check backend/ ops/ scripts/
+
+  # ── main only: refresh the caches the hosted PR jobs restore ──────────
+  # A pull request can restore caches saved on main, but main's jobs run on
+  # the VPS, where every cached path differs — nothing they save matches a
+  # hosted runner. This job saves the hosted pip wheels (~360 MB), both models
+  # (~650 MB) and the knowledge index (~5 MB) under main's scope, once per
+  # change (an exact hit saves nothing). Without it every PR starts cold and
+  # stores its own ~1 GB copy, against a 10 GB budget for the whole repository.
+  # GitHub-hosted: it adds nothing to the VPS. Skipped on pull requests.
+  hosted-cache:
+    name: hosted cache (main only)
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Production environment, models and knowledge index
+        uses: ./.github/actions/backend-env
