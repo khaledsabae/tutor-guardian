@@ -156,5 +156,53 @@
       "skill": "Apologising",
       "is_published": true
     }
-  ]
+  ],
+  "translation": {
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "dc19ed7cb36a34a05287aeda489fff9e30116b41377bed17d2e69ceffbcb186d",
+      "reviewed_at": "2026-10-04T11:18:17+00:00",
+      "residual_low": [
+        {
+          "model": "glm-5.2",
+          "field": "missions[0].instruction_ar",
+          "type": "meaning",
+          "why": "مذاكرة means the act of studying/revising lessons, not a subject itself; \"a subject\" shifts the meaning from the activity to the topic."
+        },
+        {
+          "model": "glm-5.2",
+          "field": "missions[6].title_ar",
+          "type": "meaning",
+          "why": "أهلك means \"your family\"; narrowing to \"parents\" excludes siblings or other household family members the teen might disagree with."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
+    "review_verdict": "low_only",
+    "review_defects": [
+      {
+        "model": "glm-5.2",
+        "field": "missions[0].instruction_ar",
+        "type": "meaning",
+        "why": "مذاكرة means the act of studying/revising lessons, not a subject itself; \"a subject\" shifts the meaning from the activity to the topic."
+      },
+      {
+        "model": "glm-5.2",
+        "field": "missions[6].title_ar",
+        "type": "meaning",
+        "why": "أهلك means \"your family\"; narrowing to \"parents\" excludes siblings or other household family members the teen might disagree with."
+      }
+    ],
+    "revalidated_at": "2026-10-04T11:18:17+00:00"
+  }
 }

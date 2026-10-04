@@ -1,0 +1,238 @@
+{
+  "age_band": "10-12",
+  "version": "1.0.0",
+  "is_published": true,
+  "description": "Bank of daily missions — every mission happens off-screen, and its estimated time is never less than five times the card's minutes (the card is three minutes, so the floor is fifteen).",
+  "missions": [
+    {
+      "id": "mission_10-12_cook_simple",
+      "domain": "development",
+      "title_ar": "My First Dish",
+      "instruction_ar": "Make a simple dish with one of your parents supervising — a salad or a sandwich — and clean up your space afterwards.",
+      "estimated_minutes": 30,
+      "needs_parent": true,
+      "needs_outdoors": false,
+      "materials": [],
+      "skill": "Self-reliance",
+      "is_published": true
+    },
+    {
+      "id": "mission_10-12_budget_walk",
+      "domain": "development",
+      "title_ar": "A Small Budget",
+      "instruction_ar": "Plan to buy three items with a set amount of money: write the list, compare the prices, and check the change.",
+      "estimated_minutes": 30,
+      "needs_parent": true,
+      "needs_outdoors": true,
+      "materials": [],
+      "skill": "Planning",
+      "is_published": true
+    },
+    {
+      "id": "mission_10-12_letter_relative",
+      "domain": "development",
+      "title_ar": "A Letter to a Relative",
+      "instruction_ar": "Write a short letter to a grandparent, an uncle or an aunt, and hand it over or send it.",
+      "estimated_minutes": 20,
+      "needs_parent": false,
+      "needs_outdoors": false,
+      "materials": [
+        "Paper",
+        "Pen"
+      ],
+      "skill": "Silat al-rahim (keeping family ties)",
+      "is_published": true
+    },
+    {
+      "id": "mission_10-12_room_project",
+      "domain": "development",
+      "title_ar": "My Room Project",
+      "instruction_ar": "Choose one change in your room and carry it out from start to finish: sort the books, or rearrange the desk.",
+      "estimated_minutes": 30,
+      "needs_parent": false,
+      "needs_outdoors": false,
+      "materials": [],
+      "skill": "Getting things done",
+      "is_published": true
+    },
+    {
+      "id": "mission_10-12_teach_younger",
+      "domain": "development",
+      "title_ar": "I Teach My Brother",
+      "instruction_ar": "Teach a younger brother or sister, or a neighbour's child, something you are good at — tying shoelaces, or a maths problem.",
+      "estimated_minutes": 20,
+      "needs_parent": false,
+      "needs_outdoors": false,
+      "materials": [],
+      "skill": "Giving",
+      "is_published": true
+    },
+    {
+      "id": "mission_10-12_nature_log",
+      "domain": "development",
+      "title_ar": "Nature Notebook",
+      "instruction_ar": "Go outside and write down five observations about what you saw: weather, birds, plants — then draw one of them.",
+      "estimated_minutes": 25,
+      "needs_parent": false,
+      "needs_outdoors": true,
+      "materials": [
+        "Notebook",
+        "Pen"
+      ],
+      "skill": "Observation",
+      "is_published": true
+    },
+    {
+      "id": "mission_10-12_repair_thing",
+      "domain": "development",
+      "title_ar": "I Fix, I Don't Throw Away",
+      "instruction_ar": "Find something simple that is broken in the house and try to fix it with your parents supervising.",
+      "estimated_minutes": 30,
+      "needs_parent": true,
+      "needs_outdoors": false,
+      "materials": [],
+      "skill": "Problem-solving",
+      "is_published": true
+    },
+    {
+      "id": "mission_10-12_read_and_tell",
+      "domain": "development",
+      "title_ar": "I Read and Shared",
+      "instruction_ar": "Read a chapter of a paper book, then summarise it in three sentences for someone in your family.",
+      "estimated_minutes": 30,
+      "needs_parent": false,
+      "needs_outdoors": false,
+      "materials": [
+        "Book"
+      ],
+      "skill": "Comprehension",
+      "is_published": true
+    },
+    {
+      "id": "mission_10-12_charity_act",
+      "domain": "development",
+      "title_ar": "Charity by My Own Hand",
+      "instruction_ar": "Gather clothes or toys you no longer use, and get them ready to give away in charity.",
+      "estimated_minutes": 25,
+      "needs_parent": false,
+      "needs_outdoors": false,
+      "materials": [],
+      "skill": "Putting others first",
+      "is_published": true
+    },
+    {
+      "id": "mission_10-12_memory_walk",
+      "domain": "development",
+      "title_ar": "My Neighbourhood Map",
+      "instruction_ar": "Draw a simple map from memory of the way from your home to the nearest mosque or park, then check it.",
+      "estimated_minutes": 25,
+      "needs_parent": false,
+      "needs_outdoors": false,
+      "materials": [
+        "Paper",
+        "Pen"
+      ],
+      "skill": "Sense of direction",
+      "is_published": true
+    },
+    {
+      "id": "mission_10-12_interview_elder",
+      "domain": "development",
+      "title_ar": "A Story from an Elder",
+      "instruction_ar": "Ask a grandfather or grandmother about a memory from their childhood, listen without interrupting, then tell it to your family.",
+      "estimated_minutes": 25,
+      "needs_parent": false,
+      "needs_outdoors": false,
+      "materials": [],
+      "skill": "Listening",
+      "is_published": true
+    },
+    {
+      "id": "mission_10-12_plan_day",
+      "domain": "development",
+      "title_ar": "I Plan My Day",
+      "instruction_ar": "Write tomorrow's plan in five points, and in the evening tick off what you got done.",
+      "estimated_minutes": 20,
+      "needs_parent": false,
+      "needs_outdoors": false,
+      "materials": [
+        "Paper",
+        "Pen"
+      ],
+      "skill": "Time management",
+      "is_published": true
+    }
+  ],
+  "translation": {
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "cfe861510c02164de30230fcef217f4bb36b5015abe2eb3578268df6054d1a26",
+      "reviewed_at": "2026-10-04T11:18:17+00:00",
+      "residual_low": [
+        {
+          "model": "deepseek-v4-pro",
+          "field": "missions[2].instruction_ar",
+          "type": "meaning",
+          "why": "Arabic specifies a grandfather, paternal uncle, or maternal aunt; English broadens to grandparent/uncle/aunt and loses the specific kinship terms."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "field": "missions[4].instruction_ar",
+          "type": "addition",
+          "why": "Arabic says 'a younger brother' (أخًا أصغر), not 'brother or sister'; 'sister' is added."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "field": "missions[7].title_ar",
+          "type": "meaning",
+          "why": "Arabic 'فأفدت' means 'and I benefited/gave benefit', not specifically 'shared'; the English shifts the emphasis."
+        },
+        {
+          "model": "glm-5.2",
+          "field": "missions[4].instruction_ar",
+          "type": "addition",
+          "why": "The Arabic says 'a younger brother' (أخًا أصغر); 'or sister' is added in English."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
+    "review_verdict": "low_only",
+    "review_defects": [
+      {
+        "model": "deepseek-v4-pro",
+        "field": "missions[2].instruction_ar",
+        "type": "meaning",
+        "why": "Arabic specifies a grandfather, paternal uncle, or maternal aunt; English broadens to grandparent/uncle/aunt and loses the specific kinship terms."
+      },
+      {
+        "model": "deepseek-v4-pro",
+        "field": "missions[4].instruction_ar",
+        "type": "addition",
+        "why": "Arabic says 'a younger brother' (أخًا أصغر), not 'brother or sister'; 'sister' is added."
+      },
+      {
+        "model": "deepseek-v4-pro",
+        "field": "missions[7].title_ar",
+        "type": "meaning",
+        "why": "Arabic 'فأفدت' means 'and I benefited/gave benefit', not specifically 'shared'; the English shifts the emphasis."
+      },
+      {
+        "model": "glm-5.2",
+        "field": "missions[4].instruction_ar",
+        "type": "addition",
+        "why": "The Arabic says 'a younger brother' (أخًا أصغر); 'or sister' is added in English."
+      }
+    ],
+    "revalidated_at": "2026-10-04T11:18:17+00:00"
+  }
+}

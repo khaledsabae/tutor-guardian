@@ -131,5 +131,27 @@
       ],
       "talking_point_ar": "The second account is the step after which everything becomes invisible. And keep in mind that your kid may have opened one already for completely ordinary reasons, so don't turn the conversation into an interrogation. The sentence that opens the door: \"has anyone ever asked you to hide something from us before?\" — and that is a completely different question from \"do you have another account?\""
     }
-  ]
+  ],
+  "translation": {
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "d4a4ae791011b62c80029b92636452881b4e74c9db3cbe61d7990cb38b46293f",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
+    "review_verdict": "clean",
+    "review_defects": [],
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
+  }
 }

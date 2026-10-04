@@ -1,0 +1,219 @@
+{
+  "age_band": "16-18",
+  "version": "1.0.0",
+  "is_published": true,
+  "description": "Bank of daily missions — every mission happens off-screen, and its estimated time is never less than five times the card's minutes (the card is three minutes, so the floor is fifteen).",
+  "missions": [
+    {
+      "id": "mission_16-18_teach_skill",
+      "domain": "development",
+      "title_ar": "I Master It, I Teach It",
+      "instruction_ar": "Choose a skill you are good at and teach it to someone in your family in one well-organised session.",
+      "estimated_minutes": 40,
+      "needs_parent": false,
+      "needs_outdoors": false,
+      "materials": [],
+      "skill": "Passing on knowledge",
+      "is_published": true
+    },
+    {
+      "id": "mission_16-18_community_help",
+      "domain": "development",
+      "title_ar": "A Hand in the Neighbourhood",
+      "instruction_ar": "Take part in something useful outside the house: helping a neighbour, or cleaning a shared space.",
+      "estimated_minutes": 45,
+      "needs_parent": false,
+      "needs_outdoors": true,
+      "materials": [],
+      "skill": "Social responsibility",
+      "is_published": true
+    },
+    {
+      "id": "mission_16-18_deep_read",
+      "domain": "development",
+      "title_ar": "Deep Reading",
+      "instruction_ar": "Read a chapter of a serious book, and write a page on what you agreed with, what you disagreed with, and why.",
+      "estimated_minutes": 45,
+      "needs_parent": false,
+      "needs_outdoors": false,
+      "materials": [
+        "Book",
+        "Notebook"
+      ],
+      "skill": "Critical thinking",
+      "is_published": true
+    },
+    {
+      "id": "mission_16-18_budget_month",
+      "domain": "development",
+      "title_ar": "A Month's Budget",
+      "instruction_ar": "Set a monthly budget for your pocket money: income, spending and savings — and discuss it with one of your parents.",
+      "estimated_minutes": 40,
+      "needs_parent": true,
+      "needs_outdoors": false,
+      "materials": [],
+      "skill": "Money management",
+      "is_published": true
+    },
+    {
+      "id": "mission_16-18_cv_draft",
+      "domain": "development",
+      "title_ar": "My First CV",
+      "instruction_ar": "Write a draft of your CV: your education, your skills, and what you are genuinely good at.",
+      "estimated_minutes": 40,
+      "needs_parent": false,
+      "needs_outdoors": false,
+      "materials": [],
+      "skill": "Planning for the future",
+      "is_published": true
+    },
+    {
+      "id": "mission_16-18_family_project",
+      "domain": "development",
+      "title_ar": "A Project with the Family",
+      "instruction_ar": "Suggest a small project for the family and carry it out: sorting out a storeroom, or organising the home library.",
+      "estimated_minutes": 45,
+      "needs_parent": true,
+      "needs_outdoors": false,
+      "materials": [],
+      "skill": "Initiative",
+      "is_published": true
+    },
+    {
+      "id": "mission_16-18_mentor_younger",
+      "domain": "development",
+      "title_ar": "A Brother Who Guides",
+      "instruction_ar": "Sit with a younger brother or sister for a study or planning session, and ask them more than you tell them.",
+      "estimated_minutes": 30,
+      "needs_parent": false,
+      "needs_outdoors": false,
+      "materials": [],
+      "skill": "Mentoring",
+      "is_published": true
+    },
+    {
+      "id": "mission_16-18_reflect_write",
+      "domain": "development",
+      "title_ar": "Self-Accountability",
+      "instruction_ar": "Write a page about your week: what you were pleased with, what you would like to change, and one practical step.",
+      "estimated_minutes": 30,
+      "needs_parent": false,
+      "needs_outdoors": false,
+      "materials": [
+        "Notebook"
+      ],
+      "skill": "Self-accountability (muhasabah)",
+      "is_published": true
+    },
+    {
+      "id": "mission_16-18_skill_hour",
+      "domain": "development",
+      "title_ar": "An Hour of Mastery",
+      "instruction_ar": "Set aside one unbroken hour, with no phone, for a skill you are learning, and write down what you achieved in it.",
+      "estimated_minutes": 60,
+      "needs_parent": false,
+      "needs_outdoors": false,
+      "materials": [],
+      "skill": "Focus",
+      "is_published": true
+    },
+    {
+      "id": "mission_16-18_visit_relative",
+      "domain": "development",
+      "title_ar": "A Visit That Keeps Ties",
+      "instruction_ar": "Visit a relative you haven't seen for a while, ask how they are, and listen at length.",
+      "estimated_minutes": 45,
+      "needs_parent": false,
+      "needs_outdoors": true,
+      "materials": [],
+      "skill": "Silat al-rahim (keeping family ties)",
+      "is_published": true
+    },
+    {
+      "id": "mission_16-18_debate_prep",
+      "domain": "development",
+      "title_ar": "Two Views, Not One",
+      "instruction_ar": "Choose an issue, and write the strongest argument for your view and the strongest argument against it, then weigh them up.",
+      "estimated_minutes": 35,
+      "needs_parent": false,
+      "needs_outdoors": false,
+      "materials": [
+        "Notebook"
+      ],
+      "skill": "Fairness",
+      "is_published": true
+    },
+    {
+      "id": "mission_16-18_fix_home",
+      "domain": "development",
+      "title_ar": "A Home Skill",
+      "instruction_ar": "Learn a practical home skill and do it: changing a light bulb, or fixing a dripping tap, with your parents supervising.",
+      "estimated_minutes": 40,
+      "needs_parent": true,
+      "needs_outdoors": false,
+      "materials": [],
+      "skill": "Practical competence",
+      "is_published": true
+    }
+  ],
+  "translation": {
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "40d38a19d9c90d9b740316f2a4213e82ae32e07883cc216e9655555a0d3c636a",
+      "reviewed_at": "2026-10-04T11:18:17+00:00",
+      "residual_low": [
+        {
+          "model": "deepseek-v4-pro",
+          "field": "missions[6].instruction_ar",
+          "type": "addition",
+          "why": "The Arabic specifies a younger brother (أخ أصغر), while the English adds 'or sister'."
+        },
+        {
+          "model": "glm-5.2",
+          "field": "description",
+          "type": "omission",
+          "why": "The Arabic specifies 'fifteen minutes' but the English drops the unit, leaving 'fifteen' ambiguous."
+        },
+        {
+          "model": "glm-5.2",
+          "field": "missions[6].instruction_ar",
+          "type": "addition",
+          "why": "The Arabic says 'a younger brother' (أخ أصغر); the English adds 'or sister', which is not in the source."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
+    "review_verdict": "low_only",
+    "review_defects": [
+      {
+        "model": "deepseek-v4-pro",
+        "field": "missions[6].instruction_ar",
+        "type": "addition",
+        "why": "The Arabic specifies a younger brother (أخ أصغر), while the English adds 'or sister'."
+      },
+      {
+        "model": "glm-5.2",
+        "field": "description",
+        "type": "omission",
+        "why": "The Arabic specifies 'fifteen minutes' but the English drops the unit, leaving 'fifteen' ambiguous."
+      },
+      {
+        "model": "glm-5.2",
+        "field": "missions[6].instruction_ar",
+        "type": "addition",
+        "why": "The Arabic says 'a younger brother' (أخ أصغر); the English adds 'or sister', which is not in the source."
+      }
+    ],
+    "revalidated_at": "2026-10-04T11:18:17+00:00"
+  }
+}

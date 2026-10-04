@@ -6,14 +6,14 @@
   "pairs": [
     {
       "key": "no_device_at_table",
-      "child": "No phones at the table.",
-      "parent": "No phones at the table — me included.",
+      "child": "No devices at the table.",
+      "parent": "No devices at the table — me included.",
       "note": "This is the clause the agreement gets tested on first: your child measures you against it at the very next meal."
     },
     {
       "key": "device_sleeps_outside",
       "child": "My phone or tablet sleeps outside my bedroom.",
-      "parent": "My phone sleeps outside the bedroom too."
+      "parent": "My device sleeps outside the bedroom too."
     },
     {
       "key": "tell_when_uncomfortable",
@@ -46,5 +46,101 @@
       "child": "We go over the agreement every month, and I get to ask for a change.",
       "parent": "I go over it with them and listen when they ask for a change, and if I say no I give them the reason."
     }
-  ]
+  ],
+  "translation": {
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "518bedc92b15c373e52fa16bb206eda231d2e7e9c4d110915a4bc363fe560146",
+      "reviewed_at": "2026-10-04T11:18:17+00:00",
+      "residual_low": [
+        {
+          "model": "deepseek-v4-pro",
+          "field": "pairs[0].note",
+          "type": "meaning",
+          "why": "The Arabic says 'the clearest clause' (أوضح بند), not 'the clause ... first'; 'أوضح' is dropped and 'first' shifts the meaning."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "field": "pairs[1].child",
+          "type": "addition",
+          "why": "The Arabic says 'the device' generically; the English adds 'phone or tablet'."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "field": "pairs[5].parent",
+          "type": "addition",
+          "why": "The Arabic says 'in front of him' (أمامه); 'mine included' is an added gloss, though it follows from the parent clause."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "field": "pairs[7].child",
+          "type": "meaning",
+          "why": "Arabic 'لي حقّ' means 'I have the right'; 'I get to' softens the entitlement."
+        },
+        {
+          "model": "glm-5.2",
+          "field": "pairs[1].child",
+          "type": "addition",
+          "why": "The Arabic says 'the device' and 'the room' generically; the English specifies 'phone or tablet' and 'bedroom'."
+        },
+        {
+          "model": "glm-5.2",
+          "field": "pairs[2].child",
+          "type": "meaning",
+          "why": "«الارتياح» denotes comfort/ease; 'uncomfortable' is the safeguarding-standard rendering, while 'weird' shifts the nuance toward strangeness."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
+    "review_verdict": "low_only",
+    "review_defects": [
+      {
+        "model": "deepseek-v4-pro",
+        "field": "pairs[0].note",
+        "type": "meaning",
+        "why": "The Arabic says 'the clearest clause' (أوضح بند), not 'the clause ... first'; 'أوضح' is dropped and 'first' shifts the meaning."
+      },
+      {
+        "model": "deepseek-v4-pro",
+        "field": "pairs[1].child",
+        "type": "addition",
+        "why": "The Arabic says 'the device' generically; the English adds 'phone or tablet'."
+      },
+      {
+        "model": "deepseek-v4-pro",
+        "field": "pairs[5].parent",
+        "type": "addition",
+        "why": "The Arabic says 'in front of him' (أمامه); 'mine included' is an added gloss, though it follows from the parent clause."
+      },
+      {
+        "model": "deepseek-v4-pro",
+        "field": "pairs[7].child",
+        "type": "meaning",
+        "why": "Arabic 'لي حقّ' means 'I have the right'; 'I get to' softens the entitlement."
+      },
+      {
+        "model": "glm-5.2",
+        "field": "pairs[1].child",
+        "type": "addition",
+        "why": "The Arabic says 'the device' and 'the room' generically; the English specifies 'phone or tablet' and 'bedroom'."
+      },
+      {
+        "model": "glm-5.2",
+        "field": "pairs[2].child",
+        "type": "meaning",
+        "why": "«الارتياح» denotes comfort/ease; 'uncomfortable' is the safeguarding-standard rendering, while 'weird' shifts the nuance toward strangeness."
+      }
+    ],
+    "revalidated_at": "2026-10-04T11:18:17+00:00"
+  }
 }

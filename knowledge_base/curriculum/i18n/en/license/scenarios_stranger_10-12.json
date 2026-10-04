@@ -130,5 +130,41 @@
       ],
       "talking_point_ar": "The neighborhood is enough on its own once it comes together with the name of the school and the hours they play. And lying to the person keeps your child in a conversation that is still going — and we want them out of the conversation, not winning it. The rule to agree on together: any question about a place, a time, or meeting up, we answer it together."
     }
-  ]
+  ],
+  "translation": {
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "1821ec9500e892355f6713922f132a071edb3682aec6eeb975fdb220f0abc85e",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [
+        {
+          "model": "deepseek-v4-pro",
+          "field": "scenarios[4].talking_point_ar",
+          "type": "meaning",
+          "why": "The English adds 'on its own', which contradicts the Arabic point that the neighborhood is sufficient only when combined with other details."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
+    "review_verdict": "low_only",
+    "review_defects": [
+      {
+        "model": "deepseek-v4-pro",
+        "field": "scenarios[4].talking_point_ar",
+        "type": "meaning",
+        "why": "The English adds 'on its own', which contradicts the Arabic point that the neighborhood is sufficient only when combined with other details."
+      }
+    ],
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
+  }
 }
