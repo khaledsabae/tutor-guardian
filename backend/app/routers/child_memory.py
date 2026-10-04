@@ -266,9 +266,11 @@ def delete_child_memory(child_id: int, request: Request):
             summary="This week's plan for the child (built once per ISO week)")
 def get_weekly_plan(child_id: int, request: Request,
                     lang: Optional[str] = Query(None),
-                    tz_offset_minutes: int = 0):
+                    tz_offset_minutes: Optional[int] = Query(None)):
     device_id = _owned_child(request, child_id)
     lang = lang or request.headers.get("accept-language")
+    # Recorded only when sent: a call without it must not reset the family's
+    # clock to UTC (PR #26 review F7) — the follow-up push reads it.
     cm.record_tz_offset(device_id, tz_offset_minutes)
     return weekly_plan.get_weekly_plan(
         device_id, child_id, lang=lang, tz_offset_minutes=tz_offset_minutes,

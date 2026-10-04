@@ -61,11 +61,11 @@ from app.services.push_sender import recently_pushed_since, send_to_device
 DB_PATH = db_path()
 
 
-def _send(device_id: str, title: str, body: str, data: dict, **options):
+def _send(device_id: str, title: str, body: str, data: dict):
     if DRY_RUN:
         print(f"  [dry-run] would send to {device_id}: {title}  data={data}")
         return {"ok": True, "dry_run": True}
-    return send_to_device(device_id, title, body, data, **options)
+    return send_to_device(device_id, title, body, data)
 
 
 def _query(sql: str, params: tuple = ()):
@@ -231,119 +231,9 @@ def win_back(skip: set | None = None):
         )
 
 
-# ── Follow-ups («جرّبت النصيحة؟ نفعت؟») — schema v30 ─────────────────────
-#
-# The loop that brings a parent back every week: a strategy the assistant
-# suggested a few days ago, asked about once it is due. Rules:
-#   * only devices whose build has the follow-up screen — the same gate as
-#     memory collection (CHILD_MEMORY_MIN_BUILD; unset = nobody, so this sends
-#     nothing until that build ships and the variable is set);
-#   * at most one follow-up push per device per FOLLOWUP_PUSH_EVERY_DAYS,
-#     whatever else it has received, and never the same follow-up twice;
-#   * nothing older than FOLLOWUP_EXPIRE_DAYS past due (it has expired);
-#   * only when it is daytime where the family is: the device's UTC offset is
-#     recorded when the app opens the follow-ups (child_memory_settings); an
-#     unknown offset is never guessed — no push;
-#   * inside the general frequency cap (`skip`) and this script's 17 UTC
-#     window like every other trigger here — no new cron line;
-#   * never to a device whose parent switched memory off;
-#   * a GENERIC text with private lock-screen visibility: the strategy can be
-#     about something the family keeps to itself, and FCM and the lock screen
-#     are not the place for it (PR #26 review, A8/P5). The app shows the
-#     strategy once the parent opens it.
-#
-# Deep link: /followup/{id} — see MOBILE_API.md.
-FOLLOWUP_PUSH_EVERY_DAYS = 7
-FOLLOWUP_EXPIRE_DAYS = 21
-LOCAL_DAY_START, LOCAL_DAY_END = 9, 21   # local hours a follow-up may arrive
-
-_FOLLOWUP_TEXT = {
-    "ar": ("متابعة من المربّي 🤍",
-           "هل جرّبت النصيحة التي اقترحناها؟ أخبرنا بالنتيجة لنكيّف نصائحنا لطفلك."),
-    "en": ("A follow-up from Almorabbi 🤍",
-           "Did you try the advice we suggested? Tell us how it went, so we can adapt it to your child."),
-}
-
-
-def _daytime(now: datetime, tz_offset_minutes) -> bool:
-    if tz_offset_minutes is None:
-        return False
-    local = now + timedelta(minutes=int(tz_offset_minutes))
-    return LOCAL_DAY_START <= local.hour < LOCAL_DAY_END
-
-
-def followup_due(skip: set | None = None) -> set:
-    """Push the oldest due follow-up of each eligible device. Returns devices sent."""
-    skip = skip or set()
-    from app.services.child_memory import memory_min_build
-
-    min_build = memory_min_build()
-    if min_build is None:
-        print("  -> followup_due: off (CHILD_MEMORY_MIN_BUILD unset)")
-        return set()
-    now = datetime.utcnow()
-    weekly_cutoff = (now - timedelta(days=FOLLOWUP_PUSH_EVERY_DAYS)).isoformat()
-    expired_before = (now - timedelta(days=FOLLOWUP_EXPIRE_DAYS)).isoformat()
-    try:
-        rows = _query(
-            """
-            SELECT f.id, f.device_id, f.child_id, f.lang, s.tz_offset_minutes
-            FROM followups f
-            JOIN push_tokens pt ON pt.device_id = f.device_id
-            LEFT JOIN child_memory_settings s ON s.device_id = f.device_id
-            WHERE f.status = 'pending'
-              AND f.due_at <= datetime(?)
-              AND f.due_at >= datetime(?)
-              AND f.pushed_at IS NULL
-              AND pt.token IS NOT NULL AND pt.token != ''
-              AND pt.build_number IS NOT NULL AND pt.build_number >= ?
-              AND COALESCE(s.enabled, 1) = 1
-              AND f.device_id NOT IN (
-                  SELECT device_id FROM push_sends
-                  WHERE kind = 'followup_due' AND sent_at >= datetime(?))
-            ORDER BY f.due_at ASC, f.id ASC
-            """,
-            (now.isoformat(), expired_before, min_build, weekly_cutoff),
-        )
-    except sqlite3.OperationalError as exc:  # pre-v30 database
-        print(f"  -> followup_due: skipped ({exc})")
-        return set()
-    sent: set = set()
-    night = 0
-    for r in rows:
-        device = r["device_id"]
-        if device in skip or device in sent:
-            continue
-        if not _daytime(now, r["tz_offset_minutes"]):
-            night += 1
-            continue
-        title, body = _FOLLOWUP_TEXT.get(r["lang"] or "ar", _FOLLOWUP_TEXT["ar"])
-        result = _send(
-            device_id=device,
-            title=title,
-            body=body,
-            data={
-                "type": "followup_due",
-                "link": f"/followup/{r['id']}",
-                "followup_id": str(r["id"]),
-                "child_id": str(r["child_id"]),
-            },
-            visibility="private",
-        )
-        sent.add(device)
-        if not DRY_RUN and result.get("sent"):
-            conn = sqlite3.connect(DB_PATH)
-            try:
-                conn.execute(
-                    "UPDATE followups SET pushed_at = datetime('now') WHERE id = ?",
-                    (r["id"],),
-                )
-                conn.commit()
-            finally:
-                conn.close()
-    if night:
-        print(f"  -> followup_due: {night} held back (night or unknown time zone)")
-    return sent
+# The follow-up push («جرّبت النصيحة؟») moved to the backend's in-process loop
+# (backend/app/services/followup_push.py): it goes out at 19:00 on each
+# family's own clock, and one UTC hour is night from UTC+4 to UTC+8.
 
 
 def first_lesson_activation(skip: set | None = None) -> set:
@@ -429,17 +319,12 @@ def fold_referral_clicks(dry_run: bool = False) -> int | None:
 
 def evening_run() -> bool:
     """The 17 UTC run: every trigger, at most one push per device — then the
-    daily privacy housekeeping. Returns False when housekeeping hit an error.
-
-    The follow-up goes first — it is the one push here that answers something
-    the parent asked — and whoever gets one tonight gets nothing else.
-    """
+    daily privacy housekeeping. Returns False when housekeeping hit an error."""
     skip = _recently_pushed()
-    print(f"  -> followup_due + first_lesson_activation + streak_at_risk + win_back (deduped, {len(skip)} capped)")
-    fu_sent = followup_due(skip=skip)
-    act_sent = first_lesson_activation(skip=skip | fu_sent)
-    nudged = streak_at_risk(skip=skip | act_sent | fu_sent)
-    win_back(skip=nudged | act_sent | fu_sent | skip)
+    print(f"  -> first_lesson_activation + streak_at_risk + win_back (deduped, {len(skip)} capped)")
+    act_sent = first_lesson_activation(skip=skip)
+    nudged = streak_at_risk(skip=skip | act_sent)
+    win_back(skip=nudged | act_sent | skip)
     return privacy_housekeeping()
 
 

@@ -492,12 +492,12 @@ four buttons — نجحت / Worked · نجحت جزئيًا / Partly · لم ت�
 لم أجرّب بعد / Haven't tried yet — plus an optional note field and «لا تسألني
 عن هذا» / "Don't ask about this" (= dismiss).
 
-**Push.** One evening run (17:00 UTC). A device gets at most one follow-up push
-per 7 days, never the same follow-up twice, nothing older than 21 days past due,
-nothing while the global push cap applies, nothing if the parent switched memory
-off, and only when it is 09:00–21:00 on the device (from `tz_offset_minutes`;
-unknown offset → no push). Only devices whose build is ≥ `CHILD_MEMORY_MIN_BUILD`
-receive it. The text is **generic** (no name, no strategy) and the notification is
+**Push.** At **19:00 on the family's own clock** (from the last `tz_offset_minutes`
+the app sent; unknown offset → no push), in every time zone and never at night.
+A device gets at most one follow-up push per 7 days, never the same follow-up
+twice, nothing older than 21 days past due, nothing if it already had any push
+in the last 20 hours, and nothing if the parent switched memory off. Only devices
+whose build is ≥ `CHILD_MEMORY_MIN_BUILD` receive it. The text is **generic** (no name, no strategy) and the notification is
 **private** on the lock screen; the app shows the strategy once opened. FCM `data`
 (all strings):
 ```json
@@ -515,8 +515,11 @@ If it is no longer `pending`, show its result instead of the buttons.
 
 Query: `lang` (`en` → English; anything else, or absent → Arabic; the
 `Accept-Language` header is used when `lang` is absent) and `tz_offset_minutes`
-(the device's UTC offset, e.g. `180` for Riyadh — the week is the parent's local
-ISO week, Monday to Sunday; also recorded for the follow-up push's quiet hours).
+(optional — the device's UTC offset, e.g. `180` for Riyadh; the week is the
+parent's local ISO week, Monday to Sunday). Send it when you can: it is recorded
+for the follow-up push. When it is absent, the offset last sent (here or with
+§9.4's `followups/due`) is used, and nothing is recorded — an omitted offset never
+resets the family's clock to UTC.
 This route does not require a proven session.
 
 ```json

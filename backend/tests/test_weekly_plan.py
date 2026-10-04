@@ -159,6 +159,29 @@ def test_focus_follows_the_parents_challenge_then_memory(client):
     assert plan["focus"]["topic"] == "screens" and plan["focus"]["reason"] == "parent_challenge"
 
 
+def test_a_plan_without_an_offset_keeps_the_familys_clock(client):
+    """F7 (PR #26 review): an omitted offset is not 0. The reviewer's probe:
+    followups/due recorded 480 (Kuala Lumpur), then a weekly-plan call without
+    one reset it to UTC — and with it the follow-up push's clock."""
+    h = _auth(client, "dev-plan-tz")
+    cid = _child(client, h, "4-6")
+    prove(client, h, push_token="fcm-plan-tz")
+    assert client.get("/api/children/followups/due?tz_offset_minutes=480",
+                      headers=h).status_code == 200
+    assert client.get(f"/api/children/{cid}/weekly-plan", headers=h).status_code == 200
+    conn = get_conn()
+    stored = conn.execute("SELECT tz_offset_minutes FROM child_memory_settings "
+                          "WHERE device_id = 'dev-plan-tz'").fetchone()[0]
+    conn.close()
+    assert stored == 480
+    # …and the plan's week follows that clock: Sunday 20:00 UTC is already
+    # Monday 04:00 in Kuala Lumpur — next week (41 → 42).
+    sunday_evening = datetime(2026, 10, 11, 20, 0, tzinfo=timezone.utc)
+    assert wp.get_weekly_plan("dev-plan-tz", cid, now=sunday_evening)["week"].endswith("42")
+    assert wp.get_weekly_plan("dev-plan-tz", cid, tz_offset_minutes=0,
+                              now=sunday_evening)["week"].endswith("41")
+
+
 def test_a_failed_strategy_is_swapped_for_the_spare_action(client):
     h = _auth(client, "dev-plan-adapt")
     cid = _child(client, h, "4-6")

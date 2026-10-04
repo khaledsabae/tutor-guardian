@@ -302,15 +302,32 @@ def build_plan(device_id: str, child_id: int, *, today: date,
     }
 
 
+def _stored_offset(device_id: str) -> Optional[int]:
+    """The UTC offset the app last reported for this device (child_memory)."""
+    conn = get_conn()
+    try:
+        row = conn.execute("SELECT tz_offset_minutes FROM child_memory_settings "
+                           "WHERE device_id = ?", (device_id,)).fetchone()
+    except sqlite3.Error:
+        return None
+    finally:
+        conn.close()
+    return None if row is None or row["tz_offset_minutes"] is None else int(row["tz_offset_minutes"])
+
+
 def get_weekly_plan(device_id: str, child_id: int, *, lang: Optional[str] = None,
-                    tz_offset_minutes: int = 0, now: Optional[datetime] = None) -> dict:
+                    tz_offset_minutes: Optional[int] = None,
+                    now: Optional[datetime] = None) -> dict:
     """This week's plan, built once and then served from `weekly_plans`.
 
-    The week is the parent's local ISO week (Monday start), from the same
-    client-supplied UTC offset the child-surface endpoints use.
+    The week is the parent's local ISO week (Monday start), from the UTC offset
+    the client sent — or, when it sent none, the one it last reported, and UTC
+    only when there is neither (PR #26 review F7: a missing offset is not 0).
     """
     code = content_lang.normalise(lang) or "ar"
     now = now or datetime.now(timezone.utc)
+    if tz_offset_minutes is None:
+        tz_offset_minutes = _stored_offset(device_id)
     offset = max(-14 * 60, min(14 * 60, int(tz_offset_minutes or 0)))
     local_day = (now + timedelta(minutes=offset)).date()
     week, _ = iso_week(local_day)
