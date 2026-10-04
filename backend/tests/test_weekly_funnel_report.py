@@ -675,8 +675,33 @@ def test_test_traffic_is_left_out_of_every_number(mock_db: Path, monkeypatch):
     # The seeded traffic reaches every one of those numbers when nothing is
     # excluded — without this, the equality above could hold vacuously.
     import ops.scripts.weekly_funnel_report as wfr
-    monkeypatch.setattr(wfr, "real_device_sql", lambda column, tables: "1")
-    monkeypatch.setattr(wfr, "real_session_sql", lambda column, tables: "1")
+    monkeypatch.setattr(wfr, "real_device_sql", lambda *a: "1")
+    monkeypatch.setattr(wfr, "real_session_sql", lambda *a: "1")
     unfiltered = _all_metrics(mock_db, now)
     for key, value in real_only.items():
         assert unfiltered[key] != value, key
+
+
+def test_a_report_run_finds_the_test_devices_once(mock_db: Path, tmp_path: Path,
+                                                  monkeypatch, capsys):
+    """One scan for the E2E devices per report. As a subquery in every
+    statement it scanned chat_messages 2-4 times each and tripled the report's
+    CPU on production."""
+    import ops.scripts.weekly_funnel_report as wfr
+    now = datetime.utcnow().replace(microsecond=0)
+    conn = sqlite3.connect(mock_db)
+    conn.executescript(_PROD_PUSH_TOKENS)
+    _family(conn, "real-old", now, child_days=20)
+    _seed_test_traffic(conn, now)
+    conn.commit()
+    conn.close()
+    calls = []
+    found = wfr.e2e_devices
+    monkeypatch.setattr(wfr, "e2e_devices", lambda c: calls.append(1) or found(c))
+    arb = tmp_path / "app_ar.arb"
+    arb.write_text("{}", encoding="utf-8")
+    assert wfr.main(["--db", str(mock_db), "--arb", str(arb),
+                     "--sessions-db", str(tmp_path / "absent.db"), "--dry-run"]) == 0
+    assert len(calls) == 1
+    assert "هذا الأسبوع: <b>1</b> أسرة" in capsys.readouterr().out
+    assert wfr._RUN_E2E == {}                     # nothing outlives the run

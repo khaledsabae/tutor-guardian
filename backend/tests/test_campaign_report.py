@@ -361,7 +361,15 @@ def test_test_devices_are_not_installs(report_db, monkeypatch):
     conn.close()
     assert _data(report_db) == before
 
-    monkeypatch.setattr(cr, "real_device_sql", lambda column, tables: "1")
+    monkeypatch.setattr(cr, "real_device_sql", lambda *a: "1")
     unfiltered = _data(report_db)
     assert unfiltered["campaigns"]["DA01"].new == before["campaigns"]["DA01"].new + 1
     assert unfiltered["everyone"].new == before["everyone"].new + 3
+
+
+def test_the_test_devices_are_found_once_per_report(report_db, monkeypatch):
+    calls = []
+    sql = cr.e2e_devices_sql
+    monkeypatch.setattr(cr, "e2e_devices_sql", lambda tables: calls.append(1) or sql(tables))
+    _data(report_db)
+    assert len(calls) == 1

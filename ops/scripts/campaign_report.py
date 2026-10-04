@@ -100,20 +100,24 @@ def e2e_devices_sql(tables) -> str:
                       f"WHERE m.role = 'user' AND m.content LIKE '{_E2E_QUESTION_LIKE}'")
     if not marked:
         return "SELECT NULL WHERE 0"
-    base = " UNION ".join(marked)
-    parts = [base]
+    parts = ["SELECT device_id FROM marked"]
     if "push_tokens" in tables:
         parts.append("SELECT device_id FROM push_tokens WHERE token IN "
-                     f"(SELECT token FROM push_tokens WHERE device_id IN ({base}))")
+                     "(SELECT token FROM push_tokens WHERE device_id IN marked)")
     if "device_aliases" in tables:
-        parts.append(f"SELECT device_id FROM device_aliases WHERE canonical_device IN ({base})")
-        parts.append(f"SELECT canonical_device FROM device_aliases WHERE device_id IN ({base})")
-    return f"SELECT device_id FROM ({' UNION '.join(parts)}) WHERE device_id IS NOT NULL"
+        parts.append("SELECT device_id FROM device_aliases WHERE canonical_device IN marked")
+        parts.append("SELECT canonical_device FROM device_aliases WHERE device_id IN marked")
+    return (f"WITH marked(device_id) AS ({' UNION '.join(marked)}) "
+            f"SELECT device_id FROM ({' UNION '.join(parts)}) WHERE device_id IS NOT NULL")
 
 
-def real_device_sql(column: str, tables) -> str:
+def _json_literal(values) -> str:
+    return "'" + json.dumps(sorted(v for v in values if v is not None)).replace("'", "''") + "'"
+
+
+def real_device_sql(column: str, e2e) -> str:
     return (f"({column} IS NULL OR ({column} NOT LIKE '{_EVAL_DEVICE_LIKE}' "
-            f"AND {column} NOT IN ({e2e_devices_sql(tables)})))")
+            f"AND {column} NOT IN (SELECT value FROM json_each({_json_literal(e2e)}))))")
 
 
 _TS = "%Y-%m-%d %H:%M:%S"
@@ -191,8 +195,11 @@ def load_facts(conn: sqlite3.Connection, days: int, now: datetime) -> Facts:
     def rows(sql: str, params: tuple = ()) -> list[sqlite3.Row]:
         return conn.execute(sql, params).fetchall()
 
+    # The test devices, found once for the whole report.
+    e2e = {r[0] for r in rows(e2e_devices_sql(tables)) if r[0] is not None}
+
     def real(column: str) -> str:
-        return real_device_sql(column, tables)
+        return real_device_sql(column, e2e)
 
     first_session = {r[0]: r[1] for r in rows(
         "SELECT device_id, MIN(datetime(created_at)) FROM chat_sessions "

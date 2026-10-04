@@ -85,13 +85,13 @@ def test_the_rule_finds_every_e2e_device_and_nothing_else():
     _seed()
     conn = get_conn()
     try:
-        assert e2e_devices(conn) == E2E
-        tables = table_names(conn)
+        e2e = e2e_devices(conn)
+        assert e2e == E2E
         kept = {r[0] for r in conn.execute(
-            f"SELECT device_id FROM chat_sessions WHERE {real_device_sql('device_id', tables)}")}
+            f"SELECT device_id FROM chat_sessions WHERE {real_device_sql('device_id', e2e)}")}
         asked = conn.execute(
             "SELECT COUNT(*) FROM chat_messages WHERE role = 'user' AND "
-            f"{real_session_sql('session_id', tables)}").fetchone()[0]
+            f"{real_session_sql('session_id', e2e, table_names(conn))}").fetchone()[0]
     finally:
         conn.close()
     assert kept == {"real-1", "real-2", None}       # a session without a device stays
@@ -110,7 +110,10 @@ def test_a_device_less_e2e_question_never_hides_the_real_rows():
     try:
         assert None not in {r[0] for r in conn.execute(e2e_devices_sql(table_names(conn)))}
         n = conn.execute(f"SELECT COUNT(*) FROM child_profiles WHERE "
-                         f"{real_device_sql('device_id', table_names(conn))}").fetchone()[0]
+                         f"{real_device_sql('device_id', e2e_devices(conn))}").fetchone()[0]
+        # Even a None handed in by hand never reaches the SQL.
+        assert conn.execute(f"SELECT COUNT(*) FROM child_profiles WHERE "
+                            f"{real_device_sql('device_id', {None})}").fetchone()[0] == 4
     finally:
         conn.close()
     assert n == 2
@@ -130,9 +133,22 @@ def test_a_database_without_tokens_or_aliases(tmp_path):
     bare = sqlite3.connect(":memory:")
     bare.execute("CREATE TABLE coach_tips (device_id TEXT)")
     bare.execute("INSERT INTO coach_tips VALUES ('a'), ('eval-harness-x')")
+    assert e2e_devices(bare) == set()
     assert bare.execute(f"SELECT device_id FROM coach_tips WHERE "
-                        f"{real_device_sql('device_id', table_names(bare))}").fetchall() == [("a",)]
-    assert real_session_sql("session_id", set()) == "1"
+                        f"{real_device_sql('device_id', set())}").fetchall() == [("a",)]
+    assert real_session_sql("session_id", set(), set()) == "1"
+
+
+def test_any_device_id_round_trips_through_the_literal():
+    """The E2E set is one JSON literal in the SQL: a quote, non-ASCII or a NUL
+    in an id must neither break the statement nor miss the device."""
+    conn = sqlite3.connect(":memory:")
+    conn.execute("CREATE TABLE t (device_id TEXT)")
+    odd = ["e2e-'quote", "e2e-\u00e9\u0644", "e2e-\x00nul", 'e2e-"dq', "e2e-\\back"]
+    conn.executemany("INSERT INTO t VALUES (?)", [(d,) for d in odd + ["real-'x", "real"]])
+    kept = [r[0] for r in conn.execute(
+        f"SELECT device_id FROM t WHERE {real_device_sql('device_id', odd)} ORDER BY 1")]
+    assert kept == ["real", "real-'x"]
 
 
 def test_markers_match_what_the_e2e_gate_writes():
@@ -158,8 +174,10 @@ def test_campaign_report_mirror_matches_the_rule():
     full = {"child_profiles", "chat_messages", "chat_sessions", "push_tokens", "device_aliases"}
     for tables in (full, full - {"device_aliases"}, {"child_profiles"},
                    {"chat_messages", "chat_sessions"}, set()):
+        assert cr.e2e_devices_sql(tables) == e2e_devices_sql(tables)
+    for e2e in (set(), {"e2e-1", "e2e-'q", "e2e-\u00e9"}, {None, "x"}):
         for column in ("device_id", "cs.device_id", "referred_device"):
-            assert cr.real_device_sql(column, tables) == real_device_sql(column, tables)
+            assert cr.real_device_sql(column, e2e) == real_device_sql(column, e2e)
 
 
 def test_weekly_dashboard_counts_real_devices_only(monkeypatch):

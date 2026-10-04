@@ -25,14 +25,19 @@ The question marker is not redundant: on production (2026-10-04) one E2E
 install asked its question from a childless twin whose push token was not
 shared — only the question identified it.
 
-A metric keeps real devices with one predicate:
+A report finds the E2E devices ONCE per run, then keeps real devices with one
+predicate per statement:
 
-    from app.core.real_traffic import real_device_sql
-    f"... WHERE {real_device_sql('cs.device_id', tables)}"
+    from app.core.real_traffic import e2e_devices, real_device_sql
+    e2e = e2e_devices(conn)                       # one scan, per report run
+    f"... WHERE {real_device_sql('cs.device_id', e2e)}"
 
-`tables` is the set of table names in the database being read (the rule only
-reads tables that exist). A NULL device is real traffic: rows without a device
-keep being counted as before.
+The set travels as one JSON literal (`json_each`), not as a subquery: inlined
+in every statement, the marked-device subquery scanned chat_messages two to
+four times per statement and tripled the weekly funnel report's CPU on
+production (5.2 s → 15.2 s; found once per run: 6.5 s). Nor as a parameter
+list, which would grow with every E2E run. A NULL device is real traffic: rows
+without a device keep being counted.
 
 Dependency-free, like eval_traffic: scripts under ops/ import it with
 `backend/` on sys.path, and it must not drag the app (or a database) in. (Not
@@ -40,6 +45,7 @@ named test_*: pytest would collect it.)
 """
 from __future__ import annotations
 
+import json
 import sqlite3
 from typing import Iterable
 
@@ -51,9 +57,8 @@ from app.core.eval_traffic import EVAL_DEVICE_LIKE
 E2E_CHILD_NAME_LIKE = "E2E-Maestro%"
 E2E_QUESTION_LIKE = "E2E test%"
 
-# Inlined into SQL as literals: the rule is one subquery per statement, not a
-# parameter list that grows with every E2E run. So they must stay plain — no
-# quote, and no `_`, which LIKE would read as a wildcard.
+# Inlined into SQL as literals, so they must stay plain — no quote, and no `_`,
+# which LIKE would read as a wildcard.
 for _pattern in (EVAL_DEVICE_LIKE, E2E_CHILD_NAME_LIKE, E2E_QUESTION_LIKE):
     assert "'" not in _pattern and "_" not in _pattern, _pattern
 
@@ -63,8 +68,8 @@ def table_names(conn: sqlite3.Connection) -> set[str]:
 
 
 def e2e_devices_sql(tables: Iterable[str]) -> str:
-    """A SELECT of every E2E device id in this database — never NULL, so it is
-    safe inside `NOT IN (...)` (a single NULL there would hide every row)."""
+    """A SELECT of every E2E device id in this database, never NULL. The marked
+    devices are a CTE, so chat_messages is scanned once."""
     tables = set(tables)
     marked = []
     if "child_profiles" in tables:
@@ -76,33 +81,40 @@ def e2e_devices_sql(tables: Iterable[str]) -> str:
                       f"WHERE m.role = 'user' AND m.content LIKE '{E2E_QUESTION_LIKE}'")
     if not marked:
         return "SELECT NULL WHERE 0"
-    base = " UNION ".join(marked)
-    parts = [base]
+    parts = ["SELECT device_id FROM marked"]
     if "push_tokens" in tables:
         parts.append("SELECT device_id FROM push_tokens WHERE token IN "
-                     f"(SELECT token FROM push_tokens WHERE device_id IN ({base}))")
+                     "(SELECT token FROM push_tokens WHERE device_id IN marked)")
     if "device_aliases" in tables:
-        parts.append(f"SELECT device_id FROM device_aliases WHERE canonical_device IN ({base})")
-        parts.append(f"SELECT canonical_device FROM device_aliases WHERE device_id IN ({base})")
-    return f"SELECT device_id FROM ({' UNION '.join(parts)}) WHERE device_id IS NOT NULL"
-
-
-def real_device_sql(column: str, tables: Iterable[str]) -> str:
-    """SQL predicate: `column` is neither an eval-harness nor an E2E device."""
-    return (f"({column} IS NULL OR ({column} NOT LIKE '{EVAL_DEVICE_LIKE}' "
-            f"AND {column} NOT IN ({e2e_devices_sql(tables)})))")
-
-
-def real_session_sql(column: str, tables: Iterable[str]) -> str:
-    """SQL predicate for rows keyed by a chat session id (chat_messages,
-    user_feedback): the session does not belong to a test device."""
-    tables = set(tables)
-    if "chat_sessions" not in tables:
-        return "1"
-    return (f"({column} IS NULL OR {column} NOT IN (SELECT id FROM chat_sessions "
-            f"WHERE NOT {real_device_sql('device_id', tables)}))")
+        parts.append("SELECT device_id FROM device_aliases WHERE canonical_device IN marked")
+        parts.append("SELECT canonical_device FROM device_aliases WHERE device_id IN marked")
+    return (f"WITH marked(device_id) AS ({' UNION '.join(marked)}) "
+            f"SELECT device_id FROM ({' UNION '.join(parts)}) WHERE device_id IS NOT NULL")
 
 
 def e2e_devices(conn: sqlite3.Connection) -> set[str]:
     """The E2E device ids in this database (eval devices are known by prefix)."""
-    return {r[0] for r in conn.execute(e2e_devices_sql(table_names(conn)))}
+    return {r[0] for r in conn.execute(e2e_devices_sql(table_names(conn))) if r[0] is not None}
+
+
+def _json_literal(values: Iterable[str]) -> str:
+    """A SQL string literal of a JSON array: one constant however many values.
+    json.dumps escapes every control character (NUL included) and non-ASCII;
+    SQL needs only the quote doubled."""
+    return "'" + json.dumps(sorted(v for v in values if v is not None)).replace("'", "''") + "'"
+
+
+def real_device_sql(column: str, e2e: Iterable[str]) -> str:
+    """SQL predicate: `column` is neither an eval-harness device nor one of
+    `e2e` (= e2e_devices(conn), found once per report run)."""
+    return (f"({column} IS NULL OR ({column} NOT LIKE '{EVAL_DEVICE_LIKE}' "
+            f"AND {column} NOT IN (SELECT value FROM json_each({_json_literal(e2e)}))))")
+
+
+def real_session_sql(column: str, e2e: Iterable[str], tables: Iterable[str]) -> str:
+    """SQL predicate for rows keyed by a chat session id (chat_messages,
+    user_feedback): the session does not belong to a test device."""
+    if "chat_sessions" not in set(tables):
+        return "1"
+    return (f"({column} IS NULL OR {column} NOT IN (SELECT id FROM chat_sessions "
+            f"WHERE NOT {real_device_sql('device_id', e2e)}))")

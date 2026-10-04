@@ -40,6 +40,7 @@ import sys
 import urllib.parse
 import urllib.request
 from collections import Counter, defaultdict
+from contextlib import contextmanager
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
@@ -48,7 +49,9 @@ sys.path.insert(0, str(_ROOT))
 # app.core.* — the backend container already has backend/ on PYTHONPATH.
 sys.path.insert(1, str(_ROOT / "backend"))
 
-from app.core.real_traffic import real_device_sql, real_session_sql, table_names  # noqa: E402
+from app.core.real_traffic import (  # noqa: E402
+    e2e_devices, real_device_sql, real_session_sql, table_names,
+)
 
 _DB = Path(os.environ.get(
     "CONVERSATIONS_DB", str(_ROOT / "ops" / "conversations.db"),
@@ -98,15 +101,41 @@ def _tables(db_path: Path) -> set[str]:
         conn.close()
 
 
+# The E2E test devices of the report being built (see _one_run).
+_RUN_E2E: dict[Path, frozenset[str]] = {}
+
+
+def _e2e(db_path: Path) -> frozenset[str]:
+    """The E2E devices: found once per report run, or per call outside one."""
+    cached = _RUN_E2E.get(db_path)
+    if cached is not None:
+        return cached
+    conn = sqlite3.connect(f"file:{db_path}?mode=ro", uri=True)
+    try:
+        return frozenset(e2e_devices(conn))
+    finally:
+        conn.close()
+
+
+@contextmanager
+def _one_run(db_path: Path):
+    """One scan for the test devices per report, not one per statement."""
+    _RUN_E2E[db_path] = _e2e(db_path)
+    try:
+        yield
+    finally:
+        _RUN_E2E.pop(db_path, None)
+
+
 def _real(db_path: Path, column: str) -> str:
     """SQL predicate: `column` is a real family's device, not eval or E2E
     test traffic (backend/app/core/real_traffic.py)."""
-    return real_device_sql(column, _tables(db_path))
+    return real_device_sql(column, _e2e(db_path))
 
 
 def _real_session(db_path: Path, column: str) -> str:
     """The same for rows keyed by a chat session id."""
-    return real_session_sql(column, _tables(db_path))
+    return real_session_sql(column, _e2e(db_path), _tables(db_path))
 
 
 def _utcnow() -> datetime:
@@ -830,13 +859,14 @@ def main(argv: list[str] | None = None) -> int:
     print(f"Loaded {len(suggested)} suggested questions for filtering.")
 
     print(f"Analyzing weekly funnel (last {args.days} days)...")
-    north = get_north_star(db_path)
-    openers = get_openers(db_path)
-    cohorts = get_cohort_retention(db_path)
-    funnel = get_funnel_metrics(db_path, args.days, suggested)
-    qm = get_questions_and_quality(db_path, args.days, suggested, Path(args.sessions_db))
-    tips = get_coach_tips_metrics(db_path, args.days)
-    fb = get_feedback_metrics(db_path, args.days)
+    with _one_run(db_path):
+        north = get_north_star(db_path)
+        openers = get_openers(db_path)
+        cohorts = get_cohort_retention(db_path)
+        funnel = get_funnel_metrics(db_path, args.days, suggested)
+        qm = get_questions_and_quality(db_path, args.days, suggested, Path(args.sessions_db))
+        tips = get_coach_tips_metrics(db_path, args.days)
+        fb = get_feedback_metrics(db_path, args.days)
 
     report = format_report(args.days, north, openers, cohorts, funnel, qm, tips, fb)
 

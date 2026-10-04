@@ -65,7 +65,7 @@ sys.path.insert(0, str(_ROOT))
 # app.core.* — the backend container already has backend/ on PYTHONPATH.
 sys.path.insert(1, str(_ROOT / "backend"))
 
-from app.core.real_traffic import real_device_sql, real_session_sql  # noqa: E402
+from app.core.real_traffic import e2e_devices_sql, real_device_sql, real_session_sql  # noqa: E402
 
 _DB = Path(os.environ.get(
     "CONVERSATIONS_DB", str(_ROOT / "ops" / "conversations.db"),
@@ -93,6 +93,11 @@ def _query(sql: str, params: tuple = ()) -> list[dict]:
 
 def _tables() -> set[str]:
     return {r["name"] for r in _query("SELECT name FROM sqlite_master WHERE type='table'")}
+
+
+def _e2e() -> set[str]:
+    """The E2E test devices (app/core/real_traffic.py), with one query."""
+    return {r["device_id"] for r in _query(e2e_devices_sql(_tables()))}
 
 
 def _normalize(text: str) -> str:
@@ -170,7 +175,7 @@ def collect_questions(days: int, arb_path: Path,
            LEFT JOIN chat_sessions s ON s.id = m.session_id
            WHERE m.role = 'user'
              AND m.created_at >= datetime('now', ?)
-             AND {real_device_sql('s.device_id', _tables())}
+             AND {real_device_sql('s.device_id', _e2e())}
            ORDER BY m.id""",
         (f"-{days} days",),
     )
@@ -214,7 +219,7 @@ def unanswered_stats(days: int) -> dict:
     # before the first answer was saved (Q1, Q2, A1, A2) is not an orphan.
     from ops.scripts.weekly_funnel_report import count_orphans
 
-    real = real_session_sql("session_id", _tables())
+    real = real_session_sql("session_id", _e2e(), _tables())
     orphans = count_orphans(_query(
         "SELECT session_id, role FROM chat_messages "
         f"WHERE created_at >= datetime('now', ?) AND {real} ORDER BY session_id, id",

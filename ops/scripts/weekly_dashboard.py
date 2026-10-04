@@ -35,7 +35,7 @@ sys.path.insert(0, str(_backend_root))
 # app.core.* — the backend container already has backend/ on PYTHONPATH.
 sys.path.insert(1, str(_backend_root / "backend"))
 
-from app.core.real_traffic import real_device_sql  # noqa: E402
+from app.core.real_traffic import e2e_devices_sql, real_device_sql  # noqa: E402
 
 # All product tables queried below (chat_sessions, lesson_progress,
 # child_profiles, daily_login_streaks) live in conversations.db — same
@@ -59,9 +59,11 @@ def _query_db(sql: str, params: tuple = ()) -> list[dict]:
 
 
 def _real(column: str = "device_id") -> str:
-    """SQL predicate: a real family's device, not eval or E2E test traffic."""
+    """SQL predicate: a real family's device, not eval or E2E test traffic.
+    Finds the E2E devices with one query; each section calls it once."""
     tables = {r["name"] for r in _query_db("SELECT name FROM sqlite_master WHERE type='table'")}
-    return real_device_sql(column, tables)
+    e2e = {r["device_id"] for r in _query_db(e2e_devices_sql(tables))}
+    return real_device_sql(column, e2e)
 
 
 def _fetch_ops_metrics() -> dict:
