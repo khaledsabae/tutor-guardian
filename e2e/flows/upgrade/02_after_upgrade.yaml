@@ -1,0 +1,17 @@
+# Upgrade test, part 2 — the PR head installed over the baseline (data kept):
+# it opens, still knows the child, keeps the language, and Today renders.
+appId: com.alsaba.almorabbi
+name: upgrade/02 after upgrade → same child → Today
+---
+- runScript: ../common/l10n.js
+- launchApp:
+    stopApp: true
+- extendedWaitUntil:
+    visible: '${output.lead.navToday}'
+    timeout: 60000
+- runFlow: ../common/skip_tour.yaml
+- runFlow:
+    file: ../common/assert_today.yaml
+    env:
+      SHOT: upgrade_2_after_upgrade_today
+- assertVisible: '(?s)${output.en.navToday}(?:\s.*)?'

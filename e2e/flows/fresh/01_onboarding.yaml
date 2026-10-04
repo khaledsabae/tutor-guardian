@@ -1,0 +1,12 @@
+# Checkpoint 1 — fresh install of the PR head: onboarding creates the child,
+# which is renamed to CHILD_NAME at once, and Today renders.
+appId: com.alsaba.almorabbi
+name: fresh/01 onboarding → child → Today
+---
+- runScript: ../common/l10n.js
+- runFlow: ../common/onboard.yaml
+- runFlow: ../common/mark_child.yaml
+- runFlow:
+    file: ../common/assert_today.yaml
+    env:
+      SHOT: today_after_onboarding

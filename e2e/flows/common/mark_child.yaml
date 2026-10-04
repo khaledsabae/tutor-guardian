@@ -1,0 +1,36 @@
+# Mark this install as test traffic: rename the onboarding child (created with the
+# localized default name) to the fixed CHILD_NAME. Every production row the run
+# writes hangs off this child's device_id, so
+#   child_profiles.name = CHILD_NAME  →  device_id  →  exclude.
+# Runs immediately after onboarding to keep the unmarked window to seconds.
+# Env: CHILD_NAME.
+appId: com.alsaba.almorabbi
+---
+- runFlow: open_settings.yaml
+- tapOn: '${output.lead.settingsEditChild}'
+- extendedWaitUntil:
+    visible: '${output.t.editChildTitle}'
+    timeout: 20000
+# The name field holds the default name; tapping its centre puts the caret after it.
+- tapOn: '${output.t.onbDefaultChildName}'
+- eraseText: 40
+- inputText: '${CHILD_NAME}'
+- takeScreenshot: mark_child_1_edit
+# The app-bar Save: the bottom "Save changes" button can sit under the keyboard.
+- tapOn: '${output.t.save}'
+# Back on Settings, the header is re-read from GET /api/children — the server
+# has the new name, not just this screen.
+- extendedWaitUntil:
+    visible: '${output.t.settingsTitle}'
+    timeout: 30000
+- extendedWaitUntil:
+    visible: '(?s).*${CHILD_NAME}.*'
+    timeout: 30000
+- takeScreenshot: mark_child_2_saved
+- back
+# A keyboard left open would have taken that back press.
+- runFlow:
+    when:
+      notVisible: '${output.t.hubTitle}'
+    commands:
+      - back

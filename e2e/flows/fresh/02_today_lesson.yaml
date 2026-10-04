@@ -1,0 +1,23 @@
+# Checkpoint 2 — Today's step opens the first lesson for the child's age, and
+# back returns to Today (which now offers to continue).
+appId: com.alsaba.almorabbi
+name: fresh/02 Today → first lesson → back
+---
+- runScript: ../common/l10n.js
+- launchApp
+- runFlow:
+    file: ../common/assert_today.yaml
+    env:
+      SHOT: today_before_lesson
+- tapOn: '${output.t.startThisLesson}'
+# The bottom button exists only once the lesson payload loaded for this child.
+- extendedWaitUntil:
+    visible: '(?:${output.t.lessonMarkComplete}|${output.t.lessonCompleted})'
+    timeout: 45000
+- assertNotVisible: '${output.c.lit_errorWidget}'
+- takeScreenshot: lesson_first
+- back
+- runFlow:
+    file: ../common/assert_today.yaml
+    env:
+      SHOT: today_after_lesson

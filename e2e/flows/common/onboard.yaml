@@ -1,0 +1,36 @@
+# First run, as a new parent sees it: language → child's age band → start.
+# Ends on the root scaffold with the first-run coach-mark tour skipped.
+# Env: UI_LANG (ar|en). Selectors come from l10n.js (generated from the ARB files).
+appId: com.alsaba.almorabbi
+---
+- launchApp:
+    clearState: true
+- extendedWaitUntil:
+    visible: '${output.t.lit_langTitle}'
+    timeout: 60000
+- takeScreenshot: onboarding_1_language
+- runFlow:
+    when:
+      true: "${UI_LANG == 'en'}"
+    commands:
+      - tapOn: '${output.t.lit_langEnglish}'
+- runFlow:
+    when:
+      true: "${UI_LANG != 'en'}"
+    commands:
+      - tapOn: '${output.t.lit_langArabic}'
+- extendedWaitUntil:
+    visible: '${output.t.onbAgeQuestion}'
+    timeout: 20000
+# 7-9: the youngest band that has habits, missions and child mode.
+- tapOn: '${output.t.ageGroup7to9}'
+- extendedWaitUntil:
+    visible: '${output.t.onbStartJourney}'
+    timeout: 20000
+- takeScreenshot: onboarding_2_first_tip
+# Creates the child on the production API (POST /api/children).
+- tapOn: '${output.t.onbStartJourney}'
+- extendedWaitUntil:
+    visible: '${output.lead.navToday}'
+    timeout: 90000
+- runFlow: skip_tour.yaml

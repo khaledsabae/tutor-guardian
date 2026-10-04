@@ -1,0 +1,313 @@
+name: Mobile E2E (emulator)
+
+# Release gate for «المربّي»: the RELEASE APK of the PR head, driven black-box
+# by Maestro on an Android emulator. Release mode is the point — R8/minify
+# breakage (e.g. a ComponentRegistrar constructor stripped by full mode, which
+# hangs the app on the splash) never shows in `flutter test` or a debug build.
+#
+# ── Where it runs ────────────────────────────────────────────────────────
+# GitHub-hosted ubuntu-latest ONLY (free: the repo is public; KVM works there).
+# Never give a job here a self-hosted label: [self-hosted, production] is the
+# production VPS. Nothing in this workflow runs on Khaled's machine either.
+#
+# ── What it checks (e2e/run.sh, flows in e2e/flows/) ──────────────────────
+# Lineage "fresh" — PR head, fresh install, Arabic UI:
+#   01 onboarding → child in band 7-9 → Today renders
+#   02 Today → first lesson → back       03 force-stop → cold start → Today
+#   04 assistant streams an answer       05 child mode in → PIN out → cold start
+#   06 dark mode                         07 English → Today/Learn/Assistant/More
+# Lineage "upgrade" — BASELINE build, English onboarding + child, then
+#   `adb install -r` the PR head: it must open, keep the child (and the language)
+#   and render Today; run.sh also checks firstInstallTime survived (in-place).
+# Logcat is captured for the whole run; the job fails on a FATAL EXCEPTION or
+# native crash in the app, an ANR, or a Flutter/Dart error (e2e/e2e_tool.py).
+# Selectors are ARB keys (e2e/e2e_tool.py l10n), so copy edits do not break
+# flows and every selector matches Arabic and English alike.
+#
+# ── Baseline (the build users have now) ─────────────────────────────────
+# Default: 007e71b7 = 1.0.66+111, live on Play (production, 100%). There is no
+# v1.0.66+111 tag (tags stop at v1.0.65+110); identified from
+# publishing-center/OPERATIONS_LOG.md, 2026-09-26: «main عند 007e71b7 … build
+# appbundle --release» for the 1.0.66+111 upload. mobile/ at 007e71b7 is the
+# same tree as the bump commit 6699e249 (`git rev-parse <c>:mobile`).
+# After each Play release, point it at the released commit: the repository
+# variable E2E_BASELINE_REF (Settings → Variables), or the default below.
+# A manual run can pass any ref as `baseline_ref`.
+#
+# ── Test traffic in PRODUCTION — how to exclude it ──────────────────────
+# A release build talks to https://tg-api.alsaba.cloud. Each run registers
+# exactly two devices (one per lineage), each with exactly one child, renamed
+# seconds after onboarding to the fixed name below:
+#   column  child_profiles.name    value  'E2E-Maestro'
+#   devices SELECT device_id FROM child_profiles WHERE name = 'E2E-Maestro'
+#   any device-keyed table (chat_sessions, lesson_progress, push_tokens,
+#   coach_tips, child_missions, … — every table with device_id):
+#     WHERE device_id NOT IN (SELECT device_id FROM child_profiles WHERE name = 'E2E-Maestro')
+#   child-keyed tables (child_id):
+#     WHERE child_id NOT IN (SELECT id FROM child_profiles WHERE name = 'E2E-Maestro')
+#   the one chat question per run: chat_messages.content LIKE 'E2E test%'
+# GA4: run.sh sets `debug.firebase.analytics.app` — events go to DebugView and
+# Firebase excludes them from reports and the BigQuery export.
+# Crashlytics: E2E devices report as model sdk_gphone64_x86_64 (filter it out).
+# If a run dies between onboarding and the rename (a few seconds), that device
+# keeps the default name «طفلي» / «My child»; the run is red at
+# `mark_child` and the job summary says so.
+#
+# ── Signing ──────────────────────────────────────────────────────────────
+# No secrets. One throwaway debug keystore per run signs both APKs, so the
+# upgrade's `install -r` sees the same signer. Never uploaded anywhere but here.
+#
+# Artifacts: e2e-screenshots (checkpoint PNGs), e2e-logcat (+ gate verdict),
+# e2e-maestro-report (JUnit, Maestro output, failure screenshots, summary).
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'mobile/**'
+      - 'e2e/**'
+      - '.github/workflows/mobile-e2e.yml'
+  workflow_dispatch:
+    inputs:
+      baseline_ref:
+        description: 'Commit/tag of the build users run now (upgrade test starts there). Empty = E2E_BASELINE_REF or 007e71b7 (1.0.66+111).'
+        required: false
+        type: string
+        default: ''
+
+permissions:
+  contents: read
+
+concurrency:
+  group: mobile-e2e-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+env:
+  FLUTTER_VERSION: '3.44.1'
+  MAESTRO_VERSION: '2.11.0'
+  # checksums_sha256.txt of the cli-2.11.0 release
+  MAESTRO_SHA256: 5384593cb4e7a106489e75a821d157dd43f4e438df6bc308b72e82c685e1283a
+
+jobs:
+  keystore:
+    name: CI debug keystore
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Generate a throwaway debug keystore
+        run: |
+          keytool -genkeypair -noprompt -keystore "$RUNNER_TEMP/debug.keystore" \
+            -storepass android -keypass android -alias androiddebugkey \
+            -keyalg RSA -keysize 2048 -validity 3650 \
+            -dname "CN=Android Debug,O=Android,C=US"
+
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: e2e-debug-keystore
+          path: ${{ runner.temp }}/debug.keystore
+          retention-days: 1
+
+  build:
+    name: Release APK (${{ matrix.variant }})
+    needs: keystore
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    strategy:
+      fail-fast: true
+      matrix:
+        include:
+          - variant: head
+            ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          - variant: baseline
+            ref: ${{ inputs.baseline_ref || vars.E2E_BASELINE_REF || '007e71b7bbca8cbb0eb93c210b719e0b99cff241' }}
+    defaults:
+      run:
+        working-directory: mobile
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ matrix.ref }}
+          persist-credentials: false
+
+      - uses: actions/setup-java@de7274f081f381c8f8158605e0321c36c376e2e6 # v6.0.1
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: gradle
+
+      - uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2.23.0
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: stable
+          cache: true
+
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: e2e-debug-keystore
+          path: ${{ runner.temp }}/keystore
+
+      - name: Use it as the debug keystore
+        run: |
+          mkdir -p ~/.android
+          cp "$RUNNER_TEMP/keystore/debug.keystore" ~/.android/debug.keystore
+
+      - name: Build the release APK (x86_64, as the emulator runs it)
+        # No key.properties here, so build.gradle.kts signs the release build
+        # with the debug keystore above. R8 full mode + shrinkResources run
+        # exactly as for Play; only the ABI is narrowed to the emulator's.
+        run: flutter build apk --release --target-platform android-x64
+
+      - name: Check the signer is the run's keystore
+        run: |
+          APK=build/app/outputs/flutter-apk/app-release.apk
+          APKSIGNER=$(ls -d "$ANDROID_HOME"/build-tools/* | sort -V | tail -1)/apksigner
+          got=$("$APKSIGNER" verify --print-certs "$APK" | grep -m1 'certificate SHA-256 digest' | awk '{print $NF}')
+          want=$(keytool -list -v -keystore ~/.android/debug.keystore -storepass android -alias androiddebugkey \
+                 | grep -m1 'SHA256:' | awk '{print $2}' | tr -d ':' | tr 'A-F' 'a-f')
+          echo "signer $got"
+          [ -n "$got" ] && [ "$got" = "$want" ] || { echo "::error::APK signer $got is not the run keystore $want"; exit 1; }
+
+      - name: Package APK + its ARB strings
+        env:
+          VARIANT: ${{ matrix.variant }}
+        run: |
+          OUT="$RUNNER_TEMP/e2e-apk"
+          mkdir -p "$OUT/l10n"
+          cp build/app/outputs/flutter-apk/app-release.apk "$OUT/app.apk"
+          cp lib/l10n/app_ar.arb lib/l10n/app_en.arb "$OUT/l10n/"
+          echo "$VARIANT $(git rev-parse --short HEAD) $(grep -m1 '^version:' pubspec.yaml | awk '{print $2}')" > "$OUT/ref.txt"
+          cat "$OUT/ref.txt"; ls -la "$OUT"
+
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: e2e-apk-${{ matrix.variant }}
+          path: ${{ runner.temp }}/e2e-apk
+          retention-days: 7
+
+  e2e:
+    name: Emulator journeys (API 35)
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+
+      - name: Paths
+        # `runner.temp` is not available to job-level env.
+        run: |
+          echo "E2E_APKS=$RUNNER_TEMP/e2e/apks" >> "$GITHUB_ENV"
+          echo "E2E_OUT=$RUNNER_TEMP/e2e/out" >> "$GITHUB_ENV"
+
+      - name: Unit-test the E2E tooling
+        run: python3 -m unittest discover -s e2e -v
+
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      - uses: actions/setup-java@de7274f081f381c8f8158605e0321c36c376e2e6 # v6.0.1
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: e2e-apk-head
+          path: ${{ env.E2E_APKS }}/head
+
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: e2e-apk-baseline
+          path: ${{ env.E2E_APKS }}/baseline
+
+      - name: Install Maestro ${{ env.MAESTRO_VERSION }}
+        run: |
+          curl -fsSL -o "$RUNNER_TEMP/maestro.zip" \
+            "https://github.com/mobile-dev-inc/Maestro/releases/download/cli-${MAESTRO_VERSION}/maestro.zip"
+          echo "${MAESTRO_SHA256}  $RUNNER_TEMP/maestro.zip" | sha256sum -c -
+          unzip -q "$RUNNER_TEMP/maestro.zip" -d "$RUNNER_TEMP/maestro-cli"
+          BIN=$(dirname "$(find "$RUNNER_TEMP/maestro-cli" -path '*/bin/maestro' -type f | head -1)")
+          echo "$BIN" >> "$GITHUB_PATH"
+          "$BIN/maestro" --version
+
+      - name: AVD cache
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        id: avd-cache
+        with:
+          path: |
+            ~/.android/avd/*
+            ~/.android/adb*
+          key: avd-api35-google_apis-x86_64-pixel_7-r1
+
+      - name: Create the AVD and a boot snapshot
+        if: steps.avd-cache.outputs.cache-hit != 'true'
+        uses: reactivecircus/android-emulator-runner@a421e43855164a8197daf9d8d40fe71c6996bb0d # v2.38.0
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          profile: pixel_7
+          ram-size: 4096M
+          cores: 3
+          disk-size: 6000M
+          force-avd-creation: false
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          disable-animations: false
+          emulator-boot-timeout: 900
+          script: echo "AVD snapshot generated for caching."
+
+      - name: Run the journeys
+        uses: reactivecircus/android-emulator-runner@a421e43855164a8197daf9d8d40fe71c6996bb0d # v2.38.0
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          profile: pixel_7
+          ram-size: 4096M
+          cores: 3
+          disk-size: 6000M
+          force-avd-creation: false
+          emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          disable-animations: true
+          disable-spellchecker: true
+          emulator-boot-timeout: 900
+          script: bash e2e/run.sh
+
+      - name: Job summary
+        if: always()
+        run: |
+          if [ -f "$E2E_OUT/summary.md" ]; then cat "$E2E_OUT/summary.md" >> "$GITHUB_STEP_SUMMARY"; fi
+
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        if: always()
+        with:
+          name: e2e-screenshots
+          path: ${{ env.E2E_OUT }}/screens
+          if-no-files-found: warn
+          retention-days: 14
+
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        if: always()
+        with:
+          name: e2e-logcat
+          path: ${{ env.E2E_OUT }}/logcat
+          if-no-files-found: warn
+          retention-days: 14
+
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        if: always()
+        with:
+          name: e2e-maestro-report
+          path: |
+            ${{ env.E2E_OUT }}/maestro
+            ${{ env.E2E_OUT }}/device
+            ${{ env.E2E_OUT }}/summary.md
+            ${{ env.E2E_OUT }}/meta.md
+            ${{ env.E2E_OUT }}/results.tsv
+          if-no-files-found: warn
+          retention-days: 14
