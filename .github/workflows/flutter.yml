@@ -21,25 +21,21 @@ concurrency:
 permissions:
   contents: read
 
-# Where the jobs run: main (push, or a manual run on main) stays on the VPS
-# runner [self-hosted, production], unchanged; pull requests and manual runs on
-# other branches go to ubuntu-latest — free for this public repository, in
-# parallel, and off the production box. See the same note in backend.yml.
-# On a hosted runner flutter-action keeps its default SDK cache key (version +
-# arch) — the key mobile-e2e (PR #22) uses too, so one SDK copy can serve every
-# hosted job. The VPS keeps its old key.
+# Every job runs on GitHub-hosted runners, main included — free for this public
+# repository, in parallel, and off the production VPS, which used to run them
+# (see the note in backend.yml). flutter-action keeps its default SDK cache key
+# (version + arch), the same key mobile-e2e uses, so one SDK copy saved by
+# main's runs serves every PR.
 
 jobs:
   # ── 1. Static analysis ────────────────────────────────────────────────
   analyze:
     name: flutter analyze
-    # C3 (AUDIT_AND_ROADMAP.md): a pull request never reaches the VPS runner —
-    # its ref is refs/pull/N/merge, so runs-on below sends it to GitHub-hosted.
-    # The fork guard stays as a second line: if that expression ever routes a PR
-    # to the VPS again, fork code still cannot run there. Pushes, manual runs and
-    # PRs whose head branch lives in this repository (needs write access) run.
+    # C3 (AUDIT_AND_ROADMAP.md): fork PRs are skipped. Nothing in this workflow
+    # runs on the VPS any more, so the guard no longer protects it — it only
+    # keeps fork PRs without CI; left as it was until that is decided.
     if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
-    runs-on: ${{ github.ref == 'refs/heads/main' && fromJSON('["self-hosted", "production"]') || 'ubuntu-latest' }}
+    runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
       - name: Checkout
@@ -51,19 +47,6 @@ jobs:
           flutter-version: '3.44.1'
           channel: stable
           cache: true
-          # VPS: the key it always had. Hosted: '' = the action's default.
-          cache-key: ${{ runner.environment != 'github-hosted' && format('flutter-pub-{0}', hashFiles('mobile/pubspec.lock')) || '' }}
-
-      - name: Trust the runner's Flutter checkout
-        # The self-hosted runner executes as root while flutter-action
-        # unpacks the SDK under a different owner, so every `flutter`
-        # invocation dies with "detected dubious ownership" from git's
-        # safe.directory check — exit 128 before a single line of Dart is
-        # analysed. GitHub-hosted runners never hit this because the tool
-        # cache and the job share one user. `*` here rather than the exact
-        # path: the SDK directory carries the version, so pinning it would
-        # break silently on the next Flutter bump.
-        run: git config --global --add safe.directory '*'
 
       - name: Install dependencies
         working-directory: mobile
@@ -79,58 +62,10 @@ jobs:
   # ── 2. Unit + widget tests ────────────────────────────────────────────
   test:
     name: flutter test
-    # C3 (AUDIT_AND_ROADMAP.md): a pull request never reaches the VPS runner —
-    # its ref is refs/pull/N/merge, so runs-on below sends it to GitHub-hosted.
-    # The fork guard stays as a second line: if that expression ever routes a PR
-    # to the VPS again, fork code still cannot run there. Pushes, manual runs and
-    # PRs whose head branch lives in this repository (needs write access) run.
+    # C3 (AUDIT_AND_ROADMAP.md): fork PRs are skipped. Nothing in this workflow
+    # runs on the VPS any more, so the guard no longer protects it — it only
+    # keeps fork PRs without CI; left as it was until that is decided.
     if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
-    runs-on: ${{ github.ref == 'refs/heads/main' && fromJSON('["self-hosted", "production"]') || 'ubuntu-latest' }}
-    timeout-minutes: 15
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Set up Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          flutter-version: '3.44.1'
-          channel: stable
-          cache: true
-          # VPS: the key it always had. Hosted: '' = the action's default.
-          cache-key: ${{ runner.environment != 'github-hosted' && format('flutter-pub-{0}', hashFiles('mobile/pubspec.lock')) || '' }}
-
-      - name: Trust the runner's Flutter checkout
-        # The self-hosted runner executes as root while flutter-action
-        # unpacks the SDK under a different owner, so every `flutter`
-        # invocation dies with "detected dubious ownership" from git's
-        # safe.directory check — exit 128 before a single line of Dart is
-        # analysed. GitHub-hosted runners never hit this because the tool
-        # cache and the job share one user. `*` here rather than the exact
-        # path: the SDK directory carries the version, so pinning it would
-        # break silently on the next Flutter bump.
-        run: git config --global --add safe.directory '*'
-
-      - name: Install dependencies
-        working-directory: mobile
-        run: flutter pub get
-
-      - name: Run tests
-        working-directory: mobile
-        # --reporter expanded gives a clear pass/fail per test
-        # --coverage enables coverage output for the report job
-        run: flutter test --reporter expanded --coverage
-
-  # ── main only: refresh the caches the hosted PR jobs restore ──────────
-  # Pull requests can restore caches saved on main, but main's jobs run on the
-  # VPS, whose SDK path differs, so nothing they save matches a hosted runner.
-  # This saves the hosted SDK (~1.6 GB) and pub cache (~120 MB) under main's
-  # scope once per Flutter version / pubspec.lock; without it each PR stores
-  # its own copy against the repository's 10 GB cache budget. GitHub-hosted:
-  # nothing on the VPS. Skipped on pull requests.
-  hosted-cache:
-    name: hosted cache (main only)
-    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -144,6 +79,12 @@ jobs:
           channel: stable
           cache: true
 
-      - name: Install dependencies (fills the pub cache)
+      - name: Install dependencies
         working-directory: mobile
         run: flutter pub get
+
+      - name: Run tests
+        working-directory: mobile
+        # --reporter expanded gives a clear pass/fail per test
+        # --coverage enables coverage output for the report job
+        run: flutter test --reporter expanded --coverage

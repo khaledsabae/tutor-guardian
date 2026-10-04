@@ -46,6 +46,7 @@ DEPLOY_PATHS = [
     "docs/lesson_index.json", "docs/lesson_assets",
     "docker-compose.production.yml", "backend/Dockerfile",
     ".github/workflows/deploy.yml", "requirements",
+    ".github/ci/constraints-prod.txt",
 ]
 
 GRACE_SECONDS = int(os.environ.get("TG_DRIFT_GRACE", 45 * 60))

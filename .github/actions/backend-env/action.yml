@@ -3,8 +3,8 @@ description: >-
   Production's Python and exact package set (CPU-only torch, as backend/Dockerfile
   installs it), the two Hugging Face models the backend loads, and a knowledge index
   for the current units. Models and index come from the Actions cache; a miss builds
-  them once and saves them. Used by backend.yml on GitHub-hosted runners only — the
-  VPS runner keeps its own toolcache Python and model cache.
+  them once and saves them. Used by every backend.yml pytest run (all GitHub-hosted,
+  main included — main's run is the deploy gate).
 
 runs:
   using: composite
@@ -27,9 +27,10 @@ runs:
           .github/ci/constraints-prod.txt
 
     # requirements.txt alone is not enough: its ranges resolve to whatever PyPI
-    # has today (on 2026-10-04: 25 packages newer than production, fastapi
-    # 0.142.2 against 0.141.1 among them, and FastAPI changes how include_router
-    # nests routes between those). The constraints are production's own freeze.
+    # has today (on 2026-10-04: 25 packages off production's, fastapi among
+    # them, and FastAPI changed how include_router nests routes). The
+    # constraints are production's own freeze, and backend/Dockerfile installs
+    # with the same file — one package set for CI and the image.
     - name: Install production's package set
       shell: bash
       env:

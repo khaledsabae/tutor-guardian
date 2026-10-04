@@ -1,0 +1,74 @@
+name: Candidate image
+
+# deploy.yml builds backend/Dockerfile on the production host and runs
+# ops/tools/candidate_smoke.sh inside the result before it may replace the
+# live container. This runs the same build and the same smoke on a
+# GitHub-hosted runner, for pull requests that change what goes into the image
+# or the smoke itself — so a broken image is found here, not on the production
+# host. Then it sabotages the image three ways and requires the smoke to fail
+# on each, at the right step: a gate that cannot say no is not a gate.
+#
+# Not part of the deploy gate (the deploy smokes its own build). GitHub-hosted:
+# nothing here touches the VPS.
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'backend/Dockerfile'
+      - 'backend/requirements.txt'
+      - '.github/ci/constraints-prod.txt'
+      - '.dockerignore'
+      - 'ops/tools/candidate_smoke.py'
+      - 'ops/tools/candidate_smoke.sh'
+      - '.github/workflows/candidate-image.yml'
+      - '.github/workflows/deploy.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: candidate-image-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    name: candidate image smoke
+    # Fork PRs are skipped, as in backend.yml.
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Build the image (backend/Dockerfile, repo root as context — as deploy.yml)
+        run: docker build -f backend/Dockerfile -t tg-candidate:pr .
+
+      - name: In-image smoke — the deploy's own invocation
+        run: ops/tools/candidate_smoke.sh tg-candidate:pr
+
+      - name: The smoke rejects broken images
+        run: |
+          set -uo pipefail
+          # name · the step the smoke must stop at · how the image is broken
+          sabotage() {
+            printf 'FROM tg-candidate:pr\nRUN %s\n' "$3" \
+              | docker build -q -t "tg-broken:$1" - >/dev/null
+            if out=$(ops/tools/candidate_smoke.sh "tg-broken:$1" 2>&1); then
+              echo "::error::the smoke PASSED an image with $1 — it would have deployed it"
+              return 1
+            fi
+            if ! grep -q "candidate smoke FAILED — $2" <<<"$out"; then
+              tail -n 25 <<<"$out"
+              echo "::error::the smoke rejected $1, but not at '$2'"
+              return 1
+            fi
+            echo "✓ $1: rejected — $(grep -m1 'candidate smoke FAILED' <<<"$out" | cut -c1-160)"
+          }
+          rc=0
+          sabotage missing-router imports 'rm /app/backend/app/routers/health.py' || rc=1
+          sabotage missing-models models 'rm -rf /app/.cache/huggingface' || rc=1
+          sabotage boot-failure server 'rm /app/backend/guardrails/child_surface.v1.yaml' || rc=1
+          exit $rc
