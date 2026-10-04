@@ -231,6 +231,98 @@ def win_back(skip: set | None = None):
         )
 
 
+# ── Follow-ups («جرّبت النصيحة؟ نفعت؟») — schema v30 ─────────────────────
+#
+# The loop that brings a parent back every week: a strategy the assistant
+# suggested a few days ago, asked about once it is due. Rules:
+#   * only devices whose build has the follow-up screen — the same gate as
+#     memory collection (CHILD_MEMORY_MIN_BUILD; unset = nobody, so this sends
+#     nothing until that build ships and the variable is set);
+#   * at most one follow-up push per device per FOLLOWUP_PUSH_EVERY_DAYS,
+#     whatever else it has received, and never the same follow-up twice;
+#   * inside the general frequency cap (`skip`) and this script's 17 UTC
+#     window like every other trigger here — no new cron line;
+#   * never to a device whose parent switched memory off;
+#   * no child name in the notification: FCM is a third party, and the
+#     strategy text is name-free by construction (services/child_memory.py).
+#
+# Deep link: /followup/{id} — see MOBILE_API.md. A build without that route
+# would drop the tap, which is one more reason the build gate is not optional.
+FOLLOWUP_PUSH_EVERY_DAYS = 7
+
+_FOLLOWUP_TEXT = {
+    "ar": ("هل نفعت النصيحة؟ 🤍",
+           "جرّبت «{s}»؟ أخبرنا بالنتيجة لتتكيّف نصائح المربّي مع طفلك."),
+    "en": ("Did the advice help? 🤍",
+           "Did you try \"{s}\"? Tell us how it went, so Almorabbi can adapt its advice to your child."),
+}
+
+
+def followup_due(skip: set | None = None) -> set:
+    """Push the oldest due follow-up of each eligible device. Returns devices sent."""
+    skip = skip or set()
+    from app.services.child_memory import memory_min_build
+
+    min_build = memory_min_build()
+    if min_build is None:
+        print("  -> followup_due: off (CHILD_MEMORY_MIN_BUILD unset)")
+        return set()
+    now = datetime.utcnow()
+    weekly_cutoff = (now - timedelta(days=FOLLOWUP_PUSH_EVERY_DAYS)).isoformat()
+    try:
+        rows = _query(
+            """
+            SELECT f.id, f.device_id, f.child_id, f.strategy, f.lang
+            FROM followups f
+            JOIN push_tokens pt ON pt.device_id = f.device_id
+            WHERE f.status = 'pending'
+              AND f.due_at <= datetime(?)
+              AND f.pushed_at IS NULL
+              AND pt.token IS NOT NULL AND pt.token != ''
+              AND pt.build_number IS NOT NULL AND pt.build_number >= ?
+              AND f.device_id NOT IN (
+                  SELECT device_id FROM child_memory_settings WHERE enabled = 0)
+              AND f.device_id NOT IN (
+                  SELECT device_id FROM push_sends
+                  WHERE kind = 'followup_due' AND sent_at >= datetime(?))
+            ORDER BY f.due_at ASC, f.id ASC
+            """,
+            (now.isoformat(), min_build, weekly_cutoff),
+        )
+    except sqlite3.OperationalError as exc:  # pre-v30 database
+        print(f"  -> followup_due: skipped ({exc})")
+        return set()
+    sent: set = set()
+    for r in rows:
+        device = r["device_id"]
+        if device in skip or device in sent:
+            continue
+        title, body = _FOLLOWUP_TEXT.get(r["lang"] or "ar", _FOLLOWUP_TEXT["ar"])
+        result = _send(
+            device_id=device,
+            title=title,
+            body=body.format(s=r["strategy"]),
+            data={
+                "type": "followup_due",
+                "link": f"/followup/{r['id']}",
+                "followup_id": str(r["id"]),
+                "child_id": str(r["child_id"]),
+            },
+        )
+        sent.add(device)
+        if not DRY_RUN and result.get("sent"):
+            conn = sqlite3.connect(DB_PATH)
+            try:
+                conn.execute(
+                    "UPDATE followups SET pushed_at = datetime('now') WHERE id = ?",
+                    (r["id"],),
+                )
+                conn.commit()
+            finally:
+                conn.close()
+    return sent
+
+
 def first_lesson_activation(skip: set | None = None) -> set:
     """Reach newly registered parents (registered between 2h and 36h ago)
     who have registered a child but NEVER opened or completed a lesson.
@@ -312,6 +404,20 @@ def fold_referral_clicks(dry_run: bool = False) -> int | None:
     return folded
 
 
+def evening_run() -> None:
+    """The 17 UTC run: every trigger, at most one push per device.
+
+    The follow-up goes first — it is the one push here that answers something
+    the parent asked — and whoever gets one tonight gets nothing else.
+    """
+    skip = _recently_pushed()
+    print(f"  -> followup_due + first_lesson_activation + streak_at_risk + win_back (deduped, {len(skip)} capped)")
+    fu_sent = followup_due(skip=skip)
+    act_sent = first_lesson_activation(skip=skip | fu_sent)
+    nudged = streak_at_risk(skip=skip | act_sent | fu_sent)
+    win_back(skip=nudged | act_sent | fu_sent | skip)
+
+
 def main(argv=None) -> int:
     global BASE_URL, DRY_RUN, FORCE, CAP_DAYS
     args = _parse_args(argv)
@@ -334,11 +440,7 @@ def main(argv=None) -> int:
     # sixty-minute window once a day: --dry-run printed nothing at any other
     # hour, which made "did the change work?" unanswerable until tomorrow.
     if FORCE or 17 <= hour < 18:
-        skip = _recently_pushed()
-        print(f"  -> first_lesson_activation + streak_at_risk + win_back (deduped, {len(skip)} capped)")
-        act_sent = first_lesson_activation(skip=skip)
-        nudged = streak_at_risk(skip=skip | act_sent)
-        win_back(skip=nudged | act_sent | skip)
+        evening_run()
     else:
         print("  -> outside the 17 UTC window; nothing to do (use --force to test)")
 

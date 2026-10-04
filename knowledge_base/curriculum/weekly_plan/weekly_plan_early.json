@@ -1,0 +1,261 @@
+{
+  "group": "early",
+  "age_bands": [
+    "2-3",
+    "4-6"
+  ],
+  "version": "1.0.0",
+  "is_published": true,
+  "description": "خطة الأسبوع من سنتين إلى ست سنوات: حبّ الصلاة بالقدوة، ونوبات الغضب، والنوم، والشاشات، والخوف، والغيرة.",
+  "topics": [
+    {
+      "key": "prayer",
+      "focus": "حبّ الصلاة بالقدوة لا بالأمر",
+      "actions": [
+        {
+          "key": "prayer_early_1",
+          "text": "صلِّ أمامه وادعُه أن يقف بجانبك إن أحب، دون إلزام."
+        },
+        {
+          "key": "prayer_early_2",
+          "text": "جهّز له سجادة صغيرة خاصة به يضعها بجانب سجادتك."
+        },
+        {
+          "key": "prayer_early_3",
+          "text": "امدحه على أي محاولة: وقوف أو سجدة أو تقليد، ولا تصحّح أخطاءه الآن."
+        },
+        {
+          "key": "prayer_early_4",
+          "text": "حدّثه قبل النوم مرتين هذا الأسبوع عن نِعَم الله عليه بكلمات بسيطة."
+        }
+      ],
+      "lessons": {
+        "2-3": [
+          "lesson_2-3_islamic_attachment_b02",
+          "lesson_2-3_aqeedah_first_name_01",
+          "lesson_2-3_islamic_first_words_04"
+        ],
+        "4-6": [
+          "lesson_4-6_islamic_parenting_bond_b04",
+          "lesson_4-6_aqeedah_seeds_04",
+          "lesson_4-6_aqeedah_seeds_02"
+        ]
+      }
+    },
+    {
+      "key": "anger",
+      "focus": "نوبات الغضب: هدوؤك أولًا",
+      "actions": [
+        {
+          "key": "anger_early_1",
+          "text": "حين يغضب، انزل إلى مستواه وسمِّ شعوره: «أنت غاضب لأن اللعبة أُخذت منك»."
+        },
+        {
+          "key": "anger_early_2",
+          "text": "ابقَ قريبًا وهادئًا حتى تهدأ النوبة، وأجّل الحديث عن السلوك إلى ما بعدها."
+        },
+        {
+          "key": "anger_early_3",
+          "text": "قدّم خيارين مقبولين بدل الأمر المباشر: «تلبس الأزرق أم الأحمر؟»."
+        },
+        {
+          "key": "anger_early_4",
+          "text": "لاحظ أوقات النوبات هذا الأسبوع؛ فالجوع والتعب من أكثر أسبابها شيوعًا."
+        }
+      ],
+      "lessons": {
+        "2-3": [
+          "lesson_2-3_development_growth_b03",
+          "lesson_2-3_islamic_tantrums_04",
+          "lesson_2-3_islamic_attachment_b03"
+        ],
+        "4-6": [
+          "lesson_4-6_islamic_parenting_adab_01",
+          "lesson_4-6_development_positive_parenting_b01",
+          "lesson_4-6_islamic_parenting_adab_03"
+        ]
+      }
+    },
+    {
+      "key": "sleep",
+      "focus": "نوم منتظم وروتين هادئ",
+      "actions": [
+        {
+          "key": "sleep_early_1",
+          "text": "ثبّت موعد النوم نفسه كل ليلة، حتى في أيام العطلة."
+        },
+        {
+          "key": "sleep_early_2",
+          "text": "أوقف الشاشات قبل النوم بساعة، واستبدلها بقصة أو حديث هادئ."
+        },
+        {
+          "key": "sleep_early_3",
+          "text": "اتبع ترتيبًا ثابتًا كل ليلة: حمّام، ثم تنظيف الأسنان، ثم أذكار النوم، ثم قصة، ثم إطفاء النور."
+        },
+        {
+          "key": "sleep_early_4",
+          "text": "إن نهض ليلًا فأعده إلى سريره بهدوء وبكلمات قليلة في كل مرة."
+        }
+      ],
+      "lessons": {
+        "2-3": [
+          "lesson_2-3_medical_early_wellbeing_02",
+          "lesson_2-3_cyber_routine_b04",
+          "lesson_2-3_cyber_routine_02"
+        ],
+        "4-6": [
+          "lesson_4-6_medical_healthy_growth_01"
+        ]
+      }
+    },
+    {
+      "key": "screens",
+      "focus": "شاشة أقل ولعب أكثر",
+      "actions": [
+        {
+          "key": "screens_early_1",
+          "text": "اتفق معه على وقت شاشة قصير ومحدد في اليوم، ونبّهه قبل انتهائه بخمس دقائق."
+        },
+        {
+          "key": "screens_early_2",
+          "text": "شاهد معه بدل أن يشاهد وحده، وتحدّثا عمّا رأيتما."
+        },
+        {
+          "key": "screens_early_3",
+          "text": "اجعل الوجبات وغرفة النوم أماكن بلا شاشات للأسرة كلها."
+        },
+        {
+          "key": "screens_early_4",
+          "text": "جهّز بدائل في متناول يده: مكعبات وألوان وكتب مصوّرة."
+        }
+      ],
+      "lessons": {
+        "2-3": [
+          "lesson_2-3_cyber_routine_b01",
+          "lesson_2-3_cyber_routine_b02"
+        ],
+        "4-6": [
+          "lesson_4-6_cyber_early_screens_01",
+          "lesson_4-6_cyber_early_screens_04",
+          "lesson_4-6_cyber_early_screens_03"
+        ]
+      }
+    },
+    {
+      "key": "fear",
+      "focus": "خوف أقل وأمان أكثر",
+      "actions": [
+        {
+          "key": "fear_early_1",
+          "text": "استمع لخوفه دون سخرية: «أفهم أنك خائف من الظلام»."
+        },
+        {
+          "key": "fear_early_2",
+          "text": "اقترب من مصدر الخوف معه تدريجيًا وبخطوات صغيرة، ولا تجبره."
+        },
+        {
+          "key": "fear_early_3",
+          "text": "اترك ضوءًا خافتًا في غرفته إن كان يخاف ليلًا."
+        },
+        {
+          "key": "fear_early_4",
+          "text": "علّمه أن يقول «بسم الله» ويتنفس ببطء حين يخاف."
+        }
+      ],
+      "lessons": {
+        "2-3": [
+          "lesson_2-3_medical_separation_anxiety_01",
+          "lesson_2-3_development_growth_b04"
+        ],
+        "4-6": [
+          "lesson_4-6_development_positive_parenting_02"
+        ]
+      }
+    },
+    {
+      "key": "siblings",
+      "focus": "الغيرة بين الإخوة: لكل طفل نصيبه",
+      "actions": [
+        {
+          "key": "siblings_early_1",
+          "text": "خصّص لكل طفل عشر دقائق يومية معك وحده."
+        },
+        {
+          "key": "siblings_early_2",
+          "text": "تجنّب المقارنة بين الإخوة أمامهم، ولو على سبيل التشجيع."
+        },
+        {
+          "key": "siblings_early_3",
+          "text": "سمِّ شعور الغيرة بهدوء: «تشعر بالضيق حين أحمل أخاك»."
+        },
+        {
+          "key": "siblings_early_4",
+          "text": "أشركه في رعاية أخيه الأصغر بمهام صغيرة، وامدح مساعدته."
+        }
+      ],
+      "lessons": {
+        "2-3": [
+          "lesson_2-3_development_growth_b04"
+        ],
+        "4-6": [
+          "lesson_4-6_development_positive_parenting_01",
+          "lesson_4-6_islamic_parenting_bond_01"
+        ]
+      }
+    },
+    {
+      "key": "bonding",
+      "focus": "وقت خاص يقوّي الرابطة",
+      "actions": [
+        {
+          "key": "bonding_early_1",
+          "text": "العب معه عشر دقائق كل يوم لعبةً يختارها هو، دون أن توجّهه."
+        },
+        {
+          "key": "bonding_early_2",
+          "text": "اقرأ معه كتابًا مصوّرًا قبل النوم واسأله عن الصور."
+        },
+        {
+          "key": "bonding_early_3",
+          "text": "عانقه وأخبره أنك تحبه دون مناسبة، مرة كل يوم."
+        },
+        {
+          "key": "bonding_early_4",
+          "text": "اسأله في آخر اليوم: «ما أجمل شيء حدث لك اليوم؟»."
+        }
+      ],
+      "lessons": {
+        "2-3": [
+          "lesson_2-3_islamic_attachment_b01",
+          "lesson_2-3_development_language_03"
+        ],
+        "4-6": [
+          "lesson_4-6_islamic_parenting_bond_02",
+          "lesson_4-6_islamic_parenting_bond_03"
+        ]
+      }
+    }
+  ],
+  "worship": [
+    {
+      "key": "worship_early_1",
+      "text": "صلّوا المغرب جماعةً في البيت مرةً هذا الأسبوع، وادعوا الأطفال للوقوف معكم."
+    },
+    {
+      "key": "worship_early_2",
+      "text": "اقرؤوا قصار السور معًا قبل النوم ثلاث ليالٍ هذا الأسبوع."
+    },
+    {
+      "key": "worship_early_3",
+      "text": "قولوا «بسم الله» قبل الطعام و«الحمد لله» بعده بصوت مسموع، ليقلّدكم الأطفال."
+    },
+    {
+      "key": "worship_early_4",
+      "text": "ضعوا صندوق صدقة صغيرًا في البيت، ودعوا الطفل يضع فيه بيده."
+    },
+    {
+      "key": "worship_early_5",
+      "text": "زوروا أحد الأقارب معًا هذا الأسبوع بنيّة صلة الرحم."
+    }
+  ]
+}

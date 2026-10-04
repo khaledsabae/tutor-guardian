@@ -28,6 +28,11 @@ from app.db.init_db import db_path
 logger = logging.getLogger(__name__)
 
 _REPLACEMENT = "طفلي"
+# Public name for the same token: child memory (services/child_memory.py) writes
+# every stored fact with this placeholder instead of a name, so a fact can go
+# into any prompt as-is and the app can swap the child's name back in at
+# render time, on the device.
+CHILD_PLACEHOLDER = _REPLACEMENT
 # Arabic prefixes that attach directly to names (لـ/بـ/و/فـ/ال…).
 _PREFIX = r"(?:ال|لل|و|ف|ب|ل|ك)?"
 # Word boundaries for Arabic script. Without them a name matched INSIDE other
@@ -122,6 +127,21 @@ def known_child_names() -> tuple[str, ...]:
     return _known_names_cached(_store_epoch())
 
 
+def redact_with_names(text: str, names: tuple[str, ...]) -> str:
+    """`redact_for_cloud` with the names already read.
+
+    For callers that redact several texts for one family (a question and its
+    history, a batch of facts): one read of child_profiles instead of one per
+    text.
+    """
+    if not text:
+        return text
+    redacted = text
+    for name in names:
+        redacted = _name_pattern(name).sub(_REPLACEMENT, redacted)
+    return redacted
+
+
 def redact_for_cloud(text: str, device_id: str | None = None) -> str:
     """Replace child names with «طفلي» before any cloud call.
 
@@ -132,7 +152,4 @@ def redact_for_cloud(text: str, device_id: str | None = None) -> str:
     if not text:
         return text
     names = names_for_device(device_id) if device_id else known_child_names()
-    redacted = text
-    for name in names:
-        redacted = _name_pattern(name).sub(_REPLACEMENT, redacted)
-    return redacted
+    return redact_with_names(text, names)

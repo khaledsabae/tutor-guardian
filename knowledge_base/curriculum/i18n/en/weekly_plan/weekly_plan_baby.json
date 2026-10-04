@@ -1,0 +1,122 @@
+{
+  "group": "baby",
+  "age_bands": [
+    "prenatal-1",
+    "0-3"
+  ],
+  "version": "1.0.0",
+  "is_published": true,
+  "description": "Weekly plan from pregnancy through the first years: secure attachment, sleep, a calm home of faith, and keeping screens away.",
+  "topics": [
+    {
+      "key": "bonding",
+      "focus": "A secure bond: your presence is the first lesson",
+      "actions": [
+        {
+          "key": "bonding_baby_1",
+          "text": "Spend ten minutes a day holding your baby, looking into their eyes and talking softly, with no phone."
+        },
+        {
+          "key": "bonding_baby_2",
+          "text": "Answer crying quickly and calmly; responding again and again builds security, it does not spoil."
+        },
+        {
+          "key": "bonding_baby_3",
+          "text": "Describe what you do while caring for them: \"Now we change your clothes, now we wash your hands.\""
+        },
+        {
+          "key": "bonding_baby_4",
+          "text": "Pick a few calm words or a short supplication you repeat each time you soothe them, so your voice becomes a comfort."
+        }
+      ]
+    },
+    {
+      "key": "sleep",
+      "focus": "Calmer sleep: the same routine every night",
+      "actions": [
+        {
+          "key": "sleep_baby_1",
+          "text": "Keep a short bedtime routine with the same steps every night: a warm bath, a feed, then dim lights."
+        },
+        {
+          "key": "sleep_baby_2",
+          "text": "Keep days bright and active and nights quiet and dark, so your baby learns the difference."
+        },
+        {
+          "key": "sleep_baby_3",
+          "text": "Lay your baby to sleep on their back in a cot with no pillows or toys; it is the safer way to sleep."
+        },
+        {
+          "key": "sleep_baby_4",
+          "text": "Put them down drowsy but not yet asleep, and repeat it patiently every night."
+        }
+      ]
+    },
+    {
+      "key": "screens",
+      "focus": "No screens in the first years",
+      "actions": [
+        {
+          "key": "screens_baby_1",
+          "text": "Keep screens away at meals and before sleep, and replace them with talking and play."
+        },
+        {
+          "key": "screens_baby_2",
+          "text": "Turn the TV off when nobody is watching; background noise cuts how much you talk with your child."
+        },
+        {
+          "key": "screens_baby_3",
+          "text": "Video calls with relatives are the exception — and stay with your child during them."
+        },
+        {
+          "key": "screens_baby_4",
+          "text": "Prepare a small basket of safe toys to explore with their hands instead of the phone."
+        }
+      ]
+    },
+    {
+      "key": "prayer",
+      "focus": "A calm home of faith",
+      "actions": [
+        {
+          "key": "prayer_baby_1",
+          "text": "Pray near your baby so they grow used to the sight and calm of prayer."
+        },
+        {
+          "key": "prayer_baby_2",
+          "text": "Let them hear a calm Qur'an recitation at the same time every day."
+        },
+        {
+          "key": "prayer_baby_3",
+          "text": "Say \"Bismillah\" aloud when you feed and dress them, so remembrance is familiar before they can speak."
+        },
+        {
+          "key": "prayer_baby_4",
+          "text": "Make du'a for your child aloud while holding them; they come to know your voice and the warmth of the moment."
+        }
+      ]
+    }
+  ],
+  "worship": [
+    {
+      "key": "worship_baby_1",
+      "text": "Pray one prayer together at home every day this week, with your baby close by."
+    },
+    {
+      "key": "worship_baby_2",
+      "text": "Set aside five minutes after Maghrib to recite Qur'an aloud at home."
+    },
+    {
+      "key": "worship_baby_3",
+      "text": "Make the morning and evening adhkar a shared habit between the two of you this week."
+    },
+    {
+      "key": "worship_baby_4",
+      "text": "Give a small charity in the family's name this week."
+    },
+    {
+      "key": "worship_baby_5",
+      "text": "Make du'a together for your child after one of the prayers each day."
+    }
+  ]
+}

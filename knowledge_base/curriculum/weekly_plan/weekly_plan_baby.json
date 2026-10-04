@@ -1,0 +1,160 @@
+{
+  "group": "baby",
+  "age_bands": [
+    "prenatal-1",
+    "0-3"
+  ],
+  "version": "1.0.0",
+  "is_published": true,
+  "description": "خطة الأسبوع من الحمل حتى السنوات الأولى: الرابطة الآمنة، والنوم، وجوّ البيت الإيماني، وإبعاد الشاشات.",
+  "topics": [
+    {
+      "key": "bonding",
+      "focus": "رابطة آمنة: حضورك هو أول درس",
+      "actions": [
+        {
+          "key": "bonding_baby_1",
+          "text": "خصّص كل يوم عشر دقائق تحمل فيها طفلك وتنظر في عينيه وتكلّمه بهدوء دون هاتف."
+        },
+        {
+          "key": "bonding_baby_2",
+          "text": "استجب لبكائه بسرعة وهدوء؛ فالاستجابة المتكررة تبني شعوره بالأمان ولا تُفسده."
+        },
+        {
+          "key": "bonding_baby_3",
+          "text": "صِف له ما تفعله أثناء رعايته: «الآن نغيّر الملابس، الآن نغسل اليدين»."
+        },
+        {
+          "key": "bonding_baby_4",
+          "text": "اختر كلمات هادئة أو دعاءً قصيرًا تكرره كلما هدّأته، ليألف صوتك ويطمئن إليه."
+        }
+      ],
+      "lessons": {
+        "prenatal-1": [
+          "lesson_prenatal-1_infant_pregnancy_01"
+        ],
+        "0-3": [
+          "lesson_0-3_development_early_moments_02",
+          "lesson_0-3_islamic_parenting_attachment_03",
+          "lesson_0-3_islamic_parenting_fitrah_04"
+        ]
+      }
+    },
+    {
+      "key": "sleep",
+      "focus": "نوم أهدأ: روتين ثابت كل ليلة",
+      "actions": [
+        {
+          "key": "sleep_baby_1",
+          "text": "ثبّت ترتيبًا قصيرًا قبل النوم بالخطوات نفسها كل ليلة: حمّام دافئ، ثم رضعة، ثم إضاءة خافتة."
+        },
+        {
+          "key": "sleep_baby_2",
+          "text": "اجعل النهار مضيئًا ونشيطًا والليل هادئًا ومعتمًا، ليتعلّم طفلك الفرق بينهما."
+        },
+        {
+          "key": "sleep_baby_3",
+          "text": "ضع طفلك ينام على ظهره في سرير خالٍ من الوسائد والألعاب، فهذا أكثر أمانًا لنومه."
+        },
+        {
+          "key": "sleep_baby_4",
+          "text": "ضعه في سريره وهو ناعس قبل أن يغفو تمامًا، وكرّر ذلك بصبر كل ليلة."
+        }
+      ],
+      "lessons": {
+        "prenatal-1": [
+          "lesson_prenatal-1_infant_pregnancy_04"
+        ],
+        "0-3": [
+          "lesson_0-3_medical_early_milestones_02",
+          "lesson_0-3_cyber_screen_foundations_03"
+        ]
+      }
+    },
+    {
+      "key": "screens",
+      "focus": "بلا شاشات في السنوات الأولى",
+      "actions": [
+        {
+          "key": "screens_baby_1",
+          "text": "أبعِد الشاشات عن طفلك وقت الوجبات وقبل النوم، واستبدلها بالكلام واللعب."
+        },
+        {
+          "key": "screens_baby_2",
+          "text": "أطفئ التلفاز إن لم يكن أحد يشاهده؛ فصوت الخلفية يقلّل كلامك مع طفلك."
+        },
+        {
+          "key": "screens_baby_3",
+          "text": "استثنِ مكالمات الفيديو مع الأقارب، وكن مع طفلك أثناءها."
+        },
+        {
+          "key": "screens_baby_4",
+          "text": "جهّز سلة صغيرة من ألعاب آمنة يستكشفها بيديه بدل الهاتف."
+        }
+      ],
+      "lessons": {
+        "prenatal-1": [
+          "lesson_prenatal-1_infant_pregnancy_05"
+        ],
+        "0-3": [
+          "lesson_0-3_cyber_screen_foundations_01",
+          "lesson_0-3_cyber_screen_foundations_02"
+        ]
+      }
+    },
+    {
+      "key": "prayer",
+      "focus": "جوّ إيماني هادئ في البيت",
+      "actions": [
+        {
+          "key": "prayer_baby_1",
+          "text": "صلِّ قريبًا من طفلك ليعتاد مشهد الصلاة وسكونها."
+        },
+        {
+          "key": "prayer_baby_2",
+          "text": "أسمِعه تلاوة هادئة من القرآن في وقت ثابت كل يوم."
+        },
+        {
+          "key": "prayer_baby_3",
+          "text": "قل «بسم الله» بصوت مسموع عند إطعامه وإلباسه، ليألف الذكر قبل أن يتكلم."
+        },
+        {
+          "key": "prayer_baby_4",
+          "text": "ادعُ لطفلك بصوت مسموع وأنت تحمله، فيألف صوتك ودفء اللحظة."
+        }
+      ],
+      "lessons": {
+        "prenatal-1": [
+          "lesson_prenatal-1_infant_pregnancy_02"
+        ],
+        "0-3": [
+          "lesson_0-3_islamic_parenting_fitrah_01",
+          "lesson_0-3_islamic_parenting_fitrah_03",
+          "lesson_0-3_islamic_parenting_attachment_04"
+        ]
+      }
+    }
+  ],
+  "worship": [
+    {
+      "key": "worship_baby_1",
+      "text": "صلّيا صلاةً واحدة جماعةً في البيت كل يوم هذا الأسبوع، والطفل قريب منكما."
+    },
+    {
+      "key": "worship_baby_2",
+      "text": "خصّصا خمس دقائق بعد المغرب لتلاوة القرآن بصوت مسموع في البيت."
+    },
+    {
+      "key": "worship_baby_3",
+      "text": "اجعلا أذكار الصباح والمساء عادة مشتركة بين الوالدين هذا الأسبوع."
+    },
+    {
+      "key": "worship_baby_4",
+      "text": "تصدّقا بصدقة صغيرة باسم الأسرة هذا الأسبوع."
+    },
+    {
+      "key": "worship_baby_5",
+      "text": "ادعوا معًا لطفلكما بعد إحدى الصلوات كل يوم."
+    }
+  ]
+}

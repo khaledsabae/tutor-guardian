@@ -1000,14 +1000,25 @@ def aux_cloud_provider(*, timeout: int = AUX_TIMEOUT_S) -> "OpenAIChatProvider |
         return None
 
 
+_USE_AUX_BREAKER = object()
+
+
 def aux_generate(provider: LLMProvider, prompt: str, *,
-                 options: dict, tier: str) -> str | None:
+                 options: dict, tier: str,
+                 breaker: "CircuitBreaker | None | object" = _USE_AUX_BREAKER) -> str | None:
     """Run ONE auxiliary call. Returns the text, or None on any failure.
 
     Never raises and never retries — the caller's own degraded path is cheaper
     than a second attempt. Every call is logged to llm_calls (paid auxiliary
     spend is as visible as chat spend) and reported to `aux_breaker`.
+
+    `breaker=None` keeps a background caller out of the shared breaker: the
+    child-memory extractor runs after the answer with a longer timeout, and two
+    of its slow calls must not switch the classifier and the rewriter — which
+    sit on the answer's critical path — to their degraded tier.
     """
+    if breaker is _USE_AUX_BREAKER:
+        breaker = aux_breaker
     model = getattr(provider, "model", "unknown")
     start = time.monotonic()
     deadline = _deadline_for(provider)
@@ -1023,14 +1034,16 @@ def aux_generate(provider: LLMProvider, prompt: str, *,
         _log_call(provider.name, model, int((time.monotonic() - start) * 1000),
                   None, None, streamed=False, ok=False, tier=tier,
                   route_reason=_failure_reason(e))
-        aux_breaker.record(False)
+        if breaker is not None:
+            breaker.record(False)
         logger.warning("auxiliary %s call failed: %s", tier, e)
         return None
     latency = int((time.monotonic() - start) * 1000)
     _log_call(provider.name, model, latency,
               data.get("prompt_eval_count"), data.get("eval_count"),
               streamed=False, ok=True, tier=tier)
-    aux_breaker.record(True)
+    if breaker is not None:
+        breaker.record(True)
     return (data.get("response") or "").strip()
 
 

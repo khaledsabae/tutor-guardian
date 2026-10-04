@@ -26,7 +26,7 @@ from app.middleware.client_ip import ClientIPMiddleware
 from app.routers import (
     health, assistant, chat, feedback, privacy, program, children, referral, push, identity,
     web, stats, daily_routine, value_tracking, habit_templates, child_mode, child_mode_web, sync,
-    insights, methodology, seo, tafsir, quranic_linguistics, support,
+    insights, methodology, seo, tafsir, quranic_linguistics, support, child_memory,
 )
 from app.services import child_token, mission_digest
 from app.services.push_sender import send_to_device
@@ -212,10 +212,12 @@ app.include_router(chat.router, prefix="/api")
 app.include_router(feedback.router, prefix="/api")
 app.include_router(program.router, prefix="/api")  # curriculum: paths/lessons/daily-tip
 app.include_router(privacy.router)  # /privacy-policy (no /api prefix; public)
+app.include_router(privacy.api_router, prefix="/api")  # /api/privacy/memory delete-all (auth)
 app.include_router(methodology.router)  # /methodology (public — methodology & sources page)
 app.include_router(seo.router, prefix="/seo")  # /seo/{slug} (public — SEO pages for pain-point questions)
 app.include_router(web.router)  # public SEO pages + share landing (/go, /l, /p; Phase 2)
 app.include_router(children.router, prefix="/api")  # child profiles + progress (auth)
+app.include_router(child_memory.router, prefix="/api")  # child memory, follow-ups, weekly plan (auth; v30)
 app.include_router(referral.router, prefix="/api")  # referral codes + attribution (auth)
 app.include_router(support.router, prefix="/api")  # «ادعم المربّي»: transparency (public) + verify (auth)
 app.include_router(stats.router, prefix="/api")  # community social-proof (public; Phase 3)

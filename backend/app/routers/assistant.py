@@ -39,7 +39,8 @@ from app.services.domain_classifier import (
     UNCERTAIN_DOMAINS, classify_domains, is_uncertain, matched_fast_path,
 )
 from app.services.tier_router import choose_tier
-from app.services.privacy import mentions_any, names_for_device, redact_for_cloud
+from app.services.privacy import mentions_any, names_for_device, redact_with_names
+from app.services import child_memory
 from app.services import answer_cache
 from app.services import conversation_store as store
 from app.services.tafsir_service import (
@@ -417,6 +418,35 @@ def _record_failed_turn(session_id: str | None, flag: str, *,
         logger.warning("recording the failed turn failed: %s", exc)
 
 
+def _redact_turns(history, names: tuple[str, ...]):
+    """History turns with the family's child names replaced (see privacy.py)."""
+    return [
+        t.model_copy(update={"content": redact_with_names(t.content, names)})
+        for t in history
+    ]
+
+
+async def _memory_context(caller_device, user_message: UserMessage, query_text: str):
+    """(child_id, facts block, facts used) — off the event loop, never raises."""
+    return await asyncio.to_thread(
+        child_memory.prompt_context, caller_device,
+        child_id=user_message.child_id, age_group=user_message.age_group,
+        question=query_text,
+    )
+
+
+def _remember(caller_device, child_id, query_text: str, answer: str,
+              age_group: str | None) -> None:
+    """Hand the finished turn to the background extractor. Fire-and-forget:
+    submitting is microseconds, and nothing downstream waits on it."""
+    if child_id is None or not answer:
+        return
+    child_memory.schedule_extraction(
+        caller_device, child_id, question=query_text, answer=answer,
+        age_group=age_group or "",
+    )
+
+
 logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/assistant", tags=["assistant"])
 
@@ -580,9 +610,15 @@ async def _draft_answer(
         history = await asyncio.to_thread(store.get_history, session_id, limit=6)
     else:
         history = user_message.conversation_history or []
+    # Every text that leaves for a model has the family's child names
+    # replaced first. The primary provider is a cloud API, so "the cloud
+    # tier" is every tier — the classifier and rewriter calls included.
+    names = await asyncio.to_thread(names_for_device, caller_device)
+    llm_query = redact_with_names(query_text, names)
+    llm_history = _redact_turns(history, names)
     # Both can make a model call (seconds) on a keyword fast-path miss, and
     # they are independent — so they run together, not one after the other.
-    detected_domains, rewritten_query = await _classify_and_rewrite(query_text)
+    detected_domains, rewritten_query = await _classify_and_rewrite(llm_query)
     is_general = detected_domains == ["general"]
     logger.info("Auto-detected domains: %s", detected_domains)
 
@@ -598,9 +634,11 @@ async def _draft_answer(
     )
     # A question naming the family's own child gets a personalised answer:
     # never serve it from, or store it into, the cross-family cache (M5).
-    personal = mentions_any(
-        query_text, await asyncio.to_thread(names_for_device, caller_device)
-    )
+    # Neither does one we have remembered facts for: a cached answer cannot
+    # know that the strategy it recommends already failed for this child.
+    mem_child, mem_block, mem_used = await _memory_context(
+        caller_device, user_message, query_text)
+    personal = mentions_any(query_text, names) or mem_used > 0
     if (first_question and not personal and not is_general
             and not is_uncertain(detected_domains)):
         decision = evaluate_guardrails(primary_domain, severity, policies)
@@ -695,7 +733,7 @@ async def _draft_answer(
         mode = "general_pivot"
         try:
             generated = await generate_general_pivot(
-                query_text, user_message.age_group or "unspecified"
+                llm_query, user_message.age_group or "unspecified"
             )
             draft = generated if (generated and generated.strip()) else _PIVOT_FALLBACK
         except Exception as e:
@@ -710,19 +748,6 @@ async def _draft_answer(
             query_text, detected_domains, user_message.severity or "خفيف",
             retrieved_units, history_len=len(history),
         )
-        gen_question, gen_history = query_text, history
-        if tier == "cloud_quality":
-            def _redact_blocking():
-                # redact_for_cloud reads child names from sqlite per call.
-                return (
-                    redact_for_cloud(query_text, caller_device),
-                    [
-                        t.model_copy(update={"content": redact_for_cloud(t.content, caller_device)})
-                        for t in history
-                    ],
-                )
-
-            gen_question, gen_history = await asyncio.to_thread(_redact_blocking)
         try:
             generated = await generate_reply(
                 domain=primary_domain,
@@ -730,10 +755,11 @@ async def _draft_answer(
                 age_group=user_message.age_group or "unspecified",
                 severity=user_message.severity or "خفيف",
                 retrieved_units=retrieved_units,
-                question_text=gen_question,
-                conversation_history=gen_history,
+                question_text=llm_query,
+                conversation_history=llm_history,
                 tier=tier,
                 route_reason=route_reason,
+                child_context=mem_block,
             )
             if generated and generated.strip():
                 mode = "llm_generated"
@@ -778,7 +804,14 @@ async def _draft_answer(
         # answer is told not to cite, and an empty retrieval has nothing to cite.
         "sources": reply_sources(retrieved_units)
         if mode in ("llm_generated", "retrieval_only") else [],
+        # Which child the answer was personalised for, and with how many
+        # remembered facts (0 = none used). Additive; old clients ignore it.
+        "child_id": mem_child,
+        "memory_facts_used": mem_used if mode == "llm_generated" else 0,
     }
+    if mode == "llm_generated" and not reply.needs_human_review:
+        _remember(caller_device, mem_child, query_text, reply.reply_text,
+                  user_message.age_group)
 
     await asyncio.to_thread(
         log_session,
@@ -1053,9 +1086,13 @@ async def _stream_answer(
         history = await asyncio.to_thread(store.get_history, session_id, limit=6)
     else:
         history = user_message.conversation_history or []
+    # Names out of every model-bound text — see /draft.
+    names = await asyncio.to_thread(names_for_device, caller_device)
+    llm_query = redact_with_names(query_text, names)
+    llm_history = _redact_turns(history, names)
     # Concurrent, not sequential — see _classify_and_rewrite. This is the path
     # the mobile app uses, so the round-trip saved here is one the user feels.
-    detected_domains, rewritten_query = await _classify_and_rewrite(query_text)
+    detected_domains, rewritten_query = await _classify_and_rewrite(llm_query)
     is_general = detected_domains == ["general"]
 
     primary_domain = _label_domain(detected_domains, [])
@@ -1070,9 +1107,10 @@ async def _stream_answer(
     )
 
     # ── Step 3b: Pre-cache check (skipped on a guessed domain — see /draft) ──
-    personal = mentions_any(
-        query_text, await asyncio.to_thread(names_for_device, caller_device)
-    )
+    # Remembered facts make an answer personal, exactly like a name does.
+    mem_child, mem_block, mem_used = await _memory_context(
+        caller_device, user_message, query_text)
+    personal = mentions_any(query_text, names) or mem_used > 0
     if (first_question and not personal and not is_general
             and not is_uncertain(detected_domains)):
         decision = evaluate_guardrails(primary_domain, severity, policies)
@@ -1156,7 +1194,7 @@ async def _stream_answer(
         tier, route_reason = "local_fast", "off_topic_pivot"
         stream_mode = "general_pivot"
         full_prompt = build_pivot_prompt(
-            query_text, user_message.age_group or "unspecified"
+            llm_query, user_message.age_group or "unspecified"
         )
     else:
         # Determine intervention type from retrieved units for guardrails
@@ -1192,24 +1230,12 @@ async def _stream_answer(
             query_text, detected_domains, severity,
             retrieved_units, history_len=len(history),
         )
-        stream_question, stream_history = query_text, history
-        if tier == "cloud_quality":
-            # redact_for_cloud reads sqlite — off the event loop, as in /draft.
-            def _redact_blocking():
-                return (
-                    redact_for_cloud(query_text, caller_device),
-                    [
-                        t.model_copy(update={"content": redact_for_cloud(t.content, caller_device)})
-                        for t in history
-                    ],
-                )
-
-            stream_question, stream_history = await asyncio.to_thread(_redact_blocking)
         full_prompt, _source = build_full_prompt(
             domain=primary_domain, behavior_type=user_message.behavior_type or "",
             age_group=user_message.age_group or "unspecified", severity=severity,
-            retrieved_units=retrieved_units, question_text=stream_question,
-            conversation_history=stream_history, tier=tier,
+            retrieved_units=retrieved_units, question_text=llm_query,
+            conversation_history=llm_history, tier=tier,
+            child_context=mem_block,
         )
 
     async def event_stream():
@@ -1481,6 +1507,9 @@ async def _stream_answer(
                             metadata={
                                 "sources": reply_sources(retrieved_units)
                                 if stream_mode == "llm_generated" else [],
+                                "child_id": mem_child,
+                                "memory_facts_used": mem_used
+                                if stream_mode == "llm_generated" else 0,
                             },
                         )
                         truncated = chunk.result.truncated if chunk.result else None
@@ -1488,6 +1517,13 @@ async def _stream_answer(
                             _persist, final_text, stream_mode,
                             f"truncated:{truncated}" if truncated else "",
                         )
+                        # Learn from the finished turn — after it is saved,
+                        # before the done frame, and without waiting: the
+                        # extractor runs on its own pool (child_memory).
+                        if (stream_mode == "llm_generated"
+                                and not decision["needs_human_review"]):
+                            _remember(caller_device, mem_child, query_text,
+                                      final_text, user_message.age_group)
                         # Feed the answer cache: grounded, local, review-free,
                         # first-question answers only (§5.1) — and only whole
                         # ones: an answer cut by max_tokens or a filter (R3)

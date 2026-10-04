@@ -1,0 +1,188 @@
+{
+  "group": "school",
+  "age_bands": [
+    "7-9",
+    "10-12"
+  ],
+  "version": "1.0.0",
+  "is_published": true,
+  "description": "Weekly plan for ages seven to twelve: prayer out of love, managing anger, study, screens, sleep, worry and siblings.",
+  "topics": [
+    {
+      "key": "prayer",
+      "focus": "Prayer out of love, not obligation",
+      "actions": [
+        {
+          "key": "prayer_school_1",
+          "text": "Pray one prayer a day together at home, and let them call the adhan if they like."
+        },
+        {
+          "key": "prayer_school_2",
+          "text": "Use a simple chart they tick after each prayer, and praise consistency rather than perfection."
+        },
+        {
+          "key": "prayer_school_3",
+          "text": "Remind them gently, in one word, at the adhan — no threats, no punishment."
+        },
+        {
+          "key": "prayer_school_4",
+          "text": "Ask: \"What makes prayer hard for you?\" and listen to the answer before giving advice."
+        }
+      ]
+    },
+    {
+      "key": "anger",
+      "focus": "Managing anger: tools for child and parent",
+      "actions": [
+        {
+          "key": "anger_school_1",
+          "text": "Agree on a \"calm corner\" they go to when angry, then talk once they have calmed down."
+        },
+        {
+          "key": "anger_school_2",
+          "text": "Teach simple steps for anger: stop, take three breaths, then speak."
+        },
+        {
+          "key": "anger_school_3",
+          "text": "Talk about your own anger calmly in front of them: \"I'm angry, and I'll calm down first.\""
+        },
+        {
+          "key": "anger_school_4",
+          "text": "Praise them when they put their anger into words instead of shouting or hitting."
+        }
+      ]
+    },
+    {
+      "key": "study",
+      "focus": "Organised study without battles",
+      "actions": [
+        {
+          "key": "study_school_1",
+          "text": "Fix a quiet time and place for study every day, away from screens."
+        },
+        {
+          "key": "study_school_2",
+          "text": "Split study into short blocks with breaks in between."
+        },
+        {
+          "key": "study_school_3",
+          "text": "Praise effort and persistence, not just the grade."
+        },
+        {
+          "key": "study_school_4",
+          "text": "Ask about a subject they enjoy and let them teach you something from it."
+        }
+      ]
+    },
+    {
+      "key": "screens",
+      "focus": "A family agreement on screens",
+      "actions": [
+        {
+          "key": "screens_school_1",
+          "text": "Write a simple screen agreement together: when, how long and where."
+        },
+        {
+          "key": "screens_school_2",
+          "text": "Keep devices out of bedrooms at night, for the whole family."
+        },
+        {
+          "key": "screens_school_3",
+          "text": "Play their favourite game with them once this week and ask what they like about it."
+        },
+        {
+          "key": "screens_school_4",
+          "text": "Suggest a fun alternative for free time: sport, reading or something with their hands."
+        }
+      ]
+    },
+    {
+      "key": "sleep",
+      "focus": "Enough sleep for better focus",
+      "actions": [
+        {
+          "key": "sleep_school_1",
+          "text": "Keep a fixed bedtime on school days and don't push it much later at weekends."
+        },
+        {
+          "key": "sleep_school_2",
+          "text": "Turn screens off an hour before bed and keep the phone outside the room."
+        },
+        {
+          "key": "sleep_school_3",
+          "text": "Cut down on sugar and stimulants in the evening."
+        },
+        {
+          "key": "sleep_school_4",
+          "text": "Make the last minutes of the day a quiet talk and the bedtime adhkar together."
+        }
+      ]
+    },
+    {
+      "key": "fear",
+      "focus": "Worry and fear: listen and reassure",
+      "actions": [
+        {
+          "key": "fear_school_1",
+          "text": "Set aside a quiet time for them to tell you what worries them, without interrupting or teasing."
+        },
+        {
+          "key": "fear_school_2",
+          "text": "Teach slow breathing: breathe in counting to four, breathe out counting to four."
+        },
+        {
+          "key": "fear_school_3",
+          "text": "Face the fear together in small, gradual steps, and praise every step."
+        },
+        {
+          "key": "fear_school_4",
+          "text": "If the worry lasts for weeks and affects sleep or school, consult a specialist."
+        }
+      ]
+    },
+    {
+      "key": "siblings",
+      "focus": "Siblings: cooperation instead of rivalry",
+      "actions": [
+        {
+          "key": "siblings_school_1",
+          "text": "Give each child some one-to-one time this week, even if it is short."
+        },
+        {
+          "key": "siblings_school_2",
+          "text": "Avoid comparing siblings' grades or behaviour."
+        },
+        {
+          "key": "siblings_school_3",
+          "text": "Give them a shared job at home and praise how they work together."
+        },
+        {
+          "key": "siblings_school_4",
+          "text": "When they fight, hear each one out separately before you decide."
+        }
+      ]
+    }
+  ],
+  "worship": [
+    {
+      "key": "worship_school_1",
+      "text": "Pray Maghrib or Isha together at home on four days this week."
+    },
+    {
+      "key": "worship_school_2",
+      "text": "Read one page of the Qur'an together after one prayer each day."
+    },
+    {
+      "key": "worship_school_3",
+      "text": "Choose a small good deed together this week: feeding someone, helping a neighbour, or charity."
+    },
+    {
+      "key": "worship_school_4",
+      "text": "Sit together for a few minutes after Maghrib for the evening adhkar."
+    },
+    {
+      "key": "worship_school_5",
+      "text": "Visit a relative or someone who is ill together this week."
+    }
+  ]
+}

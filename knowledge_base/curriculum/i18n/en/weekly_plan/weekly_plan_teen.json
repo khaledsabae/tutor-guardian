@@ -1,0 +1,192 @@
+{
+  "group": "teen",
+  "age_bands": [
+    "13-15",
+    "16-18"
+  ],
+  "version": "1.0.0",
+  "is_published": true,
+  "description": "Weekly plan for ages thirteen to eighteen: prayer from conviction, respectful disagreement, study and the future, screens, sleep, worry and siblings.",
+  "topics": [
+    {
+      "key": "prayer",
+      "focus": "Prayer from conviction: dialogue, not orders",
+      "actions": [
+        {
+          "key": "prayer_teen_1",
+          "text": "Ask calmly about their relationship with prayer, and listen without blame or interruption."
+        },
+        {
+          "key": "prayer_teen_2",
+          "text": "Pray one prayer with them at the mosque or at home this week, and make it your time together."
+        },
+        {
+          "key": "prayer_teen_3",
+          "text": "Share honestly something prayer gives you, without a long sermon."
+        },
+        {
+          "key": "prayer_teen_4",
+          "text": "If they have questions about faith, don't get angry; look for the answer together from a trusted source."
+        }
+      ]
+    },
+    {
+      "key": "anger",
+      "focus": "Conflict and anger: mutual respect",
+      "actions": [
+        {
+          "key": "anger_teen_1",
+          "text": "Agree to pause a heated argument until you are both calm, then come back to it."
+        },
+        {
+          "key": "anger_teen_2",
+          "text": "Hear their whole point of view before replying, and say it back so they know you understood."
+        },
+        {
+          "key": "anger_teen_3",
+          "text": "Avoid insults and sarcasm during a disagreement, and apologise if you get it wrong."
+        },
+        {
+          "key": "anger_teen_4",
+          "text": "Give them a real decision about something of theirs this week, within clear limits."
+        }
+      ]
+    },
+    {
+      "key": "study",
+      "focus": "Study and the future: a clear goal",
+      "actions": [
+        {
+          "key": "study_teen_1",
+          "text": "Sit with them to make a realistic weekly study plan that they write themselves."
+        },
+        {
+          "key": "study_teen_2",
+          "text": "Ask which subject is hardest and look for the right help together."
+        },
+        {
+          "key": "study_teen_3",
+          "text": "Talk about a long-term goal they care about and link one small step to it this week."
+        },
+        {
+          "key": "study_teen_4",
+          "text": "Praise discipline and effort, and avoid comparing them with their peers."
+        }
+      ]
+    },
+    {
+      "key": "screens",
+      "focus": "Screen balance with trust and responsibility",
+      "actions": [
+        {
+          "key": "screens_teen_1",
+          "text": "Agree together on phone limits: bedtime, study time and meals."
+        },
+        {
+          "key": "screens_teen_2",
+          "text": "Ask what they follow online out of curiosity, not as an interrogation."
+        },
+        {
+          "key": "screens_teen_3",
+          "text": "Lead by example: put your own phone away at meals and family conversations."
+        },
+        {
+          "key": "screens_teen_4",
+          "text": "Suggest one screen-free activity together this week: sport, a walk or volunteering."
+        }
+      ]
+    },
+    {
+      "key": "sleep",
+      "focus": "Enough sleep in the teenage years",
+      "actions": [
+        {
+          "key": "sleep_teen_1",
+          "text": "Agree on a time for devices off at night, with the phone charging outside the bedroom."
+        },
+        {
+          "key": "sleep_teen_2",
+          "text": "Encourage a wake-up time that stays the same, or close to it, every day."
+        },
+        {
+          "key": "sleep_teen_3",
+          "text": "Talk with them about how late nights affect mood and focus, without lecturing."
+        },
+        {
+          "key": "sleep_teen_4",
+          "text": "Cut back on stimulants such as coffee and energy drinks in the evening."
+        }
+      ]
+    },
+    {
+      "key": "fear",
+      "focus": "Worry and pressure: you're not alone",
+      "actions": [
+        {
+          "key": "fear_teen_1",
+          "text": "Set a weekly phone-free time to talk, and ask what is on their mind."
+        },
+        {
+          "key": "fear_teen_2",
+          "text": "Accept their feelings without brushing them off: \"It sounds like this is weighing on you.\""
+        },
+        {
+          "key": "fear_teen_3",
+          "text": "Help them break a big problem into small steps."
+        },
+        {
+          "key": "fear_teen_4",
+          "text": "If you notice sadness or withdrawal lasting two weeks or more, consult a specialist."
+        }
+      ]
+    },
+    {
+      "key": "siblings",
+      "focus": "Sibling relationships in the teenage years",
+      "actions": [
+        {
+          "key": "siblings_teen_1",
+          "text": "Respect their privacy in front of their siblings, and don't criticise them in front of the others."
+        },
+        {
+          "key": "siblings_teen_2",
+          "text": "Give them a lead role with younger siblings on a specific task, and praise how they handle it."
+        },
+        {
+          "key": "siblings_teen_3",
+          "text": "Avoid comparing them with their siblings on school or behaviour."
+        },
+        {
+          "key": "siblings_teen_4",
+          "text": "Make some one-to-one time with them, away from their siblings, this week."
+        }
+      ]
+    }
+  ],
+  "worship": [
+    {
+      "key": "worship_teen_1",
+      "text": "Pray one prayer together at home every day this week."
+    },
+    {
+      "key": "worship_teen_2",
+      "text": "Ask your teenager to choose a volunteering activity you all take part in."
+    },
+    {
+      "key": "worship_teen_3",
+      "text": "Sit together once this week to read the tafsir of a verse they choose, from a trusted tafsir book."
+    },
+    {
+      "key": "worship_teen_4",
+      "text": "Read two pages of the Qur'an together on Friday."
+    },
+    {
+      "key": "worship_teen_5",
+      "text": "Make du'a together for each family member by name after one of the prayers this week."
+    },
+    {
+      "key": "worship_teen_6",
+      "text": "Give charity together and let them choose where it goes."
+    }
+  ]
+}

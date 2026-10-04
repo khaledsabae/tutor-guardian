@@ -156,18 +156,29 @@ def _gender_word(gender: Optional[str]) -> str:
 
 
 def _build_coach_prompt(
-    child_name: str,
     child_gender: Optional[str],
     age_group: str,
     exact_question: str,
+    child_facts: str = "",
 ) -> str:
-    """Simple, grounded prompt for tg-tutor:v4."""
+    """Simple, grounded prompt for the daily coach tip.
+
+    Name-free. The prompt used to open with «اسم الطفل: …», and the primary
+    provider is a cloud API — so every generated tip sent a child's name out.
+    The name is added back by `_wrap_tip`, on the server, after generation.
+    `exact_question` arrives already redacted; `child_facts` is the labelled
+    block from child_memory.coach_facts (parent-reported, name-free).
+    """
     gender = _gender_word(child_gender)
-    return (
-        f"اسم الطفل: {child_name}، {gender}، عمره {age_group}.\n"
+    prompt = (
+        f"الطفل: {gender}، عمره {age_group}.\n"
         f"سؤال الأب: {exact_question}\n"
+    )
+    if child_facts:
+        prompt += f"{child_facts.rstrip()}\n"
+    return prompt + (
         "اكتب نصيحة تربوية عملية قصيرة (٣ خطوات مرقّمة) تردّ على سؤال الأب بالظبط. "
-        "استخدم اسم الطفل أو ضمير واحد فقط. بدون مقدمات وبدون ذكر مصادر."
+        "أشر إلى الطفل بضمير واحد ولا تذكر أي اسم. بدون مقدمات وبدون ذكر مصادر."
     )
 
 
@@ -559,7 +570,13 @@ async def get_proactive_tip(
         # Attempt 1: model generation with grounding.
         generated_text: Optional[str] = None
         if COACH_TIP_ENABLED:
-            prompt = _build_coach_prompt(child_name, child_gender, age_group, recent_topic)
+            from app.services import child_memory
+            from app.services.privacy import names_for_device, redact_with_names
+            prompt = _build_coach_prompt(
+                child_gender, age_group,
+                redact_with_names(recent_topic, names_for_device(device_id)),
+                child_memory.coach_facts(device_id, child_id, recent_topic),
+            )
             try:
                 result = await get_gateway().generate(
                     prompt,

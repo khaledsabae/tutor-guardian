@@ -81,6 +81,13 @@ Migration v28: api_tokens stores sha256(token) instead of the bearer itself,
 Migration v29: child_web_claims holds the one-time QR claim codes for the teen
                web surface (sha256 of the code; the token is minted on
                redemption). Replaces an in-process dict (audit L11). Additive.
+Migration v30: «المربّي يعرف ابنك» — child_facts (what the assistant has
+               learned about each child, name-free), followups (the "did the
+               advice work?" loop), weekly_plans (one cached plan per child
+               per ISO week and language) and child_memory_settings (the
+               per-device off switch). Every table is keyed by device_id and
+               cascades from child_profiles, and every one is listed in
+               routers/privacy.py MEMORY_TABLES — the delete-all path. Additive.
 Migration v32: install attribution. referrals.via records how a claim was made
                ('code' = an exact code, 'auto' = matched to a click by IP;
                NULL = before this); referral_click_days holds per-code daily
@@ -420,6 +427,7 @@ def init_db() -> None:
     _ensure_lesson_progress_child_key(conn)
     _ensure_licence_tables(conn)
     _ensure_child_web_claims_table(conn)
+    _ensure_child_memory_tables(conn)
     _ensure_donations_table(conn)
     _ensure_attribution_v32(conn)
     ensure_device_twin_tables(conn)
@@ -1081,6 +1089,77 @@ def _ensure_referral_clicks_table(conn: sqlite3.Connection) -> None:
         names = set()
     if not names:
         conn.executescript(_CREATE_REFERRAL_CLICKS)
+
+
+_CREATE_CHILD_MEMORY: str = """
+CREATE TABLE IF NOT EXISTS child_facts (
+    id          INTEGER PRIMARY KEY AUTOINCREMENT,
+    device_id   TEXT NOT NULL,
+    child_id    INTEGER NOT NULL,
+    category    TEXT NOT NULL,
+    fact        TEXT NOT NULL,
+    source      TEXT NOT NULL DEFAULT 'chat',
+    confidence  REAL NOT NULL DEFAULT 0.5,
+    status      TEXT NOT NULL DEFAULT 'active',
+    lang        TEXT NOT NULL DEFAULT 'ar',
+    times_seen  INTEGER NOT NULL DEFAULT 1,
+    created_at  TEXT NOT NULL DEFAULT (datetime('now')),
+    updated_at  TEXT NOT NULL DEFAULT (datetime('now')),
+    FOREIGN KEY (child_id) REFERENCES child_profiles(id) ON DELETE CASCADE
+);
+CREATE INDEX IF NOT EXISTS ix_child_facts_child
+    ON child_facts (device_id, child_id, status);
+
+CREATE TABLE IF NOT EXISTS followups (
+    id                INTEGER PRIMARY KEY AUTOINCREMENT,
+    device_id         TEXT NOT NULL,
+    child_id          INTEGER NOT NULL,
+    strategy          TEXT NOT NULL,
+    topic             TEXT,
+    lang              TEXT NOT NULL DEFAULT 'ar',
+    source_message_id INTEGER,
+    due_at            TEXT NOT NULL,
+    status            TEXT NOT NULL DEFAULT 'pending',
+    outcome           TEXT,
+    note              TEXT,
+    outcome_fact_id   INTEGER,
+    pushed_at         TEXT,
+    answered_at       TEXT,
+    created_at        TEXT NOT NULL DEFAULT (datetime('now')),
+    updated_at        TEXT NOT NULL DEFAULT (datetime('now')),
+    FOREIGN KEY (child_id) REFERENCES child_profiles(id) ON DELETE CASCADE
+);
+CREATE INDEX IF NOT EXISTS ix_followups_due ON followups (status, due_at);
+CREATE INDEX IF NOT EXISTS ix_followups_child
+    ON followups (device_id, child_id, status);
+
+CREATE TABLE IF NOT EXISTS weekly_plans (
+    id          INTEGER PRIMARY KEY AUTOINCREMENT,
+    device_id   TEXT NOT NULL,
+    child_id    INTEGER NOT NULL,
+    iso_week    TEXT NOT NULL,
+    lang        TEXT NOT NULL DEFAULT 'ar',
+    plan_json   TEXT NOT NULL,
+    created_at  TEXT NOT NULL DEFAULT (datetime('now')),
+    UNIQUE (device_id, child_id, iso_week, lang),
+    FOREIGN KEY (child_id) REFERENCES child_profiles(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS child_memory_settings (
+    device_id   TEXT PRIMARY KEY,
+    enabled     INTEGER NOT NULL DEFAULT 1,
+    updated_at  TEXT NOT NULL DEFAULT (datetime('now'))
+);
+"""
+
+
+def _ensure_child_memory_tables(conn: sqlite3.Connection) -> None:
+    """v30: child memory, follow-ups, weekly plans, memory switch. Additive.
+
+    Plain CREATE ... IF NOT EXISTS: none of these tables existed before v30,
+    so there is no older shape to reconcile.
+    """
+    conn.executescript(_CREATE_CHILD_MEMORY)
 
 
 def _ensure_child_web_claims_table(conn: sqlite3.Connection) -> None:
