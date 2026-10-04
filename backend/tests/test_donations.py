@@ -874,6 +874,10 @@ def test_an_unreadable_order_is_logged_and_priced_later(play, caplog, monkeypatc
     [row] = _rows()
     assert row["usd_cents"] is None and row["reprice_order_id"] == "GPA.late"
     assert donations.transparency()["unpriced"] == 1
+    # transparency() kicks a background reconciliation; let it finish so the
+    # explicit run below can take the single-flight lock (else: racy False).
+    if donations._reconciler is not None:
+        donations._reconciler.join(timeout=10)
 
     play.orders["GPA.late"] = {"total": {"currencyCode": "USD", "units": "5"}}
     assert donations.run_reconciliation() is True
