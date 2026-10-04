@@ -1,6 +1,6 @@
 {
   "total_units": 1776,
-  "generated_at": "2026-10-04T10:36:09.649372+00:00",
+  "generated_at": "2026-10-04T12:41:42.229621+00:00",
   "by_domain": {
     "medical": 361,
     "cyber": 281,
@@ -10776,7 +10776,7 @@
     {
       "id": "isl-5e099094",
       "domain": "islamic_parenting",
-      "title": "تأديب الأطفال بين الجواز والمنع",
+      "title": "تأديب الأولاد في آثار السلف",
       "source_file": "Alukah_Rights_of_Children.pdf",
       "language": "ar",
       "original_age_group": "unspecified",
@@ -10788,7 +10788,7 @@
     {
       "id": "isl-5e099094__en",
       "domain": "islamic_parenting",
-      "title": "Disciplining Children between Permissibility and Prohibition",
+      "title": "Disciplining Children in the Narrations of the Salaf",
       "source_file": "Alukah_Rights_of_Children.pdf",
       "language": "en",
       "original_age_group": "unspecified",
@@ -11448,7 +11448,7 @@
     {
       "id": "isl-6e577f4f",
       "domain": "islamic_parenting",
-      "title": "تأديب الأطفال بلا ضرب",
+      "title": "تأديب الأطفال وحدود الضرب عند الفقهاء",
       "source_file": "Alukah_Rights_of_Children.pdf",
       "language": "ar",
       "original_age_group": "4-6",

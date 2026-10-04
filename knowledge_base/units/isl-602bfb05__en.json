@@ -11,7 +11,7 @@
   "reference_type": "كتاب_تربوي",
   "reference_info": "حقوق الأولاد على الوالدين - عماد عبدالعظيم (الألوكة)",
   "text_original": "،فمً ضرمق ءمٌمسو ،فتمٞمٜمي مػمٖمس فتمٞمٜمٙمشو رمٝمّمًا ةمطزامم :فمٞموو« (2) ،ؾمْمٗمًا ؾهٕ ةمطزمامعا زاقمض :فمٞموو .فمٞمًإ سبتمطا يذمًا بامؽمًامس امٞمٚمق ڠ كمٜمي ؽمًذمي ،فمشربه كرمشو ،ؿمٝموامٓمًإو رامٝصٕامس ؼمورمًا :فمٞموو .ام٘مط ٓإ لقم٘ي ٓو حزمٛي ڠ لبمٜمًا ناميو ؾمس ،فمٚهٕ فتبضامٖمُ مغمق امٞمٚمق بمشامٕي لم ڠ لبمٜمًا نٕ ،ؿمٝمٚهٕ ؿمٝمٜمُ نقمٙي امُ مغمق ؿمٝتبمشامٕمُ .)58/9( »يراخبمًا حمٞحص حشر« »فمٚهأ ممإ فامٍمٟٓامس فمً ضرمقو .ؿمى :فمً لامى .)2419( ؿمٚسمُو ،)441( يراخبمًا فمضرمظأ (3) ـــــــــــــــتــــــــ نيدلاىلا ىلع دلاولأا قىقح ـــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ ل ِ بَـلا تَ ْـ ِ ب ةَ ؿ ِ صافَ وَ فُ قَ ر صَ ﷺ ِ للها لَ قس نَ أَ ,ﭬ بٍ ِ لاصَ ل ِ بأَ ـبْ ل ِ ؾطَ ـطو اشَ اذَ ِ نفَ , ِ للها د ِ قَ ِ ب اَـس ػُ كْ أَ , ِ للها لَ قس ايَ :تُ ؾْ ؼُ فَ »؟ن ِ اقَ ؾِ صَ تُ َٓ أَ « :لَ اؼَ فَ ,ةً ؾَ قْ لَ ڠ قَ هُ وَ فُ تُ عْ ؿ ِ س ثُ ,ائً قْ شَ للَِ إ عْ ج ِ ر لَوَ ؽَ ِ لذَ اَـؾْ قُ ـَ قح ِ فَ ر صَ كْ افَ ,اَـثَ عَ بَ اَـثَ عَ بْ يَ نْ أَ ﴾ لَ ٗ د َ ج َ ءشَ ۡ َ ثَ َ َ ؽ ۡ َ أ َ ُ س ٰ َ نلۡ ۡ ٱ ن َ كَ َ و َ ﴿ :لُ قؼُ يَ قَ هُ وَ ,هُ ذَ خ ِ فَ بُ ر ِ ضْ يَ لٍ قَ م ُ ٌٝعاسمإ",
-  "text_simplified": "Parents must teach their children salah from the age of seven, and be gently firm if they do not keep to it by the age of ten — through encouragement and follow-up, not hitting. Children should also be guided toward goodness and gradually accustomed to acts of worship. This text explains the importance of early religious tarbiyah (upbringing).",
+  "text_simplified": "Parents must teach their children salah from the age of seven and follow up with them in it. A hadith in Abu Dawud (not in the Sahihayn) instructs teaching children the prayer at seven and striking them over it at ten; the jurists who acted on it restricted it to being light and non-injurious, only after teaching and gradual steps, never resorted to if anything else suffices, away from the face and never in anger. Almorabbi never recommends hitting, but encouragement and follow-up. Children should also be guided toward goodness and gradually accustomed to acts of worship. This text explains the importance of early religious tarbiyah (upbringing).",
   "labels": [
     "صلاة",
     "تربية",
@@ -51,6 +51,9 @@
         "severity": "low"
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "manual_fix_note": "2026-10-04 PR #27 review: 7/10 narration described accurately (Abu Dawud, with the jurists' conditions); app stance kept separate",
+    "fixed_at": "2026-10-04T12:34:44.900780+00:00",
+    "fixer_model": "claude-opus-5.5"
   }
 }

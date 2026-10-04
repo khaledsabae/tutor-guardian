@@ -3,9 +3,11 @@
 Until 2026-10-04 served knowledge units said «يمكن ضرب الأطفال على ترك الصلاة
 بعد سن العاشرة كآخر وسيلة تأديبية» and «الضرب للتأديب مسموح به» — retrieval hands
 `text_simplified` to the assistant, so the model was being *grounded* in it.
-Where the scholarly position is needed it is now described with its conditions
-(light, harmless, last resort, never the face, never in anger; many discouraged
-it), followed by the app's stance and alternatives — never as an instruction.
+Where the scholarly position is needed it is described as what it is — the
+7/10 narration is in Abu Dawud, not the Sahihayn, and the jurists who acted on
+it restricted it (light, non-injurious, after teaching and gradual steps, never
+the face, never in anger) — followed by the app's stance in its own sentence,
+never as an instruction and never folded into a «يجب» sentence.
 
 `text_original` (the raw source extraction, never served) is out of scope by
 design; see ops/tools/content_surfaces.py.
@@ -92,7 +94,11 @@ def test_the_pattern_still_bites():
                     "Parents may discipline them gently if they do not adhere to it by the age of ten."):
         assert ENDORSE.search(_norm(shipped)), shipped
     # …and the accurate description that replaced them must pass.
-    for sound in ("وقد اشترط العلماء لأي ضرب أن يكون خفيفًا غير مؤذٍ، وآخرَ وسيلة، بعيدًا عن الوجه، "
-                  "ولا يكون في حال غضب، وكرهه كثير منهم. و«المربّي» لا يوصي بالضرب أبدًا.",
-                  "Scholars conditioned any striking on being light and harmless, a last resort."):
+    for sound in ("وفي حديثٍ عند أبي داود (ليس في الصحيحين) الأمرُ بتعليم الأولاد الصلاة في السابعة، "
+                  "والضربُ عليها في العاشرة؛ ومن أخذ به من الفقهاء قيّده بأن يكون خفيفًا غير مبرّح، "
+                  "بعد التعليم والتدرّج، ولا يُلجأ إليه إن أغنى غيره، بعيدًا عن الوجه وفي غير غضب. "
+                  "و«المربّي» لا يوصي بالضرب أبدًا.",
+                  "ويذكر أن الإسلام جعل للعقوبة حدًّا، فقيّد ضرب التأديب بأن يكون خفيفًا محدود العدد.",
+                  "A hadith in Abu Dawud (not in the Sahihayn) instructs teaching children the prayer at seven "
+                  "and striking them over it at ten; the jurists who acted on it restricted it to being light."):
         assert not ENDORSE.search(_norm(sound)), sound
