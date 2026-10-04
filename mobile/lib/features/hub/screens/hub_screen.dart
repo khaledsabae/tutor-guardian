@@ -11,7 +11,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/app_routes.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../program/providers/program_providers.dart';
-import '../../support/support_hub_card.dart';
 import '../data/hub_catalog.dart';
 import '../widgets/help_sheet.dart';
 import '../widgets/hub_group_card.dart';
@@ -55,9 +54,6 @@ class _HubScreenState extends ConsumerState<HubScreen> {
         children: [
           for (final group in kHubGroups)
             HubGroupCard(group: group, ageGroup: ageGroup),
-          // Renders nothing unless DONATIONS_ENABLED and the store returned
-          // the support products.
-          const SupportHubCard(),
         ],
       ),
     );

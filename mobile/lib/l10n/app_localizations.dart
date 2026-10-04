@@ -7139,7 +7139,7 @@ abstract class AppLocalizations {
   /// No description provided for @supportIntro.
   ///
   /// In ar, this message translates to:
-  /// **'المربّي مجاني بالكامل، ولن تُقفَل فيه أي ميزة أبدًا. دعمك يغطي جزءًا من تكاليف تشغيله — الخوادم والذكاء الاصطناعي — ليبقى مجانيًا لكل أسرة.'**
+  /// **'المربّي مجاني لوجه الله، وسيبقى كذلك لمن دعم ولمن لم يدعم. لكن تشغيله له تكلفة كل شهر: خوادم، ونماذج ذكاء اصطناعي تجيب أسئلتكم.'**
   String get supportIntro;
 
   /// No description provided for @supportMonthCost.
@@ -7193,7 +7193,7 @@ abstract class AppLocalizations {
   /// No description provided for @supportChooseAmount.
   ///
   /// In ar, this message translates to:
-  /// **'اختر مبلغ الدعم'**
+  /// **'إن أردت أن تعين على ذلك، فاختر مبلغًا:'**
   String get supportChooseAmount;
 
   /// No description provided for @supportProductSmall.
@@ -7217,13 +7217,13 @@ abstract class AppLocalizations {
   /// No description provided for @supportNoPerks.
   ///
   /// In ar, this message translates to:
-  /// **'الدعم لا يفتح أي ميزة ولا يمنح عملات أو أوسمة. الدفع عبر Google Play، ويمكنك الدعم أكثر من مرة.'**
+  /// **'لا يفتح الدعم أي ميزة؛ كل شيء متاح للجميع. وهذا ليس قناة زكاة. الدفع عبر Google Play، ويمكنك الدعم أكثر من مرة.'**
   String get supportNoPerks;
 
   /// No description provided for @supportThanks.
   ///
   /// In ar, this message translates to:
-  /// **'جزاك الله خيرًا 🤍 وصل دعمك.'**
+  /// **'نسأل الله أن يتقبّل منك 🤍 وصل دعمك.'**
   String get supportThanks;
 
   /// No description provided for @supportPending.
@@ -7250,17 +7250,11 @@ abstract class AppLocalizations {
   /// **'متجر Google Play غير متاح على هذا الجهاز الآن.'**
   String get supportStoreUnavailable;
 
-  /// No description provided for @supportHubTitle.
+  /// No description provided for @supportEntryDesc.
   ///
   /// In ar, this message translates to:
-  /// **'ادعم المربّي 🤍'**
-  String get supportHubTitle;
-
-  /// No description provided for @supportHubBody.
-  ///
-  /// In ar, this message translates to:
-  /// **'مجاني لكل أسرة — ساهم في تكاليف تشغيله'**
-  String get supportHubBody;
+  /// **'مجاني لوجه الله — وإن أردت، أعِن على تكلفة تشغيله'**
+  String get supportEntryDesc;
 }
 
 class _AppLocalizationsDelegate

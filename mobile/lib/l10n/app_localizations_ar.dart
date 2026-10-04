@@ -3986,7 +3986,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get supportIntro =>
-      'المربّي مجاني بالكامل، ولن تُقفَل فيه أي ميزة أبدًا. دعمك يغطي جزءًا من تكاليف تشغيله — الخوادم والذكاء الاصطناعي — ليبقى مجانيًا لكل أسرة.';
+      'المربّي مجاني لوجه الله، وسيبقى كذلك لمن دعم ولمن لم يدعم. لكن تشغيله له تكلفة كل شهر: خوادم، ونماذج ذكاء اصطناعي تجيب أسئلتكم.';
 
   @override
   String supportMonthCost(String amount) {
@@ -4020,7 +4020,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get supportCostOther => 'أخرى';
 
   @override
-  String get supportChooseAmount => 'اختر مبلغ الدعم';
+  String get supportChooseAmount => 'إن أردت أن تعين على ذلك، فاختر مبلغًا:';
 
   @override
   String get supportProductSmall => 'دعم صغير';
@@ -4033,10 +4033,10 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get supportNoPerks =>
-      'الدعم لا يفتح أي ميزة ولا يمنح عملات أو أوسمة. الدفع عبر Google Play، ويمكنك الدعم أكثر من مرة.';
+      'لا يفتح الدعم أي ميزة؛ كل شيء متاح للجميع. وهذا ليس قناة زكاة. الدفع عبر Google Play، ويمكنك الدعم أكثر من مرة.';
 
   @override
-  String get supportThanks => 'جزاك الله خيرًا 🤍 وصل دعمك.';
+  String get supportThanks => 'نسأل الله أن يتقبّل منك 🤍 وصل دعمك.';
 
   @override
   String get supportPending => 'الدفع قيد المعالجة، وسنؤكّده حين يكتمل.';
@@ -4052,8 +4052,6 @@ class AppLocalizationsAr extends AppLocalizations {
       'متجر Google Play غير متاح على هذا الجهاز الآن.';
 
   @override
-  String get supportHubTitle => 'ادعم المربّي 🤍';
-
-  @override
-  String get supportHubBody => 'مجاني لكل أسرة — ساهم في تكاليف تشغيله';
+  String get supportEntryDesc =>
+      'مجاني لوجه الله — وإن أردت، أعِن على تكلفة تشغيله';
 }

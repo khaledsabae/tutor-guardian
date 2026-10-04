@@ -488,8 +488,9 @@ abstract final class AppRoutes {
   static Route<void> invite() =>
       _r(Screens.invite, (_) => const InviteScreen());
 
-  /// «ادعم المربّي». Only offered when the server flag is on and the store
-  /// returned the products — see `supportVisibleProvider`.
+  /// «ادعم المربّي», opened from its row in Settings. Only offered when the
+  /// server flag is on and the store returned the products — see
+  /// `supportVisibleProvider`.
   static Route<void> support() =>
       _r(Screens.support, (_) => const SupportScreen());
 

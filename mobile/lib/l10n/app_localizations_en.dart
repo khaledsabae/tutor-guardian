@@ -4036,7 +4036,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get supportIntro =>
-      'Al-Murabbi is completely free, and no feature will ever be locked. Your support covers part of its running costs — servers and AI — so it stays free for every family.';
+      'Al-Murabbi is free, for the sake of Allah — and it stays free whether you give or not. Running it does cost money every month: servers, and the AI models that answer your questions.';
 
   @override
   String supportMonthCost(String amount) {
@@ -4070,7 +4070,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get supportCostOther => 'Other';
 
   @override
-  String get supportChooseAmount => 'Choose an amount';
+  String get supportChooseAmount =>
+      'If you\'d like to help with that, choose an amount:';
 
   @override
   String get supportProductSmall => 'Small support';
@@ -4083,11 +4084,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get supportNoPerks =>
-      'Support unlocks nothing and gives no coins or badges. Payment is through Google Play, and you can support more than once.';
+      'A gift unlocks nothing — everything is available to everyone. This is not a zakat channel. Payment is through Google Play, and you can give more than once.';
 
   @override
   String get supportThanks =>
-      'Thank you — may Allah reward you 🤍 Your support arrived.';
+      'May Allah accept it from you 🤍 Your support arrived.';
 
   @override
   String get supportPending =>
@@ -4106,9 +4107,6 @@ class AppLocalizationsEn extends AppLocalizations {
       'Google Play isn\'t available on this device right now.';
 
   @override
-  String get supportHubTitle => 'Support Al-Murabbi 🤍';
-
-  @override
-  String get supportHubBody =>
-      'Free for every family — help cover its running costs';
+  String get supportEntryDesc =>
+      'Free for the sake of Allah — help with its running costs if you\'d like';
 }

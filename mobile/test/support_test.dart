@@ -15,7 +15,9 @@ import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:almorabbi/api/tg_client.dart';
-import 'package:almorabbi/features/support/support_hub_card.dart';
+import 'package:almorabbi/features/onboarding/data/onboarding_storage.dart';
+import 'package:almorabbi/features/onboarding/providers/onboarding_providers.dart';
+import 'package:almorabbi/features/program/screens/settings_screen.dart';
 import 'package:almorabbi/features/support/support_providers.dart';
 import 'package:almorabbi/features/support/support_screen.dart';
 import 'package:almorabbi/features/support/support_store.dart';
@@ -86,6 +88,19 @@ class _FakeClient extends TgClient {
     'ok': true, 'consumed': true, 'already_recorded': false, 'status': 200,
   };
   final verified = <String>[];
+
+  // The settings screen lists the children before it renders its rows.
+  @override
+  Future<Map<String, dynamic>> listChildren() async => {
+        'count': 1,
+        'children': [
+          {
+            'id': 5, 'name': 'سارة', 'age_group': '4-6', 'gender': null,
+            'avatar_emoji': null, 'created_at': '2026-10-01T10:00:00',
+            'updated_at': '2026-10-01T10:00:00',
+          }
+        ],
+      };
 
   @override
   Future<Map<String, dynamic>> fetchSupportTransparency() async {
@@ -275,17 +290,60 @@ void main() {
       await tester.pump(const Duration(milliseconds: 100));
     }
 
-    testWidgets('hub card: absent when off', (tester) async {
-      store.products = [_product('support_small', 20)];
-      await pump(tester, const SupportHubCard(), flag: false);
-      expect(find.text('ادعم المربّي 🤍'), findsNothing);
-    });
+    // The ask lives in Settings, beside «قيّم التطبيق», and nowhere else in
+    // the app's chrome — and not even there unless both halves of the gate
+    // are open.
+    Future<void> pumpSettings(WidgetTester tester, {required bool flag}) async {
+      final prefs = await SharedPreferences.getInstance();
+      await OnboardingStorage(prefs)
+          .setActiveChild(id: 5, name: 'سارة', ageGroup: '4-6');
+      final c = ProviderContainer(overrides: [
+        appConfigProvider.overrideWith((ref) async => {
+              'minimum_build_number': 0,
+              if (flag) 'donations_enabled': true,
+            }),
+        supportStoreProvider.overrideWithValue(store),
+        tgClientProvider.overrideWithValue(client),
+        sharedPreferencesProvider.overrideWith((_) async => prefs),
+      ]);
+      addTearDown(c.dispose);
+      await c.read(sharedPreferencesProvider.future);
+      await tester.pumpWidget(UncontrolledProviderScope(
+        container: c,
+        child: const MaterialApp(
+          locale: Locale('ar'),
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          home: SettingsScreen(),
+        ),
+      ));
+      await tester.pumpAndSettle();
+      await tester.scrollUntilVisible(find.text('قيّم التطبيق'), 300,
+          scrollable: find.byType(Scrollable).first);
+    }
 
-    testWidgets('hub card: present when on and the store has products',
+    testWidgets('settings: no support row while the flag is off',
         (tester) async {
       store.products = [_product('support_small', 20)];
-      await pump(tester, const SupportHubCard(), flag: true);
-      expect(find.text('ادعم المربّي 🤍'), findsOneWidget);
+      await pumpSettings(tester, flag: false);
+      expect(find.text('ادعم المربّي'), findsNothing);
+    });
+
+    testWidgets('settings: no support row when the store has no products',
+        (tester) async {
+      await pumpSettings(tester, flag: true);
+      expect(find.text('ادعم المربّي'), findsNothing);
+    });
+
+    testWidgets('settings: the row opens the support screen when both are on',
+        (tester) async {
+      store.products = [_product('support_small', 20)];
+      await pumpSettings(tester, flag: true);
+      expect(find.text('ادعم المربّي'), findsOneWidget);
+      await tester.tap(find.text('ادعم المربّي'));
+      await tester.pumpAndSettle();
+      expect(find.byType(SupportScreen), findsOneWidget);
+      expect(find.text('دعم صغير'), findsOneWidget);
     });
 
     testWidgets('transparency with a declared cost shows the share',
@@ -309,7 +367,8 @@ void main() {
       expect(find.text('دعم صغير'), findsOneWidget);
       expect(find.text('دعم كبير'), findsOneWidget);
       expect(find.text('EGP 20.00'), findsOneWidget);
-      expect(find.textContaining('لا يفتح أي ميزة'), findsOneWidget);
+      expect(find.textContaining('لا يفتح الدعم أي ميزة'), findsOneWidget);
+      expect(find.textContaining('ليس قناة زكاة'), findsOneWidget);
 
       await tester.tap(find.text('دعم صغير'));
       await tester.pump();
@@ -319,7 +378,7 @@ void main() {
       store.controller.add([_purchase('support_small')]);
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 100));
-      expect(find.text('جزاك الله خيرًا 🤍 وصل دعمك.'), findsOneWidget);
+      expect(find.text('نسأل الله أن يتقبّل منك 🤍 وصل دعمك.'), findsOneWidget);
       expect(client.verified, hasLength(1));
       expect(store.consumed, isEmpty); // the server consumed it
     });
