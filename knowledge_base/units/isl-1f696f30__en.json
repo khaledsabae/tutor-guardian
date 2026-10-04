@@ -30,27 +30,26 @@
   "translated_from": "isl-1f696f30",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "على الأم ألا تعترض على أمر الأب أمام الطفل",
-        "english": "The mother should not object to the father’s instruction in front of the child",
-        "why": "The Arabic 'أمر الأب' means 'the father's command/order', which carries authority. The English 'instruction' is softer and loses the sense of a direct command, altering the intended parental dynamic.",
-        "severity": "medium"
-      },
-      {
-        "type": "term_error",
-        "field": "title",
-        "arabic": "أهمية الاتفاق التربوي بين الوالدين",
-        "english": "The Importance of Tarbiyah Agreement Between Parents",
-        "why": "The Arabic title uses the adjective 'التربوي' (educational/pedagogical), not the noun 'تربية' (tarbiyah). A more accurate rendering would be 'Educational Agreement' or 'Pedagogical Agreement'. Using 'Tarbiyah' as a noun in the title is a transliteration of a different form and may confuse readers.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "4fb884f1b3037519d151df8d94a11fa27f547a23b84dae3754e0d83b19c5942b",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

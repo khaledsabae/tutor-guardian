@@ -30,19 +30,26 @@
   "translated_from": "isl-2bbafb5d",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "term_error",
-        "field": "title",
-        "arabic": "الرفق والرحمة",
-        "english": "Rifq and Mercy",
-        "why": "The Arabic term 'الرفق' is transliterated as 'Rifq' while the parallel term 'الرحمة' is translated as 'Mercy' rather than transliterated as 'Rahmah'. This creates an inconsistency in the treatment of Islamic terms within the same document.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "438dfabdcd3847b2116ca824c6d0a242b6207375f6461137a199e5147e71c7a5",
+      "reviewed_at": "2026-10-04T16:52:31+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T16:52:31+00:00"
   }
 }

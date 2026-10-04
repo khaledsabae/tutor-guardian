@@ -30,19 +30,11 @@
   "translated_from": "isl-3d476538",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "term_error",
-        "field": "title",
-        "arabic": "العبادات",
-        "english": "'Ibadat",
-        "why": "The transliteration of عبادات is inconsistent within the document: the title uses 'Ibadat (capital I, apostrophe before I) while the body text uses 'ibadat (lowercase i). This inconsistency in transliteration of the same Islamic term should be avoided.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "pending",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

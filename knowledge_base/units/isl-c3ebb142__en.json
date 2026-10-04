@@ -30,19 +30,40 @@
   "translated_from": "isl-c3ebb142",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
+    "review_verdict": "low_only",
     "review_defects": [
       {
-        "type": "structure",
-        "field": "text_simplified",
-        "arabic": "القرآن الكريم",
-        "english": "the Qur'an",
-        "why": "The honorific 'الكريم' (the Noble) is omitted in the English rendering, dropping the reverential descriptor for the Qur'an.",
-        "severity": "low"
+        "model": "deepseek-v4-pro",
+        "field": "title",
+        "type": "leakage",
+        "why": "The Arabic phrase 'القدوة الحسنة' is left untranslated as 'Al-Qudwah al-Hasanah' instead of an English rendering."
       }
     ],
-    "approved_by": null
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "6b66170ffad1bae0acc07fc310978030aa1f65531946a1e7bd69e45a430e11c0",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [
+        {
+          "model": "deepseek-v4-pro",
+          "field": "title",
+          "type": "leakage",
+          "why": "The Arabic phrase 'القدوة الحسنة' is left untranslated as 'Al-Qudwah al-Hasanah' instead of an English rendering."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

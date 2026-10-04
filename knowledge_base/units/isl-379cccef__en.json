@@ -30,27 +30,40 @@
   "translated_from": "isl-379cccef",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
+    "review_verdict": "low_only",
     "review_defects": [
       {
-        "type": "meaning_change",
+        "model": "deepseek-v4-pro",
         "field": "title",
-        "arabic": "التمييز بين الأبناء",
-        "english": "Distinguishing Between Children",
-        "why": "The Arabic 'التمييز' in this parenting context means unfair discrimination or favoritism, not neutral 'distinguishing'. The English loses the negative connotation and may be misunderstood as simply recognizing differences.",
-        "severity": "medium"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "مشكلة التمييز بين الأبناء في المعاملة",
-        "english": "the problem of distinguishing between children in treatment",
-        "why": "'في المعاملة' means 'in the way they are treated/dealt with', but 'in treatment' can be misread as medical treatment. Also 'distinguishing' again should be 'discrimination' to preserve the negative sense.",
-        "severity": "low"
+        "type": "meaning",
+        "why": "The Arabic 'التمييز' here means discrimination/favoritism, while 'Distinguishing' is neutral and could be read as telling children apart."
       }
     ],
-    "approved_by": null
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "8909f5e62339d8399750caa6c0551dd9a59d9ad94ba52b1155861c88bc1f6821",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [
+        {
+          "model": "deepseek-v4-pro",
+          "field": "title",
+          "type": "meaning",
+          "why": "The Arabic 'التمييز' here means discrimination/favoritism, while 'Distinguishing' is neutral and could be read as telling children apart."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

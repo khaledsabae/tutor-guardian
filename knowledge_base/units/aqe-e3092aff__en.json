@@ -2,7 +2,7 @@
   "id": "aqe-e3092aff__en",
   "domain": "aqeedah",
   "source_file": "aqidah_unified_manifest.md",
-  "title": "Al-Mala'ikah, al-Kutub, and al-Rusul",
+  "title": "The Angels, the Books, and the Messengers",
   "language": "en",
   "age_group": "7-9",
   "behavior_type": "تعليم_العقيدة",
@@ -30,27 +30,40 @@
   "translated_from": "aqe-e3092aff",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
+    "review_verdict": "low_only",
     "review_defects": [
       {
-        "type": "structure",
+        "model": "deepseek-v4-pro",
         "field": "text_simplified",
-        "arabic": "قال تعالى عن نبيه",
-        "english": "Allah said about His Prophet ﷺ",
-        "why": "The honorific 'تعالى' (Exalted) for Allah is dropped in the English translation.",
-        "severity": "low"
-      },
-      {
-        "type": "religious_error",
-        "field": "text_simplified",
-        "arabic": "نبيه",
-        "english": "His Prophet ﷺ",
-        "why": "The honorific 'ﷺ' is added after 'Prophet' although the Arabic does not include it.",
-        "severity": "low"
+        "type": "quran",
+        "why": "The Quranic ayah is enclosed in «» instead of the required ﴿﴾ in the English rendering."
       }
     ],
-    "approved_by": null
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "cced8d18e43f637191f6b80dc54a04359c24e8f7b95599f8e4206878aad8add8",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [
+        {
+          "model": "deepseek-v4-pro",
+          "field": "text_simplified",
+          "type": "quran",
+          "why": "The Quranic ayah is enclosed in «» instead of the required ﴿﴾ in the English rendering."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

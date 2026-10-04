@@ -30,27 +30,26 @@
   "translated_from": "isl-5d8ffb6e",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "يجب على الأهل",
-        "english": "Parents must",
-        "why": "The Arabic 'الأهل' can mean family or parents, but the English narrows it to 'Parents' only, potentially excluding other caregivers or family members involved in upbringing.",
-        "severity": "low"
-      },
-      {
-        "type": "register",
-        "field": "text_simplified",
-        "arabic": "التربية",
-        "english": "*tarbiyah* (upbringing)",
-        "why": "The Arabic uses the ordinary word 'التربية' (upbringing), but the English adds a transliteration '*tarbiyah*' which makes the text more clinical/academic than the warm, direct Arabic.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "663ad286a46a7808056c583eef17e6e0fc67fd40c981f7b97bdf9f4ea3591c9e",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

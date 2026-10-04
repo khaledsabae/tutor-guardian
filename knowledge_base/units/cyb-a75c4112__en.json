@@ -30,19 +30,52 @@
   "translated_from": "cyb-a75c4112",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
+    "review_verdict": "low_only",
     "review_defects": [
       {
-        "type": "meaning_change",
+        "model": "deepseek-v4-pro",
         "field": "text_simplified",
-        "arabic": "الوحدة تركز على استخدام الأطفال لل mediated، وتتضمن الألعاب الإلكترونية والفيديو والقراءة ووسائل الإعلام غير الشاشة.",
-        "english": "This unit focuses on children’s use of mediated content, including electronic games, video, reading, and non-screen media.",
-        "why": "The English adds 'content' after 'mediated', but the Arabic only has 'mediated' (an English word in the Arabic text) without a noun. The addition clarifies the intended meaning but is not explicitly present in the source.",
-        "severity": "low"
+        "type": "meaning",
+        "why": "الوسائط means media, not mediated content."
+      },
+      {
+        "model": "glm-5.2",
+        "field": "text_simplified",
+        "type": "meaning",
+        "why": "«الوسائط» means 'media,' not 'mediated content,' which is a narrower academic concept."
       }
     ],
-    "approved_by": null
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "5ef0721ab186e1707ab02a81054168f303c13efcca7fd93749a3af018ae91748",
+      "reviewed_at": "2026-10-04T16:52:31+00:00",
+      "residual_low": [
+        {
+          "model": "deepseek-v4-pro",
+          "field": "text_simplified",
+          "type": "meaning",
+          "why": "الوسائط means media, not mediated content."
+        },
+        {
+          "model": "glm-5.2",
+          "field": "text_simplified",
+          "type": "meaning",
+          "why": "«الوسائط» means 'media,' not 'mediated content,' which is a narrower academic concept."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T16:52:31+00:00"
   }
 }

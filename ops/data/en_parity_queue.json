@@ -1,0 +1,1180 @@
+{
+  "_doc": [
+    "Published English that is live WITHOUT a review stamp, each bound to the exact text it was queued at (content_sha256 of the Arabic + English shown fields).",
+    "review_en_parity.py check passes such a unit only while its text still matches. Edit it and the entry no longer holds: review it, or re-queue it with a reason.",
+    "awaiting-review: waits for a reviewer from a family other than its English authors'. source-unverified: the Arabic is not verified against its own source — never stamped until the hold is released (unqueue) after re-extraction.",
+    "Written by `review_en_parity.py queue` / `unqueue`; stamping removes the entry."
+  ],
+  "units": {
+    "0bd76d3c-548a-46ed-b17b-78874741662a__en": {
+      "category": "awaiting-review",
+      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system · Arabic corrected 2026-10-04 per the PR #20 review · English corrected by Claude 2026-10-04 per the PR #20 review",
+      "content_sha256": "ec1629d69864662567f0e3e2bea30c9cf626485687baf8528d830f5bc399a084",
+      "queued_on": "2026-10-04",
+      "english_authors": [
+        "claude-opus-5.5"
+      ]
+    },
+    "968f42b5-5184-4f4a-97d9-b854f507dbe6__en": {
+      "category": "awaiting-review",
+      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
+      "content_sha256": "8ee2a2b2724dbdd1bd7fa7de538396c4753f4f18117a33f3fcb85a5955f1614f",
+      "queued_on": "2026-10-04",
+      "english_authors": [
+        "claude-opus-5.5"
+      ]
+    },
+    "adhkar:family_adhkar": {
+      "category": "awaiting-review",
+      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
+      "content_sha256": "34e847e50f009fd70efd1956ec0f1c526a548cab65cc9835cf1b191839314d45",
+      "queued_on": "2026-10-04",
+      "english_authors": [
+        "claude-opus-5.5"
+      ]
+    },
+    "cd81035d-4fdb-4274-bcf2-55074ee7a1de__en": {
+      "category": "awaiting-review",
+      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
+      "content_sha256": "073f739746099fe48326691aece5a5fc3b5ca5606945f43c44c8330e5e05a2e6",
+      "queued_on": "2026-10-04",
+      "english_authors": [
+        "claude-opus-5.5"
+      ]
+    },
+    "isl-05aa623c__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "5bb28029a85dbbce9f50f14df8e5091fb4f7906b946493686f52da9c77151433",
+      "queued_on": "2026-10-04"
+    },
+    "isl-08be6045__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "a729d9ec9002a9cc63aeae29ab0d1a2b1e059a1d454a1384c9b455f4712f2a2a",
+      "queued_on": "2026-10-04"
+    },
+    "isl-09afb431__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "23930fdbcf9085538fcdceac79cba4c9a1ca0ca427624c30956c1842944cf8bc",
+      "queued_on": "2026-10-04"
+    },
+    "isl-0b607846__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "f2b260b8f00aece082f3ae1d811ed8c6bde452719ff561181f06be6af713b632",
+      "queued_on": "2026-10-04"
+    },
+    "isl-0d1334e8__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "8c1f592c8d1fede60f52752c93b6beffa31d5737385bdd6b578eb0ea5fa0b2c4",
+      "queued_on": "2026-10-04"
+    },
+    "isl-0ecac170__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "93a5114751bf97947eb0e7a77959b00e063e19ab36922f31792e2e6de3247812",
+      "queued_on": "2026-10-04"
+    },
+    "isl-10541fe2__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "abba4c1c0f3be7c8d3056bfd686b0824ebb82f7507f225b09c0bebc9da011d99",
+      "queued_on": "2026-10-04"
+    },
+    "isl-1057f72f__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "10522b8b45748bd10abe4af88e88a38a6843d54607b238d510281d94ab145a05",
+      "queued_on": "2026-10-04"
+    },
+    "isl-12f1f119__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "e03822a98212c5bc6e0a5d406a35ece116ef0711e3cc2d9ab97c61f6bacc3547",
+      "queued_on": "2026-10-04"
+    },
+    "isl-14009a8e__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "351dabdd17f215d90987a53721f81ea22812c9c9e23841e462688ff35bbe23e1",
+      "queued_on": "2026-10-04"
+    },
+    "isl-14202095__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "e8d79a79bfd0f3db5e5260137b57a58368234ce57cba9a70126c74d42eca4600",
+      "queued_on": "2026-10-04"
+    },
+    "isl-14bc16f5__en": {
+      "category": "source-unverified",
+      "reason": "It attributes words or deeds to the Prophet ﷺ or cites a hadith — check these first. Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "3761ac07dccbd665fe717ccc205da270d99511a14cde6dc2acd927c59a7409c5",
+      "queued_on": "2026-10-04"
+    },
+    "isl-1b230a64__en": {
+      "category": "source-unverified",
+      "reason": "It attributes words or deeds to the Prophet ﷺ or cites a hadith — check these first. Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "a30f38b825b358a3ae0dca530487913c3d7ef2ff20e5dee52aa751e0fe146cc9",
+      "queued_on": "2026-10-04"
+    },
+    "isl-1d89f7df__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "d0021a336afdbf8a8a57e5210e2928345cf8d3249c2c64338ac2b8affcf513fc",
+      "queued_on": "2026-10-04"
+    },
+    "isl-1efbc747__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "19724b169866a94d9e6b90ec242439f266caeb749d403831244fd959dcdeb15b",
+      "queued_on": "2026-10-04"
+    },
+    "isl-2010ce26__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "2a4c06a07103586b498e1978a0991f26632270a9dc6be2c191f1372feb1569e4",
+      "queued_on": "2026-10-04"
+    },
+    "isl-22f68950__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "e87074a2c01840e36778dae3f09e28b2e70fd2912118536e4b80dd9d24630773",
+      "queued_on": "2026-10-04"
+    },
+    "isl-23c2dd25__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "977a8b4774ed5b3edeb4d3e6b94bd1c9641cdaaac7e7a8a5070ee7b9be1d4303",
+      "queued_on": "2026-10-04"
+    },
+    "isl-27372b44__en": {
+      "category": "awaiting-review",
+      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
+      "content_sha256": "624f5ba1934eb01b979ffc7e7d3e4280e11eb11804e1ae4b75edfe34372d3f76",
+      "queued_on": "2026-10-04",
+      "english_authors": [
+        "claude-opus-5.5"
+      ]
+    },
+    "isl-2935b46f__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "cb341e21cf4cc606cae253cb043b74ac93ce69a3a4ec8cd3208e4af0fceb0afa",
+      "queued_on": "2026-10-04"
+    },
+    "isl-2aa57245__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "6c12dadbd89d391b63c19e6fe3e6675f462a7213dafbb7c3f1eb3a3f2aa17346",
+      "queued_on": "2026-10-04"
+    },
+    "isl-2c98ee30__en": {
+      "category": "source-unverified",
+      "reason": "It attributes words or deeds to the Prophet ﷺ or cites a hadith — check these first. Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "0750468c472229efca99c628c96a90b0bd6267d2b3715dd922900ce83aac3858",
+      "queued_on": "2026-10-04"
+    },
+    "isl-2d96bbf3__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "c16f21ca7caa548f7b8c6834f71c951affbad9f8f2cec28855fc6d9bf2c18602",
+      "queued_on": "2026-10-04"
+    },
+    "isl-2fee1086__en": {
+      "category": "source-unverified",
+      "reason": "It attributes words or deeds to the Prophet ﷺ or cites a hadith — check these first. Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "8cfc8a4563c8f3d9088b166fd46ff66dbaa760bb2616cee716739cd204ed3f6d",
+      "queued_on": "2026-10-04"
+    },
+    "isl-3110e6c7__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "631b1c78171ed6edf350a686aba1675c853d7b0e4f0166cee1d2c325d73ed5cc",
+      "queued_on": "2026-10-04"
+    },
+    "isl-32871fdb__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "a4734d525fec61b1a442fa7c4084660400d28d30eba6aec38c07c7792911d448",
+      "queued_on": "2026-10-04"
+    },
+    "isl-35bd0931__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "76cdf143a4107f6702894dff0498510916d3ea245070cdcdb7b84b689f2fd93e",
+      "queued_on": "2026-10-04"
+    },
+    "isl-37320362__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "daf8e3ab829055bb34f3defb234efce142318731501a1233f269bb9df062acb2",
+      "queued_on": "2026-10-04"
+    },
+    "isl-3c246978__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "a7cd0be45e3773e5e617a41a360c16eddbe2439a7c664ece33ab4373b8e731ea",
+      "queued_on": "2026-10-04"
+    },
+    "isl-3d476538__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "2304346fc8fd68128411f8700410f3b80cd59645cec39853c358b8c2035766d6",
+      "queued_on": "2026-10-04"
+    },
+    "isl-432f1164__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "b8e7643bab9c70f63961459d9817b4dc2b0389a7e99a631c34d39fbe4db7dde5",
+      "queued_on": "2026-10-04"
+    },
+    "isl-466fef9d__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "093762dc30a853b0bd926e4c44babdb391b27d0420d4f634d43d0ef9a7e55c75",
+      "queued_on": "2026-10-04"
+    },
+    "isl-4a91d5da__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "3052ae4894540048830b6364abb61033c3d60b73defeb97c4d88f9855878f8e1",
+      "queued_on": "2026-10-04"
+    },
+    "isl-4bd24438__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "608b25ed4cf4511c1426a53b7caf12eabc36f16ca7ab6071d185704f9ba3a3d1",
+      "queued_on": "2026-10-04"
+    },
+    "isl-4c1cd031__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "722f4aaed33397a22e20d3ca4d529177ff39ad6251ff7192937868210b3ee07b",
+      "queued_on": "2026-10-04"
+    },
+    "isl-4e0db0bd__en": {
+      "category": "source-unverified",
+      "reason": "It attributes words or deeds to the Prophet ﷺ or cites a hadith — check these first. Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "5f97713f5cbb960e8aacefc026423ce8f93fceb7466e87ee300a6d7854e2ff80",
+      "queued_on": "2026-10-04"
+    },
+    "isl-4e356b57__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "8d849a16da67b036c9618b765c4a46e11171fcbc9b09f471df749d5798b6f8f7",
+      "queued_on": "2026-10-04"
+    },
+    "isl-4ecbbad1__en": {
+      "category": "source-unverified",
+      "reason": "It attributes words or deeds to the Prophet ﷺ or cites a hadith — check these first. Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "8801db4dbe89c6e82dbd9ab489a24acb3db7a4d460e67b3df9042da82af3e615",
+      "queued_on": "2026-10-04"
+    },
+    "isl-4f1f6411__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "9d093c675bc0f8b0ae390fdc32cf751f3b6fb2e83ba75af20035f89bd2d5b8d4",
+      "queued_on": "2026-10-04"
+    },
+    "isl-50818e97__en": {
+      "category": "source-unverified",
+      "reason": "It attributes words or deeds to the Prophet ﷺ or cites a hadith — check these first. Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "dea4df0f8e6e8b545838d4003677cbc4ce90b9d079c21d0b4f279e4c453db176",
+      "queued_on": "2026-10-04"
+    },
+    "isl-50f95326__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "572324cf08efad02e71c1bd65953f56a480a5d96662c75a95bcd363b414ec170",
+      "queued_on": "2026-10-04"
+    },
+    "isl-552b4f5a__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "586d46cbe6f9a964d01438b1f5e23268300c1b9963faa2082e7344ab351b1b39",
+      "queued_on": "2026-10-04"
+    },
+    "isl-5cf45742__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "bc7453dabad83890bc8ef36e98e74671b2bb800a5a079fb76e4fca14518a3d41",
+      "queued_on": "2026-10-04"
+    },
+    "isl-620730b0__en": {
+      "category": "source-unverified",
+      "reason": "It attributes words or deeds to the Prophet ﷺ or cites a hadith — check these first. Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "5ebbf57531abc54fe1d35a1ea8053b3ddd563d59ab9a93d9dd8c3136e97c3ea8",
+      "queued_on": "2026-10-04"
+    },
+    "isl-624104ea__en": {
+      "category": "awaiting-review",
+      "reason": "English rewritten by PR #27 (a Claude agent) with its Arabic; waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system · Arabic corrected 2026-10-04 per the PR #20 review",
+      "content_sha256": "a71e9a3257e0ff04691ed14b6602b9d1c01b17cdbde97857d6f47fde0a6f04ac",
+      "queued_on": "2026-10-04",
+      "english_authors": [
+        "claude-opus-5.5"
+      ]
+    },
+    "isl-642d3763__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "7da73a6c1877dc1eef0a3a70d7f89ce77af1408f89c1db7ec83777df93f71b73",
+      "queued_on": "2026-10-04"
+    },
+    "isl-65b250d1__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "a4d42a711b379a81fba810ad0e59a20f0dd3ceb690b90e2ebf60c1249406c16e",
+      "queued_on": "2026-10-04"
+    },
+    "isl-6792dd0f__en": {
+      "category": "source-unverified",
+      "reason": "It attributes words or deeds to the Prophet ﷺ or cites a hadith — check these first. Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "63162cc3e3f027d5649ea688eef40609fcd8be2804bf427eeb88d115befe4929",
+      "queued_on": "2026-10-04"
+    },
+    "isl-68df90c4__en": {
+      "category": "source-unverified",
+      "reason": "It attributes words or deeds to the Prophet ﷺ or cites a hadith — check these first. Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "6349690fe92ee4b458a2432515f517db6605e4f0a82eab3ea7c21545a970c0bc",
+      "queued_on": "2026-10-04"
+    },
+    "isl-707601b0__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "6f139afadedcaf885de6ff6389d4823a882573cb69acef3dac99c2a4eaad16c5",
+      "queued_on": "2026-10-04"
+    },
+    "isl-714f9e97__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "7a76db9ff844db8382b81f5620bddedd93feafdb718e6333bdd4a827f40e5034",
+      "queued_on": "2026-10-04"
+    },
+    "isl-7349e59c__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "84867b11f841d5332c5e9fce085ee6eede881bf0732da005883fb86d426e8327",
+      "queued_on": "2026-10-04"
+    },
+    "isl-73905b43__en": {
+      "category": "awaiting-review",
+      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
+      "content_sha256": "2ecd5fa763ba952fa4acce235da165f90b09f5ab2a29779ca3bf743434defbdc",
+      "queued_on": "2026-10-04",
+      "english_authors": [
+        "claude-opus-5.5"
+      ]
+    },
+    "isl-740684b1__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "80408fa73db22865703de5bf8ee1f5f6f3c95b35c0dfe6e17b635fed42d6dc94",
+      "queued_on": "2026-10-04"
+    },
+    "isl-752169b4__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "3df64b6dd25f25ac32309ce22a757ed077202c358cc857f419e8c79d8c287961",
+      "queued_on": "2026-10-04"
+    },
+    "isl-756e7d81__en": {
+      "category": "source-unverified",
+      "reason": "It attributes words or deeds to the Prophet ﷺ or cites a hadith — check these first. Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "5ad4a9c0d75119cb81bfef18cd6752a60c2f3c8316a3d241b7e7e220d32b5403",
+      "queued_on": "2026-10-04"
+    },
+    "isl-7dbd2226__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "953bc98e571584eba1b2551e050df6f7a6552cd5f167499d45d2f4264df966c7",
+      "queued_on": "2026-10-04"
+    },
+    "isl-801dbc52__en": {
+      "category": "source-unverified",
+      "reason": "It attributes words or deeds to the Prophet ﷺ or cites a hadith — check these first. Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "c9d04589d6295747f32f11c46814cb6d40443212de1ab8804b2b41c01bed4aba",
+      "queued_on": "2026-10-04"
+    },
+    "isl-82829528__en": {
+      "category": "source-unverified",
+      "reason": "It attributes words or deeds to the Prophet ﷺ or cites a hadith — check these first. Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "5752320d671e5f735eeba27136551a32172084cbfba87de9f1410d957d9cc8fe",
+      "queued_on": "2026-10-04"
+    },
+    "isl-841d1ede__en": {
+      "category": "source-unverified",
+      "reason": "It attributes words or deeds to the Prophet ﷺ or cites a hadith — check these first. Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "3cfb32075cd7782a4fcc92984ba4d55e77066c8cb8b5cef2dcc0d8c702236252",
+      "queued_on": "2026-10-04"
+    },
+    "isl-842e0f60__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "57a58b439877ab88eb553ba906b3ccc3cd820d82084667f684969f1e76c6a962",
+      "queued_on": "2026-10-04"
+    },
+    "isl-8aa15666__en": {
+      "category": "source-unverified",
+      "reason": "It attributes words or deeds to the Prophet ﷺ or cites a hadith — check these first. Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "2552bd29f27b676e477c0499e5064402533f3bb23fb150629a11e07752d0c7b2",
+      "queued_on": "2026-10-04"
+    },
+    "isl-8b182486__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "69da079a1148d14b86f6c58237a72ea65709b8a11b5402a58e5fb0e4a2db3c87",
+      "queued_on": "2026-10-04"
+    },
+    "isl-8bf4e7a3__en": {
+      "category": "awaiting-review",
+      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
+      "content_sha256": "1e29c5695163b0eed7dda73825f99b3418e9522b2629bbb76a55b61fe74d134e",
+      "queued_on": "2026-10-04",
+      "english_authors": [
+        "claude-opus-5.5"
+      ]
+    },
+    "isl-8de863a3__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "ddb5f6a2cfcda4b779f05d97972bba27446fcef9756ae4f6361708233f222610",
+      "queued_on": "2026-10-04"
+    },
+    "isl-8f8f836b__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "84c01e9beddda3fcbea92ea5a77df35d8ac55da55e88ea4c993532495121fbc1",
+      "queued_on": "2026-10-04"
+    },
+    "isl-91f5606a__en": {
+      "category": "source-unverified",
+      "reason": "It attributes words or deeds to the Prophet ﷺ or cites a hadith — check these first. Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "c44358c6da9510b729cbd8b55849efeef5e194e20b9dccb7f36f79f2ed726097",
+      "queued_on": "2026-10-04"
+    },
+    "isl-927b1dd2__en": {
+      "category": "source-unverified",
+      "reason": "It attributes words or deeds to the Prophet ﷺ or cites a hadith — check these first. Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "d0af01816427766058ce83374e78452dd0a65f06b996c2efade128ec280a96bd",
+      "queued_on": "2026-10-04"
+    },
+    "isl-969f83c1__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "81eb6f374d69a7d6ba52dc69bec41f2f4102d55f51988fabbb8935755241ca1b",
+      "queued_on": "2026-10-04"
+    },
+    "isl-9933c64e__en": {
+      "category": "awaiting-review",
+      "reason": "English rewritten by PR #27 (a Claude agent) with its Arabic; waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system · Arabic corrected 2026-10-04 per the PR #20 review",
+      "content_sha256": "1e2579e3feb1a05673fd9475216f522799f48534f510c1808a62423330ad6961",
+      "queued_on": "2026-10-04",
+      "english_authors": [
+        "claude-opus-5.5"
+      ]
+    },
+    "isl-9aa2ab45__en": {
+      "category": "source-unverified",
+      "reason": "It attributes words or deeds to the Prophet ﷺ or cites a hadith — check these first. Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "ba26c9a05604e801b0949227b5c0c7d4080d9154e26cd7782fba25866a69a5c2",
+      "queued_on": "2026-10-04"
+    },
+    "isl-9b6fc547__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "8cd2794f031765f27573cd68712af54e00ab5b3ca2cc276f3f4d2a9b0bebfca2",
+      "queued_on": "2026-10-04"
+    },
+    "isl-9c60af92__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "474a9dca80e9d80bb187f5f3e17fe3a3d5dd9ec9e8fd251025bfe82d75303cc3",
+      "queued_on": "2026-10-04"
+    },
+    "isl-a36a8295__en": {
+      "category": "source-unverified",
+      "reason": "It attributes words or deeds to the Prophet ﷺ or cites a hadith — check these first. Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "0f4542dd04a462b059c277bde0a20a148ba71db27ab1183df0883a2e048ced13",
+      "queued_on": "2026-10-04"
+    },
+    "isl-a387bea4__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "b43945cc5878e5bdee9a1ec724eff75178a416dc2bae07f3a6d3b28a081b64da",
+      "queued_on": "2026-10-04"
+    },
+    "isl-a3a4ff7e__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "f3555a81dca4b0401f39c5149a86830531abd764654a533e87c632dd50efb189",
+      "queued_on": "2026-10-04"
+    },
+    "isl-a8a4dd9a__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "62cc1851e56d66ef3b07761df5ea023eabd395e1f212af30b78afd0cbe84bcd2",
+      "queued_on": "2026-10-04"
+    },
+    "isl-ab49af82__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "3d4d100d4718b6dd624279aa73e58073ea1e56c874a0e9aa394ac0a7d60e873a",
+      "queued_on": "2026-10-04"
+    },
+    "isl-ac6398a4__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "357922ae6eea4935aec0428dd916a09fb37d6ee01961b45355484a099ca83042",
+      "queued_on": "2026-10-04"
+    },
+    "isl-aeca7eab__en": {
+      "category": "source-unverified",
+      "reason": "It attributes words or deeds to the Prophet ﷺ or cites a hadith — check these first. Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "b404857ae17954afa226006ed0596de9d6322d4c3133af611150a8863d69d624",
+      "queued_on": "2026-10-04"
+    },
+    "isl-b1e6de34__en": {
+      "category": "awaiting-review",
+      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
+      "content_sha256": "a8e3f35a4654f0598a625b306ffee493398f033c109019852fc2c816733c160b",
+      "queued_on": "2026-10-04",
+      "english_authors": [
+        "claude-opus-5.5"
+      ]
+    },
+    "isl-b290bf9e__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "61b885d4d6fe5b8ac894c46a36d0eed2ff86db48cf9a89c1aeb91e37a6b3afe7",
+      "queued_on": "2026-10-04"
+    },
+    "isl-b479d931__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "302f9fd80884752bf887185436ed0af490c0b6ed074ed6e809ff9ae2cd42ccfd",
+      "queued_on": "2026-10-04"
+    },
+    "isl-b5620aee__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "f4ff52d22bb9c7acf1769908caff8a3515038ce874fc7fd7fdb4dac312934f04",
+      "queued_on": "2026-10-04"
+    },
+    "isl-ba5acfd6__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "cf2cfc12cff5ce8e663c1eba40de1302eebe2e7bedd02ccbcef038cb59bbc176",
+      "queued_on": "2026-10-04"
+    },
+    "isl-ba8618fc__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "47171ad78485f55cba57e672132701ff8a558c1e34d4d7cec5de7bf207d2a032",
+      "queued_on": "2026-10-04"
+    },
+    "isl-bb001a48__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "190b9260a020875167417a11cf697937d2f60c9b3a7e3896b87ce398b304e15e",
+      "queued_on": "2026-10-04"
+    },
+    "isl-bd250b64__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "8e745ef493a1f83ca1386a62b9f77f59d5d99b070edeed1b167e3cafa14259d4",
+      "queued_on": "2026-10-04"
+    },
+    "isl-be38b357__en": {
+      "category": "source-unverified",
+      "reason": "It attributes words or deeds to the Prophet ﷺ or cites a hadith — check these first. Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "e04c8c9629de5dfd79946b24da7fb8b93af0319319d3eeade840ab260765d496",
+      "queued_on": "2026-10-04"
+    },
+    "isl-be5c0b84__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "67e35bd3f23a126953f99341478190fbda5c19c6c6cb3435adaf29f7599b210b",
+      "queued_on": "2026-10-04"
+    },
+    "isl-c0274dd3__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "34ce8ba594ecf2e6cd5a430da0aa631633d0c56617f0f45621ef34799a92c3bb",
+      "queued_on": "2026-10-04"
+    },
+    "isl-c0936200__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "f9be2ea8471a03862e2a27fdc48af50fd3405dcd9b8a2edaa5c813812e53f0e7",
+      "queued_on": "2026-10-04"
+    },
+    "isl-c10d43e4__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "05611307c030bb3cf06b1c34e2190c1bf6cb0ce92c7bd84664277804def8540a",
+      "queued_on": "2026-10-04"
+    },
+    "isl-c32410ab__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "7e3b69d96b5777e76ce66f298ed9ba29c435e115edb59a89c7e8f84763fe238e",
+      "queued_on": "2026-10-04"
+    },
+    "isl-c4a536a4__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "3aa6042bc49caf1d949c58603a7016f22c74f30008eccd533628908c21df058c",
+      "queued_on": "2026-10-04"
+    },
+    "isl-c4b3fccc__en": {
+      "category": "awaiting-review",
+      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
+      "content_sha256": "bcf29d3531418fd536b0c8ceb3b558e6b8b47d62fb6b077084e600a2c52377b4",
+      "queued_on": "2026-10-04",
+      "english_authors": [
+        "claude-opus-5.5"
+      ]
+    },
+    "isl-c81c58e1__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "b3c548eb071aac3767d8bf7ef1f66d30161a29a23199ffa7dd69e90b69fa91e0",
+      "queued_on": "2026-10-04"
+    },
+    "isl-ca9f1de7__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "18f4d708a687d476bf8978456e17f37f8d7f4b1b9d27c408e5ac43e1867b7d0d",
+      "queued_on": "2026-10-04"
+    },
+    "isl-cbc7891a__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "a1b4e2313730fc1265757ffd934df0cdfd9db19466b0e2388226f0e91c647b9f",
+      "queued_on": "2026-10-04"
+    },
+    "isl-cdac63e0__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "a26baec079f79555f7e17f97b83cd282d6bcded329ab9a9a3984784cca88ec1c",
+      "queued_on": "2026-10-04"
+    },
+    "isl-d06a6717__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "b01879fe97dd043fc38627ebdc39adfa9737357047478f8d1215f4dce2a2add0",
+      "queued_on": "2026-10-04"
+    },
+    "isl-d0a71a62__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "1f7b07c789a23055ca7eaf5cbd41bb6714baf9ecc0aa1e99b36fbbdcaef23975",
+      "queued_on": "2026-10-04"
+    },
+    "isl-d192e37a__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "fa535a785a92463992b23f8c799b02cb08525d095a1eff3cb6acb8fa1afa3306",
+      "queued_on": "2026-10-04"
+    },
+    "isl-d44d24f5__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "2dfa403d221ec12d33da25d961d44e69ebca6858d7a4d53d4ed4739fac2d5123",
+      "queued_on": "2026-10-04"
+    },
+    "isl-d4e2e2dc__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "1a89d08f2215b291ca1ff16ea3dbf1dfa8b37712268110a4af01f0d200824165",
+      "queued_on": "2026-10-04"
+    },
+    "isl-d5f87105__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "e4ddc8e24005f5a1fab09da8e6060d0ebfc1653bcbf899fd2a29ee9922c8eb17",
+      "queued_on": "2026-10-04"
+    },
+    "isl-d6faddeb__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "7a113062c9a3f87619e8759ce7c62fae1e78b35285c4b1b97e6bafb2259a40d2",
+      "queued_on": "2026-10-04"
+    },
+    "isl-d7a2d117__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "91bdbc99b75c459a526ea250c7e153c128b0710aae3e61061f5479e5fac53368",
+      "queued_on": "2026-10-04"
+    },
+    "isl-d8e6e42f__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "ee0210b498c852a46fbd1e7b2de3d94732f67916dc35efb13538e09101c9c1bd",
+      "queued_on": "2026-10-04"
+    },
+    "isl-d939e551__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "de35e7591da2565b8a4a010977cd1fa21ede1afdd5fa662f3985862f56bc0523",
+      "queued_on": "2026-10-04"
+    },
+    "isl-dab3c9f4__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "3b5e4ee0d0f65a8bf46bd852233827414b2bc18fa373e7025422d9d77d08c842",
+      "queued_on": "2026-10-04"
+    },
+    "isl-dc441991__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "e8a681ed0980ca90e54ebd38e206d97df38ea5ff5b995c3384e029f43a034896",
+      "queued_on": "2026-10-04"
+    },
+    "isl-dd395fbb__en": {
+      "category": "source-unverified",
+      "reason": "It attributes words or deeds to the Prophet ﷺ or cites a hadith — check these first. Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "299270cb814a2434eebb7e2933c0fa6d0be5b00479bcc221c774b92450b0cb38",
+      "queued_on": "2026-10-04"
+    },
+    "isl-e20d927a__en": {
+      "category": "source-unverified",
+      "reason": "It attributes words or deeds to the Prophet ﷺ or cites a hadith — check these first. Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "911abfefa78884d4c657266dee7afedcc56fc1aab10f9672f6ee51e1c85f5d03",
+      "queued_on": "2026-10-04"
+    },
+    "isl-e2711973__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "44fd878a77ca4aabb81b04277b8aa4075d987e34479f0702715c686ec82de623",
+      "queued_on": "2026-10-04"
+    },
+    "isl-e4c8a66d__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "8a54070155e13b39a99f5490cbc6afdae578cc2425d6e6b12e79048badb34929",
+      "queued_on": "2026-10-04"
+    },
+    "isl-e622ac43__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "7f8d3ca7834de4086cbf47b5dd9fff014ce8e3f740e3255a573bd4988fa652bc",
+      "queued_on": "2026-10-04"
+    },
+    "isl-e81562ec__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "3b5b4f5b3134d3e7131ae4f8e7b35e086564679acb1a72327671c5f61fd634b3",
+      "queued_on": "2026-10-04"
+    },
+    "isl-e856f88f__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "4628b91308b8ee0de23853b94679ec1acbaa7394ba893797fbcdb24b71f415cf",
+      "queued_on": "2026-10-04"
+    },
+    "isl-ea569b55__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "c16284f96119b9a9f44caa02c355bbbe71688a81b9c12d3907c5cba14806fd89",
+      "queued_on": "2026-10-04"
+    },
+    "isl-ecd6521f__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "68f065465f04ac80eeb58a61caa6cba9e301da0469c99616c7d31b8d9fe9188f",
+      "queued_on": "2026-10-04"
+    },
+    "isl-ee373ffe__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "4fec7afa7c185576683262b07ed3a82a5ca23c40398d25896e59cf67483755b9",
+      "queued_on": "2026-10-04"
+    },
+    "isl-ee380fa3__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "5064d8da49b3f5ff7126b68421a0347e3766b6d2a9bfec1b8345b4842645582c",
+      "queued_on": "2026-10-04"
+    },
+    "isl-f0c08a57__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "c4a04e9034d78c87cb2338fc51c52305aeb8c2386ac2e8873c89cd8cc9948377",
+      "queued_on": "2026-10-04"
+    },
+    "isl-f0ecb056__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "43e27b02525edb268f020ea3a37c8a75247144b459cd6c6e9be7113ed084747f",
+      "queued_on": "2026-10-04"
+    },
+    "isl-f1213a76__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "5db118e06989860356e574340712db0750d57b956b0ef94d22952c07f06af5e2",
+      "queued_on": "2026-10-04"
+    },
+    "isl-f2ccdca6__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "ab05f9fce0c1c2770dc4b9bb8f6cccc28d3a374436d721bd8be806b431400992",
+      "queued_on": "2026-10-04"
+    },
+    "isl-f3c9f4ab__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "696d0d10ced900076022496420fc7129c5ecbaa2c3dec9aeccf69d7f0e004707",
+      "queued_on": "2026-10-04"
+    },
+    "isl-f3f7d74e__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "c74e86b70a82eb591513193c3395975ab3cbe8f3f3b9fd78a489ae1d6d4db541",
+      "queued_on": "2026-10-04"
+    },
+    "isl-f5f9ceac__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "8ea11c935ddc7051f96269264d9b9b08a83a1d5ecba989df543284ce83a1c562",
+      "queued_on": "2026-10-04"
+    },
+    "isl-f6bbab53__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "25bdc52eca3769e6cb26598946417522d90708033710b9d12690a4165449ad39",
+      "queued_on": "2026-10-04"
+    },
+    "isl-f6c0c64a__en": {
+      "category": "awaiting-review",
+      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
+      "content_sha256": "98011199c372376ac80f4ba3c07c1e37b7db6ed5e0643a1f3e24b0b6d51408bc",
+      "queued_on": "2026-10-04",
+      "english_authors": [
+        "claude-opus-5.5"
+      ]
+    },
+    "isl-f6f7676b__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "524994323fcec202609287c6b2735a63d57119d2e4e4b74d6abe29016c0fb7f9",
+      "queued_on": "2026-10-04"
+    },
+    "isl-f782f2ed__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "537e9107d872181199927d0a4cec762613ddbc44b6c259a2639c8d903b365797",
+      "queued_on": "2026-10-04"
+    },
+    "isl-f84ef732__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "67327a92faa6314939edcf133d3630488f35b7acc4495f9bbadd8040c493eab6",
+      "queued_on": "2026-10-04"
+    },
+    "isl-fab3255f__en": {
+      "category": "source-unverified",
+      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "d377697e69e1fd4a7f95745bbaf26afb1ee1f6d7455921cbbfbba9820458fa8c",
+      "queued_on": "2026-10-04"
+    },
+    "isl-fb04bcd3__en": {
+      "category": "source-unverified",
+      "reason": "It attributes words or deeds to the Prophet ﷺ or cites a hadith — check these first. Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "ec0adee4c14e63cf75d300a94941736a7e2a5a78830f3c49d5e33b4ac12c9511",
+      "queued_on": "2026-10-04"
+    },
+    "isl-fd937511__en": {
+      "category": "awaiting-review",
+      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
+      "content_sha256": "f55e9bbccc67a71eacdd8b6a8a83dc5c867b5fee410d6e2546b2946f552cd907",
+      "queued_on": "2026-10-04",
+      "english_authors": [
+        "claude-opus-5.5"
+      ]
+    },
+    "isl-fe2f3c39__en": {
+      "category": "source-unverified",
+      "reason": "It attributes words or deeds to the Prophet ﷺ or cites a hadith — check these first. Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
+      "content_sha256": "905aa31b8730ec6962d79fff874cdb87b110cbb41185e1ab44798d27e9421c8f",
+      "queued_on": "2026-10-04"
+    },
+    "lesson_13-15_cyber_digital_maturity_02": {
+      "category": "awaiting-review",
+      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
+      "content_sha256": "8e355e334bd1a55a3b0dc3aaf7344e27ab8e7b789828f83533503f02eb0faa2e",
+      "queued_on": "2026-10-04",
+      "english_authors": [
+        "claude-opus-5.5"
+      ]
+    },
+    "lesson_13-15_cyber_digital_maturity_03": {
+      "category": "awaiting-review",
+      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
+      "content_sha256": "f3a2154b65578dc5ec441f91adc473d0e8d9f164bec9efc0f09cbc8c4c3e0a31",
+      "queued_on": "2026-10-04",
+      "english_authors": [
+        "claude-opus-5.5"
+      ]
+    },
+    "lesson_13-15_islamic_mockery_01": {
+      "category": "awaiting-review",
+      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
+      "content_sha256": "e3bb16579e347c2c0949297e9318fe43e8242ad3a29aef36204f183168839d60",
+      "queued_on": "2026-10-04",
+      "english_authors": [
+        "claude-opus-5.5"
+      ]
+    },
+    "lesson_13-15_islamic_parenting_steadfast_04": {
+      "category": "awaiting-review",
+      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
+      "content_sha256": "22fef9b37902c856e4d40bb63f7735e489514e3cd7d66b6dfdcb8554d854ca78",
+      "queued_on": "2026-10-04",
+      "english_authors": [
+        "claude-opus-5.5"
+      ]
+    },
+    "lesson_16-18_cyber_digital_professional_02": {
+      "category": "awaiting-review",
+      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
+      "content_sha256": "d55c2125566db52da040a82c6c6960f73344602bb96c7f0eff81fa6b468e4ccb",
+      "queued_on": "2026-10-04",
+      "english_authors": [
+        "claude-opus-5.5"
+      ]
+    },
+    "lesson_4-6_aqeedah_seeds_02": {
+      "category": "awaiting-review",
+      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
+      "content_sha256": "f561dc935cac1de8295daf0a9649dfd2b32eaf60fb69ce5a39484079dbd26315",
+      "queued_on": "2026-10-04",
+      "english_authors": [
+        "claude-opus-5.5"
+      ]
+    },
+    "lesson_4-6_aqeedah_seeds_03": {
+      "category": "awaiting-review",
+      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
+      "content_sha256": "4c0fa55bb1a00263f17bc3ffad5e9017742c7a8b0450e47ea5a2eed95819fd21",
+      "queued_on": "2026-10-04",
+      "english_authors": [
+        "claude-opus-5.5"
+      ]
+    },
+    "lesson_4-6_development_positive_parenting_02": {
+      "category": "awaiting-review",
+      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
+      "content_sha256": "5da1127432f1cd54c7ba0cab9c4b30c6af10d6ba8dc4fe202b48b9ae99e77c07",
+      "queued_on": "2026-10-04",
+      "english_authors": [
+        "claude-opus-5.5"
+      ]
+    },
+    "lesson_4-6_islamic_parenting_adab_02": {
+      "category": "awaiting-review",
+      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
+      "content_sha256": "c1b75671fc64c3f1fa48b2b94a44bd7c704c07a87ad259412cc2ecba162cf09d",
+      "queued_on": "2026-10-04",
+      "english_authors": [
+        "claude-opus-5.5"
+      ]
+    },
+    "lesson_7-9_aqeedah_fundamentals_01": {
+      "category": "awaiting-review",
+      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
+      "content_sha256": "141bd1295c45146b56264d8994276d789f4cf72b14247fd2d6ac66de588f25d1",
+      "queued_on": "2026-10-04",
+      "english_authors": [
+        "claude-opus-5.5"
+      ]
+    },
+    "lesson_7-9_aqeedah_fundamentals_04": {
+      "category": "awaiting-review",
+      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system · Arabic corrected 2026-10-04 per the PR #20 review · English corrected by Claude 2026-10-04 per the PR #20 review",
+      "content_sha256": "c0698c18b3ad33155e445cb79d5a244383a7d2f1fca054fa3673ebc58c464f31",
+      "queued_on": "2026-10-04",
+      "english_authors": [
+        "claude-opus-5.5"
+      ]
+    },
+    "lesson_7-9_islamic_parenting_worship_01": {
+      "category": "awaiting-review",
+      "reason": "owned by content/p1-deep-paths (PR #31), which rewrites this lesson; it is reviewed with #31's text, not this one",
+      "content_sha256": "ad4e7817c528e8f8251878826afe2c0fda54b7ff6462e928f23d4aca8a665605",
+      "queued_on": "2026-10-04"
+    },
+    "lesson_prenatal-1_infant_pregnancy_03": {
+      "category": "awaiting-review",
+      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
+      "content_sha256": "93003567117ec779842f92f69caa6b9bf1c1f8e1f8c2c5bddca93a251ab63338",
+      "queued_on": "2026-10-04",
+      "english_authors": [
+        "claude-opus-5.5"
+      ]
+    },
+    "lesson_prenatal-1_infant_pregnancy_04": {
+      "category": "awaiting-review",
+      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
+      "content_sha256": "f8b33255c308abd00384f5e1924a772fac3c770e0b58c978b7f5171f1ec235d0",
+      "queued_on": "2026-10-04",
+      "english_authors": [
+        "claude-opus-5.5"
+      ]
+    },
+    "lesson_prenatal-1_infant_pregnancy_05": {
+      "category": "awaiting-review",
+      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
+      "content_sha256": "97ff39a9f47bae37a745ffc756290ce4894ddbf4864ff6ebd4b7d01a5c5b2e75",
+      "queued_on": "2026-10-04",
+      "english_authors": [
+        "claude-opus-5.5"
+      ]
+    },
+    "med-6de3365b__en": {
+      "category": "awaiting-review",
+      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
+      "content_sha256": "ecd971135df75a75274a3842f43c7ff1946102f2f83c821a9dc7c9fece02906a",
+      "queued_on": "2026-10-04",
+      "english_authors": [
+        "claude-opus-5.5"
+      ]
+    },
+    "med-b99c1ea8__en": {
+      "category": "awaiting-review",
+      "reason": "Arabic corrected 2026-10-04 per the PR #20 review and the English rewritten by Claude to match; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 after the Ollama weekly cap · English corrected by Claude 2026-10-04 per the PR #20 review",
+      "content_sha256": "915bfaccd2374595260b76b5e96a62d33373d11af40b07d559ee9f5f99dedf16",
+      "queued_on": "2026-10-04",
+      "english_authors": [
+        "claude-opus-5.5"
+      ]
+    },
+    "med-ccf5e011__en": {
+      "category": "awaiting-review",
+      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system · Arabic corrected 2026-10-04 per the PR #20 review · English corrected by Claude 2026-10-04 per the PR #20 review",
+      "content_sha256": "5de773fecc409b301a9f67757b0b86ba199d6bd4ad5ad3fb67ab7ac4c3c73ffd",
+      "queued_on": "2026-10-04",
+      "english_authors": [
+        "claude-opus-5.5"
+      ]
+    },
+    "med-e7e88a3b__en": {
+      "category": "awaiting-review",
+      "reason": "Arabic corrected 2026-10-04 per the PR #20 review and the English rewritten by Claude to match; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 after the Ollama weekly cap · English corrected by Claude 2026-10-04 per the PR #20 review",
+      "content_sha256": "004f583c19c902f3306573132f4b41c601b93538c482c9b56a1237cccf1fea7b",
+      "queued_on": "2026-10-04",
+      "english_authors": [
+        "claude-opus-5.5"
+      ]
+    },
+    "story:abdullah_bismillah": {
+      "category": "awaiting-review",
+      "reason": "the Arabic gained interactive fields (age, category, three questions, Islamic value, challenge); their English is prepared in ops/data/en_parity_pending/ and is Claude-authored; parts of the live English were rewritten by PR #27 (Claude); waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
+      "content_sha256": "49ef802db60ab69fa47686b6b3f6751b7e807fb44a4cc66af90af21feca2b5ab",
+      "queued_on": "2026-10-04",
+      "english_authors": [
+        "claude-opus-5.5"
+      ]
+    },
+    "story:bilal_forgiveness": {
+      "category": "awaiting-review",
+      "reason": "the Arabic gained interactive fields (age, category, three questions, Islamic value, challenge); their English is prepared in ops/data/en_parity_pending/ and is Claude-authored; waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
+      "content_sha256": "04cb99a78bf68187700ac1abbd77828591a7fba1f8963ebac822fcbca142d670",
+      "queued_on": "2026-10-04"
+    },
+    "story:fatima_parents": {
+      "category": "awaiting-review",
+      "reason": "the Arabic gained interactive fields (age, category, three questions, Islamic value, challenge); their English is prepared in ops/data/en_parity_pending/ and is Claude-authored; waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
+      "content_sha256": "7205e0f9b09e9fc8665f07756871ff7bd4325200d8db5a753fd12f60323ee086",
+      "queued_on": "2026-10-04"
+    },
+    "story:hamza_truth": {
+      "category": "awaiting-review",
+      "reason": "the Arabic gained interactive fields (age, category, three questions, Islamic value, challenge); their English is prepared in ops/data/en_parity_pending/ and is Claude-authored; waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
+      "content_sha256": "d88d8c377c7c38363e8abe9e7cdba1f86142c28806f60cffcf6ce36b15580653",
+      "queued_on": "2026-10-04"
+    },
+    "story:hope_sprout": {
+      "category": "awaiting-review",
+      "reason": "the Arabic gained interactive fields (age, category, three questions, Islamic value, challenge); their English is prepared in ops/data/en_parity_pending/ and is Claude-authored; waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
+      "content_sha256": "72a6a07a930921b7240abc928cb86b859b11b2ffc568307123874d81f4246738",
+      "queued_on": "2026-10-04"
+    },
+    "story:khadija_neighbor": {
+      "category": "awaiting-review",
+      "reason": "the Arabic gained interactive fields (age, category, three questions, Islamic value, challenge); their English is prepared in ops/data/en_parity_pending/ and is Claude-authored; waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
+      "content_sha256": "aabbd16917fc9c37f36c6eadd185cc1dcf42fc92c9ecad0554851ec050480378",
+      "queued_on": "2026-10-04"
+    },
+    "story:maryam_toys": {
+      "category": "awaiting-review",
+      "reason": "the Arabic gained interactive fields (age, category, three questions, Islamic value, challenge); their English is prepared in ops/data/en_parity_pending/ and is Claude-authored; waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
+      "content_sha256": "fa78e4654af9af4e4c597be20b8a69f1c559944cc997f396efe86a50fec8f1f5",
+      "queued_on": "2026-10-04"
+    },
+    "story:omar_prayer": {
+      "category": "awaiting-review",
+      "reason": "the Arabic gained interactive fields (age, category, three questions, Islamic value, challenge); their English is prepared in ops/data/en_parity_pending/ and is Claude-authored; parts of the live English were rewritten by PR #27 (Claude); waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
+      "content_sha256": "855d3d1bea6059f0023adec661537807e7a19a1a58b42e85264714df32c71b51",
+      "queued_on": "2026-10-04",
+      "english_authors": [
+        "claude-opus-5.5"
+      ]
+    },
+    "story:yaseen_creation": {
+      "category": "awaiting-review",
+      "reason": "the Arabic gained interactive fields (age, category, three questions, Islamic value, challenge); their English is prepared in ops/data/en_parity_pending/ and is Claude-authored; waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
+      "content_sha256": "6f183269240e8fa043aa34380decdd474cd99d56efcc5d349b0e30317cea839d",
+      "queued_on": "2026-10-04"
+    },
+    "tip_0-3_018": {
+      "category": "awaiting-review",
+      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
+      "content_sha256": "facfabd643f3c3cc95345ea2467d03af77bc0908f7259a13440a3e776e53b809",
+      "queued_on": "2026-10-04",
+      "english_authors": [
+        "claude-opus-5.5"
+      ]
+    },
+    "tip_13-15_020": {
+      "category": "awaiting-review",
+      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
+      "content_sha256": "584b6083e74a30bdd6d49021cf8c24af090ba9fcb115b390dbfba70d0ad48d13",
+      "queued_on": "2026-10-04",
+      "english_authors": [
+        "claude-opus-5.5"
+      ]
+    },
+    "tip_16-18_012": {
+      "category": "awaiting-review",
+      "reason": "Arabic corrected 2026-10-04 per the PR #20 review and the English rewritten by Claude to match; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 after the Ollama weekly cap · English corrected by Claude 2026-10-04 per the PR #20 review",
+      "content_sha256": "51b223206c65c037beca8f1691be95028d2a0bd62813785d17548aa20242fea5",
+      "queued_on": "2026-10-04",
+      "english_authors": [
+        "claude-opus-5.5"
+      ]
+    },
+    "tip_7-9_024": {
+      "category": "awaiting-review",
+      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
+      "content_sha256": "66c124378e9318c4d3eec3679d85b41044a14cc61f143bafb3c93c6f281e1afc",
+      "queued_on": "2026-10-04",
+      "english_authors": [
+        "claude-opus-5.5"
+      ]
+    },
+    "tip_7-9_030": {
+      "category": "awaiting-review",
+      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
+      "content_sha256": "c6adb0ee30eb75ef6145f480be21a6b4962878f5682c8e14e90dbaabdf27d0b5",
+      "queued_on": "2026-10-04",
+      "english_authors": [
+        "claude-opus-5.5"
+      ]
+    }
+  }
+}

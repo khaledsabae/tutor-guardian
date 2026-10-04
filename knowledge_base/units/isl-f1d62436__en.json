@@ -30,35 +30,26 @@
   "translated_from": "isl-f1d62436",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "title",
-        "arabic": "أهمية الدعاء للأبناء في التربية",
-        "english": "The Importance of Du'a for One's Children in Tarbiyah",
-        "why": "The Arabic 'للأبناء' means 'for children' without the possessive 'one's'; the English adds 'One's', which is not in the source.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "في نفوس الأطفال",
-        "english": "in their children's hearts",
-        "why": "Arabic 'نفوس' means 'souls' or 'selves', not specifically 'hearts'; 'hearts' narrows the meaning.",
-        "severity": "low"
-      },
-      {
-        "type": "register",
-        "field": "text_simplified",
-        "arabic": "الاهتمام بالدعاء للأبناء يعد من أهم وسائل التربية الإيمانية",
-        "english": "Giving attention to making du'a for one's children is one of the most important means of tarbiyah imaniyyah (faith-based upbringing)",
-        "why": "The English phrase 'Giving attention to making du'a' is stiff and wordy; the Arabic is more direct, e.g., 'Paying attention to du'a for children'.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "70da324c891bbf3bc7d9405b523ead23fed8a6b211e143bd573e907dd36adb5c",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

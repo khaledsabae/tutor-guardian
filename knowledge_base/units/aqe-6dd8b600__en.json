@@ -30,35 +30,52 @@
   "translated_from": "aqe-6dd8b600",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
+    "review_verdict": "low_only",
     "review_defects": [
       {
-        "type": "meaning_change",
+        "model": "deepseek-v4-pro",
         "field": "text_simplified",
-        "arabic": "قُلْ إِنَّ صَلَاتِي وَنُسُكِي وَمَحْيَايَ وَمَمَاتِي لِلَّهِ رَبِّ الْعَالَمِينَ",
-        "english": "قُلْ إِنَّ صَلَاتِي وَنُسُكِي وَمَحْيَايَ وَمَمَاتِي لِلَّهِ رَبِّ الْعَالَمِينَ",
-        "why": "The English text leaves the Qur'anic verse in Arabic without providing an English translation, so the meaning is not conveyed to English readers.",
-        "severity": "high"
+        "type": "quran",
+        "why": "The Qur'anic ayah is placed inside «» instead of the required ﴿﴾ in the English field."
       },
       {
-        "type": "structure",
+        "model": "glm-5.2",
         "field": "text_simplified",
-        "arabic": "قال تعالى",
-        "english": "Allah said",
-        "why": "The honorific 'تعالى' (Exalted) is dropped in the English rendering.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "الشرك الأصغر",
-        "english": "minor shirk (associating partners with Allah)",
-        "why": "The English adds an explanatory gloss '(associating partners with Allah)' that is not present in the Arabic source.",
-        "severity": "low"
+        "type": "quran",
+        "why": "The Qur'anic ayah is enclosed in guillemets «» rather than the required ﴿﴾ brackets."
       }
     ],
-    "approved_by": null
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "d371c17bd25e4f456203957ac6db03df21ee337583a8ad50931b3200abb6095a",
+      "reviewed_at": "2026-10-04T16:52:31+00:00",
+      "residual_low": [
+        {
+          "model": "deepseek-v4-pro",
+          "field": "text_simplified",
+          "type": "quran",
+          "why": "The Qur'anic ayah is placed inside «» instead of the required ﴿﴾ in the English field."
+        },
+        {
+          "model": "glm-5.2",
+          "field": "text_simplified",
+          "type": "quran",
+          "why": "The Qur'anic ayah is enclosed in guillemets «» rather than the required ﴿﴾ brackets."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T16:52:31+00:00"
   }
 }

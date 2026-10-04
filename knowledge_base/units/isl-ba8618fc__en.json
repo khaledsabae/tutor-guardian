@@ -30,35 +30,11 @@
   "translated_from": "isl-ba8618fc",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "الرعاية الصحية والنفسية",
-        "english": "physical and psychological care",
-        "why": "The Arabic says 'health care' (رعاية صحية), which includes medical and overall health, but the English narrows it to 'physical care', omitting the health/medical dimension.",
-        "severity": "medium"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "تعزيز القيم",
-        "english": "instill values",
-        "why": "The Arabic verb 'تعزيز' means to strengthen or reinforce existing values, while 'instill' implies introducing values that are not yet present, changing the nuance.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "في نفوس أطفالهم",
-        "english": "in the hearts of their children",
-        "why": "The Arabic 'نفوس' means souls or inner selves, not specifically 'hearts' (قلوب), so the English substitutes a different concept.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "pending",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

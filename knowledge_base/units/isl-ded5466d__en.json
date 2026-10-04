@@ -30,51 +30,26 @@
   "translated_from": "isl-ded5466d",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "term_error",
-        "field": "title",
-        "arabic": "التأديب الحسن",
-        "english": "Good Adab",
-        "why": "Arabic 'التأديب' (at-ta'deeb) means disciplining/teaching good behavior, not 'adab' (manners). The translation uses the wrong Islamic term, changing the gift from an action to a quality.",
-        "severity": "high"
-      },
-      {
-        "type": "term_error",
-        "field": "text_simplified",
-        "arabic": "التأديب الحسن",
-        "english": "good adab (manners)",
-        "why": "Same error as title: 'التأديب' is disciplining, not 'adab'. The parenthetical '(manners)' reinforces the wrong meaning.",
-        "severity": "high"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "الوالد",
-        "english": "a parent",
-        "why": "Arabic 'الوالد' specifically means father, not the gender-neutral 'parent'. The hadith refers to a father's gift to his child.",
-        "severity": "medium"
-      },
-      {
-        "type": "religious_error",
-        "field": "text_simplified",
-        "arabic": "حديث نبوي شريف",
-        "english": "noble hadith",
-        "why": "Arabic explicitly says 'Prophetic noble hadith' (نبوي); English 'noble hadith' omits 'Prophetic', softening the attribution.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "التربية الصالحة",
-        "english": "sound tarbiyah (upbringing)",
-        "why": "Arabic 'صالحة' means righteous/pious, not merely 'sound'. The translation loses the religious connotation.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "252db9050edf231bb7112befc3d28ecb3415d35f03f3dcb632eca0853aaad7ff",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

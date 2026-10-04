@@ -30,27 +30,18 @@
   "translated_from": "isl-4bd24438",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
+    "review_verdict": "pending",
     "review_defects": [
       {
-        "type": "meaning_change",
+        "model": "glm-5.2",
         "field": "text_simplified",
-        "arabic": "قدوة حسنة",
-        "english": "righteous example",
-        "why": "Arabic 'حسنة' means 'good', not necessarily 'righteous'; 'righteous' adds a religious quality not present in the original.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "بعض",
-        "english": "several",
-        "why": "Arabic 'بعض' means 'some', not 'several'; 'several' implies a specific number greater than two, which is not in the source.",
-        "severity": "low"
+        "type": "meaning",
+        "why": "The Arabic says 'بعض' (some), not 'several'."
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

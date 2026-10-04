@@ -29,27 +29,52 @@
   "translated_from": "cyb-a208f26a",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
+    "review_verdict": "low_only",
     "review_defects": [
       {
-        "type": "term_error",
+        "model": "deepseek-v4-pro",
         "field": "text_simplified",
-        "arabic": "التهجم الإلكتروني",
-        "english": "cyberbullying",
-        "why": "The Arabic uses the same root 'تهجم' for both physical and electronic aggression. Translating 'التهجم البدني' as 'physical aggression' but 'التهجم الإلكتروني' as 'cyberbullying' introduces inconsistency and narrows the meaning; 'cyberbullying' is a specific term implying repeated, power-imbalanced behavior, whereas the Arabic is more general ('electronic aggression/attack').",
-        "severity": "medium"
+        "type": "source_corruption",
+        "why": "The verb should be feminine 'تشير' to agree with 'دراسة'."
       },
       {
-        "type": "meaning_change",
+        "model": "glm-5.2",
         "field": "text_simplified",
-        "arabic": "مشكلة",
-        "english": "issue",
-        "why": "The Arabic 'مشكلة' means 'problem', which is stronger and more direct. The English 'issue' is a softer, more euphemistic term, slightly downplaying the severity.",
-        "severity": "low"
+        "type": "source_corruption",
+        "why": "The verb 'يشير' is masculine but should agree with the feminine noun 'دراسة' as 'تشير'."
       }
     ],
-    "approved_by": null
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "e373341800bd9fde356347e172f3c526fd471cc9875b58a23aff6a7a73a5b023",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [
+        {
+          "model": "deepseek-v4-pro",
+          "field": "text_simplified",
+          "type": "source_corruption",
+          "why": "The verb should be feminine 'تشير' to agree with 'دراسة'."
+        },
+        {
+          "model": "glm-5.2",
+          "field": "text_simplified",
+          "type": "source_corruption",
+          "why": "The verb 'يشير' is masculine but should agree with the feminine noun 'دراسة' as 'تشير'."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

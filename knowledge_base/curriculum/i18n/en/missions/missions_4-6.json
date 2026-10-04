@@ -1,0 +1,203 @@
+{
+  "age_band": "4-6",
+  "version": "1.0.0",
+  "is_published": true,
+  "description": "Bank of daily missions — every mission happens off-screen, and its estimated time is never less than five times the card's minutes (the card is three minutes, so the floor is fifteen).",
+  "missions": [
+    {
+      "id": "mission_4-6_color_hunt",
+      "domain": "development",
+      "title_ar": "Colour Hunter",
+      "instruction_ar": "Look around the house for three red things and three blue things, then arrange them on the table and tell your mum or dad what you found.",
+      "estimated_minutes": 15,
+      "needs_parent": false,
+      "needs_outdoors": false,
+      "materials": [],
+      "skill": "Sorting",
+      "is_published": true
+    },
+    {
+      "id": "mission_4-6_tidy_corner",
+      "domain": "development",
+      "title_ar": "My Tidy Corner",
+      "instruction_ar": "Choose one corner of your room and tidy it all by yourself: toys in their place and books in their place.",
+      "estimated_minutes": 15,
+      "needs_parent": false,
+      "needs_outdoors": false,
+      "materials": [],
+      "skill": "Tidying",
+      "is_published": true
+    },
+    {
+      "id": "mission_4-6_water_plant",
+      "domain": "development",
+      "title_ar": "I Water the Plants",
+      "instruction_ar": "Water a plant in the house or on the balcony, then look at its leaves and describe them in three words.",
+      "estimated_minutes": 15,
+      "needs_parent": false,
+      "needs_outdoors": true,
+      "materials": [],
+      "skill": "Caring",
+      "is_published": true
+    },
+    {
+      "id": "mission_4-6_help_table",
+      "domain": "development",
+      "title_ar": "A Helping Hand",
+      "instruction_ar": "Help set the table: put out the plates and spoons, and count them out loud.",
+      "estimated_minutes": 15,
+      "needs_parent": true,
+      "needs_outdoors": false,
+      "materials": [],
+      "skill": "Cooperation",
+      "is_published": true
+    },
+    {
+      "id": "mission_4-6_draw_family",
+      "domain": "development",
+      "title_ar": "I Draw My Family",
+      "instruction_ar": "Draw the people in your family on a piece of paper, then tell your mum or dad who is in the picture and why you drew them that way.",
+      "estimated_minutes": 20,
+      "needs_parent": false,
+      "needs_outdoors": false,
+      "materials": [
+        "Paper",
+        "Coloured pencils"
+      ],
+      "skill": "Expression",
+      "is_published": true
+    },
+    {
+      "id": "mission_4-6_sock_pairs",
+      "domain": "development",
+      "title_ar": "Sock Twins",
+      "instruction_ar": "Sort the clean socks into matching pairs, and count how many pairs you have.",
+      "estimated_minutes": 15,
+      "needs_parent": false,
+      "needs_outdoors": false,
+      "materials": [],
+      "skill": "Matching",
+      "is_published": true
+    },
+    {
+      "id": "mission_4-6_listen_walk",
+      "domain": "development",
+      "title_ar": "The Sound Walk",
+      "instruction_ar": "Walk with your mum or dad for fifteen minutes, and try to name five sounds you heard.",
+      "estimated_minutes": 15,
+      "needs_parent": true,
+      "needs_outdoors": true,
+      "materials": [],
+      "skill": "Listening",
+      "is_published": true
+    },
+    {
+      "id": "mission_4-6_build_tower",
+      "domain": "development",
+      "title_ar": "My Tall Tower",
+      "instruction_ar": "Build a tower out of blocks or empty boxes, and try to make it taller each time.",
+      "estimated_minutes": 20,
+      "needs_parent": false,
+      "needs_outdoors": false,
+      "materials": [],
+      "skill": "Patience",
+      "is_published": true
+    },
+    {
+      "id": "mission_4-6_kind_word",
+      "domain": "development",
+      "title_ar": "A Kind Word",
+      "instruction_ar": "Say a kind word to three people in your home today, then tell your mum or dad how they felt.",
+      "estimated_minutes": 15,
+      "needs_parent": false,
+      "needs_outdoors": false,
+      "materials": [],
+      "skill": "Mercy",
+      "is_published": true
+    },
+    {
+      "id": "mission_4-6_shapes_hunt",
+      "domain": "development",
+      "title_ar": "Shapes Around Me",
+      "instruction_ar": "Find a circle, a square and a triangle among the things in your house, and point them out to someone in your family.",
+      "estimated_minutes": 15,
+      "needs_parent": false,
+      "needs_outdoors": false,
+      "materials": [],
+      "skill": "Observation",
+      "is_published": true
+    },
+    {
+      "id": "mission_4-6_fold_clothes",
+      "domain": "development",
+      "title_ar": "I Fold My Clothes",
+      "instruction_ar": "Fold three pieces of your clothing and put them in the drawer.",
+      "estimated_minutes": 15,
+      "needs_parent": false,
+      "needs_outdoors": false,
+      "materials": [],
+      "skill": "Independence",
+      "is_published": true
+    },
+    {
+      "id": "mission_4-6_story_retell",
+      "domain": "development",
+      "title_ar": "I Tell What I Heard",
+      "instruction_ar": "Ask your mum or dad for a short story, then retell it in your own words.",
+      "estimated_minutes": 20,
+      "needs_parent": true,
+      "needs_outdoors": false,
+      "materials": [],
+      "skill": "Remembering",
+      "is_published": true
+    }
+  ],
+  "translation": {
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "7b3208259413419b456d90c272716c55dc7bd076a2844555afb240be148d42ac",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [
+        {
+          "model": "deepseek-v4-pro",
+          "field": "missions[2].title_ar",
+          "type": "addition",
+          "why": "The Arabic title has no object, while the English adds 'the Plants'."
+        },
+        {
+          "model": "glm-5.2",
+          "field": "description",
+          "type": "omission",
+          "why": "The Arabic specifies 'fifteen minutes' but the English drops the unit, leaving 'fifteen' ambiguous."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
+    "review_verdict": "low_only",
+    "review_defects": [
+      {
+        "model": "deepseek-v4-pro",
+        "field": "missions[2].title_ar",
+        "type": "addition",
+        "why": "The Arabic title has no object, while the English adds 'the Plants'."
+      },
+      {
+        "model": "glm-5.2",
+        "field": "description",
+        "type": "omission",
+        "why": "The Arabic specifies 'fifteen minutes' but the English drops the unit, leaving 'fifteen' ambiguous."
+      }
+    ],
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
+  }
+}

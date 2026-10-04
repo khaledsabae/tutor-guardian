@@ -30,27 +30,26 @@
   "translated_from": "isl-a0f25a05",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "term_error",
-        "field": "text_simplified",
-        "arabic": "العبادات",
-        "english": "acts of worship",
-        "why": "The Arabic term 'العبادات' is an Islamic term and is transliterated elsewhere in the document (e.g., 'salah', 'akhlaq'), but here it is translated instead of transliterated as 'ibadat' or 'ibadah', creating inconsistency.",
-        "severity": "medium"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "نفوسهم",
-        "english": "hearts",
-        "why": "The Arabic 'نفوسهم' means 'their souls/self', not specifically 'hearts'. The English uses a common but not exact equivalent, slightly shifting the meaning.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "664166777d81cf49172e4df368779421efdc4a9d026c3c0f40195c18bc0583d4",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

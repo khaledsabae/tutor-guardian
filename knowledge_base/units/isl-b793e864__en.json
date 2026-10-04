@@ -30,27 +30,26 @@
   "translated_from": "isl-b793e864",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "title",
-        "arabic": "أهمية التحفيز المعنوي في تربية الطفل",
-        "english": "The Importance of Moral Motivation in the Tarbiyah of the Child",
-        "why": "The Arabic 'معنوي' means non-material/intangible/psychological, not 'moral' in the ethical sense. 'Moral motivation' suggests ethical motivation, which is not the intended meaning. Better: 'intangible' or 'non-material' or 'psychological'.",
-        "severity": "medium"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "يجب أن يكون المكافأة معنوية قبل أن تكون مادية",
-        "english": "The reward should be moral before it is material",
-        "why": "Same issue: 'معنوية' is rendered as 'moral', which implies ethical rather than non-material/psychological. The contrast is with 'مادية' (material), so 'intangible' or 'non-material' is more accurate.",
-        "severity": "medium"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "d7b75f4a274d0243a1e007d2be2c3cb31583238f4d47b8a27e74c81932f1ddf5",
+      "reviewed_at": "2026-10-04T16:52:31+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T16:52:31+00:00"
   }
 }

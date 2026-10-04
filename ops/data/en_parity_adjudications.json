@@ -1,0 +1,149 @@
+{
+  "seed-screen-79__en": {
+    "content_sha256": "5ad9ace0573d728f026eaa471e09fdf9ce2bdc75a0066b5c019cf2c986b4f647",
+    "overrides": [
+      {
+        "field": "text_simplified",
+        "type": "source_corruption",
+        "reason": "«ضع خطةً عائليةً متّفقًا عليها» is correct Arabic: متّفقًا is a نعت سببي describing خطة through «عليها», so it takes the masculine accusative. Nothing to fix.",
+        "by": "claude-opus-5.5 (en-parity review, PR #20)",
+        "on": "2026-10-04"
+      }
+    ]
+  },
+  "isl-48e32cae__en": {
+    "content_sha256": "2131be772fc83ce9c60847b4b209f533a40e344e2ae905d0815e14607687bf28",
+    "overrides": [
+      {
+        "field": "text_simplified",
+        "type": "source_corruption",
+        "reason": "The Arabic is coherent as written (all people err; bad habits are to be reproached). The proposed «لا يعيبه على الخطأ بل…» is a speculative reconstruction that would add content the source does not carry.",
+        "by": "claude-opus-5.5 (en-parity review, PR #20)",
+        "on": "2026-10-04"
+      }
+    ]
+  },
+  "isl-f2bef952__en": {
+    "content_sha256": "2c8841eec7783fac641b05d79be71217885ca90e41f9295388d8b0b5899a0f6e",
+    "overrides": [
+      {
+        "field": "text_simplified",
+        "type": "hadith",
+        "reason": "The Arabic names the narration's real source (Abu Dawud) for the prayer-at-seven hadith, which the master plan's Prayer Journey also builds on. Deleting a correct attribution would make it less verifiable, not safer; the English reproduces the Arabic citation faithfully. Policy question for Khaled: keep or drop explicit non-Sahihayn citations in existing content.",
+        "by": "claude-opus-5.5 (en-parity review, PR #20)",
+        "on": "2026-10-04"
+      }
+    ]
+  },
+  "adhkar:family_adhkar": {
+    "content_sha256": "34e847e50f009fd70efd1956ec0f1c526a548cab65cc9835cf1b191839314d45",
+    "overrides": [
+      {
+        "field": "items[145].source",
+        "type": "hadith",
+        "reason": "«فاتقوا الله واعدلوا بين أولادكم» is Sahih al-Bukhari 2587's own wording, «ف» included; check_scripture_coverage verifies the number holds it.",
+        "by": "claude-opus-5.5 (en-parity review, PR #20)",
+        "on": "2026-10-04"
+      },
+      {
+        "field": "items[208].text",
+        "type": "source_corruption",
+        "reason": "«في كل كبد رطبة أجر» without «ذات» is a Sahih al-Bukhari wording (6009); the cited 2363 holds it per check_scripture_coverage.",
+        "by": "claude-opus-5.5 (en-parity review, PR #20)",
+        "on": "2026-10-04"
+      },
+      {
+        "field": "items[231].text",
+        "type": "source_corruption",
+        "reason": "The tip quotes the opening of the leaving-home dhikr accurately; completing a du'a or hadith from memory is exactly what the content rules forbid.",
+        "by": "claude-opus-5.5 (en-parity review, PR #20)",
+        "on": "2026-10-04"
+      }
+    ]
+  },
+  "tip_16-18_013": {
+    "content_sha256": "aea7a3fbc805e9c0e4958f2c135bfcf84021f8ec418bbb9001c45dc03b1c801f",
+    "overrides": [
+      {
+        "field": "text",
+        "type": "source_corruption",
+        "reason": "The Arabic already reads «وليبحث»; the «يطلب» the reviewer objects to is not in the text.",
+        "by": "claude-opus-5.5 (en-parity review, PR #20)",
+        "on": "2026-10-04"
+      }
+    ]
+  },
+  "isl-602bfb05__en": {
+    "content_sha256": "412b10b5917bb83dee467c6170fec85988604344bcaec98307b5ef185b34805b",
+    "overrides": [
+      {
+        "field": "text_simplified",
+        "type": "hadith",
+        "reason": "fix/trust-content (#27) wording: names where the narration is (Abu Dawud, «ليس في الصحيحين») without quoting it, and states the app never recommends hitting; check_scripture_coverage passes.",
+        "by": "claude-opus-5.5 (en-parity review, PR #20)",
+        "on": "2026-10-04"
+      }
+    ]
+  },
+  "isl-d54fd8e8__en": {
+    "content_sha256": "da422be0b8a52626a6d603a8cb87e4d4b8307c33a625fe50e1f4c13e86af5427",
+    "overrides": [
+      {
+        "field": "text_simplified",
+        "type": "hadith",
+        "reason": "fix/trust-content (#27) wording: names where the narration is (Abu Dawud, «ليس في الصحيحين») without quoting it, and states the app never recommends hitting; check_scripture_coverage passes.",
+        "by": "claude-opus-5.5 (en-parity review, PR #20)",
+        "on": "2026-10-04"
+      }
+    ]
+  },
+  "isl-a0625782__en": {
+    "content_sha256": "154cd53de19afdbcd03c51ac4845c9ef8c1700499afcbd05bae491757b98faa4",
+    "overrides": [
+      {
+        "field": "text_simplified",
+        "type": "tone",
+        "reason": "The source passage singles out 1½–3 years inside guidance (don't search the child's room; give trust) that applies to the unit's band; the band is KB metadata, not translation.",
+        "by": "claude-opus-5.5 (en-parity review, PR #20)",
+        "on": "2026-10-04"
+      }
+    ]
+  },
+  "isl-f6c0c64a__en": {
+    "content_sha256": "98011199c372376ac80f4ba3c07c1e37b7db6ed5e0643a1f3e24b0b6d51408bc",
+    "overrides": [
+      {
+        "field": "text_simplified",
+        "type": "hadith",
+        "reason": "Sahih al-Bukhari 1418 reads exactly «من ابتلي من هذه البنات بشيء كن له سترا من النار»; «فأحسن إليهن» belongs to Bukhari 5995 / Muslim 2629. Both sides quote 1418 faithfully; check_scripture_coverage verifies it.",
+        "by": "claude-opus-5.5 (en-parity review, PR #20)",
+        "on": "2026-10-04"
+      }
+    ]
+  },
+  "med-08886df5__en": {
+    "content_sha256": "fa7dac7176657bbebdabfcdcba7ac1623f82a3be0be84a2fb3d612b6ac922464",
+    "rebound": "2026-10-04 after a title-only fix (PR #20 review: «التحريضي» → «التخريبي (DMDD)»); the adjudicated text_simplified is unchanged",
+    "overrides": [
+      {
+        "field": "text_simplified",
+        "type": "medical",
+        "reason": "Faithful to the NIMH «DMDD: The Basics» text the unit summarises («Youth with DMDD are diagnosed between the ages of 6 and 10»), which the reviewer reads as too narrow.",
+        "by": "claude-opus-5.5 (en-parity review, PR #20)",
+        "on": "2026-10-04"
+      }
+    ]
+  },
+  "lesson_13-15_islamic_mockery_01": {
+    "content_sha256": "e3bb16579e347c2c0949297e9318fe43e8242ad3a29aef36204f183168839d60",
+    "overrides": [
+      {
+        "field": "summary",
+        "type": "hadith",
+        "reason": "The Arabic names the prayer-at-seven narration's real source (Abu Dawud) in indirect speech, as in isl-f2bef952 — same decision and the same open question for Khaled; check_scripture_coverage passes.",
+        "by": "claude-opus-5.5 (en-parity review, PR #20)",
+        "on": "2026-10-04"
+      }
+    ]
+  }
+}

@@ -29,19 +29,11 @@
   "translated_from": "isl-09afb431",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "register",
-        "field": "text_simplified",
-        "arabic": "تعويدهم عليها",
-        "english": "habituating them to it",
-        "why": "The Arabic is warm and direct; 'habituating' is clinical and stiff, less natural than 'getting them used to it' or 'making it a habit'.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "pending",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

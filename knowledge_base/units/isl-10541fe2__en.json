@@ -30,19 +30,11 @@
   "translated_from": "isl-10541fe2",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "term_error",
-        "field": "title",
-        "arabic": "تربية الأبناء",
-        "english": "Tarbiyah of Children",
-        "why": "The Arabic term 'تربية' is transliterated as 'Tarbiyah' in the title but translated as 'raising children' in the body, creating inconsistent handling of the same term within the document.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "pending",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

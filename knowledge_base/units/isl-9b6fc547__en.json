@@ -30,27 +30,18 @@
   "translated_from": "isl-9b6fc547",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
+    "review_verdict": "pending",
     "review_defects": [
       {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "كما يشير إلى ضرورة طاعتهما في غير معصية الله",
-        "english": "It also emphasizes the necessity of obeying them in all matters except those involving disobedience to Allah",
-        "why": "The Arabic verb 'يشير إلى' means 'indicates' or 'points out', not 'emphasizes'. Additionally, the phrase 'all matters' is added, whereas the Arabic only says 'in other than disobedience to Allah' without the explicit universal quantifier.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
+        "model": "glm-5.2",
         "field": "title",
-        "arabic": "حقوق الوالدين على الأبناء في الإسلام",
-        "english": "The Rights of Parents over Their Children in Islam",
-        "why": "The Arabic definite noun 'الأبناء' means 'the children', not 'their children'. The English adds a possessive pronoun that is not present in the source.",
-        "severity": "low"
+        "type": "addition",
+        "why": "The English title adds an Arabic transliteration in parentheses that is not present in the Arabic source."
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

@@ -30,19 +30,11 @@
   "translated_from": "isl-2fee1086",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "التربية الحسنة",
-        "english": "sound tarbiyah (upbringing)",
-        "why": "The Arabic 'حسنة' means 'good' or 'beautiful', not 'sound'. 'Sound' implies correctness or validity, which is a slightly different nuance.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "pending",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

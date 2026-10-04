@@ -30,27 +30,40 @@
   "translated_from": "dev-7117419a",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
+    "review_verdict": "low_only",
     "review_defects": [
       {
-        "type": "meaning_change",
+        "model": "glm-5.2",
         "field": "text_simplified",
-        "arabic": "وتجنب التعرض للضغط النفسي",
-        "english": "and to avoid subjecting them to psychological pressure",
-        "why": "The Arabic says 'avoid exposure to psychological stress' without specifying who is exposed. The English adds 'them' (children) and changes the meaning to avoiding causing stress to children, whereas the Arabic likely refers to the parents avoiding stress themselves.",
-        "severity": "high"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "العقاب",
-        "english": "discipline",
-        "why": "Arabic 'العقاب' means punishment, but English 'discipline' is broader and softer, potentially changing the intended contrast between reward and punishment.",
-        "severity": "medium"
+        "type": "meaning",
+        "why": "«العقاب» means punishment, not discipline; the English softens the Arabic."
       }
     ],
-    "approved_by": null
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "6f4c1ce75a5494f1661a9576c88fbfa51103d50ee13828a4c3beea0198f2bc7f",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [
+        {
+          "model": "glm-5.2",
+          "field": "text_simplified",
+          "type": "meaning",
+          "why": "«العقاب» means punishment, not discipline; the English softens the Arabic."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

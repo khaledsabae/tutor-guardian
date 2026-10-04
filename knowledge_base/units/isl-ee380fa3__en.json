@@ -30,27 +30,18 @@
   "translated_from": "isl-ee380fa3",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
+    "review_verdict": "pending",
     "review_defects": [
       {
-        "type": "term_error",
+        "model": "glm-5.2",
         "field": "title",
-        "arabic": "أهمية التربية الأخلاقية للأبناء",
-        "english": "The Importance of Akhlaq Tarbiyah for Children",
-        "why": "The Arabic uses ordinary words meaning 'moral education'; the English transliterates them as 'Akhlaq Tarbiyah' (reversed order) instead of translating, introducing Islamic jargon not present in the source and altering the meaning.",
-        "severity": "medium"
-      },
-      {
-        "type": "term_error",
-        "field": "text_simplified",
-        "arabic": "تربية الأبناء على القيم الإسلامية والأخلاق الحميدة",
-        "english": "tarbiyah for children upon Islamic values and noble akhlaq",
-        "why": "The Arabic uses 'تربية' (upbringing) and 'الأخلاق الحميدة' (good morals) as normal words; the English transliterates them as 'tarbiyah' and 'akhlaq', making the text less accessible and not a faithful translation.",
-        "severity": "medium"
+        "type": "meaning",
+        "why": "The Arabic is an idafa-style adjective construct ('moral upbringing'); the English reverses the word order and drops the adjectival form, producing an awkward phrase."
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

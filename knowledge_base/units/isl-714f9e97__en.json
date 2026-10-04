@@ -30,35 +30,11 @@
   "translated_from": "isl-714f9e97",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "النص يتحدث عن قصة قديمة",
-        "english": "The text recounts an old story",
-        "why": "Arabic says the text 'talks about' an old story, not that it 'recounts' it; 'recounts' implies the text is narrating the story directly, which is a subtle shift.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "يُستفاد من النص أن هناك حاجة",
-        "english": "It conveys that there is a need",
-        "why": "Arabic uses passive 'it is understood/derived from the text', focusing on the reader's inference; English 'It conveys' makes the text the active communicator, changing the nuance.",
-        "severity": "low"
-      },
-      {
-        "type": "register",
-        "field": "text_simplified",
-        "arabic": "تربية الأطفال بلطف واحترام",
-        "english": "*tarbiyah* (nurturing) of children with gentleness and respect",
-        "why": "The Arabic uses the ordinary word 'تربية' (upbringing/raising); the English adds an Islamic transliteration 'tarbiyah' with a gloss, making the tone more academic and introducing a term not marked as technical in the source.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "pending",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

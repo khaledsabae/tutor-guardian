@@ -30,19 +30,26 @@
   "translated_from": "isl-d4dbc6b8",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "register",
-        "field": "title and text",
-        "arabic": "تربية البنات على الخير والأخلاق / النص يناقش تربية البنات على الخير والأخلاق...",
-        "english": "Tarbiyah of Daughters upon Khayr and Akhlaq / The text discusses the tarbiyah (upbringing) of daughters upon khayr (goodness) and akhlaq (virtuous character)...",
-        "why": "The Arabic uses ordinary words (تربية، خير، أخلاق) in a simple, direct style. The English transliterates them as technical Islamic terms (tarbiyah, khayr, akhlaq) and uses the awkward preposition 'upon', making the text sound more formal, preachy, and religious than the source.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "a5c80837fd3f76d4eaff21fb6d8434c333c3920c573cc57b98f96044b1dd75d5",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

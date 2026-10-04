@@ -30,27 +30,11 @@
   "translated_from": "isl-23c2dd25",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "حقوق الأطفال على والديهم",
-        "english": "rights of children over their parents",
-        "why": "The Arabic 'على' indicates an obligation upon parents, not authority over them; 'over' could imply children have power over parents, which is not the intended meaning.",
-        "severity": "medium"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "مع الاهتمام بحسن المعاملة والعدل بينهم",
-        "english": "along with ensuring kind treatment and justice among them",
-        "why": "Arabic 'الاهتمام' means attention/care, not 'ensuring' which implies a guarantee; the English strengthens the claim beyond the source.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "pending",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

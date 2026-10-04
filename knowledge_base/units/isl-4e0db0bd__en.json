@@ -30,27 +30,11 @@
   "translated_from": "isl-4e0db0bd",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "term_error",
-        "field": "title and text_simplified",
-        "arabic": "بر الوالدين / الأخلاق",
-        "english": "Birr al-Walidayn / Akhlaq (title) vs birr al-walidayn / akhlaq (text)",
-        "why": "Transliterated terms are capitalized inconsistently between the title and the body text.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "الأخلاق الحميدة والاحترام ... البر بالوالدين",
-        "english": "good akhlaq (manners) and respect ... birr al-walidayn (righteousness toward parents)",
-        "why": "The English adds parenthetical glosses not present in the Arabic, and 'manners' narrows the broader meaning of 'akhlaq' (morals/character).",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "pending",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

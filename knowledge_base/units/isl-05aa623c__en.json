@@ -29,19 +29,18 @@
   "translated_from": "isl-05aa623c",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
+    "review_verdict": "pending",
     "review_defects": [
       {
-        "type": "meaning_change",
+        "model": "deepseek-v4-pro",
         "field": "title",
-        "arabic": "طلب الطفل للتحكم في النفس",
-        "english": "A Child’s Du'a for Self-Control",
-        "why": "The English title adds the Islamic term 'Du'a' (supplication), which is not present in the Arabic title. The Arabic says 'طلب' (request), not 'دعاء' (du'a). This introduces a religious specificity not in the source.",
-        "severity": "medium"
+        "type": "addition",
+        "why": "The English title adds 'Du'a' (supplication), which is not present in the Arabic title; the Arabic only says 'request/asking'."
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

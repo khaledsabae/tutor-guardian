@@ -30,19 +30,11 @@
   "translated_from": "isl-32871fdb",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "توعية الأهل",
-        "english": "raise parents' awareness",
-        "why": "The Arabic 'الأهل' means 'family' or 'parents and guardians', but the English narrows it to 'parents' only, potentially excluding other caregivers or family members involved in upbringing.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "pending",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

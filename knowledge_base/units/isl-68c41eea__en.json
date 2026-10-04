@@ -30,19 +30,40 @@
   "translated_from": "isl-68c41eea",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
+    "review_verdict": "low_only",
     "review_defects": [
       {
-        "type": "meaning_change",
+        "model": "deepseek-v4-pro",
         "field": "text_simplified",
-        "arabic": "يجب على المربين ... في تربية الأطفال",
-        "english": "Parents must ... in the tarbiyah of their children",
-        "why": "The Arabic addresses 'المربين' (educators/caregivers) generally and refers to 'children' without possessive; the English narrows the audience to 'Parents' and adds 'their', implying only their own children.",
-        "severity": "medium"
+        "type": "meaning",
+        "why": "The Arabic addresses educators/upbringers (المربين) generally, while the English narrows the subject to parents only."
       }
     ],
-    "approved_by": null
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "dde706418f1a6a5e08ad0ae12c6526d20ccaf6e7396246b5d29d45113c86731d",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [
+        {
+          "model": "deepseek-v4-pro",
+          "field": "text_simplified",
+          "type": "meaning",
+          "why": "The Arabic addresses educators/upbringers (المربين) generally, while the English narrows the subject to parents only."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

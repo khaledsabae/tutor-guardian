@@ -28,27 +28,40 @@
   "translated_from": "c7b72252-7135-405e-98fd-a46d466d9055",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
+    "review_verdict": "low_only",
     "review_defects": [
       {
-        "type": "meaning_change",
+        "model": "glm-5.2",
         "field": "text_simplified",
-        "arabic": "ليس دلالًا بل ارتباط شرطي",
-        "english": "not out of indulgence, but due to a conditioned attachment",
-        "why": "دلال means spoiledness or being coddled, not 'indulgence' (which is the parent's action). ارتباط شرطي means a conditioned association/link, not 'attachment' (which has a specific emotional meaning in child development).",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "التوقّع نفسه يهدّئ",
-        "english": "The same expectation brings calm",
-        "why": "نفسه means 'itself', emphasizing the predictability, not 'the same expectation' which could imply a repeated expectation.",
-        "severity": "low"
+        "type": "meaning",
+        "why": "«ارتباط شرطي» is the Arabic term for classical conditioning (conditioned response/association), not psychological 'attachment'."
       }
     ],
-    "approved_by": null
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "5186b24664c942992f9a9194b5ef9b92423b64d99d601b88080812443d0cdbb6",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [
+        {
+          "model": "glm-5.2",
+          "field": "text_simplified",
+          "type": "meaning",
+          "why": "«ارتباط شرطي» is the Arabic term for classical conditioning (conditioned response/association), not psychological 'attachment'."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

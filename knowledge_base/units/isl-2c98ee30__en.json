@@ -30,35 +30,11 @@
   "translated_from": "isl-2c98ee30",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "title",
-        "arabic": "الآباء",
-        "english": "Parents",
-        "why": "الآباء means fathers specifically, not parents; the English broadens the scope to include mothers, which is not in the Arabic.",
-        "severity": "medium"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "آبائهم",
-        "english": "their parents",
-        "why": "Same issue: آبائهم means their fathers, not their parents.",
-        "severity": "medium"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "يشير إلى ضرورة",
-        "english": "emphasizes the necessity",
-        "why": "يشير means indicates or points out, not emphasizes; the English overstates the force of the Arabic.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "pending",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

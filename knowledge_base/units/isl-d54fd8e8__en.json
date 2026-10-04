@@ -30,38 +30,51 @@
   "translated_from": "isl-d54fd8e8",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
+    "review_verdict": "low_only",
     "review_defects": [
       {
-        "type": "religious_error",
+        "model": "glm-5.2",
         "field": "text_simplified",
-        "arabic": "وضربهم عليها عند العاشرة إن تركروها",
-        "english": "and disciplined for it at ten if they neglect it",
-        "why": "The Arabic uses 'ضربهم' (hit/strike them) from the hadith, but the English softens it to 'disciplined', obscuring the explicit command.",
-        "severity": "high"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "تكليفه بالصلاة",
-        "english": "burden them with salah",
-        "why": "Arabic 'تكليفه' means religious obligation/duty, not a burden; 'burden' introduces a negative connotation absent in the source.",
-        "severity": "medium"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "التربية البدنية والقلبية والأخلاقية",
-        "english": "physical, spiritual, and moral tarbiyah",
-        "why": "'القلبية' means of the heart, not necessarily spiritual; 'spiritual' is an interpretive expansion.",
-        "severity": "low"
+        "type": "leakage",
+        "why": "«Almorabbi» with the Arabic definite article fused in is an awkward transliteration that reads as untranslated Arabic rather than an English term."
       }
     ],
-    "approved_by": null,
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
     "manual_fix_note": "2026-10-04 PR #27 review: 7/10 narration described accurately (Abu Dawud, with the jurists' conditions); app stance kept separate",
     "fixed_at": "2026-10-04T12:34:44.900780+00:00",
-    "fixer_model": "claude-opus-5.5"
+    "fixer_model": "claude-opus-5.5",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "da422be0b8a52626a6d603a8cb87e4d4b8307c33a625fe50e1f4c13e86af5427",
+      "reviewed_at": "2026-10-04T17:06:53+00:00",
+      "residual_low": [
+        {
+          "model": "glm-5.2",
+          "field": "text_simplified",
+          "type": "leakage",
+          "why": "«Almorabbi» with the Arabic definite article fused in is an awkward transliteration that reads as untranslated Arabic rather than an English term."
+        }
+      ],
+      "adjudicated": [
+        {
+          "field": "text_simplified",
+          "type": "hadith",
+          "reason": "fix/trust-content (#27) wording: names where the narration is (Abu Dawud, «ليس في الصحيحين») without quoting it, and states the app never recommends hitting; check_scripture_coverage passes.",
+          "by": "claude-opus-5.5 (en-parity review, PR #20)",
+          "on": "2026-10-04"
+        }
+      ],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T17:06:53+00:00"
   }
 }

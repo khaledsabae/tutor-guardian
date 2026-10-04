@@ -30,19 +30,11 @@
   "translated_from": "isl-969f83c1",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "term_error",
-        "field": "title",
-        "arabic": "أهمية التربية الأخلاقية للأطفال",
-        "english": "The Importance of Tarbiyah al-Akhlaqiyyah for Children",
-        "why": "The Arabic phrase 'التربية الأخلاقية' means 'moral education' or 'ethical upbringing' and is not a technical Islamic term requiring transliteration. Transliterating it as 'Tarbiyah al-Akhlaqiyyah' obscures the meaning for English readers and is inconsistent with the text's use of 'tarbiyah (nurturing)' and 'akhlaq (character)'.",
-        "severity": "medium"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "pending",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

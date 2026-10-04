@@ -30,35 +30,26 @@
   "translated_from": "isl-7f2cd105",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "term_error",
-        "field": "title",
-        "arabic": "المنهج التربوي النبوي",
-        "english": "The Prophetic Tarbiyah Curriculum",
-        "why": "Arabic uses the adjective 'التربوي' (educational/pedagogical), not the noun 'tarbiyah'. Translating it as 'Tarbiyah Curriculum' introduces a transliterated noun not present in the source; a more accurate rendering would be 'The Prophetic Educational Methodology' or 'The Prophetic Tarbawiy Curriculum'.",
-        "severity": "medium"
-      },
-      {
-        "type": "term_error",
-        "field": "text_simplified",
-        "arabic": "أهم الوسائل التربوية التي استخدمها",
-        "english": "the most important tarbiyah methods he used",
-        "why": "Same issue: 'التربوية' is an adjective meaning educational, not the noun 'tarbiyah'. Using 'tarbiyah methods' is inconsistent with the later translation of 'تربية' as 'upbringing'.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "وفق أسس إسلامية متكاملة",
-        "english": "upon a comprehensive Islamic foundation",
-        "why": "Arabic plural 'أسس' (foundations/bases) is rendered as singular 'foundation', and 'وفق' (according to) is changed to 'upon'. This slightly alters the meaning.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "c82396da4b186819062b0750f7c70ba287df50b165ada72734bf1023bb8935c8",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

@@ -28,27 +28,25 @@
   "translated_from": "med-ca2a9d86",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "claude-opus",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "title",
-        "arabic": "اضطراب دماغي مزمن وشديد التوتر",
-        "english": "Chronic and Severe Mood Dysregulation",
-        "why": "The Arabic says 'chronic and severe stress brain disorder' (دماغي = brain, شديد التوتر = severe tension/stress), but the English changes it to 'mood dysregulation', which is a different concept. The translation should reflect the Arabic wording, not the standard English name for DMDD.",
-        "severity": "medium"
-      },
-      {
-        "type": "term_error",
-        "field": "text_simplified",
-        "arabic": "العلاج النفسي",
-        "english": "Psychological treatment / psychotherapy",
-        "why": "The same Arabic term 'العلاج النفسي' is translated inconsistently: first as 'Psychological treatment' and later as 'psychotherapy'. This creates inconsistency in terminology within the document.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:claude-opus:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "claude-opus"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "manual:dfa8a5f39718",
+      "content_sha256": "1f270f5351a448ce21c8af62812fc0fb393e6fd2afeaf27c030931a32656bc57",
+      "reviewed_at": "2026-10-04T17:12:35+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and one reviewer from a model family different from the translator's read the Arabic and English side by side against the review rubric and found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T17:12:35+00:00"
   }
 }

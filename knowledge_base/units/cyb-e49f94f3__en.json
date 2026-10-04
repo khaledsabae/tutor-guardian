@@ -30,27 +30,52 @@
   "translated_from": "cyb-e49f94f3",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
+    "review_verdict": "low_only",
     "review_defects": [
       {
-        "type": "meaning_change",
+        "model": "deepseek-v4-pro",
         "field": "title",
-        "arabic": "كيف تدعم طفلك في مواجهة الابتزاز الجنسي",
-        "english": "How to Support Your Child in Facing Sexual Extortion (al-ibtizaz al-jinsi)",
-        "why": "The English title adds a parenthetical transliteration '(al-ibtizaz al-jinsi)' that is not present in the Arabic source. This is an addition of information not in the original.",
-        "severity": "low"
+        "type": "addition",
+        "why": "Transliteration added in English not present in Arabic source."
       },
       {
-        "type": "meaning_change",
+        "model": "deepseek-v4-pro",
         "field": "text_simplified",
-        "arabic": "واحصل على مساعدة إضافية من هيئة السلامة الإلكترونية",
-        "english": "and seek additional help from the e-safety authority",
-        "why": "The Arabic verb 'احصل' means 'get/obtain', while the English 'seek' implies searching or attempting to obtain. This slightly alters the nuance from a direct instruction to obtain help to a suggestion to look for help.",
-        "severity": "low"
+        "type": "addition",
+        "why": "Transliteration added in English not present in Arabic source."
       }
     ],
-    "approved_by": null
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "353af6e28f0a11fc0e92eb0d7548bb5f13a855e10decb2e4a47d0839d404a797",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [
+        {
+          "model": "deepseek-v4-pro",
+          "field": "title",
+          "type": "addition",
+          "why": "Transliteration added in English not present in Arabic source."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "field": "text_simplified",
+          "type": "addition",
+          "why": "Transliteration added in English not present in Arabic source."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

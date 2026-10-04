@@ -30,35 +30,40 @@
   "translated_from": "aqe-c078677c",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
+    "review_verdict": "low_only",
     "review_defects": [
       {
-        "type": "term_error",
-        "field": "title and text_simplified",
-        "arabic": "قدوتنا / قدوةً سلوكية",
-        "english": "Our Uswah (Model) / behavioral uswah",
-        "why": "The Arabic uses قدوة (qudwah), not أسوة (uswah). Transliterating it as 'uswah' changes the Arabic term and conflates it with the Qur'anic word أسوة. It should be 'qudwah' or 'role model'.",
-        "severity": "medium"
-      },
-      {
-        "type": "meaning_change",
+        "model": "deepseek-v4-pro",
         "field": "text_simplified",
-        "arabic": "«لَقَدْ كَانَ لَكُمْ فِي رَسُولِ اللَّهِ أُسْوَةٌ حَسَنَةٌ»",
-        "english": "«لَقَدْ كَانَ لَكُمْ فِي رَسُولِ اللَّهِ أُسْوَةٌ حَسَنَةٌ» (left untranslated)",
-        "why": "The Qur'anic verse is quoted in Arabic but not translated into English, so its meaning is omitted for English readers. The translation should provide an English rendering clearly labelled as interpretation of the meaning.",
-        "severity": "medium"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "قصة نبوية قصيرة",
-        "english": "a short prophetic story",
-        "why": "نبوية means 'of the Prophet ﷺ' (i.e., from his life/seerah), not 'prophetic' in the sense of predictive. The English phrase is ambiguous and may be misunderstood. Better: 'a short story from the Prophet's life' or 'a short story about the Prophet'.",
-        "severity": "low"
+        "type": "quran",
+        "why": "The ayah is enclosed in «» instead of the required ﴿﴾."
       }
     ],
-    "approved_by": null
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "1c51282a71a81c786b7bba41c5f26bb22d59ec77b003ddc2d2e5e7f4ecaff265",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [
+        {
+          "model": "deepseek-v4-pro",
+          "field": "text_simplified",
+          "type": "quran",
+          "why": "The ayah is enclosed in «» instead of the required ﴿﴾."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

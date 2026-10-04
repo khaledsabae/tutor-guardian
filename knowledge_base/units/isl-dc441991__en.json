@@ -30,19 +30,11 @@
   "translated_from": "isl-dc441991",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "مواقف تربوية تتعلق بالتعامل مع الأطفال",
-        "english": "moments of *tarbiyah* (upbringing) related to interacting with children",
-        "why": "The Arabic uses the adjective 'تربوية' meaning educational/pedagogical, not the noun 'tarbiyah'. The English inserts an Islamic term not present in the source, altering the meaning and register.",
-        "severity": "medium"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "pending",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

@@ -30,27 +30,26 @@
   "translated_from": "isl-689dde49",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "تعويد الطفل على ذكر الله في كل أحواله",
-        "english": "habituating the child to the adhkar (remembrances) of Allah in all their states",
-        "why": "The Arabic uses the singular noun 'ذكر' (dhikr/remembrance), but the English renders it as the plural 'adhkar' (remembrances), which shifts the meaning from a general practice of remembrance to a specific set of plural remembrances.",
-        "severity": "medium"
-      },
-      {
-        "type": "term_error",
-        "field": "text_simplified",
-        "arabic": "أسس إيمانية صحيحة",
-        "english": "sound imani (faith-based) foundations",
-        "why": "'Imani' is not a standard transliteration of the Arabic adjective 'إيمانية'; it is an invented English adjective and is inconsistent with the noun 'Iman' used in the title. The parenthetical 'faith-based' conveys the meaning, but the transliteration itself is non-standard.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "40f8392cd28866ca1c335b670853dc866618d9d14acd74aceb9342108a079a60",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

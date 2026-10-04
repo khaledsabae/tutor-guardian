@@ -5,7 +5,7 @@
   "age_group": "2-3",
   "domain": "islamic_parenting",
   "unit_ids": [],
-  "summary": "«And speak to people kindly.» Teach your child as-salam (the greeting of peace) upon entering and gratitude upon receiving; the kind word is sadaqah (charity), and planting it early shapes a beautiful heart and tongue.",
+  "summary": "﴿وَقُولُوا لِلنَّاسِ حُسْنًا﴾ (Al-Baqarah: 83 — interpretation of the meaning: “And speak to people good [words].”) Teach your child as-salam (the greeting of peace) upon entering and gratitude upon receiving; the kind word is sadaqah (charity), and planting it early shapes a beautiful heart and tongue.",
   "try_this": "This week: Train your child to give as-salam when entering the house, and be the qudwah (example) yourself every time.",
   "order": 2,
   "estimated_minutes": 6,
@@ -17,38 +17,50 @@
   "needs_professional_followup": false,
   "is_published": true,
   "version": "1.0.0",
-  "approved_by": null,
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
   "language": "en",
   "source_language": "ar",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
     "scholar_signals": {
       "keyword": false,
       "quoted_arabic": true,
       "reviewer_model": true
     },
-    "review_verdict": "defects",
+    "review_verdict": "low_only",
     "review_defects": [
       {
-        "type": "term_error",
-        "field": "title",
-        "arabic": "السلام",
-        "english": "As-Salam",
-        "why": "Inconsistent transliteration: title uses 'As-Salam' while summary and try_this use 'as-salam'. The same term should be written uniformly.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "try_this",
-        "arabic": "عند الدخول",
-        "english": "when entering the house",
-        "why": "The Arabic does not specify 'the house'; it only says 'upon entering'. The addition narrows the meaning slightly.",
-        "severity": "low"
+        "model": "deepseek-v4-pro",
+        "field": "summary",
+        "type": "addition",
+        "why": "Adds surah reference not present in the Arabic source."
       }
     ],
-    "approved_by": null,
-    "revalidated_at": "2026-08-13T17:27:55.803928+00:00"
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "revalidated_at": "2026-10-04T16:52:31+00:00",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "9066d42ee6093c71f79c542f229cec6d737640df4148ea14fdb235584387bfc8",
+      "reviewed_at": "2026-10-04T16:52:31+00:00",
+      "residual_low": [
+        {
+          "model": "deepseek-v4-pro",
+          "field": "summary",
+          "type": "addition",
+          "why": "Adds surah reference not present in the Arabic source."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    }
   }
 }

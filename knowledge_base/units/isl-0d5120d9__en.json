@@ -30,27 +30,40 @@
   "translated_from": "isl-0d5120d9",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
+    "review_verdict": "low_only",
     "review_defects": [
       {
-        "type": "meaning_change",
+        "model": "deepseek-v4-pro",
         "field": "text_simplified",
-        "arabic": "يحذر من مشاهدة الأفلام الرومانسية والجريمة التي تؤثر على الفتيات",
-        "english": "warns against exposing girls to romantic and crime-related films, which negatively influence them",
-        "why": "The Arabic warns against watching these films, but the English shifts the focus to parents exposing girls to them, changing the subject and action.",
-        "severity": "medium"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "التي تؤثر على الفتيات",
-        "english": "which negatively influence them",
-        "why": "The Arabic says 'affect' without specifying negative, though context implies it; adding 'negatively' is an addition.",
-        "severity": "low"
+        "type": "meaning",
+        "why": "The Arabic warns against watching such films, while the English shifts the warning to exposing girls to them."
       }
     ],
-    "approved_by": null
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "6e9ed365365de7845fb2559887e299426a45bd8fa1cde2b5f69cb1769339c2b9",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [
+        {
+          "model": "deepseek-v4-pro",
+          "field": "text_simplified",
+          "type": "meaning",
+          "why": "The Arabic warns against watching such films, while the English shifts the warning to exposing girls to them."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

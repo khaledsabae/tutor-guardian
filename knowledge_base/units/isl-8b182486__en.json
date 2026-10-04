@@ -30,27 +30,11 @@
   "translated_from": "isl-8b182486",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "term_error",
-        "field": "text_simplified",
-        "arabic": "تربية الأطفال وتعليمهم",
-        "english": "tarbiyah (upbringing) and teaching them",
-        "why": "The Arabic uses the ordinary word تربية (upbringing), not a technical Islamic term. Transliterating it as 'tarbiyah' introduces unnecessary jargon and is not present in the source.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "يشير إلى ضرورة رعاية الأطفال وحسن معاملتهم",
-        "english": "It highlights the necessity of caring for children and treating them with kindness",
-        "why": "The Arabic verb يشير means 'indicates' or 'points out', while 'highlights' implies a stronger emphasis not present in the original.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "pending",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

@@ -30,19 +30,40 @@
   "translated_from": "isl-b8207e53",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
+    "review_verdict": "low_only",
     "review_defects": [
       {
-        "type": "meaning_change",
+        "model": "glm-5.2",
         "field": "text_simplified",
-        "arabic": "هذه الجملة تعد من أهم أسس تربية الأطفال",
-        "english": "This principle is among the most important foundations of raising children",
-        "why": "The Arabic says 'this sentence' (هذه الجملة) is among the most important foundations, referring to the preceding sentence itself. The English changes it to 'This principle', which alters the referent and omits the nuance of 'is considered' (تعد).",
-        "severity": "low"
+        "type": "meaning",
+        "why": "The Arabic says «هذه الجملة» (this sentence/statement), while the English renders it as 'this principle,' which slightly shifts the referent though the intent is preserved."
       }
     ],
-    "approved_by": null
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "cdfef8ffdf28b872de5277a8ed4cacbaa61ef73f8bf90e90b029269606735dcf",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [
+        {
+          "model": "glm-5.2",
+          "field": "text_simplified",
+          "type": "meaning",
+          "why": "The Arabic says «هذه الجملة» (this sentence/statement), while the English renders it as 'this principle,' which slightly shifts the referent though the intent is preserved."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

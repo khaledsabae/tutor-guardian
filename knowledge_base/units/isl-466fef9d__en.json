@@ -30,19 +30,11 @@
   "translated_from": "isl-466fef9d",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "يتشتت بسرعة",
-        "english": "is easily distracted",
-        "why": "The Arabic 'بسرعة' means 'quickly', indicating the child becomes distracted rapidly, whereas the English 'easily' suggests the distraction happens with little effort or frequently. The nuance of speed is lost.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "pending",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

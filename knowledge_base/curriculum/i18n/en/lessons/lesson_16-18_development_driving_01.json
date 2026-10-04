@@ -20,38 +20,36 @@
   "needs_professional_followup": false,
   "is_published": true,
   "version": "1.0.0",
-  "approved_by": null,
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
   "language": "en",
   "source_language": "ar",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
     "scholar_signals": {
       "keyword": false,
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "summary",
-        "arabic": "وقيادة ابنك أول سيارة علامة استقلالية طبيعية لا تمرّد يستدعي قلقًا زائدًا",
-        "english": "Your son’s first car is a natural sign of independence, not rebellion that warrants excessive concern.",
-        "why": "The Arabic emphasizes the act of driving (قيادة) as the sign of independence, not just the car itself. The English omits this nuance, changing the subject from the driving to the car.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "summary",
-        "arabic": "يبدأ بمنع القيادة الليلية واصطحاب أصدقاء",
-        "english": "it starts with prohibiting night driving and carrying friends",
-        "why": "The Arabic 'اصطحاب أصدقاء' means 'accompanying friends' or 'having friends in the car', not 'carrying friends' which is awkward and could be misinterpreted.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null,
-    "revalidated_at": "2026-08-13T17:24:30.109641+00:00"
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "revalidated_at": "2026-10-04T16:52:31+00:00",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "20ebc3f90b63ac31a28f1156c21419a1adf7e7ffd6264d66a3cfc44e5a164787",
+      "reviewed_at": "2026-10-04T16:52:31+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    }
   }
 }

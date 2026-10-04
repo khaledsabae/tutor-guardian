@@ -28,27 +28,52 @@
   "translated_from": "e095a1d9-98c4-4b4d-afe6-453645643704",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
+    "review_verdict": "low_only",
     "review_defects": [
       {
-        "type": "meaning_change",
+        "model": "deepseek-v4-pro",
         "field": "text_simplified",
-        "arabic": "ويحوّل الحوار إلى ولاء",
-        "english": "and turns the conversation into a loyalty test",
-        "why": "The Arabic says the dialogue turns into 'loyalty' (ولاء), not a 'loyalty test'. Adding 'test' changes the concept from a state of allegiance to an evaluation or challenge.",
-        "severity": "medium"
+        "type": "meaning",
+        "why": "The Arabic says the dialogue becomes about loyalty, not that it becomes a test of loyalty."
       },
       {
-        "type": "register",
+        "model": "glm-5.2",
         "field": "text_simplified",
-        "arabic": "«التصرّف ده مش عاجبني»",
-        "english": "“This action is not pleasing to me”",
-        "why": "The Arabic is colloquial and direct ('this behavior doesn't please me'), while the English is stiff and formal. The translation should match the warm, conversational tone of the source.",
-        "severity": "low"
+        "type": "meaning",
+        "why": "«علمي» means scientific, not academic («أكاديمي»); the English narrows the meaning slightly."
       }
     ],
-    "approved_by": null
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "b96deea30224aafff0f1b9960ef3e63d421677b9c09270470aae3e0dee8251bf",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [
+        {
+          "model": "deepseek-v4-pro",
+          "field": "text_simplified",
+          "type": "meaning",
+          "why": "The Arabic says the dialogue becomes about loyalty, not that it becomes a test of loyalty."
+        },
+        {
+          "model": "glm-5.2",
+          "field": "text_simplified",
+          "type": "meaning",
+          "why": "«علمي» means scientific, not academic («أكاديمي»); the English narrows the meaning slightly."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

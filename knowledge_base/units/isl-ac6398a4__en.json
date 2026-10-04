@@ -30,19 +30,11 @@
   "translated_from": "isl-ac6398a4",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "term_error",
-        "field": "title and text_simplified",
-        "arabic": "التربية والتعليم / تربية الأبناء / الصلاة / الأخلاق الحسنة",
-        "english": "Tarbiyah and Education / tarbiyah (upbringing) / Salah / good akhlaq (character)",
-        "why": "Islamic terms are transliterated inconsistently: 'Tarbiyah' is transliterated in the title without a gloss, but glossed as 'tarbiyah (upbringing)' in the text; 'Salah' is transliterated without a gloss; 'akhlaq' is transliterated with a gloss; while 'التعليم' is translated as 'Education' rather than transliterated. This mixed approach may confuse readers and lacks a consistent policy for handling Islamic terminology.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "pending",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

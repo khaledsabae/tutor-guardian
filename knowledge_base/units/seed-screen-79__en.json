@@ -29,10 +29,34 @@
   "translated_from": "seed-screen-79",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
     "review_verdict": "clean",
     "review_defects": [],
-    "approved_by": null
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "5ad9ace0573d728f026eaa471e09fdf9ce2bdc75a0066b5c019cf2c986b4f647",
+      "reviewed_at": "2026-10-04T16:52:31+00:00",
+      "residual_low": [],
+      "adjudicated": [
+        {
+          "field": "text_simplified",
+          "type": "source_corruption",
+          "reason": "«ضع خطةً عائليةً متّفقًا عليها» is correct Arabic: متّفقًا is a نعت سببي describing خطة through «عليها», so it takes the masculine accusative. Nothing to fix.",
+          "by": "claude-opus-5.5 (en-parity review, PR #20)",
+          "on": "2026-10-04"
+        }
+      ],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T16:52:31+00:00"
   }
 }

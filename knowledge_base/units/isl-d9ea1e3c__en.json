@@ -30,19 +30,26 @@
   "translated_from": "isl-d9ea1e3c",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "register",
-        "field": "text_simplified",
-        "arabic": "التربية، القدوة، المربي",
-        "english": "tarbiyah, qudwah, murabbi",
-        "why": "The Arabic uses common, everyday words (education, example, educator) that are warm and direct. The English transliterates them into Arabic terms, making the text stiff and less accessible to a general English reader. This is unnecessary jargon and does not reflect the natural tone of the source.",
-        "severity": "medium"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "97a41abe6c0f453ce1e14cb2b81b6e657544af907dae853de5838b3e9b73a7af",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

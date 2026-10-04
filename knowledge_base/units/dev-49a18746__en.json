@@ -30,35 +30,26 @@
   "translated_from": "dev-49a18746",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "شاركوهم إياها",
-        "english": "share in them",
-        "why": "The Arabic means 'share their feelings with them' (i.e., empathize and reflect their feelings), but 'share in them' is ambiguous and could refer to sharing in the children themselves, losing the object 'feelings'.",
-        "severity": "medium"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "العبارات النهائية",
-        "english": "final statements",
-        "why": "The Arabic 'العبارات النهائية' refers to ultimatums or absolute/definitive statements (e.g., 'this is final'), but 'final statements' is a literal rendering that may not convey the intended meaning in English.",
-        "severity": "medium"
-      },
-      {
-        "type": "register",
-        "field": "text_simplified",
-        "arabic": "احرصوا على الحوار والاستماع الفعّال",
-        "english": "be sure to engage in dialogue and active listening",
-        "why": "The Arabic is a direct imperative 'be keen on/make sure of dialogue and active listening', while the English 'be sure to engage in' is slightly stiff and preachy, losing the warmth of the original.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "8c312ed1df4f9ca00e798ea757d71df43babbe437b2246214859858556885ff9",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

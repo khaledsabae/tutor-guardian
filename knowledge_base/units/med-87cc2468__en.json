@@ -11,7 +11,7 @@
   "reference_type": "تقرير_طبي",
   "reference_info": "دليل التغذية الصحية - هيئة الغذاء والدواء السعودية",
   "text_original": "ﺪـــﺟﻮﺗ .ﺔﻴﻟﺰﻨﻤﻟا تﺎﻳﻮﻠﺤﻟا داﺪﻋإ ءﺎﻨﺛأ ﺮﻜـــﺴﻟا ﺔﻴﻤﻛ ﻞﻠّﻗ دﺮﺘﺳﺎﻛ ﻲﻨﺒﻟا ﺮﻜﺴﻟا تاذ ﺔﺒﺟﻮﻟا ﺮﺘﺧا ،لﺰـــﻨﻤﻟا جرﺎﺧ مﺎﻌﻄﻟا لوﺎـــﻨﺗ ﺪﻨﻋ ةرﺬﻟا باﺮﺷ زﻮﺘﻛﻻ كرﺎﻴﺧ نﻮﻜﻳ نأ صﺮـــﺣا ﺔﻴﺋاﺬﻐﻟا رﺎـــــﻴﺘﺧا ﺪـــﻨﻋ ﻲـــﺤﺻ داﺪﻋ©ا تادﺎﺷرإ ﻊﺒﺗا قﺮـﻃ تﺎــﻤﻴﻠﻌﺗ ﻊــﺒﺗا ﻚﻟ ﺔﻴﺳﺎﺴﺤﻟا ﺐﺒﺴﺗ ﺪــﻗ ةدﺎــﻣ يأ دﻮــــﺟو مﺪـﻋ ﻦﻣ ﺪﻛﺄـﺗ دﺪﻋ هدﺪﺤﻳ ﺎﻬﺘﻟوﺎـﻨﺗ ﻲﺘﻟا تاﺮــﻌﺴﻟا دﺪﻋ ،تﺎـــﻨﻴﻣﺎــﺘﻴﻔﻟا ،فﺎــﻴﻟ(cid:23)ا ﻦﻣ ﺔـﻴﻣﻮﻴﻟا ﻢـــﻴﻘﻟا نﻮـﻫﺪﻟا ،نﻮــﻫﺪﻟا ﻦﻣ ﺔـﻴﻣﻮﻴﻟا ﻢﻴﻘﻟا ﻲﻓ ﻲﻓ ﻚﻠﻬﺘـــﺴﻤﻟا ﻲﺤﺼﻟا قﻮـــﺴﺘﻟا ﺔـــﻗﺎﻄﺑ ﺪﻋﺎـــﺴﺗ عﻮﻤﺠﻣ / ﺢـــﻠﻤﻟا) ﺔﻴﺋاﺬﻐﻟا ﺮـــﺻﺎﻨﻌﻟا ﺔـــﻴﻤﻛ ﺔـــﻓﺮﻌﻣ ﻦﻣ Âﻨﻣآ مﺎـــﻌﻄﻟا ءﺎـــﻘﺑإ ﻰﻠﻋ صﺮـــﺤﻟا ﺐـــﺠﻳ ،ﺔﻳﻮﺌﻣ ﺔـــﺟرد 60 ﻦﻣ ﻞـــﻗأو ﺔـــﻳﻮﺌﻣ ﺔـــﺟرد 5 ﺔﻣﻼﺳ ﻲﻓ خﻮﺒﻄﻤﻟا مﺎـــﻌﻄﻟا ﺔﻧﻮﺨـــﺳ ﻰﻠﻋ ﻆـــﻓﺎﺣ ﻰﺘﺣ ﺔﻳﻮﺌﻣ ﺔـــﺟرد 60 ﻦﻣ ﻰـــﻠﻋأ ةراﺮﺣ ﺔـــﺟرد :ءاﺬـــــﻐﻟا ﺔــﻣﻼﺳ",
-  "text_simplified": "Parents should reduce the amount of sugar in homemade sweets and choose healthy drinks like water instead of sweetened juices. Make sure to read food labels to know the amounts of fats, sugars, and salt in foods. Ensure there are no allergy-causing ingredients, and store food at a safe temperature between 5 and 60 degrees Celsius.",
+  "text_simplified": "Parents should reduce the amount of sugar in homemade sweets and choose healthy drinks like water instead of sweetened juices. Make sure to read food labels to know the amounts of fats, sugars, and salt in foods. Ensure there are no allergy-causing ingredients, and keep cold food below 5°C and hot food above 60°C, because the range in between is where bacteria multiply.",
   "labels": [
     "تغذية",
     "سكريات",
@@ -30,19 +30,26 @@
   "translated_from": "med-87cc2468",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "يجب على الأهل تقليل كمية السكر",
-        "english": "Parents should reduce the amount of sugar",
-        "why": "The Arabic 'يجب' expresses obligation (must), while the English 'should' expresses recommendation, weakening the directive.",
-        "severity": "medium"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "d91d2036ee2f66fefc894ce3dbf5bea7847a721b733e01536d4242ea00bc3fa8",
+      "reviewed_at": "2026-10-04T16:52:31+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T16:52:31+00:00"
   }
 }

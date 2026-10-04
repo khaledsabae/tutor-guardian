@@ -2,7 +2,7 @@
   "id": "isl-f0ecb056__en",
   "domain": "islamic_parenting",
   "source_file": "Alukah_Rights_of_Children.pdf",
-  "title": "The Importance of Tarbiyah al-Diniyyah for Children",
+  "title": "The Importance of Religious Upbringing for Children",
   "language": "en",
   "age_group": "4-6",
   "behavior_type": "تربية دينية",
@@ -30,19 +30,18 @@
   "translated_from": "isl-f0ecb056",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
+    "review_verdict": "pending",
     "review_defects": [
       {
-        "type": "meaning_change",
+        "model": "deepseek-v4-pro",
         "field": "text_simplified",
-        "arabic": "القيم الدينية والأخلاقية",
-        "english": "religious values and akhlaq",
-        "why": "The Arabic adjective 'الأخلاقية' modifies 'القيم' (values), meaning 'religious and moral values' as a single concept. The English renders it as two separate nouns, 'religious values' and 'akhlaq', changing the meaning.",
-        "severity": "medium"
+        "type": "addition",
+        "why": "The English adds the honorific ﷺ not present in the Arabic, a minor addition."
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-10-04T11:26:06+00:00"
   }
 }

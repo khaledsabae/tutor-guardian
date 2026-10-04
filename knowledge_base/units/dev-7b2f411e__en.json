@@ -30,19 +30,40 @@
   "translated_from": "dev-7b2f411e",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
+    "review_verdict": "low_only",
     "review_defects": [
       {
-        "type": "meaning_change",
+        "model": "glm-5.2",
         "field": "title",
-        "arabic": "أسس التربية الإيجابية",
-        "english": "Establishing Positive Tarbiyah",
-        "why": "The Arabic noun 'أسس' means 'foundations' or 'principles', but the English translates it as the verb 'Establishing', changing the meaning from a description of foundations to an action.",
-        "severity": "medium"
+        "type": "meaning",
+        "why": "«أسس» here is a noun meaning 'foundations/principles of', not the verb 'establishing'; the English shifts the meaning."
       }
     ],
-    "approved_by": null
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "0ad764ff6f5b5900e2b9b8ed75c729b1a174c1fd1bc16cc7f155e496fb0fd3d1",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [
+        {
+          "model": "glm-5.2",
+          "field": "title",
+          "type": "meaning",
+          "why": "«أسس» here is a noun meaning 'foundations/principles of', not the verb 'establishing'; the English shifts the meaning."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

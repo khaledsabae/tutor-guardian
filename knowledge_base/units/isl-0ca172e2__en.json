@@ -30,27 +30,52 @@
   "translated_from": "isl-0ca172e2",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
+    "review_verdict": "low_only",
     "review_defects": [
       {
-        "type": "meaning_change",
+        "model": "deepseek-v4-pro",
         "field": "text_simplified",
-        "arabic": "تُعاقب البنت أقل بسبب ضعف جسدها",
-        "english": "the girl may be disciplined less due to the delicacy of her body",
-        "why": "Arabic states as a fact that the girl is punished less because of her body's weakness; English adds 'may' making it uncertain, uses 'disciplined' instead of 'punished', and 'delicacy' instead of 'weakness', softening the meaning.",
-        "severity": "medium"
+        "type": "meaning",
+        "why": "The English softens 'punished' to 'disciplined' and renders 'weakness' as 'delicacy', altering the severity and rationale."
       },
       {
-        "type": "term_error",
+        "model": "glm-5.2",
         "field": "text_simplified",
-        "arabic": "قدوة حسنة",
-        "english": "good example (uswah hasanah)",
-        "why": "The Arabic uses 'قدوة حسنة', not the Qur'anic phrase 'أسوة حسنة'. Adding the transliteration 'uswah hasanah' introduces an Islamic term not present in the source and may imply a specific religious reference.",
-        "severity": "low"
+        "type": "tone",
+        "why": "The English softens both «تُعاقب» (is punished) to 'disciplined' and «ضعف» (weakness) to 'delicacy', slightly understating the Arabic."
       }
     ],
-    "approved_by": null
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "f2cb313c9a3f313b9ea783aac216a3e44dbb61667526f00b53ee225716f247e4",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [
+        {
+          "model": "deepseek-v4-pro",
+          "field": "text_simplified",
+          "type": "meaning",
+          "why": "The English softens 'punished' to 'disciplined' and renders 'weakness' as 'delicacy', altering the severity and rationale."
+        },
+        {
+          "model": "glm-5.2",
+          "field": "text_simplified",
+          "type": "tone",
+          "why": "The English softens both «تُعاقب» (is punished) to 'disciplined' and «ضعف» (weakness) to 'delicacy', slightly understating the Arabic."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

@@ -29,27 +29,64 @@
   "translated_from": "isl-6e679939",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
+    "review_verdict": "low_only",
     "review_defects": [
       {
-        "type": "meaning_change",
+        "model": "deepseek-v4-pro",
         "field": "text_simplified",
-        "arabic": "حيث أنهم يملكون مالًا خاصًا بهم",
-        "english": "as they now have their own money",
-        "why": "The English adds 'now', which is not present in the Arabic and implies a recent change in the children's financial situation.",
-        "severity": "low"
+        "type": "addition",
+        "why": "The English adds \"now\" and \"for their age\", which are not present in the Arabic."
       },
       {
-        "type": "meaning_change",
+        "model": "glm-5.2",
         "field": "text_simplified",
-        "arabic": "بطريقة مناسبة",
-        "english": "in a way that is suitable for their age",
-        "why": "The English adds 'for their age', which is not in the Arabic. The Arabic only says 'in a suitable way' without specifying age.",
-        "severity": "low"
+        "type": "addition",
+        "why": "The Arabic says \"in a suitable way\" without specifying \"for their age\"; the English adds that qualifier."
+      },
+      {
+        "model": "glm-5.2",
+        "field": "text_simplified",
+        "type": "leakage",
+        "why": "Markdown asterisks around the transliterated term are stray formatting that would render incorrectly in published text."
       }
     ],
-    "approved_by": null
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "2a84db2cd9f06cf97c5d3a5fd29d41f06c274c893718e3159197a9226036a749",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [
+        {
+          "model": "deepseek-v4-pro",
+          "field": "text_simplified",
+          "type": "addition",
+          "why": "The English adds \"now\" and \"for their age\", which are not present in the Arabic."
+        },
+        {
+          "model": "glm-5.2",
+          "field": "text_simplified",
+          "type": "addition",
+          "why": "The Arabic says \"in a suitable way\" without specifying \"for their age\"; the English adds that qualifier."
+        },
+        {
+          "model": "glm-5.2",
+          "field": "text_simplified",
+          "type": "leakage",
+          "why": "Markdown asterisks around the transliterated term are stray formatting that would render incorrectly in published text."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

@@ -30,27 +30,11 @@
   "translated_from": "isl-08be6045",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "يجب على الآباء توفير الرعاية والتعليم لأطفالهم",
-        "english": "Parents must provide care and education for their children",
-        "why": "Arabic specifies 'الآباء' (fathers), not both parents; English broadens the obligation to 'Parents', changing the subject.",
-        "severity": "medium"
-      },
-      {
-        "type": "term_error",
-        "field": "title",
-        "arabic": "في التربية",
-        "english": "in Tarbiyah",
-        "why": "Tarbiyah is transliterated in the title but the same term is translated as 'raising' in the body, creating inconsistency; if Tarbiyah is kept, it should be defined or used consistently.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "pending",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

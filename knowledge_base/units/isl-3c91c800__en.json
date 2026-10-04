@@ -30,27 +30,40 @@
   "translated_from": "isl-3c91c800",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
+    "review_verdict": "low_only",
     "review_defects": [
       {
-        "type": "term_error",
-        "field": "title vs text_simplified",
-        "arabic": "تربية",
-        "english": "Tarbiyah (title) / raise (text)",
-        "why": "The same Arabic word 'تربية' is transliterated as 'Tarbiyah' in the title but translated as 'raise' in the body, creating inconsistency within the document.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
+        "model": "glm-5.2",
         "field": "text_simplified",
-        "arabic": "القدوة الحسنة",
-        "english": "a good example (uswah hasanah)",
-        "why": "The English adds the transliterated term 'uswah hasanah' which is not present in the Arabic source. This introduces a specific Islamic term (from Qur'an 33:21) not used in the original, potentially altering the intended meaning.",
-        "severity": "low"
+        "type": "addition",
+        "why": "The Arabic says only 'a good example'; the parenthetical transliteration 'uswah hasanah' is added content not present in the source."
       }
     ],
-    "approved_by": null
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "79ac115c85d52b3289b7eef9a5634b5b782718671ff6789b4a77bdb722e8a172",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [
+        {
+          "model": "glm-5.2",
+          "field": "text_simplified",
+          "type": "addition",
+          "why": "The Arabic says only 'a good example'; the parenthetical transliteration 'uswah hasanah' is added content not present in the source."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

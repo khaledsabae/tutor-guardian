@@ -30,35 +30,40 @@
   "translated_from": "isl-9d71a2f5",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
+    "review_verdict": "low_only",
     "review_defects": [
       {
-        "type": "meaning_change",
+        "model": "glm-5.2",
         "field": "text_simplified",
-        "arabic": "قضاء الحاجات",
-        "english": "fulfilling needs",
-        "why": "The Arabic idiom 'قضاء الحاجات' specifically refers to relieving oneself (toilet training/istinja), not general needs. The English is vague and loses the intended meaning.",
-        "severity": "high"
-      },
-      {
-        "type": "term_error",
-        "field": "text_simplified",
-        "arabic": "الحشمة والحياء",
-        "english": "modesty, and haya (shame/modesty)",
-        "why": "The Arabic distinguishes between حشمة (modesty/decorum) and حياء (bashfulness/sense of shame). The English glosses haya as 'shame/modesty', conflating the two and using 'shame' which has negative connotations; 'bashfulness' would be more accurate.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "title",
-        "arabic": "الأولاد والبنات",
-        "english": "Sons and Daughters",
-        "why": "Arabic means 'boys and girls' generally, not necessarily one's own sons and daughters; the English narrows the meaning.",
-        "severity": "low"
+        "type": "tone",
+        "why": "Glossing haya as 'shame' carries a negative connotation in English that the Arabic 'حياء' (modesty/bashfulness) does not have."
       }
     ],
-    "approved_by": null
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "57e1ae91b669f54a6f33da9645cd2006322f79a68fc1da7f439d7c51f6f9001a",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [
+        {
+          "model": "glm-5.2",
+          "field": "text_simplified",
+          "type": "tone",
+          "why": "Glossing haya as 'shame' carries a negative connotation in English that the Arabic 'حياء' (modesty/bashfulness) does not have."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

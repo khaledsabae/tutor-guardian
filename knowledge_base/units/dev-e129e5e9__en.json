@@ -30,19 +30,26 @@
   "translated_from": "dev-e129e5e9",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "register",
-        "field": "title",
-        "arabic": "فهم سلوك التمرد لدى المراهقين",
-        "english": "Understanding the Behaviour of Rebellion in Adolescents",
-        "why": "The English title is awkward and not idiomatic; 'Understanding Rebellious Behaviour in Adolescents' would be more natural. The current phrasing 'Behaviour of Rebellion' is stiff and clinical, whereas the Arabic is straightforward.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "0c78e31c1660f07f1a6bb0e3a625b420fc9f0e8b33666eed34e0cd71469b62ff",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

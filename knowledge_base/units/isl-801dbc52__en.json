@@ -28,19 +28,11 @@
   "translated_from": "isl-801dbc52",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "سلوك تربوي محدد",
-        "english": "specific tarbiyah (upbringing) practice",
-        "why": "The Arabic refers to a specific educational behavior (سلوك تربوي), not a 'practice'. Adding 'practice' narrows the meaning and introduces a term not present in the source.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "pending",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

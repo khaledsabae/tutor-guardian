@@ -28,27 +28,40 @@
   "translated_from": "cyb-8c2cbb56",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
+    "review_verdict": "low_only",
     "review_defects": [
       {
-        "type": "meaning_change",
+        "model": "deepseek-v4-pro",
         "field": "text_simplified",
-        "arabic": "مهتمين بشكل كبير",
-        "english": "overly concerned",
-        "why": "Arabic 'مهتمين بشكل كبير' means 'greatly interested' (neutral or positive), while English 'overly concerned' implies worry or anxiety, changing the nuance.",
-        "severity": "medium"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "تجربتهم",
-        "english": "their experiences",
-        "why": "Arabic singular collective 'their experience' is rendered as plural 'their experiences', a slight shift in number.",
-        "severity": "low"
+        "type": "meaning",
+        "why": "Arabic 'مهتمين' means interested, not concerned; English shifts the meaning toward worry."
       }
     ],
-    "approved_by": null
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "e056f198ad54581c214306006a9408bc9d59744a4e5a7caa0d7ba5f07b453648",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [
+        {
+          "model": "deepseek-v4-pro",
+          "field": "text_simplified",
+          "type": "meaning",
+          "why": "Arabic 'مهتمين' means interested, not concerned; English shifts the meaning toward worry."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

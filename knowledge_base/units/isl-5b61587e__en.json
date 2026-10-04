@@ -30,35 +30,26 @@
   "translated_from": "isl-5b61587e",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "term_error",
-        "field": "text_simplified",
-        "arabic": "النفقة",
-        "english": "spending",
-        "why": "النفقة is a specific Islamic legal term for obligatory financial maintenance/support, not general spending; translating it as 'spending' loses the fiqh nuance and may mislead readers about the nature of the obligation.",
-        "severity": "medium"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "دون سبب شرعي",
-        "english": "without a valid *shar'i* reason",
-        "why": "The Arabic says 'without a shar'i reason'; adding 'valid' is redundant and slightly alters the phrase, implying there could be invalid shar'i reasons.",
-        "severity": "low"
-      },
-      {
-        "type": "register",
-        "field": "text_simplified",
-        "arabic": "وأن تربي الأبناء على الطاعة والانضباط",
-        "english": "and raise the children upon obedience and discipline",
-        "why": "The English 'upon obedience and discipline' is a literal rendering of Arabic 'على' and sounds stiff/preachy; a more natural English would be 'to be obedient and disciplined' or 'with obedience and discipline'.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "744ba18d0a9eb6d90a0552c44d004df4247dcf3dfa46e6656f065f64faa974e2",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

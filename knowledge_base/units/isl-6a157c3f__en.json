@@ -30,35 +30,26 @@
   "translated_from": "isl-6a157c3f",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "الأسس الشرعية",
-        "english": "Shariah foundations",
-        "why": "The Arabic adjective 'شرعية' means 'legal/legitimate' in the Islamic sense, not the noun 'Shariah'. 'Shariah foundations' could be misread as the foundations of Shariah itself rather than foundations that are Shariah-compliant.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "القدوة الحسنة",
-        "english": "good role modeling",
-        "why": "Arabic refers to a good example/person to be followed, while English 'role modeling' refers to the act of demonstrating behavior, shifting from the person to the action.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "نشأة الأفراد",
-        "english": "development of individuals",
-        "why": "Arabic 'نشأة' means 'origin/upbringing/formation', not general 'development', which is broader and less precise.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "7ca999c52cbb39b13b143a533e50b62a24ce34f6f07e84f92620de7cf4543635",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

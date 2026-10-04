@@ -30,27 +30,26 @@
   "translated_from": "isl-3e91893e",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "في نفوسهم",
-        "english": "in them",
-        "why": "The Arabic explicitly says 'in their souls' (في نفوسهم), emphasizing the inner spiritual and psychological impact. The English 'in them' drops this nuance, making the statement more generic.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "القدوة السيئة",
-        "english": "bad role models",
-        "why": "The Arabic uses the singular 'القدوة السيئة' (the bad example/role model), while the English renders it as plural 'bad role models'. This changes the number and slightly alters the meaning from a specific bad example to a general category.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "2fcece6f668c23061e9caac5c382b6bf7e38b43b81c6c16394baee04053ab7e8",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

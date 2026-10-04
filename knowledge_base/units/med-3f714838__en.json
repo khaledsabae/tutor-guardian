@@ -29,19 +29,26 @@
   "translated_from": "med-3f714838",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "والزيارات الطبية للسمنة أو السكري النوع الثاني أو أمراض القلب والأوعية الدموية",
-        "english": "with medical visits to check for obesity, type 2 diabetes, or cardiovascular diseases",
-        "why": "The Arabic says 'medical visits for obesity, type 2 diabetes, or cardiovascular diseases' without specifying the purpose. The English adds 'to check for', narrowing the meaning to screening rather than management or treatment of these conditions.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "45f2cad22b36b543463d7f1419c7640ac2fea18041c3bd84817c0f52a5cb5f71",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

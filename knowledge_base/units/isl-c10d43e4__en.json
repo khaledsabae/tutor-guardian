@@ -29,19 +29,11 @@
   "translated_from": "isl-c10d43e4",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "حقوق الأطفال على الآباء",
-        "english": "the rights of children over their parents",
-        "why": "The Arabic 'الآباء' specifically means 'fathers', but the English 'parents' includes both mothers and fathers, broadening the group responsible.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "pending",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

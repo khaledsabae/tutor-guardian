@@ -30,27 +30,26 @@
   "translated_from": "isl-5bf1878f",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "term_error",
-        "field": "text_simplified",
-        "arabic": "مؤسسة تربوية اجتماعية شاملة / دورًا تربويًا مهمًا",
-        "english": "comprehensive social tarbiyah (upbringing) institution / vital tarbiyah role",
-        "why": "The Arabic uses the adjective 'تربوي' (educational/upbringing), but the English transliterates it as the noun 'tarbiyah' and uses it inconsistently with the title's 'Educational'. This introduces a technical Islamic term not present as a noun in the source and creates internal inconsistency.",
-        "severity": "medium"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "دورًا تربويًا مهمًا",
-        "english": "a vital tarbiyah role",
-        "why": "'مهمًا' means 'important', but it is rendered as 'vital', which is stronger and changes the nuance.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "6320cc2a882b878cbd55bf49c88b9332ab1d71ab6fe3cc5cf2d9debd048d4639",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

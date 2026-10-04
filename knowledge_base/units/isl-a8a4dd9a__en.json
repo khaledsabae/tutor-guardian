@@ -30,19 +30,11 @@
   "translated_from": "isl-a8a4dd9a",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "register",
-        "field": "title",
-        "arabic": "تربية الأطفال",
-        "english": "Tarbiyah of Children",
-        "why": "The Arabic uses the common word 'تربية' (upbringing/education), not a technical Islamic term requiring transliteration. Using 'Tarbiyah' in the English title introduces unnecessary jargon and makes the title less accessible to general readers, whereas the Arabic is simple and direct.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "pending",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

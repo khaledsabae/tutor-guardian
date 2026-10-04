@@ -14,39 +14,45 @@
   "pedagogical_framework": "aqeedah_parent_led",
   "primary_reference": {
     "type": "دراسات_عقدية",
-    "info": "ثلاثة الأصول والقواعد الأربع لابن عثيمين، العقيدة الطحاوية، أسئلة الأطفال الإيمانية، أصول الإيمان على فهم السلف"
+    "info": "Thalathat al-Usul and al-Qawa'id al-Arba' by Muhammad ibn Abd al-Wahhab, with Ibn Uthaymin's commentary; al-Aqidah al-Tahawiyyah; As'ilat al-Atfal al-Imaniyyah; Usul al-Iman as understood by the Salaf"
   },
   "prerequisites": [],
   "is_published": true,
   "version": "1.0.0",
   "created_at": "2026-06-27T00:00:00",
   "updated_at": "2026-06-27T00:00:00",
-  "approved_by": null,
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
   "language": "en",
   "source_language": "ar",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
     "scholar_signals": {
       "keyword": false,
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "description",
-        "arabic": "مسار يرافق مراهقك",
-        "english": "A path to accompany your adolescent",
-        "why": "The Arabic says the path itself accompanies the adolescent (مسار يرافق), but the English translation changes the subject to an implied 'you', making it a path for the parent to accompany the adolescent. This alters the agency and the program's role.",
-        "severity": "medium"
-      }
-    ],
-    "approved_by": null,
-    "revalidated_at": "2026-08-13T18:17:22.330032+00:00",
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "revalidated_at": "2026-10-04T16:52:31+00:00",
     "fixed_at": "2026-08-13T18:17:22.330043+00:00",
-    "fixer_model": "mistral-large-3:675b"
+    "fixer_model": "mistral-large-3:675b",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "d29e2c8e5ef7a825a0977692a9e676fbcd7830ea6935f7251808befe36935852",
+      "reviewed_at": "2026-10-04T16:52:31+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    }
   }
 }

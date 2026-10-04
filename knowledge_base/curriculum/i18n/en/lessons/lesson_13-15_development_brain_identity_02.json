@@ -26,32 +26,37 @@
   "needs_professional_followup": true,
   "is_published": true,
   "version": "1.0.0",
-  "approved_by": null,
+  "approved_by": "auto-review:claude-opus:2026-10-04",
   "language": "en",
   "source_language": "ar",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "claude-opus",
     "needs_scholar_review": true,
     "scholar_signals": {
       "keyword": false,
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "title, summary",
-        "arabic": "المخاطرة",
-        "english": "risk",
-        "why": "The Arabic 'المخاطرة' refers to the act of risk-taking, not the abstract concept of risk. In the context of adolescent psychology, 'risk-taking' is the more precise term. The English 'risk' could be misinterpreted as the possibility of loss rather than the behavior.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null,
-    "revalidated_at": "2026-08-13T18:05:32.623877+00:00",
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:claude-opus:2026-10-04",
+    "revalidated_at": "2026-10-04T17:12:35+00:00",
     "fixed_at": "2026-08-13T18:05:32.623887+00:00",
-    "fixer_model": "mistral-large-3:675b"
+    "fixer_model": "mistral-large-3:675b",
+    "auto_review": {
+      "reviewers": [
+        "claude-opus"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "manual:dfa8a5f39718",
+      "content_sha256": "7f0186c1734b35c0fe59151ba732f7a120a4032a18c2e332360088489a8244fd",
+      "reviewed_at": "2026-10-04T17:12:35+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and one reviewer from a model family different from the translator's read the Arabic and English side by side against the review rubric and found no medium/high defect in this exact text; not a scholar's ijazah"
+    }
   }
 }

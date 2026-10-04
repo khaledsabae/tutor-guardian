@@ -2,7 +2,7 @@
   "id": "isl-9baf6011__en",
   "domain": "islamic_parenting",
   "source_file": "Al_Minhaj_Al_Nabawi.pdf",
-  "title": "Al-Rifq bi-l-Tifl: Manhaj al-Nabi ﷺ",
+  "title": "Gentleness with the Child: The Prophet's Approach ﷺ",
   "language": "en",
   "age_group": "unspecified",
   "behavior_type": "الرفق والحنان",
@@ -11,7 +11,7 @@
   "reference_type": "كتاب_تربوي",
   "reference_info": "كتاب إسلامي",
   "text_original": "من شيء قط إلا شانه ) )\". فإذا كان هذا الرفق من الرحمة المهداة صلى الله عليه وسلم - بالحيوان وحثه لزوجته عائشة بنت الصديق بهذا ‎alll‏ أليس من باب أولى أن يطبق هذا النهج الطيب على أطفالنا الذين هم بذرات فعلينا أن نحسن هذا مع النشء حتى نقطف ثمارا ناضجة تسهم في الرقي بمجتمعناء لكون مجتمع أكثر تطور وتحظر مما نحن فيه الآن. ( كان النبي ‎lo‏ الله عليه وسلم يخطب ‎logs‏ على المنبر, فأقبل الحسن والحسين وعليهما ثوبان جديدان يعتران بهماء فنزل النبي صلى الله عليه وسلم - وحملهم بين يديه وقال : صدق الله ( ‎lai]‏ ‏أموالكم وأولادكم فتنة 4. [التغابن ‎[or‏ (( نظرت إلى هذين الصبيين يعثران فلم أصبر ) يعني ‎lad‏ طابت نفسه حتى نزل وحملهما)؟. ولعل هذا قليل مما يحمله عليه الصلاة والسلام في قلبه من رحمة وحب لهذين الطفلين, وهو الأمر الذي أرى أنه يجب أن يكون لدى الأب الحنون ليبادله أبنائه حتى ينشؤون في كنف ودود رحيم. ( رواه ‎gil‏ داوود في سننه /باب في الرفق /ص 70 ) سورة القصص أية 56 رواه أبو داوود في سننه/باب في الرفق / ص 70 شرح رياض الصالحين من كتاب سيد المرسلين ‎Lol‏ 552",
-  "text_simplified": "The Prophet ﷺ advised applying the approach of mercy to our children, to build a better society in the future.",
+  "text_simplified": "The Prophet ﷺ recommends applying the approach of mercy to our children, to build a better society in the future.",
   "labels": [
     "رفق",
     "حنان",
@@ -28,19 +28,40 @@
   "translated_from": "isl-9baf6011",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
+    "review_verdict": "low_only",
     "review_defects": [
       {
-        "type": "religious_error",
-        "field": "text_simplified",
-        "arabic": "يُوصى النبي صلى الله عليه وسلم بتطبيق نهج الرحمة على أطفالنا",
-        "english": "The Prophet ﷺ advised applying the approach of mercy to our children",
-        "why": "The Arabic uses the passive form 'يُوصى' (is advised), meaning the Prophet is the recipient of advice, not the giver. The English changes it to active 'advised', attributing a recommendation to the Prophet that the Arabic does not. This misattributes a statement to the Prophet.",
-        "severity": "high"
+        "model": "glm-5.2",
+        "field": "title",
+        "type": "tone",
+        "why": "The ﷺ is placed after \"Approach\" rather than after \"Prophet,\" making it read as though the blessing applies to the approach rather than to the Prophet ﷺ."
       }
     ],
-    "approved_by": null
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "ccf29e853a3c97077ce6f958dd41534b141a88c522e95303fe52bc962717a935",
+      "reviewed_at": "2026-10-04T16:52:31+00:00",
+      "residual_low": [
+        {
+          "model": "glm-5.2",
+          "field": "title",
+          "type": "tone",
+          "why": "The ﷺ is placed after \"Approach\" rather than after \"Prophet,\" making it read as though the blessing applies to the approach rather than to the Prophet ﷺ."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T16:52:31+00:00"
   }
 }

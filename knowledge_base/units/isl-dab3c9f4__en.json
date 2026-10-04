@@ -30,27 +30,11 @@
   "translated_from": "isl-dab3c9f4",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "إطالة اللعب",
-        "english": "excessive play",
-        "why": "The Arabic 'إطالة' means prolonging or extending the duration of play, not necessarily excessive in quantity. The English 'excessive play' shifts the meaning to too much play overall.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "تربية صالحة",
-        "english": "sound tarbiyah (Islamic upbringing)",
-        "why": "The Arabic 'صالحة' means righteous or good, but the English 'sound' implies correct or healthy, losing the moral/righteous connotation of the original.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "pending",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

@@ -30,35 +30,11 @@
   "translated_from": "isl-ca9f1de7",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "register",
-        "field": "title",
-        "arabic": "على الصلاة",
-        "english": "upon Salah",
-        "why": "The literal translation 'upon Salah' is unnatural in English; 'in prayer' or 'to pray' would be clearer and more idiomatic.",
-        "severity": "low"
-      },
-      {
-        "type": "register",
-        "field": "text_simplified",
-        "arabic": "على الصلاة",
-        "english": "upon salah",
-        "why": "Same literal translation issue as title; 'upon salah' is stilted and may confuse readers.",
-        "severity": "low"
-      },
-      {
-        "type": "term_error",
-        "field": "text_simplified",
-        "arabic": "أساليب تربوية إيجابية",
-        "english": "positive tarbiyah methods",
-        "why": "The Arabic adjective 'تربوية' (educational) is rendered as the noun 'tarbiyah', producing an ungrammatical phrase; should be 'positive educational methods' or 'positive methods of tarbiyah'.",
-        "severity": "medium"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "pending",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

@@ -29,19 +29,11 @@
   "translated_from": "isl-fb04bcd3",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "term_error",
-        "field": "text_simplified",
-        "arabic": "مثل العقيقة والتسمية",
-        "english": "such as the *‘aqiqah* and naming",
-        "why": "The Arabic term 'التسمية' (tasmiyah) is an Islamic term referring to the naming rite/right of the child. The translation renders it as 'naming' while transliterating 'العقيقة' as '‘aqiqah', creating inconsistency in the treatment of Islamic terms within the same document.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "pending",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

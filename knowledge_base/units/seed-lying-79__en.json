@@ -30,27 +30,40 @@
   "translated_from": "seed-lying-79",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
+    "review_verdict": "low_only",
     "review_defects": [
       {
-        "type": "meaning_change",
+        "model": "glm-5.2",
         "field": "text_simplified",
-        "arabic": "لتوقعيه في الكذب",
-        "english": "to catch him lying",
-        "why": "The Arabic means 'to make him fall into lying' (i.e., to induce him to lie), but the English says 'to catch him lying', which changes the purpose from causing the lie to detecting it.",
-        "severity": "medium"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "يدفعه إليه",
-        "english": "may be driving him to it",
-        "why": "The Arabic is definite ('drives him to it'), but the English adds 'may be', introducing uncertainty not present in the source.",
-        "severity": "low"
+        "type": "hadith",
+        "why": "The Arabic states this without quotation marks; the English adds quotes, which may imply a verbatim hadith, though neither side attributes it to the Prophet ﷺ or names a source."
       }
     ],
-    "approved_by": null
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "9e6816acd1e5fcc18193af3a777e2c393e96428440dd657e81ffc90aaa64d8a1",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [
+        {
+          "model": "glm-5.2",
+          "field": "text_simplified",
+          "type": "hadith",
+          "why": "The Arabic states this without quotation marks; the English adds quotes, which may imply a verbatim hadith, though neither side attributes it to the Prophet ﷺ or names a source."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

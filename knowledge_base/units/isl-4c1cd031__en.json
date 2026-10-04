@@ -30,19 +30,24 @@
   "translated_from": "isl-4c1cd031",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
+    "review_verdict": "pending",
     "review_defects": [
       {
-        "type": "meaning_change",
+        "model": "deepseek-v4-pro",
         "field": "title",
-        "arabic": "أهمية التربية الدينية والتوازن في التعامل مع الأطفال",
-        "english": "The Importance of Tarbiyah and Balance in Dealing with Children",
-        "why": "The English title omits the adjective 'الدينية' (religious), so it loses the specific focus on religious upbringing and becomes a general statement about tarbiyah.",
-        "severity": "medium"
+        "type": "omission",
+        "why": "The English title omits 'الدينية' (religious), losing the explicit religious focus."
+      },
+      {
+        "model": "glm-5.2",
+        "field": "title",
+        "type": "omission",
+        "why": "The Arabic specifies 'الدينية' (religious) but the English drops it, leaving 'Tarbiyah' unqualified."
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

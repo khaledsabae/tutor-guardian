@@ -43,6 +43,8 @@ on:
       - 'frontend/**'
       - 'ops/scripts/**'
       - 'ops/data/hadith_*.json.gz'
+      # The English gate's queue and adjudications (ops/tools/review_en_parity.py).
+      - 'ops/data/en_parity_*.json'
       - 'ops/tools/**'
       - 'pytest.ini'
       - '.github/workflows/backend.yml'
@@ -144,6 +146,19 @@ jobs:
           python ops/tools/check_quran_citations.py
           python ops/tools/check_hadith_citations.py
           python ops/tools/check_scripture_coverage.py
+
+      # English parity gate — the full check, not --staged. Until 2026-10-04 it ran
+      # only in pre-commit, so a GitHub merge (or a merge commit that never ran the
+      # hook) could land English without a stamp, or a stamp gone stale under an
+      # edit. Every published English unit must carry a stamp whose fingerprint
+      # matches its Arabic + English, or an entry in ops/data/en_parity_queue.json
+      # bound to that exact text. Stdlib only, no network, under a second. Being in
+      # this job, it also gates main's deploy (deploy_gate.py) — as the hook already
+      # refuses such commits, a red step here means one got past the hook.
+      - name: Run English parity gate (review_en_parity.py check)
+        run: |
+          cd "$GITHUB_WORKSPACE"
+          python ops/tools/review_en_parity.py check
 
   lint:
     # deploy.yml's gate requires this job BY NAME (ops/tools/deploy_gate.py).

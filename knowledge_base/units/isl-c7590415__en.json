@@ -30,19 +30,26 @@
   "translated_from": "isl-c7590415",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "title",
-        "arabic": "دور المدرسة في تربية الطفل اجتماعياً وأخلاقياً",
-        "english": "The Role of the School in the Child’s Social and Akhlaq-Based Tarbiyah",
-        "why": "The Arabic title says the school's role in the child's upbringing socially and morally (adverbs modifying 'upbringing'). The English title restructures this as 'Social and Akhlaq-Based Tarbiyah', implying the tarbiyah itself is based on akhlaq and is social, which shifts the meaning and introduces the term 'akhlaq' not present as a noun in the Arabic title.",
-        "severity": "medium"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "496e8c1c385add90038eb5fd2f6b96b7e9061ca9723ce079e87f8fbe533cd843",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

@@ -11,7 +11,7 @@
   "reference_type": "كتاب_تربوي",
   "reference_info": "كيف تربي ولدك",
   "text_original": "قح في ءاج ام ،بدلأا باتك :هفنصم في ةبيش بيأ نبا هجرخأ ) ( .يرغصلا عمالجا في . 2 ص ،ليوبناتسلاا دوممح ،انلافطأ بيرن فيك :رظنا )2( .63 - 62 ص ،هبرغلا هيبن ،ةيكولسلا تلاكشلما :رظنا )3( . ةيصخشلا بناوج عيملج ةلماش نوكت نأ دب دلولا ةفرغ شتفن نأ أطلخا نمف ،سستج لىإ ةظحلالما لوحتت نأ نم رذلحا بيجو يرغ صخش هنأ رعشيسو ،بيرلماب كلذ دعب قثي نل هنلأ ،اهدنج ةوفه ىلع هبسانحو زيملما اذه نكي لمو ،هفراعم وأ هئاقدصأ دنع ءايشلأا نم يرثك ءافخإ لىإ أجلي دقو ،هب قوثوم .هباحصأو هئانبلأ هتيبرت في بينلا يده لفطلا نلأ ،نامزو ناكم لك في هتقّفارمو دلولا ىلع قييضتلا نم رذلحا يغبني امك ،هسفن ىلع ًابيقر نوكي نأ بيحو ،هيلع دمتعتو هب قثت نأ بيح قهارلماو زيملما ةصابخو .لادتعاب ةصرفلا كلت هل حاتتف ،بيرلما ةباقر نع ًاديعب ،هتافرصت نع ًلاوئسمو ققّتح تيلا ةارادلما نم دبلا اهدنعو يرصقّتلاو ءاطخلأا بيرلما ديج ةظحلالماب ةيبرتلا دنعو يهنلاو رملأا فيو ميلعتلا في قفرلا يه ةارادلماو ،لفطلا لىإ ةءاسإ وأ ةراثإ نود بولطلما ابه زفتسي تيلا لفطلا تافرصت ةهجاوم في لثملأا بولسلأا دعيُ ًانايحأ لهاجتلا نإ لب لييم ثيح ةثلاثلا ةنسلاو فصنلاو ةنسلا ينب لفطلا رمع نوكي امدنع ةصابخو ،بيرلما نلأ ،لهاجتلا نم اهدنع دب لاف ،ةوخلإاو نيدلاولا زازفتساو هابتنلاا بذج لىإ لفطلا نلأ ًانايحأ حماستلا نم دب لا هنأ امك أطلخا كلذب هثبشت لىإ يدؤت دق ةجضلا ةراثإ . ةيسفنلاو ةيوبرتلا اهرارضأ اله ةديدشلا ةبسالمحا ةداعلاب ةيبرتلا ًايناث ةداعلاب ةيبرتلا لوصأ لولأا ثحبلما مودي يذلا راركتلا نلأ ،ةلاصلا نأش في بينلا ثيدح ةداعلاب ةيبرتلا في لصلأا نبا",
-  "text_simplified": "A child’s space should be broad and encompassing of all aspects of their personality, while avoiding constant monitoring that may turn into spying. The child should not be restricted; instead, they should be given trust and responsibility, especially between the ages of one and a half and three years, when they need gentle guidance rather than harshness or neglect.",
+  "text_simplified": "A child’s upbringing should encompass all aspects of their personality, while avoiding searching their room and constant monitoring that may turn into spying. The child should not be restricted; instead, they should be given trust and responsibility, especially between the ages of one and a half and three years, when they need gentle guidance rather than harshness or neglect.",
   "labels": [
     "تربية",
     "ثقة",
@@ -30,19 +30,48 @@
   "translated_from": "isl-a0625782",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
+    "review_verdict": "low_only",
     "review_defects": [
       {
-        "type": "meaning_change",
+        "model": "glm-5.2",
         "field": "text_simplified",
-        "arabic": "غرفة الطفل",
-        "english": "A child’s space",
-        "why": "The Arabic specifies the child's room (a physical room), while the English uses 'space', which is ambiguous and could refer to personal or abstract space, losing the concrete meaning.",
-        "severity": "medium"
+        "type": "tone",
+        "why": "The content discusses ages 1.5–3 but the item's age band is 4–6, creating a mismatch between the guidance and the intended audience."
       }
     ],
-    "approved_by": null
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "154cd53de19afdbcd03c51ac4845c9ef8c1700499afcbd05bae491757b98faa4",
+      "reviewed_at": "2026-10-04T17:06:53+00:00",
+      "residual_low": [
+        {
+          "model": "glm-5.2",
+          "field": "text_simplified",
+          "type": "tone",
+          "why": "The content discusses ages 1.5–3 but the item's age band is 4–6, creating a mismatch between the guidance and the intended audience."
+        }
+      ],
+      "adjudicated": [
+        {
+          "field": "text_simplified",
+          "type": "tone",
+          "reason": "The source passage singles out 1½–3 years inside guidance (don't search the child's room; give trust) that applies to the unit's band; the band is KB metadata, not translation.",
+          "by": "claude-opus-5.5 (en-parity review, PR #20)",
+          "on": "2026-10-04"
+        }
+      ],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T17:06:53+00:00"
   }
 }

@@ -11,7 +11,7 @@
   "reference_type": "كتاب_تربوي",
   "reference_info": "كيف تربي ولدك",
   "text_original": "َقلُُلخا دلولا ميلعت نأ لىإ دشرأ امك } عاصب قدصتي نأ . } نسح بدأ نم لضفأ ًادلو ٌدلاو لَحنَ ام { :لاقّف ءاطع لوسر لاق :لاق هّللا دبع نب رباج نعف ،رانلا نع باجح يهف تانبلا ةيبرت امأو ةراملإاو جارلخا دواد وبأ ،) 4 ( داهلجا يذمرتلا ،) 29( ةراملإا ملسم ،) 3( ةعملجا يراخبلا ) ( .) 2 /2( دحمأ ،)292 ( ءيفلاو دحمأ هجرخأو ، 4/6 :) ( ثيدلحا مقر ،ندلماو ىرقّلا في ةعملجا باب ،ةعملجا باتك يراخبلا هجرخأ )2( . ، 4 ، /2 :هدنسم في .)2 96( قاقرلا يمرادلا ،)2 / ( دحمأ ،) 42( نايملإا ملسم ،)6 3 ( ماكحلأا يراخبلا )3( ملسمو ، 99/24 )6 6( ثيدلحا مقر ،حصني ملف ةيعر ىعرتسا نم باب ،ماكحلأا باتك يراخبلا هاور )4( هاورو ،2 4/ 2 :قفرلا ىلع ثلحاو رئالجا ةبوقّعو لداعلا يرملأا ةليضف باب ،ةراملإا باتك :هحيحص في . / 2 هدنسم في دحمأ . ص :ميقّلا نبا :دولولما ماكحأب دودولما ةفتح ) ( .)96/ ( دحمأ ،) 9 ( ةلصلاو برلا يذمرتلا )6( ،263/4 :كردتسلما في مكالحاو ،33 /4 :ةلصلاو برلا باتك :يذمرتلاو ،96/ :هدنسم في دحمأ هجرخأ ) ( .2 4/2 :نيابرطلاو .ىطعأ يأ :لنح ) ( .33 -33 /4 :ةلصلاو برلا باتك :هننس في يذمرتلا هاور )9( .ةنلجا هل تبجو دقّف ،نهحمريو ،نهيفكيو ،نبهدؤي :تانب ثلاث هل ناك نم { للها . } ينتنثو:لاق ؟للها لوسر اي ينتنثو :موقّلا ضعب نم لجر لاقّف حجانلا بيرلما تافص دقو ،للها قيفوت دعب هدلو ةيبرت في هحانج داز اهنم دادزا املك تافص حجانلا بيرملل نيعي",
-  "text_simplified": "Tarbiyah (upbringing) of children is a tremendous responsibility, and the Prophetic examples affirm the importance of discipline and care. Whoever raises three daughters and excels in their tarbiyah, provides for them, and shows them mercy, Paradise becomes obligatory for him. Good tarbiyah begins with the parents and encompasses care and guidance.",
+  "text_simplified": "Tarbiyah (upbringing) of children is a tremendous responsibility, and the Prophetic examples affirm the importance of discipline and care. Whoever raises three daughters, disciplines them well and teaches them good manners, provides for them, and shows them mercy, Paradise becomes obligatory for him. Good tarbiyah begins with the parents and encompasses care and guidance.",
   "labels": [
     "تربية",
     "أبناء",
@@ -30,19 +30,64 @@
   "translated_from": "isl-f3f09dc7",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
+    "review_verdict": "low_only",
     "review_defects": [
       {
-        "type": "meaning_change",
+        "model": "deepseek-v4-pro",
         "field": "text_simplified",
-        "arabic": "فأحسن تأديبهن",
-        "english": "excels in their tarbiyah",
-        "why": "The Arabic 'تأديبهن' means 'disciplining them', not 'tarbiyah' (upbringing). The English substitutes a different Islamic term, altering the hadith's wording and meaning.",
-        "severity": "high"
+        "type": "addition",
+        "why": "The English adds 'and teaches them good manners' as a separate action not explicitly in the Arabic, though it is implied by good discipline."
+      },
+      {
+        "model": "glm-5.2",
+        "field": "text_simplified",
+        "type": "addition",
+        "why": "«and teaches them good manners» is added as a separate clause; the Arabic «أحسن تأديبهن» means 'disciplined them well' without a distinct mention of teaching manners."
+      },
+      {
+        "model": "glm-5.2",
+        "field": "text_simplified",
+        "type": "hadith",
+        "why": "A well-known hadith is quoted without any source attribution."
       }
     ],
-    "approved_by": null
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "83b4ea33248be7cd052a8956938c1b9d58c86dabd80dbf3d19806a9bf44f0762",
+      "reviewed_at": "2026-10-04T16:52:31+00:00",
+      "residual_low": [
+        {
+          "model": "deepseek-v4-pro",
+          "field": "text_simplified",
+          "type": "addition",
+          "why": "The English adds 'and teaches them good manners' as a separate action not explicitly in the Arabic, though it is implied by good discipline."
+        },
+        {
+          "model": "glm-5.2",
+          "field": "text_simplified",
+          "type": "addition",
+          "why": "«and teaches them good manners» is added as a separate clause; the Arabic «أحسن تأديبهن» means 'disciplined them well' without a distinct mention of teaching manners."
+        },
+        {
+          "model": "glm-5.2",
+          "field": "text_simplified",
+          "type": "hadith",
+          "why": "A well-known hadith is quoted without any source attribution."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T16:52:31+00:00"
   }
 }

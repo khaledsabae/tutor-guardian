@@ -29,27 +29,26 @@
   "translated_from": "isl-f5fca662",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "تربية الأطفال على السلوك الحسن",
-        "english": "tarbiyah (upbringing) in good conduct",
-        "why": "The Arabic explicitly mentions raising children (تربية الأطفال) upon good behavior; the English omits the object 'children' and changes 'على السلوك الحسن' (upon good behavior) to 'in good conduct', slightly shifting the focus from the act of raising children to the concept of upbringing in a domain.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "قبل الأكل",
-        "english": "before starting",
-        "why": "The Arabic specifies 'before eating'; English 'before starting' is less precise and could refer to any action, though context implies eating.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "e2bff16d0f88fd556f63d16e793213201462a905b20ed453476220b7acf0a599",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

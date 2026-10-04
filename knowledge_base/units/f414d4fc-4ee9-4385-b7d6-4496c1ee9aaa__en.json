@@ -21,27 +21,52 @@
   "translated_from": "f414d4fc-4ee9-4385-b7d6-4496c1ee9aaa",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
+    "review_verdict": "low_only",
     "review_defects": [
       {
+        "model": "deepseek-v4-pro",
+        "field": "keywords",
         "type": "structure",
-        "field": "keywords[1]",
-        "arabic": "تربيه_islamic",
-        "english": "tarbiyah (Islamic upbringing)",
-        "why": "The Arabic keyword uses an underscore and mixes Arabic with the English word 'islamic'; the English version replaces the underscore with parentheses and adds an explanatory translation, altering the original format and not preserving the structure.",
-        "severity": "low"
+        "why": "The English keyword uses an underscore instead of spaces, which is not normal human-readable formatting."
       },
       {
-        "type": "term_error",
-        "field": "title",
-        "arabic": "التربية القرآنية",
-        "english": "Qur'anic Tarbiyah",
-        "why": "The term 'Tarbiyah' is transliterated in the title without explanation, while the keyword provides the translation 'Islamic upbringing'. This inconsistent presentation of the same term may confuse readers who do not know the Arabic word.",
-        "severity": "low"
+        "model": "glm-5.2",
+        "field": "keywords",
+        "type": "leakage",
+        "why": "The keyword contains an underscore separator that reads as a formatting artifact rather than a natural keyword label."
       }
     ],
-    "approved_by": null
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "81b5cb9f813dcafe0412f62f81247970992dceae1c7bc89a2c37073acb242e7a",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [
+        {
+          "model": "deepseek-v4-pro",
+          "field": "keywords",
+          "type": "structure",
+          "why": "The English keyword uses an underscore instead of spaces, which is not normal human-readable formatting."
+        },
+        {
+          "model": "glm-5.2",
+          "field": "keywords",
+          "type": "leakage",
+          "why": "The keyword contains an underscore separator that reads as a formatting artifact rather than a natural keyword label."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

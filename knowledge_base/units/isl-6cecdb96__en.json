@@ -28,19 +28,40 @@
   "translated_from": "isl-6cecdb96",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
+    "review_verdict": "low_only",
     "review_defects": [
       {
-        "type": "term_error",
-        "field": "title vs text_simplified",
-        "arabic": "السلام",
-        "english": "Peace (title) / as-salam (text)",
-        "why": "The same Arabic term 'السلام' is rendered as 'Peace' in the title but transliterated as 'as-salam' in the body, creating inconsistency in how the Islamic greeting term is presented.",
-        "severity": "low"
+        "model": "glm-5.2",
+        "field": "text_simplified",
+        "type": "hadith",
+        "why": "The Arabic word «الحديث» here likely means 'the discourse/text' rather than a prophetic hadith, and no hadith is cited or quoted; rendering it as 'The hadith' may incorrectly attribute this passage as"
       }
     ],
-    "approved_by": null
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "4bfb4024c1ab8d795b6a208a44b800433b9ca6e2d37d8b59466b45f0f4ba869c",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [
+        {
+          "model": "glm-5.2",
+          "field": "text_simplified",
+          "type": "hadith",
+          "why": "The Arabic word «الحديث» here likely means 'the discourse/text' rather than a prophetic hadith, and no hadith is cited or quoted; rendering it as 'The hadith' may incorrectly attribute this passage as"
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

@@ -30,19 +30,40 @@
   "translated_from": "isl-5b8d2dc3",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
+    "review_verdict": "low_only",
     "review_defects": [
       {
-        "type": "meaning_change",
+        "model": "glm-5.2",
         "field": "title",
-        "arabic": "تعليم الصلاة للأطفال بالرفق والقدوة",
-        "english": "Teaching Salah to Children with Rifq and the Example of the Parents",
-        "why": "The English title adds 'of the Parents', which is not present in the Arabic title. The Arabic only says 'with gentleness and example' without specifying whose example.",
-        "severity": "low"
+        "type": "addition",
+        "why": "The Arabic says simply 'the example (القدوة)' without specifying 'of the Parents'; the English adds that specification."
       }
     ],
-    "approved_by": null
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "f1c003ecc972d905c661c98679606d1f95c01441d6a18f0705c629036a60ade3",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [
+        {
+          "model": "glm-5.2",
+          "field": "title",
+          "type": "addition",
+          "why": "The Arabic says simply 'the example (القدوة)' without specifying 'of the Parents'; the English adds that specification."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

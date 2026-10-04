@@ -30,27 +30,18 @@
   "translated_from": "isl-d06a6717",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
+    "review_verdict": "pending",
     "review_defects": [
       {
-        "type": "meaning_change",
+        "model": "glm-5.2",
         "field": "title",
-        "arabic": "أهمية التربية الدينية والأخلاقية للأبناء",
-        "english": "The Importance of Tarbiyah and Akhlaq for Children",
-        "why": "The Arabic title specifies 'religious and moral upbringing' (التربية الدينية والأخلاقية), but the English reduces it to two nouns 'Tarbiyah and Akhlaq', omitting the qualifiers 'religious' and 'moral' and changing the meaning.",
-        "severity": "medium"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "يذكر أن الوالدين مسؤولان عن تعليم أطفالهم الصلاة والالتزام بالدين",
-        "english": "It reminds that parents are responsible for teaching their children salah and adherence to the deen",
-        "why": "The Arabic verb 'يذكر' means 'mentions' or 'states', not 'reminds'. The English introduces a nuance of reminding that is not present in the source.",
-        "severity": "low"
+        "type": "omission",
+        "why": "The Arabic title specifies both religious (الدينية) and moral (الأخلاقية) upbringing, but the English drops the religious dimension."
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

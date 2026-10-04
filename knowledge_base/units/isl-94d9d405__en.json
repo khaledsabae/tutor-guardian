@@ -30,19 +30,26 @@
   "translated_from": "isl-94d9d405",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "يجب على الأهل تعليم أطفالهم حقوقهم الدينية والأخلاقية منذ الصغر.",
-        "english": "Parents must teach their children their religious and moral rights from a young age.",
-        "why": "The Arabic word 'حقوقهم' in this Islamic parenting context likely means 'their duties/obligations' (what is due from them to Allah and others), not 'their rights' (what is due to them). The phrase 'الحقوق الدينية والأخلاقية' is more naturally understood as religious and moral duties, especially when parents are teaching children values. The English 'rights' changes the intended meaning.",
-        "severity": "medium"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "88cd0255bcabf59219684ef6ed13030a51b33216fcf22e3d95e2f85b29af0386",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

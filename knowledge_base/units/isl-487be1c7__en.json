@@ -30,27 +30,52 @@
   "translated_from": "isl-487be1c7",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
+    "review_verdict": "low_only",
     "review_defects": [
       {
-        "type": "meaning_change",
+        "model": "deepseek-v4-pro",
         "field": "text_simplified",
-        "arabic": "ومنعهم من المعاصي",
-        "english": "and protect them from sins",
-        "why": "The Arabic verb 'منعهم' means 'prevent/forbid them', implying active parental prohibition. The English 'protect them from sins' softens this into shielding, which is not the same action.",
-        "severity": "low"
+        "type": "addition",
+        "why": "The English adds 'with proper tarbiyah', which is not in the Arabic and narrows the statement."
       },
       {
-        "type": "meaning_change",
+        "model": "glm-5.2",
         "field": "text_simplified",
-        "arabic": "تربية البنات تحمي من النار",
-        "english": "Raising daughters with proper tarbiyah shields from the Fire",
-        "why": "The English adds 'with proper tarbiyah', which is not in the Arabic. The Arabic states that upbringing of daughters (in general) protects from the Fire; the addition narrows the meaning.",
-        "severity": "medium"
+        "type": "addition",
+        "why": "The English adds 'with proper tarbiyah' which is not present in the Arabic."
       }
     ],
-    "approved_by": null
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "345f448c329136a5bf74548da9b4ac99c3011fd5a03458b79f0f7a5e6376a373",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [
+        {
+          "model": "deepseek-v4-pro",
+          "field": "text_simplified",
+          "type": "addition",
+          "why": "The English adds 'with proper tarbiyah', which is not in the Arabic and narrows the statement."
+        },
+        {
+          "model": "glm-5.2",
+          "field": "text_simplified",
+          "type": "addition",
+          "why": "The English adds 'with proper tarbiyah' which is not present in the Arabic."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

@@ -30,19 +30,11 @@
   "translated_from": "isl-d4e2e2dc",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "الأخلاق الحميدة",
-        "english": "good akhlaq (manners)",
-        "why": "The Arabic 'الأخلاق الحميدة' means 'good morals/character', which is broader than 'manners'. The parenthetical 'manners' narrows the meaning to etiquette, potentially losing the moral dimension.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "pending",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

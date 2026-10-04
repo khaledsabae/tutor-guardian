@@ -30,43 +30,11 @@
   "translated_from": "isl-d939e551",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "term_error",
-        "field": "title",
-        "arabic": "التربية الأسرية",
-        "english": "Family Tarbiyah",
-        "why": "The Arabic 'التربية' means general upbringing/education, not specifically the Islamic technical term 'tarbiyah'. Transliterating it as 'Tarbiyah' introduces an Islamic-specific term not present in the source and may mislead. Should be 'Family Upbringing' or 'Family Education'.",
-        "severity": "medium"
-      },
-      {
-        "type": "term_error",
-        "field": "text_simplified",
-        "arabic": "تربويًا",
-        "english": "tarbiyah-related",
-        "why": "Same issue: 'تربويًا' is a general adjective meaning educational/pedagogical, not necessarily Islamic tarbiyah. Using 'tarbiyah-related' over-transliterates and changes register.",
-        "severity": "medium"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "مع الاستشهاد بآية قرآنية",
-        "english": "with reference to a Qur'anic ayah",
-        "why": "'استشهاد' means citing/quoting, not merely referring. The English 'with reference to' weakens the meaning, suggesting the text only mentions a verse rather than quotes it.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "يُشير إلى",
-        "english": "It highlights",
-        "why": "'يُشير' means indicates/points out, while 'highlights' implies emphasis or prominence. Slight semantic shift.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "pending",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

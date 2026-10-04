@@ -29,27 +29,11 @@
   "translated_from": "isl-4e356b57",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "لتحسين الحالة النفسية",
-        "english": "to improve psychological health",
-        "why": "Arabic 'الحالة النفسية' means psychological state/condition, not health. The translation changes the noun from state to health, altering the meaning.",
-        "severity": "medium"
-      },
-      {
-        "type": "meaning_change",
-        "field": "title",
-        "arabic": "الصحة النفسية",
-        "english": "Mental Well-being",
-        "why": "Arabic 'الصحة النفسية' means mental health. 'Mental well-being' is a softer, broader term and not the standard equivalent, shifting the register and meaning.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "pending",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

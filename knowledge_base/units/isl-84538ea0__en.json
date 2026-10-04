@@ -30,27 +30,26 @@
   "translated_from": "isl-84538ea0",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "على الأم أن تقلل من الخروج والتسوق لتتفرغ لتربية أبنائها، وأن تبحث عن الكتب والوسائل التي تعينها على التربية الإسلامية الصحيحة.",
-        "english": "The mother should reduce outings and shopping to devote herself to the tarbiyah of her children, and she should seek books and resources that assist her in correct Islamic tarbiyah.",
-        "why": "The Arabic uses 'على الأم أن' which denotes obligation or duty, but the English 'should' is advisory and softens the command.",
-        "severity": "medium"
-      },
-      {
-        "type": "term_error",
-        "field": "text_simplified",
-        "arabic": "الغيبة والنميمة والكذب",
-        "english": "gheebah (backbiting), nameemah (gossip), and lying",
-        "why": "The terms gheebah and nameemah are transliterated, but الكذب is translated as 'lying' without transliteration, creating inconsistency in the treatment of Islamic terms.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "5d1a4de06a0fc0d67a86622841dc62725aac8af4877e584ad2fc6a1437ceba34",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

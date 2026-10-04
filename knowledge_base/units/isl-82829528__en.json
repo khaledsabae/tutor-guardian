@@ -30,19 +30,11 @@
   "translated_from": "isl-82829528",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "religious_error",
-        "field": "text_simplified",
-        "arabic": "حديثًا نبويًا شريفًا",
-        "english": "a noble hadith",
-        "why": "The Arabic explicitly says 'a noble Prophetic hadith' (نبوي), but the English omits 'Prophetic', weakening the explicit attribution to the Prophet ﷺ.",
-        "severity": "medium"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "pending",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

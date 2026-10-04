@@ -30,27 +30,26 @@
   "translated_from": "isl-20cd665c",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "ينبغي",
-        "english": "It is also essential",
-        "why": "The Arabic 'ينبغي' means 'should' or 'ought to', expressing a recommendation; the English 'essential' expresses necessity, making the obligation stronger than the source.",
-        "severity": "low"
-      },
-      {
-        "type": "term_error",
-        "field": "text_simplified",
-        "arabic": "القيم الدينية والأخلاقية",
-        "english": "religious values and akhlaq (moral character)",
-        "why": "The Arabic phrase means 'religious and moral values' (one set of values described by two adjectives). The English splits it into 'religious values' and 'akhlaq (moral character)', changing the meaning and transliterating an adjective as a noun that is not in the source.",
-        "severity": "medium"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "7126c4920f857cf2564dbd2a2c8f2695d7710d5a6c424deca8a546ab98752b87",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

@@ -30,19 +30,11 @@
   "translated_from": "isl-b5620aee",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "term_error",
-        "field": "text_simplified",
-        "arabic": "الصبر والشكر",
-        "english": "ṣabr (patience) and gratitude",
-        "why": "The paired Islamic virtues are treated inconsistently: 'ṣabr' is transliterated and glossed, while 'shukr' is translated as 'gratitude' without transliteration. This creates an inconsistent presentation of Islamic terms within the same document.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "pending",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

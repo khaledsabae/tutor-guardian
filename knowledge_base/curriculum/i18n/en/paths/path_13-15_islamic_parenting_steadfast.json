@@ -1,6 +1,6 @@
 {
   "id": "path_13-15_islamic_parenting_steadfast",
-  "title": "Ath-Thabat al-Akhlaqi fi Zaman al-Fitan (13-15 Years)",
+  "title": "Moral Steadfastness in Times of Trials (13-15 Years)",
   "age_group": "13-15",
   "domain": "islamic_parenting",
   "description": "A path to assist parents in steadfasting their teenager’s akhlaq amidst fitan (trials): ‘iffah (chastity) and the early stages of instinct, companionship in the age of social media, ikhlas (sincerity), and building a conscience that is mindful of Allah.",
@@ -12,37 +12,69 @@
   "pedagogical_framework": "prophetic_7_7_7",
   "primary_reference": {
     "type": "كتاب_تربوي",
-    "info": "تربية الأولاد في الإسلام لعبد الله ناصح علوان + منهج التربية النبوية للطفل لمحمد نور سويد"
+    "info": "Tarbiyat al-Awlad fi al-Islam (Raising Children in Islam) by Abdullah Nasih Ulwan + Manhaj al-Tarbiyah al-Nabawiyyah lil-Tifl (The Prophetic Method of Raising the Child) by Muhammad Nur Suwayd"
   },
   "prerequisites": [],
   "is_published": true,
   "version": "1.0.0",
-  "approved_by": null,
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
   "language": "en",
   "source_language": "ar",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
     "scholar_signals": {
       "keyword": false,
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
+    "review_verdict": "low_only",
     "review_defects": [
       {
-        "type": "meaning_change",
+        "model": "deepseek-v4-pro",
         "field": "description",
-        "arabic": "تثبيت",
-        "english": "steadfasting",
-        "why": "'Steadfasting' is not a standard English verb; the Arabic 'تثبيت' means 'making firm' or 'strengthening'. The translation uses a non-standard word that may confuse readers.",
-        "severity": "low"
+        "type": "tone",
+        "why": "The verb 'steadfasting' is not standard English and sounds awkward, though the meaning is clear."
+      },
+      {
+        "model": "glm-5.2",
+        "field": "description",
+        "type": "tone",
+        "why": "'Steadfasting' is not standard English; the Arabic تثبيت means steadying, anchoring, or firming up."
       }
     ],
-    "approved_by": null,
-    "revalidated_at": "2026-08-13T19:06:56.461187+00:00",
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "revalidated_at": "2026-10-04T11:26:06+00:00",
     "fixed_at": "2026-08-13T19:06:56.461199+00:00",
-    "fixer_model": "mistral-large-3:675b"
+    "fixer_model": "mistral-large-3:675b",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": "mistral-large-3:675b",
+      "rounds": 2,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "0b91228767e956e6f8eb25904e05642888a1dc49981899fc8edeff4290e83c75",
+      "reviewed_at": "2026-10-04T11:26:06+00:00",
+      "residual_low": [
+        {
+          "model": "deepseek-v4-pro",
+          "field": "description",
+          "type": "tone",
+          "why": "The verb 'steadfasting' is not standard English and sounds awkward, though the meaning is clear."
+        },
+        {
+          "model": "glm-5.2",
+          "field": "description",
+          "type": "tone",
+          "why": "'Steadfasting' is not standard English; the Arabic تثبيت means steadying, anchoring, or firming up."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    }
   }
 }

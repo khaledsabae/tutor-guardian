@@ -30,43 +30,26 @@
   "translated_from": "isl-d5f85bee",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "اللين",
-        "english": "kindness",
-        "why": "Arabic اللين means softness/gentleness/leniency, not kindness; the English changes the nuance.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "نفوسهم",
-        "english": "hearts",
-        "why": "Arabic نفوس means souls/self, not hearts; 'hearts' is a common but imprecise rendering.",
-        "severity": "low"
-      },
-      {
-        "type": "term_error",
-        "field": "title",
-        "arabic": "الرفق",
-        "english": "Rifq",
-        "why": "Rifq is not an Islamic technical term; it should be translated as 'gentleness' or 'kindness'. Transliterating it without gloss in the title is unnecessary and unclear.",
-        "severity": "medium"
-      },
-      {
-        "type": "meaning_change",
-        "field": "title",
-        "arabic": "القدوة",
-        "english": "the Good Example",
-        "why": "Arabic القدوة means 'the example/model'; adding 'Good' is not in the source and slightly alters the meaning.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "cee80d52ceb20baf812f79328066cfce51e121eeeae2b0e50b4e76788f618028",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

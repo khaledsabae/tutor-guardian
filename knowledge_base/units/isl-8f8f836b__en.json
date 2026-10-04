@@ -30,35 +30,18 @@
   "translated_from": "isl-8f8f836b",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
+    "review_verdict": "pending",
     "review_defects": [
       {
-        "type": "term_error",
+        "model": "glm-5.2",
         "field": "text_simplified",
-        "arabic": "سيرة الصحابة",
-        "english": "seerah of the Companions",
-        "why": "The Arabic 'سيرة' means biography/life and can apply to anyone, but the transliterated 'seerah' in English is almost exclusively used for the Prophet's biography, so using it for Companions may mislead readers into thinking it refers to the Prophet's seerah.",
-        "severity": "medium"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "في نفوس الأطفال",
-        "english": "in the hearts of children",
-        "why": "'نفوس' means souls/self, not specifically hearts; 'hearts' is a common but not exact translation, slightly altering the meaning.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "التربية الصالحة",
-        "english": "sound tarbiyah",
-        "why": "'صالحة' means righteous/good, not 'sound'; 'sound' implies correctness rather than moral goodness.",
-        "severity": "low"
+        "type": "meaning",
+        "why": "The Arabic 'سيرة' here means 'biographies/accounts' in a general sense, but 'seerah' as a transliterated term typically refers specifically to the Prophet's biography, making this slightly misleading."
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

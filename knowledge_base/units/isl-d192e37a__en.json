@@ -2,7 +2,7 @@
   "id": "isl-d192e37a__en",
   "domain": "islamic_parenting",
   "source_file": "Alukah_Rights_of_Children.pdf",
-  "title": "The Importance of Tarbiyah and Akhlaq for Children",
+  "title": "The Importance of Religious and Moral Upbringing for Children",
   "language": "en",
   "age_group": "unspecified",
   "behavior_type": "تربية دينية وأخلاقية",
@@ -29,19 +29,11 @@
   "translated_from": "isl-d192e37a",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "title",
-        "arabic": "أهمية التربية الدينية والأخلاقية للأبناء",
-        "english": "The Importance of Tarbiyah and Akhlaq for Children",
-        "why": "The English title omits 'religious' (الدينية) and converts the adjectival phrase 'religious and moral upbringing' into two nouns 'Tarbiyah and Akhlaq', losing the explicit religious dimension and altering the meaning.",
-        "severity": "high"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "pending",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-10-04T16:52:31+00:00"
   }
 }

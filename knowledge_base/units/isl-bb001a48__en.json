@@ -30,19 +30,11 @@
   "translated_from": "isl-bb001a48",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "حقوق الأطفال على الآباء",
-        "english": "the rights of children upon their parents",
-        "why": "The Arabic 'الآباء' specifically means fathers (plural of أب), not parents. The later phrase 'الوالدين' means parents, so the translation conflates the two distinct terms and broadens the scope from fathers to both parents.",
-        "severity": "medium"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "pending",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

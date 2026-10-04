@@ -30,27 +30,11 @@
   "translated_from": "isl-a36a8295",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "يذكر الحديث الشريف أهمية العدل",
-        "english": "The noble hadith highlights the importance of justice",
-        "why": "The Arabic verb 'يذكر' means 'mentions' or 'states', not 'highlights'; 'highlights' adds an emphasis not present in the source.",
-        "severity": "low"
-      },
-      {
-        "type": "register",
-        "field": "text_simplified",
-        "arabic": "تربية الأبناء على التقوى",
-        "english": "raising children upon taqwa",
-        "why": "The English 'upon taqwa' is a literal rendering of the Arabic preposition 'على' and sounds stiff and unnatural; a more idiomatic translation would be 'with taqwa' or 'in taqwa'.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "pending",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

@@ -30,27 +30,26 @@
   "translated_from": "isl-94d2e5ad",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "مع ضرورة توجيههم للدعاء والثقة بالله",
-        "english": "while guiding them towards du'a and trust in Allah",
-        "why": "The Arabic includes 'ضرورة' (necessity), making the guidance an obligation, but the English omits this word, weakening the force.",
-        "severity": "medium"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "ينبغي تربية الأطفال",
-        "english": "It is also essential to raise children",
-        "why": "The Arabic 'ينبغي' means 'should' or 'ought to', a recommendation, but the English 'essential' implies necessity, strengthening the obligation beyond the original.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "5118304927f8a4735bdc46e4aed864df292386775826321fad8ae8443ad6cf86",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

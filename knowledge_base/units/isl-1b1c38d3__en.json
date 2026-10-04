@@ -30,27 +30,26 @@
   "translated_from": "isl-1b1c38d3",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "term_error",
-        "field": "title",
-        "arabic": "المنهج التربوي الإسلامي",
-        "english": "Islamic Tarbiyah Curriculum",
-        "why": "The Arabic uses the adjective 'تربوي' (educational/pedagogical), not the noun 'تربية' (tarbiyah). 'Tarbiyah Curriculum' is a specific Islamic term not present in the source and narrows the meaning.",
-        "severity": "medium"
-      },
-      {
-        "type": "term_error",
-        "field": "text_simplified",
-        "arabic": "المنهج التربوي الإسلامي المتكامل / المناهج التربوية الحالية",
-        "english": "integrated Islamic tarbiyah (upbringing) curriculum / current tarbiyah curricula",
-        "why": "Same issue: 'التربوي/التربوية' is an adjective meaning educational, not the noun 'tarbiyah'. The English repeatedly inserts 'tarbiyah' where the Arabic does not use that term, altering the register and meaning.",
-        "severity": "medium"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "e00886c7b393ceb04af9a0d2f41f9830a73b6cc6e0f878dd2dc1a6e655357224",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

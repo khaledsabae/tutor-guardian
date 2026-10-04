@@ -30,43 +30,26 @@
   "translated_from": "isl-b328d5a2",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "term_error",
-        "field": "title",
-        "arabic": "التربية الدينية",
-        "english": "Religious Tarbiyah",
-        "why": "Tarbiyah is not a technical Islamic term requiring transliteration; it means upbringing/education and should be translated, especially in the title where no gloss is provided.",
-        "severity": "medium"
-      },
-      {
-        "type": "term_error",
-        "field": "text_simplified",
-        "arabic": "الدين",
-        "english": "the Din",
-        "why": "Din is a transliteration of the ordinary word for religion; it is not necessary and may be unclear to readers; 'religion' or 'faith' would be clearer.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "أماكن اللهو",
-        "english": "places of idle distraction",
-        "why": "اللهو means amusement or entertainment, not necessarily 'idle distraction'; adding 'idle' introduces a negative connotation not present in the Arabic.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "القدوة الحسنة",
-        "english": "a good example",
-        "why": "The Arabic definite phrase 'the good example/role model' is rendered as indefinite 'a good example', losing the specific sense of an exemplary role model.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "b53f3b9b03e0b23366b2c1ae1ad8af2c5203c8c679449c1a042244e2ecbecaa7",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

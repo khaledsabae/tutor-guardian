@@ -2,7 +2,7 @@
   "id": "isl-4fd89060__en",
   "domain": "islamic_parenting",
   "source_file": "Tarbiya_Al_Banat.pdf",
-  "title": "Al-'Adl bayna al-Abna' wa Atharuhu fi Tarbiyatihim",
+  "title": "Justice Between Children and Its Effect on Their Upbringing",
   "language": "en",
   "age_group": "unspecified",
   "behavior_type": "التمييز بين الأبناء",
@@ -30,19 +30,26 @@
   "translated_from": "isl-4fd89060",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "title",
-        "arabic": "العدل بين الأبناء وأثره في تربيتهم",
-        "english": "Al-'Adl bayna al-Abna' wa Atharuhu fi Tarbiyatihim",
-        "why": "The Arabic title is a descriptive phrase meaning 'Justice between children and its effect on their upbringing,' but the English title is only a transliteration, so the meaning is not conveyed to an English reader.",
-        "severity": "medium"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "ed9ebe941e4f1a17ac8698f12e269ef1df5f14e30349d954d0c4aabc21648f59",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

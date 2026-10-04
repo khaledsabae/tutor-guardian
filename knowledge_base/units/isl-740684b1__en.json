@@ -30,35 +30,24 @@
   "translated_from": "isl-740684b1",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
+    "review_verdict": "pending",
     "review_defects": [
       {
-        "type": "term_error",
+        "model": "glm-5.2",
         "field": "title",
-        "arabic": "القدوة",
-        "english": "Uswah",
-        "why": "The Arabic word is 'القدوة' (qudwah/qidwah), meaning example or role model. 'Uswah' is the transliteration of a different word, 'أسوة'. The correct transliteration is 'Qudwah' or 'Qidwah'.",
-        "severity": "medium"
+        "type": "meaning",
+        "why": "The Arabic uses القدوة (qudwah) but the English transliterates a different word, أسوة (uswah); both mean 'example' but they are not the same Arabic term."
       },
       {
-        "type": "term_error",
+        "model": "glm-5.2",
         "field": "text_simplified",
-        "arabic": "القدوة الحسنة",
-        "english": "good uswah (example)",
-        "why": "Same error: 'uswah' corresponds to أسوة, not قدوة. Should be 'good qudwah (example)' or 'good role model'.",
-        "severity": "medium"
-      },
-      {
-        "type": "term_error",
-        "field": "text_simplified",
-        "arabic": "الصلاة والصبر",
-        "english": "Salah and sabr",
-        "why": "Inconsistent capitalization of transliterated terms: 'Salah' is capitalized but 'sabr' is lowercase. Both are common nouns in Arabic and should be treated consistently, e.g., 'Salah and Sabr' or 'salah and sabr'.",
-        "severity": "low"
+        "type": "meaning",
+        "why": "The Arabic says القدوة الحسنة (qudwah hasanah) but the English renders it as 'uswah', a different Arabic word."
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

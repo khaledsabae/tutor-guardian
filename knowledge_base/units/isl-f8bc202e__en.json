@@ -30,35 +30,26 @@
   "translated_from": "isl-f8bc202e",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "term_error",
-        "field": "title",
-        "arabic": "التربية الإسلامية",
-        "english": "Islamic Tarbiyah",
-        "why": "Transliterated term 'Tarbiyah' is capitalized in the title but lowercased as 'tarbiyah' in the body text, creating inconsistency.",
-        "severity": "low"
-      },
-      {
-        "type": "register",
-        "field": "text_simplified",
-        "arabic": "مناهج نبوية شاملة",
-        "english": "comprehensive Prophetic methodologies",
-        "why": "The Arabic 'مناهج' is a common word for methods/approaches; 'methodologies' is more technical and stiff, shifting the register.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "مع العناية بفطرته وعلاقاته",
-        "english": "with care for their fitrah (innate pure nature) and relationships",
-        "why": "The parenthetical '(innate pure nature)' is an addition not present in the Arabic; it explains but adds words.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "b9731c4d18ca5d9322a37641cfeab598ef7b067b2b5d7b87e799ae79c2c6e58f",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

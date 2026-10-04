@@ -28,35 +28,26 @@
   "translated_from": "med-e64897f2",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "وفي المراهقة يقلّ فرط الحركة وقد يظهر على شكل تململ",
-        "english": "In adolescence, hyperactivity may decrease and appear as restlessness",
-        "why": "The Arabic states hyperactivity decreases (يقلّ) and may appear as restlessness (وقد يظهر). The English changes the first to 'may decrease' and drops 'may' from the second, altering the certainty/possibility.",
-        "severity": "medium"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "وقد تؤثر في الدراسة والتنظيم والعلاقات",
-        "english": "affecting studies, organization, and relationships",
-        "why": "The Arabic says 'and may affect' (وقد تؤثر), but the English uses 'affecting' as a definite consequence, removing the possibility.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "صعوبات التعلّم",
-        "english": "learning challenges",
-        "why": "Arabic 'صعوبات التعلّم' means learning difficulties/disabilities; 'learning challenges' is a softer euphemism that changes the clinical meaning.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "83ebaa53224a72568a3ff1ce92dc3ee18cae93647647fad88a78c88f44a2b21d",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

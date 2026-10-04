@@ -19,21 +19,62 @@
   "needs_professional_followup": false,
   "is_published": true,
   "version": "1.0.0",
-  "approved_by": null,
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
   "language": "en",
   "source_language": "ar",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
     "scholar_signals": {
       "keyword": true,
       "quoted_arabic": true,
       "reviewer_model": true
     },
-    "review_verdict": "clean",
-    "review_defects": [],
-    "approved_by": null,
-    "revalidated_at": "2026-08-13T17:34:01.743698+00:00"
+    "review_verdict": "low_only",
+    "review_defects": [
+      {
+        "model": "deepseek-v4-pro",
+        "field": "try_this",
+        "type": "meaning",
+        "why": "The Arabic asks what to fill the child's record with; the English shifts the image to dictating to the angel."
+      },
+      {
+        "model": "glm-5.2",
+        "field": "fields.try_this.arabic",
+        "type": "source_corruption",
+        "why": "The imperative verb should be «وخصّصْ» without the trailing alif; «وخصّصا» is grammatically incorrect in MSA."
+      }
+    ],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "revalidated_at": "2026-10-04T16:52:31+00:00",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "1fd8a0d2e5328d6c69976cdbb7793dc0406f1abcc34065a7f76a48764b1dfa45",
+      "reviewed_at": "2026-10-04T16:52:31+00:00",
+      "residual_low": [
+        {
+          "model": "deepseek-v4-pro",
+          "field": "try_this",
+          "type": "meaning",
+          "why": "The Arabic asks what to fill the child's record with; the English shifts the image to dictating to the angel."
+        },
+        {
+          "model": "glm-5.2",
+          "field": "fields.try_this.arabic",
+          "type": "source_corruption",
+          "why": "The imperative verb should be «وخصّصْ» without the trailing alif; «وخصّصا» is grammatically incorrect in MSA."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    }
   }
 }

@@ -29,27 +29,26 @@
   "translated_from": "isl-680b8d50",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "term_error",
-        "field": "title",
-        "arabic": "التربية الإسلامية",
-        "english": "Islamic Tarbiyah",
-        "why": "The Arabic 'التربية الإسلامية' means 'Islamic education' (the academic field). Transliterating 'التربية' as 'Tarbiyah' is unnecessary and may imply a narrower Islamic upbringing concept; standard translation is 'Islamic Education'.",
-        "severity": "medium"
-      },
-      {
-        "type": "term_error",
-        "field": "text_simplified",
-        "arabic": "المتخصصون في التربية",
-        "english": "Specialists in tarbiyah (upbringing)",
-        "why": "The Arabic 'التربية' here refers to the general field of education, not specifically 'tarbiyah/upbringing'. The transliteration plus gloss 'upbringing' changes the meaning from education specialists to upbringing specialists, which is not equivalent in curriculum studies.",
-        "severity": "medium"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "78c5e0cfe4ca73a924d4a3d51d6b4fbed79fdc21e8f5fd2f0a1c63d1179b6b98",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

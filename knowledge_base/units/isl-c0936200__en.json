@@ -30,27 +30,11 @@
   "translated_from": "isl-c0936200",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "نفوس الأطفال",
-        "english": "hearts of children",
-        "why": "The Arabic 'نفوس' means 'souls' or 'selves', not 'hearts' (which would be 'قلوب'). The translation substitutes a different body/spiritual metaphor, altering the intended meaning.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "ترك الشرك",
-        "english": "avoiding shirk",
-        "why": "The Arabic verb 'ترك' means 'to abandon' or 'to leave', which is stronger and more definitive than 'avoiding'. 'Avoiding' suggests staying away from situations, while 'abandoning' implies completely giving up shirk.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "pending",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

@@ -30,19 +30,11 @@
   "translated_from": "isl-0b607846",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "register",
-        "field": "text_simplified",
-        "arabic": "التوكل على الله",
-        "english": "tawakkul upon Allah",
-        "why": "The phrase 'tawakkul upon Allah' is not idiomatic English; 'tawakkul in Allah' or 'reliance upon Allah' would be more natural. The Arabic is simple and direct, but the English sounds stiff and slightly awkward.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "pending",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

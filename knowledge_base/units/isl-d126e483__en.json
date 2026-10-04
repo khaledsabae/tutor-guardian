@@ -30,27 +30,26 @@
   "translated_from": "isl-d126e483",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "term_error",
-        "field": "text_simplified",
-        "arabic": "الصحبة الصالحة",
-        "english": "righteous companionship",
-        "why": "The Islamic term 'suhbah' is translated instead of transliterated, while other terms in the same document ('salah', 'akhlaq', 'tarbiyah') are transliterated. This is inconsistent transliteration.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "title",
-        "arabic": "الأخلاق",
-        "english": "Good Akhlaq",
-        "why": "The Arabic title says 'الأخلاق' (morals/character) without the adjective 'حسنة' (good). The English adds 'Good', which is not present in the Arabic title.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "768db372c8304d4160f26cd085f4529f3d0b8fa3427db6a275e09df63784fb92",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

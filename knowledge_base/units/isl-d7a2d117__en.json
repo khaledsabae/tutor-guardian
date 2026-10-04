@@ -30,27 +30,11 @@
   "translated_from": "isl-d7a2d117",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "term_error",
-        "field": "title / text_simplified",
-        "arabic": "التربية / تربية",
-        "english": "Tarbiyah / raising",
-        "why": "Inconsistent transliteration: the title transliterates 'Tarbiyah' but the body translates the same Arabic term as 'raising'. Islamic term should be handled consistently.",
-        "severity": "medium"
-      },
-      {
-        "type": "term_error",
-        "field": "text_simplified",
-        "arabic": "الصلاة",
-        "english": "the prayer",
-        "why": "Islamic term 'salah' is translated away as 'prayer' instead of being transliterated, while other terms like 'akhlaq' are transliterated. Inconsistent treatment of Islamic terminology.",
-        "severity": "medium"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "pending",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

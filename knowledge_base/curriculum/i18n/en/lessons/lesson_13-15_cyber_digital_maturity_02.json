@@ -9,8 +9,8 @@
     "e9717a72-3836-4c57-9c93-9d9ba67f1ed9",
     "f69ebfd7-8cec-4eca-b7f9-3c2ac0f38996"
   ],
-  "summary": "Deepfake, AI-generated images, and fake news—these can no longer be distinguished by sight alone. The rule is: (1) Is the source official/trusted? (2) Is there another independent source confirming it? (3) Does it provoke anger/fear/urgency? (Three signs of deception). Tools: Google Reverse Image Search, InVID, the platform’s official website.",
-  "try_this": "This week: Choose a suspicious video or image—use Google Lens and Reverse Image Search together, and look for the original source. Discuss: How did you uncover the fabrication?",
+  "summary": "Deepfake, AI-generated images, and fake news—these can no longer be distinguished by sight alone. The rule is: (1) Is the source official/trusted? (2) Is there another independent source confirming it? (3) Does it provoke anger/fear/urgency? (Three signs of deception). Tools: reverse image search, video verification tools, and the platform’s official website.",
+  "try_this": "This week: Choose a suspicious video or image—use reverse image search together, and look for the original source. Discuss: How did you uncover the fabrication?",
   "order": 2,
   "estimated_minutes": 25,
   "reflection_prompts": [

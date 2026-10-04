@@ -30,19 +30,11 @@
   "translated_from": "isl-2935b46f",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "title",
-        "arabic": "أهمية التربية الدينية للأبناء",
-        "english": "The Importance of Tarbiyah upon the Din for Children",
-        "why": "The Arabic title means 'The Importance of Religious Upbringing/Education for Children' (التربية الدينية is a noun-adjective phrase). The English rendering changes this to 'Tarbiyah upon the Din', which is a different construction implying raising children upon the religion rather than religious education, and introduces transliterated terms not present in the source.",
-        "severity": "medium"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "pending",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

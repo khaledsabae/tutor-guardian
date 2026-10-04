@@ -11,7 +11,7 @@
   "reference_type": "كتاب_تربوي",
   "reference_info": "UNICEF",
   "text_original": "and Ahna Suleiman Neuroimaging and the Adolescent Brain: A period of plasticity for vulnerabilities and opportunities 29 Situating the Adolescent Brain: The developing brain in its cultural contexts 39 Suparna Choudhury Poverty and the Adolescent Brain 49 Helping Teenagers Develop Resilience in the Face of Stress 57 Sonia J. Lupien Understanding Adolescent Neuroplasticity: A guide to developing resiliency programmes for adolescents 65 Mindfulness Meditation Impact on the Adolescent Brain 75 The Perils and Promise of Technology for the Adolescent Brain 83 Melina R. Uncapher The Adolescent Brain: A second window of opportunity THE ADOLESCENT BRAIN: A SECOND WINDOW UNICEF Executive Director, Anthony Lake Few things irritate adolescents more than being told what to do – or how to think. Their need for independence is not only emotional. Adolescence is a critical developmental phase of life, a time during which children acquire the social skills they need to thrive as adults. Just as critically, it is also the time in which their brains develop – or fail to develop – in a way that enables them to reach their full potential in life. We already know that in the earliest years of childhood, children’s brains form neural connections at a rate never to be repeated. This is the first window of opportunity to influence the development of children’s brains through nutrition, stimulation and protection from violence and other harms. But a growing body of scientific knowledge shows that experience and environment also combine with genetics to shape the brains of adolescents.",
-  "text_simplified": "Youth go through a period of growth and opportunity, during which their minds develop remarkably. Parents must encourage the building of their abilities and skills.",
+  "text_simplified": "Youth go through a period of plasticity and opportunity, during which their minds develop remarkably. Parents must encourage the building of their abilities and skills.",
   "labels": [
     "الشباب",
     "العقل البشري",
@@ -30,19 +30,40 @@
   "translated_from": "dev-c5e6f09a",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
+    "review_verdict": "low_only",
     "review_defects": [
       {
-        "type": "meaning_change",
+        "model": "deepseek-v4-pro",
         "field": "text_simplified",
-        "arabic": "الشباب يمر بفترة من الاصلاح والفرص",
-        "english": "Youth go through a period of growth and opportunity",
-        "why": "The Arabic 'الاصلاح' means reform/improvement, not 'growth'. Also 'الفرص' is plural, while the English uses singular 'opportunity'.",
-        "severity": "medium"
+        "type": "tone",
+        "why": "The Arabic uses the common word 'المرونة' (flexibility), while 'plasticity' is a clinical term that may be less accessible; also 'الفرص' is plural."
       }
     ],
-    "approved_by": null
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "f7dbfead4bf1eee3a008ddbe5825741b8206a47a57c40cff827a671059e81579",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [
+        {
+          "model": "deepseek-v4-pro",
+          "field": "text_simplified",
+          "type": "tone",
+          "why": "The Arabic uses the common word 'المرونة' (flexibility), while 'plasticity' is a clinical term that may be less accessible; also 'الفرص' is plural."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

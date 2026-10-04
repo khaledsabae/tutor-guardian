@@ -30,27 +30,11 @@
   "translated_from": "isl-6792dd0f",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "religious_error",
-        "field": "text_simplified",
-        "arabic": "حديث نبوي شريف",
-        "english": "a noble hadith",
-        "why": "The Arabic explicitly says 'Prophetic hadith' (حديث نبوي), but the English omits 'Prophetic', softening the attribution to the Prophet ﷺ.",
-        "severity": "medium"
-      },
-      {
-        "type": "term_error",
-        "field": "title",
-        "arabic": "التربية النبوية",
-        "english": "Prophetic Tarbiyah",
-        "why": "The Arabic word التربية means upbringing/education and is not a technical Islamic term requiring transliteration; the title uses 'Tarbiyah' without gloss while the body uses 'tarbiyah (upbringing)', creating inconsistency.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "pending",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

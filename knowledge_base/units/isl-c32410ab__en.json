@@ -30,19 +30,18 @@
   "translated_from": "isl-c32410ab",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
+    "review_verdict": "pending",
     "review_defects": [
       {
-        "type": "meaning_change",
+        "model": "glm-5.2",
         "field": "text_simplified",
-        "arabic": "الذكر",
-        "english": "adhkar (remembrances)",
-        "why": "The Arabic uses the singular 'dhikr' (remembrance), while the English uses the plural 'adhkar', changing the number and potentially the specific meaning.",
-        "severity": "low"
+        "type": "meaning",
+        "why": "The Arabic singular 'الذكر' is rendered as the plural 'adhkar', a minor number mismatch."
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

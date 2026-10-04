@@ -27,27 +27,26 @@
   "translated_from": "179d90e1-a863-42e1-8fea-e8560b7401f7",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "register",
-        "field": "text_simplified",
-        "arabic": "الانتقال المفاجئ بين الأنشطة أكبر مولّد للرفض",
-        "english": "Sudden transitions between activities are the biggest generator of refusal",
-        "why": "Literal translation of 'مولّد' as 'generator' is stiff and mechanical; natural English would be 'trigger' or 'cause'.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "فاعرضه على مختص",
-        "english": "consult a specialist",
-        "why": "Arabic says present the child to a specialist; English says consult a specialist, shifting the object from the child to the parent.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "59e99a95eba8ac53efb130d94bdaa7eff2e0abb5ec98128349f45daa9b2372b8",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

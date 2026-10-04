@@ -2,7 +2,7 @@
   "id": "isl-aeca7eab__en",
   "domain": "islamic_parenting",
   "source_file": "Alukah_Rights_of_Children.pdf",
-  "title": "Al-Rifq bi-l-Atfal fi-l-Hadith al-Nabawi",
+  "title": "Gentleness with Children in the Prophetic Hadith",
   "language": "en",
   "age_group": "unspecified",
   "behavior_type": "تربية أخلاقية",
@@ -30,35 +30,11 @@
   "translated_from": "isl-aeca7eab",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "title",
-        "arabic": "الرفق بالأطفال في الحديث النبوي",
-        "english": "Al-Rifq bi-l-Atfal fi-l-Hadith al-Nabawi",
-        "why": "The English title is a transliteration, not a translation, so the meaning 'Gentleness with Children in the Prophetic Hadith' is not conveyed to English readers.",
-        "severity": "medium"
-      },
-      {
-        "type": "religious_error",
-        "field": "text_simplified",
-        "arabic": "حديث نبوي شريف",
-        "english": "noble hadith",
-        "why": "The Arabic explicitly says 'Prophetic noble hadith' (hadith nabwi sharif), but the English omits 'Prophetic', weakening the attribution to the Prophet ﷺ.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "حق الكبار",
-        "english": "the rights of the elders",
-        "why": "The Arabic singular 'right' (haqq) is rendered as plural 'rights', slightly altering the nuance of the hadith paraphrase.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "pending",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-10-04T11:26:06+00:00"
   }
 }

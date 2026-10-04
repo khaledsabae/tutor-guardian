@@ -30,35 +30,11 @@
   "translated_from": "isl-12f1f119",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "register",
-        "field": "text_simplified",
-        "arabic": "تربية الأطفال",
-        "english": "*tarbiyah* (the nurturing and upbringing of children)",
-        "why": "The Arabic uses the ordinary word تربية (upbringing/education), but the English transliterates it as tarbiyah with a gloss, making the tone more academic and less direct than the simple Arabic.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "تعزيز فهمهم للدين",
-        "english": "deepening their understanding of the *deen* (religion)",
-        "why": "تعزيز means strengthening/reinforcing, not deepening; the English changes the nuance.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "حسن التعامل مع الأطفال",
-        "english": "kind and excellent treatment of children",
-        "why": "The Arabic says حسن (good/kind) only; 'excellent' is an addition not present in the source.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "pending",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

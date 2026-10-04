@@ -30,19 +30,11 @@
   "translated_from": "isl-642d3763",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "قصصًا وحكمًا تربوية",
-        "english": "educational stories and wisdom",
-        "why": "The Arabic adjective 'تربوية' (educational) modifies both 'قصصًا' (stories) and 'حكمًا' (wisdom), but the English phrasing 'educational stories and wisdom' can be read as only the stories being educational, leaving the wisdom unqualified.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "pending",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

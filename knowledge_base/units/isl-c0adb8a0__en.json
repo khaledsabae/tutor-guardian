@@ -30,43 +30,52 @@
   "translated_from": "isl-c0adb8a0",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
+    "review_verdict": "low_only",
     "review_defects": [
       {
-        "type": "term_error",
+        "model": "deepseek-v4-pro",
         "field": "title",
-        "arabic": "أساسيات التربية الدينية للأبناء",
-        "english": "Foundations of Tarbiyah al-Diniyyah for Children",
-        "why": "The Arabic phrase 'التربية الدينية' is ordinary Arabic meaning 'religious upbringing/education', not a technical Islamic term requiring transliteration. Transliterating it as 'Tarbiyah al-Diniyyah' is unnecessary and may confuse English readers; it should be translated.",
-        "severity": "medium"
+        "type": "leakage",
+        "why": "The Arabic word 'al-Diniyyah' is left untranslated rather than rendered as 'Religious'."
       },
       {
-        "type": "meaning_change",
+        "model": "deepseek-v4-pro",
         "field": "text_simplified",
-        "arabic": "يجب على الوالدين تعزيز الكسب الحلال في أبنائهم، وتجنب المال الحرام والشبهات.",
-        "english": "Parents must instill the pursuit of halal earnings in their children and keep them away from haram wealth and doubtful matters.",
-        "why": "The Arabic says parents should 'strengthen halal earning' (not 'pursuit') and 'avoid haram wealth and doubtful matters' (the subject is parents, not children). The English shifts the avoidance to children and adds 'pursuit' which is not in the Arabic.",
-        "severity": "medium"
-      },
-      {
-        "type": "register",
-        "field": "text_simplified",
-        "arabic": "كما ينبغي غرس القدوة الحسنة في البيت",
-        "english": "They should also plant the seed of good role models in the home",
-        "why": "The Arabic 'غرس القدوة الحسنة' means 'instill a good example/role model' (singular, direct). The English 'plant the seed of good role models' is an idiomatic metaphor not present in the Arabic and pluralizes the concept, making it less direct.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "على الأم أن تحرص على تربية بناتها على الحياء والعفة",
-        "english": "A mother should be keen to raise her daughters with haya (modesty) and purity",
-        "why": "The Arabic 'العفة' means chastity/decency, not 'purity' (which is 'طهارة'). 'Purity' is a broader term that may not convey the specific meaning of sexual modesty/abstinence.",
-        "severity": "low"
+        "type": "source_corruption",
+        "why": "The Arabic has a missing hamza: 'وابعادهن' should be 'وإبعادهن'."
       }
     ],
-    "approved_by": null
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "8296b76255ce441abd49377ba52a83ddaa58808e6364a3f142f60257999c2ec4",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [
+        {
+          "model": "deepseek-v4-pro",
+          "field": "title",
+          "type": "leakage",
+          "why": "The Arabic word 'al-Diniyyah' is left untranslated rather than rendered as 'Religious'."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "field": "text_simplified",
+          "type": "source_corruption",
+          "why": "The Arabic has a missing hamza: 'وابعادهن' should be 'وإبعادهن'."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

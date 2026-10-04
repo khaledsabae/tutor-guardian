@@ -17,30 +17,62 @@
   "needs_professional_followup": false,
   "is_published": true,
   "version": "1.0.0",
-  "approved_by": null,
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
   "language": "en",
   "source_language": "ar",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
     "scholar_signals": {
       "keyword": false,
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
+    "review_verdict": "low_only",
     "review_defects": [
       {
-        "type": "meaning_change",
-        "field": "title",
-        "arabic": "تدرّجٌ وتحفيز",
-        "english": "Gradual Training and Motivation",
-        "why": "The Arabic noun 'تدرّج' means gradualness or gradual progression, not 'training'. The English misrepresents the concept as 'training', which is a different word (تدريب) used later in the summary.",
-        "severity": "low"
+        "model": "deepseek-v4-pro",
+        "field": "summary",
+        "type": "meaning",
+        "why": "Arabic addresses a son specifically; English broadens to any child."
+      },
+      {
+        "model": "glm-5.2",
+        "field": "try_this",
+        "type": "meaning",
+        "why": "The Arabic pronoun in «إنجازه» is singular masculine (his), but the English uses «their»."
       }
     ],
-    "approved_by": null,
-    "revalidated_at": "2026-08-13T17:20:17.282961+00:00"
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "revalidated_at": "2026-10-04T11:18:18+00:00",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "4fd8577f0395916c477e4d9807913aa0ed2930367208905da4a8c8c862deddc9",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [
+        {
+          "model": "deepseek-v4-pro",
+          "field": "summary",
+          "type": "meaning",
+          "why": "Arabic addresses a son specifically; English broadens to any child."
+        },
+        {
+          "model": "glm-5.2",
+          "field": "try_this",
+          "type": "meaning",
+          "why": "The Arabic pronoun in «إنجازه» is singular masculine (his), but the English uses «their»."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    }
   }
 }

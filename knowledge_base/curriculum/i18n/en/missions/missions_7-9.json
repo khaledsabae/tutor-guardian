@@ -156,5 +156,65 @@
       "skill": "Making",
       "is_published": true
     }
-  ]
+  ],
+  "translation": {
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "45110218eb8d308be1c09ec11d51b472e1e93010a56a8db5ef0c8cfa01eb06e8",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [
+        {
+          "model": "deepseek-v4-pro",
+          "field": "missions[2].title_ar",
+          "type": "addition",
+          "why": "English adds an object 'Them' not present in the Arabic, which simply says 'Your voice brings joy'."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "field": "missions[5].materials[1]",
+          "type": "meaning",
+          "why": "Arabic 'ألوان' is generic colours/crayons; English narrows it to colouring pencils."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "field": "missions[11].materials[0]",
+          "type": "omission",
+          "why": "Arabic specifies cardboard boxes (كراتين); English drops 'cardboard'."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
+    "review_verdict": "low_only",
+    "review_defects": [
+      {
+        "model": "deepseek-v4-pro",
+        "field": "missions[2].title_ar",
+        "type": "addition",
+        "why": "English adds an object 'Them' not present in the Arabic, which simply says 'Your voice brings joy'."
+      },
+      {
+        "model": "deepseek-v4-pro",
+        "field": "missions[5].materials[1]",
+        "type": "meaning",
+        "why": "Arabic 'ألوان' is generic colours/crayons; English narrows it to colouring pencils."
+      },
+      {
+        "model": "deepseek-v4-pro",
+        "field": "missions[11].materials[0]",
+        "type": "omission",
+        "why": "Arabic specifies cardboard boxes (كراتين); English drops 'cardboard'."
+      }
+    ],
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
+  }
 }

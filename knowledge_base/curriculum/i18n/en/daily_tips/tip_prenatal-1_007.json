@@ -1,0 +1,44 @@
+{
+  "id": "tip_prenatal-1_007",
+  "age_group": "prenatal-1",
+  "domain": "infant_pregnancy",
+  "text": "A golden rule: zero screens under the age of two. Your child's brain needs your face and your voice to develop speech and communication, and screens delay talking.",
+  "unit_id": null,
+  "day_of_week": 6,
+  "time_of_day": "evening",
+  "tags": [
+    "صفر_شاشات",
+    "نمو_الدماغ",
+    "تواصل"
+  ],
+  "is_published": true,
+  "version": "1.0.0",
+  "created_at": "2026-09-12T19:00:00",
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "claude-opus-5.5",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
+    "needs_scholar_review": false,
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "35f7b127b52e7d41b7ef095b7466e49704af7c43e3c68a81e0f5d00c68418a99",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
+  }
+}

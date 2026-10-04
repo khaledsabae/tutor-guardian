@@ -28,35 +28,34 @@
   "translated_from": "isl-f2bef952",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "title",
-        "arabic": "مروا أولادكم بالصلاة",
-        "english": "Command Your Children with Salah",
-        "why": "The Arabic means 'Command your children to pray' (the preposition ب indicates the object of the command), but the English 'with Salah' suggests using Salah as a means or accompaniment, not the act being commanded.",
-        "severity": "medium"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "عند أول ضغط اجتماعي",
-        "english": "at the first sign of social pressure",
-        "why": "The Arabic says 'at the first social pressure' (the pressure itself), while the English adds 'sign of', altering the condition and softening the meaning.",
-        "severity": "low"
-      },
-      {
-        "type": "term_error",
-        "field": "text_simplified",
-        "arabic": "رفق",
-        "english": "rifq (gentleness)",
-        "why": "رفق is a common Arabic word meaning gentleness/kindness, not a technical Islamic term requiring transliteration; transliterating it as 'rifq' is unnecessary and inconsistent with the otherwise English rendering.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "2c8841eec7783fac641b05d79be71217885ca90e41f9295388d8b0b5899a0f6e",
+      "reviewed_at": "2026-10-04T16:52:31+00:00",
+      "residual_low": [],
+      "adjudicated": [
+        {
+          "field": "text_simplified",
+          "type": "hadith",
+          "reason": "The Arabic names the narration's real source (Abu Dawud) for the prayer-at-seven hadith, which the master plan's Prayer Journey also builds on. Deleting a correct attribution would make it less verifiable, not safer; the English reproduces the Arabic citation faithfully. Policy question for Khaled: keep or drop explicit non-Sahihayn citations in existing content.",
+          "by": "claude-opus-5.5 (en-parity review, PR #20)",
+          "on": "2026-10-04"
+        }
+      ],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T16:52:31+00:00"
   }
 }

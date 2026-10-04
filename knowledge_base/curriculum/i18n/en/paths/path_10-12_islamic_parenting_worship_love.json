@@ -1,6 +1,6 @@
 {
   "id": "path_10-12_islamic_parenting_worship_love",
-  "title": "Al-'Ibadah 'an Muhabbah: min al-'Adah ila al-Qalb (10-12 years)",
+  "title": "Worship out of Love: From Habit to the Heart (10-12 years)",
   "age_group": "10-12",
   "domain": "islamic_parenting",
   "description": "A path to help parents guide their son from performing 'ibadah out of habit to loving it with the heart shortly before puberty: Salah with love, the first fasts, a living relationship with the Qur'an, and du'a as intimate conversation.",
@@ -14,37 +14,43 @@
   "pedagogical_framework": "prophetic_7_7_7",
   "primary_reference": {
     "type": "كتاب_تربوي",
-    "info": "تربية الأولاد في الإسلام لعبد الله ناصح علوان + منهج التربية النبوية للطفل لمحمد نور سويد"
+    "info": "Tarbiyat al-Awlad fi al-Islam (Raising Children in Islam) by Abdullah Nasih Ulwan + Manhaj al-Tarbiyah al-Nabawiyyah lil-Tifl (The Prophetic Method of Raising the Child) by Muhammad Nur Suwayd"
   },
   "prerequisites": [],
   "is_published": true,
   "version": "1.0.0",
-  "approved_by": null,
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
   "language": "en",
   "source_language": "ar",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
     "scholar_signals": {
       "keyword": false,
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "title",
-        "arabic": "العبادة عن محبّة: من العادة إلى القلب (10-12 سنة)",
-        "english": "Al-'Ibadah 'an Muhabbah: min al-'Adah ila al-Qalb (10-12 years)",
-        "why": "The English title is a transliteration, not a translation. The meaning of the Arabic title ('Worship out of Love: From Habit to the Heart') is lost to an English reader, while the description is fully translated. This creates a disconnect and fails to convey the title's message.",
-        "severity": "medium"
-      }
-    ],
-    "approved_by": null,
-    "revalidated_at": "2026-08-13T19:06:38.444680+00:00",
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "revalidated_at": "2026-10-04T11:26:06+00:00",
     "fixed_at": "2026-08-13T19:06:38.444693+00:00",
-    "fixer_model": "mistral-large-3:675b"
+    "fixer_model": "mistral-large-3:675b",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": "mistral-large-3:675b",
+      "rounds": 2,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "2ab06da6fecd9816039e363e922cd3239ece18138ae95d4f2aa363c4b79e41b9",
+      "reviewed_at": "2026-10-04T11:26:06+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    }
   }
 }

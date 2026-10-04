@@ -2,7 +2,7 @@
   "id": "med-b99c1ea8__en",
   "domain": "medical",
   "source_file": "ADHD_NIMH.pdf",
-  "title": "Psychological and Educational Therapy for Disorders Accompanying Hyperactivity and Attention Deficit",
+  "title": "Psychological and Educational Treatment of ADHD and Its Accompanying Disorders",
   "language": "en",
   "age_group": "unspecified",
   "behavior_type": "قلق, الاكتئاب",
@@ -11,7 +11,7 @@
   "reference_type": "تقرير_طبي",
   "reference_info": "NIMH — Attention-Deficit/Hyperactivity Disorder: What You Need to Know (2024)",
   "text_original": "role. Treatment sessions with the child alone are more likely to be effective for treating symptoms of anxiety or depression that may co-occur with ADHD than for managing core symptoms of the disorder. Mental health professionals can educate parents about the disorder and how it affects a family. They also can help parents develop new skills, attitudes, and ways of relating to their child. Examples include parenting skills training, stress management techniques for parents, and support groups that help parents and families connect with others who have similar concerns. School-based programs Many children and teens with ADHD benefit from school-based behavioral interventions and academic accommodations. Interventions include behavior management plans or classroom-taught organizational and study skills. Accommodations include preferential seating in the classroom, reduced classwork, and extended time on tests and exams. Schools may provide accommodations through what is called a 504 Plan or, for children who qualify for special education services, an Individualized Education Plan (IEP). To learn more about special education services and the Individuals with Disabilities Education Act, visit https://idea.ed.gov. Cognitive training Cognitive training approaches involve repeatedly using a program or activity over several weeks to improve specific functions, such as memory or attention. Exercises are tailored to the person’s ongoing performance. Cognitive training is shown to modestly improve the tasks being practiced. For instance, research shows the training can help memory, attention, inhibition, planning, and cognitive flexibility in people with ADHD. However, these improvements don’t usually translate to changes in core ADHD symptoms of impulsivity and",
-  "text_simplified": "Symptoms of anxiety or depression accompanying Attention Deficit Hyperactivity Disorder should be treated with home-based remedies, while the core symptoms should be addressed through school programs. Mothers can learn how to deal with these issues and help develop new skills.",
+  "text_simplified": "Symptoms of anxiety or depression that accompany attention-deficit/hyperactivity disorder (ADHD) should be treated by a qualified healthcare professional. The core symptoms of the disorder need a treatment plan set and followed up by the doctor, including behavioural therapy, parent training and medication as prescribed, supported by school accommodations such as suitable seating in the classroom and extra time on tests. Parents can learn from the specialist how to deal with these difficulties and gain new skills for relating to their child.",
   "labels": [
     "علاج نفسي",
     "مهارات تعليمية",
@@ -28,19 +28,18 @@
   "translated_from": "med-b99c1ea8",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "العلاجات المنزلية",
-        "english": "home-based remedies",
-        "why": "The Arabic 'علاجات' means 'treatments' or 'therapies' in a neutral medical sense, while 'remedies' in English often implies non-medical or folk cures, which slightly shifts the meaning.",
-        "severity": "low"
-      }
+    "review_verdict": "pending",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-10-04T16:52:31+00:00",
+    "english_authors": [
+      "mistral-large-3:675b",
+      "claude-opus-5.5"
     ],
-    "approved_by": null
+    "fixer_model": "claude-opus-5.5",
+    "fixed_at": "2026-10-04T18:17:56+00:00",
+    "manual_fix_note": "2026-10-04 PR #20 review: rewritten with the Arabic — core ADHD symptoms get a doctor-led plan supported by school accommodations, not 'school programs'; parents, not mothers"
   }
 }

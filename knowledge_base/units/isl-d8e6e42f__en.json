@@ -30,19 +30,18 @@
   "translated_from": "isl-d8e6e42f",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
+    "review_verdict": "pending",
     "review_defects": [
       {
-        "type": "register",
-        "field": "title",
-        "arabic": "أهمية التربية الأخلاقية للأطفال",
-        "english": "The Importance of Akhlaq Tarbiyah for Children",
-        "why": "The Arabic title uses a plain, everyday phrase 'التربية الأخلاقية' (moral education/upbringing). The English title replaces it with transliterated Islamic jargon 'Akhlaq Tarbiyah', which is not a standard compound and makes the title less accessible and more preachy than the original.",
-        "severity": "low"
+        "model": "glm-5.2",
+        "field": "text_simplified",
+        "type": "meaning",
+        "why": "The Arabic says «القدوة الحسنة» (qudwah hasanah), but the English gloss inserts «uswah hasanah», a different (Quranic) word not used in the source."
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

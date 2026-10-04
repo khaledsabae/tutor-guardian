@@ -30,35 +30,11 @@
   "translated_from": "isl-e4c8a66d",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "تربية صالحة",
-        "english": "sound tarbiyah (upbringing)",
-        "why": "The Arabic 'صالحة' means righteous/pious, not merely 'sound'; the translation loses the religious and moral connotation.",
-        "severity": "medium"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "بالرفق واللين",
-        "english": "with rifq (gentleness) and kindness",
-        "why": "The Arabic 'اللين' means gentleness/leniency, not 'kindness'; the translation substitutes a different virtue and also inconsistently transliterates only one of the two terms.",
-        "severity": "low"
-      },
-      {
-        "type": "term_error",
-        "field": "title",
-        "arabic": "التربية",
-        "english": "Tarbiyah",
-        "why": "The title transliterates 'Tarbiyah' without translation, while the body translates it as 'upbringing'; for consistency and clarity, the title should use 'upbringing' or include a gloss.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "pending",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

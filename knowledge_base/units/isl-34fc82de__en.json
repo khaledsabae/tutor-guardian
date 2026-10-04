@@ -28,19 +28,40 @@
   "translated_from": "isl-34fc82de",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
+    "review_verdict": "low_only",
     "review_defects": [
       {
-        "type": "meaning_change",
+        "model": "deepseek-v4-pro",
         "field": "title",
-        "arabic": "صفات المربي",
-        "english": "Qualities of the Successful Murabbi",
-        "why": "The English title adds the word 'Successful', which is not present in the Arabic title. The Arabic title simply says 'qualities of the educator' without the qualifier 'successful'.",
-        "severity": "low"
+        "type": "addition",
+        "why": "The English title adds 'Successful', which is not present in the Arabic title."
       }
     ],
-    "approved_by": null
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "c3f1237ac1277f05d510ffde91a1b3cbc630700625b6ef2ba34264c8a17e9fa2",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [
+        {
+          "model": "deepseek-v4-pro",
+          "field": "title",
+          "type": "addition",
+          "why": "The English title adds 'Successful', which is not present in the Arabic title."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

@@ -11,7 +11,7 @@
   "reference_type": "كتاب_تربوي",
   "reference_info": "كيف تربي ولدك",
   "text_original": "لك ثم نحمرلا دبعو هّللا دبع للها لىإ ءاسملأا بحأو مسا لك مريحو ،عراشلا همريح لم حابم مسا لكب ثم ،ينلحاصلا ءاسمأب ثم ،لسرلاو ءايبنلأا . 39/ ،ينميثع نب لحاص نب دممح ،عتملما حرشلا :رظنا ) ( .2 -2 4 ص ،يسدقّلما نيدلا ءابه ،ةدمعلا حرش ةدعلا :رظنا )2( . 3 - 36/ ،ينميثع نب لحاص نب دممح ،عتملما حرشلا :رظنا )3( . 4 ص ،ميقّلا نبا ،دودولما ةفتح :رظنا )4( حئابذلا هجام نبا ،)2 3 ( اياحضلا دواد وبأ ،)4224( ةقّيقّعلا يئاسنلا ،) 22( يحاضلأا يذمرتلا ) ( .) 969( يحاضلأا يمرادلا ،)22/ ( دحمأ ،)3 6 ( .2 3 ثيدلحا مقر ،2 9/3 :ةقّيقّعلا في باب ،يحاضلأا باتك ،هننس في دواد وبأ هجرخأ :رظنا )6( . 44/ ،ينميثع نب لحاص نب دممح ،عتملما حرشلا :رظنا ) ( . /3 ،ميقّلا نبا ،داعلما داز :رظنا ) ( . 4 / ،ينميثع نب لحاص نب دممح ،عتملما حرشلا :رظنا )9( :مهسوءرو رافكلا ءاسمأب يمستلاو ،اهميرغو ةبعكلا دبعو بينلا دبعك :للها يرغل دبعم مكاحو ةاضقّلا يضاقو كلاملأا كلبم :يمستلاك هنع ينه ابمو ،ةربابلجاو ةنعارفلاك ءاسملأاو ،بابلحاو عدجلأاو روعلأاو نالهولاو بنزخك ينطايشلا ءاسمأب يمستلاو ،ماكلحا ىدهو نايمإ :ابه قحليو ،ىلعيو ةكربو حينجو راسيو َحلفأو ةَرَبك :ةيكزت ىلع ةلمتشلما ةرمو ةيحو برحك :هوركم نىعم ىلع ةلمتشلما ءاسملأا هنع ينه اممو ،اهيرغو كلامو . ةكئلالما ءاسمأب يمستلا هركيو ،اهيرغو ةيصاعو نزحو عملجا نع يهنلا امأو . لوسرلل اذه نلأ رشبلا ديس وأ مدآ دلو ديس :مسا مرحيَو دمحبم ةباحصلا ءانبأ نم ةعبرأ يسم هتوم دعب ذإ ،هتايح في ناك دقّف هسماو هتينك ينب تالحاصلا",
-  "text_simplified": "This section addresses the rulings on naming children in Islam. It clarifies that the best names are those that include worship of Allah, such as Abdullah and Abdur-Rahman, followed by the names of the Prophets and the righteous. It also warns against naming children with the names of disbelievers, devils, or names that carry blameworthy meanings. Additionally, it mentions the dislike (karahah) of naming children after angels or names that involve *tazkiyah* (self-purification) of the self.",
+  "text_simplified": "This section addresses the rulings on naming children in Islam. It clarifies that the best names are those that include worship of Allah, such as Abdullah and Abdur-Rahman, followed by the names of the Prophets and the righteous. It also warns against naming children with the names of disbelievers, devils, or names that carry blameworthy meanings. Additionally, it mentions the dislike (karahah) of naming children after angels or names that praise oneself (claiming purity for oneself).",
   "labels": [
     "تسمية الأبناء",
     "أحكام شرعية",
@@ -30,27 +30,26 @@
   "translated_from": "isl-a8fadfa1",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "الأسماء التي فيها تزكية للنفس",
-        "english": "names that involve *tazkiyah* (self-purification) of the self",
-        "why": "The Arabic 'تزكية للنفس' in this context means self-praise or self-commendation (claiming purity for oneself), not self-purification. The translation changes the meaning of the religious ruling.",
-        "severity": "high"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "أفضل الأسماء ما عبد لله",
-        "english": "the best names are those that include worship of Allah",
-        "why": "The Arabic 'ما عبد لله' means names that denote servitude to Allah (like Abdullah), not names that 'include worship'. The English phrasing is imprecise and could be misunderstood.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "b97d1a0c28a18405980127145030a87ac3e599697ae965529a1d5344fafa5e94",
+      "reviewed_at": "2026-10-04T16:52:31+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T16:52:31+00:00"
   }
 }

@@ -103,7 +103,7 @@
         "string",
         "null"
       ],
-      "description": "اسم المراجع الشرعي الذي أجاز هذا المحتوى. null = غير مراجَع، لا يُنشر للإنجليزية.",
+      "description": "من أجاز هذا المحتوى. في ملفات i18n/en: إما ختم المراجعة الآلية `auto-review:<مراجع A>+<مراجع B>:<YYYY-MM-DD>` (أو `auto-review:<مراجع>:<YYYY-MM-DD>` لمراجعٍ واحد من عائلة نماذج غير عائلة كتّاب الإنجليزي) الذي يكتبه ops/tools/review_en_parity.py وحده، وبصمته في translation.auto_review.content_sha256؛ وإما توقيع إنسانٍ قرأ النصّين يكتبه `review_en_parity.py sign` مع بصمته في translation.approval.content_sha256 — اسمٌ بلا بصمة ترفضه البوابة. الختم يشهد أن الإنجليزي يطابق العربي فقط، لا أن العربي أمينٌ لمصدره، وليس إجازة شرعية. أي تعديل بعده في أيٍّ من اللغتين يُبطله. null = غير مختوم: لا يُقبل منشورًا إلا مُدرَجًا في ops/data/en_parity_queue.json ببصمة نصّه (CI وpre-commit).",
       "default": null
     },
     "language": {
@@ -116,7 +116,7 @@
     },
     "translation": {
       "type": "object",
-      "description": "سجل الترجمة والمراجعة. تكتبه ops/tools/translate_curriculum.py ويحدّثه revalidate_translations.py — ما عدا approved_by، فهو توقيع بشري.",
+      "description": "سجل الترجمة والمراجعة. تكتبه ops/tools/translate_curriculum.py، ويختمه ops/tools/review_en_parity.py (approved_by + auto_review) بعد المراجعة الآلية المزدوجة.",
       "properties": {
         "translator_model": {
           "type": [
@@ -142,7 +142,8 @@
             "clean",
             "defects",
             "pending",
-            "unreviewed"
+            "unreviewed",
+            "low_only"
           ]
         },
         "review_defects": {
@@ -160,7 +161,7 @@
             "string",
             "null"
           ],
-          "description": "اسم المراجع الشرعي. null = غير مراجَع."
+          "description": "نفس قيمة approved_by في الجذر: ختم auto-review:<…>:<date> (بصمته auto_review.content_sha256) أو توقيع بشري ببصمة (approval.content_sha256). null = غير مختوم."
         }
       },
       "additionalProperties": true

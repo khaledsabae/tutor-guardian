@@ -30,19 +30,18 @@
   "translated_from": "isl-d5f87105",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
+    "review_verdict": "pending",
     "review_defects": [
       {
-        "type": "meaning_change",
+        "model": "deepseek-v4-pro",
         "field": "text_simplified",
-        "arabic": "الرعاية الصحية",
-        "english": "physical care",
-        "why": "The Arabic says 'health care' (الرعاية الصحية), which is broader than 'physical care'; the translation narrows it to physical only, omitting other aspects of health.",
-        "severity": "medium"
+        "type": "meaning",
+        "why": "'الصحية' means health/medical, not physical; 'physical care' shifts the meaning slightly."
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

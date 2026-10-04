@@ -30,35 +30,11 @@
   "translated_from": "isl-b479d931",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "الآباء",
-        "english": "parents",
-        "why": "Arabic uses 'الآباء' (fathers), but English generalizes to 'parents', including mothers, which is not specified in the source.",
-        "severity": "medium"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "يجب رعايتهم وتعليمهم",
-        "english": "which must be cared for and taught",
-        "why": "The Arabic pronoun refers to children (هم), but the English relative pronoun 'which' could refer to 'amanah' (trust), creating ambiguity or changing the referent.",
-        "severity": "medium"
-      },
-      {
-        "type": "register",
-        "field": "text_simplified",
-        "arabic": "أمانة في أعناق الآباء",
-        "english": "amanah (trust) upon the necks of parents",
-        "why": "Literal translation of the Arabic idiom 'في أعناق' is awkward in English; a more natural rendering would be 'on their shoulders' or 'in their care'.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "pending",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

@@ -2,7 +2,7 @@
   "id": "isl-094f42cd__en",
   "domain": "islamic_parenting",
   "source_file": "Alukah_Rights_of_Children.pdf",
-  "title": "Al-ʿAdl bayna al-Abnaʾ wa Ahammiyatuhu fi al-Tarbiyah",
+  "title": "Justice Between Children and Its Importance in Tarbiyah (Upbringing)",
   "language": "en",
   "age_group": "unspecified",
   "behavior_type": "العدل بين الأبناء",
@@ -30,27 +30,26 @@
   "translated_from": "isl-094f42cd",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "structure",
-        "field": "title",
-        "arabic": "العدل بين الأبناء وأهميته في التربية",
-        "english": "Al-ʿAdl bayna al-Abnaʾ wa Ahammiyatuhu fi al-Tarbiyah",
-        "why": "The English title is a transliteration of the Arabic, not a translation. It does not convey the meaning to an English reader.",
-        "severity": "medium"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "الحقد",
-        "english": "resentment",
-        "why": "Arabic 'الحقد' means deep-seated hatred or malice, which is stronger than 'resentment'. The translation softens the intensity.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "ef1ceeb51437163d384501eb439229be436aef9729214106d3a8231bf34bec3a",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

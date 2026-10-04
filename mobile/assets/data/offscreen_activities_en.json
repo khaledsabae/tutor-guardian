@@ -172,5 +172,65 @@
         }
       ]
     }
+  },
+  "translation": {
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "583d39ec83b176e0a3d3dda60e81aa3554d5cbc0de3dcbd3020754c933faca9e",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [
+        {
+          "model": "deepseek-v4-pro",
+          "field": "bands.2-3.activities[1].materials[0]",
+          "type": "meaning",
+          "why": "Arabic 'عجين' is generic dough, while 'play dough' narrows it to a commercial product; the instruction uses 'dough'."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "field": "bands.4-6.activities[2].instruction_ar",
+          "type": "meaning",
+          "why": "'شغله' means occupied/preoccupied his mind, not 'stuck with them' (remembered)."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "field": "bands.7-9.activities[0].instruction_ar",
+          "type": "meaning",
+          "why": "Arabic specifies maternal aunt (خالة), while 'aunt' is broader and loses that distinction."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
+    "review_verdict": "low_only",
+    "review_defects": [
+      {
+        "model": "deepseek-v4-pro",
+        "field": "bands.2-3.activities[1].materials[0]",
+        "type": "meaning",
+        "why": "Arabic 'عجين' is generic dough, while 'play dough' narrows it to a commercial product; the instruction uses 'dough'."
+      },
+      {
+        "model": "deepseek-v4-pro",
+        "field": "bands.4-6.activities[2].instruction_ar",
+        "type": "meaning",
+        "why": "'شغله' means occupied/preoccupied his mind, not 'stuck with them' (remembered)."
+      },
+      {
+        "model": "deepseek-v4-pro",
+        "field": "bands.7-9.activities[0].instruction_ar",
+        "type": "meaning",
+        "why": "Arabic specifies maternal aunt (خالة), while 'aunt' is broader and loses that distinction."
+      }
+    ],
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

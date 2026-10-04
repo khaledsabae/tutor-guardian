@@ -29,19 +29,11 @@
   "translated_from": "isl-be38b357",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "term_error",
-        "field": "title",
-        "arabic": "التربية النبوية",
-        "english": "Prophetic Tarbiyah",
-        "why": "The Arabic 'التربية' is a common word meaning upbringing/education, but the English leaves it as 'Tarbiyah', an Arabic transliteration, making it seem like a technical Islamic term when it is not. This is an unnecessary transliteration that obscures meaning for English readers.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "pending",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

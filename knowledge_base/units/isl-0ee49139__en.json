@@ -30,43 +30,26 @@
   "translated_from": "isl-0ee49139",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "term_error",
-        "field": "text_simplified",
-        "arabic": "القدوة الحسنة",
-        "english": "good *qudwa* (exemplary conduct)",
-        "why": "The Arabic 'qudwa' means 'example' or 'model', not 'conduct'. Glossing it as 'exemplary conduct' misrepresents the term and shifts the meaning from the person/example to behavior.",
-        "severity": "medium"
-      },
-      {
-        "type": "register",
-        "field": "text_simplified",
-        "arabic": "ممارسة عملية",
-        "english": "practical practice",
-        "why": "The phrase 'practical practice' is redundant and awkward; 'practical application' or simply 'practice' would be more natural and less stiff.",
-        "severity": "low"
-      },
-      {
-        "type": "structure",
-        "field": "text_simplified",
-        "arabic": "في تربية الصحابة وإشراكهم",
-        "english": "in the *tarbiyah* of the *Sahabah* and involving them",
-        "why": "The grammatical parallelism is broken; it should be 'and in involving them' or 'and their involvement' to match the preceding 'in the tarbiyah'.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "الأهل والأسرة",
-        "english": "parents and the family",
-        "why": "Arabic 'الأهل' includes family/relatives, not only parents; the English narrows the meaning to parents, potentially excluding other relatives.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "079d561f9d5a1a2ed34b26b076d3791b734aa0b544afc1fe20708a0edd9d97f2",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

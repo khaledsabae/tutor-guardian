@@ -30,27 +30,26 @@
   "translated_from": "isl-7bfdefb2",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "ذات الدين",
-        "english": "a woman of faith",
-        "why": "The Arabic 'ذات الدين' means 'one who has religion' (i.e., a religious woman), not merely 'a woman of faith'. 'Faith' narrows the meaning to belief/iman, whereas 'din' encompasses religion as a whole, including practice and way of life.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "في حياته",
-        "english": "in life",
-        "why": "The Arabic specifies 'in his life' (the husband's life), but the English omits the possessive, making it general.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "f9bc499c55d29ccbb60272f7e5e346949d2e049d79db7190e2e1c294a9a69359",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

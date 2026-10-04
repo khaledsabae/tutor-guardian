@@ -30,27 +30,26 @@
   "translated_from": "isl-a7f9d1f3",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "term_error",
-        "field": "title",
-        "arabic": "أركان الإسلام في حديث نبوي",
-        "english": "Arkan al-Islam in a Hadith Nabawi",
-        "why": "The title transliterates 'Arkan al-Islam' and 'Hadith Nabawi' instead of translating them as 'Pillars of Islam' and 'Prophetic hadith'. The body text translates 'arkan' as 'pillars' but the title does not, creating inconsistency. 'Nabawi' is an Arabic adjective that should be rendered 'Prophetic' in English.",
-        "severity": "medium"
-      },
-      {
-        "type": "term_error",
-        "field": "text_simplified",
-        "arabic": "الجنة",
-        "english": "Jannah",
-        "why": "The Arabic 'الجنة' is transliterated as 'Jannah' while the paired term 'النار' is translated as 'the Fire'. This is inconsistent treatment of Islamic terms within the same document.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "5e82be3cb998899b0fce175b1a89e9edd07201dde23f03418196a9b4a8159f45",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

@@ -30,27 +30,11 @@
   "translated_from": "isl-e81562ec",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "term_error",
-        "field": "title/text",
-        "arabic": "التربية / تربية",
-        "english": "Tarbiyah / raising",
-        "why": "The term 'Tarbiyah' is transliterated in the title but translated as 'raising' in the body, creating inconsistency for the same Arabic term.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "يوصي الخبراء بضرورة توجيه الأهل لأبنائهم",
-        "english": "Experts recommend that parents guide their children",
-        "why": "The Arabic includes 'بضرورة' (the necessity of), which is omitted in English, softening the recommendation.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "pending",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

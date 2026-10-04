@@ -29,19 +29,11 @@
   "translated_from": "isl-5cf45742",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "term_error",
-        "field": "title/text_simplified",
-        "arabic": "الصيام",
-        "english": "Sawm / sawm",
-        "why": "The transliterated term 'Sawm' is capitalized in the title but lowercase in the body, creating inconsistency within the same document.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "pending",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

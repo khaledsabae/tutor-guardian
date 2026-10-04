@@ -28,35 +28,52 @@
   "translated_from": "isl-24a45a01",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
+    "review_verdict": "low_only",
     "review_defects": [
       {
-        "type": "meaning_change",
+        "model": "deepseek-v4-pro",
         "field": "text_simplified",
-        "arabic": "أوصيت أولياء الأمور",
-        "english": "Parents are advised",
-        "why": "Arabic is first-person active 'I advised parents' (or at best past passive 'parents were advised'); English changes to present passive 'Parents are advised', altering voice, tense, and dropping the speaker.",
-        "severity": "medium"
+        "type": "meaning",
+        "why": "The Arabic is first-person active ('I advised parents'), while the English changes to passive, removing the speaker."
       },
       {
-        "type": "meaning_change",
-        "field": "title",
-        "arabic": "التدريس في تعليم القرآن",
-        "english": "Teaching in the Instruction of the Qur'an",
-        "why": "Arabic 'تعليم القرآن' means 'teaching the Qur'an' (Qur'an as the object taught); English 'Instruction of the Qur'an' suggests the Qur'an is the instructor or the subject is instruction from the Qur'an, changing the meaning.",
-        "severity": "medium"
-      },
-      {
-        "type": "meaning_change",
+        "model": "glm-5.2",
         "field": "text_simplified",
-        "arabic": "أولياء الأمور",
-        "english": "Parents",
-        "why": "Arabic 'أولياء الأمور' means guardians/parents, including non-parent guardians; English 'Parents' narrows the scope.",
-        "severity": "low"
+        "type": "meaning",
+        "why": "The Arabic is first person ('I advised parents'), but the English renders it as passive, losing the authorial voice."
       }
     ],
-    "approved_by": null
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "d94c3ff0f8f494be4bb75c5f4e3ef477ddfa7c9226cc7951c17dc4e9accf73f9",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [
+        {
+          "model": "deepseek-v4-pro",
+          "field": "text_simplified",
+          "type": "meaning",
+          "why": "The Arabic is first-person active ('I advised parents'), while the English changes to passive, removing the speaker."
+        },
+        {
+          "model": "glm-5.2",
+          "field": "text_simplified",
+          "type": "meaning",
+          "why": "The Arabic is first person ('I advised parents'), but the English renders it as passive, losing the authorial voice."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

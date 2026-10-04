@@ -30,35 +30,26 @@
   "translated_from": "isl-901bde3f",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "title, text_simplified",
-        "arabic": "الضرب / الضرب المحدود",
-        "english": "physical correction / Limited Physical Correction",
-        "why": "The Arabic explicitly says hitting/striking (الضرب), but the English uses the euphemism 'physical correction', which obscures the direct meaning and softens the instruction. This is a significant semantic shift in a parenting context.",
-        "severity": "high"
-      },
-      {
-        "type": "meaning_change",
-        "field": "title, text_simplified",
-        "arabic": "معاقبة / العقاب",
-        "english": "discipline / the discipline",
-        "why": "Arabic 'عقاب' means punishment, not discipline. 'Discipline' is a softer, more positive term that changes the nature of the instruction.",
-        "severity": "medium"
-      },
-      {
-        "type": "register",
-        "field": "text_simplified",
-        "arabic": "تجنب الضرب الشديد، وإذا اضطررت للضرب فليكن خفيفاً وبعدد محدود",
-        "english": "Avoid harsh physical correction, and if you must resort to it, let it be light and limited in number",
-        "why": "The English uses clinical euphemisms ('physical correction', 'resort to it') where the Arabic is direct and concrete about hitting. This shifts the register from direct parental guidance to clinical language.",
-        "severity": "medium"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "c769418ba1bf6fb93e34997ddb0ce662847566323b4040d8497fc76a249f3888",
+      "reviewed_at": "2026-10-04T16:52:31+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T16:52:31+00:00"
   }
 }

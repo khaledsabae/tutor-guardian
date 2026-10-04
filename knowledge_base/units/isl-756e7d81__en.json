@@ -30,19 +30,18 @@
   "translated_from": "isl-756e7d81",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
+    "review_verdict": "pending",
     "review_defects": [
       {
-        "type": "meaning_change",
+        "model": "glm-5.2",
         "field": "text_simplified",
-        "arabic": "الرفق واللين",
-        "english": "rifq (gentleness)",
-        "why": "The Arabic mentions two qualities: 'الرفق' (gentleness) and 'اللين' (softness/leniency). The English translation only renders 'rifq (gentleness)' and omits 'اللين' entirely.",
-        "severity": "medium"
+        "type": "omission",
+        "why": "The Arabic mentions both الرفق (rifq) and اللين (softness/leniency), but the English drops اللين entirely."
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

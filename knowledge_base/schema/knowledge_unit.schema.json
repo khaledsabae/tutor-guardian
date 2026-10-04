@@ -209,7 +209,7 @@
             "string",
             "null"
           ],
-          "description": "null = لم يراجعها بشر. لا تملؤه أداة."
+          "description": "إما ختم المراجعة الآلية `auto-review:<مراجع A>+<مراجع B>:<YYYY-MM-DD>` (أو `auto-review:<مراجع>:<YYYY-MM-DD>` لمراجعٍ واحد من عائلة نماذج غير عائلة كتّاب الإنجليزي) الذي يكتبه ops/tools/review_en_parity.py وحده، وبصمته في translation.auto_review.content_sha256؛ وإما توقيع إنسانٍ قرأ النصّين يكتبه `review_en_parity.py sign` مع بصمته في translation.approval.content_sha256 — اسمٌ بلا بصمة ترفضه البوابة. الختم يشهد أن الإنجليزي يطابق العربي فقط، لا أن العربي أمينٌ لمصدره، وليس إجازة شرعية. أي تعديل بعده في أيٍّ من اللغتين يُبطله. null = غير مختوم: لا يُقبل منشورًا إلا مُدرَجًا في ops/data/en_parity_queue.json ببصمة نصّه (CI وpre-commit)."
         }
       },
       "additionalProperties": true

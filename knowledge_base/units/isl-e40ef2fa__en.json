@@ -30,27 +30,26 @@
   "translated_from": "isl-e40ef2fa",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "ومن يكره البنات",
-        "english": "whoever dislikes daughters",
-        "why": "The Arabic verb 'يكره' means 'hates' or 'detests', which is stronger than 'dislikes'; the English softens the severity of the statement.",
-        "severity": "low"
-      },
-      {
-        "type": "register",
-        "field": "text_simplified",
-        "arabic": "يجب على الأهل تربية البنات والذكور بالعدل",
-        "english": "Parents must give tarbiyah (upbringing) to daughters and sons with justice",
-        "why": "The phrase 'give tarbiyah' is unnatural in English; a more direct rendering like 'raise' or 'provide upbringing' would match the Arabic's directness.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "26bb23516844f63ed45ffdacb8ccabad7f7207095c48f1ddabe9e5a3f5a2bee6",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

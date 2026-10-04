@@ -29,27 +29,11 @@
   "translated_from": "isl-d44d24f5",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "القيم الدينية والأخلاقية",
-        "english": "religious values and akhlaq (moral character)",
-        "why": "The Arabic describes values that are both religious and moral (a single coordinated adjective phrase modifying 'values'), while the English splits this into two separate items: 'religious values' and 'akhlaq'. This changes the grammatical structure and slightly alters the meaning by presenting akhlaq as a separate concept rather than an adjective describing the values.",
-        "severity": "low"
-      },
-      {
-        "type": "term_error",
-        "field": "text_simplified",
-        "arabic": "تنشئة صالحة",
-        "english": "righteous tarbiyah (upbringing)",
-        "why": "The Arabic uses 'تنشئة' (nurturing/upbringing), not 'تربية' (tarbiyah). The English introduces the transliterated term 'tarbiyah' which is not present in the Arabic for this phrase, potentially misrepresenting the original wording and adding an Islamic term that was not used.",
-        "severity": "medium"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "pending",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

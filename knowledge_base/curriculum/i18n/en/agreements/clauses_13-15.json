@@ -58,5 +58,101 @@
       "parent": "We actually go over it every month, and if they ask for a change I hear them out and talk it through — I don't put it off.",
       "note": "An agreement that never gets reviewed turns into an old list of orders. And the right to ask is what makes a teenager a party to it rather than someone it was signed over."
     }
-  ]
+  ],
+  "translation": {
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "4eb3a03d31641a1520150b1d222fbfc8c4e3c9b99280b398ff47784f4f04eeb4",
+      "reviewed_at": "2026-10-04T11:18:17+00:00",
+      "residual_low": [
+        {
+          "model": "deepseek-v4-pro",
+          "field": "pairs[0].child",
+          "type": "meaning",
+          "why": "Arabic says 'devices' (أجهزة), which is broader than 'phones' and could include tablets or other electronics."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "field": "pairs[0].parent",
+          "type": "meaning",
+          "why": "Arabic says 'devices' (أجهزة), which is broader than 'phones' and could include tablets or other electronics."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "field": "pairs[0].note",
+          "type": "omission",
+          "why": "The word 'أوضح' (clearest/most obvious) is dropped, slightly weakening the emphasis."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "field": "pairs[4].parent",
+          "type": "meaning",
+          "why": "Arabic says transparency is not inspection/snooping; English phrasing is ambiguous and shifts the subject."
+        },
+        {
+          "model": "glm-5.2",
+          "field": "description",
+          "type": "omission",
+          "why": "The Arabic specifies the parent's clause is heavier than it was (in the younger-age version), but the English drops the comparative."
+        },
+        {
+          "model": "glm-5.2",
+          "field": "pairs[0].note",
+          "type": "omission",
+          "why": "The Arabic says this is the clearest/most obvious clause where the whole agreement is tested; the English drops «أوضح»."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
+    "review_verdict": "low_only",
+    "review_defects": [
+      {
+        "model": "deepseek-v4-pro",
+        "field": "pairs[0].child",
+        "type": "meaning",
+        "why": "Arabic says 'devices' (أجهزة), which is broader than 'phones' and could include tablets or other electronics."
+      },
+      {
+        "model": "deepseek-v4-pro",
+        "field": "pairs[0].parent",
+        "type": "meaning",
+        "why": "Arabic says 'devices' (أجهزة), which is broader than 'phones' and could include tablets or other electronics."
+      },
+      {
+        "model": "deepseek-v4-pro",
+        "field": "pairs[0].note",
+        "type": "omission",
+        "why": "The word 'أوضح' (clearest/most obvious) is dropped, slightly weakening the emphasis."
+      },
+      {
+        "model": "deepseek-v4-pro",
+        "field": "pairs[4].parent",
+        "type": "meaning",
+        "why": "Arabic says transparency is not inspection/snooping; English phrasing is ambiguous and shifts the subject."
+      },
+      {
+        "model": "glm-5.2",
+        "field": "description",
+        "type": "omission",
+        "why": "The Arabic specifies the parent's clause is heavier than it was (in the younger-age version), but the English drops the comparative."
+      },
+      {
+        "model": "glm-5.2",
+        "field": "pairs[0].note",
+        "type": "omission",
+        "why": "The Arabic says this is the clearest/most obvious clause where the whole agreement is tested; the English drops «أوضح»."
+      }
+    ],
+    "revalidated_at": "2026-10-04T11:18:17+00:00"
+  }
 }

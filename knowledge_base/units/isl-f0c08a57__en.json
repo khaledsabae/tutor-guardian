@@ -30,19 +30,11 @@
   "translated_from": "isl-f0c08a57",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "القيم الدينية والأخلاقية",
-        "english": "religious values and akhlaq (moral character)",
-        "why": "The Arabic refers to 'religious and moral values' (two types of values), but the English renders the second as 'akhlaq (moral character)', changing 'moral values' to a noun meaning moral character and dropping the word 'values' for the moral aspect.",
-        "severity": "medium"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "pending",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

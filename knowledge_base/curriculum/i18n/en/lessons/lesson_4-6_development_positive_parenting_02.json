@@ -13,7 +13,7 @@
   "order": 5,
   "estimated_minutes": 6,
   "reflection_prompts": [
-    "What is the most dangerous thing that came to your mind during the safety tour that you had not noticed before?",
+    "What came to your mind most during the safety tour that you had not noticed before?",
     "How many minutes a day do you spend with your child without a phone in your hand?"
   ],
   "warning_flags": [

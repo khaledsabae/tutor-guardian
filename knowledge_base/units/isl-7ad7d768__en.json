@@ -30,19 +30,26 @@
   "translated_from": "isl-7ad7d768",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "استثمر النبي صلى الله عليه وسلم رؤية القمر",
-        "english": "the Prophet ﷺ seized the sighting of the moon",
-        "why": "The Arabic verb 'استثمر' means 'invested' or 'made use of', not 'seized'. 'Seized the sighting' is unidiomatic and could imply physically grabbing the moon, altering the intended meaning of utilizing the event as a teaching opportunity.",
-        "severity": "medium"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "db46579a23ee8a0e4f6451d5e2c63dcf7b5cf7f3c1267765a429c255d2b64223",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

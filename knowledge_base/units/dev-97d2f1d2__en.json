@@ -28,27 +28,26 @@
   "translated_from": "dev-97d2f1d2",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "term_error",
-        "field": "title",
-        "arabic": "نصائح تربوية إيجابية",
-        "english": "Positive Tarbiyah Tips",
-        "why": "The Arabic adjective 'تربوية' means educational/parenting, not the Islamic noun 'Tarbiyah'. Transliterating it as 'Tarbiyah' introduces a religiously loaded term not present in the source and uses it as an adjective, which is grammatically and semantically inaccurate.",
-        "severity": "medium"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "تابِعها",
-        "english": "follow them",
-        "why": "In the context of developmental milestones, 'تابِعها' means monitor/track them, not 'follow them'. The literal translation 'follow them' is ambiguous and could be misunderstood as pursuing the skills rather than observing the child's progress.",
-        "severity": "medium"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "e752cccfd1515385ca36279f2252bff641f492851046ece41ff137668bcd0bcb",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

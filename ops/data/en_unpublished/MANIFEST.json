@@ -1,0 +1,450 @@
+[
+  {
+    "key": "isl-06c45ab7__en",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/isl-06c45ab7__en.json",
+    "to": "ops/data/en_unpublished/kb_units/isl-06c45ab7__en.json",
+    "reason": "Fabricated from a garbled PDF extraction (Alukah_Rights_of_Children.pdf / reversed-letter text): the Arabic 'summary' is a model meta-note ('text cannot be analysed', 'letters are distorted') or invents a meaning for reversed letters (isl-281aef95: 'ناطقشلا' is «الشيطان» read backwards). No parenting content exists to translate; serving it in either language pollutes retrieval.",
+    "on": "2026-10-04"
+  },
+  {
+    "key": "isl-06c45ab7__en",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/isl-06c45ab7.json",
+    "to": "ops/data/en_unpublished/kb_units_source/isl-06c45ab7.json",
+    "reason": "Fabricated from a garbled PDF extraction (Alukah_Rights_of_Children.pdf / reversed-letter text): the Arabic 'summary' is a model meta-note ('text cannot be analysed', 'letters are distorted') or invents a meaning for reversed letters (isl-281aef95: 'ناطقشلا' is «الشيطان» read backwards). No parenting content exists to translate; serving it in either language pollutes retrieval.",
+    "on": "2026-10-04"
+  },
+  {
+    "key": "isl-1e090b79__en",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/isl-1e090b79__en.json",
+    "to": "ops/data/en_unpublished/kb_units/isl-1e090b79__en.json",
+    "reason": "Fabricated from a garbled PDF extraction (Alukah_Rights_of_Children.pdf / reversed-letter text): the Arabic 'summary' is a model meta-note ('text cannot be analysed', 'letters are distorted') or invents a meaning for reversed letters (isl-281aef95: 'ناطقشلا' is «الشيطان» read backwards). No parenting content exists to translate; serving it in either language pollutes retrieval.",
+    "on": "2026-10-04"
+  },
+  {
+    "key": "isl-1e090b79__en",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/isl-1e090b79.json",
+    "to": "ops/data/en_unpublished/kb_units_source/isl-1e090b79.json",
+    "reason": "Fabricated from a garbled PDF extraction (Alukah_Rights_of_Children.pdf / reversed-letter text): the Arabic 'summary' is a model meta-note ('text cannot be analysed', 'letters are distorted') or invents a meaning for reversed letters (isl-281aef95: 'ناطقشلا' is «الشيطان» read backwards). No parenting content exists to translate; serving it in either language pollutes retrieval.",
+    "on": "2026-10-04"
+  },
+  {
+    "key": "isl-1ebc9718__en",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/isl-1ebc9718__en.json",
+    "to": "ops/data/en_unpublished/kb_units/isl-1ebc9718__en.json",
+    "reason": "Fabricated from a garbled PDF extraction (Alukah_Rights_of_Children.pdf / reversed-letter text): the Arabic 'summary' is a model meta-note ('text cannot be analysed', 'letters are distorted') or invents a meaning for reversed letters (isl-281aef95: 'ناطقشلا' is «الشيطان» read backwards). No parenting content exists to translate; serving it in either language pollutes retrieval.",
+    "on": "2026-10-04"
+  },
+  {
+    "key": "isl-1ebc9718__en",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/isl-1ebc9718.json",
+    "to": "ops/data/en_unpublished/kb_units_source/isl-1ebc9718.json",
+    "reason": "Fabricated from a garbled PDF extraction (Alukah_Rights_of_Children.pdf / reversed-letter text): the Arabic 'summary' is a model meta-note ('text cannot be analysed', 'letters are distorted') or invents a meaning for reversed letters (isl-281aef95: 'ناطقشلا' is «الشيطان» read backwards). No parenting content exists to translate; serving it in either language pollutes retrieval.",
+    "on": "2026-10-04"
+  },
+  {
+    "key": "isl-281aef95__en",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/isl-281aef95__en.json",
+    "to": "ops/data/en_unpublished/kb_units/isl-281aef95__en.json",
+    "reason": "Fabricated from a garbled PDF extraction (Alukah_Rights_of_Children.pdf / reversed-letter text): the Arabic 'summary' is a model meta-note ('text cannot be analysed', 'letters are distorted') or invents a meaning for reversed letters (isl-281aef95: 'ناطقشلا' is «الشيطان» read backwards). No parenting content exists to translate; serving it in either language pollutes retrieval.",
+    "on": "2026-10-04"
+  },
+  {
+    "key": "isl-281aef95__en",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/isl-281aef95.json",
+    "to": "ops/data/en_unpublished/kb_units_source/isl-281aef95.json",
+    "reason": "Fabricated from a garbled PDF extraction (Alukah_Rights_of_Children.pdf / reversed-letter text): the Arabic 'summary' is a model meta-note ('text cannot be analysed', 'letters are distorted') or invents a meaning for reversed letters (isl-281aef95: 'ناطقشلا' is «الشيطان» read backwards). No parenting content exists to translate; serving it in either language pollutes retrieval.",
+    "on": "2026-10-04"
+  },
+  {
+    "key": "isl-327af9d3__en",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/isl-327af9d3__en.json",
+    "to": "ops/data/en_unpublished/kb_units/isl-327af9d3__en.json",
+    "reason": "Fabricated from a garbled PDF extraction (Alukah_Rights_of_Children.pdf / reversed-letter text): the Arabic 'summary' is a model meta-note ('text cannot be analysed', 'letters are distorted') or invents a meaning for reversed letters (isl-281aef95: 'ناطقشلا' is «الشيطان» read backwards). No parenting content exists to translate; serving it in either language pollutes retrieval.",
+    "on": "2026-10-04"
+  },
+  {
+    "key": "isl-327af9d3__en",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/isl-327af9d3.json",
+    "to": "ops/data/en_unpublished/kb_units_source/isl-327af9d3.json",
+    "reason": "Fabricated from a garbled PDF extraction (Alukah_Rights_of_Children.pdf / reversed-letter text): the Arabic 'summary' is a model meta-note ('text cannot be analysed', 'letters are distorted') or invents a meaning for reversed letters (isl-281aef95: 'ناطقشلا' is «الشيطان» read backwards). No parenting content exists to translate; serving it in either language pollutes retrieval.",
+    "on": "2026-10-04"
+  },
+  {
+    "key": "isl-3f60fca7__en",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/isl-3f60fca7__en.json",
+    "to": "ops/data/en_unpublished/kb_units/isl-3f60fca7__en.json",
+    "reason": "Fabricated from a garbled PDF extraction (Alukah_Rights_of_Children.pdf / reversed-letter text): the Arabic 'summary' is a model meta-note ('text cannot be analysed', 'letters are distorted') or invents a meaning for reversed letters (isl-281aef95: 'ناطقشلا' is «الشيطان» read backwards). No parenting content exists to translate; serving it in either language pollutes retrieval.",
+    "on": "2026-10-04"
+  },
+  {
+    "key": "isl-3f60fca7__en",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/isl-3f60fca7.json",
+    "to": "ops/data/en_unpublished/kb_units_source/isl-3f60fca7.json",
+    "reason": "Fabricated from a garbled PDF extraction (Alukah_Rights_of_Children.pdf / reversed-letter text): the Arabic 'summary' is a model meta-note ('text cannot be analysed', 'letters are distorted') or invents a meaning for reversed letters (isl-281aef95: 'ناطقشلا' is «الشيطان» read backwards). No parenting content exists to translate; serving it in either language pollutes retrieval.",
+    "on": "2026-10-04"
+  },
+  {
+    "key": "isl-52abd1a8__en",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/isl-52abd1a8__en.json",
+    "to": "ops/data/en_unpublished/kb_units/isl-52abd1a8__en.json",
+    "reason": "Fabricated from a garbled PDF extraction (Alukah_Rights_of_Children.pdf / reversed-letter text): the Arabic 'summary' is a model meta-note ('text cannot be analysed', 'letters are distorted') or invents a meaning for reversed letters (isl-281aef95: 'ناطقشلا' is «الشيطان» read backwards). No parenting content exists to translate; serving it in either language pollutes retrieval.",
+    "on": "2026-10-04"
+  },
+  {
+    "key": "isl-52abd1a8__en",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/isl-52abd1a8.json",
+    "to": "ops/data/en_unpublished/kb_units_source/isl-52abd1a8.json",
+    "reason": "Fabricated from a garbled PDF extraction (Alukah_Rights_of_Children.pdf / reversed-letter text): the Arabic 'summary' is a model meta-note ('text cannot be analysed', 'letters are distorted') or invents a meaning for reversed letters (isl-281aef95: 'ناطقشلا' is «الشيطان» read backwards). No parenting content exists to translate; serving it in either language pollutes retrieval.",
+    "on": "2026-10-04"
+  },
+  {
+    "key": "isl-5a55d030__en",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/isl-5a55d030__en.json",
+    "to": "ops/data/en_unpublished/kb_units/isl-5a55d030__en.json",
+    "reason": "Fabricated from a garbled PDF extraction (Alukah_Rights_of_Children.pdf / reversed-letter text): the Arabic 'summary' is a model meta-note ('text cannot be analysed', 'letters are distorted') or invents a meaning for reversed letters (isl-281aef95: 'ناطقشلا' is «الشيطان» read backwards). No parenting content exists to translate; serving it in either language pollutes retrieval.",
+    "on": "2026-10-04"
+  },
+  {
+    "key": "isl-5a55d030__en",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/isl-5a55d030.json",
+    "to": "ops/data/en_unpublished/kb_units_source/isl-5a55d030.json",
+    "reason": "Fabricated from a garbled PDF extraction (Alukah_Rights_of_Children.pdf / reversed-letter text): the Arabic 'summary' is a model meta-note ('text cannot be analysed', 'letters are distorted') or invents a meaning for reversed letters (isl-281aef95: 'ناطقشلا' is «الشيطان» read backwards). No parenting content exists to translate; serving it in either language pollutes retrieval.",
+    "on": "2026-10-04"
+  },
+  {
+    "key": "isl-5b240e2f__en",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/isl-5b240e2f__en.json",
+    "to": "ops/data/en_unpublished/kb_units/isl-5b240e2f__en.json",
+    "reason": "Fabricated from a garbled PDF extraction (Alukah_Rights_of_Children.pdf / reversed-letter text): the Arabic 'summary' is a model meta-note ('text cannot be analysed', 'letters are distorted') or invents a meaning for reversed letters (isl-281aef95: 'ناطقشلا' is «الشيطان» read backwards). No parenting content exists to translate; serving it in either language pollutes retrieval.",
+    "on": "2026-10-04"
+  },
+  {
+    "key": "isl-5b240e2f__en",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/isl-5b240e2f.json",
+    "to": "ops/data/en_unpublished/kb_units_source/isl-5b240e2f.json",
+    "reason": "Fabricated from a garbled PDF extraction (Alukah_Rights_of_Children.pdf / reversed-letter text): the Arabic 'summary' is a model meta-note ('text cannot be analysed', 'letters are distorted') or invents a meaning for reversed letters (isl-281aef95: 'ناطقشلا' is «الشيطان» read backwards). No parenting content exists to translate; serving it in either language pollutes retrieval.",
+    "on": "2026-10-04"
+  },
+  {
+    "key": "isl-695f47e5__en",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/isl-695f47e5__en.json",
+    "to": "ops/data/en_unpublished/kb_units/isl-695f47e5__en.json",
+    "reason": "Fabricated from a garbled PDF extraction (Alukah_Rights_of_Children.pdf / reversed-letter text): the Arabic 'summary' is a model meta-note ('text cannot be analysed', 'letters are distorted') or invents a meaning for reversed letters (isl-281aef95: 'ناطقشلا' is «الشيطان» read backwards). No parenting content exists to translate; serving it in either language pollutes retrieval.",
+    "on": "2026-10-04"
+  },
+  {
+    "key": "isl-695f47e5__en",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/isl-695f47e5.json",
+    "to": "ops/data/en_unpublished/kb_units_source/isl-695f47e5.json",
+    "reason": "Fabricated from a garbled PDF extraction (Alukah_Rights_of_Children.pdf / reversed-letter text): the Arabic 'summary' is a model meta-note ('text cannot be analysed', 'letters are distorted') or invents a meaning for reversed letters (isl-281aef95: 'ناطقشلا' is «الشيطان» read backwards). No parenting content exists to translate; serving it in either language pollutes retrieval.",
+    "on": "2026-10-04"
+  },
+  {
+    "key": "isl-855eeb20__en",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/isl-855eeb20__en.json",
+    "to": "ops/data/en_unpublished/kb_units/isl-855eeb20__en.json",
+    "reason": "Fabricated from a garbled PDF extraction (Alukah_Rights_of_Children.pdf / reversed-letter text): the Arabic 'summary' is a model meta-note ('text cannot be analysed', 'letters are distorted') or invents a meaning for reversed letters (isl-281aef95: 'ناطقشلا' is «الشيطان» read backwards). No parenting content exists to translate; serving it in either language pollutes retrieval.",
+    "on": "2026-10-04"
+  },
+  {
+    "key": "isl-855eeb20__en",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/isl-855eeb20.json",
+    "to": "ops/data/en_unpublished/kb_units_source/isl-855eeb20.json",
+    "reason": "Fabricated from a garbled PDF extraction (Alukah_Rights_of_Children.pdf / reversed-letter text): the Arabic 'summary' is a model meta-note ('text cannot be analysed', 'letters are distorted') or invents a meaning for reversed letters (isl-281aef95: 'ناطقشلا' is «الشيطان» read backwards). No parenting content exists to translate; serving it in either language pollutes retrieval.",
+    "on": "2026-10-04"
+  },
+  {
+    "key": "isl-86605602__en",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/isl-86605602__en.json",
+    "to": "ops/data/en_unpublished/kb_units/isl-86605602__en.json",
+    "reason": "Fabricated from a garbled PDF extraction (Alukah_Rights_of_Children.pdf / reversed-letter text): the Arabic 'summary' is a model meta-note ('text cannot be analysed', 'letters are distorted') or invents a meaning for reversed letters (isl-281aef95: 'ناطقشلا' is «الشيطان» read backwards). No parenting content exists to translate; serving it in either language pollutes retrieval.",
+    "on": "2026-10-04"
+  },
+  {
+    "key": "isl-86605602__en",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/isl-86605602.json",
+    "to": "ops/data/en_unpublished/kb_units_source/isl-86605602.json",
+    "reason": "Fabricated from a garbled PDF extraction (Alukah_Rights_of_Children.pdf / reversed-letter text): the Arabic 'summary' is a model meta-note ('text cannot be analysed', 'letters are distorted') or invents a meaning for reversed letters (isl-281aef95: 'ناطقشلا' is «الشيطان» read backwards). No parenting content exists to translate; serving it in either language pollutes retrieval.",
+    "on": "2026-10-04"
+  },
+  {
+    "key": "isl-addc4e81__en",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/isl-addc4e81__en.json",
+    "to": "ops/data/en_unpublished/kb_units/isl-addc4e81__en.json",
+    "reason": "Fabricated from a garbled PDF extraction (Alukah_Rights_of_Children.pdf / reversed-letter text): the Arabic 'summary' is a model meta-note ('text cannot be analysed', 'letters are distorted') or invents a meaning for reversed letters (isl-281aef95: 'ناطقشلا' is «الشيطان» read backwards). No parenting content exists to translate; serving it in either language pollutes retrieval.",
+    "on": "2026-10-04"
+  },
+  {
+    "key": "isl-addc4e81__en",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/isl-addc4e81.json",
+    "to": "ops/data/en_unpublished/kb_units_source/isl-addc4e81.json",
+    "reason": "Fabricated from a garbled PDF extraction (Alukah_Rights_of_Children.pdf / reversed-letter text): the Arabic 'summary' is a model meta-note ('text cannot be analysed', 'letters are distorted') or invents a meaning for reversed letters (isl-281aef95: 'ناطقشلا' is «الشيطان» read backwards). No parenting content exists to translate; serving it in either language pollutes retrieval.",
+    "on": "2026-10-04"
+  },
+  {
+    "key": "isl-ae3d3405__en",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/isl-ae3d3405__en.json",
+    "to": "ops/data/en_unpublished/kb_units/isl-ae3d3405__en.json",
+    "reason": "Fabricated from a garbled PDF extraction (Alukah_Rights_of_Children.pdf / reversed-letter text): the Arabic 'summary' is a model meta-note ('text cannot be analysed', 'letters are distorted') or invents a meaning for reversed letters (isl-281aef95: 'ناطقشلا' is «الشيطان» read backwards). No parenting content exists to translate; serving it in either language pollutes retrieval.",
+    "on": "2026-10-04"
+  },
+  {
+    "key": "isl-ae3d3405__en",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/isl-ae3d3405.json",
+    "to": "ops/data/en_unpublished/kb_units_source/isl-ae3d3405.json",
+    "reason": "Fabricated from a garbled PDF extraction (Alukah_Rights_of_Children.pdf / reversed-letter text): the Arabic 'summary' is a model meta-note ('text cannot be analysed', 'letters are distorted') or invents a meaning for reversed letters (isl-281aef95: 'ناطقشلا' is «الشيطان» read backwards). No parenting content exists to translate; serving it in either language pollutes retrieval.",
+    "on": "2026-10-04"
+  },
+  {
+    "key": "isl-b014135a__en",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/isl-b014135a__en.json",
+    "to": "ops/data/en_unpublished/kb_units/isl-b014135a__en.json",
+    "reason": "Fabricated from a garbled PDF extraction (Alukah_Rights_of_Children.pdf / reversed-letter text): the Arabic 'summary' is a model meta-note ('text cannot be analysed', 'letters are distorted') or invents a meaning for reversed letters (isl-281aef95: 'ناطقشلا' is «الشيطان» read backwards). No parenting content exists to translate; serving it in either language pollutes retrieval.",
+    "on": "2026-10-04"
+  },
+  {
+    "key": "isl-b014135a__en",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/isl-b014135a.json",
+    "to": "ops/data/en_unpublished/kb_units_source/isl-b014135a.json",
+    "reason": "Fabricated from a garbled PDF extraction (Alukah_Rights_of_Children.pdf / reversed-letter text): the Arabic 'summary' is a model meta-note ('text cannot be analysed', 'letters are distorted') or invents a meaning for reversed letters (isl-281aef95: 'ناطقشلا' is «الشيطان» read backwards). No parenting content exists to translate; serving it in either language pollutes retrieval.",
+    "on": "2026-10-04"
+  },
+  {
+    "key": "isl-b174a774__en",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/isl-b174a774__en.json",
+    "to": "ops/data/en_unpublished/kb_units/isl-b174a774__en.json",
+    "reason": "Fabricated from a garbled PDF extraction (Alukah_Rights_of_Children.pdf / reversed-letter text): the Arabic 'summary' is a model meta-note ('text cannot be analysed', 'letters are distorted') or invents a meaning for reversed letters (isl-281aef95: 'ناطقشلا' is «الشيطان» read backwards). No parenting content exists to translate; serving it in either language pollutes retrieval.",
+    "on": "2026-10-04"
+  },
+  {
+    "key": "isl-b174a774__en",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/isl-b174a774.json",
+    "to": "ops/data/en_unpublished/kb_units_source/isl-b174a774.json",
+    "reason": "Fabricated from a garbled PDF extraction (Alukah_Rights_of_Children.pdf / reversed-letter text): the Arabic 'summary' is a model meta-note ('text cannot be analysed', 'letters are distorted') or invents a meaning for reversed letters (isl-281aef95: 'ناطقشلا' is «الشيطان» read backwards). No parenting content exists to translate; serving it in either language pollutes retrieval.",
+    "on": "2026-10-04"
+  },
+  {
+    "key": "isl-b1fe8885__en",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/isl-b1fe8885__en.json",
+    "to": "ops/data/en_unpublished/kb_units/isl-b1fe8885__en.json",
+    "reason": "Fabricated from a garbled PDF extraction (Alukah_Rights_of_Children.pdf / reversed-letter text): the Arabic 'summary' is a model meta-note ('text cannot be analysed', 'letters are distorted') or invents a meaning for reversed letters (isl-281aef95: 'ناطقشلا' is «الشيطان» read backwards). No parenting content exists to translate; serving it in either language pollutes retrieval.",
+    "on": "2026-10-04"
+  },
+  {
+    "key": "isl-b1fe8885__en",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/isl-b1fe8885.json",
+    "to": "ops/data/en_unpublished/kb_units_source/isl-b1fe8885.json",
+    "reason": "Fabricated from a garbled PDF extraction (Alukah_Rights_of_Children.pdf / reversed-letter text): the Arabic 'summary' is a model meta-note ('text cannot be analysed', 'letters are distorted') or invents a meaning for reversed letters (isl-281aef95: 'ناطقشلا' is «الشيطان» read backwards). No parenting content exists to translate; serving it in either language pollutes retrieval.",
+    "on": "2026-10-04"
+  },
+  {
+    "key": "isl-b2c738e2__en",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/isl-b2c738e2__en.json",
+    "to": "ops/data/en_unpublished/kb_units/isl-b2c738e2__en.json",
+    "reason": "Fabricated from a garbled PDF extraction (Alukah_Rights_of_Children.pdf / reversed-letter text): the Arabic 'summary' is a model meta-note ('text cannot be analysed', 'letters are distorted') or invents a meaning for reversed letters (isl-281aef95: 'ناطقشلا' is «الشيطان» read backwards). No parenting content exists to translate; serving it in either language pollutes retrieval.",
+    "on": "2026-10-04"
+  },
+  {
+    "key": "isl-b2c738e2__en",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/isl-b2c738e2.json",
+    "to": "ops/data/en_unpublished/kb_units_source/isl-b2c738e2.json",
+    "reason": "Fabricated from a garbled PDF extraction (Alukah_Rights_of_Children.pdf / reversed-letter text): the Arabic 'summary' is a model meta-note ('text cannot be analysed', 'letters are distorted') or invents a meaning for reversed letters (isl-281aef95: 'ناطقشلا' is «الشيطان» read backwards). No parenting content exists to translate; serving it in either language pollutes retrieval.",
+    "on": "2026-10-04"
+  },
+  {
+    "key": "isl-b7e51a39__en",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/isl-b7e51a39__en.json",
+    "to": "ops/data/en_unpublished/kb_units/isl-b7e51a39__en.json",
+    "reason": "Fabricated from a garbled PDF extraction (Alukah_Rights_of_Children.pdf / reversed-letter text): the Arabic 'summary' is a model meta-note ('text cannot be analysed', 'letters are distorted') or invents a meaning for reversed letters (isl-281aef95: 'ناطقشلا' is «الشيطان» read backwards). No parenting content exists to translate; serving it in either language pollutes retrieval.",
+    "on": "2026-10-04"
+  },
+  {
+    "key": "isl-b7e51a39__en",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/isl-b7e51a39.json",
+    "to": "ops/data/en_unpublished/kb_units_source/isl-b7e51a39.json",
+    "reason": "Fabricated from a garbled PDF extraction (Alukah_Rights_of_Children.pdf / reversed-letter text): the Arabic 'summary' is a model meta-note ('text cannot be analysed', 'letters are distorted') or invents a meaning for reversed letters (isl-281aef95: 'ناطقشلا' is «الشيطان» read backwards). No parenting content exists to translate; serving it in either language pollutes retrieval.",
+    "on": "2026-10-04"
+  },
+  {
+    "key": "isl-c30de28e__en",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/isl-c30de28e__en.json",
+    "to": "ops/data/en_unpublished/kb_units/isl-c30de28e__en.json",
+    "reason": "Fabricated from a garbled PDF extraction (Alukah_Rights_of_Children.pdf / reversed-letter text): the Arabic 'summary' is a model meta-note ('text cannot be analysed', 'letters are distorted') or invents a meaning for reversed letters (isl-281aef95: 'ناطقشلا' is «الشيطان» read backwards). No parenting content exists to translate; serving it in either language pollutes retrieval.",
+    "on": "2026-10-04"
+  },
+  {
+    "key": "isl-c30de28e__en",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/isl-c30de28e.json",
+    "to": "ops/data/en_unpublished/kb_units_source/isl-c30de28e.json",
+    "reason": "Fabricated from a garbled PDF extraction (Alukah_Rights_of_Children.pdf / reversed-letter text): the Arabic 'summary' is a model meta-note ('text cannot be analysed', 'letters are distorted') or invents a meaning for reversed letters (isl-281aef95: 'ناطقشلا' is «الشيطان» read backwards). No parenting content exists to translate; serving it in either language pollutes retrieval.",
+    "on": "2026-10-04"
+  },
+  {
+    "key": "isl-e8f0394b__en",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/isl-e8f0394b__en.json",
+    "to": "ops/data/en_unpublished/kb_units/isl-e8f0394b__en.json",
+    "reason": "Fabricated from a garbled PDF extraction (Alukah_Rights_of_Children.pdf / reversed-letter text): the Arabic 'summary' is a model meta-note ('text cannot be analysed', 'letters are distorted') or invents a meaning for reversed letters (isl-281aef95: 'ناطقشلا' is «الشيطان» read backwards). No parenting content exists to translate; serving it in either language pollutes retrieval.",
+    "on": "2026-10-04"
+  },
+  {
+    "key": "isl-e8f0394b__en",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/isl-e8f0394b.json",
+    "to": "ops/data/en_unpublished/kb_units_source/isl-e8f0394b.json",
+    "reason": "Fabricated from a garbled PDF extraction (Alukah_Rights_of_Children.pdf / reversed-letter text): the Arabic 'summary' is a model meta-note ('text cannot be analysed', 'letters are distorted') or invents a meaning for reversed letters (isl-281aef95: 'ناطقشلا' is «الشيطان» read backwards). No parenting content exists to translate; serving it in either language pollutes retrieval.",
+    "on": "2026-10-04"
+  },
+  {
+    "key": "isl-f59629b6__en",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/isl-f59629b6__en.json",
+    "to": "ops/data/en_unpublished/kb_units/isl-f59629b6__en.json",
+    "reason": "Fabricated from a garbled PDF extraction (Alukah_Rights_of_Children.pdf / reversed-letter text): the Arabic 'summary' is a model meta-note ('text cannot be analysed', 'letters are distorted') or invents a meaning for reversed letters (isl-281aef95: 'ناطقشلا' is «الشيطان» read backwards). No parenting content exists to translate; serving it in either language pollutes retrieval.",
+    "on": "2026-10-04"
+  },
+  {
+    "key": "isl-f59629b6__en",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/isl-f59629b6.json",
+    "to": "ops/data/en_unpublished/kb_units_source/isl-f59629b6.json",
+    "reason": "Fabricated from a garbled PDF extraction (Alukah_Rights_of_Children.pdf / reversed-letter text): the Arabic 'summary' is a model meta-note ('text cannot be analysed', 'letters are distorted') or invents a meaning for reversed letters (isl-281aef95: 'ناطقشلا' is «الشيطان» read backwards). No parenting content exists to translate; serving it in either language pollutes retrieval.",
+    "on": "2026-10-04"
+  },
+  {
+    "key": "isl-669c94e3",
+    "kind": "kb_units_source",
+    "from": "knowledge_base/units/isl-669c94e3.json",
+    "to": "ops/data/en_unpublished/kb_units_source/isl-669c94e3.json",
+    "reason": "Arabic-only unit of the same class (no English sibling): a model meta-note about an unreadable source ('النص غير مفهوم… لا يمكن استخراج معلومات'), not content.",
+    "on": "2026-10-04"
+  },
+  {
+    "key": "isl-73e37a6e",
+    "kind": "kb_units_source",
+    "from": "knowledge_base/units/isl-73e37a6e.json",
+    "to": "ops/data/en_unpublished/kb_units_source/isl-73e37a6e.json",
+    "reason": "Arabic-only unit of the same class (no English sibling): a model meta-note about an unreadable source ('النص غير مفهوم… لا يمكن استخراج معلومات'), not content.",
+    "on": "2026-10-04"
+  },
+  {
+    "key": "isl-c2a6dda3",
+    "kind": "kb_units_source",
+    "from": "knowledge_base/units/isl-c2a6dda3.json",
+    "to": "ops/data/en_unpublished/kb_units_source/isl-c2a6dda3.json",
+    "reason": "Arabic-only unit of the same class (no English sibling): a model meta-note about an unreadable source ('النص غير مفهوم… لا يمكن استخراج معلومات'), not content.",
+    "on": "2026-10-04"
+  },
+  {
+    "key": "isl-d004d6de",
+    "kind": "kb_units_source",
+    "from": "knowledge_base/units/isl-d004d6de.json",
+    "to": "ops/data/en_unpublished/kb_units_source/isl-d004d6de.json",
+    "reason": "Arabic-only unit of the same class (no English sibling): a model meta-note about an unreadable source ('النص غير مفهوم… لا يمكن استخراج معلومات'), not content.",
+    "on": "2026-10-04"
+  },
+  {
+    "key": "isl-33e652bb__en",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/isl-33e652bb__en.json",
+    "to": "ops/data/en_unpublished/kb_units/isl-33e652bb__en.json",
+    "reason": "PR #20 review: the summary («يجب على الطفل أن يلتزم بالقواعد، ويكون متعاونًا في الألعاب…») is invented — its reversed-PDF source (Al_Hady_Al_Nabawi) is about the educator's own trustworthiness (الأمانة) and the father's authority at home. The PR's retitle (المراهقة → ما قبل المدرسة) only polished it; reverted before archiving. Its references in three 4-6 lessons and tip_4-6_016 are removed.",
+    "on": "2026-10-04"
+  },
+  {
+    "key": "isl-33e652bb__en",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/isl-33e652bb.json",
+    "to": "ops/data/en_unpublished/kb_units_source/isl-33e652bb.json",
+    "reason": "PR #20 review: the summary («يجب على الطفل أن يلتزم بالقواعد، ويكون متعاونًا في الألعاب…») is invented — its reversed-PDF source (Al_Hady_Al_Nabawi) is about the educator's own trustworthiness (الأمانة) and the father's authority at home. The PR's retitle (المراهقة → ما قبل المدرسة) only polished it; reverted before archiving. Its references in three 4-6 lessons and tip_4-6_016 are removed.",
+    "on": "2026-10-04"
+  },
+  {
+    "key": "isl-e946de7d__en",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/isl-e946de7d__en.json",
+    "to": "ops/data/en_unpublished/kb_units/isl-e946de7d__en.json",
+    "reason": "PR #20 review: model meta-note, not content — «لا يمكن استخراج وحدة معرفية تربوية منه» (the source is a hadith isnad block extracted with reversed letters).",
+    "on": "2026-10-04"
+  },
+  {
+    "key": "isl-e946de7d__en",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/isl-e946de7d.json",
+    "to": "ops/data/en_unpublished/kb_units_source/isl-e946de7d.json",
+    "reason": "PR #20 review: model meta-note, not content — «لا يمكن استخراج وحدة معرفية تربوية منه» (the source is a hadith isnad block extracted with reversed letters).",
+    "on": "2026-10-04"
+  },
+  {
+    "key": "isl-2021d2aa__en",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/isl-2021d2aa__en.json",
+    "to": "ops/data/en_unpublished/kb_units/isl-2021d2aa__en.json",
+    "reason": "PR #20 review: model meta-note over an unreadable reversed-PDF page — «قصة معقدة وغير واضحة» — with generic advice attached; nothing in it comes from the source.",
+    "on": "2026-10-04"
+  },
+  {
+    "key": "isl-2021d2aa__en",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/isl-2021d2aa.json",
+    "to": "ops/data/en_unpublished/kb_units_source/isl-2021d2aa.json",
+    "reason": "PR #20 review: model meta-note over an unreadable reversed-PDF page — «قصة معقدة وغير واضحة» — with generic advice attached; nothing in it comes from the source.",
+    "on": "2026-10-04"
+  },
+  {
+    "key": "isl-18569b11__en",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/isl-18569b11__en.json",
+    "to": "ops/data/en_unpublished/kb_units/isl-18569b11__en.json",
+    "reason": "PR #20 review: invents a story of the Prophet ﷺ with al-Hasan ibn Ali; the source is Ibn Umar correcting his own son (the garment-dragging narration). A fabricated attribution to the Prophet ﷺ is the gravest kind of error this corpus can carry.",
+    "on": "2026-10-04"
+  },
+  {
+    "key": "isl-18569b11__en",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/isl-18569b11.json",
+    "to": "ops/data/en_unpublished/kb_units_source/isl-18569b11.json",
+    "reason": "PR #20 review: invents a story of the Prophet ﷺ with al-Hasan ibn Ali; the source is Ibn Umar correcting his own son (the garment-dragging narration). A fabricated attribution to the Prophet ﷺ is the gravest kind of error this corpus can carry.",
+    "on": "2026-10-04"
+  }
+]
