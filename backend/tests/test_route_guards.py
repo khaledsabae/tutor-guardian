@@ -56,6 +56,9 @@ OPEN = {
     ("DELETE", "/api/daily-routine/events/{event_id}"): "pre-PR: one routine event the "
                                                         "parent logged — unchanged",
     ("DELETE", "/api/value-tracking/events/{event_id}"): "pre-PR: one habit event — unchanged",
+    ("PATCH", "/api/children/{child_id}"): "a rename re-letters the siblings' memory and "
+                                          "turns the old name into the child's placeholder "
+                                          "(PR #39 review) — nothing is read out or deleted",
 }
 
 # What a handler's own source shows when it reads, writes or deletes memory or data.
