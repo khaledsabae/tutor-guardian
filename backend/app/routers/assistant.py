@@ -159,8 +159,9 @@ def _pump_stream(make_stream, emit, cancel: threading.Event,
             emit("chunk", chunk)
         emit("done", None)
     except Exception as e:  # noqa: BLE001 — surfaced to the SSE consumer
-        if not cancel.is_set():
-            emit("error", e)
+        # A cut turn (LLMCancelled, or anything raised once it was cut) is
+        # not a failure: whoever still listens is told nothing more comes.
+        emit("cancelled", None) if cancel.is_set() else emit("error", e)
     finally:
         if gen is not None:
             close = getattr(gen, "close", None)
@@ -1107,12 +1108,15 @@ async def _stream_answer(
                 pass  # loop already closed (shutdown) — nobody is listening
 
         # Blocking stream reader on the dedicated LLM pool (see _pump_stream).
-        # Keep a reference to the future so it is not garbage-collected.
+        # Keep a reference to the future so it is not garbage-collected. The
+        # cancel flag goes into the gateway too: a cut turn closes its request
+        # on the next line and is never handed to a fallback model (R1).
         worker = loop.run_in_executor(
             _STREAM_EXECUTOR,
             _pump_stream,
             lambda: get_gateway().stream(
                 full_prompt, tier=tier, route_reason=route_reason, tracker=tracker,
+                should_stop=cancel.is_set,
             ),
             _emit,
             cancel,
@@ -1330,15 +1334,22 @@ async def _stream_answer(
                                 if stream_mode == "llm_generated" else [],
                             },
                         )
-                        await asyncio.to_thread(_persist, final_text, stream_mode)
+                        truncated = chunk.result.truncated if chunk.result else None
+                        await asyncio.to_thread(
+                            _persist, final_text, stream_mode,
+                            f"truncated:{truncated}" if truncated else "",
+                        )
                         # Feed the answer cache: grounded, local, review-free,
-                        # first-question answers only (§5.1).
+                        # first-question answers only (§5.1) — and only whole
+                        # ones: an answer cut by max_tokens or a filter (R3)
+                        # would be served to every parent who asks the same.
                         if (
                             stream_mode == "llm_generated"
                             and first_question
                             and not personal
                             and tier != "cloud_quality"
                             and not decision["needs_human_review"]
+                            and not truncated
                         ):
                             await asyncio.to_thread(
                                 answer_cache.store,

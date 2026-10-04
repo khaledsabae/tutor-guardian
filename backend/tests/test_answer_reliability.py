@@ -85,6 +85,11 @@ def _sse_body(*texts: str, usage=(11, 22), hold_s: float = 0.0, gap_s: float = 0
     return gen()
 
 
+def _sse_ok(body) -> httpx.Response:
+    return httpx.Response(200, headers={"content-type": "text/event-stream; charset=utf-8"},
+                          content=body)
+
+
 class _DeepSeekFake:
     """An httpx transport that plays DeepSeek; counts the requests it gets."""
 
@@ -108,7 +113,7 @@ def _deepseek(fake: _DeepSeekFake, timeout: float = 0.3) -> "ai_gateway.OpenAICh
 
 def _scripted_provider(script, calls: list | None = None):
     """An Ollama stand-in whose stream follows `script`:
-    ("token", text) | ("sleep", s) | ("hang", s)."""
+    ("token", text) | ("sleep", s) | ("hang", s) | ("finish", reason)."""
 
     class _Scripted:
         name = "fake"
@@ -120,6 +125,7 @@ def _scripted_provider(script, calls: list | None = None):
         def stream(self, prompt, *, options):
             if calls is not None:
                 calls.append(prompt)
+            final = {"response": "", "done": True, "prompt_eval_count": 1, "eval_count": 1}
             for kind, value in script:
                 if kind == "token":
                     yield {"response": value, "done": False}
@@ -127,7 +133,9 @@ def _scripted_provider(script, calls: list | None = None):
                     time.sleep(value)
                 elif kind == "hang":
                     _RELEASE.wait(value)
-            yield {"response": "", "done": True, "prompt_eval_count": 1, "eval_count": 1}
+                elif kind == "finish":  # the answer stopped short (R3)
+                    final["truncated"] = value
+            yield final
 
         def generate(self, prompt, *, options):
             return {"response": "رد قصير", "done": True}
@@ -230,7 +238,7 @@ def _done_payload(body: str) -> dict:
 def test_held_request_is_aborted_and_the_thread_freed():
     """G1 — the old code abandoned a held call at its deadline but its thread
     stayed stuck in the read for as long as DeepSeek kept the socket alive."""
-    fake = _DeepSeekFake(lambda r: httpx.Response(200, content=_sse_body("late", hold_s=5)))
+    fake = _DeepSeekFake(lambda r: _sse_ok(_sse_body("late", hold_s=5)))
     provider = _deepseek(fake, timeout=0.3)
     t0 = time.monotonic()
     with ai_gateway.call_limits(ai_gateway.CallLimits(first_token=0.4)):
@@ -242,7 +250,7 @@ def test_held_request_is_aborted_and_the_thread_freed():
 def test_slow_but_alive_answer_is_not_cut_at_the_first_token_limit():
     """G2 — a provider streaming its answer slowly is alive: only a hold (no
     content at all) is cut early. Previously cut at 64 s and retried."""
-    fake = _DeepSeekFake(lambda r: httpx.Response(200, content=_sse_body(
+    fake = _DeepSeekFake(lambda r: _sse_ok(_sse_body(
         "أ", "ب", "ج", "د", gap_s=0.2)))
     provider = _deepseek(fake, timeout=0.3)
     with ai_gateway.call_limits(ai_gateway.CallLimits(first_token=0.4, total=5)):
@@ -259,7 +267,7 @@ def test_held_primary_is_not_retried(monkeypatch):
     monkeypatch.setattr(ai_gateway, "primary_budget_available", lambda name: True)
     monkeypatch.setattr(ai_gateway, "_DEADLINE_SLACK_S", 0.1, raising=False)
     monkeypatch.setattr(llm_config.LLMConfig, "fallback_chain", lambda self: [])
-    fake = _DeepSeekFake(lambda r: httpx.Response(200, content=_sse_body("late", hold_s=3)))
+    fake = _DeepSeekFake(lambda r: _sse_ok(_sse_body("late", hold_s=3)))
     gw = ai_gateway.AIGateway(provider=_deepseek(fake, timeout=0.3))
 
     t0 = time.monotonic()
@@ -274,6 +282,7 @@ def test_open_breaker_stops_the_retry_loop(monkeypatch):
     opened it, the third attempt still went out."""
     monkeypatch.setattr(ai_gateway, "_log_call", lambda *a, **k: None)
     monkeypatch.setattr(ai_gateway, "primary_budget_available", lambda name: True)
+    monkeypatch.setattr(ai_gateway, "PRIMARY_PREFLIGHT_RETRIES", 0, raising=False)
     monkeypatch.setattr(llm_config.LLMConfig, "fallback_chain", lambda self: [])
     fake = _DeepSeekFake(lambda r: httpx.Response(503))
     gw = ai_gateway.AIGateway(provider=_deepseek(fake))
@@ -289,7 +298,7 @@ def test_no_attempt_is_started_with_seconds_left(monkeypatch):
     monkeypatch.setattr(ai_gateway, "primary_budget_available", lambda name: True)
     monkeypatch.setattr(ai_gateway, "_MIN_ATTEMPT_S", 1000.0, raising=False)
     monkeypatch.setattr(llm_config.LLMConfig, "fallback_chain", lambda self: [])
-    fake = _DeepSeekFake(lambda r: httpx.Response(200, content=_sse_body("x")))
+    fake = _DeepSeekFake(lambda r: _sse_ok(_sse_body("x")))
     gw = ai_gateway.AIGateway(provider=_deepseek(fake))
     with pytest.raises(RuntimeError):
         asyncio.run(gw.generate("سؤال", max_retries=3))
@@ -301,6 +310,7 @@ def test_one_request_per_attempt_no_sdk_retries(monkeypatch):
     per-read timeout. The classifier's provider makes exactly one request."""
     fake = _DeepSeekFake(lambda r: httpx.Response(503))
     monkeypatch.setattr(ai_gateway, "_HTTP", fake.client(), raising=False)
+    monkeypatch.setattr(ai_gateway, "PRIMARY_PREFLIGHT_RETRIES", 0, raising=False)
     monkeypatch.setattr(ai_gateway, "_log_call", lambda *a, **k: None)
     cfg = dataclasses.replace(llm_config.LLM, primary_provider="deepseek",
                               deepseek_api_key="test-placeholder")
@@ -398,7 +408,7 @@ def test_held_primary_stream_falls_back_and_the_tracker_follows(monkeypatch):
     monkeypatch.setattr(ai_gateway, "primary_budget_available", lambda name: True)
     monkeypatch.setattr(ai_gateway, "PRIMARY_FIRST_TOKEN_S", 0.3, raising=False)
     monkeypatch.setattr(ai_gateway, "OllamaProvider", _scripted_provider([("token", "محلي")]))
-    fake = _DeepSeekFake(lambda r: httpx.Response(200, content=_sse_body("late", hold_s=3)))
+    fake = _DeepSeekFake(lambda r: _sse_ok(_sse_body("late", hold_s=3)))
     gw = ai_gateway.AIGateway(provider=_deepseek(fake, timeout=5))
     tracker = ai_gateway.StreamTracker()
 
@@ -589,6 +599,27 @@ def test_draft_failure_stores_an_error_turn_and_still_fails(pipeline, monkeypatc
     rows = _rows(sid)
     assert [r["role"] for r in rows] == ["user", "assistant"]
     assert rows[1]["mode"] == "error"
+
+
+@pytest.mark.parametrize("finish,cached", [(None, True), ("length", False)])
+def test_a_truncated_answer_is_stored_flagged_and_never_cached(pipeline, monkeypatch,
+                                                                finish, cached):
+    """R3 — an answer cut short by max_tokens or a content filter went into
+    the answer cache, to be served whole to every parent asking the same."""
+    stored = []
+    monkeypatch.setattr(answer_cache, "store", lambda *a, **k: stored.append(a))
+    pipeline.domains = ["tarbiyah"]
+    pipeline.unit_domain = "tarbiyah"
+    pipeline.use_script([("token", "جواب")] + ([("finish", finish)] if finish else []))
+    client, sid = _client_with_session()
+    try:
+        resp = _ask(client, sid)
+    finally:
+        client.__exit__(None, None, None)
+    assert "event: done" in resp.text
+    assert _rows(sid)[-1]["content"] == "جواب"
+    assert bool(stored) is cached
+    assert ("truncated:length" in _flags(pipeline)) is (finish == "length")
 
 
 def test_first_frame_names_the_stored_question(pipeline):

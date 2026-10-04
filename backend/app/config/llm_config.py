@@ -74,6 +74,11 @@ class LLMConfig:
     deepseek_api_key: str = os.environ.get("DEEPSEEK_API_KEY", "")
     deepseek_base_url: str = os.environ.get("DEEPSEEK_BASE_URL", "https://api.deepseek.com")
     deepseek_model: str = os.environ.get("DEEPSEEK_MODEL", "deepseek-chat")
+    # DeepSeek's docs (2026-10) list deepseek-chat as a legacy name due to be
+    # discontinued; the documented model is deepseek-flash (thinking off via
+    # the request's "thinking" field). When the configured model is refused
+    # as unknown or retired, the gateway switches to this one for the process.
+    deepseek_model_fallback: str = os.environ.get("DEEPSEEK_MODEL_FALLBACK", "deepseek-flash")
     # Monthly spend ceiling for the PRIMARY path. The app is free forever (no
     # ads, no subscriptions), so every primary token is paid out of the owner's
     # own pocket — without a ceiling the bill is unbounded. Unlike the

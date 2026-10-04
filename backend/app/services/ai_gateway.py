@@ -27,13 +27,14 @@ import contextvars
 import json
 import logging
 import os
+import re
 import sqlite3
 import threading
 import time
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Iterator, Protocol
+from typing import Callable, Iterator, Protocol
 
 import httpx
 import requests
@@ -77,6 +78,10 @@ _DEADLINE_SLACK_S = float(os.environ.get("LLM_DEADLINE_SLACK_S", "4"))
 # A streamed answer from the paid primary that has not produced its first
 # token by now is a held request: abort it and let the stream fall back.
 PRIMARY_FIRST_TOKEN_S = float(os.environ.get("LLM_PRIMARY_FIRST_TOKEN_S", "30"))
+# …and once it is answering: no new token for this long, or this long in all,
+# is a hold too (a mid-answer keep-alive hold was never aborted).
+PRIMARY_STALL_S = float(os.environ.get("LLM_PRIMARY_STALL_S", "60"))
+PRIMARY_TOTAL_S = float(os.environ.get("LLM_PRIMARY_TOTAL_S", "300"))
 # Do not start a blocking attempt with less time than this left.
 _MIN_ATTEMPT_S = float(os.environ.get("LLM_MIN_ATTEMPT_S", "10"))
 
@@ -100,6 +105,9 @@ class CallLimits:
     first_token: float | None = None
     stall: float | None = None
     total: float | None = None
+    # The turn's stop check (assistant: the stream's cancel flag), tested on
+    # every line: a cut turn closes its request instead of finishing it.
+    stop: "Callable[[], bool] | None" = None
 
 
 # Set by the gateway around a provider call and read by OpenAIChatProvider —
@@ -180,6 +188,10 @@ def call_with_deadline(fn, deadline_s: float, /, *args, lane: _Lane, **kwargs):
     try:
         return fut.result(timeout=deadline_s)
     except concurrent.futures.TimeoutError:
+        # TimeoutError is one class in 3.11: the provider's own abort
+        # (LLMDeadlineExceeded) lands here too. Keep its message.
+        if fut.done() and not fut.cancelled():
+            return fut.result()
         fut.cancel()  # a call still queued behind hung ones never starts
         raise LLMDeadlineExceeded(f"no reply within {deadline_s:.0f}s") from None
 
@@ -190,6 +202,9 @@ async def acall_with_deadline(fn, deadline_s: float, /, *args, lane: _Lane, **kw
     try:
         return await asyncio.wait_for(asyncio.wrap_future(fut), timeout=deadline_s)
     except (asyncio.TimeoutError, concurrent.futures.TimeoutError):
+        # Same aliasing as above: re-raise the provider's own error unchanged.
+        if fut.done() and not fut.cancelled():
+            return fut.result()
         fut.cancel()
         raise LLMDeadlineExceeded(f"no reply within {deadline_s:.0f}s") from None
 
@@ -225,6 +240,9 @@ class LLMResult:
     latency_ms: int
     prompt_tokens: int | None = None
     completion_tokens: int | None = None
+    # The finish_reason when the text stopped short (length, content_filter,
+    # aborted, insufficient_system_resource): usable, never cached.
+    truncated: str | None = None
 
 
 @dataclass
@@ -407,11 +425,132 @@ class OpenAICompatProvider:
 
 
 class ProviderHTTPError(RuntimeError):
-    """The provider answered with an HTTP error status."""
+    """The provider answered with an HTTP error status.
 
-    def __init__(self, name: str, status: int) -> None:
-        super().__init__(f"{name} answered HTTP {status}")
+    The message carries the start of the response body: a bare "HTTP 402" or
+    "HTTP 400" told nobody that the balance ran out or the model name was
+    refused.
+    """
+
+    def __init__(self, name: str, status: int, body: str = "",
+                 retry_after: float | None = None) -> None:
+        super().__init__(f"{name} answered HTTP {status}" + (f": {body}" if body else ""))
         self.status = status
+        self.body = body
+        self.retry_after = retry_after
+
+
+class ProviderStreamError(RuntimeError):
+    """The stream was not a usable answer: an error event inside it, an end
+    without [DONE], no content at all, or not an event stream in the first
+    place. Raised before any token is yielded, it lets the gateway fall back.
+
+    `usage` keeps the token counts the provider reported anyway: an empty
+    answer is still a billed request, and the monthly cap is their sum.
+    """
+
+    def __init__(self, message: str, usage: tuple = (None, None)) -> None:
+        super().__init__(message)
+        self.usage = usage
+
+
+class LLMCancelled(RuntimeError):
+    """The turn this call was for has been cut (Stop, a newer question): stop
+    working on it, and never fall back to another provider for it."""
+
+
+# Statuses worth one more try before any byte of the answer arrived.
+_RETRYABLE_STATUS = frozenset({429, 500, 502, 503, 504})
+# finish_reason values that mean the text stopped short of a full answer.
+_TRUNCATING_FINISH = frozenset({"length", "content_filter", "aborted",
+                                "insufficient_system_resource"})
+PRIMARY_PREFLIGHT_RETRIES = max(0, int(os.environ.get("LLM_PRIMARY_PREFLIGHT_RETRIES", "2")))
+_PREFLIGHT_BACKOFF_S = (0.5, 1.5)
+_SNIPPET_BYTES = 300
+_LINE_BREAK = re.compile(rb"\r\n|\r|\n")
+# Process-wide memory of what DeepSeek refused, so it is asked once.
+_MODEL_SWITCHED: dict[str, str] = {}      # configured model → model actually used
+_NO_THINKING_FIELD: set[str] = set()      # endpoints that rejected "thinking"
+_SERVED_MODELS_SEEN: set[tuple[str, str]] = set()
+
+
+def _refuses_model(body: str) -> bool:
+    b = body.lower()
+    return "model" in b and any(k in b for k in (
+        "not exist", "does not exist", "not found", "deprecat", "discontinu", "retired",
+        "no longer", "unknown model", "invalid model"))
+
+
+def _snippet(resp: httpx.Response) -> str:
+    """The first ~300 bytes of a response body, without reading all of it."""
+    got = b""
+    for chunk in resp.iter_bytes():
+        got += chunk
+        if len(got) >= _SNIPPET_BYTES:
+            break
+    return got[:_SNIPPET_BYTES].decode("utf-8", errors="replace").strip()
+
+
+def _retry_after(resp: httpx.Response) -> float | None:
+    raw = resp.headers.get("retry-after")
+    try:
+        return max(0.0, float(raw)) if raw is not None else None
+    except ValueError:
+        return None  # an HTTP-date: fall back to our own back-off
+
+
+def _sse_events(resp: httpx.Response, tick) -> Iterator[tuple[str | None, str]]:
+    """(event, data) for each server-sent event in `resp`.
+
+    Lines are split on CR, LF or CRLF only, over raw bytes: str.splitlines()
+    (httpx's iter_lines) also breaks on U+2028/U+2029/U+0085, which JSON
+    allows unescaped inside a string — the rest of that token was dropped.
+    A CR at the end of a read is held back until the next byte shows whether
+    it starts a CRLF. Several "data:" lines make one event, joined by "\n".
+    `tick()` runs on every line, keep-alive comments included, so a wall
+    clock is checked even while the provider only sends keep-alives.
+    """
+    buf = b""
+    event: str | None = None
+    data: list[str] = []
+
+    def lines(final: bool):
+        nonlocal buf
+        while True:
+            m = _LINE_BREAK.search(buf)
+            if m is None or (not final and m.group() == b"\r" and m.end() == len(buf)):
+                return
+            raw, buf = buf[:m.start()], buf[m.end():]
+            yield raw.decode("utf-8", errors="replace")
+
+    def handle(line: str):
+        nonlocal event, data
+        tick()
+        if not line:
+            if data:
+                yield (event, "\n".join(data))
+            event, data = None, []
+            return
+        if line.startswith(":"):
+            return  # comment — DeepSeek's ": keep-alive"
+        field, _, value = line.partition(":")
+        if value.startswith(" "):
+            value = value[1:]
+        if field == "data":
+            data.append(value)
+        elif field == "event":
+            event = value
+
+    for chunk in resp.iter_bytes():
+        buf += chunk
+        for line in lines(final=False):
+            yield from handle(line)
+    for line in lines(final=True):
+        yield from handle(line)
+    if buf:
+        yield from handle(buf.decode("utf-8", errors="replace"))
+    if data:
+        yield (event, "\n".join(data))
 
 
 # One connection pool for every OpenAI-compatible call (thread-safe; the
@@ -429,26 +568,30 @@ class OpenAIChatProvider:
     provider when LLM_PRIMARY_PROVIDER=deepseek, with the local Ollama chain
     kept behind it as automatic fallback.
 
-    Every call — blocking or streamed — is a streamed request read line by
-    line, keep-alive comments included, with the wall clock checked on each
-    line against the CallLimits the gateway set (see call_limits). When a
-    limit passes the response is closed: the request is aborted and the
-    thread is free, instead of waiting out a 30-minute DeepSeek hold that the
-    per-read timeout never ends. The SDK client this replaces also retried
-    twice by default, restarting that timeout each time; there are no
-    retries here — the gateway owns retries, and it can see the deadline and
-    the circuit breaker.
+    Every call — blocking or streamed — is a streamed request read event by
+    event, keep-alive comments included, with the wall clock and the turn's
+    stop check (CallLimits) tested on every line. When a limit passes the
+    response is closed: the request is aborted and the thread is free,
+    instead of waiting out a DeepSeek hold that the per-read timeout never
+    ends. Before any byte of the answer, a 429/5xx or a dropped connection is
+    tried again (PRIMARY_PREFLIGHT_RETRIES, honouring Retry-After, within the
+    first-token budget); after that there are no retries here — the gateway
+    owns them and can see the deadline and the breaker. A read timeout is
+    never retried.
     """
 
     def __init__(self, base_url: str, api_key: str, model: str,
                  timeout: int, name: str = "deepseek",
                  max_retries: int | None = None,
-                 http_client: "httpx.Client | None" = None) -> None:
+                 http_client: "httpx.Client | None" = None,
+                 fallback_model: str | None = None) -> None:
         self.name = name
         self.model = model
         self.timeout = timeout
-        self.max_retries = 0  # kept for old call sites; one attempt per call
-        self._url = base_url.rstrip("/") + "/chat/completions"
+        self.max_retries = 0  # kept for old call sites; the SDK retries are gone
+        self.fallback_model = fallback_model
+        self._base = base_url.rstrip("/")
+        self._url = self._base + "/chat/completions"
         self._headers = {
             "Authorization": f"Bearer {api_key}",
             "Content-Type": "application/json",
@@ -456,12 +599,12 @@ class OpenAIChatProvider:
         }
         self._http = http_client or _HTTP
 
-    def _events(self, prompt: str, options: dict) -> Iterator[tuple]:
-        """("delta", text) for each piece of content, ("usage", p, c) when the
-        provider reports token counts. Raises LLMDeadlineExceeded at a limit."""
-        limits = _CALL_LIMITS.get() or CallLimits()
+    def _current_model(self) -> str:
+        return _MODEL_SWITCHED.get(self.model, self.model)
+
+    def _payload(self, prompt: str, options: dict) -> dict:
         payload = {
-            "model": self.model,
+            "model": self._current_model(),
             "messages": [{"role": "user", "content": prompt}],
             "temperature": options.get("temperature", 0.3),
             "max_tokens": options.get("num_predict", 1024),
@@ -471,70 +614,192 @@ class OpenAIChatProvider:
             # is a sum of these counts — a stream without them reads as free.
             "stream_options": {"include_usage": True},
         }
+        # DeepSeek's current models think by default: reasoning would count as
+        # progress while eating max_tokens, and the answer could come back
+        # empty. This assistant never wants the thinking mode.
+        if self._base not in _NO_THINKING_FIELD:
+            payload["thinking"] = {"type": "disabled"}
+        return payload
+
+    def _events(self, prompt: str, options: dict) -> Iterator[tuple]:
+        """("delta", text) per piece of content, ("usage", p, c) for token
+        counts, and finally ("final", finish_reason, served_model).
+
+        Raises LLMDeadlineExceeded at a limit, LLMCancelled when the turn is
+        cut, ProviderHTTPError / ProviderStreamError when the answer is not
+        usable, httpx errors as they come.
+        """
+        limits = _CALL_LIMITS.get() or CallLimits()
         start = time.monotonic()
-        last_progress: float | None = None
+        first_budget = limits.first_token if limits.first_token is not None else PRIMARY_FIRST_TOKEN_S
         timeout = httpx.Timeout(float(self.timeout), connect=min(10.0, float(self.timeout)))
-        with self._http.stream("POST", self._url, json=payload,
-                               headers=self._headers, timeout=timeout) as resp:
-            if resp.status_code >= 400:
-                raise ProviderHTTPError(self.name, resp.status_code)
-            for line in resp.iter_lines():
-                now = time.monotonic()
-                if limits.total is not None and now - start > limits.total:
-                    raise LLMDeadlineExceeded(f"{self.name}: over {limits.total:.0f}s in total")
-                if last_progress is None:
-                    if limits.first_token is not None and now - start > limits.first_token:
-                        raise LLMDeadlineExceeded(
-                            f"{self.name}: no first token after {limits.first_token:.0f}s")
-                elif limits.stall is not None and now - last_progress > limits.stall:
+        state = {"last_progress": None, "bytes": False, "done": False}
+
+        def stopped() -> bool:
+            return bool(limits.stop and limits.stop())
+
+        def tick() -> None:
+            state["bytes"] = True
+            if state["done"]:
+                return  # the answer is complete; only the body's tail is left
+            now = time.monotonic()
+            if stopped():
+                raise LLMCancelled(f"{self.name}: turn cut")
+            if limits.total is not None and now - start > limits.total:
+                raise LLMDeadlineExceeded(f"{self.name}: over {limits.total:.0f}s in total")
+            last = state["last_progress"]
+            if last is None:
+                if limits.first_token is not None and now - start > limits.first_token:
                     raise LLMDeadlineExceeded(
-                        f"{self.name}: no new token for {limits.stall:.0f}s")
-                if not line or line.startswith(":") or not line.startswith("data:"):
-                    continue  # blank keep-alive, SSE comment, or another field
-                data = line[5:].strip()
-                if data == "[DONE]":
-                    break
-                try:
-                    obj = json.loads(data)
-                except ValueError:
-                    continue
-                if not isinstance(obj, dict):
-                    continue
-                if obj.get("error"):
-                    raise RuntimeError(f"{self.name} reported an error mid-stream")
-                usage = obj.get("usage")
-                if isinstance(usage, dict):
-                    yield ("usage", usage.get("prompt_tokens"), usage.get("completion_tokens"))
-                for choice in obj.get("choices") or []:
-                    delta = (choice or {}).get("delta") or {}
-                    # Reasoning is progress (the model is alive) but not output.
-                    if delta.get("reasoning_content"):
-                        last_progress = now
-                    content = delta.get("content")
-                    if content:
-                        last_progress = now
-                        yield ("delta", content)
+                        f"{self.name}: no first token after {limits.first_token:.0f}s")
+            elif limits.stall is not None and now - last > limits.stall:
+                raise LLMDeadlineExceeded(f"{self.name}: no new token for {limits.stall:.0f}s")
+
+        def wait_or_give_up(seconds: float) -> bool:
+            """Sleep before a retry, unless that would break the first-token
+            budget or the turn is cut meanwhile."""
+            if time.monotonic() - start + seconds > first_budget:
+                return False
+            end = time.monotonic() + seconds
+            while time.monotonic() < end:
+                if stopped():
+                    raise LLMCancelled(f"{self.name}: turn cut")
+                time.sleep(min(0.1, max(0.0, end - time.monotonic())))
+            return True
+
+        attempt = 0
+        while True:
+            if stopped():
+                raise LLMCancelled(f"{self.name}: turn cut")
+            try:
+                with self._http.stream("POST", self._url, json=self._payload(prompt, options),
+                                       headers=self._headers, timeout=timeout) as resp:
+                    if resp.status_code >= 400:
+                        body = _snippet(resp)
+                        err = ProviderHTTPError(self.name, resp.status_code, body, _retry_after(resp))
+                        if (resp.status_code == 400 and self.fallback_model
+                                and self._current_model() != self.fallback_model
+                                and _refuses_model(body)):
+                            _MODEL_SWITCHED[self.model] = self.fallback_model
+                            logger.error(
+                                "🚨 %s refused model %r (%s) — switching to %r for this process. "
+                                "Set DEEPSEEK_MODEL to a documented model.",
+                                self.name, self.model, body[:120], self.fallback_model)
+                            continue
+                        if (resp.status_code in (400, 422) and "thinking" in body.lower()
+                                and self._base not in _NO_THINKING_FIELD):
+                            _NO_THINKING_FIELD.add(self._base)
+                            logger.warning("%s does not accept the 'thinking' field — sending "
+                                           "requests without it", self.name)
+                            continue
+                        if (resp.status_code in _RETRYABLE_STATUS
+                                and attempt < PRIMARY_PREFLIGHT_RETRIES):
+                            wait = err.retry_after if err.retry_after is not None \
+                                else _PREFLIGHT_BACKOFF_S[min(attempt, len(_PREFLIGHT_BACKOFF_S) - 1)]
+                            if wait_or_give_up(wait):
+                                attempt += 1
+                                logger.info("%s answered %s — retry %d after %.1fs",
+                                            self.name, resp.status_code, attempt, wait)
+                                continue
+                        raise err
+                    ctype = resp.headers.get("content-type", "")
+                    if not ctype.startswith("text/event-stream"):
+                        body = _snippet(resp)
+                        raise ProviderStreamError(
+                            f"{self.name}: answered {ctype or 'no content type'}, not an event stream: {body}")
+                    yield from self._read_stream(resp, tick, state)
+                    return
+            except (httpx.NetworkError, httpx.RemoteProtocolError) as e:
+                # Connect/read/protocol failures — never a timeout (R7) — and
+                # before any byte only: once the answer has started, a retry
+                # would repeat (and re-bill) what the parent already saw.
+                if state["bytes"] or attempt >= PRIMARY_PREFLIGHT_RETRIES:
+                    raise
+                if not wait_or_give_up(_PREFLIGHT_BACKOFF_S[min(attempt, len(_PREFLIGHT_BACKOFF_S) - 1)]):
+                    raise
+                attempt += 1
+                logger.info("%s connection failed (%s) — retry %d", self.name, type(e).__name__, attempt)
+
+    def _read_stream(self, resp: httpx.Response, tick, state: dict) -> Iterator[tuple]:
+        finish: str | None = None
+        served: str | None = None
+        usage_seen: tuple = (None, None)
+        got_content = False
+        done = False
+        for event, data in _sse_events(resp, tick):
+            if done:
+                continue  # read to the end of the body so the connection is reused
+            if data.strip() == "[DONE]":
+                done = state["done"] = True
+                continue
+            try:
+                obj = json.loads(data)
+            except ValueError:
+                logger.warning("%s sent unparseable stream data: %r", self.name, data[:120])
+                continue
+            if not isinstance(obj, dict):
+                continue
+            if event == "error" or obj.get("error"):
+                err = obj.get("error")
+                msg = err.get("message") if isinstance(err, dict) else err
+                raise ProviderStreamError(f"{self.name} reported an error: {str(msg)[:_SNIPPET_BYTES]}")
+            if served is None and obj.get("model"):
+                served = str(obj["model"])
+            usage = obj.get("usage")
+            if isinstance(usage, dict):
+                usage_seen = (usage.get("prompt_tokens"), usage.get("completion_tokens"))
+                yield ("usage", *usage_seen)
+            for choice in obj.get("choices") or []:
+                delta = (choice or {}).get("delta") or {}
+                # Reasoning is progress (the model is alive) but not output.
+                if delta.get("reasoning_content"):
+                    state["last_progress"] = time.monotonic()
+                content = delta.get("content")
+                if content:
+                    state["last_progress"] = time.monotonic()
+                    got_content = True
+                    yield ("delta", content)
+                if choice and choice.get("finish_reason"):
+                    finish = choice["finish_reason"]
+        if not done:
+            raise ProviderStreamError(f"{self.name}: the stream ended without [DONE]", usage_seen)
+        if not got_content:
+            raise ProviderStreamError(
+                f"{self.name}: no answer (finish_reason={finish or 'none'})", usage_seen)
+        if served and (self._current_model(), served) not in _SERVED_MODELS_SEEN:
+            _SERVED_MODELS_SEEN.add((self._current_model(), served))
+            logger.info("%s: asked for %r, served by %r", self.name, self._current_model(), served)
+        yield ("final", finish, served)
 
     def generate(self, prompt: str, *, options: dict) -> dict:
         parts: list[str] = []
         prompt_tokens = completion_tokens = None
+        finish = served = None
         for ev in self._events(prompt, options):
             if ev[0] == "delta":
                 parts.append(ev[1])
-            else:
+            elif ev[0] == "usage":
                 prompt_tokens, completion_tokens = ev[1], ev[2]
+            else:
+                finish, served = ev[1], ev[2]
         text = _ThinkFilter().feed("".join(parts))
         return {
             "response": text, "done": True,
             "prompt_eval_count": prompt_tokens, "eval_count": completion_tokens,
+            "model": served or self._current_model(),
+            "truncated": finish if finish in _TRUNCATING_FINISH else None,
         }
 
     def stream(self, prompt: str, *, options: dict) -> Iterator[dict]:
         flt = _ThinkFilter()
         prompt_tokens = completion_tokens = None
+        finish = served = None
         for ev in self._events(prompt, options):
             if ev[0] == "usage":
                 prompt_tokens, completion_tokens = ev[1], ev[2]
+                continue
+            if ev[0] == "final":
+                finish, served = ev[1], ev[2]
                 continue
             delta = flt.feed(ev[1])
             if delta:
@@ -542,6 +807,8 @@ class OpenAIChatProvider:
         yield {
             "response": "", "done": True,
             "prompt_eval_count": prompt_tokens, "eval_count": completion_tokens,
+            "model": served or self._current_model(),
+            "truncated": finish if finish in _TRUNCATING_FINISH else None,
         }
 
 
@@ -704,6 +971,13 @@ GENERATE_DEADLINE_S = float(os.environ.get("LLM_GENERATE_DEADLINE_S", "150"))
 _AUX_PRIMARY_NAME = "deepseek"
 
 
+def _fallback_model() -> str | None:
+    """DEEPSEEK_MODEL_FALLBACK — read leniently: config stand-ins (tests,
+    an older LLMConfig) may not carry it, and a missing fallback must not
+    cost the primary."""
+    return getattr(LLM, "deepseek_model_fallback", None) or None
+
+
 def aux_cloud_provider(*, timeout: int = AUX_TIMEOUT_S) -> "OpenAIChatProvider | None":
     """The paid primary for a short auxiliary call, or None to stay local.
 
@@ -719,7 +993,7 @@ def aux_cloud_provider(*, timeout: int = AUX_TIMEOUT_S) -> "OpenAIChatProvider |
         return OpenAIChatProvider(
             base_url=LLM.deepseek_base_url, api_key=LLM.deepseek_api_key,
             model=LLM.deepseek_model, timeout=timeout, name=_AUX_PRIMARY_NAME,
-            max_retries=0,
+            max_retries=0, fallback_model=_fallback_model(),
         )
     except Exception as e:  # missing openai pkg / bad config — degrade to local
         logger.warning("auxiliary cloud provider unavailable: %s", e)
@@ -766,6 +1040,12 @@ def _failure_reason(exc: BaseException) -> str | None:
         return "deadline"
     if isinstance(exc, LLMProviderBusy):
         return "lane_full"
+    if isinstance(exc, httpx.TimeoutException):
+        return "read_timeout"
+    if isinstance(exc, ProviderHTTPError):
+        return f"http_{exc.status}"
+    if isinstance(exc, ProviderStreamError):
+        return "bad_stream"
     return None
 
 
@@ -794,7 +1074,7 @@ class AIGateway:
                 return OpenAIChatProvider(
                     base_url=LLM.deepseek_base_url, api_key=LLM.deepseek_api_key,
                     model=LLM.deepseek_model, timeout=LLM.cloud_tier_timeout,
-                    name="deepseek",
+                    name="deepseek", fallback_model=_fallback_model(),
                 )
             except Exception as e:  # missing openai pkg / bad config — degrade
                 logger.warning("DeepSeek primary unavailable, using local: %s", e)
@@ -873,6 +1153,7 @@ class AIGateway:
                 base_url=LLM.deepseek_base_url, api_key=LLM.deepseek_api_key,
                 model=LLM.deepseek_model, timeout=LLM.cloud_tier_timeout,
                 name=self._FALLBACK_PROVIDER_NAME,
+                fallback_model=_fallback_model(),
             )
         except Exception as e:
             logger.warning("cloud safety valve unavailable: %s", e)
@@ -1000,18 +1281,26 @@ class AIGateway:
                     latency = int((time.monotonic() - start) * 1000)
                     text = (data.get("response") or "").strip()
                     if not text:
+                        # A paid request that answered nothing is still a row:
+                        # the monthly cap is a sum over llm_calls.
+                        _log_call(self.provider.name, data.get("model") or self._provider_model(),
+                                  latency, data.get("prompt_eval_count"), data.get("eval_count"),
+                                  streamed=False, ok=False, route_reason="empty")
                         logger.warning("Primary returned empty response on attempt %d/%d", attempt, retries)
                         if attempt < retries:
                             await asyncio.sleep(0.5 * (2 ** (attempt - 1)))
                         continue
                     result = LLMResult(
-                        text=text, model=self._provider_model(), latency_ms=latency,
+                        text=text, model=data.get("model") or self._provider_model(),
+                        latency_ms=latency,
                         prompt_tokens=data.get("prompt_eval_count"),
                         completion_tokens=data.get("eval_count"),
+                        truncated=data.get("truncated"),
                     )
                     _log_call(self.provider.name, result.model, latency,
                               result.prompt_tokens, result.completion_tokens,
-                              streamed=False, ok=True)
+                              streamed=False, ok=True,
+                              route_reason=f"truncated:{result.truncated}" if result.truncated else None)
                     if paid_primary:
                         primary_breaker.record(True)
                     return result
@@ -1027,13 +1316,15 @@ class AIGateway:
                     # estimate would be the same mistake with the opposite sign.
                     _log_call(self.provider.name, self._provider_model(),
                               int((time.monotonic() - start) * 1000),
-                              None, None, streamed=False, ok=False,
+                              *getattr(e, "usage", (None, None)), streamed=False, ok=False,
                               route_reason=_failure_reason(e))
                     logger.warning("Primary attempt %d/%d failed: %s", attempt, retries, e)
-                    # A held or saturated provider is not retried: each retry
-                    # used to be another paid request into the same hold, all
-                    # of them running at once.
-                    if isinstance(e, (LLMDeadlineExceeded, LLMProviderBusy)):
+                    # A held, silent or saturated provider is not retried: each
+                    # retry was another paid request into the same hold (all of
+                    # them running at once), and a read timeout had already
+                    # spent 60 s of the budget the fallback needs.
+                    if isinstance(e, (LLMDeadlineExceeded, LLMProviderBusy,
+                                      httpx.TimeoutException)):
                         break
                     if attempt < retries:
                         await asyncio.sleep(0.5 * (2 ** (attempt - 1)))
@@ -1088,9 +1379,14 @@ class AIGateway:
         start = time.monotonic()
         text_parts: list[str] = []
         prompt_tokens = completion_tokens = None
+        served = truncated = None
         ok = False
+        limits = _CALL_LIMITS.get() or CallLimits()
         try:
             for obj in provider.stream(prompt, options=opts):
+                # Local models are read chunk by chunk too: a cut turn stops here.
+                if limits.stop and limits.stop():
+                    raise LLMCancelled(f"{provider.name}: turn cut")
                 delta = obj.get("response", "")
                 if delta:
                     text_parts.append(delta)
@@ -1098,6 +1394,8 @@ class AIGateway:
                 if obj.get("done"):
                     prompt_tokens = obj.get("prompt_eval_count")
                     completion_tokens = obj.get("eval_count")
+                    served = obj.get("model")
+                    truncated = obj.get("truncated")
                     ok = True
         except GeneratorExit:
             # The consumer closed us mid-answer (SSE client disconnected, see
@@ -1111,14 +1409,15 @@ class AIGateway:
         latency = int((time.monotonic() - start) * 1000)
         result = LLMResult(
             text="".join(text_parts).strip(),
-            model=provider.model,
+            model=served or provider.model,   # the model that really answered
             latency_ms=latency,
             prompt_tokens=prompt_tokens,
             completion_tokens=completion_tokens,
+            truncated=truncated,
         )
         _log_call(provider.name, result.model, latency,
                   prompt_tokens, completion_tokens, streamed=True, ok=ok,
-                  tier=tier, route_reason=route_reason)
+                  tier=tier, route_reason=f"truncated:{truncated}" if truncated else route_reason)
         yield StreamChunk(delta="", done=True, result=result)
 
     def note_stream_stall(self, tracker: "StreamTracker | None" = None) -> None:
@@ -1137,7 +1436,8 @@ class AIGateway:
     def stream(self, prompt: str, *, options: dict | None = None,
                tier: str = "local_fast",
                route_reason: str | None = None,
-               tracker: "StreamTracker | None" = None) -> Iterator[StreamChunk]:
+               tracker: "StreamTracker | None" = None,
+               should_stop: "Callable[[], bool] | None" = None) -> Iterator[StreamChunk]:
         """Streaming generation with pre-flight fallback.
 
         Uses stream_chain() (local-fast first) for low latency. Falls back
@@ -1147,10 +1447,14 @@ class AIGateway:
         first and the local chain stays behind it — a cloud pre-flight
         failure is invisible to the SSE consumer.
 
-        The paid primary is held to PRIMARY_FIRST_TOKEN_S for its first token:
-        a request DeepSeek is holding is aborted and the next provider gets
-        the question, instead of the whole stream waiting out the hold.
+        The paid primary is held to PRIMARY_FIRST_TOKEN_S for its first token,
+        PRIMARY_STALL_S between tokens and PRIMARY_TOTAL_S in all: a request
+        DeepSeek is holding is aborted and the next provider gets the
+        question, instead of the whole stream waiting out the hold.
         `tracker`, when given, always names the provider currently streaming.
+        `should_stop`, when given, is the turn's cut flag: checked on every
+        line and before each candidate — a dead turn is never handed to the
+        next provider (LLMCancelled is raised instead).
         """
         opts = self._options(options)
 
@@ -1176,11 +1480,15 @@ class AIGateway:
             candidates.append((valve.name, valve))
 
         for label, provider in candidates:
+            if should_stop is not None and should_stop():
+                raise LLMCancelled(f"turn cut before trying {label}")
             tokens_sent = False
             is_primary = provider is self.provider and isinstance(provider, OpenAIChatProvider)
             if tracker is not None:
                 tracker.begin(label, is_primary)
-            limits = CallLimits(first_token=PRIMARY_FIRST_TOKEN_S) if is_primary else CallLimits()
+            limits = (CallLimits(first_token=PRIMARY_FIRST_TOKEN_S, stall=PRIMARY_STALL_S,
+                                 total=PRIMARY_TOTAL_S, stop=should_stop)
+                      if is_primary else CallLimits(stop=should_stop))
             try:
                 with call_limits(limits):
                     for chunk in self._stream_provider(
@@ -1194,12 +1502,18 @@ class AIGateway:
                 if is_primary:
                     primary_breaker.record(True)
                 return  # success
+            except LLMCancelled:
+                _log_call(provider.name, provider.model, 0, None, None,
+                          streamed=True, ok=False, tier=tier, route_reason="cancelled")
+                raise
             except Exception as e:
                 if is_primary:
                     primary_breaker.record(False)
-                _log_call(provider.name, provider.model, 0, None, None,
+                _log_call(provider.name, provider.model, 0, *getattr(e, "usage", (None, None)),
                           streamed=True, ok=False,
                           tier=tier, route_reason=_failure_reason(e) or route_reason)
+                if should_stop is not None and should_stop():
+                    raise LLMCancelled(f"turn cut while {label} failed") from e
                 if tokens_sent:
                     # Can't undo sent tokens — propagate
                     logger.warning("Stream failed mid-stream on %s: %s", label, e)
