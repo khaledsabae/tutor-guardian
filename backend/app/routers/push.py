@@ -54,7 +54,10 @@ def register_push_token(request: Request, payload: dict) -> dict:
         # logged; the family's row is only touched here, by the live request.)
         conn = get_conn()
         try:
-            _upsert_push_token(conn, canonical, token, platform, app_version, build_number)
+            # The same install (the fold proved the twin holds the family's
+            # FCM token): never a takeover — no pause, no notice (PR #26).
+            _upsert_push_token(conn, canonical, token, platform, app_version, build_number,
+                               same_install=True)
         finally:
             conn.close()
         return {"ok": True, "device_id": canonical, "identity_recovered": True}
@@ -62,7 +65,7 @@ def register_push_token(request: Request, payload: dict) -> dict:
 
 
 def _upsert_push_token(conn, device_id, token, platform, app_version, build_number,
-                       session_token=None) -> None:
+                       session_token=None, same_install: bool = False) -> None:
     """Store the token. A *change* of token is the one event the device proof
     cannot see by itself (PR #26 review, round 3): a session can register any
     token for its device, so before SESSION_MINT_ENFORCE someone who knows a
@@ -92,7 +95,7 @@ def _upsert_push_token(conn, device_id, token, platform, app_version, build_numb
             changed, first = True, False
         else:
             changed, first = False, device_proof.established(conn, device_id)
-        vouched = (not changed) or device_proof.vouches_for(
+        vouched = (not changed) or same_install or device_proof.vouches_for(
             conn, device_id, session_token, old, token)
         if changed and vouched:
             device_proof.forget_other_proofs(conn, device_id, token)

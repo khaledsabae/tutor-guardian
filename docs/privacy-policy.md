@@ -25,6 +25,10 @@
 
 - **معرّف الهاتف ورموز الجلسة:** لربط بياناتك بهاتفك وحماية الوصول إليها. نحفظ رمز
   الجلسة مشفَّرًا بدالة تجزئة (hash) لا بنصّه.
+- **إصلاح التثبيت المنقسم:** قسمت إصدارات التطبيق 1.0.58–1.0.67 بعض التثبيتات الجديدة إلى
+  معرّفين لهاتف واحد. حين يعود التطبيق بالمعرّف الثاني نضمّه إلى معرّف أسرتك، ونحفظ أيّ معرّف
+  قديم صار يشير إلى أيّ معرّف (ليجد التطبيق بياناتك)، وسجلًّا بما نقله الإصلاح أو حذفه — ومعه
+  نسخ الصفوف المكرّرة التي حُذفت — لنراجع الإصلاح أو نتراجع عنه. ويُحذفان مع حسابك.
 - **ملفات الأطفال:** الاسم، والفئة العمرية، والجنس (اختياري)، والرمز التعبيري. لتخصيص
   الدروس والإجابات لعمر كل طفل.
 - **التقدّم في الدروس، وأيام المواظبة، ونصيحة اليوم** (ما عُرض منها وما ضغطت عليه)،
@@ -197,6 +201,12 @@ to your phone's random identifier:
 
 - **Phone identifier and session tokens:** to link your data to your phone and
   protect access to it. Session tokens are stored as a hash, not as text.
+- **Repairing a split install:** app versions 1.0.58–1.0.67 split some fresh
+  installs into two phone identifiers. When the app comes back under the second
+  one, we merge it into your family's identifier, keep which old identifier now
+  points at which (so the app finds your data), and keep a record of what a repair
+  moved or removed — including copies of removed duplicate rows — so a repair can
+  be checked or undone. Both are deleted with your account.
 - **Child profiles:** name, age group, gender (optional) and emoji — to fit
   lessons and answers to each child's age.
 - **Lesson progress, daily streaks, the daily tip** (which tips were shown and
