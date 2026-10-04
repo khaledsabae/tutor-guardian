@@ -13,6 +13,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:almorabbi/core/app_routes.dart';
+import 'package:almorabbi/features/child_memory/data/memory_models.dart';
 
 /// Reads the `Screens` constants straight out of the source so the test covers
 /// constants added later without anyone remembering to update this list.
@@ -121,6 +122,13 @@ void main() {
       'covenant': AppRoutes.covenant(),
       'settings': AppRoutes.settings(),
       'identity': AppRoutes.identity(),
+      'privacy': AppRoutes.privacy(),
+      'accountDeletion': AppRoutes.accountDeletion(),
+      'accountDeleted': AppRoutes.accountDeleted(
+        result: const AccountDeletionResult(devices: 1, signedIn: false),
+        wasLinkedToGoogle: false,
+      ),
+      'childMemory': AppRoutes.childMemory(childId: 1, childName: 'س'),
       'invite': AppRoutes.invite(),
       'feedback': AppRoutes.feedback(),
     };
