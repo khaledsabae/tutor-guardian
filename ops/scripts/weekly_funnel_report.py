@@ -461,6 +461,18 @@ def get_questions_and_quality(db_path: Path, days: int, suggested: set[str],
         (window,),
     )
     by_mode = {m["mode"]: m["n"] for m in modes}
+    # 'pending' (since 2026-10) is an answer still being finished after its
+    # reader left, completed in place within minutes. One still pending well
+    # after the server's deadline never was — the server restarted mid-answer
+    # — and counts with the unfinished ones, not as an answer.
+    stale_pending = _query(
+        db_path,
+        """SELECT COUNT(*) n FROM chat_messages
+           WHERE role = 'assistant' AND mode = 'pending'
+             AND created_at >= datetime('now', ?)
+             AND created_at < datetime('now', '-15 minutes')""",
+        (window,),
+    )[0]["n"]
     # Three different failures, reported apart because they have different
     # owners. Since the 2026-10 reliability fix a stream cut by the app is
     # finished on the server, so `interrupted` now means the answer could NOT
@@ -469,7 +481,7 @@ def get_questions_and_quality(db_path: Path, days: int, suggested: set[str],
     # (the outcome flags below say which). `error` = the server gave up
     # (timeout, provider down, pipeline exception); an orphan = no reply row
     # at all.
-    interrupted = by_mode.get("interrupted", 0)
+    interrupted = by_mode.get("interrupted", 0) + stale_pending
     errors = by_mode.get("error", 0)
     degraded = interrupted + errors
     unanswered_rate = ((orphans + degraded) / n_total * 100) if n_total else 0.0

@@ -498,6 +498,31 @@ def test_unanswered_is_split_by_cause(mock_db: Path, tmp_path: Path):
     assert get_stream_outcomes(tmp_path / "missing.db", 7) == {}
 
 
+def test_a_pending_answer_left_behind_counts_as_unfinished(mock_db: Path):
+    """T5 — a 'pending' row is finished in place within minutes; one still
+    pending long after was cut by a server restart and is not an answer."""
+    conn = sqlite3.connect(mock_db)
+    conn.execute("INSERT INTO chat_sessions (id, device_id) VALUES ('s', 'd')")
+    for role, content, mode, age in [
+        ("user", "سؤال أول طويل بما يكفي", None, "-30 minutes"),
+        ("assistant", "جزء بقي معلقًا", "pending", "-30 minutes"),
+        ("user", "سؤال ثانٍ طويل بما يكفي", None, "-1 minutes"),
+        ("assistant", "يُكتب الآن", "pending", "-1 minutes"),
+    ]:
+        conn.execute(
+            "INSERT INTO chat_messages (session_id, role, content, mode, created_at) "
+            "VALUES ('s', ?, ?, ?, datetime('now', ?))",
+            (role, content, mode, age),
+        )
+    conn.commit()
+    conn.close()
+
+    qm = get_questions_and_quality(mock_db, 7, set())
+    assert qm["orphans"] == 0
+    assert qm["interrupted"] == 1  # the stale one; the fresh one is being written
+    assert qm["degraded"] == 1
+
+
 def test_question_asked_again_before_the_answer_was_saved_is_not_an_orphan(mock_db: Path):
     """Q1, Q2, A1, A2 — the parent re-asked while the first answer was still
     being written (now routine: answers are finished after the app leaves).
