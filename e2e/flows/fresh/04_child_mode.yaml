@@ -7,10 +7,12 @@ name: fresh/04 child mode in → PIN out
 - runScript: ../common/l10n.js
 - runFlow: ../common/home.yaml
 - tapOn: '${output.lead.navMore}'
+# The habit tile is in the hub's first group, and the hub keeps its scroll
+# position — onboarding left it at the bottom (Settings). Scroll up.
 - scrollUntilVisible:
     element:
       text: '${output.tile.routineTitle}'
-    direction: DOWN
+    direction: UP
     timeout: 20000
 - tapOn: '${output.tile.routineTitle}'
 - extendedWaitUntil:
