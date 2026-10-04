@@ -375,6 +375,12 @@ def get_child_progress(
             """,
             (device_id, child_id, today_str),
         )
+        # Without this the row only ever lived inside the implicit transaction
+        # sqlite3 opens for the INSERT, and conn.close() rolled it back: the
+        # SELECT below saw today's row, so the streak read 1 forever, and the
+        # table held ZERO rows in production (measured 2026-10-04) — the Home
+        # stat, the monthly report and the weekly D7 line all read nothing.
+        conn.commit()
         login_dates_rows = conn.execute(
             "SELECT date FROM daily_login_streaks "
             "WHERE device_id = ? AND child_id = ? ORDER BY date DESC",
