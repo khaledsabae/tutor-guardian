@@ -61,7 +61,13 @@ async def api_health_check():
 
 @router.get("/api/app-config")
 async def get_app_config():
+    from app.services import donations
+
     return {
         "minimum_build_number": int(os.environ.get("MINIMUM_BUILD_NUMBER", "0")),
-        "store_url": os.environ.get("STORE_URL", "https://play.google.com/store/apps/details?id=com.alsaba.almorabbi")
+        "store_url": os.environ.get("STORE_URL", "https://play.google.com/store/apps/details?id=com.alsaba.almorabbi"),
+        # Additive (v31). Older builds ignore both; newer builds show «ادعم
+        # المربّي» only when this is true AND Play returns the products.
+        "donations_enabled": donations.is_enabled(),
+        "donation_product_ids": list(donations.product_ids()),
     }

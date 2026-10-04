@@ -23,7 +23,7 @@ from app.middleware.client_ip import ClientIPMiddleware
 from app.routers import (
     health, assistant, chat, feedback, privacy, program, children, referral, push, identity,
     web, stats, daily_routine, value_tracking, habit_templates, child_mode, child_mode_web, sync,
-    insights, methodology, seo, tafsir, quranic_linguistics,
+    insights, methodology, seo, tafsir, quranic_linguistics, support,
 )
 from app.services import child_token, mission_digest
 from app.services.push_sender import send_to_device
@@ -199,6 +199,7 @@ app.include_router(seo.router, prefix="/seo")  # /seo/{slug} (public — SEO pag
 app.include_router(web.router)  # public SEO pages + share landing (/go, /l, /p; Phase 2)
 app.include_router(children.router, prefix="/api")  # child profiles + progress (auth)
 app.include_router(referral.router, prefix="/api")  # referral codes + attribution (auth)
+app.include_router(support.router, prefix="/api")  # «ادعم المربّي»: transparency (public) + verify (auth)
 app.include_router(stats.router, prefix="/api")  # community social-proof (public; Phase 3)
 app.include_router(push.router, prefix="/api")  # FCM token storage (auth)
 app.include_router(identity.router, prefix="/api")  # optional Google Sign-In (auth)

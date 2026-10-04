@@ -209,7 +209,10 @@ CREATE INDEX IF NOT EXISTS ix_referrals_referrer
     ON referrals (referrer_device);
 """
 
-SCHEMA_VERSION = 29
+# 30 is reserved by the parallel Phase-0 branch (child memory). 31 is the
+# «ادعم المربّي» ledger. The stamp only ever moves up (see init_db), so the two
+# can merge in either order: whichever lands second keeps the higher number.
+SCHEMA_VERSION = 31
 
 
 def db_path() -> Path:
@@ -401,6 +404,7 @@ def init_db() -> None:
     _ensure_lesson_progress_child_key(conn)
     _ensure_licence_tables(conn)
     _ensure_child_web_claims_table(conn)
+    _ensure_donations_table(conn)
 
     row = conn.execute("SELECT version FROM schema_version LIMIT 1").fetchone()
     if row is None:
@@ -1080,6 +1084,37 @@ def _ensure_child_web_claims_table(conn: sqlite3.Connection) -> None:
         );
         CREATE INDEX IF NOT EXISTS ix_child_web_claims_expires
             ON child_web_claims (expires_at);
+        """
+    )
+
+
+def _ensure_donations_table(conn: sqlite3.Connection) -> None:
+    """v31: the «ادعم المربّي» ledger — one row per verified Play purchase.
+
+    Deliberately holds nothing that identifies a person or a device: the
+    purchase token and order id are stored only as sha256 (enough to make a
+    retry idempotent and to match a later refund), and there is no device_id
+    column at all. The transparency page needs a sum per month, not a donor.
+    Because no row points at a device, the privacy delete path has nothing
+    here to erase.
+    """
+    conn.executescript(
+        """
+        CREATE TABLE IF NOT EXISTS donations (
+            id            INTEGER PRIMARY KEY AUTOINCREMENT,
+            token_hash    TEXT NOT NULL UNIQUE,
+            order_hash    TEXT,
+            product_id    TEXT NOT NULL,
+            amount_micros INTEGER,
+            currency      TEXT,
+            usd_cents     INTEGER,
+            amount_source TEXT NOT NULL DEFAULT 'none',
+            is_test       INTEGER NOT NULL DEFAULT 0,
+            consumed      INTEGER NOT NULL DEFAULT 0,
+            created_at    TEXT NOT NULL DEFAULT (datetime('now'))
+        );
+        CREATE INDEX IF NOT EXISTS ix_donations_created
+            ON donations (created_at);
         """
     )
 
