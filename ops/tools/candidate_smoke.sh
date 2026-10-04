@@ -1,18 +1,20 @@
 #!/usr/bin/env bash
 # Run the in-image smoke (ops/tools/candidate_smoke.py) against a candidate
-# backend image. The ONE invocation shared by deploy.yml (on the production
-# host) and the candidate-image workflow (GitHub-hosted, on pull requests), so
-# what a PR proves is what the deploy runs.
+# backend image. The ONE invocation, used by .github/actions/backend-image for
+# the deploy's image job, PR checks and manual verify runs (all GitHub-hosted),
+# so what a PR proves is what gates a deploy. The production host runs no
+# smoke any more: it pulls the image this passed on.
 #
 # Usage: ops/tools/candidate_smoke.sh IMAGE [CONTAINER_NAME] [-- COMMAND...]
 #   CONTAINER_NAME  lets the caller remove the container if the job is
 #                   cancelled — killing `docker run` does not stop the
 #                   container (a cancelled deploy's test container ran on for
 #                   an hour on 2026-10-04).
-#   COMMAND         defaults to the smoke; deploy.yml reuses the same limits
-#                   for the in-image KB integrity check.
+#   COMMAND         defaults to the smoke; the same limits are reused for
+#                   the in-image KB integrity check.
 #
-# Limits, because on the production host this shares 4 vCPUs with live sites:
+# Limits — written for the production host, where this ran beside live sites
+# until 2026-10-04; kept so the smoke stays bounded and hermetic anywhere:
 #   --cpus 1           a hard cap of one core;
 #   --cpu-shares 256   cgroup v2 weight ~10 against the default 100, so under
 #                      contention the live containers win (the container

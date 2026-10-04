@@ -9,6 +9,7 @@ venv/
 .git/
 .githooks/
 knowledge_base/chroma_db/
+knowledge_base/chroma_seed/
 ops/chroma_data/
 ops/*.db
 *.db

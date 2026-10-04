@@ -1,24 +1,32 @@
 name: Deploy
 
-# Auto-deploy the backend to the VPS on push to main. Three jobs:
+# Auto-deploy the backend on push to main. The production VPS builds nothing
+# and tests nothing — it pulls an image that was built, smoked and published
+# on GitHub-hosted runners, and swaps it in. Four jobs, in order:
 #
 #   gate    GitHub-hosted. Waits for "Backend tests" (backend.yml: pytest, KB
 #           integrity, ruff — all GitHub-hosted) to pass for THIS commit, and
 #           fails closed otherwise (ops/tools/deploy_gate.py, which also says
-#           why this is an API check and not `on: workflow_run`). Nothing below
-#           runs until it passes; it holds no production runner while it waits.
-#   deploy  ON the VPS (self-hosted runner `vps-tg`, locally — no SSH). Builds a
-#           candidate image, runs a ~1 CPU-minute smoke and the KB integrity
-#           check inside it (CPU-capped, low-priority, no network), backs up the
-#           data, recreates the container from that image, and rolls back if
-#           it is not healthy.
+#           why this is an API check and not `on: workflow_run`).
+#   image   GitHub-hosted. Builds backend/Dockerfile (layer cache in GHCR),
+#           pushes a candidate, pulls it back, runs the in-image smoke and KB
+#           integrity check on those exact bytes, then tags them
+#           ghcr.io/khaledsabae/tutor-guardian-backend:<sha> and :main
+#           (.github/actions/backend-image). Hands the manifest digest on.
+#   deploy  ON the VPS (self-hosted runner `vps-tg`, locally — no SSH). Pulls
+#           that digest anonymously (public package), checks it carries this
+#           commit, resets the host checkout to it (bind mounts: docs, crons
+#           in ops/scripts, ops/tools, frontend), checks served media, backs
+#           up the data, recreates the container, verifies /health,
+#           /privacy-policy and /api/app-config, and rolls back to the
+#           previous image if any of that fails.
 #   alert   ON the VPS (the Telegram credentials live in its .env). Fires when
-#           the gate or the deploy failed or was cancelled.
+#           any job before it failed or was cancelled.
 #
-# The full test suite used to run inside the candidate image here, on the
-# production host — 16-28 min a deploy on 2026-10-04, 75+ min once the host
-# was CPU-throttled, while backend.yml ran the same suite on the same box. It
-# now runs once, on GitHub-hosted runners, and this workflow waits for it.
+# Why: on 2026-10-04 the host was CPU-throttled (~95% steal). The full suite
+# inside a candidate image ran 16-28 min, then 75+; the first gated deploy
+# then spent 44 min in a cached image build (COPY layers alone took ~10 min
+# each) and was cancelled. A pull of the changed app layers is seconds of CPU.
 #
 # Manual run: Actions → Deploy → "Run workflow". Main only; gated the same way.
 
@@ -38,11 +46,15 @@ on:
       - '.github/workflows/deploy.yml'
       - 'requirements*.txt'
       - '.github/ci/constraints-prod.txt'
+      - '.dockerignore'
   workflow_dispatch: {}
 
 concurrency:
   group: deploy-production
   cancel-in-progress: false # never cancel an in-flight deploy
+
+env:
+  IMAGE: ghcr.io/khaledsabae/tutor-guardian-backend
 
 jobs:
   gate:
@@ -64,119 +76,83 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: python3 ops/tools/deploy_gate.py --sha "${{ github.sha }}"
 
-  deploy:
-    name: Deploy to VPS (self-hosted)
+  image:
+    name: Build, smoke and publish the image
     needs: gate
-    runs-on: [self-hosted, production]
-    timeout-minutes: 90
-    environment:
-      name: production
-      url: https://tg-api.alsaba.cloud
+    runs-on: ubuntu-latest
+    # ~3-5 min with the layer cache; a cold build (requirements changed) ~6.
+    timeout-minutes: 45
+    permissions:
+      contents: read
+      packages: write
+    outputs:
+      digest: ${{ steps.image.outputs.digest }}
     steps:
       - name: Checkout
         uses: actions/checkout@v5
 
-      - name: Build the candidate image and smoke it
+      - name: Build, smoke, publish :${{ github.sha }} and :main
+        id: image
+        uses: ./.github/actions/backend-image
+        with:
+          mode: deploy
+
+  deploy:
+    name: Deploy to VPS (self-hosted)
+    needs: [gate, image]
+    runs-on: [self-hosted, production]
+    # A first pull of the whole image (~2 GB) on a throttled host is the slow
+    # case; after that only the changed app layers come down.
+    timeout-minutes: 90
+    # No checkout: everything runs from /root/tutor-guardian, reset below to
+    # the gated commit. The token is not used on this host.
+    permissions:
+      contents: read
+    environment:
+      name: production
+      url: https://tg-api.alsaba.cloud
+    env:
+      DIGEST: ${{ needs.image.outputs.digest }}
+    steps:
+
+      - name: Pull the published image (no build, no tests here)
         run: |
           set -euo pipefail
-          CANDIDATE_TAG="tutor-guardian-backend:candidate-${{ github.sha }}"
-          # Persistent layer cache between runs. The build context is the
-          # checked-out workspace (wiped after every run), so without a cache
-          # every deploy rebuilds pip/models from scratch (~69 min) and the
-          # 90-min timeout dies mid-export. buildx with a local cache dir on
-          # the runner reuses layers across runs — the second build is a
-          # fraction of the first.
-          CACHE_DIR="/var/cache/tutor-guardian-buildx"
-
-          # Disk first. On 2026-09-27 the runner — which is the production
-          # host — ran out of space mid-deploy: the test run died with
-          # "database or disk is full" and the same disk holds the live DB.
-          # Reclaim what is safe to reclaim, then refuse to build on a disk
-          # that cannot take a ~13 GB candidate image.
-          echo "=== Disk before build ==="
-          df -h / | tail -1
-          du -sh "$CACHE_DIR" 2>/dev/null || true
+          # Disk first. On 2026-09-27 a full disk killed a deploy mid-run, and
+          # this disk holds the live DB. A first pull needs ~6 GB (compressed
+          # layers + unpacked); later pulls only the changed app layers.
           free_gb() { df -BG --output=avail / | tail -1 | tr -dc '0-9'; }
-          if [ "$(free_gb)" -lt 25 ]; then
-            echo "::warning::low disk ($(free_gb) GB free) — pruning dangling images and build cache"
+          echo "=== Disk: $(free_gb) GB free ==="
+          if [ "$(free_gb)" -lt 15 ]; then
+            echo "::warning::low disk ($(free_gb) GB free) — pruning dangling images and old build cache"
             docker image prune -f >/dev/null 2>&1 || true
             docker builder prune -f --filter until=72h >/dev/null 2>&1 || true
-            rm -rf "${CACHE_DIR}-new"
-            df -h / | tail -1
           fi
-          if [ "$(free_gb)" -lt 15 ]; then
-            echo "::error::only $(free_gb) GB free on the production host — not building. Free space (docker system df) and re-run."
+          if [ "$(free_gb)" -lt 8 ]; then
+            echo "::error::only $(free_gb) GB free on the production host — not pulling. Free space (docker system df) and re-run."
             exit 1
           fi
 
-          echo "=== Build candidate image from checked-out workspace ==="
-          # Use $GITHUB_WORKSPACE (the commit that triggered this workflow), not
-          # /root/tutor-guardian, so tests gate the exact code being deployed.
-          cd "$GITHUB_WORKSPACE"
-          # The local cache exporter never drops old blobs when it writes into
-          # an existing directory, so exporting into $CACHE_DIR itself grew it
-          # by the changed layers on every deploy, forever. Export to a fresh
-          # directory and swap it in: the cache holds exactly this build's
-          # layers, which is all the next build can reuse anyway.
-          rm -rf "${CACHE_DIR}-new"
-          docker buildx build \
-            --cache-from "type=local,src=$CACHE_DIR" \
-            --cache-to "type=local,dest=${CACHE_DIR}-new,mode=max" \
-            -f backend/Dockerfile -t "$CANDIDATE_TAG" .
-          rm -rf "$CACHE_DIR"
-          mv "${CACHE_DIR}-new" "$CACHE_DIR"
-
-          # Two hard caps, because the swap above bounds the export dir but not
-          # what BuildKit keeps for itself. On 2026-09-27 the export dir was
-          # 4.6 GB after a cold build while the builder's own cache stood at
-          # 27.8 GB — a second copy of the same layers, never pruned.
-          #  * builder cache: capped at 10 GB (keeps the most recent records);
-          #  * export dir: a runaway above 12 GB is dropped — the next build is
-          #    cold (slower), which beats filling the disk that holds the live DB.
-          docker builder prune -f --max-used-space 10gb >/dev/null 2>&1 || true
-          CACHE_MAX_GB=12
-          cache_gb=$(du -s --block-size=1G "$CACHE_DIR" | cut -f1)
-          if [ "$cache_gb" -gt "$CACHE_MAX_GB" ]; then
-            echo "::warning::buildx cache is ${cache_gb} GB (> ${CACHE_MAX_GB}) — dropping it"
-            rm -rf "$CACHE_DIR"
+          # By digest: exactly the manifest the image job smoked, whatever any
+          # tag says now. Anonymous — the package is public. nice only lowers
+          # the client; unpacking runs in dockerd, but after the first deploy
+          # it is a few small layers.
+          echo "=== Pull $IMAGE@$DIGEST ==="
+          if ! nice -n 10 docker pull "$IMAGE@$DIGEST"; then
+            echo "::error::anonymous pull of $IMAGE failed. If the package is still private, make it public once: https://github.com/users/khaledsabae/packages/container/tutor-guardian-backend/settings → Danger Zone → Change visibility → Public. Then re-run this deploy."
+            exit 1
           fi
-          echo "=== Disk after build ==="
-          df -h / | tail -1
-          du -sh "$CACHE_DIR" 2>/dev/null || true
 
-          # The suite itself already passed on GitHub-hosted runners (the gate
-          # job). What only this host can check is the image it just built: it
-          # imports, loads both baked models offline, migrates a fresh DB, boots
-          # and answers /health and /api/app-config, and passes a small pytest
-          # subset — ops/tools/candidate_smoke.py, ~1 CPU-minute. The wrapper
-          # caps the container at one core with a low CPU weight, 4 GB and no
-          # network, so the live sites keep the host. The same wrapper, on the
-          # same Dockerfile, runs in the candidate-image workflow on PRs —
-          # with three sabotaged images that the smoke must reject.
-          # Named containers: if this job is cancelled, the cleanup step removes
-          # them — killing `docker run` does not stop its container.
-          echo "=== In-image smoke ==="
-          ops/tools/candidate_smoke.sh "$CANDIDATE_TAG" "tg-candidate-smoke-${{ github.run_id }}"
-
-          echo "=== KB integrity check in the candidate image ==="
-          ops/tools/candidate_smoke.sh "$CANDIDATE_TAG" "tg-candidate-kb-${{ github.run_id }}" \
-            -- python ops/tools/check_kb_integrity.py
-
-          echo "=== Candidate image passed all gates ==="
-
-          # Promote the tested candidate to the tag compose resolves for this
-          # service. Compose derives `<project>-<service>` from the deploy dir,
-          # i.e. tutor-guardian-backend:latest, and the service declares no
-          # explicit `image:` key — so tagging here lets the deploy step start
-          # the *already tested* image instead of rebuilding it.
-          #
-          # This used to be a second `docker compose build backend` run from
-          # /root/tutor-guardian. Different build context = no layer cache reuse,
-          # so a ~5.7GB image was built twice per run; "exporting layers" alone
-          # measured 238s. Three deploys in a row blew timeout-minutes: 30 and
-          # were cancelled mid-export (2026-07-27).
-          echo "=== Tag candidate as tutor-guardian-backend:latest ==="
-          docker tag "$CANDIDATE_TAG" tutor-guardian-backend:latest
+          # Belt and braces: the image must say it was built from this commit.
+          REVISION=$(docker image inspect --format '{{ index .Config.Labels "org.opencontainers.image.revision" }}' "$IMAGE@$DIGEST")
+          if [ "$REVISION" != "$GITHUB_SHA" ]; then
+            echo "::error::$IMAGE@$DIGEST was built from '$REVISION', not $GITHUB_SHA — not deploying it"
+            exit 1
+          fi
+          # A local tag keeps it out of `docker image prune` (an image pulled
+          # by digest alone is untagged) and names it for the cleanup step.
+          docker tag "$IMAGE@$DIGEST" "$IMAGE:$GITHUB_SHA"
+          echo "pulled $IMAGE:$GITHUB_SHA ($DIGEST), built from $REVISION"
 
       - name: Deploy backend locally on the VPS
         run: |
@@ -196,11 +172,9 @@ jobs:
           PREVIOUS_SHA=$(git rev-parse HEAD)
           echo "Previous SHA: $PREVIOUS_SHA"
 
-          # The running container pins its image by ID, so this still resolves
-          # to the *old* image even though the previous step already moved the
-          # :latest tag onto the new candidate. Capturing it lets rollback
-          # restore the exact image that was last verified healthy in
-          # production, with no rebuild — see _rollback() below.
+          # The running container pins its image by ID. Capturing it lets
+          # rollback restore the exact image that was last verified healthy in
+          # production, with no pull and no build — see _rollback() below.
           PREVIOUS_IMAGE=$(docker inspect tg_backend --format '{{.Image}}' 2>/dev/null || true)
           echo "Previous image: ${PREVIOUS_IMAGE:-<none>}"
 
@@ -228,18 +202,16 @@ jobs:
           # production keeps serving the last good index.
           echo "→ checking served assets against docs/"
           # nice: host-side work on a shared, CPU-starved box yields to the
-          # live sites. (The image build cannot be niced from here — BuildKit
-          # runs inside dockerd — but its heavy layers are cache hits unless
-          # requirements or the Dockerfile changed.)
+          # live sites.
           nice -n 10 python3 ops/tools/check_served_assets.py
 
-          # ── 3. Verify the tested image is present ────────────────────
-          # No build here: the previous step already built, tested and tagged
-          # tutor-guardian-backend:latest. The checkout above still has to be
-          # current because the compose file bind-mounts ./docs,
-          # ./backend/secrets, ./ops/scripts and ./mobile/assets from this dir.
-          echo "→ verifying tutor-guardian-backend:latest exists"
-          docker image inspect tutor-guardian-backend:latest >/dev/null
+          # ── 3. Verify the pulled image is present ────────────────────
+          # No build here: the previous step pulled the image the image job
+          # built and smoked. The checkout above still has to be current
+          # because the compose file bind-mounts ./docs, ./backend/secrets,
+          # ./ops/scripts, ./ops/tools, ./frontend and ./mobile from this dir.
+          echo "→ verifying $IMAGE:$GITHUB_SHA is present"
+          docker image inspect "$IMAGE:$GITHUB_SHA" >/dev/null
 
           # ── 3b. Make the data volumes writable by the container user ──
           # The image runs as `appuser` (uid 10001) but Docker creates volume
@@ -299,6 +271,11 @@ jobs:
           fi
 
           # ── 4. Recreate the container ────────────────────────────────
+          # Compose resolves this service to tutor-guardian-backend:latest
+          # (`<project>-<service>`; it declares no `image:`), so the pulled
+          # image takes that tag only now — after the backup, right before
+          # the swap. A failure above leaves :latest where it was.
+          docker tag "$IMAGE:$GITHUB_SHA" tutor-guardian-backend:latest
           echo "→ docker compose up -d --no-build backend"
           docker compose -f docker-compose.production.yml up -d --no-build --remove-orphans backend
 
@@ -306,19 +283,20 @@ jobs:
           _rollback() {
             echo "::warning::Rolling back to SHA: $PREVIOUS_SHA ..."
             git reset --hard "$PREVIOUS_SHA"
-            # Prefer re-tagging the image that was actually running and healthy
-            # before this deploy — it needs no rebuild (a rebuild here would hit
-            # the same multi-minute export that caused the timeouts, so a slow
-            # rollback is a rollback that gets cancelled). Fall back to building
-            # only when there was no prior container, e.g. first-ever deploy.
+            # Re-tag the image that was actually running and healthy before
+            # this deploy: no pull, no build. Without one (first-ever deploy on
+            # this host), the previous commit's published image if it exists —
+            # never a build here.
             if [ -n "$PREVIOUS_IMAGE" ] && docker image inspect "$PREVIOUS_IMAGE" >/dev/null 2>&1; then
               echo "::warning::Restoring previous image $PREVIOUS_IMAGE"
               docker tag "$PREVIOUS_IMAGE" tutor-guardian-backend:latest
               docker compose -f docker-compose.production.yml up -d --no-build --remove-orphans backend
+            elif nice -n 10 docker pull "$IMAGE:$PREVIOUS_SHA"; then
+              echo "::warning::Restoring $IMAGE:$PREVIOUS_SHA"
+              docker tag "$IMAGE:$PREVIOUS_SHA" tutor-guardian-backend:latest
+              docker compose -f docker-compose.production.yml up -d --no-build --remove-orphans backend
             else
-              echo "::warning::No previous image available — rebuilding from $PREVIOUS_SHA"
-              docker compose -f docker-compose.production.yml build backend
-              docker compose -f docker-compose.production.yml up -d --remove-orphans backend
+              echo "::error::no previous image to roll back to — restore by hand"
             fi
             echo "::warning::Rollback complete."
           }
@@ -377,26 +355,33 @@ jobs:
             exit 1
           fi
 
+          # ── 8. /api/app-config — every installed build asks it, on launch,
+          # whether it must update; a release that breaks it strands them all.
+          CFG=$(curl -sS --max-time 30 "${DEPLOY_HEALTH_URL%/health}/api/app-config" || echo "")
+          if ! python3 -c 'import json, sys; assert isinstance(json.loads(sys.argv[1])["minimum_build_number"], int)' "$CFG" 2>/dev/null; then
+            echo "::error::/api/app-config did not return minimum_build_number (got: ${CFG:0:200}) — triggering rollback"
+            docker logs --tail 50 tg_backend 2>&1 || true
+            _rollback
+            exit 1
+          fi
+
           echo
           echo "=== Deploy complete ==="
           echo "SHA:  $DEPLOY_SHA"
+          echo "Image: $IMAGE@$DIGEST"
           echo "Time: $(date -u +%Y-%m-%dT%H:%M:%SZ)"
 
-      # Runs on cancellation and failure too, not just success. Cleanup used to
-      # be the last block of the deploy step, so the three runs cancelled at the
-      # 30-minute mark each stranded a ~13GB candidate image on the VPS.
-      - name: Cleanup candidate image
+      # Runs on cancellation and failure too. Keeps the three most recent
+      # pulled images (the running one and its rollback targets) and drops
+      # older ones; `docker rmi` refuses an image a container still uses.
+      - name: Prune old pulled images
         if: always()
         run: |
-          # A cancelled run leaves its `docker run` container running (the
-          # client dies, the container does not): remove the smoke containers
-          # by name first. No-ops after a normal run (--rm already did it).
-          docker rm -f "tg-candidate-smoke-${{ github.run_id }}" \
-                       "tg-candidate-kb-${{ github.run_id }}" >/dev/null 2>&1 || true
-          # Untags only — after a successful deploy this image is also tagged
-          # :latest and backs the running container, so it survives as :latest.
-          docker image rm "tutor-guardian-backend:candidate-${{ github.sha }}" >/dev/null 2>&1 || true
+          docker images "$IMAGE" --format '{{.CreatedAt}}\t{{.Repository}}:{{.Tag}}' \
+            | grep -v ':<none>$' | sort -r | tail -n +4 | cut -f2 \
+            | xargs -r docker rmi >/dev/null 2>&1 || true
           docker image prune -f >/dev/null 2>&1 || true
+          docker images "$IMAGE" --format '  {{.Repository}}:{{.Tag}} {{.ID}} {{.Size}}'
           docker images tutor-guardian-backend --format '  {{.Repository}}:{{.Tag}} {{.ID}} {{.Size}}'
 
       - name: Post-deploy log tail
@@ -424,8 +409,8 @@ jobs:
   # instead of watching this workflow.
   alert:
     name: Alert on failed deploy
-    needs: [gate, deploy]
-    if: ${{ always() && (needs.gate.result == 'failure' || needs.gate.result == 'cancelled' || needs.deploy.result == 'failure' || needs.deploy.result == 'cancelled') }}
+    needs: [gate, image, deploy]
+    if: ${{ always() && (contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled')) }}
     runs-on: [self-hosted, production]
     timeout-minutes: 5
     steps:
@@ -444,6 +429,9 @@ jobs:
           if [ "${{ needs.gate.result }}" != "success" ]; then
             HINT1='البوابة: اختبارات Backend tests لم تنجح لهذا الكوميت،'
             HINT2='فلم يُلمَس الإنتاج. السبب في رابط التشغيل أعلاه.'
+          elif [ "${{ needs.image.result }}" != "success" ]; then
+            HINT1='بناء الصورة أو فحصها على GitHub لم ينجح،'
+            HINT2='فلم يُلمَس الإنتاج. السبب في رابط التشغيل أعلاه.'
           else
             HINT1='الخطوة الفاشلة في اللوج. لو الحارس هو السبب،'
             HINT2='الأرجح ملف ميديا في الفهرس ولم يصل بالـrsync.'
@@ -452,7 +440,7 @@ jobs:
           TEXT=$(printf '%s\n' \
             '🔴 نشر المربّي فشل — main لم يصل الإنتاج' \
             '' \
-            "الحالة:    gate=${{ needs.gate.result }} · deploy=${{ needs.deploy.result }}" \
+            "الحالة:    gate=${{ needs.gate.result }} · image=${{ needs.image.result }} · deploy=${{ needs.deploy.result }}" \
             "الكوميت:   ${{ github.sha }}" \
             "على الخادم: $RUNNING_SHA" \
             "الحاوية:   ${CONTAINER:-<لا توجد>}" \

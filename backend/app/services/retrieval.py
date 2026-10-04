@@ -9,9 +9,11 @@ Optimizations (v2):
 """
 import hashlib
 import logging
+import os
 import re
 import shutil
 import threading
+import time
 from functools import lru_cache
 from pathlib import Path
 from typing import Callable, Sequence, cast
@@ -34,6 +36,17 @@ CHROMA_PERSIST_DIR = (
 )
 
 COLLECTION_NAME = "knowledge_units"
+
+# The knowledge index baked into the backend image (backend/Dockerfile runs
+# app/services/index_seed.py — the same _ensure_index() this module runs at
+# startup — and parks the result here). Production keeps the live index on the
+# tg_chroma volume, which is mounted over CHROMA_PERSIST_DIR and hides the
+# image's own copy there; the seed therefore lives beside it. When the
+# volume's index was built for other units, startup copies the seed in
+# (seconds) instead of re-embedding every unit (minutes — and, on a
+# CPU-starved host, longer than the deploy's health window).
+SEED_DIR = Path(os.environ.get(
+    "CHROMA_SEED_DIR", str(CHROMA_PERSIST_DIR.parent / "chroma_seed")))
 
 # Purge and rebuild when the HNSW graph carries this many times more vectors
 # than the collection has live documents (tombstones are never reclaimed).
@@ -197,6 +210,59 @@ def _fingerprint_path() -> Path:
     return CHROMA_PERSIST_DIR / "_content_fingerprint"
 
 
+def _read_fingerprint(directory: Path) -> str | None:
+    """The content fingerprint an index directory was built for, if any."""
+    try:
+        return (directory / "_content_fingerprint").read_text().strip() or None
+    except OSError:
+        return None
+
+
+def _install_seed_if_current(fingerprint: str) -> bool:
+    """Copy the image's baked index into the persist dir — if it was built for
+    exactly these units and the persisted index was not. True when installed.
+
+    The fingerprint file is copied last, so an interrupted copy never looks
+    current: the next start copies again (or re-embeds), it never trusts half
+    an index. Any failure falls back to the caller's re-embedding path.
+    """
+    if _read_fingerprint(CHROMA_PERSIST_DIR) == fingerprint:
+        return False  # already current — a plain restart
+    if _read_fingerprint(SEED_DIR) != fingerprint:
+        return False  # no seed (tests, dev) or one built for other units
+    started = time.monotonic()
+    try:
+        _purge_persist_dir()  # drops our handle and chroma's cached client too
+        entries = sorted(SEED_DIR.iterdir(), key=lambda e: e.name == "_content_fingerprint")
+        for entry in entries:
+            target = CHROMA_PERSIST_DIR / entry.name
+            if entry.is_dir():
+                shutil.copytree(entry, target)
+            else:
+                shutil.copy2(entry, target)
+    except OSError as exc:
+        logger.error("Could not install the baked knowledge index from %s (%s) — "
+                     "falling back to re-embedding", SEED_DIR, exc)
+        try:
+            _purge_persist_dir()
+        except OSError:
+            pass
+        return False
+    # WARNING, not INFO: the app configures no logging, so only WARNING and up
+    # reach `docker logs` — and replacing the live index is worth seeing there.
+    logger.warning("Installed the knowledge index baked into the image (%s…) in %.1fs — "
+                   "no re-embedding", fingerprint[:12], time.monotonic() - started)
+    # A new index means new unit texts: answers cached from the old ones carry
+    # stale citations (see index_knowledge_units). Same rule, same reason.
+    try:
+        from app.services import answer_cache
+
+        answer_cache.purge(reason="baked knowledge index installed")
+    except Exception as exc:  # noqa: BLE001 — installing must not fail on this
+        logger.warning("could not purge answer cache after installing the index: %s", exc)
+    return True
+
+
 def _hnsw_is_bloated(collection: chromadb.Collection) -> bool:
     """True when the HNSW graph holds far more vectors than the collection has
     documents.
@@ -290,6 +356,8 @@ def index_knowledge_units(
         units = load_default_knowledge_units()
 
     fingerprint = _fingerprint(units)
+    if not force:
+        _install_seed_if_current(fingerprint)
     # Both probes read the collection, so a handle stranded by another process
     # would surface here first — as it did in production.
     collection = with_live_collection(lambda c: c)
@@ -300,6 +368,14 @@ def index_knowledge_units(
         elif _index_matches(collection, units, fingerprint):
             logger.info("Knowledge index up to date (%d units) — skipping rebuild", len(units))
             return
+
+    # The slow path, said loudly: in a container it means the image's baked
+    # index did not match these units either (or a rebuild was forced), and
+    # every unit is about to be embedded on this host.
+    logger.warning(
+        "Re-embedding all %d knowledge units (fingerprint %s…, force=%s): neither the "
+        "index on disk nor the one baked into the image (%s) matches them",
+        len(units), fingerprint[:12], force, SEED_DIR)
 
     if force:
         # A tombstoned graph can't be repaired in place; start from empty disk.

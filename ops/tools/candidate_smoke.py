@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
-"""Fast smoke of a candidate backend image — the deploy's in-image gate.
+"""Fast smoke of a candidate backend image — the in-image gate of every deploy.
 
-The full suite no longer runs here. It runs on GitHub-hosted runners
-("Backend tests", pytest + KB integrity + ruff) and deploy.yml will not start
-until those passed for the exact commit being deployed. Inside the image, on
-the production host, the question is narrower: *is this image sound?* — and it
-has to be answered in about a CPU-minute, because the host serves live sites.
-(The full suite in the image cost 16-28 minutes per deploy on 2026-10-04, and
-a cancelled deploy's copy kept running for over an hour afterwards.)
+The full suite does not run in the image. It runs on GitHub-hosted runners
+("Backend tests", pytest + KB integrity + ruff) and deploy.yml will not build
+until those passed for the exact commit being deployed. Inside the image the
+question is narrower: *is this image sound?* — answered in about 20 CPU-seconds,
+on a GitHub-hosted runner, before the image is published; the production host
+only pulls what passed. (The full suite in the image, on the production host,
+cost 16-28 minutes per deploy on 2026-10-04.)
 
 Run inside the candidate image (ops/tools/candidate_smoke.sh does that):
   1. imports    — app.main imports every router, so a missing module or a bad
@@ -16,9 +16,15 @@ Run inside the candidate image (ops/tools/candidate_smoke.sh does that):
                   produce output (an HF format drift broke loading once);
   3. database   — init_db() builds the schema on a fresh DB, twice (idempotent),
                   and stamps SCHEMA_VERSION; integrity_check passes;
-  4. server     — uvicorn starts the real app as the image's CMD would;
-                  /health and /api/app-config answer 200; SIGTERM exits cleanly;
-  5. tests      — a small pytest subset: schema migrations, the deploy-image
+  4. index      — the knowledge index baked into the image was built for exactly
+                  these units (same fingerprint the container computes at startup);
+  5. server     — uvicorn starts the real app as the image's CMD would, warm-up
+                  included, over an index dir holding an OLD index (as the
+                  production volume does): it must install the baked index, not
+                  re-embed; /health and /api/app-config answer 200; SIGTERM exits
+                  cleanly; time to healthy is printed;
+  6. retrieval  — a query against the installed index returns units;
+  7. tests      — a small pytest subset: schema migrations, the deploy-image
                   skip markers, and the assistant's guard ordering through the API.
 Exits non-zero at the first failure, with the reason. Prints CPU time used.
 """
@@ -139,6 +145,22 @@ def check_database(db: Path) -> None:
     print(f"   schema v{SCHEMA_VERSION}, {tables} tables, integrity ok")
 
 
+@_step("index: the baked knowledge index matches the units")
+def check_index() -> None:
+    from app.services import retrieval
+    from app.services.knowledge_loader import load_default_knowledge_units
+
+    units = load_default_knowledge_units()
+    fingerprint = retrieval._fingerprint(units)
+    baked = retrieval._read_fingerprint(retrieval.SEED_DIR)
+    if baked != fingerprint:
+        raise SmokeFailure(f"the image's baked index ({retrieval.SEED_DIR}) is for {baked}, the "
+                           f"units are {fingerprint[:12]}… — every start would re-embed")
+    size = sum(f.stat().st_size for f in retrieval.SEED_DIR.rglob("*") if f.is_file())
+    print(f"   {len(units)} units · baked fingerprint {fingerprint[:12]}… matches · "
+          f"{size / 1e6:.0f} MB")
+
+
 def _free_port() -> int:
     with socket.socket() as s:
         s.bind(("127.0.0.1", 0))
@@ -154,21 +176,28 @@ def _get(url: str) -> tuple[int, dict]:
         return exc.code, {"body": exc.read()[:500].decode("utf-8", "replace")}
 
 
-@_step("server: uvicorn starts the app; /health and /api/app-config answer")
+@_step("server: a real startup installs the baked index; /health, /api/app-config")
 def check_server(env: dict) -> None:
+    from app.services import retrieval
+
+    # What the production volume holds after the last deploy: an index for
+    # OTHER units. Startup must replace it with the baked one, not re-embed.
+    persist = retrieval.CHROMA_PERSIST_DIR
+    persist.mkdir(parents=True, exist_ok=True)
+    (persist / "_content_fingerprint").write_text("an-index-for-older-units")
     port = _free_port()
     log = tempfile.TemporaryFile(mode="w+")
-    # The image's own CMD, on loopback. SKIP_WARMUP skips embedding the whole
-    # knowledge base at boot — the production container still does that, and
-    # the deploy waits for its health check afterwards.
+    # The image's own CMD, on loopback, with the full warm-up (both models and
+    # the index) — exactly what the production container does before it
+    # answers its first health check.
+    t0 = time.monotonic()
     proc = subprocess.Popen(
         [sys.executable, "-m", "uvicorn", "app.main:app", "--app-dir", "backend",
          "--host", "127.0.0.1", "--port", str(port)],
-        cwd=APP_ROOT, env={**env, "SKIP_WARMUP": "1"},
-        stdout=log, stderr=subprocess.STDOUT)
+        cwd=APP_ROOT, env=env, stdout=log, stderr=subprocess.STDOUT)
     base = f"http://127.0.0.1:{port}"
     try:
-        deadline = time.monotonic() + 120
+        deadline = time.monotonic() + 300
         health = None
         while time.monotonic() < deadline:
             if proc.poll() is not None:
@@ -179,10 +208,23 @@ def check_server(env: dict) -> None:
             except OSError:  # not listening yet
                 time.sleep(0.5)
         if health is None:
-            raise SmokeFailure("no answer from /health within 120 s")
+            raise SmokeFailure("no answer from /health within 300 s")
+        startup = time.monotonic() - t0
         status, body = health
-        if status != 200 or body.get("status") != "ok" or body.get("checks", {}).get("sqlite") != "ok":
+        checks = body.get("checks", {})
+        if status != 200 or body.get("status") != "ok" or checks.get("sqlite") != "ok" \
+                or checks.get("chromadb") != "ok":
             raise SmokeFailure(f"/health answered {status} {body}")
+        log.seek(0)
+        boot = log.read()
+        if "Installed the knowledge index baked into the image" not in boot:
+            raise SmokeFailure("startup did not install the baked index")
+        if "Re-embedding all" in boot:
+            raise SmokeFailure("startup re-embedded the knowledge base")
+        if retrieval._read_fingerprint(persist) != retrieval._read_fingerprint(retrieval.SEED_DIR):
+            raise SmokeFailure("the index dir does not hold the baked index after startup")
+        print(f"   startup (warm-up: both models + baked index) → healthy in {startup:.1f}s, "
+              f"no re-embedding")
         status, cfg = _get(f"{base}/api/app-config")
         if status != 200 or not isinstance(cfg.get("minimum_build_number"), int):
             raise SmokeFailure(f"/api/app-config answered {status} {cfg}")
@@ -207,6 +249,20 @@ def check_server(env: dict) -> None:
         if proc.poll() is None:
             proc.kill()
             proc.wait()
+
+
+@_step("retrieval: a query against the installed index returns units")
+def check_retrieval() -> None:
+    from app.services import retrieval
+
+    retrieval._ensure_index()  # current now: must neither copy nor embed again
+    hits = retrieval.with_live_collection(lambda c: c.query(
+        query_embeddings=[retrieval.embed_query("كيف أعلّم ابني الصلاة؟")],
+        n_results=3, include=["metadatas"]))
+    ids = hits["ids"][0]
+    if len(ids) != 3:
+        raise SmokeFailure(f"query returned {ids}")
+    print(f"   top hits: {', '.join(ids)}")
 
 
 @_step("tests: migrations, deploy-image skip markers, assistant guard")
@@ -237,7 +293,9 @@ def main() -> int:
         check_imports()
         check_models()
         check_database(db)
+        check_index()
         check_server(env)
+        check_retrieval()
         check_tests(env)
     except SmokeFailure as exc:
         print(f"\n❌ candidate smoke FAILED — {exc}", flush=True)
