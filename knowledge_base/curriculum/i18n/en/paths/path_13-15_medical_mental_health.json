@@ -14,28 +14,57 @@
   "pedagogical_framework": "attachment_rahma",
   "primary_reference": {
     "type": "دليل_طبي",
-    "info": "دليل AAP للصحة النفسية للمراهقين + DSM-5 المعايير التشخيصية"
+    "info": "AAP guide to adolescent mental health + DSM-5 diagnostic criteria"
   },
   "prerequisites": [],
   "is_published": true,
   "version": "1.0.0",
-  "approved_by": null,
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
   "language": "en",
   "source_language": "ar",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
     "scholar_signals": {
       "keyword": false,
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "clean",
-    "review_defects": [],
-    "approved_by": null,
-    "revalidated_at": "2026-08-13T17:56:50.484541+00:00",
+    "review_verdict": "low_only",
+    "review_defects": [
+      {
+        "model": "deepseek-v4-pro",
+        "field": "description",
+        "type": "meaning",
+        "why": "The Arabic specifies 'their son' but the English broadens to 'their child', losing the gender-specific reference."
+      }
+    ],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "revalidated_at": "2026-10-04T11:18:19+00:00",
     "fixed_at": "2026-08-13T17:56:50.484553+00:00",
-    "fixer_model": "mistral-large-3:675b"
+    "fixer_model": "mistral-large-3:675b",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "7e11e298329a98e3a5092c6461d3af163dd0e6030a916ef45a5caf6df9f6cd65",
+      "reviewed_at": "2026-10-04T11:18:19+00:00",
+      "residual_low": [
+        {
+          "model": "deepseek-v4-pro",
+          "field": "description",
+          "type": "meaning",
+          "why": "The Arabic specifies 'their son' but the English broadens to 'their child', losing the gender-specific reference."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    }
   }
 }

@@ -12,43 +12,67 @@
   "pedagogical_framework": "prophetic_7_7_7",
   "primary_reference": {
     "type": "كتاب_تربوي",
-    "info": "تربية الأولاد في الإسلام لعبد الله ناصح علوان + منهج التربية النبوية للطفل لمحمد نور سويد"
+    "info": "Tarbiyat al-Awlad fi al-Islam (Raising Children in Islam) by Abdullah Nasih Ulwan + Manhaj al-Tarbiyah al-Nabawiyyah lil-Tifl (The Prophetic Method of Raising the Child) by Muhammad Nur Suwayd"
   },
   "prerequisites": [],
   "is_published": true,
   "version": "1.0.0",
-  "approved_by": null,
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
   "language": "en",
   "source_language": "ar",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
     "scholar_signals": {
       "keyword": false,
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
+    "review_verdict": "low_only",
     "review_defects": [
       {
-        "type": "meaning_change",
+        "model": "deepseek-v4-pro",
         "field": "description",
-        "arabic": "نقل ابنهم من إيمانٍ موروث إلى إيمانٍ راسخٍ بقناعة",
-        "english": "guide their child from inherited iman to firmly rooted conviction",
-        "why": "Arabic specifies 'ابنهم' (their son), but English uses gender-neutral 'their child', losing the intended male audience. Additionally, the Arabic repeats 'إيمان' (iman) in the second phrase, but English omits it, altering the structure and emphasis.",
-        "severity": "medium"
+        "type": "meaning",
+        "why": "The Arabic says 'their son' (ابنهم) but the English neutralizes it to 'their child'."
       },
       {
-        "type": "term_error",
+        "model": "glm-5.2",
         "field": "description",
-        "arabic": "إيمانٍ راسخٍ بقناعة",
-        "english": "firmly rooted conviction",
-        "why": "The Arabic uses the Islamic term 'إيمان' (iman) which should be transliterated consistently. The English translates it as 'conviction', discarding the term and its specific religious connotation.",
-        "severity": "medium"
+        "type": "meaning",
+        "why": "The Arabic says 'firmly rooted iman with conviction' (إيمانٍ راسخٍ بقناعة), but the English drops 'iman' at the end, reducing it to 'conviction' alone."
       }
     ],
-    "approved_by": null,
-    "revalidated_at": "2026-08-13T17:37:51.255981+00:00"
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "revalidated_at": "2026-10-04T11:18:19+00:00",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "51e6385be11b1ca93e59c17458e8bd2bcd5eb5078299d62afe0d7d5ef8f56bc2",
+      "reviewed_at": "2026-10-04T11:18:19+00:00",
+      "residual_low": [
+        {
+          "model": "deepseek-v4-pro",
+          "field": "description",
+          "type": "meaning",
+          "why": "The Arabic says 'their son' (ابنهم) but the English neutralizes it to 'their child'."
+        },
+        {
+          "model": "glm-5.2",
+          "field": "description",
+          "type": "meaning",
+          "why": "The Arabic says 'firmly rooted iman with conviction' (إيمانٍ راسخٍ بقناعة), but the English drops 'iman' at the end, reducing it to 'conviction' alone."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    }
   }
 }

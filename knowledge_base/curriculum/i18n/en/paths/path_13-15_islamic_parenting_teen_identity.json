@@ -13,17 +13,17 @@
   "pedagogical_framework": "prophetic_7_7_7",
   "primary_reference": {
     "type": "كتاب_تربوي",
-    "info": "تربية الأولاد في الإسلام لعبد الله ناصح علوان + فقه النفس للقرني"
+    "info": "Tarbiyat al-Awlad fi al-Islam (Raising Children in Islam) by Abdullah Nasih Ulwan + Fiqh al-Nafs by al-Qarni"
   },
   "prerequisites": [],
   "is_published": true,
   "version": "1.0.0",
-  "approved_by": null,
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
   "language": "en",
   "source_language": "ar",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
     "scholar_signals": {
       "keyword": false,
@@ -32,9 +32,24 @@
     },
     "review_verdict": "clean",
     "review_defects": [],
-    "approved_by": null,
-    "revalidated_at": "2026-08-13T19:06:49.633723+00:00",
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "revalidated_at": "2026-10-04T11:18:18+00:00",
     "fixed_at": "2026-08-13T19:06:49.633733+00:00",
-    "fixer_model": "mistral-large-3:675b"
+    "fixer_model": "mistral-large-3:675b",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "e0b068c217d8fc917582f0cb06179b8978f6ef164622ac24a6f22d43ddbdbbdc",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    }
   }
 }
