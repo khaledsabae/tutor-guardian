@@ -7,7 +7,7 @@
   "unit_ids": [
     "70ef8432-d97f-490a-acab-8df9e57f8652"
   ],
-  "summary": "Parenting and emotional bonding begin months before birth. By week 18, fetal hearing develops, allowing the baby to recognize maternal heartbeats and parental voices. Reciting Quran and speaking gently provide natural security. The husband's emotional support is vital to soothe hormonal mood shifts and maternal anxiety, as maternal well-being directly nurtures the fetal nervous system.",
+  "summary": "Parenting and emotional bonding begin months before birth. By week 18, fetal hearing develops, allowing the baby to recognize maternal heartbeats and parental voices. Reciting Quran and speaking gently provide natural security. The husband's emotional support is vital to soothe hormonal mood shifts and maternal anxiety, as the mother's psychological safety directly reflects on the stability of the fetus's nervous system and its healthy growth.",
   "try_this": "This week: Spend 10 minutes every evening in a quiet setting—have the father place his hand gently on the mother's belly and recite Quran softly or speak loving words to the baby by their chosen name. Observe fetal movements and responses to sound.",
   "order": 1,
   "estimated_minutes": 12,
@@ -22,21 +22,98 @@
   "version": "1.0.0",
   "created_at": "2026-09-12T19:00:00",
   "updated_at": "2026-09-12T19:00:00",
-  "approved_by": null,
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
   "language": "en",
   "source_language": "ar",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": false,
     "scholar_signals": {
       "keyword": false,
       "quoted_arabic": false,
       "reviewer_model": false
     },
-    "review_verdict": "clean",
-    "review_defects": [],
-    "approved_by": null,
-    "revalidated_at": "2026-09-12T19:00:00.000000+00:00"
+    "review_verdict": "low_only",
+    "review_defects": [
+      {
+        "model": "deepseek-v4-pro",
+        "field": "summary",
+        "type": "meaning",
+        "why": "The English drops 'with the fetus' and renders 'طمأنينة وراحة فطرية' as 'natural security'."
+      },
+      {
+        "model": "deepseek-v4-pro",
+        "field": "try_this",
+        "type": "omission",
+        "why": "The English changes daily to every evening and omits before sleep."
+      },
+      {
+        "model": "glm-5.2",
+        "field": "summary",
+        "type": "omission",
+        "why": "The Arabic specifies 'exceptional' psychological support, which the English drops, slightly understating the degree of support needed."
+      },
+      {
+        "model": "glm-5.2",
+        "field": "try_this",
+        "type": "omission",
+        "why": "The Arabic specifies 'before bedtime,' which the English omits, losing a practical timing detail."
+      },
+      {
+        "model": "glm-5.2",
+        "field": "try_this",
+        "type": "omission",
+        "why": "The Arabic specifies 'verses from the Holy Quran' and 'with a warm voice'; the English drops both 'verses/Holy' and changes 'warm' to 'softly.'"
+      }
+    ],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "revalidated_at": "2026-10-04T11:26:06+00:00",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": "mistral-large-3:675b",
+      "rounds": 2,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "bf855bb189d77c844eaa577a6362e94c7a62d76e49d78ce010e995202e681c02",
+      "reviewed_at": "2026-10-04T11:26:06+00:00",
+      "residual_low": [
+        {
+          "model": "deepseek-v4-pro",
+          "field": "summary",
+          "type": "meaning",
+          "why": "The English drops 'with the fetus' and renders 'طمأنينة وراحة فطرية' as 'natural security'."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "field": "try_this",
+          "type": "omission",
+          "why": "The English changes daily to every evening and omits before sleep."
+        },
+        {
+          "model": "glm-5.2",
+          "field": "summary",
+          "type": "omission",
+          "why": "The Arabic specifies 'exceptional' psychological support, which the English drops, slightly understating the degree of support needed."
+        },
+        {
+          "model": "glm-5.2",
+          "field": "try_this",
+          "type": "omission",
+          "why": "The Arabic specifies 'before bedtime,' which the English omits, losing a practical timing detail."
+        },
+        {
+          "model": "glm-5.2",
+          "field": "try_this",
+          "type": "omission",
+          "why": "The Arabic specifies 'verses from the Holy Quran' and 'with a warm voice'; the English drops both 'verses/Holy' and changes 'warm' to 'softly.'"
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    }
   }
 }

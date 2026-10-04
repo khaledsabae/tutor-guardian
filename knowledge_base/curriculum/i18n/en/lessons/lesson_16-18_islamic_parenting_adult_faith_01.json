@@ -20,30 +20,62 @@
   "needs_professional_followup": true,
   "is_published": true,
   "version": "1.0.0",
-  "approved_by": null,
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
   "language": "en",
   "source_language": "ar",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
     "scholar_signals": {
       "keyword": false,
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
+    "review_verdict": "low_only",
     "review_defects": [
       {
-        "type": "meaning_change",
+        "model": "deepseek-v4-pro",
         "field": "summary",
-        "arabic": "الإيمان الموروث يتزعزع عند أول ريح",
-        "english": "Inherited iman falters at the first gust of doubt",
-        "why": "The Arabic says 'ريح' (wind) without specifying 'doubt'. The English adds 'of doubt', narrowing the metaphor and introducing a concept not present in the original.",
-        "severity": "low"
+        "type": "addition",
+        "why": "English adds 'of doubt' not in Arabic, narrowing the metaphor."
+      },
+      {
+        "model": "glm-5.2",
+        "field": "summary",
+        "type": "addition",
+        "why": "The Arabic says 'at the first wind' (a metaphor for any challenge); English specifies 'of doubt,' narrowing the metaphor."
       }
     ],
-    "approved_by": null,
-    "revalidated_at": "2026-08-13T17:24:43.593015+00:00"
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "revalidated_at": "2026-10-04T11:18:18+00:00",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "4071316fd29e554a0317bea9f61a98effe9ecc9a369fa19ace0170eabcfe1b12",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [
+        {
+          "model": "deepseek-v4-pro",
+          "field": "summary",
+          "type": "addition",
+          "why": "English adds 'of doubt' not in Arabic, narrowing the metaphor."
+        },
+        {
+          "model": "glm-5.2",
+          "field": "summary",
+          "type": "addition",
+          "why": "The Arabic says 'at the first wind' (a metaphor for any challenge); English specifies 'of doubt,' narrowing the metaphor."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    }
   }
 }

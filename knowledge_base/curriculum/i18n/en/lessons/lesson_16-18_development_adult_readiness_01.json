@@ -17,40 +17,38 @@
   "needs_professional_followup": false,
   "is_published": true,
   "version": "1.0.0",
-  "approved_by": null,
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
   "language": "en",
   "source_language": "ar",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
     "scholar_signals": {
       "keyword": false,
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "register",
-        "field": "title",
-        "arabic": "دماغ شابك يكتمل: قرارٌ واعٍ بدل اندفاع",
-        "english": "Your Young Person’s Brain Completes: A Conscious Decision Over Impulse",
-        "why": "The Arabic uses warm, direct, and colloquial language ('شابك' meaning 'your young man'), while the English is stiff and clinical ('Your Young Person’s Brain Completes'). 'Completes' is also an unnatural choice; 'matures' or 'finishes developing' would be more idiomatic.",
-        "severity": "low"
-      },
-      {
-        "type": "register",
-        "field": "summary",
-        "arabic": "دورك ليس الوصاية بل التدريب",
-        "english": "Your role is not guardianship but training",
-        "why": "The Arabic is direct and conversational, while the English phrasing is formal and noun-heavy. A warmer rendering would be 'Your role is not to be a guardian but a trainer.'",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null,
-    "revalidated_at": "2026-08-13T18:09:06.729028+00:00",
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "revalidated_at": "2026-10-04T11:18:18+00:00",
     "fixed_at": "2026-08-13T18:09:06.729037+00:00",
-    "fixer_model": "mistral-large-3:675b"
+    "fixer_model": "mistral-large-3:675b",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "f38ae5a8fd44ee029b17f0a2b221c3ada3c891a136ce0f84aa83a72cacb66865",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    }
   }
 }
