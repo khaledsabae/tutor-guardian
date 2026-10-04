@@ -1,0 +1,17 @@
+# Checkpoint 7 — force-stop and cold start with real state on disk (a lesson in
+# progress, a finished child-mode session, dark theme, English): Today must
+# render — not a white screen, not a spinner that never ends, not the child
+# surface. Whether the child survived is checkpoint 8.
+appId: com.alsaba.almorabbi
+name: fresh/07 force-stop → cold start → Today renders
+---
+- runScript: ../common/l10n.js
+- stopApp
+- launchApp:
+    stopApp: true
+- runFlow: ../common/system_dialogs.yaml
+- runFlow:
+    file: ../common/assert_today.yaml
+    env:
+      SHOT: cold_start_today
+      NEED_CHILD: "false"

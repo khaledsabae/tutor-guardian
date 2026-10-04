@@ -64,6 +64,8 @@ _PROTECTED_PREFIXES = (
     # in production (the tests stub the middleware and could not see it) — and
     # an anonymous 50 MB body was parsed before that 401.
     "/api/sync",
+    # Recording a support purchase. The transparency GET beside it is public.
+    "/api/support/verify",
 )
 # Progress PATCH is the only mutating verb under /api/program — we
 # match on the exact path suffix so the read-only GETs remain public.

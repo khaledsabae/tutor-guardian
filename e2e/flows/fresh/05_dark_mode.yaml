@@ -1,0 +1,28 @@
+# Checkpoint 5 — switch the app to dark (Settings → Appearance cycles
+# system → light → dark) and render Today in it.
+appId: com.alsaba.almorabbi
+name: fresh/05 dark mode
+---
+- runScript: ../common/l10n.js
+- runFlow: ../common/home.yaml
+- runFlow: ../common/open_settings.yaml
+- scrollUntilVisible:
+    element:
+      text: '${output.lead.settingsTheme}'
+    direction: DOWN
+    timeout: 20000
+- repeat:
+    times: 3
+    while:
+      notVisible: '${output.tile.settingsThemeDark}'
+    commands:
+      - tapOn: '${output.lead.settingsTheme}'
+      - waitForAnimationToEnd:
+          timeout: 3000
+- assertVisible: '${output.tile.settingsThemeDark}'
+- takeScreenshot: dark_1_settings
+- back
+- runFlow:
+    file: ../common/assert_today.yaml
+    env:
+      SHOT: dark_2_today

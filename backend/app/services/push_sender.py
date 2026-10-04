@@ -18,6 +18,7 @@ import firebase_admin
 from firebase_admin import credentials, messaging
 
 from app.core.log_safety import device_tag
+from app.core.service_account import read_service_account
 from app.db.init_db import get_conn
 
 logger = logging.getLogger(__name__)
@@ -39,20 +40,10 @@ def _read_service_account(path: Path) -> Optional[dict]:
     file arrives 0600 root:root while the container runs as uid 10001, so the
     read raised PermissionError straight out of _ensure_app() and took the whole
     push path down with it. Push is an optional feature, so an unreadable or
-    malformed credential disables it instead of raising.
-
-    Only the exception *type* is logged — a JSONDecodeError message can quote
-    the surrounding bytes, which here would be service-account material.
+    malformed credential disables it instead of raising. The loader is shared
+    with support purchases, which read their Play credential the same way.
     """
-    try:
-        return json.loads(path.read_text(encoding="utf-8"))
-    except (OSError, json.JSONDecodeError) as exc:
-        logger.error(
-            "Firebase credentials at %s are unusable (%s) — push disabled",
-            path,
-            type(exc).__name__,
-        )
-        return None
+    return read_service_account(path, label="Firebase", feature="push")
 
 
 def _load_credentials() -> Optional[dict]:

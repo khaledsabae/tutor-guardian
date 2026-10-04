@@ -13,6 +13,7 @@ import '../../../core/analytics.dart';
 import '../../../core/app_routes.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../theme/design_tokens.dart';
+import '../../../widgets/ui/two_column_rows.dart';
 
 class HomeShortcutsGrid extends StatelessWidget {
   const HomeShortcutsGrid({super.key});
@@ -20,13 +21,10 @@ class HomeShortcutsGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    return GridView.count(
-      crossAxisCount: 2,
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      childAspectRatio: 2.9,
-      mainAxisSpacing: 10,
-      crossAxisSpacing: 10,
+    // Not GridView.count — a fixed aspect ratio clipped two-line labels at
+    // large text sizes. See TwoColumnRows.
+    return TwoColumnRows(
+      spacing: 10,
       children: [
         _ShortcutTile(
           emoji: '🌙',

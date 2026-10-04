@@ -1,0 +1,32 @@
+# Today renders its primary blocks (origin/main layout, 1.0.67+112):
+#   · the bottom navigation,
+#   · the active child (greeting and banner carry its name),
+#   · today's step — TodayFocusCard's start / continue / browse button,
+# and no error screen. Takes the checkpoint screenshot SHOT.
+# NEED_CHILD=false skips the name: after a cold start Today must render either
+# way, and whether the child survived is its own checkpoint.
+#
+# The Today screen is being simplified on feat/p0-today-donate. When that lands,
+# update the selectors here — no other flow looks inside Today.
+# Env: CHILD_NAME, SHOT, NEED_CHILD (default true).
+appId: com.alsaba.almorabbi
+---
+- extendedWaitUntil:
+    visible: '${output.lead.navToday}'
+    timeout: 60000
+- tapOn: '${output.lead.navToday}'
+- runFlow:
+    when:
+      true: "${typeof NEED_CHILD === 'undefined' || NEED_CHILD != 'false'}"
+    commands:
+      - extendedWaitUntil:
+          visible: '(?s)(?:.*\s)?${CHILD_NAME}(?:\s.*)?'
+          timeout: 30000
+- waitForAnimationToEnd:
+    timeout: 3000
+- extendedWaitUntil:
+    visible: '(?:${output.t.startThisLesson}|${output.t.continueBtn}|${output.t.browsePaths})'
+    timeout: 30000
+- assertNotVisible: '${output.c.lit_errorWidget}'
+- assertNotVisible: '${output.c.bootError}'
+- takeScreenshot: '${SHOT}'

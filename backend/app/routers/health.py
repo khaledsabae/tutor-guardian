@@ -59,9 +59,31 @@ async def api_health_check():
     return {"status": "ok"}
 
 
+def _support_config() -> dict:
+    """The «ادعم المربّي» fields, which must never cost the force-update gate.
+
+    This endpoint is how every build learns whether it must update, so nothing
+    optional may make it fail. donations.is_enabled() is computed once per
+    process and already degrades to False; the guard here covers the import
+    and anything future. Additive (v31): older builds ignore both fields.
+    """
+    try:
+        from app.services import donations
+
+        return {
+            "donations_enabled": donations.is_enabled(),
+            "donation_product_ids": list(donations.product_ids()),
+        }
+    except Exception as exc:  # noqa: BLE001
+        logging.getLogger(__name__).warning(
+            "support config unavailable (%s) — reported as off", type(exc).__name__)
+        return {"donations_enabled": False, "donation_product_ids": []}
+
+
 @router.get("/api/app-config")
 async def get_app_config():
     return {
         "minimum_build_number": int(os.environ.get("MINIMUM_BUILD_NUMBER", "0")),
-        "store_url": os.environ.get("STORE_URL", "https://play.google.com/store/apps/details?id=com.alsaba.almorabbi")
+        "store_url": os.environ.get("STORE_URL", "https://play.google.com/store/apps/details?id=com.alsaba.almorabbi"),
+        **_support_config(),
     }

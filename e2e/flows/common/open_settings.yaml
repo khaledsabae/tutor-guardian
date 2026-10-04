@@ -1,0 +1,21 @@
+# More tab → Settings (the last group of the hub, below the fold).
+appId: com.alsaba.almorabbi
+---
+- extendedWaitUntil:
+    visible: '${output.lead.navMore}'
+    timeout: 60000
+- tapOn: '${output.lead.navMore}'
+- extendedWaitUntil:
+    visible: '${output.t.hubTitle}'
+    timeout: 20000
+- scrollUntilVisible:
+    element:
+      text: '${output.tile.settings}'
+    direction: DOWN
+    timeout: 30000
+- tapOn: '${output.tile.settings}'
+- extendedWaitUntil:
+    visible: '${output.t.settingsTitle}'
+    timeout: 20000
+- waitForAnimationToEnd:
+    timeout: 5000

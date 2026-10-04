@@ -1,0 +1,15 @@
+# The first-run coach-mark tour starts one frame after the root scaffold shows
+# (and again whenever kTourVersion is raised). Let it appear, then skip it.
+appId: com.alsaba.almorabbi
+---
+- waitForAnimationToEnd:
+    timeout: 5000
+- repeat:
+    times: 3
+    while:
+      visible: '${output.t.tourSkip}'
+    commands:
+      - takeScreenshot: tour
+      - tapOn: '${output.t.tourSkip}'
+      - waitForAnimationToEnd:
+          timeout: 3000

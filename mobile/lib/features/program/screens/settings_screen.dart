@@ -32,7 +32,9 @@ import '../providers/settings_providers.dart';
 import '../providers/backup_provider.dart';
 import 'children_list_screen.dart';
 import '../../adhkar/services/notification_service.dart';
+import '../../support/support_providers.dart';
 import '../widgets/follow_us_row.dart';
+import 'package:almorabbi/widgets/ui/directional_chevron.dart';
 import 'package:almorabbi/widgets/ui/loading_view.dart';
 import 'package:almorabbi/core/haptics.dart';
 
@@ -209,6 +211,20 @@ class SettingsScreen extends ConsumerWidget {
                 const SizedBox(height: 24),
                 const _AdhkarSettingsRow(),
                 const SizedBox(height: 24),
+                // «ادعم المربّي» — here, with the other "about the app" rows,
+                // and nowhere else in the app's chrome: the support ask lives
+                // in exactly three places (this row, the transparency card it
+                // opens, and one post-Eid message — no notifications, no
+                // pop-ups). Absent unless DONATIONS_ENABLED and the store
+                // returned the products.
+                if (ref.watch(supportVisibleProvider))
+                  _SettingsRow(
+                    icon: Icons.volunteer_activism_outlined,
+                    title: l10n.supportTitle,
+                    subtitle: l10n.supportEntryDesc,
+                    onTap: () =>
+                        Navigator.of(context).push(AppRoutes.support()),
+                  ),
                 _SettingsRow(
                   icon: Icons.star_outline,
                   title: l10n.settingsRate,
@@ -685,8 +701,9 @@ class _SettingsRow extends StatelessWidget {
                   ],
                 ),
               ),
-              Icon(Icons.chevron_left,
-                  size: 18, color: AppTheme.textMuted),
+              // Not Icons.chevron_left: it mirrors itself under RTL and
+              // pointed backwards in Arabic. See DirectionalChevron.
+              DirectionalChevron(size: 18, color: AppTheme.textMuted),
             ],
           ),
         ),

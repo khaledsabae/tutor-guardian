@@ -10,17 +10,15 @@
 /// screen so the two read as one system.
 library;
 
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../core/analytics.dart';
 import '../../../core/app_routes.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../theme/design_tokens.dart';
 import '../../../widgets/ui/count_up_text.dart';
 import '../../../widgets/ui/stat_chip.dart';
+import '../../../widgets/ui/two_column_rows.dart';
 import '../../coins/coins_providers.dart';
 import '../../program/data/badges.dart';
 import '../../program/data/progress_models.dart';
@@ -37,20 +35,12 @@ class HomeStatsRow extends ConsumerWidget {
             .length ??
         0;
     final streak = bundle?.dailyLoginStreak ?? 0;
-    if ((bundle?.streakDays ?? 0) >= 3) {
-      unawaited(Analytics.habitStreak3(bundle!.streakDays));
-    }
     final badges = computeBadges(bundle);
     final earned = earnedCount(badges);
     final coins = ref.watch(coinsProvider);
 
-    return GridView.count(
-      crossAxisCount: 2,
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      mainAxisSpacing: 8,
-      crossAxisSpacing: 8,
-      childAspectRatio: 3.2,
+    // Not GridView.count — see TwoColumnRows for the overflow that caused.
+    return TwoColumnRows(
       children: [
         StatChip(
           emoji: '🔥',
@@ -83,3 +73,4 @@ class HomeStatsRow extends ConsumerWidget {
     );
   }
 }
+

@@ -26,6 +26,11 @@ class ReferralInfo {
     required this.shareUrl,
   });
   final String code;
+
+  /// Families who installed through this parent's code and opened the app —
+  /// `invited_count` from `/api/referral/me`, which counts every recorded
+  /// claim (Play Install Referrer, or the web-landing fallback). Shown as
+  /// «وصل المربّي إلى N أسرة بسببك».
   final int invitedCount;
   final String shareUrl;
 }

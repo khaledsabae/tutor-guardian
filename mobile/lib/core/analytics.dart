@@ -331,6 +331,29 @@ class Analytics {
   static Future<void> homeCardTapped(String card) =>
       _log('home_card_tapped', {'card': card});
 
+  /// One of the three «اليوم» blocks was acted on — the screen was cut down to
+  /// these three (2026-10) because «مش عارف أبدأ منين» was the first complaint,
+  /// so their tap shares are the measure of whether that worked.
+  ///
+  /// `block` ∈ step · ask · mission.
+  /// `action` ∈ first_lesson · browse · continue (step) · tip · compose (ask) ·
+  /// open_day · child_mode · routine · add_child (mission).
+  static Future<void> todayBlockTapped(String block, String action) =>
+      _log('today_block_tapped', {'block': block, 'action': action});
+
+  /// «ادعم المربّي» opened. Only reachable when the server flag is on and the
+  /// store returned products, so this counts real exposure.
+  static Future<void> supportOpened() => _log('support_opened');
+
+  /// A support amount was tapped (before the Play sheet).
+  static Future<void> supportTapped(String productId) =>
+      _log('support_tapped', {'product': productId});
+
+  /// How a support purchase ended: thanked · pending · retry_later ·
+  /// cancelled · error. Never carries the amount — Play reports revenue.
+  static Future<void> supportOutcome(String outcome) =>
+      _log('support_outcome', {'outcome': outcome});
+
   // hubOpened() removed 2026-08-11. It was called from HubScreen.initState,
   // but RootScaffold's IndexedStack mounts every child at once, so it fired on
   // cold start for every user rather than on first reveal. Use `tab_selected`

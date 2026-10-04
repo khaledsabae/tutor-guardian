@@ -1,0 +1,13 @@
+# Upgrade test, part 1 — on the BASELINE build (what users run today): onboard
+# in English, mark the child, see Today. run.sh then `adb install -r`s the PR head
+# over it. Selectors here come from the baseline's own ARB files.
+appId: com.alsaba.almorabbi
+name: upgrade/01 baseline onboarding → child
+---
+- runScript: ../common/l10n.js
+- runFlow: ../common/onboard.yaml
+- runFlow: ../common/mark_child.yaml
+- runFlow:
+    file: ../common/assert_today.yaml
+    env:
+      SHOT: upgrade_1_baseline_today

@@ -1,0 +1,75 @@
+# Mark this install as test traffic: rename the onboarding child (created with the
+# localized default name) to the fixed CHILD_NAME. Every production row the run
+# writes hangs off this child's device_id, so
+#   child_profiles.name = CHILD_NAME  →  device_id  →  exclude.
+# Runs immediately after onboarding to keep the unmarked window to seconds.
+# Env: CHILD_NAME.
+appId: com.alsaba.almorabbi
+---
+- runFlow: open_settings.yaml
+- tapOn: '${output.lead.settingsEditChild}'
+- extendedWaitUntil:
+    visible: '${output.t.editChildTitle}'
+    timeout: 20000
+# Replace the default name. eraseText is backspace, so the caret goes to the
+# end first, and the backspaces go one per command: a burst of 40 left the
+# default name's last letter behind in Arabic, on two runs and two tap
+# positions ('E2E-Maestroي'). Anything still left over is cleared again.
+- runFlow:
+    file: tap_field_end.yaml
+    env:
+      FIELD: '${output.t.onbDefaultChildName}'
+- repeat:
+    times: 12
+    commands:
+      - eraseText: 1
+- inputText: '${CHILD_NAME}'
+- repeat:
+    times: 2
+    while:
+      notVisible: '${CHILD_NAME}'
+    commands:
+      - takeScreenshot: mark_child_0_retry
+      - runFlow:
+          file: tap_field_end.yaml
+          env:
+            FIELD: '(?s).*${CHILD_NAME}.*'
+      - repeat:
+          times: 30
+          commands:
+            - eraseText: 1
+      - inputText: '${CHILD_NAME}'
+- takeScreenshot: mark_child_1_edit
+# The app-bar Save: the bottom "Save changes" button can sit under the keyboard.
+- tapOn: '${output.t.save}'
+# A lost tap leaves the edit screen up; saving twice is the same PATCH.
+- extendedWaitUntil:
+    visible: '${output.t.settingsTitle}'
+    timeout: 20000
+    optional: true
+- waitForAnimationToEnd:
+    timeout: 2000
+- runFlow:
+    when:
+      visible: '${output.t.editChildTitle}'
+    commands:
+      - takeScreenshot: mark_child_1b_save_retry
+      - tapOn: '${output.t.save}'
+# Save even if a letter was left over (see below). Back on Settings, the header
+# is re-read from GET /api/children — the server has the new name.
+- extendedWaitUntil:
+    visible: '${output.t.settingsTitle}'
+    timeout: 30000
+# The name as a whole word: a leftover letter fails here — after Save, so even a
+# flawed rename leaves the device caught by LIKE 'E2E-Maestro%'.
+- extendedWaitUntil:
+    visible: '(?s)(?:.*\s)?${CHILD_NAME}(?:\s.*)?'
+    timeout: 30000
+- takeScreenshot: mark_child_2_saved
+- back
+# A keyboard left open would have taken that back press.
+- runFlow:
+    when:
+      notVisible: '${output.t.hubTitle}'
+    commands:
+      - back

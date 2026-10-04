@@ -1,0 +1,46 @@
+# Checkpoint 6 — switch the interface to English (Settings → Language) and walk
+# the four tabs. The ar/en maps match one language only, so every wait below
+# proves the switch took, not just that the screen rendered.
+appId: com.alsaba.almorabbi
+name: fresh/06 English
+---
+- runScript: ../common/l10n.js
+- runFlow: ../common/home.yaml
+- runFlow: ../common/open_settings.yaml
+- scrollUntilVisible:
+    element:
+      text: '${output.lead.language}'
+    direction: DOWN
+    timeout: 20000
+- runFlow:
+    when:
+      notVisible: '${output.en.settingsTitle}'
+    commands:
+      - tapOn: '${output.lead.language}'
+- extendedWaitUntil:
+    visible: '${output.en.settingsTitle}'
+    timeout: 20000
+- takeScreenshot: english_1_settings
+- back
+- tapOn: '${output.lead.navToday}'
+- extendedWaitUntil:
+    visible: '(?:${output.en.startThisLesson}|${output.en.continueBtn}|${output.en.browsePaths})'
+    timeout: 30000
+- assertVisible: '(?s)(?:.*\s)?${CHILD_NAME}(?:\s.*)?'
+- assertNotVisible: '${output.c.lit_errorWidget}'
+- takeScreenshot: english_2_today
+- tapOn: '${output.lead.navLearn}'
+- extendedWaitUntil:
+    visible: '${output.en.pathsTitle}'
+    timeout: 30000
+- takeScreenshot: english_3_learn
+- tapOn: '${output.lead.navAssistant}'
+- extendedWaitUntil:
+    visible: '${output.en.chatTypeHint}'
+    timeout: 30000
+- takeScreenshot: english_4_assistant
+- tapOn: '${output.lead.navMore}'
+- extendedWaitUntil:
+    visible: '${output.en.hubTitle}'
+    timeout: 30000
+- takeScreenshot: english_5_more
