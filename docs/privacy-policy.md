@@ -29,8 +29,8 @@
   معرّفين لهاتف واحد. حين يعود التطبيق بالمعرّف الثاني نضمّه إلى معرّف أسرتك، ونحفظ أيّ معرّف
   قديم صار يشير إلى أيّ معرّف (ليجد التطبيق بياناتك)، وسجلًّا بما نقله الإصلاح أو حذفه — ومعه
   نسخ الصفوف المكرّرة التي حُذفت — لنراجع الإصلاح أو نتراجع عنه. ويُحذفان مع حسابك.
-- **ملفات الأطفال:** الاسم، والفئة العمرية، والجنس (اختياري)، والرمز التعبيري. لتخصيص
-  الدروس والإجابات لعمر كل طفل.
+- **ملفات الأطفال:** الاسم، والفئة العمرية، والجنس (اختياري)، وشهر الميلاد (اختياري؛ شهر
+  وسنة بلا يوم)، والرمز التعبيري. لتخصيص الدروس والإجابات لعمر كل طفل، ولتوقيت برامج الأسرة.
 - **التقدّم في الدروس، وأيام المواظبة، ونصيحة اليوم** (ما عُرض منها وما ضغطت عليه)،
   و**التحدّي الحالي** الذي تختاره لطفلك مع ملاحظتك.
 - **الأسئلة التي تطرحها على المربّي وإجاباتها:** كما كتبتَها، لتظهر في سجلّ المحادثات
@@ -44,6 +44,13 @@
 - **وضع الطفل:** أوقات استعمال الشاشة، والمهام اليومية وملاحظاتك عليها، وبنود ميثاق
   الأسرة وتوقيعاته، وإجابات «رخصة الإنترنت»، ورموز QR المؤقتة لدخول المراهق من
   المتصفح. لتعمل هذه الميزات ولتراها أنت.
+- **برامج الأسرة** (في إصدارات التطبيق التي تعرضها): علامات «تمّ» العائلية في برنامج رمضان
+  وكلمة رمضانكم المختارة، و**درجة الصيام** لكل طفل وأيام تدرّبه عليها، و**بلوغ الطفل** إن
+  حدّدته أنت (يغيّر إرشادات الصيام)؛ ومسار **رحلة الصلاة** ومرحلتها والصلوات التي يسجّلها طفلك
+  (مع المهام اليومية)؛ وسجلًّا بـ**تذكيرات المراحل** التي أرسلناها؛ و**فرق التوقيت** في هاتفك
+  ولغة التطبيق وتاريخ بداية رمضان الذي اخترته لأسرتك، ليصل التذكير مساءً وبلغتك. الغرض: أن
+  تعمل البرامج لعمر طفلك وتقويمك. وبطاقة «رمضان عائلتنا» التي تشاركها لا تحمل اسمًا ولا
+  عمرًا ولا صورة ولا نصًّا تكتبه.
 - **الملاحظات التي ترسلها عن التطبيق:** نصّها، ووسيلة التواصل إن كتبتها، والتسجيل
   الصوتي إن أرفقته، ورقم إصدار التطبيق، وردودنا عليك.
 - **الإشعارات:** رمز الإشعارات الخاص بهاتفك، ونوع الجهاز، ورقم إصدار التطبيق، وسجلّ
@@ -207,8 +214,9 @@ to your phone's random identifier:
   points at which (so the app finds your data), and keep a record of what a repair
   moved or removed — including copies of removed duplicate rows — so a repair can
   be checked or undone. Both are deleted with your account.
-- **Child profiles:** name, age group, gender (optional) and emoji — to fit
-  lessons and answers to each child's age.
+- **Child profiles:** name, age group, gender (optional), birth month (optional;
+  month and year, no day) and emoji — to fit lessons and answers to each child's
+  age, and to time the family programs.
 - **Lesson progress, daily streaks, the daily tip** (which tips were shown and
   tapped), and the **current challenge** you pick for a child, with your note.
 - **The questions you ask Almorabbi and their answers**, as you wrote them, so
@@ -226,6 +234,16 @@ to your phone's random identifier:
   family agreement's clauses and signatures, the "internet licence" answers, and
   short-lived QR codes for a teenager's browser access — so these features work
   and you can see them.
+- **Family programs** (in app versions that show them): the family's Ramadan
+  ticks ("done" marks) and the Ramadan word you chose, each child's **fasting
+  step** and the days they practised it, and whether a child has **reached
+  puberty** if you set it (it changes the fasting guidance); the child's **Prayer
+  Journey** track and stage, and the prayers your child records (kept with the
+  daily missions); a log of the **milestone reminders we sent**; and your phone's
+  **time-zone offset**, app language and the Ramadan start you chose for your
+  family, so a reminder arrives in your evening and in your language. Purpose:
+  the programs fit your child's age and your calendar. The "Our Family's Ramadan"
+  card you share carries no name, age, photo or anything you typed.
 - **App feedback you send:** its text, your contact detail if you add one, a voice
   note if you attach one, the app version — and our replies to you.
 - **Notifications:** your phone's notification token, device platform, app

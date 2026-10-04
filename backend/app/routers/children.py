@@ -4,8 +4,9 @@ Children router — Phase 5.
 Endpoints (all require Bearer auth — see AuthMiddleware):
 
   POST /api/children
-      Body: {name, age_group, gender?, avatar_emoji?}
-      Returns: {id, name, age_group, gender, avatar_emoji, created_at, updated_at}
+      Body: {name, age_group, gender?, avatar_emoji?, birth_month?}
+      Returns: {id, name, age_group, gender, avatar_emoji, birth_month,
+                created_at, updated_at}
       Side-effect: row linked to the device_id from the Bearer token.
 
   GET  /api/children/{id}/progress
@@ -38,6 +39,7 @@ from app.core.proof import confirmed_session, require_device_proof_once_enrolled
 from app.core.taxonomy import CANONICAL_AGE_GROUPS, map_profile_age_to_band
 from app.db.init_db import get_conn
 from app.services import child_budget, child_license, child_missions, family_agreement
+from app.services import programs_common
 from app.services.coach_service import CHALLENGE_TOPICS
 
 router = APIRouter()
@@ -45,11 +47,26 @@ router = APIRouter()
 # ── Pydantic models ──────────────────────────────────────────────────────
 
 
+def _check_birth_month(v: Optional[str]) -> Optional[str]:
+    """Optional 'YYYY-MM' (v34). It times the milestone reminders and the
+    Prayer Journey; no day is asked for, a month is enough for both. Up to ten
+    months ahead is accepted (an expected baby), up to 19 years back."""
+    if v is None:
+        return v
+    return programs_common.validate_birth_month(v)
+
+
 class ChildCreateRequest(BaseModel):
     name: str = Field(..., min_length=1, max_length=80)
     age_group: str
     gender: Optional[str] = Field(default=None, max_length=20)
     avatar_emoji: Optional[str] = Field(default=None, max_length=8)
+    birth_month: Optional[str] = Field(default=None, max_length=7)
+
+    @field_validator("birth_month")
+    @classmethod
+    def _validate_birth_month(cls, v: Optional[str]) -> Optional[str]:
+        return _check_birth_month(v)
 
     @field_validator("age_group")
     @classmethod
@@ -90,6 +107,13 @@ class ChildUpdateRequest(BaseModel):
     age_group: Optional[str] = Field(default=None, max_length=10)
     gender: Optional[str] = Field(default=None, max_length=20)
     avatar_emoji: Optional[str] = Field(default=None, max_length=8)
+    # `"birth_month": null` clears it; leaving the key out leaves it alone.
+    birth_month: Optional[str] = Field(default=None, max_length=7)
+
+    @field_validator("birth_month")
+    @classmethod
+    def _validate_birth_month(cls, v: Optional[str]) -> Optional[str]:
+        return _check_birth_month(v)
 
     @field_validator("age_group")
     @classmethod
@@ -125,7 +149,7 @@ class ChildUpdateRequest(BaseModel):
         return any(
             getattr(self, f) is not None
             for f in ("name", "age_group", "gender", "avatar_emoji")
-        )
+        ) or "birth_month" in self.model_fields_set
 
 
 class ChildResponse(BaseModel):
@@ -134,6 +158,8 @@ class ChildResponse(BaseModel):
     age_group: str
     gender: Optional[str]
     avatar_emoji: Optional[str]
+    # v34, additive: builds that do not know it ignore it.
+    birth_month: Optional[str] = None
     created_at: str
     updated_at: str
 
@@ -166,6 +192,7 @@ def _row_to_child(row: sqlite3.Row) -> ChildResponse:
         age_group=row["age_group"],
         gender=row["gender"],
         avatar_emoji=row["avatar_emoji"],
+        birth_month=row["birth_month"] if "birth_month" in row.keys() else None,
         created_at=row["created_at"],
         updated_at=row["updated_at"],
     )
@@ -282,8 +309,8 @@ def create_child(payload: ChildCreateRequest, request: Request) -> ChildResponse
         cur = conn.execute(
             """
             INSERT INTO child_profiles
-                (device_id, name, age_group, gender, avatar_emoji)
-            VALUES (?, ?, ?, ?, ?)
+                (device_id, name, age_group, gender, avatar_emoji, birth_month)
+            VALUES (?, ?, ?, ?, ?, ?)
             """,
             (
                 device_id,
@@ -291,6 +318,7 @@ def create_child(payload: ChildCreateRequest, request: Request) -> ChildResponse
                 payload.age_group,
                 payload.gender,
                 payload.avatar_emoji,
+                payload.birth_month,
             ),
         )
         conn.commit()
@@ -616,6 +644,9 @@ def update_child(
             if v is not None:
                 sets.append(f"{field} = ?")
                 params.append(v)
+        if "birth_month" in payload.model_fields_set:
+            sets.append("birth_month = ?")
+            params.append(payload.birth_month)
         sets.append("updated_at = datetime('now')")
         params.append(child_id)
         conn.execute(
@@ -822,7 +853,10 @@ class LicenseLevelIn(BaseModel):
 
 
 class MissionConfirmIn(BaseModel):
-    items: list[MissionConfirmItem] = Field(min_length=1, max_length=50)
+    # 200, not 50: with the Prayer Journey a family's evening list holds up to
+    # six prayer cards a child a day, kept 48 hours, beside the bank cards —
+    # four children reach 50 in two days, and the app sends the list whole.
+    items: list[MissionConfirmItem] = Field(min_length=1, max_length=200)
 
 
 @router.get("/children/missions/pending",

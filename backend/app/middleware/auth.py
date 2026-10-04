@@ -71,6 +71,9 @@ _PROTECTED_PREFIXES = (
     "/api/privacy",
     # The FCM challenge (routers/device_proof.py) proves a *session*: it needs one.
     "/api/device-proof",
+    # Family programs (v34): the Ramadan marks, settings and card. Their
+    # child-scoped half lives under /api/children, already protected.
+    "/api/programs",
 )
 # Progress PATCH is the only mutating verb under /api/program — we
 # match on the exact path suffix so the read-only GETs remain public.

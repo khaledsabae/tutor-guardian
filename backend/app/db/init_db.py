@@ -103,6 +103,17 @@ Migration v33: device twins (services/device_twins.py). device_aliases maps a
                deleted row itself), in the fold's own transaction, so a fold can
                be audited and reverted. Column names carry "device" so the
                account-deletion discovery covers both. Additive.
+Migration v34: family programs (Phase 2) — Ramadan, the Prayer Journey and the
+               proactive milestones. child_profiles.birth_month (optional
+               YYYY-MM) times the milestones; child_missions.source marks the
+               Prayer Journey's tasks ('prayer_journey'; NULL = the off-screen
+               bank) so they ride the existing claim/confirm/digest flow
+               without being mistaken for the day's bank card. New tables:
+               program_settings, program_children, ramadan_fasting,
+               ramadan_marks, prayer_journeys, milestone_alerts — every one
+               carries device_id (and child_id when it is about one child), so
+               the delete paths reach it. Additive, ensured unconditionally
+               (v33 = device twins).
 """
 import hashlib
 import os
@@ -232,10 +243,10 @@ CREATE INDEX IF NOT EXISTS ix_referrals_referrer
 """
 
 # 30 = child memory, 31 = «ادعم المربّي» ledger, 32 = attribution provenance,
-# 33 = device twins (aliases + fold log).
+# 33 = device twins (aliases + fold log), 34 = family programs.
 # Every _ensure_* step runs unconditionally and the stamp only ever moves up,
 # so branches can land in any order: keep the highest number.
-SCHEMA_VERSION = 33
+SCHEMA_VERSION = 34
 
 
 def db_path() -> Path:
@@ -431,6 +442,7 @@ def init_db() -> None:
     _ensure_donations_table(conn)
     _ensure_attribution_v32(conn)
     ensure_device_twin_tables(conn)
+    _ensure_family_programs_v34(conn)
 
     row = conn.execute("SELECT version FROM schema_version LIMIT 1").fetchone()
     if row is None:
@@ -1395,6 +1407,133 @@ def ensure_device_twin_tables(conn: sqlite3.Connection) -> None:
     """v33: device_aliases + device_fold_log (see the migration note)."""
     for statement in _CREATE_DEVICE_TWIN_TABLES:
         conn.execute(statement)
+
+
+# ── v34: family programs (Ramadan, Prayer Journey, milestones) ─────────────
+#
+# Every table carries device_id, and child_id when a row is about one child:
+# the account delete (routers/privacy.erase_account) discovers tables by
+# device_id and a proven child delete (privacy.erase_child) by child_id, so
+# both reach these with no list to keep. A family-level row (a Ramadan
+# challenge the whole family did) is stored under child_id 0, so deleting one
+# child never deletes the family's own.
+_CREATE_FAMILY_PROGRAMS: str = """
+-- One row per device: what the app last told us about where and in which
+-- language the family is. tz_offset_minutes is never guessed — a device that
+-- never reported one is never pushed (milestone_push). The ramadan_* columns
+-- are the family's own moon sighting for one season (ramadan_year): a start
+-- one day either side of the configured one, and a month of 29 or 30 days.
+CREATE TABLE IF NOT EXISTS program_settings (
+    device_id          TEXT PRIMARY KEY,
+    tz_offset_minutes  INTEGER,
+    lang               TEXT,
+    ramadan_year       INTEGER,
+    ramadan_shift_days INTEGER NOT NULL DEFAULT 0,
+    ramadan_days       INTEGER,
+    updated_at         TEXT NOT NULL DEFAULT (datetime('now'))
+);
+
+-- Per child, across programs. reached_puberty is set by the parent from the
+-- fasting ladder: it moves the child to the 13-15 ladder whatever the age
+-- band, and retires the "before puberty" milestone reminders.
+CREATE TABLE IF NOT EXISTS program_children (
+    child_id        INTEGER PRIMARY KEY,
+    device_id       TEXT NOT NULL,
+    reached_puberty INTEGER NOT NULL DEFAULT 0,
+    updated_at      TEXT NOT NULL DEFAULT (datetime('now'))
+);
+CREATE INDEX IF NOT EXISTS ix_program_children_device
+    ON program_children (device_id);
+
+-- The child's current step on the fasting ladder, per Ramadan. A rowid key and
+-- a UNIQUE pair, not a composite primary key: every user table here is a plain
+-- rowid table, which is what the account-erase and twin-fold sweeps assume.
+CREATE TABLE IF NOT EXISTS ramadan_fasting (
+    id          INTEGER PRIMARY KEY AUTOINCREMENT,
+    device_id   TEXT NOT NULL,
+    child_id    INTEGER NOT NULL,
+    hijri_year  INTEGER NOT NULL,
+    step_key    TEXT,
+    updated_at  TEXT NOT NULL DEFAULT (datetime('now')),
+    UNIQUE (child_id, hijri_year)
+);
+CREATE INDEX IF NOT EXISTS ix_ramadan_fasting_device
+    ON ramadan_fasting (device_id, hijri_year);
+
+-- «تمّ» marks. Positive only: nothing here records a missed day, a broken
+-- fast or a step down — the program has no shame metric to compute.
+-- child_id 0 = the family (challenge, wird, story, juz, night, family word);
+-- a child's own rows are fasting_practised and fasting_step_up.
+CREATE TABLE IF NOT EXISTS ramadan_marks (
+    id          INTEGER PRIMARY KEY AUTOINCREMENT,
+    device_id   TEXT NOT NULL,
+    child_id    INTEGER NOT NULL DEFAULT 0,
+    hijri_year  INTEGER NOT NULL,
+    day         INTEGER NOT NULL,
+    mark        TEXT NOT NULL,
+    value       TEXT,
+    created_at  TEXT NOT NULL DEFAULT (datetime('now')),
+    UNIQUE (device_id, child_id, hijri_year, day, mark)
+);
+CREATE INDEX IF NOT EXISTS ix_ramadan_marks_family
+    ON ramadan_marks (device_id, hijri_year, mark);
+
+-- Prayer Journey enrolment. One ACTIVE row per child; graduating closes the
+-- journey row and opens an ownership row, so the history stays readable.
+CREATE TABLE IF NOT EXISTS prayer_journeys (
+    id               INTEGER PRIMARY KEY AUTOINCREMENT,
+    device_id        TEXT NOT NULL,
+    child_id         INTEGER NOT NULL,
+    -- preparation | journey | ownership
+    track            TEXT NOT NULL,
+    stage            INTEGER,
+    -- active | graduated | ended
+    status           TEXT NOT NULL DEFAULT 'active',
+    started_on       TEXT NOT NULL,
+    stage_started_on TEXT,
+    ended_on         TEXT,
+    created_at       TEXT NOT NULL DEFAULT (datetime('now')),
+    updated_at       TEXT NOT NULL DEFAULT (datetime('now'))
+);
+CREATE UNIQUE INDEX IF NOT EXISTS ux_prayer_journeys_active
+    ON prayer_journeys (child_id) WHERE status = 'active';
+CREATE INDEX IF NOT EXISTS ix_prayer_journeys_device
+    ON prayer_journeys (device_id, child_id);
+
+-- One milestone reminder per child per milestone (per season for seasonal
+-- ones). The row is written BEFORE the push is sent — a claim, so two workers
+-- or a restart mid-send cannot send it twice — and deleted again if the send
+-- fails, so a later tick can retry.
+CREATE TABLE IF NOT EXISTS milestone_alerts (
+    id            INTEGER PRIMARY KEY AUTOINCREMENT,
+    device_id     TEXT NOT NULL,
+    child_id      INTEGER NOT NULL,
+    alert_key     TEXT NOT NULL,
+    milestone_key TEXT NOT NULL,
+    -- claimed | sent
+    status        TEXT NOT NULL DEFAULT 'claimed',
+    claimed_at    TEXT NOT NULL DEFAULT (datetime('now')),
+    sent_at       TEXT,
+    UNIQUE (child_id, alert_key)
+);
+CREATE INDEX IF NOT EXISTS ix_milestone_alerts_device_time
+    ON milestone_alerts (device_id, claimed_at);
+"""
+
+
+def _ensure_family_programs_v34(conn: sqlite3.Connection) -> None:
+    """v34: family programs. Additive and idempotent — two optional columns on
+    tables production already has (checked against the live schema
+    2026-10-04: neither column exists there) and six new tables."""
+    _ensure_column(
+        conn, table="child_profiles", column="birth_month",
+        ddl="ALTER TABLE child_profiles ADD COLUMN birth_month TEXT",
+    )
+    _ensure_column(
+        conn, table="child_missions", column="source",
+        ddl="ALTER TABLE child_missions ADD COLUMN source TEXT",
+    )
+    conn.executescript(_CREATE_FAMILY_PROGRAMS)
 
 
 def _ensure_referrals_table(conn: sqlite3.Connection) -> None:

@@ -229,8 +229,9 @@ def _merge_legacy_device_data(conn, current_device_id: str, google_id: str) -> N
     if not has_children:
         conn.execute(
             """
-            INSERT INTO child_profiles (device_id, name, age_group, gender, avatar_emoji, created_at, updated_at)
-            SELECT ?, name, age_group, gender, avatar_emoji, created_at, updated_at
+            INSERT INTO child_profiles (device_id, name, age_group, gender, avatar_emoji,
+                                        birth_month, created_at, updated_at)
+            SELECT ?, name, age_group, gender, avatar_emoji, birth_month, created_at, updated_at
             FROM child_profiles WHERE device_id = ?
             """,
             (current_device_id, old_device),

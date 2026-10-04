@@ -679,3 +679,546 @@ Authorization: Bearer <token>
   explains deletion for people without the app — that is the URL for the Play
   Console "Delete account URL" field. A confirmation dialog may link to it too.
 
+---
+
+## 11. Family programs — Ramadan, the Prayer Journey, milestones (backend schema v34)
+
+Three content-driven programs (content: `knowledge_base/curriculum/programs/`,
+documented in `knowledge_base/curriculum/schema.md` §8). The server picks the
+right piece for a child on a day; **every string you render comes from the
+response** (Arabic by default, English with `lang=en`). All of this is
+additive: builds that never call these endpoints are unaffected.
+
+### 11.0 Rules for every call
+
+| Rule | What the client does |
+|---|---|
+| Auth | Parent endpoints: `Authorization: Bearer <token>`. The two child-mode endpoints (§11.4.6): `Authorization: Child-Bearer <token>` with a live screen session, like every `/api/value-tracking/child-mode/*` route. |
+| `tz_offset_minutes` | **Send it on every call**: minutes east of UTC right now (`DateTime.now().timeZoneOffset.inMinutes`; Cairo winter = `120`, New York = `-300`). Range −720…840, else `422`. It decides the family's date (the Ramadan day turns at *their* midnight) and the server remembers it — the milestone push (§11.5.3) is sent at the family's 20:00 and is **never sent to a device that never reported one**. Omitted → the date is UTC for that response and nothing is stored. |
+| `lang` | `en` for English; omit (or anything else) for Arabic. Remembered for the push language. Untranslated content falls back to Arabic. |
+| `as_of=YYYY-MM-DD` | QA only. `403 {"error":"as_of_disabled"}` unless the server sets `PROGRAMS_AS_OF_ENABLED=1`. Never send it from the shipped app. |
+| Errors | `{"detail": {"error": "<code>", ...extra}}` — codes in §11.6. `404 {"error":"child_not_found"}` for a child of another device. `503 {"error":"program_unavailable"}` if a program file is unpublished. |
+| Hadith | Only in `evidence[]` cards: `{id, kind:"hadith", text_ar, source, provenance:{book, number}, context, meaning?}`. Render `text_ar` + `source`; in English also `meaning` under a label "Meaning". Never quote a hadith anywhere else. |
+| Quran | References only: `{surah, from, to, topic?}`. Render the verse text from `mobile/assets/data/quran.json`. Never translate it; English shows the Arabic verse (+ a tafsir only if labelled as tafsir). |
+| Never a shame metric | Show progress as counts that only go up ("3 this week"), never as misses or deficits. Going back a Prayer Journey stage is silent to the child. A fasting day not practised is not recorded at all. |
+
+### 11.1 Birth month on child profiles
+
+Optional `birth_month` (`"YYYY-MM"`) on `POST /api/children`, `PATCH /api/children/{id}`,
+and in every child object returned (`GET /api/children`, the POST/PATCH responses).
+Up to 10 months ahead (an expected baby) and up to 19 years back, else `422`.
+
+```json
+POST /api/children
+{"name": "أحمد", "age_group": "7-9", "gender": "male", "birth_month": "2019-03"}
+→ 201
+{"id": 12, "name": "أحمد", "age_group": "7-9", "gender": "male", "avatar_emoji": null,
+ "birth_month": "2019-03", "created_at": "2026-10-04 17:12:13", "updated_at": "2026-10-04 17:12:13"}
+```
+
+```json
+PATCH /api/children/12   {"birth_month": "2019-04"}   → the child object
+PATCH /api/children/12   {"birth_month": null}        → clears it (an explicit null counts as a change)
+PATCH /api/children/12   {"name": "عمر"}               → birth_month untouched
+```
+
+What it changes: programs use the **age from the birth month** when known,
+otherwise the profile's `age_group` (every program response has
+`"age": {"basis": "birth_month"|"age_group", "band": "7-9", "months": 95|null, "years": 7|null}`).
+Without it there is **no milestone push** (the cards still appear by band), so
+ask for it — `needs_profile` in §11.5.1 tells you when. Deleting the child
+deletes it, and every program row about that child (§11.7).
+
+### 11.2 `GET /api/programs` — what applies to each child today
+
+One call for the Today screen. Query: `tz_offset_minutes`, `lang`.
+
+```json
+{
+  "date": "2027-02-10",
+  "tz_offset_minutes": 180,
+  "server_features": ["weekly_plan"],
+  "unavailable": [],
+  "ramadan": {
+    "state": "ramadan",                       // upcoming | ramadan | eid | after | off_season
+    "season": {"hijri_year": 1448, "starts_on": "2027-02-08", "days": 30, "eid_on": "2027-03-10",
+               "bridge_ends_on": "2027-04-07", "start_source": "estimate",
+               "days_confirmed": false, "shift_days": 0},
+    "day": 3, "days_until_start": null, "after_week": null, "recap_available": false
+  },
+  "children": [
+    {"child_id": 12,
+     "age": {"basis": "birth_month", "band": "7-9", "months": 95, "years": 7},
+     "ramadan": {"variant_band": "7-9"},
+     "prayer_journey": {"eligible_track": "journey", "enrolled": true, "track": "journey", "stage": 1,
+                        "advance_suggested": true, "can_graduate": false, "pending_confirmations": 0},
+     "milestones": {"due": 1, "needs_profile": []}}
+  ]
+}
+```
+
+`season` is `null` when the server knows no Ramadan. `prayer_journey.eligible_track: null`
+= the Journey is not for this child (under 4, over 15, or an unknown band) — hide it.
+
+**Each program stands alone** (contract change, PR #32 review): if one program's file cannot be
+read, its name is in `unavailable` (`"ramadan_family"`, `"prayer_journey"`, `"milestones"`) and
+its sections are `null` — top-level `ramadan`, and each child's `ramadan` / `prayer_journey` /
+`milestones` — while the other programs are served as usual. Hide a `null` section; never treat
+it as an error. (The program's own endpoints answer `503 program_unavailable` meanwhile.)
+
+### 11.3 «رمضان العائلة» — Ramadan
+
+#### 11.3.1 The calendar
+
+`state` for the family's date:
+
+| state | when | payload filled |
+|---|---|---|
+| `upcoming` | before the first day (`days_until_start`) | `kickoff`, `fasting` |
+| `ramadan` | day 1…`season.days` (`day`) | `content`, `marks`, `fasting` |
+| `eid` | the day after the last day | `eid`, `fasting`; the recap card opens |
+| `after` | four «bridge» weeks after Eid (`after_week` 1–4) | `after`, `fasting` |
+| `off_season` | after the bridge, no next season known | — |
+
+The first day is announced by moon sighting, so the server reads it from its
+configuration (`season.start_source: "configured"`) and uses the content's
+estimate (`"estimate"`: 2027-02-08 for 1448, **2028-01-28 for 1449**) until then. After 1448's
+bridge (from 2027-04-08) the state is `upcoming` for **1449** — a countdown, not `off_season`
+(`off_season` only after the last season the content knows). The month is 30 days
+until the server confirms 29 (`days_confirmed`); day 30 is the content's
+`may_not_occur` farewell. A family whose country sighted the moon a day
+earlier/later, or whose month had 29 days, fixes it for itself with
+`PUT /api/programs/ramadan/settings` (§11.3.6) — offer that in the program's
+settings, and on day 29's evening ("Is tomorrow Eid?").
+
+The night precedes its day: night 21 is the **evening of day 20**, so the
+nights of the last ten are `odd_night: true` on days 20, 22, 24, 26, 28 and
+`night_joined` is ticked on days 20–28.
+
+#### 11.3.2 `GET /api/children/{child_id}/ramadan/today`
+
+Query: `tz_offset_minutes`, `lang`, `features` (comma list of what this build
+can show — send `weekly_plan` only if this build has the weekly-plan screen,
+see «requires_feature» below).
+
+```json
+{
+  "program": "ramadan_family", "child_id": 12, "date": "2027-02-10", "tz_offset_minutes": 180,
+  "state": "ramadan",
+  "season": {"hijri_year": 1448, "starts_on": "2027-02-08", "days": 30, "eid_on": "2027-03-10",
+             "bridge_ends_on": "2027-04-07", "start_source": "estimate", "days_confirmed": false,
+             "shift_days": 0},
+  "title": "Family Ramadan", "subtitle": "Thirty days of worship and joy, together",
+  "age": {"basis": "birth_month", "band": "7-9", "months": 95, "years": 7},
+  "variant_band": "7-9",
+  "bands_text": "The program is for the whole family: … (who sees what — show it to the parent)",
+  "days_until_start": null, "day": 3, "after_week": null,
+  "kickoff": null,
+  "content": {
+    "day": 3, "phase": "first_ten", "key": "iftar_table", "title": "The iftar table",
+    "family_challenge": {"title": "Set the table together and begin with Bismillah",
+                         "steps": ["Hand out small jobs before the adhan: …", "…"],
+                         "minutes": 10, "cost": "free", "at_home": true, "when": "at_iftar",
+                         "materials": []},
+    "parent_note": {"text": "In the attached hadith …", "evidence": [{"id": "h_bismillah", "kind": "hadith",
+                    "text_ar": "يا غلام سم الله وكل بيمينك وكل مما يليك", "source": "صحيح البخاري — حديث ٥٣٧٦",
+                    "provenance": {"book": "البخاري", "number": 5376}, "context": "…", "meaning": "…"}]},
+    "variant": {"band": "7-9", "addressed_to": "child", "text": "Your job: water and cups on the table …"},
+    "quran": {"together": {"surah": 114, "from": 1, "to": 6}, "theme_ref": null, "parent_juz": 3},
+    "story_id": "abdullah_bismillah",
+    "last_ten": false, "odd_night": false, "may_not_occur": false,
+    "tracks": ["challenge_done", "wird_done", "story_heard", "juz_read"],
+    "family_word_choices": null
+  },
+  "eid": null, "after": null,
+  "marks": {"challenge_done": false, "wird_done": false, "story_heard": false, "juz_read": false},
+  "fasting": {"ladder_band": "7-9", "fasts": "partial", "reached_puberty": false,
+              "current_step": {"key": "morning_hours", "label": "Morning hours", "until": "mid_morning",
+                               "approx_hours": 3, "max_days_per_week": 3},
+              "practised_today": false, "practised_this_week": 0, "rest_suggested": false},
+  "recap_available": false
+}
+```
+
+* **Who sees which variant** (`variant_band`, from the content's `band_map`):
+  `0-3`/`2-3` → `0-3`; `4-6`; `7-9`; `10-12`; `13-15`/`16-18` → `13-15`;
+  `prenatal-1` and unknown → `null` (the family challenge and its note only —
+  `content.variant` is `null` and `fasting` is `null`). `addressed_to: "parent"`
+  for 0-3 and 4-6 (the child does not read); `"child"` from 7-9 up (fit for child mode).
+* **`story_id`** points into the app's bundled `stories.json` / `stories_en.json`; `null` = no story today.
+* **`marks`** has one boolean per entry of `content.tracks` (the day card's «تمّ» toggles), plus
+  `family_word: {"choice_index": 3, "word": "Joy"} | null` on day 28. Marks are the **family's**: the
+  same on every child's card.
+* `upcoming` → `"kickoff": {"title", "text", "setup_steps": [...]}` (and let the parent set each
+  child's fasting step now).
+* `eid` → `"eid": {"title", "activities": [...], "parent_note": {text, evidence}, "variant": {...}|null,
+  "quran": {...}, "evidence": [...]}`.
+* `after` →
+  ```json
+  "after": {"title": "After Ramadan: keep going together", "text": "…",
+            "keep_habits": [{"key": "weekly_quran_circle", "title": "…", "text": "…"}, …],
+            "week": {"week": 4, "title": "Week 4: Beyond the bridge", "text": "…",
+                     "requires_feature": "weekly_plan", "feature_available": false},
+            "weeks": [ …all four, resolved the same way… ],
+            "links": {"program_ids": ["prayer_journey"], "path_ids": [...], "lesson_ids": [...]},
+            "evidence": [...]}
+  ```
+  **«requires_feature»:** a week that promises a feature carries `requires_feature` and
+  `feature_available`. Its `text` is already resolved: the promise when the server serves the
+  feature **and** this request listed it in `features`, the content's fallback otherwise. Render
+  `text` as is.
+
+#### 11.3.3 `GET /api/children/{child_id}/ramadan/days/{day}` — any day 1–30
+
+For "tomorrow's challenge needs paper" and "I forgot to tick yesterday". Query as above.
+
+```json
+{"child_id": 12, "date": "2027-02-10", "state": "ramadan", "season": {…}, "variant_band": "7-9",
+ "content": { …same shape as today's `content`… },
+ "markable": true,
+ "marks": {"challenge_done": true, "wird_done": false, "juz_read": false}}
+```
+`markable` is true for days up to today during the month, and for the whole month from Eid to the
+end of the bridge; `marks` is `null` when not markable. `404 {"error":"no_such_day"}` outside 1–30.
+
+#### 11.3.4 `POST /api/programs/ramadan/marks` — tick / untick a family «تمّ»
+
+Query: `tz_offset_minutes`. Body:
+```json
+{"mark": "challenge_done", "day": 3, "done": true}
+{"mark": "family_word", "day": 28, "choice_index": 3}
+```
+* `mark` ∈ `challenge_done`, `wird_done`, `story_heard`, `juz_read`, `night_joined`, `family_word`
+  — and only the ones in that day's `tracks` (`422 mark_not_on_this_day`).
+* `day` defaults to today during the month; required from Eid on (`422 day_required`); never a
+  future day (`422 day_not_markable` with `markable_up_to`). Outside the month and its bridge:
+  `409 not_in_season`.
+* `done: false` removes the mark. Idempotent both ways.
+* `family_word` (day 28 only): `choice_index` into that day's `content.family_word_choices`
+  (8 words, in the reader's language; `null` on other days). The chosen word comes back in
+  `marks.family_word.word`. Never free text.
+
+Response: `{"hijri_year": 1448, "day": 3, "marks": { …the day's marks after the change… }}`.
+
+#### 11.3.5 The fasting ladder
+
+`GET /api/children/{child_id}/ramadan/fasting` — the ladder screen:
+```json
+{"child_id": 12, "date": "2027-02-10", "state": "ramadan", "season": {…}, "day": 3,
+ "age": {…},
+ "ladder_band": "7-9", "fasts": "partial", "summary": "Hours, not full days. …",
+ "reached_puberty": false,
+ "current_step": null,
+ "steps": [
+   {"key": "morning_hours", "label": "Morning hours", "until": "mid_morning", "approx_hours": 3,
+    "min_age_years": 7, "max_days_per_week": 3, "advance_when": "…", "text": "…", "eligible": true},
+   {"key": "until_dhuhr", …, "min_age_years": 7, "eligible": true},
+   {"key": "until_asr", …, "min_age_years": 9, "eligible": false}],
+ "practised_today": false, "practised_this_week": 0, "rest_suggested": false,
+ "guidance": {"title": "The fasting ladder", "principles": [...], "doctor_first": [...],
+              "stop_signs": [...], "stop_action": "…", "urgent_signs": [...],
+              "urgent_action": "…", "tips": [...], "evidence": [...]}}
+```
+* `fasts`: `no` (0-3, 4-6 — no fasting before seven), `partial` (7-9), `partial_to_full` (10-12),
+  `full_supported` (13-15). `eligible:false` = the child's known age is below `min_age_years`
+  (unknown age: all `true`; show `min_age_years` beside each step).
+* **Always show `guidance`** on this screen — stop signs, the urgent signs and what to do.
+* `rest_suggested: true` = the step's own weekly cap is reached ("tomorrow is a rest day") — a
+  care message, never a score.
+
+`PUT /api/children/{child_id}/ramadan/fasting` — body `{"step_key": "until_dhuhr"}` and/or
+`{"reached_puberty": true}`. Response = the ladder (without `guidance`) plus `"climbed": true|false`.
+* `reached_puberty: true` moves the child to the 13-15 ladder whatever the band (puberty, not age,
+  makes fasting obligatory — content §8.2); settable any time; also retires the
+  "before puberty" milestone cards. Offer it as a quiet profile toggle on the ladder screen.
+* All-or-nothing: the step is checked against the ladder the **new** `reached_puberty` value
+  implies, and a refused request writes nothing (neither the step nor the flag).
+* `422 unknown_step` (not on this child's ladder), `422 step_not_for_age` (`min_age_years`),
+  `409 not_in_season` (a step outside a season), `422 nothing_to_change` (empty body).
+* A move to a step with more hours **during the month** is a "climb" — counted, privately, in the
+  recap's `family_only`. A step down is not recorded anywhere.
+
+`POST /api/children/{child_id}/ramadan/fasting/practice` — body `{}` (today), `{"day": 2}`,
+`{"done": false}` (undo). "Practised their step today." Needs a step (`409 no_step_set`).
+Response: `{"child_id", "day", "done", "current_step", "practised_today", "practised_this_week",
+"rest_suggested"}`.
+
+#### 11.3.6 `PUT /api/programs/ramadan/settings` — the family's own sighting
+
+Body (either or both): `{"start_shift_days": -1|0|1}`, `{"month_days": 29|30|null}` (`null` = back to
+the server's). Applies to the current/next season only. Response:
+`{"state", "season", "day"}` recomputed. `409 not_in_season` off season; `422 nothing_to_change`.
+
+#### 11.3.7 `GET /api/programs/ramadan/recap` — «رمضان عائلتنا»
+
+Query: `lang`, `tz_offset_minutes`, `hijri_year` (default: the latest season that has started).
+
+```json
+{"hijri_year": 1448, "available": true, "available_on": "2027-03-10", "show_on": "eid",
+ "card": {
+   "title": "Our Family's Ramadan",
+   "headline": "Our Family's Ramadan 1448",
+   "lines": [{"keys": ["challenges_done"], "text": "Family challenges: 12"},
+             {"keys": ["family_word"], "text": "Our Ramadan word: Joy"}],
+   "metrics": [{"key": "challenges_done", "label": "Family challenges", "value": 12},
+               {"key": "family_word", "label": "Our Ramadan word", "value": "Joy"}],
+   "closing": "May Allah accept from us and from you",
+   "share_text": "This was our family's Ramadan with the Almorabbi app. … https://play.google.com/store/apps/details?id=com.alsaba.almorabbi&referrer=ref_QXV6SC%26utm_source%3Dramadan-card…"},
+ "progress": [{"key": "challenges_done", "label": "Family challenges", "value": 12, "max": 30}, …],
+ "family_only": [{"key": "fasting_steps", "label": "Fasting steps our children climbed", "value": 2}],
+ "privacy": "The card carries no children's names, ages, photos or anything anyone has typed: …"}
+```
+* `card` is `null` before Eid (`available: false`); `progress` is there all month (in-app counters).
+* **Render the shareable image from `card` only** (`headline`, `lines[].text`, `closing`); Arabic
+  numbers already come as ١٢. A line below the content's `min_to_show` is already dropped — do
+  not re-add it. Share with `share_text` (it carries the family's invite link, so installs are
+  credited to them).
+* **`family_only` never goes on the card or into the share** — the children's fasting is the
+  family's business. Show it inside the app only.
+
+### 11.4 «رحلة الصلاة» — the Prayer Journey
+
+#### 11.4.1 Tracks
+
+| track | who | what |
+|---|---|---|
+| `preparation` | age 4–6 (band `4-6`) | activities only — no tasks, no coins, no daily follow-up |
+| `journey` | age 7–10 (band `7-9`) | 6 stages over 12 weeks; child tasks with coins |
+| `ownership` | age 11–15 (bands `10-12`, `13-15`), and after graduating | «صلاتي مسؤوليتي»: the child records his own prayers |
+
+By age when the birth month is known, else by band. Under 4, over 15, `2-3`, `16-18`,
+`prenatal-1`: not shown (`eligible_track: null`). An `ownership`-eligible child who does not pray
+regularly yet may take the `journey` instead, from any stage (`allowed_tracks`).
+
+#### 11.4.2 `GET /api/children/{child_id}/prayer-journey`
+
+```json
+{"child_id": 12, "date": "2026-10-04", "age": {…},
+ "title": "The Prayer Journey", "subtitle": "Twelve weeks from love to responsibility",
+ "eligible_track": "journey", "allowed_tracks": ["journey"], "bands_text": "…",
+ "enrolment": {"track": "journey", "stage": 1, "status": "active", "started_on": "2026-10-04",
+               "stage_started_on": "2026-10-04", "week": 1},
+ "basis": {"text": "…", "evidence": [...]}, "principles": ["…"],
+ "reward_policy": {"text": "Coins here encourage the effort of learning; …", "daily_cap": 60},
+ "stages": [{"stage": 1, "key": "love_and_presence", "title": "…", "goal": "…", "week_from": 1, "week_to": 2}, …6],
+ "graduation": {"title": "…", "text": "…", "certificate_text": "…",
+                "covenant": {"coins_target": 300, "examples": ["…"]},
+                "journey_milestone_keys": ["keeps_prayer"], "evidence": [...]},
+ "graduated_on": null,
+ "stage": {"stage": 1, "key": "love_and_presence", "title": "…", "goal": "…", "week_from": 1, "week_to": 2,
+           "parent_assignments": [{"key": "pray_where_seen", "text": "…"}, …],
+           "confirmation": {"how": "…", "counts_when": "…"},
+           "encouragement": ["I saw you stand beside me so calmly. Well done!", …],
+           "if_struggling": "…", "covenant": {"coins_target": 100, "examples": ["…"]},
+           "lesson_ids": ["lesson_7-9_islamic_parenting_worship_01"], "quran": [], "evidence": [...],
+           "journey_milestone_key": null},
+ "preparation": null, "ownership": null,
+ "tasks": [{"task_id": "prayer_s1_pray_beside", "title": "I pray beside Mum or Dad", "instruction": "…",
+            "estimated_minutes": 7, "needs_parent": true, "materials": [], "skill": "Following an example",
+            "coins": 10, "per_week": 5, "per_day": 1, "week_limit": 5,
+            "today": {"recorded": 0, "confirmed": 0, "slots_left": 1},
+            "this_week": {"recorded": 0, "confirmed": 0}}, …],
+ "advancement": {"days_in_stage": 0, "stage_planned_days": 14, "next_stage": 2,
+                 "advance_suggested": false, "advance_suggested_on": "2026-10-18",
+                 "can_graduate": false, "graduation_available_on": null},
+ "pending_confirmations": 0,
+ "coins": {"confirmed_in_stage": 0, "covenant_target": 100}}
+```
+* Not enrolled: `enrolment`, `stage`, `advancement`, `coins` are `null`, `tasks` is `[]`;
+  `preparation` / `ownership` carry their track's content for the eligible track.
+* `stage.journey_milestone_key` (e.g. `first_prayer` at stage 3) and `graduation.journey_milestone_keys`
+  are keys of the app's journey log (`mobile/assets/content/journey/milestones.*.json`) — suggest
+  recording them.
+* **Parent-only texts**: `stage.*` except `encouragement` (sentences the parent says to the child),
+  `graduation.text`, `if_struggling`. Never show them in child mode.
+
+#### 11.4.3 `POST /api/children/{child_id}/prayer-journey/enrol`
+
+Body: `{}` (the eligible track, stage 1), or `{"track": "journey", "start_stage": 3}`, or
+`{"restart": true, …}` to replace an active enrolment. Response = §11.4.2.
+Errors: `409 not_eligible`, `409 track_not_for_age` (`allowed_tracks`), `409 already_enrolled`
+(`track`, `stage`), `422 unknown_stage`, `422 stage_only_for_journey`.
+
+#### 11.4.4 `PUT /api/children/{child_id}/prayer-journey/stage` — `{"stage": n}`
+
+Forward **one** stage at a time (`409 one_stage_at_a_time` with `next_stage`), back to **any**
+earlier stage. Moving on is the parent's call: suggest it when `advancement.advance_suggested`
+(the stage's weeks are up) — never gate it on the week's counts (`per_week` is a goal, not a
+condition). Going back is silent to the child: child mode shows only today's tasks. Response = §11.4.2.
+`409 not_in_journey` for a child not on the journey track. `409 stage_changed`: the stage moved
+since this screen read it (a double tap on "next stage" moves it once) — refetch §11.4.2.
+
+#### 11.4.5 `POST /api/children/{child_id}/prayer-journey/graduate` · `DELETE /api/children/{child_id}/prayer-journey`
+
+Graduate from stage 6 once its two weeks are done (`advancement.can_graduate`; else
+`409 graduation_not_yet` with `available_on`). The journey closes and the `ownership` track opens;
+show `graduation` (certificate text, the big covenant). A second tap answers
+`409 already_graduated` (never a 500) — refetch §11.4.2. `DELETE` stops the journey
+(`409 not_enrolled` if none). Both return §11.4.2.
+
+#### 11.4.6 Child mode — the child's tasks
+
+`GET /api/value-tracking/child-mode/prayer/today?tz_offset_minutes=180&lang=en` (Child-Bearer):
+```json
+{"date": "2026-10-04", "available": true, "enrolled": true, "track": "journey",
+ "tasks": [{"task_id": "prayer_s1_pray_beside", "title": "I pray beside Mum or Dad",
+            "instruction": "Stand beside your dad or mum in one prayer today …",
+            "estimated_minutes": 7, "needs_parent": true, "materials": [], "skill": "Following an example",
+            "coins": 10, "per_day": 1, "week_limit": 5,
+            "recorded_today": 0, "slots_left_today": 1, "recorded_this_week": 0}, …]}
+```
+`enrolled: false` (no tasks: not enrolled, or the preparation track) → show nothing.
+`available: false` (new): the program file cannot be read right now — `enrolled` is `false`,
+`tasks` is `[]`; show nothing, it is not an error. (The claim answers `503 program_unavailable`.)
+
+`POST /api/value-tracking/child-mode/prayer/claim?task_id=prayer_s1_pray_beside&tz_offset_minutes=180`
+→ «صلّيتها». Recorded at once; the child does not wait for anyone:
+```json
+{"ok": true, "status": "claimed", "mission_id": 41, "task_id": "prayer_s1_pray_beside",
+ "slot": 1, "recorded_today": 1, "slots_left_today": 0}
+```
+A task has `per_day` slots a day (two prayers a day → 2); a "N times a week" task
+(`week_limit`) is complete for the week after N. When `slots_left_today` is 0, show it as done
+(✓), not as an error. Errors: `409 day_complete`, `409 week_complete`, `409 task_not_current`
+(the stage changed — refetch), `409 not_enrolled`, `503 program_unavailable`. A double tap is
+recorded once: the cap check and the insert are one transaction, so the second tap gets
+`day_complete` / `week_complete` (`409 already_recorded` remains only as a last guard). Treat all
+of them as "done" on the child's screen.
+
+#### 11.4.7 The parent's evening — the existing mission flow
+
+The claim is a `child_missions` row, so it appears in the **existing**
+`GET /api/children/missions/pending` and the 21:00 digest push (`link: "/missions"`), and is
+settled by the existing `POST /api/children/missions/confirm`. Additive fields on a prayer card in
+`pending`:
+```json
+{"mission_id": 41, "mission_key": "prayer_s1_pray_beside#1", "status": "claimed", "local_date": "2026-10-04",
+ "title_ar": "I pray beside Mum or Dad", "instruction_ar": "…", "estimated_minutes": 7,
+ "needs_parent": true, "needs_outdoors": false, "materials": [], "skill": "…",
+ "program": "prayer_journey", "task_id": "prayer_s1_pray_beside", "slot": 1, "coins": 10,
+ "child_id": 12, "child_name": "أحمد"}
+```
+(`title_ar` / `instruction_ar` carry the text in the requested `lang`, as for bank missions.)
+Additive fields on the confirm response:
+```json
+{"ok": true, "settled": 2,
+ "coins": [{"mission_id": 41, "child_id": 12, "task_id": "prayer_s1_pray_beside", "coins": 10}],
+ "deferred": []}
+```
+* **Batch size: up to 200 items** (was 50; `422` above). Send the whole evening list in one call.
+* **`coins` is idempotent** (contract change): it lists every prayer mission **in this request**
+  that is confirmed — including ones an earlier attempt already confirmed. So a retried request
+  (the first response was lost) reports the same entries again, and `settled` counts only rows
+  changed by *this* request. **The client credits each `mission_id` exactly once**: keep the set of
+  credited `mission_id`s on the device and skip an entry already in it. Credit to that child's
+  coins (`CoinsService`, daily cap 60 — the content keeps a stage's day under it).
+* A card confirmed `false` ("not yet") earns nothing (never, also on retry), costs nothing, and
+  frees its slot. Unanswered cards expire quietly after 48 h.
+* `deferred` (new): prayer cards the server would not settle because the program file cannot be
+  read right now (settling them would pay 0). They stay pending and are **hidden** from `pending`
+  meanwhile; they come back, payable, when the file does. Do nothing special — just don't count
+  them as confirmed.
+* The stage's `coins.confirmed_in_stage` / `covenant_target` (§11.4.2) feed the covenant progress.
+
+The bank card's own claim endpoint (`POST /api/value-tracking/child-mode/mission/claim`) now
+claims bank cards only, and refuses an expired one: `409 expired`; a prayer `mission_id` there is
+`409 mission_not_found` (prayer tasks are claimed only through §11.4.6).
+
+### 11.5 Proactive milestones
+
+#### 11.5.1 `GET /api/children/{child_id}/milestones`
+
+```json
+{"child_id": 12, "date": "2027-02-10", "age": {…},
+ "alert_policy": {"text": "At most one notification per child per month; …", "pushes": true},
+ "needs_profile": [],
+ "due": [{"key": "first_fasting", "order": 4, "state": "due", "basis": "birth_month",
+          "due_on": "2027-02-08", "alert_on": "2027-01-09",
+          "season": {"name": "ramadan", "hijri_year": 1448, "starts_on": "2027-02-08", "start_source": "estimate"},
+          "title": "First fasting attempts", "medical": true,
+          "alert": {"title": "Ramadan is a month away", "body": "…"},
+          "cards": [{"title": "Training, not obligation", "body": "…"}, …3-5],
+          "red_flags": ["Fainting, confusion or a seizure → emergency services at once; …", …],
+          "quran": [], "evidence": [...],
+          "links": {"program_ids": ["ramadan_family"], "path_ids": [...], "lesson_ids": [...],
+                    "story_ids": [], "features": []},
+          "pushed_at": null}],
+ "upcoming": [ …same shape, state "upcoming", within the next 12 months… ],
+ "library": [ …state "library": no birth month, shown by band, due_on/alert_on null… ],
+ "past": [ …state "past", due in the last 12 months… ]}
+```
+* `due`: from `alert_on` (the 1st of the month before; 30 days before a season) until 90 days after `due_on`.
+* `needs_profile`: `"birth_month"` (no timing and no push without it), `"gender"` (a
+  gender-specific card — puberty — is withheld until the profile says the gender). Show
+  "complete the profile" instead of those cards.
+* `medical: true` cards carry `red_flags` — render them visibly.
+* `links.features` ⊂ `agreement`, `license`, `missions`, `covenant`, `screen_off`, `assistant`:
+  existing app screens to link to. All texts are **for the parent**; never in child mode.
+
+#### 11.5.2 `GET /api/children/{child_id}/milestones/{key}` — one card (the push's deep link)
+
+`{"child_id": 12, "date": "…", "milestone": { …one card as above… }}`;
+`404 {"error":"milestone_not_found"}` when it is not this child's (other gender, unknown key) —
+then open the list.
+
+#### 11.5.3 The push
+
+Sent by the backend about a month ahead, **only** when: the child has a birth month; the
+device's build ≥ `MILESTONES_MIN_BUILD` (server setting — **unset = no push to anyone**); the
+device has a push token and has reported `tz_offset_minutes`; it is 20:00–20:59 on the family's
+clock; no push of any kind in the last 20 h; at most one milestone push per device per week and
+one per child per month (the most important first). A mission waiting on the parent does **not**
+hold it back (contract change): the 21:00 digest ignores milestone pushes in its own
+once-a-day cap, so on such an evening the parent gets both — the milestone at 20:00 and
+`/missions` at 21:00. Payload (Android channel `almorabbi_reengagement`, private on
+the lock screen):
+```json
+{"notification": {"title": "Turning seven next month", "body": "At seven, teaching prayer begins, …"},
+ "data": {"type": "milestone", "kind": "milestone", "link": "/milestones/12/prayer_start",
+          "child_id": "12", "milestone_key": "prayer_start"}}
+```
+**Deep link the client must add:** `/milestones/{child_id}/{milestone_key}` → open
+§11.5.2 for that child (fall back to the list on 404). Report taps as `push_tapped(type=milestone)`.
+Tell the orchestrator the first build number that routes it, so the server floor can be set.
+
+### 11.6 Error codes
+
+| code | HTTP | meaning |
+|---|---|---|
+| `child_not_found` | 404 | not this device's child |
+| `program_unavailable` | 503 | program file unpublished/unreadable |
+| `as_of_disabled` | 403 | `as_of` sent to a server that does not allow it |
+| `invalid_date_or_offset` | 422 | bad `tz_offset_minutes` or `as_of` |
+| `not_in_season` | 409 | no current/next Ramadan, or after the bridge |
+| `day_required` / `day_not_markable` | 422 | `day` missing from Eid on / a future or out-of-range day |
+| `mark_not_on_this_day` / `unknown_mark` / `choice_index_required` | 422 | see §11.3.4 |
+| `unknown_step` / `step_not_for_age` / `no_step_set` / `nothing_to_change` | 422/422/409/422 | see §11.3.5 |
+| `no_such_day` / `no_season` / `milestone_not_found` | 404 | |
+| `not_eligible` / `track_not_for_age` / `already_enrolled` | 409 | see §11.4.3 |
+| `unknown_stage` / `stage_only_for_journey` | 422 | |
+| `one_stage_at_a_time` / `not_in_journey` / `graduation_not_yet` / `not_enrolled` | 409 | |
+| `stage_changed` / `already_graduated` | 409 | a stale screen or a double tap — refetch (§11.4.4, §11.4.5) |
+| `day_complete` / `week_complete` / `task_not_current` / `already_recorded` | 409 | child mode, §11.4.6 |
+| `expired` / `mission_not_found` | 409 | the bank card claim endpoint, §11.4.7 |
+
+### 11.7 Privacy and deletion
+
+Server-side rows: the birth month (on the child profile); the family's Ramadan marks and
+sighting settings; each child's fasting step, "reached puberty" flag and practice ticks; Prayer
+Journey enrolment and its tasks (as `child_missions` rows); the milestone push log; the device's
+last offset and language. Deleting a child (`DELETE /api/children/{id}`) from a session proven
+to hold the phone (§9.0.1) deletes all of that child's rows — profile with its birth month,
+fasting step, puberty flag, journey and its prayer cards, milestone log; from any other session it
+deletes the profile row only (which carries the birth month), as that route always did. The
+family's own Ramadan marks stay when one child is deleted. Account deletion (§10) reaches all of
+it: every table carries `device_id`. All of it is disclosed in the privacy policy ("Family
+programs"). The recap card never carries names, ages, photos or typed text.
+
+### 11.8 Server settings (ops, not the client)
+
+| env | default | effect |
+|---|---|---|
+| `RAMADAN_START_<hijri year>` (e.g. `RAMADAN_START_1448=2027-02-08`) | content estimate | the announced first day |
+| `RAMADAN_DAYS_<hijri year>` | 30 (unconfirmed) | `29` or `30` once announced |
+| `MILESTONES_MIN_BUILD` | unset = no milestone push | first build that routes `/milestones/…` |
+| `PROGRAMS_AS_OF_ENABLED` | off | lets QA pass `as_of` |

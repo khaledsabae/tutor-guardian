@@ -33,6 +33,7 @@ from __future__ import annotations
 import json
 import re
 import sys
+from datetime import date
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -78,8 +79,17 @@ INVARIANT_KEYS = {
     "type", "season", "band_fallback", "gender", "if_gender_unknown", "show_on",
     "requires_feature",
     "drafter_model", "reviewer_model", "translator_model", "reviewed_at",
-    "approved_by", "expected_start_1448", "journey_milestone_key",
+    "approved_by", "journey_milestone_key",
 }
+# مفاتيح ثابتة تُعرَف بنمطها لا باسمها: تقدير بداية رمضان لكل سنة هجرية
+# (expected_start_1448، expected_start_1449، …) — تاريخ لا نصّ، فيتطابق بين اللغتين.
+# بالاسم وحده كانت كل سنة جديدة تحتاج سطرًا هنا وإلا فشل «العربي فيه عربية».
+INVARIANT_KEY_PATTERNS = (re.compile(r"^expected_start_\d{4}$"),)
+
+
+def invariant(key) -> bool:
+    return key in INVARIANT_KEYS or (
+        isinstance(key, str) and any(p.match(key) for p in INVARIANT_KEY_PATTERNS))
 INVARIANT_LIST_KEYS = {
     "unit_ids", "evidence_ids", "lesson_ids", "path_ids", "story_ids", "program_ids",
     "features", "tracks", "covered", "journey_milestone_keys",
@@ -255,7 +265,7 @@ def walk_text(node, path="", key=None, scoped=False, hadith_units=frozenset()):
         for i, v in enumerate(node):
             yield from walk_text(v, f"{path}[{i}]", key, scoped, hadith_units)
     elif isinstance(node, str):
-        if key in INVARIANT_KEYS or key in INVARIANT_LIST_KEYS or key == LANG_KEY:
+        if invariant(key) or key in INVARIANT_LIST_KEYS or key == LANG_KEY:
             return
         yield path, key, node, scoped
 
@@ -284,7 +294,7 @@ def parity(ar, en, path="", key=None) -> list[str]:
         if key == LANG_KEY:
             if (ar, en) != ("ar", "en"):
                 out.append(f"{path}: language يجب أن يكون ar/en")
-        elif key in INVARIANT_KEYS or key in INVARIANT_LIST_KEYS:
+        elif invariant(key) or key in INVARIANT_LIST_KEYS:
             if ar != en:
                 out.append(f"{path}: «{key}» يجب أن يتطابق ({ar!r} ≠ {en!r})")
         else:
@@ -411,8 +421,29 @@ def _band_map(bands: dict, allowed: set, where: str) -> list[str]:
     return out
 
 
-def ramadan_rules(doc: dict) -> list[str]:
+def season_problems(season: dict) -> list[str]:
+    """Each year's estimated start is one Hijri year (354–355 days) after the
+    one before — a typo here would silently move a whole Ramadan."""
     out = []
+    starts = []
+    for k, v in season.items():
+        m = re.match(r"^expected_start_(\d{4})$", k)
+        if not m:
+            continue
+        try:
+            starts.append((int(m.group(1)), date.fromisoformat(v)))
+        except (TypeError, ValueError):
+            out.append(f"season.{k}: ليس تاريخًا YYYY-MM-DD")
+    starts.sort()
+    for (y1, d1), (y2, d2) in zip(starts, starts[1:]):
+        if y2 != y1 + 1 or not 352 <= (d2 - d1).days <= 357:
+            out.append(f"season: expected_start_{y2} بعد expected_start_{y1} بـ{(d2 - d1).days} "
+                       "يومًا — السنة الهجرية ٣٥٤–٣٥٥ يومًا، والسنوات متتالية")
+    return out
+
+
+def ramadan_rules(doc: dict) -> list[str]:
+    out = season_problems(doc.get("season") or {})
     days = doc.get("days", [])
     if [d.get("day") for d in days] != list(range(1, 31)):
         out.append("days: يجب أن تكون ١..٣٠ مرتبة بلا تكرار")
@@ -674,6 +705,13 @@ def _self_test(src: dict) -> list[str]:
     if milestone_bands({"type": "age", "age_months": 84, "alert_days_before": 30,
                         "band_fallback": []}) != {"4-6"}:
         fails.append("فئة لحظة الإشعار معطوبة: ابن ٦ سنوات و١١ شهرًا في 4-6")
+    if not invariant("expected_start_1449") or invariant("expected_start_soon") \
+            or invariant("title"):
+        fails.append("المفاتيح الثابتة بالنمط: expected_start_<سنة> لا يُعرَف أو يُعرَف غيره")
+    if season_problems({"expected_start_1448": "2027-02-08", "expected_start_1449": "2028-01-28"}) \
+            or not season_problems({"expected_start_1448": "2027-02-08",
+                                    "expected_start_1449": "2029-01-28"}):
+        fails.append("تتابع تقديرات بداية رمضان: الفحص لا يقبل الصحيح أو لا يرفض الخطأ")
     return fails
 
 
