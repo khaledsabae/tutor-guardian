@@ -1282,5 +1282,8 @@
   "supportRetryLater": "Payment received — we'll confirm it on your next visit.",
   "supportError": "The payment couldn't be completed. Please try again.",
   "supportStoreUnavailable": "Google Play isn't available on this device right now.",
-  "supportEntryDesc": "Free for the sake of Allah — help with its running costs if you'd like"
+  "supportEntryDesc": "Free for the sake of Allah — help with its running costs if you'd like",
+  "supportCoveredPctApprox": "Supporters covered about {pct}%",
+  "supportCoveredAmountApprox": "Supporters gave about {amount} this month",
+  "supportUnpricedNote": "{count, plural, =1{1 contribution isn't priced by Google Play yet; it will be counted once it is.} other{{count} contributions aren't priced by Google Play yet; they will be counted once they are.}}"
 }

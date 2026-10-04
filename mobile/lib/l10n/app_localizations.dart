@@ -7243,6 +7243,24 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'مجاني لوجه الله — وإن أردت، أعِن على تكلفة تشغيله'**
   String get supportEntryDesc;
+
+  /// No description provided for @supportCoveredPctApprox.
+  ///
+  /// In ar, this message translates to:
+  /// **'غطّى الداعمون نحو {pct}٪'**
+  String supportCoveredPctApprox(int pct);
+
+  /// No description provided for @supportCoveredAmountApprox.
+  ///
+  /// In ar, this message translates to:
+  /// **'قدّم الداعمون هذا الشهر نحو {amount}'**
+  String supportCoveredAmountApprox(String amount);
+
+  /// No description provided for @supportUnpricedNote.
+  ///
+  /// In ar, this message translates to:
+  /// **'بعض الدعم ({count}) لم تؤكّد Google Play قيمته بعد، وسيُحتسب حين تؤكّدها.'**
+  String supportUnpricedNote(int count);
 }
 
 class _AppLocalizationsDelegate

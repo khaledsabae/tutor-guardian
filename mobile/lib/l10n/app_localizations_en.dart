@@ -4101,4 +4101,27 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get supportEntryDesc =>
       'Free for the sake of Allah — help with its running costs if you\'d like';
+
+  @override
+  String supportCoveredPctApprox(int pct) {
+    return 'Supporters covered about $pct%';
+  }
+
+  @override
+  String supportCoveredAmountApprox(String amount) {
+    return 'Supporters gave about $amount this month';
+  }
+
+  @override
+  String supportUnpricedNote(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          '$count contributions aren\'t priced by Google Play yet; they will be counted once they are.',
+      one:
+          '1 contribution isn\'t priced by Google Play yet; it will be counted once it is.',
+    );
+    return '$_temp0';
+  }
 }

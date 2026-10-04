@@ -4046,4 +4046,19 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get supportEntryDesc =>
       'مجاني لوجه الله — وإن أردت، أعِن على تكلفة تشغيله';
+
+  @override
+  String supportCoveredPctApprox(int pct) {
+    return 'غطّى الداعمون نحو $pct٪';
+  }
+
+  @override
+  String supportCoveredAmountApprox(String amount) {
+    return 'قدّم الداعمون هذا الشهر نحو $amount';
+  }
+
+  @override
+  String supportUnpricedNote(int count) {
+    return 'بعض الدعم ($count) لم تؤكّد Google Play قيمته بعد، وسيُحتسب حين تؤكّدها.';
+  }
 }

@@ -1316,5 +1316,11 @@
   "supportRetryLater": "تمّ الدفع، وسنؤكّده في زيارتك القادمة.",
   "supportError": "تعذّر إتمام الدفع. حاول مرة أخرى.",
   "supportStoreUnavailable": "متجر Google Play غير متاح على هذا الجهاز الآن.",
-  "supportEntryDesc": "مجاني لوجه الله — وإن أردت، أعِن على تكلفة تشغيله"
+  "supportEntryDesc": "مجاني لوجه الله — وإن أردت، أعِن على تكلفة تشغيله",
+  "supportCoveredPctApprox": "غطّى الداعمون نحو {pct}٪",
+  "@supportCoveredPctApprox": {"placeholders": {"pct": {"type": "int"}}},
+  "supportCoveredAmountApprox": "قدّم الداعمون هذا الشهر نحو {amount}",
+  "@supportCoveredAmountApprox": {"placeholders": {"amount": {"type": "String"}}},
+  "supportUnpricedNote": "بعض الدعم ({count}) لم تؤكّد Google Play قيمته بعد، وسيُحتسب حين تؤكّدها.",
+  "@supportUnpricedNote": {"placeholders": {"count": {"type": "int"}}}
 }

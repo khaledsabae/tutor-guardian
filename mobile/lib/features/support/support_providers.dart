@@ -100,6 +100,35 @@ final supportTransparencyProvider =
 
 enum SupportOutcome { thanked, pending, retryLater, cancelled, error }
 
+/// One settled store update, as the coordinator reports it.
+///
+/// The stream carries every purchase the app knows about — the one the parent
+/// just started, and older ones re-delivered by a restore. [productId],
+/// [token] and [restored] (with [SupportPurchaseCoordinator.seenTokens]) are
+/// what let a screen tell them apart; see SupportScreen.
+@immutable
+class SupportEvent {
+  const SupportEvent({
+    required this.outcome,
+    required this.productId,
+    required this.token,
+    required this.restored,
+  });
+
+  /// Null: settled, nothing to tell the parent.
+  final SupportOutcome? outcome;
+
+  /// '' for Android's cancel and billing-error shapes, which carry none.
+  final String productId;
+
+  /// The purchase token, '' when there is none. In memory only — never
+  /// logged, stored or sent anywhere but the verify call.
+  final String token;
+
+  /// Re-delivered by restore(): a purchase started before this one.
+  final bool restored;
+}
+
 /// Turns one store update into a server call and an outcome to show.
 ///
 /// The order is the whole point: verify and record on the server first, then
@@ -190,7 +219,7 @@ class SupportPurchaseHandler {
 ///
 /// Started only when the server has donations on (see [supportBootProvider]):
 /// for everyone else the billing client is never touched. The support screen
-/// only displays what arrives on [outcomes].
+/// only displays what arrives on [events] for the purchase it started.
 class SupportPurchaseCoordinator with WidgetsBindingObserver {
   SupportPurchaseCoordinator({
     required this.store,
@@ -214,8 +243,9 @@ class SupportPurchaseCoordinator with WidgetsBindingObserver {
   static const _kLogged = 'support.logged_outcomes';
   static const _kLoggedMax = 50;
 
-  final _outcomes = StreamController<SupportOutcome?>.broadcast();
+  final _events = StreamController<SupportEvent>.broadcast();
   final Map<String, ProductDetails> _products = {};
+  final Set<String> _seenTokens = {};
   StreamSubscription<List<PurchaseDetails>>? _sub;
   bool _started = false;
   bool _disposed = false;
@@ -225,11 +255,17 @@ class SupportPurchaseCoordinator with WidgetsBindingObserver {
   /// same token went out twice and the analytics dedupe raced itself.
   Future<void> _queue = Future<void>.value();
 
-  /// One event per settled store update: an outcome to show, or null for
-  /// "settled, nothing to say" — either way, any busy state can clear.
-  Stream<SupportOutcome?> get outcomes => _outcomes.stream;
+  /// One event per settled store update, for every purchase — the live one
+  /// and re-delivered older ones alike. Consumers decide which is theirs.
+  Stream<SupportEvent> get events => _events.stream;
 
   bool get started => _started;
+
+  /// Every purchase token that has come through the stream so far. A screen
+  /// snapshots it when the parent taps, so an older purchase completing while
+  /// the sheet is open — a cash payment from last week, first seen at launch
+  /// — is recognised as older by its token, with no clock involved.
+  Set<String> get seenTokens => Set.unmodifiable(_seenTokens);
 
   /// Idempotent. The first call subscribes and asks Play for anything left
   /// unfinished; later calls do nothing.
@@ -281,6 +317,7 @@ class SupportPurchaseCoordinator with WidgetsBindingObserver {
       productById: (id) => _products[id],
     );
     for (final p in purchases) {
+      final token = p.verificationData.serverVerificationData;
       SupportOutcome? outcome;
       try {
         outcome = await handler.handle(p);
@@ -288,7 +325,15 @@ class SupportPurchaseCoordinator with WidgetsBindingObserver {
         outcome = SupportOutcome.retryLater;
       }
       if (outcome != null) await _log(p, outcome);
-      if (!_disposed) _outcomes.add(outcome);
+      if (token.isNotEmpty) _seenTokens.add(token);
+      if (!_disposed) {
+        _events.add(SupportEvent(
+          outcome: outcome,
+          productId: p.productID,
+          token: token,
+          restored: p.status == PurchaseStatus.restored,
+        ));
+      }
     }
   }
 
@@ -336,7 +381,7 @@ class SupportPurchaseCoordinator with WidgetsBindingObserver {
     _disposed = true;
     _sub?.cancel();
     if (_started) WidgetsBinding.instance.removeObserver(this);
-    _outcomes.close();
+    _events.close();
   }
 }
 

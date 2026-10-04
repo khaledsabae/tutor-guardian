@@ -61,7 +61,7 @@ GooglePlayPurchaseDetails _purchase(
   final details = GooglePlayPurchaseDetails.fromPurchase(PurchaseWrapper(
     orderId: 'GPA.0000-${id.hashCode.abs()}',
     packageName: 'com.alsaba.almorabbi',
-    purchaseTime: 1791096000000,
+    purchaseTime: DateTime.now().millisecondsSinceEpoch,
     purchaseToken: token ?? 'token-$id',
     signature: 'sig',
     products: [id],
@@ -147,7 +147,9 @@ class _FakeStore implements SupportStore {
     controller.add([
       for (final p in owned)
         _purchase(p.productID,
-            token: p.verificationData.serverVerificationData, restored: true),
+            token: p.verificationData.serverVerificationData,
+            state: p.billingClientPurchase.purchaseState,
+            restored: true),
     ]);
   }
 
@@ -166,6 +168,10 @@ class _FakeClient extends TgClient {
   Map<String, dynamic> verifyResult = {
     'ok': true, 'consumed': true, 'already_recorded': false, 'pending': false,
   };
+
+  /// Per-token answers, over [verifyResult] — the server's view of each
+  /// purchase can differ (one still pending at Play, one recorded).
+  final verifyByToken = <String, Map<String, dynamic>>{};
   final verified = <String>[];
 
   @override
@@ -197,7 +203,7 @@ class _FakeClient extends TgClient {
     verified.add('$productId:$purchaseToken:$priceMicros:$currency');
     final e = verifyError;
     if (e != null) throw e;
-    return verifyResult;
+    return verifyByToken[purchaseToken] ?? verifyResult;
   }
 }
 
@@ -407,7 +413,7 @@ void main() {
       await c.read(appConfigProvider.future);
       c.read(supportBootProvider);
       final outcomes = <SupportOutcome?>[];
-      c.read(supportCoordinatorProvider).outcomes.listen(outcomes.add);
+      c.read(supportCoordinatorProvider).events.listen((e) => outcomes.add(e.outcome));
 
       store.controller.add(
           [_purchase('support_medium', state: PurchaseStateWrapper.pending)]);
@@ -769,6 +775,110 @@ void main() {
       await tester.pump(const Duration(milliseconds: 100));
       expect(find.byType(CircularProgressIndicator), findsNothing);
       expect(find.text('تعذّر إتمام الدفع. حاول مرة أخرى.'), findsOneWidget);
+    });
+
+    testWidgets("an older purchase's restore never speaks for the live one",
+        (tester) async {
+      // Item 3 (delta), from the review's probe: a cash payment started days
+      // ago and still pending is re-delivered by the resume-time restore — and
+      // its "pending" used to replace the thanks for the card payment the
+      // parent had just made.
+      store.products = [_product('support_small', 20000000)];
+      store.owned.add(_purchase('support_medium',
+          token: 'old-cash', state: PurchaseStateWrapper.pending));
+      // The server's view, as in production: the old cash payment is still
+      // pending at Play; the new card payment is recorded.
+      client.verifyByToken['old-cash'] = {
+        'ok': false, 'consumed': false, 'already_recorded': false, 'pending': true,
+      };
+      final c = await pump(tester, const SupportScreen(), flag: true);
+      c.read(supportBootProvider); // the app root started it at launch
+      await tester.pump(Duration.zero);
+
+      await tester.tap(find.text('دعم صغير'));
+      await tester.pump();
+      tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.inactive);
+      store.controller.add([_purchase('support_small', token: 'new-card')]);
+      tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.resumed);
+      await tester.pump(Duration.zero);
+      await tester.pump(const Duration(milliseconds: 100));
+      await tester.pump(const Duration(milliseconds: 100));
+
+      expect(client.verified.map((v) => v.split(':')[1]),
+          containsAll(['old-cash', 'new-card']));
+      expect(find.text('نسأل الله أن يتقبّل منك 🤍 وصل دعمك.'), findsOneWidget);
+      expect(find.text('الدفع قيد المعالجة، وسنؤكّده حين يكتمل.'), findsNothing);
+    });
+
+    testWidgets("an older purchase's update never clears the live spinner",
+        (tester) async {
+      store.products = [
+        _product('support_small', 20000000),
+        _product('support_medium', 60000000),
+      ];
+      final c = await pump(tester, const SupportScreen(), flag: true);
+      // At launch, Play re-delivered last week's pending cash payment.
+      c.read(supportCoordinatorProvider).start();
+      store.controller.add([_purchase('support_small',
+          token: 'cash-from-last-week',
+          state: PurchaseStateWrapper.pending, restored: true)]);
+      await tester.pump(Duration.zero);
+      await tester.tap(find.text('دعم صغير'));
+      await tester.pump();
+      expect(find.byType(CircularProgressIndicator), findsOneWidget);
+
+      // Re-delivered, another product, or a week-old purchase of the same
+      // product — seen at launch, and now completing while this sheet is
+      // open: none of them is this sheet's answer.
+      store.controller.add([
+        _purchase('support_medium', token: 'last-week', restored: true),
+        _purchase('support_small', token: 'also-old', restored: true),
+        _purchase('support_small', token: 'cash-from-last-week'),
+      ]);
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 100));
+      expect(find.byType(CircularProgressIndicator), findsOneWidget);
+      expect(find.text('نسأل الله أن يتقبّل منك 🤍 وصل دعمك.'), findsNothing);
+
+      // The live answer.
+      store.controller.add([_purchase('support_small', token: 'the-live-one')]);
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 100));
+      expect(find.byType(CircularProgressIndicator), findsNothing);
+      expect(find.text('نسأل الله أن يتقبّل منك 🤍 وصل دعمك.'), findsOneWidget);
+    });
+
+    testWidgets('a pending payment started here is followed to its end',
+        (tester) async {
+      store.products = [_product('support_small', 20000000)];
+      await pump(tester, const SupportScreen(), flag: true);
+      await tester.tap(find.text('دعم صغير'));
+      await tester.pump();
+      store.controller.add([_purchase('support_small',
+          token: 'fawry-1', state: PurchaseStateWrapper.pending)]);
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 100));
+      expect(find.text('الدفع قيد المعالجة، وسنؤكّده حين يكتمل.'), findsOneWidget);
+
+      // Paid at the kiosk; Play completes the same purchase.
+      store.controller.add([_purchase('support_small', token: 'fawry-1')]);
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 100));
+      expect(find.text('نسأل الله أن يتقبّل منك 🤍 وصل دعمك.'), findsOneWidget);
+    });
+
+    testWidgets('unpriced support makes the figure "about", and says why',
+        (tester) async {
+      // Item 4 (delta): rows Play has not priced yet are in no sum.
+      store.products = [_product('support_small', 20000000)];
+      client.transparency = {
+        'month': '2026-10', 'cost_usd': 40.0, 'covered_usd': 34.0,
+        'covered_pct': 85, 'supports': 6, 'unpriced': 2, 'breakdown': [],
+      };
+      await pump(tester, const SupportScreen(), flag: true);
+      expect(find.text('غطّى الداعمون نحو 85٪'), findsOneWidget);
+      expect(find.text('غطّى الداعمون 85٪'), findsNothing);
+      expect(find.textContaining('بعض الدعم (2)'), findsOneWidget);
     });
 
     testWidgets('no declared cost: says what was given, no percentage (EN)',

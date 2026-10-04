@@ -26,19 +26,30 @@ class SupportScreen extends ConsumerStatefulWidget {
 }
 
 class _SupportScreenState extends ConsumerState<SupportScreen> {
-  StreamSubscription<SupportOutcome?>? _sub;
+  StreamSubscription<SupportEvent>? _sub;
   SupportOutcome? _shown;
+
+  /// The product whose sheet is open.
   String? _busyProductId;
+
+  /// Tokens the coordinator had already seen when the parent tapped: older
+  /// purchases, whatever they do while this sheet is open.
+  Set<String> _olderTokens = const {};
+
+  /// The token of the purchase this screen started, once Play has named it —
+  /// so its later updates (a pending payment completing) still reach it.
+  String? _liveToken;
 
   @override
   void initState() {
     super.initState();
     unawaited(Analytics.supportOpened());
     // The coordinator owns the purchase stream for the whole app; this screen
-    // only shows what it reports. start() is a no-op when the app root has
-    // already started it, which it has whenever this screen is reachable.
+    // only shows what it reports about the purchase started here. start() is
+    // a no-op when the app root has already started it, which it has whenever
+    // this screen is reachable.
     final coordinator = ref.read(supportCoordinatorProvider)..start();
-    _sub = coordinator.outcomes.listen(_onOutcome);
+    _sub = coordinator.events.listen(_onEvent);
   }
 
   @override
@@ -47,17 +58,39 @@ class _SupportScreenState extends ConsumerState<SupportScreen> {
     super.dispose();
   }
 
-  void _onOutcome(SupportOutcome? outcome) {
-    if (!mounted) return;
+  /// Whether [e] is about the purchase the parent started on this screen.
+  ///
+  /// The stream also carries older purchases — a cash payment from last week
+  /// re-delivered by the resume-time restore. Taken as this screen's, one used
+  /// to put "pending" over the card payment that had just gone through, and
+  /// to clear the spinner of a purchase still in flight.
+  bool _isLive(SupportEvent e) {
+    final live = _liveToken;
+    if (e.token.isNotEmpty && live != null && e.token == live) return true;
+    final busy = _busyProductId;
+    if (busy == null || e.restored) return false;
+    // Android answers an open sheet's cancel or billing error with a bare
+    // update that names no product — it can only be this sheet's answer.
+    if (e.productId.isEmpty) return true;
+    // An older purchase — known before the tap — is never the live one, even
+    // for the same product. Recognised by token: no clock is trusted, since
+    // a device's clock can be hours off.
+    return e.productId == busy && !_olderTokens.contains(e.token);
+  }
+
+  void _onEvent(SupportEvent e) {
+    if (!mounted || !_isLive(e)) return;
     setState(() {
+      if (e.token.isNotEmpty) _liveToken = e.token;
       // Whatever happened, the sheet is closed: the buttons come back.
       _busyProductId = null;
       // A cancelled sheet needs no message — the parent chose to close it.
+      final outcome = e.outcome;
       if (outcome != null && outcome != SupportOutcome.cancelled) {
         _shown = outcome;
       }
     });
-    if (outcome == SupportOutcome.thanked) {
+    if (e.outcome == SupportOutcome.thanked) {
       ref.invalidate(supportTransparencyProvider);
     }
   }
@@ -67,6 +100,8 @@ class _SupportScreenState extends ConsumerState<SupportScreen> {
     unawaited(Analytics.supportTapped(product.id));
     setState(() {
       _busyProductId = product.id;
+      _olderTokens = ref.read(supportCoordinatorProvider).seenTokens;
+      _liveToken = null;
       _shown = null;
     });
     var started = false;
@@ -184,6 +219,11 @@ class _TransparencyCard extends StatelessWidget {
     final cost = (data['cost_usd'] as num?)?.toDouble();
     final covered = (data['covered_usd'] as num?)?.toDouble() ?? 0;
     final pct = (data['covered_pct'] as num?)?.toInt();
+    // Purchases Play has not priced yet are in no sum: while any exist, the
+    // figure is a floor, and the page says "about" rather than a number it
+    // knows to be short.
+    final unpriced = (data['unpriced'] as num?)?.toInt() ?? 0;
+    final approximate = unpriced > 0;
     final breakdown = (data['breakdown'] as List?)
             ?.whereType<Map>()
             .map((m) => MapEntry('${m['key']}', (m['usd'] as num?)?.toDouble() ?? 0))
@@ -221,7 +261,9 @@ class _TransparencyCard extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Text(
-              l10n.supportCoveredPct(pct ?? 0),
+              approximate
+                  ? l10n.supportCoveredPctApprox(pct ?? 0)
+                  : l10n.supportCoveredPct(pct ?? 0),
               style: TextStyle(
                 fontWeight: FontWeight.w700,
                 color: AppTheme.primary,
@@ -252,13 +294,23 @@ class _TransparencyCard extends StatelessWidget {
             // Without a declared cost a percentage would be of nothing; say
             // what was given and stop there.
             Text(
-              l10n.supportCoveredAmount(_usd(covered)),
+              approximate
+                  ? l10n.supportCoveredAmountApprox(_usd(covered))
+                  : l10n.supportCoveredAmount(_usd(covered)),
               style: TextStyle(
                 fontSize: 15,
                 fontWeight: FontWeight.w700,
                 color: AppTheme.textPrimary,
               ),
             ),
+          if (approximate) ...[
+            const SizedBox(height: 8),
+            Text(
+              l10n.supportUnpricedNote(unpriced),
+              style: TextStyle(
+                  fontSize: 12, color: AppTheme.textSecondary, height: 1.5),
+            ),
+          ],
           const SizedBox(height: 10),
           Text(
             l10n.supportApproxNote,
