@@ -219,6 +219,10 @@ def test_default_service_account_path_is_the_mounted_secrets_dir(monkeypatch):
     assert path.parent.name == "secrets" and path.parent.parent.name == "backend"
 
 
+@pytest.mark.skipif(
+    not (REPO_ROOT / ".env.example").exists(),
+    reason="repo-file check; the backend image has no .env.example (runs in PR CI)",
+)
 def test_env_example_asks_for_a_dedicated_least_privilege_account():
     """Item 9: the upload account can push releases; it must not be reused."""
     text = (REPO_ROOT / ".env.example").read_text(encoding="utf-8")
