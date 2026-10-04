@@ -11,7 +11,7 @@
 | **Needs Professional Followup** | No |
 | **Order** | 1 |
 | **Path Id** | path_7-9_islamic_parenting_worship |
-| **Reflection Prompts** | `كيف كان رد فعل طفلك عندما صليت معه؟`, `ما القصة التي أثرت בו أكثر؟` |
+| **Reflection Prompts** | `كيف كان رد فعل طفلك عندما صليت معه؟`, `ما القصة التي أثّرت فيه أكثر؟` |
 | **Unit Ids** | `6730e1c6-ddca-4ff4-8343-b07df6fa6abb`, `8e884b98-41a4-4c29-92c5-aa71e62d7d51`, `b1bd26fc-3144-4928-9bb4-ce2b30f95876` |
 | **Version** | 1.0.0 |
 | **Warning Flags** |  |
@@ -47,7 +47,7 @@
   "estimated_minutes": 7,
   "reflection_prompts": [
     "كيف كان رد فعل طفلك عندما صليت معه؟",
-    "ما القصة التي أثرت בו أكثر؟"
+    "ما القصة التي أثّرت فيه أكثر؟"
   ],
   "warning_flags": [],
   "needs_professional_followup": false,

@@ -47,8 +47,12 @@ SCHEMA_PATH = ROOT / "knowledge_base" / "schema" / "knowledge_unit.schema.json"
 INDEX_JSON = ROOT / "knowledge_base" / "units_index.json"
 
 # CJK regex (Chinese/Japanese/Korean unified ideographs + hiragana/katakana + hangul)
-# CJK (Chinese/Japanese/Korean) + Cyrillic — scripts that never belong in our Arabic/English content
-CJK_RE = re.compile(r"[\u4e00-\u9fff\u3040-\u30ff\uac00-\ud7af\u0400-\u04ff]")
+# CJK (Chinese/Japanese/Korean) + Cyrillic + Hebrew — scripts that never belong in
+# our Arabic/English content. Hebrew added 2026-10-04: «ما القصة التي أثرت בו
+# أكثر؟» had shipped in a 7-9 prayer lesson since launch, and «صورة לעائلة» in a
+# public docs page — model drift into a neighbouring Semitic script that the
+# CJK-only pattern could not see.
+CJK_RE = re.compile(r"[\u4e00-\u9fff\u3040-\u30ff\uac00-\ud7af\u0400-\u04ff\u0590-\u05ff]")
 
 # schema-property → canonical taxonomy set (the meta-check)
 ENUM_FIELDS = {
