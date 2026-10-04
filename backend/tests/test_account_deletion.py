@@ -129,7 +129,9 @@ def test_dependents_point_at_real_columns_in_production():
 
 
 def _value(table: str, col: str, decl: str, device: str, ids: dict):
-    if col == "device_id":
+    # Every column that names a device names this one: a made-up id in PR #29's
+    # `device_aliases.canonical_device` would read as a second, folded device.
+    if col == "device_id" or col.endswith("_device"):
         return device
     if col == "child_id":
         return ids["child"]

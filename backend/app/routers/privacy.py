@@ -307,10 +307,12 @@ DEPENDENT_TABLES: tuple[tuple[str, str, str, str], ...] = (
 OTHER_DEVICE_COLUMNS: tuple[tuple[str, str], ...] = (
     ("referrals", "referrer_device"),
     ("referrals", "referred_device"),
-    # PR #29's device twins: a folded device id → the family device that took
-    # it in. Covered whichever of #26/#29 lands first (skipped while absent).
-    ("device_aliases", "alias"),
-    ("device_aliases", "canonical"),
+    # PR #29's device twins (its v33 tables; skipped while absent): the folded
+    # id's own row is found by its device_id; these are the other ends — the
+    # family device that absorbed it, and the fold's audit log.
+    ("device_aliases", "canonical_device"),
+    ("device_fold_log", "from_device"),
+    ("device_fold_log", "to_device"),
 )
 
 # The Google identity behind a signed-in account (email, display name, and the
@@ -462,6 +464,16 @@ def erase_child(device_id: str, child_id: int) -> dict[str, int]:
     return {t: n for t, n in sorted(counts.items()) if n}
 
 
+def _device_twins():
+    """PR #29's device-twin service, when it is on this branch (it merges
+    first): its hooks make one account of a family's folded device ids."""
+    try:
+        from app.services import device_twins
+    except ImportError:
+        return None
+    return device_twins
+
+
 def erase_account(device_id: str) -> dict:
     """Delete every row tied to the caller's account, in one transaction."""
     conn = get_conn()
@@ -473,6 +485,11 @@ def erase_account(device_id: str) -> dict:
         conn.execute("BEGIN IMMEDIATE")
         tables = _table_columns(conn)
         devices, google_ids = account_devices(conn, device_id, tables)
+        twins = _device_twins()
+        if twins is not None:
+            # PR #29: an id folded into one of these devices (or that one was
+            # folded into) is the same install — the same account.
+            devices = sorted(twins.related_devices(conn, devices))
         marks = ",".join("?" * len(devices))
         counts: Counter = Counter()
 
@@ -497,6 +514,9 @@ def erase_account(device_id: str) -> dict:
                 cur = conn.execute(
                     f"DELETE FROM {table} WHERE {column} IN ({marks})", devices)
                 counts[table] += cur.rowcount
+        # 3b. PR #29's twin bookkeeping (aliases, fold log) for these devices.
+        if twins is not None:
+            counts.update({t: n for t, n in twins.forget_devices(conn, devices).items() if n})
         # 4. The Google identity itself.
         if google_ids:
             gmarks = ",".join("?" * len(google_ids))
