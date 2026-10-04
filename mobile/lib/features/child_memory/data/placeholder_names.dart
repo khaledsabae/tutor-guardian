@@ -179,20 +179,33 @@ RenderedMemoryText renderMemory(
   final found = <(int, int, String)>[];
   if (family.length > 1) {
     final ordered = placeholderOrder(family);
-    final other = lang.startsWith('en') ? 'another child' : 'طفل آخر';
-    for (var i = 0; i < ordered.length && i < siblingLetters.length; i++) {
-      final letter = siblingLetters[i];
+    final english = lang.startsWith('en');
+    for (var i = 0; i < ordered.length; i++) {
+      // The server's labels: the 14 letters, then 15, 16… (sibling_placeholder).
+      final label = RegExp.escape(
+          i < siblingLetters.length ? siblingLetters[i] : '${i + 1}');
       final isSubject = subjectId != null && ordered[i].id == subjectId;
-      final name = isSubject ? other : ordered[i].name;
-      // «للطفل ب» is ل + «الطفل ب» (the server writes it that way).
-      for (final m in RegExp('للطفل $letter(?![ء-ي])').allMatches(stored)) {
-        found.add((m.start, m.end, 'ل$name'));
-      }
-      for (final m in RegExp('الطفل $letter(?![ء-ي])').allMatches(stored)) {
-        found.add((m.start, m.end, name));
+      // «الطفل ب» and, should the extraction have inflected it, «الطفلة ب».
+      // Attached و/ف/ب/ك stay in the text before the name («ونور»،
+      // «بنور»); «للطفل ب» is ل + «الطفل ب» and becomes «لنور».
+      for (final feminine in const [false, true]) {
+        final word = feminine ? 'طفلة' : 'طفل';
+        final other = english
+            ? 'another child'
+            : (feminine ? 'طفلة أخرى' : 'طفل آخر');
+        final name = isSubject ? other : ordered[i].name;
+        for (final m in RegExp('لل$word $label(?![ء-ي0-9])').allMatches(stored)) {
+          found.add((m.start, m.end, 'ل$name'));
+        }
+        for (final m in RegExp('ال$word $label(?![ء-ي0-9])').allMatches(stored)) {
+          found.add((m.start, m.end, name));
+        }
       }
     }
   }
+  // «طفل آخر» / «طفلة أخرى» / "another child" — what the server writes for a
+  // child no longer in the family (MOBILE_API §9.0) — are plain words: no
+  // pattern above or below matches them, so they render exactly as written.
   final name = childName?.trim();
   if (name != null && name.isNotEmpty) {
     for (final m in _arChild.allMatches(stored)) {

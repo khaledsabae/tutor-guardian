@@ -263,6 +263,7 @@ class FollowupAnswer {
     required this.followup,
     this.fact,
     this.noteDropped = false,
+    this.remembered = true,
   });
 
   final Followup followup;
@@ -271,6 +272,11 @@ class FollowupAnswer {
   /// The note was something memory never keeps — discarded; say so gently.
   final bool noteDropped;
 
+  /// False while memory is off: nothing was kept (no outcome, no note, no
+  /// fact), so the usual thank-you — which promises to remember — must not
+  /// show. A server that predates the field kept the answer: missing ⇒ true.
+  final bool remembered;
+
   factory FollowupAnswer.fromJson(Map<String, dynamic> j) => FollowupAnswer(
         followup: Followup.fromJson(
             Map<String, dynamic>.from(j['followup'] as Map? ?? const {})),
@@ -278,7 +284,16 @@ class FollowupAnswer {
             ? MemoryFact.fromJson(Map<String, dynamic>.from(j['fact']))
             : null,
         noteDropped: j['note_dropped'] == true,
+        remembered: j['remembered'] != false,
       );
+}
+
+/// `GET /followups/{id}`: the follow-up, and whether an answer would be kept
+/// (`memory_enabled`, null from a server that predates it).
+class FollowupView {
+  const FollowupView(this.followup, {this.memoryEnabled});
+  final Followup followup;
+  final bool? memoryEnabled;
 }
 
 /// One line of the weekly plan (an action or the worship act).

@@ -126,6 +126,17 @@ class FakeMemoryServer extends TgClient {
   /// The error `POST …/memory` answers with, if any.
   TgApiError? addError;
 
+  /// Answer like PR #39's server: `memory_enabled` on the follow-up routes,
+  /// `remembered` on answers, `409 memory_off` on adding while off. False:
+  /// like today's production, which sends none of it.
+  bool memorySwitchFields = true;
+
+  /// What the follow-up routes say about memory, when it should differ from
+  /// the switch (the switch read is stale: turned off on another session).
+  bool? followupMemoryEnabledOverride;
+
+  bool get _followupMemoryEnabled => followupMemoryEnabledOverride ?? enabled;
+
   int _nextId = 100;
 
   void _guardMemory() {
@@ -236,6 +247,9 @@ class FakeMemoryServer extends TgClient {
     _requireProof();
     final err = addError;
     if (err != null) throw err;
+    if (memorySwitchFields && !enabled) {
+      throw coded(409, 'memory_off', message: 'الذاكرة متوقفة');
+    }
     final row = factJson(_nextId++, childId,
         category: category, fact: fact, source: 'parent_manual');
     (facts[childId] ??= []).insert(0, row);
@@ -286,7 +300,9 @@ class FakeMemoryServer extends TgClient {
       {int limit = 10, int? tzOffsetMinutes}) async {
     calls.add('GET /api/children/followups/due tz=$tzOffsetMinutes');
     _requireProof();
-    return {'followups': due};
+    if (!memorySwitchFields) return {'followups': due};
+    final on = _followupMemoryEnabled;
+    return {'followups': on ? due : const [], 'memory_enabled': on};
   }
 
   @override
@@ -295,7 +311,10 @@ class FakeMemoryServer extends TgClient {
     _requireProof();
     final f = followups[followupId];
     if (f == null) throw coded(404, 'followup_not_found');
-    return {'followup': f};
+    return {
+      'followup': f,
+      if (memorySwitchFields) 'memory_enabled': _followupMemoryEnabled,
+    };
   }
 
   @override
@@ -310,6 +329,15 @@ class FakeMemoryServer extends TgClient {
     if (f['status'] != 'pending') {
       throw coded(409, 'followup_closed');
     }
+    if (memorySwitchFields && !enabled) {
+      // Nothing kept: the follow-up stays pending, no fact, no note.
+      return {
+        'followup': f,
+        'fact': null,
+        'note_dropped': false,
+        'remembered': false,
+      };
+    }
     f['status'] = 'answered';
     f['outcome'] = outcome;
     f['note'] = noteDropped ? null : note;
@@ -319,6 +347,7 @@ class FakeMemoryServer extends TgClient {
       'fact': factJson(_nextId++, f['child_id'] as int,
           category: 'outcome', fact: 'جُرِّب مع طفلي', source: 'followup'),
       'note_dropped': noteDropped,
+      if (memorySwitchFields) 'remembered': true,
     };
   }
 

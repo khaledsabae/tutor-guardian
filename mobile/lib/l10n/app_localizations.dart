@@ -9293,8 +9293,26 @@ abstract class AppLocalizations {
   /// No description provided for @followupMemoryOff.
   ///
   /// In ar, this message translates to:
-  /// **'الذاكرة متوقّفة، فلا يسأل المربّي عن المتابعات ولا يحفظ إجاباتها. يمكنك تشغيلها من «ما يعرفه المربّي».'**
+  /// **'الذاكرة متوقّفة، فلا يحفظ المربّي إجابات المتابعات الآن. شغّلها إن أردت أن تجيب.'**
   String get followupMemoryOff;
+
+  /// No description provided for @followupNotSaved.
+  ///
+  /// In ar, this message translates to:
+  /// **'الذاكرة متوقّفة، فلم نحفظ إجابتك.'**
+  String get followupNotSaved;
+
+  /// No description provided for @memoryTurnOn.
+  ///
+  /// In ar, this message translates to:
+  /// **'شغّل الذاكرة'**
+  String get memoryTurnOn;
+
+  /// No description provided for @memoryOffCannotAdd.
+  ///
+  /// In ar, this message translates to:
+  /// **'الذاكرة متوقّفة، فلا تُضاف إليها معلومات جديدة. شغّلها لتضيف.'**
+  String get memoryOffCannotAdd;
 }
 
 class _AppLocalizationsDelegate

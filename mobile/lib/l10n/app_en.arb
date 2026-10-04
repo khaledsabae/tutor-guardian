@@ -1624,5 +1624,8 @@
   "deleteAccountCheckAgain": "Check again",
   "accountDeletedGoogleKept": "We kept your Google account record and its backups, because this phone's link to it wasn't verified. To remove them — and any other phone linked to it — email us at {email}.",
   "accountDeletedGoogleUnknown": "We couldn't confirm whether your Google account record was deleted with it. To check, or to remove it, email us at {email}.",
-  "followupMemoryOff": "Memory is off, so Almorabbi doesn't ask about follow-ups or keep the answers. You can turn it on in \"What Almorabbi knows\"."
+  "followupMemoryOff": "Memory is paused, so Almorabbi isn't keeping follow-up answers right now. Turn it on if you'd like to answer.",
+  "followupNotSaved": "Memory is off, so your answer wasn't saved.",
+  "memoryTurnOn": "Turn memory on",
+  "memoryOffCannotAdd": "Memory is off, so nothing new is added to it. Turn it on to add notes."
 }

@@ -5428,5 +5428,15 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get followupMemoryOff =>
-      'Memory is off, so Almorabbi doesn\'t ask about follow-ups or keep the answers. You can turn it on in \"What Almorabbi knows\".';
+      'Memory is paused, so Almorabbi isn\'t keeping follow-up answers right now. Turn it on if you\'d like to answer.';
+
+  @override
+  String get followupNotSaved => 'Memory is off, so your answer wasn\'t saved.';
+
+  @override
+  String get memoryTurnOn => 'Turn memory on';
+
+  @override
+  String get memoryOffCannotAdd =>
+      'Memory is off, so nothing new is added to it. Turn it on to add notes.';
 }

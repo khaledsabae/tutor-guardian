@@ -36,6 +36,7 @@ import 'package:almorabbi/api/tg_client.dart';
 import 'package:almorabbi/core/app_closer.dart';
 import 'package:almorabbi/features/child_memory/data/local_wipe.dart';
 import 'package:almorabbi/features/child_memory/data/memory_models.dart';
+import 'package:almorabbi/features/child_memory/data/memory_repository.dart';
 import 'package:almorabbi/features/child_memory/data/pending_deletion.dart';
 import 'package:almorabbi/features/child_memory/data/placeholder_names.dart';
 import 'package:almorabbi/features/child_memory/screens/account_deletion_screen.dart';
@@ -954,6 +955,238 @@ void main() {
           xml.substring(xml.indexOf('<$tag>'), xml.indexOf('</$tag>'));
       expect(rule.hasMatch(section('cloud-backup')), isTrue);
       expect(rule.hasMatch(section('device-transfer')), isTrue);
+    });
+  });
+  // ── Addendum: PR #39's server contract ───────────────────────────────
+  group('addendum (#39) · memory off reaches every route', () {
+    Widget today() => Scaffold(
+          body: ListView(
+            padding: const EdgeInsets.all(16),
+            children: const [TodayLoopCards(profile: _ahmad)],
+          ),
+        );
+
+    Widget sheetHome(int id) => Scaffold(
+          body: Builder(
+            builder: (context) => TextButton(
+              onPressed: () => showFollowupSheet(context,
+                  followupId: id, source: FollowupSource.push),
+              child: const Text('open'),
+            ),
+          ),
+        );
+
+    test('1 · due: `memory_enabled: false` hides the card; no field = old server',
+        () async {
+      final off = _client((req) async => _json({
+            'followups': [followupJson(7, 12)],
+            'memory_enabled': false,
+          }));
+      expect(await MemoryRepository(off.client).dueFollowups(), isEmpty);
+      final old = _client((req) async => _json({
+            'followups': [followupJson(7, 12)],
+          }));
+      expect(await MemoryRepository(old.client).dueFollowups(), hasLength(1));
+    });
+
+    testWidgets('1 · the server says off while the switch read says on: no card',
+        (tester) async {
+      final server = FakeMemoryServer()
+        ..proven = true
+        ..due = [followupJson(7, 12)]
+        ..followupMemoryEnabledOverride = false;
+      await pumpMemoryApp(tester, today(), server: server);
+      await settle(tester);
+      expect(find.text('متابعة مع أحمد'), findsNothing);
+    });
+
+    testWidgets('2 · a paused follow-up: no answers, and a way to turn memory on',
+        (tester) async {
+      final server = FakeMemoryServer()
+        ..proven = true
+        ..enabled = false
+        ..followups[7] = followupJson(7, 12);
+      await pumpMemoryApp(tester, sheetHome(7), server: server);
+      await tester.tap(find.text('open'));
+      await settle(tester);
+      expect(find.byType(ChoiceChip), findsNothing);
+      expect(find.textContaining('الذاكرة متوقّفة'), findsOneWidget);
+
+      await tester.tap(find.text('شغّل الذاكرة'));
+      await settle(tester);
+      expect(server.calls,
+          contains('PUT /api/children/memory/settings enabled=true'));
+      expect(server.enabled, isTrue);
+      // Read again — the server's word, not the switch's — and the four are
+      // back.
+      expect(
+          server.calls.where((c) => c == 'GET /api/children/followups/7'),
+          hasLength(2));
+      expect(find.byType(ChoiceChip), findsNWidgets(4));
+    });
+
+    testWidgets('2 · the field alone pauses the sheet (switch read says on)',
+        (tester) async {
+      final server = FakeMemoryServer()
+        ..proven = true
+        ..followupMemoryEnabledOverride = false
+        ..followups[7] = followupJson(7, 12);
+      await pumpMemoryApp(tester, sheetHome(7), server: server);
+      await tester.tap(find.text('open'));
+      await settle(tester);
+      expect(find.byType(ChoiceChip), findsNothing);
+      expect(find.text('شغّل الذاكرة'), findsOneWidget);
+    });
+
+    testWidgets('3 · `remembered: false`: "not saved", never the thank-you',
+        (tester) async {
+      final server = FakeMemoryServer()
+        ..proven = true
+        ..followups[7] = followupJson(7, 12);
+      await pumpMemoryApp(tester, sheetHome(7), server: server);
+      await tester.tap(find.text('open'));
+      await settle(tester);
+      // Switched off on another session while this sheet was open.
+      server.enabled = false;
+      await tester.tap(find.text('نجحت'));
+      await tester.pump();
+      await tester.tap(find.text('إرسال'));
+      await settle(tester);
+      expect(find.text('الذاكرة متوقّفة، فلم نحفظ إجابتك.'), findsOneWidget);
+      expect(find.text('شكرًا لك 🤍'), findsNothing);
+      expect(server.followups[7]!['status'], 'pending');
+    });
+
+    test('3 · a missing `remembered` (older server) means it was kept', () {
+      final a = FollowupAnswer.fromJson({
+        'followup': followupJson(7, 12, status: 'answered', outcome: 'worked'),
+        'fact': null,
+        'note_dropped': false,
+      });
+      expect(a.remembered, isTrue);
+      expect(
+          FollowupAnswer.fromJson({
+            'followup': followupJson(7, 12),
+            'remembered': false,
+          }).remembered,
+          isFalse);
+    });
+
+    testWidgets('4 · "add a fact" is off while memory is; editing is not',
+        (tester) async {
+      final server = FakeMemoryServer()
+        ..proven = true
+        ..enabled = false
+        ..facts[12] = [factJson(1, 12)];
+      await pumpMemoryApp(
+          tester, const ChildMemoryScreen(childId: 12, childName: 'أحمد'),
+          server: server);
+      await settle(tester);
+      final add = find.widgetWithText(OutlinedButton, 'أضف معلومة');
+      await tester.scrollUntilVisible(add, 300,
+          scrollable: find.byType(Scrollable).first);
+      expect(tester.widget<OutlinedButton>(add).onPressed, isNull);
+      expect(find.textContaining('شغّلها لتضيف'), findsOneWidget);
+      // Editing stays open while off.
+      await tester.scrollUntilVisible(find.byIcon(Icons.more_vert_rounded), -300,
+          scrollable: find.byType(Scrollable).first);
+      await tester.tap(find.byIcon(Icons.more_vert_rounded));
+      await settle(tester);
+      expect(find.text('تعديل'), findsWidgets);
+    });
+
+    testWidgets('4 · a 409 memory_off that happens anyway is explained',
+        (tester) async {
+      final server = FakeMemoryServer()
+        ..proven = true
+        ..facts[12] = [factJson(1, 12)]
+        ..addError = coded(409, 'memory_off', message: 'الذاكرة متوقفة');
+      await pumpMemoryApp(
+          tester, const ChildMemoryScreen(childId: 12, childName: 'أحمد'),
+          server: server);
+      await settle(tester);
+      final add = find.text('أضف معلومة');
+      await tester.scrollUntilVisible(add, 300,
+          scrollable: find.byType(Scrollable).first);
+      await tester.tap(add);
+      await settle(tester);
+      await tester.enterText(find.byType(TextField), 'يحب الرسم');
+      await tester.pump();
+      await tester.tap(find.text('حفظ'));
+      await settle(tester);
+      expect(
+          find.text(
+              'الذاكرة متوقّفة، فلا تُضاف إليها معلومات جديدة. شغّلها لتضيف.'),
+          findsOneWidget);
+    });
+
+    test('5 · «طفل آخر», «طفلة أخرى» and "another child" render as written',
+        () {
+      final family = [
+        const FamilyMember(id: 12, name: 'أحمد'),
+        const FamilyMember(id: 30, name: 'ليلى'),
+      ];
+      expect(
+          renderMemoryText('طفلي يغار من طفل آخر',
+              childName: 'أحمد', family: family, subjectId: 12),
+          'أحمد يغار من طفل آخر');
+      expect(
+          renderMemoryText('طفلي تحب طفلة أخرى ولطفل آخر لعبة',
+              childName: 'ليلى', family: family, subjectId: 30),
+          'ليلى تحب طفلة أخرى ولطفل آخر لعبة');
+      expect(
+          renderMemoryText('My child hits another child',
+              childName: 'Ahmad', family: family, subjectId: 12, lang: 'en'),
+          'Ahmad hits another child');
+    });
+
+    test('5 · the server\'s other sibling forms: feminine, attached, numbered',
+        () {
+      final family = [
+        const FamilyMember(id: 12, name: 'أحمد'),
+        const FamilyMember(id: 30, name: 'ليلى'),
+      ];
+      final r = renderMemory('الطفلة ب تحب طفلي وتلعب بالطفل ب وللطفلة ب',
+          childName: 'أحمد', family: family, subjectId: 12);
+      expect(r.text, 'ليلى تحب أحمد وتلعب بليلى ولليلى');
+      expect(r.restore(r.text), 'الطفلة ب تحب طفلي وتلعب بالطفل ب وللطفلة ب');
+      // After the 14 letters the server counts: «الطفل 15».
+      final big = [
+        for (var i = 1; i <= 15; i++) FamilyMember(id: i, name: 'طفل$i'),
+      ];
+      expect(
+          renderMemoryText('يحب الطفل 15', family: big, subjectId: 1),
+          'يحب طفل15');
+      expect(renderMemoryText('يحب الطفل 150', family: big, subjectId: 1),
+          'يحب الطفل 150',
+          reason: 'a longer number is not that label');
+    });
+
+    testWidgets('5 · deleting a child re-fetches memory before re-rendering it',
+        (tester) async {
+      final server = _DeletingServer()
+        ..proven = true
+        ..children = [childJson(12, 'أحمد'), childJson(30, 'نور')]
+        ..facts[12] = [factJson(1, 12, fact: 'طفلي يغار من الطفل ب')];
+      final container = await pumpMemoryApp(
+          tester, const ChildMemoryScreen(childId: 12, childName: 'أحمد'),
+          server: server);
+      await settle(tester);
+      expect(find.text('أحمد يغار من نور'), findsOneWidget);
+      final reads =
+          server.calls.where((c) => c == 'GET /api/children/12/memory').length;
+
+      // The server rewrites the sibling's mention as it deletes the child.
+      server.facts[12]!.first['fact'] = 'طفلي يغار من طفل آخر';
+      final keepAlive = container.listen(deleteChildProvider, (_, _) {});
+      addTearDown(keepAlive.close);
+      await container.read(deleteChildProvider.notifier).call(30);
+      await settle(tester);
+      expect(
+          server.calls.where((c) => c == 'GET /api/children/12/memory').length,
+          greaterThan(reads));
+      expect(find.text('أحمد يغار من طفل آخر'), findsOneWidget);
+      expect(find.text('أحمد يغار من نور'), findsNothing);
     });
   });
 }

@@ -1739,5 +1739,8 @@
   "@accountDeletedGoogleKept": {"placeholders": {"email": {"type": "String"}}},
   "accountDeletedGoogleUnknown": "لم نتمكّن من التأكّد هل حُذف سجلّ حسابك في Google معه. للتأكّد أو لحذفه راسلنا على {email}.",
   "@accountDeletedGoogleUnknown": {"placeholders": {"email": {"type": "String"}}},
-  "followupMemoryOff": "الذاكرة متوقّفة، فلا يسأل المربّي عن المتابعات ولا يحفظ إجاباتها. يمكنك تشغيلها من «ما يعرفه المربّي»."
+  "followupMemoryOff": "الذاكرة متوقّفة، فلا يحفظ المربّي إجابات المتابعات الآن. شغّلها إن أردت أن تجيب.",
+  "followupNotSaved": "الذاكرة متوقّفة، فلم نحفظ إجابتك.",
+  "memoryTurnOn": "شغّل الذاكرة",
+  "memoryOffCannotAdd": "الذاكرة متوقّفة، فلا تُضاف إليها معلومات جديدة. شغّلها لتضيف."
 }

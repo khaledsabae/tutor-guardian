@@ -200,6 +200,11 @@ class _ChildMemoryScreenState extends ConsumerState<ChildMemoryScreen> {
         childName: widget.childName,
         family: family,
         childId: widget.childId,
+        // The live switch first (it changes on this screen), else what came
+        // with the list; adding is refused while memory is off (§9.2).
+        memoryOn: ref.watch(memorySettingsProvider).valueOrNull?.enabled ??
+            memory.settings?.enabled ??
+            true,
         onConfirm: (f) => _setStatus(f, 'active'),
         onReject: (f) => _setStatus(f, 'rejected'),
         onEdit: (f, shown) => _editFact(f, shown, memory.maxFactChars),
@@ -276,6 +281,7 @@ class _MemoryList extends StatelessWidget {
     required this.childName,
     required this.family,
     required this.childId,
+    required this.memoryOn,
     required this.onConfirm,
     required this.onReject,
     required this.onEdit,
@@ -288,6 +294,7 @@ class _MemoryList extends StatelessWidget {
   final String childName;
   final List<FamilyMember> family;
   final int childId;
+  final bool memoryOn;
   final ValueChanged<MemoryFact> onConfirm;
   final ValueChanged<MemoryFact> onReject;
   final void Function(MemoryFact fact, RenderedMemoryText shown) onEdit;
@@ -348,11 +355,20 @@ class _MemoryList extends StatelessWidget {
         Align(
           alignment: AlignmentDirectional.centerStart,
           child: OutlinedButton.icon(
-            onPressed: onAdd,
+            // Memory off: nothing new goes into memory by any route (§9.2).
+            // Editing, confirming and deleting stay open.
+            onPressed: memoryOn ? onAdd : null,
             icon: const Icon(Icons.add_rounded),
             label: Text(l10n.memoryAddFact),
           ),
         ),
+        if (!memoryOn)
+          Padding(
+            padding: const EdgeInsetsDirectional.only(start: 4, top: 6),
+            child: Text(l10n.memoryOffCannotAdd,
+                style: TextStyle(
+                    color: colors.textSecondary, fontSize: 12.5, height: 1.5)),
+          ),
         if (hasAny) ...[
           const SizedBox(height: 12),
           Align(

@@ -21,6 +21,9 @@ String memoryErrorText(AppLocalizations l10n, Object e, {int maxChars = 160}) {
         return l10n.memoryFactInvalid;
       case 'sensitive':
         return l10n.memorySensitive;
+      case 'memory_off':
+        // Added while memory was off (§9.3): nothing was stored.
+        return l10n.memoryOffCannotAdd;
       case 'followup_closed':
         return l10n.followupClosed;
       case 'followup_not_found':

@@ -5363,5 +5363,15 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get followupMemoryOff =>
-      'الذاكرة متوقّفة، فلا يسأل المربّي عن المتابعات ولا يحفظ إجاباتها. يمكنك تشغيلها من «ما يعرفه المربّي».';
+      'الذاكرة متوقّفة، فلا يحفظ المربّي إجابات المتابعات الآن. شغّلها إن أردت أن تجيب.';
+
+  @override
+  String get followupNotSaved => 'الذاكرة متوقّفة، فلم نحفظ إجابتك.';
+
+  @override
+  String get memoryTurnOn => 'شغّل الذاكرة';
+
+  @override
+  String get memoryOffCannotAdd =>
+      'الذاكرة متوقّفة، فلا تُضاف إليها معلومات جديدة. شغّلها لتضيف.';
 }

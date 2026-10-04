@@ -75,6 +75,9 @@ class MemoryRepository {
     try {
       final json = await _client.getDueFollowups(
           tzOffsetMinutes: tzOffsetMinutes());
+      // Memory off pauses the loop (§9.2); a server that predates the field
+      // never said so.
+      if (json['memory_enabled'] == false) return const <Followup>[];
       return [
         for (final f in (json['followups'] as List? ?? const []))
           if (f is Map) Followup.fromJson(Map<String, dynamic>.from(f)),
@@ -84,11 +87,15 @@ class MemoryRepository {
     }
   }
 
-  Future<Followup> followup(int followupId) async {
+  Future<FollowupView> followup(int followupId) async {
     final json = await _client
         .withDeviceProof(() => _client.getFollowup(followupId));
-    return Followup.fromJson(
-        Map<String, dynamic>.from(json['followup'] as Map? ?? const {}));
+    final enabled = json['memory_enabled'];
+    return FollowupView(
+      Followup.fromJson(
+          Map<String, dynamic>.from(json['followup'] as Map? ?? const {})),
+      memoryEnabled: enabled is bool ? enabled : null,
+    );
   }
 
   Future<FollowupAnswer> answer(int followupId,

@@ -86,6 +86,10 @@ class FollowupSheet extends ConsumerStatefulWidget {
 class _FollowupSheetState extends ConsumerState<FollowupSheet> {
   final TextEditingController _note = TextEditingController();
   Followup? _followup;
+
+  /// What the server said about memory with the follow-up (null: not said —
+  /// an older server, or the follow-up came from the Today card).
+  bool? _memoryEnabled;
   Object? _loadError;
   bool _loading = false;
   String? _outcome;
@@ -113,10 +117,12 @@ class _FollowupSheetState extends ConsumerState<FollowupSheet> {
       _loadError = null;
     });
     try {
-      final f = await ref.read(memoryRepositoryProvider).followup(widget.followupId);
+      final view =
+          await ref.read(memoryRepositoryProvider).followup(widget.followupId);
       if (!mounted) return;
       setState(() {
-        _followup = f;
+        _followup = view.followup;
+        _memoryEnabled = view.memoryEnabled;
         _loading = false;
       });
     } catch (e) {
@@ -145,7 +151,11 @@ class _FollowupSheetState extends ConsumerState<FollowupSheet> {
             outcome: outcome,
             note: _note.text.trim().isEmpty ? null : _note.text.trim(),
           );
-      unawaited(Analytics.followupAnswered(outcome, widget.source));
+      // Counted only when kept: an answer given while memory was off is not
+      // a reply the loop can use.
+      if (answer.remembered) {
+        unawaited(Analytics.followupAnswered(outcome, widget.source));
+      }
       container.invalidate(dueFollowupsProvider);
       container.invalidate(childMemoryProvider(f.childId));
       if (!mounted) return;
@@ -166,6 +176,36 @@ class _FollowupSheetState extends ConsumerState<FollowupSheet> {
         _sending = false;
         _error = describeActionFailure(context, e);
       });
+    } catch (e) {
+      if (!mounted) return;
+      setState(() {
+        _sending = false;
+        _error = describeActionFailure(context, e);
+      });
+    }
+  }
+
+  /// "Turn memory on" from a paused follow-up: switching on needs a proven
+  /// session (the repository proves and retries), then the follow-up is read
+  /// again — the server now says whether an answer would be kept.
+  Future<void> _turnMemoryOn() async {
+    if (_sending) return;
+    setState(() {
+      _sending = true;
+      _error = null;
+    });
+    final container = ProviderScope.containerOf(context, listen: false);
+    try {
+      await container.read(memoryRepositoryProvider).setEnabled(true);
+      container
+        ..invalidate(memorySettingsProvider)
+        ..invalidate(dueFollowupsProvider);
+      if (!mounted) return;
+      setState(() {
+        _sending = false;
+        _memoryEnabled = null;
+      });
+      await _load();
     } catch (e) {
       if (!mounted) return;
       setState(() {
@@ -209,7 +249,9 @@ class _FollowupSheetState extends ConsumerState<FollowupSheet> {
     final proof = ref.watch(deviceProofStateProvider);
     final Widget content;
     if (_answer != null) {
-      content = _Thanks(answer: _answer!);
+      content = _answer!.remembered
+          ? _Thanks(answer: _answer!)
+          : const _NotSaved();
     } else if (_loading) {
       content = proof.phase == ProofPhase.confirming
           ? const ProofConfirmingView()
@@ -223,11 +265,16 @@ class _FollowupSheetState extends ConsumerState<FollowupSheet> {
       content = const SizedBox.shrink();
     } else if (!_followup!.isPending) {
       content = _Closed(followup: _followup!);
-    } else if (ref.watch(memorySettingsProvider).valueOrNull?.enabled ==
-        false) {
+    } else if (_memoryEnabled == false ||
+        ref.watch(memorySettingsProvider).valueOrNull?.enabled == false) {
       // Memory is off: the loop is paused. No answer is offered that memory
       // would then keep — and a push sent before the switch can still land.
-      content = _MemoryOff(followup: _followup!);
+      content = _MemoryOff(
+        followup: _followup!,
+        busy: _sending,
+        error: _error,
+        onTurnOn: _turnMemoryOn,
+      );
     } else {
       content = _Ask(
         followup: _followup!,
@@ -356,9 +403,17 @@ class _Ask extends ConsumerWidget {
 }
 
 class _MemoryOff extends ConsumerWidget {
-  const _MemoryOff({required this.followup});
+  const _MemoryOff({
+    required this.followup,
+    required this.busy,
+    required this.error,
+    required this.onTurnOn,
+  });
 
   final Followup followup;
+  final bool busy;
+  final String? error;
+  final VoidCallback onTurnOn;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -384,6 +439,49 @@ class _MemoryOff extends ConsumerWidget {
         Text(l10n.followupMemoryOff,
             style: TextStyle(
                 color: colors.textSecondary, fontSize: 13.5, height: 1.6)),
+        if (error != null) ...[
+          const SizedBox(height: 8),
+          Text(error!,
+              style: TextStyle(color: colors.dangerFg, fontSize: 13, height: 1.5)),
+        ],
+        const SizedBox(height: 16),
+        FilledButton(
+          onPressed: busy ? null : onTurnOn,
+          child: busy
+              ? SizedBox(
+                  width: 20,
+                  height: 20,
+                  child: CircularProgressIndicator(
+                      strokeWidth: 2, color: colors.onPrimary),
+                )
+              : Text(l10n.memoryTurnOn),
+        ),
+        const SizedBox(height: 4),
+        TextButton(
+          onPressed: busy ? null : () => Navigator.of(context).maybePop(),
+          child: Text(l10n.close),
+        ),
+      ],
+    );
+  }
+}
+
+/// An answer given while memory was off: nothing was kept — not the
+/// outcome, not the note — so no thank-you that promises to remember.
+class _NotSaved extends StatelessWidget {
+  const _NotSaved();
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final colors = context.colors;
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Text(l10n.followupNotSaved,
+            textAlign: TextAlign.center,
+            style: TextStyle(color: colors.ink, fontSize: 15, height: 1.6)),
         const SizedBox(height: 16),
         OutlinedButton(
           onPressed: () => Navigator.of(context).maybePop(),
