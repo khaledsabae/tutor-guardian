@@ -83,12 +83,23 @@ class SessionResponse {
   final String sessionId;
   final String token;
 
-  const SessionResponse({required this.sessionId, required this.token});
+  /// The device the server minted for. Absent from older servers; differs
+  /// from the requested id only when the server re-attached a split-off twin
+  /// to the family's device.
+  final String? deviceId;
+
+  const SessionResponse({
+    required this.sessionId,
+    required this.token,
+    this.deviceId,
+  });
 
   factory SessionResponse.fromJson(Map<String, dynamic> json) {
+    final deviceId = json['device_id'];
     return SessionResponse(
       sessionId: json['session_id'] as String,
       token: json['token'] as String,
+      deviceId: deviceId is String ? deviceId : null,
     );
   }
 }
