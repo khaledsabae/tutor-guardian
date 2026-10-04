@@ -43,16 +43,44 @@ class TgApiError implements Exception {
   /// `{"detail": {"error": "<code>", ...extra}}`. Before this field existed the
   /// whole object was thrown away and every refusal read as "HTTP 409", so a
   /// screen could not tell "already recorded" (show ✓) from a real failure.
+  /// The branchable errors of §9.0 send it as `detail.code` instead, e.g.
+  /// `device_proof_required`. Null for plain-string details and transport
+  /// failures.
   final String? code;
 
-  /// The rest of that object (`next_stage`, `available_on`, `markable_up_to`…).
+  /// The rest of that object (`next_stage`, `available_on`, `markable_up_to`,
+  /// `support_email`, `available_at`…), as the server sent it.
   final Map<String, dynamic>? details;
 
   const TgApiError(this.statusCode, this.message,
       {this.retryAfter, this.code, this.details});
 
+  /// The address to offer when the automatic path cannot work (§9.0.1).
+  String? get supportEmail {
+    final v = details?['support_email'];
+    return v is String && v.isNotEmpty ? v : null;
+  }
+
+  /// When a paused route opens again (`device_proof_cooldown`), as UTC. The
+  /// contract sends ISO 8601 with `Z`; a value without a zone is UTC as well,
+  /// never the phone's local time.
+  DateTime? get availableAt {
+    final v = details?['available_at'];
+    if (v is! String || v.trim().isEmpty) return null;
+    final s = v.trim();
+    final zoned = RegExp(r'(Z|[+-]\d{2}:?\d{2})$').hasMatch(s);
+    return DateTime.tryParse(zoned ? s : '${s.replaceFirst(' ', 'T')}Z')
+        ?.toUtc();
+  }
+
+  /// The route answered "not here" rather than "not yours": a server that
+  /// predates the endpoint. FastAPI's own 404 carries no code.
+  bool get isMissingEndpoint =>
+      (statusCode == 404 || statusCode == 405) && code == null;
+
   @override
-  String toString() => 'TgApiError(${statusCode ?? '?'}): $message';
+  String toString() =>
+      'TgApiError(${statusCode ?? '?'}${code == null ? '' : ' $code'}): $message';
 }
 
 /// One event yielded by `streamQuery`.
@@ -330,6 +358,32 @@ class _AuthStore {
   Future<void> clearChildToken() async {
     await _safeDelete(_kChildToken);
   }
+
+  /// After the account was deleted (MOBILE_API §10): forget the session and
+  /// every secret this install held, and become a brand-new device.
+  ///
+  /// The fresh id is written to the keystore and to the backup straight
+  /// away, rather than left for [getOrCreateDeviceId] to make on demand, so
+  /// that no later read — this process or the next launch — can fall back to
+  /// the erased id from a copy that survived.
+  Future<void> startOverAsNewDevice() async {
+    _cachedSessionId = null;
+    _cachedToken = null;
+    try {
+      // Session, token, device proof, child tokens, child-mode PIN: all of
+      // it belonged to the account that no longer exists.
+      await _storage.deleteAll();
+    } catch (_) {
+      for (final key in [_kSessionId, _kToken, _kDeviceProof, _kChildToken,
+          _kActiveChildId, _kDeviceId]) {
+        await _safeDelete(key);
+      }
+    }
+    final fresh = _uuid.v4();
+    _cachedDeviceId = fresh;
+    await _safeWrite(_kDeviceId, fresh);
+    await _writeDeviceIdBackup(fresh);
+  }
 }
 
 /// The Tutor Guardian API client.
@@ -400,6 +454,26 @@ class TgClient {
   /// Settable so `tgClientProvider` can wire the Riverpod active child into
   /// the shared instance.
   Future<int?> Function()? onNeedActiveChildId;
+
+  /// Runs the device-proof challenge for this session (MOBILE_API §9.0.1):
+  /// completes once the session is proven, throws a [TgApiError] when it
+  /// cannot be. Wired by `DeviceProofService.init`; null means "no way to
+  /// prove here", and a `device_proof_required` reaches the caller as is.
+  Future<void> Function()? onDeviceProofRequired;
+
+  /// Sends [send]; on `device_proof_required` proves the session once and
+  /// sends it once more — the client flow §9.0 prescribes. A cooldown
+  /// (`device_proof_cooldown`) is never retried: the proof cannot lift it.
+  Future<T> withDeviceProof<T>(Future<T> Function() send) async {
+    try {
+      return await send();
+    } on TgApiError catch (e) {
+      final prove = onDeviceProofRequired;
+      if (e.code != 'device_proof_required' || prove == null) rethrow;
+      await prove();
+      return await send();
+    }
+  }
 
   /// A stream that delivers no bytes for this long is treated as dead
   /// (audit M13). The server sends an SSE comment every 15 s while the
@@ -1498,35 +1572,180 @@ class TgClient {
     return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
   }
 
-  Future<Map<String, dynamic>> resetChildProgress(int childId) async {
-    final session = await ensureSession();
-    final token = session.token;
-    final resp = await _http
-        .delete(
-          Uri.parse('$_baseUrl/api/children/$childId/progress'),
-          headers: _authHeaders(token),
-        )
-        .timeout(AppConfig.httpTimeout);
-    if (resp.statusCode != 200) {
-      throw _wrap(resp);
-    }
-    return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
+  /// `DELETE /api/children/{id}/progress`. Destructive: once this device has
+  /// proven, the server wants a proven session (§9.0), so a
+  /// `device_proof_required` proves and retries once.
+  Future<Map<String, dynamic>> resetChildProgress(int childId) =>
+      withDeviceProof(() async {
+        final session = await ensureSession();
+        final token = session.token;
+        final resp = await _http
+            .delete(
+              Uri.parse('$_baseUrl/api/children/$childId/progress'),
+              headers: _authHeaders(token),
+            )
+            .timeout(AppConfig.httpTimeout);
+        if (resp.statusCode != 200) {
+          throw _wrap(resp);
+        }
+        return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
+      });
+
+  /// `DELETE /api/children/{id}` — removes the child profile entirely. Same
+  /// proof rule as [resetChildProgress].
+  Future<Map<String, dynamic>> deleteChild(int childId) =>
+      withDeviceProof(() async {
+        final session = await ensureSession();
+        final token = session.token;
+        final resp = await _http
+            .delete(
+              Uri.parse('$_baseUrl/api/children/$childId'),
+              headers: _authHeaders(token),
+            )
+            .timeout(AppConfig.httpTimeout);
+        if (resp.statusCode != 200) {
+          throw _wrap(resp);
+        }
+        return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
+      });
+
+  // ── «المربّي يعرف ابنك» — MOBILE_API §9–§10 ──────────────────────────
+  //
+  // Raw calls: each returns the decoded body or throws [TgApiError] (with
+  // `code` for the branchable errors). Which of them prove-and-retry on
+  // `device_proof_required` is decided one level up, in MemoryRepository —
+  // the Today cards must never start a challenge on their own.
+
+  /// One authed JSON call; [ok] lists the statuses that carry the answer.
+  Future<Map<String, dynamic>> _authedJson(
+    String method,
+    String path, {
+    Map<String, String>? query,
+    Object? body,
+    Set<int> ok = const {200},
+  }) {
+    return _guard(() async {
+      final session = await ensureSession();
+      final uri = Uri.parse('$_baseUrl$path')
+          .replace(queryParameters: query == null || query.isEmpty ? null : query);
+      final request = http.Request(method, uri)
+        ..headers.addAll(_authHeaders(session.token));
+      if (body != null) request.body = jsonEncode(body);
+      final resp = await http.Response.fromStream(
+        await _http.send(request).timeout(AppConfig.httpTimeout),
+      ).timeout(AppConfig.httpTimeout);
+      if (!ok.contains(resp.statusCode)) throw _wrap(resp);
+      final text = utf8.decode(resp.bodyBytes);
+      if (text.trim().isEmpty) return <String, dynamic>{};
+      final decoded = jsonDecode(text);
+      return decoded is Map<String, dynamic> ? decoded : <String, dynamic>{};
+    });
   }
 
-  /// `DELETE /api/children/{id}` — removes the child profile entirely.
-  Future<Map<String, dynamic>> deleteChild(int childId) async {
-    final session = await ensureSession();
-    final token = session.token;
-    final resp = await _http
-        .delete(
-          Uri.parse('$_baseUrl/api/children/$childId'),
-          headers: _authHeaders(token),
-        )
-        .timeout(AppConfig.httpTimeout);
-    if (resp.statusCode != 200) {
-      throw _wrap(resp);
-    }
-    return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
+  /// `GET /api/device-proof` → `{proven, proven_at, push_registered,
+  /// cooldown_until, deletion_paused_until}`.
+  Future<Map<String, dynamic>> getDeviceProofStatus() =>
+      _authedJson('GET', '/api/device-proof');
+
+  /// `POST /api/device-proof/start` → `202 {challenge_id, expires_in}`; the
+  /// code itself arrives as a silent FCM data message.
+  Future<Map<String, dynamic>> startDeviceProof() =>
+      _authedJson('POST', '/api/device-proof/start', ok: const {200, 202});
+
+  /// `POST /api/device-proof/complete` with the same session that started.
+  Future<Map<String, dynamic>> completeDeviceProof(
+          String challengeId, String code) =>
+      _authedJson('POST', '/api/device-proof/complete',
+          body: {'challenge_id': challengeId, 'code': code});
+
+  /// `GET /api/children/memory/settings` — no proof needed.
+  Future<Map<String, dynamic>> getMemorySettings() =>
+      _authedJson('GET', '/api/children/memory/settings');
+
+  /// `PUT /api/children/memory/settings` — off never needs a proof; on does.
+  Future<Map<String, dynamic>> putMemorySettings({required bool enabled}) =>
+      _authedJson('PUT', '/api/children/memory/settings',
+          body: {'enabled': enabled});
+
+  /// `GET /api/children/{id}/memory?status=all`.
+  Future<Map<String, dynamic>> getChildMemory(int childId,
+          {String status = 'all'}) =>
+      _authedJson('GET', '/api/children/$childId/memory',
+          query: {'status': status});
+
+  /// `POST /api/children/{id}/memory` → 201 Fact (`parent_manual`, active).
+  Future<Map<String, dynamic>> addChildFact(int childId,
+          {required String category, required String fact}) =>
+      _authedJson('POST', '/api/children/$childId/memory',
+          body: {'category': category, 'fact': fact}, ok: const {200, 201});
+
+  /// `PATCH /api/children/{id}/memory/{factId}` — at least one field.
+  Future<Map<String, dynamic>> patchChildFact(int childId, int factId,
+          {String? fact, String? category, String? status}) =>
+      _authedJson('PATCH', '/api/children/$childId/memory/$factId', body: {
+        'fact': ?fact,
+        'category': ?category,
+        'status': ?status,
+      });
+
+  /// `DELETE /api/children/{id}/memory/{factId}`.
+  Future<Map<String, dynamic>> deleteChildFact(int childId, int factId) =>
+      _authedJson('DELETE', '/api/children/$childId/memory/$factId');
+
+  /// `DELETE /api/children/{id}/memory` — everything about one child.
+  Future<Map<String, dynamic>> deleteChildMemory(int childId) =>
+      _authedJson('DELETE', '/api/children/$childId/memory');
+
+  /// `GET /api/children/followups/due` — pending and due, every child.
+  /// [tzOffsetMinutes] is how the follow-up push learns the family's evening.
+  Future<Map<String, dynamic>> getDueFollowups(
+          {int limit = 10, int? tzOffsetMinutes}) =>
+      _authedJson('GET', '/api/children/followups/due', query: {
+        'limit': '$limit',
+        if (tzOffsetMinutes != null) 'tz_offset_minutes': '$tzOffsetMinutes',
+      });
+
+  /// `GET /api/children/followups/{id}` — any status (the deep link).
+  Future<Map<String, dynamic>> getFollowup(int followupId) =>
+      _authedJson('GET', '/api/children/followups/$followupId');
+
+  /// `POST /api/children/followups/{id}/answer`.
+  Future<Map<String, dynamic>> answerFollowup(int followupId,
+          {required String outcome, String? note}) =>
+      _authedJson('POST', '/api/children/followups/$followupId/answer',
+          body: {
+            'outcome': outcome,
+            if (note != null && note.trim().isNotEmpty) 'note': note.trim(),
+          });
+
+  /// `POST /api/children/followups/{id}/dismiss`.
+  Future<Map<String, dynamic>> dismissFollowup(int followupId) =>
+      _authedJson('POST', '/api/children/followups/$followupId/dismiss');
+
+  /// `GET /api/children/{id}/weekly-plan` — no proof needed.
+  Future<Map<String, dynamic>> getWeeklyPlan(int childId,
+          {String? lang, int? tzOffsetMinutes}) =>
+      _authedJson('GET', '/api/children/$childId/weekly-plan', query: {
+        'lang': ?lang,
+        if (tzOffsetMinutes != null) 'tz_offset_minutes': '$tzOffsetMinutes',
+      });
+
+  /// `DELETE /api/privacy/memory` — memory of every child of this device.
+  Future<Map<String, dynamic>> deleteAllMemory() =>
+      _authedJson('DELETE', '/api/privacy/memory');
+
+  /// `DELETE /api/privacy/account?confirm=true` (§10).
+  ///
+  /// The token used for the call is revoked by it, so on success this install
+  /// stops being the deleted device at once — before any other request can
+  /// run: the session is forgotten and a brand-new device id replaces the old
+  /// one. Otherwise the next call would 401, and the session recovery would
+  /// mint a fresh session for the very device id that was just erased.
+  Future<Map<String, dynamic>> deleteAccount() async {
+    final body = await _authedJson('DELETE', '/api/privacy/account',
+        query: const {'confirm': 'true'});
+    await _auth.startOverAsNewDevice();
+    return body;
   }
 
   // ── Daily routine — حساب اليوم ───────────────────────────────────────
@@ -2497,28 +2716,25 @@ class TgClient {
       final j = jsonDecode(body);
       if (j is Map && j['detail'] is String) {
         message = j['detail'] as String;
-      } else if (j is Map &&
-          j['detail'] is Map &&
-          (j['detail'] as Map)['error'] is String) {
-        // `{"detail": {"error": "<code>", ...}}` — the programs contract.
-        // Screens map these codes to their own words (§11.6).
+      } else if (j is Map && j['detail'] is Map) {
         details = Map<String, dynamic>.from(j['detail'] as Map);
-        code = details['error'] as String;
-        message = AppL10n.current.apiHttpError('$status');
-      } else if (j is Map &&
-          j['detail'] is Map &&
-          (j['detail'] as Map)['code'] is String) {
-        // `{"detail": {"code": "<code>", "message": "<Arabic to show>",
-        // "message_en": ...}}` — §9's branchable errors, e.g. a child deletion
-        // refused with `device_proof_required` / `device_proof_cooldown`. The
-        // server writes these for the parent; show them rather than "HTTP 403".
-        details = Map<String, dynamic>.from(j['detail'] as Map);
-        code = details['code'] as String;
-        final text = (uiLanguage == 'en' ? details['message_en'] : null) ??
-            details['message'];
-        message = text is String && text.trim().isNotEmpty
-            ? text
-            : AppL10n.current.apiHttpError('$status');
+        final error = details['error'];
+        if (error is String) {
+          // `{"detail": {"error": "<code>", ...}}` — the programs contract.
+          // Screens map these codes to their own words (§11.6).
+          code = error;
+          message = AppL10n.current.apiHttpError('$status');
+        } else {
+          // `{"detail": {"code": "<code>", "message": "<Arabic to show>",
+          // "message_en": ...}}` — §9's branchable errors, e.g. a child
+          // deletion refused with `device_proof_required` /
+          // `device_proof_cooldown`. The server writes these for the parent;
+          // show them rather than "HTTP 403".
+          final c = details['code'];
+          code = c is String && c.isNotEmpty ? c : null;
+          message = _detailMessage(details) ??
+              AppL10n.current.apiHttpError('$status');
+        }
       } else {
         message = AppL10n.current.apiHttpError('$status');
       }
@@ -2535,6 +2751,20 @@ class TgClient {
 
     return TgApiError(status, message,
         retryAfter: retryAfter, code: code, details: details);
+  }
+
+  /// The detail's message in the app's language. The server writes Arabic in
+  /// `message` and, where it has one, English in `message_en`. An English
+  /// reader with no `message_en` gets null — the caller's generic line — not
+  /// a sentence they cannot read: the memory routes' refusals (§9) are
+  /// Arabic-only today.
+  static String? _detailMessage(Map<String, dynamic> details) {
+    String? pick(String key) {
+      final v = details[key];
+      return v is String && v.trim().isNotEmpty ? v.trim() : null;
+    }
+
+    return uiLanguage == 'en' ? pick('message_en') : pick('message');
   }
 
   /// Close the underlying HTTP client. Safe to call multiple times.

@@ -31,6 +31,7 @@ import 'features/onboarding/screens/update_splash_screen.dart';
 import 'features/program/providers/settings_providers.dart';
 import 'features/program/providers/progress_providers.dart';
 import 'features/deeplink/deep_link_handler.dart';
+import 'features/child_memory/device_proof/device_proof_service.dart';
 import 'features/push/push_service.dart';
 import 'features/referral/referral_service.dart';
 import 'firebase_options.dart';
@@ -250,6 +251,12 @@ void main() async {
   // ensureSession() throws, silently dropping the tap that opened the app.
   unawaited(PushService.instance.listenTaps());
 
+  // The device-proof inbox (MOBILE_API §9.0.1), for the same reason: a code
+  // can arrive before the growth loop below gets anywhere, and this isolate
+  // must be the one the background handler hands it to — registered once,
+  // here, in the app's own `main()`.
+  PushService.instance.listenDeviceProof();
+
   // Channels, for exactly the same reason. They are a local OS call with no
   // network in it, and putting them behind ensureSession() would mean a
   // device that cold-started offline never creates the safety channel — so
@@ -273,8 +280,15 @@ Future<void> _postLaunchGrowthLoop() async {
   }
   await PushService.instance.registerToken();
   await PushService.instance.listenForeground();
+  // Prove this session in the background once its push token is on the
+  // server (MOBILE_API §9.0.1) — answers and coach tips use memory only for a
+  // proven session. Alongside the referral work, and before the Google
+  // re-link: a link made by a proven session is a confirmed one, the only kind
+  // an account deletion follows to the family's other phones (§10).
+  final proof = DeviceProofService.instance.proveIfUseful();
   await ReferralService.instance.captureAndClaimOnFirstRun();
   await ReferralService.instance.refresh();
+  await proof;
   await IdentityService.instance.silentRestore();
 }
 

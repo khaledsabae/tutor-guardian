@@ -4968,4 +4968,449 @@ class AppLocalizationsEn extends AppLocalizations {
   String ramadanDayToday(int day) {
     return 'Day $day, today';
   }
+
+  @override
+  String memoryTitle(String name) {
+    return 'What Almorabbi knows about $name';
+  }
+
+  @override
+  String memoryIntro(String name) {
+    return 'Almorabbi remembers a few things you mention about $name in your questions, so its advice fits your child better. You decide what stays: correct or delete anything, any time.';
+  }
+
+  @override
+  String get memorySwitchTitle => 'Remember what I share';
+
+  @override
+  String get memorySwitchOn =>
+      'On for all your children: Almorabbi learns from your questions and uses what it knows in its answers.';
+
+  @override
+  String get memorySwitchOff =>
+      'Off for all your children: nothing new is learned and nothing here is used. Nothing is deleted.';
+
+  @override
+  String get memorySwitchFailed =>
+      'Couldn\'t change the switch. Please try again.';
+
+  @override
+  String get memoryPendingTitle => 'Is this right?';
+
+  @override
+  String get memoryPendingBody =>
+      'Almorabbi doesn\'t use health notes until you confirm them.';
+
+  @override
+  String get memoryConfirmFact => 'Yes, that\'s right';
+
+  @override
+  String get memoryRejectFact => 'Not right';
+
+  @override
+  String get memoryRejected => 'Almorabbi won\'t learn this again.';
+
+  @override
+  String get memoryCatTemperament => 'Temperament';
+
+  @override
+  String get memoryCatChallenge => 'Challenges';
+
+  @override
+  String get memoryCatGoal => 'Goals';
+
+  @override
+  String get memoryCatTried => 'Tried approaches';
+
+  @override
+  String get memoryCatOutcome => 'Results';
+
+  @override
+  String get memoryCatHealth => 'Health notes';
+
+  @override
+  String get memoryCatSchool => 'School';
+
+  @override
+  String get memoryCatWorship => 'Worship';
+
+  @override
+  String get memoryCatOther => 'Other';
+
+  @override
+  String get memorySourceChat => 'From a conversation';
+
+  @override
+  String get memorySourceFollowup => 'From a follow-up';
+
+  @override
+  String get memorySourceManual => 'Added by you';
+
+  @override
+  String get memoryFactOptions => 'Note options';
+
+  @override
+  String get memoryDeleteFactTitle => 'Delete this note?';
+
+  @override
+  String get memoryDeleteFactBody =>
+      'Almorabbi may learn it again if you mention it later.';
+
+  @override
+  String get memoryFactDeleted => 'Note deleted.';
+
+  @override
+  String memoryEmptyTitle(String name) {
+    return 'Almorabbi doesn\'t know anything about $name yet';
+  }
+
+  @override
+  String get memoryEmptyBody =>
+      'As you ask Almorabbi, it notes here what helps its advice. You can add things yourself too.';
+
+  @override
+  String get memoryAddFact => 'Add a note';
+
+  @override
+  String get memoryAddTitle => 'What should Almorabbi know?';
+
+  @override
+  String get memoryEditTitle => 'Edit note';
+
+  @override
+  String get memoryFactHint => 'e.g. Loves a story before bed';
+
+  @override
+  String get memoryCategoryLabel => 'Type';
+
+  @override
+  String memoryFactTooLong(int max) {
+    return 'Keep it under $max characters.';
+  }
+
+  @override
+  String get memoryFactInvalid =>
+      'Write a short note without links or contact details.';
+
+  @override
+  String get memorySensitive =>
+      'This is something Almorabbi never keeps, like medicines or sensitive matters, so it wasn\'t saved.';
+
+  @override
+  String memoryForgetChild(String name) {
+    return 'Delete everything Almorabbi knows about $name';
+  }
+
+  @override
+  String memoryForgetChildBody(String name) {
+    return 'This deletes everything Almorabbi remembers about $name: notes, follow-ups and weekly plans. It can\'t be undone, and the memory switch stays as it is.';
+  }
+
+  @override
+  String memoryForgotten(String name) {
+    return 'Everything Almorabbi remembered about $name was deleted.';
+  }
+
+  @override
+  String get memoryNeverTitle => 'What Almorabbi never keeps';
+
+  @override
+  String get memoryNeverBody =>
+      'Medicines, their names, doses and prescriptions; test results, doctors or hospitals; anything about self-harm, suicide, abuse, sexual matters or drugs; and the parents\' private life.';
+
+  @override
+  String get memoryWhereKept =>
+      'These notes are kept on Almorabbi\'s server without your child\'s name, until you delete them or your account.';
+
+  @override
+  String get memoryUnavailable =>
+      'This isn\'t available yet. It will appear here when it\'s ready.';
+
+  @override
+  String memoryChipFor(String name) {
+    return 'Personalised for $name';
+  }
+
+  @override
+  String get memoryChipGeneric => 'Personalised for your child';
+
+  @override
+  String get settingsMemoryDesc => 'Review and edit what it remembers';
+
+  @override
+  String get proofConfirmingTitle => 'Confirming this is your phone…';
+
+  @override
+  String get proofConfirmingBody =>
+      'Just a few seconds. We send a silent code to this phone — you won\'t see it — to make sure the request comes from it.';
+
+  @override
+  String get proofFailedTitle => 'We couldn\'t confirm your phone';
+
+  @override
+  String get proofFailedBody =>
+      'The verification code didn\'t reach your phone. Check your internet connection and try again.';
+
+  @override
+  String proofSupport(String email) {
+    return 'If it keeps happening, email us at $email.';
+  }
+
+  @override
+  String proofPausedTitle(String time) {
+    return 'Paused until $time';
+  }
+
+  @override
+  String get proofPausedMemoryBody =>
+      'To protect your family, memory is paused because your account started receiving notifications on a new phone or after a reinstall. If that was you, there\'s nothing to do — it reopens on its own at that time. You can switch memory off now if you like.';
+
+  @override
+  String get proofPausedDeletionBody =>
+      'To protect your family\'s data, deleting is paused for 72 hours when the account starts receiving notifications on a phone for the first time, or on a new phone, so no one can delete your data from a phone that isn\'t yours. Nothing is lost, and deleting opens on its own at that time.';
+
+  @override
+  String proofPausedEmail(String email) {
+    return 'If you need it sooner, email us at $email.';
+  }
+
+  @override
+  String get followupTitle => 'Follow-up';
+
+  @override
+  String followupTitleFor(String name) {
+    return 'Follow-up with $name';
+  }
+
+  @override
+  String followupQuestion(String strategy) {
+    return 'Did you try: $strategy?';
+  }
+
+  @override
+  String get followupWorked => 'Worked';
+
+  @override
+  String get followupPartly => 'Partly';
+
+  @override
+  String get followupDidntWork => 'Didn\'t work';
+
+  @override
+  String get followupDidntTry => 'Haven\'t tried yet';
+
+  @override
+  String get followupNoteHint => 'Optional note: what happened?';
+
+  @override
+  String get followupDismiss => 'Don\'t ask about this';
+
+  @override
+  String get followupDismissed => 'We won\'t ask about this again.';
+
+  @override
+  String get followupThanksTitle => 'Thank you 🤍';
+
+  @override
+  String get followupThanksWorked =>
+      'Alhamdulillah! Almorabbi will remember this helped.';
+
+  @override
+  String get followupThanksPartly =>
+      'A good step. Almorabbi will build on what worked.';
+
+  @override
+  String get followupThanksDidntWork =>
+      'That\'s okay — every child is different. Almorabbi won\'t repeat this advice and will suggest something else.';
+
+  @override
+  String get followupThanksDidntTry => 'No problem. Try it when it suits you.';
+
+  @override
+  String get followupNoteDropped =>
+      'Your answer was saved. We didn\'t keep your note, because it\'s something Almorabbi doesn\'t store.';
+
+  @override
+  String followupAnsweredResult(String outcome) {
+    return 'You answered: $outcome';
+  }
+
+  @override
+  String get followupDismissedResult =>
+      'You asked us not to ask about this advice.';
+
+  @override
+  String get followupExpiredResult => 'This follow-up has expired.';
+
+  @override
+  String get followupNotFound => 'We couldn\'t find this follow-up.';
+
+  @override
+  String get followupClosed => 'This follow-up was already answered.';
+
+  @override
+  String planTitleFor(String name) {
+    return '$name\'s plan this week';
+  }
+
+  @override
+  String get planSteps => 'Three small steps';
+
+  @override
+  String get planWorship => 'Worship together';
+
+  @override
+  String get planLesson => 'This week\'s lesson';
+
+  @override
+  String get planLessonDone => 'Completed';
+
+  @override
+  String get planAdapted =>
+      'We swapped a step that didn\'t work for you before.';
+
+  @override
+  String get planShowAll => 'Show the full plan';
+
+  @override
+  String get planShowLess => 'Hide details';
+
+  @override
+  String get privacyDataTitle => 'Privacy & your data';
+
+  @override
+  String get privacyDataDesc =>
+      'Memory, deleting your data, the privacy policy';
+
+  @override
+  String get privacyMemorySection => 'Almorabbi\'s memory';
+
+  @override
+  String get privacyEraseMemory => 'Erase memory for all your children';
+
+  @override
+  String get privacyEraseMemoryDesc =>
+      'Notes, follow-ups and weekly plans. The switch stays as it is.';
+
+  @override
+  String get privacyEraseMemoryBody =>
+      'This deletes everything Almorabbi remembers about all your children: notes, follow-ups and weekly plans. It can\'t be undone.';
+
+  @override
+  String get privacyMemoryErased => 'Memory erased.';
+
+  @override
+  String get privacyAccountSection => 'Your account';
+
+  @override
+  String get privacyDeleteAccountDesc =>
+      'Deletes all your data from our servers';
+
+  @override
+  String get privacyDeleteWithoutApp => 'Ask for deletion without the app';
+
+  @override
+  String privacyDeleteWithoutAppDesc(String email) {
+    return 'A page on our site, or an email to $email';
+  }
+
+  @override
+  String get deleteAccountIntro =>
+      'Deleting your account immediately erases everything linked to this phone on our servers:';
+
+  @override
+  String get deleteAccountItemChildren =>
+      'Your children\'s profiles, progress and tools';
+
+  @override
+  String get deleteAccountItemChat =>
+      'Your questions, their answers and your ratings';
+
+  @override
+  String get deleteAccountItemMemory =>
+      'What Almorabbi remembers, follow-ups and weekly plans';
+
+  @override
+  String get deleteAccountItemOther =>
+      'Your notification token, invite code and backups';
+
+  @override
+  String get deleteAccountGoogle =>
+      'If you linked this phone to a Google account after it was verified, every other phone linked the same way is deleted too, along with the account record.';
+
+  @override
+  String get deleteAccountPhone =>
+      'Then this phone is cleared, and the app starts over.';
+
+  @override
+  String get deleteAccountBackups =>
+      'Your data disappears from our server\'s backups within 14 days.';
+
+  @override
+  String get deleteAccountPermanent => 'This can\'t be undone.';
+
+  @override
+  String get deleteAccountProofNote =>
+      'Before deleting, we automatically confirm the request comes from your phone. It takes a few seconds.';
+
+  @override
+  String get deleteAccountUnderstand => 'I understand this is permanent';
+
+  @override
+  String get deleteAccountButton => 'Delete my account';
+
+  @override
+  String get deleteAccountConfirmTitle => 'Delete your account for good?';
+
+  @override
+  String get deleteAccountConfirmBody =>
+      'Everything will be deleted and can\'t be recovered.';
+
+  @override
+  String get deleteAccountDeleting => 'Deleting…';
+
+  @override
+  String get deleteAccountServerError =>
+      'Nothing was deleted. Please try again shortly.';
+
+  @override
+  String get deleteAccountUnavailable =>
+      'Deleting from inside the app isn\'t available right now. You can ask for it by email; we complete it within 30 days.';
+
+  @override
+  String get deleteAccountEmailUs => 'Email us';
+
+  @override
+  String get deleteAccountOpenPage => 'Open the deletion page';
+
+  @override
+  String get deleteAccountEmailSubject => 'Data deletion request';
+
+  @override
+  String get accountDeletedTitle => 'Your account has been deleted';
+
+  @override
+  String get accountDeletedBody =>
+      'We deleted everything linked to this phone from our servers and cleared this phone. Close the app — it will start fresh when you open it.';
+
+  @override
+  String accountDeletedOthers(int count) {
+    return 'Data from the other phones linked to your Google account was deleted too ($count).';
+  }
+
+  @override
+  String accountDeletedUnconfirmed(String email) {
+    return 'Phones linked to your Google account without verification weren\'t included. To delete them, delete the account from the app on them, or email us at $email.';
+  }
+
+  @override
+  String get accountDeletedClose => 'Close the app';
+
+  @override
+  String supportEmailCopied(String email) {
+    return 'Address copied: $email';
+  }
+
+  @override
+  String get memoryYourChild => 'your child';
 }

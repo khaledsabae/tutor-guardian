@@ -14,6 +14,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../api/tg_client.dart';
 import '../../core/app_routes.dart';
 import '../../features/referral/referral_service.dart';
+import '../child_memory/widgets/followup_sheet.dart';
 import '../routine/providers/child_mode_providers.dart';
 
 class DeepLinkHandler {
@@ -204,5 +205,26 @@ class DeepLinkHandler {
       navigator.push(AppRoutes.pathDetail(pathId, ''));
       return;
     }
+
+    // Follow-up: /followup/{id} — the `followup_due` push (MOBILE_API §9.4).
+    // Its text is generic on the lock screen; the sheet fetches the follow-up
+    // (in any status: one answered meanwhile shows its result) and asks.
+    final followupId = followupIdFromPath(path);
+    if (followupId != null) {
+      navigator.popUntil((route) => route.isFirst);
+      unawaited(showFollowupSheet(
+        navigator.context,
+        followupId: followupId,
+        source: FollowupSource.push,
+      ));
+      return;
+    }
+  }
+
+  /// The follow-up id in a `/followup/{id}` link, or null.
+  @visibleForTesting
+  static int? followupIdFromPath(String path) {
+    final m = RegExp(r'^/followup/(\d{1,12})/?$').firstMatch(path);
+    return m == null ? null : int.tryParse(m.group(1)!);
   }
 }

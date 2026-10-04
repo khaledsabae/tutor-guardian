@@ -37,6 +37,8 @@ import '../widgets/follow_us_row.dart';
 import 'package:almorabbi/widgets/ui/directional_chevron.dart';
 import 'package:almorabbi/widgets/ui/loading_view.dart';
 import 'package:almorabbi/core/haptics.dart';
+import '../../child_memory/providers/memory_providers.dart';
+import '../../child_memory/widgets/memory_errors.dart';
 
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
@@ -133,6 +135,21 @@ class SettingsScreen extends ConsumerWidget {
                     }
                   },
                 ),
+                // «ما يعرفه المربّي عن …» — only once the server has memory
+                // (null settings = an older server: no row to dead-end on).
+                if (ref.watch(memorySettingsProvider).valueOrNull != null)
+                  _SettingsRow(
+                    icon: Icons.psychology_alt_outlined,
+                    title: l10n.memoryTitle(activeChild.name),
+                    subtitle: l10n.settingsMemoryDesc,
+                    iconColor: AppTheme.primary,
+                    onTap: () => Navigator.of(context).push(
+                      AppRoutes.childMemory(
+                        childId: activeChild.id,
+                        childName: activeChild.name,
+                      ),
+                    ),
+                  ),
                 // «ادعُ صديقًا» now lives in the hub under الإعدادات والمساعدة.
                 // Settings is for settings; content and rewards belong in the
                 // index, not buried behind a gear icon.
@@ -242,6 +259,14 @@ class SettingsScreen extends ConsumerWidget {
                           mode: LaunchMode.externalApplication);
                     }
                   },
+                ),
+                // Memory, erasing it, deleting the account (Google Play's
+                // in-app deletion path) — one screen for the family's data.
+                _SettingsRow(
+                  icon: Icons.lock_person_outlined,
+                  title: l10n.privacyDataTitle,
+                  subtitle: l10n.privacyDataDesc,
+                  onTap: () => Navigator.of(context).push(AppRoutes.privacy()),
                 ),
                 _SettingsRow(
                   icon: Icons.shield_outlined,
@@ -492,7 +517,9 @@ class SettingsScreen extends ConsumerWidget {
       if (!context.mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(l10n.settingsResetFailed(e)),
+          // A reset can be paused for 72 h after a push-token change
+          // (MOBILE_API §9.0.1): say until when, not the exception.
+          content: Text(l10n.settingsResetFailed(describeActionFailure(context, e))),
           backgroundColor: AppTheme.dangerFg,
         ),
       );

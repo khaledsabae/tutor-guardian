@@ -8533,6 +8533,744 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'اليوم {day}، اليوم الحالي'**
   String ramadanDayToday(int day);
+
+  /// No description provided for @memoryTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'ما يعرفه المربّي عن {name}'**
+  String memoryTitle(String name);
+
+  /// No description provided for @memoryIntro.
+  ///
+  /// In ar, this message translates to:
+  /// **'يتذكّر المربّي معلومات قليلة تذكرها عن {name} في أسئلتك، ليجعل نصائحه أنسب لطفلك. وأنت من يقرّر ما يبقى: صحّح أي معلومة أو احذفها متى شئت.'**
+  String memoryIntro(String name);
+
+  /// No description provided for @memorySwitchTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'تذكّر ما أشاركه'**
+  String get memorySwitchTitle;
+
+  /// No description provided for @memorySwitchOn.
+  ///
+  /// In ar, this message translates to:
+  /// **'مفعّل لكل أطفالك: يتعلّم المربّي من أسئلتك ويستعمل ما يعرفه في إجاباته.'**
+  String get memorySwitchOn;
+
+  /// No description provided for @memorySwitchOff.
+  ///
+  /// In ar, this message translates to:
+  /// **'متوقّف لكل أطفالك: لا يتعلّم المربّي شيئًا جديدًا ولا يستعمل ما هنا، ولا يُحذف شيء.'**
+  String get memorySwitchOff;
+
+  /// No description provided for @memorySwitchFailed.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعذّر تغيير المفتاح. حاول مرة أخرى.'**
+  String get memorySwitchFailed;
+
+  /// No description provided for @memoryPendingTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'هل هذا صحيح؟'**
+  String get memoryPendingTitle;
+
+  /// No description provided for @memoryPendingBody.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا يستعمل المربّي الملاحظات الصحية حتى تؤكّدها.'**
+  String get memoryPendingBody;
+
+  /// No description provided for @memoryConfirmFact.
+  ///
+  /// In ar, this message translates to:
+  /// **'نعم، صحيح'**
+  String get memoryConfirmFact;
+
+  /// No description provided for @memoryRejectFact.
+  ///
+  /// In ar, this message translates to:
+  /// **'ليس صحيحًا'**
+  String get memoryRejectFact;
+
+  /// No description provided for @memoryRejected.
+  ///
+  /// In ar, this message translates to:
+  /// **'لن يتعلّم المربّي هذه المعلومة مرة أخرى.'**
+  String get memoryRejected;
+
+  /// No description provided for @memoryCatTemperament.
+  ///
+  /// In ar, this message translates to:
+  /// **'الطبع'**
+  String get memoryCatTemperament;
+
+  /// No description provided for @memoryCatChallenge.
+  ///
+  /// In ar, this message translates to:
+  /// **'التحديات'**
+  String get memoryCatChallenge;
+
+  /// No description provided for @memoryCatGoal.
+  ///
+  /// In ar, this message translates to:
+  /// **'الأهداف'**
+  String get memoryCatGoal;
+
+  /// No description provided for @memoryCatTried.
+  ///
+  /// In ar, this message translates to:
+  /// **'أساليب جُرِّبت'**
+  String get memoryCatTried;
+
+  /// No description provided for @memoryCatOutcome.
+  ///
+  /// In ar, this message translates to:
+  /// **'نتائج التجارب'**
+  String get memoryCatOutcome;
+
+  /// No description provided for @memoryCatHealth.
+  ///
+  /// In ar, this message translates to:
+  /// **'ملاحظات صحية'**
+  String get memoryCatHealth;
+
+  /// No description provided for @memoryCatSchool.
+  ///
+  /// In ar, this message translates to:
+  /// **'الدراسة'**
+  String get memoryCatSchool;
+
+  /// No description provided for @memoryCatWorship.
+  ///
+  /// In ar, this message translates to:
+  /// **'العبادة'**
+  String get memoryCatWorship;
+
+  /// No description provided for @memoryCatOther.
+  ///
+  /// In ar, this message translates to:
+  /// **'أخرى'**
+  String get memoryCatOther;
+
+  /// No description provided for @memorySourceChat.
+  ///
+  /// In ar, this message translates to:
+  /// **'من محادثة'**
+  String get memorySourceChat;
+
+  /// No description provided for @memorySourceFollowup.
+  ///
+  /// In ar, this message translates to:
+  /// **'من متابعة'**
+  String get memorySourceFollowup;
+
+  /// No description provided for @memorySourceManual.
+  ///
+  /// In ar, this message translates to:
+  /// **'أضفتها بنفسك'**
+  String get memorySourceManual;
+
+  /// No description provided for @memoryFactOptions.
+  ///
+  /// In ar, this message translates to:
+  /// **'خيارات المعلومة'**
+  String get memoryFactOptions;
+
+  /// No description provided for @memoryDeleteFactTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'حذف هذه المعلومة؟'**
+  String get memoryDeleteFactTitle;
+
+  /// No description provided for @memoryDeleteFactBody.
+  ///
+  /// In ar, this message translates to:
+  /// **'قد يتعلّمها المربّي مرة أخرى إن ذكرتها لاحقًا.'**
+  String get memoryDeleteFactBody;
+
+  /// No description provided for @memoryFactDeleted.
+  ///
+  /// In ar, this message translates to:
+  /// **'حُذفت المعلومة.'**
+  String get memoryFactDeleted;
+
+  /// No description provided for @memoryEmptyTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا يعرف المربّي شيئًا عن {name} بعد'**
+  String memoryEmptyTitle(String name);
+
+  /// No description provided for @memoryEmptyBody.
+  ///
+  /// In ar, this message translates to:
+  /// **'حين تسأل المربّي يدوّن هنا ما يفيد نصائحه، ويمكنك أن تضيف بنفسك.'**
+  String get memoryEmptyBody;
+
+  /// No description provided for @memoryAddFact.
+  ///
+  /// In ar, this message translates to:
+  /// **'أضف معلومة'**
+  String get memoryAddFact;
+
+  /// No description provided for @memoryAddTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'ماذا ينبغي أن يعرف المربّي؟'**
+  String get memoryAddTitle;
+
+  /// No description provided for @memoryEditTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعديل المعلومة'**
+  String get memoryEditTitle;
+
+  /// No description provided for @memoryFactHint.
+  ///
+  /// In ar, this message translates to:
+  /// **'مثال: يحب القصص قبل النوم'**
+  String get memoryFactHint;
+
+  /// No description provided for @memoryCategoryLabel.
+  ///
+  /// In ar, this message translates to:
+  /// **'النوع'**
+  String get memoryCategoryLabel;
+
+  /// No description provided for @memoryFactTooLong.
+  ///
+  /// In ar, this message translates to:
+  /// **'اكتبها في أقل من {max} حرفًا.'**
+  String memoryFactTooLong(int max);
+
+  /// No description provided for @memoryFactInvalid.
+  ///
+  /// In ar, this message translates to:
+  /// **'اكتب معلومة قصيرة دون روابط أو أرقام تواصل.'**
+  String get memoryFactInvalid;
+
+  /// No description provided for @memorySensitive.
+  ///
+  /// In ar, this message translates to:
+  /// **'هذه المعلومة مما لا يحفظه المربّي، مثل الأدوية أو الأمور الحساسة، فلم نحفظها.'**
+  String get memorySensitive;
+
+  /// No description provided for @memoryForgetChild.
+  ///
+  /// In ar, this message translates to:
+  /// **'احذف كل ما يعرفه المربّي عن {name}'**
+  String memoryForgetChild(String name);
+
+  /// No description provided for @memoryForgetChildBody.
+  ///
+  /// In ar, this message translates to:
+  /// **'سيُحذف كل ما يتذكّره المربّي عن {name}: المعلومات والمتابعات وخطط الأسابيع. لا يمكن التراجع عن ذلك، ويبقى مفتاح الذاكرة كما هو.'**
+  String memoryForgetChildBody(String name);
+
+  /// No description provided for @memoryForgotten.
+  ///
+  /// In ar, this message translates to:
+  /// **'حُذف كل ما يتذكّره المربّي عن {name}.'**
+  String memoryForgotten(String name);
+
+  /// No description provided for @memoryNeverTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'ما لا يحفظه المربّي أبدًا'**
+  String get memoryNeverTitle;
+
+  /// No description provided for @memoryNeverBody.
+  ///
+  /// In ar, this message translates to:
+  /// **'الأدوية وأسماؤها وجرعاتها والوصفات، ونتائج التحاليل، والأطباء والمستشفيات؛ وأي شيء عن إيذاء النفس أو الانتحار أو الإساءة أو الأمور الجنسية أو المخدرات؛ وخصوصيات الوالدين.'**
+  String get memoryNeverBody;
+
+  /// No description provided for @memoryWhereKept.
+  ///
+  /// In ar, this message translates to:
+  /// **'تُحفظ هذه المعلومات على خادم المربّي دون اسم طفلك، حتى تحذفها أنت أو تحذف حسابك.'**
+  String get memoryWhereKept;
+
+  /// No description provided for @memoryUnavailable.
+  ///
+  /// In ar, this message translates to:
+  /// **'هذه الميزة غير متاحة بعد، وستظهر هنا حين تصبح جاهزة.'**
+  String get memoryUnavailable;
+
+  /// No description provided for @memoryChipFor.
+  ///
+  /// In ar, this message translates to:
+  /// **'مخصّص لـ{name}'**
+  String memoryChipFor(String name);
+
+  /// No description provided for @memoryChipGeneric.
+  ///
+  /// In ar, this message translates to:
+  /// **'مخصّص لطفلك'**
+  String get memoryChipGeneric;
+
+  /// No description provided for @settingsMemoryDesc.
+  ///
+  /// In ar, this message translates to:
+  /// **'راجع ما يتذكّره وعدّله'**
+  String get settingsMemoryDesc;
+
+  /// No description provided for @proofConfirmingTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'نتأكّد أن هذا هاتفك…'**
+  String get proofConfirmingTitle;
+
+  /// No description provided for @proofConfirmingBody.
+  ///
+  /// In ar, this message translates to:
+  /// **'لحظات قليلة. نرسل إلى هاتفك رمزًا صامتًا لا يظهر لك، لنتأكّد أن الطلب منه.'**
+  String get proofConfirmingBody;
+
+  /// No description provided for @proofFailedTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعذّر التأكد من هاتفك'**
+  String get proofFailedTitle;
+
+  /// No description provided for @proofFailedBody.
+  ///
+  /// In ar, this message translates to:
+  /// **'لم يصل رمز التحقق إلى هاتفك. تأكّد من اتصالك بالإنترنت ثم حاول مرة أخرى.'**
+  String get proofFailedBody;
+
+  /// No description provided for @proofSupport.
+  ///
+  /// In ar, this message translates to:
+  /// **'وإن تكررت المشكلة فراسلنا على {email}.'**
+  String proofSupport(String email);
+
+  /// No description provided for @proofPausedTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'متوقّف مؤقتًا حتى {time}'**
+  String proofPausedTitle(String time);
+
+  /// No description provided for @proofPausedMemoryBody.
+  ///
+  /// In ar, this message translates to:
+  /// **'لحماية أسرتك توقّفت الذاكرة مؤقتًا، لأن حسابك بدأ يستقبل الإشعارات على هاتف جديد أو بعد إعادة تثبيت التطبيق. إن كان هذا أنت فلا تفعل شيئًا، فستعود تلقائيًا في الموعد. ويمكنك إيقاف الذاكرة الآن إن شئت.'**
+  String get proofPausedMemoryBody;
+
+  /// No description provided for @proofPausedDeletionBody.
+  ///
+  /// In ar, this message translates to:
+  /// **'لحماية بيانات أسرتك، يتوقّف الحذف 72 ساعة حين يبدأ الحساب باستقبال الإشعارات على هاتف لأول مرة أو على هاتف جديد، حتى لا يستطيع أحد حذف بياناتكم من هاتف غير هاتفكم. لم يُفقد شيء، وسيُتاح الحذف تلقائيًا في الموعد.'**
+  String get proofPausedDeletionBody;
+
+  /// No description provided for @proofPausedEmail.
+  ///
+  /// In ar, this message translates to:
+  /// **'وإن احتجت الحذف قبل ذلك فراسلنا على {email}.'**
+  String proofPausedEmail(String email);
+
+  /// No description provided for @followupTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'متابعة'**
+  String get followupTitle;
+
+  /// No description provided for @followupTitleFor.
+  ///
+  /// In ar, this message translates to:
+  /// **'متابعة مع {name}'**
+  String followupTitleFor(String name);
+
+  /// No description provided for @followupQuestion.
+  ///
+  /// In ar, this message translates to:
+  /// **'هل جرّبت: {strategy}؟'**
+  String followupQuestion(String strategy);
+
+  /// No description provided for @followupWorked.
+  ///
+  /// In ar, this message translates to:
+  /// **'نجحت'**
+  String get followupWorked;
+
+  /// No description provided for @followupPartly.
+  ///
+  /// In ar, this message translates to:
+  /// **'نجحت جزئيًا'**
+  String get followupPartly;
+
+  /// No description provided for @followupDidntWork.
+  ///
+  /// In ar, this message translates to:
+  /// **'لم تنجح'**
+  String get followupDidntWork;
+
+  /// No description provided for @followupDidntTry.
+  ///
+  /// In ar, this message translates to:
+  /// **'لم أجرّب بعد'**
+  String get followupDidntTry;
+
+  /// No description provided for @followupNoteHint.
+  ///
+  /// In ar, this message translates to:
+  /// **'ملاحظة اختيارية: ماذا حدث؟'**
+  String get followupNoteHint;
+
+  /// No description provided for @followupDismiss.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا تسألني عن هذا'**
+  String get followupDismiss;
+
+  /// No description provided for @followupDismissed.
+  ///
+  /// In ar, this message translates to:
+  /// **'لن نسألك عن هذا مرة أخرى.'**
+  String get followupDismissed;
+
+  /// No description provided for @followupThanksTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'شكرًا لك 🤍'**
+  String get followupThanksTitle;
+
+  /// No description provided for @followupThanksWorked.
+  ///
+  /// In ar, this message translates to:
+  /// **'الحمد لله! سيتذكّر المربّي أن هذا نفع.'**
+  String get followupThanksWorked;
+
+  /// No description provided for @followupThanksPartly.
+  ///
+  /// In ar, this message translates to:
+  /// **'خطوة طيبة. سيبني المربّي على ما نجح منها.'**
+  String get followupThanksPartly;
+
+  /// No description provided for @followupThanksDidntWork.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا بأس، فلكل طفل طريقه. لن يكرّر المربّي هذه النصيحة، وسيقترح بديلًا.'**
+  String get followupThanksDidntWork;
+
+  /// No description provided for @followupThanksDidntTry.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا بأس. جرّبها حين يناسبك.'**
+  String get followupThanksDidntTry;
+
+  /// No description provided for @followupNoteDropped.
+  ///
+  /// In ar, this message translates to:
+  /// **'حُفظت إجابتك، ولم نحفظ ملاحظتك لأنها مما لا يحفظه المربّي.'**
+  String get followupNoteDropped;
+
+  /// No description provided for @followupAnsweredResult.
+  ///
+  /// In ar, this message translates to:
+  /// **'أجبت: {outcome}'**
+  String followupAnsweredResult(String outcome);
+
+  /// No description provided for @followupDismissedResult.
+  ///
+  /// In ar, this message translates to:
+  /// **'طلبت ألا نسأل عن هذه النصيحة.'**
+  String get followupDismissedResult;
+
+  /// No description provided for @followupExpiredResult.
+  ///
+  /// In ar, this message translates to:
+  /// **'انتهت مدة هذه المتابعة.'**
+  String get followupExpiredResult;
+
+  /// No description provided for @followupNotFound.
+  ///
+  /// In ar, this message translates to:
+  /// **'لم نجد هذه المتابعة.'**
+  String get followupNotFound;
+
+  /// No description provided for @followupClosed.
+  ///
+  /// In ar, this message translates to:
+  /// **'أُجيب عن هذه المتابعة من قبل.'**
+  String get followupClosed;
+
+  /// No description provided for @planTitleFor.
+  ///
+  /// In ar, this message translates to:
+  /// **'خطة {name} هذا الأسبوع'**
+  String planTitleFor(String name);
+
+  /// No description provided for @planSteps.
+  ///
+  /// In ar, this message translates to:
+  /// **'ثلاث خطوات صغيرة'**
+  String get planSteps;
+
+  /// No description provided for @planWorship.
+  ///
+  /// In ar, this message translates to:
+  /// **'عبادة نعملها معًا'**
+  String get planWorship;
+
+  /// No description provided for @planLesson.
+  ///
+  /// In ar, this message translates to:
+  /// **'درس الأسبوع'**
+  String get planLesson;
+
+  /// No description provided for @planLessonDone.
+  ///
+  /// In ar, this message translates to:
+  /// **'مكتمل'**
+  String get planLessonDone;
+
+  /// No description provided for @planAdapted.
+  ///
+  /// In ar, this message translates to:
+  /// **'غيّرنا خطوة لم تنجح معكم من قبل.'**
+  String get planAdapted;
+
+  /// No description provided for @planShowAll.
+  ///
+  /// In ar, this message translates to:
+  /// **'اعرض الخطة كاملة'**
+  String get planShowAll;
+
+  /// No description provided for @planShowLess.
+  ///
+  /// In ar, this message translates to:
+  /// **'أخفِ التفاصيل'**
+  String get planShowLess;
+
+  /// No description provided for @privacyDataTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'الخصوصية وبياناتك'**
+  String get privacyDataTitle;
+
+  /// No description provided for @privacyDataDesc.
+  ///
+  /// In ar, this message translates to:
+  /// **'الذاكرة، وحذف بياناتك، وسياسة الخصوصية'**
+  String get privacyDataDesc;
+
+  /// No description provided for @privacyMemorySection.
+  ///
+  /// In ar, this message translates to:
+  /// **'ذاكرة المربّي'**
+  String get privacyMemorySection;
+
+  /// No description provided for @privacyEraseMemory.
+  ///
+  /// In ar, this message translates to:
+  /// **'امسح ذاكرة كل أطفالك'**
+  String get privacyEraseMemory;
+
+  /// No description provided for @privacyEraseMemoryDesc.
+  ///
+  /// In ar, this message translates to:
+  /// **'المعلومات والمتابعات وخطط الأسابيع. يبقى المفتاح كما هو.'**
+  String get privacyEraseMemoryDesc;
+
+  /// No description provided for @privacyEraseMemoryBody.
+  ///
+  /// In ar, this message translates to:
+  /// **'سيُحذف كل ما يتذكّره المربّي عن كل أطفالك: المعلومات والمتابعات وخطط الأسابيع. لا يمكن التراجع عن ذلك.'**
+  String get privacyEraseMemoryBody;
+
+  /// No description provided for @privacyMemoryErased.
+  ///
+  /// In ar, this message translates to:
+  /// **'مُسحت الذاكرة.'**
+  String get privacyMemoryErased;
+
+  /// No description provided for @privacyAccountSection.
+  ///
+  /// In ar, this message translates to:
+  /// **'حسابك'**
+  String get privacyAccountSection;
+
+  /// No description provided for @privacyDeleteAccountDesc.
+  ///
+  /// In ar, this message translates to:
+  /// **'يحذف كل بياناتك من خوادمنا'**
+  String get privacyDeleteAccountDesc;
+
+  /// No description provided for @privacyDeleteWithoutApp.
+  ///
+  /// In ar, this message translates to:
+  /// **'طلب الحذف دون التطبيق'**
+  String get privacyDeleteWithoutApp;
+
+  /// No description provided for @privacyDeleteWithoutAppDesc.
+  ///
+  /// In ar, this message translates to:
+  /// **'صفحة على موقعنا، أو رسالة إلى {email}'**
+  String privacyDeleteWithoutAppDesc(String email);
+
+  /// No description provided for @deleteAccountIntro.
+  ///
+  /// In ar, this message translates to:
+  /// **'حذف الحساب يمحو فورًا كل ما يرتبط بهذا الهاتف على خوادمنا:'**
+  String get deleteAccountIntro;
+
+  /// No description provided for @deleteAccountItemChildren.
+  ///
+  /// In ar, this message translates to:
+  /// **'ملفات أطفالك وتقدّمهم وأدواتهم'**
+  String get deleteAccountItemChildren;
+
+  /// No description provided for @deleteAccountItemChat.
+  ///
+  /// In ar, this message translates to:
+  /// **'أسئلتك وإجاباتها وتقييماتك'**
+  String get deleteAccountItemChat;
+
+  /// No description provided for @deleteAccountItemMemory.
+  ///
+  /// In ar, this message translates to:
+  /// **'ما يتذكّره المربّي، والمتابعات، وخطط الأسابيع'**
+  String get deleteAccountItemMemory;
+
+  /// No description provided for @deleteAccountItemOther.
+  ///
+  /// In ar, this message translates to:
+  /// **'رمز الإشعارات، ورمز الدعوة، والنسخ الاحتياطية'**
+  String get deleteAccountItemOther;
+
+  /// No description provided for @deleteAccountGoogle.
+  ///
+  /// In ar, this message translates to:
+  /// **'وإن كنت ربطت هذا الهاتف بحساب Google بعد التحقق منه، فيُحذف معه كل هاتف آخر رُبط بالطريقة نفسها، ويُحذف سجل الحساب.'**
+  String get deleteAccountGoogle;
+
+  /// No description provided for @deleteAccountPhone.
+  ///
+  /// In ar, this message translates to:
+  /// **'ثم يُمسح ما على هذا الهاتف، ويبدأ التطبيق من جديد.'**
+  String get deleteAccountPhone;
+
+  /// No description provided for @deleteAccountBackups.
+  ///
+  /// In ar, this message translates to:
+  /// **'وتختفي بياناتك من النسخ الاحتياطية لخادمنا خلال 14 يومًا.'**
+  String get deleteAccountBackups;
+
+  /// No description provided for @deleteAccountPermanent.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا يمكن التراجع عن الحذف.'**
+  String get deleteAccountPermanent;
+
+  /// No description provided for @deleteAccountProofNote.
+  ///
+  /// In ar, this message translates to:
+  /// **'قبل الحذف نتأكّد تلقائيًا أن الطلب من هاتفك، وذلك يستغرق ثواني.'**
+  String get deleteAccountProofNote;
+
+  /// No description provided for @deleteAccountUnderstand.
+  ///
+  /// In ar, this message translates to:
+  /// **'فهمت أن الحذف نهائي'**
+  String get deleteAccountUnderstand;
+
+  /// No description provided for @deleteAccountButton.
+  ///
+  /// In ar, this message translates to:
+  /// **'احذف حسابي'**
+  String get deleteAccountButton;
+
+  /// No description provided for @deleteAccountConfirmTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'حذف الحساب نهائيًا؟'**
+  String get deleteAccountConfirmTitle;
+
+  /// No description provided for @deleteAccountConfirmBody.
+  ///
+  /// In ar, this message translates to:
+  /// **'سيُحذف كل شيء ولا يمكن استعادته.'**
+  String get deleteAccountConfirmBody;
+
+  /// No description provided for @deleteAccountDeleting.
+  ///
+  /// In ar, this message translates to:
+  /// **'جارٍ الحذف…'**
+  String get deleteAccountDeleting;
+
+  /// No description provided for @deleteAccountServerError.
+  ///
+  /// In ar, this message translates to:
+  /// **'لم يُحذف شيء. حاول مرة أخرى بعد قليل.'**
+  String get deleteAccountServerError;
+
+  /// No description provided for @deleteAccountUnavailable.
+  ///
+  /// In ar, this message translates to:
+  /// **'الحذف من داخل التطبيق غير متاح الآن. يمكنك طلبه بالبريد، وننفّذه خلال 30 يومًا.'**
+  String get deleteAccountUnavailable;
+
+  /// No description provided for @deleteAccountEmailUs.
+  ///
+  /// In ar, this message translates to:
+  /// **'راسلنا بالبريد'**
+  String get deleteAccountEmailUs;
+
+  /// No description provided for @deleteAccountOpenPage.
+  ///
+  /// In ar, this message translates to:
+  /// **'افتح صفحة الحذف'**
+  String get deleteAccountOpenPage;
+
+  /// No description provided for @deleteAccountEmailSubject.
+  ///
+  /// In ar, this message translates to:
+  /// **'طلب حذف البيانات'**
+  String get deleteAccountEmailSubject;
+
+  /// No description provided for @accountDeletedTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'حُذف حسابك'**
+  String get accountDeletedTitle;
+
+  /// No description provided for @accountDeletedBody.
+  ///
+  /// In ar, this message translates to:
+  /// **'حذفنا كل ما يرتبط بهذا الهاتف من خوادمنا، ومسحنا ما عليه. أغلق التطبيق، وسيبدأ من جديد حين تفتحه.'**
+  String get accountDeletedBody;
+
+  /// No description provided for @accountDeletedOthers.
+  ///
+  /// In ar, this message translates to:
+  /// **'وحُذفت كذلك بيانات الهواتف الأخرى المرتبطة بحسابك في Google (العدد: {count}).'**
+  String accountDeletedOthers(int count);
+
+  /// No description provided for @accountDeletedUnconfirmed.
+  ///
+  /// In ar, this message translates to:
+  /// **'الهواتف المرتبطة بحسابك في Google دون تحقق لم تُحذف. لحذفها احذف الحساب من التطبيق عليها، أو راسلنا على {email}.'**
+  String accountDeletedUnconfirmed(String email);
+
+  /// No description provided for @accountDeletedClose.
+  ///
+  /// In ar, this message translates to:
+  /// **'أغلق التطبيق'**
+  String get accountDeletedClose;
+
+  /// No description provided for @supportEmailCopied.
+  ///
+  /// In ar, this message translates to:
+  /// **'نسخنا العنوان: {email}'**
+  String supportEmailCopied(String email);
+
+  /// No description provided for @memoryYourChild.
+  ///
+  /// In ar, this message translates to:
+  /// **'طفلك'**
+  String get memoryYourChild;
 }
 
 class _AppLocalizationsDelegate

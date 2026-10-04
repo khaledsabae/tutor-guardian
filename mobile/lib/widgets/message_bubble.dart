@@ -18,6 +18,7 @@ import '../theme/design_tokens.dart';
 import 'safety_banner.dart';
 import '../l10n/app_localizations.dart';
 import '../core/motion.dart';
+import '../features/child_memory/widgets/personalised_chip.dart';
 
 /// The answer text without its «📚 المصدر: …» lines.
 ///
@@ -233,6 +234,11 @@ class _AssistantBody extends StatelessWidget {
         if (r != null && !message.isStreaming) ...[
           const SizedBox(height: 6),
           _MetadataChips(reply: r),
+          // «مخصّص لأحمد» — the answer used what the parent told the assistant
+          // (MOBILE_API §9.1); it opens what is remembered, so the parent can
+          // see and correct what shaped it.
+          if (r.memoryFactsUsed > 0)
+            PersonalisedChip(childId: r.memoryChildId),
           if (sources.isNotEmpty) _SourcesDisclosure(sources: sources),
           const SizedBox(height: 4),
           _FeedbackRow(

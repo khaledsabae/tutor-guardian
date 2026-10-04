@@ -40,6 +40,7 @@ import '../features/home/widgets/home_stats_row.dart';
 import '../features/home/widgets/today_focus_card.dart';
 import '../features/home/widgets/today_ask_block.dart';
 import '../features/home/widgets/today_child_block.dart';
+import '../features/home/widgets/today_loop_cards.dart';
 import '../features/home/widgets/today_rituals_row.dart';
 import '../features/home/widgets/today_section.dart';
 import '../features/onboarding/providers/onboarding_providers.dart';
@@ -151,12 +152,13 @@ class HomeScreen extends ConsumerWidget {
             ageGroup: ageGroup,
             onStartFirstPath: () => onGoToTab(RootTab.learn),
           ),
-          // «خطة الأسبوع» and «المتابعة» (plan §1.3, §1.2) go here, between
-          // ① and ②: the weekly plan is the week-sized version of today's
-          // step, and a follow-up is time-sensitive — but neither goes above
-          // ①, the card that took lesson_opened/child_added from 39% to 54%.
-          // Each must hide itself while loading, on any failure, and on an
-          // older server; and log today_block_tapped('loop', <action>).
+          // «المتابعة» then «خطة الأسبوع» (plan §1.2, §1.3), between ① and ②:
+          // the weekly plan is the week-sized version of today's step, and a
+          // follow-up is time-sensitive — but neither goes above ①, the card
+          // that took lesson_opened/child_added from 39% to 54%. Each hides
+          // itself while loading, on any failure, and on an older server, and
+          // logs today_block_tapped('loop', <action>).
+          TodayLoopCards(profile: profile),
           const SizedBox(height: 24),
 
           // ② اسأل المربّي

@@ -88,6 +88,17 @@ class IdentityService {
     Analytics.identityUnlinked();
   }
 
+  /// The account was deleted (MOBILE_API §10): sign out of Google in the app
+  /// so the next launch does not silently re-link a fresh install to it. The
+  /// server already erased the link; nothing is sent.
+  Future<void> signOutAfterAccountDeletion() async {
+    try {
+      await _googleSignIn.signOut();
+    } catch (_) {
+      // Not signed in, or no Play Services: nothing to sign out of.
+    }
+  }
+
   /// Fetch the server's view of this device identity.
   Future<Map<String, dynamic>> getServerIdentity() async {
     try {

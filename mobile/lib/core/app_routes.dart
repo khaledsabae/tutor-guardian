@@ -47,6 +47,10 @@ import '../features/games/tree_of_deeds/game_screen.dart';
 import '../features/identity/identity_screen.dart';
 import '../features/journey/screens/child_journey_screen.dart';
 import '../features/journey/screens/quran_memorization_screen.dart';
+import '../features/child_memory/data/memory_models.dart';
+import '../features/child_memory/screens/account_deletion_screen.dart';
+import '../features/child_memory/screens/child_memory_screen.dart';
+import '../features/child_memory/screens/privacy_screen.dart';
 import '../features/program/data/progress_models.dart';
 import '../features/program/data/story_models.dart';
 import '../features/program/screens/add_child_screen.dart';
@@ -185,6 +189,13 @@ abstract final class Screens {
   // Account & meta
   static const settings = 'settings';
   static const identity = 'identity';
+  static const privacyData = 'privacy_data';
+  static const accountDeletion = 'account_deletion';
+  static const accountDeleted = 'account_deleted';
+
+  // «المربّي يعرف ابنك» (MOBILE_API §9)
+  static const childMemory = 'child_memory';
+  static const followup = 'followup';
   static const invite = 'invite';
   static const support = 'support';
   static const feedback = 'feedback';
@@ -535,6 +546,37 @@ abstract final class AppRoutes {
 
   static Route<void> identity() =>
       _r(Screens.identity, (_) => const IdentityScreen());
+
+  /// «الخصوصية وبياناتك»: memory, erasing it, deleting the account.
+  static Route<void> privacy() =>
+      _r(Screens.privacyData, (_) => const PrivacyScreen());
+
+  /// «حذف الحساب» (MOBILE_API §10).
+  static Route<void> accountDeletion() =>
+      _r(Screens.accountDeletion, (_) => const AccountDeletionScreen());
+
+  /// The end of a deletion; pushed with every other route removed.
+  static Route<void> accountDeleted({
+    required AccountDeletionResult result,
+    required bool wasLinkedToGoogle,
+  }) =>
+      _r(
+        Screens.accountDeleted,
+        (_) => AccountDeletedScreen(
+          result: result,
+          wasLinkedToGoogle: wasLinkedToGoogle,
+        ),
+      );
+
+  /// «ما يعرفه المربّي عن <اسم>» (MOBILE_API §9.3).
+  static Route<void> childMemory({
+    required int childId,
+    required String childName,
+  }) =>
+      _r(
+        Screens.childMemory,
+        (_) => ChildMemoryScreen(childId: childId, childName: childName),
+      );
 
   static Route<void> invite() =>
       _r(Screens.invite, (_) => const InviteScreen());

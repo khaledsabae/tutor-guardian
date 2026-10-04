@@ -4913,4 +4913,439 @@ class AppLocalizationsAr extends AppLocalizations {
   String ramadanDayToday(int day) {
     return 'اليوم $day، اليوم الحالي';
   }
+
+  @override
+  String memoryTitle(String name) {
+    return 'ما يعرفه المربّي عن $name';
+  }
+
+  @override
+  String memoryIntro(String name) {
+    return 'يتذكّر المربّي معلومات قليلة تذكرها عن $name في أسئلتك، ليجعل نصائحه أنسب لطفلك. وأنت من يقرّر ما يبقى: صحّح أي معلومة أو احذفها متى شئت.';
+  }
+
+  @override
+  String get memorySwitchTitle => 'تذكّر ما أشاركه';
+
+  @override
+  String get memorySwitchOn =>
+      'مفعّل لكل أطفالك: يتعلّم المربّي من أسئلتك ويستعمل ما يعرفه في إجاباته.';
+
+  @override
+  String get memorySwitchOff =>
+      'متوقّف لكل أطفالك: لا يتعلّم المربّي شيئًا جديدًا ولا يستعمل ما هنا، ولا يُحذف شيء.';
+
+  @override
+  String get memorySwitchFailed => 'تعذّر تغيير المفتاح. حاول مرة أخرى.';
+
+  @override
+  String get memoryPendingTitle => 'هل هذا صحيح؟';
+
+  @override
+  String get memoryPendingBody =>
+      'لا يستعمل المربّي الملاحظات الصحية حتى تؤكّدها.';
+
+  @override
+  String get memoryConfirmFact => 'نعم، صحيح';
+
+  @override
+  String get memoryRejectFact => 'ليس صحيحًا';
+
+  @override
+  String get memoryRejected => 'لن يتعلّم المربّي هذه المعلومة مرة أخرى.';
+
+  @override
+  String get memoryCatTemperament => 'الطبع';
+
+  @override
+  String get memoryCatChallenge => 'التحديات';
+
+  @override
+  String get memoryCatGoal => 'الأهداف';
+
+  @override
+  String get memoryCatTried => 'أساليب جُرِّبت';
+
+  @override
+  String get memoryCatOutcome => 'نتائج التجارب';
+
+  @override
+  String get memoryCatHealth => 'ملاحظات صحية';
+
+  @override
+  String get memoryCatSchool => 'الدراسة';
+
+  @override
+  String get memoryCatWorship => 'العبادة';
+
+  @override
+  String get memoryCatOther => 'أخرى';
+
+  @override
+  String get memorySourceChat => 'من محادثة';
+
+  @override
+  String get memorySourceFollowup => 'من متابعة';
+
+  @override
+  String get memorySourceManual => 'أضفتها بنفسك';
+
+  @override
+  String get memoryFactOptions => 'خيارات المعلومة';
+
+  @override
+  String get memoryDeleteFactTitle => 'حذف هذه المعلومة؟';
+
+  @override
+  String get memoryDeleteFactBody =>
+      'قد يتعلّمها المربّي مرة أخرى إن ذكرتها لاحقًا.';
+
+  @override
+  String get memoryFactDeleted => 'حُذفت المعلومة.';
+
+  @override
+  String memoryEmptyTitle(String name) {
+    return 'لا يعرف المربّي شيئًا عن $name بعد';
+  }
+
+  @override
+  String get memoryEmptyBody =>
+      'حين تسأل المربّي يدوّن هنا ما يفيد نصائحه، ويمكنك أن تضيف بنفسك.';
+
+  @override
+  String get memoryAddFact => 'أضف معلومة';
+
+  @override
+  String get memoryAddTitle => 'ماذا ينبغي أن يعرف المربّي؟';
+
+  @override
+  String get memoryEditTitle => 'تعديل المعلومة';
+
+  @override
+  String get memoryFactHint => 'مثال: يحب القصص قبل النوم';
+
+  @override
+  String get memoryCategoryLabel => 'النوع';
+
+  @override
+  String memoryFactTooLong(int max) {
+    return 'اكتبها في أقل من $max حرفًا.';
+  }
+
+  @override
+  String get memoryFactInvalid => 'اكتب معلومة قصيرة دون روابط أو أرقام تواصل.';
+
+  @override
+  String get memorySensitive =>
+      'هذه المعلومة مما لا يحفظه المربّي، مثل الأدوية أو الأمور الحساسة، فلم نحفظها.';
+
+  @override
+  String memoryForgetChild(String name) {
+    return 'احذف كل ما يعرفه المربّي عن $name';
+  }
+
+  @override
+  String memoryForgetChildBody(String name) {
+    return 'سيُحذف كل ما يتذكّره المربّي عن $name: المعلومات والمتابعات وخطط الأسابيع. لا يمكن التراجع عن ذلك، ويبقى مفتاح الذاكرة كما هو.';
+  }
+
+  @override
+  String memoryForgotten(String name) {
+    return 'حُذف كل ما يتذكّره المربّي عن $name.';
+  }
+
+  @override
+  String get memoryNeverTitle => 'ما لا يحفظه المربّي أبدًا';
+
+  @override
+  String get memoryNeverBody =>
+      'الأدوية وأسماؤها وجرعاتها والوصفات، ونتائج التحاليل، والأطباء والمستشفيات؛ وأي شيء عن إيذاء النفس أو الانتحار أو الإساءة أو الأمور الجنسية أو المخدرات؛ وخصوصيات الوالدين.';
+
+  @override
+  String get memoryWhereKept =>
+      'تُحفظ هذه المعلومات على خادم المربّي دون اسم طفلك، حتى تحذفها أنت أو تحذف حسابك.';
+
+  @override
+  String get memoryUnavailable =>
+      'هذه الميزة غير متاحة بعد، وستظهر هنا حين تصبح جاهزة.';
+
+  @override
+  String memoryChipFor(String name) {
+    return 'مخصّص لـ$name';
+  }
+
+  @override
+  String get memoryChipGeneric => 'مخصّص لطفلك';
+
+  @override
+  String get settingsMemoryDesc => 'راجع ما يتذكّره وعدّله';
+
+  @override
+  String get proofConfirmingTitle => 'نتأكّد أن هذا هاتفك…';
+
+  @override
+  String get proofConfirmingBody =>
+      'لحظات قليلة. نرسل إلى هاتفك رمزًا صامتًا لا يظهر لك، لنتأكّد أن الطلب منه.';
+
+  @override
+  String get proofFailedTitle => 'تعذّر التأكد من هاتفك';
+
+  @override
+  String get proofFailedBody =>
+      'لم يصل رمز التحقق إلى هاتفك. تأكّد من اتصالك بالإنترنت ثم حاول مرة أخرى.';
+
+  @override
+  String proofSupport(String email) {
+    return 'وإن تكررت المشكلة فراسلنا على $email.';
+  }
+
+  @override
+  String proofPausedTitle(String time) {
+    return 'متوقّف مؤقتًا حتى $time';
+  }
+
+  @override
+  String get proofPausedMemoryBody =>
+      'لحماية أسرتك توقّفت الذاكرة مؤقتًا، لأن حسابك بدأ يستقبل الإشعارات على هاتف جديد أو بعد إعادة تثبيت التطبيق. إن كان هذا أنت فلا تفعل شيئًا، فستعود تلقائيًا في الموعد. ويمكنك إيقاف الذاكرة الآن إن شئت.';
+
+  @override
+  String get proofPausedDeletionBody =>
+      'لحماية بيانات أسرتك، يتوقّف الحذف 72 ساعة حين يبدأ الحساب باستقبال الإشعارات على هاتف لأول مرة أو على هاتف جديد، حتى لا يستطيع أحد حذف بياناتكم من هاتف غير هاتفكم. لم يُفقد شيء، وسيُتاح الحذف تلقائيًا في الموعد.';
+
+  @override
+  String proofPausedEmail(String email) {
+    return 'وإن احتجت الحذف قبل ذلك فراسلنا على $email.';
+  }
+
+  @override
+  String get followupTitle => 'متابعة';
+
+  @override
+  String followupTitleFor(String name) {
+    return 'متابعة مع $name';
+  }
+
+  @override
+  String followupQuestion(String strategy) {
+    return 'هل جرّبت: $strategy؟';
+  }
+
+  @override
+  String get followupWorked => 'نجحت';
+
+  @override
+  String get followupPartly => 'نجحت جزئيًا';
+
+  @override
+  String get followupDidntWork => 'لم تنجح';
+
+  @override
+  String get followupDidntTry => 'لم أجرّب بعد';
+
+  @override
+  String get followupNoteHint => 'ملاحظة اختيارية: ماذا حدث؟';
+
+  @override
+  String get followupDismiss => 'لا تسألني عن هذا';
+
+  @override
+  String get followupDismissed => 'لن نسألك عن هذا مرة أخرى.';
+
+  @override
+  String get followupThanksTitle => 'شكرًا لك 🤍';
+
+  @override
+  String get followupThanksWorked => 'الحمد لله! سيتذكّر المربّي أن هذا نفع.';
+
+  @override
+  String get followupThanksPartly =>
+      'خطوة طيبة. سيبني المربّي على ما نجح منها.';
+
+  @override
+  String get followupThanksDidntWork =>
+      'لا بأس، فلكل طفل طريقه. لن يكرّر المربّي هذه النصيحة، وسيقترح بديلًا.';
+
+  @override
+  String get followupThanksDidntTry => 'لا بأس. جرّبها حين يناسبك.';
+
+  @override
+  String get followupNoteDropped =>
+      'حُفظت إجابتك، ولم نحفظ ملاحظتك لأنها مما لا يحفظه المربّي.';
+
+  @override
+  String followupAnsweredResult(String outcome) {
+    return 'أجبت: $outcome';
+  }
+
+  @override
+  String get followupDismissedResult => 'طلبت ألا نسأل عن هذه النصيحة.';
+
+  @override
+  String get followupExpiredResult => 'انتهت مدة هذه المتابعة.';
+
+  @override
+  String get followupNotFound => 'لم نجد هذه المتابعة.';
+
+  @override
+  String get followupClosed => 'أُجيب عن هذه المتابعة من قبل.';
+
+  @override
+  String planTitleFor(String name) {
+    return 'خطة $name هذا الأسبوع';
+  }
+
+  @override
+  String get planSteps => 'ثلاث خطوات صغيرة';
+
+  @override
+  String get planWorship => 'عبادة نعملها معًا';
+
+  @override
+  String get planLesson => 'درس الأسبوع';
+
+  @override
+  String get planLessonDone => 'مكتمل';
+
+  @override
+  String get planAdapted => 'غيّرنا خطوة لم تنجح معكم من قبل.';
+
+  @override
+  String get planShowAll => 'اعرض الخطة كاملة';
+
+  @override
+  String get planShowLess => 'أخفِ التفاصيل';
+
+  @override
+  String get privacyDataTitle => 'الخصوصية وبياناتك';
+
+  @override
+  String get privacyDataDesc => 'الذاكرة، وحذف بياناتك، وسياسة الخصوصية';
+
+  @override
+  String get privacyMemorySection => 'ذاكرة المربّي';
+
+  @override
+  String get privacyEraseMemory => 'امسح ذاكرة كل أطفالك';
+
+  @override
+  String get privacyEraseMemoryDesc =>
+      'المعلومات والمتابعات وخطط الأسابيع. يبقى المفتاح كما هو.';
+
+  @override
+  String get privacyEraseMemoryBody =>
+      'سيُحذف كل ما يتذكّره المربّي عن كل أطفالك: المعلومات والمتابعات وخطط الأسابيع. لا يمكن التراجع عن ذلك.';
+
+  @override
+  String get privacyMemoryErased => 'مُسحت الذاكرة.';
+
+  @override
+  String get privacyAccountSection => 'حسابك';
+
+  @override
+  String get privacyDeleteAccountDesc => 'يحذف كل بياناتك من خوادمنا';
+
+  @override
+  String get privacyDeleteWithoutApp => 'طلب الحذف دون التطبيق';
+
+  @override
+  String privacyDeleteWithoutAppDesc(String email) {
+    return 'صفحة على موقعنا، أو رسالة إلى $email';
+  }
+
+  @override
+  String get deleteAccountIntro =>
+      'حذف الحساب يمحو فورًا كل ما يرتبط بهذا الهاتف على خوادمنا:';
+
+  @override
+  String get deleteAccountItemChildren => 'ملفات أطفالك وتقدّمهم وأدواتهم';
+
+  @override
+  String get deleteAccountItemChat => 'أسئلتك وإجاباتها وتقييماتك';
+
+  @override
+  String get deleteAccountItemMemory =>
+      'ما يتذكّره المربّي، والمتابعات، وخطط الأسابيع';
+
+  @override
+  String get deleteAccountItemOther =>
+      'رمز الإشعارات، ورمز الدعوة، والنسخ الاحتياطية';
+
+  @override
+  String get deleteAccountGoogle =>
+      'وإن كنت ربطت هذا الهاتف بحساب Google بعد التحقق منه، فيُحذف معه كل هاتف آخر رُبط بالطريقة نفسها، ويُحذف سجل الحساب.';
+
+  @override
+  String get deleteAccountPhone =>
+      'ثم يُمسح ما على هذا الهاتف، ويبدأ التطبيق من جديد.';
+
+  @override
+  String get deleteAccountBackups =>
+      'وتختفي بياناتك من النسخ الاحتياطية لخادمنا خلال 14 يومًا.';
+
+  @override
+  String get deleteAccountPermanent => 'لا يمكن التراجع عن الحذف.';
+
+  @override
+  String get deleteAccountProofNote =>
+      'قبل الحذف نتأكّد تلقائيًا أن الطلب من هاتفك، وذلك يستغرق ثواني.';
+
+  @override
+  String get deleteAccountUnderstand => 'فهمت أن الحذف نهائي';
+
+  @override
+  String get deleteAccountButton => 'احذف حسابي';
+
+  @override
+  String get deleteAccountConfirmTitle => 'حذف الحساب نهائيًا؟';
+
+  @override
+  String get deleteAccountConfirmBody => 'سيُحذف كل شيء ولا يمكن استعادته.';
+
+  @override
+  String get deleteAccountDeleting => 'جارٍ الحذف…';
+
+  @override
+  String get deleteAccountServerError =>
+      'لم يُحذف شيء. حاول مرة أخرى بعد قليل.';
+
+  @override
+  String get deleteAccountUnavailable =>
+      'الحذف من داخل التطبيق غير متاح الآن. يمكنك طلبه بالبريد، وننفّذه خلال 30 يومًا.';
+
+  @override
+  String get deleteAccountEmailUs => 'راسلنا بالبريد';
+
+  @override
+  String get deleteAccountOpenPage => 'افتح صفحة الحذف';
+
+  @override
+  String get deleteAccountEmailSubject => 'طلب حذف البيانات';
+
+  @override
+  String get accountDeletedTitle => 'حُذف حسابك';
+
+  @override
+  String get accountDeletedBody =>
+      'حذفنا كل ما يرتبط بهذا الهاتف من خوادمنا، ومسحنا ما عليه. أغلق التطبيق، وسيبدأ من جديد حين تفتحه.';
+
+  @override
+  String accountDeletedOthers(int count) {
+    return 'وحُذفت كذلك بيانات الهواتف الأخرى المرتبطة بحسابك في Google (العدد: $count).';
+  }
+
+  @override
+  String accountDeletedUnconfirmed(String email) {
+    return 'الهواتف المرتبطة بحسابك في Google دون تحقق لم تُحذف. لحذفها احذف الحساب من التطبيق عليها، أو راسلنا على $email.';
+  }
+
+  @override
+  String get accountDeletedClose => 'أغلق التطبيق';
+
+  @override
+  String supportEmailCopied(String email) {
+    return 'نسخنا العنوان: $email';
+  }
+
+  @override
+  String get memoryYourChild => 'طفلك';
 }

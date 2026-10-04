@@ -16,14 +16,26 @@ import '../../api/tg_client.dart';
 import '../../core/analytics.dart';
 import '../../firebase_options.dart';
 import '../deeplink/deep_link_handler.dart';
+import '../child_memory/device_proof/device_proof_service.dart';
 import 'notification_channels.dart';
 
 /// FCM requires the background handler to be a TOP-LEVEL entry-point
 /// function (it runs in a separate isolate while the app is terminated).
+///
+/// That isolate is FCM's, not the app's. A device-proof code is handed to the
+/// app's own isolate and nothing else happens here: no session, no keystore,
+/// no token registration, no second `main()` — the device-twin bug of PR #29
+/// was exactly a second isolate doing the app's startup.
+/// (test/device_proof_test.dart pins what this body may call.)
 @pragma('vm:entry-point')
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  if (forwardDeviceProofFromBackground(message.data)) return;
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 }
+
+/// FCM `data.type` of the one-off security notice sent to a phone whose push
+/// token was replaced (MOBILE_API §9.0.1).
+const String kAccountAlertType = 'account_alert';
 
 class PushService {
   PushService._();
@@ -124,7 +136,34 @@ class PushService {
     }
   }
 
-  Future<void> registerToken() async {
+  /// The registration in flight, shared by every caller (launch, a
+  /// `no_push_token` answer to a device proof, an `account_alert`).
+  Future<void>? _registering;
+  StreamSubscription<String>? _refreshSub;
+  StreamSubscription<RemoteMessage>? _foregroundSub;
+
+  /// Upload this phone's FCM token (with the build census) to the server.
+  ///
+  /// On EVERY launch, and whether or not the parent allowed notifications
+  /// (MOBILE_API §9.0.1). This used to stop when permission was refused, so a
+  /// family that declined notifications had no token and no build number on
+  /// the server: the silent device-proof code had nowhere to go — memory,
+  /// follow-ups and in-app deletion could never open for them — and the
+  /// server's CHILD_MEMORY_MIN_BUILD census never saw their build. A data
+  /// message needs no notification permission; refusing notifications still
+  /// means no notification is ever shown.
+  Future<void> registerToken() {
+    final running = _registering;
+    if (running != null) return running;
+    final run = _registerToken();
+    _registering = run;
+    run.whenComplete(() {
+      if (identical(_registering, run)) _registering = null;
+    });
+    return run;
+  }
+
+  Future<void> _registerToken() async {
     try {
       // Belt and braces: main() already does this on a path with no network
       // in it, and a repeat create is a no-op that preserves whatever the
@@ -136,31 +175,32 @@ class PushService {
       // This is required for data messages to wake the app while terminated.
       FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
 
-      // Android defaults to authorized; iOS requires explicit permission.
-      // Usually a no-op by now — main() asks after the first frame, on a path
-      // that does not need a session — but kept so a token is never registered
-      // for a device that has refused notifications.
-      if (!await requestNotificationPermission()) return;
+      await registerWith(
+        // Android defaults to authorized; iOS requires explicit permission.
+        // Usually a no-op by now — main() asks after the first frame.
+        askPermission: requestNotificationPermission,
+        fetchToken: () async {
+          if (defaultTargetPlatform == TargetPlatform.android) {
+            return _messaging.getToken();
+          }
+          return await _messaging.getAPNSToken() ?? await _messaging.getToken();
+        },
+        upload: (token) async {
+          await TgClient.shared.ensureSession();
+          await TgClient.shared.registerPushToken(token, platform: 'android');
+          await Analytics.pushTokenRegistered();
+        },
+      );
 
-      String? token;
-      if (defaultTargetPlatform == TargetPlatform.android) {
-        token = await _messaging.getToken();
-      } else {
-        token = await _messaging.getAPNSToken();
-        token ??= await _messaging.getToken();
-      }
-      if (token == null || token.isEmpty) return;
-
-      await TgClient.shared.ensureSession();
-      await TgClient.shared.registerPushToken(token, platform: 'android');
-      await Analytics.pushTokenRegistered();
-
-      // Listen to token refreshes and keep the backend in sync.
-      _messaging.onTokenRefresh.listen(
+      // Listen to token refreshes and keep the backend in sync — once.
+      _refreshSub ??= _messaging.onTokenRefresh.listen(
         (newToken) async {
           try {
             await TgClient.shared.ensureSession();
             await TgClient.shared.registerPushToken(newToken, platform: 'android');
+            // A proof belongs to one push token: the new one needs its own
+            // (§9.0.1), or answers go without memory until a screen asks.
+            unawaited(DeviceProofService.instance.proveIfUseful());
           } catch (e, s) {
             // Not fatal, but not harmless either: the device keeps running with
             // a token the backend no longer knows, so every future reminder
@@ -178,6 +218,50 @@ class PushService {
       // FCM not available on this device/build — ignore silently.
     }
   }
+
+  /// The registration's decision, without Firebase: the permission is asked
+  /// (and its answer recorded by [requestNotificationPermission]), but it does
+  /// not gate the upload. Returns the token uploaded, or null.
+  @visibleForTesting
+  static Future<String?> registerWith({
+    required Future<bool> Function() askPermission,
+    required Future<String?> Function() fetchToken,
+    required Future<void> Function(String token) upload,
+  }) async {
+    await askPermission();
+    final token = await fetchToken();
+    if (token == null || token.isEmpty) return null;
+    await upload(token);
+    return token;
+  }
+
+  /// Wire the device proof (MOBILE_API §9.0.1) to FCM: foreground data
+  /// messages reach the proof service here (the background isolate reaches
+  /// it through its port), and a `no_push_token` answer re-registers.
+  /// Needs no session, so `main()` calls it unconditionally.
+  void listenDeviceProof() {
+    final proof = DeviceProofService.instance
+      ..reRegisterPushToken = registerToken;
+    // The background inbox and the client's proof hook first, on their own:
+    // they need no Firebase call, and must not be lost if the next one fails.
+    try {
+      proof.init();
+    } catch (_) {}
+    try {
+      proof.init(
+        foregroundMessages: FirebaseMessaging.onMessage.map((m) => m.data),
+      );
+    } catch (_) {
+      // FCM not available on this device/build — no code can arrive.
+    }
+  }
+
+  /// The security notice (`account_alert`) was received or tapped: this phone
+  /// held the account's push token before another phone took it. Registering
+  /// this phone's own token again takes the device back at once when this
+  /// phone had proven it (§9.0.1) — a warm start would otherwise not
+  /// re-register until the next cold launch.
+  void _onAccountAlert() => unawaited(registerToken());
 
   /// Start listening for notification taps.
   ///
@@ -216,6 +300,8 @@ class PushService {
       // ignore
     }
 
+    if (type == kAccountAlertType) _onAccountAlert();
+
     final link = (message.data['link'] ?? message.data['route']) as String?;
     if (link == null || link.isEmpty) return;
     try {
@@ -227,8 +313,13 @@ class PushService {
 
   /// Listen to foreground messages so we can update badge or route the user.
   Future<void> listenForeground() async {
-    FirebaseMessaging.onMessage.listen((message) {
-      Analytics.pushReceived(message.data['type'] ?? 'unknown');
+    _foregroundSub ??= FirebaseMessaging.onMessage.listen((message) {
+      final type = message.data['type'] ?? 'unknown';
+      // A device-proof code is a silent handshake, not a push a parent sees
+      // (listenDeviceProof handles it); counting it would inflate push_received.
+      if (type == kDeviceProofMessageType) return;
+      Analytics.pushReceived(type);
+      if (type == kAccountAlertType) _onAccountAlert();
       // UI decisions are left to whichever screen is visible.
     });
   }

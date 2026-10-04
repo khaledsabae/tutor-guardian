@@ -14,6 +14,7 @@ import '../../../theme/app_palette.dart';
 import '../../../theme/app_theme.dart';
 import '../../journey/providers/journey_providers.dart';
 import '../../programs/providers/programs_providers.dart';
+import '../../child_memory/widgets/memory_errors.dart';
 import '../data/progress_models.dart';
 import '../providers/progress_providers.dart';
 import '../providers/settings_providers.dart';
@@ -254,7 +255,10 @@ class ChildrenListScreen extends ConsumerWidget {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(AppLocalizations.of(context).childrenDeleteError(describeFailure(AppLocalizations.of(context), e))),
+            // A deletion can be paused for 72 h after a push-token change
+            // (MOBILE_API §9.0.1): say until when, not just "failed".
+            content: Text(AppLocalizations.of(context)
+                .childrenDeleteError(describeActionFailure(context, e))),
             backgroundColor: AppTheme.dangerFg,
           ),
         );
