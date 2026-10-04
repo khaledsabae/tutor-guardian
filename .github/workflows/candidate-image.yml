@@ -53,9 +53,14 @@ jobs:
         run: |
           set -uo pipefail
           # name · the step the smoke must stop at · how the image is broken
+          # Broken as root (the HF cache's parent dir is root's), then run as
+          # appuser like the real image.
           sabotage() {
-            printf 'FROM tg-candidate:pr\nRUN %s\n' "$3" \
-              | docker build -q -t "tg-broken:$1" - >/dev/null
+            if ! printf 'FROM tg-candidate:pr\nUSER root\nRUN %s\nUSER appuser\n' "$3" \
+                | docker build -q -t "tg-broken:$1" - >/dev/null; then
+              echo "::error::could not build the sabotaged image $1"
+              return 1
+            fi
             if out=$(ops/tools/candidate_smoke.sh "tg-broken:$1" 2>&1); then
               echo "::error::the smoke PASSED an image with $1 — it would have deployed it"
               return 1
