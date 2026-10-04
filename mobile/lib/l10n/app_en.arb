@@ -1620,12 +1620,19 @@
   "accountDeletedClose": "Close the app",
   "supportEmailCopied": "Address copied: {email}",
   "memoryYourChild": "your child",
-  "deleteAccountUnconfirmed": "The connection dropped before the server's answer reached us, so we don't know yet whether your account was deleted. We won't do anything until we know: check your connection, then tap \"Check again\".",
+  "deleteAccountUnconfirmed": "The connection dropped before the server's answer reached us, so we don't know yet whether your account was deleted. We'll finish your request once you're back online: tap \"Check again\", or it happens by itself the next time you open the app.",
   "deleteAccountCheckAgain": "Check again",
   "accountDeletedGoogleKept": "We kept your Google account record and its backups, because this phone's link to it wasn't verified. To remove them — and any other phone linked to it — email us at {email}.",
   "accountDeletedGoogleUnknown": "We couldn't confirm whether your Google account record was deleted with it. To check, or to remove it, email us at {email}.",
   "followupMemoryOff": "Memory is paused, so Almorabbi isn't keeping follow-up answers right now. Turn it on if you'd like to answer.",
   "followupNotSaved": "Memory is off, so your answer wasn't saved.",
   "memoryTurnOn": "Turn memory on",
-  "memoryOffCannotAdd": "Memory is off, so nothing new is added to it. Turn it on to add notes."
+  "memoryOffCannotAdd": "Memory is off, so nothing new is added to it. Turn it on to add notes.",
+  "deleteAccountStartOver": "Start over on this phone",
+  "deleteAccountStartOverTitle": "Start over on this phone?",
+  "deleteAccountStartOverBody": "Everything on this phone will be cleared, and the app will start as if just installed. We don't know yet whether your account was deleted from our servers; to make sure it is, email us at {email}.",
+  "deleteAccountStartOverConfirm": "Start over",
+  "accountStartedOverTitle": "The app has started over on this phone",
+  "accountStartedOverBody": "We cleared everything that was on this phone. We couldn't confirm whether your account was deleted from our servers; to make sure it is, email us at {email}. Close the app — it will start fresh when you open it.",
+  "deleteAccountNotDeletedNotice": "Your account was not deleted. You can try again from Settings → Privacy & your data."
 }

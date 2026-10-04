@@ -1,5 +1,6 @@
 package com.alsaba.almorabbi
 
+import android.app.backup.BackupManager
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import io.flutter.embedding.android.FlutterFragmentActivity
@@ -27,6 +28,14 @@ class MainActivity : FlutterFragmentActivity() {
                     "finishAndRemoveTask" -> {
                         result.success(true)
                         finishAndRemoveTask()
+                    }
+                    // After an account deletion cleared the phone: the Auto
+                    // Backup copy still holds the deleted account, and a
+                    // restore would bring it back. Ask for a new backup of
+                    // what is left (lib/core/app_closer.dart).
+                    "backupDataChanged" -> {
+                        BackupManager(this).dataChanged()
+                        result.success(true)
                     }
                     else -> result.notImplemented()
                 }

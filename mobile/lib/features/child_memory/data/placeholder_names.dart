@@ -29,8 +29,40 @@ class FamilyMember {
   final String name;
 }
 
+/// What onboarding names a child the parent did not name («طفلي» / "My
+/// child" — most children on production), and the kinship words: the server's
+/// `_DEFAULT_NAMES` (MOBILE_API §9.0, PR #39). Such a child keeps its place in
+/// the family — its letter — but has no name to show: «طفلي» in a text is the
+/// fact's own child, never that sibling.
+const Set<String> _defaultNames = {
+  'طفلي', 'طفلتي', 'طفل', 'طفله', 'الطفل', 'الطفله', 'طفلك', 'ابني', 'ابنتي',
+  'بنتي', 'ولدي', //
+  'my child', 'your child', 'child', 'my kid', 'kid', 'baby', 'my baby',
+  'my son', 'my daughter', 'another child',
+};
+
+final RegExp _tashkeel = RegExp('[\u064B-\u0652\u0670\u0640]');
+
+/// Whether [name] is a default rather than a name (compared the way the
+/// server compares: harakat and tatweel dropped, alef/ta marbuta/ya spellings
+/// folded, Latin lower-cased).
+bool isDefaultChildName(String name) {
+  final folded = name
+      .replaceAll(_tashkeel, '')
+      .replaceAll(RegExp('[أإآٱ]'), 'ا')
+      .replaceAll('ة', 'ه')
+      .replaceAll('ى', 'ي')
+      .replaceAll('ئ', 'ي')
+      .replaceAll('ؤ', 'و')
+      .replaceAll(RegExp(r'\s+'), ' ')
+      .trim()
+      .toLowerCase();
+  return _defaultNames.contains(folded);
+}
+
 /// The family in the server's placeholder order: by profile id, skipping
-/// names shorter than two characters (the server does not redact those).
+/// names shorter than two characters (the server does not redact those). A
+/// child named «طفلي» keeps its letter like any other (PR #39).
 List<FamilyMember> placeholderOrder(Iterable<FamilyMember> children) {
   final named = [
     for (final c in children)
@@ -168,7 +200,10 @@ List<int?> _align(List<_Token> a, List<_Token> b) {
 /// positional, so deleting a sibling shifts them — is shown as «طفل آخر» /
 /// "another child", never as the child's own name («عمر يغار من عمر»).
 /// Unknown letters and a missing [childName] leave the placeholder as it is:
-/// a generic word is better than a wrong name.
+/// a generic word is better than a wrong name. So does a default name
+/// ([isDefaultChildName]): a sibling named «طفلي» stays «الطفل أ» — shown
+/// as «طفلي» it would read as the fact's own child — and a child named
+/// «طفلي» needs no swap at all.
 RenderedMemoryText renderMemory(
   String stored, {
   String? childName,
@@ -193,6 +228,7 @@ RenderedMemoryText renderMemory(
         final other = english
             ? 'another child'
             : (feminine ? 'طفلة أخرى' : 'طفل آخر');
+        if (!isSubject && isDefaultChildName(ordered[i].name)) continue;
         final name = isSubject ? other : ordered[i].name;
         for (final m in RegExp('لل$word $label(?![ء-ي0-9])').allMatches(stored)) {
           found.add((m.start, m.end, 'ل$name'));
@@ -207,7 +243,7 @@ RenderedMemoryText renderMemory(
   // child no longer in the family (MOBILE_API §9.0) — are plain words: no
   // pattern above or below matches them, so they render exactly as written.
   final name = childName?.trim();
-  if (name != null && name.isNotEmpty) {
+  if (name != null && name.isNotEmpty && !isDefaultChildName(name)) {
     for (final m in _arChild.allMatches(stored)) {
       found.add((m.start, m.end, name));
     }

@@ -445,15 +445,31 @@ class AccountDeletionResult {
     required this.signedIn,
     this.deletedAt,
     this.scopeKnown = true,
-  });
+  }) : startedOver = false;
 
-  /// The deletion was confirmed, but its answer was lost: only the old token
-  /// being refused says it happened, so how far it reached is not known.
+  /// The account is gone, but not by this answer: the DELETE sent again was
+  /// refused with the token it carried, or a session mint said the device id
+  /// was erased. How far the deletion reached is not known.
   const AccountDeletionResult.scopeUnknown()
       : devices = 1,
         signedIn = false,
         deletedAt = null,
-        scopeKnown = false;
+        scopeKnown = false,
+        startedOver = false;
+
+  /// Not a deletion: the parent left one that could not be settled and this
+  /// phone started over. Whether the server deleted the account is unknown.
+  const AccountDeletionResult.startedOver()
+      : devices = 1,
+        signedIn = false,
+        deletedAt = null,
+        scopeKnown = false,
+        startedOver = true;
+
+  /// True when the phone was cleared without the deletion being confirmed
+  /// («ابدأ من جديد على هذا الهاتف»): the result page says so, and how to
+  /// make sure the account is gone.
+  final bool startedOver;
 
   /// How many devices were erased (this one included).
   final int devices;

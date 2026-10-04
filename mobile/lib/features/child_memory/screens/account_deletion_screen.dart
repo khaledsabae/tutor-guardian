@@ -22,8 +22,15 @@
 ///     deletion reaches the Google record and its backups; if the server
 ///     still says it did not, the result page says what was kept;
 ///   * item 4 — an answer that never arrived is not "nothing was deleted":
-///     the old token is asked (TgClient.deleteAccount), and when even that
-///     cannot tell, the screen says so and offers to check again.
+///     the same DELETE is sent again with the token it first carried
+///     (TgClient.settleAccountDeletion) — on "check again", and by itself at
+///     the next launch. While there is still no answer the screen says so,
+///     and always offers a way out: «ابدأ من جديد على هذا الهاتف» clears the
+///     phone and makes it a new device, and says how to make sure the
+///     account is gone.
+/// The phone is cleared even when this screen was closed under the deletion
+/// (a notification tapped meanwhile unwinds the stack): the navigator and
+/// the steps are taken before the wait, not looked up after it.
 library;
 
 import 'dart:async';
@@ -85,6 +92,34 @@ class AccountDeletionSteps {
 
 final accountDeletionStepsProvider =
     Provider<AccountDeletionSteps>((ref) => const AccountDeletionSteps());
+
+/// The account turned out deleted outside this screen — a launch settling a
+/// deletion whose answer was lost, or a session mint answered
+/// `410 device_erased` (a backup of a deleted account restored, say): clear
+/// the phone, then end on the deleted page, as the screen itself does. The
+/// install has already become a new device (TgClient). A second call — two
+/// paths learning it together — clears nothing twice (the wipe is shared)
+/// and only puts the same page up again.
+Future<void> finishDeletedAccount(
+  GlobalKey<NavigatorState> navigatorKey, {
+  AccountDeletionResult? result,
+  Future<void> Function() wipe = wipeLocalDataAfterAccountDeletion,
+}) async {
+  await wipe();
+  var navigator = navigatorKey.currentState;
+  if (navigator == null) {
+    // Before the first frame (a mint at launch): wait for it once.
+    await WidgetsBinding.instance.endOfFrame;
+    navigator = navigatorKey.currentState;
+  }
+  if (navigator == null || !navigator.mounted) return;
+  unawaited(navigator.pushAndRemoveUntil(
+    AppRoutes.accountDeleted(
+        result: result ?? const AccountDeletionResult.scopeUnknown(),
+        wasLinkedToGoogle: false),
+    (_) => false,
+  ));
+}
 
 class AccountDeletionScreen extends ConsumerStatefulWidget {
   const AccountDeletionScreen({super.key});
@@ -175,6 +210,7 @@ class _AccountDeletionScreenState extends ConsumerState<AccountDeletionScreen> {
     final repo = ref.read(memoryRepositoryProvider);
     final proof = ref.read(deviceProofServiceProvider);
     final steps = ref.read(accountDeletionStepsProvider);
+    final navigator = Navigator.of(context);
 
     // 1. Prove the phone first, so the parent sees which step is running.
     setState(() => _phase = _Phase.proving);
@@ -196,7 +232,8 @@ class _AccountDeletionScreenState extends ConsumerState<AccountDeletionScreen> {
       } catch (_) {}
     }
 
-    // 3. Delete.
+    // 3. Delete — not started once the screen is gone (a link opened
+    // meanwhile); once started, it is seen through (see [_finish]).
     if (!mounted) return;
     setState(() => _phase = _Phase.deleting);
     final AccountDeletionResult result;
@@ -206,43 +243,82 @@ class _AccountDeletionScreenState extends ConsumerState<AccountDeletionScreen> {
       _fail(e);
       return;
     }
-    await _finish(result);
+    await _finish(result, steps, navigator);
   }
 
   /// The server is done and this install is already a new device: clear the
-  /// phone, then leave nothing to navigate back into.
-  Future<void> _finish(AccountDeletionResult result) async {
-    final steps = ref.read(accountDeletionStepsProvider);
-    final navigator = Navigator.of(context);
+  /// phone, then leave nothing to navigate back into. [steps] and [navigator]
+  /// were taken before the wait: this screen may be gone by now (a
+  /// notification tapped meanwhile pops back to the root), and the phone is
+  /// cleared all the same — the result page then goes on the root navigator.
+  Future<void> _finish(AccountDeletionResult result, AccountDeletionSteps steps,
+      NavigatorState navigator) async {
     await steps.wipeLocal();
+    if (!navigator.mounted) return;
     unawaited(navigator.pushAndRemoveUntil(
       AppRoutes.accountDeleted(result: result, wasLinkedToGoogle: _wasLinked),
       (_) => false,
     ));
   }
 
-  /// After an answer that never arrived: ask again whether the account is
-  /// gone (the old token tells), and act on what that says.
+  /// After an answer that never arrived: send the same DELETE again (the
+  /// token it carried tells), and act on what the server says.
   Future<void> _checkAgain() async {
+    final repo = ref.read(memoryRepositoryProvider);
+    final steps = ref.read(accountDeletionStepsProvider);
+    final navigator = Navigator.of(context);
     setState(() => _phase = _Phase.deleting);
     final AccountDeletionResult? result;
     try {
-      result = await ref.read(memoryRepositoryProvider).resolvePendingDeletion();
+      result = await repo.resolvePendingDeletion();
     } catch (e) {
+      // `account_not_deleted` (refused: «لم يُحذف شيء»), a pause, or still
+      // no answer.
       _fail(e);
       return;
     }
-    if (!mounted) return;
     if (result != null) {
-      await _finish(result);
+      await _finish(result, steps, navigator);
       return;
     }
-    // Nothing was deleted: the account is as it was.
-    setState(() {
-      _error = TgApiError(null, AppLocalizations.of(context).deleteAccountServerError,
-          code: 'account_not_deleted');
-      _phase = _Phase.failed;
-    });
+    // Nothing pending any more (settled elsewhere): the normal screen.
+    if (mounted) unawaited(_loadStatus());
+  }
+
+  /// The way out of a deletion that cannot be settled: this phone is cleared
+  /// and becomes a new device. What happened to the account on the server is
+  /// not known — the confirmation and the result page both say so, with the
+  /// e-mail address that makes sure it is gone.
+  Future<void> _startOverHere() async {
+    final l10n = AppLocalizations.of(context);
+    final ok = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(l10n.deleteAccountStartOverTitle),
+        content: Text(l10n.deleteAccountStartOverBody(kSupportEmail)),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(ctx).pop(false),
+            child: Text(l10n.cancel),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(ctx).pop(true),
+            child: Text(l10n.deleteAccountStartOverConfirm),
+          ),
+        ],
+      ),
+    );
+    if (ok != true || !mounted) return;
+    final repo = ref.read(memoryRepositoryProvider);
+    final steps = ref.read(accountDeletionStepsProvider);
+    final navigator = Navigator.of(context);
+    setState(() => _phase = _Phase.deleting);
+    try {
+      await repo.startOverOnThisPhone();
+    } catch (_) {
+      // The wipe below still runs: the parent asked for a clean phone.
+    }
+    await _finish(const AccountDeletionResult.startedOver(), steps, navigator);
   }
 
   void _fail(Object e) {
@@ -332,6 +408,12 @@ class _AccountDeletionScreenState extends ConsumerState<AccountDeletionScreen> {
             const SizedBox(height: 16),
             FilledButton(
                 onPressed: _checkAgain, child: Text(l10n.deleteAccountCheckAgain)),
+            const SizedBox(height: 8),
+            // Never a dead end: a parent who cannot wait for the answer gets
+            // a clean phone (and the e-mail path for the server's copy).
+            OutlinedButton(
+                onPressed: _startOverHere,
+                child: Text(l10n.deleteAccountStartOver)),
             const SizedBox(height: 20),
             const _WithoutTheApp(),
           ],
@@ -570,7 +652,9 @@ class AccountDeletedScreen extends StatelessWidget {
                   size: 56, color: colors.primary),
               const SizedBox(height: 16),
               Text(
-                l10n.accountDeletedTitle,
+                result.startedOver
+                    ? l10n.accountStartedOverTitle
+                    : l10n.accountDeletedTitle,
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
                       color: colors.ink,
@@ -578,8 +662,15 @@ class AccountDeletedScreen extends StatelessWidget {
                     ),
               ),
               const SizedBox(height: 12),
-              Text(l10n.accountDeletedBody,
-                  textAlign: TextAlign.center, style: soft),
+              // A start-over is not a deletion: the page says the phone was
+              // cleared, that the server's copy is not known to be gone, and
+              // where to write to make sure.
+              Text(
+                  result.startedOver
+                      ? l10n.accountStartedOverBody(kSupportEmail)
+                      : l10n.accountDeletedBody,
+                  textAlign: TextAlign.center,
+                  style: soft),
               if (result.scopeKnown && others > 0) ...[
                 const SizedBox(height: 10),
                 Text(l10n.accountDeletedOthers(others),
@@ -593,7 +684,9 @@ class AccountDeletedScreen extends StatelessWidget {
                 Text(l10n.accountDeletedGoogleKept(kSupportEmail),
                     textAlign: TextAlign.center, style: soft),
               ],
-              if (wasLinkedToGoogle && !result.scopeKnown) ...[
+              if (wasLinkedToGoogle &&
+                  !result.scopeKnown &&
+                  !result.startedOver) ...[
                 const SizedBox(height: 10),
                 Text(l10n.accountDeletedGoogleUnknown(kSupportEmail),
                     textAlign: TextAlign.center, style: soft),

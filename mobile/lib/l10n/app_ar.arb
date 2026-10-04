@@ -1733,7 +1733,7 @@
   "supportEmailCopied": "نسخنا العنوان: {email}",
   "@supportEmailCopied": {"placeholders": {"email": {"type": "String"}}},
   "memoryYourChild": "طفلك",
-  "deleteAccountUnconfirmed": "انقطع الاتصال قبل أن يصلنا ردّ الخادم، فلا نعرف بعد هل حُذف حسابك. لن نفعل شيئًا قبل أن نتأكّد: تحقّق من اتصالك ثم اضغط «تحقّق مرة أخرى».",
+  "deleteAccountUnconfirmed": "انقطع الاتصال قبل أن يصلنا ردّ الخادم، فلا نعرف بعد هل حُذف حسابك. سنُكمل طلبك حين يعود الاتصال: اضغط «تحقّق مرة أخرى»، أو يتمّ ذلك وحده حين تفتح التطبيق في المرة القادمة.",
   "deleteAccountCheckAgain": "تحقّق مرة أخرى",
   "accountDeletedGoogleKept": "أبقينا سجلّ حسابك في Google ونسخه الاحتياطية، لأن ربط هذا الهاتف به لم يُتحقَّق منه. لحذفها — ومعها أي هاتف آخر مرتبط به — راسلنا على {email}.",
   "@accountDeletedGoogleKept": {"placeholders": {"email": {"type": "String"}}},
@@ -1742,5 +1742,14 @@
   "followupMemoryOff": "الذاكرة متوقّفة، فلا يحفظ المربّي إجابات المتابعات الآن. شغّلها إن أردت أن تجيب.",
   "followupNotSaved": "الذاكرة متوقّفة، فلم نحفظ إجابتك.",
   "memoryTurnOn": "شغّل الذاكرة",
-  "memoryOffCannotAdd": "الذاكرة متوقّفة، فلا تُضاف إليها معلومات جديدة. شغّلها لتضيف."
+  "memoryOffCannotAdd": "الذاكرة متوقّفة، فلا تُضاف إليها معلومات جديدة. شغّلها لتضيف.",
+  "deleteAccountStartOver": "ابدأ من جديد على هذا الهاتف",
+  "deleteAccountStartOverTitle": "البدء من جديد على هذا الهاتف؟",
+  "deleteAccountStartOverBody": "سنمسح كل ما على هذا الهاتف، ويبدأ التطبيق كأنه مثبَّت للتوّ. لا نعرف بعد هل حُذف حسابك من خوادمنا؛ لتتأكّد من حذفه راسلنا على {email}.",
+  "@deleteAccountStartOverBody": {"placeholders": {"email": {"type": "String"}}},
+  "deleteAccountStartOverConfirm": "ابدأ من جديد",
+  "accountStartedOverTitle": "بدأ التطبيق من جديد على هذا الهاتف",
+  "accountStartedOverBody": "مسحنا كل ما كان على هذا الهاتف. لم نتأكّد هل حُذف حسابك من خوادمنا؛ لتتأكّد من حذفه راسلنا على {email}. أغلق التطبيق، وسيبدأ من جديد حين تفتحه.",
+  "@accountStartedOverBody": {"placeholders": {"email": {"type": "String"}}},
+  "deleteAccountNotDeletedNotice": "لم يُحذف حسابك. يمكنك أن تحاول مرة أخرى من الإعدادات ← الخصوصية وبياناتك."
 }

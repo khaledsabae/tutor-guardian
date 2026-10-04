@@ -446,9 +446,11 @@ void main() {
             'deleted_at': '2026-10-04T18:40:00Z',
           }));
       final result = await MemoryRepository(c.client).deleteAccount();
-      expect(c.seen.single.method, 'DELETE');
-      expect(c.seen.single.url.path, '/api/privacy/account');
-      expect(c.seen.single.url.queryParameters, {'confirm': 'true'});
+      // A live token first (a 401 to the DELETE must mean "gone"), then the
+      // DELETE itself.
+      expect(c.seen.map((r) => '${r.method} ${r.url.path}'),
+          ['GET /api/device-proof', 'DELETE /api/privacy/account']);
+      expect(c.seen.last.url.queryParameters, {'confirm': 'true'});
       expect(result.devices, 2);
       expect(result.signedIn, isTrue);
       expect(result.deletedAt, DateTime.utc(2026, 10, 4, 18, 40));
@@ -488,13 +490,26 @@ void main() {
       expect(await claimFile.readAsString(), fresh);
     });
 
-    test('a failed deletion keeps the identity (nothing was deleted)',
+    test('a 5xx keeps the identity and the record: unknown, not "nothing"',
         () async {
-      final c = _client((req, n) => _json({'detail': 'boom'}, 500));
-      await expectLater(MemoryRepository(c.client).deleteAccount(),
-          throwsA(isA<TgApiError>()));
+      final c = _client((req, n) => req.method == 'DELETE'
+          ? _json({'detail': 'boom'}, 500)
+          : _json({'proven': true}));
+      await expectLater(
+          MemoryRepository(c.client).deleteAccount(),
+          throwsA(isA<TgApiError>()
+              .having((e) => e.code, 'code', 'account_deletion_unconfirmed')));
       expect(c.storage.store['tg_device_id'], 'dev-old');
       expect(c.storage.store['tg_token'], 'tok1');
+      expect(await c.client.accountDeletionState(), kAccountDeletionRequested);
+    });
+
+    test('no live session: nothing is sent, nothing recorded', () async {
+      final c = _client((req, n) => throw http.ClientException('offline'));
+      await expectLater(MemoryRepository(c.client).deleteAccount(),
+          throwsA(isA<TgApiError>()));
+      expect(c.seen.where((r) => r.method == 'DELETE'), isEmpty);
+      expect(await c.client.accountDeletionState(), isNull);
     });
   });
 

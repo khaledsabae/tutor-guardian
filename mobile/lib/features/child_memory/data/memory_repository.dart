@@ -16,7 +16,6 @@
 library;
 
 import '../../../api/tg_client.dart';
-import '../../../l10n/l10n_global.dart';
 import 'memory_models.dart';
 
 class MemoryRepository {
@@ -145,26 +144,20 @@ class MemoryRepository {
   /// Where an account deletion stands on this phone (null: none pending).
   Future<String?> deletionState() => _client.accountDeletionState();
 
-  /// "Check again" after a deletion whose answer was lost: the deletion's
-  /// result (scope unknown) when the account is gone, null when nothing was
-  /// deleted, or `account_deletion_unconfirmed` when that still cannot be
-  /// told.
+  /// "Check again" after a deletion whose answer was lost: the same DELETE
+  /// is sent again (TgClient.settleAccountDeletion). The deletion's result
+  /// when the account is gone (scope unknown when it already was), null when
+  /// no deletion is pending; throws `account_not_deleted` when the server
+  /// refused it, or `account_deletion_unconfirmed` while there is still no
+  /// answer.
   Future<AccountDeletionResult?> resolvePendingDeletion() async {
-    final state = await _client.accountDeletionState();
-    if (state == null) return null;
-    if (state == kAccountDeletionConfirmed) {
-      return const AccountDeletionResult.scopeUnknown();
-    }
-    final deleted = await _client.probeAccountDeleted();
-    if (deleted == true) {
-      await _client.startOverAfterAccountDeletion();
-      return const AccountDeletionResult.scopeUnknown();
-    }
-    if (deleted == false) {
-      await _client.clearAccountDeletionState();
-      return null;
-    }
-    throw TgApiError(null, AppL10n.current.deleteAccountUnconfirmed,
-        code: 'account_deletion_unconfirmed');
+    final body = await _client.settleAccountDeletion();
+    return body == null ? null : AccountDeletionResult.fromJson(body);
   }
+
+  /// The way out when a deletion cannot be settled: this install becomes a new
+  /// device (the caller clears the phone). The server's account stays as the
+  /// DELETE left it — the parent is told how to make sure it is gone.
+  Future<void> startOverOnThisPhone() =>
+      _client.startOverAfterAccountDeletion();
 }

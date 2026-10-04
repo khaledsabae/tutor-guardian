@@ -4,9 +4,11 @@
 /// cached children and preferences, the chat copy, voice recordings and
 /// exports in the app's documents, the cache (which also holds the device-id
 /// claim of the device-twin fix), scheduled reminders, the Google sign-in and
-/// the push token. The device id and the session were already replaced by
-/// `TgClient.deleteAccount` the moment the server answered, before anything
-/// else could run.
+/// the push token. The device id and the session were already replaced
+/// (`TgClient.startOverAfterAccountDeletion`) the moment the server answered,
+/// before anything else could run. Last, Android is told the app's data
+/// changed, so the next Auto Backup replaces the copy that still holds the
+/// deleted account.
 ///
 /// Every step is best-effort and independent: one that fails (a plugin
 /// missing on this phone) must not keep the others from running.
@@ -19,7 +21,9 @@ import 'package:flutter/foundation.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../../api/tg_client.dart' show kAccountDeletionKey;
+import '../../../api/tg_client.dart'
+    show kAccountDeletionErasedIdKey, kAccountDeletionKey;
+import '../../../core/app_closer.dart' show notifyBackupDataChanged;
 import '../../adhkar/services/notification_service.dart';
 import '../../identity/identity_service.dart';
 
@@ -29,9 +33,10 @@ import '../../identity/identity_service.dart';
 /// markers (they name no one, and resetting them would count this phone as a
 /// brand-new install in every funnel).
 ///
-/// The deletion record ([kAccountDeletionKey]) is kept through the clear and
-/// removed as the wipe's LAST step: a wipe cut short (the app killed in the
-/// middle) is finished by the next launch, not forgotten.
+/// The deletion record ([kAccountDeletionKey], with the id it erased) is kept
+/// through the clear and removed as the wipe's LAST step: a wipe cut short
+/// (the app killed in the middle) is finished by the next launch, not
+/// forgotten.
 @visibleForTesting
 const Set<String> keptPreferenceKeys = {
   'tg.ui_language',
@@ -39,35 +44,22 @@ const Set<String> keptPreferenceKeys = {
   'cached_minimum_build_number',
   'tg_device_id_backup',
   kAccountDeletionKey,
+  kAccountDeletionErasedIdKey,
 };
 
 @visibleForTesting
 const List<String> keptPreferencePrefixes = ['tg.analytics.once.'];
 
-/// Clear [prefs] except [keptPreferenceKeys] / [keptPreferencePrefixes].
+/// Remove from [prefs] every key but [keptPreferenceKeys] /
+/// [keptPreferencePrefixes] — one by one. Not `clear()` and then writing the
+/// kept ones back: killed in between, that would lose the deletion record,
+/// and with it the next launch's chance to finish this wipe.
 @visibleForTesting
 Future<void> clearPreferencesForFreshStart(SharedPreferences prefs) async {
-  final keep = <String, Object>{};
-  for (final key in prefs.getKeys()) {
+  for (final key in prefs.getKeys().toList()) {
     final kept = keptPreferenceKeys.contains(key) ||
         keptPreferencePrefixes.any(key.startsWith);
-    final value = prefs.get(key);
-    if (kept && value != null) keep[key] = value;
-  }
-  await prefs.clear();
-  for (final e in keep.entries) {
-    final v = e.value;
-    if (v is String) {
-      await prefs.setString(e.key, v);
-    } else if (v is bool) {
-      await prefs.setBool(e.key, v);
-    } else if (v is int) {
-      await prefs.setInt(e.key, v);
-    } else if (v is double) {
-      await prefs.setDouble(e.key, v);
-    } else if (v is List<String>) {
-      await prefs.setStringList(e.key, v);
-    }
+    if (!kept) await prefs.remove(key);
   }
 }
 
@@ -90,8 +82,14 @@ Future<void> _step(Future<void> Function() step) async {
   } catch (_) {}
 }
 
-/// Clear the phone after the server deleted the account.
-Future<void> wipeLocalDataAfterAccountDeletion() async {
+Future<void>? _wiping;
+
+/// Clear the phone after the server deleted the account. Callers that arrive
+/// together (the deletion screen, a `410 device_erased`) share one run.
+Future<void> wipeLocalDataAfterAccountDeletion() =>
+    _wiping ??= _wipe().whenComplete(() => _wiping = null);
+
+Future<void> _wipe() async {
   await _step(() => NotificationService.instance.cancelAll());
   await _step(() => IdentityService.instance.signOutAfterAccountDeletion());
   await _step(() async =>
@@ -111,6 +109,12 @@ Future<void> wipeLocalDataAfterAccountDeletion() async {
   // push rows (already erased on the server) could be matched against.
   await _step(() => FirebaseMessaging.instance.deleteToken());
   // Last: the deletion is complete on this phone too.
-  await _step(() async =>
-      (await SharedPreferences.getInstance()).remove(kAccountDeletionKey));
+  await _step(() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove(kAccountDeletionErasedIdKey);
+    await prefs.remove(kAccountDeletionKey);
+  });
+  // The phone's Auto Backup still holds the deleted account (its device id,
+  // cached children, the chat copy): ask for a new one of what is left.
+  await _step(notifyBackupDataChanged);
 }

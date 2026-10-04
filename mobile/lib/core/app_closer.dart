@@ -1,4 +1,5 @@
-/// Ending the app so that the next open is a fresh launch.
+/// Ending the app so that the next open is a fresh launch — and telling
+/// Android's backup that the app's data changed.
 ///
 /// Used once: after an account deletion (MOBILE_API §10), when everything on
 /// the phone was cleared and nothing of the deleted account may survive in
@@ -35,4 +36,18 @@ Future<void> closeAppForFreshStart({
     // Fall through to the exit below.
   }
   exitProcess(0);
+}
+
+/// Ask Android for a new backup of the app's data (`BackupManager
+/// .dataChanged()`), after the phone was cleared of a deleted account: the
+/// copy in the parent's Google Drive still holds it, and a restore would
+/// bring its device id, cached children and chat copy back. Best effort, and
+/// bounded — iOS and builds without the channel do nothing.
+Future<void> notifyBackupDataChanged({
+  MethodChannel channel = appChannel,
+  Duration timeout = const Duration(seconds: 3),
+}) async {
+  try {
+    await channel.invokeMethod<bool>('backupDataChanged').timeout(timeout);
+  } catch (_) {}
 }

@@ -6,8 +6,9 @@
 ///     stored form.
 ///  3. A phone signed in with Google is linked again from the proven session
 ///     before the deletion; a kept Google record is said, not hidden.
-///  4. A lost answer is not "nothing was deleted": the old token tells, no
-///     session is minted meanwhile, and the next launch finishes the job.
+///  4. A lost answer is not "nothing was deleted": the same DELETE is sent
+///     again with the token it carried, and the next launch finishes the job
+///     (reworked by the delta review — see pr36_delta_review_test.dart).
 ///  5. Memory off pauses the follow-up loop.
 ///  6. No link opens a parent screen — /followup included — over child mode;
 ///     it waits, and opens when the parent leaves (PR #34's hold).
@@ -446,15 +447,18 @@ void main() {
   });
 
   // ── 4 ──────────────────────────────────────────────────────────────────
+  // Rewritten in the delta review (3814abbf): a lost answer is settled by
+  // sending the same DELETE again with the token it carried — never by
+  // asking whether a token still works. More in pr36_delta_review_test.
   group('4 · a lost answer is settled, not guessed', () {
-    Future<http.Response> Function(http.Request) server({
-      required Future<http.Response> Function() delete,
-      required Future<http.Response> Function() probe,
-    }) =>
+    /// A server that knows the session `tok1` (device-proof status answers
+    /// 200) and answers the account DELETE with [delete].
+    Future<http.Response> Function(http.Request) server(
+            Future<http.Response> Function(http.Request req) delete) =>
         (req) async {
-          if (req.method == 'DELETE') return delete();
-          if (req.method == 'GET' && req.url.path == '/api/children') {
-            return probe();
+          if (req.method == 'DELETE') return delete(req);
+          if (req.method == 'GET' && req.url.path == '/api/device-proof') {
+            return _json({'proven': true});
           }
           if (req.method == 'POST' && req.url.path == '/api/chat/sessions') {
             return _json({'session_id': 's2', 'token': 'tok2'}, 201);
@@ -462,118 +466,117 @@ void main() {
           return _json({'detail': 'Not Found'}, 404);
         };
 
-    test('the connection dropped, the old token is refused: it was deleted',
+    test('the connection dropped: unknown — recorded, its token kept apart',
         () async {
       final c = _client(server(
-        delete: () async => throw http.ClientException('connection reset'),
-        probe: () async => _json({'detail': 'invalid token'}, 401),
-      ));
-      final body = await c.client.deleteAccount();
-      expect(AccountDeletionResult.fromJson(body).scopeKnown, isFalse);
-      expect(c.storage.store['tg_device_id'], isNot('dev-old'));
-      expect(c.storage.store.containsKey('tg_token'), isFalse);
-      expect(await c.client.accountDeletionState(), kAccountDeletionConfirmed);
-    });
-
-    test('an edge 502, the old token still works: nothing was deleted',
-        () async {
-      final c = _client(server(
-        delete: () async => http.Response('<html>Bad gateway</html>', 502),
-        probe: () async => _json({'children': []}),
-      ));
-      await expectLater(
-          c.client.deleteAccount(),
-          throwsA(isA<TgApiError>()
-              .having((e) => e.code, 'code', 'account_not_deleted')));
-      expect(c.storage.store['tg_device_id'], 'dev-old');
-      expect(c.storage.store['tg_token'], 'tok1');
-      expect(await c.client.accountDeletionState(), isNull);
-    });
-
-    test('no answer either way: unconfirmed, recorded, identity kept',
-        () async {
-      final c = _client(server(
-        delete: () async => http.Response('', 524),
-        probe: () async => throw http.ClientException('offline'),
-      ));
+          (_) async => throw http.ClientException('connection reset')));
       await expectLater(
           c.client.deleteAccount(),
           throwsA(isA<TgApiError>()
               .having((e) => e.code, 'code', 'account_deletion_unconfirmed')));
       expect(await c.client.accountDeletionState(), kAccountDeletionRequested);
+      expect(c.storage.store['tg_deletion_token'], 'tok1');
       expect(c.storage.store['tg_device_id'], 'dev-old');
+    });
+
+    test('an edge 502 is not "nothing was deleted": unknown, nothing asked',
+        () async {
+      final c = _client(server(
+          (_) async => http.Response('<html>Bad gateway</html>', 502)));
+      await expectLater(
+          c.client.deleteAccount(),
+          throwsA(isA<TgApiError>()
+              .having((e) => e.code, 'code', 'account_deletion_unconfirmed')));
+      expect(await c.client.accountDeletionState(), kAccountDeletionRequested);
+      expect(c.seen.where((s) => s == 'GET /api/children'), isEmpty,
+          reason: 'no token check stands in for the answer');
+    });
+
+    test('sent again and refused with its token: it was deleted', () async {
+      var committed = false;
+      final c = _client(server((req) async {
+        if (committed) return _json({'detail': 'invalid token'}, 401);
+        committed = true; // the origin commits; the answer is lost
+        throw http.ClientException('connection reset');
+      }));
+      await expectLater(c.client.deleteAccount(), throwsA(isA<TgApiError>()));
+      final body = await c.client.settleAccountDeletion();
+      expect(body, isNotNull);
+      expect(AccountDeletionResult.fromJson(body!).scopeKnown, isFalse);
+      expect(c.storage.store['tg_device_id'], isNot('dev-old'));
+      expect(c.storage.store.containsKey('tg_deletion_token'), isFalse);
+      expect(await c.client.accountDeletionState(), kAccountDeletionConfirmed);
     });
 
     test('a refusal (a pause) deleted nothing and leaves nothing recorded',
         () async {
-      final c = _client(server(
-        delete: () async => _json({
-          'detail': {
-            'code': 'device_proof_cooldown',
-            'message': 'm',
-            'available_at': '2026-10-07T18:30:00Z',
-          }
-        }, 403),
-        probe: () async => fail('a refusal needs no probe'),
-      ));
-      await expectLater(c.client.deleteAccount(), throwsA(isA<TgApiError>()));
+      final c = _client(server((_) async => _json({
+            'detail': {
+              'code': 'device_proof_cooldown',
+              'message': 'm',
+              'available_at': '2026-10-07T18:30:00Z',
+            }
+          }, 403)));
+      await expectLater(
+          c.client.deleteAccount(),
+          throwsA(isA<TgApiError>()
+              .having((e) => e.code, 'code', 'device_proof_cooldown')));
       expect(await c.client.accountDeletionState(), isNull);
-      expect(c.seen.where((s) => s == 'GET /api/children'), isEmpty);
+      expect(c.storage.store.containsKey('tg_deletion_token'), isFalse);
+      expect(c.storage.store['tg_device_id'], 'dev-old');
     });
 
-    test('while unsettled no session is minted for the possibly erased id',
-        () async {
+    test('while unsettled a session can still be minted', () async {
       SharedPreferences.setMockInitialValues(
           {kAccountDeletionKey: kAccountDeletionRequested});
-      final c = _client(
-          (req) async => req.url.path == '/api/chat/sessions'
-              ? _json({'session_id': 's2', 'token': 'tok2'}, 201)
-              : _json({'detail': 'invalid token'}, 401));
-      await expectLater(
-          c.client.getMemorySettings(), throwsA(isA<TgApiError>()));
-      await expectLater(
-          c.client.createSession(),
-          throwsA(isA<TgApiError>()
-              .having((e) => e.code, 'code', 'account_deletion_unconfirmed')));
-      expect(c.seen.where((s) => s == 'POST /api/chat/sessions'), isEmpty);
-      expect(c.storage.store['tg_device_id'], 'dev-old');
-      // And the old token is kept: it is the only way left to ask the server
-      // whether the account is gone (recovery would clear it before minting).
-      expect(c.storage.store['tg_token'], 'tok1');
+      final c = _client(server((_) async => _json({}, 200)));
+      await c.client.endSession(); // "new conversation"
+      final session = await c.client.ensureSession();
+      expect(session.token, 'tok2');
+      expect(c.seen, contains('POST /api/chat/sessions'));
     });
 
     group('the next launch finishes it', () {
-      test('requested, token refused: new device, phone cleared', () async {
+      test('requested: nothing before the first frame, and no network',
+          () async {
         final s = FakeMemoryServer()
-          ..deletionStateValue = kAccountDeletionRequested
-          ..probeAnswer = true;
+          ..deletionStateValue = kAccountDeletionRequested;
         var wiped = 0;
         expect(await completePendingAccountDeletion(
-            client: s, wipe: () async => wiped++), isTrue);
+            client: s, wipe: () async => wiped++), isFalse);
+        expect(wiped, 0);
+        expect(s.calls, isEmpty);
+      });
+
+      test('requested, sent again and refused with its token: deleted',
+          () async {
+        final s = FakeMemoryServer()
+          ..deletionStateValue = kAccountDeletionRequested
+          ..resendAnswer = true;
+        final settled = await settlePendingAccountDeletion(client: s);
+        expect(settled.outcome, PendingDeletion.deleted);
+        expect(settled.result!.scopeKnown, isFalse);
         expect(s.startOvers, 1);
-        expect(wiped, 1);
       });
 
-      test('requested, token still works: nothing to finish', () async {
+      test('requested, the server refuses it: nothing deleted, nothing left',
+          () async {
         final s = FakeMemoryServer()
           ..deletionStateValue = kAccountDeletionRequested
-          ..probeAnswer = false;
-        var wiped = 0;
-        expect(await completePendingAccountDeletion(
-            client: s, wipe: () async => wiped++), isFalse);
+          ..resendAnswer = false;
+        final settled = await settlePendingAccountDeletion(client: s);
+        expect(settled.outcome, PendingDeletion.notDeleted);
         expect(s.deletionStateValue, isNull);
-        expect(wiped, 0);
+        expect(s.startOvers, 0);
       });
 
-      test('requested, no answer: kept for the next launch', () async {
+      test('requested, still no answer: kept for later', () async {
         final s = FakeMemoryServer()
           ..deletionStateValue = kAccountDeletionRequested
-          ..probeAnswer = null;
-        var wiped = 0;
-        expect(await completePendingAccountDeletion(
-            client: s, wipe: () async => wiped++), isFalse);
+          ..resendAnswer = null;
+        final settled = await settlePendingAccountDeletion(client: s);
+        expect(settled.outcome, PendingDeletion.unknown);
         expect(s.deletionStateValue, kAccountDeletionRequested);
-        expect(wiped, 0);
       });
 
       test('confirmed but the wipe was cut short: wiped, no network',
@@ -590,6 +593,8 @@ void main() {
       test('nothing recorded: nothing done, nothing asked', () async {
         final s = FakeMemoryServer();
         expect(await completePendingAccountDeletion(client: s), isFalse);
+        expect((await settlePendingAccountDeletion(client: s)).outcome,
+            PendingDeletion.none);
         expect(s.calls, isEmpty);
       });
 
@@ -597,11 +602,13 @@ void main() {
           () async {
         SharedPreferences.setMockInitialValues({
           kAccountDeletionKey: kAccountDeletionConfirmed,
+          kAccountDeletionErasedIdKey: 'dev-old',
           'tg.onboarding.completed': true,
         });
         final prefs = await SharedPreferences.getInstance();
         await clearPreferencesForFreshStart(prefs);
         expect(prefs.getString(kAccountDeletionKey), kAccountDeletionConfirmed);
+        expect(prefs.getString(kAccountDeletionErasedIdKey), 'dev-old');
         expect(prefs.containsKey('tg.onboarding.completed'), isFalse);
       });
     });
@@ -638,9 +645,12 @@ void main() {
           reason: 'not known: never claimed');
       expect(wipes, isEmpty);
 
-      server.probeAnswer = true; // the connection is back: the token is refused
+      // The connection is back: the DELETE sent again is refused with its
+      // token — the first one went through.
+      server.resendAnswer = true;
       await tester.tap(find.text('تحقّق مرة أخرى'));
       await settle(tester);
+      expect(server.calls, contains('RESEND DELETE /api/privacy/account'));
       expect(server.startOvers, 1);
       expect(wipes, [1]);
       expect(find.text('حُذف حسابك'), findsOneWidget);
@@ -649,11 +659,11 @@ void main() {
           findsOneWidget);
     });
 
-    testWidgets('"check again" when nothing was deleted says so',
+    testWidgets('"check again" when the server refused it says nothing was deleted',
         (tester) async {
       final server = FakeMemoryServer()
         ..deletionStateValue = kAccountDeletionRequested
-        ..probeAnswer = false;
+        ..resendAnswer = false;
       await pumpMemoryApp(tester, const AccountDeletionScreen(),
           server: server,
           overrides: [
@@ -664,7 +674,7 @@ void main() {
           ]);
       await settle(tester);
       // Opened with a deletion still unsettled: settled before anything else.
-      expect(server.calls.first, 'PROBE old token');
+      expect(server.calls.first, 'RESEND DELETE /api/privacy/account');
       expect(find.text('لم يُحذف شيء. حاول مرة أخرى بعد قليل.'), findsOneWidget);
       expect(server.deletionStateValue, isNull);
     });

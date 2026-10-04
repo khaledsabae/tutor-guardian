@@ -5411,7 +5411,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get deleteAccountUnconfirmed =>
-      'The connection dropped before the server\'s answer reached us, so we don\'t know yet whether your account was deleted. We won\'t do anything until we know: check your connection, then tap \"Check again\".';
+      'The connection dropped before the server\'s answer reached us, so we don\'t know yet whether your account was deleted. We\'ll finish your request once you\'re back online: tap \"Check again\", or it happens by itself the next time you open the app.';
 
   @override
   String get deleteAccountCheckAgain => 'Check again';
@@ -5439,4 +5439,31 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get memoryOffCannotAdd =>
       'Memory is off, so nothing new is added to it. Turn it on to add notes.';
+
+  @override
+  String get deleteAccountStartOver => 'Start over on this phone';
+
+  @override
+  String get deleteAccountStartOverTitle => 'Start over on this phone?';
+
+  @override
+  String deleteAccountStartOverBody(String email) {
+    return 'Everything on this phone will be cleared, and the app will start as if just installed. We don\'t know yet whether your account was deleted from our servers; to make sure it is, email us at $email.';
+  }
+
+  @override
+  String get deleteAccountStartOverConfirm => 'Start over';
+
+  @override
+  String get accountStartedOverTitle =>
+      'The app has started over on this phone';
+
+  @override
+  String accountStartedOverBody(String email) {
+    return 'We cleared everything that was on this phone. We couldn\'t confirm whether your account was deleted from our servers; to make sure it is, email us at $email. Close the app — it will start fresh when you open it.';
+  }
+
+  @override
+  String get deleteAccountNotDeletedNotice =>
+      'Your account was not deleted. You can try again from Settings → Privacy & your data.';
 }

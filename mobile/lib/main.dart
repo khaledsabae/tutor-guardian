@@ -17,6 +17,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
 import 'core/analytics.dart';
+import 'core/local_only_files.dart';
 import 'core/crash_triage.dart';
 import 'core/nav_observer.dart';
 
@@ -32,6 +33,8 @@ import 'features/program/providers/settings_providers.dart';
 import 'features/program/providers/progress_providers.dart';
 import 'features/deeplink/deep_link_handler.dart';
 import 'features/child_memory/data/pending_deletion.dart';
+import 'features/child_memory/screens/account_deletion_screen.dart'
+    show finishDeletedAccount;
 import 'features/child_memory/device_proof/device_proof_service.dart';
 import 'features/push/push_service.dart';
 import 'features/referral/referral_service.dart';
@@ -196,15 +199,23 @@ void main() async {
     );
   }
 
-  // An account deletion this app did not see through — the answer was lost,
-  // or the app was killed before the phone was cleared — is finished here,
-  // before anything reads the onboarding state or can mint a session for
-  // the erased device id (MOBILE_API §10). No network unless one is pending.
+  // Every session mint says which build asks (`X-App-Build`): a build that
+  // handles `410 device_erased` gets it for a device id erased with its
+  // account, and a device so answered starts over and clears the phone —
+  // a restored backup of a deleted account, a deletion whose answer was lost
+  // (MOBILE_API §10). Both before anything can mint.
+  TgClient.appBuild = await buildNumber;
+  TgClient.shared.onDeviceErased = () => finishDeletedAccount(appNavigatorKey);
+
+  // A deletion the server confirmed but the app did not see through (killed
+  // before the phone was cleared) is finished here, before anything reads the
+  // onboarding state. Local only: a deletion still waiting for its answer is
+  // settled after the first frame (_settleLostDeletion), never holding it.
   try {
     await completePendingAccountDeletion();
   } catch (e, s) {
     FirebaseCrashlytics.instance.recordError(e, s,
-        reason: 'pending account deletion not settled', fatal: false);
+        reason: 'pending account deletion not finished', fatal: false);
   }
 
   // Before onboarding can complete: the only moment a first install is
@@ -277,11 +288,48 @@ void main() async {
   unawaited(ensureNotificationChannels());
 
   // Phase 0.2 + Phase 1 growth loops — fire-and-forget so it never blocks
-  // cold start. Order: session → push token → referral → identity.
-  unawaited(_postLaunchGrowthLoop());
+  // cold start. Order: a lost account deletion settled → session → push
+  // token → referral → identity.
+  unawaited(() async {
+    // Deleted after all: the deleted page is up, and nothing below is
+    // wanted for a phone about to close.
+    if (await _settleLostDeletion()) return;
+    await _postLaunchGrowthLoop();
+  }());
+
+  // Voice notes and agreement images older builds left where every backup
+  // picked them up (core/local_only_files.dart).
+  unawaited(removeStrayPrivateFiles());
 
   // Activation-funnel bookkeeping (first-open day → one-shot day2_return).
   unawaited(Analytics.appOpened());
+}
+
+/// An account deletion whose answer was lost: the same DELETE is sent again
+/// (TgClient.settleAccountDeletion), before the growth loop — nothing there
+/// should work for an account that turns out gone. After the first frame,
+/// because it needs the network. No network when nothing is pending. True
+/// when the account turned out deleted (the phone is cleared and the deleted
+/// page is up).
+Future<bool> _settleLostDeletion() async {
+  try {
+    final settled = await settlePendingAccountDeletion();
+    switch (settled.outcome) {
+      case PendingDeletion.deleted:
+        await finishDeletedAccount(appNavigatorKey, result: settled.result);
+        return true;
+      case PendingDeletion.notDeleted:
+        // The parent last saw «we don't know yet»: say how it ended.
+        messengerKey.currentState?.showSnackBar(SnackBar(
+            content: Text(AppL10n.current.deleteAccountNotDeletedNotice)));
+      case PendingDeletion.none || PendingDeletion.unknown:
+        break;
+    }
+  } catch (e, s) {
+    FirebaseCrashlytics.instance.recordError(e, s,
+        reason: 'lost account deletion not settled', fatal: false);
+  }
+  return false;
 }
 
 Future<void> _postLaunchGrowthLoop() async {

@@ -67,11 +67,13 @@ class FakeMemoryServer extends TgClient {
   List<Map<String, dynamic>> children = [];
   bool noteDropped = false;
 
-  /// Where an account deletion stands on this phone, and what asking the
-  /// server with the old token answers (TgClient's real logic is tested at
-  /// the HTTP level in memory_api_test / pr36_review_fixes_test).
+  /// Where an account deletion stands on this phone, and what sending the
+  /// lost DELETE again finds: true — the account is gone (scope unknown);
+  /// false — the server refused it, nothing was deleted; null — still no
+  /// answer. TgClient's real logic is tested at the HTTP level in
+  /// pr36_delta_review_test / pr36_review_fixes_test.
   String? deletionStateValue;
-  bool? probeAnswer;
+  bool? resendAnswer;
   int startOvers = 0;
 
   @override
@@ -81,15 +83,28 @@ class FakeMemoryServer extends TgClient {
   Future<void> clearAccountDeletionState() async => deletionStateValue = null;
 
   @override
-  Future<void> startOverAfterAccountDeletion() async {
-    startOvers++;
-    deletionStateValue = kAccountDeletionConfirmed;
+  Future<Map<String, dynamic>?> settleAccountDeletion() async {
+    final state = deletionStateValue;
+    if (state == null) return null;
+    if (state == kAccountDeletionConfirmed) return const <String, dynamic>{};
+    calls.add('RESEND DELETE /api/privacy/account');
+    switch (resendAnswer) {
+      case true:
+        await startOverAfterAccountDeletion();
+        return const <String, dynamic>{};
+      case false:
+        deletionStateValue = null;
+        throw const TgApiError(403, 'لم يُحذف شيء. حاول مرة أخرى بعد قليل.',
+            code: 'account_not_deleted');
+      case null:
+        throw const TgApiError(null, 'm', code: 'account_deletion_unconfirmed');
+    }
   }
 
   @override
-  Future<bool?> probeAccountDeleted() async {
-    calls.add('PROBE old token');
-    return probeAnswer;
+  Future<void> startOverAfterAccountDeletion() async {
+    startOvers++;
+    deletionStateValue = kAccountDeletionConfirmed;
   }
 
   /// What the account deletion returns, or the error it throws.
@@ -100,6 +115,10 @@ class FakeMemoryServer extends TgClient {
     'deleted_at': '2026-10-04T18:40:00Z',
   };
   TgApiError? deletionError;
+
+  /// When set, the account deletion waits for it — the screen can be closed
+  /// under the DELETE (a notification tapped meanwhile).
+  Completer<void>? deletionGate;
 
   // ── device proof ──────────────────────────────────────────────────────
   /// Hands a code to the app the way FCM would (wired by the test).
@@ -394,6 +413,8 @@ class FakeMemoryServer extends TgClient {
           extra: {'available_at': paused.toIso8601String()});
     }
     _requireProof();
+    final gate = deletionGate;
+    if (gate != null) await gate.future;
     final err = deletionError;
     if (err != null) {
       if (err.code == 'account_deletion_unconfirmed') {

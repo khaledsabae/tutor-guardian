@@ -9269,7 +9269,7 @@ abstract class AppLocalizations {
   /// No description provided for @deleteAccountUnconfirmed.
   ///
   /// In ar, this message translates to:
-  /// **'انقطع الاتصال قبل أن يصلنا ردّ الخادم، فلا نعرف بعد هل حُذف حسابك. لن نفعل شيئًا قبل أن نتأكّد: تحقّق من اتصالك ثم اضغط «تحقّق مرة أخرى».'**
+  /// **'انقطع الاتصال قبل أن يصلنا ردّ الخادم، فلا نعرف بعد هل حُذف حسابك. سنُكمل طلبك حين يعود الاتصال: اضغط «تحقّق مرة أخرى»، أو يتمّ ذلك وحده حين تفتح التطبيق في المرة القادمة.'**
   String get deleteAccountUnconfirmed;
 
   /// No description provided for @deleteAccountCheckAgain.
@@ -9313,6 +9313,48 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'الذاكرة متوقّفة، فلا تُضاف إليها معلومات جديدة. شغّلها لتضيف.'**
   String get memoryOffCannotAdd;
+
+  /// No description provided for @deleteAccountStartOver.
+  ///
+  /// In ar, this message translates to:
+  /// **'ابدأ من جديد على هذا الهاتف'**
+  String get deleteAccountStartOver;
+
+  /// No description provided for @deleteAccountStartOverTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'البدء من جديد على هذا الهاتف؟'**
+  String get deleteAccountStartOverTitle;
+
+  /// No description provided for @deleteAccountStartOverBody.
+  ///
+  /// In ar, this message translates to:
+  /// **'سنمسح كل ما على هذا الهاتف، ويبدأ التطبيق كأنه مثبَّت للتوّ. لا نعرف بعد هل حُذف حسابك من خوادمنا؛ لتتأكّد من حذفه راسلنا على {email}.'**
+  String deleteAccountStartOverBody(String email);
+
+  /// No description provided for @deleteAccountStartOverConfirm.
+  ///
+  /// In ar, this message translates to:
+  /// **'ابدأ من جديد'**
+  String get deleteAccountStartOverConfirm;
+
+  /// No description provided for @accountStartedOverTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'بدأ التطبيق من جديد على هذا الهاتف'**
+  String get accountStartedOverTitle;
+
+  /// No description provided for @accountStartedOverBody.
+  ///
+  /// In ar, this message translates to:
+  /// **'مسحنا كل ما كان على هذا الهاتف. لم نتأكّد هل حُذف حسابك من خوادمنا؛ لتتأكّد من حذفه راسلنا على {email}. أغلق التطبيق، وسيبدأ من جديد حين تفتحه.'**
+  String accountStartedOverBody(String email);
+
+  /// No description provided for @deleteAccountNotDeletedNotice.
+  ///
+  /// In ar, this message translates to:
+  /// **'لم يُحذف حسابك. يمكنك أن تحاول مرة أخرى من الإعدادات ← الخصوصية وبياناتك.'**
+  String get deleteAccountNotDeletedNotice;
 }
 
 class _AppLocalizationsDelegate

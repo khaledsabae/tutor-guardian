@@ -94,13 +94,22 @@ class TgApiError implements Exception {
 /// SharedPreferences key, so it survives the process.
 const String kAccountDeletionKey = 'tg.account_deletion';
 
-/// The DELETE was sent with this install's token; whether the server
-/// committed it is not known yet. No session may be minted meanwhile.
+/// The DELETE is on its way, or its answer was lost: whether the server
+/// committed it is not known yet. The token it carries is kept apart from the
+/// session (clearing the session never touches it), because sending that same
+/// DELETE again is how the answer is settled (`TgClient.settleAccountDeletion`).
+/// The app works on meanwhile: for an erased device id the server refuses the
+/// session mint with `410 device_erased`.
 const String kAccountDeletionRequested = 'requested';
 
-/// The server deleted the account and this install is already a new device;
-/// the phone still has to be cleared.
+/// The server deleted the account; this install is a new device, or becoming
+/// one. The phone still has to be cleared.
 const String kAccountDeletionConfirmed = 'confirmed';
+
+/// The device id the deletion erased, recorded with [kAccountDeletionConfirmed]
+/// BEFORE the keystore is cleared: a launch that finds it still held — the app
+/// was killed in the middle — starts over again before the phone is cleared.
+const String kAccountDeletionErasedIdKey = 'tg.account_deletion.erased_id';
 
 /// One event yielded by `streamQuery`.
 sealed class TgStreamEvent {
@@ -175,6 +184,12 @@ class _AuthStore {
   /// A copy of the device id outside the keystore. Only ever read when the
   /// secure copy is missing or unreadable — see [getOrCreateDeviceId].
   static const _kDeviceIdBackup = 'tg_device_id_backup';
+
+  /// The token an account DELETE was sent with (MOBILE_API §10). Not part of
+  /// the session: "new conversation" and the 401 handlers clear the session,
+  /// and this token is the only way to send the same DELETE again when its
+  /// answer was lost.
+  static const _kDeletionToken = 'tg_deletion_token';
 
   final FlutterSecureStorage _storage;
   final DeviceIdClaim _claim;
@@ -378,6 +393,33 @@ class _AuthStore {
     await _safeDelete(_kChildToken);
   }
 
+  Future<void> writeDeletionToken(String token) =>
+      _safeWrite(_kDeletionToken, token);
+
+  Future<String?> readDeletionToken() => _safeRead(_kDeletionToken);
+
+  Future<void> clearDeletionToken() => _safeDelete(_kDeletionToken);
+
+  /// The device id this install holds, without creating one.
+  Future<String?> peekDeviceId() async {
+    final cached = _cachedDeviceId;
+    if (cached != null) return cached;
+    final (stored, _) = await _readChecked(_kDeviceId);
+    if (isValidDeviceId(stored)) return stored;
+    final backup = await _readDeviceIdBackup();
+    return isValidDeviceId(backup) ? backup : null;
+  }
+
+  /// Whether [id] is still this install's id anywhere it lives — the memory
+  /// cache, the keystore, the backup copy. A keystore that cannot be read
+  /// counts as holding it: starting over once more costs nothing.
+  Future<bool> stillHolds(String id) async {
+    if (_cachedDeviceId == id) return true;
+    final (stored, readOk) = await _readChecked(_kDeviceId);
+    if (!readOk || stored == id) return true;
+    return await _readDeviceIdBackup() == id;
+  }
+
   /// After the account was deleted (MOBILE_API §10): forget the session and
   /// every secret this install held, and become a brand-new device.
   ///
@@ -395,7 +437,7 @@ class _AuthStore {
       await _storage.deleteAll();
     } catch (_) {
       for (final key in [_kSessionId, _kToken, _kDeviceProof, _kChildToken,
-          _kActiveChildId, _kDeviceId]) {
+          _kActiveChildId, _kDeviceId, _kDeletionToken]) {
         await _safeDelete(key);
       }
     }
@@ -464,7 +506,15 @@ class TgClient {
   /// the app. Set by the app when the locale changes; `null` keeps Arabic.
   static String? uiLanguage;
 
-  /// The transport as injected. Only session minting uses it directly.
+  /// This build's number, sent as `X-App-Build` with every session mint. A
+  /// build that handles `410 device_erased` says so this way, and only such a
+  /// build gets that answer for an erased device id (MOBILE_API §10). Set once
+  /// in `main()`; null (host tests, no platform channel) sends nothing, and
+  /// the server answers as it always did.
+  static int? appBuild;
+
+  /// The transport as injected. Only session minting and the account DELETE
+  /// use it directly.
   final http.Client _raw;
 
   /// Everything else goes through this: it renews an expired session once
@@ -482,6 +532,13 @@ class TgClient {
   /// cannot be. Wired by `DeviceProofService.init`; null means "no way to
   /// prove here", and a `device_proof_required` reaches the caller as is.
   Future<void> Function()? onDeviceProofRequired;
+
+  /// Called once this install has become a new device because a session mint
+  /// was answered `410 device_erased`: its device id belongs to a deleted
+  /// account — a phone backup restored after the deletion, or a deletion
+  /// whose answer was lost. The app clears the phone and says the account was
+  /// deleted. Wired in `main()`; null does the start-over alone.
+  Future<void> Function()? onDeviceErased;
 
   /// Sends [send]; on `device_proof_required` proves the session once and
   /// sends it once more — the client flow §9.0 prescribes. A cooldown
@@ -520,19 +577,16 @@ class TgClient {
   Future<SessionResponse> createSession({
     Map<String, dynamic>? metadata,
   }) async {
-    // An account deletion whose answer never arrived: the server may have
-    // erased this device id. Minting for it now would bring it back to life.
-    // Settled first — at launch (completePendingAccountDeletion) or on the
-    // deletion screen's "check again".
-    if (await accountDeletionState() == kAccountDeletionRequested) {
-      throw TgApiError(null, AppL10n.current.deleteAccountUnconfirmed,
-          code: 'account_deletion_unconfirmed');
-    }
+    // Not blocked while an account deletion is unsettled: a mint for a device
+    // id the server erased is refused (`410 device_erased`, below), so nothing
+    // comes back to life — and an install whose deletion never reached the
+    // server keeps working until the DELETE is sent again.
     final deviceId = await _auth.getOrCreateDeviceId();
     final body = <String, dynamic>{
       'device_id': deviceId,
       'metadata': ?metadata,
     };
+    final build = appBuild;
 
     // Prove this is the same device (audit H5): the server refuses a proof
     // that belongs to another device, and — once SESSION_MINT_ENFORCE is on —
@@ -543,6 +597,8 @@ class TgClient {
           headers: {
             'Content-Type': 'application/json; charset=utf-8',
             if (proof != null && proof.isNotEmpty) 'Authorization': 'Bearer $proof',
+            // "I handle 410 device_erased" (MOBILE_API §10).
+            'X-App-Build': ?build?.toString(),
           },
           body: jsonEncode(body),
         )
@@ -555,6 +611,15 @@ class TgClient {
       // token was never issued for this id). Drop it and try once without.
       await _auth.clearDeviceProof();
       resp = await post(null);
+    }
+
+    if (resp.statusCode == 410) {
+      // This device id was erased with its account (a backup restored after
+      // the deletion, or a deletion whose answer was lost). Never mint for it:
+      // become a new device now, and let the app clear the phone.
+      final error = _wrap(resp);
+      if (error.code == 'device_erased') await _deviceErased();
+      throw error;
     }
 
     if (resp.statusCode != 201) {
@@ -971,11 +1036,9 @@ class TgClient {
   /// parent mid-conversation keeps it — and its history after a restart.
   Future<String?> _recoverSession(String rejectedToken) async {
     try {
-      // During an account deletion a 401 most likely means the account is
-      // gone: never paper over it with a fresh session for the erased id.
-      if (await accountDeletionState() == kAccountDeletionRequested) {
-        return null;
-      }
+      // During an unsettled account deletion too: for an erased device id the
+      // mint answers `410 device_erased`, which starts this install over
+      // (createSession) instead of bringing the account back.
       final (sessionId, current) = await _auth.readSession();
       if (current != null && current != rejectedToken) {
         return current; // another request already renewed it
@@ -1771,52 +1834,142 @@ class TgClient {
 
   /// `DELETE /api/privacy/account?confirm=true` (§10).
   ///
-  /// The token used for the call is revoked by it, so on success this install
-  /// stops being the deleted device at once — before any other request can
-  /// run: the session is forgotten and a brand-new device id replaces the old
-  /// one. Otherwise the next call would 401, and the session recovery would
-  /// mint a fresh session for the very device id that was just erased.
+  /// The token the DELETE carries is revoked by it, so on success this install
+  /// stops being the deleted device at once, before any other request can
+  /// run: a brand-new device id replaces the old one (and a mint for the old
+  /// one is refused with `410 device_erased` by servers that keep erased ids).
   ///
   /// The deletion is one transaction on the server, but not on the way back
-  /// (PR #36 review, item 4): the origin can commit and the answer still be
-  /// lost — a dropped connection, or an edge 502/504/52x. So the attempt is
-  /// recorded first ([kAccountDeletionRequested]) and an answer that might
-  /// hide a deletion is settled by asking the server with the old token,
-  /// without session recovery ([probeAccountDeleted]): 401 means the account
-  /// is gone. Results: the server's body; `{}` when the deletion was confirmed
-  /// only that way (its scope is then unknown); `account_not_deleted` when
-  /// the old token still works (nothing was deleted, say so); and
-  /// `account_deletion_unconfirmed` when even that cannot be told — the
-  /// record stays, no session can be minted for this id, and the next launch
-  /// settles it before anything else.
+  /// (PR #36 reviews): the origin can commit and the answer still be lost — a
+  /// dropped connection, a client timeout while the origin works on, an edge
+  /// 502/504/52x. So, before the DELETE leaves:
+  ///   * the token is one the server accepts right now (an idle-lapsed token
+  ///     is renewed first, H5), so a 401 to the DELETE can only mean the
+  ///     account is gone;
+  ///   * that token is copied to a key of its own, which clearing the session
+  ///     ("new conversation", a 401 handler) never touches;
+  ///   * the attempt is recorded ([kAccountDeletionRequested]).
+  /// Then the answer decides — see [_sendAccountDeletion]: the server's body
+  /// (200); `{}` when the account was already gone (401/410 — its scope is
+  /// then unknown); the server's refusal when it deleted nothing (any other
+  /// 4xx: nothing is left pending); or `account_deletion_unconfirmed` when
+  /// there is no answer (5xx, timeout, no connection), with the record and
+  /// the token kept for [settleAccountDeletion]. Nothing is ever concluded
+  /// from a token merely still working: an in-flight DELETE can commit after.
   Future<Map<String, dynamic>> deleteAccount() async {
+    final token = await _liveToken();
+    await _auth.writeDeletionToken(token);
     await _setAccountDeletionState(kAccountDeletionRequested);
+    return _sendAccountDeletion(token);
+  }
+
+  /// Settle a deletion whose answer was lost (§10): send the same DELETE
+  /// again, with the token it first carried and no session recovery. Returns
+  /// the server's body (`{}` when the account was already gone: scope
+  /// unknown), or null when no deletion is pending. Throws
+  /// `account_not_deleted` when the server refused it (nothing was deleted;
+  /// nothing is pending any more — a 72-hour pause keeps its own code,
+  /// `device_proof_cooldown`), or `account_deletion_unconfirmed` while there
+  /// is still no answer.
+  ///
+  /// A record whose token is gone (a keystore reset) is settled with a live
+  /// session instead: for an erased device id the mint answers
+  /// `410 device_erased`, which already started this install over; for an
+  /// account that is still there the DELETE is simply sent — the parent asked
+  /// for it.
+  Future<Map<String, dynamic>?> settleAccountDeletion() async {
+    final state = await accountDeletionState();
+    if (state == null) return null;
+    if (state == kAccountDeletionConfirmed) {
+      await startOverAfterAccountDeletion();
+      return const <String, dynamic>{};
+    }
+    var token = await _auth.readDeletionToken();
     try {
-      final body = await _authedJson('DELETE', '/api/privacy/account',
-          query: const {'confirm': 'true'});
+      if (token == null || token.isEmpty) {
+        token = await _liveToken();
+        await _auth.writeDeletionToken(token);
+      }
+      return await _sendAccountDeletion(token);
+    } on TgApiError catch (e) {
+      switch (e.code) {
+        case 'device_erased':
+          return const <String, dynamic>{};
+        case 'account_deletion_unconfirmed' || 'device_proof_cooldown':
+          rethrow;
+      }
+      if (await accountDeletionState() == kAccountDeletionRequested) {
+        // No token, and no live session to send it with either.
+        throw _deletionUnconfirmed(e.statusCode);
+      }
+      throw TgApiError(e.statusCode, AppL10n.current.deleteAccountServerError,
+          code: 'account_not_deleted', details: e.details);
+    }
+  }
+
+  /// A token the server accepted a moment ago: a request through the
+  /// session-recovering transport first (it renews an idle-lapsed token), then
+  /// the session as it stands.
+  Future<String> _liveToken() async {
+    await getDeviceProofStatus();
+    final (_, token) = await _auth.readSession();
+    if (token == null || token.isEmpty) {
+      throw TgApiError(401, AppL10n.current.noActiveSession);
+    }
+    return token;
+  }
+
+  /// Send the account DELETE with [token] over the raw transport — a 401 must
+  /// reach this code, never a session recovery minting for the erased id —
+  /// and act on the answer:
+  ///   * 200: deleted. The install starts over; the server's body is returned.
+  ///   * 401 / 410: the token died with the account — an earlier attempt went
+  ///     through. The install starts over; `{}` (scope unknown).
+  ///   * any other 4xx: the server read the request and refused it (a pause,
+  ///     no proof, no route, a rate limit). Nothing was deleted; nothing is
+  ///     left pending; the refusal is rethrown as the server sent it.
+  ///   * 5xx, a timeout, no connection: unknown — the record and the token
+  ///     stay, and `account_deletion_unconfirmed` is thrown.
+  Future<Map<String, dynamic>> _sendAccountDeletion(String token) async {
+    final http.Response resp;
+    try {
+      resp = await _raw
+          .delete(
+            Uri.parse('$_baseUrl/api/privacy/account')
+                .replace(queryParameters: const {'confirm': 'true'}),
+            headers: _authHeaders(token),
+          )
+          .timeout(AppConfig.httpTimeout);
+    } catch (_) {
+      throw _deletionUnconfirmed(null);
+    }
+    final status = resp.statusCode;
+    if (status == 200) {
+      Map<String, dynamic> body = const {};
+      try {
+        final decoded = jsonDecode(utf8.decode(resp.bodyBytes));
+        if (decoded is Map<String, dynamic>) body = decoded;
+      } catch (_) {}
       await startOverAfterAccountDeletion();
       return body;
-    } on TgApiError catch (e) {
-      final status = e.statusCode;
-      final mayHaveHappened = status == null || status == 401 || status >= 500;
-      if (!mayHaveHappened) {
-        // Refused (a pause, no proof, no route): nothing was deleted.
-        await _setAccountDeletionState(null);
-        rethrow;
-      }
-      final deleted = await probeAccountDeleted();
-      if (deleted == true) {
-        await startOverAfterAccountDeletion();
-        return const <String, dynamic>{};
-      }
-      if (deleted == false) {
-        await _setAccountDeletionState(null);
-        throw TgApiError(status, AppL10n.current.deleteAccountServerError,
-            code: 'account_not_deleted');
-      }
-      throw TgApiError(status, AppL10n.current.deleteAccountUnconfirmed,
-          code: 'account_deletion_unconfirmed');
     }
+    if (status == 401 || status == 410) {
+      await startOverAfterAccountDeletion();
+      return const <String, dynamic>{};
+    }
+    if (status >= 500) throw _deletionUnconfirmed(status);
+    await _abandonAccountDeletion();
+    throw _wrap(resp);
+  }
+
+  TgApiError _deletionUnconfirmed(int? status) => TgApiError(
+      status, AppL10n.current.deleteAccountUnconfirmed,
+      code: 'account_deletion_unconfirmed');
+
+  /// The server refused the DELETE: nothing was deleted, nothing is pending.
+  Future<void> _abandonAccountDeletion() async {
+    await _auth.clearDeletionToken();
+    await _setAccountDeletionState(null);
   }
 
   /// Where an account deletion stands on this phone (SharedPreferences):
@@ -1841,34 +1994,60 @@ class TgClient {
     } catch (_) {}
   }
 
-  /// The phone has been cleared too: nothing of the deletion is left to do.
-  Future<void> clearAccountDeletionState() => _setAccountDeletionState(null);
-
-  /// The server deleted the account: become a brand-new device now, and
-  /// record that only the phone still has to be cleared.
-  Future<void> startOverAfterAccountDeletion() async {
-    await _auth.startOverAsNewDevice();
-    await _setAccountDeletionState(kAccountDeletionConfirmed);
+  /// Nothing of a deletion is left to do on this phone: the record, the id it
+  /// erased and the token it was sent with all go.
+  Future<void> clearAccountDeletionState() async {
+    await _auth.clearDeletionToken();
+    await _setAccountDeletionState(null);
+    try {
+      await (await SharedPreferences.getInstance())
+          .remove(kAccountDeletionErasedIdKey);
+    } catch (_) {}
   }
 
-  /// Is the account behind this install's token gone? Asked with the stored
-  /// token and the raw transport — never the session-recovering one, which
-  /// would answer a 401 by minting a session for the erased id. True: 401
-  /// (the token was revoked with the account). False: the token still works
-  /// (nothing was deleted). Null: no token here, or no answer.
-  Future<bool?> probeAccountDeleted() async {
+  Future<void>? _startingOver;
+
+  /// The server deleted the account, or erased this device id: become a
+  /// brand-new device. What happened is recorded first —
+  /// [kAccountDeletionConfirmed] and the erased id, BEFORE the keystore is
+  /// cleared — so a launch that finds the record finishes the job even if the
+  /// app was killed in the middle: it starts over again while the erased id is
+  /// still held anywhere, then clears the phone (completePendingAccountDeletion).
+  ///
+  /// Single-flight, and a no-op once the erased id is gone from everywhere —
+  /// a second caller (the DELETE's answer and a `410` racing) never erases the
+  /// fresh id it just got. Also the parent's way out of a deletion that cannot
+  /// be settled («ابدأ من جديد على هذا الهاتف»).
+  Future<void> startOverAfterAccountDeletion() =>
+      _startingOver ??= _startOver().whenComplete(() => _startingOver = null);
+
+  Future<void> _startOver() async {
+    SharedPreferences? prefs;
     try {
-      final (_, token) = await _auth.readSession();
-      if (token == null || token.isEmpty) return null;
-      final resp = await _raw
-          .get(Uri.parse('$_baseUrl/api/children'),
-              headers: _authHeaders(token))
-          .timeout(AppConfig.httpTimeout);
-      if (resp.statusCode == 401) return true;
-      if (resp.statusCode == 200) return false;
-      return null;
-    } catch (_) {
-      return null;
+      prefs = await SharedPreferences.getInstance();
+    } catch (_) {}
+    if (prefs?.getString(kAccountDeletionKey) == kAccountDeletionConfirmed) {
+      final erased = prefs!.getString(kAccountDeletionErasedIdKey);
+      if (erased == null || !await _auth.stillHolds(erased)) return;
+    } else {
+      final erased = await _auth.peekDeviceId();
+      try {
+        if (erased != null) {
+          await prefs?.setString(kAccountDeletionErasedIdKey, erased);
+        }
+        await prefs?.setString(kAccountDeletionKey, kAccountDeletionConfirmed);
+      } catch (_) {}
+    }
+    await _auth.startOverAsNewDevice();
+  }
+
+  /// A mint answered `410 device_erased`: start over (nothing may mint for
+  /// that id again), then let the app clear the phone and say so.
+  Future<void> _deviceErased() async {
+    await startOverAfterAccountDeletion();
+    final handler = onDeviceErased;
+    if (handler != null) {
+      unawaited(Future<void>.sync(handler).catchError((Object _) {}));
     }
   }
 

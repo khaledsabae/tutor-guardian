@@ -5346,7 +5346,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get deleteAccountUnconfirmed =>
-      'انقطع الاتصال قبل أن يصلنا ردّ الخادم، فلا نعرف بعد هل حُذف حسابك. لن نفعل شيئًا قبل أن نتأكّد: تحقّق من اتصالك ثم اضغط «تحقّق مرة أخرى».';
+      'انقطع الاتصال قبل أن يصلنا ردّ الخادم، فلا نعرف بعد هل حُذف حسابك. سنُكمل طلبك حين يعود الاتصال: اضغط «تحقّق مرة أخرى»، أو يتمّ ذلك وحده حين تفتح التطبيق في المرة القادمة.';
 
   @override
   String get deleteAccountCheckAgain => 'تحقّق مرة أخرى';
@@ -5374,4 +5374,30 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get memoryOffCannotAdd =>
       'الذاكرة متوقّفة، فلا تُضاف إليها معلومات جديدة. شغّلها لتضيف.';
+
+  @override
+  String get deleteAccountStartOver => 'ابدأ من جديد على هذا الهاتف';
+
+  @override
+  String get deleteAccountStartOverTitle => 'البدء من جديد على هذا الهاتف؟';
+
+  @override
+  String deleteAccountStartOverBody(String email) {
+    return 'سنمسح كل ما على هذا الهاتف، ويبدأ التطبيق كأنه مثبَّت للتوّ. لا نعرف بعد هل حُذف حسابك من خوادمنا؛ لتتأكّد من حذفه راسلنا على $email.';
+  }
+
+  @override
+  String get deleteAccountStartOverConfirm => 'ابدأ من جديد';
+
+  @override
+  String get accountStartedOverTitle => 'بدأ التطبيق من جديد على هذا الهاتف';
+
+  @override
+  String accountStartedOverBody(String email) {
+    return 'مسحنا كل ما كان على هذا الهاتف. لم نتأكّد هل حُذف حسابك من خوادمنا؛ لتتأكّد من حذفه راسلنا على $email. أغلق التطبيق، وسيبدأ من جديد حين تفتحه.';
+  }
+
+  @override
+  String get deleteAccountNotDeletedNotice =>
+      'لم يُحذف حسابك. يمكنك أن تحاول مرة أخرى من الإعدادات ← الخصوصية وبياناتك.';
 }
