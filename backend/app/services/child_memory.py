@@ -28,6 +28,13 @@ they allow it.** Learning needs a build with the memory screen
 re-checked inside the write transaction, together with an erase *generation*
 that every «forget» bumps, so an extraction already in flight can never write
 after the parent switched memory off or erased it. The switch fails closed.
+Off means nothing new goes in by any path (PR #36 review): no extraction, no
+follow-up asked or answered into memory (due → [], an answer keeps nothing),
+no fact typed by the parent. Correcting and deleting what is kept stay open.
+
+**5. Sibling letters follow the family as it is.** «الطفل ب» is a position in
+profile order; deleting a child rewrites the siblings' memory texts in the
+deleting transaction (forget_sibling) so a letter never moves to another child.
 
 Facts are parent-reported context. In every prompt they sit inside a labelled
 block that says so, and they are sanitised of anything that could pass for
@@ -50,8 +57,8 @@ from typing import Iterable, Optional, Union
 from app.db.init_db import get_conn
 from app.core.times import iso_z
 from app.services.privacy import (
-    CHILD_PLACEHOLDER, Family, family_for_device, family_mentions, redact_family,
-    redact_with_names,
+    CHILD_PLACEHOLDER, Family, family_for_device, family_from_conn, family_mentions,
+    redact_family, redact_with_names, reletter_siblings, scrub_child_name,
 )
 from app.services.sensitive_content import is_harmful, must_not_remember
 
@@ -200,10 +207,13 @@ FamilyOrNames = Union[Family, tuple, list, None]
 
 
 def _redact(text: str, family: FamilyOrNames, subject_id: Optional[int]) -> str:
+    # Strict (PR #36 review): a fact lives for months and reaches every prompt
+    # about the child, so every whole-word use of a family name goes — «نور»
+    # in «يغار من نور» too, at the price of «نور القرآن» → «طفلي القرآن».
     if isinstance(family, Family):
-        return redact_family(text, family, subject_id)
+        return redact_family(text, family, subject_id, strict=True)
     if family:
-        return redact_with_names(text, tuple(family))
+        return redact_with_names(text, tuple(family), strict=True)
     return text
 
 
@@ -212,7 +222,11 @@ def clean_fact_text(text: str, family: FamilyOrNames = None,
     """Name-free, single-line, structure-free fact text — or None to drop it.
 
     `family` is the device's Family (sibling-aware placeholders, `subject_id`
-    is «طفلي») or, for callers without one, a plain tuple of names.
+    is «طفلي») or, for callers without one, a plain tuple of names. Names are
+    matched strictly (privacy.py): every known name of the family, wherever it
+    stands as a word. Used for every memory text — facts, follow-up
+    strategies, the name-free form of a note — on the way in and again on the
+    way into a prompt.
     """
     if not isinstance(text, str):
         return None
@@ -347,6 +361,17 @@ def memory_in_use(device_id: Optional[str], *, proven: bool) -> bool:
 def collection_allowed(device_id: Optional[str], *, proven: bool = False) -> bool:
     """May we learn new facts / open follow-ups from this session's questions?"""
     return memory_in_use(device_id, proven=proven)
+
+
+def _switch_on(conn: sqlite3.Connection, device_id: str) -> bool:
+    """The parent's switch, read inside the caller's write transaction."""
+    row = _settings_row(conn, device_id)
+    return row is None or bool(row["enabled"])
+
+
+class MemoryOffError(RuntimeError):
+    """The parent switched memory off: nothing new goes into it (code
+    memory_off). Reading, correcting and deleting what is there still work."""
 
 
 def _write_allowed(conn: sqlite3.Connection, device_id: str, child_id: int,
@@ -603,12 +628,19 @@ def _validated_manual(fact: str, family: Family, child_id: int) -> str:
 
 
 def add_manual_fact(device_id: str, child_id: int, category: str, fact: str) -> dict:
+    """A fact the parent typed. Refused while memory is off (MemoryOffError):
+    off means nothing new goes in, whoever brings it — the parent turns memory
+    on to add. Editing, confirming, rejecting and deleting stay open while off:
+    they are the parent's control over what is already kept."""
     if category not in CATEGORIES:
         raise FactValidationError("category")
     cleaned = _validated_manual(fact, family_for_device(device_id), child_id)
     conn = get_conn()
     try:
         conn.execute("BEGIN IMMEDIATE")
+        if not _switch_on(conn, device_id):
+            conn.rollback()
+            raise MemoryOffError("memory_off")
         fact_id, _ = upsert_fact(
             conn, device_id, child_id, category=category, fact=cleaned,
             source="parent_manual", confidence=1.0, lang=lang_of(cleaned),
@@ -699,6 +731,54 @@ def delete_child_memory(device_id: str, child_id: int) -> dict:
         return counts
     finally:
         conn.close()
+
+
+# Memory texts that can carry a sibling placeholder: (table, column). A
+# follow-up's note is kept as the parent typed it and never reaches a model.
+_SIBLING_TEXTS = (("child_facts", "fact"), ("followups", "strategy"))
+
+
+def forget_sibling(conn: sqlite3.Connection, device_id: str, child_id: int) -> int:
+    """Called inside the transaction that deletes `child_id`'s profile, before
+    the delete (privacy.erase_child; the profile-only delete of
+    routers/children.py). Returns how many memory texts it rewrote.
+
+    Sibling letters are profile-order positions (privacy.Family), so removing
+    a child moves every later sibling's letter. Every other child's facts and
+    follow-up strategies are rewritten for the family that remains: a sibling
+    keeps meaning the same child under its new letter, and the deleted child —
+    by letter, or by a name written before it had a profile — becomes «طفل
+    آخر». No name is written anywhere. The erase generation is bumped too: an
+    extraction in flight redacted with the old letters must not land after.
+    """
+    present = {r[0] for r in conn.execute(
+        "SELECT name FROM sqlite_master WHERE type = 'table' AND name IN (?, ?, ?)",
+        ("child_facts", "followups", "child_memory_settings"))}
+    before = family_from_conn(conn, device_id)
+    after = Family(tuple(m for m in before.members if m[0] != child_id))
+    row = conn.execute("SELECT name FROM child_profiles WHERE id = ? AND device_id = ?",
+                       (child_id, device_id)).fetchone()
+    name = (row[0] or "").strip() if row is not None else ""
+    # A name another child still carries is that child's to redact, not ours.
+    if len(name) < 2 or any(_norm(name) == _norm(n) for _, n in after.members):
+        name = ""
+    changed = 0
+    for table, column in _SIBLING_TEXTS:
+        if table not in present:
+            continue
+        for r in conn.execute(
+                f"SELECT id, {column}, child_id FROM {table} "
+                "WHERE device_id = ? AND child_id != ?",
+                (device_id, child_id)).fetchall():
+            text = r[1] or ""
+            new = reletter_siblings(scrub_child_name(text, name) if name else text,
+                                    before, after, owner=r[2])
+            if new != text:
+                conn.execute(f"UPDATE {table} SET {column} = ? WHERE id = ?", (new, r[0]))
+                changed += 1
+    if "child_memory_settings" in present:
+        bump_generation(conn, device_id)
+    return changed
 
 
 # ── Facts → prompt ────────────────────────────────────────────────────────
@@ -1333,16 +1413,27 @@ class FollowupStateError(ValueError):
     """The follow-up was already answered, dismissed or expired."""
 
 
+def _not_remembered(followup: dict) -> dict:
+    """The answer to a follow-up while memory is off: nothing was kept."""
+    return {"followup": followup, "fact": None, "note_dropped": False,
+            "remembered": False}
+
+
 def answer_followup(
     device_id: str, followup_id: int, outcome: str, note: Optional[str] = None,
 ) -> Optional[dict]:
     """Record the outcome and remember it as an `outcome` fact.
 
-    Returns {"followup", "fact", "note_dropped"}, None when the follow-up is
-    not this device's. The latest outcome for a strategy replaces the earlier
-    one's text (A3): «worked» then «didn't work» leaves «didn't work». A note
-    that memory must never keep (sensitive_content) is dropped, from the fact
-    and from the follow-up row both, and `note_dropped` says so.
+    Returns {"followup", "fact", "note_dropped", "remembered"}, None when the
+    follow-up is not this device's. The latest outcome for a strategy replaces
+    the earlier one's text (A3): «worked» then «didn't work» leaves «didn't
+    work». A note that memory must never keep (sensitive_content) is dropped,
+    from the fact and from the follow-up row both, and `note_dropped` says so.
+
+    While the parent's memory switch is off nothing is written — no fact, no
+    outcome, no note, not even the status: the follow-up stays pending, paused
+    with the rest of memory (PR #36 review). `remembered` is false then and
+    `fact` null. Checked again inside the write transaction, like extraction.
     """
     if outcome not in OUTCOMES:
         raise FactValidationError("outcome")
@@ -1351,6 +1442,8 @@ def answer_followup(
         return None
     if current["status"] != "pending":
         raise FollowupStateError(current["status"])
+    if not memory_enabled(device_id):
+        return _not_remembered(current)
     family = family_for_device(device_id)
     child_id = current["child_id"]
     note_dropped = False
@@ -1367,6 +1460,22 @@ def answer_followup(
     conn = get_conn()
     try:
         conn.execute("BEGIN IMMEDIATE")
+        # Asked again under the write lock: the switch may have gone off, and
+        # an erase or another answer may have closed the follow-up meanwhile —
+        # an outcome fact must never outlive the erase that removed its row.
+        row = conn.execute(
+            "SELECT status FROM followups WHERE id = ? AND device_id = ?",
+            (followup_id, device_id),
+        ).fetchone()
+        if row is None:
+            conn.rollback()
+            return None
+        if row["status"] != "pending":
+            conn.rollback()
+            raise FollowupStateError(row["status"])
+        if not _switch_on(conn, device_id):
+            conn.rollback()
+            return _not_remembered(current)
         # The previous outcome for the same strategy, if any, is the fact to
         # update: the newest result wins rather than a second, contradictory one.
         earlier = conn.execute(
@@ -1405,6 +1514,7 @@ def answer_followup(
         "followup": get_followup(device_id, followup_id),
         "fact": get_fact(device_id, child_id, fact_id),
         "note_dropped": note_dropped,
+        "remembered": True,
     }
 
 

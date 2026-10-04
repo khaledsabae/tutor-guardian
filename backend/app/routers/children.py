@@ -721,14 +721,20 @@ def delete_child(child_id: int, request: Request):
     on a device that never proved, outside every pause — gets exactly what
     this route did before: the profile row (and what the schema cascades from
     it), nothing more (PR #26 final review). A bare session for a known device
-    id is cheap until SESSION_MINT_ENFORCE, so it must not reach further."""
+    id is cheap until SESSION_MINT_ENFORCE, so it must not reach further.
+    Either way the siblings' memory texts are re-lettered for the new profile
+    order (child_memory.forget_sibling, PR #36 review): that deletes nothing —
+    it keeps «الطفل ب» from naming another child once this one is gone."""
     from app.routers.privacy import erase_child
+    from app.services.child_memory import forget_sibling
 
     device_id = _require_device_id(request)
     conn = get_conn()
     try:
         _load_owned_child(conn, child_id, device_id)
         if not confirmed_session(request):
+            conn.execute("BEGIN IMMEDIATE")
+            forget_sibling(conn, device_id, child_id)
             conn.execute(
                 "DELETE FROM child_profiles WHERE id = ? AND device_id = ?",
                 (child_id, device_id),

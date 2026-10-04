@@ -26,7 +26,30 @@ child is «طفلي» and the others keep their letters. Redaction with no famil
   before it, a vocative, an age adjective after it, «مع» before it, or a
   clause it opens with a verb or a person predicate. A construct, a «without»
   phrase or a season phrase means the word whatever else is around (آية
-  الكرسي، دعاء النوم، من غير نور، يصوم رمضان).
+  الكرسي، دعاء النوم، من غير نور، يصوم رمضان). Once one mention of such a
+  noun-name has that evidence, its other mentions in the same text are the
+  child too, counter-signs aside (PR #36 review).
+* Questions keep this evidence rule rather than the strict one below — a
+  decision measured on production (2026-10-04, read-only, counts only): of
+  2,203 parent questions, 89 came from the 47 children (of 4,353) whose name
+  is a word, and strict matching would have caught a mention the evidence
+  rule left in 6. Five of those six were a child already recognised elsewhere
+  in the same question — now caught by the rule above. The sixth is the price
+  of not turning «نور القرآن» or «دعاء النوم» into «طفلي القرآن» in a
+  question, where a garbled religious phrase means a wrong answer.
+
+**Strict matching — for memory facts** (review of PR #36, 2026-10-04). A fact
+is stored for months and goes into every prompt about the child, so for facts
+(services/child_memory.py, `strict=True`) every whole-word occurrence of a
+family name is the child: no evidence is asked for, and a construct, a
+«without» or a season phrase does not save the word. «أحمد يغار من نور» kept
+«نور» under the evidence rule; strictly it is the sibling. A name that is also
+a word is over-redacted in facts («نور القرآن» → «طفلي القرآن») — accepted:
+the app swaps the name back on the device, so the parent still reads the
+original words. Strict matching also takes the accusative alif («محمدًا»).
+What stays out even strictly: the name with «ال» attached (النور، الأمل), a
+religious reference (النبي محمد ﷺ، سورة يوسف), and a function word not spelled
+exactly as the name (على for علي).
 
 Best-effort and fail-open on a database error: returning the text unchanged is
 the failure mode of an optional enrichment; every caller sits in a path that
@@ -362,26 +385,48 @@ def _name_variants(name: str) -> tuple[tuple[str, Optional[str]], ...]:
     return tuple(sorted(out.items(), key=lambda kv: len(kv[0]), reverse=True))
 
 
+# The accusative alif a declinable name takes («محمدًا», «عليًّا», «خالدًا»).
+# Strict matching only: in a question it would turn «حسنًا» (okay) into a
+# child named حسن.
+_ACCUSATIVE = f"(?:ا{_TASHKEEL}*)?"
+
+
 @lru_cache(maxsize=4096)
-def _variant_pattern(variant: str) -> "re.Pattern[str]":
+def _variant_pattern(variant: str, strict: bool = False) -> "re.Pattern[str]":
     if re.search(r"[a-z]", variant):
         return re.compile(rf"(?<![A-Za-z]){re.escape(variant)}(?![A-Za-z])", re.IGNORECASE)
     body = _letters_pattern(variant)
     if variant.startswith("عبد"):
         body = body.replace(_letters_pattern("عبد"), _letters_pattern("عبد") + r"\s?", 1)
+    suffix = _ACCUSATIVE if strict and variant[-1] not in "اهءو" else ""
     return re.compile(
-        rf"(?<!{_AR_LETTER})(?P<prefix>{_PREFIX_CHAIN})(?P<name>{body})(?!{_AR_LETTER})"
+        rf"(?<!{_AR_LETTER})(?P<prefix>{_PREFIX_CHAIN})(?P<name>{body}){suffix}(?!{_AR_LETTER})"
     )
 
 
-def _child_matches(text: str, name: str):
-    """(start, end, prefix) of every place `text` names this child."""
+def _child_matches(text: str, name: str, strict: bool = False):
+    """(start, end, prefix) of every place `text` names this child.
+
+    `strict` (memory facts): every whole-word occurrence is the child — no
+    evidence of a person is needed and a construct is no counter-sign. The
+    article, religious references and function-word spellings still are.
+
+    Otherwise a name that is also a noun (نور، أمل، دعاء…) needs evidence of
+    a person — but once one mention in the text has it, the others are the
+    same child unless a counter-sign says otherwise (PR #36 review): «بنتي نور
+    بتخاف… ونور كمان…» must not leave the second «نور» beside «طفلي». Measured
+    on production questions 2026-10-04: 5 of the 6 mentions only strict
+    matching caught were of this kind. Function words (علي، مني…) do not
+    extend this way: «علي طول» stays a preposition."""
     seen: list[tuple[int, int]] = []
+    deferred: list[tuple[int, int, str]] = []   # a noun-name with no evidence of its own
+    recognised = False
     for variant, original in _name_variants(name):
         arabic = not re.search(r"[a-z]", variant)
-        for m in _variant_pattern(variant).finditer(text or ""):
+        for m in _variant_pattern(variant, strict).finditer(text or ""):
             s, e = m.start(), m.end()
-            if any(s < pe and ps < e for ps, pe in seen):
+            if any(s < pe and ps < e for ps, pe in seen) or \
+                    any(s < de and ds < e for ds, de, _ in deferred):
                 continue                                   # inside a longer variant
             name_start = m.start("name") if arabic else s
             if arabic and variant in _FUNCTION_WORDS and \
@@ -389,14 +434,20 @@ def _child_matches(text: str, name: str):
                 continue                                   # «على» is not «علي»
             if _is_religious_reference(text, name_start, e):
                 continue
-            if arabic and _is_common_word_use(variant, text, name_start, e):
-                continue
             prefix = (m.group("prefix") if arabic else "") or ""
-            if arabic and variant in _AMBIGUOUS_NAMES and not _names_a_person(
-                    text, s, e, prefix, variant, original):
-                continue                                   # «دعاء قبل النوم»، «عندي أمل»
+            if arabic and not strict:
+                if _is_common_word_use(variant, text, name_start, e):
+                    continue                               # «آية الكرسي»، «من غير نور»
+                if variant in _AMBIGUOUS_NAMES and not _names_a_person(
+                        text, s, e, prefix, variant, original):
+                    if variant in COMMON_NOUN_NAMES and variant not in _FUNCTION_WORDS:
+                        deferred.append((s, e, prefix))
+                    continue                               # «دعاء قبل النوم»، «عندي أمل»
+            recognised = True
             seen.append((s, e))
             yield s, e, prefix
+    if recognised:
+        yield from deferred
 
 
 def _with_prefix(prefix: str, placeholder: str) -> str:
@@ -429,33 +480,117 @@ class Family:
         return tuple(n for _, n in self.members)
 
 
-def family_for_device(device_id: Optional[str]) -> Family:
-    if not device_id:
-        return Family()
-    try:
-        conn = sqlite3.connect(db_path())
-        try:
-            rows = conn.execute(
-                "SELECT id, name FROM child_profiles WHERE device_id = ? ORDER BY id",
-                (device_id,),
-            ).fetchall()
-        finally:
-            conn.close()
-    except Exception as exc:  # noqa: BLE001 — fail open, never break a request
-        logger.debug("privacy: family unavailable: %s", exc)
-        return Family()
+def family_from_conn(conn: sqlite3.Connection, device_id: str) -> Family:
+    """The device's family read on an open connection — inside the caller's
+    transaction, so it cannot change under a write that depends on it. The
+    order and the 2-character floor are what the placeholders (and the app,
+    which renders them back) are built on."""
+    rows = conn.execute(
+        "SELECT id, name FROM child_profiles WHERE device_id = ? ORDER BY id",
+        (device_id,),
+    ).fetchall()
     return Family(tuple(
         (int(r[0]), (r[1] or "").strip()) for r in rows
         if r[1] and len(r[1].strip()) >= 2
     ))
 
 
-def _spans(text: str, labelled: Iterable[tuple[str, str]]) -> list[tuple[int, int, str, str]]:
+def family_for_device(device_id: Optional[str]) -> Family:
+    if not device_id:
+        return Family()
+    try:
+        conn = sqlite3.connect(db_path())
+        try:
+            return family_from_conn(conn, device_id)
+        finally:
+            conn.close()
+    except Exception as exc:  # noqa: BLE001 — fail open, never break a request
+        logger.debug("privacy: family unavailable: %s", exc)
+        return Family()
+
+
+# ── When a child leaves the family (review of PR #36, 2026-10-04) ─────────
+#
+# Sibling letters are positions in profile order, and stored memory texts keep
+# them. Deleting a child shifts every later sibling's position: «الطفل ب» in a
+# fact written before the deletion would then name a different child (even
+# the fact's own: «عمر يغار من عمر»). So the deletion rewrites them, in its
+# own transaction (services/child_memory.forget_sibling): a sibling who is
+# still there gets its new letter, the deleted one becomes «طفل آخر» — a
+# neutral «another child», never a name.
+
+OTHER_CHILD = "طفل آخر"
+OTHER_CHILD_FEMININE = "طفلة أخرى"
+OTHER_CHILD_EN = "another child"
+
+# A stored sibling placeholder however Arabic attached it: «الطفل ب»،
+# «والطفل ب»، «بالطفل ب»، «للطفل ب»، «وللطفل ب» — and «الطفلة ب», should the
+# extraction model have inflected it.
+_STORED_SIBLING_RE = re.compile(
+    rf"(?<![ء-ي])(?P<conj>[وف]?)(?P<form>[بك]?ال|لل)طفل(?P<fem>ة)?"
+    rf" (?P<label>[{_SIBLING_LETTERS}]|\d+)(?![ء-ي0-9])"
+)
+
+
+def _latin_text(text: str) -> bool:
+    return len(re.findall(r"[A-Za-z]", text or "")) > len(re.findall(r"[؀-ۿ]", text or ""))
+
+
+def _labels(family: Family) -> dict[str, int]:
+    """sibling label («ب», «15») → child id, by profile order."""
+    return {sibling_placeholder(i).split(" ", 1)[1]: cid
+            for i, (cid, _) in enumerate(family.members)}
+
+
+def reletter_siblings(text: str, before: Family, after: Family,
+                      owner: Optional[int] = None) -> str:
+    """`text`'s sibling placeholders, written for the family `before`,
+    rewritten for the family `after`: the same child under its new letter, a
+    child no longer in the family as «طفل آخر». A letter `before` never had
+    is left alone. When one named child is left the family has no letters:
+    in that child's own texts (`owner`) a reference to it is «طفلي», in any
+    other child's (one whose name is too short to count) «طفل آخر»."""
+    if not text or "طفل" not in text:
+        return text
+    old = _labels(before)
+    new = {cid: label for label, cid in _labels(after).items()}
+    english = _latin_text(text)
+
+    def swap(m: re.Match) -> str:
+        cid = old.get(m.group("label"))
+        if cid is None:
+            return m.group(0)
+        prep = "ل" if m.group("form") == "لل" else m.group("form")[:-2]
+        if cid in new and len(after.members) >= 2:
+            return (f"{m.group('conj')}{m.group('form')}طفل{m.group('fem') or ''} "
+                    f"{new[cid]}")
+        if cid in new and owner in (None, cid):
+            return m.group("conj") + _with_prefix(prep, CHILD_PLACEHOLDER)
+        if english:
+            return OTHER_CHILD_EN
+        other = OTHER_CHILD_FEMININE if m.group("fem") else OTHER_CHILD
+        return f"{m.group('conj')}{prep}{other}"
+
+    return _STORED_SIBLING_RE.sub(swap, text)
+
+
+def scrub_child_name(text: str, name: str) -> str:
+    """Every whole-word mention of a deleted child's name (strict matching) →
+    «طفل آخر». For memory texts that mention the child by name — written
+    before it had a profile — which no redaction covers once it is gone."""
+    if not text or not name:
+        return text
+    other = OTHER_CHILD_EN if _latin_text(text) else OTHER_CHILD
+    return _replace(text, _spans(text, [(name, other)], strict=True))
+
+
+def _spans(text: str, labelled: Iterable[tuple[str, str]],
+           strict: bool = False) -> list[tuple[int, int, str, str]]:
     """Non-overlapping (start, end, prefix, label) for every named mention."""
     found: list[tuple[int, int, str, str]] = []
     # Longest names first so «محمد علي» wins over «محمد».
     for name, label in sorted(labelled, key=lambda x: len(x[0]), reverse=True):
-        for s, e, prefix in _child_matches(text, name):
+        for s, e, prefix in _child_matches(text, name, strict):
             if any(s < fe and fs < e for fs, fe, _, _ in found):
                 continue
             found.append((s, e, prefix, label))
@@ -472,19 +607,23 @@ def _replace(text: str, spans: list[tuple[int, int, str, str]]) -> str:
     return "".join(out)
 
 
-def redact_family(text: str, family: Family, subject_id: Optional[int] = None) -> str:
-    """Replace each child of `family` by its placeholder (see module doc)."""
+def redact_family(text: str, family: Family, subject_id: Optional[int] = None,
+                  *, strict: bool = False) -> str:
+    """Replace each child of `family` by its placeholder (see module doc).
+    `strict`: every whole-word occurrence of a name — for memory facts."""
     if not text or not family.members:
         return text
     labelled = [(name, family.placeholder(cid, subject_id)) for cid, name in family.members]
-    return _replace(text, _spans(text, labelled))
+    return _replace(text, _spans(text, labelled, strict))
 
 
-def family_mentions(text: str, family: Family) -> list[int]:
-    """Child ids named in `text`, outside religious and common-word uses."""
+def family_mentions(text: str, family: Family, *, strict: bool = False) -> list[int]:
+    """Child ids named in `text`, outside religious and common-word uses
+    (any whole-word use with `strict`)."""
     if not text:
         return []
-    return sorted({cid for cid, name in family.members if next(_child_matches(text, name), None)})
+    return sorted({cid for cid, name in family.members
+                   if next(_child_matches(text, name, strict), None)})
 
 
 # ── Generic API (kept for callers without a family) ───────────────────────
@@ -534,12 +673,12 @@ def known_child_names() -> tuple[str, ...]:
     return _known_names_cached(_store_epoch())
 
 
-def redact_with_names(text: str, names: tuple[str, ...]) -> str:
+def redact_with_names(text: str, names: tuple[str, ...], *, strict: bool = False) -> str:
     """Every one of `names` → «طفلي». For callers with no family structure
     (offline logs and analyses); a family prompt uses redact_family."""
     if not text or not names:
         return text
-    return _replace(text, _spans(text, [(n, CHILD_PLACEHOLDER) for n in names]))
+    return _replace(text, _spans(text, [(n, CHILD_PLACEHOLDER) for n in names], strict))
 
 
 def redact_for_cloud(text: str, device_id: str | None = None) -> str:
