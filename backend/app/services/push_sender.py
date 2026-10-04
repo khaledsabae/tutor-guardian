@@ -146,6 +146,29 @@ def recently_pushed_since(cutoff_iso: str) -> set[str]:
         return set()
 
 
+def pushed_only_with(cutoff_iso: str, kind: str) -> set[str]:
+    """Device ids whose every push at or after `cutoff_iso` was of `kind`.
+
+    For a sender that must not be capped by one particular kind: the evening
+    digest subtracts these from `recently_pushed_since`, so a milestone
+    reminder at 20:00 does not silence the 21:00 «a mission is waiting» —
+    while any other push in the window still does. Same failure stance as
+    `recently_pushed_since`: unreadable → empty set, so the cap is not lifted.
+    """
+    try:
+        conn = get_conn()
+        rows = conn.execute(
+            "SELECT device_id FROM push_sends WHERE sent_at >= datetime(?) "
+            "GROUP BY device_id HAVING SUM(kind != ?) = 0",
+            (cutoff_iso, kind),
+        ).fetchall()
+        conn.close()
+        return {r["device_id"] for r in rows}
+    except Exception:  # noqa: BLE001
+        logger.warning("push_sends read failed", exc_info=True)
+        return set()
+
+
 # Every message this service sent used to land on one Android channel, named
 # for re-engagement. That is fine while everything *is* re-engagement, and
 # wrong the moment something is not: a parent who mutes marketing nudges would

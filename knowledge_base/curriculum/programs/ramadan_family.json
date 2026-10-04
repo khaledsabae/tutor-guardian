@@ -11,7 +11,8 @@
     "hijri_month": 9,
     "days": 30,
     "may_have_29_days": true,
-    "expected_start_1448": "2027-02-08"
+    "expected_start_1448": "2027-02-08",
+    "expected_start_1449": "2028-01-28"
   },
   "bands": {
     "covered": [

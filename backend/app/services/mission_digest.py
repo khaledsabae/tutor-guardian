@@ -29,6 +29,15 @@ DIGEST_KIND = "mission_digest"
 # devices already contacted, and this is the window we ask about.
 _ONE_DAY = timedelta(hours=20)
 
+# A milestone reminder («ابنك هيكمّل ٧ سنين الشهر الجاي», milestone_push) does
+# not cap the digest. It goes at 20:00 at most once a week; counted here, it
+# silenced the 21:00 digest on the one evening a child's mission or prayer was
+# waiting — and for a family on the Prayer Journey one always is, which is how
+# a gate that held the milestone back for the digest starved it on 28 of 28
+# evenings (PR #32 review). The digest is about the parent's own child, waiting
+# now; it is the push that may come second.
+_DOES_NOT_CAP = "milestone"
+
 # 9pm where the child lives — late enough that the day's missions are done,
 # early enough that the parent is awake to answer.
 DIGEST_LOCAL_HOUR = 21
@@ -70,7 +79,9 @@ def send_digest(device_id: str, *, force: bool = False) -> dict[str, Any]:
         return {"ok": True, "sent": False, "reason": "nothing_pending"}
 
     if not force:
-        already = push_sender.recently_pushed_since(_iso(_now() - _ONE_DAY))
+        cutoff = _iso(_now() - _ONE_DAY)
+        already = (push_sender.recently_pushed_since(cutoff)
+                   - push_sender.pushed_only_with(cutoff, _DOES_NOT_CAP))
         if device_id in already:
             return {"ok": True, "sent": False, "reason": "already_pushed_today"}
 

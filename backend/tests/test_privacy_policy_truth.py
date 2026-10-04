@@ -126,6 +126,14 @@ TABLE_DISCLOSURE = {
     "user_backups": "Backup",
     # Install attribution (PR #25): raw visits, then daily counts with no IP.
     "referral_click_days": "daily counts with no IP",
+    # Family programs (PR #32, schema v34): Ramadan, the Prayer Journey and the
+    # milestone reminders. child_profiles.birth_month is in "Child profiles".
+    "program_settings": "time-zone offset",
+    "program_children": "reached puberty",
+    "ramadan_fasting": "fasting step",
+    "ramadan_marks": "Ramadan ticks",
+    "prayer_journeys": "Prayer Journey",
+    "milestone_alerts": "milestone reminders we sent",
 }
 
 
