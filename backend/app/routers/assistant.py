@@ -483,9 +483,13 @@ async def draft_reply(request: Request, user_message: UserMessage):
             user_message.message_text or user_message.behavior_type or "",
         )
 
+    # Whether remembered facts may shape this answer (and it may teach memory
+    # anything): the session must be proven to hold the phone (core/proof.py).
+    memory_proven = await asyncio.to_thread(request_proven, request)
     try:
         return await _draft_answer(
             user_message, policies, caller_device, session_id, user_msg_id,
+            memory_proven=memory_proven,
         )
     except HTTPException:
         raise
@@ -504,7 +508,7 @@ async def draft_reply(request: Request, user_message: UserMessage):
 
 async def _draft_answer(
     user_message: UserMessage, policies: dict, caller_device: str | None,
-    session_id: str | None, user_msg_id: int | None,
+    session_id: str | None, user_msg_id: int | None, *, memory_proven: bool = False,
 ) -> AssistantReply:
     """/draft after the question is stored: guards → retrieval → LLM."""
     # ── Step 0: Banned intent check ──────────────────────────────────
@@ -622,7 +626,6 @@ async def _draft_answer(
     # replaced first. The primary provider is a cloud API, so "the cloud
     # tier" is every tier — the classifier and rewriter calls included.
     family = await asyncio.to_thread(family_for_device, caller_device)
-    memory_proven = await asyncio.to_thread(request_proven, request)
     # Which child the question is about decides whose name becomes «طفلي»
     # (siblings keep «الطفل ب»…), so it is resolved before anything leaves.
     mem_child, mem_block, mem_used = await _memory_context(
@@ -925,8 +928,10 @@ async def stream_reply(request: Request, user_message: UserMessage) -> Streaming
         await _register_turn(control)
 
     lang = detect_reply_language(user_message.message_text or "")
+    memory_proven = await asyncio.to_thread(request_proven, request)   # see /draft
     work = asyncio.create_task(_stream_answer(
         user_message, policies, caller_device, session_id, user_msg_id, control,
+        memory_proven=memory_proven,
     ))
     _PIPELINES.add(work)
     work.add_done_callback(_PIPELINES.discard)
@@ -1012,7 +1017,7 @@ async def _pipeline_failed(exc: BaseException, control: _TurnControl | None,
 async def _stream_answer(
     user_message: UserMessage, policies: dict, caller_device: str | None,
     session_id: str | None, user_msg_id: int | None,
-    control: _TurnControl | None = None,
+    control: _TurnControl | None = None, *, memory_proven: bool = False,
 ) -> StreamingResponse:
     """/stream after the question is stored: guards → retrieval → SSE."""
 
@@ -1104,7 +1109,6 @@ async def _stream_answer(
         history = user_message.conversation_history or []
     # Names out of every model-bound text — see /draft.
     family = await asyncio.to_thread(family_for_device, caller_device)
-    memory_proven = await asyncio.to_thread(request_proven, request)
     # Which child the question is about decides whose name becomes «طفلي»
     # (siblings keep «الطفل ب»…), so it is resolved before anything leaves.
     mem_child, mem_block, mem_used = await _memory_context(
