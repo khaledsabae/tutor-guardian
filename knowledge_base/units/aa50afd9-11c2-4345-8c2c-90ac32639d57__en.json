@@ -28,19 +28,40 @@
   "translated_from": "aa50afd9-11c2-4345-8c2c-90ac32639d57",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
+    "review_verdict": "low_only",
     "review_defects": [
       {
-        "type": "meaning_change",
-        "field": "english.text_simplified",
-        "arabic": "الطفل الذي يملك طريقًا مشروعًا للحصول يقلّ لجوؤه لغيره.",
-        "english": "the child who has a lawful way to obtain things is less likely to resort to unlawful means.",
-        "why": "The Arabic says 'لغيره' (to other than it) without specifying that the other means are unlawful. The English adds 'unlawful', narrowing the meaning and introducing a moral judgment not explicit in the source.",
-        "severity": "low"
+        "model": "deepseek-v4-pro",
+        "field": "keywords",
+        "type": "meaning",
+        "why": "The Arabic keyword means reform/making amends, while 'restitution' specifically means returning the item, which is only one part."
       }
     ],
-    "approved_by": null
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "75d74a0506174b56add0a6821af7f565b13d178d55bf245f5d16e8feff872b04",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [
+        {
+          "model": "deepseek-v4-pro",
+          "field": "keywords",
+          "type": "meaning",
+          "why": "The Arabic keyword means reform/making amends, while 'restitution' specifically means returning the item, which is only one part."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

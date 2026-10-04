@@ -28,19 +28,40 @@
   "translated_from": "8b595d9b-62ce-48af-b5a5-a3bfe748041d",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
+    "review_verdict": "low_only",
     "review_defects": [
       {
-        "type": "meaning_change",
-        "field": "keywords[2]",
-        "arabic": "الحصيلة اللغوية",
-        "english": "language acquisition",
-        "why": "الحصيلة اللغوية means vocabulary or lexical inventory, not language acquisition (اكتساب اللغة). The English keyword changes the meaning.",
-        "severity": "medium"
+        "model": "deepseek-v4-pro",
+        "field": "keywords",
+        "type": "meaning",
+        "why": "The Arabic keyword means vocabulary/linguistic inventory, not the process of language acquisition."
       }
     ],
-    "approved_by": null
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "0aefc6f2e2c0b2e2dcbae4d99de84ab86bfc2806190a9af298ce6b2309126bdf",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [
+        {
+          "model": "deepseek-v4-pro",
+          "field": "keywords",
+          "type": "meaning",
+          "why": "The Arabic keyword means vocabulary/linguistic inventory, not the process of language acquisition."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

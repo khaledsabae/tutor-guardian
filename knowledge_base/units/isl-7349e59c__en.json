@@ -30,27 +30,26 @@
   "translated_from": "isl-7349e59c",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "واجبات الآباء",
-        "english": "duties of parents",
-        "why": "The Arabic 'الآباء' specifically means fathers, not parents. The duty of choosing a righteous mother is a father's duty, so translating as 'parents' incorrectly includes mothers and broadens the meaning.",
-        "severity": "medium"
-      },
-      {
-        "type": "term_error",
-        "field": "title",
-        "arabic": "الدين",
-        "english": "Din",
-        "why": "The term 'Din' is transliterated in the title but translated as 'religious' in the text_simplified, creating inconsistent handling of the same Arabic word within the document.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "84867b11f841d5332c5e9fce085ee6eede881bf0732da005883fb86d426e8327",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

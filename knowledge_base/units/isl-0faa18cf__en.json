@@ -2,7 +2,7 @@
   "id": "isl-0faa18cf__en",
   "domain": "islamic_parenting",
   "source_file": "Kayfa_Turabbi_Waladak.pdf",
-  "title": "Tarbiyah of the Yateem and the Role of the Alternative Family",
+  "title": "Tarbiyah of the Orphan and the Role of the Foster Family",
   "language": "en",
   "age_group": "unspecified",
   "behavior_type": "تربية اليتيم",
@@ -30,43 +30,52 @@
   "translated_from": "isl-0faa18cf",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
+    "review_verdict": "low_only",
     "review_defects": [
       {
-        "type": "meaning_change",
+        "model": "deepseek-v4-pro",
         "field": "text_simplified",
-        "arabic": "الأخ الأكبر",
-        "english": "older sibling",
-        "why": "Arabic specifies 'older brother', not 'sibling'; the gender-neutral translation loses the masculine specificity.",
-        "severity": "low"
+        "type": "meaning",
+        "why": "The Arabic specifies 'older brother' (الأخ الأكبر), while the English broadens this to 'older sibling', losing the gender."
       },
       {
-        "type": "meaning_change",
+        "model": "deepseek-v4-pro",
         "field": "text_simplified",
-        "arabic": "المربي",
-        "english": "guardian",
-        "why": "Arabic 'المربي' means the one who raises/educates, not necessarily a legal guardian; 'guardian' narrows the meaning.",
-        "severity": "medium"
-      },
-      {
-        "type": "term_error",
-        "field": "text_simplified",
-        "arabic": "التربوية",
-        "english": "tarbiyah safety",
-        "why": "Arabic adjective 'التربوية' (educational/upbringing-related) is transliterated as noun 'tarbiyah' and combined with 'safety', producing unclear English; should be 'educational safety' or 'upbringing-related well-being'.",
-        "severity": "medium"
-      },
-      {
-        "type": "register",
-        "field": "title",
-        "arabic": "تربية اليتيم",
-        "english": "Tarbiyah of the Yateem",
-        "why": "Transliterating ordinary Arabic words 'tarbiyah' and 'yateem' makes the title stiff and less accessible; Arabic is direct and warm.",
-        "severity": "low"
+        "type": "meaning",
+        "why": "'Tarbiyah safety' is an awkward literal rendering; 'educational well-being' would be clearer and more natural."
       }
     ],
-    "approved_by": null
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "17e89baeee9d87a3f8a0092b51462063a9ba96ec648b0609edcc24a3f9e22f67",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [
+        {
+          "model": "deepseek-v4-pro",
+          "field": "text_simplified",
+          "type": "meaning",
+          "why": "The Arabic specifies 'older brother' (الأخ الأكبر), while the English broadens this to 'older sibling', losing the gender."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "field": "text_simplified",
+          "type": "meaning",
+          "why": "'Tarbiyah safety' is an awkward literal rendering; 'educational well-being' would be clearer and more natural."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

@@ -11,7 +11,7 @@
   "reference_type": "كتاب_تربوي",
   "reference_info": "المنهاج التربوي النبوي — د. عدنان الخليفي",
   "text_original": "ﰲ ةدمتعﳌا ت(cid:682)راقﳌا فﻼتخ(cid:682) ةيبﱰلا فيراعت تفلتخا : يحﻼطصﻻا فيرعتلا . \"11ل ئاسولا هذه ةطساوب ةلصﶈا جئاتنلا اذكو ،ﱐاسنﻹا نئاكلا نيوكتو و ﳕ هجون اهتطساوب ﱵلا لئاسولا عومﳎ\" :ا(cid:276)أ ةيقاقتشﻻا انل ددﲢ هذه ةيقاقتشﻻا ةبراقﳌاف ،ىرخأ ةيح(cid:685) نم ةجيتنو ةيح(cid:685) نم ةيلمع ا (cid:276)أ ثيح ،ةيبﱰلل دقعﳌا ﱄاكشﻹا عباطلا ﲔبي فيرعتلا اذهف .ي مني \"ءاذغ\" يأ ،ومنلاو ومسلا ﱃإ درفلا دوقي (يقﻼ خأ ﰲرعم) ي ونعمو ( ةيض(cid:686)ر تانيرﲤ ،ماعط) يدام ءاذغك ةيبﱰلا انه هنيب ام اذهو .هتامامتهاو درفلا ةمدخ يه اساسأ ةيبﱰلا ةياغف ،درفلا ةيﳘأ ى لع زكتري ةيبﱰلل مهفيرعت نإف يدرفلا هاﲡﻻا ةبراقم باحصأ امأو .12 \"تامامتهﻻا ةيددعت هيدل ﲑثن ن(cid:997) هتاذل درفلا نيوكت\" و ه اهفده نأ ىري ﲔح ةيبﱰلل هفيرعت ﰲ Herbart ت ر(cid:682)راه ﱂ ﱵلا لايجﻷا ىلع ةدشارلا لايجﻷا اهسراﲤ ﱵلا ةيلمعلا \" :ا (cid:276)وفرعي ثيﲝ ،هتمدخو عمت(cid:272)(cid:682) اطبترم ةيبﱰلا نوﱪتعيف ي عامتجﻻا هاﲡﻻا ا مأ اهبلطتي ﱵلا ةيقﻼخﻷاو ةيركفلاو ةيمسﳉا تﻻاﳊا نم ددع ةر(cid:684)إ \" هنأ ﰲ هددحيف اهعوضوم امأ .\"ةيعامتجﻻا ةايحلل مزﻼلا جضنلا دعب جضنت .13\" ص اخ هج وب هل أيهي يذلا يعامتجﻻا طسولاو ،هلمﳎ ﰲ يسايسلا عمت(cid:272)ا هنم يمتني ﱵلا ةعامﳉ(cid:682) طبترﳌا صاﳋا هدعب ﰲوأ ،يسايسلا ماعلا هدعب ﰲ ءاوس ،عمت(cid:272)(cid:682) درفلا ةيبﱰل هطبر يعقاولا فيرعتلا اذه تايباﳚإ نم فراعم جاتنﻹ ملسﳌا ناسنﻹا دادعإ\" يه يأ ،قيبطتلا دئاز ةفرعﳌا :ﲏعت ا(cid:276)(cid:997) ﱐﻼيكلا دجام روتكدلا اهفرعيف ،ةيمﻼسﻹا ةيبﱰلا ﰲ امأ ه تاقﻼع ءوض ﰲ تاعامﳉاو دارفﻷا ةايح ﰲ فراعﳌا هذه فيظوت نسحيل هدادعإ ﰒ ةفلتخﳌا ةايﳊا نيدايم ﰲ ةرصاعﳌاو ةلاصﻷ(cid:682) ةمستم . 14\" ةرخﻵاو ةايﳊاو تاسرامﳌاو نوكلاو قلاﳋ(cid:682) .15\" ة سراﳑو امهف",
-  "text_simplified": "This text explains the definition of tarbiyah (Islamic upbringing) from various perspectives. Tarbiyah is a means for human growth and formation, aiming to serve the individual and develop their interests. Some view tarbiyah as linked to society, aiming to prepare the individual for social life. However, in Islamic tarbiyah, the goal is to prepare the Muslim individual to produce knowledge and apply it in life.",
+  "text_simplified": "This text explains the definition of tarbiyah (upbringing) from various perspectives. Tarbiyah is a means for human growth and formation, aiming to serve the individual and develop their interests. Some view tarbiyah as linked to society, aiming to prepare the individual for social life. However, in Islamic tarbiyah, the goal is to prepare the Muslim individual to produce knowledge and apply it in life.",
   "labels": [
     "تربية",
     "تعريف",
@@ -30,19 +30,26 @@
   "translated_from": "isl-8b3e09ef",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "هذا النص يشرح تعريف التربية من وجهات نظر مختلفة.",
-        "english": "This text explains the definition of tarbiyah (Islamic upbringing) from various perspectives.",
-        "why": "The Arabic uses the generic term 'التربية' without specifying 'Islamic'. The English adds the parenthetical '(Islamic upbringing)' to the first mention, which narrows the term and incorrectly implies that all perspectives discussed are Islamic, whereas the Arabic only later distinguishes 'التربية الإسلامية' as a specific perspective.",
-        "severity": "medium"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "70db1450e3e9e1a253ad190e978ec1bf2eb33ac33349ffc2ca75ac049ec3f57b",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

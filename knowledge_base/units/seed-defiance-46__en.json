@@ -30,27 +30,40 @@
   "translated_from": "seed-defiance-46",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
+    "review_verdict": "low_only",
     "review_defects": [
       {
-        "type": "meaning_change",
+        "model": "deepseek-v4-pro",
         "field": "text_simplified",
-        "arabic": "اطلب منه أمراً واحداً واضحاً",
-        "english": "Ask him for one clear command",
-        "why": "The Arabic means 'ask of him one clear instruction/command' (i.e., give him one clear instruction), but the English 'ask him for one clear command' can be read as asking the child to provide a command, changing the direction of the request.",
-        "severity": "medium"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "فالتربية بالحب أبقى أثراً",
-        "english": "for *tarbiyah* (upbringing) with love leaves a lasting impact",
-        "why": "The Arabic comparative 'أبقى أثراً' (more lasting in effect) is flattened to 'leaves a lasting impact', losing the comparative nuance.",
-        "severity": "low"
+        "type": "meaning",
+        "why": "The English phrase 'ask him for one clear command' is ambiguous and could be read as asking the child to issue a command rather than giving him one clear instruction."
       }
     ],
-    "approved_by": null
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "c535c6d0e09ab63965e998b7be0825e7c25a785a26c478dc9ea43a4903bc4968",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [
+        {
+          "model": "deepseek-v4-pro",
+          "field": "text_simplified",
+          "type": "meaning",
+          "why": "The English phrase 'ask him for one clear command' is ambiguous and could be read as asking the child to issue a command rather than giving him one clear instruction."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

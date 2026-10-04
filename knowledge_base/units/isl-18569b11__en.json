@@ -2,7 +2,7 @@
   "id": "isl-18569b11__en",
   "domain": "islamic_parenting",
   "source_file": "Alukah_Rights_of_Children.pdf",
-  "title": "As-Sabr wa-r-Rifq fi Tarbiyah al-Atfal",
+  "title": "Patience and Rifq (Gentleness) in Raising Children",
   "language": "en",
   "age_group": "4-6",
   "behavior_type": "تربية وضبط نفس",
@@ -11,7 +11,7 @@
   "reference_type": "كتاب_تربوي",
   "reference_info": "حقوق الأولاد على الوالدين - عماد عبدالعظيم (الألوكة)",
   "text_original": ": لَ اقَ , ؿ َ ؾَ س ْ أَ ـِ بْ ديْ زَ ـْ طَ و .)2122( ؿمٚسمُو ،)5376( يراخبمًا فمضرمظأ (1) ـــــــــــــــتــــــــ نيدلاىلا ىلع دلاولأا قىقح ـــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ لا : ؾْ ؼُ فَ مٍ قْ قَ كلَِ إ تَ قْ تَ أَ اذَ ِ إ , لَـبُ يْ أَ : لَ اؼَ فَ ,لتقْ صَ فَ ر ازَ ِ إ عْ فَ ر ا : لَ اؼَ فَ , هُ ر جُ يَ ادً قاوَ فُ َـبْ ا ىأَ ر ثُ : لَ اقَ ,؟ ؾُ خُ دْ أَ أَ : ؾْ ؼُ فَ , ؽَ قْ ؾَ طَ لَ ءلاَ َقخُ لْ ا ـْ م فُ بَ قْ ثَ ر « : لُ قؼُ يَ ﷺ للها لَ قس طُ ـُ بْ ا لَ اؼَ فَ ,عُ قَ طَ تَ يَ هدلَ وَ ضَ عْ بَ ﭭ رؿط ـبا ىأر اؿلو ل ِ ف ا هَ دَ عْ بَ َٓ وَ ,افَ ؾَ بْ قَ ةَ َلاصَ َلافَ نَ اؿ طُ وَ ,ر ٍ ؽْ بَ ل ِ بأ َ وَ ,ﷺ ِ للها ل ِ قس تَْٕ تطْ قَ طَ تَ قْ لَ وَ , ر ِ ػَ س كؾط ديزي ٓ ناكو رػسلا في رؿط ـبا تبحص :لاق :ةحؾص ـب كسقط ـط اؿكإ :لاق ,؟عقطت ٓ ؽلام :تؾؼف نقطقطتي فباحصأو هقـب مقؼيو ـقتعكر .)3(»عـصي ﷺ لبـلا تيأر اؿك عـصأ تؾؼف ,لضقتي ؿث ؾستغي رؿط ـب للها دبط لبأ تيأر :للها دبط ـب ؿلاس لاقو سمأ اكاقحأ لـؽلو ,كؾب :لاق ,؟ءقضقلا ـم ؾسغلا ؽيزجي امأ تبأ اي",
-  "text_simplified": "The text discusses a tarbiyah-related story highlighting the importance of patience and self-control when dealing with children. It narrates an incident involving Al-Hasan ibn Ali, may Allah be pleased with them both, where the Prophet ﷺ demonstrated forbearance and rifq (gentleness) in addressing a child's behavior. From this, we learn the necessity of guiding children with kindness and avoiding anger or impatience.",
+  "text_simplified": "The text discusses a tarbiyah-related story highlighting the importance of patience and self-control when dealing with children. The hadith narrates an incident involving Al-Hasan ibn Ali, may Allah be pleased with them both, where the Prophet ﷺ demonstrated forbearance and rifq (gentleness) in addressing a child's behavior. From this, we learn the necessity of guiding children with kindness and avoiding anger or impatience.",
   "labels": [
     "تربية",
     "صبر",
@@ -30,35 +30,26 @@
   "translated_from": "isl-18569b11",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "يروي الحديث موقفًا مع الحسن بن علي",
-        "english": "It narrates an incident involving Al-Hasan ibn Ali",
-        "why": "The Arabic explicitly says 'the hadith narrates' but the English drops the word 'hadith' and uses 'It', obscuring that the story is from a hadith.",
-        "severity": "medium"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "تجنب الغضب أو الانفعال",
-        "english": "avoiding anger or impatience",
-        "why": "'الانفعال' means emotional agitation or outburst, not 'impatience'; the English narrows the meaning incorrectly.",
-        "severity": "medium"
-      },
-      {
-        "type": "term_error",
-        "field": "title",
-        "arabic": "الصبر والرفق في تربية الأطفال",
-        "english": "As-Sabr wa-r-Rifq fi Tarbiyah al-Atfal",
-        "why": "The title is transliterated rather than translated, while the body translates 'الصبر' as 'patience' and 'الرفق' as 'rifq (gentleness)', creating inconsistency and leaving the title untranslated for English readers.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "a4c6f336664fbd2f9f1186bfa13186ed6ebb71df596718d4a915690093c491db",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

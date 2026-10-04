@@ -30,27 +30,26 @@
   "translated_from": "isl-ddc58cc5",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "register",
-        "field": "text_simplified",
-        "arabic": "ويجب على الآباء تربيتهم وتعليمهم",
-        "english": "and parents must engage in their tarbiyah (upbringing and nurturing) and teach them",
-        "why": "The Arabic is direct and imperative ('must raise them and teach them'), while the English uses a formal noun phrase 'engage in their tarbiyah' with a parenthetical, making it stiff and less direct.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "من يقوم بذلك",
-        "english": "Whoever fulfills this duty",
-        "why": "The Arabic says 'whoever does that' (referring to upbringing and teaching), but the English adds 'duty' and changes 'does' to 'fulfills', narrowing the meaning to completing an obligation rather than simply performing the action.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "c68e0d8b935e874f06f7c980d67203c98436527d91fb1eb47a4b51a2f9c4b629",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

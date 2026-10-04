@@ -30,19 +30,26 @@
   "translated_from": "isl-0ecac170",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "term_error",
-        "field": "title",
-        "arabic": "أهمية التربية الأخلاقية للأبناء",
-        "english": "The Importance of Akhlaq Tarbiyah for Children",
-        "why": "The Arabic title uses ordinary words 'التربية الأخلاقية' meaning 'moral education/upbringing'. Transliterating them as 'Akhlaq Tarbiyah' is unnecessary, makes the title sound like a technical Islamic term, and is inconsistent with the body where 'akhlaq' is glossed but 'tarbiyah' is not used. It should be translated as 'The Importance of Moral Education for Children' or similar.",
-        "severity": "medium"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "93a5114751bf97947eb0e7a77959b00e063e19ab36922f31792e2e6de3247812",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

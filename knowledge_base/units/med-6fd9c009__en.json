@@ -17,7 +17,7 @@
   "created_at": "2026-06-07T08:32:42Z",
   "updated_at": "2026-06-07T08:32:42Z",
   "version": "1.0.0",
-  "title": "Qadm al-Athafir 'inda al-Atfal (Nail-Biting in Children)",
+  "title": "Nail-Biting in Children",
   "language": "en",
   "source_meta": {
     "source_title": "قضم الأظافر عند الأطفال",
@@ -27,35 +27,40 @@
   "translated_from": "med-6fd9c009",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
+    "review_verdict": "low_only",
     "review_defects": [
       {
-        "type": "term_error",
-        "field": "title",
-        "arabic": "قضم الأظافر عند الأطفال",
-        "english": "Qadm al-Athafir 'inda al-Atfal (Nail-Biting in Children)",
-        "why": "The transliteration of الأظافر as 'al-Athafir' is incorrect: the Arabic letter is ظ (ẓā'), not ث (thā'). It should be transliterated as al-Aẓāfir or al-Azafir.",
-        "severity": "medium"
-      },
-      {
-        "type": "meaning_change",
+        "model": "deepseek-v4-pro",
         "field": "text_simplified",
-        "arabic": "وإعطاءه أشياء آمنة للاستفادة منها",
-        "english": "provide them with safe alternatives to benefit from",
-        "why": "The Arabic says 'safe things' (أشياء آمنة), not 'safe alternatives'. Adding 'alternatives' introduces a meaning not present in the source.",
-        "severity": "medium"
-      },
-      {
-        "type": "register",
-        "field": "text_simplified",
-        "arabic": "يجب مراقبة الطفل وإعطاءه",
-        "english": "It is important to monitor the child and provide them",
-        "why": "The Arabic uses a direct obligation 'يجب' (must/should), while the English softens it to 'It is important to', making the guidance less direct.",
-        "severity": "low"
+        "type": "meaning",
+        "why": "Alternatives implies substitutes for nail-biting, while Arabic only says safe things to use."
       }
     ],
-    "approved_by": null
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": "mistral-large-3:675b",
+      "rounds": 2,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "6b1563d23393ed3226a328e24ef881c942785e9451b069cab3eb9f9df2fe8752",
+      "reviewed_at": "2026-10-04T11:26:06+00:00",
+      "residual_low": [
+        {
+          "model": "deepseek-v4-pro",
+          "field": "text_simplified",
+          "type": "meaning",
+          "why": "Alternatives implies substitutes for nail-biting, while Arabic only says safe things to use."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:26:06+00:00"
   }
 }

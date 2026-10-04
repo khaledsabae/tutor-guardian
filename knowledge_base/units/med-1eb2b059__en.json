@@ -29,27 +29,26 @@
   "translated_from": "med-1eb2b059",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "title",
-        "arabic": "الرفق",
-        "english": "Rifq",
-        "why": "The Arabic word 'الرفق' means 'gentleness' or 'kindness', but the English transliterates it as 'Rifq' without translation, so the meaning is not conveyed to an English reader.",
-        "severity": "medium"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "قم بقراءة كتب وأغاني لطفلك",
-        "english": "Read books and sing songs to your child",
-        "why": "The Arabic says 'read books and songs' (قراءة كتب وأغاني), but the English changes the verb for songs to 'sing', adding an action not present in the Arabic.",
-        "severity": "medium"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "635257aac395b579d7d330a2ef4ea6eb41291456187884ca1025fc0ddcf38df2",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

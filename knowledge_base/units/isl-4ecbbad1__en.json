@@ -30,27 +30,26 @@
   "translated_from": "isl-4ecbbad1",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "register",
-        "field": "title",
-        "arabic": "الصبر عند الغضب",
-        "english": "Patience at Anger",
-        "why": "The English phrase is not idiomatic; 'Patience at Anger' could be misread as patience directed at anger rather than patience during anger. Better: 'Patience When Angry' or 'Patience at the Time of Anger'.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "حقوق الأبناء على الآباء",
-        "english": "rights of children over their parents",
-        "why": "The Arabic preposition 'على' indicates an obligation upon parents, not authority of children over parents. 'Over' may imply control; 'upon' is more accurate.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "8801db4dbe89c6e82dbd9ab489a24acb3db7a4d460e67b3df9042da82af3e615",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

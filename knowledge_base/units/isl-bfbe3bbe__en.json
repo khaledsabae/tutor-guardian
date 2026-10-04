@@ -2,7 +2,7 @@
   "id": "isl-bfbe3bbe__en",
   "domain": "islamic_parenting",
   "source_file": "Al_Hady_Al_Nabawi.pdf",
-  "title": "The Unit of Leadership in the Family and Its Impact on the Discipline of Children",
+  "title": "Unity of Leadership in the Family and Its Impact on the Discipline of Children",
   "language": "en",
   "age_group": "4-6",
   "behavior_type": "الانضباط_الأسري",
@@ -27,27 +27,52 @@
   "translated_from": "isl-bfbe3bbe",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
+    "review_verdict": "low_only",
     "review_defects": [
       {
-        "type": "meaning_change",
-        "field": "title",
-        "arabic": "وحدة القيادة في الأسرة",
-        "english": "The Unit of Leadership in the Family",
-        "why": "Arabic 'وحدة القيادة' means 'unity of leadership' (i.e., singleness/unified command), not 'unit of leadership' as a noun entity. The English changes the meaning.",
-        "severity": "high"
+        "model": "deepseek-v4-pro",
+        "field": "text_simplified",
+        "type": "addition",
+        "why": "The English inserts the term 'tarbiyah' not present in the Arabic, though the meaning is preserved."
       },
       {
-        "type": "meaning_change",
+        "model": "glm-5.2",
         "field": "text_simplified",
-        "arabic": "حتى يتربى الأولاد على الطاعة والانضباط",
-        "english": "so that children are raised upon *tarbiyah* (upbringing) with obedience and discipline",
-        "why": "The English inserts '*tarbiyah* (upbringing)' which is not present in the Arabic. The Arabic simply says children are raised upon obedience and discipline, without the term tarbiyah.",
-        "severity": "medium"
+        "type": "addition",
+        "why": "The Arabic says children are raised upon obedience and discipline; the English inserts 'tarbiyah (upbringing)' which is not present as a noun in the Arabic."
       }
     ],
-    "approved_by": null
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": "mistral-large-3:675b",
+      "rounds": 2,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "f2fd197a8c19c6bf69004cf92e3b4d32837e08b0405b00d626637edf0dacba2f",
+      "reviewed_at": "2026-10-04T11:26:06+00:00",
+      "residual_low": [
+        {
+          "model": "deepseek-v4-pro",
+          "field": "text_simplified",
+          "type": "addition",
+          "why": "The English inserts the term 'tarbiyah' not present in the Arabic, though the meaning is preserved."
+        },
+        {
+          "model": "glm-5.2",
+          "field": "text_simplified",
+          "type": "addition",
+          "why": "The Arabic says children are raised upon obedience and discipline; the English inserts 'tarbiyah (upbringing)' which is not present as a noun in the Arabic."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:26:06+00:00"
   }
 }

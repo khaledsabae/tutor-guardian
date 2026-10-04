@@ -2,7 +2,7 @@
   "id": "isl-33e652bb__en",
   "domain": "islamic_parenting",
   "source_file": "Al_Hady_Al_Nabawi.pdf",
-  "title": "Proper Conduct for Children in Adolescence",
+  "title": "Proper Conduct for Preschool Children",
   "language": "en",
   "age_group": "4-6",
   "behavior_type": "تربية أخلاقية",
@@ -27,19 +27,26 @@
   "translated_from": "isl-33e652bb",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "يجب عليه أيضًا التحلي بالصبر والاحترام",
-        "english": "They should also embody patience and respect",
-        "why": "The Arabic uses 'يجب عليه' (must) for both obligations, but the English shifts to 'should' in the second sentence, weakening the obligation. Additionally, 'embody' suggests being a personification of patience and respect, whereas 'التحلي' means to display or adorn oneself with these qualities.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "0f88ed1eed37f5ecd77e79a562a206ac5c5790c1b6b445e10a3ccc0954c1685f",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

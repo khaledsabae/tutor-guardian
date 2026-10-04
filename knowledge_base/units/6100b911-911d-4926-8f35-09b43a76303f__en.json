@@ -28,19 +28,26 @@
   "translated_from": "6100b911-911d-4926-8f35-09b43a76303f",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "قلّل نقاط الاحتكاك اليومية المعروفة (الصباح، الواجب، النوم) بتحضير مسبق بدل معالجتها بالانفعال كل يوم.",
-        "english": "Reduce daily friction points (mornings, homework, bedtime) by preparing in advance instead of managing them with emotion every day.",
-        "why": "The Arabic includes 'المعروفة' (known/well-known), which is omitted in the English. This slightly reduces the specificity that these are recognized, typical friction points.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "f185931becb08a3e1cfffec24faa004c1febe71b642c392028a9bfac75ddacf5",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

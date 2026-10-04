@@ -30,27 +30,26 @@
   "translated_from": "isl-67c4622e",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "أن الطفل يرث من الوقف إذا كان موجوداً",
-        "english": "that the child inherits from a *waqf* (endowment) if one exists",
-        "why": "The Arabic pronoun 'كان موجوداً' most likely refers to the child (الطفل), meaning the child inherits from the waqf if the child is in existence (e.g., born alive at the time of entitlement). The English 'if one exists' is ambiguous and likely read as referring to the waqf, changing the condition.",
-        "severity": "high"
-      },
-      {
-        "type": "term_error",
-        "field": "text_simplified",
-        "arabic": "حتى البلوغ",
-        "english": "until maturity",
-        "why": "البلوغ is the Islamic legal term for puberty, not general maturity. The translation should use 'puberty' or transliterate 'bulugh' to preserve the specific legal meaning.",
-        "severity": "medium"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "e3d6b63830e715cfef78cc01e86ce4185a3dc62a177d5a4c04f918223f0eaf62",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

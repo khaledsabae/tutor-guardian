@@ -30,35 +30,26 @@
   "translated_from": "isl-c5b93252",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "لمن يعولهن",
-        "english": "for those who support them",
-        "why": "يعول means to provide for financially or maintain as a dependent; 'support' is broader and loses the specific financial provision nuance.",
-        "severity": "low"
-      },
-      {
-        "type": "religious_error",
-        "field": "text_simplified",
-        "arabic": "فأحسن صحبتهن",
-        "english": "and treats them with excellence",
-        "why": "The Arabic says 'and is good in their companionship/keeping company with them' (a hadith phrase); the English drops 'صحبتهن' and uses a generic 'treats them with excellence', altering the hadith wording.",
-        "severity": "medium"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "احتساب الأجر من الله",
-        "english": "seeking reward from Allah",
-        "why": "احتساب means expecting/reckoning reward with Allah, not merely seeking; the nuance of counting on Allah's reward is lost.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "86681b0e4f4af9f34b76dd318cfaa8cc8fd61eea65e39286817d7ae153b41234",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

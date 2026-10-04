@@ -29,27 +29,26 @@
   "translated_from": "isl-52c6e496",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "توجيهات تربوية ودينية متنوعة",
-        "english": "diverse tarbiyah (upbringing) and religious directives",
-        "why": "The Arabic has one noun 'توجيهات' (directives) modified by two adjectives 'تربوية' (educational) and 'دينية' (religious). The English splits it into two nouns: 'tarbiyah (upbringing)' and 'religious directives', changing the meaning and structure. 'Tarbiyah' is not a directive; it is the adjective 'educational/upbringing' describing the directives.",
-        "severity": "medium"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "القيم الإسلامية والأخلاقية",
-        "english": "Islamic values and akhlaq (moral character)",
-        "why": "The Arabic 'الأخلاقية' is an adjective modifying 'القيم' (values), meaning 'moral values.' The English turns it into a separate noun 'akhlaq (moral character)' and drops the word 'values' for the moral aspect, changing 'Islamic and moral values' into 'Islamic values and akhlaq.' This alters the meaning and introduces a transliterated term not present as a noun in the Arabic.",
-        "severity": "medium"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "b18485d508d4beb81ad8b899f31013145e290f8d4c6d98b2c5c0b536afe15565",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

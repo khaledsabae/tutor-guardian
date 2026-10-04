@@ -2,7 +2,7 @@
   "id": "isl-ee097ab9__en",
   "domain": "islamic_parenting",
   "source_file": "Manhaj_Nabawi_Khulayfi.pdf",
-  "title": "Al-Tarbiyah al-Nabawiyyah wa-Tawjeeh al-Sulook al-Imani",
+  "title": "Prophetic Tarbiyah and Guiding Faith-Based Behavior",
   "language": "en",
   "age_group": "unspecified",
   "behavior_type": "تربية إيمانية",
@@ -30,35 +30,26 @@
   "translated_from": "isl-ee097ab9",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "title",
-        "arabic": "التربية النبوية وتوجيه السلوك الإيماني",
-        "english": "Al-Tarbiyah al-Nabawiyyah wa-Tawjeeh al-Sulook al-Imani",
-        "why": "The English title is a transliteration, not a translation, so the meaning is completely lost to English readers.",
-        "severity": "medium"
-      },
-      {
-        "type": "term_error",
-        "field": "text_simplified",
-        "arabic": "التوكل على الله",
-        "english": "reliance on Allah",
-        "why": "The Islamic term 'tawakkul' is translated away as 'reliance' instead of being transliterated, while 'tarbiyah' is transliterated elsewhere, creating inconsistency.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "تذكر",
-        "english": "highlights",
-        "why": "The Arabic 'تذكر' means 'mentions', but the English 'highlights' adds emphasis not present in the source.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": "mistral-large-3:675b",
+      "rounds": 2,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "e468920fa436e2a94499db24f903a5ff860d1041f4358b976dcd20c33c75cbe9",
+      "reviewed_at": "2026-10-04T11:26:06+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:26:06+00:00"
   }
 }

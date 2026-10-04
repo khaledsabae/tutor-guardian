@@ -30,19 +30,52 @@
   "translated_from": "isl-f782f2ed",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
+    "review_verdict": "low_only",
     "review_defects": [
       {
-        "type": "meaning_change",
+        "model": "deepseek-v4-pro",
         "field": "title",
-        "arabic": "أساسيات التربية الدينية للأطفال",
-        "english": "Foundations of Tarbiyah for Children",
-        "why": "The English title omits the word 'الدينية' (religious), so it loses the explicit religious focus of the Arabic title. 'Tarbiyah' alone can mean general upbringing, not necessarily religious education.",
-        "severity": "medium"
+        "type": "omission",
+        "why": "The English title omits the qualifier 'الدينية' (religious), making the title broader than the Arabic."
+      },
+      {
+        "model": "glm-5.2",
+        "field": "title",
+        "type": "omission",
+        "why": "The Arabic specifies 'religious upbringing' (الدينية) but the English title drops 'religious'."
       }
     ],
-    "approved_by": null
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "537e9107d872181199927d0a4cec762613ddbc44b6c259a2639c8d903b365797",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [
+        {
+          "model": "deepseek-v4-pro",
+          "field": "title",
+          "type": "omission",
+          "why": "The English title omits the qualifier 'الدينية' (religious), making the title broader than the Arabic."
+        },
+        {
+          "model": "glm-5.2",
+          "field": "title",
+          "type": "omission",
+          "why": "The Arabic specifies 'religious upbringing' (الدينية) but the English title drops 'religious'."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

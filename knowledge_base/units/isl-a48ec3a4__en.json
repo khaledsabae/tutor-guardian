@@ -30,35 +30,26 @@
   "translated_from": "isl-a48ec3a4",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "term_error",
-        "field": "title",
-        "arabic": "المنهج التربوي النبوي",
-        "english": "The Prophetic Tarbiyah Curriculum",
-        "why": "The Arabic 'منهج' means methodology/approach, not a fixed curriculum. The translation uses 'Curriculum' in the title but 'methodology' in the body, and 'curricula' at the end, creating inconsistency and narrowing the meaning.",
-        "severity": "medium"
-      },
-      {
-        "type": "term_error",
-        "field": "text_simplified",
-        "arabic": "تربية الإنسان",
-        "english": "nurturing the individual",
-        "why": "The term 'تربية' is transliterated as 'Tarbiyah' elsewhere (title and final phrase) but here translated as 'nurturing', breaking consistency for the same Islamic concept.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "القيادة الإنسانية",
-        "english": "human leadership",
-        "why": "The Arabic likely means 'leadership of humanity' (i.e., the ummah leading mankind), but 'human leadership' is ambiguous and could be read as leadership by humans rather than leadership over humans.",
-        "severity": "medium"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "f7b6d75101b25d196410ccda4e67ef3c71513df129a80e3cba0e6cad344d63ef",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

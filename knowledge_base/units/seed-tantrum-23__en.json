@@ -29,27 +29,26 @@
   "translated_from": "seed-tantrum-23",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "ثم تجاهلي النوبة بهدوء",
-        "english": "then ignore the tantrum quietly",
-        "why": "The Arabic 'بهدوء' means 'calmly', not 'quietly'. 'Quietly' could imply not making noise, whereas the intended meaning is to remain calm and composed while ignoring the tantrum.",
-        "severity": "low"
-      },
-      {
-        "type": "register",
-        "field": "text_simplified",
-        "arabic": "حافظي على هدوئك أنتِ أولاً",
-        "english": "maintain your own calm first",
-        "why": "The Arabic uses a warm, direct imperative 'keep your calm' while the English 'maintain your own calm' is stiff and clinical, shifting the register from supportive parenting advice to formal instruction.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "fc68c5e312250803208b857eb6600f39792619aab46d89ee3d164eeec98f1664",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

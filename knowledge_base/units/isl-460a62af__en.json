@@ -11,7 +11,7 @@
   "reference_type": "كتاب_تربوي",
   "reference_info": "حقوق الأولاد على الوالدين - عماد عبدالعظيم (الألوكة)",
   "text_original": "ِإ .)994( ؿمٚسمُ فمضرمظأ (2) ــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ نيدلاىلا ىلع دلاولأا قىقح ــــــــــــــــــــ للها ؿفعػـي وأ ؿفػعي راغص لاقط كؾط ؼػـي ؾجر ـم ارجأ ؿظطأ ؾجر يأو ,للها ؾقبس في فتؼػكأ راـيد :ﷺ للها لقسر لاق :لاق ,ﭬ ةريره لبأ ـطو كؾط فتؼػكأ راـيدو ,ـقؽسم كؾط فب تقدصت راـيدو ,ةبقر في فتؼػكأ راـيدو .)2(»ؽؾهأ كؾط فتؼػكأ يذلا ارجأ افؿظطأ ,ؽؾهأ نامرفق هءاج ذإ ,ﭭ ورؿط ـب للها دبط عم اسقؾج اـك :لاق ,ةؿثقخ ـطو :لاق ,ؿفططلف ؼؾطكاف :لاق ,ٓ :لاق ,؟ؿتهقق ؼققرلا تقططأ :لاؼف ,ؾخدف فل .)3(»ؽؾؿي ـؿط سبحي نأ اؿثإ ءرؿلاب كػك :ﷺ للها لقسر لاق ر ٍ جْ أَ ـْ م لل ؾْ هَ , للها لَ قس ايَ : تُ ؾْ قُ ,ڤ ةَ ؿ أُ ـْ طَ »ـقحقحصلا« فيو كَ ِ إ ,اذَ ؽَ هَ وَ اذَ ؽَ هَ , ؿ ف ِ ِ تكَ ر ِ اتَ ِ ب تُ س ف ِ قْ ؾَ طَ ؼَ ػ ِ كْ أُ نْ أَ ةَ ؿ ل ِ بأَ ل ِ ـبَ ل ِ ف ف ِ ْقؾَ طَ تؼْ ػَ كْ أَ ام عَ كَ : لَ اقَ , لـبَ فُ لَ تْ َكاكَ افَ ُبس ِ تَ حْ يَ قَ هُ وَ ف ِ ِ ؾهْ أَ كؾَ طَ ةً ؼَ ػَ كَ ؿ لْ ا ؼَ ػَ كْ أَ اذَ ِ إ« :ﷺ لاقو .)4(» ةً قَ دَ صَ .)994( ؿمٚسمُ فمضرمظأ (1) .)995( ؿمٚسمُ فمضرمظأ (2) .)996( ؿمٚسمُ فمضرمظأ (3) .)1112( ؿمٚسمُو ،)5351( يراخبمًا فمضرمظأ (4) ـــــــــــــــتــــــــ نيدلاىلا ىلع دلاولأا قىقح ـــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ اقَ ـغْ",
-  "text_simplified": "Parents must teach children the rights of Allah and the rights of parents from a young age. It is essential to instill religious and moral values in children's hearts gradually. Raising children upon *birr al-walidayn* (dutifulness to parents) and *ihsan* (excellence) is one of the most important duties of the family.",
+  "text_simplified": "Parents must teach children the rights of Allah and the rights of parents from a young age. It is essential to instill religious and moral values in children's hearts gradually. Raising children upon *birr* (righteousness) and *ihsan* (excellence) is one of the most important duties of the family.",
   "labels": [
     "تربية",
     "حقوق الوالدين",
@@ -30,35 +30,26 @@
   "translated_from": "isl-460a62af",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "البر والإحسان",
-        "english": "birr al-walidayn (dutifulness to parents) and ihsan (excellence)",
-        "why": "The English adds 'al-walidayn' to 'birr', narrowing the meaning to dutifulness specifically to parents, whereas the Arabic 'البر' is general righteousness/dutifulness without specifying parents.",
-        "severity": "medium"
-      },
-      {
-        "type": "register",
-        "field": "text_simplified",
-        "arabic": "ينبغي",
-        "english": "It is essential",
-        "why": "Arabic 'ينبغي' means 'should/ought', a softer recommendation; English 'essential' is stronger and more prescriptive, shifting the tone.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "نفوس",
-        "english": "hearts",
-        "why": "Arabic 'نفوس' means 'souls/self', while 'hearts' is a common but not exact rendering, slightly altering the intended depth.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "f8d645b203396f26557c52701e60f22cf91c2e6b8a851f9281887e6164f25170",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

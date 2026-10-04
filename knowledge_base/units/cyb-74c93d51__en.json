@@ -28,27 +28,26 @@
   "translated_from": "cyb-74c93d51",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "التعريف بـ 'الكيبولريلجية' للطفلة والطفل",
-        "english": "Definition of 'Cyberbullying' for the Girl and Boy",
-        "why": "The Arabic verbal noun 'التعريف بـ' means 'introducing' (making known), not 'definition of'; and the preposition 'ل' means 'to' (the audience), not 'for'. The English changes the action and the recipient.",
-        "severity": "medium"
-      },
-      {
-        "type": "register",
-        "field": "text_simplified",
-        "arabic": "للطفلة والطفل",
-        "english": "for the Girl and Boy",
-        "why": "Unnecessary capitalization of 'Girl' and 'Boy' in English; common nouns should be lowercase, and the phrase is more naturally 'for the girl and boy' or 'for girls and boys'.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "9634868866da3a471442a5786e8ea158712f6a427ad38828fcfde5e63a91fdb8",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

@@ -30,27 +30,26 @@
   "translated_from": "isl-d7c56adc",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "term_error",
-        "field": "title",
-        "arabic": "المنهج التربوي النبوي",
-        "english": "The Prophetic Tarbiyah Curriculum",
-        "why": "The Arabic uses the adjective 'التربوي' (educational/pedagogical), not the noun 'tarbiyah'. The English introduces 'tarbiyah' as a transliterated term and uses it as a modifier, which is not a direct translation and may be inconsistent with the Arabic's use of the adjective. 'Educational' or 'pedagogical' would be more accurate.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "title",
-        "arabic": "المنهج",
-        "english": "Curriculum",
-        "why": "'منهج' means method/approach/methodology, which is broader than 'curriculum' (a fixed course of study). The text discusses the Prophetic educational methodology, not a specific curriculum.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "79867ef2f8d862822c61169a65fa16152dbb91765bdca37d674edf647c4e2fd5",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

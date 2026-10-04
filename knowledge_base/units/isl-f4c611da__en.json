@@ -30,43 +30,26 @@
   "translated_from": "isl-f4c611da",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "مطالب",
-        "english": "should",
-        "why": "Arabic 'مطالب' means 'is required/demanded', but English 'should' softens the obligation to a recommendation.",
-        "severity": "medium"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "يكره المربي",
-        "english": "resent the one raising him",
-        "why": "Arabic 'يكره' means 'hates', but English 'resent' is milder; also 'المربي' is rendered as 'the one raising him' instead of the consistent 'the one engaged in tarbiyah', narrowing the meaning to a parent rather than any educator.",
-        "severity": "medium"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "في نفسه",
-        "english": "in his heart",
-        "why": "Arabic 'نفسه' means 'himself/his self/soul', not specifically 'heart' (قلب).",
-        "severity": "low"
-      },
-      {
-        "type": "register",
-        "field": "text_simplified",
-        "arabic": "المربي",
-        "english": "The one engaged in tarbiyah",
-        "why": "The Arabic uses the simple noun 'المربي' (the educator/upbringer), but the English uses a stiff, clinical phrase 'The one engaged in tarbiyah', which is less direct and warm.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "9f6e7a12785f1f5f2d323903c92810605febc679078d5475c20325eb72a8b319",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

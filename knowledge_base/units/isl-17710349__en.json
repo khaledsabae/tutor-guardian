@@ -30,19 +30,26 @@
   "translated_from": "isl-17710349",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "term_error",
-        "field": "text_simplified",
-        "arabic": "الانشغال بالدنيا على حساب الآخرة",
-        "english": "becoming absorbed in the dunya (worldly life) at the expense of the Hereafter",
-        "why": "The Arabic term 'الآخرة' is transliterated as 'Akhirah' in Islamic contexts, but here it is translated as 'Hereafter' while 'dunya' is transliterated, creating inconsistency in transliteration of key Islamic terms within the same sentence.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "d4b724484d4691c2f6a0dc52ad54a942d2b028176e3351d759d76e83bb321704",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

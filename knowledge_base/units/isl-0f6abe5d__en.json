@@ -2,7 +2,7 @@
   "id": "isl-0f6abe5d__en",
   "domain": "islamic_parenting",
   "source_file": "Kayfa_Turabbi_Waladak.pdf",
-  "title": "Al-ʿadl bayna al-abnāʾ wa ʿadam al-tamyīz",
+  "title": "Justice Between Children and Avoiding Discrimination",
   "language": "en",
   "age_group": "unspecified",
   "behavior_type": "تمييز بين الأبناء",
@@ -30,19 +30,26 @@
   "translated_from": "isl-0f6abe5d",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "title",
-        "arabic": "العدل بين الأبناء وعدم التمييز",
-        "english": "Al-ʿadl bayna al-abnāʾ wa ʿadam al-tamyīz",
-        "why": "The English title is a transliteration, not a translation; it does not convey the meaning 'Justice between children and non-discrimination' to an English reader.",
-        "severity": "medium"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "46bf7d308d10e291c60106b8fa666f195decf234c541692eddd1e6f69d05135a",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

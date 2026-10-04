@@ -2,7 +2,7 @@
   "id": "isl-65b250d1__en",
   "domain": "islamic_parenting",
   "source_file": "Alukah_Rights_of_Children.pdf",
-  "title": "The Importance of Tarbiyah and Akhlaq for Children",
+  "title": "The Importance of Religious and Moral Upbringing for Children",
   "language": "en",
   "age_group": "unspecified",
   "behavior_type": "تربية دينية وأخلاقية",
@@ -30,35 +30,40 @@
   "translated_from": "isl-65b250d1",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
+    "review_verdict": "low_only",
     "review_defects": [
       {
-        "type": "meaning_change",
-        "field": "title",
-        "arabic": "أهمية التربية الدينية والأخلاقية للأبناء",
-        "english": "The Importance of Tarbiyah and Akhlaq for Children",
-        "why": "The Arabic title specifies 'religious and moral upbringing' (التربية الدينية والأخلاقية), but the English title omits the qualifiers 'religious' and 'moral', reducing the meaning to just 'Tarbiyah and Akhlaq' which are general terms for upbringing and character without the religious/moral dimension.",
-        "severity": "medium"
-      },
-      {
-        "type": "meaning_change",
+        "model": "glm-5.2",
         "field": "text_simplified",
-        "arabic": "يقوي علاقتهم بالله",
-        "english": "deepens their relationship with Allah",
-        "why": "The Arabic verb 'يقوي' means 'strengthens', while 'deepens' is a different nuance. Although similar, it is not an exact rendering and slightly alters the meaning.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "في نفوس أبنائهم",
-        "english": "in their children’s hearts",
-        "why": "The Arabic 'نفوس' means 'souls' or 'inner selves', not specifically 'hearts'. The English uses 'hearts' which is a common but not exact equivalent, slightly shifting the meaning.",
-        "severity": "low"
+        "type": "meaning",
+        "why": "The Arabic says 'strengthens' (يقوي) their relationship with Allah, while the English renders it as 'deepens', a subtle shift in meaning."
       }
     ],
-    "approved_by": null
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "a4d42a711b379a81fba810ad0e59a20f0dd3ceb690b90e2ebf60c1249406c16e",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [
+        {
+          "model": "glm-5.2",
+          "field": "text_simplified",
+          "type": "meaning",
+          "why": "The Arabic says 'strengthens' (يقوي) their relationship with Allah, while the English renders it as 'deepens', a subtle shift in meaning."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

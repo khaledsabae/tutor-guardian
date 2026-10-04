@@ -30,27 +30,26 @@
   "translated_from": "isl-6e3ef777",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "title",
-        "arabic": "أهمية تربية الطفل على الصدق والأمانة",
-        "english": "The Importance of Tarbiyah in Truthfulness and Amanah for the Child",
-        "why": "The Arabic means 'the importance of raising the child upon truthfulness and trustworthiness'; the English rephrases it as 'Tarbiyah in Truthfulness and Amanah for the Child', shifting the focus from the act of raising the child to the concept of tarbiyah in those qualities, and adding 'for the Child' awkwardly.",
-        "severity": "medium"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "كما ينبغي لهم الدعاء بالحفظ والتوفيق لأبنائهم من الفتن.",
-        "english": "They should also make du'a for the protection and success of their children from fitan.",
-        "why": "The Arabic asks for du'a for protection and success for their children, with 'from fitan' primarily applying to protection; the English attaches 'from fitan' to both protection and success, implying success from fitan, which is not the intended meaning.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "3cf19439e72266140139b32c62f2fc4b14697dcfd26afdfa3fc17b9973bcb167",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

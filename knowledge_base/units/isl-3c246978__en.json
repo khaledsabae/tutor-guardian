@@ -2,7 +2,7 @@
   "id": "isl-3c246978__en",
   "domain": "islamic_parenting",
   "source_file": "Alukah_Rights_of_Children.pdf",
-  "title": "The Importance of Tarbiyah in Protecting Our Children",
+  "title": "The Importance of Religious Upbringing in Protecting Our Children",
   "language": "en",
   "age_group": "unspecified",
   "behavior_type": "تربية دينية وأخلاقية",
@@ -29,27 +29,26 @@
   "translated_from": "isl-3c246978",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "title",
-        "arabic": "أهمية التربية الدينية في حماية الأبناء",
-        "english": "The Importance of Tarbiyah in Protecting Our Children",
-        "why": "Omits 'الدينية' (religious), so the title no longer specifies religious upbringing; also adds 'Our' not present in Arabic, changing the neutral 'children' to a possessive first-person plural.",
-        "severity": "medium"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "تربية الأبناء",
-        "english": "raising our children",
-        "why": "Adds 'our' not present in Arabic; Arabic is neutral 'children'.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "a7cd0be45e3773e5e617a41a360c16eddbe2439a7c664ece33ab4373b8e731ea",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

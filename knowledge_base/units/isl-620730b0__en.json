@@ -30,19 +30,26 @@
   "translated_from": "isl-620730b0",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "title and text_simplified (last sentence)",
-        "arabic": "لطف / اللطف",
-        "english": "Rifq / rifq",
-        "why": "The Arabic uses لطف (lutf) in the title and in the final sentence, but the English consistently renders it as 'rifq', which is a different Arabic word (رفق). While both mean gentleness/kindness, the translation substitutes one term for another, altering the specific wording of the source.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "5ebbf57531abc54fe1d35a1ea8053b3ddd563d59ab9a93d9dd8c3136e97c3ea8",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

@@ -30,19 +30,26 @@
   "translated_from": "isl-2935b46f",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "title",
-        "arabic": "أهمية التربية الدينية للأبناء",
-        "english": "The Importance of Tarbiyah upon the Din for Children",
-        "why": "The Arabic title means 'The Importance of Religious Upbringing/Education for Children' (التربية الدينية is a noun-adjective phrase). The English rendering changes this to 'Tarbiyah upon the Din', which is a different construction implying raising children upon the religion rather than religious education, and introduces transliterated terms not present in the source.",
-        "severity": "medium"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "cb341e21cf4cc606cae253cb043b74ac93ce69a3a4ec8cd3208e4af0fceb0afa",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

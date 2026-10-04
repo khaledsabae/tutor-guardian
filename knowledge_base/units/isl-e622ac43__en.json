@@ -30,27 +30,26 @@
   "translated_from": "isl-e622ac43",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "structure",
-        "field": "text_simplified",
-        "arabic": "سلوك ابنه الذي لا يشكر ولا يقدر ما يقدم له",
-        "english": "his son’s conduct, who neither thanks nor values what is given to him",
-        "why": "The relative pronoun 'who' is placed immediately after 'conduct', making it grammatically refer to conduct rather than the son. In Arabic, 'الذي' clearly refers to 'ابنه' (son).",
-        "severity": "medium"
-      },
-      {
-        "type": "term_error",
-        "field": "text_simplified",
-        "arabic": "الشكر والرضا",
-        "english": "gratitude and contentment (shukr and *rida*)",
-        "why": "The transliteration 'rida' is non-standard and the asterisks are stray formatting. The Arabic did not include transliterations; if included, it should be 'riḍā' or 'rida' without asterisks.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "7f8d3ca7834de4086cbf47b5dd9fff014ce8e3f740e3255a573bd4988fa652bc",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

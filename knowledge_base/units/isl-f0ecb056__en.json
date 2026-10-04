@@ -2,7 +2,7 @@
   "id": "isl-f0ecb056__en",
   "domain": "islamic_parenting",
   "source_file": "Alukah_Rights_of_Children.pdf",
-  "title": "The Importance of Tarbiyah al-Diniyyah for Children",
+  "title": "The Importance of Religious Upbringing for Children",
   "language": "en",
   "age_group": "4-6",
   "behavior_type": "تربية دينية",
@@ -30,19 +30,40 @@
   "translated_from": "isl-f0ecb056",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
+    "review_verdict": "low_only",
     "review_defects": [
       {
-        "type": "meaning_change",
+        "model": "deepseek-v4-pro",
         "field": "text_simplified",
-        "arabic": "القيم الدينية والأخلاقية",
-        "english": "religious values and akhlaq",
-        "why": "The Arabic adjective 'الأخلاقية' modifies 'القيم' (values), meaning 'religious and moral values' as a single concept. The English renders it as two separate nouns, 'religious values' and 'akhlaq', changing the meaning.",
-        "severity": "medium"
+        "type": "addition",
+        "why": "The English adds the honorific ﷺ not present in the Arabic, a minor addition."
       }
     ],
-    "approved_by": null
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": "mistral-large-3:675b",
+      "rounds": 2,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "43e27b02525edb268f020ea3a37c8a75247144b459cd6c6e9be7113ed084747f",
+      "reviewed_at": "2026-10-04T11:26:06+00:00",
+      "residual_low": [
+        {
+          "model": "deepseek-v4-pro",
+          "field": "text_simplified",
+          "type": "addition",
+          "why": "The English adds the honorific ﷺ not present in the Arabic, a minor addition."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:26:06+00:00"
   }
 }

@@ -2,7 +2,7 @@
   "id": "isl-848acb1e__en",
   "domain": "islamic_parenting",
   "source_file": "Alukah_Rights_of_Children.pdf",
-  "title": "The Importance of Tarbiyah and Akhlaq for Children",
+  "title": "The Importance of Religious and Moral Upbringing for Children",
   "language": "en",
   "age_group": "unspecified",
   "behavior_type": "تربية دينية وأخلاقية",
@@ -30,35 +30,40 @@
   "translated_from": "isl-848acb1e",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
+    "review_verdict": "low_only",
     "review_defects": [
       {
-        "type": "meaning_change",
-        "field": "title",
-        "arabic": "أهمية التربية الدينية والأخلاقية للأطفال",
-        "english": "The Importance of Tarbiyah and Akhlaq for Children",
-        "why": "The Arabic specifies 'religious and moral education' (التربية الدينية والأخلاقية), but the English title reduces this to generic 'Tarbiyah and Akhlaq', omitting the qualifiers 'religious' and 'moral' and thus changing the meaning.",
-        "severity": "medium"
-      },
-      {
-        "type": "register",
+        "model": "glm-5.2",
         "field": "text_simplified",
-        "arabic": "التربية الإيمانية",
-        "english": "imani tarbiyah",
-        "why": "The Arabic uses plain language 'faith-based upbringing', but the English uses transliterated Islamic jargon 'imani tarbiyah', which is less direct and may be unclear to general readers.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "نفوس الأطفال",
-        "english": "hearts of children",
-        "why": "'نفوس' means souls/self, not specifically hearts; 'hearts' is a slight semantic shift.",
-        "severity": "low"
+        "type": "leakage",
+        "why": "\"imani\" is an Arabic adjective (إيمانية) transliterated into English rather than translated; it is not among the allowed glossary terms."
       }
     ],
-    "approved_by": null
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "2058bbead9692090d4ebfe73f097cc22efa0d19a00a6fa3df4e4940b5f15d652",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [
+        {
+          "model": "glm-5.2",
+          "field": "text_simplified",
+          "type": "leakage",
+          "why": "\"imani\" is an Arabic adjective (إيمانية) transliterated into English rather than translated; it is not among the allowed glossary terms."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

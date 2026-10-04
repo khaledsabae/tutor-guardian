@@ -29,27 +29,26 @@
   "translated_from": "med-cd46475d",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "title",
-        "arabic": "لعلاج إدمان ألعاب الأطفال",
-        "english": "for Children’s Gaming Addiction",
-        "why": "The Arabic literally means 'for treating addiction to children's games' (i.e., games intended for children), while the English implies children are the ones addicted to gaming. This shifts the subject of the addiction.",
-        "severity": "medium"
-      },
-      {
-        "type": "meaning_change",
-        "field": "title",
-        "arabic": "للعلاجات الجديدة",
-        "english": "of New Treatments",
-        "why": "Arabic 'for new treatments' indicates the trials are conducted for the purpose of developing new treatments, whereas English 'of new treatments' suggests the trials are testing those treatments. The relationship is altered.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "a6dc6dfdfb1fac97b4e4d9b9d463d006908fb984b945331bc6fd5d15d1a3d029",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

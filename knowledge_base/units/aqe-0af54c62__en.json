@@ -30,35 +30,40 @@
   "translated_from": "aqe-0af54c62",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
+    "review_verdict": "low_only",
     "review_defects": [
       {
-        "type": "meaning_change",
+        "model": "deepseek-v4-pro",
         "field": "text_simplified",
-        "arabic": "«وَمَا خَلَقْتُ الْجِنَّ وَالْإِنسَ إِلَّا لِيَعْبُدُونِ»",
-        "english": "«وَمَا خَلَقْتُ الْجِنَّ وَالْإِنسَ إِلَّا لِيَعْبُدُونِ»",
-        "why": "The Qur'anic verse is left untranslated in the English text, so non-Arabic readers receive no meaning of this central ayah.",
-        "severity": "high"
-      },
-      {
-        "type": "structure",
-        "field": "text_simplified",
-        "arabic": "قال تعالى",
-        "english": "Allah says",
-        "why": "The honorific 'تعالى' (Exalted) is dropped in the English rendering.",
-        "severity": "medium"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "صالحة صغيرة",
-        "english": "small good deeds",
-        "why": "The Arabic singular 'صالحة صغيرة' (a small righteous deed) is rendered as plural 'small good deeds', changing the number and weakening 'righteous' to 'good'.",
-        "severity": "low"
+        "type": "quran",
+        "why": "The Quranic ayah is enclosed in «» instead of the required ﴿﴾ in the English rendering."
       }
     ],
-    "approved_by": null
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "97ea9d8ba480b32bae7b46776404cf3d27a9d7f0d595f570ae46cdc2db86b3c6",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [
+        {
+          "model": "deepseek-v4-pro",
+          "field": "text_simplified",
+          "type": "quran",
+          "why": "The Quranic ayah is enclosed in «» instead of the required ﴿﴾ in the English rendering."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

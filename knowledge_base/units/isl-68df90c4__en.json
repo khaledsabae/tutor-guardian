@@ -30,19 +30,26 @@
   "translated_from": "isl-68df90c4",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "يروي الصحابي أنس بن مالك رضي الله عنه موقفًا مع امرأة وأطفالها",
-        "english": "It narrates an incident involving the Companion Anas ibn Malik, may Allah be pleased with him, with a woman and her children.",
-        "why": "The Arabic says Anas ibn Malik narrates/reports the incident; the English changes the subject to 'It' (the text) and says the incident involves Anas, implying he was a participant rather than the narrator.",
-        "severity": "medium"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "6349690fe92ee4b458a2432515f517db6605e4f0a82eab3ea7c21545a970c0bc",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

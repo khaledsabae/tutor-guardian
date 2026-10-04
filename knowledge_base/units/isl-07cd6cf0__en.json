@@ -30,27 +30,26 @@
   "translated_from": "isl-07cd6cf0",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "title",
-        "arabic": "مسؤولية الآباء في تربية الأبناء",
-        "english": "Responsibility of Parents in the Tarbiyah of Children",
-        "why": "The Arabic 'الآباء' specifically means 'fathers', not 'parents' (which would be 'الوالدين' or 'الأبوين'). The English broadens the scope to include mothers, which the Arabic title does not.",
-        "severity": "medium"
-      },
-      {
-        "type": "register",
-        "field": "text_simplified",
-        "arabic": "هذا النص يذكر أن",
-        "english": "This text reminds us that",
-        "why": "The Arabic 'يذكر' is a neutral 'mentions', while 'reminds us' adds a direct, preachy tone and an implied audience that is not in the source.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "2661e616d3cb79f7f7573c492e8f5f2ca483de434b7edb4ceb7680edeb96aa53",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

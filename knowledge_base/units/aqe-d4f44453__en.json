@@ -30,35 +30,64 @@
   "translated_from": "aqe-d4f44453",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
+    "review_verdict": "low_only",
     "review_defects": [
       {
-        "type": "term_error",
-        "field": "title",
-        "arabic": "أسماء الله الحسنى",
-        "english": "Al-Asma' al-Husna",
-        "why": "The transliteration omits the word 'Allah' from the Arabic phrase, rendering it as 'Al-Asma' al-Husna' instead of 'Asma' Allah al-Husna'. The translation in parentheses includes 'of Allah', but the transliteration itself is incomplete.",
-        "severity": "medium"
+        "model": "deepseek-v4-pro",
+        "field": "text_simplified",
+        "type": "quran",
+        "why": "The ayah is placed inside guillemets instead of the required ﴿﴾ delimiters."
       },
       {
-        "type": "structure",
+        "model": "glm-5.2",
         "field": "text_simplified",
-        "arabic": "قال تعالى",
-        "english": "Allah says",
-        "why": "The honorific 'تعالى' (Exalted is He) is dropped in the English rendering. The Arabic explicitly says 'قال تعالى', but the English only says 'Allah says' without the honorific.",
-        "severity": "medium"
+        "type": "quran",
+        "why": "The ayah is kept in Arabic but uses «» instead of the required ﴿﴾ brackets."
       },
       {
-        "type": "meaning_change",
+        "model": "glm-5.2",
         "field": "text_simplified",
-        "arabic": "ابدأ بالأسماء المألوفة في القرآن",
-        "english": "start with the names most familiar in the Qur'an",
-        "why": "The Arabic 'المألوفة' means 'familiar' or 'the familiar ones', but the English adds the superlative 'most familiar', which is not present in the source.",
-        "severity": "low"
+        "type": "addition",
+        "why": "English adds parenthetical glosses for the two names of Allah that are not present in the Arabic; helpful but an addition."
       }
     ],
-    "approved_by": null
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "a641bbb75515ae29d1e0de6ac455bad3e4cb287d1a209c0306665853b3bb9084",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [
+        {
+          "model": "deepseek-v4-pro",
+          "field": "text_simplified",
+          "type": "quran",
+          "why": "The ayah is placed inside guillemets instead of the required ﴿﴾ delimiters."
+        },
+        {
+          "model": "glm-5.2",
+          "field": "text_simplified",
+          "type": "quran",
+          "why": "The ayah is kept in Arabic but uses «» instead of the required ﴿﴾ brackets."
+        },
+        {
+          "model": "glm-5.2",
+          "field": "text_simplified",
+          "type": "addition",
+          "why": "English adds parenthetical glosses for the two names of Allah that are not present in the Arabic; helpful but an addition."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

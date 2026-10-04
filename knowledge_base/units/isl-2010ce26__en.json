@@ -11,7 +11,7 @@
   "reference_type": "كتاب_تربوي",
   "reference_info": "حقوق الأولاد على الوالدين - عماد عبدالعظيم (الألوكة)",
   "text_original": "اقَ ؾْ عُ لْ ا دُ قَ لْ اوَ ِ ِ ِ ِ ِ ِ ِ ِ : ـُ بْ ٓا لُ قؼُ يَ وَ ,لـؾْ ؿعْ َتس عصْ أَ : دُ بْ عَ لْ ا لُ قؼُ يَ وَ ,لـؼَ ؾِ طَ تُ نْ أَ ام .)1(»لـطُ دَ تَ ـْ م .ل ِ اقَ ع ِ لْاوَ ؾِ هْ َْٕ ا كؾَ طَ ة ِ ؼَ ػَ َـلا بِ قجُ وُ بابَ .ؽلذ في ةجح ثيدحلا اذهو ,عاؿجنب ةبجاو لاقعلاو ؾهٕا كؾط ةؼػـلا« ـم كؾط فتؼػك نأ لدي ةقدصلا ٓإ ركذي ؿلو ,»لقعت ـؿب أدباو« :ڠ فلققو اوءدبي نأ للها ؿهرمأ اؿكإو ,ةقدصلا في فل بقسحم دلوو ؾهأ ـم لقعي فقؾط ؿففرعف ,افقف ؿفل رجأ ٓ ؾهٕا كؾط ةؼػـلا نأ اقـظي نأ ةقشخ ؿفقؾهلب .)2(»ؿهقتقؼي نأ دعب ٓإ ؿهرقغ كلإ اهقجرخي ٓ كتح ةقدص ؿفل انهأ ملاسلا فقؾط ءرؿلا سػك ؼح نٕ :ؽلذ لاق اؿكإ ,»لقعت ـؿب أدباو« :ڠ فلققو« رطضم قه ام فرصل فجو لاف ؽلذ حص اذنف ,للها دعب دحأ ؾك ؼح ـم ؿظطأ فل اؿكإو ,فؾهأو فسػك فلاتنب هرقغ ءاقحإ دحٕ سقل ناك ذإ ,هرقغ كلإ فقلإ ,ؿفقؾط ةؼػـلا فقؾط ضرف ذإ ,هدلوو فؾهأو فسػك كلاهإ رقغب هرقغ ءاقحإ دحأ ؾؽب كلوأ ضرػلا نأ ؽش ٓو ,فقؾط اضً رف ؿهرقغ كؾط ةؼػـلا تسقلو .)5355( يراخبمًا فمضرمظأ (1) .)531/7( »يراخبمًا حمٞحص حشر« لامٓمس ـمسا فمٜمق هامٙمط (2) ـــــــــــــــتــــــــ نيدلاىلا ىلع دلاولأا قىقح ـــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ :فقؾط ضرف اراغص اقماد ام دلقلا كؾط ةؼػـلا نأ :فقفو .فقؾط عقطتلا راثيإ ـم .)1(»ةمزٓ ةبجاو ءرؿؾل مداخلاو دبعلا ةؼػك ؽلذكو »؟لـطدت ـم كلإ«",
-  "text_simplified": "This text discusses the importance of the intellect and sound thinking, noting that the intellect is the foundation of taklif (moral and legal responsibility) and accountability. It also clarifies that righteous deeds and charity are only accepted when they stem from a conscious intellect. It emphasizes the necessity of nurturing children in sound thinking from a young age.",
+  "text_simplified": "This text discusses the importance of the intellect and sound thinking, noting that the intellect is the foundation of taklif (moral and legal responsibility) and accountability. It also clarifies that righteous deeds and charity are accepted when they stem from a conscious intellect. It emphasizes the necessity of nurturing children in sound thinking from a young age.",
   "labels": [
     "تربية",
     "عقل",
@@ -30,27 +30,52 @@
   "translated_from": "isl-2010ce26",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
+    "review_verdict": "low_only",
     "review_defects": [
       {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "الأعمال الصالحة والصدقة تكون مقبولة إذا صدرت عن عقل واعٍ",
-        "english": "righteous deeds and charity are only accepted when they stem from a conscious intellect",
-        "why": "The English adds 'only', implying exclusivity, whereas the Arabic simply states they are accepted if from a conscious intellect, without restricting acceptance to that condition alone.",
-        "severity": "medium"
+        "model": "deepseek-v4-pro",
+        "field": "title",
+        "type": "addition",
+        "why": "The English title adds the qualifier \"Sound\", which is not present in the Arabic title."
       },
       {
-        "type": "term_error",
-        "field": "title vs text_simplified",
-        "arabic": "تربية",
-        "english": "Tarbiyah (title) / nurturing (text)",
-        "why": "The same Arabic term 'تربية' is transliterated as 'Tarbiyah' in the title but translated as 'nurturing' in the body, creating inconsistency within the document.",
-        "severity": "low"
+        "model": "glm-5.2",
+        "field": "title",
+        "type": "addition",
+        "why": "The Arabic title says simply «التفكير» (thinking), but the English adds \"Sound\" which is not present in the title (though it appears in the body)."
       }
     ],
-    "approved_by": null
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "2a4c06a07103586b498e1978a0991f26632270a9dc6be2c191f1372feb1569e4",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [
+        {
+          "model": "deepseek-v4-pro",
+          "field": "title",
+          "type": "addition",
+          "why": "The English title adds the qualifier \"Sound\", which is not present in the Arabic title."
+        },
+        {
+          "model": "glm-5.2",
+          "field": "title",
+          "type": "addition",
+          "why": "The Arabic title says simply «التفكير» (thinking), but the English adds \"Sound\" which is not present in the title (though it appears in the body)."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

@@ -30,27 +30,40 @@
   "translated_from": "isl-9238038f",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
+    "review_verdict": "low_only",
     "review_defects": [
       {
-        "type": "meaning_change",
+        "model": "glm-5.2",
         "field": "text_simplified",
-        "arabic": "في نفوسهم",
-        "english": "in their hearts",
-        "why": "The Arabic 'نفوسهم' means 'their souls/self', not 'hearts' (قلوب). The translation changes the locus from souls to hearts.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "قدوة حسنة",
-        "english": "righteous example",
-        "why": "The Arabic 'حسنة' means 'good' or 'beautiful', not specifically 'righteous'. 'Righteous' adds a moral/religious connotation not present in the original.",
-        "severity": "low"
+        "type": "leakage",
+        "why": "'Sawm' is not among the allowed transliterated Islamic terms in the app's glossary."
       }
     ],
-    "approved_by": null
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "f1c59c340b04702c940e78b518923c94fc365c43ef0bfb7078cb9d1393e9f382",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [
+        {
+          "model": "glm-5.2",
+          "field": "text_simplified",
+          "type": "leakage",
+          "why": "'Sawm' is not among the allowed transliterated Islamic terms in the app's glossary."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

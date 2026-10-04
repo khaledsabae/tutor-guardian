@@ -28,19 +28,40 @@
   "translated_from": "c456b140-4520-4e47-a089-26d6f4877c32",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
+    "review_verdict": "low_only",
     "review_defects": [
       {
-        "type": "meaning_change",
+        "model": "glm-5.2",
         "field": "text_simplified",
-        "arabic": "يقول «أرنب» بلدغة",
-        "english": "if he says «أرنب» (rabbit) with a lisp",
-        "why": "Arabic 'بلدغة' refers to a general speech defect or mispronunciation, not specifically a lisp. 'Lisp' narrows the meaning and may mislead because the example word 'أرنب' does not contain sibilant sounds typically associated with a lisp.",
-        "severity": "low"
+        "type": "source_corruption",
+        "why": "«أيوه» is Egyptian colloquial in an otherwise MSA text; the expected word is «نعم» or «أجل»."
       }
     ],
-    "approved_by": null
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "947745d196b752e2e2edb7287ed96cd42537c922add85c783f93288db2a5278b",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [
+        {
+          "model": "glm-5.2",
+          "field": "text_simplified",
+          "type": "source_corruption",
+          "why": "«أيوه» is Egyptian colloquial in an otherwise MSA text; the expected word is «نعم» or «أجل»."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

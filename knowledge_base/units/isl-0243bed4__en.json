@@ -30,35 +30,26 @@
   "translated_from": "isl-0243bed4",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "term_error",
-        "field": "title",
-        "arabic": "تربية",
-        "english": "Tarbiyah",
-        "why": "The Arabic word 'تربية' is a common word meaning upbringing/education, not a technical Islamic term requiring transliteration. Transliterating it as 'Tarbiyah' in the title without a gloss obscures the meaning for English readers.",
-        "severity": "medium"
-      },
-      {
-        "type": "term_error",
-        "field": "text_simplified",
-        "arabic": "التربوية",
-        "english": "tarbiyah values",
-        "why": "The Arabic adjective 'التربوية' means educational/upbringing. Rendering it as 'tarbiyah values' uses the transliterated noun as an adjective, which is unidiomatic and unclear; it should be 'educational values' or 'upbringing values'.",
-        "severity": "medium"
-      },
-      {
-        "type": "term_error",
-        "field": "title and text_simplified",
-        "arabic": "الصلاة",
-        "english": "Salah / salah",
-        "why": "Inconsistent capitalization of the transliterated term 'salah' between the title ('Salah') and the body ('salah').",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "7bf0ce7ff78a70badcc7b703481dce1648d19d351578bab6e6500a932b506beb",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

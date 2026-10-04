@@ -30,27 +30,26 @@
   "translated_from": "isl-3afa9af8",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "تعزيز",
-        "english": "nurture",
-        "why": "The Arabic 'تعزيز' means 'strengthen' or 'promote', while 'nurture' implies fostering growth or care, which softens the intended meaning of actively reinforcing the spirit of competition.",
-        "severity": "low"
-      },
-      {
-        "type": "register",
-        "field": "text_simplified",
-        "arabic": "ينبغي",
-        "english": "It is also important to",
-        "why": "The Arabic 'ينبغي' is a direct prescriptive 'should', but the English 'It is also important to' shifts to a descriptive statement of importance, making the tone less direct and more clinical.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "a99e5e363db39c9257f0fde34b306c8ecb26669ff9b32395078792e59a5bc1ff",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

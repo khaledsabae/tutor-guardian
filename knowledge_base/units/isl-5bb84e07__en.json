@@ -30,27 +30,26 @@
   "translated_from": "isl-5bb84e07",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "التضحية بالكبش",
-        "english": "to slaughter the sacrificial ram",
-        "why": "The Arabic 'التضحية' denotes the act of sacrifice as a religious ritual, not merely the physical slaughter. The English reduces it to 'slaughter', omitting the sacrificial/ritual dimension.",
-        "severity": "medium"
-      },
-      {
-        "type": "meaning_change",
-        "field": "title",
-        "arabic": "في العيد",
-        "english": "for Eid",
-        "why": "The Arabic 'في العيد' means 'on Eid' or 'during Eid', indicating the time. The English 'for Eid' suggests purpose or occasion, which is a slight shift.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "883a673e27c9a99d2f886c0eb2309f6a3f9b4cb1ef07327a8784e33ced6e993e",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

@@ -2,7 +2,7 @@
   "id": "isl-2a3f0ed3__en",
   "domain": "islamic_parenting",
   "source_file": "Alukah_Rights_of_Children.pdf",
-  "title": "The Importance of Tarbiyah for Children",
+  "title": "The Importance of Religious Upbringing for Children",
   "language": "en",
   "age_group": "4-6",
   "behavior_type": "تربية دينية وأخلاقية",
@@ -30,59 +30,26 @@
   "translated_from": "isl-2a3f0ed3",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "title",
-        "arabic": "أهمية التربية الدينية للأطفال",
-        "english": "The Importance of Tarbiyah for Children",
-        "why": "Omits 'الدينية' (religious), changing the scope from religious upbringing to general tarbiyah.",
-        "severity": "medium"
-      },
-      {
-        "type": "religious_error",
-        "field": "text_simplified",
-        "arabic": "رسوله",
-        "english": "His Messenger ﷺ",
-        "why": "Arabic does not include the honorific ﷺ; adding it is an honorific not present in the source.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "الاهتمام بتربية الأطفال على الصلاة والطاعة",
-        "english": "Giving attention to tarbiyah in prayer and obedience",
-        "why": "Omits 'children' (الأطفال) and changes 'على' (upon) to 'in', altering the meaning from raising children to pray and obey to attention to tarbiyah in prayer/obedience.",
-        "severity": "medium"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "استقامتهم النفسية والسلوكية",
-        "english": "psychological and behavioral steadfastness",
-        "why": "'استقامة' means uprightness/integrity, not steadfastness (ثبات).",
-        "severity": "medium"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "القيم الدينية والأخلاقية",
-        "english": "religious values and akhlaq (moral character)",
-        "why": "Arabic uses adjective 'الأخلاقية' modifying values (moral values); English turns it into noun 'akhlaq (moral character)', which is not the same.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "في نفوسهم",
-        "english": "in their hearts",
-        "why": "'نفوس' means souls/selves, not hearts (قلوب).",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "21216ec52501c082383f02b9d89135418d908de47fe1fd2896ed02828a70ea30",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

@@ -30,51 +30,26 @@
   "translated_from": "isl-65ecd339",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "ينفصلون عن سلطة الأم",
-        "english": "are separated from the authority of their mother",
-        "why": "The Arabic uses the active verb ينفصلون (they separate themselves), but the English passive 'are separated' suggests an external agent, altering the meaning.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "دون إهمال أو فساد",
-        "english": "without neglect or corruption",
-        "why": "In a parenting context, فساد here means spoiling or moral corruption of the child, not the general English 'corruption' which is ambiguous and may be misunderstood as bribery or institutional corruption.",
-        "severity": "medium"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "السب",
-        "english": "cursing",
-        "why": "Arabic السب means insulting or reviling; 'cursing' (لعن) is narrower and may not cover all forms of verbal abuse intended.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "سلامته النفسية",
-        "english": "psychological well-being",
-        "why": "Arabic سلامة means safety/soundness, not well-being; the translation shifts from protection from harm to general wellness.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "المربي البديل",
-        "english": "substitute guardian",
-        "why": "المربي means educator/upbringer, not guardian (وصي); 'guardian' adds a legal custodial sense not present in the Arabic.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "67a3b29fed3ac0976c9dbb312636d0145375de18cab889b9073180a1aba5769e",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

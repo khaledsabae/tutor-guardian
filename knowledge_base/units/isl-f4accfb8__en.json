@@ -30,27 +30,26 @@
   "translated_from": "isl-f4accfb8",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "title",
-        "arabic": "أساسيات التربية الأخلاقية للأطفال",
-        "english": "Foundations of Akhlaq Tarbiyah for Children",
-        "why": "The Arabic title uses 'التربية الأخلاقية' (moral education/upbringing), not 'Akhlaq Tarbiyah'. The English introduces transliterated Islamic terms and reverses their order, altering the title's meaning and register.",
-        "severity": "medium"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "القدوة الحسنة",
-        "english": "the righteous example",
-        "why": "'حسنة' means good, not necessarily righteous; 'righteous' adds a religious connotation not explicit in the Arabic.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "9e4c68252778fc5b276a7cd1830c52b38cd5fe32cfaf05d9c7e81954910c9b15",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

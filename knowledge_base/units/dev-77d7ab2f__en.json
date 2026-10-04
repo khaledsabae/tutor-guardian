@@ -29,27 +29,40 @@
   "translated_from": "dev-77d7ab2f",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
+    "review_verdict": "low_only",
     "review_defects": [
       {
-        "type": "meaning_change",
+        "model": "glm-5.2",
         "field": "text_simplified",
-        "arabic": "العديد من الأمور تحدث",
-        "english": "Many changes occur",
-        "why": "Arabic says 'many things/matters happen', not specifically 'changes'; 'changes' narrows the meaning.",
-        "severity": "medium"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "دماغ",
-        "english": "mind",
-        "why": "Arabic 'دماغ' means brain (the physical organ), while English 'mind' is more abstract and not equivalent.",
-        "severity": "medium"
+        "type": "meaning",
+        "why": "«أمور» means 'matters/things' not 'changes', and «دماغ» means 'brain' not 'mind'; both are minor semantic shifts."
       }
     ],
-    "approved_by": null
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "642a1ec2d6cb04f0476cdf6161d5d8ada1dbf1a5445e175c3152cc97de3ddd84",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [
+        {
+          "model": "glm-5.2",
+          "field": "text_simplified",
+          "type": "meaning",
+          "why": "«أمور» means 'matters/things' not 'changes', and «دماغ» means 'brain' not 'mind'; both are minor semantic shifts."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

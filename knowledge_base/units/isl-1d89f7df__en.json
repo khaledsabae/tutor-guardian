@@ -29,19 +29,52 @@
   "translated_from": "isl-1d89f7df",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
+    "review_verdict": "low_only",
     "review_defects": [
       {
-        "type": "meaning_change",
+        "model": "deepseek-v4-pro",
         "field": "title",
-        "arabic": "حقوق الأطفال على الآباء",
-        "english": "The Rights of Children upon Their Parents",
-        "why": "The Arabic 'الآباء' specifically means 'fathers', not 'parents' (which would be 'الوالدين' or 'الأبوين'). The English broadens the scope to include mothers, altering the intended meaning.",
-        "severity": "medium"
+        "type": "meaning",
+        "why": "Arabic specifies fathers (الآباء), while English broadens to parents."
+      },
+      {
+        "model": "deepseek-v4-pro",
+        "field": "text_simplified",
+        "type": "meaning",
+        "why": "Same broadening from fathers to parents in the body text."
       }
     ],
-    "approved_by": null
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "d0021a336afdbf8a8a57e5210e2928345cf8d3249c2c64338ac2b8affcf513fc",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [
+        {
+          "model": "deepseek-v4-pro",
+          "field": "title",
+          "type": "meaning",
+          "why": "Arabic specifies fathers (الآباء), while English broadens to parents."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "field": "text_simplified",
+          "type": "meaning",
+          "why": "Same broadening from fathers to parents in the body text."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

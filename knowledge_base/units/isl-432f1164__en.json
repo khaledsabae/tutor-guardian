@@ -30,27 +30,26 @@
   "translated_from": "isl-432f1164",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "تحث على حسن معاملة الأطفال وعدم ظلمهم",
-        "english": "urge kindness toward children and warn against wronging them",
-        "why": "The Arabic uses one verb 'تحث على' governing both 'good treatment' and 'not wronging'; the English splits it into 'urge kindness' and 'warn against wronging', adding a warning nuance not present in the Arabic.",
-        "severity": "low"
-      },
-      {
-        "type": "term_error",
-        "field": "text_simplified",
-        "arabic": "القيم الدينية والأخلاقية",
-        "english": "religious values and *akhlaq* (moral character)",
-        "why": "The Arabic uses the adjective 'الأخلاقية' (moral) as part of 'moral values'; the English replaces it with the transliterated noun 'akhlaq', introducing an Islamic term not used in the source and changing the grammatical structure.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "b8e7643bab9c70f63961459d9817b4dc2b0389a7e99a631c34d39fbe4db7dde5",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

@@ -30,27 +30,40 @@
   "translated_from": "isl-89eaf8dd",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
+    "review_verdict": "low_only",
     "review_defects": [
       {
-        "type": "meaning_change",
+        "model": "glm-5.2",
         "field": "text_simplified",
-        "arabic": "الإحسان إليهما",
-        "english": "ihsan (excellence) toward them",
-        "why": "In the context of parents, ihsan means treating them with utmost goodness, kindness, and dutifulness, not merely 'excellence'. The gloss 'excellence' is too abstract and loses the relational duty.",
-        "severity": "medium"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "بالصلاح والبر",
-        "english": "for righteousness and birr (piety)",
-        "why": "Birr in this context refers to righteousness/dutifulness, especially toward parents, not specifically 'piety' (religious devotion). The gloss narrows the meaning and may mislead.",
-        "severity": "medium"
+        "type": "meaning",
+        "why": "In the context of treatment of parents, ihsan means kindness or good treatment, not 'excellence', which could mislead parents about what is expected."
       }
     ],
-    "approved_by": null
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "719e7c134bf437446544cc941b01e683cf6c2c524d6f414188ab3de66489246c",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [
+        {
+          "model": "glm-5.2",
+          "field": "text_simplified",
+          "type": "meaning",
+          "why": "In the context of treatment of parents, ihsan means kindness or good treatment, not 'excellence', which could mislead parents about what is expected."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

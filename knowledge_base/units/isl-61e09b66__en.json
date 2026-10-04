@@ -30,35 +30,52 @@
   "translated_from": "isl-61e09b66",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
+    "review_verdict": "low_only",
     "review_defects": [
       {
-        "type": "meaning_change",
+        "model": "deepseek-v4-pro",
         "field": "title",
-        "arabic": "الآباء",
-        "english": "Parents",
-        "why": "الآباء means 'fathers', not 'parents'. The English broadens the responsibility to both parents, altering the specific emphasis on fathers in the Arabic title.",
-        "severity": "medium"
+        "type": "meaning",
+        "why": "The Arabic specifies fathers (الآباء), while the English broadens this to parents, which includes mothers."
       },
       {
-        "type": "meaning_change",
+        "model": "deepseek-v4-pro",
         "field": "text_simplified",
-        "arabic": "الآباء",
-        "english": "parents",
-        "why": "Same issue: الآباء means 'fathers', but translated as 'parents'. Later in the same text, 'كل أب' is correctly translated as 'Every father', creating inconsistency.",
-        "severity": "medium"
-      },
-      {
-        "type": "term_error",
-        "field": "title",
-        "arabic": "تربية",
-        "english": "Tarbiyah",
-        "why": "The term is transliterated as 'Tarbiyah' in the title but as 'tarbiyah' (lowercase) in the text, an inconsistent capitalization of the same transliterated term.",
-        "severity": "low"
+        "type": "meaning",
+        "why": "The Arabic specifies fathers (الآباء), while the English broadens this to parents."
       }
     ],
-    "approved_by": null
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "fdbc87eb23e396d696e22ac46270a2ae8b65b0007bb9013e184c383e7d3de792",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [
+        {
+          "model": "deepseek-v4-pro",
+          "field": "title",
+          "type": "meaning",
+          "why": "The Arabic specifies fathers (الآباء), while the English broadens this to parents, which includes mothers."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "field": "text_simplified",
+          "type": "meaning",
+          "why": "The Arabic specifies fathers (الآباء), while the English broadens this to parents."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

@@ -30,27 +30,26 @@
   "translated_from": "isl-22169daa",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "المربي",
-        "english": "A murabbi (one who provides tarbiyah)",
-        "why": "The English adds a parenthetical definition not present in the Arabic; the Arabic simply says 'the educator/mentor' without gloss, so the English says something the Arabic does not.",
-        "severity": "low"
-      },
-      {
-        "type": "register",
-        "field": "text_simplified",
-        "arabic": "يجب على المربي أن يكون قدوة حسنة لأبنائه",
-        "english": "A murabbi (one who provides tarbiyah) must be a good role model for their children",
-        "why": "The English is stiff and clinical with the transliterated term and parenthetical, whereas the Arabic is direct and warm.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "9d3dd3c48d0b335a76317e54b0ad7e82def424f8ae8e2c81dbeee2dc11fed818",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

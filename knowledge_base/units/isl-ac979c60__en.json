@@ -26,27 +26,52 @@
   "translated_from": "isl-ac979c60",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
+    "review_verdict": "low_only",
     "review_defects": [
       {
-        "type": "meaning_change",
+        "model": "deepseek-v4-pro",
         "field": "text_simplified",
-        "arabic": "أي ينقلب الموقف يوم القيامة",
-        "english": "(omitted)",
-        "why": "The explanatory clause is omitted, losing the explicit statement that the situation is reversed on the Day of Resurrection.",
-        "severity": "medium"
+        "type": "omission",
+        "why": "The explanatory clause 'that is, the situation is reversed on the Day of Resurrection' is omitted from the English rendering."
       },
       {
-        "type": "structure",
+        "model": "deepseek-v4-pro",
         "field": "text_simplified",
-        "arabic": "قوله تعالى",
-        "english": "the words of Allah",
-        "why": "The honorific 'تعالى' (Exalted is He) is dropped.",
-        "severity": "low"
+        "type": "quran",
+        "why": "The Qur'anic ayah should be enclosed in ﴿﴾ rather than «» in the English rendering."
       }
     ],
-    "approved_by": null
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "90c2daa47cdd52f592a492dbfe0dbc170f81df52c52424b5507009142a9b53af",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [
+        {
+          "model": "deepseek-v4-pro",
+          "field": "text_simplified",
+          "type": "omission",
+          "why": "The explanatory clause 'that is, the situation is reversed on the Day of Resurrection' is omitted from the English rendering."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "field": "text_simplified",
+          "type": "quran",
+          "why": "The Qur'anic ayah should be enclosed in ﴿﴾ rather than «» in the English rendering."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

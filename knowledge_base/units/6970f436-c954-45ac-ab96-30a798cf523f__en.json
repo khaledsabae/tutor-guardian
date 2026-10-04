@@ -28,27 +28,26 @@
   "translated_from": "6970f436-c954-45ac-ab96-30a798cf523f",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "الطفل يستدعيها بالسياق لا بالجوع وحده.",
-        "english": "The child recalls them through context, not hunger alone.",
-        "why": "The Arabic means the child calls for nursing based on context, not hunger alone; 'يستدعيها' is 'summons/calls for it', not 'recalls them'. The English changes the action from the child actively asking for nursing to passively remembering cues, and shifts the pronoun/object.",
-        "severity": "medium"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "أحد المقرّبين",
-        "english": "a close relative",
-        "why": "Arabic 'المقرّبين' means close people (relatives or close friends), not specifically relatives. The English narrows the meaning to family members only.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "bd68321b97ef14c9c39be9a0c2f837bea5ef0278bb914411023e24e96c4a104b",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

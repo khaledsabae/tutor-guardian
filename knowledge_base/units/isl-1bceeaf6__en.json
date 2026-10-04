@@ -30,35 +30,40 @@
   "translated_from": "isl-1bceeaf6",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
+    "review_verdict": "low_only",
     "review_defects": [
       {
-        "type": "meaning_change",
+        "model": "deepseek-v4-pro",
         "field": "text_simplified",
-        "arabic": "يجب تعويد الطفل على الصلاة منذ سن السابعة",
-        "english": "The child should be trained in salah from the age of seven",
-        "why": "The Arabic 'يجب' expresses obligation (must), but English 'should' softens it to a recommendation, altering the religious instruction derived from the hadith.",
-        "severity": "medium"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "وليس بالهدايا المادية فقط",
-        "english": "rather than just material rewards",
-        "why": "Arabic 'الهدايا المادية' means material gifts, not rewards; the English uses 'rewards' which conflates gifts with the later 'مكافآت' (rewards) and loses the distinction.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "يجب الحذر من الإكثار من المكافآت المادية",
-        "english": "Care should be taken to avoid excessive material rewards",
-        "why": "Arabic 'يجب الحذر' is a strong warning (must beware), English 'Care should be taken' is softer and less urgent.",
-        "severity": "low"
+        "type": "meaning",
+        "why": "Arabic uses يجب (must) twice, but English softens the obligation to 'should'/'care should be taken'."
       }
     ],
-    "approved_by": null
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "07343fd92a56046718db23d268f483c48d3d622f87fddee4990b04fb8ce9ad31",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [
+        {
+          "model": "deepseek-v4-pro",
+          "field": "text_simplified",
+          "type": "meaning",
+          "why": "Arabic uses يجب (must) twice, but English softens the obligation to 'should'/'care should be taken'."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

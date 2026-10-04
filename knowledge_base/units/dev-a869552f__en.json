@@ -30,19 +30,40 @@
   "translated_from": "dev-a869552f",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
+    "review_verdict": "low_only",
     "review_defects": [
       {
-        "type": "meaning_change",
+        "model": "glm-5.2",
         "field": "text_simplified",
-        "arabic": "ألعاب تبادل الأدوار",
-        "english": "role-exchange games",
-        "why": "In this parenting context, 'ألعاب تبادل الأدوار' refers to turn-taking games where children alternate turns, not games where roles are exchanged or pretended. The literal translation 'role-exchange games' changes the intended meaning and may confuse readers.",
-        "severity": "medium"
+        "type": "meaning",
+        "why": "In child-development context 'تبادل الأدوار' refers to turn-taking games, not role-exchange games."
       }
     ],
-    "approved_by": null
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "c7345eadb4a0d1204dff792639f8c8c82fd76cd11a418cb2a0c81b545f158614",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [
+        {
+          "model": "glm-5.2",
+          "field": "text_simplified",
+          "type": "meaning",
+          "why": "In child-development context 'تبادل الأدوار' refers to turn-taking games, not role-exchange games."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

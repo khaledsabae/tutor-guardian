@@ -29,27 +29,26 @@
   "translated_from": "seed-jealousy-23",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "لضمان سلامته",
-        "english": "to ensure safety",
-        "why": "The Arabic specifies 'his safety' (سلامته), but the English omits the pronoun, making it unclear whose safety is meant.",
-        "severity": "low"
-      },
-      {
-        "type": "register",
-        "field": "text_simplified",
-        "arabic": "امدحي رفقه بأخيه",
-        "english": "Praise his *rifq* (gentleness) with his brother",
-        "why": "The Arabic uses the common word رفق (gentleness) in a warm, direct parenting context; transliterating it as *rifq* adds an unnecessary technical/foreign term and disrupts the plain register.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "ed8a9f6d3e730da93dd37e57ab5fdbbe0ab91d6846b20ea69c812d57a98db80e",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

@@ -30,35 +30,40 @@
   "translated_from": "isl-94a01203",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
+    "review_verdict": "low_only",
     "review_defects": [
       {
-        "type": "term_error",
-        "field": "title",
-        "arabic": "التربية النبوية",
-        "english": "Al-Tarbiyah al-Nabawiyyah",
-        "why": "The Arabic title phrase meaning 'Prophetic Upbringing/Education' is left as transliteration rather than translated, making it opaque to English readers; inconsistent with the text where 'التربية الإسلامية' is rendered as 'Islamic tarbiyah'.",
-        "severity": "medium"
-      },
-      {
-        "type": "term_error",
+        "model": "glm-5.2",
         "field": "text_simplified",
-        "arabic": "سيرة النبي محمد صلى الله عليه وسلم",
-        "english": "seerah of the Prophet Muhammad ﷺ",
-        "why": "'Seerah' is transliterated without explanation, while 'tarbiyah' is given a parenthetical '(upbringing)'; inconsistent handling of Islamic terms.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "تربوا على يد النبي",
-        "english": "raised under the guidance of the Prophet ﷺ",
-        "why": "The Arabic 'على يد' implies direct, hands-on upbringing by the Prophet, whereas 'under the guidance of' suggests a more indirect influence, softening the original meaning.",
-        "severity": "low"
+        "type": "meaning",
+        "why": "The Arabic says 'raised at the hands of the Prophet,' implying direct upbringing by him, while 'under the guidance of' is more general and indirect."
       }
     ],
-    "approved_by": null
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "52386de2b462fb3223c5fe6f1156385e05a596bee1997af775e31d483e0ae092",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [
+        {
+          "model": "glm-5.2",
+          "field": "text_simplified",
+          "type": "meaning",
+          "why": "The Arabic says 'raised at the hands of the Prophet,' implying direct upbringing by him, while 'under the guidance of' is more general and indirect."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

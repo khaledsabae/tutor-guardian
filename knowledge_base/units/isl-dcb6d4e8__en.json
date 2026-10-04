@@ -26,35 +26,40 @@
   "translated_from": "isl-dcb6d4e8",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
+    "review_verdict": "low_only",
     "review_defects": [
       {
-        "type": "meaning_change",
-        "field": "title",
-        "arabic": "يلتزم بالصلاة",
-        "english": "Uphold Salah",
-        "why": "The Arabic 'يلتزم' means 'adheres to' or 'commits to', while 'uphold' suggests establishing or maintaining, which is a slightly different concept.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
+        "model": "deepseek-v4-pro",
         "field": "text_simplified",
-        "arabic": "الساخر نفسه",
-        "english": "the one who mocks",
-        "why": "The Arabic includes the emphatic 'نفسه' (himself) to stress that the verse addresses the mocker, not the mocked; the English loses this emphasis.",
-        "severity": "low"
-      },
-      {
-        "type": "term_error",
-        "field": "title and body",
-        "arabic": "الصلاة",
-        "english": "Salah / salah",
-        "why": "The transliterated term is capitalized in the title ('Salah') but lowercase in the body ('salah'), which is inconsistent within the same document.",
-        "severity": "low"
+        "type": "quran",
+        "why": "The Qur'anic ayah is enclosed in guillemets «» instead of the required ﴿﴾."
       }
     ],
-    "approved_by": null
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "8879e9276c4d0b8124a7bd1ba156f1b47f660ca4e82fcc7d1a090cb2d03e491c",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [
+        {
+          "model": "deepseek-v4-pro",
+          "field": "text_simplified",
+          "type": "quran",
+          "why": "The Qur'anic ayah is enclosed in guillemets «» instead of the required ﴿﴾."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

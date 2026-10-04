@@ -30,27 +30,26 @@
   "translated_from": "isl-72893770",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "term_error",
-        "field": "title",
-        "arabic": "المنهج التربوي النبوي الشامل",
-        "english": "Comprehensive Prophetic Tarbiyah Methodology",
-        "why": "The Arabic adjective 'التربوي' (educational/upbringing) is rendered as the transliterated noun 'Tarbiyah' without translation, while the body text uses 'tarbiyah (upbringing)' with a parenthetical translation. This inconsistency in transliteration/translation within the same document is a term error.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "تحقيق مصالح الإنسان",
-        "english": "achieve the well-being of the human being",
-        "why": "Arabic 'مصالح' means 'interests' or 'benefits' (plural), which is broader than 'well-being'. The English narrows the meaning to a state of comfort/health, losing the sense of multiple benefits/interests in this world and the Hereafter.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "768f2b5ebbd133764ca6ea063b6de3fdb23dbe3ec5fcd21baa1576ba3f084074",
+      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

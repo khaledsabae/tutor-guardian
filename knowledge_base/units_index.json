@@ -1,10 +1,10 @@
 {
-  "total_units": 1774,
+  "total_units": 1726,
   "generated_at": "2026-10-04T12:44:11.421466+00:00",
   "by_domain": {
     "medical": 361,
     "cyber": 281,
-    "islamic_parenting": 976,
+    "islamic_parenting": 928,
     "development": 135,
     "aqeedah": 21
   },
@@ -7150,30 +7150,6 @@
       "size_chars": 993
     },
     {
-      "id": "isl-06c45ab7",
-      "domain": "islamic_parenting",
-      "title": "نص غير مفهوم يحتاج توضيحًا",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "غير محدد",
-      "needs_ocr": false,
-      "size_chars": 992
-    },
-    {
-      "id": "isl-06c45ab7__en",
-      "domain": "islamic_parenting",
-      "title": "Incomprehensible Text Requiring Clarification",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "غير محدد",
-      "needs_ocr": false,
-      "size_chars": 992
-    },
-    {
       "id": "isl-06fef96a",
       "domain": "islamic_parenting",
       "title": "كيف صنع النبي ﷺ أصحابه: التثقيف بالقدوة والعمل",
@@ -8026,54 +8002,6 @@
       "size_chars": 953
     },
     {
-      "id": "isl-1e090b79",
-      "domain": "islamic_parenting",
-      "title": "نص غير قابل للتحليل",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "غير محدد",
-      "needs_ocr": false,
-      "size_chars": 898
-    },
-    {
-      "id": "isl-1e090b79__en",
-      "domain": "islamic_parenting",
-      "title": "Unanalyzable Text",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "غير محدد",
-      "needs_ocr": false,
-      "size_chars": 898
-    },
-    {
-      "id": "isl-1ebc9718",
-      "domain": "islamic_parenting",
-      "title": "تكرار جمل غير مفهومة لدى الطفل",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تأخر لغوي",
-      "needs_ocr": false,
-      "size_chars": 789
-    },
-    {
-      "id": "isl-1ebc9718__en",
-      "domain": "islamic_parenting",
-      "title": "Repetition of Incomprehensible Phrases in the Child",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تأخر لغوي",
-      "needs_ocr": false,
-      "size_chars": 789
-    },
-    {
       "id": "isl-1efbc747",
       "domain": "islamic_parenting",
       "title": "حقوق الأطفال على الوالدين في التربية",
@@ -8542,30 +8470,6 @@
       "size_chars": 1289
     },
     {
-      "id": "isl-281aef95",
-      "domain": "islamic_parenting",
-      "title": "تحليل سلوك ناطقشلا وطرق التعامل معه",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "عدوانية",
-      "needs_ocr": false,
-      "size_chars": 1259
-    },
-    {
-      "id": "isl-281aef95__en",
-      "domain": "islamic_parenting",
-      "title": "Analysing Nātiqshilā Behaviour and Ways to Address It",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "عدوانية",
-      "needs_ocr": false,
-      "size_chars": 1259
-    },
-    {
       "id": "isl-2935b46f",
       "domain": "islamic_parenting",
       "title": "أهمية التربية الدينية للأبناء",
@@ -8948,30 +8852,6 @@
       "behavior_type": "تربية دينية وأخلاقية",
       "needs_ocr": false,
       "size_chars": 1523
-    },
-    {
-      "id": "isl-327af9d3",
-      "domain": "islamic_parenting",
-      "title": "وصف غير واضح لطقوس الوضوء والصلاة",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "سلوك ديني",
-      "needs_ocr": false,
-      "size_chars": 755
-    },
-    {
-      "id": "isl-327af9d3__en",
-      "domain": "islamic_parenting",
-      "title": "Unclear Description of Wudu and Salah Rituals",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "سلوك ديني",
-      "needs_ocr": false,
-      "size_chars": 755
     },
     {
       "id": "isl-32871fdb",
@@ -9452,30 +9332,6 @@
       "behavior_type": "تربية إسلامية وقدوة",
       "needs_ocr": false,
       "size_chars": 1399
-    },
-    {
-      "id": "isl-3f60fca7",
-      "domain": "islamic_parenting",
-      "title": "نص غير واضح يتطلب توضيحاً",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "غير محدد",
-      "needs_ocr": false,
-      "size_chars": 995
-    },
-    {
-      "id": "isl-3f60fca7__en",
-      "domain": "islamic_parenting",
-      "title": "Unclear Text Requiring Clarification",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "غير محدد",
-      "needs_ocr": false,
-      "size_chars": 995
     },
     {
       "id": "isl-3f7359b4",
@@ -10306,30 +10162,6 @@
       "size_chars": 1261
     },
     {
-      "id": "isl-52abd1a8",
-      "domain": "islamic_parenting",
-      "title": "نص غير قابل للتحليل",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "غير محدد",
-      "needs_ocr": false,
-      "size_chars": 816
-    },
-    {
-      "id": "isl-52abd1a8__en",
-      "domain": "islamic_parenting",
-      "title": "Unanalyzable Text",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "غير محدد",
-      "needs_ocr": false,
-      "size_chars": 816
-    },
-    {
       "id": "isl-52c6e496",
       "domain": "islamic_parenting",
       "title": "حقوق الأطفال على الوالدين في التربية الإسلامية",
@@ -10498,30 +10330,6 @@
       "size_chars": 1355
     },
     {
-      "id": "isl-5a55d030",
-      "domain": "islamic_parenting",
-      "title": "حوار غير واضح يحتاج توضيح",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "غير محدد",
-      "needs_ocr": false,
-      "size_chars": 802
-    },
-    {
-      "id": "isl-5a55d030__en",
-      "domain": "islamic_parenting",
-      "title": "Unclear Dialogue Requiring Clarification",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "غير محدد",
-      "needs_ocr": false,
-      "size_chars": 802
-    },
-    {
       "id": "isl-5a728c81",
       "domain": "islamic_parenting",
       "title": "مفهوم التربية في الإسلام وتعريفاتها",
@@ -10544,30 +10352,6 @@
       "behavior_type": "تربية إسلامية",
       "needs_ocr": false,
       "size_chars": 1387
-    },
-    {
-      "id": "isl-5b240e2f",
-      "domain": "islamic_parenting",
-      "title": "نص غير مفهوم يتطلب مراجعة",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "غير محدد",
-      "needs_ocr": false,
-      "size_chars": 767
-    },
-    {
-      "id": "isl-5b240e2f__en",
-      "domain": "islamic_parenting",
-      "title": "Incomprehensible text requiring review",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "غير محدد",
-      "needs_ocr": false,
-      "size_chars": 767
     },
     {
       "id": "isl-5b61587e",
@@ -11026,18 +10810,6 @@
       "size_chars": 1426
     },
     {
-      "id": "isl-669c94e3",
-      "domain": "islamic_parenting",
-      "title": "نص غير مفهوم يتطلب توضيحًا",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "mixed",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "غير محدد",
-      "needs_ocr": false,
-      "size_chars": 1156
-    },
-    {
       "id": "isl-66f08676",
       "domain": "islamic_parenting",
       "title": "حقوق الأبناء في التربية الدينية والأخلاقية",
@@ -11192,30 +10964,6 @@
       "behavior_type": "تربية أخلاقية",
       "needs_ocr": false,
       "size_chars": 1274
-    },
-    {
-      "id": "isl-695f47e5",
-      "domain": "islamic_parenting",
-      "title": "تحليل نص غير مفهوم ودعم التعبير",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "صعوبة تعبير",
-      "needs_ocr": false,
-      "size_chars": 1121
-    },
-    {
-      "id": "isl-695f47e5__en",
-      "domain": "islamic_parenting",
-      "title": "Analysing Unclear Text and Supporting Expression",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "صعوبة تعبير",
-      "needs_ocr": false,
-      "size_chars": 1121
     },
     {
       "id": "isl-6a157c3f",
@@ -11720,18 +11468,6 @@
       "behavior_type": "تأديب الأبناء",
       "needs_ocr": false,
       "size_chars": 1233
-    },
-    {
-      "id": "isl-73e37a6e",
-      "domain": "islamic_parenting",
-      "title": "نص غير قابل للتحليل التربوي",
-      "source_file": "Rakaiz_Tarbiya.pdf",
-      "language": "mixed",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "غير محدد",
-      "needs_ocr": false,
-      "size_chars": 626
     },
     {
       "id": "isl-740684b1",
@@ -12418,30 +12154,6 @@
       "size_chars": 923
     },
     {
-      "id": "isl-855eeb20",
-      "domain": "islamic_parenting",
-      "title": "تحليل سلوك الأطفال غير المحدد",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "سلوك غير محدد",
-      "needs_ocr": false,
-      "size_chars": 790
-    },
-    {
-      "id": "isl-855eeb20__en",
-      "domain": "islamic_parenting",
-      "title": "Analysing Unspecified Child Behaviour",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "سلوك غير محدد",
-      "needs_ocr": false,
-      "size_chars": 790
-    },
-    {
       "id": "isl-85e3c490",
       "domain": "islamic_parenting",
       "title": "أساسيات تربية الطفل باحترام وتوجيه",
@@ -12488,30 +12200,6 @@
       "behavior_type": "تربية دينية",
       "needs_ocr": false,
       "size_chars": 1066
-    },
-    {
-      "id": "isl-86605602",
-      "domain": "islamic_parenting",
-      "title": "نص غير قابل للتحليل",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "غير محدد",
-      "needs_ocr": false,
-      "size_chars": 766
-    },
-    {
-      "id": "isl-86605602__en",
-      "domain": "islamic_parenting",
-      "title": "Unanalyzable Text",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "غير محدد",
-      "needs_ocr": false,
-      "size_chars": 766
     },
     {
       "id": "isl-87ab426e",
@@ -14038,30 +13726,6 @@
       "size_chars": 1357
     },
     {
-      "id": "isl-addc4e81",
-      "domain": "islamic_parenting",
-      "title": "نص غير قابل للتحليل التربوي",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "غير محدد",
-      "needs_ocr": false,
-      "size_chars": 727
-    },
-    {
-      "id": "isl-addc4e81__en",
-      "domain": "islamic_parenting",
-      "title": "Text Not Suitable for Tarbiyah Analysis",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "غير محدد",
-      "needs_ocr": false,
-      "size_chars": 727
-    },
-    {
       "id": "isl-adf40f0b",
       "domain": "islamic_parenting",
       "title": "تعزيز ثقة الطفل وتجنب ألعاب الحرب",
@@ -14072,30 +13736,6 @@
       "behavior_type": "عدوانية",
       "needs_ocr": false,
       "size_chars": 1339
-    },
-    {
-      "id": "isl-ae3d3405",
-      "domain": "islamic_parenting",
-      "title": "نص غير قابل للتحليل",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "غير محدد",
-      "needs_ocr": false,
-      "size_chars": 747
-    },
-    {
-      "id": "isl-ae3d3405__en",
-      "domain": "islamic_parenting",
-      "title": "Text Not Suitable for Analysis",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "غير محدد",
-      "needs_ocr": false,
-      "size_chars": 747
     },
     {
       "id": "isl-aeca7eab",
@@ -14134,30 +13774,6 @@
       "size_chars": 1401
     },
     {
-      "id": "isl-b014135a",
-      "domain": "islamic_parenting",
-      "title": "نص غير قابل للتحليل",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "غير محدد",
-      "needs_ocr": false,
-      "size_chars": 798
-    },
-    {
-      "id": "isl-b014135a__en",
-      "domain": "islamic_parenting",
-      "title": "Unanalyzable Text",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "غير محدد",
-      "needs_ocr": false,
-      "size_chars": 798
-    },
-    {
       "id": "isl-b04140c3",
       "domain": "islamic_parenting",
       "title": "دور المسجد في التربية النبوية",
@@ -14192,30 +13808,6 @@
       "behavior_type": "صراع وعنف",
       "needs_ocr": false,
       "size_chars": 1362
-    },
-    {
-      "id": "isl-b174a774",
-      "domain": "islamic_parenting",
-      "title": "نص غير قابل للتحليل",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "غير محدد",
-      "needs_ocr": false,
-      "size_chars": 734
-    },
-    {
-      "id": "isl-b174a774__en",
-      "domain": "islamic_parenting",
-      "title": "Unanalyzable Text",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "غير محدد",
-      "needs_ocr": false,
-      "size_chars": 734
     },
     {
       "id": "isl-b1e1577f",
@@ -14254,30 +13846,6 @@
       "size_chars": 1346
     },
     {
-      "id": "isl-b1fe8885",
-      "domain": "islamic_parenting",
-      "title": "نص غير قابل للتحليل",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "غير محدد",
-      "needs_ocr": false,
-      "size_chars": 752
-    },
-    {
-      "id": "isl-b1fe8885__en",
-      "domain": "islamic_parenting",
-      "title": "Text Not Suitable for Analysis",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "غير محدد",
-      "needs_ocr": false,
-      "size_chars": 752
-    },
-    {
       "id": "isl-b290bf9e",
       "domain": "islamic_parenting",
       "title": "حقوق الأطفال على الوالدين في التربية",
@@ -14300,30 +13868,6 @@
       "behavior_type": "تربية الأطفال",
       "needs_ocr": false,
       "size_chars": 1080
-    },
-    {
-      "id": "isl-b2c738e2",
-      "domain": "islamic_parenting",
-      "title": "حقوق الأطفال على الآباء في التربية",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية الأطفال",
-      "needs_ocr": false,
-      "size_chars": 1281
-    },
-    {
-      "id": "isl-b2c738e2__en",
-      "domain": "islamic_parenting",
-      "title": "The Rights of Children upon Parents in Tarbiyah",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية الأطفال",
-      "needs_ocr": false,
-      "size_chars": 1281
     },
     {
       "id": "isl-b2d0f3e5",
@@ -14480,30 +14024,6 @@
       "behavior_type": "تحفيز الطفل",
       "needs_ocr": false,
       "size_chars": 1362
-    },
-    {
-      "id": "isl-b7e51a39",
-      "domain": "islamic_parenting",
-      "title": "نص غير قابل للتحليل التربوي",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "غير محدد",
-      "needs_ocr": false,
-      "size_chars": 866
-    },
-    {
-      "id": "isl-b7e51a39__en",
-      "domain": "islamic_parenting",
-      "title": "Text Not Suitable for Tarbiyah Analysis",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "غير محدد",
-      "needs_ocr": false,
-      "size_chars": 866
     },
     {
       "id": "isl-b7ed60a1",
@@ -15046,42 +14566,6 @@
       "size_chars": 1401
     },
     {
-      "id": "isl-c2a6dda3",
-      "domain": "islamic_parenting",
-      "title": "نص غير صالح للتحليل التربوي",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "mixed",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "غير محدد",
-      "needs_ocr": false,
-      "size_chars": 656
-    },
-    {
-      "id": "isl-c30de28e",
-      "domain": "islamic_parenting",
-      "title": "نص غير قابل للتحليل التربوي",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "غير محدد",
-      "needs_ocr": false,
-      "size_chars": 803
-    },
-    {
-      "id": "isl-c30de28e__en",
-      "domain": "islamic_parenting",
-      "title": "Text Not Suitable for Tarbiyah Analysis",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "غير محدد",
-      "needs_ocr": false,
-      "size_chars": 803
-    },
-    {
       "id": "isl-c32410ab",
       "domain": "islamic_parenting",
       "title": "تربية الأبناء على القيم الإسلامية والآداب",
@@ -15500,18 +14984,6 @@
       "behavior_type": "تربية إسلامية",
       "needs_ocr": false,
       "size_chars": 2502
-    },
-    {
-      "id": "isl-d004d6de",
-      "domain": "islamic_parenting",
-      "title": "نص غير قابل للتحليل",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "mixed",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "غير محدد",
-      "needs_ocr": false,
-      "size_chars": 1260
     },
     {
       "id": "isl-d0227f8b",
@@ -16678,30 +16150,6 @@
       "size_chars": 970
     },
     {
-      "id": "isl-e8f0394b",
-      "domain": "islamic_parenting",
-      "title": "نص غير مفهوم يحتاج توضيحاً",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "غير محدد",
-      "needs_ocr": false,
-      "size_chars": 1267
-    },
-    {
-      "id": "isl-e8f0394b__en",
-      "domain": "islamic_parenting",
-      "title": "Unclear text requiring clarification",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "غير محدد",
-      "needs_ocr": false,
-      "size_chars": 1267
-    },
-    {
       "id": "isl-e946de7d",
       "domain": "islamic_parenting",
       "title": "مقتطف من أسانيد الحديث النبوي",
@@ -17252,30 +16700,6 @@
       "behavior_type": "تربية دينية وتعليم قرآن",
       "needs_ocr": false,
       "size_chars": 1291
-    },
-    {
-      "id": "isl-f59629b6",
-      "domain": "islamic_parenting",
-      "title": "نص غير مفهوم يتطلب توضيحاً",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "غير محدد",
-      "needs_ocr": false,
-      "size_chars": 602
-    },
-    {
-      "id": "isl-f59629b6__en",
-      "domain": "islamic_parenting",
-      "title": "Unclear Text Requiring Clarification",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "غير محدد",
-      "needs_ocr": false,
-      "size_chars": 602
     },
     {
       "id": "isl-f5f9ceac",
