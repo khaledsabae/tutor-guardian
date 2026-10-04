@@ -263,17 +263,38 @@ _THANKS_PHRASES = {
 
 _GREETING_PHRASES = {
     "السلام عليكم", "السلام عليكم ورحمة الله", "السلام عليكم ورحمة الله وبركاته",
+    "سلام", "سلام عليكم",
     "صباح الخير", "مساء الخير", "صباح النور", "مساء النور",
     "اهلا", "اهلا بك", "اهلا وسهلا", "مرحبا", "مرحبا بك", "هاي", "هلو",
+}
+
+# «كيف الحال» and friends reached the off-topic pivot, which answered a
+# question nobody asked (👎 triage, 2026-10-04).
+_HOW_ARE_YOU_PHRASES = {
+    "كيف الحال", "كيف حالك", "كيف حالكم", "كيفك", "ازيك", "ازيكم",
+    "عامل ايه", "عاملة ايه", "اخبارك ايه", "شلونك",
 }
 
 _CLOSING_PHRASES = {
     "لا شكر على واجب", "العفو", "على الرحب والسعة",
 }
 
+# English pleasantries got the Arabic pivot. Replies stay in the parent's language.
+_EN_THANKS_PHRASES = {
+    "thanks", "thank you", "thanks a lot", "thank you so much", "thank you very much",
+    "thx", "jazakallah khair", "jazak allah khair",
+}
+_EN_GREETING_PHRASES = {
+    "hi", "hello", "hey", "hi there", "hello there", "salam", "salaam",
+    "assalamu alaikum", "as salamu alaykum", "good morning", "good evening",
+}
+
 _THANKS_NORM = {_normalize(p) for p in _THANKS_PHRASES}
 _GREETING_NORM = {_normalize(p) for p in _GREETING_PHRASES}
+_HOW_ARE_YOU_NORM = {_normalize(p) for p in _HOW_ARE_YOU_PHRASES}
 _CLOSING_NORM = {_normalize(p) for p in _CLOSING_PHRASES}
+_EN_THANKS_NORM = {_normalize(p) for p in _EN_THANKS_PHRASES}
+_EN_GREETING_NORM = {_normalize(p) for p in _EN_GREETING_PHRASES}
 
 
 def check_conversational_shortcut(text: str) -> tuple[bool, str]:
@@ -290,8 +311,17 @@ def check_conversational_shortcut(text: str) -> tuple[bool, str]:
     if norm in _GREETING_NORM:
         return True, "وعليكم السلام ورحمة الله وبركاته، أهلاً بك! كيف يمكنني مساعدتك اليوم في رعاية طفلك وتربيته؟"
 
+    if norm in _HOW_ARE_YOU_NORM:
+        return True, "الحمد لله، أهلاً بك! كيف يمكنني مساعدتك اليوم في رعاية طفلك وتربيته؟"
+
     if norm in _CLOSING_NORM:
         return True, "بارك الله فيك ويسّر أمرك! أنا في خدمتك دائمًا لأي استشارة أو تساؤل تربوي."
+
+    if norm in _EN_THANKS_NORM:
+        return True, "You're welcome! I'm always glad to help with anything about raising your child."
+
+    if norm in _EN_GREETING_NORM:
+        return True, "Hello, and welcome! How can I help you today with your child's care and upbringing?"
 
     return False, ""
 

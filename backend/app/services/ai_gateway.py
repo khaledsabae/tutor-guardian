@@ -21,11 +21,13 @@ Usage:
 from __future__ import annotations
 
 import asyncio
+import concurrent.futures
 import json
 import logging
 import os
 import sqlite3
 import time
+from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Iterator, Protocol
@@ -38,6 +40,71 @@ from app.core.circuit_breaker import CircuitBreaker
 logger = logging.getLogger(__name__)
 
 _TELEMETRY_DB = Path(__file__).resolve().parents[3] / "ops" / "sessions.db"
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Wall-clock deadlines for blocking (non-streamed) provider calls
+# ─────────────────────────────────────────────────────────────────────────────
+# A provider `timeout` is a per-READ timeout (requests and httpx both), not a
+# limit on the whole call. DeepSeek, when loaded, holds a request open and
+# trickles keep-alive blank lines until it gets to it — up to 30 minutes — and
+# every blank line resets the read timer. Measured in production
+# (llm_calls, 60 days to 2026-10-04): an 8 s classifier call took 236 s, a 6 s
+# rewriter call 237 s, and 48 blocking calls ran past 300 s (max 35 min).
+#
+# Those calls ran on asyncio's DEFAULT executor — 8 threads on the 4-CPU VPS —
+# which is also where every sqlite read/write and every retrieval of the chat
+# pipeline runs. A handful of hung calls therefore froze the whole assistant:
+# questions sat between classification and retrieval for 2–31 minutes, the
+# parent gave up, and the question was left with no reply (most of the 7%
+# "orphan" questions in September).
+#
+# So blocking calls run on their own bounded pool and the CALLER stops waiting
+# at a wall-clock deadline. The abandoned call finishes (or dies) on its own
+# thread; a queued one that never started is cancelled.
+_BLOCKING_LLM_WORKERS = max(1, int(os.environ.get("LLM_BLOCKING_WORKERS", "8")))
+_BLOCKING_LLM_EXECUTOR = ThreadPoolExecutor(
+    max_workers=_BLOCKING_LLM_WORKERS, thread_name_prefix="llm-blocking"
+)
+# Seconds added to a provider's own (per-read) timeout to get the wall-clock
+# ceiling for one call: room for connect + a slow-but-alive reply.
+_DEADLINE_SLACK_S = float(os.environ.get("LLM_DEADLINE_SLACK_S", "4"))
+
+
+class LLMDeadlineExceeded(TimeoutError):
+    """A blocking provider call outlived its wall-clock deadline."""
+
+
+def _deadline_for(provider: object, cap: float | None = None) -> float:
+    """Wall-clock ceiling for one call to `provider`, never above `cap`."""
+    limit = float(getattr(provider, "timeout", 60) or 60) + _DEADLINE_SLACK_S
+    if cap is not None:
+        limit = min(limit, cap)
+    return max(0.1, limit)
+
+
+def call_with_deadline(fn, deadline_s: float, /, *args, **kwargs):
+    """Run blocking `fn` on the LLM pool; give up after `deadline_s` seconds.
+
+    For synchronous callers (the classifier and rewriter already run inside a
+    worker thread). Raises LLMDeadlineExceeded on timeout.
+    """
+    fut = _BLOCKING_LLM_EXECUTOR.submit(fn, *args, **kwargs)
+    try:
+        return fut.result(timeout=deadline_s)
+    except concurrent.futures.TimeoutError:
+        fut.cancel()  # a call still queued behind hung ones never starts
+        raise LLMDeadlineExceeded(f"no reply within {deadline_s:.0f}s") from None
+
+
+async def acall_with_deadline(fn, deadline_s: float, /, *args, **kwargs):
+    """Async twin of `call_with_deadline` — replaces `asyncio.to_thread`."""
+    fut = _BLOCKING_LLM_EXECUTOR.submit(fn, *args, **kwargs)
+    try:
+        return await asyncio.wait_for(asyncio.wrap_future(fut), timeout=deadline_s)
+    except (asyncio.TimeoutError, concurrent.futures.TimeoutError):
+        fut.cancel()
+        raise LLMDeadlineExceeded(f"no reply within {deadline_s:.0f}s") from None
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -242,13 +309,20 @@ class OpenAIChatProvider:
     """
 
     def __init__(self, base_url: str, api_key: str, model: str,
-                 timeout: int, name: str = "deepseek") -> None:
+                 timeout: int, name: str = "deepseek",
+                 max_retries: int | None = None) -> None:
         from openai import OpenAI  # lazy import — optional dependency
 
         self.name = name
         self.model = model
         self.timeout = timeout
-        self._client = OpenAI(api_key=api_key, base_url=base_url, timeout=timeout)
+        kwargs = {"api_key": api_key, "base_url": base_url, "timeout": timeout}
+        # The SDK retries twice by default, and each retry restarts the (per
+        # read) timeout. Auxiliary calls pass 0: they have a cheaper degraded
+        # path than a second and third wait.
+        if max_retries is not None:
+            kwargs["max_retries"] = max_retries
+        self._client = OpenAI(**kwargs)
 
     def generate(self, prompt: str, *, options: dict) -> dict:
         r = self._client.chat.completions.create(
@@ -467,6 +541,7 @@ def aux_cloud_provider(*, timeout: int = AUX_TIMEOUT_S) -> "OpenAIChatProvider |
         return OpenAIChatProvider(
             base_url=LLM.deepseek_base_url, api_key=LLM.deepseek_api_key,
             model=LLM.deepseek_model, timeout=timeout, name=_AUX_PRIMARY_NAME,
+            max_retries=0,
         )
     except Exception as e:  # missing openai pkg / bad config — degrade to local
         logger.warning("auxiliary cloud provider unavailable: %s", e)
@@ -484,10 +559,13 @@ def aux_generate(provider: LLMProvider, prompt: str, *,
     model = getattr(provider, "model", "unknown")
     start = time.monotonic()
     try:
-        data = provider.generate(prompt, options=options)
+        data = call_with_deadline(
+            provider.generate, _deadline_for(provider), prompt, options=options,
+        )
     except Exception as e:
         _log_call(provider.name, model, int((time.monotonic() - start) * 1000),
-                  None, None, streamed=False, ok=False, tier=tier)
+                  None, None, streamed=False, ok=False, tier=tier,
+                  route_reason="deadline" if isinstance(e, LLMDeadlineExceeded) else None)
         aux_breaker.record(False)
         logger.warning("auxiliary %s call failed: %s", tier, e)
         return None
@@ -544,7 +622,11 @@ class AIGateway:
         provider = OllamaProvider(base_url=base_url, model=model, timeout=timeout)
         start = time.monotonic()
         try:
-            data = await asyncio.to_thread(provider.generate, prompt, options=opts)
+            # Bounded by the provider's own timeout as a WALL-CLOCK limit; the
+            # chain's overall deadline is checked between providers (generate).
+            data = await acall_with_deadline(
+                provider.generate, _deadline_for(provider), prompt, options=opts,
+            )
             latency = int((time.monotonic() - start) * 1000)
             text = (data.get("response") or "").strip()
             if not text:
@@ -631,6 +713,9 @@ class AIGateway:
         last_err: Exception | None = None
         deadline = time.monotonic() + GENERATE_DEADLINE_S
 
+        def _remaining() -> float:
+            return max(0.1, deadline - time.monotonic())
+
         def _out_of_time(stage: str) -> bool:
             if time.monotonic() < deadline:
                 return False
@@ -645,7 +730,10 @@ class AIGateway:
             if cloud is not None:
                 start = time.monotonic()
                 try:
-                    data = await asyncio.to_thread(cloud.generate, prompt, options=opts)
+                    data = await acall_with_deadline(
+                        cloud.generate, _deadline_for(cloud, _remaining()),
+                        prompt, options=opts,
+                    )
                     latency = int((time.monotonic() - start) * 1000)
                     text = (data.get("response") or "").strip()
                     if text:
@@ -680,7 +768,15 @@ class AIGateway:
                 break
             start = time.monotonic()
             try:
-                data = await asyncio.to_thread(self.provider.generate, prompt, options=opts)
+                # Wall-clock bound per attempt (see call_with_deadline): the
+                # deadline below used to be checked only BETWEEN attempts, so a
+                # single hung attempt ran for as long as the provider kept the
+                # socket alive — 35 minutes on 2026-09-14.
+                data = await acall_with_deadline(
+                    self.provider.generate,
+                    _deadline_for(self.provider, _remaining()),
+                    prompt, options=opts,
+                )
                 latency = int((time.monotonic() - start) * 1000)
                 text = (data.get("response") or "").strip()
                 if not text:
@@ -734,7 +830,10 @@ class AIGateway:
             logger.warning("⚠️ local chain exhausted — trying cloud safety valve (%s)", valve.model)
             start = time.monotonic()
             try:
-                data = await asyncio.to_thread(valve.generate, prompt, options=opts)
+                data = await acall_with_deadline(
+                    valve.generate, _deadline_for(valve, _remaining()),
+                    prompt, options=opts,
+                )
                 latency = int((time.monotonic() - start) * 1000)
                 text = (data.get("response") or "").strip()
                 if text:
@@ -797,6 +896,18 @@ class AIGateway:
                   prompt_tokens, completion_tokens, streamed=True, ok=ok,
                   tier=tier, route_reason=route_reason)
         yield StreamChunk(delta="", done=True, result=result)
+
+    def note_stream_stall(self) -> None:
+        """The SSE consumer gave up waiting for tokens (assistant watchdog).
+
+        The worker is still blocked inside the provider's read, so the gateway
+        itself never saw a failure — and the next question would walk straight
+        into the same hung provider. Counted against the paid primary, which
+        is the provider streamed first whenever its breaker is closed; two
+        stalls open the breaker and the next answers go to the fallback chain.
+        """
+        if isinstance(self.provider, OpenAIChatProvider) and not primary_breaker.is_open():
+            primary_breaker.record(False)
 
     def stream(self, prompt: str, *, options: dict | None = None,
                tier: str = "local_fast",

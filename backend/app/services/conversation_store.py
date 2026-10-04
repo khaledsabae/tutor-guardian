@@ -251,6 +251,45 @@ def update_classification(
         conn.close()
 
 
+# Domains a follow-up may inherit: the classifier's real knowledge domains
+# (domain_classifier.VALID_DOMAINS) — never "general", nor a guard's label
+# such as "fiqh_aqeedah", which has no knowledge base behind it.
+_FOLLOWUP_DOMAINS = frozenset({"fiqh", "medical", "cyber", "development", "aqeedah"})
+# Reply modes that mean "the previous turn was answered on-topic". An
+# interrupted reply was cut by the client, but the parent read its start.
+_GROUNDED_MODES = frozenset({"llm_generated", "retrieval_only", "interrupted"})
+
+
+def followup_context(session_id: str, before_message_id: int | None) -> tuple[str, str] | None:
+    """(domain, question) of the turn the message `before_message_id` follows.
+
+    Only when the row right before it is an on-topic assistant reply and the
+    user question before THAT has a real knowledge domain. Error placeholders
+    are skipped, like in get_history. None when there is no such turn.
+    """
+    if before_message_id is None:
+        return None
+    conn = get_conn()
+    try:
+        rows = conn.execute(
+            """SELECT role, content, domain, mode FROM chat_messages
+               WHERE session_id = ? AND id < ?
+                 AND (mode IS NULL OR mode != 'error')
+               ORDER BY id DESC LIMIT 2""",
+            (session_id, before_message_id),
+        ).fetchall()
+    finally:
+        conn.close()
+    if len(rows) < 2:
+        return None
+    reply, question = rows[0], rows[1]
+    if reply["role"] != "assistant" or reply["mode"] not in _GROUNDED_MODES:
+        return None
+    if question["role"] != "user" or question["domain"] not in _FOLLOWUP_DOMAINS:
+        return None
+    return question["domain"], question["content"]
+
+
 def get_history(session_id: str, limit: int = 20) -> list[ConversationTurn]:
     """Return the last `limit` turns (chronological) as ConversationTurn objects."""
     conn = get_conn()
