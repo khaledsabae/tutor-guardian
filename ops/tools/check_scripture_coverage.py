@@ -62,14 +62,8 @@ FLOORS = {
 # not as a failure — but ONLY while the file is byte-for-byte the version that PR
 # replaces. Any edit to it (that PR landing, or anyone else's) ends the exemption
 # on its own, and a stale entry is printed so it gets deleted. It never covers a
-# new violation: new text means new bytes.
-PENDING_ELSEWHERE = {
-    "backend/app/routers/seo.py": (
-        "f9b1cd4333c8800af6b958b411e1503f83b19a1396f002b843dd6f73fa98c1ab",
-        "PR #25 (fix/attribution) deletes «الراحمون يرحمهم الرحمن» and the Abu Dawud "
-        "prayer quote from the SEO pages; this branch leaves the file to it",
-    ),
-}
+# new violation: new text means new bytes. (seo.py's entry ended when #25 landed.)
+PENDING_ELSEWHERE: dict[str, tuple[str, str]] = {}
 
 _PARITY_MUST_FLAG = [
     # the translation keeps the old sequential number the Arabic dropped

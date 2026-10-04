@@ -88,8 +88,10 @@ PROPHETIC_TEACH = re.compile(
 # hadith. The definite «الحديث «…»» is left out: in prose about hadith science it
 # introduces metaphors («كأن الحديث «رسالة مسجَّلة»»), not narrations.
 INDEF_HADITH = re.compile(r"(?<![ء-ي])[بوف]?حديث\s*[:：]?\s*$"
-                          # «يؤكد الهدي النبوي على أن '…'» — attribution by a noun phrase
-                          r"|(?:الهدي|التوجيه|القول|المبدأ|الأدب|المنهج)\s+النبوي[^«»“”\"'.؛]{0,30}$")
+                          # «يؤكد الهدي النبوي على أن '…'» — attribution by a noun phrase,
+                          # within its own clause: «…كما في التوجيه النبوي، و«رحلة الصلاة»
+                          # جاهزة» names a feature after the comma, not a hadith.
+                          r"|(?:الهدي|التوجيه|القول|المبدأ|الأدب|المنهج)\s+النبوي[^«»“”\"'.؛،,]{0,30}$")
 
 QURAN_MARKER = re.compile(
     r"(?:قال|يقول|قوله|وقال|فقال)\s*(?:الله\s*)?(?:تعالى|سبحانه(?:\s*وتعالى)?|عزّ?\s*وجلّ?)\s*[:：]?\s*$"
@@ -441,6 +443,8 @@ MUST_PASS = [
     "قال أبو بكر (رضي الله عنه) لابنته (صحيح البخاري ٣٣٤) ما قال، و(صلى الله عليه وسلم) عليه.",
     "اقرأ معه من القرآن (العلق، القدر، العاديات) قبل النوم.",
     "قال ﷺ: (من لا يرحم لا يرحم) (صحيح البخاري ٥٩٩٧).",
+    # a feature name after the clause that mentions «التوجيه النبوي» (milestones.json, #23)
+    "في السابعة يبدأ تعليم الصلاة كما في التوجيه النبوي، و«رحلة الصلاة» جاهزة لكم.",
 ]
 
 
