@@ -535,4 +535,9 @@ Authorization: Bearer <token>
   when `confirm=true` is missing.
 - Not affected: aggregate telemetry that carries no device identifier and so
   cannot be linked back to the account.
+- **Public pages (no auth):** the privacy policy stays at
+  `https://tg-api.alsaba.cloud/privacy-policy` (Arabic + English; the Settings
+  "About" row already opens it), and `https://tg-api.alsaba.cloud/delete-account`
+  explains deletion for people without the app — that is the URL for the Play
+  Console "Delete account URL" field. A confirmation dialog may link to it too.
 

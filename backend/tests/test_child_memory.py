@@ -63,7 +63,7 @@ _UNITS = [{
 def pipeline(monkeypatch):
     """The assistant with retrieval and every model call replaced by recorders."""
     _RecordingProvider.prompts = []
-    seen = {"classify": [], "rewrite": []}
+    seen = {"classify": [], "rewrite": [], "ayah": [], "log": []}
 
     def fake_classify(text):
         seen["classify"].append(text)
@@ -73,14 +73,16 @@ def pipeline(monkeypatch):
         seen["rewrite"].append(text)
         return ""
 
-    async def no_ayah(_text):
+    async def no_ayah(text):
+        seen["ayah"].append(text)          # the external Qur'an search (tafsir.net)
         return None
 
     monkeypatch.setattr(assistant, "classify_domains", fake_classify)
     monkeypatch.setattr(assistant, "rewrite_query", fake_rewrite)
     monkeypatch.setattr(assistant, "retrieve_hybrid", lambda **kw: [dict(u) for u in _UNITS])
     monkeypatch.setattr(assistant, "_ensure_index", lambda: None)
-    monkeypatch.setattr(assistant, "log_retrieval", lambda *a, **k: None)
+    monkeypatch.setattr(assistant, "log_retrieval",
+                        lambda text, *a, **k: seen["log"].append(text))
     monkeypatch.setattr(assistant, "resolve_ayah_reference", no_ayah)
     monkeypatch.setattr(ai_gateway, "OllamaProvider", _RecordingProvider)
     from app.services import answer_cache
@@ -426,8 +428,10 @@ def test_child_name_never_reaches_any_llm_payload(client, pipeline, monkeypatch)
     cm.wait_for_extractions()
 
     payloads = (_RecordingProvider.prompts + extractor.prompts
-                + pipeline["classify"] + pipeline["rewrite"])
+                + pipeline["classify"] + pipeline["rewrite"]
+                + pipeline["ayah"] + pipeline["log"])
     assert _RecordingProvider.prompts and extractor.prompts and pipeline["classify"]
+    assert pipeline["ayah"] and pipeline["log"]   # tafsir.net and the search log too
     for p in payloads:
         assert CHILD_NAME not in p, p[:200]
     assert "طفلي بيضرب أخته" in _RecordingProvider.prompts[-1]

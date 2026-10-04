@@ -9,9 +9,11 @@ Optimizations (v2):
 """
 import hashlib
 import logging
+import os
 import re
 import shutil
 import threading
+import time
 from functools import lru_cache
 from pathlib import Path
 from typing import Callable, Sequence, cast
@@ -540,10 +542,18 @@ def retrieve_multi_domain(
 
 _TELEMETRY_DB = Path(__file__).resolve().parents[3] / "ops" / "sessions.db"
 
+# The log holds question text (names already replaced by the caller — see
+# routers/assistant.py) with no device identifier. The privacy policy promises
+# it is kept this long, and no longer.
+RETRIEVAL_LOG_RETENTION_DAYS = int(os.environ.get("RETRIEVAL_LOG_RETENTION_DAYS", "90"))
+_PRUNE_EVERY_S = 3600.0
+_last_prune = float("-inf")  # the first log call of a process prunes
+
 
 def log_retrieval(query_text: str, domains: list[str],
                   rewritten_query: str, final_units: list[dict]) -> None:
     """Record what retrieval produced so eval runs can diagnose recall."""
+    global _last_prune
     try:
         import json as _json
         import sqlite3 as _sqlite3
@@ -557,6 +567,15 @@ def log_retrieval(query_text: str, domains: list[str],
                 final_ids TEXT, distances TEXT, rerank_scores TEXT
             )"""
         )
+        # At most once an hour per process: the table has no index on ts, and
+        # a scan on every question would grow with the log it is trimming.
+        now = time.monotonic()
+        if now - _last_prune >= _PRUNE_EVERY_S:
+            _last_prune = now
+            conn.execute(
+                "DELETE FROM retrieval_log WHERE ts < datetime('now', ?)",
+                (f"-{max(1, RETRIEVAL_LOG_RETENTION_DAYS)} days",),
+            )
         conn.execute(
             "INSERT INTO retrieval_log (question, domains, rewritten_query,"
             " final_ids, distances, rerank_scores) VALUES (?,?,?,?,?,?)",

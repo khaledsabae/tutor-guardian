@@ -219,6 +219,13 @@ def store(question: str, age_group: str, domain: str, severity: str, answer: str
         vec = _embed(question)
         conn = _conn()
         try:
+            # An expired entry is never served (lookup filters on created_at),
+            # so keeping it only keeps a question's text for nothing. The
+            # privacy policy says 45 days; this makes the row go too.
+            conn.execute(
+                "DELETE FROM answer_cache WHERE created_at < datetime('now', ?)",
+                (f"-{_TTL_DAYS} days",),
+            )
             conn.execute(
                 "INSERT INTO answer_cache "
                 "(qhash, question_norm, age_group, domain, severity, answer, embedding) "

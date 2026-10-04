@@ -676,7 +676,8 @@ async def _draft_answer(
                 rewritten_query=rewritten_query,
                 lang=detect_query_language(query_text),
             )
-            log_retrieval(query_text, detected_domains, rewritten_query, units)
+            # The log keeps the question; it keeps it without the names.
+            log_retrieval(llm_query, detected_domains, rewritten_query, units)
             return units
 
         # ── Step 4b: Tafsir MCP — if the question references a specific ayah, ──
@@ -686,7 +687,11 @@ async def _draft_answer(
         # the KB. This is a one-shot best-effort enrichment: if the MCP server
         # is unreachable, the tafsir block is silently empty and the answer is
         # built from KB units alone, exactly as before.
-        ayah_task = asyncio.create_task(resolve_ayah_reference(query_text))
+        # The ayah search is an external service (mcp.tafsir.net): it gets
+        # the redacted text. A name inside a Qur'anic reference survives
+        # redaction (privacy._is_religious_reference), so «سورة يوسف» still
+        # resolves.
+        ayah_task = asyncio.create_task(resolve_ayah_reference(llm_query))
         retrieved_units = await asyncio.to_thread(_retrieve_blocking)
         ayah_ref = await ayah_task
         if ayah_ref:
@@ -1143,11 +1148,16 @@ async def _stream_answer(
                 rewritten_query=rewritten_query,
                 lang=detect_query_language(query_text),
             )
-            log_retrieval(query_text, detected_domains, rewritten_query, units)
+            # The log keeps the question; it keeps it without the names.
+            log_retrieval(llm_query, detected_domains, rewritten_query, units)
             return units
 
         # ── Tafsir MCP enrichment (same logic as /draft) ────────────────
-        ayah_task = asyncio.create_task(resolve_ayah_reference(query_text))
+        # The ayah search is an external service (mcp.tafsir.net): it gets
+        # the redacted text. A name inside a Qur'anic reference survives
+        # redaction (privacy._is_religious_reference), so «سورة يوسف» still
+        # resolves.
+        ayah_task = asyncio.create_task(resolve_ayah_reference(llm_query))
         retrieved_units = await asyncio.to_thread(_retrieve_blocking)
         ayah_ref = await ayah_task
         if ayah_ref:

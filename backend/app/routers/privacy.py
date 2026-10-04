@@ -29,7 +29,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from fastapi import APIRouter, HTTPException, Query, Request
-from fastapi.responses import FileResponse, Response
+from fastapi.responses import FileResponse, HTMLResponse, Response
 
 from app.db.init_db import get_conn
 
@@ -132,13 +132,134 @@ async def get_privacy_policy():
         else:
             logger.error("Privacy policy file not found at %s", PRIVACY_POLICY_PATH)
         return Response(
-            content="Privacy policy is temporarily unavailable. Please contact support@alsaba.cloud.",
+            content=f"Privacy policy is temporarily unavailable. Please contact {SUPPORT_EMAIL}.",
             status_code=503,
             media_type="text/plain; charset=utf-8",
         )
     return FileResponse(
         path=str(PRIVACY_POLICY_PATH),
         media_type="text/markdown; charset=utf-8",
+        headers={"Cache-Control": "public, max-age=300"},
+    )
+
+
+# ── The public deletion page ──────────────────────────────────────────────
+#
+# Google Play asks for a web route to request deletion that works for someone
+# who no longer has the app. Served from code, not from docs/: docs/ is a bind
+# mount whose permissions have broken the policy route before (see above), and
+# this page must answer even then. System fonts only — no request leaves the
+# visitor's browser for a third party.
+
+SUPPORT_EMAIL = "support@alsaba.cloud"
+
+DELETE_ACCOUNT_HTML = """<!doctype html>
+<html lang="ar">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>حذف الحساب والبيانات — المربّي · Delete your account — Almorabbi</title>
+<style>
+  body { font-family: system-ui, -apple-system, "Segoe UI", Tahoma, sans-serif;
+         max-width: 44rem; margin: 2rem auto; padding: 0 1rem; line-height: 1.7;
+         color: #1f2933; }
+  h1 { font-size: 1.5rem; } h2 { font-size: 1.15rem; margin-top: 1.6rem; }
+  section { margin-bottom: 2.5rem; }
+  a { color: #0b6e4f; }
+  .box { background: #f4f7f6; border-radius: .6rem; padding: .8rem 1rem; }
+</style>
+</head>
+<body>
+<section dir="rtl" lang="ar">
+<h1>حذف حسابك وبياناتك — المربّي</h1>
+
+<h2>من داخل التطبيق</h2>
+<ol>
+  <li>افتح <b>الإعدادات</b>.</li>
+  <li>اضغط <b>«حذف الحساب»</b> ثم أكّد.</li>
+</ol>
+<p>يُحذف فورًا كل ما يرتبط بهاتفك على خوادمنا: ملفات الأطفال وتقدّمهم، والأسئلة
+وإجاباتها، وذاكرة الطفل والمتابعات وخطط الأسبوع، وأدوات المتابعة اليومية، وبيانات
+وضع الطفل، والملاحظات وردودها، ورمز الإشعارات، والدعوات، والنسخ الاحتياطية، ورموز
+الجلسة. وإن كنت سجّلت الدخول بحساب Google تُحذف كذلك بيانات كل هاتف مرتبط بالحساب،
+وبيانات الحساب نفسه.</p>
+<p>هذا الخيار موجود في إصدارات التطبيق التي تحويه؛ إن لم تجده فحدّث التطبيق أو اتبع
+الطريقة التالية. ولحذف جزء فقط: من شاشة ذاكرة الطفل تحذف معلومة واحدة أو كل ما يخصّ
+طفلًا، ومن ملف الطفل تحذف الطفل وبياناته.</p>
+
+<h2>دون التطبيق</h2>
+<p class="box">راسلنا على
+<a href="mailto:{email}?subject=%D8%B7%D9%84%D8%A8%20%D8%AD%D8%B0%D9%81%20%D8%A8%D9%8A%D8%A7%D9%86%D8%A7%D8%AA%20%2F%20Data%20deletion%20request">{email}</a>
+بعنوان «طلب حذف بيانات».</p>
+<ul>
+  <li>إن كنت سجّلت الدخول بحساب Google: راسلنا من بريد ذلك الحساب، فنحذف كل البيانات
+  المرتبطة به وبكل هاتف مرتبط به.</li>
+  <li>إن لم تسجّل الدخول: بياناتك مرتبطة بمعرّف عشوائي أنشأه هاتفك، ولا نستطيع ربطه
+  ببريدك. اكتب لنا ما يساعد على التعرّف عليها — الفترة التقريبية لاستعمال التطبيق،
+  والاسم الأول والفئة العمرية لطفلك كما أدخلتهما — فنحذف ما نستطيع مطابقته بثقة،
+  ونخبرك إن لم نجد شيئًا.</li>
+</ul>
+<p>ننفّذ الطلب خلال <b>30 يومًا</b> ونؤكّده لك بالبريد.</p>
+
+<h2>ما لا يشمله الحذف</h2>
+<p>سجلات تقنية لا تحمل أي معرّف لك أو لهاتفك، وتُحذف تلقائيًا خلال 90 يومًا على
+الأكثر، والإحصاءات المجمّعة. وما يحفظه مزوّدو الخدمة (مثل Google وDeepSeek) يخضع
+لسياساتهم.</p>
+<p><a href="/privacy-policy">سياسة الخصوصية</a></p>
+</section>
+
+<hr>
+
+<section dir="ltr" lang="en">
+<h1>Delete your account and data — Almorabbi</h1>
+
+<h2>In the app</h2>
+<ol>
+  <li>Open <b>Settings</b>.</li>
+  <li>Tap <b>"Delete Account"</b> and confirm.</li>
+</ol>
+<p>Everything linked to your phone on our servers is deleted immediately: child
+profiles and progress, questions and answers, child memory, follow-ups and weekly
+plans, the daily tracking tools, child-mode data, feedback and replies, the
+notification token, invites, backups and session tokens. If you signed in with
+Google, the data of every phone linked to that account, and the account record
+itself, are deleted too.</p>
+<p>This option exists in app versions that include it; if you do not see it,
+update the app or use the method below. To delete only part of your data: on the
+child-memory screen you can delete one item or everything about a child, and from
+a child's profile you can delete that child and their data.</p>
+
+<h2>Without the app</h2>
+<p class="box">Email
+<a href="mailto:{email}?subject=Data%20deletion%20request">{email}</a>
+with the subject "Data deletion request".</p>
+<ul>
+  <li>If you signed in with Google: write from that Google account's address, and we
+  delete all data linked to it and to every phone linked to it.</li>
+  <li>If you never signed in: your data is linked only to a random identifier your
+  phone created, which we cannot connect to your email address. Tell us what can
+  help identify it — roughly when you used the app, and your child's first name and
+  age group as you entered them — and we delete what we can match with confidence,
+  or tell you if we find nothing.</li>
+</ul>
+<p>We complete the request within <b>30 days</b> and confirm by email.</p>
+
+<h2>What deletion does not cover</h2>
+<p>Technical logs that carry no identifier of you or your phone, which are deleted
+automatically within 90 days at most, and aggregate statistics. What our service
+providers (such as Google and DeepSeek) keep is governed by their own policies.</p>
+<p><a href="/privacy-policy">Privacy policy</a></p>
+</section>
+</body>
+</html>
+""".replace("{email}", SUPPORT_EMAIL)
+
+
+@router.get("/delete-account", include_in_schema=False)
+def delete_account_page():
+    """How to delete an account — in the app, or by email without it."""
+    return HTMLResponse(
+        DELETE_ACCOUNT_HTML,
         headers={"Cache-Control": "public, max-age=300"},
     )
 

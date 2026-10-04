@@ -128,15 +128,39 @@ def _suggested_questions(arb_path: Path) -> set[str]:
     return keys
 
 
+def _redact_names(questions: list[dict]) -> None:
+    """Replace each family's child names in the text the judge model reads.
+
+    The judge is a cloud model (DeepSeek on the VPS, Ollama Cloud when that
+    key is set), and the privacy policy promises names never reach one. The
+    same rule and the same code as the assistant (services/privacy.py); the
+    names are read once, from the same read-only connection.
+    """
+    sys.path.insert(0, str(_ROOT / "backend"))
+    from app.services.privacy import redact_with_names
+
+    names: dict[str, list[str]] = {}
+    for r in _query("SELECT device_id, name FROM child_profiles"):
+        n = (r["name"] or "").strip()
+        if r["device_id"] and len(n) >= 2:
+            names.setdefault(r["device_id"], []).append(n)
+    for q in questions:
+        family = tuple(sorted(set(names.get(q.get("device_id") or "", [])),
+                              key=len, reverse=True))
+        if family:
+            q["content"] = redact_with_names(q["content"], family)
+
+
 def collect_questions(days: int, arb_path: Path,
                       allow_unfiltered: bool = False) -> tuple[list[dict], dict]:
     """The week's genuine parent questions, plus what was filtered and why."""
     rows = _query(
-        """SELECT id, content, domain, created_at
-           FROM chat_messages
-           WHERE role = 'user'
-             AND created_at >= datetime('now', ?)
-           ORDER BY id""",
+        """SELECT m.id, m.content, m.domain, m.created_at, s.device_id
+           FROM chat_messages m
+           LEFT JOIN chat_sessions s ON s.id = m.session_id
+           WHERE m.role = 'user'
+             AND m.created_at >= datetime('now', ?)
+           ORDER BY m.id""",
         (f"-{days} days",),
     )
     try:
@@ -156,6 +180,7 @@ def collect_questions(days: int, arb_path: Path,
             n_short += 1
             continue
         kept.append({**r, "norm": norm})
+    _redact_names(kept)
     return kept, {
         "total": len(rows),
         "suggested_dropped": n_sugg,
