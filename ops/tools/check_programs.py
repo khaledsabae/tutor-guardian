@@ -642,6 +642,14 @@ def _self_test(src: dict) -> list[str]:
         fails.append(f"جدول الأجزاء: {p[:2]}")
     if not WEAK.search("العشر الأواخر عتق من النار"):
         fails.append("الأقوال الضعيفة: فات «عتق من النار»")
+    if not FOREIGN_SCRIPT.search("abc\u4e2d") or not FOREIGN_SCRIPT.search("\u041f\u0440\u0438") \
+            or FOREIGN_SCRIPT.search("مرحبًا hello ﷺ"):
+        fails.append("الحروف الأجنبية: الكاشف لا يمسك CJK/السيريلية أو يُنذر على عربي/لاتيني")
+    if band_of_age(6) != "4-6" or band_of_age(7) != "7-9" or band_of_age(12) != "10-12":
+        fails.append("حساب الفئة من العمر معطوب")
+    if milestone_bands({"type": "age", "age_months": 84, "alert_days_before": 30,
+                        "band_fallback": []}) != {"4-6"}:
+        fails.append("فئة لحظة الإشعار معطوبة: ابن ٦ سنوات و١١ شهرًا في 4-6")
     return fails
 
 
