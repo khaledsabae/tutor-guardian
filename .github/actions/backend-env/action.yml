@@ -1,0 +1,174 @@
+name: Backend test environment (GitHub-hosted)
+description: >-
+  Production's Python and exact package set (CPU-only torch, as backend/Dockerfile
+  installs it), the two Hugging Face models the backend loads, and a knowledge index
+  for the current units. Models and index come from the Actions cache; a miss builds
+  them once and saves them. Used by backend.yml on GitHub-hosted runners only — the
+  VPS runner keeps its own toolcache Python and model cache.
+
+runs:
+  using: composite
+  steps:
+    - name: Read production's Python version
+      id: prod
+      shell: bash
+      run: |
+        v="$(sed -n 's/^# python: *//p' .github/ci/constraints-prod.txt)"
+        test -n "$v"
+        echo "python=$v" >> "$GITHUB_OUTPUT"
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ steps.prod.outputs.python }}
+        cache: pip
+        cache-dependency-path: |
+          backend/requirements.txt
+          .github/ci/constraints-prod.txt
+
+    # requirements.txt alone is not enough: its ranges resolve to whatever PyPI
+    # has today (on 2026-10-04: 25 packages newer than production, fastapi
+    # 0.142.2 against 0.141.1 among them, and FastAPI changes how include_router
+    # nests routes between those). The constraints are production's own freeze.
+    - name: Install production's package set
+      shell: bash
+      env:
+        PYTHONDONTWRITEBYTECODE: '1'
+      run: |
+        set -euo pipefail
+        C=.github/ci/constraints-prod.txt
+        python -m pip install --upgrade pip
+        # CPU-only torch from the PyTorch index first, as backend/Dockerfile does:
+        # the default PyPI wheel is the CUDA build and drags in ~4 GB of nvidia-*.
+        # --no-deps so its dependencies resolve below, under the constraints.
+        torch_pin="$(grep '^torch==' "$C")"
+        pip install --no-deps --index-url https://download.pytorch.org/whl/cpu "$torch_pin"
+        pip install -r backend/requirements.txt -c "$C"
+        pip check
+        cuda="$(pip list 2>/dev/null | grep -i '^nvidia-' || true)"
+        if [ -n "$cuda" ]; then echo "::error::CUDA wheels installed: $cuda"; exit 1; fi
+        python - "$C" <<'EOF'
+        import hashlib, re, sys
+        from importlib import metadata
+
+        norm = lambda n: re.sub(r"[-_.]+", "-", n).lower()
+        pins, recorded = {}, None
+        for line in open(sys.argv[1]):
+            if line.startswith("# requirements-sha256:"):
+                recorded = line.split(":", 1)[1].strip()
+            line = line.split("#", 1)[0].strip()
+            if "==" in line:
+                name, ver = line.split("==", 1)
+                pins[norm(name)] = ver
+        have = {norm(d.metadata["Name"]): d.version for d in metadata.distributions()}
+        tooling = {"pip", "setuptools", "wheel"}
+        off = [f"{n} {have[n]} (production {v})" for n, v in pins.items() if n in have and have[n] != v]
+        new = sorted(f"{n}=={v}" for n, v in have.items() if n not in pins and n not in tooling)
+        gone = sorted(n for n in pins if n not in have)
+        print(f"{len(pins) - len(off) - len(gone)}/{len(pins)} production pins installed at production's version")
+        if off:
+            sys.exit("::error::installed version differs from production: " + ", ".join(off))
+        if new:
+            print("::warning::installed but not in production's set: " + ", ".join(new))
+        if gone:
+            print("::warning::in production's set but no longer required: " + ", ".join(gone))
+        if recorded != hashlib.sha256(open("backend/requirements.txt", "rb").read()).hexdigest():
+            print("::warning::backend/requirements.txt changed since .github/ci/constraints-prod.txt "
+                  "was generated. Production re-resolves every package on the next deploy; run "
+                  ".github/ci/refresh-constraints-from-prod.sh once that deploy is live.")
+        EOF
+
+    # Keys are derived from what the code actually loads, not from file paths:
+    # the model names the services declare, the library versions that read and
+    # write them, and the content fingerprint retrieval.py itself uses to decide
+    # whether an index is current (plus retrieval.py, so a change to how the
+    # index is built never reuses one built the old way).
+    - name: Cache keys for models and the knowledge index
+      id: keys
+      shell: bash
+      env:
+        PYTHONPATH: backend
+      run: |
+        python - <<'EOF'
+        import hashlib, os, pathlib
+        from importlib.metadata import version
+        from app.services.knowledge_loader import load_default_knowledge_units
+        from app.services.reranker import RERANKER_MODEL
+        from app.services.retrieval import EMBEDDING_MODEL, _fingerprint
+
+        def digest(*parts):
+            return hashlib.sha256("|".join(parts).encode()).hexdigest()[:16]
+
+        def libs(*names):
+            return ";".join(f"{n}={version(n)}" for n in names)
+
+        units = load_default_knowledge_units()
+        hf = "hf-" + digest(EMBEDDING_MODEL, RERANKER_MODEL,
+                            libs("huggingface_hub", "sentence-transformers", "transformers"))
+        index = "chroma-" + digest(
+            _fingerprint(units), EMBEDDING_MODEL,
+            libs("chromadb", "sentence-transformers", "transformers", "tokenizers", "torch", "numpy"),
+            hashlib.sha256(pathlib.Path("backend/app/services/retrieval.py").read_bytes()).hexdigest(),
+        )
+        with open(os.environ["GITHUB_OUTPUT"], "a") as out:
+            print(f"hf={hf}", file=out)
+            print(f"index={index}", file=out)
+        print(f"models {EMBEDDING_MODEL} + {RERANKER_MODEL} -> {hf}")
+        print(f"index of {len(units)} units -> {index}")
+        EOF
+
+    - name: Restore Hugging Face models
+      id: hf
+      uses: actions/cache/restore@v5
+      with:
+        path: ~/.cache/huggingface
+        key: ${{ steps.keys.outputs.hf }}
+
+    - name: Restore the knowledge index
+      id: index
+      uses: actions/cache/restore@v5
+      with:
+        path: knowledge_base/chroma_db
+        key: ${{ steps.keys.outputs.index }}
+
+    # A fresh checkout has no knowledge_base/chroma_db (it is gitignored), so the
+    # first test that reaches retrieval embeds every unit — on the VPS runner that
+    # is ~5 minutes inside test_release_hardening on every run, because
+    # actions/checkout's `git clean -ffdx` deletes the index between jobs. Here it
+    # is built once per content change, by the same _ensure_index() the app and
+    # the tests call, and the tests then find it current and skip the rebuild.
+    # Saved right after the build, not at job end, so no test can alter what is
+    # cached.
+    - name: Download models and build the index (cache miss only)
+      if: steps.hf.outputs.cache-hit != 'true' || steps.index.outputs.cache-hit != 'true'
+      shell: bash
+      env:
+        PYTHONPATH: backend
+        CONVERSATIONS_DB: ${{ runner.temp }}/warmup.db
+      run: |
+        python - <<'EOF'
+        import time
+        from app.services import reranker, retrieval
+
+        t = time.monotonic()
+        retrieval.embed_query("warm-up")  # embedder weights
+        reranker._get_model()             # reranker weights
+        print(f"models ready in {time.monotonic() - t:.0f}s")
+        t = time.monotonic()
+        retrieval._ensure_index()
+        print(f"index ready in {time.monotonic() - t:.0f}s")
+        EOF
+
+    - name: Save Hugging Face models
+      if: steps.hf.outputs.cache-hit != 'true'
+      uses: actions/cache/save@v5
+      with:
+        path: ~/.cache/huggingface
+        key: ${{ steps.keys.outputs.hf }}
+
+    - name: Save the knowledge index
+      if: steps.index.outputs.cache-hit != 'true'
+      uses: actions/cache/save@v5
+      with:
+        path: knowledge_base/chroma_db
+        key: ${{ steps.keys.outputs.index }}
