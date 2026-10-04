@@ -13,7 +13,6 @@ from pathlib import Path
 from urllib.parse import parse_qs, urlsplit
 
 import pytest
-from fastapi.routing import APIRoute
 from fastapi.testclient import TestClient
 
 from app import curriculum_loader as cl
@@ -52,12 +51,33 @@ def _path_params() -> dict[str, str]:
             "slug": next(iter(SEO_PAGES))}
 
 
+def _routes(routes):
+    """Every effective route, however this FastAPI exposes included routers.
+
+    Up to 0.140, include_router copied each APIRoute into app.routes. From
+    0.141 (CI and production run 0.141.1) it appends one nested _IncludedRouter
+    per router, which expands through effective_candidates(). An
+    isinstance(route, APIRoute) walk over app.routes therefore found no public
+    page at all in CI. Duck-typed, so it reads both shapes.
+    """
+    for route in routes:
+        nested = getattr(route, "effective_candidates", None)
+        if callable(nested):
+            yield from _routes(nested())
+        else:
+            yield route
+
+
 def _public_pages() -> list[str]:
-    pages = []
-    for route in app.routes:
-        if (isinstance(route, APIRoute) and "GET" in route.methods
-                and not route.path.startswith("/api")):
-            pages.append(route.path)
+    pages = sorted({
+        route.path for route in _routes(app.routes)
+        if "GET" in (getattr(route, "methods", None) or ())
+        and not route.path.startswith("/api")
+    })
+    # Fail here, by name, if a future FastAPI hides routes again, rather than
+    # downstream as a misleading "no Play link" or a vacuous pass.
+    missing = _MUST_LINK_TO_PLAY - set(pages)
+    assert not missing, f"the route walk did not find {sorted(missing)}"
     return pages
 
 
@@ -414,3 +434,23 @@ def test_the_kit_never_counts_clicks_from_the_raw_table():
         text = doc.read_text(encoding="utf-8")
         assert "FROM referral_clicks" not in text, doc.name
         assert not re.search(r"\blp\.(?:updated|completed)_at\s*[<>]", text), doc.name
+
+
+def test_the_route_walk_reads_fastapi_0_141_nested_routers():
+    # The shape FastAPI 0.141 gives app.routes: one nested router per
+    # include_router, expanded through effective_candidates().
+    class Route:
+        def __init__(self, path, methods):
+            self.path, self.methods = path, methods
+
+    class IncludedRouter:
+        def __init__(self, *children):
+            self.children = children
+
+        def effective_candidates(self):
+            return list(self.children)
+
+    nested = [IncludedRouter(Route("/go", {"GET"}),
+                             IncludedRouter(Route("/seo/{slug}", {"GET"}))),
+              Route("/api/x", {"POST"})]
+    assert [r.path for r in _routes(nested)] == ["/go", "/seo/{slug}", "/api/x"]
