@@ -49,21 +49,22 @@
     }
   ],
   "basis": {
-    "text": "The program starts at seven, following the well-known Prophetic guidance to begin teaching children the prayer at seven, with steadier follow-up at ten. We do not display the wording of that hadith because the app only shows hadith from Sahih al-Bukhari and Sahih Muslim; its source is given in the linked knowledge unit. And we learn the prayer the way the companions learned it: by watching and by example, as in the attached hadith.",
+    "text": "The program starts at seven, following the well-known Prophetic guidance to command children to pray at seven and to be firm about it at ten. Its wording mentions striking, which scholars restricted to what is neither harmful nor humiliating; this program does not use it, and relies on example, gradualness and gentleness: the companions learned the prayer by watching, and Anas never heard a word of annoyance from the Prophet ﷺ in the ten years he served him, as in the two attached hadiths. We do not display the wording of the hadith about seven because this program only shows hadith from Sahih al-Bukhari and Sahih Muslim; its source is given in the linked knowledge unit.",
     "unit_ids": [
       "isl-f2bef952",
       "isl-1bceeaf6"
     ],
     "evidence_ids": [
-      "h_pray_as_seen"
+      "h_pray_as_seen",
+      "h_anas_uff"
     ]
   },
   "principles": [
     "Example first: the child sees his parents pray calmly and on time.",
-    "Love before performance: prayer is a meeting with Allah, who loves us, not a heavy chore.",
+    "Love before performance: prayer is a meeting with Allah, who loves us, not a heavy burden.",
     "No punishment, no hitting, no shaming and no comparison with siblings or anyone else.",
     "Mistakes while learning are part of learning: correct one thing at a time, gently and in private.",
-    "A missed prayer is not met with a lecture: the next prayer is a new chance.",
+    "A missed prayer is prayed when the child remembers it, with no lecture and no blame.",
     "The rulings of purification and prayer are learned from people whose knowledge you trust; the app does not issue rulings."
   ],
   "reward_policy": {
@@ -86,6 +87,18 @@
       },
       "context": "Narrated by Malik ibn al-Huwayrith; the Prophet ﷺ said it to a group of young men who stayed with him to learn.",
       "meaning": "Pray as you have seen me praying."
+    },
+    {
+      "id": "h_anas_uff",
+      "kind": "hadith",
+      "text_ar": "خدمت النبي صلى الله عليه وسلم عشر سنين فما قال لي أف ولا لم صنعت ولا ألا صنعت",
+      "source": "صحيح البخاري — حديث ٦٠٣٨",
+      "provenance": {
+        "book": "البخاري",
+        "number": 6038
+      },
+      "context": "Anas ibn Malik describing his years of serving the Prophet ﷺ, which began when he was a boy.",
+      "meaning": "I served the Prophet ﷺ for ten years, and he never once said to me 'uff' (a word of annoyance), nor 'why did you do that?', nor 'why didn't you do that?'"
     },
     {
       "id": "h_umamah",
@@ -148,6 +161,18 @@
       "meaning": "Tell me, if there were a river at the door of one of you and he bathed in it five times every day, would any dirt remain on him?"
     },
     {
+      "id": "h_forgot_prayer",
+      "kind": "hadith",
+      "text_ar": "من نسي صلاة فليصل إذا ذكرها لا كفارة لها إلا ذلك",
+      "source": "صحيح البخاري — حديث ٥٩٧",
+      "provenance": {
+        "book": "البخاري",
+        "number": 597
+      },
+      "context": "Narrated by Anas ibn Malik.",
+      "meaning": "Whoever forgets a prayer, let him pray it when he remembers it; there is no expiation for it other than that."
+    },
+    {
       "id": "h_ease",
       "kind": "hadith",
       "text_ar": "يسروا ولا تعسروا وبشروا ولا تنفروا",
@@ -188,7 +213,7 @@
     "track": "preparation",
     "title": "Getting ready",
     "goal": "For the child to love prayer and feel at home with it before anything is asked of him.",
-    "text": "Before seven there is no daily follow-up, no coins and no obligation: it is enough for the child to see prayer as a lovely part of his family's day, and to imitate and play. In the two attached hadiths the Prophet ﷺ prayed while carrying his little granddaughter, and shortened his prayer when he heard a child crying, so little ones are welcome near prayer. The app will remind you a month before your child turns seven so that the journey can begin.",
+    "text": "Before seven there is no daily follow-up, no coins and no obligation: it is enough for the child to see prayer as a lovely part of his family's day, and to imitate and play. In the two attached hadiths the Prophet ﷺ prayed while carrying his little granddaughter, and shortened his prayer when he heard a child crying, so little ones are welcome near prayer. If you add his birth month to his profile, the app will remind you a month before he turns seven so that the journey can begin.",
     "activities": [
       {
         "key": "imitate_beside_you",
@@ -495,14 +520,14 @@
         },
         {
           "key": "local_timetable",
-          "text": "Use your local prayer times from the app or the mosque, and don't burden him with the details of when each time ends."
+          "text": "Use your local prayer times from a prayer-times app or the mosque's timetable, and don't burden him with the details of when each time ends."
         }
       ],
       "child_tasks": [
         {
           "id": "prayer_s4_adhan_announcer",
           "title": "The adhan announcer",
-          "instruction": "When you hear the adhan or the app's reminder, tell your family it is time to pray.",
+          "instruction": "When you hear the adhan or the phone alarm, tell your family it is time to pray.",
           "estimated_minutes": 2,
           "needs_parent": false,
           "per_week": 7,
@@ -531,7 +556,7 @@
         "You prayed asr on time. That's wonderful.",
         "Three whole prayers today, masha Allah!"
       ],
-      "if_struggling": "If he forgets the times, let the app's adhan reminder be his companion, or link each prayer to a fixed part of the day. If three prayers feel too heavy, go back to two for another week, without telling him he has gone backwards.",
+      "if_struggling": "If he forgets the times, set a phone alarm for the prayer times from a prayer-times app or the mosque's timetable, or link each prayer to a fixed part of the day. If three prayers feel too heavy, go back to two for another week, without telling him he has gone backwards.",
       "covenant": {
         "coins_target": 200,
         "examples": [
@@ -563,7 +588,7 @@
       "parent_assignments": [
         {
           "key": "five_gently",
-          "text": "Encourage him to pray all five, and if he misses one, no lecture: 'The next prayer is a new chance.'"
+          "text": "Encourage him to pray all five, and if he misses one, he prays it when he remembers it, as in the attached hadith about a forgotten prayer, with no lecture and no blame."
         },
         {
           "key": "fajr_days_off",
@@ -578,7 +603,7 @@
         {
           "id": "prayer_s5_five_prayers",
           "title": "The five prayers",
-          "instruction": "Try to pray the five prayers every day. If you miss one, don't be sad: pray the next one.",
+          "instruction": "Try to pray the five prayers every day. If you miss one, pray it when you remember it, and don't be sad.",
           "estimated_minutes": 7,
           "needs_parent": false,
           "per_week": 35,
@@ -622,7 +647,8 @@
         "isl-b793e864"
       ],
       "evidence_ids": [
-        "h_river"
+        "h_river",
+        "h_forgot_prayer"
       ],
       "lesson_ids": [
         "lesson_7-9_islamic_parenting_worship_01"
@@ -731,7 +757,7 @@
     "track": "ownership",
     "title": "My prayer, my responsibility",
     "goal": "For him to keep up his prayer from his own motivation, with his parents as companions and conversation partners rather than monitors.",
-    "text": "From ten onwards the follow-up becomes steadier and calmer: a clear routine, a short weekly check-in and conversation about the meaning of prayer. Steadiness here means steady follow-up, not harshness: no punishment and no shaming. Each of us is a shepherd responsible for his flock, as in the attached hadith, and now the child is learning to look after his own prayer.",
+    "text": "From eleven onwards, or after finishing the Journey, the follow-up becomes firm and gentle: a clear routine, a short weekly check-in and conversation about the meaning of prayer, with no punishment and no shaming. After puberty, prayer becomes his own obligation, and your role becomes companionship and gentle reminding. Each of us is a shepherd responsible for his flock, as in the attached hadith, and now the child is learning to look after his own prayer.",
     "parent_assignments": [
       {
         "key": "weekly_checkin",
@@ -799,11 +825,11 @@
   },
   "generation": {
     "drafter_model": "claude-opus-5.5",
-    "reviewer_model": "glm-5.2 (every item)",
+    "reviewer_model": "glm-5.2 (every item) + PR #23 sharia/medical/child-safety review",
     "translator_model": "claude-opus-5.5",
     "reviewed_at": "2026-10-04",
-    "review_rounds": 1,
-    "defects_fixed": 7,
-    "approved_by": "auto-review:glm-5.2+guards"
+    "review_rounds": 2,
+    "defects_fixed": 19,
+    "approved_by": "auto-review:glm-5.2+guards; pr23-sharia-medical-review"
   }
 }
