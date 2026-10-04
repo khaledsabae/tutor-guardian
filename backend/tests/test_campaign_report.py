@@ -31,9 +31,9 @@ def _device(conn, device, first_session, *, child=False):
     return None
 
 
-def _claim(conn, device, code, at):
-    conn.execute("INSERT INTO referrals (referrer_device, referred_device, code, created_at) "
-                 "VALUES (?, ?, ?, ?)", (f"campaign#{code}", device, code, at))
+def _claim(conn, device, code, at, via="code"):
+    conn.execute("INSERT INTO referrals (referrer_device, referred_device, code, created_at, via) "
+                 "VALUES (?, ?, ?, ?, ?)", (f"campaign#{code}", device, code, at, via))
 
 
 @pytest.fixture
@@ -57,7 +57,7 @@ def report_db():
                  (kid, "2026-09-09 08:00:00", "2026-09-09 08:00:00"))
 
     kid2 = _device(conn, "a2", "2026-09-02 10:00:00", child=True)
-    _claim(conn, "a2", "DA01", "2026-09-02 10:00:00")
+    _claim(conn, "a2", "DA01", "2026-09-02 10:00:00", via="auto")  # matched by IP
     conn.execute("INSERT INTO chat_messages (session_id, role, content, created_at) "
                  "VALUES ('s-a2', 'user', 'q', '2026-09-03 10:00:00')")
     # Day 15, '+00:00' format — after the window.
@@ -74,14 +74,14 @@ def report_db():
     # A one-minute-early 'T…Z' stamp: compared as raw text it would sort
     # after '2026-09-08 10:00:00' and count as a day-7 action.
     kid5 = _device(conn, "a5", "2026-09-01 10:00:00", child=True)
-    _claim(conn, "a5", "DA01", "2026-09-01 10:00:00")
+    _claim(conn, "a5", "DA01", "2026-09-01 10:00:00", via=None)    # before via existed
     conn.execute("INSERT INTO lesson_progress (device_id, child_id, path_id, lesson_id, status, "
                  "started_at, updated_at) VALUES ('a5', ?, 'p', 'l2', 'in_progress', ?, ?)",
                  (kid5, "2026-09-01T11:00:00Z", "2026-09-08T09:59:00Z"))
 
-    # WAAR: clicked, never installed.
+    # WA01: clicked, never installed.
     conn.execute("INSERT INTO referral_clicks (ip, code, clicked_at) VALUES "
-                 "('198.51.100.1', 'WAAR', '2026-09-20 10:00:00')")
+                 "('198.51.100.1', 'WA01', '2026-09-20 10:00:00')")
     # Two personal invites — one from a parent whose code merely starts like a
     # campaign (ENV9Z5 is a real production device code) — and an organic install.
     _device(conn, "p1", "2026-09-10 10:00:00")
@@ -110,13 +110,14 @@ def _data(db, days=60):
 def test_campaign_funnel_counts(report_db):
     da = _data(report_db)["campaigns"]["DA01"]
     assert (da.clicks, da.new, da.already) == (3, 4, 1)   # a1 a2 a4 a5 new; a3 already
+    assert (da.exact, da.auto, da.unknown) == (2, 1, 1)   # a1 a4 · a2 · a5
     assert (da.child, da.lesson) == (3, 2)                # a1 a2 a5 · a1 a5
     assert (da.d7_eligible, da.d7_active) == (3, 1)       # a1 a2 a5 eligible; a1 active
     assert da.first_seen == "2026-09-01 09:00:00"
 
 
 def test_clicks_without_installs_still_show(report_db):
-    wa = _data(report_db)["campaigns"]["WAAR"]
+    wa = _data(report_db)["campaigns"]["WA01"]
     assert (wa.clicks, wa.new, wa.already) == (1, 0, 0)
 
 
@@ -150,7 +151,8 @@ def test_dry_run_prints_aggregates_only(report_db, capsys, monkeypatch):
     monkeypatch.setattr(cr, "send_telegram", lambda *a: pytest.fail("sent in dry run"))
     assert cr.main(["--db", str(report_db), "--dry-run", "--days", "365"]) == 0
     out = capsys.readouterr().out
-    assert "<b>DA01</b> · preacher_ar" in out and "WAAR" in out
+    assert "<b>DA01</b> · preacher_ar" in out and "WA01" in out
+    assert "تثبيت 5 [بالكود 3 · بمطابقة IP 1 · قبل التتبّع 1]" in out  # + the June claim
     # No device ids, IPs or owners — and a person's own code never gets a line.
     for private in ("a1", "a2", "p1", "p2", "o1", "203.0.113", "inviter", "campaign#",
                     "ABC234", "ENV9Z5"):
@@ -217,9 +219,77 @@ def test_end_to_end_a_preacher_link_lands_in_the_report():
 
 def test_the_script_and_the_backend_agree_on_campaign_codes():
     assert cr.CAMPAIGN_CHANNELS == attribution.CAMPAIGN_CHANNELS
-    assert cr.DEVICE_CODE_ALPHABET == attribution.DEVICE_CODE_ALPHABET
-    assert cr.DEVICE_CODE_LEN == attribution.DEVICE_CODE_LEN
+    assert cr.CAMPAIGN_RE.pattern == attribution.CAMPAIGN_RE.pattern
     assert cr.PREVIEW_FETCHER_RE.pattern == attribution.PREVIEW_FETCHER_RE.pattern
-    for code in ("DA01", "WAAR", "KT001", "ABC234", "C0001", "ENV9Z5", "DA0001",
-                 "DA" + "9" * 14, "DA" + "9" * 15):
+    for code in ("DA01", "WA02", "KT17", "WAAR", "KT001", "ENV9Z", "ENV9Z5", "ABC234",
+                 "DA0001", "DA٠١"):
         assert cr.is_campaign_code(code) == attribution.is_campaign_code(code), code
+
+
+def test_folded_daily_clicks_are_counted(report_db):
+    conn = get_conn()
+    conn.execute("INSERT INTO referral_click_days (day, code, clicks) VALUES "
+                 "('2026-08-20', 'DA01', 4), ('2026-05-01', 'DA01', 50)")
+    conn.commit()
+    conn.close()
+    da = _data(report_db)["campaigns"]["DA01"]
+    assert da.clicks == 3 + 4                    # May is outside the 60-day window
+    assert da.first_seen == "2026-08-20 00:00:00"
+
+
+def test_a_database_from_before_v32_still_reports(tmp_path):
+    # Production until this deploys: no referrals.via, no referral_click_days.
+    db = tmp_path / "old.db"
+    conn = sqlite3.connect(db)
+    conn.executescript(
+        "CREATE TABLE referrals (id INTEGER PRIMARY KEY, referrer_device TEXT,"
+        " referred_device TEXT, code TEXT, created_at TEXT);"
+        "CREATE TABLE chat_sessions (id TEXT, device_id TEXT, created_at TEXT);"
+        "INSERT INTO referrals VALUES (1, 'campaign#DA01', 'd1', 'DA01', '2026-09-20 10:00:00');"
+        "INSERT INTO chat_sessions VALUES ('s', 'd1', '2026-09-20 10:00:00');")
+    conn.commit()
+    conn.close()
+    da = _data(db)["campaigns"]["DA01"]
+    assert (da.new, da.exact, da.auto, da.unknown) == (1, 0, 0, 1)
+
+
+def _raw_click(conn, ip, ua, code, age):
+    conn.execute("INSERT INTO referral_clicks (ip, user_agent, code, clicked_at) "
+                 "VALUES (?, ?, ?, datetime('now', ?))", (ip, ua, code, age))
+
+
+def test_old_clicks_fold_into_daily_counts_and_leave_no_ip_behind():
+    from app.services.attribution import compact_referral_clicks
+
+    conn = get_conn()
+    _raw_click(conn, "203.0.113.1", "Mozilla", "DA01", "-10 days")
+    _raw_click(conn, "203.0.113.2", "Mozilla", "DA01", "-10 days")
+    _raw_click(conn, "203.0.113.3", "facebookexternalhit/1.1", "DA01", "-10 days")
+    _raw_click(conn, "203.0.113.4", "Mozilla", "WA01", "-9 days")
+    _raw_click(conn, "203.0.113.5", "Mozilla", "DA01", "-1 days")    # recent: stays raw
+    conn.commit()
+    conn.close()
+    assert compact_referral_clicks(dry_run=True) == 4                 # counts, writes nothing
+    assert compact_referral_clicks() == 4
+    conn = get_conn()
+    raw = [(r["ip"], r["code"]) for r in conn.execute("SELECT ip, code FROM referral_clicks")]
+    days = {(r["code"], r["clicks"]) for r in
+            conn.execute("SELECT code, clicks FROM referral_click_days")}
+    conn.close()
+    assert raw == [("203.0.113.5", "DA01")]         # only the recent click keeps an IP
+    assert days == {("DA01", 2), ("WA01", 1)}        # the preview fetch is not counted
+    assert compact_referral_clicks() == 0            # nothing left to fold
+
+
+def test_the_daily_push_cron_folds_old_clicks():
+    import ops.scripts.cron_push_triggers as cpt
+
+    conn = get_conn()
+    _raw_click(conn, "203.0.113.9", "Mozilla", "DA01", "-30 days")
+    conn.commit()
+    conn.close()
+    assert cpt.fold_referral_clicks(dry_run=True) == 1
+    assert cpt.fold_referral_clicks() == 1
+    conn = get_conn()
+    assert conn.execute("SELECT COUNT(*) FROM referral_clicks").fetchone()[0] == 0
+    conn.close()

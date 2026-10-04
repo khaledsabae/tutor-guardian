@@ -14,8 +14,8 @@
 |---|---|
 | **القناتان** | عربية «المربّي \| تربية الأطفال» + إنجليزية «Al-Morabbi — Muslim Parenting». قناتان لا قناة ثنائية: المنشور المختلط اللغة يُزعج الجمهورين، ودليل القنوات يرتّب بحسب البلد |
 | **الصورة** | `frontend/icons/icon-512.png` |
-| **الوصف (عربي)** | «منشور تربوي قصير كل يوم: نصيحة لعمر طفلك، ودرس أسبوعي، واستطلاع. من تطبيق المربّي — مجاني لوجه الله. https://tg-api.alsaba.cloud/go?ref=WAAR» |
-| **Description (EN)** | "A short, practical Muslim parenting tip three times a week. From the Al-Morabbi app — free, for the sake of Allah. Android: https://play.google.com/store/apps/details?id=com.alsaba.almorabbi&referrer=ref_WAEN&hl=en" |
+| **الوصف (عربي)** | «منشور تربوي قصير كل يوم: نصيحة لعمر طفلك، ودرس أسبوعي، واستطلاع. من تطبيق المربّي — مجاني لوجه الله. https://tg-api.alsaba.cloud/go?ref=WA01» |
+| **Description (EN)** | "A short, practical Muslim parenting tip three times a week. From the Al-Morabbi app — free, for the sake of Allah. Android: https://play.google.com/store/apps/details?id=com.alsaba.almorabbi&referrer=ref_WA02&hl=en" |
 | **الظهور في الدليل** | مفعّل (الدليل يصفّي بالبلد ويعرض الأنشط والأكثر متابعة) |
 | **إعادة التوجيه** | **مسموحة** — الانتشار هو الهدف. لا حظر للقطات الشاشة |
 | **التفاعلات** | مجموعة محدودة (🤍 👍 🤲) — المتابعون لا يستطيعون الرد نصيًا، فلا شيء يحتاج إشرافًا |
@@ -35,11 +35,11 @@
 | المؤشر | المصدر | الإيقاع |
 |---|---|---|
 | المتابعون | شاشة القناة | كل سبت، يُسجَّل يدويًا |
-| النقرات | `referral_clicks` للكود `WAAR` | أسبوعيًا |
-| التثبيتات ونشاطها في الأيام ٧–١٤ | `referrals` لـ`WAAR`/`WAEN` + استعلام README §٣ | أسبوعيًا |
+| النقرات | `ops/scripts/campaign_report.py --dry-run`، سطر `WA01` (النقرات الخام تبقى سبعة أيام ثم تُطوى في عدّاد يومي) | أسبوعيًا |
+| التثبيتات ونشاطها في الأيام ٧–١٤ | التقرير نفسه، سطرا `WA01`/`WA02` (تثبيت بالكود منفصل عن مطابقة IP) | أسبوعيًا |
 | التفاعل لكل نوع منشور | تفاعلات كل منشور | السبت — لتعديل الخلطة بعد ٤ أسابيع |
 
-**هدف معقول:** ٥٠٠ متابع عربي قبل رمضان (من منشورات الدعاة ورابط التطبيق)، لا أكثر. القياس الحقيقي هو تثبيتات `WAAR` التي تبقى.
+**هدف معقول:** ٥٠٠ متابع عربي قبل رمضان (من منشورات الدعاة ورابط التطبيق)، لا أكثر. القياس الحقيقي هو تثبيتات `WA01` التي تبقى.
 
 ## ٣. قوالب المنشورات
 
@@ -47,14 +47,14 @@
 ```
 🌱 نصيحة لعمر [الفئة]
 [نص النصيحة حرفيًا من الملف]
-— المربّي: https://tg-api.alsaba.cloud/go?ref=WAAR
+— المربّي: https://tg-api.alsaba.cloud/go?ref=WA01
 ```
 
 **درس الأسبوع (الاثنين):**
 ```
 📘 درس الأسبوع: [عنوان الدرس]
 [أول جملة من ملخص الدرس، حرفيًا]
-اقرأه: https://tg-api.alsaba.cloud/l/[lesson_id]?ref=WAAR
+اقرأه: https://tg-api.alsaba.cloud/l/[lesson_id]?ref=WA01
 ```
 
 **استطلاع (الأربعاء):** من الجدول في القسم ٤.
@@ -79,7 +79,7 @@
 ```
 🌱 A tip for ages [band]
 [EN tip text, verbatim from knowledge_base/curriculum/i18n/en/daily_tips/<id>.json]
-— Al-Morabbi (Android): https://play.google.com/store/apps/details?id=com.alsaba.almorabbi&referrer=ref_WAEN&hl=en
+— Al-Morabbi (Android): https://play.google.com/store/apps/details?id=com.alsaba.almorabbi&referrer=ref_WA02&hl=en
 ```
 القناة الإنجليزية: الأحد = نصيحة الأحد، الأربعاء = نصيحة الثلاثاء، الجمعة = نصيحة الخميس (بنفس الـid بنصّه الإنجليزي).
 إن كانت النصيحة «❌ عربي فقط» تُؤخذ نصيحة الجمعة من الأسبوع نفسه بدلها؛ وإن بقيت خانة بلا نصيحة إنجليزية (أسبوع ٨ فيه
@@ -225,7 +225,7 @@
 | البند | القرار |
 |---|---|
 | **المقاسات** | 1080×1080 للقناة، و1080×1920 لحالة واتساب (خالد والدعاة) |
-| **المولّد** | `ops/tools/generate_tip_cards.py` موجود (خط Cairo، خلفية الهوية، QR) **لكنه يقرأ من `02_content_arsenal.md`** (فيه عامية). يحتاج تعديلًا صغيرًا لاحقًا: خيار `--ids tip_7-9_001,…` يقرأ النص من `knowledge_base/curriculum/daily_tips/` (والإنجليزي من `i18n/en/`)، وQR إلى `/go?ref=WAAR` أو رابط Play بـ`ref_WAEN`. **ليس في هذه الحزمة** (وثائق فقط) |
+| **المولّد** | `ops/tools/generate_tip_cards.py` موجود (خط Cairo، خلفية الهوية، QR) **لكنه يقرأ من `02_content_arsenal.md`** (فيه عامية). يحتاج تعديلًا صغيرًا لاحقًا: خيار `--ids tip_7-9_001,…` يقرأ النص من `knowledge_base/curriculum/daily_tips/` (والإنجليزي من `i18n/en/`)، وQR إلى `/go?ref=WA01` أو رابط Play بـ`ref_WA02`. **ليس في هذه الحزمة** (وثائق فقط) |
 | **محتوى البطاقة** | نص النصيحة حرفيًا + «لعمر [الفئة]» + الشعار + QR. بلا آيات ولا أحاديث ولا «مجاني» داخل الصورة |
 | **الإيقاع** | يوم السبت: ٤ بطاقات نصائح + بطاقة درس للأسبوع التالي |
 | **رمضان** ⏳ F-RAMADAN | بطاقة يومية من تحدّي اليوم في البرنامج — المحتوى من المرحلة ٢ نفسها لا يُكتب هنا |

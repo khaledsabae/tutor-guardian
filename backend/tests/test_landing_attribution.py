@@ -237,9 +237,9 @@ def test_a_campaign_click_is_recorded_on_every_landing_page(client):
              f"/seo/{params['slug']}", "/seo/", "/methodology"]
     for i, url in enumerate(pages):
         ip = f"203.0.113.{10 + i}"
-        assert client.get(url, params={"ref": "wa-ar"},
+        assert client.get(url, params={"ref": "wa-01"},
                           headers={"cf-connecting-ip": ip}).status_code == 200
-        assert (ip, "WAAR") in _clicks(), url
+        assert (ip, "WA01") in _clicks(), url
 
 
 @pytest.mark.parametrize("fetcher", [
@@ -267,3 +267,129 @@ def test_an_unknown_personal_code_is_still_not_recorded(client):
     client.get("/ui/?ref=NOPE99", headers={"cf-connecting-ip": "203.0.113.7"})
     client.get("/l/x?ref=ZZZZ22", headers={"cf-connecting-ip": "203.0.113.7"})
     assert _clicks() == []
+
+
+# ── Click writes are bounded: 8 public routes share the app-wide SQLite ──────
+
+def _trace_writes(monkeypatch) -> list[str]:
+    """Every INSERT/UPDATE/DELETE record_click sends to SQLite."""
+    from app.services import attribution
+
+    real, writes = attribution.get_conn, []
+
+    def traced():
+        conn = real()
+        conn.set_trace_callback(
+            lambda sql: writes.append(sql)
+            if sql.lstrip().upper().startswith(("INSERT", "UPDATE", "DELETE")) else None)
+        return conn
+
+    monkeypatch.setattr(attribution, "get_conn", traced)
+    return writes
+
+
+def test_a_repeat_visit_within_a_minute_writes_nothing(client, monkeypatch):
+    writes = _trace_writes(monkeypatch)
+    ip = {"cf-connecting-ip": "203.0.113.70"}
+    client.get("/go?ref=DA01", headers=ip)
+    assert len(writes) == 1                      # the first visit inserts
+    writes.clear()
+    for _ in range(5):
+        client.get("/go?ref=DA01", headers=ip)
+    assert writes == []                          # no UPDATE + COMMIT per hit
+    conn = get_conn()
+    conn.execute("UPDATE referral_clicks SET clicked_at = datetime('now', '-2 minutes')")
+    conn.commit()
+    conn.close()
+    client.get("/go?ref=DA01", headers=ip)
+    assert len(writes) == 1 and writes[0].lstrip().upper().startswith("UPDATE")
+
+
+def test_ipv6_visitors_are_counted_per_64(client):
+    for host in ("2001:db8:9:9::1", "2001:db8:9:9:abcd::2"):
+        client.get("/go?ref=DA01", headers={"cf-connecting-ip": host})
+    assert _clicks() == [("2001:db8:9:9::/64", "DA01")]
+
+
+def test_new_clicks_have_a_global_per_minute_cap(client, monkeypatch):
+    from app.services import attribution
+
+    monkeypatch.setattr(attribution, "MAX_NEW_CLICKS_PER_MINUTE", 3)
+    for i in range(5):
+        client.get("/go?ref=DA01", headers={"cf-connecting-ip": f"198.51.100.{i}"})
+    assert len(_clicks()) == 3
+
+
+@pytest.mark.parametrize("header", [
+    {"Sec-Purpose": "prefetch"}, {"Sec-Purpose": "prefetch;prerender"},
+    {"Purpose": "prefetch"}, {"X-Purpose": "preview"}, {"X-Moz": "prefetch"},
+])
+def test_a_prefetch_or_preview_load_is_not_a_click(client, header):
+    r = client.get("/go?ref=DA01", headers={"cf-connecting-ip": "203.0.113.80", **header})
+    assert r.status_code == 200 and "referrer=ref_DA01" in _html.unescape(r.text)
+    assert _clicks() == []
+
+
+def test_a_database_that_will_not_open_never_fails_the_page(client, monkeypatch):
+    import sqlite3
+
+    from app.services import attribution
+
+    def broken():
+        raise sqlite3.OperationalError("unable to open database file")
+
+    monkeypatch.setattr(attribution, "get_conn", broken)
+    r = client.get("/go?ref=DA01", headers={"cf-connecting-ip": "203.0.113.81"})
+    assert r.status_code == 200 and "referrer=ref_DA01" in _html.unescape(r.text)
+
+
+@pytest.mark.parametrize("path", ["/seo/", "/seo/pray-child", "/methodology"])
+def test_a_tagged_page_is_never_kept_by_a_shared_cache(client, path):
+    # The Play link inside carries this visitor's ?ref= / utm_*.
+    for query in ({"ref": "DA01"}, {"utm_source": "facebook"}):
+        cache = client.get(path, params=query).headers["cache-control"]
+        assert "private" in cache and "public" not in cache, (path, query, cache)
+    assert client.get(path).headers["cache-control"] == "public, max-age=3600"
+
+
+def test_methodology_numbers_return_after_a_failed_count(client, monkeypatch):
+    from app.routers import methodology
+    from app.services import knowledge_loader
+
+    real = knowledge_loader.load_default_knowledge_units
+    calls = []
+
+    def flaky():
+        calls.append(1)
+        if len(calls) == 1:
+            raise OSError("knowledge base not mounted yet")
+        return real()
+
+    monkeypatch.setattr(methodology, "_STATS", None)
+    monkeypatch.setattr(knowledge_loader, "load_default_knowledge_units", flaky)
+    assert 'class="stat-num"' not in client.get("/methodology").text  # renders anyway
+    assert 'class="stat-num"' in client.get("/methodology").text      # not cached as None
+
+
+# ── Documented campaign links keep their query on the way in ────────────────
+
+_DOC_CAMPAIGN_URL = re.compile(r"https?://[^\s)`'\"<>»]+[?&](?:ref|utm_[a-z]+)=")
+_KEEPS_QUERY = re.compile(r"^https://tg-api\.alsaba\.cloud/(?:go|l/[^?]+|seo/[^?]*)\?")
+
+
+def test_campaign_links_only_use_routes_that_keep_the_query():
+    # The alsaba.cloud proxy for /methodology drops the query string — the code
+    # and utm_* never reach the page — and its config lives in another
+    # project's repo on a shared host. So campaign traffic goes to tg-api's
+    # /go, /l/ and /seo/ only.
+    docs = [_ROOT / "docs" / "OPS_RUNBOOK.md",
+            *sorted((_ROOT / "docs" / "marketing" / "2026-10-ramadan").glob("*.md"))]
+    bad = [(doc.name, m.group(0)) for doc in docs
+           for m in _DOC_CAMPAIGN_URL.finditer(doc.read_text(encoding="utf-8"))
+           if not _KEEPS_QUERY.match(m.group(0))]
+    assert not bad, bad
+    runbook = (_ROOT / "docs" / "OPS_RUNBOOK.md").read_text(encoding="utf-8")
+    section = runbook.split("### 6.5", 1)[1].split("\n### ", 1)[0]
+    routes = set(re.findall(r"`(/[a-z]+)[^`]*`", section))
+    assert routes <= {"/go", "/l", "/seo"}, routes
+    assert "alsaba.cloud/methodology" in section  # and it says why not

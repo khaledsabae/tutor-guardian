@@ -19,7 +19,7 @@ from pathlib import Path
 from fastapi import APIRouter, Request
 from fastapi.responses import HTMLResponse
 
-from app.services.attribution import attribute_visit
+from app.services.attribution import attribute_visit, cache_control
 
 router = APIRouter(tags=["web"])
 
@@ -533,7 +533,8 @@ def _faq_schema(faq: list[dict], canonical: str) -> str:
 
 
 def _page(title: str, desc: str, body: str, canonical: str, install_url: str,
-          faq: list[dict] | None = None) -> HTMLResponse:
+          faq: list[dict] | None = None,
+          cache: str = "public, max-age=3600") -> HTMLResponse:
     t, d = _html.escape(title), _html.escape(desc)
     body = body.replace(PLAY_URL_PLACEHOLDER, _html.escape(install_url))
     schema = _faq_schema(faq or [], canonical)
@@ -589,7 +590,7 @@ def _page(title: str, desc: str, body: str, canonical: str, install_url: str,
 </body>
 </html>"""
     return HTMLResponse(content=doc, status_code=200,
-                        headers={"Cache-Control": "public, max-age=3600"})
+                        headers={"Cache-Control": cache})
 
 
 @router.get("/{slug}", include_in_schema=False)
@@ -608,6 +609,7 @@ def seo_page(request: Request, slug: str):
         canonical=canonical,
         install_url=attribute_visit(request),
         faq=page_data.get("faq"),
+        cache=cache_control(request.query_params),
     )
 
 
@@ -638,4 +640,5 @@ def seo_index(request: Request):
         body=body,
         canonical=base_url + "/seo",
         install_url=attribute_visit(request),
+        cache=cache_control(request.query_params),
     )

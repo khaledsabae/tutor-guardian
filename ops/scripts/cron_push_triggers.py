@@ -269,6 +269,30 @@ def first_lesson_activation(skip: set | None = None) -> set:
     return sent
 
 
+def fold_referral_clicks(dry_run: bool = False) -> int | None:
+    """Daily housekeeping that needs no cron of its own: raw referral clicks
+    (IP + user agent) older than a week fold into per-code daily counts.
+
+    The import is guarded on purpose. ops/scripts reaches the host by
+    `git reset` alone while the backend is baked into the image, so a deploy
+    that stops between the two leaves this script newer than its backend — and
+    housekeeping must never take the evening pushes down with it.
+    """
+    try:
+        from app.services.attribution import compact_referral_clicks
+    except ImportError:
+        print("  -> referral clicks: backend predates compaction; skipped")
+        return None
+    try:
+        folded = compact_referral_clicks(dry_run=dry_run)
+    except Exception as e:  # noqa: BLE001
+        print(f"  -> referral clicks: compaction failed ({type(e).__name__}); skipped")
+        return None
+    verb = "would fold" if dry_run else "folded"
+    print(f"  -> referral clicks: {verb} {folded} raw rows into daily counts")
+    return folded
+
+
 if __name__ == "__main__":
     args = _parse_args()
     BASE_URL = args.base_url.rstrip("/")
@@ -294,5 +318,8 @@ if __name__ == "__main__":
         win_back(skip=nudged | act_sent | skip)
     else:
         print("  -> outside the 17 UTC window; nothing to do (use --force to test)")
+
+    # After the pushes, whatever the hour: once a day is what the cron gives it.
+    fold_referral_clicks(dry_run=DRY_RUN)
 
     print("done")

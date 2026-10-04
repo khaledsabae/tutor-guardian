@@ -14,7 +14,7 @@ public list there only for nothing — it requires a token like /api/children):
   GET  /api/referral/me      → {code, invited_count, reward_coins, share_url}
   POST /api/referral/claim   → body {code}; records this device as referred.
 
-Campaign codes (`DA01`, `WAAR`, `KT001` — see app.services.attribution) have no
+Campaign codes (`DA01`, `WA02`, `KT17` — see app.services.attribution) have no
 device behind them. A claim of one that is well-formed is recorded under the
 owner `campaign#<CODE>` even if the code was never seen before: the app makes
 exactly one claim attempt per install, so a 404 there loses the install's
@@ -33,6 +33,7 @@ from app.services.attribution import (
     DEVICE_CODE_ALPHABET,
     DEVICE_CODE_LEN,
     campaign_owner,
+    ip_bucket,
     is_campaign_code,
     normalize_code,
     play_install_url,
@@ -135,8 +136,13 @@ def claim_referral(body: ClaimRequest, request: Request) -> dict:
         if already:
             return {"ok": False, "already_claimed": True, "reward_coins": 0}
 
+        # Provenance, kept apart in referrals.via: an exact code (install
+        # referrer, deep link or typed) vs. a guess from a click on the same
+        # IP — worth less on a carrier NAT, so the campaign report shows both.
+        via = "code"
         if code == "AUTO":
-            ip = _get_client_ip(request)
+            via = "auto"
+            ip = ip_bucket(_get_client_ip(request))  # as record_click stored it
             click = conn.execute(
                 "SELECT code FROM referral_clicks "
                 "WHERE ip = ? AND clicked_at > datetime('now', '-24 hours') "
@@ -161,9 +167,9 @@ def claim_referral(body: ClaimRequest, request: Request) -> dict:
             raise HTTPException(status_code=400, detail="لا يمكن إحالة نفسك")
 
         conn.execute(
-            "INSERT INTO referrals (referrer_device, referred_device, code) "
-            "VALUES (?, ?, ?)",
-            (referrer, device_id, code),
+            "INSERT INTO referrals (referrer_device, referred_device, code, via) "
+            "VALUES (?, ?, ?, ?)",
+            (referrer, device_id, code, via),
         )
         conn.commit()
     finally:

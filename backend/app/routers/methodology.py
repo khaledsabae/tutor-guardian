@@ -16,12 +16,11 @@ from __future__ import annotations
 import html as _html
 import logging
 from collections import Counter
-from functools import lru_cache
 
 from fastapi import APIRouter, Request
 from fastapi.responses import HTMLResponse
 
-from app.services.attribution import attribute_visit
+from app.services.attribution import attribute_visit, cache_control
 
 logger = logging.getLogger(__name__)
 router = APIRouter(tags=["web"])
@@ -30,7 +29,8 @@ _TEAL = "#01696F"
 _CREAM = "#FAF7F2"
 
 
-def _page(title: str, desc: str, body: str, canonical: str) -> HTMLResponse:
+def _page(title: str, desc: str, body: str, canonical: str,
+          cache: str = "public, max-age=3600") -> HTMLResponse:
     t, d = _html.escape(title), _html.escape(desc)
     doc = f"""<!doctype html>
 <html lang="ar" dir="rtl">
@@ -79,7 +79,7 @@ def _page(title: str, desc: str, body: str, canonical: str) -> HTMLResponse:
 </body>
 </html>"""
     return HTMLResponse(content=doc, status_code=200,
-                        headers={"Cache-Control": "public, max-age=3600"})
+                        headers={"Cache-Control": cache})
 
 
 _AR_DIGITS = str.maketrans("0123456789", "٠١٢٣٤٥٦٧٨٩")
@@ -90,16 +90,23 @@ def _ar(n: int) -> str:
     return f"{n:,}".replace(",", "٬").translate(_AR_DIGITS)
 
 
-@lru_cache(maxsize=1)
+_STATS: dict | None = None  # set once counted; a failed count is retried
+
+
 def _kb_stats() -> dict | None:
     """Counted from the knowledge base the assistant retrieves from.
 
     The page used to type its numbers in, and they drifted: «١٬١١٩ وحدة» when
     there were 1,673, and 57 development units when there were 172. Counted
-    once per process — the knowledge base only changes with a deploy. "Has a
-    reference" uses the filter that decides whether an answer shows a «📚»
-    line, so the page and the answers cannot disagree.
+    once per process — the knowledge base only changes with a deploy — but only
+    once it succeeds: a failed load is retried on the next request instead of
+    hiding the numbers until a restart. "Has a reference" uses the filter that
+    decides whether an answer shows a «📚» line, so the page and the answers
+    cannot disagree.
     """
+    global _STATS
+    if _STATS is not None:
+        return _STATS
     try:
         from app.services.knowledge_loader import load_default_knowledge_units
         from app.services.llm_service import usable_reference
@@ -112,7 +119,7 @@ def _kb_stats() -> dict | None:
         return None
     by_domain = Counter(u.domain for u in units)
     referenced = sum(1 for u in units if usable_reference(u.reference_info))
-    return {
+    _STATS = {
         "total": len(units),
         "islamic": by_domain["islamic_parenting"] + by_domain["aqeedah"],
         "health": by_domain["medical"],
@@ -120,6 +127,7 @@ def _kb_stats() -> dict | None:
         "cyber": by_domain["cyber"],
         "referenced_pct": round(100 * referenced / len(units)),
     }
+    return _STATS
 
 
 def _stats_html() -> str:
@@ -212,4 +220,5 @@ def methodology_page(request: Request):
         desc="كيف تُبنى إجابات المربّي: قاعدة معرفة بمراجع مذكورة، وضوابط آلية، ولا فتوى ولا تشخيص طبي.",
         body=body,
         canonical=canonical,
+        cache=cache_control(request.query_params),
     )

@@ -12,6 +12,7 @@ Each test below decodes the Play URL the way Play does (once) and then asserts
 what each reader would see.
 """
 import re
+import string
 from urllib.parse import parse_qs, unquote, urlsplit
 
 import pytest
@@ -89,14 +90,21 @@ def test_a_utm_value_can_never_be_claimed_as_a_referral_code(value):
 # ── Input normalisation ─────────────────────────────────────────────────────
 
 @pytest.mark.parametrize("raw,code", [
-    ("DA01", "DA01"), ("da01", "DA01"), (" Da-01 ", "DA01"), ("kt_001", "KT001"),
+    ("DA01", "DA01"), ("da01", "DA01"), (" Da-01 ", "DA01"), ("kt_01", "KT01"),
     ("ABC234", "ABC234"),
+    # Pasted out of a chat message: bidi / zero-width marks (Unicode Cf) and
+    # the punctuation that follows the code in the sentence.
+    ("\u200fDA01\u060c", "DA01"), ("DA01.", "DA01"), ("\u2066da-01\u2069", "DA01"),
+    ("\u200bDA\u200c01", "DA01"), ("\ufeffABC234", "ABC234"), ("«DA01»", "DA01"),
+    ("DA01<script>", "DA01"), ("DA01?utm_source=x", "DA01"),
+    # Typed on an Arabic keyboard.
+    ("DA٠١", "DA01"), ("KT۱۷", "KT17"),
 ])
 def test_codes_are_normalised(raw, code):
     assert at.normalize_code(raw) == code
 
 
-@pytest.mark.parametrize("raw", [None, "", "AB", "A" * 17, "DA01<script>", "دعاة"])
+@pytest.mark.parametrize("raw", [None, "", "AB", "A" * 17, "دعاة", "!!!", "\u200f\u060c"])
 def test_malformed_codes_are_dropped(raw):
     assert at.normalize_code(raw) is None
 
@@ -109,25 +117,43 @@ def test_utm_values_are_bounded_and_unknown_params_ignored():
 
 # ── Campaign codes ───────────────────────────────────────────────────────────
 
-@pytest.mark.parametrize("code", ["DA01", "DA10", "EN05", "WAAR", "WAEN", "KT001",
-                                  "CM01", "PD01", "OT01"])
+@pytest.mark.parametrize("code", ["DA01", "DA10", "EN05", "WA01", "WA02", "KT01",
+                                  "KT99", "CM01", "PD01", "OT01"])
 def test_the_marketing_kit_codes_are_campaign_codes(code):
     # docs/marketing/2026-10-ramadan/00_README.md hands these out.
     assert at.is_campaign_code(code)
 
 
-@pytest.mark.parametrize("code", ["ABC234", "C0001", "NOPE99", "AUTO", "DA", "DA0"])
+@pytest.mark.parametrize("code", [
+    "ABC234", "C0001", "NOPE99", "AUTO", "DA", "DA0", "DA001", "DA1A", "DAAB",
+    # The earlier, wider shape — and personal codes that start like a channel.
+    "WAAR", "KT001", "ENV9Z", "ENV9Z5", "DA2345", "WAXYZK", "DA٠١",
+])
 def test_other_codes_are_not_campaign_codes(code):
     assert not at.is_campaign_code(code)
+    assert at.attribution_utm(code, {}) == {}  # and get no campaign utm
 
 
-@pytest.mark.parametrize("code", ["ENV9Z5", "DA2345", "WAXYZK"])
-def test_a_device_code_that_starts_like_a_campaign_is_still_a_person(code):
-    # ENV9Z5 is a real device code in production (read-only, 2026-10-04); a
-    # prefix-only rule credited its owner's invites to "English preachers".
-    assert at.is_device_shaped(code)
-    assert not at.is_campaign_code(code)
-    assert at.attribution_utm(code, {}) == {}
+def _one_edit_typos(code: str) -> set[str]:
+    """Every dropped, added, wrong or swapped character."""
+    chars = string.ascii_uppercase + string.digits
+    out = {code[:i] + code[i + 1:] for i in range(len(code))}
+    out |= {code[:i] + c + code[i:] for i in range(len(code) + 1) for c in chars}
+    out |= {code[:i] + c + code[i + 1:] for i in range(len(code)) for c in chars}
+    out |= {code[:i] + code[i + 1] + code[i] + code[i + 2:] for i in range(len(code) - 1)}
+    return out - {code}
+
+
+def test_no_typo_of_a_personal_code_is_ever_a_campaign_code():
+    # ENV9Z — ENV9Z5 with its last character dropped — was accepted as an
+    # English-preacher campaign: the claim used up the device's one attempt
+    # and the friend who invited it was never credited.
+    from app.routers.referral import _gen_code
+
+    codes = {"ENV9Z5", "DA2345", "WA2345", "KT2345"} | {_gen_code() for _ in range(300)}
+    for code in codes:
+        typos = [t for t in _one_edit_typos(code) if at.is_campaign_code(t)]
+        assert not typos, (code, typos[:5])
 
 
 def test_no_generated_device_code_is_ever_a_campaign_code():
@@ -164,7 +190,8 @@ def test_a_campaign_owner_can_never_be_a_real_device_id():
 
 
 def test_every_campaign_code_fits_the_app_parser():
-    longest = "DA" + "9" * (16 - 2)
-    assert at.is_campaign_code(longest)
-    assert _app_claims(at.play_install_url(longest)) == longest
-    assert not at.is_campaign_code(longest + "9")
+    for prefix in at.CAMPAIGN_CHANNELS:
+        code = f"{prefix}07"
+        assert at.is_campaign_code(code)
+        url = at.play_install_url(code, at.attribution_utm(code, {}))
+        assert _app_claims(url) == code

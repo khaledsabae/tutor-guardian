@@ -81,6 +81,12 @@ Migration v28: api_tokens stores sha256(token) instead of the bearer itself,
 Migration v29: child_web_claims holds the one-time QR claim codes for the teen
                web surface (sha256 of the code; the token is minted on
                redemption). Replaces an in-process dict (audit L11). Additive.
+Migration v32: install attribution. referrals.via records how a claim was made
+               ('code' = an exact code, 'auto' = matched to a click by IP;
+               NULL = before this); referral_click_days holds per-code daily
+               click counts once raw clicks (IP, user agent) pass their
+               seven-day retention; ix_referral_clicks_time serves both. Additive,
+               ensured unconditionally (v30 and v31 belong to other branches).
 """
 import hashlib
 import os
@@ -209,7 +215,7 @@ CREATE INDEX IF NOT EXISTS ix_referrals_referrer
     ON referrals (referrer_device);
 """
 
-SCHEMA_VERSION = 29
+SCHEMA_VERSION = 32
 
 
 def db_path() -> Path:
@@ -401,6 +407,7 @@ def init_db() -> None:
     _ensure_lesson_progress_child_key(conn)
     _ensure_licence_tables(conn)
     _ensure_child_web_claims_table(conn)
+    _ensure_attribution_v32(conn)
 
     row = conn.execute("SELECT version FROM schema_version LIMIT 1").fetchone()
     if row is None:
@@ -1080,6 +1087,26 @@ def _ensure_child_web_claims_table(conn: sqlite3.Connection) -> None:
         );
         CREATE INDEX IF NOT EXISTS ix_child_web_claims_expires
             ON child_web_claims (expires_at);
+        """
+    )
+
+
+def _ensure_attribution_v32(conn: sqlite3.Connection) -> None:
+    """v32: claim provenance + daily click counts. Additive and idempotent."""
+    _ensure_column(
+        conn, table="referrals", column="via",
+        ddl="ALTER TABLE referrals ADD COLUMN via TEXT",
+    )
+    conn.executescript(
+        """
+        CREATE TABLE IF NOT EXISTS referral_click_days (
+            day    TEXT NOT NULL,
+            code   TEXT NOT NULL,
+            clicks INTEGER NOT NULL,
+            PRIMARY KEY (day, code)
+        );
+        CREATE INDEX IF NOT EXISTS ix_referral_clicks_time
+            ON referral_clicks (clicked_at);
         """
     )
 

@@ -1,17 +1,22 @@
 #!/usr/bin/env python3
 """Campaign report — which channel brings families who stay.
 
-One block per campaign code (DA01, WAAR, KT001 … — the scheme lives in
+One block per campaign code (DA01, WA02, KT17 … — the scheme lives in
 backend/app/services/attribution.py), then the same numbers for personal
 invites and for every new device, as the yardstick:
 
-  clicks    landing-page visits carrying the code (referral_clicks; the same
-            IP and code within 10 minutes count once; link-preview fetchers
-            such as facebookexternalhit are not visits and are left out)
+  clicks    landing-page visits carrying the code: raw referral_clicks rows
+            (the same IP and code within 10 minutes count once; link-preview
+            fetchers such as facebookexternalhit are not visits) plus
+            referral_click_days, where rows older than a week are folded.
   installs  claims (referrals). `new` = the claim came with the first launch;
             `already` = the app was installed before and a tap on the link
             opened it (App Links), so it is re-engagement, not acquisition.
-            Every rate below is over `new` only.
+            Every rate below is over `new` only. New installs are split by
+            how the claim was made (referrals.via): an exact code (install
+            referrer, deep link, typed) or AUTO, a guess from a click on the
+            same IP — weaker on a carrier NAT. Claims from before the split
+            was recorded show as «قبل التتبّع».
   child     new installs that added a child (ever)
   lesson    … that started a lesson (ever)
   D7        … with a family action in days 7–13 after the claim, over the
@@ -62,11 +67,9 @@ CAMPAIGN_CHANNELS: dict[str, tuple[str, str]] = {
     "PD": ("paid", "paid"),
     "OT": ("other", "referral"),
 }
-CAMPAIGN_RE = re.compile(r"^(?:" + "|".join(CAMPAIGN_CHANNELS) + r")[A-Z0-9]{2,14}$")
-# A six-character code from the device alphabet is a person's invite, even
-# one that starts like a campaign (production has `EN…` device codes).
-DEVICE_CODE_ALPHABET = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"
-DEVICE_CODE_LEN = 6
+# Exactly two letters and two digits: no typo of a six-character personal
+# code can take this shape. Mirror of CAMPAIGN_RE.
+CAMPAIGN_RE = re.compile(r"^(?:" + "|".join(CAMPAIGN_CHANNELS) + r")[0-9]{2}$")
 # Link-preview fetchers (a share in a chat fetches the preview) were 15% of
 # production clicks before the landing pages stopped recording them; this
 # keeps the older rows out of the count too. Mirror of PREVIEW_FETCHER_RE.
@@ -97,9 +100,7 @@ _ACTION_COLUMNS = (
 
 
 def is_campaign_code(code: str | None) -> bool:
-    if not code or not CAMPAIGN_RE.match(code):
-        return False
-    return not (len(code) == DEVICE_CODE_LEN and set(code) <= set(DEVICE_CODE_ALPHABET))
+    return bool(code) and bool(CAMPAIGN_RE.match(code))
 
 
 def channel_of(code: str) -> str:
@@ -123,11 +124,14 @@ class Cohort:
     first_seen: str | None = None
     already: int = 0
     new: int = 0
+    exact: int = 0      # new installs claimed with the code itself
+    auto: int = 0       # … matched to a click by IP
+    unknown: int = 0    # … from before referrals.via existed
     child: int = 0
     lesson: int = 0
     d7_eligible: int = 0
     d7_active: int = 0
-    members: list[tuple[str, str]] = field(default_factory=list, repr=False)
+    members: list[tuple[str, str, str | None]] = field(default_factory=list, repr=False)
 
 
 @dataclass
@@ -139,7 +143,7 @@ class Facts:
     with_child: set[str]
     with_lesson: set[str]
     actions: dict[str, list[str]]
-    claims: list[tuple[str, str, str]]     # (code, device_id, claimed_at)
+    claims: list[tuple[str, str, str, str | None]]  # (code, device, claimed_at, via)
     clicks: dict[str, tuple[int, str]]     # code → (clicks, first click)
 
 
@@ -179,19 +183,31 @@ def load_facts(conn: sqlite3.Connection, days: int, now: datetime) -> Facts:
     for stamps in actions.values():
         stamps.sort()
 
-    claims = [(r[0], r[1], r[2]) for r in rows(
-        "SELECT code, referred_device, datetime(created_at) FROM referrals "
-        "WHERE datetime(created_at) >= ? ORDER BY created_at", (since,))] \
-        if "referrals" in tables else []
+    claims: list[tuple[str, str, str, str | None]] = []
+    if "referrals" in tables:
+        # referrals.via arrived in schema v32; older databases read as NULL.
+        has_via = "via" in {c[1] for c in conn.execute("PRAGMA table_info(referrals)")}
+        via = "via" if has_via else "NULL"
+        claims = [(r[0], r[1], r[2], r[3]) for r in rows(
+            f"SELECT code, referred_device, datetime(created_at), {via} FROM referrals "
+            "WHERE datetime(created_at) >= ? ORDER BY created_at", (since,))]
     clicks: dict[str, tuple[int, str]] = {}
+
+    def add_clicks(code: str, n: int, at: str) -> None:
+        total, first = clicks.get(code, (0, at))
+        clicks[code] = (total + n, min(first, at))
+
     if "referral_clicks" in tables:
         for code, user_agent, at in rows(
                 "SELECT code, user_agent, datetime(clicked_at) FROM referral_clicks "
                 "WHERE datetime(clicked_at) >= ?", (since,)):
-            if PREVIEW_FETCHER_RE.search(user_agent or ""):
-                continue
-            n, first = clicks.get(code, (0, at))
-            clicks[code] = (n + 1, min(first, at))
+            if not PREVIEW_FETCHER_RE.search(user_agent or ""):
+                add_clicks(code, 1, at)
+    if "referral_click_days" in tables:  # raw rows older than a week, folded
+        for code, n, day in rows(
+                "SELECT code, SUM(clicks), MIN(day) FROM referral_click_days "
+                "WHERE day >= date(?) GROUP BY code", (since,)):
+            add_clicks(code, n, f"{day} 00:00:00")
     return Facts(now=now, since=since, first_session=first_session, with_child=with_child,
                  with_lesson=with_lesson, actions=actions, claims=claims, clicks=clicks)
 
@@ -204,7 +220,10 @@ def _acted_between(stamps: list[str], start: datetime, end: datetime) -> bool:
 def _finish(cohort: Cohort, facts: Facts) -> Cohort:
     """Fill child / lesson / D7 from cohort.members — the new installs."""
     cohort.new = len(cohort.members)
-    for device, start in cohort.members:
+    for device, start, via in cohort.members:
+        cohort.exact += via == "code"
+        cohort.auto += via == "auto"
+        cohort.unknown += via not in ("code", "auto")
         cohort.child += device in facts.with_child
         cohort.lesson += device in facts.with_lesson
         t0 = _parse(start)
@@ -233,12 +252,12 @@ def build_report_data(facts: Facts) -> dict:
             c.clicks, c.first_seen = n, first
         else:
             invites.clicks += n
-    for code, device, claimed_at in facts.claims:
+    for code, device, claimed_at, via in facts.claims:
         cohort = campaign(code) if is_campaign_code(code) else invites
         if cohort is not invites and (cohort.first_seen is None or claimed_at < cohort.first_seen):
             cohort.first_seen = claimed_at
         if _is_new_install(facts, device, claimed_at):
-            cohort.members.append((device, claimed_at))
+            cohort.members.append((device, claimed_at, via))
         else:
             cohort.already += 1
 
@@ -254,7 +273,7 @@ def build_report_data(facts: Facts) -> dict:
     for ch in channels.values():
         _finish(ch, facts)
 
-    everyone = Cohort(members=[(d, t) for d, t in facts.first_session.items()
+    everyone = Cohort(members=[(d, t, None) for d, t in facts.first_session.items()
                                if t >= facts.since])
     _finish(everyone, facts)
     return {"campaigns": campaigns, "channels": channels, "invites": invites,
@@ -270,6 +289,11 @@ def _line(c: Cohort, with_clicks: bool = True) -> str:
     if with_clicks:
         parts.append(f"نقرات {c.clicks}")
     installs = f"تثبيت {c.new}"
+    if with_clicks and c.new:  # a claim-based cohort: say how it was claimed
+        split = [f"بالكود {c.exact}", f"بمطابقة IP {c.auto}"]
+        if c.unknown:
+            split.append(f"قبل التتبّع {c.unknown}")
+        installs += " [" + " · ".join(split) + "]"
     if c.already:
         installs += f" (+{c.already} مثبَّت سابقًا)"
     parts += [installs,
@@ -302,6 +326,7 @@ def format_report(data: dict, days: int, now: datetime) -> str:
             "كل جهاز جديد: " + _line(data["everyone"], with_clicks=False),
             "",
             "التثبيت = طلب إحالة من التطبيق؛ النسب على التثبيتات الجديدة وحدها. "
+            "«بالكود» = وصل الكود نفسه؛ «بمطابقة IP» = تخمين من نقرة على العنوان نفسه. "
             "D7 = فعل أسري في الأيام 7–13 بعد التثبيت، على من مضى عليه 14 يومًا."]
     return "\n".join(out)
 
