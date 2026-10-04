@@ -2,7 +2,7 @@
   "id": "tip_16-18_012",
   "age_group": "16-18",
   "domain": "cyber",
-  "text": "Gaming addiction can go as far as two years away from school. Signs: prioritising play, continuing despite harm, anger when prevented. Seek help early.",
+  "text": "Gaming addiction can go as far as dropping out of school. Signs: prioritising play, continuing despite harm, anger when prevented. Seek help early.",
   "unit_id": "cyb-26236b19",
   "day_of_week": 0,
   "time_of_day": "evening",
@@ -21,6 +21,13 @@
     "review_verdict": "pending",
     "review_defects": [],
     "approved_by": null,
-    "revalidated_at": "2026-10-04T11:18:18+00:00"
+    "revalidated_at": "2026-10-04T11:18:18+00:00",
+    "english_authors": [
+      "mistral-large-3:675b",
+      "claude-opus-5.5"
+    ],
+    "fixer_model": "claude-opus-5.5",
+    "fixed_at": "2026-10-04T18:17:56+00:00",
+    "manual_fix_note": "2026-10-04 PR #20 review: 'two years' was one patient's story in the WHO source, not a general claim"
   }
 }

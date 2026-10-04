@@ -8,8 +8,8 @@
   "units": {
     "0bd76d3c-548a-46ed-b17b-78874741662a__en": {
       "category": "awaiting-review",
-      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system · Arabic corrected 2026-10-04 per the PR #20 review",
-      "content_sha256": "7fcba710e6c9da0d1888f0525406c9b8f7794376701c2b0170af53bce3a1a769",
+      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system · Arabic corrected 2026-10-04 per the PR #20 review · English corrected by Claude 2026-10-04 per the PR #20 review",
+      "content_sha256": "ec1629d69864662567f0e3e2bea30c9cf626485687baf8528d830f5bc399a084",
       "queued_on": "2026-10-04",
       "english_authors": [
         "claude-opus-5.5"
@@ -215,8 +215,8 @@
     },
     "lesson_7-9_aqeedah_fundamentals_04": {
       "category": "awaiting-review",
-      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system · Arabic corrected 2026-10-04 per the PR #20 review",
-      "content_sha256": "e3293edba6745147b6ea7fa02ac5a75cb813e9a142fe6c0b2c2891e8822870da",
+      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system · Arabic corrected 2026-10-04 per the PR #20 review · English corrected by Claude 2026-10-04 per the PR #20 review",
+      "content_sha256": "c0698c18b3ad33155e445cb79d5a244383a7d2f1fca054fa3673ebc58c464f31",
       "queued_on": "2026-10-04",
       "english_authors": [
         "claude-opus-5.5"
@@ -266,8 +266,8 @@
     },
     "med-b99c1ea8__en": {
       "category": "awaiting-review",
-      "reason": "Arabic corrected 2026-10-04 per the PR #20 review and the English rewritten by Claude to match; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 after the Ollama weekly cap",
-      "content_sha256": "ba3736d2d2c66e2be7829bc5d3e65214a871a76ec0a2328962771d40d2351032",
+      "reason": "Arabic corrected 2026-10-04 per the PR #20 review and the English rewritten by Claude to match; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 after the Ollama weekly cap · English corrected by Claude 2026-10-04 per the PR #20 review",
+      "content_sha256": "915bfaccd2374595260b76b5e96a62d33373d11af40b07d559ee9f5f99dedf16",
       "queued_on": "2026-10-04",
       "english_authors": [
         "claude-opus-5.5"
@@ -275,8 +275,8 @@
     },
     "med-ccf5e011__en": {
       "category": "awaiting-review",
-      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system · Arabic corrected 2026-10-04 per the PR #20 review",
-      "content_sha256": "9a71caaf236480ff950d74857ef629ad908e4b07cd4c3e0ae26490bb137834a0",
+      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system · Arabic corrected 2026-10-04 per the PR #20 review · English corrected by Claude 2026-10-04 per the PR #20 review",
+      "content_sha256": "5de773fecc409b301a9f67757b0b86ba199d6bd4ad5ad3fb67ab7ac4c3c73ffd",
       "queued_on": "2026-10-04",
       "english_authors": [
         "claude-opus-5.5"
@@ -284,8 +284,8 @@
     },
     "med-e7e88a3b__en": {
       "category": "awaiting-review",
-      "reason": "Arabic corrected 2026-10-04 per the PR #20 review and the English rewritten by Claude to match; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 after the Ollama weekly cap",
-      "content_sha256": "b35c11f8884fb6de6b76f94bbe7aa76a8b87b3da8cea7a1a094eb2d8b7705af3",
+      "reason": "Arabic corrected 2026-10-04 per the PR #20 review and the English rewritten by Claude to match; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 after the Ollama weekly cap · English corrected by Claude 2026-10-04 per the PR #20 review",
+      "content_sha256": "004f583c19c902f3306573132f4b41c601b93538c482c9b56a1237cccf1fea7b",
       "queued_on": "2026-10-04",
       "english_authors": [
         "claude-opus-5.5"
@@ -371,8 +371,8 @@
     },
     "tip_16-18_012": {
       "category": "awaiting-review",
-      "reason": "Arabic corrected 2026-10-04 per the PR #20 review and the English rewritten by Claude to match; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 after the Ollama weekly cap",
-      "content_sha256": "b685cf2fc5b558e2973dca83b256533bb9d701e35f012f9b1ac2000180d852b8",
+      "reason": "Arabic corrected 2026-10-04 per the PR #20 review and the English rewritten by Claude to match; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 after the Ollama weekly cap · English corrected by Claude 2026-10-04 per the PR #20 review",
+      "content_sha256": "51b223206c65c037beca8f1691be95028d2a0bd62813785d17548aa20242fea5",
       "queued_on": "2026-10-04",
       "english_authors": [
         "claude-opus-5.5"

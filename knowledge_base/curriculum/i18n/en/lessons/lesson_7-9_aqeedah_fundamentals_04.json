@@ -8,7 +8,7 @@
     "aqe-ff6b8a27"
   ],
   "summary": "The correct answer according to the understanding of Ahl al-Sunnah: Allah is in the sky, exalted above His Throne, above all His creation, and at the same time, He is with us through His knowledge, hearing, and sight—He sees us, hears us, and knows what is in our hearts. In the hadith, the Prophet ﷺ asked a slave girl, 'Where is Allah?' and she said, 'In the sky,' and he affirmed her answer. Teach your child that Allah always sees him, even when no one else does—not to frighten him, but to cultivate in him murāqabah (watchfulness): that he feels haya before his Lord and does good even in secret. This self-watchfulness is the most precious thing you can plant in him, and it will guard him when you are not around.",
-  "try_this": "This week: When your child does something good and no one sees it, gently remind him, 'Our Lord saw you, and He is pleased with you.' And make 'Allah sees me' the motto of your home.",
+  "try_this": "This week: When your child does something good and no one sees it, gently remind him, 'Allah saw you, and He loves what you did.' And make 'Allah sees me' the motto of your home.",
   "order": 4,
   "estimated_minutes": 8,
   "reflection_prompts": [
@@ -44,7 +44,12 @@
     ],
     "approved_by": null,
     "revalidated_at": "2026-08-13T19:43:42.242707+00:00",
-    "fixed_at": "2026-08-13T19:43:42.242739+00:00",
-    "fixer_model": "mistral-large-3:675b"
+    "fixed_at": "2026-10-04T18:17:56+00:00",
+    "fixer_model": "claude-opus-5.5",
+    "english_authors": [
+      "mistral-large-3:675b",
+      "claude-opus-5.5"
+    ],
+    "manual_fix_note": "2026-10-04 PR #20 review: the reminder no longer tells the child, as a fact, that Allah is pleased with them (#31's wording)"
   }
 }
