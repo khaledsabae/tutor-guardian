@@ -13,6 +13,13 @@ public list there only for nothing — it requires a token like /api/children):
 
   GET  /api/referral/me      → {code, invited_count, reward_coins, share_url}
   POST /api/referral/claim   → body {code}; records this device as referred.
+
+Campaign codes (`DA01`, `WA02`, `KT17` — see app.services.attribution) have no
+device behind them. A claim of one that is well-formed is recorded under the
+owner `campaign#<CODE>` even if the code was never seen before: the app makes
+exactly one claim attempt per install, so a 404 there loses the install's
+attribution for good — which is what happened to every campaign code until
+now, since none existed in referral_codes.
 """
 from __future__ import annotations
 
@@ -22,6 +29,15 @@ from fastapi import APIRouter, HTTPException, Request
 from pydantic import BaseModel, Field
 
 from app.db.init_db import get_conn
+from app.services.attribution import (
+    DEVICE_CODE_ALPHABET,
+    DEVICE_CODE_LEN,
+    campaign_owner,
+    ip_bucket,
+    is_campaign_code,
+    normalize_code,
+    play_install_url,
+)
 
 router = APIRouter(prefix="/referral", tags=["referral"])
 
@@ -29,10 +45,10 @@ router = APIRouter(prefix="/referral", tags=["referral"])
 # Doubled 2026-07-16 (growth plan §6.4 — temporary referral campaign);
 # revert to 50 when the campaign ends.
 REWARD_COINS = 100
-# Unambiguous alphabet (no 0/O/1/I) for codes that get typed/read aloud.
-_ALPHABET = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"
-_CODE_LEN = 6
-_PLAY_URL = "https://play.google.com/store/apps/details?id=com.alsaba.almorabbi"
+# Unambiguous alphabet (no 0/O/1/I) for codes that get typed/read aloud. The
+# shape is also what tells a person's code from a campaign's (attribution.py).
+_ALPHABET = DEVICE_CODE_ALPHABET
+_CODE_LEN = DEVICE_CODE_LEN
 
 
 class ClaimRequest(BaseModel):
@@ -88,7 +104,7 @@ def my_referral(request: Request) -> dict:
         "code": code,
         "invited_count": invited,
         "reward_coins": REWARD_COINS,
-        "share_url": f"{_PLAY_URL}&referrer=ref_{code}",
+        "share_url": play_install_url(code),  # …&referrer=ref_<code>, as ever
     }
 
 
@@ -103,10 +119,14 @@ def claim_referral(body: ClaimRequest, request: Request) -> dict:
     """Record that this (new) device was referred by `body.code`.
 
     Idempotent + abuse-guarded: a device can be referred only once, can't
-    refer itself, and the code must exist. Returns the reward for the client
-    to credit locally."""
+    refer itself, and the code must exist — or be a well-formed campaign code,
+    which needs no row of its own. Returns the reward for the client to credit
+    locally."""
     device_id = _require_device_id(request)
-    code = body.code.strip().upper()
+    raw = body.code.strip().upper()
+    # `da-01` typed or linked by hand is DA01; anything that cannot be a code
+    # is looked up as sent and 404s as before.
+    code = raw if raw == "AUTO" else (normalize_code(raw) or raw)
     conn = get_conn()
     try:
         # Check if already claimed first to avoid fingerprinting for already claimed devices
@@ -116,8 +136,13 @@ def claim_referral(body: ClaimRequest, request: Request) -> dict:
         if already:
             return {"ok": False, "already_claimed": True, "reward_coins": 0}
 
+        # Provenance, kept apart in referrals.via: an exact code (install
+        # referrer, deep link or typed) vs. a guess from a click on the same
+        # IP — worth less on a carrier NAT, so the campaign report shows both.
+        via = "code"
         if code == "AUTO":
-            ip = _get_client_ip(request)
+            via = "auto"
+            ip = ip_bucket(_get_client_ip(request))  # as record_click stored it
             click = conn.execute(
                 "SELECT code FROM referral_clicks "
                 "WHERE ip = ? AND clicked_at > datetime('now', '-24 hours') "
@@ -132,16 +157,19 @@ def claim_referral(body: ClaimRequest, request: Request) -> dict:
         owner = conn.execute(
             "SELECT device_id FROM referral_codes WHERE code = ?", (code,)
         ).fetchone()
-        if owner is None:
+        if owner is not None:
+            referrer = owner["device_id"]
+        elif is_campaign_code(code):
+            referrer = campaign_owner(code)
+        else:
             raise HTTPException(status_code=404, detail="كود إحالة غير صالح")
-        referrer = owner["device_id"]
         if referrer == device_id:
             raise HTTPException(status_code=400, detail="لا يمكن إحالة نفسك")
 
         conn.execute(
-            "INSERT INTO referrals (referrer_device, referred_device, code) "
-            "VALUES (?, ?, ?)",
-            (referrer, device_id, code),
+            "INSERT INTO referrals (referrer_device, referred_device, code, via) "
+            "VALUES (?, ?, ?, ?)",
+            (referrer, device_id, code, via),
         )
         conn.commit()
     finally:

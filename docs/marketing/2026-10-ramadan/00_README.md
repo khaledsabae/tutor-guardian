@@ -78,52 +78,65 @@
 | 🔧 M-UTM | سكربت تمرير `utm_*` إلى رابط Play (الإصلاح `30bc1d5f`، 15 أغسطس) **حُذف** في `e35bcdc2` (13 سبتمبر) حين استُبدلت `index.html` | `git show e35bcdc2 -- frontend/index.html` يُظهر حذف السكربت؛ و`/go?utm_source=x` يعطي روابط Play عارية | كل تثبيت من حملة مدفوعة يعود إلى `(direct)` في GA4 — نفس العطل الذي أُصلح في أغسطس | الآن `/go` تُولَّد في الخادم (`web.py::landing`)، فيمكن التمرير هناك: إلحاق `utm_*` بـ`referrer` مع إبقاء `ref_<code>` أولًا |
 | 🔧 M-CODES | رابط الإحالة لا يُحتسب إلا إن كان **الكود موجودًا** في `referral_codes`؛ وإلا يردّ `/api/referral/claim` بـ404 ويضيع التثبيت | `referral.py::claim_referral` و`web.py::_record_click` | لا يمكن إعطاء داعية رابطًا خاصًا قبل إنشاء كوده | جدول أو بذرة `campaign_codes` (انظر أدناه) |
 
-### أكواد الحملات (المقترح)
+> **الحالة:** الثلاثة يُصلحها فرع `fix/attribution`: `/ui/` تُعرض من القالب نفسه بأزرار Play حقيقية، وكل صفحة عامة
+> تمرّر `ref` و`utm_*` إلى Play، وكود الحملة الصحيح الصيغة يُحتسب **دون أي إنشاء مسبق**. الدليل التشغيلي:
+> `docs/OPS_RUNBOOK.md` §6.5. يبقى شرط G0 كما هو: تثبيت تجريبي بعد النشر يظهر صفًا بالكود الصحيح.
+
+### أكواد الحملات
 
 الآلية الموجودة تعمل بالأثر: **١٠٠ إحالة مسجّلة و٦٤١ نقرة** على الإنتاج (قراءة فقط، 2026-10-04)، وأعلى كود
 جلب ١٨ تثبيتًا. نبني عليها ولا نخترع آلية جديدة:
 
-- **الصيغة:** حروف كبيرة وأرقام، ٤–١٦ خانة (`_CODE_RE` في الخادم، و`REF_([A-Z0-9]{4,16})` في التطبيق،
-  و`min_length=4` في الطلب). الحروف الصغيرة **تكسر الرابط بصمت** (يصير رابط Play عاريًا).
-- **لا تصادم مع أكواد الأجهزة:** كود الجهاز ٦ خانات من أبجدية بلا `0/1/O/I` (`_ALPHABET` في `referral.py`)، فأي كود طوله
-  غير ٦ أو فيه `0` أو `1` لا يمكن أن يصادم كود جهاز. (`WAAR` و`WAEN` ٤ خانات، و`KT001` ٥.)
+- **الصيغة: حرفان للقناة ثم رقمان — أربع خانات بالضبط** (`DA01`، `WA02`، `KT17`). الحروف الصغيرة والشرطة
+  والأرقام العربية مقبولة في الرابط (`da-01` = `DA٠١` = `DA01`)؛ قبل `fix/attribution` كانت الحروف الصغيرة
+  **تكسر الرابط بصمت** (يصير رابط Play عاريًا).
+- **لماذا أربع خانات بالضبط:** كود الدعوة الشخصي ست خانات، فأي خطأ في كتابته (حرف ساقط أو زائد أو مبدَّل) يعطي
+  خمسًا أو ستًّا أو سبعًا، فلا يُقرأ حملةً أبدًا. الصيغة الأوسع التي اقترحتها هذه الحزمة أولًا (`WAAR` و`KT001`)
+  قبلت `ENV9Z` — كودًا شخصيًا حقيقيًا (`ENV9Z5`) سقط حرفه الأخير — حملةً، فاستهلكت المطالبة الوحيدة للجهاز وضاع حق
+  صاحب الدعوة. لذلك صارت قناتا واتساب `WA01` (العربية) و`WA02` (الإنجليزية)، والكتاتيب `KT01`…`KT99`.
 - **السجلّ:**
 
 | البادئة | لمن | أمثلة |
 |---|---|---|
 | `DA01`–`DA10` | الدعاة والمربّون بالعربية | `DA01` |
 | `EN01`–`EN05` | الدعاة والمربّون بالإنجليزية | `EN01` |
-| `WAAR` / `WAEN` | قناتا واتساب | — |
-| `KT001`… | الكتاتيب والحضانات والمدارس (قبل F-CLASS) | `KT001` |
+| `WA01` / `WA02` | قناتا واتساب | — |
+| `KT01`–`KT99` | الكتاتيب والحضانات والمدارس (قبل F-CLASS) | `KT01` |
 | `CM01`… | المجتمعات الإنجليزية (جروب/نشرة/بودكاست) | `CM01` |
 | `PD01`… | أي تعزيز مدفوع (بعد بوابة D7 فقط) | `PD01` |
 
 - **الربط بين الكود والشخص لا يدخل git** — يبقى في ملاحظات خالد المحلية. لا أسماء أشخاص في الأكواد.
-- **إنشاء الأكواد — خياران:**
-  1. **(موصى به)** PR صغير إضافي: ملف `ops/data/campaign_codes.json` يُبذَر عند الإقلاع في `referral_codes`
-     بـ`device_id = 'campaign:<CODE>'`. إضافي بالكامل، لا يغيّر أي سلوك قائم، ويُختبر بتست واحد (رابط `/go?ref=DA01`
-     يسجّل نقرة، و`claim` بـ`DA01` يعيد `ok`).
-  2. **(بديل يدوي — كتابة على الإنتاج يقوم بها خالد بنفسه):**
-     ```sql
-     INSERT OR IGNORE INTO referral_codes (device_id, code)
-     VALUES ('campaign:DA01','DA01'), ('campaign:DA02','DA02'), ('campaign:WAAR','WAAR');
-     ```
-     ثم يُسجَّل قيد في `publishing-center/OPERATIONS_LOG.md` (تغيير تشغيلي).
+- **إنشاء الأكواد: لا شيء.** بعد `fix/attribution` يُحتسب أي كود بإحدى البادئات أعلاه (و`OT` لغيرها) فور مشاركة
+  رابطه، ويُسجَّل التثبيت باسم المالك `campaign#<CODE>`. **لا بذر ولا كتابة على الإنتاج** — بديلا البذرة و`INSERT`
+  اليدوي اللذان اقترحتهما هذه الحزمة لم يعودا لازمين.
+- **روابط الحملات على `tg-api.alsaba.cloud` وحده: `/go` أو `/l/<lesson_id>` أو `/seo/<مقال>`.** هذه تصل إلى
+  التطبيق باستعلامها كاملًا. أما `alsaba.cloud/methodology` وغيره تحت `alsaba.cloud` فيمرّ بوكيل nginx لموقع آخر
+  على الخادم نفسه يُسقط ما بعد «?»، فيضيع الكود و`utm_*` (إعداده في مستودع آخر ولا يُعدَّل من هنا).
 
 ### أشكال الروابط
 
 | الاستعمال | الرابط | ما يُقاس | ملاحظة |
 |---|---|---|---|
 | عربي عام | `https://tg-api.alsaba.cloud/go?ref=DA01` | نقرة (`referral_clicks`) + تثبيت (`referrals`) + مطابقة IP خلال ٢٤ ساعة إن ضاع الـreferrer | الصفحة عربية فقط |
-| درس بعينه | `https://tg-api.alsaba.cloud/l/<lesson_id>?ref=WAAR` | تثبيت فقط (صفحة الدرس **لا تسجّل النقرة** ولا تدعم مطابقة IP) | مُختبرة حية: الرابط يمرّر `referrer=ref_…` |
+| درس بعينه | `https://tg-api.alsaba.cloud/l/<lesson_id>?ref=WA01` | نقرة + تثبيت + مطابقة IP (منذ `fix/attribution`؛ قبله: تثبيت فقط) | الرابط يمرّر `referrer=ref_…` |
 | إنجليزي | `https://play.google.com/store/apps/details?id=com.alsaba.almorabbi&referrer=ref_EN01&hl=en` | تثبيت فقط | لأن كل صفحات الويب عربية؛ لا توجد صفحة هبوط إنجليزية |
 
 ### قياس كل كود حتى اليوم السابع (قراءة فقط على الإنتاج)
 
-جُرّب على قاعدة الإنتاج اليوم: من **٩١ تثبيتًا بالإحالة** (أقدم من ١٤ يومًا) سجّلت ٧١ منها طفلًا، وفتحت ٣٧ درسًا،
-ونشطت **٧ (٨٪) في الأيام ٧–١٤**. وللمقارنة بنقطة بداية واحدة (تسجيل أول طفل) ونافذة واحدة (الأيام ٧–١٤): الأسر
-التي جاءت بإحالة **٨ من ٧١ (١١٪)**، وكل الأسر التي سجّلت طفلًا في آخر ١٢٠ يومًا **٢٠٠ من ٣٬٥٨٢ (٥٫٦٪)**.
-العيّنة صغيرة (٧١)، فالفرق اتجاه لا حكم — لكنه في صالح توصية شخص حقيقي.
+**المصدر المعتمد للأرقام:** `docker exec -w /app tg_backend python ops/scripts/campaign_report.py --dry-run` —
+النقرات (بلا زواحف المعاينة، ومعها ما طُوي من النقرات الأقدم من سبعة أيام في `referral_click_days`)، والتثبيتات
+الجديدة مقسومةً بين «بالكود» و«بمطابقة IP» ومنفصلةً عمّن كان التطبيق عنده، والطفل، والدرس، وD7. لا تعدّ النقرات من
+جدول `referral_clicks` مباشرة: الصفوف الخام تُحذف بعد سبعة أيام بعد طيّها، فالعدّ منه يُنقص النقرات نحو عشرة أضعاف.
+
+**تعريفان لـD7 — لا تقارن أرقام أحدهما بالآخر:**
+- **رسالة + درس** (تعريف `weekly_funnel_report.py` والاستعلام أدناه): من **٩١ تثبيتًا بالإحالة** (أقدم من ١٤ يومًا)
+  سجّلت ٧١ منها طفلًا، وفتحت ٣٧ درسًا، ونشطت **٧ (٨٪) في الأيام ٧–١٤**. وللمقارنة بنقطة بداية واحدة (تسجيل أول طفل)
+  ونافذة واحدة: الأسر التي جاءت بإحالة **٨ من ٧١ (١١٪)**، وكل الأسر التي سجّلت طفلًا في آخر ١٢٠ يومًا
+  **٢٠٠ من ٣٬٥٨٢ (٥٫٦٪)**.
+- **رسالة + درس + عادة + مهمة طفل + تحدٍّ** (تعريف `campaign_report.py`): من **٨٩ تثبيتًا جديدًا** بالإحالة نشط
+  **٨ (٩٪)** في الأيام ٧–١٣؛ ومن كل جهاز جديد **٢٤٠ من ٤٬٥٩٥ (٥٪)**. (قراءة فقط، 2026-10-04.)
+
+العيّنة صغيرة، فالفرق اتجاه لا حكم — لكنه في صالح توصية شخص حقيقي.
 
 ```sql
 -- عدّل قائمة الأكواد؛ شغّله على الـVPS داخل الحاوية: ssh root@<VPS> 'docker exec -i -w /app tg_backend python -' (انظر docs/OPS_RUNBOOK.md)
@@ -131,7 +144,7 @@
 WITH ref AS (
   SELECT code, referred_device AS device_id, created_at AS joined
   FROM referrals
-  WHERE code IN ('DA01','DA02','WAAR') AND created_at < datetime('now','-14 days')  -- نافذة ٧–١٤ مكتملة
+  WHERE code IN ('DA01','DA02','WA01') AND created_at < datetime('now','-14 days')  -- نافذة ٧–١٤ مكتملة
 )
 SELECT r.code,
   COUNT(*) AS installs,
@@ -140,15 +153,19 @@ SELECT r.code,
   SUM(
     EXISTS (SELECT 1 FROM chat_sessions cs JOIN chat_messages cm ON cm.session_id = cs.id
             WHERE cs.device_id = r.device_id
-              AND cm.created_at >= datetime(r.joined,'+7 days') AND cm.created_at < datetime(r.joined,'+14 days'))
+              AND datetime(cm.created_at) >= datetime(r.joined,'+7 days')
+              AND datetime(cm.created_at) < datetime(r.joined,'+14 days'))
+    -- lesson_progress stores '…T10:00:00Z', which sorts after '… 10:00:00' as
+    -- text: compare through datetime(), or the window edges are off by a day.
     OR EXISTS (SELECT 1 FROM lesson_progress lp WHERE lp.device_id = r.device_id
-            AND ((lp.updated_at >= datetime(r.joined,'+7 days') AND lp.updated_at < datetime(r.joined,'+14 days'))
-              OR (lp.completed_at >= datetime(r.joined,'+7 days') AND lp.completed_at < datetime(r.joined,'+14 days'))))
+            AND ((datetime(lp.updated_at) >= datetime(r.joined,'+7 days')
+                  AND datetime(lp.updated_at) < datetime(r.joined,'+14 days'))
+              OR (datetime(lp.completed_at) >= datetime(r.joined,'+7 days')
+                  AND datetime(lp.completed_at) < datetime(r.joined,'+14 days'))))
   ) AS active_d7_d14
 FROM ref r GROUP BY r.code ORDER BY installs DESC;
 
--- النقرات لكل كود (من /go فقط):
-SELECT code, COUNT(*) FROM referral_clicks WHERE code IN ('DA01','DA02','WAAR') GROUP BY code;
+-- النقرات: من campaign_report.py لا من referral_clicks، فالصفوف الخام تُطوى وتُحذف بعد سبعة أيام.
 ```
 
 تعريف «النشاط» هنا هو نفسه في `ops/scripts/weekly_funnel_report.py` (رسالة للمساعد أو تقدّم في درس)، والنافذة

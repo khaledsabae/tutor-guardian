@@ -16,6 +16,11 @@ Needs env:
     TG_ADMIN_KEY          (unused here, but kept for symmetry)
 
 Safe to run repeatedly: all sends are best-effort and idempotent-ish.
+
+Before the pushes, every run also folds raw referral clicks older than seven
+days into daily counts (fold_referral_clicks) — the only enforcement of that
+retention. If it cannot run, the log gets an "ALERT referral-click-retention"
+line and the run exits 2.
 """
 import argparse
 import sqlite3
@@ -269,8 +274,47 @@ def first_lesson_activation(skip: set | None = None) -> set:
     return sent
 
 
-if __name__ == "__main__":
-    args = _parse_args()
+# Grep-able in /var/log/tg-push.log: printed whenever the fold could not run.
+RETENTION_ALERT = "ALERT referral-click-retention"
+
+
+def _load_compactor():
+    from app.services.attribution import compact_referral_clicks
+    return compact_referral_clicks
+
+
+def fold_referral_clicks(dry_run: bool = False) -> int | None:
+    """Daily housekeeping that needs no cron of its own: raw referral clicks
+    (IP + user agent) older than a week fold into per-code daily counts.
+
+    This is the only thing that enforces that seven-day retention, so it runs
+    before the pushes and a failure here is loud: an ALERT line on stderr and,
+    from main(), a non-zero exit — never a silent skip. The import is guarded
+    because ops/scripts reaches the host by `git reset` alone while the backend
+    is baked into the image; a deploy that stops between the two leaves this
+    script newer than its backend, and the pushes must still go out.
+    Returns the number of rows folded, or None when the fold could not run.
+    """
+    try:
+        compact = _load_compactor()
+    except ImportError as e:
+        print(f"{RETENTION_ALERT}: the backend predates compact_referral_clicks ({e}); "
+              "raw IP/user-agent rows are NOT being expired", file=sys.stderr, flush=True)
+        return None
+    try:
+        folded = compact(dry_run=dry_run)
+    except Exception as e:  # noqa: BLE001
+        print(f"{RETENTION_ALERT}: compaction failed ({type(e).__name__}: {e}); "
+              "raw IP/user-agent rows are NOT being expired", file=sys.stderr, flush=True)
+        return None
+    verb = "would fold" if dry_run else "folded"
+    print(f"  -> referral clicks: {verb} {folded} raw rows into daily counts")
+    return folded
+
+
+def main(argv=None) -> int:
+    global BASE_URL, DRY_RUN, FORCE, CAP_DAYS
+    args = _parse_args(argv)
     BASE_URL = args.base_url.rstrip("/")
     DRY_RUN = args.dry_run
     FORCE = args.force
@@ -278,6 +322,9 @@ if __name__ == "__main__":
 
     hour = datetime.utcnow().hour
     print(f"[{datetime.utcnow().isoformat()}] cron_push_triggers starting (UTC hour={hour})")
+
+    # Retention first, whatever the hour and whatever the pushes do next.
+    folded = fold_referral_clicks(dry_run=DRY_RUN)
 
     # Evening re-engagement at 17 UTC (≈20:00 القاهرة والرياض — بعد المغرب،
     # وليس 23:00/منتصف الليل كما كانت 20 UTC). One push per device per day, and
@@ -296,3 +343,8 @@ if __name__ == "__main__":
         print("  -> outside the 17 UTC window; nothing to do (use --force to test)")
 
     print("done")
+    return 0 if folded is not None else 2
+
+
+if __name__ == "__main__":
+    sys.exit(main())
