@@ -194,6 +194,25 @@ def quotes_quran(text: str, shingles: set[str], n: int = 5) -> str | None:
     return None
 
 
+def quotes_evidence(text: str, evidence_skeletons: list[str]) -> bool:
+    """Is an attached hadith copied into free text?
+
+    Long skeletons match as substrings. Short ones (e.g. «الحياء من الإيمان»,
+    ten characters of skeleton) match only as whole words: a reviewer caught
+    that very sentence in a card after a 12-character floor had let it
+    through, and a bare substring at that length would also fire on ordinary
+    prose.
+    """
+    sk = skeleton(text)
+    padded = f" {sk} "
+    for h in evidence_skeletons:
+        if len(h) >= 12 and h in sk:
+            return True
+        if 8 <= len(h) < 12 and f" {h} " in padded:
+            return True
+    return False
+
+
 def juz_table_problems(quran: dict) -> list[str]:
     out = []
     prev = (0, 0)
@@ -302,11 +321,8 @@ def hygiene(doc: dict, lang: str, evidence_skeletons: list[str], src: dict) -> l
                 out.append(f"{path}: عامية {sorted(set(d))}")
             if (q := quotes_quran(text, shingles)):
                 out.append(f"{path}: نصّ قرآني في نصّ حرّ ({q}) — الآيات مراجع فقط")
-            sk = skeleton(text)
-            for h in evidence_skeletons:
-                if len(h) >= 12 and h in sk:
-                    out.append(f"{path}: الحديث المرفق مقتبس خارج بطاقته")
-                    break
+            if quotes_evidence(text, evidence_skeletons):
+                out.append(f"{path}: الحديث المرفق مقتبس خارج بطاقته")
     return out
 
 
@@ -640,6 +656,11 @@ def _self_test(src: dict) -> list[str]:
         fails.append("القرآن: إنذار كاذب على نثر عادي")
     if (p := juz_table_problems(src["quran"])):
         fails.append(f"جدول الأجزاء: {p[:2]}")
+    short = [skeleton("الحياء من الإيمان")]
+    if not quotes_evidence("والحياء من الإيمان كما في الحديث المرفق؛ فعلّموه", short):
+        fails.append("الاقتباس: فات حديث قصير منسوخ في نص حرّ")
+    if quotes_evidence("علّموه الحياء باحترام، فهو من خلق المؤمن", short):
+        fails.append("الاقتباس: إنذار كاذب على نثر عادي")
     if not WEAK.search("العشر الأواخر عتق من النار"):
         fails.append("الأقوال الضعيفة: فات «عتق من النار»")
     if not FOREIGN_SCRIPT.search("abc\u4e2d") or not FOREIGN_SCRIPT.search("\u041f\u0440\u0438") \

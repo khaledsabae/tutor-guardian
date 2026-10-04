@@ -316,6 +316,10 @@ def _ms(doc, key):
     ("alert timing off-policy",
      lambda ar, en: [_ms(d, "age_ten")["trigger"].__setitem__("alert_days_before", 10) for d in (ar, en)],
      "السياسة"),
+    ("short hadith copied into a card (caught by a reviewer, missed by a 12-char floor)",
+     lambda ar, en: _ms(ar, "puberty_boys")["cards"][4].__setitem__(
+         "body", "والحياء من الإيمان كما في الحديث المرفق؛ فعلّموه إياه باحترام."),
+     "مقتبس خارج بطاقته"),
     ("season trigger with inverted ages",
      lambda ar, en: [_ms(d, "first_fasting")["trigger"].update(min_age_months=160, max_age_months=100) for d in (ar, en)],
      "min_age_months"),
