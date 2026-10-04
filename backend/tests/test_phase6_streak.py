@@ -197,7 +197,7 @@ def test_progress_endpoint_returns_streak_days(client, tmp_db):
     child_id = _create_child(client)
     # Relative to the real "today" — the endpoint computes streak against the
     # server's current date, so seeding a fixed date makes this time-dependent.
-    today = date.today()
+    today = datetime.now(timezone.utc).date()  # the endpoint counts in UTC days
     _seed_completion(
         tmp_db, "test-device-001", "lesson_a", f"{today}T10:00:00Z", child_id=child_id
     )
@@ -241,7 +241,7 @@ def test_progress_endpoint_daily_login_streak_counts_consecutive_days(client):
     """Opening the app on consecutive days increments daily_login_streak
     independently from lesson completions."""
     child_id = _create_child(client)
-    today = date.today()
+    today = datetime.now(timezone.utc).date()  # the endpoint counts in UTC days
     _seed_login_dates(
         client,
         "test-device-001",
@@ -282,7 +282,7 @@ def _seed_login_dates(
 def test_progress_endpoint_streak_ignores_path_filter(client, tmp_db):
     """The path filter on GET progress doesn't affect the streak."""
     child_id = _create_child(client)
-    today = date.today()  # relative to real now (endpoint uses server date)
+    today = datetime.now(timezone.utc).date()  # the endpoint counts in UTC days
     # Seed completions on two different paths
     _seed_completion(
         tmp_db,
