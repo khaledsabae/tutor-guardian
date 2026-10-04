@@ -209,7 +209,7 @@
             "string",
             "null"
           ],
-          "description": "null = لم يراجعها بشر. لا تملؤه أداة."
+          "description": "اسم مراجِع بشري، أو ختم المراجعة الآلية auto-review:<مراجع A>+<مراجع B>:<YYYY-MM-DD> الذي يكتبه ops/tools/review_en_parity.py فقط بعد مرور الحرّاس الحتمية ومراجعَين من عائلتين مختلفتين بلا عيب متوسط أو عالٍ (البصمة في auto_review.content_sha256؛ ليس إجازة شرعية). null = لم يجتز البوابة."
         }
       },
       "additionalProperties": true

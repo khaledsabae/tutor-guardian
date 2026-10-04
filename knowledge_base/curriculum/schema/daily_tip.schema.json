@@ -103,7 +103,7 @@
         "string",
         "null"
       ],
-      "description": "اسم المراجع الشرعي الذي أجاز هذا المحتوى. null = غير مراجَع، لا يُنشر للإنجليزية.",
+      "description": "من أجاز هذا المحتوى. في ملفات i18n/en: إما اسم مراجِع بشري، وإما ختم المراجعة الآلية `auto-review:<مراجع A>+<مراجع B>:<YYYY-MM-DD>` الذي يكتبه ops/tools/review_en_parity.py بعد أن تمرّ الحرّاس الحتمية ولا يجد مراجعان من عائلتَي نماذج مختلفتين عيبًا متوسطًا أو عاليًا في النص بعينه (بصمته في translation.auto_review.content_sha256). الختم الآلي ليس إجازة شرعية ولا يدّعيها. null = لم يجتز البوابة، لا يُنشر للإنجليزية (يرفضه pre-commit).",
       "default": null
     },
     "language": {
@@ -116,7 +116,7 @@
     },
     "translation": {
       "type": "object",
-      "description": "سجل الترجمة والمراجعة. تكتبه ops/tools/translate_curriculum.py ويحدّثه revalidate_translations.py — ما عدا approved_by، فهو توقيع بشري.",
+      "description": "سجل الترجمة والمراجعة. تكتبه ops/tools/translate_curriculum.py، ويختمه ops/tools/review_en_parity.py (approved_by + auto_review) بعد المراجعة الآلية المزدوجة.",
       "properties": {
         "translator_model": {
           "type": [
@@ -160,7 +160,7 @@
             "string",
             "null"
           ],
-          "description": "اسم المراجع الشرعي. null = غير مراجَع."
+          "description": "نفس قيمة approved_by في الجذر: اسم مراجِع بشري أو ختم auto-review:<A>+<B>:<date>. null = غير مراجَع."
         }
       },
       "additionalProperties": true
