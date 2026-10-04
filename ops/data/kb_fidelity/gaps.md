@@ -26,6 +26,13 @@ on the topic.
    isl-6e577f4f, isl-73905b43 and isl-f4e75ff2 on discipline. What is missing is the
    *practical* teaching that the Alukah chapters (pp.97–104) actually contain:
    fathers teaching wudu and prayer by doing it, children at the mosque and at Eid.
+   **Filled 2026-10-05** from the OCR'd pages (book pp.89–104): isl-acc3d8ec (when to start,
+   the Salaf's daily follow-up; the 7/10 narration described, the app's no-hitting stance as the
+   app's), isl-3f0af447 (al-Bara' showing his family wudu and prayer; fathers' du'as after prayer),
+   isl-c4986b8f (correcting a child's prayer gently; Muslim 535 described, no hitting advised),
+   isl-7152a388 (children at Eid and Jumu'a: Bukhari 977, Ibn Battal's readiness test),
+   isl-b58a4a58 (training children to fast: Bukhari 1960). The prayer journey's wudu and
+   words-and-movements stages now cite isl-3f0af447.
 2. **Discipline and hitting** (7 / 30 / 18). isl-19074fe7 and isl-2fafe289 claimed
    books "reject hitting" when the pages say otherwise. The app's no-hitting position
    is stated as the app's in the PR #27 units and in `backend/guardrails/policies.v1.yaml`.
@@ -34,7 +41,11 @@ on the topic.
 3. **Truthfulness and lying** (10 / 78 / 15). isl-390466e2, isl-68df90c4 and
    isl-756e7d81 invented stories and narrators. Alukah p.74 (Umar checking on his son
    without warning, so that no lie is prompted) is the real material.
+   **Filled 2026-10-05:** isl-1e4f7969 (book pp.73, 160, 170: Umar, a father's dying will on
+   truthfulness, Abu Bakr «إن قلت ما لا أعلم»). Ramadan day 15 cites it.
 4. **Patience** (18 / 62 / 10). Alukah pp.162–171: Luqman 17, patience in illness and loss.
+   **Filled 2026-10-05:** isl-fc0925f0 (loss: Bukhari 5655, Anas burying his son, al-Nawawi on
+   tears) and isl-30775bae (illness and qadar: Ubada's will, Urwa, Umm al-Aswad, Ibn al-Jawzi).
 5. **Anger and self-control** (7 / 47 / 18). The withdrawn units invented their anger
    content: isl-22d62ea2 (a violent child), isl-50f95326 and isl-05aa623c. None of their
    pages treats anger. New units need a source that does, for example the Sahihayn's
@@ -44,22 +55,37 @@ on the topic.
 7. **Birr, kinship, neighbours, others' rights** (17 / 53 / 7). The family programmes
    need topic units here. Ramadan day 9 (neighbour) and day 16 (kinship) now rest on
    general "learning by example" units.
+   **Filled 2026-10-05** from Ulwan, «Tarbiyat al-Awlad», «مراعاة حقوق الآخرين» (pp.376–397,
+   OCR'd; the Alukah book has no chapter on them): isl-9b1b1eec (birr), isl-59632ca7 (kinship),
+   isl-14660eb4 (neighbours). Ramadan days 7, 16 and 9 cite them first. Still open: the
+   teacher, companion and elder rights of the same chapter (pp.398 ff.).
 8. **Charity and generosity** (5 / 11 / 0 left). Ramadan day 6 (generosity) and day 27
    (zakat al-fitr) have no topic unit at all.
    Day 21 (dhikr) has the same problem.
+   **Filled 2026-10-05:** isl-ab4fcddf (Alukah pp.136–140, «تدريب الأولاد على البذل»),
+   isl-d15a630e (dhikr: Bukhari 2822, Muslim 389, Fatima's tasbih), isl-90a3e496 (zakat al-fitr:
+   Bukhari 1503 + Jarir's will on zakat, pp.92–93). Ramadan days 6, 21 and 27 cite them first.
 
 ### Single facts lost
 
 - **Child physical activity**: at least 60 minutes of moderate-to-vigorous activity
   a day. 30 minutes on five days is the *adult* figure. Source: SFDA guide pp.25, 34.
-  Withdrawn: med-0b39e5a8, med-a1df6423.
+  Withdrawn: med-0b39e5a8, med-a1df6423. **Filled 2026-10-05:** med-b0136703 (printed pp.23, 32–33).
 - **Screen time under 8**: about 2 h 27 min a day, not 5 h. Source: Screen_Time_2025
-  census. Withdrawn: cyb-fc24ccce.
+  census. Withdrawn: cyb-fc24ccce. **Filled 2026-10-05:** cyb-60a0c4df (report pp.1, 15, 35).
 - **Abortion ruling** (Kayfa pp.37–38): forbidden by consensus after ensoulment; before
   it, scholars range between prohibition and dislike. State it as the book's position
   and refer the reader to scholars, with no added exceptions. Withdrawn: isl-d8ac2c78.
+  **Filled 2026-10-05:** isl-b630e2ad (p.37 only; the contraception sentence above it is left out).
 - **"Tie your camel, then rely on Allah"** is in al-Tirmidhi, not the Sahihayn: describe
-  it, don't quote it. Withdrawn: isl-9aa2ab45.
+  it, don't quote it. Withdrawn: isl-9aa2ab45. **Not filled:** no readable source in
+  `knowledge_base/raw_sources` carries this narration, and describing it from memory is the very
+  failure this review withdrew.
+
+Page numbers in the 2026-10-05 units are the books' printed numbers. Alukah: printed = PDF − 1
+(the quarantine records above use PDF pages). SFDA guide: printed = PDF − 2. Ulwan and Kayfa:
+printed = PDF. The new units are Arabic only: no `__en` twin until the English gate's
+cross-family review can run.
 
 ## Re-extraction plan
 

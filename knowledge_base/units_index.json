@@ -1,10 +1,10 @@
 {
-  "total_units": 1336,
-  "generated_at": "2026-10-04T12:44:11.421466+00:00",
+  "total_units": 1353,
+  "generated_at": "2026-10-04T22:35:33.508541+00:00",
   "by_domain": {
-    "medical": 354,
-    "cyber": 279,
-    "islamic_parenting": 551,
+    "medical": 355,
+    "cyber": 280,
+    "islamic_parenting": 566,
     "development": 131,
     "aqeedah": 21
   },
@@ -48,7 +48,7 @@
     {
       "id": "0bd76d3c-548a-46ed-b17b-78874741662a",
       "domain": "islamic_parenting",
-      "title": "Alukah Al Rahma Bi Al Atfal",
+      "title": "الرحمة بالأطفال",
       "source_file": "Alukah_Al_Rahma_Bi_Al_Atfal.pdf",
       "language": "ar",
       "original_age_group": "4-6",
@@ -60,7 +60,7 @@
     {
       "id": "0bd76d3c-548a-46ed-b17b-78874741662a__en",
       "domain": "islamic_parenting",
-      "title": "Alukah al-Rahmah bi al-Atfal",
+      "title": "Mercy Towards Children",
       "source_file": "Alukah_Al_Rahma_Bi_Al_Atfal.pdf",
       "language": "en",
       "original_age_group": "4-6",
@@ -324,7 +324,7 @@
     {
       "id": "2dd953f6-aafe-4a67-9571-ba214533f43f",
       "domain": "cyber",
-      "title": "APMC Volume 12, Number 3      July – September 2018         ",
+      "title": "أثر ألعاب الفيديو في السلوك العدواني لدى الأطفال",
       "source_file": "WHO_EMRO_Video_Games_Aggression_Study.pdf",
       "language": "en",
       "original_age_group": "7-9",
@@ -420,7 +420,7 @@
     {
       "id": "3a72f29b-1f14-46fc-9a89-b72df7295c98",
       "domain": "islamic_parenting",
-      "title": "٢ ﶈﺎﺕ ﰲ ﺗﺮﺑﻴﺔ ﺍﻟﺒﻨﺎﺕ",
+      "title": "لمحات في تربية البنات",
       "source_file": "Tarbiya_Al_Banat_Lamaat.pdf",
       "language": "ar",
       "original_age_group": "unspecified",
@@ -432,7 +432,7 @@
     {
       "id": "3a72f29b-1f14-46fc-9a89-b72df7295c98__en",
       "domain": "islamic_parenting",
-      "title": "2 – Ḥuqūq fī tarbiyah al-banāt",
+      "title": "Glimpses into Raising Daughters",
       "source_file": "Tarbiya_Al_Banat_Lamaat.pdf",
       "language": "en",
       "original_age_group": "unspecified",
@@ -1080,7 +1080,7 @@
     {
       "id": "968f42b5-5184-4f4a-97d9-b854f507dbe6",
       "domain": "islamic_parenting",
-      "title": "Tarbiyat Al Tifl Fi Al Islam Archive",
+      "title": "تربية الطفل في الإسلام",
       "source_file": "Tarbiyat_Al_Tifl_Fi_Al_Islam_Archive.pdf",
       "language": "ar",
       "original_age_group": "10-12",
@@ -1092,7 +1092,7 @@
     {
       "id": "968f42b5-5184-4f4a-97d9-b854f507dbe6__en",
       "domain": "islamic_parenting",
-      "title": "Tarbiyat al-Tifl fi al-Islam Archive",
+      "title": "Raising Children in Islam",
       "source_file": "Tarbiyat_Al_Tifl_Fi_Al_Islam_Archive.pdf",
       "language": "en",
       "original_age_group": "10-12",
@@ -1500,7 +1500,7 @@
     {
       "id": "aqe-e3092aff__en",
       "domain": "aqeedah",
-      "title": "Al-Mala'ikah, al-Kutub, and al-Rusul",
+      "title": "The Angels, the Books, and the Messengers",
       "source_file": "aqidah_unified_manifest.md",
       "language": "en",
       "original_age_group": "7-9",
@@ -1548,7 +1548,7 @@
     {
       "id": "b08d70af-9008-41cc-97f5-cfeba46ba327__en",
       "domain": "medical",
-      "title": "Al-Khilaf al-Zawji Amam al-Abna': Ma Yadurruhum wa Ma La Yad",
+      "title": "Marital Conflict in Front of the Children: What Harms Them a",
       "source_file": "",
       "language": "en",
       "original_age_group": "unspecified",
@@ -1812,7 +1812,7 @@
     {
       "id": "cd81035d-4fdb-4274-bcf2-55074ee7a1de",
       "domain": "islamic_parenting",
-      "title": "كيف تريب ولدك",
+      "title": "كيف تربي ولدك",
       "source_file": "kayfa-turabbi-waladak.pdf",
       "language": "ar",
       "original_age_group": "13-15",
@@ -1824,7 +1824,7 @@
     {
       "id": "cd81035d-4fdb-4274-bcf2-55074ee7a1de__en",
       "domain": "islamic_parenting",
-      "title": "Kayfa Turabbi Waladak",
+      "title": "How to Raise Your Child (Kayfa Turabbi Waladak)",
       "source_file": "kayfa-turabbi-waladak.pdf",
       "language": "en",
       "original_age_group": "13-15",
@@ -3010,6 +3010,18 @@
       "size_chars": 1682
     },
     {
+      "id": "cyb-60a0c4df",
+      "domain": "cyber",
+      "title": "كم يقضي الأطفال دون الثامنة أمام الشاشات؟ أرقام إحصاء Common",
+      "source_file": "Screen_Time_2025.pdf",
+      "language": "ar",
+      "original_age_group": "4-6",
+      "normalized_age_group": "4-6",
+      "behavior_type": "وقت الشاشة",
+      "needs_ocr": false,
+      "size_chars": 1698
+    },
+    {
       "id": "cyb-6409b323",
       "domain": "cyber",
       "title": "مبادئ توجيهية لحماية الأطفال عبر الإنترنت",
@@ -3204,7 +3216,7 @@
     {
       "id": "cyb-74c93d51",
       "domain": "cyber",
-      "title": "تعريف الكيبولريلجية للطفلة والطفل",
+      "title": "تعريف التنمر الإلكتروني للطفلة والطفل",
       "source_file": "Cyberbullying_Guide.pdf",
       "language": "ar",
       "original_age_group": "10-12",
@@ -3684,7 +3696,7 @@
     {
       "id": "cyb-a75c4112",
       "domain": "cyber",
-      "title": "نصائح للأمهات حول استخدام وسائل الإعلام الرقمية للاطفال في ا",
+      "title": "نصائح للأمهات حول استخدام وسائل الإعلام الرقمية للأطفال في ا",
       "source_file": "Screen_Time_2025.pdf",
       "language": "ar",
       "original_age_group": "10-12",
@@ -5232,7 +5244,7 @@
     {
       "id": "dev-77d7ab2f",
       "domain": "development",
-      "title": "الadolescents والقلق: فرصة للدعم",
+      "title": "المراهقون والقلق: فرصة للدعم",
       "source_file": "Adolescent_Brain_UNICEF.pdf",
       "language": "ar",
       "original_age_group": "13-15",
@@ -5424,7 +5436,7 @@
     {
       "id": "dev-8fdf563b",
       "domain": "development",
-      "title": "نصائح لرعاية أطفال الصغار في مرحلة الفرط الحركة",
+      "title": "نصائح لرعاية الأطفال الصغار في مرحلة فرط الحركة",
       "source_file": "Positive_Parenting_3_5.pdf",
       "language": "ar",
       "original_age_group": "prenatal-1",
@@ -5436,7 +5448,7 @@
     {
       "id": "dev-8fdf563b__en",
       "domain": "development",
-      "title": "Advice for Nurturing Young Children in the Hyperactivity Sta",
+      "title": "Tips for Caring for Young Children in the Hyperactive Stage",
       "source_file": "Positive_Parenting_3_5.pdf",
       "language": "en",
       "original_age_group": "prenatal-1",
@@ -5568,7 +5580,7 @@
     {
       "id": "dev-a576d902",
       "domain": "development",
-      "title": "ال adolescents ودورهم في مستقبلنا",
+      "title": "المراهقون ودورهم في مستقبلنا",
       "source_file": "Adolescent_Brain_UNICEF.pdf",
       "language": "ar",
       "original_age_group": "10-12",
@@ -6300,7 +6312,7 @@
     {
       "id": "f414d4fc-4ee9-4385-b7d6-4496c1ee9aaa",
       "domain": "islamic_parenting",
-      "title": "ّمعالم التربية القرآنية في جزء عم",
+      "title": "معالم التربية القرآنية في جزء عم",
       "source_file": "Saaid_Quranic_Tarbiyyah_Spiritual_Growth.pdf",
       "language": "ar",
       "original_age_group": "7-9",
@@ -7200,7 +7212,7 @@
     {
       "id": "isl-0f6abe5d__en",
       "domain": "islamic_parenting",
-      "title": "Al-ʿadl bayna al-abnāʾ wa ʿadam al-tamyīz",
+      "title": "Justice Between Children and Avoiding Discrimination",
       "source_file": "Kayfa_Turabbi_Waladak.pdf",
       "language": "en",
       "original_age_group": "unspecified",
@@ -7224,7 +7236,7 @@
     {
       "id": "isl-0faa18cf__en",
       "domain": "islamic_parenting",
-      "title": "Tarbiyah of the Yateem and the Role of the Alternative Famil",
+      "title": "Tarbiyah of the Orphan and the Role of the Foster Family",
       "source_file": "Kayfa_Turabbi_Waladak.pdf",
       "language": "en",
       "original_age_group": "unspecified",
@@ -7328,6 +7340,18 @@
       "behavior_type": "تربية دينية",
       "needs_ocr": false,
       "size_chars": 1094
+    },
+    {
+      "id": "isl-14660eb4",
+      "domain": "islamic_parenting",
+      "title": "كيف أعلّم طفلي حق الجار؟ أربعة أصول تُعلَّم بالقول والتطبيق",
+      "source_file": "Tarbiya_Al_Awlad_Alwan.pdf",
+      "language": "ar",
+      "original_age_group": "7-9",
+      "normalized_age_group": "7-9",
+      "behavior_type": "حق الجار",
+      "needs_ocr": false,
+      "size_chars": 2455
     },
     {
       "id": "isl-14bc16f5",
@@ -7544,6 +7568,18 @@
       "behavior_type": "تعويد على الصلاة والعبادات",
       "needs_ocr": false,
       "size_chars": 1392
+    },
+    {
+      "id": "isl-1e4f7969",
+      "domain": "islamic_parenting",
+      "title": "كيف أربّي طفلي على الصدق؟ لا تفتح له باب الكذب، وكن قدوته",
+      "source_file": "Alukah_Rights_of_Children.pdf",
+      "language": "ar",
+      "original_age_group": "7-9",
+      "normalized_age_group": "7-9",
+      "behavior_type": "الصدق والكذب",
+      "needs_ocr": false,
+      "size_chars": 1000
     },
     {
       "id": "isl-1f696f30",
@@ -7884,7 +7920,7 @@
     {
       "id": "isl-2a3f0ed3__en",
       "domain": "islamic_parenting",
-      "title": "The Importance of Tarbiyah for Children",
+      "title": "The Importance of Religious Upbringing for Children",
       "source_file": "Alukah_Rights_of_Children.pdf",
       "language": "en",
       "original_age_group": "4-6",
@@ -8096,6 +8132,18 @@
       "behavior_type": "تربية إسلامية",
       "needs_ocr": false,
       "size_chars": 1520
+    },
+    {
+      "id": "isl-30775bae",
+      "domain": "islamic_parenting",
+      "title": "كيف أربّي طفلي على الصبر والرضا عند المرض والابتلاء؟",
+      "source_file": "Alukah_Rights_of_Children.pdf",
+      "language": "ar",
+      "original_age_group": "10-12",
+      "normalized_age_group": "10-12",
+      "behavior_type": "الصبر والرضا بالقضاء",
+      "needs_ocr": false,
+      "size_chars": 1052
     },
     {
       "id": "isl-343ab724",
@@ -8336,6 +8384,18 @@
       "behavior_type": "تربية إسلامية وقدوة",
       "needs_ocr": false,
       "size_chars": 1399
+    },
+    {
+      "id": "isl-3f0af447",
+      "domain": "islamic_parenting",
+      "title": "كيف أعلّم طفلي الوضوء والصلاة؟ بأن يراني أؤديهما أمامه",
+      "source_file": "Alukah_Rights_of_Children.pdf",
+      "language": "ar",
+      "original_age_group": "7-9",
+      "normalized_age_group": "7-9",
+      "behavior_type": "تعليم الوضوء والصلاة",
+      "needs_ocr": false,
+      "size_chars": 1659
     },
     {
       "id": "isl-3f7359b4",
@@ -8652,7 +8712,7 @@
     {
       "id": "isl-4fd89060__en",
       "domain": "islamic_parenting",
-      "title": "Al-'Adl bayna al-Abna' wa Atharuhu fi Tarbiyatihim",
+      "title": "Justice Between Children and Its Effect on Their Upbringing",
       "source_file": "Tarbiya_Al_Banat.pdf",
       "language": "en",
       "original_age_group": "unspecified",
@@ -8806,9 +8866,21 @@
       "size_chars": 1293
     },
     {
+      "id": "isl-59632ca7",
+      "domain": "islamic_parenting",
+      "title": "كيف أعلّم طفلي صلة الرحم؟ من هم الأرحام وما فضل وصلهم",
+      "source_file": "Tarbiya_Al_Awlad_Alwan.pdf",
+      "language": "ar",
+      "original_age_group": "7-9",
+      "normalized_age_group": "7-9",
+      "behavior_type": "صلة الرحم",
+      "needs_ocr": false,
+      "size_chars": 1566
+    },
+    {
       "id": "isl-59686545",
       "domain": "islamic_parenting",
-      "title": "بنتي عايزة تشتغل وأنا مش موافق",
+      "title": "ابنتي تريد أن تعمل وأنا غير موافق",
       "source_file": "",
       "language": "ar",
       "original_age_group": "16-18",
@@ -9084,7 +9156,7 @@
     {
       "id": "isl-624104ea",
       "domain": "islamic_parenting",
-      "title": "ابني بقى يستخدم ألفاظ وحشة اتعلمها من ولاد الشارع",
+      "title": "ابني صار يستخدم ألفاظًا بذيئة تعلّمها من أولاد الشارع",
       "source_file": "",
       "language": "ar",
       "original_age_group": "7-9",
@@ -9432,7 +9504,7 @@
     {
       "id": "isl-6d8f26e2__en",
       "domain": "islamic_parenting",
-      "title": "The Importance of Tarbiyah in the Child’s Life",
+      "title": "The Importance of Religious Upbringing for Children",
       "source_file": "Alukah_Rights_of_Children.pdf",
       "language": "en",
       "original_age_group": "unspecified",
@@ -9524,6 +9596,18 @@
       "behavior_type": "إدمان ألعاب",
       "needs_ocr": false,
       "size_chars": 1361
+    },
+    {
+      "id": "isl-7152a388",
+      "domain": "islamic_parenting",
+      "title": "اصطحاب الأطفال إلى صلاة العيد والجمعة: متى يكون الطفل مستعدً",
+      "source_file": "Alukah_Rights_of_Children.pdf",
+      "language": "ar",
+      "original_age_group": "7-9",
+      "normalized_age_group": "7-9",
+      "behavior_type": "اصطحاب الأطفال إلى المسجد والعيد",
+      "needs_ocr": false,
+      "size_chars": 1303
     },
     {
       "id": "isl-71d65f43",
@@ -9660,7 +9744,7 @@
     {
       "id": "isl-73905b43__en",
       "domain": "islamic_parenting",
-      "title": "Disciplining Children without 'Unf",
+      "title": "Disciplining Children without Violence",
       "source_file": "Alukah_Rights_of_Children.pdf",
       "language": "en",
       "original_age_group": "unspecified",
@@ -10224,7 +10308,7 @@
     {
       "id": "isl-8bf4e7a3__en",
       "domain": "islamic_parenting",
-      "title": "Al-ʿAdl bayna al-Abna’ fi al-Tarbiyah",
+      "title": "Justice Between Children in Their Upbringing",
       "source_file": "Alukah_Rights_of_Children.pdf",
       "language": "en",
       "original_age_group": "unspecified",
@@ -10378,6 +10462,18 @@
       "size_chars": 1223
     },
     {
+      "id": "isl-90a3e496",
+      "domain": "islamic_parenting",
+      "title": "زكاة الفطر عن الأطفال: هل تُخرج عن الصغير؟ وكيف أُشرك أولادي",
+      "source_file": "sahih_bukhari_1503.txt",
+      "language": "ar",
+      "original_age_group": "7-9",
+      "normalized_age_group": "7-9",
+      "behavior_type": "زكاة الفطر وتعليم الزكاة",
+      "needs_ocr": false,
+      "size_chars": 799
+    },
+    {
       "id": "isl-91162ead",
       "domain": "islamic_parenting",
       "title": "تكوين الجيل القرآني: الأثر العقلي والروحي للإسلام",
@@ -10476,7 +10572,7 @@
     {
       "id": "isl-9933c64e",
       "domain": "islamic_parenting",
-      "title": "ابني بيقول كلمات وحشة سمعها من الشارع",
+      "title": "ابني يقول كلمات بذيئة سمعها في الشارع",
       "source_file": "",
       "language": "ar",
       "original_age_group": "4-6",
@@ -10496,6 +10592,18 @@
       "behavior_type": "تقليد ألفاظ بذيئة من الشارع",
       "needs_ocr": false,
       "size_chars": 132
+    },
+    {
+      "id": "isl-9b1b1eec",
+      "domain": "islamic_parenting",
+      "title": "كيف أعلّم طفلي برّ الوالدين؟ وصايا نبوية وآداب عملية",
+      "source_file": "Tarbiya_Al_Awlad_Alwan.pdf",
+      "language": "ar",
+      "original_age_group": "7-9",
+      "normalized_age_group": "7-9",
+      "behavior_type": "بر الوالدين",
+      "needs_ocr": false,
+      "size_chars": 3191
     },
     {
       "id": "isl-9b3b5acd",
@@ -10536,7 +10644,7 @@
     {
       "id": "isl-9baf6011__en",
       "domain": "islamic_parenting",
-      "title": "Al-Rifq bi-l-Tifl: Manhaj al-Nabi ﷺ",
+      "title": "Gentleness with the Child: The Prophet's Approach ﷺ",
       "source_file": "Al_Minhaj_Al_Nabawi.pdf",
       "language": "en",
       "original_age_group": "unspecified",
@@ -10834,6 +10942,18 @@
       "size_chars": 1470
     },
     {
+      "id": "isl-ab4fcddf",
+      "domain": "islamic_parenting",
+      "title": "كيف أعوّد طفلي على العطاء والكرم؟ تدريب الأولاد على البذل",
+      "source_file": "Alukah_Rights_of_Children.pdf",
+      "language": "ar",
+      "original_age_group": "7-9",
+      "normalized_age_group": "7-9",
+      "behavior_type": "الكرم والصدقة",
+      "needs_ocr": false,
+      "size_chars": 2184
+    },
+    {
       "id": "isl-ac1de08a",
       "domain": "islamic_parenting",
       "title": "التربية الإسلامية بالملاحظة والتوجيه",
@@ -10880,6 +11000,18 @@
       "behavior_type": "التعامل مع سخرية الأصدقاء من الالتزام",
       "needs_ocr": false,
       "size_chars": 256
+    },
+    {
+      "id": "isl-acc3d8ec",
+      "domain": "islamic_parenting",
+      "title": "متى أبدأ تعليم طفلي الصلاة؟ وكيف عوّد السلف أبناءهم عليها",
+      "source_file": "Alukah_Rights_of_Children.pdf",
+      "language": "ar",
+      "original_age_group": "7-9",
+      "normalized_age_group": "7-9",
+      "behavior_type": "تعليم الصلاة",
+      "needs_ocr": false,
+      "size_chars": 2000
     },
     {
       "id": "isl-adf40f0b",
@@ -10988,6 +11120,30 @@
       "behavior_type": "إدمان ألعاب إلكترونية",
       "needs_ocr": false,
       "size_chars": 1409
+    },
+    {
+      "id": "isl-b58a4a58",
+      "domain": "islamic_parenting",
+      "title": "كيف أدرّب طفلي على الصيام؟ تدرّجٌ وتسليةٌ حتى الإفطار",
+      "source_file": "Alukah_Rights_of_Children.pdf",
+      "language": "ar",
+      "original_age_group": "7-9",
+      "normalized_age_group": "7-9",
+      "behavior_type": "تدريب الطفل على الصيام",
+      "needs_ocr": false,
+      "size_chars": 1150
+    },
+    {
+      "id": "isl-b630e2ad",
+      "domain": "islamic_parenting",
+      "title": "حكم إسقاط الجنين (الإجهاض) كما في كتاب «كيف تربي ولدك»",
+      "source_file": "Kayfa_Turabbi_Waladak.pdf",
+      "language": "ar",
+      "original_age_group": "unspecified",
+      "normalized_age_group": "unspecified",
+      "behavior_type": "حكم إسقاط الجنين",
+      "needs_ocr": false,
+      "size_chars": 820
     },
     {
       "id": "isl-b720986d",
@@ -11244,7 +11400,7 @@
     {
       "id": "isl-bfbe3bbe__en",
       "domain": "islamic_parenting",
-      "title": "The Unit of Leadership in the Family and Its Impact on the D",
+      "title": "Unity of Leadership in the Family and Its Impact on the Disc",
       "source_file": "Al_Hady_Al_Nabawi.pdf",
       "language": "en",
       "original_age_group": "4-6",
@@ -11362,6 +11518,18 @@
       "size_chars": 1282
     },
     {
+      "id": "isl-c4986b8f",
+      "domain": "islamic_parenting",
+      "title": "كيف أصحّح أخطاء طفلي في الصلاة؟ رفقٌ وتعليمٌ وبيانٌ للسبب",
+      "source_file": "Alukah_Rights_of_Children.pdf",
+      "language": "ar",
+      "original_age_group": "10-12",
+      "normalized_age_group": "10-12",
+      "behavior_type": "تصحيح أخطاء الصلاة",
+      "needs_ocr": false,
+      "size_chars": 1631
+    },
+    {
       "id": "isl-c4b3fccc",
       "domain": "islamic_parenting",
       "title": "بدأ الإسلام غريبًا فطوبى للغرباء",
@@ -11376,7 +11544,7 @@
     {
       "id": "isl-c4b3fccc__en",
       "domain": "islamic_parenting",
-      "title": "Bada al-Islam ghariban fa-tuba li-l-ghuraba'",
+      "title": "Islam Began as Something Strange, So Glad Tidings to the Str",
       "source_file": "sahih_muslim_145.txt",
       "language": "en",
       "original_age_group": "10-12",
@@ -11612,6 +11780,18 @@
       "behavior_type": "تربية دينية وأخلاقية",
       "needs_ocr": false,
       "size_chars": 890
+    },
+    {
+      "id": "isl-d15a630e",
+      "domain": "islamic_parenting",
+      "title": "كيف أعلّم طفلي الأذكار؟ بعد الصلاة وقبل النوم وعند الخوف",
+      "source_file": "Alukah_Rights_of_Children.pdf",
+      "language": "ar",
+      "original_age_group": "7-9",
+      "normalized_age_group": "7-9",
+      "behavior_type": "تعليم الأذكار",
+      "needs_ocr": false,
+      "size_chars": 1269
     },
     {
       "id": "isl-d16b57ea",
@@ -12144,7 +12324,7 @@
     {
       "id": "isl-ee097ab9__en",
       "domain": "islamic_parenting",
-      "title": "Al-Tarbiyah al-Nabawiyyah wa-Tawjeeh al-Sulook al-Imani",
+      "title": "Prophetic Tarbiyah and Guiding Faith-Based Behavior",
       "source_file": "Manhaj_Nabawi_Khulayfi.pdf",
       "language": "en",
       "original_age_group": "unspecified",
@@ -12348,7 +12528,7 @@
     {
       "id": "isl-f6c0c64a__en",
       "domain": "islamic_parenting",
-      "title": "«Mā naḥala wālidun waladan afḍala min adabin ḥasan» – Faḍl T",
+      "title": "The Best Gift a Parent Can Give a Child Is Good Manners — Th",
       "source_file": "Al_Hady_Al_Nabawi.pdf",
       "language": "en",
       "original_age_group": "4-6",
@@ -12492,7 +12672,7 @@
     {
       "id": "isl-fb584945__en",
       "domain": "islamic_parenting",
-      "title": "Tarbiyah al-Jamaliyyah wa-l-Badaniyyah fi al-Islam",
+      "title": "Aesthetic and Physical Tarbiyah in Islam",
       "source_file": "Manhaj_Nabawi_Khulayfi.pdf",
       "language": "en",
       "original_age_group": "unspecified",
@@ -12516,7 +12696,7 @@
     {
       "id": "isl-fb6a8582__en",
       "domain": "islamic_parenting",
-      "title": "Al-ʿAdl bayna al-Awlad: Mata Yuqbalu Tamyiz al-Muʿamalah wa ",
+      "title": "Justice Among Children: When Differential Treatment Is Accep",
       "source_file": "Al_Hady_Al_Nabawi.pdf",
       "language": "en",
       "original_age_group": "4-6",
@@ -12524,6 +12704,18 @@
       "behavior_type": "العدل_بين_الأولاد",
       "needs_ocr": false,
       "size_chars": 1473
+    },
+    {
+      "id": "isl-fc0925f0",
+      "domain": "islamic_parenting",
+      "title": "كيف أعلّم طفلي الصبر عند موت قريب أو مصيبة؟",
+      "source_file": "Alukah_Rights_of_Children.pdf",
+      "language": "ar",
+      "original_age_group": "unspecified",
+      "normalized_age_group": "unspecified",
+      "behavior_type": "الصبر عند المصيبة والفقد",
+      "needs_ocr": false,
+      "size_chars": 1665
     },
     {
       "id": "isl-fd937511",
@@ -12540,7 +12732,7 @@
     {
       "id": "isl-fd937511__en",
       "domain": "islamic_parenting",
-      "title": "Al-I'tidal fi al-Tarhib wa al-Targhib fi Tarbiyat al-Talab",
+      "title": "Moderation in Warning and Encouragement in Raising a Child",
       "source_file": "Kayfa_Turabbi_Waladak.pdf",
       "language": "en",
       "original_age_group": "unspecified",
@@ -12648,7 +12840,7 @@
     {
       "id": "med-00fa7863",
       "domain": "medical",
-      "title": "الاضطراب العاطفي الشديد وانتكاساته الحادة في الأطفال والadol",
+      "title": "الاضطراب العاطفي الشديد وانتكاساته الحادة في الأطفال والمراه",
       "source_file": "DMDD.pdf",
       "language": "ar",
       "original_age_group": "13-15",
@@ -12780,7 +12972,7 @@
     {
       "id": "med-08886df5",
       "domain": "medical",
-      "title": "اضطراب المزاج التحريضي: أعراض وعلاج",
+      "title": "اضطراب خلل تنظيم المزاج التخريبي (DMDD): أعراض وعلاج",
       "source_file": "DMDD.pdf",
       "language": "ar",
       "original_age_group": "7-9",
@@ -12792,7 +12984,7 @@
     {
       "id": "med-08886df5__en",
       "domain": "medical",
-      "title": "Iḍṭirāb al-Mizāj al-Taḥrīḍī: ʿAlāmāt wa-ʿIlāj",
+      "title": "Disruptive Mood Dysregulation Disorder: Symptoms and Treatme",
       "source_file": "DMDD.pdf",
       "language": "en",
       "original_age_group": "7-9",
@@ -13560,7 +13752,7 @@
     {
       "id": "med-61f2e992",
       "domain": "medical",
-      "title": "ال Attention Deficit Hyperactivity Disorder (ADHD) في الأطفا",
+      "title": "اضطراب فرط الحركة وتشتت الانتباه (ADHD) لدى الأطفال من سن 4 ",
       "source_file": "ADHD_NIMH.pdf",
       "language": "ar",
       "original_age_group": "unspecified",
@@ -13716,7 +13908,7 @@
     {
       "id": "med-6fd9c009__en",
       "domain": "medical",
-      "title": "Qadm al-Athafir 'inda al-Atfal (Nail-Biting in Children)",
+      "title": "Nail-Biting in Children",
       "source_file": "",
       "language": "en",
       "original_age_group": "7-9",
@@ -13740,7 +13932,7 @@
     {
       "id": "med-72806e5e",
       "domain": "medical",
-      "title": "القلق وال depression في الأطفال: ما هي العلامات والأعراض؟",
+      "title": "القلق والاكتئاب في الأطفال: ما هي العلامات والأعراض؟",
       "source_file": "DMDD.pdf",
       "language": "ar",
       "original_age_group": "13-15",
@@ -14160,7 +14352,7 @@
     {
       "id": "med-95b2e7e8",
       "domain": "medical",
-      "title": "العلامات وال behaviors المرتبطة بالقلق وفرط الحركة في الأطفا",
+      "title": "العلامات والسلوكيات المرتبطة بالقلق وفرط الحركة في الأطفال م",
       "source_file": "Children_Mental_Health.pdf",
       "language": "ar",
       "original_age_group": "4-6",
@@ -14256,7 +14448,7 @@
     {
       "id": "med-a1a24ab2__en",
       "domain": "medical",
-      "title": "ADHD: At-Tashkhis wa al-Irshad (Diagnosis and Guidance)",
+      "title": "ADHD: Diagnosis and Guidance",
       "source_file": "ADHD_NIMH.pdf",
       "language": "en",
       "original_age_group": "unspecified",
@@ -14422,6 +14614,18 @@
       "size_chars": 1626
     },
     {
+      "id": "med-b0136703",
+      "domain": "medical",
+      "title": "كم يحتاج الطفل من النشاط البدني يوميًّا؟ ساعة على الأقل بحسب",
+      "source_file": "SFDA_Healthy_Nutrition_Guide.pdf",
+      "language": "ar",
+      "original_age_group": "7-9",
+      "normalized_age_group": "7-9",
+      "behavior_type": "النشاط البدني",
+      "needs_ocr": false,
+      "size_chars": 1360
+    },
+    {
       "id": "med-b0960610",
       "domain": "medical",
       "title": "الرؤية والقيم في سياسة الصحة النفسية للأطفال",
@@ -14532,7 +14736,7 @@
     {
       "id": "med-b88b7ad3",
       "domain": "medical",
-      "title": "تشخيص وعلاج اضطراب اضطراب الانتباه الحركي (ADHD)",
+      "title": "تشخيص وعلاج اضطراب فرط الحركة وتشتت الانتباه (ADHD)",
       "source_file": "ADHD_NIMH.pdf",
       "language": "ar",
       "original_age_group": "13-15",
@@ -14568,7 +14772,7 @@
     {
       "id": "med-b99c1ea8",
       "domain": "medical",
-      "title": "العلاج النفسي والتعليمي للاضطرابات المصاحبة للفرط في الحركة ",
+      "title": "العلاج النفسي والتعليمي لاضطراب فرط الحركة ونقص الانتباه وال",
       "source_file": "ADHD_NIMH.pdf",
       "language": "ar",
       "original_age_group": "unspecified",
@@ -14580,7 +14784,7 @@
     {
       "id": "med-b99c1ea8__en",
       "domain": "medical",
-      "title": "Psychological and Educational Therapy for Disorders Accompan",
+      "title": "Psychological and Educational Treatment of ADHD and Its Acco",
       "source_file": "ADHD_NIMH.pdf",
       "language": "en",
       "original_age_group": "unspecified",
@@ -14772,7 +14976,7 @@
     {
       "id": "med-c7a1bbf6",
       "domain": "medical",
-      "title": " milestones for babies at 2 months",
+      "title": "مراحل نمو الرضيع في عمر شهرين",
       "source_file": "Autism_CDC.pdf",
       "language": "ar",
       "original_age_group": "prenatal-1",
@@ -14820,7 +15024,7 @@
     {
       "id": "med-ca2a9d86",
       "domain": "medical",
-      "title": "العلاج النفسي للتعامل مع اضطراب دماغي مزمن وشديد التوتر (DMD",
+      "title": "العلاج النفسي للتعامل مع اضطراب خلل تنظيم المزاج المزمن والش",
       "source_file": "DMDD.pdf",
       "language": "ar",
       "original_age_group": "10-12",
@@ -15108,7 +15312,7 @@
     {
       "id": "med-db5760f5",
       "domain": "medical",
-      "title": "تبطيل التبول عند الأطفال من سن 4-6 سنوات",
+      "title": "التخلص من التبول اللاإرادي عند الأطفال من سن 4-6 سنوات",
       "source_file": "",
       "language": "ar",
       "original_age_group": "4-6",
