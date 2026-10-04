@@ -1,0 +1,87 @@
+{
+  "topic": "sleep",
+  "demand": "النوم — 95 من 1,284 سؤالًا، الثالث بعد الصلاة والدين والغضب والعناد. لا مسار مخصّص له: درسٌ واحد متفرّق في مسارات الصحة لكل فئة.",
+  "paths": [
+    {
+      "path_id": "path_0-3_medical_infant_sleep",
+      "create": {
+        "title": "نوم الرضيع: نومٌ آمن وليالٍ أهدأ (حتى عام)",
+        "age_group": "0-3",
+        "domain": "medical",
+        "description": "مسار يومي للوالدين في السنة الأولى: النوم الآمن الذي يحمي الرضيع، وما هو طبيعي في نومه واستيقاظه، وعلامات النعاس، وروتين المساء، والرضاعة الليلية، والانتقال الهادئ إلى سريره، وتهدئة البكاء بأمان، وتعب الوالدين، ومتى تستشير الطبيب.",
+        "pedagogical_framework": "attachment_rahma",
+        "primary_reference": {"type": "تقرير_طبي", "info": "إرشادات الأكاديمية الأمريكية لطب الأطفال للنوم الآمن، ومنظمة الصحة العالمية، ووحدات المربّي المحرّرة"},
+        "en": {"title": "Baby Sleep: Safe Sleep and Calmer Nights (Up to One Year)",
+               "description": "A daily path for parents in the first year: safe sleep that protects the baby, what is normal in their sleeping and waking, signs of sleepiness, an evening routine, night feeds, a gentle move to their own cot, soothing crying safely, parents' exhaustion, and when to see the doctor."}
+      },
+      "unit_bands": ["prenatal-1", "0-3", "2-3", "unspecified"],
+      "band_notes": "Birth to twelve months. Medical safety first, following mainstream pediatric guidance (AAP/WHO): back to sleep for every sleep, a firm flat separate sleep surface, nothing soft in the cot, room-sharing without bed-sharing, never asleep with the baby on a sofa or armchair, never shaking a baby. Conservative; name the red flags that need a doctor or emergency care.",
+      "lessons": [
+        {"title": "النوم الآمن: على ظهره في سريرٍ خالٍ", "focus": "Safe sleep for every sleep: on the back, a firm flat surface, nothing soft in the cot, own sleep surface in the parents' room, never on a sofa or armchair with a parent, no overheating, a smoke-free home; supervised tummy time while awake.", "keywords": ["نوم آمن", "النوم"], "pin_units": ["med-2dc3af5f", "gap-med-co-sleeping-01"]},
+        {"title": "كم ينام الرضيع؟ ولماذا يستيقظ كثيرًا؟", "focus": "Normal infant sleep: many hours in short stretches, frequent waking to feed in the first months, gradual lengthening of night sleep, wide differences between babies; what is normal versus worrying.", "keywords": ["النوم", "الرضيع"], "pin_units": ["med-2dc3af5f", "c88f868b-4f40-45eb-b357-f8867b2c327d"]},
+        {"title": "علامات النعاس: اللحظة المناسبة للنوم", "focus": "Reading sleepy cues (yawning, rubbing eyes, looking away, fussing), putting the baby down drowsy but awake as they grow, and why an overtired baby is harder to settle.", "keywords": ["النعاس", "النوم"], "pin_units": ["gap-med-co-sleeping-01"]},
+        {"title": "روتينٌ قصير قبل النوم", "focus": "A short, same-order evening routine from the early months: bath or wash, clean nappy, feed, a soft song or du'a, dim lights; consistency over weeks.", "keywords": ["روتين", "النوم"], "pin_units": ["gap-med-co-sleeping-01", "c7b72252-7135-405e-98fd-a46d466d9055"]},
+        {"title": "الرضاعة الليلية والنوم", "focus": "Night feeds are normal and needed in the early months; breastfeeding is protective; never prop a bottle; avoid falling asleep with the baby on a sofa while feeding; later, gently separating feeding from falling asleep; ask the doctor about night weaning.", "keywords": ["الرضاعة", "النوم"], "pin_units": ["med-2dc3af5f", "gap-med-co-sleeping-01"]},
+        {"title": "من الحضن إلى السرير: خطواتٌ هادئة", "focus": "Moving a baby who only sleeps in arms to their own cot gradually: cot beside the parents' bed, a steady routine, down drowsy not asleep, brief waits before picking up, patience over two weeks.", "keywords": ["الحضن", "السرير"], "pin_units": ["gap-med-co-sleeping-01"]},
+        {"title": "البكاء ليلًا: تهدئةٌ آمنة", "focus": "Soothing a crying baby safely: check basic needs, hold, rock, soft rhythmic sound, a dummy if used; never shake a baby; if overwhelmed, put the baby on their back in the cot and step away for a few minutes; when crying needs a doctor.", "keywords": ["البكاء", "التهدئة"], "pin_units": ["gap-med-co-sleeping-01", "med-1eb2b059"]},
+        {"title": "سكينة المساء: ذِكرٌ ودعاءٌ بصوتٍ هادئ", "focus": "A calm voice at bedtime: the parent recites dhikr and makes du'a for the baby softly as part of the routine; the baby is soothed by the parent's familiar calm voice; the parent's own heart finds rest.", "keywords": ["ذكر الله", "الدعاء"], "pin_units": ["isl-f6342250", "gap-med-co-sleeping-01"], "bank": ["v_013_028"]},
+        {"title": "إرهاق الوالدين: تعبك جزءٌ من الخطة", "focus": "Parents' sleep deprivation is real: sharing night shifts, sleeping when the baby sleeps, asking family for help, never dozing with the baby on a sofa; signs of postpartum depression that need a doctor.", "keywords": ["الاكتئاب", "التعب"], "pin_units": ["med-b972ac47", "gap-med-co-sleeping-01"]},
+        {"title": "متى تستشير الطبيب في نوم رضيعك؟", "focus": "Red flags: pauses in breathing, blue or grey colour, very noisy or laboured breathing, fever in a baby under three months, a baby who is unusually hard to wake or very floppy, poor feeding, inconsolable crying unlike usual — when to call the doctor and when to seek emergency care.", "keywords": ["النوم", "الطبيب"], "pin_units": ["med-2dc3af5f", "c88f868b-4f40-45eb-b357-f8867b2c327d"]}
+      ]
+    },
+    {
+      "path_id": "path_2-3_medical_toddler_sleep",
+      "create": {
+        "title": "نوم الطفل الصغير: روتينٌ ثابت وليالٍ أهدأ (2-3 سنوات)",
+        "age_group": "2-3",
+        "domain": "medical",
+        "description": "مسار يومي للوالدين مع طفلٍ في الثانية والثالثة: كم يحتاج من النوم، وروتين المساء الثابت، والانتقال إلى سريره، والاستيقاظ الليلي، والقيلولة، وتعطّل الروتين بالمرض والسفر، ومخاوف الليل، ومقاومة موعد النوم، ومتى تستشير الطبيب.",
+        "pedagogical_framework": "attachment_rahma",
+        "primary_reference": {"type": "تقرير_طبي", "info": "الأكاديمية الأمريكية لطب الأطفال (HealthyChildren) عن نوم الأطفال الصغار، ووحدات المربّي المحرّرة"},
+        "en": {"title": "Toddler Sleep: A Steady Routine and Calmer Nights (Ages 2-3)",
+               "description": "A daily path for parents of two- and three-year-olds: how much sleep they need, a steady evening routine, moving to their own bed, night waking, naps, routines upset by illness and travel, night-time fears, resisting bedtime, and when to see the doctor."}
+      },
+      "unit_bands": ["2-3", "0-3", "prenatal-1", "4-6", "unspecified"],
+      "band_notes": "Ages 2-3: need about 11-14 hours of sleep in 24 hours including the nap; love routine; separation and night fears are common; resistance to bedtime is normal testing. Conservative medical advice; snoring and breathing pauses need a doctor.",
+      "lessons": [
+        {"title": "كم يحتاج طفلك من النوم؟", "focus": "Sleep needs at two and three including the nap, signs that a child is not sleeping enough (irritability, frequent tantrums, falling asleep in the car), and setting the bedtime by counting back from the wake time.", "keywords": ["النوم"], "pin_units": ["seed-sleep-23"]},
+        {"title": "روتين المساء: الخطوات نفسها كل ليلة", "focus": "A short evening routine in the same order every night (bath, pyjamas, story, dim light), no longer than about twenty minutes, so the predictability itself calms the child.", "keywords": ["روتين", "النوم"], "pin_units": ["seed-sleep-23", "c7b72252-7135-405e-98fd-a46d466d9055"]},
+        {"title": "ضعه في سريره نعسانًا لا نائمًا", "focus": "Why the last moment before sleep should be in their own bed rather than in arms; the sleep association that makes them call for you at night; how to start.", "keywords": ["النوم المستقل", "النوم"], "pin_units": ["c7b72252-7135-405e-98fd-a46d466d9055", "seed-sleep-23"]},
+        {"title": "من سريرك إلى سريره: خطةٌ تدريجية", "focus": "A gradual plan to move the child to their own bed: sitting beside them with a hand on them, then without touching, then on a chair, moving closer to the door every few nights; expect setbacks.", "keywords": ["النوم المستقل"], "pin_units": ["c7b72252-7135-405e-98fd-a46d466d9055"]},
+        {"title": "الاستيقاظ ليلًا: طمأنةٌ قصيرة بلا لعب", "focus": "Responding to night waking: a brief reassurance in their own bed, low light, few words, no picking up or play, the same response every time.", "keywords": ["الاستيقاظ", "النوم"], "pin_units": ["seed-sleep-23", "c7b72252-7135-405e-98fd-a46d466d9055"]},
+        {"title": "القيلولة: متى تبقى ومتى تقصر", "focus": "Most two-year-olds still need one daytime nap; a late or very long nap pushes bedtime; signs a child is ready to drop the nap; quiet time instead.", "keywords": ["القيلولة", "النوم"], "pin_units": ["seed-sleep-23"]},
+        {"title": "حين يتعطّل الروتين: مرضٌ أو سفرٌ أو أخٌ جديد", "focus": "Sleep setbacks after illness, travel, a move or a new baby are expected; meet the extra need calmly, then return to the routine from the previous step without frustration.", "keywords": ["النوم المستقل", "النوم"], "pin_units": ["c7b72252-7135-405e-98fd-a46d466d9055"]},
+        {"title": "مخاوف الليل والأحلام المزعجة", "focus": "Fear of the dark and separation at night are normal at this age: a dim night light, a short goodbye routine, reassurance without mocking; frightening dreams versus night terrors (stay calm, keep the child safe, don't wake them); when to ask the doctor.", "keywords": ["الخوف", "الليل"], "pin_units": ["seed-fear-23"]},
+        {"title": "«لا أريد أن أنام»: مقاومة موعد النوم", "focus": "Bedtime resistance: a fixed time, no question whose answer can be no, two small choices within the routine, a calm firm return to bed, no long negotiation.", "keywords": ["مقاومة النوم", "العناد"], "pin_units": ["seed-sleep-23", "179d90e1-a863-42e1-8fea-e8560b7401f7"]},
+        {"title": "متى تستشير الطبيب في نوم طفلك؟", "focus": "Signs that need a doctor: loud snoring most nights, pauses in breathing, breathing through the mouth, very restless sleep, sleepiness or behaviour problems in the day, frequent night terrors, sleepwalking with danger, a sudden change in sleep.", "keywords": ["النوم"], "pin_units": ["seed-sleep-23", "seed-fear-23"]}
+      ]
+    },
+    {
+      "path_id": "path_4-6_medical_sleep",
+      "create": {
+        "title": "النوم في سنّ ما قبل المدرسة: مواعيد ثابتة وليالٍ هادئة (4-6 سنوات)",
+        "age_group": "4-6",
+        "domain": "medical",
+        "description": "مسار يومي للوالدين مع طفلٍ بين الرابعة والسادسة: ساعات النوم التي يحتاجها، والموعد الثابت، ونصف الساعة الهادئة قبل النوم، والخوف من الظلام، والمجيء إلى سرير الوالدين ليلًا، والشاشات، والحركة في النهار، والتبوّل الليلي، وأذكار النوم، ومتى تستشير الطبيب.",
+        "pedagogical_framework": "zpd_scaffolded",
+        "primary_reference": {"type": "تقرير_طبي", "info": "الأكاديمية الأمريكية لطب الأطفال وهيئة الخدمات الصحية البريطانية عن نوم الأطفال، ومنظمة الصحة العالمية، ووحدات المربّي المحرّرة"},
+        "en": {"title": "Sleep in the Preschool Years: Steady Times and Calm Nights (Ages 4-6)",
+               "description": "A daily path for parents of four- to six-year-olds: the hours of sleep they need, a fixed bedtime, a calm half hour before sleep, fear of the dark, coming to the parents' bed at night, screens, daytime activity, bedwetting, bedtime adhkar, and when to see the doctor."}
+      },
+      "unit_bands": ["4-6", "2-3", "7-9", "unspecified"],
+      "band_notes": "Ages 4-6: need about 10-13 hours of sleep including any nap; vivid imagination makes fears of the dark common; bedwetting is still common and never a reason for punishment. Conservative medical advice.",
+      "lessons": [
+        {"title": "كم ساعةً يحتاج طفلك من النوم؟", "focus": "Sleep needs at four to six, the link between sleep and mood, attention and growth, and counting back from the wake-up time to set bedtime.", "keywords": ["النوم"], "pin_units": ["seed-sleep-46", "med-fb24deba"]},
+        {"title": "موعدٌ واحد طوال الأسبوع", "focus": "One bedtime and one wake-up time every day of the week, including weekends and holidays, and why a steady body clock makes falling asleep easier.", "keywords": ["النوم", "موعد"], "pin_units": ["seed-sleep-46"]},
+        {"title": "نصف ساعةٍ هادئة قبل النوم", "focus": "A calm half hour before bed: no screens, no rough play, no heavy food; a bath, a story, a talk about the day, dim lights.", "keywords": ["النوم", "روتين"], "pin_units": ["seed-sleep-46"]},
+        {"title": "الخوف من الظلام", "focus": "Fear of the dark and of monsters is a normal part of imagination: acknowledge it, don't mock or force, a dim night light or favourite toy, no frightening stories before bed, small brave steps.", "keywords": ["الخوف", "الظلام"], "pin_units": ["seed-fear-46", "seed-sleep-46"]},
+        {"title": "حين يأتي إلى سريرك ليلًا", "focus": "When the child comes to the parents' bed at night: walk them back calmly and firmly, few words, the same response every time, praise mornings in their own bed.", "keywords": ["النوم"], "pin_units": ["seed-sleep-46"]},
+        {"title": "الشاشات والنوم", "focus": "Screens before bed delay sleep and stir the mind; screens out of the bedroom, switched off an hour before bed; replacing them with a story or quiet play.", "keywords": ["الشاشات", "النوم"], "pin_units": ["seed-sleep-46"]},
+        {"title": "حركةٌ في النهار، نومٌ في الليل", "focus": "Active outdoor play in the day helps children fall asleep and sleep better; less sitting, more movement, and daylight in the morning.", "keywords": ["النشاط البدني", "النوم"], "pin_units": ["med-fb24deba", "seed-sleep-46"]},
+        {"title": "التبوّل الليلي: صبرٌ لا عقاب", "focus": "Bedwetting is common at this age and out of the child's control: never punish or shame, fewer drinks before bed, the toilet before sleep, a mattress protector, involving the child calmly, praising dry nights; when to see the doctor.", "keywords": ["التبول", "الليلي"], "pin_units": ["seed-bedwet-46"]},
+        {"title": "أذكار النوم وحكايةٌ قصيرة", "focus": "Ending the day with the bedtime adhkar from a trusted book of adhkar and a short calm story, so sleep is linked to calm and to remembering Allah; no frightening stories.", "keywords": ["ذكر الله", "الأذكار"], "pin_units": ["isl-f6342250", "seed-sleep-46"], "bank": ["v_013_028"]},
+        {"title": "متى تستشير الطبيب في نومه؟", "focus": "Signs that need a doctor: loud snoring, pauses in breathing, persistent difficulty falling or staying asleep, daytime sleepiness or behaviour change, frequent night terrors or sleepwalking, bedwetting returning after months dry or with pain or daytime wetting.", "keywords": ["النوم"], "pin_units": ["seed-sleep-46", "seed-bedwet-46"]}
+      ]
+    }
+  ]
+}

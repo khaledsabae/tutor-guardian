@@ -1,0 +1,736 @@
+{
+  "topic": "anger_stubbornness",
+  "demand": "الغضب والعناد — 102 من 1,284 سؤالًا، الثاني بعد الصلاة والدين. لا يوجد مسار مخصّص له في أي فئة: دروسه متفرّقة في مسارات أخرى.",
+  "paths": [
+    {
+      "path_id": "path_2-3_development_tantrums",
+      "create": {
+        "title": "نوبات الغضب والعناد: هدوؤك يعلّمه (2-3 سنوات)",
+        "age_group": "2-3",
+        "domain": "development",
+        "description": "مسار يومي للوالد مع طفلٍ في الثانية والثالثة: لماذا تحدث نوبات الغضب و«لا» المتكررة، وماذا تفعل قبل النوبة وأثناءها وبعدها، وكيف تضع حدودًا قليلة ثابتة بهدوء، ومتى تستشير مختصًّا.",
+        "pedagogical_framework": "attachment_rahma",
+        "primary_reference": {
+          "type": "دليل_تربوي",
+          "info": "إرشادات الأكاديمية الأمريكية لطب الأطفال ومراكز السيطرة على الأمراض في التربية الإيجابية، ووحدات المربّي المحرّرة"
+        },
+        "en": {
+          "title": "Tantrums and Stubbornness: Your Calm Teaches Them (Ages 2-3)",
+          "description": "A daily path for parents of two- and three-year-olds: why tantrums and the constant «no» happen, what to do before, during and after a tantrum, how to set a few firm limits calmly, and when to consult a specialist."
+        }
+      },
+      "unit_bands": [
+        "2-3",
+        "0-3",
+        "prenatal-1",
+        "4-6",
+        "unspecified"
+      ],
+      "band_notes": "Ages 2-3: the brain's brakes on emotion are immature while wishes and language race ahead; tantrums and «no» are normal development, not bad upbringing. Very short sentences to the child. Never hitting, shouting, threats or shaming. Safety first during a tantrum.",
+      "lessons": [
+        {
+          "title": "لماذا يغضب بهذه القوة؟",
+          "focus": "Why tantrums peak at two and three: an immature brain for self-control, strong wishes, limited words; tantrums are a stage, not a verdict on the parent or the child. The parent's calm is the main tool.",
+          "keywords": [
+            "نوبات الغضب"
+          ],
+          "pin_units": [
+            "d7a09c7e-769c-48b5-aaf8-0511fedfc0db",
+            "dev-35865ddb",
+            "seed-tantrum-23"
+          ]
+        },
+        {
+          "title": "قبل النوبة: الجوع والنعاس والانتقال المفاجئ",
+          "focus": "Prevention: most tantrums come with hunger, tiredness or sudden transitions; regular meals and naps, a warning before changing activity («خمس دقائق ثم نخرج»), simple routines.",
+          "keywords": [
+            "نوبات الغضب",
+            "الروتين"
+          ],
+          "pin_units": [
+            "d7a09c7e-769c-48b5-aaf8-0511fedfc0db",
+            "seed-tantrum-23"
+          ]
+        },
+        {
+          "title": "أثناء النوبة: أمانٌ وكلماتٌ قليلة",
+          "focus": "During the tantrum: keep him safe, stay close, one short sentence repeated calmly, do not argue or give in to screaming, do not raise your voice above his.",
+          "keywords": [
+            "نوبات الغضب"
+          ],
+          "pin_units": [
+            "d7a09c7e-769c-48b5-aaf8-0511fedfc0db",
+            "seed-tantrum-23"
+          ]
+        },
+        {
+          "title": "بعد أن يهدأ: الحضن أولًا ثم الكلمات",
+          "focus": "After the storm: hug first, then name what happened in simple words («كنتَ غاضبًا لأنك أردت…»), teach one alternative sentence once, no long lecture, no grudges.",
+          "keywords": [
+            "نوبات الغضب",
+            "المشاعر"
+          ],
+          "pin_units": [
+            "d7a09c7e-769c-48b5-aaf8-0511fedfc0db"
+          ]
+        },
+        {
+          "title": "«لا» الصغيرة: العناد علامة نموّ",
+          "focus": "Repeated «no» means the child discovered he is a separate person with a will; fewer direct orders, few fixed rules, do not ask a question whose answer may be «no» when «no» is not acceptable.",
+          "keywords": [
+            "العناد"
+          ],
+          "pin_units": [
+            "179d90e1-a863-42e1-8fea-e8560b7401f7",
+            "seed-defiance-23"
+          ]
+        },
+        {
+          "title": "خياران بدل أمرٍ واحد",
+          "focus": "Offering two choices that are both acceptable to the parent («الأزرق أم الأحمر؟»), time warnings, calm follow-through on what was said without long negotiation.",
+          "keywords": [
+            "العناد",
+            "الخيارات"
+          ],
+          "pin_units": [
+            "179d90e1-a863-42e1-8fea-e8560b7401f7",
+            "seed-defiance-23"
+          ]
+        },
+        {
+          "title": "حين يضرب أو يعضّ",
+          "focus": "Hitting and biting at two and three: stop the hand calmly and firmly, short clear words, attend to the hurt child first, teach what to do instead, never hit back to teach him.",
+          "keywords": [
+            "العدوان",
+            "الضرب",
+            "العض"
+          ],
+          "pin_units": [
+            "seed-aggression-23"
+          ]
+        },
+        {
+          "title": "نوبةٌ في السوق أو أمام الضيوف",
+          "focus": "Tantrums in public: prepare before outings, keep your decision, move calmly to a quieter place, ignore stares, do not buy peace with a treat; talk afterwards at home.",
+          "keywords": [
+            "نوبات الغضب"
+          ],
+          "pin_units": [
+            "d7a09c7e-769c-48b5-aaf8-0511fedfc0db",
+            "seed-tantrum-23"
+          ]
+        },
+        {
+          "title": "حين تنفد طاقتك أنت",
+          "focus": "The parent's own anger: early warning signs in the body, take thirty seconds of distance after making the child safe, deal with sleep and stress, apologise clearly when you shout.",
+          "keywords": [
+            "انفعال الوالد",
+            "الغضب"
+          ],
+          "pin_units": [
+            "6100b911-911d-4926-8f35-09b43a76303f"
+          ],
+          "bank": [
+            "h_004"
+          ]
+        },
+        {
+          "title": "متى تستشير مختصًّا؟",
+          "focus": "Signs that tantrums need a specialist: very long or very frequent tantrums, hurting himself or others, loss of skills he had, delayed speech, constant defiance with aggression for months. Reassure that most tantrums are normal.",
+          "keywords": [
+            "نوبات الغضب",
+            "العناد"
+          ],
+          "pin_units": [
+            "d7a09c7e-769c-48b5-aaf8-0511fedfc0db",
+            "179d90e1-a863-42e1-8fea-e8560b7401f7"
+          ]
+        }
+      ]
+    },
+    {
+      "path_id": "path_4-6_development_anger_stubbornness",
+      "create": {
+        "title": "الغضب والعناد: من الصراخ إلى الكلمات (4-6 سنوات)",
+        "age_group": "4-6",
+        "domain": "development",
+        "description": "مسار يومي يساعد الوالد على فهم غضب طفله وعناده في سنوات ما قبل المدرسة، وتعليمه تسمية مشاعره وتهدئة نفسه، ووضع قواعد قليلة بنتائج هادئة، ومعالجة الضرب والعدوان، والانتباه لغضب الوالد نفسه.",
+        "pedagogical_framework": "zpd_scaffolded",
+        "primary_reference": {
+          "type": "دليل_تربوي",
+          "info": "نصائح التربية الإيجابية من مراكز السيطرة على الأمراض والأكاديمية الأمريكية لطب الأطفال، ووحدات المربّي المحرّرة"
+        },
+        "en": {
+          "title": "Anger and Stubbornness: From Screaming to Words (Ages 4-6)",
+          "description": "A daily path that helps parents understand their preschooler's anger and stubbornness, teach them to name their feelings and calm themselves, set a few rules with calm consequences, deal with hitting and aggression, and attend to the parent's own anger."
+        }
+      },
+      "unit_bands": [
+        "4-6",
+        "2-3",
+        "7-9",
+        "unspecified"
+      ],
+      "band_notes": "Ages 4-6: more words but still limited self-control; learns through play, stories and imitation; needs clear simple rules and reasons. Never hitting, shaming, threats or frightening with Hell or with Allah.",
+      "lessons": [
+        {
+          "title": "ماذا يقول غضبه؟",
+          "focus": "What lies behind anger at 4-6: frustration, tiredness, wanting control or attention; look for the need behind the behaviour while still holding the limit.",
+          "keywords": [
+            "نوبات الغضب",
+            "الغضب"
+          ],
+          "pin_units": [
+            "seed-tantrum-46"
+          ]
+        },
+        {
+          "title": "«أنا غاضب»: أسماء المشاعر",
+          "focus": "Teaching emotion words: name feelings during calm moments, picture cards or stories, accept every feeling while limiting harmful actions.",
+          "keywords": [
+            "المشاعر",
+            "الانفعال"
+          ],
+          "pin_units": [
+            "seed-tantrum-46"
+          ]
+        },
+        {
+          "title": "ركن الهدوء: مكانٌ لا عقاب",
+          "focus": "A calm corner chosen with the child (cushion, picture book, water), practised when calm, offered not imposed during anger, the parent stays close; different from punishment.",
+          "keywords": [
+            "التهدئة",
+            "الهدوء",
+            "نوبات الغضب"
+          ],
+          "pin_units": [
+            "seed-tantrum-46"
+          ]
+        },
+        {
+          "title": "أمرٌ واحد واضح وسببٌ يفهمه",
+          "focus": "One clear request at a time, close up and with eye contact, a short reason instead of «because I said so», a short wait for response.",
+          "keywords": [
+            "العناد",
+            "الأوامر"
+          ],
+          "pin_units": [
+            "seed-defiance-46"
+          ]
+        },
+        {
+          "title": "قواعد قليلة ونتائج هادئة",
+          "focus": "A few fixed family rules and logical consequences announced in advance and applied calmly without lectures or anger.",
+          "keywords": [
+            "العناد",
+            "القواعد"
+          ],
+          "pin_units": [
+            "seed-defiance-46",
+            "gap-dev-stubborn-01"
+          ]
+        },
+        {
+          "title": "انتباهك جائزته: امدح اللحظة الجيدة",
+          "focus": "Catch him being good: immediate specific praise for cooperation and calm, more powerful than punishment; reduce attention given to minor misbehaviour.",
+          "keywords": [
+            "المدح",
+            "التشجيع"
+          ],
+          "pin_units": [
+            "gap-dev-stubborn-01",
+            "seed-defiance-46"
+          ]
+        },
+        {
+          "title": "حين يضرب أخاه أو صديقه",
+          "focus": "Aggression toward siblings or friends: stop it calmly, care for the hurt child first, teach words and alternatives, one-on-one time for the older child, no hitting as punishment.",
+          "keywords": [
+            "العدوان",
+            "الضرب"
+          ],
+          "pin_units": [
+            "seed-aggression-46",
+            "gap-dev-aggression-01"
+          ]
+        },
+        {
+          "title": "أسباب خفية: التعب والجوع والشاشة",
+          "focus": "Hidden drivers of irritability: short sleep, hunger, too much screen time especially before bed, busy days; track when outbursts happen and change one factor at a time.",
+          "keywords": [
+            "العصبية",
+            "النوم",
+            "الشاشات"
+          ],
+          "pin_units": [
+            "gap-med-irritability-01",
+            "seed-sleep-46"
+          ]
+        },
+        {
+          "title": "«لا تغضب»: الوصية بالقدوة قبل الكلام",
+          "focus": "Children learn calm from watching the parent: the parent handles his own anger in front of the child, names it, calms down, repairs; the Prophet's advice is lived before it is taught.",
+          "keywords": [
+            "انفعال الوالد",
+            "القدوة",
+            "الغضب"
+          ],
+          "pin_units": [
+            "6100b911-911d-4926-8f35-09b43a76303f"
+          ],
+          "bank": [
+            "h_009"
+          ]
+        },
+        {
+          "title": "متى يحتاج غضبه مختصًّا؟",
+          "focus": "Red flags at 4-6: frequent intense outbursts most days, hurting others or himself, destroying things, problems at kindergarten, a sudden change in behaviour; where to start (pediatrician).",
+          "keywords": [
+            "العدوان",
+            "نوبات الغضب"
+          ],
+          "pin_units": [
+            "seed-aggression-46",
+            "seed-tantrum-46"
+          ]
+        }
+      ]
+    },
+    {
+      "path_id": "path_7-9_development_anger_stubbornness",
+      "create": {
+        "title": "الغضب والعناد: مهارات الضبط والتعاون (7-9 سنوات)",
+        "age_group": "7-9",
+        "domain": "development",
+        "description": "مسار يومي للوالد مع طفلٍ بين السابعة والتاسعة: فهم أسباب العصبية والعناد، وتعليم الطفل مهارات تهدئة نفسه والتعبير عن غضبه بالكلام، وبناء التعاون بقواعد واتفاقات واضحة، والإصلاح بعد الخلاف، ومتى تستشير مختصًّا.",
+        "pedagogical_framework": "zpd_scaffolded",
+        "primary_reference": {
+          "type": "دليل_تربوي",
+          "info": "منظمة الصحة العالمية (التربية من أجل صحة مدى الحياة) والأكاديمية الأمريكية لطب الأطفال، ووحدات المربّي المحرّرة"
+        },
+        "en": {
+          "title": "Anger and Stubbornness: Skills for Self-Control and Cooperation (Ages 7-9)",
+          "description": "A daily path for parents of seven- to nine-year-olds: understanding what drives irritability and stubbornness, teaching the child to calm down and to express anger in words, building cooperation through clear rules and agreements, repairing after conflict, and knowing when to consult a specialist."
+        }
+      },
+      "unit_bands": [
+        "7-9",
+        "4-6",
+        "10-12",
+        "unspecified"
+      ],
+      "band_notes": "Ages 7-9: can learn self-calming skills and words for feelings, understands rules and fairness, likes agreements and charts; school pressure appears. Never hitting, shaming, threats or frightening with Hell.",
+      "lessons": [
+        {
+          "title": "خريطة العصبية: متى ينفجر ولماذا؟",
+          "focus": "Keep a three-day log of outbursts (time, before what, after what) to find the pattern — sleep, hunger, screens, homework — then change one factor for a week.",
+          "keywords": [
+            "العصبية",
+            "الغضب"
+          ],
+          "pin_units": [
+            "gap-med-irritability-01"
+          ]
+        },
+        {
+          "title": "الجسد يتكلّم أولًا",
+          "focus": "Teaching the child to notice early body signs of anger (hot face, clenched fists, fast breathing) and to stop at that moment; a simple anger thermometer.",
+          "keywords": [
+            "الغضب",
+            "الانفعال"
+          ],
+          "pin_units": [
+            "gap-med-irritability-01",
+            "seed-tantrum-46"
+          ]
+        },
+        {
+          "title": "أدوات التهدئة: نفَسٌ وعدٌّ وابتعاد",
+          "focus": "Practising calming tools when calm: slow breathing with a longer out-breath, counting, leaving the place, changing position, drinking water, seeking refuge in Allah; restraining anger is praised in the Qur'an.",
+          "keywords": [
+            "التهدئة",
+            "الغضب"
+          ],
+          "pin_units": [
+            "6100b911-911d-4926-8f35-09b43a76303f"
+          ],
+          "bank": [
+            "v_003_134"
+          ]
+        },
+        {
+          "title": "«أنا غاضب لأن…»: الغضب بالكلام",
+          "focus": "Teaching a sentence for anger («أنا غاضب لأن… وأريد…»), listening to it seriously, solving the problem together once calm.",
+          "keywords": [
+            "المشاعر",
+            "الغضب",
+            "الحوار"
+          ],
+          "pin_units": [
+            "gap-dev-stubborn-01"
+          ]
+        },
+        {
+          "title": "العناد: أوامر مهمّة قليلة",
+          "focus": "Reduce daily orders to a few important ones (sleep, school, safety), offer choices in the rest; each extra order spends the parent's authority.",
+          "keywords": [
+            "العناد"
+          ],
+          "pin_units": [
+            "gap-dev-stubborn-01"
+          ]
+        },
+        {
+          "title": "اتفاقٌ مكتوب يشارك في صياغته",
+          "focus": "A short written family agreement of three rules the child helps write, with clear logical consequences, reviewed weekly.",
+          "keywords": [
+            "العناد",
+            "القواعد",
+            "الاتفاق"
+          ],
+          "pin_units": [
+            "gap-dev-stubborn-01"
+          ]
+        },
+        {
+          "title": "نتائج منطقية بلا محاضرة",
+          "focus": "Consequences announced in advance and applied calmly and briefly (play after tidying), never in the heat of anger, never humiliating, followed by a fresh start.",
+          "keywords": [
+            "العقاب",
+            "النتائج",
+            "العناد"
+          ],
+          "pin_units": [
+            "gap-dev-stubborn-01",
+            "seed-defiance-46"
+          ]
+        },
+        {
+          "title": "بعد العاصفة: الإصلاح والاعتذار",
+          "focus": "Repair after conflict: return when both are calm, talk about what happened, the parent apologises for his own mistakes, the child makes amends, the relationship is restored.",
+          "keywords": [
+            "الاعتذار",
+            "انفعال الوالد"
+          ],
+          "pin_units": [
+            "6100b911-911d-4926-8f35-09b43a76303f"
+          ]
+        },
+        {
+          "title": "وصيةٌ نبوية في بيتنا: «لا تغضب»",
+          "focus": "Making the Prophet's advice a family motto with practical tools: a family plan for angry moments, praise when he controls himself, the parent as the first example.",
+          "keywords": [
+            "الغضب",
+            "القدوة"
+          ],
+          "pin_units": [
+            "6100b911-911d-4926-8f35-09b43a76303f",
+            "gap-dev-stubborn-01"
+          ],
+          "bank": [
+            "h_009"
+          ]
+        },
+        {
+          "title": "متى يحتاج غضبه مختصًّا؟",
+          "focus": "Signs that need a specialist at 7-9: anger most days for months, violence, self-harm, sharp drop at school, withdrawal, sleep or appetite changes; start with the pediatrician.",
+          "keywords": [
+            "نوبات الغضب",
+            "العصبية"
+          ],
+          "pin_units": [
+            "gap-med-irritability-01",
+            "3a15b379-edec-4916-a0cd-de4fc00863c9"
+          ]
+        }
+      ]
+    },
+    {
+      "path_id": "path_10-12_development_anger",
+      "create": {
+        "title": "الغضب والعناد قبل المراهقة: حوارٌ وحدودٌ واضحة (10-12 سنة)",
+        "age_group": "10-12",
+        "domain": "development",
+        "description": "مسار يومي للوالد مع طفلٍ بين العاشرة والثانية عشرة: لماذا يزداد الجدال والعناد قبل المراهقة، وكيف تحاوره دون صراع، وتضع معه قواعد مكتوبة بنتائج متّفقٍ عليها، وتعلّمه تهدئة نفسه وحلّ الخلاف، وتنتبه لما وراء غضبه من ضغطٍ أو تنمّرٍ أو شاشة، ومتى تستشير مختصًّا.",
+        "pedagogical_framework": "zpd_scaffolded",
+        "primary_reference": {
+          "type": "دليل_تربوي",
+          "info": "منظمة الصحة العالمية والأكاديمية الأمريكية لطب الأطفال، ووحدات المربّي المحرّرة"
+        },
+        "en": {
+          "title": "Anger and Stubbornness Before the Teens: Dialogue and Clear Limits (Ages 10-12)",
+          "description": "A daily path for parents of ten- to twelve-year-olds: why arguing and stubbornness increase before adolescence, how to talk with them without a power struggle, how to write family rules together with agreed consequences, how to teach them to calm down and resolve conflicts, what may lie behind their anger — pressure, bullying or screens — and when to consult a specialist."
+        }
+      },
+      "unit_bands": [
+        "10-12",
+        "7-9",
+        "13-15",
+        "unspecified"
+      ],
+      "band_notes": "Ages 10-12: reasoning grows fast, a strong sense of fairness, wanting more independence, the first changes of puberty; arguing is often practice in thinking. Dialogue and written agreements work better than orders. Correct in private; never hitting, insulting or comparing.",
+      "lessons": [
+        {
+          "title": "لماذا يجادل أكثر الآن؟",
+          "focus": "Why arguing and stubbornness rise at ten to twelve: growing reasoning, a strong sense of fairness, wanting independence, early puberty changes; arguing is partly practice in thinking, not only defiance.",
+          "keywords": [
+            "العناد",
+            "الجدال"
+          ],
+          "pin_units": [
+            "gap-dev-stubborn-01",
+            "gap-dev-defiance-teen-01"
+          ]
+        },
+        {
+          "title": "الحوار بدل الأمر: «ما رأيك؟»",
+          "focus": "Moving from orders to dialogue: explaining reasons, asking their view, involving them in decisions that concern them, listening to the end, keeping the final word on safety matters.",
+          "keywords": [
+            "الحوار",
+            "العناد"
+          ],
+          "pin_units": [
+            "gap-dev-stubborn-01",
+            "89bf08a7-5d8f-4373-b48d-523b596f5f8a"
+          ]
+        },
+        {
+          "title": "عقدٌ عائلي يشارك في كتابته",
+          "focus": "A written family agreement of three rules for the recurring battles (screens, homework, bedtime), written with the child, linked to his rights, signed by everyone and reviewed weekly.",
+          "keywords": [
+            "القواعد",
+            "العناد"
+          ],
+          "pin_units": [
+            "gap-dev-stubborn-01"
+          ]
+        },
+        {
+          "title": "نتائج متّفقٌ عليها لا عقوباتٌ مرتجلة",
+          "focus": "Consequences agreed in advance, logical and proportionate, applied calmly without lectures or humiliation; no decisions in the heat of anger; a fresh start afterwards.",
+          "keywords": [
+            "العقاب",
+            "النتائج"
+          ],
+          "pin_units": [
+            "gap-dev-stubborn-01"
+          ]
+        },
+        {
+          "title": "من الإحساس إلى القرار: مهارة تهدئة النفس",
+          "focus": "Teaching the child to notice anger early, pause, calm the body (breathing, stepping away, water) and then decide what to say; practising in calm times; praising self-control.",
+          "keywords": [
+            "الغضب",
+            "التهدئة"
+          ],
+          "pin_units": [
+            "gap-med-irritability-01",
+            "6100b911-911d-4926-8f35-09b43a76303f"
+          ]
+        },
+        {
+          "title": "حلّ الخلاف خطوةً خطوة",
+          "focus": "Teaching conflict-resolution steps with siblings and friends: calm down, each says what happened and what he wants, think of solutions together, choose one, try it; the parent as coach, not judge; no comparisons.",
+          "keywords": [
+            "الخلاف",
+            "الإخوة",
+            "الغيرة"
+          ],
+          "pin_units": [
+            "seed-jealousy-79",
+            "gap-dev-sibling-hits-01"
+          ]
+        },
+        {
+          "title": "الألعاب والشاشة والغضب",
+          "focus": "Anger when a game is stopped or lost: a family screen plan with agreed times and device-free places, warnings before stopping, games that can be saved, balance with sleep and movement, the parent's own example.",
+          "keywords": [
+            "الألعاب",
+            "الشاشة"
+          ],
+          "pin_units": [
+            "bd4afec4-d395-55f4-9953-22cc698564fd",
+            "gap-med-irritability-01"
+          ]
+        },
+        {
+          "title": "حين يكون الغضب رسالة: ضغطٌ أو تنمّر",
+          "focus": "Sudden or new irritability may carry a message: school pressure, being bullied in person or online, friendship trouble; ask calmly, listen, contact the school when needed, and watch for withdrawal or sleep changes.",
+          "keywords": [
+            "التنمر",
+            "العصبية"
+          ],
+          "pin_units": [
+            "gap-med-irritability-01",
+            "cyb-3f81bd4b"
+          ]
+        },
+        {
+          "title": "غضبك أنت أمام ابنٍ يجادل",
+          "focus": "The parent's own anger with an arguing pre-teen: noticing early signs, pausing before answering, not taking arguments personally, apologising when you shout, keeping the relationship.",
+          "keywords": [
+            "انفعال الوالد",
+            "الغضب"
+          ],
+          "pin_units": [
+            "6100b911-911d-4926-8f35-09b43a76303f"
+          ]
+        },
+        {
+          "title": "متى يحتاج غضبه مختصًّا؟",
+          "focus": "Signs that need a specialist at ten to twelve: anger most days for months out of proportion, violence, self-harm or talk of death, sharp drop at school, withdrawal, sleep or appetite change; how to start with the doctor.",
+          "keywords": [
+            "الغضب",
+            "العصبية"
+          ],
+          "pin_units": [
+            "gap-med-irritability-01",
+            "3a15b379-edec-4916-a0cd-de4fc00863c9"
+          ]
+        }
+      ]
+    },
+    {
+      "path_id": "path_13-15_development_teen_anger",
+      "create": {
+        "title": "غضب المراهق وعناده: علاقةٌ تحفظ الحدّ (13-15 سنة)",
+        "age_group": "13-15",
+        "domain": "development",
+        "description": "مسار يومي للوالد مع مراهقٍ بين الثالثة عشرة والخامسة عشرة: لماذا يشتدّ الغضب والعناد في هذه السن، وكيف تحفظ العلاقة وتضع حدودًا قليلة ثابتة، وتدير الخلاف دون صراخ، ومتى يكون الغضب علامة ضيقٍ نفسي يحتاج مختصًّا.",
+        "pedagogical_framework": "zpd_scaffolded",
+        "primary_reference": {
+          "type": "دليل_تربوي",
+          "info": "منظمة الصحة العالمية (صحة المراهقين النفسية) والأكاديمية الأمريكية لطب الأطفال، ووحدات المربّي المحرّرة"
+        },
+        "en": {
+          "title": "Teen Anger and Defiance: A Relationship That Keeps the Limits (Ages 13-15)",
+          "description": "A daily path for parents of teenagers aged thirteen to fifteen: why anger and defiance intensify at this age, how to protect the relationship while holding a few firm limits, how to handle disagreement without shouting, and when anger is a sign of emotional distress that needs a specialist."
+        }
+      },
+      "unit_bands": [
+        "13-15",
+        "10-12",
+        "16-18",
+        "unspecified"
+      ],
+      "band_notes": "Ages 13-15: identity, independence and peers; the brain's control centre is still maturing while emotions run high. The relationship is the parent's main tool; few firm limits; dignity and privacy; never hitting, insulting or public criticism. Irritability can be a sign of depression.",
+      "lessons": [
+        {
+          "title": "لماذا يشتدّ غضبه الآن؟",
+          "focus": "Why anger and defiance rise at 13-15: a maturing brain, identity and independence, testing limits; it is usually not hatred of the parent.",
+          "keywords": [
+            "العناد"
+          ],
+          "pin_units": [
+            "gap-dev-defiance-teen-01"
+          ]
+        },
+        {
+          "title": "رصيد العلاقة قبل التصحيح",
+          "focus": "Build the relationship account: several positive moments (interest, humour, help, time together) before each correction; a teen accepts limits from someone he feels safe with.",
+          "keywords": [
+            "العلاقة"
+          ],
+          "pin_units": [
+            "gap-dev-defiance-teen-01",
+            "89bf08a7-5d8f-4373-b48d-523b596f5f8a"
+          ]
+        },
+        {
+          "title": "«نكمل بعد ساعة»",
+          "focus": "No decisions in the heat of anger: a family rule to pause and resume later, the parent calms himself first, returns to the conversation as promised.",
+          "keywords": [
+            "الغضب",
+            "انفعال الوالد"
+          ],
+          "pin_units": [
+            "gap-dev-defiance-teen-01",
+            "6100b911-911d-4926-8f35-09b43a76303f"
+          ]
+        },
+        {
+          "title": "حدود قليلة ثابتة ومرونة في الباقي",
+          "focus": "Few non-negotiable limits (safety, respect, prayer) agreed and explained, flexibility in the rest, consequences announced in advance, no hidden revenge.",
+          "keywords": [
+            "الحدود",
+            "القواعد"
+          ],
+          "pin_units": [
+            "gap-dev-defiance-teen-01"
+          ]
+        },
+        {
+          "title": "الاستماع الذي يُطفئ الغضب",
+          "focus": "Listening to understand: let him finish, reflect back what you heard, ask before advising, accept the feeling while discussing the behaviour.",
+          "keywords": [
+            "الاستماع",
+            "الحوار"
+          ],
+          "pin_units": [
+            "89bf08a7-5d8f-4373-b48d-523b596f5f8a"
+          ]
+        },
+        {
+          "title": "حين يرفع صوته عليك",
+          "focus": "When the teen shouts at the parent: do not shout back, set the limit calmly («أسمعك حين تخفض صوتك»), return later to discuss respect and kindness to parents at a calm time, without guilt-tripping.",
+          "keywords": [
+            "الاحترام",
+            "بر الوالدين"
+          ],
+          "pin_units": [
+            "gap-dev-defiance-teen-01"
+          ],
+          "bank": [
+            "v_017_023"
+          ]
+        },
+        {
+          "title": "السهر والشاشة وحِدّة المزاج",
+          "focus": "Sleep loss and late gaming raise irritability: phones out of the bedroom at night, enough sleep, agreed screen times; notice the pattern before blaming character.",
+          "keywords": [
+            "النوم",
+            "السهر",
+            "الشاشات"
+          ],
+          "pin_units": [
+            "med-974f2776",
+            "gap-med-irritability-01"
+          ]
+        },
+        {
+          "title": "خلاف الوالدين أمامه",
+          "focus": "Parental conflict in front of the teen: what harms (insults, involving him, unresolved fights) and what can teach (respectful disagreement and visible repair); keep him out of the middle.",
+          "keywords": [
+            "الخلافات الزوجية",
+            "الخلاف"
+          ],
+          "pin_units": [
+            "b08d70af-9008-41cc-97f5-cfeba46ba327"
+          ]
+        },
+        {
+          "title": "حين يكون الغضب قناعًا للحزن",
+          "focus": "In teens depression often shows as irritability, withdrawal, sleep and appetite change, falling grades; ask gently, listen, and seek a specialist; urgent help if he speaks of self-harm.",
+          "keywords": [
+            "الاكتئاب"
+          ],
+          "pin_units": [
+            "med-292f742a",
+            "gap-med-suicide-risk-01"
+          ]
+        },
+        {
+          "title": "متى تطلب مساعدة مختص؟",
+          "focus": "Signs that need a specialist without delay: violence, breaking things, threats, self-harm, substance use, persistent rage; how to talk to the teen about getting help without shame.",
+          "keywords": [
+            "الغضب"
+          ],
+          "pin_units": [
+            "gap-dev-defiance-teen-01",
+            "a77834fd-ec17-4e0f-b98d-048e87c44bdb"
+          ]
+        }
+      ]
+    }
+  ]
+}
