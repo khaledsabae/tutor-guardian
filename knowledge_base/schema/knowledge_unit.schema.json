@@ -213,6 +213,33 @@
         }
       },
       "additionalProperties": true
+    },
+    "source_kind": {
+      "type": "string",
+      "enum": [
+        "authored_guidance"
+      ],
+      "description": "اختياري: «authored_guidance» = نصّ الوحدة إرشادٌ كتبه التطبيق (أُعيدت كتابته عمدًا ورُوجع)، لا ملخّصٌ لـ text_original الذي يبقى سجلًّا لأصل توليدها. غيابه = ملخّصٌ لمصدره، ويُحاكَم أمامه (check_kb_fidelity.py)."
+    },
+    "authored_references": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 3
+      },
+      "minItems": 1,
+      "description": "مع authored_guidance: المراجع التي يقوم عليها النص فعلًا (حديثٌ موصوف لا مقتبس، بطاقة من الصحيحين، موقف التطبيق المكتوب…)."
+    },
+    "source_note": {
+      "type": "string",
+      "minLength": 10,
+      "description": "مع authored_guidance: متى ولماذا أُعيدت كتابة النص، وعلاقته بـ text_original."
     }
+  },
+  "dependentRequired": {
+    "source_kind": [
+      "authored_references",
+      "source_note"
+    ]
   }
 }

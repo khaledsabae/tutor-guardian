@@ -504,22 +504,6 @@
     "on": "2026-10-04"
   },
   {
-    "key": "isl-c4d83813",
-    "kind": "kb_units",
-    "from": "knowledge_base/units/isl-c4d83813.json",
-    "to": "ops/data/en_unpublished/kb_units_source/isl-c4d83813.json",
-    "reason": "KB fidelity quarantine 2026-10-04 (unfaithful): Topic invented: summary teaches prayer (and the 7/10 narration); the source page (Alukah p.177) is about modest dress for girls and keeping sons from lying (Ibn Sirin, Abd al-Malik ibn Marwan, Awn ibn Abdullah). Nothing on prayer.",
-    "on": "2026-10-04"
-  },
-  {
-    "key": "isl-af807518",
-    "kind": "kb_units",
-    "from": "knowledge_base/units/isl-af807518.json",
-    "to": "ops/data/en_unpublished/kb_units_source/isl-af807518.json",
-    "reason": "KB fidelity quarantine 2026-10-04 (unfaithful): Topic invented: summary is about accustoming children to prayer gently; source (p.104) is fathers passing on knowledge - Dhakwan telling Suhayl to call the adhan when frightened (Satan flees it), Abu Burda's hadith on freeing a slave, Qurra teaching Mu'awiya how to return salam.",
-    "on": "2026-10-04"
-  },
-  {
     "key": "isl-707601b0__en",
     "kind": "kb_units",
     "from": "knowledge_base/units/isl-707601b0__en.json",
@@ -829,22 +813,6 @@
     "from": "knowledge_base/units/isl-801dbc52.json",
     "to": "ops/data/en_unpublished/kb_units_source/isl-801dbc52.json",
     "reason": "KB fidelity quarantine 2026-10-04 (meta_note): Meta description ('a dialogue between two people... no specific parenting focus'); the source (p.86) is fathers teaching sons faith - al-Zubayr telling Abdullah to seek Allah's help with his debt, Umar's du'a, Ubada ibn al-Samit teaching al-Walid belief in qadar. None of it conveyed.",
-    "on": "2026-10-04"
-  },
-  {
-    "key": "isl-901bde3f__en",
-    "kind": "kb_units",
-    "from": "knowledge_base/units/isl-901bde3f__en.json",
-    "to": "ops/data/en_unpublished/kb_units/isl-901bde3f__en.json",
-    "reason": "KB fidelity quarantine 2026-10-04 (unfaithful): No longer a summary of its source: the 2026-10-04 safety rewrite (70f2df67) replaced Kayfa p.51's rules with the app's guidance, and now contradicts the book - p.51 says a mistake made in front of siblings is punished in front of them; the unit says 'correct him privately, never in front of his siblings'. Sound advice, false provenance; re-home it as authored content.",
-    "on": "2026-10-04"
-  },
-  {
-    "key": "isl-901bde3f__en",
-    "kind": "kb_units",
-    "from": "knowledge_base/units/isl-901bde3f.json",
-    "to": "ops/data/en_unpublished/kb_units_source/isl-901bde3f.json",
-    "reason": "KB fidelity quarantine 2026-10-04 (unfaithful): No longer a summary of its source: the 2026-10-04 safety rewrite (70f2df67) replaced Kayfa p.51's rules with the app's guidance, and now contradicts the book - p.51 says a mistake made in front of siblings is punished in front of them; the unit says 'correct him privately, never in front of his siblings'. Sound advice, false provenance; re-home it as authored content.",
     "on": "2026-10-04"
   },
   {
@@ -2168,22 +2136,6 @@
     "on": "2026-10-04"
   },
   {
-    "key": "isl-24dda124__en",
-    "kind": "kb_units",
-    "from": "knowledge_base/units/isl-24dda124__en.json",
-    "to": "ops/data/en_unpublished/kb_units/isl-24dda124__en.json",
-    "reason": "KB fidelity quarantine 2026-10-04 (unfaithful): Does not convey its source and adds content: p.127 forbids children weapon play and fireworks that frighten Muslims ('a Muslim may not frighten a Muslim', not pointing iron at a brother); the quoted 'the Muslim is the brother of the Muslim' (Bukhari 2442) and the urging to tolerance and not getting angry are not there.",
-    "on": "2026-10-04"
-  },
-  {
-    "key": "isl-24dda124__en",
-    "kind": "kb_units",
-    "from": "knowledge_base/units/isl-24dda124.json",
-    "to": "ops/data/en_unpublished/kb_units_source/isl-24dda124.json",
-    "reason": "KB fidelity quarantine 2026-10-04 (unfaithful): Does not convey its source and adds content: p.127 forbids children weapon play and fireworks that frighten Muslims ('a Muslim may not frighten a Muslim', not pointing iron at a brother); the quoted 'the Muslim is the brother of the Muslim' (Bukhari 2442) and the urging to tolerance and not getting angry are not there.",
-    "on": "2026-10-04"
-  },
-  {
     "key": "isl-2935b46f__en",
     "kind": "kb_units",
     "from": "knowledge_base/units/isl-2935b46f__en.json",
@@ -2493,22 +2445,6 @@
     "from": "knowledge_base/units/isl-602280fa.json",
     "to": "ops/data/en_unpublished/kb_units_source/isl-602280fa.json",
     "reason": "KB fidelity quarantine 2026-10-04 (unfaithful): Invents a story of a child taking his siblings' toys; the source (pp.139-140) is Anas on the Prophet's hunger and Abu Talha's food, Umm Sulaym's hays for the Prophet's wedding, Ibn Umar inviting the poor to his table.",
-    "on": "2026-10-04"
-  },
-  {
-    "key": "isl-602bfb05__en",
-    "kind": "kb_units",
-    "from": "knowledge_base/units/isl-602bfb05__en.json",
-    "to": "ops/data/en_unpublished/kb_units/isl-602bfb05__en.json",
-    "reason": "KB fidelity quarantine 2026-10-04 (unfaithful): Topic invented (prayer at seven); the source (p.72) is the chapter on checking on one's children - the Prophet going to Fatima's house asking for Ali and wiping the dust off him in the mosque ('Abu Turab'), and asking for al-Hasan.",
-    "on": "2026-10-04"
-  },
-  {
-    "key": "isl-602bfb05__en",
-    "kind": "kb_units",
-    "from": "knowledge_base/units/isl-602bfb05.json",
-    "to": "ops/data/en_unpublished/kb_units_source/isl-602bfb05.json",
-    "reason": "KB fidelity quarantine 2026-10-04 (unfaithful): Topic invented (prayer at seven); the source (p.72) is the chapter on checking on one's children - the Prophet going to Fatima's house asking for Ali and wiping the dust off him in the mosque ('Abu Turab'), and asking for al-Hasan.",
     "on": "2026-10-04"
   },
   {

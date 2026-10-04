@@ -597,6 +597,16 @@
    ],
    "why": "Gist matches pp.8-9: parents answer for their household (shepherd hadith), most corruption in children comes from parents' neglect of teaching them the obligations of the religion (Ibn al-Qayyim), al-Sa'di's neglected-garden analogy. 'Justice between them' is one unsupported clause, not attributed."
   },
+  "isl-24dda124": {
+   "fingerprint": "592970de3edb46a7",
+   "judged_on": "2026-10-04",
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "flags": [
+    "glyph_substituted"
+   ],
+   "source_kind": "authored_guidance",
+   "why": "Authored guidance, rewritten in PR #27 — 2224ade1 and reviewed there; not a summary of its PDF chunk, so it is not judged against it. Read on its own: correct, and states the app's position as the app's. Provenance relabelled to the references the text actually rests on."
+  },
   "isl-257951bb": {
    "fingerprint": "aae332443f7544ac",
    "judged_on": "2026-10-04",
@@ -1109,6 +1119,18 @@
     "glyph_substituted"
    ],
    "why": "Matches p.62: narrations from the salaf on disciplining children and orphans including hitting (Aisha, Maymun, Luqman 'a father's hitting is like fertiliser'), 'the child's right is good adab'. The limits are attributed to the jurists and the app's stance is stated as its own."
+  },
+  "isl-602bfb05": {
+   "fingerprint": "f229d21a7deaa088",
+   "judged_on": "2026-10-04",
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "flags": [
+    "glyph_substituted",
+    "meta_framing",
+    "introduces_number"
+   ],
+   "source_kind": "authored_guidance",
+   "why": "Authored guidance, rewritten in PR #27 — 70f2df67, 3ab8dae1 and reviewed there; not a summary of its PDF chunk, so it is not judged against it. Read on its own: correct, and states the app's position as the app's. Provenance relabelled to the references the text actually rests on."
   },
   "isl-61e09b66": {
    "fingerprint": "68ccddef01e8c2a4",
@@ -1647,6 +1669,16 @@
    ],
    "why": "Matches p.173: training children in night prayer (Mu'tamir's father waking the household in Ramadan, Talha ibn Musarrif ordering his daughters to pray at night) and teaching them to speak the truth. The models are Successors rather than Companions - a category slip, no invented event."
   },
+  "isl-901bde3f": {
+   "fingerprint": "a2600b20d38aa6ae",
+   "judged_on": "2026-10-04",
+   "source_file": "Kayfa_Turabbi_Waladak.pdf",
+   "flags": [
+    "reversed"
+   ],
+   "source_kind": "authored_guidance",
+   "why": "Authored guidance, rewritten in PR #27 — 70f2df67 and reviewed there; not a summary of its PDF chunk, so it is not judged against it. Read on its own: correct, and states the app's position as the app's. Provenance relabelled to the references the text actually rests on."
+  },
   "isl-908e4c80": {
    "fingerprint": "9e1fea2b7d59045b",
    "judged_on": "2026-10-04",
@@ -1847,6 +1879,17 @@
    ],
    "why": "Matches Kayfa pp.29-30: an open play space for safety, not buying war toys that raise aggression, and building confidence by respecting the child - no mockery, praise for success, consulting him, gentle guidance."
   },
+  "isl-af807518": {
+   "fingerprint": "af9fdaff07d551af",
+   "judged_on": "2026-10-04",
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "flags": [
+    "reversed",
+    "glyph_substituted"
+   ],
+   "source_kind": "authored_guidance",
+   "why": "Authored guidance, rewritten in PR #27 — 3ab8dae1 and reviewed there; not a summary of its PDF chunk, so it is not judged against it. Read on its own: correct, and states the app's position as the app's. Provenance relabelled to the references the text actually rests on."
+  },
   "isl-b04140c3": {
    "fingerprint": "b14f036e5d44e133",
    "judged_on": "2026-10-04",
@@ -2033,6 +2076,18 @@
     "meta_framing"
    ],
    "why": "Matches Khulayfi pp.9-10: education by example - the Prophet as the living model of the Quran in character and conduct - and its effect on the Companions."
+  },
+  "isl-c4d83813": {
+   "fingerprint": "38fa7b61e0257b1c",
+   "judged_on": "2026-10-04",
+   "source_file": "Alukah_Rights_of_Children.pdf",
+   "flags": [
+    "reversed",
+    "glyph_substituted",
+    "introduces_number"
+   ],
+   "source_kind": "authored_guidance",
+   "why": "Authored guidance, rewritten in PR #27 — 70f2df67, 3ab8dae1 and reviewed there; not a summary of its PDF chunk, so it is not judged against it. Read on its own: correct, and states the app's position as the app's. Provenance relabelled to the references the text actually rests on."
   },
   "isl-c5b93252": {
    "fingerprint": "17c8001823da0e14",

@@ -1,10 +1,10 @@
 {
-  "total_units": 1328,
+  "total_units": 1336,
   "generated_at": "2026-10-04T12:44:11.421466+00:00",
   "by_domain": {
     "medical": 354,
     "cyber": 279,
-    "islamic_parenting": 543,
+    "islamic_parenting": 551,
     "development": 131,
     "aqeedah": 21
   },
@@ -7726,6 +7726,30 @@
       "size_chars": 1242
     },
     {
+      "id": "isl-24dda124",
+      "domain": "islamic_parenting",
+      "title": "تعليم الأطفال آداب التعامل والتسامح",
+      "source_file": "Alukah_Rights_of_Children.pdf",
+      "language": "ar",
+      "original_age_group": "4-6",
+      "normalized_age_group": "4-6",
+      "behavior_type": "سلوك اجتماعي",
+      "needs_ocr": false,
+      "size_chars": 999
+    },
+    {
+      "id": "isl-24dda124__en",
+      "domain": "islamic_parenting",
+      "title": "Teaching Children the Adab of Interaction and Tolerance",
+      "source_file": "Alukah_Rights_of_Children.pdf",
+      "language": "en",
+      "original_age_group": "4-6",
+      "normalized_age_group": "4-6",
+      "behavior_type": "سلوك اجتماعي",
+      "needs_ocr": false,
+      "size_chars": 999
+    },
+    {
       "id": "isl-257951bb",
       "domain": "islamic_parenting",
       "title": "أهمية القدوة الحسنة في التربية",
@@ -8984,6 +9008,30 @@
       "behavior_type": "الحوار",
       "needs_ocr": false,
       "size_chars": 1262
+    },
+    {
+      "id": "isl-602bfb05",
+      "domain": "islamic_parenting",
+      "title": "تعليم الصلاة للأطفال وأهمية التوجيه المبكر",
+      "source_file": "Alukah_Rights_of_Children.pdf",
+      "language": "ar",
+      "original_age_group": "7-9",
+      "normalized_age_group": "7-9",
+      "behavior_type": "تربية دينية",
+      "needs_ocr": false,
+      "size_chars": 1127
+    },
+    {
+      "id": "isl-602bfb05__en",
+      "domain": "islamic_parenting",
+      "title": "Teaching Salah to Children and the Importance of Early Guida",
+      "source_file": "Alukah_Rights_of_Children.pdf",
+      "language": "en",
+      "original_age_group": "7-9",
+      "normalized_age_group": "7-9",
+      "behavior_type": "تربية دينية",
+      "needs_ocr": false,
+      "size_chars": 1127
     },
     {
       "id": "isl-61e09b66",
@@ -10282,6 +10330,30 @@
       "size_chars": 1587
     },
     {
+      "id": "isl-901bde3f",
+      "domain": "islamic_parenting",
+      "title": "قواعد العاقبة الفورية الهادئة للأطفال",
+      "source_file": "Kayfa_Turabbi_Waladak.pdf",
+      "language": "ar",
+      "original_age_group": "4-6",
+      "normalized_age_group": "4-6",
+      "behavior_type": "تأديب وعقاب",
+      "needs_ocr": false,
+      "size_chars": 1258
+    },
+    {
+      "id": "isl-901bde3f__en",
+      "domain": "islamic_parenting",
+      "title": "Rules of Immediate, Calm Consequences for Children",
+      "source_file": "Kayfa_Turabbi_Waladak.pdf",
+      "language": "en",
+      "original_age_group": "4-6",
+      "normalized_age_group": "4-6",
+      "behavior_type": "تأديب وعقاب",
+      "needs_ocr": false,
+      "size_chars": 1258
+    },
+    {
       "id": "isl-908e4c80",
       "domain": "islamic_parenting",
       "title": "أهمية تربية البنات في الإسلام",
@@ -10822,6 +10894,18 @@
       "size_chars": 1339
     },
     {
+      "id": "isl-af807518",
+      "domain": "islamic_parenting",
+      "title": "تعويد الأطفال على الصلاة بلطف",
+      "source_file": "Alukah_Rights_of_Children.pdf",
+      "language": "ar",
+      "original_age_group": "4-6",
+      "normalized_age_group": "4-6",
+      "behavior_type": "تربية دينية",
+      "needs_ocr": false,
+      "size_chars": 1401
+    },
+    {
       "id": "isl-b04140c3",
       "domain": "islamic_parenting",
       "title": "دور المسجد في التربية النبوية",
@@ -11300,6 +11384,18 @@
       "behavior_type": "الشعور بالاختلاف عن الأصدقاء بسبب الالتزام",
       "needs_ocr": false,
       "size_chars": 99
+    },
+    {
+      "id": "isl-c4d83813",
+      "domain": "islamic_parenting",
+      "title": "تعليم الأطفال الصلاة وأهمية التوجيه الحكيم",
+      "source_file": "Alukah_Rights_of_Children.pdf",
+      "language": "ar",
+      "original_age_group": "7-9",
+      "normalized_age_group": "7-9",
+      "behavior_type": "تعويد على الصلاة",
+      "needs_ocr": false,
+      "size_chars": 1285
     },
     {
       "id": "isl-c5b93252",
