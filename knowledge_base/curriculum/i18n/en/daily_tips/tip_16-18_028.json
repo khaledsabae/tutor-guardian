@@ -6,32 +6,39 @@
   "unit_id": "f42e35c1-4bbd-4037-8bfa-4668a530f6d8",
   "day_of_week": 4,
   "time_of_day": "morning",
-  "approved_by": null,
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
   "language": "en",
   "source_language": "ar",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": false,
     "scholar_signals": {
       "keyword": false,
       "quoted_arabic": false,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text",
-        "arabic": "نضج",
-        "english": "maturity (nudhūj)",
-        "reason": "The English adds a transliteration '(nudhūj)' that is not present in the Arabic source."
-      }
-    ],
-    "approved_by": null,
-    "revalidated_at": "2026-08-13T17:12:52.796618+00:00",
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "revalidated_at": "2026-10-04T17:02:06+00:00",
     "manual_fix_note": "Rewritten 2026-10-04 with the Arabic: re-addressed to the parent (the tip spoke to the teen); Arabic no longer carries the Latin abbreviation DMDD.",
     "fixed_at": "2026-10-04T07:11:53.626353+00:00",
-    "fixer_model": "claude-opus-5.5"
+    "fixer_model": "claude-opus-5.5",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "2bd790d4479f48be196eaff1f48834277c2925a86001fe145feae6fa71431364",
+      "reviewed_at": "2026-10-04T17:02:06+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    }
   }
 }
