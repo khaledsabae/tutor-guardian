@@ -297,6 +297,42 @@ def test_the_seven_hadith_is_described_not_quoted(prayer):
     assert "isl-f2bef952" in prayer[0]["basis"]["unit_ids"]
 
 
+# ── grounded on the topic, not only on a principle ─────────────────────────
+#
+# The KB fidelity review of 2026-10-04 withdrew the units these notes once cited,
+# and left them resting on general «children learn by example» units
+# (ops/data/kb_fidelity/gaps.md, gaps 1, 3, 7, 8). Each now also cites a unit
+# written from its source page about the note's own topic. An edit that drops it
+# should fail here, not quietly re-open the gap.
+_UNITS = ROOT / "knowledge_base" / "units"
+
+
+def _labels_of(unit_ids):
+    out = []
+    for uid in unit_ids:
+        path = _UNITS / f"{uid}.json"
+        if path.exists():
+            out.append(json.loads(path.read_text(encoding="utf-8")).get("labels") or [])
+    return out
+
+
+@pytest.mark.parametrize("key,label", [
+    ("charity_box", "الصدقة"), ("honouring_parents", "بر الوالدين"),
+    ("neighbour_plate", "حق الجار"), ("truth_day", "الصدق"), ("family_ties", "صلة الرحم"),
+    ("light_words", "الأذكار"), ("zakat_al_fitr_together", "زكاة الفطر"),
+])
+def test_ramadan_topic_days_rest_on_a_unit_about_their_topic(ramadan, key, label):
+    day = next(d for d in ramadan[0]["days"] if d["key"] == key)
+    cited = day["parent_note"]["unit_ids"]
+    assert any(label in labels for labels in _labels_of(cited)), \
+        f"day {day['day']} ({key}) cites no unit labelled «{label}»: {cited}"
+
+
+def test_the_wudu_stage_rests_on_a_unit_that_teaches_wudu(prayer):
+    stage = next(s for s in prayer[0]["stages"] if s["key"] == "wudu")
+    assert any("تعليم الوضوء" in labels for labels in _labels_of(stage["unit_ids"])), stage["unit_ids"]
+
+
 # ── every rule bites (Milestones) ──────────────────────────────────────────
 
 @pytest.fixture(scope="module")
