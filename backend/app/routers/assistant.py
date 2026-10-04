@@ -116,9 +116,11 @@ _FLAG_COMPLETED_AFTER_DISCONNECT = "completed_after_disconnect"
 _FLAG_SUPERSEDED = "superseded"
 _FLAG_STOPPED = "stopped_by_parent"
 
-# Answers being finished after their reader left (see event_stream's finally).
-# Held here so the tasks are not garbage-collected mid-flight.
+# Answers being finished after their reader left (see event_stream's finally),
+# and the pre-stream pipelines of /stream requests (classification,
+# retrieval). Held here so the tasks are not garbage-collected mid-flight.
 _BACKGROUND_COMPLETIONS: set[asyncio.Task] = set()
+_PIPELINES: set[asyncio.Task] = set()
 
 
 class _StreamStalled(TimeoutError):
@@ -207,16 +209,51 @@ def _stall_flag(now: float, started: float, tracker: StreamTracker,
 class _TurnControl:
     """Handle on the answer a session is producing, for cutting it short.
 
-    `cancel_work(flag)` runs on the event loop (stops the model worker and any
-    background completion); `settle(flag)` writes the cut turn (what the parent
-    saw, as 'interrupted', or nothing) and may run in a thread.
+    Registered the moment the question row is stored (T1) — not when the
+    answer starts streaming, seconds later, after classification and
+    retrieval: a newer question or a Stop arriving in that window used to
+    find nothing to cut, and the old answer was generated and stored after
+    the new question anyway.
+
+    `cut` is the reason once cut. `cancel_work(flag)` runs on the event loop
+    (stops the model worker and any background completion); `settle(flag)`
+    writes the cut turn and may run in a thread. Until the answer starts,
+    both only record the cut — there is nothing to stop and nothing to write.
     """
 
     def __init__(self, session_id: str, user_msg_id: int | None = None) -> None:
         self.session_id = session_id
         self.user_msg_id = user_msg_id
-        self.cancel_work = lambda flag: None
-        self.settle = lambda flag: None
+        self.cut = ""
+        self.reader_gone = False   # the client left before the answer began
+        self._cancel_hook = None
+        self._settle_hook = None
+
+    def attach(self, cancel_hook, settle_hook) -> None:
+        """The answer's stream is starting: cuts now reach its worker and row."""
+        self._cancel_hook, self._settle_hook = cancel_hook, settle_hook
+
+    def cancel_work(self, flag: str) -> None:
+        self.cut = self.cut or flag
+        if self._cancel_hook is not None:
+            self._cancel_hook(flag)
+
+    def settle(self, flag: str) -> None:
+        if self._settle_hook is not None:
+            self._settle_hook(flag)
+        else:
+            # Cut before any word was produced: no row, but the reason counts.
+            try:
+                log_session(domain="", behavior_type="", age_group="", severity="",
+                            mode="abandoned", needs_human_review=False, reply_length=0,
+                            retrieved_count=0, flag=flag)
+            except Exception:  # noqa: BLE001 — telemetry only
+                pass
+
+    def release(self) -> None:
+        """Forget this turn — unless a newer one has already taken its place."""
+        if _ACTIVE_TURNS.get(self.session_id) is self:
+            del _ACTIVE_TURNS[self.session_id]
 
 
 # session_id → the answer it is producing. One event loop, one worker: plain
@@ -246,6 +283,27 @@ async def cut_pending_turn(session_id: str | None, flag: str,
     control.cancel_work(flag)
     await asyncio.to_thread(control.settle, flag)
     return True
+
+
+async def _register_turn(control: _TurnControl) -> None:
+    """Make `control` its session's turn — unless a newer question already is.
+
+    Two requests for one session interleave at their awaits, so the one whose
+    question was stored later is the newer turn, whichever gets here first
+    (T1: a late registration used to replace the newer turn's control, and
+    a Stop for the newer question then found the wrong turn). An older turn
+    already registered is cut as superseded; an older newcomer is cut at
+    birth and never reaches the model.
+    """
+    current = _ACTIVE_TURNS.get(control.session_id)
+    if current is not None and (current.user_msg_id or 0) > (control.user_msg_id or 0):
+        control.cancel_work(_FLAG_SUPERSEDED)
+        await asyncio.to_thread(control.settle, _FLAG_SUPERSEDED)
+        return
+    _ACTIVE_TURNS[control.session_id] = control
+    if current is not None:
+        current.cancel_work(_FLAG_SUPERSEDED)
+        await asyncio.to_thread(current.settle, _FLAG_SUPERSEDED)
 
 
 # Fallback used when the off-topic pivot generation fails or returns empty.
@@ -803,6 +861,7 @@ async def stream_reply(request: Request, user_message: UserMessage) -> Streaming
     # commit on the event loop stalls every other request this worker holds,
     # including the streams already in flight.
     user_msg_id: int | None = None
+    control: _TurnControl | None = None
     if session_id:
         await _require_owned_session(request, session_id)
         # Any answer still being produced for this session is cut first, so
@@ -813,50 +872,123 @@ async def stream_reply(request: Request, user_message: UserMessage) -> Streaming
             session_id, "user",
             user_message.message_text or user_message.behavior_type or "",
         )
+        control = _TurnControl(session_id, user_msg_id)
+        await _register_turn(control)
 
+    lang = detect_reply_language(user_message.message_text or "")
+    work = asyncio.create_task(_stream_answer(
+        user_message, policies, caller_device, session_id, user_msg_id, control,
+    ))
+    _PIPELINES.add(work)
+    work.add_done_callback(_PIPELINES.discard)
+    return StreamingResponse(
+        _relay(work, control, user_msg_id, session_id, lang),
+        media_type="text/event-stream", headers=_SSE_HEADERS,
+    )
+
+
+async def _relay(work: "asyncio.Task", control: _TurnControl | None,
+                 user_msg_id: int | None, session_id: str | None, lang: str):
+    """The SSE body: the `turn` frame at once, then the answer.
+
+    T2 — the frame used to come only after classification and retrieval, so
+    a Stop pressed in those seconds had no question id to name and never
+    reached the server. Keep-alives cover the wait. If the reader leaves
+    before the answer begins, the pipeline still finishes and its answer is
+    produced detached (background completion), exactly as after a cut
+    mid-answer; if it leaves mid-answer, closing the inner stream does that.
+    """
+    inner = None
     try:
-        return await _stream_answer(
-            user_message, policies, caller_device, session_id, user_msg_id,
-        )
-    except HTTPException:
-        raise
-    except Exception as exc:
-        # Everything between the stored question and the first token used to
-        # end here as a bare 500 with no reply row — in the data, the same as a
-        # parent who walked away. Now it is a stored, counted error turn and an
-        # `error` event the app already knows how to show with a retry.
-        logger.exception("stream pipeline failed before streaming (session=%s)", session_id)
-        lang = detect_reply_language(user_message.message_text or "")
-        await asyncio.to_thread(functools.partial(
-            _record_failed_turn, session_id,
-            f"{_FLAG_PIPELINE_ERROR}:{type(exc).__name__}", lang=lang,
-        ))
-
-        def failed():
-            if user_msg_id is not None:
-                yield _turn_frame(user_msg_id)
+        if user_msg_id is not None:
+            yield _turn_frame(user_msg_id)
+        while not work.done():
+            done, _ = await asyncio.wait({work}, timeout=_STREAM_KEEPALIVE_S)
+            if not done:
+                yield _SSE_KEEPALIVE
+        try:
+            response = work.result()
+        except Exception as exc:  # noqa: BLE001 — answered below, never a bare 500
+            await _pipeline_failed(exc, control, session_id, lang)
             yield _sse("error", {"detail": _error_text(lang)})
-        return StreamingResponse(failed(), media_type="text/event-stream", headers=_SSE_HEADERS)
+            return
+        inner = response.body_iterator
+        async for frame in inner:
+            yield frame
+        inner = None
+    finally:
+        if inner is not None:
+            await inner.aclose()  # the reader left mid-answer
+        elif not work.done():
+            if control is not None:
+                control.reader_gone = True
+            work.add_done_callback(functools.partial(_detached, control, session_id, lang))
+
+
+def _detached(control: _TurnControl | None, session_id: str | None, lang: str,
+              work: "asyncio.Task") -> None:
+    """The pipeline finished after its reader left: produce the answer anyway."""
+    loop = asyncio.get_running_loop()
+    if work.cancelled():
+        return
+    exc = work.exception()
+    if exc is not None:
+        task = loop.create_task(_pipeline_failed(exc, control, session_id, lang))
+    else:
+        task = loop.create_task(_drain(work.result()))
+    _BACKGROUND_COMPLETIONS.add(task)
+    task.add_done_callback(_BACKGROUND_COMPLETIONS.discard)
+
+
+async def _drain(response: StreamingResponse) -> None:
+    async for _ in response.body_iterator:
+        pass
+
+
+async def _pipeline_failed(exc: BaseException, control: _TurnControl | None,
+                           session_id: str | None, lang: str) -> None:
+    """Everything between the stored question and the first token used to end
+    as a bare 500 with no reply row — in the data, the same as a parent who
+    walked away. Now it is a stored, counted error turn."""
+    logger.error("stream pipeline failed before streaming (session=%s)", session_id,
+                 exc_info=(type(exc), exc, exc.__traceback__))
+    if control is not None:
+        control.release()
+    await asyncio.to_thread(functools.partial(
+        _record_failed_turn, session_id,
+        f"{_FLAG_PIPELINE_ERROR}:{type(exc).__name__}", lang=lang,
+    ))
 
 
 async def _stream_answer(
     user_message: UserMessage, policies: dict, caller_device: str | None,
     session_id: str | None, user_msg_id: int | None,
+    control: _TurnControl | None = None,
 ) -> StreamingResponse:
     """/stream after the question is stored: guards → retrieval → SSE."""
 
     async def _single(reply: AssistantReply) -> StreamingResponse:
         """Emit a non-streamed reply as one terminal `done` event."""
+        if control is not None and control.cut:
+            # Cut while it was being worked out: writing it now would put it
+            # after the newer question.
+            control.release()
+
+            def nothing():
+                return
+                yield  # noqa: B901 — an empty generator
+            return StreamingResponse(nothing(), media_type="text/event-stream",
+                                     headers=_SSE_HEADERS)
         # Banned and emergency return through here, before the classifier
         # runs — tag the question from the reply so the rows that matter
         # most are not the ones left unlabelled. Both writes go through
         # to_thread: this handler runs on the event loop.
         await _tag_user_message(user_msg_id, reply.domain, reply.severity)
         await asyncio.to_thread(_finalize, reply, session_id)
+        if control is not None:
+            control.release()
 
         def one():
-            if user_msg_id is not None:
-                yield _turn_frame(user_msg_id)
             yield _sse("done", reply.model_dump())
         return StreamingResponse(one(), media_type="text/event-stream", headers=_SSE_HEADERS)
 
@@ -1091,15 +1223,24 @@ async def _stream_answer(
         persist_lock = threading.Lock()
         cancel = threading.Event()
         tracker = StreamTracker()
-        control = _TurnControl(session_id, user_msg_id) if session_id else None
         background: asyncio.Task | None = None
         cut_flag = ""  # set before a deliberate cut cancels the work
         started = time.monotonic()
         last_token_at: float | None = None
+        # How many of sent_parts the parent actually received before leaving;
+        # None while they are still reading. A cut keeps only that much (T7):
+        # what a background completion added after they left was never shown.
+        seen_count: int | None = None
         # The finished answer, set BEFORE it is written: if the reader leaves
         # during that write, the background completion stores this instead of
         # a partial.
         pending_final: tuple[str, str] | None = None
+
+        if control is not None and control.cut:
+            # T1 — cut (a newer question, Stop) while it was still being
+            # worked out: the model is never started for it.
+            control.release()
+            return
 
         def _emit(kind, value):
             try:
@@ -1181,9 +1322,11 @@ async def _stream_answer(
                 if persisted or reserved_id is not None:
                     return
                 try:
+                    # 'pending' (T5): still being written — the app keeps
+                    # looking until it turns into the answer or 'interrupted'.
                     reserved_id = store.add_message(
-                        session_id, "assistant", "".join(sent_parts).strip(),
-                        domain=primary_domain, severity=severity, mode="interrupted",
+                        session_id, "assistant", _seen_text(),
+                        domain=primary_domain, severity=severity, mode="pending",
                         needs_human_review=decision["needs_human_review"],
                     )
                 except Exception as exc:  # noqa: BLE001
@@ -1198,7 +1341,7 @@ async def _stream_answer(
                     return
                 persisted = True
                 rid = reserved_id
-            partial = "".join(sent_parts).strip()
+            partial = _seen_text()
             try:
                 if session_id:
                     if rid is not None:
@@ -1216,21 +1359,27 @@ async def _stream_answer(
                 logger.warning("settling the cut turn failed: %s", exc)
             _log("interrupted" if partial else "abandoned", flag, len(partial))
 
+        def _seen_text() -> str:
+            parts = sent_parts if seen_count is None else sent_parts[:seen_count]
+            return "".join(parts).strip()
+
         def _cancel_work(flag: str) -> None:
             nonlocal cut_flag
             cut_flag = flag
             cancel.set()
+            # A reader still connected hears now that nothing more comes —
+            # not at the model's next token, which a held or slow model may
+            # not send for a minute.
+            q.put_nowait(("cancelled", None))
             if background is not None and not background.done():
                 background.cancel()
 
         def _release() -> None:
-            if control is not None and _ACTIVE_TURNS.get(session_id) is control:
-                del _ACTIVE_TURNS[session_id]
+            if control is not None:
+                control.release()
 
         if control is not None:
-            control.cancel_work = _cancel_work
-            control.settle = _settle_cut
-            _ACTIVE_TURNS[session_id] = control
+            control.attach(_cancel_work, _settle_cut)
 
         def _final_text(chunk) -> str:
             text = (chunk.result.text if chunk.result else "").strip()
@@ -1298,8 +1447,8 @@ async def _stream_answer(
         # went away. Any way out of the loop below means a reader was there.
         reader_gone = True
         try:
-            if user_msg_id is not None:
-                yield _turn_frame(user_msg_id)
+            if control is not None and control.reader_gone:
+                return  # nobody to stream to: finish it detached (finally)
             while True:
                 try:
                     msg_type, val = await asyncio.wait_for(
@@ -1381,6 +1530,7 @@ async def _stream_answer(
             # log, nothing. That silent path was 176 of 1,617 questions
             # (10.9%) as of 2026-08-13, and it is why they were undiagnosable.
             if not persisted and reader_gone and not cancel.is_set():
+                seen_count = len(sent_parts)
                 logger.warning(
                     "Stream reader left before completion (session=%s, chars=%d) "
                     "— finishing in the background",

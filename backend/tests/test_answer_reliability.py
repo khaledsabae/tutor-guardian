@@ -4,8 +4,10 @@ Production, 30 days to 2026-10-04: 44 of 290 parent questions (15.2%) ended
 with no answer. 23 were cut by the app mid-answer, ~18 sat for 2–31 minutes
 behind DeepSeek calls that ignored their 6–8 s "timeouts" (a per-READ limit
 that keep-alive lines reset) while holding the event loop's default thread
-pool. The PR #24 review then found regressions in the first fix (G1–G4,
-S1–S8, M1–M6); the tests for those are labelled with the finding's id.
+pool. The PR #24 reviews then found regressions in the first fix (round 1:
+G1–G4, S1–S8, M1–M6; round 2: R1–R8, T1–T8); the tests for those are
+labelled with the finding's id. The follow-up topic inheritance (S2/S3) was
+taken out of this PR (T3) — production's behaviour is kept.
 
 Names introduced by the fix are reached through the module (`ai_gateway.x`)
 inside each test, never imported at the top — so on old code a test fails on
@@ -665,11 +667,15 @@ async def _read_until(resp, stop_at: str) -> list[str]:
 
 
 async def _drain_background() -> None:
+    """Wait for everything the server keeps doing after the reader left:
+    pre-stream pipelines, detached answers, background completions."""
     for _ in range(200):
-        pending = list(getattr(assistant, "_BACKGROUND_COMPLETIONS", ()))
+        pending = (list(getattr(assistant, "_PIPELINES", ()))
+                   + list(getattr(assistant, "_BACKGROUND_COMPLETIONS", ())))
         if not pending:
             return
         await asyncio.gather(*pending, return_exceptions=True)
+        await asyncio.sleep(0)  # let done-callbacks schedule their follow-ups
 
 
 def test_answer_is_finished_into_the_row_reserved_when_the_reader_left(pipeline):
@@ -690,7 +696,8 @@ def test_answer_is_finished_into_the_row_reserved_when_the_reader_left(pipeline)
 
     reserved = asyncio.run(scenario())
     assert [r["role"] for r in reserved] == ["user", "assistant"]
-    assert reserved[1]["mode"] == "interrupted" and reserved[1]["content"] == "أولًا"
+    # T5 — 'pending' while it is being finished, distinct from a final cut.
+    assert reserved[1]["mode"] == "pending" and reserved[1]["content"] == "أولًا"
     rows = _rows(sid)
     assert [r["role"] for r in rows] == ["user", "assistant"]
     assert rows[1]["id"] == reserved[1]["id"]  # the same row, filled in
@@ -799,6 +806,223 @@ def test_background_stall_is_counted_as_a_stall_not_a_parent(pipeline, monkeypat
     assert [r["role"] for r in _rows(sid)] == ["user"]  # no empty bubble left behind
     assert "first_token_timeout" in _flags(pipeline)
     assert "client_left_before_first_token" not in _flags(pipeline)
+
+
+# ── T1/T2/T7: a turn is cut from the moment its question is stored ────────
+
+def _run(coro, timeout: float = 20.0):
+    """asyncio.run with a ceiling: on a regression these scenarios wait for
+    a frame or a task that never comes — fail, don't hang the suite."""
+    return asyncio.run(asyncio.wait_for(coro, timeout))
+
+
+def _gate_classifier(monkeypatch, slow_text: str) -> "asyncio.Event":
+    """Classification of `slow_text` waits for the returned event: the
+    seconds of "thinking" before an answer starts streaming."""
+    gate = asyncio.Event()
+
+    async def _classify(query_text):
+        if query_text == slow_text:
+            await gate.wait()
+        return ["medical"], ""
+
+    monkeypatch.setattr(assistant, "_classify_and_rewrite", _classify)
+    return gate
+
+
+def _turn_id(frame: str) -> int:
+    assert frame.startswith("event: turn"), frame
+    return json.loads(frame.split("data: ", 1)[1])["message_id"]
+
+
+def test_turn_frame_comes_before_classification(pipeline, monkeypatch):
+    """T2 — the frame came only after classification and retrieval, so a
+    Stop pressed in those seconds had no question id and never reached the
+    server: the whole answer was generated and stored."""
+    pipeline.use_script([("token", "رد")])
+    sid = store.create_session("early")
+
+    async def scenario():
+        gate = _gate_classifier(monkeypatch, "سؤال بطيء")
+        resp = await assistant.stream_reply(_request("early"), _msg(sid, "سؤال بطيء"))
+        first = await asyncio.wait_for(resp.body_iterator.__anext__(), 2)
+        registered = assistant._ACTIVE_TURNS.get(sid)
+        gate.set()
+        rest = [frame async for frame in resp.body_iterator]
+        return first, registered, rest
+
+    first, registered, rest = _run(scenario())
+    qid = _rows(sid)[0]["id"]
+    assert _turn_id(first) == qid
+    # T1 — registered with the stored question, before any of the pipeline.
+    assert registered is not None and registered.user_msg_id == qid
+    assert any("event: done" in f for f in rest)
+
+
+def test_new_question_while_thinking_never_starts_the_old_answer(pipeline, monkeypatch):
+    """T1 — the turn was registered only when its answer began to stream. A
+    question asked during the "thinking" seconds found nothing to cut:
+    Q1, Q2, A1, A2 — A1 paid for, and shown under Q2."""
+    pipeline.use_script([("token", "الجواب")])
+    sid = store.create_session("thinker")
+
+    async def scenario():
+        gate = _gate_classifier(monkeypatch, "السؤال الأول")
+        r1 = await assistant.stream_reply(_request("thinker"), _msg(sid, "السؤال الأول"))
+        await r1.body_iterator.__anext__()  # the turn frame; Q1 is thinking
+        r2 = await assistant.stream_reply(_request("thinker"), _msg(sid, "السؤال الثاني"))
+        out2 = [frame async for frame in r2.body_iterator]
+        gate.set()
+        out1 = [frame async for frame in r1.body_iterator]
+        await _drain_background()
+        return out1, out2
+
+    out1, out2 = _run(scenario())
+    assert [(r["role"], r["content"]) for r in _rows(sid)] == [
+        ("user", "السؤال الأول"), ("user", "السؤال الثاني"), ("assistant", "الجواب"),
+    ]
+    assert len(pipeline.prompts) == 1  # Q1 never reached the model
+    assert "superseded" in _flags(pipeline)
+    assert not any("event: done" in f for f in out1)
+    assert any("event: done" in f for f in out2)
+
+
+def test_stop_while_thinking_never_starts_the_model(pipeline, monkeypatch):
+    """T1/T2 — with the id from the first frame, a Stop during the thinking
+    seconds cuts the turn before any model call."""
+    pipeline.use_script([("token", "لن يُكتب")])
+    sid = store.create_session("early-stop")
+
+    async def scenario():
+        gate = _gate_classifier(monkeypatch, "سؤال سيوقف")
+        resp = await assistant.stream_reply(_request("early-stop"), _msg(sid, "سؤال سيوقف"))
+        qid = _turn_id(await resp.body_iterator.__anext__())
+        stopped = await assistant.cut_pending_turn(sid, "stopped_by_parent", only_message_id=qid)
+        gate.set()
+        out = [frame async for frame in resp.body_iterator]
+        await _drain_background()
+        return stopped, out
+
+    stopped, out = _run(scenario())
+    assert stopped is True
+    assert pipeline.prompts == []
+    assert [r["role"] for r in _rows(sid)] == ["user"]
+    assert "stopped_by_parent" in _flags(pipeline)
+    assert not any("event: done" in f for f in out)
+
+
+def test_reader_leaving_while_thinking_still_gets_its_answer(pipeline, monkeypatch):
+    """The app going to the background before the first token is not a Stop:
+    the answer is produced anyway and stored for the app to reload."""
+    pipeline.use_script([("token", "جواب "), ("token", "كامل")])
+    sid = store.create_session("pocket")
+
+    async def scenario():
+        gate = _gate_classifier(monkeypatch, "سؤال ثم جيب")
+        resp = await assistant.stream_reply(_request("pocket"), _msg(sid, "سؤال ثم جيب"))
+        await resp.body_iterator.__anext__()
+        await resp.body_iterator.aclose()  # the reader leaves while thinking
+        gate.set()
+        await _drain_background()
+
+    _run(scenario())
+    rows = _rows(sid)
+    assert [(r["role"], r["mode"]) for r in rows] == [("user", None), ("assistant", "llm_generated")]
+    assert rows[1]["content"] == "جواب كامل"
+    assert "completed_after_disconnect" in _flags(pipeline)
+
+
+def test_a_late_registration_never_replaces_a_newer_turn(pipeline, monkeypatch):
+    """T1 — Q1 stored first but registered after Q2 replaced Q2's control:
+    a Stop for Q2 then answered stopped:false and Q1 was answered after Q2."""
+    pipeline.use_script([("token", "جواب الثاني "), ("sleep", 0.3), ("token", "يكمل")])
+    sid = store.create_session("racer")
+    real_add = store.add_message
+
+    def slow_add(session_id, role, content, **kw):
+        mid = real_add(session_id, role, content, **kw)
+        if role == "user" and content == "السؤال الأول":
+            time.sleep(0.3)  # stored first, back on the loop last
+        return mid
+
+    monkeypatch.setattr(store, "add_message", slow_add)
+
+    async def scenario():
+        t1 = asyncio.create_task(
+            assistant.stream_reply(_request("racer"), _msg(sid, "السؤال الأول")))
+        await asyncio.sleep(0.1)  # Q1's row exists; its request is still in add_message
+        r2 = await assistant.stream_reply(_request("racer"), _msg(sid, "السؤال الثاني"))
+        r1 = await t1
+        owner = assistant._ACTIVE_TURNS[sid].user_msg_id
+        q2 = _turn_id(await r2.body_iterator.__anext__())
+        await _read_until(r2, "event: token")
+        stopped = await assistant.cut_pending_turn(sid, "stopped_by_parent", only_message_id=q2)
+        out1 = [frame async for frame in r1.body_iterator]
+        await _drain_background()
+        return owner, q2, stopped, out1
+
+    owner, q2, stopped, out1 = _run(scenario())
+    assert owner == q2 and stopped is True
+    assert len(pipeline.prompts) == 1  # Q1 was cut at birth
+    assert not any("event: done" in f for f in out1)
+    assert [(r["role"], r["content"], r["mode"]) for r in _rows(sid)] == [
+        ("user", "السؤال الأول", None), ("user", "السؤال الثاني", None),
+        ("assistant", "جواب الثاني", "interrupted"),
+    ]
+
+
+def test_a_cut_keeps_only_what_the_parent_saw(pipeline):
+    """T7 — a cut after the reader left stored the words a background
+    completion added later as the 'interrupted' answer: text the parent
+    never saw, fed into the next prompt as if they had."""
+    pipeline.use_script([
+        ("token", "ما رآه "), ("sleep", 0.05), ("token", "وما لم يره "),
+        ("token", "أيضًا"), ("hang", 3.0),
+    ])
+    sid = store.create_session("unseen")
+
+    async def scenario():
+        resp = await assistant.stream_reply(_request("unseen"), _msg(sid))
+        await _read_until(resp, "event: token")
+        await asyncio.sleep(0.4)  # the background completion takes in the rest
+        stopped = await assistant.cut_pending_turn(sid, "stopped_by_parent")
+        await _drain_background()
+        return stopped
+
+    assert _run(scenario()) is True
+    rows = _rows(sid)
+    assert rows[-1]["mode"] == "interrupted" and rows[-1]["content"] == "ما رآه"
+
+
+def test_a_cut_turn_tells_the_gateway_to_stop(pipeline, monkeypatch):
+    """R1 — the gateway never saw the cancel: at its first-token limit it
+    treated the abort as a failure and started a fallback model for a turn
+    nobody was waiting for. The stop check now goes into stream()."""
+    seen = {}
+    real_stream = ai_gateway.AIGateway.stream
+
+    def spying_stream(self, prompt, **kw):
+        seen["should_stop"] = kw.get("should_stop")
+        return real_stream(self, prompt, **kw)
+
+    monkeypatch.setattr(ai_gateway.AIGateway, "stream", spying_stream)
+    pipeline.use_script([("token", "بداية "), ("hang", 3.0), ("token", "لن تأتي")])
+    sid = store.create_session("r1")
+
+    async def scenario():
+        resp = await assistant.stream_reply(_request("r1"), _msg(sid))
+        frames = resp.body_iterator
+        async for frame in frames:
+            if "event: token" in frame:
+                break
+        before = seen["should_stop"]()
+        await assistant.cut_pending_turn(sid, "stopped_by_parent")
+        after = seen["should_stop"]()
+        await frames.aclose()
+        await _drain_background()
+        return before, after
+
+    assert _run(scenario()) == (False, True)
 
 
 # ── Pivot prompt, S8 pleasantries, minor ───────────────────────────────────
