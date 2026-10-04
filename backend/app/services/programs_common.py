@@ -407,24 +407,40 @@ def erase_child(conn: sqlite3.Connection, device_id: str, child_id: int) -> dict
 # ── Feature gating ─────────────────────────────────────────────────────────
 
 # A content item that `requires_feature: X` promises a screen. It is shown only
-# when this server serves X (the route below is mounted) AND the calling build
-# can show it (the client lists X in `features`). Either alone is not enough:
-# the endpoint without the screen is a promise the app cannot keep, and the
-# screen without the endpoint is an empty page.
+# when this server serves X (a request for the route below would be routed)
+# AND the calling build can show it (the client lists X in `features`). Either
+# alone is not enough: the endpoint without the screen is a promise the app
+# cannot keep, and the screen without the endpoint is an empty page.
 FEATURE_ROUTES: dict[str, tuple[str, str]] = {
-    "weekly_plan": ("GET", "/api/children/{child_id}/weekly-plan"),
+    "weekly_plan": ("GET", "/api/children/0/weekly-plan"),
 }
 
 
+def _routes_to(app: Any, method: str, path: str) -> bool:
+    """Would this app route `method path` to an endpoint?
+
+    Asked through Starlette's routing contract (`route.matches`) rather than by
+    reading `app.routes`: FastAPI 0.142 — production's — no longer copies an
+    included router's routes into the app's list (it keeps one lazy
+    `_IncludedRouter` per include), so a walk over `app.routes` finds nothing
+    there while finding everything under 0.136. Matching works on both.
+    """
+    from starlette.routing import Match
+
+    scope = {"type": "http", "method": method, "path": path, "root_path": "",
+             "headers": [], "query_string": b""}
+    router = getattr(app, "router", app)
+    try:
+        return any(route.matches(scope)[0] == Match.FULL
+                   for route in getattr(router, "routes", None) or ())
+    except Exception:  # noqa: BLE001 — unknown means unavailable, never a 500
+        logger.warning("feature probe failed for %s %s", method, path, exc_info=True)
+        return False
+
+
 def server_features(app: Any) -> set[str]:
-    have: set[str] = set()
-    for route in getattr(app, "routes", None) or ():
-        path = getattr(route, "path", None)
-        methods = getattr(route, "methods", None) or set()
-        for feature, (method, wanted) in FEATURE_ROUTES.items():
-            if path == wanted and method in methods:
-                have.add(feature)
-    return have
+    return {feature for feature, (method, path) in FEATURE_ROUTES.items()
+            if _routes_to(app, method, path)}
 
 
 def parse_client_features(raw: Optional[str]) -> set[str]:
