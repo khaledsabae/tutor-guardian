@@ -21,8 +21,16 @@ card to be the one the child was actually given.
 (schema v34) are rows here too — `source = 'prayer_journey'` — so they ride
 the same claim → evening confirmation → digest loop. Everything about *the
 day's card* (which card is today's, the no-repeat window, the leverage
-figure) reads bank rows only (`source IS NULL`); everything about *the
-evening* (pending, confirm, expiry, the digest) reads both.
+figure, the bank claim) reads bank rows only (`source IS NULL`); everything
+about *the evening* (pending, confirm, expiry, the digest) reads both.
+
+**Reverting v34 safely.** Code from before v34 reads the newest row of the day
+as the day's card, with no `source` filter — it would hand a child a recorded
+prayer as a blank mission card, and show blank cards in the evening list. So
+delete the program's rows before deploying such code:
+`DELETE FROM child_missions WHERE source = 'prayer_journey';`
+(or keep these `source IS NULL` filters through the revert). The added
+columns and tables are additive and can stay.
 """
 from __future__ import annotations
 
@@ -181,9 +189,14 @@ def _program_of(row: sqlite3.Row) -> Optional[str]:
 
 
 def _row_to_card(row: sqlite3.Row, missions: list[dict[str, Any]],
-                 lang: Optional[str] = None) -> dict[str, Any]:
+                 lang: Optional[str] = None) -> Optional[dict[str, Any]]:
+    """A card for the row. None for a Prayer Journey row whose program file
+    (or task) cannot be read right now — never a blank card with 0 coins."""
     if _program_of(row) == "prayer_journey":
         from app.services import prayer_journey
+        detail = prayer_journey.mission_card(row["mission_key"], lang)
+        if detail is None:
+            return None
         return {
             "mission_id": row["id"],
             "mission_key": row["mission_key"],
@@ -191,7 +204,7 @@ def _row_to_card(row: sqlite3.Row, missions: list[dict[str, Any]],
             "local_date": row["local_date"],
             "claimed_at": row["claimed_at"],
             "confirmed_at": row["confirmed_at"],
-            **prayer_journey.mission_card(row["mission_key"], lang),
+            **detail,
         }
     detail = next((m for m in missions if m["id"] == row["mission_key"]), None)
     return {
@@ -219,17 +232,24 @@ def claim(child_id: int, mission_id: int) -> dict[str, Any]:
     """
     conn = get_conn()
     try:
+        # Bank rows only: a Prayer Journey row is claimed through its own
+        # endpoint, which enforces the task's daily and weekly caps. Through
+        # this one, an old prayer card could be re-claimed and paid again.
         row = conn.execute(
-            "SELECT * FROM child_missions WHERE id = ? AND child_id = ?",
+            f"SELECT * FROM child_missions WHERE id = ? AND child_id = ? AND {_BANK_ONLY}",
             (mission_id, child_id),
         ).fetchone()
         if row is None:
             return {"ok": False, "reason": "mission_not_found"}
         if row["status"] in ("confirmed", "not_done"):
             return {"ok": False, "reason": "already_settled"}
+        if row["status"] == "expired":
+            # Gone quietly, and it stays gone: a card can't be revived to put
+            # a two-day-old claim in front of the parent tonight.
+            return {"ok": False, "reason": "expired"}
         conn.execute(
             "UPDATE child_missions SET status = 'claimed', claimed_at = ? "
-            "WHERE id = ?", (_iso(_now()), mission_id),
+            "WHERE id = ? AND status IN ('assigned', 'claimed')", (_iso(_now()), mission_id),
         )
         conn.commit()
         return {"ok": True, "status": "claimed"}
@@ -256,6 +276,10 @@ def pending_for_device(device_id: str, lang: Optional[str] = None) -> list[dict[
             missions = [] if _program_of(row) else load_missions(
                 map_profile_age_to_band(row["age_group"]), lang)
             card = _row_to_card(row, missions, lang)
+            if card is None:
+                # Its program is unreadable this minute: hidden, still claimed,
+                # and back in the list — payable — when the file is.
+                continue
             card["child_id"] = row["child_id"]
             card["child_name"] = row["child_name"]
             out.append(card)
@@ -269,17 +293,41 @@ def confirm_batch(device_id: str, items: list[dict[str, Any]]) -> dict[str, Any]
 
     A parent with three children should press one button, not six.
 
-    `coins` (additive, v34) lists what each confirmed Prayer Journey task is
-    worth, for the app to credit on the device — there is no server ledger.
-    A card answered "not yet" earns nothing and costs nothing.
+    `coins` (additive, v34) lists what each confirmed Prayer Journey task in
+    the request is worth, for the app to credit on the device — there is no
+    server ledger. It is idempotent: a retried request (the response was lost,
+    the app sends the batch again) reports the same coins for the rows the
+    first one confirmed, so the app — which credits each `mission_id` once —
+    never loses a payment. A card answered "not yet" earns nothing.
+
+    `deferred` lists Prayer Journey rows left unsettled because their program
+    file (or task) cannot be read right now: confirming them would pay 0. They
+    stay claimed, hidden from the evening list, and come back payable when the
+    file does.
     """
+    from app.services import prayer_journey
+
     settled = 0
     coins: list[dict[str, Any]] = []
+    deferred: list[int] = []
+    seen: set[int] = set()
     conn = get_conn()
     try:
         for item in items:
             mission_id = item.get("mission_id")
-            if not isinstance(mission_id, int):
+            if not isinstance(mission_id, int) or mission_id in seen:
+                continue
+            seen.add(mission_id)
+            row = conn.execute(
+                "SELECT child_id, mission_key, source FROM child_missions "
+                "WHERE id = ? AND device_id = ?", (mission_id, device_id),
+            ).fetchone()
+            if row is None:
+                continue
+            prayer = _program_of(row) == "prayer_journey"
+            task = prayer_journey.task_for_key(row["mission_key"]) if prayer else None
+            if prayer and task is None:
+                deferred.append(mission_id)
                 continue
             confirmed = bool(item.get("confirmed", True))
             note = (item.get("note") or "")[:280] or None
@@ -291,21 +339,18 @@ def confirm_batch(device_id: str, items: list[dict[str, Any]]) -> dict[str, Any]
                  note, mission_id, device_id),
             )
             settled += cur.rowcount
-            if cur.rowcount and confirmed:
-                row = conn.execute(
-                    "SELECT child_id, mission_key, source FROM child_missions WHERE id = ?",
-                    (mission_id,),
-                ).fetchone()
-                if row is not None and _program_of(row) == "prayer_journey":
-                    from app.services import prayer_journey
+            if prayer and confirmed:
+                status = conn.execute("SELECT status FROM child_missions WHERE id = ?",
+                                      (mission_id,)).fetchone()["status"]
+                if status == "confirmed":
                     coins.append({
                         "mission_id": mission_id,
                         "child_id": row["child_id"],
                         "task_id": row["mission_key"].split("#", 1)[0],
-                        "coins": prayer_journey.coins_for_key(row["mission_key"]),
+                        "coins": int(task.get("coins") or 0),
                     })
         conn.commit()
-        return {"ok": True, "settled": settled, "coins": coins}
+        return {"ok": True, "settled": settled, "coins": coins, "deferred": deferred}
     finally:
         conn.close()
 

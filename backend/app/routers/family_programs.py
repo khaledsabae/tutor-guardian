@@ -73,6 +73,15 @@ def _program(name: str, lang: Optional[str]) -> dict:
                                                      "program": name}) from None
 
 
+def _program_or_none(name: str, lang: Optional[str]) -> Optional[dict]:
+    """For responses that combine programs: one unreadable file hides its own
+    section, not its neighbours'."""
+    try:
+        return pc.load_program(name, lang)
+    except pc.ProgramUnavailable:
+        return None
+
+
 def _refuse(exc: rp.RamadanError | pj.JourneyError) -> HTTPException:
     return HTTPException(status_code=exc.status, detail={"error": exc.code, **exc.extra})
 
@@ -93,24 +102,26 @@ def _season_dict(where: dict[str, Any]) -> Optional[dict]:
 def programs_overview(request: Request, lang: Optional[str] = Query(None),
                       tz_offset_minutes: Optional[int] = Query(None),
                       as_of: Optional[str] = Query(None)):
+    """Each program is loaded on its own: a missing file nulls that program's
+    sections and names it in `unavailable`; the others are served as usual."""
     device_id, today = _context(request, tz_offset_minutes, lang, as_of)
-    ramadan = _program(rp.PROGRAM, lang)
-    prayer = _program(pj.PROGRAM, lang)
-    miles = _program(ms.PROGRAM, lang)
-    settings, where = _where(device_id, today, ramadan)
-    seasons = rp.family_seasons(settings, ramadan)
+    ramadan = _program_or_none(rp.PROGRAM, lang)
+    prayer = _program_or_none(pj.PROGRAM, lang)
+    miles = _program_or_none(ms.PROGRAM, lang)
+    settings = pc.device_settings(device_id)
+    seasons = rp.family_seasons(settings, ramadan) if ramadan else []
+    where = rp.locate(today, seasons) if ramadan else None
     children = []
     for child in pc.device_children(device_id):
         age = pc.child_age(child, today)
-        row = pj.active(device_id, child["id"])
-        adv = pj.advancement(prayer, row, today)
-        found, needs = ms.evaluate(miles, child, today, seasons,
-                                   pc.reached_puberty(device_id, child["id"]))
-        children.append({
-            "child_id": child["id"],
-            "age": age,
-            "ramadan": {"variant_band": rp.variant_band(ramadan, age["band"])},
-            "prayer_journey": {
+        entry: dict[str, Any] = {"child_id": child["id"], "age": age,
+                                 "ramadan": None, "prayer_journey": None, "milestones": None}
+        if ramadan:
+            entry["ramadan"] = {"variant_band": rp.variant_band(ramadan, age["band"])}
+        if prayer:
+            row = pj.active(device_id, child["id"])
+            adv = pj.advancement(prayer, row, today)
+            entry["prayer_journey"] = {
                 "eligible_track": pj.eligible_track(prayer, age),
                 "enrolled": row is not None,
                 "track": row["track"] if row else None,
@@ -118,17 +129,22 @@ def programs_overview(request: Request, lang: Optional[str] = Query(None),
                 "advance_suggested": bool(adv and adv["advance_suggested"]),
                 "can_graduate": bool(adv and adv["can_graduate"]),
                 "pending_confirmations": pj.pending_count(device_id, child["id"]),
-            },
-            "milestones": {
+            }
+        if miles:
+            found, needs = ms.evaluate(miles, child, today, seasons,
+                                       pc.reached_puberty(device_id, child["id"]))
+            entry["milestones"] = {
                 "due": sum(1 for _, w in found if w["state"] == "due"),
                 "needs_profile": sorted(needs),
-            },
-        })
+            }
+        children.append(entry)
     return {
         "date": today.isoformat(),
         "tz_offset_minutes": tz_offset_minutes,
         "server_features": sorted(pc.server_features(request.app)),
-        "ramadan": {
+        "unavailable": [name for name, doc in ((rp.PROGRAM, ramadan), (pj.PROGRAM, prayer),
+                                               (ms.PROGRAM, miles)) if doc is None],
+        "ramadan": None if where is None else {
             "state": where["state"],
             "season": _season_dict(where),
             "day": where.get("day"),
@@ -455,8 +471,8 @@ def milestones_list(child_id: int, request: Request, lang: Optional[str] = Query
     device_id, today = _context(request, tz_offset_minutes, lang, as_of)
     child = _child(device_id, child_id)
     doc = _program(ms.PROGRAM, lang)
-    ramadan = _program(rp.PROGRAM, None)
-    seasons = rp.family_seasons(pc.device_settings(device_id), ramadan)
+    # The Ramadan file only times the first-fast card; without it, no season.
+    seasons = rp.seasons_or_empty(pc.device_settings(device_id))
     return ms.child_milestones(doc, device_id, child, today, seasons)
 
 
@@ -469,8 +485,7 @@ def milestone_one(child_id: int, key: str, request: Request,
     device_id, today = _context(request, tz_offset_minutes, lang, as_of)
     child = _child(device_id, child_id)
     doc = _program(ms.PROGRAM, lang)
-    ramadan = _program(rp.PROGRAM, None)
-    seasons = rp.family_seasons(pc.device_settings(device_id), ramadan)
+    seasons = rp.seasons_or_empty(pc.device_settings(device_id))
     card = ms.one_milestone(doc, device_id, child, key, today, seasons)
     if card is None:
         raise HTTPException(status_code=404, detail={"error": "milestone_not_found"})
@@ -495,7 +510,11 @@ def child_prayer_today(request: Request, lang: Optional[str] = Query(None),
     device_id, child_id = _child_mode(request)
     today = _today(tz_offset_minutes, None)
     pc.remember_device(device_id, tz_offset_minutes, None)
-    doc = _program(pj.PROGRAM, lang)
+    doc = _program_or_none(pj.PROGRAM, lang)
+    if doc is None:
+        # The journey is hidden, not an error on the child's screen.
+        return {"date": today.isoformat(), "available": False, "enrolled": False,
+                "track": None, "tasks": []}
     return pj.child_today(doc, device_id, child_id, today)
 
 

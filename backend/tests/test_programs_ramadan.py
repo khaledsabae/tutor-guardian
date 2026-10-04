@@ -87,7 +87,7 @@ def test_day_thirty_is_the_contents_may_not_occur_day(monkeypatch):
     assert out["season"]["days_confirmed"] is False
 
 
-def test_the_bridge_runs_four_weeks_after_eid_then_the_season_is_over(monkeypatch):
+def test_the_bridge_runs_four_weeks_after_eid_then_counts_down_to_1449(monkeypatch):
     c = client()
     cid = add_child(c)
     for iso, week in (("2027-03-11", 1), ("2027-03-17", 1), ("2027-03-18", 2),
@@ -96,7 +96,19 @@ def test_the_bridge_runs_four_weeks_after_eid_then_the_season_is_over(monkeypatc
         out = _today(c, cid, tz_offset_minutes=0)
         assert (out["state"], out["after_week"]) == ("after", week), iso
         assert out["after"]["week"]["week"] == week
+    # The day after the bridge is not off-season: the content carries 1449's
+    # estimate, so the countdown to next Ramadan starts (PR #32 review).
     freeze(monkeypatch, "2027-04-08T12:00:00")
+    out = _today(c, cid, tz_offset_minutes=0)
+    assert (out["state"], out["season"]["hijri_year"]) == ("upcoming", 1449)
+    assert (out["season"]["starts_on"], out["season"]["start_source"]) == ("2028-01-28",
+                                                                           "estimate")
+    assert out["days_until_start"] == 295
+    # 1449's own bridge ends on 26 March 2028 (a leap year); after that, with
+    # no 1450 estimate yet, the program is off-season.
+    freeze(monkeypatch, "2028-03-26T12:00:00")
+    assert _today(c, cid, tz_offset_minutes=0)["after_week"] == 4
+    freeze(monkeypatch, "2028-03-27T12:00:00")
     assert _today(c, cid, tz_offset_minutes=0)["state"] == "off_season"
 
 
@@ -186,7 +198,7 @@ def test_settings_need_a_season_and_a_value(monkeypatch):
     assert c.put("/api/programs/ramadan/settings", json={}).status_code == 422
     assert c.put("/api/programs/ramadan/settings",
                  json={"start_shift_days": 2}).status_code == 422
-    freeze(monkeypatch, "2027-06-01T12:00:00")
+    freeze(monkeypatch, "2028-04-01T12:00:00")          # after 1449's bridge
     r = c.put("/api/programs/ramadan/settings", json={"start_shift_days": 1})
     assert r.status_code == 409 and r.json()["detail"]["error"] == "not_in_season"
 

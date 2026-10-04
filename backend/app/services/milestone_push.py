@@ -14,11 +14,11 @@ Rules, each of them a test in tests/test_programs_milestones.py:
     an unknown offset is never guessed;
   * at MILESTONE_LOCAL_HOUR on the family's clock, inside 09:00–21:00 local;
   * never to a device that had any push in the last 20 hours, whoever sent it;
-  * never while a child's mission waits on the parent — tonight's 21:00 digest
-    owns the evening, and a milestone sent first would cap it out. (A claim
-    made after this 20:00 push still waits for the next evening's digest: a
-    day late, not lost — a card lives 48 hours. Every other sender already
-    caps the digest the same way; this one sends at most weekly.);
+  * a waiting mission does NOT hold it back: the 21:00 digest ignores this
+    kind in its own once-a-day cap (mission_digest._DOES_NOT_CAP), so both go
+    that evening. Holding the milestone back instead starved every family on
+    the Prayer Journey — a prayer waits on the parent nearly every evening
+    (PR #32 review: 28 of 28 evenings skipped);
   * at most one milestone push per device per DEVICE_EVERY_DAYS, at most one
     per child per CHILD_EVERY_DAYS (alert_policy.max_alerts_per_child_per_month),
     the most important first (the lowest `order`) — the other waits;
@@ -139,16 +139,12 @@ def _device_state(device_id: str, now: datetime) -> dict[str, Any]:
             "SELECT 1 FROM push_sends WHERE device_id = ? AND kind = ? AND sent_at >= ? LIMIT 1",
             (device_id, KIND, _sql_ts(now - timedelta(days=DEVICE_EVERY_DAYS))),
         ).fetchone() is not None
-        waiting = conn.execute(
-            "SELECT 1 FROM child_missions WHERE device_id = ? AND status = 'claimed' LIMIT 1",
-            (device_id,),
-        ).fetchone() is not None
         settings = conn.execute(
             "SELECT * FROM program_settings WHERE device_id = ?", (device_id,)
         ).fetchone()
     finally:
         conn.close()
-    return {"weekly_capped": weekly, "mission_waiting": waiting,
+    return {"weekly_capped": weekly,
             "settings": dict(settings) if settings is not None else {}}
 
 
@@ -256,7 +252,7 @@ def run_due_milestones(now: Optional[datetime] = None, *, dry_run: bool = False)
     if now.tzinfo is None:
         now = now.replace(tzinfo=_UTC)
     out = {"sent": 0, "would_send": 0, "failed": 0, "not_this_hour": 0, "capped": 0,
-           "no_offset": 0, "waiting_digest": 0, "nothing_due": 0}
+           "no_offset": 0, "nothing_due": 0}
     try:
         by_device = _candidates(floor)
     except sqlite3.OperationalError as exc:      # a database before v34
@@ -280,16 +276,14 @@ def run_due_milestones(now: Optional[datetime] = None, *, dry_run: bool = False)
         if device_id in pushed_today or state["weekly_capped"]:
             out["capped"] += 1
             continue
-        if state["mission_waiting"]:
-            out["waiting_digest"] += 1
-            continue
         lang = state["settings"].get("lang") or "ar"
         try:
             doc = docs.get(lang) or docs.setdefault(lang, pc.load_program(ms.PROGRAM, lang))
-            seasons = rp.family_seasons(state["settings"])
         except pc.ProgramUnavailable:
             logger.warning("milestone push: the milestones program is unavailable")
-            return out
+            return {**out, "unavailable": True}
+        # Without the Ramadan file only the seasonal card (first fast) goes.
+        seasons = rp.seasons_or_empty(state["settings"])
         chosen = pick(doc, device_id, children, local.date(), seasons, now)
         if chosen is None:
             out["nothing_due"] += 1

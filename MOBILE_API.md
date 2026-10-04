@@ -738,6 +738,7 @@ One call for the Today screen. Query: `tz_offset_minutes`, `lang`.
   "date": "2027-02-10",
   "tz_offset_minutes": 180,
   "server_features": ["weekly_plan"],
+  "unavailable": [],
   "ramadan": {
     "state": "ramadan",                       // upcoming | ramadan | eid | after | off_season
     "season": {"hijri_year": 1448, "starts_on": "2027-02-08", "days": 30, "eid_on": "2027-03-10",
@@ -759,6 +760,12 @@ One call for the Today screen. Query: `tz_offset_minutes`, `lang`.
 `season` is `null` when the server knows no Ramadan. `prayer_journey.eligible_track: null`
 = the Journey is not for this child (under 4, over 15, or an unknown band) — hide it.
 
+**Each program stands alone** (contract change, PR #32 review): if one program's file cannot be
+read, its name is in `unavailable` (`"ramadan_family"`, `"prayer_journey"`, `"milestones"`) and
+its sections are `null` — top-level `ramadan`, and each child's `ramadan` / `prayer_journey` /
+`milestones` — while the other programs are served as usual. Hide a `null` section; never treat
+it as an error. (The program's own endpoints answer `503 program_unavailable` meanwhile.)
+
 ### 11.3 «رمضان العائلة» — Ramadan
 
 #### 11.3.1 The calendar
@@ -775,7 +782,9 @@ One call for the Today screen. Query: `tz_offset_minutes`, `lang`.
 
 The first day is announced by moon sighting, so the server reads it from its
 configuration (`season.start_source: "configured"`) and uses the content's
-estimate (`"estimate"`, 2027-02-08 for 1448) until then. The month is 30 days
+estimate (`"estimate"`: 2027-02-08 for 1448, **2028-01-28 for 1449**) until then. After 1448's
+bridge (from 2027-04-08) the state is `upcoming` for **1449** — a countdown, not `off_season`
+(`off_season` only after the last season the content knows). The month is 30 days
 until the server confirms 29 (`days_confirmed`); day 30 is the content's
 `may_not_occur` farewell. A family whose country sighted the moon a day
 earlier/later, or whose month had 29 days, fixes it for itself with
@@ -922,6 +931,8 @@ Response: `{"hijri_year": 1448, "day": 3, "marks": { …the day's marks after th
 * `reached_puberty: true` moves the child to the 13-15 ladder whatever the band (puberty, not age,
   makes fasting obligatory — content §8.2); settable any time; also retires the
   "before puberty" milestone cards. Offer it as a quiet profile toggle on the ladder screen.
+* All-or-nothing: the step is checked against the ladder the **new** `reached_puberty` value
+  implies, and a refused request writes nothing (neither the step nor the flag).
 * `422 unknown_step` (not on this child's ladder), `422 step_not_for_age` (`min_age_years`),
   `409 not_in_season` (a step outside a season), `422 nothing_to_change` (empty body).
 * A move to a step with more hours **during the month** is a "climb" — counted, privately, in the
@@ -1034,20 +1045,22 @@ Forward **one** stage at a time (`409 one_stage_at_a_time` with `next_stage`), b
 earlier stage. Moving on is the parent's call: suggest it when `advancement.advance_suggested`
 (the stage's weeks are up) — never gate it on the week's counts (`per_week` is a goal, not a
 condition). Going back is silent to the child: child mode shows only today's tasks. Response = §11.4.2.
-`409 not_in_journey` for a child not on the journey track.
+`409 not_in_journey` for a child not on the journey track. `409 stage_changed`: the stage moved
+since this screen read it (a double tap on "next stage" moves it once) — refetch §11.4.2.
 
 #### 11.4.5 `POST /api/children/{child_id}/prayer-journey/graduate` · `DELETE /api/children/{child_id}/prayer-journey`
 
 Graduate from stage 6 once its two weeks are done (`advancement.can_graduate`; else
 `409 graduation_not_yet` with `available_on`). The journey closes and the `ownership` track opens;
-show `graduation` (certificate text, the big covenant). `DELETE` stops the journey
+show `graduation` (certificate text, the big covenant). A second tap answers
+`409 already_graduated` (never a 500) — refetch §11.4.2. `DELETE` stops the journey
 (`409 not_enrolled` if none). Both return §11.4.2.
 
 #### 11.4.6 Child mode — the child's tasks
 
 `GET /api/value-tracking/child-mode/prayer/today?tz_offset_minutes=180&lang=en` (Child-Bearer):
 ```json
-{"date": "2026-10-04", "enrolled": true, "track": "journey",
+{"date": "2026-10-04", "available": true, "enrolled": true, "track": "journey",
  "tasks": [{"task_id": "prayer_s1_pray_beside", "title": "I pray beside Mum or Dad",
             "instruction": "Stand beside your dad or mum in one prayer today …",
             "estimated_minutes": 7, "needs_parent": true, "materials": [], "skill": "Following an example",
@@ -1055,6 +1068,8 @@ show `graduation` (certificate text, the big covenant). `DELETE` stops the journ
             "recorded_today": 0, "slots_left_today": 1, "recorded_this_week": 0}, …]}
 ```
 `enrolled: false` (no tasks: not enrolled, or the preparation track) → show nothing.
+`available: false` (new): the program file cannot be read right now — `enrolled` is `false`,
+`tasks` is `[]`; show nothing, it is not an error. (The claim answers `503 program_unavailable`.)
 
 `POST /api/value-tracking/child-mode/prayer/claim?task_id=prayer_s1_pray_beside&tz_offset_minutes=180`
 → «صلّيتها». Recorded at once; the child does not wait for anyone:
@@ -1065,7 +1080,10 @@ show `graduation` (certificate text, the big covenant). `DELETE` stops the journ
 A task has `per_day` slots a day (two prayers a day → 2); a "N times a week" task
 (`week_limit`) is complete for the week after N. When `slots_left_today` is 0, show it as done
 (✓), not as an error. Errors: `409 day_complete`, `409 week_complete`, `409 task_not_current`
-(the stage changed — refetch), `409 not_enrolled`, `409 already_recorded` (a double tap).
+(the stage changed — refetch), `409 not_enrolled`, `503 program_unavailable`. A double tap is
+recorded once: the cap check and the insert are one transaction, so the second tap gets
+`day_complete` / `week_complete` (`409 already_recorded` remains only as a last guard). Treat all
+of them as "done" on the child's screen.
 
 #### 11.4.7 The parent's evening — the existing mission flow
 
@@ -1081,15 +1099,30 @@ settled by the existing `POST /api/children/missions/confirm`. Additive fields o
  "child_id": 12, "child_name": "أحمد"}
 ```
 (`title_ar` / `instruction_ar` carry the text in the requested `lang`, as for bank missions.)
-Additive field on the confirm response:
+Additive fields on the confirm response:
 ```json
 {"ok": true, "settled": 2,
- "coins": [{"mission_id": 41, "child_id": 12, "task_id": "prayer_s1_pray_beside", "coins": 10}]}
+ "coins": [{"mission_id": 41, "child_id": 12, "task_id": "prayer_s1_pray_beside", "coins": 10}],
+ "deferred": []}
 ```
-**Credit each entry to that child's coins on the device** (`CoinsService`, daily cap 60 — the
-content keeps a stage's day under it). A card confirmed `false` ("not yet") earns nothing, costs
-nothing, and frees its slot. Unanswered cards expire quietly after 48 h. The stage's
-`coins.confirmed_in_stage` / `covenant_target` (§11.4.2) feed the covenant progress.
+* **Batch size: up to 200 items** (was 50; `422` above). Send the whole evening list in one call.
+* **`coins` is idempotent** (contract change): it lists every prayer mission **in this request**
+  that is confirmed — including ones an earlier attempt already confirmed. So a retried request
+  (the first response was lost) reports the same entries again, and `settled` counts only rows
+  changed by *this* request. **The client credits each `mission_id` exactly once**: keep the set of
+  credited `mission_id`s on the device and skip an entry already in it. Credit to that child's
+  coins (`CoinsService`, daily cap 60 — the content keeps a stage's day under it).
+* A card confirmed `false` ("not yet") earns nothing (never, also on retry), costs nothing, and
+  frees its slot. Unanswered cards expire quietly after 48 h.
+* `deferred` (new): prayer cards the server would not settle because the program file cannot be
+  read right now (settling them would pay 0). They stay pending and are **hidden** from `pending`
+  meanwhile; they come back, payable, when the file does. Do nothing special — just don't count
+  them as confirmed.
+* The stage's `coins.confirmed_in_stage` / `covenant_target` (§11.4.2) feed the covenant progress.
+
+The bank card's own claim endpoint (`POST /api/value-tracking/child-mode/mission/claim`) now
+claims bank cards only, and refuses an expired one: `409 expired`; a prayer `mission_id` there is
+`409 mission_not_found` (prayer tasks are claimed only through §11.4.6).
 
 ### 11.5 Proactive milestones
 
@@ -1133,9 +1166,11 @@ then open the list.
 Sent by the backend about a month ahead, **only** when: the child has a birth month; the
 device's build ≥ `MILESTONES_MIN_BUILD` (server setting — **unset = no push to anyone**); the
 device has a push token and has reported `tz_offset_minutes`; it is 20:00–20:59 on the family's
-clock; no push of any kind in the last 20 h; no child mission waiting on the parent (the 21:00
-digest owns that evening); at most one milestone push per device per week and one per child per
-month (the most important first). Payload (Android channel `almorabbi_reengagement`, private on
+clock; no push of any kind in the last 20 h; at most one milestone push per device per week and
+one per child per month (the most important first). A mission waiting on the parent does **not**
+hold it back (contract change): the 21:00 digest ignores milestone pushes in its own
+once-a-day cap, so on such an evening the parent gets both — the milestone at 20:00 and
+`/missions` at 21:00. Payload (Android channel `almorabbi_reengagement`, private on
 the lock screen):
 ```json
 {"notification": {"title": "Turning seven next month", "body": "At seven, teaching prayer begins, …"},
@@ -1162,7 +1197,9 @@ Tell the orchestrator the first build number that routes it, so the server floor
 | `not_eligible` / `track_not_for_age` / `already_enrolled` | 409 | see §11.4.3 |
 | `unknown_stage` / `stage_only_for_journey` | 422 | |
 | `one_stage_at_a_time` / `not_in_journey` / `graduation_not_yet` / `not_enrolled` | 409 | |
+| `stage_changed` / `already_graduated` | 409 | a stale screen or a double tap — refetch (§11.4.4, §11.4.5) |
 | `day_complete` / `week_complete` / `task_not_current` / `already_recorded` | 409 | child mode, §11.4.6 |
+| `expired` / `mission_not_found` | 409 | the bank card claim endpoint, §11.4.7 |
 
 ### 11.7 Privacy and deletion
 

@@ -5,8 +5,10 @@ Content: `knowledge_base/curriculum/programs/ramadan_family.json` (schema.md
 writes program text.
 
 **The calendar.** Ramadan's first day is announced by moon sighting, not
-computed: the content's `season.expected_start_1448` is a planning estimate
-("بداية الشهر الفعلية يحدّدها التطبيق/الخادم بإعلان الرؤية لا هذا الحقل").
+computed: the content's `season.expected_start_<hijri year>` (1448, 1449, …)
+are planning estimates ("بداية الشهر الفعلية يحدّدها التطبيق/الخادم بإعلان الرؤية لا
+هذا الحقل"). After the last year the content knows, the program is off-season
+— so each year's estimate is added a season ahead.
 So the start is configuration — `RAMADAN_START_<hijri year>=YYYY-MM-DD` on
 the server, read per call — and the estimate is used, and labelled
 `start_source: "estimate"`, only until it is set. The month's length is
@@ -176,6 +178,16 @@ def family_seasons(settings: dict, doc: Optional[dict] = None) -> list[Season]:
             )
         out.append(season)
     return out
+
+
+def seasons_or_empty(settings: dict) -> list[Season]:
+    """The family's seasons, or none when the Ramadan file cannot be read —
+    for the programs that only *consult* the calendar (the first-fast
+    milestone): a missing Ramadan file must not take them down with it."""
+    try:
+        return family_seasons(settings)
+    except pc.ProgramUnavailable:
+        return []
 
 
 def locate(today: date, seasons: list[Season]) -> dict[str, Any]:
@@ -467,46 +479,67 @@ def set_fasting(doc: dict, device_id: str, child: sqlite3.Row, age: dict,
                 puberty: Optional[bool]) -> dict[str, Any]:
     """Set the child's step and/or the puberty flag.
 
+    Everything is validated before anything is written, and both are written
+    in one transaction: a step refused with a 422 used to leave the puberty
+    flag sent beside it already saved (PR #32 review).
+
     A climb — a step with more fasting hours than the one before, during the
     month — is the card's private «درجات صيام صعدها أطفالنا». A step down is
     just a change: nothing records it, nothing counts it.
     """
-    if puberty is not None:
-        # A fact about the child, not about this season: settable any time.
-        pc.set_reached_puberty(device_id, child["id"], puberty)
-    if step_key is None:
-        return {"climbed": False}
-    season = season_for_child_settings(where)
-    now_puberty = pc.reached_puberty(device_id, child["id"])
-    ladder = ladder_band(doc, variant_band(doc, age["band"]), now_puberty)
-    step = next((s for s in _steps(doc, ladder) if s.get("key") == step_key), None)
-    if step is None:
-        raise RamadanError("unknown_step", 422, ladder_band=ladder)
-    if not _eligible(step, age, now_puberty):
-        raise RamadanError("step_not_for_age", 422,
-                           min_age_years=step.get("min_age_years"))
-    before = _step(doc, current_step(device_id, child["id"], season.hijri_year))
-    climbed = bool(before is not None
-                   and (step.get("approx_hours") or 0) > (before.get("approx_hours") or 0)
-                   and where["state"] == "ramadan")
+    # The ladder the step must be on is the one the NEW puberty value implies.
+    new_puberty = puberty if puberty is not None \
+        else pc.reached_puberty(device_id, child["id"])
+    season = None
+    climbed = False
+    if step_key is not None:
+        season = season_for_child_settings(where)
+        ladder = ladder_band(doc, variant_band(doc, age["band"]), new_puberty)
+        step = next((s for s in _steps(doc, ladder) if s.get("key") == step_key), None)
+        if step is None:
+            raise RamadanError("unknown_step", 422, ladder_band=ladder)
+        if not _eligible(step, age, new_puberty):
+            raise RamadanError("step_not_for_age", 422,
+                               min_age_years=step.get("min_age_years"))
+        before = _step(doc, current_step(device_id, child["id"], season.hijri_year))
+        climbed = bool(before is not None
+                       and (step.get("approx_hours") or 0) > (before.get("approx_hours") or 0)
+                       and where["state"] == "ramadan")
     conn = get_conn()
     try:
-        conn.execute(
-            """
-            INSERT INTO ramadan_fasting (device_id, child_id, hijri_year, step_key, updated_at)
-            VALUES (?, ?, ?, ?, datetime('now'))
-            ON CONFLICT(child_id, hijri_year) DO UPDATE SET
-                step_key = excluded.step_key, updated_at = excluded.updated_at
-            """,
-            (device_id, child["id"], season.hijri_year, step_key),
-        )
-        if climbed:
+        if puberty is not None:
+            # A fact about the child, not about this season: settable any time.
             conn.execute(
-                "INSERT OR IGNORE INTO ramadan_marks (device_id, child_id, hijri_year, day, "
-                "mark, value) VALUES (?, ?, ?, ?, ?, ?)",
-                (device_id, child["id"], season.hijri_year, where["day"], STEP_UP, step_key),
+                """
+                INSERT INTO program_children (child_id, device_id, reached_puberty, updated_at)
+                VALUES (?, ?, ?, datetime('now'))
+                ON CONFLICT(child_id) DO UPDATE SET
+                    reached_puberty = excluded.reached_puberty,
+                    updated_at = excluded.updated_at
+                """,
+                (child["id"], device_id, 1 if puberty else 0),
             )
+        if step_key is not None:
+            conn.execute(
+                """
+                INSERT INTO ramadan_fasting (device_id, child_id, hijri_year, step_key, updated_at)
+                VALUES (?, ?, ?, ?, datetime('now'))
+                ON CONFLICT(child_id, hijri_year) DO UPDATE SET
+                    step_key = excluded.step_key, updated_at = excluded.updated_at
+                """,
+                (device_id, child["id"], season.hijri_year, step_key),
+            )
+            if climbed:
+                conn.execute(
+                    "INSERT OR IGNORE INTO ramadan_marks (device_id, child_id, hijri_year, day, "
+                    "mark, value) VALUES (?, ?, ?, ?, ?, ?)",
+                    (device_id, child["id"], season.hijri_year, where["day"], STEP_UP,
+                     step_key),
+                )
         conn.commit()
+    except Exception:
+        conn.rollback()
+        raise
     finally:
         conn.close()
     return {"climbed": climbed}

@@ -124,10 +124,13 @@ def coins_for_key(mission_key: str) -> int:
     return int(task.get("coins") or 0) if task else 0
 
 
-def mission_card(mission_key: str, lang: Optional[str]) -> dict[str, Any]:
+def mission_card(mission_key: str, lang: Optional[str]) -> Optional[dict[str, Any]]:
     """The fields a mission card carries, for a prayer task — so the parent's
-    evening list renders it exactly like an off-screen mission."""
-    task = task_for_key(mission_key, lang) or {}
+    evening list renders it exactly like an off-screen mission. None when the
+    program file (or the task) cannot be read: no blank card, no 0 coins."""
+    task = task_for_key(mission_key, lang)
+    if task is None:
+        return None
     task_id, _, slot = (mission_key or "").partition("#")
     return {
         "title_ar": task.get("title", ""),
@@ -260,15 +263,20 @@ def _week_window(row: sqlite3.Row, today: date) -> tuple[date, int]:
 
 
 def _counts(device_id: str, child_id: int, task_ids: list[str], today: date,
-            week_start: date) -> dict[str, dict[str, int]]:
+            week_start: date, conn: Optional[sqlite3.Connection] = None
+            ) -> dict[str, dict[str, int]]:
     """Per task: today's and this week's claimed / confirmed rows. A card the
     parent answered "not yet", or that expired, does not count — and does not
-    count against the child either."""
+    count against the child either.
+
+    `conn`: read inside the caller's transaction (the claim's write lock), so
+    the count it checks is the count it writes against."""
     out = {t: {"today_claimed": 0, "today_confirmed": 0,
                "week_claimed": 0, "week_confirmed": 0} for t in task_ids}
     if not task_ids:
         return out
-    conn = get_conn()
+    own = conn is None
+    conn = conn or get_conn()
     try:
         rows = conn.execute(
             "SELECT mission_key, local_date, status FROM child_missions "
@@ -277,7 +285,8 @@ def _counts(device_id: str, child_id: int, task_ids: list[str], today: date,
             (child_id, device_id, SOURCE, week_start.isoformat(), today.isoformat()),
         ).fetchall()
     finally:
-        conn.close()
+        if own:
+            conn.close()
     for r in rows:
         task_id = r["mission_key"].split("#", 1)[0]
         if task_id not in out:
@@ -458,7 +467,7 @@ def enrol(doc: dict, device_id: str, child: sqlite3.Row, age: dict, today: date,
         if existing is not None:
             conn.execute(
                 "UPDATE prayer_journeys SET status = 'ended', ended_on = ?, "
-                "updated_at = datetime('now') WHERE id = ?",
+                "updated_at = datetime('now') WHERE id = ? AND status = 'active'",
                 (today.isoformat(), existing["id"]),
             )
         conn.execute(
@@ -489,19 +498,27 @@ def set_stage(doc: dict, device_id: str, child: sqlite3.Row, stage_no: int,
         raise JourneyError("one_stage_at_a_time", next_stage=row["stage"] + 1)
     conn = get_conn()
     try:
-        conn.execute(
+        # The stage it was read at, too: two taps on "next stage" move it once.
+        cur = conn.execute(
             "UPDATE prayer_journeys SET stage = ?, stage_started_on = ?, "
-            "updated_at = datetime('now') WHERE id = ? AND status = 'active'",
-            (stage_no, today.isoformat(), row["id"]),
+            "updated_at = datetime('now') WHERE id = ? AND status = 'active' AND stage = ?",
+            (stage_no, today.isoformat(), row["id"], row["stage"]),
         )
         conn.commit()
     finally:
         conn.close()
+    if cur.rowcount != 1:
+        raise JourneyError("stage_changed")
 
 
 def graduate(doc: dict, device_id: str, child: sqlite3.Row, today: date) -> None:
     """The last stage's weeks done → the journey closes and «صلاتي مسؤوليتي»
-    opens, as graduation.text says."""
+    opens, as graduation.text says.
+
+    One transaction, guarded on the row still being active: a second tap that
+    read the journey before the first committed finds nothing to close
+    (`already_graduated`) instead of tripping the one-active-row index into a
+    500 (PR #32 review)."""
     row = active(device_id, child["id"])
     if row is None or row["track"] != "journey":
         raise JourneyError("not_in_journey")
@@ -513,16 +530,25 @@ def graduate(doc: dict, device_id: str, child: sqlite3.Row, today: date) -> None
     conn = get_conn()
     try:
         conn.execute("BEGIN IMMEDIATE")
-        conn.execute(
+        cur = conn.execute(
             "UPDATE prayer_journeys SET status = 'graduated', ended_on = ?, "
-            "updated_at = datetime('now') WHERE id = ?", (today.isoformat(), row["id"]),
+            "updated_at = datetime('now') WHERE id = ? AND status = 'active'",
+            (today.isoformat(), row["id"]),
         )
+        if cur.rowcount != 1:
+            now = conn.execute("SELECT status FROM prayer_journeys WHERE id = ?",
+                               (row["id"],)).fetchone()
+            raise JourneyError("already_graduated" if now and now["status"] == "graduated"
+                               else "not_in_journey")
         conn.execute(
             "INSERT INTO prayer_journeys (device_id, child_id, track, stage, status, "
             "started_on, stage_started_on) VALUES (?, ?, 'ownership', NULL, 'active', ?, ?)",
             (device_id, child["id"], today.isoformat(), today.isoformat()),
         )
         conn.commit()
+    except sqlite3.IntegrityError as exc:
+        conn.rollback()
+        raise JourneyError("already_enrolled") from exc
     except Exception:
         conn.rollback()
         raise
@@ -536,13 +562,16 @@ def end(device_id: str, child: sqlite3.Row, today: date) -> None:
         raise JourneyError("not_enrolled")
     conn = get_conn()
     try:
-        conn.execute(
+        cur = conn.execute(
             "UPDATE prayer_journeys SET status = 'ended', ended_on = ?, "
-            "updated_at = datetime('now') WHERE id = ?", (today.isoformat(), row["id"]),
+            "updated_at = datetime('now') WHERE id = ? AND status = 'active'",
+            (today.isoformat(), row["id"]),
         )
         conn.commit()
     finally:
         conn.close()
+    if cur.rowcount != 1:
+        raise JourneyError("not_enrolled")
 
 
 # ── The child's half (child mode) ──────────────────────────────────────────
@@ -556,6 +585,7 @@ def child_today(doc: dict, device_id: str, child_id: int, today: date) -> dict[s
                     "materials", "skill", "coins", "per_day", "week_limit")
     return {
         "date": today.isoformat(),
+        "available": True,
         "enrolled": bool(row is not None and tasks),
         "track": row["track"] if row is not None else None,
         "tasks": [{**{k: t[k] for k in child_fields},
@@ -568,23 +598,36 @@ def child_today(doc: dict, device_id: str, child_id: int, today: date) -> dict[s
 
 def claim(doc: dict, device_id: str, child_id: int, task_id: str,
           today: date) -> dict[str, Any]:
-    """«صلّيتها» — recorded as claimed at once; the parent confirms tonight."""
-    row = active(device_id, child_id)
-    tasks = {t["id"]: t for t in current_tasks(doc, row)}
-    if row is None or not tasks:
-        raise JourneyError("not_enrolled")
-    task = tasks.get(task_id)
-    if task is None:
-        raise JourneyError("task_not_current", tasks=sorted(tasks))
-    progress = next(t for t in task_progress(doc, device_id, child_id, row, today)
-                    if t["task_id"] == task_id)
-    if progress["today"]["slots_left"] <= 0:
-        reason = ("week_complete" if week_limit(task) is not None
-                  and progress["this_week"]["recorded"] >= week_limit(task)
-                  else "day_complete")
-        raise JourneyError(reason)
+    """«صلّيتها» — recorded as claimed at once; the parent confirms tonight.
+
+    The cap check, the slot pick and the insert happen in ONE write
+    transaction (BEGIN IMMEDIATE). Checked outside it, a double tap's twin
+    could land between the check and the insert, and a once-a-week task was
+    recorded — and paid — twice (PR #32 review). Now the second tap waits for
+    the first to commit and then sees it: `day_complete` / `week_complete`.
+    """
     conn = get_conn()
     try:
+        conn.execute("BEGIN IMMEDIATE")
+        row = conn.execute(
+            "SELECT * FROM prayer_journeys WHERE child_id = ? AND device_id = ? "
+            "AND status = 'active'", (child_id, device_id),
+        ).fetchone()
+        tasks = {t["id"]: t for t in current_tasks(doc, row)}
+        if row is None or not tasks:
+            raise JourneyError("not_enrolled")
+        task = tasks.get(task_id)
+        if task is None:
+            raise JourneyError("task_not_current", tasks=sorted(tasks))
+        week_start, _ = _week_window(row, today)
+        c = _counts(device_id, child_id, [task_id], today, week_start, conn=conn)[task_id]
+        done_today = c["today_claimed"] + c["today_confirmed"]
+        done_week = c["week_claimed"] + c["week_confirmed"]
+        limit = week_limit(task)
+        if limit is not None and done_week >= limit:
+            raise JourneyError("week_complete")
+        if done_today >= per_day(task):
+            raise JourneyError("day_complete")
         used = {
             int(r["mission_key"].split("#", 1)[1])
             for r in conn.execute(
@@ -598,16 +641,19 @@ def claim(doc: dict, device_id: str, child_id: int, task_id: str,
             slot += 1
         now = _now_iso()
         cur = conn.execute(
-            "INSERT OR IGNORE INTO child_missions (device_id, child_id, mission_key, "
+            "INSERT INTO child_missions (device_id, child_id, mission_key, "
             "local_date, status, assigned_at, claimed_at, source) "
             "VALUES (?, ?, ?, ?, 'claimed', ?, ?, ?)",
             (device_id, child_id, f"{task_id}#{slot}", today.isoformat(), now, now, SOURCE),
         )
-        conn.commit()
-        if cur.rowcount != 1:
-            # A double tap raced this one to the same slot: it is recorded once.
-            raise JourneyError("already_recorded")
         mission_id = cur.lastrowid
+        conn.commit()
+    except sqlite3.IntegrityError as exc:
+        conn.rollback()
+        raise JourneyError("already_recorded") from exc
+    except Exception:
+        conn.rollback()
+        raise
     finally:
         conn.close()
     after = next(t for t in task_progress(doc, device_id, child_id, row, today)

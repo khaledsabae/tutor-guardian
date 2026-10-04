@@ -339,24 +339,6 @@ def reached_puberty(device_id: str, child_id: int) -> bool:
     return bool(row and row["reached_puberty"])
 
 
-def set_reached_puberty(device_id: str, child_id: int, value: bool) -> None:
-    conn = get_conn()
-    try:
-        conn.execute(
-            """
-            INSERT INTO program_children (child_id, device_id, reached_puberty, updated_at)
-            VALUES (?, ?, ?, datetime('now'))
-            ON CONFLICT(child_id) DO UPDATE SET
-                reached_puberty = excluded.reached_puberty,
-                updated_at = excluded.updated_at
-            """,
-            (child_id, device_id, 1 if value else 0),
-        )
-        conn.commit()
-    finally:
-        conn.close()
-
-
 def gender_of(row: sqlite3.Row | dict) -> Optional[str]:
     """'male' | 'female' | None. The column is free text (max 20); the app
     sends 'male'/'female', and nothing else is guessed at."""

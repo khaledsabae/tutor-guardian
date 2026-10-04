@@ -96,9 +96,14 @@ def test_the_first_fast_is_timed_by_the_season(monkeypatch):
     assert card["season"]["hijri_year"] == 1448
     freeze(monkeypatch, "2027-02-20T12:00:00")              # during Ramadan: still due
     assert "first_fasting" in _keys(_list(c, eight)["due"])
-    assert "first_fasting" not in str(_list(c, too_young))
-    freeze(monkeypatch, "2027-03-10T12:00:00")              # Eid: this season is over
-    assert "first_fasting" not in str(_list(c, eight))
+    # Too young at 1448's start (83 months); his first fast is 1449's.
+    young = [m for g in ("due", "upcoming") for m in _list(c, too_young)[g]
+             if m["key"] == "first_fasting"]
+    assert [m["season"]["hijri_year"] for m in young] == [1449]
+    freeze(monkeypatch, "2027-03-10T12:00:00")              # Eid: 1448 is over…
+    later = next(m for m in _list(c, eight)["upcoming"] if m["key"] == "first_fasting")
+    assert later["season"]["hijri_year"] == 1449            # …and 1449 is next
+    assert (later["alert_on"], later["due_on"]) == ("2027-12-29", "2028-01-28")
 
 
 def test_the_familys_own_sighting_moves_the_seasonal_card(monkeypatch):
@@ -284,7 +289,9 @@ def test_one_push_a_day_whoever_sent_the_first(sent):
     assert _run("2027-02-02T17:00:00")["sent"] == 1
 
 
-def test_a_mission_waiting_on_the_parent_keeps_the_evening_for_the_digest(sent):
+def test_a_waiting_mission_does_not_hold_the_milestone_back(sent):
+    """The digest no longer counts a milestone push in its own cap, so the
+    milestone need not stand aside for it (PR #32 review)."""
     cid = _family("2020-03")
     conn = get_conn()
     conn.execute("INSERT INTO child_missions (device_id, child_id, mission_key, local_date, "
@@ -292,8 +299,7 @@ def test_a_mission_waiting_on_the_parent_keeps_the_evening_for_the_digest(sent):
                  (DEVICE, cid))
     conn.commit()
     conn.close()
-    out = _run("2027-02-01T17:00:00")
-    assert out["waiting_digest"] == 1 and sent == []
+    assert _run("2027-02-01T17:00:00")["sent"] == 1
 
 
 def test_a_closed_window_is_not_caught_up(sent):

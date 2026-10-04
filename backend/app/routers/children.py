@@ -853,7 +853,10 @@ class LicenseLevelIn(BaseModel):
 
 
 class MissionConfirmIn(BaseModel):
-    items: list[MissionConfirmItem] = Field(min_length=1, max_length=50)
+    # 200, not 50: with the Prayer Journey a family's evening list holds up to
+    # six prayer cards a child a day, kept 48 hours, beside the bank cards —
+    # four children reach 50 in two days, and the app sends the list whole.
+    items: list[MissionConfirmItem] = Field(min_length=1, max_length=200)
 
 
 @router.get("/children/missions/pending",

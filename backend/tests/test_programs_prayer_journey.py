@@ -88,8 +88,8 @@ def test_preparation_shows_activities_and_has_nothing_to_record():
     assert out["preparation"]["activities"] and out["stage"] is None
     assert _enrol(c, cid).status_code == 200
     assert _view(c, cid)["enrolment"]["track"] == "preparation"
-    assert _child_today(c, cid) == {"date": _child_today(c, cid)["date"], "enrolled": False,
-                                    "track": "preparation", "tasks": []}
+    assert _child_today(c, cid) == {"date": _child_today(c, cid)["date"], "available": True,
+                                    "enrolled": False, "track": "preparation", "tasks": []}
     assert _claim(c, cid, "prayer_s1_pray_beside").json()["detail"]["error"] == "not_enrolled"
 
 
@@ -184,7 +184,7 @@ def test_going_back_is_silent_to_the_child(monkeypatch):
     _enrol(c, cid, start_stage=4)
     _stage(c, cid, 3)
     child_view = _child_today(c, cid)
-    assert set(child_view) == {"date", "enrolled", "track", "tasks"}
+    assert set(child_view) == {"date", "available", "enrolled", "track", "tasks"}
     assert [t["task_id"] for t in child_view["tasks"]] == [
         "prayer_s3_recite_fatiha", "prayer_s3_two_prayers"]
     text = str(child_view)
