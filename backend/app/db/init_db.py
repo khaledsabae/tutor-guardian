@@ -1146,20 +1146,39 @@ CREATE TABLE IF NOT EXISTS weekly_plans (
 );
 
 CREATE TABLE IF NOT EXISTS child_memory_settings (
-    device_id   TEXT PRIMARY KEY,
-    enabled     INTEGER NOT NULL DEFAULT 1,
-    updated_at  TEXT NOT NULL DEFAULT (datetime('now'))
+    device_id         TEXT PRIMARY KEY,
+    enabled           INTEGER NOT NULL DEFAULT 1,
+    generation        INTEGER NOT NULL DEFAULT 0,
+    tz_offset_minutes INTEGER,
+    updated_at        TEXT NOT NULL DEFAULT (datetime('now'))
 );
 """
 
 
 def _ensure_child_memory_tables(conn: sqlite3.Connection) -> None:
-    """v30: child memory, follow-ups, weekly plans, memory switch. Additive.
-
-    Plain CREATE ... IF NOT EXISTS: none of these tables existed before v30,
-    so there is no older shape to reconcile.
+    """v30: child memory, follow-ups, weekly plans, memory switch; and the
+    proof-of-possession flag on api_tokens. Additive and unconditional (it runs
+    whatever the stamp says, so a database a later branch already stamped
+    higher still gets every piece).
     """
     conn.executescript(_CREATE_CHILD_MEMORY)
+    # Columns that arrived after the first v30 shape (PR #26 review).
+    _ensure_column(conn, table="child_memory_settings", column="generation",
+                   ddl="ALTER TABLE child_memory_settings ADD COLUMN generation "
+                       "INTEGER NOT NULL DEFAULT 0")
+    _ensure_column(conn, table="child_memory_settings", column="tz_offset_minutes",
+                   ddl="ALTER TABLE child_memory_settings ADD COLUMN tz_offset_minutes INTEGER")
+    # One open follow-up per child and topic, even with two workers racing.
+    conn.execute(
+        "CREATE UNIQUE INDEX IF NOT EXISTS ux_followups_pending_topic "
+        "ON followups (device_id, child_id, topic) "
+        "WHERE status = 'pending' AND topic != 'other'"
+    )
+    # 1 = minted with proof of the device (first token of a new device, or
+    # the previous proven token presented); 0 = minted for a known device
+    # without proof; NULL = minted before this column existed.
+    _ensure_column(conn, table="api_tokens", column="proven",
+                   ddl="ALTER TABLE api_tokens ADD COLUMN proven INTEGER")
 
 
 def _ensure_child_web_claims_table(conn: sqlite3.Connection) -> None:

@@ -137,18 +137,17 @@ def _redact_names(questions: list[dict]) -> None:
     names are read once, from the same read-only connection.
     """
     sys.path.insert(0, str(_ROOT / "backend"))
-    from app.services.privacy import redact_with_names
+    from app.services.privacy import Family, redact_family
 
-    names: dict[str, list[str]] = {}
-    for r in _query("SELECT device_id, name FROM child_profiles"):
+    members: dict[str, list[tuple[int, str]]] = {}
+    for r in _query("SELECT id, device_id, name FROM child_profiles ORDER BY id"):
         n = (r["name"] or "").strip()
         if r["device_id"] and len(n) >= 2:
-            names.setdefault(r["device_id"], []).append(n)
+            members.setdefault(r["device_id"], []).append((r["id"], n))
     for q in questions:
-        family = tuple(sorted(set(names.get(q.get("device_id") or "", [])),
-                              key=len, reverse=True))
+        family = members.get(q.get("device_id") or "")
         if family:
-            q["content"] = redact_with_names(q["content"], family)
+            q["content"] = redact_family(q["content"], Family(tuple(family)))
 
 
 def collect_questions(days: int, arb_path: Path,

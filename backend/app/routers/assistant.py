@@ -39,7 +39,7 @@ from app.services.domain_classifier import (
     UNCERTAIN_DOMAINS, classify_domains, is_uncertain, matched_fast_path,
 )
 from app.services.tier_router import choose_tier
-from app.services.privacy import mentions_any, names_for_device, redact_with_names
+from app.services.privacy import Family, family_for_device, family_mentions, redact_family
 from app.services import child_memory
 from app.services import answer_cache
 from app.services import conversation_store as store
@@ -418,20 +418,21 @@ def _record_failed_turn(session_id: str | None, flag: str, *,
         logger.warning("recording the failed turn failed: %s", exc)
 
 
-def _redact_turns(history, names: tuple[str, ...]):
+def _redact_turns(history, family: Family, subject_id):
     """History turns with the family's child names replaced (see privacy.py)."""
     return [
-        t.model_copy(update={"content": redact_with_names(t.content, names)})
+        t.model_copy(update={"content": redact_family(t.content, family, subject_id)})
         for t in history
     ]
 
 
-async def _memory_context(caller_device, user_message: UserMessage, query_text: str):
+async def _memory_context(caller_device, user_message: UserMessage, query_text: str,
+                          family: Family):
     """(child_id, facts block, facts used) — off the event loop, never raises."""
     return await asyncio.to_thread(
         child_memory.prompt_context, caller_device,
         child_id=user_message.child_id, age_group=user_message.age_group,
-        question=query_text,
+        question=query_text, family=family,
     )
 
 
@@ -613,9 +614,13 @@ async def _draft_answer(
     # Every text that leaves for a model has the family's child names
     # replaced first. The primary provider is a cloud API, so "the cloud
     # tier" is every tier — the classifier and rewriter calls included.
-    names = await asyncio.to_thread(names_for_device, caller_device)
-    llm_query = redact_with_names(query_text, names)
-    llm_history = _redact_turns(history, names)
+    family = await asyncio.to_thread(family_for_device, caller_device)
+    # Which child the question is about decides whose name becomes «طفلي»
+    # (siblings keep «الطفل ب»…), so it is resolved before anything leaves.
+    mem_child, mem_block, mem_used = await _memory_context(
+        caller_device, user_message, query_text, family)
+    llm_query = redact_family(query_text, family, mem_child)
+    llm_history = _redact_turns(history, family, mem_child)
     # Both can make a model call (seconds) on a keyword fast-path miss, and
     # they are independent — so they run together, not one after the other.
     detected_domains, rewritten_query = await _classify_and_rewrite(llm_query)
@@ -636,9 +641,7 @@ async def _draft_answer(
     # never serve it from, or store it into, the cross-family cache (M5).
     # Neither does one we have remembered facts for: a cached answer cannot
     # know that the strategy it recommends already failed for this child.
-    mem_child, mem_block, mem_used = await _memory_context(
-        caller_device, user_message, query_text)
-    personal = mentions_any(query_text, names) or mem_used > 0
+    personal = bool(family_mentions(query_text, family)) or mem_used > 0
     if (first_question and not personal and not is_general
             and not is_uncertain(detected_domains)):
         decision = evaluate_guardrails(primary_domain, severity, policies)
@@ -1092,9 +1095,13 @@ async def _stream_answer(
     else:
         history = user_message.conversation_history or []
     # Names out of every model-bound text — see /draft.
-    names = await asyncio.to_thread(names_for_device, caller_device)
-    llm_query = redact_with_names(query_text, names)
-    llm_history = _redact_turns(history, names)
+    family = await asyncio.to_thread(family_for_device, caller_device)
+    # Which child the question is about decides whose name becomes «طفلي»
+    # (siblings keep «الطفل ب»…), so it is resolved before anything leaves.
+    mem_child, mem_block, mem_used = await _memory_context(
+        caller_device, user_message, query_text, family)
+    llm_query = redact_family(query_text, family, mem_child)
+    llm_history = _redact_turns(history, family, mem_child)
     # Concurrent, not sequential — see _classify_and_rewrite. This is the path
     # the mobile app uses, so the round-trip saved here is one the user feels.
     detected_domains, rewritten_query = await _classify_and_rewrite(llm_query)
@@ -1113,9 +1120,7 @@ async def _stream_answer(
 
     # ── Step 3b: Pre-cache check (skipped on a guessed domain — see /draft) ──
     # Remembered facts make an answer personal, exactly like a name does.
-    mem_child, mem_block, mem_used = await _memory_context(
-        caller_device, user_message, query_text)
-    personal = mentions_any(query_text, names) or mem_used > 0
+    personal = bool(family_mentions(query_text, family)) or mem_used > 0
     if (first_question and not personal and not is_general
             and not is_uncertain(detected_domains)):
         decision = evaluate_guardrails(primary_domain, severity, policies)
@@ -1542,6 +1547,7 @@ async def _stream_answer(
                             stream_mode == "llm_generated"
                             and first_question
                             and not personal
+                            and not family_mentions(final_text, family)
                             and tier != "cloud_quality"
                             and not decision["needs_human_review"]
                             and not truncated

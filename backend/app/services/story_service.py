@@ -54,6 +54,23 @@ def _ensure_schema(conn: sqlite3.Connection) -> None:
     )
 
 
+# Girls' names that do not end in a feminine marker — the commonest few.
+_FEMALE_NAMES = frozenset({
+    "مريم", "زينب", "هند", "نور", "أمل", "رنا", "رهف", "ريم", "دينا", "لين", "جود",
+    "تالين", "حلا", "هلا", "يارا", "مايا", "ميار", "رغد", "شهد", "سجود", "ملك", "رزان",
+    "لجين", "ديما", "تسنيم", "إيمان", "ايمان", "وعد", "سما", "روان", "جنان",
+})
+
+
+def guess_gender(name: str) -> str:
+    """'female' or 'male' for a first name, locally — for Arabic conjugation
+    only, when the profile has no gender. Never sent anywhere."""
+    first = (name or "").strip().split(" ")[0]
+    if first.endswith(("ة", "ى", "اء")) or first in _FEMALE_NAMES:
+        return "female"
+    return "male"
+
+
 def personalize(story: str, hero_name: str, child_name: str) -> str:
     """Substitute the canonical hero name with the child's name."""
     child_name = child_name.strip()

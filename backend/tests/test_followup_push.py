@@ -19,8 +19,9 @@ from app.services import push_sender
 def sent(monkeypatch):
     calls: list[dict] = []
 
-    def fake_send(device_id, title, body, data):
-        calls.append({"device": device_id, "title": title, "body": body, "data": data})
+    def fake_send(device_id, title, body, data, **options):
+        calls.append({"device": device_id, "title": title, "body": body, "data": data,
+                      **options})
         push_sender._record_send(device_id, data.get("type", "unknown"))
         return {"ok": True, "sent": True}
 
@@ -31,7 +32,13 @@ def sent(monkeypatch):
     return calls
 
 
-def _device(device: str, *, build: int | None = 120, name: str = "يوسف") -> int:
+def _daytime_offset() -> int:
+    """A UTC offset that makes it noon on the device right now."""
+    return (12 - datetime.utcnow().hour) * 60
+
+
+def _device(device: str, *, build: int | None = 120, name: str = "يوسف",
+            tz: int | None | str = "day") -> int:
     conn = get_conn()
     cid = conn.execute(
         "INSERT INTO child_profiles (device_id, name, age_group) VALUES (?, ?, '4-6')",
@@ -41,18 +48,22 @@ def _device(device: str, *, build: int | None = 120, name: str = "يوسف") -> 
         "INSERT INTO push_tokens (device_id, token, build_number) VALUES (?, 'tok', ?)",
         (device, build),
     )
+    if tz is not None:
+        conn.execute(
+            "INSERT INTO child_memory_settings (device_id, enabled, tz_offset_minutes) "
+            "VALUES (?, 1, ?)", (device, _daytime_offset() if tz == "day" else tz))
     conn.commit()
     conn.close()
     return cid
 
 
 def _followup(device: str, cid: int, *, hours_ago: float = 2, lang: str = "ar",
-              strategy: str = "روتين نوم ثابت مع قصة") -> int:
+              strategy: str = "روتين نوم ثابت مع قصة", topic: str = "sleep") -> int:
     due = (datetime.utcnow() - timedelta(hours=hours_ago)).strftime("%Y-%m-%d %H:%M:%S")
     conn = get_conn()
     fid = conn.execute(
         "INSERT INTO followups (device_id, child_id, strategy, topic, lang, due_at) "
-        "VALUES (?, ?, ?, 'sleep', ?, ?)", (device, cid, strategy, lang, due),
+        "VALUES (?, ?, ?, ?, ?, ?)", (device, cid, strategy, topic, lang, due),
     ).lastrowid
     conn.commit()
     conn.close()
@@ -82,8 +93,10 @@ def test_due_followup_is_pushed_once_with_its_deep_link(sent):
     push = sent[0]
     assert push["data"] == {"type": "followup_due", "link": f"/followup/{fid}",
                             "followup_id": str(fid), "child_id": str(cid)}
-    assert "روتين نوم ثابت مع قصة" in push["body"]
-    assert "يوسف" not in push["title"] + push["body"]   # no child name to FCM
+    # Generic and private: no strategy (it can be something the family keeps
+    # to itself), no name, hidden on a locked screen (A8/P5).
+    assert "روتين" not in push["body"] and "يوسف" not in push["title"] + push["body"]
+    assert push["visibility"] == "private"
     assert _pushed_at(fid) is not None
     # Same follow-up, next evening: never twice.
     assert cpt.followup_due() == set()
@@ -93,7 +106,7 @@ def test_due_followup_is_pushed_once_with_its_deep_link(sent):
 def test_at_most_one_followup_push_per_device_per_week(sent):
     cid = _device("dev-a")
     _followup("dev-a", cid, hours_ago=5)
-    second = _followup("dev-a", cid, hours_ago=3, strategy="ركن هدوء")
+    second = _followup("dev-a", cid, hours_ago=3, strategy="ركن هدوء", topic="anger")
     cpt.followup_due()
     assert len(sent) == 1            # one per run, the oldest
     cpt.followup_due()
@@ -111,7 +124,7 @@ def test_not_due_old_build_unknown_build_memory_off_or_capped(sent):
     d = _device("dev-off")
     _followup("dev-off", d)
     conn = get_conn()
-    conn.execute("INSERT INTO child_memory_settings (device_id, enabled) VALUES ('dev-off', 0)")
+    conn.execute("UPDATE child_memory_settings SET enabled = 0 WHERE device_id = 'dev-off'")
     conn.commit()
     conn.close()
     e = _device("dev-capped")
@@ -134,8 +147,24 @@ def test_english_followup_gets_english_copy(sent):
     cid = _device("dev-en")
     _followup("dev-en", cid, lang="en", strategy="a fixed bedtime routine")
     cpt.followup_due()
-    assert sent[0]["title"].startswith("Did the advice help")
-    assert "a fixed bedtime routine" in sent[0]["body"]
+    assert sent[0]["title"].startswith("A follow-up from Almorabbi")
+    assert "bedtime" not in sent[0]["body"]
+
+
+def test_expired_followups_are_not_pushed(sent):
+    """Past FOLLOWUP_EXPIRE_DAYS a follow-up has expired — the push SQL says
+    so itself, without waiting for the app to open (A8)."""
+    cid = _device("dev-old-fu")
+    _followup("dev-old-fu", cid, hours_ago=22 * 24)
+    assert cpt.followup_due() == set() and sent == []
+
+
+@pytest.mark.parametrize("tz", [None, "night"])
+def test_no_push_at_night_or_with_an_unknown_time_zone(sent, tz):
+    night = (2 - datetime.utcnow().hour) * 60          # 02:00 on the device
+    cid = _device("dev-night", tz=None if tz is None else night)
+    _followup("dev-night", cid)
+    assert cpt.followup_due() == set() and sent == []
 
 
 def test_dry_run_marks_nothing(sent, monkeypatch):

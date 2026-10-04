@@ -246,5 +246,8 @@ class AuthMiddleware(BaseHTTPMiddleware):
         request.state.device_id = token_info["device_id"]
         request.state.session_id = token_info["session_id"]
         request.state.token = token
+        # Proof of possession at mint (routers/chat.py) — required by the
+        # routes in app/core/proof.py.
+        request.state.token_proven = bool(token_info.get("proven"))
 
         return await call_next(request)

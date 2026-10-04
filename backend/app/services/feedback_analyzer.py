@@ -21,7 +21,9 @@ from datetime import datetime, timezone
 from app.db.init_db import get_conn
 from app.services import conversation_store
 from app.services.ai_gateway import get_gateway
-from app.services.privacy import names_for_device, redact_with_names
+from app.services.privacy import (
+    family_for_device, known_child_names, redact_family, redact_with_names,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -99,14 +101,18 @@ def collect_feedback(limit: int = 500) -> list[dict]:
     بـ«طفلي» — التعليق، وسؤال الجلسة وردّها، ونص فيدباك التطبيق — كما تَعِد
     سياسة الخصوصية. يُقرأ اسم كل أسرة مرة واحدة.
     """
-    names_by_device: dict[str | None, tuple[str, ...]] = {}
+    families: dict[str, object] = {}
 
     def _clean(text: str | None, device_id: str | None) -> str:
         if not text:
             return text or ""
-        if device_id not in names_by_device:
-            names_by_device[device_id] = names_for_device(device_id)
-        return redact_with_names(text, names_by_device[device_id])
+        if not device_id:
+            # A row with no device (old feedback, or a session without one)
+            # cannot be matched to a family: every known child name goes (P8).
+            return redact_with_names(text, known_child_names())
+        if device_id not in families:
+            families[device_id] = family_for_device(device_id)
+        return redact_family(text, families[device_id])
 
     con = get_conn()
     items: list[dict] = []

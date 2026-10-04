@@ -28,9 +28,10 @@ from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
 
-from fastapi import APIRouter, HTTPException, Query, Request
+from fastapi import APIRouter, Depends, HTTPException, Query, Request
 from fastapi.responses import FileResponse, HTMLResponse, Response
 
+from app.core.proof import require_proven_token
 from app.db.init_db import get_conn
 
 logger = logging.getLogger(__name__)
@@ -39,24 +40,30 @@ router = APIRouter()
 api_router = APIRouter()
 
 # Every table holding what the assistant learned about a device's children,
-# with the column that scopes a row to the device. Schema v30.
+# with the column that scopes a row to the device. Schema v30. The memory
+# switch (MEMORY_SETTINGS_TABLE) is not deleted by a memory erase: an erase is
+# not «turn memory back on» (A4) — it keeps the parent's choice and bumps the
+# erase generation so an extraction in flight cannot write after it.
 MEMORY_TABLES: tuple[tuple[str, str], ...] = (
     ("child_facts", "device_id"),
     ("followups", "device_id"),
     ("weekly_plans", "device_id"),
-    ("child_memory_settings", "device_id"),
 )
+MEMORY_SETTINGS_TABLE = "child_memory_settings"
 
 
 def erase_device_memory(device_id: str) -> dict[str, int]:
     """Delete every MEMORY_TABLES row of one device, in one transaction."""
+    from app.services.child_memory import bump_generation
+
     conn = get_conn()
     try:
         counts: dict[str, int] = {}
-        conn.execute("BEGIN")
+        conn.execute("BEGIN IMMEDIATE")
         for table, column in MEMORY_TABLES:
             cur = conn.execute(f"DELETE FROM {table} WHERE {column} = ?", (device_id,))
             counts[table] = cur.rowcount
+        bump_generation(conn, device_id)
         conn.commit()
         return counts
     except Exception:
@@ -66,10 +73,12 @@ def erase_device_memory(device_id: str) -> dict[str, int]:
         conn.close()
 
 
-@api_router.delete("/privacy/memory", summary="Forget everything about my children")
+@api_router.delete("/privacy/memory", summary="Forget everything about my children",
+                   dependencies=[Depends(require_proven_token)])
 def delete_my_memory(request: Request):
-    """The privacy delete-all for child memory: facts, follow-ups, weekly plans
-    and the memory switch itself, for every child of the calling device."""
+    """The privacy delete-all for child memory: facts, follow-ups and weekly
+    plans, for every child of the calling device. The memory switch keeps its
+    setting."""
     device_id = getattr(request.state, "device_id", None)
     if not device_id:
         raise HTTPException(status_code=401, detail="مطلوب توثيق.")
@@ -203,7 +212,8 @@ DELETE_ACCOUNT_HTML = """<!doctype html>
 
 <h2>ما لا يشمله الحذف</h2>
 <p>سجلات تقنية لا تحمل أي معرّف لك أو لهاتفك، وتُحذف تلقائيًا خلال 90 يومًا على
-الأكثر، والإحصاءات المجمّعة. وما يحفظه مزوّدو الخدمة (مثل Google وDeepSeek) يخضع
+الأكثر، والإحصاءات المجمّعة. وتبقى البيانات المحذوفة في النسخ الاحتياطية لقاعدة
+البيانات 14 يومًا على الأكثر. وما يحفظه مزوّدو الخدمة (مثل Google وDeepSeek) يخضع
 لسياساتهم.</p>
 <p><a href="/privacy-policy">سياسة الخصوصية</a></p>
 </section>
@@ -246,8 +256,9 @@ with the subject "Data deletion request".</p>
 
 <h2>What deletion does not cover</h2>
 <p>Technical logs that carry no identifier of you or your phone, which are deleted
-automatically within 90 days at most, and aggregate statistics. What our service
-providers (such as Google and DeepSeek) keep is governed by their own policies.</p>
+automatically within 90 days at most, and aggregate statistics. Deleted data stays in
+our database backups for at most 14 days. What our service providers (such as Google
+and DeepSeek) keep is governed by their own policies.</p>
 <p><a href="/privacy-policy">Privacy policy</a></p>
 </section>
 </body>
@@ -338,6 +349,55 @@ def account_devices(conn: sqlite3.Connection, device_id: str,
     return sorted(devices), google_ids
 
 
+def erase_child(device_id: str, child_id: int) -> dict[str, int]:
+    """Delete one child and every row tied to it, in one transaction.
+
+    Every table with a `child_id` column — discovered at call time, so a table
+    added later is covered without touching this code — plus the rows that
+    hang off them with no child_id of their own (routine events, agreement
+    clauses). Deleting only child_profiles left progress, coach tips (with the
+    child's name and topic), missions and their notes, agreements, licences,
+    scenario answers, screen sessions and streaks behind (PR #26 review, P3).
+    Legacy lesson_progress rows (child_id 0) belong to the device, not a child,
+    and stay.
+    """
+    conn = get_conn()
+    try:
+        conn.execute("PRAGMA foreign_keys = OFF")
+        conn.execute("BEGIN IMMEDIATE")
+        tables = _table_columns(conn)
+        counts: Counter = Counter()
+        for table, column, parent, parent_col in DEPENDENT_TABLES:
+            pcols = tables.get(parent, set())
+            if table in tables and "child_id" in pcols and "device_id" in pcols:
+                cur = conn.execute(
+                    f"DELETE FROM {table} WHERE {column} IN (SELECT {parent_col} FROM "
+                    f"{parent} WHERE child_id = ? AND device_id = ?)",
+                    (child_id, device_id),
+                )
+                counts[table] += cur.rowcount
+        for table, cols in tables.items():
+            if table == "child_profiles" or "child_id" not in cols:
+                continue
+            if "device_id" in cols:
+                cur = conn.execute(
+                    f"DELETE FROM {table} WHERE child_id = ? AND device_id = ?",
+                    (child_id, device_id))
+            else:
+                cur = conn.execute(f"DELETE FROM {table} WHERE child_id = ?", (child_id,))
+            counts[table] += cur.rowcount
+        cur = conn.execute("DELETE FROM child_profiles WHERE id = ? AND device_id = ?",
+                           (child_id, device_id))
+        counts["child_profiles"] += cur.rowcount
+        conn.commit()
+    except Exception:
+        conn.rollback()
+        raise
+    finally:
+        conn.close()
+    return {t: n for t, n in sorted(counts.items()) if n}
+
+
 def erase_account(device_id: str) -> dict:
     """Delete every row tied to the caller's account, in one transaction."""
     conn = get_conn()
@@ -394,7 +454,8 @@ def erase_account(device_id: str) -> dict:
     }
 
 
-@api_router.delete("/privacy/account", summary="Delete my account and all its data")
+@api_router.delete("/privacy/account", summary="Delete my account and all its data",
+                   dependencies=[Depends(require_proven_token)])
 def delete_my_account(request: Request, confirm: bool = Query(False)):
     """Everything tied to this device — and, when signed in with Google, to
     every device linked to that Google account: children, progress, chat,

@@ -194,7 +194,8 @@ def test_v30_tables_are_created_on_a_db_already_stamped_higher(tmp_path, monkeyp
 
 
 def test_every_v30_table_is_in_the_privacy_delete_all():
-    covered = {t for t, _ in MEMORY_TABLES}
+    from app.routers.privacy import MEMORY_SETTINGS_TABLE
+    covered = {t for t, _ in MEMORY_TABLES} | {MEMORY_SETTINGS_TABLE}
     assert covered == {"child_facts", "followups", "weekly_plans", "child_memory_settings"}
     conn = get_conn()
     for table, column in MEMORY_TABLES:
@@ -320,8 +321,10 @@ def _seed_everything(client, h, device) -> int:
     client.post(f"/api/children/{cid}/memory", headers=_headers(h),
                 json={"category": "challenge", "fact": "طفلي يرفض النوم وحده"})
     conn = get_conn()
-    cm.store_extraction(device, cid, [], {"strategy": "روتين نوم ثابت", "topic": "sleep", "days": 3},
-                        lang="ar", names=(CHILD_NAME,))
+    conn.execute("INSERT INTO followups (device_id, child_id, strategy, topic, due_at) "
+                 "VALUES (?, ?, 'روتين نوم ثابت', 'sleep', datetime('now', '+3 days'))",
+                 (device, cid))
+    conn.commit()
     conn.close()
     client.get(f"/api/children/{cid}/weekly-plan", headers=_headers(h))
     client.put("/api/children/memory/settings", headers=_headers(h), json={"enabled": True})
@@ -516,6 +519,7 @@ def test_a_rejected_fact_is_not_learned_again(client, monkeypatch):
     device = "dev-reject"
     h = _session(client, device)
     cid = _child(client, h)
+    _enable_collection(monkeypatch, device)
     conn = get_conn()
     fid, _ = cm.upsert_fact(conn, device, cid, category="temperament", fact="طفلي عصبي جدًا",
                             source="chat", confidence=0.9, lang="ar")
@@ -524,7 +528,7 @@ def test_a_rejected_fact_is_not_learned_again(client, monkeypatch):
     cm.update_fact(device, cid, fid, status="rejected")
     stats = cm.store_extraction(device, cid, [{"category": "temperament", "fact": "طفلي عصبي جدًا",
                                                "confidence": 0.9, "replaces": None}],
-                                None, lang="ar", names=())
+                                None, lang="ar", family=())
     assert stats["skipped"] == 1
     assert [f["status"] for f in cm.list_facts(device, cid, "all")] == ["rejected"]
 
@@ -651,3 +655,222 @@ def test_remembered_facts_bypass_the_cross_family_cache(client, pipeline, monkey
                 json={"category": "temperament", "fact": "طفلي يخاف من الظلام"})
     _ask(client, h, "كيف أعوّد الطفل على النوم مبكرًا؟", child_id=cid)
     assert calls == {"lookup": 0, "store": 0}
+
+
+# ── PR #26 review: memory correctness ─────────────────────────────────────
+
+PROBE_FACTS = [  # the reviewer's probes (probe5.db, t1.db) — every category
+    ("tried_strategy", "طفلي يأخذ دواء ريتالين 10 ملغ يوميًا بوصفة الطبيب"),
+    ("challenge", "طفلي يشاهد مواقع إباحية على هاتفه"),
+    ("other", "طفلي طلب منه شخص غريب صورًا عارية على إنستجرام"),
+    ("challenge", "طفلي يجرح ذراعه بالموس عندما يحزن"),
+    ("other", "طفلي تعرّض للمس غير لائق من أحد الأقارب"),
+    ("tried_strategy", "جُرِّب الميلاتونين مع طفلي للنوم"),
+    ("health_note", "طفلي يأخذ ريتالين للتركيز"),
+    ("challenge", "My child is cutting himself"),
+]
+PROBE_STRATEGIES = ["حوار هادئ عن مخاطر المواد الإباحية",
+                    "إبعاد الأدوات الحادة وحوار يومي عن جرح نفسه"]
+
+
+def _allowed_device(client, monkeypatch, device, name=CHILD_NAME):
+    h = _session(client, device)
+    cid = _child(client, h, name)
+    _enable_collection(monkeypatch, device)
+    return h, cid
+
+
+def test_sensitive_and_medication_facts_are_never_stored(client, monkeypatch):
+    """A1/P5: every category, and every strategy."""
+    _, cid = _allowed_device(client, monkeypatch, "dev-sens")
+    facts = [{"category": c, "fact": t, "confidence": 0.9, "replaces": None} for c, t in PROBE_FACTS]
+    for strategy in PROBE_STRATEGIES:
+        cm.store_extraction("dev-sens", cid, facts,
+                            {"strategy": strategy, "topic": "other", "days": 4},
+                            lang="ar", family=cm.family_for_device("dev-sens"))
+    assert cm.list_facts("dev-sens", cid, "all") == []
+    assert cm.list_followups("dev-sens", cid, "all") == []
+
+
+def test_a_parent_cannot_store_a_sensitive_fact_either(client):
+    h = _session(client, "dev-sens-manual")
+    cid = _child(client, h)
+    r = client.post(f"/api/children/{cid}/memory", headers=_headers(h),
+                    json={"category": "health_note", "fact": "طفلي يأخذ ريتالين 10 ملغ"})
+    assert r.status_code == 422 and r.json()["detail"]["code"] == "sensitive"
+
+
+def test_a_sensitive_followup_note_is_dropped_not_kept(client):
+    h = _session(client, "dev-note")
+    cid = _child(client, h)
+    fid = _make_due_followup("dev-note", cid)
+    body = client.post(f"/api/children/followups/{fid}/answer", headers=_headers(h),
+                       json={"outcome": "partly", "note": "أعطيناه ميلاتونين قبل النوم"}).json()
+    assert body["note_dropped"] is True
+    assert body["followup"]["note"] is None and "ميلاتونين" not in body["fact"]["fact"]
+
+
+def test_the_latest_outcome_wins(client):
+    """A3: worked → partly → didn't work leaves «didn't work», once."""
+    h = _session(client, "dev-latest")
+    cid = _child(client, h)
+    for outcome in ("worked", "partly", "didnt_work"):
+        fid = _make_due_followup("dev-latest", cid, "روتين نوم ثابت مع قصة قبل النوم")
+        client.post(f"/api/children/followups/{fid}/answer", headers=_headers(h),
+                    json={"outcome": outcome})
+    outcomes = [f for f in cm.list_facts("dev-latest", cid, "all") if f["category"] == "outcome"]
+    assert len(outcomes) == 1 and "ولم ينجح" in outcomes[0]["fact"]
+
+
+def test_opposite_facts_are_not_merged(client, monkeypatch):
+    """A7: «لا يكذب» is a new fact, not a repeat of «يكذب»."""
+    _, cid = _allowed_device(client, monkeypatch, "dev-polar")
+    fam = cm.family_for_device("dev-polar")
+    cm.store_extraction("dev-polar", cid, [{"category": "challenge", "fact": "طفلي يكذب",
+                                            "confidence": 0.9, "replaces": None}],
+                        None, lang="ar", family=fam)
+    cm.store_extraction("dev-polar", cid, [{"category": "challenge", "fact": "طفلي لا يكذب",
+                                            "confidence": 0.9, "replaces": None}],
+                        None, lang="ar", family=fam)
+    texts = sorted(f["fact"] for f in cm.list_facts("dev-polar", cid, "all"))
+    assert texts == ["طفلي لا يكذب", "طفلي يكذب"]
+    assert not cm._similar("it worked", "it did not work")
+    assert not cm._similar("نجح جزئيًا", "نجح")
+
+
+def test_a_replaced_health_note_waits_for_the_parent(client, monkeypatch):
+    """A5: the replaces path cannot activate a health note."""
+    _, cid = _allowed_device(client, monkeypatch, "dev-health")
+    conn = get_conn()
+    fid, _ = cm.upsert_fact(conn, "dev-health", cid, category="challenge", fact="طفلي كثير الحركة",
+                            source="chat", confidence=0.9, lang="ar")
+    conn.commit()
+    conn.close()
+    assert cm.get_fact("dev-health", cid, fid)["status"] == "active"
+    cm.store_extraction("dev-health", cid, [{"category": "health_note",
+                                             "fact": "طفلي مصاب بفرط الحركة وتشتت الانتباه",
+                                             "confidence": 0.9, "replaces": fid}],
+                        None, lang="ar", family=cm.family_for_device("dev-health"))
+    assert cm.get_fact("dev-health", cid, fid)["status"] == "pending"
+
+
+def test_erasing_memory_keeps_the_switch_off(client):
+    """A4/P2: an erase is not «turn memory back on»."""
+    h = _session(client, "dev-erase-off")
+    client.put("/api/children/memory/settings", headers=_headers(h), json={"enabled": False})
+    assert client.delete("/api/privacy/memory", headers=_headers(h)).status_code == 200
+    assert cm.memory_enabled("dev-erase-off") is False
+
+
+def test_an_extraction_in_flight_cannot_write_after_an_erase_or_switch_off(client, monkeypatch):
+    _, cid = _allowed_device(client, monkeypatch, "dev-inflight")
+    fact = [{"category": "challenge", "fact": "طفلي يرفض النوم وحده", "confidence": 0.9,
+             "replaces": None}]
+    started = cm._generation("dev-inflight")
+    cm.delete_child_memory("dev-inflight", cid)            # the parent erases meanwhile
+    stats = cm.store_extraction("dev-inflight", cid, fact, None, lang="ar",
+                                family=cm.family_for_device("dev-inflight"), generation=started)
+    assert stats["refused"] and cm.list_facts("dev-inflight", cid, "all") == []
+    cm.set_memory_enabled("dev-inflight", False)           # …or switches it off
+    stats = cm.store_extraction("dev-inflight", cid, fact, None, lang="ar",
+                                family=cm.family_for_device("dev-inflight"),
+                                generation=cm._generation("dev-inflight"))
+    assert stats["refused"] and cm.list_facts("dev-inflight", cid, "all") == []
+
+
+def test_the_memory_switch_fails_closed(monkeypatch):
+    def broken():
+        raise sqlite3.OperationalError("database is locked")
+    monkeypatch.setattr(cm, "get_conn", broken)
+    assert cm.memory_enabled("anyone") is False
+
+
+def test_no_extraction_when_the_question_names_a_sibling(client, monkeypatch):
+    """A6: nothing is filed rather than mis-filed."""
+    h = _session(client, "dev-sibq")
+    sara = _child(client, h, "سارة")
+    _child(client, h, "أحمد")
+    _enable_collection(monkeypatch, "dev-sibq")
+    extractor = _FakeExtractor(response='{"facts": [], "followup": null}')
+    monkeypatch.setattr(ai_gateway, "aux_cloud_provider", lambda **kw: extractor)
+    assert cm.extract_and_store("dev-sibq", sara, question="سارة بتضرب أحمد كل يوم ومش بتسمع",
+                                answer="…") is None
+    assert extractor.prompts == []
+
+
+def test_existing_facts_are_reredacted_in_the_extraction_prompt(client, monkeypatch):
+    """P8: a fact stored with a sibling's name must not carry it into the call."""
+    h = _session(client, "dev-p8")
+    sara = _child(client, h, "سارة")
+    _child(client, h, "يوسف")
+    _enable_collection(monkeypatch, "dev-p8")
+    conn = get_conn()
+    conn.execute("INSERT INTO child_facts (device_id, child_id, category, fact, source, "
+                 "confidence, status, lang) VALUES ('dev-p8', ?, 'challenge', "
+                 "'طفلي تغار كثيرا من أخيها الرضيع يوسف', 'chat', 0.9, 'active', 'ar')", (sara,))
+    conn.commit()
+    conn.close()
+    monkeypatch.setattr(cm, "extraction_budget_ok", lambda: True)
+    extractor = _FakeExtractor(response='{"facts": [], "followup": null}')
+    monkeypatch.setattr(ai_gateway, "aux_cloud_provider", lambda **kw: extractor)
+    cm.extract_and_store("dev-p8", sara, question="ابنتي بتغار وبتصرخ كل ما أشيل أخوها",
+                         answer="…")
+    assert extractor.prompts and "يوسف" not in extractor.prompts[0]
+    assert "الطفل ب" in extractor.prompts[0]
+
+
+@pytest.mark.parametrize("question,expected", [
+    ("ما حكم صلاة الطفل بدون وضوء؟", False),          # not about the child's behaviour
+    ("كيف أعلم الأطفال حب القراءة؟", False),
+    ("ابني بيرفض ينام لوحده وبيخاف من الضلمة", True),
+    ("my son refuses to sleep alone", True),
+])
+def test_extraction_prefilter(question, expected):
+    assert cm.worth_extracting(question, None, 1) is expected
+
+
+def test_extraction_stops_when_its_budget_or_the_primary_headroom_is_spent(monkeypatch):
+    monkeypatch.setattr(cm, "_extraction_tokens_this_month",
+                        lambda: cm.CHILD_MEMORY_MONTHLY_TOKEN_CAP)
+    assert cm.extraction_budget_ok() is False
+    monkeypatch.setattr(cm, "_extraction_tokens_this_month", lambda: 0)
+    from app.config.llm_config import LLM
+    from app.services import ai_gateway as gw
+    monkeypatch.setattr(gw, "_monthly_tokens_used_cached",
+                        lambda name: int(0.85 * LLM.deepseek_primary_monthly_token_cap))
+    assert cm.extraction_budget_ok() is False
+    monkeypatch.setattr(gw, "_monthly_tokens_used_cached", lambda name: 0)
+    assert cm.extraction_budget_ok() is True
+
+
+def test_the_extraction_queue_is_bounded(monkeypatch):
+    import threading
+    gate = threading.Event()
+    monkeypatch.setattr(cm, "extract_and_store", lambda *a, **k: gate.wait(5))
+    monkeypatch.setattr(cm, "MAX_QUEUED_EXTRACTIONS", 3)
+    futures = [cm.schedule_extraction("dev-q", 1, question="q", answer="a") for _ in range(5)]
+    assert sum(f is not None for f in futures) == 3
+    gate.set()
+    cm.wait_for_extractions()
+
+
+def test_concurrent_extractions_write_each_fact_and_followup_once(client, monkeypatch):
+    import threading
+    _, cid = _allowed_device(client, monkeypatch, "dev-race")
+    fam = cm.family_for_device("dev-race")
+    fact = [{"category": "challenge", "fact": "طفلي يرفض النوم وحده", "confidence": 0.9,
+             "replaces": None}]
+    fu = {"strategy": "روتين نوم ثابت مع قصة", "topic": "sleep", "days": 4}
+    start = threading.Barrier(6)
+
+    def worker():
+        start.wait()
+        cm.store_extraction("dev-race", cid, fact, fu, lang="ar", family=fam)
+
+    threads = [threading.Thread(target=worker) for _ in range(6)]
+    for t in threads:
+        t.start()
+    for t in threads:
+        t.join()
+    assert len(cm.list_facts("dev-race", cid, "all")) == 1
+    assert len(cm.list_followups("dev-race", cid)) == 1

@@ -28,6 +28,14 @@ def _rows():
 
 
 def test_a_code_redeems_once_for_a_web_token(db):
+    # A v2 web token resolves its device from the child's profile (it no
+    # longer carries the parent's device id), so the child must exist.
+    from app.db.init_db import get_conn
+    conn = get_conn()
+    conn.execute("INSERT INTO child_profiles (id, device_id, name, age_group) "
+                 "VALUES (7, 'dev-1', 'سالم', '13-15')")
+    conn.commit()
+    conn.close()
     code = child_token.create_claim_code("dev-1", 7, ttl_seconds=3600)
     first = child_token.redeem_claim_code(code)
     assert first["child_id"] == 7

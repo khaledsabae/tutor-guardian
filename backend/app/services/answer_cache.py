@@ -85,9 +85,12 @@ def _conn() -> sqlite3.Connection:
             answer TEXT NOT NULL,
             embedding TEXT,
             created_at TEXT DEFAULT (datetime('now')),
-            hit_count INTEGER DEFAULT 0
+            hit_count INTEGER DEFAULT 0,
+            redacted INTEGER
         )"""
     )
+    from app.services.retention import ensure_marker
+    ensure_marker(conn, "answer_cache")
     conn.execute(
         "CREATE INDEX IF NOT EXISTS idx_answer_cache_scope "
         "ON answer_cache (age_group, domain)"
@@ -127,8 +130,10 @@ def lookup(question: str, age_group: str, domain: str, severity: str) -> str | N
         try:
             fresh = f"-{_TTL_DAYS} days"
             row = conn.execute(
+                # Only rows stored since names were matched properly: an older
+                # one may carry a child's name into another family (P4).
                 "SELECT id, answer FROM answer_cache "
-                "WHERE qhash = ? AND created_at >= datetime('now', ?)",
+                "WHERE qhash = ? AND redacted = 1 AND created_at >= datetime('now', ?)",
                 (_key(question, age_group, domain, severity), fresh),
             ).fetchone()
             match_kind = "exact"
@@ -139,7 +144,7 @@ def lookup(question: str, age_group: str, domain: str, severity: str) -> str | N
                 candidates = conn.execute(
                     "SELECT id, answer, embedding FROM answer_cache "
                     "WHERE age_group = ? AND domain = ? AND severity = ? "
-                    "AND embedding IS NOT NULL "
+                    "AND embedding IS NOT NULL AND redacted = 1 "
                     "AND created_at >= datetime('now', ?) "
                     "ORDER BY hit_count DESC LIMIT ?",
                     (age_group, domain, severity, fresh, _MAX_CANDIDATES),
@@ -228,10 +233,10 @@ def store(question: str, age_group: str, domain: str, severity: str, answer: str
             )
             conn.execute(
                 "INSERT INTO answer_cache "
-                "(qhash, question_norm, age_group, domain, severity, answer, embedding) "
-                "VALUES (?, ?, ?, ?, ?, ?, ?) "
+                "(qhash, question_norm, age_group, domain, severity, answer, embedding, "
+                "redacted) VALUES (?, ?, ?, ?, ?, ?, ?, 1) "
                 "ON CONFLICT(qhash) DO UPDATE SET "
-                "answer = excluded.answer, created_at = datetime('now')",
+                "answer = excluded.answer, created_at = datetime('now'), redacted = 1",
                 (
                     _key(question, age_group, domain, severity),
                     normalize(question)[:500],

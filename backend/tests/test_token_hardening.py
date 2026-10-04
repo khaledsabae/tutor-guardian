@@ -54,7 +54,8 @@ def test_only_the_hash_is_stored(db):
 
 def test_the_stored_hash_is_not_a_credential(db):
     token = store.create_token("dev-1", "s-1")
-    assert store.validate_token(token) == {"device_id": "dev-1", "session_id": "s-1"}
+    assert store.validate_token(token) == {"device_id": "dev-1", "session_id": "s-1",
+                                           "proven": False}
     # Someone holding a copy of the table only has the digest.
     assert store.validate_token(hashlib.sha256(token.encode()).hexdigest()) is None
     assert store.validate_token("") is None
@@ -128,7 +129,7 @@ def test_legacy_plaintext_tokens_are_hashed_and_keep_working(legacy):
     assert rows[0][1] is not None                   # given a full TTL, not NULL
     # The install still holds the raw token: it must not be logged out.
     assert store.validate_token("tg_legacy_plaintext") == {
-        "device_id": "dev-old", "session_id": "s-old"}
+        "device_id": "dev-old", "session_id": "s-old", "proven": False}
 
 
 def test_the_v28_migration_is_idempotent(legacy):

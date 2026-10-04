@@ -5,7 +5,7 @@ import logging
 from fastapi import APIRouter, HTTPException, Query, Request
 from app.db.init_db import get_conn
 from app.services.ai_gateway import get_gateway
-from app.services.privacy import names_for_device, redact_with_names
+from app.services.privacy import family_for_device, redact_family
 
 logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/insights", tags=["insights"])
@@ -152,8 +152,8 @@ def _gather_insights_data(device_id: str, child_id: int):
         # carry the child's name in its first line and the parent's questions
         # verbatim; both now leave with the family's child names replaced
         # (services/privacy.py), the same rule as the assistant.
-        names = names_for_device(device_id)
-        chat_texts = [redact_with_names(c["content"], names) for c in chats]
+        family = family_for_device(device_id)
+        chat_texts = [redact_family(c["content"], family, child_id) for c in chats]
 
         return child, total_sleep, feed_count, feed_amount, diaper_count, chat_texts
     finally:

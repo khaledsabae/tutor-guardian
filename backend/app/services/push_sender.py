@@ -160,6 +160,7 @@ def send_to_device(
     body: str,
     data: Optional[dict[str, str]] = None,
     channel_id: str = DEFAULT_CHANNEL,
+    visibility: Optional[str] = None,
 ) -> dict:
     """Send an FCM notification to a single device.
 
@@ -171,7 +172,8 @@ def send_to_device(
 
     `channel_id` selects the Android notification channel. Use
     `license_alert.SAFETY_CHANNEL` for anything a parent must be able to keep
-    unmuted while silencing the rest.
+    unmuted while silencing the rest. `visibility='private'` keeps the text off
+    a locked screen.
     """
     if not _ensure_app():
         return {"ok": False, "error": "firebase_credentials_not_configured"}
@@ -190,6 +192,8 @@ def send_to_device(
             notification=messaging.AndroidNotification(
                 channel_id=channel_id,
                 sound="default",
+                # 'private' hides the text on a locked screen (follow-ups).
+                visibility=visibility,
             ),
         ),
     )

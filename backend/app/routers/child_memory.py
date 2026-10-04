@@ -12,9 +12,10 @@ from __future__ import annotations
 
 from typing import Literal, Optional
 
-from fastapi import APIRouter, HTTPException, Query, Request
+from fastapi import APIRouter, Depends, HTTPException, Query, Request
 from pydantic import BaseModel, Field
 
+from app.core.proof import require_proven_token
 from app.db.init_db import get_conn
 from app.routers.children import _load_owned_child, _require_device_id
 from app.services import child_memory as cm
@@ -32,6 +33,7 @@ _FACT_ERRORS = {
     "fact": "النص فارغ أو يحتوي على رابط أو رقم تواصل.",
     "fact_too_long": f"النص أطول من {cm.MAX_FACT_CHARS} حرفًا.",
     "status": "الحالة المسموحة: active أو rejected.",
+    "sensitive": "هذه المعلومة مما لا يحفظه المربّي (أدوية أو أمور حساسة).",
     "outcome": "النتيجة المسموحة: worked أو partly أو didnt_work أو didnt_try.",
 }
 
@@ -68,13 +70,15 @@ def _settings(device_id: str) -> dict:
 
 
 @router.get("/children/memory/settings",
-            summary="Is child memory on for this device?")
+            summary="Is child memory on for this device?",
+            dependencies=[Depends(require_proven_token)])
 def get_memory_settings(request: Request):
     return _settings(_require_device_id(request))
 
 
 @router.put("/children/memory/settings",
-            summary="Turn child memory on or off for this device")
+            summary="Turn child memory on or off for this device",
+            dependencies=[Depends(require_proven_token)])
 def put_memory_settings(body: MemorySettingsIn, request: Request):
     """Off pauses everything: nothing new is learned, no follow-up is opened,
     and remembered facts stop reaching the assistant. Nothing is deleted —
@@ -93,14 +97,19 @@ class FollowupAnswerIn(BaseModel):
 
 
 @router.get("/children/followups/due",
-            summary="Follow-ups whose time has come, across all children")
-def followups_due(request: Request, limit: int = Query(10, ge=1, le=20)):
+            summary="Follow-ups whose time has come, across all children",
+            dependencies=[Depends(require_proven_token)])
+def followups_due(request: Request, limit: int = Query(10, ge=1, le=20),
+                  tz_offset_minutes: Optional[int] = Query(None)):
     device_id = _require_device_id(request)
+    # Where the follow-up push learns the family's night (quiet hours).
+    cm.record_tz_offset(device_id, tz_offset_minutes)
     return {"followups": cm.due_followups(device_id, limit=limit)}
 
 
 @router.get("/children/followups/{followup_id}",
-            summary="One follow-up — what the /followup/{id} deep link opens")
+            summary="One follow-up — what the /followup/{id} deep link opens",
+            dependencies=[Depends(require_proven_token)])
 def get_followup(followup_id: int, request: Request):
     """Any status: a push can be tapped after the follow-up was answered on
     another device or expired, and the screen should say so, not 404."""
@@ -112,7 +121,8 @@ def get_followup(followup_id: int, request: Request):
 
 
 @router.post("/children/followups/{followup_id}/answer",
-             summary="Did the advice work? Records it as an outcome fact")
+             summary="Did the advice work? Records it as an outcome fact",
+            dependencies=[Depends(require_proven_token)])
 def answer_followup(followup_id: int, body: FollowupAnswerIn, request: Request):
     device_id = _require_device_id(request)
     try:
@@ -128,7 +138,8 @@ def answer_followup(followup_id: int, body: FollowupAnswerIn, request: Request):
 
 
 @router.post("/children/followups/{followup_id}/dismiss",
-             summary="Stop asking about this follow-up")
+             summary="Stop asking about this follow-up",
+            dependencies=[Depends(require_proven_token)])
 def dismiss_followup(followup_id: int, request: Request):
     device_id = _require_device_id(request)
     try:
@@ -141,7 +152,8 @@ def dismiss_followup(followup_id: int, request: Request):
 
 
 @router.get("/children/{child_id}/followups",
-            summary="A child's follow-ups (pending by default)")
+            summary="A child's follow-ups (pending by default)",
+            dependencies=[Depends(require_proven_token)])
 def child_followups(
     child_id: int, request: Request,
     status: Literal["pending", "answered", "dismissed", "expired", "all"] = "pending",
@@ -172,7 +184,8 @@ class FactPatch(BaseModel):
 
 
 @router.get("/children/{child_id}/memory",
-            summary="What the assistant remembers about this child")
+            summary="What the assistant remembers about this child",
+            dependencies=[Depends(require_proven_token)])
 def list_memory(
     child_id: int, request: Request,
     status: Literal["active", "pending", "rejected", "all"] = "all",
@@ -188,7 +201,8 @@ def list_memory(
 
 
 @router.post("/children/{child_id}/memory", status_code=201,
-             summary="Add a fact the parent typed")
+             summary="Add a fact the parent typed",
+            dependencies=[Depends(require_proven_token)])
 def add_memory(child_id: int, body: FactIn, request: Request):
     device_id = _owned_child(request, child_id)
     try:
@@ -198,7 +212,8 @@ def add_memory(child_id: int, body: FactIn, request: Request):
 
 
 @router.patch("/children/{child_id}/memory/{fact_id}",
-              summary="Edit, confirm (active) or reject a fact")
+              summary="Edit, confirm (active) or reject a fact",
+              dependencies=[Depends(require_proven_token)])
 def patch_memory(child_id: int, fact_id: int, body: FactPatch, request: Request):
     device_id = _owned_child(request, child_id)
     if body.fact is None and body.category is None and body.status is None:
@@ -214,7 +229,8 @@ def patch_memory(child_id: int, fact_id: int, body: FactPatch, request: Request)
 
 
 @router.delete("/children/{child_id}/memory/{fact_id}",
-               summary="Forget one fact")
+               summary="Forget one fact",
+            dependencies=[Depends(require_proven_token)])
 def delete_memory_fact(child_id: int, fact_id: int, request: Request):
     device_id = _owned_child(request, child_id)
     if not cm.delete_fact(device_id, child_id, fact_id):
@@ -223,7 +239,8 @@ def delete_memory_fact(child_id: int, fact_id: int, request: Request):
 
 
 @router.delete("/children/{child_id}/memory",
-               summary="Forget everything about this child")
+               summary="Forget everything about this child",
+            dependencies=[Depends(require_proven_token)])
 def delete_child_memory(child_id: int, request: Request):
     """Facts, follow-ups and cached weekly plans for this child. The child
     profile itself is untouched (that is DELETE /api/children/{id})."""
@@ -242,6 +259,7 @@ def get_weekly_plan(child_id: int, request: Request,
                     tz_offset_minutes: int = 0):
     device_id = _owned_child(request, child_id)
     lang = lang or request.headers.get("accept-language")
+    cm.record_tz_offset(device_id, tz_offset_minutes)
     return weekly_plan.get_weekly_plan(
         device_id, child_id, lang=lang, tz_offset_minutes=tz_offset_minutes,
     )

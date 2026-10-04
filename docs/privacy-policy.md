@@ -13,7 +13,7 @@
 - نحفظ على **خادمنا** ملفات أطفالك وتقدّمهم وأسئلتك وإجاباتها وما يتذكّره المربّي
   عن كل طفل، لأن التطبيق لا يعمل من دونها.
 - تُرسَل أسئلتك إلى **DeepSeek** (خدمة ذكاء اصطناعي) لتوليد الإجابة، **بعد استبدال
-  أسماء أطفالك** بكلمة «طفلي».
+  أسماء أطفالك** بكلمة «طفلي» (وإن كان لك أكثر من طفل: «الطفل أ»، «الطفل ب»…).
 - نستعمل **Google Firebase** للإحصاءات وتقارير الأعطال والإشعارات.
 - لا نبيع بياناتك، ولا نعرض إعلانات، ولا نتتبّعك في تطبيقات أخرى.
 - تستطيع حذف كل شيء من التطبيق، أو بمراسلتنا، أو من صفحة
@@ -44,16 +44,20 @@
   الصوتي إن أرفقته، ورقم إصدار التطبيق، وردودنا عليك.
 - **الإشعارات:** رمز الإشعارات الخاص بهاتفك، ونوع الجهاز، ورقم إصدار التطبيق، وسجلّ
   بالإشعارات التي أرسلناها (نوعها ووقتها) حتى لا نكثر عليك.
-- **الدعوات:** رمز دعوتك، وأي هاتف دعا أي هاتف. وعند فتح رابط دعوة في المتصفح نسجّل
-  **عنوان IP ونوع المتصفح** ورمز الدعوة، لنحتسب الدعوة إن ثُبّت التطبيق من الشبكة
-  نفسها خلال 24 ساعة.
+- **الدعوات ومصدر التثبيت:** رمز دعوتك، وأي هاتف دعا أي هاتف. وعند فتح رابط عليه رمز
+  دعوة أو وسم حملة (ref أو utm) من صفحاتنا (/ و/go و/ui/ و/l و/p و/seo و/methodology)
+  نسجّل **عنوان IP** (عنوان IPv6 مختصرًا إلى أول 64 بتًا) و**نوع المتصفح**، وقد نطابق
+  أول تشغيل للتطبيق مع هذه الزيارة بعنوان IP نفسه خلال 24 ساعة لنعرف مصدر التثبيت.
+  تُحفظ هذه السجلات **7 أيام** ثم تُدمج في أعداد يومية بلا عنوان IP. ولا نسجّل زيارات
+  برامج معاينة الروابط ولا التحميل المسبق.
 - **حساب Google** (إن سجّلت الدخول): معرّف الحساب، والبريد الإلكتروني، والاسم المعروض.
 - **النسخة الاحتياطية** (إن استعملتها): تُشفَّر على هاتفك بمفتاح لا نملكه، فلا نستطيع
   قراءتها.
 
-ونحفظ أيضًا سجلات تقنية **لا تحمل معرّف هاتفك**: نص السؤال (بعد استبدال الأسماء)
-مع نتائج البحث في المحتوى، لتحسين جودة البحث؛ وتوقيت نداءات نموذج الذكاء الاصطناعي
-وعدد كلماتها دون نصّها؛ وإجابات عامة غير شخصية مع السؤال الذي تجيب عنه، نعيد
+ونحفظ أيضًا سجلات تقنية **لا تحمل معرّف هاتفك**: سجلّ البحث (نص السؤال بعد استبدال
+الأسماء مع نتائج البحث في المحتوى)، وكلمات البحث المستخلصة من الأسئلة، وسجلّ نداءات
+نموذج الذكاء الاصطناعي (التوقيت وعدد الكلمات دون النص)، وسجلّ استعمال المساعد (المجال
+والفئة العمرية دون النص)، وإجابات عامة غير شخصية مع السؤال الذي تجيب عنه نعيد
 استعمالها للأسئلة المتكررة.
 
 ### من يعالج بياناتك نيابةً عنّا
@@ -61,9 +65,11 @@
   المحادثة، والفئة العمرية، ومقاطع المحتوى المناسبة من مكتبتنا، وما يتذكّره المربّي عن
   طفلك. ويتلقّى كذلك نص «نصيحة اليوم» المخصّصة، وملخّص «تحليلات التربية» (أرقام الروتين
   وآخر أسئلتك)، وطلب استخراج الذاكرة بعد كل إجابة، وتحليلًا أسبوعيًا لأسئلة لم نُحسن
-  إجابتها، وتحليلًا لملاحظاتك على التطبيق. **في كل ذلك تُستبدَل أسماء أطفالك بكلمة
-  «طفلي» قبل الإرسال**، إلا إذا جاء الاسم ضمن ذكر ديني مثل «النبي محمد ﷺ» أو
-  «سورة يوسف». يعالج DeepSeek البيانات وفق شروط خدمته، وقد تُعالَج خارج بلدك.
+  إجابتها، وتحليلًا لملاحظاتك على التطبيق، وطلب كتابة قصة لطفلك (عن بطل بديل، ويُضاف
+  اسم طفلك على خادمنا بعد ذلك). **في كل ذلك تُستبدَل أسماء أطفالك قبل الإرسال** بكلمة
+  «طفلي» أو «الطفل أ»، «الطفل ب»… مهما اختلفت كتابة الاسم، إلا إذا جاء الاسم ضمن ذكر
+  ديني مثل «النبي محمد ﷺ» أو «سورة يوسف»، أو كان كلمة عادية في سياقها مثل «صلاة الفجر»
+  أو «آية الكرسي». يعالج DeepSeek البيانات وفق شروط خدمته، وقد تُعالَج خارج بلدك.
 - **خادم احتياطي يديره مطوّر التطبيق** — إن تعذّر DeepSeek يُرسَل النص نفسه (بعد استبدال
   الأسماء) إلى نموذج يعمل على خادم يملكه المطوّر عبر شبكة خاصة مشفّرة.
 - **مركز تفسير للدراسات القرآنية (tafsir.net)** — يُرسَل نص سؤالك (بعد استبدال الأسماء)
@@ -73,7 +79,8 @@
 - **Google Firebase:** **Analytics** (أحداث الاستعمال مثل فتح درس، ومعرّف تثبيت التطبيق،
   وطراز الجهاز ونظامه، والبلد التقريبي) دون أسمائك أو أسئلتك؛ و**Crashlytics** (تقارير
   الأعطال التقنية)؛ و**Cloud Messaging** (توصيل الإشعارات). يمرّ نص الإشعار عبر Google،
-  وإشعار الترحيب بعد إضافة طفل يذكر اسمه الأول، أما إشعارات المتابعة فلا تذكر الاسم.
+  وإشعار الترحيب بعد إضافة طفل يذكر اسمه الأول. أما إشعار المتابعة فنصّه عام لا يذكر
+  الاسم ولا النصيحة، ويُخفى على شاشة القفل، ولا يصل ليلًا بتوقيتك.
 - **Google** أيضًا: **تسجيل الدخول** (اختياري؛ نتحقّق من رمز الدخول لدى Google)،
   و**Google Play** لمعرفة رابط الدعوة الذي ثُبّت منه التطبيق مرة واحدة عند أول تشغيل،
   ولنافذة تقييم التطبيق، و**Google Play Billing** إن اخترت التبرّع (حين يتوفّر) — تتولّى
@@ -82,7 +89,8 @@
   كتبتها) إلى المطوّر عبر Telegram كما كتبتها، ومنه يكتب ردّه إليك. وتصل إليه كذلك
   تقارير أسبوعية فيها أرقام وعناوين موضوعات فقط، دون نص أي سؤال.
 - **Cloudflare** — شبكة تنقل الاتصال بين التطبيق وخادمنا وتحميه.
-- **Hostinger** — شركة الاستضافة التي يعمل عليها خادمنا.
+- **Hostinger** — شركة الاستضافة التي يعمل عليها خادمنا. ويحتفظ الخادم **بنسخ احتياطية
+  من قاعدة البيانات لمدة 14 يومًا**، فما تحذفه يختفي من النسخ الاحتياطية خلال 14 يومًا.
 - صفحات الويب التي نعرضها (صفحة الدعوة ونحوها) تحمّل الخطوط من **Google Fonts**.
 
 لا نستعمل أسئلتك لتدريب نماذج ذكاء اصطناعي. وقد نختبر جودة الإجابات أحيانًا على عيّنة
@@ -99,18 +107,22 @@
 - رمز الجلسة: يتوقّف عن العمل بعد **180 يومًا** من آخر استعمال.
 - المتابعة التي لا تجيب عنها: تُغلق تلقائيًا بعد **21 يومًا** من موعدها.
 - رموز QR لوضع المراهق: تُحذف بعد انتهاء صلاحيتها (دقائق).
-- عنوان IP ونوع المتصفح عند فتح رابط دعوة: **7 أيام**.
-- سجلّ البحث التقني (السؤال بعد استبدال الأسماء، دون معرّف): **90 يومًا**.
+- عنوان IP ونوع المتصفح عند فتح رابط دعوة أو حملة: **7 أيام**، ثم أعداد يومية بلا عنوان.
+- سجلّ البحث، وكلمات البحث المستخلصة، وسجلّ نداءات النموذج، وسجلّ الاستعمال (كلها دون
+  معرّف لهاتفك): **90 يومًا**. وما سُجّل منها قبل استبدال الأسماء حُذف أو أُعيد إخفاؤه.
 - سجلّ الأسئلة الشرعية التي حُوّلت إلى أهل العلم (بعد حذف الأسماء ووسائل التواصل):
   **90 يومًا**.
 - الإجابات العامة المخزّنة مؤقتًا مع أسئلتها: **45 يومًا**.
+- النسخ الاحتياطية لقاعدة البيانات على خادمنا: **14 يومًا**.
 - ما يحفظه مزوّدو الخدمة (Google وDeepSeek وTelegram): وفق سياساتهم.
+تُنفَّذ هذه المدد يوميًا بمهمة مجدولة، لا عند وصول بيانات جديدة فقط.
 
 ### تحكّمك في بياناتك وحذفها
 - **ذاكرة الطفل** (في الإصدارات التي تعرضها): ترى كل ما يتذكّره المربّي عن كل طفل،
   وتعدّل أي معلومة أو ترفضها أو تحذفها، أو تحذف كل ما يخصّ طفلًا، أو تحذف ذاكرة كل
-  أطفالك مرة واحدة. ومفتاح الذاكرة يوقف التعلّم والمتابعات ويمنع وصول الذاكرة إلى
-  الإجابات (دون حذف شيء).
+  أطفالك مرة واحدة (ويبقى مفتاح الذاكرة على حاله، فإن كان مطفأً يبقى مطفأً). ومفتاح الذاكرة
+  يوقف التعلّم والمتابعات ويمنع وصول الذاكرة إلى الإجابات (دون حذف شيء). وقراءة الذاكرة
+  وحذفها وحذف الحساب لا تتمّ إلا من الهاتف نفسه الذي أنشأ الجلسة.
 - **حذف ملف طفل** يحذف معه تقدّمه وذاكرته وبياناته في الأدوات.
 - **حذف الحساب من التطبيق** (في الإصدارات التي تحوي «حذف الحساب» في الإعدادات): يحذف
   فورًا كل ما يرتبط بهاتفك على خوادمنا، وإن كنت سجّلت الدخول بحساب Google يحذف كذلك
@@ -121,9 +133,11 @@
 ### الأطفال
 التطبيق موجّه إلى الآباء والأمهات. لا ينشئ الطفل حسابًا، ويستعمل «وضع الطفل» على هاتف
 والده أو من متصفح بإذنه، ويرى الوالد ما يُسجَّل فيه. ولا يحفظ المربّي في ذاكرة الطفل:
-أسماء الأدوية أو جرعاتها أو نتائج التحاليل أو الأطباء أو المستشفيات، ولا أي حديث عن
-إيذاء النفس أو الإساءة أو الأمور الجنسية، ولا خصوصيات الوالدين. والملاحظات الصحية لا
-تُستعمل حتى تؤكّدها أنت.
+الأدوية أو أسماءها أو جرعاتها أو الوصفات، ولا نتائج التحاليل أو الأطباء أو المستشفيات،
+ولا أي حديث عن إيذاء النفس أو الانتحار أو الإساءة أو الأمور الجنسية أو المخدرات، ولا
+خصوصيات الوالدين — في أي نوع من المعلومات، وفي أي نص متابعة أو ملاحظة. وإذا ذكر سؤالك
+طفلًا آخر من أطفالك لا نستخلص منه شيئًا، حتى لا تُنسب معلومة إلى غير صاحبها. والملاحظات
+الصحية لا تُستعمل حتى تؤكّدها أنت، ولو عُدّلت.
 
 ### حماية البيانات
 الاتصال مشفّر دائمًا (HTTPS). نحفظ رموز الجلسة مجزّأة، وذاكرة الطفل دون اسمه، والنسخ
@@ -152,7 +166,8 @@ our servers is linked to it. Signing in with Google is optional.
   and their answers, and what Almorabbi remembers about each child — the app cannot
   work without them.
 - Your questions are sent to **DeepSeek** (an AI service) to generate the answer,
-  **with your children's names replaced** by «طفلي» ("my child") first.
+  **with your children's names replaced** first — by «طفلي» ("my child"), or with
+  several children «الطفل أ», «الطفل ب»… ("child A", "child B").
 - We use **Google Firebase** for analytics, crash reports and notifications.
 - We do not sell your data, show ads, or track you across other apps.
 - You can delete everything in the app, by emailing us, or from
@@ -188,17 +203,22 @@ to your phone's random identifier:
 - **Notifications:** your phone's notification token, device platform, app
   version and build number, and a log of the notifications we sent (type and
   time) so we do not send too many.
-- **Invites:** your invite code and which phone invited which. When an invite
-  link is opened in a browser we record the **IP address, browser type** and the
-  invite code, to credit the invite if the app is installed from the same network
-  within 24 hours.
+- **Invites and install attribution:** your invite code and which phone invited
+  which. When a link carrying an invite code or a campaign tag (ref or utm) is
+  opened on one of our pages (/, /go, /ui/, /l, /p, /seo, /methodology) we record
+  the **IP address** (an IPv6 address cut to its first 64 bits, its /64) and the
+  **browser's user agent**; a first app launch may be matched to such a visit by
+  IP within 24 hours to learn where the install came from. These raw records are
+  kept **7 days** and then folded into daily counts with no IP address.
+  Link-preview bots and prefetches are not recorded.
 - **Google account** (if you sign in): account ID, email address and display name.
 - **Backup** (if you use it): encrypted on your phone with a key we do not have,
   so we cannot read it.
 
-We also keep technical logs that **carry no phone identifier**: the question text
-(with names replaced) together with the content search results, to improve search
-quality; the timing and size of AI model calls, without their text; and general,
+We also keep technical logs that **carry no phone identifier**: the search log (the
+question text with names replaced, with the content search results), the search
+keywords derived from questions, the AI call log (timing and size, without text),
+the assistant usage log (topic and age group, without text), and general,
 non-personal answers, with the question they answer, reused for repeated questions.
 
 ### Who processes your data on our behalf
@@ -207,11 +227,14 @@ non-personal answers, with the question they answer, reused for repeated questio
   content library, and what Almorabbi remembers about your child. It also
   receives the personalised daily-tip text, the "parenting insights" summary
   (routine counts and your recent questions), the memory-extraction request after
-  each answer, a weekly analysis of questions we answered poorly, and an analysis
-  of your app feedback. **In all of these, your children's names are replaced by
-  «طفلي» before sending**, unless the name is part of a religious reference such as
-  «النبي محمد ﷺ» or «سورة يوسف». DeepSeek processes data under its own service
-  terms, and processing may take place outside your country.
+  each answer, a weekly analysis of questions we answered poorly, an analysis of
+  your app feedback, and a request to write a story for your child (about a
+  stand-in hero; your child's name is added on our server afterwards). **In all of
+  these, your children's names are replaced before sending** — by «طفلي» or
+  «الطفل أ», «الطفل ب»…, however the name is spelled — unless the name is part of
+  a religious reference such as «النبي محمد ﷺ» or «سورة يوسف», or an ordinary word
+  in context such as «صلاة الفجر» or «آية الكرسي». DeepSeek processes data under
+  its own service terms, and processing may take place outside your country.
 - **A backup server run by the app's developer** — if DeepSeek is unavailable, the
   same text (names replaced) goes to a model running on a server the developer
   owns, over a private encrypted network.
@@ -224,8 +247,9 @@ non-personal answers, with the question they answer, reused for repeated questio
   app-install ID, device model and OS, approximate country) without your names or
   questions; **Crashlytics** (technical crash reports); and **Cloud Messaging**
   (delivering notifications). Notification text passes through Google; the welcome
-  notification after you add a child includes the child's first name, while
-  follow-up notifications never do.
+  notification after you add a child includes the child's first name. A follow-up
+  notification is generic — no name, no advice — hidden on the lock screen, and
+  never sent at night in your time zone.
 - **Google** also for: **Sign-In** (optional; we verify the sign-in token with
   Google), **Google Play** to read, once at first launch, the invite link the app
   was installed from, the in-app review prompt, and **Google Play Billing** if you
@@ -237,7 +261,9 @@ non-personal answers, with the question they answer, reused for repeated questio
   labels only — never the text of a question — also go there.
 - **Cloudflare** — the network that carries and protects traffic between the app
   and our server.
-- **Hostinger** — the hosting company our server runs on.
+- **Hostinger** — the hosting company our server runs on. The server keeps
+  **backups of the database for 14 days**, so data you delete is gone from the
+  backups within 14 days.
 - Web pages we serve (the invite page and similar) load fonts from **Google Fonts**.
 
 We do not use your questions to train AI models. We may occasionally test answer
@@ -256,19 +282,28 @@ and backup files you export to a place you choose.
 - Session token: stops working **180 days** after it was last used.
 - An unanswered follow-up: closed automatically **21 days** after it was due.
 - Teen QR codes: deleted once they expire (minutes).
-- IP address and browser type from an invite link: **7 days**.
-- Technical search log (question with names replaced, no identifier): **90 days**.
+- IP address and browser type from an invite or campaign link: **7 days**, then
+  daily counts with no address.
+- Search log, derived search keywords, AI call log and usage log (none of them
+  carries a phone identifier): **90 days**. Entries logged before names were
+  replaced have been deleted or re-redacted.
 - Log of religious-ruling questions referred to scholars (names and contact
   details removed): **90 days**.
 - Cached general answers and their questions: **45 days**.
+- Database backups on our server: **14 days**.
 - What our providers (Google, DeepSeek, Telegram) keep: according to their
   policies.
+These periods are enforced every day by a scheduled job, not only when new data
+arrives.
 
 ### Your controls and deletion
 - **Child memory** (in versions that show it): see everything Almorabbi remembers
   about each child; edit, reject or delete any item; delete everything about one
-  child; or delete all your children's memory at once. The memory switch stops
-  learning and follow-ups and keeps memory out of answers (without deleting it).
+  child; or delete all your children's memory at once (the memory switch keeps its
+  setting: if it was off, it stays off). The memory switch stops learning and
+  follow-ups and keeps memory out of answers (without deleting it). Reading or
+  deleting memory, and deleting the account, only work from the phone that holds
+  the session.
 - **Deleting a child profile** deletes that child's progress, memory and tool data.
 - **Delete account in the app** (in versions with "Delete account" in Settings):
   immediately deletes everything linked to your phone on our servers — and, if you
@@ -281,10 +316,12 @@ and backup files you export to a place you choose.
 ### Children
 The app is meant for mothers and fathers. A child does not create an account; child
 mode runs on the parent's phone, or in a browser with the parent's permission, and
-the parent can see what it records. Almorabbi's child memory never keeps: medication
-names or doses, test results, doctors or hospitals; anything about self-harm, abuse
-or sexual matters; or the parents' private life. Health notes are not used until you
-confirm them.
+the parent can see what it records. Almorabbi's child memory never keeps: medicines,
+their names or doses, or prescriptions; test results, doctors or hospitals; anything
+about self-harm, suicide, abuse, sexual matters or drugs; or the parents' private
+life — in any kind of note, follow-up text or comment. When a question names another
+of your children, nothing is learned from it, so nothing is filed under the wrong
+child. Health notes are not used until you confirm them, including after an edit.
 
 ### Security
 Connections are always encrypted (HTTPS). Session tokens are stored hashed, child

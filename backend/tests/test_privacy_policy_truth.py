@@ -104,10 +104,12 @@ TABLE_DISCLOSURE = {
     "push_sends": "log of the notifications we sent",
     "referral_codes": "invite code",
     "referrals": "which phone invited which",
-    "referral_clicks": "IP address, browser type",
+    "referral_clicks": "browser's user agent",
     "identity_links": "Google account",
     "parent_identities": "Google account",
     "user_backups": "Backup",
+    # Install attribution (PR #25): raw visits, then daily counts with no IP.
+    "referral_click_days": "daily counts with no IP",
 }
 
 
@@ -133,11 +135,14 @@ def test_every_table_holding_user_data_is_disclosed():
     user_tables |= {t for t, *_ in pv.DEPENDENT_TABLES}
     user_tables |= {t for t, _ in pv.OTHER_DEVICE_COLUMNS}
     user_tables |= {t for t, _ in pv.IDENTITY_TABLES}
-    user_tables.add("referral_clicks")          # personal (IP) though device-less
+    # Personal (IP) though device-less; and PR #25's daily fold of the same
+    # visits. Checked whenever the table exists — before #25 merges or after.
+    user_tables |= {"referral_clicks", "referral_click_days"} & set(schema)
     missing = sorted(user_tables - set(TABLE_DISCLOSURE))
     assert missing == [], f"disclose in docs/privacy-policy.md and map here: {missing}"
+    flat = " ".join(ENGLISH.split()).lower()      # markdown wraps lines anywhere
     for table in sorted(user_tables & set(schema)):
-        assert TABLE_DISCLOSURE[table].lower() in ENGLISH.lower(), table
+        assert TABLE_DISCLOSURE[table].lower() in flat, table
 
 
 # ── Every external host is a named processor ──────────────────────────────
@@ -175,7 +180,7 @@ def test_every_external_host_in_the_backend_is_disclosed():
 
 def test_retention_periods_match_the_code():
     from app.routers import web
-    from app.services import answer_cache, child_memory, fiqh_guard, retrieval
+    from app.services import answer_cache, child_memory, fiqh_guard, retention
 
     assert "**180 days**" in ENGLISH and "**180 يومًا**" in ARABIC
     assert "TOKEN_TTL_DAYS\", \"180\"" in (ROOT / "backend/app/db/init_db.py").read_text()
@@ -183,12 +188,27 @@ def test_retention_periods_match_the_code():
     assert "**21 days**" in ENGLISH and "**21 يومًا**" in ARABIC
     assert web._CLICK_RETENTION == "-7 days"
     assert "**7 days**" in ENGLISH and "**7 أيام**" in ARABIC
-    assert retrieval.RETRIEVAL_LOG_RETENTION_DAYS == 90
-    assert fiqh_guard._retention_days() == 90
-    assert ENGLISH.count("**90 days**") == 2 and ARABIC.count("**90 يومًا**") == 2
-    assert answer_cache._TTL_DAYS == 45
+    assert retention.DAYS["retrieval_log"] == retention.DAYS["query_rewrites"] == 90
+    assert retention.DAYS["llm_calls"] == retention.DAYS["sessions"] == 90
+    assert retention.DAYS["blocked_fiqh_log"] == fiqh_guard._retention_days() == 90
+    assert "**90 days**" in ENGLISH and "**90 يومًا**" in ARABIC
+    assert answer_cache._TTL_DAYS == retention.DAYS["answer_cache"] == 45
     assert "**45 days**" in ENGLISH and "**45 يومًا**" in ARABIC
     assert "**30 days**" in ENGLISH and "**30 يومًا**" in ARABIC
+    # Database backups on the VPS (/root/tg-backups) are kept 14 days.
+    assert "**14 days**" in ENGLISH and "**14 يومًا**" in ARABIC
+
+
+def test_install_attribution_is_disclosed():
+    """PR #25 records visits to tagged links; the policy says what and how long."""
+    en, ar = " ".join(ENGLISH.split()), " ".join(ARABIC.split())
+    for phrase in ("/go", "/ui/", "/l", "/p", "/seo", "/methodology", "ref or utm",
+                   "/64", "within 24 hours", "**7 days**", "daily counts with no IP",
+                   "Link-preview bots and prefetches are not recorded"):
+        assert phrase in en, phrase
+    for phrase in ("/methodology", "64 بتًا", "خلال 24 ساعة", "**7 أيام**",
+                   "أعداد يومية بلا عنوان IP", "معاينة الروابط"):
+        assert phrase in ar, phrase
 
 
 # ── Served where the app and Play already link ────────────────────────────

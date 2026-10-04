@@ -94,27 +94,28 @@ def detect_language(text: str) -> str:
     return "ar"
 
 
-def _family_names(db_path: Path) -> dict[str, tuple[str, ...]]:
-    """device_id → its children's names, longest first (read-only)."""
+def _family_names(db_path: Path) -> dict[str, tuple[tuple[int, str], ...]]:
+    """device_id → its children ((id, name), …) in profile order (read-only)."""
     conn = sqlite3.connect(f"file:{db_path}?mode=ro", uri=True)
     try:
-        rows = conn.execute("SELECT device_id, name FROM child_profiles").fetchall()
+        rows = conn.execute(
+            "SELECT id, device_id, name FROM child_profiles ORDER BY id").fetchall()
     finally:
         conn.close()
-    out: dict[str, set[str]] = {}
-    for device_id, name in rows:
+    out: dict[str, list[tuple[int, str]]] = {}
+    for cid, device_id, name in rows:
         name = (name or "").strip()
         if device_id and len(name) >= 2:
-            out.setdefault(device_id, set()).add(name)
-    return {d: tuple(sorted(n, key=len, reverse=True)) for d, n in out.items()}
+            out.setdefault(device_id, []).append((int(cid), name))
+    return {d: tuple(m) for d, m in out.items()}
 
 
-def _redact_family(text: str, names: tuple[str, ...]) -> str:
-    if not names:
+def _redact_family(text: str, members: tuple[tuple[int, str], ...]) -> str:
+    if not members:
         return text
     sys.path.insert(0, str(_ROOT / "backend"))
-    from app.services.privacy import redact_with_names
-    return redact_with_names(text, names)
+    from app.services.privacy import Family, redact_family
+    return redact_family(text, Family(members))
 
 
 def collect_raw_candidates(db_path: Path, suggested: set[str]) -> list[dict]:

@@ -571,10 +571,10 @@ async def get_proactive_tip(
         generated_text: Optional[str] = None
         if COACH_TIP_ENABLED:
             from app.services import child_memory
-            from app.services.privacy import names_for_device, redact_with_names
+            from app.services.privacy import family_for_device, redact_family
             prompt = _build_coach_prompt(
                 child_gender, age_group,
-                redact_with_names(recent_topic, names_for_device(device_id)),
+                redact_family(recent_topic, family_for_device(device_id), child_id),
                 child_memory.coach_facts(device_id, child_id, recent_topic),
             )
             try:
