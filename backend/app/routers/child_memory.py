@@ -15,7 +15,7 @@ from typing import Literal, Optional
 from fastapi import APIRouter, Depends, HTTPException, Query, Request
 from pydantic import BaseModel, Field
 
-from app.core.proof import require_device_proof, request_proven
+from app.core.proof import request_access, require_device_proof
 from app.db.init_db import get_conn
 from app.routers.children import _load_owned_child, _require_device_id
 from app.services import child_memory as cm
@@ -61,16 +61,18 @@ class MemorySettingsIn(BaseModel):
 
 
 def _settings(request: Request, device_id: str) -> dict:
-    proven = request_proven(request)
+    acc = request_access(request)
     return {
         "enabled": cm.memory_enabled(device_id),
         # Whether the server learns from THIS session's questions: the parent's
         # switch, a build with the memory screen (CHILD_MEMORY_MIN_BUILD), and a
         # session proven to hold the phone (§9.0).
-        "collecting": cm.collection_allowed(device_id, proven=proven),
+        "collecting": cm.collection_allowed(device_id, proven=acc.ok),
         # Whether this session may read, change or erase memory right now. When
-        # false, run the device-proof challenge (§9.0) before opening the screen.
-        "proven": proven,
+        # false: if `cooldown_until` is set, say when it opens (§9.0.1);
+        # otherwise run the device-proof challenge first.
+        "proven": acc.ok,
+        "cooldown_until": acc.available_at if acc.reason == "cooldown" else None,
     }
 
 

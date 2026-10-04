@@ -409,7 +409,8 @@ def test_memory_switch_off_keeps_facts_out_of_the_prompt(client, pipeline, monke
     client.post(f"/api/children/{cid}/memory", headers=_headers(h),
                 json={"category": "temperament", "fact": "طفلي يخاف من الظلام"})
     r = client.put("/api/children/memory/settings", headers=_headers(h), json={"enabled": False})
-    assert r.json() == {"enabled": False, "collecting": False, "proven": True}
+    assert r.json() == {"enabled": False, "collecting": False, "proven": True,
+                        "cooldown_until": None}
     done = _ask(client, h, "ابني يرفض النوم وحده، ماذا أفعل؟", child_id=cid)
     assert "طفلي يخاف من الظلام" not in _RecordingProvider.prompts[-1]
     assert done["metadata"]["memory_facts_used"] == 0

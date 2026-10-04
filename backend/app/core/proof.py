@@ -16,6 +16,11 @@ until they update. It is required once the device has ever proven — every
 device that has memory has, because nothing writes memory without a proof —
 and for every device once the forced-update floor reaches the build that can
 prove (device_proof.required_for_every_device).
+
+Both also refuse — `device_proof_cooldown`, with `available_at` — for 72 hours
+after the device's push token was replaced without a proven session vouching
+for it, even a session proven on the new token (device_proof, round 3).
+Switching memory off stays open throughout.
 """
 from __future__ import annotations
 
@@ -32,26 +37,52 @@ DEVICE_PROOF_REQUIRED = {
     "support_email": SUPPORT_EMAIL,
 }
 
+DEVICE_PROOF_COOLDOWN = {
+    "code": "device_proof_cooldown",
+    "message": "فُتح حسابك مؤخرًا على جهاز جديد، فأوقفنا هذه الخطوة 72 ساعة لحماية بيانات "
+               "أسرتك. يمكنك إيقاف الذاكرة في أي وقت، وللمساعدة راسلنا على "
+               f"{SUPPORT_EMAIL}.",
+    "message_en": "Your account was recently opened on a new device, so this step is "
+                  "paused for 72 hours to protect your family's data. You can turn "
+                  f"memory off at any time. For help, email {SUPPORT_EMAIL}.",
+    "support_email": SUPPORT_EMAIL,
+}
 
-def request_proven(request: Request) -> bool:
-    """Is the session behind this request proven? Cached on the request."""
-    cached = getattr(request.state, "device_proven", None)
+
+def request_access(request: Request) -> device_proof.Access:
+    """May the session behind this request use the protected routes? Cached."""
+    cached = getattr(request.state, "device_access", None)
     if cached is not None:
         return cached
-    proven = device_proof.is_proven(getattr(request.state, "device_id", None),
-                                    getattr(request.state, "token", None))
-    request.state.device_proven = proven
-    return proven
+    acc = device_proof.access(getattr(request.state, "device_id", None),
+                              getattr(request.state, "token", None))
+    request.state.device_access = acc
+    return acc
+
+
+def request_proven(request: Request) -> bool:
+    """Proven on the current push token and not in a cooldown — the test for
+    every protected route, and for memory in answers and coach tips (F4)."""
+    return request_access(request).ok
+
+
+def _refuse(acc: device_proof.Access) -> HTTPException:
+    if acc.reason == "cooldown":
+        return HTTPException(status_code=403, detail={
+            **DEVICE_PROOF_COOLDOWN, "available_at": acc.available_at})
+    return HTTPException(status_code=403, detail=DEVICE_PROOF_REQUIRED)
 
 
 def require_device_proof(request: Request) -> None:
-    if not request_proven(request):
-        raise HTTPException(status_code=403, detail=DEVICE_PROOF_REQUIRED)
+    acc = request_access(request)
+    if not acc.ok:
+        raise _refuse(acc)
 
 
 def require_device_proof_once_enrolled(request: Request) -> None:
-    if request_proven(request):
+    acc = request_access(request)
+    if acc.ok:
         return
     device_id = getattr(request.state, "device_id", None)
     if device_proof.required_for_every_device() or device_proof.ever_proven(device_id):
-        raise HTTPException(status_code=403, detail=DEVICE_PROOF_REQUIRED)
+        raise _refuse(acc)

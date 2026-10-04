@@ -228,6 +228,37 @@ def remove_token_if_current(device_id: str, token: str) -> None:
         conn.close()
 
 
+def send_notification_to_token(token: str, title: str, body: str,
+                               data: Optional[dict[str, str]] = None,
+                               channel_id: str = DEFAULT_CHANNEL) -> dict:
+    """A visible notification to one specific FCM token — not the device's
+    current one. For the notice owed to the phone that just lost the account's
+    token (services/device_alerts.py). Not written to `push_sends`: it goes to
+    a different phone from the one the send log speaks for.
+
+    Returns {"ok": True, "sent": True}, {"ok": True, "sent": False, "reason":
+    "unregistered"}, or {"ok": False, "error": <exception type name>}."""
+    if not _ensure_app():
+        return {"ok": False, "error": "firebase_credentials_not_configured"}
+    message = messaging.Message(
+        notification=messaging.Notification(title=title, body=body),
+        data=data or {},
+        token=token,
+        android=messaging.AndroidConfig(
+            priority="high",
+            notification=messaging.AndroidNotification(channel_id=channel_id,
+                                                       sound="default"),
+        ),
+    )
+    try:
+        messaging.send(message, app=_app)
+        return {"ok": True, "sent": True}
+    except messaging.UnregisteredError:
+        return {"ok": True, "sent": False, "reason": "unregistered"}
+    except Exception as exc:  # noqa: BLE001
+        return {"ok": False, "error": type(exc).__name__}
+
+
 def send_data_message(token: str, data: dict[str, str], ttl_seconds: int) -> dict:
     """A silent data-only message to one FCM registration token.
 

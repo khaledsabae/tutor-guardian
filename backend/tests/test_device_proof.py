@@ -153,7 +153,9 @@ def test_recovery_after_an_unproven_mint(client):
 def test_a_phone_transfer(client):
     """The device id comes back from a backup on a new phone; the token does
     not. The new phone proves on its own push token, and the old phone's proof
-    ends with the push token it was made against."""
+    ends with the push token it was made against. A new phone looks exactly
+    like a takeover (round 3), so the protected routes wait out the cooldown —
+    memory can be switched off at once."""
     old_phone = _mint(client, "dev-move")
     prove(client, old_phone, push_token="fcm-old-phone")
     cid = _child(client, old_phone)
@@ -170,6 +172,15 @@ def test_a_phone_transfer(client):
         code = inbox.last_for("fcm-new-phone")
         assert not [m for t, m in inbox.messages if t == "fcm-old-phone"]
         assert complete(client, new_phone, code["challenge_id"], code["code"]).status_code == 200
+    r = _memory(client, new_phone, cid)
+    assert r.status_code == 403 and r.json()["detail"]["code"] == "device_proof_cooldown"
+    assert client.put("/api/children/memory/settings", json={"enabled": False},
+                      headers=new_phone).status_code == 200
+    conn = get_conn()
+    conn.execute("UPDATE push_tokens SET token_since = datetime('now', '-73 hours') "
+                 "WHERE device_id = 'dev-move'")
+    conn.commit()
+    conn.close()
     facts = _memory(client, new_phone, cid).json()["facts"]
     assert [f["fact"] for f in facts] == ["طفلي يخاف من الظلام"]
 
@@ -337,7 +348,8 @@ def test_no_push_token_says_so_with_the_support_path(client):
     assert d["code"] == "no_push_token" and d["support_email"] == "support@alsaba.cloud"
     assert "support@alsaba.cloud" in d["message"] and "support@alsaba.cloud" in d["message_en"]
     assert client.get("/api/device-proof", headers=h).json() == {
-        "proven": False, "proven_at": None, "push_registered": False}
+        "proven": False, "proven_at": None, "push_registered": False,
+        "cooldown_until": None}
 
 
 def test_a_dead_push_token_is_forgotten_and_reported(client):

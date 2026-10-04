@@ -291,7 +291,7 @@ the parent declined notifications.**
 
 ```http
 GET /api/device-proof
-→ 200 {"proven": false, "proven_at": null, "push_registered": true}
+→ 200 {"proven": false, "proven_at": null, "push_registered": true, "cooldown_until": null}
 
 POST /api/device-proof/start
 → 202 {"challenge_id": 41, "expires_in": 300}
@@ -319,6 +319,21 @@ POST /api/device-proof/complete
   without memory until the parent opens a protected screen.
 - The code lives **5 minutes**, works **once**, and only while the device's push
   token is still the one it was sent to.
+- **Push-token cooldown.** When this device's push token is replaced by a
+  session that had not proven the old one — a new phone, a reinstall, or
+  someone else — every route that needs a proof answers
+  `403 {"detail": {"code": "device_proof_cooldown", "message", "message_en",
+  "support_email", "available_at": "2026-10-07 18:30:00"}}` for **72 hours**
+  (`available_at` is UTC), even after this session proves. Show the message with
+  the time; do not re-run the challenge. Switching memory **off** still works.
+  `GET /api/device-proof` and the memory settings carry `cooldown_until`. The
+  install that proved the old token can change it freely (`onTokenRefresh`):
+  register the new token with the **same, proven session** and nothing pauses.
+- **The previous phone is told.** It gets one notification (safety channel,
+  at most one a day, 09:00–21:00 its time), Arabic and English, no account data:
+  FCM `data` `{"type": "account_alert"}`. Tapping it just opens the app — the
+  launch re-registers that phone's own token, which voids the newcomer's proof
+  and is accepted at once if that phone had proven it.
 
 | HTTP | `detail.code` | When — what the app does |
 |---|---|---|
@@ -326,6 +341,7 @@ POST /api/device-proof/complete
 | 503 | `push_unavailable` | the server could not send — try again shortly; else show the message |
 | 429 | `proof_rate_limited` | more than 5 starts per session (20 per device) in an hour |
 | 409/404 | `proof_failed` | `detail.reason`: `wrong_code` · `expired` · `used` · `other_session` · `push_token_changed` · `not_found` — start again once |
+| 403 (protected routes) | `device_proof_cooldown` | the push token changed without a proven session — wait until `available_at` |
 
 ### 9.1 Send the child with every question
 
@@ -346,15 +362,16 @@ small chip («مخصّص لأحمد» / "Personalised for Ahmad") that opens §9
 
 ```http
 GET /api/children/memory/settings
-→ 200 {"enabled": true, "collecting": false, "proven": false}
+→ 200 {"enabled": true, "collecting": false, "proven": false, "cooldown_until": null}
 
 PUT /api/children/memory/settings
 {"enabled": false}
-→ 200 {"enabled": false, "collecting": false, "proven": false}
+→ 200 {"enabled": false, "collecting": false, "proven": false, "cooldown_until": null}
 ```
 No proof is needed to read the settings or to switch memory **off**; switching
 it **on** needs a proven session (§9.0). `proven` says whether this session may
-open the memory screen now — if `false`, run §9.0.1 first.
+open the memory screen now. If it is `false`: when `cooldown_until` is set, say
+when the screen opens (§9.0.1, push-token cooldown); otherwise run §9.0.1 first.
 - `enabled` — the parent's switch (default `true`). Off = nothing new is
   learned, no follow-up is opened, and remembered facts stop reaching the
   assistant. **Off deletes nothing** — deletion is §9.3/§9.6 — and **deleting

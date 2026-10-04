@@ -8,7 +8,7 @@ AuthMiddleware guarantees the device_id in request.state.device_id.
 from fastapi import APIRouter, Request
 
 from app.db.init_db import get_conn
-from app.services import device_twins
+from app.services import device_alerts, device_proof, device_twins
 
 router = APIRouter(tags=["push"])
 
@@ -36,7 +36,8 @@ def register_push_token(request: Request, payload: dict) -> dict:
 
     conn = get_conn()
     try:
-        _upsert_push_token(conn, device_id, token, platform, app_version, build_number)
+        _upsert_push_token(conn, device_id, token, platform, app_version, build_number,
+                           session_token=getattr(request.state, "token", None))
     finally:
         conn.close()
 
@@ -60,22 +61,52 @@ def register_push_token(request: Request, payload: dict) -> dict:
     return {"ok": True}
 
 
-def _upsert_push_token(conn, device_id, token, platform, app_version, build_number) -> None:
-    conn.execute(
-        """
-        INSERT INTO push_tokens (device_id, token, platform, updated_at,
-                                 app_version, build_number)
-        VALUES (?, ?, ?, datetime('now'), ?, ?)
-        ON CONFLICT(device_id) DO UPDATE SET
-            token = excluded.token,
-            platform = excluded.platform,
-            updated_at = excluded.updated_at,
-            app_version = COALESCE(excluded.app_version, push_tokens.app_version),
-            build_number = COALESCE(excluded.build_number, push_tokens.build_number)
-        """,
-        (device_id, token, platform, app_version, build_number),
-    )
-    conn.commit()
+def _upsert_push_token(conn, device_id, token, platform, app_version, build_number,
+                       session_token=None) -> None:
+    """Store the token. A *change* of token is the one event the device proof
+    cannot see by itself (PR #26 review, round 3): a session can register any
+    token for its device, so before SESSION_MINT_ENFORCE someone who knows a
+    device id could point it at a phone they hold and pass the challenge there.
+
+    So a change records when the new token became current (`token_since`) and
+    whether a session with a clean proof vouched for it (`token_vouched`,
+    services/device_proof.vouches_for). An unvouched change pauses the
+    protected routes for 72 hours and owes the previous token a notice
+    (services/device_alerts.py). Re-registering the same token — every launch
+    does — changes neither. A first token is not a change.
+    """
+    conn.execute("BEGIN IMMEDIATE")
+    try:
+        row = conn.execute("SELECT token FROM push_tokens WHERE device_id = ?",
+                           (device_id,)).fetchone()
+        old = row["token"] if row is not None and row["token"] else None
+        changed = old is not None and old != token
+        vouched = (not changed) or device_proof.vouches_for(
+            conn, device_id, session_token, old, token)
+        conn.execute(
+            """
+            INSERT INTO push_tokens (device_id, token, platform, updated_at,
+                                     app_version, build_number, token_since, token_vouched)
+            VALUES (?, ?, ?, datetime('now'), ?, ?, datetime('now'), ?)
+            ON CONFLICT(device_id) DO UPDATE SET
+                token = excluded.token,
+                platform = excluded.platform,
+                updated_at = excluded.updated_at,
+                app_version = COALESCE(excluded.app_version, push_tokens.app_version),
+                build_number = COALESCE(excluded.build_number, push_tokens.build_number),
+                token_since = CASE WHEN push_tokens.token = excluded.token
+                                   THEN push_tokens.token_since ELSE excluded.token_since END,
+                token_vouched = CASE WHEN push_tokens.token = excluded.token
+                                     THEN push_tokens.token_vouched ELSE excluded.token_vouched END
+            """,
+            (device_id, token, platform, app_version, build_number, 1 if vouched else 0),
+        )
+        if changed and not vouched:
+            device_alerts.queue(conn, device_id, old)
+        conn.commit()
+    except Exception:
+        conn.rollback()
+        raise
 
 
 @router.get("/push/token")

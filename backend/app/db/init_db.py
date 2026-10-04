@@ -1177,11 +1177,14 @@ CREATE INDEX IF NOT EXISTS ix_device_proof_challenges_created
 
 -- One row per session that completed a challenge. It is proven while the
 -- device's current push token is still the one the code was delivered to.
+-- `clean` = the device was not in a push-token cooldown when it proved: only
+-- a clean proof can vouch for a later push-token change.
 CREATE TABLE IF NOT EXISTS device_proof_sessions (
     token_hash       TEXT PRIMARY KEY,
     device_id        TEXT NOT NULL,
     push_token_hash  TEXT NOT NULL,
-    proven_at        TEXT NOT NULL DEFAULT (datetime('now'))
+    proven_at        TEXT NOT NULL DEFAULT (datetime('now')),
+    clean            INTEGER NOT NULL DEFAULT 0
 );
 CREATE INDEX IF NOT EXISTS ix_device_proof_sessions_device
     ON device_proof_sessions (device_id);
@@ -1194,6 +1197,16 @@ CREATE TABLE IF NOT EXISTS device_proofs (
     proven_at        TEXT NOT NULL DEFAULT (datetime('now')),
     first_proven_at  TEXT NOT NULL DEFAULT (datetime('now'))
 );
+
+-- The notice owed to the phone that just lost the account's push token
+-- (services/device_alerts.py). `old_token` is that phone's FCM token, kept only
+-- until the notice is sent; `sent_at` enforces one notice a day.
+CREATE TABLE IF NOT EXISTS device_alerts (
+    device_id   TEXT PRIMARY KEY,
+    old_token   TEXT,
+    queued_at   TEXT,
+    sent_at     TEXT
+);
 """
 
 
@@ -1205,6 +1218,16 @@ def _ensure_child_memory_tables(conn: sqlite3.Connection) -> None:
     """
     conn.executescript(_CREATE_CHILD_MEMORY)
     conn.executescript(_CREATE_DEVICE_PROOF)
+    _ensure_column(conn, table="device_proof_sessions", column="clean",
+                   ddl="ALTER TABLE device_proof_sessions ADD COLUMN clean "
+                       "INTEGER NOT NULL DEFAULT 0")
+    # When the device's current push token became current, and whether that
+    # change was vouched for by a proven session (services/device_proof.py:
+    # an unvouched change pauses the protected routes for 72 hours).
+    _ensure_column(conn, table="push_tokens", column="token_since",
+                   ddl="ALTER TABLE push_tokens ADD COLUMN token_since TEXT")
+    _ensure_column(conn, table="push_tokens", column="token_vouched",
+                   ddl="ALTER TABLE push_tokens ADD COLUMN token_vouched INTEGER")
     # Columns that arrived after the first v30 shape (PR #26 review).
     _ensure_column(conn, table="child_memory_settings", column="generation",
                    ddl="ALTER TABLE child_memory_settings ADD COLUMN generation "

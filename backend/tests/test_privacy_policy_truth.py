@@ -112,6 +112,7 @@ TABLE_DISCLOSURE = {
     "device_proofs": "Phone verification",
     "device_proof_sessions": "Phone verification",
     "device_proof_challenges": "Phone-verification codes",
+    "device_alerts": "previous phone's notification token",
     "referral_codes": "invite code",
     "referrals": "which phone invited which",
     "referral_clicks": "browser's user agent",
@@ -199,6 +200,11 @@ def test_retention_periods_match_the_code():
     assert "**180 days**" in ENGLISH and "**180 يومًا**" in ARABIC
     assert "TOKEN_TTL_DAYS\", \"180\"" in (ROOT / "backend/app/db/init_db.py").read_text()
     assert child_memory.FOLLOWUP_EXPIRE_DAYS == 21
+    from app.services import device_alerts, device_proof
+    assert device_proof.COOLDOWN_HOURS == 72
+    assert "**72 hours**" in ENGLISH and "**72 ساعة**" in ARABIC
+    assert device_alerts.GIVE_UP.days == 3
+    assert "**3 days** at most" in " ".join(ENGLISH.split()) and "**3 أيام**" in ARABIC
     assert "**21 days**" in ENGLISH and "**21 يومًا**" in ARABIC
     # Raw invite/campaign visits (IP + user agent): folded into daily counts
     # after a week by PR #25's compaction, run daily from cron_push_triggers.

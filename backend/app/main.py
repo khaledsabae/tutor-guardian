@@ -28,7 +28,7 @@ from app.routers import (
     web, stats, daily_routine, value_tracking, habit_templates, child_mode, child_mode_web, sync,
     insights, methodology, seo, tafsir, quranic_linguistics, support, child_memory, device_proof,
 )
-from app.services import child_token, followup_push, mission_digest
+from app.services import child_token, device_alerts, followup_push, mission_digest
 from app.services.push_sender import send_to_device
 from app import curriculum_loader as curriculum
 
@@ -51,6 +51,9 @@ _LOCAL_HOUR_JOBS = (
     # «جرّبت النصيحة؟» at 19:00 the family's time — every time zone, never at
     # night (PR #26 review F7: the 17 UTC cron could not reach UTC+4…+8).
     ("Follow-up push", followup_push.run_due_followups),
+    # The notice to a phone that lost the account's push token (round 3):
+    # daytime on the family's clock, at most one a day.
+    ("Account alert", device_alerts.run_due_alerts),
 )
 
 

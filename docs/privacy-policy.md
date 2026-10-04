@@ -49,6 +49,9 @@
   الإشعارات في رسالة صامتة لا تظهر لك. وبعد أول تحقق يُطلب كذلك قبل حذف طفل أو تصفير
   تقدّمه. نحفظ وقت التحقق للهاتف ولكل جلسة، ونسخة مجزّأة (hash) من رمز الإشعارات الذي
   استُعمل — لا الرمز المرسل نفسه. الغرض: ألّا يصل إلى بيانات أسرتك من يعرف معرّف هاتفك فقط.
+  وإذا تغيّر رمز الإشعارات إلى هاتف لم يُتحقَّق منه، نوقف عرض الذاكرة وتعديلها وحذفها وحذف
+  الحساب وحذف الأطفال **72 ساعة**، ونرسل إلى الهاتف السابق تنبيهًا عامًا (بلا أي بيانات من
+  حسابك) ليفتح التطبيق إن لم يكن التغيير منه. ولا نحتفظ برمز الهاتف السابق إلا حتى يُرسَل التنبيه.
 - **الدعوات ومصدر التثبيت:** رمز دعوتك، وأي هاتف دعا أي هاتف. وعند فتح رابط عليه رمز
   دعوة أو وسم حملة (ref أو utm) من صفحاتنا (/ و/go و/ui/ و/l و/p و/seo و/methodology)
   نسجّل **عنوان IP** (عنوان IPv6 مختصرًا إلى أول 64 بتًا) و**نوع المتصفح**، وقد نطابق
@@ -113,6 +116,7 @@
 - المتابعة التي لا تجيب عنها: تُغلق تلقائيًا بعد **21 يومًا** من موعدها.
 - رموز QR لوضع المراهق: تُحذف بعد انتهاء صلاحيتها (دقائق).
 - رموز التحقق من الهاتف: تنتهي صلاحيتها بعد **5 دقائق**، وتُحذف خلال **يوم**.
+- رمز الإشعارات للهاتف السابق (لتنبيه الأمان): حتى يُرسَل التنبيه، و**3 أيام** على الأكثر.
 - عنوان IP ونوع المتصفح عند فتح رابط دعوة أو حملة: **7 أيام**، ثم أعداد يومية بلا عنوان.
 - سجلّ البحث، وكلمات البحث المستخلصة، وسجلّ نداءات النموذج، وسجلّ الاستعمال (كلها دون
   معرّف لهاتفك): **90 يومًا**. وما سُجّل منها قبل استبدال الأسماء يُحذف أو يُعاد إخفاؤه
@@ -218,7 +222,11 @@ to your phone's random identifier:
   or resetting its progress needs it too. We keep when the phone and each session
   were verified, and a hash of the notification token used — never the code
   itself. Purpose: someone who only knows your phone's identifier cannot reach
-  your family's data.
+  your family's data. If the notification token changes to a phone that has not
+  been verified, we pause showing, changing or erasing memory, account deletion
+  and child deletion for **72 hours**, and send the previous phone a generic
+  notice (no data from your account) to open the app if the change was not
+  theirs. We keep the previous phone's token only until that notice is sent.
 - **Invites and install attribution:** your invite code and which phone invited
   which. When a link carrying an invite code or a campaign tag (ref or utm) is
   opened on one of our pages (/, /go, /ui/, /l, /p, /seo, /methodology) we record
@@ -300,6 +308,8 @@ and backup files you export to a place you choose.
 - Teen QR codes: deleted once they expire (minutes).
 - Phone-verification codes: expire after **5 minutes** and are deleted within
   **a day**.
+- The previous phone's notification token (for the security notice): until the
+  notice is sent, **3 days** at most.
 - IP address and browser type from an invite or campaign link: **7 days**, then
   daily counts with no address.
 - Search log, derived search keywords, AI call log and usage log (none of them
