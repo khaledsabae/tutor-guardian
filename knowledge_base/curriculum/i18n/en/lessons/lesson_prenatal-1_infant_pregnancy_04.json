@@ -7,13 +7,13 @@
   "unit_ids": [
     "c88f868b-4f40-45eb-b357-f8867b2c327d"
   ],
-  "summary": "Crying is an infant's primary language for expressing hunger, colic, wetness, or sensory overload. Soothing is mastered through the 5 S's: safe swaddling, side/stomach holding position (in your arms only, never for sleep), white noise (mimicking womb sounds), gentle rhythmic swinging, and sucking. For safe sleep and strict SIDS prevention: infants must always sleep flat on their back on a firm mattress in their own crib near the parents, free of pillows, bumpers, or loose blankets.",
-  "try_this": "This week: Practice proper swaddling technique (securing arms comfortably while leaving hips loose and flexible to prevent dysplasia), and set up a consistent white noise machine or soft recitation in the nursery.",
+  "summary": "Crying is the baby's only language for expressing their needs: hunger, colic and gas, a wet nappy, or overstimulation and heat. To soothe the baby, use the well-known five-step technique: safe swaddling, holding the baby on their side or stomach in your arms (for soothing only, never for sleep), white noise (mimicking the sound of the womb), steady rocking, and sucking. For safe sleep: the baby must always sleep on their back in a separate cot beside the parents, with no pillows or soft toys, for strict protection against sudden infant death syndrome.",
+  "try_this": "This week: practise correct swaddling together (securing the arms while leaving the baby's hips and legs completely free, to avoid hip dislocation), and prepare a source of gentle white noise or soft, steady Qur'an recitation in the bedroom.",
   "order": 4,
   "estimated_minutes": 15,
   "reflection_prompts": [
-    "How will you respond calmly when your baby cries after being fed and cleaned?",
-    "Does your baby's sleep environment meet the AAP Safe Sleep guidelines (bare crib, firm mattress)?"
+    "What will you do if the baby keeps crying after you have checked they are clean and fed?",
+    "Does your baby's cot meet safe sleep standards (free of heavy blankets and pillows)?"
   ],
   "warning_flags": [
     "safe_sleep_sids_prevention"

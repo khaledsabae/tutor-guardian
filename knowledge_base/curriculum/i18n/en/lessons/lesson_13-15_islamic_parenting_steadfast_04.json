@@ -5,7 +5,7 @@
   "age_group": "13-15",
   "domain": "aqeedah",
   "unit_ids": [],
-  "summary": "External supervision ends when you are absent from him. Instill in him the watchfulness of Allah (ihsan: that you worship Allah as if you see Him), for it is the conscience that preserves him when the eyes of people are not upon him. This is the highest fruit of tarbiyah.",
+  "summary": "External supervision ends when you are absent from him. Instill in him the watchfulness of Allah (ihsan: «that you worship Allah as if you see Him» — Sahih al-Bukhari 50), for it is the conscience that preserves him when the eyes of people are not upon him. This is the highest fruit of tarbiyah.",
   "try_this": "This week: Connect a situation your teenager faced with the meaning of 'Allah sees me,' without lengthy preaching.",
   "order": 4,
   "estimated_minutes": 9,
@@ -17,7 +17,7 @@
   "needs_professional_followup": false,
   "is_published": true,
   "version": "1.0.0",
-  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+  "approved_by": null,
   "language": "en",
   "source_language": "ar",
   "translation": {
@@ -29,24 +29,9 @@
       "quoted_arabic": true,
       "reviewer_model": true
     },
-    "review_verdict": "clean",
+    "review_verdict": "pending",
     "review_defects": [],
-    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
-    "revalidated_at": "2026-10-04T11:26:06+00:00",
-    "auto_review": {
-      "reviewers": [
-        "deepseek-v4-pro",
-        "glm-5.2"
-      ],
-      "fixer": "mistral-large-3:675b",
-      "rounds": 2,
-      "prompt_version": "dfa8a5f39718",
-      "content_sha256": "7293556fb1e1fd7d4ac9008481d76084c032a5c06e398d6d2cf861be5dcaf6b7",
-      "reviewed_at": "2026-10-04T11:26:06+00:00",
-      "residual_low": [],
-      "adjudicated": [],
-      "tool": "ops/tools/review_en_parity.py",
-      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
-    }
+    "approved_by": null,
+    "revalidated_at": "2026-10-04T11:26:06+00:00"
   }
 }

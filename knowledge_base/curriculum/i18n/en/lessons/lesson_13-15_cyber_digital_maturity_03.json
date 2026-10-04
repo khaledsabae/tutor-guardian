@@ -15,8 +15,8 @@
   "order": 3,
   "estimated_minutes": 30,
   "reflection_prompts": [
-    "Did you adhere to the agreement?",
-    "Which alternative did you enjoy the most?"
+    "Did he stick to the agreement?",
+    "Which alternative did he enjoy the most?"
   ],
   "warning_flags": [
     "لعب >4 ساعات يومياً",

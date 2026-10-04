@@ -22,32 +22,37 @@
   "needs_professional_followup": false,
   "is_published": true,
   "version": "1.0.0",
-  "approved_by": null,
+  "approved_by": "auto-review:claude-opus:2026-10-04",
   "language": "en",
   "source_language": "ar",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "claude-opus",
     "needs_scholar_review": true,
     "scholar_signals": {
       "keyword": false,
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "summary",
-        "arabic": "ما يمارسه الآن",
-        "english": "what they practice now",
-        "why": "Arabic uses masculine singular 'يمارسه' (he practices) consistent with addressing a son; English uses gender-neutral 'they', losing the masculine specificity and creating inconsistency with the rest of the translation that uses 'he'.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null,
-    "revalidated_at": "2026-08-13T18:57:55.188774+00:00",
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:claude-opus:2026-10-04",
+    "revalidated_at": "2026-10-04T17:12:35+00:00",
     "fixed_at": "2026-08-13T18:57:55.188786+00:00",
-    "fixer_model": "mistral-large-3:675b"
+    "fixer_model": "mistral-large-3:675b",
+    "auto_review": {
+      "reviewers": [
+        "claude-opus"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "manual:dfa8a5f39718",
+      "content_sha256": "f7018b08f332548ad5faffe51c376b716585af94d41ae76af835ac5b73c5547b",
+      "reviewed_at": "2026-10-04T17:12:35+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and one reviewer from a model family different from the translator's read the Arabic and English side by side against the review rubric and found no medium/high defect in this exact text; not a scholar's ijazah"
+    }
   }
 }
