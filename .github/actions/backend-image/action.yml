@@ -105,5 +105,7 @@ runs:
         args=()
         for n in "${names[@]}"; do args+=(-t "$IMAGE:$n"); done
         docker buildx imagetools create "${args[@]}" "$IMAGE@$DIGEST"
-        docker buildx imagetools inspect "$IMAGE:${names[0]}" | head -4
+        # sed, not head: head closes the pipe early, and under pipefail the
+        # writer's SIGPIPE fails the step after the tags already exist.
+        docker buildx imagetools inspect "$IMAGE:${names[0]}" | sed -n '1,4p'
         echo "Published \`$IMAGE@$DIGEST\` as: ${names[*]}" >> "$GITHUB_STEP_SUMMARY"
