@@ -232,6 +232,15 @@ are additive; older builds keep working and simply never call them.
 ### 9.0 Rules the client must follow
 
 - **Auth:** `Authorization: Bearer <token>` (§1). Wrong device → `404`.
+- **Proven token required** for every route in §9.2–§9.4 and §9.6, and for §10.
+  A token is *proven* when it was minted with proof of this device: the device's
+  first session, or `POST /api/chat/sessions` sent with
+  `Authorization: Bearer <the current or last token>` (what `TgClient.createSession`
+  already does — builds ≥ 106). Otherwise these routes answer
+  `403 {"detail": {"code": "proof_required", "message": "…"}}`. **Client flow:** on
+  `proof_required`, call `createSession()` once (it sends the current token as
+  proof), store the new token, retry the request once. Tokens from before this
+  change also upgrade this way. The weekly plan (§9.5) does not need it.
 - **Branchable errors** carry a stable code:
   `{"detail": {"code": "fact_too_long", "message": "<Arabic message to show>"}}`.
   Malformed bodies (wrong type, unknown enum value) get FastAPI's standard
@@ -242,9 +251,15 @@ are additive; older builds keep working and simply never call them.
   in a fact, the server replaces it. The app **may** swap the placeholder for
   the child's name when rendering (on the device only), e.g. «طفلي يخاف من
   الظلام» → «أحمد يخاف من الظلام». Never send the swapped text back unedited.
-- **What is never remembered** (say so in the screen's footer): medication
-  names, doses, test results, doctors or hospitals; any disclosure about
-  self-harm, abuse or sexual matters; anything about the parents' private life.
+- **What is never remembered** (say so in the screen's footer): medicines —
+  names, doses, prescriptions — test results, doctors or hospitals; anything
+  about self-harm, suicide, abuse, sexual matters or drugs; anything about the
+  parents' private life. This holds for every category, every follow-up strategy
+  and every note — a parent-typed fact like that is refused with `422 sensitive`.
+  A question that names a *second* child of the family is not learned from.
+- **Placeholders:** one child → «طفلي»; several → the question's child is «طفلي»
+  and siblings «الطفل أ», «الطفل ب»… by profile order. A fact may therefore
+  mention «الطفل ب»: render it with that sibling's name on the device.
 - **When the server learns:** only while the parent's switch is on **and** the
   device reports a build ≥ the server's `CHILD_MEMORY_MIN_BUILD` (the build
   number the app already sends on every launch to `POST /api/push/register`
@@ -280,7 +295,8 @@ PUT /api/children/memory/settings
 ```
 - `enabled` — the parent's switch (default `true`). Off = nothing new is
   learned, no follow-up is opened, and remembered facts stop reaching the
-  assistant. **Off deletes nothing** — deletion is §9.3/§9.6.
+  assistant. **Off deletes nothing** — deletion is §9.3/§9.6 — and **deleting
+  keeps the switch as it was** (off stays off).
 - `collecting` — `enabled` AND this build is allowed to learn (§9.0).
 
 ### 9.3 Facts — what the assistant knows about a child
@@ -359,7 +375,9 @@ Deleting the child profile (`DELETE /api/children/{id}`) removes all of it too.
 | 404 | `fact_not_found` | fact id not on this child |
 | 422 | `fact` | empty after cleaning, or contains a link/phone/e-mail |
 | 422 | `fact_too_long` | > 160 characters |
+| 422 | `sensitive` | something memory never keeps (medicine, self-harm, abuse, sexual, drugs) |
 | 422 | `category` / `status` | value outside the enums above |
+| 403 | `proof_required` | token not proven — re-mint (§9.0) and retry |
 | 422 | `empty_patch` | PATCH with no field |
 
 ### 9.4 Follow-ups — «جرّبت النصيحة؟ نفعت؟»
@@ -391,10 +409,10 @@ topic).
 
 | Route | Returns |
 |---|---|
-| `GET /api/children/followups/due?limit=10` | `{"followups": [ … ]}` — pending and due now, every child, oldest first (`limit` 1–20). Drive the Home card from this. |
+| `GET /api/children/followups/due?limit=10&tz_offset_minutes=180` | `{"followups": [ … ]}` — pending and due now, every child, oldest first (`limit` 1–20). Drive the Home card from this. **Send `tz_offset_minutes`** (the device's UTC offset): the follow-up push only goes out during the family's daytime, and a device whose offset was never sent gets no push. |
 | `GET /api/children/followups/{id}` | `{"followup": {…}}` in **any** status — what the deep link opens. |
 | `GET /api/children/{child_id}/followups?status=pending` | `{"child_id": 12, "followups": [ … ]}`; `status` ∈ `pending` (default), `answered`, `dismissed`, `expired`, `all`. |
-| `POST /api/children/followups/{id}/answer` | body `{"outcome": "didnt_work", "note": "optional, ≤ 300 chars"}` → `{"followup": {…answered…}, "fact": {Fact}}` |
+| `POST /api/children/followups/{id}/answer` | body `{"outcome": "didnt_work", "note": "optional, ≤ 300 chars"}` → `{"followup": {…answered…}, "fact": {Fact}, "note_dropped": false}` — `note_dropped: true` when the note was something memory never keeps (it was discarded; tell the parent gently). Answering the same strategy again updates the outcome fact (the latest result wins). |
 | `POST /api/children/followups/{id}/dismiss` | `{"followup": {…dismissed…}}` |
 
 Answering stores the result as an `outcome` fact, e.g.
@@ -413,9 +431,13 @@ four buttons — نجحت / Worked · نجحت جزئيًا / Partly · لم ت�
 عن هذا» / "Don't ask about this" (= dismiss).
 
 **Push.** One evening run (17:00 UTC). A device gets at most one follow-up push
-per 7 days, never the same follow-up twice, nothing while the global push cap
-applies, and nothing if the parent switched memory off. Only devices whose
-build is ≥ `CHILD_MEMORY_MIN_BUILD` receive it. FCM `data` (all strings):
+per 7 days, never the same follow-up twice, nothing older than 21 days past due,
+nothing while the global push cap applies, nothing if the parent switched memory
+off, and only when it is 09:00–21:00 on the device (from `tz_offset_minutes`;
+unknown offset → no push). Only devices whose build is ≥ `CHILD_MEMORY_MIN_BUILD`
+receive it. The text is **generic** (no name, no strategy) and the notification is
+**private** on the lock screen; the app shows the strategy once opened. FCM `data`
+(all strings):
 ```json
 {"type": "followup_due", "link": "/followup/7", "followup_id": "7", "child_id": "12"}
 ```
@@ -432,7 +454,8 @@ If it is no longer `pending`, show its result instead of the buttons.
 Query: `lang` (`en` → English; anything else, or absent → Arabic; the
 `Accept-Language` header is used when `lang` is absent) and `tz_offset_minutes`
 (the device's UTC offset, e.g. `180` for Riyadh — the week is the parent's local
-ISO week, Monday to Sunday).
+ISO week, Monday to Sunday; also recorded for the follow-up push's quiet hours).
+This route does not require a proven token.
 
 ```json
 {
@@ -486,10 +509,10 @@ ISO week, Monday to Sunday).
 
 ### 9.6 Delete-all for memory — `DELETE /api/privacy/memory`
 
-Forgets everything about **every** child of this device (facts, follow-ups,
-weekly plans and the memory switch):
+Forgets everything about **every** child of this device (facts, follow-ups and
+weekly plans). The memory switch keeps its setting. Requires a proven token.
 ```json
-→ 200 {"deleted": {"child_facts": 12, "followups": 3, "weekly_plans": 4, "child_memory_settings": 1},
+→ 200 {"deleted": {"child_facts": 12, "followups": 3, "weekly_plans": 4},
        "deleted_at": "2026-10-04T18:30:00+00:00"}
 ```
 
@@ -532,7 +555,11 @@ Authorization: Bearer <token>
   stored `device_id`), generate a **new** `device_id`, and start over with
   `POST /api/chat/sessions`. Any further call with the old token gets `401`.
 - Errors: `401` no/invalid token · `400 {"detail": {"code": "confirm_required", …}}`
-  when `confirm=true` is missing.
+  when `confirm=true` is missing · `403 {"detail": {"code": "proof_required", …}}`
+  for a token not proven on this device (§9.0: re-mint, retry once).
+- **Child-mode tokens are opaque.** Since this change they no longer contain the
+  parent's device id; never decode them on the client (old ones keep working until
+  they expire).
 - Not affected: aggregate telemetry that carries no device identifier and so
   cannot be linked back to the account.
 - **Public pages (no auth):** the privacy policy stays at
