@@ -423,30 +423,34 @@ def collect(kinds: list[str]) -> list[Item]:
 #  Stamp — read / write the record in the place each content type keeps it
 # ═════════════════════════════════════════════════════════════════════════
 
-_STAMP_RE = re.compile(
-    rf"^{STAMP_PREFIX}:(?P<a>[^+:\s]+(?::[^+:\s]+)?)\+(?P<b>[^+\s]+?):(?P<d>\d{{4}}-\d{{2}}-\d{{2}})$")
+_STAMP_BODY = re.compile(r"^(?P<r>\S+):(?P<d>\d{4}-\d{2}-\d{2})$")
 
 
-def stamp_value(reviewers: tuple[str, str], on: str) -> str:
-    return f"{STAMP_PREFIX}:{reviewers[0]}+{reviewers[1]}:{on}"
+def stamp_value(reviewers: tuple[str, ...], on: str) -> str:
+    return f"{STAMP_PREFIX}:{'+'.join(reviewers)}:{on}"
 
 
 def parse_stamp(value: Any) -> dict | None:
     """'auto-review:deepseek-v4-pro+glm-5.2:2026-10-04' → {reviewers, date}; غير ذلك None.
 
-    أسماء النماذج قد تحمل وسمًا بنقطتين (mistral-large-3:675b)، فالتاريخ يُقرأ من
-    الذيل لا بالتقسيم الساذج على ':'.
+    مراجعٌ واحد مقبول أيضًا ('auto-review:claude-opus:2026-10-04') — هو ختم ما
+    راجعه Claude وحده حين أغلق السقف الأسبوعي نماذج Ollama؛ اسمه في القيمة نفسها
+    ليُميَّز. أسماء النماذج قد تحمل وسمًا بنقطتين (mistral-large-3:675b)، فالتاريخ
+    يُقرأ من الذيل لا بالتقسيم الساذج على ':'.
     """
-    if not isinstance(value, str):
+    if not isinstance(value, str) or not value.strip().startswith(STAMP_PREFIX + ":"):
         return None
-    m = _STAMP_RE.match(value.strip())
+    m = _STAMP_BODY.match(value.strip()[len(STAMP_PREFIX) + 1:])
     if not m:
         return None
     try:
         date.fromisoformat(m.group("d"))
     except ValueError:
         return None
-    return {"reviewers": [m.group("a"), m.group("b")], "date": m.group("d")}
+    reviewers = m.group("r").split("+")
+    if not all(reviewers):
+        return None
+    return {"reviewers": reviewers, "date": m.group("d")}
 
 
 def _translation_block(item: Item, doc: Any) -> dict:
@@ -483,6 +487,32 @@ def write_stamp(item: Item, record: dict) -> None:
     _dump(item.en_file, doc)
     if item.kind == "stories":
         shutil.copyfile(STORIES_EN, STORIES_EN_MIRROR)
+
+
+def clear_stamp(item: Item) -> bool:
+    """يُسقط ختمًا لم يعد يصدق (تغيّر النص بعده). يرجّع True إن كان هناك ختم.
+
+    ختمٌ بائت أسوأ من غياب الختم: الأول يقول «رُوجع» عن نصٍّ لم يُراجَع.
+    """
+    doc = _load(item.en_file)
+    if item.kind == "stories":
+        target = next((s for s in doc if s.get("id") == item.selector), None)
+        if target is None:
+            return False
+    else:
+        target = doc
+    tr = target.get("translation") if isinstance(target, dict) else None
+    if not tr or not tr.get("approved_by"):
+        return False
+    tr["approved_by"] = None
+    tr.pop("auto_review", None)
+    tr["review_verdict"] = "pending"
+    if item.kind in CURRICULUM_FIELDS and isinstance(doc, dict) and doc.get("approved_by"):
+        doc["approved_by"] = None
+    _dump(item.en_file, doc)
+    if item.kind == "stories":
+        shutil.copyfile(STORIES_EN, STORIES_EN_MIRROR)
+    return True
 
 
 def build_record(item: Item, reviewers: tuple[str, str], rounds: int, fixed: bool,
@@ -1181,6 +1211,8 @@ def apply_english(item: Item, new_en: dict) -> None:
     _dump(item.en_file, doc)
     if item.kind == "stories":
         shutil.copyfile(STORIES_EN, STORIES_EN_MIRROR)
+    if check_item(item) is not None:
+        clear_stamp(item)
 
 
 def _ensure_parent(target: Any, path: str) -> None:
@@ -1249,6 +1281,8 @@ def apply_arabic(item: Item, new_ar: dict) -> None:
         item.fields[p]["ar"] = v
     json.loads(text)  # لا نكتب ملفًا مكسورًا
     item.ar_file.write_text(text, encoding="utf-8")
+    if item.en_file.exists() and check_item(item) is not None:
+        clear_stamp(item)   # المصدر تغيّر بعد المراجعة: ختم الإنجليزي لم يعد يصدق
 
 
 def run(items: list[Item], args) -> dict:
@@ -1392,7 +1426,10 @@ def _self_test() -> bool:
            "stamp round-trip")
     expect(parse_stamp(stamp_value(("mistral-large-3:675b", "glm-5.2"), "2026-10-04")) is not None,
            "stamp with tagged model")
-    for bad in (None, "", "Sheikh X", "auto-review:a:2026-10-04", "auto-review:a+b:2026-13-40"):
+    expect(parse_stamp("auto-review:claude-opus:2026-10-04") ==
+           {"reviewers": ["claude-opus"], "date": "2026-10-04"}, "single-reviewer stamp")
+    for bad in (None, "", "Sheikh X", "auto-review:a+:2026-10-04", "auto-review::2026-10-04",
+                "auto-review:a+b:2026-13-40", "auto-review:a+b"):
         expect(parse_stamp(bad) is None, f"parse_stamp accepted {bad!r}")
     f1 = {"t": {"ar": "صدق", "en": "Truth"}, "s": {"ar": "أ", "en": "A"}}
     f2 = {"s": {"ar": "أ", "en": "A"}, "t": {"ar": "صدق", "en": "Truth"}}
@@ -1404,6 +1441,46 @@ def _self_test() -> bool:
     expect(leaked_arabic("Be gentle ﷺ ﴿وَقُل رَّبِّ﴾ «خيركم»") == "", "allowed Arabic spans")
     expect(leaked_arabic("Practice الصبر daily") != "", "bare Arabic leaks")
     return ok
+
+
+def _git_head_json(path: Path):
+    import subprocess
+    try:
+        out = subprocess.run(["git", "show", f"HEAD:{path.relative_to(ROOT)}"], cwd=ROOT,
+                             capture_output=True, text=True, check=True).stdout
+        return json.loads(out)
+    except (OSError, subprocess.CalledProcessError, json.JSONDecodeError, ValueError):
+        return None
+
+
+def _fields_for(item: Item, ar_doc, en_doc) -> dict | None:
+    """حقول الوحدة كما يبنيها مجمِّعها، من وثيقتين معطاتين (لمقارنة HEAD)."""
+    if ar_doc is None or en_doc is None:
+        return None
+    if item.kind in CURRICULUM_FIELDS:
+        return _field_pairs(ar_doc, en_doc, CURRICULUM_FIELDS[item.kind])
+    if item.kind == "kb_units":
+        return _field_pairs(ar_doc, en_doc, UNIT_FIELDS)
+    if item.kind == "stories":
+        a = next((s for s in ar_doc if s.get("id") == item.selector), None)
+        e = next((s for s in en_doc if s.get("id") == item.selector), None)
+        return None if a is None or e is None else {
+            p: {"ar": x, "en": y} for p, x, y in walk_text_pairs(a, e)}
+    if item.kind in ("banks", "offscreen"):
+        return {p: {"ar": x, "en": y} for p, x, y in walk_text_pairs(ar_doc, en_doc)}
+    return None   # adhkar: لا نعيد بناءه هنا — يُعامَل ختم HEAD كأنه صالح (الأحوط)
+
+
+def _head_stamp_holds(item: Item, head_en) -> bool:
+    """هل كان ختم HEAD صادقًا على نصّ HEAD؟ ختمٌ كان بائتًا أصلًا لا يُحمى."""
+    rec = ((head_en or {}).get("translation") or {}).get("auto_review") or {}
+    if not parse_stamp(((head_en or {}).get("translation") or {}).get("approved_by")):
+        return True   # توقيع بشري: يُحترم كما هو
+    en_doc = _git_head_json(item.en_file)
+    fields = _fields_for(item, _git_head_json(item.ar_file), en_doc)
+    if fields is None:
+        return True
+    return rec.get("content_sha256") == content_sha(fields)
 
 
 def _head_en(item: Item) -> dict | None:
@@ -1437,10 +1514,15 @@ def staged_check_item(item: Item) -> str | None:
     bad = check_item(item)
     if bad is None:
         return None
+    if read_stamp(item)[0]:
+        # ختمٌ موجود لا يصدق على النص: لا يدخل أبدًا، أيًّا كان HEAD. (دخل واحدٌ
+        # كذلك بعد إعادة الترتيب على #27: غيّر #27 العربي، فبطل ختمٌ كُتب قبله،
+        # ومرّ لأن HEAD كان «متراكمًا» — والملف يدّعي مراجعةً لنصٍّ ليس نصّه.)
+        return bad
     head = _head_en(item)
     if head is None:
         return bad
-    if (head.get("translation") or {}).get("approved_by"):
+    if (head.get("translation") or {}).get("approved_by") and _head_stamp_holds(item, head):
         return bad
     added = [p for p, v in item.fields.items()
              if get_leaf(head, p) in (None, "", []) and v["en"] not in (None, "", [])]
@@ -1667,11 +1749,49 @@ def cmd_apply_arabic(path: Path) -> int:
     return 0 if not skipped else 1
 
 
+MANUAL_REVIEWER = "claude-opus"
+
+
+def cmd_stamp_reviewed(items: list[Item], reviewer: str, notes_path: Path | None) -> int:
+    """يختم وحداتٍ راجعها مراجعٌ واحد بالمعيار نفسه (REVIEW_SYSTEM) — بلا نداء نموذج.
+
+    وُضع لأسبوعٍ أغلق فيه السقف الأسبوعي Ollama Cloud (والمفتاح يخدم نظامًا حيًّا):
+    الترجمات الأصلية من mistral (عائلة غير Anthropic)، فمراجعة Claude لها مراجعةٌ
+    من عائلة مختلفة. ولهذا شرطان لا يُتساهل فيهما:
+      · الحرّاس الحتمية تمرّ (ما لم يُنقض المسموح نقضه بسبب مكتوب)؛
+      · الإنجليزي الذي كتبه Claude نفسه لا يُختم هنا — ينتظر مراجعًا من عائلة أخرى.
+    والختم يحمل اسم المراجع ('auto-review:claude-opus:<date>') فيُميَّز عن ختم النموذجين.
+    """
+    notes = _load(notes_path) if notes_path else {}
+    adj = load_adjudications()
+    today = date.today().isoformat()
+    done = refused = 0
+    for it in items:
+        overrides = adjudicated_for(it, adj)
+        blocking = [d for d in deterministic_defects(it)
+                    if not (d["type"] in OVERRIDABLE_DET and _matches_override(d, overrides))]
+        if blocking:
+            print(f"  ⛔ {it.key}: deterministic guard — {blocking[0]['type']}@{blocking[0]['field']}")
+            refused += 1
+            continue
+        rec = build_record(it, (reviewer,), 1, False, notes.get(it.key, []), overrides, today)
+        rec["auto_review"]["prompt_version"] = f"manual:{PROMPT_V}"
+        rec["auto_review"]["meaning"] = (
+            "deterministic guards passed and one reviewer from a model family different from "
+            "the translator's read the Arabic and English side by side against the review "
+            "rubric and found no medium/high defect in this exact text; not a scholar's ijazah")
+        write_stamp(it, rec)
+        done += 1
+    print(f"  ✅ stamped {done} · refused {refused}")
+    return 0 if not refused else 1
+
+
 # ═════════════════════════════════════════════════════════════════════════
 
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[1])
-    ap.add_argument("command", choices=("inventory", "check", "run", "unpublish", "apply-arabic"))
+    ap.add_argument("command", choices=("inventory", "check", "run", "unpublish", "apply-arabic",
+                                        "stamp-reviewed"))
     ap.add_argument("--kind", action="append", choices=sorted(COLLECTORS))
     ap.add_argument("--all", action="store_true")
     ap.add_argument("--only", help="مفاتيح مفصولة بفواصل")
@@ -1701,6 +1821,8 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--exclude", type=Path,
                     help="ملف مفاتيح (سطر لكل مفتاح) لا تُلمس — يملكها فرع آخر الآن")
     ap.add_argument("--proposals", type=Path, help="apply-arabic: قائمة الإصلاحات المفحوصة")
+    ap.add_argument("--reviewer", default=MANUAL_REVIEWER, help="stamp-reviewed: اسم المراجع")
+    ap.add_argument("--notes", type=Path, help="stamp-reviewed: {key: [ملاحظات منخفضة]}")
     args = ap.parse_args(argv)
 
     kinds = sorted(COLLECTORS) if (args.all or not args.kind) else args.kind
@@ -1729,6 +1851,10 @@ def main(argv: list[str] | None = None) -> int:
     if args.command == "unpublish":
         cmd_unpublish(items, args.reason, args.with_source)
         return 0
+    if args.command == "stamp-reviewed":
+        if not args.only:
+            sys.exit("❌ --only مطلوب: يُختم ما رُوجع فعلًا، واحدًا واحدًا")
+        return cmd_stamp_reviewed(items, args.reviewer, args.notes)
 
     set_concurrency(args.max_concurrent)
     global CACHE_ONLY

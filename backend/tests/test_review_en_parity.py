@@ -147,8 +147,9 @@ def test_stamp_round_trips_including_tagged_model_names(rp):
     assert rp.parse_stamp(tagged)["reviewers"] == ["mistral-large-3:675b", "glm-5.2"]
 
 
-@pytest.mark.parametrize("bad", [None, "", "Sheikh Ahmad", "auto-review:a:2026-10-04",
-                                 "auto-review:a+b:2026-13-40", "auto-review:a+b"])
+@pytest.mark.parametrize("bad", [None, "", "Sheikh Ahmad", "auto-review::2026-10-04",
+                                 "auto-review:a+:2026-10-04", "auto-review:a+b:2026-13-40",
+                                 "auto-review:a+b"])
 def test_non_stamps_do_not_parse(rp, bad):
     assert rp.parse_stamp(bad) is None
 
@@ -474,3 +475,44 @@ def test_the_cache_is_never_seen_half_loaded(rp, tmp_path, monkeypatch):
     for t in threads:
         t.join()
     assert seen == [5000] * 4
+
+
+def test_a_stamp_that_no_longer_holds_never_gets_committed(rp, tree, monkeypatch):
+    _stamp(rp, _lesson(rp))
+    f = tree / "knowledge_base/curriculum/i18n/en/lessons/lesson_x.json"
+    doc = json.loads(f.read_text())
+    doc["summary"] = "Make honesty safe."           # edited after review, stamp kept
+    f.write_text(json.dumps(doc, ensure_ascii=False))
+    monkeypatch.setattr(rp, "_head_en", lambda _it: {"translation": {"approved_by": None}})
+    assert "stale" in rp.staged_check_item(_lesson(rp))   # legacy HEAD is no excuse
+
+
+def test_changing_reviewed_text_drops_the_stamp_instead_of_leaving_it_stale(rp, tree):
+    _stamp(rp, _lesson(rp))
+    item = _lesson(rp)
+    rp.apply_english(item, {"summary": "Make honesty safe."})
+    stamp, rec = rp.read_stamp(_lesson(rp))
+    assert stamp is None and rec == {}
+    doc = json.loads((tree / "knowledge_base/curriculum/i18n/en/lessons/lesson_x.json").read_text())
+    assert doc["approved_by"] is None and doc["translation"]["review_verdict"] == "pending"
+
+
+def test_a_single_named_reviewer_is_a_distinguishable_stamp(rp, tree):
+    # The weekly cap closed Ollama; Claude reviewed mistral's translations alone,
+    # and the stamp says so in its value.
+    assert rp.parse_stamp("auto-review:claude-opus:2026-10-04") == {
+        "reviewers": ["claude-opus"], "date": "2026-10-04"}
+    assert rp.cmd_stamp_reviewed([_lesson(rp)], "claude-opus", None) == 0
+    stamp, rec = rp.read_stamp(_lesson(rp))
+    assert stamp == f"auto-review:claude-opus:{__import__('datetime').date.today().isoformat()}"
+    assert rec["reviewers"] == ["claude-opus"] and rec["prompt_version"].startswith("manual:")
+    assert rp.check_item(_lesson(rp)) is None
+
+
+def test_a_manual_stamp_still_obeys_the_guards(rp, tree):
+    f = tree / "knowledge_base/curriculum/i18n/en/lessons/lesson_x.json"
+    doc = json.loads(f.read_text())
+    doc["summary"] = "Treat your child with rifq"          # injection: no رفق in the Arabic
+    f.write_text(json.dumps(doc, ensure_ascii=False))
+    assert rp.cmd_stamp_reviewed([_lesson(rp)], "claude-opus", None) == 1
+    assert rp.read_stamp(_lesson(rp))[0] is None
