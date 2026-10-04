@@ -273,10 +273,13 @@ class CoinsService {
   /// * **Once per mission.** The server's list is idempotent — a retried batch
   ///   (its first answer lost) reports the same missions again — so the ids
   ///   paid are kept and skipped, as are duplicates within one answer.
-  /// * **Credit and record together,** in this one call, with nothing that
-  ///   depends on a screen in between: the balance first, then the ids. A
-  ///   screen popped mid-request used to leave the ids recorded and the coins
-  ///   unpaid, for good.
+  /// * **Ids first, then the balance — and only if the ids were stored.** A
+  ///   crash between the two writes then loses a coin instead of paying the
+  ///   same mission twice when the batch is resent. Each read-modify-write
+  ///   runs without an await between the read and the (synchronous, cached)
+  ///   set, so a concurrent call already sees these ids and this balance.
+  ///   Nothing here depends on a screen: one popped mid-request used to leave
+  ///   the ids recorded and the coins unpaid, for good.
   /// * **Outside [dailyEarnCap].** That ceiling stops a game from minting
   ///   coins; these were confirmed by a parent and are bounded by the server
   ///   per child per day. Clipping them paid a child less than the screen said.
@@ -298,8 +301,8 @@ class CoinsService {
     if (paid.length > creditedMissionsKept) {
       paid.removeRange(0, paid.length - creditedMissionsKept);
     }
-    await p.setInt(_kBalance, (p.getInt(_kBalance) ?? 0) + total);
     await p.setStringList(_kCreditedMissions, paid);
+    await p.setInt(_kBalance, (p.getInt(_kBalance) ?? 0) + total);
     return total;
   }
 }

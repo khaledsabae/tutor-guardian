@@ -4908,4 +4908,9 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get ramadanRecapLastSeason => 'بطاقة «رمضان عائلتنا» من رمضان الماضي';
+
+  @override
+  String ramadanDayToday(int day) {
+    return 'اليوم $day، اليوم الحالي';
+  }
 }

@@ -1496,5 +1496,6 @@
   "recapShareFailed": "Sharing didn't work. Please try again.",
   "recapTitle": "Our Family's Ramadan",
   "prayerHandOverNeedsBand": "For {name} to record tasks in child mode, update their age group in their profile to match their age.",
-  "ramadanRecapLastSeason": "Last Ramadan's «Our Family's Ramadan» card"
+  "ramadanRecapLastSeason": "Last Ramadan's «Our Family's Ramadan» card",
+  "ramadanDayToday": "Day {day}, today"
 }

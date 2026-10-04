@@ -1590,5 +1590,7 @@
   "recapTitle": "رمضان عائلتنا",
   "prayerHandOverNeedsBand": "لكي يسجّل {name} مهامه في وضع الطفل، حدّث فئته العمرية في ملفه لتوافق عمره.",
   "@prayerHandOverNeedsBand": {"placeholders": {"name": {"type": "String"}}},
-  "ramadanRecapLastSeason": "بطاقة «رمضان عائلتنا» من رمضان الماضي"
+  "ramadanRecapLastSeason": "بطاقة «رمضان عائلتنا» من رمضان الماضي",
+  "ramadanDayToday": "اليوم {day}، اليوم الحالي",
+  "@ramadanDayToday": {"placeholders": {"day": {"type": "int"}}}
 }

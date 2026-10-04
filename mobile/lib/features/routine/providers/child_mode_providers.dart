@@ -620,16 +620,16 @@ class ChildModeNotifier extends StateNotifier<ChildModeState> {
 
   Future<int?> _loadChildId() async {
     final prefs = await SharedPreferences.getInstance();
-    return prefs.getInt('child_mode_child_id');
+    return prefs.getInt(kChildModeChildIdKey);
   }
 
   Future<void> _saveChildId(int childId) async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setInt('child_mode_child_id', childId);
+    await prefs.setInt(kChildModeChildIdKey, childId);
   }
 
   Future<void> _clearChildId() async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.remove('child_mode_child_id');
+    await prefs.remove(kChildModeChildIdKey);
   }
 }

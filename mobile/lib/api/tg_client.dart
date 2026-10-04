@@ -92,6 +92,11 @@ class TgTurnEvent extends TgStreamEvent {
   const TgTurnEvent(this.messageId);
 }
 
+/// SharedPreferences key holding the child a child-mode surface was opened
+/// for (written by `ChildModeNotifier` on entry, removed on exit). The child
+/// token is renewed for this child.
+const kChildModeChildIdKey = 'child_mode_child_id';
+
 /// Default secure storage with resetOnError enabled to self-heal against
 /// Android Keystore desync / BadPaddingException on reinstall or lock change.
 FlutterSecureStorage createDefaultSecureStorage() {
@@ -406,7 +411,9 @@ class TgClient {
 
   final bool _ownsHttpClient;
   final String? _baseUrlOverride;
-  bool _refreshingChildToken = false;
+  /// The child-token renewal in flight, shared by every caller that hit a 401
+  /// meanwhile — a second caller used to get null and hide its card.
+  Future<String?>? _childTokenRenewal;
 
   String get _baseUrl => _baseUrlOverride ?? AppConfig.apiBaseUrl;
 
@@ -2345,26 +2352,44 @@ class TgClient {
 
   /// Tries to silently refresh the child token using the stored parent token.
   /// Returns the new child token, or null if the parent session is also gone.
-  Future<String?> _refreshChildTokenOrFail() async {
-    if (_refreshingChildToken) return null;
-    _refreshingChildToken = true;
+  ///
+  /// Renews for the child **holding the phone** — the one child mode was
+  /// entered for — not the parent's active child: the Prayer Journey hands
+  /// the phone to the journey's child without making them the active child,
+  /// and renewing for the active one replayed the claim on the other child's
+  /// journey and switched the whole child surface to them.
+  Future<String?> _refreshChildTokenOrFail() =>
+      _childTokenRenewal ??= _renewChildToken()
+          .whenComplete(() => _childTokenRenewal = null);
+
+  Future<String?> _renewChildToken() async {
     try {
-      final activeChildId = await (onNeedActiveChildId?.call() ?? _auth.readActiveChildId());
-      if (activeChildId == null) return null;
-      try {
-        final session = await _auth.readSession();
-        if (session.$1 == null) return null;
-        final newSession = await createChildSession(activeChildId);
-        final token = newSession['token'] as String?;
-        if (token == null) return null;
-        await _auth.writeChildToken(token);
-        return token;
-      } catch (_) {
-        return null;
-      }
-    } finally {
-      _refreshingChildToken = false;
+      final childId = await _childModeChildId();
+      if (childId == null) return null;
+      final session = await _auth.readSession();
+      if (session.$1 == null) return null;
+      final newSession = await createChildSession(childId);
+      final token = newSession['token'] as String?;
+      if (token == null) return null;
+      await _auth.writeChildToken(token);
+      return token;
+    } catch (_) {
+      return null;
     }
+  }
+
+  /// The child whose surface is open, as child mode stored it on entry
+  /// ([kChildModeChildIdKey]). Falls back to the active child only when none is
+  /// stored — the habit surface's behaviour before this existed.
+  Future<int?> _childModeChildId() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final stored = prefs.getInt(kChildModeChildIdKey);
+      if (stored != null) return stored;
+    } catch (_) {
+      // No preferences: fall back below.
+    }
+    return onNeedActiveChildId?.call() ?? _auth.readActiveChildId();
   }
 
   // ── Internals ────────────────────────────────────────────────────────

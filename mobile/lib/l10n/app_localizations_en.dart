@@ -4963,4 +4963,9 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get ramadanRecapLastSeason =>
       'Last Ramadan\'s «Our Family\'s Ramadan» card';
+
+  @override
+  String ramadanDayToday(int day) {
+    return 'Day $day, today';
+  }
 }

@@ -73,22 +73,47 @@ class DeepLinkHandler {
     }
   }
 
+  /// The last parent link child mode held back, and the watch that replays it.
+  Uri? _held;
+  ProviderSubscription<bool>? _heldWatch;
+
+  /// Keeps [uri] — the latest one wins — and opens it as soon as child mode
+  /// ends. That also covers a cold start: `restore()` reports child mode as
+  /// active while it checks the network, and a push tapped to launch the app
+  /// arrives in exactly that window; it used to be dropped.
+  void _holdUntilChildModeEnds(
+      BuildContext context, Uri uri, GlobalKey<NavigatorState> key) {
+    _held = uri;
+    if (_heldWatch != null) return;
+    try {
+      final container = ProviderScope.containerOf(context, listen: false);
+      _heldWatch = container.listen<bool>(
+        childModeProvider.select((s) => s.active),
+        (_, active) {
+          if (active) return;
+          _heldWatch?.close();
+          _heldWatch = null;
+          final link = _held;
+          _held = null;
+          if (link == null) return;
+          // After the frame that swaps the child surface for the parent app.
+          WidgetsBinding.instance.addPostFrameCallback((_) => _handle(link, key));
+        },
+      );
+    } catch (_) {
+      _held = null; // no scope to watch: nothing to replay into
+    }
+  }
+
   void _handle(Uri uri, GlobalKey<NavigatorState> key) {
     final path = uri.path;
     final context = key.currentContext;
     if (context == null) return;
+    final childMode = _childModeActive(context);
 
-    // While a child holds the phone, no link opens anything. Every route
-    // below is the parent's: /missions would put the evening confirmation —
-    // the parent's own session — over the child surface, where a child could
-    // confirm their own claims; /license, /inbox, a lesson, a milestone are
-    // parent screens too. The tap is dropped and the child surface stays; the
-    // parent reaches the same screen from the app after leaving child mode.
-    if (_childModeActive(context)) return;
-
-    final navigator = Navigator.of(context);
-
-    // Referral landing: /go?ref=XXXX → save code + home.
+    // Referral landing: /go?ref=XXXX → save code + home. The code is saved
+    // whatever is on screen — it is the install's attribution, not a parent
+    // screen; only the unwinding waits for the parent app.
     if (path == '/go' || path.startsWith('/go/')) {
       final code = uri.queryParameters['ref'] ?? '';
       if (code.isNotEmpty) {
@@ -100,9 +125,21 @@ class DeepLinkHandler {
       // Pushing another one would bypass the onboarding / child-mode /
       // force-update gates and reset every tab's state, so just unwind back
       // to it.
-      navigator.popUntil((route) => route.isFirst);
+      if (!childMode) Navigator.of(context).popUntil((route) => route.isFirst);
       return;
     }
+
+    // While a child holds the phone, no other link opens anything: every one
+    // below is the parent's. /missions would put the evening confirmation —
+    // the parent's own session — over the child surface, where a child could
+    // confirm their own claims; /license, /inbox, a lesson, a milestone are
+    // parent screens too. The link is kept and opens when child mode ends.
+    if (childMode) {
+      _holdUntilChildModeEnds(context, uri, key);
+      return;
+    }
+
+    final navigator = Navigator.of(context);
 
     // Feedback reply: /inbox — sent as `data.link` on the push that fires when
     // Khaled answers a piece of feedback. The replies render at the top of the

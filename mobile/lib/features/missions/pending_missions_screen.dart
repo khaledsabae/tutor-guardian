@@ -52,28 +52,39 @@ class _PendingMissionsScreenState extends ConsumerState<PendingMissionsScreen> {
     final client = ref.read(tgClientProvider);
     final coins = ref.read(coinsProvider.notifier);
 
-    // A batch whose answer was lost goes first. Its cards may no longer be
-    // pending — the server applied them — so this is the only way left to
-    // pay their coins. Offline, it simply waits for the next open.
-    try {
-      final flushed = await MissionConfirmations.flush(client);
-      if (flushed != null && flushed.coins > 0) {
-        await coins.refresh();
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              content: Text(AppLocalizations.of(context)
-                  .missionCoinsEarned(flushed.coins))));
-        }
-      }
-    } catch (_) {}
+    // A batch whose answer was lost is resent beside tonight's list, not
+    // before it: on a flaky network the resend can take the whole request
+    // timeout, and the list must not wait behind it. The resend is the only
+    // way left to pay cards the server applied but never answered for.
+    final flushing = MissionConfirmations.flush(client)
+        .then<MissionConfirmResult?>((r) => r, onError: (Object _) => null);
 
     try {
       final items = await client.fetchPendingMissions();
       if (mounted) setState(() { _pending = items; _error = null; });
     } catch (e) {
-      if (!mounted) return;
-      final message = describeFailure(AppLocalizations.of(context), e);
-      setState(() { _error = message; _pending = const []; });
+      if (mounted) {
+        final message = describeFailure(AppLocalizations.of(context), e);
+        setState(() { _error = message; _pending = const []; });
+      }
+    }
+
+    final flushed = await flushing;
+    if (flushed == null) return;
+    if (flushed.coins > 0) {
+      await coins.refresh();
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text(
+                AppLocalizations.of(context).missionCoinsEarned(flushed.coins))));
+      }
+    }
+    // The resend may have settled cards the list fetched beside it still shows.
+    if (flushed.settled > 0 && mounted && !_sending) {
+      try {
+        final items = await client.fetchPendingMissions();
+        if (mounted && !_sending) setState(() => _pending = items);
+      } catch (_) {}
     }
   }
 

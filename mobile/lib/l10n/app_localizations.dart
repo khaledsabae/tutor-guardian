@@ -8527,6 +8527,12 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'بطاقة «رمضان عائلتنا» من رمضان الماضي'**
   String get ramadanRecapLastSeason;
+
+  /// No description provided for @ramadanDayToday.
+  ///
+  /// In ar, this message translates to:
+  /// **'اليوم {day}، اليوم الحالي'**
+  String ramadanDayToday(int day);
 }
 
 class _AppLocalizationsDelegate

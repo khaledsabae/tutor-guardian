@@ -324,13 +324,15 @@ class _DayStrip extends StatelessWidget {
         children: [
           // Action chips, not choice chips: a tap opens the day, it selects
           // nothing — a choice chip was read out as a toggle. Each says "Day
-          // N" rather than a bare number; today is only highlighted.
+          // N" rather than a bare number, and today's says so too.
           for (var d = 1; d <= season.days; d++)
             ActionChip(
               key: ValueKey('ramadan_day_$d'),
               label: Text(
                 '$d',
-                semanticsLabel: l10n.ramadanDayN(d),
+                semanticsLabel: d == today
+                    ? l10n.ramadanDayToday(d)
+                    : l10n.ramadanDayN(d),
                 style: d == today
                     ? TextStyle(color: c.primary, fontWeight: FontWeight.w800)
                     : null,
