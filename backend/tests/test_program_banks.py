@@ -27,6 +27,14 @@ import pytest
 ROOT = Path(__file__).resolve().parents[2]
 TOOLS = ROOT / "ops" / "tools"
 CURRICULUM = ROOT / "knowledge_base" / "curriculum"
+
+# The deploy gate runs pytest inside the backend-only image, which does not
+# ship mobile/ (the programs reference stories in mobile/assets/data). These are
+# repo-content checks: they run in PR CI and pre-commit — skip them in the image.
+pytestmark = pytest.mark.skipif(
+    not (ROOT / "mobile" / "assets" / "data" / "stories.json").exists(),
+    reason="repo-content check; the backend image has no mobile/ (runs in PR CI)",
+)
 PROGRAMS = CURRICULUM / "programs"
 PROGRAMS_EN = CURRICULUM / "i18n" / "en" / "programs"
 
