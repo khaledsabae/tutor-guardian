@@ -1,0 +1,19 @@
+# Tap a text field at its far end side, away from the text, so the caret lands
+# after the last character: left in an Arabic (RTL) field, right in an English
+# one. Env: FIELD (text selector of the field), UI_LANG.
+appId: com.alsaba.almorabbi
+---
+- runFlow:
+    when:
+      true: "${UI_LANG == 'en'}"
+    commands:
+      - tapOn:
+          text: '${FIELD}'
+          point: 95%,50%
+- runFlow:
+    when:
+      true: "${UI_LANG != 'en'}"
+    commands:
+      - tapOn:
+          text: '${FIELD}'
+          point: 5%,50%
