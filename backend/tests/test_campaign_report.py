@@ -157,6 +157,27 @@ def test_dry_run_prints_aggregates_only(report_db, capsys, monkeypatch):
         assert private not in out
 
 
+def test_without_dry_run_the_report_goes_to_telegram(report_db, monkeypatch):
+    sent = []
+    monkeypatch.setenv("TELEGRAM_BOT_TOKEN", "t")
+    monkeypatch.setenv("TELEGRAM_CHAT_ID", "c")
+    monkeypatch.setattr(cr, "send_telegram",
+                        lambda token, chat, text: sent.append((token, chat, text)) or True)
+    assert cr.main(["--db", str(report_db), "--days", "365"]) == 0
+    assert len(sent) == 1 and sent[0][:2] == ("t", "c")
+    assert "<b>DA01</b>" in sent[0][2]
+    monkeypatch.setattr(cr, "send_telegram", lambda *a: False)
+    assert cr.main(["--db", str(report_db)]) == 1   # a failed send is not a success
+
+
+def test_without_telegram_credentials_it_prints_instead(report_db, capsys, monkeypatch):
+    monkeypatch.delenv("TELEGRAM_BOT_TOKEN", raising=False)
+    monkeypatch.delenv("TELEGRAM_CHAT_ID", raising=False)
+    monkeypatch.setattr(cr, "send_telegram", lambda *a: pytest.fail("no credentials"))
+    assert cr.main(["--db", str(report_db)]) == 0
+    assert "تقرير الحملات" in capsys.readouterr().out
+
+
 def test_end_to_end_a_preacher_link_lands_in_the_report():
     """Link → page → Play → app parser → claim → report, every hop for real."""
     import html as _html
