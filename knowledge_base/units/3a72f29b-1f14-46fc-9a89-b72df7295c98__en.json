@@ -22,51 +22,40 @@
   "translated_from": "3a72f29b-1f14-46fc-9a89-b72df7295c98",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
+    "review_verdict": "low_only",
     "review_defects": [
       {
-        "type": "meaning_change",
-        "field": "title",
-        "arabic": "٢ ملاحظات في تربية البنات",
-        "english": "2 – Ḥuqūq fī tarbiyah al-banāt",
-        "why": "The Arabic word 'ملاحظات' means 'notes' or 'observations', but the English title uses 'Ḥuqūq' which means 'rights'. This is a completely different word and changes the meaning of the title.",
-        "severity": "high"
-      },
-      {
-        "type": "meaning_change",
+        "model": "glm-5.2",
         "field": "text_simplified",
-        "arabic": "ويحرص على إبرازها",
-        "english": "and take care to bring out their best",
-        "why": "The pronoun 'ها' in Arabic refers to 'التربية' (the upbringing), not to the daughters. The English changes the object to 'their best' (the daughters' best), which is not what the Arabic says.",
-        "severity": "medium"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "نعم العيون",
-        "english": "coolness of the eyes",
-        "why": "The Arabic phrase 'نعم العيون' means 'blessing/comfort of the eyes', not 'coolness of the eyes'. 'Coolness of the eyes' is a translation of the Qur'anic phrase 'قرة أعين', which is different. The English imports a religious phrase not present in the Arabic.",
-        "severity": "medium"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "للآباء والأمهات",
-        "english": "for parents",
-        "why": "The Arabic explicitly mentions 'fathers and mothers', but the English generalizes to 'parents', losing the specific mention of both roles.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "تربية",
-        "english": "tarbiyah (upbringing rooted in faith and character)",
-        "why": "The English adds an explanatory gloss '(upbringing rooted in faith and character)' that is not present in the Arabic. While it may be helpful, it is an addition to the source text.",
-        "severity": "low"
+        "type": "addition",
+        "why": "The parenthetical '(upbringing rooted in faith and character)' is an explanatory gloss not present in the Arabic source."
       }
     ],
-    "approved_by": null
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "dbe969c0e26f01cf7489bd75631f617a3b542facf2d001685c2f4208786a23f5",
+      "reviewed_at": "2026-10-04T17:02:06+00:00",
+      "residual_low": [
+        {
+          "model": "glm-5.2",
+          "field": "text_simplified",
+          "type": "addition",
+          "why": "The parenthetical '(upbringing rooted in faith and character)' is an explanatory gloss not present in the Arabic source."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T17:02:06+00:00"
   }
 }
