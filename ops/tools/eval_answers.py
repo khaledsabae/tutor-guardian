@@ -14,6 +14,18 @@ Usage:
   python ops/tools/eval_answers.py --label baseline
   python ops/tools/eval_answers.py --label phase2 --subset medical --limit 10
   python ops/tools/eval_answers.py --judge-only ops/eval/runs/baseline_*.jsonl
+  python ops/tools/eval_answers.py --set ops/eval/memory_set.jsonl --label memory
+
+Isolation: the pipeline always runs against a throwaway database and with the
+answer cache off. Inside the backend container CONVERSATIONS_DB *is* the
+production database, and this script used to leave it in place
+(`setdefault`) — the 2026-09-24 baseline wrote its 92 eval sessions into it.
+Pass --db only to point at another throwaway file.
+
+Memory items (ops/eval/memory_set.jsonl) carry a `child` with remembered
+facts: the harness creates the child, stores the facts through the public API,
+asks with that child_id, and the judge additionally scores whether the answer
+used the facts, invented any, or repeated a strategy the parent said failed.
 """
 from __future__ import annotations
 
@@ -34,6 +46,8 @@ GOLDEN = ROOT / "ops" / "eval" / "golden_set.jsonl"
 RUNS_DIR = ROOT / "ops" / "eval" / "runs"
 
 sys.path.insert(0, str(BACKEND))
+
+from app.core.eval_traffic import EVAL_DEVICE_PREFIX  # noqa: E402 — needs BACKEND on the path
 
 JUDGE_PROMPT = """أنت محكّم جودة لإجابات مساعد تربوي عربي للأهل. قيّم الإجابة أدناه بدقة وصرامة.
 
@@ -106,6 +120,17 @@ def _get_judge_config(provider: str) -> tuple[any, str]:
     return client, model
 
 
+MEMORY_JUDGE_ADDENDUM = """
+
+[ما سبق أن ذكره الوالد عن طفله وكان متاحًا للمساعد]
+{facts}
+
+أضف إلى JSON نفسه هذه المفاتيح أيضًا:
+ "memory_use": 1-5,               // هل استفادت الإجابة مما ذُكر عن الطفل حين كان ذا صلة، دون إقحامه حين لا صلة له؟
+ "invents_child_facts": true/false, // هل نسبت الإجابة إلى الطفل شيئًا لم يُذكر أعلاه ولا في السؤال؟
+ "repeats_failed_strategy": true/false // هل أوصت مجددًا بأسلوب ذُكر أعلاه أنه جُرِّب ولم ينجح، دون تعديل أو بديل؟"""
+
+
 def _judge(client, model: str, item: dict, retries: int = 4) -> dict:
     context = "\n\n".join(
         f"[{i+1}] {c}" for i, c in enumerate(item.get("retrieved_chunks") or [])
@@ -117,6 +142,11 @@ def _judge(client, model: str, item: dict, retries: int = 4) -> dict:
         context=context[:6000],
         answer=item["reply_text"][:4000],
     )
+    facts = (item.get("child") or {}).get("facts") or []
+    if facts:
+        prompt += MEMORY_JUDGE_ADDENDUM.format(
+            facts="\n".join(f"- ({f['category']}) {f['fact']}" for f in facts)
+        )
 
     for attempt in range(retries):
         try:
@@ -153,8 +183,15 @@ def _retrieved_for(question_text: str, age_group: str) -> list[str]:
     ]
 
 
-def run_pipeline(items: list[dict], label: str) -> list[dict]:
-    os.environ.setdefault("CONVERSATIONS_DB", str(ROOT / "ops" / "eval" / f"_eval_{label}.db"))
+def run_pipeline(items: list[dict], label: str, db: str | None = None) -> list[dict]:
+    import tempfile
+    # Forced, never setdefault — see the module docstring.
+    os.environ["CONVERSATIONS_DB"] = db or str(
+        Path(tempfile.gettempdir()) / f"tg_eval_{label}_{os.getpid()}.db")
+    # A cache hit measures an old answer, and a cache write from an eval run
+    # would be served to real parents when this runs beside production.
+    os.environ["ANSWER_CACHE_ENABLED"] = "false"
+    os.environ["ANSWER_CACHE_DB"] = os.environ["CONVERSATIONS_DB"] + ".cache"
     from fastapi.testclient import TestClient
     from app.db.init_db import init_db
     from app.main import app
@@ -165,7 +202,9 @@ def run_pipeline(items: list[dict], label: str) -> list[dict]:
         for i, g in enumerate(items, 1):
             # /api/assistant/* requires a session Bearer token.
             # Use unique device_id per question so evaluation never trips per-device daily rate limits.
-            sess = client.post("/api/chat/sessions", json={"device_id": f"eval-harness-{g['id']}"})
+            # The prefix is the marker metrics exclude (app/core/eval_traffic.py).
+            sess = client.post("/api/chat/sessions",
+                               json={"device_id": f"{EVAL_DEVICE_PREFIX}{g['id']}"})
             sess.raise_for_status()
             auth_headers = {"Authorization": f"Bearer {sess.json()['token']}"}
             payload = {
@@ -174,6 +213,19 @@ def run_pipeline(items: list[dict], label: str) -> list[dict]:
                 "message_text": g["question"],
                 "conversation_history": g.get("conversation_history") or [],
             }
+            child = g.get("child")
+            if child:
+                made = client.post("/api/children", headers=auth_headers, json={
+                    "name": child.get("name", "سالم"),
+                    "age_group": child.get("age_group", g["age_group"]),
+                })
+                made.raise_for_status()
+                child_id = made.json()["id"]
+                for f in child.get("facts") or []:
+                    r = client.post(f"/api/children/{child_id}/memory",
+                                    headers=auth_headers, json=f)
+                    r.raise_for_status()
+                payload["child_id"] = child_id
             t0 = time.time()
             try:
                 resp = client.post("/api/assistant/draft", json=payload, headers=auth_headers)
@@ -191,6 +243,7 @@ def run_pipeline(items: list[dict], label: str) -> list[dict]:
                 "mode": body.get("mode"),
                 "answered_domain": body.get("domain"),
                 "needs_human_review": body.get("needs_human_review"),
+                "memory_facts_used": (body.get("metadata") or {}).get("memory_facts_used"),
                 "latency_s": round(latency, 2),
             }
             try:
@@ -256,6 +309,16 @@ def summarize(results: list[dict]) -> dict:
         for r in scored:
             groups.setdefault(str(r.get(dim)), []).append(r)
         summary[dim] = {k: block(v) for k, v in sorted(groups.items())}
+    mem = [r for r in scored if (r.get("child") or {}).get("facts")]
+    if mem:
+        summary["memory"] = {
+            "n": len(mem),
+            "memory_use": agg(mem, "memory_use"),
+            "invents_child_facts_rate": round(
+                sum(1 for r in mem if r["judge"].get("invents_child_facts") is True) / len(mem), 2),
+            "repeats_failed_strategy_rate": round(
+                sum(1 for r in mem if r["judge"].get("repeats_failed_strategy") is True) / len(mem), 2),
+        }
     abstain = [r for r in scored if r.get("category") == "out_of_kb_abstain"]
     if abstain:
         summary["abstention_rate"] = round(
@@ -285,6 +348,7 @@ def main() -> None:
     ap.add_argument("--limit", type=int)
     ap.add_argument("--skip-judge", action="store_true")
     ap.add_argument("--judge-only", help="glob of an existing run jsonl to (re)judge")
+    ap.add_argument("--db", help="throwaway sqlite path for the pipeline (default: a temp file)")
     args = ap.parse_args()
 
     RUNS_DIR.mkdir(parents=True, exist_ok=True)
@@ -304,7 +368,7 @@ def main() -> None:
         if args.limit:
             items = items[: args.limit]
         print(f"running {len(items)} items from {set_path.name} (label={args.label})…")
-        results = run_pipeline(items, args.label)
+        results = run_pipeline(items, args.label, db=args.db)
         out = RUNS_DIR / f"{args.label}_{ts}.jsonl"
         # Crash-safe: persist raw pipeline output BEFORE the judge phase
         # so a killed run can be re-judged via --judge-only.
