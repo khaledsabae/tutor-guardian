@@ -23,6 +23,7 @@ import 'package:almorabbi/api/tg_client.dart';
 import 'package:almorabbi/features/onboarding/data/onboarding_storage.dart';
 import 'package:almorabbi/features/onboarding/providers/onboarding_providers.dart';
 import 'package:almorabbi/l10n/app_localizations.dart';
+import 'package:almorabbi/l10n/l10n_global.dart';
 import 'package:almorabbi/screens/chat_screen.dart';
 import 'package:almorabbi/state/chat_notifier.dart';
 
@@ -57,6 +58,13 @@ class _Server extends http.BaseClient {
 
   /// Servers before 2026-10 send no `turn` frame and no message ids.
   final bool sendsTurns;
+
+  /// Send the `turn` frame as the stream opens (servers since round 2 of
+  /// PR #24); false = the test sends it with [turn], after "thinking".
+  bool turnAtOpen = true;
+
+  /// Holds history reads until completed — a fetch still in flight.
+  Completer<void>? historyGate;
   final streams = <StreamController<List<int>>>[];
   final statuses = <int?>[]; // per question: null = SSE stream, else that status
   int streamCalls = 0;
@@ -74,10 +82,14 @@ class _Server extends http.BaseClient {
     if (path == '/api/chat/sessions' && request.method == 'POST') {
       return _json({'session_id': 's1', 'token': 't1'}, 201);
     }
-    if (path == '/api/chat/sessions/s1' && request.method == 'GET') {
+    if (path.startsWith('/api/chat/sessions/') &&
+        !path.endsWith('/stop') &&
+        request.method == 'GET') {
       historyReads++;
+      final gate = historyGate;
+      if (gate != null) await gate.future;
       return _json({
-        'id': 's1',
+        'id': path.split('/').last,
         'created_at': '2026-10-04T10:00:00',
         'updated_at': '2026-10-04T10:00:00',
         'metadata': <String, Object?>{},
@@ -99,7 +111,7 @@ class _Server extends http.BaseClient {
     }
     final c = StreamController<List<int>>();
     streams.add(c);
-    if (sendsTurns) {
+    if (sendsTurns && turnAtOpen) {
       c.add(utf8.encode('event: turn\ndata: ${jsonEncode({'message_id': nextId})}\n\n'));
     }
     return http.StreamedResponse(c.stream, 200,
@@ -114,6 +126,9 @@ class _Server extends http.BaseClient {
 
   void token(String t) =>
       sse.add(utf8.encode('event: token\ndata: ${jsonEncode({'delta': t})}\n\n'));
+
+  void turn(int id) =>
+      sse.add(utf8.encode('event: turn\ndata: ${jsonEncode({'message_id': id})}\n\n'));
 
   void done(String text) => sse.add(utf8.encode('event: done\ndata: ${jsonEncode({
         'reply_text': text,
@@ -139,10 +154,11 @@ Map<String, Object?> _msg(String role, String content, [String? mode, int? id]) 
 
 Future<void> _settle() => Future<void>.delayed(const Duration(milliseconds: 120));
 
-Future<(ChatNotifier, _Server)> _asking(String question, {_Server? server}) async {
+Future<(ChatNotifier, _Server)> _asking(String question,
+    {_Server? server, Duration recoveryDelay = const Duration(seconds: 2)}) async {
   final s = server ?? _Server();
   final tg = TgClient.forTesting(baseUrl: 'http://x', httpClient: s, storage: _MemStorage());
-  final notifier = ChatNotifier(tg);
+  final notifier = ChatNotifier(tg, recoveryDelay: recoveryDelay);
   await notifier.bootstrap();
   unawaited(notifier.sendMessage(question));
   await Future<void>.delayed(const Duration(milliseconds: 20));
@@ -150,6 +166,29 @@ Future<(ChatNotifier, _Server)> _asking(String question, {_Server? server}) asyn
 }
 
 const _chip = 'أعطني مثالاً عمليًا'; // a generic follow-up chip, sent more than once
+
+/// Polls [check] until true; fails after [within].
+Future<void> _until(bool Function() check,
+    {Duration within = const Duration(seconds: 5), String? reason}) async {
+  final sw = Stopwatch()..start();
+  while (!check()) {
+    if (sw.elapsed > within) fail('timed out: ${reason ?? 'condition'}');
+    await Future<void>.delayed(const Duration(milliseconds: 10));
+  }
+}
+
+/// A notifier restarted on a session the server already has (cold start).
+Future<(ChatNotifier, _Server)> _coldStart(_Server server,
+    {Map<String, Object>? prefs, Duration recoveryDelay = const Duration(milliseconds: 30)}) async {
+  SharedPreferences.setMockInitialValues(prefs ?? {});
+  final storage = _MemStorage();
+  await storage.write(key: 'tg_session_id', value: 's1');
+  await storage.write(key: 'tg_token', value: 't1');
+  final tg = TgClient.forTesting(baseUrl: 'http://x', httpClient: server, storage: storage);
+  final n = ChatNotifier(tg, recoveryDelay: recoveryDelay);
+  await n.bootstrap();
+  return (n, server);
+}
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -438,6 +477,281 @@ void main() {
     expect(await n.recoverInterruptedAnswer(attempts: 1, retryDelay: Duration.zero),
         isTrue);
     expect(n.state.messages.last.content, 'Start and finish');
+    n.dispose();
+  });
+
+  // ── PR #24 round 2 (/tmp/review-pr24/mobile-probe2: N2, N4–N10) ────────
+
+  test('T2 (N5a): Stop before the turn frame is sent once the server names it',
+      () async {
+    final server = _Server()..turnAtOpen = false;
+    final (n, _) = await _asking('Q1 wrong age', server: server);
+    await _settle(); // the server is still classifying: no turn frame yet
+    n.stopStreaming(notifyServer: true);
+    await _settle();
+    expect(n.state.phase, ChatPhase.idle);
+    expect(n.state.messages.last.isStreaming, isFalse);
+    expect(server.stops, isEmpty);
+    expect(server.sse.hasListener, isTrue,
+        reason: 'kept open, unseen, until the server names the turn');
+
+    server.turn(41);
+    await _settle();
+    expect(server.stops, [
+      {'message_id': 41}
+    ]);
+    expect(server.sse.hasListener, isFalse);
+    expect(n.state.messages.last.content, AppL10n.current.chatResponseStopped,
+        reason: 'nothing from the stopped stream is shown');
+    n.dispose();
+  });
+
+  test('T2: a server too old to name turns is just closed at its first word',
+      () async {
+    final server = _Server(sendsTurns: false);
+    final (n, _) = await _asking('Q1', server: server);
+    await _settle();
+    n.stopStreaming(notifyServer: true);
+    server.token('Start ');
+    await _settle();
+    expect(server.stops, isEmpty);
+    expect(server.sse.hasListener, isFalse);
+    n.dispose();
+  });
+
+  test('N8: a second question while thinking closes the first, sends no stop',
+      () async {
+    final server = _Server()..turnAtOpen = false;
+    final (n, _) = await _asking('Q1 my son lies', server: server);
+    await _settle();
+    unawaited(n.sendMessage('Q2 he is 5'));
+    await _settle();
+    expect(server.streamCalls, 2);
+    expect(n.state.messages.map((m) => m.isStreaming), [false, false, false, true]);
+    expect(server.stops, isEmpty, reason: 'the server cuts the older turn itself');
+    n.dispose();
+  });
+
+  test('T4 (N6): cold start while the server is still writing the answer',
+      () async {
+    final server = _Server()
+      ..history = [
+        _msg('user', 'Q1 bedtime', null, 1),
+        _msg('assistant', 'Start', 'pending', 2),
+      ];
+    final (n, _) = await _coldStart(server);
+    var last = n.state.messages.last;
+    expect(last.turnId, 1);
+    expect(last.interrupted, isTrue, reason: 'a fragment must not look final');
+    expect(last.error, AppL10n.current.chatAnswerStillComing);
+
+    server.history = [
+      _msg('user', 'Q1 bedtime', null, 1),
+      _msg('assistant', 'Start and the full rest', 'llm_generated', 2),
+    ];
+    await _until(() => n.state.messages.last.content == 'Start and the full rest',
+        reason: 'the recovery started at cold start');
+    last = n.state.messages.last;
+    expect(last.error, isNull);
+    expect(last.interrupted, isFalse);
+    n.dispose();
+  });
+
+  test('T4: cold start on an unanswered question waits for its answer', () async {
+    final server = _Server()..history = [_msg('user', 'Q1 bedtime', null, 1)];
+    final (n, _) = await _coldStart(server);
+    expect(n.state.messages.map((m) => m.role), ['user', 'assistant']);
+    expect(n.state.messages.last.turnId, 1);
+    expect(n.state.messages.last.interrupted, isTrue);
+
+    server.history = [
+      _msg('user', 'Q1 bedtime', null, 1),
+      _msg('assistant', 'The answer', 'llm_generated', 2),
+    ];
+    await _until(() => n.state.messages.last.content == 'The answer');
+    n.dispose();
+  });
+
+  test('T4: a cut fragment comes back with its Retry, and Retry asks again',
+      () async {
+    final server = _Server()
+      ..history = [
+        _msg('user', 'Q1 bedtime', null, 1),
+        _msg('assistant', 'Start', 'interrupted', 2),
+      ];
+    final (n, _) = await _coldStart(server);
+    final last = n.state.messages.last;
+    expect(last.interrupted, isTrue);
+    expect(last.error, AppL10n.current.chatConnectionInterrupted);
+    await _settle();
+    final reads = server.historyReads;
+    unawaited(n.retryLastTurn());
+    await _settle();
+    expect(server.streamCalls, 1, reason: 'a fragment is final: generate again');
+    expect(server.historyReads, reads + 1);
+    n.dispose();
+  });
+
+  test('T4: the cut turn and its id survive in the local snapshot', () async {
+    final (n, server) = await _asking('Q1 bedtime');
+    server.token('Start ');
+    await _settle();
+    server.history = [_msg('user', 'Q1 bedtime', null, 1)];
+    server.drop();
+    await _settle();
+    final prefs = await SharedPreferences.getInstance();
+    final snap = jsonDecode(prefs.getString('tg.chat_snapshot')!) as Map;
+    final reply = (snap['messages'] as List).last as Map;
+    expect(reply['turn_id'], 1);
+    expect(reply['interrupted'], isTrue);
+    n.dispose();
+
+    // The process dies; the local copy (with the partial) is longer than the
+    // server's, so it is the one restored — still recoverable.
+    final (restarted, _) = await _coldStart(server,
+        prefs: {'tg.chat_snapshot': prefs.getString('tg.chat_snapshot')!});
+    final last = restarted.state.messages.last;
+    expect(last.content, 'Start ');
+    expect((last.turnId, last.interrupted), (1, true));
+    server.history = [
+      _msg('user', 'Q1 bedtime', null, 1),
+      _msg('assistant', 'Start and the rest', 'llm_generated', 2),
+    ];
+    await _until(() => restarted.state.messages.last.content == 'Start and the rest');
+    restarted.dispose();
+  });
+
+  test('T4: opening a past conversation marks and recovers its cut turn',
+      () async {
+    final (n, server) = await _asking('Q in s1');
+    server.done('A in s1');
+    await _settle();
+    server.history = [
+      _msg('user', 'Q in s2', null, 7),
+      _msg('assistant', 'Start', 'pending', 8),
+    ];
+    await n.switchToSession('s2');
+    expect(n.state.messages.last.turnId, 7);
+    expect(n.state.messages.last.interrupted, isTrue);
+    n.dispose();
+  });
+
+  test('T5 (N2): recovery keeps looking past the old one-minute window',
+      () async {
+    // The old loop looked six times (~60 s) and gave up while the server may
+    // take up to its 300 s deadline. Scaled: 10 ms first gap — six looks are
+    // over within ~0.3 s; the answer lands at 0.7 s.
+    final (n, server) =
+        await _asking('Q1 long', recoveryDelay: const Duration(milliseconds: 10));
+    server.token('Start ');
+    await _settle();
+    server.history = [
+      _msg('user', 'Q1 long', null, 1),
+      _msg('assistant', 'Start', 'pending', 2),
+    ];
+    server.drop();
+    await Future<void>.delayed(const Duration(milliseconds: 700));
+    expect(n.state.messages.last.error, AppL10n.current.chatAnswerStillComing);
+    server.history = [
+      _msg('user', 'Q1 long', null, 1),
+      _msg('assistant', 'Start and the long rest', 'llm_generated', 2),
+    ];
+    await _until(() => n.state.messages.last.content == 'Start and the long rest',
+        within: const Duration(seconds: 3));
+    expect(server.historyReads, greaterThan(6));
+    n.dispose();
+  });
+
+  test('T5: the defaults wait as long as the server may write', () {
+    expect(ChatNotifier.answerDeadline, greaterThanOrEqualTo(const Duration(seconds: 300)));
+    expect(ChatNotifier.maxRecoveryGap, lessThanOrEqualTo(const Duration(seconds: 30)));
+  });
+
+  test('T5 (N7): resume wakes a recovery sleeping through its back-off',
+      () async {
+    final (n, server) =
+        await _asking('Q1', recoveryDelay: const Duration(seconds: 20));
+    server.token('Start ');
+    await _settle();
+    server.history = [_msg('user', 'Q1', null, 1), _msg('assistant', 'Start', 'pending', 2)];
+    server.drop(); // first look: still being written → sleeps 20 s
+    await _settle();
+    server.history = [
+      _msg('user', 'Q1', null, 1),
+      _msg('assistant', 'Start and the rest', 'llm_generated', 2),
+    ];
+    final sw = Stopwatch()..start();
+    n.onAppResumed(); // the parent is back
+    await _until(() => n.state.messages.last.content == 'Start and the rest',
+        within: const Duration(seconds: 2));
+    expect(sw.elapsed, lessThan(const Duration(seconds: 2)));
+    n.dispose();
+  });
+
+  test('T6 (N4): Retry while the server is still writing does not generate it again',
+      () async {
+    final (n, server) =
+        await _asking('Q1', recoveryDelay: const Duration(seconds: 20));
+    server.token('Start ');
+    await _settle();
+    server.history = [_msg('user', 'Q1', null, 1), _msg('assistant', 'Start', 'pending', 2)];
+    server.drop();
+    await _settle();
+    final calls = server.streamCalls;
+    await n.retryLastTurn();
+    expect(server.streamCalls, calls, reason: 'Q1, A1, Q1′, A1′ — two answers');
+    expect(n.state.messages.last.error, AppL10n.current.chatAnswerStillComing);
+    expect(n.state.messages.where((m) => m.role == 'user').length, 1);
+
+    server.history = [
+      _msg('user', 'Q1', null, 1),
+      _msg('assistant', 'Start and the rest', 'llm_generated', 2),
+    ];
+    await n.retryLastTurn(); // a second tap looks again, now
+    expect(n.state.messages.last.content, 'Start and the rest');
+    expect(server.streamCalls, calls);
+    n.dispose();
+  });
+
+  test('T6 (N10): Retry during the recovery fetch shares it', () async {
+    final (n, server) = await _asking('Q1');
+    server.token('Start ');
+    await _settle();
+    server.history = [
+      _msg('user', 'Q1', null, 1),
+      _msg('assistant', 'Start and the rest', 'llm_generated', 2),
+    ];
+    server.historyGate = Completer<void>();
+    server.drop(); // the loop's first fetch starts and blocks
+    await _settle();
+    final calls = server.streamCalls;
+    final retry = n.retryLastTurn(); // tapped while that fetch is pending
+    await _settle();
+    server.historyGate!.complete();
+    server.historyGate = null;
+    await retry;
+    expect(server.streamCalls, calls);
+    expect(server.historyReads, 1);
+    expect(n.state.messages.last.content, 'Start and the rest');
+    expect(n.state.phase, ChatPhase.idle);
+    n.dispose();
+  });
+
+  test('N9: a newer question after ours ends the wait at once', () async {
+    final (n, server) = await _asking('Q1', recoveryDelay: const Duration(seconds: 20));
+    server.token('Start ');
+    await _settle();
+    server.history = [
+      _msg('user', 'Q1', null, 1),
+      _msg('user', 'Asked from another device', null, 3),
+      _msg('assistant', 'Its answer', 'llm_generated', 4),
+    ];
+    server.drop();
+    await _settle();
+    expect(server.historyReads, 1);
+    expect(n.state.messages.last.content, 'Start ',
+        reason: 'another turn\'s answer is never taken');
+    expect(n.state.messages.last.error, AppL10n.current.chatConnectionInterrupted);
     n.dispose();
   });
 

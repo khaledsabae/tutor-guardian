@@ -2766,6 +2766,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'The connection dropped before the reply finished.';
 
   @override
+  String get chatAnswerStillComing =>
+      'The reply is still being written — it will appear here shortly.';
+
+  @override
   String get chatResponseStopped => '⏹️ Reply stopped.';
 
   @override

@@ -5012,6 +5012,12 @@ abstract class AppLocalizations {
   /// **'انقطع الاتصال قبل اكتمال الرد.'**
   String get chatConnectionInterrupted;
 
+  /// No description provided for @chatAnswerStillComing.
+  ///
+  /// In ar, this message translates to:
+  /// **'ما زال الرد يُكتب، وسيظهر هنا خلال لحظات.'**
+  String get chatAnswerStillComing;
+
   /// No description provided for @chatResponseStopped.
   ///
   /// In ar, this message translates to:
