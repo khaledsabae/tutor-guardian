@@ -25,6 +25,7 @@ on:
       - 'docker-compose.production.yml'
       - 'requirements*.txt'
       - '.github/workflows/deploy.yml'
+      - '.dockerignore'
   pull_request:
     branches: [main]
     paths:

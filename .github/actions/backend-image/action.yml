@@ -60,9 +60,11 @@ runs:
               --cache-from "type=registry,ref=$IMAGE:buildcache"
               --label "org.opencontainers.image.source=https://github.com/$GITHUB_REPOSITORY"
               --label "org.opencontainers.image.revision=$SHA")
+        size() { numfmt --to=iec --suffix=B "$(docker image inspect --format '{{.Size}}' "$1")"; }
         if [ "$MODE" = check ]; then
           docker buildx build "${args[@]}" --load -t tg-candidate:ci .
           echo "image=tg-candidate:ci" >> "$GITHUB_OUTPUT"
+          echo "image size: $(size tg-candidate:ci) unpacked"
           exit 0
         fi
         docker buildx build "${args[@]}" \
@@ -73,7 +75,10 @@ runs:
         digest=$(docker image inspect --format '{{index .RepoDigests 0}}' "$IMAGE:candidate-$SHA")
         echo "image=$IMAGE:candidate-$SHA" >> "$GITHUB_OUTPUT"
         echo "digest=${digest#*@}" >> "$GITHUB_OUTPUT"
+        packed=$(docker buildx imagetools inspect --raw "$digest" \
+          | python3 -c 'import json, sys; print(sum(l["size"] for l in json.load(sys.stdin)["layers"]))')
         echo "pushed and pulled back $digest"
+        echo "image size: $(size "$IMAGE:candidate-$SHA") unpacked, $(numfmt --to=iec --suffix=B "$packed") to pull"
 
     # The same wrapper (and limits) the deploy used to run on the VPS.
     - name: In-image smoke and KB integrity

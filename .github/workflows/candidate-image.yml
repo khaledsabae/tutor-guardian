@@ -19,6 +19,10 @@ on:
   pull_request:
     branches: [main]
     paths:
+      # The image now bakes the knowledge index (app code + units), so any
+      # backend or knowledge-base change can break the build — check them all.
+      - 'backend/**'
+      - 'knowledge_base/**'
       - 'backend/Dockerfile'
       - 'backend/requirements.txt'
       - '.github/ci/constraints-prod.txt'

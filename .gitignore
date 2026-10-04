@@ -28,6 +28,7 @@ backend/secrets/
 
 # ── Generated vector indexes (rebuilt from knowledge_base/units/) ───────
 knowledge_base/chroma_db/
+knowledge_base/chroma_seed/
 ops/chroma_data/
 
 # ── Runtime databases (regenerated) ─────────────────────────────────────

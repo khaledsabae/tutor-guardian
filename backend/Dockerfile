@@ -42,29 +42,49 @@ RUN python -c "from sentence_transformers import SentenceTransformer, CrossEncod
     CrossEncoder('cross-encoder/mmarco-mMiniLMv2-L12-H384-v1', max_length=256)" \
     && chown -R appuser:appgroup "$HF_HOME"
 
-# App code + knowledge base + tools (units are needed to build the vector index).
-# --chown at copy time for the same reason: the old trailing
+# App code + knowledge base first: the baked index below depends on these two
+# and nothing else, so a change to tools, scripts, frontend or docs reuses it.
+# --chown at copy time for the same reason as above: the old trailing
 # `RUN chown -R appuser:appgroup /app` duplicated all of /app, models included.
 COPY --chown=appuser:appgroup backend/ ./backend/
 COPY --chown=appuser:appgroup knowledge_base/ ./knowledge_base/
+
+# The directories the app writes into (volumes in production, plain dirs in
+# a container started from the image alone). Directories only — no -R.
+RUN mkdir -p /app/ops /app/knowledge_base/chroma_db \
+    && chown appuser:appgroup /app /app/ops /app/knowledge_base /app/knowledge_base/chroma_db
+
+# Offline Hugging Face from here on: both models are in the image (above) and
+# the knowledge index is baked with them (below), so the container must load
+# exactly these files — never a newer revision that would no longer match the
+# index — and must not wait on huggingface.co to start. Measured 2026-10-04
+# with the hub unreachable: 146 s to healthy online, 11 s offline.
+ENV PROJECT_ROOT=/app \
+    PYTHONPATH=/app/backend \
+    PYTHONUNBUFFERED=1 \
+    CONVERSATIONS_DB=/app/ops/conversations.db \
+    HF_HUB_OFFLINE=1 \
+    TRANSFORMERS_OFFLINE=1
+
+# Drop to non-root user for security
+USER appuser
+
+# Bake the knowledge index: the container's own startup call
+# (retrieval._ensure_index — same units, same offline model, same fingerprint)
+# run here, on the build machine, then parked at knowledge_base/chroma_seed.
+# Production mounts the tg_chroma volume over chroma_db, so startup copies the
+# seed into it when the volume's index is for other units — seconds, instead of
+# re-embedding every unit on the production host. chroma_db is left empty.
+RUN ANONYMIZED_TELEMETRY=False python -m app.services.index_seed \
+    && rm -rf knowledge_base/chroma_seed \
+    && mv knowledge_base/chroma_db knowledge_base/chroma_seed \
+    && mkdir knowledge_base/chroma_db
+
 COPY --chown=appuser:appgroup ops/tools/ ./ops/tools/
 COPY --chown=appuser:appgroup ops/scripts/ ./ops/scripts/
 COPY --chown=appuser:appgroup frontend/ ./frontend/
 COPY --chown=appuser:appgroup docs/ ./docs/
 COPY --chown=appuser:appgroup .well-known/ ./.well-known/
-
-# The directories the app writes into (volumes in production, plain dirs in
-# the candidate image the deploy tests run in). Directories only — no -R.
-RUN mkdir -p /app/ops /app/knowledge_base/chroma_db \
-    && chown appuser:appgroup /app /app/ops /app/knowledge_base /app/knowledge_base/chroma_db
-
-ENV PROJECT_ROOT=/app \
-    PYTHONPATH=/app/backend \
-    PYTHONUNBUFFERED=1 \
-    CONVERSATIONS_DB=/app/ops/conversations.db
-
-# Drop to non-root user for security
-USER appuser
 
 EXPOSE 8000
 
