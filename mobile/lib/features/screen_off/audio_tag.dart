@@ -31,4 +31,16 @@
 /// directly, and it is its own piece of work** — one handler, every player
 /// routed through it, and tested on a device before it goes anywhere near a
 /// release. Not a line added to main() on the way to something else.
+///
+/// **And MainActivity must then extend `AudioServiceFragmentActivity`.** The
+/// revert above removed the init call but left the package in pubspec.yaml,
+/// and the package alone was enough: its Android plugin, on every activity
+/// attach, creates its own FlutterEngine and runs main() in it unless the
+/// activity already uses that engine. From then on two isolates ran the whole
+/// startup. Once 1.0.58 made a failed keystore read fall through to a fresh
+/// id instead of an error, both isolates of a fresh install minted one —
+/// ~40% of new families had a childless twin, and some came back as it after
+/// a restart (found 2026-10-04, the "device twin").
+/// test/single_dart_entrypoint_test.dart fails if the package comes back
+/// without that activity change.
 library;

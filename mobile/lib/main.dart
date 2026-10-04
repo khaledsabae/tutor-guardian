@@ -86,6 +86,11 @@ Future<int?> _installedBuildNumber() async {
 }
 
 void main() async {
+  // One line per run of this entrypoint. The E2E logcat gate counts them per
+  // process: a second one means a second Flutter engine is running the whole
+  // app — every startup side effect twice, and on a fresh install two device
+  // ids (the 2026-10 "device twin"; see pubspec.yaml for what caused it).
+  debugPrint('tg.main: entrypoint started');
   WidgetsFlutterBinding.ensureInitialized();
   configureBundledFonts();
 
@@ -108,6 +113,8 @@ void main() async {
   // NO background audio package here, deliberately. See
   // features/screen_off/audio_tag.dart for the full story: this app has five
   // AudioPlayer instances, and just_audio_background supports exactly one.
+  // Not even as an unused dependency: its audio_service plugin starts a second
+  // engine that runs this main() again (pubspec.yaml).
   //
   // Startup work that does not depend on Firebase starts now and runs while
   // Firebase initialises, instead of one step after another before the first
