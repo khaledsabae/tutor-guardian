@@ -33,9 +33,10 @@ from typing import Optional
 
 from app import curriculum_loader as cl
 from app.core.taxonomy import age_equivalents, canonical_age_group
+from app.core.times import iso_z
 from app.db.init_db import get_conn
 from app.services import content_lang
-from app.services.child_memory import _similar, _tokens, memory_enabled
+from app.services.child_memory import _similar, _tokens
 
 logger = logging.getLogger(__name__)
 
@@ -258,8 +259,13 @@ def _choose_lesson(topic: dict, band: str, completed: set[str],
 
 
 def build_plan(device_id: str, child_id: int, *, today: date,
-               lang: Optional[str]) -> dict:
-    """Assemble (not cache) the plan for the ISO week containing `today`."""
+               lang: Optional[str], use_memory: bool = False) -> dict:
+    """Assemble (not cache) the plan for the ISO week containing `today`.
+
+    `use_memory`: remembered facts and follow-up outcomes shape the choice —
+    only for a session confirmed to hold the phone, on a memory build, with
+    the switch on (child_memory.memory_in_use; PR #26 final review). Otherwise
+    the plan comes from the parent's chosen challenge and the demand map."""
     code = content_lang.normalise(lang) or "ar"
     week, monday = iso_week(today)
     week_no = int(week.split("-W")[1])
@@ -274,7 +280,7 @@ def build_plan(device_id: str, child_id: int, *, today: date,
         band = canonical_age_group(child["age_group"] or "")
         group = BAND_GROUP.get(band) or BAND_GROUP.get(child["age_group"] or "", "early")
         bank = load_bank(group, code)
-        signals = _signals(conn, device_id, child_id, memory_enabled(device_id))
+        signals = _signals(conn, device_id, child_id, use_memory)
         completed = _completed_lessons(conn, device_id, child_id)
     finally:
         conn.close()
@@ -317,12 +323,15 @@ def _stored_offset(device_id: str) -> Optional[int]:
 
 def get_weekly_plan(device_id: str, child_id: int, *, lang: Optional[str] = None,
                     tz_offset_minutes: Optional[int] = None,
-                    now: Optional[datetime] = None) -> dict:
+                    now: Optional[datetime] = None, personal: bool = False) -> dict:
     """This week's plan, built once and then served from `weekly_plans`.
 
     The week is the parent's local ISO week (Monday start), from the UTC offset
     the client sent — or, when it sent none, the one it last reported, and UTC
     only when there is neither (PR #26 review F7: a missing offset is not 0).
+
+    `personal` (memory may shape it — build_plan) is part of the cache key: a
+    plan shaped by memory is never served to a session that may not use it.
     """
     code = content_lang.normalise(lang) or "ar"
     now = now or datetime.now(timezone.utc)
@@ -335,37 +344,38 @@ def get_weekly_plan(device_id: str, child_id: int, *, lang: Optional[str] = None
     try:
         row = conn.execute(
             "SELECT plan_json, created_at FROM weekly_plans WHERE device_id = ? "
-            "AND child_id = ? AND iso_week = ? AND lang = ?",
-            (device_id, child_id, week, code),
+            "AND child_id = ? AND iso_week = ? AND lang = ? AND personal = ?",
+            (device_id, child_id, week, code, 1 if personal else 0),
         ).fetchone()
     finally:
         conn.close()
     if row is not None:
         try:
             plan = json.loads(row["plan_json"])
-            plan["generated_at"] = row["created_at"]
+            plan["generated_at"] = iso_z(row["created_at"])
             return plan
         except (json.JSONDecodeError, TypeError):
             logger.warning("weekly plan: unreadable cached row — rebuilding")
 
-    plan = build_plan(device_id, child_id, today=local_day, lang=code)
+    plan = build_plan(device_id, child_id, today=local_day, lang=code, use_memory=personal)
     conn = get_conn()
     try:
         conn.execute(
-            "INSERT INTO weekly_plans (device_id, child_id, iso_week, lang, plan_json) "
-            "VALUES (?, ?, ?, ?, ?) "
-            "ON CONFLICT(device_id, child_id, iso_week, lang) DO NOTHING",
-            (device_id, child_id, week, code, json.dumps(plan, ensure_ascii=False)),
+            "INSERT OR IGNORE INTO weekly_plans "
+            "(device_id, child_id, iso_week, lang, personal, plan_json) "
+            "VALUES (?, ?, ?, ?, ?, ?)",
+            (device_id, child_id, week, code, 1 if personal else 0,
+             json.dumps(plan, ensure_ascii=False)),
         )
         conn.commit()
         row = conn.execute(
             "SELECT plan_json, created_at FROM weekly_plans WHERE device_id = ? "
-            "AND child_id = ? AND iso_week = ? AND lang = ?",
-            (device_id, child_id, week, code),
+            "AND child_id = ? AND iso_week = ? AND lang = ? AND personal = ?",
+            (device_id, child_id, week, code, 1 if personal else 0),
         ).fetchone()
     finally:
         conn.close()
     # Two first readers racing: the row that won is the plan, for both.
     stored = json.loads(row["plan_json"]) if row else plan
-    stored["generated_at"] = row["created_at"] if row else None
+    stored["generated_at"] = iso_z(row["created_at"]) if row else None
     return stored

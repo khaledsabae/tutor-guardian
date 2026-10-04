@@ -202,26 +202,36 @@ def send_to_device(
         _record_send(device_id, (data or {}).get("type", "unknown"))
         return {"ok": True, "sent": True, "message_id": message_id}
     except messaging.UnregisteredError:
-        # Token is stale; remove it so we don't retry.
-        _remove_token(device_id)
+        # Token is stale; stop using it — unless the app registered a newer one
+        # while this was in flight (remove_token_if_current).
+        remove_token_if_current(device_id, token)
         return {"ok": True, "sent": False, "reason": "unregistered"}
     except Exception as exc:  # noqa: BLE001
         return {"ok": False, "error": str(exc)}
 
 
+# A dead push token leaves a tombstone, not a hole: the row stays, with an
+# empty token. Every reader already treats '' as "no token"; what survives is
+# the device's push history (routers/push.py) — a deleted row made the next
+# registration a "first" token and skipped the takeover cooldown (PR #26 final
+# review).
+
+
 def _remove_token(device_id: str) -> None:
     conn = get_conn()
-    conn.execute("DELETE FROM push_tokens WHERE device_id = ?", (device_id,))
-    conn.commit()
-    conn.close()
+    try:
+        conn.execute("UPDATE push_tokens SET token = '' WHERE device_id = ?", (device_id,))
+        conn.commit()
+    finally:
+        conn.close()
 
 
 def remove_token_if_current(device_id: str, token: str) -> None:
-    """Forget a push token FCM called unregistered — unless the app has
+    """Stop using a push token FCM called unregistered — unless the app has
     registered a newer one in the meantime, which must survive."""
     conn = get_conn()
     try:
-        conn.execute("DELETE FROM push_tokens WHERE device_id = ? AND token = ?",
+        conn.execute("UPDATE push_tokens SET token = '' WHERE device_id = ? AND token = ?",
                      (device_id, token))
         conn.commit()
     finally:

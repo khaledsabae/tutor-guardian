@@ -519,7 +519,8 @@ def test_extraction_stores_merges_and_opens_a_followup(client, pipeline, monkeyp
     assert not any("ملغ" in f for f in facts)                    # dose never stored
     fus = cm.list_followups(device, cid)
     assert len(fus) == 1 and fus[0]["topic"] == "sleep"
-    due = datetime.strptime(fus[0]["due_at"], "%Y-%m-%d %H:%M:%S")
+    assert fus[0]["due_at"].endswith("Z")                       # ISO 8601, UTC (final review)
+    due = datetime.strptime(fus[0]["due_at"], "%Y-%m-%dT%H:%M:%SZ")
     assert timedelta(days=3, hours=23) < due - datetime.utcnow() < timedelta(days=4, hours=1)
 
     # Said again: merged (and the pending one promoted), not duplicated; no

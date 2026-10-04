@@ -16,6 +16,7 @@ from fastapi import APIRouter, Depends, HTTPException, Query, Request
 from pydantic import BaseModel, Field
 
 from app.core.proof import request_access, require_device_proof
+from app.core.times import iso_z
 from app.db.init_db import get_conn
 from app.routers.children import _load_owned_child, _require_device_id
 from app.services import child_memory as cm
@@ -72,7 +73,7 @@ def _settings(request: Request, device_id: str) -> dict:
         # false: if `cooldown_until` is set, say when it opens (§9.0.1);
         # otherwise run the device-proof challenge first.
         "proven": acc.ok,
-        "cooldown_until": acc.available_at if acc.reason == "cooldown" else None,
+        "cooldown_until": iso_z(acc.available_at) if acc.reason == "cooldown" else None,
     }
 
 
@@ -271,9 +272,14 @@ def get_weekly_plan(child_id: int, request: Request,
                     tz_offset_minutes: Optional[int] = Query(None)):
     device_id = _owned_child(request, child_id)
     lang = lang or request.headers.get("accept-language")
-    # Recorded only when sent: a call without it must not reset the family's
-    # clock to UTC (PR #26 review F7) — the follow-up push reads it.
-    cm.record_tz_offset(device_id, tz_offset_minutes)
+    confirmed = request_access(request).ok
+    # Recorded only when sent (a call without it must not reset the family's
+    # clock to UTC — PR #26 review F7), and only from a session confirmed to
+    # hold the phone: the follow-up push and the security notice read it
+    # (PR #26 final review).
+    if confirmed:
+        cm.record_tz_offset(device_id, tz_offset_minutes)
     return weekly_plan.get_weekly_plan(
         device_id, child_id, lang=lang, tz_offset_minutes=tz_offset_minutes,
+        personal=cm.memory_in_use(device_id, proven=confirmed),
     )

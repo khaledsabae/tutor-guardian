@@ -77,41 +77,7 @@ def _expire(h: dict) -> None:
     conn.close()
 
 
-# ── Every protected route ─────────────────────────────────────────────────
-
-PROTECTED = [
-    ("delete", "/api/privacy/account?confirm=true", None),
-    ("delete", "/api/privacy/memory", None),
-    ("put", "/api/children/memory/settings", {"enabled": True}),
-    ("get", "/api/children/followups/due", None),
-    ("get", "/api/children/followups/1", None),
-    ("post", "/api/children/followups/1/answer", {"outcome": "worked"}),
-    ("post", "/api/children/followups/1/dismiss", None),
-    ("get", "/api/children/{cid}/followups", None),
-    ("get", "/api/children/{cid}/memory", None),
-    ("post", "/api/children/{cid}/memory", {"category": "temperament", "fact": "طفلي هادئ"}),
-    ("patch", "/api/children/{cid}/memory/1", {"status": "rejected"}),
-    ("delete", "/api/children/{cid}/memory/1", None),
-    ("delete", "/api/children/{cid}/memory", None),
-]
-
-
-@pytest.mark.parametrize("method,path,body", PROTECTED)
-def test_every_protected_route_needs_a_proven_session(client, method, path, body):
-    h = _mint(client, f"dev-route-{method}-{abs(hash(path)) % 10_000}")
-    cid = _child(client, h)
-    url = path.format(cid=cid)
-    kwargs = {"headers": h}
-    if body is not None:
-        kwargs["json"] = body
-    r = getattr(client, method)(url, **kwargs)
-    assert _refused(r), (url, r.status_code, r.text)
-    detail = r.json()["detail"]
-    assert detail["message"] and detail["message_en"] and detail["support_email"]
-
-    prove(client, h, push_token=f"fcm-{url}")
-    r = getattr(client, method)(url, **kwargs)
-    assert r.status_code != 403, (url, r.text)
+# ── Every protected route: tests/test_route_guards.py walks them from the app ─
 
 
 def test_switching_memory_off_never_needs_a_proof(client):
@@ -254,7 +220,7 @@ def test_a_wrong_an_expired_and_a_reused_code(client):
         msg = inbox.last_for("fcm-codes")
     conn = get_conn()
     conn.execute("UPDATE device_proof_challenges SET expires_at = datetime('now', '-1 second') "
-                 "WHERE id = ?", (int(msg["challenge_id"]),))
+                 "WHERE public_id = ?", (msg["challenge_id"],))
     conn.commit()
     conn.close()
     r = complete(client, h, msg["challenge_id"], msg["code"])
@@ -301,19 +267,21 @@ def test_a_code_delivered_to_an_old_push_token(client):
 
 def test_a_code_proves_only_the_session_that_asked(client):
     """Otherwise the owner's app, posting back a code it received, would prove
-    a stranger's session that started the challenge."""
-    stranger = _mint(client, "dev-bind")
-    owner = _mint(client, "dev-bind")
-    register_push(client, owner, "fcm-owner")
+    a stranger's session that started the challenge. And another session's
+    post does not burn the challenge (final review): it cannot cancel one."""
+    asker = _mint(client, "dev-bind")
+    other_session = _mint(client, "dev-bind")
+    register_push(client, other_session, "fcm-owner")
     with fcm() as inbox:
-        assert start(client, stranger).status_code == 202
-        msg = inbox.last_for("fcm-owner")                    # lands on the owner's phone
-    r = complete(client, owner, msg["challenge_id"], msg["code"])
+        assert start(client, asker).status_code == 202
+        msg = inbox.last_for("fcm-owner")                    # lands on the phone
+    r = complete(client, other_session, msg["challenge_id"], msg["code"])
     assert r.status_code == 409 and r.json()["detail"]["reason"] == "other_session"
-    r = complete(client, stranger, msg["challenge_id"], msg["code"])
-    assert r.status_code == 409 and r.json()["detail"]["reason"] == "used"
-    for h in (stranger, owner):
-        assert client.get("/api/device-proof", headers=h).json()["proven"] is False
+    assert client.get("/api/device-proof", headers=other_session).json()["proven"] is False
+    # Not burnt: the session that asked can still answer it.
+    assert complete(client, asker, msg["challenge_id"], msg["code"]).status_code == 200
+    assert client.get("/api/device-proof", headers=asker).json()["proven"] is True
+    assert client.get("/api/device-proof", headers=other_session).json()["proven"] is False
     # Another device's challenge id is simply not found.
     other = _mint(client, "dev-bind-other")
     assert complete(client, other, msg["challenge_id"], msg["code"]).status_code == 404
@@ -327,10 +295,11 @@ def test_the_code_never_leaves_in_a_response(client):
         msg = inbox.last_for("fcm-secret")
     assert r.status_code == 202
     assert set(r.json()) == {"challenge_id", "expires_in"}
-    assert msg["code"] not in r.text and int(msg["challenge_id"]) == r.json()["challenge_id"]
+    assert msg["code"] not in r.text and msg["challenge_id"] == r.json()["challenge_id"]
+    assert len(msg["challenge_id"]) >= 16 and not msg["challenge_id"].isdigit()   # random
     conn = get_conn()
     stored = conn.execute("SELECT code_hash, push_token_hash, token_hash FROM "
-                          "device_proof_challenges WHERE id = ?",
+                          "device_proof_challenges WHERE public_id = ?",
                           (r.json()["challenge_id"],)).fetchone()
     conn.close()
     assert msg["code"] not in tuple(stored) and "fcm-secret" not in tuple(stored)
@@ -377,6 +346,18 @@ def test_starts_are_rate_limited_per_session(client):
     with fcm():
         codes = [start(client, h).status_code for _ in range(device_proof.MAX_STARTS_PER_SESSION_HOUR + 1)]
     assert codes[:-1] == [202] * device_proof.MAX_STARTS_PER_SESSION_HOUR
+    assert codes[-1] == 429
+
+
+def test_starts_are_rate_limited_per_device_across_sessions(client):
+    """Many sessions of one device (cheap before SESSION_MINT_ENFORCE) still
+    share one budget: the device's phone is not spammed (final review, item 7)."""
+    first = _mint(client, "dev-rate-device")
+    register_push(client, first, "fcm-rate-device")
+    with fcm():
+        codes = [start(client, _mint(client, "dev-rate-device")).status_code
+                 for _ in range(device_proof.MAX_STARTS_PER_DEVICE_HOUR + 1)]
+    assert codes[:-1] == [202] * device_proof.MAX_STARTS_PER_DEVICE_HOUR
     assert codes[-1] == 429
 
 

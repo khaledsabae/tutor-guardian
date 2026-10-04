@@ -33,6 +33,7 @@ from fastapi.responses import FileResponse, HTMLResponse, Response
 
 from app.core.contact import SUPPORT_EMAIL
 from app.core.proof import require_device_proof, require_device_proof_irreversible
+from app.core.times import now_z
 from app.db.init_db import get_conn
 
 logger = logging.getLogger(__name__)
@@ -87,7 +88,7 @@ def delete_my_memory(request: Request):
     logger.info("privacy: device memory erased (%d rows)", sum(counts.values()))
     return {
         "deleted": counts,
-        "deleted_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        "deleted_at": now_z(),
     }
 
 # Project root (…/tutor-guardian), overridable for containers.
@@ -190,8 +191,9 @@ DELETE_ACCOUNT_HTML = """<!doctype html>
 <p>يُحذف فورًا كل ما يرتبط بهاتفك على خوادمنا: ملفات الأطفال وتقدّمهم، والأسئلة
 وإجاباتها، وذاكرة الطفل والمتابعات وخطط الأسبوع، وأدوات المتابعة اليومية، وبيانات
 وضع الطفل، والملاحظات وردودها، ورمز الإشعارات، والدعوات، والنسخ الاحتياطية، ورموز
-الجلسة. وإن كنت سجّلت الدخول بحساب Google تُحذف كذلك بيانات كل هاتف مرتبط بالحساب،
-وبيانات الحساب نفسه.</p>
+الجلسة. وإن كنت ربطت هاتفك بحساب Google من هاتف تحقّقنا منه، تُحذف كذلك بيانات كل
+هاتف آخر رُبط بالحساب من هاتف تحقّقنا منه، وبيانات الحساب نفسه؛ أما الهاتف الذي رُبط
+دون تحقّق فلا يُحذف إلا بطلب نتأكد فيه أنه لك.</p>
 <p>هذا الخيار موجود في إصدارات التطبيق التي تحويه؛ إن لم تجده فحدّث التطبيق أو اتبع
 الطريقة التالية. وقبل الحذف يتحقق التطبيق تلقائيًا أن الطلب من هاتفك برسالة صامتة؛ فإن
 تعذّر التحقق فاتبع الطريقة التالية. وقد يتوقف الحذف من التطبيق 72 ساعة بعد ربط هاتف
@@ -203,8 +205,8 @@ DELETE_ACCOUNT_HTML = """<!doctype html>
 <a href="mailto:{email}?subject=%D8%B7%D9%84%D8%A8%20%D8%AD%D8%B0%D9%81%20%D8%A8%D9%8A%D8%A7%D9%86%D8%A7%D8%AA%20%2F%20Data%20deletion%20request">{email}</a>
 بعنوان «طلب حذف بيانات».</p>
 <ul>
-  <li>إن كنت سجّلت الدخول بحساب Google: راسلنا من بريد ذلك الحساب، فنحذف كل البيانات
-  المرتبطة به وبكل هاتف مرتبط به.</li>
+  <li>إن كنت سجّلت الدخول بحساب Google: راسلنا من بريد ذلك الحساب، فنحذف بيانات الحساب
+  وكل هاتف رُبط به من هاتف تحقّقنا منه؛ وأي هاتف آخر بعد أن نتأكد أنه لك.</li>
   <li>إن لم تسجّل الدخول: بياناتك مرتبطة بمعرّف عشوائي أنشأه هاتفك، ولا نستطيع ربطه
   ببريدك. اكتب لنا ما يساعد على التعرّف عليها — الفترة التقريبية لاستعمال التطبيق،
   والاسم الأول والفئة العمرية لطفلك كما أدخلتهما — فنحذف ما نستطيع مطابقته بثقة،
@@ -233,9 +235,11 @@ DELETE_ACCOUNT_HTML = """<!doctype html>
 <p>Everything linked to your phone on our servers is deleted immediately: child
 profiles and progress, questions and answers, child memory, follow-ups and weekly
 plans, the daily tracking tools, child-mode data, feedback and replies, the
-notification token, invites, backups and session tokens. If you signed in with
-Google, the data of every phone linked to that account, and the account record
-itself, are deleted too.</p>
+notification token, invites, backups and session tokens. If your phone was linked
+to a Google account from a verified phone, the data of every other phone linked to
+that account from a verified phone, and the account record itself, are deleted
+too; a phone linked without verification is deleted only on a request in which we
+confirm it is yours.</p>
 <p>This option exists in app versions that include it; if you do not see it,
 update the app or use the method below. Before deleting, the app checks
 automatically, with a silent message, that the request comes from your phone; if
@@ -251,7 +255,8 @@ a child's profile you can delete that child and their data.</p>
 with the subject "Data deletion request".</p>
 <ul>
   <li>If you signed in with Google: write from that Google account's address, and we
-  delete all data linked to it and to every phone linked to it.</li>
+  delete the account's data and every phone linked to it from a verified phone — any
+  other phone once we have confirmed it is yours.</li>
   <li>If you never signed in: your data is linked only to a random identifier your
   phone created, which we cannot connect to your email address. Tell us what can
   help identify it — roughly when you used the app, and your child's first name and
@@ -302,6 +307,10 @@ DEPENDENT_TABLES: tuple[tuple[str, str, str, str], ...] = (
 OTHER_DEVICE_COLUMNS: tuple[tuple[str, str], ...] = (
     ("referrals", "referrer_device"),
     ("referrals", "referred_device"),
+    # PR #29's device twins: a folded device id → the family device that took
+    # it in. Covered whichever of #26/#29 lands first (skipped while absent).
+    ("device_aliases", "alias"),
+    ("device_aliases", "canonical"),
 )
 
 # The Google identity behind a signed-in account (email, display name, and the
@@ -309,6 +318,9 @@ OTHER_DEVICE_COLUMNS: tuple[tuple[str, str], ...] = (
 IDENTITY_TABLES: tuple[tuple[str, str], ...] = (
     ("parent_identities", "google_id"),
     ("user_backups", "google_id"),
+    # Every remaining link to a deleted identity: a phone linked by an
+    # unconfirmed session keeps its data, but not a link to nothing.
+    ("identity_links", "google_id"),
 )
 
 # Tables that hold nothing tied to a device — and why. A new table must be
@@ -344,16 +356,61 @@ def account_devices(conn: sqlite3.Connection, device_id: str,
     the same identity and copies the children over (identity._merge_legacy_
     device_data), so deleting only the calling device would leave a full copy
     one sign-in away.
+
+    Only links a session *proven to hold its phone* made are followed (PR #26
+    final review): until SESSION_MINT_ENFORCE, a bare session for a known
+    device id could link that family's phone to the attacker's own Google
+    account, and an account deletion there would then wipe the family. So the
+    caller's identity counts only through a confirmed link of the caller, and
+    reaches only the devices confirmed-linked to it. Through an unconfirmed
+    link the caller deletes only its own device (and that link); the Google
+    identity and the other phones stay.
     """
     devices = {device_id}
     google_ids: list[str] = []
     if "identity_links" in tables:
-        google_ids = [r[0] for r in conn.execute(
-            "SELECT google_id FROM identity_links WHERE device_id = ?", (device_id,))]
-        for g in google_ids:
+        flag = "confirmed" if "confirmed" in tables["identity_links"] else "NULL"
+        for google_id, confirmed in conn.execute(
+                f"SELECT google_id, {flag} FROM identity_links WHERE device_id = ?",
+                (device_id,)).fetchall():
+            if not confirmed:
+                continue
+            google_ids.append(google_id)
             devices |= {r[0] for r in conn.execute(
-                "SELECT device_id FROM identity_links WHERE google_id = ?", (g,))}
+                f"SELECT device_id FROM identity_links WHERE google_id = ? AND {flag} = 1",
+                (google_id,))}
     return sorted(devices), google_ids
+
+
+def erase_identity(google_ids: list[str]) -> dict[str, int]:
+    """Delete Google identities themselves — the account record, its backups,
+    and every link to it — but no device's data. For the e-mailed request whose
+    sender proved the address while no phone was confirmed-linked
+    (ops/scripts/delete_account.py)."""
+    if not google_ids:
+        return {}
+    conn = get_conn()
+    try:
+        # As in erase_account: off for this connection, before the transaction
+        # opens — the links that reference the identity go in the same step.
+        conn.execute("PRAGMA foreign_keys = OFF")
+        conn.execute("BEGIN IMMEDIATE")
+        tables = _table_columns(conn)
+        marks = ",".join("?" * len(google_ids))
+        counts: dict[str, int] = {}
+        for table, column in IDENTITY_TABLES:
+            if column in tables.get(table, set()):
+                n = conn.execute(f"DELETE FROM {table} WHERE {column} IN ({marks})",
+                                 google_ids).rowcount
+                if n:
+                    counts[table] = n
+        conn.commit()
+        return counts
+    except Exception:
+        conn.rollback()
+        raise
+    finally:
+        conn.close()
 
 
 def erase_child(device_id: str, child_id: int) -> dict[str, int]:
@@ -485,4 +542,4 @@ def delete_my_account(request: Request, confirm: bool = Query(False)):
         "privacy: account erased (%d device(s), signed_in=%s, %d rows)",
         result["devices"], result["signed_in"], sum(result["deleted"].values()),
     )
-    return {**result, "deleted_at": datetime.now(timezone.utc).isoformat(timespec="seconds")}
+    return {**result, "deleted_at": now_z()}

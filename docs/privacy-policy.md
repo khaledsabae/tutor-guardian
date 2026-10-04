@@ -136,12 +136,17 @@
   يوقف التعلّم والمتابعات ويمنع وصول الذاكرة إلى الإجابات (دون حذف شيء)، وإيقافه متاح
   دائمًا. أما قراءة الذاكرة وتعديلها وحذفها وحذف الحساب فلا تتمّ إلا بعد «التحقق من
   الهاتف» المذكور أعلاه. وإن تعذّر التحقق (لا يستقبل هاتفك الرسائل مثلًا) فراسلنا.
-- **حذف ملف طفل** يحذف معه تقدّمه وذاكرته وبياناته في الأدوات.
-- **حذف الحساب من التطبيق** (في الإصدارات التي تحوي «حذف الحساب» في الإعدادات): يحذف
-  فورًا كل ما يرتبط بهاتفك على خوادمنا، وإن كنت سجّلت الدخول بحساب Google يحذف كذلك
-  بيانات كل هاتف مرتبط بالحساب نفسه، وبيانات الحساب.
+- **حذف ملف طفل** من هاتف تحقّقنا منه يحذف معه تقدّمه وذاكرته وبياناته في الأدوات. ومن
+  إصدار لا يستطيع التحقق (ولم يُتحقَّق من الهاتف قط) يُحذف الملف وحده كما كان من قبل؛
+  فراسلنا لحذف ما تبقّى.
+- **حذف الحساب من التطبيق** (في الإصدارات التي تحوي «حذف الحساب» في الإعدادات، وبعد
+  «التحقق من الهاتف»): يحذف فورًا كل ما يرتبط بهاتفك على خوادمنا. وإن كنت ربطت هذا الهاتف
+  بحساب Google من هاتف تحقّقنا منه، يحذف كذلك بيانات كل هاتف آخر رُبط بالحساب نفسه من هاتف
+  تحقّقنا منه، وبيانات الحساب. أما الهاتف الذي رُبط بحسابك دون تحقّق فلا يُحذف معه؛ راسلنا
+  لحذفه بعد أن نتأكد أنه لك.
 - **دون التطبيق:** راسلنا على **support@alsaba.cloud** بعنوان «طلب حذف بيانات»، أو افتح
-  صفحة https://tg-api.alsaba.cloud/delete-account — ننفّذ الطلب خلال **30 يومًا**.
+  صفحة https://tg-api.alsaba.cloud/delete-account — ننفّذ الطلب خلال **30 يومًا**، بالقاعدة
+  نفسها: الهواتف المرتبطة بحسابك من هاتف تحقّقنا منه، وغيرها بعد أن نتأكد أنه لك.
 
 ### الأطفال
 التطبيق موجّه إلى الآباء والأمهات. لا ينشئ الطفل حسابًا، ويستعمل «وضع الطفل» على هاتف
@@ -337,14 +342,22 @@ arrives.
   off always works. Reading, changing or deleting memory, and deleting the
   account, only work after the "phone verification" described above. If it cannot
   work (for example, your phone does not receive messages), email us.
-- **Deleting a child profile** deletes that child's progress, memory and tool data.
-- **Delete account in the app** (in versions with "Delete account" in Settings):
-  immediately deletes everything linked to your phone on our servers — and, if you
-  signed in with Google, everything linked to every phone on that same Google
-  account, and the account record itself.
+- **Deleting a child profile** from a verified phone deletes that child's
+  progress, memory and tool data. From an app version that cannot verify (on a
+  phone never verified), only the profile is removed, as before — email us to
+  remove the rest.
+- **Delete account in the app** (in versions with "Delete account" in Settings,
+  after "phone verification"): immediately deletes everything linked to your
+  phone on our servers. If this phone was linked to a Google account from a
+  verified phone, it also deletes everything of every other phone linked to that
+  account from a verified phone, and the account record itself. A phone linked
+  to your account without verification is not included — email us to delete it
+  once we have confirmed it is yours.
 - **Without the app:** email **support@alsaba.cloud** with the subject "Data
   deletion request", or open https://tg-api.alsaba.cloud/delete-account — we
-  complete the request within **30 days**.
+  complete the request within **30 days**, by the same rule: the phones linked to
+  your account from a verified phone, and any other once we have confirmed it is
+  yours.
 
 ### Children
 The app is meant for mothers and fathers. A child does not create an account; child

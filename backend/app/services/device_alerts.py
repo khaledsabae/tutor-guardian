@@ -9,7 +9,8 @@ voids the newcomer's proof (and the owner's clean proof vouches for it at once).
 
 Rules:
   * generic, in Arabic and English: no name, nothing from the account;
-  * at most one per device per day;
+  * at most one per device per day — a later one waits for the day to end
+    (it is delayed, never dropped);
   * between 09:00 and 21:00 on the family's clock (the offset the app last
     sent; when it never sent one, UTC+3 — where most of the families are);
   * on the safety channel, so a parent who muted reminders still gets it;
@@ -47,13 +48,14 @@ def _utcnow() -> datetime:
 
 
 def queue(conn: sqlite3.Connection, device_id: str, old_token: str) -> bool:
-    """Owe the previous token a notice — unless one is already waiting, or one
-    went out in the last day. Runs inside the caller's transaction."""
+    """Owe the previous token a notice — unless one is already waiting. One
+    sent in the last day does not cancel it: it waits until the day is over
+    (run_due_alerts; PR #26 final review — a second takeover is told, later).
+    Runs inside the caller's transaction."""
     row = conn.execute(
-        "SELECT old_token, sent_at >= datetime('now', '-24 hours') AS recent "
-        "FROM device_alerts WHERE device_id = ?", (device_id,),
+        "SELECT old_token FROM device_alerts WHERE device_id = ?", (device_id,),
     ).fetchone()
-    if row is not None and (row["old_token"] or row["recent"]):
+    if row is not None and row["old_token"]:
         return False
     conn.execute(
         "INSERT INTO device_alerts (device_id, old_token, queued_at) "
@@ -73,16 +75,20 @@ def _local_hour(now: datetime, offset: Optional[int]) -> int:
 def run_due_alerts(now: Optional[datetime] = None) -> dict:
     """One sweep. Returns counts; never names a device or a token."""
     now = now or _utcnow()
-    out = {"sent": 0, "dead": 0, "failed": 0, "night": 0, "expired": 0}
+    now_s = now.isoformat(sep=" ", timespec="seconds")      # the sweep's clock, as SQLite writes it
+    out = {"sent": 0, "dead": 0, "failed": 0, "night": 0, "expired": 0, "waiting": 0}
     conn = get_conn()
     try:
         rows = conn.execute(
             "SELECT a.device_id, a.old_token, a.sent_at, "
-            "       a.queued_at < datetime('now', ?) AS stale, s.tz_offset_minutes "
+            "       a.queued_at < datetime('now', ?) AS stale, "
+            "       a.sent_at IS NOT NULL AND a.sent_at > datetime(?) AS recent, "
+            "       s.tz_offset_minutes "
             "FROM device_alerts a "
             "LEFT JOIN child_memory_settings s ON s.device_id = a.device_id "
             "WHERE a.old_token IS NOT NULL",
-            (f"-{int(GIVE_UP.total_seconds())} seconds",),
+            (f"-{int(GIVE_UP.total_seconds())} seconds",
+             (now - ONE_A_DAY).isoformat(sep=" ", timespec="seconds")),
         ).fetchall()
     except sqlite3.OperationalError as exc:          # a database before v30
         logger.warning("account alert: skipped (%s)", exc)
@@ -95,10 +101,13 @@ def run_due_alerts(now: Optional[datetime] = None) -> dict:
             _settle(device, token, sent=False)       # forget the token, no notice
             out["expired"] += 1
             continue
+        if r["recent"]:
+            out["waiting"] += 1                      # one a day: this one goes tomorrow
+            continue
         if not (LOCAL_DAY_START <= _local_hour(now, r["tz_offset_minutes"]) < LOCAL_DAY_END):
             out["night"] += 1
             continue
-        if not _claim(device, token):
+        if not _claim(device, token, now_s):
             continue                                 # another worker has it
         result = push_sender.send_notification_to_token(
             token, TITLE, BODY, {"type": KIND},
@@ -121,13 +130,13 @@ def _safety_channel() -> str:
     return SAFETY_CHANNEL
 
 
-def _claim(device_id: str, token: str) -> bool:
+def _claim(device_id: str, token: str, now_s: str) -> bool:
     """Take the notice and forget the token in one step."""
     conn = get_conn()
     try:
         cur = conn.execute(
-            "UPDATE device_alerts SET old_token = NULL, sent_at = datetime('now') "
-            "WHERE device_id = ? AND old_token = ?", (device_id, token))
+            "UPDATE device_alerts SET old_token = NULL, sent_at = ? "
+            "WHERE device_id = ? AND old_token = ?", (now_s, device_id, token))
         conn.commit()
         return cur.rowcount == 1
     finally:

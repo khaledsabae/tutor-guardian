@@ -1141,7 +1141,8 @@ CREATE TABLE IF NOT EXISTS weekly_plans (
     lang        TEXT NOT NULL DEFAULT 'ar',
     plan_json   TEXT NOT NULL,
     created_at  TEXT NOT NULL DEFAULT (datetime('now')),
-    UNIQUE (device_id, child_id, iso_week, lang),
+    personal    INTEGER NOT NULL DEFAULT 0,  -- shaped by memory (confirmed sessions only)
+    UNIQUE (device_id, child_id, iso_week, lang, personal),
     FOREIGN KEY (child_id) REFERENCES child_profiles(id) ON DELETE CASCADE
 );
 
@@ -1221,6 +1222,17 @@ def _ensure_child_memory_tables(conn: sqlite3.Connection) -> None:
     _ensure_column(conn, table="device_proof_sessions", column="clean",
                    ddl="ALTER TABLE device_proof_sessions ADD COLUMN clean "
                        "INTEGER NOT NULL DEFAULT 0")
+    # The challenge's public id: random, so another session cannot name it.
+    _ensure_column(conn, table="device_proof_challenges", column="public_id",
+                   ddl="ALTER TABLE device_proof_challenges ADD COLUMN public_id TEXT")
+    conn.execute("CREATE UNIQUE INDEX IF NOT EXISTS ux_device_proof_challenges_public "
+                 "ON device_proof_challenges (public_id)")
+    _ensure_column(conn, table="weekly_plans", column="personal",
+                   ddl="ALTER TABLE weekly_plans ADD COLUMN personal INTEGER NOT NULL DEFAULT 0")
+    # 1 = the Google link was made by a session proven to hold the phone. Account
+    # deletion follows only such links (routers/privacy.py account_devices).
+    _ensure_column(conn, table="identity_links", column="confirmed",
+                   ddl="ALTER TABLE identity_links ADD COLUMN confirmed INTEGER")
     # When the device's current push token became current, and whether that
     # change was vouched for by a proven session (services/device_proof.py:
     # an unvouched change pauses the protected routes for 72 hours).

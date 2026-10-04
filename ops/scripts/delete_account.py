@@ -15,6 +15,14 @@ Run inside the backend container (it reads CONVERSATIONS_DB from there):
 
 Dry run by default: it prints how many rows each table holds for the account.
 Add --yes to delete. Prints counts only — never the data itself.
+
+Same rule as the in-app button (PR #26 final review): the deletion follows only
+Google links that a session proven to hold its phone made. A phone linked
+without that proof is listed but not included — the address proves who owns
+the Google account, not who owns every phone someone linked to it. Check such a
+phone separately and delete it with --device-id. With --email and no confirmed
+phone at all, only the Google account itself goes (its record, backups and
+links); no phone's data.
 """
 from __future__ import annotations
 
@@ -29,19 +37,27 @@ sys.path.insert(0, str(ROOT / "backend"))
 # ruff: noqa: E402
 from app.db.init_db import get_conn
 from app.routers.privacy import (
-    DEPENDENT_TABLES, _table_columns, account_devices, erase_account,
+    DEPENDENT_TABLES, _table_columns, account_devices, erase_account, erase_identity,
 )
 
 
-def devices_for_email(email: str) -> list[str]:
+def links_for_email(email: str) -> list[tuple[str, str, bool]]:
+    """(device_id, google_id, confirmed) for every phone linked to the Google
+    account with this address."""
     conn = get_conn()
     try:
-        return [r[0] for r in conn.execute(
-            "SELECT l.device_id FROM identity_links l "
+        cols = {r[1] for r in conn.execute("PRAGMA table_info(identity_links)")}
+        flag = "l.confirmed" if "confirmed" in cols else "NULL"
+        return [(r[0], r[1], bool(r[2])) for r in conn.execute(
+            f"SELECT l.device_id, l.google_id, {flag} FROM identity_links l "
             "JOIN parent_identities p ON p.google_id = l.google_id "
             "WHERE lower(p.email) = lower(?)", (email.strip(),))]
     finally:
         conn.close()
+
+
+def devices_for_email(email: str) -> list[str]:
+    return [d for d, _, _ in links_for_email(email)]
 
 
 def preview(device_id: str) -> dict:
@@ -78,11 +94,26 @@ def main(argv: list[str] | None = None) -> int:
     args = ap.parse_args(argv)
 
     if args.email:
-        devices = devices_for_email(args.email)
-        if not devices:
+        links = links_for_email(args.email)
+        if not links:
             print("no Google-linked account with that email — nothing to delete")
             return 2
-        device = devices[0]   # erase_account expands to every linked device
+        unconfirmed = [d for d, _, ok in links if not ok]
+        if unconfirmed:
+            print(f"{len(unconfirmed)} phone(s) linked WITHOUT a confirmed session — "
+                  "not included; verify each and use --device-id")
+        confirmed = [d for d, _, ok in links if ok]
+        if not confirmed:
+            google_ids = sorted({g for _, g, _ in links})
+            print(f"no confirmed phone: only the Google account itself "
+                  f"({len(google_ids)} identity) — record, backups, links")
+            if not args.yes:
+                print("dry run — add --yes to delete")
+                return 0
+            result = erase_identity(google_ids)
+            print(f"deleted {sum(result.values())} identity rows across {len(result)} tables")
+            return 0
+        device = confirmed[0]   # erase_account expands to every confirmed-linked device
     else:
         device = args.device_id
 

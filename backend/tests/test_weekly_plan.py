@@ -150,12 +150,14 @@ def test_focus_follows_the_parents_challenge_then_memory(client):
     r = client.post(f"/api/children/{cid}/memory", headers=h,
                     json={"category": "challenge", "fact": "طفلي يخاف من النوم وحده ويستيقظ ليلًا"})
     assert r.status_code == 201, r.text
-    plan = wp.build_plan("dev-plan-signal", cid, today=date(2026, 10, 5), lang=None)
+    plan = wp.build_plan("dev-plan-signal", cid, today=date(2026, 10, 5), lang=None,
+                         use_memory=True)
     assert plan["focus"]["topic"] == "sleep" and plan["focus"]["reason"] == "memory"
 
     assert client.put(f"/api/children/{cid}/challenge", headers=h,
                       json={"challenge_key": "screens"}).status_code in (200, 201)
-    plan = wp.build_plan("dev-plan-signal", cid, today=date(2026, 10, 5), lang=None)
+    plan = wp.build_plan("dev-plan-signal", cid, today=date(2026, 10, 5), lang=None,
+                         use_memory=True)
     assert plan["focus"]["topic"] == "screens" and plan["focus"]["reason"] == "parent_challenge"
 
 
@@ -192,7 +194,8 @@ def test_a_failed_strategy_is_swapped_for_the_spare_action(client):
         "'answered', 'didnt_work', '2026-01-02 00:00:00')", (cid,))
     conn.commit()
     conn.close()
-    plan = wp.build_plan("dev-plan-adapt", cid, today=date(2026, 10, 5), lang=None)
+    plan = wp.build_plan("dev-plan-adapt", cid, today=date(2026, 10, 5), lang=None,
+                         use_memory=True)
     assert plan["focus"]["topic"] == "sleep"
     keys = [a["key"] for a in plan["actions"]]
     assert "sleep_early_1" not in keys and len(keys) == 3

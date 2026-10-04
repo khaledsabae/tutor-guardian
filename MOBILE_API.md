@@ -232,6 +232,8 @@ are additive; older builds keep working and simply never call them.
 ### 9.0 Rules the client must follow
 
 - **Auth:** `Authorization: Bearer <token>` (§1). Wrong device → `404`.
+- **Timestamps:** every timestamp in §9–§10 is ISO 8601, UTC, with `Z`
+  (`"2026-10-04T18:30:00Z"`). Parse it as UTC; show it in the device's time.
 - **Proven session required** for every route in §9.3, §9.4 and §9.6, for
   `PUT /api/children/memory/settings` with `{"enabled": true}`, and for §10.
   *Proven* = this session (bearer token) completed the device-proof challenge
@@ -246,7 +248,11 @@ are additive; older builds keep working and simply never call them.
   `DELETE /api/children/{id}/progress` — need a proven session too, **once this
   device has proven at least once** (and for every device once the server's
   `MINIMUM_BUILD_NUMBER` reaches `CHILD_MEMORY_MIN_BUILD`). Same `403`, same flow.
-  Builds that cannot prove and never did keep today's behaviour.
+  Any push-token pause (§9.0.1) refuses them for every session, proven or not.
+  **What a child deletion removes:** from a proven session, everything tied to the
+  child (progress, memory, tools…); from any other session — possible only on a
+  device that never proved, outside every pause — only the profile row, exactly
+  as before this change.
 - **A proof belongs to one session and one push token.** Minting a new session
   (`POST /api/chat/sessions`) or a new FCM token (`onTokenRefresh`, reinstall,
   another phone) means proving again. Earlier tokens never vouch for a new one —
@@ -295,14 +301,14 @@ GET /api/device-proof
        "cooldown_until": null, "deletion_paused_until": null}
 
 POST /api/device-proof/start
-→ 202 {"challenge_id": 41, "expires_in": 300}
+→ 202 {"challenge_id": "q3Vb0J7xQ2m8YtKa", "expires_in": 300}
 
 # FCM data message to this device's registered token — no notification block:
-#   {"type": "device_proof", "challenge_id": "41", "code": "<32 characters>"}
+#   {"type": "device_proof", "challenge_id": "q3Vb0J7xQ2m8YtKa", "code": "<32 characters>"}
 
 POST /api/device-proof/complete
-{"challenge_id": 41, "code": "<the code from the data message>"}
-→ 200 {"proven": true, "proven_at": "2026-10-04 18:30:00"}
+{"challenge_id": "q3Vb0J7xQ2m8YtKa", "code": "<the code from the data message>"}
+→ 200 {"proven": true, "proven_at": "2026-10-04T18:30:00Z"}
 ```
 - **Same session throughout:** call `start` and `complete` with the same bearer
   token. Handle the data message in `FirebaseMessaging.onMessage` (the app is in
@@ -324,7 +330,7 @@ POST /api/device-proof/complete
   session that had not proven the old one — a new phone, a reinstall, or
   someone else — every route that needs a proof answers
   `403 {"detail": {"code": "device_proof_cooldown", "message", "message_en",
-  "support_email", "available_at": "2026-10-07 18:30:00"}}` for **72 hours**
+  "support_email", "available_at": "2026-10-07T18:30:00Z"}}` for **72 hours**
   (`available_at` is UTC), even after this session proves. Show the message with
   the time; do not re-run the challenge. Switching memory **off** still works.
   `GET /api/device-proof` and the memory settings carry `cooldown_until`. The
@@ -398,8 +404,8 @@ when the screen opens (§9.0.1, push-token cooldown); otherwise run §9.0.1 firs
   "confidence": 0.9,
   "status": "active",
   "lang": "ar",
-  "created_at": "2026-10-04 18:20:11",
-  "updated_at": "2026-10-04 18:20:11"
+  "created_at": "2026-10-04T18:20:11Z",
+  "updated_at": "2026-10-04T18:20:11Z"
 }
 ```
 | Field | Values |
@@ -480,11 +486,11 @@ topic).
   "strategy": "روتين نوم ثابت مع قصة قبل النوم",
   "topic": "sleep",
   "lang": "ar",
-  "due_at": "2026-10-08 18:20:11",
+  "due_at": "2026-10-08T18:20:11Z",
   "status": "pending",
   "outcome": null,
   "note": null,
-  "created_at": "2026-10-04 18:20:11",
+  "created_at": "2026-10-04T18:20:11Z",
   "answered_at": null
 }
 ```
@@ -544,7 +550,10 @@ parent's local ISO week, Monday to Sunday). Send it when you can: it is recorded
 for the follow-up push. When it is absent, the offset last sent (here or with
 §9.4's `followups/due`) is used, and nothing is recorded — an omitted offset never
 resets the family's clock to UTC.
-This route does not require a proven session.
+This route does not require a proven session — but only a proven session (§9.0)
+on a memory build gets a plan shaped by memory, and only such a session's
+`tz_offset_minutes` is recorded; any other session gets the plan built from the
+chosen challenge and the default topic order.
 
 ```json
 {
@@ -574,7 +583,7 @@ This route does not require a proven session.
     "completed": false
   },
   "source": "bank",
-  "generated_at": "2026-10-05 06:12:40"
+  "generated_at": "2026-10-05T06:12:40Z"
 }
 ```
 - Exactly **3** `actions`, one `worship` act, one `focus`. `lesson` may be
@@ -602,7 +611,7 @@ Forgets everything about **every** child of this device (facts, follow-ups and
 weekly plans). The memory switch keeps its setting. Requires a proven session (§9.0).
 ```json
 → 200 {"deleted": {"child_facts": 12, "followups": 3, "weekly_plans": 4},
-       "deleted_at": "2026-10-04T18:30:00+00:00"}
+       "deleted_at": "2026-10-04T18:30:00Z"}
 ```
 
 ---
@@ -624,14 +633,23 @@ Authorization: Bearer <token>
   "deleted": {"api_tokens": 2, "chat_messages": 14, "chat_sessions": 3,
               "child_facts": 6, "child_profiles": 2, "lesson_progress": 9,
               "push_tokens": 1, "…": 0},
-  "deleted_at": "2026-10-04T18:40:00+00:00"
+  "deleted_at": "2026-10-04T18:40:00Z"
 }
 ```
-- **Scope.** Signed out: this device. Signed in with Google: **every device
-  linked to that Google account**, plus the Google identity itself (e-mail,
-  display name) and the backups filed under it — a reinstall links a new device
-  and copies the children over, so deleting one device alone would leave a full
-  copy one sign-in away. `devices` says how many devices were erased.
+- **Scope.** Signed out: this device. Signed in with Google **through a link a
+  proven session made** (`POST /api/identity/link-google` from a session that
+  passed §9.0.1): **every device linked to that account the same way**, plus the
+  Google identity itself (e-mail, display name), its backups and every remaining
+  link to it — a reinstall links a new device and copies the children over, so
+  deleting one device alone would leave a full copy one sign-in away. A device
+  linked by a session that had **not** proven is not included (until session
+  minting is enforced, such a link is cheap to make for someone else's device),
+  and through such a link of its own the caller deletes only itself. `devices`
+  says how many devices were erased.
+- **Google link from an unproven session:** it is recorded as unconfirmed, and
+  it cannot replace a link a proven session made to a *different* account —
+  `link-google` answers `{"ok": false, "error": "device_proof_required"}`; prove
+  (§9.0.1) and link again.
 - **What goes:** every row tied to those devices — children and everything
   under them (progress, streaks, routines and their events, habits, agreements
   and clauses, missions, licences, screen sessions, challenges, coach tips,

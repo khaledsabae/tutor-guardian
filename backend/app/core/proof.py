@@ -29,6 +29,7 @@ from __future__ import annotations
 from fastapi import HTTPException, Request
 
 from app.core.contact import SUPPORT_EMAIL
+from app.core.times import iso_z
 from app.services import device_proof
 
 DEVICE_PROOF_REQUIRED = {
@@ -74,7 +75,7 @@ def request_proven(request: Request) -> bool:
 def _refuse(acc: device_proof.Access) -> HTTPException:
     if acc.reason == "cooldown":
         return HTTPException(status_code=403, detail={
-            **DEVICE_PROOF_COOLDOWN, "available_at": acc.available_at})
+            **DEVICE_PROOF_COOLDOWN, "available_at": iso_z(acc.available_at)})
     return HTTPException(status_code=403, detail=DEVICE_PROOF_REQUIRED)
 
 
@@ -92,9 +93,27 @@ def require_device_proof_irreversible(request: Request) -> None:
 
 
 def require_device_proof_once_enrolled(request: Request) -> None:
+    """Child deletion and progress reset (PR #26 final review). A pause of
+    either kind binds every session, confirmed or not. Beyond that, a session
+    must be confirmed once the device has ever proven (or the build floor makes
+    everyone able to); otherwise the old behaviour stands — and the handler
+    keeps it old: an unconfirmed deletion removes only the profile row
+    (`confirmed_session` tells it which)."""
     acc = request_access(request, irreversible=True)
     if acc.ok:
         return
+    if acc.reason != "cooldown":
+        until = device_proof.paused_until(getattr(request.state, "device_id", None))
+        if until:
+            acc = device_proof.Access(False, "cooldown", until)
+    if acc.reason == "cooldown":
+        raise _refuse(acc)
     device_id = getattr(request.state, "device_id", None)
     if device_proof.required_for_every_device() or device_proof.ever_proven(device_id):
         raise _refuse(acc)
+
+
+def confirmed_session(request: Request) -> bool:
+    """Proven to hold the phone, and outside every pause: the session that may
+    run the full cascade of an irreversible action."""
+    return request_access(request, irreversible=True).ok

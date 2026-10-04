@@ -113,6 +113,8 @@ TABLE_DISCLOSURE = {
     "device_proof_sessions": "Phone verification",
     "device_proof_challenges": "Phone-verification codes",
     "device_alerts": "previous phone's notification token",
+    # PR #29: which old phone identifier now points at which (device twins).
+    "device_aliases": "Phone identifier",
     "referral_codes": "invite code",
     "referrals": "which phone invited which",
     "referral_clicks": "browser's user agent",

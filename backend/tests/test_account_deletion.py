@@ -169,7 +169,8 @@ def _seed_device_rows(conn: sqlite3.Connection, device: str, ids: dict) -> None:
         )
 
 
-def _seed_account(device: str, google: str | None, *, linked: list[str] = ()) -> dict:
+def _seed_account(device: str, google: str | None, *, linked: list[str] = (),
+                  confirmed: bool = True) -> dict:
     """A device with a child, a chat, every device table, dependents, a
     referral and (optionally) a Google identity shared with `linked` devices."""
     conn = sqlite3.connect(db_path())        # foreign keys off: seed in any order
@@ -201,8 +202,10 @@ def _seed_account(device: str, google: str | None, *, linked: list[str] = ()) ->
         conn.execute("INSERT INTO agreement_clauses (agreement_id, applies_to, text_ar) "
                      "VALUES (?, 'child', 'بند')", (agreement,))
         if google:
-            conn.execute("INSERT OR REPLACE INTO identity_links (device_id, google_id) VALUES (?, ?)",
-                         (dev, google))
+            # Linked from a session proven to hold the phone (identity.py) — the
+            # only kind of link account deletion follows.
+            conn.execute("INSERT OR REPLACE INTO identity_links (device_id, google_id, confirmed) "
+                         "VALUES (?, ?, ?)", (dev, google, 1 if confirmed else 0))
     conn.execute("INSERT INTO referrals (referrer_device, referred_device, code) VALUES (?, ?, ?)",
                  (device, f"friend-of-{device}", f"code-{device}"))
     if google:

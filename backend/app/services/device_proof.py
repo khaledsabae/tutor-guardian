@@ -76,6 +76,7 @@ import sqlite3
 from typing import NamedTuple, Optional
 
 from app.core.log_safety import device_tag
+from app.core.times import iso_z
 from app.db.init_db import get_conn, hash_token
 
 logger = logging.getLogger(__name__)
@@ -177,6 +178,23 @@ def cooldown_until(conn: sqlite3.Connection, device_id: str,
     return None
 
 
+def paused_until(device_id: Optional[str], irreversible: bool = True) -> Optional[str]:
+    """The device's pause, whoever asks — for routes an unconfirmed session may
+    still use (the legacy child routes): a pause binds them too. Fails closed:
+    an unreadable database counts as paused for an hour."""
+    if not device_id:
+        return None
+    try:
+        conn = get_conn()
+        try:
+            return cooldown_until(conn, device_id, irreversible=irreversible)
+        finally:
+            conn.close()
+    except sqlite3.Error:
+        logger.warning("device proof: could not read the pause", exc_info=True)
+        return "unknown"
+
+
 def established(conn: sqlite3.Connection, device_id: str) -> bool:
     """Has this device anything older than the cooldown — a session or a child?
     (api_tokens and chat_sessions are never purged, and a newcomer cannot make
@@ -212,10 +230,27 @@ def access(device_id: Optional[str], token: Optional[str],
     return Access(True)
 
 
+def ever_confirmed(conn: sqlite3.Connection, device_id: str) -> bool:
+    """Has any session of this device ever completed a challenge?"""
+    return conn.execute("SELECT 1 FROM device_proofs WHERE device_id = ?",
+                        (device_id,)).fetchone() is not None
+
+
+def forget_other_proofs(conn: sqlite3.Connection, device_id: str, new_token: str) -> int:
+    """A vouched change — the owner rotating or taking the device back — ends
+    every proof tied to another push token (PR #26 final review): a newcomer
+    who once outlasted a cooldown must not keep a clean proof to flip back with."""
+    return conn.execute(
+        "DELETE FROM device_proof_sessions WHERE device_id = ? AND push_token_hash != ?",
+        (device_id, _sha(new_token)),
+    ).rowcount
+
+
 def vouches_for(conn: sqlite3.Connection, device_id: str, session_token: Optional[str],
-                old_token: str, new_token: str) -> bool:
+                old_token: Optional[str], new_token: str) -> bool:
     """Is this push-token change made by a session with a clean proof of the
-    token being replaced, or of the new one? (Module docstring.)"""
+    token being replaced, or of the new one? (Module docstring.) With no live
+    token to replace (it died, or was removed), only the second can vouch."""
     if not session_token:
         return False
     row = conn.execute(
@@ -225,7 +260,7 @@ def vouches_for(conn: sqlite3.Connection, device_id: str, session_token: Optiona
     ).fetchone()
     if row is None:
         return False
-    if hmac.compare_digest(row["push_token_hash"], _sha(old_token)):
+    if old_token and hmac.compare_digest(row["push_token_hash"], _sha(old_token)):
         # A rotation by the install that proved the current token: clean, or
         # proven on a token whose cooldown — of either kind — has run out.
         return bool(row["clean"]) or cooldown_until(conn, device_id, irreversible=True) is None
@@ -279,12 +314,12 @@ def status(device_id: str, token: str) -> dict:
         conn.close()
     return {
         "proven": proven_at is not None,
-        "proven_at": proven_at,
+        "proven_at": iso_z(proven_at),
         "push_registered": push is not None,
         # Every protected route paused until then (UTC): an unvouched change.
-        "cooldown_until": until,
+        "cooldown_until": iso_z(until),
         # Account and child deletion paused until then (UTC): either kind.
-        "deletion_paused_until": deletions,
+        "deletion_paused_until": iso_z(deletions),
     }
 
 
@@ -301,6 +336,9 @@ def start(device_id: str, token: str) -> dict:
 
     token_hash = hash_token(token)
     code = secrets.token_urlsafe(24)
+    # The id the app and the data message carry: random, so no other session
+    # can name this challenge (PR #26 final review — sequential ids could be).
+    public_id = secrets.token_urlsafe(12)
     conn = get_conn()
     try:
         conn.execute("BEGIN IMMEDIATE")
@@ -327,9 +365,10 @@ def start(device_id: str, token: str) -> dict:
         )
         cur = conn.execute(
             "INSERT INTO device_proof_challenges "
-            "(device_id, token_hash, code_hash, push_token_hash, expires_at) "
-            "VALUES (?, ?, ?, ?, datetime('now', ?))",
-            (device_id, token_hash, _sha(code), _sha(push_token), f"+{CODE_TTL_S} seconds"),
+            "(device_id, token_hash, code_hash, push_token_hash, expires_at, public_id) "
+            "VALUES (?, ?, ?, ?, datetime('now', ?), ?)",
+            (device_id, token_hash, _sha(code), _sha(push_token), f"+{CODE_TTL_S} seconds",
+             public_id),
         )
         challenge_id = cur.lastrowid
         conn.commit()
@@ -343,11 +382,11 @@ def start(device_id: str, token: str) -> dict:
 
     sent = push_sender.send_data_message(
         push_token,
-        {"type": DATA_TYPE, "challenge_id": str(challenge_id), "code": code},
+        {"type": DATA_TYPE, "challenge_id": public_id, "code": code},
         ttl_seconds=CODE_TTL_S,
     )
     if sent.get("sent"):
-        return {"challenge_id": challenge_id, "expires_in": CODE_TTL_S}
+        return {"challenge_id": public_id, "expires_in": CODE_TTL_S}
     _burn(challenge_id)
     if sent.get("reason") == "unregistered":
         # The registered token is dead: forget it, so the app's next launch
@@ -373,7 +412,7 @@ def _burn(challenge_id: int) -> None:
 # ── Complete ──────────────────────────────────────────────────────────────
 
 
-def complete(device_id: str, token: str, challenge_id: int, code: str) -> dict:
+def complete(device_id: str, token: str, challenge_id: str, code: str) -> dict:
     """Check the code and prove this session. Raises ProofError
     (`proof_failed`, with a reason) — the app's answer to any of them is to
     start again."""
@@ -384,8 +423,8 @@ def complete(device_id: str, token: str, challenge_id: int, code: str) -> dict:
         conn.execute("BEGIN IMMEDIATE")
         row = conn.execute(
             "SELECT *, expires_at <= datetime('now') AS expired "
-            "FROM device_proof_challenges WHERE id = ? AND device_id = ?",
-            (challenge_id, device_id),
+            "FROM device_proof_challenges WHERE public_id = ? AND device_id = ?",
+            (str(challenge_id), device_id),
         ).fetchone()
         burn = False
         if row is None:
@@ -397,13 +436,14 @@ def complete(device_id: str, token: str, challenge_id: int, code: str) -> dict:
         elif not hmac.compare_digest(row["token_hash"], token_hash):
             # Only the session that asked may answer. Otherwise the owner's app,
             # posting back a code it received, would prove a stranger's session
-            # that started the challenge. The code reached the wrong session:
-            # it is spent either way.
-            failure, burn = ProofError(409, "proof_failed", "other_session"), True
+            # that started the challenge. It does not burn the challenge either
+            # (PR #26 final review): another session's post must not be a way
+            # to cancel the one that asked.
+            failure = ProofError(409, "proof_failed", "other_session")
         elif not hmac.compare_digest(row["code_hash"], _sha(code or "")):
             attempts = int(row["attempts"]) + 1
             conn.execute("UPDATE device_proof_challenges SET attempts = ? WHERE id = ?",
-                         (attempts, challenge_id))
+                         (attempts, row["id"]))
             failure, burn = ProofError(409, "proof_failed", "wrong_code"), attempts >= MAX_ATTEMPTS
         else:
             push = _current_push_token(conn, device_id)
@@ -414,7 +454,7 @@ def complete(device_id: str, token: str, challenge_id: int, code: str) -> dict:
         if failure is not None:
             if burn:
                 conn.execute("UPDATE device_proof_challenges SET used_at = datetime('now') "
-                             "WHERE id = ?", (challenge_id,))
+                             "WHERE id = ?", (row["id"],))
             conn.commit()
             raise failure
 
@@ -424,7 +464,7 @@ def complete(device_id: str, token: str, challenge_id: int, code: str) -> dict:
         # a token change while that token is still cooling (vouches_for).
         clean = cooldown_until(conn, device_id, irreversible=True) is None
         conn.execute("UPDATE device_proof_challenges SET used_at = datetime('now') "
-                     "WHERE id = ?", (challenge_id,))
+                     "WHERE id = ?", (row["id"],))
         conn.execute(
             "INSERT INTO device_proof_sessions "
             "(token_hash, device_id, push_token_hash, proven_at, clean) "
@@ -461,4 +501,4 @@ def complete(device_id: str, token: str, challenge_id: int, code: str) -> dict:
     finally:
         conn.close()
     logger.info("device proof: session proven for %s", device_tag(device_id))
-    return {"proven": True, "proven_at": proven_at}
+    return {"proven": True, "proven_at": iso_z(proven_at)}

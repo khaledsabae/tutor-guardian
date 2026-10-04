@@ -48,6 +48,7 @@ from datetime import datetime, timedelta, timezone
 from typing import Iterable, Optional, Union
 
 from app.db.init_db import get_conn
+from app.core.times import iso_z
 from app.services.privacy import (
     CHILD_PLACEHOLDER, Family, family_for_device, family_mentions, redact_family,
     redact_with_names,
@@ -429,8 +430,8 @@ def fact_to_dict(row: sqlite3.Row) -> dict:
         "confidence": round(float(row["confidence"]), 2),
         "status": row["status"],
         "lang": row["lang"],
-        "created_at": row["created_at"],
-        "updated_at": row["updated_at"],
+        "created_at": iso_z(row["created_at"]),
+        "updated_at": iso_z(row["updated_at"]),
     }
 
 
@@ -1223,12 +1224,12 @@ def followup_to_dict(row: sqlite3.Row) -> dict:
         "strategy": row["strategy"],
         "topic": row["topic"],
         "lang": row["lang"],
-        "due_at": row["due_at"],
+        "due_at": iso_z(row["due_at"]),
         "status": row["status"],
         "outcome": row["outcome"],
         "note": row["note"],
-        "created_at": row["created_at"],
-        "answered_at": row["answered_at"],
+        "created_at": iso_z(row["created_at"]),
+        "answered_at": iso_z(row["answered_at"]),
     }
 
 

@@ -52,7 +52,7 @@ def start(client, headers: dict):
 
 def complete(client, headers: dict, challenge_id, code: str):
     return client.post("/api/device-proof/complete", headers=headers,
-                       json={"challenge_id": int(challenge_id), "code": code})
+                       json={"challenge_id": str(challenge_id), "code": code})
 
 
 def prove(client, headers: dict, push_token: str | None = None,

@@ -81,7 +81,7 @@ def proof_start(request: Request):
 
 
 class ProofCompleteIn(BaseModel):
-    challenge_id: int = Field(ge=1)
+    challenge_id: str = Field(min_length=8, max_length=64)
     code: str = Field(min_length=1, max_length=128)
 
 

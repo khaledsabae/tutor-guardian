@@ -116,9 +116,12 @@ def test_the_owner_opening_the_app_takes_it_back_at_once(client):
     assert client.get(f"/api/children/{cid}/memory", headers=owner).status_code == 200
     r = client.get(f"/api/children/{cid}/memory", headers=intruder)
     assert r.status_code == 403 and _code(r) == "device_proof_required"
-    # Putting their token back does not help the intruder: a proof made during
-    # a cooldown is not clean, so it vouches for nothing.
+    # Putting their token back does not help the intruder: the take-back ended
+    # every proof tied to another token (final review, item 4), so nothing
+    # vouches for it — the change is unvouched, and everything pauses again.
     register_push(client, intruder, "fcm-intruder-back")
+    assert client.get("/api/device-proof", headers=intruder).json()["cooldown_until"]
+    prove(client, intruder)
     assert _cooling(client.get(f"/api/children/{cid}/memory", headers=intruder))
 
 
@@ -304,10 +307,8 @@ def test_the_alert_goes_to_the_old_token_once(client, notices):
     assert n["data"] == {"type": "account_alert"} and n["channel"] == "almorabbi_safety"
     assert "سالم" not in n["title"] + n["body"] and "dev-alert" not in n["title"] + n["body"]
     assert "open the app" in n["body"] and "افتح التطبيق" in n["body"]
-    # Once: not again today, and the old token is forgotten.
+    # Once: nothing more today, and the old token is forgotten.
     assert device_alerts.run_due_alerts(DAY)["sent"] == 0
-    register_push(client, intruder, "fcm-intruder-3")
-    assert device_alerts.run_due_alerts(DAY)["sent"] == 0 and len(notices) == 1
     conn = get_conn()
     assert conn.execute("SELECT old_token FROM device_alerts WHERE device_id = 'dev-alert'"
                         ).fetchone()[0] is None

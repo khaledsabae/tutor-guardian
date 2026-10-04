@@ -19,6 +19,7 @@ from typing import Optional
 import httpx
 from fastapi import APIRouter, Request
 
+from app.core.proof import request_proven
 from app.db.init_db import get_conn
 
 logger = logging.getLogger(__name__)
@@ -119,14 +120,32 @@ async def link_google_identity(request: Request, payload: dict) -> dict:
     if not google_id:
         return {"ok": False, "error": "invalid_google_id_token"}
 
+    # Whether this session is proven to hold the phone (core/proof.py): only
+    # a link made that way carries account deletion across devices (PR #26
+    # final review — a bare session for a known device id must not be able to
+    # tie a family's phone to someone else's Google account and delete it).
+    confirmed = await asyncio.to_thread(request_proven, request)
     # sqlite is blocking — keep it off the event loop.
-    await asyncio.to_thread(_link_identity, device_id, google_id, email, display_name)
+    linked = await asyncio.to_thread(
+        _link_identity, device_id, google_id, email, display_name, confirmed)
+    if not linked:
+        return {"ok": False, "error": "device_proof_required"}
     return {"ok": True, "google_id": google_id, "email": email}
 
 
-def _link_identity(device_id: str, google_id: str, email: str, display_name: str) -> None:
+def _link_identity(device_id: str, google_id: str, email: str, display_name: str,
+                   confirmed: bool = False) -> bool:
+    """Link the device to the Google identity. False — nothing written — when an
+    unconfirmed session tries to replace a link a confirmed session made to a
+    different account. A confirmed link is never downgraded by re-linking."""
     conn = get_conn()
     try:
+        current = conn.execute(
+            "SELECT google_id, confirmed FROM identity_links WHERE device_id = ?", (device_id,)
+        ).fetchone()
+        if (current is not None and current["confirmed"] and not confirmed
+                and current["google_id"] != google_id):
+            return False
         conn.execute(
             """
             INSERT INTO parent_identities (google_id, email, display_name)
@@ -139,13 +158,17 @@ def _link_identity(device_id: str, google_id: str, email: str, display_name: str
         )
         conn.execute(
             """
-            INSERT INTO identity_links (device_id, google_id, linked_at)
-            VALUES (?, ?, datetime('now'))
+            INSERT INTO identity_links (device_id, google_id, linked_at, confirmed)
+            VALUES (?, ?, datetime('now'), ?)
             ON CONFLICT(device_id) DO UPDATE SET
+                confirmed = CASE WHEN identity_links.google_id = excluded.google_id
+                                 THEN MAX(COALESCE(identity_links.confirmed, 0),
+                                          excluded.confirmed)
+                                 ELSE excluded.confirmed END,
                 google_id = excluded.google_id,
                 linked_at = excluded.linked_at
             """,
-            (device_id, google_id),
+            (device_id, google_id, 1 if confirmed else 0),
         )
         conn.commit()
 
@@ -155,6 +178,7 @@ def _link_identity(device_id: str, google_id: str, email: str, display_name: str
             _merge_legacy_device_data(conn, device_id, google_id)
         except Exception as e:
             logger.warning("Legacy device merge failed (link kept): %s", e)
+        return True
     finally:
         conn.close()
 

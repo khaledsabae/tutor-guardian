@@ -82,10 +82,20 @@ def _upsert_push_token(conn, device_id, token, platform, app_version, build_numb
         row = conn.execute("SELECT token FROM push_tokens WHERE device_id = ?",
                            (device_id,)).fetchone()
         old = row["token"] if row is not None and row["token"] else None
-        changed = old is not None and old != token
+        if old is not None:
+            changed = old != token
+            first = False
+        elif device_proof.ever_confirmed(conn, device_id):
+            # No live token, but the device has confirmed before: its token
+            # died or was removed (a tombstone — push_sender), and the next one
+            # is a change, not a fresh start (PR #26 final review).
+            changed, first = True, False
+        else:
+            changed, first = False, device_proof.established(conn, device_id)
         vouched = (not changed) or device_proof.vouches_for(
             conn, device_id, session_token, old, token)
-        first = old is None and device_proof.established(conn, device_id)
+        if changed and vouched:
+            device_proof.forget_other_proofs(conn, device_id, token)
         conn.execute(
             """
             INSERT INTO push_tokens (device_id, token, platform, updated_at, app_version,
@@ -107,8 +117,8 @@ def _upsert_push_token(conn, device_id, token, platform, app_version, build_numb
             (device_id, token, platform, app_version, build_number,
              1 if vouched else 0, 1 if first else 0),
         )
-        if changed and not vouched:
-            device_alerts.queue(conn, device_id, old)
+        if changed and not vouched and old is not None:
+            device_alerts.queue(conn, device_id, old)        # a dead token hears nothing
         conn.commit()
     except Exception:
         conn.rollback()
@@ -127,6 +137,6 @@ def get_push_token(request: Request) -> dict:
         ).fetchone()
     finally:
         conn.close()
-    if not row:
+    if not row or not row["token"]:            # none, or a tombstone (push_sender)
         return {"ok": False, "registered": False}
     return {"ok": True, "registered": True, "updated_at": row["updated_at"]}

@@ -16,6 +16,7 @@ from fastapi.testclient import TestClient
 
 from app.db.init_db import db_path, get_conn
 from app.routers import privacy as pv
+from tests.device_proof_support import prove
 
 DEVICE = "dev-two-kids"
 
@@ -99,9 +100,11 @@ def client():
 
 
 def test_deleting_a_child_deletes_every_child_linked_row(client):
+    """From a session confirmed to hold the phone: the full cascade."""
     _full_schema()
     tok = client.post("/api/chat/sessions", json={"device_id": DEVICE}).json()["token"]
     h = {"Authorization": f"Bearer {tok}"}
+    prove(client, h, push_token="fcm-child-deletion")
     gone = client.post("/api/children", json={"name": "سالم", "age_group": "7-9"},
                        headers=h).json()["id"]
     kept = client.post("/api/children", json={"name": "سارة", "age_group": "4-6"},

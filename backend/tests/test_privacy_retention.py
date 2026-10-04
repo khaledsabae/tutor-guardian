@@ -323,8 +323,8 @@ def signed_in_account():
     for dev in ("dev-mail-1", "dev-mail-2"):
         conn.execute("INSERT INTO child_profiles (device_id, name, age_group) "
                      "VALUES (?, 'سالم', '7-9')", (dev,))
-        conn.execute("INSERT INTO identity_links (device_id, google_id) VALUES (?, 'g-mail')",
-                     (dev,))
+        conn.execute("INSERT INTO identity_links (device_id, google_id, confirmed) "
+                     "VALUES (?, 'g-mail', 1)", (dev,))
     conn.commit()
     conn.close()
 
@@ -356,6 +356,47 @@ def test_delete_script_deletes_the_whole_google_account(signed_in_account, capsy
     conn.close()
     assert left == 0
     assert script.main(["--email", "nobody@example.com"]) == 2
+
+
+def test_delete_script_follows_only_confirmed_links(signed_in_account, capsys):
+    """Final review, item 1 — the e-mail path too: a phone linked to the
+    account WITHOUT a confirmed session is listed, not deleted; its link to
+    the deleted identity goes."""
+    script = pytest.importorskip("ops.scripts.delete_account")
+    conn = get_conn()
+    conn.execute("INSERT INTO child_profiles (device_id, name, age_group) "
+                 "VALUES ('dev-linked-by-someone', 'منى', '7-9')")
+    conn.execute("INSERT INTO identity_links (device_id, google_id, confirmed) "
+                 "VALUES ('dev-linked-by-someone', 'g-mail', 0)")
+    conn.commit()
+    conn.close()
+    assert script.main(["--email", "parent@example.com", "--yes"]) == 0
+    assert "1 phone(s) linked WITHOUT a confirmed session" in capsys.readouterr().out
+    assert _children_of("dev-mail-1", "dev-mail-2") == 0
+    assert _children_of("dev-linked-by-someone") == 1
+    conn = get_conn()
+    links = conn.execute("SELECT COUNT(*) FROM identity_links WHERE google_id = 'g-mail'"
+                         ).fetchone()[0]
+    conn.close()
+    assert links == 0
+
+
+def test_delete_script_with_no_confirmed_phone_deletes_only_the_identity(capsys):
+    script = pytest.importorskip("ops.scripts.delete_account")
+    conn = get_conn()
+    conn.execute("INSERT INTO parent_identities (google_id, email) VALUES ('g-old', 'old@example.com')")
+    conn.execute("INSERT INTO child_profiles (device_id, name, age_group) "
+                 "VALUES ('dev-old-link', 'سالم', '7-9')")
+    conn.execute("INSERT INTO identity_links (device_id, google_id) VALUES ('dev-old-link', 'g-old')")
+    conn.commit()
+    conn.close()
+    assert script.main(["--email", "old@example.com", "--yes"]) == 0
+    assert "no confirmed phone" in capsys.readouterr().out
+    assert _children_of("dev-old-link") == 1
+    conn = get_conn()
+    assert conn.execute("SELECT COUNT(*) FROM parent_identities WHERE google_id = 'g-old'"
+                        ).fetchone()[0] == 0
+    conn.close()
 
 
 def test_feedback_without_a_device_is_still_redacted():
