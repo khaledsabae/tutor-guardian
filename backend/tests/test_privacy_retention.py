@@ -82,6 +82,83 @@ def test_housekeeping_keeps_the_promised_retention(tmp_path, monkeypatch):
     conn.close()
 
 
+@pytest.mark.parametrize("endpoint", ["/api/assistant/stream", "/api/assistant/draft"])
+def test_the_search_log_row_is_stored_without_the_names(endpoint, tmp_path, monkeypatch):
+    """By effect, not by argument: the row the assistant really writes to
+    retrieval_log holds no child name — in the question or in the rewritten
+    query — and carries the marker the purge of unmarked rows spares. The
+    rewriter is an echo, so a rewrite fed the raw question would leak here."""
+    from fastapi.testclient import TestClient
+
+    from app.main import app
+    from app.routers import assistant
+    from app.services import ai_gateway, answer_cache
+
+    db = _telemetry(tmp_path, monkeypatch)
+
+    class _Model:
+        def __init__(self, *a, **k):
+            pass
+
+        def stream(self, prompt, *, options):
+            yield {"response": "ثبّت روتينًا هادئًا قبل النوم.", "done": False}
+            yield {"response": "", "done": True, "prompt_eval_count": 1, "eval_count": 1}
+
+        def generate(self, prompt, *, options):
+            return {"response": "ثبّت روتينًا هادئًا قبل النوم.", "done": True}
+
+    async def no_ayah(_text):
+        return None
+
+    monkeypatch.setattr(assistant, "classify_domains", lambda text: ["tarbiyah"])
+    monkeypatch.setattr(assistant, "rewrite_query", lambda text, **kw: text)
+    monkeypatch.setattr(assistant, "retrieve_hybrid", lambda **kw: [{
+        "unit_id": "u1", "document": "passage: الروتين الثابت يساعد على النوم.",
+        "metadata": {"domain": "tarbiyah", "reference_info": "دليل"},
+        "rerank_score": 2.0, "distance": 0.2, "source_domain": "tarbiyah"}])
+    monkeypatch.setattr(assistant, "_ensure_index", lambda: None)
+    monkeypatch.setattr(assistant, "resolve_ayah_reference", no_ayah)
+    monkeypatch.setattr(answer_cache, "lookup", lambda *a, **k: None)
+    monkeypatch.setattr(answer_cache, "store", lambda *a, **k: None)
+    monkeypatch.setattr(ai_gateway, "OllamaProvider", _Model)
+    ai_gateway._gateway = None
+    try:
+        with TestClient(app) as client:
+            tok = client.post("/api/chat/sessions", json={"device_id": "dev-log"}).json()["token"]
+            h = {"Authorization": f"Bearer {tok}"}
+            assert client.post("/api/children", json={"name": NAME, "age_group": "4-6"},
+                               headers=h).status_code == 201
+            r = client.post(endpoint, headers=h, json={
+                "age_group": "4-6", "severity": "خفيف",
+                "message_text": f"{NAME} يرفض النوم وحده كل ليلة، ماذا أفعل مع {NAME}؟"})
+            assert r.status_code == 200
+    finally:
+        ai_gateway._gateway = None
+
+    conn = sqlite3.connect(db)
+    rows = conn.execute("SELECT question, rewritten_query, redacted FROM retrieval_log").fetchall()
+    conn.close()
+    assert len(rows) == 1                 # /draft used to search, and log, twice
+    question, rewritten, marker = rows[0]
+    assert NAME not in question and NAME not in rewritten
+    assert "طفلي" in question and marker == 1
+
+
+def test_the_search_log_carries_no_identifier(tmp_path, monkeypatch):
+    """Why neither the delete-all nor the account erase reaches it: no device,
+    session, child, token or IP column — the policy's «technical logs that
+    carry no phone identifier», deleted after 90 days instead. A new column
+    here must come with a deletion path and a policy sentence."""
+    from app.services import retrieval
+    db = _telemetry(tmp_path, monkeypatch)
+    retrieval.log_retrieval("سؤال", ["tarbiyah"], "", [])
+    conn = sqlite3.connect(db)
+    cols = {r[1] for r in conn.execute("PRAGMA table_info(retrieval_log)")}
+    conn.close()
+    assert cols == {"id", "ts", "question", "domains", "rewritten_query", "final_ids",
+                    "distances", "rerank_scores", "redacted"}
+
+
 def test_housekeeping_reports_errors_instead_of_swallowing_them(tmp_path, monkeypatch):
     from app.services import retention, retrieval
     db = _telemetry(tmp_path, monkeypatch)
