@@ -605,6 +605,10 @@ class ChatNotifier extends StateNotifier<ChatState> {
         jsonEncode({
           'session_id': sid,
           'messages': state.messages
+              // An answer still waiting for its first word is not saved: on a
+              // cold start it would come back as an empty bubble.
+              .where((m) =>
+                  !(m.role == 'assistant' && m.isStreaming && m.content.isEmpty))
               .map((m) => {
                     'role': m.role,
                     'content': m.content,
@@ -618,14 +622,101 @@ class ChatNotifier extends StateNotifier<ChatState> {
     }
   }
 
-  /// Called by the screen's lifecycle observer when the app is paused.
-  /// Finalizes any in-flight stream and saves the conversation.
+  /// Called by the screen's lifecycle observer when the app goes inactive or
+  /// to the background. Saves the conversation — and deliberately leaves a
+  /// streaming answer running.
+  ///
+  /// It used to stop the stream here. `inactive` fires for the notification
+  /// shade, a system dialog, the app switcher and a screen lock, so a parent
+  /// who glanced at WhatsApp while waiting came back to a few words and
+  /// «تم الإيقاف»: 23 of 290 questions in September 2026 ended that way,
+  /// most 2–10 seconds into the answer. The stream now keeps going; if the
+  /// OS cuts the connection anyway, [onAppResumed] fetches the answer the
+  /// server finished on its own.
   void onAppPaused() {
-    if (state.phase == ChatPhase.streaming) {
-      stopStreaming(); // keeps the partial answer, persists it
-    } else {
+    unawaited(_persistLocal());
+  }
+
+  /// Called by the screen's lifecycle observer when the app is back.
+  void onAppResumed() {
+    unawaited(recoverInterruptedAnswer());
+  }
+
+  /// Restore an answer whose stream died while the app was away.
+  ///
+  /// Servers since 2026-10 finish an answer after its reader leaves and store
+  /// it in the conversation, so the finished text is fetched from the
+  /// session history — retried a few times, as the server may still be
+  /// writing it. An older server never stored it: nothing usable is found
+  /// (its fragment is marked `interrupted`) and the turn keeps its error and
+  /// Retry, exactly as before. Returns true when the turn was restored.
+  Future<bool> recoverInterruptedAnswer({
+    int attempts = 3,
+    Duration retryDelay = const Duration(seconds: 3),
+  }) async {
+    for (var attempt = 0; attempt < attempts; attempt++) {
+      if (attempt > 0) await Future<void>.delayed(retryDelay);
+      final turn = _interruptedTurn();
+      final sid = state.sessionId;
+      if (turn == null || sid == null) return false;
+      final SessionHistory history;
+      try {
+        history = await _client.getHistory(sid);
+      } catch (_) {
+        continue; // offline right after resuming — try again
+      }
+      final answer = _serverAnswerFor(history.messages, turn.question);
+      // The parent may have retried or asked again while we were fetching.
+      final now = _interruptedTurn();
+      if (answer == null || now == null || now.assistantId != turn.assistantId) {
+        continue;
+      }
+      _updateAssistant(turn.assistantId, (m) {
+        m
+          ..content = answer.content
+          ..isStreaming = false
+          ..error = null;
+      });
+      state = state.copyWith(
+        phase: ChatPhase.idle,
+        turnCount: state.turnCount + 1,
+        clearBanner: true,
+      );
       unawaited(_persistLocal());
+      return true;
     }
+    return false;
+  }
+
+  /// The last question and its assistant bubble, when that answer failed
+  /// before finishing. Null while a stream is live (nothing to recover) and
+  /// for an answer the parent stopped on purpose.
+  ({String question, String assistantId})? _interruptedTurn() {
+    if (state.phase == ChatPhase.streaming || state.phase == ChatPhase.waiting) {
+      return null;
+    }
+    final msgs = state.messages;
+    final u = msgs.lastIndexWhere((m) => m.role == 'user');
+    if (u < 0 || u + 1 >= msgs.length) return null;
+    final reply = msgs[u + 1];
+    if (reply.role != 'assistant' || reply.isStreaming) return null;
+    if (reply.error == null && reply.content.trim().isNotEmpty) return null;
+    return (question: msgs[u].content, assistantId: reply.id);
+  }
+
+  /// The server's stored answer to [question]: the assistant row that follows
+  /// the last matching question, unless it is an apology or a fragment.
+  ChatMessage? _serverAnswerFor(List<ChatMessage> server, String question) {
+    final q = server.lastIndexWhere(
+        (m) => m.role == 'user' && m.content.trim() == question.trim());
+    if (q < 0) return null;
+    for (var i = q + 1; i < server.length; i++) {
+      final m = server[i];
+      if (m.role != 'assistant') continue;
+      if (m.modeWire == 'error' || m.modeWire == 'interrupted') return null;
+      return m.content.trim().isEmpty ? null : m;
+    }
+    return null;
   }
 
   Future<List<ChatMessageUI>?> _loadLocal(String sid) async {

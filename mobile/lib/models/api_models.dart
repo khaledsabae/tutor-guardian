@@ -101,6 +101,12 @@ class ChatMessage {
   final Domain? domain;
   final Severity? severity;
   final ReplyMode? mode;
+
+  /// The server's mode string as sent. [mode] folds everything it does not
+  /// model ('error', 'interrupted', 'general_pivot', …) into `unknown`, and
+  /// recovering a cut answer must tell an apology or a fragment from a real
+  /// answer.
+  final String? modeWire;
   final bool needsHumanReview;
   final DateTime? createdAt;
 
@@ -110,6 +116,7 @@ class ChatMessage {
     this.domain,
     this.severity,
     this.mode,
+    this.modeWire,
     this.needsHumanReview = false,
     this.createdAt,
   });
@@ -134,6 +141,7 @@ class ChatMessage {
       mode: json['mode'] is String
           ? ReplyMode.fromWire(json['mode'] as String)
           : null,
+      modeWire: json['mode'] is String ? json['mode'] as String : null,
       needsHumanReview: (json['needs_human_review'] ?? false) as bool,
       createdAt: parseDate(json['created_at']),
     );
