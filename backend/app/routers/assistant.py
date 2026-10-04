@@ -3,6 +3,7 @@ Assistant router — Multi-domain ChromaDB retrieval + guardrails + LLM.
 Flow: self-worry support → banned check → emergency check → discipline guard → fiqh guard → classify_domains → multi_retrieval → LLM → guardrails.
 """
 import asyncio
+import functools
 import json
 import logging
 import os
@@ -20,22 +21,22 @@ from app.services.guardrails import (
 )
 from app.services.retrieval import (retrieve_hybrid, _ensure_index,
                                     log_retrieval, detect_query_language)
-from app.services.reranker import RERANK_MIN_SCORE
+from app.services.reranker import RERANK_MIN_SCORE, relevance as rerank_relevance
 from app.services.query_rewriter import rewrite_query
 from app.services.llm_service import (
     generate_reply, build_full_prompt, generate_general_pivot, build_pivot_prompt,
     strip_pivot_citation, clean_model_output, reply_sources, usable_reference, _CJK_RE,
 )
-from app.services.ai_gateway import get_gateway
+from app.services.ai_gateway import StreamTracker, get_gateway
 from app.services.session_logger import log_session
 from app.services.intent_guard import (
     check_banned_intent, check_emergency_keywords,
-    check_abusive_language, check_conversational_shortcut,
+    check_abusive_language, check_conversational_shortcut, detect_reply_language,
 )
 from app.services.fiqh_guard import check_fiqh_guard, SAFE_REPLY as FIQH_SAFE_REPLY
 from app.services.discipline_guard import check_physical_discipline, discipline_reply
 from app.services.domain_classifier import (
-    classify_domains, is_uncertain, matched_fast_path,
+    UNCERTAIN_DOMAINS, classify_domains, is_uncertain, matched_fast_path,
 )
 from app.services.tier_router import choose_tier
 from app.services.privacy import mentions_any, names_for_device, redact_for_cloud
@@ -49,7 +50,18 @@ _SSE_HEADERS = {"Cache-Control": "no-cache", "X-Accel-Buffering": "no"}
 
 # Shown to the parent *and* stored as the turn when generation fails outright,
 # so the conversation keeps a visible answer instead of a question that hangs.
-_STREAM_ERROR_TEXT = "تعذّر توليد الرد، يُرجى المحاولة لاحقاً."
+# In the parent's own language: English and French parents used to get the
+# Arabic sentence verbatim.
+_STREAM_ERROR_TEXTS = {
+    "ar": "تعذّر توليد الرد، يُرجى المحاولة لاحقاً.",
+    "en": "Sorry, the answer could not be generated. Please try again in a moment.",
+    "fr": "Désolé, la réponse n'a pas pu être générée. Veuillez réessayer dans un instant.",
+}
+_STREAM_ERROR_TEXT = _STREAM_ERROR_TEXTS["ar"]
+
+
+def _error_text(lang: str | None) -> str:
+    return _STREAM_ERROR_TEXTS.get(lang or "ar", _STREAM_ERROR_TEXT)
 
 
 # ── LLM stream workers (audit H6) ─────────────────────────────────────────
@@ -67,6 +79,13 @@ _STREAM_EXECUTOR = ThreadPoolExecutor(
 # cold local model, the fallback chain — the first token can take minutes).
 # The app treats a stream with no bytes for 45 s as dead (audit M13); this is
 # what lets it tell "still thinking" from "the connection is gone".
+# The classifier and the rewriter: one short model call each (see
+# _classify_and_rewrite). Bounded by the auxiliary call's own deadline.
+_AUX_CALLERS = ThreadPoolExecutor(
+    max_workers=max(2, int(os.environ.get("AUX_CALLER_WORKERS", "8"))),
+    thread_name_prefix="aux-caller",
+)
+_AUX_WAIT_S = float(os.environ.get("AUX_WAIT_S", "20"))
 _STREAM_KEEPALIVE_S = float(os.environ.get("SSE_KEEPALIVE_S", "15"))
 _SSE_KEEPALIVE = ": keep-alive\n\n"
 # …but the keep-alive also defeats that 45 s check: a provider that never
@@ -77,6 +96,11 @@ _SSE_KEEPALIVE = ": keep-alive\n\n"
 # Normal answers start in seconds (p99 of a whole answer: 78 s).
 _FIRST_TOKEN_TIMEOUT_S = float(os.environ.get("LLM_FIRST_TOKEN_TIMEOUT_S", "75"))
 _STREAM_STALL_S = float(os.environ.get("LLM_STREAM_STALL_S", "60"))
+# Once the stream has moved past the paid primary to a fallback model, that
+# attempt gets its own, longer first-token budget: a 7B model on the home
+# CPU box needs 32–95 s before its first token, and killing it at 75 s from
+# the start of the request threw away the only answer still coming.
+_FALLBACK_FIRST_TOKEN_S = float(os.environ.get("LLM_FALLBACK_FIRST_TOKEN_S", "150"))
 
 # `sessions.flag` values for turns that end without an answer. The weekly
 # funnel report counts them (ops/scripts/weekly_funnel_report._OUTCOME_FLAGS):
@@ -87,6 +111,10 @@ _FLAG_FIRST_TOKEN_TIMEOUT = "first_token_timeout"
 _FLAG_STREAM_STALLED = "stream_stalled"
 _FLAG_PIPELINE_ERROR = "pipeline_error"
 _FLAG_COMPLETED_AFTER_DISCONNECT = "completed_after_disconnect"
+# The turn was cut on purpose: a new question arrived in the same session, or
+# the parent pressed Stop (new app builds send POST /api/chat/sessions/{id}/stop).
+_FLAG_SUPERSEDED = "superseded"
+_FLAG_STOPPED = "stopped_by_parent"
 
 # Answers being finished after their reader left (see event_stream's finally).
 # Held here so the tasks are not garbage-collected mid-flight.
@@ -121,6 +149,9 @@ def _pump_stream(make_stream, emit, cancel: threading.Event,
         gen = make_stream()
         for chunk in gen:
             if cancel.is_set():
+                # Tell a consumer still listening (a turn cut while live) that
+                # nothing more is coming, rather than leave it to the watchdog.
+                emit("cancelled", None)
                 return
             if time.monotonic() - started > deadline_s:
                 emit("error", TimeoutError(f"stream exceeded {deadline_s:.0f}s"))
@@ -143,6 +174,77 @@ def _pump_stream(make_stream, emit, cancel: threading.Event,
 def _sse(event: str, data: dict) -> str:
     """Format one Server-Sent Event."""
     return f"event: {event}\ndata: {json.dumps(data, ensure_ascii=False)}\n\n"
+
+
+def _turn_frame(user_msg_id: int | None) -> str:
+    """First SSE frame: the stored question's id, so the app can find THIS
+    turn's answer in the session history later. Additive — clients that
+    predate it ignore unknown events."""
+    return _sse("turn", {"message_id": user_msg_id}) if user_msg_id is not None else ""
+
+
+def _stall_flag(now: float, started: float, tracker: StreamTracker,
+                last_token_at: float | None) -> str | None:
+    """Why a silent stream should end now, or None to keep waiting.
+
+    The first-token budget is timed per provider attempt: the paid primary
+    (which also aborts itself at PRIMARY_FIRST_TOKEN_S) gets
+    _FIRST_TOKEN_TIMEOUT_S, a fallback model the longer
+    _FALLBACK_FIRST_TOKEN_S. A stream whose worker never started — queued
+    behind busy ones — is timed from the request. _STREAM_DEADLINE_S caps it all.
+    """
+    if now - started > _STREAM_DEADLINE_S:
+        return _FLAG_STREAM_STALLED if last_token_at is not None else _FLAG_FIRST_TOKEN_TIMEOUT
+    if last_token_at is not None:
+        return _FLAG_STREAM_STALLED if now - last_token_at > _STREAM_STALL_S else None
+    if tracker.attempt_started is None:
+        return _FLAG_FIRST_TOKEN_TIMEOUT if now - started > _FIRST_TOKEN_TIMEOUT_S else None
+    limit = _FIRST_TOKEN_TIMEOUT_S if tracker.is_primary else _FALLBACK_FIRST_TOKEN_S
+    return _FLAG_FIRST_TOKEN_TIMEOUT if now - tracker.attempt_started > limit else None
+
+
+class _TurnControl:
+    """Handle on the answer a session is producing, for cutting it short.
+
+    `cancel_work(flag)` runs on the event loop (stops the model worker and any
+    background completion); `settle(flag)` writes the cut turn (what the parent
+    saw, as 'interrupted', or nothing) and may run in a thread.
+    """
+
+    def __init__(self, session_id: str, user_msg_id: int | None = None) -> None:
+        self.session_id = session_id
+        self.user_msg_id = user_msg_id
+        self.cancel_work = lambda flag: None
+        self.settle = lambda flag: None
+
+
+# session_id → the answer it is producing. One event loop, one worker: plain
+# dict access from coroutines needs no lock.
+_ACTIVE_TURNS: dict[str, _TurnControl] = {}
+
+
+async def cut_pending_turn(session_id: str | None, flag: str,
+                           only_message_id: int | None = None) -> bool:
+    """Cut the answer this session is still producing, if any.
+
+    Called before a new question is stored (flag 'superseded'): the old turn's
+    row is written first, so the conversation keeps its order — Q1, A1, Q2 —
+    instead of the old answer landing after the new question. Also called by
+    the explicit stop endpoint ('stopped_by_parent') with the question the
+    parent is stopping, so a late stop can never cut a newer turn. True when
+    a turn was cut.
+    """
+    if not session_id:
+        return False
+    control = _ACTIVE_TURNS.get(session_id)
+    if control is None:
+        return False
+    if only_message_id is not None and control.user_msg_id != only_message_id:
+        return False
+    _ACTIVE_TURNS.pop(session_id, None)
+    control.cancel_work(flag)
+    await asyncio.to_thread(control.settle, flag)
+    return True
 
 
 # Fallback used when the off-topic pivot generation fails or returns empty.
@@ -197,10 +299,23 @@ async def _classify_and_rewrite(query_text: str) -> tuple[list[str], str]:
     the common case a full round-trip shorter.
     """
     fast_path = matched_fast_path(query_text)
-    domains, rewritten = await asyncio.gather(
-        asyncio.to_thread(classify_domains, query_text),
-        asyncio.to_thread(rewrite_query, query_text, classifier_fast_path=fast_path),
+    loop = asyncio.get_running_loop()
+    # Their own threads, never asyncio's default executor: that one runs every
+    # sqlite call and retrieval in the app, and a model call held by the
+    # provider used to sit on it (G4). Awaited with a deadline — past it the
+    # question is searched broadly and unrewritten, never left waiting.
+    classify = loop.run_in_executor(_AUX_CALLERS, classify_domains, query_text)
+    rewrite = loop.run_in_executor(
+        _AUX_CALLERS,
+        functools.partial(rewrite_query, query_text, classifier_fast_path=fast_path),
     )
+    await asyncio.wait({classify, rewrite}, timeout=_AUX_WAIT_S)
+    domains = classify.result() if classify.done() and not classify.exception() \
+        else list(UNCERTAIN_DOMAINS)
+    rewritten = rewrite.result() if rewrite.done() and not rewrite.exception() else ""
+    if not (classify.done() and rewrite.done()):
+        logger.warning("classifier/rewriter still waiting after %.0fs — answering without them",
+                       _AUX_WAIT_S)
     return domains, rewritten
 
 
@@ -227,7 +342,7 @@ async def _tag_user_message(
 async def _resolve_followup(
     session_id: str | None, user_msg_id: int | None,
     detected_domains: list[str], query_text: str,
-) -> tuple[list[str], str]:
+) -> tuple[list[str], str, str, bool]:
     """Keep a follow-up in the conversation it belongs to.
 
     The classifier sees the new message alone (by design), so a follow-up —
@@ -237,33 +352,54 @@ async def _resolve_followup(
     nothing to do with parenting: 26% of follow-ups to a grounded answer
     (Sept 2026), and the pivot is where most 👎 ratings landed (10 of 18).
 
-    When the turn just before was a grounded answer to a question with a real
-    domain, the follow-up inherits that domain, and retrieval searches the
-    previous question together with this one. Returns (domains, retrieval
-    query); unchanged when there is nothing to follow.
+    When the turn just before was a grounded answer, the follow-up takes that
+    answer's EVIDENCE domain (store.followup_context) and searches with both
+    questions. It is only a candidate: the caller still checks the new message
+    on its own against what was retrieved (_followup_off_topic), so «ما عاصمة
+    فرنسا؟» after a sleep answer stays off-topic.
+
+    Returns (domains, search query for the vector/BM25 legs, query for the
+    cross-encoder — the new message FIRST, since it reads 256 tokens and a long
+    previous question would push the follow-up out — and whether this is an
+    inherited follow-up).
     """
     if detected_domains != ["general"] or not session_id:
-        return detected_domains, query_text
+        return detected_domains, query_text, "", False
     try:
         prev = await asyncio.to_thread(store.followup_context, session_id, user_msg_id)
     except Exception as exc:  # noqa: BLE001 — a lookup must not break the answer
         logger.warning("follow-up lookup failed: %s", exc)
-        return detected_domains, query_text
+        return detected_domains, query_text, "", False
     if prev is None:
-        return detected_domains, query_text
+        return detected_domains, query_text, "", False
     domain, previous_question = prev
-    logger.info("Follow-up of a %s turn — keeping its domain", domain)
-    return [domain], f"{previous_question}\n{query_text}"
+    logger.info("Follow-up of a %s turn — searching it in that domain", domain)
+    return ([domain], f"{previous_question}\n{query_text}",
+            f"{query_text}\n{previous_question}", True)
+
+
+async def _followup_off_topic(query_text: str, units: list[dict]) -> bool:
+    """Is the follow-up, read ALONE, unrelated to what was retrieved for it?
+
+    The retrieval and the ranking saw the previous question too, which lifts
+    any message above the relevance floor — «ما عاصمة فرنسا؟» after a sleep
+    question scored -2.8 with it and -9.0 without. Unverifiable (reranker off
+    or failing) counts as off-topic: the pivot is the safe answer then.
+    """
+    if not units:
+        return True
+    scores = await asyncio.to_thread(rerank_relevance, query_text, units)
+    return not scores or max(scores) < RERANK_MIN_SCORE
 
 
 def _record_failed_turn(session_id: str | None, flag: str, *,
-                        severity: str = "") -> None:
+                        severity: str = "", lang: str = "ar") -> None:
     """Store the apology as the turn and count why. Synchronous, like
     _persist in _stream_answer: callers run it via to_thread or inline."""
     try:
         if session_id:
             store.add_message(
-                session_id, "assistant", _STREAM_ERROR_TEXT,
+                session_id, "assistant", _error_text(lang),
                 severity=severity or None, mode="error",
             )
         log_session(
@@ -294,6 +430,9 @@ async def draft_reply(request: Request, user_message: UserMessage):
     user_msg_id: int | None = None
     if session_id:
         await _require_owned_session(request, session_id)
+        # Any answer still being produced for this session is cut first, so
+        # its row lands before this question (see cut_pending_turn).
+        await cut_pending_turn(session_id, _FLAG_SUPERSEDED)
         user_msg_id = await asyncio.to_thread(
             store.add_message,
             session_id, "user",
@@ -311,7 +450,10 @@ async def draft_reply(request: Request, user_message: UserMessage):
         # or the failure is indistinguishable from a parent who walked away.
         logger.exception("draft pipeline failed (session=%s)", session_id)
         await asyncio.to_thread(
-            _record_failed_turn, session_id, _FLAG_PIPELINE_ERROR,
+            functools.partial(
+                _record_failed_turn, session_id, _FLAG_PIPELINE_ERROR,
+                lang=detect_reply_language(user_message.message_text or ""),
+            ),
         )
         raise
 
@@ -364,7 +506,9 @@ async def _draft_answer(
         return await asyncio.to_thread(_finalize, reply, session_id)
 
     # ── Step 0c: Conversational shortcut (thanks/greetings — zero latency, no unprompted activity) ──
-    is_conv, conv_reply = check_conversational_shortcut(query_input)
+    is_conv, conv_reply = check_conversational_shortcut(
+        query_input, detect_reply_language(query_input),
+    )
     if is_conv:
         reply = AssistantReply(
             reply_text=conv_reply,
@@ -433,7 +577,7 @@ async def _draft_answer(
     # Both can make a model call (seconds) on a keyword fast-path miss, and
     # they are independent — so they run together, not one after the other.
     detected_domains, rewritten_query = await _classify_and_rewrite(query_text)
-    detected_domains, retrieval_query = await _resolve_followup(
+    detected_domains, retrieval_query, rerank_query, followup = await _resolve_followup(
         session_id, user_msg_id, detected_domains, query_text,
     )
     is_general = detected_domains == ["general"]
@@ -490,6 +634,7 @@ async def _draft_answer(
                 age_group=user_message.age_group or "unspecified",
                 rewritten_query=rewritten_query,
                 lang=detect_query_language(query_text),
+                rerank_query=rerank_query,
             )
             log_retrieval(query_text, detected_domains, rewritten_query, units)
             return units
@@ -530,6 +675,10 @@ async def _draft_answer(
                 })
         else:
             retrieved_units = await asyncio.to_thread(_retrieve_blocking)
+
+    # An inherited follow-up must still be about this conversation on its own.
+    if followup and await _followup_off_topic(query_text, retrieved_units):
+        detected_domains, is_general, retrieved_units = ["general"], True, []
 
     # Re-label from the retrieved evidence when classification was uncertain.
     primary_domain = _label_domain(detected_domains, retrieved_units)
@@ -689,9 +838,15 @@ async def stream_reply(request: Request, user_message: UserMessage) -> Streaming
     SSE streaming variant of /draft (mobile-ready).
 
     Contract — every response is a stream of Server-Sent Events:
+        event: turn    data: {"message_id": N}       (first, when the question
+                                                      was stored — since 2026-10)
         event: token   data: {"delta": "..."}      (0+ times, LLM tokens)
         event: done    data: {<full AssistantReply>} (always, terminal)
         event: error   data: {"detail": "..."}       (on failure)
+
+    A client that leaves mid-answer does not cancel it: the answer's row is
+    reserved and the server finishes it (see event_stream). A new question in
+    the same session, or POST /api/chat/sessions/{id}/stop, cuts it instead.
 
     Safety: all guardrail/banned/emergency decisions run BEFORE any token is
     sent (you can't un-send a streamed token). Banned/emergency/no-context/
@@ -710,6 +865,9 @@ async def stream_reply(request: Request, user_message: UserMessage) -> Streaming
     user_msg_id: int | None = None
     if session_id:
         await _require_owned_session(request, session_id)
+        # Any answer still being produced for this session is cut first, so
+        # its row lands before this question (see cut_pending_turn).
+        await cut_pending_turn(session_id, _FLAG_SUPERSEDED)
         user_msg_id = await asyncio.to_thread(
             store.add_message,
             session_id, "user",
@@ -728,13 +886,16 @@ async def stream_reply(request: Request, user_message: UserMessage) -> Streaming
         # parent who walked away. Now it is a stored, counted error turn and an
         # `error` event the app already knows how to show with a retry.
         logger.exception("stream pipeline failed before streaming (session=%s)", session_id)
-        await asyncio.to_thread(
+        lang = detect_reply_language(user_message.message_text or "")
+        await asyncio.to_thread(functools.partial(
             _record_failed_turn, session_id,
-            f"{_FLAG_PIPELINE_ERROR}:{type(exc).__name__}",
-        )
+            f"{_FLAG_PIPELINE_ERROR}:{type(exc).__name__}", lang=lang,
+        ))
 
         def failed():
-            yield _sse("error", {"detail": _STREAM_ERROR_TEXT})
+            if user_msg_id is not None:
+                yield _turn_frame(user_msg_id)
+            yield _sse("error", {"detail": _error_text(lang)})
         return StreamingResponse(failed(), media_type="text/event-stream", headers=_SSE_HEADERS)
 
 
@@ -754,6 +915,8 @@ async def _stream_answer(
         await asyncio.to_thread(_finalize, reply, session_id)
 
         def one():
+            if user_msg_id is not None:
+                yield _turn_frame(user_msg_id)
             yield _sse("done", reply.model_dump())
         return StreamingResponse(one(), media_type="text/event-stream", headers=_SSE_HEADERS)
 
@@ -780,7 +943,8 @@ async def _stream_answer(
             mode="refusal",
         ))
 
-    is_conv, conv_reply = check_conversational_shortcut(query_input)
+    reply_lang = detect_reply_language(query_input)
+    is_conv, conv_reply = check_conversational_shortcut(query_input, reply_lang)
     if is_conv:
         return await _single(AssistantReply(
             reply_text=conv_reply,
@@ -820,7 +984,7 @@ async def _stream_answer(
     # Concurrent, not sequential — see _classify_and_rewrite. This is the path
     # the mobile app uses, so the round-trip saved here is one the user feels.
     detected_domains, rewritten_query = await _classify_and_rewrite(query_text)
-    detected_domains, retrieval_query = await _resolve_followup(
+    detected_domains, retrieval_query, rerank_query, followup = await _resolve_followup(
         session_id, user_msg_id, detected_domains, query_text,
     )
     is_general = detected_domains == ["general"]
@@ -871,6 +1035,7 @@ async def _stream_answer(
                 age_group=user_message.age_group or "unspecified",
                 rewritten_query=rewritten_query,
                 lang=detect_query_language(query_text),
+                rerank_query=rerank_query,
             )
             log_retrieval(query_text, detected_domains, rewritten_query, units)
             return units
@@ -901,6 +1066,10 @@ async def _stream_answer(
                     "rerank_score": 1.0,
                     "source_domain": "fiqh",
                 })
+
+    # An inherited follow-up must still be about this conversation on its own.
+    if followup and await _followup_off_topic(query_text, retrieved_units):
+        detected_domains, is_general, retrieved_units = ["general"], True, []
 
     # Re-label from the retrieved evidence when classification was uncertain.
     primary_domain = _label_domain(detected_domains, retrieved_units)
@@ -982,11 +1151,23 @@ async def _stream_answer(
     async def event_stream():
         loop = asyncio.get_running_loop()
         q: asyncio.Queue = asyncio.Queue()
+        # Everything the model has produced for this answer — what the parent
+        # saw live, plus what a background completion added after they left.
         sent_parts: list[str] = []
         persisted = False
+        reserved_id: int | None = None
         persist_lock = threading.Lock()
-
         cancel = threading.Event()
+        tracker = StreamTracker()
+        control = _TurnControl(session_id, user_msg_id) if session_id else None
+        background: asyncio.Task | None = None
+        cut_flag = ""  # set before a deliberate cut cancels the work
+        started = time.monotonic()
+        last_token_at: float | None = None
+        # The finished answer, set BEFORE it is written: if the reader leaves
+        # during that write, the background completion stores this instead of
+        # a partial.
+        pending_final: tuple[str, str] | None = None
 
         def _emit(kind, value):
             try:
@@ -1000,51 +1181,121 @@ async def _stream_answer(
             _STREAM_EXECUTOR,
             _pump_stream,
             lambda: get_gateway().stream(
-                full_prompt, tier=tier, route_reason=route_reason
+                full_prompt, tier=tier, route_reason=route_reason, tracker=tracker,
             ),
             _emit,
             cancel,
         )
 
-        def _persist(text: str, mode: str, flag: str = "") -> None:
-            """Record the assistant turn. Synchronous on purpose.
-
-            This is also called from the `finally` below, which may run while
-            the task is being cancelled — `asyncio.to_thread` would just raise
-            CancelledError again there, so the (millisecond) sqlite write is
-            done inline instead.
-            """
-            nonlocal persisted
-            # Two writers can race here — the reply's own to_thread write and
-            # a background completion started because the reader left during
-            # it — and exactly one row must win.
-            with persist_lock:
-                if persisted:
-                    return
-                persisted = True
+        def _log(mode: str, flag: str, length: int) -> None:
             try:
-                if session_id:
-                    store.add_message(
-                        session_id, "assistant", text,
-                        domain=primary_domain, severity=severity, mode=mode,
-                        needs_human_review=decision["needs_human_review"],
-                    )
                 log_session(
                     domain=primary_domain, behavior_type=user_message.behavior_type or "",
                     age_group=user_message.age_group or "", severity=severity,
                     mode=mode, needs_human_review=decision["needs_human_review"],
-                    reply_length=len(text), retrieved_count=len(retrieved_units),
+                    reply_length=length, retrieved_count=len(retrieved_units),
                     flag=flag,
                 )
+            except Exception as exc:  # noqa: BLE001 — telemetry only
+                logger.warning("turn telemetry failed: %s", exc)
+
+        def _persist(text: str, mode: str, flag: str = "") -> None:
+            """Record the assistant turn — a new row, or the row reserved when
+            the reader left. Synchronous on purpose.
+
+            Also called from `finally` blocks, which may run while the task is
+            being cancelled — `asyncio.to_thread` would just raise
+            CancelledError again there, so the (millisecond) sqlite write is
+            done inline instead.
+            """
+            nonlocal persisted
+            # Several writers can race here — the reply's own to_thread write,
+            # a background completion, a new question cutting the turn — and
+            # exactly one must win.
+            with persist_lock:
+                if persisted:
+                    return
+                persisted = True
+                rid = reserved_id
+            try:
+                if session_id:
+                    if rid is not None:
+                        store.update_reply(rid, content=text, mode=mode)
+                    else:
+                        store.add_message(
+                            session_id, "assistant", text,
+                            domain=primary_domain, severity=severity, mode=mode,
+                            needs_human_review=decision["needs_human_review"],
+                        )
+                _log(mode, flag, len(text))
             except Exception as exc:  # noqa: BLE001
                 logger.warning("persisting %s turn failed: %s", mode, exc)
 
-        started = loop.time()
-        last_token_at: float | None = None
-        # The finished answer, set BEFORE it is written: if the reader leaves
-        # during that write, the background completion stores this instead of
-        # a partial.
-        pending_final: tuple[str, str] | None = None
+        def _reserve() -> None:
+            """The reader left mid-answer: write the answer's row NOW, with
+            what the parent saw, as 'interrupted'.
+
+            The background completion fills it in later. Inserting only at
+            the end let a question asked meanwhile land first — Q1, Q2, A1 —
+            so A1 showed under Q2 and Q2's prompt never saw A1.
+            """
+            nonlocal reserved_id
+            if not session_id:
+                return
+            with persist_lock:
+                if persisted or reserved_id is not None:
+                    return
+                try:
+                    reserved_id = store.add_message(
+                        session_id, "assistant", "".join(sent_parts).strip(),
+                        domain=primary_domain, severity=severity, mode="interrupted",
+                        needs_human_review=decision["needs_human_review"],
+                    )
+                except Exception as exc:  # noqa: BLE001
+                    logger.warning("reserving the reply row failed: %s", exc)
+
+        def _settle_cut(flag: str) -> None:
+            """End the turn without a full answer: keep what was produced (as
+            'interrupted') or, if nothing was, no row at all — and count why."""
+            nonlocal persisted
+            with persist_lock:
+                if persisted:
+                    return
+                persisted = True
+                rid = reserved_id
+            partial = "".join(sent_parts).strip()
+            try:
+                if session_id:
+                    if rid is not None:
+                        if partial:
+                            store.update_reply(rid, content=partial, mode="interrupted")
+                        else:
+                            store.discard_reply(rid)
+                    elif partial:
+                        store.add_message(
+                            session_id, "assistant", partial,
+                            domain=primary_domain, severity=severity, mode="interrupted",
+                            needs_human_review=decision["needs_human_review"],
+                        )
+            except Exception as exc:  # noqa: BLE001
+                logger.warning("settling the cut turn failed: %s", exc)
+            _log("interrupted" if partial else "abandoned", flag, len(partial))
+
+        def _cancel_work(flag: str) -> None:
+            nonlocal cut_flag
+            cut_flag = flag
+            cancel.set()
+            if background is not None and not background.done():
+                background.cancel()
+
+        def _release() -> None:
+            if control is not None and _ACTIVE_TURNS.get(session_id) is control:
+                del _ACTIVE_TURNS[session_id]
+
+        if control is not None:
+            control.cancel_work = _cancel_work
+            control.settle = _settle_cut
+            _ACTIVE_TURNS[session_id] = control
 
         def _final_text(chunk) -> str:
             text = (chunk.result.text if chunk.result else "").strip()
@@ -1055,69 +1306,65 @@ async def _stream_answer(
         async def _complete_after_disconnect() -> None:
             """Finish an answer whose reader left, and store it whole.
 
-            The parent backgrounding the app, locking the phone or pulling the
-            notification shade closed the stream (app builds before 2026-10
-            stop it on `inactive`), and the answer used to be cancelled with
-            it: 23 of 290 questions in September ended as a few words and
-            «تم الإيقاف». The model is already mid-answer and the app reloads
-            the conversation from the server (on its next start, and on resume
-            in newer builds), so finishing costs one short generation and gives
-            the parent the answer when they come back. Bounded by the same
-            deadline and stall limits as a live stream.
+            Older app builds close the stream when the phone goes to the
+            background or the notification shade comes down, and the answer
+            used to be cancelled with it: 23 of 290 questions in September
+            ended as a few words and «تم الإيقاف». The model is mid-answer
+            and the app reloads the conversation from the server, so the
+            answer is finished into the row _reserve() wrote. Bounded by the
+            same per-attempt limits as a live stream; a stall here is charged
+            to the provider that was streaming, like a live one.
             """
-            parts = list(sent_parts)
+            nonlocal last_token_at
+            outcome = ""
             try:
                 while not persisted:
-                    elapsed = loop.time() - started
-                    if elapsed > _STREAM_DEADLINE_S:
+                    try:
+                        kind, val = await asyncio.wait_for(q.get(), timeout=_STREAM_KEEPALIVE_S)
+                    except asyncio.TimeoutError:
+                        flag = _stall_flag(time.monotonic(), started, tracker, last_token_at)
+                        if flag:
+                            get_gateway().note_stream_stall(tracker)
+                            outcome = flag
+                            break
+                        continue
+                    if kind == "error":
+                        outcome = f"stream_error:{type(val).__name__}"
                         break
-                    wait = _STREAM_STALL_S if parts else _FIRST_TOKEN_TIMEOUT_S - elapsed
-                    kind, val = await asyncio.wait_for(q.get(), timeout=max(0.1, wait))
                     if kind != "chunk":
-                        break  # "done" without a final chunk, or a provider error
+                        outcome = outcome or "stream_error:no_final"
+                        break
                     if val.done:
                         text = _final_text(val)
                         if text:
                             await asyncio.to_thread(
-                                _persist, text, stream_mode,
-                                _FLAG_COMPLETED_AFTER_DISCONNECT,
+                                _persist, text, stream_mode, _FLAG_COMPLETED_AFTER_DISCONNECT,
                             )
+                        else:
+                            outcome = "stream_error:empty"
                         break
                     if val.delta:
-                        parts.append(_CJK_RE.sub("", val.delta))
-            except (Exception, asyncio.CancelledError) as exc:  # noqa: BLE001
-                logger.info("background completion ended early (session=%s): %s",
-                            session_id, type(exc).__name__)
+                        last_token_at = time.monotonic()
+                        sent_parts.append(_CJK_RE.sub("", val.delta))
+            except asyncio.CancelledError:
+                outcome = cut_flag or "cancelled"
+            except Exception as exc:  # noqa: BLE001
+                outcome = f"stream_error:{type(exc).__name__}"
             finally:
                 if not persisted and pending_final is not None:
                     _persist(*pending_final)
                 if not persisted:
-                    partial = "".join(parts).strip()
-                    if partial:
-                        _persist(partial, "interrupted")
-                    else:
-                        _log_abandoned()
+                    _settle_cut(cut_flag or outcome or _FLAG_CLIENT_LEFT)
                 cancel.set()
                 worker.cancel()
+                _release()
 
-        def _log_abandoned() -> None:
-            # No reply row on purpose (an empty assistant turn would show as a
-            # blank bubble and enter the next prompt), but the cause is
-            # counted: the parent left before the first word and the model
-            # never produced one. Without this it looked like a server stall.
-            try:
-                log_session(
-                    domain=primary_domain,
-                    behavior_type=user_message.behavior_type or "",
-                    age_group=user_message.age_group or "", severity=severity,
-                    mode="abandoned", needs_human_review=False,
-                    reply_length=0, retrieved_count=len(retrieved_units),
-                    flag=_FLAG_CLIENT_LEFT,
-                )
-            except Exception:  # noqa: BLE001 — telemetry only
-                pass
-
+        # Stays True only when the generator is closed under us — the client
+        # went away. Any way out of the loop below means a reader was there.
+        reader_gone = True
         try:
+            if user_msg_id is not None:
+                yield _turn_frame(user_msg_id)
             while True:
                 try:
                     msg_type, val = await asyncio.wait_for(
@@ -1125,17 +1372,15 @@ async def _stream_answer(
                     )
                 except asyncio.TimeoutError:
                     # Silence is fine for a while (retrieval, a cold fallback
-                    # model) — but not forever. See _FIRST_TOKEN_TIMEOUT_S.
-                    now = loop.time()
-                    if last_token_at is None and now - started > _FIRST_TOKEN_TIMEOUT_S:
-                        get_gateway().note_stream_stall()
-                        raise _StreamStalled(_FLAG_FIRST_TOKEN_TIMEOUT, now - started)
-                    if last_token_at is not None and now - last_token_at > _STREAM_STALL_S:
-                        get_gateway().note_stream_stall()
-                        raise _StreamStalled(_FLAG_STREAM_STALLED, now - last_token_at)
+                    # model) — but not forever. See _stall_flag.
+                    now = time.monotonic()
+                    flag = _stall_flag(now, started, tracker, last_token_at)
+                    if flag:
+                        get_gateway().note_stream_stall(tracker)
+                        raise _StreamStalled(flag, now - (last_token_at or started))
                     yield _SSE_KEEPALIVE
                     continue
-                if msg_type == "done":
+                if msg_type in ("done", "cancelled"):
                     break
                 elif msg_type == "error":
                     raise val
@@ -1171,19 +1416,21 @@ async def _stream_answer(
                             )
                         yield _sse("done", reply.model_dump())
                     elif chunk.delta:
-                        last_token_at = loop.time()
+                        last_token_at = time.monotonic()
                         # Filter leaked CJK tokens from the live stream too.
                         delta = _CJK_RE.sub("", chunk.delta)
                         sent_parts.append(delta)
                         yield _sse("token", {"delta": delta})
+            reader_gone = False
         except Exception as exc:
+            reader_gone = False
             failure_flag = getattr(exc, "flag", "") or f"stream_error:{type(exc).__name__}"
             logger.exception("Stream generation failed (session=%s)", session_id)
             _persist(
-                "".join(sent_parts).strip() or _STREAM_ERROR_TEXT, "error",
+                "".join(sent_parts).strip() or _error_text(reply_lang), "error",
                 flag=failure_flag,
             )
-            yield _sse("error", {"detail": _STREAM_ERROR_TEXT})
+            yield _sse("error", {"detail": _error_text(reply_lang)})
         finally:
             # Reached on client disconnect too, where the generator is closed
             # with CancelledError/GeneratorExit — neither is an Exception, so
@@ -1191,32 +1438,35 @@ async def _stream_answer(
             # parent watched stream in was dropped on the floor: no row, no
             # log, nothing. That silent path was 176 of 1,617 questions
             # (10.9%) as of 2026-08-13, and it is why they were undiagnosable.
-            if not persisted:
+            if not persisted and reader_gone and not cancel.is_set():
                 logger.warning(
                     "Stream reader left before completion (session=%s, chars=%d) "
                     "— finishing in the background",
                     session_id, len("".join(sent_parts)),
                 )
+                _reserve()
                 try:
-                    task = loop.create_task(_complete_after_disconnect())
-                    _BACKGROUND_COMPLETIONS.add(task)
-                    task.add_done_callback(_BACKGROUND_COMPLETIONS.discard)
+                    background = loop.create_task(_complete_after_disconnect())
+                    _BACKGROUND_COMPLETIONS.add(background)
+                    background.add_done_callback(_BACKGROUND_COMPLETIONS.discard)
                 except RuntimeError:
                     # Loop shutting down: keep what the parent saw, as before.
-                    partial = "".join(sent_parts).strip()
-                    if partial:
-                        _persist(partial, "interrupted")
-                    else:
-                        _log_abandoned()
+                    _settle_cut(_FLAG_CLIENT_LEFT)
                     cancel.set()
                     worker.cancel()
+                    _release()
             else:
+                if not persisted:
+                    # The turn was cut (new question / Stop) or the provider
+                    # ended without a final answer.
+                    _settle_cut(cut_flag or "stream_error:no_final")
                 # Cooperative cancellation (audit H6): asyncio cannot interrupt
                 # a running thread, so the worker checks this flag between
                 # chunks, stops, and closes the stream generator — which closes
                 # the provider connection.
                 cancel.set()
                 worker.cancel()
+                _release()
 
     return StreamingResponse(event_stream(), media_type="text/event-stream", headers=_SSE_HEADERS)
 

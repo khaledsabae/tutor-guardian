@@ -22,16 +22,20 @@ from __future__ import annotations
 
 import asyncio
 import concurrent.futures
+import contextlib
+import contextvars
 import json
 import logging
 import os
 import sqlite3
+import threading
 import time
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Iterator, Protocol
 
+import httpx
 import requests
 
 from app.config.llm_config import LLM
@@ -43,36 +47,83 @@ _TELEMETRY_DB = Path(__file__).resolve().parents[3] / "ops" / "sessions.db"
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# Wall-clock deadlines for blocking (non-streamed) provider calls
+# Wall-clock limits, provider lanes and stream tracking
 # ─────────────────────────────────────────────────────────────────────────────
 # A provider `timeout` is a per-READ timeout (requests and httpx both), not a
 # limit on the whole call. DeepSeek, when loaded, holds a request open and
-# trickles keep-alive blank lines until it gets to it — up to 30 minutes — and
-# every blank line resets the read timer. Measured in production
-# (llm_calls, 60 days to 2026-10-04): an 8 s classifier call took 236 s, a 6 s
-# rewriter call 237 s, and 48 blocking calls ran past 300 s (max 35 min).
+# trickles keep-alive lines (blank lines, or ": keep-alive" when streaming)
+# until it gets to it — up to 30 minutes — and every line resets the read
+# timer. Measured in production (llm_calls, 60 days to 2026-10-04): an 8 s
+# classifier call took 236 s, a 6 s rewriter call 237 s, and 48 blocking calls
+# ran past 300 s (max 35 min).
 #
 # Those calls ran on asyncio's DEFAULT executor — 8 threads on the 4-CPU VPS —
 # which is also where every sqlite read/write and every retrieval of the chat
-# pipeline runs. A handful of hung calls therefore froze the whole assistant:
-# questions sat between classification and retrieval for 2–31 minutes, the
-# parent gave up, and the question was left with no reply (most of the 7%
-# "orphan" questions in September).
+# pipeline runs. A handful of hung calls froze the whole assistant: questions
+# sat between classification and retrieval for 2–31 minutes and were left
+# with no reply (most of the September "orphan" questions).
 #
-# So blocking calls run on their own bounded pool and the CALLER stops waiting
-# at a wall-clock deadline. The abandoned call finishes (or dies) on its own
-# thread; a queued one that never started is cancelled.
-_BLOCKING_LLM_WORKERS = max(1, int(os.environ.get("LLM_BLOCKING_WORKERS", "8")))
-_BLOCKING_LLM_EXECUTOR = ThreadPoolExecutor(
-    max_workers=_BLOCKING_LLM_WORKERS, thread_name_prefix="llm-blocking"
-)
-# Seconds added to a provider's own (per-read) timeout to get the wall-clock
-# ceiling for one call: room for connect + a slow-but-alive reply.
+# Three layers now:
+#   1. OpenAIChatProvider reads the raw SSE lines itself and checks a wall
+#      clock on every line, keep-alives included — so a held request is
+#      ABORTED (socket closed, thread freed) at its limit instead of waited out.
+#   2. Blocking calls run on lanes — primary (paid), local (Ollama) and aux
+#      (classifier/rewriter) — never on the default executor, and never on each
+#      other's threads: a DeepSeek hold cannot take the local fallback down
+#      with it. A lane whose slots are all held fails fast (LLMProviderBusy)
+#      instead of queueing.
+#   3. The caller stops waiting at its own deadline as a backstop.
 _DEADLINE_SLACK_S = float(os.environ.get("LLM_DEADLINE_SLACK_S", "4"))
+# A streamed answer from the paid primary that has not produced its first
+# token by now is a held request: abort it and let the stream fall back.
+PRIMARY_FIRST_TOKEN_S = float(os.environ.get("LLM_PRIMARY_FIRST_TOKEN_S", "30"))
+# Do not start a blocking attempt with less time than this left.
+_MIN_ATTEMPT_S = float(os.environ.get("LLM_MIN_ATTEMPT_S", "10"))
 
 
 class LLMDeadlineExceeded(TimeoutError):
-    """A blocking provider call outlived its wall-clock deadline."""
+    """A provider call outlived its wall-clock limit."""
+
+
+class LLMProviderBusy(RuntimeError):
+    """Every slot of a provider lane is held by calls still in flight."""
+
+
+@dataclass(frozen=True)
+class CallLimits:
+    """Wall-clock limits for one provider call, in seconds from its start.
+
+    first_token: until the first content arrives (keep-alives do not count);
+    stall: between two pieces of content; total: the whole call. None = none.
+    """
+
+    first_token: float | None = None
+    stall: float | None = None
+    total: float | None = None
+
+
+# Set by the gateway around a provider call and read by OpenAIChatProvider —
+# a context variable, so providers keep the plain (prompt, *, options) shape
+# that every test fake implements.
+_CALL_LIMITS: contextvars.ContextVar[CallLimits | None] = contextvars.ContextVar(
+    "llm_call_limits", default=None,
+)
+
+
+# The absolute deadline (time.monotonic()) of the generate() call in progress,
+# so a fallback attempt can be capped by what is left of it.
+_GENERATE_DEADLINE: contextvars.ContextVar[float | None] = contextvars.ContextVar(
+    "llm_generate_deadline", default=None,
+)
+
+
+@contextlib.contextmanager
+def call_limits(limits: CallLimits):
+    token = _CALL_LIMITS.set(limits)
+    try:
+        yield
+    finally:
+        _CALL_LIMITS.reset(token)
 
 
 def _deadline_for(provider: object, cap: float | None = None) -> float:
@@ -83,13 +134,49 @@ def _deadline_for(provider: object, cap: float | None = None) -> float:
     return max(0.1, limit)
 
 
-def call_with_deadline(fn, deadline_s: float, /, *args, **kwargs):
-    """Run blocking `fn` on the LLM pool; give up after `deadline_s` seconds.
+class _Lane:
+    """A bounded set of threads for one kind of provider call.
 
-    For synchronous callers (the classifier and rewriter already run inside a
-    worker thread). Raises LLMDeadlineExceeded on timeout.
+    A slot is held until the call really ends — not when its caller stops
+    waiting — so calls still stuck on a provider count against the lane, and
+    when all of them are stuck new calls fail at once (LLMProviderBusy).
     """
-    fut = _BLOCKING_LLM_EXECUTOR.submit(fn, *args, **kwargs)
+
+    def __init__(self, name: str, workers: int) -> None:
+        self.name = name
+        self.workers = max(1, workers)
+        self._pool = ThreadPoolExecutor(max_workers=self.workers,
+                                        thread_name_prefix=f"llm-{name}")
+        self._slots = threading.BoundedSemaphore(self.workers)
+
+    def submit(self, fn, *args, **kwargs) -> concurrent.futures.Future:
+        if not self._slots.acquire(blocking=False):
+            raise LLMProviderBusy(f"{self.name} lane: {self.workers} calls already held")
+        ctx = contextvars.copy_context()
+        try:
+            fut = self._pool.submit(ctx.run, fn, *args, **kwargs)
+        except BaseException:
+            self._slots.release()
+            raise
+        fut.add_done_callback(lambda _f: self._slots.release())
+        return fut
+
+    def held(self) -> int:
+        return self.workers - self._slots._value  # noqa: SLF001 — read-only gauge
+
+
+PRIMARY_LANE = _Lane("primary", int(os.environ.get("LLM_PRIMARY_WORKERS", "6")))
+LOCAL_LANE = _Lane("local", int(os.environ.get("LLM_LOCAL_WORKERS", "4")))
+AUX_LANE = _Lane("aux", int(os.environ.get("LLM_AUX_WORKERS", "6")))
+
+
+def call_with_deadline(fn, deadline_s: float, /, *args, lane: _Lane, **kwargs):
+    """Run blocking `fn` on `lane`; give up after `deadline_s` seconds.
+
+    For synchronous callers. Raises LLMDeadlineExceeded on timeout and
+    LLMProviderBusy when the lane is full.
+    """
+    fut = lane.submit(fn, *args, **kwargs)
     try:
         return fut.result(timeout=deadline_s)
     except concurrent.futures.TimeoutError:
@@ -97,14 +184,35 @@ def call_with_deadline(fn, deadline_s: float, /, *args, **kwargs):
         raise LLMDeadlineExceeded(f"no reply within {deadline_s:.0f}s") from None
 
 
-async def acall_with_deadline(fn, deadline_s: float, /, *args, **kwargs):
-    """Async twin of `call_with_deadline` — replaces `asyncio.to_thread`."""
-    fut = _BLOCKING_LLM_EXECUTOR.submit(fn, *args, **kwargs)
+async def acall_with_deadline(fn, deadline_s: float, /, *args, lane: _Lane, **kwargs):
+    """Async twin of `call_with_deadline` — awaits instead of blocking a thread."""
+    fut = lane.submit(fn, *args, **kwargs)
     try:
         return await asyncio.wait_for(asyncio.wrap_future(fut), timeout=deadline_s)
     except (asyncio.TimeoutError, concurrent.futures.TimeoutError):
         fut.cancel()
         raise LLMDeadlineExceeded(f"no reply within {deadline_s:.0f}s") from None
+
+
+@dataclass
+class StreamTracker:
+    """Which provider a stream is on right now, and since when.
+
+    Written by the gateway's stream() (worker thread), read by the assistant's
+    watchdog (event loop): a stall is charged to the provider that was
+    actually streaming — not to the paid primary by default, and not at all
+    when the stream never started (a queued worker contacted nobody).
+    """
+
+    label: str | None = None
+    is_primary: bool = False
+    attempt_started: float | None = None   # time.monotonic()
+    first_token_at: float | None = None
+
+    def begin(self, label: str, is_primary: bool) -> None:
+        self.label, self.is_primary = label, is_primary
+        self.first_token_at = None
+        self.attempt_started = time.monotonic()
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -298,6 +406,20 @@ class OpenAICompatProvider:
         }
 
 
+class ProviderHTTPError(RuntimeError):
+    """The provider answered with an HTTP error status."""
+
+    def __init__(self, name: str, status: int) -> None:
+        super().__init__(f"{name} answered HTTP {status}")
+        self.status = status
+
+
+# One connection pool for every OpenAI-compatible call (thread-safe; the
+# timeout is set per request). Building a client per call — as the SDK
+# client used to be built per auxiliary call — paid a TLS handshake each time.
+_HTTP = httpx.Client(timeout=httpx.Timeout(60.0, connect=10.0))
+
+
 class OpenAIChatProvider:
     """Generic OpenAI-compatible chat provider (DeepSeek / GLM / OpenRouter…).
 
@@ -306,59 +428,115 @@ class OpenAIChatProvider:
     shape as Ollama so the gateway plumbing is unchanged. Used as the PRIMARY
     provider when LLM_PRIMARY_PROVIDER=deepseek, with the local Ollama chain
     kept behind it as automatic fallback.
+
+    Every call — blocking or streamed — is a streamed request read line by
+    line, keep-alive comments included, with the wall clock checked on each
+    line against the CallLimits the gateway set (see call_limits). When a
+    limit passes the response is closed: the request is aborted and the
+    thread is free, instead of waiting out a 30-minute DeepSeek hold that the
+    per-read timeout never ends. The SDK client this replaces also retried
+    twice by default, restarting that timeout each time; there are no
+    retries here — the gateway owns retries, and it can see the deadline and
+    the circuit breaker.
     """
 
     def __init__(self, base_url: str, api_key: str, model: str,
                  timeout: int, name: str = "deepseek",
-                 max_retries: int | None = None) -> None:
-        from openai import OpenAI  # lazy import — optional dependency
-
+                 max_retries: int | None = None,
+                 http_client: "httpx.Client | None" = None) -> None:
         self.name = name
         self.model = model
         self.timeout = timeout
-        kwargs = {"api_key": api_key, "base_url": base_url, "timeout": timeout}
-        # The SDK retries twice by default, and each retry restarts the (per
-        # read) timeout. Auxiliary calls pass 0: they have a cheaper degraded
-        # path than a second and third wait.
-        if max_retries is not None:
-            kwargs["max_retries"] = max_retries
-        self._client = OpenAI(**kwargs)
+        self.max_retries = 0  # kept for old call sites; one attempt per call
+        self._url = base_url.rstrip("/") + "/chat/completions"
+        self._headers = {
+            "Authorization": f"Bearer {api_key}",
+            "Content-Type": "application/json",
+            "Accept": "text/event-stream",
+        }
+        self._http = http_client or _HTTP
+
+    def _events(self, prompt: str, options: dict) -> Iterator[tuple]:
+        """("delta", text) for each piece of content, ("usage", p, c) when the
+        provider reports token counts. Raises LLMDeadlineExceeded at a limit."""
+        limits = _CALL_LIMITS.get() or CallLimits()
+        payload = {
+            "model": self.model,
+            "messages": [{"role": "user", "content": prompt}],
+            "temperature": options.get("temperature", 0.3),
+            "max_tokens": options.get("num_predict", 1024),
+            "stream": True,
+            # Token counts in a final chunk (DeepSeek sends them anyway; other
+            # OpenAI-compatible hosts only on request). The monthly spend cap
+            # is a sum of these counts — a stream without them reads as free.
+            "stream_options": {"include_usage": True},
+        }
+        start = time.monotonic()
+        last_progress: float | None = None
+        timeout = httpx.Timeout(float(self.timeout), connect=min(10.0, float(self.timeout)))
+        with self._http.stream("POST", self._url, json=payload,
+                               headers=self._headers, timeout=timeout) as resp:
+            if resp.status_code >= 400:
+                raise ProviderHTTPError(self.name, resp.status_code)
+            for line in resp.iter_lines():
+                now = time.monotonic()
+                if limits.total is not None and now - start > limits.total:
+                    raise LLMDeadlineExceeded(f"{self.name}: over {limits.total:.0f}s in total")
+                if last_progress is None:
+                    if limits.first_token is not None and now - start > limits.first_token:
+                        raise LLMDeadlineExceeded(
+                            f"{self.name}: no first token after {limits.first_token:.0f}s")
+                elif limits.stall is not None and now - last_progress > limits.stall:
+                    raise LLMDeadlineExceeded(
+                        f"{self.name}: no new token for {limits.stall:.0f}s")
+                if not line or line.startswith(":") or not line.startswith("data:"):
+                    continue  # blank keep-alive, SSE comment, or another field
+                data = line[5:].strip()
+                if data == "[DONE]":
+                    break
+                try:
+                    obj = json.loads(data)
+                except ValueError:
+                    continue
+                if not isinstance(obj, dict):
+                    continue
+                if obj.get("error"):
+                    raise RuntimeError(f"{self.name} reported an error mid-stream")
+                usage = obj.get("usage")
+                if isinstance(usage, dict):
+                    yield ("usage", usage.get("prompt_tokens"), usage.get("completion_tokens"))
+                for choice in obj.get("choices") or []:
+                    delta = (choice or {}).get("delta") or {}
+                    # Reasoning is progress (the model is alive) but not output.
+                    if delta.get("reasoning_content"):
+                        last_progress = now
+                    content = delta.get("content")
+                    if content:
+                        last_progress = now
+                        yield ("delta", content)
 
     def generate(self, prompt: str, *, options: dict) -> dict:
-        r = self._client.chat.completions.create(
-            model=self.model,
-            messages=[{"role": "user", "content": prompt}],
-            temperature=options.get("temperature", 0.3),
-            max_tokens=options.get("num_predict", 1024),
-        )
-        text = r.choices[0].message.content or ""
-        text = _ThinkFilter().feed(text)
-        usage = getattr(r, "usage", None)
+        parts: list[str] = []
+        prompt_tokens = completion_tokens = None
+        for ev in self._events(prompt, options):
+            if ev[0] == "delta":
+                parts.append(ev[1])
+            else:
+                prompt_tokens, completion_tokens = ev[1], ev[2]
+        text = _ThinkFilter().feed("".join(parts))
         return {
             "response": text, "done": True,
-            "prompt_eval_count": getattr(usage, "prompt_tokens", None),
-            "eval_count": getattr(usage, "completion_tokens", None),
+            "prompt_eval_count": prompt_tokens, "eval_count": completion_tokens,
         }
 
     def stream(self, prompt: str, *, options: dict) -> Iterator[dict]:
-        stream = self._client.chat.completions.create(
-            model=self.model,
-            messages=[{"role": "user", "content": prompt}],
-            temperature=options.get("temperature", 0.3),
-            max_tokens=options.get("num_predict", 1024),
-            stream=True,
-        )
         flt = _ThinkFilter()
         prompt_tokens = completion_tokens = None
-        for chunk in stream:
-            usage = getattr(chunk, "usage", None)
-            if usage:
-                prompt_tokens = getattr(usage, "prompt_tokens", None)
-                completion_tokens = getattr(usage, "completion_tokens", None)
-            if not chunk.choices:
+        for ev in self._events(prompt, options):
+            if ev[0] == "usage":
+                prompt_tokens, completion_tokens = ev[1], ev[2]
                 continue
-            delta = chunk.choices[0].delta.content or ""
-            delta = flt.feed(delta)
+            delta = flt.feed(ev[1])
             if delta:
                 yield {"response": delta, "done": False}
         yield {
@@ -558,14 +736,19 @@ def aux_generate(provider: LLMProvider, prompt: str, *,
     """
     model = getattr(provider, "model", "unknown")
     start = time.monotonic()
+    deadline = _deadline_for(provider)
+    # A short call: its first token within the provider timeout, all of it
+    # within the wall-clock deadline.
+    limits = CallLimits(first_token=deadline, total=deadline + float(getattr(provider, "timeout", 8) or 8))
     try:
-        data = call_with_deadline(
-            provider.generate, _deadline_for(provider), prompt, options=options,
-        )
+        with call_limits(limits):
+            data = call_with_deadline(
+                provider.generate, limits.total, prompt, options=options, lane=AUX_LANE,
+            )
     except Exception as e:
         _log_call(provider.name, model, int((time.monotonic() - start) * 1000),
                   None, None, streamed=False, ok=False, tier=tier,
-                  route_reason="deadline" if isinstance(e, LLMDeadlineExceeded) else None)
+                  route_reason=_failure_reason(e))
         aux_breaker.record(False)
         logger.warning("auxiliary %s call failed: %s", tier, e)
         return None
@@ -575,6 +758,22 @@ def aux_generate(provider: LLMProvider, prompt: str, *,
               streamed=False, ok=True, tier=tier)
     aux_breaker.record(True)
     return (data.get("response") or "").strip()
+
+
+def _failure_reason(exc: BaseException) -> str | None:
+    """route_reason for a failed call's llm_calls row."""
+    if isinstance(exc, LLMDeadlineExceeded):
+        return "deadline"
+    if isinstance(exc, LLMProviderBusy):
+        return "lane_full"
+    return None
+
+
+def _lane_for(provider: object) -> _Lane:
+    """Paid/cloud providers and the local chain never share threads."""
+    if isinstance(provider, (OpenAIChatProvider, OpenAICompatProvider)):
+        return PRIMARY_LANE
+    return LOCAL_LANE
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -622,10 +821,14 @@ class AIGateway:
         provider = OllamaProvider(base_url=base_url, model=model, timeout=timeout)
         start = time.monotonic()
         try:
-            # Bounded by the provider's own timeout as a WALL-CLOCK limit; the
-            # chain's overall deadline is checked between providers (generate).
+            # Wall-clock bound: the provider's own timeout, never past what is
+            # left of the generate() budget (a 180 s local model must not
+            # outlive a 150 s request).
+            budget = _GENERATE_DEADLINE.get()
+            cap = max(0.1, budget - time.monotonic()) if budget is not None else None
             data = await acall_with_deadline(
-                provider.generate, _deadline_for(provider), prompt, options=opts,
+                provider.generate, _deadline_for(provider, cap), prompt,
+                options=opts, lane=_lane_for(provider),
             )
             latency = int((time.monotonic() - start) * 1000)
             text = (data.get("response") or "").strip()
@@ -703,6 +906,25 @@ class AIGateway:
             logger.warning("cloud tier unavailable: %s", e)
             return None
 
+    async def _blocking(self, provider: LLMProvider, prompt: str, opts: dict,
+                        remaining: float) -> dict:
+        """One blocking call on the provider's lane, inside its limits.
+
+        An OpenAI-compatible provider aborts itself (CallLimits): a held
+        request at its first-token limit, a slow-but-alive one only at the end
+        of the budget. Anything else is cut by the caller's wall clock.
+        """
+        if isinstance(provider, OpenAIChatProvider):
+            limits = CallLimits(first_token=_deadline_for(provider, remaining), total=remaining)
+            wait = remaining + _DEADLINE_SLACK_S
+        else:
+            limits = CallLimits()
+            wait = _deadline_for(provider, remaining)
+        with call_limits(limits):
+            return await acall_with_deadline(
+                provider.generate, wait, prompt, options=opts, lane=_lane_for(provider),
+            )
+
     async def generate(self, prompt: str, *, options: dict | None = None,
                        max_retries: int | None = None,
                        tier: str = "local_fast",
@@ -712,6 +934,7 @@ class AIGateway:
         opts = self._options(options)
         last_err: Exception | None = None
         deadline = time.monotonic() + GENERATE_DEADLINE_S
+        budget_token = _GENERATE_DEADLINE.set(deadline)
 
         def _remaining() -> float:
             return max(0.1, deadline - time.monotonic())
@@ -723,139 +946,140 @@ class AIGateway:
                            GENERATE_DEADLINE_S, stage)
             return True
 
-        # Cloud quality tier first when routed there; local chain remains
-        # the fallback so a cloud failure is invisible to the caller.
-        if tier == "cloud_quality":
-            cloud = self._cloud_provider()
-            if cloud is not None:
+        try:
+            # Cloud quality tier first when routed there; local chain remains
+            # the fallback so a cloud failure is invisible to the caller.
+            if tier == "cloud_quality":
+                cloud = self._cloud_provider()
+                if cloud is not None:
+                    start = time.monotonic()
+                    try:
+                        data = await self._blocking(cloud, prompt, opts, _remaining())
+                        latency = int((time.monotonic() - start) * 1000)
+                        text = (data.get("response") or "").strip()
+                        if text:
+                            result = LLMResult(
+                                text=text, model=cloud.model, latency_ms=latency,
+                                prompt_tokens=data.get("prompt_eval_count"),
+                                completion_tokens=data.get("eval_count"),
+                            )
+                            _log_call(cloud.name, cloud.model, latency,
+                                      result.prompt_tokens, result.completion_tokens,
+                                      streamed=False, ok=True,
+                                      tier=tier, route_reason=route_reason)
+                            return result
+                    except Exception as e:
+                        _log_call(cloud.name, cloud.model, 0, None, None,
+                                  streamed=False, ok=False,
+                                  tier=tier, route_reason=route_reason)
+                        logger.warning("cloud quality tier failed, using local: %s", e)
+
+            # 1. Try primary model with retries — unless the paid primary has
+            #    burnt its monthly ceiling, in which case we skip the loop
+            #    outright (range(1, 1) is empty) and drop into the local
+            #    fallback chain below, exactly as if the provider had failed.
+            if not self._primary_within_budget():
+                retries = 0
+            paid_primary = isinstance(self.provider, OpenAIChatProvider)
+            for attempt in range(1, retries + 1):
+                if _out_of_time(f"primary attempt {attempt}"):
+                    break
+                # Re-checked every attempt: two failures open it, and retrying
+                # a provider the breaker just declared dead is a paid request
+                # into the same hole.
+                if paid_primary and primary_breaker.is_open():
+                    logger.warning("primary LLM circuit open — going straight to the local chain")
+                    break
+                if _remaining() < _MIN_ATTEMPT_S:
+                    logger.warning("generate(): %.0fs left — not starting primary attempt %d",
+                                   _remaining(), attempt)
+                    break
                 start = time.monotonic()
                 try:
-                    data = await acall_with_deadline(
-                        cloud.generate, _deadline_for(cloud, _remaining()),
-                        prompt, options=opts,
+                    data = await self._blocking(self.provider, prompt, opts, _remaining())
+                    latency = int((time.monotonic() - start) * 1000)
+                    text = (data.get("response") or "").strip()
+                    if not text:
+                        logger.warning("Primary returned empty response on attempt %d/%d", attempt, retries)
+                        if attempt < retries:
+                            await asyncio.sleep(0.5 * (2 ** (attempt - 1)))
+                        continue
+                    result = LLMResult(
+                        text=text, model=self._provider_model(), latency_ms=latency,
+                        prompt_tokens=data.get("prompt_eval_count"),
+                        completion_tokens=data.get("eval_count"),
                     )
+                    _log_call(self.provider.name, result.model, latency,
+                              result.prompt_tokens, result.completion_tokens,
+                              streamed=False, ok=True)
+                    if paid_primary:
+                        primary_breaker.record(True)
+                    return result
+                except Exception as e:
+                    last_err = e
+                    if paid_primary:
+                        primary_breaker.record(False)
+                    # Recorded, not silently dropped. The monthly cap is a sum
+                    # over this table, and a timeout here is the case where the
+                    # provider most likely *did* count the tokens — the request
+                    # reached it and the answer did not come back. Tokens stay
+                    # null because they are genuinely unknown; inventing an
+                    # estimate would be the same mistake with the opposite sign.
+                    _log_call(self.provider.name, self._provider_model(),
+                              int((time.monotonic() - start) * 1000),
+                              None, None, streamed=False, ok=False,
+                              route_reason=_failure_reason(e))
+                    logger.warning("Primary attempt %d/%d failed: %s", attempt, retries, e)
+                    # A held or saturated provider is not retried: each retry
+                    # used to be another paid request into the same hold, all
+                    # of them running at once.
+                    if isinstance(e, (LLMDeadlineExceeded, LLMProviderBusy)):
+                        break
+                    if attempt < retries:
+                        await asyncio.sleep(0.5 * (2 ** (attempt - 1)))
+
+            # 2. Try fallback chain
+            for fb in LLM.fallback_chain():
+                if _out_of_time(f"fallback {fb['name']}"):
+                    break
+                logger.warning("⚠️ trying fallback: %s (%s@%s)", fb["name"], fb["model"], fb["url"])
+                result = await self._try_provider(
+                    prompt, opts, fb["url"], fb["model"], fb["timeout"], fb["name"]
+                )
+                if result:
+                    return result
+
+            # 3. Cloud safety valve — only when the whole local chain is down.
+            valve = None if _out_of_time("safety valve") else self._safety_valve_provider()
+            if valve is not None:
+                logger.warning("⚠️ local chain exhausted — trying cloud safety valve (%s)", valve.model)
+                start = time.monotonic()
+                try:
+                    data = await self._blocking(valve, prompt, opts, _remaining())
                     latency = int((time.monotonic() - start) * 1000)
                     text = (data.get("response") or "").strip()
                     if text:
                         result = LLMResult(
-                            text=text, model=cloud.model, latency_ms=latency,
+                            text=text, model=valve.model, latency_ms=latency,
                             prompt_tokens=data.get("prompt_eval_count"),
                             completion_tokens=data.get("eval_count"),
                         )
-                        _log_call(cloud.name, cloud.model, latency,
+                        _log_call(valve.name, valve.model, latency,
                                   result.prompt_tokens, result.completion_tokens,
                                   streamed=False, ok=True,
                                   tier=tier, route_reason=route_reason)
                         return result
                 except Exception as e:
-                    _log_call(cloud.name, cloud.model, 0, None, None,
+                    _log_call(valve.name, valve.model, 0, None, None,
                               streamed=False, ok=False,
                               tier=tier, route_reason=route_reason)
-                    logger.warning("cloud quality tier failed, using local: %s", e)
+                    logger.warning("cloud safety valve failed: %s", e)
 
-        # 1. Try primary model with retries — unless the paid primary has burnt
-        #    its monthly ceiling, in which case we skip the loop outright
-        #    (range(1, 1) is empty) and drop into the local fallback chain
-        #    below, exactly as if the provider had failed.
-        if not self._primary_within_budget():
-            retries = 0
-        paid_primary = isinstance(self.provider, OpenAIChatProvider)
-        if paid_primary and primary_breaker.is_open():
-            logger.warning("primary LLM circuit open — going straight to the local chain")
-            retries = 0
-        for attempt in range(1, retries + 1):
-            if _out_of_time(f"primary attempt {attempt}"):
-                break
-            start = time.monotonic()
-            try:
-                # Wall-clock bound per attempt (see call_with_deadline): the
-                # deadline below used to be checked only BETWEEN attempts, so a
-                # single hung attempt ran for as long as the provider kept the
-                # socket alive — 35 minutes on 2026-09-14.
-                data = await acall_with_deadline(
-                    self.provider.generate,
-                    _deadline_for(self.provider, _remaining()),
-                    prompt, options=opts,
-                )
-                latency = int((time.monotonic() - start) * 1000)
-                text = (data.get("response") or "").strip()
-                if not text:
-                    logger.warning("Primary returned empty response on attempt %d/%d", attempt, retries)
-                    if attempt < retries:
-                        await asyncio.sleep(0.5 * (2 ** (attempt - 1)))
-                    continue
-                result = LLMResult(
-                    text=text, model=self._provider_model(), latency_ms=latency,
-                    prompt_tokens=data.get("prompt_eval_count"),
-                    completion_tokens=data.get("eval_count"),
-                )
-                _log_call(self.provider.name, result.model, latency,
-                          result.prompt_tokens, result.completion_tokens,
-                          streamed=False, ok=True)
-                if paid_primary:
-                    primary_breaker.record(True)
-                return result
-            except Exception as e:
-                last_err = e
-                if paid_primary:
-                    primary_breaker.record(False)
-                # Recorded, not silently dropped. The monthly cap is a sum over
-                # this table, and a timeout here is the case where the provider
-                # most likely *did* count the tokens — the request reached it and
-                # the answer did not come back. Leaving the row out made the cap
-                # read low by exactly the spend nobody could see. Tokens stay
-                # null because they are genuinely unknown; inventing an estimate
-                # here would be the same mistake wearing the opposite sign.
-                _log_call(self.provider.name, self._provider_model(),
-                          int((time.monotonic() - start) * 1000),
-                          None, None, streamed=False, ok=False)
-                logger.warning("Primary attempt %d/%d failed: %s", attempt, retries, e)
-                if attempt < retries:
-                    await asyncio.sleep(0.5 * (2 ** (attempt - 1)))
-
-        # 2. Try fallback chain
-        for fb in LLM.fallback_chain():
-            if _out_of_time(f"fallback {fb['name']}"):
-                break
-            logger.warning("⚠️ trying fallback: %s (%s@%s)", fb["name"], fb["model"], fb["url"])
-            result = await self._try_provider(
-                prompt, opts, fb["url"], fb["model"], fb["timeout"], fb["name"]
-            )
-            if result:
-                return result
-
-        # 3. Cloud safety valve — only when the whole local chain is down.
-        valve = None if _out_of_time("safety valve") else self._safety_valve_provider()
-        if valve is not None:
-            logger.warning("⚠️ local chain exhausted — trying cloud safety valve (%s)", valve.model)
-            start = time.monotonic()
-            try:
-                data = await acall_with_deadline(
-                    valve.generate, _deadline_for(valve, _remaining()),
-                    prompt, options=opts,
-                )
-                latency = int((time.monotonic() - start) * 1000)
-                text = (data.get("response") or "").strip()
-                if text:
-                    result = LLMResult(
-                        text=text, model=valve.model, latency_ms=latency,
-                        prompt_tokens=data.get("prompt_eval_count"),
-                        completion_tokens=data.get("eval_count"),
-                    )
-                    _log_call(valve.name, valve.model, latency,
-                              result.prompt_tokens, result.completion_tokens,
-                              streamed=False, ok=True,
-                              tier=tier, route_reason=route_reason)
-                    return result
-            except Exception as e:
-                _log_call(valve.name, valve.model, 0, None, None,
-                          streamed=False, ok=False,
-                          tier=tier, route_reason=route_reason)
-                logger.warning("cloud safety valve failed: %s", e)
-
-        _log_call(self.provider.name, self._provider_model(), 0, None, None,
-                  streamed=False, ok=False)
-        raise RuntimeError(f"LLM generation failed after all retries and fallbacks: {last_err}") from last_err
+            _log_call(self.provider.name, self._provider_model(), 0, None, None,
+                      streamed=False, ok=False)
+            raise RuntimeError(f"LLM generation failed after all retries and fallbacks: {last_err}") from last_err
+        finally:
+            _GENERATE_DEADLINE.reset(budget_token)
 
     def _stream_provider(self, provider: LLMProvider, prompt: str,
                          opts: dict, tier: str | None = None,
@@ -897,21 +1121,23 @@ class AIGateway:
                   tier=tier, route_reason=route_reason)
         yield StreamChunk(delta="", done=True, result=result)
 
-    def note_stream_stall(self) -> None:
+    def note_stream_stall(self, tracker: "StreamTracker | None" = None) -> None:
         """The SSE consumer gave up waiting for tokens (assistant watchdog).
 
-        The worker is still blocked inside the provider's read, so the gateway
-        itself never saw a failure — and the next question would walk straight
-        into the same hung provider. Counted against the paid primary, which
-        is the provider streamed first whenever its breaker is closed; two
-        stalls open the breaker and the next answers go to the fallback chain.
+        Charged to the provider that was actually streaming: the paid primary
+        only when the tracker shows it was the one on the line. A stream that
+        never started (its worker was queued) contacted nobody, and a stall on
+        the cloud tier or a local model says nothing about DeepSeek.
         """
-        if isinstance(self.provider, OpenAIChatProvider) and not primary_breaker.is_open():
+        if tracker is None or not tracker.is_primary or tracker.attempt_started is None:
+            return
+        if not primary_breaker.is_open():
             primary_breaker.record(False)
 
     def stream(self, prompt: str, *, options: dict | None = None,
                tier: str = "local_fast",
-               route_reason: str | None = None) -> Iterator[StreamChunk]:
+               route_reason: str | None = None,
+               tracker: "StreamTracker | None" = None) -> Iterator[StreamChunk]:
         """Streaming generation with pre-flight fallback.
 
         Uses stream_chain() (local-fast first) for low latency. Falls back
@@ -920,6 +1146,11 @@ class AIGateway:
         When routed to the cloud quality tier, the Azure provider is tried
         first and the local chain stays behind it — a cloud pre-flight
         failure is invisible to the SSE consumer.
+
+        The paid primary is held to PRIMARY_FIRST_TOKEN_S for its first token:
+        a request DeepSeek is holding is aborted and the next provider gets
+        the question, instead of the whole stream waiting out the hold.
+        `tracker`, when given, always names the provider currently streaming.
         """
         opts = self._options(options)
 
@@ -946,22 +1177,29 @@ class AIGateway:
 
         for label, provider in candidates:
             tokens_sent = False
+            is_primary = provider is self.provider and isinstance(provider, OpenAIChatProvider)
+            if tracker is not None:
+                tracker.begin(label, is_primary)
+            limits = CallLimits(first_token=PRIMARY_FIRST_TOKEN_S) if is_primary else CallLimits()
             try:
-                for chunk in self._stream_provider(
-                    provider, prompt, opts, tier=tier, route_reason=route_reason
-                ):
-                    if not chunk.done:
-                        tokens_sent = True
-                    yield chunk
-                if provider is self.provider and isinstance(provider, OpenAIChatProvider):
+                with call_limits(limits):
+                    for chunk in self._stream_provider(
+                        provider, prompt, opts, tier=tier, route_reason=route_reason
+                    ):
+                        if not chunk.done:
+                            tokens_sent = True
+                            if tracker is not None and tracker.first_token_at is None:
+                                tracker.first_token_at = time.monotonic()
+                        yield chunk
+                if is_primary:
                     primary_breaker.record(True)
                 return  # success
             except Exception as e:
-                if provider is self.provider and isinstance(provider, OpenAIChatProvider):
+                if is_primary:
                     primary_breaker.record(False)
                 _log_call(provider.name, provider.model, 0, None, None,
                           streamed=True, ok=False,
-                          tier=tier, route_reason=route_reason)
+                          tier=tier, route_reason=_failure_reason(e) or route_reason)
                 if tokens_sent:
                     # Can't undo sent tokens — propagate
                     logger.warning("Stream failed mid-stream on %s: %s", label, e)

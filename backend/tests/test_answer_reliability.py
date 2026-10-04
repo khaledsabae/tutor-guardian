@@ -1,21 +1,22 @@
-"""Unanswered questions — the September 2026 causes, one test per fix.
+"""Unanswered questions — one test per mechanism, each failing without its fix.
 
 Production, 30 days to 2026-10-04: 44 of 290 parent questions (15.2%) ended
 with no answer. 23 were cut by the app mid-answer, ~18 sat for 2–31 minutes
 behind DeepSeek calls that ignored their 6–8 s "timeouts" (a per-READ limit
-that keep-alive blank lines reset) while holding the event loop's default
-thread pool, and the rest left no trace at all. Each test below targets one
-of those mechanisms and fails on the code before the fix (checked against
-origin/main in a detached worktree).
+that keep-alive lines reset) while holding the event loop's default thread
+pool. The PR #24 review then found regressions in the first fix (G1–G4,
+S1–S8, M1–M6); the tests for those are labelled with the finding's id.
 
 Names introduced by the fix are reached through the module (`ai_gateway.x`)
-inside each test, never imported at the top — so on the old code a test fails
-on its behaviour, not on a collection-time ImportError.
+inside each test, never imported at the top — so on old code a test fails on
+its behaviour, not on a collection-time ImportError.
 """
 from __future__ import annotations
 
 import asyncio
 import dataclasses
+import json
+import os
 import sqlite3
 import threading
 import time
@@ -23,6 +24,7 @@ import uuid
 from concurrent.futures import ThreadPoolExecutor
 from types import SimpleNamespace
 
+import httpx
 import pytest
 from fastapi.testclient import TestClient
 from starlette.requests import Request
@@ -34,7 +36,7 @@ from app.routers import assistant
 from app.services import ai_gateway, answer_cache
 from app.services import conversation_store as store
 from app.services.intent_guard import check_conversational_shortcut
-from app.services.llm_service import build_pivot_prompt
+from app.services.llm_service import build_pivot_prompt, strip_pivot_citation
 
 _RELEASE = threading.Event()  # frees every provider thread a test left blocked
 
@@ -42,15 +44,16 @@ _RELEASE = threading.Event()  # frees every provider thread a test left blocked
 @pytest.fixture(autouse=True)
 def _release_blocked_threads():
     _RELEASE.clear()
+    ai_gateway.aux_breaker.reset()
     yield
     _RELEASE.set()
+    ai_gateway.aux_breaker.reset()
 
 
 # ── Fakes ──────────────────────────────────────────────────────────────────
 
 class _HangingProvider:
-    """A provider that holds the call open the way DeepSeek does when loaded:
-    the per-read timeout never fires, the call just does not return."""
+    """Holds the call open the way DeepSeek does when loaded: no answer."""
 
     name = "deepseek"
     model = "fake-hang"
@@ -66,7 +69,45 @@ class _HangingProvider:
         return {"response": "متأخر جدًا", "done": True}
 
 
-def _scripted_provider(script):
+def _sse_body(*texts: str, usage=(11, 22), hold_s: float = 0.0, gap_s: float = 0.0):
+    """A DeepSeek-style streamed body: optional keep-alive hold, then content."""
+    def gen():
+        end = time.monotonic() + hold_s
+        while time.monotonic() < end:
+            yield b": keep-alive\n\n"
+            time.sleep(0.05)
+        for t in texts:
+            yield ("data: " + json.dumps({"choices": [{"delta": {"content": t}}]}) + "\n\n").encode()
+            if gap_s:
+                time.sleep(gap_s)
+        yield ("data: " + json.dumps({"choices": [], "usage": {
+            "prompt_tokens": usage[0], "completion_tokens": usage[1]}}) + "\n\n").encode()
+        yield b"data: [DONE]\n\n"
+    return gen()
+
+
+class _DeepSeekFake:
+    """An httpx transport that plays DeepSeek; counts the requests it gets."""
+
+    def __init__(self, respond) -> None:
+        self.respond = respond
+        self.requests = 0
+
+    def client(self) -> httpx.Client:
+        def handler(request: httpx.Request) -> httpx.Response:
+            self.requests += 1
+            return self.respond(request)
+        return httpx.Client(transport=httpx.MockTransport(handler))
+
+
+def _deepseek(fake: _DeepSeekFake, timeout: float = 0.3) -> "ai_gateway.OpenAIChatProvider":
+    return ai_gateway.OpenAIChatProvider(
+        base_url="https://deepseek.test", api_key="test-placeholder", model="deepseek-chat",
+        timeout=timeout, http_client=fake.client(),
+    )
+
+
+def _scripted_provider(script, calls: list | None = None):
     """An Ollama stand-in whose stream follows `script`:
     ("token", text) | ("sleep", s) | ("hang", s)."""
 
@@ -78,6 +119,8 @@ def _scripted_provider(script):
             self.timeout = 60
 
         def stream(self, prompt, *, options):
+            if calls is not None:
+                calls.append(prompt)
             for kind, value in script:
                 if kind == "token":
                     yield {"response": value, "done": False}
@@ -93,29 +136,32 @@ def _scripted_provider(script):
     return _Scripted
 
 
-_UNIT = {
-    "unit_id": "u-medical-1",
-    "document": "passage: نصيحة تربوية موثقة عن النوم.",
-    "metadata": {"domain": "medical", "reference_info": "مرجع تربوي موثق",
-                 "title": "النوم", "age_group": "4-6"},
-    "rerank_score": 0.5,
-    "distance": 0.2,
-    "source_domain": "medical",
-}
+def _unit(domain="medical", doc="نصيحة تربوية موثقة عن النوم."):
+    return {
+        "unit_id": f"u-{domain}-1",
+        "document": f"passage: {doc}",
+        "metadata": {"domain": domain, "reference_info": "مرجع تربوي موثق",
+                     "title": "النوم", "age_group": "4-6"},
+        "rerank_score": 0.5,
+        "distance": 0.2,
+        "source_domain": domain,
+    }
 
 
 @pytest.fixture
 def pipeline(monkeypatch):
     """The assistant pipeline minus its heavy parts: classification, cache,
     retrieval and telemetry are stubbed; the model is a scripted fake."""
-    calls = SimpleNamespace(retrieve=[], sessions=[], domains=["medical"])
+    calls = SimpleNamespace(retrieve=[], sessions=[], domains=["medical"],
+                            relevance=lambda q, units: [0.5] * len(units),
+                            unit_domain="medical", prompts=[])
 
     async def _classify(query_text):
         return list(calls.domains), ""
 
     def _retrieve(**kwargs):
         calls.retrieve.append(kwargs)
-        return [dict(_UNIT)]
+        return [_unit(calls.unit_domain)]
 
     async def _no_ayah(_q):
         return None
@@ -128,17 +174,20 @@ def pipeline(monkeypatch):
     monkeypatch.setattr(assistant, "log_retrieval", lambda *a, **k: None)
     monkeypatch.setattr(assistant, "resolve_ayah_reference", _no_ayah)
     monkeypatch.setattr(assistant, "log_session", lambda **kw: calls.sessions.append(kw))
+    monkeypatch.setattr(assistant, "rerank_relevance", lambda q, u: calls.relevance(q, u),
+                        raising=False)
     monkeypatch.setattr(ai_gateway, "_log_call", lambda *a, **k: None)
     monkeypatch.setattr(assistant, "_STREAM_KEEPALIVE_S", 0.05)
     ai_gateway._gateway = None
 
     def use_script(script):
-        monkeypatch.setattr(ai_gateway, "OllamaProvider", _scripted_provider(script))
+        monkeypatch.setattr(ai_gateway, "OllamaProvider", _scripted_provider(script, calls.prompts))
         ai_gateway._gateway = None
 
     calls.use_script = use_script
     yield calls
     ai_gateway._gateway = None
+    getattr(assistant, "_ACTIVE_TURNS", {}).clear()
 
 
 def _client_with_session():
@@ -158,7 +207,7 @@ def _rows(session_id: str) -> list[sqlite3.Row]:
     conn = store.get_conn()
     try:
         return conn.execute(
-            "SELECT role, content, mode, domain FROM chat_messages WHERE session_id = ? ORDER BY id",
+            "SELECT id, role, content, mode, domain FROM chat_messages WHERE session_id = ? ORDER BY id",
             (session_id,),
         ).fetchall()
     finally:
@@ -176,11 +225,147 @@ def _flags(calls) -> list[str]:
     return [kw.get("flag", "") for kw in calls.sessions]
 
 
-# ── 1. Wall-clock deadlines on blocking calls ──────────────────────────────
+def _done_payload(body: str) -> dict:
+    return json.loads(body.split("event: done\ndata: ", 1)[1].split("\n", 1)[0])
+
+
+# ── G1/G2: real abort, separate lanes, bounded retries ─────────────────────
+
+def test_held_request_is_aborted_and_the_thread_freed():
+    """G1 — the old code abandoned a held call at its deadline but its thread
+    stayed stuck in the read for as long as DeepSeek kept the socket alive."""
+    fake = _DeepSeekFake(lambda r: httpx.Response(200, content=_sse_body("late", hold_s=5)))
+    provider = _deepseek(fake, timeout=0.3)
+    t0 = time.monotonic()
+    with ai_gateway.call_limits(ai_gateway.CallLimits(first_token=0.4)):
+        with pytest.raises(ai_gateway.LLMDeadlineExceeded):
+            provider.generate("س", options={})
+    assert time.monotonic() - t0 < 1.5  # returned in this thread at the limit
+
+
+def test_slow_but_alive_answer_is_not_cut_at_the_first_token_limit():
+    """G2 — a provider streaming its answer slowly is alive: only a hold (no
+    content at all) is cut early. Previously cut at 64 s and retried."""
+    fake = _DeepSeekFake(lambda r: httpx.Response(200, content=_sse_body(
+        "أ", "ب", "ج", "د", gap_s=0.2)))
+    provider = _deepseek(fake, timeout=0.3)
+    with ai_gateway.call_limits(ai_gateway.CallLimits(first_token=0.4, total=5)):
+        out = provider.generate("س", options={})
+    assert out["response"] == "أبجد"
+    assert (out["prompt_eval_count"], out["eval_count"]) == (11, 22)
+    assert fake.requests == 1
+
+
+def test_held_primary_is_not_retried(monkeypatch):
+    """G2 — after a deadline the loop retried, each retry another paid request
+    into the same hold, all of them running at once."""
+    monkeypatch.setattr(ai_gateway, "_log_call", lambda *a, **k: None)
+    monkeypatch.setattr(ai_gateway, "primary_budget_available", lambda name: True)
+    monkeypatch.setattr(ai_gateway, "_DEADLINE_SLACK_S", 0.1, raising=False)
+    monkeypatch.setattr(llm_config.LLMConfig, "fallback_chain", lambda self: [])
+    fake = _DeepSeekFake(lambda r: httpx.Response(200, content=_sse_body("late", hold_s=3)))
+    gw = ai_gateway.AIGateway(provider=_deepseek(fake, timeout=0.3))
+
+    t0 = time.monotonic()
+    with pytest.raises(RuntimeError):
+        asyncio.run(gw.generate("سؤال", max_retries=3))
+    assert time.monotonic() - t0 < 2.0
+    assert fake.requests == 1
+
+
+def test_open_breaker_stops_the_retry_loop(monkeypatch):
+    """G2 — the breaker was only checked before the loop: once two failures
+    opened it, the third attempt still went out."""
+    monkeypatch.setattr(ai_gateway, "_log_call", lambda *a, **k: None)
+    monkeypatch.setattr(ai_gateway, "primary_budget_available", lambda name: True)
+    monkeypatch.setattr(llm_config.LLMConfig, "fallback_chain", lambda self: [])
+    fake = _DeepSeekFake(lambda r: httpx.Response(503))
+    gw = ai_gateway.AIGateway(provider=_deepseek(fake))
+
+    with pytest.raises(RuntimeError):
+        asyncio.run(gw.generate("سؤال", max_retries=3))
+    assert ai_gateway.primary_breaker.is_open()
+    assert fake.requests == 2
+
+
+def test_no_attempt_is_started_with_seconds_left(monkeypatch):
+    monkeypatch.setattr(ai_gateway, "_log_call", lambda *a, **k: None)
+    monkeypatch.setattr(ai_gateway, "primary_budget_available", lambda name: True)
+    monkeypatch.setattr(ai_gateway, "_MIN_ATTEMPT_S", 1000.0, raising=False)
+    monkeypatch.setattr(llm_config.LLMConfig, "fallback_chain", lambda self: [])
+    fake = _DeepSeekFake(lambda r: httpx.Response(200, content=_sse_body("x")))
+    gw = ai_gateway.AIGateway(provider=_deepseek(fake))
+    with pytest.raises(RuntimeError):
+        asyncio.run(gw.generate("سؤال", max_retries=3))
+    assert fake.requests == 0
+
+
+def test_one_request_per_attempt_no_sdk_retries(monkeypatch):
+    """G2 — the SDK client retried twice per call, each retry restarting the
+    per-read timeout. The classifier's provider makes exactly one request."""
+    fake = _DeepSeekFake(lambda r: httpx.Response(503))
+    monkeypatch.setattr(ai_gateway, "_HTTP", fake.client(), raising=False)
+    monkeypatch.setattr(ai_gateway, "_log_call", lambda *a, **k: None)
+    cfg = dataclasses.replace(llm_config.LLM, primary_provider="deepseek",
+                              deepseek_api_key="test-placeholder")
+    monkeypatch.setattr(ai_gateway, "LLM", cfg)
+    monkeypatch.setattr(ai_gateway, "primary_budget_available", lambda name: True)
+    from app.services import domain_classifier
+
+    provider = domain_classifier._classifier_provider()
+    assert isinstance(provider, ai_gateway.OpenAIChatProvider)
+    assert ai_gateway.aux_generate(provider, "صنّف", options={}, tier="classifier") is None
+    assert fake.requests == 1
+
+
+def test_fallback_still_runs_while_the_primary_lane_is_held(monkeypatch):
+    """G1 — one pool served the primary, the local fallback and aux calls:
+    during a DeepSeek hold it filled up and the healthy local model never ran
+    (review probe: local ran 0 times, RuntimeError)."""
+    monkeypatch.setattr(ai_gateway, "_log_call", lambda *a, **k: None)
+    monkeypatch.setattr(ai_gateway, "_DEADLINE_SLACK_S", 0.1, raising=False)
+    monkeypatch.setattr(ai_gateway, "PRIMARY_LANE", ai_gateway._Lane("primary", 1), raising=False)
+    hung = _HangingProvider(timeout=0.2, hang_s=5.0)
+
+    class _Healthy:
+        name, ran = "ollama", 0
+
+        def __init__(self, base_url=None, model="m", timeout=1.0):
+            self.model, self.timeout = model, timeout
+
+        def generate(self, prompt, *, options):
+            _Healthy.ran += 1
+            return {"response": "ok-local", "done": True}
+
+    monkeypatch.setattr(ai_gateway, "OllamaProvider", _Healthy)
+    monkeypatch.setattr(llm_config.LLMConfig, "fallback_chain", lambda self: [
+        {"name": "local_fast", "url": "http://x", "model": "m", "timeout": 1.0}])
+    # The paid primary, held: its only lane slot is taken by a stuck call.
+    monkeypatch.setattr(ai_gateway, "OpenAIChatProvider", _HangingProvider)
+    ai_gateway.PRIMARY_LANE.submit(hung.generate, "x", options={})
+    gw = ai_gateway.AIGateway(provider=hung)
+
+    result = asyncio.run(gw.generate("سؤال", max_retries=3))
+    assert result.text == "ok-local"
+    assert _Healthy.ran == 1
+    assert hung.calls == 1  # the held call only — nothing queued behind it
+
+
+def test_full_lane_fails_fast_instead_of_queueing(monkeypatch):
+    monkeypatch.setattr(ai_gateway, "_log_call", lambda *a, **k: None)
+    monkeypatch.setattr(ai_gateway, "_DEADLINE_SLACK_S", 0.1, raising=False)
+    monkeypatch.setattr(ai_gateway, "AUX_LANE", ai_gateway._Lane("aux", 1), raising=False)
+    provider = _HangingProvider(timeout=0.2, hang_s=5.0)
+
+    t0 = time.monotonic()
+    assert ai_gateway.aux_generate(provider, "أ", options={}, tier="classifier") is None
+    assert ai_gateway.aux_generate(provider, "ب", options={}, tier="classifier") is None
+    assert time.monotonic() - t0 < 2.0
+    assert provider.calls == 1  # the second call never started
+
 
 def test_aux_call_gives_up_at_a_wall_clock_deadline(monkeypatch):
-    """The classifier's 8 s timeout let a call run 236 s: per-read timeouts
-    restart on every keep-alive line. The caller must stop waiting anyway."""
+    """The classifier's 8 s timeout let a call run 236 s in production."""
     logged = []
     monkeypatch.setattr(ai_gateway, "_log_call", lambda *a, **k: logged.append(k))
     monkeypatch.setattr(ai_gateway, "_DEADLINE_SLACK_S", 0.1, raising=False)
@@ -188,75 +373,47 @@ def test_aux_call_gives_up_at_a_wall_clock_deadline(monkeypatch):
 
     t0 = time.monotonic()
     out = ai_gateway.aux_generate(provider, "صنّف", options={}, tier="classifier")
-    elapsed = time.monotonic() - t0
-
-    assert out is None  # the classifier's degraded path takes over
-    assert elapsed < 1.5, f"waited {elapsed:.1f}s for a hung auxiliary call"
+    assert out is None
+    assert time.monotonic() - t0 < 1.5
     assert logged and logged[-1].get("route_reason") == "deadline"
 
 
-def test_blocking_generate_attempt_is_bounded(monkeypatch):
-    """gateway.generate checked its 150 s deadline only BETWEEN attempts, so
-    one hung attempt ran as long as the provider kept the socket (35 min on
-    2026-09-14)."""
+# ── G3: stalls are charged to the provider that was streaming ──────────────
+
+def test_stall_is_charged_only_to_the_provider_that_was_streaming():
+    gw = ai_gateway.AIGateway.__new__(ai_gateway.AIGateway)
+    tracker = ai_gateway.StreamTracker()
+    gw.note_stream_stall(tracker)          # never started: a queued worker
+    assert not ai_gateway.primary_breaker._consecutive_failures
+
+    tracker.begin("cloud_quality", is_primary=False)
+    gw.note_stream_stall(tracker)          # the Azure tier, not DeepSeek
+    assert not ai_gateway.primary_breaker._consecutive_failures
+
+    tracker.begin("deepseek", is_primary=True)
+    gw.note_stream_stall(tracker)
+    assert ai_gateway.primary_breaker._consecutive_failures == 1
+
+
+def test_held_primary_stream_falls_back_and_the_tracker_follows(monkeypatch):
+    """S4/G3 — the held primary is aborted at its own first-token limit and
+    the next provider answers; the tracker names the one actually streaming."""
     monkeypatch.setattr(ai_gateway, "_log_call", lambda *a, **k: None)
-    monkeypatch.setattr(ai_gateway, "_DEADLINE_SLACK_S", 0.1, raising=False)
-    monkeypatch.setattr(llm_config.LLMConfig, "fallback_chain", lambda self: [])
-    gw = ai_gateway.AIGateway(provider=_HangingProvider(timeout=0.2, hang_s=5.0))
-
-    t0 = time.monotonic()
-    with pytest.raises(RuntimeError):
-        asyncio.run(gw.generate("سؤال", max_retries=1))
-    assert time.monotonic() - t0 < 1.5
-
-
-def test_queued_call_behind_hung_ones_is_cancelled_not_run(monkeypatch):
-    """When every LLM thread is stuck, a new call must still return at its
-    deadline — and never start later, holding a thread for nobody."""
-    monkeypatch.setattr(ai_gateway, "_log_call", lambda *a, **k: None)
-    monkeypatch.setattr(ai_gateway, "_DEADLINE_SLACK_S", 0.1, raising=False)
-    monkeypatch.setattr(ai_gateway, "_BLOCKING_LLM_EXECUTOR",
-                        ThreadPoolExecutor(max_workers=1), raising=False)
-    provider = _HangingProvider(timeout=0.2, hang_s=5.0)
-
-    t0 = time.monotonic()
-    assert ai_gateway.aux_generate(provider, "أ", options={}, tier="classifier") is None
-    assert ai_gateway.aux_generate(provider, "ب", options={}, tier="classifier") is None
-    assert time.monotonic() - t0 < 2.0
-
-    _RELEASE.set()
-    ai_gateway._BLOCKING_LLM_EXECUTOR.shutdown(wait=True)
-    assert provider.calls == 1  # the queued second call never ran
-
-
-# ── 2. Auxiliary calls get no SDK retries ─────────────────────────────────
-
-def test_classifier_provider_has_no_sdk_retries(monkeypatch):
-    """The OpenAI SDK retries twice by default, each retry restarting the
-    per-read timeout — tripling a hang for a call whose fallback is free."""
-    pytest.importorskip("openai")
-    cfg = dataclasses.replace(
-        llm_config.LLM, primary_provider="deepseek",
-        deepseek_api_key="test-placeholder-not-a-key",
-    )
-    monkeypatch.setattr(ai_gateway, "LLM", cfg)
     monkeypatch.setattr(ai_gateway, "primary_budget_available", lambda name: True)
-    from app.services import domain_classifier
+    monkeypatch.setattr(ai_gateway, "PRIMARY_FIRST_TOKEN_S", 0.3, raising=False)
+    monkeypatch.setattr(ai_gateway, "OllamaProvider", _scripted_provider([("token", "محلي")]))
+    fake = _DeepSeekFake(lambda r: httpx.Response(200, content=_sse_body("late", hold_s=3)))
+    gw = ai_gateway.AIGateway(provider=_deepseek(fake, timeout=5))
+    tracker = ai_gateway.StreamTracker()
 
-    ai_gateway.aux_breaker.reset()
-    provider = domain_classifier._classifier_provider()
-    assert isinstance(provider, ai_gateway.OpenAIChatProvider)
-    assert provider._client.max_retries == 0
-
-    # The chat path keeps the SDK default: there a retry is worth a wait.
-    primary = ai_gateway.OpenAIChatProvider(
-        base_url=cfg.deepseek_base_url, api_key=cfg.deepseek_api_key,
-        model=cfg.deepseek_model, timeout=60,
-    )
-    assert primary._client.max_retries == 2
+    t0 = time.monotonic()
+    deltas = [c.delta for c in gw.stream("س", tracker=tracker) if not c.done]
+    assert deltas == ["محلي"]
+    assert time.monotonic() - t0 < 2.0
+    assert tracker.label == "local_fast" and tracker.is_primary is False
 
 
-# ── 3. The default executor cannot be starved by LLM calls ─────────────────
+# ── G4: the default executor is never blocked by a model wait ──────────────
 
 def _sqlite_ping() -> int:
     conn = store.get_conn()
@@ -266,25 +423,30 @@ def _sqlite_ping() -> int:
         conn.close()
 
 
-def test_hung_classifier_calls_do_not_starve_sqlite(monkeypatch):
-    """Classification runs aux calls from asyncio's default pool — the same
-    pool every sqlite read/write and retrieval uses. Two hung calls on a
-    two-thread pool used to freeze the whole assistant."""
-    monkeypatch.setattr(ai_gateway, "_log_call", lambda *a, **k: None)
-    monkeypatch.setattr(ai_gateway, "_DEADLINE_SLACK_S", 0.1, raising=False)
-    provider = _HangingProvider(timeout=0.2, hang_s=5.0)
+def test_classification_does_not_occupy_the_default_executor(monkeypatch):
+    """G4 — classification ran on asyncio's default pool and waited there up
+    to 12 s per call; sqlite (token checks, history) queued behind it."""
+    def _slow_classify(q):
+        _RELEASE.wait(2.0)
+        return ["medical"]
+
+    monkeypatch.setattr(assistant, "classify_domains", _slow_classify)
+    monkeypatch.setattr(assistant, "rewrite_query", lambda *a, **k: "")
+    monkeypatch.setattr(assistant, "_AUX_WAIT_S", 0.3, raising=False)
 
     async def scenario():
-        asyncio.get_running_loop().set_default_executor(ThreadPoolExecutor(max_workers=2))
-        hung = [asyncio.create_task(asyncio.to_thread(
-            ai_gateway.aux_generate, provider, "س", options={}, tier="classifier"))
-            for _ in range(2)]
+        asyncio.get_running_loop().set_default_executor(ThreadPoolExecutor(max_workers=1))
+        task = asyncio.create_task(assistant._classify_and_rewrite("سؤال جديد تمامًا"))
         await asyncio.sleep(0.05)
-        ping = await asyncio.wait_for(asyncio.to_thread(_sqlite_ping), timeout=2.0)
-        await asyncio.gather(*hung)
-        return ping
+        ping = await asyncio.wait_for(asyncio.to_thread(_sqlite_ping), timeout=0.5)
+        domains, _ = await task
+        return ping, domains
 
-    assert asyncio.run(scenario()) == 1
+    ping, domains = asyncio.run(scenario())
+    assert ping == 1
+    # Past the deadline the question is searched broadly instead of waiting.
+    from app.services.domain_classifier import UNCERTAIN_DOMAINS
+    assert domains == list(UNCERTAIN_DOMAINS)
 
 
 def test_blocking_generate_does_not_use_the_default_executor(monkeypatch):
@@ -304,18 +466,19 @@ def test_blocking_generate_does_not_use_the_default_executor(monkeypatch):
     assert asyncio.run(scenario()) == 1
 
 
-# ── 4. Stall limits on the stream ─────────────────────────────────────────
+# ── S4: stall limits per attempt ──────────────────────────────────────────
 
 def test_stall_limits_default_to_75s_first_token_and_60s_between_tokens():
     assert assistant._FIRST_TOKEN_TIMEOUT_S == 75.0
     assert assistant._STREAM_STALL_S == 60.0
+    assert assistant._FALLBACK_FIRST_TOKEN_S == 150.0
 
 
 def test_no_first_token_ends_the_turn_with_an_error(pipeline, monkeypatch):
     """The SSE keep-alive defeats the app's 45 s idle check, so a provider
-    that never sends a token kept the parent on «يكتب…» until DeepSeek gave
-    up — up to 30 minutes on 2026-10-01."""
+    that never sends a token kept the parent on «يكتب…» for up to 30 min."""
     monkeypatch.setattr(assistant, "_FIRST_TOKEN_TIMEOUT_S", 0.3, raising=False)
+    monkeypatch.setattr(assistant, "_FALLBACK_FIRST_TOKEN_S", 0.3, raising=False)
     pipeline.use_script([("hang", 3.0), ("token", "متأخر")])
     client, sid = _client_with_session()
     try:
@@ -332,6 +495,22 @@ def test_no_first_token_ends_the_turn_with_an_error(pipeline, monkeypatch):
     assert [r["role"] for r in rows] == ["user", "assistant"]
     assert rows[1]["mode"] == "error"
     assert "first_token_timeout" in _flags(pipeline)
+
+
+def test_fallback_model_gets_its_own_longer_first_token_budget(pipeline, monkeypatch):
+    """S4 — 75 s from the start of the request covered the whole provider
+    chain, so a slow-but-healthy local model (32–95 s on the home box) was
+    killed. A fallback attempt is timed on its own, longer budget."""
+    monkeypatch.setattr(assistant, "_FIRST_TOKEN_TIMEOUT_S", 0.3, raising=False)
+    monkeypatch.setattr(assistant, "_FALLBACK_FIRST_TOKEN_S", 3.0, raising=False)
+    pipeline.use_script([("sleep", 0.8), ("token", "إجابة بطيئة لكنها حية")])
+    client, sid = _client_with_session()
+    try:
+        resp = _ask(client, sid)
+    finally:
+        client.__exit__(None, None, None)
+    assert "event: done" in resp.text and "event: error" not in resp.text
+    assert _rows(sid)[-1]["mode"] == "llm_generated"
 
 
 def test_tokens_that_stop_mid_answer_end_the_turn(pipeline, monkeypatch):
@@ -353,12 +532,9 @@ def test_tokens_that_stop_mid_answer_end_the_turn(pipeline, monkeypatch):
     assert "stream_stalled" in _flags(pipeline)
 
 
-# ── 5. A failure before the first token leaves a reply row ─────────────────
+# ── Pre-stream failure + S7 localization ───────────────────────────────────
 
 def test_pre_stream_failure_stores_an_error_turn(pipeline, monkeypatch):
-    """Anything that raised between the stored question and the first token
-    was a bare 500 and a question with no reply — in the data, identical to
-    a parent who walked away."""
     def _boom(**kwargs):
         raise RuntimeError("retrieval exploded")
 
@@ -376,6 +552,27 @@ def test_pre_stream_failure_stores_an_error_turn(pipeline, monkeypatch):
     assert [r["role"] for r in rows] == ["user", "assistant"]
     assert rows[1]["mode"] == "error"
     assert any(f.startswith("pipeline_error:RuntimeError") for f in _flags(pipeline))
+
+
+@pytest.mark.parametrize("question,expected", [
+    ("My son refuses to sleep before midnight, what can I do?",
+     "Sorry, the answer could not be generated"),
+    ("Mon fils refuse de dormir avant minuit, que faire ?",
+     "Désolé, la réponse n'a pas pu être générée"),
+])
+def test_error_text_follows_the_parents_language(pipeline, monkeypatch, question, expected):
+    """S7 — English and French parents got the Arabic apology verbatim."""
+    def _boom(**kwargs):
+        raise RuntimeError("retrieval exploded")
+
+    monkeypatch.setattr(assistant, "retrieve_hybrid", _boom)
+    client, sid = _client_with_session()
+    try:
+        resp = _ask(client, sid, question)
+    finally:
+        client.__exit__(None, None, None)
+    assert expected in resp.text
+    assert _rows(sid)[-1]["content"].startswith(expected)
 
 
 def test_draft_failure_stores_an_error_turn_and_still_fails(pipeline, monkeypatch):
@@ -398,7 +595,23 @@ def test_draft_failure_stores_an_error_turn_and_still_fails(pipeline, monkeypatc
     assert rows[1]["mode"] == "error"
 
 
-# ── 6. The answer survives the reader leaving ──────────────────────────────
+def test_first_frame_names_the_stored_question(pipeline):
+    """M1 — the app needs the id of THIS question to find its answer in the
+    history later; matching by text picked a different turn's answer."""
+    pipeline.use_script([("token", "رد")])
+    client, sid = _client_with_session()
+    try:
+        resp = _ask(client, sid)
+        hist = client.get(f"/api/chat/sessions/{sid}").json()
+    finally:
+        client.__exit__(None, None, None)
+    first = resp.text.split("\n\n", 1)[0]
+    assert first.startswith("event: turn")
+    qid = json.loads(first.split("data: ", 1)[1])["message_id"]
+    assert [m["id"] for m in hist["messages"] if m["role"] == "user"] == [qid]
+
+
+# ── S1/S5/S6: the answer survives the reader leaving, in order ─────────────
 
 def _request(device_id: str) -> Request:
     app = SimpleNamespace(state=SimpleNamespace(guardrails_config=load_guardrails_config()))
@@ -409,89 +622,241 @@ def _request(device_id: str) -> Request:
     })
 
 
-async def _leave_after(session_id: str, device_id: str, stop_at: str) -> list[str]:
-    """Read the stream until `stop_at` appears, then close it the way
-    Starlette does when the client disconnects; wait for any work the
-    server keeps doing after that."""
-    resp = await assistant.stream_reply(_request(device_id), UserMessage(
-        age_group="4-6", severity="خفيف",
-        message_text="ابني لا ينام إلا متأخرًا، ماذا أفعل؟", session_id=session_id,
-    ))
+def _msg(session_id: str, text="ابني لا ينام إلا متأخرًا، ماذا أفعل؟") -> UserMessage:
+    return UserMessage(age_group="4-6", severity="خفيف", message_text=text, session_id=session_id)
+
+
+async def _read_until(resp, stop_at: str) -> list[str]:
     seen: list[str] = []
     gen = resp.body_iterator
     async for frame in gen:
         seen.append(frame)
         if stop_at in frame:
             break
-    await gen.aclose()
-    for _ in range(200):
-        pending = list(getattr(assistant, "_BACKGROUND_COMPLETIONS", ()))
-        if not pending:
-            break
-        await asyncio.gather(*pending, return_exceptions=True)
+    await gen.aclose()  # what Starlette does when the client disconnects
     return seen
 
 
-def test_answer_is_finished_and_stored_after_the_reader_leaves(pipeline):
-    """The app stopped the stream whenever the phone went to the background;
-    the answer was cancelled with it (23 of 290 questions). The app reloads
-    the conversation from the server on its next start — so finish it."""
+async def _drain_background() -> None:
+    for _ in range(200):
+        pending = list(getattr(assistant, "_BACKGROUND_COMPLETIONS", ()))
+        if not pending:
+            return
+        await asyncio.gather(*pending, return_exceptions=True)
+
+
+def test_answer_is_finished_into_the_row_reserved_when_the_reader_left(pipeline):
+    """S1 — the row is written the moment the reader leaves (what they saw,
+    as 'interrupted') and completed in place, keeping its position."""
     pipeline.use_script([
-        ("token", "أولًا "), ("sleep", 0.15), ("token", "ثانيًا "),
-        ("sleep", 0.15), ("token", "ثالثًا"),
+        ("token", "أولًا "), ("sleep", 0.3), ("token", "ثانيًا "),
+        ("sleep", 0.3), ("token", "ثالثًا"),
     ])
     sid = store.create_session("leaver")
-    seen = asyncio.run(_leave_after(sid, "leaver", "event: token"))
 
-    assert any("event: token" in f for f in seen)
-    assert not any("event: done" in f for f in seen)  # the reader really left early
+    async def scenario():
+        resp = await assistant.stream_reply(_request("leaver"), _msg(sid))
+        await _read_until(resp, "event: token")
+        reserved = _rows(sid)  # right after the reader left
+        await _drain_background()
+        return reserved
+
+    reserved = asyncio.run(scenario())
+    assert [r["role"] for r in reserved] == ["user", "assistant"]
+    assert reserved[1]["mode"] == "interrupted" and reserved[1]["content"] == "أولًا"
     rows = _rows(sid)
     assert [r["role"] for r in rows] == ["user", "assistant"]
+    assert rows[1]["id"] == reserved[1]["id"]  # the same row, filled in
     assert rows[1]["content"] == "أولًا ثانيًا ثالثًا"
     assert rows[1]["mode"] == "llm_generated"
     assert "completed_after_disconnect" in _flags(pipeline)
     assert store.get_history(sid)[-1].content == "أولًا ثانيًا ثالثًا"
 
 
-def test_reader_gone_and_model_silent_is_counted_not_stored(pipeline, monkeypatch):
-    """Left before the first word and the model never produced one: no blank
-    bubble in the conversation, but the cause is recorded."""
+def test_new_question_cuts_the_pending_completion_and_keeps_order(pipeline):
+    """S1/S5 — a question asked while the previous answer was being finished
+    in the background landed before it (Q1, Q2, A1): A1 then showed under Q2
+    and Q2's prompt never saw it. The old turn is now cut and written first."""
+    pipeline.use_script([
+        ("token", "بداية الجواب الأول "), ("sleep", 0.4), ("token", "بقية لن تُكتب"),
+    ])
+    sid = store.create_session("asker")
+
+    async def scenario():
+        r1 = await assistant.stream_reply(_request("asker"), _msg(sid, "السؤال الأول عن النوم"))
+        await _read_until(r1, "event: token")
+        pipeline.use_script([("token", "الجواب الثاني")])
+        r2 = await assistant.stream_reply(_request("asker"), _msg(sid, "السؤال الثاني عن الشاشات"))
+        async for _frame in r2.body_iterator:
+            pass
+        await _drain_background()
+
+    asyncio.run(scenario())
+    rows = _rows(sid)
+    assert [(r["role"], r["mode"]) for r in rows] == [
+        ("user", None), ("assistant", "interrupted"), ("user", None), ("assistant", "llm_generated"),
+    ]
+    assert rows[1]["content"] == "بداية الجواب الأول"  # cut: the rest was never written
+    assert "superseded" in _flags(pipeline)
+    assert "completed_after_disconnect" not in _flags(pipeline)
+    # Q2's prompt saw A1 — the conversation is in order.
+    assert "بداية الجواب الأول" in pipeline.prompts[-1]
+
+
+def test_stop_cancels_generation_instead_of_finishing_it(pipeline):
+    """S5 — Stop looked exactly like the app going to the background, so the
+    server finished (and paid for, and stored) an answer the parent rejected.
+    New builds send an explicit stop; the work is cancelled."""
+    pipeline.use_script([
+        ("token", "جواب سيوقفه الأب "), ("sleep", 0.5), ("token", "ولا يُكمل"),
+    ])
+    sid = store.create_session("stopper")
+
+    async def scenario():
+        resp = await assistant.stream_reply(_request("stopper"), _msg(sid))
+        await _read_until(resp, "event: token")
+        stopped = await assistant.cut_pending_turn(sid, "stopped_by_parent")
+        await _drain_background()
+        return stopped
+
+    assert asyncio.run(scenario()) is True
+    rows = _rows(sid)
+    assert rows[-1]["mode"] == "interrupted" and rows[-1]["content"] == "جواب سيوقفه الأب"
+    assert "stopped_by_parent" in _flags(pipeline)
+    assert "completed_after_disconnect" not in _flags(pipeline)
+
+
+def test_late_stop_for_an_older_turn_does_not_cut_a_newer_one(pipeline):
+    """S5 — a stop names the question it stops; arriving after a newer
+    question started, it must not cut that one."""
+    pipeline.use_script([("token", "جواب "), ("sleep", 0.3), ("token", "كامل")])
+    sid = store.create_session("late")
+
+    async def scenario():
+        resp = await assistant.stream_reply(_request("late"), _msg(sid))
+        await _read_until(resp, "event: token")
+        cut = await assistant.cut_pending_turn(sid, "stopped_by_parent", only_message_id=-1)
+        await _drain_background()
+        return cut
+
+    assert asyncio.run(scenario()) is False
+    assert _rows(sid)[-1]["content"] == "جواب كامل"
+    assert "completed_after_disconnect" in _flags(pipeline)
+
+
+def test_stop_endpoint_is_owned_and_quota_free(pipeline):
+    client, sid = _client_with_session()
+    try:
+        ok = client.post(f"/api/chat/sessions/{sid}/stop")
+        other = client.post("/api/chat/sessions/not-a-session/stop")
+    finally:
+        client.__exit__(None, None, None)
+    assert ok.status_code == 200 and ok.json() == {"stopped": False}
+    assert other.status_code == 404
+
+
+def test_background_stall_is_counted_as_a_stall_not_a_parent(pipeline, monkeypatch):
+    """S6 — after the reader left, a provider that never answered was logged
+    as 'client_left_before_first_token'; it is a provider stall."""
     monkeypatch.setattr(assistant, "_FIRST_TOKEN_TIMEOUT_S", 0.3, raising=False)
+    monkeypatch.setattr(assistant, "_FALLBACK_FIRST_TOKEN_S", 0.3, raising=False)
     pipeline.use_script([("hang", 3.0), ("token", "متأخر")])
     sid = store.create_session("silent")
-    asyncio.run(_leave_after(sid, "silent", ": keep-alive"))
 
-    assert [r["role"] for r in _rows(sid)] == ["user"]
-    assert "client_left_before_first_token" in _flags(pipeline)
+    async def scenario():
+        resp = await assistant.stream_reply(_request("silent"), _msg(sid))
+        await _read_until(resp, ": keep-alive")
+        await _drain_background()
+
+    asyncio.run(scenario())
+    assert [r["role"] for r in _rows(sid)] == ["user"]  # no empty bubble left behind
+    assert "first_token_timeout" in _flags(pipeline)
+    assert "client_left_before_first_token" not in _flags(pipeline)
 
 
-# ── 7. Follow-ups stay in their conversation ──────────────────────────────
+# ── S2/S3: follow-ups ─────────────────────────────────────────────────────
 
-def _seed_answered_turn(session_id: str, domain: str, reply_mode: str) -> None:
-    qid = store.add_message(session_id, "user", "ابني يرفض أداء الصلاة، كيف أشجعه؟")
-    store.update_classification(qid, domain=domain, severity="خفيف")
-    store.add_message(session_id, "assistant", "ابدأ بالقدوة والتحبيب.", mode=reply_mode)
+def _seed_answered_turn(session_id: str, question_domain: str, reply_domain: str | None,
+                        reply_mode: str, question="ابني يرفض أداء الصلاة، كيف أشجعه؟") -> None:
+    qid = store.add_message(session_id, "user", question)
+    store.update_classification(qid, domain=question_domain, severity="خفيف")
+    store.add_message(session_id, "assistant", "ابدأ بالقدوة والتحبيب.",
+                      domain=reply_domain, mode=reply_mode)
 
 
 def test_followup_classified_general_keeps_the_previous_topic(pipeline):
-    """«وإذا رفض؟» has no topic words, so the classifier says general and the
-    question went to the off-topic pivot with no history: 26% of follow-ups to
-    a grounded answer, and where 10 of 18 linked 👎 ratings landed."""
+    """«وإذا رفض؟» has no topic words, so it went to the off-topic pivot with
+    no history: 26% of follow-ups to a grounded answer."""
     pipeline.domains = ["general"]
     pipeline.use_script([("token", "جرّب أن تصلي أمامه.")])
     client, sid = _client_with_session()
     try:
-        _seed_answered_turn(sid, "fiqh", "llm_generated")
+        _seed_answered_turn(sid, "fiqh", "fiqh", "llm_generated")
         resp = _ask(client, sid, "وإذا رفض مرة أخرى؟")
     finally:
         client.__exit__(None, None, None)
 
-    assert len(pipeline.retrieve) == 1
     call = pipeline.retrieve[0]
     assert call["domains"] == ["fiqh"]
-    assert "يرفض أداء الصلاة" in call["query_text"]
-    assert "وإذا رفض مرة أخرى" in call["query_text"]
-    assert '"mode": "llm_generated"' in resp.text
+    # S2 — both questions for the search legs; the follow-up FIRST for the
+    # cross-encoder, which reads only 256 tokens.
+    assert "يرفض أداء الصلاة" in call["query_text"] and "وإذا رفض مرة أخرى" in call["query_text"]
+    assert call["rerank_query"].startswith("وإذا رفض مرة أخرى")
+    assert _done_payload(resp.text)["mode"] == "llm_generated"
+
+
+def test_off_topic_followup_stays_on_the_pivot_without_sources(pipeline):
+    """S2 — inheritance lifted «ما عاصمة فرنسا؟» above the relevance floor
+    (with the previous sleep question it scored -2.8, alone -9.0) and it was
+    answered on the grounded path with the sleep topic's sources."""
+    pipeline.domains = ["general"]
+    pipeline.relevance = (
+        lambda q, units: [-9.0] * len(units) if "فرنسا" in q else [0.5] * len(units))
+    pipeline.use_script([("token", "باريس.")])
+    client, sid = _client_with_session()
+    try:
+        _seed_answered_turn(sid, "medical", "medical", "llm_generated",
+                            question="ابني لا ينام إلا بعد منتصف الليل، ماذا أفعل؟")
+        resp = _ask(client, sid, "ما عاصمة فرنسا؟")
+    finally:
+        client.__exit__(None, None, None)
+
+    done = _done_payload(resp.text)
+    assert done["mode"] == "general_pivot"
+    assert done["metadata"]["sources"] == []
+
+
+@pytest.mark.skipif(not os.environ.get("RUN_MODEL_TESTS"),
+                    reason="loads the real cross-encoder (~100 s); set RUN_MODEL_TESTS=1")
+def test_real_cross_encoder_rejects_the_capital_of_france():
+    """The same case through the real model (measured 2026-10-04: -6.99
+    alone vs the sleep unit; the sleep follow-up -3.82)."""
+    from app.services import reranker
+    try:
+        reranker._get_model()
+    except Exception:  # noqa: BLE001 — no model in this environment
+        pytest.skip("cross-encoder not available")
+    units = [_unit(doc="النوم المبكر للطفل يبدأ بروتين ثابت كل ليلة: حمام دافئ ثم قصة ثم إطفاء الأنوار.")]
+    assert max(reranker.relevance("ما عاصمة فرنسا؟", units)) < reranker.RERANK_MIN_SCORE
+    assert max(reranker.relevance("وإذا بكى عند إطفاء النور؟", units)) >= reranker.RERANK_MIN_SCORE
+
+
+def test_followup_inherits_the_replys_evidence_domain_not_the_guess(pipeline):
+    """S3 — an uncertain classification tags the question with the first
+    entry of the broad search ('medical'); the reply is labelled from the
+    evidence actually found. Inheriting the guess sent an Instagram
+    follow-up to the medical knowledge base."""
+    pipeline.domains = ["general"]
+    pipeline.unit_domain = "cyber"
+    pipeline.use_script([("token", "فعّل الرقابة الأبوية.")])
+    client, sid = _client_with_session()
+    try:
+        _seed_answered_turn(sid, "medical", "cyber", "llm_generated",
+                            question="ابني يقضي وقتًا طويلًا على إنستغرام")
+        _ask(client, sid, "وكيف أراقب ذلك؟")
+    finally:
+        client.__exit__(None, None, None)
+    assert pipeline.retrieve[0]["domains"] == ["cyber"]
 
 
 def test_followup_after_an_off_topic_reply_stays_general(pipeline):
@@ -499,31 +864,33 @@ def test_followup_after_an_off_topic_reply_stays_general(pipeline):
     pipeline.use_script([("token", "إجابة عامة")])
     client, sid = _client_with_session()
     try:
-        _seed_answered_turn(sid, "general", "general_pivot")
+        _seed_answered_turn(sid, "general", "general", "general_pivot")
         resp = _ask(client, sid, "وماذا عن الحلوى؟")
     finally:
         client.__exit__(None, None, None)
 
     assert pipeline.retrieve == []
-    assert '"mode": "general_pivot"' in resp.text
+    assert _done_payload(resp.text)["mode"] == "general_pivot"
 
 
 def test_followup_context_requires_a_grounded_reply_and_a_real_domain():
     sid = store.create_session("ctx")
-    _seed_answered_turn(sid, "medical", "llm_generated")
+    _seed_answered_turn(sid, "medical", "medical", "llm_generated")
     store.add_message(sid, "assistant", "تعذّر توليد الرد", mode="error")  # skipped
     nxt = store.add_message(sid, "user", "وإذا لم ينفع؟")
     assert store.followup_context(sid, nxt) == (
         "medical", "ابني يرفض أداء الصلاة، كيف أشجعه؟",
     )
-
     sid2 = store.create_session("ctx2")
-    _seed_answered_turn(sid2, "fiqh_aqeedah", "fiqh_guard")
+    _seed_answered_turn(sid2, "fiqh_aqeedah", "fiqh_aqeedah", "fiqh_guard")
     assert store.followup_context(sid2, store.add_message(sid2, "user", "ولماذا؟")) is None
-    assert store.followup_context(sid2, None) is None
+    sid3 = store.create_session("ctx3")
+    _seed_answered_turn(sid3, "medical", None, "llm_generated")  # no evidence domain
+    assert store.followup_context(sid3, store.add_message(sid3, "user", "وبعد؟")) is None
+    assert store.followup_context(sid3, None) is None
 
 
-# ── 8. The off-topic fallback: no invented questions, menus or language ────
+# ── Pivot prompt, S8 pleasantries, minor ───────────────────────────────────
 
 def test_pivot_prompt_forbids_inventing_a_question_or_app_menus():
     prompt = build_pivot_prompt("عندي سؤال", "4-6")
@@ -533,11 +900,20 @@ def test_pivot_prompt_forbids_inventing_a_question_or_app_menus():
     assert "ضع هنا" not in prompt  # no fill-in template for the model to copy
 
 
-def test_pivot_prompt_answers_in_the_parents_language():
+def test_pivot_prompt_answers_in_the_parents_language_and_asks_no_sources():
     english = build_pivot_prompt("How do I make pizza dough at home?", "4-6")
     arabic = build_pivot_prompt("كيف أصنع عجينة البيتزا في البيت؟", "4-6")
     assert english.startswith("🔴 LANGUAGE")
     assert not arabic.startswith("🔴 LANGUAGE")
+    # The pivot cites nothing (rule 6): its language rule must not ask for a
+    # closing sources line.
+    assert "sources line" not in english
+
+
+def test_pivot_strips_english_source_lines():
+    assert strip_pivot_citation("Paris is the capital.\n\nSource: Wikipedia") == "Paris is the capital."
+    assert strip_pivot_citation("Try a calm routine.\n**Sources:** AAP, NHS") == "Try a calm routine."
+    assert strip_pivot_citation("The source of the noise matters.") == "The source of the noise matters."
 
 
 @pytest.mark.parametrize("text,expected", [
@@ -545,8 +921,12 @@ def test_pivot_prompt_answers_in_the_parents_language():
     ("كيف الحال؟", "الحمد لله"),
     ("Hi", "Hello"),
     ("Thank you!", "You're welcome"),
+    ("Salam", "Wa alaikum assalam"),            # S8: a salam is returned as a salam
+    ("Assalamu alaikum", "Wa alaikum assalam"),
+    ("merci", "Avec plaisir"),
+    ("bonjour", "Bonjour et bienvenue"),
 ])
-def test_pleasantries_that_reached_the_pivot_now_get_a_direct_reply(text, expected):
+def test_pleasantries_get_a_direct_reply_in_kind(text, expected):
     is_conv, reply = check_conversational_shortcut(text)
     assert is_conv is True
     assert expected in reply

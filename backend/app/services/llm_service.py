@@ -11,7 +11,13 @@ from app.models.api import ConversationTurn
 logger = logging.getLogger(__name__)
 
 # Matches a trailing citation line (📚 …) or a bare "المصدر/المصادر: …" line.
-_PIVOT_CITATION_RE = re.compile(r"\n*\s*(?:📚|المصدر[\s:：]|المصادر[\s:：]).*$", re.S)
+_PIVOT_CITATION_RE = re.compile(
+    r"\n*\s*(?:📚|المصدر[\s:：]|المصادر[\s:：]).*$"
+    # English/French source lines too — only at the start of a line, so the
+    # word "source" inside a sentence is left alone.
+    r"|(?:^|\n)[ \t>*_-]*(?:sources?|references?|références?)[ \t*_]*[:：].*$",
+    re.S | re.I,
+)
 
 # CJK / Japanese / Korean / fullwidth ranges. The local qwen model occasionally
 # leaks Chinese tokens mid-answer ("首先要认识到，…"); strip them deterministically.
@@ -169,10 +175,11 @@ def build_pivot_prompt(question_text: str, age_group: str) -> str:
         "وتجنب تماماً ترك أي قوالب غير مكتملة أو نصوص بين أقواس تنتظر الملء.\n"
     )
     # Same first-line rule as the grounded prompt (_compose_system_prompt):
-    # an all-Arabic prompt is itself an instruction to answer in Arabic.
+    # an all-Arabic prompt is itself an instruction to answer in Arabic. The
+    # pivot's variant does not mention a sources line — rule 6 forbids one.
     from app.services.retrieval import detect_query_language
     if detect_query_language(question_text or "") == "en":
-        prompt = _NON_ARABIC_DIRECTIVE + prompt
+        prompt = _NON_ARABIC_DIRECTIVE_PIVOT + prompt
     return prompt
 
 
@@ -313,6 +320,13 @@ _NON_ARABIC_DIRECTIVE = (
     "  • Hadith wording is quoted in Arabic with its attribution, then "
     "explained. Do not present a translation as the Prophet's words ﷺ.\n\n"
 )
+
+# The off-topic pivot cites nothing (its rule 6), so its copy of the
+# directive must not ask for "the closing sources line" either.
+_NON_ARABIC_DIRECTIVE_PIVOT = _NON_ARABIC_DIRECTIVE.replace(
+    ", including the closing sources line", "",
+)
+assert _NON_ARABIC_DIRECTIVE_PIVOT != _NON_ARABIC_DIRECTIVE
 
 # Said in Arabic too, because the model reads the whole prompt and an Arabic
 # system prompt that never mentions language is itself an instruction to

@@ -279,15 +279,69 @@ _CLOSING_PHRASES = {
     "لا شكر على واجب", "العفو", "على الرحب والسعة",
 }
 
-# English pleasantries got the Arabic pivot. Replies stay in the parent's language.
+# Latin-script pleasantries got the Arabic pivot. Replies follow the parent's
+# language: English unless the message itself is French.
 _EN_THANKS_PHRASES = {
     "thanks", "thank you", "thanks a lot", "thank you so much", "thank you very much",
     "thx", "jazakallah khair", "jazak allah khair",
 }
 _EN_GREETING_PHRASES = {
-    "hi", "hello", "hey", "hi there", "hello there", "salam", "salaam",
-    "assalamu alaikum", "as salamu alaykum", "good morning", "good evening",
+    "hi", "hello", "hey", "hi there", "hello there", "good morning", "good evening",
 }
+# A salam is returned as a salam, whatever language the parent reads.
+_LATIN_SALAM_PHRASES = {
+    "salam", "salaam", "salam alaikum", "salam aleikum", "salamu alaikum",
+    "assalamu alaikum", "assalamu alaykum", "as salamu alaykum", "assalam alaikum",
+    "assalamualaikum", "asalamu alaikum", "salam alikoum", "assalamou alaykoum",
+}
+_FR_THANKS_PHRASES = {"merci", "merci beaucoup", "merci bien", "merci infiniment"}
+_FR_GREETING_PHRASES = {"bonjour", "bonsoir", "salut", "coucou"}
+
+_LATIN_REPLIES = {
+    "salam": {
+        "en": "Wa alaikum assalam! How can I help you today with your child's care and upbringing?",
+        "fr": "Wa alaykoum assalam ! Comment puis-je vous aider aujourd'hui pour l'éducation de votre enfant ?",
+    },
+    "thanks": {
+        "en": "You're welcome! I'm always glad to help with anything about raising your child.",
+        "fr": "Avec plaisir ! Je suis toujours là pour vous aider dans l'éducation de votre enfant.",
+    },
+    "greeting": {
+        "en": "Hello, and welcome! How can I help you today with your child's care and upbringing?",
+        "fr": "Bonjour et bienvenue ! Comment puis-je vous aider aujourd'hui pour l'éducation de votre enfant ?",
+    },
+}
+
+_ARABIC_LETTER = re.compile(r"[\u0600-\u06FF]")
+_LATIN_LETTER = re.compile(r"[A-Za-zÀ-ÿŒœ]")
+_FR_ACCENTS = re.compile(r"[àâçéèêëîïôûùüÿœæ]", re.IGNORECASE)
+_FR_WORDS = frozenset({
+    "je", "j", "tu", "il", "elle", "nous", "vous", "mon", "ma", "mes", "ton", "ta",
+    "est", "pas", "comment", "pourquoi", "quoi", "avec", "dans", "pour", "que",
+    "qui", "une", "des", "les", "du", "au", "aux", "mais", "et", "enfant", "fils",
+    "fille", "bonjour", "merci", "salut", "bonsoir", "coucou", "aider", "faire",
+})
+
+
+def detect_reply_language(text: str) -> str:
+    """'ar', 'en' or 'fr' — the language to answer a short system message in.
+
+    Arabic script wins; Latin text is French when it carries a French accent
+    or two French function words, English otherwise. Deliberately coarse: it
+    picks the language of an apology or a greeting, not of a whole answer
+    (the model is told to mirror the parent for that).
+    """
+    t = text or ""
+    ar = len(_ARABIC_LETTER.findall(t))
+    la = len(_LATIN_LETTER.findall(t))
+    if ar >= la:
+        return "ar"
+    if _FR_ACCENTS.search(t):
+        return "fr"
+    words = re.findall(r"[a-zà-ÿœ]+", t.lower())
+    if sum(1 for w in words if w in _FR_WORDS) >= 2 or (len(words) <= 3 and any(w in _FR_WORDS for w in words)):
+        return "fr"
+    return "en"
 
 _THANKS_NORM = {_normalize(p) for p in _THANKS_PHRASES}
 _GREETING_NORM = {_normalize(p) for p in _GREETING_PHRASES}
@@ -295,12 +349,19 @@ _HOW_ARE_YOU_NORM = {_normalize(p) for p in _HOW_ARE_YOU_PHRASES}
 _CLOSING_NORM = {_normalize(p) for p in _CLOSING_PHRASES}
 _EN_THANKS_NORM = {_normalize(p) for p in _EN_THANKS_PHRASES}
 _EN_GREETING_NORM = {_normalize(p) for p in _EN_GREETING_PHRASES}
+_LATIN_SALAM_NORM = {_normalize(p) for p in _LATIN_SALAM_PHRASES}
+_FR_THANKS_NORM = {_normalize(p) for p in _FR_THANKS_PHRASES}
+_FR_GREETING_NORM = {_normalize(p) for p in _FR_GREETING_PHRASES}
 
 
-def check_conversational_shortcut(text: str) -> tuple[bool, str]:
+def check_conversational_shortcut(text: str, lang: str | None = None) -> tuple[bool, str]:
     """If the text is strictly a greeting, thanks, or pleasantry with no actual
     question, return (True, predefined_response) to bypass LLM and avoid
-    unprompted activity generation."""
+    unprompted activity generation.
+
+    `lang` ('en'/'fr') picks the language of a Latin-script reply; by default
+    it is detected from the text.
+    """
     norm = _normalize(text).strip()
     if not norm:
         return False, ""
@@ -317,11 +378,19 @@ def check_conversational_shortcut(text: str) -> tuple[bool, str]:
     if norm in _CLOSING_NORM:
         return True, "بارك الله فيك ويسّر أمرك! أنا في خدمتك دائمًا لأي استشارة أو تساؤل تربوي."
 
+    latin = lang if lang in ("en", "fr") else detect_reply_language(text)
+    if latin not in ("en", "fr"):
+        latin = "en"
+    if norm in _LATIN_SALAM_NORM:
+        return True, _LATIN_REPLIES["salam"][latin]
+    if norm in _FR_THANKS_NORM:
+        return True, _LATIN_REPLIES["thanks"]["fr"]
+    if norm in _FR_GREETING_NORM:
+        return True, _LATIN_REPLIES["greeting"]["fr"]
     if norm in _EN_THANKS_NORM:
-        return True, "You're welcome! I'm always glad to help with anything about raising your child."
-
+        return True, _LATIN_REPLIES["thanks"][latin]
     if norm in _EN_GREETING_NORM:
-        return True, "Hello, and welcome! How can I help you today with your child's care and upbringing?"
+        return True, _LATIN_REPLIES["greeting"][latin]
 
     return False, ""
 

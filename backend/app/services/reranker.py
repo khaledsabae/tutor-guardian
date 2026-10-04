@@ -74,6 +74,28 @@ def is_disabled() -> bool:
     return _disabled
 
 
+def relevance(query: str, candidates: list[dict]) -> list[float] | None:
+    """Cross-encoder scores of `candidates` against `query`, read-only.
+
+    Unlike rerank(), nothing is reordered, trimmed or written onto the
+    candidates. Used to ask whether a follow-up, on its own, is about what was
+    retrieved for it. None when the reranker is off or fails — the caller
+    must then treat the question as unverified.
+    """
+    if not candidates or not RERANK_ENABLED or _disabled:
+        return None
+    try:
+        model = _get_model()
+        pairs = [
+            (query, (c.get("document") or "").removeprefix("passage: ")[:1500])
+            for c in candidates
+        ]
+        return [float(x) for x in model.predict(pairs, show_progress_bar=False)]
+    except Exception as exc:  # noqa: BLE001 — degrade, don't break the answer
+        logger.warning("relevance scoring failed (%s)", exc)
+        return None
+
+
 def rerank(query: str, candidates: list[dict], top_n: int = 4) -> list[dict]:
     """Score candidates against the query; return the best `top_n`.
 
