@@ -25,11 +25,11 @@
       "2-3": null,
       "4-6": "preparation",
       "7-9": "journey",
-      "10-12": "journey",
+      "10-12": "ownership",
       "13-15": "ownership",
       "16-18": null
     },
-    "text": "By the child's age: from four to six, 'Getting ready', with no daily follow-up and no coins; from seven to ten, 'the Journey' over twelve weeks; from eleven to fifteen, 'My prayer, my responsibility', where he keeps track of his own prayer. Under four, it is enough for a child to see his parents pray and to imitate them in play. If the child's exact age is not known, a child in the 10–12 group starts the Journey, and you can move him to 'My prayer, my responsibility' if he already prays regularly."
+    "text": "By the child's age: from four to six, 'Getting ready', with no daily follow-up and no coins; from seven to ten, 'the Journey' over twelve weeks; from eleven to fifteen, 'My prayer, my responsibility', where he keeps track of his own prayer. Under four, it is enough for a child to see his parents pray and to imitate them in play. If the child's exact age is not known, a child in the 7–9 group starts the Journey, and a child in the 10–12 group starts 'My prayer, my responsibility'; if he doesn't pray regularly yet, start the Journey with him from the stage that suits him."
   },
   "entry_rules": [
     {
@@ -208,7 +208,7 @@
       {
         "key": "wudu_as_water_play",
         "title": "Wudu as water play",
-        "text": "Let him copy your wudu as if it were a water game, and cheer every step he copies."
+        "text": "Let him copy your wudu as if it were a water game, and clap for every step he copies."
       },
       {
         "key": "who_we_pray_to",
@@ -219,7 +219,8 @@
     "unit_ids": [
       "isl-d5f85bee",
       "isl-toddler-prayer",
-      "isl-af807518"
+      "isl-af807518",
+      "isl-f2bef952"
     ],
     "evidence_ids": [
       "h_umamah",
@@ -490,7 +491,7 @@
         },
         {
           "key": "pray_on_time",
-          "text": "Pray at the start of the time yourselves as much as you can, because he sees more than he hears; the attached hadith tells us that prayer at its proper time is among the deeds most beloved to Allah."
+          "text": "Pray at the start of the time yourselves as much as you can, because he sees more than he hears; in the attached hadith, prayer at its proper time is the answer to the question of which deed Allah loves most."
         },
         {
           "key": "local_timetable",
@@ -517,7 +518,7 @@
           "needs_parent": false,
           "per_week": 21,
           "coins": 5,
-          "skill": "Keeping it up",
+          "skill": "Keeping up the prayer",
           "materials": []
         }
       ],
@@ -582,7 +583,7 @@
           "needs_parent": false,
           "per_week": 35,
           "coins": 3,
-          "skill": "Keeping it up",
+          "skill": "Keeping up the prayer",
           "materials": []
         },
         {
@@ -710,7 +711,7 @@
   "graduation": {
     "title": "Prayer Journey graduation",
     "text": "Twelve weeks of learning deserve a celebration: a certificate he hangs up, a big covenant you honour, and a du'a for him in front of the family. After graduating he moves on to 'My prayer, my responsibility'. The attached hadith shows that Allah loves deeds done consistently, even if small, so the aim is for prayer to stay with him.",
-    "certificate_text": "Prayer Journey certificate: the holder of this certificate has completed twelve weeks of learning the prayer with effort and love. We ask Allah to make him one of those who keep it up.",
+    "certificate_text": "Prayer Journey certificate: the holder of this certificate has completed twelve weeks of learning the prayer with effort and love. We ask Allah to make him one of those who faithfully keep up the prayer.",
     "journey_milestone_keys": [
       "keeps_prayer"
     ],
@@ -754,7 +755,7 @@
         "needs_parent": false,
         "per_week": 35,
         "coins": 1,
-        "skill": "Keeping it up",
+        "skill": "Keeping up the prayer",
         "materials": []
       },
       {
@@ -798,9 +799,11 @@
   },
   "generation": {
     "drafter_model": "claude-opus-5.5",
-    "reviewer_model": "pending (Ollama Cloud Pro 5-hour cap reached 2026-10-04 10:30)",
+    "reviewer_model": "glm-5.2 (every item)",
     "translator_model": "claude-opus-5.5",
     "reviewed_at": "2026-10-04",
-    "approved_by": "auto-review:guards-only (cross-family review pending)"
+    "review_rounds": 1,
+    "defects_fixed": 7,
+    "approved_by": "auto-review:glm-5.2+guards"
   }
 }
