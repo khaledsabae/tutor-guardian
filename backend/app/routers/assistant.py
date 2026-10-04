@@ -732,8 +732,10 @@ async def _draft_answer(
                     "rerank_score": 1.0,  # authoritative — always included
                     "source_domain": "fiqh",
                 })
-        else:
-            retrieved_units = await asyncio.to_thread(_retrieve_blocking)
+        # No `else`: retrieval already ran above. Until 2026-10 an `else` left
+        # from before 2a63949f searched again for every question without an
+        # ayah — twice the CPU on /draft and /query, and every search-log row
+        # written twice (/stream never had it).
 
     # Re-label from the retrieved evidence when classification was uncertain.
     primary_domain = _label_domain(detected_domains, retrieved_units)

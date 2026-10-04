@@ -555,3 +555,153 @@ def test_count_orphans_pairs_replies_in_order():
             ("c", "user"), ("c", "assistant"), ("c", "assistant")]
     assert count_orphans(rows) == 2
     assert count_orphans([{"session_id": "x", "role": "user"}]) == 1
+
+
+# ── Test traffic is not a family ───────────────────────────────────────
+
+# Copied from production (tg_backend, 2026-10-04), like _PROD_SCHEMA above.
+_PROD_PUSH_TOKENS = """
+CREATE TABLE push_tokens (
+    id          INTEGER PRIMARY KEY AUTOINCREMENT,
+    device_id   TEXT NOT NULL UNIQUE,
+    token       TEXT NOT NULL,
+    platform    TEXT NOT NULL DEFAULT 'android',
+    updated_at  TEXT NOT NULL DEFAULT (datetime('now'))
+, app_version TEXT, build_number INTEGER);
+"""
+
+_E2E_QUESTION = "E2E test how can I teach my child to be honest"
+
+
+def _family(conn, device: str, now: datetime, *, child_days: int, name: str = "سارة",
+            question: str = "ابني يرفض النوم كل ليلة، ماذا أفعل معه؟") -> None:
+    """A device doing everything the report counts, relative to `now`: a child
+    `child_days` ago, opens on days 1 and 8 after it, an action on day 8, and
+    — yesterday — a lesson, a question with a failed answer, a tapped tip and
+    both kinds of feedback."""
+    d0 = now - timedelta(days=child_days)
+    d1 = now - timedelta(days=1)
+    cid = conn.execute(
+        "INSERT INTO child_profiles (device_id, name, age_group, created_at) "
+        "VALUES (?, ?, '4-6', ?)", (device, name, _sql(d0))).lastrowid
+    for k in (1, 8):
+        day = d0 + timedelta(days=k)
+        if day.date() < d1.date():           # yesterday's tip is written below
+            conn.execute("INSERT INTO coach_tips (device_id, child_id, date, text) "
+                         "VALUES (?, ?, ?, 'نص')", (device, cid, day.date().isoformat()))
+    if d0 + timedelta(days=8) < now:
+        conn.execute(
+            "INSERT INTO habits_value_events (device_id, child_id, category, habit_name, status, "
+            "created_at) VALUES (?, ?, 'c', 'h', 'completed', ?)",
+            (device, cid, _sql(d0 + timedelta(days=8))))
+    conn.execute(
+        "INSERT INTO lesson_progress (device_id, child_id, path_id, lesson_id, status, started_at, "
+        "completed_at, updated_at) VALUES (?, ?, 'p', 'l', 'completed', ?, ?, ?)",
+        (device, cid, _sql(d1), _sql(d1), _sql(d1)))
+    sid = f"s-{device}"
+    conn.execute("INSERT INTO chat_sessions (id, device_id, created_at) VALUES (?, ?, ?)",
+                 (sid, device, _sql(d1)))
+    conn.execute("INSERT INTO chat_messages (session_id, role, content, created_at) "
+                 "VALUES (?, 'user', ?, ?)", (sid, question, _sql(d1)))
+    conn.execute("INSERT INTO chat_messages (session_id, role, content, mode, created_at) "
+                 "VALUES (?, 'assistant', 'تعذّر', 'error', ?)", (sid, _sql(d1)))
+    conn.execute(
+        "INSERT INTO coach_tips (device_id, child_id, date, text, shown_at, tapped_at, created_at) "
+        "VALUES (?, ?, ?, 'نص', ?, ?, ?)",
+        (device, cid, d1.date().isoformat(), _sql(d1), _sql(d1), _sql(d1)))
+    conn.execute("INSERT INTO user_feedback (session_id, rating, created_at) VALUES (?, 'down', ?)",
+                 (sid, _sql(d1)))
+    conn.execute("INSERT INTO app_feedback (id, message, device_id, created_at) "
+                 "VALUES (?, 'm', ?, ?)", (f"f-{device}", device, _sql(d1)))
+
+
+def _seed_test_traffic(conn, now: datetime) -> None:
+    # An E2E install, marked by its child's name and its question, and its
+    # childless twin (same FCM token) that also asked something.
+    _family(conn, "e2e-fresh", now, child_days=2, name="E2E-Maestro", question=_E2E_QUESTION)
+    conn.execute("INSERT INTO push_tokens (device_id, token) "
+                 "VALUES ('e2e-fresh', 'fcm-e2e-1'), ('e2e-fresh-twin', 'fcm-e2e-1')")
+    conn.execute("INSERT INTO chat_sessions (id, device_id) VALUES ('s-twin', 'e2e-fresh-twin')")
+    conn.execute("INSERT INTO chat_messages (session_id, role, content, created_at) "
+                 "VALUES ('s-twin', 'user', 'سؤال طويل من التوأم في الاختبار', ?)",
+                 (_sql(now - timedelta(days=1)),))
+    # An older run whose rename left a letter behind — in a measurable cohort.
+    _family(conn, "e2e-old", now, child_days=20, name="E2E-Maestroي")
+    # A twin known only by the question it asked (its token was not shared).
+    conn.execute("INSERT INTO push_tokens (device_id, token) VALUES ('e2e-q-twin', 'fcm-e2e-2')")
+    conn.execute("INSERT INTO chat_sessions (id, device_id) VALUES ('s-q', 'e2e-q-twin')")
+    conn.execute("INSERT INTO chat_messages (session_id, role, content, created_at) "
+                 "VALUES ('s-q', 'user', ?, ?)", (_E2E_QUESTION, _sql(now - timedelta(days=1))))
+    # The eval harness: a real-looking parent question from a marked device.
+    conn.execute("INSERT INTO chat_sessions (id, device_id) "
+                 "VALUES ('s-eval', 'eval-harness-real-7')")
+    for role, content, mode in (("user", "كيف أعلّم ابني الصدق دون عقاب؟", None),
+                                ("assistant", "تعذّر", "error")):
+        conn.execute("INSERT INTO chat_messages (session_id, role, content, mode, created_at) "
+                     "VALUES ('s-eval', ?, ?, ?, ?)",
+                     (role, content, mode, _sql(now - timedelta(days=1))))
+
+
+def _all_metrics(db: Path, now: datetime) -> dict:
+    return {
+        "north": get_north_star(db, weeks=3, now=now),
+        "openers": get_openers(db, weeks=3, now=now),
+        "cohorts": get_cohort_retention(db, cohorts=6, now=now),
+        "funnel": get_funnel_metrics(db, 7, set()),
+        "questions": get_questions_and_quality(db, 7, set()),
+        "tips": get_coach_tips_metrics(db, 7),
+        "feedback": get_feedback_metrics(db, 7),
+    }
+
+
+def test_test_traffic_is_left_out_of_every_number(mock_db: Path, monkeypatch):
+    """Eval-harness and remote-E2E devices (with their twins) count nowhere:
+    adding them leaves every metric exactly as the real families made it."""
+    now = datetime.utcnow().replace(microsecond=0)
+    conn = sqlite3.connect(mock_db)
+    conn.executescript(_PROD_PUSH_TOKENS)
+    _family(conn, "real-old", now, child_days=20)
+    _family(conn, "real-new", now, child_days=2)
+    conn.execute("INSERT INTO push_tokens (device_id, token) VALUES ('real-old', 'fcm-real')")
+    conn.commit()
+    real_only = _all_metrics(mock_db, now)
+    assert real_only["north"][0]["families"] == 2 and real_only["funnel"]["cohort_size"] == 1
+
+    _seed_test_traffic(conn, now)
+    conn.commit()
+    conn.close()
+    assert _all_metrics(mock_db, now) == real_only
+
+    # The seeded traffic reaches every one of those numbers when nothing is
+    # excluded — without this, the equality above could hold vacuously.
+    import ops.scripts.weekly_funnel_report as wfr
+    monkeypatch.setattr(wfr, "real_device_sql", lambda *a: "1")
+    monkeypatch.setattr(wfr, "real_session_sql", lambda *a: "1")
+    unfiltered = _all_metrics(mock_db, now)
+    for key, value in real_only.items():
+        assert unfiltered[key] != value, key
+
+
+def test_a_report_run_finds_the_test_devices_once(mock_db: Path, tmp_path: Path,
+                                                  monkeypatch, capsys):
+    """One scan for the E2E devices per report. As a subquery in every
+    statement it scanned chat_messages 2-4 times each and tripled the report's
+    CPU on production."""
+    import ops.scripts.weekly_funnel_report as wfr
+    now = datetime.utcnow().replace(microsecond=0)
+    conn = sqlite3.connect(mock_db)
+    conn.executescript(_PROD_PUSH_TOKENS)
+    _family(conn, "real-old", now, child_days=20)
+    _seed_test_traffic(conn, now)
+    conn.commit()
+    conn.close()
+    calls = []
+    found = wfr.e2e_devices
+    monkeypatch.setattr(wfr, "e2e_devices", lambda c: calls.append(1) or found(c))
+    arb = tmp_path / "app_ar.arb"
+    arb.write_text("{}", encoding="utf-8")
+    assert wfr.main(["--db", str(mock_db), "--arb", str(arb),
+                     "--sessions-db", str(tmp_path / "absent.db"), "--dry-run"]) == 0
+    assert len(calls) == 1
+    assert "هذا الأسبوع: <b>1</b> أسرة" in capsys.readouterr().out
+    assert wfr._RUN_E2E == {}                     # nothing outlives the run

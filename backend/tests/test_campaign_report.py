@@ -341,3 +341,35 @@ def test_a_fold_that_cannot_run_is_loud_and_fails_the_run(monkeypatch, capsys):
     monkeypatch.setattr(cpt, "_load_compactor",
                         lambda: (lambda dry_run=False: 0))
     assert cpt.main([]) == 0
+
+
+def test_test_devices_are_not_installs(report_db, monkeypatch):
+    """Eval-harness and remote-E2E devices (with the E2E install's twin) are
+    neither a campaign's installs nor part of the every-new-device yardstick."""
+    before = _data(report_db)
+    conn = get_conn()
+    _device(conn, "e2e-1", "2026-09-20 10:00:00")
+    conn.execute("INSERT INTO child_profiles (device_id, name, age_group) "
+                 "VALUES ('e2e-1', 'E2E-Maestro', '4-6')")
+    _claim(conn, "e2e-1", "DA01", "2026-09-20 10:00:00")
+    _device(conn, "e2e-1-twin", "2026-09-20 10:00:00")
+    _claim(conn, "e2e-1-twin", "WA01", "2026-09-20 10:00:01")
+    conn.execute("INSERT INTO push_tokens (device_id, token) VALUES ('e2e-1', 'fcm-e2e'), "
+                 "('e2e-1-twin', 'fcm-e2e')")
+    _device(conn, "eval-harness-real-5", "2026-09-21 10:00:00")
+    conn.commit()
+    conn.close()
+    assert _data(report_db) == before
+
+    monkeypatch.setattr(cr, "real_device_sql", lambda *a: "1")
+    unfiltered = _data(report_db)
+    assert unfiltered["campaigns"]["DA01"].new == before["campaigns"]["DA01"].new + 1
+    assert unfiltered["everyone"].new == before["everyone"].new + 3
+
+
+def test_the_test_devices_are_found_once_per_report(report_db, monkeypatch):
+    calls = []
+    sql = cr.e2e_devices_sql
+    monkeypatch.setattr(cr, "e2e_devices_sql", lambda tables: calls.append(1) or sql(tables))
+    _data(report_db)
+    assert len(calls) == 1

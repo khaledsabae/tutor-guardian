@@ -9,6 +9,7 @@ Usage (VPS cron, every Saturday 06:00 UTC):
 
 The loop:
     chat_messages (role='user', last 7 days)
+      → drop eval-harness and remote-E2E test devices (app/core/real_traffic.py)
       → drop the app's own suggested questions and sub-12-character noise
       → ops/tools/retrieval_probe.py   (real classify → rewrite → retrieve)
       → ops/tools/kb_gap_judge.py      (LLM verdict per (question, unit))
@@ -61,6 +62,10 @@ from pathlib import Path
 
 _ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(_ROOT))
+# app.core.* — the backend container already has backend/ on PYTHONPATH.
+sys.path.insert(1, str(_ROOT / "backend"))
+
+from app.core.real_traffic import e2e_devices_sql, real_device_sql, real_session_sql  # noqa: E402
 
 _DB = Path(os.environ.get(
     "CONVERSATIONS_DB", str(_ROOT / "ops" / "conversations.db"),
@@ -84,6 +89,15 @@ def _query(sql: str, params: tuple = ()) -> list[dict]:
         return [dict(r) for r in conn.execute(sql, params).fetchall()]
     finally:
         conn.close()
+
+
+def _tables() -> set[str]:
+    return {r["name"] for r in _query("SELECT name FROM sqlite_master WHERE type='table'")}
+
+
+def _e2e() -> set[str]:
+    """The E2E test devices (app/core/real_traffic.py), with one query."""
+    return {r["device_id"] for r in _query(e2e_devices_sql(_tables()))}
 
 
 def _normalize(text: str) -> str:
@@ -153,12 +167,15 @@ def _redact_names(questions: list[dict]) -> None:
 def collect_questions(days: int, arb_path: Path,
                       allow_unfiltered: bool = False) -> tuple[list[dict], dict]:
     """The week's genuine parent questions, plus what was filtered and why."""
+    # Test traffic first: an eval or E2E question is not a parent's, and the
+    # eval set is real parent questions — it would read as demand.
     rows = _query(
-        """SELECT m.id, m.content, m.domain, m.created_at, s.device_id
+        f"""SELECT m.id, m.content, m.domain, m.created_at, s.device_id
            FROM chat_messages m
            LEFT JOIN chat_sessions s ON s.id = m.session_id
            WHERE m.role = 'user'
              AND m.created_at >= datetime('now', ?)
+             AND {real_device_sql('s.device_id', _e2e())}
            ORDER BY m.id""",
         (f"-{days} days",),
     )
@@ -202,18 +219,19 @@ def unanswered_stats(days: int) -> dict:
     # before the first answer was saved (Q1, Q2, A1, A2) is not an orphan.
     from ops.scripts.weekly_funnel_report import count_orphans
 
+    real = real_session_sql("session_id", _e2e(), _tables())
     orphans = count_orphans(_query(
         "SELECT session_id, role FROM chat_messages "
-        "WHERE created_at >= datetime('now', ?) ORDER BY session_id, id",
+        f"WHERE created_at >= datetime('now', ?) AND {real} ORDER BY session_id, id",
         (f"-{days} days",),
     ))
     total = _query(
         "SELECT COUNT(*) n FROM chat_messages WHERE role='user' "
-        "AND created_at >= datetime('now', ?)", (f"-{days} days",),
+        f"AND created_at >= datetime('now', ?) AND {real}", (f"-{days} days",),
     )[0]["n"]
     modes = _query(
         "SELECT mode, COUNT(*) n FROM chat_messages WHERE role='assistant' "
-        "AND created_at >= datetime('now', ?) GROUP BY mode", (f"-{days} days",),
+        f"AND created_at >= datetime('now', ?) AND {real} GROUP BY mode", (f"-{days} days",),
     )
     degraded = sum(m["n"] for m in modes if m["mode"] in ("error", "interrupted"))
     return {

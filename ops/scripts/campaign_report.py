@@ -25,7 +25,8 @@ invites and for every new device, as the yardstick:
             challenge.
 
 Read-only: the database is opened with mode=ro. Aggregates only — no device
-ids, IPs or text leave the database.
+ids, IPs or text leave the database. Eval-harness and remote-E2E test devices
+are left out of every device number (real_device_sql below).
 
 Usage (inside the backend container, like weekly_funnel_report.py):
     docker exec -w /app tg_backend python ops/scripts/campaign_report.py --dry-run
@@ -78,6 +79,46 @@ PREVIEW_FETCHER_RE = re.compile(
     r"Discordbot|LinkedInBot|Googlebot|bingbot|Applebot|SkypeUriPreview",
     re.IGNORECASE,
 )
+
+# Mirror of backend/app/core/real_traffic.py (eval-harness and remote-E2E test
+# devices), copied for the same reason as the channels above;
+# backend/tests/test_real_traffic.py fails if the two drift.
+_EVAL_DEVICE_LIKE = "eval-harness-%"
+_E2E_CHILD_NAME_LIKE = "E2E-Maestro%"
+_E2E_QUESTION_LIKE = "E2E test%"
+
+
+def e2e_devices_sql(tables) -> str:
+    tables = set(tables)
+    marked = []
+    if "child_profiles" in tables:
+        marked.append("SELECT device_id FROM child_profiles "
+                      f"WHERE name LIKE '{_E2E_CHILD_NAME_LIKE}'")
+    if {"chat_messages", "chat_sessions"} <= tables:
+        marked.append("SELECT s.device_id FROM chat_messages m "
+                      "JOIN chat_sessions s ON s.id = m.session_id "
+                      f"WHERE m.role = 'user' AND m.content LIKE '{_E2E_QUESTION_LIKE}'")
+    if not marked:
+        return "SELECT NULL WHERE 0"
+    parts = ["SELECT device_id FROM marked"]
+    if "push_tokens" in tables:
+        parts.append("SELECT device_id FROM push_tokens WHERE token IN "
+                     "(SELECT token FROM push_tokens WHERE device_id IN marked)")
+    if "device_aliases" in tables:
+        parts.append("SELECT device_id FROM device_aliases WHERE canonical_device IN marked")
+        parts.append("SELECT canonical_device FROM device_aliases WHERE device_id IN marked")
+    return (f"WITH marked(device_id) AS ({' UNION '.join(marked)}) "
+            f"SELECT device_id FROM ({' UNION '.join(parts)}) WHERE device_id IS NOT NULL")
+
+
+def _json_literal(values) -> str:
+    return "'" + json.dumps(sorted(v for v in values if v is not None)).replace("'", "''") + "'"
+
+
+def real_device_sql(column: str, e2e) -> str:
+    return (f"({column} IS NULL OR ({column} NOT LIKE '{_EVAL_DEVICE_LIKE}' "
+            f"AND {column} NOT IN (SELECT value FROM json_each({_json_literal(e2e)}))))")
+
 
 _TS = "%Y-%m-%d %H:%M:%S"
 _NEW_INSTALL_SLACK = timedelta(days=1)   # first session at most this long before the claim
@@ -154,20 +195,30 @@ def load_facts(conn: sqlite3.Connection, days: int, now: datetime) -> Facts:
     def rows(sql: str, params: tuple = ()) -> list[sqlite3.Row]:
         return conn.execute(sql, params).fetchall()
 
+    # The test devices, found once for the whole report.
+    e2e = {r[0] for r in rows(e2e_devices_sql(tables)) if r[0] is not None}
+
+    def real(column: str) -> str:
+        return real_device_sql(column, e2e)
+
     first_session = {r[0]: r[1] for r in rows(
         "SELECT device_id, MIN(datetime(created_at)) FROM chat_sessions "
-        "WHERE device_id IS NOT NULL GROUP BY device_id")} if "chat_sessions" in tables else {}
-    with_child = {r[0] for r in rows("SELECT DISTINCT device_id FROM child_profiles")} \
+        f"WHERE device_id IS NOT NULL AND {real('device_id')} GROUP BY device_id")} \
+        if "chat_sessions" in tables else {}
+    with_child = {r[0] for r in rows(
+        f"SELECT DISTINCT device_id FROM child_profiles WHERE {real('device_id')}")} \
         if "child_profiles" in tables else set()
     with_lesson = {r[0] for r in rows(
         "SELECT DISTINCT device_id FROM lesson_progress "
-        "WHERE status IN ('in_progress', 'completed') OR started_at IS NOT NULL")} \
+        "WHERE (status IN ('in_progress', 'completed') OR started_at IS NOT NULL) "
+        f"AND {real('device_id')}")} \
         if "lesson_progress" in tables else set()
 
     actions: dict[str, list[str]] = {}
     if {"chat_sessions", "chat_messages"} <= tables:
         for r in rows("SELECT cs.device_id, datetime(cm.created_at) FROM chat_messages cm "
-                      "JOIN chat_sessions cs ON cs.id = cm.session_id WHERE cm.role = 'user'"):
+                      "JOIN chat_sessions cs ON cs.id = cm.session_id "
+                      f"WHERE cm.role = 'user' AND {real('cs.device_id')}"):
             if r[1]:
                 actions.setdefault(r[0], []).append(r[1])
     for table, column in _ACTION_COLUMNS:
@@ -177,7 +228,7 @@ def load_facts(conn: sqlite3.Connection, days: int, now: datetime) -> Facts:
         if column not in cols:
             continue
         for r in rows(f"SELECT device_id, datetime({column}) FROM {table} "
-                      f"WHERE {column} IS NOT NULL"):
+                      f"WHERE {column} IS NOT NULL AND {real('device_id')}"):
             if r[1]:
                 actions.setdefault(r[0], []).append(r[1])
     for stamps in actions.values():
@@ -190,7 +241,8 @@ def load_facts(conn: sqlite3.Connection, days: int, now: datetime) -> Facts:
         via = "via" if has_via else "NULL"
         claims = [(r[0], r[1], r[2], r[3]) for r in rows(
             f"SELECT code, referred_device, datetime(created_at), {via} FROM referrals "
-            "WHERE datetime(created_at) >= ? ORDER BY created_at", (since,))]
+            f"WHERE datetime(created_at) >= ? AND {real('referred_device')} "
+            "ORDER BY created_at", (since,))]
     clicks: dict[str, tuple[int, str]] = {}
 
     def add_clicks(code: str, n: int, at: str) -> None:
