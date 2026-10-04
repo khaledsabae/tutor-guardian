@@ -64,19 +64,86 @@ _TOUCHES = re.compile(
     r"child_facts|followups|weekly_plans|request_proven|request_access|confirmed_session")
 
 
-def _routes():
-    from app.main import app
-    for route in app.routes:
-        if isinstance(route, APIRoute):
-            for method in route.methods:
-                yield method, route.path, route
+def _effective(routes):
+    """Every effective route, however this FastAPI exposes included routers.
+
+    Up to 0.140 include_router copied each APIRoute into app.routes; from 0.141
+    (CI and production run 0.141.1) it appends one nested _IncludedRouter per
+    router, which expands through effective_candidates() into contexts that
+    carry the original route, the prefixed path and the combined dependencies.
+    Duck-typed, like test_landing_attribution's walk (f0f4682a), so it reads
+    both shapes.
+    """
+    for route in routes:
+        nested = getattr(route, "effective_candidates", None)
+        if callable(nested):
+            yield from _effective(nested())
+        else:
+            yield route
+
+
+def _routes(routes=None):
+    if routes is None:
+        from app.main import app
+        routes = app.routes
+    for route in _effective(routes):
+        original = getattr(route, "original_route", route)
+        if not isinstance(original, APIRoute) and not getattr(route, "_api_route", False):
+            continue
+        for method in getattr(route, "methods", None) or ():
+            yield method, route.path, route
 
 
 def _guard(route) -> str | None:
-    names = {getattr(d.call, "__name__", "") for d in route.dependant.dependencies}
+    names = {getattr(getattr(d, "dependency", None), "__name__", "")
+             for d in getattr(route, "dependencies", None) or ()}
+    dependant = getattr(route, "dependant", None)
+    if dependant is not None:
+        names |= {getattr(d.call, "__name__", "") for d in dependant.dependencies}
     found = names & GUARD_NAMES
     assert len(found) <= 1, (route.path, found)
     return next(iter(found), None)
+
+
+def test_the_walk_finds_the_routes():
+    """Fail here, by name, if a future FastAPI hides routes from the walk,
+    rather than as a vacuous pass below."""
+    found = {(m, p) for m, p, _ in _routes()}
+    assert len(found) > 50
+    missing = (set(GUARDED) | set(OPEN)) - found
+    assert not missing, f"the route walk did not find {sorted(missing)}"
+
+
+def test_the_walk_reads_fastapi_0_141_nested_routers():
+    """The shape FastAPI 0.141 gives app.routes, built by hand."""
+    from fastapi import Depends
+
+    from app.core.proof import require_device_proof
+
+    def endpoint():
+        return None
+
+    class Context:                       # _EffectiveRouteContext
+        def __init__(self, path, methods, dependencies):
+            self.original_route = APIRoute(path, endpoint, methods=list(methods))
+            self.path, self.methods, self.endpoint = path, set(methods), endpoint
+            self.dependencies = dependencies
+            self.dependant = None
+
+    class IncludedRouter:                # _IncludedRouter
+        def __init__(self, *children):
+            self.children = children
+
+        def effective_candidates(self):
+            return list(self.children)
+
+    tree = [IncludedRouter(
+        Context("/api/x/memory", {"GET"}, [Depends(require_device_proof)]),
+        IncludedRouter(Context("/api/y", {"DELETE"}, [])),
+    )]
+    walked = {(m, p): _guard(r) for m, p, r in _routes(tree)}
+    assert walked == {("GET", "/api/x/memory"): "require_device_proof",
+                      ("DELETE", "/api/y"): None}
 
 
 def test_the_guarded_routes_are_exactly_these():
