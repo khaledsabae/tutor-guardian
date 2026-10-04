@@ -109,6 +109,11 @@ _ACTION_SOURCES: tuple[tuple[str, str, str], ...] = (
     ("child_missions", "claimed_at", ""),
     ("child_missions", "confirmed_at", ""),
     ("child_challenges", "started_at", ""),
+    # Family programs (backend schema v34): a Ramadan «تمّ» and a Prayer
+    # Journey started are parenting acts. The journey's tasks are already
+    # child_missions rows above. Absent tables are skipped.
+    ("ramadan_marks", "created_at", ""),
+    ("prayer_journeys", "created_at", ""),
 )
 
 
