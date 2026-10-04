@@ -102,6 +102,10 @@ TABLE_DISCLOSURE = {
     "child_web_claims": "QR codes",
     "push_tokens": "notification token",
     "push_sends": "log of the notifications we sent",
+    # The FCM challenge behind memory, child deletion and account deletion.
+    "device_proofs": "Phone verification",
+    "device_proof_sessions": "Phone verification",
+    "device_proof_challenges": "Phone-verification codes",
     "referral_codes": "invite code",
     "referrals": "which phone invited which",
     "referral_clicks": "browser's user agent",

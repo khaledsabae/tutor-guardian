@@ -31,7 +31,8 @@ from pathlib import Path
 from fastapi import APIRouter, Depends, HTTPException, Query, Request
 from fastapi.responses import FileResponse, HTMLResponse, Response
 
-from app.core.proof import require_proven_token
+from app.core.contact import SUPPORT_EMAIL
+from app.core.proof import require_device_proof
 from app.db.init_db import get_conn
 
 logger = logging.getLogger(__name__)
@@ -74,7 +75,7 @@ def erase_device_memory(device_id: str) -> dict[str, int]:
 
 
 @api_router.delete("/privacy/memory", summary="Forget everything about my children",
-                   dependencies=[Depends(require_proven_token)])
+                   dependencies=[Depends(require_device_proof)])
 def delete_my_memory(request: Request):
     """The privacy delete-all for child memory: facts, follow-ups and weekly
     plans, for every child of the calling device. The memory switch keeps its
@@ -160,7 +161,6 @@ async def get_privacy_policy():
 # this page must answer even then. System fonts only — no request leaves the
 # visitor's browser for a third party.
 
-SUPPORT_EMAIL = "support@alsaba.cloud"
 
 DELETE_ACCOUNT_HTML = """<!doctype html>
 <html lang="ar">
@@ -193,7 +193,8 @@ DELETE_ACCOUNT_HTML = """<!doctype html>
 الجلسة. وإن كنت سجّلت الدخول بحساب Google تُحذف كذلك بيانات كل هاتف مرتبط بالحساب،
 وبيانات الحساب نفسه.</p>
 <p>هذا الخيار موجود في إصدارات التطبيق التي تحويه؛ إن لم تجده فحدّث التطبيق أو اتبع
-الطريقة التالية. ولحذف جزء فقط: من شاشة ذاكرة الطفل تحذف معلومة واحدة أو كل ما يخصّ
+الطريقة التالية. وقبل الحذف يتحقق التطبيق تلقائيًا أن الطلب من هاتفك برسالة صامتة؛ فإن
+تعذّر التحقق فاتبع الطريقة التالية. ولحذف جزء فقط: من شاشة ذاكرة الطفل تحذف معلومة واحدة أو كل ما يخصّ
 طفلًا، ومن ملف الطفل تحذف الطفل وبياناته.</p>
 
 <h2>دون التطبيق</h2>
@@ -235,7 +236,9 @@ notification token, invites, backups and session tokens. If you signed in with
 Google, the data of every phone linked to that account, and the account record
 itself, are deleted too.</p>
 <p>This option exists in app versions that include it; if you do not see it,
-update the app or use the method below. To delete only part of your data: on the
+update the app or use the method below. Before deleting, the app checks
+automatically, with a silent message, that the request comes from your phone; if
+that check cannot work, use the method below. To delete only part of your data: on the
 child-memory screen you can delete one item or everything about a child, and from
 a child's profile you can delete that child and their data.</p>
 
@@ -455,7 +458,7 @@ def erase_account(device_id: str) -> dict:
 
 
 @api_router.delete("/privacy/account", summary="Delete my account and all its data",
-                   dependencies=[Depends(require_proven_token)])
+                   dependencies=[Depends(require_device_proof)])
 def delete_my_account(request: Request, confirm: bool = Query(False)):
     """Everything tied to this device — and, when signed in with Google, to
     every device linked to that Google account: children, progress, chat,

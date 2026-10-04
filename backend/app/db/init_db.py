@@ -1155,13 +1155,56 @@ CREATE TABLE IF NOT EXISTS child_memory_settings (
 """
 
 
+# Proof that a session holds the phone behind its device id (v30; see
+# services/device_proof.py). Hashes only: the code, the session token and the
+# push token are never stored here in the clear.
+_CREATE_DEVICE_PROOF: str = """
+CREATE TABLE IF NOT EXISTS device_proof_challenges (
+    id               INTEGER PRIMARY KEY AUTOINCREMENT,
+    device_id        TEXT NOT NULL,
+    token_hash       TEXT NOT NULL,   -- the session that asked; only it may answer
+    code_hash        TEXT NOT NULL,
+    push_token_hash  TEXT NOT NULL,   -- the push token the code was sent to
+    created_at       TEXT NOT NULL DEFAULT (datetime('now')),
+    expires_at       TEXT NOT NULL,
+    attempts         INTEGER NOT NULL DEFAULT 0,
+    used_at          TEXT
+);
+CREATE INDEX IF NOT EXISTS ix_device_proof_challenges_device
+    ON device_proof_challenges (device_id, created_at);
+CREATE INDEX IF NOT EXISTS ix_device_proof_challenges_created
+    ON device_proof_challenges (created_at);
+
+-- One row per session that completed a challenge. It is proven while the
+-- device's current push token is still the one the code was delivered to.
+CREATE TABLE IF NOT EXISTS device_proof_sessions (
+    token_hash       TEXT PRIMARY KEY,
+    device_id        TEXT NOT NULL,
+    push_token_hash  TEXT NOT NULL,
+    proven_at        TEXT NOT NULL DEFAULT (datetime('now'))
+);
+CREATE INDEX IF NOT EXISTS ix_device_proof_sessions_device
+    ON device_proof_sessions (device_id);
+
+-- The device itself: when it last proved, against which push token, and when
+-- it first did (from then on its destructive child routes need a proof too).
+CREATE TABLE IF NOT EXISTS device_proofs (
+    device_id        TEXT PRIMARY KEY,
+    push_token_hash  TEXT NOT NULL,
+    proven_at        TEXT NOT NULL DEFAULT (datetime('now')),
+    first_proven_at  TEXT NOT NULL DEFAULT (datetime('now'))
+);
+"""
+
+
 def _ensure_child_memory_tables(conn: sqlite3.Connection) -> None:
     """v30: child memory, follow-ups, weekly plans, memory switch; and the
-    proof-of-possession flag on api_tokens. Additive and unconditional (it runs
-    whatever the stamp says, so a database a later branch already stamped
-    higher still gets every piece).
+    device-proof tables (services/device_proof.py). Additive and unconditional
+    (it runs whatever the stamp says, so a database a later branch already
+    stamped higher still gets every piece).
     """
     conn.executescript(_CREATE_CHILD_MEMORY)
+    conn.executescript(_CREATE_DEVICE_PROOF)
     # Columns that arrived after the first v30 shape (PR #26 review).
     _ensure_column(conn, table="child_memory_settings", column="generation",
                    ddl="ALTER TABLE child_memory_settings ADD COLUMN generation "
@@ -1174,11 +1217,6 @@ def _ensure_child_memory_tables(conn: sqlite3.Connection) -> None:
         "ON followups (device_id, child_id, topic) "
         "WHERE status = 'pending' AND topic != 'other'"
     )
-    # 1 = minted with proof of the device (first token of a new device, or
-    # the previous proven token presented); 0 = minted for a known device
-    # without proof; NULL = minted before this column existed.
-    _ensure_column(conn, table="api_tokens", column="proven",
-                   ddl="ALTER TABLE api_tokens ADD COLUMN proven INTEGER")
 
 
 def _ensure_child_web_claims_table(conn: sqlite3.Connection) -> None:

@@ -69,6 +69,8 @@ _PROTECTED_PREFIXES = (
     # The child-memory delete-all (routers/privacy.py api_router). Without an
     # identity it would have nothing to delete — and nothing to scope it to.
     "/api/privacy",
+    # The FCM challenge (routers/device_proof.py) proves a *session*: it needs one.
+    "/api/device-proof",
 )
 # Progress PATCH is the only mutating verb under /api/program — we
 # match on the exact path suffix so the read-only GETs remain public.
@@ -246,8 +248,5 @@ class AuthMiddleware(BaseHTTPMiddleware):
         request.state.device_id = token_info["device_id"]
         request.state.session_id = token_info["session_id"]
         request.state.token = token
-        # Proof of possession at mint (routers/chat.py) — required by the
-        # routes in app/core/proof.py.
-        request.state.token_proven = bool(token_info.get("proven"))
 
         return await call_next(request)

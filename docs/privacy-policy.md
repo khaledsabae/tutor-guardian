@@ -44,6 +44,11 @@
   الصوتي إن أرفقته، ورقم إصدار التطبيق، وردودنا عليك.
 - **الإشعارات:** رمز الإشعارات الخاص بهاتفك، ونوع الجهاز، ورقم إصدار التطبيق، وسجلّ
   بالإشعارات التي أرسلناها (نوعها ووقتها) حتى لا نكثر عليك.
+- **التحقق من الهاتف** (في إصدارات التطبيق التي تدعمه): قبل عرض ذاكرة الطفل أو تعديلها
+  أو حذفها، وقبل حذف الحساب، يثبت التطبيق أنه هاتفك برمز لمرة واحدة نرسله إليه عبر رمز
+  الإشعارات في رسالة صامتة لا تظهر لك. وبعد أول تحقق يُطلب كذلك قبل حذف طفل أو تصفير
+  تقدّمه. نحفظ وقت التحقق للهاتف ولكل جلسة، ونسخة مجزّأة (hash) من رمز الإشعارات الذي
+  استُعمل — لا الرمز المرسل نفسه. الغرض: ألّا يصل إلى بيانات أسرتك من يعرف معرّف هاتفك فقط.
 - **الدعوات ومصدر التثبيت:** رمز دعوتك، وأي هاتف دعا أي هاتف. وعند فتح رابط عليه رمز
   دعوة أو وسم حملة (ref أو utm) من صفحاتنا (/ و/go و/ui/ و/l و/p و/seo و/methodology)
   نسجّل **عنوان IP** (عنوان IPv6 مختصرًا إلى أول 64 بتًا) و**نوع المتصفح**، وقد نطابق
@@ -107,6 +112,7 @@
 - رمز الجلسة: يتوقّف عن العمل بعد **180 يومًا** من آخر استعمال.
 - المتابعة التي لا تجيب عنها: تُغلق تلقائيًا بعد **21 يومًا** من موعدها.
 - رموز QR لوضع المراهق: تُحذف بعد انتهاء صلاحيتها (دقائق).
+- رموز التحقق من الهاتف: تنتهي صلاحيتها بعد **5 دقائق**، وتُحذف خلال **يوم**.
 - عنوان IP ونوع المتصفح عند فتح رابط دعوة أو حملة: **7 أيام**، ثم أعداد يومية بلا عنوان.
 - سجلّ البحث، وكلمات البحث المستخلصة، وسجلّ نداءات النموذج، وسجلّ الاستعمال (كلها دون
   معرّف لهاتفك): **90 يومًا**. وما سُجّل منها قبل استبدال الأسماء حُذف أو أُعيد إخفاؤه.
@@ -121,8 +127,9 @@
 - **ذاكرة الطفل** (في الإصدارات التي تعرضها): ترى كل ما يتذكّره المربّي عن كل طفل،
   وتعدّل أي معلومة أو ترفضها أو تحذفها، أو تحذف كل ما يخصّ طفلًا، أو تحذف ذاكرة كل
   أطفالك مرة واحدة (ويبقى مفتاح الذاكرة على حاله، فإن كان مطفأً يبقى مطفأً). ومفتاح الذاكرة
-  يوقف التعلّم والمتابعات ويمنع وصول الذاكرة إلى الإجابات (دون حذف شيء). وقراءة الذاكرة
-  وحذفها وحذف الحساب لا تتمّ إلا من الهاتف نفسه الذي أنشأ الجلسة.
+  يوقف التعلّم والمتابعات ويمنع وصول الذاكرة إلى الإجابات (دون حذف شيء)، وإيقافه متاح
+  دائمًا. أما قراءة الذاكرة وتعديلها وحذفها وحذف الحساب فلا تتمّ إلا بعد «التحقق من
+  الهاتف» المذكور أعلاه. وإن تعذّر التحقق (لا يستقبل هاتفك الرسائل مثلًا) فراسلنا.
 - **حذف ملف طفل** يحذف معه تقدّمه وذاكرته وبياناته في الأدوات.
 - **حذف الحساب من التطبيق** (في الإصدارات التي تحوي «حذف الحساب» في الإعدادات): يحذف
   فورًا كل ما يرتبط بهاتفك على خوادمنا، وإن كنت سجّلت الدخول بحساب Google يحذف كذلك
@@ -203,6 +210,14 @@ to your phone's random identifier:
 - **Notifications:** your phone's notification token, device platform, app
   version and build number, and a log of the notifications we sent (type and
   time) so we do not send too many.
+- **Phone verification** (in app versions that support it): before child memory
+  is shown, changed or erased, and before the account is deleted, the app proves
+  it is your phone with a one-time code we send to its notification token as a
+  silent message you do not see. Once a phone has been verified, deleting a child
+  or resetting its progress needs it too. We keep when the phone and each session
+  were verified, and a hash of the notification token used — never the code
+  itself. Purpose: someone who only knows your phone's identifier cannot reach
+  your family's data.
 - **Invites and install attribution:** your invite code and which phone invited
   which. When a link carrying an invite code or a campaign tag (ref or utm) is
   opened on one of our pages (/, /go, /ui/, /l, /p, /seo, /methodology) we record
@@ -282,6 +297,8 @@ and backup files you export to a place you choose.
 - Session token: stops working **180 days** after it was last used.
 - An unanswered follow-up: closed automatically **21 days** after it was due.
 - Teen QR codes: deleted once they expire (minutes).
+- Phone-verification codes: expire after **5 minutes** and are deleted within
+  **a day**.
 - IP address and browser type from an invite or campaign link: **7 days**, then
   daily counts with no address.
 - Search log, derived search keywords, AI call log and usage log (none of them
@@ -301,9 +318,10 @@ arrives.
   about each child; edit, reject or delete any item; delete everything about one
   child; or delete all your children's memory at once (the memory switch keeps its
   setting: if it was off, it stays off). The memory switch stops learning and
-  follow-ups and keeps memory out of answers (without deleting it). Reading or
-  deleting memory, and deleting the account, only work from the phone that holds
-  the session.
+  follow-ups and keeps memory out of answers (without deleting it), and turning it
+  off always works. Reading, changing or deleting memory, and deleting the
+  account, only work after the "phone verification" described above. If it cannot
+  work (for example, your phone does not receive messages), email us.
 - **Deleting a child profile** deletes that child's progress, memory and tool data.
 - **Delete account in the app** (in versions with "Delete account" in Settings):
   immediately deletes everything linked to your phone on our servers — and, if you

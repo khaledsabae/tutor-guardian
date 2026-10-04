@@ -15,7 +15,7 @@ from typing import Literal, Optional
 from fastapi import APIRouter, Depends, HTTPException, Query, Request
 from pydantic import BaseModel, Field
 
-from app.core.proof import require_proven_token
+from app.core.proof import require_device_proof, request_proven
 from app.db.init_db import get_conn
 from app.routers.children import _load_owned_child, _require_device_id
 from app.services import child_memory as cm
@@ -60,32 +60,42 @@ class MemorySettingsIn(BaseModel):
     enabled: bool
 
 
-def _settings(device_id: str) -> dict:
+def _settings(request: Request, device_id: str) -> dict:
+    proven = request_proven(request)
     return {
         "enabled": cm.memory_enabled(device_id),
-        # Whether the server will learn from chat for this device: the parent's
-        # switch AND a build with the memory screen (CHILD_MEMORY_MIN_BUILD).
-        "collecting": cm.collection_allowed(device_id),
+        # Whether the server learns from THIS session's questions: the parent's
+        # switch, a build with the memory screen (CHILD_MEMORY_MIN_BUILD), and a
+        # session proven to hold the phone (§9.0).
+        "collecting": cm.collection_allowed(device_id, proven=proven),
+        # Whether this session may read, change or erase memory right now. When
+        # false, run the device-proof challenge (§9.0) before opening the screen.
+        "proven": proven,
     }
 
 
 @router.get("/children/memory/settings",
-            summary="Is child memory on for this device?",
-            dependencies=[Depends(require_proven_token)])
+            summary="Is child memory on for this device? (no proof needed)")
 def get_memory_settings(request: Request):
-    return _settings(_require_device_id(request))
+    """Two booleans and the proof state — nothing remembered is in it, so it
+    answers without a proof: the app needs it to know whether to ask for one."""
+    return _settings(request, _require_device_id(request))
 
 
 @router.put("/children/memory/settings",
-            summary="Turn child memory on or off for this device",
-            dependencies=[Depends(require_proven_token)])
+            summary="Turn child memory on or off for this device")
 def put_memory_settings(body: MemorySettingsIn, request: Request):
     """Off pauses everything: nothing new is learned, no follow-up is opened,
     and remembered facts stop reaching the assistant. Nothing is deleted —
-    that is DELETE /api/children/{id}/memory or DELETE /api/privacy/memory."""
+    that is DELETE /api/children/{id}/memory or DELETE /api/privacy/memory.
+
+    Switching OFF never needs a proof: stopping must always be possible.
+    Switching ON does (§9.0)."""
     device_id = _require_device_id(request)
+    if body.enabled:
+        require_device_proof(request)
     cm.set_memory_enabled(device_id, body.enabled)
-    return _settings(device_id)
+    return _settings(request, device_id)
 
 
 # ── Follow-ups (device-level routes first) ────────────────────────────────
@@ -98,7 +108,7 @@ class FollowupAnswerIn(BaseModel):
 
 @router.get("/children/followups/due",
             summary="Follow-ups whose time has come, across all children",
-            dependencies=[Depends(require_proven_token)])
+            dependencies=[Depends(require_device_proof)])
 def followups_due(request: Request, limit: int = Query(10, ge=1, le=20),
                   tz_offset_minutes: Optional[int] = Query(None)):
     device_id = _require_device_id(request)
@@ -109,7 +119,7 @@ def followups_due(request: Request, limit: int = Query(10, ge=1, le=20),
 
 @router.get("/children/followups/{followup_id}",
             summary="One follow-up — what the /followup/{id} deep link opens",
-            dependencies=[Depends(require_proven_token)])
+            dependencies=[Depends(require_device_proof)])
 def get_followup(followup_id: int, request: Request):
     """Any status: a push can be tapped after the follow-up was answered on
     another device or expired, and the screen should say so, not 404."""
@@ -122,7 +132,7 @@ def get_followup(followup_id: int, request: Request):
 
 @router.post("/children/followups/{followup_id}/answer",
              summary="Did the advice work? Records it as an outcome fact",
-            dependencies=[Depends(require_proven_token)])
+            dependencies=[Depends(require_device_proof)])
 def answer_followup(followup_id: int, body: FollowupAnswerIn, request: Request):
     device_id = _require_device_id(request)
     try:
@@ -139,7 +149,7 @@ def answer_followup(followup_id: int, body: FollowupAnswerIn, request: Request):
 
 @router.post("/children/followups/{followup_id}/dismiss",
              summary="Stop asking about this follow-up",
-            dependencies=[Depends(require_proven_token)])
+            dependencies=[Depends(require_device_proof)])
 def dismiss_followup(followup_id: int, request: Request):
     device_id = _require_device_id(request)
     try:
@@ -153,7 +163,7 @@ def dismiss_followup(followup_id: int, request: Request):
 
 @router.get("/children/{child_id}/followups",
             summary="A child's follow-ups (pending by default)",
-            dependencies=[Depends(require_proven_token)])
+            dependencies=[Depends(require_device_proof)])
 def child_followups(
     child_id: int, request: Request,
     status: Literal["pending", "answered", "dismissed", "expired", "all"] = "pending",
@@ -185,7 +195,7 @@ class FactPatch(BaseModel):
 
 @router.get("/children/{child_id}/memory",
             summary="What the assistant remembers about this child",
-            dependencies=[Depends(require_proven_token)])
+            dependencies=[Depends(require_device_proof)])
 def list_memory(
     child_id: int, request: Request,
     status: Literal["active", "pending", "rejected", "all"] = "all",
@@ -194,7 +204,7 @@ def list_memory(
     return {
         "child_id": child_id,
         "facts": cm.list_facts(device_id, child_id, status),
-        "settings": _settings(device_id),
+        "settings": _settings(request, device_id),
         "limits": {"max_fact_chars": cm.MAX_FACT_CHARS,
                    "max_facts": cm.MAX_FACTS_PER_CHILD},
     }
@@ -202,7 +212,7 @@ def list_memory(
 
 @router.post("/children/{child_id}/memory", status_code=201,
              summary="Add a fact the parent typed",
-            dependencies=[Depends(require_proven_token)])
+            dependencies=[Depends(require_device_proof)])
 def add_memory(child_id: int, body: FactIn, request: Request):
     device_id = _owned_child(request, child_id)
     try:
@@ -213,7 +223,7 @@ def add_memory(child_id: int, body: FactIn, request: Request):
 
 @router.patch("/children/{child_id}/memory/{fact_id}",
               summary="Edit, confirm (active) or reject a fact",
-              dependencies=[Depends(require_proven_token)])
+              dependencies=[Depends(require_device_proof)])
 def patch_memory(child_id: int, fact_id: int, body: FactPatch, request: Request):
     device_id = _owned_child(request, child_id)
     if body.fact is None and body.category is None and body.status is None:
@@ -230,7 +240,7 @@ def patch_memory(child_id: int, fact_id: int, body: FactPatch, request: Request)
 
 @router.delete("/children/{child_id}/memory/{fact_id}",
                summary="Forget one fact",
-            dependencies=[Depends(require_proven_token)])
+            dependencies=[Depends(require_device_proof)])
 def delete_memory_fact(child_id: int, fact_id: int, request: Request):
     device_id = _owned_child(request, child_id)
     if not cm.delete_fact(device_id, child_id, fact_id):
@@ -240,7 +250,7 @@ def delete_memory_fact(child_id: int, fact_id: int, request: Request):
 
 @router.delete("/children/{child_id}/memory",
                summary="Forget everything about this child",
-            dependencies=[Depends(require_proven_token)])
+            dependencies=[Depends(require_device_proof)])
 def delete_child_memory(child_id: int, request: Request):
     """Facts, follow-ups and cached weekly plans for this child. The child
     profile itself is untouched (that is DELETE /api/children/{id})."""

@@ -331,9 +331,21 @@ def device_has_memory_ui(device_id: str) -> bool:
     return int(row["build_number"]) >= min_build
 
 
-def collection_allowed(device_id: Optional[str]) -> bool:
-    """May we learn new facts / open follow-ups for this device right now?"""
-    return bool(device_id) and device_has_memory_ui(device_id) and memory_enabled(device_id)
+def memory_in_use(device_id: Optional[str], *, proven: bool) -> bool:
+    """May remembered facts be used — or new ones learned — for this request?
+
+    Only for a session proven to hold the phone (core/proof.py, §9.0) on a
+    build with the memory screen, while the parent's switch is on (PR #26
+    review F4). `proven` is the caller's: a session that did not prove itself
+    neither reads memory through the assistant nor writes into it.
+    """
+    return (bool(device_id) and proven and device_has_memory_ui(device_id)
+            and memory_enabled(device_id))
+
+
+def collection_allowed(device_id: Optional[str], *, proven: bool = False) -> bool:
+    """May we learn new facts / open follow-ups from this session's questions?"""
+    return memory_in_use(device_id, proven=proven)
 
 
 def _write_allowed(conn: sqlite3.Connection, device_id: str, child_id: int,
@@ -767,19 +779,21 @@ def prompt_context(
     age_group: Optional[str],
     question: str,
     family: Optional[Family] = None,
+    proven: bool = False,
 ) -> tuple[Optional[int], str, int]:
     """(resolved child, facts block, facts used) for one assistant question.
 
     Never raises: memory is an enrichment, and the answer must not depend on
-    it. A parent who switched memory off gets no block, though the child is
-    still resolved (redaction uses it to pick «طفلي»).
+    it. No block unless memory_in_use — switched on, a memory build, and a
+    session proven to hold the phone — though the child is still resolved
+    (redaction uses it to pick «طفلي»).
     """
     try:
         resolved = resolve_child(
             device_id, child_id=child_id, age_group=age_group, text=question,
             family=family,
         )
-        if resolved is None or not memory_enabled(device_id or ""):
+        if resolved is None or not memory_in_use(device_id, proven=proven):
             return resolved, "", 0
         block, n = facts_block(device_id or "", resolved, question, family=family)
         return resolved, block, n
@@ -788,10 +802,11 @@ def prompt_context(
         return None, "", 0
 
 
-def coach_facts(device_id: str, child_id: int, topic: str) -> str:
-    """A shorter block for the daily coach tip. "" when memory is off/empty."""
+def coach_facts(device_id: str, child_id: int, topic: str, *, proven: bool = False) -> str:
+    """A shorter block for the daily coach tip. "" when memory is not in use
+    for this session (memory_in_use) or holds nothing."""
     try:
-        if not memory_enabled(device_id):
+        if not memory_in_use(device_id, proven=proven):
             return ""
         block, _ = facts_block(device_id, child_id, topic, limit=4, char_budget=400)
         return block
@@ -1060,13 +1075,16 @@ def extraction_budget_ok() -> bool:
 def extract_and_store(
     device_id: str, child_id: int, *, question: str, answer: str,
     age_group: str = "", source_message_id: Optional[int] = None,
+    proven: bool = False,
 ) -> Optional[dict]:
     """One extraction pass. Synchronous; call it from a worker thread.
 
-    Returns the store stats, or None when nothing was attempted. Never raises.
+    `proven`: the asking session proved it holds the phone (§9.0) — nothing is
+    learned from a session that did not. Returns the store stats, or None when
+    nothing was attempted. Never raises.
     """
     try:
-        if not collection_allowed(device_id):
+        if not collection_allowed(device_id, proven=proven):
             return None
         if is_harmful(question or ""):
             logger.info("child memory: sensitive disclosure — not remembered")
@@ -1137,9 +1155,10 @@ _QUEUE_LOCK = threading.Lock()
 def schedule_extraction(
     device_id: Optional[str], child_id: Optional[int], *, question: str,
     answer: str, age_group: str = "", source_message_id: Optional[int] = None,
+    proven: bool = False,
 ) -> Optional[Future]:
     """Fire-and-forget extraction. Returns the future (tests wait on it)."""
-    if not device_id or child_id is None or not (answer or "").strip():
+    if not device_id or child_id is None or not (answer or "").strip() or not proven:
         return None
     with _QUEUE_LOCK:
         if len(_IN_FLIGHT) >= MAX_QUEUED_EXTRACTIONS:
@@ -1149,7 +1168,7 @@ def schedule_extraction(
             fut = _EXECUTOR.submit(
                 extract_and_store, device_id, child_id, question=question,
                 answer=answer, age_group=age_group,
-                source_message_id=source_message_id,
+                source_message_id=source_message_id, proven=proven,
             )
         except Exception:  # noqa: BLE001 — e.g. executor shut down at exit
             logger.warning("child memory: could not schedule extraction", exc_info=True)

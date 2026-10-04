@@ -216,6 +216,49 @@ def _remove_token(device_id: str) -> None:
     conn.close()
 
 
+def remove_token_if_current(device_id: str, token: str) -> None:
+    """Forget a push token FCM called unregistered — unless the app has
+    registered a newer one in the meantime, which must survive."""
+    conn = get_conn()
+    try:
+        conn.execute("DELETE FROM push_tokens WHERE device_id = ? AND token = ?",
+                     (device_id, token))
+        conn.commit()
+    finally:
+        conn.close()
+
+
+def send_data_message(token: str, data: dict[str, str], ttl_seconds: int) -> dict:
+    """A silent data-only message to one FCM registration token.
+
+    No `notification` block: nothing is shown, and Android delivers it without
+    the notification permission. `ttl_seconds` keeps FCM from delivering it
+    after it has stopped meaning anything (a device-proof code's lifetime).
+
+    Not written to `push_sends`: that log is for pushes a parent *sees*, and a
+    silent message must not hold back the next real one.
+
+    Returns {"ok": True, "sent": True} on success,
+    {"ok": True, "sent": False, "reason": "unregistered"} for a dead token,
+    {"ok": False, "error": ...} otherwise. The error is the exception's type
+    name only — FCM messages can echo the request, and this one carries a code.
+    """
+    if not _ensure_app():
+        return {"ok": False, "error": "firebase_credentials_not_configured"}
+    message = messaging.Message(
+        data=data,
+        token=token,
+        android=messaging.AndroidConfig(priority="high", ttl=ttl_seconds),
+    )
+    try:
+        messaging.send(message, app=_app)
+        return {"ok": True, "sent": True}
+    except messaging.UnregisteredError:
+        return {"ok": True, "sent": False, "reason": "unregistered"}
+    except Exception as exc:  # noqa: BLE001
+        return {"ok": False, "error": type(exc).__name__}
+
+
 def send_to_topic(
     topic: str,
     title: str,

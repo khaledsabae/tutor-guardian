@@ -39,6 +39,7 @@ from app.services.domain_classifier import (
     UNCERTAIN_DOMAINS, classify_domains, is_uncertain, matched_fast_path,
 )
 from app.services.tier_router import choose_tier
+from app.core.proof import request_proven
 from app.services.privacy import Family, family_for_device, family_mentions, redact_family
 from app.services import child_memory
 from app.services import answer_cache
@@ -427,24 +428,30 @@ def _redact_turns(history, family: Family, subject_id):
 
 
 async def _memory_context(caller_device, user_message: UserMessage, query_text: str,
-                          family: Family):
-    """(child_id, facts block, facts used) — off the event loop, never raises."""
+                          family: Family, proven: bool):
+    """(child_id, facts block, facts used) — off the event loop, never raises.
+
+    `proven`: this session proved it holds the phone (core/proof.py). Without
+    it no remembered fact reaches the prompt — otherwise a session minted from
+    a bare device id could read memory through the answers (PR #26 review F4).
+    """
     return await asyncio.to_thread(
         child_memory.prompt_context, caller_device,
         child_id=user_message.child_id, age_group=user_message.age_group,
-        question=query_text, family=family,
+        question=query_text, family=family, proven=proven,
     )
 
 
 def _remember(caller_device, child_id, query_text: str, answer: str,
-              age_group: str | None) -> None:
+              age_group: str | None, proven: bool) -> None:
     """Hand the finished turn to the background extractor. Fire-and-forget:
-    submitting is microseconds, and nothing downstream waits on it."""
-    if child_id is None or not answer:
+    submitting is microseconds, and nothing downstream waits on it. Nothing is
+    learned from a session that did not prove it holds the phone."""
+    if child_id is None or not answer or not proven:
         return
     child_memory.schedule_extraction(
         caller_device, child_id, question=query_text, answer=answer,
-        age_group=age_group or "",
+        age_group=age_group or "", proven=proven,
     )
 
 
@@ -615,10 +622,11 @@ async def _draft_answer(
     # replaced first. The primary provider is a cloud API, so "the cloud
     # tier" is every tier — the classifier and rewriter calls included.
     family = await asyncio.to_thread(family_for_device, caller_device)
+    memory_proven = await asyncio.to_thread(request_proven, request)
     # Which child the question is about decides whose name becomes «طفلي»
     # (siblings keep «الطفل ب»…), so it is resolved before anything leaves.
     mem_child, mem_block, mem_used = await _memory_context(
-        caller_device, user_message, query_text, family)
+        caller_device, user_message, query_text, family, memory_proven)
     llm_query = redact_family(query_text, family, mem_child)
     llm_history = _redact_turns(history, family, mem_child)
     # Both can make a model call (seconds) on a keyword fast-path miss, and
@@ -819,7 +827,7 @@ async def _draft_answer(
     }
     if mode == "llm_generated" and not reply.needs_human_review:
         _remember(caller_device, mem_child, query_text, reply.reply_text,
-                  user_message.age_group)
+                  user_message.age_group, memory_proven)
 
     await asyncio.to_thread(
         log_session,
@@ -1096,10 +1104,11 @@ async def _stream_answer(
         history = user_message.conversation_history or []
     # Names out of every model-bound text — see /draft.
     family = await asyncio.to_thread(family_for_device, caller_device)
+    memory_proven = await asyncio.to_thread(request_proven, request)
     # Which child the question is about decides whose name becomes «طفلي»
     # (siblings keep «الطفل ب»…), so it is resolved before anything leaves.
     mem_child, mem_block, mem_used = await _memory_context(
-        caller_device, user_message, query_text, family)
+        caller_device, user_message, query_text, family, memory_proven)
     llm_query = redact_family(query_text, family, mem_child)
     llm_history = _redact_turns(history, family, mem_child)
     # Concurrent, not sequential — see _classify_and_rewrite. This is the path
@@ -1538,7 +1547,8 @@ async def _stream_answer(
                         if (stream_mode == "llm_generated"
                                 and not decision["needs_human_review"]):
                             _remember(caller_device, mem_child, query_text,
-                                      final_text, user_message.age_group)
+                                      final_text, user_message.age_group,
+                                      memory_proven)
                         # Feed the answer cache: grounded, local, review-free,
                         # first-question answers only (§5.1) — and only whole
                         # ones: an answer cut by max_tokens or a filter (R3)

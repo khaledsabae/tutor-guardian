@@ -21,6 +21,7 @@ from fastapi.testclient import TestClient
 
 from app.db.init_db import db_path, get_conn
 from app.routers import privacy as pv
+from tests.device_proof_support import prove
 
 # Copied 2026-10-04 from production (read-only: sqlite_master + PRAGMA
 # table_info inside tg_backend, schema v29). Do not edit by hand — re-dump.
@@ -253,6 +254,11 @@ def _token(client, device: str) -> dict:
 def test_needs_auth_and_explicit_confirmation(client):
     assert client.delete("/api/privacy/account?confirm=true").status_code == 401
     h = _token(client, "dev-confirm")
+    # A session that has not proven it holds the phone (MOBILE_API §9.0)…
+    r = client.delete("/api/privacy/account?confirm=true", headers=h)
+    assert r.status_code == 403 and r.json()["detail"]["code"] == "device_proof_required"
+    prove(client, h, push_token="fcm-confirm")
+    # …and, proven, still not without the explicit confirmation.
     r = client.delete("/api/privacy/account", headers=h)
     assert r.status_code == 400 and r.json()["detail"]["code"] == "confirm_required"
 
@@ -261,6 +267,7 @@ def test_signed_out_account_is_the_device(client):
     h = _token(client, "dev-solo")
     _seed_account("dev-solo", None)
     _seed_account("dev-bystander", None)
+    prove(client, h)                       # against the push token just seeded
     before = _rows_for(["dev-solo"])
     assert all(before[t] for t in ("child_profiles", "chat_messages", "child_facts",
                                    "routine_events", "agreement_clauses", "push_tokens",
@@ -288,6 +295,7 @@ def test_signed_in_account_is_every_device_linked_to_the_google_identity(client)
     h = _token(client, "dev-phone")
     _seed_account("dev-phone", "g-parent", linked=["dev-old-phone"])
     _seed_account("dev-stranger", "g-stranger")
+    prove(client, h)
 
     r = client.delete("/api/privacy/account?confirm=true", headers=h)
     assert r.status_code == 200, r.text

@@ -12,6 +12,7 @@ from fastapi.testclient import TestClient
 from app import curriculum_loader as cl
 from app.db.init_db import get_conn
 from app.services import weekly_plan as wp
+from tests.device_proof_support import prove
 
 CURRICULUM = Path(__file__).resolve().parents[2] / "knowledge_base" / "curriculum"
 BANDS = ("prenatal-1", "0-3", "2-3", "4-6", "7-9", "10-12", "13-15", "16-18")
@@ -145,8 +146,10 @@ def test_plan_is_cached_for_the_week_and_per_language(client):
 def test_focus_follows_the_parents_challenge_then_memory(client):
     h = _auth(client, "dev-plan-signal")
     cid = _child(client, h, "4-6")
-    client.post(f"/api/children/{cid}/memory", headers=h,
-                json={"category": "challenge", "fact": "طفلي يخاف من النوم وحده ويستيقظ ليلًا"})
+    prove(client, h, push_token="fcm-plan-signal")      # memory routes: MOBILE_API §9.0
+    r = client.post(f"/api/children/{cid}/memory", headers=h,
+                    json={"category": "challenge", "fact": "طفلي يخاف من النوم وحده ويستيقظ ليلًا"})
+    assert r.status_code == 201, r.text
     plan = wp.build_plan("dev-plan-signal", cid, today=date(2026, 10, 5), lang=None)
     assert plan["focus"]["topic"] == "sleep" and plan["focus"]["reason"] == "memory"
 

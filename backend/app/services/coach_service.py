@@ -496,8 +496,12 @@ async def get_proactive_tip(
     mark_shown: bool = True,
     used_texts: Optional[set[str]] = None,
     lang: Optional[str] = None,
+    memory_proven: bool = False,
 ) -> dict:
-    """Return today's tip. If text does not start with child name → plain daily tip."""
+    """Return today's tip. If text does not start with child name → plain daily tip.
+
+    `memory_proven`: the asking session proved it holds the phone — only then
+    do remembered facts shape the generated tip (child_memory.memory_in_use)."""
     _ensure_coach_tips_table()
     date = _today_utc()
 
@@ -575,7 +579,8 @@ async def get_proactive_tip(
             prompt = _build_coach_prompt(
                 child_gender, age_group,
                 redact_family(recent_topic, family_for_device(device_id), child_id),
-                child_memory.coach_facts(device_id, child_id, recent_topic),
+                child_memory.coach_facts(device_id, child_id, recent_topic,
+                                         proven=memory_proven),
             )
             try:
                 result = await get_gateway().generate(

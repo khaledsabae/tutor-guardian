@@ -23,6 +23,7 @@ from app.routers import assistant
 from app.routers.privacy import MEMORY_TABLES
 from app.services import ai_gateway
 from app.services import child_memory as cm
+from tests.device_proof_support import prove
 
 CHILD_NAME = "يوسف"
 
@@ -100,9 +101,14 @@ def client():
         yield c
 
 
-def _session(client: TestClient, device: str) -> dict:
+def _session(client: TestClient, device: str, proven: bool = True) -> dict:
+    """A session for `device` — proven to hold the phone (MOBILE_API §9.0)
+    unless `proven=False`: memory routes, learning and injection need it."""
     tok = client.post("/api/chat/sessions", json={"device_id": device}).json()
-    return {"Authorization": f"Bearer {tok['token']}", "_sid": tok.get("session_id")}
+    h = {"Authorization": f"Bearer {tok['token']}", "_sid": tok.get("session_id")}
+    if proven:
+        prove(client, _headers(h), push_token=f"fcm-{device}")
+    return h
 
 
 def _headers(h: dict) -> dict:
@@ -126,11 +132,14 @@ def _ask(client, h, text, child_id=None, age="4-6"):
 
 
 def _enable_collection(monkeypatch, device: str, build: int = 120) -> None:
+    """A memory build on the server's side of the fence. The push token is kept
+    (only the build changes): replacing it would end the session's proof."""
     monkeypatch.setenv("CHILD_MEMORY_MIN_BUILD", "112")
     conn = get_conn()
     conn.execute(
-        "INSERT OR REPLACE INTO push_tokens (device_id, token, build_number) VALUES (?, 'tok', ?)",
-        (device, build),
+        "INSERT INTO push_tokens (device_id, token, build_number) VALUES (?, ?, ?) "
+        "ON CONFLICT(device_id) DO UPDATE SET build_number = excluded.build_number",
+        (device, f"fcm-{device}", build),
     )
     conn.commit()
     conn.close()
@@ -376,8 +385,9 @@ def test_deleting_the_child_cascades_its_memory(client):
 # ── Facts reach the prompt — labelled, and only for the right child ──────
 
 
-def test_facts_are_injected_as_parent_reported_context(client, pipeline):
+def test_facts_are_injected_as_parent_reported_context(client, pipeline, monkeypatch):
     h = _session(client, "dev-inject")
+    _enable_collection(monkeypatch, "dev-inject")
     cid = _child(client, h)
     client.post(f"/api/children/{cid}/memory", headers=_headers(h),
                 json={"category": "temperament", "fact": "طفلي يخاف من الظلام"})
@@ -392,20 +402,22 @@ def test_facts_are_injected_as_parent_reported_context(client, pipeline):
     assert done["metadata"]["child_id"] == cid
 
 
-def test_memory_switch_off_keeps_facts_out_of_the_prompt(client, pipeline):
+def test_memory_switch_off_keeps_facts_out_of_the_prompt(client, pipeline, monkeypatch):
     h = _session(client, "dev-off")
+    _enable_collection(monkeypatch, "dev-off")
     cid = _child(client, h)
     client.post(f"/api/children/{cid}/memory", headers=_headers(h),
                 json={"category": "temperament", "fact": "طفلي يخاف من الظلام"})
     r = client.put("/api/children/memory/settings", headers=_headers(h), json={"enabled": False})
-    assert r.json() == {"enabled": False, "collecting": False}
+    assert r.json() == {"enabled": False, "collecting": False, "proven": True}
     done = _ask(client, h, "ابني يرفض النوم وحده، ماذا أفعل؟", child_id=cid)
     assert "طفلي يخاف من الظلام" not in _RecordingProvider.prompts[-1]
     assert done["metadata"]["memory_facts_used"] == 0
 
 
-def test_pending_and_rejected_facts_are_not_injected(client, pipeline):
+def test_pending_and_rejected_facts_are_not_injected(client, pipeline, monkeypatch):
     h = _session(client, "dev-pending")
+    _enable_collection(monkeypatch, "dev-pending")
     cid = _child(client, h)
     conn = get_conn()
     cm.upsert_fact(conn, "dev-pending", cid, category="health_note",
@@ -413,7 +425,11 @@ def test_pending_and_rejected_facts_are_not_injected(client, pipeline):
     conn.commit()
     conn.close()
     assert cm.list_facts("dev-pending", cid, "pending")[0]["fact"] == "طفلي مصاب بالربو"
+    # An active fact beside it: injection is on, and only the pending one is held back.
+    client.post(f"/api/children/{cid}/memory", headers=_headers(h),
+                json={"category": "temperament", "fact": "طفلي يحب القصص قبل النوم"})
     _ask(client, h, "ابني يرفض النوم وحده، ماذا أفعل؟", child_id=cid)
+    assert "طفلي يحب القصص قبل النوم" in _RecordingProvider.prompts[-1]
     assert "الربو" not in _RecordingProvider.prompts[-1]
 
 
@@ -456,7 +472,7 @@ def test_extraction_failure_never_breaks_the_answer(client, pipeline, monkeypatc
     assert extractor.prompts, "the extractor was called and failed"
     assert cm.list_facts(device, cid, "all") == []
     # A crash inside the worker itself is swallowed the same way.
-    monkeypatch.setattr(cm, "collection_allowed", lambda d: 1 / 0)
+    monkeypatch.setattr(cm, "collection_allowed", lambda d, **k: 1 / 0)
     done = _ask(client, h, "ابني يرفض النوم وحده، ماذا أفعل؟", child_id=cid)
     cm.wait_for_extractions()
     assert done["mode"] == "llm_generated"
@@ -554,7 +570,7 @@ def test_sensitive_disclosures_are_not_remembered(client, monkeypatch):
     extractor = _FakeExtractor(response='{"facts": [], "followup": null}')
     monkeypatch.setattr(ai_gateway, "aux_cloud_provider", lambda **kw: extractor)
     assert cm.extract_and_store(device, cid, question="ابني قال إنه يريد الانتحار",
-                                answer="...") is None
+                                answer="...", proven=True) is None
     assert extractor.prompts == []
 
 
@@ -626,8 +642,9 @@ def test_stale_followups_expire(client):
     assert cm.list_followups("dev-expire", cid, "expired")[0]["strategy"] == "قديم"
 
 
-def test_followup_outcome_changes_the_next_prompt(client, pipeline):
+def test_followup_outcome_changes_the_next_prompt(client, pipeline, monkeypatch):
     h = _session(client, "dev-adapt")
+    _enable_collection(monkeypatch, "dev-adapt")
     cid = _child(client, h)
     fid = _make_due_followup("dev-adapt", cid, "إطفاء النور وتركه وحده")
     _ask(client, h, "ابني يرفض النوم وحده، ماذا أفعل؟", child_id=cid)
@@ -650,6 +667,7 @@ def test_remembered_facts_bypass_the_cross_family_cache(client, pipeline, monkey
     monkeypatch.setattr(answer_cache, "store",
                         lambda *a, **k: calls.__setitem__("store", calls["store"] + 1))
     h = _session(client, "dev-cache")
+    _enable_collection(monkeypatch, "dev-cache")
     cid = _child(client, h)
     client.post(f"/api/children/{cid}/memory", headers=_headers(h),
                 json={"category": "temperament", "fact": "طفلي يخاف من الظلام"})
@@ -794,7 +812,7 @@ def test_no_extraction_when_the_question_names_a_sibling(client, monkeypatch):
     extractor = _FakeExtractor(response='{"facts": [], "followup": null}')
     monkeypatch.setattr(ai_gateway, "aux_cloud_provider", lambda **kw: extractor)
     assert cm.extract_and_store("dev-sibq", sara, question="سارة بتضرب أحمد كل يوم ومش بتسمع",
-                                answer="…") is None
+                                answer="…", proven=True) is None
     assert extractor.prompts == []
 
 
@@ -814,7 +832,7 @@ def test_existing_facts_are_reredacted_in_the_extraction_prompt(client, monkeypa
     extractor = _FakeExtractor(response='{"facts": [], "followup": null}')
     monkeypatch.setattr(ai_gateway, "aux_cloud_provider", lambda **kw: extractor)
     cm.extract_and_store("dev-p8", sara, question="ابنتي بتغار وبتصرخ كل ما أشيل أخوها",
-                         answer="…")
+                         answer="…", proven=True)
     assert extractor.prompts and "يوسف" not in extractor.prompts[0]
     assert "الطفل ب" in extractor.prompts[0]
 
@@ -848,7 +866,8 @@ def test_the_extraction_queue_is_bounded(monkeypatch):
     gate = threading.Event()
     monkeypatch.setattr(cm, "extract_and_store", lambda *a, **k: gate.wait(5))
     monkeypatch.setattr(cm, "MAX_QUEUED_EXTRACTIONS", 3)
-    futures = [cm.schedule_extraction("dev-q", 1, question="q", answer="a") for _ in range(5)]
+    futures = [cm.schedule_extraction("dev-q", 1, question="q", answer="a", proven=True)
+               for _ in range(5)]
     assert sum(f is not None for f in futures) == 3
     gate.set()
     cm.wait_for_extractions()

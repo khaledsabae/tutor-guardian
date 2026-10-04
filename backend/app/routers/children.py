@@ -30,10 +30,11 @@ import sqlite3
 from datetime import date, datetime, timedelta, timezone
 from typing import Optional
 
-from fastapi import APIRouter, HTTPException, Query, Request
+from fastapi import APIRouter, Depends, HTTPException, Query, Request
 from pydantic import BaseModel, Field, field_validator
 
 from app.config.guardrails_loader import load_child_surface_policy
+from app.core.proof import require_device_proof_once_enrolled
 from app.core.taxonomy import CANONICAL_AGE_GROUPS, map_profile_age_to_band
 from app.db.init_db import get_conn
 from app.services import child_budget, child_license, child_missions, family_agreement
@@ -633,6 +634,8 @@ def update_child(
 @router.delete(
     "/children/{child_id}/progress",
     summary="Reset all lesson_progress rows for the given child",
+    # Destructive: a proven session once the device has enrolled (core/proof.py).
+    dependencies=[Depends(require_device_proof_once_enrolled)],
 )
 def reset_child_progress(child_id: int, request: Request):
     """Phase 7 — the "reset streak" affordance. Wipes every
@@ -674,6 +677,9 @@ def reset_child_progress(child_id: int, request: Request):
 @router.delete(
     "/children/{child_id}",
     summary="Delete a child profile",
+    # Destructive, and it takes the child's memory with it: a proven session
+    # once the device has enrolled (core/proof.py, PR #26 review F3).
+    dependencies=[Depends(require_device_proof_once_enrolled)],
 )
 def delete_child(child_id: int, request: Request):
     """Phase 7 — remove a child profile entirely. Ownership-enforced via

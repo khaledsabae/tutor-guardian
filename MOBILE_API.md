@@ -232,15 +232,27 @@ are additive; older builds keep working and simply never call them.
 ### 9.0 Rules the client must follow
 
 - **Auth:** `Authorization: Bearer <token>` (§1). Wrong device → `404`.
-- **Proven token required** for every route in §9.2–§9.4 and §9.6, and for §10.
-  A token is *proven* when it was minted with proof of this device: the device's
-  first session, or `POST /api/chat/sessions` sent with
-  `Authorization: Bearer <the current or last token>` (what `TgClient.createSession`
-  already does — builds ≥ 106). Otherwise these routes answer
-  `403 {"detail": {"code": "proof_required", "message": "…"}}`. **Client flow:** on
-  `proof_required`, call `createSession()` once (it sends the current token as
-  proof), store the new token, retry the request once. Tokens from before this
-  change also upgrade this way. The weekly plan (§9.5) does not need it.
+- **Proven session required** for every route in §9.3, §9.4 and §9.6, for
+  `PUT /api/children/memory/settings` with `{"enabled": true}`, and for §10.
+  *Proven* = this session (bearer token) completed the device-proof challenge
+  (§9.0.1), and the push token the code went to is still this device's push
+  token. Otherwise these routes answer
+  `403 {"detail": {"code": "device_proof_required", "message": "…", "message_en": "…",
+  "support_email": "support@alsaba.cloud"}}`. **Client flow:** on
+  `device_proof_required`, run §9.0.1 once, then retry the request once.
+  **Always allowed without a proof:** `GET /api/children/memory/settings`,
+  switching memory **off** (`PUT … {"enabled": false}`), and the weekly plan (§9.5).
+- **Destructive child routes** — `DELETE /api/children/{id}` and
+  `DELETE /api/children/{id}/progress` — need a proven session too, **once this
+  device has proven at least once** (and for every device once the server's
+  `MINIMUM_BUILD_NUMBER` reaches `CHILD_MEMORY_MIN_BUILD`). Same `403`, same flow.
+  Builds that cannot prove and never did keep today's behaviour.
+- **A proof belongs to one session and one push token.** Minting a new session
+  (`POST /api/chat/sessions`) or a new FCM token (`onTokenRefresh`, reinstall,
+  another phone) means proving again. Earlier tokens never vouch for a new one —
+  presenting the last token when minting (what builds ≥ 106 do) still links the
+  new session to the device, but grants nothing protected. Reuse one session
+  for the app's lifetime where you can.
 - **Branchable errors** carry a stable code:
   `{"detail": {"code": "fact_too_long", "message": "<Arabic message to show>"}}`.
   Malformed bodies (wrong type, unknown enum value) get FastAPI's standard
@@ -260,13 +272,60 @@ are additive; older builds keep working and simply never call them.
 - **Placeholders:** one child → «طفلي»; several → the question's child is «طفلي»
   and siblings «الطفل أ», «الطفل ب»… by profile order. A fact may therefore
   mention «الطفل ب»: render it with that sibling's name on the device.
-- **When the server learns:** only while the parent's switch is on **and** the
-  device reports a build ≥ the server's `CHILD_MEMORY_MIN_BUILD` (the build
-  number the app already sends on every launch to `POST /api/push/register`
-  as `build_number`). Until that variable is set on the server to the build
-  that ships the memory screen, nothing is learned from chat and no follow-up
-  is opened — but every endpoint below works, and facts the parent adds by hand
-  are used. `settings.collecting` tells the app which state it is in.
+- **When memory is used and learned:** only for a **proven session** (above),
+  while the parent's switch is on, on a device that reports a build ≥ the
+  server's `CHILD_MEMORY_MIN_BUILD` (the build number the app already sends on
+  every launch to `POST /api/push/register` as `build_number`). Then remembered
+  facts reach answers (§9.1) and the daily coach tip, and the answer can teach
+  memory something new. For any other session nothing is learned and no fact is
+  used — the answer is simply general. Until that variable is set on the server
+  to the build that ships the memory screen, nothing is learned or used.
+  `settings.collecting` tells the app which state this session is in.
+
+### 9.0.1 Device proof — the FCM challenge
+
+The server proves a session holds the phone by sending a one-time code to the
+device's **current** push token, as a silent data message. Data messages need
+no notification permission — **register the FCM token on every launch even when
+the parent declined notifications.**
+
+```http
+GET /api/device-proof
+→ 200 {"proven": false, "proven_at": null, "push_registered": true}
+
+POST /api/device-proof/start
+→ 202 {"challenge_id": 41, "expires_in": 300}
+
+# FCM data message to this device's registered token — no notification block:
+#   {"type": "device_proof", "challenge_id": "41", "code": "<32 characters>"}
+
+POST /api/device-proof/complete
+{"challenge_id": 41, "code": "<the code from the data message>"}
+→ 200 {"proven": true, "proven_at": "2026-10-04 18:30:00"}
+```
+- **Same session throughout:** call `start` and `complete` with the same bearer
+  token. Handle the data message in `FirebaseMessaging.onMessage` (the app is in
+  the foreground: the parent just tapped something) and in the background
+  handler; post it back **only if `challenge_id` is the one this session is
+  waiting for** — ignore any other `device_proof` message. Never show the code
+  or log it.
+- **Wait at most 20 seconds** for the message. If it does not come, or
+  `complete` fails, start once more; after that show `message` / `message_en`
+  with the support address (`support_email`) — the parent can still turn
+  memory off, and can ask for deletion by e-mail.
+- **When to prove:** on `device_proof_required` (then retry the request once);
+  and proactively, in the background, after minting a session or registering a
+  new FCM token while memory is in use — otherwise answers and coach tips go
+  without memory until the parent opens a protected screen.
+- The code lives **5 minutes**, works **once**, and only while the device's push
+  token is still the one it was sent to.
+
+| HTTP | `detail.code` | When — what the app does |
+|---|---|---|
+| 409 | `no_push_token` | no FCM token registered (or FCM called it dead) — register it, try again; else show the message (it names the support address) |
+| 503 | `push_unavailable` | the server could not send — try again shortly; else show the message |
+| 429 | `proof_rate_limited` | more than 5 starts per session (20 per device) in an hour |
+| 409/404 | `proof_failed` | `detail.reason`: `wrong_code` · `expired` · `used` · `other_session` · `push_token_changed` · `not_found` — start again once |
 
 ### 9.1 Send the child with every question
 
@@ -287,17 +346,20 @@ small chip («مخصّص لأحمد» / "Personalised for Ahmad") that opens §9
 
 ```http
 GET /api/children/memory/settings
-→ 200 {"enabled": true, "collecting": false}
+→ 200 {"enabled": true, "collecting": false, "proven": false}
 
 PUT /api/children/memory/settings
 {"enabled": false}
-→ 200 {"enabled": false, "collecting": false}
+→ 200 {"enabled": false, "collecting": false, "proven": false}
 ```
+No proof is needed to read the settings or to switch memory **off**; switching
+it **on** needs a proven session (§9.0). `proven` says whether this session may
+open the memory screen now — if `false`, run §9.0.1 first.
 - `enabled` — the parent's switch (default `true`). Off = nothing new is
   learned, no follow-up is opened, and remembered facts stop reaching the
   assistant. **Off deletes nothing** — deletion is §9.3/§9.6 — and **deleting
   keeps the switch as it was** (off stays off).
-- `collecting` — `enabled` AND this build is allowed to learn (§9.0).
+- `collecting` — `enabled` AND a memory build AND this session is proven (§9.0).
 
 ### 9.3 Facts — what the assistant knows about a child
 
@@ -377,7 +439,7 @@ Deleting the child profile (`DELETE /api/children/{id}`) removes all of it too.
 | 422 | `fact_too_long` | > 160 characters |
 | 422 | `sensitive` | something memory never keeps (medicine, self-harm, abuse, sexual, drugs) |
 | 422 | `category` / `status` | value outside the enums above |
-| 403 | `proof_required` | token not proven — re-mint (§9.0) and retry |
+| 403 | `device_proof_required` | session not proven — run the device proof (§9.0.1), retry once |
 | 422 | `empty_patch` | PATCH with no field |
 
 ### 9.4 Follow-ups — «جرّبت النصيحة؟ نفعت؟»
@@ -455,7 +517,7 @@ Query: `lang` (`en` → English; anything else, or absent → Arabic; the
 `Accept-Language` header is used when `lang` is absent) and `tz_offset_minutes`
 (the device's UTC offset, e.g. `180` for Riyadh — the week is the parent's local
 ISO week, Monday to Sunday; also recorded for the follow-up push's quiet hours).
-This route does not require a proven token.
+This route does not require a proven session.
 
 ```json
 {
@@ -510,7 +572,7 @@ This route does not require a proven token.
 ### 9.6 Delete-all for memory — `DELETE /api/privacy/memory`
 
 Forgets everything about **every** child of this device (facts, follow-ups and
-weekly plans). The memory switch keeps its setting. Requires a proven token.
+weekly plans). The memory switch keeps its setting. Requires a proven session (§9.0).
 ```json
 → 200 {"deleted": {"child_facts": 12, "followups": 3, "weekly_plans": 4},
        "deleted_at": "2026-10-04T18:30:00+00:00"}
@@ -555,8 +617,10 @@ Authorization: Bearer <token>
   stored `device_id`), generate a **new** `device_id`, and start over with
   `POST /api/chat/sessions`. Any further call with the old token gets `401`.
 - Errors: `401` no/invalid token · `400 {"detail": {"code": "confirm_required", …}}`
-  when `confirm=true` is missing · `403 {"detail": {"code": "proof_required", …}}`
-  for a token not proven on this device (§9.0: re-mint, retry once).
+  when `confirm=true` is missing · `403 {"detail": {"code": "device_proof_required", …}}`
+  for a session that has not proven it holds the phone (§9.0.1, then retry once).
+  If the proof cannot work (no push token, the code never arrives), show the
+  message with its support address — deletion by e-mail is the fallback.
 - **Child-mode tokens are opaque.** Since this change they no longer contain the
   parent's device id; never decode them on the client (old ones keep working until
   they expire).

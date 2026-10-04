@@ -1,25 +1,57 @@
-"""The proven-token requirement for the most private and irreversible routes.
+"""Guards for the routes that need a session proven to hold its phone.
 
-A token is *proven* when it was minted with proof of possession of its device
-(routers/chat.py): the device's first token, or one minted while presenting an
-earlier proven (or pre-proof) token. Account deletion and everything that reads
-or erases child memory require it (PR #26 review, P1) — knowing a device id is
-not owning the family's data.
+The proof itself is an FCM challenge (services/device_proof.py, MOBILE_API.md
+§9.0): the server sends a single-use code to the device's current push token
+and the session posts it back. Knowing a device id — e.g. decoded from an old
+child token — is not owning the family's data.
 
-A client holding an unproven or pre-proof token recovers by minting a new
-session with its current token as proof (`POST /api/chat/sessions` with
-`Authorization: Bearer <current token>`), then retrying — MOBILE_API.md §9.0.
+`require_device_proof` — always: account deletion, everything that reads,
+changes or erases child memory, and switching memory ON. (Switching it OFF
+never needs a proof: stopping is always allowed.)
+
+`require_device_proof_once_enrolled` — the destructive child routes (delete a
+child, reset its progress). No build on Play can answer a challenge yet, so
+requiring it of every device would take child deletion away from every family
+until they update. It is required once the device has ever proven — every
+device that has memory has, because nothing writes memory without a proof —
+and for every device once the forced-update floor reaches the build that can
+prove (device_proof.required_for_every_device).
 """
 from __future__ import annotations
 
 from fastapi import HTTPException, Request
 
-PROOF_REQUIRED = {
-    "code": "proof_required",
-    "message": "أعد فتح الجلسة من هذا الجهاز ثم حاول مرة أخرى.",
+from app.core.contact import SUPPORT_EMAIL
+from app.services import device_proof
+
+DEVICE_PROOF_REQUIRED = {
+    "code": "device_proof_required",
+    "message": "نحتاج أن نتأكد أن هذا الطلب من هاتفك قبل هذه الخطوة. حاول مرة أخرى.",
+    "message_en": "We need to confirm this request comes from your phone before this "
+                  "step. Please try again.",
+    "support_email": SUPPORT_EMAIL,
 }
 
 
-def require_proven_token(request: Request) -> None:
-    if not getattr(request.state, "token_proven", False):
-        raise HTTPException(status_code=403, detail=PROOF_REQUIRED)
+def request_proven(request: Request) -> bool:
+    """Is the session behind this request proven? Cached on the request."""
+    cached = getattr(request.state, "device_proven", None)
+    if cached is not None:
+        return cached
+    proven = device_proof.is_proven(getattr(request.state, "device_id", None),
+                                    getattr(request.state, "token", None))
+    request.state.device_proven = proven
+    return proven
+
+
+def require_device_proof(request: Request) -> None:
+    if not request_proven(request):
+        raise HTTPException(status_code=403, detail=DEVICE_PROOF_REQUIRED)
+
+
+def require_device_proof_once_enrolled(request: Request) -> None:
+    if request_proven(request):
+        return
+    device_id = getattr(request.state, "device_id", None)
+    if device_proof.required_for_every_device() or device_proof.ever_proven(device_id):
+        raise HTTPException(status_code=403, detail=DEVICE_PROOF_REQUIRED)

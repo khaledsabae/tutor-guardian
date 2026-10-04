@@ -30,22 +30,15 @@ def generate_token() -> str:
     return "tg_" + secrets.token_hex(32)
 
 
-def create_token(device_id: str, session_id: str, proven: int | None = None) -> str:
-    """Store a new auth token for the given device + session.
-
-    `proven` records proof of possession at mint (routers/chat.py): 1 when the
-    caller proved it holds this device — its first token, or a proven earlier
-    token presented — and 0 when a token was minted for a known device without
-    proof. The irreversible and most private routes (account deletion, child
-    memory) accept only proven tokens.
-    """
+def create_token(device_id: str, session_id: str) -> str:
+    """Store a new auth token for the given device + session."""
     token = generate_token()
     conn = get_conn()
     try:
         conn.execute(
-            "INSERT INTO api_tokens (token, device_id, session_id, expires_at, proven) "
-            "VALUES (?, ?, ?, datetime('now', ?), ?)",
-            (hash_token(token), device_id, session_id, _ttl_modifier(), proven),
+            "INSERT INTO api_tokens (token, device_id, session_id, expires_at) "
+            "VALUES (?, ?, ?, datetime('now', ?))",
+            (hash_token(token), device_id, session_id, _ttl_modifier()),
         )
         conn.commit()
     finally:
@@ -64,7 +57,7 @@ def validate_token(token: str) -> dict | None:
     conn = get_conn()
     try:
         row = conn.execute(
-            """SELECT device_id, session_id, proven,
+            """SELECT device_id, session_id,
                       expires_at < datetime('now', ?) AS due_for_renewal
                FROM api_tokens
                WHERE token = ?
@@ -79,33 +72,9 @@ def validate_token(token: str) -> dict | None:
                 (_ttl_modifier(), digest),
             )
             conn.commit()
-        return {"device_id": row["device_id"], "session_id": row["session_id"],
-                "proven": row["proven"] == 1}
+        return {"device_id": row["device_id"], "session_id": row["session_id"]}
     finally:
         conn.close()
-
-
-def token_proof(token: str) -> tuple[str, bool] | None:
-    """(device_id, can_prove) for a token this server issued — expired or not.
-
-    `can_prove` is False only for a token minted *without* proof for a device
-    that already existed: such a token must never vouch for a new proven one,
-    or an unproven mint could launder itself. Tokens from before proofs were
-    recorded (NULL) still prove their device — they were the only proof there
-    was, and the app has held them since.
-    """
-    if not token:
-        return None
-    conn = get_conn()
-    try:
-        row = conn.execute(
-            "SELECT device_id, proven FROM api_tokens WHERE token = ?", (hash_token(token),)
-        ).fetchone()
-    finally:
-        conn.close()
-    if row is None:
-        return None
-    return row["device_id"], row["proven"] != 0
 
 
 def token_device(token: str) -> str | None:
@@ -170,15 +139,13 @@ def create_session(device_id: str | None = None, metadata: dict | None = None) -
     return sid
 
 
-def create_session_with_token(device_id: str | None = None, metadata: dict | None = None,
-                              proven: int | None = None) -> tuple[str, str]:
+def create_session_with_token(device_id: str | None = None, metadata: dict | None = None) -> tuple[str, str]:
     """Create a session and return (session_id, auth_token)."""
     # Normalize device_id
     if not device_id:
         device_id = f"device_{uuid.uuid4().hex[:12]}"
-        proven = 1   # a device id this server just made up has no other holder
     sid = create_session(device_id, metadata)
-    token = create_token(device_id, sid, proven)
+    token = create_token(device_id, sid)
     return sid, token
 
 
