@@ -1,6 +1,6 @@
 {
   "total_units": 1776,
-  "generated_at": "2026-09-29T07:50:27.883935+00:00",
+  "generated_at": "2026-10-04T10:36:09.649372+00:00",
   "by_domain": {
     "medical": 361,
     "cyber": 281,
@@ -6924,12 +6924,12 @@
     {
       "id": "gap-med-puberty-hayd-01",
       "domain": "medical",
-      "title": "متى تعتبر الفتاة حائضة؟ (مرجع مزدوج طبي+شرعي)",
+      "title": "أول حيض: ما تحتاج ابنتك معرفته طبيًا وشرعيًا",
       "source_file": "gap_fill_2026-09.json",
       "language": "ar",
       "original_age_group": "10-12",
       "normalized_age_group": "10-12",
-      "behavior_type": "متى تعتبر الفتاة حائضة؟ (علامات البلوغ المعتبرة)",
+      "behavior_type": "أول حيض وعلامات البلوغ",
       "needs_ocr": false,
       "size_chars": 0
     },
@@ -11448,7 +11448,7 @@
     {
       "id": "isl-6e577f4f",
       "domain": "islamic_parenting",
-      "title": "تأديب الأطفال بين الضرب المسموح والممنوع",
+      "title": "تأديب الأطفال بلا ضرب",
       "source_file": "Alukah_Rights_of_Children.pdf",
       "language": "ar",
       "original_age_group": "4-6",
@@ -12924,7 +12924,7 @@
     {
       "id": "isl-901bde3f",
       "domain": "islamic_parenting",
-      "title": "قواعد العقاب الفوري والضرب المحدود للأطفال",
+      "title": "قواعد العاقبة الفورية الهادئة للأطفال",
       "source_file": "Kayfa_Turabbi_Waladak.pdf",
       "language": "ar",
       "original_age_group": "4-6",
@@ -12936,7 +12936,7 @@
     {
       "id": "isl-901bde3f__en",
       "domain": "islamic_parenting",
-      "title": "Rules of Immediate Discipline and Limited Physical Correctio",
+      "title": "Rules of Immediate, Calm Consequences for Children",
       "source_file": "Kayfa_Turabbi_Waladak.pdf",
       "language": "en",
       "original_age_group": "4-6",
