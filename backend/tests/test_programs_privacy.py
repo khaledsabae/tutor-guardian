@@ -127,3 +127,34 @@ def test_the_milestone_push_never_carries_a_childs_name(monkeypatch):
     mp.run_due_milestones(datetime(2027, 2, 1, 17, 0, tzinfo=timezone.utc))
     assert len(seen) == 1
     assert "يوسف" not in repr(seen) and seen[0][2]["child_id"] == str(cid)
+
+
+def test_every_program_endpoint_refuses_an_anonymous_caller():
+    """With the real AuthMiddleware, not the stub the other suites use: the
+    family endpoints sit under /api/programs (added to the protected
+    prefixes), the child ones under /api/children and child mode."""
+    from fastapi import FastAPI
+    from fastapi.testclient import TestClient
+
+    from app.middleware.auth import AuthMiddleware
+    from app.routers.family_programs import router
+
+    app = FastAPI()
+    app.add_middleware(AuthMiddleware)
+    app.include_router(router, prefix="/api")
+    c = TestClient(app)
+    for route in router.routes:
+        path = "/api" + route.path.replace("{child_id}", "1").replace("{day}", "1") \
+            .replace("{key}", "prayer_start")
+        for method in route.methods - {"HEAD", "OPTIONS"}:
+            r = c.request(method, path, json={})
+            assert r.status_code == 401, (method, path, r.status_code)
+
+    # And a real token gets through with its device bound — a path outside
+    # the protected prefixes would 401 even then (the /api/sync lesson).
+    from app.services import conversation_store as store
+    _, token = store.create_session_with_token(DEVICE)
+    r = c.get("/api/programs", headers={"Authorization": f"Bearer {token}"})
+    assert r.status_code == 200 and r.json()["children"] == []
+    r = c.get("/api/programs/ramadan/recap", headers={"Authorization": f"Bearer {token}"})
+    assert r.status_code == 200
