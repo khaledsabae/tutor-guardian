@@ -23,6 +23,9 @@ What counts as a hadith *claim* (anything else is ordinary prose):
      Dhikr and du'a formulas («بسم الله»، «الحمد لله»، «اللهم…») taught as
      words to say are not hadith claims unless the text attributes them.
 
+Quotes are «…», “…”, "…", '…', ﴿…﴾ — and (…) for hadith only: OCR'd books
+write narrations in parentheses, and a parenthesised surah list is not a verse.
+
 Verdicts on a claim:
   • in the Sahihayn + a citation whose number holds it            → sound
   • in the Sahihayn, citation missing / without a number / wrong  → violation,
@@ -54,7 +57,12 @@ OTHERS_INDEX = ROOT / "ops/data/hadith_others_index.json.gz"
 QURAN = ROOT / "mobile/assets/data/quran.json"
 
 # ── patterns ──────────────────────────────────────────────────────────────
-QUOTE = re.compile(r"«([^«»]{2,600})»|“([^“”]{2,600})”|\"([^\"\n]{2,600})\"|'([^'\n]{2,400})'|﴿([^﴾]{1,1500})﴾")
+# Parentheses carry quotations too — OCR'd books write narrations as «( عن … )» and
+# lesson prose writes «(الإحسان: أن تعبد الله كأنك تراه)». They are read for HADITH
+# only (a parenthesised surah list is not a verse), and only when the body holds
+# no other quote mark — «(قال ﷺ: «…»)» keeps its inner quote as the quote.
+QUOTE = re.compile(r"«([^«»]{2,600})»|“([^“”]{2,600})”|\"([^\"\n]{2,600})\"|'([^'\n]{2,400})'|﴿([^﴾]{1,1500})﴾"
+                   r"|\(\s*([^()«»“”\"﴿﴾]{6,600}?)\s*\)")
 
 _PROPHET = (r"(?:النبي|النبيّ|النبيُّ|رسول\s*الله|رسولُ\s*الله|الرسول|المصطفى|نبيّ?نا|نبيُّنا)"
             r"(?:\s*محمد)?(?:\s*(?:ﷺ|صلى\s*الله\s*عليه\s*وسلم|صلّى\s*الله\s*عليه\s*وسلّم|\(ﷺ\)|عليه\s*الصلاة\s*والسلام))?"
@@ -280,6 +288,7 @@ def scan_text(text: str) -> list[Finding]:
     for i, m in enumerate(quotes):
         q = next(g for g in m.groups() if g is not None)
         is_ayah_brackets = m.group(5) is not None
+        is_paren = m.group(6) is not None
         before = text[max(0, m.start() - _PREV): m.start()]
         nxt = quotes[i + 1].start() if i + 1 < len(quotes) else len(text)
         after = _citation_after(text, m.end(), nxt)
@@ -290,7 +299,7 @@ def scan_text(text: str) -> list[Finding]:
         letters = sum(len(f.replace(" ", "")) for f in frags)
 
         # ── Qur'an ──────────────────────────────────────────────────────
-        if is_ayah_brackets or QURAN_MARKER.search(before):
+        if not is_paren and (is_ayah_brackets or QURAN_MARKER.search(before)):
             if letters < 4:
                 continue      # an ayah-number ornament such as ﴿١﴾
             where = quran_locate(frags)
@@ -412,6 +421,12 @@ MUST_FLAG = [
     "قال تعالى: ﴿فأقم وجهك للذين حنيفا﴾",
     # a sound verse cited to the wrong place
     "قال تعالى: ﴿فأقم وجهك للدين حنيفا﴾ [الروم: ٣٢].",
+    # parenthesised narration outside the Sahihayn (the OCR'd al-Minhaj units) — marked…
+    "فقال له ﷺ: ( ارجع فقل السلام عليكم أأدخل ).",
+    # …and unmarked
+    "وفي الاستئذان: ( ارجع فقل السلام عليكم أأدخل ).",
+    # parenthesised Sahihayn wording with no citation
+    "اغرس فيه مراقبة الله (الإحسان: أن تعبد الله كأنك تراه)، فهي الضمير الذي يحفظه.",
 ]
 MUST_PASS = [
     "قال النبي ﷺ: «إن الله رفيق يحب الرفق في الأمر كله» (صحيح البخاري — حديث ٦٩٢٧).",
@@ -422,6 +437,10 @@ MUST_PASS = [
     "كان النبي ﷺ رحيمًا بالأطفال، يحملهم ويلاعبهم.",
     "قال تعالى: ﴿فأقم وجهك للدين حنيفا﴾ [الروم: ٣٠].",
     "ما أجمل أن تقول له: «هذا العمل يقرّبك من الجنة».",
+    "اغرس فيه مراقبة الله (الإحسان: أن تعبد الله كأنك تراه) (صحيح البخاري ٤٧٧٧).",
+    "قال أبو بكر (رضي الله عنه) لابنته (صحيح البخاري ٣٣٤) ما قال، و(صلى الله عليه وسلم) عليه.",
+    "اقرأ معه من القرآن (العلق، القدر، العاديات) قبل النوم.",
+    "قال ﷺ: (من لا يرحم لا يرحم) (صحيح البخاري ٥٩٩٧).",
 ]
 
 
