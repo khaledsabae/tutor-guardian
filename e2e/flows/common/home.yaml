@@ -1,0 +1,19 @@
+# Back to Today inside the running process — no cold start, so checkpoints that
+# need the child run before the restart checkpoint, and a failure in one flow
+# (left on some inner screen) does not sink the next.
+appId: com.alsaba.almorabbi
+---
+- runFlow: system_dialogs.yaml
+# Maestro shortens a condition's wait by the time since the last interaction;
+# this counts as one, so the check below gets its full window.
+- waitForAnimationToEnd:
+    timeout: 2000
+- repeat:
+    times: 4
+    while:
+      notVisible: '${output.lead.navToday}'
+    commands:
+      - back
+      - waitForAnimationToEnd:
+          timeout: 2000
+- tapOn: '${output.lead.navToday}'

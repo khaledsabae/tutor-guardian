@@ -1,0 +1,8 @@
+# Four digits on the child-mode keypad (child_mode_lock_screen.dart).
+# The same fixed test PIN sets, confirms and unlocks.
+appId: com.alsaba.almorabbi
+---
+- tapOn: "2"
+- tapOn: "5"
+- tapOn: "8"
+- tapOn: "0"

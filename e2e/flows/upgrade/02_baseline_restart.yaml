@@ -1,0 +1,20 @@
+# Upgrade test, control — restart the BASELINE before upgrading: does the live
+# build keep its own child across a cold start? If not (device identity race,
+# see the workflow header), checkpoint 04 cannot be blamed on the upgrade, and
+# run.sh skips it. Informational: it never fails the job by itself.
+appId: com.alsaba.almorabbi
+name: upgrade/02 baseline restart keeps the child (control)
+---
+- runScript: ../common/l10n.js
+- stopApp
+- launchApp:
+    stopApp: true
+- runFlow: ../common/system_dialogs.yaml
+- extendedWaitUntil:
+    visible: '${output.lead.navToday}'
+    timeout: 60000
+- runFlow: ../common/skip_tour.yaml
+- runFlow:
+    file: ../common/assert_today.yaml
+    env:
+      SHOT: upgrade_2_baseline_restart

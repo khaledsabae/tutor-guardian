@@ -98,6 +98,27 @@ void main() {
       handle.dispose();
     });
 
+    testWidgets('a BouncyButton beside text is a node of its own', (t) async {
+      // TodayFocusCard read as ONE node — "🚀 | <lesson> | <description> |
+      // ابدأ هذا الدرس": a ListView item is a semantics boundary that absorbs
+      // every compatible descendant, the button's label and tap included.
+      // Nothing could address the button itself: not a screen reader's focus,
+      // not the emulator gate (e2e/), which taps by label.
+      final handle = t.ensureSemantics();
+      await t.pumpWidget(_host(ListView(children: [
+        Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Text('الصدق'),
+            BouncyButton(label: 'ابدأ هذا الدرس', onTap: () {}),
+          ],
+        ),
+      ])));
+      expect(find.bySemanticsLabel('ابدأ هذا الدرس'), findsOneWidget);
+      expect(find.bySemanticsLabel('الصدق'), findsOneWidget);
+      handle.dispose();
+    });
+
     testWidgets('a disabled BouncyTap says so', (t) async {
       final handle = t.ensureSemantics();
       await t.pumpWidget(_host(const BouncyTap(child: Text('لاحقاً'))));

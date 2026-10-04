@@ -29,6 +29,10 @@ class _BouncyTapState extends State<BouncyTap> {
   @override
   Widget build(BuildContext context) {
     return Semantics(
+      // Its own node, as Material's buttons are. Without it a list item's
+      // semantics boundary absorbed the label: TodayFocusCard read as one
+      // node ending in «ابدأ هذا الدرس», and nothing could address the button.
+      container: true,
       button: true,
       enabled: widget.onTap != null,
       label: widget.semanticLabel,

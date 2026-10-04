@@ -1,0 +1,31 @@
+# Checkpoint 3 — the assistant streams an answer from the production API.
+# The question is fixed and starts with "E2E" so the message itself is
+# excludable (chat_messages.content LIKE 'E2E test%') even without the device join.
+# Env: QUESTION.
+appId: com.alsaba.almorabbi
+name: fresh/03 assistant answers
+---
+- runScript: ../common/l10n.js
+- runFlow: ../common/home.yaml
+- tapOn: '${output.lead.navAssistant}'
+- tapOn: '${output.t.chatTypeHint}'
+- inputText: '${QUESTION}'
+- tapOn: '${output.t.send}'
+# While the reply streams, the send button turns into "stop reply".
+- extendedWaitUntil:
+    visible: '${output.t.chatStop}'
+    timeout: 20000
+    optional: true
+- takeScreenshot: assistant_1_streaming
+- extendedWaitUntil:
+    notVisible: '${output.t.chatStop}'
+    timeout: 180000
+# The feedback buttons render only under a completed reply (message_bubble.dart).
+- scrollUntilVisible:
+    element:
+      text: '${output.t.feedbackHelpful}'
+    direction: DOWN
+    timeout: 20000
+- assertNotVisible: '${output.t.chatRetry}'
+- assertNotVisible: '${output.c.lit_errorWidget}'
+- takeScreenshot: assistant_2_answered

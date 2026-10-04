@@ -1,0 +1,52 @@
+# Checkpoint 4 — hand the device to the child and take it back with the PIN.
+# The cold start that follows (07) is the check for the 2026-08-16 lock-out:
+# a child-mode flag left on disk → white screen and an endless spinner.
+appId: com.alsaba.almorabbi
+name: fresh/04 child mode in → PIN out
+---
+- runScript: ../common/l10n.js
+- runFlow: ../common/home.yaml
+- tapOn: '${output.lead.navMore}'
+# The habit tile is in the hub's first group, and the hub keeps its scroll
+# position — onboarding left it at the bottom (Settings). Scroll up.
+- scrollUntilVisible:
+    element:
+      text: '${output.tile.routineTitle}'
+    direction: UP
+    timeout: 20000
+- tapOn: '${output.tile.routineTitle}'
+- extendedWaitUntil:
+    visible: '${output.t.routineChildMode}'
+    timeout: 30000
+- takeScreenshot: child_mode_1_habits
+- tapOn: '${output.t.routineChildMode}'
+- extendedWaitUntil:
+    visible: '${output.t.childMode}'
+    timeout: 20000
+# First use: choose the PIN, then confirm it — the confirmation opens the session.
+- runFlow: ../common/enter_pin.yaml
+- waitForAnimationToEnd:
+    timeout: 2000
+- runFlow: ../common/enter_pin.yaml
+# The child surface: "Child Mode · <name>" in the header.
+- extendedWaitUntil:
+    visible: '(?s).*${output.t.childMode} . ${CHILD_NAME}.*'
+    timeout: 30000
+- takeScreenshot: child_mode_2_child_surface
+# The hand-over card holds for ~1.1 s and swallows taps until it fades.
+- extendedWaitUntil:
+    notVisible: '${output.c.childModeHandoff}'
+    timeout: 15000
+- tapOn: '${output.t.habitChildModeExit}'
+- extendedWaitUntil:
+    visible: '${output.t.habitChildModeExitTitle}'
+    timeout: 15000
+# The confirm dialog's own "Exit" button; the header icon is behind the barrier.
+- tapOn: '${output.t.habitChildModeExit}'
+- waitForAnimationToEnd:
+    timeout: 3000
+- runFlow: ../common/enter_pin.yaml
+- extendedWaitUntil:
+    visible: '${output.lead.navToday}'
+    timeout: 30000
+- takeScreenshot: child_mode_3_parent_again

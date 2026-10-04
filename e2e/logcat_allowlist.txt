@@ -1,0 +1,4 @@
+# Regexes (Python `re.search`) for logcat-gate findings that are known not to be
+# app defects. Each entry needs a dated reason; an empty list is the goal.
+# A finding is matched as "KIND: line", e.g.
+#   FLUTTER ERROR (engine): [ERROR:flutter/...] ...

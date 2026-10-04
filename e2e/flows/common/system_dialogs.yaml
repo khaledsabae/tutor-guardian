@@ -1,0 +1,11 @@
+# Fallback for a system "X isn't responding" dialog that is already up (run.sh
+# sets hide_error_dialogs, which stops new ones): answer "Wait".
+appId: com.alsaba.almorabbi
+---
+- runFlow:
+    when:
+      visible:
+        id: android:id/aerr_wait
+    commands:
+      - tapOn:
+          id: android:id/aerr_wait

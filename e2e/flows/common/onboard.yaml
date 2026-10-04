@@ -1,0 +1,57 @@
+# First run, as a new parent sees it: language → child's age band → start.
+# Ends on the root scaffold with the first-run coach-mark tour skipped.
+# Env: UI_LANG (ar|en). Selectors come from l10n.js (generated from the ARB files).
+appId: com.alsaba.almorabbi
+---
+- launchApp:
+    clearState: true
+- runFlow: system_dialogs.yaml
+- extendedWaitUntil:
+    visible: '${output.t.lit_langTitle}'
+    timeout: 60000
+- takeScreenshot: onboarding_1_language
+- runFlow:
+    when:
+      true: "${UI_LANG == 'en'}"
+    commands:
+      - tapOn: '${output.t.lit_langEnglish}'
+- runFlow:
+    when:
+      true: "${UI_LANG != 'en'}"
+    commands:
+      - tapOn: '${output.t.lit_langArabic}'
+- extendedWaitUntil:
+    visible: '${output.t.onbAgeQuestion}'
+    timeout: 20000
+# 7-9: the youngest band that has habits, missions and child mode.
+- tapOn: '${output.t.ageGroup7to9}'
+- extendedWaitUntil:
+    visible: '${output.t.onbStartJourney}'
+    timeout: 20000
+- takeScreenshot: onboarding_2_first_tip
+# Creates the child on the production API (POST /api/children).
+- tapOn: '${output.t.onbStartJourney}'
+# Run 6: the tap went through but no request ever reached the server (a lost
+# tap or a transient network error; the app's error snackbar lasts seconds).
+# Retry once, as a parent would — but only after the app's own 45 s create
+# timeout, when an attempt has surely resolved: success has replaced the page,
+# failure has left it idle. Never while the busy overlay shows (a second child).
+- extendedWaitUntil:
+    visible: '${output.lead.navToday}'
+    timeout: 50000
+    optional: true
+- waitForAnimationToEnd:
+    timeout: 2000
+- runFlow:
+    when:
+      visible: '${output.t.onbStartJourney}'
+      notVisible: '${output.c.onbPreparing}'
+    commands:
+      - takeScreenshot: onboarding_2b_cta_retry
+      - tapOn:
+          text: '${output.t.onbStartJourney}'
+          optional: true
+- extendedWaitUntil:
+    visible: '${output.lead.navToday}'
+    timeout: 90000
+- runFlow: skip_tour.yaml
