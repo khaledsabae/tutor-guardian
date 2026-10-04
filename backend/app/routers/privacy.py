@@ -314,6 +314,7 @@ IDENTITY_TABLES: tuple[tuple[str, str], ...] = (
 NOT_DEVICE_DATA: dict[str, str] = {
     "schema_version": "schema bookkeeping",
     "referral_clicks": "a landing-page click (IP + code) before any device exists",
+    "referral_click_days": "per-code daily click counts (PR #25): no IP, no device",
     "story_cache": "shared generated stories keyed by theme/age/gender; the "
                    "child's name is substituted on the way out, never stored",
     "tg_updates_seen": "Telegram webhook update ids (dedupe)",

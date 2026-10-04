@@ -26,7 +26,13 @@ from app.db.init_db import get_conn
 from app.routers import privacy as pv
 
 ROOT = Path(__file__).resolve().parents[2]
-POLICY = (ROOT / "docs" / "privacy-policy.md").read_text(encoding="utf-8")
+POLICY_PATH = ROOT / "docs" / "privacy-policy.md"
+# The backend image ships docs/ today (Dockerfile: COPY docs/), but a test that
+# reads repo files outside backend/ skips where they are absent instead of
+# failing the deploy gate (the pattern of 18da165c).
+pytestmark = pytest.mark.skipif(not POLICY_PATH.exists(),
+                                reason="docs/ not present (backend-only image)")
+POLICY = POLICY_PATH.read_text(encoding="utf-8") if POLICY_PATH.exists() else ""
 ARABIC, _, ENGLISH = POLICY.partition("## English")
 
 
@@ -183,14 +189,15 @@ def test_every_external_host_in_the_backend_is_disclosed():
 
 
 def test_retention_periods_match_the_code():
-    from app.routers import web
-    from app.services import answer_cache, child_memory, fiqh_guard, retention
+    from app.services import answer_cache, attribution, child_memory, fiqh_guard, retention
 
     assert "**180 days**" in ENGLISH and "**180 يومًا**" in ARABIC
     assert "TOKEN_TTL_DAYS\", \"180\"" in (ROOT / "backend/app/db/init_db.py").read_text()
     assert child_memory.FOLLOWUP_EXPIRE_DAYS == 21
     assert "**21 days**" in ENGLISH and "**21 يومًا**" in ARABIC
-    assert web._CLICK_RETENTION == "-7 days"
+    # Raw invite/campaign visits (IP + user agent): folded into daily counts
+    # after a week by PR #25's compaction, run daily from cron_push_triggers.
+    assert attribution.CLICK_RAW_RETENTION_DAYS == 7
     assert "**7 days**" in ENGLISH and "**7 أيام**" in ARABIC
     assert retention.DAYS["retrieval_log"] == retention.DAYS["query_rewrites"] == 90
     assert retention.DAYS["llm_calls"] == retention.DAYS["sessions"] == 90
@@ -201,6 +208,15 @@ def test_retention_periods_match_the_code():
     assert "**30 days**" in ENGLISH and "**30 يومًا**" in ARABIC
     # Database backups on the VPS (/root/tg-backups) are kept 14 days.
     assert "**14 days**" in ENGLISH and "**14 يومًا**" in ARABIC
+
+
+def test_no_deletion_is_claimed_before_it_has_run():
+    """F8 (PR #26 review): the first clean-up runs after the deploy, so the
+    policy says what *will* happen, not that it already did."""
+    en = " ".join(ENGLISH.split())
+    assert not re.search(r"\b(?:have|has) been (?:deleted|purged|removed|re-redacted)", en)
+    assert "حُذف أو أُعيد إخفاؤه" not in ARABIC
+    assert "first daily clean-up" in en and "التنظيف اليومي الأول" in " ".join(ARABIC.split())
 
 
 def test_install_attribution_is_disclosed():

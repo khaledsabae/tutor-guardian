@@ -115,7 +115,8 @@
 - رموز التحقق من الهاتف: تنتهي صلاحيتها بعد **5 دقائق**، وتُحذف خلال **يوم**.
 - عنوان IP ونوع المتصفح عند فتح رابط دعوة أو حملة: **7 أيام**، ثم أعداد يومية بلا عنوان.
 - سجلّ البحث، وكلمات البحث المستخلصة، وسجلّ نداءات النموذج، وسجلّ الاستعمال (كلها دون
-  معرّف لهاتفك): **90 يومًا**. وما سُجّل منها قبل استبدال الأسماء حُذف أو أُعيد إخفاؤه.
+  معرّف لهاتفك): **90 يومًا**. وما سُجّل منها قبل استبدال الأسماء يُحذف أو يُعاد إخفاؤه
+  في التنظيف اليومي الأول بعد تحديث خوادمنا، ثم كل يوم.
 - سجلّ الأسئلة الشرعية التي حُوّلت إلى أهل العلم (بعد حذف الأسماء ووسائل التواصل):
   **90 يومًا**.
 - الإجابات العامة المخزّنة مؤقتًا مع أسئلتها: **45 يومًا**.
@@ -303,7 +304,8 @@ and backup files you export to a place you choose.
   daily counts with no address.
 - Search log, derived search keywords, AI call log and usage log (none of them
   carries a phone identifier): **90 days**. Entries logged before names were
-  replaced have been deleted or re-redacted.
+  replaced are deleted or re-redacted by the first daily clean-up after our
+  servers are updated, and every day after that.
 - Log of religious-ruling questions referred to scholars (names and contact
   details removed): **90 days**.
 - Cached general answers and their questions: **45 days**.

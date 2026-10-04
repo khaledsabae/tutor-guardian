@@ -21,6 +21,17 @@ Before the pushes, every run also folds raw referral clicks older than seven
 days into daily counts (fold_referral_clicks) — the only enforcement of that
 retention. If it cannot run, the log gets an "ALERT referral-click-retention"
 line and the run exits 2.
+
+After them — in a `finally`, so on every run, whatever the hour and whatever
+the pushes did — the privacy housekeeping (backend/app/services/retention.py)
+deletes what the privacy policy says is no longer kept. If any step fails, the
+log gets an "ALERT privacy-housekeeping" line and the run exits 1. With
+--dry-run it deletes nothing and prints what it would delete.
+
+The follow-up push («جرّبت النصيحة؟») is not here: it runs at 19:00 on each
+family's own clock from the backend's in-process loop
+(backend/app/services/followup_push.py). A single UTC hour is night from UTC+4
+to UTC+8.
 """
 import argparse
 import sqlite3
@@ -231,11 +242,6 @@ def win_back(skip: set | None = None):
         )
 
 
-# The follow-up push («جرّبت النصيحة؟») moved to the backend's in-process loop
-# (backend/app/services/followup_push.py): it goes out at 19:00 on each
-# family's own clock, and one UTC hour is night from UTC+4 to UTC+8.
-
-
 def first_lesson_activation(skip: set | None = None) -> set:
     """Reach newly registered parents (registered between 2h and 36h ago)
     who have registered a child but NEVER opened or completed a lesson.
@@ -317,34 +323,38 @@ def fold_referral_clicks(dry_run: bool = False) -> int | None:
     return folded
 
 
-def evening_run() -> bool:
-    """The 17 UTC run: every trigger, at most one push per device — then the
-    daily privacy housekeeping. Returns False when housekeeping hit an error."""
-    skip = _recently_pushed()
-    print(f"  -> first_lesson_activation + streak_at_risk + win_back (deduped, {len(skip)} capped)")
-    act_sent = first_lesson_activation(skip=skip)
-    nudged = streak_at_risk(skip=skip | act_sent)
-    win_back(skip=nudged | act_sent | skip)
-    return privacy_housekeeping()
+# Grep-able in /var/log/tg-push.log: printed whenever the housekeeping failed.
+HOUSEKEEPING_ALERT = "ALERT privacy-housekeeping"
 
 
-def privacy_housekeeping() -> bool:
+def privacy_housekeeping(dry_run: bool = False) -> bool:
     """Retention the privacy policy promises (backend/app/services/retention.py),
     once a day, here rather than as a side effect of traffic — no cron line of
-    its own. Pushes are already out; a failure is printed and reported in the
-    exit code, never swallowed."""
-    if DRY_RUN:
-        print("  -> privacy housekeeping: skipped in --dry-run")
-        return True
+    its own. With `dry_run` nothing is deleted and the counts are printed.
+
+    Never raises: it runs in main()'s `finally`, and an exception there would
+    hide whatever the pushes raised. A failure is an ALERT line on stderr and a
+    False return (exit 1) — never a silent skip.
+    """
     try:
         from app.services.retention import has_errors, run_housekeeping
-    except ImportError:
-        print("  -> privacy housekeeping: backend predates it; skipped")
-        return True
-    results = run_housekeeping()
-    print("  -> privacy housekeeping: " + ", ".join(f"{k}={v}" for k, v in results.items()))
+    except ImportError as e:
+        # Same skew as the fold's: ops/scripts can be newer than the image.
+        print(f"{HOUSEKEEPING_ALERT}: the backend predates the retention module ({e}); "
+              "nothing was deleted", file=sys.stderr, flush=True)
+        return False
+    try:
+        results = run_housekeeping(dry_run=dry_run)
+    except Exception as e:  # noqa: BLE001
+        print(f"{HOUSEKEEPING_ALERT}: {type(e).__name__}: {e}", file=sys.stderr, flush=True)
+        return False
+    verb = "would delete" if dry_run else "deleted"
+    print(f"  -> privacy housekeeping ({verb}): "
+          + ", ".join(f"{k}={v}" for k, v in results.items()))
     if has_errors(results):
-        print("  ❌ privacy housekeeping had errors (see above)")
+        failed = ", ".join(k for k, v in results.items()
+                           if isinstance(v, str) and v.startswith("error"))
+        print(f"{HOUSEKEEPING_ALERT}: failed steps: {failed}", file=sys.stderr, flush=True)
         return False
     return True
 
@@ -370,11 +380,20 @@ def main(argv=None) -> int:
     # --force exists because without it this is only testable inside a
     # sixty-minute window once a day: --dry-run printed nothing at any other
     # hour, which made "did the change work?" unanswerable until tomorrow.
-    housekeeping_ok = True
-    if FORCE or 17 <= hour < 18:
-        housekeeping_ok = evening_run()
-    else:
-        print("  -> outside the 17 UTC window; nothing to do (use --force to test)")
+    housekeeping_ok = False
+    try:
+        if FORCE or 17 <= hour < 18:
+            skip = _recently_pushed()
+            print(f"  -> first_lesson_activation + streak_at_risk + win_back (deduped, {len(skip)} capped)")
+            act_sent = first_lesson_activation(skip=skip)
+            nudged = streak_at_risk(skip=skip | act_sent)
+            win_back(skip=nudged | act_sent | skip)
+        else:
+            print("  -> outside the 17 UTC window; no pushes (use --force to test)")
+    finally:
+        # Every run, whatever the hour and whatever the pushes did or raised
+        # (PR #26 review F8): retention does not wait on re-engagement.
+        housekeeping_ok = privacy_housekeeping(dry_run=DRY_RUN)
 
     print("done")
     if folded is None:

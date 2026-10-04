@@ -95,14 +95,102 @@ def test_housekeeping_reports_errors_instead_of_swallowing_them(tmp_path, monkey
     assert retention.has_errors(results)
 
 
-def test_cron_evening_run_fails_loudly_when_housekeeping_fails(monkeypatch, capsys):
-    import ops.scripts.cron_push_triggers as cpt
+def test_cron_housekeeping_fails_loudly(monkeypatch, capsys):
+    cpt = pytest.importorskip("ops.scripts.cron_push_triggers")
     from app.services import retention
-    monkeypatch.setattr(cpt, "DRY_RUN", False)
-    monkeypatch.setattr(retention, "run_housekeeping",
-                        lambda: {"retrieval_log": "error: OperationalError: disk I/O error"})
+    monkeypatch.setattr(retention, "run_housekeeping", lambda dry_run=False: {
+        "retrieval_log": "error: OperationalError: disk I/O error", "sessions": 0})
     assert cpt.privacy_housekeeping() is False
-    assert "❌" in capsys.readouterr().out
+    err = capsys.readouterr().err
+    assert "ALERT privacy-housekeeping" in err and "retrieval_log" in err
+
+
+def _cron_at(monkeypatch, hour: int):
+    """The cron script with its clock at `hour` UTC and its sends stubbed."""
+    cpt = pytest.importorskip("ops.scripts.cron_push_triggers")
+
+    class _Clock(datetime):
+        @classmethod
+        def utcnow(cls):
+            return datetime(2026, 10, 5, hour, 5)
+
+    monkeypatch.setattr(cpt, "datetime", _Clock)
+    monkeypatch.setattr(cpt, "fold_referral_clicks", lambda dry_run=False: 0)
+    monkeypatch.setattr(cpt, "_recently_pushed", lambda: set())
+    for name in ("first_lesson_activation", "streak_at_risk", "win_back"):
+        monkeypatch.setattr(cpt, name, lambda skip=None: set())
+    ran: list[bool] = []
+    monkeypatch.setattr(cpt, "privacy_housekeeping",
+                        lambda dry_run=False: ran.append(dry_run) or True)
+    return cpt, ran
+
+
+def test_cron_housekeeping_runs_even_when_a_push_trigger_raises(monkeypatch):
+    """F8: in a `finally` — retention does not depend on re-engagement."""
+    cpt, ran = _cron_at(monkeypatch, 17)
+
+    def boom(skip=None):
+        raise RuntimeError("FCM exploded")
+
+    monkeypatch.setattr(cpt, "streak_at_risk", boom)
+    with pytest.raises(RuntimeError):
+        cpt.main([])
+    assert ran == [False]
+
+
+def test_cron_housekeeping_runs_outside_the_push_window(monkeypatch):
+    cpt, ran = _cron_at(monkeypatch, 3)
+    assert cpt.main([]) == 0 and ran == [False]
+    assert cpt.main(["--dry-run"]) == 0 and ran == [False, True]
+
+
+def test_cron_exit_code_reports_a_housekeeping_failure(monkeypatch):
+    cpt, ran = _cron_at(monkeypatch, 17)
+    monkeypatch.setattr(cpt, "privacy_housekeeping", lambda dry_run=False: False)
+    assert cpt.main([]) == 1
+    monkeypatch.setattr(cpt, "fold_referral_clicks", lambda dry_run=False: None)
+    assert cpt.main([]) == 2            # the fold's ALERT still wins
+
+
+def test_dry_run_counts_what_it_would_delete_and_deletes_nothing(tmp_path, monkeypatch, capsys):
+    """F8: before the first real run on production, see the numbers."""
+    cpt = pytest.importorskip("ops.scripts.cron_push_triggers")
+    from app.services import retention
+    db = _telemetry(tmp_path, monkeypatch)
+    conn = sqlite3.connect(db)
+    conn.execute("CREATE TABLE retrieval_log (id INTEGER PRIMARY KEY, ts TEXT, question TEXT, "
+                 "redacted INTEGER)")
+    conn.execute("INSERT INTO retrieval_log (ts, question, redacted) "
+                 "VALUES (datetime('now', '-91 days'), 'قديم', 1)")
+    conn.execute("INSERT INTO retrieval_log (ts, question) VALUES (datetime('now'), 'غير معلَّم')")
+    conn.execute("INSERT INTO retrieval_log (ts, question, redacted) "
+                 "VALUES (datetime('now'), 'جديد', 1)")
+    conn.execute("CREATE TABLE sessions (id TEXT, ts TEXT)")
+    conn.execute("INSERT INTO sessions VALUES ('old', '2020-01-01T10:00:00+00:00')")
+    conn.commit()
+    conn.close()
+
+    counted = retention.run_housekeeping(dry_run=True)
+    assert counted["retrieval_log"] == 2 and counted["sessions"] == 1, counted
+    conn = sqlite3.connect(db)
+    assert conn.execute("SELECT COUNT(*) FROM retrieval_log").fetchone()[0] == 3
+    assert conn.execute("SELECT COUNT(*) FROM sessions").fetchone()[0] == 1
+    conn.close()
+
+    assert cpt.privacy_housekeeping(dry_run=True) is True
+    assert "would delete" in capsys.readouterr().out
+
+    done = retention.run_housekeeping()
+    assert done["retrieval_log"] == counted["retrieval_log"]
+    assert done["sessions"] == counted["sessions"]
+
+
+def test_a_dry_run_never_creates_a_missing_database(tmp_path, monkeypatch):
+    from app.services import retention
+    db = _telemetry(tmp_path, monkeypatch)
+    counted = retention.run_housekeeping(dry_run=True)
+    assert not retention.has_errors(counted), counted
+    assert not db.exists()
 
 
 def test_names_logged_before_redaction_are_purged_or_reredacted(tmp_path, monkeypatch):
@@ -145,7 +233,6 @@ def test_unmarked_cached_answers_are_never_served(tmp_path, monkeypatch):
 
 
 def test_invite_link_visits_are_kept_seven_days():
-    from app.routers import web
     conn = get_conn()
     conn.execute("INSERT INTO referral_codes (device_id, code) VALUES ('dev-ref', 'ABC123')")
     conn.execute("INSERT INTO referral_clicks (ip, user_agent, code, clicked_at) "
@@ -154,11 +241,14 @@ def test_invite_link_visits_are_kept_seven_days():
                  "VALUES ('203.0.113.8', 'recent-ua', 'ABC123', datetime('now', '-6 days'))")
     conn.commit()
     conn.close()
-    web._record_click("198.51.100.7", "new-ua", "ABC123")
+    # PR #25's daily fold enforces the week (the web.py prune this replaced).
+    from app.services.attribution import compact_referral_clicks
+    assert compact_referral_clicks() == 1
     conn = get_conn()
     uas = sorted(r[0] for r in conn.execute("SELECT user_agent FROM referral_clicks"))
+    folded = conn.execute("SELECT SUM(clicks) FROM referral_click_days").fetchone()[0]
     conn.close()
-    assert uas == ["new-ua", "recent-ua"]
+    assert uas == ["recent-ua"] and folded == 1
 
 
 def test_expired_cached_answers_are_deleted(tmp_path, monkeypatch):
@@ -203,7 +293,7 @@ def test_feedback_digest_sends_no_child_name():
 
 
 def test_weekly_gap_analysis_sends_no_child_name(tmp_path, monkeypatch):
-    import ops.scripts.weekly_kb_gap_report as gap
+    gap = pytest.importorskip("ops.scripts.weekly_kb_gap_report")
     monkeypatch.setattr(gap, "_DB", db_path())
     arb = tmp_path / "app_ar.arb"
     arb.write_text(json.dumps({"chatQ_sleep": "كيف أنظّم نوم طفلي؟"}), encoding="utf-8")
@@ -215,7 +305,7 @@ def test_weekly_gap_analysis_sends_no_child_name(tmp_path, monkeypatch):
 
 
 def test_eval_set_builder_removes_family_names():
-    import ops.tools.build_real_eval_set as builder
+    builder = pytest.importorskip("ops.tools.build_real_eval_set")
     _family("dev-eval")
     _session_with("dev-eval", ("user", f"كيف أتعامل مع عناد {NAME} عند النوم؟"))
     candidates = builder.collect_raw_candidates(db_path(), set())
@@ -249,7 +339,7 @@ def _children_of(*devices: str) -> int:
 
 
 def test_delete_script_is_a_dry_run_unless_told(signed_in_account, capsys):
-    import ops.scripts.delete_account as script
+    script = pytest.importorskip("ops.scripts.delete_account")
     assert script.main(["--email", "parent@example.com"]) == 0
     out = capsys.readouterr().out
     assert "2 device(s)" in out and "dry run" in out
@@ -257,7 +347,7 @@ def test_delete_script_is_a_dry_run_unless_told(signed_in_account, capsys):
 
 
 def test_delete_script_deletes_the_whole_google_account(signed_in_account, capsys):
-    import ops.scripts.delete_account as script
+    script = pytest.importorskip("ops.scripts.delete_account")
     assert script.main(["--email", "parent@example.com", "--yes"]) == 0
     assert _children_of("dev-mail-1", "dev-mail-2") == 0
     conn = get_conn()

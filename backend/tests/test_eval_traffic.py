@@ -10,9 +10,15 @@ from __future__ import annotations
 import os
 from pathlib import Path
 
+import pytest
+
 from app.core.eval_traffic import EVAL_DEVICE_LIKE, EVAL_DEVICE_PREFIX, is_eval_device
 
 ROOT = Path(__file__).resolve().parents[2]
+HARNESS = ROOT / "ops" / "tools" / "eval_answers.py"
+# Outside backend/: skip where the image does not ship it (pattern of 18da165c).
+needs_harness = pytest.mark.skipif(not HARNESS.exists(),
+                                   reason="ops/tools not present (backend-only image)")
 
 
 def test_marker():
@@ -22,12 +28,14 @@ def test_marker():
     assert EVAL_DEVICE_LIKE == EVAL_DEVICE_PREFIX + "%"
 
 
+@needs_harness
 def test_harness_names_devices_with_the_shared_marker():
-    src = (ROOT / "ops" / "tools" / "eval_answers.py").read_text(encoding="utf-8")
+    src = HARNESS.read_text(encoding="utf-8")
     assert "EVAL_DEVICE_PREFIX" in src
     assert '"eval-harness-' not in src and "f\"eval-harness-" not in src
 
 
+@needs_harness
 def test_harness_never_runs_against_the_configured_database(monkeypatch, tmp_path):
     import ops.tools.eval_answers as ev
 
