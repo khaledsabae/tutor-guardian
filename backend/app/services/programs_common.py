@@ -351,39 +351,14 @@ def gender_of(row: sqlite3.Row | dict) -> Optional[str]:
 
 
 # Rows of these tables are about one child (child_id = that child). Family
-# rows (ramadan_marks with child_id 0, program_settings) are not.
+# rows (ramadan_marks with child_id 0, program_settings) are not. Nothing here
+# deletes them: routers/privacy.erase_child (a proven child delete) and
+# erase_account discover every table by child_id / device_id — this list is
+# what tests/test_programs_privacy.py holds those sweeps to.
 PER_CHILD_TABLES: tuple[str, ...] = (
     "program_children", "ramadan_fasting", "ramadan_marks",
     "prayer_journeys", "milestone_alerts",
 )
-
-
-def erase_child(conn: sqlite3.Connection, device_id: str, child_id: int) -> dict[str, int]:
-    """Delete this child's rows from every family-program table, on the
-    caller's connection and inside its transaction.
-
-    The Prayer Journey's tasks live in child_missions (source =
-    'prayer_journey'); they go too. The family's own Ramadan marks
-    (child_id 0) stay — they are not this child's.
-    """
-    if not child_id:
-        return {}
-    counts: dict[str, int] = {}
-    for table in PER_CHILD_TABLES:
-        cur = conn.execute(
-            f"DELETE FROM {table} WHERE child_id = ? AND device_id = ?",
-            (child_id, device_id),
-        )
-        if cur.rowcount:
-            counts[table] = cur.rowcount
-    cur = conn.execute(
-        "DELETE FROM child_missions WHERE child_id = ? AND device_id = ? "
-        "AND source = 'prayer_journey'",
-        (child_id, device_id),
-    )
-    if cur.rowcount:
-        counts["child_missions"] = cur.rowcount
-    return counts
 
 
 # ── Feature gating ─────────────────────────────────────────────────────────

@@ -281,10 +281,12 @@ def test_a_child_token_only_reaches_its_own_child():
     mine = add_child(c)
     _enrol(c, mine)
     theirs = add_child(c, device=OTHER)
-    # A token minted for the other family's child cannot be replayed as mine.
+    # A token minted for the other family's child cannot be replayed as mine:
+    # v2 child tokens (PR #26) take the device from the child's own profile,
+    # so it does not even verify — 401 before any route runs.
     r = c.get("/api/value-tracking/child-mode/prayer/today",
               headers=child_headers(theirs, device=DEVICE))
-    assert r.status_code == 404
+    assert r.status_code == 401
 
 
 def test_the_parent_sees_the_task_in_the_evening_list_in_their_language(monkeypatch):
@@ -385,7 +387,11 @@ def test_an_unanswered_prayer_card_expires_quietly(monkeypatch):
     assert c.get("/api/children/missions/pending").json()["pending"] == []
 
 
-def test_deleting_the_child_takes_the_journey_and_its_tasks():
+def test_deleting_the_child_takes_the_journey_and_its_tasks(monkeypatch):
+    """From a session proven to hold the phone (PR #26): privacy.erase_child
+    discovers prayer_journeys and child_missions by child_id."""
+    from app.routers import children
+    monkeypatch.setattr(children, "confirmed_session", lambda request: True)
     c = client()
     cid = add_child(c)
     keep = add_child(c, name="سارة")

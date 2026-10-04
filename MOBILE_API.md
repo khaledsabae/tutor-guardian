@@ -1206,9 +1206,13 @@ Tell the orchestrator the first build number that routes it, so the server floor
 Server-side rows: the birth month (on the child profile); the family's Ramadan marks and
 sighting settings; each child's fasting step, "reached puberty" flag and practice ticks; Prayer
 Journey enrolment and its tasks (as `child_missions` rows); the milestone push log; the device's
-last offset and language. Deleting a child (`DELETE /api/children/{id}`) deletes all of that
-child's rows; the family's own marks stay. Every table carries `device_id`, so the account-wide
-delete reaches all of it. The recap card never carries names, ages, photos or typed text.
+last offset and language. Deleting a child (`DELETE /api/children/{id}`) from a session proven
+to hold the phone (§9.0.1) deletes all of that child's rows — profile with its birth month,
+fasting step, puberty flag, journey and its prayer cards, milestone log; from any other session it
+deletes the profile row only (which carries the birth month), as that route always did. The
+family's own Ramadan marks stay when one child is deleted. Account deletion (§10) reaches all of
+it: every table carries `device_id`. All of it is disclosed in the privacy policy ("Family
+programs"). The recap card never carries names, ages, photos or typed text.
 
 ### 11.8 Server settings (ops, not the client)
 

@@ -1,11 +1,12 @@
 """Every row the family programs keep is reachable by the delete paths.
 
-Two paths exist or are about to: deleting one child (DELETE /api/children/{id},
-on main today) and deleting the whole account (PR #26's
-DELETE /api/privacy/account, which discovers tables by their device_id
-column and child rows by child_id). These tests hold the v34 tables to both:
-each one carries device_id, each per-child one carries child_id, and a child's
-deletion removes exactly that child's rows — not the family's, not a sibling's.
+Two paths (PR #26): deleting one child (DELETE /api/children/{id} —
+privacy.erase_child from a session proven to hold the phone, the profile row
+alone otherwise) and deleting the whole account (privacy.erase_account). Both
+discover tables at run time — by child_id and by device_id — so these tests
+hold the v34 tables to that shape: each carries device_id, each per-child one
+carries child_id, and a child's deletion removes exactly that child's rows —
+not the family's, not a sibling's.
 """
 from app.db.init_db import get_conn
 from app.services import programs_common as pc
@@ -60,9 +61,17 @@ def _populate(monkeypatch, c):
     return gone, kept
 
 
+def _proven(monkeypatch):
+    """A session that proved it holds the phone (core/proof.py) — the case in
+    which a child's deletion takes everything tied to the child."""
+    from app.routers import children
+    monkeypatch.setattr(children, "confirmed_session", lambda request: True)
+
+
 def test_deleting_a_child_deletes_its_program_rows_and_nothing_else(monkeypatch):
     c = client()
     gone, kept = _populate(monkeypatch, c)
+    _proven(monkeypatch)
     for table in pc.PER_CHILD_TABLES:
         assert rows(table, "child_id = ?", (gone,)), table           # populated first
     assert c.delete(f"/api/children/{gone}").status_code == 200
@@ -76,6 +85,17 @@ def test_deleting_a_child_deletes_its_program_rows_and_nothing_else(monkeypatch)
     assert rows("program_settings", "device_id = ?", (DEVICE,))
 
 
+def test_an_unproven_delete_takes_the_profile_and_its_birth_month_only(monkeypatch):
+    """PR #26's rule: without a proven session the route does exactly what it
+    did before — the profile row, nothing more. The birth month is ON that row,
+    so it goes; the program rows wait for a proven delete or the account's."""
+    c = client()
+    gone, _ = _populate(monkeypatch, c)
+    assert c.delete(f"/api/children/{gone}").status_code == 200
+    assert rows("child_profiles", "id = ?", (gone,)) == []
+    assert rows("prayer_journeys", "child_id = ?", (gone,))
+
+
 def test_another_family_cannot_delete_or_reach_the_rows(monkeypatch):
     c = client()
     gone, _ = _populate(monkeypatch, c)
@@ -84,24 +104,35 @@ def test_another_family_cannot_delete_or_reach_the_rows(monkeypatch):
     assert rows("prayer_journeys", "child_id = ?", (gone,))
 
 
-def test_an_account_erase_by_device_reaches_every_program_row(monkeypatch):
-    """What PR #26's erase_account does: every table with a device_id column,
-    discovered at call time. Run that sweep here and nothing is left."""
+def test_the_account_erase_reaches_every_program_row(monkeypatch):
+    """PR #26's erase_account, the real one: it discovers every table with a
+    device_id, so nothing of the family's programs is left behind."""
+    from app.routers.privacy import erase_account
+
     c = client()
     _populate(monkeypatch, c)
-    conn = get_conn()
-    try:
-        tables = [r[0] for r in conn.execute(
-            "SELECT name FROM sqlite_master WHERE type = 'table' AND name NOT LIKE 'sqlite_%'")]
-        for table in tables:
-            cols = {r[1] for r in conn.execute(f"PRAGMA table_info('{table}')")}
-            if "device_id" in cols:
-                conn.execute(f"DELETE FROM {table} WHERE device_id = ?", (DEVICE,))
-        conn.commit()
-    finally:
-        conn.close()
+    for table in V34_TABLES:
+        assert rows(table, "device_id = ?", (DEVICE,)), table      # populated first
+    erase_account(DEVICE)
     for table in V34_TABLES:
         assert rows(table) == [], table
+    assert rows("child_missions") == [] and rows("child_profiles") == []
+
+
+def test_the_policy_discloses_the_programs_and_the_birth_month():
+    from pathlib import Path
+
+    import pytest
+
+    policy = Path(__file__).resolve().parents[2] / "docs" / "privacy-policy.md"
+    if not policy.exists():
+        pytest.skip("docs/ not present (backend-only image)")
+    text = policy.read_text(encoding="utf-8")
+    arabic, _, english = text.partition("## English")
+    flat_en = " ".join(english.split())
+    flat_ar = " ".join(arabic.split())
+    assert "birth month (optional" in flat_en and "شهر الميلاد (اختياري" in flat_ar
+    assert "**Family programs**" in flat_en and "**برامج الأسرة**" in flat_ar
 
 
 def test_the_milestone_push_never_carries_a_childs_name(monkeypatch):

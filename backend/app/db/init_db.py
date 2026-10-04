@@ -1412,10 +1412,11 @@ def ensure_device_twin_tables(conn: sqlite3.Connection) -> None:
 # ── v34: family programs (Ramadan, Prayer Journey, milestones) ─────────────
 #
 # Every table carries device_id, and child_id when a row is about one child:
-# the account delete discovers tables by those columns, and the child delete
-# removes this program's rows by child (services/programs_common.erase_child).
-# A family-level row (a Ramadan challenge the whole family did) is stored
-# under child_id 0, so deleting one child never deletes the family's own.
+# the account delete (routers/privacy.erase_account) discovers tables by
+# device_id and a proven child delete (privacy.erase_child) by child_id, so
+# both reach these with no list to keep. A family-level row (a Ramadan
+# challenge the whole family did) is stored under child_id 0, so deleting one
+# child never deletes the family's own.
 _CREATE_FAMILY_PROGRAMS: str = """
 -- One row per device: what the app last told us about where and in which
 -- language the family is. tz_offset_minutes is never guessed — a device that
@@ -1444,14 +1445,17 @@ CREATE TABLE IF NOT EXISTS program_children (
 CREATE INDEX IF NOT EXISTS ix_program_children_device
     ON program_children (device_id);
 
--- The child's current step on the fasting ladder, per Ramadan.
+-- The child's current step on the fasting ladder, per Ramadan. A rowid key and
+-- a UNIQUE pair, not a composite primary key: every user table here is a plain
+-- rowid table, which is what the account-erase and twin-fold sweeps assume.
 CREATE TABLE IF NOT EXISTS ramadan_fasting (
+    id          INTEGER PRIMARY KEY AUTOINCREMENT,
     device_id   TEXT NOT NULL,
     child_id    INTEGER NOT NULL,
     hijri_year  INTEGER NOT NULL,
     step_key    TEXT,
     updated_at  TEXT NOT NULL DEFAULT (datetime('now')),
-    PRIMARY KEY (child_id, hijri_year)
+    UNIQUE (child_id, hijri_year)
 );
 CREATE INDEX IF NOT EXISTS ix_ramadan_fasting_device
     ON ramadan_fasting (device_id, hijri_year);
