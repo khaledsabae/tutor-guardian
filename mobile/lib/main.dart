@@ -41,6 +41,7 @@ import 'features/adhkar/services/notification_service.dart';
 import 'features/whats_new/data/whats_new.dart';
 import 'features/journey/data/journey_milestones.dart';
 import 'features/shell/root_scaffold.dart';
+import 'features/support/support_providers.dart' show supportBootProvider;
 import 'features/tour/tour_overlay.dart';
 import 'theme/app_palette.dart';
 import 'theme/app_theme.dart';
@@ -529,6 +530,10 @@ class _AppBootstrapper extends ConsumerWidget {
         final configAsync = ref.watch(appConfigProvider);
         return configAsync.when(
           data: (config) {
+            // «ادعم المربّي»: starts the app-wide purchase listener when, and
+            // only when, the server has donations on. A no-op for everyone
+            // else — billing is never touched.
+            ref.watch(supportBootProvider);
             final minBuild = config['minimum_build_number'] as int? ?? 0;
             final storeUrl = config['store_url'] as String? ??
                 'https://play.google.com/store/apps/details?id=com.alsaba.almorabbi';

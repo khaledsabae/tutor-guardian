@@ -10,6 +10,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/app_routes.dart';
 import '../../../theme/design_tokens.dart';
+import '../../../widgets/ui/directional_chevron.dart';
 import '../../onboarding/providers/onboarding_providers.dart';
 import '../providers/journey_providers.dart';
 import '../../../l10n/app_localizations.dart';
@@ -88,7 +89,7 @@ class ChildJourneyCard extends ConsumerWidget {
                   ],
                 ),
               ),
-              const Icon(Icons.chevron_left, color: Colors.white70),
+              const DirectionalChevron(size: 24, color: Colors.white70),
             ],
           ),
         ),

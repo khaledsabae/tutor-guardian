@@ -23,10 +23,18 @@ import '../providers/program_providers.dart';
 Color get _coachInk => AppPalette.current.tipInk;
 
 class CoachTipCard extends ConsumerWidget {
-  const CoachTipCard({super.key, this.onAsk});
+  const CoachTipCard({
+    super.key,
+    this.onAsk,
+    this.padding = const EdgeInsets.fromLTRB(12, 8, 12, 0),
+  });
 
   /// Invoked when the parent taps the card (e.g. switch to the chat tab).
   final VoidCallback? onAsk;
+
+  /// Outer padding. The «اسأل المربّي» block on Home passes zero so the tip
+  /// lines up with the other two blocks' cards.
+  final EdgeInsetsGeometry padding;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -36,7 +44,7 @@ class CoachTipCard extends ConsumerWidget {
     }
     final asyncTip = ref.watch(coachTipProvider(profile.id));
     return Padding(
-      padding: const EdgeInsets.fromLTRB(12, 8, 12, 0),
+      padding: padding,
       child: asyncTip.when(
         data: (tip) => _CoachCard(
           text: tip.text,
@@ -162,7 +170,10 @@ class _CoachCard extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(width: 4),
-                        Icon(Icons.arrow_back,
+                        // arrow_forward, not arrow_back: both mirror with
+                        // the text direction, and "ask" is a step forward —
+                        // ← in Arabic, → in English.
+                        Icon(Icons.arrow_forward,
                             color: _coachInk, size: 16),
                       ],
                     ),

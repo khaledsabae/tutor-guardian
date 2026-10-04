@@ -90,6 +90,13 @@ _SESSION_LIMIT = int(os.environ.get("RATE_LIMIT_SESSION_PER_MINUTE", "30"))
 # notifications a minute. A human writes feedback a handful of times at most.
 _FEEDBACK_PREFIXES = ("/api/feedback/app",)
 _FEEDBACK_LIMIT = int(os.environ.get("RATE_LIMIT_FEEDBACK_PER_MINUTE", "5"))
+# Recording a support purchase costs up to three Play calls and a ledger write.
+# A parent sends one purchase — plus, on a later launch, the odd one Play
+# re-delivers — so the budget is feedback-tight, and it is charged to BOTH the
+# client IP and the validated device: a fresh session cannot buy a fresh
+# bucket, and many sessions behind one address share one.
+_SUPPORT_VERIFY_PATH = "/api/support/verify"
+_SUPPORT_VERIFY_LIMIT = int(os.environ.get("RATE_LIMIT_SUPPORT_VERIFY_PER_MINUTE", "5"))
 _EXEMPT_PREFIXES = ("/api/health", "/api/healthz")
 _REDIS_URL = os.environ.get("REDIS_URL", "")
 # Both auth schemes in use carry a token we can key on. Kept scheme-aware on
@@ -270,21 +277,27 @@ class RateLimitMiddleware(BaseHTTPMiddleware):
             scope, limit = "feedback", _FEEDBACK_LIMIT
         elif path == _SESSION_PATH and request.method == "POST":
             scope, limit = "session", _SESSION_LIMIT
+        elif path == _SUPPORT_VERIFY_PATH and request.method == "POST":
+            scope, limit = "support", _SUPPORT_VERIFY_LIMIT
         else:
             scope, limit = "api", _GENERAL_LIMIT
 
         if scope == "ai":
             # Validated device, else IP — see _validated_identity.
-            ident = await _validated_identity(request)
+            idents = [await _validated_identity(request)]
         elif scope in ("feedback", "session"):
             # Unauthenticated by design: a Bearer header proves nothing here
             # and a random one would buy a fresh bucket. The client IP is
             # trustworthy since ClientIPMiddleware (audit H4).
-            ident = _ip_identity(request)
+            idents = [_ip_identity(request)]
+        elif scope == "support":
+            # Both, each with its own bucket — see _SUPPORT_VERIFY_LIMIT.
+            idents = list(dict.fromkeys(
+                [_ip_identity(request), await _validated_identity(request)]))
         else:
             # device_id → token hash → IP, resolved without touching the DB.
-            ident = _client_identity(request)
-        key = f"rl:{scope}:{ident}"
+            idents = [_client_identity(request)]
+        ident = idents[0]
 
         # Fair-use daily quota — AI generation POSTs (plus LLM-backed GETs such
         # as /api/insights); GET catalogues like /story-themes stay free.
@@ -299,6 +312,14 @@ class RateLimitMiddleware(BaseHTTPMiddleware):
                     headers={"Retry-After": str(self._seconds_to_utc_midnight())},
                 )
 
+        for each in idents:
+            blocked = await self._spend(f"rl:{scope}:{each}", limit)
+            if blocked is not None:
+                return blocked
+        return await call_next(request)
+
+    async def _spend(self, key: str, limit: int) -> JSONResponse | None:
+        """Charge one request to [key]'s minute window; a 429 when it is full."""
         # Try Redis first, fall back to in-memory
         redis_allowed = await self._check_redis(key, limit)
         if redis_allowed is not None:
@@ -308,7 +329,7 @@ class RateLimitMiddleware(BaseHTTPMiddleware):
                     content={"detail": "طلبات كثيرة، يُرجى المحاولة بعد قليل."},
                     headers={"Retry-After": str(int(_WINDOW))},
                 )
-            return await call_next(request)
+            return None
 
         # In-memory fallback
         now = time.monotonic()
@@ -338,4 +359,4 @@ class RateLimitMiddleware(BaseHTTPMiddleware):
             )
 
         self._buckets[key] = (start, count + 1)
-        return await call_next(request)
+        return None

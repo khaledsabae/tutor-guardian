@@ -59,6 +59,16 @@ void main() {
     await tester.pump();
     await tester.pump(const Duration(seconds: 1));
 
+    // The stats row sits below the three «اليوم» blocks since 2026-10, so it
+    // is built only once scrolled near.
+    await tester.scrollUntilVisible(
+      find.text('أيام متتالية'),
+      300,
+      scrollable: find.byType(Scrollable).first,
+    );
+    // Freshly built by the scroll, so its CountUpText starts again from 0.
+    await tester.pump(const Duration(seconds: 2));
+
     // The "أيام متتالية" chip must reflect dailyLoginStreak (5), not streakDays (2).
     expect(find.text('أيام متتالية'), findsOneWidget);
     expect(
