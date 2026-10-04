@@ -1,0 +1,601 @@
+{
+  "spec": "ops/data/deepen_paths/prayer_religion.json",
+  "author": "claude-opus-5-5",
+  "reviewers": [
+    "deepseek-v4-pro",
+    "glm-5.2"
+  ],
+  "written_at": "2026-10-04T17:13:00",
+  "lessons": [
+    {
+      "path_id": "path_4-6_aqeedah_seeds",
+      "key": "s01",
+      "brief": "يسمعني حين أدعوه: أول الدعاء",
+      "accepted": false,
+      "blockers": [
+        "en: current text not reviewed"
+      ],
+      "ar_review": {
+        "reviewer": "deepseek-v4-pro",
+        "at": "2026-10-04T15:04:18",
+        "rounds": 2,
+        "defects": [
+          {
+            "severity": "low",
+            "type": "register",
+            "field": "summary",
+            "why": "ضمير 'يذكر' بلا فاعل صريح، والضمير 'فيها' يعود على 'دقيقة' بينما 'موعد' مذكر، فيحدث التباس؛ وكذلك جملة 'يلجأ إليها وحده' لاحقًا تعاني من نفس الغموض."
+          }
+        ]
+      },
+      "dispositions": []
+    },
+    {
+      "path_id": "path_4-6_aqeedah_seeds",
+      "key": "s02",
+      "brief": "يقلّدك في الصلاة: أول علاقة بسجادة الصلاة",
+      "accepted": true,
+      "blockers": [],
+      "ar_review": {
+        "reviewer": "deepseek-v4-pro",
+        "at": "2026-10-04T10:03:57",
+        "rounds": 1,
+        "defects": []
+      },
+      "en_review": {
+        "reviewer": "deepseek-v4-pro",
+        "at": "2026-10-04T10:03:57",
+        "rounds": 1,
+        "defects": []
+      },
+      "dispositions": [],
+      "held_behind": "s01"
+    },
+    {
+      "path_id": "path_4-6_aqeedah_seeds",
+      "key": "s03",
+      "brief": "الوضوء: ماءٌ ونظافةٌ يحبّها الله",
+      "accepted": true,
+      "blockers": [],
+      "ar_review": {
+        "reviewer": "deepseek-v4-pro",
+        "at": "2026-10-04T15:06:03",
+        "rounds": 2,
+        "defects": [
+          {
+            "severity": "low",
+            "type": "register",
+            "field": "summary",
+            "why": "خطأ نحوي: الفعل «يعتاد» يتعدى بـ«أن» والفعل المضارع، لا بـ«أنّ» والجملة الاسمية. الصواب «يعتاد أن يسبق الصلاة» أو «يعتاد على أنه يسبق الصلاة»."
+          }
+        ]
+      },
+      "en_review": {
+        "reviewer": "deepseek-v4-pro",
+        "at": "2026-10-04T15:06:03",
+        "rounds": 2,
+        "defects": [
+          {
+            "severity": "low",
+            "type": "register",
+            "field": "title",
+            "why": "كلمة «cleanliness» غير معدودة ولا تقبل أداة التنكير «a»، والصياغة ركيكة."
+          }
+        ]
+      },
+      "dispositions": [],
+      "held_behind": "s01"
+    },
+    {
+      "path_id": "path_4-6_aqeedah_seeds",
+      "key": "s04",
+      "brief": "«أين الله؟» وأسئلة الصغار الكبيرة",
+      "accepted": false,
+      "blockers": [
+        "ar: current text not reviewed",
+        "en: current text not reviewed"
+      ],
+      "dispositions": []
+    },
+    {
+      "path_id": "path_4-6_aqeedah_seeds",
+      "key": "s05",
+      "brief": "حين يسأل عن الموت: «أين ذهب جدّي؟»",
+      "accepted": true,
+      "blockers": [],
+      "ar_review": {
+        "reviewer": "glm-5.2",
+        "at": "2026-10-04T15:37:03",
+        "rounds": 2,
+        "defects": [
+          {
+            "severity": "low",
+            "type": "grounding",
+            "field": "summary",
+            "why": "عبارة «لا تُكثر» توحي بأن الحديث القليل عن القبر مقبول في هذا العمر، بينما إرشادات الفئة العمرية تنص صراحةً على «Never fear-based; never Hell». الأفضل النصّ على تجنّب الحديث عن القبر جملةً في هذا السن."
+          }
+        ]
+      },
+      "en_review": {
+        "reviewer": "glm-5.2",
+        "at": "2026-10-04T15:37:03",
+        "rounds": 2,
+        "defects": [
+          {
+            "severity": "low",
+            "type": "term_error",
+            "field": "summary",
+            "why": "النص العربي يستخدم الفعل «يدعو» ولا يَرِد فيه اسم «دعاء» أو «دُعاء». الإنجليزية تُقحم مصطلحًا مُحوَّرًا صوتيًّا (du'a) غير موجود كاسم في الأصل."
+          }
+        ]
+      },
+      "dispositions": [],
+      "held_behind": "s01"
+    },
+    {
+      "path_id": "path_4-6_aqeedah_seeds",
+      "key": "s06",
+      "brief": "الجنة: وعدٌ جميل بلا مساومة",
+      "accepted": true,
+      "blockers": [],
+      "ar_review": {
+        "reviewer": "deepseek-v4-pro",
+        "at": "2026-10-04T15:39:05",
+        "rounds": 2,
+        "defects": [
+          {
+            "severity": "low",
+            "type": "pedagogy",
+            "field": "try_this",
+            "why": "The instruction says two sentences but the example is one long sentence, which may confuse the parent about the requested format."
+          },
+          {
+            "severity": "low",
+            "type": "age_fit",
+            "field": "summary",
+            "why": "The age band is 4-6, but the text only mentions four- and five-year-olds, omitting six-year-olds."
+          }
+        ]
+      },
+      "en_review": {
+        "reviewer": "deepseek-v4-pro",
+        "at": "2026-10-04T15:39:05",
+        "rounds": 2,
+        "defects": []
+      },
+      "dispositions": [],
+      "held_behind": "s01"
+    },
+    {
+      "path_id": "path_4-6_aqeedah_seeds",
+      "key": "s07",
+      "brief": "«يحبّه الله» و«لا يحبّه الله»: أول الحلال والحرام",
+      "accepted": false,
+      "blockers": [
+        "ar: current text not reviewed",
+        "en: current text not reviewed"
+      ],
+      "dispositions": []
+    },
+    {
+      "path_id": "path_4-6_aqeedah_seeds",
+      "key": "s08",
+      "brief": "قصة نبيّ قبل النوم",
+      "accepted": true,
+      "blockers": [],
+      "ar_review": {
+        "reviewer": "glm-5.2",
+        "at": "2026-10-04T15:45:37",
+        "rounds": 1,
+        "defects": []
+      },
+      "en_review": {
+        "reviewer": "glm-5.2",
+        "at": "2026-10-04T15:45:37",
+        "rounds": 1,
+        "defects": [
+          {
+            "severity": "low",
+            "type": "meaning_change",
+            "field": "summary",
+            "why": "Arabic says «أصفى لحظات يومه» (the purest/clearest moments of his day). The English drops «لحظات» (moments), making «the clearest of their day» sound awkward and incomplete."
+          },
+          {
+            "severity": "low",
+            "type": "meaning_change",
+            "field": "summary",
+            "why": "Arabic «أقرب طريقٍ إلى قلب طفلك» means «the closest way to your child's heart»; «shortest» shifts the sense from proximity/intimacy to brevity/distance."
+          }
+        ]
+      },
+      "dispositions": [],
+      "held_behind": "s01"
+    },
+    {
+      "path_id": "path_7-9_islamic_parenting_worship",
+      "key": "s01",
+      "brief": "السابعة: بداية أمر الصلاة بالرفق",
+      "accepted": true,
+      "blockers": [],
+      "ar_review": {
+        "reviewer": "deepseek-v4-pro",
+        "at": "2026-10-04T15:57:17",
+        "rounds": 1,
+        "defects": []
+      },
+      "en_review": {
+        "reviewer": "deepseek-v4-pro",
+        "at": "2026-10-04T15:57:17",
+        "rounds": 1,
+        "defects": [
+          {
+            "severity": "low",
+            "type": "meaning_change",
+            "field": "summary",
+            "why": "The English adds the parenthetical clarification '(call to prayer)' which is not present in the Arabic text. This is an addition not in the source."
+          },
+          {
+            "severity": "low",
+            "type": "term_error",
+            "field": "title",
+            "why": "The English title transliterates 'Rifq' while the Arabic title uses the Arabic word 'الرفق' without any transliteration. The instruction flags a transliterated term the Arabic does not contain."
+          },
+          {
+            "severity": "low",
+            "type": "meaning_change",
+            "field": "summary",
+            "why": "The Arabic says 'الأمر بالصلاة' which means 'the command to pray' or 'commanding prayer'. The English softens this to 'instructing', which changes the nuance of the religious command."
+          }
+        ]
+      },
+      "dispositions": [],
+      "written_as": "lesson_7-9_islamic_parenting_worship_05",
+      "order": 5,
+      "title": "السابعة: بداية أمر الصلاة بالرفق"
+    },
+    {
+      "path_id": "path_7-9_islamic_parenting_worship",
+      "key": "s02",
+      "brief": "الوضوء خطوة بخطوة",
+      "accepted": true,
+      "blockers": [],
+      "ar_review": {
+        "reviewer": "glm-5.2",
+        "at": "2026-10-04T16:12:29",
+        "rounds": 1,
+        "defects": []
+      },
+      "en_review": {
+        "reviewer": "glm-5.2",
+        "at": "2026-10-04T16:12:29",
+        "rounds": 1,
+        "defects": []
+      },
+      "dispositions": [],
+      "written_as": "lesson_7-9_islamic_parenting_worship_06",
+      "order": 6,
+      "title": "الوضوء خطوةً بخطوة"
+    },
+    {
+      "path_id": "path_7-9_islamic_parenting_worship",
+      "key": "s03",
+      "brief": "خمس صلوات في يوم طفلك",
+      "accepted": true,
+      "blockers": [],
+      "ar_review": {
+        "reviewer": "glm-5.2",
+        "at": "2026-10-04T16:22:26",
+        "rounds": 2,
+        "defects": []
+      },
+      "en_review": {
+        "reviewer": "glm-5.2",
+        "at": "2026-10-04T16:22:26",
+        "rounds": 2,
+        "defects": []
+      },
+      "dispositions": [],
+      "written_as": "lesson_7-9_islamic_parenting_worship_07",
+      "order": 7,
+      "title": "خمس صلواتٍ في يوم طفلك"
+    },
+    {
+      "path_id": "path_7-9_islamic_parenting_worship",
+      "key": "s04",
+      "brief": "حين يقول: «لا أريد أن أصلّي»",
+      "accepted": true,
+      "blockers": [],
+      "ar_review": {
+        "reviewer": "glm-5.2",
+        "at": "2026-10-04T16:29:45",
+        "rounds": 1,
+        "defects": []
+      },
+      "en_review": {
+        "reviewer": "glm-5.2",
+        "at": "2026-10-04T16:29:45",
+        "rounds": 1,
+        "defects": [
+          {
+            "severity": "low",
+            "type": "meaning_change",
+            "field": "try_this",
+            "why": "The Arabic «ردّدها مرةً بصوتٍ منخفض» means 'repeat/rehearse it once in a low voice' — the sense of rehearsal (ردّد) is lost, and 'to yourself' adds a nuance not present in the Arabic, which says 'in a low voice' (بصوتٍ منخفض), implying audible low voice, not silently."
+          }
+        ]
+      },
+      "dispositions": [],
+      "written_as": "lesson_7-9_islamic_parenting_worship_08",
+      "order": 8,
+      "title": "حين يقول: «لا أريد أن أصلّي»"
+    },
+    {
+      "path_id": "path_7-9_islamic_parenting_worship",
+      "key": "s05",
+      "brief": "جدول الصلاة والتشجيع: حافزٌ لا رشوة",
+      "accepted": true,
+      "blockers": [],
+      "ar_review": {
+        "reviewer": "deepseek-v4-pro",
+        "at": "2026-10-04T16:31:04",
+        "rounds": 1,
+        "defects": [
+          {
+            "severity": "low",
+            "type": "age_fit",
+            "field": "summary",
+            "why": "يذكر السابعة والثامنة فقط رغم أن الفئة العمرية للدرس هي 7-9 سنوات، فيشعر والدا الطفل في التاسعة أن الدرس لا يخصهما."
+          }
+        ]
+      },
+      "en_review": {
+        "reviewer": "deepseek-v4-pro",
+        "at": "2026-10-04T16:31:04",
+        "rounds": 1,
+        "defects": [
+          {
+            "severity": "low",
+            "type": "meaning_change",
+            "field": "summary",
+            "why": "كلمة «معنوية» في العربية تعني غير مادية أو روحية، وترجمتها «moral» قد توحي بمكافأة أخلاقية وليس غير مادية، مما يغيّر الدلالة قليلاً."
+          }
+        ]
+      },
+      "dispositions": [],
+      "written_as": "lesson_7-9_islamic_parenting_worship_09",
+      "order": 9,
+      "title": "جدول الصلاة والتشجيع: حافزٌ لا رشوة"
+    },
+    {
+      "path_id": "path_7-9_islamic_parenting_worship",
+      "key": "s06",
+      "brief": "الصلاة حديثٌ مع الله: كيف يهدأ فيها",
+      "accepted": false,
+      "blockers": [
+        "ar: current text not reviewed",
+        "en: current text not reviewed"
+      ],
+      "dispositions": []
+    },
+    {
+      "path_id": "path_7-9_islamic_parenting_worship",
+      "key": "s07",
+      "brief": "إلى المسجد: أول زيارة وآدابها",
+      "accepted": false,
+      "blockers": [
+        "ar: current text not reviewed",
+        "en: current text not reviewed"
+      ],
+      "dispositions": []
+    },
+    {
+      "path_id": "path_7-9_islamic_parenting_worship",
+      "key": "s08",
+      "brief": "حين يفتر الحماس: الاستمرار بعد البداية",
+      "accepted": false,
+      "blockers": [
+        "ar: current text not reviewed",
+        "en: current text not reviewed"
+      ],
+      "dispositions": []
+    },
+    {
+      "path_id": "path_7-9_aqeedah_fundamentals",
+      "key": "s01",
+      "brief": "«مَن خلق الله؟» حين يسأل السؤال المحيّر",
+      "accepted": false,
+      "blockers": [
+        "ar: current text not reviewed",
+        "en: current text not reviewed"
+      ],
+      "dispositions": []
+    },
+    {
+      "path_id": "path_7-9_aqeedah_fundamentals",
+      "key": "s02",
+      "brief": "الحلال والحرام: لماذا نهانا الله؟",
+      "accepted": false,
+      "blockers": [
+        "ar: current text not reviewed",
+        "en: current text not reviewed"
+      ],
+      "dispositions": []
+    },
+    {
+      "path_id": "path_10-12_islamic_parenting_worship_love",
+      "key": "s01",
+      "brief": "من العاشرة: متابعةٌ حازمة بلا قسوة",
+      "accepted": false,
+      "blockers": [
+        "ar: current text not reviewed",
+        "en: current text not reviewed"
+      ],
+      "dispositions": []
+    },
+    {
+      "path_id": "path_10-12_islamic_parenting_worship_love",
+      "key": "s02",
+      "brief": "البلوغ وبداية التكليف: حوارٌ قبل أن يأتي",
+      "accepted": false,
+      "blockers": [
+        "ar: current text not reviewed",
+        "en: current text not reviewed"
+      ],
+      "dispositions": []
+    },
+    {
+      "path_id": "path_10-12_islamic_parenting_worship_love",
+      "key": "s03",
+      "brief": "الصلاة خارج البيت: في المدرسة ومع الأصدقاء",
+      "accepted": false,
+      "blockers": [
+        "ar: current text not reviewed",
+        "en: current text not reviewed"
+      ],
+      "dispositions": []
+    },
+    {
+      "path_id": "path_10-12_islamic_parenting_worship_love",
+      "key": "s04",
+      "brief": "الهاتف والصلاة: حين تسرقه الشاشة",
+      "accepted": false,
+      "blockers": [
+        "ar: current text not reviewed",
+        "en: current text not reviewed"
+      ],
+      "dispositions": []
+    },
+    {
+      "path_id": "path_10-12_islamic_parenting_worship_love",
+      "key": "s05",
+      "brief": "صلاة الفجر: النوم المبكر أولًا",
+      "accepted": false,
+      "blockers": [
+        "ar: current text not reviewed",
+        "en: current text not reviewed"
+      ],
+      "dispositions": []
+    },
+    {
+      "path_id": "path_10-12_islamic_parenting_worship_love",
+      "key": "s06",
+      "brief": "حين يفقد عزيزًا: الموت والصبر في عمر العاشرة",
+      "accepted": false,
+      "blockers": [
+        "ar: current text not reviewed",
+        "en: current text not reviewed"
+      ],
+      "dispositions": []
+    },
+    {
+      "path_id": "path_10-12_islamic_parenting_worship_love",
+      "key": "s07",
+      "brief": "«لماذا نصلّي؟» حين يسأل عن الحكمة",
+      "accepted": false,
+      "blockers": [
+        "ar: current text not reviewed",
+        "en: current text not reviewed"
+      ],
+      "dispositions": []
+    },
+    {
+      "path_id": "path_10-12_islamic_parenting_worship_love",
+      "key": "s08",
+      "brief": "حين يسأل: «هل هذا حرام؟»",
+      "accepted": false,
+      "blockers": [
+        "ar: current text not reviewed",
+        "en: current text not reviewed"
+      ],
+      "dispositions": []
+    },
+    {
+      "path_id": "path_13-15_islamic_parenting_steadfast",
+      "key": "s01",
+      "brief": "حين يترك ابنك المراهق الصلاة",
+      "accepted": false,
+      "blockers": [
+        "ar: current text not reviewed",
+        "en: current text not reviewed"
+      ],
+      "dispositions": []
+    },
+    {
+      "path_id": "path_13-15_islamic_parenting_steadfast",
+      "key": "s02",
+      "brief": "بين أمرك وقراره: الصلاة في عمر الاستقلال",
+      "accepted": false,
+      "blockers": [
+        "ar: current text not reviewed",
+        "en: current text not reviewed"
+      ],
+      "dispositions": []
+    },
+    {
+      "path_id": "path_13-15_islamic_parenting_steadfast",
+      "key": "s03",
+      "brief": "حين يرى أخطاءك: القدوة في عمر النقد",
+      "accepted": false,
+      "blockers": [
+        "ar: current text not reviewed",
+        "en: current text not reviewed"
+      ],
+      "dispositions": []
+    },
+    {
+      "path_id": "path_13-15_islamic_parenting_steadfast",
+      "key": "s04",
+      "brief": "الذنب والتوبة: بابٌ لا يُغلق",
+      "accepted": false,
+      "blockers": [
+        "ar: current text not reviewed",
+        "en: current text not reviewed"
+      ],
+      "dispositions": []
+    },
+    {
+      "path_id": "path_13-15_islamic_parenting_steadfast",
+      "key": "s05",
+      "brief": "الفجر والسهر: معركة النوم في المراهقة",
+      "accepted": false,
+      "blockers": [
+        "ar: current text not reviewed",
+        "en: current text not reviewed"
+      ],
+      "dispositions": []
+    },
+    {
+      "path_id": "path_13-15_islamic_parenting_steadfast",
+      "key": "s06",
+      "brief": "رفاقٌ لا يصلّون: كيف يثبت دون أن يتعالى",
+      "accepted": false,
+      "blockers": [
+        "ar: current text not reviewed",
+        "en: current text not reviewed"
+      ],
+      "dispositions": []
+    },
+    {
+      "path_id": "path_13-15_islamic_parenting_steadfast",
+      "key": "s07",
+      "brief": "أسئلة الحلال والحرام: منهجٌ لا فتوى",
+      "accepted": false,
+      "blockers": [
+        "ar: current text not reviewed",
+        "en: current text not reviewed"
+      ],
+      "dispositions": []
+    },
+    {
+      "path_id": "path_13-15_islamic_parenting_steadfast",
+      "key": "s08",
+      "brief": "صيام المراهق: من التدريب إلى الفريضة",
+      "accepted": false,
+      "blockers": [
+        "ar: current text not reviewed",
+        "en: current text not reviewed"
+      ],
+      "dispositions": []
+    }
+  ]
+}

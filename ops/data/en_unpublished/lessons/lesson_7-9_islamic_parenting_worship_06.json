@@ -1,0 +1,42 @@
+{
+  "id": "lesson_7-9_islamic_parenting_worship_06",
+  "path_id": "path_7-9_islamic_parenting_worship",
+  "title": "Wudu, Step by Step",
+  "age_group": "7-9",
+  "domain": "islamic_parenting",
+  "unit_ids": [
+    "isl-ab49af82",
+    "isl-c4d83813"
+  ],
+  "summary": "Prayer is not valid without purity, so teaching prayer at seven begins with teaching wudu (ablution). A child this age loves order and clear steps, and is proud to master a skill grown-ups do. Use that to teach wudu in a practical, enjoyable way.\n\nTeach the steps in order, by doing and not only by explaining: the intention in the heart, then saying «Bismillah», then washing the hands, then rinsing the mouth and nose, then washing the face, then washing the arms up to the elbows, then wiping the head and ears, then washing the feet up to the ankles. Make wudu slowly in front of them, naming each step, then let them make wudu with you beside them, and repeat this for a few days until they know the order.\n\nA useful idea: a picture card of the wudu steps hung near the sink, which they draw or colour with you. Teach them not to waste water by turning off the tap between steps. If they forget a step, don't scold them; say gently: «There's one step left — which one?» and let them remember it themselves.\n\nIf detailed questions come up, such as what breaks wudu or what to do if they are injured, answer what you know for certain, and for anything else turn to a trusted children's book on the fiqh of purity or to a scholar you trust. Praise their mastery specifically: «Today you made wudu completely, in the right order.» This way wudu becomes a habit they master and are proud of, and they enter their prayer at ease.",
+  "try_this": "Today: Before Asr or Maghrib, make wudu slowly in front of your child, naming each step aloud, then ask them to make wudu with you beside them. If they forget a step, help with a gentle question instead of telling them.",
+  "order": 6,
+  "estimated_minutes": 3,
+  "reflection_prompts": [
+    "Which wudu step did your child forget or hesitate over, and how will you help them remember it tomorrow?"
+  ],
+  "warning_flags": [],
+  "needs_professional_followup": false,
+  "is_published": true,
+  "version": "1.0.0",
+  "created_at": "2026-10-04T17:13:00",
+  "updated_at": "2026-10-04T17:13:00",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "claude-opus-5-5",
+    "reviewer_model": "glm-5.2",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": true
+    },
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-10-04T16:12:29",
+    "generated_by": "ops/tools/deepen_paths.py"
+  }
+}

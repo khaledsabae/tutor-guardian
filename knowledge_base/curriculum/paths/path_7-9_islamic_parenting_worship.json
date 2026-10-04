@@ -8,9 +8,14 @@
     "lesson_7-9_islamic_parenting_worship_01",
     "lesson_7-9_islamic_parenting_worship_02",
     "lesson_7-9_islamic_parenting_worship_03",
-    "lesson_7-9_islamic_parenting_worship_b04"
+    "lesson_7-9_islamic_parenting_worship_b04",
+    "lesson_7-9_islamic_parenting_worship_05",
+    "lesson_7-9_islamic_parenting_worship_06",
+    "lesson_7-9_islamic_parenting_worship_07",
+    "lesson_7-9_islamic_parenting_worship_08",
+    "lesson_7-9_islamic_parenting_worship_09"
   ],
-  "estimated_days": 4,
+  "estimated_days": 9,
   "pedagogical_framework": "prophetic_7_7_7",
   "primary_reference": {
     "type": "كتاب_تربوي",
@@ -19,6 +24,6 @@
   "prerequisites": [],
   "is_published": true,
   "version": "1.0.0",
-  "updated_at": "2026-06-13T00:00:00",
+  "updated_at": "2026-10-04T17:13:00",
   "approved_by": null
 }

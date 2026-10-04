@@ -446,5 +446,45 @@
     "to": "ops/data/en_unpublished/kb_units_source/isl-18569b11.json",
     "reason": "PR #20 review: invents a story of the Prophet ﷺ with al-Hasan ibn Ali; the source is Ibn Umar correcting his own son (the garment-dragging narration). A fabricated attribution to the Prophet ﷺ is the gravest kind of error this corpus can carry.",
     "on": "2026-10-04"
+  },
+  {
+    "key": "lesson_7-9_islamic_parenting_worship_05",
+    "kind": "lessons",
+    "from": "knowledge_base/curriculum/i18n/en/lessons/lesson_7-9_islamic_parenting_worship_05.json",
+    "to": "ops/data/en_unpublished/lessons/lesson_7-9_islamic_parenting_worship_05.json",
+    "reason": "New lesson from ops/tools/deepen_paths.py (content/p1-deep-paths), Arabic and English authored by claude-opus-5-5. The Arabic+English pair was cleared by one cross-family reviewer (deepseek-v4-pro or glm-5.2; ops/data/deepen_paths/prayer_religion.review.json), but this gate's two-reviewer stamp needs Ollama, capped for the week, and Claude may not stamp its own English. English users see the Arabic until review_en_parity run stamps it after the reset.",
+    "on": "2026-10-04"
+  },
+  {
+    "key": "lesson_7-9_islamic_parenting_worship_06",
+    "kind": "lessons",
+    "from": "knowledge_base/curriculum/i18n/en/lessons/lesson_7-9_islamic_parenting_worship_06.json",
+    "to": "ops/data/en_unpublished/lessons/lesson_7-9_islamic_parenting_worship_06.json",
+    "reason": "New lesson from ops/tools/deepen_paths.py (content/p1-deep-paths), Arabic and English authored by claude-opus-5-5. The Arabic+English pair was cleared by one cross-family reviewer (deepseek-v4-pro or glm-5.2; ops/data/deepen_paths/prayer_religion.review.json), but this gate's two-reviewer stamp needs Ollama, capped for the week, and Claude may not stamp its own English. English users see the Arabic until review_en_parity run stamps it after the reset.",
+    "on": "2026-10-04"
+  },
+  {
+    "key": "lesson_7-9_islamic_parenting_worship_07",
+    "kind": "lessons",
+    "from": "knowledge_base/curriculum/i18n/en/lessons/lesson_7-9_islamic_parenting_worship_07.json",
+    "to": "ops/data/en_unpublished/lessons/lesson_7-9_islamic_parenting_worship_07.json",
+    "reason": "New lesson from ops/tools/deepen_paths.py (content/p1-deep-paths), Arabic and English authored by claude-opus-5-5. The Arabic+English pair was cleared by one cross-family reviewer (deepseek-v4-pro or glm-5.2; ops/data/deepen_paths/prayer_religion.review.json), but this gate's two-reviewer stamp needs Ollama, capped for the week, and Claude may not stamp its own English. English users see the Arabic until review_en_parity run stamps it after the reset.",
+    "on": "2026-10-04"
+  },
+  {
+    "key": "lesson_7-9_islamic_parenting_worship_08",
+    "kind": "lessons",
+    "from": "knowledge_base/curriculum/i18n/en/lessons/lesson_7-9_islamic_parenting_worship_08.json",
+    "to": "ops/data/en_unpublished/lessons/lesson_7-9_islamic_parenting_worship_08.json",
+    "reason": "New lesson from ops/tools/deepen_paths.py (content/p1-deep-paths), Arabic and English authored by claude-opus-5-5. The Arabic+English pair was cleared by one cross-family reviewer (deepseek-v4-pro or glm-5.2; ops/data/deepen_paths/prayer_religion.review.json), but this gate's two-reviewer stamp needs Ollama, capped for the week, and Claude may not stamp its own English. English users see the Arabic until review_en_parity run stamps it after the reset.",
+    "on": "2026-10-04"
+  },
+  {
+    "key": "lesson_7-9_islamic_parenting_worship_09",
+    "kind": "lessons",
+    "from": "knowledge_base/curriculum/i18n/en/lessons/lesson_7-9_islamic_parenting_worship_09.json",
+    "to": "ops/data/en_unpublished/lessons/lesson_7-9_islamic_parenting_worship_09.json",
+    "reason": "New lesson from ops/tools/deepen_paths.py (content/p1-deep-paths), Arabic and English authored by claude-opus-5-5. The Arabic+English pair was cleared by one cross-family reviewer (deepseek-v4-pro or glm-5.2; ops/data/deepen_paths/prayer_religion.review.json), but this gate's two-reviewer stamp needs Ollama, capped for the week, and Claude may not stamp its own English. English users see the Arabic until review_en_parity run stamps it after the reset.",
+    "on": "2026-10-04"
   }
 ]
