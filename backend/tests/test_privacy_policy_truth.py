@@ -134,6 +134,8 @@ TABLE_DISCLOSURE = {
     "ramadan_marks": "Ramadan ticks",
     "prayer_journeys": "Prayer Journey",
     "milestone_alerts": "milestone reminders we sent",
+    # Erased-device tombstones (v35): no id, but derived from one — disclosed.
+    "erased_devices": "one-way hash of a deleted phone's identifier",
 }
 
 
@@ -162,6 +164,8 @@ def test_every_table_holding_user_data_is_disclosed():
     # Personal (IP) though device-less; and PR #25's daily fold of the same
     # visits. Checked whenever the table exists — before #25 merges or after.
     user_tables |= {"referral_clicks", "referral_click_days"} & set(schema)
+    # A hash of an erased device id: kept after the deletion, so the policy says so.
+    user_tables |= {"erased_devices"} & set(schema)
     missing = sorted(user_tables - set(TABLE_DISCLOSURE))
     assert missing == [], f"disclose in docs/privacy-policy.md and map here: {missing}"
     flat = " ".join(ENGLISH.split()).lower()      # markdown wraps lines anywhere

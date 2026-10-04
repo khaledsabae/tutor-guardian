@@ -82,8 +82,14 @@ def _support_config() -> dict:
 
 @router.get("/api/app-config")
 async def get_app_config():
+    from app.services import erased_devices
+
     return {
         "minimum_build_number": int(os.environ.get("MINIMUM_BUILD_NUMBER", "0")),
         "store_url": os.environ.get("STORE_URL", "https://play.google.com/store/apps/details?id=com.alsaba.almorabbi"),
+        # The first build the session mint answers `410 device_erased` (null =
+        # none yet): only for such a build is a 201 proof that a device id was
+        # NOT erased — what settling a lost account deletion relies on.
+        "erased_device_410_min_build": erased_devices.min_build(),
         **_support_config(),
     }
