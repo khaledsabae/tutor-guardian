@@ -1840,9 +1840,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get covenantAddCostLabel => 'تكلفة العملات 🪙';
 
   @override
-  String get inviteTitle => 'ادعُ صديقًا 🤍';
-
-  @override
   String get inviteDesc =>
       'دلالتك صديقًا على «المربّي» صدقة جارية — كل ما ينفع به طفله في ميزان حسناتك بإذن الله 🌿';
 
@@ -1863,11 +1860,6 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get inviteYourCode => 'كود الإحالة الخاص بك';
-
-  @override
-  String inviteCodeUsed(Object count) {
-    return 'دعوت $count — جزاك الله خيرًا 🤍';
-  }
 
   @override
   String get inviteSuccess =>
@@ -3964,7 +3956,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String inviteCoinsNote(int coins) {
-    return 'ومكافأة صغيرة داخل التطبيق: $coins عملة لك ولصديقك.';
+    return 'ومكافأة صغيرة داخل التطبيق: $coins عملة لك عن كل أسرة تنضم، و$coins لصديقك — ضمن حدّ العملات اليومي.';
   }
 
   @override

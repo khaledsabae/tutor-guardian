@@ -34,6 +34,7 @@ import 'children_list_screen.dart';
 import '../../adhkar/services/notification_service.dart';
 import '../../support/support_providers.dart';
 import '../widgets/follow_us_row.dart';
+import 'package:almorabbi/widgets/ui/directional_chevron.dart';
 import 'package:almorabbi/widgets/ui/loading_view.dart';
 import 'package:almorabbi/core/haptics.dart';
 
@@ -700,8 +701,9 @@ class _SettingsRow extends StatelessWidget {
                   ],
                 ),
               ),
-              Icon(Icons.chevron_left,
-                  size: 18, color: AppTheme.textMuted),
+              // Not Icons.chevron_left: it mirrors itself under RTL and
+              // pointed backwards in Arabic. See DirectionalChevron.
+              DirectionalChevron(size: 18, color: AppTheme.textMuted),
             ],
           ),
         ),

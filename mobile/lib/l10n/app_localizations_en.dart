@@ -1867,9 +1867,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get covenantAddCostLabel => 'Coin cost 🪙';
 
   @override
-  String get inviteTitle => 'Invite a Friend 🤍';
-
-  @override
   String get inviteDesc =>
       'Sharing Al-Murabbi with a friend is ongoing charity — every child who benefits adds to your good deeds, inshaAllah 🌿';
 
@@ -1890,11 +1887,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get inviteYourCode => 'Your Referral Code';
-
-  @override
-  String inviteCodeUsed(Object count) {
-    return 'You invited $count — may Allah reward you 🤍';
-  }
 
   @override
   String get inviteSuccess =>
@@ -4014,7 +4006,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String inviteCoinsNote(int coins) {
-    return 'And a small in-app thank-you: $coins coins for you and your friend.';
+    return 'And a small in-app thank-you: $coins coins for you per family that joins, and $coins for your friend — within the daily coin limit.';
   }
 
   @override

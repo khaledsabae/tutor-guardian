@@ -9,6 +9,7 @@ import '../../../core/analytics.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../theme/app_theme.dart';
 import '../../../theme/design_tokens.dart';
+import '../../../widgets/ui/two_column_rows.dart';
 import '../data/hub_catalog.dart';
 
 class HubGroupCard extends StatelessWidget {
@@ -37,13 +38,11 @@ class HubGroupCard extends StatelessWidget {
         ),
         // Fixed tile height keeps rows aligned across groups; two columns keeps
         // Arabic labels readable without truncating.
-        GridView.count(
-          crossAxisCount: 2,
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          mainAxisSpacing: 10,
-          crossAxisSpacing: 10,
-          childAspectRatio: 2.9,
+        // Not GridView.count: a fixed childAspectRatio fixes every tile's
+        // height, so at 200% text a two-line label was clipped. Rows grow
+        // with their tallest tile — see TwoColumnRows.
+        TwoColumnRows(
+          spacing: 10,
           children: [
             for (final item in group.items)
               _HubTile(item: item, groupId: group.id, ageGroup: ageGroup),

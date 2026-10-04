@@ -24,7 +24,6 @@ class ReferralInfo {
     required this.code,
     required this.invitedCount,
     required this.shareUrl,
-    this.rewardCoins = 0,
   });
   final String code;
 
@@ -34,10 +33,6 @@ class ReferralInfo {
   /// «وصل المربّي إلى N أسرة بسببك».
   final int invitedCount;
   final String shareUrl;
-
-  /// Coins each side earns. Secondary on purpose: the motive this audience
-  /// actually acts on is the reward, not the coins.
-  final int rewardCoins;
 }
 
 enum ClaimOutcome { success, alreadyClaimed, invalid, error }
@@ -132,7 +127,6 @@ class ReferralService {
         code: code,
         invitedCount: invited,
         shareUrl: (m['share_url'] as String?) ?? '',
-        rewardCoins: (m['reward_coins'] as num?)?.toInt() ?? 0,
       );
     } catch (_) {
       return null;

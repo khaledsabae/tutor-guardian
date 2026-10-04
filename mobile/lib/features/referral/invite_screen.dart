@@ -25,6 +25,7 @@ import '../../core/analytics.dart';
 import '../../l10n/app_localizations.dart';
 import '../../theme/app_theme.dart';
 import '../../widgets/ui/community_proof_card.dart';
+import '../coins/coins_service.dart';
 import '../share/share_service.dart';
 import '../share/shareable_moment_card.dart';
 import 'referral_service.dart';
@@ -160,10 +161,14 @@ class _InviteScreenState extends State<InviteScreen> {
                   ),
                   const SizedBox(height: 20),
                   if (info != null) _codeCard(info),
-                  if (info != null && info.rewardCoins > 0) ...[
+                  if (info != null) ...[
                     const SizedBox(height: 12),
+                    // What this device actually credits — one badge reward
+                    // each side (referral_welcome / referral_invite_N), under
+                    // the daily cap — not the server's reward_coins, which
+                    // the client has never paid out.
                     Text(
-                      l10n.inviteCoinsNote(info.rewardCoins),
+                      l10n.inviteCoinsNote(CoinsService.badgeReward),
                       textAlign: TextAlign.center,
                       style: TextStyle(fontSize: 12, color: AppTheme.textMuted),
                     ),

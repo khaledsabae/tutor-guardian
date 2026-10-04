@@ -3464,12 +3464,6 @@ abstract class AppLocalizations {
   /// **'تكلفة العملات 🪙'**
   String get covenantAddCostLabel;
 
-  /// No description provided for @inviteTitle.
-  ///
-  /// In ar, this message translates to:
-  /// **'ادعُ صديقًا 🤍'**
-  String get inviteTitle;
-
   /// No description provided for @inviteDesc.
   ///
   /// In ar, this message translates to:
@@ -3511,12 +3505,6 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'كود الإحالة الخاص بك'**
   String get inviteYourCode;
-
-  /// No description provided for @inviteCodeUsed.
-  ///
-  /// In ar, this message translates to:
-  /// **'دعوت {count} — جزاك الله خيرًا 🤍'**
-  String inviteCodeUsed(Object count);
 
   /// No description provided for @inviteSuccess.
   ///
@@ -7103,7 +7091,7 @@ abstract class AppLocalizations {
   /// No description provided for @inviteCoinsNote.
   ///
   /// In ar, this message translates to:
-  /// **'ومكافأة صغيرة داخل التطبيق: {coins} عملة لك ولصديقك.'**
+  /// **'ومكافأة صغيرة داخل التطبيق: {coins} عملة لك عن كل أسرة تنضم، و{coins} لصديقك — ضمن حدّ العملات اليومي.'**
   String inviteCoinsNote(int coins);
 
   /// No description provided for @inviteShareMessage.
