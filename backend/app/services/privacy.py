@@ -91,9 +91,36 @@ def names_for_device(device_id: str | None) -> tuple[str, ...]:
     ))
 
 
+# A name a family gives its child is often also the name of a prophet, a surah
+# or a companion — محمد ﷺ, سورة يوسف, مريم عليها السلام. Since every answer is
+# redacted (the primary provider is a cloud API), a family with a son named
+# Muhammad would otherwise send religion — the topic parents ask about most —
+# to the model as «النبي طفلي ﷺ». A name inside such a reference is not the
+# child: a title right before it, or an honorific right after it.
+_TITLE_BEFORE = re.compile(
+    r"(?:النبي|نبي|سيدنا|سيدتنا|السيدة|الرسول|رسول|سورة|سوره|الصحابي|الصحابية"
+    r"|أم المؤمنين|ام المؤمنين)\s*$"
+)
+_HONORIFIC_AFTER = re.compile(
+    r"^\s*(?:ﷺ|صل[ّ]?ى الله عليه وسل[ّ]?م|عليه السلام|عليها السلام|عليهما السلام"
+    r"|عليهم السلام|رضي الله عنه|رضي الله عنها|\(ص\))"
+)
+
+
+def _is_religious_reference(text: str, start: int, end: int) -> bool:
+    return bool(_TITLE_BEFORE.search(text[max(0, start - 24):start])
+                or _HONORIFIC_AFTER.match(text[end:end + 32]))
+
+
+def _child_mentions(pattern: "re.Pattern[str]", text: str):
+    return (m for m in pattern.finditer(text or "")
+            if not _is_religious_reference(m.string, m.start(), m.end()))
+
+
 def mentions_any(text: str, names: tuple[str, ...]) -> bool:
-    """True when `text` contains one of `names` as a word (prefixes allowed)."""
-    return any(_name_pattern(n).search(text or "") for n in names)
+    """True when `text` names one of `names` as a word (prefixes allowed) —
+    outside a religious reference (see _is_religious_reference)."""
+    return any(next(_child_mentions(_name_pattern(n), text), None) for n in names)
 
 
 @lru_cache(maxsize=4096)
@@ -138,8 +165,14 @@ def redact_with_names(text: str, names: tuple[str, ...]) -> str:
         return text
     redacted = text
     for name in names:
-        redacted = _name_pattern(name).sub(_REPLACEMENT, redacted)
+        redacted = _name_pattern(name).sub(_redact_match, redacted)
     return redacted
+
+
+def _redact_match(m: "re.Match[str]") -> str:
+    if _is_religious_reference(m.string, m.start(), m.end()):
+        return m.group(0)
+    return _REPLACEMENT
 
 
 def redact_for_cloud(text: str, device_id: str | None = None) -> str:

@@ -200,6 +200,28 @@ def test_clean_fact_text_redacts_and_neutralises():
     assert cm.clean_fact_text("  ", names) is None
 
 
+def test_religious_references_are_not_the_child(client):
+    """Every answer is redacted now, so a family with a son named Muhammad must
+    not send «النبي طفلي ﷺ» — religion is what parents ask about most."""
+    from app.services.privacy import mentions_any, redact_with_names
+    names = ("محمد", "يوسف", "مريم")
+    out = redact_with_names("كيف أحبّب ابني في النبي محمد ﷺ؟ ومحمد يرفض الصلاة", names)
+    assert "النبي محمد ﷺ" in out and "طفلي يرفض الصلاة" in out
+    assert redact_with_names("نقرأ سورة يوسف كل ليلة", names) == "نقرأ سورة يوسف كل ليلة"
+    assert "مريم عليها السلام" in redact_with_names("قصة مريم عليها السلام", names)
+    assert "سيدنا محمد صلّى الله عليه وسلّم" in redact_with_names(
+        "سيدنا محمد صلّى الله عليه وسلّم قدوتنا", names)
+    assert not mentions_any("حب النبي محمد ﷺ", ("محمد",))
+    assert mentions_any("محمد لا ينام", ("محمد",))
+
+    # …and the memory is not filed under the child who shares the name.
+    h = _session(client, "dev-religious")
+    _child(client, h, "محمد", "7-9")
+    _child(client, h, "فاطمة", "4-6")
+    assert cm.resolve_child("dev-religious", text="كيف أحبّب أولادي في النبي محمد ﷺ") is None
+    assert cm.resolve_child("dev-religious", text="محمد لا يصلي الفجر") is not None
+
+
 # ── Facts API ─────────────────────────────────────────────────────────────
 
 
