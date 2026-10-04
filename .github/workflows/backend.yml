@@ -25,6 +25,19 @@ on:
     paths:
       - 'backend/**'
       - 'knowledge_base/**'
+      # Every surface the scripture guard reads (ops/tools/content_surfaces.py)
+      # and the suite's content tests (test_no_hitting_endorsement reads the
+      # stories, adhkar and games). App-bundled content never reaches the
+      # backend, so the push list above leaves it out; a PR that only touches
+      # it must still be checked here — the pre-commit hook can be skipped.
+      - 'mobile/lib/**'
+      - 'mobile/assets/**'
+      - 'docs/stories*.json'
+      - 'docs/lesson_index.json'
+      - 'docs/lesson_assets/**'
+      - 'frontend/**'
+      - 'ops/scripts/**'
+      - 'ops/data/hadith_*.json.gz'
       - 'ops/tools/**'
       - 'pytest.ini'
       - '.github/workflows/backend.yml'
