@@ -492,6 +492,7 @@ def build_record(item: Item, reviewers: tuple[str, str], rounds: int, fixed: boo
             "reviewers": list(reviewers),
             "fixer": FIXER if fixed else None,
             "rounds": rounds,
+            "prompt_version": PROMPT_V,
             "content_sha256": item.sha,
             "reviewed_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
             "residual_low": residual_low[:8],
@@ -798,7 +799,25 @@ Return JSON only:
 "rejected": [{"field": "<field>", "why": "<reason>"}]}"""
 
 
-# ── cache: (model, chunk sha) → defects ──────────────────────────────────
+# ── cache: (model, prompt version, chunk sha) → defects ──────────────────
+# النسخة جزء من المفتاح: حكمٌ صدر بتعليمات مراجعة قديمة لا يُعاد استعماله بعد
+# تغييرها. (أول تجربة سمّت «حديثًا بلا مصدر» عيبًا عاليًا، ثم تغيّرت القاعدة إلى
+# «غياب المصدر أأمن من اختلاقه» — وكاد الكاش يعيد الحكم القديم كأنه جديد.)
+PROMPT_V = hashlib.sha256(REVIEW_SYSTEM.encode("utf-8")).hexdigest()[:12]
+# مفاتيح ما قبل الترقيم («model|sha») صدرت كلها بهذه النسخة بعينها.
+_LEGACY_PROMPT_V = "dfa8a5f39718"
+
+
+def _cache_key(model: str, sha: str) -> str:
+    return f"{model}|{PROMPT_V}|{sha}"
+
+
+def _cache_get(cache: dict, model: str, sha: str):
+    hit = cache.get(_cache_key(model, sha))
+    if hit is None and PROMPT_V == _LEGACY_PROMPT_V:
+        hit = cache.get(f"{model}|{sha}")
+    return hit
+
 _cache_lock = threading.Lock()
 _cache: dict[str, list] | None = None
 
@@ -944,10 +963,10 @@ def review_batch(model: str, batch: list[Chunk], depth: int = 0) -> dict[str, li
     cache = _cache_load()
     result, todo = {}, []
     for c in batch:
-        k = f"{model}|{c.sha}"
-        if k in cache:
+        hit = _cache_get(cache, model, c.sha)
+        if hit is not None:
             result[c.cid] = [{**d, "field": canon_field(d.get("field", ""), set(c.fields))}
-                             for d in cache[k]]
+                             for d in hit]
         else:
             todo.append(c)
     if not todo:
@@ -962,7 +981,7 @@ def review_batch(model: str, batch: list[Chunk], depth: int = 0) -> dict[str, li
     parsed = parsed or {}
     for c in todo:
         if c.cid in parsed:
-            _cache_put(f"{model}|{c.sha}", parsed[c.cid])
+            _cache_put(_cache_key(model, c.sha), parsed[c.cid])
             result[c.cid] = parsed[c.cid]
     missing = [c for c in todo if c.cid not in parsed]
     if missing and depth == 0:
@@ -1148,12 +1167,25 @@ def _ensure_parent(target: Any, path: str) -> None:
         cur = cur[tok]
 
 
-def _replace_literal(text: str, old: str, new: str) -> str | None:
-    """يستبدل نصًّا مُرمَّزًا JSON مرة واحدة بالضبط، أو None إن لم يكن فريدًا."""
+def _replace_literal(text: str, old: str, new: str, key: str | None = None) -> str | None:
+    """يستبدل نصًّا مُرمَّزًا JSON مرة واحدة بالضبط، أو None إن لم يكن فريدًا.
+
+    يُجرَّب أولًا مقيَّدًا باسم المفتاح (`"text_simplified": "…"`): وحدات المعرفة
+    الأحدث تحمل نفس النص في text_original وtext_simplified، فالسلسلة وحدها تقع
+    مرتين ولا يُعرف أيّهما المقصود — والأصل (text_original) لا يُمسّ.
+    """
     enc_old = json.dumps(old, ensure_ascii=False)
+    enc_new = json.dumps(new, ensure_ascii=False)
+    if key:
+        pat = re.compile(re.escape(json.dumps(key, ensure_ascii=False)) + r"(\s*:\s*)"
+                         + re.escape(enc_old))
+        hits = pat.findall(text)
+        if len(hits) == 1:
+            return pat.sub(lambda m: json.dumps(key, ensure_ascii=False) + m.group(1)
+                           + enc_new, text, count=1)
     if text.count(enc_old) != 1:
         return None
-    return text.replace(enc_old, json.dumps(new, ensure_ascii=False))
+    return text.replace(enc_old, enc_new)
 
 
 def apply_arabic(item: Item, new_ar: dict) -> None:
@@ -1168,10 +1200,11 @@ def apply_arabic(item: Item, new_ar: dict) -> None:
     for p, v in new_ar.items():
         old = item.fields[p]["ar"]
         pairs = list(zip(old, v)) if isinstance(old, list) else [(old, v)]
+        leaf_key = None if isinstance(old, list) else parse_path(p)[-1]
         for o, n in pairs:
             if o == n:
                 continue
-            out = _replace_literal(text, o, n)
+            out = _replace_literal(text, o, n, leaf_key if isinstance(leaf_key, str) else None)
             if out is None:
                 raise ValueError(f"{item.key} · {p}: Arabic string not unique in "
                                  f"{item.ar_file.name} — fix by hand")
@@ -1500,7 +1533,12 @@ def cmd_apply_arabic(path: Path) -> int:
             print(f"  ⛔ {pr['key']} · {fld}: {why}")
             skipped += 1
             continue
-        apply_arabic(it, {fld: pr["new"]})
+        try:
+            apply_arabic(it, {fld: pr["new"]})
+        except ValueError as e:
+            print(f"  ⛔ {e}")
+            skipped += 1
+            continue
         applied += 1
     print(f"  ✅ applied {applied} · skipped {skipped}")
     return 0 if not skipped else 1

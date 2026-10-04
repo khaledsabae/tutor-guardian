@@ -316,12 +316,13 @@ def test_arabic_fix_is_a_literal_edit_that_keeps_the_file_format(rp, tmp_path):
 
 def test_arabic_fix_refuses_an_ambiguous_target(rp, tmp_path):
     ar = tmp_path / "unit.json"
-    ar.write_text('{"a": "نص", "b": "نص"}', encoding="utf-8")
+    same = '{"x": {"a": "نص"}, "y": {"a": "نص"}}'   # same key, same value, twice
+    ar.write_text(same, encoding="utf-8")
     item = rp.Item("kb_units", "u__en", tmp_path / "x.json", ar,
-                   {"a": {"ar": "نص", "en": "text"}})
+                   {"x.a": {"ar": "نص", "en": "text"}})
     with pytest.raises(ValueError):
-        rp.apply_arabic(item, {"a": "نصّ"})
-    assert ar.read_text(encoding="utf-8") == '{"a": "نص", "b": "نص"}'
+        rp.apply_arabic(item, {"x.a": "نصّ"})
+    assert ar.read_text(encoding="utf-8") == same
 
 
 @pytest.mark.parametrize("ending", ["\n", ""])
@@ -356,3 +357,25 @@ def test_an_account_cap_is_told_apart_from_a_burst_limit(rp):
            'for $300 of usage, with no 5-hour or weekly caps"}}')
     assert rp._is_usage_cap(cap)
     assert not rp._is_usage_cap('{"error": "Too Many Requests"}')
+
+
+def test_a_verdict_given_under_other_instructions_is_not_reused(rp, monkeypatch):
+    cache = {f"glm-5.2|{rp.PROMPT_V}|abc": [{"why": "current"}],
+             "glm-5.2|legacy": [{"why": "pre-versioning"}]}
+    assert rp._cache_get(cache, "glm-5.2", "abc") == [{"why": "current"}]
+    monkeypatch.setattr(rp, "PROMPT_V", "changed00000")
+    assert rp._cache_get(cache, "glm-5.2", "abc") is None
+    assert rp._cache_get(cache, "glm-5.2", "legacy") is None
+
+
+def test_a_fix_lands_in_the_simplified_text_not_the_original(rp, tmp_path):
+    # Newer units carry the same string in text_original and text_simplified;
+    # the source text (text_original) is never edited.
+    ar = tmp_path / "u.json"
+    ar.write_text('{\n  "text_original": "لل mediated",\n  "text_simplified": "لل mediated"\n}',
+                  encoding="utf-8")
+    item = rp.Item("kb_units", "u__en", tmp_path / "u__en.json", ar,
+                   {"text_simplified": {"ar": "لل mediated", "en": "media"}})
+    rp.apply_arabic(item, {"text_simplified": "للوسائط"})
+    assert ar.read_text(encoding="utf-8") == \
+        '{\n  "text_original": "لل mediated",\n  "text_simplified": "للوسائط"\n}'
