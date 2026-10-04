@@ -1,0 +1,38 @@
+{
+  "seed-screen-79__en": {
+    "content_sha256": "5ad9ace0573d728f026eaa471e09fdf9ce2bdc75a0066b5c019cf2c986b4f647",
+    "overrides": [
+      {
+        "field": "text_simplified",
+        "type": "source_corruption",
+        "reason": "«ضع خطةً عائليةً متّفقًا عليها» is correct Arabic: متّفقًا is a نعت سببي describing خطة through «عليها», so it takes the masculine accusative. Nothing to fix.",
+        "by": "claude-opus-5.5 (en-parity review, PR #20)",
+        "on": "2026-10-04"
+      }
+    ]
+  },
+  "isl-48e32cae__en": {
+    "content_sha256": "2131be772fc83ce9c60847b4b209f533a40e344e2ae905d0815e14607687bf28",
+    "overrides": [
+      {
+        "field": "text_simplified",
+        "type": "source_corruption",
+        "reason": "The Arabic is coherent as written (all people err; bad habits are to be reproached). The proposed «لا يعيبه على الخطأ بل…» is a speculative reconstruction that would add content the source does not carry.",
+        "by": "claude-opus-5.5 (en-parity review, PR #20)",
+        "on": "2026-10-04"
+      }
+    ]
+  },
+  "isl-f2bef952__en": {
+    "content_sha256": "2c8841eec7783fac641b05d79be71217885ca90e41f9295388d8b0b5899a0f6e",
+    "overrides": [
+      {
+        "field": "text_simplified",
+        "type": "hadith",
+        "reason": "The Arabic names the narration's real source (Abu Dawud) for the prayer-at-seven hadith, which the master plan's Prayer Journey also builds on. Deleting a correct attribution would make it less verifiable, not safer; the English reproduces the Arabic citation faithfully. Policy question for Khaled: keep or drop explicit non-Sahihayn citations in existing content.",
+        "by": "claude-opus-5.5 (en-parity review, PR #20)",
+        "on": "2026-10-04"
+      }
+    ]
+  }
+}
