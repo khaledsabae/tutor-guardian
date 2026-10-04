@@ -14,7 +14,6 @@ import 'package:in_app_purchase/in_app_purchase.dart';
 
 import '../../core/analytics.dart';
 import '../../l10n/app_localizations.dart';
-import '../../state/chat_notifier.dart' show tgClientProvider;
 import '../../theme/app_theme.dart';
 import '../../theme/design_tokens.dart';
 import 'support_providers.dart';
@@ -27,26 +26,19 @@ class SupportScreen extends ConsumerStatefulWidget {
 }
 
 class _SupportScreenState extends ConsumerState<SupportScreen> {
-  StreamSubscription<List<PurchaseDetails>>? _sub;
-  SupportOutcome? _outcome;
+  StreamSubscription<SupportOutcome?>? _sub;
+  SupportOutcome? _shown;
   String? _busyProductId;
-  bool _restored = false;
 
   @override
   void initState() {
     super.initState();
     unawaited(Analytics.supportOpened());
-    final store = ref.read(supportStoreProvider);
-    try {
-      _sub = store.purchaseStream.listen(_onPurchases, onError: (_) {});
-    } catch (_) {
-      // No billing on this device; the screen still shows transparency.
-    }
-    ref.listenManual<AsyncValue<List<ProductDetails>>>(
-      supportProductsProvider,
-      (_, next) => next.whenData(_restoreOnce),
-      fireImmediately: true,
-    );
+    // The coordinator owns the purchase stream for the whole app; this screen
+    // only shows what it reports. start() is a no-op when the app root has
+    // already started it, which it has whenever this screen is reachable.
+    final coordinator = ref.read(supportCoordinatorProvider)..start();
+    _sub = coordinator.outcomes.listen(_onOutcome);
   }
 
   @override
@@ -55,46 +47,18 @@ class _SupportScreenState extends ConsumerState<SupportScreen> {
     super.dispose();
   }
 
-  /// Once the products are known, ask Play for anything left unfinished —
-  /// a purchase the server could not verify on a previous visit.
-  void _restoreOnce(List<ProductDetails> products) {
-    if (_restored || products.isEmpty) return;
-    _restored = true;
-    unawaited(ref.read(supportStoreProvider).restore().catchError((_) {}));
-  }
-
-  Future<void> _onPurchases(List<PurchaseDetails> purchases) async {
-    final products = ref.read(supportProductsProvider).valueOrNull ?? const [];
-    final handler = SupportPurchaseHandler(
-      client: ref.read(tgClientProvider),
-      store: ref.read(supportStoreProvider),
-      productIds: ref.read(donationProductIdsProvider),
-      productById: (id) {
-        for (final p in products) {
-          if (p.id == id) return p;
-        }
-        return null;
-      },
-    );
-    for (final p in purchases) {
-      final outcome = await handler.handle(p);
-      if (outcome == null) continue;
-      unawaited(Analytics.supportOutcome(switch (outcome) {
-        SupportOutcome.thanked => 'thanked',
-        SupportOutcome.pending => 'pending',
-        SupportOutcome.retryLater => 'retry_later',
-        SupportOutcome.cancelled => 'cancelled',
-        SupportOutcome.error => 'error',
-      }));
-      if (!mounted) return;
-      setState(() {
-        _busyProductId = null;
-        // A cancelled sheet needs no message — the parent chose to close it.
-        _outcome = outcome == SupportOutcome.cancelled ? null : outcome;
-      });
-      if (outcome == SupportOutcome.thanked) {
-        ref.invalidate(supportTransparencyProvider);
+  void _onOutcome(SupportOutcome? outcome) {
+    if (!mounted) return;
+    setState(() {
+      // Whatever happened, the sheet is closed: the buttons come back.
+      _busyProductId = null;
+      // A cancelled sheet needs no message — the parent chose to close it.
+      if (outcome != null && outcome != SupportOutcome.cancelled) {
+        _shown = outcome;
       }
+    });
+    if (outcome == SupportOutcome.thanked) {
+      ref.invalidate(supportTransparencyProvider);
     }
   }
 
@@ -103,23 +67,19 @@ class _SupportScreenState extends ConsumerState<SupportScreen> {
     unawaited(Analytics.supportTapped(product.id));
     setState(() {
       _busyProductId = product.id;
-      _outcome = null;
+      _shown = null;
     });
+    var started = false;
     try {
-      final started = await ref.read(supportStoreProvider).buy(product);
-      if (!started && mounted) {
-        setState(() {
-          _busyProductId = null;
-          _outcome = SupportOutcome.error;
-        });
-      }
+      started = await ref.read(supportCoordinatorProvider).buy(product);
     } catch (_) {
-      if (mounted) {
-        setState(() {
-          _busyProductId = null;
-          _outcome = SupportOutcome.error;
-        });
-      }
+      started = false;
+    }
+    if (!started && mounted) {
+      setState(() {
+        _busyProductId = null;
+        _shown = SupportOutcome.error;
+      });
     }
   }
 
@@ -127,7 +87,9 @@ class _SupportScreenState extends ConsumerState<SupportScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final products = ref.watch(supportProductsProvider);
+    final list = products.valueOrNull;
     final transparency = ref.watch(supportTransparencyProvider).valueOrNull;
+    final shown = _shown;
 
     return Scaffold(
       appBar: AppBar(title: Text(l10n.supportTitle)),
@@ -147,8 +109,8 @@ class _SupportScreenState extends ConsumerState<SupportScreen> {
             _TransparencyCard(data: transparency),
             const SizedBox(height: 24),
           ],
-          if (_outcome != null) ...[
-            _OutcomeBanner(outcome: _outcome!),
+          if (shown != null) ...[
+            _OutcomeBanner(outcome: shown),
             const SizedBox(height: 16),
           ],
           Text(
@@ -159,38 +121,30 @@ class _SupportScreenState extends ConsumerState<SupportScreen> {
                 ),
           ),
           const SizedBox(height: 10),
-          ...products.when(
-            data: (list) => list.isEmpty
-                ? [
-                    Text(l10n.supportStoreUnavailable,
-                        style: TextStyle(color: AppTheme.textMuted)),
-                  ]
-                : [
-                    for (final p in list)
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 10),
-                        child: _ProductButton(
-                          label: _labelFor(l10n, p),
-                          price: p.price,
-                          busy: _busyProductId == p.id,
-                          enabled: _busyProductId == null,
-                          onTap: () => _buy(p),
-                        ),
-                      ),
-                  ],
-            loading: () => const [
-              Center(
-                child: Padding(
-                  padding: EdgeInsets.all(16),
-                  child: CircularProgressIndicator(),
+          // The provider never errors (it degrades to an empty list), so the
+          // only states are "asking the store" and an answer.
+          if (list == null)
+            const Center(
+              child: Padding(
+                padding: EdgeInsets.all(16),
+                child: CircularProgressIndicator(),
+              ),
+            )
+          else if (list.isEmpty)
+            Text(l10n.supportStoreUnavailable,
+                style: TextStyle(color: AppTheme.textMuted))
+          else
+            for (final p in list)
+              Padding(
+                padding: const EdgeInsets.only(bottom: 10),
+                child: _ProductButton(
+                  label: _labelFor(l10n, p),
+                  price: p.price,
+                  busy: _busyProductId == p.id,
+                  enabled: _busyProductId == null,
+                  onTap: () => _buy(p),
                 ),
               ),
-            ],
-            error: (_, _) => [
-              Text(l10n.supportStoreUnavailable,
-                  style: TextStyle(color: AppTheme.textMuted)),
-            ],
-          ),
           const SizedBox(height: 16),
           Text(
             l10n.supportNoPerks,
@@ -382,19 +336,21 @@ class _ProductButton extends StatelessWidget {
 class _OutcomeBanner extends StatelessWidget {
   const _OutcomeBanner({required this.outcome});
 
+  /// Never [SupportOutcome.cancelled] — the screen does not show one.
   final SupportOutcome outcome;
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    final (text, good) = switch (outcome) {
-      SupportOutcome.thanked => (l10n.supportThanks, true),
-      SupportOutcome.pending => (l10n.supportPending, true),
-      SupportOutcome.retryLater => (l10n.supportRetryLater, true),
-      SupportOutcome.error => (l10n.supportError, false),
-      SupportOutcome.cancelled => ('', true),
+    final isError = outcome == SupportOutcome.error;
+    final text = switch (outcome) {
+      SupportOutcome.thanked => l10n.supportThanks,
+      SupportOutcome.pending => l10n.supportPending,
+      SupportOutcome.retryLater => l10n.supportRetryLater,
+      SupportOutcome.error || SupportOutcome.cancelled => l10n.supportError,
     };
-    final color = good ? AppTheme.primary : Theme.of(context).colorScheme.error;
+    final color =
+        isError ? Theme.of(context).colorScheme.error : AppTheme.primary;
     return Semantics(
       liveRegion: true,
       child: Container(

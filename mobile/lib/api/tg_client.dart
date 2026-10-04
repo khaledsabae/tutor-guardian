@@ -1093,9 +1093,9 @@ class TgClient {
   }
 
   /// `POST /api/support/verify` (authed). The server checks the token with
-  /// Play, records it, and consumes it. Returns the body with `status` added:
-  /// 200 recorded · 202 still pending at Play. Throws [TgApiError] otherwise
-  /// (400 rejected, 503 retry later).
+  /// Play, records it, and consumes it. Returns the body as sent —
+  /// `{ok, consumed, already_recorded, pending}`, with `pending: true` on a
+  /// 202. Throws [TgApiError] otherwise (400 rejected, 503 retry later).
   Future<Map<String, dynamic>> verifySupportPurchase({
     required String productId,
     required String purchaseToken,
@@ -1115,8 +1115,7 @@ class TgClient {
               }))
           .timeout(AppConfig.httpTimeout);
       if (resp.statusCode != 200 && resp.statusCode != 202) throw _wrap(resp);
-      final body = jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
-      return {...body, 'status': resp.statusCode};
+      return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
     });
   }
 
