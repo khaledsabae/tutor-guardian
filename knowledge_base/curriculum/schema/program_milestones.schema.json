@@ -1,0 +1,493 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tutor-guardian.local/schemas/curriculum/program_milestones.schema.json",
+  "title": "Proactive Milestones («المراحل الاستباقية»)",
+  "description": "مراحل عمرية/شرعية ينبّه التطبيق الوالدَ إليها قبل موعدها بنحو شهر: إشعار قصير + دليل مصغّر من ٣–٥ بطاقات + روابط لما يوجد فعلًا في التطبيق. ملف واحد: programs/milestones.json وترجمته في i18n/en/programs/. التوقيت بالأشهر من الميلاد؛ وإن لم يُعرف تاريخ الميلاد فـband_fallback يقول متى تظهر البطاقة (عند دخول الفئة) بلا إشعار.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "program_type",
+    "id",
+    "version",
+    "is_published",
+    "language",
+    "title",
+    "description",
+    "alert_policy",
+    "evidence",
+    "milestones",
+    "generation"
+  ],
+  "properties": {
+    "program_type": {
+      "const": "milestones"
+    },
+    "id": {
+      "const": "milestones"
+    },
+    "version": {
+      "$ref": "#/$defs/semver"
+    },
+    "is_published": {
+      "type": "boolean"
+    },
+    "language": {
+      "enum": [
+        "ar",
+        "en"
+      ]
+    },
+    "title": {
+      "$ref": "#/$defs/text"
+    },
+    "description": {
+      "$ref": "#/$defs/text"
+    },
+    "alert_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "default_days_before",
+        "max_alerts_per_child_per_month",
+        "text"
+      ],
+      "properties": {
+        "default_days_before": {
+          "const": 30
+        },
+        "max_alerts_per_child_per_month": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2,
+          "description": "إن تزامنت مرحلتان لطفل واحد يُرسل إشعار الأعلى أولوية (الأصغر order) ويؤجَّل الآخر."
+        },
+        "text": {
+          "$ref": "#/$defs/text"
+        }
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/hadith"
+      }
+    },
+    "milestones": {
+      "type": "array",
+      "minItems": 8,
+      "items": {
+        "$ref": "#/$defs/milestone"
+      }
+    },
+    "generation": {
+      "$ref": "#/$defs/generation"
+    }
+  },
+  "$defs": {
+    "semver": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+    "key": {
+      "type": "string",
+      "pattern": "^[a-z0-9_]+$"
+    },
+    "text": {
+      "type": "string",
+      "minLength": 2
+    },
+    "text_list": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/text"
+      }
+    },
+    "ids": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string"
+      }
+    },
+    "unit_ids": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 3
+      }
+    },
+    "evidence_ids": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^h_[a-z0-9_]+$"
+      }
+    },
+    "band": {
+      "enum": [
+        "prenatal-1",
+        "0-3",
+        "2-3",
+        "4-6",
+        "7-9",
+        "10-12",
+        "13-15",
+        "16-18"
+      ]
+    },
+    "hadith": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "kind",
+        "text_ar",
+        "source",
+        "provenance"
+      ],
+      "description": "انظر program_ramadan_family.schema.json — التعريف نفسه.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^h_[a-z0-9_]+$"
+        },
+        "kind": {
+          "const": "hadith"
+        },
+        "text_ar": {
+          "type": "string",
+          "minLength": 8
+        },
+        "source": {
+          "type": "string",
+          "pattern": "^صحيح (البخاري|مسلم) — حديث [٠-٩]+$"
+        },
+        "provenance": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "book",
+            "number"
+          ],
+          "properties": {
+            "book": {
+              "enum": [
+                "البخاري",
+                "مسلم"
+              ]
+            },
+            "number": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        },
+        "context": {
+          "$ref": "#/$defs/text"
+        },
+        "meaning": {
+          "$ref": "#/$defs/text"
+        }
+      }
+    },
+    "quran_range": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "surah",
+        "from",
+        "to"
+      ],
+      "properties": {
+        "surah": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 114
+        },
+        "from": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "to": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "topic": {
+          "$ref": "#/$defs/text"
+        }
+      }
+    },
+    "trigger": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "age_months",
+        "alert_days_before",
+        "band_fallback"
+      ],
+      "properties": {
+        "type": {
+          "enum": [
+            "age",
+            "season_age"
+          ],
+          "description": "age: يُطلق عند (age_months − alert_days_before). season_age: يُطلق قبل الموسم (season) بـalert_days_before لكل طفل عمره بين min_age_months وmax_age_months عند بداية الموسم."
+        },
+        "age_months": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 216
+        },
+        "alert_days_before": {
+          "type": "integer",
+          "minimum": 7,
+          "maximum": 60
+        },
+        "season": {
+          "enum": [
+            "ramadan",
+            null
+          ]
+        },
+        "min_age_months": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 216
+        },
+        "max_age_months": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 216
+        },
+        "band_fallback": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/band"
+          },
+          "description": "بلا تاريخ ميلاد: تظهر البطاقة في مكتبة الوالد (دون إشعار) لطفل في إحدى هذه الفئات. قائمة فارغة = لا تظهر إلا بتاريخ ميلاد."
+        }
+      }
+    },
+    "card": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "title",
+        "body"
+      ],
+      "properties": {
+        "title": {
+          "$ref": "#/$defs/text"
+        },
+        "body": {
+          "$ref": "#/$defs/text"
+        }
+      }
+    },
+    "links": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "program_ids",
+        "path_ids",
+        "lesson_ids",
+        "story_ids",
+        "features"
+      ],
+      "properties": {
+        "program_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "ramadan_family",
+              "prayer_journey"
+            ]
+          }
+        },
+        "path_ids": {
+          "$ref": "#/$defs/ids"
+        },
+        "lesson_ids": {
+          "$ref": "#/$defs/ids"
+        },
+        "story_ids": {
+          "$ref": "#/$defs/ids"
+        },
+        "features": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "agreement",
+              "license",
+              "missions",
+              "covenant",
+              "screen_off",
+              "assistant"
+            ]
+          }
+        }
+      }
+    },
+    "milestone": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "key",
+        "order",
+        "trigger",
+        "audience",
+        "medical",
+        "title",
+        "alert",
+        "cards",
+        "unit_ids",
+        "evidence_ids",
+        "quran",
+        "links"
+      ],
+      "properties": {
+        "key": {
+          "$ref": "#/$defs/key"
+        },
+        "order": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "أولوية عند التزامن (الأصغر أولًا)."
+        },
+        "trigger": {
+          "$ref": "#/$defs/trigger"
+        },
+        "audience": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "gender",
+            "if_gender_unknown"
+          ],
+          "properties": {
+            "gender": {
+              "enum": [
+                "any",
+                "female",
+                "male"
+              ]
+            },
+            "if_gender_unknown": {
+              "enum": [
+                "show",
+                "ask"
+              ],
+              "description": "ask: لا يُرسل الإشعار المخصّص لجنس قبل أن يحدّد الوالد جنس الطفل في ملفه؛ يُعرض بدلًا منه طلب إكمال الملف."
+            }
+          }
+        },
+        "medical": {
+          "type": "boolean"
+        },
+        "title": {
+          "$ref": "#/$defs/text"
+        },
+        "alert": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "title",
+            "body"
+          ],
+          "properties": {
+            "title": {
+              "type": "string",
+              "minLength": 2,
+              "maxLength": 50
+            },
+            "body": {
+              "type": "string",
+              "minLength": 10,
+              "maxLength": 160
+            }
+          }
+        },
+        "cards": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 5,
+          "items": {
+            "$ref": "#/$defs/card"
+          }
+        },
+        "red_flags": {
+          "$ref": "#/$defs/text_list",
+          "description": "مطلوب حين medical=true: متى يُراجَع الطبيب."
+        },
+        "unit_ids": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/unit_ids"
+            },
+            {
+              "minItems": 1
+            }
+          ]
+        },
+        "evidence_ids": {
+          "$ref": "#/$defs/evidence_ids"
+        },
+        "quran": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/quran_range"
+          }
+        },
+        "links": {
+          "$ref": "#/$defs/links"
+        }
+      }
+    },
+    "generation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "drafter_model",
+        "reviewer_model",
+        "reviewed_at",
+        "approved_by"
+      ],
+      "properties": {
+        "drafter_model": {
+          "type": "string"
+        },
+        "reviewer_model": {
+          "type": "string"
+        },
+        "translator_model": {
+          "type": "string"
+        },
+        "reviewed_at": {
+          "type": "string"
+        },
+        "review_rounds": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "defects_fixed": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "approved_by": {
+          "type": "string",
+          "pattern": "^auto-review:"
+        }
+      }
+    }
+  }
+}

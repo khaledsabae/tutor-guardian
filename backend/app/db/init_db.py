@@ -81,6 +81,12 @@ Migration v28: api_tokens stores sha256(token) instead of the bearer itself,
 Migration v29: child_web_claims holds the one-time QR claim codes for the teen
                web surface (sha256 of the code; the token is minted on
                redemption). Replaces an in-process dict (audit L11). Additive.
+Migration v32: install attribution. referrals.via records how a claim was made
+               ('code' = an exact code, 'auto' = matched to a click by IP;
+               NULL = before this); referral_click_days holds per-code daily
+               click counts once raw clicks (IP, user agent) pass their
+               seven-day retention; ix_referral_clicks_time serves both. Additive,
+               ensured unconditionally (v30 and v31 belong to other branches).
 """
 import hashlib
 import os
@@ -209,10 +215,10 @@ CREATE INDEX IF NOT EXISTS ix_referrals_referrer
     ON referrals (referrer_device);
 """
 
-# 30 is reserved by the parallel Phase-0 branch (child memory). 31 is the
-# «ادعم المربّي» ledger. The stamp only ever moves up (see init_db), so the two
-# can merge in either order: whichever lands second keeps the higher number.
-SCHEMA_VERSION = 31
+# 30 = child memory, 31 = «ادعم المربّي» ledger, 32 = attribution provenance.
+# Every _ensure_* step runs unconditionally and the stamp only ever moves up,
+# so branches can land in any order: keep the highest number.
+SCHEMA_VERSION = 32
 
 
 def db_path() -> Path:
@@ -405,6 +411,7 @@ def init_db() -> None:
     _ensure_licence_tables(conn)
     _ensure_child_web_claims_table(conn)
     _ensure_donations_table(conn)
+    _ensure_attribution_v32(conn)
 
     row = conn.execute("SELECT version FROM schema_version LIMIT 1").fetchone()
     if row is None:
@@ -1147,6 +1154,26 @@ def _ensure_donations_table(conn: sqlite3.Connection) -> None:
         conn.execute("UPDATE donations SET purchase_type = 0 "
                      "WHERE is_test = 1 AND purchase_type IS NULL")
     conn.commit()
+
+
+def _ensure_attribution_v32(conn: sqlite3.Connection) -> None:
+    """v32: claim provenance + daily click counts. Additive and idempotent."""
+    _ensure_column(
+        conn, table="referrals", column="via",
+        ddl="ALTER TABLE referrals ADD COLUMN via TEXT",
+    )
+    conn.executescript(
+        """
+        CREATE TABLE IF NOT EXISTS referral_click_days (
+            day    TEXT NOT NULL,
+            code   TEXT NOT NULL,
+            clicks INTEGER NOT NULL,
+            PRIMARY KEY (day, code)
+        );
+        CREATE INDEX IF NOT EXISTS ix_referral_clicks_time
+            ON referral_clicks (clicked_at);
+        """
+    )
 
 
 def _ensure_referrals_table(conn: sqlite3.Connection) -> None:
