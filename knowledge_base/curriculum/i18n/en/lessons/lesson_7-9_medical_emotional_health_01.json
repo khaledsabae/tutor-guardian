@@ -11,7 +11,7 @@
     "b25fcddc-6765-4e00-9d40-1ac90f97f3b4"
   ],
   "summary": "Recurring tantrums, intense anxiety, or a mood that is disturbed most of the day—these are signs that require intervention. Teach your child to name their feelings (\"I am angry\"), a breathing technique, and when to ask for help.",
-  "try_this": "Create a \"Calm Box\" together: paper, pens, a stress ball, soothing pictures. When they are angry, go to them together, choose a tool, and discuss after 10 minutes: What happened?",
+  "try_this": "Create a \"Calm Box\" together: paper, pens, a stress ball, soothing pictures. When they are angry, go to the box together, choose a tool, then talk after 10 minutes: What happened?",
   "order": 1,
   "estimated_minutes": 7,
   "reflection_prompts": [
@@ -19,7 +19,7 @@
     "Which tool did they prefer?"
   ],
   "warning_flags": [
-    "nوبات غضب أكثر من 3 أسبوعياً لمدة سنة",
+    "نوبات غضب أكثر من 3 مرات أسبوعياً لمدة سنة",
     "إيذاء النفس أو الآخرين"
   ],
   "needs_professional_followup": true,
@@ -41,7 +41,8 @@
     "review_defects": [],
     "approved_by": null,
     "revalidated_at": "2026-08-13T19:06:16.771618+00:00",
-    "fixed_at": "2026-08-13T19:06:16.771632+00:00",
-    "fixer_model": "mistral-large-3:675b"
+    "fixed_at": "2026-10-04T07:31:52.180297+00:00",
+    "fixer_model": "claude-opus-5.5",
+    "manual_fix_note": "2026-10-04: aligned with the Arabic register/safety fix (country-specific number removed, leaked or garbled wording corrected)."
   }
 }

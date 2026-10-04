@@ -2,7 +2,7 @@
   "id": "tip_16-18_013",
   "age_group": "16-18",
   "domain": "cyber",
-  "text": "Your digital footprint = your professional profile. LinkedIn: photo, headline, projects. Portfolio: GitHub/website. Clean your trace: search your name, fix.",
+  "text": "Help your teen build a professional digital footprint: a LinkedIn profile with a suitable photo, a clear headline and their projects, and a portfolio on a personal site or GitHub. Have them search their own name online and fix anything unsuitable.",
   "unit_id": "cyb-db2bb48f",
   "day_of_week": 2,
   "time_of_day": "morning",
@@ -21,6 +21,9 @@
     "review_verdict": "clean",
     "review_defects": [],
     "approved_by": null,
-    "revalidated_at": "2026-08-13T17:12:12.822628+00:00"
+    "revalidated_at": "2026-08-13T17:12:12.822628+00:00",
+    "manual_fix_note": "Rewritten 2026-10-04 with the Arabic register fix (Latin words / dialect removed from the Arabic); meaning re-aligned.",
+    "fixed_at": "2026-10-04T07:26:56.760370+00:00",
+    "fixer_model": "claude-opus-5.5"
   }
 }

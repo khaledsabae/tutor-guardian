@@ -2,7 +2,7 @@
   "id": "tip_13-15_025",
   "age_group": "13-15",
   "domain": "medical",
-  "text": "Safety plans save: warning signs + calming strategies + trusted people + 937. Make a safety card.",
+  "text": "A safety plan can save a life. Make a card with your child that lists warning signs, ways to calm down, people they trust, and your country's emergency number.",
   "unit_id": "med-c974d9d8",
   "day_of_week": 3,
   "time_of_day": "evening",
@@ -21,6 +21,9 @@
     "review_verdict": "clean",
     "review_defects": [],
     "approved_by": null,
-    "revalidated_at": "2026-08-13T17:11:24.694266+00:00"
+    "revalidated_at": "2026-08-13T17:11:24.694266+00:00",
+    "manual_fix_note": "Rewritten 2026-10-04 with the Arabic: the Saudi-only 937 line replaced by country-neutral emergency guidance, and the card is made with the child.",
+    "fixed_at": "2026-10-04T07:11:53.626353+00:00",
+    "fixer_model": "claude-opus-5.5"
   }
 }

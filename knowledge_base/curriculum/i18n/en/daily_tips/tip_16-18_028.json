@@ -2,7 +2,7 @@
   "id": "tip_16-18_028",
   "age_group": "16-18",
   "domain": "medical",
-  "text": "DMDD in Adolescence: Learn your signs, your strategies, your safety net. You manage your condition, it does not manage you. Self-care = maturity (nudhūj).",
+  "text": "If your teen has a diagnosis of disruptive mood dysregulation disorder, gradually hand them the follow-up: their signs, their calming methods, their doctor's appointments. Tell them that looking after themselves is a sign of maturity, and that you are with them.",
   "unit_id": "f42e35c1-4bbd-4037-8bfa-4668a530f6d8",
   "day_of_week": 4,
   "time_of_day": "morning",
@@ -29,6 +29,9 @@
       }
     ],
     "approved_by": null,
-    "revalidated_at": "2026-08-13T17:12:52.796618+00:00"
+    "revalidated_at": "2026-08-13T17:12:52.796618+00:00",
+    "manual_fix_note": "Rewritten 2026-10-04 with the Arabic: re-addressed to the parent (the tip spoke to the teen); Arabic no longer carries the Latin abbreviation DMDD.",
+    "fixed_at": "2026-10-04T07:11:53.626353+00:00",
+    "fixer_model": "claude-opus-5.5"
   }
 }

@@ -2,7 +2,7 @@
   "id": "tip_7-9_025",
   "age_group": "7-9",
   "domain": "medical",
-  "text": "Create a 'Calm Box': paper, pens, a stress ball, soothing pictures. When he gets angry, go to him together, choose a tool, then discuss after 10 minutes.",
+  "text": "Make a \"calm-down box\" together: paper, pens, a stress ball, soothing pictures. When your child gets angry, go to the box together, let them choose a tool, then talk after 10 minutes.",
   "unit_id": "78431bb2-354f-43ef-a874-d17bc11ed6e6",
   "day_of_week": 1,
   "time_of_day": "evening",
@@ -22,7 +22,8 @@
     "review_defects": [],
     "approved_by": null,
     "revalidated_at": "2026-08-13T18:01:26.319069+00:00",
-    "fixed_at": "2026-08-13T18:01:26.319080+00:00",
-    "fixer_model": "mistral-large-3:675b"
+    "fixed_at": "2026-10-04T07:26:56.760370+00:00",
+    "fixer_model": "claude-opus-5.5",
+    "manual_fix_note": "Rewritten 2026-10-04 with the Arabic register fix (Latin words / dialect removed from the Arabic); meaning re-aligned."
   }
 }

@@ -2,7 +2,7 @@
   "id": "tip_13-15_028",
   "age_group": "13-15",
   "domain": "medical",
-  "text": "NIMH research supports new treatment trials. Ask your doctor: Are there suitable clinical trials?",
+  "text": "The US National Institute of Mental Health supports research on new treatments. Ask the doctor: are there suitable clinical trials for your child?",
   "unit_id": "med-cd46475d",
   "day_of_week": 5,
   "time_of_day": "morning",
@@ -21,6 +21,9 @@
     "review_verdict": "clean",
     "review_defects": [],
     "approved_by": null,
-    "revalidated_at": "2026-08-13T17:11:28.846670+00:00"
+    "revalidated_at": "2026-08-13T17:11:28.846670+00:00",
+    "manual_fix_note": "Rewritten 2026-10-04 with the Arabic register fix (Latin words / dialect removed from the Arabic); meaning re-aligned.",
+    "fixed_at": "2026-10-04T07:26:56.760370+00:00",
+    "fixer_model": "claude-opus-5.5"
   }
 }

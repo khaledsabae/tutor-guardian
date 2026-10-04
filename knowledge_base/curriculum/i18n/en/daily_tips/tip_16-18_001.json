@@ -2,7 +2,7 @@
   "id": "tip_16-18_001",
   "age_group": "16-18",
   "domain": "medical",
-  "text": "University/work = new pressures. Your tools: routine (sleep/movement/nutrition) + safety net (friend/mentor/937) + weekly mood tracker.",
+  "text": "University or work brings your teen new pressures. Help them with three things: a steady routine for sleep, movement and meals; a safety net of people they trust; and a weekly check-in where they can tell you about their mood without blame.",
   "unit_id": "83f8a5c4-defa-49a6-91ec-8504fee1140e",
   "day_of_week": 0,
   "time_of_day": "morning",
@@ -21,6 +21,9 @@
     "review_verdict": "clean",
     "review_defects": [],
     "approved_by": null,
-    "revalidated_at": "2026-08-13T17:11:46.112345+00:00"
+    "revalidated_at": "2026-08-13T17:11:46.112345+00:00",
+    "manual_fix_note": "Rewritten 2026-10-04 with the Arabic: re-addressed to the parent (the tip spoke to the teen); the Saudi-only 937 line replaced by country-neutral emergency guidance.",
+    "fixed_at": "2026-10-04T07:11:28.621718+00:00",
+    "fixer_model": "claude-opus-5.5"
   }
 }

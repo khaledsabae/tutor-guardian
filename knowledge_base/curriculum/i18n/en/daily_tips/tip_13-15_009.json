@@ -2,7 +2,7 @@
   "id": "tip_13-15_009",
   "age_group": "13-15",
   "domain": "cyber",
-  "text": "Gaming addiction: signs (WHO) — loss of control, prioritising gaming, continuation despite harm. Striking a balance: time, priorities, alternatives.",
+  "text": "Gaming addiction has signs set out by the World Health Organization: loss of control, putting gaming before everything else, and continuing despite harm. Agree on a balance with your child: set times, priorities and alternatives.",
   "unit_id": "1a79f159-fcad-5a0e-8af3-1e1a8bc90bec",
   "day_of_week": 0,
   "time_of_day": "evening",
@@ -21,6 +21,9 @@
     "review_verdict": "clean",
     "review_defects": [],
     "approved_by": null,
-    "revalidated_at": "2026-08-13T17:10:46.579351+00:00"
+    "revalidated_at": "2026-08-13T17:10:46.579351+00:00",
+    "manual_fix_note": "Rewritten 2026-10-04 with the Arabic register fix (Latin words / dialect removed from the Arabic); meaning re-aligned.",
+    "fixed_at": "2026-10-04T07:26:56.760370+00:00",
+    "fixer_model": "claude-opus-5.5"
   }
 }

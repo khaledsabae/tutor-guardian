@@ -2,7 +2,7 @@
   "id": "tip_16-18_005",
   "age_group": "16-18",
   "domain": "medical",
-  "text": "DMDD may sometimes continue into adolescence. Learn: your warning signs, calming strategies, and safety net. You manage your condition—it does not manage you.",
+  "text": "Disruptive mood dysregulation disorder (severe, frequent anger outbursts) can affect your teen into adulthood. Help them learn their warning signs and the calming methods that work for them, and stay in touch with their doctor, so they learn to manage it themselves.",
   "unit_id": "f42e35c1-4bbd-4037-8bfa-4668a530f6d8",
   "day_of_week": 2,
   "time_of_day": "morning",
@@ -30,6 +30,9 @@
       }
     ],
     "approved_by": null,
-    "revalidated_at": "2026-08-13T17:11:54.538264+00:00"
+    "revalidated_at": "2026-08-13T17:11:54.538264+00:00",
+    "manual_fix_note": "Rewritten 2026-10-04 with the Arabic: re-addressed to the parent (the tip spoke to the teen); Arabic no longer carries the Latin abbreviation DMDD.",
+    "fixed_at": "2026-10-04T07:11:53.626353+00:00",
+    "fixer_model": "claude-opus-5.5"
   }
 }

@@ -2,7 +2,7 @@
   "id": "tip_0-3_012",
   "age_group": "0-3",
   "domain": "cyber",
-  "text": "Screen time for children 2-3 years: one hour maximum daily, high-quality content, with the parent (not alone). AAP: Shared viewing transforms the screen into an opportunity for connection, not isolation.",
+  "text": "Screen time for children aged 2-3: one hour a day at most, high-quality content, with the parent, not alone. The American Academy of Pediatrics recommends watching together, because shared viewing turns the screen into a chance for connection, not isolation.",
   "unit_id": "cyb-499319c4",
   "day_of_week": 6,
   "time_of_day": "evening",
@@ -30,6 +30,9 @@
     "review_verdict": "clean",
     "review_defects": [],
     "approved_by": null,
-    "revalidated_at": "2026-08-13T17:08:14.048119+00:00"
+    "revalidated_at": "2026-08-13T17:08:14.048119+00:00",
+    "manual_fix_note": "Rewritten 2026-10-04 with the Arabic register fix (Latin words / dialect removed from the Arabic); meaning re-aligned.",
+    "fixed_at": "2026-10-04T07:26:56.760370+00:00",
+    "fixer_model": "claude-opus-5.5"
   }
 }

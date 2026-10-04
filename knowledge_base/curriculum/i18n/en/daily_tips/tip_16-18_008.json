@@ -2,7 +2,7 @@
   "id": "tip_16-18_008",
   "age_group": "16-18",
   "domain": "medical",
-  "text": "Personal Safety Card: 3 Warning Signs + 3 Calming Strategies + 3 Trusted People + 937. Make it, memorise it, share it with a friend.",
+  "text": "Make a safety card with your teen: three warning signs they recognise in themselves, three ways to calm down, three people they trust, and your country's emergency number. Save it on their phone and yours.",
   "unit_id": "83f8a5c4-defa-49a6-91ec-8504fee1140e",
   "day_of_week": 3,
   "time_of_day": "morning",
@@ -21,6 +21,9 @@
     "review_verdict": "clean",
     "review_defects": [],
     "approved_by": null,
-    "revalidated_at": "2026-08-13T17:12:03.148518+00:00"
+    "revalidated_at": "2026-08-13T17:12:03.148518+00:00",
+    "manual_fix_note": "Rewritten 2026-10-04 with the Arabic: re-addressed to the parent (the tip spoke to the teen); the Saudi-only 937 line replaced by country-neutral emergency guidance.",
+    "fixed_at": "2026-10-04T07:11:53.626353+00:00",
+    "fixer_model": "claude-opus-5.5"
   }
 }

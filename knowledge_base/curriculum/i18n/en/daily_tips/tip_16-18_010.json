@@ -2,7 +2,7 @@
   "id": "tip_16-18_010",
   "age_group": "16-18",
   "domain": "medical",
-  "text": "Mental well-being in university/work: routine (sleep/movement/nutrition) + support network (friend/mentor/937) + emergency plan. Independence = responsibility for your health.",
+  "text": "As your teen starts university or work, agree on a simple mental-health plan together: a routine for sleep, movement and meals; people they can turn to; and what to do in an emergency. Independence means learning to look after their own health, with you behind them.",
   "unit_id": "e5d132da-cdb4-403a-a43e-e78640ee6270",
   "day_of_week": 3,
   "time_of_day": "evening",
@@ -21,6 +21,9 @@
     "review_verdict": "clean",
     "review_defects": [],
     "approved_by": null,
-    "revalidated_at": "2026-08-13T17:12:03.176118+00:00"
+    "revalidated_at": "2026-08-13T17:12:03.176118+00:00",
+    "manual_fix_note": "Rewritten 2026-10-04 with the Arabic: re-addressed to the parent (the tip spoke to the teen); the Saudi-only 937 line replaced by country-neutral emergency guidance.",
+    "fixed_at": "2026-10-04T07:11:53.626353+00:00",
+    "fixer_model": "claude-opus-5.5"
   }
 }
