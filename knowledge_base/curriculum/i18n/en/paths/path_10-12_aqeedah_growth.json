@@ -14,39 +14,59 @@
   "pedagogical_framework": "aqeedah_parent_led",
   "primary_reference": {
     "type": "دراسات_عقدية",
-    "info": "ثلاثة الأصول والقواعد الأربع لابن عثيمين، العقيدة الطحاوية، أسئلة الأطفال الإيمانية، أصول الإيمان على فهم السلف"
+    "info": "Thalathat al-Usul and al-Qawa'id al-Arba' by Muhammad ibn Abd al-Wahhab, with Ibn Uthaymin's commentary; al-Aqidah al-Tahawiyyah; As'ilat al-Atfal al-Imaniyyah; Usul al-Iman as understood by the Salaf"
   },
   "prerequisites": [],
   "is_published": true,
   "version": "1.0.0",
   "created_at": "2026-06-27T00:00:00",
   "updated_at": "2026-06-27T00:00:00",
-  "approved_by": null,
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
   "language": "en",
   "source_language": "ar",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
     "scholar_signals": {
       "keyword": false,
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
+    "review_verdict": "low_only",
     "review_defects": [
       {
-        "type": "meaning_change",
+        "model": "deepseek-v4-pro",
         "field": "description",
-        "arabic": "ابنك",
-        "english": "your child",
-        "why": "The Arabic uses the masculine singular 'ابنك' (your son), while the English uses the gender-neutral 'your child'. This may obscure the original intended audience or tone, though it could be a deliberate inclusive choice.",
-        "severity": "low"
+        "type": "meaning",
+        "why": "The Arabic addresses a son specifically; the English neutralizes gender."
       }
     ],
-    "approved_by": null,
-    "revalidated_at": "2026-08-13T18:17:00.924302+00:00",
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "revalidated_at": "2026-10-04T16:52:31+00:00",
     "fixed_at": "2026-08-13T18:17:00.924315+00:00",
-    "fixer_model": "mistral-large-3:675b"
+    "fixer_model": "mistral-large-3:675b",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "206e64181f9ce15d4141fcdb5b99bd454ecc59f47ea35df82f39ae1c47994bde",
+      "reviewed_at": "2026-10-04T16:52:31+00:00",
+      "residual_low": [
+        {
+          "model": "deepseek-v4-pro",
+          "field": "description",
+          "type": "meaning",
+          "why": "The Arabic addresses a son specifically; the English neutralizes gender."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    }
   }
 }
