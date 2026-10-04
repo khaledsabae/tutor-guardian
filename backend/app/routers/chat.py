@@ -15,6 +15,7 @@ from pydantic import BaseModel
 from app.core.log_safety import device_tag
 from app.models.api import SessionCreate, SessionCreateResponse, SessionResponse
 from app.services import conversation_store as store
+from app.services import device_twins
 
 logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/chat", tags=["chat"])
@@ -47,21 +48,31 @@ def create_session(request: Request, body: SessionCreate | None = None) -> Sessi
         uses;
       * new device ids need no proof (that is how an install begins), and the
         per-IP minting budget in rate_limit.py bounds how many a caller gets.
+
+    One exception to "a mismatch is refused", and one addition, both for
+    installs that 1.0.58-1.0.67 split into two device ids (services/
+    device_twins.py has the evidence rule): when the claimed device and the
+    proven one are the two halves of one install, or the proven device is a
+    childless twin of the family's device, the session is minted for the
+    family's device and the twin is folded into it. The response names the
+    device minted for; the app adopts it when it differs from what it asked.
     """
     body = body or SessionCreate()
-    device_id = body.device_id
+    # A device id folded into its family's device (services/device_twins.py)
+    # stands for that device: the app still has the old id on disk.
+    device_id = device_twins.canonical_of(body.device_id) or body.device_id
 
     header = request.headers.get("Authorization", "")
+    proof = header[7:].strip() if header.startswith("Bearer ") else None
     # An expired token still proves the device (token_device): tokens now
     # lapse after TOKEN_TTL_DAYS idle, and the install holding one must be
     # able to mint its next session once minting is enforced.
-    proof_device = (store.token_device(header[7:].strip())
-                    if header.startswith("Bearer ") else None)
+    proof_device = store.token_device(proof) if proof else None
     if proof_device is not None:
-        if device_id and device_id != proof_device:
+        device_id = device_twins.resolve_mint(device_id, proof_device, proof=proof)
+        if device_id is None:
             raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,
                                 detail="الجهاز لا يطابق التوثيق.")
-        device_id = device_id or proof_device
     elif device_id and store.device_has_tokens(device_id):
         if _session_mint_enforced():
             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
@@ -73,7 +84,7 @@ def create_session(request: Request, body: SessionCreate | None = None) -> Sessi
         device_id=device_id,
         metadata=body.metadata,
     )
-    return SessionCreateResponse(session_id=sid, token=token)
+    return SessionCreateResponse(session_id=sid, token=token, device_id=device_id)
 
 
 @router.get("/sessions")
