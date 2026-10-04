@@ -1,10 +1,10 @@
 {
-  "total_units": 1726,
+  "total_units": 1718,
   "generated_at": "2026-10-04T12:44:11.421466+00:00",
   "by_domain": {
     "medical": 361,
     "cyber": 281,
-    "islamic_parenting": 928,
+    "islamic_parenting": 920,
     "development": 135,
     "aqeedah": 21
   },
@@ -7786,30 +7786,6 @@
       "size_chars": 1239
     },
     {
-      "id": "isl-18569b11",
-      "domain": "islamic_parenting",
-      "title": "الصبر والرفق في تربية الأطفال",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تربية وضبط نفس",
-      "needs_ocr": false,
-      "size_chars": 1007
-    },
-    {
-      "id": "isl-18569b11__en",
-      "domain": "islamic_parenting",
-      "title": "As-Sabr wa-r-Rifq fi Tarbiyah al-Atfal",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تربية وضبط نفس",
-      "needs_ocr": false,
-      "size_chars": 1007
-    },
-    {
       "id": "isl-18fa1a80",
       "domain": "islamic_parenting",
       "title": "أهمية اختيار الزوجة الصالحة في تربية الأبناء",
@@ -8072,30 +8048,6 @@
       "behavior_type": "تربية فكرية",
       "needs_ocr": false,
       "size_chars": 1245
-    },
-    {
-      "id": "isl-2021d2aa",
-      "domain": "islamic_parenting",
-      "title": "تحليل قصة تربوية تحتوي على عنف أسري",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "عنف أسري",
-      "needs_ocr": false,
-      "size_chars": 1175
-    },
-    {
-      "id": "isl-2021d2aa__en",
-      "domain": "islamic_parenting",
-      "title": "Analysis of a Tarbiyah Story Containing Domestic Violence",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "عنف أسري",
-      "needs_ocr": false,
-      "size_chars": 1175
     },
     {
       "id": "isl-20cd665c",
@@ -8876,30 +8828,6 @@
       "behavior_type": "تربية الأطفال والعدل بينهم",
       "needs_ocr": false,
       "size_chars": 1514
-    },
-    {
-      "id": "isl-33e652bb",
-      "domain": "islamic_parenting",
-      "title": "السلوك السليم للأطفال في سن المراهقة",
-      "source_file": "Al_Hady_Al_Nabawi.pdf",
-      "language": "ar",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تربية أخلاقية",
-      "needs_ocr": false,
-      "size_chars": 1400
-    },
-    {
-      "id": "isl-33e652bb__en",
-      "domain": "islamic_parenting",
-      "title": "Proper Conduct for Children in Adolescence",
-      "source_file": "Al_Hady_Al_Nabawi.pdf",
-      "language": "en",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تربية أخلاقية",
-      "needs_ocr": false,
-      "size_chars": 1400
     },
     {
       "id": "isl-343ab724",
@@ -16148,30 +16076,6 @@
       "behavior_type": "تربية دينية وأخلاقية",
       "needs_ocr": false,
       "size_chars": 970
-    },
-    {
-      "id": "isl-e946de7d",
-      "domain": "islamic_parenting",
-      "title": "مقتطف من أسانيد الحديث النبوي",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "غير محدد",
-      "needs_ocr": false,
-      "size_chars": 1134
-    },
-    {
-      "id": "isl-e946de7d__en",
-      "domain": "islamic_parenting",
-      "title": "Excerpt from the Asaneed of the Prophetic Hadith",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "غير محدد",
-      "needs_ocr": false,
-      "size_chars": 1134
     },
     {
       "id": "isl-ea569b55",

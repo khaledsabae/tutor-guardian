@@ -382,5 +382,69 @@
     "to": "ops/data/en_unpublished/kb_units_source/isl-d004d6de.json",
     "reason": "Arabic-only unit of the same class (no English sibling): a model meta-note about an unreadable source ('النص غير مفهوم… لا يمكن استخراج معلومات'), not content.",
     "on": "2026-10-04"
+  },
+  {
+    "key": "isl-33e652bb__en",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/isl-33e652bb__en.json",
+    "to": "ops/data/en_unpublished/kb_units/isl-33e652bb__en.json",
+    "reason": "PR #20 review: the summary («يجب على الطفل أن يلتزم بالقواعد، ويكون متعاونًا في الألعاب…») is invented — its reversed-PDF source (Al_Hady_Al_Nabawi) is about the educator's own trustworthiness (الأمانة) and the father's authority at home. The PR's retitle (المراهقة → ما قبل المدرسة) only polished it; reverted before archiving. Its references in three 4-6 lessons and tip_4-6_016 are removed.",
+    "on": "2026-10-04"
+  },
+  {
+    "key": "isl-33e652bb__en",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/isl-33e652bb.json",
+    "to": "ops/data/en_unpublished/kb_units_source/isl-33e652bb.json",
+    "reason": "PR #20 review: the summary («يجب على الطفل أن يلتزم بالقواعد، ويكون متعاونًا في الألعاب…») is invented — its reversed-PDF source (Al_Hady_Al_Nabawi) is about the educator's own trustworthiness (الأمانة) and the father's authority at home. The PR's retitle (المراهقة → ما قبل المدرسة) only polished it; reverted before archiving. Its references in three 4-6 lessons and tip_4-6_016 are removed.",
+    "on": "2026-10-04"
+  },
+  {
+    "key": "isl-e946de7d__en",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/isl-e946de7d__en.json",
+    "to": "ops/data/en_unpublished/kb_units/isl-e946de7d__en.json",
+    "reason": "PR #20 review: model meta-note, not content — «لا يمكن استخراج وحدة معرفية تربوية منه» (the source is a hadith isnad block extracted with reversed letters).",
+    "on": "2026-10-04"
+  },
+  {
+    "key": "isl-e946de7d__en",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/isl-e946de7d.json",
+    "to": "ops/data/en_unpublished/kb_units_source/isl-e946de7d.json",
+    "reason": "PR #20 review: model meta-note, not content — «لا يمكن استخراج وحدة معرفية تربوية منه» (the source is a hadith isnad block extracted with reversed letters).",
+    "on": "2026-10-04"
+  },
+  {
+    "key": "isl-2021d2aa__en",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/isl-2021d2aa__en.json",
+    "to": "ops/data/en_unpublished/kb_units/isl-2021d2aa__en.json",
+    "reason": "PR #20 review: model meta-note over an unreadable reversed-PDF page — «قصة معقدة وغير واضحة» — with generic advice attached; nothing in it comes from the source.",
+    "on": "2026-10-04"
+  },
+  {
+    "key": "isl-2021d2aa__en",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/isl-2021d2aa.json",
+    "to": "ops/data/en_unpublished/kb_units_source/isl-2021d2aa.json",
+    "reason": "PR #20 review: model meta-note over an unreadable reversed-PDF page — «قصة معقدة وغير واضحة» — with generic advice attached; nothing in it comes from the source.",
+    "on": "2026-10-04"
+  },
+  {
+    "key": "isl-18569b11__en",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/isl-18569b11__en.json",
+    "to": "ops/data/en_unpublished/kb_units/isl-18569b11__en.json",
+    "reason": "PR #20 review: invents a story of the Prophet ﷺ with al-Hasan ibn Ali; the source is Ibn Umar correcting his own son (the garment-dragging narration). A fabricated attribution to the Prophet ﷺ is the gravest kind of error this corpus can carry.",
+    "on": "2026-10-04"
+  },
+  {
+    "key": "isl-18569b11__en",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/isl-18569b11.json",
+    "to": "ops/data/en_unpublished/kb_units_source/isl-18569b11.json",
+    "reason": "PR #20 review: invents a story of the Prophet ﷺ with al-Hasan ibn Ali; the source is Ibn Umar correcting his own son (the garment-dragging narration). A fabricated attribution to the Prophet ﷺ is the gravest kind of error this corpus can carry.",
+    "on": "2026-10-04"
   }
 ]
