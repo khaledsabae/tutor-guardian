@@ -6,6 +6,17 @@ import 'dart:io';
 
 import 'package:path_provider/path_provider.dart';
 
+/// The server's rule for a device id (backend `SessionCreate.device_id`):
+/// 1–128 characters from `A-Z a-z 0-9 . _ : -`. An id outside it is refused
+/// with 422 on every session mint, forever — a keystore that decrypts with the
+/// wrong key hands back exactly that kind of garbage (production holds ids
+/// that are mostly U+FFFD, and one with spaces). Nothing that fails this is
+/// ever used, claimed, persisted or adopted.
+bool isValidDeviceId(String? id) =>
+    id != null && id.length <= 128 && _deviceIdPattern.hasMatch(id);
+
+final RegExp _deviceIdPattern = RegExp(r'^[A-Za-z0-9._:-]+$');
+
 /// Decides, once per install, which candidate becomes the device id — no
 /// matter how many isolates are asking at the same moment.
 ///
@@ -58,7 +69,11 @@ class DeviceIdClaim {
         await file.create(exclusive: true);
       } on FileSystemException {
         if (!await file.exists()) return null; // not "already claimed"
-        return await _readClaimed(file);
+        final claimed = await _readClaimed(file);
+        if (claimed != _corrupt) return claimed;
+        // A claim the server would refuse can only be damage: replace it.
+        await file.writeAsString(candidate, flush: true);
+        return candidate;
       }
       await file.writeAsString(candidate, flush: true);
       return candidate;
@@ -70,6 +85,7 @@ class DeviceIdClaim {
   /// Point the claim at [id] — the server re-attached this install to the
   /// family's device, and a later keystore loss must not resurrect the old id.
   Future<void> replace(String id) async {
+    if (!isValidDeviceId(id)) return;
     try {
       final file = await _file();
       if (file == null) return;
@@ -86,11 +102,15 @@ class DeviceIdClaim {
     return File('${dir.path}${Platform.pathSeparator}$fileName');
   }
 
+  /// Returned by [_readClaimed] for a claim that holds something other than
+  /// a valid id — never a value a caller could mistake for one.
+  static const _corrupt = '\u0000corrupt';
+
   Future<String?> _readClaimed(File file) async {
     final deadline = DateTime.now().add(_readTimeout);
     while (true) {
       final id = (await file.readAsString()).trim();
-      if (id.isNotEmpty && id.length <= 200 && !id.contains('\n')) return id;
+      if (id.isNotEmpty) return isValidDeviceId(id) ? id : _corrupt;
       if (DateTime.now().isAfter(deadline)) return null;
       await Future<void>.delayed(_readPoll);
     }

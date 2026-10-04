@@ -171,6 +171,7 @@ class _AuthStore {
   }
 
   Future<void> _writeDeviceIdBackup(String id) async {
+    if (!isValidDeviceId(id)) return; // never let garbage replace a good copy
     try {
       final prefs = await SharedPreferences.getInstance();
       if (prefs.getString(_kDeviceIdBackup) != id) {
@@ -213,20 +214,25 @@ class _AuthStore {
 
   Future<String> _resolveDeviceId() async {
     final (existing, readOk) = await _readChecked(_kDeviceId);
-    if (existing != null && existing.isNotEmpty) {
-      await _writeDeviceIdBackup(existing);
+    if (isValidDeviceId(existing)) {
+      await _writeDeviceIdBackup(existing!);
       return existing;
     }
-    // Secure copy missing or unreadable: the backup is the same identity.
+    // Secure copy missing, unreadable, or garbage the server would refuse
+    // with 422 on every mint (a keystore decrypting with the wrong key): the
+    // backup is the same identity, if it is a valid one.
     final backup = await _readDeviceIdBackup();
-    if (backup != null) {
-      if (readOk) await _safeWrite(_kDeviceId, backup);
-      return backup;
+    if (isValidDeviceId(backup)) {
+      if (readOk) await _safeWrite(_kDeviceId, backup!);
+      return backup!;
     }
-    // Nothing persisted. Claim a fresh id — or get the one another isolate
-    // claimed a moment ago, or an earlier run left in the claim file.
+    // Nothing usable persisted. Claim a fresh id — or get the one another
+    // isolate claimed a moment ago, or an earlier run left in the claim file.
+    // The family is not lost with the old id: the next mint still carries the
+    // device proof, and the server moves the proven device to this id.
     final candidate = _uuid.v4();
-    final id = await _claim.claim(candidate) ?? candidate;
+    final claimed = await _claim.claim(candidate);
+    final id = isValidDeviceId(claimed) ? claimed! : candidate;
     // Only persist into the keystore when we KNOW it was empty. If the read
     // failed, an id may still be in there; overwriting it would orphan the
     // family's data just as the old deleteAll() did. The next launch reads
@@ -241,7 +247,7 @@ class _AuthStore {
   /// `device_twins`). Written everywhere the id lives, so the next launch
   /// starts as that device instead of asking the server to map it again.
   Future<void> adoptDeviceId(String id) async {
-    if (id.isEmpty || id == _cachedDeviceId) return;
+    if (!isValidDeviceId(id) || id == _cachedDeviceId) return;
     _cachedDeviceId = id;
     await _safeWrite(_kDeviceId, id);
     await _writeDeviceIdBackup(id);

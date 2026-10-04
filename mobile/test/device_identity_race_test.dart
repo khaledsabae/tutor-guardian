@@ -94,6 +94,7 @@ class _Server {
   final String? pushRecoversTo;
 
   final mintedFor = <String>[];
+  final mintProofs = <String?>[];
   final feedbackFrom = <String>[];
   int _n = 0;
 
@@ -102,6 +103,7 @@ class _Server {
           case '/api/chat/sessions':
             final body = jsonDecode(req.body) as Map<String, dynamic>;
             mintedFor.add(body['device_id'] as String);
+            mintProofs.add(req.headers['Authorization']);
             _n++;
             return http.Response(
               jsonEncode({
@@ -266,6 +268,114 @@ void main() {
 
     test('no directory, no claim — the caller keeps its candidate', () async {
       expect(await _noClaim().claim('candidate'), isNull);
+    });
+  });
+
+  group('a device id the server would refuse (keystore garbage)', () {
+    // The shapes production holds (2026-10-04): mostly U+FFFD with stray
+    // characters — a keystore decrypting with the wrong key — and one with
+    // spaces. The server answers 422 to such an id on every mint, forever.
+    const garbage = '\uFFFD\uFFFDk\uFFFD9 \uFFFD-\uFFFD\uFFFD';
+    const spaced = 'abcd efgh ijkl mnop';
+
+    test('the rule is the server\'s', () {
+      expect(isValidDeviceId('0b5c2f6e-1d2a-4c3b-9f8e-7a6b5c4d3e2f'), isTrue);
+      expect(isValidDeviceId('device_0123456789ab'), isTrue);
+      expect(isValidDeviceId('a' * 128), isTrue);
+      for (final bad in [null, '', spaced, garbage, 'a' * 129, 'é', 'a/b']) {
+        expect(isValidDeviceId(bad), isFalse, reason: '$bad');
+      }
+    });
+
+    test('is never sent: a fresh valid id replaces it, and the proof still goes',
+        () async {
+      final keystore = _SlowKeystore({
+        'tg_device_id': garbage,
+        'tg_device_proof': 'tok-of-the-family-device',
+      });
+      final server = _Server();
+      final client = TgClient.forTesting(
+        baseUrl: 'http://x',
+        httpClient: server.client(),
+        storage: keystore,
+        deviceIdClaim: _claimIn(tmp),
+      );
+
+      await client.createSession();
+
+      final sent = server.mintedFor.single;
+      expect(isValidDeviceId(sent), isTrue);
+      expect(keystore.store['tg_device_id'], sent, reason: 'the garbage is overwritten');
+      final prefs = await SharedPreferences.getInstance();
+      expect(prefs.getString('tg_device_id_backup'), sent);
+      // The proof is what lets the server move the family's device to the new
+      // id (device_twins.resolve_mint); dropping it would orphan the family.
+      expect(server.mintProofs.single, 'Bearer tok-of-the-family-device');
+    });
+
+    test('a valid backup wins over a garbage keystore id', () async {
+      SharedPreferences.setMockInitialValues({'tg_device_id_backup': 'family-1'});
+      final keystore = _SlowKeystore({'tg_device_id': spaced});
+      final server = _Server();
+      final client = TgClient.forTesting(
+        baseUrl: 'http://x',
+        httpClient: server.client(),
+        storage: keystore,
+        deviceIdClaim: _claimIn(tmp),
+      );
+
+      await client.createSession();
+      expect(server.mintedFor, ['family-1']);
+      expect(keystore.store['tg_device_id'], 'family-1');
+    });
+
+    test('a garbage backup is not trusted either', () async {
+      SharedPreferences.setMockInitialValues({'tg_device_id_backup': garbage});
+      final keystore = _SlowKeystore({'tg_device_id': spaced});
+      final server = _Server();
+      final client = TgClient.forTesting(
+        baseUrl: 'http://x',
+        httpClient: server.client(),
+        storage: keystore,
+        deviceIdClaim: _claimIn(tmp),
+      );
+
+      await client.createSession();
+      final sent = server.mintedFor.single;
+      expect(isValidDeviceId(sent), isTrue);
+      final prefs = await SharedPreferences.getInstance();
+      expect(prefs.getString('tg_device_id_backup'), sent);
+    });
+
+    test('a garbage claim file is replaced, not adopted', () async {
+      File('${tmp.path}/tg_device_id.claim').writeAsStringSync(garbage);
+      final keystore = _SlowKeystore({});
+      final server = _Server();
+      final client = TgClient.forTesting(
+        baseUrl: 'http://x',
+        httpClient: server.client(),
+        storage: keystore,
+        deviceIdClaim: _claimIn(tmp),
+      );
+
+      await client.createSession();
+      final sent = server.mintedFor.single;
+      expect(isValidDeviceId(sent), isTrue);
+      expect(File('${tmp.path}/tg_device_id.claim').readAsStringSync(), sent);
+    });
+
+    test('a device id the server hands back is adopted only if valid', () async {
+      final keystore = _SlowKeystore({'tg_device_id': 'family'});
+      final server = _Server(mintAs: spaced);
+      final client = TgClient.forTesting(
+        baseUrl: 'http://x',
+        httpClient: server.client(),
+        storage: keystore,
+        deviceIdClaim: _claimIn(tmp),
+      );
+
+      await client.createSession();
+      expect(keystore.store['tg_device_id'], 'family');
     });
   });
 
