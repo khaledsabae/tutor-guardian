@@ -229,6 +229,67 @@ def scan_translated_units() -> list:
     return out
 
 
+# ── برامج الأسرة ───────────────────────────────────────────────────────────
+#
+# برامج رمضان ورحلة الصلاة والمراحل (knowledge_base/curriculum/programs/) تحمل
+# أحاديثها في مصفوفة `evidence` بعناصر `kind: hadith` — النص العربي متصلًا،
+# والإسناد بالصيغة نفسها، و`provenance` رقمية. الحارس كان لا ينظر إلا في حزمة
+# الأذكار والوحدات المترجمة، فبطاقة حديث في برنامج كانت ستمرّ بلا مطابقة. الملف
+# الإنجليزي يحمل `text_ar` نفسه ويُفحص كذلك: انحراف نصّ الحديث في الترجمة وحدها
+# يصل المستخدم الإنجليزي تمامًا كما يصل العربي.
+
+PROGRAM_DIRS = (
+    ROOT / "knowledge_base" / "curriculum" / "programs",
+    ROOT / "knowledge_base" / "curriculum" / "i18n" / "en" / "programs",
+)
+
+
+class _Card:
+    """Adapter so a program evidence card goes through the same `_check_item`."""
+
+    def __init__(self, card: dict):
+        self.text = card.get("text_ar") or ""
+        self.source = card.get("source") or ""
+        self.provenance = card.get("provenance") or {}
+
+
+def check_program_card(books: dict, card: dict) -> str | None:
+    return _check_item(books, _Card(card))
+
+
+_PROGRAM_MUST_REJECT = [
+    # رقم في provenance لا يطابق الإسناد المكتوب.
+    {"text_ar": "خيركم من تعلم القرآن وعلمه", "source": "صحيح البخاري — حديث ٥٠٢٧",
+     "provenance": {"book": "البخاري", "number": 5028}},
+    # اللفظ الذي شُحن فعلًا ثم بلّغ عنه المستخدمان.
+    {"text_ar": "خيركم من تعلم العلم وعلمه", "source": "صحيح البخاري — حديث ٥٠٢٧",
+     "provenance": {"book": "البخاري", "number": 5027}},
+]
+_PROGRAM_MUST_ACCEPT = [
+    {"text_ar": "خيركم من تعلم القرآن وعلمه", "source": "صحيح البخاري — حديث ٥٠٢٧",
+     "provenance": {"book": "البخاري", "number": 5027}},
+]
+
+
+def scan_programs(books: dict) -> tuple[int, list]:
+    cards, errors = 0, []
+    for d in PROGRAM_DIRS:
+        for f in sorted(d.glob("*.json")) if d.exists() else []:
+            try:
+                doc = json.loads(f.read_text(encoding="utf-8"))
+            except json.JSONDecodeError as e:
+                errors.append((str(f.relative_to(ROOT)), "json", str(e)[:60]))
+                continue
+            for card in (doc.get("evidence") or []) if isinstance(doc, dict) else []:
+                if card.get("kind") != "hadith":
+                    continue
+                cards += 1
+                why = check_program_card(books, card)
+                if why:
+                    errors.append((str(f.relative_to(ROOT)), card.get("id", "?"), why))
+    return cards, errors
+
+
 def main() -> int:
     print("\n" + "=" * 67)
     print("  HADITH CITATION CHECK — فحص الأحاديث على الصحيحين")
@@ -255,8 +316,18 @@ def main() -> int:
         if check_translated_attribution(ar, en) is None:
             print(f"\n🔴  SELF-TEST: قُبل إسناد مخترَع «{en[:46]}» — الفحص لاغٍ.\n")
             return 2
+    for card in _PROGRAM_MUST_ACCEPT:
+        why = check_program_card(books, card)
+        if why:
+            print(f"\n🔴  SELF-TEST: رُفضت بطاقة برنامج سليمة ({why}) — الفحص لاغٍ.\n")
+            return 2
+    for card in _PROGRAM_MUST_REJECT:
+        if check_program_card(books, card) is None:
+            print(f"\n🔴  SELF-TEST: قُبلت بطاقة برنامج مرفوضة «{card['text_ar'][:40]}» — الفحص لاغٍ.\n")
+            return 2
     print(f"  self-tests: {len(_MUST_ACCEPT)} قبول · {len(_MUST_REJECT)} رفض · "
-          f"وحدات {len(_UNIT_MUST_ACCEPT)}/{len(_UNIT_MUST_REJECT)} ✓")
+          f"وحدات {len(_UNIT_MUST_ACCEPT)}/{len(_UNIT_MUST_REJECT)} · "
+          f"برامج {len(_PROGRAM_MUST_ACCEPT)}/{len(_PROGRAM_MUST_REJECT)} ✓")
 
     unit_errors = scan_translated_units()
     en_units = len(list((ROOT / "knowledge_base" / "units").glob("*__en.json")))
@@ -267,6 +338,17 @@ def main() -> int:
             print(f"\n     ✗ {uid} · {key}\n       → {why}")
         print("\n" + "=" * 67)
         print("  ❌  نسبة قولٍ إلى النبي ﷺ بسندٍ ليس في المصدر — لا يجوز الدفع.")
+        print("=" * 67 + "\n")
+        return 1
+
+    n_cards, program_errors = scan_programs(books)
+    print(f"  بطاقات أحاديث في البرامج (عربي + إنجليزي): {n_cards}   ·   مخالفة: {len(program_errors)}")
+    if program_errors:
+        print(f"\n🔴  بطاقات أحاديث في البرامج لا تطابق الصحيحين ({len(program_errors)}):")
+        for rel, cid, why in program_errors[:12]:
+            print(f"\n     ✗ {rel} · {cid}\n       → {why}")
+        print("\n" + "=" * 67)
+        print("  ❌  حديث في برنامج لا يطابق الصحيحين لفظًا ورقمًا — لا يجوز الدفع.")
         print("=" * 67 + "\n")
         return 1
 

@@ -1,0 +1,1051 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tutor-guardian.local/schemas/curriculum/program_ramadan_family.schema.json",
+  "title": "Family Ramadan Program («رمضان العائلة»)",
+  "description": "برنامج رمضان للأسرة كلها: ٣٠ يومًا + العيد + ما بعد رمضان. ملف واحد: programs/ramadan_family.json، وترجمته في i18n/en/programs/ بالبنية نفسها حرفًا بحرف (المعرّفات والأرقام والمراجع متطابقة، والنصوص وحدها تختلف). المخطّط يفرض الشكل؛ أما المراجع (الوحدات والقصص والآيات والأحاديث) وتطابق اللغتين وسلامة النص فيفرضها ops/tools/check_programs.py. النص القرآني لا يُكتب هنا أبدًا: الآيات مراجع سورة:آية فقط، والتطبيق يعرض نصّها من quran.json المتحقَّق منه.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "program_type",
+    "id",
+    "version",
+    "is_published",
+    "language",
+    "title",
+    "subtitle",
+    "description",
+    "season",
+    "bands",
+    "evidence",
+    "kickoff",
+    "fasting_ladder",
+    "days",
+    "eid",
+    "after_ramadan",
+    "recap",
+    "generation"
+  ],
+  "properties": {
+    "program_type": {
+      "const": "ramadan_family"
+    },
+    "id": {
+      "const": "ramadan_family"
+    },
+    "version": {
+      "$ref": "#/$defs/semver"
+    },
+    "is_published": {
+      "type": "boolean"
+    },
+    "language": {
+      "enum": [
+        "ar",
+        "en"
+      ]
+    },
+    "title": {
+      "$ref": "#/$defs/text"
+    },
+    "subtitle": {
+      "$ref": "#/$defs/text"
+    },
+    "description": {
+      "$ref": "#/$defs/text"
+    },
+    "season": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "hijri_month",
+        "days",
+        "may_have_29_days",
+        "expected_start_1448"
+      ],
+      "properties": {
+        "hijri_month": {
+          "const": 9
+        },
+        "days": {
+          "const": 30
+        },
+        "may_have_29_days": {
+          "const": true,
+          "description": "الشهر قد يكون ٢٩ يومًا؛ اليوم ٣٠ معلَّم may_not_occur ولا يُبنى عليه شيء في العيد ولا في البطاقة."
+        },
+        "expected_start_1448": {
+          "type": "string",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+          "description": "تقدير للتخطيط فقط. بداية الشهر الفعلية يحدّدها التطبيق/الخادم بإعلان الرؤية لا هذا الحقل."
+        }
+      }
+    },
+    "bands": {
+      "$ref": "#/$defs/bands"
+    },
+    "evidence": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/hadith"
+      }
+    },
+    "kickoff": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "title",
+        "text",
+        "setup_steps",
+        "unit_ids"
+      ],
+      "properties": {
+        "title": {
+          "$ref": "#/$defs/text"
+        },
+        "text": {
+          "$ref": "#/$defs/text"
+        },
+        "setup_steps": {
+          "$ref": "#/$defs/text_list"
+        },
+        "unit_ids": {
+          "$ref": "#/$defs/unit_ids"
+        }
+      }
+    },
+    "fasting_ladder": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "title",
+        "principles",
+        "doctor_first",
+        "stop_signs",
+        "stop_action",
+        "urgent_signs",
+        "tips",
+        "bands",
+        "unit_ids",
+        "evidence_ids"
+      ],
+      "properties": {
+        "title": {
+          "$ref": "#/$defs/text"
+        },
+        "principles": {
+          "$ref": "#/$defs/text_list"
+        },
+        "doctor_first": {
+          "$ref": "#/$defs/text_list",
+          "description": "حالات يُستشار فيها الطبيب قبل أي محاولة صيام."
+        },
+        "stop_signs": {
+          "$ref": "#/$defs/text_list",
+          "description": "علامات يُفطر عندها الطفل فورًا، بلا لوم."
+        },
+        "stop_action": {
+          "$ref": "#/$defs/text"
+        },
+        "urgent_signs": {
+          "$ref": "#/$defs/text_list",
+          "description": "علامات تستدعي رعاية طبية عاجلة لا مجرد الإفطار."
+        },
+        "tips": {
+          "$ref": "#/$defs/text_list"
+        },
+        "bands": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "0-3",
+            "4-6",
+            "7-9",
+            "10-12",
+            "13-15"
+          ],
+          "properties": {
+            "0-3": {
+              "$ref": "#/$defs/ladder_band"
+            },
+            "4-6": {
+              "$ref": "#/$defs/ladder_band"
+            },
+            "7-9": {
+              "$ref": "#/$defs/ladder_band"
+            },
+            "10-12": {
+              "$ref": "#/$defs/ladder_band"
+            },
+            "13-15": {
+              "$ref": "#/$defs/ladder_band"
+            }
+          }
+        },
+        "unit_ids": {
+          "$ref": "#/$defs/unit_ids"
+        },
+        "evidence_ids": {
+          "$ref": "#/$defs/evidence_ids"
+        }
+      }
+    },
+    "days": {
+      "type": "array",
+      "minItems": 30,
+      "maxItems": 30,
+      "items": {
+        "$ref": "#/$defs/day"
+      }
+    },
+    "eid": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "title",
+        "activities",
+        "parent_note",
+        "variants",
+        "quran",
+        "evidence_ids"
+      ],
+      "properties": {
+        "title": {
+          "$ref": "#/$defs/text"
+        },
+        "activities": {
+          "$ref": "#/$defs/text_list"
+        },
+        "parent_note": {
+          "$ref": "#/$defs/parent_note"
+        },
+        "variants": {
+          "$ref": "#/$defs/variants"
+        },
+        "quran": {
+          "$ref": "#/$defs/quran_ref"
+        },
+        "evidence_ids": {
+          "$ref": "#/$defs/evidence_ids"
+        }
+      }
+    },
+    "after_ramadan": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "title",
+        "text",
+        "keep_habits",
+        "weeks",
+        "links",
+        "evidence_ids"
+      ],
+      "properties": {
+        "title": {
+          "$ref": "#/$defs/text"
+        },
+        "text": {
+          "$ref": "#/$defs/text"
+        },
+        "keep_habits": {
+          "type": "array",
+          "minItems": 3,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "key",
+              "title",
+              "text"
+            ],
+            "properties": {
+              "key": {
+                "$ref": "#/$defs/key"
+              },
+              "title": {
+                "$ref": "#/$defs/text"
+              },
+              "text": {
+                "$ref": "#/$defs/text"
+              }
+            }
+          }
+        },
+        "weeks": {
+          "type": "array",
+          "minItems": 4,
+          "maxItems": 4,
+          "description": "أربعة أسابيع جسر بعد العيد، ثم تنتقل الأسرة إلى خطة الأسبوع العادية.",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "week",
+              "title",
+              "text"
+            ],
+            "properties": {
+              "week": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 4
+              },
+              "title": {
+                "$ref": "#/$defs/text"
+              },
+              "text": {
+                "$ref": "#/$defs/text"
+              }
+            }
+          }
+        },
+        "links": {
+          "$ref": "#/$defs/links"
+        },
+        "evidence_ids": {
+          "$ref": "#/$defs/evidence_ids"
+        }
+      }
+    },
+    "recap": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "card_title",
+        "show_on",
+        "metrics",
+        "templates",
+        "privacy",
+        "min_to_show"
+      ],
+      "properties": {
+        "card_title": {
+          "$ref": "#/$defs/text"
+        },
+        "show_on": {
+          "enum": [
+            "eid"
+          ]
+        },
+        "metrics": {
+          "type": "array",
+          "minItems": 3,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "key",
+              "source",
+              "label",
+              "max"
+            ],
+            "properties": {
+              "key": {
+                "$ref": "#/$defs/key"
+              },
+              "source": {
+                "enum": [
+                  "challenge_done",
+                  "wird_done",
+                  "story_heard",
+                  "night_joined",
+                  "fasting_step_up",
+                  "juz_read",
+                  "family_word"
+                ],
+                "description": "ما يسجّله التطبيق ليحسب الرقم. challenge_done/wird_done/story_heard/juz_read: علامة «تمّ» يومية. night_joined: علامة على ليالي العشر. fasting_step_up: عدد مرات صعود أي طفل درجةً في سلّم الصيام. family_word: اختيار واحد من choices يحدّده الوالد في اليوم ٢٩."
+              },
+              "label": {
+                "$ref": "#/$defs/text"
+              },
+              "max": {
+                "type": [
+                  "integer",
+                  "null"
+                ],
+                "minimum": 1
+              },
+              "choices": {
+                "$ref": "#/$defs/text_list"
+              }
+            }
+          }
+        },
+        "templates": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "headline",
+            "lines",
+            "closing",
+            "share_text"
+          ],
+          "properties": {
+            "headline": {
+              "$ref": "#/$defs/text"
+            },
+            "lines": {
+              "$ref": "#/$defs/text_list"
+            },
+            "closing": {
+              "$ref": "#/$defs/text"
+            },
+            "share_text": {
+              "$ref": "#/$defs/text"
+            }
+          }
+        },
+        "privacy": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "child_names",
+            "child_ages",
+            "photos",
+            "free_text",
+            "text"
+          ],
+          "properties": {
+            "child_names": {
+              "const": false
+            },
+            "child_ages": {
+              "const": false
+            },
+            "photos": {
+              "const": false
+            },
+            "free_text": {
+              "const": false
+            },
+            "text": {
+              "$ref": "#/$defs/text"
+            }
+          }
+        },
+        "min_to_show": {
+          "type": "object",
+          "description": "أقل قيمة لكل مقياس حتى يظهر سطره في البطاقة؛ سطر بقيمة دون الحد يُحذف بدل أن يُعرض رقم يُحرج الأسرة.",
+          "additionalProperties": {
+            "type": "integer",
+            "minimum": 0
+          }
+        }
+      }
+    },
+    "generation": {
+      "$ref": "#/$defs/generation"
+    }
+  },
+  "$defs": {
+    "semver": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+    "key": {
+      "type": "string",
+      "pattern": "^[a-z0-9_]+$"
+    },
+    "text": {
+      "type": "string",
+      "minLength": 2
+    },
+    "text_list": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/text"
+      }
+    },
+    "unit_ids": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 3
+      }
+    },
+    "evidence_ids": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^h_[a-z0-9_]+$"
+      }
+    },
+    "band": {
+      "enum": [
+        "0-3",
+        "4-6",
+        "7-9",
+        "10-12",
+        "13-15"
+      ]
+    },
+    "bands": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "covered",
+        "band_map",
+        "text"
+      ],
+      "properties": {
+        "covered": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/band"
+          }
+        },
+        "band_map": {
+          "type": "object",
+          "description": "كل فئات التطبيق الثماني ← أي نسخة تراها. null = لا نسخة للطفل (البرنامج يظهر للوالد بالتحدّي العائلي وملاحظته فقط).",
+          "required": [
+            "prenatal-1",
+            "0-3",
+            "2-3",
+            "4-6",
+            "7-9",
+            "10-12",
+            "13-15",
+            "16-18"
+          ],
+          "propertyNames": {
+            "enum": [
+              "prenatal-1",
+              "0-3",
+              "2-3",
+              "4-6",
+              "7-9",
+              "10-12",
+              "13-15",
+              "16-18"
+            ]
+          },
+          "additionalProperties": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/band"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "text": {
+          "$ref": "#/$defs/text",
+          "description": "شرح للوالد بلغته: مَن يرى ماذا."
+        }
+      }
+    },
+    "hadith": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "kind",
+        "text_ar",
+        "source",
+        "provenance"
+      ],
+      "description": "حديث من الصحيحين فقط. text_ar هو اللفظ متصلًا كما في الصحيح (يفحصه check_hadith_citations.py على الفهرس)، و«صلى الله عليه وسلم» تُكتب حروفًا لا رمز ﷺ لأن المطابقة على الهيكل الصامت. text_ar وsource وprovenance متطابقة في الملفين العربي والإنجليزي؛ ما يختلف هو context وmeaning.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^h_[a-z0-9_]+$"
+        },
+        "kind": {
+          "const": "hadith"
+        },
+        "text_ar": {
+          "type": "string",
+          "minLength": 8
+        },
+        "source": {
+          "type": "string",
+          "pattern": "^صحيح (البخاري|مسلم) — حديث [٠-٩]+$"
+        },
+        "provenance": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "book",
+            "number"
+          ],
+          "properties": {
+            "book": {
+              "enum": [
+                "البخاري",
+                "مسلم"
+              ]
+            },
+            "number": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        },
+        "context": {
+          "$ref": "#/$defs/text",
+          "description": "سطر وصفي قصير (من الراوي/في أي مناسبة) — وصف لا اقتباس."
+        },
+        "meaning": {
+          "$ref": "#/$defs/text",
+          "description": "في الملف الإنجليزي فقط: ترجمة المعنى، يعرضها التطبيق بعنوان Meaning تحت النص العربي. لا يوجد في العربي."
+        }
+      }
+    },
+    "quran_range": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "surah",
+        "from",
+        "to"
+      ],
+      "properties": {
+        "surah": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 114
+        },
+        "from": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "to": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "topic": {
+          "$ref": "#/$defs/text",
+          "description": "اسم موضوع المقطع المتداول (مثل «آيات الصيام») — ليس تفسيرًا ولا ترجمة."
+        }
+      }
+    },
+    "quran_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "together",
+        "theme_ref",
+        "parent_juz"
+      ],
+      "properties": {
+        "together": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/quran_range"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "ما تقرؤه الأسرة معًا اليوم (سورة قصيرة تتكرّر يومين للحفظ)."
+        },
+        "theme_ref": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/quran_range"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "مقطع يرتبط بموضوع اليوم — مرجع فقط، يعرض التطبيق نصّه."
+        },
+        "parent_juz": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 30
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "ورد الختمة الشخصي للوالد (اختياري للأسرة): جزء رقم اليوم. حدود الأجزاء في juz_starts في المدقّق، مطابَقة على علامة ۞ في quran.json."
+        }
+      }
+    },
+    "parent_note": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "text",
+        "unit_ids",
+        "evidence_ids"
+      ],
+      "properties": {
+        "text": {
+          "$ref": "#/$defs/text"
+        },
+        "unit_ids": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/unit_ids"
+            },
+            {
+              "minItems": 1
+            }
+          ],
+          "description": "وحدة معرفة واحدة على الأقل تُسند الملاحظة — لا ملاحظة تربوية بلا أصل في القاعدة."
+        },
+        "evidence_ids": {
+          "$ref": "#/$defs/evidence_ids"
+        }
+      }
+    },
+    "variant": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "addressed_to",
+        "text"
+      ],
+      "properties": {
+        "addressed_to": {
+          "enum": [
+            "parent",
+            "child"
+          ],
+          "description": "0-3 و4-6: موجَّه للوالد (الطفل لا يقرأ). 7-9 فما فوق: موجَّه للطفل ويصلح لعرضه في وضع الطفل."
+        },
+        "text": {
+          "$ref": "#/$defs/text"
+        }
+      }
+    },
+    "variants": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "0-3",
+        "4-6",
+        "7-9",
+        "10-12",
+        "13-15"
+      ],
+      "properties": {
+        "0-3": {
+          "$ref": "#/$defs/variant"
+        },
+        "4-6": {
+          "$ref": "#/$defs/variant"
+        },
+        "7-9": {
+          "$ref": "#/$defs/variant"
+        },
+        "10-12": {
+          "$ref": "#/$defs/variant"
+        },
+        "13-15": {
+          "$ref": "#/$defs/variant"
+        }
+      }
+    },
+    "ladder_step": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "key",
+        "label",
+        "until",
+        "approx_hours",
+        "min_age_years",
+        "advance_when",
+        "text"
+      ],
+      "properties": {
+        "key": {
+          "$ref": "#/$defs/key"
+        },
+        "label": {
+          "$ref": "#/$defs/text"
+        },
+        "until": {
+          "enum": [
+            "none",
+            "mid_morning",
+            "dhuhr",
+            "asr",
+            "maghrib"
+          ],
+          "description": "none = مشاركة بلا إمساك. maghrib = يوم كامل."
+        },
+        "approx_hours": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 16,
+          "description": "تقريبًا كم ساعة امتناع عن الطعام والشراب بعد آخر وجبة (سحور أو فطور مبكر)."
+        },
+        "min_age_years": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 15
+        },
+        "max_days_per_week": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 7
+        },
+        "advance_when": {
+          "$ref": "#/$defs/text"
+        },
+        "text": {
+          "$ref": "#/$defs/text"
+        }
+      }
+    },
+    "ladder_band": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "fasts",
+        "summary",
+        "steps"
+      ],
+      "properties": {
+        "fasts": {
+          "enum": [
+            "no",
+            "partial",
+            "partial_to_full",
+            "full_supported"
+          ],
+          "description": "no: لا إمساك إطلاقًا (0-3 و4-6). partial: ساعات فقط، لا يوم كامل. partial_to_full: تدرّج قد يصل يومًا كاملًا. full_supported: الصيام الكامل مع دعم صحي (بعد البلوغ فريضة)."
+        },
+        "summary": {
+          "$ref": "#/$defs/text"
+        },
+        "steps": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/ladder_step"
+          }
+        }
+      }
+    },
+    "family_challenge": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "title",
+        "steps",
+        "minutes",
+        "cost",
+        "at_home",
+        "when",
+        "materials"
+      ],
+      "properties": {
+        "title": {
+          "$ref": "#/$defs/text"
+        },
+        "steps": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 5,
+          "items": {
+            "$ref": "#/$defs/text"
+          }
+        },
+        "minutes": {
+          "type": "integer",
+          "minimum": 3,
+          "maximum": 15,
+          "description": "سقف ربع ساعة: تحدٍّ يحتاج أكثر لا يُنفَّذ في بيتٍ صائم."
+        },
+        "cost": {
+          "enum": [
+            "free",
+            "low"
+          ]
+        },
+        "at_home": {
+          "const": true
+        },
+        "when": {
+          "enum": [
+            "before_iftar",
+            "at_iftar",
+            "after_iftar",
+            "night",
+            "suhoor",
+            "anytime"
+          ]
+        },
+        "materials": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/text"
+          }
+        }
+      }
+    },
+    "day": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "day",
+        "phase",
+        "key",
+        "title",
+        "family_challenge",
+        "parent_note",
+        "variants",
+        "quran",
+        "story_id",
+        "last_ten",
+        "odd_night",
+        "may_not_occur",
+        "tracks"
+      ],
+      "properties": {
+        "day": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 30
+        },
+        "phase": {
+          "enum": [
+            "first_ten",
+            "middle_ten",
+            "last_ten"
+          ],
+          "description": "تقسيم زمني محايد. لا تُسمَّى العشر «رحمة/مغفرة/عتق» — حديث ذلك غير ثابت."
+        },
+        "key": {
+          "$ref": "#/$defs/key"
+        },
+        "title": {
+          "$ref": "#/$defs/text"
+        },
+        "family_challenge": {
+          "$ref": "#/$defs/family_challenge"
+        },
+        "parent_note": {
+          "$ref": "#/$defs/parent_note"
+        },
+        "variants": {
+          "$ref": "#/$defs/variants"
+        },
+        "quran": {
+          "$ref": "#/$defs/quran_ref"
+        },
+        "story_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "معرّف قصة في mobile/assets/data/stories.json (و stories_en.json)."
+        },
+        "last_ten": {
+          "type": "boolean",
+          "description": "اليوم من الأيام العشرة الأخيرة بالتقويم (٢١–٣٠). أما ليالي العشر فتبدأ مساء اليوم ٢٠ — انظر odd_night."
+        },
+        "odd_night": {
+          "type": "boolean",
+          "description": "مساء هذا اليوم تبدأ ليلة وترية من العشر الأواخر. الليلة في الحساب الهجري تسبق نهارها: ليلة ٢١ هي مساء اليوم ٢٠، فالقيمة true للأيام ٢٠، ٢٢، ٢٤، ٢٦، ٢٨ (ليالي ٢١، ٢٣، ٢٥، ٢٧، ٢٩) وحدها. ولا تُخصّ ليلة بعينها بأنها ليلة القدر."
+        },
+        "may_not_occur": {
+          "type": "boolean"
+        },
+        "tracks": {
+          "type": "array",
+          "uniqueItems": true,
+          "minItems": 1,
+          "items": {
+            "enum": [
+              "challenge_done",
+              "wird_done",
+              "story_heard",
+              "night_joined",
+              "fasting_step_up",
+              "juz_read",
+              "family_word"
+            ]
+          },
+          "description": "ما تعرضه بطاقة اليوم من علامات «تمّ». night_joined في أمسيات الأيام ٢٠–٢٨ وحدها (مساء ٢٩ قد يكون ليلة العيد)، وfamily_word في اليوم ٢٨ وحده. تقدّم سلّم الصيام (fasting_step_up) يُسجَّل من شاشة السلّم في أي يوم، لا من بطاقة اليوم."
+        }
+      }
+    },
+    "links": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "program_ids",
+        "path_ids",
+        "lesson_ids"
+      ],
+      "properties": {
+        "program_ids": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "ramadan_family",
+              "prayer_journey",
+              "milestones"
+            ]
+          }
+        },
+        "path_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string"
+          }
+        },
+        "lesson_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "generation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "drafter_model",
+        "reviewer_model",
+        "reviewed_at",
+        "approved_by"
+      ],
+      "properties": {
+        "drafter_model": {
+          "type": "string"
+        },
+        "reviewer_model": {
+          "type": "string"
+        },
+        "translator_model": {
+          "type": "string"
+        },
+        "reviewed_at": {
+          "type": "string"
+        },
+        "review_rounds": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "defects_fixed": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "approved_by": {
+          "type": "string",
+          "pattern": "^auto-review:",
+          "description": "مشروع فردي بلا مراجع بشري: الختم يوثّق النماذج والحرّاس التي راجعت، لا توقيع إنسان."
+        }
+      }
+    }
+  }
+}

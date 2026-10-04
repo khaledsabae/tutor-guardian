@@ -1,0 +1,2999 @@
+{
+  "program_type": "ramadan_family",
+  "id": "ramadan_family",
+  "version": "1.0.0",
+  "is_published": true,
+  "language": "en",
+  "title": "Family Ramadan",
+  "subtitle": "Thirty days of worship and joy, together",
+  "description": "A daily program for the whole family in Ramadan: a short challenge at home, a grounded parenting note, a role for every child by age, a gradual and safe fasting ladder, a family Quran reading, special nights in the last ten, then Eid and your 'Our Family's Ramadan' card.",
+  "season": {
+    "hijri_month": 9,
+    "days": 30,
+    "may_have_29_days": true,
+    "expected_start_1448": "2027-02-08"
+  },
+  "bands": {
+    "covered": [
+      "0-3",
+      "4-6",
+      "7-9",
+      "10-12",
+      "13-15"
+    ],
+    "band_map": {
+      "prenatal-1": null,
+      "0-3": "0-3",
+      "2-3": "0-3",
+      "4-6": "4-6",
+      "7-9": "7-9",
+      "10-12": "10-12",
+      "13-15": "13-15",
+      "16-18": "13-15"
+    },
+    "text": "The program is for the whole family: one challenge everyone shares, with a role for each child suited to their age in five groups: up to 3, 4–6, 7–9, 10–12 and 13–15. Teenagers of 16 and over see the 13–15 version. During pregnancy, parents see only the family challenge and its note. The fasting ladder has no fasting before age seven."
+  },
+  "evidence": [
+    {
+      "id": "h_children_fasting",
+      "kind": "hadith",
+      "text_ar": "فكنا نصومه بعد ونصوم صبياننا ونجعل لهم اللعبة من العهن فإذا بكى أحدهم على الطعام أعطيناه ذاك حتى يكون عند الإفطار",
+      "source": "صحيح البخاري — حديث ١٩٦٠",
+      "provenance": {
+        "book": "البخاري",
+        "number": 1960
+      },
+      "context": "Al-Rubayyi' bint Mu'awwidh describing the fast of the day of Ashura in the Prophet's time.",
+      "meaning": "We used to fast it afterwards and have our young children fast; we would make them toys of wool, and when one of them cried for food, we gave him that (toy) until it was time to break the fast."
+    },
+    {
+      "id": "h_intention",
+      "kind": "hadith",
+      "text_ar": "إنما الأعمال بالنيات",
+      "source": "صحيح البخاري — حديث ١",
+      "provenance": {
+        "book": "البخاري",
+        "number": 1
+      },
+      "context": "Narrated by Umar ibn al-Khattab — the first hadith in Sahih al-Bukhari.",
+      "meaning": "Actions are only by intentions."
+    },
+    {
+      "id": "h_ramadan_faith",
+      "kind": "hadith",
+      "text_ar": "من صام رمضان إيمانا واحتسابا غفر له ما تقدم من ذنبه",
+      "source": "صحيح البخاري — حديث ٣٨",
+      "provenance": {
+        "book": "البخاري",
+        "number": 38
+      },
+      "context": "Narrated by Abu Hurayrah.",
+      "meaning": "Whoever fasts Ramadan out of faith and seeking its reward, his past sins are forgiven."
+    },
+    {
+      "id": "h_ramadan_gates",
+      "kind": "hadith",
+      "text_ar": "إذا جاء رمضان فتحت أبواب الجنة",
+      "source": "صحيح البخاري — حديث ١٨٩٨",
+      "provenance": {
+        "book": "البخاري",
+        "number": 1898
+      },
+      "context": "Narrated by Abu Hurayrah.",
+      "meaning": "When Ramadan comes, the gates of Paradise are opened."
+    },
+    {
+      "id": "h_bismillah",
+      "kind": "hadith",
+      "text_ar": "يا غلام سم الله وكل بيمينك وكل مما يليك",
+      "source": "صحيح البخاري — حديث ٥٣٧٦",
+      "provenance": {
+        "book": "البخاري",
+        "number": 5376
+      },
+      "context": "The Prophet ﷺ said this to Umar ibn Abi Salamah, a young boy, at a meal.",
+      "meaning": "Young boy, say Bismillah (in the name of Allah), eat with your right hand, and eat from what is in front of you."
+    },
+    {
+      "id": "h_hasten_iftar",
+      "kind": "hadith",
+      "text_ar": "لا يزال الناس بخير ما عجلوا الفطر",
+      "source": "صحيح البخاري — حديث ١٩٥٧",
+      "provenance": {
+        "book": "البخاري",
+        "number": 1957
+      },
+      "context": "Narrated by Sahl ibn Sa'd.",
+      "meaning": "People will remain in goodness as long as they hasten to break the fast."
+    },
+    {
+      "id": "h_suhoor",
+      "kind": "hadith",
+      "text_ar": "تسحروا فإن في السحور بركة",
+      "source": "صحيح البخاري — حديث ١٩٢٣",
+      "provenance": {
+        "book": "البخاري",
+        "number": 1923
+      },
+      "context": "Narrated by Anas ibn Malik.",
+      "meaning": "Eat suhoor, for in suhoor there is blessing."
+    },
+    {
+      "id": "h_fasting_speech",
+      "kind": "hadith",
+      "text_ar": "وإذا كان يوم صوم أحدكم فلا يرفث ولا يصخب فإن سابه أحد أو قاتله فليقل إني امرؤ صائم",
+      "source": "صحيح البخاري — حديث ١٩٠٤",
+      "provenance": {
+        "book": "البخاري",
+        "number": 1904
+      },
+      "context": "Narrated by Abu Hurayrah.",
+      "meaning": "When it is a day of fasting for one of you, let him not speak obscenely or shout; and if someone insults him or fights him, let him say: I am fasting."
+    },
+    {
+      "id": "h_false_speech",
+      "kind": "hadith",
+      "text_ar": "من لم يدع قول الزور والعمل به فليس لله حاجة في أن يدع طعامه وشرابه",
+      "source": "صحيح البخاري — حديث ١٩٠٣",
+      "provenance": {
+        "book": "البخاري",
+        "number": 1903
+      },
+      "context": "Narrated by Abu Hurayrah.",
+      "meaning": "Whoever does not give up false speech and acting upon it, Allah has no need of his giving up his food and drink."
+    },
+    {
+      "id": "h_generous",
+      "kind": "hadith",
+      "text_ar": "كان رسول الله صلى الله عليه وسلم أجود الناس وكان أجود ما يكون في رمضان",
+      "source": "صحيح البخاري — حديث ٦",
+      "provenance": {
+        "book": "البخاري",
+        "number": 6
+      },
+      "context": "Narrated by Ibn Abbas.",
+      "meaning": "The Messenger of Allah ﷺ was the most generous of people, and he was at his most generous in Ramadan."
+    },
+    {
+      "id": "h_half_date",
+      "kind": "hadith",
+      "text_ar": "اتقوا النار ولو بشق تمرة",
+      "source": "صحيح البخاري — حديث ١٤١٧",
+      "provenance": {
+        "book": "البخاري",
+        "number": 1417
+      },
+      "context": "Narrated by Adi ibn Hatim.",
+      "meaning": "Protect yourselves from the Fire, even with half a date (given in charity)."
+    },
+    {
+      "id": "h_parents",
+      "kind": "hadith",
+      "text_ar": "سألت النبي صلى الله عليه وسلم أي العمل أحب إلى الله قال الصلاة على وقتها قال ثم أي قال ثم بر الوالدين",
+      "source": "صحيح البخاري — حديث ٥٢٧",
+      "provenance": {
+        "book": "البخاري",
+        "number": 527
+      },
+      "context": "Narrated by Abdullah ibn Mas'ud.",
+      "meaning": "I asked the Prophet ﷺ: Which deed is most beloved to Allah? He said: Prayer at its proper time. I asked: Then what? He said: Then kindness to parents."
+    },
+    {
+      "id": "h_quran_teach",
+      "kind": "hadith",
+      "text_ar": "خيركم من تعلم القرآن وعلمه",
+      "source": "صحيح البخاري — حديث ٥٠٢٧",
+      "provenance": {
+        "book": "البخاري",
+        "number": 5027
+      },
+      "context": "Narrated by Uthman ibn Affan.",
+      "meaning": "The best of you are those who learn the Quran and teach it."
+    },
+    {
+      "id": "h_neighbor",
+      "kind": "hadith",
+      "text_ar": "ما زال جبريل يوصيني بالجار حتى ظننت أنه سيورثه",
+      "source": "صحيح البخاري — حديث ٦٠١٥",
+      "provenance": {
+        "book": "البخاري",
+        "number": 6015
+      },
+      "context": "Narrated by Abdullah ibn Umar.",
+      "meaning": "Jibril kept urging me to treat the neighbour well until I thought he would make him an heir."
+    },
+    {
+      "id": "h_anger",
+      "kind": "hadith",
+      "text_ar": "ليس الشديد بالصرعة إنما الشديد الذي يملك نفسه عند الغضب",
+      "source": "صحيح البخاري — حديث ٦١١٤",
+      "provenance": {
+        "book": "البخاري",
+        "number": 6114
+      },
+      "context": "Narrated by Abu Hurayrah.",
+      "meaning": "The strong one is not the one who overpowers others in wrestling; the strong one is the one who controls himself when angry."
+    },
+    {
+      "id": "h_remove_harm",
+      "kind": "hadith",
+      "text_ar": "يميط الأذى عن الطريق صدقة",
+      "source": "صحيح البخاري — حديث ٢٩٨٩",
+      "provenance": {
+        "book": "البخاري",
+        "number": 2989
+      },
+      "context": "Part of a hadith narrated by Abu Hurayrah listing everyday acts of charity.",
+      "meaning": "Removing something harmful from the path is charity."
+    },
+    {
+      "id": "h_truth",
+      "kind": "hadith",
+      "text_ar": "إن الصدق يهدي إلى البر وإن البر يهدي إلى الجنة",
+      "source": "صحيح البخاري — حديث ٦٠٩٤",
+      "provenance": {
+        "book": "البخاري",
+        "number": 6094
+      },
+      "context": "Narrated by Abdullah ibn Mas'ud.",
+      "meaning": "Truthfulness leads to righteousness, and righteousness leads to Paradise."
+    },
+    {
+      "id": "h_kinship",
+      "kind": "hadith",
+      "text_ar": "من أحب أن يبسط له في رزقه وينسأ له في أثره فليصل رحمه",
+      "source": "صحيح البخاري — حديث ٥٩٨٦",
+      "provenance": {
+        "book": "البخاري",
+        "number": 5986
+      },
+      "context": "Narrated by Anas ibn Malik.",
+      "meaning": "Whoever would love his provision to be expanded and his life to be extended, let him keep the ties of kinship."
+    },
+    {
+      "id": "h_mercy",
+      "kind": "hadith",
+      "text_ar": "من لا يرحم لا يرحم",
+      "source": "صحيح البخاري — حديث ٥٩٩٧",
+      "provenance": {
+        "book": "البخاري",
+        "number": 5997
+      },
+      "context": "The Prophet ﷺ said this when he kissed al-Hasan ibn Ali, and al-Aqra' ibn Habis remarked that he had ten children and had never kissed any of them.",
+      "meaning": "Whoever does not show mercy will not be shown mercy."
+    },
+    {
+      "id": "h_last_ten",
+      "kind": "hadith",
+      "text_ar": "كان النبي صلى الله عليه وسلم إذا دخل العشر شد مئزره وأحيا ليله وأيقظ أهله",
+      "source": "صحيح البخاري — حديث ٢٠٢٤",
+      "provenance": {
+        "book": "البخاري",
+        "number": 2024
+      },
+      "context": "Narrated by Aisha; 'the ten' are the last ten nights of Ramadan.",
+      "meaning": "When the (last) ten began, the Prophet ﷺ would tighten his waist-wrapper (devote himself to worship), spend the night in worship, and wake his family."
+    },
+    {
+      "id": "h_seek_qadr",
+      "kind": "hadith",
+      "text_ar": "تحروا ليلة القدر في الوتر من العشر الأواخر من رمضان",
+      "source": "صحيح البخاري — حديث ٢٠١٧",
+      "provenance": {
+        "book": "البخاري",
+        "number": 2017
+      },
+      "context": "Narrated by Aisha.",
+      "meaning": "Seek Laylat al-Qadr in the odd nights of the last ten of Ramadan."
+    },
+    {
+      "id": "h_qadr_faith",
+      "kind": "hadith",
+      "text_ar": "من قام ليلة القدر إيمانا واحتسابا غفر له ما تقدم من ذنبه",
+      "source": "صحيح البخاري — حديث ١٩٠١",
+      "provenance": {
+        "book": "البخاري",
+        "number": 1901
+      },
+      "context": "Narrated by Abu Hurayrah.",
+      "meaning": "Whoever stands in prayer on Laylat al-Qadr out of faith and seeking its reward, his past sins are forgiven."
+    },
+    {
+      "id": "h_two_words",
+      "kind": "hadith",
+      "text_ar": "كلمتان خفيفتان على اللسان ثقيلتان في الميزان حبيبتان إلى الرحمن سبحان الله وبحمده سبحان الله العظيم",
+      "source": "صحيح البخاري — حديث ٦٦٨٢",
+      "provenance": {
+        "book": "البخاري",
+        "number": 6682
+      },
+      "context": "Narrated by Abu Hurayrah.",
+      "meaning": "Two phrases are light on the tongue, heavy on the Scale, and beloved to the Most Merciful: Subhan Allahi wa bihamdihi, Subhan Allahil-Azim."
+    },
+    {
+      "id": "h_kind_word",
+      "kind": "hadith",
+      "text_ar": "الكلمة الطيبة صدقة",
+      "source": "صحيح البخاري — حديث ٢٩٨٩",
+      "provenance": {
+        "book": "البخاري",
+        "number": 2989
+      },
+      "context": "Part of a hadith narrated by Abu Hurayrah listing everyday acts of charity.",
+      "meaning": "A good word is charity."
+    },
+    {
+      "id": "h_shepherd",
+      "kind": "hadith",
+      "text_ar": "كلكم راع وكلكم مسئول عن رعيته",
+      "source": "صحيح البخاري — حديث ٨٩٣",
+      "provenance": {
+        "book": "البخاري",
+        "number": 893
+      },
+      "context": "Narrated by Abdullah ibn Umar.",
+      "meaning": "Each of you is a shepherd, and each of you is responsible for his flock."
+    },
+    {
+      "id": "h_zakat_fitr",
+      "kind": "hadith",
+      "text_ar": "فرض رسول الله صلى الله عليه وسلم زكاة الفطر صاعا من تمر أو صاعا من شعير على العبد والحر والذكر والأنثى والصغير والكبير من المسلمين",
+      "source": "صحيح البخاري — حديث ١٥٠٣",
+      "provenance": {
+        "book": "البخاري",
+        "number": 1503
+      },
+      "context": "Narrated by Abdullah ibn Umar.",
+      "meaning": "The Messenger of Allah ﷺ made Zakat al-Fitr obligatory — a sa' of dates or a sa' of barley — on the slave and the free, male and female, young and old among the Muslims."
+    },
+    {
+      "id": "h_steady",
+      "kind": "hadith",
+      "text_ar": "أحب الأعمال أدومها إلى الله وإن قل",
+      "source": "صحيح البخاري — حديث ٦٤٦٤",
+      "provenance": {
+        "book": "البخاري",
+        "number": 6464
+      },
+      "context": "Part of a hadith narrated by Aisha.",
+      "meaning": "The deeds most beloved to Allah are those done consistently, even if they are small."
+    },
+    {
+      "id": "h_eid",
+      "kind": "hadith",
+      "text_ar": "يا أبا بكر إن لكل قوم عيدا وهذا عيدنا",
+      "source": "صحيح البخاري — حديث ٩٥٢",
+      "provenance": {
+        "book": "البخاري",
+        "number": 952
+      },
+      "context": "The Prophet ﷺ said this to Abu Bakr on a day of Eid; narrated by Aisha.",
+      "meaning": "O Abu Bakr, every people has its festival, and this is our festival."
+    },
+    {
+      "id": "h_eid_dates",
+      "kind": "hadith",
+      "text_ar": "كان رسول الله صلى الله عليه وسلم لا يغدو يوم الفطر حتى يأكل تمرات",
+      "source": "صحيح البخاري — حديث ٩٥٣",
+      "provenance": {
+        "book": "البخاري",
+        "number": 953
+      },
+      "context": "Narrated by Anas ibn Malik.",
+      "meaning": "The Messenger of Allah ﷺ would not go out on the morning of Eid al-Fitr until he had eaten some dates."
+    }
+  ],
+  "kickoff": {
+    "title": "Before Ramadan begins",
+    "text": "The Family Ramadan program runs for thirty days. Each day brings a family challenge of no more than fifteen minutes, a short note for you, a role for each child by age, a family Quran reading and, on some nights, a story. At Eid you receive your 'Our Family's Ramadan' card.",
+    "setup_steps": [
+      "Choose a fixed time for the daily challenge, such as after iftar.",
+      "Set each child's step on the fasting ladder according to age and health; there is no fasting before seven.",
+      "Get ready a box for the charity box, a small jar and some coloured paper.",
+      "Decide whether the parents will read one juz' a day to complete the Quran; the app shows each day's juz'."
+    ],
+    "unit_ids": [
+      "isl-3d476538",
+      "isl-d15d1a95"
+    ]
+  },
+  "fasting_ladder": {
+    "title": "The fasting ladder",
+    "principles": [
+      "Before puberty, fasting is training, not an obligation. The aim is for the child to love fasting, not to hold out as long as possible.",
+      "No fasting under seven: little ones share the atmosphere of Ramadan without fasting.",
+      "Move up a step only after two or three comfortable days on the current one, and only if the child wants to.",
+      "Breaking the fast when tired is not failure: always praise the attempt, and never compare siblings.",
+      "Keep school days, sport days and hot days shorter; rest days are the best days to try."
+    ],
+    "doctor_first": [
+      "Diabetes or any chronic illness, such as kidney disease, heart disease, epilepsy or severe anaemia.",
+      "A medicine taken regularly during the day.",
+      "Being very underweight, or slow growth or weight gain.",
+      "A recent illness in the last few days, such as fever, diarrhoea or vomiting.",
+      "A history of eating problems, or strong preoccupation with weight."
+    ],
+    "stop_signs": [
+      "Dizziness, blurred vision, paleness or a cold sweat.",
+      "A severe headache, or stomach pain that does not ease.",
+      "Vomiting.",
+      "Unusual sleepiness, marked sluggishness or difficulty concentrating.",
+      "Very little or very dark urine, or a very dry mouth.",
+      "The child says he cannot carry on."
+    ],
+    "stop_action": "The child breaks the fast at once: water first, then light food, then rest. Tell him: 'Well done for trying; tomorrow is a new day', with no blame and no comparison. If he does not feel better within an hour, call the doctor.",
+    "urgent_signs": [
+      "Fainting or a seizure.",
+      "Confusion, slurred speech or being hard to wake.",
+      "Repeated vomiting that stops him from drinking.",
+      "In a child with diabetes: any sign of low blood sugar, such as shaking, sweating or confusion."
+    ],
+    "tips": [
+      "Suhoor: water plus slow-digesting food such as wholemeal bread, oats, eggs, yoghurt and pitted dates, not sweets on their own.",
+      "Water little and often from iftar to bedtime, not a large amount all at once.",
+      "Start iftar with water and something light, then have the meal a little later.",
+      "Early sleep matters more than late nights: a tired child finds fasting hard.",
+      "On fasting days: calm activities, out of the sun, and no running about before iftar.",
+      "A toy, a story or a shared task keeps the child busy in the last hour, as in the attached hadith."
+    ],
+    "bands": {
+      "0-3": {
+        "fasts": "no",
+        "summary": "No fasting. The child lives the atmosphere of Ramadan: sitting at the iftar table, hearing 'Bismillah' and seeing the joy at home.",
+        "steps": [
+          {
+            "key": "at_the_table",
+            "label": "With us at the table",
+            "until": "none",
+            "approx_hours": 0,
+            "min_age_years": 0,
+            "advance_when": "No further steps at this age; his meals and sleep stay as usual.",
+            "text": "All his meals stay at their usual times, and he joins you at the iftar table with food suited to his age."
+          }
+        ]
+      },
+      "4-6": {
+        "fasts": "no",
+        "summary": "No fasting from food or drink. Training here is about the meaning of patience through small things, with full meals and water whenever he wants.",
+        "steps": [
+          {
+            "key": "wait_for_the_adhan",
+            "label": "Waiting for the adhan together",
+            "until": "none",
+            "approx_hours": 0,
+            "min_age_years": 4,
+            "advance_when": "When he enjoys taking part and asks for more.",
+            "text": "He saves a sweet or a date until the maghrib adhan to eat with the family; his other meals are complete and on time."
+          },
+          {
+            "key": "no_snacks_day",
+            "label": "A day without snacks between meals",
+            "until": "none",
+            "approx_hours": 0,
+            "min_age_years": 5,
+            "max_days_per_week": 2,
+            "advance_when": "This stays the highest step before age seven.",
+            "text": "One or two days a week: no sweets or snacks between meals, with water and meals as usual. This is not fasting; it is practice in patience."
+          }
+        ]
+      },
+      "7-9": {
+        "fasts": "partial",
+        "summary": "Hours, not full days. He starts with a few hours after suhoor or an early breakfast and builds up gradually, rest days first.",
+        "steps": [
+          {
+            "key": "morning_hours",
+            "label": "Morning hours",
+            "until": "mid_morning",
+            "approx_hours": 3,
+            "min_age_years": 7,
+            "max_days_per_week": 3,
+            "advance_when": "After two or three comfortable days, and if he wants to.",
+            "text": "He goes without food and drink for about three hours after his suhoor or early breakfast, then eats and drinks as usual. If he gets thirsty and tired, drinking is not failure."
+          },
+          {
+            "key": "until_dhuhr",
+            "label": "Until dhuhr",
+            "until": "dhuhr",
+            "approx_hours": 6,
+            "min_age_years": 7,
+            "max_days_per_week": 4,
+            "advance_when": "After at least one comfortable week; the next step is for nine-year-olds only.",
+            "text": "He fasts until the dhuhr adhan, on rest days first and then on school days if he is comfortable."
+          },
+          {
+            "key": "until_asr",
+            "label": "Until asr",
+            "until": "asr",
+            "approx_hours": 9,
+            "min_age_years": 9,
+            "max_days_per_week": 2,
+            "advance_when": "This is the highest step at this age: a full day is not a goal before ten.",
+            "text": "Only for a healthy nine-year-old who wants to: one or two days a week until the asr adhan, on a rest day in mild weather."
+          }
+        ]
+      },
+      "10-12": {
+        "fasts": "partial_to_full",
+        "summary": "Gradual, possibly reaching full days: half a day, then most of the day, then a full day on rest days, without every day becoming a fasting day.",
+        "steps": [
+          {
+            "key": "until_dhuhr",
+            "label": "Until dhuhr",
+            "until": "dhuhr",
+            "approx_hours": 6,
+            "min_age_years": 10,
+            "advance_when": "After two or three comfortable days.",
+            "text": "He starts where he got to last year, or at dhuhr if this is his first time."
+          },
+          {
+            "key": "until_asr",
+            "label": "Until asr",
+            "until": "asr",
+            "approx_hours": 9,
+            "min_age_years": 10,
+            "advance_when": "After a comfortable week.",
+            "text": "He fasts until the asr adhan, then drinks and eats something light, and joins the family at iftar."
+          },
+          {
+            "key": "full_day_rest_days",
+            "label": "A full day on rest days",
+            "until": "maghrib",
+            "approx_hours": 13,
+            "min_age_years": 10,
+            "max_days_per_week": 3,
+            "advance_when": "Full days may increase if he is comfortable and healthy, without pressure.",
+            "text": "He fasts until maghrib, starting with rest days, with a good suhoor and enough sleep. At any of the stop signs he breaks the fast at once."
+          }
+        ]
+      },
+      "13-15": {
+        "fasts": "full_supported",
+        "summary": "After puberty fasting becomes obligatory, so what is needed here is health support rather than training: a good suhoor, enough water, sleep, and care around exams and sport. A girl does not fast during her period and makes those days up after Ramadan, without being embarrassed; the details of the rulings come from scholars. A child who has not yet reached puberty continues the 10–12 steps.",
+        "steps": [
+          {
+            "key": "full_day_supported",
+            "label": "Full days, with support",
+            "until": "maghrib",
+            "approx_hours": 13,
+            "min_age_years": 13,
+            "advance_when": "A child who has not reached puberty continues the 10–12 steps gradually.",
+            "text": "He fasts the month with a good suhoor and enough water between iftar and bedtime. On exam and sport days, lighten the effort, not the fast. If a stop sign appears, his health comes first: he breaks the fast and makes it up later, and you consult the doctor and the scholars if it keeps happening."
+          }
+        ]
+      }
+    },
+    "unit_ids": [
+      "isl-d15d1a95",
+      "isl-3d476538",
+      "isl-5cf45742",
+      "med-408796d1"
+    ],
+    "evidence_ids": [
+      "h_children_fasting"
+    ]
+  },
+  "days": [
+    {
+      "day": 1,
+      "phase": "first_ten",
+      "key": "family_intention",
+      "title": "Our Ramadan intentions",
+      "family_challenge": {
+        "title": "The family intentions board",
+        "steps": [
+          "Everyone picks one small intention they can keep every day, such as a kind word to a sibling or making their bed.",
+          "Parents share theirs first, then the oldest child down to the youngest.",
+          "Write the intentions down, or draw them for the little ones, and hang the sheet where everyone can see it.",
+          "Read them out together and agree to look at them again near the end of Ramadan."
+        ],
+        "minutes": 15,
+        "cost": "low",
+        "at_home": true,
+        "when": "after_iftar",
+        "materials": [
+          "A large sheet of paper",
+          "Coloured pens",
+          "Tape"
+        ]
+      },
+      "parent_note": {
+        "text": "An intention turns a small habit into worship, and the two attached hadiths tie every deed, and fasting in particular, to intention and to seeking reward from Allah. Start by sharing your own intention: children learn more from example than from words. Keep the children's intentions small and doable. Succeeding at something small every day builds a love of worship far more than a big goal dropped after a few days.",
+        "unit_ids": [
+          "isl-3d476538",
+          "isl-f3270ea2"
+        ],
+        "evidence_ids": [
+          "h_intention",
+          "h_ramadan_faith"
+        ]
+      },
+      "variants": {
+        "0-3": {
+          "addressed_to": "parent",
+          "text": "Keep your little one close while you write. Give him a small sheet and a chunky crayon to scribble with, then hang his sheet next to your intentions. Feeling part of the family is enough for him."
+        },
+        "4-6": {
+          "addressed_to": "parent",
+          "text": "Ask him: what is one lovely thing you want to do in Ramadan? Help him choose one simple intention, let him draw it himself, and let him stick it on the board with his own hands."
+        },
+        "7-9": {
+          "addressed_to": "child",
+          "text": "Choose one intention you can do every day, like making your bed or thanking whoever prepares the food. Write it neatly, decorate it, and put a tick beside it every night you do it."
+        },
+        "10-12": {
+          "addressed_to": "child",
+          "text": "Pick an intention that stretches you a little but is doable, like reading a page of the mushaf daily or a daily job at home. Write next to it exactly when you will do it: a clear plan helps you keep going."
+        },
+        "13-15": {
+          "addressed_to": "child",
+          "text": "Today you run the session. Hand out the paper and help any younger ones put their intentions into words, then choose an intention of your own, between you and Allah. You can keep its details private if you like."
+        }
+      },
+      "quran": {
+        "together": {
+          "surah": 1,
+          "from": 1,
+          "to": 7
+        },
+        "theme_ref": {
+          "surah": 2,
+          "from": 183,
+          "to": 185,
+          "topic": "The verses on fasting"
+        },
+        "parent_juz": 1
+      },
+      "story_id": null,
+      "last_ten": false,
+      "odd_night": false,
+      "may_not_occur": false,
+      "tracks": [
+        "challenge_done",
+        "wird_done",
+        "juz_read"
+      ]
+    },
+    {
+      "day": 2,
+      "phase": "first_ten",
+      "key": "ramadan_corner",
+      "title": "Our Ramadan corner",
+      "family_challenge": {
+        "title": "Make a Ramadan corner from things at home",
+        "steps": [
+          "Pick a quiet corner of the house: a shelf, a small table or part of a wall.",
+          "The children draw and colour crescents and stars; the older ones cut them out and hang them up.",
+          "Put the intentions board, a small prayer mat and a thirty-box chart in the corner to tick off each day.",
+          "For light, use battery lights or shiny paper only: no candles and no open flame."
+        ],
+        "minutes": 15,
+        "cost": "low",
+        "at_home": true,
+        "when": "before_iftar",
+        "materials": [
+          "Coloured or scrap paper",
+          "Scissors for the older ones",
+          "A prayer mat or a clean towel"
+        ]
+      },
+      "parent_note": {
+        "text": "A home's joy at Ramadan's arrival is part of upbringing, and the attached hadith brings the good news that the gates of Paradise open in this month. When a child sees the house change and decorates it with his own hands, Ramadan becomes linked in his memory with joy and togetherness. Children learn through play and imitation more than through instruction.",
+        "unit_ids": [
+          "isl-eaeb0ee0",
+          "isl-3d476538"
+        ],
+        "evidence_ids": [
+          "h_ramadan_gates"
+        ]
+      },
+      "variants": {
+        "0-3": {
+          "addressed_to": "parent",
+          "text": "Let him watch the colours and shapes while you decorate, and name what he sees: 'crescent, star, yellow'. Keep scissors and small things he could swallow out of his reach."
+        },
+        "4-6": {
+          "addressed_to": "parent",
+          "text": "Give him the colouring job: he colours the crescents and stars in his favourite colours, then chooses where to hang them. Praise his choice in front of everyone."
+        },
+        "7-9": {
+          "addressed_to": "child",
+          "text": "You are today's Ramadan corner designer: draw the crescents and stars, and make a chart with thirty boxes to tick off each day."
+        },
+        "10-12": {
+          "addressed_to": "child",
+          "text": "Design the thirty-day chart neatly: a box for the family challenge, one for the Quran reading and one for your fasting. Help cut and hang the decorations safely."
+        },
+        "13-15": {
+          "addressed_to": "child",
+          "text": "Take charge of making it happen: choose the spot with your parents, share out the jobs, and make sure everything you hang up is secure and safe for the little ones."
+        }
+      },
+      "quran": {
+        "together": {
+          "surah": 1,
+          "from": 1,
+          "to": 7
+        },
+        "theme_ref": null,
+        "parent_juz": 2
+      },
+      "story_id": null,
+      "last_ten": false,
+      "odd_night": false,
+      "may_not_occur": false,
+      "tracks": [
+        "challenge_done",
+        "wird_done",
+        "juz_read"
+      ]
+    },
+    {
+      "day": 3,
+      "phase": "first_ten",
+      "key": "iftar_table",
+      "title": "The iftar table",
+      "family_challenge": {
+        "title": "Set the table together and begin with Bismillah",
+        "steps": [
+          "Hand out small jobs before the adhan: water and cups, napkins, plates. Everyone gets a job that suits their age.",
+          "Sit down together a few minutes before the adhan and make du'a for whatever you wish.",
+          "At the adhan: 'Bismillah', eating with the right hand and from what is in front of you, as in the attached hadith.",
+          "After the meal everyone says 'Alhamdulillah' and thanks whoever cooked."
+        ],
+        "minutes": 10,
+        "cost": "free",
+        "at_home": true,
+        "when": "at_iftar",
+        "materials": []
+      },
+      "parent_note": {
+        "text": "In the attached hadith the Prophet ﷺ taught a young boy table manners in three short phrases, at the table itself rather than afterwards. That is the method: gentle teaching in the moment, with no lecture and no embarrassment in front of others. The other hadith encourages hastening to break the fast, so make the moment of the adhan a joyful moment that gathers everyone.",
+        "unit_ids": [
+          "isl-e2248a74"
+        ],
+        "evidence_ids": [
+          "h_bismillah",
+          "h_hasten_iftar"
+        ]
+      },
+      "variants": {
+        "0-3": {
+          "addressed_to": "parent",
+          "text": "Seat him at the table with you, in his chair or on your lap, and say 'Bismillah' clearly before he eats. Give him dates cut into small pieces with the stone removed, and never whole nuts or whole grapes."
+        },
+        "4-6": {
+          "addressed_to": "parent",
+          "text": "His job is handing out the napkins or spoons. Before he eats, remind him calmly: 'Bismillah, and with the right hand', and praise him when he remembers by himself. After iftar, listen together to the story 'Abdullah and Bismillah'."
+        },
+        "7-9": {
+          "addressed_to": "child",
+          "text": "Your job: water and cups on the table before the adhan. Start with 'Bismillah', eat with your right hand and from what is in front of you, and at the end say 'Alhamdulillah' and thank whoever cooked."
+        },
+        "10-12": {
+          "addressed_to": "child",
+          "text": "You are today's table coordinator: share out the jobs among your brothers and sisters, or help your parents if you have none, and make sure everything is ready five minutes before the adhan."
+        },
+        "13-15": {
+          "addressed_to": "child",
+          "text": "Help whoever is cooking prepare a simple dish for iftar, and be an example to the little ones in table manners without correcting them in front of everyone. A gentle whisper works better."
+        }
+      },
+      "quran": {
+        "together": {
+          "surah": 114,
+          "from": 1,
+          "to": 6
+        },
+        "theme_ref": null,
+        "parent_juz": 3
+      },
+      "story_id": "abdullah_bismillah",
+      "last_ten": false,
+      "odd_night": false,
+      "may_not_occur": false,
+      "tracks": [
+        "challenge_done",
+        "wird_done",
+        "story_heard",
+        "juz_read"
+      ]
+    },
+    {
+      "day": 4,
+      "phase": "first_ten",
+      "key": "suhoor_blessing",
+      "title": "The blessing of suhoor",
+      "family_challenge": {
+        "title": "A calm suhoor and a fasting step for each child",
+        "steps": [
+          "Suhoor is for the adults and the children who are practising fasting; the little ones stay asleep.",
+          "Suhoor food is water and something slow to digest, not sweets on their own.",
+          "Later that day, look at the fasting ladder together and agree with each child old enough to practise on his step for this week.",
+          "After suhoor, keep the house quiet; whoever can goes back to sleep."
+        ],
+        "minutes": 10,
+        "cost": "free",
+        "at_home": true,
+        "when": "suhoor",
+        "materials": [
+          "Water",
+          "Slow-digesting food: bread, oats, eggs or yoghurt"
+        ]
+      },
+      "parent_note": {
+        "text": "The attached hadith says there is blessing in suhoor, so make it a calm moment for the children who are practising fasting. Little ones are not woken for suhoor: enough sleep is part of their health, and their usual breakfast is all they need. The program's fasting ladder sets the right step for each age, so no child is asked for more than suits his age and health.",
+        "unit_ids": [
+          "isl-d15d1a95",
+          "med-fb24deba"
+        ],
+        "evidence_ids": [
+          "h_suhoor"
+        ]
+      },
+      "variants": {
+        "0-3": {
+          "addressed_to": "parent",
+          "text": "Don't wake him for suhoor. In the morning give him his usual breakfast and talk to him softly about the 'dawn meal' the grown-ups eat in Ramadan."
+        },
+        "4-6": {
+          "addressed_to": "parent",
+          "text": "Don't wake him for suhoor. Turn his breakfast into a 'little suhoor' where he chooses his food with you, and tell him the grown-ups ate a meal like it before dawn."
+        },
+        "7-9": {
+          "addressed_to": "child",
+          "text": "If you are practising fasting, have suhoor or an early breakfast: water and an egg or bread, not sweets on their own. Agree with your parents on your step on the fasting ladder this week."
+        },
+        "10-12": {
+          "addressed_to": "child",
+          "text": "Have suhoor with the family and drink your water slowly. Choose your fasting-ladder step with your parents and write it in your chart so you know this week's goal."
+        },
+        "13-15": {
+          "addressed_to": "child",
+          "text": "Help prepare suhoor quietly so the little ones don't wake up. Choose food that keeps you full for longer, and spread your water between iftar and bedtime rather than drinking it all at suhoor."
+        }
+      },
+      "quran": {
+        "together": {
+          "surah": 114,
+          "from": 1,
+          "to": 6
+        },
+        "theme_ref": null,
+        "parent_juz": 4
+      },
+      "story_id": null,
+      "last_ten": false,
+      "odd_night": false,
+      "may_not_occur": false,
+      "tracks": [
+        "challenge_done",
+        "wird_done",
+        "juz_read"
+      ]
+    },
+    {
+      "day": 5,
+      "phase": "first_ten",
+      "key": "fasting_tongue",
+      "title": "The fasting tongue",
+      "family_challenge": {
+        "title": "The kind-words jar",
+        "steps": [
+          "Agree on a calm phrase for anyone who is provoked today: 'I am fasting', and then they walk away calmly.",
+          "Every kind word someone hears from another family member today goes on a slip of paper into the jar.",
+          "In the evening, count the slips and read some of them aloud."
+        ],
+        "minutes": 10,
+        "cost": "free",
+        "at_home": true,
+        "when": "anytime",
+        "materials": [
+          "A jar or an empty box",
+          "Slips of paper"
+        ]
+      },
+      "parent_note": {
+        "text": "Fasting is not only going without food. The two attached hadiths tie it to speech and behaviour: no shouting and no foul words, and whoever is provoked says that he is fasting. The hardest time is the last hour before iftar, so be the example then. Children learn a calm tongue when they see it in their parents while they are tired.",
+        "unit_ids": [
+          "isl-50f95326",
+          "isl-dfa52092"
+        ],
+        "evidence_ids": [
+          "h_fasting_speech",
+          "h_false_speech"
+        ]
+      },
+      "variants": {
+        "0-3": {
+          "addressed_to": "parent",
+          "text": "Little ones pick up the tone of voice before the words. Speak calmly in front of him today and repeat lovely words to him: 'thank you', 'I love you', 'jazak Allahu khayran'."
+        },
+        "4-6": {
+          "addressed_to": "parent",
+          "text": "Teach him to say 'thank you' and 'please', and put a slip in the jar in front of him every time he does. A jar that fills up is a joy he can see with his own eyes."
+        },
+        "7-9": {
+          "addressed_to": "child",
+          "text": "Your challenge: say at least three kind words to your family today. If you get angry, say 'I am fasting' and step away until you calm down."
+        },
+        "10-12": {
+          "addressed_to": "child",
+          "text": "Be the 'kind-words spotter': whenever you hear someone say something lovely, write it on a slip and put it in the jar, then read the best ones to the family in the evening."
+        },
+        "13-15": {
+          "addressed_to": "child",
+          "text": "Watch your own tongue today, especially in the last hour before iftar and with your brothers and sisters. If you slip, apologise quickly: an apology from an older one is a lesson for the younger ones."
+        }
+      },
+      "quran": {
+        "together": {
+          "surah": 113,
+          "from": 1,
+          "to": 5
+        },
+        "theme_ref": null,
+        "parent_juz": 5
+      },
+      "story_id": null,
+      "last_ten": false,
+      "odd_night": false,
+      "may_not_occur": false,
+      "tracks": [
+        "challenge_done",
+        "wird_done",
+        "juz_read"
+      ]
+    },
+    {
+      "day": 6,
+      "phase": "first_ten",
+      "key": "charity_box",
+      "title": "The family charity box",
+      "family_challenge": {
+        "title": "Make the charity box and make a start",
+        "steps": [
+          "Decorate an empty box and write on it: Family charity box.",
+          "Everyone puts in something from their own money, however little, or a little one picks a toy or book in good condition to give away.",
+          "Agree together who the box will go to at the end of Ramadan: a family in need you know, or a trusted charity."
+        ],
+        "minutes": 10,
+        "cost": "low",
+        "at_home": true,
+        "when": "anytime",
+        "materials": [
+          "An empty box",
+          "Pens to decorate it"
+        ]
+      },
+      "parent_note": {
+        "text": "The Prophet ﷺ was at his most generous in Ramadan, as the attached hadith tells us, and the other hadith counts even half a date as charity that matters. What counts is the habit of giving, not the size of the gift. Let your child choose what to give, and never force him to part with a toy he loves: giving under pressure teaches the opposite of what we want.",
+        "unit_ids": [
+          "isl-bd250b64"
+        ],
+        "evidence_ids": [
+          "h_generous",
+          "h_half_date"
+        ]
+      },
+      "variants": {
+        "0-3": {
+          "addressed_to": "parent",
+          "text": "Put a banknote in his hand and let him push it into the box with your hand around his, then smile and say: 'charity!' Use paper money, not coins: coins are dangerous if he puts them in his mouth."
+        },
+        "4-6": {
+          "addressed_to": "parent",
+          "text": "Help him choose a toy or book he would like to make another child happy with, and listen together to the story 'Maryam and the Toy Box'. The choice is his; the praise is yours."
+        },
+        "7-9": {
+          "addressed_to": "child",
+          "text": "Put part of your pocket money in the box this week, even a little, and draw something on the box that reminds you who your charity will make happy."
+        },
+        "10-12": {
+          "addressed_to": "child",
+          "text": "Suggest to the family where the charity should go, find out a little about it with your parents, and note in your chart each time you put something in the box."
+        },
+        "13-15": {
+          "addressed_to": "child",
+          "text": "Think about charity beyond money too: your time or a skill, like helping a younger child with lessons or helping an elderly neighbour. Write your idea on a slip and put it in the box."
+        }
+      },
+      "quran": {
+        "together": {
+          "surah": 113,
+          "from": 1,
+          "to": 5
+        },
+        "theme_ref": null,
+        "parent_juz": 6
+      },
+      "story_id": "maryam_toys",
+      "last_ten": false,
+      "odd_night": false,
+      "may_not_occur": false,
+      "tracks": [
+        "challenge_done",
+        "wird_done",
+        "story_heard",
+        "juz_read"
+      ]
+    },
+    {
+      "day": 7,
+      "phase": "first_ten",
+      "key": "honouring_parents",
+      "title": "Honouring parents",
+      "family_challenge": {
+        "title": "A secret act of kindness for a parent or grandparent",
+        "steps": [
+          "Each child chooses a small service to do for a parent today without saying so: water at iftar, lining up the shoes, a drawing or a thank-you.",
+          "Call the grandparents together, or visit if they live nearby, and let the children wish them a blessed Ramadan.",
+          "If a grandparent has passed away, make du'a together for Allah's mercy on them."
+        ],
+        "minutes": 15,
+        "cost": "free",
+        "at_home": true,
+        "when": "anytime",
+        "materials": []
+      },
+      "parent_note": {
+        "text": "In the attached hadith, kindness to parents comes right after prayer on time among the deeds most beloved to Allah. Children learn birr al-walidayn (dutiful kindness to parents) from what they see more than from what they hear: when they see you call and honour your own parents, they understand that this is how this home lives. Call your parents today in front of your children if you can.",
+        "unit_ids": [
+          "isl-9b6fc547",
+          "isl-4e0db0bd"
+        ],
+        "evidence_ids": [
+          "h_parents"
+        ]
+      },
+      "variants": {
+        "0-3": {
+          "addressed_to": "parent",
+          "text": "Let him spend time on his grandparent's lap, or see them on a video call and wave. The voices of the wider family build his sense of safety."
+        },
+        "4-6": {
+          "addressed_to": "parent",
+          "text": "Help him draw a little card for a parent or grandparent, listen together to the story 'Fatima and the Flower of Birr', then let him hand over his card himself."
+        },
+        "7-9": {
+          "addressed_to": "child",
+          "text": "Your secret mission: do something today that will make your mum or dad happy without being asked, then wait for them to notice. Don't tell anyone before iftar!"
+        },
+        "10-12": {
+          "addressed_to": "child",
+          "text": "Call one of your grandparents yourself today, ask what Ramadan was like when they were young, and tell the family what you heard at iftar."
+        },
+        "13-15": {
+          "addressed_to": "child",
+          "text": "Take a tiring job off one of your parents today, like helping in the kitchen, tidying up or shopping, without being asked."
+        }
+      },
+      "quran": {
+        "together": {
+          "surah": 112,
+          "from": 1,
+          "to": 4
+        },
+        "theme_ref": {
+          "surah": 17,
+          "from": 23,
+          "to": 24,
+          "topic": "Kindness to parents"
+        },
+        "parent_juz": 7
+      },
+      "story_id": "fatima_parents",
+      "last_ten": false,
+      "odd_night": false,
+      "may_not_occur": false,
+      "tracks": [
+        "challenge_done",
+        "wird_done",
+        "story_heard",
+        "juz_read"
+      ]
+    },
+    {
+      "day": 8,
+      "phase": "first_ten",
+      "key": "family_quran_circle",
+      "title": "The family Quran circle",
+      "family_challenge": {
+        "title": "A short Quran circle after iftar",
+        "steps": [
+          "Sit in a circle; everyone reads or repeats today's surah as best they can.",
+          "The youngest listens or repeats a single word; the older ones read from the mushaf.",
+          "Finish with everyone saying one thing they love about the Quran.",
+          "No correcting that embarrasses anyone in front of their siblings: praise the effort, and correct gently and in private."
+        ],
+        "minutes": 15,
+        "cost": "free",
+        "at_home": true,
+        "when": "after_iftar",
+        "materials": [
+          "A mushaf"
+        ]
+      },
+      "parent_note": {
+        "text": "The attached hadith says the best of people are those who learn the Quran and teach it, and the home circle is the nearest school for that. What matters most is that the child loves the Quran session: short, warm and full of praise for effort. This circle is a weekly habit you can keep after Ramadan.",
+        "unit_ids": [
+          "isl-77ba4991",
+          "f414d4fc-4ee9-4385-b7d6-4496c1ee9aaa"
+        ],
+        "evidence_ids": [
+          "h_quran_teach"
+        ]
+      },
+      "variants": {
+        "0-3": {
+          "addressed_to": "parent",
+          "text": "Sit him on your lap inside the circle; hearing the recitation and seeing the family gathered around the Quran is enough for him."
+        },
+        "4-6": {
+          "addressed_to": "parent",
+          "text": "Let him repeat a short verse, or a word of it, after you, and clap when he finishes. Give him a role: he announces the start of the circle."
+        },
+        "7-9": {
+          "addressed_to": "child",
+          "text": "Recite today's surah, or part of it, to the family, and pick a word you liked in it to tell them about."
+        },
+        "10-12": {
+          "addressed_to": "child",
+          "text": "Read from the mushaf in a clear voice and help the younger ones repeat after you. If you know the surah by heart, recite it from memory."
+        },
+        "13-15": {
+          "addressed_to": "child",
+          "text": "Lead the circle today: who starts, who reads next, and when it ends. Remember that the little ones need encouragement more than lots of correction."
+        }
+      },
+      "quran": {
+        "together": {
+          "surah": 112,
+          "from": 1,
+          "to": 4
+        },
+        "theme_ref": null,
+        "parent_juz": 8
+      },
+      "story_id": null,
+      "last_ten": false,
+      "odd_night": false,
+      "may_not_occur": false,
+      "tracks": [
+        "challenge_done",
+        "wird_done",
+        "juz_read"
+      ]
+    },
+    {
+      "day": 9,
+      "phase": "first_ten",
+      "key": "neighbour_plate",
+      "title": "A plate for the neighbour",
+      "family_challenge": {
+        "title": "Share a plate of our iftar with a neighbour",
+        "steps": [
+          "Prepare a small plate from your iftar, or a few dates.",
+          "The children carry it to the neighbour together with a parent, with a kind word and Ramadan greetings.",
+          "If you don't know the neighbours well, ask about food allergies before giving.",
+          "If you have no close neighbours, the building guard or a colleague works too."
+        ],
+        "minutes": 15,
+        "cost": "low",
+        "at_home": true,
+        "when": "before_iftar",
+        "materials": [
+          "A plate",
+          "Some of your iftar food or dates"
+        ]
+      },
+      "parent_note": {
+        "text": "The attached hadith shows how much Jibril urged the Prophet ﷺ to care for the neighbour. When a child carries the plate himself and sees the neighbour's delight, he learns the neighbour's right by doing, not by being told. Teaching children the rights of others is one of the foundations of upbringing.",
+        "unit_ids": [
+          "isl-82c3c96e"
+        ],
+        "evidence_ids": [
+          "h_neighbor"
+        ]
+      },
+      "variants": {
+        "0-3": {
+          "addressed_to": "parent",
+          "text": "Carry him with you when you hand over the plate and let him wave to the neighbours. Seeing smiling faces is enough for him."
+        },
+        "4-6": {
+          "addressed_to": "parent",
+          "text": "Let him carry the dates or a pretty napkin and say to the neighbour: 'Ramadan Kareem'. Then listen together to the story 'Khadijah and the Right of the Neighbour'."
+        },
+        "7-9": {
+          "addressed_to": "child",
+          "text": "Decorate a small card saying 'Ramadan Kareem' to go with the plate, and carry it to the neighbour with one of your parents."
+        },
+        "10-12": {
+          "addressed_to": "child",
+          "text": "Help prepare and arrange the plate, and suggest a neighbour who may be alone or elderly to receive it today."
+        },
+        "13-15": {
+          "addressed_to": "child",
+          "text": "Take the lead in handing over the plate and greeting the neighbour, with one of your parents beside you, and ask whether they need help with anything."
+        }
+      },
+      "quran": {
+        "together": {
+          "surah": 110,
+          "from": 1,
+          "to": 3
+        },
+        "theme_ref": null,
+        "parent_juz": 9
+      },
+      "story_id": "khadija_neighbor",
+      "last_ten": false,
+      "odd_night": false,
+      "may_not_occur": false,
+      "tracks": [
+        "challenge_done",
+        "wird_done",
+        "story_heard",
+        "juz_read"
+      ]
+    },
+    {
+      "day": 10,
+      "phase": "first_ten",
+      "key": "gratitude_jar",
+      "title": "The gratitude jar",
+      "family_challenge": {
+        "title": "Three blessings from our day",
+        "steps": [
+          "Everyone writes, or draws, three small blessings from their day: cold water at iftar, a friend's smile, a warm home.",
+          "The slips go into the gratitude jar.",
+          "Each person reads out one blessing, and everyone says: 'Alhamdulillah'."
+        ],
+        "minutes": 10,
+        "cost": "free",
+        "at_home": true,
+        "when": "after_iftar",
+        "materials": [
+          "A jar or a box",
+          "Slips of paper"
+        ]
+      },
+      "parent_note": {
+        "text": "After ten days of fasting a child feels the value of water and food more than ever. Use that to build the habit of gratitude and contentment with what he has: gratitude reduces complaining and constant demands. Today's verse is about gratitude.",
+        "unit_ids": [
+          "isl-e622ac43",
+          "isl-b793e864"
+        ],
+        "evidence_ids": []
+      },
+      "variants": {
+        "0-3": {
+          "addressed_to": "parent",
+          "text": "Name blessings to him while he eats or plays: 'Alhamdulillah for water', 'Alhamdulillah for Mummy and Daddy'. Words he hears again and again stay in his memory."
+        },
+        "4-6": {
+          "addressed_to": "parent",
+          "text": "Let him draw three things he loves at home while you write their names underneath, then listen together to 'Layla and Her Little Star' before bed."
+        },
+        "7-9": {
+          "addressed_to": "child",
+          "text": "Write three blessings, one of them something you never noticed before, like the hands you write with. Put them in the jar and read one to the family."
+        },
+        "10-12": {
+          "addressed_to": "child",
+          "text": "Write one blessing about each person in your family, something that makes you thank Allah that they are with you, and give it to them."
+        },
+        "13-15": {
+          "addressed_to": "child",
+          "text": "Write three blessings, and a fourth that came disguised as something hard that taught you something. Share it if you like."
+        }
+      },
+      "quran": {
+        "together": {
+          "surah": 110,
+          "from": 1,
+          "to": 3
+        },
+        "theme_ref": {
+          "surah": 14,
+          "from": 7,
+          "to": 7,
+          "topic": "Gratitude"
+        },
+        "parent_juz": 10
+      },
+      "story_id": "layla_star",
+      "last_ten": false,
+      "odd_night": false,
+      "may_not_occur": false,
+      "tracks": [
+        "challenge_done",
+        "wird_done",
+        "story_heard",
+        "juz_read"
+      ]
+    },
+    {
+      "day": 11,
+      "phase": "middle_ten",
+      "key": "patience_seed",
+      "title": "The seed of patience",
+      "family_challenge": {
+        "title": "Plant a seed and watch it grow",
+        "steps": [
+          "Put damp cotton wool in a cup with a few lentil or bean seeds on top, and set it by a window.",
+          "Everyone names something they are being patient with this Ramadan: hunger, waiting their turn, or a hard lesson.",
+          "Check the seeds every day and water them a little; they will sprout in a few days, by Allah's leave."
+        ],
+        "minutes": 10,
+        "cost": "free",
+        "at_home": true,
+        "when": "anytime",
+        "materials": [
+          "A cup",
+          "Cotton wool",
+          "Lentil or bean seeds"
+        ]
+      },
+      "parent_note": {
+        "text": "In Ramadan a child practises patience every day: with hunger, with waiting his turn, with things he does not like. Children learn patience when their patience is noticed and praised: 'I saw you wait for iftar so calmly. Well done.' Praise the patience itself, not only the result. The seed that sprouts slowly is a reminder he sees every day.",
+        "unit_ids": [
+          "isl-c0274dd3",
+          "isl-b5620aee"
+        ],
+        "evidence_ids": []
+      },
+      "variants": {
+        "0-3": {
+          "addressed_to": "parent",
+          "text": "Keep the seeds out of his reach: they are small enough to swallow. Show him the cup every morning, and when the leaves appear say: 'Look, it's growing!'"
+        },
+        "4-6": {
+          "addressed_to": "parent",
+          "text": "Let him water the seeds every morning with a spoonful of water, listen together to 'Yusuf and the Seed of Hope', and teach him to say when he has to wait: 'I'll be patient.'"
+        },
+        "7-9": {
+          "addressed_to": "child",
+          "text": "Draw the seeds every day in a little notebook to see how they grow, and next to each drawing write something you were patient about that day."
+        },
+        "10-12": {
+          "addressed_to": "child",
+          "text": "Choose one hard thing to be patient with until the end of Ramadan, like dropping a habit you don't like or mastering something new, and track it in your chart."
+        },
+        "13-15": {
+          "addressed_to": "child",
+          "text": "Read 'Yusuf and the Seed of Hope' to a younger brother or sister if you have one, or think on your own: where do you most need patience this year?"
+        }
+      },
+      "quran": {
+        "together": {
+          "surah": 109,
+          "from": 1,
+          "to": 6
+        },
+        "theme_ref": {
+          "surah": 2,
+          "from": 153,
+          "to": 153,
+          "topic": "Patience"
+        },
+        "parent_juz": 11
+      },
+      "story_id": "hope_sprout",
+      "last_ten": false,
+      "odd_night": false,
+      "may_not_occur": false,
+      "tracks": [
+        "challenge_done",
+        "wird_done",
+        "story_heard",
+        "juz_read"
+      ]
+    },
+    {
+      "day": 12,
+      "phase": "middle_ten",
+      "key": "calm_when_angry",
+      "title": "Calm when angry",
+      "family_challenge": {
+        "title": "The family calm-down plan",
+        "steps": [
+          "Agree on three steps for anyone who gets angry: stop and breathe slowly three times, change place or sit down, then say how you feel in words.",
+          "Practise them together as a game: one person acts angry and follows the steps.",
+          "Write the steps on a 'calm card' and hang it in the Ramadan corner."
+        ],
+        "minutes": 10,
+        "cost": "free",
+        "at_home": true,
+        "when": "anytime",
+        "materials": [
+          "A sheet of paper",
+          "Coloured pens"
+        ]
+      },
+      "parent_note": {
+        "text": "The strong person in the attached hadith is not the one who overpowers others but the one who controls himself when angry. The last hour before iftar is the tensest time at home, so a plan agreed in advance prevents a lot of shouting. And if you lose your temper and get it wrong, apologise to your child: that teaches him more than any advice.",
+        "unit_ids": [
+          "isl-50f95326",
+          "seed-tantrum-46"
+        ],
+        "evidence_ids": [
+          "h_anger"
+        ]
+      },
+      "variants": {
+        "0-3": {
+          "addressed_to": "parent",
+          "text": "Crying and tantrums are normal at this age. Hold him, speak softly and name his feeling for him: 'You're angry, and I'm here with you.'"
+        },
+        "4-6": {
+          "addressed_to": "parent",
+          "text": "Teach him 'balloon breathing': a deep breath in, then blow out slowly as if blowing up a balloon. Practise while he is calm so he can use it when he is angry."
+        },
+        "7-9": {
+          "addressed_to": "child",
+          "text": "When you get angry today, try the steps on the calm card, then tell your parents: did it work? Every time you calm yourself down, you get stronger."
+        },
+        "10-12": {
+          "addressed_to": "child",
+          "text": "On a small card, write three things that make you angry and, next to each, a way to calm down. Keep it for yourself."
+        },
+        "13-15": {
+          "addressed_to": "child",
+          "text": "Think back to the last time you got angry: what would have happened if you had used the calm steps? Today, be the one who calms arguments between the younger ones instead of feeding them."
+        }
+      },
+      "quran": {
+        "together": {
+          "surah": 109,
+          "from": 1,
+          "to": 6
+        },
+        "theme_ref": {
+          "surah": 3,
+          "from": 134,
+          "to": 134,
+          "topic": "Restraining anger"
+        },
+        "parent_juz": 12
+      },
+      "story_id": null,
+      "last_ten": false,
+      "odd_night": false,
+      "may_not_occur": false,
+      "tracks": [
+        "challenge_done",
+        "wird_done",
+        "juz_read"
+      ]
+    },
+    {
+      "day": 13,
+      "phase": "middle_ten",
+      "key": "clean_space",
+      "title": "Clearing harm from the way",
+      "family_challenge": {
+        "title": "Fifteen minutes to clean a shared space",
+        "steps": [
+          "Choose a place people use: the entrance, the building stairs, the balcony or the space outside your door.",
+          "Put on gloves, pick up paper and litter, and tidy the place.",
+          "Little ones pick up safe things only, never glass or anything sharp.",
+          "Keep it light and fun: you are fasting, and fifteen minutes is enough."
+        ],
+        "minutes": 15,
+        "cost": "free",
+        "at_home": true,
+        "when": "anytime",
+        "materials": [
+          "Gloves",
+          "A rubbish bag"
+        ]
+      },
+      "parent_note": {
+        "text": "The attached hadith counts clearing what harms people from their way as charity, so cleaning is worship everyone at home can share in. Turn it into a race or a song for the little ones and praise every bit of help: playing together teaches children cooperation and commitment more than orders do.",
+        "unit_ids": [
+          "isl-eaeb0ee0"
+        ],
+        "evidence_ids": [
+          "h_remove_harm"
+        ]
+      },
+      "variants": {
+        "0-3": {
+          "addressed_to": "parent",
+          "text": "He stays with you in his buggy or your arms while you tidy, away from the rubbish. Back home, he can put his toys in their box while you clap for him."
+        },
+        "4-6": {
+          "addressed_to": "parent",
+          "text": "Give him a safe job: putting paper into the bag with you beside him, and listen together to the story 'Noor and the Clean Garden'."
+        },
+        "7-9": {
+          "addressed_to": "child",
+          "text": "Put on the gloves and be today's 'clean-up hero': collect paper and light cans, and leave glass and sharp things to the grown-ups."
+        },
+        "10-12": {
+          "addressed_to": "child",
+          "text": "Suggest the place that needs cleaning, share out the jobs, and take before-and-after photos for your family only, not for posting."
+        },
+        "13-15": {
+          "addressed_to": "child",
+          "text": "Take on the jobs that need more strength, like carrying bags or moving things, and make sure the little ones work safely."
+        }
+      },
+      "quran": {
+        "together": {
+          "surah": 108,
+          "from": 1,
+          "to": 3
+        },
+        "theme_ref": null,
+        "parent_juz": 13
+      },
+      "story_id": "noor_clean",
+      "last_ten": false,
+      "odd_night": false,
+      "may_not_occur": false,
+      "tracks": [
+        "challenge_done",
+        "wird_done",
+        "story_heard",
+        "juz_read"
+      ]
+    },
+    {
+      "day": 14,
+      "phase": "middle_ten",
+      "key": "moon_reflection",
+      "title": "Looking at the moon",
+      "family_challenge": {
+        "title": "A sky-watching moment",
+        "steps": [
+          "After iftar, look at the moon together from a window or a safe balcony. In the middle of the hijri month it is full or nearly full and rises around sunset.",
+          "Everyone draws tonight's moon. Look again on a later night: it grows thinner until it disappears at the end of the month, and then the crescent of the new month appears.",
+          "Everyone names one thing in the sky or in nature that reminds them of Allah's greatness."
+        ],
+        "minutes": 10,
+        "cost": "free",
+        "at_home": true,
+        "when": "night",
+        "materials": [
+          "A sheet of paper",
+          "A pencil"
+        ]
+      },
+      "parent_note": {
+        "text": "Reflecting on Allah's creation is one of the closest roads to a child's heart in learning tawhid (the oneness of Allah): he sees with his own eyes and asks, and you connect what he sees to the Creator. Today's verses are about reflecting on creation. Answer his questions with what you know, and say 'I don't know, let's find out together' when you don't.",
+        "unit_ids": [
+          "isl-a10b175c"
+        ],
+        "evidence_ids": []
+      },
+      "variants": {
+        "0-3": {
+          "addressed_to": "parent",
+          "text": "Hold him, point at the moon and say: 'The moon. Allah made it.' Keep a firm hold of him on the balcony or by the window."
+        },
+        "4-6": {
+          "addressed_to": "parent",
+          "text": "Ask him: what shape is the moon tonight? Let him draw it, and listen together to 'Yaseen and the Wonders of the Creator'. He must not go near the edge of the balcony on his own."
+        },
+        "7-9": {
+          "addressed_to": "child",
+          "text": "Draw the moon tonight and again three or four nights later. What changed? Write down a question about the moon and ask your parents."
+        },
+        "10-12": {
+          "addressed_to": "child",
+          "text": "Find out with your parents why the moon changes shape during the month, then explain it simply to your brothers and sisters if you have any."
+        },
+        "13-15": {
+          "addressed_to": "child",
+          "text": "Read today's verses from the mushaf, then write a short reflection in your notebook about something in the universe that made you think about Allah's greatness."
+        }
+      },
+      "quran": {
+        "together": {
+          "surah": 108,
+          "from": 1,
+          "to": 3
+        },
+        "theme_ref": {
+          "surah": 3,
+          "from": 190,
+          "to": 191,
+          "topic": "Reflecting on creation"
+        },
+        "parent_juz": 14
+      },
+      "story_id": "yaseen_creation",
+      "last_ten": false,
+      "odd_night": false,
+      "may_not_occur": false,
+      "tracks": [
+        "challenge_done",
+        "wird_done",
+        "story_heard",
+        "juz_read"
+      ]
+    },
+    {
+      "day": 15,
+      "phase": "middle_ten",
+      "key": "truth_day",
+      "title": "Truth day",
+      "family_challenge": {
+        "title": "The brave-truth game",
+        "steps": [
+          "Agree for today: anyone who owns up to a small mistake is thanked, not punished: 'Thank you for telling the truth.'",
+          "In the evening, everyone tells about a moment when they told the truth even though it was hard.",
+          "Parents go first, with a story from their own childhood."
+        ],
+        "minutes": 10,
+        "cost": "free",
+        "at_home": true,
+        "when": "anytime",
+        "materials": []
+      },
+      "parent_note": {
+        "text": "Children usually lie out of fear of punishment or embarrassment, so when telling the truth is safe at home, lying shrinks. The attached hadith shows that truthfulness leads to righteousness and to Paradise. Never lie to your children, even as a joke or to keep them quiet: they copy what they see.",
+        "unit_ids": [
+          "isl-dfa52092",
+          "seed-lying-79"
+        ],
+        "evidence_ids": [
+          "h_truth"
+        ]
+      },
+      "variants": {
+        "0-3": {
+          "addressed_to": "parent",
+          "text": "At this age a child doesn't lie the way adults do: his imagination is big. Always tell him the truth in simple words; that is his first lesson in honesty."
+        },
+        "4-6": {
+          "addressed_to": "parent",
+          "text": "If he owns up to a mistake today, thank him first, then put it right together. Listen together to the story 'Hamza and the Amanah of the Word'."
+        },
+        "7-9": {
+          "addressed_to": "child",
+          "text": "Your challenge: if you make a mistake today, tell the truth straight away, and see how your parents thank you."
+        },
+        "10-12": {
+          "addressed_to": "child",
+          "text": "Think: why do people sometimes lie? And what makes telling the truth easier? Share your answer at the evening session."
+        },
+        "13-15": {
+          "addressed_to": "child",
+          "text": "Truthfulness covers what you write and share online too. Think of a time you saw a lie spreading, and how you could avoid helping it spread."
+        }
+      },
+      "quran": {
+        "together": {
+          "surah": 107,
+          "from": 1,
+          "to": 7
+        },
+        "theme_ref": {
+          "surah": 9,
+          "from": 119,
+          "to": 119,
+          "topic": "Truthfulness"
+        },
+        "parent_juz": 15
+      },
+      "story_id": "hamza_truth",
+      "last_ten": false,
+      "odd_night": false,
+      "may_not_occur": false,
+      "tracks": [
+        "challenge_done",
+        "wird_done",
+        "story_heard",
+        "juz_read"
+      ]
+    },
+    {
+      "day": 16,
+      "phase": "middle_ten",
+      "key": "family_ties",
+      "title": "Keeping family ties",
+      "family_challenge": {
+        "title": "Call a relative we haven't spoken to for a while",
+        "steps": [
+          "Choose together a relative you haven't called for a while: an uncle, an aunt, a cousin or an elderly relative.",
+          "Call them; the children greet them, wish them a blessed Ramadan or show them a drawing.",
+          "If there is coldness between you and a relative, think about a small first step towards them yourselves, without involving the children in the disagreement."
+        ],
+        "minutes": 15,
+        "cost": "free",
+        "at_home": true,
+        "when": "after_iftar",
+        "materials": []
+      },
+      "parent_note": {
+        "text": "The attached hadith links keeping family ties (silat al-rahim) with wider provision and a longer legacy. A child who sees his parents reach out to relatives, forgive and greet first learns that the wider family is part of his life. Keep the call short and cheerful, and never load the adults' disagreements onto the children.",
+        "unit_ids": [
+          "isl-82c3c96e"
+        ],
+        "evidence_ids": [
+          "h_kinship"
+        ]
+      },
+      "variants": {
+        "0-3": {
+          "addressed_to": "parent",
+          "text": "Let him appear on the video call and wave to your relatives, and repeat their names to him: 'This is your aunt, this is your uncle.'"
+        },
+        "4-6": {
+          "addressed_to": "parent",
+          "text": "Help him prepare a drawing to show the relative on the call, and listen together to the story 'Bilal and the Heart of Forgiveness'."
+        },
+        "7-9": {
+          "addressed_to": "child",
+          "text": "Prepare two questions to ask your relative on the call, like: what was Ramadan like for you when you were little?"
+        },
+        "10-12": {
+          "addressed_to": "child",
+          "text": "You suggest which relative to call, and open the call yourself with a greeting and Ramadan wishes."
+        },
+        "13-15": {
+          "addressed_to": "child",
+          "text": "Call a relative your own age, or one of the family elders, yourself this week, and tell your parents how it went."
+        }
+      },
+      "quran": {
+        "together": {
+          "surah": 107,
+          "from": 1,
+          "to": 7
+        },
+        "theme_ref": null,
+        "parent_juz": 16
+      },
+      "story_id": "bilal_forgiveness",
+      "last_ten": false,
+      "odd_night": false,
+      "may_not_occur": false,
+      "tracks": [
+        "challenge_done",
+        "wird_done",
+        "story_heard",
+        "juz_read"
+      ]
+    },
+    {
+      "day": 17,
+      "phase": "middle_ten",
+      "key": "mercy_to_animals",
+      "title": "Mercy to all creatures",
+      "family_challenge": {
+        "title": "Water and food for the birds",
+        "steps": [
+          "Put out a small dish of water and a few bread crumbs or grains on the balcony or by the door.",
+          "Check it over the next days and change the water every day.",
+          "Children don't touch stray animals, and everyone washes their hands after putting the food out."
+        ],
+        "minutes": 10,
+        "cost": "free",
+        "at_home": true,
+        "when": "anytime",
+        "materials": [
+          "A small water dish",
+          "Bread crumbs or grain"
+        ]
+      },
+      "parent_note": {
+        "text": "Mercy in the attached hadith is a rule that covers everything, and the Prophet ﷺ was kissing his grandson when he spoke of it. Mercy to animals and birds is part of mercy to people. Hug and kiss your children today: that is the mercy we want them to learn.",
+        "unit_ids": [
+          "isl-82c3c96e",
+          "isl-f3270ea2"
+        ],
+        "evidence_ids": [
+          "h_mercy"
+        ]
+      },
+      "variants": {
+        "0-3": {
+          "addressed_to": "parent",
+          "text": "Show him the birds through the window and imitate their sounds for him. Keep him away from the water dish on the balcony."
+        },
+        "4-6": {
+          "addressed_to": "parent",
+          "text": "Let him put out the crumbs himself with you beside him, and listen together to the story 'Anas and the Little Cat'."
+        },
+        "7-9": {
+          "addressed_to": "child",
+          "text": "You are in charge of the birds' water this week: change it every day and keep a note of how many birds you see."
+        },
+        "10-12": {
+          "addressed_to": "child",
+          "text": "Find out with your parents which food suits the birds where you live and which harms them, then put it into practice."
+        },
+        "13-15": {
+          "addressed_to": "child",
+          "text": "Mercy covers people too: choose someone you know is having a hard time and send them a kind message today."
+        }
+      },
+      "quran": {
+        "together": {
+          "surah": 106,
+          "from": 1,
+          "to": 4
+        },
+        "theme_ref": null,
+        "parent_juz": 17
+      },
+      "story_id": "kitten_kindness",
+      "last_ten": false,
+      "odd_night": false,
+      "may_not_occur": false,
+      "tracks": [
+        "challenge_done",
+        "wird_done",
+        "story_heard",
+        "juz_read"
+      ]
+    },
+    {
+      "day": 18,
+      "phase": "middle_ten",
+      "key": "keeping_trust",
+      "title": "Keeping a trust",
+      "family_challenge": {
+        "title": "Today's trust",
+        "steps": [
+          "Each child is given a 'trust' to look after until the evening: the seed cup, the charity box, a parent's book or a sibling's toy.",
+          "In the evening everyone returns their trust exactly as they received it.",
+          "Talk about it: what does it mean to keep a trust and a promise?"
+        ],
+        "minutes": 10,
+        "cost": "free",
+        "at_home": true,
+        "when": "anytime",
+        "materials": []
+      },
+      "parent_note": {
+        "text": "Keeping trusts and promises is a quality of the believers, and today's verse is about it. A child learns loyalty when he sees his parents keep their promises to him: if you promise something, deliver it, and if you can't, apologise and explain. Example speaks louder here than any words.",
+        "unit_ids": [
+          "isl-7b7cda4e"
+        ],
+        "evidence_ids": []
+      },
+      "variants": {
+        "0-3": {
+          "addressed_to": "parent",
+          "text": "Give him a toy to carry on a short walk around the house, then let him put it back in its place while you thank him."
+        },
+        "4-6": {
+          "addressed_to": "parent",
+          "text": "Give him a small trust that is easy to look after, like a pen or a book, listen together to 'Saleh and the Little Bird of Amanah', and let him give it back before bed."
+        },
+        "7-9": {
+          "addressed_to": "child",
+          "text": "Look after your trust until the evening, then give it back to its owner and say: 'Here is what you trusted me with.'"
+        },
+        "10-12": {
+          "addressed_to": "child",
+          "text": "Choose a small promise to make to someone in your family today, and keep it before bedtime."
+        },
+        "13-15": {
+          "addressed_to": "child",
+          "text": "A trust includes secrets, passwords and things lent to you. Think: is there anything you were trusted with that you haven't returned yet?"
+        }
+      },
+      "quran": {
+        "together": {
+          "surah": 106,
+          "from": 1,
+          "to": 4
+        },
+        "theme_ref": {
+          "surah": 23,
+          "from": 8,
+          "to": 8,
+          "topic": "Trusts and promises"
+        },
+        "parent_juz": 18
+      },
+      "story_id": "saleh_bird",
+      "last_ten": false,
+      "odd_night": false,
+      "may_not_occur": false,
+      "tracks": [
+        "challenge_done",
+        "wird_done",
+        "story_heard",
+        "juz_read"
+      ]
+    },
+    {
+      "day": 19,
+      "phase": "middle_ten",
+      "key": "prepare_last_ten",
+      "title": "Getting ready for the last ten nights",
+      "family_challenge": {
+        "title": "The family plan for the last ten",
+        "steps": [
+          "Agree on a short 'family night' for the last ten nights: prayer, du'a and Quran, ten to twenty minutes depending on ages.",
+          "Set the time: the little ones join early in the evening and go to bed on time; the older ones carry on if they wish.",
+          "Write the family's list of du'as, and who wakes whom if the older ones plan to pray later in the night.",
+          "The first of the last ten nights begins tomorrow evening, after the iftar of day twenty."
+        ],
+        "minutes": 15,
+        "cost": "free",
+        "at_home": true,
+        "when": "after_iftar",
+        "materials": [
+          "A sheet of paper",
+          "A pen"
+        ]
+      },
+      "parent_note": {
+        "text": "The attached hadith tells us that when the last ten began, the Prophet ﷺ would spend the night in worship and wake his family. So this is a season of worship for the whole family, not only for the adults. Fit it to your children's ages: a short, joyful part for the little ones, more responsibility for the older ones, and enough sleep for everyone.",
+        "unit_ids": [
+          "isl-3d476538",
+          "isl-f1d62436"
+        ],
+        "evidence_ids": [
+          "h_last_ten"
+        ]
+      },
+      "variants": {
+        "0-3": {
+          "addressed_to": "parent",
+          "text": "He goes to sleep at his usual time. Seeing his family pray before he sleeps and hearing your du'a for him is enough."
+        },
+        "4-6": {
+          "addressed_to": "parent",
+          "text": "He joins the first few minutes of the family night, standing beside you in prayer or raising his hands in du'a, then goes to bed on time."
+        },
+        "7-9": {
+          "addressed_to": "child",
+          "text": "Help write the du'a list, and pick the night you would like to stay up a little longer with the family, with your parents' permission."
+        },
+        "10-12": {
+          "addressed_to": "child",
+          "text": "Suggest the parts of the family night: who reads, who makes du'a and for how many minutes. Write the plan on a sheet in the Ramadan corner."
+        },
+        "13-15": {
+          "addressed_to": "child",
+          "text": "Think of a personal goal for the last ten: finishing a juz', a short night prayer every night, or dropping a habit. And help your parents organise the nights for the little ones."
+        }
+      },
+      "quran": {
+        "together": {
+          "surah": 97,
+          "from": 1,
+          "to": 5
+        },
+        "theme_ref": null,
+        "parent_juz": 19
+      },
+      "story_id": null,
+      "last_ten": false,
+      "odd_night": false,
+      "may_not_occur": false,
+      "tracks": [
+        "challenge_done",
+        "wird_done",
+        "juz_read"
+      ]
+    },
+    {
+      "day": 20,
+      "phase": "middle_ten",
+      "key": "first_family_night",
+      "title": "The first of the ten nights",
+      "family_challenge": {
+        "title": "A short prayer and du'a together",
+        "steps": [
+          "After today's iftar the twenty-first night begins: the first of the odd nights of the last ten.",
+          "Pray two short rak'ahs together at home, or go to taraweeh if the mosque suits children.",
+          "The child chooses his place in the row beside one of his parents, and afterwards everyone makes one du'a from the family list."
+        ],
+        "minutes": 15,
+        "cost": "free",
+        "at_home": true,
+        "when": "night",
+        "materials": [
+          "A prayer mat"
+        ]
+      },
+      "parent_note": {
+        "text": "The two attached hadiths encourage seeking Laylat al-Qadr in the odd nights of the last ten, and standing in prayer on it with faith and hope of reward. No one knows which night it is, so give every one of the ten nights a special touch. A small child can sit or play quietly near you if he gets tired; what matters is that he loves these nights.",
+        "unit_ids": [
+          "isl-d5f85bee",
+          "isl-597a1018"
+        ],
+        "evidence_ids": [
+          "h_seek_qadr",
+          "h_qadr_faith"
+        ]
+      },
+      "variants": {
+        "0-3": {
+          "addressed_to": "parent",
+          "text": "If he is awake, let him stay close while you pray; if he is asleep, make du'a for him as he sleeps."
+        },
+        "4-6": {
+          "addressed_to": "parent",
+          "text": "He stands beside you in the prayer and copies the movements; it is fine if he sits down or moves about. Before bed, listen to the story 'Umar and the Light of Salah'."
+        },
+        "7-9": {
+          "addressed_to": "child",
+          "text": "Pray two rak'ahs with the family, and choose a du'a you love from the list to say in your own voice."
+        },
+        "10-12": {
+          "addressed_to": "child",
+          "text": "Pray with the family, and read 'Umar and the Light of Salah' to your little brother or sister before bed if you have one."
+        },
+        "13-15": {
+          "addressed_to": "child",
+          "text": "If you can, pray taraweeh or a short night prayer, and keep some time alone with Allah on these nights: du'a and Quran."
+        }
+      },
+      "quran": {
+        "together": {
+          "surah": 97,
+          "from": 1,
+          "to": 5
+        },
+        "theme_ref": null,
+        "parent_juz": 20
+      },
+      "story_id": "omar_prayer",
+      "last_ten": false,
+      "odd_night": true,
+      "may_not_occur": false,
+      "tracks": [
+        "challenge_done",
+        "wird_done",
+        "story_heard",
+        "juz_read",
+        "night_joined"
+      ]
+    },
+    {
+      "day": 21,
+      "phase": "last_ten",
+      "key": "light_words",
+      "title": "Two light phrases",
+      "family_challenge": {
+        "title": "Learn the dhikr and keep count",
+        "steps": [
+          "One parent reads the dhikr from the attached hadith card, and everyone repeats it until they know it.",
+          "Make a simple counter: large buttons on a string, or a sheet with a line drawn for each time.",
+          "Say it during waiting times: in the car, before iftar, while tidying."
+        ],
+        "minutes": 10,
+        "cost": "free",
+        "at_home": true,
+        "when": "anytime",
+        "materials": [
+          "String and large buttons, or a tally sheet"
+        ]
+      },
+      "parent_note": {
+        "text": "The dhikr in the attached hadith is short, easy to learn and greatly rewarded, which makes it ideal for children. Keep it light and joyful, filling the waiting times, not a heavy duty or a number the child is held to.",
+        "unit_ids": [
+          "isl-f6342250"
+        ],
+        "evidence_ids": [
+          "h_two_words"
+        ]
+      },
+      "variants": {
+        "0-3": {
+          "addressed_to": "parent",
+          "text": "Say it softly as you rock or feed him, and keep small buttons away from him."
+        },
+        "4-6": {
+          "addressed_to": "parent",
+          "text": "Repeat the dhikr with him like a little song, and let him slide one big button along the string each time, with you beside him."
+        },
+        "7-9": {
+          "addressed_to": "child",
+          "text": "Learn the dhikr today, say it ten times while you are waiting for something, and mark it on your counter."
+        },
+        "10-12": {
+          "addressed_to": "child",
+          "text": "Make a counter for each person in the family, and suggest set times in the day for dhikr."
+        },
+        "13-15": {
+          "addressed_to": "child",
+          "text": "Make dhikr your companion on the way and between lessons instead of scrolling your phone, and notice how your mood changes."
+        }
+      },
+      "quran": {
+        "together": {
+          "surah": 105,
+          "from": 1,
+          "to": 5
+        },
+        "theme_ref": null,
+        "parent_juz": 21
+      },
+      "story_id": null,
+      "last_ten": true,
+      "odd_night": false,
+      "may_not_occur": false,
+      "tracks": [
+        "challenge_done",
+        "wird_done",
+        "juz_read",
+        "night_joined"
+      ]
+    },
+    {
+      "day": 22,
+      "phase": "last_ten",
+      "key": "night_of_dua",
+      "title": "A night of du'a",
+      "family_challenge": {
+        "title": "The du'a wall and the family du'a",
+        "steps": [
+          "Hang up a large sheet; everyone writes du'as for themselves, their family and people in need, and the parents write for the little ones.",
+          "After iftar the twenty-third night begins: sit together, and everyone makes the du'as they wrote, aloud or silently.",
+          "One parent ends by making du'a for each child by name."
+        ],
+        "minutes": 15,
+        "cost": "free",
+        "at_home": true,
+        "when": "night",
+        "materials": [
+          "A large sheet of paper",
+          "Pens"
+        ]
+      },
+      "parent_note": {
+        "text": "This is one of the odd nights in which Laylat al-Qadr is sought, as in the attached hadith. When a child hears his parents make du'a for him by name, he keeps it all his life. Today's verse is about Allah's nearness to His servants when they call on Him. Always pray for your children, and beware of praying against them in a moment of anger.",
+        "unit_ids": [
+          "isl-f1d62436",
+          "isl-52462ce7"
+        ],
+        "evidence_ids": [
+          "h_seek_qadr"
+        ]
+      },
+      "variants": {
+        "0-3": {
+          "addressed_to": "parent",
+          "text": "Make du'a for him in your arms or while he sleeps, with your hand gently on his head. Feeling that warmth is enough for him."
+        },
+        "4-6": {
+          "addressed_to": "parent",
+          "text": "Teach him to raise his hands and say 'Ya Rabb', then ask for something in his own words. Write his du'a on the sheet exactly as he said it."
+        },
+        "7-9": {
+          "addressed_to": "child",
+          "text": "Write three du'as: one for yourself, one for your family and one for someone in need you don't know, and say them with your family tonight."
+        },
+        "10-12": {
+          "addressed_to": "child",
+          "text": "Write a du'a for each person in your family by name, and read it to them at tonight's gathering."
+        },
+        "13-15": {
+          "addressed_to": "child",
+          "text": "Write your private du'as in your own notebook, since some are between you and Allah, and add a du'a for Muslims everywhere and for the sick to the wall."
+        }
+      },
+      "quran": {
+        "together": {
+          "surah": 105,
+          "from": 1,
+          "to": 5
+        },
+        "theme_ref": {
+          "surah": 2,
+          "from": 186,
+          "to": 186,
+          "topic": "Du'a"
+        },
+        "parent_juz": 22
+      },
+      "story_id": null,
+      "last_ten": true,
+      "odd_night": true,
+      "may_not_occur": false,
+      "tracks": [
+        "challenge_done",
+        "wird_done",
+        "juz_read",
+        "night_joined"
+      ]
+    },
+    {
+      "day": 23,
+      "phase": "last_ten",
+      "key": "thank_those_who_serve",
+      "title": "Thank you to those who serve us",
+      "family_challenge": {
+        "title": "Thank-you cards",
+        "steps": [
+          "The children make thank-you cards with a drawing and one sentence.",
+          "Choose who will receive them: the building guard, the cleaner, the delivery worker, a teacher, the imam or a nurse.",
+          "The children hand them over with a parent, with some dates or a small gift if you can."
+        ],
+        "minutes": 15,
+        "cost": "low",
+        "at_home": true,
+        "when": "anytime",
+        "materials": [
+          "Card",
+          "Pens",
+          "Dates or a small gift (optional)"
+        ]
+      },
+      "parent_note": {
+        "text": "The attached hadith counts a good word among the charities anyone can give. This challenge teaches a child to notice the people many overlook, to thank them and to respect their work. A good word costs nothing, and its effect on the heart is great.",
+        "unit_ids": [
+          "isl-b793e864",
+          "isl-82c3c96e"
+        ],
+        "evidence_ids": [
+          "h_kind_word"
+        ]
+      },
+      "variants": {
+        "0-3": {
+          "addressed_to": "parent",
+          "text": "Carry him when you hand over the card and let him wave and smile: his smile is a gift too."
+        },
+        "4-6": {
+          "addressed_to": "parent",
+          "text": "Let him draw the card himself while you write down the sentence he dictates, then he hands it over with his own hand."
+        },
+        "7-9": {
+          "addressed_to": "child",
+          "text": "Make two cards: one for someone who serves your building or neighbourhood, and one for your teacher, each thanking them for something specific."
+        },
+        "10-12": {
+          "addressed_to": "child",
+          "text": "Suggest people nobody usually notices, and write them sincere words of thanks in your own handwriting."
+        },
+        "13-15": {
+          "addressed_to": "child",
+          "text": "Hand over the card yourself and say thank you face to face. It may be harder than writing it, but it means more."
+        }
+      },
+      "quran": {
+        "together": {
+          "surah": 103,
+          "from": 1,
+          "to": 3
+        },
+        "theme_ref": null,
+        "parent_juz": 23
+      },
+      "story_id": null,
+      "last_ten": true,
+      "odd_night": false,
+      "may_not_occur": false,
+      "tracks": [
+        "challenge_done",
+        "wird_done",
+        "juz_read",
+        "night_joined"
+      ]
+    },
+    {
+      "day": 24,
+      "phase": "last_ten",
+      "key": "listening_night",
+      "title": "A night of listening",
+      "family_challenge": {
+        "title": "Listen to the Quran together",
+        "steps": [
+          "After iftar the twenty-fifth night begins: dim the bright lights and put the phones away.",
+          "Listen together to a calm recitation of a short surah you know, from the app's reciter or in a parent's voice.",
+          "Afterwards, everyone mentions a word or a verse that stayed with them."
+        ],
+        "minutes": 15,
+        "cost": "free",
+        "at_home": true,
+        "when": "night",
+        "materials": []
+      },
+      "parent_note": {
+        "text": "Tonight is one of the odd nights in which Laylat al-Qadr is sought, as in the attached hadith. Listening to the Quran is worship, and it is the gentlest way to bring the Quran into little hearts, so keep the session short for the youngest and calm, without too many questions. The other hadith reminds you of the virtue of learning and teaching the Quran, and listening is where learning begins.",
+        "unit_ids": [
+          "isl-f4e75ff2",
+          "isl-77ba4991"
+        ],
+        "evidence_ids": [
+          "h_seek_qadr",
+          "h_quran_teach"
+        ]
+      },
+      "variants": {
+        "0-3": {
+          "addressed_to": "parent",
+          "text": "Sit him in your lap during the calm recitation: the sound of the Quran in a warm setting stays in his memory."
+        },
+        "4-6": {
+          "addressed_to": "parent",
+          "text": "Let him lie down, close his eyes and listen, then ask: which word did you hear?"
+        },
+        "7-9": {
+          "addressed_to": "child",
+          "text": "Listen carefully, and try to repeat the end of each verse along with the reciter."
+        },
+        "10-12": {
+          "addressed_to": "child",
+          "text": "You choose the recitation the family will listen to, and try to imitate the reciter in one verse."
+        },
+        "13-15": {
+          "addressed_to": "child",
+          "text": "Recite a surah you know to the family in your best voice: your brothers and sisters may love your voice more than any reciter's."
+        }
+      },
+      "quran": {
+        "together": {
+          "surah": 103,
+          "from": 1,
+          "to": 3
+        },
+        "theme_ref": {
+          "surah": 73,
+          "from": 4,
+          "to": 4,
+          "topic": "Tartil (measured recitation)"
+        },
+        "parent_juz": 24
+      },
+      "story_id": null,
+      "last_ten": true,
+      "odd_night": true,
+      "may_not_occur": false,
+      "tracks": [
+        "challenge_done",
+        "wird_done",
+        "juz_read",
+        "night_joined"
+      ]
+    },
+    {
+      "day": 25,
+      "phase": "last_ten",
+      "key": "household_team",
+      "title": "Team home",
+      "family_challenge": {
+        "title": "Share the housework before iftar",
+        "steps": [
+          "Write household jobs on small slips: setting the table, watering the plants, folding clothes, lining up the shoes.",
+          "Everyone draws a slip, or chooses a job that suits their age.",
+          "Finish the jobs in fifteen minutes, then thank each other at iftar."
+        ],
+        "minutes": 15,
+        "cost": "free",
+        "at_home": true,
+        "when": "before_iftar",
+        "materials": [
+          "Slips of paper"
+        ]
+      },
+      "parent_note": {
+        "text": "The attached hadith says each of us is a shepherd, responsible for those in his care, and a child learns responsibility when he has a real job at home rather than just orders. At the end of Ramadan the fasting grown-ups are tired, so the children's help is a mercy to everyone, and it builds their confidence.",
+        "unit_ids": [
+          "isl-6d93523b",
+          "dev-8ad4980e"
+        ],
+        "evidence_ids": [
+          "h_shepherd"
+        ]
+      },
+      "variants": {
+        "0-3": {
+          "addressed_to": "parent",
+          "text": "Give him a very small job that fits his hands, like putting a spoon in its place or carrying a napkin, and clap for him."
+        },
+        "4-6": {
+          "addressed_to": "parent",
+          "text": "His job: lining up the shoes, putting the toys in their box or watering the seed cup. Praise him by naming what he did: 'You lined up all the shoes. Well done!'"
+        },
+        "7-9": {
+          "addressed_to": "child",
+          "text": "Pick two jobs from the slips and finish them before the adhan, then tell the family what you did."
+        },
+        "10-12": {
+          "addressed_to": "child",
+          "text": "You are in charge of a whole job today, like setting the entire table or folding the laundry, from start to finish without reminders."
+        },
+        "13-15": {
+          "addressed_to": "child",
+          "text": "Take over a job one of your parents usually does, like preparing a dish or tidying the living room, so they can rest a little before iftar."
+        }
+      },
+      "quran": {
+        "together": {
+          "surah": 102,
+          "from": 1,
+          "to": 8
+        },
+        "theme_ref": null,
+        "parent_juz": 25
+      },
+      "story_id": null,
+      "last_ten": true,
+      "odd_night": false,
+      "may_not_occur": false,
+      "tracks": [
+        "challenge_done",
+        "wird_done",
+        "juz_read",
+        "night_joined"
+      ]
+    },
+    {
+      "day": 26,
+      "phase": "last_ten",
+      "key": "night_of_hope",
+      "title": "A night of hope",
+      "family_challenge": {
+        "title": "A hope from everyone",
+        "steps": [
+          "After iftar the twenty-seventh night begins: a slightly longer family night of prayer, Quran and du'a, as suits the children's ages.",
+          "Everyone writes a hope for the coming year that they ask Allah for, and puts it in the Ramadan corner.",
+          "End with a family du'a that Allah fulfils every good hope."
+        ],
+        "minutes": 15,
+        "cost": "free",
+        "at_home": true,
+        "when": "night",
+        "materials": [
+          "Small slips of paper",
+          "Pens"
+        ]
+      },
+      "parent_note": {
+        "text": "This is one of the odd nights in which Laylat al-Qadr is sought, as in the attached hadith, and no one can be certain it is the one. Teach your children to think well of Allah and to hope in Him, and let them leave this night happy, not exhausted.",
+        "unit_ids": [
+          "isl-f1d62436",
+          "isl-f4e75ff2"
+        ],
+        "evidence_ids": [
+          "h_seek_qadr"
+        ]
+      },
+      "variants": {
+        "0-3": {
+          "addressed_to": "parent",
+          "text": "He goes to sleep at his usual time; you write a hope for him and make du'a for it."
+        },
+        "4-6": {
+          "addressed_to": "parent",
+          "text": "Ask him: what do you wish for? Write it down exactly as he says it, and let him raise his hands with you in du'a."
+        },
+        "7-9": {
+          "addressed_to": "child",
+          "text": "Write two hopes, one for you and one for someone you love, and ask Allah for them."
+        },
+        "10-12": {
+          "addressed_to": "child",
+          "text": "Write a hope for the coming year, and next to it one small step you will take towards it."
+        },
+        "13-15": {
+          "addressed_to": "child",
+          "text": "Write your hopes honestly; you can keep them to yourself. And help organise the night for the little ones."
+        }
+      },
+      "quran": {
+        "together": {
+          "surah": 102,
+          "from": 1,
+          "to": 8
+        },
+        "theme_ref": null,
+        "parent_juz": 26
+      },
+      "story_id": null,
+      "last_ten": true,
+      "odd_night": true,
+      "may_not_occur": false,
+      "tracks": [
+        "challenge_done",
+        "wird_done",
+        "juz_read",
+        "night_joined"
+      ]
+    },
+    {
+      "day": 27,
+      "phase": "last_ten",
+      "key": "zakat_al_fitr_together",
+      "title": "Zakat al-Fitr with the children",
+      "family_challenge": {
+        "title": "Involve the children in Zakat al-Fitr",
+        "steps": [
+          "Explain simply that Zakat al-Fitr is given for every member of the family, young or old, as in the attached hadith.",
+          "For its amount, its timing and how to give it, follow what your local mosque or religious authority announces.",
+          "Let your child help count it or hand it over, or come along when it is given."
+        ],
+        "minutes": 10,
+        "cost": "free",
+        "at_home": true,
+        "when": "anytime",
+        "materials": []
+      },
+      "parent_note": {
+        "text": "The attached hadith mentions the young and the old together in Zakat al-Fitr, so it is given for children too, which is a chance for your child to feel part of this act of worship. Involve him in the act itself, and leave the details of the rulings to the scholars where you live.",
+        "unit_ids": [
+          "isl-bd250b64"
+        ],
+        "evidence_ids": [
+          "h_zakat_fitr"
+        ]
+      },
+      "variants": {
+        "0-3": {
+          "addressed_to": "parent",
+          "text": "As you give it, tell him: 'This is your zakat', and let him see the joy of the people who receive it if you can."
+        },
+        "4-6": {
+          "addressed_to": "parent",
+          "text": "Explain to him: 'This is your own zakat; it makes another child happy at Eid.' Let him put it in the envelope or hand it over with you."
+        },
+        "7-9": {
+          "addressed_to": "child",
+          "text": "Help your parents count the Zakat al-Fitr for each person in the family, and ask them who will receive it."
+        },
+        "10-12": {
+          "addressed_to": "child",
+          "text": "Ask your parents what the mosque has announced about Zakat al-Fitr this year, and help prepare it and deliver it."
+        },
+        "13-15": {
+          "addressed_to": "child",
+          "text": "Go with your parents when they give Zakat al-Fitr and learn how it is done: you will need it when you are older."
+        }
+      },
+      "quran": {
+        "together": {
+          "surah": 94,
+          "from": 1,
+          "to": 8
+        },
+        "theme_ref": null,
+        "parent_juz": 27
+      },
+      "story_id": null,
+      "last_ten": true,
+      "odd_night": false,
+      "may_not_occur": false,
+      "tracks": [
+        "challenge_done",
+        "wird_done",
+        "juz_read",
+        "night_joined"
+      ]
+    },
+    {
+      "day": 28,
+      "phase": "last_ten",
+      "key": "family_harvest",
+      "title": "Our Ramadan harvest",
+      "family_challenge": {
+        "title": "The harvest session and the family promise",
+        "steps": [
+          "Tonight is the twenty-ninth night, one of the odd nights: pray a short prayer together if you can, then sit down with the thirty-day chart and the intentions board from day one.",
+          "Everyone names one thing they achieved and one thing that changed in them, and you praise each child for something specific you saw.",
+          "Choose two Ramadan habits to keep after Eid and write them on a 'family promise card'.",
+          "Pick one word from the app's list that describes your Ramadan; it will appear on the 'Our Family's Ramadan' card."
+        ],
+        "minutes": 15,
+        "cost": "free",
+        "at_home": true,
+        "when": "after_iftar",
+        "materials": [
+          "The thirty-day chart",
+          "The intentions board"
+        ]
+      },
+      "parent_note": {
+        "text": "Celebrate effort, not perfection: the attached hadith shows that Allah loves deeds done consistently, even if they are small. What your children kept up in Ramadan, however small, is what deserves to carry on after it. Praise each child for what he himself did, without comparing him with his siblings.",
+        "unit_ids": [
+          "isl-b793e864",
+          "isl-1bceeaf6"
+        ],
+        "evidence_ids": [
+          "h_steady"
+        ]
+      },
+      "variants": {
+        "0-3": {
+          "addressed_to": "parent",
+          "text": "Talk about his first Ramadan: how he sat at the table and the words he learned. It is a memory you will tell him about one day."
+        },
+        "4-6": {
+          "addressed_to": "parent",
+          "text": "Ask him: what did you love doing most in Ramadan? Praise something specific he learned, like saying 'Bismillah' or waiting patiently."
+        },
+        "7-9": {
+          "addressed_to": "child",
+          "text": "Count the ticks in your chart, choose the day you liked best, then suggest a habit you would like the family to keep."
+        },
+        "10-12": {
+          "addressed_to": "child",
+          "text": "Look back at your intention from day one: did you keep it up? What did you learn when it got hard? Suggest the family's word."
+        },
+        "13-15": {
+          "addressed_to": "child",
+          "text": "Talk honestly about what worked for you this month and what didn't, and help the family choose the two habits that will carry on after Ramadan."
+        }
+      },
+      "quran": {
+        "together": {
+          "surah": 94,
+          "from": 1,
+          "to": 8
+        },
+        "theme_ref": null,
+        "parent_juz": 28
+      },
+      "story_id": null,
+      "last_ten": true,
+      "odd_night": true,
+      "may_not_occur": false,
+      "tracks": [
+        "challenge_done",
+        "wird_done",
+        "juz_read",
+        "night_joined",
+        "family_word"
+      ]
+    },
+    {
+      "day": 29,
+      "phase": "last_ten",
+      "key": "eid_preparation",
+      "title": "Getting ready for Eid",
+      "family_challenge": {
+        "title": "Eid cards and decorations",
+        "steps": [
+          "Eid may be tomorrow or the day after, depending on the moon-sighting announcement, so get everything ready today.",
+          "The children make Eid cards for relatives and friends, and you decorate the house with simple paper decorations.",
+          "Plan Eid day together: the Eid prayer, visits, and an outing or games.",
+          "Parents agree on Eid gifts or Eid money, shared fairly between the children."
+        ],
+        "minutes": 15,
+        "cost": "low",
+        "at_home": true,
+        "when": "anytime",
+        "materials": [
+          "Coloured paper",
+          "Pens"
+        ]
+      },
+      "parent_note": {
+        "text": "Joy at Eid is part of the religion, and preparing for it teaches a child to look forward to good occasions and to enjoy them. Be fair between your children in gifts and Eid money: favouring one plants jealousy. And permissible play at Eid is a rightful joy for children.",
+        "unit_ids": [
+          "isl-3f7359b4",
+          "isl-4fd89060"
+        ],
+        "evidence_ids": []
+      },
+      "variants": {
+        "0-3": {
+          "addressed_to": "parent",
+          "text": "Try his Eid clothes on him briefly, and take photos for the family album only, not for posting."
+        },
+        "4-6": {
+          "addressed_to": "parent",
+          "text": "Let him colour an Eid card for a grandparent and choose a spot to hang a decoration himself."
+        },
+        "7-9": {
+          "addressed_to": "child",
+          "text": "Make three Eid cards and write in each one: 'Taqabbal Allahu minna wa minkum' (may Allah accept from us and from you)."
+        },
+        "10-12": {
+          "addressed_to": "child",
+          "text": "Draw up the Eid-day plan with your parents, with the prayer time, the visits and play time, and put it up in the Ramadan corner."
+        },
+        "13-15": {
+          "addressed_to": "child",
+          "text": "Pick a simple gift or a card for each of your brothers and sisters or friends, and help decorate the house."
+        }
+      },
+      "quran": {
+        "together": {
+          "surah": 93,
+          "from": 1,
+          "to": 11
+        },
+        "theme_ref": null,
+        "parent_juz": 29
+      },
+      "story_id": null,
+      "last_ten": true,
+      "odd_night": false,
+      "may_not_occur": false,
+      "tracks": [
+        "challenge_done",
+        "wird_done",
+        "juz_read"
+      ]
+    },
+    {
+      "day": 30,
+      "phase": "last_ten",
+      "key": "ramadan_farewell",
+      "title": "Farewell to Ramadan",
+      "family_challenge": {
+        "title": "A du'a of thanks and practising the Eid takbir",
+        "steps": [
+          "Sit together after iftar and thank Allah for everything He helped you do in Ramadan.",
+          "Ask Allah to accept your fasting and your prayers, and to let you reach next Ramadan.",
+          "Practise with the children the takbir you will say on Eid morning."
+        ],
+        "minutes": 10,
+        "cost": "free",
+        "at_home": true,
+        "when": "after_iftar",
+        "materials": []
+      },
+      "parent_note": {
+        "text": "This day may not come if the month is twenty-nine days, so nothing in the program depends on it. If it does come, it is a chance for a calm ending: thanks, du'a for acceptance, and getting the children ready for the joy of Eid. Remind everyone of the family promise: the attached hadith shows that Allah loves deeds done consistently, even if they are small.",
+        "unit_ids": [
+          "isl-1bceeaf6",
+          "isl-3d476538"
+        ],
+        "evidence_ids": [
+          "h_steady"
+        ]
+      },
+      "variants": {
+        "0-3": {
+          "addressed_to": "parent",
+          "text": "Say the takbir softly as you hold him: tomorrow he will hear it everywhere."
+        },
+        "4-6": {
+          "addressed_to": "parent",
+          "text": "Teach him the takbir like a short song, and let him lay out his Eid clothes beside his bed."
+        },
+        "7-9": {
+          "addressed_to": "child",
+          "text": "Learn the takbir so you can say it on your way to the Eid prayer, and ask Allah to accept your fasting."
+        },
+        "10-12": {
+          "addressed_to": "child",
+          "text": "Write in your chart the best thing you learned this Ramadan, and ask Allah to let you reach next Ramadan."
+        },
+        "13-15": {
+          "addressed_to": "child",
+          "text": "Write a short message to yourself to read next Ramadan: what do you want to have changed in you by then?"
+        }
+      },
+      "quran": {
+        "together": {
+          "surah": 93,
+          "from": 1,
+          "to": 11
+        },
+        "theme_ref": null,
+        "parent_juz": 30
+      },
+      "story_id": null,
+      "last_ten": true,
+      "odd_night": false,
+      "may_not_occur": true,
+      "tracks": [
+        "challenge_done",
+        "wird_done",
+        "juz_read"
+      ]
+    }
+  ],
+  "eid": {
+    "title": "Eid day",
+    "activities": [
+      "Wash, put on your best clothes, and eat a few dates before heading out to the Eid prayer, as in the attached hadith; cut them into small pieces for the little ones.",
+      "Say the takbir on the way to the prayer and at home, with the little ones joining in.",
+      "Take the children to the Eid prayer if you can: it is a joyful gathering.",
+      "Exchange greetings and visits, and reach out to relatives, at least by phone.",
+      "Give the children time to play and enjoy themselves, and Eid money or gifts shared fairly between them.",
+      "Open your 'Our Family's Ramadan' card together, and share it with people you love if you wish."
+    ],
+    "parent_note": {
+      "text": "Eid is a joy after the fast, and the attached hadith tells us that Muslims have their own festival to celebrate. Make it a day children love: beautiful clothes, takbir, visits, permissible play and fairness in gifts, so that a child sees worship end in joy.",
+      "unit_ids": [
+        "isl-3f7359b4",
+        "isl-4fd89060"
+      ],
+      "evidence_ids": [
+        "h_eid"
+      ]
+    },
+    "variants": {
+      "0-3": {
+        "addressed_to": "parent",
+        "text": "Comfortable clothes first, short visits that fit around his sleep, and watch out for hard sweets and nuts in the homes you visit."
+      },
+      "4-6": {
+        "addressed_to": "parent",
+        "text": "Let him say the takbir with you on the way, give his card to relatives and choose his Eid game. Don't make him kiss anyone if he doesn't want to: a greeting is enough."
+      },
+      "7-9": {
+        "addressed_to": "child",
+        "text": "Say the takbir on the way to the prayer and greet everyone you meet: 'Eid Mubarak'. You get to decide how to spend part of your Eid money, and to give part in charity if you like."
+      },
+      "10-12": {
+        "addressed_to": "child",
+        "text": "Help welcome the guests and serve the sweets, and remember those who have little to celebrate: is there a child in the neighbourhood you could make happy?"
+      },
+      "13-15": {
+        "addressed_to": "child",
+        "text": "Join the adults at the prayer and the greetings, and set aside time to play with the little ones: their joy in you is part of their Eid."
+      }
+    },
+    "quran": {
+      "together": null,
+      "theme_ref": {
+        "surah": 2,
+        "from": 185,
+        "to": 185,
+        "topic": "The month of Ramadan"
+      },
+      "parent_juz": null
+    },
+    "evidence_ids": [
+      "h_eid_dates"
+    ]
+  },
+  "after_ramadan": {
+    "title": "After Ramadan: keep going together",
+    "text": "Ramadan is over, but the habits remain. Take the two habits from your family promise and keep them up gently: a small deed done consistently is most beloved to Allah, as in the attached hadith. After four weeks, the app moves you on to each child's usual weekly plan.",
+    "keep_habits": [
+      {
+        "key": "weekly_quran_circle",
+        "title": "The weekly Quran circle",
+        "text": "A quarter of an hour each week on a set day, the same way as in Ramadan."
+      },
+      {
+        "key": "charity_box",
+        "title": "The charity box",
+        "text": "It stays in its place and is opened and given away every month."
+      },
+      {
+        "key": "kind_words_jar",
+        "title": "The kind-words jar",
+        "text": "One day a week to collect kind words and read them out in the evening."
+      },
+      {
+        "key": "bedtime_dua",
+        "title": "Du'a at bedtime",
+        "text": "A minute before sleep when the parents make du'a for each child by name."
+      }
+    ],
+    "weeks": [
+      {
+        "week": 1,
+        "title": "Week 1: Keeping the promise",
+        "text": "Look at your family promise card and do both habits at least once this week."
+      },
+      {
+        "week": 2,
+        "title": "Week 2: Your child's prayer",
+        "text": "If you have a child between seven and ten, this is a good time to start the app's Prayer Journey."
+      },
+      {
+        "week": 3,
+        "title": "Week 3: The Quran circle",
+        "text": "Bring back the family Quran circle and start learning a new surah together."
+      },
+      {
+        "week": 4,
+        "title": "Week 4: The weekly plan",
+        "text": "The app moves you on to each child's regular weekly plan, with your Ramadan habits kept as part of it."
+      }
+    ],
+    "links": {
+      "program_ids": [
+        "prayer_journey"
+      ],
+      "path_ids": [
+        "path_7-9_islamic_parenting_worship",
+        "path_10-12_islamic_parenting_worship_love"
+      ],
+      "lesson_ids": [
+        "lesson_7-9_islamic_parenting_worship_03"
+      ]
+    },
+    "evidence_ids": [
+      "h_steady"
+    ]
+  },
+  "recap": {
+    "card_title": "Our Family's Ramadan",
+    "show_on": "eid",
+    "metrics": [
+      {
+        "key": "challenges_done",
+        "source": "challenge_done",
+        "label": "Family challenges",
+        "max": 30
+      },
+      {
+        "key": "wird_days",
+        "source": "wird_done",
+        "label": "Days of Quran together",
+        "max": 30
+      },
+      {
+        "key": "stories_heard",
+        "source": "story_heard",
+        "label": "Stories we listened to",
+        "max": 13
+      },
+      {
+        "key": "nights_joined",
+        "source": "night_joined",
+        "label": "Nights of the last ten",
+        "max": 9
+      },
+      {
+        "key": "fasting_steps",
+        "source": "fasting_step_up",
+        "label": "Fasting steps our children climbed",
+        "max": null
+      },
+      {
+        "key": "juz_read",
+        "source": "juz_read",
+        "label": "Juz' of the khatm",
+        "max": 30
+      },
+      {
+        "key": "family_word",
+        "source": "family_word",
+        "label": "Our Ramadan word",
+        "max": null,
+        "choices": [
+          "Mercy",
+          "Patience",
+          "Closeness",
+          "Joy",
+          "Giving",
+          "Tranquillity",
+          "Blessing",
+          "Hope"
+        ]
+      }
+    ],
+    "templates": {
+      "headline": "Our Family's Ramadan {hijri_year}",
+      "lines": [
+        "Family challenges: {challenges_done}",
+        "Days of Quran together: {wird_days}",
+        "Nights of the last ten we joined: {nights_joined}",
+        "Fasting steps our children climbed: {fasting_steps}",
+        "Stories we listened to: {stories_heard}",
+        "Juz' the parents read towards a khatm: {juz_read}",
+        "Our Ramadan word: {family_word}"
+      ],
+      "closing": "May Allah accept from us and from you",
+      "share_text": "This was our family's Ramadan with the Almorabbi app. The Family Ramadan program is free for every family: {app_link}"
+    },
+    "privacy": {
+      "child_names": false,
+      "child_ages": false,
+      "photos": false,
+      "free_text": false,
+      "text": "The card carries no children's names, ages, photos or anything anyone has typed: only the family's numbers and its word, so it is safe to share."
+    },
+    "min_to_show": {
+      "challenges_done": 3,
+      "wird_days": 3,
+      "stories_heard": 1,
+      "nights_joined": 1,
+      "fasting_steps": 1,
+      "juz_read": 1
+    }
+  },
+  "generation": {
+    "drafter_model": "claude-opus-5.5",
+    "reviewer_model": "deepseek-v4-pro + glm-5.2 (days 1–6 reviewed; days 7–30, Eid, after-Ramadan, recap pending: Ollama Cloud Pro 5-hour cap reached 2026-10-04 10:30)",
+    "translator_model": "claude-opus-5.5",
+    "reviewed_at": "2026-10-04",
+    "review_rounds": 1,
+    "defects_fixed": 3,
+    "approved_by": "auto-review:guards+partial-cross-family"
+  }
+}
