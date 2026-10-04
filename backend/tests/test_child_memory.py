@@ -12,6 +12,7 @@ Plus the API contract MOBILE_API.md documents.
 from __future__ import annotations
 
 import json
+import sqlite3
 from datetime import datetime, timedelta, timezone
 
 import pytest
@@ -151,14 +152,43 @@ class _FakeExtractor:
 # ── Schema + delete-all coverage ──────────────────────────────────────────
 
 
-def test_schema_version_is_30_and_tables_exist():
-    assert SCHEMA_VERSION == 30
+_V30_TABLES = {"child_facts", "followups", "weekly_plans", "child_memory_settings"}
+
+
+def test_schema_is_at_least_v30_and_tables_exist():
+    # Lower bounds, not equality: later migrations stack on top (the
+    # donations branch is v31), and an exact pin would fail the deploy gate
+    # for whichever branch merges second.
+    assert SCHEMA_VERSION >= 30
     conn = get_conn()
     names = {r[0] for r in conn.execute("SELECT name FROM sqlite_master WHERE type='table'")}
     version = conn.execute("SELECT version FROM schema_version").fetchone()[0]
     conn.close()
-    assert {"child_facts", "followups", "weekly_plans", "child_memory_settings"} <= names
-    assert version == 30
+    assert _V30_TABLES <= names
+    assert version >= 30
+
+
+def test_v30_tables_are_created_on_a_db_already_stamped_higher(tmp_path, monkeypatch):
+    """A database that a later build already stamped (v31+) and that has never
+    had the v30 tables — e.g. a branch merged in the other order — must still
+    get them: the ensure step runs on every boot, whatever the stamp says."""
+    from app.db.init_db import init_db
+    db = tmp_path / "stamped_31.db"
+    conn = sqlite3.connect(db)
+    conn.executescript(
+        "CREATE TABLE schema_version (version INTEGER NOT NULL);"
+        "INSERT INTO schema_version (version) VALUES (31);"
+    )
+    conn.commit()
+    conn.close()
+    monkeypatch.setenv("CONVERSATIONS_DB", str(db))
+    init_db()
+    conn = sqlite3.connect(db)
+    names = {r[0] for r in conn.execute("SELECT name FROM sqlite_master WHERE type='table'")}
+    version = conn.execute("SELECT version FROM schema_version").fetchone()[0]
+    conn.close()
+    assert _V30_TABLES <= names
+    assert version >= 31          # never stamped down
 
 
 def test_every_v30_table_is_in_the_privacy_delete_all():
