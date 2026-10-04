@@ -36,6 +36,35 @@ def _generous_session_mint_limit(monkeypatch):
 
 
 @pytest.fixture(autouse=True)
+def _generous_support_verify_limit(monkeypatch):
+    """Same reason as the session limit above: every test's TestClient shares
+    one address and one in-process limiter. The verify budget is exercised by
+    its own test, which sets it."""
+    from app.middleware import rate_limit
+
+    monkeypatch.setattr(rate_limit, "_SUPPORT_VERIFY_LIMIT", 1_000_000)
+
+
+@pytest.fixture(autouse=True)
+def _fresh_support_state(monkeypatch):
+    """donations computes its gate, credentials and verifier once per process
+    (by design — see its docstring). Tests change the environment between
+    cases, so each one starts from a cold process state."""
+    from app.services import donations
+
+    # Captured now: a test may monkeypatch these names, and this teardown runs
+    # before monkeypatch restores them.
+    caches = (donations._gate, donations._credentials, donations._cached_verifier)
+    for cached in caches:
+        cached.cache_clear()
+    monkeypatch.setattr(donations, "_unhealthy", False)
+    monkeypatch.setattr(donations, "_voided_checked_at", None)
+    yield
+    for cached in caches:
+        cached.cache_clear()
+
+
+@pytest.fixture(autouse=True)
 def _skip_startup_warmup(monkeypatch):
     """Every `TestClient(app)` runs the app's lifespan, and its warm-ups (ONNX
     embedder, ChromaDB index, reranker, an Ollama ping with a 5 s timeout) cost

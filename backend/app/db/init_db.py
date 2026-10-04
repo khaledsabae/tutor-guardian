@@ -1097,6 +1097,10 @@ def _ensure_donations_table(conn: sqlite3.Connection) -> None:
     column at all. The transparency page needs a sum per month, not a donor.
     Because no row points at a device, the privacy delete path has nothing
     here to erase.
+
+    purchase_type is Play's (0 test, 1 promo, 2 rewarded; NULL for an ordinary
+    purchase) and voided is set when Play reports a refund or chargeback; only
+    NULL/0 rows count as money. See app/services/donations.py.
     """
     conn.executescript(
         """
@@ -1109,8 +1113,9 @@ def _ensure_donations_table(conn: sqlite3.Connection) -> None:
             currency      TEXT,
             usd_cents     INTEGER,
             amount_source TEXT NOT NULL DEFAULT 'none',
-            is_test       INTEGER NOT NULL DEFAULT 0,
+            purchase_type INTEGER,
             consumed      INTEGER NOT NULL DEFAULT 0,
+            voided        INTEGER NOT NULL DEFAULT 0,
             created_at    TEXT NOT NULL DEFAULT (datetime('now'))
         );
         CREATE INDEX IF NOT EXISTS ix_donations_created
