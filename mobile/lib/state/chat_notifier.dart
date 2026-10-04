@@ -55,6 +55,16 @@ class ChatMessageUI {
   /// Whether the user has voted on this assistant turn (for the 👍/👎 UI).
   String? feedback; // "up" | "down" | null
 
+  /// Server id of the question this answer belongs to (the stream's first
+  /// `turn` frame; null on servers older than 2026-10). Recovery matches the
+  /// stored answer by this, not by the question's text.
+  int? turnId;
+
+  /// The stream died on THIS side (connection cut, stall) — the server may
+  /// still have finished the answer. Distinct from [error], which any
+  /// failure sets (a rating that failed to save included).
+  bool interrupted;
+
   ChatMessageUI({
     required this.id,
     required this.role,
@@ -63,6 +73,8 @@ class ChatMessageUI {
     this.isStreaming = false,
     this.error,
     this.feedback,
+    this.turnId,
+    this.interrupted = false,
   });
 
   ChatMessageUI copyWith({
@@ -82,6 +94,8 @@ class ChatMessageUI {
       isStreaming: isStreaming ?? this.isStreaming,
       error: clearError ? null : (error ?? this.error),
       feedback: clearFeedback ? null : (feedback ?? this.feedback),
+      turnId: turnId,
+      interrupted: interrupted,
     );
   }
 }
@@ -405,6 +419,8 @@ class ChatNotifier extends StateNotifier<ChatState> {
     _sub = _client.streamQuery(query).listen(
       (ev) {
         switch (ev) {
+          case TgTurnEvent(:final messageId):
+            _updateAssistant(assistantId, (m) => m.turnId = messageId);
           case TgTokenEvent(:final delta):
             _pendingDelta.write(delta);
             _flushTimer ??= Timer(_flushEvery, _flushPending);
@@ -427,11 +443,15 @@ class ChatNotifier extends StateNotifier<ChatState> {
             _finishStream();
             unawaited(_persistLocal());
             if (!completer.isCompleted) completer.complete();
-          case TgStreamError(:final detail):
+          case TgStreamError(:final detail, :final fromServer):
             _flushPending();
-            _failLastTurn(detail, assistantId: assistantId);
+            // A connection that died here may have left an answer the server
+            // went on to finish; an `error` event from the server did not.
+            _failLastTurn(detail,
+                assistantId: assistantId, interrupted: !fromServer);
             _finishStream();
             if (!completer.isCompleted) completer.complete();
+            if (!fromServer) unawaited(_recoverWithBackoff());
         }
       },
       onError: (Object e) {
@@ -442,12 +462,14 @@ class ChatNotifier extends StateNotifier<ChatState> {
       onDone: () {
         _flushPending();
         // Stream closed without a terminal event → connection drop.
-        if (state.phase == ChatPhase.streaming) {
+        final dropped = state.phase == ChatPhase.streaming;
+        if (dropped) {
           _failLastTurn(AppL10n.current.chatConnectionInterrupted,
-              assistantId: assistantId);
+              assistantId: assistantId, interrupted: true);
         }
         _finishStream();
         if (!completer.isCompleted) completer.complete();
+        if (dropped) unawaited(_recoverWithBackoff());
       },
     );
 
@@ -465,11 +487,27 @@ class ChatNotifier extends StateNotifier<ChatState> {
   }
 
   /// Stop the current generation, keeping whatever was streamed so far.
-  void stopStreaming() {
+  ///
+  /// [notifyServer] (the Stop button) also tells the server to stop: without
+  /// it, a closed stream looks like the app going to the background and the
+  /// server finishes the answer the parent just rejected. Only sent when the
+  /// server has named this turn — the stop then cannot hit a newer one.
+  /// Sending a new question needs no stop: the server cuts the old turn itself.
+  void stopStreaming({bool notifyServer = false}) {
     // Keep what the reader already received, including the unflushed tail.
     _flushPending();
     final id = _streamingAssistantId;
     final completer = _streamCompleter;
+    final sid = state.sessionId;
+    final turnId = id == null
+        ? null
+        : state.messages
+            .firstWhere((m) => m.id == id,
+                orElse: () => ChatMessageUI(id: '', role: '', content: ''))
+            .turnId;
+    if (notifyServer && sid != null && turnId != null) {
+      unawaited(_client.stopAnswer(sid, messageId: turnId));
+    }
     _sub?.cancel();
     _sub = null;
     _streamCompleter = null;
@@ -501,7 +539,8 @@ class ChatNotifier extends StateNotifier<ChatState> {
     state = state.copyWith(messages: msgs);
   }
 
-  void _failLastTurn(String message, {String? assistantId}) {
+  void _failLastTurn(String message,
+      {String? assistantId, bool interrupted = false}) {
     final targetId = assistantId ??
         [...state.messages]
             .lastWhere((m) => m.role == 'assistant', orElse: () => state.messages.last)
@@ -509,6 +548,7 @@ class ChatNotifier extends StateNotifier<ChatState> {
     _updateAssistant(targetId, (m) {
       m
         ..isStreaming = false
+        ..interrupted = interrupted
         ..error = message;
     });
     state = state.copyWith(phase: ChatPhase.error, errorBanner: message);
@@ -537,6 +577,9 @@ class ChatNotifier extends StateNotifier<ChatState> {
   // ── Manual retry (Phase 3 retry button) ────────────────────────────
 
   Future<void> retryLastTurn() async {
+    // The server may have finished the cut answer on its own; generating it
+    // again would store a second, different answer to the same question.
+    if (await _recoverOnce()) return;
     final lastUserIdx = state.messages
         .lastIndexWhere((m) => m.role == 'user' && m.error == null);
     if (lastUserIdx < 0) return;
@@ -639,59 +682,93 @@ class ChatNotifier extends StateNotifier<ChatState> {
 
   /// Called by the screen's lifecycle observer when the app is back.
   void onAppResumed() {
-    unawaited(recoverInterruptedAnswer());
+    unawaited(_recoverWithBackoff());
   }
 
-  /// Restore an answer whose stream died while the app was away.
+  bool _recovering = false;
+
+  /// Keep looking for the answer of a cut turn for about a minute: the
+  /// server finishes it in the background, which can take a while. One loop
+  /// at a time — resume and the stream's own error both start one.
+  Future<bool> _recoverWithBackoff() async {
+    if (_recovering) return false;
+    _recovering = true;
+    try {
+      return await recoverInterruptedAnswer();
+    } finally {
+      _recovering = false;
+    }
+  }
+
+  /// Restore an answer whose stream died on this side.
   ///
   /// Servers since 2026-10 finish an answer after its reader leaves and store
-  /// it in the conversation, so the finished text is fetched from the
-  /// session history — retried a few times, as the server may still be
-  /// writing it. An older server never stored it: nothing usable is found
-  /// (its fragment is marked `interrupted`) and the turn keeps its error and
-  /// Retry, exactly as before. Returns true when the turn was restored.
+  /// it in place, so the finished text is fetched from the session history,
+  /// retried with a growing delay (2, 4, 8, 16, 30 s by default) while it is
+  /// being written. The stored answer is found by turn identity: the id the
+  /// server gave the question. Without one (an older server), only the
+  /// server's LAST question is considered, and only if its answer begins
+  /// with what this side already showed. An older server never stored the
+  /// answer — it finds nothing usable and the turn keeps its Retry.
+  /// Returns true when the turn was restored.
   Future<bool> recoverInterruptedAnswer({
-    int attempts = 3,
-    Duration retryDelay = const Duration(seconds: 3),
+    int attempts = 6,
+    Duration retryDelay = const Duration(seconds: 2),
   }) async {
+    var delay = retryDelay;
     for (var attempt = 0; attempt < attempts; attempt++) {
-      if (attempt > 0) await Future<void>.delayed(retryDelay);
-      final turn = _interruptedTurn();
-      final sid = state.sessionId;
-      if (turn == null || sid == null) return false;
-      final SessionHistory history;
-      try {
-        history = await _client.getHistory(sid);
-      } catch (_) {
-        continue; // offline right after resuming — try again
+      if (attempt > 0) {
+        await Future<void>.delayed(delay);
+        final next = delay * 2;
+        delay = next > const Duration(seconds: 30) ? const Duration(seconds: 30) : next;
       }
-      final answer = _serverAnswerFor(history.messages, turn.question);
-      // The parent may have retried or asked again while we were fetching.
-      final now = _interruptedTurn();
-      if (answer == null || now == null || now.assistantId != turn.assistantId) {
-        continue;
-      }
-      _updateAssistant(turn.assistantId, (m) {
-        m
-          ..content = answer.content
-          ..isStreaming = false
-          ..error = null;
-      });
-      state = state.copyWith(
-        phase: ChatPhase.idle,
-        turnCount: state.turnCount + 1,
-        clearBanner: true,
-      );
-      unawaited(_persistLocal());
-      return true;
+      if (!mounted || _interruptedTurn() == null) return false;
+      if (await _recoverOnce()) return true;
     }
     return false;
   }
 
-  /// The last question and its assistant bubble, when that answer failed
-  /// before finishing. Null while a stream is live (nothing to recover) and
-  /// for an answer the parent stopped on purpose.
-  ({String question, String assistantId})? _interruptedTurn() {
+  /// One look at the server for the cut turn's answer.
+  Future<bool> _recoverOnce() async {
+    if (!mounted) return false;
+    final turn = _interruptedTurn();
+    final sid = state.sessionId;
+    if (turn == null || sid == null) return false;
+    final SessionHistory history;
+    try {
+      history = await _client.getHistory(sid);
+    } catch (_) {
+      return false; // offline right after resuming — the loop tries again
+    }
+    if (!mounted) return false;
+    final answer = _serverAnswerFor(history.messages, turn);
+    // The parent may have retried or asked again while we were fetching.
+    final now = _interruptedTurn();
+    if (answer == null || now == null || now.assistantId != turn.assistantId) {
+      return false;
+    }
+    _updateAssistant(turn.assistantId, (m) {
+      m
+        ..content = answer.content
+        ..isStreaming = false
+        ..interrupted = false
+        ..error = null;
+    });
+    state = state.copyWith(
+      phase: ChatPhase.idle,
+      turnCount: state.turnCount + 1,
+      clearBanner: true,
+    );
+    unawaited(_persistLocal());
+    return true;
+  }
+
+  /// The last question and its assistant bubble, when that answer was cut on
+  /// this side. Null while a stream is live, for an answer the parent
+  /// stopped, and for any other kind of error (a rating that failed to save
+  /// is not a lost answer).
+  ({String question, String assistantId, int? turnId, String partial})?
+      _interruptedTurn() {
     if (state.phase == ChatPhase.streaming || state.phase == ChatPhase.waiting) {
       return null;
     }
@@ -699,24 +776,49 @@ class ChatNotifier extends StateNotifier<ChatState> {
     final u = msgs.lastIndexWhere((m) => m.role == 'user');
     if (u < 0 || u + 1 >= msgs.length) return null;
     final reply = msgs[u + 1];
-    if (reply.role != 'assistant' || reply.isStreaming) return null;
-    if (reply.error == null && reply.content.trim().isNotEmpty) return null;
-    return (question: msgs[u].content, assistantId: reply.id);
+    if (reply.role != 'assistant' || reply.isStreaming || !reply.interrupted) {
+      return null;
+    }
+    return (
+      question: msgs[u].content,
+      assistantId: reply.id,
+      turnId: reply.turnId,
+      partial: reply.content,
+    );
   }
 
-  /// The server's stored answer to [question]: the assistant row that follows
-  /// the last matching question, unless it is an apology or a fragment.
-  ChatMessage? _serverAnswerFor(List<ChatMessage> server, String question) {
-    final q = server.lastIndexWhere(
-        (m) => m.role == 'user' && m.content.trim() == question.trim());
+  /// The server's stored answer to [turn], or null.
+  ChatMessage? _serverAnswerFor(
+    List<ChatMessage> server,
+    ({String question, String assistantId, int? turnId, String partial}) turn,
+  ) {
+    int q;
+    if (turn.turnId != null && server.any((m) => m.id != null)) {
+      q = server.indexWhere((m) => m.role == 'user' && m.id == turn.turnId);
+    } else {
+      // No turn id: only the server's LAST question can be this one.
+      q = server.lastIndexWhere((m) => m.role == 'user');
+      if (q < 0 || server[q].content.trim() != turn.question.trim()) return null;
+    }
     if (q < 0) return null;
+    ChatMessage? answer;
     for (var i = q + 1; i < server.length; i++) {
       final m = server[i];
-      if (m.role != 'assistant') continue;
-      if (m.modeWire == 'error' || m.modeWire == 'interrupted') return null;
-      return m.content.trim().isEmpty ? null : m;
+      if (m.role == 'user') break; // the next turn — not ours
+      if (m.role == 'assistant') {
+        answer = m;
+        break;
+      }
     }
-    return null;
+    if (answer == null || answer.content.trim().isEmpty) return null;
+    if (answer.modeWire == 'error' || answer.modeWire == 'interrupted') return null;
+    if (turn.turnId == null) {
+      // Same text is not proof of the same turn: the answer must continue
+      // what this side already showed.
+      String squash(String s) => s.replaceAll(RegExp(r'\s+'), '');
+      if (!squash(answer.content).startsWith(squash(turn.partial))) return null;
+    }
+    return answer;
   }
 
   Future<List<ChatMessageUI>?> _loadLocal(String sid) async {

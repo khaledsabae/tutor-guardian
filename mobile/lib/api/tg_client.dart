@@ -62,7 +62,21 @@ class TgDoneEvent extends TgStreamEvent {
 /// HTTP errors that are raised before streaming starts).
 class TgStreamError extends TgStreamEvent {
   final String detail;
-  const TgStreamError(this.detail);
+
+  /// True when the server itself ended the turn with an `error` event (it
+  /// stored an apology — there is no answer to recover). False when the
+  /// connection died or stalled on this side: the server may still have
+  /// finished the answer.
+  final bool fromServer;
+  const TgStreamError(this.detail, {this.fromServer = false});
+}
+
+/// First frame from servers since 2026-10: the id the server gave this
+/// question. Lets the app find THIS turn's answer in the session history
+/// later, instead of guessing by text. Older servers never send it.
+class TgTurnEvent extends TgStreamEvent {
+  final int messageId;
+  const TgTurnEvent(this.messageId);
 }
 
 /// Default secure storage with resetOnError enabled to self-heal against
@@ -506,6 +520,32 @@ class TgClient {
 
   /// Fetch full session history. Throws `TgApiError(404)` if the session
   /// was deleted server-side.
+  /// Ask the server to stop the answer it is generating for [sessionId] —
+  /// the parent pressed Stop. Best-effort: false when nothing was running,
+  /// on any error, and on servers older than 2026-10 (404), which simply
+  /// finish the answer in the background as before.
+  ///
+  /// [messageId] is the question the parent is stopping (the stream's `turn`
+  /// frame): the server cuts that turn only, never a newer one.
+  Future<bool> stopAnswer(String sessionId, {required int messageId}) async {
+    try {
+      final (_, tok) = await _auth.readSession();
+      if (tok == null) return false;
+      final resp = await _http
+          .post(
+            Uri.parse('$_baseUrl/api/chat/sessions/$sessionId/stop'),
+            headers: _authHeaders(tok),
+            body: jsonEncode({'message_id': messageId}),
+          )
+          .timeout(const Duration(seconds: 10));
+      if (resp.statusCode != 200) return false;
+      final body = jsonDecode(utf8.decode(resp.bodyBytes));
+      return body is Map && body['stopped'] == true;
+    } catch (_) {
+      return false;
+    }
+  }
+
   Future<SessionHistory> getHistory(String sessionId) async {
     final (sid, tok) = await _auth.readSession();
     if (tok == null) {
@@ -2080,7 +2120,11 @@ class TgClient {
       case 'error':
         return TgStreamError(
           (m['detail'] as String?) ?? AppL10n.current.apiServerError,
+          fromServer: true,
         );
+      case 'turn':
+        final id = m['message_id'];
+        return id is int ? TgTurnEvent(id) : null;
       default:
         return null;
     }

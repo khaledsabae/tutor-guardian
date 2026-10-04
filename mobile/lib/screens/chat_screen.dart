@@ -397,7 +397,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
             isStreaming: state.phase == ChatPhase.streaming,
             onSend: _onSend,
             onStop: () =>
-                ref.read(chatNotifierProvider.notifier).stopStreaming(),
+                ref.read(chatNotifierProvider.notifier).stopStreaming(notifyServer: true),
             behaviorType: state.behaviorType,
             onEditContext: () => _editContext(state.behaviorType),
             onClearContext: () => notifier.setBehaviorType(''),

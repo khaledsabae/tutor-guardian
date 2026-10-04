@@ -96,6 +96,9 @@ class SessionResponse {
 /// One message inside `SessionResponse.messages[]` and inside history
 /// rehydration responses.
 class ChatMessage {
+  /// Server row id (servers since 2026-10; null before). The id of a user
+  /// row is what the stream's first `turn` frame names.
+  final int? id;
   final String role; // "user" | "assistant"
   final String content;
   final Domain? domain;
@@ -111,6 +114,7 @@ class ChatMessage {
   final DateTime? createdAt;
 
   const ChatMessage({
+    this.id,
     required this.role,
     required this.content,
     this.domain,
@@ -130,6 +134,7 @@ class ChatMessage {
     }
 
     return ChatMessage(
+      id: json['id'] is int ? json['id'] as int : null,
       role: (json['role'] ?? 'user') as String,
       content: (json['content'] ?? '') as String,
       domain: json['domain'] is String
