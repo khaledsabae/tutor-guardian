@@ -14,7 +14,7 @@
   "pedagogical_framework": "zpd_scaffolded",
   "primary_reference": {
     "type": "دليل_مهني",
-    "info": "إرشادات ACM لأخلاقيات الحوسبة + نIST للأمن السيبراني"
+    "info": "إرشادات ACM لأخلاقيات الحوسبة + إرشادات NIST للأمن السيبراني"
   },
   "prerequisites": [],
   "is_published": true,
