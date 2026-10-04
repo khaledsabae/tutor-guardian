@@ -219,7 +219,8 @@ app.add_middleware(AuthMiddleware)
 # resolves its own identity from the Authorization header; see rate_limit.py.
 app.add_middleware(RateLimitMiddleware)
 
-# Client IP + scheme from the Cloudflare → nginx chain. Registered LAST so it
+# Client IP + scheme from the local proxy (tg_cloudflared's tunnel, or
+# analytics_nginx for /seo and /methodology). Registered LAST so it
 # runs FIRST: the rate limiter above keys anonymous callers on the client IP,
 # and it used to read the nginx container's address because the old
 # ProxyHeadersMiddleware(trusted_hosts="*") was registered first (innermost)

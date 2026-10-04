@@ -166,6 +166,7 @@ Two independent defects:
   - `/api/insights` is in the AI scope, and its GETs count against the daily quota.
   - Session minting and feedback are keyed on IP only; minting has its own budget (`RATE_LIMIT_SESSION_PER_MINUTE`, default 30).
   - **Tests:** `test_client_ip.py`, `test_rate_limit_identity.py` (updated plus new cases), and `test_referral_fingerprint.py` (now models the nginx peer, plus a spoofing test).
+  - **Narrowed (2026-10-04):** production reaches the app only through local proxies (Cloudflare Tunnel → `tg_cloudflared`; `analytics_nginx` for `/seo` and `/methodology`), never from a Cloudflare node. Cloudflare's ranges are no longer trusted proxies (`TRUSTED_PROXY_IPS` defaults to loopback + private): a Cloudflare address in `X-Forwarded-For` defers to `CF-Connecting-IP` (`CLOUDFLARE_EDGE_IPS`), because skipping it let a Cloudflare Worker pick its own address with a forged left-hand entry.
 
 ### H5 — `device_id` is a bearer credential ✅
 - `POST /api/chat/sessions` is public and mints a token for **any** `device_id` in the body. Knowing a device ID is therefore equivalent to owning the account: children, progress, chat history, backups.
