@@ -118,7 +118,7 @@
 
 ```
 🌙 برنامج رمضان للأسرة — ٣٠ يومًا
-تحدٍّ عائلي كل يوم، وتدريب على الصيام بالتدريج بحسب سنّ طفلك، وورد قرآن للأسرة، وقصة قبل النوم. وفي آخر الشهر بطاقة «رمضان عائلتنا» تحفظ ما أنجزتموه معًا، وتشاركها مع من تحب.
+تحدٍّ عائلي كل يوم، وتدريب على الصيام بالتدريج بحسب سنّ طفلك، وورد قرآن للأسرة، وقصص في ليالٍ مختارة. وفي آخر الشهر بطاقة «رمضان عائلتنا» تحفظ ما أنجزتموه معًا، وتشاركها مع من تحب.
 ```
 
 **[B] — ⏳ F-MEMORY**
@@ -187,7 +187,7 @@
 | التجميع | ترتيب الكتل | الطول (حرف، الحد ٤٠٠٠) |
 |---|---|---|
 | **الآن** (يُنشر فورًا) | A → K → F → G | 1576 |
-| **الموسم** (١٥ يناير → ١٥ مارس، بعد شحن الميزات) | A → D → B → E → C → K → F → G → H | 2348 |
+| **الموسم** (١٥ يناير → ١٥ مارس، بعد شحن الميزات) | A → D → B → E → C → K → F → G → H | 2354 |
 
 الكتل تُفصل بسطر فارغ. **أي كتلة ⏳ لم تُشحن ميزتها تُحذف من التجميع**، ولا يُستبدل بها وعد.
 
@@ -205,7 +205,7 @@ Al-Morabbi is an Islamic parenting companion for Muslim parents, from pregnancy 
 
 ```
 🌙 A 30-day family Ramadan program
-A daily family challenge, gradual fasting practice matched to your child's age, a family Qur'an routine and a bedtime story. At the end of the month, a "Our Family Ramadan" card keeps what you achieved together — ready to share.
+A daily family challenge, gradual fasting practice matched to your child's age, a family Qur'an routine and stories on selected nights. At the end of the month, an "Our Family's Ramadan" card keeps what you achieved together — ready to share.
 ```
 
 **[B] — ⏳ F-MEMORY**
@@ -274,13 +274,13 @@ If you would like to help with running costs, you can give inside the app. A gif
 **[LANG] — ثابت — يُحذف أو يُعدَّل حين يتغيّر ⏳ F-EN-CONTENT**
 
 ```
-Note on language: the lessons, the paths and the assistant are fully available in English. The adhkar and du'a texts, the daily reminder, the games and the story library are currently Arabic only — translation is under way.
+Note on language: the lessons, the paths and the assistant are fully available in English, and so are most of the stories. The adhkar and du'a texts, the daily reminder, the games and five of the nineteen stories are currently Arabic only — translation is under way.
 ```
 
 | التجميع | ترتيب الكتل | الطول (حرف، الحد ٤٠٠٠) |
 |---|---|---|
-| **الآن** (يُنشر فورًا) | A → K → F → G → LANG | 2292 |
-| **الموسم** (١٥ يناير → ١٥ مارس، بعد شحن الميزات) | A → D → B → E → C → K → F → G → H → LANG | 3316 |
+| **الآن** (يُنشر فورًا) | A → K → F → G → LANG | 2335 |
+| **الموسم** (١٥ يناير → ١٥ مارس، بعد شحن الميزات) | A → D → B → E → C → K → F → G → H → LANG | 3373 |
 
 الكتل تُفصل بسطر فارغ. **أي كتلة ⏳ لم تُشحن ميزتها تُحذف من التجميع**، ولا يُستبدل بها وعد.
 
