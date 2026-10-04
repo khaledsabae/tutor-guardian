@@ -5,7 +5,7 @@
   "is_published": true,
   "language": "en",
   "title": "Milestones ahead",
-  "description": "The app follows each child's age and lets you know about a month before each important stage: starting school, the age of discernment, starting to teach prayer, first fasting, preparing for puberty, turning ten, the first phone and the identity question. Each stage comes with a short notification, a mini-guide of cards and links to what suits it in the app.",
+  "description": "If you add your child's birth month to his profile, the app lets you know about a month before each important stage: starting school, the age of discernment, starting to teach prayer, first fasting, preparing for puberty, turning ten, the first phone and the identity question. Without it, you will find the stage guides in your library by your child's age group. Each stage comes with a short notification, a mini-guide of cards and links to what suits it in the app.",
   "alert_policy": {
     "default_days_before": 30,
     "max_alerts_per_child_per_month": 1,
@@ -47,6 +47,18 @@
       },
       "context": "Narrated by Aisha.",
       "meaning": "Allah is Gentle and loves gentleness in all matters."
+    },
+    {
+      "id": "h_forgot_prayer",
+      "kind": "hadith",
+      "text_ar": "من نسي صلاة فليصل إذا ذكرها لا كفارة لها إلا ذلك",
+      "source": "صحيح البخاري — حديث ٥٩٧",
+      "provenance": {
+        "book": "البخاري",
+        "number": 597
+      },
+      "context": "Narrated by Anas ibn Malik.",
+      "meaning": "Whoever forgets a prayer, let him pray it when he remembers it; there is no expiation for it other than that."
     },
     {
       "id": "h_children_fasting",
@@ -107,6 +119,18 @@
       },
       "context": "Narrated by Abdullah ibn Umar.",
       "meaning": "Each of you is a shepherd, and each of you is responsible for his flock."
+    },
+    {
+      "id": "h_anas_uff",
+      "kind": "hadith",
+      "text_ar": "خدمت النبي صلى الله عليه وسلم عشر سنين فما قال لي أف ولا لم صنعت ولا ألا صنعت",
+      "source": "صحيح البخاري — حديث ٦٠٣٨",
+      "provenance": {
+        "book": "البخاري",
+        "number": 6038
+      },
+      "context": "Anas ibn Malik describing his years of serving the Prophet ﷺ, which began when he was a boy.",
+      "meaning": "I served the Prophet ﷺ for ten years, and he never once said to me 'uff' (a word of annoyance), nor 'why did you do that?', nor 'why didn't you do that?'"
     }
   ],
   "milestones": [
@@ -128,8 +152,8 @@
       "medical": true,
       "title": "Starting school",
       "alert": {
-        "title": "The first school year is near",
-        "body": "Your child turns six next month, the age school starts in many countries. A short guide to preparing him calmly."
+        "title": "When school is near",
+        "body": "In many countries school starts at about six. A short guide to preparing your child for it calmly."
       },
       "cards": [
         {
@@ -274,7 +298,7 @@
       "cards": [
         {
           "title": "Why seven?",
-          "body": "Well-known Prophetic guidance starts teaching children the prayer at seven and makes the follow-up steadier at ten; its source is in the linked knowledge unit, because the app only displays hadith from the two Sahihs. Before puberty, prayer is training, and the child is not blamed for it."
+          "body": "Well-known Prophetic guidance commands teaching children the prayer at seven and firmness about it at ten. Its wording mentions striking, which scholars restricted to what is neither harmful nor humiliating; this program does not use it, and relies on example, gradualness and gentleness. The guidance's source is in the linked knowledge unit, because this program only displays hadith from the two Sahihs. Before puberty, prayer is training, and the child is not blamed for it."
         },
         {
           "title": "The Prayer Journey",
@@ -282,11 +306,11 @@
         },
         {
           "title": "Be what he sees",
-          "body": "Children learn the prayer by watching, as in the attached hadith, so let him see you pray calmly and on time, and pray beside him."
+          "body": "Children learn the prayer by watching, as in the attached hadith about it, so let him see you pray calmly and on time, and pray beside him."
         },
         {
           "title": "Gentleness first",
-          "body": "No shouting, no shaming, no comparison. Correct one thing at a time, in private, and meet a missed prayer with 'the next prayer is a new chance'. The attached hadith is about gentleness in every matter."
+          "body": "No shouting, no shaming, no comparison. Correct one thing at a time, in private, and if he misses a prayer, he prays it when he remembers it, with no lecture and no blame. Among the attached hadiths are one about gentleness in every matter and one about a forgotten prayer."
         }
       ],
       "unit_ids": [
@@ -296,7 +320,8 @@
       ],
       "evidence_ids": [
         "h_pray_as_seen",
-        "h_gentle"
+        "h_gentle",
+        "h_forgot_prayer"
       ],
       "quran": [],
       "links": {
@@ -341,16 +366,16 @@
       "title": "First fasting attempts",
       "alert": {
         "title": "Ramadan is a month away",
-        "body": "If your child wants to try fasting this year, here is how to start gently and safely, one step at a time."
+        "body": "If your child will try fasting this year, here is how to start gently and safely. A child who has reached puberty must fast."
       },
       "cards": [
         {
           "title": "Training, not obligation",
-          "body": "Fasting becomes obligatory at puberty; before that it is training. The companions got their young children used to fasting the day of Ashura and kept them busy with toys when they were hungry, as in the attached hadith: encouragement without pressure."
+          "body": "Fasting becomes obligatory at puberty; before that it is training. The attached hadith is the source for getting young children used to fasting and distracting them with play when they are hungry; it describes the fast of Ashura. We take the distraction and the encouragement from it, and a tired child breaks the fast at once."
         },
         {
           "title": "Start small",
-          "body": "Begin with a few hours after suhoor or an early breakfast, then until midday, and only increase after two or three comfortable days. For ages 7–9 a full day is not the goal; ages 10–12 may reach full days gradually, on rest days and no more than two a week. The fasting ladder in the Ramadan program sets the steps for each age."
+          "body": "Begin with a few hours after suhoor or an early breakfast, then until midday, and only increase after two or three comfortable days. For ages 7–9 a full day is not the goal; ages 10–12 may reach full days gradually, on rest days and no more than two a week. A child who has reached puberty, by menstruation or a wet dream, must fast as an obligation whatever their age, so the training cap does not apply. The fasting ladder in the Ramadan program sets the steps for each age."
         },
         {
           "title": "Suhoor, iftar and sleep",
@@ -358,7 +383,7 @@
         },
         {
           "title": "When to stop at once",
-          "body": "Dizziness or fainting, a severe headache, vomiting, unusual sleepiness or confusion, very little or very dark urine, or him saying he can't go on: he breaks the fast with water, then food, and you praise his effort."
+          "body": "Dizziness, a severe headache, vomiting, unusual sleepiness, very little or very dark urine, or him saying, before puberty, that he can't go on: he breaks the fast with water and a date or some juice, and you praise his effort. Fainting, confusion or a seizure means emergency services at once, and nothing by mouth until he is fully alert."
         },
         {
           "title": "The doctor before fasting",
@@ -366,7 +391,7 @@
         }
       ],
       "red_flags": [
-        "Fainting, confusion or a seizure → urgent medical care.",
+        "Fainting, confusion or a seizure → emergency services at once; nothing by mouth until he is fully alert.",
         "A chronic illness or a regular medicine → ask the doctor before any attempt.",
         "Severe restriction of food, skipping iftar or preoccupation with weight, especially in older children → talk to a doctor."
       ],
@@ -400,7 +425,7 @@
       "order": 5,
       "trigger": {
         "type": "age",
-        "age_months": 102,
+        "age_months": 96,
         "alert_days_before": 30,
         "band_fallback": [
           "7-9",
@@ -442,7 +467,8 @@
       "red_flags": [
         "Any sign of puberty before age eight → paediatrician: early puberty needs assessment.",
         "No breast development by thirteen, or no period by fifteen or three years after breast development began → doctor.",
-        "Heavy bleeding that soaks a pad every one to two hours, bleeding that lasts more than seven days, pain that stops her daily life, or fainting → doctor."
+        "Heavy bleeding that soaks a pad every one to two hours, bleeding that lasts more than seven days, or pain that stops her daily life → doctor.",
+        "Fainting or severe dizziness with the bleeding → emergency care immediately."
       ],
       "unit_ids": [
         "dev-40436851",
@@ -475,9 +501,10 @@
       "order": 6,
       "trigger": {
         "type": "age",
-        "age_months": 114,
+        "age_months": 108,
         "alert_days_before": 30,
         "band_fallback": [
+          "7-9",
           "10-12"
         ]
       },
@@ -502,7 +529,7 @@
         },
         {
           "title": "Wet dreams (ihtilam)",
-          "body": "Tell him before it happens that a release of fluid during sleep is a natural sign of growing up, not a sin and not an illness. The rules of purity and ghusl that follow, he should learn from a trustworthy teacher or scholar. Asking about such things is part of religion, as in Umm Sulaym's question in the attached hadith."
+          "body": "Tell him before it happens that a release of fluid during sleep is a natural sign of growing up, not a sin and not an illness, and that it is a sign of puberty, from which he becomes responsible himself for prayer and fasting. The rules of purity and ghusl that follow, he should learn from a trustworthy teacher or scholar. Asking about such things is part of religion, as in Umm Sulaym's question in the attached hadith."
         },
         {
           "title": "Daily care and privacy",
@@ -562,12 +589,12 @@
       "title": "Turning ten",
       "alert": {
         "title": "Turning ten next month",
-        "body": "A new stage: steadier follow-up of prayer, more trust and more privacy. A short guide."
+        "body": "A new stage: firmness with gentleness about prayer, more trust and more privacy. A short guide."
       },
       "cards": [
         {
-          "title": "Steadier, not harsher",
-          "body": "Prophetic guidance on teaching prayer makes the follow-up steadier at ten; its source is in the linked knowledge unit. Steadier follow-up means a clear routine, checking in and talking about meaning, not shouting, shaming or punishment. The attached hadith is about gentleness."
+          "title": "Firmness with gentleness",
+          "body": "At ten, the well-known Prophetic guidance calls for firmness about prayer. Its wording mentions striking, which scholars restricted to what is neither harmful nor humiliating; this program does not use it. Its way of being firm is a steady routine, calm daily follow-up, conversation about meaning and your own example, with no shouting or shaming. Among the attached hadiths: gentleness in every matter, and Anas, who never heard a word of annoyance from the Prophet ﷺ in the ten years he served him."
         },
         {
           "title": "Prayer becomes his own",
@@ -575,11 +602,11 @@
         },
         {
           "title": "Privacy at home",
-          "body": "His own bed, and his own room or private corner where possible, with knocking before entering, by parents too. Start the puberty conversations now; the app will remind you at the right time for a son or a daughter."
+          "body": "His own bed, and his own room or private corner where possible, with knocking before entering, by parents too. Start the puberty conversations now; the puberty guide is in your library now."
         },
         {
           "title": "More trust, more responsibility",
-          "body": "Pocket money he manages himself, a household responsibility of his own, and a voice in family decisions. Each of us is a shepherd, as in the attached hadith, so let him practise caring for what is his: his things, his time, and a younger sibling if there is one."
+          "body": "Pocket money he manages himself, a household responsibility of his own, and a voice in family decisions. Each of us is a shepherd, as in one of the attached hadiths, so let him practise caring for what is his: his things, his time, and a younger sibling if there is one."
         }
       ],
       "unit_ids": [
@@ -589,7 +616,8 @@
       ],
       "evidence_ids": [
         "h_gentle",
-        "h_shepherd"
+        "h_shepherd",
+        "h_anas_uff"
       ],
       "quran": [],
       "links": {
@@ -714,7 +742,8 @@
       ],
       "red_flags": [
         "Persistent sadness, withdrawing from family and friends, or a sharp drop in schoolwork for more than two weeks → talk to a doctor or a counsellor.",
-        "Any talk of self-harm or of not wanting to live → get help the same day.",
+        "Any talk of self-harm or of not wanting to live → get professional help the same day.",
+        "If he has a plan or a means, or is in danger right now → emergency services at once; don't leave him alone, and remove medicines and dangerous tools.",
         "Signs of substance use, or contact with a stranger who asks for secrecy → act at once, and calmly."
       ],
       "unit_ids": [
@@ -747,11 +776,11 @@
   ],
   "generation": {
     "drafter_model": "claude-opus-5.5",
-    "reviewer_model": "glm-5.2 (every item) + mistral-large-3 (first fasting, puberty girls and boys)",
+    "reviewer_model": "glm-5.2 (every item) + mistral-large-3 (first fasting, puberty) + PR #23 sharia/medical/child-safety review",
     "translator_model": "claude-opus-5.5",
     "reviewed_at": "2026-10-04",
-    "review_rounds": 1,
-    "defects_fixed": 26,
-    "approved_by": "auto-review:glm-5.2+mistral-large-3+guards"
+    "review_rounds": 2,
+    "defects_fixed": 42,
+    "approved_by": "auto-review:glm-5.2+mistral-large-3+guards; pr23-sharia-medical-review"
   }
 }

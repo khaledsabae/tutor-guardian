@@ -346,3 +346,62 @@ def test_milestone_alerts_fit_a_notification(milestones):
     for lang_doc in milestones:
         for m in lang_doc["milestones"]:
             assert len(m["alert"]["title"]) <= 50 and len(m["alert"]["body"]) <= 160, m["key"]
+
+
+# ── PR #23 sharia / medical / child-safety review: regressions ──────────────
+
+def _schema_errors(name, doc):
+    from jsonschema import Draft202012Validator
+    schema = json.loads((CURRICULUM / "schema" / f"program_{name}.schema.json").read_text(encoding="utf-8"))
+    return list(Draft202012Validator(schema).iter_errors(doc))
+
+
+def test_urgent_signs_carry_an_action(ramadan):
+    ar = copy.deepcopy(ramadan[0])
+    assert ar["fasting_ladder"]["urgent_action"]
+    del ar["fasting_ladder"]["urgent_action"]
+    assert _schema_errors("ramadan_family", ar), "an urgent sign without an action must be refused"
+
+
+def test_a_promised_feature_needs_a_fallback(ramadan):
+    ar = copy.deepcopy(ramadan[0])
+    week = next(w for w in ar["after_ramadan"]["weeks"] if w.get("requires_feature"))
+    del week["fallback_text"]
+    assert _schema_errors("ramadan_family", ar)
+
+
+def test_childrens_fasting_progress_stays_off_the_shared_card(cp, src, ramadan):
+    metrics = {m["key"]: m for m in ramadan[0]["recap"]["metrics"]}
+    assert metrics["fasting_steps"].get("shareable") is False
+    ar, en = _mutated(ramadan, lambda a, e: [d["recap"]["templates"]["lines"].append(
+        ("درجات: {fasting_steps}" if d is a else "Steps: {fasting_steps}")) for d in (a, e)])
+    _expect(_problems(cp, src, "ramadan_family", ar, en), "قابلًا للمشاركة")
+
+
+def test_puberty_not_age_decides_the_obligation(ramadan, milestones):
+    ladder = ramadan[0]["fasting_ladder"]
+    assert any("الحيض أو الاحتلام" in p and "فريضة" in "".join(ladder["principles"]) for p in ladder["principles"])
+    assert "الحيض أو الاحتلام" in ladder["bands"]["10-12"]["summary"]
+    card2 = _ms(milestones[0], "first_fasting")["cards"][1]["body"]
+    assert "الحيض أو الاحتلام" in card2
+    assert "قبل البلوغ" in ladder["stop_signs"][-1], "«I can't go on» is a pre-puberty stop sign"
+
+
+def test_a_missed_prayer_is_made_up_not_skipped(prayer, milestones):
+    texts = json.dumps(prayer[0], ensure_ascii=False) + json.dumps(milestones[0], ensure_ascii=False)
+    assert "الصلاة القادمة فرصة جديدة" not in texts
+    assert "حين تتذكّرها" in json.dumps(prayer[0], ensure_ascii=False)
+    assert any(e["id"] == "h_forgot_prayer" for e in prayer[0]["evidence"])
+
+
+def test_the_seven_and_ten_guidance_is_stated_honestly(prayer, milestones):
+    basis = prayer[0]["basis"]["text"]
+    assert "الضرب" in basis and "لا يستعمله" in basis and "هذا البرنامج" in basis
+    assert "h_anas_uff" in prayer[0]["basis"]["evidence_ids"]
+    age_ten = _ms(milestones[0], "age_ten")
+    assert age_ten["cards"][0]["title"] == "حزمٌ برفق"
+
+
+def test_no_promise_of_an_adhan_or_prayer_times_feature(prayer):
+    text = json.dumps(prayer[0], ensure_ascii=False)
+    assert "تنبيه التطبيق" not in text and "تنبيه الأذان في التطبيق" not in text
