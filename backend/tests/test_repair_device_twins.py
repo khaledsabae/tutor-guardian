@@ -75,6 +75,8 @@ def population():
     # 5. No shared token (notifications refused): visible by birth time only.
     _born("U5", "2026-09-30 13:00:00"); _child("U5")
     _born("H5", "2026-09-30 13:00:01")
+    # 6. A family on an id the API now refuses (stored before validation).
+    _born("abcd efgh ijkl mnop", "2026-09-12 15:57:50"); _child("abcd efgh ijkl mnop")
     return tokens
 
 
@@ -103,6 +105,8 @@ def test_dry_run_classifies_and_writes_nothing(population, capsys):
         "both_halves_have_a_child_reonboarded": 1,
         "time_only_twin_not_folded": 1,
         "time_only_twin_used_after_first_minute": 0,
+        "refused_id_devices": 1,
+        "refused_id_devices_with_children": 1,
         "=> foldable twins (what --apply would fold)": 2,
     }
     assert "dry run: nothing written" in out
@@ -149,7 +153,16 @@ def test_the_bundle_runs_the_dry_run_in_a_container_without_the_module(populatio
     bundle = subprocess.run([sys.executable, str(SCRIPT), "--bundle"], capture_output=True,
                             text=True, check=True, env={**os.environ,
                                                         "PYTHONPATH": str(ROOT / "backend")}).stdout
-    run = subprocess.run([sys.executable, "-"], input=bundle, capture_output=True, text=True,
+    # The container predates this change: no service module, and none of the
+    # helpers it imports. Remove them before the bundle runs.
+    old_container = (
+        "import app.core.log_safety as l, app.models.api as a, app.db.init_db as d\n"
+        "del l.describe_rejected_id, a.DEVICE_ID_PATTERN, a.DEVICE_ID_MAX_LENGTH\n"
+        "del d.ensure_device_aliases_table, d._CREATE_DEVICE_ALIASES\n"
+        "import sys; sys.modules.pop('app.services.device_twins', None)\n"
+        f"exec(compile({bundle!r}, '<stdin>', 'exec'), {{'__name__': '__main__'}})\n"
+    )
+    run = subprocess.run([sys.executable, "-"], input=old_container, capture_output=True, text=True,
                          env={**os.environ, "PYTHONPATH": str(ROOT / "backend"),
                               "CONVERSATIONS_DB": str(db_path())})
     assert run.returncode == 0, run.stderr

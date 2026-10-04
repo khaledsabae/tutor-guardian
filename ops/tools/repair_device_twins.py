@@ -74,6 +74,10 @@ def survey(conn: sqlite3.Connection, twins) -> dict:
     holders = collections.defaultdict(list)
     for d, (tok, _, _) in push.items():
         holders[tok].append(d)
+    # The emulator E2E gate (.github/workflows/mobile-e2e.yml) runs against
+    # production and names its test child E2E-Maestro; its baseline lineage is
+    # a build that still splits, so some twins here are test devices.
+    e2e = {d for (d,) in q("SELECT DISTINCT device_id FROM child_profiles WHERE name LIKE 'E2E-Maestro%'")}
 
     out = collections.Counter()
     pairs = []          # (twin, family, state) — what --apply folds
@@ -102,6 +106,8 @@ def survey(conn: sqlite3.Connection, twins) -> dict:
         else:
             state = "never_relaunched_or_unknown"
         out[f"twin:{state}"] += 1
+        if family in e2e:
+            out[f"twin:{state}:of_which_e2e_test_devices"] += 1
         pairs.append((device, family, state))
 
     # Both halves with children: the parent re-onboarded on the twin. Same
@@ -144,6 +150,13 @@ def survey(conn: sqlite3.Connection, twins) -> dict:
             break
     out["time_only_twin_not_folded"] = time_only
     out["time_only_twin_used_after_first_minute"] = time_only_active
+
+    # Devices on an id the API now refuses (stored before SessionCreate
+    # validated it): their app gets 422 at every mint until the fixed build
+    # moves them to a valid id on its next proof-carrying mint.
+    refused = [d for d in born if not twins.is_valid_device_id(d)]
+    out["refused_id_devices"] = len(refused)
+    out["refused_id_devices_with_children"] = sum(1 for d in refused if kids.get(d))
     return {"counts": dict(out), "pairs": pairs}
 
 
@@ -224,13 +237,56 @@ def main(argv: list[str] | None = None) -> int:
 
 def _bundle() -> str:
     """This script, preceded by the service module registered under its import
-    name — so `python -` in an older container runs the same code."""
-    service = (ROOT / "backend" / "app" / "services" / "device_twins.py").read_text(encoding="utf-8")
+    name — so `python -` in an older container runs the same code.
+
+    Every name the service imports from `app.*` and the container may not have
+    yet (it predates this change) is supplied from this checkout's source:
+    the defining top-level statements are picked out with `ast` and added to
+    the container's module only where the name is missing — nothing it already
+    has is replaced.
+    """
+    import ast
+
+    backend = ROOT / "backend"
+    service = (backend / "app" / "services" / "device_twins.py").read_text(encoding="utf-8")
+    supply = []
+    for node in ast.parse(service).body:
+        if not (isinstance(node, ast.ImportFrom) and (node.module or "").startswith("app.")):
+            continue
+        source = (backend / Path(*node.module.split("."))).with_suffix(".py").read_text(encoding="utf-8")
+        wanted = {alias.name for alias in node.names}
+        tree = ast.parse(source)
+        defined = {}
+        for stmt in tree.body:
+            names = ([stmt.name] if isinstance(stmt, (ast.FunctionDef, ast.ClassDef)) else
+                     [t.id for t in getattr(stmt, "targets", []) if isinstance(t, ast.Name)])
+            for name in names:
+                defined[name] = stmt
+        # A picked function may lean on module globals defined beside it.
+        picked, queue = {}, list(wanted)
+        while queue:
+            name = queue.pop()
+            stmt = defined.get(name)
+            if stmt is None or name in picked:
+                continue
+            picked[name] = stmt
+            queue.extend(n.id for n in ast.walk(stmt) if isinstance(n, ast.Name) and n.id in defined)
+        # The statements' own text (not ast.unparse, whose output follows the
+        # Python that builds the bundle, not the container's 3.11).
+        code = "\n\n".join(ast.get_source_segment(source, stmt) for stmt in picked.values())
+        supply.append((node.module, sorted(picked), code))
+
     future = "from __future__ import annotations\n"
     me = Path(__file__).read_text(encoding="utf-8").replace(future, "", 1)
-    return (
-        future                       # must stay the first statement of the file
-        + "import sys, types\n"
+    prelude = [future, "import importlib, sys, types\n"]  # future: must stay first
+    for module, names, code in supply:
+        prelude.append(
+            f"_mod = importlib.import_module({module!r})\n"
+            f"_ns = dict(_mod.__dict__)\n"
+            f"exec(compile({code!r}, {module!r}, 'exec'), _ns)\n"
+            f"[setattr(_mod, _n, _ns[_n]) for _n in {names!r} if not hasattr(_mod, _n)]\n"
+        )
+    prelude.append(
         "_m = types.ModuleType('app.services.device_twins')\n"
         "_m.__file__ = 'bundled:device_twins.py'\n"
         f"exec(compile({service!r}, 'device_twins.py', 'exec'), _m.__dict__)\n"
@@ -239,8 +295,8 @@ def _bundle() -> str:
         "sys.argv = ['repair_device_twins.py', '--dry-run']\n"
         # `python -` has no __file__; the container keeps the repo at /app.
         "__file__ = '/app/ops/tools/repair_device_twins.py'\n"
-        + me
     )
+    return "".join(prelude) + me
 
 
 if __name__ == "__main__":
