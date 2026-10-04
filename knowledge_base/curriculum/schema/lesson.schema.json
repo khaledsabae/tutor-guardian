@@ -174,7 +174,8 @@
             "clean",
             "defects",
             "pending",
-            "unreviewed"
+            "unreviewed",
+            "low_only"
           ]
         },
         "review_defects": {
