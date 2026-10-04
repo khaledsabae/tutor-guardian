@@ -29,34 +29,41 @@
   "translated_from": "med-08886df5",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro+glm-5.2",
+    "reviewer_model": "claude-opus",
     "needs_scholar_review": true,
-    "review_verdict": "clean",
-    "review_defects": [],
-    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "review_verdict": "low_only",
+    "review_defects": [
+      {
+        "model": "claude-opus",
+        "field": "title",
+        "type": "omission",
+        "severity": "low",
+        "why": "The Arabic title now carries the abbreviation «(DMDD)»; the English title spells the full name without it — same disorder, nothing lost."
+      }
+    ],
+    "approved_by": "auto-review:claude-opus:2026-10-04",
+    "revalidated_at": "2026-10-04T18:16:25+00:00",
     "auto_review": {
       "reviewers": [
-        "deepseek-v4-pro",
-        "glm-5.2"
+        "claude-opus"
       ],
       "fixer": null,
       "rounds": 1,
-      "prompt_version": "dfa8a5f39718",
-      "content_sha256": "f115a4f46c457c86d22e464e3aa038da4c6c3bba64037e866d7504b265d851e3",
-      "reviewed_at": "2026-10-04T17:06:53+00:00",
-      "residual_low": [],
-      "adjudicated": [
+      "prompt_version": "manual:dfa8a5f39718",
+      "content_sha256": "fa7dac7176657bbebdabfcdcba7ac1623f82a3be0be84a2fb3d612b6ac922464",
+      "reviewed_at": "2026-10-04T18:16:25+00:00",
+      "residual_low": [
         {
-          "field": "text_simplified",
-          "type": "medical",
-          "reason": "Faithful to the NIMH «DMDD: The Basics» text the unit summarises («Youth with DMDD are diagnosed between the ages of 6 and 10»), which the reviewer reads as too narrow.",
-          "by": "claude-opus-5.5 (en-parity review, PR #20)",
-          "on": "2026-10-04"
+          "model": "claude-opus",
+          "field": "title",
+          "type": "omission",
+          "severity": "low",
+          "why": "The Arabic title now carries the abbreviation «(DMDD)»; the English title spells the full name without it — same disorder, nothing lost."
         }
       ],
+      "adjudicated": [],
       "tool": "ops/tools/review_en_parity.py",
-      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
-    },
-    "revalidated_at": "2026-10-04T17:06:53+00:00"
+      "meaning": "deterministic guards passed and one reviewer from a model family different from every author of the English read the Arabic and English side by side against the review rubric and found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+    }
   }
 }

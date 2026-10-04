@@ -122,7 +122,8 @@
     ]
   },
   "med-08886df5__en": {
-    "content_sha256": "f115a4f46c457c86d22e464e3aa038da4c6c3bba64037e866d7504b265d851e3",
+    "content_sha256": "fa7dac7176657bbebdabfcdcba7ac1623f82a3be0be84a2fb3d612b6ac922464",
+    "rebound": "2026-10-04 after a title-only fix (PR #20 review: «التحريضي» → «التخريبي (DMDD)»); the adjudicated text_simplified is unchanged",
     "overrides": [
       {
         "field": "text_simplified",

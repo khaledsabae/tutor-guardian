@@ -28,26 +28,25 @@
   "translated_from": "814739d8-0acf-4d8e-8d93-4bc25e9b4b6b",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro+glm-5.2",
+    "reviewer_model": "claude-opus",
     "needs_scholar_review": true,
     "review_verdict": "clean",
     "review_defects": [],
-    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "approved_by": "auto-review:claude-opus:2026-10-04",
+    "revalidated_at": "2026-10-04T18:16:25+00:00",
     "auto_review": {
       "reviewers": [
-        "deepseek-v4-pro",
-        "glm-5.2"
+        "claude-opus"
       ],
       "fixer": null,
       "rounds": 1,
-      "prompt_version": "dfa8a5f39718",
-      "content_sha256": "ede026465d8fc87c87cf344234eb622ccb6d1d1e3e61e50e413a2abac9f7696b",
-      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "prompt_version": "manual:dfa8a5f39718",
+      "content_sha256": "f0ff186469ebbee6aaece6601521ba16e6841770338ffa9cc60004d17419314b",
+      "reviewed_at": "2026-10-04T18:16:25+00:00",
       "residual_low": [],
       "adjudicated": [],
       "tool": "ops/tools/review_en_parity.py",
-      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
-    },
-    "revalidated_at": "2026-10-04T11:18:18+00:00"
+      "meaning": "deterministic guards passed and one reviewer from a model family different from every author of the English read the Arabic and English side by side against the review rubric and found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+    }
   }
 }
