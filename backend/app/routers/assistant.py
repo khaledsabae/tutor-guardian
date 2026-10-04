@@ -21,7 +21,7 @@ from app.services.guardrails import (
 )
 from app.services.retrieval import (retrieve_hybrid, _ensure_index,
                                     log_retrieval, detect_query_language)
-from app.services.reranker import RERANK_MIN_SCORE, relevance as rerank_relevance
+from app.services.reranker import RERANK_MIN_SCORE
 from app.services.query_rewriter import rewrite_query
 from app.services.llm_service import (
     generate_reply, build_full_prompt, generate_general_pivot, build_pivot_prompt,
@@ -339,59 +339,6 @@ async def _tag_user_message(
         logger.warning("tagging user message %s failed: %s", message_id, exc)
 
 
-async def _resolve_followup(
-    session_id: str | None, user_msg_id: int | None,
-    detected_domains: list[str], query_text: str,
-) -> tuple[list[str], str, str, bool]:
-    """Keep a follow-up in the conversation it belongs to.
-
-    The classifier sees the new message alone (by design), so a follow-up —
-    «وإذا رفض؟», «اشرحها بلغة تناسب سنه», even «طلبت منها أن تصلي فرفضت» —
-    carries no topic words and comes back ["general"]. That sent it to the
-    off-topic pivot, which has no history and is told the question has
-    nothing to do with parenting: 26% of follow-ups to a grounded answer
-    (Sept 2026), and the pivot is where most 👎 ratings landed (10 of 18).
-
-    When the turn just before was a grounded answer, the follow-up takes that
-    answer's EVIDENCE domain (store.followup_context) and searches with both
-    questions. It is only a candidate: the caller still checks the new message
-    on its own against what was retrieved (_followup_off_topic), so «ما عاصمة
-    فرنسا؟» after a sleep answer stays off-topic.
-
-    Returns (domains, search query for the vector/BM25 legs, query for the
-    cross-encoder — the new message FIRST, since it reads 256 tokens and a long
-    previous question would push the follow-up out — and whether this is an
-    inherited follow-up).
-    """
-    if detected_domains != ["general"] or not session_id:
-        return detected_domains, query_text, "", False
-    try:
-        prev = await asyncio.to_thread(store.followup_context, session_id, user_msg_id)
-    except Exception as exc:  # noqa: BLE001 — a lookup must not break the answer
-        logger.warning("follow-up lookup failed: %s", exc)
-        return detected_domains, query_text, "", False
-    if prev is None:
-        return detected_domains, query_text, "", False
-    domain, previous_question = prev
-    logger.info("Follow-up of a %s turn — searching it in that domain", domain)
-    return ([domain], f"{previous_question}\n{query_text}",
-            f"{query_text}\n{previous_question}", True)
-
-
-async def _followup_off_topic(query_text: str, units: list[dict]) -> bool:
-    """Is the follow-up, read ALONE, unrelated to what was retrieved for it?
-
-    The retrieval and the ranking saw the previous question too, which lifts
-    any message above the relevance floor — «ما عاصمة فرنسا؟» after a sleep
-    question scored -2.8 with it and -9.0 without. Unverifiable (reranker off
-    or failing) counts as off-topic: the pivot is the safe answer then.
-    """
-    if not units:
-        return True
-    scores = await asyncio.to_thread(rerank_relevance, query_text, units)
-    return not scores or max(scores) < RERANK_MIN_SCORE
-
-
 def _record_failed_turn(session_id: str | None, flag: str, *,
                         severity: str = "", lang: str = "ar") -> None:
     """Store the apology as the turn and count why. Synchronous, like
@@ -577,9 +524,6 @@ async def _draft_answer(
     # Both can make a model call (seconds) on a keyword fast-path miss, and
     # they are independent — so they run together, not one after the other.
     detected_domains, rewritten_query = await _classify_and_rewrite(query_text)
-    detected_domains, retrieval_query, rerank_query, followup = await _resolve_followup(
-        session_id, user_msg_id, detected_domains, query_text,
-    )
     is_general = detected_domains == ["general"]
     logger.info("Auto-detected domains: %s", detected_domains)
 
@@ -629,12 +573,11 @@ async def _draft_answer(
             # already happened alongside classification (_classify_and_rewrite).
             _ensure_index()
             units = retrieve_hybrid(
-                query_text=retrieval_query,
+                query_text=query_text,
                 domains=detected_domains,
                 age_group=user_message.age_group or "unspecified",
                 rewritten_query=rewritten_query,
                 lang=detect_query_language(query_text),
-                rerank_query=rerank_query,
             )
             log_retrieval(query_text, detected_domains, rewritten_query, units)
             return units
@@ -675,10 +618,6 @@ async def _draft_answer(
                 })
         else:
             retrieved_units = await asyncio.to_thread(_retrieve_blocking)
-
-    # An inherited follow-up must still be about this conversation on its own.
-    if followup and await _followup_off_topic(query_text, retrieved_units):
-        detected_domains, is_general, retrieved_units = ["general"], True, []
 
     # Re-label from the retrieved evidence when classification was uncertain.
     primary_domain = _label_domain(detected_domains, retrieved_units)
@@ -984,9 +923,6 @@ async def _stream_answer(
     # Concurrent, not sequential — see _classify_and_rewrite. This is the path
     # the mobile app uses, so the round-trip saved here is one the user feels.
     detected_domains, rewritten_query = await _classify_and_rewrite(query_text)
-    detected_domains, retrieval_query, rerank_query, followup = await _resolve_followup(
-        session_id, user_msg_id, detected_domains, query_text,
-    )
     is_general = detected_domains == ["general"]
 
     primary_domain = _label_domain(detected_domains, [])
@@ -1031,11 +967,10 @@ async def _stream_answer(
             # The rewrite already ran alongside classification above.
             _ensure_index()
             units = retrieve_hybrid(
-                query_text=retrieval_query, domains=detected_domains,
+                query_text=query_text, domains=detected_domains,
                 age_group=user_message.age_group or "unspecified",
                 rewritten_query=rewritten_query,
                 lang=detect_query_language(query_text),
-                rerank_query=rerank_query,
             )
             log_retrieval(query_text, detected_domains, rewritten_query, units)
             return units
@@ -1066,10 +1001,6 @@ async def _stream_answer(
                     "rerank_score": 1.0,
                     "source_domain": "fiqh",
                 })
-
-    # An inherited follow-up must still be about this conversation on its own.
-    if followup and await _followup_off_topic(query_text, retrieved_units):
-        detected_domains, is_general, retrieved_units = ["general"], True, []
 
     # Re-label from the retrieved evidence when classification was uncertain.
     primary_domain = _label_domain(detected_domains, retrieved_units)

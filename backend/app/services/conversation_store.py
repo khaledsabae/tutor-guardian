@@ -251,50 +251,6 @@ def update_classification(
         conn.close()
 
 
-# Domains a follow-up may inherit: the classifier's real knowledge domains
-# (domain_classifier.VALID_DOMAINS) — never "general", nor a guard's label
-# such as "fiqh_aqeedah", which has no knowledge base behind it.
-_FOLLOWUP_DOMAINS = frozenset({"fiqh", "medical", "cyber", "development", "aqeedah"})
-# Reply modes that mean "the previous turn was answered on-topic". An
-# interrupted reply was cut by the client, but the parent read its start.
-_GROUNDED_MODES = frozenset({"llm_generated", "retrieval_only", "interrupted"})
-
-
-def followup_context(session_id: str, before_message_id: int | None) -> tuple[str, str] | None:
-    """(domain, question) of the turn the message `before_message_id` follows.
-
-    Only when the row right before it is an on-topic assistant reply with a
-    real knowledge domain. The domain is the REPLY's: it is labelled from the
-    evidence actually retrieved, while the question row keeps the
-    classifier's pre-retrieval guess — for an uncertain classification that
-    guess is just the first entry of the broad all-domains search, and
-    inheriting it sent an Instagram follow-up to the medical knowledge base.
-    Error placeholders and empty reservations are skipped, like in
-    get_history. None when there is no such turn.
-    """
-    if before_message_id is None:
-        return None
-    conn = get_conn()
-    try:
-        rows = conn.execute(
-            """SELECT role, content, domain, mode FROM chat_messages
-               WHERE session_id = ? AND id < ?
-                 AND (mode IS NULL OR mode != 'error') AND content != ''
-               ORDER BY id DESC LIMIT 2""",
-            (session_id, before_message_id),
-        ).fetchall()
-    finally:
-        conn.close()
-    if len(rows) < 2:
-        return None
-    reply, question = rows[0], rows[1]
-    if reply["role"] != "assistant" or reply["mode"] not in _GROUNDED_MODES:
-        return None
-    if reply["domain"] not in _FOLLOWUP_DOMAINS or question["role"] != "user":
-        return None
-    return reply["domain"], question["content"]
-
-
 def update_reply(message_id: int, *, content: str, mode: str) -> None:
     """Fill in an assistant row reserved earlier (see assistant.event_stream:
     the row is inserted when the reader leaves, so it keeps its place before

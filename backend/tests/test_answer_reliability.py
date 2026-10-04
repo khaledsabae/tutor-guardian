@@ -16,7 +16,6 @@ from __future__ import annotations
 import asyncio
 import dataclasses
 import json
-import os
 import sqlite3
 import threading
 import time
@@ -153,7 +152,6 @@ def pipeline(monkeypatch):
     """The assistant pipeline minus its heavy parts: classification, cache,
     retrieval and telemetry are stubbed; the model is a scripted fake."""
     calls = SimpleNamespace(retrieve=[], sessions=[], domains=["medical"],
-                            relevance=lambda q, units: [0.5] * len(units),
                             unit_domain="medical", prompts=[])
 
     async def _classify(query_text):
@@ -174,8 +172,6 @@ def pipeline(monkeypatch):
     monkeypatch.setattr(assistant, "log_retrieval", lambda *a, **k: None)
     monkeypatch.setattr(assistant, "resolve_ayah_reference", _no_ayah)
     monkeypatch.setattr(assistant, "log_session", lambda **kw: calls.sessions.append(kw))
-    monkeypatch.setattr(assistant, "rerank_relevance", lambda q, u: calls.relevance(q, u),
-                        raising=False)
     monkeypatch.setattr(ai_gateway, "_log_call", lambda *a, **k: None)
     monkeypatch.setattr(assistant, "_STREAM_KEEPALIVE_S", 0.05)
     ai_gateway._gateway = None
@@ -772,122 +768,6 @@ def test_background_stall_is_counted_as_a_stall_not_a_parent(pipeline, monkeypat
     assert [r["role"] for r in _rows(sid)] == ["user"]  # no empty bubble left behind
     assert "first_token_timeout" in _flags(pipeline)
     assert "client_left_before_first_token" not in _flags(pipeline)
-
-
-# ── S2/S3: follow-ups ─────────────────────────────────────────────────────
-
-def _seed_answered_turn(session_id: str, question_domain: str, reply_domain: str | None,
-                        reply_mode: str, question="ابني يرفض أداء الصلاة، كيف أشجعه؟") -> None:
-    qid = store.add_message(session_id, "user", question)
-    store.update_classification(qid, domain=question_domain, severity="خفيف")
-    store.add_message(session_id, "assistant", "ابدأ بالقدوة والتحبيب.",
-                      domain=reply_domain, mode=reply_mode)
-
-
-def test_followup_classified_general_keeps_the_previous_topic(pipeline):
-    """«وإذا رفض؟» has no topic words, so it went to the off-topic pivot with
-    no history: 26% of follow-ups to a grounded answer."""
-    pipeline.domains = ["general"]
-    pipeline.use_script([("token", "جرّب أن تصلي أمامه.")])
-    client, sid = _client_with_session()
-    try:
-        _seed_answered_turn(sid, "fiqh", "fiqh", "llm_generated")
-        resp = _ask(client, sid, "وإذا رفض مرة أخرى؟")
-    finally:
-        client.__exit__(None, None, None)
-
-    call = pipeline.retrieve[0]
-    assert call["domains"] == ["fiqh"]
-    # S2 — both questions for the search legs; the follow-up FIRST for the
-    # cross-encoder, which reads only 256 tokens.
-    assert "يرفض أداء الصلاة" in call["query_text"] and "وإذا رفض مرة أخرى" in call["query_text"]
-    assert call["rerank_query"].startswith("وإذا رفض مرة أخرى")
-    assert _done_payload(resp.text)["mode"] == "llm_generated"
-
-
-def test_off_topic_followup_stays_on_the_pivot_without_sources(pipeline):
-    """S2 — inheritance lifted «ما عاصمة فرنسا؟» above the relevance floor
-    (with the previous sleep question it scored -2.8, alone -9.0) and it was
-    answered on the grounded path with the sleep topic's sources."""
-    pipeline.domains = ["general"]
-    pipeline.relevance = (
-        lambda q, units: [-9.0] * len(units) if "فرنسا" in q else [0.5] * len(units))
-    pipeline.use_script([("token", "باريس.")])
-    client, sid = _client_with_session()
-    try:
-        _seed_answered_turn(sid, "medical", "medical", "llm_generated",
-                            question="ابني لا ينام إلا بعد منتصف الليل، ماذا أفعل؟")
-        resp = _ask(client, sid, "ما عاصمة فرنسا؟")
-    finally:
-        client.__exit__(None, None, None)
-
-    done = _done_payload(resp.text)
-    assert done["mode"] == "general_pivot"
-    assert done["metadata"]["sources"] == []
-
-
-@pytest.mark.skipif(not os.environ.get("RUN_MODEL_TESTS"),
-                    reason="loads the real cross-encoder (~100 s); set RUN_MODEL_TESTS=1")
-def test_real_cross_encoder_rejects_the_capital_of_france():
-    """The same case through the real model (measured 2026-10-04: -6.99
-    alone vs the sleep unit; the sleep follow-up -3.82)."""
-    from app.services import reranker
-    try:
-        reranker._get_model()
-    except Exception:  # noqa: BLE001 — no model in this environment
-        pytest.skip("cross-encoder not available")
-    units = [_unit(doc="النوم المبكر للطفل يبدأ بروتين ثابت كل ليلة: حمام دافئ ثم قصة ثم إطفاء الأنوار.")]
-    assert max(reranker.relevance("ما عاصمة فرنسا؟", units)) < reranker.RERANK_MIN_SCORE
-    assert max(reranker.relevance("وإذا بكى عند إطفاء النور؟", units)) >= reranker.RERANK_MIN_SCORE
-
-
-def test_followup_inherits_the_replys_evidence_domain_not_the_guess(pipeline):
-    """S3 — an uncertain classification tags the question with the first
-    entry of the broad search ('medical'); the reply is labelled from the
-    evidence actually found. Inheriting the guess sent an Instagram
-    follow-up to the medical knowledge base."""
-    pipeline.domains = ["general"]
-    pipeline.unit_domain = "cyber"
-    pipeline.use_script([("token", "فعّل الرقابة الأبوية.")])
-    client, sid = _client_with_session()
-    try:
-        _seed_answered_turn(sid, "medical", "cyber", "llm_generated",
-                            question="ابني يقضي وقتًا طويلًا على إنستغرام")
-        _ask(client, sid, "وكيف أراقب ذلك؟")
-    finally:
-        client.__exit__(None, None, None)
-    assert pipeline.retrieve[0]["domains"] == ["cyber"]
-
-
-def test_followup_after_an_off_topic_reply_stays_general(pipeline):
-    pipeline.domains = ["general"]
-    pipeline.use_script([("token", "إجابة عامة")])
-    client, sid = _client_with_session()
-    try:
-        _seed_answered_turn(sid, "general", "general", "general_pivot")
-        resp = _ask(client, sid, "وماذا عن الحلوى؟")
-    finally:
-        client.__exit__(None, None, None)
-
-    assert pipeline.retrieve == []
-    assert _done_payload(resp.text)["mode"] == "general_pivot"
-
-
-def test_followup_context_requires_a_grounded_reply_and_a_real_domain():
-    sid = store.create_session("ctx")
-    _seed_answered_turn(sid, "medical", "medical", "llm_generated")
-    store.add_message(sid, "assistant", "تعذّر توليد الرد", mode="error")  # skipped
-    nxt = store.add_message(sid, "user", "وإذا لم ينفع؟")
-    assert store.followup_context(sid, nxt) == (
-        "medical", "ابني يرفض أداء الصلاة، كيف أشجعه؟",
-    )
-    sid2 = store.create_session("ctx2")
-    _seed_answered_turn(sid2, "fiqh_aqeedah", "fiqh_aqeedah", "fiqh_guard")
-    assert store.followup_context(sid2, store.add_message(sid2, "user", "ولماذا؟")) is None
-    sid3 = store.create_session("ctx3")
-    _seed_answered_turn(sid3, "medical", None, "llm_generated")  # no evidence domain
-    assert store.followup_context(sid3, store.add_message(sid3, "user", "وبعد؟")) is None
-    assert store.followup_context(sid3, None) is None
 
 
 # ── Pivot prompt, S8 pleasantries, minor ───────────────────────────────────

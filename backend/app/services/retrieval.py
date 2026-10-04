@@ -705,14 +705,8 @@ def retrieve_hybrid(
     rerank_pool: int = 12,
     age_span: int = 1,
     lang: str | None = None,
-    rerank_query: str = "",
 ) -> list[dict]:
     """The quality-first retrieval path.
-
-    `rerank_query`, when given, is what the cross-encoder scores against
-    instead of `query_text` — a follow-up searches with the previous question
-    and itself, but is judged with itself first (the cross-encoder reads only
-    256 tokens, so a long previous question would push it out).
 
     Per domain and per query: three legs — vector filtered to the child's age
     band, vector across the domain regardless of band, and BM25 → RRF fusion →
@@ -843,9 +837,8 @@ def retrieve_hybrid(
     # pool, so the extra leg must not be allowed to grow the pool — it is
     # there to change *which* candidates are scored, not how many.
     candidates = _rrf_merge(*legs)[:rerank_pool]
-    judge = rerank_query or query_text
     if not lang:
-        return rerank(judge, candidates, top_n=top_n)
+        return rerank(query_text, candidates, top_n=top_n)
 
     # 🚨 Language is applied AFTER the reranker, not before it.
     #
@@ -862,7 +855,7 @@ def retrieve_hybrid(
     # cross-encoder has *already* judged relevant is the thing that was wanted
     # all along, and it cannot promote an off-topic unit, because off-topic
     # units are not in this list — RERANK_MIN_SCORE removed them.
-    scored = rerank(judge, candidates, top_n=len(candidates))
+    scored = rerank(query_text, candidates, top_n=len(candidates))
     if len(scored) <= 1:
         return scored[:top_n]
 
