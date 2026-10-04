@@ -966,6 +966,12 @@
         "claude-opus-5.5"
       ]
     },
+    "lesson_4-6_aqeedah_seeds_04": {
+      "category": "awaiting-review",
+      "reason": "Arabic grammar fix on content/p1-deep-paths: «وعلّميه يقول» → «وعلّميه أن يقول» in try_this. The English is unchanged and still matches; its 2026-10-04 stamp went stale only because the Arabic changed. Re-review after the Ollama weekly reset (key capped; Claude may not stamp).",
+      "content_sha256": "901ccf04d04cfa600cdb2270c3c81b74fddef4fa9b93ef13a1e42b9584ab3471",
+      "queued_on": "2026-10-04"
+    },
     "lesson_4-6_development_positive_parenting_02": {
       "category": "awaiting-review",
       "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
