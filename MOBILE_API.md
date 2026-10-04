@@ -492,3 +492,47 @@ weekly plans and the memory switch):
 → 200 {"deleted": {"child_facts": 12, "followups": 3, "weekly_plans": 4, "child_memory_settings": 1},
        "deleted_at": "2026-10-04T18:30:00+00:00"}
 ```
+
+---
+
+## 10. Account deletion — `DELETE /api/privacy/account?confirm=true`
+
+Google Play requires an in-app way to delete the account and its data (the app
+offers Google sign-in). This is that call. Wire it to Settings → «حذف الحساب» /
+"Delete Account" (the `deleteAccount` ARB key exists) behind a confirmation
+dialog that says it cannot be undone.
+
+```http
+DELETE /api/privacy/account?confirm=true
+Authorization: Bearer <token>
+→ 200
+{
+  "devices": 1,
+  "signed_in": false,
+  "deleted": {"api_tokens": 2, "chat_messages": 14, "chat_sessions": 3,
+              "child_facts": 6, "child_profiles": 2, "lesson_progress": 9,
+              "push_tokens": 1, "…": 0},
+  "deleted_at": "2026-10-04T18:40:00+00:00"
+}
+```
+- **Scope.** Signed out: this device. Signed in with Google: **every device
+  linked to that Google account**, plus the Google identity itself (e-mail,
+  display name) and the backups filed under it — a reinstall links a new device
+  and copies the children over, so deleting one device alone would leave a full
+  copy one sign-in away. `devices` says how many devices were erased.
+- **What goes:** every row tied to those devices — children and everything
+  under them (progress, streaks, routines and their events, habits, agreements
+  and clauses, missions, licences, screen sessions, challenges, coach tips,
+  memory, follow-ups, weekly plans), chat sessions and messages, ratings, app
+  feedback and replies, push token and send log, referral code and referral
+  links, backups, auth tokens. `deleted` lists non-zero counts per table.
+- **One transaction:** a `5xx` means nothing was deleted — safe to retry.
+- **The token used for the call is revoked by it.** After `200`: sign out of
+  Google in the app, wipe local storage (cached children, preferences, the
+  stored `device_id`), generate a **new** `device_id`, and start over with
+  `POST /api/chat/sessions`. Any further call with the old token gets `401`.
+- Errors: `401` no/invalid token · `400 {"detail": {"code": "confirm_required", …}}`
+  when `confirm=true` is missing.
+- Not affected: aggregate telemetry that carries no device identifier and so
+  cannot be linked back to the account.
+
