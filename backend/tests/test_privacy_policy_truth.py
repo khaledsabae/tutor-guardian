@@ -167,9 +167,14 @@ HOST_DISCLOSURE = {
     "fonts.googleapis.com": "Google Fonts",
     "play.google.com": "Google Play",
     "www.cloudflare.com": "Cloudflare",
+    # Support purchases (#21): the Play Developer API verifies a purchase, and
+    # www.googleapis.com is that API's OAuth scope — both Google Play Billing.
+    "androidpublisher.googleapis.com": "Google Play Billing",
+    "www.googleapis.com": "Google Play Billing",
 }
 _OWN_OR_INERT = {"tg-api.alsaba.cloud", "schema.org", "www.w3.org", "json-schema.org",
-                 "www.sitemaps.org"}  # XML namespaces and our own domain: no call leaves
+                 "www.sitemaps.org",   # XML namespaces and our own domain: no call leaves
+                 "support.google.com"}  # Play help-centre links in comments (#21)
 
 
 def test_every_external_host_in_the_backend_is_disclosed():
