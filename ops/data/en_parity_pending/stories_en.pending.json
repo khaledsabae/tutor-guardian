@@ -53,475 +53,16 @@
         }
       ],
       "approved_by": null
-    }
-  },
-  {
-    "id": "kitten_kindness",
-    "title": "Anas and the Little Cat",
-    "description": "A faith-filled story that teaches children the virtue of rifq (gentleness) toward animals, following the example of our beloved Prophet ﷺ.",
-    "coverImage": "docs/stories/kitten_kindness_cover.png",
-    "themeColor": "0xFF0284C7",
-    "videoFile": "docs/stories/kitten_kindness.mp4",
-    "pages": [
-      {
-        "pageNumber": 1,
-        "text": "One day, as Anas was walking home from school, he heard a faint sound coming from behind an old tree. He tiptoed closer and found a tiny cat, shivering with cold and fear, its beautiful fur all dirty.",
-        "image": "docs/stories/kitten_kindness_1.png"
-      },
-      {
-        "pageNumber": 2,
-        "text": "Anas felt a deep pity for the little creature. He remembered what his father had taught him: that the Messenger of Allah ﷺ told us there is reward in being kind to every living creature. So he decided to help this small, weak creature.",
-        "image": "docs/stories/kitten_kindness_2.png"
-      },
-      {
-        "pageNumber": 3,
-        "text": "Anas hurried home and brought back a bowl of warm milk and a clean cloth. He approached the cat gently, offering the milk. Then he carefully wiped its wet fur until the little cat felt safe and warm.",
-        "image": "docs/stories/kitten_kindness_3.png"
-      },
-      {
-        "pageNumber": 4,
-        "text": "The little cat looked up at Anas with shining eyes and began to purr softly, showing its happiness and gratitude. Anas’s heart filled with joy because he had practiced a great virtue that Allah and His Messenger ﷺ love.",
-        "image": "docs/stories/kitten_kindness_4.png"
-      }
-    ],
-    "language": "en",
-    "source_language": "ar",
-    "translation": {
-      "translator_model": "mistral-large-3:675b",
-      "reviewer_model": "deepseek-v4-pro+glm-5.2",
-      "attempts": 1,
-      "needs_scholar_review": true,
-      "scholar_signals": {
-        "keyword": true,
-        "quoted_arabic": true,
-        "quran_ayah": false,
-        "reviewer_model": true
-      },
-      "review_verdict": "low_only",
-      "review_defects": [
-        {
-          "model": "deepseek-v4-pro",
-          "field": "description",
-          "type": "addition",
-          "why": "The English adds 'beloved' not present in the Arabic, though ﷺ is an acceptable honorific."
-        },
-        {
-          "model": "deepseek-v4-pro",
-          "field": "pages[0].text",
-          "type": "addition",
-          "why": "The English adds 'One day' which is not in the Arabic."
-        },
-        {
-          "model": "deepseek-v4-pro",
-          "field": "pages[0].text",
-          "type": "meaning",
-          "why": "'Tiptoed' implies stealth, whereas the Arabic simply says he approached slowly."
-        },
-        {
-          "model": "deepseek-v4-pro",
-          "field": "pages[1].text",
-          "type": "omission",
-          "why": "The English omits 'فوراً' (immediately)."
-        },
-        {
-          "model": "deepseek-v4-pro",
-          "field": "pages[2].text",
-          "type": "omission",
-          "why": "The English omits 'فائقة' (extreme), weakening the description."
-        },
-        {
-          "model": "deepseek-v4-pro",
-          "field": "discussionQuestions[1]",
-          "type": "omission",
-          "why": "The English omits 'تعالى' (Almighty)."
-        }
-      ],
-      "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
-      "auto_review": {
-        "reviewers": [
-          "deepseek-v4-pro",
-          "glm-5.2"
-        ],
-        "fixer": null,
-        "rounds": 1,
-        "prompt_version": "dfa8a5f39718",
-        "content_sha256": "f2d2841dd42ccd175248dde22c16b0ebdbd255b96ef6d754062d0d983ed84268",
-        "reviewed_at": "2026-10-04T16:52:31+00:00",
-        "residual_low": [
-          {
-            "model": "deepseek-v4-pro",
-            "field": "description",
-            "type": "addition",
-            "why": "The English adds 'beloved' not present in the Arabic, though ﷺ is an acceptable honorific."
-          },
-          {
-            "model": "deepseek-v4-pro",
-            "field": "pages[0].text",
-            "type": "addition",
-            "why": "The English adds 'One day' which is not in the Arabic."
-          },
-          {
-            "model": "deepseek-v4-pro",
-            "field": "pages[0].text",
-            "type": "meaning",
-            "why": "'Tiptoed' implies stealth, whereas the Arabic simply says he approached slowly."
-          },
-          {
-            "model": "deepseek-v4-pro",
-            "field": "pages[1].text",
-            "type": "omission",
-            "why": "The English omits 'فوراً' (immediately)."
-          },
-          {
-            "model": "deepseek-v4-pro",
-            "field": "pages[2].text",
-            "type": "omission",
-            "why": "The English omits 'فائقة' (extreme), weakening the description."
-          },
-          {
-            "model": "deepseek-v4-pro",
-            "field": "discussionQuestions[1]",
-            "type": "omission",
-            "why": "The English omits 'تعالى' (Almighty)."
-          }
-        ],
-        "adjudicated": [],
-        "tool": "ops/tools/review_en_parity.py",
-        "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
-      },
-      "revalidated_at": "2026-10-04T16:52:31+00:00"
-    },
-    "ageGroup": "3-6 years",
-    "category": "Kindness to animals and mercy",
-    "discussionQuestions": [
-      "What did Anas do when he saw the little kitten shivering from the cold?",
-      "Why does Allah love those who show mercy to animals and to weak creatures?",
-      "If you saw a hungry sparrow or cat in front of your house, how would you help it?"
-    ],
-    "islamicValue": "The Messenger of Allah ﷺ said: “In every living creature there is a reward.” (Sahih al-Bukhari 2363)",
-    "actionChallenge": "Kindness challenge: today, put a bowl of clean water on your balcony or by the door for the birds and cats to drink from."
-  },
-  {
-    "id": "layla_star",
-    "title": "Layla and Her Little Star",
-    "description": "A gentle story to help children relax and praise Allah for the day's blessings before sleep.",
-    "coverImage": "docs/stories/layla_star_cover.png",
-    "themeColor": "0xFF1E293B",
-    "videoFile": "docs/stories/layla_star_cover.mp4",
-    "pages": [
-      {
-        "pageNumber": 1,
-        "text": "Layla was a little girl who loved gazing at the sky before bedtime. In her cozy room, she opened the window and looked up at the clear sky filled with stars. She whispered, 'Oh shining stars of the sky, do you sleep like we do?'",
-        "image": "docs/stories/layla_star_1.png"
-      },
-      {
-        "pageNumber": 2,
-        "text": "A small star twinkled on the horizon, seeming to smile at Layla. She sat on her soft bed and remembered her mother’s advice: 'Layla, before you close your eyes, remember three beautiful things that happened today and thank Allah for them.'",
-        "image": "docs/stories/layla_star_2.png"
-      },
-      {
-        "pageNumber": 3,
-        "text": "The little star twinkled even more gently, as if inviting Layla to imagine a peaceful journey with it above the soft, silver clouds, to learn how quiet and calm fill the hearts of little ones.",
-        "image": "docs/stories/layla_star_3.png"
-      },
-      {
-        "pageNumber": 4,
-        "text": "Layla felt deep gratitude to Allah, who created this vast and wondrous universe and guarded it with its shining stars. She felt in her heart the greatness of the Creator and His mercy for all His servants.",
-        "image": "docs/stories/layla_star_4.png"
-      },
-      {
-        "pageNumber": 5,
-        "text": "Layla’s mind returned to her warm bed, and she began counting her three blessings with a smile: first, playing with her sweet kitten; second, helping her grandfather water the garden; and third, her mother’s delicious and warm food.",
-        "image": "docs/stories/layla_star_5.png"
-      },
-      {
-        "pageNumber": 6,
-        "text": "Layla felt complete peace. She recited Ayat al-Kursi and the du'a for sleep, then snuggled under her warm blanket and closed her eyes, seeing her little star guarding her happy dreams in peace.",
-        "image": "docs/stories/layla_star_6.png"
-      }
-    ],
-    "language": "en",
-    "source_language": "ar",
-    "translation": {
-      "translator_model": "mistral-large-3:675b",
-      "reviewer_model": "deepseek-v4-pro+glm-5.2",
-      "attempts": 1,
-      "needs_scholar_review": true,
-      "scholar_signals": {
-        "keyword": true,
-        "quoted_arabic": true,
-        "quran_ayah": false,
-        "reviewer_model": false
-      },
-      "review_verdict": "clean",
-      "review_defects": [],
-      "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
-      "auto_review": {
-        "reviewers": [
-          "deepseek-v4-pro",
-          "glm-5.2"
-        ],
-        "fixer": null,
-        "rounds": 1,
-        "prompt_version": "dfa8a5f39718",
-        "content_sha256": "a70a6b416b53ad2b05857de2cb86ef08ab1e88e765f992c025933fef49b96222",
-        "reviewed_at": "2026-10-04T16:52:31+00:00",
-        "residual_low": [],
-        "adjudicated": [],
-        "tool": "ops/tools/review_en_parity.py",
-        "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
-      },
-      "revalidated_at": "2026-10-04T16:52:31+00:00"
-    },
-    "ageGroup": "3-6 years",
-    "category": "Gratitude for blessings and calm before sleep",
-    "discussionQuestions": [
-      "What three beautiful blessings did Layla remember and thank Allah for?",
-      "What three great blessings made you happiest today, in your life and with your family?",
-      "Why does a person sleep with a peaceful heart after reading the bedtime adhkar and thanking their Lord?"
-    ],
-    "islamicValue": "Allah says: ﴿وَإِن تَعُدُّوا نِعْمَتَ اللَّهِ لَا تُحْصُوهَا﴾ (Ibrahim: 34) — interpretation of the meaning: 'And if you should count the favor of Allah, you could not enumerate them.' And the du'a of the Prophet ﷺ: «باسمك اللهم أموت وأحيا» — “In Your name, O Allah, I die and I live.”",
-    "actionChallenge": "Gratitude challenge: before you sleep tonight, tell your parents three beautiful things that happened to you today, and thank Allah for them in your heart."
-  },
-  {
-    "id": "saleh_bird",
-    "title": "Saleh and the Little Bird of Amanah",
-    "description": "An engaging story that teaches children to return trusts to their owners and the importance of honesty and amanah (trustworthiness).",
-    "coverImage": "docs/stories/saleh_bird_cover.png",
-    "themeColor": "0xFF065F46",
-    "videoFile": "docs/stories/saleh_bird_cover.mp4",
-    "pages": [
-      {
-        "pageNumber": 1,
-        "text": "One day, Saleh was playing with his ball in the neighborhood garden when he saw a little bird building its nest in a blessed olive tree. Suddenly, something shiny fell from the hand of a man passing under the tree.",
-        "image": "docs/stories/saleh_bird_1.png"
-      },
-      {
-        "pageNumber": 2,
-        "text": "Saleh ran quickly toward the tree and found a small wallet full of money. He thought for a moment: *I wonder who this wallet belongs to? I must find its owner quickly—amanah is a trait loved by Allah and His Messenger ﷺ.*",
-        "image": "docs/stories/saleh_bird_2.png"
-      },
-      {
-        "pageNumber": 3,
-        "text": "Saleh politely and gently asked the kind garden guard and his neighbor, Uncle Ahmad, if they knew the owner of the lost wallet. Everyone could see how eager he was to return the amanah to its rightful owner.",
-        "image": "docs/stories/saleh_bird_3.png"
-      },
-      {
-        "pageNumber": 4,
-        "text": "After a few steps, Saleh saw a man searching anxiously and sadly at the other end of the garden. He looked tired and worried as he rummaged through the grass, looking for something he had lost.",
-        "image": "docs/stories/saleh_bird_4.png"
-      },
-      {
-        "pageNumber": 5,
-        "text": "Saleh approached the man with gentle manners and asked him about the features of his lost wallet to be sure. When the man described it correctly, Saleh took it out and handed it to him with a warm smile.",
-        "image": "docs/stories/saleh_bird_5.png"
-      },
-      {
-        "pageNumber": 6,
-        "text": "The man’s face lit up with joy, and he prayed for Saleh’s blessings and goodness, saying, *‘Thank you for your amanah, my son.’* Saleh returned home happy, knowing that keeping amanah brings Allah’s pleasure and the love of all people.",
-        "image": "docs/stories/saleh_bird_6.png"
-      }
-    ],
-    "language": "en",
-    "source_language": "ar",
-    "translation": {
-      "translator_model": "mistral-large-3:675b",
-      "reviewer_model": "deepseek-v4-pro+glm-5.2",
-      "attempts": 1,
-      "needs_scholar_review": true,
-      "scholar_signals": {
-        "keyword": true,
-        "quoted_arabic": true,
-        "quran_ayah": false,
-        "reviewer_model": true
-      },
-      "review_verdict": "low_only",
-      "review_defects": [
-        {
-          "model": "deepseek-v4-pro",
-          "field": "title",
-          "type": "addition",
-          "why": "English adds 'Little' which is not present in the Arabic title."
-        },
-        {
-          "model": "glm-5.2",
-          "field": "title",
-          "type": "addition",
-          "why": "The word \"Little\" is added in English with no counterpart in the Arabic title."
-        },
-        {
-          "model": "glm-5.2",
-          "field": "pages[3].text",
-          "type": "omission",
-          "why": "The intensifier شديد (very/greatly) is dropped, slightly understating the man's distress."
-        },
-        {
-          "model": "glm-5.2",
-          "field": "actionChallenge",
-          "type": "addition",
-          "why": "\"and sisters'\" is added; the Arabic إخوانك refers to brothers only."
-        }
-      ],
-      "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
-      "auto_review": {
-        "reviewers": [
-          "deepseek-v4-pro",
-          "glm-5.2"
-        ],
-        "fixer": null,
-        "rounds": 1,
-        "prompt_version": "dfa8a5f39718",
-        "content_sha256": "491a45353d2c57aebf59d20c07e5d3d473e493e19f5ff25f160d3da19cee8552",
-        "reviewed_at": "2026-10-04T16:52:31+00:00",
-        "residual_low": [
-          {
-            "model": "deepseek-v4-pro",
-            "field": "title",
-            "type": "addition",
-            "why": "English adds 'Little' which is not present in the Arabic title."
-          },
-          {
-            "model": "glm-5.2",
-            "field": "title",
-            "type": "addition",
-            "why": "The word \"Little\" is added in English with no counterpart in the Arabic title."
-          },
-          {
-            "model": "glm-5.2",
-            "field": "pages[3].text",
-            "type": "omission",
-            "why": "The intensifier شديد (very/greatly) is dropped, slightly understating the man's distress."
-          },
-          {
-            "model": "glm-5.2",
-            "field": "actionChallenge",
-            "type": "addition",
-            "why": "\"and sisters'\" is added; the Arabic إخوانك refers to brothers only."
-          }
-        ],
-        "adjudicated": [],
-        "tool": "ops/tools/review_en_parity.py",
-        "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
-      },
-      "revalidated_at": "2026-10-04T16:52:31+00:00"
     },
     "ageGroup": "4-7 years",
-    "category": "Trustworthiness and mindfulness of Allah",
+    "category": "Patience and trusting Allah",
     "discussionQuestions": [
-      "What happened that tested Saleh's honesty?",
-      "Why did Saleh refuse to take what wasn't his, even though he was on his own?",
-      "How does Allah reward the trustworthy person in this life and the next?"
+      "Why was Yusuf sad at first, and what was the secret in his father's advice?",
+      "How is caring for a plant like being patient while we memorise the Qur'an or learn to pray?",
+      "What would you like to be patient with until it bears fruit and its success makes you happy?"
     ],
-    "islamicValue": "Allah says: ﴿إِنَّ ٱللَّهَ يَأۡمُرُكُمۡ أَن تُؤَدُّواْ ٱلۡأَمَٰنَٰتِ إِلَىٰٓ أَهۡلِهَا﴾ (An-Nisa: 58) — interpretation of the meaning: 'Indeed, Allah commands you to render trusts to whom they are due.'",
-    "actionChallenge": "Trustworthiness challenge: today, look after all your brothers' and sisters' things and toys, and don't use anything without politely asking them first."
-  },
-  {
-    "id": "noor_clean",
-    "title": "Noor and the Clean Garden",
-    "description": "An inspiring story that teaches children the importance of cleanliness and keeping the neighborhood and school tidy.",
-    "coverImage": "docs/stories/noor_clean_cover.png",
-    "themeColor": "0xFF047857",
-    "videoFile": "docs/stories/noor_clean_cover.mp4",
-    "pages": [
-      {
-        "pageNumber": 1,
-        "text": "Noor was an energetic little girl who loved playing in the neighborhood garden after Asr. One day, she noticed some trash and scattered leaves on the beautiful green grass, making the garden look sad.",
-        "image": "docs/stories/noor_clean_1.png"
-      },
-      {
-        "pageNumber": 2,
-        "text": "Noor remembered her teacher’s words at school: \"Cleanliness is part of faith, and the environment is an *amanah* (trust) in our hands.\" She decided not to just stand by. She brought big bags and started collecting the leaves and plastic bottles with energy and enthusiasm.",
-        "image": "docs/stories/noor_clean_2.png"
-      },
-      {
-        "pageNumber": 3,
-        "text": "Noor worked alone at first, full of energy. She put up a small wooden sign at the garden’s entrance, writing in her pretty handwriting: \"Our environment is an *amanah*—let’s keep it clean and beautiful together.\"",
-        "image": "docs/stories/noor_clean_3.png"
-      },
-      {
-        "pageNumber": 4,
-        "text": "Noor’s friends in the neighborhood saw what she was doing. They hurried to help her, bringing extra tools and saying, \"We want our garden to be the prettiest!\" Everyone worked together with team spirit and love.",
-        "image": "docs/stories/noor_clean_4.png"
-      },
-      {
-        "pageNumber": 5,
-        "text": "To make the garden even more beautiful, the children teamed up to plant a small, colorful flower in the middle of the garden. They watered it carefully and hoped it would grow and bloom quickly to bring joy to those who passed by.",
-        "image": "docs/stories/noor_clean_5.png"
-      },
-      {
-        "pageNumber": 6,
-        "text": "The children sat on the wooden bench, enjoying the lovely view and the gentle breeze. Noor felt proud and happy because, by working together, they had made their playground clean, beautiful, and healthy for everyone.",
-        "image": "docs/stories/noor_clean_6.png"
-      }
-    ],
-    "language": "en",
-    "source_language": "ar",
-    "translation": {
-      "translator_model": "mistral-large-3:675b",
-      "reviewer_model": "deepseek-v4-pro+glm-5.2",
-      "attempts": 1,
-      "needs_scholar_review": true,
-      "scholar_signals": {
-        "keyword": false,
-        "quoted_arabic": true,
-        "quran_ayah": false,
-        "reviewer_model": true
-      },
-      "review_verdict": "low_only",
-      "review_defects": [
-        {
-          "model": "glm-5.2",
-          "field": "discussionQuestions[0]",
-          "type": "meaning",
-          "why": "الحديقة is translated as \"garden\" throughout the story but as \"park\" here, creating an inconsistency."
-        },
-        {
-          "model": "glm-5.2",
-          "field": "discussionQuestions[1]",
-          "type": "meaning",
-          "why": "حدائقنا is translated as \"parks\" but the story consistently uses \"garden\" for the same Arabic word."
-        }
-      ],
-      "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
-      "auto_review": {
-        "reviewers": [
-          "deepseek-v4-pro",
-          "glm-5.2"
-        ],
-        "fixer": null,
-        "rounds": 1,
-        "prompt_version": "dfa8a5f39718",
-        "content_sha256": "96f653e16476ad20ae901413cd0c7b2ad5993feb739cd862dfaa670fb6f97dbc",
-        "reviewed_at": "2026-10-04T16:52:31+00:00",
-        "residual_low": [
-          {
-            "model": "glm-5.2",
-            "field": "discussionQuestions[0]",
-            "type": "meaning",
-            "why": "الحديقة is translated as \"garden\" throughout the story but as \"park\" here, creating an inconsistency."
-          },
-          {
-            "model": "glm-5.2",
-            "field": "discussionQuestions[1]",
-            "type": "meaning",
-            "why": "حدائقنا is translated as \"parks\" but the story consistently uses \"garden\" for the same Arabic word."
-          }
-        ],
-        "adjudicated": [],
-        "tool": "ops/tools/review_en_parity.py",
-        "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
-      },
-      "revalidated_at": "2026-10-04T16:52:31+00:00"
-    },
-    "ageGroup": "3-6 years",
-    "category": "Cleanliness and removing harm",
-    "discussionQuestions": [
-      "How did the park change after Noor's kind idea?",
-      "Why does Islam tell us to keep our homes, mosques and parks clean?",
-      "What can you do to make your home and your school a clean and beautiful place?"
-    ],
-    "islamicValue": "The Messenger of Allah ﷺ said: “Purification is half of faith.” (Sahih Muslim 223)",
-    "actionChallenge": "Cleanliness challenge: today, make your bed and tidy your desk yourself as soon as you wake up, without waiting for anyone to help."
+    "islamicValue": "The Messenger of Allah ﷺ said: “No one is given a gift better and more abundant than patience.” (Sahih al-Bukhari 1469)",
+    "actionChallenge": "Patience challenge: choose something useful that needs patience today, like tidying your wardrobe or practising a short surah without getting bored."
   },
   {
     "id": "maryam_toys",
@@ -587,7 +128,16 @@
         }
       ],
       "approved_by": null
-    }
+    },
+    "ageGroup": "3-6 years",
+    "category": "Time management and responsibility",
+    "discussionQuestions": [
+      "What did Maryam learn when she put every toy in its own place?",
+      "How does keeping things tidy save time and make life easier for everyone?",
+      "How does your mother feel when she sees your room tidy and beautiful?"
+    ],
+    "islamicValue": "The Messenger of Allah ﷺ said: “Allah has prescribed ihsan (excellence) in everything.” (Sahih Muslim 1955)",
+    "actionChallenge": "Doing-it-well challenge: when you finish playing today, put every block and toy back in its box carefully and neatly."
   },
   {
     "id": "omar_prayer",
@@ -661,7 +211,16 @@
         }
       ],
       "approved_by": null
-    }
+    },
+    "ageGroup": "5-8 years",
+    "category": "Love of prayer and its light",
+    "discussionQuestions": [
+      "Why did Omar feel light and joy in his heart when he heard the adhan?",
+      "What are the benefits of praying with the family or at the mosque?",
+      "How do we get ready for prayer with good manners, focus and a clean wudu?"
+    ],
+    "islamicValue": "Allah says: ﴿وَأَقِمِ الصَّلَاةَ لِذِكْرِي﴾ (Taha: 14) — interpretation of the meaning: 'and establish prayer for My remembrance.'",
+    "actionChallenge": "Prayer challenge: today, make wudu and pray one prayer together with your father or mother, with focus and a smile."
   },
   {
     "id": "khadija_neighbor",
@@ -727,7 +286,16 @@
         }
       ],
       "approved_by": null
-    }
+    },
+    "ageGroup": "4-7 years",
+    "category": "The neighbour's right and ihsan (doing good)",
+    "discussionQuestions": [
+      "What did Khadija give her elderly neighbour to make her happy?",
+      "What did the Prophet ﷺ advise about being good to neighbours?",
+      "What would you do if you saw your neighbour needing help, or if they were ill?"
+    ],
+    "islamicValue": "The Messenger of Allah ﷺ said: “Jibril kept urging me to treat the neighbour well until I thought he would make him an heir.” (Sahih al-Bukhari 6015)",
+    "actionChallenge": "Ihsan challenge: today, share a plate of sweets or some good food with your neighbour, or send them a warm greeting of salam."
   },
   {
     "id": "abdullah_bismillah",
@@ -825,115 +393,16 @@
         }
       ],
       "approved_by": null
-    }
-  },
-  {
-    "id": "aisha_permission",
-    "title": "Aisha and the Adab of Isti'dhan",
-    "description": "An Islamic tarbiyah story that teaches children the akhlaq of seeking permission and preserving the privacy of homes, following the Qur'anic guidance.",
-    "coverImage": "docs/stories/aisha_permission_cover.png",
-    "themeColor": "0xFFEC4899",
-    "videoFile": "docs/stories/aisha_permission_cover.mp4",
-    "pages": [
-      {
-        "pageNumber": 1,
-        "text": "On a beautiful afternoon, Aisha wanted to enter her mother’s room to get her reading book. She ran and raised her hand to push the door suddenly.",
-        "image": "docs/stories/aisha_permission_1.png"
-      },
-      {
-        "pageNumber": 2,
-        "text": "Aisha remembered her father’s words when they had memorized together the words of Allah: ﴿يَا أَيُّهَا الَّذِينَ آمَنُوا لَا تَدْخُلُوا بُيُوتًا غَيْرَ بُيُوتِكُمْ حَتَّىٰ تَسْتَأْنِسُوا وَتُسَلِّمُوا عَلَىٰ أَهْلِهَا﴾. Interpretation of the meaning: 'O you who have believed, do not enter houses other than your own houses until you ascertain welcome and greet their inhabitants.'",
-        "image": "docs/stories/aisha_permission_2.png"
-      },
-      {
-        "pageNumber": 3,
-        "text": "Aisha stood calmly at the door, knocked three gentle and polite knocks, and said in a clear, sweet voice: 'Assalamu alaykum, may I come in, Mama?'",
-        "image": "docs/stories/aisha_permission_3.png"
-      },
-      {
-        "pageNumber": 4,
-        "text": "Her mother gave permission with a warm smile and said, 'Come in, my dear. May Allah bless you and your adab.' So Aisha entered with dignity and joy.",
-        "image": "docs/stories/aisha_permission_4.png"
-      },
-      {
-        "pageNumber": 5,
-        "text": "Her mother taught Aisha that isti'dhan preserves privacy and is a sign of refined Islamic akhlaq that protects hearts and increases love among family.",
-        "image": "docs/stories/aisha_permission_5.png"
-      },
-      {
-        "pageNumber": 6,
-        "text": "Aisha always sought permission before entering any room or house, and she became a role model for her sisters and friends in practicing the beautiful akhlaq of isti'dhan.",
-        "image": "docs/stories/aisha_permission_6.png"
-      }
-    ],
-    "language": "en",
-    "source_language": "ar",
-    "translation": {
-      "translator_model": "mistral-large-3:675b",
-      "reviewer_model": "deepseek-v4-pro+glm-5.2",
-      "attempts": 3,
-      "needs_scholar_review": true,
-      "scholar_signals": {
-        "keyword": true,
-        "quoted_arabic": true,
-        "quran_ayah": true,
-        "reviewer_model": true
-      },
-      "review_verdict": "low_only",
-      "review_defects": [
-        {
-          "model": "deepseek-v4-pro",
-          "field": "pages[3].text",
-          "type": "source_corruption",
-          "why": "The preposition لـ is separated from the following noun by a space; it should be attached as لعائشة."
-        },
-        {
-          "model": "glm-5.2",
-          "field": "pages[4].text",
-          "type": "meaning",
-          "why": "The Arabic says 'adab' (etiquette/manners) but the English renders it as 'akhlaq' (character/morals), a related but distinct concept."
-        }
-      ],
-      "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
-      "auto_review": {
-        "reviewers": [
-          "deepseek-v4-pro",
-          "glm-5.2"
-        ],
-        "fixer": null,
-        "rounds": 1,
-        "prompt_version": "dfa8a5f39718",
-        "content_sha256": "6eaf9e6f190f97168f27fa04324e9daab6e4b03a2ac5aa19b101655dd787dbb8",
-        "reviewed_at": "2026-10-04T16:52:31+00:00",
-        "residual_low": [
-          {
-            "model": "deepseek-v4-pro",
-            "field": "pages[3].text",
-            "type": "source_corruption",
-            "why": "The preposition لـ is separated from the following noun by a space; it should be attached as لعائشة."
-          },
-          {
-            "model": "glm-5.2",
-            "field": "pages[4].text",
-            "type": "meaning",
-            "why": "The Arabic says 'adab' (etiquette/manners) but the English renders it as 'akhlaq' (character/morals), a related but distinct concept."
-          }
-        ],
-        "adjudicated": [],
-        "tool": "ops/tools/review_en_parity.py",
-        "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
-      },
-      "revalidated_at": "2026-10-04T16:52:31+00:00"
     },
-    "ageGroup": "4-7 years",
-    "category": "Asking permission and respecting privacy",
+    "ageGroup": "3-6 years",
+    "category": "Barakah and remembering Allah",
     "discussionQuestions": [
-      "Why did Aisha knock on the door and ask permission three times before going in?",
-      "What is the right thing to do if the person in the room does not give you permission to come in?",
-      "How does asking permission protect the privacy and comfort of everyone in the family?"
+      "What happens to our food and our work when we begin them in the name of Allah?",
+      "In which everyday moments should we say «Bismillah»?",
+      "Why does Allah protect us and give us good when we remember Him?"
     ],
-    "islamicValue": "Allah says: ﴿يَا أَيُّهَا الَّذِينَ آمَنُوا لَا تَدْخُلُوا بُيُوتًا غَيْرَ بُيُوتِكُمْ حَتَّىٰ تَسْتَأْنِسُوا وَتُسَلِّمُوا عَلَىٰ أَهْلِهَا﴾ (An-Nur: 27) — interpretation of the meaning: 'O you who have believed, do not enter houses other than your own houses until you ascertain welcome and greet their inhabitants.'",
-    "actionChallenge": "Permission challenge: today, knock on your parents' bedroom door and politely ask permission three times before going in."
+    "islamicValue": "The Messenger of Allah ﷺ said: “Young boy, mention the name of Allah, eat with your right hand, and eat from what is in front of you.” (Sahih al-Bukhari 5376)",
+    "actionChallenge": "Remembrance challenge: today, remember to say «Bismillah» before every meal and every drink of water, and before you start anything you do."
   },
   {
     "id": "yaseen_creation",
@@ -999,7 +468,16 @@
         }
       ],
       "approved_by": null
-    }
+    },
+    "ageGroup": "5-8 years",
+    "category": "Reflecting on Allah's creation and greatness",
+    "discussionQuestions": [
+      "What amazing signs did Yaseen reflect on in the sky and the birds?",
+      "How does reflecting on nature make our love for Allah, glorified and exalted is He, stronger?",
+      "What is the most beautiful thing in Allah's creation that amazes you and makes you say «SubhanAllah»?"
+    ],
+    "islamicValue": "Allah says: ﴿رَبَّنَا مَا خَلَقْتَ هَٰذَا بَاطِلًا سُبْحَانَكَ فَقِنَا عَذَابَ النَّارِ﴾ (Al Imran: 191) — interpretation of the meaning: 'Our Lord, You did not create this aimlessly; exalted are You [above such a thing]; then protect us from the punishment of the Fire.'",
+    "actionChallenge": "Reflection challenge: look out of the window at the sky or the trees and say from your heart, with full attention: «Subhan Allah al-Azim wa bihamdih»."
   },
   {
     "id": "fatima_parents",
@@ -1081,7 +559,16 @@
         }
       ],
       "approved_by": null
-    }
+    },
+    "ageGroup": "3-6 years",
+    "category": "Birr al-walidayn (kindness to parents) and bringing smiles",
+    "discussionQuestions": [
+      "How did Fatima make her mother's heart happy after a tiring day at work?",
+      "Why did Allah make pleasing our parents one of the greatest causes of happiness and of entering Paradise?",
+      "What kind word or beautiful deed can you do right now to make your parents happy?"
+    ],
+    "islamicValue": "Allah says: ﴿وَقَضَىٰ رَبُّكَ أَلَّا تَعْبُدُوا إِلَّا إِيَّاهُ وَبِالْوَالِدَيْنِ إِحْسَانًا﴾ (Al-Isra: 23) — interpretation of the meaning: 'And your Lord has decreed that you not worship except Him, and to parents, good treatment.'",
+    "actionChallenge": "Birr challenge: go to your mother and your father, kiss their heads and tell them: «I love you both, and thank you for everything you do for me.»"
   },
   {
     "id": "bilal_forgiveness",
@@ -1163,7 +650,16 @@
         }
       ],
       "approved_by": null
-    }
+    },
+    "ageGroup": "4-7 years",
+    "category": "Forgiveness and a clean heart",
+    "discussionQuestions": [
+      "What did Bilal do when his friend wronged him while they were playing?",
+      "Why does a person feel calm and at ease when they pardon and forgive?",
+      "How does forgiving raise a Muslim's standing with Allah and with people?"
+    ],
+    "islamicValue": "Allah says: ﴿وَأَن تَعْفُوا أَقْرَبُ لِلتَّقْوَىٰ﴾ (Al-Baqarah: 237) — interpretation of the meaning: 'And to forgo it is nearer to righteousness.' And the Prophet ﷺ said: “Allah increases a servant who pardons only in honour.” (Sahih Muslim 2588)",
+    "actionChallenge": "Forgiveness challenge: if you are upset with your brother or a friend about something in the past, shake their hand today and tell them: «I forgive you, and I love you for the sake of Allah.»"
   },
   {
     "id": "hamza_truth",
@@ -1237,6 +733,260 @@
         }
       ],
       "approved_by": null
-    }
+    },
+    "ageGroup": "5-8 years",
+    "category": "Truthful words and courage",
+    "discussionQuestions": [
+      "Why did Hamza choose to tell the truth even though it was hard?",
+      "How does honesty always save the one who tells the truth, even when they think otherwise?",
+      "Why is it important for a Muslim's tongue to be truthful and to speak only good?"
+    ],
+    "islamicValue": "The Messenger of Allah ﷺ said: “Truthfulness leads to righteousness, and righteousness leads to Paradise.” (Sahih al-Bukhari 6094)",
+    "actionChallenge": "Truthful-words challenge: today, make sure nothing comes out of your mouth except a kind word, a smile and sincere truth."
+  },
+  {
+    "id": "badr_broken_toy",
+    "title": "Badr and the Broken Toy",
+    "description": "A story from the kindergarten curriculum that teaches children the courage to tell the truth and to apologise sincerely.",
+    "coverImage": "docs/stories/badr_broken_toy_cover.png",
+    "themeColor": "0xFF0F766E",
+    "videoFile": null,
+    "pages": [
+      {
+        "pageNumber": 1,
+        "text": "Badr was playing in the living room with a beautiful blue racing car that belonged to his big brother, Omar. He drove it eagerly across the carpet, happily copying the sound of the engine.",
+        "image": "docs/stories/badr_broken_toy_1.png"
+      },
+      {
+        "pageNumber": 2,
+        "text": "Suddenly, the car crashed hard into the edge of the table, and one of its little wheels broke! Badr's heart pounded. He felt scared and thought about quickly hiding the car behind the sofa so that no one would know.",
+        "image": "docs/stories/badr_broken_toy_2.png"
+      },
+      {
+        "pageNumber": 3,
+        "text": "But Badr remembered his father's advice: «A believer is truthful and brave, my son, and truthfulness brings peace of heart and blessing.» So Badr stopped, took a deep breath, and decided to tell the truth, whatever happened.",
+        "image": "docs/stories/badr_broken_toy_3.png"
+      },
+      {
+        "pageNumber": 4,
+        "text": "Badr picked up the car and walked over to his brother Omar with his head held high. He said honestly, «I'm sorry, brother. The wheel broke by accident while I was playing with it.» Omar smiled, hugged him and said, «Thank you for your honesty and your courage, Badr. Truthfulness is worth more than any toy. Come on, let's fix it together with Dad's help.»",
+        "image": "docs/stories/badr_broken_toy_4.png"
+      }
+    ],
+    "language": "en",
+    "source_language": "ar",
+    "translation": {
+      "translator_model": "claude-opus-5.5",
+      "reviewer_model": null,
+      "needs_scholar_review": true,
+      "review_verdict": "unreviewed",
+      "review_defects": [],
+      "approved_by": null
+    },
+    "ageGroup": "3-6 years",
+    "category": "Honesty and courage",
+    "discussionQuestions": [
+      "What could have happened if Badr had lied and hidden the toy behind the sofa?",
+      "Does it take courage to admit a mistake? And why did Omar love his brother Badr even more when he told him the truth?",
+      "If your friend broke your toy and then honestly admitted it and said sorry, what would you do?"
+    ],
+    "islamicValue": "The Messenger of Allah ﷺ said: “Hold fast to truthfulness, for truthfulness leads to righteousness, and righteousness leads to Paradise.” (Sahih Muslim 2607)",
+    "actionChallenge": "Honesty challenge: if you make any small mistake today at home or at nursery, go straight to your parents — bravely and with a smile — tell the truth and say sorry."
+  },
+  {
+    "id": "sarah_basil_sprout",
+    "title": "Sarah and the Basil Plant",
+    "description": "A gentle story that encourages kindergarten children to remove harm, and to care for the environment and for plants, as a beautiful Prophetic manner.",
+    "coverImage": "docs/stories/sarah_basil_sprout_cover.png",
+    "themeColor": "0xFF10B981",
+    "videoFile": null,
+    "pages": [
+      {
+        "pageNumber": 1,
+        "text": "In the bright nursery yard, Sarah was running between the trees at break time when she noticed a small plant pot in the corner. Its leaves were drooping, and dry leaves and blown-about tissues had gathered around it.",
+        "image": "docs/stories/sarah_basil_sprout_1.png"
+      },
+      {
+        "pageNumber": 2,
+        "text": "Sarah felt sad to see the plant, and she said to her friend Hind, «This plant is a living thing. It feels, and it needs us to be gentle with it — and cleanliness is part of faith.» She decided not to leave until the corner looked lovely again.",
+        "image": "docs/stories/sarah_basil_sprout_2.png"
+      },
+      {
+        "pageNumber": 3,
+        "text": "Sarah put on a pair of small gloves, eagerly picked up the leaves and litter and threw them in the bin. Then she brought a watering can and watered the dry soil with love and care.",
+        "image": "docs/stories/sarah_basil_sprout_3.png"
+      },
+      {
+        "pageNumber": 4,
+        "text": "A few days later, the basil plant perked up, its leaves turned green again, and its sweet, fragrant smell filled the whole nursery yard! The teacher gave Sarah the title «Friend of Nature», and Sarah was happy because she had left a good mark.",
+        "image": "docs/stories/sarah_basil_sprout_4.png"
+      }
+    ],
+    "language": "en",
+    "source_language": "ar",
+    "translation": {
+      "translator_model": "claude-opus-5.5",
+      "reviewer_model": null,
+      "needs_scholar_review": true,
+      "review_verdict": "unreviewed",
+      "review_defects": [],
+      "approved_by": null
+    },
+    "ageGroup": "3-6 years",
+    "category": "Cleanliness and caring for the environment",
+    "discussionQuestions": [
+      "What was the difference in the nursery yard before and after what Sarah did?",
+      "Why is Allah pleased with a Muslim who removes harm from the path and keeps their surroundings clean?",
+      "How can we make our room and our garden clean, comfortable and beautiful every day?"
+    ],
+    "islamicValue": "The Messenger of Allah ﷺ said: “…and removing harm from the path is charity.” (Sahih al-Bukhari 2989)",
+    "actionChallenge": "Environment challenge: pick up three bits of litter or tissues you see in your room or home and put them in the bin, then gently water a plant pot."
+  },
+  {
+    "id": "tamim_anger_volcano",
+    "title": "Tamim and the Volcano of Anger",
+    "description": "An interactive story that trains a kindergarten child in the Prophetic steps to calm down and to manage their feelings when they lose.",
+    "coverImage": "docs/stories/tamim_anger_volcano_cover.png",
+    "themeColor": "0xFFD97706",
+    "videoFile": null,
+    "pages": [
+      {
+        "pageNumber": 1,
+        "text": "Tamim was building a tall, tall tower of coloured blocks to win the class competition for the most beautiful building. Suddenly, the table shook, the whole tower fell down, and the blocks scattered all over the floor!",
+        "image": "docs/stories/tamim_anger_volcano_1.png"
+      },
+      {
+        "pageNumber": 2,
+        "text": "Tamim felt a strong heat in his chest and his face, as if a red volcano was about to erupt. He clenched his fists tightly and wanted to scream and throw the rest of the blocks everywhere because he was so cross.",
+        "image": "docs/stories/tamim_anger_volcano_2.png"
+      },
+      {
+        "pageNumber": 3,
+        "text": "His mother came over to him gently, stroked his head and whispered to him: «Tamim, remember the secret of the patient hero: say A'udhu billahi min ash-shaytan ir-rajim, take a deep breath, and make wudu with cool water to put out the volcano of anger.»",
+        "image": "docs/stories/tamim_anger_volcano_3.png"
+      },
+      {
+        "pageNumber": 4,
+        "text": "Tamim followed his mother's advice step by step: he breathed calmly, sought refuge in Allah and made wudu — and he felt wonderfully refreshed, and the volcano went out. He came back with a confident smile and said, «I'll build the tower again, and it will be stronger and more beautiful, in sha' Allah!»",
+        "image": "docs/stories/tamim_anger_volcano_4.png"
+      }
+    ],
+    "language": "en",
+    "source_language": "ar",
+    "translation": {
+      "translator_model": "claude-opus-5.5",
+      "reviewer_model": null,
+      "needs_scholar_review": true,
+      "review_verdict": "unreviewed",
+      "review_defects": [],
+      "approved_by": null
+    },
+    "ageGroup": "4-7 years",
+    "category": "Managing feelings and staying calm",
+    "discussionQuestions": [
+      "What could have happened if Tamim had given in to the volcano of anger, screamed and spoiled other children's toys?",
+      "What great Prophetic tool did Tamim use to put out the fire of anger in his heart?",
+      "When you feel upset or lose a game, what is the first thing you will do to stay a calm hero?"
+    ],
+    "islamicValue": "The Messenger of Allah ﷺ said: “The strong one is not the one who overcomes others in wrestling; the strong one is the one who controls himself when angry.” (Sahih al-Bukhari 6114)",
+    "actionChallenge": "Calm challenge: whenever something upsets you today, stop straight away, seek refuge in Allah from the accursed Shaytan, and slowly drink a sip of cool water."
+  },
+  {
+    "id": "noura_sharing_box",
+    "title": "Noura and the Sharing Box",
+    "description": "A warm story that shows children the joy of giving and sharing with their brothers, sisters and friends at nursery and at home.",
+    "coverImage": "docs/stories/noura_sharing_box_cover.png",
+    "themeColor": "0xFFE11D48",
+    "videoFile": null,
+    "pages": [
+      {
+        "pageNumber": 1,
+        "text": "Noura had bought a special box of wooden colouring pencils, full of sparkle and bright colours, and she was very excited for art class at nursery so she could draw a wonderful rainbow.",
+        "image": "docs/stories/noura_sharing_box_1.png"
+      },
+      {
+        "pageNumber": 2,
+        "text": "Noura looked at the seat next to her and saw her classmate Layla sitting silently, her eyes full of sadness, because she had left her pencil box on the school bus and had nothing to draw with.",
+        "image": "docs/stories/noura_sharing_box_2.png"
+      },
+      {
+        "pageNumber": 3,
+        "text": "Noura hesitated for a moment and thought, «Should I give her some of my new pencils?» Then she remembered her teacher's words: «The people most beloved to Allah are those most useful to others, and no wealth or good is ever lessened by charity and sharing.»",
+        "image": "docs/stories/noura_sharing_box_3.png"
+      },
+      {
+        "pageNumber": 4,
+        "text": "Noura held out her hand with a big smile, split the pencils into two halves and said to Layla, «These are for you, my friend. We'll draw one picture together.» Layla wiped away her tear and laughed — and it was the most beautiful picture in the exhibition!",
+        "image": "docs/stories/noura_sharing_box_4.png"
+      }
+    ],
+    "language": "en",
+    "source_language": "ar",
+    "translation": {
+      "translator_model": "claude-opus-5.5",
+      "reviewer_model": null,
+      "needs_scholar_review": true,
+      "review_verdict": "unreviewed",
+      "review_defects": [],
+      "approved_by": null
+    },
+    "ageGroup": "3-6 years",
+    "category": "Generosity and putting others first",
+    "discussionQuestions": [
+      "How did Layla's sadness turn into great joy because of what Noura did?",
+      "Did Noura lose anything when she shared her new pencils? Or did she gain something greater?",
+      "What lovely thing would you like to share today with your brother or sister to make them happy?"
+    ],
+    "islamicValue": "Aisha (may Allah be pleased with her) said: “The Messenger of Allah ﷺ used to accept gifts and give something in return for them.” (Sahih al-Bukhari 2585) And Allah says: ﴿وَيُؤْثِرُونَ عَلَىٰ أَنفُسِهِمْ﴾ (Al-Hashr: 9) — interpretation of the meaning: 'but give [them] preference over themselves.'",
+    "actionChallenge": "Sharing challenge: today, give one of your favourite toys, or a piece of your fruit, to your brother or a friend, gladly and with love."
+  },
+  {
+    "id": "salman_secret_trust",
+    "title": "Salman and the Secret of Trust",
+    "description": "An exciting story about being mindful that Allah sees us, returning what is entrusted to us, and respecting other people's rights at nursery and in the community.",
+    "coverImage": "docs/stories/salman_secret_trust_cover.png",
+    "themeColor": "0xFF4338CA",
+    "videoFile": null,
+    "pages": [
+      {
+        "pageNumber": 1,
+        "text": "As Salman was walking along the nursery corridor at the end of the day, he found a small, shiny wallet on the floor with a spaceship drawn on it. Inside it were some pocket money and a colourful name card.",
+        "image": "docs/stories/salman_secret_trust_1.png"
+      },
+      {
+        "pageNumber": 2,
+        "text": "The corridor was completely empty, and no one could see him. Salman opened the wallet, and its sparkle tempted him to keep it — but a voice of faith whispered in his heart: «Allah sees me everywhere. This is something entrusted to me, and it is not mine to keep.»",
+        "image": "docs/stories/salman_secret_trust_2.png"
+      },
+      {
+        "pageNumber": 3,
+        "text": "Salman went straight to the teacher's room, handed him the wallet and said, «Sir, I found this in the corridor. Its owner must be looking for it and worrying about it right now.» The teacher thanked him and announced over the school speakers that it had been found.",
+        "image": "docs/stories/salman_secret_trust_3.png"
+      },
+      {
+        "pageNumber": 4,
+        "text": "His classmate Ziyad came running, his eyes shining with tears of joy at getting back the wallet his grandfather had given him. At the morning assembly the head teacher gave Salman the «Trustworthy One of the Nursery» award, and Salman was proud that Allah was pleased with him.",
+        "image": "docs/stories/salman_secret_trust_4.png"
+      }
+    ],
+    "language": "en",
+    "source_language": "ar",
+    "translation": {
+      "translator_model": "claude-opus-5.5",
+      "reviewer_model": null,
+      "needs_scholar_review": true,
+      "review_verdict": "unreviewed",
+      "review_defects": [],
+      "approved_by": null
+    },
+    "ageGroup": "4-7 years",
+    "category": "Trustworthiness and giving back what belongs to others",
+    "discussionQuestions": [
+      "Who could see Salman in the corridor when he found the wallet on his own?",
+      "Why did Salman feel so much happier when he gave back what was entrusted to him than he would have felt if he had kept it?",
+      "What would you do if you found money, a pen or a toy at your school or in the mosque?"
+    ],
+    "islamicValue": "Allah says: ﴿إِنَّ اللَّهَ يَأْمُرُكُمْ أَن تُؤَدُّوا الْأَمَانَاتِ إِلَىٰ أَهْلِهَا﴾ (An-Nisa: 58) — interpretation of the meaning: 'Indeed, Allah commands you to render trusts to whom they are due.'",
+    "actionChallenge": "Trust challenge: look through your room or your bag, and if you find anything you borrowed from a friend or your brother, give it back to them today in good condition, with a word of thanks."
   }
 ]

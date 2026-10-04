@@ -88,7 +88,7 @@
     "source_language": "ar",
     "translation": {
       "translator_model": "mistral-large-3:675b",
-      "reviewer_model": "deepseek-v4-pro",
+      "reviewer_model": "deepseek-v4-pro+glm-5.2",
       "attempts": 1,
       "needs_scholar_review": true,
       "scholar_signals": {
@@ -97,19 +97,109 @@
         "quran_ayah": false,
         "reviewer_model": true
       },
-      "review_verdict": "defects",
+      "review_verdict": "low_only",
       "review_defects": [
         {
-          "type": "religious_error",
+          "model": "deepseek-v4-pro",
+          "field": "description",
+          "type": "addition",
+          "why": "The English adds 'beloved' not present in the Arabic, though ﷺ is an acceptable honorific."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "field": "pages[0].text",
+          "type": "addition",
+          "why": "The English adds 'One day' which is not in the Arabic."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "field": "pages[0].text",
+          "type": "meaning",
+          "why": "'Tiptoed' implies stealth, whereas the Arabic simply says he approached slowly."
+        },
+        {
+          "model": "deepseek-v4-pro",
           "field": "pages[1].text",
-          "arabic": "«في كل كبد رطبة أجر»",
-          "english": "«In every living being, there is reward.»",
-          "why": "The English presents a paraphrase as the exact words of the hadith. The Arabic wording is specific ('moist liver'), and the translation replaces it with an interpretation ('living being') without indicating it is the meaning. This misrepresents the hadith text.",
-          "severity": "medium"
+          "type": "omission",
+          "why": "The English omits 'فوراً' (immediately)."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "field": "pages[2].text",
+          "type": "omission",
+          "why": "The English omits 'فائقة' (extreme), weakening the description."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "field": "discussionQuestions[1]",
+          "type": "omission",
+          "why": "The English omits 'تعالى' (Almighty)."
         }
       ],
-      "approved_by": null
-    }
+      "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+      "auto_review": {
+        "reviewers": [
+          "deepseek-v4-pro",
+          "glm-5.2"
+        ],
+        "fixer": null,
+        "rounds": 1,
+        "prompt_version": "dfa8a5f39718",
+        "content_sha256": "f2d2841dd42ccd175248dde22c16b0ebdbd255b96ef6d754062d0d983ed84268",
+        "reviewed_at": "2026-10-04T16:52:31+00:00",
+        "residual_low": [
+          {
+            "model": "deepseek-v4-pro",
+            "field": "description",
+            "type": "addition",
+            "why": "The English adds 'beloved' not present in the Arabic, though ﷺ is an acceptable honorific."
+          },
+          {
+            "model": "deepseek-v4-pro",
+            "field": "pages[0].text",
+            "type": "addition",
+            "why": "The English adds 'One day' which is not in the Arabic."
+          },
+          {
+            "model": "deepseek-v4-pro",
+            "field": "pages[0].text",
+            "type": "meaning",
+            "why": "'Tiptoed' implies stealth, whereas the Arabic simply says he approached slowly."
+          },
+          {
+            "model": "deepseek-v4-pro",
+            "field": "pages[1].text",
+            "type": "omission",
+            "why": "The English omits 'فوراً' (immediately)."
+          },
+          {
+            "model": "deepseek-v4-pro",
+            "field": "pages[2].text",
+            "type": "omission",
+            "why": "The English omits 'فائقة' (extreme), weakening the description."
+          },
+          {
+            "model": "deepseek-v4-pro",
+            "field": "discussionQuestions[1]",
+            "type": "omission",
+            "why": "The English omits 'تعالى' (Almighty)."
+          }
+        ],
+        "adjudicated": [],
+        "tool": "ops/tools/review_en_parity.py",
+        "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+      },
+      "revalidated_at": "2026-10-04T16:52:31+00:00"
+    },
+    "ageGroup": "3-6 years",
+    "category": "Kindness to animals and mercy",
+    "discussionQuestions": [
+      "What did Anas do when he saw the little kitten shivering from the cold?",
+      "Why does Allah love those who show mercy to animals and to weak creatures?",
+      "If you saw a hungry sparrow or cat in front of your house, how would you help it?"
+    ],
+    "islamicValue": "The Messenger of Allah ﷺ said: “In every living creature there is a reward.” (Sahih al-Bukhari 2363)",
+    "actionChallenge": "Kindness challenge: today, put a bowl of clean water on your balcony or by the door for the birds and cats to drink from."
   },
   {
     "id": "layla_star",
@@ -154,7 +244,7 @@
     "source_language": "ar",
     "translation": {
       "translator_model": "mistral-large-3:675b",
-      "reviewer_model": "deepseek-v4-pro",
+      "reviewer_model": "deepseek-v4-pro+glm-5.2",
       "attempts": 1,
       "needs_scholar_review": true,
       "scholar_signals": {
@@ -163,27 +253,35 @@
         "quran_ayah": false,
         "reviewer_model": false
       },
-      "review_verdict": "defects",
-      "review_defects": [
-        {
-          "type": "meaning_change",
-          "field": "pages.4.text",
-          "arabic": "وحفظه بنجومه المضيئة",
-          "english": "and guarded it with its shining stars",
-          "why": "The Arabic pronoun 'his' (referring to Allah) is rendered as 'its' (referring to the universe), changing the attribution of the stars from Allah to the universe.",
-          "severity": "low"
-        },
-        {
-          "type": "religious_error",
-          "field": "pages.4.text",
-          "arabic": "لله تعالى",
-          "english": "to Allah",
-          "why": "The honorific 'تعالى' (the Exalted) is dropped.",
-          "severity": "low"
-        }
-      ],
-      "approved_by": null
-    }
+      "review_verdict": "clean",
+      "review_defects": [],
+      "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+      "auto_review": {
+        "reviewers": [
+          "deepseek-v4-pro",
+          "glm-5.2"
+        ],
+        "fixer": null,
+        "rounds": 1,
+        "prompt_version": "dfa8a5f39718",
+        "content_sha256": "a70a6b416b53ad2b05857de2cb86ef08ab1e88e765f992c025933fef49b96222",
+        "reviewed_at": "2026-10-04T16:52:31+00:00",
+        "residual_low": [],
+        "adjudicated": [],
+        "tool": "ops/tools/review_en_parity.py",
+        "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+      },
+      "revalidated_at": "2026-10-04T16:52:31+00:00"
+    },
+    "ageGroup": "3-6 years",
+    "category": "Gratitude for blessings and calm before sleep",
+    "discussionQuestions": [
+      "What three beautiful blessings did Layla remember and thank Allah for?",
+      "What three great blessings made you happiest today, in your life and with your family?",
+      "Why does a person sleep with a peaceful heart after reading the bedtime adhkar and thanking their Lord?"
+    ],
+    "islamicValue": "Allah says: ﴿وَإِن تَعُدُّوا نِعْمَتَ اللَّهِ لَا تُحْصُوهَا﴾ (Ibrahim: 34) — interpretation of the meaning: 'And if you should count the favor of Allah, you could not enumerate them.' And the du'a of the Prophet ﷺ: «باسمك اللهم أموت وأحيا» — “In Your name, O Allah, I die and I live.”",
+    "actionChallenge": "Gratitude challenge: before you sleep tonight, tell your parents three beautiful things that happened to you today, and thank Allah for them in your heart."
   },
   {
     "id": "saleh_bird",
@@ -228,7 +326,7 @@
     "source_language": "ar",
     "translation": {
       "translator_model": "mistral-large-3:675b",
-      "reviewer_model": "deepseek-v4-pro",
+      "reviewer_model": "deepseek-v4-pro+glm-5.2",
       "attempts": 1,
       "needs_scholar_review": true,
       "scholar_signals": {
@@ -237,43 +335,85 @@
         "quran_ayah": false,
         "reviewer_model": true
       },
-      "review_verdict": "defects",
+      "review_verdict": "low_only",
       "review_defects": [
         {
-          "type": "meaning_change",
+          "model": "deepseek-v4-pro",
           "field": "title",
-          "arabic": "صالح وعصفور الأمانة",
-          "english": "Saleh and the Little Bird of Amanah",
-          "why": "The Arabic title does not include 'Little'; the English adds it, altering the description.",
-          "severity": "low"
+          "type": "addition",
+          "why": "English adds 'Little' which is not present in the Arabic title."
         },
         {
-          "type": "religious_error",
-          "field": "pages[1].text",
-          "arabic": "فالأمانة خلق يحبه الله ورسوله",
-          "english": "amanah is a trait loved by Allah and His Messenger ﷺ",
-          "why": "The Arabic does not include the honorific 'ﷺ'; the English adds it, introducing an element not present in the source.",
-          "severity": "low"
+          "model": "glm-5.2",
+          "field": "title",
+          "type": "addition",
+          "why": "The word \"Little\" is added in English with no counterpart in the Arabic title."
         },
         {
-          "type": "meaning_change",
-          "field": "pages[2].text",
-          "arabic": "لأصحابها",
-          "english": "to its rightful owner",
-          "why": "The Arabic uses the plural 'أصحابها' (its owners); the English renders it as singular 'its rightful owner', changing the number.",
-          "severity": "low"
+          "model": "glm-5.2",
+          "field": "pages[3].text",
+          "type": "omission",
+          "why": "The intensifier شديد (very/greatly) is dropped, slightly understating the man's distress."
         },
         {
-          "type": "term_error",
-          "field": "pages[5].text",
-          "arabic": "الصلاح",
-          "english": "goodness",
-          "why": "'الصلاح' is an Islamic term meaning righteousness or uprightness; 'goodness' is too generic and loses the specific religious connotation.",
-          "severity": "low"
+          "model": "glm-5.2",
+          "field": "actionChallenge",
+          "type": "addition",
+          "why": "\"and sisters'\" is added; the Arabic إخوانك refers to brothers only."
         }
       ],
-      "approved_by": null
-    }
+      "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+      "auto_review": {
+        "reviewers": [
+          "deepseek-v4-pro",
+          "glm-5.2"
+        ],
+        "fixer": null,
+        "rounds": 1,
+        "prompt_version": "dfa8a5f39718",
+        "content_sha256": "491a45353d2c57aebf59d20c07e5d3d473e493e19f5ff25f160d3da19cee8552",
+        "reviewed_at": "2026-10-04T16:52:31+00:00",
+        "residual_low": [
+          {
+            "model": "deepseek-v4-pro",
+            "field": "title",
+            "type": "addition",
+            "why": "English adds 'Little' which is not present in the Arabic title."
+          },
+          {
+            "model": "glm-5.2",
+            "field": "title",
+            "type": "addition",
+            "why": "The word \"Little\" is added in English with no counterpart in the Arabic title."
+          },
+          {
+            "model": "glm-5.2",
+            "field": "pages[3].text",
+            "type": "omission",
+            "why": "The intensifier شديد (very/greatly) is dropped, slightly understating the man's distress."
+          },
+          {
+            "model": "glm-5.2",
+            "field": "actionChallenge",
+            "type": "addition",
+            "why": "\"and sisters'\" is added; the Arabic إخوانك refers to brothers only."
+          }
+        ],
+        "adjudicated": [],
+        "tool": "ops/tools/review_en_parity.py",
+        "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+      },
+      "revalidated_at": "2026-10-04T16:52:31+00:00"
+    },
+    "ageGroup": "4-7 years",
+    "category": "Trustworthiness and mindfulness of Allah",
+    "discussionQuestions": [
+      "What happened that tested Saleh's honesty?",
+      "Why did Saleh refuse to take what wasn't his, even though he was on his own?",
+      "How does Allah reward the trustworthy person in this life and the next?"
+    ],
+    "islamicValue": "Allah says: ﴿إِنَّ ٱللَّهَ يَأۡمُرُكُمۡ أَن تُؤَدُّواْ ٱلۡأَمَٰنَٰتِ إِلَىٰٓ أَهۡلِهَا﴾ (An-Nisa: 58) — interpretation of the meaning: 'Indeed, Allah commands you to render trusts to whom they are due.'",
+    "actionChallenge": "Trustworthiness challenge: today, look after all your brothers' and sisters' things and toys, and don't use anything without politely asking them first."
   },
   {
     "id": "noor_clean",
@@ -318,7 +458,7 @@
     "source_language": "ar",
     "translation": {
       "translator_model": "mistral-large-3:675b",
-      "reviewer_model": "deepseek-v4-pro",
+      "reviewer_model": "deepseek-v4-pro+glm-5.2",
       "attempts": 1,
       "needs_scholar_review": true,
       "scholar_signals": {
@@ -327,27 +467,61 @@
         "quran_ayah": false,
         "reviewer_model": true
       },
-      "review_verdict": "defects",
+      "review_verdict": "low_only",
       "review_defects": [
         {
-          "type": "meaning_change",
-          "field": "pages[1].text",
-          "arabic": "العلب البلاستيكية",
-          "english": "plastic bottles",
-          "why": "The Arabic 'علب' means 'cans' or 'containers', not specifically 'bottles'. The translation narrows the meaning.",
-          "severity": "low"
+          "model": "glm-5.2",
+          "field": "discussionQuestions[0]",
+          "type": "meaning",
+          "why": "الحديقة is translated as \"garden\" throughout the story but as \"park\" here, creating an inconsistency."
         },
         {
-          "type": "meaning_change",
-          "field": "pages[4].text",
-          "arabic": "وردة صغيرة ملونة",
-          "english": "a small, colorful flower",
-          "why": "The Arabic 'وردة' specifically means 'rose', not a generic 'flower'. The translation loses this specificity.",
-          "severity": "low"
+          "model": "glm-5.2",
+          "field": "discussionQuestions[1]",
+          "type": "meaning",
+          "why": "حدائقنا is translated as \"parks\" but the story consistently uses \"garden\" for the same Arabic word."
         }
       ],
-      "approved_by": null
-    }
+      "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+      "auto_review": {
+        "reviewers": [
+          "deepseek-v4-pro",
+          "glm-5.2"
+        ],
+        "fixer": null,
+        "rounds": 1,
+        "prompt_version": "dfa8a5f39718",
+        "content_sha256": "96f653e16476ad20ae901413cd0c7b2ad5993feb739cd862dfaa670fb6f97dbc",
+        "reviewed_at": "2026-10-04T16:52:31+00:00",
+        "residual_low": [
+          {
+            "model": "glm-5.2",
+            "field": "discussionQuestions[0]",
+            "type": "meaning",
+            "why": "الحديقة is translated as \"garden\" throughout the story but as \"park\" here, creating an inconsistency."
+          },
+          {
+            "model": "glm-5.2",
+            "field": "discussionQuestions[1]",
+            "type": "meaning",
+            "why": "حدائقنا is translated as \"parks\" but the story consistently uses \"garden\" for the same Arabic word."
+          }
+        ],
+        "adjudicated": [],
+        "tool": "ops/tools/review_en_parity.py",
+        "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+      },
+      "revalidated_at": "2026-10-04T16:52:31+00:00"
+    },
+    "ageGroup": "3-6 years",
+    "category": "Cleanliness and removing harm",
+    "discussionQuestions": [
+      "How did the park change after Noor's kind idea?",
+      "Why does Islam tell us to keep our homes, mosques and parks clean?",
+      "What can you do to make your home and your school a clean and beautiful place?"
+    ],
+    "islamicValue": "The Messenger of Allah ﷺ said: “Purification is half of faith.” (Sahih Muslim 223)",
+    "actionChallenge": "Cleanliness challenge: today, make your bed and tidy your desk yourself as soon as you wake up, without waiting for anyone to help."
   },
   {
     "id": "maryam_toys",
@@ -696,7 +870,7 @@
     "source_language": "ar",
     "translation": {
       "translator_model": "mistral-large-3:675b",
-      "reviewer_model": "deepseek-v4-pro",
+      "reviewer_model": "deepseek-v4-pro+glm-5.2",
       "attempts": 3,
       "needs_scholar_review": true,
       "scholar_signals": {
@@ -705,43 +879,61 @@
         "quran_ayah": true,
         "reviewer_model": true
       },
-      "review_verdict": "defects",
+      "review_verdict": "low_only",
       "review_defects": [
         {
-          "type": "meaning_change",
-          "field": "pages[1].text",
-          "arabic": "تذكرت عائشة كلام أبيها عندما حفظت معه قوله تعالى: ﴿يَا أَيُّهَا الَّذِينَ آمَنُوا لَا تَدْخُلُوا بُيُوتًا غَيْرَ بُيُوتِكُمْ حَتَّىٰ تَسْتَأْنِسُوا وَتُسَلِّمُوا عَلَىٰ أَهْلِهَا﴾",
-          "english": "Aisha remembered her father’s words when they had memorized together the words of Allah: ﴿يَا أَيُّهَا الَّذِينَ آمَنُوا لَا تَدْخُلُوا بُيُوتًا غَيْرَ بُيُوتِكُمْ حَتَّىٰ تَسْتَأْنِسُوا وَتُسَلِّمُوا عَلَىٰ أَهْلِهَا﴾. Interpretation of the meaning: 'O you who have believed, do not enter houses other than your own houses until you ascertain welcome and greet their inhabitants.'",
-          "why": "The English phrasing merges 'her father's words' with 'the words of Allah', implying the father's words are the Qur'anic verse. The Arabic separates them: she remembered her father's words (likely a reminder) when they memorized the verse. This could misattribute the verse to the father's speech.",
-          "severity": "medium"
+          "model": "deepseek-v4-pro",
+          "field": "pages[3].text",
+          "type": "source_corruption",
+          "why": "The preposition لـ is separated from the following noun by a space; it should be attached as لعائشة."
         },
         {
-          "type": "term_error",
-          "field": "description",
-          "arabic": "خلق الاستئذان",
-          "english": "akhlaq of seeking permission",
-          "why": "Arabic uses singular 'khuluq' (خلق), but English uses plural 'akhlaq'. Should be singular to match the concept of a single character trait.",
-          "severity": "low"
-        },
-        {
-          "type": "term_error",
+          "model": "glm-5.2",
           "field": "pages[4].text",
-          "arabic": "الأدب الإسلامي الرفيع",
-          "english": "refined Islamic akhlaq",
-          "why": "Arabic uses 'adab' (أدب), not 'akhlaq'. The English should use 'adab' to maintain consistency with the title and the mother's speech, and to accurately reflect the Arabic term.",
-          "severity": "medium"
-        },
-        {
-          "type": "term_error",
-          "field": "pages[5].text",
-          "arabic": "خلق الاستئذان الجميل",
-          "english": "beautiful akhlaq of isti'dhan",
-          "why": "Arabic uses singular 'khuluq' (خلق), but English uses plural 'akhlaq'. Should be singular to match the Arabic and the concept.",
-          "severity": "low"
+          "type": "meaning",
+          "why": "The Arabic says 'adab' (etiquette/manners) but the English renders it as 'akhlaq' (character/morals), a related but distinct concept."
         }
       ],
-      "approved_by": null
-    }
+      "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+      "auto_review": {
+        "reviewers": [
+          "deepseek-v4-pro",
+          "glm-5.2"
+        ],
+        "fixer": null,
+        "rounds": 1,
+        "prompt_version": "dfa8a5f39718",
+        "content_sha256": "6eaf9e6f190f97168f27fa04324e9daab6e4b03a2ac5aa19b101655dd787dbb8",
+        "reviewed_at": "2026-10-04T16:52:31+00:00",
+        "residual_low": [
+          {
+            "model": "deepseek-v4-pro",
+            "field": "pages[3].text",
+            "type": "source_corruption",
+            "why": "The preposition لـ is separated from the following noun by a space; it should be attached as لعائشة."
+          },
+          {
+            "model": "glm-5.2",
+            "field": "pages[4].text",
+            "type": "meaning",
+            "why": "The Arabic says 'adab' (etiquette/manners) but the English renders it as 'akhlaq' (character/morals), a related but distinct concept."
+          }
+        ],
+        "adjudicated": [],
+        "tool": "ops/tools/review_en_parity.py",
+        "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+      },
+      "revalidated_at": "2026-10-04T16:52:31+00:00"
+    },
+    "ageGroup": "4-7 years",
+    "category": "Asking permission and respecting privacy",
+    "discussionQuestions": [
+      "Why did Aisha knock on the door and ask permission three times before going in?",
+      "What is the right thing to do if the person in the room does not give you permission to come in?",
+      "How does asking permission protect the privacy and comfort of everyone in the family?"
+    ],
+    "islamicValue": "Allah says: ﴿يَا أَيُّهَا الَّذِينَ آمَنُوا لَا تَدْخُلُوا بُيُوتًا غَيْرَ بُيُوتِكُمْ حَتَّىٰ تَسْتَأْنِسُوا وَتُسَلِّمُوا عَلَىٰ أَهْلِهَا﴾ (An-Nur: 27) — interpretation of the meaning: 'O you who have believed, do not enter houses other than your own houses until you ascertain welcome and greet their inhabitants.'",
+    "actionChallenge": "Permission challenge: today, knock on your parents' bedroom door and politely ask permission three times before going in."
   },
   {
     "id": "yaseen_creation",
