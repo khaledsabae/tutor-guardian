@@ -182,13 +182,13 @@ jobs:
   # ── main only: refresh the caches the hosted PR jobs restore ──────────
   # A pull request can restore caches saved on main, but main's jobs run on
   # the VPS, where every cached path differs — nothing they save matches a
-  # hosted runner. This job saves the hosted pip wheels, both models and the
-  # knowledge index under main's scope, once per change (an exact hit saves
-  # nothing). Without it every PR starts cold and stores its own ~2 GB copy,
-  # against a 10 GB budget for the whole repository. GitHub-hosted: it adds
-  # nothing to the VPS.
+  # hosted runner. This job saves the hosted pip wheels (~360 MB), both models
+  # (~650 MB) and the knowledge index (~5 MB) under main's scope, once per
+  # change (an exact hit saves nothing). Without it every PR starts cold and
+  # stores its own ~1 GB copy, against a 10 GB budget for the whole repository.
+  # GitHub-hosted: it adds nothing to the VPS. Skipped on pull requests.
   hosted-cache:
-    name: hosted cache (main)
+    name: hosted cache (main only)
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     timeout-minutes: 30

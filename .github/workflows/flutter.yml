@@ -124,11 +124,12 @@ jobs:
   # ── main only: refresh the caches the hosted PR jobs restore ──────────
   # Pull requests can restore caches saved on main, but main's jobs run on the
   # VPS, whose SDK path differs, so nothing they save matches a hosted runner.
-  # This saves the hosted SDK (~1.6 GB) and pub cache under main's scope once
-  # per Flutter version / pubspec.lock; without it each PR stores its own copy
-  # against the repository's 10 GB cache budget. GitHub-hosted: nothing on the VPS.
+  # This saves the hosted SDK (~1.6 GB) and pub cache (~120 MB) under main's
+  # scope once per Flutter version / pubspec.lock; without it each PR stores
+  # its own copy against the repository's 10 GB cache budget. GitHub-hosted:
+  # nothing on the VPS. Skipped on pull requests.
   hosted-cache:
-    name: hosted cache (main)
+    name: hosted cache (main only)
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     timeout-minutes: 15
