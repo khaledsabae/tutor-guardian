@@ -33,6 +33,20 @@ Map<String, dynamic> _withNulls({required List<String> unavailable}) {
   return {...j, 'unavailable': unavailable, 'children': [child]};
 }
 
+class _GraduatedClient extends FakeProgramsClient {
+  int journeyReads = 0;
+
+  @override
+  Future<Map<String, dynamic>> fetchPrayerJourney(int childId) async {
+    journeyReads++;
+    return super.fetchPrayerJourney(childId);
+  }
+
+  @override
+  Future<Map<String, dynamic>> graduatePrayerJourney(int childId) async =>
+      throw const TgApiError(409, 'x', code: 'already_graduated');
+}
+
 class _StaleClient extends FakeProgramsClient {
   int journeyReads = 0;
 
@@ -116,6 +130,39 @@ void main() {
     await settle(tester);
     expect(client.journeyReads, greaterThan(reads));
     expect(find.byType(SnackBar), findsNothing);
+  });
+
+  testWidgets('a second graduation tap refetches, with no error and no second party', (tester) async {
+    final client = _GraduatedClient()..journey = journeyJson(stage: 6, graduate: true);
+    await pumpPrograms(tester, const PrayerJourneyScreen(childId: kChildId), client: client);
+    await settle(tester);
+    final reads = client.journeyReads;
+    final button = find.byKey(const ValueKey('prayer_graduate'));
+    await scrollTo(tester, button);
+    await tester.tap(button);
+    await settle(tester, 10);
+    expect(client.journeyReads, greaterThan(reads));
+    expect(find.byType(SnackBar), findsNothing);
+    expect(find.byType(Dialog), findsNothing); // no celebration for a repeat
+  });
+
+  test('after 1448\'s bridge the next season counts down — not off season', () {
+    final next = {
+      ...ramadanTodayJson(state: 'upcoming'),
+      'season': {
+        ...seasonJson(),
+        'hijri_year': 1449,
+        'starts_on': '2028-01-28',
+        'eid_on': '2028-02-27',
+      },
+      'days_until_start': 290,
+    };
+    final t = RamadanToday.fromJson(next);
+    expect(t.state, RamadanState.upcoming);
+    expect(t.season!.hijriYear, 1449);
+    expect(t.daysUntilStart, 290);
+    expect(RamadanOverview.fromJson({'state': 'upcoming', 'season': next['season'], 'days_until_start': 290}).isActive,
+        isTrue);
   });
 
   group('coins: each mission paid once', () {
