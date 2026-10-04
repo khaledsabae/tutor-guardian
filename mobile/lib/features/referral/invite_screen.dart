@@ -7,9 +7,8 @@
 /// via the share sheet), the parent's code, and a box for entering a friend's
 /// code by hand.
 ///
-/// No hadith is quoted here. The share card used to carry «الدالُّ على الخير
-/// كفاعله», which is not in al-Bukhari or Muslim; the reward is phrased as a
-/// hope («نرجو أن يكون لك مثل أجرها»), never as a citation.
+/// The share card once carried «الدالُّ على الخير كفاعله», which is not in
+/// al-Bukhari or Muslim; it was replaced by the Sahih wording below.
 ///
 /// The Arabic share card quotes «من دلّ على خير فله مثل أجر فاعله»
 /// (صحيح مسلم — حديث ١٨٩٣, Abd al-Baqi numbering, verified by the pre-commit
