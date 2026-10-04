@@ -5,50 +5,54 @@ What reaches this container (verified read-only on the VPS, 2026-10-04):
 
   * tg_backend publishes no port; it is reachable only on its two Docker
     networks (tutor-guardian_internal, analytics-platform_production_network).
-  * tg-api.alsaba.cloud, the app's API: Cloudflare edge → Cloudflare
-    Tunnel → the tg_cloudflared container → tg_backend:8000. Sampled for 90 s,
-    every connection to :8000 came from tg_cloudflared or from 127.0.0.1 (the
-    container's own healthcheck).
-  * alsaba.cloud/seo and /methodology: Cloudflare edge →
-    analytics_nginx → tg_backend:8000. nginx appends its peer to
-    X-Forwarded-For ($proxy_add_x_forwarded_for) and passes CF-Connecting-IP
-    through; its repository config first sets that peer from
-    CF-Connecting-IP (real_ip). Either way the rule below resolves the same
-    client.
-
-So the TCP peer is always a local proxy, never a Cloudflare edge node. And
-Cloudflare is not a hop of its own in X-Forwarded-For: it appends the address
-that connected to it (Cloudflare docs, "HTTP request headers"). A Cloudflare
-address in the chain is the client itself, or — behind an nginx without
-real_ip — the edge that saw the client.
+  * tg-api.alsaba.cloud, the app's API: Cloudflare edge → Cloudflare Tunnel →
+    the tg_cloudflared container → tg_backend:8000. Sampled for 90 s, every
+    connection to :8000 came from tg_cloudflared or from 127.0.0.1 (the
+    container's own healthcheck). cloudflared (2026.5.2) forwards the edge's
+    headers untouched — a plain RoundTrip, no X-Forwarded-For handling — and
+    the edge appends the address that connected to it (Cloudflare docs, "HTTP
+    request headers"). So the last entry is the client.
+  * alsaba.cloud/seo and /methodology: analytics_nginx → tg_backend:8000.
+    nginx appends its own peer ($remote_addr) to X-Forwarded-For and passes
+    CF-Connecting-IP through. Through Cloudflare, real_ip (live config) makes
+    that peer the visitor. But nginx also takes direct connections: over IPv4
+    its peer is the caller's address; over IPv6 docker-proxy relays them from
+    the alsaba_edge gateway, 172.23.0.1 — a private address with whatever the
+    caller wrote to its left, CF-Connecting-IP included.
 
 The rule:
-  1. Forwarding headers are believed only from a trusted proxy peer
-     (TRUSTED_PROXY_IPS; default loopback and the private ranges Docker
-     networks use).
-  2. X-Forwarded-For is walked from the right, skipping trusted proxies only;
-     the first other address is the one the nearest proxy actually saw. A
-     forged left-hand entry is never reached.
-  3. If that address is Cloudflare's (CLOUDFLARE_EDGE_IPS; default the
-     published ranges), Cloudflare saw the client, and its CF-Connecting-IP —
-     set by the edge on every request, whatever the client sent — is the
-     answer; without it, that address itself. Never an entry further left: the
-     client wrote those.
+  1. Forwarding headers are believed only from a trusted peer
+     (TRUSTED_PROXY_IPS; default loopback and the private ranges the Docker
+     networks use). Only the peer is trusted, never an entry in its chain.
+  2. The answer is the LAST X-Forwarded-For entry: what our proxy itself saw
+     (the tunnel: the address Cloudflare appended; nginx: its $remote_addr).
+     Never skip an entry to the left of it — not even a private one: the
+     docker-proxy gateway is private.
+  3. If that entry is Cloudflare's (CLOUDFLARE_EDGE_IPS; default the published
+     ranges), Cloudflare saw the client, and its CF-Connecting-IP — set by the
+     edge on every request, whatever the client sent — is the answer; without
+     it, the entry itself.
+  4. No chain at all: CF-Connecting-IP (or the peer, without it).
 
-Until 2026-10 Cloudflare's ranges were trusted proxies, as peers and as hops
-to skip. Through the tunnel that let a caller pick its own address: a request
-from a Cloudflare Worker arrives with X-Forwarded-For "<anything>,
-2a06:98c0:3600::103" (the Worker's address, inside a Cloudflare range); the
-walk skipped the Worker as a proxy and returned <anything>.
+History. Until 2026-10 private and Cloudflare entries were skipped from the
+right. That let a caller choose its address twice over: a Cloudflare Worker
+reaches the tunnel as "X-Forwarded-For: <anything>, 2a06:98c0:3600::103"
+(the Worker's address, in a Cloudflare range), and a direct IPv6 visit to
+nginx as "<anything>, 172.23.0.1" — the skipped hop exposed <anything>, or the
+caller's own CF-Connecting-IP. Optional hardening outside this repository:
+accept 80/443 on the VPS from Cloudflare's ranges only (the analytics-platform
+owner's call); the rule above does not depend on it.
 
 The client IP is used by the rate limiter (IP buckets for session minting,
 feedback and support verification; the AI scope and the general API when no
 token identifies the caller) and by install attribution (landing-page clicks
-stored per IP or IPv6 /64, matched by the AUTO referral claim within 24 h).
+stored per IP or IPv6 /64, matched by the AUTO referral claim within 24 h, and
+the cap on new clicks per minute).
 
-TRUSTED_PROXY_IPS: comma-separated IPs/CIDRs, or "*" to trust every peer and
-hop. If the backend is ever exposed to Cloudflare directly (a published port
-behind proxied DNS, no tunnel or local proxy), add Cloudflare's ranges to it.
+TRUSTED_PROXY_IPS: comma-separated IPs/CIDRs, or "*" to trust every peer
+(then the first entry is taken, the old trust-everything behaviour). If the
+backend is ever exposed to Cloudflare directly (a published port behind
+proxied DNS, no tunnel or local proxy), add Cloudflare's ranges to it.
 X-Forwarded-Proto is honoured from trusted peers only, so HTTPS redirects keep
 working.
 """
@@ -71,6 +75,9 @@ _PRIVATE = (
     "127.0.0.0/8", "::1/128", "10.0.0.0/8", "172.16.0.0/12", "192.168.0.0/16",
     "fc00::/7",
 )
+# Peers whose forwarding headers are read: loopback (the healthcheck) and the
+# Docker networks tg_cloudflared and analytics_nginx connect from. A peer is
+# trusted to report what IT saw — the last entry — not to vouch for the rest.
 DEFAULT_TRUSTED = ",".join(_PRIVATE)
 DEFAULT_CLOUDFLARE = ",".join(_CLOUDFLARE)
 
@@ -138,14 +145,14 @@ class ClientIPMiddleware:
         cf = (_header(scope, b"cf-connecting-ip") or "").strip() or None
         xff = _header(scope, b"x-forwarded-for")
         hops = [_strip_port(h) for h in xff.split(",") if h.strip()] if xff else []
-        for hop in reversed(hops):
-            if self.trust.contains(hop):
-                continue                  # one of our own proxies
-            if self.edge.contains(hop):
-                return cf or hop          # Cloudflare saw the client: its header says who
-            return hop
-        # Nothing beyond our own proxies (or no chain at all).
-        return cf or (hops[0] if hops else None)
+        if self.trust.always:             # "*": the old trust-everything behaviour
+            return cf or (hops[0] if hops else None)
+        if not hops:
+            return cf                     # no chain: Cloudflare's own header, if any
+        last = hops[-1]                   # what our proxy saw — never skipped, even if private
+        if self.edge.contains(last):
+            return cf or last             # Cloudflare saw the client: its header says who
+        return last
 
     async def __call__(self, scope, receive, send):
         if scope["type"] in ("http", "websocket"):
