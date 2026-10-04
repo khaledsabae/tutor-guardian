@@ -1,0 +1,104 @@
+name: Backend image (build, smoke, publish)
+description: >-
+  Builds backend/Dockerfile with BuildKit (layer cache kept in GHCR), runs the
+  in-image smoke and the KB integrity check on it (ops/tools/candidate_smoke.sh),
+  and — when publishing — promotes that exact image to its tags in GHCR, so the
+  production host only ever pulls. GitHub-hosted runners only.
+
+inputs:
+  mode:
+    description: >-
+      check  — pull requests: build, load, smoke; nothing is pushed.
+      deploy — deploy.yml on main: publish :<sha> and :main, write the layer cache.
+      verify — manual run on a branch: publish :verify-<sha> only (never deployed).
+    required: true
+
+outputs:
+  image:
+    description: The local reference that was smoked.
+    value: ${{ steps.build.outputs.image }}
+  digest:
+    description: Manifest digest of the smoked, published image (deploy/verify).
+    value: ${{ steps.build.outputs.digest }}
+
+runs:
+  using: composite
+  steps:
+    # A container builder (docker-container driver) is what can export the
+    # layer cache to a registry. use: false keeps plain `docker build` on the
+    # daemon's own builder, so later steps can still build FROM local images.
+    - name: Set up Buildx
+      id: buildx
+      uses: docker/setup-buildx-action@v3
+      with:
+        use: false
+
+    # The job's own token: write when publishing, read for the cache on PRs.
+    # login-action logs out again in its post step.
+    - name: Log in to GHCR
+      uses: docker/login-action@v3
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ github.token }}
+
+    - name: Build (and push a candidate when publishing)
+      id: build
+      shell: bash
+      env:
+        MODE: ${{ inputs.mode }}
+        BUILDER: ${{ steps.buildx.outputs.name }}
+        IMAGE: ghcr.io/khaledsabae/tutor-guardian-backend
+        SHA: ${{ github.sha }}
+      run: |
+        set -euo pipefail
+        case "$MODE" in check|deploy|verify) ;; *) echo "::error::unknown mode $MODE"; exit 1 ;; esac
+        # The layer cache lives in the registry as $IMAGE:buildcache, so an
+        # unchanged pip/torch/model layer keeps its digest from build to build
+        # — which is what lets the production host pull only the app layers.
+        args=(-f backend/Dockerfile --builder "$BUILDER" --provenance=false
+              --cache-from "type=registry,ref=$IMAGE:buildcache"
+              --label "org.opencontainers.image.source=https://github.com/$GITHUB_REPOSITORY"
+              --label "org.opencontainers.image.revision=$SHA")
+        if [ "$MODE" = check ]; then
+          docker buildx build "${args[@]}" --load -t tg-candidate:ci .
+          echo "image=tg-candidate:ci" >> "$GITHUB_OUTPUT"
+          exit 0
+        fi
+        docker buildx build "${args[@]}" \
+          --cache-to "type=registry,ref=$IMAGE:buildcache,mode=max" \
+          --push -t "$IMAGE:candidate-$SHA" .
+        # Smoke what the registry holds — the very bytes production will pull.
+        docker pull "$IMAGE:candidate-$SHA"
+        digest=$(docker image inspect --format '{{index .RepoDigests 0}}' "$IMAGE:candidate-$SHA")
+        echo "image=$IMAGE:candidate-$SHA" >> "$GITHUB_OUTPUT"
+        echo "digest=${digest#*@}" >> "$GITHUB_OUTPUT"
+        echo "pushed and pulled back $digest"
+
+    # The same wrapper (and limits) the deploy used to run on the VPS.
+    - name: In-image smoke and KB integrity
+      shell: bash
+      run: |
+        set -euo pipefail
+        ops/tools/candidate_smoke.sh "${{ steps.build.outputs.image }}"
+        ops/tools/candidate_smoke.sh "${{ steps.build.outputs.image }}" "" \
+          -- python ops/tools/check_kb_integrity.py
+
+    # Only now does the image get a name production can deploy: the tags are
+    # created on the registry from the smoked manifest — nothing is rebuilt.
+    - name: Promote the smoked image
+      if: inputs.mode != 'check'
+      shell: bash
+      env:
+        MODE: ${{ inputs.mode }}
+        IMAGE: ghcr.io/khaledsabae/tutor-guardian-backend
+        SHA: ${{ github.sha }}
+        DIGEST: ${{ steps.build.outputs.digest }}
+      run: |
+        set -euo pipefail
+        if [ "$MODE" = deploy ]; then names=("$SHA" main); else names=("verify-$SHA"); fi
+        args=()
+        for n in "${names[@]}"; do args+=(-t "$IMAGE:$n"); done
+        docker buildx imagetools create "${args[@]}" "$IMAGE@$DIGEST"
+        docker buildx imagetools inspect "$IMAGE:${names[0]}" | head -4
+        echo "Published \`$IMAGE@$DIGEST\` as: ${names[*]}" >> "$GITHUB_STEP_SUMMARY"

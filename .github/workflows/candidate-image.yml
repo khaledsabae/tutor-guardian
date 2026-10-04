@@ -1,15 +1,19 @@
 name: Candidate image
 
-# deploy.yml builds backend/Dockerfile on the production host and runs
-# ops/tools/candidate_smoke.sh inside the result before it may replace the
-# live container. This runs the same build and the same smoke on a
-# GitHub-hosted runner, for pull requests that change what goes into the image
-# or the smoke itself — so a broken image is found here, not on the production
-# host. Then it sabotages the image three ways and requires the smoke to fail
-# on each, at the right step: a gate that cannot say no is not a gate.
+# The backend image is built, smoked and published on GitHub-hosted runners —
+# the production host only pulls it (deploy.yml). Both use the same composite
+# action, .github/actions/backend-image, and the same in-image smoke.
 #
-# Not part of the deploy gate (the deploy smokes its own build). GitHub-hosted:
-# nothing here touches the VPS.
+#   check   pull requests that change what goes into the image or the smoke:
+#           build, run the smoke, then break the image three ways and require
+#           the smoke to reject each at the right step — a gate that cannot
+#           say no is not a gate. Pushes nothing.
+#   verify  manual run ("Run workflow", any branch): the full publish path —
+#           push a candidate, pull it back, smoke it, tag it :verify-<sha> —
+#           then check an anonymous pull works. Proves the deploy's image job
+#           before a merge; :verify-* tags are never deployed.
+#
+# Not part of the deploy gate. Nothing here touches the VPS.
 
 on:
   pull_request:
@@ -18,9 +22,11 @@ on:
       - 'backend/Dockerfile'
       - 'backend/requirements.txt'
       - '.github/ci/constraints-prod.txt'
+      - '.github/ci/reject-broken-images.sh'
       - '.dockerignore'
       - 'ops/tools/candidate_smoke.py'
       - 'ops/tools/candidate_smoke.sh'
+      - '.github/actions/backend-image/**'
       - '.github/workflows/candidate-image.yml'
       - '.github/workflows/deploy.yml'
   workflow_dispatch:
@@ -33,47 +39,68 @@ permissions:
   contents: read
 
 jobs:
-  smoke:
+  check:
     name: candidate image smoke
     # Fork PRs are skipped, as in backend.yml.
-    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+    if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     timeout-minutes: 45
+    permissions:
+      contents: read
+      packages: read   # the layer cache in GHCR
     steps:
       - name: Checkout
         uses: actions/checkout@v5
 
-      - name: Build the image (backend/Dockerfile, repo root as context — as deploy.yml)
-        run: docker build -f backend/Dockerfile -t tg-candidate:pr .
-
-      - name: In-image smoke — the deploy's own invocation
-        run: ops/tools/candidate_smoke.sh tg-candidate:pr
+      - name: Build and smoke (nothing pushed)
+        id: image
+        uses: ./.github/actions/backend-image
+        with:
+          mode: check
 
       - name: The smoke rejects broken images
+        run: .github/ci/reject-broken-images.sh "${{ steps.image.outputs.image }}"
+
+  verify:
+    name: publish path (verify tag)
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Build, push a candidate, pull it back, smoke it, tag :verify-<sha>
+        id: image
+        uses: ./.github/actions/backend-image
+        with:
+          mode: verify
+
+      - name: The smoke rejects broken images
+        run: .github/ci/reject-broken-images.sh "${{ steps.image.outputs.image }}"
+
+      # What the production host does: no credentials at all. The registry's
+      # token endpoint hands anyone a pull token for a public package; for a
+      # private one it answers 403.
+      - name: Anonymous pull works (public package)
+        env:
+          REPO: khaledsabae/tutor-guardian-backend
+          DIGEST: ${{ steps.image.outputs.digest }}
         run: |
           set -uo pipefail
-          # name · the step the smoke must stop at · how the image is broken
-          # Broken as root (the HF cache's parent dir is root's), then run as
-          # appuser like the real image.
-          sabotage() {
-            if ! printf 'FROM tg-candidate:pr\nUSER root\nRUN %s\nUSER appuser\n' "$3" \
-                | docker build -q -t "tg-broken:$1" - >/dev/null; then
-              echo "::error::could not build the sabotaged image $1"
-              return 1
-            fi
-            if out=$(ops/tools/candidate_smoke.sh "tg-broken:$1" 2>&1); then
-              echo "::error::the smoke PASSED an image with $1 — it would have deployed it"
-              return 1
-            fi
-            if ! grep -q "candidate smoke FAILED — $2" <<<"$out"; then
-              tail -n 25 <<<"$out"
-              echo "::error::the smoke rejected $1, but not at '$2'"
-              return 1
-            fi
-            echo "✓ $1: rejected — $(grep -m1 'candidate smoke FAILED' <<<"$out" | cut -c1-160)"
-          }
-          rc=0
-          sabotage missing-router imports 'rm /app/backend/app/routers/health.py' || rc=1
-          sabotage missing-models models 'rm -rf /app/.cache/huggingface' || rc=1
-          sabotage boot-failure server 'rm /app/backend/guardrails/child_surface.v1.yaml' || rc=1
-          exit $rc
+          code=$(curl -s -o /tmp/anon.json -w '%{http_code}' "https://ghcr.io/token?scope=repository:$REPO:pull&service=ghcr.io")
+          if [ "$code" != 200 ]; then
+            echo "::warning::GHCR refuses anonymous pulls of $REPO (HTTP $code) — the package is private. One-time fix: https://github.com/users/khaledsabae/packages/container/tutor-guardian-backend/settings → Danger Zone → Change visibility → Public."
+            exit 0
+          fi
+          # The anonymous token goes through a header file, not the command line.
+          python3 -c 'import json; print("Authorization: Bearer " + json.load(open("/tmp/anon.json"))["token"])' > /tmp/anon.hdr
+          code=$(curl -s -o /dev/null -w '%{http_code}' -H @/tmp/anon.hdr \
+            -H 'Accept: application/vnd.oci.image.manifest.v1+json, application/vnd.docker.distribution.manifest.v2+json' \
+            "https://ghcr.io/v2/$REPO/manifests/$DIGEST")
+          rm -f /tmp/anon.hdr /tmp/anon.json
+          echo "anonymous manifest fetch of $DIGEST: HTTP $code"
+          [ "$code" = 200 ] || echo "::warning::anonymous manifest fetch failed (HTTP $code)"

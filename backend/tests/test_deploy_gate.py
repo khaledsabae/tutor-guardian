@@ -7,6 +7,7 @@ backend.yml's push filter matched — a rename or a narrowed filter in one file
 would quietly turn every deploy red, or leave a merge with nothing to wait for.
 """
 import importlib.util
+import re
 import sys
 from pathlib import Path
 
@@ -134,10 +135,31 @@ def test_main_runs_of_the_tests_are_never_cancelled():
 def test_production_jobs_wait_for_the_gate_and_never_cancel_a_deploy():
     deploy = _workflow("deploy.yml")
     assert deploy["concurrency"] == {"group": "deploy-production", "cancel-in-progress": False}
-    assert deploy["jobs"]["deploy"]["needs"] == "gate"
-    gate_job = deploy["jobs"]["gate"]
-    assert gate_job["runs-on"] == "ubuntu-latest"  # never holds the production runner
-    assert any("ops/tools/deploy_gate.py" in step.get("run", "") for step in gate_job["steps"])
+    jobs = deploy["jobs"]
+    assert set(jobs["deploy"]["needs"]) == {"gate", "image"}
+    assert jobs["image"]["needs"] == "gate"
+    for hosted in ("gate", "image"):  # neither holds the production runner
+        assert jobs[hosted]["runs-on"] == "ubuntu-latest", hosted
+    assert any("ops/tools/deploy_gate.py" in step.get("run", "") for step in jobs["gate"]["steps"])
+
+
+@repo_files
+def test_the_production_host_builds_and_tests_nothing():
+    # 2026-10-04: a cached image build on the CPU-throttled host took 44 min and
+    # was cancelled. It pulls the image the hosted `image` job smoked — by digest.
+    deploy = _workflow("deploy.yml")
+    for job_id, job in deploy["jobs"].items():
+        if "self-hosted" not in str(job["runs-on"]):
+            continue
+        script = "\n".join(step.get("run", "") for step in job["steps"])
+        uses = " ".join(str(step.get("uses", "")) for step in job["steps"])
+        for heavy in (r"\bdocker build\b", r"\bbuildx build\b", r"\bcompose(\s+-f\s+\S+)*\s+build\b",
+                      r"\bpytest\b", r"candidate_smoke"):
+            assert not re.search(heavy, script), (job_id, heavy)
+        assert "actions/checkout" not in uses, job_id
+    pull = "\n".join(step.get("run", "") for step in deploy["jobs"]["deploy"]["steps"])
+    assert 'docker pull "$IMAGE@$DIGEST"' in pull
+    assert deploy["jobs"]["deploy"]["env"]["DIGEST"] == "${{ needs.image.outputs.digest }}"
 
 
 @repo_files

@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
-"""Fast smoke of a candidate backend image — the deploy's in-image gate.
+"""Fast smoke of a candidate backend image — the in-image gate of every deploy.
 
-The full suite no longer runs here. It runs on GitHub-hosted runners
-("Backend tests", pytest + KB integrity + ruff) and deploy.yml will not start
-until those passed for the exact commit being deployed. Inside the image, on
-the production host, the question is narrower: *is this image sound?* — and it
-has to be answered in about a CPU-minute, because the host serves live sites.
-(The full suite in the image cost 16-28 minutes per deploy on 2026-10-04, and
-a cancelled deploy's copy kept running for over an hour afterwards.)
+The full suite does not run in the image. It runs on GitHub-hosted runners
+("Backend tests", pytest + KB integrity + ruff) and deploy.yml will not build
+until those passed for the exact commit being deployed. Inside the image the
+question is narrower: *is this image sound?* — answered in about 20 CPU-seconds,
+on a GitHub-hosted runner, before the image is published; the production host
+only pulls what passed. (The full suite in the image, on the production host,
+cost 16-28 minutes per deploy on 2026-10-04.)
 
 Run inside the candidate image (ops/tools/candidate_smoke.sh does that):
   1. imports    — app.main imports every router, so a missing module or a bad

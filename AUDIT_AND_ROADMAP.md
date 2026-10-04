@@ -114,9 +114,9 @@ A newborn-health question getting a fiqh reply is a patient-safety problem. The 
   The workflows also declare `permissions: contents: read`.
   Point 3 (the settings toggle) is still advised as defence in depth.
 - **Follow-up (2026-10-04):** points 1 and 2 are now in place. Every job in `backend.yml` and `flutter.yml`
-  runs on `ubuntu-latest`, `main` included; `deploy.yml`'s build/restart job (and its alert) is the only
-  user of the `production` runner, and it starts only after a GitHub-hosted gate saw this commit's
-  pytest, KB integrity and ruff pass. `docker.yml` (disabled) still names the runner. The fork guard
+  runs on `ubuntu-latest`, `main` included; `deploy.yml`'s pull/restart job (and its alert) is the only
+  user of the `production` runner. It starts only after a GitHub-hosted gate saw this commit's pytest,
+  KB integrity and ruff pass, and it pulls an image built and smoked on GitHub-hosted runners (GHCR). `docker.yml` (disabled) still names the runner. The fork guard
   stays, though it no longer protects the VPS. Point 3 is still open: the fork-PR approval policy reads `first_time_contributors`, so a returning outside
   contributor's PR — which can edit the workflow file itself, guard included — runs without approval.
 
