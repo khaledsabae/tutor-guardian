@@ -30,35 +30,26 @@
   "translated_from": "isl-034b141a",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "term_error",
-        "field": "title",
-        "arabic": "أساسيات التربية بالرفق والحكمة",
-        "english": "Foundations of Tarbiyah with Rifq and Wisdom",
-        "why": "Rifq is transliterated while Hikmah is translated as Wisdom, creating inconsistent treatment of Arabic/Islamic terms; Tarbiyah and Rifq are transliterated but Hikmah is not.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "والحرص على توجيه الأبناء نحو الخير",
-        "english": "while guiding their children toward goodness",
-        "why": "The Arabic presents keenness/diligence in guiding as an additional recommended action (والحرص على...), but the English turns it into a subordinate 'while' clause and drops the sense of eagerness/keenness.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "الضرب المبرح",
-        "english": "harsh beating",
-        "why": "مبرح means severe/excruciating, but 'harsh' is weaker and does not convey the intensity of the Arabic.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "a8587aa8ea7e1d337ac35a21f7c1eb625c4b2d74f00bf37b6e6c1accfad22092",
+      "reviewed_at": "2026-10-04T16:52:31+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T16:52:31+00:00"
   }
 }

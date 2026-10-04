@@ -11,7 +11,7 @@
   "reference_type": "تقرير_طبي",
   "reference_info": "NIMH — Attention-Deficit/Hyperactivity Disorder: What You Need to Know (2024)",
   "text_original": "Attention-Deficit/ Hyperactivity Disorder: What You Need to Know Attention-deficit/hyperactivity disorder (ADHD) is a developmental disorder marked by persistent symptoms of inattention, hyperactivity, and impulsivity. Some people mostly have symptoms of inattention. Others mostly have symptoms of hyperactivity and impulsivity. Some people have both types of symptoms. Symptoms begin in childhood and can interfere with daily life, including social relationships and school or work performance. ADHD is well-known among children and teens, but many adults also have the disorder. Effective treatments are available to manage symptoms. What are the symptoms of ADHD? People with ADHD may experience an ongoing pattern of: ► Inattention: Difficulty paying attention ► Hyperactivity: Showing too much energy or moving and talking too much ► Impulsivity: Acting without thinking or having difficulty with self-control Signs of inattention can include frequent difficulty with: ► Paying attention to details, leading to careless mistakes at school, work, or during other activities ► Concentrating on tasks or activities, for instance, while having conversations, taking tests, completing assignments, or reading papers ► Listening when spoken to directly ► Following instructions or finishing tasks at school, work, or home ► Organizing tasks and activities, managing time, and meeting deadlines ► Completing tasks that require sustained attention, such as homework, large projects, and complicated forms ► Losing things, such as backpacks, books, keys, wallets, and phones ► Getting easily distracted by unrelated thoughts or stimuli ► Forgetting about daily activities, such as chores, errands, and events, or other important things, like assignments, appointments, and",
-  "text_simplified": "ADHD is a psychological disorder that includes signs such as low attention, hyperactivity, and exhaustion. It can affect performance in school or work and their social relationships.",
+  "text_simplified": "ADHD is a psychological disorder that includes signs such as low attention, hyperactivity, and impulsivity. It can affect performance in school or work and their social relationships.",
   "labels": [
     "اضطراب نشاط",
     "اضطراب انتباه",
@@ -28,10 +28,40 @@
   "translated_from": "med-8b8522f6",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": false,
-    "review_verdict": "clean",
-    "review_defects": [],
-    "approved_by": null
+    "review_verdict": "low_only",
+    "review_defects": [
+      {
+        "model": "glm-5.2",
+        "field": "text_simplified",
+        "type": "medical",
+        "why": "ADHD is classified as a neurodevelopmental disorder, not a psychological disorder; the Arabic source misclassifies it."
+      }
+    ],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "ffef7d0aa84e8d6e357572c849d2bb7da7b201116c882c57a436f9decc88c2c1",
+      "reviewed_at": "2026-10-04T16:52:31+00:00",
+      "residual_low": [
+        {
+          "model": "glm-5.2",
+          "field": "text_simplified",
+          "type": "medical",
+          "why": "ADHD is classified as a neurodevelopmental disorder, not a psychological disorder; the Arabic source misclassifies it."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T16:52:31+00:00"
   }
 }

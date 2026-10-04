@@ -30,27 +30,26 @@
   "translated_from": "aqe-d34c31d5",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "term_error",
-        "field": "text_simplified",
-        "arabic": "القدر",
-        "english": "al-qadr",
-        "why": "The definite article 'al-' is transliterated as part of the term, but standard Islamic English uses 'qadar' or 'qadr' without the article, consistent with 'iman' not 'al-iman'.",
-        "severity": "low"
-      },
-      {
-        "type": "register",
-        "field": "text_simplified",
-        "arabic": "مع الإشارة بأصابع اليد",
-        "english": "pointing with the fingers of the hand",
-        "why": "The English is stiff and redundant; 'the fingers of the hand' is literal and unnatural, whereas the Arabic is simple and direct.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "86f938ab8be8cb9fd5e082b7ead13887e4bb5b4a9cfb0eba4cec1b5e955353b1",
+      "reviewed_at": "2026-10-04T16:52:31+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T16:52:31+00:00"
   }
 }

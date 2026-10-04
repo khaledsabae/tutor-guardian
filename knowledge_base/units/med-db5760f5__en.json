@@ -8,7 +8,7 @@
   "reference_type": "تقرير_طبي",
   "reference_info": "NIMH/Mental Health Guide — التبول اللاإرادي",
   "text_original": "",
-  "text_simplified": "The issue of involuntary urination (bedwetting) may appear in children aged 4–6 years, where a child may lose control over the urination process. This problem can occur due to various reasons, such as anxiety or changes in daily routine.",
+  "text_simplified": "The issue of involuntary urination may appear in children aged 4–6 years, where a child may lose control over the urination process. This problem can occur due to various reasons, such as anxiety or changes in daily routine.",
   "labels": [
     "تغذية صحية",
     "نظام نوم ثابت",
@@ -29,35 +29,26 @@
   "translated_from": "med-db5760f5",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "تظهر مشكلة التبول اللاإرادي عند الأطفال في سن 4-6 سنوات",
-        "english": "The issue of involuntary urination (bedwetting) may appear in children aged 4–6 years",
-        "why": "The Arabic states the problem appears as a fact (تظهر), while the English adds 'may', changing the certainty to possibility.",
-        "severity": "medium"
-      },
-      {
-        "type": "meaning_change",
-        "field": "title",
-        "arabic": "تبطيل التبول عند الأطفال من سن 4-6 سنوات",
-        "english": "Eliminating Involuntary Urination in Children Aged 4–6 Years",
-        "why": "The Arabic title says 'urination' without the qualifier 'involuntary'; the English adds 'Involuntary', which is not present in the source title.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "التبول اللاإرادي",
-        "english": "involuntary urination (bedwetting)",
-        "why": "The English adds the parenthetical 'bedwetting', which narrows the meaning beyond the Arabic term 'involuntary urination'.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "75abacea1e2cde0c8f6699e4e5e53abd968d43d918b89f5f2e879ea3a71f8ae7",
+      "reviewed_at": "2026-10-04T16:52:31+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T16:52:31+00:00"
   }
 }

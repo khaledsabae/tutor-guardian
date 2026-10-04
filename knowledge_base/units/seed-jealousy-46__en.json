@@ -30,19 +30,26 @@
   "translated_from": "seed-jealousy-46",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "title",
-        "arabic": "غيرة الطفل من أخيه الجديد في عمر أربعة إلى ستة",
-        "english": "Child’s Jealousy of the New Sibling at Ages Four to Six",
-        "why": "The Arabic specifies 'أخيه الجديد' (his new brother), using the masculine singular possessive. The English broadens this to 'the New Sibling', which is gender-neutral and drops the possessive 'his'. This changes the meaning from a specific new brother to any new sibling.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "a93d0348f0a45ec31157d1533154368aa579f17b9850080364284112f7f23934",
+      "reviewed_at": "2026-10-04T16:52:31+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T16:52:31+00:00"
   }
 }

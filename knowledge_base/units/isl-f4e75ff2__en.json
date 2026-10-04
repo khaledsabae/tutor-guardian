@@ -30,22 +30,43 @@
   "translated_from": "isl-f4e75ff2",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
+    "review_verdict": "low_only",
     "review_defects": [
       {
-        "type": "meaning_change",
+        "model": "glm-5.2",
         "field": "text_simplified",
-        "arabic": "ويذكر أن الإسلام جعل التأديب بالضرب غير مبرح وفي حدود معينة.",
-        "english": "It mentions that Islam has made discipline through non-severe striking permissible within certain limits.",
-        "why": "The Arabic 'جعل التأديب بالضرب غير مبرح وفي حدود معينة' means 'made discipline by striking non-severe and within certain limits' without explicitly stating permissibility. The English adds 'permissible', which is an interpretive addition not present in the source.",
-        "severity": "medium"
+        "type": "leakage",
+        "why": "«المربّي» is translated as the transliterated proper noun \"Almorabbi\" without explanation, which may confuse readers unfamiliar with the term."
       }
     ],
-    "approved_by": null,
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
     "manual_fix_note": "2026-10-04 PR #27 review: reports what the source says; app stance in its own sentence",
     "fixed_at": "2026-10-04T12:34:44.900780+00:00",
-    "fixer_model": "claude-opus-5.5"
+    "fixer_model": "claude-opus-5.5",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "d29e6fe3dd34398f10fdacf4ec88b2d81d3e446d5dda93a07e921e99128df928",
+      "reviewed_at": "2026-10-04T16:52:31+00:00",
+      "residual_low": [
+        {
+          "model": "glm-5.2",
+          "field": "text_simplified",
+          "type": "leakage",
+          "why": "«المربّي» is translated as the transliterated proper noun \"Almorabbi\" without explanation, which may confuse readers unfamiliar with the term."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T16:52:31+00:00"
   }
 }

@@ -30,19 +30,52 @@
   "translated_from": "aqe-b1e103fc",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
+    "review_verdict": "low_only",
     "review_defects": [
       {
-        "type": "religious_error",
+        "model": "deepseek-v4-pro",
         "field": "text_simplified",
-        "arabic": "وقال النبي ﷺ: «من مات وهو يعلم أن لا إله إلا الله دخل الجنة».",
-        "english": "The Prophet ﷺ said: 'Whoever dies knowing that there is no god but Allah will enter Paradise.' (Narrated by al-Bukhari).",
-        "why": "The English adds a source attribution not present in the Arabic, and the attribution is incorrect: this hadith is narrated by Muslim, not al-Bukhari.",
-        "severity": "high"
+        "type": "quran",
+        "why": "The Qur'anic ayah is placed inside «» instead of the required ﴿﴾ in the English field."
+      },
+      {
+        "model": "glm-5.2",
+        "field": "text_simplified",
+        "type": "quran",
+        "why": "The Qur'anic ayah is enclosed in guillemets «» rather than the required ﴿﴾ brackets."
       }
     ],
-    "approved_by": null
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "aadf13e683cf0bd99d6a1bc75371c46c5bab4c19c5598adbf1ee83f323eb68ff",
+      "reviewed_at": "2026-10-04T16:52:31+00:00",
+      "residual_low": [
+        {
+          "model": "deepseek-v4-pro",
+          "field": "text_simplified",
+          "type": "quran",
+          "why": "The Qur'anic ayah is placed inside «» instead of the required ﴿﴾ in the English field."
+        },
+        {
+          "model": "glm-5.2",
+          "field": "text_simplified",
+          "type": "quran",
+          "why": "The Qur'anic ayah is enclosed in guillemets «» rather than the required ﴿﴾ brackets."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T16:52:31+00:00"
   }
 }

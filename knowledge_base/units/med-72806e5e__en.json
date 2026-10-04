@@ -11,7 +11,7 @@
   "reference_type": "تقرير_طبي",
   "reference_info": "NIMH — Disruptive Mood Dysregulation Disorder: The Basics",
   "text_original": "developing anxiety and depression in the future. sports. If you think your child has DMDD, seeking a diagnosis and treatment is essential. DMDD can be treated. If you are concerned that your child may have DMDD, talk to your child’s pediatrician or health care provider. Did you know? What is the difference between typical and severe irritability? DMDD was added to the Diagnostic and Statistical Manual of Mental Disorders (DSM-5) All children can become irritable sometimes. in 2013. The DSM is used to assess and diagnose It’s a normal reaction to frustration. Children mental disorders. For more information on DMDD, experiencing severe irritability (as observed in visit www.nimh.nih.gov/dmdd. DMDD) have difficulty tolerating frustration and have outbursts that are out of proportion to the What are the signs and symptoms situation at hand. These outbursts occur more often and are more severe than expected for children their age. For example, a parent tells the child to stop Children or adolescents with DMDD experience: playing a game and do their homework. Any • Severe temper outbursts (verbal or behavioral), on child might be frustrated or annoyed. But a child average, 3 or more times per week with DMDD may become extremely upset and • Outbursts and tantrums that have been happening emotional and have an intense temper outburst regularly for at least 12 months with yelling or hitting. A child with DMDD • Chronically irritable or angry mood most of the day, experiences these intense temper outbursts a nearly every day few",
-  "text_simplified": "Parents must ensure the diagnosis and treatment of depressive disorder if symptoms of anxiety and depression appear in the future. Depressive disorder can be treated.",
+  "text_simplified": "Parents should make sure that disruptive mood dysregulation disorder (DMDD) is diagnosed and treated, because children who have it are at risk of developing anxiety and depression later on. This disorder can be treated.",
   "labels": [
     "قلق",
     " depession",
@@ -28,19 +28,26 @@
   "translated_from": "med-72806e5e",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "اضطراب دمداي",
-        "english": "depressive disorder",
-        "why": "The Arabic 'اضطراب دمداي' refers to DMDD (disruptive mood dysregulation disorder), not depressive disorder. The translation changes the diagnosis, which is clinically significant.",
-        "severity": "high"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "b2e28e05ae6a2c758eaf2d429328d485b531d37bd891f9019d002fff8a5c508c",
+      "reviewed_at": "2026-10-04T16:52:31+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T16:52:31+00:00"
   }
 }
