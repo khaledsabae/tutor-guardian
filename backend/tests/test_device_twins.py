@@ -6,6 +6,7 @@ The shape every test builds is the one production has: the family's device U
 twin H (the headless engine), born within seconds, both registered with the
 install's one FCM token. See app/services/device_twins.py.
 """
+import logging
 import sqlite3
 from pathlib import Path
 
@@ -235,6 +236,70 @@ def test_the_fold_is_remembered_and_older_aliases_follow(client):
     with _db() as conn:
         rows = dict(conn.execute("SELECT alias, canonical FROM device_aliases").fetchall())
     assert rows == {"H": "U", "older": "U"}
+
+
+# ── an id the API refuses (stored before SessionCreate validated it) ──────
+# Production, 2026-10-04: one id with spaces (seven children, used today) and
+# two of keystore garbage (mostly U+FFFD). Each is refused with 422 at every
+# mint. The app now checks its own id against the same rule and claims a fresh
+# one, still sending its device proof.
+
+SPACED = "abcd efgh ijkl mnop"
+GARBAGE = "\ufffd\ufffdk\ufffd9 \ufffd-\ufffd\ufffd"
+
+
+def test_a_family_on_a_refused_id_moves_to_the_apps_new_id(client):
+    t_s = _born(SPACED)          # the store, like the API before validation
+    _child(SPACED, "Yusuf")
+    _push(SPACED)
+    r = client.post("/api/chat/sessions", headers=_bearer(t_s),
+                    json={"device_id": "0b5c2f6e-1d2a-4c3b-9f8e-7a6b5c4d3e2f"})
+    assert r.status_code == 201
+    assert r.json()["device_id"] == "0b5c2f6e-1d2a-4c3b-9f8e-7a6b5c4d3e2f"
+    assert _children(client, r.json()["token"]) == ["Yusuf"]
+    assert store.validate_token(t_s)["device_id"] == "0b5c2f6e-1d2a-4c3b-9f8e-7a6b5c4d3e2f"
+    assert _rows_of(SPACED) == {}
+    with _db() as conn:
+        assert conn.execute("SELECT canonical FROM device_aliases WHERE alias = ?",
+                            (SPACED,)).fetchone()[0] == "0b5c2f6e-1d2a-4c3b-9f8e-7a6b5c4d3e2f"
+
+
+def test_a_refused_id_cannot_move_onto_a_device_that_exists(client):
+    t_s = _born(SPACED)
+    _child(SPACED, "Yusuf")
+    _born("someone-else", "2026-09-01 08:00:00")
+    _child("someone-else", "Other")
+    r = client.post("/api/chat/sessions", headers=_bearer(t_s), json={"device_id": "someone-else"})
+    assert r.status_code == 403
+    assert _rows_of(SPACED)
+    with _db() as conn:
+        names = [n for (n,) in conn.execute(
+            "SELECT name FROM child_profiles WHERE device_id = 'someone-else'")]
+    assert names == ["Other"]
+
+
+def test_a_valid_proof_still_cannot_claim_a_brand_new_id(client):
+    # Only a refused id may move; for a valid one audit H5 is unchanged.
+    t_a = _born("valid-device-A")
+    r = client.post("/api/chat/sessions", headers=_bearer(t_a), json={"device_id": "brand-new-id"})
+    assert r.status_code == 403
+    assert _rows_of("brand-new-id") == {}
+
+
+def test_a_refused_device_id_is_logged_but_never_repeated(client, caplog):
+    with caplog.at_level(logging.WARNING, logger="app.main"):
+        r = client.post("/api/chat/sessions", json={"device_id": GARBAGE})
+        r2 = client.post("/api/chat/sessions", json={"device_id": SPACED})
+    assert r.status_code == 422 and r2.status_code == 422
+    assert r.json()["detail"][0]["loc"][-1] == "device_id"      # FastAPI's own body
+    lines = [rec.getMessage() for rec in caplog.records
+             if "session mint rejected device_id" in rec.getMessage()]
+    assert len(lines) == 2
+    assert "len=10" in lines[0] and "fffd=6" in lines[0] and "space=1" in lines[0]
+    assert "len=19" in lines[1] and "space=3" in lines[1] and "fffd=0" in lines[1]
+    assert GARBAGE not in caplog.text and SPACED not in caplog.text
+    # The tag is stable, so one client retrying six times counts as one.
+    assert lines[0].split("tag=")[1] != lines[1].split("tag=")[1]
 
 
 # ── never across families ─────────────────────────────────────────────────

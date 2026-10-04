@@ -45,8 +45,11 @@ import os
 import sqlite3
 from datetime import datetime
 
-from app.core.log_safety import device_tag
+import re
+
+from app.core.log_safety import describe_rejected_id, device_tag
 from app.db.init_db import ensure_device_aliases_table, get_conn, hash_token
+from app.models.api import DEVICE_ID_MAX_LENGTH, DEVICE_ID_PATTERN
 
 logger = logging.getLogger(__name__)
 
@@ -60,6 +63,30 @@ TWIN_WINDOW_SECONDS = 60
 # time — production has tables the declared schema does not (see
 # fixtures-must-be-copied-not-written in the project notes).
 DEVICE_COLUMNS = ("device_id", "referrer_device", "referred_device")
+
+
+_VALID_ID = re.compile(DEVICE_ID_PATTERN)
+
+
+def is_valid_device_id(device_id: str | None) -> bool:
+    """The rule SessionCreate enforces. Ids stored before it existed (one with
+    spaces and seven children, two of keystore garbage) fail it — and the app
+    holding one is refused on every mint."""
+    return (isinstance(device_id, str) and 0 < len(device_id) <= DEVICE_ID_MAX_LENGTH
+            and _VALID_ID.match(device_id) is not None)
+
+
+def has_footprint(conn: sqlite3.Connection, device_id: str) -> bool:
+    """Whether any row anywhere names this device (or it was folded away)."""
+    for table, col in device_columns(conn):
+        if conn.execute(f'SELECT 1 FROM "{table}" WHERE "{col}" = ? LIMIT 1',
+                        (device_id,)).fetchone():
+            return True
+    try:
+        return conn.execute("SELECT 1 FROM device_aliases WHERE alias = ? OR canonical = ? LIMIT 1",
+                            (device_id, device_id)).fetchone() is not None
+    except sqlite3.OperationalError:
+        return False
 
 
 def session_mint_enforced() -> bool:
@@ -313,6 +340,13 @@ def resolve_mint(claimed: str | None, proof_device: str, *, proof: str) -> str |
 
     A claimed id that was already folded stands for its family device: the app
     in the field still has the twin's id on disk.
+
+    And one more way the two can differ: the proven device's own id is one the
+    API now refuses (stored before SessionCreate validated it — keystore
+    garbage, or spaces), so the app — which checks its id against the same
+    rule — claims a fresh valid one. If that id is brand new (no row anywhere),
+    the proven device moves to it: the caller already holds that device's
+    token, so this is the family keeping its data under a usable name.
     """
     device = proof_device
     claimed = canonical_of(claimed) or claimed
@@ -327,6 +361,13 @@ def resolve_mint(claimed: str | None, proof_device: str, *, proof: str) -> str |
                 elif twin_canonical(conn, claimed, credential=proof) == proof_device:
                     fold_twin(conn, claimed, credential=proof)
                     device = proof_device
+                elif (not is_valid_device_id(proof_device) and is_valid_device_id(claimed)
+                        and not has_footprint(conn, claimed)):
+                    counts = merge_device(conn, proof_device, claimed)
+                    logger.warning("device on a refused id (%s) moved to %s (%s)",
+                                   describe_rejected_id(proof_device), device_tag(claimed),
+                                   ", ".join(f"{k}={v}" for k, v in sorted(counts.items())))
+                    device = claimed
                 else:
                     return None
             finally:
