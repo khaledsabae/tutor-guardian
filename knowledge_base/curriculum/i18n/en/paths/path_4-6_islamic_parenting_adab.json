@@ -21,7 +21,7 @@
   "version": "1.0.0",
   "created_at": "2026-06-08T19:00:00",
   "updated_at": "2026-06-13T00:00:00",
-  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+  "approved_by": null,
   "language": "en",
   "source_language": "ar",
   "translation": {
@@ -33,26 +33,11 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "clean",
+    "review_verdict": "pending",
     "review_defects": [],
-    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "approved_by": null,
     "revalidated_at": "2026-10-04T11:18:19+00:00",
     "fixed_at": "2026-08-13T19:07:42.152776+00:00",
-    "fixer_model": "mistral-large-3:675b",
-    "auto_review": {
-      "reviewers": [
-        "deepseek-v4-pro",
-        "glm-5.2"
-      ],
-      "fixer": null,
-      "rounds": 1,
-      "prompt_version": "dfa8a5f39718",
-      "content_sha256": "fda539f5dce9aafc348df5a7639c66698327bf3e08b4dff9f590724329da98e7",
-      "reviewed_at": "2026-10-04T11:18:19+00:00",
-      "residual_low": [],
-      "adjudicated": [],
-      "tool": "ops/tools/review_en_parity.py",
-      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
-    }
+    "fixer_model": "mistral-large-3:675b"
   }
 }

@@ -32,26 +32,11 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "clean",
+    "review_verdict": "pending",
     "review_defects": [],
-    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "approved_by": null,
     "revalidated_at": "2026-10-04T11:18:19+00:00",
     "fixed_at": "2026-08-13T19:07:50.186106+00:00",
-    "fixer_model": "mistral-large-3:675b",
-    "auto_review": {
-      "reviewers": [
-        "deepseek-v4-pro",
-        "glm-5.2"
-      ],
-      "fixer": null,
-      "rounds": 1,
-      "prompt_version": "dfa8a5f39718",
-      "content_sha256": "1ab28fd6e51480059a26bfbd8e54d8bb1a7af5d0eab907317b84a4dc312c5938",
-      "reviewed_at": "2026-10-04T11:18:19+00:00",
-      "residual_low": [],
-      "adjudicated": [],
-      "tool": "ops/tools/review_en_parity.py",
-      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
-    }
+    "fixer_model": "mistral-large-3:675b"
   }
 }
