@@ -11,10 +11,29 @@ appId: com.alsaba.almorabbi
 - extendedWaitUntil:
     visible: '${output.t.editChildTitle}'
     timeout: 20000
-# The name field holds the default name; tapping its centre puts the caret after it.
-- tapOn: '${output.t.onbDefaultChildName}'
+# The field holds the default name. eraseText is backspace, so the caret must
+# sit after the name: tap the field's far end side, away from the text — left in
+# Arabic, right in English. (A centre tap left «ي» behind: run 3 stored
+# 'E2E-Maestroي'.)
+- runFlow:
+    when:
+      true: "${UI_LANG == 'en'}"
+    commands:
+      - tapOn:
+          text: '${output.t.onbDefaultChildName}'
+          point: 95%,50%
+- runFlow:
+    when:
+      true: "${UI_LANG != 'en'}"
+    commands:
+      - tapOn:
+          text: '${output.t.onbDefaultChildName}'
+          point: 5%,50%
 - eraseText: 40
 - inputText: '${CHILD_NAME}'
+# Exact match — a leftover letter of the default name fails here, not in the
+# exclusion query.
+- assertVisible: '${CHILD_NAME}'
 - takeScreenshot: mark_child_1_edit
 # The app-bar Save: the bottom "Save changes" button can sit under the keyboard.
 - tapOn: '${output.t.save}'

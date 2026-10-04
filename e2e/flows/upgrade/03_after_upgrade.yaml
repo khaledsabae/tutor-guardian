@@ -1,7 +1,8 @@
-# Upgrade test, part 2 — the PR head installed over the baseline (data kept):
-# it opens, still knows the child, keeps the language, and Today renders.
+# Upgrade test — the PR head installed over the baseline (`install -r`, data
+# kept): it opens in the language the parent chose and Today renders. Whether
+# it is still the same family is checkpoint 04.
 appId: com.alsaba.almorabbi
-name: upgrade/02 after upgrade → same child → Today
+name: upgrade/03 after upgrade → Today renders
 ---
 - runScript: ../common/l10n.js
 - launchApp:
@@ -14,5 +15,6 @@ name: upgrade/02 after upgrade → same child → Today
 - runFlow:
     file: ../common/assert_today.yaml
     env:
-      SHOT: upgrade_2_after_upgrade_today
+      SHOT: upgrade_3_after_upgrade_today
+      NEED_CHILD: "false"
 - assertVisible: '(?s)${output.en.navToday}(?:\s.*)?'

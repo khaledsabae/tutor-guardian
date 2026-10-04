@@ -282,8 +282,13 @@ def cmd_summary(args: argparse.Namespace) -> int:
         md += [meta.read_text(encoding="utf-8").strip(), ""]
     md += ["| lineage | checkpoint | result | seconds |", "|---|---|---|---|"]
     icon = {"0": "✅ pass", "skip": "⏭️ skipped"}
-    for lineage, name, rc, secs, *_ in rows:
-        md.append(f"| {lineage} | {name} | {icon.get(rc, '❌ fail (rc=' + rc + ')')} | {secs} |")
+    for lineage, name, rc, secs, *rest in rows:
+        note = rest[0] if rest else ""
+        if note == "informational":
+            result = "✅ pass" if rc == "0" else f"⚠️ fail (informational, rc={rc})"
+        else:
+            result = icon.get(rc, f"❌ fail (rc={rc})") + (f" — {note}" if note else "")
+        md.append(f"| {lineage} | {name} | {result} | {secs} |")
     onboarding = [r for r in rows if r[1].startswith("01_") and r[2] not in ("0", "skip")]
     if onboarding:
         md += ["", "⚠️ Onboarding failed in: " + ", ".join(r[0] for r in onboarding)

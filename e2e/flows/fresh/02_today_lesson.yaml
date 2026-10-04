@@ -4,8 +4,7 @@ appId: com.alsaba.almorabbi
 name: fresh/02 Today → first lesson → back
 ---
 - runScript: ../common/l10n.js
-- launchApp
-- runFlow: ../common/system_dialogs.yaml
+- runFlow: ../common/home.yaml
 - runFlow:
     file: ../common/assert_today.yaml
     env:

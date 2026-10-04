@@ -1,11 +1,10 @@
-# Checkpoint 6 — switch the app to dark (Settings → Appearance cycles
+# Checkpoint 5 — switch the app to dark (Settings → Appearance cycles
 # system → light → dark) and render Today in it.
 appId: com.alsaba.almorabbi
-name: fresh/06 dark mode
+name: fresh/05 dark mode
 ---
 - runScript: ../common/l10n.js
-- launchApp
-- runFlow: ../common/system_dialogs.yaml
+- runFlow: ../common/home.yaml
 - runFlow: ../common/open_settings.yaml
 - scrollUntilVisible:
     element:

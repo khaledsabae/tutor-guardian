@@ -1,0 +1,11 @@
+# Upgrade test — the upgraded app still has the child the baseline created.
+# Only run when the baseline itself kept it across a restart (02).
+appId: com.alsaba.almorabbi
+name: upgrade/04 upgrade keeps the child
+---
+- runScript: ../common/l10n.js
+- runFlow: ../common/home.yaml
+- extendedWaitUntil:
+    visible: '(?s).*${CHILD_NAME}.*'
+    timeout: 30000
+- takeScreenshot: upgrade_4_child_kept

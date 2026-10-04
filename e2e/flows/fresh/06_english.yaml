@@ -1,12 +1,11 @@
-# Checkpoint 7 — switch the interface to English (Settings → Language) and walk
+# Checkpoint 6 — switch the interface to English (Settings → Language) and walk
 # the four tabs. The ar/en maps match one language only, so every wait below
 # proves the switch took, not just that the screen rendered.
 appId: com.alsaba.almorabbi
-name: fresh/07 English
+name: fresh/06 English
 ---
 - runScript: ../common/l10n.js
-- launchApp
-- runFlow: ../common/system_dialogs.yaml
+- runFlow: ../common/home.yaml
 - runFlow: ../common/open_settings.yaml
 - scrollUntilVisible:
     element:

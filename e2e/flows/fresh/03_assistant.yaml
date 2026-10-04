@@ -1,16 +1,12 @@
-# Checkpoint 4 — the assistant streams an answer from the production API.
+# Checkpoint 3 — the assistant streams an answer from the production API.
 # The question is fixed and starts with "E2E" so the message itself is
 # excludable (chat_messages.content LIKE 'E2E test%') even without the device join.
 # Env: QUESTION.
 appId: com.alsaba.almorabbi
-name: fresh/04 assistant answers
+name: fresh/03 assistant answers
 ---
 - runScript: ../common/l10n.js
-- launchApp
-- runFlow: ../common/system_dialogs.yaml
-- extendedWaitUntil:
-    visible: '${output.lead.navAssistant}'
-    timeout: 60000
+- runFlow: ../common/home.yaml
 - tapOn: '${output.lead.navAssistant}'
 - tapOn: '${output.t.chatTypeHint}'
 - inputText: '${QUESTION}'

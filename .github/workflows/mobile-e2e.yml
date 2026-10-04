@@ -11,14 +11,18 @@ name: Mobile E2E (emulator)
 # production VPS. Nothing in this workflow runs on Khaled's machine either.
 #
 # ── What it checks (e2e/run.sh, flows in e2e/flows/) ──────────────────────
-# Lineage "fresh" — PR head, fresh install, Arabic UI:
+# Lineage "fresh" — PR head, fresh install, Arabic UI, one process for 01-06:
 #   01 onboarding → child in band 7-9 → Today renders
-#   02 Today → first lesson → back       03 force-stop → cold start → Today
-#   04 assistant streams an answer       05 child mode in → PIN out → cold start
-#   06 dark mode                         07 English → Today/Learn/Assistant/More
-# Lineage "upgrade" — BASELINE build, English onboarding + child, then
-#   `adb install -r` the PR head: it must open, keep the child (and the language)
-#   and render Today; run.sh also checks firstInstallTime survived (in-place).
+#   02 Today → first lesson → back       03 assistant streams an answer
+#   04 child mode in → PIN out           05 dark mode
+#   06 English → Today/Learn/Assistant/More
+#   07 force-stop → cold start → Today renders (no white screen, no spinner,
+#      not stuck in child mode)          08 the child survived that restart
+# Lineage "upgrade" — BASELINE build: 01 English onboarding + child,
+#   02 restart on the baseline (control, informational), then `adb install -r`
+#   the PR head: 03 it opens and Today renders, 04 the child is kept (skipped
+#   when the control shows the baseline already lost it). run.sh also checks
+#   firstInstallTime survived (an in-place upgrade, data kept).
 # Logcat is captured for the whole run; the job fails on a FATAL EXCEPTION or
 # native crash in the app, an ANR, or a Flutter/Dart error (e2e/e2e_tool.py).
 # Selectors are ARB keys (e2e/e2e_tool.py l10n), so copy edits do not break
@@ -35,23 +39,27 @@ name: Mobile E2E (emulator)
 # A manual run can pass any ref as `baseline_ref`.
 #
 # ── Test traffic in PRODUCTION — how to exclude it ──────────────────────
-# A release build talks to https://tg-api.alsaba.cloud. Each run registers
-# exactly two devices (one per lineage), each with exactly one child, renamed
-# seconds after onboarding to the fixed name below:
-#   column  child_profiles.name    value  'E2E-Maestro'
-#   devices SELECT device_id FROM child_profiles WHERE name = 'E2E-Maestro'
-#   any device-keyed table (chat_sessions, lesson_progress, push_tokens,
-#   coach_tips, child_missions, … — every table with device_id):
-#     WHERE device_id NOT IN (SELECT device_id FROM child_profiles WHERE name = 'E2E-Maestro')
-#   child-keyed tables (child_id):
-#     WHERE child_id NOT IN (SELECT id FROM child_profiles WHERE name = 'E2E-Maestro')
-#   the one chat question per run: chat_messages.content LIKE 'E2E test%'
+# A release build talks to https://tg-api.alsaba.cloud. Each lineage creates one
+# child, renamed seconds after onboarding to the fixed name below:
+#   column  child_profiles.name      value  LIKE 'E2E-Maestro%'
+#   devices WITH e2e AS (SELECT device_id FROM child_profiles WHERE name LIKE 'E2E-Maestro%')
+#           SELECT device_id FROM e2e
+#           UNION SELECT device_id FROM push_tokens          -- the install's twin, see below
+#                 WHERE token IN (SELECT token FROM push_tokens WHERE device_id IN (SELECT device_id FROM e2e))
+#   device-keyed tables (every table with device_id): device_id NOT IN (<devices>)
+#   child-keyed tables:  child_id NOT IN (SELECT id FROM child_profiles WHERE name LIKE 'E2E-Maestro%')
+#   the one question per run: chat_messages.content LIKE 'E2E test%'
+# Twins: until the device identity race is fixed, a fresh install mints TWO
+# device ids at first launch (seen in production for ~35% of installs that
+# registered a child in the 30 days to 2026-10-04); the childless one shares the
+# install's FCM token, which is how the rule above catches it. Verified on run
+# 37188547221: the rule returned exactly its 4 devices and nothing else.
+# A run that dies before onboarding leaves only childless devices (a token, an
+# empty chat session, a push token); exclude them by the UTC window printed in
+# the job summary.
 # GA4: run.sh sets `debug.firebase.analytics.app` — events go to DebugView and
 # Firebase excludes them from reports and the BigQuery export.
 # Crashlytics: E2E devices report as model sdk_gphone64_x86_64 (filter it out).
-# If a run dies between onboarding and the rename (a few seconds), that device
-# keeps the default name «طفلي» / «My child»; the run is red at
-# `mark_child` and the job summary says so.
 #
 # ── Signing ──────────────────────────────────────────────────────────────
 # No secrets. One throwaway debug-style keystore per run (password "android")

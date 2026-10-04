@@ -1,0 +1,13 @@
+# Checkpoint 8 — after that cold start the app still is the same family: the
+# child onboarding created is the active child. (Fails when the install has
+# split into two device ids and came back as the childless one — see the
+# workflow header, "device identity race".)
+appId: com.alsaba.almorabbi
+name: fresh/08 child survives the restart
+---
+- runScript: ../common/l10n.js
+- runFlow: ../common/home.yaml
+- extendedWaitUntil:
+    visible: '(?s).*${CHILD_NAME}.*'
+    timeout: 30000
+- takeScreenshot: child_after_restart

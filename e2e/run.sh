@@ -7,10 +7,11 @@
 #   E2E_OUT   dir for everything uploaded as artifacts
 #
 # Two install lineages, each = one device_id + one child named $CHILD_NAME:
-#   fresh    PR head, fresh install, Arabic: the seven checkpoints
-#   upgrade  baseline build, English onboarding → `adb install -r` PR head
-# A failed checkpoint does not stop the next one (each starts with a cold
-# launch), except onboarding, which everything after it needs.
+#   fresh    PR head, fresh install, Arabic: eight checkpoints
+#   upgrade  baseline build, English onboarding → restart (control) →
+#            `adb install -r` PR head
+# A failed checkpoint does not stop the next one (each starts by returning to
+# Today), except onboarding, which everything after it needs.
 set -uo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
@@ -25,6 +26,7 @@ export MAESTRO_CLI_NO_ANALYTICS=1 MAESTRO_CLI_ANALYSIS_NOTIFICATION_DISABLED=tru
 
 mkdir -p "$OUT/logcat" "$OUT/maestro" "$OUT/screens" "$OUT/device"
 : > "$OUT/results.tsv"
+RUN_START_UTC=$(date -u '+%Y-%m-%d %H:%M:%S')
 FAILED=0
 
 say() { echo "[e2e] $*"; }
@@ -59,9 +61,9 @@ l10n_for() { python3 "$E2E/e2e_tool.py" l10n --arb-dir "$APKS/$1/l10n" --out "$F
 
 pkg_field() { adb shell dumpsys package "$PKG" | tr -d '\r' | grep -m1 -oE "$1=[^ ]+( [0-9:]+)?" | cut -d= -f2-; }
 
-run_flow() {  # lineage name file [extra maestro args...]
-  local lineage=$1 name=$2 file=$3 dir start rc
-  shift 3
+run_flow() {  # severity(gate|info) lineage name file [extra maestro args...]
+  local severity=$1 lineage=$2 name=$3 file=$4 dir start rc
+  shift 4
   dir="$OUT/maestro/$lineage/$name"
   mkdir -p "$dir"
   echo "::group::E2E $lineage / $name"
@@ -71,7 +73,8 @@ run_flow() {  # lineage name file [extra maestro args...]
     -e CHILD_NAME="$CHILD_NAME" -e QUESTION="$QUESTION" "$@" "$FLOWS/$file"
   rc=$?
   mark "END $lineage/$name rc=$rc"
-  printf '%s\t%s\t%s\t%s\n' "$lineage" "$name" "$rc" "$(( $(date +%s) - start ))" >> "$OUT/results.tsv"
+  printf '%s\t%s\t%s\t%s\t%s\n' "$lineage" "$name" "$rc" "$(( $(date +%s) - start ))" \
+    "$([ "$severity" = info ] && echo informational)" >> "$OUT/results.tsv"
   # The checkpoint screenshots (takeScreenshot), flattened for browsing; the
   # failure screenshots stay in the per-flow report.
   find "$dir" -path '*takeScreenshot*' -name '*.png' | while read -r png; do
@@ -79,13 +82,17 @@ run_flow() {  # lineage name file [extra maestro args...]
   done
   echo "::endgroup::"
   if [ "$rc" -ne 0 ]; then
-    FAILED=1
-    echo "::error title=E2E $lineage/$name::checkpoint failed (rc=$rc) — see the e2e-maestro-report artifact"
+    if [ "$severity" = info ]; then
+      echo "::warning title=E2E $lineage/$name::informational checkpoint failed (rc=$rc)"
+    else
+      FAILED=1
+      echo "::error title=E2E $lineage/$name::checkpoint failed (rc=$rc) — see the e2e-maestro-report artifact"
+    fi
   fi
   return "$rc"
 }
 
-skip() { printf '%s\t%s\tskip\t0\n' "$1" "$2" >> "$OUT/results.tsv"; }
+skip() { printf '%s\t%s\tskip\t0\t%s\n' "$1" "$2" "${3:-}" >> "$OUT/results.tsv"; }
 
 install_fresh() {  # variant
   adb uninstall "$PKG" >/dev/null 2>&1 || true
@@ -97,19 +104,27 @@ install_fresh() {  # variant
 }
 
 # ── lineage 1: fresh install of the PR head (Arabic) ────────────────────
-FRESH=(02_today_lesson 03_relaunch 04_assistant 05_child_mode 06_dark_mode 07_english)
+# One process from onboarding through 06 (no restarts), so the checkpoints that
+# need the child do not depend on the identity surviving a cold start; 07/08
+# then restart and check exactly that.
+FRESH=(02_today_lesson 03_assistant 04_child_mode 05_dark_mode 06_english 07_cold_start 08_child_survives_restart)
 if install_fresh head && l10n_for head \
-   && run_flow fresh 01_onboarding fresh/01_onboarding.yaml -e UI_LANG=ar; then
+   && run_flow gate fresh 01_onboarding fresh/01_onboarding.yaml -e UI_LANG=ar; then
   for f in "${FRESH[@]}"; do
-    run_flow fresh "$f" "fresh/$f.yaml" -e UI_LANG=ar || true
+    run_flow gate fresh "$f" "fresh/$f.yaml" -e UI_LANG=ar || true
   done
 else
-  for f in "${FRESH[@]}"; do skip fresh "$f"; done
+  for f in "${FRESH[@]}"; do skip fresh "$f" "onboarding failed"; done
 fi
 
 # ── lineage 2: baseline → install -r PR head (English) ──────────────────
+UPGRADE=(02_baseline_restart 03_after_upgrade 04_child_kept)
 if install_fresh baseline && l10n_for baseline \
-   && run_flow upgrade 01_baseline_onboarding upgrade/01_baseline_onboarding.yaml -e UI_LANG=en; then
+   && run_flow gate upgrade 01_baseline_onboarding upgrade/01_baseline_onboarding.yaml -e UI_LANG=en; then
+  # Control: does the baseline keep its own child across a restart? If not, a
+  # missing child after the upgrade is the baseline's doing, not the PR's.
+  baseline_kept=yes
+  run_flow info upgrade 02_baseline_restart upgrade/02_baseline_restart.yaml -e UI_LANG=en || baseline_kept=no
   base_code=$(pkg_field versionCode); base_first=$(pkg_field firstInstallTime)
   if adb install -r "$APKS/head/app.apk"; then
     head_code=$(pkg_field versionCode); head_first=$(pkg_field firstInstallTime)
@@ -121,14 +136,20 @@ if install_fresh baseline && l10n_for baseline \
       FAILED=1
     fi
     l10n_for head
-    run_flow upgrade 02_after_upgrade upgrade/02_after_upgrade.yaml -e UI_LANG=en || true
+    run_flow gate upgrade 03_after_upgrade upgrade/03_after_upgrade.yaml -e UI_LANG=en || true
+    if [ "$baseline_kept" = yes ]; then
+      run_flow gate upgrade 04_child_kept upgrade/04_child_kept.yaml -e UI_LANG=en || true
+    else
+      skip upgrade 04_child_kept "baseline lost its own child on restart (control 02) — not attributable to the upgrade"
+    fi
   else
     echo "::error::adb install -r of the head APK over the baseline failed (signature or downgrade?)"
     FAILED=1
-    skip upgrade 02_after_upgrade
+    skip upgrade 03_after_upgrade "install -r failed"
+    skip upgrade 04_child_kept "install -r failed"
   fi
 else
-  skip upgrade 02_after_upgrade
+  for f in "${UPGRADE[@]}"; do skip upgrade "$f" "baseline onboarding failed"; done
 fi
 
 # ── logcat gate ──────────────────────────────────────────────────────────
@@ -145,7 +166,7 @@ fi
   echo "- head: \`$(cat "$APKS/head/ref.txt" 2>/dev/null)\` · baseline: \`$(cat "$APKS/baseline/ref.txt" 2>/dev/null)\`"
   echo "- device: $(cat "$OUT/device/model.txt" 2>/dev/null), Android $(cat "$OUT/device/android_version.txt" 2>/dev/null)"
   echo "- $(cat "$OUT/device/upgrade.txt" 2>/dev/null || echo 'upgrade: not reached')"
-  echo "- test traffic: child \`$CHILD_NAME\` (one per lineage), question \`$QUESTION\`"
+  echo "- test traffic: child \`$CHILD_NAME\` (one per lineage), question \`$QUESTION\`, UTC window $RUN_START_UTC → $(date -u '+%Y-%m-%d %H:%M:%S')"
 } > "$OUT/meta.md"
 python3 "$E2E/e2e_tool.py" summary "$OUT" || true
 exit "$FAILED"
