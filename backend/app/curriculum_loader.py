@@ -254,6 +254,12 @@ def _translate(item: dict, overlay: dict[str, dict[str, dict]],
     added field it does not know about yet) keeps the Arabic value instead of
     dropping it. Structural fields the app routes on — id, path_id, order —
     always win from the source.
+
+    So do the numbers the app prints as badges: a path's `lesson_ids` (the
+    «N دروس» pill counts them) and `estimated_days`, and a lesson's
+    `estimated_minutes`. The translation is a copy taken on the day it was
+    made; when a path is deepened from 4 lessons to 12, the English copy still
+    says 4, and English readers were shown the stale count over the true one.
     """
     code = _norm_lang(lang)
     if not code:
@@ -262,7 +268,8 @@ def _translate(item: dict, overlay: dict[str, dict[str, dict]],
     if not tr:
         return item
     merged = {**item, **{k: v for k, v in tr.items() if v not in (None, "", [])}}
-    for key in ("id", "path_id", "order", "age_group", "domain", "unit_ids"):
+    for key in ("id", "path_id", "order", "age_group", "domain", "unit_ids",
+                "lesson_ids", "estimated_days", "estimated_minutes"):
         if key in item:
             merged[key] = item[key]
     merged["language"] = code

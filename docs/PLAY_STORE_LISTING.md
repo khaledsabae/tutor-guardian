@@ -35,7 +35,7 @@
 «المربّي الذكي» هو أول مساعد تربية إسلامي بالذكاء الاصطناعي يرافقك من الحمل حتى ١٨ سنة — لا تطبيق نصائح سريع، بل منهج تربوي متكامل تعيشه مع طفلك.
 
 📚 منهج تربوي متكامل لكل مرحلة عمرية
-مسارات تربوية من ٢٨ يومًا لكل فئة عمرية (الحمل–سنة، ٢–٣، ٤–٦، ٧–٩، ١٠–١٢، ١٣–١٥، ١٦–١٨) تغطي:
+مسارات تربوية يومية متدرّجة لكل فئة عمرية (الحمل–سنة، ٢–٣، ٤–٦، ٧–٩، ١٠–١٢، ١٣–١٥، ١٦–١٨) تغطي:
 • التربية الإسلامية وغرس الإيمان والأخلاق النبوية
 • تطور الطفل وسلوكه وعاداته اليومية
 • الأمان الرقمي وإدارة وقت الشاشة
@@ -137,7 +137,7 @@
 「المربّي الذكي」 هو أول مساعد تربية إسلامي بالذكاء الاصطناعي في مصر — يرافق طفلك من الحمل لحد ما يكمل ١٨ سنة.
 
 📚 منهج تربوي متكامل
-مسارات من ٢٨ يومًا لكل مرحلة عمرية — تربية إسلامية، سلوك، عادات، أمان رقمي، وقرآن. كل مسار فيه دروس + بودكاست + فيديو + اختبارات.
+مسارات يومية متدرّجة لكل مرحلة عمرية — تربية إسلامية، سلوك، عادات، أمان رقمي، وقرآن. كل مسار فيه دروس + بودكاست + فيديو + اختبارات.
 
 💬 اسأل وجاوب فورًا
 ابني عنيد؟ طفلي مش بيصلي؟ نوبات غضب؟ بيدوّر على كلام في التيك توك؟
@@ -174,7 +174,7 @@
 「المربّي الذكي» هو أول مساعد تربية إسلامي بالذكاء الاصطناعي — يرافق طفلك من الحمل حتى ١٨ سنة بمنهج متكامل.
 
 📚 منهج تربوي شامل لكل مرحلة عمرية
-مسارات من ٢٨ يومًا تغطي: التربية الإسلامية، الأخلاق النبوية، سلوك الطفل، العادات اليومية، الأمان الرقمي، إدارة وقت الشاشة، وحفظ القرآن.
+مسارات يومية متدرّجة تغطي: التربية الإسلامية، الأخلاق النبوية، سلوك الطفل، العادات اليومية، الأمان الرقمي، إدارة وقت الشاشة، وحفظ القرآن.
 
 💬 مساعد ذكي يجيبك فورًا
 ابنك عنيد؟ ما يصلي؟ نوبات غضب؟ يخاف من النوم؟
@@ -214,7 +214,7 @@ Completely FREE forever — no ads, no subscriptions, no in-app purchases. A cha
 Al-Murabbi is the first AI-powered Islamic parenting assistant that guides you from pregnancy to age 18. Not just tips — a complete curriculum with daily plans, audio lessons, stories, and an AI coach that answers your parenting questions instantly.
 
 📚 COMPLETE PARENTING CURRICULUM
-28-day learning tracks for every age group (0–1, 2–3, 4–6, 7–9, 10–12, 13–15, 16–18) covering:
+Step-by-step daily learning tracks for every age group (0–1, 2–3, 4–6, 7–9, 10–12, 13–15, 16–18) covering:
 • Islamic tarbiyah and building good character (akhlaq)
 • Child development, behavior, and daily habits
 • Digital safety and healthy screen time
@@ -287,7 +287,7 @@ Daily Quran recitation and Islamic supplications for children — all in one pla
 |---|---|---|
 | 1 | **100% FREE forever** | No ads, no subscriptions — ever |
 | 2 | **"My son won't pray" — ask now** | Instant AI answers grounded in Islamic sources |
-| 3 | **Complete curriculum: 0–18 years** | 28-day tracks for every age group |
+| 3 | **Complete curriculum: 0–18 years** | Step-by-step daily tracks for every age group |
 | 4 | **Listen, read, watch, play** | Lessons + podcasts + videos + quizzes |
 | 5 | **Track your child's faith journey** | First prayer, first fast, Quran milestones |
 | 6 | **Daily Quran & Adhkar** | Recitation + supplications for children |
@@ -418,7 +418,7 @@ Completely free — no ads, no subscriptions, ever. Built as a sadaqah jariyah.
 Al-Morabbi is an Islamic parenting companion that walks with you from pregnancy through age 18 — not a tips app, but a curriculum you live alongside your child.
 
 📚 A curriculum for every stage
-28-day guided paths for each age band (pregnancy–1, 2–3, 4–6, 7–9, 10–12, 13–15, 16–18), covering:
+Step-by-step daily guided paths for each age band (pregnancy–1, 2–3, 4–6, 7–9, 10–12, 13–15, 16–18), covering:
 • Islamic upbringing — iman, worship and prophetic character
 • Child development, behaviour and daily habits
 • Digital safety and screen time

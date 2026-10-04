@@ -1,0 +1,42 @@
+{
+  "id": "lesson_7-9_islamic_parenting_worship_07",
+  "path_id": "path_7-9_islamic_parenting_worship",
+  "title": "Five Prayers in Your Child's Day",
+  "age_group": "7-9",
+  "domain": "islamic_parenting",
+  "unit_ids": [
+    "isl-c4d83813",
+    "isl-1bceeaf6"
+  ],
+  "summary": "Five prayers a day may seem a lot to a seven-year-old, but they become easy when they are tied to the rhythm of a day they already know. Children learn through routine: they know when they wake up, when they go to school, when they eat, play and sleep. If you tie each prayer to one of these stations, it becomes a natural part of their day.\n\nDraw a «map of the day» with them: Fajr when they wake for it, before sunrise, Dhuhr at school if possible, or after coming home while its time remains, Asr before playtime, Maghrib at sunset, and Isha before bed. This changes with your country, the season and their school hours; what matters is that they know each prayer has a time to look forward to.\n\nMake the adhan (call to prayer) a family signal: when it is called from the mosque or from an app at home, everyone pauses a little and gets ready. That doesn't mean cutting off their play suddenly; give them a warning a few minutes before: «Five more minutes, then we make wudu for Asr.» A sudden switch from play to prayer creates resistance that isn't needed.\n\nAt this age your child is still in training; if they are late for a prayer or forget it, don't make it a battle — remind them calmly and start again with the next prayer. The aim is for the prayers to become landmarks in their day that they know and expect, so that when they reach puberty they find their day already organised around them, without strain.",
+  "try_this": "Today: Sit with your child for ten minutes and draw together, on a sheet of paper, the «map of their day»: the stations of their day in order, and next to each station the prayer that comes near it. Then hang it where they will see it every day.",
+  "order": 7,
+  "estimated_minutes": 3,
+  "reflection_prompts": [
+    "Which prayer looked hardest for your child on their day map, and what could change in your family's day to make it easier for them?"
+  ],
+  "warning_flags": [],
+  "needs_professional_followup": false,
+  "is_published": true,
+  "version": "1.0.0",
+  "created_at": "2026-10-04T17:13:00",
+  "updated_at": "2026-10-04T17:13:00",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "claude-opus-5-5",
+    "reviewer_model": "glm-5.2",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-10-04T16:22:26",
+    "generated_by": "ops/tools/deepen_paths.py"
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "id": "lesson_7-9_islamic_parenting_worship_05",
+  "path_id": "path_7-9_islamic_parenting_worship",
+  "title": "Age Seven: Beginning the Command to Pray with Rifq (Gentleness)",
+  "age_group": "7-9",
+  "domain": "islamic_parenting",
+  "unit_ids": [
+    "isl-d54fd8e8",
+    "isl-1bceeaf6"
+  ],
+  "summary": "At seven, your child moves from imitating prayer to learning it and getting used to it. Scholars have guided parents to begin at this age by instructing the child to pray — gently and gradually — so that when they reach puberty and prayer becomes obligatory, they are already used to it, rather than meeting it suddenly after puberty.\n\nAmong Luqman's counsel to his son in the Qur'an is a verse about prayer. Allah says: ﴿يَا بُنَيَّ أَقِمِ الصَّلَاةَ وَأْمُرْ بِالْمَعْرُوفِ وَانْهَ عَنِ الْمُنكَرِ وَاصْبِرْ عَلَىٰ مَا أَصَابَكَ﴾ [Surah Luqman, 31:17] Instructing a child in prayer is a long journey that needs patience from you before it needs it from your child, and a gentle, loving call rather than an angry voice.\n\nStart gradually: one or two prayers a day in the first week, such as Maghrib and Isha when you are at home, then add a prayer every week or two according to how ready they are. Remind them with a short, kind word at the adhan (call to prayer): «It's time for Maghrib, come let's pray together», and don't turn the reminder into a lecture or shouting. At this age a child may forget or be lazy, and this is expected; what is required is continuity, not perfection.\n\nMake prayer at home a congregation whenever possible, for praying beside you is dearer to them than praying alone. Praise their commitment specifically: «I liked that you came to pray at the very first call.» And remember that the firmness required is steadiness in reminding, day after day, not harshness; a child who loves prayer when small keeps it when grown.",
+  "try_this": "Today: Choose one prayer when you will be at home, such as Maghrib, and calmly say to your child at the adhan: «Come, let's pray Maghrib together.» Pray it in congregation with them, and after the salam give them one specific sentence of praise about something they did in their prayer.",
+  "order": 5,
+  "estimated_minutes": 3,
+  "reflection_prompts": [
+    "How did your child respond to your invitation to pray today, and what made it easier or harder?"
+  ],
+  "warning_flags": [],
+  "needs_professional_followup": false,
+  "is_published": true,
+  "version": "1.0.0",
+  "created_at": "2026-10-04T17:13:00",
+  "updated_at": "2026-10-04T17:13:00",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "claude-opus-5-5",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": true,
+      "quoted_arabic": true,
+      "reviewer_model": true
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "summary",
+        "quote": "at the adhan (call to prayer)",
+        "why": "The English adds the parenthetical clarification '(call to prayer)' which is not present in the Arabic text. This is an addition not in the source.",
+        "severity": "low",
+        "fix": "Remove '(call to prayer)' or keep only 'adhan' to match the Arabic."
+      },
+      {
+        "type": "term_error",
+        "field": "title",
+        "quote": "Rifq (Gentleness)",
+        "why": "The English title transliterates 'Rifq' while the Arabic title uses the Arabic word 'الرفق' without any transliteration. The instruction flags a transliterated term the Arabic does not contain.",
+        "severity": "low",
+        "fix": "Use only 'Gentleness' in the English title to match the Arabic, or add the transliteration to the Arabic title as well."
+      },
+      {
+        "type": "meaning_change",
+        "field": "summary",
+        "quote": "Instructing a child in prayer",
+        "why": "The Arabic says 'الأمر بالصلاة' which means 'the command to pray' or 'commanding prayer'. The English softens this to 'instructing', which changes the nuance of the religious command.",
+        "severity": "low",
+        "fix": "Use 'commanding prayer' or 'the command to pray' to preserve the Arabic meaning."
+      }
+    ],
+    "approved_by": null,
+    "revalidated_at": "2026-10-04T15:57:17",
+    "generated_by": "ops/tools/deepen_paths.py"
+  }
+}

@@ -1,0 +1,524 @@
+{
+  "topic": "prayer_religion",
+  "demand": "الصلاة والدين — 199 من 1,284 سؤالًا (15.5%)، وتشمل العقيدة وأسئلة الطفل عن الله والموت والحلال والحرام",
+  "paths": [
+    {
+      "path_id": "path_4-6_aqeedah_seeds",
+      "unit_bands": [
+        "4-6",
+        "7-9",
+        "2-3",
+        "unspecified"
+      ],
+      "band_notes": "Ages 4-6: learns through senses, imitation and play; concrete thinking; short attention. Prayer is NOT required at this age — it is imitation and love. Never fear-based; never Hell. Short sentences the parent can say to the child.",
+      "description_replace_ar": [
+        [
+          "مسار 4 دروس قصيرة يعرّف الطفل (4-6) بربّه تعريفاً محبَّباً محسوساً: الله الخالق المنعِم، محبّته ورؤيته، وحبّ النبي ﷺ — بذور العقيدة الأولى.",
+          "مسار دروسٍ يومية قصيرة يعرّف الطفل (4-6) بربّه تعريفًا محبَّبًا محسوسًا: الله الخالق المنعِم، ومحبّته ورؤيته، وحبّ النبي ﷺ، ثم أول الدعاء، وتقليد الصلاة والوضوء، والجواب الهادئ عن أسئلته الكبيرة عن الله والموت والجنة، وأول الحلال والحرام — بذور العقيدة الأولى."
+        ]
+      ],
+      "description_replace_en": [
+        [
+          "A 4-lesson path that introduces the child (ages 4-6) to their Lord in an endearing, tangible way: Allah the Creator, the Bestower, love for Him and His vision, and love for the Prophet ﷺ — the first seeds of aqeedah.",
+          "A path of short daily lessons that introduces the child (ages 4-6) to their Lord in an endearing, tangible way: Allah the Creator and Bestower, His love and His seeing, and love for the Prophet ﷺ — then a first du'a, imitating prayer and wudu, calm answers to big questions about Allah, death and Paradise, and first steps in halal and haram: the first seeds of aqeedah."
+        ]
+      ],
+      "lessons": [
+        {
+          "title": "يسمعني حين أدعوه: أول الدعاء",
+          "focus": "Dua as talking to Allah at any time in the child's own simple words; the parent makes dua aloud in front of the child; a tiny daily dua habit (before sleep or on the way to school).",
+          "keywords": [
+            "الدعاء",
+            "دعاء",
+            "يدعو"
+          ],
+          "bank": [
+            "v_002_186"
+          ]
+        },
+        {
+          "title": "يقلّدك في الصلاة: أول علاقة بسجادة الصلاة",
+          "focus": "At 4-6 the child joins prayer by imitation: standing beside the parent, his own small prayer mat, no correcting mistakes, no obligation, praise for joining. The parent's own prayer is the lesson.",
+          "keywords": [
+            "الصلاة",
+            "صلاة",
+            "القدوة",
+            "يقلد"
+          ],
+          "bank": [
+            "v_014_040"
+          ],
+          "pin_units": [
+            "isl-toddler-prayer",
+            "isl-1bceeaf6"
+          ]
+        },
+        {
+          "title": "الوضوء: ماءٌ ونظافةٌ يحبّها الله",
+          "focus": "Introduce wudu as a joyful cleanliness routine through play and imitation, one or two steps at a time, without demanding precision at this age.",
+          "keywords": [
+            "الوضوء",
+            "الطهارة",
+            "النظافة"
+          ]
+        },
+        {
+          "title": "«أين الله؟» وأسئلة الصغار الكبيرة",
+          "focus": "Welcoming the child's big questions about Allah with calm, short, true answers (Allah is above the heavens, He sees and hears us, He is not like anything we know); it is fine to say «let us ask together»; never mock or silence the question; do not invent answers.",
+          "keywords": [
+            "أسئلة",
+            "العقيدة",
+            "التوحيد"
+          ],
+          "pin_units": [
+            "aqe-ff6b8a27",
+            "aqe-b1e103fc",
+            "isl-a10b175c"
+          ]
+        },
+        {
+          "title": "حين يسأل عن الموت: «أين ذهب جدّي؟»",
+          "focus": "Talking about the death of a relative with a 4-6 year old: honest simple words, avoid euphemisms like 'he travelled' or 'he is asleep' that create fear; the soul returns to Allah; we pray for him; sadness is allowed; reassure the child about his own safety and routine. Mention when grief signs need a specialist.",
+          "keywords": [
+            "الموت",
+            "الوفاة",
+            "الحزن",
+            "الفقد",
+            "اليوم الآخر"
+          ],
+          "pin_units": [
+            "ee765e4d-9efd-413d-9350-d8aa8d59acf7",
+            "aqe-d0f14b8c"
+          ]
+        },
+        {
+          "title": "الجنة: وعدٌ جميل بلا مساومة",
+          "focus": "Describing Paradise lovingly and simply, linking it to good deeds and Allah's mercy, without turning it into a bargain for every chore and without frightening with Hell at this age.",
+          "keywords": [
+            "الجنة",
+            "الآخرة"
+          ],
+          "pin_units": [
+            "aqe-d0f14b8c"
+          ]
+        },
+        {
+          "title": "«يحبّه الله» و«لا يحبّه الله»: أول الحلال والحرام",
+          "focus": "First steps in right and wrong: a few clear rules (honesty, not hurting others, not taking what is not ours), explained with love and a reason; judge the action not the child; no labels like 'bad boy'.",
+          "keywords": [
+            "الحلال",
+            "الحرام",
+            "الصدق",
+            "الأخلاق",
+            "الضمير"
+          ]
+        },
+        {
+          "title": "قصة نبيّ قبل النوم",
+          "focus": "A bedtime habit of short stories of the prophets, told simply and accurately from reliable children's books based on the Qur'an, without invented details, ending with one value the child can live tomorrow.",
+          "keywords": [
+            "قصص",
+            "القصة"
+          ],
+          "pin_units": [
+            "isl-68df90c4",
+            "isl-c8cae71a"
+          ]
+        }
+      ]
+    },
+    {
+      "path_id": "path_7-9_islamic_parenting_worship",
+      "unit_bands": [
+        "7-9",
+        "4-6",
+        "10-12",
+        "unspecified"
+      ],
+      "band_notes": "Ages 7-9: the age at which parents begin instructing the child in prayer, gently and consistently, as a training phase (prayer is not yet obligatory before puberty). Concrete thinking; likes rules, charts and fairness; needs modelling and praise. Never recommend hitting, threats or shaming; never frighten with Hell.",
+      "lessons": [
+        {
+          "title": "السابعة: بداية أمر الصلاة بالرفق",
+          "focus": "Starting to instruct prayer around age seven, as scholars teach parents: begin with one or two prayers, add gradually, daily gentle reminders, patience over months; firmness without anger.",
+          "keywords": [
+            "الصلاة",
+            "السابعة",
+            "تعويد",
+            "تعليم الصلاة"
+          ],
+          "bank": [
+            "v_031_017"
+          ]
+        },
+        {
+          "title": "الوضوء خطوة بخطوة",
+          "focus": "Teaching the steps of wudu practically and in order, by doing it together several times, with a simple picture card; praise effort; correct gently; keep to the agreed basic steps without detailed fiqh disputes.",
+          "keywords": [
+            "الوضوء",
+            "الطهارة"
+          ]
+        },
+        {
+          "title": "خمس صلوات في يوم طفلك",
+          "focus": "Linking the five prayer times to the child's daily routine (waking, after school, before play, at sunset, before sleep), using the adhan as a family signal.",
+          "keywords": [
+            "مواقيت الصلاة",
+            "أوقات الصلاة",
+            "الصلاة",
+            "الروتين"
+          ]
+        },
+        {
+          "title": "حين يقول: «لا أريد أن أصلّي»",
+          "focus": "Handling refusal: understand the reason (tiredness, play, boredom, wanting attention), stay calm, avoid power struggles, offer a choice of when within the prayer time, keep the reminder short, connect prayer to love not fear.",
+          "keywords": [
+            "الصلاة",
+            "رفض",
+            "العناد",
+            "تعويد"
+          ],
+          "bank": [
+            "h_004"
+          ]
+        },
+        {
+          "title": "جدول الصلاة والتشجيع: حافزٌ لا رشوة",
+          "focus": "A simple prayer chart and specific praise; small rewards at the start that fade as the habit forms; warn against tying worship to material prizes only.",
+          "keywords": [
+            "مكافأة",
+            "تشجيع",
+            "تحفيز",
+            "الصلاة"
+          ]
+        },
+        {
+          "title": "الصلاة حديثٌ مع الله: كيف يهدأ فيها",
+          "focus": "Helping a 7-9 year old pray calmly: slowing down, a quiet place, knowing he is speaking to Allah, learning the meanings of what he recites from a trusted children's tafsir book (the lesson itself gives no tafsir).",
+          "keywords": [
+            "الخشوع",
+            "الصلاة",
+            "الطمأنينة"
+          ]
+        },
+        {
+          "title": "إلى المسجد: أول زيارة وآدابها",
+          "focus": "Taking the child to the mosque: preparing him beforehand, simple etiquette, choosing a suitable prayer, staying beside him, making it a happy memory, handling noise without embarrassment.",
+          "keywords": [
+            "المسجد",
+            "الجماعة",
+            "آداب المسجد"
+          ],
+          "pin_units": [
+            "isl-fe625918",
+            "isl-09afb431",
+            "isl-b04140c3"
+          ]
+        },
+        {
+          "title": "حين يفتر الحماس: الاستمرار بعد البداية",
+          "focus": "Keeping the habit after the novelty fades: family prayer at least once a day, patience, not giving up after missed days, travel and school days, renewing motivation.",
+          "keywords": [
+            "الاستمرار",
+            "المداومة",
+            "الصلاة",
+            "الصبر"
+          ],
+          "bank": [
+            "v_020_132"
+          ]
+        }
+      ]
+    },
+    {
+      "path_id": "path_7-9_aqeedah_fundamentals",
+      "unit_bands": [
+        "7-9",
+        "4-6",
+        "10-12",
+        "unspecified"
+      ],
+      "band_notes": "Ages 7-9: concrete reasoning, many 'why' questions. Answers must follow Ahl al-Sunnah, be short and true, and never frighten. No detailed fiqh rulings; for disputed matters tell the parent to ask a trusted scholar.",
+      "description_replace_ar": [
+        [
+          "مسار 10 دروس قصيرة يُعلّم",
+          "مسار دروس قصيرة يُعلّم"
+        ]
+      ],
+      "description_replace_en": [
+        [
+          "A 10-lesson pathway where",
+          "A pathway of short lessons where"
+        ]
+      ],
+      "lessons": [
+        {
+          "title": "«مَن خلق الله؟» حين يسأل السؤال المحيّر",
+          "focus": "When the child asks who created Allah: stay calm, praise the question, explain simply that Allah is the First with nothing before Him and is not like His creation, that everything created needs a Creator but the Creator is not created; teach him to seek refuge in Allah when confusing thoughts come and to come back to you with any question.",
+          "keywords": [
+            "التوحيد",
+            "العقيدة"
+          ],
+          "pin_units": [
+            "aqe-b1e103fc",
+            "isl-a10b175c"
+          ]
+        },
+        {
+          "title": "الحلال والحرام: لماذا نهانا الله؟",
+          "focus": "Explaining that Allah allows the good and forbids what harms us out of mercy; a few clear agreed examples (lying, stealing, hurting others); obeying with understanding; when he asks about a matter people differ on, the answer is «we ask a trustworthy scholar».",
+          "keywords": [
+            "الحلال",
+            "الحرام",
+            "الأخلاق",
+            "الطاعة"
+          ],
+          "pin_units": [
+            "gap-isl-haram-halal-q-01"
+          ]
+        }
+      ]
+    },
+    {
+      "path_id": "path_10-12_islamic_parenting_worship_love",
+      "unit_bands": [
+        "10-12",
+        "7-9",
+        "13-15",
+        "unspecified"
+      ],
+      "band_notes": "Ages 10-12: approaching or entering puberty, when prayer and fasting become obligatory. Firmer follow-up from ten — meaning consistency, clear expectations and dialogue, NEVER hitting or humiliation. Seeks reasons, sensitive to peers and dignity; correct in private.",
+      "lessons": [
+        {
+          "title": "من العاشرة: متابعةٌ حازمة بلا قسوة",
+          "focus": "What firm follow-up of prayer means from age ten: a clear family expectation, daily check-in without interrogation, private conversations, consistent and non-violent consequences, never hitting, insulting or comparing.",
+          "keywords": [
+            "الصلاة",
+            "العاشرة",
+            "المتابعة",
+            "الحزم"
+          ]
+        },
+        {
+          "title": "البلوغ وبداية التكليف: حوارٌ قبل أن يأتي",
+          "focus": "Preparing the child before puberty: that prayer and fasting become his own obligation before Allah, the dignity of responsibility, learning the purity rules related to puberty from a trusted source or scholar; an open, calm conversation with the same-sex parent.",
+          "keywords": [
+            "البلوغ",
+            "التكليف"
+          ],
+          "pin_units": [
+            "isl-898aaacc",
+            "dev-a33dbaaf"
+          ]
+        },
+        {
+          "title": "الصلاة خارج البيت: في المدرسة ومع الأصدقاء",
+          "focus": "Helping him pray at school, at friends' houses and outings: planning, finding a place, confidence when others watch or tease, without arrogance toward those who do not pray.",
+          "keywords": [
+            "الأصدقاء",
+            "المدرسة",
+            "الصلاة",
+            "ضغط الأقران"
+          ]
+        },
+        {
+          "title": "الهاتف والصلاة: حين تسرقه الشاشة",
+          "focus": "When games and phones delay prayer: a family agreement that the adhan pauses screens, the parent models it, consequences agreed in advance, praising when he stops by himself.",
+          "keywords": [
+            "الهاتف",
+            "الشاشة",
+            "الألعاب",
+            "الصلاة"
+          ]
+        },
+        {
+          "title": "صلاة الفجر: النوم المبكر أولًا",
+          "focus": "Fajr starts the night before: earlier bedtime, screens out of the bedroom, an alarm he sets himself, waking him gently, praying together, celebrating success without shaming failure.",
+          "keywords": [
+            "الفجر",
+            "النوم"
+          ],
+          "pin_units": [
+            "36081e1a-c41f-4787-a38c-85d50dc9aa2a",
+            "med-974f2776"
+          ]
+        },
+        {
+          "title": "حين يفقد عزيزًا: الموت والصبر في عمر العاشرة",
+          "focus": "Talking with a 10-12 year old about the death of someone he loves: honest answers about death and the Hereafter, allowing grief, patience and saying «إنا لله وإنا إليه راجعون», dua for the deceased; signs of prolonged grief that need a specialist.",
+          "keywords": [
+            "الموت",
+            "الصبر",
+            "الحزن",
+            "الفقد",
+            "الآخرة"
+          ],
+          "bank": [
+            "v_002_155"
+          ],
+          "pin_units": [
+            "ee765e4d-9efd-413d-9350-d8aa8d59acf7"
+          ]
+        },
+        {
+          "title": "«لماذا نصلّي؟» حين يسأل عن الحكمة",
+          "focus": "Welcoming the question about why we pray: a respectful dialogue about worship, gratitude, connection with Allah and order in life; listening before answering; it is fine to research the answer together from trusted sources.",
+          "keywords": [
+            "الحكمة",
+            "الصلاة"
+          ],
+          "pin_units": [
+            "isl-1bceeaf6",
+            "isl-c4d83813"
+          ]
+        },
+        {
+          "title": "حين يسأل: «هل هذا حرام؟»",
+          "focus": "Teaching a method for halal/haram questions rather than giving rulings: clear matters versus matters scholars differ on, asking a trusted scholar, avoiding random online rulings, keeping the heart calm rather than anxious about everything.",
+          "keywords": [
+            "الحلال",
+            "الحرام",
+            "الفتوى"
+          ],
+          "pin_units": [
+            "gap-isl-haram-halal-q-01"
+          ]
+        }
+      ],
+      "description_replace_ar": [
+        [
+          "مسار يعين الوالدين على نقل ابنهم من أداء العبادة عادةً إلى محبّتها قلباً قبيل البلوغ: الصلاة محبةً، أول صيام، علاقة حيّة بالقرآن، والدعاء مناجاةً.",
+          "مسار يعين الوالدين على نقل ابنهم من أداء العبادة عادةً إلى محبّتها قلبًا قبيل البلوغ: الصلاة محبّةً، وأول صيام، وعلاقةٌ حيّة بالقرآن، والدعاء مناجاةً، ثم المتابعة الحازمة بلا قسوة، والاستعداد للبلوغ والتكليف، والصلاة خارج البيت ومع الشاشات، وصلاة الفجر، والصبر عند الفقد، وأسئلة الحكمة والحلال والحرام."
+        ]
+      ],
+      "description_replace_en": [
+        [
+          "A path to help parents guide their son from performing 'ibadah out of habit to loving it with the heart shortly before puberty: Salah with love, the first fasts, a living relationship with the Qur'an, and du'a as intimate conversation.",
+          "A path to help parents guide their child from performing 'ibadah out of habit to loving it with the heart shortly before puberty: salah with love, the first fasts, a living relationship with the Qur'an, and du'a as intimate conversation — then firm follow-up without harshness, preparing for puberty and religious responsibility, praying away from home and around screens, Fajr, patience in loss, and questions about wisdom and about halal and haram."
+        ]
+      ]
+    },
+    {
+      "path_id": "path_13-15_islamic_parenting_steadfast",
+      "unit_bands": [
+        "13-15",
+        "10-12",
+        "16-18",
+        "unspecified"
+      ],
+      "band_notes": "Ages 13-15: teen; prayer and fasting are obligatory after puberty. Identity, peers, independence and doubts. The parent's tools shift to relationship and dialogue; nagging, threats and public criticism push the teen away. Watch for low mood or depression behind withdrawal from worship and refer to a specialist when needed.",
+      "lessons": [
+        {
+          "title": "حين يترك ابنك المراهق الصلاة",
+          "focus": "When a teen stops praying: stay calm, protect the relationship, understand the reason (doubts, low mood, laziness, friends, phone), private conversation, keep inviting without nagging, make dua for him, and check for signs of depression that need a specialist.",
+          "keywords": [
+            "ترك الصلاة",
+            "الصلاة"
+          ],
+          "bank": [
+            "v_020_132"
+          ],
+          "pin_units": [
+            "gap-dev-defiance-teen-01",
+            "89bf08a7-5d8f-4373-b48d-523b596f5f8a",
+            "isl-f2bef952"
+          ]
+        },
+        {
+          "title": "بين أمرك وقراره: الصلاة في عمر الاستقلال",
+          "focus": "Balancing parental authority and the teen's growing autonomy: clear family values, conversations that build conviction, reminding him that his prayer is between him and Allah, the parent as guide rather than guard.",
+          "keywords": [
+            "الاستقلال",
+            "الحوار"
+          ],
+          "pin_units": [
+            "gap-dev-defiance-teen-01",
+            "89bf08a7-5d8f-4373-b48d-523b596f5f8a"
+          ]
+        },
+        {
+          "title": "حين يرى أخطاءك: القدوة في عمر النقد",
+          "focus": "Teens notice the gap between what parents say and do: admitting mistakes, praying in front of them consistently, apologising, making worship a family matter rather than an order.",
+          "keywords": [
+            "القدوة"
+          ],
+          "pin_units": [
+            "89bf08a7-5d8f-4373-b48d-523b596f5f8a"
+          ]
+        },
+        {
+          "title": "الذنب والتوبة: بابٌ لا يُغلق",
+          "focus": "When the teen falls into a sin (for example something on the phone): respond without labels or scandal, separate the act from the person, teach repentance and Allah's wide mercy, agree on protective steps together.",
+          "keywords": [
+            "التوبة",
+            "الذنب"
+          ],
+          "bank": [
+            "v_002_286_4"
+          ],
+          "pin_units": [
+            "gap-isl-maghfira-01"
+          ]
+        },
+        {
+          "title": "الفجر والسهر: معركة النوم في المراهقة",
+          "focus": "Teen body clocks shift later; late nights and phones make Fajr hard. Practical steps: phones out of the bedroom, consistent wake time, enough sleep, waking him gently, praying Fajr together; when sleep problems need a doctor.",
+          "keywords": [
+            "السهر",
+            "النوم"
+          ],
+          "pin_units": [
+            "med-34deb628",
+            "med-974f2776"
+          ]
+        },
+        {
+          "title": "رفاقٌ لا يصلّون: كيف يثبت دون أن يتعالى",
+          "focus": "When his friends do not pray: keep kindness and good manners, avoid arrogance, quietly keep his own prayer, seek at least one good friend, and keep home a place he can talk about it.",
+          "keywords": [
+            "الصحبة",
+            "الرفقة"
+          ],
+          "pin_units": [
+            "e095a1d9-98c4-4b4d-afe6-453645643704",
+            "isl-f2bef952"
+          ]
+        },
+        {
+          "title": "أسئلة الحلال والحرام: منهجٌ لا فتوى",
+          "focus": "Teens meet rulings on social media: teach how to check a source, the difference between agreed matters and scholarly difference, asking trusted scholars, and discussing his questions without anger. The lesson gives no rulings itself.",
+          "keywords": [
+            "الفتوى"
+          ],
+          "pin_units": [
+            "gap-isl-haram-halal-q-01",
+            "gap-isl-sunnah-rijal-01"
+          ]
+        },
+        {
+          "title": "صيام المراهق: من التدريب إلى الفريضة",
+          "focus": "Fasting becomes obligatory after puberty: preparing before Ramadan, suhoor and sleep, school days, encouragement, and when health conditions need a doctor's advice and a scholar's guidance.",
+          "keywords": [
+            "الصيام",
+            "رمضان"
+          ],
+          "pin_units": [
+            "isl-3d476538",
+            "isl-d15d1a95"
+          ]
+        }
+      ],
+      "description_replace_ar": [
+        [
+          "مسار يعين الوالدين على تثبيت أخلاق مراهقهم وسط الفتن: العفّة وبدايات الغريزة، الصحبة في زمن السوشيال ميديا، الإخلاص، وبناء ضميرٍ يراقب الله.",
+          "مسار يعين الوالدين على تثبيت مراهقهم على دينه وأخلاقه وسط الفتن: العفّة وبدايات الغريزة، والصحبة في زمن السوشيال ميديا، ثم الصلاة حين يتركها أو تثقل عليه، والقدوة في عمر النقد، والذنب والتوبة، والفجر والسهر، والرفاق الذين لا يصلّون، ومنهجٌ لأسئلة الحلال والحرام، وصيام الفريضة."
+        ]
+      ],
+      "description_replace_en": [
+        [
+          "A path to assist parents in steadfasting their teenager’s akhlaq amidst fitan (trials): ‘iffah (chastity) and the early stages of instinct, companionship in the age of social media, ikhlas (sincerity), and building a conscience that is mindful of Allah.",
+          "A path to help parents keep their teenager steadfast in faith and akhlaq amidst fitan (trials): 'iffah (chastity) and the early stages of instinct, and companionship in the age of social media — then prayer when they leave it or find it heavy, being an example in the age of criticism, sin and repentance, Fajr and late nights, friends who don't pray, a method for questions of halal and haram, and the obligatory fast."
+        ]
+      ]
+    }
+  ]
+}

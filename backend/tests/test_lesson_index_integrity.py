@@ -139,17 +139,22 @@ def test_no_reference_uses_a_renamed_age_band(lessons):
 # ── Path duration must reflect the lessons that exist ────────────────────────
 
 def test_paths_do_not_promise_more_days_than_content():
-    """A path may not advertise more than 3 days per lesson.
+    """A path may not advertise more days than it has lessons.
 
     Reported by voice note on 2026-08-02: a mother opened a path badged «28
     يوم», found four lessons, finished them in one sitting, and asked why.
     estimated_days had been set aspirationally — the same four-lesson shape
     carried values from 10 to 28 days across the catalogue, so the badge was
-    not derived from anything. 3/lesson is the loosest ratio any well-formed
-    path used, so nothing claims more pacing than the app's own best example.
+    not derived from anything.
 
-    The real fix is more lessons; this only stops the number being a promise
-    the content cannot keep.
+    The first fix (same day) capped it at 3 days per lesson, which left the
+    four-lesson paths badged 12 days — still three times what a parent can
+    read, because nothing in the app paces the lessons. Since 2026-10-04 a day
+    of a path is one lesson card, so days ≤ lessons. The real fix is more
+    lessons; this only stops the number being a promise the content cannot
+    keep. The same rule runs on pre-commit in
+    ops/tools/check_curriculum_schema.py, with the descriptions, the store
+    listing and the onboarding copy.
     """
     import json
     from pathlib import Path
@@ -163,7 +168,7 @@ def test_paths_do_not_promise_more_days_than_content():
             days = d.get("estimated_days")
             if not (isinstance(days, int) and n):
                 continue
-            if days > n * 3:
+            if days > n:
                 offenders.append(f"{sub}/{d.get('id')}: {days}d / {n} lessons")
-    assert not offenders, "paths promising more than 3 days per lesson:\n  " + \
+    assert not offenders, "paths promising more days than lessons:\n  " + \
         "\n  ".join(offenders)

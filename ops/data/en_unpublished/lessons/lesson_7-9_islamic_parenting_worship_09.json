@@ -1,0 +1,51 @@
+{
+  "id": "lesson_7-9_islamic_parenting_worship_09",
+  "path_id": "path_7-9_islamic_parenting_worship",
+  "title": "A Prayer Chart and Encouragement: An Incentive, Not a Bribe",
+  "age_group": "7-9",
+  "domain": "islamic_parenting",
+  "unit_ids": [
+    "isl-b793e864",
+    "isl-1bceeaf6"
+  ],
+  "summary": "Seven- and eight-year-olds love to see their progress with their own eyes, which is why a «prayer chart» is a useful tool at the start of the journey: a sheet with the days of the week and the five prayers, where they put a mark or a star after each prayer. The chart turns a big goal into small steps they can see and be happy to complete.\n\nBut notice the difference between an incentive and a bribe. An incentive encourages a child into a new habit and then fades gradually, while a bribe turns worship into a deal: «I pray to get sweets.» Educators have warned against too many material rewards, lest the child attach to worship for their sake alone.\n\nSo make the most important reward a moral one: specific praise, a hug, and a word in front of the family: «Today he prayed all his prayers on time.» If you want an end-of-week reward, let it be a shared activity rather than something bought: an outing, playtime with you, or letting them choose the family dinner. Don't announce the reward as a condition every time; sometimes make it a surprise you celebrate together.\n\nAs the weeks pass, ease off the chart gradually: from a mark after every prayer, to a daily review, then a weekly one, until the chart becomes a fond memory of the start of the road. And link prayer in your talk to its meaning: «We pray because we love Allah and thank Him», so that the motivation stays in their heart when the chart leaves the wall.",
+  "try_this": "Today: Design a simple weekly prayer chart on paper with your child, letting them choose its colours and the shape of the mark. Hang it somewhere visible, and agree that the end-of-week reward will be a shared activity of their choosing.",
+  "order": 9,
+  "estimated_minutes": 3,
+  "reflection_prompts": [
+    "What makes your child happier: the mark on the chart or your words after the prayer? And what does that tell you about their motivation?"
+  ],
+  "warning_flags": [],
+  "needs_professional_followup": false,
+  "is_published": true,
+  "version": "1.0.0",
+  "created_at": "2026-10-04T17:13:00",
+  "updated_at": "2026-10-04T17:13:00",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "claude-opus-5-5",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": true,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "summary",
+        "quote": "make the most important reward a moral one",
+        "why": "كلمة «معنوية» في العربية تعني غير مادية أو روحية، وترجمتها «moral» قد توحي بمكافأة أخلاقية وليس غير مادية، مما يغيّر الدلالة قليلاً.",
+        "severity": "low",
+        "fix": "استخدم «non-material» أو «intangible» بدلاً من «moral»."
+      }
+    ],
+    "approved_by": null,
+    "revalidated_at": "2026-10-04T16:31:04",
+    "generated_by": "ops/tools/deepen_paths.py"
+  }
+}

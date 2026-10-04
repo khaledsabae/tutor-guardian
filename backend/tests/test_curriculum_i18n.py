@@ -364,3 +364,26 @@ def test_daily_tip_and_search_accept_a_language(client):
 
     s = client.get("/api/program/search?q=الصدق&limit=5&lang=en", headers=hdr)
     assert s.status_code == 200, s.text
+
+
+def test_badge_numbers_follow_arabic_not_a_stale_translation():
+    """The «N دروس» and «N يوم» pills are counted from the served path.
+
+    A translation is a copy taken on the day it was made. When a path grows
+    from 4 lessons to 12, an English file still listing 4 used to win the
+    overlay merge, so English readers saw a smaller path than Arabic readers —
+    and, before 2026-10-04, a duration the Arabic had already corrected.
+    """
+    source = {"id": "path_x", "title": "عنوان", "lesson_ids": ["a", "b", "c"],
+              "estimated_days": 3}
+    stale_en = {"id": "path_x", "title": "Title", "lesson_ids": ["a"],
+                "estimated_days": 28}
+    merged = cl._translate(source, {"en": {"path_x": stale_en}}, "en")
+    assert merged["title"] == "Title", "text fields still come from the translation"
+    assert merged["lesson_ids"] == ["a", "b", "c"]
+    assert merged["estimated_days"] == 3
+
+    lesson = {"id": "lesson_x", "title": "درس", "estimated_minutes": 3}
+    stale_lesson = {"id": "lesson_x", "title": "Lesson", "estimated_minutes": 9}
+    merged = cl._translate(lesson, {"en": {"lesson_x": stale_lesson}}, "en")
+    assert merged["estimated_minutes"] == 3

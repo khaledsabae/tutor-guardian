@@ -830,7 +830,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get onbFreeDesc => 'No ads, no subscriptions';
 
   @override
-  String get onbFeature1Title => '28-Day Paths';
+  String get onbFeature1Title => 'Step-by-Step Daily Paths';
 
   @override
   String get onbFeature1Desc =>

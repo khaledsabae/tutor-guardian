@@ -3,14 +3,14 @@
   "title": "التربية الإيجابية والأمان: بناء ثقة الطفل (4-6 سنوات)",
   "age_group": "4-6",
   "domain": "development",
-  "description": "رحلة تربوية لمدة 14 يوماً لبناء ثقة الطفل بنفسه وأمانه الجسدي والنفسي عبر أدوات التربية الإيجابية المعتمدة من CDC، ومنهج 'جولة الأمان' اليومي للوقاية من الحوادث، ومهارة المدح النوعي المحدد. يستند المسار إلى نظريات Erikson (Industry vs Inferiority) وVygotsky (ZPD) لتنمية الكفاءة الذاتية دون مقارنة، مع التركيز على الجانب العملي القابل للقياس.",
+  "description": "رحلة تربوية لبناء ثقة الطفل بنفسه وأمانه الجسدي والنفسي عبر أدوات التربية الإيجابية المعتمدة من CDC، ومنهج 'جولة الأمان' اليومي للوقاية من الحوادث، ومهارة المدح النوعي المحدد. يستند المسار إلى نظريات Erikson (Industry vs Inferiority) وVygotsky (ZPD) لتنمية الكفاءة الذاتية دون مقارنة، مع التركيز على الجانب العملي القابل للقياس.",
   "lesson_ids": [
     "lesson_4-6_development_positive_parenting_b01",
     "lesson_4-6_development_positive_parenting_b02",
     "lesson_4-6_development_positive_parenting_01",
     "lesson_4-6_development_positive_parenting_02"
   ],
-  "estimated_days": 12,
+  "estimated_days": 4,
   "pedagogical_framework": "zpd_scaffolded",
   "primary_reference": {
     "type": "مقال_تنموي",
