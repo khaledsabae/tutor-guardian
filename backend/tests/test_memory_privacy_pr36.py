@@ -17,6 +17,8 @@ from __future__ import annotations
 
 import json
 import re
+import threading
+import unicodedata
 from datetime import datetime, timedelta, timezone
 
 import pytest
@@ -535,27 +537,31 @@ def test_scrubbing_a_deleted_childs_name_is_strict():
 # ── PR #39 review ─────────────────────────────────────────────────────────
 #
 # An independent oracle — a test that asks the matcher whether the matcher
-# missed something cannot fail. This one folds spelling crudely and looks for
-# every name, and every name token of 3+ letters, as a word: behind any
-# particle, with or without the accusative alif or a final hamza. It
-# over-reports by design, so cases where a name may rightly stay (a religious
-# reference, «فعلا» for a child «علا») are not given to it.
+# missed something cannot fail, and one that copies the matcher's folding
+# misses what the matcher misses (PR #39 review). This one shares nothing with
+# privacy.py: Unicode NFKD with every combining mark (Mn) and format character
+# (Cf) dropped — accents, hamza and madda seats, zero-width spaces and
+# joiners, soft hyphens — tatweel dropped, the Persian yeh/kaf folded, words
+# split on Unicode letters. It looks for every name, and every name word of 3+
+# letters, behind any particle, with the accusative alif, a final hamza on or
+# off, and an «ال» name with or without its article. It over-reports by design,
+# so cases where a name may rightly stay (a religious reference, «فعلا» for a
+# child «علا», a hamza-less word the matcher refuses) are not given to it.
 
-_ORACLE_MARKS = re.compile("[ً-ْٰـ‌-‏؜]")
-_ORACLE_FOLD = str.maketrans({"أ": "ا", "إ": "ا", "آ": "ا", "ٱ": "ا", "ة": "ه",
-                              "ى": "ي", "ئ": "ي", "ؤ": "و"})
+_ORACLE_FOLD = str.maketrans({"ة": "ه", "ى": "ي", "ی": "ي", "ک": "ك", "ٱ": "ا", "ـ": None})
 _ORACLE_PARTICLES = ("وب", "ول", "وك", "فب", "فل", "فك", "و", "ف", "ب", "ل", "ك")
 
 
 def _oracle_fold(text: str) -> str:
-    folded = _ORACLE_MARKS.sub("", text or "").translate(_ORACLE_FOLD).lower()
-    return re.sub(r"عبد\s+", "عبد", folded)
+    decomposed = unicodedata.normalize("NFKD", text or "")
+    kept = "".join(ch for ch in decomposed if unicodedata.category(ch) not in ("Mn", "Cf"))
+    return re.sub(r"عبد\s+", "عبد", kept.translate(_ORACLE_FOLD).lower())
 
 
 def _oracle_left(text: str, names) -> list[str]:
     """The names among `names` still readable in `text`."""
     folded = _oracle_fold(text)
-    words = set(re.findall(r"[a-zء-ي]+", folded))
+    words = set(re.findall(r"[^\W\d_]+", folded))
     stems = set(words)
     for w in words:
         stems |= {w[len(p):] for p in _ORACLE_PARTICLES if w.startswith(p)}
@@ -567,7 +573,9 @@ def _oracle_left(text: str, names) -> list[str]:
             continue                                                 # a default: no name
         forms = {n} | {t for t in n.split() if len(t) >= 3}
         forms |= {f[:-1] for f in forms if f.endswith("اء")}         # «دعا» for «دعاء»
-        forms |= {"ل" + f[2:] for f in forms if f.startswith("ال")}  # «للحسن»
+        forms |= {f + "ء" for f in forms if f.endswith("ا")}         # «سماء» for «سما»
+        if n.startswith("ال"):
+            forms |= {n[2:], "ل" + n[2:]}                            # «حسن», «للحسن»
         if forms & stems or (" " in n and n in folded):
             left.append(name)
     return left
@@ -577,6 +585,9 @@ def test_the_oracle_sees_what_it_must():
     assert _oracle_left("طفلي تغار من لـأحمدًا", ["أحمد"]) == ["أحمد"]
     assert _oracle_left("طفلي تغار من اسما", ["أسماء"]) == ["أسماء"]
     assert _oracle_left("طفلي تغار من الطفل أ", ["أحمد", "طفلي"]) == []
+    assert _oracle_left("Ines hits Zoé", ["Inès", "Zoe"]) == ["Inès", "Zoe"]
+    assert _oracle_left("طفلي تغار من علی ومن مح\u200bمد", ["علي", "محمد"]) == ["علي", "محمد"]
+    assert _oracle_left("طفلي تحب حسن وسماء", ["الحسن", "سما"]) == ["الحسن", "سما"]
 
 
 def _fake_llm(monkeypatch, fact_text: str) -> None:
@@ -910,3 +921,202 @@ def test_huna_is_here_unless_it_is_the_child():
     fam = Family(((1, "هنا"), (2, "أحمد")))
     assert redact_family("أحمد بيحب يقعد هنا وهنا", fam, 2) == "طفلي بيحب يقعد هنا وهنا"
     assert redact_family("بنتي هنا بتخاف من الضلمة", fam, 1) == "بنتي طفلي بتخاف من الضلمة"
+
+
+# ── PR #39 delta review ───────────────────────────────────────────────────
+
+# 1. A rename rewrites memory: a proven session's, and only plausible names.
+
+
+def test_an_unproven_rename_cannot_rewrite_memory_words(client):
+    """A bare session for an enrolled device («anyone who knows the id») got
+    «طفلي تخاف من الظلام» rewritten by renaming a child «من» and back."""
+    dev = "dev-b-attack"
+    owner = _session(client, dev)                          # proven: enrolled
+    sara = _child(client, owner, "سارة")
+    fid = _insert_fact(dev, sara, "طفلي تخاف من الظلام ومن الكلاب")
+    bare = _session(client, dev, proven=False)
+    r = client.patch(f"/api/children/{sara}", headers=bare, json={"name": "من"})
+    assert r.status_code == 403 and r.json()["detail"]["code"] == "device_proof_required"
+    # Sending the name it already has changes nothing, and needs nothing.
+    assert client.patch(f"/api/children/{sara}", headers=bare,
+                        json={"name": "سارة"}).status_code == 200
+    assert _fact_text(fid) == "طفلي تخاف من الظلام ومن الكلاب"
+    # The other fields stay open.
+    assert client.patch(f"/api/children/{sara}", headers=bare,
+                        json={"age_group": "7-9"}).status_code == 200
+
+
+def test_an_unproven_rename_below_the_floor_cannot_erase_a_sibling_link(client):
+    dev = "dev-b-floor"
+    owner = _session(client, dev)
+    sara = _child(client, owner, "سارة")
+    ahmad = _child(client, owner, "أحمد")
+    fid = _insert_fact(dev, sara, "طفلي تغار من الطفل ب")
+    bare = _session(client, dev, proven=False)
+    assert client.patch(f"/api/children/{ahmad}", headers=bare,
+                        json={"name": "ح"}).status_code == 403
+    assert _fact_text(fid) == "طفلي تغار من الطفل ب"
+
+
+def test_a_function_word_name_is_never_relabelled(client):
+    """Even the parent's own rename to «من» and back leaves «من» a word."""
+    dev = "dev-b-min"
+    h = _session(client, dev)
+    sara = _child(client, h, "سارة")
+    fid = _insert_fact(dev, sara, "طفلي تخاف من الظلام")
+    for name in ("من", "سارة"):
+        assert client.patch(f"/api/children/{sara}", headers=h,
+                            json={"name": name}).status_code == 200
+    assert _fact_text(fid) == "طفلي تخاف من الظلام"
+    assert cm.clean_fact_text("طفلي تخاف من الظلام", Family(((1, "من"), (2, "سارة"))), 2) == \
+        "طفلي تخاف من الظلام"
+
+
+@pytest.mark.parametrize("extra", [{}, {"age_group": "7-9", "avatar_emoji": "🙂"}])
+def test_a_rename_rewrites_memory_whatever_else_the_patch_carries(client, extra):
+    dev = f"dev-b-ren-{len(extra)}"
+    h = _session(client, dev)
+    sara = _child(client, h, "سارة")
+    yusuf = _child(client, h, "يوسف")
+    sib = _insert_fact(dev, sara, "طفلي تقلد أخاها يوسف")
+    own = _insert_fact(dev, yusuf, "يوسف يحب الرسم")
+    r = client.patch(f"/api/children/{yusuf}", headers=h, json={"name": "جود", **extra})
+    assert r.status_code == 200, r.text
+    assert _fact_text(sib) == "طفلي تقلد أخاها الطفل ب"
+    assert _fact_text(own) == "طفلي يحب الرسم"
+
+
+def test_a_rename_to_the_default_or_a_siblings_name_and_back(client):
+    dev = "dev-b-ren-def"
+    h = _session(client, dev)
+    sara = _child(client, h, "سارة")
+    yusuf = _child(client, h, "يوسف")
+    sib = _insert_fact(dev, sara, "طفلي تقلد أخاها يوسف")
+    own = _insert_fact(dev, yusuf, "طفلي يغار من الطفل أ")
+    for name in ("طفلي", "سارة", "يوسف"):
+        assert client.patch(f"/api/children/{yusuf}", headers=h,
+                            json={"name": name}).status_code == 200
+        assert _fact_text(sib) == "طفلي تقلد أخاها الطفل ب"
+        assert _fact_text(own) == "طفلي يغار من الطفل أ"
+
+
+def test_a_rename_below_the_floor_and_its_siblings(client):
+    dev = "dev-b-below"
+    h = _session(client, dev)
+    sara = _child(client, h, "سارة")            # أ
+    yusuf = _child(client, h, "يوسف")           # ب, then no letter
+    omar = _child(client, h, "عمر")             # ج, then ب
+    sib = _insert_fact(dev, sara, "طفلي تقلد يوسف وتلعب مع الطفل ج")
+    own = _insert_fact(dev, yusuf, "يوسف يغار من الطفل ج")
+    third = _insert_fact(dev, omar, "طفلي يقلد الطفل ب")
+    assert client.patch(f"/api/children/{yusuf}", headers=h, json={"name": "ي"}).status_code == 200
+    assert _fact_text(sib) == "طفلي تقلد طفل آخر وتلعب مع الطفل ب"
+    assert _fact_text(own) == "طفلي يغار من الطفل ب"
+    assert _fact_text(third) == "طفلي يقلد طفل آخر"
+
+
+def test_concurrent_renames_and_adds_never_fail(client):
+    dev = "dev-b-conc"
+    h = _session(client, dev)
+    sara = _child(client, h, "سارة")
+    kids = [_child(client, h, n) for n in ("يوسف", "عمر", "مريم")]
+    for i in range(30):
+        _insert_fact(dev, sara, f"طفلي تلعب مع الطفل ب والطفل ج رقم {i}")
+    errors: list = []
+
+    def rename(cid, names):
+        for n in names:
+            r = client.patch(f"/api/children/{cid}", headers=h, json={"name": n})
+            if r.status_code != 200:
+                errors.append(("patch", r.status_code, r.text[:200]))
+
+    def add():
+        for i in range(10):
+            r = client.post(f"/api/children/{sara}/memory", headers=h,
+                            json={"category": "other", "fact": f"سارة تحب عمر {i}"})
+            if r.status_code not in (200, 201):
+                errors.append(("add", r.status_code, r.text[:200]))
+
+    threads = [threading.Thread(target=rename, args=(kids[0], ["ي", "يوسف"] * 5)),
+               threading.Thread(target=rename, args=(kids[1], ["عمرو", "عمر"] * 5)),
+               threading.Thread(target=add)]
+    for t in threads:
+        t.start()
+    for t in threads:
+        t.join()
+    assert errors == []
+
+
+# 2. The hamza-less form only for names whose bare form is no everyday word.
+
+
+@pytest.mark.parametrize("sibling,fact,word", [
+    ("ولاء", "طفلي لا يأكل ولا ينام", "ولا"),
+    ("آلاء", "طفلي لا ينام إلا بعد قصة", "إلا"),
+    ("بهاء", "طفلي متعلق بدميته ولا ينام إلا بها", "بها"),
+    ("هناء", "طفلي يحب اللعب هنا في البيت", "هنا"),
+    ("علاء", "طفلي علا صوته في الصف", "علا"),
+])
+def test_a_hamzaless_form_never_eats_an_everyday_word(sibling, fact, word):
+    out = cm.clean_fact_text(fact, Family(((1, sibling), (2, "أحمد"))), 2)
+    assert word in out, out
+    # The name itself, written in full, still goes.
+    assert sibling not in cm.clean_fact_text(f"طفلي يحب {sibling}",
+                                             Family(((1, sibling), (2, "أحمد"))), 2)
+
+
+# 3. A token that is one child's first name is that child's.
+
+
+@pytest.mark.parametrize("members", [
+    ((1, "محمد أحمد محمد"), (2, "سارة أحمد محمد")),   # the first son named after his grandfather
+    ((1, "محمد محمد"), (2, "سارة محمد")),             # a son named after his father
+])
+def test_a_shared_token_that_is_a_first_name_is_that_child(members):
+    fam = Family(members)
+    text = "سارة بتغير من محمد وبتضربه"
+    assert redact_family(text, fam, 2) == "طفلي بتغير من الطفل أ وبتضربه"
+    assert cm.clean_fact_text(text, fam, 2) == "طفلي بتغير من الطفل أ وبتضربه"
+    assert 1 in family_mentions(text, fam)              # the A6 sibling rule sees him
+    # A later word they share and nobody's first is still nobody's.
+    assert "أحمد" in redact_family("سارة بتحب جدها أحمد", fam, 2)
+
+
+# 4. What the independent oracle found.
+
+
+@pytest.mark.parametrize("members,subject,text", [
+    ([(1, "Inès"), (2, "Zoé")], 2, "Zoé is jealous of Inès and of Ines"),
+    ([(1, "Zoé"), (2, "Adam")], 2, "Adam hits Zoe, and Zoé cries"),
+    ([(1, "علي"), (2, "سارة")], 2, "سارة تغار من علی"),
+    ([(1, "الحسن"), (2, "سارة")], 2, "سارة تحب حسن وتلعب مع الحسن وللحسن"),
+    ([(1, "سما"), (2, "أحمد")], 2, "أحمد يغار من سماء"),
+    ([(1, "محمد"), (2, "سارة")], 2, "سارة تغار من مح​مد ومن مح⁠مد ومن مح­مد"),
+    ([(1, "كريم"), (2, "سارة")], 2, "سارة تحب کريم"),
+])
+def test_what_the_independent_oracle_found(members, subject, text):
+    fam = Family(tuple(members))
+    out = cm.clean_fact_text(text, fam, subject)
+    assert _oracle_left(out, fam.names) == [], out
+
+
+# 5. «ف/ك» stay with the name unless the whole word is an everyday one.
+
+
+@pytest.mark.parametrize("name,text,expected", [
+    ("عمر", "سارة تحب فعمر وكعمر", "طفلي تحب فالطفل أ وكالطفل أ"),
+    ("نور", "سارة تلعب فنور تضحك", "طفلي تلعب فالطفل أ تضحك"),
+])
+def test_f_and_k_before_a_short_name_are_the_child(name, text, expected):
+    fam = Family(((1, name), (2, "سارة")))
+    assert cm.clean_fact_text(text, fam, 2) == expected
+
+
+# 6. «لأن» opens no extension.
+
+
+def test_li_anna_does_not_extend_a_recognised_child():
+    """«…لأن أمل كبير راح» — a word after «لأن», with no evidence of its own."""
+    out = redact_family("بنتي أمل حزينة لأن أمل كبير راح", Family(((1, "أمل"),)), 1)
+    assert out == "بنتي طفلي حزينة لأن أمل كبير راح"

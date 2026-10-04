@@ -644,6 +644,11 @@ def update_child(
         before = None
         if payload.name is not None and \
                 payload.name.strip() != (current["name"] or "").strip():
+            # Rewriting every child's memory is not for a bare session (PR #39
+            # review): on a device that has proven once, a name change needs a
+            # proven session — the same rule, and the same 403s, as deleting a
+            # child. The other fields never do.
+            require_device_proof_once_enrolled(request)
             from app.services.privacy import family_from_conn
             conn.execute("BEGIN IMMEDIATE")
             before = family_from_conn(conn, device_id)

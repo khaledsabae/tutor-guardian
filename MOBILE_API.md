@@ -244,10 +244,14 @@ are additive; older builds keep working and simply never call them.
   `device_proof_required`, run §9.0.1 once, then retry the request once.
   **Always allowed without a proof:** `GET /api/children/memory/settings`,
   switching memory **off** (`PUT … {"enabled": false}`), and the weekly plan (§9.5).
-- **Destructive child routes** — `DELETE /api/children/{id}` and
-  `DELETE /api/children/{id}/progress` — need a proven session too, **once this
-  device has proven at least once** (and for every device once the server's
-  `MINIMUM_BUILD_NUMBER` reaches `CHILD_MEMORY_MIN_BUILD`). Same `403`, same flow.
+- **Destructive child routes** — `DELETE /api/children/{id}`,
+  `DELETE /api/children/{id}/progress`, and `PATCH /api/children/{id}` **when it
+  changes `name`** (a rename rewrites the siblings' memory, see *Placeholders*) —
+  need a proven session too, **once this device has proven at least once** (and
+  for every device once the server's `MINIMUM_BUILD_NUMBER` reaches
+  `CHILD_MEMORY_MIN_BUILD`). Same `403`, same flow: wrap a rename in the same
+  prove-and-retry-once as a child deletion. A `PATCH` that leaves `name` as it
+  is (age group, gender, avatar) never needs it.
   Any push-token pause (§9.0.1) refuses them for every session, proven or not.
   **What a child deletion removes:** from a proven session, everything tied to the
   child (progress, memory, tools…); from any other session — possible only on a
@@ -277,8 +281,8 @@ are additive; older builds keep working and simply never call them.
   «الطفل ب…» for a sibling). That is deliberate; the on-device swap gives the
   parent back the words they wrote. Not replaced: the name with «ال» attached
   (النور), a religious reference (النبي محمد ﷺ، سورة يوسف), «على» for a
-  child named علي, and «ف/ك» read off a name of ≤ 3 letters («فعلا» for a
-  child «علا»). A child whose name is the onboarding default — «طفلي» /
+  child named علي, and «ف/ك» read off a word that is an everyday word as a
+  whole («فعلا» for a child «علا», «كريم» for «ريم»; «فعمر» is still عمر). A child whose name is the onboarding default — «طفلي» /
   "My child" — has no name to replace: in any text «طفلي» stays the fact's
   own child, never that sibling (it keeps its letter for placeholders).
 - **What is never remembered** (say so in the screen's footer): medicines —
