@@ -2,22 +2,28 @@
 Methodology & Sources page — «منهجيتنا ومصادرنا».
 
 Serves a public HTML page explaining the AI methodology, knowledge sources,
-and safety guardrails. Strategic counter to Babymode's announced "sharia board"
-differentiator (growth plan §7.2).
+and safety guardrails (growth plan §7.2).
+
+Every sentence states what the code does, nothing more. This is a solo
+project with no sharia board and no human reviewer, so the page claims the
+automated guards and the fiqh deferral — never supervision or review it does
+not have. The knowledge-base numbers are counted, not typed.
 
 Route: GET /methodology
 """
 from __future__ import annotations
 
 import html as _html
-import os
-from pathlib import Path
+import logging
+from collections import Counter
+from functools import lru_cache
 
 from fastapi import APIRouter, Request
 from fastapi.responses import HTMLResponse
 
 from app.services.attribution import attribute_visit
 
+logger = logging.getLogger(__name__)
 router = APIRouter(tags=["web"])
 
 _TEAL = "#01696F"
@@ -76,108 +82,134 @@ def _page(title: str, desc: str, body: str, canonical: str) -> HTMLResponse:
                         headers={"Cache-Control": "public, max-age=3600"})
 
 
+_AR_DIGITS = str.maketrans("0123456789", "٠١٢٣٤٥٦٧٨٩")
+
+
+def _ar(n: int) -> str:
+    """1673 → «١٬٦٧٣», the way the page has always shown its numbers."""
+    return f"{n:,}".replace(",", "٬").translate(_AR_DIGITS)
+
+
+@lru_cache(maxsize=1)
+def _kb_stats() -> dict | None:
+    """Counted from the knowledge base the assistant retrieves from.
+
+    The page used to type its numbers in, and they drifted: «١٬١١٩ وحدة» when
+    there were 1,673, and 57 development units when there were 172. Counted
+    once per process — the knowledge base only changes with a deploy. "Has a
+    reference" uses the filter that decides whether an answer shows a «📚»
+    line, so the page and the answers cannot disagree.
+    """
+    try:
+        from app.services.knowledge_loader import load_default_knowledge_units
+        from app.services.llm_service import usable_reference
+
+        units = load_default_knowledge_units()
+    except Exception:  # noqa: BLE001 — the page renders without its numbers
+        logger.warning("methodology: knowledge-base stats unavailable", exc_info=True)
+        return None
+    if not units:
+        return None
+    by_domain = Counter(u.domain for u in units)
+    referenced = sum(1 for u in units if usable_reference(u.reference_info))
+    return {
+        "total": len(units),
+        "islamic": by_domain["islamic_parenting"] + by_domain["aqeedah"],
+        "health": by_domain["medical"],
+        "development": by_domain["development"],
+        "cyber": by_domain["cyber"],
+        "referenced_pct": round(100 * referenced / len(units)),
+    }
+
+
+def _stats_html() -> str:
+    stats = _kb_stats()
+    if not stats:
+        return ""
+    cards = [
+        (stats["total"], "وحدة معرفة"),
+        (stats["islamic"], "في التربية الإسلامية والعقيدة"),
+        (stats["health"], "في صحة الطفل وسلوكه"),
+        (stats["development"], "في نمو الطفل"),
+        (stats["cyber"], "في الأمان الرقمي"),
+    ]
+    grid = "".join(
+        f'<div class="stat"><div class="stat-num">{_ar(n)}</div>'
+        f'<div class="stat-label">{label}</div></div>'
+        for n, label in cards
+    )
+    return (f'<div class="stat-grid">{grid}</div>'
+            f'<p>{_ar(stats["referenced_pct"])}٪ من الوحدات لها مرجع مذكور معها.</p>')
+
+
 @router.get("/methodology", include_in_schema=False)
 def methodology_page(request: Request):
     """Our methodology and sources — public page for parents and reviewers."""
     canonical = str(request.base_url).rstrip("/") + "/methodology"
+    play = _html.escape(attribute_visit(request))
 
-    body = """
+    body = f"""
 <h1>منهجيتنا ومصادرنا</h1>
-<p class="subtitle">كيف نضمن أن إجابات المربي موثوقة وآمنة لطفلك</p>
+<p class="subtitle">كيف تُبنى إجابات المربّي، وما الذي يُفحَص فيها آليًا</p>
 
-<h2>الإجابة المؤصّلة — مش مجرد كلام</h2>
-<p>كل إجابة يعطيها المربي مبنية على <strong>مصادر موثّقة</strong>، و<strong>مذكّر فيها المصدر</strong> في سطر خاص يبدأ بـ 📚. لا نخترع معلومات، ولا نُصدر فتاوى بدون سند.</p>
+<h2>إجابة مبنية على مراجع</h2>
+<p>يبني المربّي إجابته من وحدات قاعدة المعرفة التي يسترجعها لسؤالك، ويذكر مراجعها في سطر يبدأ بـ 📚 متى كان لها مرجع مسجَّل. ولا يُصدر فتاوى: أسئلة الأحكام تُحال إلى أهل العلم.</p>
 
 <h2>قاعدة المعرفة</h2>
-<div class="stat-grid">
-  <div class="stat">
-    <div class="stat-num">١٬١١٩</div>
-    <div class="stat-label">وحدة معرفة</div>
-  </div>
-  <div class="stat">
-    <div class="stat-num">٥٥٤</div>
-    <div class="stat-label">وحدة شرعية</div>
-  </div>
-  <div class="stat">
-    <div class="stat-num">٢٥١</div>
-    <div class="stat-label">وحدة سيبرانية</div>
-  </div>
-  <div class="stat">
-    <div class="stat-num">٢٥٧</div>
-    <div class="stat-label">وحدة طبية</div>
-  </div>
-</div>
-<p>كل وحدة معرفية في قاعدة البيانات موثّقة بمصدرها — كتاب مرجع، أو حديث نبوي، أو مرجع تربوي متخصص. الوحدات مُقسّمة إلى مجالات:</p>
+{_stats_html()}
 <ul>
-  <li><strong>شرعي (تربية إسلامية + عقيدة):</strong> أحاديث نبوية، آيات قرآنية، أقوال العلماء — موثّقة بالمرجع الكامل</li>
-  <li><strong>سيبراني (أمن رقمي):</strong> إرشادات حماية الأطفال الرقمية من مصادر متخصصة</li>
-  <li><strong>طبي (سلوك ونفسية):</strong> إرشادات السلوك والصحة النفسية من مراجع طبية موثوقة</li>
-  <li><strong>تطوّر الطفل:</strong> مراحل النمو الجسدي واللغوي والحركي (٥٧ وحدة)</li>
+  <li><strong>التربية الإسلامية والعقيدة:</strong> مستخلصة في أغلبها من كتب في التربية الإسلامية، وعنوان الكتاب مرجعها.</li>
+  <li><strong>صحة الطفل وسلوكه:</strong> مبنية في أغلبها على منشورات جهات مثل الأكاديمية الأمريكية لطب الأطفال (AAP) ومراكز السيطرة على الأمراض (CDC) ومنظمة الصحة العالمية (WHO) والمعهد الوطني الأمريكي للصحة النفسية (NIMH)، وبعضها محتوى تحريري كُتب للتطبيق ويقول مرجعه ذلك.</li>
+  <li><strong>نمو الطفل:</strong> مراحل النمو الجسدي واللغوي والحركي، من منشورات جهات مثل اليونيسف وAAP وCDC.</li>
+  <li><strong>الأمان الرقمي:</strong> إرشادات حماية الأطفال على الإنترنت، من منشورات جهات مثل منظمة الصحة العالمية وCommon Sense Media وInternet Matters.</li>
 </ul>
 
-<h2>التفسير القرآني الموثّق (Tafsir MCP)</h2>
-<p>عندما يسأل ولي الأمر عن تفسير آية معينة، يستعين المربّي بخدمة <strong>Tafsir MCP</strong> من مركز تفسير للدراسات القرآنية — قاعدة بيانات علمية تضم:</p>
-<div class="stat-grid">
-  <div class="stat">
-    <div class="stat-num">٢٨</div>
-    <div class="stat-label">مصدر تفسير</div>
-  </div>
-  <div class="stat">
-    <div class="stat-num">٨</div>
-    <div class="stat-label">مصدر علوم قرآن</div>
-  </div>
-  <div class="stat">
-    <div class="stat-num">١٧</div>
-    <div class="stat-label">وظيفة بحث</div>
-  </div>
-</div>
-<p>من أبرز المصادر المتاحة: تفسير الطبري، ابن كثير، القرطبي، السعدي، الميسر، البغوي، ابن عاشور، والوسيط. النص يُعرض كما هو من المصدر المعتمد — بدون تلخيص أو إعادة صياغة أو إضافة من الذاكرة. التفسير يُستخدم كسياق إضافي لإثراء الإجابة، ولا يُستبدل به قاعدة المعرفة التربوية.</p>
+<h2>التفسير القرآني</h2>
+<p>إذا سألت عن آية بعينها، يجلب المربّي تفسيرها من خدمة <strong>Tafsir MCP</strong> التابعة لمركز تفسير للدراسات القرآنية (تفسير السعدي والتفسير الميسَّر)، ويُضاف نصّه إلى سياق الإجابة إلى جانب قاعدة المعرفة التربوية. وإن تعذّر الوصول إلى الخدمة، بُنيت الإجابة على قاعدة المعرفة وحدها.</p>
 
-<h2>كيف يعمل المربي</h2>
+<h2>كيف يعمل المربّي</h2>
 <h3>١. البحث الدلالي (RAG)</h3>
-<p>لما تسأل سؤالاً تربوياً، المربي يبحث في قاعدة المعرفة عن أقرب الوحدات المعرفية صلةً بسؤالك — باستخدام تقنية البحث الدلالي (Semantic Search) اللي بتفهم معنى سؤالك مش بس الكلمات.</p>
+<p>حين تسأل سؤالًا تربويًا، يبحث المربّي في قاعدة المعرفة عن أقرب الوحدات صلةً بسؤالك، ببحث دلالي يفهم معنى السؤال لا ألفاظه فقط، ويرشّح النتائج حسب الفئة العمرية لطفلك.</p>
 
-<h3>٢. التوليد الموجّه</h3>
-<p>المربي لا يخترع إجابات من فراغ. هو يأخذ الوحدات المعرفية الموثّقة ويولّد منها إجابة عملية مخصصة لعمر طفلك وتحديتك. الإجابة تكون:</p>
+<h3>٢. التوليد الموجَّه</h3>
+<p>يُطلب من النموذج أن يبني إجابته على الوحدات المسترجَعة وحدها، فتكون:</p>
 <ul>
-  <li><strong> عملية:</strong> خطوات واضحة تقدر تنفذها اليوم</li>
-  <li><strong>مناسبة لعمر الطفل:</strong> المربي يعرف إن طفل ٤ سنين يختلف عن طفل ١٣ سنة</li>
-  <li><strong>مذكّر بالمصدر:</strong> كل إجابة فيها سطر 📚 المصدر</li>
+  <li><strong>عملية:</strong> خطوات واضحة تستطيع تنفيذها اليوم</li>
+  <li><strong>مناسبة لعمر الطفل:</strong> فطفل في الرابعة غير طفل في الثالثة عشرة</li>
+  <li><strong>مذكورة المراجع:</strong> سطر 📚 بمراجع الوحدات التي بُنيت عليها، متى كان لها مرجع</li>
 </ul>
 
-<h3>٣. بوابات الجودة</h3>
-<p>قبل ما الإجابة توصلك، تمرّ ببوابات فحص تلقائية:</p>
+<h3>٣. ضوابط آلية</h3>
 <ul>
-  <li><strong>بوابة الأمان:</strong> لا نُقدّم إجابات عن مواضيع طبية حساسة بدون تحويل لطبيب</li>
-  <li><strong>بوابة المصدر:</strong> تأكد إن فيه مصدر موثّق ورا الإجابة</li>
-  <li><strong>بوابة الملاءمة:</strong> الإجابة مناسبة لعمر الطفل والسياق</li>
+  <li><strong>الحالات الطارئة:</strong> ما يُصنَّف طارئًا لا يُجيب عنه النموذج أصلًا؛ تظهر إحالة فورية إلى مختص أو إلى الطوارئ</li>
+  <li><strong>المراجع:</strong> المرجع الفارغ أو غير الصحيح يُحجب ولا يُنسب إلى الإجابة</li>
 </ul>
 
-<h2>ضوابط الأمان (Guardrails)</h2>
+<h2>ضوابط الأمان</h2>
 <ul>
-  <li><strong>لا نُفتي:</strong> المربي لا يُقدّم فتاوى شخصية في الحلال والحرام — يحيل لعلماء مختصين</li>
-  <li><strong>لا تشخيص طبي:</strong> المربي يرشدك لطبيب متخصص لما يكون الموضوع طبياً (التبول اللاإرادي، الخوف، الإدمان)</li>
-  <li><strong>حصر في المحتوى الموثّق:</strong> الإجابة مبنية على المصادر الموجودة في قاعدة المعرفة فقط — لا معلومات من الإنترنت العام</li>
-  <li><strong>مراجعات دورية:</strong> الوحدات المعرفية تُراجع دورياً للتأكد من صحتها وحداثتها</li>
+  <li><strong>لا فتوى:</strong> أسئلة الحلال والحرام والعقيدة تُحال إلى أهل العلم، ولا يُجيب عنها المربّي</li>
+  <li><strong>لا تشخيص طبي:</strong> المربّي لا يشخّص، ويحيلك إلى مختص في الحالات الخطرة</li>
+  <li><strong>لا بحث في الإنترنت:</strong> يُطلب من النموذج ألّا يضيف معلومة من خارج الوحدات المسترجَعة</li>
+  <li><strong>حرّاس آليون للنصوص الشرعية:</strong> عند كل تعديل في محتوى التطبيق، تُطابَق آيات الأذكار والإشعارات مع نص المصحف، وأحاديثها مع صحيحي البخاري ومسلم لفظًا ورقمًا، ويُمنع في المحتوى الإنجليزي عرض ترجمة على أنها قرآن. وهذه مطابقة آلية للنصوص، لا مراجعة من أهل العلم.</li>
 </ul>
 
 <h2>مجاني لوجه الله</h2>
-<p>المربّي مجاني بالكامل — بلا إعلانات، بلا اشتراكات، بلا مشتريات داخلية. تطبيق خيري نبنيه لوجه الله. لا نبيع بيانات المستخدمين ولا نشاركها مع أطراف ثالثة.</p>
+<p>المربّي مجاني بالكامل — بلا إعلانات ولا اشتراكات ولا مشتريات داخلية. تطبيق خيري نبنيه لوجه الله، ولا نبيع بيانات المستخدمين.</p>
 
-<h2>الخصوصية أولاً</h2>
+<h2>الخصوصية</h2>
 <ul>
-  <li>بيانات طفلك تبقى على جهازك — لا تُرسل لخوادمنا إلا عند السؤال (وتُحذف بعد المعالجة)</li>
-  <li>لا نجمع بيانات شخصية تُعرّف بهويتك</li>
+  <li>يُخفى اسم طفلك قبل أي معالجة سحابية لسؤالك</li>
   <li>التشفير أثناء النقل (HTTPS)</li>
-  <li>لا حسابات إجبارية — تطبيق بدون تسجيل دخول</li>
+  <li>لا يلزمك حساب: تسجيل الدخول اختياري</li>
+  <li>يمكنك طلب حذف بياناتك من خادمنا في أي وقت عبر support@alsaba.cloud</li>
 </ul>
 
-<a class="cta" href="%(play)s">حمّل المربي مجاناً 🤍</a>
-""" % {"play": _html.escape(attribute_visit(request))}
+<a class="cta" href="{play}">حمّل المربي مجاناً 🤍</a>
+"""
 
     return _page(
         title="منهجيتنا ومصادرنا",
-        desc="كيف يضمن المربي الذكي أن إجاباته موثوقة ومبنية على مصادر شرعية وعلمية — قاعدة معرفة ١٬١١٩ وحدة مع ضوابط أمان صارمة",
+        desc="كيف تُبنى إجابات المربّي: قاعدة معرفة بمراجع مذكورة، وضوابط آلية، ولا فتوى ولا تشخيص طبي.",
         body=body,
         canonical=canonical,
     )

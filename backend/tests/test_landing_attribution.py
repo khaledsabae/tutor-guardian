@@ -141,18 +141,72 @@ def test_the_canonical_never_echoes_tracking_params(client):
 # the very claim this replaced. Case-sensitive, so BIOS and -apple-system pass.
 _IOS_CLAIM = re.compile(r"iOS|iPhone|iPad|آيفون|أيفون|App Store|apps\.apple\.com")
 
+# A solo project: no scholar, sheikh, doctor or reviewer stands behind the
+# content, so supervision, review, accreditation or expert authorship is a false
+# claim. What the system does guarantee is said plainly instead: automated
+# matching against the Mushaf and the two Sahihs, and rulings deferred to
+# «أهل العلم» (not matched here). Bare «مراجع» is left out on purpose: it also
+# means "references", which the pages state truthfully («مراجعها»).
+_AUTHORITY_CLAIM = re.compile(
+    r"إشراف|مراجعة (?:شرعية|تربوية|طبية|علمية)|مُراجَع|مراجَع|تُراجَع|تُراجع|يُراجَع|"
+    r"موث[ّ]?ق|مُوثّق|موثوق|معتمد|مُعتمد|علماء|مشايخ|شيوخ|أطباء|خبراء|خبير|"
+    r"الطب النفسي|\b(?:experts?|scholars?|certified|accredited|approved by|reviewed by)\b",
+    re.IGNORECASE,
+)
+_FALSE_CLAIMS = {
+    "iOS — the app is Android-only (master plan, phase 4)": _IOS_CLAIM,
+    "authority — no human sharia, medical or educational reviewer exists": _AUTHORITY_CLAIM,
+}
 
-def test_no_page_claims_ios_while_the_app_is_android_only(client):
-    # iOS comes after Android stabilises (master plan, phase 4). Until then a
-    # parent on an iPhone who believes the page is led to a Play button.
+
+def _public_html(client) -> list[tuple[str, str]]:
+    """(where, html) for every public page as served, plus the frontend sources."""
     params = _path_params()
-    for route_path in _public_pages():
-        r = client.get(route_path.format(**params))
+    urls = [route_path.format(**params) for route_path in _public_pages()]
+    urls += [f"/seo/{slug}" for slug in SEO_PAGES]  # every article, not one sample
+    pages = []
+    for url in urls:
+        r = client.get(url)
         if "text/html" in r.headers.get("content-type", ""):
-            m = _IOS_CLAIM.search(r.text)
-            assert not m, f"{route_path}: {m and m.group(0)}"
-    for page in (_ROOT / "frontend").rglob("*.html"):
-        assert not _IOS_CLAIM.search(page.read_text(encoding="utf-8")), page.name
+            pages.append((url, r.text))
+    for page in sorted((_ROOT / "frontend").rglob("*.html")):
+        pages.append((str(page.relative_to(_ROOT)), page.read_text(encoding="utf-8")))
+    return pages
+
+
+@pytest.mark.parametrize("claim", list(_FALSE_CLAIMS))
+def test_no_page_makes_a_claim_the_project_cannot_back(client, claim):
+    pattern = _FALSE_CLAIMS[claim]
+    found = [(where, m.group(0)) for where, html in _public_html(client)
+             for m in [pattern.search(html)] if m]
+    assert not found, f"{claim}: {found}"
+
+
+@pytest.mark.parametrize("text", [
+    "إشراف ومراجعة شرعية وتربوية موثقة", "الطب النفسي للأطفال واليافعين",
+    "برامج تربوية معتمدة", "مقالات من خبراء التربية الإسلامية", "أقوال العلماء",
+    "الوحدات تُراجع دورياً", "Reviewed by scholars", "متوافق مع أندرويد وiOS",
+])
+def test_the_claims_this_replaced_would_be_caught(text):
+    assert any(p.search(text) for p in _FALSE_CLAIMS.values()), text
+
+
+def test_methodology_numbers_are_counted_not_typed(client):
+    # Typed in, they drifted: «١٬١١٩ وحدة» when there were 1,673.
+    from app.services.knowledge_loader import load_default_knowledge_units
+
+    total = len(load_default_knowledge_units())
+    arabic = f"{total:,}".replace(",", "٬").translate(
+        str.maketrans("0123456789", "٠١٢٣٤٥٦٧٨٩"))
+    assert f'<div class="stat-num">{arabic}</div>' in client.get("/methodology").text
+
+
+@pytest.mark.parametrize("text", [
+    "لا فتوى — الأحكام تُحال إلى أهل العلم", "ويذكر مراجعها في سطر 📚",
+    "متى أستشير الطبيب؟", "لا مراجعة من أهل العلم", "font-family: -apple-system",
+])
+def test_truthful_wording_is_not_flagged(text):
+    assert not any(p.search(text) for p in _FALSE_CLAIMS.values()), text
 
 
 def test_no_static_page_links_to_play_directly():
