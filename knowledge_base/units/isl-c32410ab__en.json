@@ -32,7 +32,7 @@
     "translator_model": "mistral-large-3:675b",
     "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "low_only",
+    "review_verdict": "pending",
     "review_defects": [
       {
         "model": "glm-5.2",
@@ -41,29 +41,7 @@
         "why": "The Arabic singular 'الذكر' is rendered as the plural 'adhkar', a minor number mismatch."
       }
     ],
-    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
-    "auto_review": {
-      "reviewers": [
-        "deepseek-v4-pro",
-        "glm-5.2"
-      ],
-      "fixer": null,
-      "rounds": 1,
-      "prompt_version": "dfa8a5f39718",
-      "content_sha256": "7e3b69d96b5777e76ce66f298ed9ba29c435e115edb59a89c7e8f84763fe238e",
-      "reviewed_at": "2026-10-04T11:18:18+00:00",
-      "residual_low": [
-        {
-          "model": "glm-5.2",
-          "field": "text_simplified",
-          "type": "meaning",
-          "why": "The Arabic singular 'الذكر' is rendered as the plural 'adhkar', a minor number mismatch."
-        }
-      ],
-      "adjudicated": [],
-      "tool": "ops/tools/review_en_parity.py",
-      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
-    },
+    "approved_by": null,
     "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

@@ -32,7 +32,7 @@
     "translator_model": "mistral-large-3:675b",
     "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "low_only",
+    "review_verdict": "pending",
     "review_defects": [
       {
         "model": "glm-5.2",
@@ -41,29 +41,7 @@
         "why": "The Arabic is an idafa-style adjective construct ('moral upbringing'); the English reverses the word order and drops the adjectival form, producing an awkward phrase."
       }
     ],
-    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
-    "auto_review": {
-      "reviewers": [
-        "deepseek-v4-pro",
-        "glm-5.2"
-      ],
-      "fixer": null,
-      "rounds": 1,
-      "prompt_version": "dfa8a5f39718",
-      "content_sha256": "5064d8da49b3f5ff7126b68421a0347e3766b6d2a9bfec1b8345b4842645582c",
-      "reviewed_at": "2026-10-04T11:18:18+00:00",
-      "residual_low": [
-        {
-          "model": "glm-5.2",
-          "field": "title",
-          "type": "meaning",
-          "why": "The Arabic is an idafa-style adjective construct ('moral upbringing'); the English reverses the word order and drops the adjectival form, producing an awkward phrase."
-        }
-      ],
-      "adjudicated": [],
-      "tool": "ops/tools/review_en_parity.py",
-      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
-    },
+    "approved_by": null,
     "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

@@ -32,7 +32,7 @@
     "translator_model": "mistral-large-3:675b",
     "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "low_only",
+    "review_verdict": "pending",
     "review_defects": [
       {
         "model": "deepseek-v4-pro",
@@ -47,35 +47,7 @@
         "why": "The Arabic specifies 'الدينية' (religious) but the English drops it, leaving 'Tarbiyah' unqualified."
       }
     ],
-    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
-    "auto_review": {
-      "reviewers": [
-        "deepseek-v4-pro",
-        "glm-5.2"
-      ],
-      "fixer": null,
-      "rounds": 1,
-      "prompt_version": "dfa8a5f39718",
-      "content_sha256": "722f4aaed33397a22e20d3ca4d529177ff39ad6251ff7192937868210b3ee07b",
-      "reviewed_at": "2026-10-04T11:18:18+00:00",
-      "residual_low": [
-        {
-          "model": "deepseek-v4-pro",
-          "field": "title",
-          "type": "omission",
-          "why": "The English title omits 'الدينية' (religious), losing the explicit religious focus."
-        },
-        {
-          "model": "glm-5.2",
-          "field": "title",
-          "type": "omission",
-          "why": "The Arabic specifies 'الدينية' (religious) but the English drops it, leaving 'Tarbiyah' unqualified."
-        }
-      ],
-      "adjudicated": [],
-      "tool": "ops/tools/review_en_parity.py",
-      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
-    },
+    "approved_by": null,
     "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

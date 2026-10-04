@@ -32,7 +32,7 @@
     "translator_model": "mistral-large-3:675b",
     "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "low_only",
+    "review_verdict": "pending",
     "review_defects": [
       {
         "model": "deepseek-v4-pro",
@@ -47,35 +47,7 @@
         "why": "English adds ﷺ not present in the Arabic text."
       }
     ],
-    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
-    "auto_review": {
-      "reviewers": [
-        "deepseek-v4-pro",
-        "glm-5.2"
-      ],
-      "fixer": null,
-      "rounds": 1,
-      "prompt_version": "dfa8a5f39718",
-      "content_sha256": "911abfefa78884d4c657266dee7afedcc56fc1aab10f9672f6ee51e1c85f5d03",
-      "reviewed_at": "2026-10-04T11:18:18+00:00",
-      "residual_low": [
-        {
-          "model": "deepseek-v4-pro",
-          "field": "title",
-          "type": "addition",
-          "why": "English adds ﷺ not present in the Arabic title."
-        },
-        {
-          "model": "deepseek-v4-pro",
-          "field": "text_simplified",
-          "type": "addition",
-          "why": "English adds ﷺ not present in the Arabic text."
-        }
-      ],
-      "adjudicated": [],
-      "tool": "ops/tools/review_en_parity.py",
-      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
-    },
+    "approved_by": null,
     "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

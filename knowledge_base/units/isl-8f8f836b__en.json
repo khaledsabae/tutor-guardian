@@ -32,7 +32,7 @@
     "translator_model": "mistral-large-3:675b",
     "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "low_only",
+    "review_verdict": "pending",
     "review_defects": [
       {
         "model": "glm-5.2",
@@ -41,29 +41,7 @@
         "why": "The Arabic 'سيرة' here means 'biographies/accounts' in a general sense, but 'seerah' as a transliterated term typically refers specifically to the Prophet's biography, making this slightly misleading."
       }
     ],
-    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
-    "auto_review": {
-      "reviewers": [
-        "deepseek-v4-pro",
-        "glm-5.2"
-      ],
-      "fixer": null,
-      "rounds": 1,
-      "prompt_version": "dfa8a5f39718",
-      "content_sha256": "84c01e9beddda3fcbea92ea5a77df35d8ac55da55e88ea4c993532495121fbc1",
-      "reviewed_at": "2026-10-04T11:18:18+00:00",
-      "residual_low": [
-        {
-          "model": "glm-5.2",
-          "field": "text_simplified",
-          "type": "meaning",
-          "why": "The Arabic 'سيرة' here means 'biographies/accounts' in a general sense, but 'seerah' as a transliterated term typically refers specifically to the Prophet's biography, making this slightly misleading."
-        }
-      ],
-      "adjudicated": [],
-      "tool": "ops/tools/review_en_parity.py",
-      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
-    },
+    "approved_by": null,
     "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

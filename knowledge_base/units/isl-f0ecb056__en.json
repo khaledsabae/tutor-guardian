@@ -32,7 +32,7 @@
     "translator_model": "mistral-large-3:675b",
     "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "low_only",
+    "review_verdict": "pending",
     "review_defects": [
       {
         "model": "deepseek-v4-pro",
@@ -41,29 +41,7 @@
         "why": "The English adds the honorific ﷺ not present in the Arabic, a minor addition."
       }
     ],
-    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
-    "auto_review": {
-      "reviewers": [
-        "deepseek-v4-pro",
-        "glm-5.2"
-      ],
-      "fixer": "mistral-large-3:675b",
-      "rounds": 2,
-      "prompt_version": "dfa8a5f39718",
-      "content_sha256": "43e27b02525edb268f020ea3a37c8a75247144b459cd6c6e9be7113ed084747f",
-      "reviewed_at": "2026-10-04T11:26:06+00:00",
-      "residual_low": [
-        {
-          "model": "deepseek-v4-pro",
-          "field": "text_simplified",
-          "type": "addition",
-          "why": "The English adds the honorific ﷺ not present in the Arabic, a minor addition."
-        }
-      ],
-      "adjudicated": [],
-      "tool": "ops/tools/review_en_parity.py",
-      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
-    },
+    "approved_by": null,
     "revalidated_at": "2026-10-04T11:26:06+00:00"
   }
 }

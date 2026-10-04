@@ -32,7 +32,7 @@
     "translator_model": "mistral-large-3:675b",
     "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "low_only",
+    "review_verdict": "pending",
     "review_defects": [
       {
         "model": "glm-5.2",
@@ -47,35 +47,7 @@
         "why": "The Arabic says القدوة الحسنة (qudwah hasanah) but the English renders it as 'uswah', a different Arabic word."
       }
     ],
-    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
-    "auto_review": {
-      "reviewers": [
-        "deepseek-v4-pro",
-        "glm-5.2"
-      ],
-      "fixer": null,
-      "rounds": 1,
-      "prompt_version": "dfa8a5f39718",
-      "content_sha256": "80408fa73db22865703de5bf8ee1f5f6f3c95b35c0dfe6e17b635fed42d6dc94",
-      "reviewed_at": "2026-10-04T11:18:18+00:00",
-      "residual_low": [
-        {
-          "model": "glm-5.2",
-          "field": "title",
-          "type": "meaning",
-          "why": "The Arabic uses القدوة (qudwah) but the English transliterates a different word, أسوة (uswah); both mean 'example' but they are not the same Arabic term."
-        },
-        {
-          "model": "glm-5.2",
-          "field": "text_simplified",
-          "type": "meaning",
-          "why": "The Arabic says القدوة الحسنة (qudwah hasanah) but the English renders it as 'uswah', a different Arabic word."
-        }
-      ],
-      "adjudicated": [],
-      "tool": "ops/tools/review_en_parity.py",
-      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
-    },
+    "approved_by": null,
     "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }
