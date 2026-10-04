@@ -638,6 +638,24 @@ def _wait_cooldown() -> None:
         time.sleep(min(left, 15))
 
 
+class UsageCapError(Exception):
+    """سقف استهلاك الحساب (Pro: نافذة ٥ ساعات) — ليس عطلًا عابرًا.
+
+    وقع 2026-10-04 في منتصف أول تشغيلة كاملة: كل النماذج ترجع 429 بنص
+    «You reached your Pro 5-hour limit». إعادة المحاولة بتراجع أُسّي كانت ستحرق
+    ٨ محاولات × كل دفعة ثم تُعلِّم مئات الوحدات «غير مراجَعة» — فالأداة تتوقف
+    فورًا بتقرير جزئي، والكاش يحفظ ما تمّ، والتشغيلة التالية تكمل من حيث وقفت.
+    """
+
+
+_capped = threading.Event()
+
+
+def _is_usage_cap(body: str) -> bool:
+    b = body.lower()
+    return "limit" in b and any(w in b for w in ("hour", "week", "month", "usage"))
+
+
 def post(model: str, system: str, user: str, timeout: int = 600) -> tuple[str, dict]:
     """نداء واحد، بتراجع أُسّي على العابر وتبريد مشترك على 429، وسقوط فوري على 401/402/403."""
     body = json.dumps({"model": model, "temperature": 0.1,
@@ -645,6 +663,8 @@ def post(model: str, system: str, user: str, timeout: int = 600) -> tuple[str, d
                                     {"role": "user", "content": user}]}).encode()
     last = None
     for attempt in range(8):
+        if _capped.is_set():
+            raise UsageCapError("usage cap reached earlier in this run")
         _wait_cooldown()
         req = urllib.request.Request(API_URL, data=body, headers={
             "Authorization": f"Bearer {_api_key()}", "Content-Type": "application/json"})
@@ -661,6 +681,13 @@ def post(model: str, system: str, user: str, timeout: int = 600) -> tuple[str, d
                 raise RuntimeError(f"{model}: HTTP {e.code} — غير متاح على هذا المفتاح") from e
             last = e
             if e.code == 429:
+                try:
+                    detail = e.read().decode("utf-8", "replace")
+                except OSError:
+                    detail = ""
+                if _is_usage_cap(detail):
+                    _capped.set()
+                    raise UsageCapError(detail[:200]) from e
                 _cooldown(min(300, 30 * 2 ** min(attempt, 3)))
                 continue
         except (urllib.error.URLError, TimeoutError, OSError, ValueError, KeyError) as e:
@@ -848,6 +875,23 @@ def batches_of(chunks: list[Chunk], budget: int, max_items: int) -> list[list[Ch
     return out
 
 
+def canon_field(fld: str, valid_fields: set) -> str:
+    """glm-5.2 يكتب المسار أحيانًا «fields.text» بدل «text» — نفس الحقل، فيُعاد إليه.
+
+    بدون هذا يبقى العيب «مانعًا» لكنه لا يصل المُصلِح (لا حقل بهذا الاسم)، فتعلق
+    الوحدة بلا إصلاح ولا ختم.
+    """
+    fld = (fld or "").strip()
+    if fld in valid_fields:
+        return fld
+    for prefix in ("fields.", "fields[", "english.", "arabic."):
+        if fld.startswith(prefix):
+            rest = fld[len(prefix):].rstrip("]").strip("'\"")
+            if rest in valid_fields:
+                return rest
+    return fld or "?"
+
+
 def normalise_defects(raw: Any, valid_fields: set) -> list[dict]:
     """ناتج المراجع كما هو لا يُوثَق: خطورة مجهولة = متوسطة (الأحوط)، والحقل يُحفظ كما ورد."""
     out = []
@@ -858,9 +902,8 @@ def normalise_defects(raw: Any, valid_fields: set) -> list[dict]:
         if sev not in SEVERITIES:
             sev = "medium"
         side = "arabic" if str(d.get("side", "")).lower().startswith("ar") else "english"
-        fld = str(d.get("field", "")).strip()
         out.append({
-            "field": fld if fld in valid_fields else (fld or "?"),
+            "field": canon_field(str(d.get("field", "")), valid_fields),
             "side": side,
             "type": str(d.get("type", "meaning"))[:40],
             "severity": sev,
@@ -903,7 +946,8 @@ def review_batch(model: str, batch: list[Chunk], depth: int = 0) -> dict[str, li
     for c in batch:
         k = f"{model}|{c.sha}"
         if k in cache:
-            result[c.cid] = cache[k]
+            result[c.cid] = [{**d, "field": canon_field(d.get("field", ""), set(c.fields))}
+                             for d in cache[k]]
         else:
             todo.append(c)
     if not todo:
@@ -1147,7 +1191,12 @@ def run(items: list[Item], args) -> dict:
     for rnd in range(1, args.rounds + 1):
         report["rounds"] = rnd
         print(f"\n━━ جولة {rnd}: {len(pending)} وحدة · {reviewers[0]} + {reviewers[1]}", flush=True)
-        verdicts = review_items(pending, reviewers, args.workers, args.budget, args.max_items)
+        try:
+            verdicts = review_items(pending, reviewers, args.workers, args.budget, args.max_items)
+        except UsageCapError as e:
+            print(f"\n⏸️  سقف استهلاك Ollama: {e}\n   الكاش محفوظ؛ أعد التشغيل لاحقًا.", flush=True)
+            report["capped"] = True
+            break
         to_fix: list[tuple[Item, list]] = []
         for key, v in verdicts.items():
             it = v.item
@@ -1172,7 +1221,12 @@ def run(items: list[Item], args) -> dict:
         print(f"   🔧 {len(to_fix)} وحدة إلى المُصلِح ({FIXER})", flush=True)
         # النداءات متوازية، والكتابة متسلسلة: القصص الأربع عشرة ملف واحد.
         with ThreadPoolExecutor(max_workers=args.workers) as ex:
-            fixes = list(ex.map(lambda job: fix_item(*job), to_fix))
+            try:
+                fixes = list(ex.map(lambda job: fix_item(*job), to_fix))
+            except UsageCapError as e:
+                print(f"\n⏸️  سقف استهلاك Ollama أثناء الإصلاح: {e}", flush=True)
+                report["capped"] = True
+                break
         pending = []
         for (it, _block), fx in zip(to_fix, fixes):
             pending.append(it)
@@ -1529,9 +1583,9 @@ def main(argv: list[str] | None = None) -> int:
                   f"{d.get('field', '?')} ({d.get('model', d.get('source', ''))}): "
                   f"{str(d.get('why', ''))[:160]}")
     if args.report:
-        args.report.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
+        _dump_report(args.report, report)
         print(f"\n📄 {args.report}")
-    return 0
+    return 3 if report.get("capped") else 0
 
 
 if __name__ == "__main__":

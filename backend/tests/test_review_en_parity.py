@@ -338,3 +338,21 @@ def test_the_commit_answers_for_what_it_touches_source_included(rp, tree):
     # Editing only the Arabic still invalidates the English stamp.
     assert rp.touched_by(item, {"knowledge_base/curriculum/lessons/lesson_x.json"})
     assert not rp.touched_by(item, {"knowledge_base/curriculum/lessons/other.json"})
+
+
+def test_a_prefixed_field_path_still_reaches_the_fixer(rp):
+    # glm-5.2 writes "fields.text"; left as is, the defect blocks the stamp but
+    # never reaches the fixer, and the unit hangs with neither.
+    valid = {"text", "pages[0].text"}
+    assert rp.canon_field("fields.text", valid) == "text"
+    assert rp.canon_field("fields[pages[0].text]", valid) == "pages[0].text"
+    assert rp.canon_field("text", valid) == "text"
+    assert rp.canon_field("summary", valid) == "summary"   # unknown stays visible
+
+
+def test_an_account_cap_is_told_apart_from_a_burst_limit(rp):
+    # The body Ollama Cloud actually returned on 2026-10-04, mid-run.
+    cap = ('{"error":{"message":"You reached your Pro 5-hour limit. Max is $100/month '
+           'for $300 of usage, with no 5-hour or weekly caps"}}')
+    assert rp._is_usage_cap(cap)
+    assert not rp._is_usage_cap('{"error": "Too Many Requests"}')
