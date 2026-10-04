@@ -5,6 +5,10 @@ Each page targets a specific search query (e.g. "كيف أعلم طفلي الص
 and provides valuable content that ranks organically.
 
 Route: GET /seo/{slug}
+
+The install button is filled per request (PLAY_URL_PLACEHOLDER) from
+app.services.attribution, so `?ref=` and `utm_*` on an article link reach the
+Play install referrer like they do from /go.
 """
 from __future__ import annotations
 
@@ -15,11 +19,13 @@ from pathlib import Path
 from fastapi import APIRouter, Request
 from fastapi.responses import HTMLResponse
 
+from app.services.attribution import attribute_visit
+
 router = APIRouter(tags=["web"])
 
 _TEAL = "#01696F"
 _CREAM = "#FAF7F2"
-_PLAY = "https://play.google.com/store/apps/details?id=com.alsaba.almorabbi"
+PLAY_URL_PLACEHOLDER = "{{PLAY_URL}}"
 
 # SEO page definitions
 SEO_PAGES = {
@@ -71,7 +77,7 @@ SEO_PAGES = {
 <p>كل طفل مختلف. اسأل المربّي الذكي: «ابني 8 سنين ويرفض الصلاة، أعمل إيه؟» واحصل على خطة مخصصة لعمره وشخصيته.</p>
 
 <a class="cta" href="%(play)s">حمّل المربي مجاناً 🤍</a>
-""" % {"play": _PLAY},
+""" % {"play": PLAY_URL_PLACEHOLDER},
     },
     "tantrums-child": {
         "title": "كيف أتعامل مع نوبات غضب طفلي — حلول عملية",
@@ -128,7 +134,7 @@ SEO_PAGES = {
 <p>اسأل المربّي عن تفاصيل طفلك: «ابني 3 سنين ونوبات الغضب بتطول، إيه الحل؟» — الإجابة العامة لا تكفي.</p>
 
 <a class="cta" href="%(play)s">حمّل المربي مجاناً 🤍</a>
-""" % {"play": _PLAY},
+""" % {"play": PLAY_URL_PLACEHOLDER},
     },
     "screen-time-child": {
         "title": "كم وقت شاشة يناسب طفلي؟ — دليل المربّي الذكي",
@@ -176,7 +182,7 @@ SEO_PAGES = {
 <p>اطلب من المربّي خطة مخصصة: «أمي طفلي 4 سنين ومتعلق باليوتيوب، إزاي أقلله؟»</p>
 
 <a class="cta" href="%(play)s">حمّل المربي مجاناً 🤍</a>
-""" % {"play": _PLAY},
+""" % {"play": PLAY_URL_PLACEHOLDER},
     },
     "toilet-training": {
         "title": "متى أبدأ تدريب طفلي على المرحاض؟",
@@ -225,7 +231,7 @@ SEO_PAGES = {
 <p>اسأل: «ابنتي 2.5 سنة جاهزة للمرحاض بس مترددة، إيه أفضل طريقة؟» — المربّي يقدّم خطة تتناسب مع طفلك.</p>
 
 <a class="cta" href="%(play)s">حمّل المربي مجاناً 🤍</a>
-""" % {"play": _PLAY},
+""" % {"play": PLAY_URL_PLACEHOLDER},
     },
     "lying-child": {
         "title": "كيف أربّي طفلي على الصدق؟",
@@ -273,7 +279,7 @@ SEO_PAGES = {
 <p>اسأل: «ابني 6 سنين بدأ يكذب عشان يتجنب العقاب، أعمل إيه؟» — المربّي يرشدك لخطوات عملية.</p>
 
 <a class="cta" href="%(play)s">حمّل المربي مجاناً 🤍</a>
-""" % {"play": _PLAY},
+""" % {"play": PLAY_URL_PLACEHOLDER},
     },
     "sleep-child": {
         "title": "طفلي لا ينام — نصائح للنوم الهادئ",
@@ -318,7 +324,7 @@ SEO_PAGES = {
 <p>اسأل: «طفلي 3 سنين بيصحى كتير بالليل، إيه السبب؟» — المربّي يساعدك تفرّق بين عادة قابلة للتعديل وعلامة تحتاج طبيب.</p>
 
 <a class="cta" href="%(play)s">حمّل المربي مجاناً 🤍</a>
-""" % {"play": _PLAY},
+""" % {"play": PLAY_URL_PLACEHOLDER},
     },
     "violent-games-child": {
         "title": "طفلي يلعب ألعاب عنيفة — كيف أحميه؟",
@@ -367,7 +373,7 @@ SEO_PAGES = {
 <p>اسأل: «ابني 8 سنين بيلعب ألعاب قتالية وأخاف يتأثر، إيه البديل؟»</p>
 
 <a class="cta" href="%(play)s">حمّل المربي مجاناً 🤍</a>
-""" % {"play": _PLAY},
+""" % {"play": PLAY_URL_PLACEHOLDER},
     },
     "sibling-kindness": {
         "title": "كيف أعلّم طفلي الرحمة بإخوته؟",
@@ -411,7 +417,7 @@ SEO_PAGES = {
 <p>اسأل: «أولادي بيتخانقوا كتير وبضربوا بعض، إزاي أعلمهم الرحمة؟»</p>
 
 <a class="cta" href="%(play)s">حمّل المربي مجاناً 🤍</a>
-""" % {"play": _PLAY},
+""" % {"play": PLAY_URL_PLACEHOLDER},
     },
     "quran-child": {
         "title": "كيف أقرّب طفلي من القرآن؟ — حفظ وفهم",
@@ -455,7 +461,7 @@ SEO_PAGES = {
 <p>اسأل: «إزاي أخلي ابني 10 سنين يحب القرآن مش يحفظه بس؟»</p>
 
 <a class="cta" href="%(play)s">حمّل المربي مجاناً 🤍</a>
-""" % {"play": _PLAY},
+""" % {"play": PLAY_URL_PLACEHOLDER},
     },
     "shared-screen-toddler": {
         "title": "هل أترك طفلي الصغير يشاهد الشاشة وحده؟",
@@ -499,7 +505,7 @@ SEO_PAGES = {
 <p>اسأل: «ابنتي سنتين وبتحب يوتيوب kids، هل أقعد معاها ولا خليها لوحدها؟»</p>
 
 <a class="cta" href="%(play)s">حمّل المربي مجاناً 🤍</a>
-""" % {"play": _PLAY},
+""" % {"play": PLAY_URL_PLACEHOLDER},
     },
 }
 
@@ -526,8 +532,10 @@ def _faq_schema(faq: list[dict], canonical: str) -> str:
     return f"""<script type="application/ld+json">{json.dumps(data, ensure_ascii=False)}</script>"""
 
 
-def _page(title: str, desc: str, body: str, canonical: str, faq: list[dict] | None = None) -> HTMLResponse:
+def _page(title: str, desc: str, body: str, canonical: str, install_url: str,
+          faq: list[dict] | None = None) -> HTMLResponse:
     t, d = _html.escape(title), _html.escape(desc)
+    body = body.replace(PLAY_URL_PLACEHOLDER, _html.escape(install_url))
     schema = _faq_schema(faq or [], canonical)
     doc = f"""<!doctype html>
 <html lang="ar" dir="rtl">
@@ -585,7 +593,7 @@ def _page(title: str, desc: str, body: str, canonical: str, faq: list[dict] | No
 
 
 @router.get("/{slug}", include_in_schema=False)
-async def seo_page(request: Request, slug: str):
+def seo_page(request: Request, slug: str):
     """SEO page for a specific pain-point question."""
     if slug not in SEO_PAGES:
         return HTMLResponse(content="Page not found", status_code=404)
@@ -598,12 +606,13 @@ async def seo_page(request: Request, slug: str):
         desc=page_data["description"],
         body=page_data["body"],
         canonical=canonical,
+        install_url=attribute_visit(request),
         faq=page_data.get("faq"),
     )
 
 
 @router.get("/", include_in_schema=False)
-async def seo_index(request: Request):
+def seo_index(request: Request):
     """Index of all SEO pages."""
     base_url = str(request.base_url).rstrip("/")
 
@@ -620,7 +629,7 @@ async def seo_index(request: Request):
 {"".join(links)}
 </ul>
 
-<a class="cta" href="{_PLAY}">حمّل المربي مجاناً 🤍</a>
+<a class="cta" href="{PLAY_URL_PLACEHOLDER}">حمّل المربي مجاناً 🤍</a>
 """
 
     return _page(
@@ -628,4 +637,5 @@ async def seo_index(request: Request):
         desc="مقالات مفيدة للآباء من خبراء التربية الإسلامية — تربية إسلامية متكاملة",
         body=body,
         canonical=base_url + "/seo",
+        install_url=attribute_visit(request),
     )

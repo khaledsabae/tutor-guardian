@@ -16,11 +16,12 @@ from pathlib import Path
 from fastapi import APIRouter, Request
 from fastapi.responses import HTMLResponse
 
+from app.services.attribution import attribute_visit
+
 router = APIRouter(tags=["web"])
 
 _TEAL = "#01696F"
 _CREAM = "#FAF7F2"
-_PLAY = "https://play.google.com/store/apps/details?id=com.alsaba.almorabbi"
 
 
 def _page(title: str, desc: str, body: str, canonical: str) -> HTMLResponse:
@@ -76,7 +77,7 @@ def _page(title: str, desc: str, body: str, canonical: str) -> HTMLResponse:
 
 
 @router.get("/methodology", include_in_schema=False)
-async def methodology_page(request: Request):
+def methodology_page(request: Request):
     """Our methodology and sources — public page for parents and reviewers."""
     canonical = str(request.base_url).rstrip("/") + "/methodology"
 
@@ -172,7 +173,7 @@ async def methodology_page(request: Request):
 </ul>
 
 <a class="cta" href="%(play)s">حمّل المربي مجاناً 🤍</a>
-""" % {"play": _PLAY}
+""" % {"play": _html.escape(attribute_visit(request))}
 
     return _page(
         title="منهجيتنا ومصادرنا",
