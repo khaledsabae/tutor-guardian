@@ -8,7 +8,8 @@ Three subcommands, all stdlib-only so they run on a bare GitHub runner:
                the Arabic and the English rendering alike. Re-run per install
                lineage: the baseline build is matched with its own strings.
   logcat-gate  Fail on a FATAL EXCEPTION or native crash in the app process,
-               an ANR, or a Flutter framework/Dart error (release mode).
+               an ANR, a Flutter framework/Dart error (release mode), or the
+               app's main() running more than once in one process.
   summary      Render results.tsv + the gate verdict as Markdown.
 """
 from __future__ import annotations
@@ -148,6 +149,13 @@ _LINE = re.compile(r"^\S+\s+\S+\s+(\d+)\s+(\d+)\s+([VDIWEF])\s+(.*?)\s*: (.*)$")
 # a run has no fixed prefix, so the frames are the marker.
 _DART_FRAME = re.compile(r"^#\d+\s+\S|^\s*#\d\d abs [0-9a-f]+|^\*\*\* \*\*\* \*\*\*")
 
+# mobile/lib/main.dart prints this once per run of main(). Two in one process
+# mean a second Flutter engine is running the whole app: every startup side
+# effect twice, and on a fresh install two device ids — the 2026-10 "device
+# twin", caused by audio_service's plugin starting an engine of its own. Builds
+# before the marker print nothing, so they are simply not counted.
+_MAIN_MARKER = "tg.main: entrypoint started"
+
 
 def _parse(line: str):
     m = _LINE.match(line)
@@ -181,6 +189,7 @@ def scan_logcat(lines: list[str], package: str, allow: list[re.Pattern]) -> tupl
     pending_fatal: str | None = None
     prev_flutter_msg = ""
     in_trace = False
+    main_runs: dict[int, int] = {}
     for raw in lines:
         parsed = _parse(raw.rstrip("\n"))
         if not parsed:
@@ -219,6 +228,8 @@ def scan_logcat(lines: list[str], package: str, allow: list[re.Pattern]) -> tupl
             continue
 
         # tag == "flutter": the Dart side of the app.
+        if msg.startswith(_MAIN_MARKER):
+            main_runs[pid] = main_runs.get(pid, 0) + 1
         if prio in "EF":
             fail("FLUTTER ERROR (engine)", msg)
         elif "Another exception was thrown" in msg or "EXCEPTION CAUGHT BY" in msg:
@@ -233,7 +244,14 @@ def scan_logcat(lines: list[str], package: str, allow: list[re.Pattern]) -> tupl
 
     if pending_fatal is not None:
         notes.append(f"unattributed {pending_fatal}")
+    for pid, runs in sorted(main_runs.items()):
+        if runs > 1:
+            fail("SECOND DART ENTRYPOINT",
+                 f"main() ran {runs} times in process {pid} — a second Flutter engine is running the app")
     notes.append(f"app pids seen: {sorted(app_pids) or 'none'}")
+    if main_runs:
+        notes.append("main() runs per process: "
+                     + ", ".join(f"{pid}={n}" for pid, n in sorted(main_runs.items())))
     return failures, notes
 
 

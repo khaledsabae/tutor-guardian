@@ -167,6 +167,37 @@ class LogcatGateTest(unittest.TestCase):
         self.assertEqual(failures, [])
         self.assertTrue(any("allowlisted" in n for n in notes))
 
+    def test_main_once_per_process_passes(self):
+        failures, notes = self.scan([
+            lc(500, "I", "ActivityManager", f"Start proc 4242:{PKG}/u0a190 for next-top-activity"),
+            lc(4242, "I", "flutter", "tg.main: entrypoint started", tid=4260),
+            lc(500, "I", "ActivityManager", f"Start proc 5151:{PKG}/u0a190 for next-top-activity"),
+            lc(5151, "I", "flutter", "tg.main: entrypoint started", tid=5170),
+        ])
+        self.assertEqual(failures, [])
+        self.assertIn("main() runs per process: 4242=1, 5151=1", notes)
+
+    def test_second_dart_entrypoint_in_one_process_fails(self):
+        # What every process of 1.0.66 does: audio_service's engine runs main()
+        # again, on its own UI thread, in the same process.
+        failures, _ = self.scan([
+            lc(500, "I", "ActivityManager", f"Start proc 4242:{PKG}/u0a190 for next-top-activity"),
+            lc(4242, "I", "flutter", "tg.main: entrypoint started", tid=4260),
+            lc(4242, "D", "MediaBrowserCompat", "Connecting to a MediaBrowserService."),
+            lc(4242, "I", "flutter", "tg.main: entrypoint started", tid=4290),
+        ])
+        self.assertEqual(len(failures), 1, failures)
+        self.assertIn("SECOND DART ENTRYPOINT", failures[0])
+        self.assertIn("2 times in process 4242", failures[0])
+
+    def test_builds_without_the_marker_are_not_judged(self):
+        failures, notes = self.scan([
+            lc(500, "I", "ActivityManager", f"Start proc 4242:{PKG}/u0a190 for next-top-activity"),
+            lc(4242, "I", "flutter", "something informational"),
+        ])
+        self.assertEqual(failures, [])
+        self.assertFalse(any(n.startswith("main() runs") for n in notes))
+
     def test_gate_refuses_an_empty_capture(self):
         with tempfile.TemporaryDirectory() as d:
             path = Path(d) / "logcat.txt"
