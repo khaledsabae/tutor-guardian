@@ -231,3 +231,61 @@ def test_written_lessons_are_well_formed_pairs(dp):
         path = json.loads((CURRICULUM / "paths" / f"{ar['path_id']}.json")
                           .read_text(encoding="utf-8"))
         assert ar["id"] in path["lesson_ids"], ar["id"]
+
+
+# ── the reviewer call: one try per family, then wait ──────────────────────
+
+class _FakeOllama:
+    """Stands in for urlopen: a script of outcomes per model, and a call log."""
+
+    def __init__(self, outcomes):
+        self.outcomes, self.calls = outcomes, []
+
+    def __call__(self, req, timeout=None):
+        import io
+        import urllib.error
+        model = json.loads(req.data)["model"]
+        self.calls.append(model)
+        out = self.outcomes[model]
+        if isinstance(out, int):
+            raise urllib.error.HTTPError(req.full_url, out, "x", {}, None)
+        if isinstance(out, BaseException):
+            raise out
+        body = {"choices": [{"message": {"content": json.dumps(out)}}]}
+        return io.BytesIO(json.dumps(body).encode())
+
+
+@pytest.fixture
+def ollama(dp, monkeypatch):
+    monkeypatch.setenv("OLLAMA_API_KEY", "test-not-a-key")
+    monkeypatch.setattr(dp, "REVIEW_PATIENCE_S", 0)
+
+    def install(outcomes):
+        fake = _FakeOllama(outcomes)
+        monkeypatch.setattr(dp.urllib.request, "urlopen", fake)
+        return fake
+    return install
+
+
+def test_a_timeout_goes_to_the_other_family_without_retrying_the_same_model(dp, ollama):
+    """tc._post retries a timeout three times; on a crowded shared key that spent
+    15 minutes per lesson — and quota — before the fallback was ever asked."""
+    fake = ollama({dp.REVIEW_MODEL: TimeoutError("read timed out"),
+                   dp.REVIEW_FALLBACK: {"verdict": "clean", "defects": []}})
+    verdict, model = dp.review("system", {"lesson": "x"})
+    assert (verdict["verdict"], model) == ("clean", dp.REVIEW_FALLBACK)
+    assert fake.calls == [dp.REVIEW_MODEL, dp.REVIEW_FALLBACK]
+
+
+def test_an_account_refusal_is_raised_not_waited_on(dp, ollama):
+    fake = ollama({dp.REVIEW_MODEL: 401, dp.REVIEW_FALLBACK: {"verdict": "clean"}})
+    with pytest.raises(RuntimeError, match="غير متاح"):
+        dp.review("system", {"lesson": "x"})
+    assert fake.calls == [dp.REVIEW_MODEL]
+
+
+def test_both_families_busy_ends_in_an_error_not_a_verdict(dp, ollama):
+    fake = ollama({dp.REVIEW_MODEL: 429, dp.REVIEW_FALLBACK: 429})
+    with pytest.raises(RuntimeError, match="both reviewers unavailable"):
+        dp.review("system", {"lesson": "x"})
+    assert fake.calls == [dp.REVIEW_MODEL, dp.REVIEW_FALLBACK]

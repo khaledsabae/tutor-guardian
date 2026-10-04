@@ -60,6 +60,8 @@ import sys
 import threading
 import time
 import unicodedata
+import urllib.error
+import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -403,30 +405,49 @@ def load_key() -> None:
 # 2026-10-04: ثمانية نماذج، 429 خلال ثانية). فالطاعن ينتظر بصبرٍ متصاعد — طلبٌ واحد
 # كل بضع دقائق — بدل أن يسقط الدرس أو يضاعف الضغط على مفتاحٍ مشترك.
 REVIEW_PATIENCE_S = int(os.environ.get("DEEPEN_REVIEW_PATIENCE_S", 4 * 3600))
+# طلبٌ واحد لكل نموذج في كل دورة. `tc._post` يعيد المحاولة ثلاثًا عند انتهاء المهلة،
+# فكان الأساسي المزدحم يأكل ١٥ دقيقة (٣ × ٣٠٠ث) قبل أن يُسأل البديل — قيس 2026-10-04:
+# ٧٠٠–١٠٦٧ث لدرسٍ يُراجَع في دقيقة حين يردّ — وكل محاولةٍ منها تُحسب على حصةٍ مشتركة.
+REVIEW_TIMEOUT_S = int(os.environ.get("DEEPEN_REVIEW_TIMEOUT_S", 420))
+
+
+def _ask_once(model: str, system: str, user: str) -> str:
+    """نداءٌ واحد بلا إعادة. الأخطاء تصعد كما هي ليقرّر `review` ما بعدها."""
+    body = json.dumps({"model": model, "temperature": 0.2,
+                       "messages": [{"role": "system", "content": system},
+                                    {"role": "user", "content": user}]}).encode()
+    req = urllib.request.Request(
+        tc.API_URL, data=body,
+        headers={"Authorization": f"Bearer {os.environ['OLLAMA_API_KEY']}",
+                 "Content-Type": "application/json"})
+    with urllib.request.urlopen(req, timeout=REVIEW_TIMEOUT_S) as r:
+        return json.load(r)["choices"][0]["message"]["content"]
 
 
 def review(system: str, payload: dict) -> tuple[dict, str]:
-    """طعنٌ من عائلة غير عائلة الكاتب. 429 على الأساسي → البديل؛ على الاثنين → انتظار."""
+    """طعنٌ من عائلة غير عائلة الكاتب: الأساسي ثم البديل مرةً واحدة لكلٍّ منهما، فإن
+    تعذّر الاثنان (429 أو مهلة أو ردٌّ مبتور) فانتظارٌ متصاعد ثم دورةٌ جديدة."""
     user = json.dumps(payload, ensure_ascii=False)
     deadline = time.time() + REVIEW_PATIENCE_S
     wait = 60
     while True:
         for model in (REVIEW_MODEL, REVIEW_FALLBACK):
             try:
-                raw, _ = tc._post(model, system, user)
-                return tc._parse_json(raw), model
-            except RuntimeError as e:
-                if "غير متاح" in str(e):
-                    raise
-            except (json.JSONDecodeError, ValueError):
-                continue
-            except http.client.HTTPException:
-                # IncompleteRead أسقط تشغيلةً كاملة بعد ست مراجعات: _post يعيد المحاولة
-                # على أخطاء الشبكة وحدها، وانقطاع الجسم في منتصفه ليس منها.
+                return tc._parse_json(_ask_once(model, system, user)), model
+            except urllib.error.HTTPError as e:
+                # 401/402/403 حالة حساب لا ازدحام: الانتظار يكرّر الرفض نفسه.
+                if e.code in (401, 402, 403):
+                    raise RuntimeError(f"{model}: HTTP {e.code} — النموذج غير متاح "
+                                       f"على هذا المفتاح") from e
+            except (urllib.error.URLError, TimeoutError, OSError,
+                    http.client.HTTPException, json.JSONDecodeError, ValueError,
+                    KeyError):
+                # مهلة، أو جسمٌ مبتور (IncompleteRead أسقط تشغيلةً كاملة يومًا)، أو ردٌّ
+                # ليس JSON: العائلة الأخرى الآن، لا النموذج نفسه ثلاث مرات.
                 continue
         if time.time() + wait > deadline:
             raise RuntimeError("both reviewers unavailable (429/timeouts) — retry later")
-        print(f"    … reviewers busy (429); waiting {wait}s", flush=True)
+        print(f"    … reviewers busy (429/timeout); waiting {wait}s", flush=True)
         time.sleep(wait)
         wait = min(wait * 2, 600)
 
