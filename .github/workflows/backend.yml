@@ -152,7 +152,9 @@ jobs:
       # hook) could land English without a stamp, or a stamp gone stale under an
       # edit. Every published English unit must carry a stamp whose fingerprint
       # matches its Arabic + English, or an entry in ops/data/en_parity_queue.json
-      # bound to that exact text. Stdlib only, no network, under a second.
+      # bound to that exact text. Stdlib only, no network, under a second. Being in
+      # this job, it also gates main's deploy (deploy_gate.py) — as the hook already
+      # refuses such commits, a red step here means one got past the hook.
       - name: Run English parity gate (review_en_parity.py check)
         run: |
           cd "$GITHUB_WORKSPACE"
