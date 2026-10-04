@@ -14,6 +14,8 @@ import '../../../models/enums.dart';
 import '../../../theme/app_theme.dart';
 import '../../../widgets/ui/bouncy_button.dart';
 import '../../onboarding/screens/avatar_picker_sheet.dart';
+import '../../programs/providers/programs_providers.dart';
+import '../../programs/widgets/birth_month_field.dart';
 import '../providers/progress_providers.dart';
 import '../../../theme/design_tokens.dart';
 import '../../../widgets/ui/error_retry_view.dart';
@@ -31,6 +33,10 @@ class _AddChildScreenState extends ConsumerState<AddChildScreen> {
   String? _ageGroup;
   String? _gender;
   String? _avatarEmoji;
+
+  /// "YYYY-MM" or null — optional, and offered only when the server can store
+  /// it (a server without the programs would silently drop it).
+  String? _birthMonth;
 
   @override
   void dispose() {
@@ -65,7 +71,10 @@ class _AddChildScreenState extends ConsumerState<AddChildScreen> {
             ageGroup: ageGroup,
             gender: _gender,
             avatarEmoji: _avatarEmoji,
+            birthMonth: ref.read(programsAvailableProvider) ? _birthMonth : null,
           );
+      // The programs summarise every child; a new one changes the answer.
+      if (mounted) ref.invalidate(programsOverviewProvider);
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text(AppLocalizations.of(context).addChildAdded(child.name))),
@@ -88,6 +97,7 @@ class _AddChildScreenState extends ConsumerState<AddChildScreen> {
   Widget build(BuildContext context) {
     final createState = ref.watch(createChildProvider);
     final busy = createState.isLoading;
+    final offerBirthMonth = ref.watch(programsAvailableProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -185,6 +195,16 @@ class _AddChildScreenState extends ConsumerState<AddChildScreen> {
                     .toList(),
               ),
               const SizedBox(height: 24),
+              if (offerBirthMonth) ...[
+                BirthMonthField(
+                  value: _birthMonth,
+                  childName: _nameController.text,
+                  ageGroup: _ageGroup,
+                  onChanged: (v) => setState(() => _birthMonth = v),
+                  onUseBand: (band) => setState(() => _ageGroup = band),
+                ),
+                const SizedBox(height: 24),
+              ],
               Text(
                 AppLocalizations.of(context).onbChildAvatar,
                 style: Theme.of(context)

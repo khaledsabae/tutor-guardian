@@ -12,6 +12,7 @@ import '../models/habit_models.dart';
 import '../../agreement/child_agreement_screen.dart';
 import '../../license/child_license_screen.dart';
 import '../../missions/child_mission_screen.dart';
+import '../../programs/widgets/child_prayer_card.dart';
 import '../providers/child_mode_providers.dart';
 import '../widgets/habit_week_strip.dart';
 import '../../../widgets/ui/celebration_overlay.dart';
@@ -106,9 +107,13 @@ class HabitChildModeScreen extends ConsumerWidget {
             Expanded(
               child: ListView.builder(
                 padding: const EdgeInsets.all(16),
-                itemCount: state.day!.habits.length,
+                itemCount: state.day!.habits.length + 1,
                 itemBuilder: (context, index) {
-                  final item = state.day!.habits[index];
+                  // «صلاتي اليوم» first, for a child on the Prayer Journey —
+                  // it renders nothing for everyone else (and on an older
+                  // server), so the habit list is unchanged for them.
+                  if (index == 0) return const ChildPrayerCard();
+                  final item = state.day!.habits[index - 1];
                   return _HabitChildCard(
                     item: HabitItem(
                       category: item.category,

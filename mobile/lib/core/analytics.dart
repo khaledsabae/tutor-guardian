@@ -335,11 +335,19 @@ class Analytics {
   /// these three (2026-10) because «مش عارف أبدأ منين» was the first complaint,
   /// so their tap shares are the measure of whether that worked.
   ///
-  /// `block` ∈ step · ask · mission.
+  /// `block` ∈ step · ask · mission · programs.
   /// `action` ∈ first_lesson · browse · continue (step) · tip · compose (ask) ·
-  /// open_day · child_mode · routine · add_child (mission).
+  /// open_day · child_mode · routine · add_child (mission) ·
+  /// open · ramadan · prayer · milestones (programs — the card under the three).
   static Future<void> todayBlockTapped(String block, String action) =>
       _log('today_block_tapped', {'block': block, 'action': action});
+
+  /// Something done in a family program (MOBILE_API §11). [program] is one of
+  /// `ramadan` · `prayer` · `milestones`; [action] is a fixed snake_case verb
+  /// from the calling screen (`open`, `mark`, `enrol_journey`, `child_claim`…),
+  /// never free text — the pair stays a small, closed set in GA4.
+  static Future<void> programAction(String program, String action) =>
+      _log('program_action', {'program': program, 'action': action});
 
   /// «ادعم المربّي» opened. Only reachable when the server flag is on and the
   /// store returned products, so this counts real exposure.

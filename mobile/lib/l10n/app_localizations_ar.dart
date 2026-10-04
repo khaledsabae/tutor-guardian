@@ -4065,4 +4065,844 @@ class AppLocalizationsAr extends AppLocalizations {
   String supportUnpricedNote(int count) {
     return 'بعض الدعم ($count) لم تؤكّد Google Play قيمته بعد، وسيُحتسب حين تؤكّدها.';
   }
+
+  @override
+  String get birthMonthLabel => 'شهر الميلاد (اختياري)';
+
+  @override
+  String get birthMonthWhy =>
+      'يساعد شهر الميلاد المربّي على تنبيهك قبل المراحل المهمة في وقتها، مثل بدء تعليم الصلاة في السابعة. يكفي الشهر والسنة، ولا نسأل عن اليوم.';
+
+  @override
+  String get birthMonthNotSet => 'لم يُحدَّد';
+
+  @override
+  String get birthMonthChoose => 'اختيار';
+
+  @override
+  String get birthMonthChange => 'تغيير';
+
+  @override
+  String get birthMonthClear => 'إزالة';
+
+  @override
+  String get birthMonthPickerTitle => 'شهر الميلاد';
+
+  @override
+  String get birthMonthYear => 'السنة';
+
+  @override
+  String birthMonthBandHint(String name, String band) {
+    return 'بحسب شهر الميلاد، فئة $name العمرية: $band.';
+  }
+
+  @override
+  String get birthMonthUseBand => 'اعتمادها';
+
+  @override
+  String get childPrayerTitle => 'صلاتي اليوم';
+
+  @override
+  String get childPrayerClaim => 'فعلتُها';
+
+  @override
+  String get childPrayerDoneToday => 'تمّ اليوم ✓';
+
+  @override
+  String get childPrayerRecorded => 'سُجِّلت ✓ سيراها أبوك أو أمك في المساء.';
+
+  @override
+  String get fastingUrgentTitle => 'علامات عاجلة';
+
+  @override
+  String get fastingUrgentWhatToDo => 'ماذا تفعلون فورًا';
+
+  @override
+  String get fastingStopTitle => 'متى يفطر فورًا';
+
+  @override
+  String get fastingDoctorFirst => 'استشيروا الطبيب قبل البدء إن كان عند الطفل';
+
+  @override
+  String fastingSteps(String name) {
+    return 'درجات $name';
+  }
+
+  @override
+  String get fastingCurrent => 'الدرجة الحالية';
+
+  @override
+  String get fastingSetStep => 'اجعلها درجته';
+
+  @override
+  String fastingFromAge(int age) {
+    return 'من عمر $age';
+  }
+
+  @override
+  String fastingHours(int hours) {
+    String _temp0 = intl.Intl.pluralLogic(
+      hours,
+      locale: localeName,
+      other: 'نحو $hours ساعة',
+      few: 'نحو $hours ساعات',
+      two: 'نحو ساعتين',
+      one: 'نحو ساعة',
+      zero: 'بلا إمساك',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String fastingMaxDays(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days يومًا في الأسبوع على الأكثر',
+      few: '$days أيام في الأسبوع على الأكثر',
+      two: 'يومان في الأسبوع على الأكثر',
+      one: 'يوم واحد في الأسبوع على الأكثر',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get fastingAdvanceWhen => 'متى يصعد درجة';
+
+  @override
+  String get fastingNotYetForAge => 'ليست لعمره بعد';
+
+  @override
+  String fastingPuberty(String name) {
+    return 'بلغ $name';
+  }
+
+  @override
+  String get fastingPubertyHint =>
+      'البلوغ لا العمر هو ما يجعل الصيام فريضة. عند تفعيله ينتقل الطفل إلى درجة ١٣–١٥، ولا يُطبَّق عليه سقف أيام التدريب. وتفاصيل الأحكام عند أهل العلم.';
+
+  @override
+  String get fastingClimbed => 'صعد درجة، بارك الله فيه!';
+
+  @override
+  String get fastingStepSaved => 'حُفظت الدرجة';
+
+  @override
+  String get fastingPrinciples => 'مبادئ';
+
+  @override
+  String get fastingTips => 'نصائح';
+
+  @override
+  String get fastingErrorNotForAge => 'هذه الدرجة لعمر أكبر.';
+
+  @override
+  String get fastingErrorNoStep => 'اختاروا درجته أولًا.';
+
+  @override
+  String milestonesTitle(String name) {
+    return 'مراحل $name';
+  }
+
+  @override
+  String get milestonesDue => 'حان وقتها';
+
+  @override
+  String get milestonesUpcoming => 'قادمة';
+
+  @override
+  String milestonesLibrary(String name) {
+    return 'لعمر $name';
+  }
+
+  @override
+  String get milestonesPast => 'مرّت';
+
+  @override
+  String milestonesDueOn(String date) {
+    return 'موعدها: $date';
+  }
+
+  @override
+  String milestonesNeedsBirthMonth(String name) {
+    return 'أضف شهر ميلاد $name لنعرف موعد كل مرحلة ونُنبّهك قبلها بشهر. وإلى ذلك الحين تظهر البطاقات بحسب فئته العمرية.';
+  }
+
+  @override
+  String milestonesNeedsGender(String name) {
+    return 'حدّد جنس $name لتظهر بطاقة الاستعداد للبلوغ المناسبة.';
+  }
+
+  @override
+  String get milestonesCompleteProfile => 'أكمل الملف';
+
+  @override
+  String get milestonesEmpty => 'لا مراحل لعرضها الآن.';
+
+  @override
+  String get milestonesRedFlags => 'متى تستشيرون مختصًّا';
+
+  @override
+  String get milestonesMedicalNote => 'معلومات عامة لا تغني عن الطبيب.';
+
+  @override
+  String get milestonesLinks => 'للتعمّق';
+
+  @override
+  String missionCoinsEarned(int coins) {
+    String _temp0 = intl.Intl.pluralLogic(
+      coins,
+      locale: localeName,
+      other: 'أُضيفت $coins عملة إلى الرصيد',
+      few: 'أُضيفت $coins عملات إلى الرصيد',
+      two: 'أُضيفت عملتان إلى الرصيد',
+      one: 'أُضيفت عملة واحدة إلى الرصيد',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get prayerAdvanceTitle => 'انتهت أسابيع هذه المرحلة';
+
+  @override
+  String prayerAdvanceBody(int next, String name) {
+    return 'انتقلوا إلى المرحلة $next حين ترون $name مستعدًّا؛ القرار لكم.';
+  }
+
+  @override
+  String prayerAdvanceButton(int next) {
+    return 'إلى المرحلة $next';
+  }
+
+  @override
+  String get prayerBackToStage => 'العودة إلى مرحلة سابقة';
+
+  @override
+  String get prayerBackHint => 'العودة لا يراها الطفل؛ فهو يرى مهام يومه فقط.';
+
+  @override
+  String get prayerBasis => 'على ماذا تقوم الرحلة';
+
+  @override
+  String get prayerPrinciples => 'مبادئ الرحلة';
+
+  @override
+  String get prayerChooseStage => 'من أي مرحلة نبدأ؟';
+
+  @override
+  String get prayerConfirmNow => 'ثبّت الآن';
+
+  @override
+  String get prayerCovenantTitle => 'العهد';
+
+  @override
+  String prayerCovenantProgress(int coins, int target) {
+    return 'جمع في هذه المرحلة $coins عملة، والعهد عند $target.';
+  }
+
+  @override
+  String get prayerCovenantExamples => 'أفكار للعهد';
+
+  @override
+  String get prayerSetCovenant => 'اتفقوا على العهد';
+
+  @override
+  String get prayerErrorAlreadyEnrolled => 'بدأت الرحلة بالفعل.';
+
+  @override
+  String get prayerErrorGraduationNotYet =>
+      'يُتاح التخرّج بعد أن تكتمل أسابيع المرحلة الأخيرة.';
+
+  @override
+  String get prayerErrorNotForAge => 'هذا المسار ليس لعمره.';
+
+  @override
+  String get prayerErrorOneStage => 'يكون الانتقال مرحلةً واحدة في كل مرة.';
+
+  @override
+  String get prayerGraduateButton => 'احتفلوا بالتخرّج';
+
+  @override
+  String prayerGraduatedOn(String date) {
+    return 'أتمّ الرحلة في $date';
+  }
+
+  @override
+  String get prayerGraduatedTitle => 'أتمّ رحلة الصلاة!';
+
+  @override
+  String prayerHandOver(String name) {
+    return 'سلّم الجهاز لـ$name ليسجّل مهمته';
+  }
+
+  @override
+  String get prayerHowToConfirm => 'كيف تثبّتون';
+
+  @override
+  String get prayerIfStruggling => 'إن صعب الأمر';
+
+  @override
+  String get prayerJourneyInstead =>
+      'لا يصلّي بانتظام بعد؟ ابدأ الرحلة من المرحلة المناسبة';
+
+  @override
+  String get prayerLessons => 'دروس لهذه المرحلة';
+
+  @override
+  String prayerNotForChild(String name) {
+    return 'رحلة الصلاة ليست لعمر $name الآن.';
+  }
+
+  @override
+  String prayerRecordInJourney(String name) {
+    return 'سجّل هذه المحطة في رحلة $name';
+  }
+
+  @override
+  String prayerSayToChild(String name) {
+    return 'قولوا لـ$name';
+  }
+
+  @override
+  String prayerStageN(int stage) {
+    return 'المرحلة $stage';
+  }
+
+  @override
+  String prayerStageOf(int stage, int total) {
+    return 'المرحلة $stage من $total';
+  }
+
+  @override
+  String prayerStageWeeks(int first, int last) {
+    return 'الأسابيع $first–$last';
+  }
+
+  @override
+  String get prayerStagesTitle => 'المراحل';
+
+  @override
+  String prayerStartTrack(String title) {
+    return 'ابدأ: $title';
+  }
+
+  @override
+  String get prayerStop => 'إيقاف الرحلة';
+
+  @override
+  String prayerStopConfirm(String name) {
+    return 'إيقاف رحلة الصلاة مع $name؟ يمكنكم البدء من جديد متى شئتم.';
+  }
+
+  @override
+  String prayerTaskGoal(int count) {
+    return 'المقترح: $count في الأسبوع';
+  }
+
+  @override
+  String prayerTaskThisWeek(int count) {
+    return 'هذا الأسبوع: $count';
+  }
+
+  @override
+  String prayerTaskToday(int count) {
+    return 'اليوم: $count';
+  }
+
+  @override
+  String prayerTasksTitle(String name) {
+    return 'مهام $name';
+  }
+
+  @override
+  String get prayerTrackJourney => 'رحلة الصلاة';
+
+  @override
+  String get prayerTrackOwnership => 'صلاتي مسؤوليتي';
+
+  @override
+  String get prayerTrackPreparation => 'مرحلة التهيئة';
+
+  @override
+  String prayerWeekN(int week) {
+    return 'الأسبوع $week';
+  }
+
+  @override
+  String get prayerYourPart => 'دوركم في هذه المرحلة';
+
+  @override
+  String get programsTitle => 'برامج الأسرة';
+
+  @override
+  String get programsIntro =>
+      'برامج قصيرة تمشي معك خطوة بخطوة: رمضان العائلة، ورحلة الصلاة، والمراحل المهمة في عمر كل طفل.';
+
+  @override
+  String get programsHomeIntro =>
+      'رمضان العائلة، ورحلة الصلاة، والمراحل المهمة في عمر طفلك.';
+
+  @override
+  String programsCoins(int coins) {
+    String _temp0 = intl.Intl.pluralLogic(
+      coins,
+      locale: localeName,
+      other: '$coins عملة',
+      few: '$coins عملات',
+      two: 'عملتان',
+      one: 'عملة واحدة',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get programsErrorNotInSeason => 'يُضبط هذا قبل رمضان وفي أثنائه.';
+
+  @override
+  String get programsEvidenceTitle => 'الدليل';
+
+  @override
+  String get programsVerses => 'آيات';
+
+  @override
+  String get programsLessonFallback => 'درس';
+
+  @override
+  String get programsPathFallback => 'مسار';
+
+  @override
+  String get programsMeaningLabel => 'المعنى';
+
+  @override
+  String programsMilestonesAddBirthMonth(String name) {
+    return 'أضف شهر ميلاد $name لتصلك التنبيهات في وقتها';
+  }
+
+  @override
+  String get programsMilestonesBrowse => 'ما ينتظره في كل عمر';
+
+  @override
+  String programsMilestonesDue(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count مرحلة حان وقتها',
+      few: '$count مراحل حان وقتها',
+      two: 'مرحلتان حان وقتهما',
+      one: 'مرحلة واحدة حان وقتها',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String programsMilestonesDueFor(int count, String name) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count مرحلة في عمر $name حان وقتها',
+      few: '$count مراحل في عمر $name حان وقتها',
+      two: 'مرحلتان في عمر $name حان وقتهما',
+      one: 'مرحلة في عمر $name حان وقتها',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get programsMilestonesTitle => 'المراحل المهمة';
+
+  @override
+  String get programsNoChildren => 'أضف طفلك لتظهر برامجه هنا.';
+
+  @override
+  String get programsOpenInQuran => 'افتح في المصحف';
+
+  @override
+  String get programsOpenRamadan => 'افتح البرنامج';
+
+  @override
+  String get programsPrayerAdvance => 'جاهز للمرحلة التالية حين ترون ذلك';
+
+  @override
+  String get programsPrayerCanGraduate => 'جاهز للتخرّج';
+
+  @override
+  String programsPrayerNotStarted(String track) {
+    return 'لم تبدأ بعد: $track';
+  }
+
+  @override
+  String programsPrayerPending(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count مهمة تنتظر تثبيتك',
+      few: '$count مهام تنتظر تثبيتك',
+      two: 'مهمتان تنتظران تثبيتك',
+      one: 'مهمة واحدة تنتظر تثبيتك',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String programsPrayerStartWith(String name) {
+    return 'رحلة الصلاة: ابدأها مع $name';
+  }
+
+  @override
+  String get programsPrayerTitle => 'رحلة الصلاة';
+
+  @override
+  String get programsQuranArabicNote => 'يُعرض القرآن بنصّه العربي.';
+
+  @override
+  String programsRamadanAfterWeek(int week) {
+    return 'بعد رمضان: الأسبوع $week من أسابيع الاستمرار';
+  }
+
+  @override
+  String get programsRamadanEid => 'عيدكم مبارك — بطاقة «رمضان عائلتنا» جاهزة';
+
+  @override
+  String get programsRamadanOffSeason =>
+      'يعود برنامج رمضان مع الموسم القادم بإذن الله.';
+
+  @override
+  String programsRamadanRole(String name) {
+    return 'دور $name في رمضان';
+  }
+
+  @override
+  String get programsRamadanTitle => 'رمضان العائلة';
+
+  @override
+  String get programsSaved => 'حُفظ';
+
+  @override
+  String programsSurahRange(String surah, String range) {
+    return 'سورة $surah ($range)';
+  }
+
+  @override
+  String get programsUnavailable => 'هذه البرامج غير متاحة الآن. حاول لاحقًا.';
+
+  @override
+  String get ramadanAfterHabits => 'عادات نستمر عليها';
+
+  @override
+  String get ramadanAfterLinks => 'تابعوا من هنا';
+
+  @override
+  String get ramadanAfterThisWeek => 'هذا الأسبوع';
+
+  @override
+  String get ramadanAfterWeeks => 'أسابيع الاستمرار';
+
+  @override
+  String get ramadanAtHome => 'في البيت';
+
+  @override
+  String ramadanChildPart(String name) {
+    return 'دور $name';
+  }
+
+  @override
+  String get ramadanChooseStep => 'اختر درجته';
+
+  @override
+  String get ramadanCostFree => 'بلا تكلفة';
+
+  @override
+  String get ramadanCostLow => 'تكلفة قليلة';
+
+  @override
+  String ramadanCountdown(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'بقي $days يومًا على رمضان',
+      few: 'بقي $days أيام على رمضان',
+      two: 'بقي يومان على رمضان',
+      one: 'بقي يوم واحد على رمضان',
+      zero: 'يبدأ رمضان اليوم',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String ramadanDayN(int day) {
+    return 'اليوم $day';
+  }
+
+  @override
+  String ramadanDayOf(int day, int total) {
+    return 'اليوم $day من $total من رمضان';
+  }
+
+  @override
+  String get ramadanDayPreviewNote =>
+      'لم يأتِ هذا اليوم بعد؛ تُعلَّم «تمّ» في يومه.';
+
+  @override
+  String get ramadanDays29 => '٢٩ يومًا';
+
+  @override
+  String get ramadanDays30 => '٣٠ يومًا';
+
+  @override
+  String get ramadanDaysAuto => 'كما يُعلَن في التطبيق';
+
+  @override
+  String get ramadanEidTomorrowTitle => 'هل غدًا العيد؟';
+
+  @override
+  String get ramadanEidTomorrowBody =>
+      'إن أُعلن العيد غدًا في بلدكم، فاجعلوا الشهر ٢٩ يومًا ليصل البرنامج معكم إلى العيد في وقته.';
+
+  @override
+  String get ramadanErrorDayNotMarkable => 'يُعلَّم هذا اليوم حين يأتي.';
+
+  @override
+  String get ramadanFamilyChallenge => 'تحدّي العائلة';
+
+  @override
+  String get ramadanFamilyWordHint =>
+      'اختاروا كلمة واحدة تصف رمضانكم، لتظهر في بطاقة «رمضان عائلتنا».';
+
+  @override
+  String get ramadanFamilyWordTitle => 'كلمة رمضاننا';
+
+  @override
+  String ramadanFastingNoStep(String name) {
+    return 'لم تُختر درجة $name بعد.';
+  }
+
+  @override
+  String ramadanFastingStep(String name, String step) {
+    return 'درجة $name: $step';
+  }
+
+  @override
+  String get ramadanFastingTitle => 'سلّم الصيام';
+
+  @override
+  String get ramadanMarkChallenge => 'التحدّي';
+
+  @override
+  String get ramadanMarkJuz => 'جزء الختمة';
+
+  @override
+  String get ramadanMarkNight => 'اجتمعنا الليلة';
+
+  @override
+  String get ramadanMarkStory => 'القصة';
+
+  @override
+  String get ramadanMarkWird => 'الورد';
+
+  @override
+  String get ramadanMarksNote =>
+      'علّموا ما أتممتموه فقط؛ وما لم يتيسّر لا يُسجَّل.';
+
+  @override
+  String get ramadanMarksTitle => 'ما أتممناه';
+
+  @override
+  String get ramadanMaterials => 'تحتاجون إلى';
+
+  @override
+  String get ramadanMayNotOccur =>
+      'قد لا يأتي هذا اليوم إن كان الشهر ٢٩ يومًا.';
+
+  @override
+  String ramadanMinutes(int minutes) {
+    String _temp0 = intl.Intl.pluralLogic(
+      minutes,
+      locale: localeName,
+      other: '$minutes دقيقة',
+      few: '$minutes دقائق',
+      two: 'دقيقتان',
+      one: 'دقيقة واحدة',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get ramadanNoFastingBeforeSeven =>
+      'لا إمساك قبل السابعة في هذا البرنامج؛ يعيش الطفل أجواء رمضان معكم.';
+
+  @override
+  String get ramadanOddNight => 'الليلة من الليالي الوترية في العشر الأواخر.';
+
+  @override
+  String get ramadanOffSeasonBody =>
+      'انتهى موسم رمضان. نلقاكم في رمضان القادم بإذن الله.';
+
+  @override
+  String get ramadanOpenLadder => 'افتح سلّم الصيام';
+
+  @override
+  String get ramadanOtherDays => 'أيام الشهر';
+
+  @override
+  String ramadanParentJuz(int juz) {
+    return 'ختمة الوالدين: الجزء $juz';
+  }
+
+  @override
+  String get ramadanParentNote => 'لكم أنتم';
+
+  @override
+  String get ramadanPhaseFirstTen => 'العشر الأولى';
+
+  @override
+  String get ramadanPhaseMiddleTen => 'العشر الوسطى';
+
+  @override
+  String get ramadanPhaseLastTen => 'العشر الأواخر';
+
+  @override
+  String ramadanPractisedThisWeek(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count مرة هذا الأسبوع',
+      few: '$count مرات هذا الأسبوع',
+      two: 'مرتان هذا الأسبوع',
+      one: 'مرة واحدة هذا الأسبوع',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String ramadanPractisedToday(String name) {
+    return 'تدرّب $name على درجته اليوم';
+  }
+
+  @override
+  String get ramadanReadStory => 'اقرؤوها معًا';
+
+  @override
+  String ramadanReadWithChild(String name) {
+    return 'هذا النص موجّه إلى $name؛ اقرؤوه معه.';
+  }
+
+  @override
+  String get ramadanRecapOpen => 'افتح «رمضان عائلتنا»';
+
+  @override
+  String get ramadanRestSuggested => 'يكفيه هذا الأسبوع؛ فليكن الغد يوم راحة.';
+
+  @override
+  String ramadanSettingsCurrent(String date, int days) {
+    return 'الآن: يبدأ في $date، والشهر $days يومًا';
+  }
+
+  @override
+  String get ramadanSettingsIntro =>
+      'يبدأ رمضان برؤية الهلال، وقد يختلف يومه بين البلدان. اضبطوه على ما أُعلن في بلدكم.';
+
+  @override
+  String get ramadanSettingsLength => 'عدد أيام الشهر';
+
+  @override
+  String get ramadanSettingsStart => 'أول يوم من رمضان';
+
+  @override
+  String get ramadanSettingsTitle => 'رؤية الهلال عندكم';
+
+  @override
+  String get ramadanShiftEarlier => 'قبل يوم';
+
+  @override
+  String get ramadanShiftLater => 'بعد يوم';
+
+  @override
+  String get ramadanShiftNone => 'كما في التطبيق';
+
+  @override
+  String get ramadanSoFar => 'رمضاننا حتى الآن';
+
+  @override
+  String ramadanStartsOn(String date) {
+    return 'يبدأ في $date';
+  }
+
+  @override
+  String ramadanStartsOnEstimate(String date) {
+    return 'يبدأ في $date تقريبًا، ويُؤكَّد برؤية الهلال';
+  }
+
+  @override
+  String ramadanStoryTonight(String title) {
+    return 'قصة الليلة: $title';
+  }
+
+  @override
+  String get ramadanWhenAfterIftar => 'بعد الإفطار';
+
+  @override
+  String get ramadanWhenAnytime => 'في أي وقت';
+
+  @override
+  String get ramadanWhenAtIftar => 'عند الإفطار';
+
+  @override
+  String get ramadanWhenBeforeIftar => 'قبل الإفطار';
+
+  @override
+  String get ramadanWhenNight => 'في الليل';
+
+  @override
+  String get ramadanWhenSuhoor => 'عند السحور';
+
+  @override
+  String get ramadanWhoSeesWhat => 'مَن يرى ماذا';
+
+  @override
+  String get ramadanWirdTheme => 'آيات اليوم';
+
+  @override
+  String get ramadanWirdTitle => 'ورد القرآن العائلي';
+
+  @override
+  String get ramadanWirdTogether => 'نقرؤها معًا';
+
+  @override
+  String get recapEmpty =>
+      'لا عدّادات بعد؛ علّموا «تمّ» في بطاقة اليوم لتظهر هنا.';
+
+  @override
+  String get recapFamilyOnly => 'لأسرتكم فقط';
+
+  @override
+  String get recapFamilyOnlyNote =>
+      'هذا لا يظهر في البطاقة ولا يُشارَك؛ فصيام الأطفال شأن خاص بالأسرة.';
+
+  @override
+  String get recapNoSeason => 'لا موسم رمضان معروفًا بعد.';
+
+  @override
+  String recapNotYet(String date) {
+    return 'تجهز البطاقة يوم العيد ($date).';
+  }
+
+  @override
+  String get recapNotYetNoDate => 'تجهز البطاقة يوم العيد.';
+
+  @override
+  String get recapPreview => 'هذا ما سيُشارَك';
+
+  @override
+  String get recapShare => 'شارك البطاقة';
+
+  @override
+  String get recapShareFailed => 'تعذّرت المشاركة. حاولوا مرة أخرى.';
+
+  @override
+  String get recapTitle => 'رمضان عائلتنا';
+
+  @override
+  String prayerHandOverNeedsBand(String name) {
+    return 'لكي يسجّل $name مهامه في وضع الطفل، حدّث فئته العمرية في ملفه لتوافق عمره.';
+  }
 }

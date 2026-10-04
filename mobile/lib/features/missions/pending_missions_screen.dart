@@ -18,6 +18,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../api/tg_client.dart';
 import '../../l10n/app_localizations.dart';
 import '../../state/chat_notifier.dart';
+import '../coins/coins_providers.dart';
+import '../programs/data/prayer_coins_ledger.dart';
 import 'package:almorabbi/widgets/ui/loading_view.dart';
 
 class PendingMissionsScreen extends ConsumerStatefulWidget {
@@ -70,8 +72,18 @@ class _PendingMissionsScreenState extends ConsumerState<PendingMissionsScreen> {
     ];
 
     try {
-      await ref.read(tgClientProvider).confirmMissions(items);
+      final result = await ref.read(tgClientProvider).settleMissions(items);
+      // Prayer Journey cards come back with what they earned (MOBILE_API
+      // §11.4.7). There is no server ledger: the device credits them, through
+      // the same daily cap as every other coin — and each mission once, since
+      // a retried batch lists the same missions again.
+      final earned = await PrayerCoinsLedger.takeNew(result.coins);
+      if (earned > 0) await ref.read(coinsProvider.notifier).earn(earned);
       if (!mounted) return;
+      if (earned > 0) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text(AppLocalizations.of(context).missionCoinsEarned(earned))));
+      }
       Navigator.of(context).pop(true);
     } on TgApiError catch (e) {
       if (!mounted) return;
@@ -111,7 +123,9 @@ class _PendingMissionsScreenState extends ConsumerState<PendingMissionsScreen> {
                               title: Text(card['title_ar'] as String? ?? ''),
                               subtitle: Text(
                                 '${card['child_name'] ?? ''} · '
-                                '${card['estimated_minutes'] ?? 0} ${l10n.missionMinutesShort}',
+                                '${card['estimated_minutes'] ?? 0} ${l10n.missionMinutesShort}'
+                                // A Prayer Journey card says what it earns.
+                                '${_coinsOf(card) > 0 ? ' · 🪙 ${l10n.programsCoins(_coinsOf(card))}' : ''}',
                               ),
                               trailing: TextButton(
                                 onPressed: () => setState(() {
@@ -156,6 +170,9 @@ class _PendingMissionsScreenState extends ConsumerState<PendingMissionsScreen> {
     );
   }
 }
+
+/// Coins a pending card carries — only Prayer Journey cards have any.
+int _coinsOf(Map<String, dynamic> card) => (card['coins'] as num?)?.toInt() ?? 0;
 
 class _Empty extends StatelessWidget {
   const _Empty({required this.message});

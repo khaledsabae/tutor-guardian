@@ -11,6 +11,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/app_routes.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../program/providers/program_providers.dart';
+import '../../programs/providers/programs_providers.dart';
 import '../data/hub_catalog.dart';
 import '../widgets/help_sheet.dart';
 import '../widgets/hub_group_card.dart';
@@ -35,6 +36,9 @@ class _HubScreenState extends ConsumerState<HubScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final ageGroup = ref.watch(selectedAgeGroupProvider);
+    final available = {
+      if (ref.watch(programsAvailableProvider)) HubRequirement.programs,
+    };
 
     return Scaffold(
       appBar: AppBar(
@@ -53,7 +57,7 @@ class _HubScreenState extends ConsumerState<HubScreen> {
         padding: const EdgeInsets.fromLTRB(16, 12, 16, 24),
         children: [
           for (final group in kHubGroups)
-            HubGroupCard(group: group, ageGroup: ageGroup),
+            HubGroupCard(group: group, ageGroup: ageGroup, available: available),
         ],
       ),
     );

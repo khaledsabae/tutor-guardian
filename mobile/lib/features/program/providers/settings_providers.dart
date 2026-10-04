@@ -60,6 +60,8 @@ class UpdateChildNotifier extends AutoDisposeAsyncNotifier<ChildProfile?> {
     required String ageGroup,
     String? gender,
     String? avatarEmoji,
+    String? birthMonth,
+    bool clearBirthMonth = false,
   }) async {
     state = const AsyncValue.loading();
     try {
@@ -70,6 +72,8 @@ class UpdateChildNotifier extends AutoDisposeAsyncNotifier<ChildProfile?> {
         ageGroup: ageGroup,
         gender: gender,
         avatarEmoji: avatarEmoji,
+        birthMonth: birthMonth,
+        clearBirthMonth: clearBirthMonth,
       );
       // If we just changed the active child, sync the on-disk profile
       // so the rest of the app (DailyTipCard, path detail) refetches

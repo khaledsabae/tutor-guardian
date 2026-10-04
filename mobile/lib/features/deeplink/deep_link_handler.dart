@@ -9,10 +9,12 @@ import 'dart:async';
 
 import 'package:app_links/app_links.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../api/tg_client.dart';
 import '../../core/app_routes.dart';
 import '../../features/referral/referral_service.dart';
+import '../routine/providers/child_mode_providers.dart';
 
 class DeepLinkHandler {
   DeepLinkHandler._();
@@ -52,6 +54,22 @@ class DeepLinkHandler {
       _handle(uri, key);
     } catch (_) {
       // ignore malformed links
+    }
+  }
+
+  /// [_handle] for tests, which cannot drive app_links or FCM.
+  @visibleForTesting
+  void handleForTest(Uri uri, GlobalKey<NavigatorState> key) => _handle(uri, key);
+
+  /// True while a child is holding the phone — a parent's screen must not be
+  /// pushed over the child surface.
+  bool _childModeActive(BuildContext context) {
+    try {
+      return ProviderScope.containerOf(context, listen: false)
+          .read(childModeProvider)
+          .active;
+    } catch (_) {
+      return false; // no scope (tests, very early start): nothing to protect
     }
   }
 
@@ -103,6 +121,21 @@ class DeepLinkHandler {
     if (path == '/license') {
       navigator.popUntil((route) => route.isFirst);
       navigator.push(AppRoutes.parentLicense());
+      return;
+    }
+
+    // Milestone push: /milestones/{child_id}/{milestone_key} (MOBILE_API
+    // §11.5.3) — "turning seven next month". Opens that child's card; the
+    // screen falls back to the child's list when the card is not theirs.
+    // Parent-only content, so never on top of a running child surface.
+    final milestoneMatch =
+        RegExp(r'^/milestones/(\d+)/([A-Za-z0-9_\-]+)/?$').firstMatch(path);
+    if (milestoneMatch != null) {
+      if (_childModeActive(context)) return;
+      final childId = int.parse(milestoneMatch.group(1)!);
+      final key = milestoneMatch.group(2)!;
+      navigator.popUntil((route) => route.isFirst);
+      navigator.push(AppRoutes.milestoneDetail(childId, key));
       return;
     }
 

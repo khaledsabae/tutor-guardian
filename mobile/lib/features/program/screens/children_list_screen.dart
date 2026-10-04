@@ -13,6 +13,7 @@ import '../../../l10n/app_localizations.dart';
 import '../../../theme/app_palette.dart';
 import '../../../theme/app_theme.dart';
 import '../../journey/providers/journey_providers.dart';
+import '../../programs/providers/programs_providers.dart';
 import '../data/progress_models.dart';
 import '../providers/progress_providers.dart';
 import '../providers/settings_providers.dart';
@@ -204,6 +205,7 @@ class ChildrenListScreen extends ConsumerWidget {
     final added = await Navigator.of(context).push(AppRoutes.addChild());
     if (added == true) {
       ref.invalidate(childrenListProvider);
+      ref.invalidate(programsOverviewProvider);
     }
   }
 
@@ -236,6 +238,9 @@ class ChildrenListScreen extends ConsumerWidget {
     try {
       await ref.read(deleteChildProvider.notifier).call(child.id);
       if (context.mounted) {
+        // The programs summarise every child; a removed one must not linger
+        // on Today's card or in the programs list.
+        ref.invalidate(programsOverviewProvider);
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text(AppLocalizations.of(context).childrenDeleted(child.name))),
         );

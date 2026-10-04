@@ -16,12 +16,14 @@ class ProgressRepository {
     required String ageGroup,
     String? gender,
     String? avatarEmoji,
+    String? birthMonth,
   }) async {
     final json = await _client.createChild(
       name: name,
       ageGroup: ageGroup,
       gender: gender,
       avatarEmoji: avatarEmoji,
+      birthMonth: birthMonth,
     );
     return ChildProfile.fromJson(json);
   }

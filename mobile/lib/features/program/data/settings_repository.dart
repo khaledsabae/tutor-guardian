@@ -24,6 +24,8 @@ class SettingsRepository {
     required String ageGroup,
     String? gender,
     String? avatarEmoji,
+    String? birthMonth,
+    bool clearBirthMonth = false,
   }) async {
     final json = await _client.updateChild(
       childId: childId,
@@ -31,6 +33,8 @@ class SettingsRepository {
       ageGroup: ageGroup,
       gender: gender,
       avatarEmoji: avatarEmoji,
+      birthMonth: birthMonth,
+      clearBirthMonth: clearBirthMonth,
     );
     return ChildProfile.fromJson(json);
   }

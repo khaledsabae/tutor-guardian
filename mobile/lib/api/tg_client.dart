@@ -37,7 +37,19 @@ class TgApiError implements Exception {
   final String message;
   final Duration? retryAfter;
 
-  const TgApiError(this.statusCode, this.message, {this.retryAfter});
+  /// The machine-readable reason, when the server sent one.
+  ///
+  /// The family-programs endpoints (MOBILE_API §11.6) answer
+  /// `{"detail": {"error": "<code>", ...extra}}`. Before this field existed the
+  /// whole object was thrown away and every refusal read as "HTTP 409", so a
+  /// screen could not tell "already recorded" (show ✓) from a real failure.
+  final String? code;
+
+  /// The rest of that object (`next_stage`, `available_on`, `markable_up_to`…).
+  final Map<String, dynamic>? details;
+
+  const TgApiError(this.statusCode, this.message,
+      {this.retryAfter, this.code, this.details});
 
   @override
   String toString() => 'TgApiError(${statusCode ?? '?'}): $message';
@@ -1347,6 +1359,7 @@ class TgClient {
     required String ageGroup,
     String? gender,
     String? avatarEmoji,
+    String? birthMonth,
   }) async {
     final session = await ensureSession();
     final token = session.token;
@@ -1355,6 +1368,10 @@ class TgClient {
       'age_group': ageGroup,
       'gender': ?gender,
       'avatar_emoji': ?avatarEmoji,
+      // "YYYY-MM", optional (MOBILE_API §11.1). A server older than schema v34
+      // ignores the key, which is why the field is only offered when the
+      // programs API answers (see `programsAvailableProvider`).
+      'birth_month': ?birthMonth,
     };
     final resp = await _http
         .post(
@@ -1443,6 +1460,8 @@ class TgClient {
     String? ageGroup,
     String? gender,
     String? avatarEmoji,
+    String? birthMonth,
+    bool clearBirthMonth = false,
   }) async {
     final session = await ensureSession();
     final token = session.token;
@@ -1451,6 +1470,14 @@ class TgClient {
     if (ageGroup != null) body['age_group'] = ageGroup;
     if (gender != null) body['gender'] = gender;
     if (avatarEmoji != null) body['avatar_emoji'] = avatarEmoji;
+    // An explicit `null` clears the birth month; leaving the key out leaves it
+    // alone (MOBILE_API §11.1). Two arguments rather than a nullable one,
+    // because "not given" and "remove it" are different requests.
+    if (clearBirthMonth) {
+      body['birth_month'] = null;
+    } else if (birthMonth != null) {
+      body['birth_month'] = birthMonth;
+    }
     final resp = await _http
         .patch(
           Uri.parse('$_baseUrl/api/children/$childId'),
@@ -1942,7 +1969,17 @@ class TgClient {
 
   /// Settle a batch. One call for the whole evening — the asynchronous
   /// confirmation loop is the point, and a per-card round trip would undo it.
-  Future<int> confirmMissions(List<Map<String, dynamic>> items) async {
+  Future<int> confirmMissions(List<Map<String, dynamic>> items) async =>
+      (await settleMissions(items)).settled;
+
+  /// [confirmMissions], plus what the confirmed cards earned.
+  ///
+  /// Prayer Journey cards ride the same evening loop (MOBILE_API §11.4.7) and
+  /// the server keeps no coin ledger: `coins` lists each confirmed program card
+  /// with its value, for the app to credit on the device. Older servers do not
+  /// send the key, and bank missions never carry coins.
+  Future<({int settled, List<Map<String, dynamic>> coins})> settleMissions(
+      List<Map<String, dynamic>> items) async {
     return _guard(() async {
       final session = await ensureSession();
       final uri = Uri.parse('$_baseUrl/api/children/missions/confirm');
@@ -1954,7 +1991,207 @@ class TgClient {
           .timeout(AppConfig.httpTimeout);
       if (resp.statusCode != 200) throw _wrap(resp);
       final body = jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
-      return body['settled'] as int? ?? 0;
+      final coins = (body['coins'] as List<dynamic>? ?? const [])
+          .whereType<Map<String, dynamic>>()
+          .toList();
+      return (settled: body['settled'] as int? ?? 0, coins: coins);
+    });
+  }
+
+  // ── Family programs (MOBILE_API §11, backend schema v34) ────────────────
+  //
+  // Ramadan, the Prayer Journey and the proactive milestones. Every call sends
+  // the family's UTC offset — it decides their date (the Ramadan day turns at
+  // *their* midnight) and the server remembers it for the milestone push, which
+  // is never sent to a device that never reported one — and the UI language.
+  // A server older than v34 answers 404 to all of it; the screens treat that
+  // as "not offered" and hide their entry points.
+
+  /// `tz_offset_minutes` + `lang` — the query every programs call carries.
+  Map<String, String> _programsQuery([Map<String, String>? extra]) => {
+        'tz_offset_minutes': '${DateTime.now().timeZoneOffset.inMinutes}',
+        ..._langParam(),
+        ...?extra,
+      };
+
+  Future<Map<String, dynamic>> _programsCall(
+    String method,
+    String path, {
+    Map<String, dynamic>? body,
+    Map<String, String>? query,
+  }) {
+    return _guard(() async {
+      final session = await ensureSession();
+      final uri = Uri.parse('$_baseUrl$path')
+          .replace(queryParameters: _programsQuery(query));
+      final headers = _authHeaders(session.token);
+      final encoded = body == null ? null : jsonEncode(body);
+      final http.Response resp;
+      switch (method) {
+        case 'GET':
+          resp = await _http.get(uri, headers: headers).timeout(AppConfig.httpTimeout);
+        case 'POST':
+          resp = await _http
+              .post(uri, headers: headers, body: encoded ?? '{}')
+              .timeout(AppConfig.httpTimeout);
+        case 'PUT':
+          resp = await _http
+              .put(uri, headers: headers, body: encoded ?? '{}')
+              .timeout(AppConfig.httpTimeout);
+        case 'DELETE':
+          resp = await _http.delete(uri, headers: headers).timeout(AppConfig.httpTimeout);
+        default:
+          throw ArgumentError.value(method, 'method');
+      }
+      if (resp.statusCode != 200) throw _wrap(resp);
+      return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
+    });
+  }
+
+  /// `GET /api/programs` — what applies to each child today. 404 on a server
+  /// that has no programs; callers read that as "hide the entry points".
+  Future<Map<String, dynamic>> fetchPrograms() =>
+      _programsCall('GET', '/api/programs');
+
+  /// `GET /api/children/{id}/ramadan/today`. No `features` is sent: this build
+  /// has no weekly-plan screen, so the after-Ramadan week that promises one
+  /// must come back with its fallback text (MOBILE_API §11.3.2).
+  Future<Map<String, dynamic>> fetchRamadanToday(int childId) =>
+      _programsCall('GET', '/api/children/$childId/ramadan/today');
+
+  /// `GET /api/children/{id}/ramadan/days/{day}` — any day 1–30.
+  Future<Map<String, dynamic>> fetchRamadanDay(int childId, int day) =>
+      _programsCall('GET', '/api/children/$childId/ramadan/days/$day');
+
+  /// `POST /api/programs/ramadan/marks` — tick or untick a family «تمّ».
+  Future<Map<String, dynamic>> setRamadanMark({
+    required String mark,
+    int? day,
+    bool done = true,
+    int? choiceIndex,
+  }) =>
+      _programsCall('POST', '/api/programs/ramadan/marks', body: {
+        'mark': mark,
+        'day': ?day,
+        'done': done,
+        'choice_index': ?choiceIndex,
+      });
+
+  /// `GET /api/children/{id}/ramadan/fasting` — the ladder and its guidance.
+  Future<Map<String, dynamic>> fetchFastingLadder(int childId) =>
+      _programsCall('GET', '/api/children/$childId/ramadan/fasting');
+
+  /// `PUT /api/children/{id}/ramadan/fasting` — a step and/or puberty.
+  Future<Map<String, dynamic>> updateFasting(
+    int childId, {
+    String? stepKey,
+    bool? reachedPuberty,
+  }) =>
+      _programsCall('PUT', '/api/children/$childId/ramadan/fasting', body: {
+        'step_key': ?stepKey,
+        'reached_puberty': ?reachedPuberty,
+      });
+
+  /// `POST /api/children/{id}/ramadan/fasting/practice` — "practised their
+  /// step today". `done: false` takes it back; a day not practised is simply
+  /// not recorded.
+  Future<Map<String, dynamic>> recordFastingPractice(
+    int childId, {
+    int? day,
+    bool done = true,
+  }) =>
+      _programsCall('POST', '/api/children/$childId/ramadan/fasting/practice',
+          body: {'day': ?day, 'done': done});
+
+  /// `PUT /api/programs/ramadan/settings` — the family's own moon sighting.
+  /// [resetMonthDays] sends `month_days: null` (back to the server's length).
+  Future<Map<String, dynamic>> updateRamadanSettings({
+    int? startShiftDays,
+    int? monthDays,
+    bool resetMonthDays = false,
+  }) {
+    final body = <String, dynamic>{'start_shift_days': ?startShiftDays};
+    if (resetMonthDays) {
+      body['month_days'] = null;
+    } else if (monthDays != null) {
+      body['month_days'] = monthDays;
+    }
+    return _programsCall('PUT', '/api/programs/ramadan/settings', body: body);
+  }
+
+  /// `GET /api/programs/ramadan/recap` — «رمضان عائلتنا».
+  Future<Map<String, dynamic>> fetchRamadanRecap({int? hijriYear}) =>
+      _programsCall('GET', '/api/programs/ramadan/recap',
+          query: {if (hijriYear != null) 'hijri_year': '$hijriYear'});
+
+  /// `GET /api/children/{id}/prayer-journey`.
+  Future<Map<String, dynamic>> fetchPrayerJourney(int childId) =>
+      _programsCall('GET', '/api/children/$childId/prayer-journey');
+
+  /// `POST /api/children/{id}/prayer-journey/enrol`.
+  Future<Map<String, dynamic>> enrolPrayerJourney(
+    int childId, {
+    String? track,
+    int? startStage,
+    bool restart = false,
+  }) =>
+      _programsCall('POST', '/api/children/$childId/prayer-journey/enrol',
+          body: {
+            'track': ?track,
+            'start_stage': ?startStage,
+            if (restart) 'restart': true,
+          });
+
+  /// `PUT /api/children/{id}/prayer-journey/stage` — forward one, back any.
+  Future<Map<String, dynamic>> setPrayerJourneyStage(int childId, int stage) =>
+      _programsCall('PUT', '/api/children/$childId/prayer-journey/stage',
+          body: {'stage': stage});
+
+  /// `POST /api/children/{id}/prayer-journey/graduate`.
+  Future<Map<String, dynamic>> graduatePrayerJourney(int childId) =>
+      _programsCall('POST', '/api/children/$childId/prayer-journey/graduate');
+
+  /// `DELETE /api/children/{id}/prayer-journey` — stop it.
+  Future<Map<String, dynamic>> stopPrayerJourney(int childId) =>
+      _programsCall('DELETE', '/api/children/$childId/prayer-journey');
+
+  /// `GET /api/children/{id}/milestones`.
+  Future<Map<String, dynamic>> fetchMilestones(int childId) =>
+      _programsCall('GET', '/api/children/$childId/milestones');
+
+  /// `GET /api/children/{id}/milestones/{key}` — the push's deep link.
+  Future<Map<String, dynamic>> fetchMilestone(int childId, String key) =>
+      _programsCall('GET',
+          '/api/children/$childId/milestones/${Uri.encodeComponent(key)}');
+
+  /// Child mode: today's prayer tasks (Child-Bearer, live screen session).
+  Future<Map<String, dynamic>> fetchChildPrayerToday(String childToken) {
+    return _guard(() async {
+      final uri =
+          Uri.parse('$_baseUrl/api/value-tracking/child-mode/prayer/today')
+              .replace(queryParameters: _programsQuery());
+      final resp = await _http
+          .get(uri, headers: _childAuthHeaders(childToken))
+          .timeout(AppConfig.httpTimeout);
+      if (resp.statusCode != 200) throw _wrap(resp);
+      return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
+    });
+  }
+
+  /// Child mode: «صلّيتها». Recorded at once; the parent confirms tonight.
+  Future<Map<String, dynamic>> claimChildPrayer({
+    required String childToken,
+    required String taskId,
+  }) {
+    return _guard(() async {
+      final uri =
+          Uri.parse('$_baseUrl/api/value-tracking/child-mode/prayer/claim')
+              .replace(queryParameters: _programsQuery({'task_id': taskId}));
+      final resp = await _http
+          .post(uri, headers: _childAuthHeaders(childToken))
+          .timeout(AppConfig.httpTimeout);
+      if (resp.statusCode != 200) throw _wrap(resp);
+      return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
     });
   }
 
@@ -2209,10 +2446,19 @@ class TgClient {
 
   TgApiError _wrapStatus(int status, String body, Map<String, String> headers) {
     String message;
+    String? code;
+    Map<String, dynamic>? details;
     try {
       final j = jsonDecode(body);
       if (j is Map && j['detail'] is String) {
         message = j['detail'] as String;
+      } else if (j is Map &&
+          j['detail'] is Map &&
+          (j['detail'] as Map)['error'] is String) {
+        // `{"detail": {"error": "<code>", ...}}` — the programs contract.
+        details = Map<String, dynamic>.from(j['detail'] as Map);
+        code = details['error'] as String;
+        message = AppL10n.current.apiHttpError('$status');
       } else {
         message = AppL10n.current.apiHttpError('$status');
       }
@@ -2227,7 +2473,8 @@ class TgClient {
       if (secs != null) retryAfter = Duration(seconds: secs);
     }
 
-    return TgApiError(status, message, retryAfter: retryAfter);
+    return TgApiError(status, message,
+        retryAfter: retryAfter, code: code, details: details);
   }
 
   /// Close the underlying HTTP client. Safe to call multiple times.

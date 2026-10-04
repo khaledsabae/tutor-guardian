@@ -7267,6 +7267,1260 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'بعض الدعم ({count}) لم تؤكّد Google Play قيمته بعد، وسيُحتسب حين تؤكّدها.'**
   String supportUnpricedNote(int count);
+
+  /// No description provided for @birthMonthLabel.
+  ///
+  /// In ar, this message translates to:
+  /// **'شهر الميلاد (اختياري)'**
+  String get birthMonthLabel;
+
+  /// No description provided for @birthMonthWhy.
+  ///
+  /// In ar, this message translates to:
+  /// **'يساعد شهر الميلاد المربّي على تنبيهك قبل المراحل المهمة في وقتها، مثل بدء تعليم الصلاة في السابعة. يكفي الشهر والسنة، ولا نسأل عن اليوم.'**
+  String get birthMonthWhy;
+
+  /// No description provided for @birthMonthNotSet.
+  ///
+  /// In ar, this message translates to:
+  /// **'لم يُحدَّد'**
+  String get birthMonthNotSet;
+
+  /// No description provided for @birthMonthChoose.
+  ///
+  /// In ar, this message translates to:
+  /// **'اختيار'**
+  String get birthMonthChoose;
+
+  /// No description provided for @birthMonthChange.
+  ///
+  /// In ar, this message translates to:
+  /// **'تغيير'**
+  String get birthMonthChange;
+
+  /// No description provided for @birthMonthClear.
+  ///
+  /// In ar, this message translates to:
+  /// **'إزالة'**
+  String get birthMonthClear;
+
+  /// No description provided for @birthMonthPickerTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'شهر الميلاد'**
+  String get birthMonthPickerTitle;
+
+  /// No description provided for @birthMonthYear.
+  ///
+  /// In ar, this message translates to:
+  /// **'السنة'**
+  String get birthMonthYear;
+
+  /// No description provided for @birthMonthBandHint.
+  ///
+  /// In ar, this message translates to:
+  /// **'بحسب شهر الميلاد، فئة {name} العمرية: {band}.'**
+  String birthMonthBandHint(String name, String band);
+
+  /// No description provided for @birthMonthUseBand.
+  ///
+  /// In ar, this message translates to:
+  /// **'اعتمادها'**
+  String get birthMonthUseBand;
+
+  /// No description provided for @childPrayerTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'صلاتي اليوم'**
+  String get childPrayerTitle;
+
+  /// No description provided for @childPrayerClaim.
+  ///
+  /// In ar, this message translates to:
+  /// **'فعلتُها'**
+  String get childPrayerClaim;
+
+  /// No description provided for @childPrayerDoneToday.
+  ///
+  /// In ar, this message translates to:
+  /// **'تمّ اليوم ✓'**
+  String get childPrayerDoneToday;
+
+  /// No description provided for @childPrayerRecorded.
+  ///
+  /// In ar, this message translates to:
+  /// **'سُجِّلت ✓ سيراها أبوك أو أمك في المساء.'**
+  String get childPrayerRecorded;
+
+  /// No description provided for @fastingUrgentTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'علامات عاجلة'**
+  String get fastingUrgentTitle;
+
+  /// No description provided for @fastingUrgentWhatToDo.
+  ///
+  /// In ar, this message translates to:
+  /// **'ماذا تفعلون فورًا'**
+  String get fastingUrgentWhatToDo;
+
+  /// No description provided for @fastingStopTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'متى يفطر فورًا'**
+  String get fastingStopTitle;
+
+  /// No description provided for @fastingDoctorFirst.
+  ///
+  /// In ar, this message translates to:
+  /// **'استشيروا الطبيب قبل البدء إن كان عند الطفل'**
+  String get fastingDoctorFirst;
+
+  /// No description provided for @fastingSteps.
+  ///
+  /// In ar, this message translates to:
+  /// **'درجات {name}'**
+  String fastingSteps(String name);
+
+  /// No description provided for @fastingCurrent.
+  ///
+  /// In ar, this message translates to:
+  /// **'الدرجة الحالية'**
+  String get fastingCurrent;
+
+  /// No description provided for @fastingSetStep.
+  ///
+  /// In ar, this message translates to:
+  /// **'اجعلها درجته'**
+  String get fastingSetStep;
+
+  /// No description provided for @fastingFromAge.
+  ///
+  /// In ar, this message translates to:
+  /// **'من عمر {age}'**
+  String fastingFromAge(int age);
+
+  /// No description provided for @fastingHours.
+  ///
+  /// In ar, this message translates to:
+  /// **'{hours, plural, =0{بلا إمساك} =1{نحو ساعة} =2{نحو ساعتين} few{نحو {hours} ساعات} other{نحو {hours} ساعة}}'**
+  String fastingHours(int hours);
+
+  /// No description provided for @fastingMaxDays.
+  ///
+  /// In ar, this message translates to:
+  /// **'{days, plural, =1{يوم واحد في الأسبوع على الأكثر} =2{يومان في الأسبوع على الأكثر} few{{days} أيام في الأسبوع على الأكثر} other{{days} يومًا في الأسبوع على الأكثر}}'**
+  String fastingMaxDays(int days);
+
+  /// No description provided for @fastingAdvanceWhen.
+  ///
+  /// In ar, this message translates to:
+  /// **'متى يصعد درجة'**
+  String get fastingAdvanceWhen;
+
+  /// No description provided for @fastingNotYetForAge.
+  ///
+  /// In ar, this message translates to:
+  /// **'ليست لعمره بعد'**
+  String get fastingNotYetForAge;
+
+  /// No description provided for @fastingPuberty.
+  ///
+  /// In ar, this message translates to:
+  /// **'بلغ {name}'**
+  String fastingPuberty(String name);
+
+  /// No description provided for @fastingPubertyHint.
+  ///
+  /// In ar, this message translates to:
+  /// **'البلوغ لا العمر هو ما يجعل الصيام فريضة. عند تفعيله ينتقل الطفل إلى درجة ١٣–١٥، ولا يُطبَّق عليه سقف أيام التدريب. وتفاصيل الأحكام عند أهل العلم.'**
+  String get fastingPubertyHint;
+
+  /// No description provided for @fastingClimbed.
+  ///
+  /// In ar, this message translates to:
+  /// **'صعد درجة، بارك الله فيه!'**
+  String get fastingClimbed;
+
+  /// No description provided for @fastingStepSaved.
+  ///
+  /// In ar, this message translates to:
+  /// **'حُفظت الدرجة'**
+  String get fastingStepSaved;
+
+  /// No description provided for @fastingPrinciples.
+  ///
+  /// In ar, this message translates to:
+  /// **'مبادئ'**
+  String get fastingPrinciples;
+
+  /// No description provided for @fastingTips.
+  ///
+  /// In ar, this message translates to:
+  /// **'نصائح'**
+  String get fastingTips;
+
+  /// No description provided for @fastingErrorNotForAge.
+  ///
+  /// In ar, this message translates to:
+  /// **'هذه الدرجة لعمر أكبر.'**
+  String get fastingErrorNotForAge;
+
+  /// No description provided for @fastingErrorNoStep.
+  ///
+  /// In ar, this message translates to:
+  /// **'اختاروا درجته أولًا.'**
+  String get fastingErrorNoStep;
+
+  /// No description provided for @milestonesTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'مراحل {name}'**
+  String milestonesTitle(String name);
+
+  /// No description provided for @milestonesDue.
+  ///
+  /// In ar, this message translates to:
+  /// **'حان وقتها'**
+  String get milestonesDue;
+
+  /// No description provided for @milestonesUpcoming.
+  ///
+  /// In ar, this message translates to:
+  /// **'قادمة'**
+  String get milestonesUpcoming;
+
+  /// No description provided for @milestonesLibrary.
+  ///
+  /// In ar, this message translates to:
+  /// **'لعمر {name}'**
+  String milestonesLibrary(String name);
+
+  /// No description provided for @milestonesPast.
+  ///
+  /// In ar, this message translates to:
+  /// **'مرّت'**
+  String get milestonesPast;
+
+  /// No description provided for @milestonesDueOn.
+  ///
+  /// In ar, this message translates to:
+  /// **'موعدها: {date}'**
+  String milestonesDueOn(String date);
+
+  /// No description provided for @milestonesNeedsBirthMonth.
+  ///
+  /// In ar, this message translates to:
+  /// **'أضف شهر ميلاد {name} لنعرف موعد كل مرحلة ونُنبّهك قبلها بشهر. وإلى ذلك الحين تظهر البطاقات بحسب فئته العمرية.'**
+  String milestonesNeedsBirthMonth(String name);
+
+  /// No description provided for @milestonesNeedsGender.
+  ///
+  /// In ar, this message translates to:
+  /// **'حدّد جنس {name} لتظهر بطاقة الاستعداد للبلوغ المناسبة.'**
+  String milestonesNeedsGender(String name);
+
+  /// No description provided for @milestonesCompleteProfile.
+  ///
+  /// In ar, this message translates to:
+  /// **'أكمل الملف'**
+  String get milestonesCompleteProfile;
+
+  /// No description provided for @milestonesEmpty.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا مراحل لعرضها الآن.'**
+  String get milestonesEmpty;
+
+  /// No description provided for @milestonesRedFlags.
+  ///
+  /// In ar, this message translates to:
+  /// **'متى تستشيرون مختصًّا'**
+  String get milestonesRedFlags;
+
+  /// No description provided for @milestonesMedicalNote.
+  ///
+  /// In ar, this message translates to:
+  /// **'معلومات عامة لا تغني عن الطبيب.'**
+  String get milestonesMedicalNote;
+
+  /// No description provided for @milestonesLinks.
+  ///
+  /// In ar, this message translates to:
+  /// **'للتعمّق'**
+  String get milestonesLinks;
+
+  /// No description provided for @missionCoinsEarned.
+  ///
+  /// In ar, this message translates to:
+  /// **'{coins, plural, =1{أُضيفت عملة واحدة إلى الرصيد} =2{أُضيفت عملتان إلى الرصيد} few{أُضيفت {coins} عملات إلى الرصيد} other{أُضيفت {coins} عملة إلى الرصيد}}'**
+  String missionCoinsEarned(int coins);
+
+  /// No description provided for @prayerAdvanceTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'انتهت أسابيع هذه المرحلة'**
+  String get prayerAdvanceTitle;
+
+  /// No description provided for @prayerAdvanceBody.
+  ///
+  /// In ar, this message translates to:
+  /// **'انتقلوا إلى المرحلة {next} حين ترون {name} مستعدًّا؛ القرار لكم.'**
+  String prayerAdvanceBody(int next, String name);
+
+  /// No description provided for @prayerAdvanceButton.
+  ///
+  /// In ar, this message translates to:
+  /// **'إلى المرحلة {next}'**
+  String prayerAdvanceButton(int next);
+
+  /// No description provided for @prayerBackToStage.
+  ///
+  /// In ar, this message translates to:
+  /// **'العودة إلى مرحلة سابقة'**
+  String get prayerBackToStage;
+
+  /// No description provided for @prayerBackHint.
+  ///
+  /// In ar, this message translates to:
+  /// **'العودة لا يراها الطفل؛ فهو يرى مهام يومه فقط.'**
+  String get prayerBackHint;
+
+  /// No description provided for @prayerBasis.
+  ///
+  /// In ar, this message translates to:
+  /// **'على ماذا تقوم الرحلة'**
+  String get prayerBasis;
+
+  /// No description provided for @prayerPrinciples.
+  ///
+  /// In ar, this message translates to:
+  /// **'مبادئ الرحلة'**
+  String get prayerPrinciples;
+
+  /// No description provided for @prayerChooseStage.
+  ///
+  /// In ar, this message translates to:
+  /// **'من أي مرحلة نبدأ؟'**
+  String get prayerChooseStage;
+
+  /// No description provided for @prayerConfirmNow.
+  ///
+  /// In ar, this message translates to:
+  /// **'ثبّت الآن'**
+  String get prayerConfirmNow;
+
+  /// No description provided for @prayerCovenantTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'العهد'**
+  String get prayerCovenantTitle;
+
+  /// No description provided for @prayerCovenantProgress.
+  ///
+  /// In ar, this message translates to:
+  /// **'جمع في هذه المرحلة {coins} عملة، والعهد عند {target}.'**
+  String prayerCovenantProgress(int coins, int target);
+
+  /// No description provided for @prayerCovenantExamples.
+  ///
+  /// In ar, this message translates to:
+  /// **'أفكار للعهد'**
+  String get prayerCovenantExamples;
+
+  /// No description provided for @prayerSetCovenant.
+  ///
+  /// In ar, this message translates to:
+  /// **'اتفقوا على العهد'**
+  String get prayerSetCovenant;
+
+  /// No description provided for @prayerErrorAlreadyEnrolled.
+  ///
+  /// In ar, this message translates to:
+  /// **'بدأت الرحلة بالفعل.'**
+  String get prayerErrorAlreadyEnrolled;
+
+  /// No description provided for @prayerErrorGraduationNotYet.
+  ///
+  /// In ar, this message translates to:
+  /// **'يُتاح التخرّج بعد أن تكتمل أسابيع المرحلة الأخيرة.'**
+  String get prayerErrorGraduationNotYet;
+
+  /// No description provided for @prayerErrorNotForAge.
+  ///
+  /// In ar, this message translates to:
+  /// **'هذا المسار ليس لعمره.'**
+  String get prayerErrorNotForAge;
+
+  /// No description provided for @prayerErrorOneStage.
+  ///
+  /// In ar, this message translates to:
+  /// **'يكون الانتقال مرحلةً واحدة في كل مرة.'**
+  String get prayerErrorOneStage;
+
+  /// No description provided for @prayerGraduateButton.
+  ///
+  /// In ar, this message translates to:
+  /// **'احتفلوا بالتخرّج'**
+  String get prayerGraduateButton;
+
+  /// No description provided for @prayerGraduatedOn.
+  ///
+  /// In ar, this message translates to:
+  /// **'أتمّ الرحلة في {date}'**
+  String prayerGraduatedOn(String date);
+
+  /// No description provided for @prayerGraduatedTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'أتمّ رحلة الصلاة!'**
+  String get prayerGraduatedTitle;
+
+  /// No description provided for @prayerHandOver.
+  ///
+  /// In ar, this message translates to:
+  /// **'سلّم الجهاز لـ{name} ليسجّل مهمته'**
+  String prayerHandOver(String name);
+
+  /// No description provided for @prayerHowToConfirm.
+  ///
+  /// In ar, this message translates to:
+  /// **'كيف تثبّتون'**
+  String get prayerHowToConfirm;
+
+  /// No description provided for @prayerIfStruggling.
+  ///
+  /// In ar, this message translates to:
+  /// **'إن صعب الأمر'**
+  String get prayerIfStruggling;
+
+  /// No description provided for @prayerJourneyInstead.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا يصلّي بانتظام بعد؟ ابدأ الرحلة من المرحلة المناسبة'**
+  String get prayerJourneyInstead;
+
+  /// No description provided for @prayerLessons.
+  ///
+  /// In ar, this message translates to:
+  /// **'دروس لهذه المرحلة'**
+  String get prayerLessons;
+
+  /// No description provided for @prayerNotForChild.
+  ///
+  /// In ar, this message translates to:
+  /// **'رحلة الصلاة ليست لعمر {name} الآن.'**
+  String prayerNotForChild(String name);
+
+  /// No description provided for @prayerRecordInJourney.
+  ///
+  /// In ar, this message translates to:
+  /// **'سجّل هذه المحطة في رحلة {name}'**
+  String prayerRecordInJourney(String name);
+
+  /// No description provided for @prayerSayToChild.
+  ///
+  /// In ar, this message translates to:
+  /// **'قولوا لـ{name}'**
+  String prayerSayToChild(String name);
+
+  /// No description provided for @prayerStageN.
+  ///
+  /// In ar, this message translates to:
+  /// **'المرحلة {stage}'**
+  String prayerStageN(int stage);
+
+  /// No description provided for @prayerStageOf.
+  ///
+  /// In ar, this message translates to:
+  /// **'المرحلة {stage} من {total}'**
+  String prayerStageOf(int stage, int total);
+
+  /// No description provided for @prayerStageWeeks.
+  ///
+  /// In ar, this message translates to:
+  /// **'الأسابيع {first}–{last}'**
+  String prayerStageWeeks(int first, int last);
+
+  /// No description provided for @prayerStagesTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'المراحل'**
+  String get prayerStagesTitle;
+
+  /// No description provided for @prayerStartTrack.
+  ///
+  /// In ar, this message translates to:
+  /// **'ابدأ: {title}'**
+  String prayerStartTrack(String title);
+
+  /// No description provided for @prayerStop.
+  ///
+  /// In ar, this message translates to:
+  /// **'إيقاف الرحلة'**
+  String get prayerStop;
+
+  /// No description provided for @prayerStopConfirm.
+  ///
+  /// In ar, this message translates to:
+  /// **'إيقاف رحلة الصلاة مع {name}؟ يمكنكم البدء من جديد متى شئتم.'**
+  String prayerStopConfirm(String name);
+
+  /// No description provided for @prayerTaskGoal.
+  ///
+  /// In ar, this message translates to:
+  /// **'المقترح: {count} في الأسبوع'**
+  String prayerTaskGoal(int count);
+
+  /// No description provided for @prayerTaskThisWeek.
+  ///
+  /// In ar, this message translates to:
+  /// **'هذا الأسبوع: {count}'**
+  String prayerTaskThisWeek(int count);
+
+  /// No description provided for @prayerTaskToday.
+  ///
+  /// In ar, this message translates to:
+  /// **'اليوم: {count}'**
+  String prayerTaskToday(int count);
+
+  /// No description provided for @prayerTasksTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'مهام {name}'**
+  String prayerTasksTitle(String name);
+
+  /// No description provided for @prayerTrackJourney.
+  ///
+  /// In ar, this message translates to:
+  /// **'رحلة الصلاة'**
+  String get prayerTrackJourney;
+
+  /// No description provided for @prayerTrackOwnership.
+  ///
+  /// In ar, this message translates to:
+  /// **'صلاتي مسؤوليتي'**
+  String get prayerTrackOwnership;
+
+  /// No description provided for @prayerTrackPreparation.
+  ///
+  /// In ar, this message translates to:
+  /// **'مرحلة التهيئة'**
+  String get prayerTrackPreparation;
+
+  /// No description provided for @prayerWeekN.
+  ///
+  /// In ar, this message translates to:
+  /// **'الأسبوع {week}'**
+  String prayerWeekN(int week);
+
+  /// No description provided for @prayerYourPart.
+  ///
+  /// In ar, this message translates to:
+  /// **'دوركم في هذه المرحلة'**
+  String get prayerYourPart;
+
+  /// No description provided for @programsTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'برامج الأسرة'**
+  String get programsTitle;
+
+  /// No description provided for @programsIntro.
+  ///
+  /// In ar, this message translates to:
+  /// **'برامج قصيرة تمشي معك خطوة بخطوة: رمضان العائلة، ورحلة الصلاة، والمراحل المهمة في عمر كل طفل.'**
+  String get programsIntro;
+
+  /// No description provided for @programsHomeIntro.
+  ///
+  /// In ar, this message translates to:
+  /// **'رمضان العائلة، ورحلة الصلاة، والمراحل المهمة في عمر طفلك.'**
+  String get programsHomeIntro;
+
+  /// No description provided for @programsCoins.
+  ///
+  /// In ar, this message translates to:
+  /// **'{coins, plural, =1{عملة واحدة} =2{عملتان} few{{coins} عملات} other{{coins} عملة}}'**
+  String programsCoins(int coins);
+
+  /// No description provided for @programsErrorNotInSeason.
+  ///
+  /// In ar, this message translates to:
+  /// **'يُضبط هذا قبل رمضان وفي أثنائه.'**
+  String get programsErrorNotInSeason;
+
+  /// No description provided for @programsEvidenceTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'الدليل'**
+  String get programsEvidenceTitle;
+
+  /// No description provided for @programsVerses.
+  ///
+  /// In ar, this message translates to:
+  /// **'آيات'**
+  String get programsVerses;
+
+  /// No description provided for @programsLessonFallback.
+  ///
+  /// In ar, this message translates to:
+  /// **'درس'**
+  String get programsLessonFallback;
+
+  /// No description provided for @programsPathFallback.
+  ///
+  /// In ar, this message translates to:
+  /// **'مسار'**
+  String get programsPathFallback;
+
+  /// No description provided for @programsMeaningLabel.
+  ///
+  /// In ar, this message translates to:
+  /// **'المعنى'**
+  String get programsMeaningLabel;
+
+  /// No description provided for @programsMilestonesAddBirthMonth.
+  ///
+  /// In ar, this message translates to:
+  /// **'أضف شهر ميلاد {name} لتصلك التنبيهات في وقتها'**
+  String programsMilestonesAddBirthMonth(String name);
+
+  /// No description provided for @programsMilestonesBrowse.
+  ///
+  /// In ar, this message translates to:
+  /// **'ما ينتظره في كل عمر'**
+  String get programsMilestonesBrowse;
+
+  /// No description provided for @programsMilestonesDue.
+  ///
+  /// In ar, this message translates to:
+  /// **'{count, plural, =1{مرحلة واحدة حان وقتها} =2{مرحلتان حان وقتهما} few{{count} مراحل حان وقتها} other{{count} مرحلة حان وقتها}}'**
+  String programsMilestonesDue(int count);
+
+  /// No description provided for @programsMilestonesDueFor.
+  ///
+  /// In ar, this message translates to:
+  /// **'{count, plural, =1{مرحلة في عمر {name} حان وقتها} =2{مرحلتان في عمر {name} حان وقتهما} few{{count} مراحل في عمر {name} حان وقتها} other{{count} مرحلة في عمر {name} حان وقتها}}'**
+  String programsMilestonesDueFor(int count, String name);
+
+  /// No description provided for @programsMilestonesTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'المراحل المهمة'**
+  String get programsMilestonesTitle;
+
+  /// No description provided for @programsNoChildren.
+  ///
+  /// In ar, this message translates to:
+  /// **'أضف طفلك لتظهر برامجه هنا.'**
+  String get programsNoChildren;
+
+  /// No description provided for @programsOpenInQuran.
+  ///
+  /// In ar, this message translates to:
+  /// **'افتح في المصحف'**
+  String get programsOpenInQuran;
+
+  /// No description provided for @programsOpenRamadan.
+  ///
+  /// In ar, this message translates to:
+  /// **'افتح البرنامج'**
+  String get programsOpenRamadan;
+
+  /// No description provided for @programsPrayerAdvance.
+  ///
+  /// In ar, this message translates to:
+  /// **'جاهز للمرحلة التالية حين ترون ذلك'**
+  String get programsPrayerAdvance;
+
+  /// No description provided for @programsPrayerCanGraduate.
+  ///
+  /// In ar, this message translates to:
+  /// **'جاهز للتخرّج'**
+  String get programsPrayerCanGraduate;
+
+  /// No description provided for @programsPrayerNotStarted.
+  ///
+  /// In ar, this message translates to:
+  /// **'لم تبدأ بعد: {track}'**
+  String programsPrayerNotStarted(String track);
+
+  /// No description provided for @programsPrayerPending.
+  ///
+  /// In ar, this message translates to:
+  /// **'{count, plural, =1{مهمة واحدة تنتظر تثبيتك} =2{مهمتان تنتظران تثبيتك} few{{count} مهام تنتظر تثبيتك} other{{count} مهمة تنتظر تثبيتك}}'**
+  String programsPrayerPending(int count);
+
+  /// No description provided for @programsPrayerStartWith.
+  ///
+  /// In ar, this message translates to:
+  /// **'رحلة الصلاة: ابدأها مع {name}'**
+  String programsPrayerStartWith(String name);
+
+  /// No description provided for @programsPrayerTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'رحلة الصلاة'**
+  String get programsPrayerTitle;
+
+  /// No description provided for @programsQuranArabicNote.
+  ///
+  /// In ar, this message translates to:
+  /// **'يُعرض القرآن بنصّه العربي.'**
+  String get programsQuranArabicNote;
+
+  /// No description provided for @programsRamadanAfterWeek.
+  ///
+  /// In ar, this message translates to:
+  /// **'بعد رمضان: الأسبوع {week} من أسابيع الاستمرار'**
+  String programsRamadanAfterWeek(int week);
+
+  /// No description provided for @programsRamadanEid.
+  ///
+  /// In ar, this message translates to:
+  /// **'عيدكم مبارك — بطاقة «رمضان عائلتنا» جاهزة'**
+  String get programsRamadanEid;
+
+  /// No description provided for @programsRamadanOffSeason.
+  ///
+  /// In ar, this message translates to:
+  /// **'يعود برنامج رمضان مع الموسم القادم بإذن الله.'**
+  String get programsRamadanOffSeason;
+
+  /// No description provided for @programsRamadanRole.
+  ///
+  /// In ar, this message translates to:
+  /// **'دور {name} في رمضان'**
+  String programsRamadanRole(String name);
+
+  /// No description provided for @programsRamadanTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'رمضان العائلة'**
+  String get programsRamadanTitle;
+
+  /// No description provided for @programsSaved.
+  ///
+  /// In ar, this message translates to:
+  /// **'حُفظ'**
+  String get programsSaved;
+
+  /// No description provided for @programsSurahRange.
+  ///
+  /// In ar, this message translates to:
+  /// **'سورة {surah} ({range})'**
+  String programsSurahRange(String surah, String range);
+
+  /// No description provided for @programsUnavailable.
+  ///
+  /// In ar, this message translates to:
+  /// **'هذه البرامج غير متاحة الآن. حاول لاحقًا.'**
+  String get programsUnavailable;
+
+  /// No description provided for @ramadanAfterHabits.
+  ///
+  /// In ar, this message translates to:
+  /// **'عادات نستمر عليها'**
+  String get ramadanAfterHabits;
+
+  /// No description provided for @ramadanAfterLinks.
+  ///
+  /// In ar, this message translates to:
+  /// **'تابعوا من هنا'**
+  String get ramadanAfterLinks;
+
+  /// No description provided for @ramadanAfterThisWeek.
+  ///
+  /// In ar, this message translates to:
+  /// **'هذا الأسبوع'**
+  String get ramadanAfterThisWeek;
+
+  /// No description provided for @ramadanAfterWeeks.
+  ///
+  /// In ar, this message translates to:
+  /// **'أسابيع الاستمرار'**
+  String get ramadanAfterWeeks;
+
+  /// No description provided for @ramadanAtHome.
+  ///
+  /// In ar, this message translates to:
+  /// **'في البيت'**
+  String get ramadanAtHome;
+
+  /// No description provided for @ramadanChildPart.
+  ///
+  /// In ar, this message translates to:
+  /// **'دور {name}'**
+  String ramadanChildPart(String name);
+
+  /// No description provided for @ramadanChooseStep.
+  ///
+  /// In ar, this message translates to:
+  /// **'اختر درجته'**
+  String get ramadanChooseStep;
+
+  /// No description provided for @ramadanCostFree.
+  ///
+  /// In ar, this message translates to:
+  /// **'بلا تكلفة'**
+  String get ramadanCostFree;
+
+  /// No description provided for @ramadanCostLow.
+  ///
+  /// In ar, this message translates to:
+  /// **'تكلفة قليلة'**
+  String get ramadanCostLow;
+
+  /// No description provided for @ramadanCountdown.
+  ///
+  /// In ar, this message translates to:
+  /// **'{days, plural, =0{يبدأ رمضان اليوم} =1{بقي يوم واحد على رمضان} =2{بقي يومان على رمضان} few{بقي {days} أيام على رمضان} other{بقي {days} يومًا على رمضان}}'**
+  String ramadanCountdown(int days);
+
+  /// No description provided for @ramadanDayN.
+  ///
+  /// In ar, this message translates to:
+  /// **'اليوم {day}'**
+  String ramadanDayN(int day);
+
+  /// No description provided for @ramadanDayOf.
+  ///
+  /// In ar, this message translates to:
+  /// **'اليوم {day} من {total} من رمضان'**
+  String ramadanDayOf(int day, int total);
+
+  /// No description provided for @ramadanDayPreviewNote.
+  ///
+  /// In ar, this message translates to:
+  /// **'لم يأتِ هذا اليوم بعد؛ تُعلَّم «تمّ» في يومه.'**
+  String get ramadanDayPreviewNote;
+
+  /// No description provided for @ramadanDays29.
+  ///
+  /// In ar, this message translates to:
+  /// **'٢٩ يومًا'**
+  String get ramadanDays29;
+
+  /// No description provided for @ramadanDays30.
+  ///
+  /// In ar, this message translates to:
+  /// **'٣٠ يومًا'**
+  String get ramadanDays30;
+
+  /// No description provided for @ramadanDaysAuto.
+  ///
+  /// In ar, this message translates to:
+  /// **'كما يُعلَن في التطبيق'**
+  String get ramadanDaysAuto;
+
+  /// No description provided for @ramadanEidTomorrowTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'هل غدًا العيد؟'**
+  String get ramadanEidTomorrowTitle;
+
+  /// No description provided for @ramadanEidTomorrowBody.
+  ///
+  /// In ar, this message translates to:
+  /// **'إن أُعلن العيد غدًا في بلدكم، فاجعلوا الشهر ٢٩ يومًا ليصل البرنامج معكم إلى العيد في وقته.'**
+  String get ramadanEidTomorrowBody;
+
+  /// No description provided for @ramadanErrorDayNotMarkable.
+  ///
+  /// In ar, this message translates to:
+  /// **'يُعلَّم هذا اليوم حين يأتي.'**
+  String get ramadanErrorDayNotMarkable;
+
+  /// No description provided for @ramadanFamilyChallenge.
+  ///
+  /// In ar, this message translates to:
+  /// **'تحدّي العائلة'**
+  String get ramadanFamilyChallenge;
+
+  /// No description provided for @ramadanFamilyWordHint.
+  ///
+  /// In ar, this message translates to:
+  /// **'اختاروا كلمة واحدة تصف رمضانكم، لتظهر في بطاقة «رمضان عائلتنا».'**
+  String get ramadanFamilyWordHint;
+
+  /// No description provided for @ramadanFamilyWordTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'كلمة رمضاننا'**
+  String get ramadanFamilyWordTitle;
+
+  /// No description provided for @ramadanFastingNoStep.
+  ///
+  /// In ar, this message translates to:
+  /// **'لم تُختر درجة {name} بعد.'**
+  String ramadanFastingNoStep(String name);
+
+  /// No description provided for @ramadanFastingStep.
+  ///
+  /// In ar, this message translates to:
+  /// **'درجة {name}: {step}'**
+  String ramadanFastingStep(String name, String step);
+
+  /// No description provided for @ramadanFastingTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'سلّم الصيام'**
+  String get ramadanFastingTitle;
+
+  /// No description provided for @ramadanMarkChallenge.
+  ///
+  /// In ar, this message translates to:
+  /// **'التحدّي'**
+  String get ramadanMarkChallenge;
+
+  /// No description provided for @ramadanMarkJuz.
+  ///
+  /// In ar, this message translates to:
+  /// **'جزء الختمة'**
+  String get ramadanMarkJuz;
+
+  /// No description provided for @ramadanMarkNight.
+  ///
+  /// In ar, this message translates to:
+  /// **'اجتمعنا الليلة'**
+  String get ramadanMarkNight;
+
+  /// No description provided for @ramadanMarkStory.
+  ///
+  /// In ar, this message translates to:
+  /// **'القصة'**
+  String get ramadanMarkStory;
+
+  /// No description provided for @ramadanMarkWird.
+  ///
+  /// In ar, this message translates to:
+  /// **'الورد'**
+  String get ramadanMarkWird;
+
+  /// No description provided for @ramadanMarksNote.
+  ///
+  /// In ar, this message translates to:
+  /// **'علّموا ما أتممتموه فقط؛ وما لم يتيسّر لا يُسجَّل.'**
+  String get ramadanMarksNote;
+
+  /// No description provided for @ramadanMarksTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'ما أتممناه'**
+  String get ramadanMarksTitle;
+
+  /// No description provided for @ramadanMaterials.
+  ///
+  /// In ar, this message translates to:
+  /// **'تحتاجون إلى'**
+  String get ramadanMaterials;
+
+  /// No description provided for @ramadanMayNotOccur.
+  ///
+  /// In ar, this message translates to:
+  /// **'قد لا يأتي هذا اليوم إن كان الشهر ٢٩ يومًا.'**
+  String get ramadanMayNotOccur;
+
+  /// No description provided for @ramadanMinutes.
+  ///
+  /// In ar, this message translates to:
+  /// **'{minutes, plural, =1{دقيقة واحدة} =2{دقيقتان} few{{minutes} دقائق} other{{minutes} دقيقة}}'**
+  String ramadanMinutes(int minutes);
+
+  /// No description provided for @ramadanNoFastingBeforeSeven.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا إمساك قبل السابعة في هذا البرنامج؛ يعيش الطفل أجواء رمضان معكم.'**
+  String get ramadanNoFastingBeforeSeven;
+
+  /// No description provided for @ramadanOddNight.
+  ///
+  /// In ar, this message translates to:
+  /// **'الليلة من الليالي الوترية في العشر الأواخر.'**
+  String get ramadanOddNight;
+
+  /// No description provided for @ramadanOffSeasonBody.
+  ///
+  /// In ar, this message translates to:
+  /// **'انتهى موسم رمضان. نلقاكم في رمضان القادم بإذن الله.'**
+  String get ramadanOffSeasonBody;
+
+  /// No description provided for @ramadanOpenLadder.
+  ///
+  /// In ar, this message translates to:
+  /// **'افتح سلّم الصيام'**
+  String get ramadanOpenLadder;
+
+  /// No description provided for @ramadanOtherDays.
+  ///
+  /// In ar, this message translates to:
+  /// **'أيام الشهر'**
+  String get ramadanOtherDays;
+
+  /// No description provided for @ramadanParentJuz.
+  ///
+  /// In ar, this message translates to:
+  /// **'ختمة الوالدين: الجزء {juz}'**
+  String ramadanParentJuz(int juz);
+
+  /// No description provided for @ramadanParentNote.
+  ///
+  /// In ar, this message translates to:
+  /// **'لكم أنتم'**
+  String get ramadanParentNote;
+
+  /// No description provided for @ramadanPhaseFirstTen.
+  ///
+  /// In ar, this message translates to:
+  /// **'العشر الأولى'**
+  String get ramadanPhaseFirstTen;
+
+  /// No description provided for @ramadanPhaseMiddleTen.
+  ///
+  /// In ar, this message translates to:
+  /// **'العشر الوسطى'**
+  String get ramadanPhaseMiddleTen;
+
+  /// No description provided for @ramadanPhaseLastTen.
+  ///
+  /// In ar, this message translates to:
+  /// **'العشر الأواخر'**
+  String get ramadanPhaseLastTen;
+
+  /// No description provided for @ramadanPractisedThisWeek.
+  ///
+  /// In ar, this message translates to:
+  /// **'{count, plural, =1{مرة واحدة هذا الأسبوع} =2{مرتان هذا الأسبوع} few{{count} مرات هذا الأسبوع} other{{count} مرة هذا الأسبوع}}'**
+  String ramadanPractisedThisWeek(int count);
+
+  /// No description provided for @ramadanPractisedToday.
+  ///
+  /// In ar, this message translates to:
+  /// **'تدرّب {name} على درجته اليوم'**
+  String ramadanPractisedToday(String name);
+
+  /// No description provided for @ramadanReadStory.
+  ///
+  /// In ar, this message translates to:
+  /// **'اقرؤوها معًا'**
+  String get ramadanReadStory;
+
+  /// No description provided for @ramadanReadWithChild.
+  ///
+  /// In ar, this message translates to:
+  /// **'هذا النص موجّه إلى {name}؛ اقرؤوه معه.'**
+  String ramadanReadWithChild(String name);
+
+  /// No description provided for @ramadanRecapOpen.
+  ///
+  /// In ar, this message translates to:
+  /// **'افتح «رمضان عائلتنا»'**
+  String get ramadanRecapOpen;
+
+  /// No description provided for @ramadanRestSuggested.
+  ///
+  /// In ar, this message translates to:
+  /// **'يكفيه هذا الأسبوع؛ فليكن الغد يوم راحة.'**
+  String get ramadanRestSuggested;
+
+  /// No description provided for @ramadanSettingsCurrent.
+  ///
+  /// In ar, this message translates to:
+  /// **'الآن: يبدأ في {date}، والشهر {days} يومًا'**
+  String ramadanSettingsCurrent(String date, int days);
+
+  /// No description provided for @ramadanSettingsIntro.
+  ///
+  /// In ar, this message translates to:
+  /// **'يبدأ رمضان برؤية الهلال، وقد يختلف يومه بين البلدان. اضبطوه على ما أُعلن في بلدكم.'**
+  String get ramadanSettingsIntro;
+
+  /// No description provided for @ramadanSettingsLength.
+  ///
+  /// In ar, this message translates to:
+  /// **'عدد أيام الشهر'**
+  String get ramadanSettingsLength;
+
+  /// No description provided for @ramadanSettingsStart.
+  ///
+  /// In ar, this message translates to:
+  /// **'أول يوم من رمضان'**
+  String get ramadanSettingsStart;
+
+  /// No description provided for @ramadanSettingsTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'رؤية الهلال عندكم'**
+  String get ramadanSettingsTitle;
+
+  /// No description provided for @ramadanShiftEarlier.
+  ///
+  /// In ar, this message translates to:
+  /// **'قبل يوم'**
+  String get ramadanShiftEarlier;
+
+  /// No description provided for @ramadanShiftLater.
+  ///
+  /// In ar, this message translates to:
+  /// **'بعد يوم'**
+  String get ramadanShiftLater;
+
+  /// No description provided for @ramadanShiftNone.
+  ///
+  /// In ar, this message translates to:
+  /// **'كما في التطبيق'**
+  String get ramadanShiftNone;
+
+  /// No description provided for @ramadanSoFar.
+  ///
+  /// In ar, this message translates to:
+  /// **'رمضاننا حتى الآن'**
+  String get ramadanSoFar;
+
+  /// No description provided for @ramadanStartsOn.
+  ///
+  /// In ar, this message translates to:
+  /// **'يبدأ في {date}'**
+  String ramadanStartsOn(String date);
+
+  /// No description provided for @ramadanStartsOnEstimate.
+  ///
+  /// In ar, this message translates to:
+  /// **'يبدأ في {date} تقريبًا، ويُؤكَّد برؤية الهلال'**
+  String ramadanStartsOnEstimate(String date);
+
+  /// No description provided for @ramadanStoryTonight.
+  ///
+  /// In ar, this message translates to:
+  /// **'قصة الليلة: {title}'**
+  String ramadanStoryTonight(String title);
+
+  /// No description provided for @ramadanWhenAfterIftar.
+  ///
+  /// In ar, this message translates to:
+  /// **'بعد الإفطار'**
+  String get ramadanWhenAfterIftar;
+
+  /// No description provided for @ramadanWhenAnytime.
+  ///
+  /// In ar, this message translates to:
+  /// **'في أي وقت'**
+  String get ramadanWhenAnytime;
+
+  /// No description provided for @ramadanWhenAtIftar.
+  ///
+  /// In ar, this message translates to:
+  /// **'عند الإفطار'**
+  String get ramadanWhenAtIftar;
+
+  /// No description provided for @ramadanWhenBeforeIftar.
+  ///
+  /// In ar, this message translates to:
+  /// **'قبل الإفطار'**
+  String get ramadanWhenBeforeIftar;
+
+  /// No description provided for @ramadanWhenNight.
+  ///
+  /// In ar, this message translates to:
+  /// **'في الليل'**
+  String get ramadanWhenNight;
+
+  /// No description provided for @ramadanWhenSuhoor.
+  ///
+  /// In ar, this message translates to:
+  /// **'عند السحور'**
+  String get ramadanWhenSuhoor;
+
+  /// No description provided for @ramadanWhoSeesWhat.
+  ///
+  /// In ar, this message translates to:
+  /// **'مَن يرى ماذا'**
+  String get ramadanWhoSeesWhat;
+
+  /// No description provided for @ramadanWirdTheme.
+  ///
+  /// In ar, this message translates to:
+  /// **'آيات اليوم'**
+  String get ramadanWirdTheme;
+
+  /// No description provided for @ramadanWirdTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'ورد القرآن العائلي'**
+  String get ramadanWirdTitle;
+
+  /// No description provided for @ramadanWirdTogether.
+  ///
+  /// In ar, this message translates to:
+  /// **'نقرؤها معًا'**
+  String get ramadanWirdTogether;
+
+  /// No description provided for @recapEmpty.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا عدّادات بعد؛ علّموا «تمّ» في بطاقة اليوم لتظهر هنا.'**
+  String get recapEmpty;
+
+  /// No description provided for @recapFamilyOnly.
+  ///
+  /// In ar, this message translates to:
+  /// **'لأسرتكم فقط'**
+  String get recapFamilyOnly;
+
+  /// No description provided for @recapFamilyOnlyNote.
+  ///
+  /// In ar, this message translates to:
+  /// **'هذا لا يظهر في البطاقة ولا يُشارَك؛ فصيام الأطفال شأن خاص بالأسرة.'**
+  String get recapFamilyOnlyNote;
+
+  /// No description provided for @recapNoSeason.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا موسم رمضان معروفًا بعد.'**
+  String get recapNoSeason;
+
+  /// No description provided for @recapNotYet.
+  ///
+  /// In ar, this message translates to:
+  /// **'تجهز البطاقة يوم العيد ({date}).'**
+  String recapNotYet(String date);
+
+  /// No description provided for @recapNotYetNoDate.
+  ///
+  /// In ar, this message translates to:
+  /// **'تجهز البطاقة يوم العيد.'**
+  String get recapNotYetNoDate;
+
+  /// No description provided for @recapPreview.
+  ///
+  /// In ar, this message translates to:
+  /// **'هذا ما سيُشارَك'**
+  String get recapPreview;
+
+  /// No description provided for @recapShare.
+  ///
+  /// In ar, this message translates to:
+  /// **'شارك البطاقة'**
+  String get recapShare;
+
+  /// No description provided for @recapShareFailed.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعذّرت المشاركة. حاولوا مرة أخرى.'**
+  String get recapShareFailed;
+
+  /// No description provided for @recapTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'رمضان عائلتنا'**
+  String get recapTitle;
+
+  /// No description provided for @prayerHandOverNeedsBand.
+  ///
+  /// In ar, this message translates to:
+  /// **'لكي يسجّل {name} مهامه في وضع الطفل، حدّث فئته العمرية في ملفه لتوافق عمره.'**
+  String prayerHandOverNeedsBand(String name);
 }
 
 class _AppLocalizationsDelegate

@@ -62,11 +62,17 @@ class ShareService {
   ///
   /// [message] is the human line (e.g. «ما شاء الله، أتمّ محمد أول صلاة 🤍»);
   /// the install CTA is appended automatically so callers never forget it.
+  ///
+  /// [appendInstallLink] is false when [message] already carries the link —
+  /// the «رمضان عائلتنا» card's `share_text` is written by the server with the
+  /// family's own attributed invite in it, and a second link under it would
+  /// read as spam.
   static Future<bool> shareMomentCard({
     required Widget card,
     required String message,
     required String fileTag,
     String? referralCode,
+    bool appendInstallLink = true,
   }) async {
     try {
       // Default to this device's referral code so every shared moment is an
@@ -87,8 +93,10 @@ class ShareService {
       final file = File('${dir.path}/$fileTag.png');
       await file.writeAsBytes(image);
 
-      final text = '$message\n\n📲 «المربّي» مجانًا لوجه الله:\n'
-          '${installUrlFor(referralCode: referralCode)}';
+      final text = appendInstallLink
+          ? '$message\n\n📲 «المربّي» مجانًا لوجه الله:\n'
+              '${installUrlFor(referralCode: referralCode)}'
+          : message;
 
       final result = await SharePlus.instance.share(
           ShareParams(files: [XFile(file.path)], text: text));
