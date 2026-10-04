@@ -113,10 +113,11 @@ A newborn-health question getting a fiqh reply is a patient-safety problem. The 
   A fork PR skips all jobs, so it never reaches the production runner. Pushes, manual runs and same-repo branches (which need write access) are unchanged.
   The workflows also declare `permissions: contents: read`.
   Point 3 (the settings toggle) is still advised as defence in depth.
-- **Follow-up (2026-10-04):** point 1 is now in place for `backend.yml` and `flutter.yml`: pull requests and
-  manual runs off `main` go to `ubuntu-latest`; only `main` (push or manual run) and `deploy.yml` use the
-  `production` runner. `docker.yml` (disabled) still names it. The fork guard stays as a second line.
-  Point 3 is still open: the fork-PR approval policy reads `first_time_contributors`, so a returning outside
+- **Follow-up (2026-10-04):** points 1 and 2 are now in place. Every job in `backend.yml` and `flutter.yml`
+  runs on `ubuntu-latest`, `main` included; `deploy.yml`'s build/restart job (and its alert) is the only
+  user of the `production` runner, and it starts only after a GitHub-hosted gate saw this commit's
+  pytest, KB integrity and ruff pass. `docker.yml` (disabled) still names the runner. The fork guard
+  stays, though it no longer protects the VPS. Point 3 is still open: the fork-PR approval policy reads `first_time_contributors`, so a returning outside
   contributor's PR — which can edit the workflow file itself, guard included — runs without approval.
 
 ---

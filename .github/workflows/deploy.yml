@@ -1,18 +1,26 @@
 name: Deploy
 
-# Auto-deploy the backend to the VPS on push to main.
+# Auto-deploy the backend to the VPS on push to main. Three jobs:
 #
-# Runs ON the self-hosted runner (`vps-tg`) which lives on the VPS itself,
-# so it executes the deploy LOCALLY — no SSH, no GitHub-hosted minutes, and
-# fully independent of GitHub Actions billing.
+#   gate    GitHub-hosted. Waits for "Backend tests" (backend.yml: pytest, KB
+#           integrity, ruff — all GitHub-hosted) to pass for THIS commit, and
+#           fails closed otherwise (ops/tools/deploy_gate.py, which also says
+#           why this is an API check and not `on: workflow_run`). Nothing below
+#           runs until it passes; it holds no production runner while it waits.
+#   deploy  ON the VPS (self-hosted runner `vps-tg`, locally — no SSH). Builds a
+#           candidate image, runs a ~1 CPU-minute smoke and the KB integrity
+#           check inside it (CPU-capped, low-priority, no network), backs up the
+#           data, recreates the container from that image, and rolls back if
+#           it is not healthy.
+#   alert   ON the VPS (the Telegram credentials live in its .env). Fires when
+#           the gate or the deploy failed or was cancelled.
 #
-# Previously this was gated on the "Backend tests" GitHub-hosted workflow, but
-# that workflow is disabled to avoid Actions billing. Instead, the deploy job
-# builds a *candidate* image and runs pytest + KB integrity inside it BEFORE
-# recreating the production container. A red test suite therefore never reaches
-# production.
+# The full test suite used to run inside the candidate image here, on the
+# production host — 16-28 min a deploy on 2026-10-04, 75+ min once the host
+# was CPU-throttled, while backend.yml ran the same suite on the same box. It
+# now runs once, on GitHub-hosted runners, and this workflow waits for it.
 #
-# Manual run: Actions → Deploy → "Run workflow" (workflow_dispatch).
+# Manual run: Actions → Deploy → "Run workflow". Main only; gated the same way.
 
 on:
   push:
@@ -29,6 +37,7 @@ on:
       - 'backend/Dockerfile'
       - '.github/workflows/deploy.yml'
       - 'requirements*.txt'
+      - '.github/ci/constraints-prod.txt'
   workflow_dispatch: {}
 
 concurrency:
@@ -36,8 +45,28 @@ concurrency:
   cancel-in-progress: false # never cancel an in-flight deploy
 
 jobs:
+  gate:
+    name: Backend tests passed for this commit
+    runs-on: ubuntu-latest
+    # Hosted tests take ~3-5 min; the script's own budget is 50 min.
+    timeout-minutes: 60
+    permissions:
+      actions: read
+      contents: read
+    steps:
+      - name: Checkout (the gate script only)
+        uses: actions/checkout@v5
+        with:
+          sparse-checkout: ops/tools
+
+      - name: Wait for pytest, KB integrity and ruff on ${{ github.sha }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 ops/tools/deploy_gate.py --sha "${{ github.sha }}"
+
   deploy:
     name: Deploy to VPS (self-hosted)
+    needs: gate
     runs-on: [self-hosted, production]
     timeout-minutes: 90
     environment:
@@ -47,7 +76,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
 
-      - name: Build candidate image and run tests
+      - name: Build the candidate image and smoke it
         run: |
           set -euo pipefail
           CANDIDATE_TAG="tutor-guardian-backend:candidate-${{ github.sha }}"
@@ -115,18 +144,23 @@ jobs:
           df -h / | tail -1
           du -sh "$CACHE_DIR" 2>/dev/null || true
 
-          echo "=== Run backend tests in candidate image ==="
-          docker run --rm \
-            -e SKIP_API_SMOKE=1 \
-            -e PYTHONPATH=/app/backend \
-            "$CANDIDATE_TAG" \
-            pytest -q
+          # The suite itself already passed on GitHub-hosted runners (the gate
+          # job). What only this host can check is the image it just built: it
+          # imports, loads both baked models offline, migrates a fresh DB, boots
+          # and answers /health and /api/app-config, and passes a small pytest
+          # subset — ops/tools/candidate_smoke.py, ~1 CPU-minute. The wrapper
+          # caps the container at one core with a low CPU weight, 4 GB and no
+          # network, so the live sites keep the host. The same wrapper, on the
+          # same Dockerfile, runs in the candidate-image workflow on PRs —
+          # with three sabotaged images that the smoke must reject.
+          # Named containers: if this job is cancelled, the cleanup step removes
+          # them — killing `docker run` does not stop its container.
+          echo "=== In-image smoke ==="
+          ops/tools/candidate_smoke.sh "$CANDIDATE_TAG" "tg-candidate-smoke-${{ github.run_id }}"
 
-          echo "=== Run KB integrity check in candidate image ==="
-          docker run --rm \
-            -e PYTHONPATH=/app/backend \
-            "$CANDIDATE_TAG" \
-            python ops/tools/check_kb_integrity.py
+          echo "=== KB integrity check in the candidate image ==="
+          ops/tools/candidate_smoke.sh "$CANDIDATE_TAG" "tg-candidate-kb-${{ github.run_id }}" \
+            -- python ops/tools/check_kb_integrity.py
 
           echo "=== Candidate image passed all gates ==="
 
@@ -170,10 +204,14 @@ jobs:
           PREVIOUS_IMAGE=$(docker inspect tg_backend --format '{{.Image}}' 2>/dev/null || true)
           echo "Previous image: ${PREVIOUS_IMAGE:-<none>}"
 
-          # ── 2. Pull the latest main ──────────────────────────────────
-          echo "→ git fetch + reset --hard origin/main"
+          # ── 2. Check out exactly the commit the gate approved ────────
+          # Not origin/main: main may already be ahead, and the bind mounts
+          # below (docs, ops/scripts — the crons run from here — mobile/assets)
+          # must come from the tested commit, like the image does. The newer
+          # commit gets its own gated deploy.
+          echo "→ git fetch + reset --hard $GITHUB_SHA (the tested commit)"
           git fetch origin main
-          git reset --hard origin/main
+          git reset --hard "$GITHUB_SHA"
           DEPLOY_SHA=$(git rev-parse --short HEAD)
           echo "Deploying SHA: $DEPLOY_SHA"
 
@@ -189,7 +227,11 @@ jobs:
           # A failure here stops the deploy before the container is touched, so
           # production keeps serving the last good index.
           echo "→ checking served assets against docs/"
-          python3 ops/tools/check_served_assets.py
+          # nice: host-side work on a shared, CPU-starved box yields to the
+          # live sites. (The image build cannot be niced from here — BuildKit
+          # runs inside dockerd — but its heavy layers are cache hits unless
+          # requirements or the Dockerfile changed.)
+          nice -n 10 python3 ops/tools/check_served_assets.py
 
           # ── 3. Verify the tested image is present ────────────────────
           # No build here: the previous step already built, tested and tagged
@@ -248,10 +290,10 @@ jobs:
           # Skipped only when there is no running container to back up.
           if docker inspect -f '{{.State.Running}}' tg_backend 2>/dev/null | grep -q true; then
             echo "→ pre-deploy backup of /app/ops/*.db"
-            BACKUP_ROOT=/root/tg-backups ops/scripts/backup_user_data.sh
+            BACKUP_ROOT=/root/tg-backups nice -n 10 ops/scripts/backup_user_data.sh
             # Read-only schema preflight: integrity_check and no child with two
             # active challenges (the v27 partial index would reject that).
-            ops/scripts/migrate_schema_v27.sh preflight
+            nice -n 10 ops/scripts/migrate_schema_v27.sh preflight
           else
             echo "::warning::tg_backend not running — skipping pre-deploy backup"
           fi
@@ -346,6 +388,11 @@ jobs:
       - name: Cleanup candidate image
         if: always()
         run: |
+          # A cancelled run leaves its `docker run` container running (the
+          # client dies, the container does not): remove the smoke containers
+          # by name first. No-ops after a normal run (--rm already did it).
+          docker rm -f "tg-candidate-smoke-${{ github.run_id }}" \
+                       "tg-candidate-kb-${{ github.run_id }}" >/dev/null 2>&1 || true
           # Untags only — after a successful deploy this image is also tagged
           # :latest and backs the running container, so it survives as :latest.
           docker image rm "tutor-guardian-backend:candidate-${{ github.sha }}" >/dev/null 2>&1 || true
@@ -358,23 +405,31 @@ jobs:
           echo "=== Last 30 lines of tg_backend (post-deploy) ==="
           docker logs --tail 30 tg_backend 2>&1 || echo "(no logs available)"
 
-      # A failed deploy used to be silent. On 2026-08-14 two consecutive runs
-      # failed on the served-assets guard (702b723, f1f9453) and nobody found
-      # out for three hours — main simply stopped reaching production while
-      # every local signal said the work was pushed and done.
-      #
-      # This fires on the runner itself, so it needs no GitHub secret: the
-      # credentials come from the same .env the app uses (0600, root, and the
-      # runner is root). The token is never echoed — it enters the URL from the
-      # environment at run time and does not appear in this file or in the log.
-      #
-      # ⚠️ Covers a *failed or cancelled run*. It cannot cover a run that never
-      # started — a dead runner, or a push whose paths all miss the filters
-      # above. The drift check in ops/tools/check_deploy_drift.py is what
-      # catches those, because it compares production against origin/main
-      # instead of watching this workflow.
-      - name: Alert on failed deploy
-        if: failure() || cancelled()
+  # A failed deploy used to be silent. On 2026-08-14 two consecutive runs
+  # failed on the served-assets guard (702b723, f1f9453) and nobody found
+  # out for three hours — main simply stopped reaching production while
+  # every local signal said the work was pushed and done.
+  #
+  # Its own job since the gate exists: a red gate skips the deploy job, and a
+  # skipped job runs none of its steps. It runs on the VPS runner because the
+  # credentials come from the same .env the app uses (0600, root, and the
+  # runner is root) — no GitHub secret. The token is never echoed — it enters
+  # the URL from the environment at run time and does not appear in this file
+  # or in the log.
+  #
+  # ⚠️ Covers a *failed or cancelled run*. It cannot cover a run that never
+  # started — a dead runner, or a push whose paths all miss the filters
+  # above. The drift check in ops/tools/check_deploy_drift.py is what
+  # catches those, because it compares production against origin/main
+  # instead of watching this workflow.
+  alert:
+    name: Alert on failed deploy
+    needs: [gate, deploy]
+    if: ${{ always() && (needs.gate.result == 'failure' || needs.gate.result == 'cancelled' || needs.deploy.result == 'failure' || needs.deploy.result == 'cancelled') }}
+    runs-on: [self-hosted, production]
+    timeout-minutes: 5
+    steps:
+      - name: Send the Telegram alert
         run: |
           set -eu
           cd /root/tutor-guardian
@@ -386,10 +441,18 @@ jobs:
           HEALTH=$(curl -s -o /dev/null -w '%{http_code}' --max-time 10 \
                    https://tg-api.alsaba.cloud/health || echo 'unreachable')
 
+          if [ "${{ needs.gate.result }}" != "success" ]; then
+            HINT1='البوابة: اختبارات Backend tests لم تنجح لهذا الكوميت،'
+            HINT2='فلم يُلمَس الإنتاج. السبب في رابط التشغيل أعلاه.'
+          else
+            HINT1='الخطوة الفاشلة في اللوج. لو الحارس هو السبب،'
+            HINT2='الأرجح ملف ميديا في الفهرس ولم يصل بالـrsync.'
+          fi
+
           TEXT=$(printf '%s\n' \
             '🔴 نشر المربّي فشل — main لم يصل الإنتاج' \
             '' \
-            "الحالة:    ${{ job.status }}" \
+            "الحالة:    gate=${{ needs.gate.result }} · deploy=${{ needs.deploy.result }}" \
             "الكوميت:   ${{ github.sha }}" \
             "على الخادم: $RUNNING_SHA" \
             "الحاوية:   ${CONTAINER:-<لا توجد>}" \
@@ -397,8 +460,8 @@ jobs:
             '' \
             "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
             '' \
-            'الخطوة الفاشلة في اللوج. لو الحارس هو السبب،' \
-            'الأرجح ملف ميديا في الفهرس ولم يصل بالـrsync.')
+            "$HINT1" \
+            "$HINT2")
 
           curl -sS --max-time 20 \
             "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
