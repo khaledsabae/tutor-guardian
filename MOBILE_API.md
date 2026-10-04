@@ -291,7 +291,8 @@ the parent declined notifications.**
 
 ```http
 GET /api/device-proof
-→ 200 {"proven": false, "proven_at": null, "push_registered": true, "cooldown_until": null}
+→ 200 {"proven": false, "proven_at": null, "push_registered": true,
+       "cooldown_until": null, "deletion_paused_until": null}
 
 POST /api/device-proof/start
 → 202 {"challenge_id": 41, "expires_in": 300}
@@ -329,6 +330,12 @@ POST /api/device-proof/complete
   `GET /api/device-proof` and the memory settings carry `cooldown_until`. The
   install that proved the old token can change it freely (`onTokenRefresh`):
   register the new token with the **same, proven session** and nothing pauses.
+- **First token of an existing account.** When a device that already has history
+  (a session or a child older than 72 hours) registers its **first** push token,
+  account deletion (§10) and child deletion/progress reset answer the same
+  `device_proof_cooldown` for 72 hours. Memory is not paused.
+  `GET /api/device-proof` → `deletion_paused_until`. A brand-new install is not
+  paused. Show the time, and point to the e-mail path on the deletion screen.
 - **The previous phone is told.** It gets one notification (safety channel,
   at most one a day, 09:00–21:00 its time), Arabic and English, no account data:
   FCM `data` `{"type": "account_alert"}`. Tapping it just opens the app — the
@@ -638,7 +645,9 @@ Authorization: Bearer <token>
   `POST /api/chat/sessions`. Any further call with the old token gets `401`.
 - Errors: `401` no/invalid token · `400 {"detail": {"code": "confirm_required", …}}`
   when `confirm=true` is missing · `403 {"detail": {"code": "device_proof_required", …}}`
-  for a session that has not proven it holds the phone (§9.0.1, then retry once).
+  for a session that has not proven it holds the phone (§9.0.1, then retry once) ·
+  `403 {"detail": {"code": "device_proof_cooldown", "available_at": …}}` for 72 hours
+  after a new push token (§9.0.1) — show when it becomes available.
   If the proof cannot work (no push token, the code never arrives), show the
   message with its support address — deletion by e-mail is the fallback.
 - **Child-mode tokens are opaque.** Since this change they no longer contain the

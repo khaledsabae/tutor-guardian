@@ -32,7 +32,7 @@ from fastapi import APIRouter, Depends, HTTPException, Query, Request
 from fastapi.responses import FileResponse, HTMLResponse, Response
 
 from app.core.contact import SUPPORT_EMAIL
-from app.core.proof import require_device_proof
+from app.core.proof import require_device_proof, require_device_proof_irreversible
 from app.db.init_db import get_conn
 
 logger = logging.getLogger(__name__)
@@ -194,7 +194,8 @@ DELETE_ACCOUNT_HTML = """<!doctype html>
 وبيانات الحساب نفسه.</p>
 <p>هذا الخيار موجود في إصدارات التطبيق التي تحويه؛ إن لم تجده فحدّث التطبيق أو اتبع
 الطريقة التالية. وقبل الحذف يتحقق التطبيق تلقائيًا أن الطلب من هاتفك برسالة صامتة؛ فإن
-تعذّر التحقق فاتبع الطريقة التالية. ولحذف جزء فقط: من شاشة ذاكرة الطفل تحذف معلومة واحدة أو كل ما يخصّ
+تعذّر التحقق فاتبع الطريقة التالية. وقد يتوقف الحذف من التطبيق 72 ساعة بعد ربط هاتف
+جديد بحسابك لحماية بياناتك، والطريقة التالية متاحة دائمًا. ولحذف جزء فقط: من شاشة ذاكرة الطفل تحذف معلومة واحدة أو كل ما يخصّ
 طفلًا، ومن ملف الطفل تحذف الطفل وبياناته.</p>
 
 <h2>دون التطبيق</h2>
@@ -238,7 +239,9 @@ itself, are deleted too.</p>
 <p>This option exists in app versions that include it; if you do not see it,
 update the app or use the method below. Before deleting, the app checks
 automatically, with a silent message, that the request comes from your phone; if
-that check cannot work, use the method below. To delete only part of your data: on the
+that check cannot work, use the method below. To protect your data, deleting in
+the app may be paused for 72 hours after a new phone is linked to your account;
+the method below always works. To delete only part of your data: on the
 child-memory screen you can delete one item or everything about a child, and from
 a child's profile you can delete that child and their data.</p>
 
@@ -459,7 +462,7 @@ def erase_account(device_id: str) -> dict:
 
 
 @api_router.delete("/privacy/account", summary="Delete my account and all its data",
-                   dependencies=[Depends(require_device_proof)])
+                   dependencies=[Depends(require_device_proof_irreversible)])
 def delete_my_account(request: Request, confirm: bool = Query(False)):
     """Everything tied to this device — and, when signed in with Google, to
     every device linked to that Google account: children, progress, chat,

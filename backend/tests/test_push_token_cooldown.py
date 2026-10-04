@@ -177,6 +177,98 @@ def test_a_code_sent_before_the_token_changed_is_void(client):
     assert r.status_code == 409 and r.json()["detail"]["reason"] == "push_token_changed"
 
 
+# ── A first token (round 4) ───────────────────────────────────────────────
+
+
+def _make_established(device: str, hours: int = 100) -> None:
+    """Age everything the device has: an established device, not a new install."""
+    conn = get_conn()
+    for table in ("api_tokens", "chat_sessions", "child_profiles"):
+        conn.execute(f"UPDATE {table} SET created_at = datetime('now', ?) WHERE device_id = ?",
+                     (f"-{hours} hours", device))
+    conn.commit()
+    conn.close()
+
+
+def _tokenless_family(client, device: str) -> int:
+    """A device with a child and history, and no push token on file — like 43%
+    of the devices with children today."""
+    h = _mint(client, device)
+    cid = client.post("/api/children", json={"name": "سالم", "age_group": "4-6"},
+                      headers=h).json()["id"]
+    _make_established(device)
+    return cid
+
+
+def test_a_first_token_on_an_established_device_pauses_only_the_irreversible(client):
+    """Whoever registers the first token — the family that just updated, or
+    anyone who knows the id — cannot delete the account or a child for 72 hours.
+    Memory stays open: the family keeps the memory screen (it is empty here)."""
+    cid = _tokenless_family(client, "dev-tokenless")
+    h = _mint(client, "dev-tokenless")
+    prove(client, h, push_token="fcm-first-ever")
+
+    assert client.get(f"/api/children/{cid}/memory", headers=h).status_code == 200
+    assert client.put("/api/children/memory/settings", json={"enabled": False},
+                      headers=h).status_code == 200
+    assert client.delete("/api/privacy/memory", headers=h).status_code == 200
+    settings = client.get("/api/children/memory/settings", headers=h).json()
+    assert settings["proven"] is True and settings["cooldown_until"] is None
+    status = client.get("/api/device-proof", headers=h).json()
+    assert status["deletion_paused_until"] and status["cooldown_until"] is None
+
+    _age_token("dev-tokenless", 71)
+    assert _cooling(client.delete("/api/privacy/account?confirm=true", headers=h))
+    assert _cooling(client.delete(f"/api/children/{cid}", headers=h))
+    assert _cooling(client.delete(f"/api/children/{cid}/progress", headers=h))
+    _age_token("dev-tokenless", 73)
+    assert client.delete(f"/api/children/{cid}/progress", headers=h).status_code == 200
+    assert client.delete("/api/privacy/account?confirm=true", headers=h).status_code == 200
+
+
+def test_a_brand_new_install_is_not_paused(client):
+    """Nothing older than 72 hours: an id that has not existed long enough to
+    leak, and a family deleting an onboarding mistake."""
+    h = _mint(client, "dev-onboarding")
+    prove(client, h, push_token="fcm-onboarding")
+    cid = client.post("/api/children", json={"name": "سالم", "age_group": "4-6"},
+                      headers=h).json()["id"]
+    assert client.get("/api/device-proof", headers=h).json()["deletion_paused_until"] is None
+    assert client.delete(f"/api/children/{cid}", headers=h).status_code == 200
+    assert client.delete("/api/privacy/account?confirm=true", headers=h).status_code == 200
+
+
+def test_vouched_rotations_are_unaffected(client):
+    """The pause belongs to the first token. Once its 72 hours are over, the
+    install that proved it rotates its FCM token freely — even though that proof
+    was made inside the pause."""
+    cid = _tokenless_family(client, "dev-settled")
+    h = _mint(client, "dev-settled")
+    prove(client, h, push_token="fcm-settled-1")
+    _age_token("dev-settled", 73)
+    register_push(client, h, "fcm-settled-2")                # onTokenRefresh
+    prove(client, h)
+    status = client.get("/api/device-proof", headers=h).json()
+    assert status["cooldown_until"] is None and status["deletion_paused_until"] is None
+    assert client.delete(f"/api/children/{cid}", headers=h).status_code == 200
+
+
+def test_a_first_token_cannot_be_rotated_out_of_its_pause(client, notices):
+    """Whoever holds the first token cannot escape its 72 hours by moving to
+    another token: their proof was made inside the pause, so it vouches for
+    nothing — the move is an unvouched change, everything pauses, and the
+    first token's phone is told."""
+    cid = _tokenless_family(client, "dev-escape")
+    h = _mint(client, "dev-escape")
+    prove(client, h, push_token="fcm-escape-1")
+    register_push(client, h, "fcm-escape-2")
+    prove(client, h)
+    assert _cooling(client.delete("/api/privacy/account?confirm=true", headers=h))
+    assert _cooling(client.get(f"/api/children/{cid}/memory", headers=h))
+    assert device_alerts.run_due_alerts(DAY)["sent"] == 1
+    assert [n["token"] for n in notices] == ["fcm-escape-1"]
+
+
 # ── The notice to the previous token ──────────────────────────────────────
 
 

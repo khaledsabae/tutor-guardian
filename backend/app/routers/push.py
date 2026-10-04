@@ -73,7 +73,9 @@ def _upsert_push_token(conn, device_id, token, platform, app_version, build_numb
     services/device_proof.vouches_for). An unvouched change pauses the
     protected routes for 72 hours and owes the previous token a notice
     (services/device_alerts.py). Re-registering the same token — every launch
-    does — changes neither. A first token is not a change.
+    does — changes neither. A first token is not a change and warns no one; on
+    an established device it pauses account and child deletion for 72 hours
+    (`token_first`, round 4).
     """
     conn.execute("BEGIN IMMEDIATE")
     try:
@@ -83,11 +85,12 @@ def _upsert_push_token(conn, device_id, token, platform, app_version, build_numb
         changed = old is not None and old != token
         vouched = (not changed) or device_proof.vouches_for(
             conn, device_id, session_token, old, token)
+        first = old is None and device_proof.established(conn, device_id)
         conn.execute(
             """
-            INSERT INTO push_tokens (device_id, token, platform, updated_at,
-                                     app_version, build_number, token_since, token_vouched)
-            VALUES (?, ?, ?, datetime('now'), ?, ?, datetime('now'), ?)
+            INSERT INTO push_tokens (device_id, token, platform, updated_at, app_version,
+                                     build_number, token_since, token_vouched, token_first)
+            VALUES (?, ?, ?, datetime('now'), ?, ?, datetime('now'), ?, ?)
             ON CONFLICT(device_id) DO UPDATE SET
                 token = excluded.token,
                 platform = excluded.platform,
@@ -97,9 +100,12 @@ def _upsert_push_token(conn, device_id, token, platform, app_version, build_numb
                 token_since = CASE WHEN push_tokens.token = excluded.token
                                    THEN push_tokens.token_since ELSE excluded.token_since END,
                 token_vouched = CASE WHEN push_tokens.token = excluded.token
-                                     THEN push_tokens.token_vouched ELSE excluded.token_vouched END
+                                     THEN push_tokens.token_vouched ELSE excluded.token_vouched END,
+                token_first = CASE WHEN push_tokens.token = excluded.token
+                                   THEN push_tokens.token_first ELSE excluded.token_first END
             """,
-            (device_id, token, platform, app_version, build_number, 1 if vouched else 0),
+            (device_id, token, platform, app_version, build_number,
+             1 if vouched else 0, 1 if first else 0),
         )
         if changed and not vouched:
             device_alerts.queue(conn, device_id, old)

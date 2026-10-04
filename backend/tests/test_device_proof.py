@@ -349,7 +349,7 @@ def test_no_push_token_says_so_with_the_support_path(client):
     assert "support@alsaba.cloud" in d["message"] and "support@alsaba.cloud" in d["message_en"]
     assert client.get("/api/device-proof", headers=h).json() == {
         "proven": False, "proven_at": None, "push_registered": False,
-        "cooldown_until": None}
+        "cooldown_until": None, "deletion_paused_until": None}
 
 
 def test_a_dead_push_token_is_forgotten_and_reported(client):

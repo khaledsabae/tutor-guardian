@@ -52,6 +52,7 @@
   وإذا تغيّر رمز الإشعارات إلى هاتف لم يُتحقَّق منه، نوقف عرض الذاكرة وتعديلها وحذفها وحذف
   الحساب وحذف الأطفال **72 ساعة**، ونرسل إلى الهاتف السابق تنبيهًا عامًا (بلا أي بيانات من
   حسابك) ليفتح التطبيق إن لم يكن التغيير منه. ولا نحتفظ برمز الهاتف السابق إلا حتى يُرسَل التنبيه.
+  وكذلك حين يُسجَّل أول رمز إشعارات لحسابٍ قائم، نوقف حذف الحساب وحذف الأطفال (دون الذاكرة) **72 ساعة**.
 - **الدعوات ومصدر التثبيت:** رمز دعوتك، وأي هاتف دعا أي هاتف. وعند فتح رابط عليه رمز
   دعوة أو وسم حملة (ref أو utm) من صفحاتنا (/ و/go و/ui/ و/l و/p و/seo و/methodology)
   نسجّل **عنوان IP** (عنوان IPv6 مختصرًا إلى أول 64 بتًا) و**نوع المتصفح**، وقد نطابق
@@ -227,6 +228,8 @@ to your phone's random identifier:
   and child deletion for **72 hours**, and send the previous phone a generic
   notice (no data from your account) to open the app if the change was not
   theirs. We keep the previous phone's token only until that notice is sent.
+  Likewise, when an existing account registers its first notification token, we
+  pause account deletion and child deletion (not memory) for 72 hours.
 - **Invites and install attribution:** your invite code and which phone invited
   which. When a link carrying an invite code or a campaign tag (ref or utm) is
   opened on one of our pages (/, /go, /ui/, /l, /p, /seo, /methodology) we record

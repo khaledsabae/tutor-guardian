@@ -1228,6 +1228,10 @@ def _ensure_child_memory_tables(conn: sqlite3.Connection) -> None:
                    ddl="ALTER TABLE push_tokens ADD COLUMN token_since TEXT")
     _ensure_column(conn, table="push_tokens", column="token_vouched",
                    ddl="ALTER TABLE push_tokens ADD COLUMN token_vouched INTEGER")
+    # 1 = the first push token of an established device: its first 72 hours
+    # pause the irreversible routes only (account and child deletion).
+    _ensure_column(conn, table="push_tokens", column="token_first",
+                   ddl="ALTER TABLE push_tokens ADD COLUMN token_first INTEGER")
     # Columns that arrived after the first v30 shape (PR #26 review).
     _ensure_column(conn, table="child_memory_settings", column="generation",
                    ddl="ALTER TABLE child_memory_settings ADD COLUMN generation "

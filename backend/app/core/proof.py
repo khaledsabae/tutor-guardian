@@ -20,7 +20,9 @@ prove (device_proof.required_for_every_device).
 Both also refuse — `device_proof_cooldown`, with `available_at` — for 72 hours
 after the device's push token was replaced without a proven session vouching
 for it, even a session proven on the new token (device_proof, round 3).
-Switching memory off stays open throughout.
+`require_device_proof_irreversible` (account deletion) and the child routes
+are also paused for the first 72 hours of an established device's first push
+token (round 4); memory is not. Switching memory off stays open throughout.
 """
 from __future__ import annotations
 
@@ -39,25 +41,28 @@ DEVICE_PROOF_REQUIRED = {
 
 DEVICE_PROOF_COOLDOWN = {
     "code": "device_proof_cooldown",
-    "message": "فُتح حسابك مؤخرًا على جهاز جديد، فأوقفنا هذه الخطوة 72 ساعة لحماية بيانات "
-               "أسرتك. يمكنك إيقاف الذاكرة في أي وقت، وللمساعدة راسلنا على "
+    "message": "لحماية بيانات أسرتك، تُتاح هذه الخطوة بعد 72 ساعة من ربط هذا الجهاز بحسابك "
+               "لاستقبال الإشعارات. يمكنك إيقاف الذاكرة في أي وقت، وللمساعدة راسلنا على "
                f"{SUPPORT_EMAIL}.",
-    "message_en": "Your account was recently opened on a new device, so this step is "
-                  "paused for 72 hours to protect your family's data. You can turn "
-                  f"memory off at any time. For help, email {SUPPORT_EMAIL}.",
+    "message_en": "To protect your family's data, this step becomes available 72 hours "
+                  "after this device was linked to your account for notifications. You "
+                  f"can turn memory off at any time. For help, email {SUPPORT_EMAIL}.",
     "support_email": SUPPORT_EMAIL,
 }
 
 
-def request_access(request: Request) -> device_proof.Access:
-    """May the session behind this request use the protected routes? Cached."""
-    cached = getattr(request.state, "device_access", None)
-    if cached is not None:
-        return cached
-    acc = device_proof.access(getattr(request.state, "device_id", None),
-                              getattr(request.state, "token", None))
-    request.state.device_access = acc
-    return acc
+def request_access(request: Request, irreversible: bool = False) -> device_proof.Access:
+    """May the session behind this request use the protected routes? Cached per
+    kind: `irreversible` (account and child deletion) or not."""
+    cache = getattr(request.state, "device_access", None)
+    if cache is None:
+        cache = {}
+        request.state.device_access = cache
+    if irreversible not in cache:
+        cache[irreversible] = device_proof.access(
+            getattr(request.state, "device_id", None),
+            getattr(request.state, "token", None), irreversible=irreversible)
+    return cache[irreversible]
 
 
 def request_proven(request: Request) -> bool:
@@ -79,8 +84,15 @@ def require_device_proof(request: Request) -> None:
         raise _refuse(acc)
 
 
+def require_device_proof_irreversible(request: Request) -> None:
+    """Account deletion: a proof, and no cooldown of either kind."""
+    acc = request_access(request, irreversible=True)
+    if not acc.ok:
+        raise _refuse(acc)
+
+
 def require_device_proof_once_enrolled(request: Request) -> None:
-    acc = request_access(request)
+    acc = request_access(request, irreversible=True)
     if acc.ok:
         return
     device_id = getattr(request.state, "device_id", None)

@@ -40,17 +40,27 @@ the app, re-registers their own token: the newcomer's proof is void, and the
 owner's is good again at once.
 
 Vouched for (routers/push.py → vouches_for) means the session registering the
-new token holds a *clean* proof — one made outside a cooldown — of either
-  * the token being replaced: the owner's own install rotating its FCM token, or
+new token holds a *clean* proof — one made outside any cooldown — of either
+  * the token being replaced: the owner's own install rotating its FCM token
+    (a proof of the current token also counts once that token's cooldown has
+    run out — by then it is as settled as any), or
   * the new token itself: the owner taking their token back after a takeover.
 A proof made during a cooldown is not clean, so it can never vouch: a newcomer
-cannot hand the account to itself, nor take it back from the owner. A first
-registration (no token before) is not a change: there is no previous phone to
-warn, and nothing to wait for.
+cannot hand the account to itself, rotate its way out of a cooldown, nor take
+the account back from the owner.
 
-What it cannot do: a device with no push token on file, or an owner who does not
-open the app for COOLDOWN_HOURS, has no one to answer the notice. Closing that
-is SESSION_MINT_ENFORCE's job (the PR description's residual-risk section).
+A first token (none before) is not a change and warns no one — there is no
+previous phone. But on an *established* device (anything older than the
+cooldown: a session, a child) it pauses the irreversible routes — account
+deletion, child deletion — for COOLDOWN_HOURS (round 4): 43% of devices with
+children have no token on file, and without this anyone who knew one of their
+ids could delete the account in one step. Memory stays open: it is empty there.
+A brand-new install (nothing older than the cooldown) is not paused: its id has
+not existed long enough to leak, and onboarding families delete mistakes.
+
+What it cannot do: an owner who does not open the app for COOLDOWN_HOURS has no
+one to answer the notice. Closing that is SESSION_MINT_ENFORCE's job (the PR
+description's residual-risk section).
 
 Hashes only: the code, the session token and the push token are compared as
 sha256 digests and never stored in the clear here.
@@ -146,29 +156,52 @@ def is_proven(device_id: Optional[str], token: Optional[str]) -> bool:
     return session_proof(device_id, token) is not None
 
 
-def cooldown_until(conn: sqlite3.Connection, device_id: str) -> Optional[str]:
-    """When the protected routes open again after an unvouched push-token
-    change ('YYYY-MM-DD HH:MM:SS', UTC), or None if they are not paused."""
+def cooldown_until(conn: sqlite3.Connection, device_id: str,
+                   irreversible: bool = False) -> Optional[str]:
+    """When the protected routes open again ('YYYY-MM-DD HH:MM:SS', UTC), or
+    None if they are not paused. An unvouched change pauses them all; the first
+    token of an established device pauses only the `irreversible` ones."""
     row = conn.execute(
         "SELECT datetime(token_since, ?) AS until, "
-        "       datetime(token_since, ?) > datetime('now') AS cooling, token_vouched "
+        "       datetime(token_since, ?) > datetime('now') AS cooling, "
+        "       token_vouched, token_first "
         "FROM push_tokens WHERE device_id = ?",
         (f"+{COOLDOWN_HOURS} hours", f"+{COOLDOWN_HOURS} hours", device_id),
     ).fetchone()
-    if row is None or row["until"] is None or row["token_vouched"]:
+    if row is None or row["until"] is None or not row["cooling"]:
         return None
-    return row["until"] if row["cooling"] else None
+    if not row["token_vouched"]:
+        return row["until"]
+    if irreversible and row["token_first"]:
+        return row["until"]
+    return None
 
 
-def access(device_id: Optional[str], token: Optional[str]) -> Access:
-    """Proven on the device's current push token, and that token is not in its
-    cooldown. Fails closed: an unreadable database grants nothing."""
+def established(conn: sqlite3.Connection, device_id: str) -> bool:
+    """Has this device anything older than the cooldown — a session or a child?
+    (api_tokens and chat_sessions are never purged, and a newcomer cannot make
+    an old device look new.)"""
+    for table in ("api_tokens", "chat_sessions", "child_profiles"):
+        if conn.execute(
+            f"SELECT 1 FROM {table} WHERE device_id = ? "
+            "AND created_at < datetime('now', ?) LIMIT 1",
+            (device_id, f"-{COOLDOWN_HOURS} hours"),
+        ).fetchone() is not None:
+            return True
+    return False
+
+
+def access(device_id: Optional[str], token: Optional[str],
+           irreversible: bool = False) -> Access:
+    """Proven on the device's current push token, and that token is not in a
+    cooldown that covers this route. Fails closed: an unreadable database
+    grants nothing."""
     if session_proof(device_id, token) is None:
         return Access(False, "not_proven")
     try:
         conn = get_conn()
         try:
-            until = cooldown_until(conn, device_id)
+            until = cooldown_until(conn, device_id, irreversible=irreversible)
         finally:
             conn.close()
     except sqlite3.Error:
@@ -190,10 +223,15 @@ def vouches_for(conn: sqlite3.Connection, device_id: str, session_token: Optiona
         "WHERE token_hash = ? AND device_id = ?",
         (hash_token(session_token), device_id),
     ).fetchone()
-    if row is None or not row["clean"]:
+    if row is None:
         return False
-    return any(hmac.compare_digest(row["push_token_hash"], _sha(t))
-               for t in (old_token, new_token))
+    if hmac.compare_digest(row["push_token_hash"], _sha(old_token)):
+        # A rotation by the install that proved the current token: clean, or
+        # proven on a token whose cooldown — of either kind — has run out.
+        return bool(row["clean"]) or cooldown_until(conn, device_id, irreversible=True) is None
+    if hmac.compare_digest(row["push_token_hash"], _sha(new_token)):
+        return bool(row["clean"])          # taking back a token it proved, cleanly
+    return False
 
 
 def ever_proven(device_id: Optional[str]) -> bool:
@@ -236,14 +274,17 @@ def status(device_id: str, token: str) -> dict:
     try:
         push = _current_push_token(conn, device_id)
         until = cooldown_until(conn, device_id)
+        deletions = cooldown_until(conn, device_id, irreversible=True)
     finally:
         conn.close()
     return {
         "proven": proven_at is not None,
         "proven_at": proven_at,
         "push_registered": push is not None,
-        # Protected routes paused until then (UTC) after an unvouched change.
+        # Every protected route paused until then (UTC): an unvouched change.
         "cooldown_until": until,
+        # Account and child deletion paused until then (UTC): either kind.
+        "deletion_paused_until": deletions,
     }
 
 
@@ -378,10 +419,10 @@ def complete(device_id: str, token: str, challenge_id: int, code: str) -> dict:
             raise failure
 
         push_hash = row["push_token_hash"]
-        # A proof made while the token is in its cooldown proves this session
-        # (usable once the cooldown ends) but is not clean: it can never vouch
-        # for a token change, and it does not enrol the device.
-        clean = cooldown_until(conn, device_id) is None
+        # A proof made during a cooldown of either kind proves this session
+        # (usable once the cooldown ends) but is not clean: it cannot vouch for
+        # a token change while that token is still cooling (vouches_for).
+        clean = cooldown_until(conn, device_id, irreversible=True) is None
         conn.execute("UPDATE device_proof_challenges SET used_at = datetime('now') "
                      "WHERE id = ?", (challenge_id,))
         conn.execute(
@@ -393,14 +434,15 @@ def complete(device_id: str, token: str, challenge_id: int, code: str) -> dict:
             "clean = excluded.clean",
             (token_hash, device_id, push_hash, 1 if clean else 0),
         )
-        if clean:
-            conn.execute(
-                "INSERT INTO device_proofs (device_id, push_token_hash, proven_at, "
-                "first_proven_at) VALUES (?, ?, datetime('now'), datetime('now')) "
-                "ON CONFLICT(device_id) DO UPDATE SET "
-                "push_token_hash = excluded.push_token_hash, proven_at = excluded.proven_at",
-                (device_id, push_hash),
-            )
+        # Enrolment only ever adds a requirement (a proof for child deletion),
+        # so every completed proof enrols the device.
+        conn.execute(
+            "INSERT INTO device_proofs (device_id, push_token_hash, proven_at, "
+            "first_proven_at) VALUES (?, ?, datetime('now'), datetime('now')) "
+            "ON CONFLICT(device_id) DO UPDATE SET "
+            "push_token_hash = excluded.push_token_hash, proven_at = excluded.proven_at",
+            (device_id, push_hash),
+        )
         # Sessions that no longer exist keep nothing behind.
         conn.execute(
             "DELETE FROM device_proof_sessions WHERE device_id = ? AND token_hash NOT IN "
