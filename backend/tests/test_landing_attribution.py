@@ -137,6 +137,24 @@ def test_the_canonical_never_echoes_tracking_params(client):
         assert "?" not in canonical and canonical.endswith(url), canonical
 
 
+# No \b: Arabic letters are word characters, so \biOS\b misses «أندرويد وiOS» —
+# the very claim this replaced. Case-sensitive, so BIOS and -apple-system pass.
+_IOS_CLAIM = re.compile(r"iOS|iPhone|iPad|آيفون|أيفون|App Store|apps\.apple\.com")
+
+
+def test_no_page_claims_ios_while_the_app_is_android_only(client):
+    # iOS comes after Android stabilises (master plan, phase 4). Until then a
+    # parent on an iPhone who believes the page is led to a Play button.
+    params = _path_params()
+    for route_path in _public_pages():
+        r = client.get(route_path.format(**params))
+        if "text/html" in r.headers.get("content-type", ""):
+            m = _IOS_CLAIM.search(r.text)
+            assert not m, f"{route_path}: {m and m.group(0)}"
+    for page in (_ROOT / "frontend").rglob("*.html"):
+        assert not _IOS_CLAIM.search(page.read_text(encoding="utf-8")), page.name
+
+
 def test_no_static_page_links_to_play_directly():
     # A static file cannot carry ref/utm through — Play links belong in a route.
     offenders = []
