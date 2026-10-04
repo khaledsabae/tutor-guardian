@@ -288,19 +288,29 @@ _EN_THANKS_PHRASES = {
 _EN_GREETING_PHRASES = {
     "hi", "hello", "hey", "hi there", "hello there", "good morning", "good evening",
 }
-# A salam is returned as a salam, whatever language the parent reads.
-_LATIN_SALAM_PHRASES = {
-    "salam", "salaam", "salam alaikum", "salam aleikum", "salamu alaikum",
-    "assalamu alaikum", "assalamu alaykum", "as salamu alaykum", "assalam alaikum",
-    "assalamualaikum", "asalamu alaikum", "salam alikoum", "assalamou alaykoum",
-}
+# A salam is returned as a salam, whatever language the parent reads — and
+# it is spelled a dozen ways (T8): "Salam", "Salaam alaikum", "salamualaikum",
+# "As-salamu alaykum", "Assalam o alaikum", "Salam alaykoum", "Assalamou
+# alaykoum", "Salamalekoum", "... wa rahmatullahi wa barakatuh". Matched on
+# the normalized text with its spaces taken out; anchored, so a salam with a
+# question after it still goes to the model.
+_LATIN_SALAM_RE = re.compile(
+    r"^(?:[ae]s?)?sala+m"                     # salam, salaam, assalam, asalam, essalam
+    r"(?:u|ou|o)?"                            # salamu, salamou, salam o
+    r"(?:a?l[ae]?[iy]?[kc](?:u|ou|o)m)?"      # alaikum, aleykum, alikoum, alaykoum, alekoum
+    r"(?:wa?rahmat(?:u|ou|o)?l+ah[iy]?)?"     # wa rahmatullah(i), warahmatoullah
+    r"(?:wa?barakat(?:u|ou|o)h?)?"            # wa barakatuh, wabarakatou
+    r"(?:wrwb|wr)?$"
+)
 _FR_THANKS_PHRASES = {"merci", "merci beaucoup", "merci bien", "merci infiniment"}
 _FR_GREETING_PHRASES = {"bonjour", "bonsoir", "salut", "coucou"}
 
 _LATIN_REPLIES = {
+    # Returned in full whatever the parent wrote — "with one better than it"
+    # — as the Arabic reply above does.
     "salam": {
-        "en": "Wa alaikum assalam! How can I help you today with your child's care and upbringing?",
-        "fr": "Wa alaykoum assalam ! Comment puis-je vous aider aujourd'hui pour l'éducation de votre enfant ?",
+        "en": "Wa alaikum assalam wa rahmatullahi wa barakatuh! How can I help you today with your child's care and upbringing?",
+        "fr": "Wa alaykoum assalam wa rahmatoullahi wa barakatouh ! Comment puis-je vous aider aujourd'hui pour l'éducation de votre enfant ?",
     },
     "thanks": {
         "en": "You're welcome! I'm always glad to help with anything about raising your child.",
@@ -315,31 +325,44 @@ _LATIN_REPLIES = {
 _ARABIC_LETTER = re.compile(r"[\u0600-\u06FF]")
 _LATIN_LETTER = re.compile(r"[A-Za-zÀ-ÿŒœ]")
 _FR_ACCENTS = re.compile(r"[àâçéèêëîïôûùüÿœæ]", re.IGNORECASE)
+# Words English does not share — "son", "on", "plus", "par" are left out.
 _FR_WORDS = frozenset({
     "je", "j", "tu", "il", "elle", "nous", "vous", "mon", "ma", "mes", "ton", "ta",
     "est", "pas", "comment", "pourquoi", "quoi", "avec", "dans", "pour", "que",
     "qui", "une", "des", "les", "du", "au", "aux", "mais", "et", "enfant", "fils",
     "fille", "bonjour", "merci", "salut", "bonsoir", "coucou", "aider", "faire",
+    "de", "le", "la", "un", "ne", "ce", "cette", "sa", "ses", "sur", "en", "très",
+    "quand", "enfants", "bébé", "dort", "mange", "veut",
 })
+# How French speakers (Maghreb, West Africa) transliterate Arabic phrases:
+# "alaykoum", "salamou", "rahmatoullah", "inchallah", "hamdoulillah".
+_FR_TRANSLITERATION = re.compile(
+    r"(?:koum|salamou|rahmatou|barakatou|inch'?\s?allah|hamdou|machallah)",
+    re.IGNORECASE,
+)
 
 
 def detect_reply_language(text: str) -> str:
     """'ar', 'en' or 'fr' — the language to answer a short system message in.
 
-    Arabic script wins; Latin text is French when it carries a French accent
-    or two French function words, English otherwise. Deliberately coarse: it
-    picks the language of an apology or a greeting, not of a whole answer
-    (the model is told to mirror the parent for that).
+    Arabic script wins. Latin text is French on two French words, on one
+    French word in a short message or next to a French accent, or on a
+    French-style transliteration («Salam alaykoum»); English otherwise. An
+    accent alone is not enough (T8): "José" and "Chloé" are names in English
+    sentences too. Deliberately coarse: it picks the language of an apology
+    or a greeting, not of a whole answer (the model is told to mirror the
+    parent for that).
     """
     t = text or ""
     ar = len(_ARABIC_LETTER.findall(t))
     la = len(_LATIN_LETTER.findall(t))
     if ar >= la:
         return "ar"
-    if _FR_ACCENTS.search(t):
+    if _FR_TRANSLITERATION.search(t):
         return "fr"
     words = re.findall(r"[a-zà-ÿœ]+", t.lower())
-    if sum(1 for w in words if w in _FR_WORDS) >= 2 or (len(words) <= 3 and any(w in _FR_WORDS for w in words)):
+    french = sum(1 for w in words if w in _FR_WORDS)
+    if french >= 2 or (french and (len(words) <= 3 or _FR_ACCENTS.search(t))):
         return "fr"
     return "en"
 
@@ -349,7 +372,6 @@ _HOW_ARE_YOU_NORM = {_normalize(p) for p in _HOW_ARE_YOU_PHRASES}
 _CLOSING_NORM = {_normalize(p) for p in _CLOSING_PHRASES}
 _EN_THANKS_NORM = {_normalize(p) for p in _EN_THANKS_PHRASES}
 _EN_GREETING_NORM = {_normalize(p) for p in _EN_GREETING_PHRASES}
-_LATIN_SALAM_NORM = {_normalize(p) for p in _LATIN_SALAM_PHRASES}
 _FR_THANKS_NORM = {_normalize(p) for p in _FR_THANKS_PHRASES}
 _FR_GREETING_NORM = {_normalize(p) for p in _FR_GREETING_PHRASES}
 
@@ -381,7 +403,7 @@ def check_conversational_shortcut(text: str, lang: str | None = None) -> tuple[b
     latin = lang if lang in ("en", "fr") else detect_reply_language(text)
     if latin not in ("en", "fr"):
         latin = "en"
-    if norm in _LATIN_SALAM_NORM:
+    if _LATIN_SALAM_RE.match(norm.replace(" ", "")):
         return True, _LATIN_REPLIES["salam"][latin]
     if norm in _FR_THANKS_NORM:
         return True, _LATIN_REPLIES["thanks"]["fr"]

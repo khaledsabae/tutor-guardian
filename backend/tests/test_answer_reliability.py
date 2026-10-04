@@ -1060,6 +1060,16 @@ def test_pivot_strips_english_source_lines():
     ("Assalamu alaikum", "Wa alaikum assalam"),
     ("merci", "Avec plaisir"),
     ("bonjour", "Bonjour et bienvenue"),
+    # T8 — the spellings that missed the shortcut or got an English reply.
+    ("Salaam alaikum", "Wa alaikum assalam"),
+    ("salamualaikum", "Wa alaikum assalam"),
+    ("Assalam o alaikum", "Wa alaikum assalam"),
+    ("Assalamu alaikum wa rahmatullah", "Wa alaikum assalam wa rahmatullahi"),
+    ("As-salamu alaykum wa rahmatullahi wa barakatuh!", "Wa alaikum assalam"),
+    ("Salam alaykoum", "Wa alaykoum assalam"),
+    ("Salam alikoum", "Wa alaykoum assalam"),
+    ("Assalamou alaykoum", "Wa alaykoum assalam"),
+    ("Salamalekoum", "Wa alaykoum assalam"),
 ])
 def test_pleasantries_get_a_direct_reply_in_kind(text, expected):
     is_conv, reply = check_conversational_shortcut(text)
@@ -1067,9 +1077,35 @@ def test_pleasantries_get_a_direct_reply_in_kind(text, expected):
     assert expected in reply
 
 
+def test_a_french_style_salam_is_answered_in_french():
+    """T8 — "Assalamou alaykoum" is how French speakers write it; it got
+    the English welcome."""
+    for text in ("Assalamou alaykoum", "Salam alikoum"):
+        reply = check_conversational_shortcut(text)[1]
+        assert "Comment puis-je vous aider" in reply, text
+
+
+@pytest.mark.parametrize("text,lang", [
+    ("My son José won't sleep at night", "en"),     # T8: an accented name is not French
+    ("Chloé hits her little brother", "en"),
+    ("Ma fille Chloé ne dort pas", "fr"),
+    ("Mon fils refuse de manger", "fr"),
+    ("Problème de sommeil", "fr"),
+    ("Salam alaykoum, mon fils a peur du noir", "fr"),
+    ("How do I calm a tantrum?", "en"),
+    ("ابني لا ينام", "ar"),
+])
+def test_reply_language(text, lang):
+    from app.services.intent_guard import detect_reply_language
+
+    assert detect_reply_language(text) == lang
+
+
 @pytest.mark.parametrize("text", [
     "hello, my son hits his little sister",
     "سلام عليكم ابني لا ينام",
+    "Salam alaikum, my son hits his little sister",
+    "Salami for a toddler?",
 ])
 def test_greeting_with_a_question_is_not_short_circuited(text):
     assert check_conversational_shortcut(text)[0] is False
