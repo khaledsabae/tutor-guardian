@@ -30,13 +30,28 @@ Where the Abd al-Baqi number comes from — and how we know it is right
   meeAtif/hadith_datasets, which was scraped from sunnah.com — a different
   pipeline from fawazahmed0. Narrations are aligned by sunnah.com's in-book
   reference and confirmed by text. Result at build time on the pinned inputs:
-  7,195 agree, 17 disagree, 148 unaligned (the Introduction, which neither
-  numbers). Run this script to see the current figures.
-* The 17 disagreements are boundary placements between the two editions
-  (e.g. one says 902, the other 901). They are registered under **both**
-  numbers and listed in the index: two reputable editions assign them, so
-  rejecting either would reject a correct citation. Wording is still checked
-  exactly; an unrelated number still fails.
+  7,195 agree, 17 disagree, 156 unaligned (mostly the Introduction's 148
+  narrations, which neither numbers). Run this script to see the current figures.
+* The 17 disagreements are of two kinds, each listed in the index with its
+  ``kind``:
+  - 13 **boundary** placements (|Δ| ≤ 4): where one hadith ends and the next
+    begins — one edition says 902, the other 901.
+  - 4 **cross-references** (|Δ| in the hundreds or thousands): a narration that
+    repeats a hadith from another book. Abd al-Baqi labels it with the number
+    of the first occurrence — «عليكم بهذا العود الهندي» in Kitab al-Salam is
+    287.05, «دخلت امرأة النار في هرة» in Kitab al-Tawba is 2619.02, a Fitan
+    narration is 169.04 — while sunnah.com numbers it where it stands (2214,
+    2756, 2930); once it is the other way round (a 2214 narration that
+    sunnah.com files as 287).
+  Both kinds are registered under **both** numbers: each is what one of the
+  two references prints for that exact narration, so rejecting either rejects
+  a citation a reader can verify there. Limiting the second number to small
+  gaps was considered and rejected: in three of the four cross-references it
+  would keep Abd al-Baqi's back-reference and drop sunnah.com's own number —
+  «عليكم بهذا العود الهندي» would fail as Muslim 2214, the number a reader
+  finds it under on sunnah.com, and pass only as 287, whose own chapter does
+  not contain those words. Wording is still checked exactly (one contiguous
+  run in one narration); an unrelated number still fails.
 * Anchors, asserted at build time AND as self-tests in the guard (exit 2):
   Muslim 1631, 1164, 1893, 2699, 55, 2564 · Bukhari 1, 13, 5027, 6018.
 
@@ -84,6 +99,12 @@ SUNNAH = "https://huggingface.co/datasets/meeAtif/hadith_datasets/resolve/{sha}/
 
 OTHERS = {"abudawud": "أبو داود", "tirmidhi": "الترمذي", "nasai": "النسائي",
           "ibnmajah": "ابن ماجه", "malik": "الموطأ"}
+
+# A disagreement this small is a boundary placement; anything larger is a
+# cross-reference label (see the docstring). Classification only — both kinds
+# are accepted, and the build refuses to write if the split ever changes.
+_BOUNDARY = 5
+_EXPECTED_SPLIT = {"boundary": 13, "cross_reference": 4}
 
 
 
@@ -160,10 +181,16 @@ def build(cache: Path, offline: bool) -> tuple[dict, dict]:
         if theirs == mine["abq"]:
             agree += 1
         else:
-            disputed.append({"seq": mine["seq"], "fawazahmed0": mine["abq"], "sunnah_com": theirs})
-            muslim.setdefault(str(theirs), []).append(mine["sk"])   # accept both numbers
+            kind = "boundary" if abs(theirs - mine["abq"]) <= _BOUNDARY else "cross_reference"
+            disputed.append({"seq": mine["seq"], "fawazahmed0": mine["abq"], "sunnah_com": theirs,
+                             "kind": kind})
+            muslim.setdefault(str(theirs), []).append(mine["sk"])   # accept both numbers (docstring)
     if agree < 7000 or len(disputed) > 60:
         sys.exit(f"🔴 cross-check too weak (agree={agree}, disputed={len(disputed)}) — refusing to write")
+    split = {k: sum(d["kind"] == k for d in disputed) for k in _EXPECTED_SPLIT}
+    if split != _EXPECTED_SPLIT:
+        sys.exit(f"🔴 disagreements split {split}, expected {_EXPECTED_SPLIT} — new inputs: read each "
+                 "new cross-reference against both editions before accepting it under two numbers")
 
     # ── Gaps: Abd al-Baqi numbers the fawazahmed0 edition does not carry at all
     # (e.g. 2700, «لا يقعد قوم يذكرون الله»). Without this a correct citation is
@@ -244,7 +271,9 @@ def main() -> int:
     print(f"✅ {OUT.relative_to(ROOT)}: البخاري {len(index['books']['البخاري'])} رقمًا · "
           f"مسلم {len(index['books']['مسلم'])} رقمًا (عبد الباقي) · مقدمة غير مرقّمة "
           f"{len(index['unnumbered']['مسلم']['المقدمة'])}")
-    print(f"   sunnah.com: يتفق {cc['agree']} · يختلف {len(cc['disputed'])} (مقبول بالرقمين) · "
+    kinds = {k: sum(d["kind"] == k for d in cc["disputed"]) for k in _EXPECTED_SPLIT}
+    print(f"   sunnah.com: يتفق {cc['agree']} · يختلف {len(cc['disputed'])} "
+          f"({kinds['boundary']} حدود + {kinds['cross_reference']} إحالة — مقبول بالرقمين) · "
           f"غير مقابَل {cc['unaligned']} · أرقام غائبة عن fawazahmed0 أُكملت منه "
           f"{len(cc['filled_from_sunnah_com'])}")
     print(f"✅ {OUT_OTHERS.relative_to(ROOT)}: " +

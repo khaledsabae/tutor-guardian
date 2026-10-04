@@ -213,6 +213,12 @@ def cite(book: str, number: int) -> str:
 
 _MUST_ACCEPT += [(phrase, cite(b, n)) for b, n, phrase, _ in ANCHORS]
 _MUST_REJECT += [(phrase, cite(b, old)) for b, _, phrase, old in ANCHORS if old]
+# A cross-reference narration (build_hadith_index.py docstring): Abd al-Baqi
+# labels it 287.05, sunnah.com files it as 2214 — both editions' number pass,
+# a neighbour of either does not.
+_MUST_ACCEPT += [("عليكم بهذا العود الهندي", cite("مسلم", 287)),
+                 ("عليكم بهذا العود الهندي", cite("مسلم", 2214))]
+_MUST_REJECT += [("عليكم بهذا العود الهندي", cite("مسلم", 2215))]
 
 
 # ── وحدات المعرفة المترجَمة ────────────────────────────────────────────────
