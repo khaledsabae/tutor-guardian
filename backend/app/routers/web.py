@@ -229,6 +229,9 @@ def _page(*, title: str, desc: str, body: str, install_url: str,
 @router.get("/go", response_class=HTMLResponse)
 @router.get("/ui/", response_class=HTMLResponse, include_in_schema=False)
 @router.get("/ui/index.html", response_class=HTMLResponse, include_in_schema=False)
+# The template itself sits in the static mount too; served raw, its buttons
+# were literal {{DOWNLOAD_URL}} links — dead, and carrying no attribution.
+@router.get("/ui/cinematic.html", response_class=HTMLResponse, include_in_schema=False)
 def landing(request: Request) -> HTMLResponse:
     """Share/install landing — where shared cards, referral and campaign links arrive."""
     if not _CINEMATIC.is_file():

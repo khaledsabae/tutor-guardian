@@ -29,7 +29,7 @@ _HREF_RE = re.compile(r'href="([^"]*)"')
 # The pages that must link to Play. Losing every Play link is a failure too —
 # that was the /ui/ bug — so the walk below must find at least these.
 _MUST_LINK_TO_PLAY = {
-    "/", "/go", "/ui/", "/ui/index.html", "/l/{lesson_id}", "/p/{path_id}",
+    "/", "/go", "/ui/", "/ui/index.html", "/ui/cinematic.html", "/l/{lesson_id}", "/p/{path_id}",
     "/seo/", "/seo/{slug}", "/methodology",
 }
 _UTM = {"utm_source": "src_t", "utm_medium": "med_t", "utm_campaign": "camp_t"}
@@ -393,3 +393,24 @@ def test_campaign_links_only_use_routes_that_keep_the_query():
     routes = set(re.findall(r"`(/[a-z]+)[^`]*`", section))
     assert routes <= {"/go", "/l", "/seo"}, routes
     assert "alsaba.cloud/methodology" in section  # and it says why not
+
+
+def test_the_raw_template_is_never_served(client):
+    # cinematic.html also sits in the /ui static mount; served as a file, its
+    # buttons were literal {{DOWNLOAD_URL}} links: dead, and unattributed.
+    r = client.get("/ui/cinematic.html", params={"ref": "DA01"})
+    assert r.status_code == 200 and "{{" not in r.text
+    links = _play_links(r.text)
+    assert links and all(_what_the_readers_see(link)[0] == "DA01" for link in links)
+
+
+def test_the_kit_never_counts_clicks_from_the_raw_table():
+    # Raw referral_clicks rows are folded and deleted after 7 days, so counting
+    # them under-counts by ~10x; and lesson_progress stores '…Z' timestamps that
+    # only compare correctly through datetime().
+    docs = [_ROOT / "docs" / "OPS_RUNBOOK.md",
+            *sorted((_ROOT / "docs" / "marketing" / "2026-10-ramadan").glob("*.md"))]
+    for doc in docs:
+        text = doc.read_text(encoding="utf-8")
+        assert "FROM referral_clicks" not in text, doc.name
+        assert not re.search(r"\blp\.(?:updated|completed)_at\s*[<>]", text), doc.name

@@ -123,14 +123,20 @@
 
 ### قياس كل كود حتى اليوم السابع (قراءة فقط على الإنتاج)
 
-الأداة الجاهزة: `docker exec -w /app tg_backend python ops/scripts/campaign_report.py --dry-run` — نقرات
-(بلا زواحف المعاينة)، وتثبيتات جديدة منفصلة عمّن كان التطبيق عنده، وطفل، ودرس، ونشاط الأيام ٧–١٣؛ والاستعلام أدناه
-يبقى للتحليل اليدوي.
+**المصدر المعتمد للأرقام:** `docker exec -w /app tg_backend python ops/scripts/campaign_report.py --dry-run` —
+النقرات (بلا زواحف المعاينة، ومعها ما طُوي من النقرات الأقدم من سبعة أيام في `referral_click_days`)، والتثبيتات
+الجديدة مقسومةً بين «بالكود» و«بمطابقة IP» ومنفصلةً عمّن كان التطبيق عنده، والطفل، والدرس، وD7. لا تعدّ النقرات من
+جدول `referral_clicks` مباشرة: الصفوف الخام تُحذف بعد سبعة أيام بعد طيّها، فالعدّ منه يُنقص النقرات نحو عشرة أضعاف.
 
-جُرّب على قاعدة الإنتاج اليوم: من **٩١ تثبيتًا بالإحالة** (أقدم من ١٤ يومًا) سجّلت ٧١ منها طفلًا، وفتحت ٣٧ درسًا،
-ونشطت **٧ (٨٪) في الأيام ٧–١٤**. وللمقارنة بنقطة بداية واحدة (تسجيل أول طفل) ونافذة واحدة (الأيام ٧–١٤): الأسر
-التي جاءت بإحالة **٨ من ٧١ (١١٪)**، وكل الأسر التي سجّلت طفلًا في آخر ١٢٠ يومًا **٢٠٠ من ٣٬٥٨٢ (٥٫٦٪)**.
-العيّنة صغيرة (٧١)، فالفرق اتجاه لا حكم — لكنه في صالح توصية شخص حقيقي.
+**تعريفان لـD7 — لا تقارن أرقام أحدهما بالآخر:**
+- **رسالة + درس** (تعريف `weekly_funnel_report.py` والاستعلام أدناه): من **٩١ تثبيتًا بالإحالة** (أقدم من ١٤ يومًا)
+  سجّلت ٧١ منها طفلًا، وفتحت ٣٧ درسًا، ونشطت **٧ (٨٪) في الأيام ٧–١٤**. وللمقارنة بنقطة بداية واحدة (تسجيل أول طفل)
+  ونافذة واحدة: الأسر التي جاءت بإحالة **٨ من ٧١ (١١٪)**، وكل الأسر التي سجّلت طفلًا في آخر ١٢٠ يومًا
+  **٢٠٠ من ٣٬٥٨٢ (٥٫٦٪)**.
+- **رسالة + درس + عادة + مهمة طفل + تحدٍّ** (تعريف `campaign_report.py`): من **٨٩ تثبيتًا جديدًا** بالإحالة نشط
+  **٨ (٩٪)** في الأيام ٧–١٣؛ ومن كل جهاز جديد **٢٤٠ من ٤٬٥٩٥ (٥٪)**. (قراءة فقط، 2026-10-04.)
+
+العيّنة صغيرة، فالفرق اتجاه لا حكم — لكنه في صالح توصية شخص حقيقي.
 
 ```sql
 -- عدّل قائمة الأكواد؛ شغّله على الـVPS داخل الحاوية: ssh root@<VPS> 'docker exec -i -w /app tg_backend python -' (انظر docs/OPS_RUNBOOK.md)
@@ -147,15 +153,19 @@ SELECT r.code,
   SUM(
     EXISTS (SELECT 1 FROM chat_sessions cs JOIN chat_messages cm ON cm.session_id = cs.id
             WHERE cs.device_id = r.device_id
-              AND cm.created_at >= datetime(r.joined,'+7 days') AND cm.created_at < datetime(r.joined,'+14 days'))
+              AND datetime(cm.created_at) >= datetime(r.joined,'+7 days')
+              AND datetime(cm.created_at) < datetime(r.joined,'+14 days'))
+    -- lesson_progress stores '…T10:00:00Z', which sorts after '… 10:00:00' as
+    -- text: compare through datetime(), or the window edges are off by a day.
     OR EXISTS (SELECT 1 FROM lesson_progress lp WHERE lp.device_id = r.device_id
-            AND ((lp.updated_at >= datetime(r.joined,'+7 days') AND lp.updated_at < datetime(r.joined,'+14 days'))
-              OR (lp.completed_at >= datetime(r.joined,'+7 days') AND lp.completed_at < datetime(r.joined,'+14 days'))))
+            AND ((datetime(lp.updated_at) >= datetime(r.joined,'+7 days')
+                  AND datetime(lp.updated_at) < datetime(r.joined,'+14 days'))
+              OR (datetime(lp.completed_at) >= datetime(r.joined,'+7 days')
+                  AND datetime(lp.completed_at) < datetime(r.joined,'+14 days'))))
   ) AS active_d7_d14
 FROM ref r GROUP BY r.code ORDER BY installs DESC;
 
--- النقرات لكل كود (من /go فقط):
-SELECT code, COUNT(*) FROM referral_clicks WHERE code IN ('DA01','DA02','WA01') GROUP BY code;
+-- النقرات: من campaign_report.py لا من referral_clicks، فالصفوف الخام تُطوى وتُحذف بعد سبعة أيام.
 ```
 
 تعريف «النشاط» هنا هو نفسه في `ops/scripts/weekly_funnel_report.py` (رسالة للمساعد أو تقدّم في درس)، والنافذة

@@ -153,6 +153,10 @@ def test_dry_run_prints_aggregates_only(report_db, capsys, monkeypatch):
     out = capsys.readouterr().out
     assert "<b>DA01</b> · preacher_ar" in out and "WA01" in out
     assert "تثبيت 5 [بالكود 3 · بمطابقة IP 1 · قبل التتبّع 1]" in out  # + the June claim
+    # D7 here counts five kinds of action; say so, or it gets compared with
+    # weekly_funnel_report's chat + lesson figure.
+    for action in ("رسالة للمساعد", "تقدّم في درس", "عادة", "مهمة طفل", "تحدٍّ"):
+        assert action in out, action
     # No device ids, IPs or owners — and a person's own code never gets a line.
     for private in ("a1", "a2", "p1", "p2", "o1", "203.0.113", "inviter", "campaign#",
                     "ABC234", "ENV9Z5"):
@@ -293,3 +297,47 @@ def test_the_daily_push_cron_folds_old_clicks():
     conn = get_conn()
     assert conn.execute("SELECT COUNT(*) FROM referral_clicks").fetchone()[0] == 0
     conn.close()
+
+
+def _quiet_pushes(monkeypatch, cpt, *, failing=False):
+    def boom(skip=None):
+        raise RuntimeError("FCM unavailable")
+
+    monkeypatch.setattr(cpt, "_recently_pushed", lambda: set())
+    monkeypatch.setattr(cpt, "first_lesson_activation",
+                        boom if failing else (lambda skip=None: set()))
+    monkeypatch.setattr(cpt, "streak_at_risk", lambda skip=None: set())
+    monkeypatch.setattr(cpt, "win_back", lambda skip=None: set())
+
+
+def test_a_failing_push_step_does_not_skip_the_fold(monkeypatch):
+    # The fold is the only thing that expires raw IPs and user agents; it used
+    # to run after the pushes, so any push exception skipped it.
+    import ops.scripts.cron_push_triggers as cpt
+
+    conn = get_conn()
+    _raw_click(conn, "203.0.113.10", "Mozilla", "DA01", "-30 days")
+    conn.commit()
+    conn.close()
+    _quiet_pushes(monkeypatch, cpt, failing=True)
+    with pytest.raises(RuntimeError):
+        cpt.main(["--force"])
+    conn = get_conn()
+    assert conn.execute("SELECT COUNT(*) FROM referral_clicks").fetchone()[0] == 0
+    conn.close()
+
+
+def test_a_fold_that_cannot_run_is_loud_and_fails_the_run(monkeypatch, capsys):
+    import ops.scripts.cron_push_triggers as cpt
+
+    def no_compactor():
+        raise ImportError("cannot import name 'compact_referral_clicks'")
+
+    _quiet_pushes(monkeypatch, cpt)
+    monkeypatch.setattr(cpt, "_load_compactor", no_compactor)
+    assert cpt.main([]) == 2
+    assert cpt.RETENTION_ALERT in capsys.readouterr().err
+    _quiet_pushes(monkeypatch, cpt)
+    monkeypatch.setattr(cpt, "_load_compactor",
+                        lambda: (lambda dry_run=False: 0))
+    assert cpt.main([]) == 0
