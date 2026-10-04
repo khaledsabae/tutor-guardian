@@ -116,6 +116,10 @@ if install_fresh head && l10n_for head \
 else
   for f in "${FRESH[@]}"; do skip fresh "$f" "onboarding failed"; done
 fi
+# fresh/09_programs is written but not run yet: the app hides the programs
+# while production answers 404 to GET /api/programs (API in PR #32). The TODO
+# at the top of the flow says how to turn it on once that is deployed.
+skip fresh 09_programs "disabled until the programs API (PR #32) is live in production"
 
 # ── lineage 2: baseline → install -r PR head (English) ──────────────────
 UPGRADE=(02_baseline_restart 03_after_upgrade 04_child_kept)

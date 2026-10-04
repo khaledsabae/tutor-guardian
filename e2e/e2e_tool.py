@@ -46,6 +46,8 @@ KEYS = [
     "childModeOffline",
     # failure screens
     "bootError", "forceUpdateTitle",
+    # family programs (fresh/09 — disabled until the programs API is live)
+    "programsTitle", "programsIntro", "programsPrayerTitle", "prayerStagesTitle",
 ]
 
 # Strings the app hardcodes outside the ARB files.

@@ -1,0 +1,51 @@
+# Checkpoint 9 — «برامج الأسرة» (family programs, MOBILE_API §11).
+#
+# DISABLED: not in run.sh's FRESH list. The app hides every programs entry
+# while the server answers `GET /api/programs` with 404 (the API ships in
+# PR #32), so against today's production this checkpoint cannot pass.
+# TODO(after #32 is deployed): when
+#   curl -s -o /dev/null -w '%{http_code}' https://tg-api.alsaba.cloud/api/programs
+# prints 401 (the route exists and wants a token) instead of 404, replace the
+# `skip fresh 09_programs` line in e2e/run.sh with
+#   run_flow info fresh 09_programs fresh/09_programs.yaml -e UI_LANG=ar || true
+# and promote `info` to `gate` after its first green run.
+#
+# Walk (read-only — it starts nothing, so it writes no production rows):
+# «المزيد» → «برامج الأسرة» → the list renders for the onboarded child (band
+# 7-9, no birth month: the Prayer Journey is offered by band) → the Prayer
+# Journey screen opens → back to Today.
+appId: com.alsaba.almorabbi
+name: fresh/09 Family programs
+---
+- runScript: ../common/l10n.js
+- runFlow: ../common/home.yaml
+- tapOn: '${output.lead.navMore}'
+- extendedWaitUntil:
+    visible: '${output.t.hubTitle}'
+    timeout: 30000
+- scrollUntilVisible:
+    element:
+      text: '${output.tile.programsTitle}'
+    direction: DOWN
+    timeout: 20000
+- tapOn: '${output.tile.programsTitle}'
+- extendedWaitUntil:
+    visible: '${output.c.programsIntro}'
+    timeout: 30000
+- assertVisible: '(?s)(?:.*\s)?${CHILD_NAME}(?:\s.*)?'
+- assertNotVisible: '${output.c.lit_errorWidget}'
+- takeScreenshot: programs_1_list
+- scrollUntilVisible:
+    element:
+      text: '${output.lead.programsPrayerTitle}'
+    direction: DOWN
+    timeout: 20000
+- tapOn: '${output.lead.programsPrayerTitle}'
+- extendedWaitUntil:
+    visible: '${output.c.prayerStagesTitle}'
+    timeout: 30000
+- assertNotVisible: '${output.c.lit_errorWidget}'
+- takeScreenshot: programs_2_prayer_journey
+- back
+- back
+- runFlow: ../common/home.yaml
