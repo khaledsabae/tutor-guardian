@@ -439,6 +439,10 @@ def test_cohort_report_shows_dash_for_unmeasurable(mock_db: Path):
         {"ratings": {}, "total_app_feedback": 0, "voice_notes": 0},
     )
     assert "2026-09-21 (n=1): D1 فتح 0% · D7 فتح — · D7 فعل — · D30 فتح —" in report
+    # `interrupted` no longer means "the parent left": since the server
+    # finishes a cut answer, it means the answer could not be completed.
+    assert "لم يكتمل وحُفظ ما ظهر منه" in report
+    assert "خروج من التطبيق/إيقاف" not in report
 
 
 # ── Unanswered questions, by cause ─────────────────────────────────────
@@ -471,7 +475,8 @@ def test_unanswered_is_split_by_cause(mock_db: Path, tmp_path: Path):
     now_iso = _iso(datetime.utcnow())
     for i, flag in enumerate(["client_left_before_first_token", "client_left_before_first_token",
                               "first_token_timeout", "pipeline_error:RuntimeError", "no_results", "",
-                              "stream_error:RuntimeError", "completed_after_disconnect"]):
+                              "stream_error:RuntimeError", "completed_after_disconnect",
+                              "superseded", "stopped_by_parent", "stopped_by_parent"]):
         s.execute("INSERT INTO sessions (id, ts, mode, flag) VALUES (?, ?, 'x', ?)", (str(i), now_iso, flag))
     s.execute("INSERT INTO sessions (id, ts, mode, flag) VALUES ('old', ?, 'x', 'first_token_timeout')",
               (_iso(datetime.utcnow() - timedelta(days=30)),))
@@ -488,7 +493,7 @@ def test_unanswered_is_split_by_cause(mock_db: Path, tmp_path: Path):
     assert qm["stream_outcomes"] == {
         "client_left_before_first_token": 2, "first_token_timeout": 1,
         "stream_stalled": 0, "stream_error": 1, "pipeline_error": 1,
-        "completed_after_disconnect": 1,
+        "superseded": 1, "stopped_by_parent": 2, "completed_after_disconnect": 1,
     }
     assert get_stream_outcomes(tmp_path / "missing.db", 7) == {}
 

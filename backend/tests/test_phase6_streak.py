@@ -6,7 +6,7 @@ the heavy RAG stack is never imported. The auth middleware is stubbed
 via a tiny middleware that sets `request.state.device_id`.
 """
 import sqlite3
-from datetime import date, datetime, timedelta
+from datetime import date, datetime, timedelta, timezone
 
 import pytest
 from fastapi import FastAPI, Request
@@ -316,8 +316,11 @@ def test_progress_endpoint_persists_todays_login_row(client, tmp_db):
     import sqlite3
 
     child_id = _create_child(client)
+    # UTC on both sides, like the endpoint: a local date here made the test
+    # fail between 00:00 and 03:00 in Cairo/Riyadh.
+    today_utc = datetime.now(timezone.utc).date()
     _seed_login_dates(client, "test-device-001", child_id,
-                      [date.today() - timedelta(days=1)])
+                      [today_utc - timedelta(days=1)])
     r = client.get(f"/api/children/{child_id}/progress")
     assert r.status_code == 200
 
@@ -330,8 +333,8 @@ def test_progress_endpoint_persists_todays_login_row(client, tmp_db):
     finally:
         conn.close()
     assert sorted(r[0] for r in rows) == [
-        (date.today() - timedelta(days=1)).isoformat(),
-        datetime.utcnow().strftime("%Y-%m-%d"),
+        (today_utc - timedelta(days=1)).isoformat(),
+        today_utc.isoformat(),
     ]
     # Second visit on the same day: idempotent, and yesterday + today = 2.
     r2 = client.get(f"/api/children/{child_id}/progress")

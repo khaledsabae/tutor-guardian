@@ -462,10 +462,13 @@ def get_questions_and_quality(db_path: Path, days: int, suggested: set[str],
     )
     by_mode = {m["mode"]: m["n"] for m in modes}
     # Three different failures, reported apart because they have different
-    # owners: `interrupted` = the stream was cut after the parent saw part of
-    # the answer (the app left/stopped — client side); `error` = the server
-    # gave up (timeout, provider down, pipeline exception); an orphan = no
-    # reply row at all (the parent left before the first word, or a stall).
+    # owners. Since the 2026-10 reliability fix a stream cut by the app is
+    # finished on the server, so `interrupted` now means the answer could NOT
+    # be completed: the parent pressed Stop or asked something else first, or
+    # the provider failed after they left — the row keeps what was produced
+    # (the outcome flags below say which). `error` = the server gave up
+    # (timeout, provider down, pipeline exception); an orphan = no reply row
+    # at all.
     interrupted = by_mode.get("interrupted", 0)
     errors = by_mode.get("error", 0)
     degraded = interrupted + errors
@@ -497,6 +500,9 @@ _OUTCOME_FLAGS = (
     "stream_stalled",
     "stream_error",
     "pipeline_error",
+    # Cut on purpose: a new question in the same session, or the Stop button.
+    "superseded",
+    "stopped_by_parent",
     # Not a failure: the parent left mid-answer and the server finished and
     # stored it anyway — the app shows it when the conversation is reopened.
     "completed_after_disconnect",
@@ -668,7 +674,7 @@ def format_report(days: int, north: list[dict], openers: list[dict], cohorts: li
         f"  • أسئلة انطلقت من نصيحة اليوم: {qm['tip_initiated_count']}",
         f"  • نسبة الأسئلة غير المخدومة: <b>{qm['unanswered_rate']:.1f}%</b> من كل الرسائل، وتفصيلها:",
         f"    – بلا أي رد محفوظ (غادر قبل أول كلمة أو تعطّل الخادم): {qm['orphans']}",
-        f"    – انقطع البث بعد أن ظهر جزء من الرد (خروج من التطبيق/إيقاف): {qm['interrupted']}",
+        f"    – لم يكتمل وحُفظ ما ظهر منه (إيقاف/سؤال جديد/تعطّل بعد خروج الأب): {qm['interrupted']}",
         f"    – فشل من الخادم ورُدّ باعتذار (مهلة/مزوّد/خطأ): {qm['errors']}",
     ])
     outcomes = qm.get("stream_outcomes") or {}
@@ -679,7 +685,9 @@ def format_report(days: int, north: list[dict], openers: list[dict], cohorts: li
             f"مهلة أول كلمة {outcomes.get('first_token_timeout', 0)} · "
             f"توقف أثناء البث {outcomes.get('stream_stalled', 0)} · "
             f"خطأ المزوّد أثناء البث {outcomes.get('stream_error', 0)} · "
-            f"خطأ قبل البث {outcomes.get('pipeline_error', 0)}</i>"
+            f"خطأ قبل البث {outcomes.get('pipeline_error', 0)} · "
+            f"قُطع بسؤال جديد {outcomes.get('superseded', 0)} · "
+            f"أوقفه الأب {outcomes.get('stopped_by_parent', 0)}</i>"
         )
         if outcomes.get("completed_after_disconnect"):
             lines.append(
