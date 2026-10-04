@@ -710,6 +710,30 @@ def test_sensitive_and_medication_facts_are_never_stored(client, monkeypatch):
     assert cm.list_followups("dev-sens", cid, "all") == []
 
 
+def test_what_the_extractor_labels_sensitive_never_reaches_memory(client, monkeypatch):
+    """F6: the model's own label is a second reader behind the screen — a fact
+    or follow-up it labels is dropped even when no list would have caught it."""
+    _, cid = _allowed_device(client, monkeypatch, "dev-label")
+    monkeypatch.setattr(cm, "extraction_budget_ok", lambda: True)
+    extractor = _FakeExtractor(response=json.dumps({
+        "sensitive": False,
+        "facts": [
+            {"category": "temperament", "fact": "طفلي يخاف من الظلام", "confidence": 0.9,
+             "replaces": None, "sensitive": False},
+            {"category": "other", "fact": "طفلي حصل له موقف مع قريب", "confidence": 0.9,
+             "replaces": None, "sensitive": True},
+        ],
+        "followup": {"strategy": "حوار هادئ عن الموقف", "topic": "other", "days": 4,
+                     "sensitive": True},
+    }, ensure_ascii=False))
+    monkeypatch.setattr(ai_gateway, "aux_cloud_provider", lambda **kw: extractor)
+    out = cm.extract_and_store("dev-label", cid, question="ابني بيخاف من الظلام ومش بينام لوحده",
+                               answer="…", proven=True)
+    assert extractor.prompts and out is not None
+    assert [f["fact"] for f in cm.list_facts("dev-label", cid, "all")] == ["طفلي يخاف من الظلام"]
+    assert cm.list_followups("dev-label", cid, "all") == []
+
+
 def test_a_parent_cannot_store_a_sensitive_fact_either(client):
     h = _session(client, "dev-sens-manual")
     cid = _child(client, h)

@@ -819,8 +819,9 @@ def coach_facts(device_id: str, child_id: int, topic: str, *, proven: bool = Fal
 
 EXTRACT_PROMPT = """You maintain a short memory about ONE child for a parenting assistant used by Muslim families.
 Read the parent's message (and the assistant's answer, only to identify the advice given) and return JSON only — no prose, no code fences:
-{{"facts": [{{"category": "...", "fact": "...", "confidence": 0.0, "replaces": null}}],
- "followup": {{"strategy": "...", "topic": "...", "days": 4}} }}
+{{"sensitive": false,
+ "facts": [{{"category": "...", "fact": "...", "confidence": 0.0, "replaces": null, "sensitive": false}}],
+ "followup": {{"strategy": "...", "topic": "...", "days": 4, "sensitive": false}} }}
 
 FACTS — durable things the PARENT said or clearly implied about THIS child that will help future advice:
 - category is one of: temperament, challenge, goal, tried_strategy, outcome, health_note, school, worship, other.
@@ -831,6 +832,13 @@ FACTS — durable things the PARENT said or clearly implied about THIS child tha
   Never medication, doses, test results, doctors or hospitals.
 - Never record: the parents' private life or marriage, other people, sexual matters, abuse, self-harm, drugs,
   or any medicine.
+
+SENSITIVE — label, do not judge silently. Set "sensitive": true on any fact or followup that touches
+self-harm or suicide, abuse or inappropriate touching, sexual matters or nudity, drugs, alcohol or sniffing,
+any medicine, pill, dose or treatment the child takes, a diagnosis beyond a general condition, doctors or
+hospitals, or the parents' private life — including when it is said indirectly or in dialect
+(e.g. «حاجة وحشة», «قلة أدب» videos, «حباية»). Set the top-level "sensitive": true when the parent's message
+itself is about one of these. Labelled items are discarded; when unsure, label.
 - confidence: 0.9 when stated explicitly, 0.6 when only implied.
 - EXISTING FACTS are listed with ids. Do not repeat one. If the message updates or contradicts one,
   output the updated fact with "replaces": <that id>.
@@ -858,6 +866,18 @@ ASSISTANT ANSWER (only to identify the advice):
 >>>"""
 
 
+def _labelled_sensitive(value) -> bool:
+    """The extractor's own "sensitive" label (EXTRACT_PROMPT). Read generously:
+    a model that writes "true" or 1 means it too, and a doubtful label drops."""
+    if isinstance(value, bool):
+        return value
+    if isinstance(value, (int, float)):
+        return value != 0
+    if isinstance(value, str):
+        return value.strip().lower() in {"true", "yes", "1"}
+    return False
+
+
 def parse_extraction(raw: str) -> tuple[list[dict], Optional[dict]]:
     """Validate the model's JSON. Anything malformed is dropped, not repaired."""
     if not raw:
@@ -871,9 +891,17 @@ def parse_extraction(raw: str) -> tuple[list[dict], Optional[dict]]:
         return [], None
     if not isinstance(data, dict):
         return [], None
+    if _labelled_sensitive(data.get("sensitive")):
+        # The model says the message itself is sensitive: nothing is kept,
+        # exactly as when the screen catches the question (F6).
+        logger.info("child memory: extractor labelled the message sensitive — nothing kept")
+        return [], None
     facts: list[dict] = []
     for f in (data.get("facts") or [])[:4]:
         if not isinstance(f, dict):
+            continue
+        if _labelled_sensitive(f.get("sensitive")):
+            logger.info("child memory: extractor labelled a fact sensitive — dropped")
             continue
         cat, text = f.get("category"), f.get("fact")
         if cat not in CATEGORIES or not isinstance(text, str):
@@ -888,6 +916,8 @@ def parse_extraction(raw: str) -> tuple[list[dict], Optional[dict]]:
             "replaces": rep if isinstance(rep, int) and not isinstance(rep, bool) else None,
         })
     followup = data.get("followup")
+    if isinstance(followup, dict) and _labelled_sensitive(followup.get("sensitive")):
+        followup = None
     if isinstance(followup, dict) and isinstance(followup.get("strategy"), str):
         topic = followup.get("topic")
         try:
