@@ -24,10 +24,13 @@ What the ledger stores
 ----------------------
 One row per verified purchase: product, amount in micros, currency, a rough USD
 figure, Play's purchaseType, whether it was consumed, whether Play later voided
-it, and the date. The purchase token and order id are kept only as sha256 —
-enough to make a retry idempotent and to match a refund. There is **no device
-id**: the transparency sum needs a month, not a donor, and a table that never
-names a device has nothing for the privacy delete path to erase.
+it, and the date. The purchase token and order id are kept as sha256 — enough
+to make a retry idempotent and to match a refund. The one exception is a row
+Play could not price when it was recorded: its order id is kept in
+``reprice_order_id`` until the background reconciliation prices it, and is
+then cleared. There is **no device id**: the transparency sum needs a month,
+not a donor, and a table that never names a device has nothing for the
+privacy delete path to erase.
 
 Configuration — read ONCE per process; restart after changing any of it
 ------------------------------------------------------------------------
@@ -57,13 +60,26 @@ Configuration — read ONCE per process; restart after changing any of it
 ``DONATIONS_FX_USD_JSON``    Optional ``{"EGP": 0.0205, ...}`` overriding or
                              extending the built-in rough rates below.
 
+When Play refuses the credentials
+---------------------------------
+Only the calls a sale depends on — reading the purchase and consuming it — can
+take the support surface down. A 401/403 there, or a non-retryable
+``RefreshError`` (key revoked, account disabled), hides support for
+``REPROBE_SECONDS`` (12 min), doubling per consecutive refusal up to
+``REPROBE_MAX_SECONDS``; the first verify after the window is the probe. Every
+change of state is logged. Failures of the order and voided-purchase reads —
+the latter reachable from the anonymous transparency page — degrade the
+figures and never close the gate.
+
 How "covered" is computed (rough, and labelled as rough in the app)
 -------------------------------------------------------------------
 1. Amount: the order's ``developerRevenueInBuyerCurrency`` — what reaches the
    developer after Google's fee and taxes. If the order does not report it,
-   ``total`` minus ``tax``, less ``DONATIONS_PLAY_FEE``. If no order can be read
-   at all the row is stored **unpriced**: the price the app reports is never
-   counted as money, and is kept only on test rows, which are never counted.
+   ``total`` minus ``tax``, less ``DONATIONS_PLAY_FEE``. If the order cannot be
+   read when the purchase is recorded, the row is stored **unpriced** (and
+   logged), and the background reconciliation keeps trying to price it. The
+   price the app reports is never counted as money, and is kept only on test
+   rows, which are never counted.
 2. To USD with a static table of approximate rates (``_USD_PER_UNIT``). Rates
    drift; for a sentence that says "covered about 40%", a few percent of drift
    is noise, and a live FX dependency would be one more thing to break. An
@@ -72,9 +88,14 @@ How "covered" is computed (rough, and labelled as rough in the app)
 3. Never counted: test purchases (Play ``purchaseType`` 0), promo-code (1) and
    rewarded (2) purchases, and anything Play has since voided — refunds,
    chargebacks, and the automatic refund of a purchase never acknowledged
-   within three days. Voids are reconciled from the Voided Purchases API on a
-   transparency read, at most once every ``VOIDED_RECHECK_SECONDS`` per
-   process — no cron.
+   within three days.
+
+Reconciliation — voids and re-pricing, off the request path
+-----------------------------------------------------------
+A transparency read starts the reconciliation in a background thread when one
+is due (at most every ``RECONCILE_EVERY_SECONDS``) and none is running; the
+read itself only sums the ledger, so it always serves the last computed
+values and never waits on Play. Single-flight under a lock. No cron.
 """
 from __future__ import annotations
 
@@ -89,6 +110,8 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any, Optional, Protocol
 from urllib.parse import quote
+
+from google.auth.exceptions import RefreshError
 
 from app.core.service_account import read_service_account
 from app.db.init_db import get_conn
@@ -107,7 +130,10 @@ DEFAULT_SERVICE_ACCOUNT = (
 # The cost lines the app has labels for. Anything else would render as a second
 # «أخرى» row, so it is not shown at all.
 COST_KEYS = ("server", "ai", "domain", "other")
-VOIDED_RECHECK_SECONDS = 6 * 3600
+RECONCILE_EVERY_SECONDS = 6 * 3600
+REPRICE_BATCH = 50
+REPROBE_SECONDS = 12 * 60
+REPROBE_MAX_SECONDS = 6 * 3600
 _SCOPE = "https://www.googleapis.com/auth/androidpublisher"
 
 # Play's ProductPurchase.purchaseType. Absent for an ordinary purchase.
@@ -206,27 +232,6 @@ def _credentials():
         return None
 
 
-_unhealthy = False
-_state_lock = threading.Lock()
-
-
-def _mark_unhealthy(status: int) -> None:
-    """Play refused the credentials (401/403): stop offering support.
-
-    A 401 that survives google-auth's own token refresh, or a 403, means the
-    account lost its permissions — every purchase from here on would be
-    unverifiable and refunded after three days. Logged once.
-    """
-    global _unhealthy
-    with _state_lock:
-        if _unhealthy:
-            return
-        _unhealthy = True
-    logger.error("Play rejected the support service account (HTTP %s) — support "
-                 "hidden and verification off until restart; check the "
-                 "account's permissions in Play Console", status)
-
-
 @functools.lru_cache(maxsize=1)
 def _gate() -> bool:
     """The flag AND credentials that load — computed once, never raising.
@@ -249,8 +254,64 @@ def _gate() -> bool:
         return False
 
 
+# ── Credential health: time-bounded, and only the sale path can close it ─
+
+_state_lock = threading.Lock()
+_rejected_until: Optional[float] = None
+_rejections = 0
+_reprobe_logged = False
+
+
+def _clock() -> float:
+    return time.monotonic()
+
+
+def credentials_rejected() -> bool:
+    """True while Play's last refusal of the credentials is still fresh."""
+    global _reprobe_logged
+    with _state_lock:
+        if _rejected_until is None:
+            return False
+        if _clock() < _rejected_until:
+            return True
+        if _reprobe_logged:
+            return False
+        _reprobe_logged = True
+    logger.warning("Play support credentials: refusal window over — support "
+                   "shown again; the next verify is the probe")
+    return False
+
+
+def _reject_credentials(reason: str) -> None:
+    """A sale-path call was refused: hide support for a bounded window."""
+    global _rejected_until, _rejections, _reprobe_logged
+    with _state_lock:
+        if _rejected_until is not None and _clock() < _rejected_until:
+            return  # already closed — one log line per closure
+        _rejections += 1
+        window = min(REPROBE_SECONDS * 2 ** (_rejections - 1), REPROBE_MAX_SECONDS)
+        _rejected_until = _clock() + window
+        _reprobe_logged = False
+        count = _rejections
+    logger.error("Play refused the support credentials (%s) — support hidden "
+                 "for %d min (refusal %d in a row); check the service account "
+                 "in Play Console", reason, window // 60, count)
+
+
+def _accept_credentials() -> None:
+    """A sale-path call got through: any refusal state is over."""
+    global _rejected_until, _rejections, _reprobe_logged
+    with _state_lock:
+        if _rejected_until is None:
+            return
+        count = _rejections
+        _rejected_until, _rejections, _reprobe_logged = None, 0, False
+    logger.warning("Play accepted the support credentials again after %d "
+                   "refusal(s) — support restored", count)
+
+
 def is_enabled() -> bool:
-    return _gate() and not _unhealthy
+    return _gate() and not credentials_rejected()
 
 
 def monthly_cost_usd() -> Optional[float]:
@@ -353,17 +414,29 @@ class GooglePlayVerifier:
 
         return AuthorizedSession(self._credentials)
 
-    def _call(self, method: str, url: str, params: Optional[dict] = None):
+    def _call(self, method: str, url: str, params: Optional[dict] = None, *,
+              sale_path: bool = False):
+        """One request. [sale_path] calls — reading the purchase, consuming
+        it — are the only ones whose credential failures close the gate."""
         try:
             resp = self._session().request(method, url, params=params, timeout=20)
+        except RefreshError as exc:
+            # The token could not be minted: key revoked, account disabled or
+            # deleted. Not an HTTP status, so it used to pass as a plain outage.
+            if sale_path and not exc.retryable:
+                _reject_credentials("RefreshError")
+            raise VerificationUnavailable("RefreshError") from None
         except Exception as exc:  # noqa: BLE001 — network/auth: retry later
             # `from None`: the transport error's text and its chain quote the URL.
             raise VerificationUnavailable(type(exc).__name__) from None
         if resp.status_code in (401, 403):
-            _mark_unhealthy(resp.status_code)
+            if sale_path:
+                _reject_credentials(f"http {resp.status_code}")
             raise VerificationUnavailable(f"http {resp.status_code}")
         if resp.status_code >= 500 or resp.status_code == 429:
             raise VerificationUnavailable(f"http {resp.status_code}")
+        if sale_path:
+            _accept_credentials()  # Play read our credentials and answered
         return resp
 
     @staticmethod
@@ -381,7 +454,7 @@ class GooglePlayVerifier:
                 f"/tokens/{quote(token, safe='')}")
 
     def get_purchase(self, product_id: str, token: str) -> dict[str, Any]:
-        resp = self._call("GET", self._token_url(product_id, token))
+        resp = self._call("GET", self._token_url(product_id, token), sale_path=True)
         if resp.status_code != 200:
             raise InvalidPurchase(f"http {resp.status_code}")
         return self._json(resp)
@@ -391,7 +464,8 @@ class GooglePlayVerifier:
         return self._json(resp) if resp.status_code == 200 else None
 
     def consume(self, product_id: str, token: str) -> None:
-        resp = self._call("POST", self._token_url(product_id, token) + ":consume")
+        resp = self._call("POST", self._token_url(product_id, token) + ":consume",
+                          sale_path=True)
         if resp.status_code not in (200, 204):
             raise VerificationUnavailable(f"consume http {resp.status_code}")
 
@@ -425,8 +499,8 @@ def _cached_verifier() -> Optional[GooglePlayVerifier]:
 
 def _verifier() -> PlayVerifier:
     """The one verifier this process uses, or VerificationUnavailable."""
-    if _unhealthy:
-        raise VerificationUnavailable("unhealthy")
+    if credentials_rejected():
+        raise VerificationUnavailable("credentials refused")
     verifier = _cached_verifier()
     if verifier is None:
         raise VerificationUnavailable("no credentials")
@@ -534,27 +608,31 @@ def record_purchase(product_id: str, token: str,
             ptype = None
         order_id = purchase.get("orderId")
         micros, currency, source = None, None, "none"
+        unpriced_because = "no order id"
         if order_id and ptype is None:
             try:
                 micros, currency, source = _amount_from_order(
                     verifier.get_order(order_id))
-            except VerificationUnavailable:
+                unpriced_because = "order not readable yet"
+            except VerificationUnavailable as exc:
                 micros, currency, source = None, None, "none"
+                unpriced_because = _reason(exc)
         if (micros is None and ptype == PURCHASE_TYPE_TEST
                 and client_price_micros is not None and client_currency):
             # Only a test row may carry the price the app reports — and test
             # rows are never counted. A real purchase without a readable order
             # stays unpriced rather than counting a client-supplied number.
             micros, currency, source = int(client_price_micros), client_currency, "client"
+        reprice = order_id if (micros is None and ptype is None and order_id) else None
 
         cur = conn.execute(
             "INSERT OR IGNORE INTO donations (token_hash, order_hash, product_id, "
-            "amount_micros, currency, usd_cents, amount_source, purchase_type) "
-            "VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+            "amount_micros, currency, usd_cents, amount_source, purchase_type, "
+            "reprice_order_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
             (token_hash, _sha(order_id) if order_id else None, product_id,
              micros, currency.upper() if currency else None,
              to_usd_cents(micros, currency, fee_deducted=source == "order_revenue"),
-             source, ptype),
+             source, ptype, reprice),
         )
         conn.commit()
         if cur.rowcount == 0:
@@ -563,6 +641,11 @@ def record_purchase(product_id: str, token: str,
             row = _row_for(conn, token_hash)
             return {"ok": True, "consumed": bool(row and row["consumed"]),
                     "already_recorded": True, "pending": False}
+        if micros is None and ptype is None:
+            logger.warning("support purchase recorded unpriced (%s) — %s",
+                           unpriced_because,
+                           "the background reconciliation will price it"
+                           if reprice else "it cannot be priced later")
 
         row_id = cur.lastrowid
         if purchase.get("consumptionState") == 1:
@@ -577,6 +660,112 @@ def record_purchase(product_id: str, token: str,
         conn.close()
 
 
+# ── Reconciliation: voids and re-pricing, in the background ───────────────
+
+_reconcile_lock = threading.Lock()   # single-flight: one reconciliation at a time
+_last_reconcile_start: Optional[float] = None
+_reconciler: Optional[threading.Thread] = None
+
+
+def _mark_voided(verifier: PlayVerifier, now: datetime) -> int:
+    """Flag the rows Play reports voided. The API reaches back 30 days, which
+    covers the month on display."""
+    month_start = now.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+    since = max(month_start, now - timedelta(days=29))
+    hashes = [_sha(t) for t in verifier.voided_tokens(int(since.timestamp() * 1000))]
+    if not hashes:
+        return 0
+    conn = get_conn()
+    try:
+        marked = 0
+        for i in range(0, len(hashes), 500):
+            chunk = hashes[i:i + 500]
+            marked += conn.execute(
+                "UPDATE donations SET voided = 1 WHERE voided = 0 AND token_hash "
+                f"IN ({','.join('?' * len(chunk))})", chunk).rowcount
+        conn.commit()
+        return marked
+    finally:
+        conn.close()
+
+
+def _reprice_unpriced(verifier: PlayVerifier) -> int:
+    """Price the rows recorded while their order could not be read."""
+    conn = get_conn()
+    try:
+        rows = conn.execute(
+            "SELECT id, reprice_order_id FROM donations "
+            "WHERE reprice_order_id IS NOT NULL AND voided = 0 "
+            "ORDER BY id LIMIT ?", (REPRICE_BATCH,)).fetchall()
+        priced = 0
+        for row in rows:
+            try:
+                micros, currency, source = _amount_from_order(
+                    verifier.get_order(row["reprice_order_id"]))
+            except VerificationUnavailable:
+                continue  # next cycle
+            if micros is None:
+                continue
+            conn.execute(
+                "UPDATE donations SET amount_micros = ?, currency = ?, usd_cents = ?, "
+                "amount_source = ?, reprice_order_id = NULL WHERE id = ?",
+                (micros, currency.upper(),
+                 to_usd_cents(micros, currency, fee_deducted=source == "order_revenue"),
+                 source, row["id"]))
+            priced += 1
+        conn.commit()
+        if rows:
+            logger.info("support reconciliation priced %d of %d waiting row(s)",
+                        priced, len(rows))
+        return priced
+    finally:
+        conn.close()
+
+
+def run_reconciliation(now: Optional[datetime] = None) -> bool:
+    """Mark voids and re-price; single-flight, never raising.
+
+    Returns False when another reconciliation was already running (or support
+    is off), True when this call did the work. Failures here can degrade the
+    figures; they can never close the gate — only the sale path does that.
+    """
+    if not _reconcile_lock.acquire(blocking=False):
+        return False
+    try:
+        if not is_enabled():
+            return False
+        now = now or datetime.now(timezone.utc)
+        verifier = _verifier()
+        for step in (lambda: _mark_voided(verifier, now),
+                     lambda: _reprice_unpriced(verifier)):
+            try:
+                step()
+            except Exception as exc:  # noqa: BLE001 — one step failing skips only itself
+                logger.warning("support reconciliation step skipped (%s)", _reason(exc))
+        return True
+    except Exception as exc:  # noqa: BLE001
+        logger.warning("support reconciliation skipped (%s)", _reason(exc))
+        return False
+    finally:
+        _reconcile_lock.release()
+
+
+def _kick_reconciliation() -> None:
+    """Start a background reconciliation when one is due and none is running."""
+    global _last_reconcile_start, _reconciler
+    with _state_lock:
+        clock = _clock()
+        if _reconciler is not None and _reconciler.is_alive():
+            return
+        if (_last_reconcile_start is not None
+                and clock - _last_reconcile_start < RECONCILE_EVERY_SECONDS):
+            return
+        _last_reconcile_start = clock
+        _reconciler = threading.Thread(
+            target=run_reconciliation, name="support-reconcile", daemon=True)
+        _reconciler.start()
+
+
 # ── Transparency ──────────────────────────────────────────────────────────
 
 # A range on created_at, not substr(): the range can use ix_donations_created.
@@ -587,8 +776,6 @@ MONTH_TOTALS_SQL = (
     "AND purchase_type IS NULL AND voided = 0"
 )
 
-_voided_checked_at: Optional[float] = None
-
 
 def _month_bounds(now: datetime) -> tuple[str, str, str]:
     start = now.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
@@ -597,47 +784,14 @@ def _month_bounds(now: datetime) -> tuple[str, str, str]:
     return start.strftime("%Y-%m"), start.strftime(fmt), following.strftime(fmt)
 
 
-def _reconcile_voided(now: datetime) -> None:
-    """Mark the rows Play reports voided — refunds, chargebacks, auto-refunds.
-
-    Runs on a transparency read, at most once per VOIDED_RECHECK_SECONDS per
-    process, so a page anyone can load costs at most four Play calls a day and
-    no cron exists for it. The API reaches back 30 days; that covers the month
-    on display. Any failure leaves the figures as they were, logged by reason.
-    """
-    global _voided_checked_at
-    clock = time.monotonic()
-    if (_voided_checked_at is not None
-            and clock - _voided_checked_at < VOIDED_RECHECK_SECONDS):
-        return
-    _voided_checked_at = clock
-    try:
-        if not is_enabled():
-            return
-        month_start = now.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
-        since = max(month_start, now - timedelta(days=29))
-        tokens = _verifier().voided_tokens(int(since.timestamp() * 1000))
-        hashes = [_sha(t) for t in tokens]
-        if not hashes:
-            return
-        conn = get_conn()
-        try:
-            for i in range(0, len(hashes), 500):
-                chunk = hashes[i:i + 500]
-                conn.execute(
-                    "UPDATE donations SET voided = 1 WHERE voided = 0 AND token_hash "
-                    f"IN ({','.join('?' * len(chunk))})", chunk)
-            conn.commit()
-        finally:
-            conn.close()
-    except Exception as exc:  # noqa: BLE001 — the page must still answer
-        logger.warning("voided-purchase reconciliation skipped (%s)", _reason(exc))
-
-
 def transparency(now: Optional[datetime] = None) -> dict[str, Any]:
-    """This month's cost, what supporters covered, and the share — aggregates only."""
+    """This month's cost, what supporters covered, and the share — aggregates only.
+
+    Serves the ledger as it stands — the last reconciliation's voids and
+    prices — and only *starts* the next reconciliation, in the background.
+    """
     now = now or datetime.now(timezone.utc)
-    _reconcile_voided(now)
+    _kick_reconciliation()
     month, start, end = _month_bounds(now)
     conn = get_conn()
     try:

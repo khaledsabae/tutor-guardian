@@ -1088,40 +1088,65 @@ def _ensure_child_web_claims_table(conn: sqlite3.Connection) -> None:
     )
 
 
+_CREATE_DONATIONS: str = """
+CREATE TABLE IF NOT EXISTS donations (
+    id               INTEGER PRIMARY KEY AUTOINCREMENT,
+    token_hash       TEXT NOT NULL UNIQUE,
+    order_hash       TEXT,
+    product_id       TEXT NOT NULL,
+    amount_micros    INTEGER,
+    currency         TEXT,
+    usd_cents        INTEGER,
+    amount_source    TEXT NOT NULL DEFAULT 'none',
+    purchase_type    INTEGER,
+    consumed         INTEGER NOT NULL DEFAULT 0,
+    voided           INTEGER NOT NULL DEFAULT 0,
+    reprice_order_id TEXT,
+    created_at       TEXT NOT NULL DEFAULT (datetime('now'))
+);
+CREATE INDEX IF NOT EXISTS ix_donations_created
+    ON donations (created_at);
+"""
+
+
 def _ensure_donations_table(conn: sqlite3.Connection) -> None:
     """v31: the «ادعم المربّي» ledger — one row per verified Play purchase.
 
     Deliberately holds nothing that identifies a person or a device: the
-    purchase token and order id are stored only as sha256 (enough to make a
-    retry idempotent and to match a later refund), and there is no device_id
-    column at all. The transparency page needs a sum per month, not a donor.
-    Because no row points at a device, the privacy delete path has nothing
-    here to erase.
+    purchase token and order id are stored as sha256 (enough to make a retry
+    idempotent and to match a later refund), and there is no device_id column
+    at all. The one plain order id is reprice_order_id, held only while a row
+    waits to be priced and cleared once it is. Because no row points at a
+    device, the privacy delete path has nothing here to erase.
 
     purchase_type is Play's (0 test, 1 promo, 2 rewarded; NULL for an ordinary
     purchase) and voided is set when Play reports a refund or chargeback; only
     NULL/0 rows count as money. See app/services/donations.py.
+
+    The table's first shape (commit 765be74f, never deployed) had is_test and
+    none of purchase_type / voided / reprice_order_id. A database created then
+    is brought forward: an empty table is recreated; one with rows gets the
+    missing columns, and its test rows keep counting as test rows.
     """
-    conn.executescript(
-        """
-        CREATE TABLE IF NOT EXISTS donations (
-            id            INTEGER PRIMARY KEY AUTOINCREMENT,
-            token_hash    TEXT NOT NULL UNIQUE,
-            order_hash    TEXT,
-            product_id    TEXT NOT NULL,
-            amount_micros INTEGER,
-            currency      TEXT,
-            usd_cents     INTEGER,
-            amount_source TEXT NOT NULL DEFAULT 'none',
-            purchase_type INTEGER,
-            consumed      INTEGER NOT NULL DEFAULT 0,
-            voided        INTEGER NOT NULL DEFAULT 0,
-            created_at    TEXT NOT NULL DEFAULT (datetime('now'))
-        );
-        CREATE INDEX IF NOT EXISTS ix_donations_created
-            ON donations (created_at);
-        """
-    )
+    conn.executescript(_CREATE_DONATIONS)
+    columns = {row[1] for row in conn.execute("PRAGMA table_info(donations)")}
+    missing = {"purchase_type", "voided", "reprice_order_id"} - columns
+    if not missing:
+        return
+    if conn.execute("SELECT COUNT(*) FROM donations").fetchone()[0] == 0:
+        conn.executescript("DROP TABLE donations;\n" + _CREATE_DONATIONS)
+        return
+    for column, ddl in (
+        ("purchase_type", "ALTER TABLE donations ADD COLUMN purchase_type INTEGER"),
+        ("voided", "ALTER TABLE donations ADD COLUMN voided INTEGER NOT NULL DEFAULT 0"),
+        ("reprice_order_id", "ALTER TABLE donations ADD COLUMN reprice_order_id TEXT"),
+    ):
+        if column in missing:
+            conn.execute(ddl)
+    if "is_test" in columns:
+        conn.execute("UPDATE donations SET purchase_type = 0 "
+                     "WHERE is_test = 1 AND purchase_type IS NULL")
+    conn.commit()
 
 
 def _ensure_referrals_table(conn: sqlite3.Connection) -> None:

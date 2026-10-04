@@ -257,26 +257,139 @@ def test_app_config_survives_a_secret_it_cannot_even_stat(monkeypatch, caplog, c
     assert "PermissionError" in unusable[0].getMessage()
 
 
-def test_403_from_play_hides_support_and_is_logged_once(monkeypatch, caplog):
-    """Item 2: an account that lost its permissions must stop selling."""
+class _Clock:
+    """A monotonic clock the test can move."""
+
+    def __init__(self):
+        self.now = 1_000.0
+
+    def __call__(self):
+        return self.now
+
+
+def _messages(caplog, needle):
+    return [r.getMessage() for r in caplog.records if needle in r.getMessage()]
+
+
+def test_sale_path_403_hides_support_for_a_bounded_window(monkeypatch, caplog):
+    """Item 1 (delta): closed by the sale path, reopened by the clock.
+
+    A refusal on reading a purchase hides support for REPROBE_SECONDS, then
+    the gate reopens and the next verify is the probe; a second refusal in a
+    row doubles the window; a success ends the state. Every change is logged.
+    """
     monkeypatch.setenv("DONATIONS_ENABLED", "true")
     monkeypatch.setattr(donations, "_credentials", lambda: object())
-    assert donations.is_enabled() is True
+    clock = _Clock()
+    monkeypatch.setattr(donations, "_clock", clock)
+    status = {"code": 403}
 
-    class Refused:
+    class Play:
         def request(self, method, url, params=None, timeout=None):
-            return _Resp(403, {})
+            return _Resp(status["code"], {"purchaseState": 0})
 
-    verifier = _google(Refused())
-    caplog.set_level(logging.ERROR, logger="app.services.donations")
-    for _ in range(2):
-        with pytest.raises(donations.VerificationUnavailable):
-            verifier.get_purchase("support_small", "tok_refused_1")
+    verifier = _google(Play())
+    caplog.set_level(logging.INFO, logger="app.services.donations")
+
+    with pytest.raises(donations.VerificationUnavailable):
+        verifier.get_purchase("support_small", "tok_refused_1")
     assert donations.is_enabled() is False
     with pytest.raises(donations.VerificationUnavailable):
-        donations._verifier()
-    rejected = [r for r in caplog.records if "rejected the support service account" in r.getMessage()]
-    assert len(rejected) == 1
+        donations._verifier()  # no Play call while closed
+
+    clock.now += donations.REPROBE_SECONDS - 1
+    assert donations.is_enabled() is False
+    clock.now += 2
+    assert donations.is_enabled() is True  # reopened: the next verify probes
+    assert len(_messages(caplog, "refusal window over")) == 1
+
+    with pytest.raises(donations.VerificationUnavailable):
+        verifier.get_purchase("support_small", "tok_refused_2")
+    clock.now += donations.REPROBE_SECONDS + 1
+    assert donations.is_enabled() is False  # doubled the second time
+    clock.now += donations.REPROBE_SECONDS
+    assert donations.is_enabled() is True
+
+    status["code"] = 200
+    verifier.get_purchase("support_small", "tok_works_3")
+    assert donations.is_enabled() is True
+    closed = _messages(caplog, "refused the support credentials")
+    assert len(closed) == 2
+    assert "for 12 min (refusal 1" in closed[0] and "for 24 min (refusal 2" in closed[1]
+    assert len(_messages(caplog, "support restored")) == 1
+
+
+def test_a_401_from_the_public_page_never_closes_the_gate(monkeypatch, tmp_path):
+    """Item 1 (delta), from the review's probe: the voided-purchases read runs
+    off an anonymous GET; its 401 must not take support down for the process."""
+    sa = _write_service_account(tmp_path)
+    monkeypatch.setenv("DONATIONS_ENABLED", "true")
+    monkeypatch.setenv("PLAY_SERVICE_ACCOUNT", str(sa))
+
+    class Session(_RoutedSession):
+        voided_status = 401  # e.g. permission not yet propagated
+
+        def request(self, method, url, params=None, timeout=None):
+            if url.endswith("/voidedpurchases"):
+                self.calls.append((method, url))
+                return _Resp(self.voided_status, {})
+            if "/orders/" in url:
+                self.calls.append((method, url))
+                return _Resp(403, {})  # orders permission missing: figures only
+            return super().request(method, url, params=params, timeout=timeout)
+
+    session = Session(purchase={"purchaseState": 0, "consumptionState": 0,
+                                "orderId": "GPA.probe"})
+    monkeypatch.setattr(donations.GooglePlayVerifier, "_session", lambda self: session)
+
+    with TestClient(app) as c:
+        assert c.get("/api/app-config").json()["donations_enabled"] is True
+        assert c.get("/api/support/transparency").status_code == 200
+        donations._reconciler.join(timeout=10)
+        assert any(u.endswith("/voidedpurchases") for _, u in session.calls)
+        assert c.get("/api/app-config").json()["donations_enabled"] is True
+        r = c.post("/api/support/verify",
+                   json={"product_id": "support_small", "purchase_token": "tok_valid_123"},
+                   headers={"Authorization": f"Bearer {_token(c)}"})
+    assert r.status_code == 200, r.text
+    assert r.json()["ok"] is True
+    assert donations.credentials_rejected() is False
+
+
+@pytest.mark.parametrize("retryable,closes", [(False, True), (True, False)])
+def test_a_revoked_key_closes_the_gate_and_says_so(monkeypatch, tmp_path, caplog,
+                                                   retryable, closes):
+    """Item 2 (delta), from the review's probe: a revoked key or a disabled
+    account fails at token mint — a RefreshError, not a 401 — and used to be
+    a silent 503 forever with the gate open."""
+    from google.auth.exceptions import RefreshError
+
+    class Dead:
+        def request(self, method, url, params=None, timeout=None):
+            raise RefreshError("invalid_grant: Invalid JWT Signature.",
+                               retryable=retryable)
+
+    sa = _write_service_account(tmp_path)
+    monkeypatch.setenv("DONATIONS_ENABLED", "true")
+    monkeypatch.setenv("PLAY_SERVICE_ACCOUNT", str(sa))
+    monkeypatch.setattr(donations.GooglePlayVerifier, "_session", lambda self: Dead())
+    caplog.set_level(logging.INFO, logger="app.services.donations")
+    with TestClient(app) as c:
+        bearer = _token(c)
+        codes = [c.post("/api/support/verify",
+                        json={"product_id": "support_small",
+                              "purchase_token": f"tok_revoked_{i:03d}"},
+                        headers={"Authorization": f"Bearer {bearer}"}).status_code
+                 for i in range(3)]
+        enabled = c.get("/api/app-config").json()["donations_enabled"]
+    assert codes == [503, 503, 503]
+    refused = _messages(caplog, "refused the support credentials (RefreshError)")
+    if closes:
+        assert enabled is False
+        assert len(refused) == 1  # once, not once per request
+    else:
+        # A retryable refresh failure is an outage, not a revoked key.
+        assert enabled is True and refused == []
 
 
 def test_verify_requires_auth(play, client):
@@ -416,6 +529,7 @@ def test_a_real_purchase_is_never_priced_from_the_client(play):
     [row] = _rows()
     assert row["amount_micros"] is None and row["usd_cents"] is None
     assert row["amount_source"] == "none"
+    assert row["reprice_order_id"] == "GPA.missing"  # priced later from Play, not the client
     body = donations.transparency()
     assert body["covered_usd"] == 0
     assert body["unpriced"] == 1 and body["supports"] == 1
@@ -679,8 +793,8 @@ def test_month_totals_use_the_created_at_index():
     assert "ix_donations_created" in plan
 
 
-def test_voided_purchases_stop_counting_and_play_is_asked_rarely(play, monkeypatch):
-    """Item 22: refunds and chargebacks are reconciled — cached, no cron."""
+def test_voided_purchases_stop_counting(play, monkeypatch):
+    """Item 22: refunds and chargebacks are reconciled — no cron."""
     monkeypatch.setenv("COST_MONTHLY_USD", "10")
     for token in ("tok_keep", "tok_refunded"):
         play.purchases[token] = _purchased(f"GPA.{token}")
@@ -688,16 +802,86 @@ def test_voided_purchases_stop_counting_and_play_is_asked_rarely(play, monkeypat
         donations.record_purchase("support_medium", token)
     play.voided = {"tok_refunded"}
 
+    assert donations.run_reconciliation() is True
     body = donations.transparency()
     assert body["supports"] == 1
     assert body["covered_usd"] == 4.25  # one $5 purchase, less the fee
-    assert play.voided_calls == 1
     assert {r["token_hash"]: r["voided"] for r in _rows()}[
         hashlib.sha256(b"tok_refunded").hexdigest()] == 1
 
+
+def test_the_public_page_never_waits_on_play(play, monkeypatch):
+    """Item 5 (delta): the check runs in the background, single-flight; the
+    GET serves the last computed values and returns while Play is slow."""
+    import threading
+    import time as _time
+
+    release = threading.Event()
+    entered = threading.Event()
+    calls = []
+
+    def slow_voided(start_ms):
+        calls.append(start_ms)
+        entered.set()
+        release.wait(10)
+        return {"tok_refunded"}
+
+    play.voided_tokens = slow_voided
+    for token in ("tok_keep", "tok_refunded"):
+        play.purchases[token] = _purchased(f"GPA.{token}")
+        play.orders[f"GPA.{token}"] = {"total": {"currencyCode": "USD", "units": "5"}}
+        donations.record_purchase("support_medium", token)
+
+    started = _time.monotonic()
+    first = donations.transparency()
+    assert _time.monotonic() - started < 2  # did not wait on Play
+    assert entered.wait(5)                   # …but the check did start
+    assert first["supports"] == 2            # last computed values: no voids yet
+
+    # While it runs, more reads neither wait nor start a second one.
+    donations._last_reconcile_start = None   # even if one were due
     donations.transparency()
+    assert donations.run_reconciliation() is False  # single-flight
+    assert len(calls) == 1
+
+    release.set()
+    donations._reconciler.join(timeout=10)
+    assert donations.transparency()["supports"] == 1  # the void, once computed
+
+
+def test_reconciliation_is_due_at_most_every_six_hours(play, monkeypatch):
+    clock = _Clock()
+    monkeypatch.setattr(donations, "_clock", clock)
+    calls = []
+    play.voided_tokens = lambda start_ms: calls.append(start_ms) or set()
+    for _ in range(3):
+        donations.transparency()
+        donations._reconciler.join(timeout=10)
+    assert len(calls) == 1
+    clock.now += donations.RECONCILE_EVERY_SECONDS + 1
     donations.transparency()
-    assert play.voided_calls == 1  # within VOIDED_RECHECK_SECONDS: no new call
+    donations._reconciler.join(timeout=10)
+    assert len(calls) == 2
+
+
+def test_an_unreadable_order_is_logged_and_priced_later(play, caplog, monkeypatch):
+    """Item 4 (delta): unpriced is a waiting state, not a final one."""
+    monkeypatch.setenv("COST_MONTHLY_USD", "10")
+    play.purchases["tok_late_order"] = _purchased("GPA.late")  # order not readable yet
+    caplog.set_level(logging.WARNING, logger="app.services.donations")
+    donations.record_purchase("support_small", "tok_late_order")
+    assert _messages(caplog, "recorded unpriced (order not readable yet)")
+    [row] = _rows()
+    assert row["usd_cents"] is None and row["reprice_order_id"] == "GPA.late"
+    assert donations.transparency()["unpriced"] == 1
+
+    play.orders["GPA.late"] = {"total": {"currencyCode": "USD", "units": "5"}}
+    assert donations.run_reconciliation() is True
+    [row] = _rows()
+    assert row["usd_cents"] == 425 and row["amount_source"] == "order_total"
+    assert row["reprice_order_id"] is None  # the plain order id is gone again
+    body = donations.transparency()
+    assert body["unpriced"] == 0 and body["covered_usd"] == 4.25
 
 
 def test_reconciliation_failure_leaves_the_page_answering(play, monkeypatch, client):
@@ -775,3 +959,55 @@ def test_shared_loader_degrades_on_binary_and_non_object_files(tmp_path):
     for path in (binary, listy):
         assert read_service_account(path, label="T", feature="t") is None
         assert push_sender._read_service_account(path) is None
+
+
+# ── The ledger's first shape (765be74f) is brought forward ────────────────
+
+_OLD_DONATIONS = """
+CREATE TABLE donations (
+    id INTEGER PRIMARY KEY AUTOINCREMENT, token_hash TEXT NOT NULL UNIQUE,
+    order_hash TEXT, product_id TEXT NOT NULL, amount_micros INTEGER,
+    currency TEXT, usd_cents INTEGER, amount_source TEXT NOT NULL DEFAULT 'none',
+    is_test INTEGER NOT NULL DEFAULT 0, consumed INTEGER NOT NULL DEFAULT 0,
+    created_at TEXT NOT NULL DEFAULT (datetime('now')));
+CREATE INDEX ix_donations_created ON donations (created_at);
+"""
+
+
+def _columns():
+    conn = get_conn()
+    try:
+        return {r[1] for r in conn.execute("PRAGMA table_info(donations)")}
+    finally:
+        conn.close()
+
+
+def test_an_empty_first_shape_table_is_recreated():
+    from app.db.init_db import init_db
+
+    conn = get_conn()
+    conn.executescript("DROP TABLE donations;" + _OLD_DONATIONS)
+    conn.close()
+    init_db()
+    cols = _columns()
+    assert {"purchase_type", "voided", "reprice_order_id"} <= cols
+    assert "is_test" not in cols
+
+
+def test_a_first_shape_table_with_rows_gains_columns_and_keeps_test_rows_out(play):
+    from app.db.init_db import init_db
+
+    conn = get_conn()
+    conn.executescript("DROP TABLE donations;" + _OLD_DONATIONS)
+    conn.execute("INSERT INTO donations (token_hash, product_id, usd_cents, is_test) "
+                 "VALUES ('h-test', 'support_small', 500, 1), "
+                 "('h-real', 'support_small', 300, 0)")
+    conn.commit()
+    conn.close()
+    init_db()
+    assert {"purchase_type", "voided", "reprice_order_id"} <= _columns()
+    rows = {r["token_hash"]: r for r in _rows()}
+    assert rows["h-test"]["purchase_type"] == 0
+    assert rows["h-real"]["purchase_type"] is None
+    body = donations.transparency()
+    assert body["supports"] == 1 and body["covered_usd"] == 3.0

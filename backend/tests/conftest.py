@@ -57,9 +57,15 @@ def _fresh_support_state(monkeypatch):
     caches = (donations._gate, donations._credentials, donations._cached_verifier)
     for cached in caches:
         cached.cache_clear()
-    monkeypatch.setattr(donations, "_unhealthy", False)
-    monkeypatch.setattr(donations, "_voided_checked_at", None)
+    for name, cold in (("_rejected_until", None), ("_rejections", 0),
+                       ("_reprobe_logged", False), ("_last_reconcile_start", None),
+                       ("_reconciler", None)):
+        monkeypatch.setattr(donations, name, cold)
     yield
+    # A background reconciliation started by this test finishes inside it.
+    thread = donations._reconciler
+    if thread is not None:
+        thread.join(timeout=10)
     for cached in caches:
         cached.cache_clear()
 
