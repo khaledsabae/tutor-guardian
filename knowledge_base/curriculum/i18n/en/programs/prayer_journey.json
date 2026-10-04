@@ -1,0 +1,806 @@
+{
+  "program_type": "prayer_journey",
+  "id": "prayer_journey",
+  "version": "1.0.0",
+  "is_published": true,
+  "language": "en",
+  "title": "The Prayer Journey",
+  "subtitle": "Twelve weeks from love to responsibility",
+  "description": "A program for a child between seven and ten to learn the prayer step by step: the parent assigns a small task, the child does it and records it in child mode, the parent confirms it in the evening, and the child earns coins that turn into a real reward you agreed on. No pressure, no punishment, and your example before everything.",
+  "age": {
+    "min_years": 7,
+    "max_years": 10,
+    "weeks": 12
+  },
+  "bands": {
+    "covered": [
+      "4-6",
+      "7-9",
+      "10-12",
+      "13-15"
+    ],
+    "band_map": {
+      "prenatal-1": null,
+      "0-3": null,
+      "2-3": null,
+      "4-6": "preparation",
+      "7-9": "journey",
+      "10-12": "journey",
+      "13-15": "ownership",
+      "16-18": null
+    },
+    "text": "By the child's age: from four to six, 'Getting ready', with no daily follow-up and no coins; from seven to ten, 'the Journey' over twelve weeks; from eleven to fifteen, 'My prayer, my responsibility', where he keeps track of his own prayer. Under four, it is enough for a child to see his parents pray and to imitate them in play. If the child's exact age is not known, a child in the 10–12 group starts the Journey, and you can move him to 'My prayer, my responsibility' if he already prays regularly."
+  },
+  "entry_rules": [
+    {
+      "min_age_years": 4,
+      "max_age_years": 6,
+      "track": "preparation"
+    },
+    {
+      "min_age_years": 7,
+      "max_age_years": 10,
+      "track": "journey"
+    },
+    {
+      "min_age_years": 11,
+      "max_age_years": 15,
+      "track": "ownership"
+    }
+  ],
+  "basis": {
+    "text": "The program starts at seven, following the well-known Prophetic guidance to begin teaching children the prayer at seven, with steadier follow-up at ten. We do not display the wording of that hadith because the app only shows hadith from Sahih al-Bukhari and Sahih Muslim; its source is given in the linked knowledge unit. And we learn the prayer the way the companions learned it: by watching and by example, as in the attached hadith.",
+    "unit_ids": [
+      "isl-f2bef952",
+      "isl-1bceeaf6"
+    ],
+    "evidence_ids": [
+      "h_pray_as_seen"
+    ]
+  },
+  "principles": [
+    "Example first: the child sees his parents pray calmly and on time.",
+    "Love before performance: prayer is a meeting with Allah, who loves us, not a heavy chore.",
+    "No punishment, no hitting, no shaming and no comparison with siblings or anyone else.",
+    "Mistakes while learning are part of learning: correct one thing at a time, gently and in private.",
+    "A missed prayer is not met with a lecture: the next prayer is a new chance.",
+    "The rulings of purification and prayer are learned from people whose knowledge you trust; the app does not issue rulings."
+  ],
+  "reward_policy": {
+    "text": "Coins here encourage the effort of learning; they are not a price for prayer. That is why they shrink from stage to stage until they almost disappear, while praise, hugs and your delight in him remain. The real reward is a covenant you agree with your child in advance and honour on time. Coins are never withheld or taken away as a punishment.",
+    "daily_cap": 60,
+    "unit_ids": [
+      "isl-1bceeaf6",
+      "isl-b793e864"
+    ]
+  },
+  "evidence": [
+    {
+      "id": "h_pray_as_seen",
+      "kind": "hadith",
+      "text_ar": "صلوا كما رأيتموني أصلي",
+      "source": "صحيح البخاري — حديث ٦٣١",
+      "provenance": {
+        "book": "البخاري",
+        "number": 631
+      },
+      "context": "Narrated by Malik ibn al-Huwayrith; the Prophet ﷺ said it to a group of young men who stayed with him to learn.",
+      "meaning": "Pray as you have seen me praying."
+    },
+    {
+      "id": "h_umamah",
+      "kind": "hadith",
+      "text_ar": "أن رسول الله صلى الله عليه وسلم كان يصلي وهو حامل أمامة بنت زينب بنت رسول الله صلى الله عليه وسلم",
+      "source": "صحيح البخاري — حديث ٥١٦",
+      "provenance": {
+        "book": "البخاري",
+        "number": 516
+      },
+      "context": "Narrated by Abu Qatadah al-Ansari; Umamah was the Prophet's granddaughter.",
+      "meaning": "The Messenger of Allah ﷺ used to pray while carrying Umamah, the daughter of Zaynab, the daughter of the Messenger of Allah ﷺ."
+    },
+    {
+      "id": "h_shorten_for_child",
+      "kind": "hadith",
+      "text_ar": "إني لأقوم في الصلاة أريد أن أطول فيها فأسمع بكاء الصبي فأتجوز في صلاتي كراهية أن أشق على أمه",
+      "source": "صحيح البخاري — حديث ٧٠٧",
+      "provenance": {
+        "book": "البخاري",
+        "number": 707
+      },
+      "context": "Narrated by Abu Qatadah al-Ansari.",
+      "meaning": "I stand in prayer intending to make it long, then I hear a child crying, so I shorten my prayer, not wanting to make things hard for his mother."
+    },
+    {
+      "id": "h_gentle",
+      "kind": "hadith",
+      "text_ar": "إن الله رفيق يحب الرفق في الأمر كله",
+      "source": "صحيح البخاري — حديث ٦٩٢٧",
+      "provenance": {
+        "book": "البخاري",
+        "number": 6927
+      },
+      "context": "Narrated by Aisha.",
+      "meaning": "Allah is Gentle and loves gentleness in all matters."
+    },
+    {
+      "id": "h_prayer_on_time",
+      "kind": "hadith",
+      "text_ar": "سألت النبي صلى الله عليه وسلم أي العمل أحب إلى الله قال الصلاة على وقتها",
+      "source": "صحيح البخاري — حديث ٥٢٧",
+      "provenance": {
+        "book": "البخاري",
+        "number": 527
+      },
+      "context": "Narrated by Abdullah ibn Mas'ud.",
+      "meaning": "I asked the Prophet ﷺ: Which deed is most beloved to Allah? He said: Prayer at its proper time."
+    },
+    {
+      "id": "h_river",
+      "kind": "hadith",
+      "text_ar": "أرأيتم لو أن نهرا بباب أحدكم يغتسل فيه كل يوم خمسا ما تقول ذلك يبقي من درنه",
+      "source": "صحيح البخاري — حديث ٥٢٨",
+      "provenance": {
+        "book": "البخاري",
+        "number": 528
+      },
+      "context": "Narrated by Abu Hurayrah; the hadith goes on to say that this is the example of the five daily prayers.",
+      "meaning": "Tell me, if there were a river at the door of one of you and he bathed in it five times every day, would any dirt remain on him?"
+    },
+    {
+      "id": "h_ease",
+      "kind": "hadith",
+      "text_ar": "يسروا ولا تعسروا وبشروا ولا تنفروا",
+      "source": "صحيح البخاري — حديث ٦٩",
+      "provenance": {
+        "book": "البخاري",
+        "number": 69
+      },
+      "context": "Narrated by Anas ibn Malik.",
+      "meaning": "Make things easy and do not make them difficult; give good news and do not drive people away."
+    },
+    {
+      "id": "h_steady",
+      "kind": "hadith",
+      "text_ar": "أحب الأعمال أدومها إلى الله وإن قل",
+      "source": "صحيح البخاري — حديث ٦٤٦٤",
+      "provenance": {
+        "book": "البخاري",
+        "number": 6464
+      },
+      "context": "Part of a hadith narrated by Aisha.",
+      "meaning": "The deeds most beloved to Allah are those done consistently, even if they are small."
+    },
+    {
+      "id": "h_shepherd",
+      "kind": "hadith",
+      "text_ar": "كلكم راع وكلكم مسئول عن رعيته",
+      "source": "صحيح البخاري — حديث ٨٩٣",
+      "provenance": {
+        "book": "البخاري",
+        "number": 893
+      },
+      "context": "Narrated by Abdullah ibn Umar.",
+      "meaning": "Each of you is a shepherd, and each of you is responsible for his flock."
+    }
+  ],
+  "preparation": {
+    "track": "preparation",
+    "title": "Getting ready",
+    "goal": "For the child to love prayer and feel at home with it before anything is asked of him.",
+    "text": "Before seven there is no daily follow-up, no coins and no obligation: it is enough for the child to see prayer as a lovely part of his family's day, and to imitate and play. In the two attached hadiths the Prophet ﷺ prayed while carrying his little granddaughter, and shortened his prayer when he heard a child crying, so little ones are welcome near prayer. The app will remind you a month before your child turns seven so that the journey can begin.",
+    "activities": [
+      {
+        "key": "imitate_beside_you",
+        "title": "Imitating beside you",
+        "text": "Let him stand beside you and copy the movements however he likes, without correction; it's fine if he wanders off and comes back."
+      },
+      {
+        "key": "own_mat",
+        "title": "His own little mat",
+        "text": "A small mat or towel of his own that he spreads out beside yours."
+      },
+      {
+        "key": "fatiha_by_listening",
+        "title": "Al-Fatiha by listening",
+        "text": "He hears Al-Fatiha from you every day and repeats what he can, with no testing."
+      },
+      {
+        "key": "wudu_as_water_play",
+        "title": "Wudu as water play",
+        "text": "Let him copy your wudu as if it were a water game, and cheer every step he copies."
+      },
+      {
+        "key": "who_we_pray_to",
+        "title": "Who do we pray to?",
+        "text": "Tell him simply: we pray to Allah who created us and loves us; we thank Him and ask Him for what we need."
+      }
+    ],
+    "unit_ids": [
+      "isl-d5f85bee",
+      "isl-toddler-prayer",
+      "isl-af807518"
+    ],
+    "evidence_ids": [
+      "h_umamah",
+      "h_shorten_for_child"
+    ],
+    "lesson_ids": [
+      "lesson_2-3_islamic_first_words_04"
+    ]
+  },
+  "stages": [
+    {
+      "stage": 1,
+      "key": "love_and_presence",
+      "week_from": 1,
+      "week_to": 2,
+      "title": "Prayer is a meeting we love",
+      "goal": "For the child to link prayer with love and closeness, by standing beside his parents.",
+      "parent_assignments": [
+        {
+          "key": "pray_where_seen",
+          "text": "Pray one prayer each day where he can see you, and invite him to stand beside you without insisting: children learn by watching, as in the attached hadith."
+        },
+        {
+          "key": "explain_simply",
+          "text": "Explain simply that prayer is talking with Allah, who loves us, and that it is one of the best moments of the day."
+        },
+        {
+          "key": "no_correction",
+          "text": "Don't correct his movements at this stage; being with you is enough."
+        }
+      ],
+      "child_tasks": [
+        {
+          "id": "prayer_s1_pray_beside",
+          "title": "I pray beside Mum or Dad",
+          "instruction": "Stand beside your dad or mum in one prayer today and follow the movements calmly. Don't worry if you don't know everything yet.",
+          "estimated_minutes": 7,
+          "needs_parent": true,
+          "per_week": 5,
+          "coins": 10,
+          "skill": "Following an example",
+          "materials": []
+        },
+        {
+          "id": "prayer_s1_my_place",
+          "title": "My prayer place",
+          "instruction": "With your dad or mum, get your own mat or a clean towel ready, and find out together which way the qibla is in your home.",
+          "estimated_minutes": 10,
+          "needs_parent": true,
+          "per_week": 1,
+          "coins": 10,
+          "skill": "Getting ready",
+          "materials": [
+            "A small mat or a clean towel"
+          ]
+        }
+      ],
+      "confirmation": {
+        "how": "In the evening you will see what your child recorded in child mode: ask him about praying with you, then confirm the task.",
+        "counts_when": "It counts if he stood with you and tried to follow, even if not every movement was complete."
+      },
+      "encouragement": [
+        "I saw you stand beside me so calmly. Well done!",
+        "Praying with you made me happy today.",
+        "Every time you stand with me, you learn something new."
+      ],
+      "if_struggling": "If he refuses or gets bored, make it lighter: 'Stand with me for just one minute', or let him sit beside you and watch. Look for the reason: tiredness, hunger or an unfinished game. No pressure and no criticism; tomorrow is another try.",
+      "covenant": {
+        "coins_target": 100,
+        "examples": [
+          "A short walk together in the park",
+          "Choosing Friday's dinner",
+          "An extra bedtime story"
+        ]
+      },
+      "unit_ids": [
+        "isl-d5f85bee",
+        "isl-1bceeaf6",
+        "isl-f3270ea2"
+      ],
+      "evidence_ids": [
+        "h_pray_as_seen"
+      ],
+      "lesson_ids": [
+        "lesson_7-9_islamic_parenting_worship_01"
+      ],
+      "quran": [],
+      "journey_milestone_key": null
+    },
+    {
+      "stage": 2,
+      "key": "wudu",
+      "week_from": 3,
+      "week_to": 4,
+      "title": "Wudu",
+      "goal": "For the child to learn wudu step by step beside his parents.",
+      "parent_assignments": [
+        {
+          "key": "wudu_side_by_side",
+          "text": "Make wudu in front of him and beside him, and teach him one or two steps at a time, the way you yourselves learned from people whose knowledge you trust."
+        },
+        {
+          "key": "praise_each_step",
+          "text": "Praise every step he masters, and don't get cross about splashed water: the attached hadith is about gentleness."
+        },
+        {
+          "key": "ask_when_unsure",
+          "text": "If he asks about a ruling on wudu that you don't know, ask a scholar together."
+        }
+      ],
+      "child_tasks": [
+        {
+          "id": "prayer_s2_wudu_with_parent",
+          "title": "Wudu with Mum or Dad",
+          "instruction": "Make wudu with your dad or mum beside you to help, step by step.",
+          "estimated_minutes": 5,
+          "needs_parent": true,
+          "per_week": 5,
+          "coins": 10,
+          "skill": "Purification",
+          "materials": []
+        },
+        {
+          "id": "prayer_s2_pray_beside",
+          "title": "Wudu, then prayer",
+          "instruction": "After your wudu, pray one prayer each day beside your dad or mum.",
+          "estimated_minutes": 7,
+          "needs_parent": true,
+          "per_week": 7,
+          "coins": 8,
+          "skill": "Getting ready for prayer",
+          "materials": []
+        }
+      ],
+      "confirmation": {
+        "how": "In the evening, confirm the wudu and the prayer you saw with your own eyes.",
+        "counts_when": "Wudu counts if he completed the steps he has learned so far, even if he needed reminding."
+      },
+      "encouragement": [
+        "You did two whole steps of wudu by yourself today, masha Allah!",
+        "I love how calm you are when you make wudu.",
+        "You're learning fast. Well done."
+      ],
+      "if_struggling": "If the cold water bothers him or he gets bored, use warm water, add fewer new steps, and go back to what he already knows before adding more. Laughing while learning is fine.",
+      "covenant": {
+        "coins_target": 150,
+        "examples": [
+          "Half an hour of football together",
+          "A visit to a library to choose a book",
+          "He chooses the weekend activity"
+        ]
+      },
+      "unit_ids": [
+        "isl-ca9f1de7",
+        "isl-1bceeaf6"
+      ],
+      "evidence_ids": [
+        "h_gentle"
+      ],
+      "lesson_ids": [
+        "lesson_7-9_islamic_parenting_worship_01"
+      ],
+      "quran": [],
+      "journey_milestone_key": null
+    },
+    {
+      "stage": 3,
+      "key": "words_and_movements",
+      "week_from": 5,
+      "week_to": 6,
+      "title": "The words and movements of prayer",
+      "goal": "To learn Al-Fatiha, a short surah and the movements of prayer by praying with you, and to pray his first complete prayer by himself.",
+      "parent_assignments": [
+        {
+          "key": "teach_by_praying",
+          "text": "Teach him the movements by praying with him rather than by long explanations: children learn by watching, as in the attached hadith."
+        },
+        {
+          "key": "fatiha_three_times",
+          "text": "Listen to him recite Al-Fatiha three times a week, and gently correct one word at a time."
+        },
+        {
+          "key": "first_prayer",
+          "text": "When he prays his first complete prayer by himself with you nearby, celebrate it, and record it in your child's journey if you like."
+        }
+      ],
+      "child_tasks": [
+        {
+          "id": "prayer_s3_recite_fatiha",
+          "title": "I recite Al-Fatiha",
+          "instruction": "Recite Al-Fatiha to your dad or mum, and then Surat al-Ikhlas once you know it.",
+          "estimated_minutes": 5,
+          "needs_parent": true,
+          "per_week": 3,
+          "coins": 8,
+          "skill": "Memorising",
+          "materials": []
+        },
+        {
+          "id": "prayer_s3_two_prayers",
+          "title": "Two prayers a day",
+          "instruction": "Pray two prayers every day, at least one of them beside your dad or mum.",
+          "estimated_minutes": 7,
+          "needs_parent": false,
+          "per_week": 14,
+          "coins": 6,
+          "skill": "Prayer",
+          "materials": []
+        }
+      ],
+      "confirmation": {
+        "how": "Confirm each prayer he recorded, and sometimes ask him what he recited in it.",
+        "counts_when": "A prayer counts if he prayed it sincerely, even if he forgot a movement or hesitated over a word: this is a time for learning."
+      },
+      "encouragement": [
+        "You recited the whole of Al-Fatiha. What a lovely voice!",
+        "That's the first prayer you've prayed by yourself. What a joy!",
+        "You're learning the prayer step by step. Well done."
+      ],
+      "if_struggling": "If memorising is hard, split Al-Fatiha into two verses at a time and listen to it together with the app's reciter. If he forgets a prayer, remind him gently, or start praying and invite him to join you.",
+      "covenant": {
+        "coins_target": 150,
+        "examples": [
+          "A short family outing",
+          "Making a dessert together",
+          "A new prayer mat he chooses himself"
+        ]
+      },
+      "unit_ids": [
+        "isl-ca9f1de7",
+        "isl-d5f85bee",
+        "isl-77ba4991"
+      ],
+      "evidence_ids": [
+        "h_pray_as_seen"
+      ],
+      "lesson_ids": [
+        "lesson_7-9_islamic_parenting_worship_01",
+        "lesson_7-9_islamic_parenting_worship_03"
+      ],
+      "quran": [
+        {
+          "surah": 1,
+          "from": 1,
+          "to": 7,
+          "topic": "Al-Fatiha"
+        },
+        {
+          "surah": 112,
+          "from": 1,
+          "to": 4,
+          "topic": "Al-Ikhlas"
+        }
+      ],
+      "journey_milestone_key": "first_prayer"
+    },
+    {
+      "stage": 4,
+      "key": "prayer_times",
+      "week_from": 7,
+      "week_to": 8,
+      "title": "The prayer times",
+      "goal": "To know the names of the five prayers and that each has its own time, and to pray three prayers a day.",
+      "parent_assignments": [
+        {
+          "key": "five_names",
+          "text": "Teach him the names of the five prayers in order, and that the adhan signals the start of each prayer's time."
+        },
+        {
+          "key": "pray_on_time",
+          "text": "Pray at the start of the time yourselves as much as you can, because he sees more than he hears; the attached hadith tells us that prayer at its proper time is among the deeds most beloved to Allah."
+        },
+        {
+          "key": "local_timetable",
+          "text": "Use your local prayer times from the app or the mosque, and don't burden him with the details of when each time ends."
+        }
+      ],
+      "child_tasks": [
+        {
+          "id": "prayer_s4_adhan_announcer",
+          "title": "The adhan announcer",
+          "instruction": "When you hear the adhan or the app's reminder, tell your family it is time to pray.",
+          "estimated_minutes": 2,
+          "needs_parent": false,
+          "per_week": 7,
+          "coins": 5,
+          "skill": "Knowing the times",
+          "materials": []
+        },
+        {
+          "id": "prayer_s4_three_prayers",
+          "title": "Three prayers a day",
+          "instruction": "Pray three prayers every day, choosing ones that come while you are at home, such as asr, maghrib and isha.",
+          "estimated_minutes": 7,
+          "needs_parent": false,
+          "per_week": 21,
+          "coins": 5,
+          "skill": "Keeping it up",
+          "materials": []
+        }
+      ],
+      "confirmation": {
+        "how": "In the evening, confirm the prayers he recorded, and praise the ones he prayed on time.",
+        "counts_when": "A prayer counts if he prayed it that day; praying it early in its time deserves special praise."
+      },
+      "encouragement": [
+        "You heard the adhan before me today. Well done, family announcer!",
+        "You prayed asr on time. That's wonderful.",
+        "Three whole prayers today, masha Allah!"
+      ],
+      "if_struggling": "If he forgets the times, let the app's adhan reminder be his companion, or link each prayer to a fixed part of the day. If three prayers feel too heavy, go back to two for another week, without telling him he has gone backwards.",
+      "covenant": {
+        "coins_target": 200,
+        "examples": [
+          "An outing to a place he chooses",
+          "A family games day",
+          "A special breakfast on a day off"
+        ]
+      },
+      "unit_ids": [
+        "isl-ca9f1de7",
+        "isl-d5f85bee"
+      ],
+      "evidence_ids": [
+        "h_prayer_on_time"
+      ],
+      "lesson_ids": [
+        "lesson_7-9_islamic_parenting_worship_01"
+      ],
+      "quran": [],
+      "journey_milestone_key": null
+    },
+    {
+      "stage": 5,
+      "key": "five_prayers",
+      "week_from": 9,
+      "week_to": 10,
+      "title": "All five prayers",
+      "goal": "To try all five prayers every day, and to get to know fajr with the family on days off.",
+      "parent_assignments": [
+        {
+          "key": "five_gently",
+          "text": "Encourage him to pray all five, and if he misses one, no lecture: 'The next prayer is a new chance.'"
+        },
+        {
+          "key": "fajr_days_off",
+          "text": "On days off, wake him gently with the family for fajr; he can go back to sleep afterwards. On school days, protect his sleep with an early bedtime."
+        },
+        {
+          "key": "river_example",
+          "text": "Tell him the river example from the attached hadith in your own words, and ask him: how much dirt is left after five baths?"
+        }
+      ],
+      "child_tasks": [
+        {
+          "id": "prayer_s5_five_prayers",
+          "title": "The five prayers",
+          "instruction": "Try to pray the five prayers every day. If you miss one, don't be sad: pray the next one.",
+          "estimated_minutes": 7,
+          "needs_parent": false,
+          "per_week": 35,
+          "coins": 3,
+          "skill": "Keeping it up",
+          "materials": []
+        },
+        {
+          "id": "prayer_s5_fajr_day_off",
+          "title": "Fajr on a day off",
+          "instruction": "On a day off, wake up with your family for fajr; afterwards you can go back to sleep.",
+          "estimated_minutes": 10,
+          "needs_parent": true,
+          "per_week": 2,
+          "coins": 5,
+          "skill": "Fajr",
+          "materials": []
+        }
+      ],
+      "confirmation": {
+        "how": "Each evening confirm what he prayed, and look at the whole week rather than a single day.",
+        "counts_when": "Every prayer he prayed counts. The aim is all five every day; we encourage, we don't pressure."
+      },
+      "encouragement": [
+        "You prayed all five today, masha Allah!",
+        "You woke up for fajr with us, and it was a beautiful prayer.",
+        "Your day is organised around prayer now, and that makes me so happy."
+      ],
+      "if_struggling": "If five feel heavy, celebrate the prayers he did pray instead of counting the ones he missed, and look together for the prayer he misses most and why. At this stage, fajr on school days is not asked of him at the expense of his sleep.",
+      "covenant": {
+        "coins_target": 200,
+        "examples": [
+          "A full day out",
+          "A gift he chooses within an agreed budget",
+          "Inviting a friend over"
+        ]
+      },
+      "unit_ids": [
+        "isl-1bceeaf6",
+        "isl-ca9f1de7",
+        "isl-b793e864"
+      ],
+      "evidence_ids": [
+        "h_river"
+      ],
+      "lesson_ids": [
+        "lesson_7-9_islamic_parenting_worship_01"
+      ],
+      "quran": [],
+      "journey_milestone_key": null
+    },
+    {
+      "stage": 6,
+      "key": "praying_on_my_own",
+      "week_from": 11,
+      "week_to": 12,
+      "title": "Praying on my own",
+      "goal": "To keep track of his own prayers, and to pray at the mosque with a parent once a week where possible.",
+      "parent_assignments": [
+        {
+          "key": "step_back",
+          "text": "Move from reminder to supporter: he records his prayers, and you confirm and encourage."
+        },
+        {
+          "key": "mosque_weekly",
+          "text": "Take him to the mosque for one prayer a week if it suits and is safe, or pray together in congregation at home."
+        },
+        {
+          "key": "graduation_plan",
+          "text": "Plan the graduation celebration for the end of week twelve, and the big covenant you agreed on."
+        }
+      ],
+      "child_tasks": [
+        {
+          "id": "prayer_s6_self_track",
+          "title": "I track my own prayers",
+          "instruction": "Pray the five prayers and tick them yourself in your prayer chart; your parents confirm them in the evening.",
+          "estimated_minutes": 7,
+          "needs_parent": false,
+          "per_week": 35,
+          "coins": 2,
+          "skill": "Responsibility",
+          "materials": []
+        },
+        {
+          "id": "prayer_s6_mosque_with_parent",
+          "title": "A prayer at the mosque",
+          "instruction": "Once this week, pray one prayer at the mosque with your dad or mum, or in congregation at home if the mosque isn't possible.",
+          "estimated_minutes": 30,
+          "needs_parent": true,
+          "per_week": 1,
+          "coins": 5,
+          "skill": "Praying in congregation",
+          "materials": []
+        }
+      ],
+      "confirmation": {
+        "how": "Confirm what he recorded, and once a week talk with him about his prayer: what helped him and what was hard.",
+        "counts_when": "What he prayed and recorded himself counts; honesty in the chart matters more than a full chart."
+      },
+      "encouragement": [
+        "You keep track of your own prayers now. That's a sign of growing up.",
+        "Your prayer at the mosque today was lovely.",
+        "I trust you and your prayer."
+      ],
+      "if_struggling": "If he slips when it's left to him, don't go back to nagging but to companionship: pray with him more, and return to an earlier stage without announcing it. The attached hadith is a reminder to make things easy and to bring good news.",
+      "covenant": {
+        "coins_target": 150,
+        "examples": [
+          "He chooses dinner for a week",
+          "An extra hour of play with his parents",
+          "A visit to a friend or relative he loves"
+        ]
+      },
+      "unit_ids": [
+        "isl-1bceeaf6",
+        "isl-597a1018",
+        "isl-b793e864"
+      ],
+      "evidence_ids": [
+        "h_ease"
+      ],
+      "lesson_ids": [
+        "lesson_7-9_islamic_parenting_worship_01"
+      ],
+      "quran": [],
+      "journey_milestone_key": null
+    }
+  ],
+  "graduation": {
+    "title": "Prayer Journey graduation",
+    "text": "Twelve weeks of learning deserve a celebration: a certificate he hangs up, a big covenant you honour, and a du'a for him in front of the family. After graduating he moves on to 'My prayer, my responsibility'. The attached hadith shows that Allah loves deeds done consistently, even if small, so the aim is for prayer to stay with him.",
+    "certificate_text": "Prayer Journey certificate: the holder of this certificate has completed twelve weeks of learning the prayer with effort and love. We ask Allah to make him one of those who keep it up.",
+    "journey_milestone_keys": [
+      "keeps_prayer"
+    ],
+    "covenant": {
+      "coins_target": 300,
+      "examples": [
+        "A special family trip to a place he chooses",
+        "A gift agreed in advance",
+        "A small family party"
+      ]
+    },
+    "evidence_ids": [
+      "h_steady"
+    ]
+  },
+  "ownership": {
+    "track": "ownership",
+    "title": "My prayer, my responsibility",
+    "goal": "For him to keep up his prayer from his own motivation, with his parents as companions and conversation partners rather than monitors.",
+    "text": "From ten onwards the follow-up becomes steadier and calmer: a clear routine, a short weekly check-in and conversation about the meaning of prayer. Steadiness here means steady follow-up, not harshness: no punishment and no shaming. Each of us is a shepherd responsible for his flock, as in the attached hadith, and now the child is learning to look after his own prayer.",
+    "parent_assignments": [
+      {
+        "key": "weekly_checkin",
+        "text": "A ten-minute weekly check-in: how was his prayer? What helped? What was hard? Listen more than you talk."
+      },
+      {
+        "key": "meaning",
+        "text": "Talk with him about what prayer means and what it does, answer his questions honestly, and seek answers from scholars when you don't know."
+      },
+      {
+        "key": "peers",
+        "text": "If he faces mockery or pressure from friends because of his prayer, listen first, and be his support, not his critic."
+      }
+    ],
+    "child_tasks": [
+      {
+        "id": "prayer_own_five",
+        "title": "My five prayers",
+        "instruction": "Pray the five prayers at their times and record them yourself, honestly.",
+        "estimated_minutes": 7,
+        "needs_parent": false,
+        "per_week": 35,
+        "coins": 1,
+        "skill": "Keeping it up",
+        "materials": []
+      },
+      {
+        "id": "prayer_own_weekly_review",
+        "title": "My weekly review",
+        "instruction": "Sit with one of your parents once a week and talk about your prayer: what went well and what you want to improve.",
+        "estimated_minutes": 10,
+        "needs_parent": true,
+        "per_week": 1,
+        "coins": 3,
+        "skill": "Reflection",
+        "materials": []
+      }
+    ],
+    "confirmation": {
+      "how": "Confirm what he recorded without interrogating him: trust is part of this stage.",
+      "counts_when": "What he recorded himself counts; if he is falling short, that belongs in the weekly check-in, calmly."
+    },
+    "encouragement": [
+      "Your prayer is in your hands now, and I trust you.",
+      "I loved that you prayed in front of your friends without hesitating.",
+      "Your question about prayer today was a deep one."
+    ],
+    "if_struggling": "If he falls short or stops, look for the reason before anything else: sleep, school, friends or questions of faith. Go back to praying alongside him and to an earlier stage without announcing it, and avoid punishment and shaming: they tie prayer to fear.",
+    "unit_ids": [
+      "isl-f2bef952",
+      "isl-ca9f1de7",
+      "8451bbb0-4617-4252-a206-e442c533fac3"
+    ],
+    "evidence_ids": [
+      "h_shepherd"
+    ],
+    "lesson_ids": [
+      "lesson_10-12_islamic_parenting_worship_love_01",
+      "lesson_10-12_islamic_parenting_identity_01"
+    ],
+    "path_ids": [
+      "path_10-12_islamic_parenting_worship_love",
+      "path_13-15_islamic_parenting_teen_identity"
+    ]
+  },
+  "generation": {
+    "drafter_model": "claude-opus-5.5",
+    "reviewer_model": "pending (Ollama Cloud Pro 5-hour cap reached 2026-10-04 10:30)",
+    "translator_model": "claude-opus-5.5",
+    "reviewed_at": "2026-10-04",
+    "approved_by": "auto-review:guards-only (cross-family review pending)"
+  }
+}
