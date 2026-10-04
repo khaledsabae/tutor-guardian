@@ -3,9 +3,12 @@
 ترجمة قاعدة المعرفة إلى الإنجليزية — وحدات جديدة، لا استبدال
 =============================================================
 
-    export OLLAMA_API_KEY=…                       # من ~/projects/email-twin/.env
     python3 ops/tools/translate_knowledge_base.py --limit 5      # جرّب أولًا
     python3 ops/tools/translate_knowledge_base.py --all
+    python3 ops/tools/translate_knowledge_base.py --only isl-acc3d8ec,isl-3f0af447
+
+المفتاح يُقرأ من البيئة، وإلا من ~/projects/email-twin/.env داخل بايثون (كما في
+review_en_parity.py) — لا يُكتب على سطر أمر.
 
 لماذا هذه الأداة
 ----------------
@@ -102,6 +105,36 @@ def arabic_units(include_institutional: bool) -> list:
     return out
 
 
+def select_only(pending: list, wanted: set) -> tuple[list, list]:
+    """(the pending units whose id is in `wanted`, the wanted ids that are not pending).
+
+    `--only` exists so a batch of new units can be translated without sweeping in
+    every other Arabic unit that still has no English twin. A wanted id that is
+    not pending (no such unit, not Arabic, institutional, or already translated)
+    is reported, never silently skipped.
+    """
+    chosen = [(f, d) for f, d in pending if d.get("id", f.stem) in wanted]
+    found = {d.get("id", f.stem) for f, d in chosen}
+    return chosen, sorted(wanted - found)
+
+
+EMAIL_TWIN_ENV = Path.home() / "projects" / "email-twin" / ".env"
+
+
+def load_api_key(env_file: Path = EMAIL_TWIN_ENV) -> bool:
+    """Put OLLAMA_API_KEY in os.environ (where translate_curriculum._post reads it)
+    from `env_file` when the environment does not already carry it — the same
+    source review_en_parity.py uses, so the key never goes on a command line."""
+    if os.environ.get("OLLAMA_API_KEY"):
+        return True
+    if env_file.exists():
+        for line in env_file.read_text(encoding="utf-8").splitlines():
+            if line.startswith("OLLAMA_API_KEY="):
+                os.environ["OLLAMA_API_KEY"] = line.split("=", 1)[1].strip().strip("'\"")
+                return True
+    return False
+
+
 def translate_unit(src: Path, doc: dict) -> dict:
     uid = doc.get("id", src.stem)
     payload = {k: doc[k] for k in FIELDS if doc.get(k)}
@@ -176,10 +209,11 @@ def main() -> int:
     ap.add_argument("--include-institutional", action="store_true",
                     help="also translate ITU/WHO bulk imports — read the "
                          "module docstring before using this")
+    ap.add_argument("--only", help="comma-separated unit ids — translate exactly these")
     args = ap.parse_args()
 
-    if not os.environ.get("OLLAMA_API_KEY"):
-        print("❌ OLLAMA_API_KEY not set")
+    if not load_api_key():
+        print("❌ OLLAMA_API_KEY not set (nor in ~/projects/email-twin/.env)")
         return 1
 
     pending = arabic_units(args.include_institutional)
@@ -188,8 +222,14 @@ def main() -> int:
     print("=" * 66)
     print(f"  pending: {len(pending)}"
           f"{'' if args.include_institutional else '  (institutional excluded)'}")
-    if not (args.all or args.limit):
-        print("  pass --limit N or --all")
+    if args.only:
+        pending, missing = select_only(pending, {u.strip() for u in args.only.split(",") if u.strip()})
+        if missing:
+            print(f"❌ not pending (unknown, not Arabic, institutional, or already translated): "
+                  f"{', '.join(missing)}")
+            return 1
+    elif not (args.all or args.limit):
+        print("  pass --limit N, --all or --only ID,ID")
         return 0
 
     todo = pending[: args.limit] if args.limit else pending
