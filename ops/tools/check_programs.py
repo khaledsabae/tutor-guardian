@@ -76,6 +76,7 @@ INVARIANT_KEYS = {
     "program_type", "id", "version", "key", "kind", "text_ar", "source", "book",
     "phase", "when", "cost", "until", "fasts", "addressed_to", "story_id", "track",
     "type", "season", "band_fallback", "gender", "if_gender_unknown", "show_on",
+    "requires_feature",
     "drafter_model", "reviewer_model", "translator_model", "reviewed_at",
     "approved_by", "expected_start_1448", "journey_milestone_key",
 }
@@ -456,16 +457,18 @@ def ramadan_rules(doc: dict) -> list[str]:
     for m in metrics.values():
         if m["source"] == "family_word" and not m.get("choices"):
             out.append("recap: family_word بلا choices")
-    # أماكن الحقول في القوالب
-    allowed = set(metrics) | {"hijri_year", "app_link"}
+    # أماكن الحقول في القوالب. مقياس shareable=false (تقدّم الأطفال في الصيام)
+    # شأن خاص بالأسرة: يُعرض داخل التطبيق، ولا يدخل البطاقة التي تخرج إلى واتساب.
+    shareable = {k for k, m in metrics.items() if m.get("shareable", True)}
+    allowed = shareable | {"hijri_year", "app_link"}
     tpl = doc["recap"]["templates"]
     for t in [tpl["headline"], tpl["closing"], tpl["share_text"], *tpl["lines"]]:
         for ph in re.findall(r"\{(\w+)\}", t):
             if ph not in allowed:
-                out.append(f"recap: «{{{ph}}}» ليس مقياسًا معرَّفًا")
+                out.append(f"recap: «{{{ph}}}» ليس مقياسًا معرَّفًا قابلًا للمشاركة")
     for k in doc["recap"]["min_to_show"]:
-        if k not in metrics:
-            out.append(f"recap.min_to_show: «{k}» ليس مقياسًا")
+        if k not in shareable:
+            out.append(f"recap.min_to_show: «{k}» ليس مقياسًا يظهر في البطاقة")
     # سلّم الصيام
     lad = doc["fasting_ladder"]["bands"]
     for b in ("0-3", "4-6"):

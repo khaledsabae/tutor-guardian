@@ -124,6 +124,7 @@
         "stop_signs",
         "stop_action",
         "urgent_signs",
+        "urgent_action",
         "tips",
         "bands",
         "unit_ids",
@@ -142,7 +143,7 @@
         },
         "stop_signs": {
           "$ref": "#/$defs/text_list",
-          "description": "علامات يُفطر عندها الطفل فورًا، بلا لوم."
+          "description": "علامات يُفطر عندها الطفل فورًا، بلا لوم. بعد البلوغ لا يُفطر الصيام الواجب إلا لعلامة جسدية أو مشقة حقيقية؛ وعلامة «لا أستطيع» خاصة بما قبل البلوغ."
         },
         "stop_action": {
           "$ref": "#/$defs/text"
@@ -187,6 +188,10 @@
         },
         "evidence_ids": {
           "$ref": "#/$defs/evidence_ids"
+        },
+        "urgent_action": {
+          "$ref": "#/$defs/text",
+          "description": "ما يُفعل عند أي علامة عاجلة: الإسعاف فورًا، ولا شيء بالفم حتى يستعيد الطفل وعيه تمامًا، وللمصاب بالسكري خطة طبيبه لهبوط السكر ثم الإسعاف إن لم يتحسّن. علامة عاجلة بلا فعل مكتوب تترك الوالد أمام قائمة لا يعرف ماذا يفعل بها."
         }
       }
     },
@@ -296,7 +301,21 @@
               },
               "text": {
                 "$ref": "#/$defs/text"
+              },
+              "requires_feature": {
+                "enum": [
+                  "weekly_plan"
+                ],
+                "description": "هذا الأسبوع يعد بميزة قد لا تكون في نسخة التطبيق. إن لم تكن موجودة يُعرض fallback_text بدل text."
+              },
+              "fallback_text": {
+                "$ref": "#/$defs/text"
               }
+            },
+            "dependentRequired": {
+              "requires_feature": [
+                "fallback_text"
+              ]
             }
           }
         },
@@ -368,6 +387,10 @@
               },
               "choices": {
                 "$ref": "#/$defs/text_list"
+              },
+              "shareable": {
+                "type": "boolean",
+                "description": "false = يُعرض للأسرة داخل التطبيق ولا يدخل البطاقة التي تُشارَك. غيابه = true. (تقدّم الأطفال في الصيام شأن خاص بالأسرة.)"
               }
             }
           }

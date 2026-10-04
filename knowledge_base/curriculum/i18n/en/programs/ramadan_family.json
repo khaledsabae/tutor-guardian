@@ -31,7 +31,7 @@
       "13-15": "13-15",
       "16-18": "13-15"
     },
-    "text": "The program is for the whole family: one challenge everyone shares, with a role for each child suited to their age in five groups: up to 3, 4–6, 7–9, 10–12 and 13–15. Teenagers of 16 and over see the 13–15 version. During pregnancy, parents see only the family challenge and its note. The fasting ladder has no fasting before age seven."
+    "text": "The program is for the whole family: one challenge everyone shares, with a role for each child suited to their age in five groups: up to 3, 4–6, 7–9, 10–12 and 13–15. Teenagers of 16 and over see the 13–15 version. During pregnancy, parents see only the family challenge and its note. In this program there is no fasting before age seven."
   },
   "evidence": [
     {
@@ -337,14 +337,14 @@
     {
       "id": "h_zakat_fitr",
       "kind": "hadith",
-      "text_ar": "فرض رسول الله صلى الله عليه وسلم زكاة الفطر صاعا من تمر أو صاعا من شعير على العبد والحر والذكر والأنثى والصغير والكبير من المسلمين",
+      "text_ar": "فرض رسول الله صلى الله عليه وسلم زكاة الفطر صاعا من تمر أو صاعا من شعير على العبد والحر والذكر والأنثى والصغير والكبير من المسلمين وأمر بها أن تؤدى قبل خروج الناس إلى الصلاة",
       "source": "صحيح البخاري — حديث ١٥٠٣",
       "provenance": {
         "book": "البخاري",
         "number": 1503
       },
       "context": "Narrated by Abdullah ibn Umar.",
-      "meaning": "The Messenger of Allah ﷺ made Zakat al-Fitr obligatory — a sa' of dates or a sa' of barley — on the slave and the free, male and female, young and old among the Muslims."
+      "meaning": "The Messenger of Allah ﷺ made Zakat al-Fitr obligatory — a sa' of dates or a sa' of barley — on the slave and the free, male and female, young and old among the Muslims, and he commanded that it be given before the people go out to the prayer."
     },
     {
       "id": "h_steady",
@@ -388,7 +388,7 @@
     "text": "The Family Ramadan program runs for thirty days. Each day brings a family challenge of no more than fifteen minutes, a short note for you, a role for each child by age, a family Quran reading of a short surah that repeats for two days so the little ones can learn it, and, on some nights, a story. At Eid you receive your 'Our Family's Ramadan' card.",
     "setup_steps": [
       "Choose a fixed time for the daily challenge, such as after iftar.",
-      "Set each child's step on the fasting ladder according to age and health; there is no fasting before seven.",
+      "Set each child's step on the fasting ladder according to age and health; there is no fasting before seven in this program, and a child who has reached puberty must fast.",
       "Get a box ready for charity, plus a small jar and some coloured paper.",
       "Decide whether the parents will read one juz' a day to complete the Quran; the app shows each day's juz'."
     ],
@@ -401,7 +401,8 @@
     "title": "The fasting ladder",
     "principles": [
       "Before puberty, fasting is training, not an obligation. The aim is for the child to love fasting, not to hold out as long as possible.",
-      "No fasting under seven: little ones share the atmosphere of Ramadan without fasting.",
+      "In this program there is no fasting before seven: little ones share the atmosphere of Ramadan without fasting.",
+      "Puberty, not age, makes fasting obligatory: a child who shows a sign of puberty, such as menstruation or a wet dream, must fast whatever their age group, so the 13–15 step applies to them, not the two-days-a-week cap. The details of the signs of puberty are for scholars.",
       "Move up a step only after two or three comfortable days on the current one, and only if the child wants to.",
       "Breaking the fast when tired is not failure: always praise the attempt, and never compare siblings.",
       "Keep school days, sport days and hot days shorter; rest days are the best days to try."
@@ -419,15 +420,16 @@
       "Vomiting.",
       "Unusual sleepiness, marked sluggishness or difficulty concentrating.",
       "Very little or very dark urine, or a very dry mouth.",
-      "The child says he cannot carry on."
+      "Before puberty: the child says he cannot carry on."
     ],
-    "stop_action": "The child breaks the fast at once: water first, then light food, then rest. Tell him: 'Well done for trying; tomorrow is a new day', with no blame and no comparison. If he does not feel better within an hour, call the doctor.",
+    "stop_action": "The child breaks the fast at once with water and a date or some juice, then rests. Tell him: 'Well done for trying; tomorrow is a new day', with no blame and no comparison. If he does not feel better within an hour, call the doctor.",
     "urgent_signs": [
       "Fainting or a seizure.",
       "Confusion, slurred speech or being hard to wake.",
       "Repeated vomiting that stops him from drinking.",
       "In a child with diabetes: any sign of low blood sugar, such as shaking, sweating or confusion."
     ],
+    "urgent_action": "Call emergency services at once, and give nothing by mouth until the child is fully alert. For a child with diabetes, follow the doctor's low-blood-sugar plan (fast sugar such as juice or glucose tablets), then call emergency services if there is no improvement.",
     "tips": [
       "Suhoor: water plus slow-digesting food such as wholemeal bread, oats, eggs, yoghurt and pitted dates, not sweets on their own.",
       "Water little and often from iftar to bedtime, not a large amount all at once.",
@@ -515,7 +517,7 @@
       },
       "10-12": {
         "fasts": "partial_to_full",
-        "summary": "Gradual, possibly reaching full days: half a day, then most of the day, then a full day on rest days, without every day becoming a fasting day.",
+        "summary": "Gradual, possibly reaching full days: half a day, then most of the day, then a full day on rest days, without every day becoming a fasting day. A child in this group who has reached puberty, by menstruation or a wet dream, must fast as an obligation whatever their age, and the 13–15 step applies to them, not this ladder.",
         "steps": [
           {
             "key": "until_dhuhr",
@@ -542,7 +544,7 @@
             "approx_hours": 13,
             "min_age_years": 10,
             "max_days_per_week": 2,
-            "advance_when": "Two days a week at most; a child close to puberty who is comfortable and healthy may add full days gradually, without pressure.",
+            "advance_when": "Two days a week at most before puberty; a child who has reached puberty, by menstruation or a wet dream, must fast as an obligation, and the 13–15 step applies.",
             "text": "He fasts until maghrib, starting with rest days, with a good suhoor and enough sleep. At any of the stop signs he breaks the fast at once."
           }
         ]
@@ -558,7 +560,7 @@
             "approx_hours": 13,
             "min_age_years": 13,
             "advance_when": "A child who has not reached puberty continues the 10–12 steps gradually.",
-            "text": "He fasts the month with a good suhoor and enough water between iftar and bedtime. On exam and sport days, lighten the effort, not the fast. If a stop sign appears, his health comes first: he breaks the fast and makes it up later, and you consult the doctor and the scholars if it keeps happening."
+            "text": "He fasts the month with a good suhoor and enough water between iftar and bedtime. On exam and sport days, lighten the effort, not the fast. After puberty, an obligatory fast is broken only for a physical stop sign or real hardship, and made up later; ordinary tiredness is eased with rest. Consult the doctor and the scholars if it keeps happening."
           }
         ]
       }
@@ -1024,9 +1026,9 @@
       "key": "honouring_parents",
       "title": "Honouring parents",
       "family_challenge": {
-        "title": "A secret act of kindness for a parent or grandparent",
+        "title": "A kind surprise for a parent or grandparent",
         "steps": [
-          "Each child chooses a small service to do for a parent today without saying so: water at iftar, lining up the shoes, a drawing or a thank-you.",
+          "Each child chooses a small service to surprise a parent with today: water at iftar, lining up the shoes, a drawing or a thank-you.",
           "Call the grandparents together, or visit if they live nearby, and let the children wish them a blessed Ramadan.",
           "If a grandparent has passed away, make du'a together for Allah's mercy on them."
         ],
@@ -1057,7 +1059,7 @@
         },
         "7-9": {
           "addressed_to": "child",
-          "text": "Your secret mission: do something today that will make your mum or dad happy without being asked, then wait for them to notice. Don't tell anyone before iftar!"
+          "text": "Your surprise today: do something that will make your mum or dad happy without being asked, then wait for them to notice, and if they don't, tell them about it at iftar."
         },
         "10-12": {
           "addressed_to": "child",
@@ -1260,7 +1262,7 @@
         ]
       },
       "parent_note": {
-        "text": "After ten days of Ramadan a child feels the value of water and food more than ever. Use that to build the habit of gratitude and contentment with what he has: gratitude reduces complaining and constant demands. Today's theme verse is about gratitude.",
+        "text": "After ten days of Ramadan a child sees the value of water and food around him more than ever, and a child practising fasting feels it himself. Use that to build the habit of gratitude and contentment with what he has: gratitude reduces complaining and constant demands. Today's theme verse is about gratitude.",
         "unit_ids": [
           "isl-e622ac43",
           "isl-b793e864"
@@ -2503,11 +2505,11 @@
       "key": "zakat_al_fitr_together",
       "title": "Zakat al-Fitr with the children",
       "family_challenge": {
-        "title": "Involve the children in Zakat al-Fitr",
+        "title": "Prepare Zakat al-Fitr with the children",
         "steps": [
           "Explain simply that Zakat al-Fitr is given for every member of the family, young or old, as in the attached hadith.",
-          "For its amount, its timing and how to give it, follow what your local mosque or religious authority announces.",
-          "Let your child help count it or hand it over, or come along when it is given."
+          "Prepare it today and choose together who will receive it; for its amount and how to give it, follow what your local mosque or religious authority announces.",
+          "Hand it over at the time the mosque announces, before the Eid prayer, as in the attached hadith; let your child help count it, or come along when it is given."
         ],
         "minutes": 10,
         "cost": "free",
@@ -2516,7 +2518,7 @@
         "materials": []
       },
       "parent_note": {
-        "text": "The attached hadith mentions the young and the old together in Zakat al-Fitr, so it is given for children too, which is a chance for your child to feel part of this act of worship. Involve him in the act itself, and leave the details of the rulings to the scholars where you live.",
+        "text": "The attached hadith mentions the young and the old together in Zakat al-Fitr, so it is given for children too, which is a chance for your child to feel part of this act of worship. The same hadith commands that it be given before the people go out to the Eid prayer. Involve him in the act itself, and leave the details of the rulings to the scholars where you live.",
         "unit_ids": [
           "isl-bd250b64"
         ],
@@ -2527,7 +2529,7 @@
       "variants": {
         "0-3": {
           "addressed_to": "parent",
-          "text": "As you give it, tell him: 'This is your zakat', and let him see the joy of the people who receive it if you can."
+          "text": "As you prepare it, tell him: 'This is your zakat', and let him see the joy of the people who receive it when you hand it over, if you can."
         },
         "4-6": {
           "addressed_to": "parent",
@@ -2790,6 +2792,7 @@
       "Take the children to the Eid prayer if you can: it is a joyful gathering.",
       "Exchange greetings and visits, and reach out to relatives, at least by phone.",
       "Give the children time to play and enjoy themselves, and Eid money or gifts shared fairly between them.",
+      "If you have not given Zakat al-Fitr yet, give it before the Eid prayer, as in the attached hadith.",
       "Open your 'Our Family's Ramadan' card together, and share it with people you love if you wish."
     ],
     "parent_note": {
@@ -2835,12 +2838,13 @@
       "parent_juz": null
     },
     "evidence_ids": [
-      "h_eid_dates"
+      "h_eid_dates",
+      "h_zakat_fitr"
     ]
   },
   "after_ramadan": {
     "title": "After Ramadan: keep going together",
-    "text": "Ramadan is over, but the habits remain. Take the two habits from your family promise and keep them up gently: a small deed done consistently is most beloved to Allah, as in the attached hadith. After four weeks, the app moves you on to each child's usual weekly plan.",
+    "text": "Ramadan is over, but the habits remain. Take the two habits from your family promise and keep them up gently: a small deed done consistently is most beloved to Allah, as in the attached hadith.",
     "keep_habits": [
       {
         "key": "weekly_quran_circle",
@@ -2881,8 +2885,10 @@
       },
       {
         "week": 4,
-        "title": "Week 4: The weekly plan",
-        "text": "The app moves you on to each child's regular weekly plan, with your Ramadan habits kept as part of it."
+        "title": "Week 4: Beyond the bridge",
+        "text": "The app moves you on to each child's regular weekly plan, with your Ramadan habits kept as part of it.",
+        "requires_feature": "weekly_plan",
+        "fallback_text": "Keep up the two habits, and choose for each child one of the app's paths that suits their age."
       }
     ],
     "links": {
@@ -2933,7 +2939,8 @@
         "key": "fasting_steps",
         "source": "fasting_step_up",
         "label": "Fasting steps our children climbed",
-        "max": null
+        "max": null,
+        "shareable": false
       },
       {
         "key": "juz_read",
@@ -2963,8 +2970,7 @@
       "lines": [
         "Family challenges: {challenges_done}",
         "Days of Quran together: {wird_days}",
-        "Nights of the last ten we joined: {nights_joined}",
-        "Fasting steps our children climbed: {fasting_steps}",
+        "Nights of the last ten we spent together: {nights_joined}",
         "Stories we listened to: {stories_heard}",
         "Juz' the parents read towards a khatm: {juz_read}",
         "Our Ramadan word: {family_word}"
@@ -2984,17 +2990,16 @@
       "wird_days": 3,
       "stories_heard": 1,
       "nights_joined": 1,
-      "fasting_steps": 1,
       "juz_read": 1
     }
   },
   "generation": {
     "drafter_model": "claude-opus-5.5",
-    "reviewer_model": "glm-5.2 (every item) + deepseek-v4-pro (days 4–6, fasting ladder)",
+    "reviewer_model": "glm-5.2 (every item) + deepseek-v4-pro (days 4–6, fasting ladder) + PR #23 sharia/medical/child-safety review",
     "translator_model": "claude-opus-5.5",
     "reviewed_at": "2026-10-04",
-    "review_rounds": 1,
-    "defects_fixed": 34,
-    "approved_by": "auto-review:glm-5.2+deepseek-v4-pro+guards"
+    "review_rounds": 2,
+    "defects_fixed": 51,
+    "approved_by": "auto-review:glm-5.2+deepseek-v4-pro+guards; pr23-sharia-medical-review"
   }
 }
