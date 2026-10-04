@@ -3,7 +3,7 @@
   "title": "Pregnancy and Newborn Care: A Journey of Care and Serenity",
   "age_group": "prenatal-1",
   "domain": "infant_pregnancy",
-  "description": "A comprehensive 14-day pathway accompanying expectant and new parents from late pregnancy through the early months: emotional support, early fetal bonding and Quran listening, Prophetic welcoming traditions, mastering breastfeeding, decoding baby cries and safe sleep, strict zero-screen guidance, and parental mental well-being.",
+  "description": "A comprehensive pathway accompanying expectant and new parents from late pregnancy through the early months: emotional support, early fetal bonding and Quran listening, Prophetic welcoming traditions, mastering breastfeeding, decoding baby cries and safe sleep, strict zero-screen guidance, and parental mental well-being.",
   "lesson_ids": [
     "lesson_prenatal-1_infant_pregnancy_01",
     "lesson_prenatal-1_infant_pregnancy_02",
@@ -11,7 +11,7 @@
     "lesson_prenatal-1_infant_pregnancy_04",
     "lesson_prenatal-1_infant_pregnancy_05"
   ],
-  "estimated_days": 14,
+  "estimated_days": 5,
   "pedagogical_framework": "attachment_rahma",
   "primary_reference": {
     "type": "دليل_طبي",

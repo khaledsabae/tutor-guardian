@@ -3,14 +3,14 @@
   "title": "Positive Tarbiyah and Safety: Building the Child’s Confidence (Ages 4-6)",
   "age_group": "4-6",
   "domain": "development",
-  "description": "A 14-day tarbiyah journey to build the child’s self-confidence and physical and psychological safety through positive tarbiyah tools endorsed by the CDC, the daily 'Safety Tour' method for accident prevention, and the skill of specific, qualitative praise. The course is grounded in Erikson’s (Industry vs. Inferiority) and Vygotsky’s (ZPD) theories to nurture self-efficacy without comparison, with a focus on practical, measurable implementation.",
+  "description": "A tarbiyah journey to build the child’s self-confidence and physical and psychological safety through positive tarbiyah tools endorsed by the CDC, the daily 'Safety Tour' method for accident prevention, and the skill of specific, qualitative praise. The course is grounded in Erikson’s (Industry vs. Inferiority) and Vygotsky’s (ZPD) theories to nurture self-efficacy without comparison, with a focus on practical, measurable implementation.",
   "lesson_ids": [
     "lesson_4-6_development_positive_parenting_b01",
     "lesson_4-6_development_positive_parenting_b02",
     "lesson_4-6_development_positive_parenting_01",
     "lesson_4-6_development_positive_parenting_02"
   ],
-  "estimated_days": 12,
+  "estimated_days": 4,
   "pedagogical_framework": "zpd_scaffolded",
   "primary_reference": {
     "type": "مقال_تنموي",

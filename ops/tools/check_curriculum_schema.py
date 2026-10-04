@@ -26,10 +26,27 @@
 بـ`day_of_week = 7` بينما الأيام ٠..٦. الحقل لا يقرؤه شيء اليوم، لكنه معرَّف في
 موديل التطبيق بـ`0..6 (Mon..Sun)`، فأي ترشيح مستقبلي كان سيُسقط الثلاث بصمت.
 
+الوعود الصادقة (أُضيف 2026-10-04)
+----------------------------------
+مخطّطٌ سليم لا يمنع مسارًا من أن يَعِد بما لا يملك. أمٌّ فتحت مسارًا مكتوبًا عليه
+«٢٨ يومًا» فوجدت أربعة دروس وأنهتها في جلسة واحدة. الرقم لم يكن مشتقًّا من شيء:
+شاشة الترحيب تقول «مسارات من ٢٨ يومًا»، وأوصاف المسارات «لمدة ١٤ يومًا» بينما
+الشارة ١٢، والدروس أربعة. لذلك يفحص `duration_problems()`:
+
+  · `estimated_days` ≤ عدد الدروس — اليوم في المسار = بطاقة درس واحدة. لا شيء في
+    التطبيق يمنع قراءة الدروس كلّها في جلسة، فأيّ رقمٍ أكبر وعدٌ بمحتوى غير موجود.
+  · كل `lesson_id` في المسار له ملف درس منشور يشير إلى المسار نفسه.
+  · المسار الإنجليزي يطابق العربي في `lesson_ids` و`estimated_days`: الترجمة
+    تُطبَّق فوق العربي، فرقمٌ قديم في الإنجليزي كان يغطّي الرقم الصحيح.
+  · العنوان والوصف (عربي وإنجليزي): «N يوم/أسبوع» لا يتجاوز ما تدعمه الدروس،
+    و«N دروس» يساوي عددها.
+  · نصوص التطبيق ومتجر Play التي تَعِد بـ«مسارات من N يومًا» لا تتجاوز أطول مسار.
+
 Exit: 0 مطابق · 1 مخالفات
 """
 
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -38,6 +55,124 @@ from jsonschema import Draft202012Validator
 ROOT = Path(__file__).resolve().parents[2]
 CURRICULUM = ROOT / "knowledge_base" / "curriculum"
 SCHEMA = CURRICULUM / "schema"
+
+# نصوص خارج المنهج تَعِد بطول المسارات. الواجهة والمتجر هما أول ما يقرؤه الوالد.
+PROMISE_SOURCES = (
+    ROOT / "mobile" / "lib" / "l10n" / "app_ar.arb",
+    ROOT / "mobile" / "lib" / "l10n" / "app_en.arb",
+    ROOT / "docs" / "PLAY_STORE_LISTING.md",
+)
+
+_ARABIC_DIGITS = str.maketrans("٠١٢٣٤٥٦٧٨٩", "0123456789")
+_NUM = r"([0-9٠-٩]+)"
+# رقم ثم وحدة. «N-day» و«N days» و«N يومًا» و«N أيام» كلها وعد بطول.
+_DAYS = re.compile(_NUM + r"\s*-?\s*(?:يوم|أيام|days?\b)", re.IGNORECASE)
+_WEEKS = re.compile(_NUM + r"\s*-?\s*(?:أسبوع|أسابيع|weeks?\b)", re.IGNORECASE)
+_LESSONS = re.compile(_NUM + r"\s*-?\s*(?:دروس|درس|lessons?\b)", re.IGNORECASE)
+# سطر/نصّ يتكلّم عن المسارات — حتى لا تُحاسَب «سلسلة ٢٨ يومًا» في العادات بطول المسار.
+_PATH_WORD = re.compile(r"مسار|\bpaths?\b|\btracks?\b", re.IGNORECASE)
+
+
+def _n(s: str) -> int:
+    return int(s.translate(_ARABIC_DIGITS))
+
+
+def _text_promises(text: str, n_lessons: int) -> list[str]:
+    """وعود الطول داخل عنوان/وصف مسار مقابل عدد دروسه."""
+    out = []
+    for m in _DAYS.finditer(text):
+        if _n(m.group(1)) > n_lessons:
+            out.append(f"«{m.group(0)}» والدروس {n_lessons}")
+    for m in _WEEKS.finditer(text):
+        if _n(m.group(1)) * 7 > n_lessons:
+            out.append(f"«{m.group(0)}» والدروس {n_lessons}")
+    for m in _LESSONS.finditer(text):
+        if _n(m.group(1)) != n_lessons:
+            out.append(f"«{m.group(0)}» والدروس {n_lessons}")
+    return out
+
+
+def duration_problems(paths_ar: dict, paths_en: dict, lessons: dict,
+                      promise_texts: dict) -> list[tuple[str, str, str]]:
+    """وعود الطول التي لا يملكها المحتوى. مدخلات نقيّة ليُختبَر بلا قرص.
+
+    paths_ar/paths_en: {path_id: doc} · lessons: {lesson_id: doc} (العربي المنشور)
+    promise_texts: {اسم_المصدر: نص} — ARB وقائمة المتجر.
+    """
+    problems = []
+    for pid, p in sorted(paths_ar.items()):
+        ids = p.get("lesson_ids") or []
+        n = len(ids)
+        days = p.get("estimated_days")
+        if isinstance(days, int) and days > n:
+            problems.append((f"paths/{pid}", "estimated_days",
+                             f"{days} يومًا والدروس {n} — اليوم = درس واحد"))
+        for lid in ids:
+            lesson = lessons.get(lid)
+            if lesson is None:
+                problems.append((f"paths/{pid}", "lesson_ids",
+                                 f"{lid} لا ملف درس منشور له"))
+            elif lesson.get("path_id") != pid:
+                problems.append((f"paths/{pid}", "lesson_ids",
+                                 f"{lid} يشير إلى {lesson.get('path_id')}"))
+        for field in ("title", "description"):
+            for msg in _text_promises(p.get(field) or "", n):
+                problems.append((f"paths/{pid}", field, msg))
+
+        en = paths_en.get(pid)
+        if en is None:
+            continue
+        for field in ("lesson_ids", "estimated_days"):
+            if field in en and en[field] != p.get(field):
+                problems.append((f"i18n/en/paths/{pid}", field,
+                                 "يخالف العربي — الحقل بنيوي لا يُترجَم"))
+        for field in ("title", "description"):
+            for msg in _text_promises(en.get(field) or "", n):
+                problems.append((f"i18n/en/paths/{pid}", field, msg))
+
+    longest = max((p.get("estimated_days") or 0 for p in paths_ar.values()),
+                  default=0)
+    for source, text in sorted(promise_texts.items()):
+        for line in text.splitlines():
+            if not _PATH_WORD.search(line):
+                continue
+            for m in _DAYS.finditer(line):
+                if _n(m.group(1)) > longest:
+                    problems.append((source, "promise",
+                                     f"«{m.group(0)}» وأطول مسار {longest} يومًا"))
+    return problems
+
+
+def _load_dir(tree: Path) -> dict:
+    out = {}
+    for f in sorted(tree.glob("*.json")):
+        try:
+            d = json.loads(f.read_text(encoding="utf-8"))
+        except json.JSONDecodeError:
+            continue  # يُبلَّغ عنه في فحص المخطّط
+        if d.get("id"):
+            out[d["id"]] = d
+    return out
+
+
+def check_durations() -> list[tuple[str, str, str]]:
+    paths_ar = {k: v for k, v in _load_dir(CURRICULUM / "paths").items()
+                if v.get("is_published", True)}
+    paths_en = _load_dir(CURRICULUM / "i18n" / "en" / "paths")
+    lessons = {k: v for k, v in _load_dir(CURRICULUM / "lessons").items()
+               if v.get("is_published", True)}
+    texts = {}
+    for src in PROMISE_SOURCES:
+        if not src.exists():
+            continue
+        raw = src.read_text(encoding="utf-8")
+        if src.suffix == ".arb":
+            # القيم وحدها: المفاتيح والوصف (@key) ليست نصًّا يراه المستخدم.
+            data = json.loads(raw)
+            raw = "\n".join(v for k, v in data.items()
+                            if not k.startswith("@") and isinstance(v, str))
+        texts[str(src.relative_to(ROOT))] = raw
+    return duration_problems(paths_ar, paths_en, lessons, texts)
 
 # (مجلد المحتوى, اسم المخطّط)
 #
@@ -120,6 +255,10 @@ def main() -> int:
                 problems.append((rel, "/".join(map(str, err.path)) or "(root)", err.message[:100]))
 
     print(f"  ملفات مفحوصة (عربي + إنجليزي): {total}")
+
+    durations = check_durations()
+    print(f"  وعود الطول (مسار/متجر/واجهة) المخالفة للمحتوى: {len(durations)}")
+    problems += durations
 
     if problems:
         print(f"\n  ❌ {len(problems)} مخالفة:\n")

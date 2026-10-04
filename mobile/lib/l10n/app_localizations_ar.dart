@@ -816,7 +816,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get onbFreeDesc => 'بلا إعلانات ولا اشتراكات';
 
   @override
-  String get onbFeature1Title => 'مسارات من ٢٨ يومًا';
+  String get onbFeature1Title => 'مسارات يومية متدرّجة';
 
   @override
   String get onbFeature1Desc =>

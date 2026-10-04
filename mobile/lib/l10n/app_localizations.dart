@@ -1667,7 +1667,7 @@ abstract class AppLocalizations {
   /// No description provided for @onbFeature1Title.
   ///
   /// In ar, this message translates to:
-  /// **'مسارات من ٢٨ يومًا'**
+  /// **'مسارات يومية متدرّجة'**
   String get onbFeature1Title;
 
   /// No description provided for @onbFeature1Desc.

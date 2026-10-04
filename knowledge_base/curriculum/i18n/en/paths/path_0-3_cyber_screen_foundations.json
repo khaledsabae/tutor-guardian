@@ -3,14 +3,14 @@
   "title": "Foundations of Screens and Devices: Protecting the Young Child from Birth",
   "age_group": "0-3",
   "domain": "cyber",
-  "description": "A 10-day cyber tarbiyah (upbringing) pathway covering the most important foundations for dealing with screens and devices for children up to one year old: zero screens under two years (AAP/WHO recommendation), alternatives of real play, protecting sleep and development, and the risks of early exposure to games and advertisements. Based on the guidelines of the American Academy of Pediatrics and the World Health Organization.",
+  "description": "A cyber tarbiyah (upbringing) pathway covering the most important foundations for dealing with screens and devices for children up to one year old: zero screens under two years (AAP/WHO recommendation), alternatives of real play, protecting sleep and development, and the risks of early exposure to games and advertisements. Based on the guidelines of the American Academy of Pediatrics and the World Health Organization.",
   "lesson_ids": [
     "lesson_0-3_cyber_screen_foundations_01",
     "lesson_0-3_cyber_screen_foundations_02",
     "lesson_0-3_cyber_screen_foundations_03",
     "lesson_0-3_cyber_screen_foundations_b04"
   ],
-  "estimated_days": 10,
+  "estimated_days": 4,
   "pedagogical_framework": "attachment_rahma",
   "primary_reference": {
     "type": "تقرير_سيبراني",

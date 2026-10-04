@@ -3,14 +3,14 @@
   "title": "The First Developmental Stages: From Pregnancy to One Year",
   "age_group": "0-3",
   "domain": "medical",
-  "description": "A 14-day educational and medical pathway covering the most important developmental stages for children from pregnancy to one year: eye contact and smiling in the first two months, healthcare in the first six months, early warning signs (autism, speech delay, developmental regression), and when and how to seek medical help. Based on CDC Act Early guidelines and the American Academy of Pediatrics.",
+  "description": "An educational and medical pathway covering the most important developmental stages for children from pregnancy to one year: eye contact and smiling in the first two months, healthcare in the first six months, early warning signs (autism, speech delay, developmental regression), and when and how to seek medical help. Based on CDC Act Early guidelines and the American Academy of Pediatrics.",
   "lesson_ids": [
     "lesson_0-3_medical_early_milestones_01",
     "lesson_0-3_medical_early_milestones_02",
     "lesson_0-3_medical_early_milestones_03",
     "lesson_0-3_medical_early_milestones_04"
   ],
-  "estimated_days": 12,
+  "estimated_days": 4,
   "pedagogical_framework": "attachment_rahma",
   "primary_reference": {
     "type": "تقرير_طبي",
