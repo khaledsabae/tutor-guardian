@@ -546,10 +546,27 @@ def _hash(doc: dict) -> str:
     return hashlib.sha256(blob.encode()).hexdigest()[:16]
 
 
+def _en_twin(lid: str) -> Path | None:
+    """الترجمة الإنجليزية للدرس: المنشورة، أو المسحوبة إلى `ops/data/en_unpublished/`.
+
+    `review_en_parity.py unpublish` ينقل إنجليزيًّا لم يُختم إلى هناك فيرى المستخدم
+    الإنجليزي العربيَّ. الدرس يبقى درس هذه الأداة، وترجمته تبقى مسحوبة حتى تُختم.
+    """
+    for f in (CURRICULUM / "i18n" / "en" / "lessons" / f"{lid}.json",
+              ROOT / "ops" / "data" / "en_unpublished" / "lessons" / f"{lid}.json"):
+        if f.exists():
+            return f
+    return None
+
+
 def _generated(lid: str) -> bool:
-    """درسٌ كتبته هذه الأداة — علامته في سجل ترجمته (الدرس العربي لا يقبل حقلًا زائدًا)."""
-    f = CURRICULUM / "i18n" / "en" / "lessons" / f"{lid}.json"
-    return f.exists() and \
+    """درسٌ كتبته هذه الأداة — علامته في سجل ترجمته (الدرس العربي لا يقبل حقلًا زائدًا).
+
+    والترجمة المسحوبة علامةٌ أيضًا: لو عُدّ الدرس أصليًّا لصار من أساس المسار، فتزحزح
+    ترتيب كل ما بعده عند الكتابة التالية.
+    """
+    f = _en_twin(lid)
+    return f is not None and \
         (_load(f).get("translation") or {}).get("generated_by") == GENERATED_BY
 
 
@@ -861,12 +878,17 @@ def write_outputs(spec: dict, spec_path: Path, work: Work, bank: dict, grams: se
         # الأساس قبل الحذف: `_generated` يعرف الدرس المولَّد من ملفّه الإنجليزي، فبعد حذفه
         # يبدو أصليًّا ويُقرأ ملفٌّ لم يعد موجودًا — كانت الكتابة الثانية لأي مسار تسقط هنا.
         base = _original_lessons(pid)
-        # إعادة الكتابة نظيفة: احذف ما كتبته تشغيلة سابقة لهذا المسار.
+        # إعادة الكتابة نظيفة: احذف ما كتبته تشغيلة سابقة لهذا المسار. والترجمة المسحوبة
+        # تُكتب حيث هي: إعادة الكتابة لا تنشر إنجليزيًّا لم يُختم.
+        unpublished = {}
         if pfile.exists():
             for lid in _load(pfile)["lesson_ids"]:
                 if _generated(lid):
+                    twin = _en_twin(lid)
+                    if twin.parent != CURRICULUM / "i18n" / "en" / "lessons":
+                        unpublished[lid] = twin
                     (CURRICULUM / "lessons" / f"{lid}.json").unlink()
-                    (CURRICULUM / "i18n" / "en" / "lessons" / f"{lid}.json").unlink()
+                    twin.unlink()
         if pfile.exists():
             path = _load(pfile)
         else:
@@ -936,7 +958,8 @@ def write_outputs(spec: dict, spec_path: Path, work: Work, bank: dict, grams: se
                     "generated_by": GENERATED_BY,
                 },
             })
-            _dump(CURRICULUM / "i18n" / "en" / "lessons" / f"{lid}.json", en_lesson)
+            _dump(unpublished.get(lid, CURRICULUM / "i18n" / "en" / "lessons" / f"{lid}.json"),
+                  en_lesson)
             new_ids.append(lid)
             entry.update(written_as=lid, order=order, title=ar["title"])
 

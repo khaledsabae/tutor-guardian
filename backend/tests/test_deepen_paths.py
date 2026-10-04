@@ -202,8 +202,12 @@ def test_english_gate_rejects_a_placeholder_the_arabic_does_not_have(dp):
 # ── what was actually written ────────────────────────────────────────────
 
 def _generated_lessons():
+    """Every lesson the tool wrote — with its English twin, published or held back
+    by `review_en_parity.py unpublish` (an unpublished twin is still checked)."""
     out = []
-    for f in sorted((CURRICULUM / "i18n" / "en" / "lessons").glob("*.json")):
+    twins = [*(CURRICULUM / "i18n" / "en" / "lessons").glob("*.json"),
+             *(ROOT / "ops" / "data" / "en_unpublished" / "lessons").glob("*.json")]
+    for f in sorted(twins):
         en = json.loads(f.read_text(encoding="utf-8"))
         if (en.get("translation") or {}).get("generated_by") == "ops/tools/deepen_paths.py":
             ar = json.loads((CURRICULUM / "lessons" / f.name).read_text(encoding="utf-8"))
@@ -411,3 +415,22 @@ def test_inserting_a_lesson_before_a_served_one_is_refused(shelf):
     shelf.write()
     with pytest.raises(ValueError, match="never inserted or reordered"):
         shelf.write(briefs=["درسٌ أُدرج قبل غيره"] + shelf.briefs)
+
+
+def test_an_unpublished_english_twin_stays_unpublished_and_keeps_its_place(shelf):
+    """`review_en_parity.py unpublish` moves an unstamped English twin out of what the
+    app loads. To _generated() the lesson must stay ours — counted as an original it
+    would join the path's base and shift every later order — and a rewrite must not
+    publish its English again before a review stamps it."""
+    shelf.cleared = {"s01", "s02"}
+    shelf.write()
+    lid = shelf.served()["درسٌ جديد 1"][0]
+    held = shelf.tmp / "ops" / "data" / "en_unpublished" / "lessons" / f"{lid}.json"
+    held.parent.mkdir(parents=True)
+    (shelf.cur / "i18n" / "en" / "lessons" / f"{lid}.json").rename(held)
+    shelf.cleared = {"s01", "s02", "s03"}
+    shelf.write()
+    assert shelf.served()["درسٌ جديد 1"] == (lid, 3)
+    assert shelf.served()["درسٌ جديد 3"] == ("lesson_7-9_test_worship_05", 5)
+    assert held.exists()
+    assert not (shelf.cur / "i18n" / "en" / "lessons" / f"{lid}.json").exists()
