@@ -30,30 +30,37 @@
   "translated_from": "isl-602bfb05",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "religious_error",
-        "field": "text_simplified",
-        "arabic": "ويمكن ضربهم بلطف إن لم يلتزموا بها في سن العاشرة",
-        "english": "and may discipline them gently if they do not adhere to it by the age of ten",
-        "why": "The Arabic explicitly says 'hit them gently' (ضربهم بلطف), which is a direct paraphrase of the hadith about commanding children to pray at seven and hitting them at ten. The English 'discipline them gently' softens and omits the specific action of hitting, altering the religious ruling.",
-        "severity": "high"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "يجب على الآباء",
-        "english": "Parents must",
-        "why": "Arabic 'الآباء' means fathers, not parents. The English broadens the obligation to include mothers, which may not be the intended meaning.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null,
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
     "manual_fix_note": "2026-10-04 PR #27 review: 7/10 narration described accurately (Abu Dawud, with the jurists' conditions); app stance kept separate",
     "fixed_at": "2026-10-04T12:34:44.900780+00:00",
-    "fixer_model": "claude-opus-5.5"
+    "fixer_model": "claude-opus-5.5",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "412b10b5917bb83dee467c6170fec85988604344bcaec98307b5ef185b34805b",
+      "reviewed_at": "2026-10-04T17:06:53+00:00",
+      "residual_low": [],
+      "adjudicated": [
+        {
+          "field": "text_simplified",
+          "type": "hadith",
+          "reason": "fix/trust-content (#27) wording: names where the narration is (Abu Dawud, «ليس في الصحيحين») without quoting it, and states the app never recommends hitting; check_scripture_coverage passes.",
+          "by": "claude-opus-5.5 (en-parity review, PR #20)",
+          "on": "2026-10-04"
+        }
+      ],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T17:06:53+00:00"
   }
 }

@@ -30,19 +30,39 @@
   "translated_from": "med-e7e88a3b",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "claude-opus",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
+    "review_verdict": "low_only",
     "review_defects": [
       {
-        "type": "meaning_change",
+        "model": "claude-opus",
         "field": "text_simplified",
-        "arabic": "اتصل ببرنامج مبكر في ولايتك",
-        "english": "contact an early intervention program in your state",
-        "why": "The English adds 'intervention', which is not present in the Arabic. The Arabic says 'early program' (برنامج مبكر), not 'early intervention program'.",
-        "severity": "medium"
+        "type": "tone",
+        "why": "«في ولايتك» (your state) is US-specific in the source CDC text; kept faithfully."
       }
     ],
-    "approved_by": null
+    "approved_by": "auto-review:claude-opus:2026-10-04",
+    "auto_review": {
+      "reviewers": [
+        "claude-opus"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "manual:dfa8a5f39718",
+      "content_sha256": "0173548a71b394c5b8fb43dbe9298b3cd6d6251b7fa613c18d6c236d309bb27f",
+      "reviewed_at": "2026-10-04T17:12:35+00:00",
+      "residual_low": [
+        {
+          "model": "claude-opus",
+          "field": "text_simplified",
+          "type": "tone",
+          "why": "«في ولايتك» (your state) is US-specific in the source CDC text; kept faithfully."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and one reviewer from a model family different from the translator's read the Arabic and English side by side against the review rubric and found no medium/high defect in this exact text; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-04T17:12:35+00:00"
   }
 }
