@@ -1,0 +1,754 @@
+{
+  "program_type": "milestones",
+  "id": "milestones",
+  "version": "1.0.0",
+  "is_published": true,
+  "language": "en",
+  "title": "Milestones ahead",
+  "description": "The app follows each child's age and lets you know about a month before each important stage: starting school, the age of discernment, starting to teach prayer, first fasting, preparing for puberty, turning ten, the first phone and the identity question. Each stage comes with a short notification, a mini-guide of cards and links to what suits it in the app.",
+  "alert_policy": {
+    "default_days_before": 30,
+    "max_alerts_per_child_per_month": 1,
+    "text": "At most one notification per child per month; if two stages coincide, the more important one goes first and the other waits. Without a date of birth no notification is sent, and the cards appear in your library according to the child's age group."
+  },
+  "evidence": [
+    {
+      "id": "h_bismillah",
+      "kind": "hadith",
+      "text_ar": "يا غلام سم الله وكل بيمينك وكل مما يليك",
+      "source": "صحيح البخاري — حديث ٥٣٧٦",
+      "provenance": {
+        "book": "البخاري",
+        "number": 5376
+      },
+      "context": "The Prophet ﷺ said this to Umar ibn Abi Salamah, a young boy, at a meal.",
+      "meaning": "Young boy, say Bismillah (in the name of Allah), eat with your right hand, and eat from what is in front of you."
+    },
+    {
+      "id": "h_pray_as_seen",
+      "kind": "hadith",
+      "text_ar": "صلوا كما رأيتموني أصلي",
+      "source": "صحيح البخاري — حديث ٦٣١",
+      "provenance": {
+        "book": "البخاري",
+        "number": 631
+      },
+      "context": "Narrated by Malik ibn al-Huwayrith; the Prophet ﷺ said it to a group of young men who stayed with him to learn.",
+      "meaning": "Pray as you have seen me praying."
+    },
+    {
+      "id": "h_gentle",
+      "kind": "hadith",
+      "text_ar": "إن الله رفيق يحب الرفق في الأمر كله",
+      "source": "صحيح البخاري — حديث ٦٩٢٧",
+      "provenance": {
+        "book": "البخاري",
+        "number": 6927
+      },
+      "context": "Narrated by Aisha.",
+      "meaning": "Allah is Gentle and loves gentleness in all matters."
+    },
+    {
+      "id": "h_children_fasting",
+      "kind": "hadith",
+      "text_ar": "فكنا نصومه بعد ونصوم صبياننا ونجعل لهم اللعبة من العهن فإذا بكى أحدهم على الطعام أعطيناه ذاك حتى يكون عند الإفطار",
+      "source": "صحيح البخاري — حديث ١٩٦٠",
+      "provenance": {
+        "book": "البخاري",
+        "number": 1960
+      },
+      "context": "Al-Rubayyi' bint Mu'awwidh describing the fast of the day of Ashura in the Prophet's time.",
+      "meaning": "We used to fast it afterwards and have our young children fast; we would make them toys of wool, and when one of them cried for food, we gave him that (toy) until it was time to break the fast."
+    },
+    {
+      "id": "h_haya_good",
+      "kind": "hadith",
+      "text_ar": "الحياء لا يأتي إلا بخير",
+      "source": "صحيح البخاري — حديث ٦١١٧",
+      "provenance": {
+        "book": "البخاري",
+        "number": 6117
+      },
+      "context": "Narrated by Imran ibn Husayn.",
+      "meaning": "Modesty (haya) brings nothing but good."
+    },
+    {
+      "id": "h_umm_sulaym",
+      "kind": "hadith",
+      "text_ar": "إن الله لا يستحيي من الحق فهل على المرأة من غسل إذا احتلمت",
+      "source": "صحيح البخاري — حديث ١٣٠",
+      "provenance": {
+        "book": "البخاري",
+        "number": 130
+      },
+      "context": "Umm Sulaym said this when asking the Prophet ﷺ; narrated by Umm Salamah.",
+      "meaning": "Allah is not shy of the truth: is a woman required to take a ritual bath (ghusl) if she has a wet dream?"
+    },
+    {
+      "id": "h_haya",
+      "kind": "hadith",
+      "text_ar": "الحياء من الإيمان",
+      "source": "صحيح البخاري — حديث ٢٤",
+      "provenance": {
+        "book": "البخاري",
+        "number": 24
+      },
+      "context": "Narrated by Abdullah ibn Umar.",
+      "meaning": "Modesty (haya) is part of faith."
+    },
+    {
+      "id": "h_shepherd",
+      "kind": "hadith",
+      "text_ar": "كلكم راع وكلكم مسئول عن رعيته",
+      "source": "صحيح البخاري — حديث ٨٩٣",
+      "provenance": {
+        "book": "البخاري",
+        "number": 893
+      },
+      "context": "Narrated by Abdullah ibn Umar.",
+      "meaning": "Each of you is a shepherd, and each of you is responsible for his flock."
+    }
+  ],
+  "milestones": [
+    {
+      "key": "school_entry",
+      "order": 1,
+      "trigger": {
+        "type": "age",
+        "age_months": 72,
+        "alert_days_before": 30,
+        "band_fallback": [
+          "4-6"
+        ]
+      },
+      "audience": {
+        "gender": "any",
+        "if_gender_unknown": "show"
+      },
+      "medical": true,
+      "title": "Starting school",
+      "alert": {
+        "title": "The first school year is near",
+        "body": "Your child turns six next month, the age school starts in many countries. A short guide to preparing him calmly."
+      },
+      "cards": [
+        {
+          "title": "Two to four weeks before",
+          "body": "Talk about school positively and concretely: what he will do there and who he will meet. Visit the building if you can, and read a story about a first school day together. Never use school as a threat, like 'wait until the teacher sees this'."
+        },
+        {
+          "title": "Sleep and routine",
+          "body": "Move bedtime and wake-up time earlier gradually, about a quarter of an hour every few days, so that the first week isn't exhausting: a school-age child needs roughly 9 to 12 hours of sleep."
+        },
+        {
+          "title": "The goodbye",
+          "body": "A short, warm, confident goodbye with a clear sign of your return: 'I'll come for you after the last lesson.' Don't slip away without saying goodbye, and don't go back in if he cries: some crying in the first days is normal and usually fades."
+        },
+        {
+          "title": "After school",
+          "body": "Give him ten minutes of your full attention, ask specific questions like 'Who did you sit next to?' instead of 'How was school?', and let him rest and play before homework."
+        }
+      ],
+      "red_flags": [
+        "Refusing school every morning for more than three to four weeks, or intense fear that does not ease.",
+        "Repeated stomach aches or headaches on school days only.",
+        "A clear step backwards that lasts weeks, such as wetting the bed again, or signs that he is being hurt or bullied → talk to the teacher and to the paediatrician or school counsellor."
+      ],
+      "unit_ids": [
+        "dev-75346fc0",
+        "med-2bf09c13",
+        "med-fb24deba"
+      ],
+      "evidence_ids": [],
+      "quran": [],
+      "links": {
+        "program_ids": [],
+        "path_ids": [
+          "path_4-6_development_positive_parenting",
+          "path_4-6_medical_healthy_growth"
+        ],
+        "lesson_ids": [
+          "lesson_4-6_medical_healthy_growth_01",
+          "lesson_4-6_development_positive_parenting_b01"
+        ],
+        "story_ids": [],
+        "features": [
+          "assistant"
+        ]
+      }
+    },
+    {
+      "key": "tamyeez",
+      "order": 2,
+      "trigger": {
+        "type": "age",
+        "age_months": 78,
+        "alert_days_before": 30,
+        "band_fallback": [
+          "4-6"
+        ]
+      },
+      "audience": {
+        "gender": "any",
+        "if_gender_unknown": "show"
+      },
+      "medical": false,
+      "title": "The age of discernment (tamyeez)",
+      "alert": {
+        "title": "Approaching the age of discernment",
+        "body": "Your child now understands reasons and tells right from wrong better. Four ways to make the most of this stage."
+      },
+      "cards": [
+        {
+          "title": "What changes?",
+          "body": "Around six or seven most children begin to understand right and wrong and the reasons behind rules, so explain the 'why' briefly instead of only giving orders. The exact definition and rulings of tamyeez belong to the scholars; what is here is upbringing."
+        },
+        {
+          "title": "Asking permission and privacy",
+          "body": "Teach him to knock and ask permission before entering a room, especially at times when people rest; the verse shown here, from Surat an-Nur, concerns this manner. Read the story 'Aisha and the Adab of Isti'dhan' with him."
+        },
+        {
+          "title": "Body safety",
+          "body": "Teach him the correct names of body parts, and that what underwear covers is private: no one may touch it or ask to see it, except someone helping him wash when needed, or a doctor with you present. And that there are no secrets from Mum and Dad about touch. Say it calmly, the way you teach road safety."
+        },
+        {
+          "title": "Small responsibilities, manners taught gently",
+          "body": "A daily household job of his own, keeping promises, and correcting manners with short, kind words in the moment, as in the attached hadith, where a young boy was taught table manners in three short phrases."
+        }
+      ],
+      "unit_ids": [
+        "isl-7b7cda4e",
+        "isl-82c3c96e",
+        "gap-med-child-touch-01"
+      ],
+      "evidence_ids": [
+        "h_bismillah"
+      ],
+      "quran": [
+        {
+          "surah": 24,
+          "from": 58,
+          "to": 58,
+          "topic": "Children asking permission"
+        }
+      ],
+      "links": {
+        "program_ids": [
+          "prayer_journey"
+        ],
+        "path_ids": [
+          "path_4-6_islamic_parenting_adab"
+        ],
+        "lesson_ids": [
+          "lesson_4-6_islamic_parenting_adab_03"
+        ],
+        "story_ids": [
+          "aisha_permission"
+        ],
+        "features": [
+          "missions"
+        ]
+      }
+    },
+    {
+      "key": "prayer_start",
+      "order": 3,
+      "trigger": {
+        "type": "age",
+        "age_months": 84,
+        "alert_days_before": 30,
+        "band_fallback": [
+          "7-9"
+        ]
+      },
+      "audience": {
+        "gender": "any",
+        "if_gender_unknown": "show"
+      },
+      "medical": false,
+      "title": "Starting to teach prayer",
+      "alert": {
+        "title": "Turning seven next month",
+        "body": "At seven, Prophetic guidance starts teaching prayer, and the Prayer Journey is ready for you: 12 weeks of small steps."
+      },
+      "cards": [
+        {
+          "title": "Why seven?",
+          "body": "Well-known Prophetic guidance starts teaching children the prayer at seven and makes the follow-up steadier at ten; its source is in the linked knowledge unit, because the app only displays hadith from the two Sahihs. Before puberty, prayer is training, and the child is not blamed for it."
+        },
+        {
+          "title": "The Prayer Journey",
+          "body": "Twelve weeks in six small stages: praying beside you, wudu, the words and movements of prayer, the prayer times, all five prayers, then 'praying on my own'. You assign, he records it in child mode, you confirm in the evening, and his coins turn into a real reward you promise him."
+        },
+        {
+          "title": "Be what he sees",
+          "body": "Children learn the prayer by watching, as in the attached hadith, so let him see you pray calmly and on time, and pray beside him."
+        },
+        {
+          "title": "Gentleness first",
+          "body": "No shouting, no shaming, no comparison. Correct one thing at a time, in private, and meet a missed prayer with 'the next prayer is a new chance'. The attached hadith is about gentleness in every matter."
+        }
+      ],
+      "unit_ids": [
+        "isl-f2bef952",
+        "isl-1bceeaf6",
+        "isl-ca9f1de7"
+      ],
+      "evidence_ids": [
+        "h_pray_as_seen",
+        "h_gentle"
+      ],
+      "quran": [],
+      "links": {
+        "program_ids": [
+          "prayer_journey"
+        ],
+        "path_ids": [
+          "path_7-9_islamic_parenting_worship"
+        ],
+        "lesson_ids": [
+          "lesson_7-9_islamic_parenting_worship_01"
+        ],
+        "story_ids": [
+          "omar_prayer"
+        ],
+        "features": [
+          "missions",
+          "covenant"
+        ]
+      }
+    },
+    {
+      "key": "first_fasting",
+      "order": 4,
+      "trigger": {
+        "type": "season_age",
+        "age_months": null,
+        "alert_days_before": 30,
+        "season": "ramadan",
+        "min_age_months": 84,
+        "max_age_months": 155,
+        "band_fallback": [
+          "7-9",
+          "10-12"
+        ]
+      },
+      "audience": {
+        "gender": "any",
+        "if_gender_unknown": "show"
+      },
+      "medical": true,
+      "title": "First fasting attempts",
+      "alert": {
+        "title": "Ramadan is a month away",
+        "body": "If your child wants to try fasting this year, here is how to start gently and safely, one step at a time."
+      },
+      "cards": [
+        {
+          "title": "Training, not obligation",
+          "body": "Fasting becomes obligatory at puberty; before that it is training. The companions got their young children used to fasting and kept them busy with toys when they were hungry, as in the attached hadith: encouragement without pressure."
+        },
+        {
+          "title": "Start small",
+          "body": "Begin with a few hours after suhoor or an early breakfast, then until midday, and only increase after two or three comfortable days. For ages 7–9 a full day is not the goal; ages 10–12 may reach full days gradually, starting on rest days. The fasting ladder in the Ramadan program sets the steps for each age."
+        },
+        {
+          "title": "Suhoor, iftar and sleep",
+          "body": "Water little and often through the evening, a slow suhoor such as bread, oats, eggs, yoghurt or chopped dates instead of sweets, an iftar that starts with water, and an early bedtime: a tired child finds fasting hard."
+        },
+        {
+          "title": "When to stop at once",
+          "body": "Dizziness or fainting, a severe headache, vomiting, unusual sleepiness or confusion, very little or very dark urine, or him saying he can't go on: he breaks the fast with water, then food, and you praise his effort."
+        },
+        {
+          "title": "The doctor before fasting",
+          "body": "See a doctor before any fasting if the child has diabetes, kidney or heart disease or epilepsy, takes a regular medicine, is very underweight or has recently been ill. And keep an eye on older children: dieting to lose weight can hide behind fasting."
+        }
+      ],
+      "red_flags": [
+        "Fainting, confusion or a seizure → urgent medical care.",
+        "A chronic illness or a regular medicine → ask the doctor before any attempt.",
+        "Severe restriction of food, skipping iftar or preoccupation with weight, especially in older children → talk to a doctor."
+      ],
+      "unit_ids": [
+        "isl-d15d1a95",
+        "isl-3d476538",
+        "med-408796d1"
+      ],
+      "evidence_ids": [
+        "h_children_fasting"
+      ],
+      "quran": [],
+      "links": {
+        "program_ids": [
+          "ramadan_family"
+        ],
+        "path_ids": [
+          "path_7-9_islamic_parenting_worship",
+          "path_10-12_islamic_parenting_worship_love"
+        ],
+        "lesson_ids": [
+          "lesson_7-9_islamic_parenting_worship_02",
+          "lesson_10-12_islamic_parenting_worship_love_02"
+        ],
+        "story_ids": [],
+        "features": []
+      }
+    },
+    {
+      "key": "puberty_girls",
+      "order": 5,
+      "trigger": {
+        "type": "age",
+        "age_months": 102,
+        "alert_days_before": 30,
+        "band_fallback": [
+          "7-9",
+          "10-12"
+        ]
+      },
+      "audience": {
+        "gender": "female",
+        "if_gender_unknown": "ask"
+      },
+      "medical": true,
+      "title": "Preparing for puberty: girls",
+      "alert": {
+        "title": "A calm talk before puberty",
+        "body": "Your daughter is nearing the age when puberty can begin. Talking before the first signs makes it a calm, safe stage for her."
+      },
+      "cards": [
+        {
+          "title": "Talk before the signs",
+          "body": "The first signs of puberty usually appear between eight and thirteen, according to the American Academy of Pediatrics. Talk early, calmly and privately. Usually the mother or a trusted woman leads the talk, with the father supportive. The message: your body is healthy and growing as Allah created it."
+        },
+        {
+          "title": "What happens, and in what order?",
+          "body": "It usually starts with a small bump under the nipple, sometimes on one side before the other, then body hair, a growth spurt, more sweating and skin changes. The first period usually comes about two years after breast development begins."
+        },
+        {
+          "title": "Getting ready for the first period",
+          "body": "A small bag with sanitary pads and spare underwear for school, showing her how to use and dispose of a pad, keeping a note of the dates, and knowing she can come to you at any hour without embarrassment."
+        },
+        {
+          "title": "The religious side, gently",
+          "body": "With puberty she becomes responsible herself for prayer and fasting, and she learns the rulings of purity from a trustworthy female teacher or scholar. Modesty is good, as in one of the two attached hadiths, but it never stops us from asking: in the other, Umm Sulaym asked the Prophet ﷺ about such matters directly."
+        },
+        {
+          "title": "Feelings and respect",
+          "body": "Mood swings and sensitivity about her body are normal. No comments about her weight or shape from anyone in the family, respect her privacy in her room and in the bathroom, and be patient."
+        }
+      ],
+      "red_flags": [
+        "Any sign of puberty before age eight → paediatrician: early puberty needs assessment.",
+        "No breast development by thirteen, or no period by fifteen or three years after breast development began → doctor.",
+        "Heavy bleeding that soaks a pad every one to two hours, bleeding that lasts more than seven days, pain that stops her daily life, or fainting → doctor."
+      ],
+      "unit_ids": [
+        "dev-40436851",
+        "med-88c1469a",
+        "isl-9738d757"
+      ],
+      "evidence_ids": [
+        "h_haya_good",
+        "h_umm_sulaym"
+      ],
+      "quran": [],
+      "links": {
+        "program_ids": [],
+        "path_ids": [
+          "path_10-12_medical_puberty_wellbeing",
+          "path_10-12_development_pre_teen"
+        ],
+        "lesson_ids": [
+          "lesson_10-12_development_pre_teen_01",
+          "lesson_10-12_medical_puberty_wellbeing_b04"
+        ],
+        "story_ids": [],
+        "features": [
+          "assistant"
+        ]
+      }
+    },
+    {
+      "key": "puberty_boys",
+      "order": 6,
+      "trigger": {
+        "type": "age",
+        "age_months": 114,
+        "alert_days_before": 30,
+        "band_fallback": [
+          "10-12"
+        ]
+      },
+      "audience": {
+        "gender": "male",
+        "if_gender_unknown": "ask"
+      },
+      "medical": true,
+      "title": "Preparing for puberty: boys",
+      "alert": {
+        "title": "A calm talk before puberty",
+        "body": "Your son is nearing the age when puberty can begin. A calm talk before the changes keeps him from learning about them from friends or the internet."
+      },
+      "cards": [
+        {
+          "title": "Talk before the changes",
+          "body": "In boys, puberty usually begins between nine and fourteen, according to the American Academy of Pediatrics. Usually the father or a trusted man leads the talk, privately and calmly: if he doesn't hear it from you, he will hear it from friends or the internet."
+        },
+        {
+          "title": "What happens?",
+          "body": "The testicles grow first, which parents usually don't notice, then hair appears in the pubic area and the armpits, a growth spurt comes, the voice cracks and then deepens, sweating increases and spots appear on the face. Slight swelling under one or both nipples is common in boys and usually goes away by itself."
+        },
+        {
+          "title": "Wet dreams (ihtilam)",
+          "body": "Tell him before it happens that a release of fluid during sleep is a natural sign of growing up, not a sin and not an illness. What he does afterwards, the rules of purity and ghusl, he learns from a trustworthy teacher or scholar. Asking about such things is part of religion, as in Umm Sulaym's question in the attached hadith."
+        },
+        {
+          "title": "Daily care and privacy",
+          "body": "A daily shower, deodorant, clean clothes, his own private space and knocking before entering, plus a calm talk about images and content online before he comes across them."
+        },
+        {
+          "title": "Feelings and respect",
+          "body": "Mood swings, wanting more independence and caring about friends' opinions are normal. Modesty is part of faith, as in the attached hadith, so teach it with respect, and never mock his changing voice or his body."
+        }
+      ],
+      "red_flags": [
+        "Signs of puberty before nine, or none by fourteen → paediatrician.",
+        "Sudden pain or swelling in a testicle → emergency care immediately: it can be a twisted testicle.",
+        "Breast swelling that is large or lasts more than two years, or growth in height that stops → doctor."
+      ],
+      "unit_ids": [
+        "med-88c1469a",
+        "89bf08a7-5d8f-4373-b48d-523b596f5f8a"
+      ],
+      "evidence_ids": [
+        "h_umm_sulaym",
+        "h_haya"
+      ],
+      "quran": [],
+      "links": {
+        "program_ids": [],
+        "path_ids": [
+          "path_10-12_medical_puberty_wellbeing",
+          "path_10-12_development_pre_teen"
+        ],
+        "lesson_ids": [
+          "lesson_10-12_development_pre_teen_01",
+          "lesson_10-12_medical_puberty_wellbeing_03"
+        ],
+        "story_ids": [],
+        "features": [
+          "assistant"
+        ]
+      }
+    },
+    {
+      "key": "age_ten",
+      "order": 7,
+      "trigger": {
+        "type": "age",
+        "age_months": 120,
+        "alert_days_before": 30,
+        "band_fallback": [
+          "10-12"
+        ]
+      },
+      "audience": {
+        "gender": "any",
+        "if_gender_unknown": "show"
+      },
+      "medical": false,
+      "title": "Turning ten",
+      "alert": {
+        "title": "Turning ten next month",
+        "body": "A new stage: steadier follow-up of prayer, more trust and more privacy. A short guide."
+      },
+      "cards": [
+        {
+          "title": "Steadier, not harsher",
+          "body": "The same guidance on prayer makes the follow-up steadier at ten; its source is in the linked knowledge unit. Steadier follow-up means a clear routine, checking in and talking about meaning, not shouting, shaming or punishment. The attached hadith is about gentleness."
+        },
+        {
+          "title": "Prayer becomes his own",
+          "body": "If he has finished the Prayer Journey, he moves on to 'My prayer, my responsibility': he keeps track of his own prayer and you hold a short weekly check-in. If he hasn't started it yet, start now from the stage that suits him."
+        },
+        {
+          "title": "Privacy at home",
+          "body": "His own bed, and his own room or private corner where possible, with knocking before entering, by parents too. Start the puberty conversations now; the app will remind you at the right time for a son or a daughter."
+        },
+        {
+          "title": "More trust, more responsibility",
+          "body": "Pocket money he manages himself, a household responsibility of his own, and a voice in family decisions. Each of us is a shepherd, as in the attached hadith, so let him practise caring for what is his: his things, his time, and a younger sibling if there is one."
+        }
+      ],
+      "unit_ids": [
+        "isl-f2bef952",
+        "isl-ca9f1de7",
+        "8451bbb0-4617-4252-a206-e442c533fac3"
+      ],
+      "evidence_ids": [
+        "h_gentle",
+        "h_shepherd"
+      ],
+      "quran": [],
+      "links": {
+        "program_ids": [
+          "prayer_journey"
+        ],
+        "path_ids": [
+          "path_10-12_islamic_parenting_worship_love",
+          "path_10-12_development_pre_teen"
+        ],
+        "lesson_ids": [
+          "lesson_10-12_islamic_parenting_worship_love_01",
+          "lesson_10-12_development_pre_teen_02"
+        ],
+        "story_ids": [],
+        "features": [
+          "covenant"
+        ]
+      }
+    },
+    {
+      "key": "first_phone",
+      "order": 8,
+      "trigger": {
+        "type": "age",
+        "age_months": 132,
+        "alert_days_before": 30,
+        "band_fallback": [
+          "10-12"
+        ]
+      },
+      "audience": {
+        "gender": "any",
+        "if_gender_unknown": "show"
+      },
+      "medical": false,
+      "title": "The first phone",
+      "alert": {
+        "title": "Before the first phone",
+        "body": "Around eleven, many children ask for their first phone. Before you say yes or no: a four-step plan."
+      },
+      "cards": [
+        {
+          "title": "Does he need it now?",
+          "body": "Many families hold off on a smartphone until there is a real need, such as a distant school or travel; 'all my friends have one' is not a need. A basic phone for calls is a reasonable first step. If your child already uses a tablet or a shared device, start these steps now."
+        },
+        {
+          "title": "A written agreement first",
+          "body": "Write a short family agreement together, where every rule for him has a matching rule for you: no devices at the table for any of us, and all devices sleep outside the bedrooms."
+        },
+        {
+          "title": "The internet licence",
+          "body": "Let him practise the 'internet licence' scenarios in the app, like a stranger asking for a photo or offering a gift, before he has his own device. The safe answer always includes telling a parent."
+        },
+        {
+          "title": "Settings and the golden rule",
+          "body": "Parental controls and app approval at the start, no phone in the bedroom at night, and the most important rule of all: 'Tell me anything that bothers you, and I will listen without shouting or taking the phone away at once.'"
+        }
+      ],
+      "unit_ids": [
+        "gap-cyber-phone-boundary-01",
+        "cyb-e8894b21",
+        "cyb-fbd7fad6"
+      ],
+      "evidence_ids": [],
+      "quran": [],
+      "links": {
+        "program_ids": [],
+        "path_ids": [
+          "path_10-12_cyber_digital_citizenship",
+          "path_13-15_cyber_digital_maturity"
+        ],
+        "lesson_ids": [
+          "lesson_10-12_cyber_digital_citizenship_01",
+          "lesson_10-12_cyber_digital_citizenship_b04"
+        ],
+        "story_ids": [],
+        "features": [
+          "license",
+          "screen_off"
+        ]
+      }
+    },
+    {
+      "key": "teen_identity",
+      "order": 9,
+      "trigger": {
+        "type": "age",
+        "age_months": 156,
+        "alert_days_before": 30,
+        "band_fallback": [
+          "13-15"
+        ]
+      },
+      "audience": {
+        "gender": "any",
+        "if_gender_unknown": "show"
+      },
+      "medical": false,
+      "title": "The identity question",
+      "alert": {
+        "title": "Turning thirteen next month",
+        "body": "The question 'who am I?' begins now, and you are still the closest answer. A short guide to this stage."
+      },
+      "cards": [
+        {
+          "title": "Who am I?",
+          "body": "Trying out new opinions, styles and friends is a normal part of building an identity, not a rejection of your values, and online worlds are part of that experiment too. Stay close and curious rather than alarmed."
+        },
+        {
+          "title": "From control to supervision",
+          "body": "Rules agreed together, reasons explained, and freedom that grows with trust. You are still shepherds responsible for your flock, as in the attached hadith, but now the teenager walks beside you rather than behind you."
+        },
+        {
+          "title": "Questions of faith are welcome",
+          "body": "A question or a doubt is a chance for conversation, not a disaster. Listen until he has finished, answer what you know, and look for answers together with scholars and in the app's paths on certainty."
+        },
+        {
+          "title": "Belonging",
+          "body": "Give him a real role at home and in the community: at the mosque, in volunteering or in a skill he masters. Get to know his friends and their families: belonging protects more than surveillance does."
+        }
+      ],
+      "red_flags": [
+        "Persistent sadness, withdrawing from family and friends, or a sharp drop in schoolwork for more than two weeks → talk to a doctor or a counsellor.",
+        "Any talk of self-harm or of not wanting to live → get help the same day.",
+        "Signs of substance use, or contact with a stranger who asks for secrecy → act at once, and calmly."
+      ],
+      "unit_ids": [
+        "dev-e49bf55e",
+        "cyb-68e1ede6",
+        "med-7f894b01"
+      ],
+      "evidence_ids": [
+        "h_shepherd"
+      ],
+      "quran": [],
+      "links": {
+        "program_ids": [],
+        "path_ids": [
+          "path_13-15_islamic_parenting_teen_identity",
+          "path_13-15_aqeedah_certainty",
+          "path_13-15_development_brain_identity"
+        ],
+        "lesson_ids": [
+          "lesson_13-15_development_brain_identity_b04",
+          "lesson_13-15_islamic_parenting_teen_identity_02"
+        ],
+        "story_ids": [],
+        "features": [
+          "assistant"
+        ]
+      }
+    }
+  ],
+  "generation": {
+    "drafter_model": "claude-opus-5.5",
+    "reviewer_model": "pending (Ollama Cloud Pro 5-hour cap reached 2026-10-04 10:30)",
+    "translator_model": "claude-opus-5.5",
+    "reviewed_at": "2026-10-04",
+    "approved_by": "auto-review:guards-only (cross-family review pending)"
+  }
+}
