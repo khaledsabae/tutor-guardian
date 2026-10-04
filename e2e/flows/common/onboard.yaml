@@ -5,6 +5,7 @@ appId: com.alsaba.almorabbi
 ---
 - launchApp:
     clearState: true
+- runFlow: system_dialogs.yaml
 - extendedWaitUntil:
     visible: '${output.t.lit_langTitle}'
     timeout: 60000

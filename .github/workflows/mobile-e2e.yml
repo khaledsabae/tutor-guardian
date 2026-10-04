@@ -89,6 +89,8 @@ env:
   MAESTRO_VERSION: '2.11.0'
   # checksums_sha256.txt of the cli-2.11.0 release
   MAESTRO_SHA256: 5384593cb4e7a106489e75a821d157dd43f4e438df6bc308b72e82c685e1283a
+  # Bump the suffix when the emulator settings below change.
+  AVD_CACHE_KEY: avd-api35-google_apis-x86_64-pixel_7-r1
 
 jobs:
   keystore:
@@ -244,14 +246,14 @@ jobs:
           echo "$BIN" >> "$GITHUB_PATH"
           "$BIN/maestro" --version
 
-      - name: AVD cache
-        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+      - name: Restore the AVD
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         id: avd-cache
         with:
           path: |
             ~/.android/avd/*
             ~/.android/adb*
-          key: avd-api35-google_apis-x86_64-pixel_7-r1
+          key: ${{ env.AVD_CACHE_KEY }}
 
       - name: Create the AVD and a boot snapshot
         if: steps.avd-cache.outputs.cache-hit != 'true'
@@ -269,6 +271,15 @@ jobs:
           disable-animations: false
           emulator-boot-timeout: 900
           script: echo "AVD snapshot generated for caching."
+
+      - name: Save the AVD (now, so a red run still caches it)
+        if: steps.avd-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: |
+            ~/.android/avd/*
+            ~/.android/adb*
+          key: ${{ env.AVD_CACHE_KEY }}
 
       - name: Run the journeys
         uses: reactivecircus/android-emulator-runner@a421e43855164a8197daf9d8d40fe71c6996bb0d # v2.38.0

@@ -7,6 +7,7 @@ name: fresh/04 assistant answers
 ---
 - runScript: ../common/l10n.js
 - launchApp
+- runFlow: ../common/system_dialogs.yaml
 - extendedWaitUntil:
     visible: '${output.lead.navAssistant}'
     timeout: 60000

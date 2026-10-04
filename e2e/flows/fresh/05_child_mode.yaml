@@ -6,6 +6,7 @@ name: fresh/05 child mode in → PIN out → cold start
 ---
 - runScript: ../common/l10n.js
 - launchApp
+- runFlow: ../common/system_dialogs.yaml
 - extendedWaitUntil:
     visible: '${output.lead.navMore}'
     timeout: 60000
@@ -54,6 +55,7 @@ name: fresh/05 child mode in → PIN out → cold start
 - stopApp
 - launchApp:
     stopApp: true
+- runFlow: ../common/system_dialogs.yaml
 - runFlow:
     file: ../common/assert_today.yaml
     env:

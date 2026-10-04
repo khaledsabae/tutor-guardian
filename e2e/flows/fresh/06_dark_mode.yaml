@@ -5,6 +5,7 @@ name: fresh/06 dark mode
 ---
 - runScript: ../common/l10n.js
 - launchApp
+- runFlow: ../common/system_dialogs.yaml
 - runFlow: ../common/open_settings.yaml
 - scrollUntilVisible:
     element:

@@ -6,6 +6,7 @@ name: upgrade/02 after upgrade → same child → Today
 - runScript: ../common/l10n.js
 - launchApp:
     stopApp: true
+- runFlow: ../common/system_dialogs.yaml
 - extendedWaitUntil:
     visible: '${output.lead.navToday}'
     timeout: 60000

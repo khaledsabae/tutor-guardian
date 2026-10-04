@@ -6,6 +6,7 @@ name: fresh/07 English
 ---
 - runScript: ../common/l10n.js
 - launchApp
+- runFlow: ../common/system_dialogs.yaml
 - runFlow: ../common/open_settings.yaml
 - scrollUntilVisible:
     element:

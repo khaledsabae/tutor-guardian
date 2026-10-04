@@ -35,6 +35,11 @@ adb wait-for-device
 adb shell svc power stayon true || true
 adb shell settings put system screen_off_timeout 1800000 || true
 adb shell input keyevent 82 || true
+# No system "X isn't responding" dialogs: right after boot the Pixel Launcher
+# ANRs on a loaded runner and its dialog covers the app (first run: both
+# onboardings blocked). The app's own ANRs and crashes are still logged, and the
+# logcat gate fails on them — it never relied on a dialog.
+adb shell settings put global hide_error_dialogs 1 || true
 # GA4 debug mode for the app: its events go to DebugView and are excluded from
 # reports and the BigQuery export (Firebase docs, "Debug events").
 adb shell setprop debug.firebase.analytics.app "$PKG"
