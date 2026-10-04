@@ -94,6 +94,30 @@ def detect_language(text: str) -> str:
     return "ar"
 
 
+def _family_names(db_path: Path) -> dict[str, tuple[tuple[int, str], ...]]:
+    """device_id → its children ((id, name), …) in profile order (read-only)."""
+    conn = sqlite3.connect(f"file:{db_path}?mode=ro", uri=True)
+    try:
+        rows = conn.execute(
+            "SELECT id, device_id, name FROM child_profiles ORDER BY id").fetchall()
+    finally:
+        conn.close()
+    out: dict[str, list[tuple[int, str]]] = {}
+    for cid, device_id, name in rows:
+        name = (name or "").strip()
+        if device_id and len(name) >= 2:
+            out.setdefault(device_id, []).append((int(cid), name))
+    return {d: tuple(m) for d, m in out.items()}
+
+
+def _redact_family(text: str, members: tuple[tuple[int, str], ...]) -> str:
+    if not members:
+        return text
+    sys.path.insert(0, str(_ROOT / "backend"))
+    from app.services.privacy import Family, redact_family
+    return redact_family(text, Family(members))
+
+
 def collect_raw_candidates(db_path: Path, suggested: set[str]) -> list[dict]:
     """Fetch user questions with resolved age groups."""
     conn = sqlite3.connect(f"file:{db_path}?mode=ro", uri=True)
@@ -115,9 +139,13 @@ def collect_raw_candidates(db_path: Path, suggested: set[str]) -> list[dict]:
 
     candidates = []
     seen_texts = set()
+    family_names = _family_names(db_path)
 
     for r in rows:
-        raw_content = r["content"] or ""
+        # The family's own child names first — the same redaction the
+        # assistant applies before any cloud call (services/privacy.py); the
+        # regex anonymizer below only catches a name after a cue word.
+        raw_content = _redact_family(r["content"] or "", family_names.get(r["device_id"], ()))
         norm = _normalize(raw_content)
 
         if norm in suggested:

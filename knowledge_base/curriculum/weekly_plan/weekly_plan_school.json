@@ -1,0 +1,255 @@
+{
+  "group": "school",
+  "age_bands": [
+    "7-9",
+    "10-12"
+  ],
+  "version": "1.0.0",
+  "is_published": true,
+  "description": "خطة الأسبوع من سبع سنوات إلى اثنتي عشرة: الصلاة حبًّا، وضبط الغضب، والمذاكرة، والشاشات، والنوم، والقلق، والإخوة.",
+  "topics": [
+    {
+      "key": "prayer",
+      "focus": "الصلاة حبًّا لا إلزامًا",
+      "actions": [
+        {
+          "key": "prayer_school_1",
+          "text": "صلّوا صلاةً واحدة يوميًا معًا في البيت، ودعه يؤذّن لها إن أحب."
+        },
+        {
+          "key": "prayer_school_2",
+          "text": "استعمل جدولًا بسيطًا يضع فيه علامة بعد كل صلاة، وامدح الاستمرار لا الكمال."
+        },
+        {
+          "key": "prayer_school_3",
+          "text": "ذكّره بلطف وبكلمة واحدة عند الأذان، دون تهديد أو عقاب."
+        },
+        {
+          "key": "prayer_school_4",
+          "text": "اسأله: «ما الذي يجعل الصلاة صعبة عليك؟» واستمع لجوابه قبل أن تنصح."
+        }
+      ],
+      "lessons": {
+        "7-9": [
+          "lesson_7-9_islamic_parenting_worship_01",
+          "lesson_7-9_islamic_parenting_worship_03"
+        ],
+        "10-12": [
+          "lesson_10-12_islamic_parenting_worship_love_01",
+          "lesson_10-12_islamic_parenting_identity_01"
+        ]
+      }
+    },
+    {
+      "key": "anger",
+      "focus": "ضبط الغضب: أدوات للطفل وللوالد",
+      "actions": [
+        {
+          "key": "anger_school_1",
+          "text": "اتفقا على «ركن هدوء» يذهب إليه حين يغضب، ثم تتحدثان بعد أن يهدأ."
+        },
+        {
+          "key": "anger_school_2",
+          "text": "علّمه خطوات بسيطة عند الغضب: يتوقف، ثم يتنفس ثلاث مرات، ثم يتكلم."
+        },
+        {
+          "key": "anger_school_3",
+          "text": "تحدّث عن غضبك أنت بصوت هادئ أمامه: «أنا غاضب، وسأهدأ أولًا»."
+        },
+        {
+          "key": "anger_school_4",
+          "text": "امدحه حين يعبّر عن غضبه بالكلام بدل الصراخ أو الضرب."
+        }
+      ],
+      "lessons": {
+        "7-9": [
+          "lesson_7-9_islamic_parenting_akhlaq_04",
+          "lesson_7-9_medical_emotional_health_b04",
+          "lesson_7-9_medical_emotional_health_01"
+        ],
+        "10-12": [
+          "lesson_10-12_development_pre_teen_02",
+          "lesson_10-12_islamic_parenting_identity_03"
+        ]
+      }
+    },
+    {
+      "key": "study",
+      "focus": "مذاكرة منظمة بلا صراع",
+      "actions": [
+        {
+          "key": "study_school_1",
+          "text": "ثبّت وقتًا ومكانًا هادئًا للمذاكرة كل يوم، بعيدًا عن الشاشات."
+        },
+        {
+          "key": "study_school_2",
+          "text": "قسّم المذاكرة إلى فترات قصيرة بينها استراحات."
+        },
+        {
+          "key": "study_school_3",
+          "text": "امدح جهده واستمراره، لا الدرجة وحدها."
+        },
+        {
+          "key": "study_school_4",
+          "text": "اسأله عن مادة يحبها، ودعه يشرح لك منها شيئًا."
+        }
+      ],
+      "lessons": {
+        "7-9": [
+          "lesson_7-9_medical_emotional_health_02",
+          "lesson_7-9_islamic_parenting_akhlaq_03"
+        ],
+        "10-12": [
+          "lesson_10-12_development_pre_teen_04",
+          "lesson_10-12_medical_puberty_wellbeing_02"
+        ]
+      }
+    },
+    {
+      "key": "screens",
+      "focus": "اتفاق عائلي على الشاشات",
+      "actions": [
+        {
+          "key": "screens_school_1",
+          "text": "اكتبا معًا اتفاقًا بسيطًا للشاشة: متى، وكم، وأين."
+        },
+        {
+          "key": "screens_school_2",
+          "text": "أبقِ الأجهزة خارج غرف النوم ليلًا للأسرة كلها."
+        },
+        {
+          "key": "screens_school_3",
+          "text": "العب معه لعبته المفضلة مرة هذا الأسبوع، واسأله عمّا يعجبه فيها."
+        },
+        {
+          "key": "screens_school_4",
+          "text": "اقترح نشاطًا بديلًا ممتعًا لوقت الفراغ: رياضة أو قراءة أو عمل يدوي."
+        }
+      ],
+      "lessons": {
+        "7-9": [
+          "lesson_7-9_cyber_digital_basics_01",
+          "lesson_7-9_development_digital_wellbeing_01",
+          "lesson_7-9_cyber_digital_basics_02"
+        ],
+        "10-12": [
+          "lesson_10-12_development_pre_teen_04",
+          "lesson_10-12_cyber_digital_citizenship_01"
+        ]
+      }
+    },
+    {
+      "key": "sleep",
+      "focus": "نوم كافٍ لتركيز أفضل",
+      "actions": [
+        {
+          "key": "sleep_school_1",
+          "text": "ثبّت موعد النوم في أيام الدراسة، ولا تؤخّره كثيرًا في العطلة."
+        },
+        {
+          "key": "sleep_school_2",
+          "text": "أوقف الشاشات قبل النوم بساعة، وضع الهاتف خارج الغرفة."
+        },
+        {
+          "key": "sleep_school_3",
+          "text": "خفّف السكريات والمنبّهات في المساء."
+        },
+        {
+          "key": "sleep_school_4",
+          "text": "اجعل آخر دقائق اليوم حديثًا هادئًا وأذكار النوم معًا."
+        }
+      ],
+      "lessons": {
+        "7-9": [
+          "lesson_7-9_medical_emotional_health_02"
+        ],
+        "10-12": [
+          "lesson_10-12_medical_puberty_wellbeing_03"
+        ]
+      }
+    },
+    {
+      "key": "fear",
+      "focus": "القلق والخوف: نسمع ونطمئن",
+      "actions": [
+        {
+          "key": "fear_school_1",
+          "text": "خصّص وقتًا هادئًا يحدّثك فيه عمّا يقلقه، دون مقاطعة أو سخرية."
+        },
+        {
+          "key": "fear_school_2",
+          "text": "علّمه التنفس البطيء: شهيق مع العدّ إلى أربع، وزفير مع العدّ إلى أربع."
+        },
+        {
+          "key": "fear_school_3",
+          "text": "واجها الخوف معًا بخطوات صغيرة متدرّجة، وامدح كل خطوة."
+        },
+        {
+          "key": "fear_school_4",
+          "text": "إن استمر القلق أسابيع وأثّر في نومه أو دراسته، فاستشر مختصًا."
+        }
+      ],
+      "lessons": {
+        "7-9": [
+          "lesson_7-9_medical_emotional_health_b03",
+          "lesson_7-9_medical_emotional_health_01"
+        ],
+        "10-12": [
+          "lesson_10-12_medical_puberty_wellbeing_02"
+        ]
+      }
+    },
+    {
+      "key": "siblings",
+      "focus": "الإخوة: تعاون بدل تنافس",
+      "actions": [
+        {
+          "key": "siblings_school_1",
+          "text": "خصّص وقتًا منفردًا لكل طفل هذا الأسبوع، ولو كان قصيرًا."
+        },
+        {
+          "key": "siblings_school_2",
+          "text": "تجنّب المقارنة بين الإخوة في الدرجات أو السلوك."
+        },
+        {
+          "key": "siblings_school_3",
+          "text": "كلّفهم بمهمة مشتركة في البيت، وامدح تعاونهم."
+        },
+        {
+          "key": "siblings_school_4",
+          "text": "إن تشاجرا فاستمع لكلٍّ منهما على حدة قبل أن تحكم."
+        }
+      ],
+      "lessons": {
+        "7-9": [
+          "lesson_7-9_islamic_parenting_akhlaq_02"
+        ],
+        "10-12": [
+          "lesson_10-12_islamic_parenting_identity_03"
+        ]
+      }
+    }
+  ],
+  "worship": [
+    {
+      "key": "worship_school_1",
+      "text": "صلّوا المغرب أو العشاء جماعةً في البيت أربعة أيام هذا الأسبوع."
+    },
+    {
+      "key": "worship_school_2",
+      "text": "اقرؤوا معًا صفحة واحدة من القرآن بعد صلاة واحدة كل يوم."
+    },
+    {
+      "key": "worship_school_3",
+      "text": "اختاروا معًا عملًا خيريًا صغيرًا هذا الأسبوع: إطعام، أو مساعدة جار، أو صدقة."
+    },
+    {
+      "key": "worship_school_4",
+      "text": "اجلسوا بعد المغرب دقائق لأذكار المساء معًا."
+    },
+    {
+      "key": "worship_school_5",
+      "text": "زوروا قريبًا أو مريضًا معًا هذا الأسبوع."
+    }
+  ]
+}

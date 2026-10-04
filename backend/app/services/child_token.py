@@ -3,7 +3,8 @@
 Uses HMAC-SHA256 signed tokens so the server can verify child sessions
 without any database table, lock, or query. (The one-time QR claim codes that
 lead to a web token are the exception: they are in `child_web_claims`.) Tokens are short-lived (30
-minutes by default) and carry only: child_id, device_id, scope, iat, exp.
+minutes by default) and carry only: child_id, a keyed device binding (never the
+device id itself — format v2), scope, iat, exp.
 """
 import base64
 import hashlib
@@ -60,18 +61,33 @@ def _b64decode(data: str) -> bytes:
     return base64.urlsafe_b64decode(data + ("=" * pad))
 
 
+def _device_binding(device_id: str) -> str:
+    """An opaque, keyed stand-in for the parent's device id.
+
+    Child tokens used to carry the device id itself, readable by anyone who
+    base64-decodes the payload — a teen holding a 20-hour web token could read
+    their parent's device id and mint a parent session with it (PR #26 review,
+    P1). The token now carries only this HMAC: the server resolves the device
+    from the child and checks it still matches; the bearer learns nothing.
+    """
+    return _b64encode(hmac.new(_secret(), b"device:" + device_id.encode("utf-8"),
+                               hashlib.sha256).digest()[:18])
+
+
 def issue_child_token(device_id: str, child_id: int, ttl_seconds: int = 1800, is_web: bool = False) -> str:
     """Issue a short-lived signed token for a child reporting session.
 
     When is_web=True the token is scoped for web use and is valid for a longer
     duration (20 hours) so the teen does not need to re-scan a QR code during
     the day. The default 30-minute token remains for mobile child-mode.
+    Format v2: no device id in the payload (see _device_binding).
     """
     now = int(time.time())
     scope = _WEB_SCOPE if is_web else _CHILD_SCOPE
     payload = {
+        "v": 2,
         "scope": scope,
-        "device_id": device_id,
+        "dh": _device_binding(device_id),
         "child_id": child_id,
         "iat": now,
         "exp": now + ttl_seconds,
@@ -104,9 +120,34 @@ def verify_child_token(token: str, *, allow_web: bool = True) -> dict[str, Any] 
             return None
         if int(payload.get("exp", 0)) < int(time.time()):
             return None
-        return payload
     except Exception:
         return None
+    if "device_id" in payload:
+        # Format v1 (device id in clear). Still accepted until it expires —
+        # at most 20 hours after this deploy — and never issued again.
+        return payload
+    return _resolve_device(payload)
+
+
+def _resolve_device(payload: dict[str, Any]) -> dict[str, Any] | None:
+    """v2: the device comes from the child's profile, checked against the
+    token's keyed binding. A deleted child, or one no longer on that device,
+    invalidates the token."""
+    try:
+        conn = get_conn()
+        try:
+            row = conn.execute(
+                "SELECT device_id FROM child_profiles WHERE id = ?",
+                (int(payload.get("child_id", 0)),),
+            ).fetchone()
+        finally:
+            conn.close()
+    except Exception:  # noqa: BLE001 — unreadable store: not a valid token
+        return None
+    if row is None or not hmac.compare_digest(
+            _device_binding(row["device_id"]), str(payload.get("dh", ""))):
+        return None
+    return {**payload, "device_id": row["device_id"]}
 
 
 def child_token_expiry_iso(token: str) -> str | None:

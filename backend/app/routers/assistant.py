@@ -39,7 +39,9 @@ from app.services.domain_classifier import (
     UNCERTAIN_DOMAINS, classify_domains, is_uncertain, matched_fast_path,
 )
 from app.services.tier_router import choose_tier
-from app.services.privacy import mentions_any, names_for_device, redact_for_cloud
+from app.core.proof import request_proven
+from app.services.privacy import Family, family_for_device, family_mentions, redact_family
+from app.services import child_memory
 from app.services import answer_cache
 from app.services import conversation_store as store
 from app.services.tafsir_service import (
@@ -417,6 +419,42 @@ def _record_failed_turn(session_id: str | None, flag: str, *,
         logger.warning("recording the failed turn failed: %s", exc)
 
 
+def _redact_turns(history, family: Family, subject_id):
+    """History turns with the family's child names replaced (see privacy.py)."""
+    return [
+        t.model_copy(update={"content": redact_family(t.content, family, subject_id)})
+        for t in history
+    ]
+
+
+async def _memory_context(caller_device, user_message: UserMessage, query_text: str,
+                          family: Family, proven: bool):
+    """(child_id, facts block, facts used) — off the event loop, never raises.
+
+    `proven`: this session proved it holds the phone (core/proof.py). Without
+    it no remembered fact reaches the prompt — otherwise a session minted from
+    a bare device id could read memory through the answers (PR #26 review F4).
+    """
+    return await asyncio.to_thread(
+        child_memory.prompt_context, caller_device,
+        child_id=user_message.child_id, age_group=user_message.age_group,
+        question=query_text, family=family, proven=proven,
+    )
+
+
+def _remember(caller_device, child_id, query_text: str, answer: str,
+              age_group: str | None, proven: bool) -> None:
+    """Hand the finished turn to the background extractor. Fire-and-forget:
+    submitting is microseconds, and nothing downstream waits on it. Nothing is
+    learned from a session that did not prove it holds the phone."""
+    if child_id is None or not answer or not proven:
+        return
+    child_memory.schedule_extraction(
+        caller_device, child_id, question=query_text, answer=answer,
+        age_group=age_group or "", proven=proven,
+    )
+
+
 logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/assistant", tags=["assistant"])
 
@@ -445,9 +483,13 @@ async def draft_reply(request: Request, user_message: UserMessage):
             user_message.message_text or user_message.behavior_type or "",
         )
 
+    # Whether remembered facts may shape this answer (and it may teach memory
+    # anything): the session must be proven to hold the phone (core/proof.py).
+    memory_proven = await asyncio.to_thread(request_proven, request)
     try:
         return await _draft_answer(
             user_message, policies, caller_device, session_id, user_msg_id,
+            memory_proven=memory_proven,
         )
     except HTTPException:
         raise
@@ -466,7 +508,7 @@ async def draft_reply(request: Request, user_message: UserMessage):
 
 async def _draft_answer(
     user_message: UserMessage, policies: dict, caller_device: str | None,
-    session_id: str | None, user_msg_id: int | None,
+    session_id: str | None, user_msg_id: int | None, *, memory_proven: bool = False,
 ) -> AssistantReply:
     """/draft after the question is stored: guards → retrieval → LLM."""
     # ── Step 0: Banned intent check ──────────────────────────────────
@@ -580,9 +622,19 @@ async def _draft_answer(
         history = await asyncio.to_thread(store.get_history, session_id, limit=6)
     else:
         history = user_message.conversation_history or []
+    # Every text that leaves for a model has the family's child names
+    # replaced first. The primary provider is a cloud API, so "the cloud
+    # tier" is every tier — the classifier and rewriter calls included.
+    family = await asyncio.to_thread(family_for_device, caller_device)
+    # Which child the question is about decides whose name becomes «طفلي»
+    # (siblings keep «الطفل ب»…), so it is resolved before anything leaves.
+    mem_child, mem_block, mem_used = await _memory_context(
+        caller_device, user_message, query_text, family, memory_proven)
+    llm_query = redact_family(query_text, family, mem_child)
+    llm_history = _redact_turns(history, family, mem_child)
     # Both can make a model call (seconds) on a keyword fast-path miss, and
     # they are independent — so they run together, not one after the other.
-    detected_domains, rewritten_query = await _classify_and_rewrite(query_text)
+    detected_domains, rewritten_query = await _classify_and_rewrite(llm_query)
     is_general = detected_domains == ["general"]
     logger.info("Auto-detected domains: %s", detected_domains)
 
@@ -598,9 +650,9 @@ async def _draft_answer(
     )
     # A question naming the family's own child gets a personalised answer:
     # never serve it from, or store it into, the cross-family cache (M5).
-    personal = mentions_any(
-        query_text, await asyncio.to_thread(names_for_device, caller_device)
-    )
+    # Neither does one we have remembered facts for: a cached answer cannot
+    # know that the strategy it recommends already failed for this child.
+    personal = bool(family_mentions(query_text, family)) or mem_used > 0
     if (first_question and not personal and not is_general
             and not is_uncertain(detected_domains)):
         decision = evaluate_guardrails(primary_domain, severity, policies)
@@ -638,7 +690,8 @@ async def _draft_answer(
                 rewritten_query=rewritten_query,
                 lang=detect_query_language(query_text),
             )
-            log_retrieval(query_text, detected_domains, rewritten_query, units)
+            # The log keeps the question; it keeps it without the names.
+            log_retrieval(llm_query, detected_domains, rewritten_query, units)
             return units
 
         # ── Step 4b: Tafsir MCP — if the question references a specific ayah, ──
@@ -648,7 +701,11 @@ async def _draft_answer(
         # the KB. This is a one-shot best-effort enrichment: if the MCP server
         # is unreachable, the tafsir block is silently empty and the answer is
         # built from KB units alone, exactly as before.
-        ayah_task = asyncio.create_task(resolve_ayah_reference(query_text))
+        # The ayah search is an external service (mcp.tafsir.net): it gets
+        # the redacted text. A name inside a Qur'anic reference survives
+        # redaction (privacy._is_religious_reference), so «سورة يوسف» still
+        # resolves.
+        ayah_task = asyncio.create_task(resolve_ayah_reference(llm_query))
         retrieved_units = await asyncio.to_thread(_retrieve_blocking)
         ayah_ref = await ayah_task
         if ayah_ref:
@@ -695,7 +752,7 @@ async def _draft_answer(
         mode = "general_pivot"
         try:
             generated = await generate_general_pivot(
-                query_text, user_message.age_group or "unspecified"
+                llm_query, user_message.age_group or "unspecified"
             )
             draft = generated if (generated and generated.strip()) else _PIVOT_FALLBACK
         except Exception as e:
@@ -710,19 +767,6 @@ async def _draft_answer(
             query_text, detected_domains, user_message.severity or "خفيف",
             retrieved_units, history_len=len(history),
         )
-        gen_question, gen_history = query_text, history
-        if tier == "cloud_quality":
-            def _redact_blocking():
-                # redact_for_cloud reads child names from sqlite per call.
-                return (
-                    redact_for_cloud(query_text, caller_device),
-                    [
-                        t.model_copy(update={"content": redact_for_cloud(t.content, caller_device)})
-                        for t in history
-                    ],
-                )
-
-            gen_question, gen_history = await asyncio.to_thread(_redact_blocking)
         try:
             generated = await generate_reply(
                 domain=primary_domain,
@@ -730,10 +774,11 @@ async def _draft_answer(
                 age_group=user_message.age_group or "unspecified",
                 severity=user_message.severity or "خفيف",
                 retrieved_units=retrieved_units,
-                question_text=gen_question,
-                conversation_history=gen_history,
+                question_text=llm_query,
+                conversation_history=llm_history,
                 tier=tier,
                 route_reason=route_reason,
+                child_context=mem_block,
             )
             if generated and generated.strip():
                 mode = "llm_generated"
@@ -778,7 +823,14 @@ async def _draft_answer(
         # answer is told not to cite, and an empty retrieval has nothing to cite.
         "sources": reply_sources(retrieved_units)
         if mode in ("llm_generated", "retrieval_only") else [],
+        # Which child the answer was personalised for, and with how many
+        # remembered facts (0 = none used). Additive; old clients ignore it.
+        "child_id": mem_child,
+        "memory_facts_used": mem_used if mode == "llm_generated" else 0,
     }
+    if mode == "llm_generated" and not reply.needs_human_review:
+        _remember(caller_device, mem_child, query_text, reply.reply_text,
+                  user_message.age_group, memory_proven)
 
     await asyncio.to_thread(
         log_session,
@@ -876,8 +928,10 @@ async def stream_reply(request: Request, user_message: UserMessage) -> Streaming
         await _register_turn(control)
 
     lang = detect_reply_language(user_message.message_text or "")
+    memory_proven = await asyncio.to_thread(request_proven, request)   # see /draft
     work = asyncio.create_task(_stream_answer(
         user_message, policies, caller_device, session_id, user_msg_id, control,
+        memory_proven=memory_proven,
     ))
     _PIPELINES.add(work)
     work.add_done_callback(_PIPELINES.discard)
@@ -963,7 +1017,7 @@ async def _pipeline_failed(exc: BaseException, control: _TurnControl | None,
 async def _stream_answer(
     user_message: UserMessage, policies: dict, caller_device: str | None,
     session_id: str | None, user_msg_id: int | None,
-    control: _TurnControl | None = None,
+    control: _TurnControl | None = None, *, memory_proven: bool = False,
 ) -> StreamingResponse:
     """/stream after the question is stored: guards → retrieval → SSE."""
 
@@ -1053,9 +1107,17 @@ async def _stream_answer(
         history = await asyncio.to_thread(store.get_history, session_id, limit=6)
     else:
         history = user_message.conversation_history or []
+    # Names out of every model-bound text — see /draft.
+    family = await asyncio.to_thread(family_for_device, caller_device)
+    # Which child the question is about decides whose name becomes «طفلي»
+    # (siblings keep «الطفل ب»…), so it is resolved before anything leaves.
+    mem_child, mem_block, mem_used = await _memory_context(
+        caller_device, user_message, query_text, family, memory_proven)
+    llm_query = redact_family(query_text, family, mem_child)
+    llm_history = _redact_turns(history, family, mem_child)
     # Concurrent, not sequential — see _classify_and_rewrite. This is the path
     # the mobile app uses, so the round-trip saved here is one the user feels.
-    detected_domains, rewritten_query = await _classify_and_rewrite(query_text)
+    detected_domains, rewritten_query = await _classify_and_rewrite(llm_query)
     is_general = detected_domains == ["general"]
 
     primary_domain = _label_domain(detected_domains, [])
@@ -1070,9 +1132,8 @@ async def _stream_answer(
     )
 
     # ── Step 3b: Pre-cache check (skipped on a guessed domain — see /draft) ──
-    personal = mentions_any(
-        query_text, await asyncio.to_thread(names_for_device, caller_device)
-    )
+    # Remembered facts make an answer personal, exactly like a name does.
+    personal = bool(family_mentions(query_text, family)) or mem_used > 0
     if (first_question and not personal and not is_general
             and not is_uncertain(detected_domains)):
         decision = evaluate_guardrails(primary_domain, severity, policies)
@@ -1105,11 +1166,16 @@ async def _stream_answer(
                 rewritten_query=rewritten_query,
                 lang=detect_query_language(query_text),
             )
-            log_retrieval(query_text, detected_domains, rewritten_query, units)
+            # The log keeps the question; it keeps it without the names.
+            log_retrieval(llm_query, detected_domains, rewritten_query, units)
             return units
 
         # ── Tafsir MCP enrichment (same logic as /draft) ────────────────
-        ayah_task = asyncio.create_task(resolve_ayah_reference(query_text))
+        # The ayah search is an external service (mcp.tafsir.net): it gets
+        # the redacted text. A name inside a Qur'anic reference survives
+        # redaction (privacy._is_religious_reference), so «سورة يوسف» still
+        # resolves.
+        ayah_task = asyncio.create_task(resolve_ayah_reference(llm_query))
         retrieved_units = await asyncio.to_thread(_retrieve_blocking)
         ayah_ref = await ayah_task
         if ayah_ref:
@@ -1156,7 +1222,7 @@ async def _stream_answer(
         tier, route_reason = "local_fast", "off_topic_pivot"
         stream_mode = "general_pivot"
         full_prompt = build_pivot_prompt(
-            query_text, user_message.age_group or "unspecified"
+            llm_query, user_message.age_group or "unspecified"
         )
     else:
         # Determine intervention type from retrieved units for guardrails
@@ -1192,24 +1258,12 @@ async def _stream_answer(
             query_text, detected_domains, severity,
             retrieved_units, history_len=len(history),
         )
-        stream_question, stream_history = query_text, history
-        if tier == "cloud_quality":
-            # redact_for_cloud reads sqlite — off the event loop, as in /draft.
-            def _redact_blocking():
-                return (
-                    redact_for_cloud(query_text, caller_device),
-                    [
-                        t.model_copy(update={"content": redact_for_cloud(t.content, caller_device)})
-                        for t in history
-                    ],
-                )
-
-            stream_question, stream_history = await asyncio.to_thread(_redact_blocking)
         full_prompt, _source = build_full_prompt(
             domain=primary_domain, behavior_type=user_message.behavior_type or "",
             age_group=user_message.age_group or "unspecified", severity=severity,
-            retrieved_units=retrieved_units, question_text=stream_question,
-            conversation_history=stream_history, tier=tier,
+            retrieved_units=retrieved_units, question_text=llm_query,
+            conversation_history=llm_history, tier=tier,
+            child_context=mem_block,
         )
 
     async def event_stream():
@@ -1481,6 +1535,9 @@ async def _stream_answer(
                             metadata={
                                 "sources": reply_sources(retrieved_units)
                                 if stream_mode == "llm_generated" else [],
+                                "child_id": mem_child,
+                                "memory_facts_used": mem_used
+                                if stream_mode == "llm_generated" else 0,
                             },
                         )
                         truncated = chunk.result.truncated if chunk.result else None
@@ -1488,6 +1545,14 @@ async def _stream_answer(
                             _persist, final_text, stream_mode,
                             f"truncated:{truncated}" if truncated else "",
                         )
+                        # Learn from the finished turn — after it is saved,
+                        # before the done frame, and without waiting: the
+                        # extractor runs on its own pool (child_memory).
+                        if (stream_mode == "llm_generated"
+                                and not decision["needs_human_review"]):
+                            _remember(caller_device, mem_child, query_text,
+                                      final_text, user_message.age_group,
+                                      memory_proven)
                         # Feed the answer cache: grounded, local, review-free,
                         # first-question answers only (§5.1) — and only whole
                         # ones: an answer cut by max_tokens or a filter (R3)
@@ -1496,6 +1561,7 @@ async def _stream_answer(
                             stream_mode == "llm_generated"
                             and first_question
                             and not personal
+                            and not family_mentions(final_text, family)
                             and tier != "cloud_quality"
                             and not decision["needs_human_review"]
                             and not truncated

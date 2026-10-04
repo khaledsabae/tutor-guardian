@@ -26,9 +26,9 @@ from app.middleware.client_ip import ClientIPMiddleware
 from app.routers import (
     health, assistant, chat, feedback, privacy, program, children, referral, push, identity,
     web, stats, daily_routine, value_tracking, habit_templates, child_mode, child_mode_web, sync,
-    insights, methodology, seo, tafsir, quranic_linguistics, support,
+    insights, methodology, seo, tafsir, quranic_linguistics, support, child_memory, device_proof,
 )
-from app.services import child_token, mission_digest
+from app.services import child_token, device_alerts, followup_push, mission_digest
 from app.services.push_sender import send_to_device
 from app import curriculum_loader as curriculum
 
@@ -44,27 +44,41 @@ _origins = os.environ.get(
 ).split(",")
 
 
+# The pushes whose moment is a device's local hour, not a UTC one. Each runs
+# on every tick and decides per device; a crontab cannot read the hour.
+_LOCAL_HOUR_JOBS = (
+    ("Mission digest", mission_digest.run_due_digests),
+    # «جرّبت النصيحة؟» at 19:00 the family's time — every time zone, never at
+    # night (PR #26 review F7: the 17 UTC cron could not reach UTC+4…+8).
+    ("Follow-up push", followup_push.run_due_followups),
+    # The notice to a phone that lost the account's push token (round 3):
+    # daytime on the family's clock, at most one a day.
+    ("Account alert", device_alerts.run_due_alerts),
+)
+
+
 async def _digest_loop() -> None:
-    """Wake every few minutes and push to the devices whose evening it is.
+    """Wake every few minutes and push to the devices whose hour it is.
 
-    Runs the blocking sweep in a worker thread: it opens SQLite connections and
-    calls FCM, and doing that on the event loop would stall every request for
-    the duration of the sweep.
+    Runs the blocking sweeps in a worker thread: they open SQLite connections
+    and call FCM, and doing that on the event loop would stall every request
+    for the duration of the sweep.
 
-    Every iteration is wrapped, because a loop that dies on one bad night stays
-    dead until the next deploy — and its death is silent, which is how the
-    digest came to be unscheduled in the first place.
+    Every job of every iteration is wrapped on its own, because a loop that
+    dies on one bad night stays dead until the next deploy — and its death is
+    silent, which is how the digest came to be unscheduled in the first place.
     """
     while True:
-        try:
-            await asyncio.sleep(mission_digest.DIGEST_TICK_SECONDS)
-            result = await asyncio.to_thread(mission_digest.run_due_digests)
-            if result.get("sent") or result.get("expired"):
-                logger.info("Mission digest: %s", result)
-        except asyncio.CancelledError:
-            raise
-        except Exception as exc:  # noqa: BLE001 — a tick must not kill the loop
-            logger.warning("Mission digest tick failed: %s", exc)
+        await asyncio.sleep(mission_digest.DIGEST_TICK_SECONDS)
+        for name, job in _LOCAL_HOUR_JOBS:
+            try:
+                result = await asyncio.to_thread(job)
+                if result.get("sent") or result.get("expired") or result.get("failed"):
+                    logger.info("%s: %s", name, result)
+            except asyncio.CancelledError:
+                raise
+            except Exception as exc:  # noqa: BLE001 — a tick must not kill the loop
+                logger.warning("%s tick failed: %s", name, exc)
 
 
 @asynccontextmanager
@@ -212,10 +226,13 @@ app.include_router(chat.router, prefix="/api")
 app.include_router(feedback.router, prefix="/api")
 app.include_router(program.router, prefix="/api")  # curriculum: paths/lessons/daily-tip
 app.include_router(privacy.router)  # /privacy-policy (no /api prefix; public)
+app.include_router(privacy.api_router, prefix="/api")  # /api/privacy/memory delete-all (auth)
 app.include_router(methodology.router)  # /methodology (public — methodology & sources page)
 app.include_router(seo.router, prefix="/seo")  # /seo/{slug} (public — SEO pages for pain-point questions)
 app.include_router(web.router)  # public SEO pages + share landing (/go, /l, /p; Phase 2)
 app.include_router(children.router, prefix="/api")  # child profiles + progress (auth)
+app.include_router(child_memory.router, prefix="/api")  # child memory, follow-ups, weekly plan (auth; v30)
+app.include_router(device_proof.router, prefix="/api")  # FCM challenge behind the protected routes (auth; v30)
 app.include_router(referral.router, prefix="/api")  # referral codes + attribution (auth)
 app.include_router(support.router, prefix="/api")  # «ادعم المربّي»: transparency (public) + verify (auth)
 app.include_router(stats.router, prefix="/api")  # community social-proof (public; Phase 3)

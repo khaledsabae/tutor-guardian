@@ -51,6 +51,8 @@ KINDS = (
     ("agreements", "agreement_clauses"),
     ("missions", "mission_bank"),
     ("license", "license_scenario"),
+    # «خطة الأسبوع» (المرحلة ١.٣) — دخلت القائمة مع البنك نفسه، لا بعده.
+    ("weekly_plan", "weekly_plan_bank"),
 )
 
 # برامج الأسرة: مجلد واحد وثلاثة مخطّطات، والمخطّط يُختار بحقل `program_type` لا

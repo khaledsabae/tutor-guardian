@@ -1,0 +1,188 @@
+{
+  "group": "early",
+  "age_bands": [
+    "2-3",
+    "4-6"
+  ],
+  "version": "1.0.0",
+  "is_published": true,
+  "description": "Weekly plan for ages two to six: love of prayer through example, tantrums, sleep, screens, fears and sibling jealousy.",
+  "topics": [
+    {
+      "key": "prayer",
+      "focus": "Loving prayer through example, not orders",
+      "actions": [
+        {
+          "key": "prayer_early_1",
+          "text": "Pray in front of them and invite them to stand beside you if they like, with no pressure."
+        },
+        {
+          "key": "prayer_early_2",
+          "text": "Give them a small prayer mat of their own to place next to yours."
+        },
+        {
+          "key": "prayer_early_3",
+          "text": "Praise any attempt — standing, a prostration, copying you — and leave the corrections for later."
+        },
+        {
+          "key": "prayer_early_4",
+          "text": "Twice this week at bedtime, talk with them in simple words about the blessings Allah has given them."
+        }
+      ]
+    },
+    {
+      "key": "anger",
+      "focus": "Tantrums: your calm comes first",
+      "actions": [
+        {
+          "key": "anger_early_1",
+          "text": "When they get angry, get down to their level and name the feeling: \"You're angry because the toy was taken.\""
+        },
+        {
+          "key": "anger_early_2",
+          "text": "Stay close and calm until the storm passes, and save the talk about behaviour for afterwards."
+        },
+        {
+          "key": "anger_early_3",
+          "text": "Offer two acceptable choices instead of a direct order: \"The blue one or the red one?\""
+        },
+        {
+          "key": "anger_early_4",
+          "text": "Notice when the tantrums happen this week; hunger and tiredness are among the most common triggers."
+        }
+      ]
+    },
+    {
+      "key": "sleep",
+      "focus": "Regular sleep and a calm routine",
+      "actions": [
+        {
+          "key": "sleep_early_1",
+          "text": "Keep the same bedtime every night, weekends included."
+        },
+        {
+          "key": "sleep_early_2",
+          "text": "Switch screens off an hour before bed and replace them with a story or a quiet talk."
+        },
+        {
+          "key": "sleep_early_3",
+          "text": "Follow the same order each night: bath, teeth, bedtime adhkar, a story, lights out."
+        },
+        {
+          "key": "sleep_early_4",
+          "text": "If they get up at night, walk them back to bed calmly and with few words, every time."
+        }
+      ]
+    },
+    {
+      "key": "screens",
+      "focus": "Less screen, more play",
+      "actions": [
+        {
+          "key": "screens_early_1",
+          "text": "Agree on a short, fixed screen time each day and give a five-minute warning before it ends."
+        },
+        {
+          "key": "screens_early_2",
+          "text": "Watch with them instead of leaving them alone, and talk about what you saw."
+        },
+        {
+          "key": "screens_early_3",
+          "text": "Make meals and bedrooms screen-free for the whole family."
+        },
+        {
+          "key": "screens_early_4",
+          "text": "Keep alternatives within reach: blocks, crayons and picture books."
+        }
+      ]
+    },
+    {
+      "key": "fear",
+      "focus": "Less fear, more safety",
+      "actions": [
+        {
+          "key": "fear_early_1",
+          "text": "Listen to the fear without teasing: \"I understand you're scared of the dark.\""
+        },
+        {
+          "key": "fear_early_2",
+          "text": "Approach what scares them together, gradually and in small steps, never by force."
+        },
+        {
+          "key": "fear_early_3",
+          "text": "Leave a dim light on in their room if they are afraid at night."
+        },
+        {
+          "key": "fear_early_4",
+          "text": "Teach them to say \"Bismillah\" and breathe slowly when they feel afraid."
+        }
+      ]
+    },
+    {
+      "key": "siblings",
+      "focus": "Sibling jealousy: every child gets their share",
+      "actions": [
+        {
+          "key": "siblings_early_1",
+          "text": "Give each child ten minutes a day alone with you."
+        },
+        {
+          "key": "siblings_early_2",
+          "text": "Avoid comparing siblings in front of them, even to encourage."
+        },
+        {
+          "key": "siblings_early_3",
+          "text": "Name the jealousy calmly: \"You feel upset when I hold your brother.\""
+        },
+        {
+          "key": "siblings_early_4",
+          "text": "Let them help care for the younger sibling with small tasks, and praise the help."
+        }
+      ]
+    },
+    {
+      "key": "bonding",
+      "focus": "Special time that strengthens the bond",
+      "actions": [
+        {
+          "key": "bonding_early_1",
+          "text": "Play for ten minutes a day at a game they choose, without directing it."
+        },
+        {
+          "key": "bonding_early_2",
+          "text": "Read a picture book together at bedtime and ask them about the pictures."
+        },
+        {
+          "key": "bonding_early_3",
+          "text": "Hug them and tell them you love them for no reason, once every day."
+        },
+        {
+          "key": "bonding_early_4",
+          "text": "At the end of the day, ask: \"What was the best thing that happened today?\""
+        }
+      ]
+    }
+  ],
+  "worship": [
+    {
+      "key": "worship_early_1",
+      "text": "Pray Maghrib together at home once this week and invite the children to stand with you."
+    },
+    {
+      "key": "worship_early_2",
+      "text": "Recite the short surahs together at bedtime on three nights this week."
+    },
+    {
+      "key": "worship_early_3",
+      "text": "Say \"Bismillah\" before meals and \"Alhamdulillah\" after, out loud, so the children copy you."
+    },
+    {
+      "key": "worship_early_4",
+      "text": "Put a small charity box at home and let your child drop the coins in with their own hand."
+    },
+    {
+      "key": "worship_early_5",
+      "text": "Visit a relative together this week with the intention of keeping family ties."
+    }
+  ]
+}

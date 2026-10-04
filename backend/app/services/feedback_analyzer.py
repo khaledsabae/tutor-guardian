@@ -21,6 +21,9 @@ from datetime import datetime, timezone
 from app.db.init_db import get_conn
 from app.services import conversation_store
 from app.services.ai_gateway import get_gateway
+from app.services.privacy import (
+    family_for_device, known_child_names, redact_family, redact_with_names,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -92,7 +95,25 @@ def _query(con, sql: str, params: tuple) -> list:
 
 
 def collect_feedback(limit: int = 500) -> list[dict]:
-    """اسحب المصدرين في قائمة موحّدة (الأحدث أولًا)."""
+    """اسحب المصدرين في قائمة موحّدة (الأحدث أولًا).
+
+    كل نص يذهب منها إلى النموذج (وهو خدمة سحابية) يُستبدَل فيه اسم طفل الأسرة
+    بـ«طفلي» — التعليق، وسؤال الجلسة وردّها، ونص فيدباك التطبيق — كما تَعِد
+    سياسة الخصوصية. يُقرأ اسم كل أسرة مرة واحدة.
+    """
+    families: dict[str, object] = {}
+
+    def _clean(text: str | None, device_id: str | None) -> str:
+        if not text:
+            return text or ""
+        if not device_id:
+            # A row with no device (old feedback, or a session without one)
+            # cannot be matched to a family: every known child name goes (P8).
+            return redact_with_names(text, known_child_names())
+        if device_id not in families:
+            families[device_id] = family_for_device(device_id)
+        return redact_family(text, families[device_id])
+
     con = get_conn()
     items: list[dict] = []
     try:
@@ -101,22 +122,27 @@ def collect_feedback(limit: int = 500) -> list[dict]:
             "SELECT session_id, rating, comment, created_at FROM user_feedback "
             "ORDER BY created_at DESC LIMIT ?", (limit,),
         ):
+            device = (conversation_store.session_owner(r["session_id"])[1]
+                      if r["session_id"] else None)
+            context = _q_and_a(r["session_id"]) if r["rating"] == "down" else None
+            if context:
+                context = {k: _clean(v, device) for k, v in context.items()}
             items.append({
                 "source": "rating",
                 "rating": r["rating"],
-                "comment": r["comment"] or "",
+                "comment": _clean(r["comment"], device),
                 "created_at": r["created_at"],
-                "context": _q_and_a(r["session_id"]) if r["rating"] == "down" else None,
+                "context": context,
             })
         for r in _query(
             con,
-            "SELECT message, contact, app_version, created_at, "
+            "SELECT message, contact, app_version, created_at, device_id, "
             "(audio_b64 IS NOT NULL) AS has_audio FROM app_feedback "
             "ORDER BY created_at DESC LIMIT ?", (limit,),
         ):
             items.append({
                 "source": "app",
-                "message": r["message"] or "",
+                "message": _clean(r["message"], r["device_id"]),
                 "contact": r["contact"],
                 "app_version": r["app_version"],
                 "created_at": r["created_at"],

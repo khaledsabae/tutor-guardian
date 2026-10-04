@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tutor-guardian.local/schemas/curriculum/weekly_plan_bank.schema.json",
+  "title": "Weekly Family Plan Bank",
+  "description": "بنك «خطة الأسبوع» لمجموعة فئات عمرية: weekly_plan_<group>.json. لكل موضوع تركيز أسبوعي أربعة أفعال صغيرة (تُعرَض ثلاثة ويبقى الرابع بديلًا لما ثبت أنه لم ينجح مع الطفل) ودروس حقيقية من المنهج لكل فئة. الأفعال والعبادات مكتوبة يدويًا ولا يولّدها نموذج؛ لا نصوص آيات ولا أحاديث فيها. الملف الإنجليزي تحت i18n/en يحمل النصوص فقط، والمفاتيح والدروس تؤخذ من العربي.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["group", "version", "is_published", "topics", "worship"],
+  "properties": {
+    "group": { "type": "string", "enum": ["baby", "early", "school", "teen"] },
+    "age_bands": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "enum": ["prenatal-1", "0-3", "2-3", "4-6", "7-9", "10-12", "13-15", "16-18"]
+      }
+    },
+    "version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+    "is_published": { "type": "boolean" },
+    "description": { "type": "string" },
+    "topics": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["key", "focus", "actions"],
+        "properties": {
+          "key": {
+            "type": "string",
+            "enum": ["prayer", "anger", "sleep", "study", "screens", "fear", "siblings", "bonding"]
+          },
+          "focus": { "type": "string", "minLength": 6, "maxLength": 80 },
+          "actions": {
+            "type": "array",
+            "minItems": 4,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["key", "text"],
+              "properties": {
+                "key": { "type": "string", "pattern": "^[a-z0-9_]+$" },
+                "text": { "type": "string", "minLength": 15, "maxLength": 160 }
+              }
+            }
+          },
+          "lessons": {
+            "type": "object",
+            "description": "فئة عمرية ← معرّفات دروس منشورة بالترتيب. اختبار test_weekly_plan يتحقق أن كل معرّف موجود في المنهج.",
+            "additionalProperties": {
+              "type": "array",
+              "items": { "type": "string", "pattern": "^lesson_[a-z0-9_.-]+$" }
+            }
+          }
+        }
+      }
+    },
+    "worship": {
+      "type": "array",
+      "minItems": 4,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["key", "text"],
+        "properties": {
+          "key": { "type": "string", "pattern": "^[a-z0-9_]+$" },
+          "text": { "type": "string", "minLength": 15, "maxLength": 160 }
+        }
+      }
+    }
+  }
+}

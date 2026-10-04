@@ -160,6 +160,7 @@ def send_to_device(
     body: str,
     data: Optional[dict[str, str]] = None,
     channel_id: str = DEFAULT_CHANNEL,
+    visibility: Optional[str] = None,
 ) -> dict:
     """Send an FCM notification to a single device.
 
@@ -171,7 +172,8 @@ def send_to_device(
 
     `channel_id` selects the Android notification channel. Use
     `license_alert.SAFETY_CHANNEL` for anything a parent must be able to keep
-    unmuted while silencing the rest.
+    unmuted while silencing the rest. `visibility='private'` keeps the text off
+    a locked screen.
     """
     if not _ensure_app():
         return {"ok": False, "error": "firebase_credentials_not_configured"}
@@ -190,6 +192,8 @@ def send_to_device(
             notification=messaging.AndroidNotification(
                 channel_id=channel_id,
                 sound="default",
+                # 'private' hides the text on a locked screen (follow-ups).
+                visibility=visibility,
             ),
         ),
     )
@@ -198,18 +202,102 @@ def send_to_device(
         _record_send(device_id, (data or {}).get("type", "unknown"))
         return {"ok": True, "sent": True, "message_id": message_id}
     except messaging.UnregisteredError:
-        # Token is stale; remove it so we don't retry.
-        _remove_token(device_id)
+        # Token is stale; stop using it — unless the app registered a newer one
+        # while this was in flight (remove_token_if_current).
+        remove_token_if_current(device_id, token)
         return {"ok": True, "sent": False, "reason": "unregistered"}
     except Exception as exc:  # noqa: BLE001
         return {"ok": False, "error": str(exc)}
 
 
+# A dead push token leaves a tombstone, not a hole: the row stays, with an
+# empty token. Every reader already treats '' as "no token"; what survives is
+# the device's push history (routers/push.py) — a deleted row made the next
+# registration a "first" token and skipped the takeover cooldown (PR #26 final
+# review).
+
+
 def _remove_token(device_id: str) -> None:
     conn = get_conn()
-    conn.execute("DELETE FROM push_tokens WHERE device_id = ?", (device_id,))
-    conn.commit()
-    conn.close()
+    try:
+        conn.execute("UPDATE push_tokens SET token = '' WHERE device_id = ?", (device_id,))
+        conn.commit()
+    finally:
+        conn.close()
+
+
+def remove_token_if_current(device_id: str, token: str) -> None:
+    """Stop using a push token FCM called unregistered — unless the app has
+    registered a newer one in the meantime, which must survive."""
+    conn = get_conn()
+    try:
+        conn.execute("UPDATE push_tokens SET token = '' WHERE device_id = ? AND token = ?",
+                     (device_id, token))
+        conn.commit()
+    finally:
+        conn.close()
+
+
+def send_notification_to_token(token: str, title: str, body: str,
+                               data: Optional[dict[str, str]] = None,
+                               channel_id: str = DEFAULT_CHANNEL) -> dict:
+    """A visible notification to one specific FCM token — not the device's
+    current one. For the notice owed to the phone that just lost the account's
+    token (services/device_alerts.py). Not written to `push_sends`: it goes to
+    a different phone from the one the send log speaks for.
+
+    Returns {"ok": True, "sent": True}, {"ok": True, "sent": False, "reason":
+    "unregistered"}, or {"ok": False, "error": <exception type name>}."""
+    if not _ensure_app():
+        return {"ok": False, "error": "firebase_credentials_not_configured"}
+    message = messaging.Message(
+        notification=messaging.Notification(title=title, body=body),
+        data=data or {},
+        token=token,
+        android=messaging.AndroidConfig(
+            priority="high",
+            notification=messaging.AndroidNotification(channel_id=channel_id,
+                                                       sound="default"),
+        ),
+    )
+    try:
+        messaging.send(message, app=_app)
+        return {"ok": True, "sent": True}
+    except messaging.UnregisteredError:
+        return {"ok": True, "sent": False, "reason": "unregistered"}
+    except Exception as exc:  # noqa: BLE001
+        return {"ok": False, "error": type(exc).__name__}
+
+
+def send_data_message(token: str, data: dict[str, str], ttl_seconds: int) -> dict:
+    """A silent data-only message to one FCM registration token.
+
+    No `notification` block: nothing is shown, and Android delivers it without
+    the notification permission. `ttl_seconds` keeps FCM from delivering it
+    after it has stopped meaning anything (a device-proof code's lifetime).
+
+    Not written to `push_sends`: that log is for pushes a parent *sees*, and a
+    silent message must not hold back the next real one.
+
+    Returns {"ok": True, "sent": True} on success,
+    {"ok": True, "sent": False, "reason": "unregistered"} for a dead token,
+    {"ok": False, "error": ...} otherwise. The error is the exception's type
+    name only — FCM messages can echo the request, and this one carries a code.
+    """
+    if not _ensure_app():
+        return {"ok": False, "error": "firebase_credentials_not_configured"}
+    message = messaging.Message(
+        data=data,
+        token=token,
+        android=messaging.AndroidConfig(priority="high", ttl=ttl_seconds),
+    )
+    try:
+        messaging.send(message, app=_app)
+        return {"ok": True, "sent": True}
+    except messaging.UnregisteredError:
+        return {"ok": True, "sent": False, "reason": "unregistered"}
+    except Exception as exc:  # noqa: BLE001
+        return {"ok": False, "error": type(exc).__name__}
 
 
 def send_to_topic(

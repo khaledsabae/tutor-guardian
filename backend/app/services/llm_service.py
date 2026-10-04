@@ -216,8 +216,16 @@ def _build_prompt(
     question_text: str = "",
     conversation_history: list[ConversationTurn] | None = None,
     variant: str = "compact",
+    child_context: str = "",
 ) -> tuple[str, str]:
-    """Construct the generation prompt. Returns (user_prompt, source_line)."""
+    """Construct the generation prompt. Returns (user_prompt, source_line).
+
+    `child_context` is the labelled block of parent-reported facts from
+    child_memory.facts_block — already name-free and sanitised. It sits after
+    the question and before the sources: close enough to the question to be
+    used, and visibly separate from the documented sources so the model never
+    cites it as one.
+    """
 
     parts: list[str] = []
     for n, unit in enumerate(retrieved_units, 1):
@@ -250,6 +258,10 @@ def _build_prompt(
         f"[سؤال الوالد/الوالدة الحالي — أجب على هذا فقط]\n"
         f"{question_display}\n"
         f"الفئة العمرية: {age_group} | شدة الحالة: {severity}\n\n"
+    )
+    if child_context:
+        user_prompt += f"{child_context.rstrip()}\n\n"
+    user_prompt += (
         f"[مصادر ومعلومات موثقة — مرقّمة]\n"
         f"{joined}\n\n"
     )
@@ -390,6 +402,7 @@ async def generate_reply(
     conversation_history: list[ConversationTurn] | None = None,
     tier: str = "local_fast",
     route_reason: str | None = None,
+    child_context: str = "",
 ) -> str:
     """Generate via the gateway. Returns generated text or raises on failure."""
 
@@ -397,6 +410,7 @@ async def generate_reply(
     user_prompt, source_line = _build_prompt(
         domain, behavior_type, age_group, severity, retrieved_units,
         question_text, conversation_history, variant=variant,
+        child_context=child_context,
     )
     full_prompt = (_compose_system_prompt(domain, question_text)
                    + "\n\n" + user_prompt)
@@ -427,6 +441,7 @@ def build_full_prompt(
     question_text: str = "",
     conversation_history: list[ConversationTurn] | None = None,
     tier: str = "local_fast",
+    child_context: str = "",
 ) -> tuple[str, str]:
     """Expose the composed (system + user) prompt and source line for streaming.
 
@@ -437,6 +452,7 @@ def build_full_prompt(
     user_prompt, source_line = _build_prompt(
         domain, behavior_type, age_group, severity, retrieved_units,
         question_text, conversation_history, variant=variant,
+        child_context=child_context,
     )
     return (_compose_system_prompt(domain, question_text)
             + "\n\n" + user_prompt), source_line

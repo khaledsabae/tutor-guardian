@@ -540,26 +540,39 @@ def retrieve_multi_domain(
 
 _TELEMETRY_DB = Path(__file__).resolve().parents[3] / "ops" / "sessions.db"
 
+# The log holds question text (names already replaced by the caller — see
+# routers/assistant.py) with no device identifier. Rows written by this code
+# carry redacted = 1; retention (90 days) and the purge of older, unmarked rows
+# run on a schedule in services/retention.py — not here, where a failure could
+# only be swallowed with the request's telemetry.
+_log_schema_ready = False
+
 
 def log_retrieval(query_text: str, domains: list[str],
                   rewritten_query: str, final_units: list[dict]) -> None:
     """Record what retrieval produced so eval runs can diagnose recall."""
+    global _log_schema_ready
     try:
         import json as _json
         import sqlite3 as _sqlite3
 
         conn = _sqlite3.connect(_TELEMETRY_DB)
-        conn.execute(
-            """CREATE TABLE IF NOT EXISTS retrieval_log (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                ts TEXT DEFAULT (datetime('now')),
-                question TEXT, domains TEXT, rewritten_query TEXT,
-                final_ids TEXT, distances TEXT, rerank_scores TEXT
-            )"""
-        )
+        if not _log_schema_ready:
+            from app.services.retention import ensure_marker
+            conn.execute(
+                """CREATE TABLE IF NOT EXISTS retrieval_log (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    ts TEXT DEFAULT (datetime('now')),
+                    question TEXT, domains TEXT, rewritten_query TEXT,
+                    final_ids TEXT, distances TEXT, rerank_scores TEXT,
+                    redacted INTEGER
+                )"""
+            )
+            ensure_marker(conn, "retrieval_log")
+            _log_schema_ready = True
         conn.execute(
             "INSERT INTO retrieval_log (question, domains, rewritten_query,"
-            " final_ids, distances, rerank_scores) VALUES (?,?,?,?,?,?)",
+            " final_ids, distances, rerank_scores, redacted) VALUES (?,?,?,?,?,?,1)",
             (
                 query_text[:300],
                 ",".join(domains),

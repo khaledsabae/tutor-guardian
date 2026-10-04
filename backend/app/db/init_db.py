@@ -81,6 +81,13 @@ Migration v28: api_tokens stores sha256(token) instead of the bearer itself,
 Migration v29: child_web_claims holds the one-time QR claim codes for the teen
                web surface (sha256 of the code; the token is minted on
                redemption). Replaces an in-process dict (audit L11). Additive.
+Migration v30: «المربّي يعرف ابنك» — child_facts (what the assistant has
+               learned about each child, name-free), followups (the "did the
+               advice work?" loop), weekly_plans (one cached plan per child
+               per ISO week and language) and child_memory_settings (the
+               per-device off switch). Every table is keyed by device_id and
+               cascades from child_profiles, and every one is listed in
+               routers/privacy.py MEMORY_TABLES — the delete-all path. Additive.
 Migration v32: install attribution. referrals.via records how a claim was made
                ('code' = an exact code, 'auto' = matched to a click by IP;
                NULL = before this); referral_click_days holds per-code daily
@@ -420,6 +427,7 @@ def init_db() -> None:
     _ensure_lesson_progress_child_key(conn)
     _ensure_licence_tables(conn)
     _ensure_child_web_claims_table(conn)
+    _ensure_child_memory_tables(conn)
     _ensure_donations_table(conn)
     _ensure_attribution_v32(conn)
     ensure_device_twin_tables(conn)
@@ -1081,6 +1089,173 @@ def _ensure_referral_clicks_table(conn: sqlite3.Connection) -> None:
         names = set()
     if not names:
         conn.executescript(_CREATE_REFERRAL_CLICKS)
+
+
+_CREATE_CHILD_MEMORY: str = """
+CREATE TABLE IF NOT EXISTS child_facts (
+    id          INTEGER PRIMARY KEY AUTOINCREMENT,
+    device_id   TEXT NOT NULL,
+    child_id    INTEGER NOT NULL,
+    category    TEXT NOT NULL,
+    fact        TEXT NOT NULL,
+    source      TEXT NOT NULL DEFAULT 'chat',
+    confidence  REAL NOT NULL DEFAULT 0.5,
+    status      TEXT NOT NULL DEFAULT 'active',
+    lang        TEXT NOT NULL DEFAULT 'ar',
+    times_seen  INTEGER NOT NULL DEFAULT 1,
+    created_at  TEXT NOT NULL DEFAULT (datetime('now')),
+    updated_at  TEXT NOT NULL DEFAULT (datetime('now')),
+    FOREIGN KEY (child_id) REFERENCES child_profiles(id) ON DELETE CASCADE
+);
+CREATE INDEX IF NOT EXISTS ix_child_facts_child
+    ON child_facts (device_id, child_id, status);
+
+CREATE TABLE IF NOT EXISTS followups (
+    id                INTEGER PRIMARY KEY AUTOINCREMENT,
+    device_id         TEXT NOT NULL,
+    child_id          INTEGER NOT NULL,
+    strategy          TEXT NOT NULL,
+    topic             TEXT,
+    lang              TEXT NOT NULL DEFAULT 'ar',
+    source_message_id INTEGER,
+    due_at            TEXT NOT NULL,
+    status            TEXT NOT NULL DEFAULT 'pending',
+    outcome           TEXT,
+    note              TEXT,
+    outcome_fact_id   INTEGER,
+    pushed_at         TEXT,
+    answered_at       TEXT,
+    created_at        TEXT NOT NULL DEFAULT (datetime('now')),
+    updated_at        TEXT NOT NULL DEFAULT (datetime('now')),
+    FOREIGN KEY (child_id) REFERENCES child_profiles(id) ON DELETE CASCADE
+);
+CREATE INDEX IF NOT EXISTS ix_followups_due ON followups (status, due_at);
+CREATE INDEX IF NOT EXISTS ix_followups_child
+    ON followups (device_id, child_id, status);
+
+CREATE TABLE IF NOT EXISTS weekly_plans (
+    id          INTEGER PRIMARY KEY AUTOINCREMENT,
+    device_id   TEXT NOT NULL,
+    child_id    INTEGER NOT NULL,
+    iso_week    TEXT NOT NULL,
+    lang        TEXT NOT NULL DEFAULT 'ar',
+    plan_json   TEXT NOT NULL,
+    created_at  TEXT NOT NULL DEFAULT (datetime('now')),
+    personal    INTEGER NOT NULL DEFAULT 0,  -- shaped by memory (confirmed sessions only)
+    UNIQUE (device_id, child_id, iso_week, lang, personal),
+    FOREIGN KEY (child_id) REFERENCES child_profiles(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS child_memory_settings (
+    device_id         TEXT PRIMARY KEY,
+    enabled           INTEGER NOT NULL DEFAULT 1,
+    generation        INTEGER NOT NULL DEFAULT 0,
+    tz_offset_minutes INTEGER,
+    updated_at        TEXT NOT NULL DEFAULT (datetime('now'))
+);
+"""
+
+
+# Proof that a session holds the phone behind its device id (v30; see
+# services/device_proof.py). Hashes only: the code, the session token and the
+# push token are never stored here in the clear.
+_CREATE_DEVICE_PROOF: str = """
+CREATE TABLE IF NOT EXISTS device_proof_challenges (
+    id               INTEGER PRIMARY KEY AUTOINCREMENT,
+    device_id        TEXT NOT NULL,
+    token_hash       TEXT NOT NULL,   -- the session that asked; only it may answer
+    code_hash        TEXT NOT NULL,
+    push_token_hash  TEXT NOT NULL,   -- the push token the code was sent to
+    created_at       TEXT NOT NULL DEFAULT (datetime('now')),
+    expires_at       TEXT NOT NULL,
+    attempts         INTEGER NOT NULL DEFAULT 0,
+    used_at          TEXT
+);
+CREATE INDEX IF NOT EXISTS ix_device_proof_challenges_device
+    ON device_proof_challenges (device_id, created_at);
+CREATE INDEX IF NOT EXISTS ix_device_proof_challenges_created
+    ON device_proof_challenges (created_at);
+
+-- One row per session that completed a challenge. It is proven while the
+-- device's current push token is still the one the code was delivered to.
+-- `clean` = the device was not in a push-token cooldown when it proved: only
+-- a clean proof can vouch for a later push-token change.
+CREATE TABLE IF NOT EXISTS device_proof_sessions (
+    token_hash       TEXT PRIMARY KEY,
+    device_id        TEXT NOT NULL,
+    push_token_hash  TEXT NOT NULL,
+    proven_at        TEXT NOT NULL DEFAULT (datetime('now')),
+    clean            INTEGER NOT NULL DEFAULT 0
+);
+CREATE INDEX IF NOT EXISTS ix_device_proof_sessions_device
+    ON device_proof_sessions (device_id);
+
+-- The device itself: when it last proved, against which push token, and when
+-- it first did (from then on its destructive child routes need a proof too).
+CREATE TABLE IF NOT EXISTS device_proofs (
+    device_id        TEXT PRIMARY KEY,
+    push_token_hash  TEXT NOT NULL,
+    proven_at        TEXT NOT NULL DEFAULT (datetime('now')),
+    first_proven_at  TEXT NOT NULL DEFAULT (datetime('now'))
+);
+
+-- The notice owed to the phone that just lost the account's push token
+-- (services/device_alerts.py). `old_token` is that phone's FCM token, kept only
+-- until the notice is sent; `sent_at` enforces one notice a day.
+CREATE TABLE IF NOT EXISTS device_alerts (
+    device_id   TEXT PRIMARY KEY,
+    old_token   TEXT,
+    queued_at   TEXT,
+    sent_at     TEXT
+);
+"""
+
+
+def _ensure_child_memory_tables(conn: sqlite3.Connection) -> None:
+    """v30: child memory, follow-ups, weekly plans, memory switch; and the
+    device-proof tables (services/device_proof.py). Additive and unconditional
+    (it runs whatever the stamp says, so a database a later branch already
+    stamped higher still gets every piece).
+    """
+    conn.executescript(_CREATE_CHILD_MEMORY)
+    conn.executescript(_CREATE_DEVICE_PROOF)
+    _ensure_column(conn, table="device_proof_sessions", column="clean",
+                   ddl="ALTER TABLE device_proof_sessions ADD COLUMN clean "
+                       "INTEGER NOT NULL DEFAULT 0")
+    # The challenge's public id: random, so another session cannot name it.
+    _ensure_column(conn, table="device_proof_challenges", column="public_id",
+                   ddl="ALTER TABLE device_proof_challenges ADD COLUMN public_id TEXT")
+    conn.execute("CREATE UNIQUE INDEX IF NOT EXISTS ux_device_proof_challenges_public "
+                 "ON device_proof_challenges (public_id)")
+    _ensure_column(conn, table="weekly_plans", column="personal",
+                   ddl="ALTER TABLE weekly_plans ADD COLUMN personal INTEGER NOT NULL DEFAULT 0")
+    # 1 = the Google link was made by a session proven to hold the phone. Account
+    # deletion follows only such links (routers/privacy.py account_devices).
+    _ensure_column(conn, table="identity_links", column="confirmed",
+                   ddl="ALTER TABLE identity_links ADD COLUMN confirmed INTEGER")
+    # When the device's current push token became current, and whether that
+    # change was vouched for by a proven session (services/device_proof.py:
+    # an unvouched change pauses the protected routes for 72 hours).
+    _ensure_column(conn, table="push_tokens", column="token_since",
+                   ddl="ALTER TABLE push_tokens ADD COLUMN token_since TEXT")
+    _ensure_column(conn, table="push_tokens", column="token_vouched",
+                   ddl="ALTER TABLE push_tokens ADD COLUMN token_vouched INTEGER")
+    # 1 = the first push token of an established device: its first 72 hours
+    # pause the irreversible routes only (account and child deletion).
+    _ensure_column(conn, table="push_tokens", column="token_first",
+                   ddl="ALTER TABLE push_tokens ADD COLUMN token_first INTEGER")
+    # Columns that arrived after the first v30 shape (PR #26 review).
+    _ensure_column(conn, table="child_memory_settings", column="generation",
+                   ddl="ALTER TABLE child_memory_settings ADD COLUMN generation "
+                       "INTEGER NOT NULL DEFAULT 0")
+    _ensure_column(conn, table="child_memory_settings", column="tz_offset_minutes",
+                   ddl="ALTER TABLE child_memory_settings ADD COLUMN tz_offset_minutes INTEGER")
+    # One open follow-up per child and topic, even with two workers racing.
+    conn.execute(
+        "CREATE UNIQUE INDEX IF NOT EXISTS ux_followups_pending_topic "
+        "ON followups (device_id, child_id, topic) "
+        "WHERE status = 'pending' AND topic != 'other'"
+    )
 
 
 def _ensure_child_web_claims_table(conn: sqlite3.Connection) -> None:

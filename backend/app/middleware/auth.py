@@ -66,6 +66,11 @@ _PROTECTED_PREFIXES = (
     "/api/sync",
     # Recording a support purchase. The transparency GET beside it is public.
     "/api/support/verify",
+    # The child-memory delete-all (routers/privacy.py api_router). Without an
+    # identity it would have nothing to delete — and nothing to scope it to.
+    "/api/privacy",
+    # The FCM challenge (routers/device_proof.py) proves a *session*: it needs one.
+    "/api/device-proof",
 )
 # Progress PATCH is the only mutating verb under /api/program — we
 # match on the exact path suffix so the read-only GETs remain public.

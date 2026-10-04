@@ -46,8 +46,10 @@ def _get_conn() -> sqlite3.Connection:
         conn.execute(
             """CREATE TABLE IF NOT EXISTS query_rewrites (
                 question_hash TEXT PRIMARY KEY, rewritten TEXT,
-                ts TEXT DEFAULT (datetime('now')))"""
+                ts TEXT DEFAULT (datetime('now')), redacted INTEGER)"""
         )
+        from app.services.retention import ensure_marker
+        ensure_marker(conn, "query_rewrites")
         conn.commit()
         _schema_initialized = True
     return conn
@@ -69,7 +71,10 @@ def _cache_put(qhash: str, rewritten: str) -> None:
     try:
         conn = _get_conn()
         conn.execute(
-            "INSERT OR REPLACE INTO query_rewrites (question_hash, rewritten) VALUES (?,?)",
+            # redacted = 1: rewrites come from the name-free question now
+            # (routers/assistant.py); older rows are purged (services/retention.py).
+            "INSERT OR REPLACE INTO query_rewrites (question_hash, rewritten, redacted) "
+            "VALUES (?,?,1)",
             (qhash, rewritten),
         )
         conn.commit()

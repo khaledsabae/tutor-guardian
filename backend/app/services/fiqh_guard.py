@@ -165,11 +165,14 @@ def _log_block(text: str, rule_id: str, device_id: str | None = None) -> None:
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 question TEXT NOT NULL,
                 rule_id TEXT NOT NULL,
-                created_at TEXT DEFAULT (datetime('now'))
+                created_at TEXT DEFAULT (datetime('now')),
+                redacted INTEGER
             )"""
         )
+        from app.services.retention import ensure_marker
+        ensure_marker(conn, "blocked_fiqh_log")
         conn.execute(
-            "INSERT INTO blocked_fiqh_log (question, rule_id) VALUES (?, ?)",
+            "INSERT INTO blocked_fiqh_log (question, rule_id, redacted) VALUES (?, ?, 1)",
             (_scrub(text, device_id)[:500], rule_id),
         )
         conn.execute(

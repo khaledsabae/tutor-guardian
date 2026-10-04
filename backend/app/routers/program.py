@@ -18,6 +18,7 @@ The children CRUD (POST /api/children, GET /api/children/{id}/progress)
 lives in `routers/children.py` to keep `/api/program/*` focused on
 curriculum content.
 """
+import asyncio
 import datetime as dt
 import hashlib
 import logging
@@ -28,6 +29,7 @@ from fastapi import APIRouter, HTTPException, Query, Request
 from pydantic import BaseModel, Field
 
 from app import curriculum_loader as cl
+from app.core.proof import request_proven
 from app.core.taxonomy import ACCEPTED_CHILD_AGE_INPUTS, CANONICAL_DOMAINS
 from app.db.init_db import get_conn
 
@@ -484,8 +486,12 @@ async def get_coach_tip(
     if not device_id:
         raise HTTPException(status_code=401, detail="مطلوب توثيق.")
     try:
+        # Remembered facts shape the tip only for a session proven to hold
+        # the phone (core/proof.py; PR #26 review F4).
+        memory_proven = await asyncio.to_thread(request_proven, request)
         tip = await coach_service.get_proactive_tip(
-            device_id, child_id, lang=_resolve_lang(lang, request))
+            device_id, child_id, lang=_resolve_lang(lang, request),
+            memory_proven=memory_proven)
         return CoachTipResponse(**tip)
     except ValueError as exc:
         raise HTTPException(status_code=404, detail=str(exc)) from exc
@@ -775,17 +781,24 @@ async def generate_story(req: StoryRequest, request: Request):
             ),
         }
 
+    # The child's name never goes to the model (PR #26 review, P6): the story
+    # is written about the canonical hero of the right gender — the child's
+    # own when known, else a local guess from the name — and the name is put
+    # in afterwards, exactly as the cached stories are.
+    hero_gender = gender or story_service.guess_gender(safe_name)
+    hero = story_service.HERO_NAMES[hero_gender]
+    hero_word = "طفلة" if hero_gender == "female" else "طفل"
     prompt = (
         "أنت كاتب قصص أطفال عربي. اكتب قصة قصيرة (٣ إلى ٥ فقرات) بالعربية "
         "الفصحى الميسرة، آمنة تماماً ومناسبة للأطفال، خالية من العنف أو الخوف "
         "المبالغ فيه، ومنسجمة مع القيم الإسلامية.\n"
-        f"بطل القصة طفل اسمه «{safe_name}». القصة تعلّم قيمة: {value}.\n"
+        f"بطل القصة {hero_word} اسمه «{hero}». القصة تعلّم قيمة: {value}.\n"
         "اجعل لها عنواناً جذاباً في أول سطر، ثم القصة، واختمها بدرس مستفاد "
         "في جملة واحدة تبدأ بـ «الدرس المستفاد:». لا تكتب أي شيء خارج القصة."
     )
     try:
         result = await get_gateway().generate(prompt, options={"temperature": 0.8})
-        story = (result.text or "").strip()
+        story = story_service.personalize((result.text or "").strip(), hero, safe_name)
     except Exception as exc:  # noqa: BLE001
         logger.warning("story generation failed: %s", exc)
         raise HTTPException(

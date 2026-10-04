@@ -28,6 +28,10 @@ class UserMessage(BaseModel):
     severity: str = Field(max_length=32)
     message_text: str = Field("", max_length=MAX_MESSAGE_CHARS)
     session_id: str | None = Field(None, max_length=64)
+    # The child the question is about (schema v30, child memory). Optional and
+    # additive: builds that do not send it get the child resolved server-side
+    # (one child, a named child, or the one child in age_group) or none.
+    child_id: int | None = Field(None, ge=1)
     # Client-supplied history is only used when there is no server session;
     # it is capped so it cannot smuggle an unbounded transcript into the prompt.
     conversation_history: list[ConversationTurn] = Field(
