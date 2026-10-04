@@ -134,13 +134,25 @@ def test_unknown_unit_is_rejected(dp):
     assert any("unit_ids" in p for p in _gates(dp, doc))
 
 
-def test_bank_excludes_muslim_until_renumbering_lands(dp, bank):
-    """Sahih Muslim numbering in the hadith guard is moving to Abd al-Baqi on
-    another branch; a number that may change under a published lesson is worse
-    than no hadith."""
-    books = {(i.get("provenance") or {}).get("book")
-             for i in bank.values() if i["kind"] == "hadith"}
-    assert books == {"البخاري"}
+@pytest.fixture(scope="module")
+def scan():
+    """The scripture guard's own scanner — the tests ask it, not a copy of its rules."""
+    sys.path.insert(0, str(ROOT / "ops" / "tools"))
+    import scripture_scan
+    return scripture_scan
+
+
+def test_bank_hadith_numbers_hold_their_text_in_the_guards_corpus(bank, scan):
+    """Muslim was held back until the hadith guard moved to Abd al-Baqi's numbering
+    (#27): a number that changes under a published lesson is worse than no hadith.
+    It has moved, so both Sahihayn are offered — and every number the tool can
+    insert must hold its exact text in the corpus the guard itself reads."""
+    hadith = [i for i in bank.values() if i["kind"] == "hadith"]
+    assert {i["provenance"]["book"] for i in hadith} == {"البخاري", "مسلم"}
+    for item in hadith:
+        prov = item["provenance"]
+        assert scan.sahihayn_holds(prov["book"], int(prov["number"]),
+                                   scan._fragments(item["text"])), item["id"]
 
 
 def test_expansion_inserts_the_bank_text_verbatim_in_both_languages(dp, bank):
@@ -150,7 +162,22 @@ def test_expansion_inserts_the_bank_text_verbatim_in_both_languages(dp, bank):
     assert f"﴿{text}﴾" in ar and f"﴿{text}﴾" in en
     assert "Allah says: ﴿" in en and "Surah Ta-Ha, 20:132" in en
     h = dp.expand("[[h_009]]", bank, "en")
-    assert f"«{bank['h_009']['text']}»" in h and "Sahih al-Bukhari, hadith 6116" in h
+    assert f"«{bank['h_009']['text']}»" in h and "(Sahih al-Bukhari 6116)" in h
+
+
+def test_every_expanded_hadith_is_sound_to_the_scripture_guard(dp, bank, scan):
+    """«(Sahih al-Bukhari, hadith 6927)» read to the guard as no citation at all, so
+    the English twin of a lesson showed a hadith «بلا إسناد». The guard is what
+    stands between the text and the parent: ask it about every hadith, both
+    languages, and require the same book and number on each side."""
+    for hid, item in bank.items():
+        if item["kind"] != "hadith":
+            continue
+        ar, en = (dp.expand(f"[[{hid}]]", bank, lang) for lang in ("ar", "en"))
+        for text in (ar, en):
+            assert [f for f in scan.scan_text(text) if f.verdict != "ok"] == [], (hid, text)
+        want = {(item["provenance"]["book"], int(item["provenance"]["number"]))}
+        assert scan.ar_citations(ar) == scan.en_citations(en) == want, hid
 
 
 def test_english_gate_rejects_arabic_not_taken_from_the_source(dp):

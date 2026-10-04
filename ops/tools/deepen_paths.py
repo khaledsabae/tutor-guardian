@@ -155,10 +155,10 @@ def _words(s: str) -> list[str]:
     return re.findall(rf"[{AR_LETTER}A-Za-z0-9]+", s)
 
 
-# مؤقت (2026-10-04): ترقيم صحيح مسلم في حارس الأحاديث يُنقل إلى ترقيم عبد الباقي في
-# فرعٍ آخر (fix/trust-content). حتى ينزل، لا يدخل درسًا جديدًا حديثٌ إلا من البخاري —
-# رقمٌ قد يتغيّر تحت الدرس بعد نشره أسوأ من غياب الحديث.
-HADITH_BOOKS_ALLOWED = {"البخاري"}
+# كان البخاري وحده حتى نزل ترقيم عبد الباقي لصحيح مسلم في حارس الأحاديث (#27):
+# رقمٌ قد يتغيّر تحت الدرس بعد نشره أسوأ من غياب الحديث. نزل، والحزمة تستشهد به،
+# والاختبار يثبت أن كل رقمٍ فيها يحمل نصّه في مدوّنة الحارس نفسها.
+HADITH_BOOKS_ALLOWED = {"البخاري", "مسلم"}
 
 
 def load_bank() -> dict:
@@ -309,7 +309,9 @@ def _en_source(item: dict) -> str:
             raise KeyError(f"no English surah name for {surah!r} — add it to SURAH_EN")
         return f"Surah {name}, {prov['surah']}:{prov['ayah']}"
     book = {"البخاري": "Sahih al-Bukhari", "مسلم": "Sahih Muslim"}[prov["book"]]
-    return f"{book}, hadith {prov['number']}"
+    # «Sahih al-Bukhari 6927» لا «…, hadith 6927»: حارس النصوص الشرعية لا يقرأ الثانية
+    # إسنادًا، فكان الحديث في النسخة الإنجليزية يظهر له بلا مصدر.
+    return f"{book} {prov['number']}"
 
 
 def expand(text: str, bank: dict, lang: str) -> str:
