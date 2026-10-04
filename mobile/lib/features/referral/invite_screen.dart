@@ -7,15 +7,12 @@
 /// via the share sheet), the parent's code, and a box for entering a friend's
 /// code by hand.
 ///
-/// No hadith is quoted here. The share card used to carry «الدالُّ على الخير
-/// كفاعله», which is not in al-Bukhari or Muslim; the reward is phrased as a
-/// hope («نرجو أن يكون لك مثل أجرها»), never as a citation.
+/// The share card once carried «الدالُّ على الخير كفاعله», which is not in
+/// al-Bukhari or Muslim; it was replaced by the Sahih wording below.
 ///
-/// TODO(hadith-numbering): the closely related «مَن دلَّ على خيرٍ فله مثلُ أجرِ
-/// فاعله» IS in Sahih Muslim (1893 in the common Abd al-Baqi numbering), but
-/// the pre-commit hadith guard's index numbers Muslim differently (Darussalam)
-/// and is being fixed separately. Once the guard accepts Abd al-Baqi numbers,
-/// this screen may quote it with book + number — not before.
+/// The Arabic share card quotes «من دلّ على خير فله مثل أجر فاعله»
+/// (صحيح مسلم — حديث ١٨٩٣, Abd al-Baqi numbering, verified by the pre-commit
+/// hadith guard). The English card carries no hadith text.
 library;
 
 import 'package:flutter/material.dart';

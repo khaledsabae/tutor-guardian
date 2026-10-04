@@ -19,7 +19,19 @@ What this rejects, drawn from what actually shipped:
   * a citation whose number points at a different hadith.
 
 Source format expected in `source:`
-    'صحيح البخاري — حديث ٥٠٢٧'   ·   'صحيح مسلم — حديث ٢٣١٨'
+    'صحيح البخاري — حديث ٥٠٢٧'   ·   'صحيح مسلم — حديث ١٦٣١'
+
+**Numbering.** Bukhari by the common (Fath al-Bari / sunnah.com) number. Muslim by
+**Muhammad Fu'ad Abd al-Baqi's** number — the one Arabic readers and scholars
+cite. Until 2026-10-04 Muslim was keyed by the fawazahmed0 edition's sequential
+(Darussalam-style) number, so the app showed «مسلم ٤٢٢٣» for «إذا مات الإنسان»,
+whose number is 1631. A preacher reading that concludes the app fabricates. The
+sequential number survives only as an internal alias that names the right number
+in the error — it never makes a citation pass. Anchors (exit 2 on regression):
+Muslim 1631, 1164, 1893, 2699, 55, 2564 · Bukhari 1, 13, 5027, 6018.
+
+Free text everywhere else (lessons, stories, assets, ARB, push and SEO literals…)
+is `check_scripture_coverage.py`, which reuses [check_one]'s matching.
 
 Scope: `kind: 'hadith'` entries in
 mobile/assets/content/adhkar/family_adhkar.ar.json (Dart literals until
@@ -29,8 +41,9 @@ mobile/assets/content/adhkar/family_adhkar.ar.json (Dart literals until
 the citation itself, as before, and asserts the stored pair agrees: derived
 data that drifted from what it was derived from is an error, not a shortcut.
 
-Corpus: `ops/data/hadith_index.json.gz`, derived from the ara-bukhari and
-ara-muslim editions of fawazahmed0/hadith-api. It stores consonantal skeletons
+Corpus: `ops/data/hadith_index.json.gz`, built by `ops/tools/build_hadith_index.py`
+from the ara-bukhari and ara-muslim editions of fawazahmed0/hadith-api (pinned
+commit), Muslim numbers cross-checked against sunnah.com. It stores consonantal skeletons
 for matching only — it is not display text, and **it is not a certificate of
 tahqiq**. A pass here means the wording and the number line up with that
 edition; it does not mean a scholar has reviewed the choice.
@@ -70,13 +83,49 @@ def skeleton(s: str) -> str:
     return re.sub(r"\s+", " ", s).strip()
 
 
+INDEX_SCHEMA = "tg.hadith_index/2"
+
+# Filled by [_load_index]: the old sequential Muslim numbers (diagnosis only) and
+# the Introduction narrations, which Abd al-Baqi did not number.
+_ALIASES: dict[str, dict[str, int]] = {}
+_UNNUMBERED: dict[str, dict[str, list[str]]] = {}
+
+
 def _load_index() -> dict:
     if not INDEX.exists():
         print(f"\n🔴  الفهرس غير موجود: {INDEX}")
-        print("    أعِد بناءه من ara-bukhari/ara-muslim قبل الاعتماد على الفحص.\n")
+        print("    أعِد بناءه: python ops/tools/build_hadith_index.py\n")
         sys.exit(2)
     with gzip.open(INDEX, "rt", encoding="utf-8") as f:
-        return json.load(f)
+        idx = json.load(f)
+    if idx.get("schema") != INDEX_SCHEMA:
+        # A v1 index keys Muslim by the sequential number: every check against
+        # it would "pass" the wrong numbers. Refuse rather than report.
+        print(f"\n🔴  مخطط الفهرس {idx.get('schema')!r} — المنتظر {INDEX_SCHEMA!r} "
+              "(ترقيم عبد الباقي لصحيح مسلم).")
+        print("    أعِد بناءه: python ops/tools/build_hadith_index.py\n")
+        sys.exit(2)
+    _ALIASES.clear()
+    _ALIASES.update(idx.get("aliases", {}))
+    _UNNUMBERED.clear()
+    _UNNUMBERED.update(idx.get("unnumbered", {}))
+    return idx
+
+
+def _narrations(value) -> list[str]:
+    """One number → its narrations. Each stays a separate string, so a match can
+    never run across the boundary between two chains filed under one number."""
+    return value if isinstance(value, list) else [value]
+
+
+def locate(books: dict, frag: str) -> tuple[str, int] | None:
+    """(book, number) of the first narration holding `frag` — Bukhari first,
+    lowest number first, so the answer is stable from run to run."""
+    for b in ("البخاري", "مسلم"):
+        for n in sorted(books.get(b, {}), key=float):
+            if any(frag in t for t in _narrations(books[b][n])):
+                return b, int(n)
+    return None
 
 
 def check_one(books: dict, text: str, source: str) -> str | None:
@@ -88,19 +137,29 @@ def check_one(books: dict, text: str, source: str) -> str | None:
     entries = books.get(book)
     if entries is None:
         return f"كتاب غير مدعوم: {book}"
-    target = entries.get(num)
-    if target is None:
-        return f"لا يوجد حديث برقم {num} في صحيح {book}"
     frag = skeleton(text)
     if not frag:
         return "النص فارغ بعد التطبيع"
-    if frag in target:
+    target = entries.get(num)
+    if target is not None and any(frag in t for t in _narrations(target)):
         return None
-    # Where does it really live? Cheap enough over 15k entries.
-    for b, ents in books.items():
-        for n, t in ents.items():
-            if frag in t:
-                return f"النص موجود في صحيح {b} حديث {n}، لا {book} {num}"
+    # The pre-2026-10-04 sequential number: name the right one, never pass.
+    alias = _ALIASES.get(book, {}).get(num)
+    if alias is not None and any(frag in t for t in _narrations(entries.get(str(alias), []))):
+        return (f"{num} رقمٌ تسلسلي (طبعة دار السلام/fawazahmed0) لا رقم عبد الباقي — "
+                f"الإسناد الصحيح: «{cite(book, alias)}»")
+    found = locate(books, frag)
+    if found:
+        where = f"صحيح {found[0]} حديث {found[1]}"
+        if target is None:
+            return f"لا يوجد حديث برقم {num} في صحيح {book} — والنص في {where}"
+        return f"النص موجود في {where}، لا {book} {num}"
+    for b, pools in _UNNUMBERED.items():
+        for part, texts in pools.items():
+            if any(frag in t for t in texts):
+                return f"النص في {part} صحيح {b} — غير مرقّمة عند عبد الباقي فلا يُستشهد بها برقم"
+    if target is None:
+        return f"لا يوجد حديث برقم {num} في صحيح {book}"
     return f"النص ليس في صحيح {book} ولا في الآخر — لفظ غير ثابت أو ملزوق"
 
 
@@ -127,6 +186,39 @@ _MUST_REJECT = [
     ("خيركم من تعلم القرآن وعلمه", "صحيح — رواه الترمذي وأبو داود"),
 ]
 _MUST_ACCEPT = [("خيركم من تعلم القرآن وعلمه", "صحيح البخاري — حديث ٥٠٢٧")]
+
+# Numbering anchors — (book, the number scholars cite, a phrase that lives there,
+# the sequential number the v1 index used for it). Shared with the index builder,
+# which refuses to write an index that breaks one. A Muslim anchor accepted under
+# its old number, or rejected under Abd al-Baqi's, means the numbering regressed.
+ANCHORS = [
+    ("مسلم", 1631, "إذا مات الإنسان انقطع عنه عمله", 4223),
+    ("مسلم", 1164, "من صام رمضان ثم أتبعه ستا من شوال", 2758),
+    ("مسلم", 1893, "من دل على خير فله مثل أجر فاعله", 4899),
+    ("مسلم", 2699, "من نفس عن مؤمن كربة من كرب الدنيا", 6853),
+    ("مسلم", 55, "الدين النصيحة", 196),
+    ("مسلم", 2564, "لا تحاسدوا ولا تناجشوا ولا تباغضوا ولا تدابروا", 6541),
+    ("البخاري", 1, "إنما الأعمال بالنيات", None),
+    ("البخاري", 13, "لا يؤمن أحدكم حتى يحب لأخيه ما يحب لنفسه", None),
+    ("البخاري", 5027, "خيركم من تعلم القرآن وعلمه", None),
+    ("البخاري", 6018, "من كان يؤمن بالله واليوم الآخر فلا يؤذ جاره", None),
+]
+_AR_NUM = str.maketrans("0123456789", "٠١٢٣٤٥٦٧٨٩")
+
+
+def cite(book: str, number: int) -> str:
+    """The one citation format the guards accept: «صحيح مسلم — حديث ١٦٣١»."""
+    return f"صحيح {book} — حديث {str(number).translate(_AR_NUM)}"
+
+
+_MUST_ACCEPT += [(phrase, cite(b, n)) for b, n, phrase, _ in ANCHORS]
+_MUST_REJECT += [(phrase, cite(b, old)) for b, _, phrase, old in ANCHORS if old]
+# A cross-reference narration (build_hadith_index.py docstring): Abd al-Baqi
+# labels it 287.05, sunnah.com files it as 2214 — both editions' number pass,
+# a neighbour of either does not.
+_MUST_ACCEPT += [("عليكم بهذا العود الهندي", cite("مسلم", 287)),
+                 ("عليكم بهذا العود الهندي", cite("مسلم", 2214))]
+_MUST_REJECT += [("عليكم بهذا العود الهندي", cite("مسلم", 2215))]
 
 
 # ── وحدات المعرفة المترجَمة ────────────────────────────────────────────────

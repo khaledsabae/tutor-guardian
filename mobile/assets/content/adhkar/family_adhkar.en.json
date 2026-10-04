@@ -1709,15 +1709,15 @@
     {
       "id": "t_001",
       "kind": "tip",
-      "text": "Start your day by smiling at your children: a smile is charity, and a home takes its shape from the first moment of the morning.",
-      "source": "Parenting guidance — drawn from the hadith «تبسمك في وجه أخيك صدقة»",
+      "text": "Start your day by smiling at your children: meeting them with a cheerful face is a good deed, and a home takes its shape from the first moment of the morning.",
+      "source": "Parenting guidance — drawn from the hadith «لا تحقرن من المعروف شيئا ولو أن تلقى أخاك بوجه طلق» (صحيح مسلم — حديث ٢٦٢٦)",
       "topic": "Tip"
     },
     {
       "id": "t_002",
       "kind": "tip",
       "text": "Before you criticise, put your hand on your child's head and lower your voice: «الرفق لا يكون في شيء إلا زانه» — gentleness adorns whatever it touches.",
-      "source": "Parenting guidance — drawn from the hadith on gentleness",
+      "source": "Parenting guidance — drawn from the hadith on gentleness (صحيح مسلم — حديث ٢٥٩٤)",
       "topic": "Tip"
     },
     {
@@ -1752,7 +1752,7 @@
       "id": "t_007",
       "kind": "tip",
       "text": "When your child angers you, take a breath before you answer: «الصبر عند الصدمة الأولى» — patience counts at the first shock.",
-      "source": "Parenting guidance — drawn from the hadith on patience",
+      "source": "Parenting guidance — drawn from the hadith on patience (صحيح البخاري — حديث ١٢٨٣)",
       "topic": "Tip"
     },
     {
@@ -1983,7 +1983,7 @@
       "id": "t_040",
       "kind": "tip",
       "text": "Teach your children never to mock anyone for their looks, their colour or their clothes: «إن الله لا ينظر إلى صوركم» — Allah does not look at your forms.",
-      "source": "Parenting guidance — drawn from the hadith «إن الله لا ينظر إلى صوركم»",
+      "source": "Parenting guidance — drawn from the hadith «إن الله لا ينظر إلى صوركم» (صحيح مسلم — حديث ٢٥٦٤)",
       "topic": "Tip"
     },
     {
@@ -2172,7 +2172,7 @@
       "id": "t_067",
       "kind": "tip",
       "text": "Get your children used to kindness towards animals and never harming them: «في كل كبد رطبة أجر» — there is reward in every living creature.",
-      "source": "Parenting guidance — drawn from the hadith «في كل كبد رطبة أجر»",
+      "source": "Parenting guidance — drawn from the hadith «في كل كبد رطبة أجر» (صحيح البخاري — حديث ٢٣٦٣)",
       "topic": "Tip"
     },
     {
@@ -2650,24 +2650,24 @@
       "id": "h_007",
       "kind": "hadith",
       "text": "إِذَا مَاتَ الإِنْسَانُ انْقَطَعَ عَنْهُ عَمَلُهُ إِلاَّ مِنْ ثَلاَثَةٍ إِلاَّ مِنْ صَدَقَةٍ جَارِيَةٍ أَوْ عِلْمٍ يُنْتَفَعُ بِهِ أَوْ وَلَدٍ صَالِحٍ يَدْعُو لَهُ",
-      "source": "صحيح مسلم — حديث ٤٢٢٣",
+      "source": "صحيح مسلم — حديث ١٦٣١",
       "topic": "الولد الصالح",
       "provenance": {
         "type": "hadith",
         "book": "مسلم",
-        "number": 4223
+        "number": 1631
       }
     },
     {
       "id": "h_008",
       "kind": "hadith",
       "text": "الدِّينُ النَّصِيحَةُ",
-      "source": "صحيح مسلم — حديث ١٩٦",
+      "source": "صحيح مسلم — حديث ٥٥",
       "topic": "النصيحة",
       "provenance": {
         "type": "hadith",
         "book": "مسلم",
-        "number": 196
+        "number": 55
       }
     },
     {
@@ -2686,24 +2686,24 @@
       "id": "h_010",
       "kind": "hadith",
       "text": "الْمُسْلِمُ مَنْ سَلِمَ الْمُسْلِمُونَ مِنْ لِسَانِهِ وَيَدِهِ",
-      "source": "صحيح مسلم — حديث ١٦٢",
+      "source": "صحيح مسلم — حديث ٤١",
       "topic": "كف الأذى",
       "provenance": {
         "type": "hadith",
         "book": "مسلم",
-        "number": 162
+        "number": 41
       }
     },
     {
       "id": "h_011",
       "kind": "hadith",
       "text": "مَنْ عَالَ جَارِيَتَيْنِ حَتَّى تَبْلُغَا جَاءَ يَوْمَ الْقِيَامَةِ أَنَا وَهُوَ",
-      "source": "صحيح مسلم — حديث ٦٦٩٥",
+      "source": "صحيح مسلم — حديث ٢٦٣١",
       "topic": "تربية البنات",
       "provenance": {
         "type": "hadith",
         "book": "مسلم",
-        "number": 6695
+        "number": 2631
       }
     },
     {
@@ -2734,24 +2734,24 @@
       "id": "h_014",
       "kind": "hadith",
       "text": "اللَّهُمَّ مَنْ وَلِيَ مِنْ أَمْرِ أُمَّتِي شَيْئًا فَشَقَّ عَلَيْهِمْ فَاشْقُقْ عَلَيْهِ وَمَنْ وَلِيَ مِنْ أَمْرِ أُمَّتِي شَيْئًا فَرَفَقَ بِهِمْ فَارْفُقْ بِهِ",
-      "source": "صحيح مسلم — حديث ٤٧٢٢",
+      "source": "صحيح مسلم — حديث ١٨٢٨",
       "topic": "الرفق بمن تحت يدك",
       "provenance": {
         "type": "hadith",
         "book": "مسلم",
-        "number": 4722
+        "number": 1828
       }
     },
     {
       "id": "h_015",
       "kind": "hadith",
       "text": "إِنَّ الصِّدْقَ يَهْدِي إِلَى الْبِرِّ وَإِنَّ الْبِرَّ يَهْدِي إِلَى الْجَنَّةِ وَإِنَّ الرَّجُلَ لَيَصْدُقُ حَتَّى يُكْتَبَ صِدِّيقًا وَإِنَّ الْكَذِبَ يَهْدِي إِلَى الْفُجُورِ وَإِنَّ الْفُجُورَ يَهْدِي إِلَى النَّارِ وَإِنَّ الرَّجُلَ لَيَكْذِبُ حَتَّى يُكْتَبَ كَذَّابًا",
-      "source": "صحيح مسلم — حديث ٦٦٣٧",
+      "source": "صحيح مسلم — حديث ٢٦٠٧",
       "topic": "الصدق",
       "provenance": {
         "type": "hadith",
         "book": "مسلم",
-        "number": 6637
+        "number": 2607
       }
     }
   ]

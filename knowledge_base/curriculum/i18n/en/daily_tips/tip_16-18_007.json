@@ -2,7 +2,7 @@
   "id": "tip_16-18_007",
   "age_group": "16-18",
   "domain": "medical",
-  "text": "2022 Report: The Mental Health of Youth is a Global Priority. Universities provide counsellors—use them, they are there for you.",
+  "text": "Many universities offer student counsellors, usually confidential and often free. Find out about the service with your teen at the start of the term, and encourage them to go when stress builds, before problems pile up.",
   "unit_id": "e5d132da-cdb4-403a-a43e-e78640ee6270",
   "day_of_week": 2,
   "time_of_day": "morning",
@@ -22,7 +22,8 @@
     "review_defects": [],
     "approved_by": null,
     "revalidated_at": "2026-08-13T18:53:11.995478+00:00",
-    "fixed_at": "2026-08-13T18:53:11.995493+00:00",
-    "fixer_model": "mistral-large-3:675b"
+    "fixed_at": "2026-10-04T07:11:53.626353+00:00",
+    "fixer_model": "claude-opus-5.5",
+    "manual_fix_note": "Rewritten 2026-10-04 with the Arabic: re-addressed to the parent (the tip spoke to the teen)."
   }
 }

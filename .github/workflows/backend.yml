@@ -25,6 +25,19 @@ on:
     paths:
       - 'backend/**'
       - 'knowledge_base/**'
+      # Every surface the scripture guard reads (ops/tools/content_surfaces.py)
+      # and the suite's content tests (test_no_hitting_endorsement reads the
+      # stories, adhkar and games). App-bundled content never reaches the
+      # backend, so the push list above leaves it out; a PR that only touches
+      # it must still be checked here — the pre-commit hook can be skipped.
+      - 'mobile/lib/**'
+      - 'mobile/assets/**'
+      - 'docs/stories*.json'
+      - 'docs/lesson_index.json'
+      - 'docs/lesson_assets/**'
+      - 'frontend/**'
+      - 'ops/scripts/**'
+      - 'ops/data/hadith_*.json.gz'
       - 'ops/tools/**'
       - 'pytest.ini'
       - '.github/workflows/backend.yml'
@@ -149,6 +162,16 @@ jobs:
         run: |
           cd "$GITHUB_WORKSPACE"
           python ops/tools/check_kb_integrity.py
+
+      # Scripture guards — until 2026-10-04 they ran only in the local pre-commit
+      # hook, so a --no-verify commit or a machine without the hook shipped
+      # unchecked verses and hadith. Stdlib only; the indexes are in ops/data.
+      - name: Run scripture guards (Qur'an, Sahihayn, every surface)
+        run: |
+          cd "$GITHUB_WORKSPACE"
+          python ops/tools/check_quran_citations.py
+          python ops/tools/check_hadith_citations.py
+          python ops/tools/check_scripture_coverage.py
 
   lint:
     name: ruff

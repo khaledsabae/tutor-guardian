@@ -2,7 +2,7 @@
   "id": "tip_10-12_011",
   "age_group": "10-12",
   "domain": "cyber",
-  "text": "Cyberbullying: Teach him: screenshot → report to the platform → tell me → 19099 for serious reports.",
+  "text": "Cyberbullying: teach your child: screenshot → report to the platform → tell you. For serious cases, contact the cybercrime reporting authority in your country.",
   "unit_id": "bd4afec4-d395-55f4-9953-22cc698564fd",
   "day_of_week": 1,
   "time_of_day": "evening",
@@ -21,6 +21,9 @@
     "review_verdict": "clean",
     "review_defects": [],
     "approved_by": null,
-    "revalidated_at": "2026-08-13T17:09:45.656468+00:00"
+    "revalidated_at": "2026-08-13T17:09:45.656468+00:00",
+    "manual_fix_note": "Rewritten 2026-10-04 with the Arabic: the single-country reporting number 19099 replaced by country-neutral guidance.",
+    "fixed_at": "2026-10-04T07:31:52.180297+00:00",
+    "fixer_model": "claude-opus-5.5"
   }
 }

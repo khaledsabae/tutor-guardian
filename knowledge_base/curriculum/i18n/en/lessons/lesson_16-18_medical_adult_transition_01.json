@@ -10,13 +10,13 @@
     "e19e72c2-d553-4e12-a6e6-5d7c6f3fc083",
     "e5d132da-cdb4-403a-a43e-e78640ee6270"
   ],
-  "summary": "Transitioning to university/work brings new pressures: alienation, performance, relationships, financial decisions. Your tools: (1) A consistent routine (sleep, movement, nutrition) — the chemical foundation for your brain. (2) A support network: a trusted friend, an academic mentor, a university counselor, a hotline (937). (3) Personal warning signs: write them down and monitor them weekly. (4) An emergency plan: 937/112, an emergency friend, a known psychiatrist. Independence means taking responsibility for your mental health.",
-  "try_this": "This week: Write a personal \"safety card\" — 3 warning signs, 3 calming strategies, 3 people you trust + 937. Keep it in your wallet/phone.",
+  "summary": "Your teen's move to university or work brings new pressures: being away from home, performance, relationships, and financial decisions. Help them build their tools: (1) A steady routine for sleep, movement and meals — the foundation of brain health. (2) A support network: a trusted friend, an academic mentor, a university counsellor, and your country's mental-health helpline saved on their phone. (3) Personal warning signs they write down and monitor weekly. (4) An emergency plan: your country's emergency number, a friend they can turn to, and a psychiatrist they know. Independence means learning to look after their own mental health, with you behind them.",
+  "try_this": "This week: Sit with your teen and write a personal \"safety card\" together: 3 warning signs, 3 ways to calm down, 3 people they trust, and your country's emergency number. They should keep it in their wallet or on their phone.",
   "order": 1,
   "estimated_minutes": 10,
   "reflection_prompts": [
-    "What are the three warning signs you identified?",
-    "Who are the three people in your safety net?"
+    "What are the three warning signs your teen identified?",
+    "Who are the three people in their safety net?"
   ],
   "warning_flags": [
     "أفكار انتحار/خطة",
@@ -42,7 +42,8 @@
     "review_defects": [],
     "approved_by": null,
     "revalidated_at": "2026-08-13T19:00:48.049809+00:00",
-    "fixed_at": "2026-08-13T19:00:48.049821+00:00",
-    "fixer_model": "mistral-large-3:675b"
+    "fixed_at": "2026-10-04T07:11:53.626353+00:00",
+    "fixer_model": "claude-opus-5.5",
+    "manual_fix_note": "Rewritten 2026-10-04 with the Arabic: Saudi-only 937 (and 112 as a universal number) replaced by country-neutral guidance; teen-directed wording re-addressed to the parent."
   }
 }

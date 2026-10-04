@@ -2,7 +2,7 @@
   "id": "tip_0-3_005",
   "age_group": "0-3",
   "domain": "medical",
-  "text": "Early intervention programmes are available for children under 3 years old and are often free—no final diagnosis is needed to begin. If you are worried, start with the doctor and ask for a referral. You are your child’s best advocate.",
+  "text": "In many countries, early intervention programmes for children under 3 do not need a final diagnosis to begin. If you are worried, start with the paediatrician and ask for a referral. You are your child's best advocate.",
   "unit_id": "med-e7e88a3b",
   "day_of_week": 4,
   "time_of_day": "morning",
@@ -30,6 +30,9 @@
     "review_verdict": "clean",
     "review_defects": [],
     "approved_by": null,
-    "revalidated_at": "2026-08-13T17:07:55.188708+00:00"
+    "revalidated_at": "2026-08-13T17:07:55.188708+00:00",
+    "manual_fix_note": "Rewritten 2026-10-04 with the Arabic register fix (Latin words / dialect removed from the Arabic); meaning re-aligned.",
+    "fixed_at": "2026-10-04T07:26:56.760370+00:00",
+    "fixer_model": "claude-opus-5.5"
   }
 }

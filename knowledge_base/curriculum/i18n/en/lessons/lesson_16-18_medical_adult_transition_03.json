@@ -10,13 +10,13 @@
     "f42e35c1-4bbd-4037-8bfa-4668a530f6d8",
     "83f8a5c4-defa-49a6-91ec-8504fee1140e"
   ],
-  "summary": "Psychological health is not the absence of illness, but rather: (1) Daily habits: 7-9 hours of sleep, 30 minutes of movement, real food, real connection. (2) Meaning: Discover what gives you purpose (service, knowledge, art, family) — meaning protects from emptiness. (3) Professional network: A therapist/counselor you trust, a psychiatrist whose number you know, and the hotline 937 saved in your contacts. (4) Seeking help is strength: \"I need help\" is maturity, not weakness. You are building a life, not just passing through a phase.",
-  "try_this": "This week: Create a \"self-contract\" — 3 daily habits, one value you live by, a person you trust, and an emergency number. Sign it, and review it monthly.",
+  "summary": "Mental health is not just the absence of illness; it is built through things you can help your teen with: (1) Daily habits: 7-9 hours of sleep, 30 minutes of movement, healthy food, and real connection with people. (2) Meaning: help them discover what gives them purpose (service, knowledge, art, family) — meaning protects against emptiness. (3) A professional network: a therapist or counsellor they trust, a psychiatrist whose number they know, and your country's mental-health helpline saved on their phone. (4) Seeking help is strength: teach them that saying \"I need help\" is maturity, not weakness. Your teen is building a life, not just passing through a phase.",
+  "try_this": "This week: Encourage your teen to write a \"self-contract\": 3 daily habits, one value to live by, a person they trust, and your country's emergency number. They sign it and review it every month.",
   "order": 3,
   "estimated_minutes": 10,
   "reflection_prompts": [
-    "What are the three habits you have committed to?",
-    "What value have you chosen to live by in the coming year?"
+    "Which three habits has your teen committed to?",
+    "What value has your teen chosen to live by in the coming year?"
   ],
   "warning_flags": [
     "غياب تام للأمل/المعنى",
@@ -42,7 +42,8 @@
     "review_defects": [],
     "approved_by": null,
     "revalidated_at": "2026-08-13T19:00:59.777996+00:00",
-    "fixed_at": "2026-08-13T19:00:59.778009+00:00",
-    "fixer_model": "mistral-large-3:675b"
+    "fixed_at": "2026-10-04T07:11:53.626353+00:00",
+    "fixer_model": "claude-opus-5.5",
+    "manual_fix_note": "Rewritten 2026-10-04 with the Arabic: Saudi-only 937 (and 112 as a universal number) replaced by country-neutral guidance; teen-directed wording re-addressed to the parent."
   }
 }

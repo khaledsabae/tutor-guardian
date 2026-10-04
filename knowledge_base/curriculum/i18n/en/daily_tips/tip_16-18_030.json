@@ -2,7 +2,7 @@
   "id": "tip_16-18_030",
   "age_group": "16-18",
   "domain": "medical",
-  "text": "The Young Adult’s Mental Health: routine + support network + emergency plan. Independence = responsibility for your health. You are investing in your future.",
+  "text": "Your teen is nearing independence, so encourage habits that protect their mental health: regular sleep, movement, good company, and worship in which they find calm. Remind them that caring for themselves today is an investment in their future.",
   "unit_id": "e5d132da-cdb4-403a-a43e-e78640ee6270",
   "day_of_week": 4,
   "time_of_day": "evening",
@@ -21,6 +21,9 @@
     "review_verdict": "clean",
     "review_defects": [],
     "approved_by": null,
-    "revalidated_at": "2026-08-13T17:12:56.893258+00:00"
+    "revalidated_at": "2026-08-13T17:12:56.893258+00:00",
+    "manual_fix_note": "Rewritten 2026-10-04 with the Arabic: re-addressed to the parent (the tip spoke to the teen).",
+    "fixed_at": "2026-10-04T07:11:53.626353+00:00",
+    "fixer_model": "claude-opus-5.5"
   }
 }

@@ -15,7 +15,7 @@
     "a77834fd-ec17-4e0f-b98d-048e87c44bdb"
   ],
   "summary": "Teenage depression: sadness/emptiness > two weeks, loss of enjoyment, fatigue, changes in sleep/appetite, poor concentration, negative thoughts. Anxiety: persistent tension, expecting disaster, avoiding situations. It is not a \"mood\" or \"weakness of iman\" — it is a chemical/psychological imbalance. Treatment: Cognitive Behavioral Therapy (CBT) + medication if needed + family support. Parents: listen without judgment, reassure: \"It is an illness like any other, and it has a cure.\"",
-  "try_this": "This week: simplified PHQ-9/GAD-7 scale (9/7 questions) — complete it with your child confidentially. If the score is >10: schedule an appointment with a pediatrician or mental health specialist.",
+  "try_this": "This week: the simplified PHQ-9 (mood) and GAD-7 (anxiety) questionnaires — complete it with your child confidentially. If the score is >10: schedule an appointment with a pediatrician or mental health specialist.",
   "order": 1,
   "estimated_minutes": 15,
   "reflection_prompts": [
@@ -54,6 +54,9 @@
       }
     ],
     "approved_by": null,
-    "revalidated_at": "2026-08-13T17:23:17.319164+00:00"
+    "revalidated_at": "2026-08-13T17:23:17.319164+00:00",
+    "manual_fix_note": "2026-10-04: aligned with the Arabic register/safety fix (country-specific number removed, leaked or garbled wording corrected).",
+    "fixed_at": "2026-10-04T07:31:52.180297+00:00",
+    "fixer_model": "claude-opus-5.5"
   }
 }

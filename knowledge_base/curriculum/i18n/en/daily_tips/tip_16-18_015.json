@@ -2,7 +2,7 @@
   "id": "tip_16-18_015",
   "age_group": "16-18",
   "domain": "cyber",
-  "text": "Information Security: unique passwords, a password manager (Bitwarden), 2FA on all accounts, encryption, backups. You are responsible.",
+  "text": "Teach your teen the basics of information security: a different password for each account, a password manager, two-step verification on every account, encryption and backups. Their digital safety is their responsibility.",
   "unit_id": "cyb-db2bb48f",
   "day_of_week": 3,
   "time_of_day": "morning",
@@ -21,6 +21,9 @@
     "review_verdict": "clean",
     "review_defects": [],
     "approved_by": null,
-    "revalidated_at": "2026-08-13T17:12:15.374775+00:00"
+    "revalidated_at": "2026-08-13T17:12:15.374775+00:00",
+    "manual_fix_note": "Rewritten 2026-10-04 with the Arabic register fix (Latin words / dialect removed from the Arabic); meaning re-aligned.",
+    "fixed_at": "2026-10-04T07:26:56.760370+00:00",
+    "fixer_model": "claude-opus-5.5"
   }
 }

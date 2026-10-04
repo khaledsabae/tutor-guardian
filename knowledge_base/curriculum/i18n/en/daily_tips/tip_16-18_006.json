@@ -2,7 +2,7 @@
   "id": "tip_16-18_006",
   "age_group": "16-18",
   "domain": "medical",
-  "text": "Suicidal thoughts/plan/method = immediate emergency. 937 / 112 / nearest emergency services. Do not stay alone. Help is available 24/7.",
+  "text": "If your teen talks about suicide, or about a plan or a means to harm themselves, this is an emergency: do not leave them alone, remove anything dangerous, and immediately call your country's emergency number or take them to the nearest emergency department.",
   "unit_id": "e19e72c2-d553-4e12-a6e6-5d7c6f3fc083",
   "day_of_week": 2,
   "time_of_day": "evening",
@@ -21,6 +21,9 @@
     "review_verdict": "clean",
     "review_defects": [],
     "approved_by": null,
-    "revalidated_at": "2026-08-13T17:11:57.703138+00:00"
+    "revalidated_at": "2026-08-13T17:11:57.703138+00:00",
+    "manual_fix_note": "Rewritten 2026-10-04 with the Arabic: re-addressed to the parent (the tip spoke to the teen); the Saudi-only 937 line replaced by country-neutral emergency guidance.",
+    "fixed_at": "2026-10-04T07:11:53.626353+00:00",
+    "fixer_model": "claude-opus-5.5"
   }
 }

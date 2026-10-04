@@ -2,7 +2,7 @@
   "id": "tip_4-6_001",
   "age_group": "4-6",
   "domain": "islamic_parenting",
-  "text": "Before you reprimand your child, take a deep breath. The Prophet said: 'Indeed, Allah is Rafeeq and loves rifq in all things' — and rifq begins with the tone of your voice before your words.",
+  "text": "Before you reprimand your child, take a deep breath. The Prophet ﷺ said: «Allah is gentle and loves gentleness in every matter» (Sahih al-Bukhari 6927) — and gentleness begins with the tone of your voice before your words.",
   "unit_id": "0bd76d3c-548a-46ed-b17b-78874741662a",
   "day_of_week": 0,
   "time_of_day": "anytime",
@@ -45,7 +45,8 @@
     ],
     "approved_by": null,
     "revalidated_at": "2026-08-13T18:54:03.974436+00:00",
-    "fixed_at": "2026-08-13T18:54:03.974456+00:00",
-    "fixer_model": "mistral-large-3:675b"
+    "fixed_at": "2026-10-04T08:15:36.331649+00:00",
+    "fixer_model": "claude-opus-5.5",
+    "manual_fix_note": "2026-10-04 scripture fix: hadith quoted only from the Sahihayn with book + number (Muslim by Abd al-Baqi); non-Sahihayn or paraphrased quotes replaced, mirrored from the Arabic."
   }
 }

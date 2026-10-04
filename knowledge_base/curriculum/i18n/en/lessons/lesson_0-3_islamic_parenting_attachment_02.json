@@ -7,7 +7,7 @@
   "unit_ids": [
     "f66f6ba1-d342-47a0-8184-6bfb848c47be"
   ],
-  "summary": "Rifq (gentleness) is an authentic Islamic value, not a weakness—Allah’s Messenger ﷺ said: «Indeed, Allah is Rafeeq (Gentle) and loves rifq in all things.» In the first months, the child does not understand words but senses tone, touch, and presence. Rifq in carrying, softness in handling, patience with crying, and avoiding hitting or harm in any form—these are Prophetic values before they are psychological recommendations. The child treated with rifq learns rifq, and the one threatened with shouting learns fear. You are building the personality day by day with every touch, glance, and word.",
+  "summary": "Rifq (gentleness) is an authentic Islamic value, not a weakness—Allah’s Messenger ﷺ said: «Indeed, Allah is Rafeeq (Gentle) and loves rifq in every matter» (Sahih al-Bukhari 6927). In the first months, the child does not understand words but senses tone, touch, and presence. Rifq in carrying, softness in handling, patience with crying, and avoiding hitting or harm in any form—these are Prophetic values before they are psychological recommendations. The child treated with rifq learns rifq, and the one threatened with shouting learns fear. You are building the personality day by day with every touch, glance, and word.",
   "try_this": "This week: Observe your tone of voice with your child. When they cry, instead of tensing up—breathe, come close, and speak in a calm, low voice. The child is soothed by the gentle voice before the words. During changing or bathing, talk to them and describe what you are doing: «Now we are dressing you...» Gentle verbal communication in the early months builds trust even before they understand the meaning.",
   "order": 2,
   "estimated_minutes": 46,
@@ -36,7 +36,8 @@
     "review_defects": [],
     "approved_by": null,
     "revalidated_at": "2026-08-13T18:55:38.302236+00:00",
-    "fixed_at": "2026-08-13T18:55:38.302249+00:00",
-    "fixer_model": "mistral-large-3:675b"
+    "fixed_at": "2026-10-04T08:15:36.331649+00:00",
+    "fixer_model": "claude-opus-5.5",
+    "manual_fix_note": "2026-10-04 scripture fix: hadith quoted only from the Sahihayn with book + number (Muslim by Abd al-Baqi); non-Sahihayn or paraphrased quotes replaced, mirrored from the Arabic."
   }
 }

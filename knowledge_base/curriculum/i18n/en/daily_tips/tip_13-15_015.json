@@ -2,7 +2,7 @@
   "id": "tip_13-15_015",
   "age_group": "13-15",
   "domain": "cyber",
-  "text": "Online harassment: threatening messages, spreading images, blackmail. Take a screenshot → report to the platform → inform a guardian → 19099.",
+  "text": "Online harassment: threatening messages, sharing images, blackmail. Teach your child: screenshot → report to the platform → tell you at once. In serious cases, contact the cybercrime reporting authority in your country.",
   "unit_id": "cyb-8a2da5de",
   "day_of_week": 3,
   "time_of_day": "evening",
@@ -22,7 +22,8 @@
     "review_defects": [],
     "approved_by": null,
     "revalidated_at": "2026-08-13T17:59:06.141992+00:00",
-    "fixed_at": "2026-08-13T17:59:06.142013+00:00",
-    "fixer_model": "mistral-large-3:675b"
+    "fixed_at": "2026-10-04T07:31:52.180297+00:00",
+    "fixer_model": "claude-opus-5.5",
+    "manual_fix_note": "Rewritten 2026-10-04 with the Arabic: the single-country reporting number 19099 replaced by country-neutral guidance."
   }
 }

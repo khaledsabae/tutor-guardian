@@ -1853,7 +1853,7 @@ abstract class AppLocalizations {
   /// No description provided for @onbTip_7to9.
   ///
   /// In ar, this message translates to:
-  /// **'هذا عمر «مُروا أولادكم بالصلاة» — ابدأ بالتشجيع لا بالعقاب، وثبّتا معًا صلاة واحدة يوميًا قبل أن تطلب الخمس.'**
+  /// **'في هذا العمر جاءت السنة بتعليم الصلاة — ابدأ بالتشجيع لا بالعقاب، وثبّتا معًا صلاة واحدة يوميًا قبل أن تطلب الخمس.'**
   String get onbTip_7to9;
 
   /// No description provided for @onbTip_10to12.
@@ -6689,7 +6689,7 @@ abstract class AppLocalizations {
   /// No description provided for @notifWird1.
   ///
   /// In ar, this message translates to:
-  /// **'«خيركم من تعلّم القرآن وعلّمه» — ابدأ بنفسك، وولدك يشوفك.'**
+  /// **'«خيركم من تعلّم القرآن وعلّمه» (صحيح البخاري — حديث ٥٠٢٧) — ابدأ بنفسك، فولدك يراك.'**
   String get notifWird1;
 
   /// No description provided for @notifWird2.
@@ -6875,7 +6875,7 @@ abstract class AppLocalizations {
   /// No description provided for @habitMilestoneMsg.
   ///
   /// In ar, this message translates to:
-  /// **'«أحبُّ الأعمالِ إلى اللهِ أدومُها وإن قلَّ». استمر، فالقليل الدائم خير كثير.'**
+  /// **'«أحبُّ الأعمالِ إلى اللهِ أدومُها وإن قلَّ» (صحيح مسلم — حديث ٢٨١٨). استمر، فالقليل الدائم خير كثير.'**
   String get habitMilestoneMsg;
 
   /// No description provided for @habitMilestoneButton.
@@ -7115,7 +7115,7 @@ abstract class AppLocalizations {
   /// No description provided for @inviteCardBody.
   ///
   /// In ar, this message translates to:
-  /// **'تطبيق تربية إسلامي يرافقك خطوة بخطوة — مجاني وبلا إعلانات.'**
+  /// **'تطبيق تربية إسلامي يرافقك خطوة بخطوة — مجاني وبلا إعلانات.\n«من دلّ على خير فله مثل أجر فاعله» (صحيح مسلم — حديث ١٨٩٣)'**
   String get inviteCardBody;
 
   /// No description provided for @supportTitle.

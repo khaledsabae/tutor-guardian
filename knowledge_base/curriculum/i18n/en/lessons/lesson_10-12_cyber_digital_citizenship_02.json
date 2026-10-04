@@ -11,13 +11,13 @@
     "cyb-74c93d51",
     "cyb-8c2cbb56"
   ],
-  "summary": "Cyberbullying is more dangerous: it’s 24/7, reaches the home, and lasts forever. Teach your child: (1) Don’t participate or play the role of the bystander (2) Take a screenshot + report to the platform + tell a parent (3) The National Centre for Electronic Development (19099) for serious reports.",
+  "summary": "Cyberbullying is more dangerous: it’s 24/7, reaches the home, and lasts forever. Teach your child: (1) Don’t participate or play the role of the bystander (2) Take a screenshot + report to the platform + tell a parent (3) the official cybercrime reporting authority in your country for serious reports.",
   "try_this": "Practice a scenario: \"If you see bullying against a friend, what do you do?\" — Train them on: screenshot → report → tell me.",
   "order": 2,
   "estimated_minutes": 47,
   "reflection_prompts": [
     "Has your child been exposed to or witnessed cyberbullying?",
-    "Do they know the reporting number (19099)?"
+    "Do they know how to report cybercrime to the official authority in your country?"
   ],
   "warning_flags": [
     "تغير مفاجئ في المزاج بعد استخدام الجوال",
@@ -42,6 +42,9 @@
     "review_verdict": "clean",
     "review_defects": [],
     "approved_by": null,
-    "revalidated_at": "2026-08-13T17:19:17.254799+00:00"
+    "revalidated_at": "2026-08-13T17:19:17.254799+00:00",
+    "manual_fix_note": "2026-10-04: aligned with the Arabic register/safety fix (country-specific number removed, leaked or garbled wording corrected).",
+    "fixed_at": "2026-10-04T07:31:52.180297+00:00",
+    "fixer_model": "claude-opus-5.5"
   }
 }

@@ -936,7 +936,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get onbTip_7to9 =>
-      'This is the age of “teach your children the prayer” — start with encouragement, not punishment, and anchor one daily prayer together before expecting all five.';
+      'This is the age the Sunnah sets for teaching prayer — start with encouragement, not punishment, and anchor one daily prayer together before expecting all five.';
 
   @override
   String get onbTip_10to12 =>
@@ -3731,7 +3731,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get notifWird1 =>
-      '«The best of you are those who learn the Qur\'an and teach it» — start with yourself; your child is watching.';
+      '«The best of you are those who learn the Qur\'an and teach it» (Sahih al-Bukhari 5027) — start with yourself; your child is watching.';
 
   @override
   String get notifWird2 =>
@@ -3860,7 +3860,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get habitMilestoneMsg =>
-      '“The deeds most loved by Allah are the most consistent, even if small.” Keep going — a little, kept up, is a lot.';
+      '“The deeds most loved by Allah are the most consistent, even if small” (Sahih Muslim 2818). Keep going — a little, kept up, is a lot.';
 
   @override
   String get habitMilestoneButton => 'Alhamdulillah';

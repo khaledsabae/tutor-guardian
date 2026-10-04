@@ -18,8 +18,8 @@
     "med-ca2a9d86",
     "med-ec6f874a"
   ],
-  "summary": "A practical tool for parents: (1) Weekly mood scale (1-10 chart for mood/energy/sleep) — a decline for more than two weeks = visit a specialist. (2) Personal safety plan: my warning signs, calming strategies, trusted people, emergency numbers (937 in Saudi Arabia / 112 international). (3) Emergency: suicidal thoughts, a specific plan, available means, previous self-harm — call 937/112 immediately, do not leave them alone.",
-  "try_this": "This week: Create a \"safety card\" together, pocket-sized — write: 3 warning signs, 3 calming strategies, 3 trusted people + 937. Keep it in a wallet/phone.",
+  "summary": "A practical tool for parents: (1) Weekly mood scale (1-10 chart for mood/energy/sleep) — a decline for more than two weeks = visit a specialist. (2) Personal safety plan: their warning signs, calming strategies, people they trust, and your country's emergency number and mental-health helpline. (3) Emergency: suicidal thoughts, a specific plan, available means, previous self-harm — call your country's emergency number immediately or go to the nearest emergency department, and do not leave them alone.",
+  "try_this": "This week: Create a pocket-sized \"safety card\" together — write: 3 warning signs, 3 calming strategies, 3 people your child trusts, and your country's emergency number. Keep it in a wallet or on the phone.",
   "order": 4,
   "estimated_minutes": 10,
   "reflection_prompts": [
@@ -50,7 +50,8 @@
     "review_defects": [],
     "approved_by": null,
     "revalidated_at": "2026-08-13T18:59:21.326948+00:00",
-    "fixed_at": "2026-08-13T18:59:21.326963+00:00",
-    "fixer_model": "mistral-large-3:675b"
+    "fixed_at": "2026-10-04T07:11:53.626353+00:00",
+    "fixer_model": "claude-opus-5.5",
+    "manual_fix_note": "Rewritten 2026-10-04 with the Arabic: Saudi-only 937 (and 112 as a universal number) replaced by country-neutral guidance; teen-directed wording re-addressed to the parent."
   }
 }

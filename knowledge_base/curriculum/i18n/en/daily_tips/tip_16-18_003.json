@@ -2,7 +2,7 @@
   "id": "tip_16-18_003",
   "age_group": "16-18",
   "domain": "medical",
-  "text": "Severe anxiety or stress? Reach out to the hospital or psychological clinic. Do not wait for a crisis — early intervention saves.",
+  "text": "If you notice severe anxiety or stress that disrupts your teen's sleep or studies, do not wait for a crisis: take them to a doctor or a mental-health clinic. Early help protects them.",
   "unit_id": "e19e72c2-d553-4e12-a6e6-5d7c6f3fc083",
   "day_of_week": 1,
   "time_of_day": "morning",
@@ -21,6 +21,9 @@
     "review_verdict": "clean",
     "review_defects": [],
     "approved_by": null,
-    "revalidated_at": "2026-08-13T17:11:51.249944+00:00"
+    "revalidated_at": "2026-08-13T17:11:51.249944+00:00",
+    "manual_fix_note": "Rewritten 2026-10-04 with the Arabic: re-addressed to the parent (the tip spoke to the teen).",
+    "fixed_at": "2026-10-04T07:11:28.621718+00:00",
+    "fixer_model": "claude-opus-5.5"
   }
 }

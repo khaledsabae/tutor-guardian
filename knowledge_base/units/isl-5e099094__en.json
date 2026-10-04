@@ -2,7 +2,7 @@
   "id": "isl-5e099094__en",
   "domain": "islamic_parenting",
   "source_file": "Alukah_Rights_of_Children.pdf",
-  "title": "Disciplining Children between Permissibility and Prohibition",
+  "title": "Disciplining Children in the Narrations of the Salaf",
   "language": "en",
   "age_group": "unspecified",
   "behavior_type": "تأديب الأطفال",
@@ -11,7 +11,7 @@
   "reference_type": "كتاب_تربوي",
   "reference_info": "حقوق الأولاد على الوالدين - عماد عبدالعظيم (الألوكة)",
   "text_original": "طَ كلَِ إ بَ تَ ؽَ فَ ؽَ ِ لذَ ِ ب ﭬ بِ اطَ خَ لْا ـُ بْ ر فَ صِ اعَ لْا ـُ بْ طَ ؽَ لذَ ؾَ عَ ػَ فَ بٍ تَ قَ كؾَ طَ ر فُ شْ أَ ثَ ِ بؾَ فَ فُ ؾَ س ثُ فُ ْـم فكاؽَ م ؾِ جْ أَ ـْ م ةُ بَ قَ اطَ وَ هُ دَ ؾَ جَ ﭬ ر .)356/1( »مللحامّمًا ضاير حشر« (1) .)339/4( »ؾم٘مٜمًاو ؾم٘مٕمًا ضرامٕمش ءرد« (2) ــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ نيدلاىلا ىلع دلاولأا قىقح ــــــــــــــــــــ طُ دؾْ جَ ـْ م تَ ام فُ كَ أَ سِ اَـلا ةُ م دَ قَ فُ بَ اصَ أَ ؿ .)1(» هدؾْ ج ـْ م .عدبلا ؾهأ فتسلاجؿل للها دبط فـبٓ بابخ برض تيلقسو لكِ إ : تْ لَاؼَ فَ , ؿِ قتقَ لْا بِ دَ أَ ـْ طَ تؾئس وَ , ةَ شَ ئاطَ تعْ ؿس .)2(» طَ سبَ ْـيَ كتَ حَ ؿ هُ دَ حَ أَ بُ ر ِ ضْ َٕ ؼتا ؿقتقلا اذه ؿحرت ٓ :لقؼي ,ؿقتقلاو هدـط فل اؿقتي برضي نقؿقم ناكو .)3(»ؿقتقلا اذه حؾصأ ؿفؾلا :لقؼيو برضي نقؿقمو ,ؿقتقلا اذه في للها .)4( فُ بَ دَ أَ ـْ سحْ أَ وَ كدَ لَوَ م ر ِ كْ أَ :نَ قلُقؼُ يَ اقكُ اكَ : لَ اقَ ,دؿ .)5(فبدأ ـسحي نأ دلاقلا كؾط دلقلا ؼح ـم :لاؼي ناك :ناقػس لاقو للها دبط ـب رؽب كلإ يقق داـسنب )336( »لاقعلا« في اقكدلا لبأ ـبا جرخأو .عرزؾل داؿسلاك هدلقل دلاقلا برض :فـبٓ ناؿؼل لاق :لاق نيزؿلا ـمسا ـمق ،لمامؾ ـمق",
-  "text_simplified": "This text addresses the topic of disciplining children and physical punishment, presenting various opinions on the permissibility of *darb* (striking) in *tarbiyah* (upbringing). It notes that some scholars permit light disciplinary *darb* when necessary, while cautioning against excess in striking or harming the child.",
+  "text_simplified": "This text cites narrations from the Salaf on disciplining children and orphans, including striking. The jurists restricted it to being light and non-injurious, only after teaching and gradual steps, never resorted to if anything else suffices, away from the face and never in anger, and warned against excess or harming the child. Almorabbi never recommends hitting; better alternatives are dialogue, example, praise, and calm consequences agreed in advance.",
   "labels": [
     "تأديب",
     "تربية",
@@ -42,6 +42,9 @@
         "severity": "low"
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "manual_fix_note": "2026-10-04 PR #27 review: no invented dispute over permissibility; describes the narrations the text cites",
+    "fixed_at": "2026-10-04T12:34:44.900780+00:00",
+    "fixer_model": "claude-opus-5.5"
   }
 }

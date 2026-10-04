@@ -5,7 +5,7 @@
   "age_group": "7-9",
   "domain": "islamic_parenting",
   "unit_ids": [],
-  "summary": "«Al-Rahimuna yarhamuhum al-Rahman (The merciful will be shown mercy by the Most Merciful).» Teach your child rifq (gentleness) with his siblings, animals, and those who serve him. Correct harshness with calmness and explain its impact on others, for rahmah (mercy) is a khuluq (character trait) learned through situation, not sermon.",
+  "summary": "He ﷺ said: «Whoever does not show mercy to people, Allah will not show mercy to him» (Sahih Muslim 2319). Teach your child rifq (gentleness) with his siblings, animals, and those who serve him. Correct harshness with calmness and explain its impact on others, for rahmah (mercy) is a khuluq (character trait) learned through situation, not sermon.",
   "try_this": "This week: Notice a situation of rahmah from your child and praise him for it, or a situation of harshness and address it with the question, «How did your brother feel?»",
   "order": 2,
   "estimated_minutes": 7,
@@ -33,7 +33,8 @@
     "review_defects": [],
     "approved_by": null,
     "revalidated_at": "2026-08-13T19:05:28.088472+00:00",
-    "fixed_at": "2026-08-13T19:05:28.088484+00:00",
-    "fixer_model": "mistral-large-3:675b"
+    "fixed_at": "2026-10-04T08:15:36.331649+00:00",
+    "fixer_model": "claude-opus-5.5",
+    "manual_fix_note": "2026-10-04 scripture fix: hadith quoted only from the Sahihayn with book + number (Muslim by Abd al-Baqi); non-Sahihayn or paraphrased quotes replaced, mirrored from the Arabic."
   }
 }
