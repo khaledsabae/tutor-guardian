@@ -1,7 +1,7 @@
 {
   "id": "lesson_10-12_islamic_parenting_identity_04",
   "path_id": "path_10-12_aqeedah_growth",
-  "title": "Confidence and Identity: You are his son, and Allah sees you",
+  "title": "Confidence and Identity: You Are My Son, and Allah Sees You",
   "age_group": "10-12",
   "domain": "aqeedah",
   "unit_ids": [
@@ -22,40 +22,38 @@
   "needs_professional_followup": false,
   "is_published": true,
   "version": "1.0.0",
-  "approved_by": null,
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
   "language": "en",
   "source_language": "ar",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
     "scholar_signals": {
       "keyword": false,
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "summary",
-        "arabic": "قيمتك عند الله بعملك",
-        "english": "your worth with Allah is through your deeds",
-        "why": "The Arabic uses the singular 'بعملك' (by your deed), while the English uses the plural 'your deeds', altering the nuance from a single deed to multiple deeds.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "try_this",
-        "arabic": "ورقة صغيرة يومياً يكتب فيها شيئاً أحس به فخراً",
-        "english": "a small paper each day where he writes something he feels proud of",
-        "why": "The Arabic uses past tense 'أحس' (felt) to refer to something he felt proud of that day, while the English uses present tense 'feels', changing the nuance from a specific daily reflection to a general feeling.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null,
-    "revalidated_at": "2026-08-13T19:42:45.643234+00:00",
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "revalidated_at": "2026-10-04T16:52:31+00:00",
     "fixed_at": "2026-08-13T19:42:45.643252+00:00",
-    "fixer_model": "mistral-large-3:675b"
+    "fixer_model": "mistral-large-3:675b",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "3a23ca00ac21c9c5653cba2f5eb499db0ee52e30e72e7fd888d0e6809d9a5c4e",
+      "reviewed_at": "2026-10-04T16:52:31+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    }
   }
 }

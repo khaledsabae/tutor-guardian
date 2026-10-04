@@ -8,7 +8,7 @@
     "isl-c4b3fccc",
     "isl-dcb6d4e8"
   ],
-  "summary": "When your child feels like an outsider because he is the only one in his company who prays or adheres to the commands of Allah, teach him the hadith of the Prophet ﷺ: «Islam began as something strange and will return to being strange as it began, so glad tidings to the strangers» (reported by Muslim). Explain to him that differing from the majority in obedience to Allah is not a deficiency, but rather the praise with which the Prophet ﷺ gave glad tidings to the committed in every era. If other children mock your son because of his prayer, read with him the words of Allah: «O you who have believed, let not a people ridicule [another] people; perhaps they may be better than them» (Al-Hujurat: 11). Clarify to him that the verse forbids the one who mocks, and that Allah may have preferred the one being mocked over the mocker, so there is no need for him to feel ashamed or to respond in kind.",
+  "summary": "When your child feels like an outsider because he is the only one in his company who prays or adheres to the commands of Allah, teach him the hadith of the Prophet ﷺ: «بدأ الإسلام غريبًا، وسيعود كما بدأ غريبًا، فطوبى للغرباء» — “Islam began as something strange, and it will return to being strange as it began, so glad tidings to the strangers.” (Sahih Muslim 145). Explain to him that differing from the majority in obedience to Allah is not a deficiency, but rather the praise with which the Prophet ﷺ gave glad tidings to the committed in every era. If other children mock your son because of his prayer, read with him the words of Allah: ﴿يَا أَيُّهَا الَّذِينَ آمَنُوا لَا يَسْخَرْ قَوْمٌ مِّن قَوْمٍ عَسَىٰ أَن يَكُونُوا خَيْرًا مِّنْهُمْ﴾ (Al-Hujurat: 11) — interpretation of the meaning: 'O you who have believed, let not a people ridicule [another] people; perhaps they may be better than them.' Clarify to him that the verse forbids the one who mocks, and that Allah may have preferred the one being mocked over the mocker, so there is no need for him to feel ashamed or to respond in kind.",
   "try_this": "This week: Ask your child if he ever felt different from his friends because of his commitment, and read with him the hadith of the strangers or the verse from Surah Al-Hujurat that fits his situation. Reassure him that this feeling has a positive meaning in the Qur’an and Sunnah, not a negative one.",
   "order": 1,
   "estimated_minutes": 7,
@@ -20,54 +20,36 @@
   "needs_professional_followup": false,
   "is_published": true,
   "version": "1.0.0",
-  "approved_by": null,
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
   "language": "en",
   "source_language": "ar",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
     "scholar_signals": {
       "keyword": true,
       "quoted_arabic": true,
       "reviewer_model": true
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "summary",
-        "arabic": "يلتزم",
-        "english": "adheres to the commands of Allah",
-        "why": "The Arabic verb 'يلتزم' means 'commits' or 'adheres' without specifying the object; the English adds 'to the commands of Allah', which is an interpretive addition not present in the original.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "try_this",
-        "arabic": "اسأل ابنك",
-        "english": "Ask your child",
-        "why": "The Arabic uses the masculine 'ابنك' (your son), but the English uses the gender-neutral 'your child', changing the specificity.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "reflection_prompts[0]",
-        "arabic": "ابنك",
-        "english": "your child",
-        "why": "Same as above, 'ابنك' is 'your son', not 'your child'.",
-        "severity": "low"
-      },
-      {
-        "type": "term_error",
-        "field": "reflection_prompts[1]",
-        "arabic": "النهي الشرعي",
-        "english": "legal prohibition",
-        "why": "'النهي الشرعي' means 'religious prohibition' or 'divine prohibition'; 'legal prohibition' may sound secular and less precise.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null,
-    "revalidated_at": "2026-08-13T17:21:09.788988+00:00"
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "revalidated_at": "2026-10-04T16:52:31+00:00",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "9995a1c17c4c7784c9ae2e66fad856d7484d08f452dd0d1556366f1317213a4f",
+      "reviewed_at": "2026-10-04T16:52:31+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    }
   }
 }

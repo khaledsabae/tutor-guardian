@@ -1,7 +1,7 @@
 {
   "id": "lesson_4-6_islamic_parenting_adab_b04",
   "path_id": "path_4-6_islamic_parenting_adab",
-  "title": "Adab al-Kalam: al-Sidq wal-Kalimat al-Tayyibah",
+  "title": "Adab of Speech: Truthfulness and the Good Word",
   "age_group": "4-6",
   "domain": "islamic_parenting",
   "unit_ids": [
@@ -9,8 +9,8 @@
     "29896a42-3c9a-4c22-bbf0-8e4d2e4da0e4",
     "isl-33e652bb"
   ],
-  "summary": "At this age, the child absorbs the adab of speech from his home. Teach him through example and practice: truthfulness is beloved, the good word is sadaqah (charity), greetings are offered, and 'shukran' and 'min fadlik' are a habit. Connect this to Allah’s love for the truthful and the gentle, not to fear. Correct his small lie calmly without labeling him a liar, and make telling the truth safe by ensuring its consequence is lighter. Praise his good word immediately. A child who grows up with a beautiful tongue and truthfulness builds a character people love—and, more importantly, ties adab to an inner value, not merely pleasing adults.",
-  "try_this": "This week: Focus on one adab of speech (greeting or gratitude). Teach it through your example, practice it together, and praise your child every time he says it. Connect it to 'Allah loves the sweet word.'",
+  "summary": "At this age, the child absorbs the adab of speech from his home. Teach him through example and practice: truthfulness is beloved, the good word is sadaqah (charity), greetings are offered, and 'thank you' and 'please' are a habit. Connect this to Allah’s love for the truthful and the gentle, not to fear. Correct his small lie calmly without labeling him a liar, and make telling the truth safe by ensuring its consequence is lighter. Praise his good word immediately. A child who grows up with a beautiful tongue and truthfulness builds a character people love—and, more importantly, ties adab to an inner value, not merely pleasing adults.",
+  "try_this": "This week: Focus on one adab of speech (greeting or gratitude). Teach it through your example, practice it together, and praise your child every time he says it. Connect it to 'Allah loves the good word.'",
   "order": 4,
   "estimated_minutes": 5,
   "reflection_prompts": [
@@ -22,40 +22,38 @@
   "version": "1.0.0",
   "created_at": "2026-06-13T00:00:00",
   "updated_at": "2026-06-13T00:00:00",
-  "approved_by": null,
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
   "language": "en",
   "source_language": "ar",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
     "scholar_signals": {
       "keyword": false,
       "quoted_arabic": true,
       "reviewer_model": true
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "term_error",
-        "field": "title",
-        "arabic": "آداب الكلام: الصدق والكلمة الطيبة",
-        "english": "Adab al-Kalam: al-Sidq wal-Kalimat al-Tayyibah",
-        "why": "The title is transliterated instead of translated, and the number is changed: Arabic plural 'آداب' becomes singular 'Adab', and singular 'الكلمة' becomes plural 'al-Kalimat'.",
-        "severity": "medium"
-      },
-      {
-        "type": "term_error",
-        "field": "summary",
-        "arabic": "'شكراً' و'من فضلك'",
-        "english": "'shukran' and 'min fadlik'",
-        "why": "The Arabic words are transliterated instead of translated to 'thank you' and 'please', which would be more appropriate for an English reader.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null,
-    "revalidated_at": "2026-08-13T18:14:16.537299+00:00",
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "revalidated_at": "2026-10-04T16:52:31+00:00",
     "fixed_at": "2026-08-13T18:14:16.537314+00:00",
-    "fixer_model": "mistral-large-3:675b"
+    "fixer_model": "mistral-large-3:675b",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "fa1b1588ff2a7219ee4a1f05430dd72909f0e78262492f4e531857fefd5a74a6",
+      "reviewed_at": "2026-10-04T16:52:31+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    }
   }
 }

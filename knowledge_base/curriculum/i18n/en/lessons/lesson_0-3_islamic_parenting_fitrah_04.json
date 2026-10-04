@@ -17,41 +17,53 @@
   "needs_professional_followup": false,
   "is_published": true,
   "version": "1.0.0",
-  "approved_by": null,
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
   "language": "en",
   "source_language": "ar",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
     "scholar_signals": {
       "keyword": true,
       "quoted_arabic": true,
       "reviewer_model": true
     },
-    "review_verdict": "defects",
+    "review_verdict": "low_only",
     "review_defects": [
       {
-        "type": "meaning_change",
-        "field": "summary",
-        "arabic": "طفلك الذي يُغمَر بالحنان يربط الدين بالأمان والحب",
-        "english": "A child who is immersed in tenderness connects deen with safety and love",
-        "why": "The Arabic uses the second-person possessive 'طفلك' (your child), directly addressing the parent. The English generalizes to 'A child', losing the personal and direct tone.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
+        "model": "glm-5.2",
         "field": "try_this",
-        "arabic": "واقصد بها أنها من رحمة الله التي تربّيه عليها",
-        "english": "and intend that they are from the mercy of Allah by which you raise them (upbringing)",
-        "why": "The English adds the parenthetical gloss '(upbringing)' which is not present in the Arabic. This is an extraneous addition.",
-        "severity": "low"
+        "type": "addition",
+        "why": "The parenthetical \"(upbringing)\" has no corresponding word in the Arabic and reads like a stray glossary annotation left in published text."
       }
     ],
-    "approved_by": null,
-    "revalidated_at": "2026-08-13T17:18:06.582173+00:00",
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "revalidated_at": "2026-10-04T16:52:31+00:00",
     "manual_fix_note": "2026-10-04 scripture fix: hadith quoted only from the Sahihayn with book + number (Muslim by Abd al-Baqi); non-Sahihayn or paraphrased quotes replaced, mirrored from the Arabic.",
     "fixed_at": "2026-10-04T08:15:36.331649+00:00",
-    "fixer_model": "claude-opus-5.5"
+    "fixer_model": "claude-opus-5.5",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "ce7e89f683658209654ba3e62649dc9cc7831ab94464653048e0a208a7510aed",
+      "reviewed_at": "2026-10-04T16:52:31+00:00",
+      "residual_low": [
+        {
+          "model": "glm-5.2",
+          "field": "try_this",
+          "type": "addition",
+          "why": "The parenthetical \"(upbringing)\" has no corresponding word in the Arabic and reads like a stray glossary annotation left in published text."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    }
   }
 }

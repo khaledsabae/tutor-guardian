@@ -21,40 +21,38 @@
   "needs_professional_followup": false,
   "is_published": true,
   "version": "1.0.0",
-  "approved_by": null,
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
   "language": "en",
   "source_language": "ar",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
     "scholar_signals": {
       "keyword": false,
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "summary",
-        "arabic": "رفض ودود دون وصف الصديق بـ«الشخص السيئ»",
-        "english": "a friendly refusal without judging the friend",
-        "why": "The Arabic specifically instructs not to describe the friend as a 'bad person' (الشخص السيئ), while the English generalizes to 'judging,' which loses the explicit label. The second occurrence correctly uses 'labeling the friend as a \"bad person\"', creating inconsistency.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "try_this",
-        "arabic": "يقارنه بمصروفه",
-        "english": "comparing his spending",
-        "why": "The Arabic means comparing him in terms of his spending money (i.e., his financial status or allowance), while 'comparing his spending' could be read as comparing the amount he spends, shifting the focus from personal comparison to expenditure.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null,
-    "revalidated_at": "2026-08-13T18:07:54.023789+00:00",
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "revalidated_at": "2026-10-04T16:52:31+00:00",
     "fixed_at": "2026-08-13T18:07:54.023800+00:00",
-    "fixer_model": "mistral-large-3:675b"
+    "fixer_model": "mistral-large-3:675b",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "923b7cebdb4254eb6e1398b384ce07b181ee32988db585df9ac1c2aa15cd1e5a",
+      "reviewed_at": "2026-10-04T16:52:31+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    }
   }
 }

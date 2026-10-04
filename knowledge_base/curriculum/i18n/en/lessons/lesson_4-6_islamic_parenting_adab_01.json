@@ -21,57 +21,53 @@
   "version": "1.0.0",
   "created_at": "2026-06-08T19:00:00",
   "updated_at": "2026-06-08T19:00:00",
-  "approved_by": null,
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
   "language": "en",
   "source_language": "ar",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
     "scholar_signals": {
       "keyword": false,
       "quoted_arabic": true,
       "reviewer_model": true
     },
-    "review_verdict": "defects",
+    "review_verdict": "low_only",
     "review_defects": [
       {
-        "type": "term_error",
-        "field": "title",
-        "arabic": "قيمة تربوية",
-        "english": "Tarbiyah Value",
-        "why": "Tarbiyah is a noun, not an adjective; the Arabic is 'educational value'. Using 'Tarbiyah' as a modifier is non-standard and may confuse readers.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
+        "model": "glm-5.2",
         "field": "summary",
-        "arabic": "الصوت الحنون",
-        "english": "a gentle voice",
-        "why": "حنون means affectionate or tender, not merely gentle. The nuance of emotional warmth is lost.",
-        "severity": "low"
-      },
-      {
-        "type": "structure",
-        "field": "summary",
-        "arabic": "يؤكد الهدي النبوي على أن 'إن الله رفيق يحب الرفق في كل شيء'، وأن 'ويعطي على الرفق ما لا يعطي على العنف'",
-        "english": "The Prophetic guidance emphasizes that 'Allah is gentle and loves gentleness in all things,' and that 'He gives for gentleness what He does not give for harshness'",
-        "why": "The Arabic presents the hadith as one continuous quote connected by 'وأن', while the English splits it into two separate quoted segments, altering the structure of the narration.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "summary",
-        "arabic": "كيف ينعكس صوته ولمساته على شعور طفله بالأمان",
-        "english": "how their voice and touch reflect on their child’s sense of safety",
-        "why": "The Arabic uses the passive/reflexive 'ينعكس ... على' (is reflected on), focusing on the child's perception. The English active 'reflect on' shifts the agency and may change the nuance.",
-        "severity": "low"
+        "type": "addition",
+        "why": "The English parenthetical redundantly repeats 'preoperational' where the Arabic simply says '(according to Piaget).'"
       }
     ],
-    "approved_by": null,
-    "revalidated_at": "2026-08-13T18:14:08.786839+00:00",
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "revalidated_at": "2026-10-04T16:52:31+00:00",
     "fixed_at": "2026-10-04T08:15:36.331649+00:00",
     "fixer_model": "claude-opus-5.5",
-    "manual_fix_note": "2026-10-04 scripture fix: hadith quoted only from the Sahihayn with book + number (Muslim by Abd al-Baqi); non-Sahihayn or paraphrased quotes replaced, mirrored from the Arabic."
+    "manual_fix_note": "2026-10-04 scripture fix: hadith quoted only from the Sahihayn with book + number (Muslim by Abd al-Baqi); non-Sahihayn or paraphrased quotes replaced, mirrored from the Arabic.",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "a3c2264f307a4ee6a0324af1f2e2283640b75d1c4de8cef72bb25d68bf62d033",
+      "reviewed_at": "2026-10-04T16:52:31+00:00",
+      "residual_low": [
+        {
+          "model": "glm-5.2",
+          "field": "summary",
+          "type": "addition",
+          "why": "The English parenthetical redundantly repeats 'preoperational' where the Arabic simply says '(according to Piaget).'"
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    }
   }
 }

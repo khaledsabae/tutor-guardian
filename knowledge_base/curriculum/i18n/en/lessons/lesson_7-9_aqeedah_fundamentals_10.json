@@ -19,32 +19,52 @@
   "needs_professional_followup": false,
   "is_published": true,
   "version": "1.0.0",
-  "approved_by": null,
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
   "language": "en",
   "source_language": "ar",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
     "scholar_signals": {
       "keyword": false,
       "quoted_arabic": true,
       "reviewer_model": true
     },
-    "review_verdict": "defects",
+    "review_verdict": "low_only",
     "review_defects": [
       {
-        "type": "meaning_change",
-        "field": "summary",
-        "arabic": "فالقدوة أبلغ من ألف موعظة",
-        "english": "for the example is more powerful than a thousand pieces of advice",
-        "why": "The Arabic 'موعظة' means a sermon or religious exhortation, not just general advice. The English 'pieces of advice' loses the religious connotation and softens the impact.",
-        "severity": "low"
+        "model": "glm-5.2",
+        "field": "fields.summary.english",
+        "type": "meaning",
+        "why": "The Arabic says «الله» (Allah) in both phrases but the English renders it as \"our Lord,\" a slight but consistent substitution."
       }
     ],
-    "approved_by": null,
-    "revalidated_at": "2026-08-13T19:43:15.664898+00:00",
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "revalidated_at": "2026-10-04T16:52:31+00:00",
     "fixed_at": "2026-08-13T19:43:15.664915+00:00",
-    "fixer_model": "mistral-large-3:675b"
+    "fixer_model": "mistral-large-3:675b",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "b026b1f4f101cfcb547a5d2183b12b095b8bd14ac557c39e7af059e6220b9d4c",
+      "reviewed_at": "2026-10-04T16:52:31+00:00",
+      "residual_low": [
+        {
+          "model": "glm-5.2",
+          "field": "fields.summary.english",
+          "type": "meaning",
+          "why": "The Arabic says «الله» (Allah) in both phrases but the English renders it as \"our Lord,\" a slight but consistent substitution."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+    }
   }
 }
