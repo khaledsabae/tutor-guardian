@@ -58,6 +58,7 @@ def tree(rp, tmp_path, monkeypatch):
     en = {**ar, "title": "Truthfulness", "summary": "Make truthfulness safe.",
           "try_this": "Praise his honesty.", "reflection_prompts": ["When does he lie?"],
           "language": "en", "translation": {"review_defects": [{"why": "stale"}],
+                                            "translator_model": "mistral-large-3:675b",
                                             "approved_by": None}}
     (cur / "lessons" / "lesson_x.json").write_text(json.dumps(ar, ensure_ascii=False))
     (cur / "i18n" / "en" / "lessons" / "lesson_x.json").write_text(
@@ -67,6 +68,8 @@ def tree(rp, tmp_path, monkeypatch):
     monkeypatch.setattr(rp, "I18N_EN", cur / "i18n" / "en")
     monkeypatch.setattr(rp, "UNITS", units)
     monkeypatch.setattr(rp, "STORIES_EN", tmp_path / "absent.json")
+    monkeypatch.setattr(rp, "QUEUE", tmp_path / "ops" / "data" / "en_parity_queue.json")
+    (tmp_path / "ops" / "data").mkdir(parents=True)
     return tmp_path
 
 
@@ -188,12 +191,32 @@ def test_any_edit_after_review_makes_the_stamp_stale(rp, tree, side, value):
     assert "stale" in rp.check_item(_lesson(rp))
 
 
-def test_a_human_signature_is_accepted_as_written(rp, tree):
+def test_a_human_signature_without_a_fingerprint_vouches_for_nothing(rp, tree):
+    # It used to be accepted as written, forever: edit the whole text after the
+    # signature and the gate still read "approved" (PR #20 review).
     f = tree / "knowledge_base" / "curriculum" / "i18n/en/lessons/lesson_x.json"
     doc = json.loads(f.read_text())
     doc["translation"]["approved_by"] = "Sheikh Ahmad"
     f.write_text(json.dumps(doc, ensure_ascii=False))
+    assert "no content fingerprint" in rp.check_item(_lesson(rp))
+
+
+def test_a_signature_is_bound_to_the_text_it_was_given_for(rp, tree):
+    assert rp.cmd_sign([_lesson(rp)], "Sheikh Ahmad") == 0
     assert rp.check_item(_lesson(rp)) is None
+    f = tree / "knowledge_base" / "curriculum" / "i18n/en/lessons/lesson_x.json"
+    doc = json.loads(f.read_text())
+    assert doc["approved_by"] == "Sheikh Ahmad"
+    assert doc["translation"]["approval"]["content_sha256"] == _lesson(rp).sha
+    doc["summary"] = "Make honesty safe."
+    f.write_text(json.dumps(doc, ensure_ascii=False))
+    assert "stale" in rp.check_item(_lesson(rp))
+
+
+@pytest.mark.parametrize("name", ["claude-opus", "glm-5.2", "auto-review:x:2026-10-04", ""])
+def test_a_model_cannot_sign_as_a_person(rp, tree, name):
+    with pytest.raises(SystemExit):
+        rp.cmd_sign([_lesson(rp)], name)
 
 
 def test_unpublished_and_untranslated_need_no_stamp(rp, tree):
@@ -437,22 +460,46 @@ def test_cache_only_judges_what_was_reviewed_and_calls_nobody(rp, tree, monkeypa
 
 # ── the commit-time rule: no regression, nothing new unreviewed, no frozen backlog ──
 
-def test_staged_rule_blocks_new_and_stale_but_lets_the_backlog_be_corrected(rp, tree, monkeypatch):
+def test_staged_rule_blocks_new_and_stale_and_holds_the_backlog_to_its_queue(rp, tree, monkeypatch):
     item = _lesson(rp)                                  # unstamped, translated
-    head_new = None
-    head_stamped = {"translation": {"approved_by": "auto-review:a+b:2026-10-04"},
-                    "summary": "old"}
     head_legacy = {"translation": {"approved_by": None}, "title": "Truthfulness",
                    "summary": "Make truthfulness safe.", "try_this": "Praise his honesty.",
                    "reflection_prompts": ["When does he lie?"]}
-    for head, blocked in ((head_new, True), (head_stamped, True), (head_legacy, False)):
-        monkeypatch.setattr(rp, "_head_en", lambda _it, h=head: h)
-        assert (rp.staged_check_item(item) is not None) is blocked, head
 
-    # …but a legacy unit may not gain English it never had without review.
+    # Brand-new English needs a stamp — the queue holds only what was already live.
+    monkeypatch.setattr(rp, "_head_en", lambda _it: head_legacy)
+    rp.cmd_queue([item], "waits for the weekly cap", "awaiting-review", [])
+    monkeypatch.setattr(rp, "_head_en", lambda _it: None)
+    assert "new" in rp.staged_check_item(_lesson(rp))
+
+    # The live backlog passes while its queue entry names this exact text…
+    monkeypatch.setattr(rp, "_head_en", lambda _it: head_legacy)
+    assert rp.staged_check_item(_lesson(rp)) is None
+    # …and is held to it: edit the text without re-queueing and the commit stops.
+    rp.apply_english(_lesson(rp), {"summary": "Make honesty safe."})
+    assert "queued at a different text" in rp.staged_check_item(_lesson(rp))
+
+    # A legacy unit may not gain English it never had, queue or no queue.
     legacy_without_prompts = {k: v for k, v in head_legacy.items() if k != "reflection_prompts"}
     monkeypatch.setattr(rp, "_head_en", lambda _it: legacy_without_prompts)
-    assert "adds English" in rp.staged_check_item(item)
+    rp.cmd_queue([_lesson(rp)], "re-queued after the fix", "awaiting-review", [])
+    assert "adds English" in rp.staged_check_item(_lesson(rp))
+
+
+def test_a_stamp_that_held_is_dropped_only_by_a_recorded_decision(rp, tree, monkeypatch):
+    head_stamped = {"translation": {"approved_by": "auto-review:a+b:2026-10-04"},
+                    "title": "Truthfulness", "summary": "Make truthfulness safe.",
+                    "try_this": "Praise his honesty.", "reflection_prompts": ["When does he lie?"]}
+    monkeypatch.setattr(rp, "_head_en", lambda _it: head_stamped)
+    monkeypatch.setattr(rp, "_head_stamp_holds", lambda _it, _h: True)
+    assert "drops a review stamp" in rp.staged_check_item(_lesson(rp))
+    rp.cmd_queue([_lesson(rp)], "Arabic fixed per review; English waits for two families",
+                 "awaiting-review", [])
+    assert rp.staged_check_item(_lesson(rp)) is None
+
+
+def test_an_unfingerprinted_signature_in_head_never_held(rp, tree):
+    assert rp._head_stamp_holds(_lesson(rp), {"translation": {"approved_by": "Sheikh Ahmad"}}) is False
 
 
 def test_the_cache_is_never_seen_half_loaded(rp, tmp_path, monkeypatch):
@@ -516,3 +563,91 @@ def test_a_manual_stamp_still_obeys_the_guards(rp, tree):
     f.write_text(json.dumps(doc, ensure_ascii=False))
     assert rp.cmd_stamp_reviewed([_lesson(rp)], "claude-opus", None) == 1
     assert rp.read_stamp(_lesson(rp))[0] is None
+
+
+# ── the queue: live English without a stamp is named, reasoned and bound to its text ──
+
+def test_the_full_gate_passes_a_queued_unit_only_at_the_text_it_was_queued_at(rp, tree, monkeypatch):
+    # CI runs the full check; without the queue it could only be red until the
+    # weekly cap reset — or not run at all, which is how a merge used to skip it.
+    monkeypatch.setattr(rp, "_head_en", lambda _it: {"translation": {}})
+    assert rp.check_item(_lesson(rp)) == rp.NO_STAMP
+    with pytest.raises(SystemExit):
+        rp.cmd_queue([_lesson(rp)], "  ", "awaiting-review", [])          # no reason, no hold
+    assert rp.cmd_queue([_lesson(rp)], "Claude-authored fix; needs two families",
+                        "awaiting-review", ["claude-opus-5.5"]) == 0
+    assert rp.check_item(_lesson(rp)) is None
+    rp.apply_english(_lesson(rp), {"summary": "Make honesty safe."})
+    assert "queued at a different text" in rp.check_item(_lesson(rp))
+
+
+def test_queueing_a_stamped_unit_withdraws_the_stamp(rp, tree, monkeypatch):
+    # The Alukah «النص يتحدث عن…» units: the English matched the Arabic, but the
+    # Arabic was never shown to match its source — no stamp may stand over it.
+    _stamp(rp, _lesson(rp))
+    monkeypatch.setattr(rp, "_head_en", lambda _it: {"translation": {}})
+    rp.cmd_queue([_lesson(rp)], "summary not verified against its PDF", "source-unverified", [])
+    assert rp.read_stamp(_lesson(rp))[0] is None
+    assert rp.check_item(_lesson(rp)) is None
+    assert rp.cmd_stamp_reviewed([_lesson(rp)], "claude-opus", None) == 1   # never stamped…
+    assert rp.read_stamp(_lesson(rp))[0] is None
+    with pytest.raises(SystemExit):
+        rp.cmd_sign([_lesson(rp)], "")
+    assert rp.cmd_sign([_lesson(rp)], "Sheikh Ahmad") == 1                 # …nor signed
+
+
+def test_a_malformed_queue_entry_fails_the_full_check(rp, tree, capsys):
+    rp.save_queue({"lesson_x": {"category": "awaiting-review", "reason": "",
+                                "content_sha256": _lesson(rp).sha, "queued_on": "2026-10-04"}})
+    assert "queue entry is invalid" in rp.check_item(_lesson(rp))
+
+
+def test_stamping_settles_the_queue_and_keeps_who_wrote_the_english(rp, tree, monkeypatch):
+    monkeypatch.setattr(rp, "_head_en", lambda _it: {"translation": {}})
+    rp.cmd_queue([_lesson(rp)], "waits", "awaiting-review", ["claude-opus-5.5"])
+    _stamp(rp, _lesson(rp))
+    assert rp.load_queue() == {}
+    doc = json.loads(_lesson(rp).en_file.read_text())
+    assert doc["translation"]["english_authors"] == ["claude-opus-5.5"]
+    # …so a later Claude-only re-stamp is still refused after the entry is gone.
+    assert "same family" in rp.family_conflict(_lesson(rp), ["claude-opus"])
+
+
+# ── the family rule, enforced rather than written down ───────────────────
+
+@pytest.mark.parametrize("name,family", [
+    ("claude-opus", "anthropic"), ("claude-opus-5.5", "anthropic"),
+    ("mistral-large-3:675b", "mistral"), ("deepseek-v4-pro", "deepseek"),
+    ("glm-5.2", "zhipu"), ("qwen2.5:3b", "alibaba"), ("command-r7b-arabic", "cohere"),
+    ("gpt-4o", "openai"), ("Sheikh Ahmad", None), (None, None)])
+def test_model_families(rp, name, family):
+    assert rp.model_family(name) == family
+
+
+def test_claude_cannot_vouch_for_english_claude_wrote(rp, tree):
+    rp.apply_english(_lesson(rp), {"summary": "Make honesty safe."},
+                     author="claude-opus-5.5", note="fixed a reviewer-located omission")
+    tr = json.loads(_lesson(rp).en_file.read_text())["translation"]
+    assert tr["english_authors"] == ["mistral-large-3:675b", "claude-opus-5.5"]
+    assert tr["fixer_model"] == "claude-opus-5.5"
+    assert rp.cmd_stamp_reviewed([_lesson(rp)], "claude-opus", None) == 1
+    assert rp.read_stamp(_lesson(rp))[0] is None
+    # A reviewer from neither family may.
+    assert rp.family_conflict(_lesson(rp), ["deepseek-v4-pro", "glm-5.2"]) is None
+
+
+def test_an_unrecorded_manual_fix_counts_as_claude(rp, tree):
+    f = _lesson(rp).en_file
+    doc = json.loads(f.read_text())
+    doc["translation"]["manual_fix_note"] = "rewritten by hand"
+    f.write_text(json.dumps(doc, ensure_ascii=False))
+    assert "same family" in rp.family_conflict(_lesson(rp), ["claude-opus"])
+
+
+def test_unknown_authorship_cannot_be_vouched_for_by_one_reviewer(rp, tree):
+    f = _lesson(rp).en_file
+    doc = json.loads(f.read_text())
+    del doc["translation"]["translator_model"]
+    f.write_text(json.dumps(doc, ensure_ascii=False))
+    assert rp.cmd_stamp_reviewed([_lesson(rp)], "claude-opus", None) == 1
+    assert "no recorded author" in rp.family_conflict(_lesson(rp), ["claude-opus"])

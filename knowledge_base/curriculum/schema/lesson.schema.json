@@ -135,7 +135,7 @@
         "string",
         "null"
       ],
-      "description": "من أجاز هذا المحتوى. في ملفات i18n/en: إما اسم مراجِع بشري، وإما ختم المراجعة الآلية `auto-review:<مراجع A>+<مراجع B>:<YYYY-MM-DD>` الذي يكتبه ops/tools/review_en_parity.py بعد أن تمرّ الحرّاس الحتمية ولا يجد مراجعان من عائلتَي نماذج مختلفتين عيبًا متوسطًا أو عاليًا في النص بعينه (بصمته في translation.auto_review.content_sha256). الختم الآلي ليس إجازة شرعية ولا يدّعيها. null = لم يجتز البوابة، لا يُنشر للإنجليزية (يرفضه pre-commit).",
+      "description": "من أجاز هذا المحتوى. في ملفات i18n/en: إما ختم المراجعة الآلية `auto-review:<مراجع A>+<مراجع B>:<YYYY-MM-DD>` (أو `auto-review:<مراجع>:<YYYY-MM-DD>` لمراجعٍ واحد من عائلة نماذج غير عائلة كتّاب الإنجليزي) الذي يكتبه ops/tools/review_en_parity.py وحده، وبصمته في translation.auto_review.content_sha256؛ وإما توقيع إنسانٍ قرأ النصّين يكتبه `review_en_parity.py sign` مع بصمته في translation.approval.content_sha256 — اسمٌ بلا بصمة ترفضه البوابة. الختم يشهد أن الإنجليزي يطابق العربي فقط، لا أن العربي أمينٌ لمصدره، وليس إجازة شرعية. أي تعديل بعده في أيٍّ من اللغتين يُبطله. null = غير مختوم: لا يُقبل منشورًا إلا مُدرَجًا في ops/data/en_parity_queue.json ببصمة نصّه (CI وpre-commit).",
       "default": null
     },
     "language": {
@@ -193,7 +193,7 @@
             "string",
             "null"
           ],
-          "description": "نفس قيمة approved_by في الجذر: اسم مراجِع بشري أو ختم auto-review:<A>+<B>:<date>. null = غير مراجَع."
+          "description": "نفس قيمة approved_by في الجذر: ختم auto-review:<…>:<date> (بصمته auto_review.content_sha256) أو توقيع بشري ببصمة (approval.content_sha256). null = غير مختوم."
         }
       },
       "additionalProperties": true

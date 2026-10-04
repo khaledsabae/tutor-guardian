@@ -1,0 +1,373 @@
+{
+  "_doc": [
+    "Published English that is live WITHOUT a review stamp, each bound to the exact text it was queued at (content_sha256 of the Arabic + English shown fields).",
+    "review_en_parity.py check passes such a unit only while its text still matches. Edit it and the entry no longer holds: review it, or re-queue it with a reason.",
+    "awaiting-review: waits for a reviewer from a family other than its English authors'. source-unverified: the Arabic is not verified against its own source — never stamped until the hold is released (unqueue) after re-extraction.",
+    "Written by `review_en_parity.py queue` / `unqueue`; stamping removes the entry."
+  ],
+  "units": {
+    "0bd76d3c-548a-46ed-b17b-78874741662a__en": {
+      "category": "awaiting-review",
+      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
+      "content_sha256": "2540951f46997ded7804d1f88b9bd4050bf5232c46b21b8dbea5ec394d696a44",
+      "queued_on": "2026-10-04",
+      "english_authors": [
+        "claude-opus-5.5"
+      ]
+    },
+    "968f42b5-5184-4f4a-97d9-b854f507dbe6__en": {
+      "category": "awaiting-review",
+      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
+      "content_sha256": "8ee2a2b2724dbdd1bd7fa7de538396c4753f4f18117a33f3fcb85a5955f1614f",
+      "queued_on": "2026-10-04",
+      "english_authors": [
+        "claude-opus-5.5"
+      ]
+    },
+    "adhkar:family_adhkar": {
+      "category": "awaiting-review",
+      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
+      "content_sha256": "34e847e50f009fd70efd1956ec0f1c526a548cab65cc9835cf1b191839314d45",
+      "queued_on": "2026-10-04",
+      "english_authors": [
+        "claude-opus-5.5"
+      ]
+    },
+    "cd81035d-4fdb-4274-bcf2-55074ee7a1de__en": {
+      "category": "awaiting-review",
+      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
+      "content_sha256": "073f739746099fe48326691aece5a5fc3b5ca5606945f43c44c8330e5e05a2e6",
+      "queued_on": "2026-10-04",
+      "english_authors": [
+        "claude-opus-5.5"
+      ]
+    },
+    "isl-27372b44__en": {
+      "category": "awaiting-review",
+      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
+      "content_sha256": "624f5ba1934eb01b979ffc7e7d3e4280e11eb11804e1ae4b75edfe34372d3f76",
+      "queued_on": "2026-10-04",
+      "english_authors": [
+        "claude-opus-5.5"
+      ]
+    },
+    "isl-624104ea__en": {
+      "category": "awaiting-review",
+      "reason": "English rewritten by PR #27 (a Claude agent) with its Arabic; waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
+      "content_sha256": "9cba523ed9aa12df3fe2bb2fc98a585311f92a67da69b9bef5b6303f219df813",
+      "queued_on": "2026-10-04",
+      "english_authors": [
+        "claude-opus-5.5"
+      ]
+    },
+    "isl-73905b43__en": {
+      "category": "awaiting-review",
+      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
+      "content_sha256": "2ecd5fa763ba952fa4acce235da165f90b09f5ab2a29779ca3bf743434defbdc",
+      "queued_on": "2026-10-04",
+      "english_authors": [
+        "claude-opus-5.5"
+      ]
+    },
+    "isl-8bf4e7a3__en": {
+      "category": "awaiting-review",
+      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
+      "content_sha256": "1e29c5695163b0eed7dda73825f99b3418e9522b2629bbb76a55b61fe74d134e",
+      "queued_on": "2026-10-04",
+      "english_authors": [
+        "claude-opus-5.5"
+      ]
+    },
+    "isl-9933c64e__en": {
+      "category": "awaiting-review",
+      "reason": "English rewritten by PR #27 (a Claude agent) with its Arabic; waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
+      "content_sha256": "a5230ee1caab704d670e10171b33835df3637fc60d3ee8e00011a1a7faf06e86",
+      "queued_on": "2026-10-04",
+      "english_authors": [
+        "claude-opus-5.5"
+      ]
+    },
+    "isl-b1e6de34__en": {
+      "category": "awaiting-review",
+      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
+      "content_sha256": "a8e3f35a4654f0598a625b306ffee493398f033c109019852fc2c816733c160b",
+      "queued_on": "2026-10-04",
+      "english_authors": [
+        "claude-opus-5.5"
+      ]
+    },
+    "isl-c4b3fccc__en": {
+      "category": "awaiting-review",
+      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
+      "content_sha256": "bcf29d3531418fd536b0c8ceb3b558e6b8b47d62fb6b077084e600a2c52377b4",
+      "queued_on": "2026-10-04",
+      "english_authors": [
+        "claude-opus-5.5"
+      ]
+    },
+    "isl-f6c0c64a__en": {
+      "category": "awaiting-review",
+      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
+      "content_sha256": "98011199c372376ac80f4ba3c07c1e37b7db6ed5e0643a1f3e24b0b6d51408bc",
+      "queued_on": "2026-10-04",
+      "english_authors": [
+        "claude-opus-5.5"
+      ]
+    },
+    "isl-fd937511__en": {
+      "category": "awaiting-review",
+      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
+      "content_sha256": "f55e9bbccc67a71eacdd8b6a8a83dc5c867b5fee410d6e2546b2946f552cd907",
+      "queued_on": "2026-10-04",
+      "english_authors": [
+        "claude-opus-5.5"
+      ]
+    },
+    "lesson_13-15_cyber_digital_maturity_02": {
+      "category": "awaiting-review",
+      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
+      "content_sha256": "8e355e334bd1a55a3b0dc3aaf7344e27ab8e7b789828f83533503f02eb0faa2e",
+      "queued_on": "2026-10-04",
+      "english_authors": [
+        "claude-opus-5.5"
+      ]
+    },
+    "lesson_13-15_cyber_digital_maturity_03": {
+      "category": "awaiting-review",
+      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
+      "content_sha256": "f3a2154b65578dc5ec441f91adc473d0e8d9f164bec9efc0f09cbc8c4c3e0a31",
+      "queued_on": "2026-10-04",
+      "english_authors": [
+        "claude-opus-5.5"
+      ]
+    },
+    "lesson_13-15_islamic_mockery_01": {
+      "category": "awaiting-review",
+      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
+      "content_sha256": "e3bb16579e347c2c0949297e9318fe43e8242ad3a29aef36204f183168839d60",
+      "queued_on": "2026-10-04",
+      "english_authors": [
+        "claude-opus-5.5"
+      ]
+    },
+    "lesson_13-15_islamic_parenting_steadfast_04": {
+      "category": "awaiting-review",
+      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
+      "content_sha256": "22fef9b37902c856e4d40bb63f7735e489514e3cd7d66b6dfdcb8554d854ca78",
+      "queued_on": "2026-10-04",
+      "english_authors": [
+        "claude-opus-5.5"
+      ]
+    },
+    "lesson_16-18_cyber_digital_professional_02": {
+      "category": "awaiting-review",
+      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
+      "content_sha256": "d55c2125566db52da040a82c6c6960f73344602bb96c7f0eff81fa6b468e4ccb",
+      "queued_on": "2026-10-04",
+      "english_authors": [
+        "claude-opus-5.5"
+      ]
+    },
+    "lesson_4-6_aqeedah_seeds_02": {
+      "category": "awaiting-review",
+      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
+      "content_sha256": "f561dc935cac1de8295daf0a9649dfd2b32eaf60fb69ce5a39484079dbd26315",
+      "queued_on": "2026-10-04",
+      "english_authors": [
+        "claude-opus-5.5"
+      ]
+    },
+    "lesson_4-6_aqeedah_seeds_03": {
+      "category": "awaiting-review",
+      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
+      "content_sha256": "4c0fa55bb1a00263f17bc3ffad5e9017742c7a8b0450e47ea5a2eed95819fd21",
+      "queued_on": "2026-10-04",
+      "english_authors": [
+        "claude-opus-5.5"
+      ]
+    },
+    "lesson_4-6_development_positive_parenting_02": {
+      "category": "awaiting-review",
+      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
+      "content_sha256": "5da1127432f1cd54c7ba0cab9c4b30c6af10d6ba8dc4fe202b48b9ae99e77c07",
+      "queued_on": "2026-10-04",
+      "english_authors": [
+        "claude-opus-5.5"
+      ]
+    },
+    "lesson_4-6_islamic_parenting_adab_02": {
+      "category": "awaiting-review",
+      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
+      "content_sha256": "c1b75671fc64c3f1fa48b2b94a44bd7c704c07a87ad259412cc2ecba162cf09d",
+      "queued_on": "2026-10-04",
+      "english_authors": [
+        "claude-opus-5.5"
+      ]
+    },
+    "lesson_7-9_aqeedah_fundamentals_01": {
+      "category": "awaiting-review",
+      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
+      "content_sha256": "141bd1295c45146b56264d8994276d789f4cf72b14247fd2d6ac66de588f25d1",
+      "queued_on": "2026-10-04",
+      "english_authors": [
+        "claude-opus-5.5"
+      ]
+    },
+    "lesson_7-9_aqeedah_fundamentals_04": {
+      "category": "awaiting-review",
+      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
+      "content_sha256": "97d934eb1a3504de08a11df59ffd9615635a27bc9df2e4046e43e20923a13ae1",
+      "queued_on": "2026-10-04",
+      "english_authors": [
+        "claude-opus-5.5"
+      ]
+    },
+    "lesson_7-9_islamic_parenting_worship_01": {
+      "category": "awaiting-review",
+      "reason": "owned by content/p1-deep-paths (PR #31), which rewrites this lesson; it is reviewed with #31's text, not this one",
+      "content_sha256": "ad4e7817c528e8f8251878826afe2c0fda54b7ff6462e928f23d4aca8a665605",
+      "queued_on": "2026-10-04"
+    },
+    "lesson_prenatal-1_infant_pregnancy_03": {
+      "category": "awaiting-review",
+      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
+      "content_sha256": "93003567117ec779842f92f69caa6b9bf1c1f8e1f8c2c5bddca93a251ab63338",
+      "queued_on": "2026-10-04",
+      "english_authors": [
+        "claude-opus-5.5"
+      ]
+    },
+    "lesson_prenatal-1_infant_pregnancy_04": {
+      "category": "awaiting-review",
+      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
+      "content_sha256": "f8b33255c308abd00384f5e1924a772fac3c770e0b58c978b7f5171f1ec235d0",
+      "queued_on": "2026-10-04",
+      "english_authors": [
+        "claude-opus-5.5"
+      ]
+    },
+    "lesson_prenatal-1_infant_pregnancy_05": {
+      "category": "awaiting-review",
+      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
+      "content_sha256": "97ff39a9f47bae37a745ffc756290ce4894ddbf4864ff6ebd4b7d01a5c5b2e75",
+      "queued_on": "2026-10-04",
+      "english_authors": [
+        "claude-opus-5.5"
+      ]
+    },
+    "med-6de3365b__en": {
+      "category": "awaiting-review",
+      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
+      "content_sha256": "ecd971135df75a75274a3842f43c7ff1946102f2f83c821a9dc7c9fece02906a",
+      "queued_on": "2026-10-04",
+      "english_authors": [
+        "claude-opus-5.5"
+      ]
+    },
+    "med-ccf5e011__en": {
+      "category": "awaiting-review",
+      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
+      "content_sha256": "09983cd9e3603144242ae3b664cef976ef60ecc1f7da51c556e1024256f32398",
+      "queued_on": "2026-10-04",
+      "english_authors": [
+        "claude-opus-5.5"
+      ]
+    },
+    "story:abdullah_bismillah": {
+      "category": "awaiting-review",
+      "reason": "the Arabic gained interactive fields (age, category, three questions, Islamic value, challenge); their English is prepared in ops/data/en_parity_pending/ and is Claude-authored; parts of the live English were rewritten by PR #27 (Claude); waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
+      "content_sha256": "49ef802db60ab69fa47686b6b3f6751b7e807fb44a4cc66af90af21feca2b5ab",
+      "queued_on": "2026-10-04",
+      "english_authors": [
+        "claude-opus-5.5"
+      ]
+    },
+    "story:bilal_forgiveness": {
+      "category": "awaiting-review",
+      "reason": "the Arabic gained interactive fields (age, category, three questions, Islamic value, challenge); their English is prepared in ops/data/en_parity_pending/ and is Claude-authored; waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
+      "content_sha256": "04cb99a78bf68187700ac1abbd77828591a7fba1f8963ebac822fcbca142d670",
+      "queued_on": "2026-10-04"
+    },
+    "story:fatima_parents": {
+      "category": "awaiting-review",
+      "reason": "the Arabic gained interactive fields (age, category, three questions, Islamic value, challenge); their English is prepared in ops/data/en_parity_pending/ and is Claude-authored; waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
+      "content_sha256": "7205e0f9b09e9fc8665f07756871ff7bd4325200d8db5a753fd12f60323ee086",
+      "queued_on": "2026-10-04"
+    },
+    "story:hamza_truth": {
+      "category": "awaiting-review",
+      "reason": "the Arabic gained interactive fields (age, category, three questions, Islamic value, challenge); their English is prepared in ops/data/en_parity_pending/ and is Claude-authored; waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
+      "content_sha256": "d88d8c377c7c38363e8abe9e7cdba1f86142c28806f60cffcf6ce36b15580653",
+      "queued_on": "2026-10-04"
+    },
+    "story:hope_sprout": {
+      "category": "awaiting-review",
+      "reason": "the Arabic gained interactive fields (age, category, three questions, Islamic value, challenge); their English is prepared in ops/data/en_parity_pending/ and is Claude-authored; waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
+      "content_sha256": "72a6a07a930921b7240abc928cb86b859b11b2ffc568307123874d81f4246738",
+      "queued_on": "2026-10-04"
+    },
+    "story:khadija_neighbor": {
+      "category": "awaiting-review",
+      "reason": "the Arabic gained interactive fields (age, category, three questions, Islamic value, challenge); their English is prepared in ops/data/en_parity_pending/ and is Claude-authored; waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
+      "content_sha256": "aabbd16917fc9c37f36c6eadd185cc1dcf42fc92c9ecad0554851ec050480378",
+      "queued_on": "2026-10-04"
+    },
+    "story:maryam_toys": {
+      "category": "awaiting-review",
+      "reason": "the Arabic gained interactive fields (age, category, three questions, Islamic value, challenge); their English is prepared in ops/data/en_parity_pending/ and is Claude-authored; waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
+      "content_sha256": "fa78e4654af9af4e4c597be20b8a69f1c559944cc997f396efe86a50fec8f1f5",
+      "queued_on": "2026-10-04"
+    },
+    "story:omar_prayer": {
+      "category": "awaiting-review",
+      "reason": "the Arabic gained interactive fields (age, category, three questions, Islamic value, challenge); their English is prepared in ops/data/en_parity_pending/ and is Claude-authored; parts of the live English were rewritten by PR #27 (Claude); waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
+      "content_sha256": "855d3d1bea6059f0023adec661537807e7a19a1a58b42e85264714df32c71b51",
+      "queued_on": "2026-10-04",
+      "english_authors": [
+        "claude-opus-5.5"
+      ]
+    },
+    "story:yaseen_creation": {
+      "category": "awaiting-review",
+      "reason": "the Arabic gained interactive fields (age, category, three questions, Islamic value, challenge); their English is prepared in ops/data/en_parity_pending/ and is Claude-authored; waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
+      "content_sha256": "6f183269240e8fa043aa34380decdd474cd99d56efcc5d349b0e30317cea839d",
+      "queued_on": "2026-10-04"
+    },
+    "tip_0-3_018": {
+      "category": "awaiting-review",
+      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
+      "content_sha256": "facfabd643f3c3cc95345ea2467d03af77bc0908f7259a13440a3e776e53b809",
+      "queued_on": "2026-10-04",
+      "english_authors": [
+        "claude-opus-5.5"
+      ]
+    },
+    "tip_13-15_020": {
+      "category": "awaiting-review",
+      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
+      "content_sha256": "584b6083e74a30bdd6d49021cf8c24af090ba9fcb115b390dbfba70d0ad48d13",
+      "queued_on": "2026-10-04",
+      "english_authors": [
+        "claude-opus-5.5"
+      ]
+    },
+    "tip_7-9_024": {
+      "category": "awaiting-review",
+      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
+      "content_sha256": "66c124378e9318c4d3eec3679d85b41044a14cc61f143bafb3c93c6f281e1afc",
+      "queued_on": "2026-10-04",
+      "english_authors": [
+        "claude-opus-5.5"
+      ]
+    },
+    "tip_7-9_030": {
+      "category": "awaiting-review",
+      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
+      "content_sha256": "c6adb0ee30eb75ef6145f480be21a6b4962878f5682c8e14e90dbaabdf27d0b5",
+      "queued_on": "2026-10-04",
+      "english_authors": [
+        "claude-opus-5.5"
+      ]
+    }
+  }
+}

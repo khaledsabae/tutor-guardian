@@ -16,7 +16,7 @@
     "description": { "type": "string" },
     "translation": {
       "type": "object",
-      "description": "سجل المراجعة الآلية للترجمة الإنجليزية (ops/tools/review_en_parity.py): approved_by = auto-review:<A>+<B>:<date>، و auto_review.content_sha256 بصمة النص كما رُوجع. يوجد في i18n/en فقط.",
+      "description": "سجل المراجعة الآلية للترجمة الإنجليزية (ops/tools/review_en_parity.py): approved_by = auto-review:<A>+<B>:<date>، و auto_review.content_sha256 بصمة النص كما رُوجع؛ أو توقيع بشري ببصمته في approval.content_sha256 (يكتبه `review_en_parity.py sign`). يشهد أن الإنجليزي يطابق العربي فقط. يوجد في i18n/en فقط.",
       "additionalProperties": true
     },
     "missions": {

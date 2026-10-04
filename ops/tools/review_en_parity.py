@@ -8,6 +8,8 @@
     python3 ops/tools/review_en_parity.py run --kind lessons   # راجع → أصلح → أعد المراجعة → اختم
     python3 ops/tools/review_en_parity.py run --only lesson_7-9_islamic_parenting_akhlaq_01
     python3 ops/tools/review_en_parity.py run --all --rounds 3 --report /tmp/en_report.json
+    python3 ops/tools/review_en_parity.py queue --only KEY --reason '…' [--category source-unverified]
+    python3 ops/tools/review_en_parity.py sign --only KEY --by 'اسم من قرأ النصّين'
 
 لماذا هذه الأداة
 ----------------
@@ -62,6 +64,29 @@
 الإنجليزي للنسخة العربية (السلوك الموثَّق في curriculum_loader و content_lang) بدل
 نصٍّ لم يجتز البوابة.
 
+ما يشهد به الختم — وما لا يشهد به
+--------------------------------
+الختم يشهد أن **الإنجليزي يطابق العربي** فقط. لا يشهد أن العربي أمينٌ لمصدره:
+المراجعون لا يرون `text_original`، فوحدةٌ لخّص نموذجٌ حروفَ PDF مقلوبةً فاخترع
+معناها تخرج «نظيفة» إن طابقتها ترجمتها (isl-18569b11 نسبت للنبي ﷺ قصةً مصدرها
+ابن عمر — وكانت مختومة). أمانة العربي لمصدره مهمة فحصٍ آخر.
+
+الطابور (`ops/data/en_parity_queue.json`)
+----------------------------------------
+`check` الكامل يجري في CI، فلا يكفي أن «نعرف» أن وحدةً تنتظر. كل إنجليزي منشور بلا
+ختم يجب أن يُذكر في الطابور **مربوطًا ببصمة نصّه** مع سبب مكتوب:
+  · awaiting-review   — حيٌّ كما كان، ينتظر مراجعةً من عائلةٍ غير عائلة كاتبه؛
+  · source-unverified — العربي نفسه غير موثَّق أمام مصدره: لا يُختم أبدًا حتى
+                        يُرفع القيد (`unqueue`) بعد إعادة الاستخراج.
+تغيّر النص بعد إدراجه ← سقط الإدراج. ولا يُدرَج إنجليزيٌّ جديد: الطابور يحمل ما كان
+حيًّا قبل البوابة، لا بابًا خلفيًّا لنصٍّ لم يُراجَع.
+
+قاعدة العائلة، والتوقيع البشري
+-----------------------------
+`stamp-reviewed` يرفض مراجعًا من عائلة أيٍّ من كتّاب الإنجليزي (المترجم والمُصلحين،
+من سجل الترجمة والطابور)، ويرفض إن جُهل الكاتب. والتوقيع البشري (`sign --by`)
+يحمل بصمة النص كالختم الآلي: توقيعٌ بلا بصمة يشهد لأي نصٍّ يصيره الملف لاحقًا.
+
 Exit (check): 0 سليم · 1 مخالفات · 2 تعطّل الفحص نفسه (self-tests)
 """
 
@@ -103,6 +128,12 @@ OFFSCREEN_EN = ROOT / "mobile" / "assets" / "data" / "offscreen_activities_en.js
 CACHE = ROOT / "ops" / "data" / "en_parity_cache.jsonl"          # gitignored (*.jsonl)
 ADJUDICATIONS = ROOT / "ops" / "data" / "en_parity_adjudications.json"
 UNPUBLISHED = ROOT / "ops" / "data" / "en_unpublished"
+QUEUE = ROOT / "ops" / "data" / "en_parity_queue.json"
+QUEUE_CATEGORIES = {
+    "awaiting-review": "live as before; waits for a reviewer from a family other than its authors'",
+    "source-unverified": "the Arabic itself is not verified against its source — never stamped "
+                         "until the hold is released after re-extraction",
+}
 
 API_URL = "https://ollama.com/v1/chat/completions"
 REVIEWER_A = "deepseek-v4-pro"
@@ -461,14 +492,53 @@ def _translation_block(item: Item, doc: Any) -> dict:
     return doc.setdefault("translation", {})
 
 
-def read_stamp(item: Item) -> tuple[Any, dict]:
+def read_translation(item: Item) -> dict:
+    """سجل الترجمة كما هو في الملف (للقصص: سجل القصة بعينها)، أو {}."""
     doc = _load(item.en_file)
     if item.kind == "stories":
         story = next((s for s in doc if s.get("id") == item.selector), {})
-        tr = story.get("translation") or {}
-    else:
-        tr = doc.get("translation") or {} if isinstance(doc, dict) else {}
+        return story.get("translation") or {}
+    return (doc.get("translation") or {}) if isinstance(doc, dict) else {}
+
+
+def read_stamp(item: Item) -> tuple[Any, dict]:
+    tr = read_translation(item)
     return tr.get("approved_by"), tr.get("auto_review") or {}
+
+
+def _approval_problem(item: Item, tr: dict) -> str | None:
+    """None إن كان في السجل اعتمادٌ يصدق على النص الحالي؛ وإلا السبب.
+
+    ختمٌ آلي (`auto-review:…`) بصمته في `auto_review.content_sha256`. وتوقيعٌ بشريٌّ
+    باسم يحمل بصمته في `approval.content_sha256` — كان يُقبل «كما كُتب» بلا بصمة،
+    فيبقى صالحًا أبدًا مهما تغيّر النص بعده (ثغرةٌ أمسكتها مراجعة PR #20).
+    """
+    stamp = tr.get("approved_by")
+    parsed = parse_stamp(stamp)
+    if parsed is None:
+        if str(stamp).strip().startswith(STAMP_PREFIX):
+            return f"malformed stamp {stamp!r}"
+        fp = (tr.get("approval") or {}).get("content_sha256")
+        if not fp:
+            return (f"approved_by {stamp!r} carries no content fingerprint — a signature "
+                    "that never goes stale vouches for whatever the text later becomes; "
+                    f"sign with `{TOOL_REL} sign --only {item.key} --by …`")
+        if fp != item.sha:
+            return "signature is stale — the Arabic or English changed after it was signed"
+        return None
+    if (tr.get("auto_review") or {}).get("content_sha256") != item.sha:
+        return ("stamp is stale — the Arabic or English changed after review "
+                f"(stamped {parsed['date']})")
+    return None
+
+
+def approval_state(item: Item) -> tuple[str, str | None]:
+    """('valid' | 'none' | 'invalid', why). لا يعرف شيئًا عن الطابور."""
+    tr = read_translation(item)
+    if not tr.get("approved_by"):
+        return "none", None
+    why = _approval_problem(item, tr)
+    return ("invalid", why) if why else ("valid", None)
 
 
 def write_stamp(item: Item, record: dict) -> None:
@@ -476,11 +546,13 @@ def write_stamp(item: Item, record: dict) -> None:
     tr = _translation_block(item, doc)
     tr["approved_by"] = record["approved_by"]
     tr["auto_review"] = record["auto_review"]
+    tr.pop("approval", None)
     # السجل القديم يصف نصًّا قبل الإصلاح؛ نستبدله بحكم الجولة الأخيرة لا نتركه بائتًا.
     tr["reviewer_model"] = "+".join(record["auto_review"]["reviewers"])
     tr["review_verdict"] = "clean" if not record["auto_review"]["residual_low"] else "low_only"
     tr["review_defects"] = record["auto_review"]["residual_low"]
     tr["revalidated_at"] = record["auto_review"]["reviewed_at"]
+    _settle_queue_entry(item, tr)
     # ملفات المنهج تحمل approved_by في الجذر أيضًا (نسخة من العربي) — يتبع الختم.
     if item.kind in CURRICULUM_FIELDS and isinstance(doc, dict) and "approved_by" in doc:
         doc["approved_by"] = record["approved_by"]
@@ -490,7 +562,7 @@ def write_stamp(item: Item, record: dict) -> None:
 
 
 def clear_stamp(item: Item) -> bool:
-    """يُسقط ختمًا لم يعد يصدق (تغيّر النص بعده). يرجّع True إن كان هناك ختم.
+    """يُسقط ختمًا (أو توقيعًا) لم يعد يصدق. يرجّع True إن كان هناك ختم.
 
     ختمٌ بائت أسوأ من غياب الختم: الأول يقول «رُوجع» عن نصٍّ لم يُراجَع.
     """
@@ -506,6 +578,7 @@ def clear_stamp(item: Item) -> bool:
         return False
     tr["approved_by"] = None
     tr.pop("auto_review", None)
+    tr.pop("approval", None)
     tr["review_verdict"] = "pending"
     if item.kind in CURRICULUM_FIELDS and isinstance(doc, dict) and doc.get("approved_by"):
         doc["approved_by"] = None
@@ -513,6 +586,136 @@ def clear_stamp(item: Item) -> bool:
     if item.kind == "stories":
         shutil.copyfile(STORIES_EN, STORIES_EN_MIRROR)
     return True
+
+
+# ── the queue: unstamped English that is live, named, and bound to its text ──
+
+def load_queue() -> dict:
+    """key → {category, reason, content_sha256, queued_on, english_authors?}."""
+    if not QUEUE.exists():
+        return {}
+    return dict(_load(QUEUE).get("units") or {})
+
+
+def save_queue(units: dict) -> None:
+    doc = _load(QUEUE) if QUEUE.exists() else {}
+    doc.setdefault("_doc", [
+        "Published English that is live WITHOUT a review stamp, each bound to the exact "
+        "text it was queued at (content_sha256 of the Arabic + English shown fields).",
+        "review_en_parity.py check passes such a unit only while its text still matches. "
+        "Edit it and the entry no longer holds: review it, or re-queue it with a reason.",
+        "awaiting-review: waits for a reviewer from a family other than its English authors'. "
+        "source-unverified: the Arabic is not verified against its own source — never stamped "
+        "until the hold is released (unqueue) after re-extraction.",
+        "Written by `review_en_parity.py queue` / `unqueue`; stamping removes the entry.",
+    ])
+    doc["units"] = dict(sorted(units.items()))
+    _dump(QUEUE, doc)
+
+
+def queue_entry_problem(key: str, entry: Any) -> str | None:
+    if not isinstance(entry, dict):
+        return "entry is not an object"
+    if entry.get("category") not in QUEUE_CATEGORIES:
+        return f"category {entry.get('category')!r} — expected one of {sorted(QUEUE_CATEGORIES)}"
+    if not str(entry.get("reason") or "").strip():
+        return "no reason — a hold nobody can explain is a stamp by another name"
+    if not re.fullmatch(r"[0-9a-f]{64}", str(entry.get("content_sha256") or "")):
+        return "no content fingerprint"
+    try:
+        date.fromisoformat(str(entry.get("queued_on")))
+    except ValueError:
+        return "queued_on is not a date"
+    return None
+
+
+def _settle_queue_entry(item: Item, tr: dict) -> None:
+    """عند الختم: يُحفظ كتّاب الإنجليزي المسجَّلون في الطابور داخل سجل الترجمة
+    (لئلا تضيع معرفة «Claude كتب هذا» حين يخرج من الطابور)، ثم يُحذف الإدخال."""
+    queue = load_queue()
+    entry = queue.pop(item.key, None)
+    if entry is None:
+        return
+    authors = list(tr.get("english_authors") or [])
+    for a in entry.get("english_authors") or []:
+        if a not in authors:
+            authors.append(a)
+    if authors:
+        tr["english_authors"] = authors
+    save_queue(queue)
+
+
+# ── model families: who wrote the English, and who may vouch for it ──────
+
+MODEL_FAMILIES = {
+    "anthropic": ("claude", "anthropic", "opus", "sonnet", "haiku"),
+    "mistral": ("mistral", "mixtral", "magistral", "devstral", "codestral", "ministral",
+                "pixtral"),
+    "deepseek": ("deepseek",),
+    "zhipu": ("glm", "chatglm", "zhipu"),
+    "alibaba": ("qwen", "qwq"),
+    "openai": ("gpt", "chatgpt", "openai", "o1", "o3", "o4"),
+    "google": ("gemini", "gemma"),
+    "meta": ("llama",),
+    "moonshot": ("kimi", "moonshot"),
+    "cohere": ("command", "aya", "cohere"),
+    "xai": ("grok",),
+    "minimax": ("minimax",),
+}
+
+
+def model_family(name: Any) -> str | None:
+    """'claude-opus-5.5' → 'anthropic'، 'mistral-large-3:675b' → 'mistral'؛ غير معروف → None."""
+    if not isinstance(name, str) or not name.strip():
+        return None
+    for tok in re.split(r"[^a-z0-9]+", name.lower()):
+        if not tok:
+            continue
+        for fam, prefixes in MODEL_FAMILIES.items():
+            if any(tok == p or (tok.startswith(p) and len(p) > 2) for p in prefixes):
+                return fam
+    return None
+
+
+def english_authors(item: Item, queue: dict | None = None) -> list[str]:
+    """كل من كتب في هذا الإنجليزي: المترجم، والمُصلحون، وما سُجّل في الطابور.
+
+    `manual_fix_note` بلا كاتبٍ مسمّى يُحسب على Claude: كل إصلاح يدوي في هذا
+    المستودع كتبه وكيلٌ من Claude — والخطأ في هذا الاتجاه يكلّف مراجعةً إضافية
+    فقط، وفي الاتجاه الآخر يكلّف ختمًا يشهد فيه الكاتب لنفسه.
+    """
+    tr = read_translation(item)
+    names = [tr.get("translator_model"), tr.get("fixer_model"),
+             (tr.get("auto_review") or {}).get("fixer"), *(tr.get("english_authors") or [])]
+    entry = (load_queue() if queue is None else queue).get(item.key) or {}
+    names += entry.get("english_authors") or []
+    if tr.get("manual_fix_note") and not any(model_family(n) == "anthropic" for n in names):
+        names.append("claude-opus")
+    out: list[str] = []
+    for n in names:
+        if isinstance(n, str) and n.strip() and n not in out:
+            out.append(n)
+    return out
+
+
+def family_conflict(item: Item, reviewers: tuple[str, ...] | list[str],
+                    queue: dict | None = None) -> str | None:
+    """None إن كان كل مراجع من عائلة غير عائلات كتّاب الإنجليزي؛ وإلا السبب."""
+    authors = english_authors(item, queue)
+    if not authors:
+        return "its English has no recorded author, so no reviewer can be shown to be independent"
+    fams = {a: model_family(a) for a in authors}
+    unknown = [a for a, f in fams.items() if f is None]
+    if unknown:
+        return f"author family unknown ({', '.join(unknown)})"
+    for r in reviewers:
+        rf = model_family(r)
+        if rf is None:
+            return f"reviewer {r!r} is not a known model family (a person signs with `sign`)"
+        same = [a for a, f in fams.items() if f == rf]
+        if same:
+            return f"reviewer {r} is the same family ({rf}) as an author of this English ({same[0]})"
+    return None
 
 
 def build_record(item: Item, reviewers: tuple[str, str], rounds: int, fixed: bool,
@@ -531,7 +734,8 @@ def build_record(item: Item, reviewers: tuple[str, str], rounds: int, fixed: boo
             "tool": TOOL_REL,
             "meaning": "deterministic guards passed and two different-family model "
                        "reviewers found no medium/high defect in this exact text; "
-                       "not a scholar's ijazah",
+                       "certifies that the English matches the Arabic, not that the "
+                       "Arabic is faithful to its own source; not a scholar's ijazah",
         },
     }
 
@@ -1198,7 +1402,9 @@ def candidate_ok(item: Item, new_en: dict) -> list[str]:
     return bad
 
 
-def apply_english(item: Item, new_en: dict) -> None:
+def apply_english(item: Item, new_en: dict, author: str | None = None,
+                  note: str | None = None) -> None:
+    """يكتب الإنجليزي الجديد، ويسجّل كاتبه (قاعدة العائلة تقرأه)، ويُسقط ختمًا بطل."""
     doc = _load(item.en_file)
     target = doc
     if item.kind == "stories":
@@ -1208,10 +1414,21 @@ def apply_english(item: Item, new_en: dict) -> None:
             _ensure_parent(target, p)
         set_leaf(target, p, v)
         item.fields[p]["en"] = v
+    if author:
+        tr = _translation_block(item, doc)
+        authors = list(tr.get("english_authors") or [])
+        for a in (tr.get("translator_model"), author):
+            if a and a not in authors:
+                authors.append(a)
+        tr["english_authors"] = authors
+        tr["fixer_model"] = author
+        tr["fixed_at"] = datetime.now(timezone.utc).isoformat(timespec="seconds")
+        if note:
+            tr["manual_fix_note"] = note
     _dump(item.en_file, doc)
     if item.kind == "stories":
         shutil.copyfile(STORIES_EN, STORIES_EN_MIRROR)
-    if check_item(item) is not None:
+    if approval_state(item)[0] == "invalid":
         clear_stamp(item)
 
 
@@ -1281,7 +1498,7 @@ def apply_arabic(item: Item, new_ar: dict) -> None:
         item.fields[p]["ar"] = v
     json.loads(text)  # لا نكتب ملفًا مكسورًا
     item.ar_file.write_text(text, encoding="utf-8")
-    if item.en_file.exists() and check_item(item) is not None:
+    if item.en_file.exists() and approval_state(item)[0] == "invalid":
         clear_stamp(item)   # المصدر تغيّر بعد المراجعة: ختم الإنجليزي لم يعد يصدق
 
 
@@ -1291,7 +1508,23 @@ def run(items: list[Item], args) -> dict:
     today = args.date or date.today().isoformat()
     report = {"stamped": [], "fixed": set(), "arabic_proposals": [], "arabic_applied": [],
               "unresolved": {}, "fix_rejected": [], "rounds": 0}
-    pending = list(items)
+    queue = load_queue()
+    pending = []
+    for it in items:
+        held = queue.get(it.key) or {}
+        if held.get("category") == "source-unverified":
+            # الختم يشهد بالتطابق، والعربي هنا غير موثَّق: لا يُشهد لنصٍّ لم يُثبت أصله.
+            report["unresolved"][it.key] = [{"why": "source-unverified hold: "
+                                                    + str(held.get("reason", ""))[:120]}]
+            continue
+        why = family_conflict(it, reviewers, queue)
+        if why:
+            report["unresolved"][it.key] = [{"why": why}]
+            continue
+        pending.append(it)
+    if len(pending) != len(items):
+        print(f"   ⏭️  {len(items) - len(pending)} وحدة لا تُراجَع هنا "
+              "(قيد source-unverified أو تعارض عائلة)", flush=True)
     for rnd in range(1, args.rounds + 1):
         report["rounds"] = rnd
         print(f"\n━━ جولة {rnd}: {len(pending)} وحدة · {reviewers[0]} + {reviewers[1]}", flush=True)
@@ -1362,7 +1595,7 @@ def run(items: list[Item], args) -> dict:
                     report["fix_rejected"].append({"key": key, "field": "(gate)",
                                                    "why": "; ".join(bad)})
                 elif not args.dry_run:
-                    apply_english(it, new_en)
+                    apply_english(it, new_en, author=FIXER)
                     report["fixed"].add(key)
         if args.report:   # تقرير وسيط: تشغيلة طويلة تنقطع لا تضيّع ما حُسم
             _dump_report(args.report, report)
@@ -1384,20 +1617,28 @@ def is_translation(item: Item) -> bool:
     return any(v["en"] not in (None, "", []) and v["en"] != v["ar"] for v in item.fields.values())
 
 
-def check_item(item: Item) -> str | None:
+NO_STAMP = "approved_by: null — published English that never passed the gate"
+
+
+def check_item(item: Item, queue: dict | None = None) -> str | None:
+    """None إن كان الإنجليزي المنشور مختومًا ختمًا يصدق على نصّه، أو مُدرَجًا في
+    الطابور بنفس النص بالضبط؛ وإلا السبب."""
     if not item.published or not is_translation(item):
         return None
-    stamp, rec = read_stamp(item)
-    if not stamp:
-        return "approved_by: null — published English that never passed the gate"
-    parsed = parse_stamp(stamp)
-    if parsed is None:
-        if str(stamp).startswith(STAMP_PREFIX):
-            return f"malformed stamp {stamp!r}"
-        return None  # توقيع بشري باسم — يُقبل كما هو
-    if rec.get("content_sha256") != item.sha:
-        return ("stamp is stale — the Arabic or English changed after review "
-                f"(stamped {parsed['date']})")
+    state, why = approval_state(item)
+    if state == "valid":
+        return None
+    if state == "invalid":
+        return why
+    held = (load_queue() if queue is None else queue).get(item.key)
+    if held is None:
+        return NO_STAMP
+    bad = queue_entry_problem(item.key, held)
+    if bad:
+        return f"queue entry is invalid: {bad}"
+    if held["content_sha256"] != item.sha:
+        return ("queued at a different text — it changed after it was queued; review it, or "
+                f"re-queue it with a reason (`{TOOL_REL} queue --only {item.key} --reason …`)")
     return None
 
 
@@ -1440,6 +1681,17 @@ def _self_test() -> bool:
     expect(content_sha(f1) != content_sha(f4), "sha must see an Arabic change")
     expect(leaked_arabic("Be gentle ﷺ ﴿وَقُل رَّبِّ﴾ «خيركم»") == "", "allowed Arabic spans")
     expect(leaked_arabic("Practice الصبر daily") != "", "bare Arabic leaks")
+    for name, fam in (("claude-opus", "anthropic"), ("claude-opus-5.5", "anthropic"),
+                      ("mistral-large-3:675b", "mistral"), ("deepseek-v4-pro", "deepseek"),
+                      ("glm-5.2", "zhipu"), ("qwen2.5:3b", "alibaba"),
+                      ("command-r7b-arabic", "cohere"), ("Sheikh Ahmad", None), ("", None)):
+        expect(model_family(name) == fam, f"model_family({name!r}) → {model_family(name)!r}")
+    good = {"category": "awaiting-review", "reason": "r", "content_sha256": "a" * 64,
+            "queued_on": "2026-10-04"}
+    expect(queue_entry_problem("k", good) is None, "valid queue entry")
+    for k, v in (("category", "later"), ("reason", " "), ("content_sha256", "abc"),
+                 ("queued_on", "soon")):
+        expect(queue_entry_problem("k", {**good, k: v}) is not None, f"queue entry with bad {k}")
     return ok
 
 
@@ -1472,15 +1724,19 @@ def _fields_for(item: Item, ar_doc, en_doc) -> dict | None:
 
 
 def _head_stamp_holds(item: Item, head_en) -> bool:
-    """هل كان ختم HEAD صادقًا على نصّ HEAD؟ ختمٌ كان بائتًا أصلًا لا يُحمى."""
-    rec = ((head_en or {}).get("translation") or {}).get("auto_review") or {}
-    if not parse_stamp(((head_en or {}).get("translation") or {}).get("approved_by")):
-        return True   # توقيع بشري: يُحترم كما هو
-    en_doc = _git_head_json(item.en_file)
-    fields = _fields_for(item, _git_head_json(item.ar_file), en_doc)
+    """هل كان اعتماد HEAD صادقًا على نصّ HEAD؟ ما كان بائتًا أصلًا لا يُحمى،
+    وتوقيعٌ بلا بصمة لم يصدق على شيءٍ قط."""
+    tr = (head_en or {}).get("translation") or {}
+    if parse_stamp(tr.get("approved_by")):
+        fp = (tr.get("auto_review") or {}).get("content_sha256")
+    else:
+        fp = (tr.get("approval") or {}).get("content_sha256")
+    if not fp:
+        return False
+    fields = _fields_for(item, _git_head_json(item.ar_file), _git_head_json(item.en_file))
     if fields is None:
         return True
-    return rec.get("content_sha256") == content_sha(fields)
+    return fp == content_sha(fields)
 
 
 def _head_en(item: Item) -> dict | None:
@@ -1498,38 +1754,43 @@ def _head_en(item: Item) -> dict | None:
     return doc
 
 
-def staged_check_item(item: Item) -> str | None:
-    """البوابة على الـcommit: لا تراجُع، لا جديد بلا مراجعة — ولا تجميد للمتراكم.
+def staged_check_item(item: Item, queue: dict | None = None) -> str | None:
+    """البوابة على الـcommit — نفس حكم `check` في CI، وثلاثة قيود يراها HEAD وحده:
 
-    · ترجمة جديدة (غير موجودة في HEAD) تحتاج ختمًا صالحًا.
-    · وحدة كانت مختومة في HEAD لا تُترك بختم بائت أو مفقود.
-    · وحدة قديمة لم تُختم بعد (المتراكم قبل البوابة) يجوز تصحيح نصّها — عربيًّا أو
-      إنجليزيًّا — دون ختم، **ما لم يُضف إليها إنجليزيٌّ جديد**: إصلاح تلفٍ طبي في
-      المصدر لا ينتظر حصّة نموذج، لكن نصًّا إنجليزيًّا جديدًا لا يدخل بلا مراجعة.
-      تبقى هذه الوحدات في `check` و`inventory` حتى تُختم.
-
-    (وُضعت بعد أن أغلق السقف الأسبوعي لـ Ollama Cloud المراجعة يوم 2026-10-04 وفي
-    الشجرة إصلاحات سلامة طبية — «احفظ الطعام بين 5 و60» — كانت البوابة ستحبسها.)
+    · ترجمة جديدة (غير موجودة في HEAD) تحتاج ختمًا صالحًا؛ الطابور لا يحملها.
+    · لا يُضاف إنجليزيٌّ جديد إلى وحدة غير مختومة — وإن كانت في الطابور.
+    · ختمٌ كان يصدق في HEAD لا يسقط إلا بقرارٍ مسجَّل: إدراجٌ في الطابور بسبب
+      (`queue --reason`)، يراه المراجع في الـdiff.
+    وما عدا ذلك يجوز تصحيحه دون ختم — إصلاح تلفٍ طبي في المصدر لا ينتظر حصّة
+    نموذج — لكن الوحدة تُعاد إلى الطابور ببصمة نصّها الجديد، وإلا أوقفها CI.
     """
-    bad = check_item(item)
-    if bad is None:
+    queue = load_queue() if queue is None else queue
+    if not item.published or not is_translation(item):
         return None
-    if read_stamp(item)[0]:
+    state, why = approval_state(item)
+    if state == "valid":
+        return None
+    if state == "invalid":
         # ختمٌ موجود لا يصدق على النص: لا يدخل أبدًا، أيًّا كان HEAD. (دخل واحدٌ
         # كذلك بعد إعادة الترتيب على #27: غيّر #27 العربي، فبطل ختمٌ كُتب قبله،
         # ومرّ لأن HEAD كان «متراكمًا» — والملف يدّعي مراجعةً لنصٍّ ليس نصّه.)
-        return bad
+        return why
     head = _head_en(item)
     if head is None:
-        return bad
-    if (head.get("translation") or {}).get("approved_by") and _head_stamp_holds(item, head):
-        return bad
+        return (NO_STAMP + " — and it is new: new English needs a review stamp "
+                "(the queue only holds English that was already live)")
     added = [p for p, v in item.fields.items()
              if get_leaf(head, p) in (None, "", []) and v["en"] not in (None, "", [])]
     if added:
         return ("adds English to a unit that has not passed review yet ("
                 + ", ".join(added[:3]) + ") — run the review first")
-    return None
+    held = check_item(item, queue)
+    if held is None:
+        return None
+    if (head.get("translation") or {}).get("approved_by") and _head_stamp_holds(item, head):
+        return ("drops a review stamp that held — re-review it, or record the demotion with a "
+                f"reason: `{TOOL_REL} queue --only {item.key} --reason …`")
+    return held
 
 
 def staged_paths() -> set[str] | None:
@@ -1556,16 +1817,27 @@ def cmd_check(kinds: list[str], staged: bool = False) -> int:
         print("\n⛔ self-tests فشلت — الفحص لاغٍ. صلّح الفحص لا تتخطّاه.")
         return 2
     items = collect(kinds)
+    queue = load_queue()
+    all_keys = {it.key for it in items}
     if staged:
-        # pre-commit: يُحاسَب الـcommit على ما يلمسه — ترجمةً أو مصدرًا. وحدة لم
-        # يلمسها لا تُوقفه (وإلا أوقف وكيلٌ واحد بملف بائت كلَّ من بعده)؛
-        # الصورة الكاملة في `check` بلا --staged وفي `inventory`.
+        # pre-commit: يُحاسَب الـcommit على ما يلمسه — ترجمةً أو مصدرًا أو إدراجًا في
+        # الطابور. وحدة لم يلمسها لا تُوقفه (وإلا أوقف وكيلٌ واحد بملف بائت كلَّ من
+        # بعده)؛ الصورة الكاملة في `check` بلا --staged (وهو ما يجري في CI).
         paths = staged_paths()
         if paths is not None:
-            items = [it for it in items if touched_by(it, paths)]
+            keys: set[str] = set()
+            if str(QUEUE.relative_to(ROOT)) in paths:
+                head_q = (_git_head_json(QUEUE) or {}).get("units") or {}
+                keys = {k for k in set(head_q) | set(queue) if head_q.get(k) != queue.get(k)}
+            items = [it for it in items if touched_by(it, paths) or it.key in keys]
             print(f"  (staged) وحدات يمسّها هذا الـcommit: {len(items)}")
-    judge = staged_check_item if staged else check_item
-    bad = [(it, why) for it in items if (why := judge(it))]
+    bad = [(it, why) for it in items
+           if (why := (staged_check_item(it, queue) if staged else check_item(it, queue)))]
+    for k, entry in queue.items():
+        why = queue_entry_problem(k, entry)
+        if why and (not staged or k in {it.key for it in items}):
+            print(f"  ❌ queue entry {k}: {why}")
+            bad.append((None, f"queue:{k}"))
     if STORIES_EN.exists() and STORIES_EN_MIRROR.exists() \
             and (not staged or any(it.kind == "stories" for it in items)) \
             and STORIES_EN.read_bytes() != STORIES_EN_MIRROR.read_bytes():
@@ -1575,6 +1847,20 @@ def cmd_check(kinds: list[str], staged: bool = False) -> int:
     for it in items:
         by_kind[it.kind] = by_kind.get(it.kind, 0) + 1
     print("  مفحوص: " + " · ".join(f"{k} {n}" for k, n in by_kind.items()))
+    held: dict[str, int] = {}
+    for it in items:
+        e = queue.get(it.key)
+        if e and approval_state(it)[0] == "none" and check_item(it, queue) is None \
+                and it.published and is_translation(it):
+            held[e["category"]] = held.get(e["category"], 0) + 1
+    if held:
+        print("  في الطابور (حيٌّ بلا ختم، مربوط ببصمة نصّه): "
+              + " · ".join(f"{c} {n}" for c, n in sorted(held.items())))
+    if not staged and set(kinds) == set(COLLECTORS):
+        orphans = sorted(k for k in queue if k not in all_keys)
+        if orphans:
+            print(f"  ⚠️ {len(orphans)} إدراجًا في الطابور لوحداتٍ لم تعد موجودة "
+                  f"(سُحبت؟): {', '.join(orphans[:6])} — `unqueue` ينظّفها")
     if bad:
         print(f"\n  ❌ {len(bad)} وحدة لم تجتز البوابة:")
         for it, why in bad[:40]:
@@ -1582,13 +1868,15 @@ def cmd_check(kinds: list[str], staged: bool = False) -> int:
                 print(f"     {it.key}  ({it.rel()}): {why}")
         if len(bad) > 40:
             print(f"     … و{len(bad) - 40} أخرى")
-        keys = ",".join(it.key for it, _ in bad[:20] if it is not None)
+        keys_s = ",".join(it.key for it, _ in bad[:20] if it is not None)
         print("\n  الإصلاح: راجِع واختم (يحتاج OLLAMA_API_KEY):")
-        print(f"     python3 {TOOL_REL} run --only {keys}")
+        print(f"     python3 {TOOL_REL} run --only {keys_s}")
         print("  أو اسحب الترجمة إن تعذّر توثيقها:")
         print(f"     python3 {TOOL_REL} unpublish --only <key> --reason '…'")
+        print("  أو — لإنجليزيٍّ كان حيًّا قبل هذا التعديل فقط — سجّل انتظاره بسبب:")
+        print(f"     python3 {TOOL_REL} queue --only <key> --reason '…'")
         return 1
-    print("  ✅ كل الإنجليزي المنشور مختوم، وكل ختم يطابق النص الحالي.")
+    print("  ✅ كل الإنجليزي المنشور مختوم وختمه يطابق نصّه، أو مُدرَج في الطابور بنصّه نفسه.")
     return 0
 
 
@@ -1598,20 +1886,26 @@ def cmd_check(kinds: list[str], staged: bool = False) -> int:
 
 def cmd_inventory(kinds: list[str]) -> None:
     items = collect(kinds)
+    queue = load_queue()
     rows: dict[str, dict] = {}
+    cols = ("units", "null", "queued", "src-hold", "stamped", "stale", "human")
     for it in items:
-        r = rows.setdefault(it.kind, {"units": 0, "null": 0, "stamped": 0, "stale": 0, "human": 0})
+        r = rows.setdefault(it.kind, dict.fromkeys(cols, 0))
         r["units"] += 1
         stamp, rec = read_stamp(it)
         if not stamp:
-            r["null"] += 1
+            e = queue.get(it.key)
+            if e and check_item(it, queue) is None:
+                r["src-hold" if e.get("category") == "source-unverified" else "queued"] += 1
+            else:
+                r["null"] += 1
         elif parse_stamp(stamp):
             r["stamped" if rec.get("content_sha256") == it.sha else "stale"] += 1
         else:
             r["human"] += 1
-    print(f"{'kind':12} {'units':>6} {'null':>6} {'stamped':>8} {'stale':>6} {'human':>6}")
+    print(f"{'kind':12} " + " ".join(f"{c:>8}" for c in cols))
     for k, r in rows.items():
-        print(f"{k:12} {r['units']:>6} {r['null']:>6} {r['stamped']:>8} {r['stale']:>6} {r['human']:>6}")
+        print(f"{k:12} " + " ".join(f"{r[c]:>8}" for c in cols))
     # الفجوة: مصادر عربية بلا نظير إنجليزي.
     print("\nArabic sources with no English counterpart:")
     for kind in ("lessons", "paths", "daily_tips"):
@@ -1685,6 +1979,9 @@ def cmd_unpublish(items: list[Item], reason: str, with_source: bool = False) -> 
             print(f"  ↩︎ {src.relative_to(ROOT)} → {dest.relative_to(ROOT)}")
     _dump(manifest_p, manifest)
     _drop_from_units_index(dropped_ids)
+    queue = load_queue()
+    if any(it.key in queue for it in items):
+        save_queue({k: v for k, v in queue.items() if k not in {it.key for it in items}})
 
 
 _AYAH_SPAN = re.compile(r"﴿[^﴾]*﴾")
@@ -1764,9 +2061,19 @@ def cmd_stamp_reviewed(items: list[Item], reviewer: str, notes_path: Path | None
     """
     notes = _load(notes_path) if notes_path else {}
     adj = load_adjudications()
+    queue = load_queue()
     today = date.today().isoformat()
     done = refused = 0
     for it in items:
+        why = _vouch_refusal(it, queue)
+        if not why:
+            # القاعدة كانت مكتوبة هنا ولا يفرضها شيء — فختم Claude ترجماتٍ كتبها
+            # Claude ممكنًا بأمرٍ واحد (مراجعة PR #20). الآن تُفرض بسجل الكتّاب.
+            why = family_conflict(it, (reviewer,), queue)
+        if why:
+            print(f"  ⛔ {it.key}: {why}")
+            refused += 1
+            continue
         overrides = adjudicated_for(it, adj)
         blocking = [d for d in deterministic_defects(it)
                     if not (d["type"] in OVERRIDABLE_DET and _matches_override(d, overrides))]
@@ -1778,11 +2085,109 @@ def cmd_stamp_reviewed(items: list[Item], reviewer: str, notes_path: Path | None
         rec["auto_review"]["prompt_version"] = f"manual:{PROMPT_V}"
         rec["auto_review"]["meaning"] = (
             "deterministic guards passed and one reviewer from a model family different from "
-            "the translator's read the Arabic and English side by side against the review "
-            "rubric and found no medium/high defect in this exact text; not a scholar's ijazah")
+            "every author of the English read the Arabic and English side by side against the "
+            "review rubric and found no medium/high defect in this exact text; certifies that "
+            "the English matches the Arabic, not that the Arabic is faithful to its own source; "
+            "not a scholar's ijazah")
         write_stamp(it, rec)
         done += 1
     print(f"  ✅ stamped {done} · refused {refused}")
+    return 0 if not refused else 1
+
+
+def _vouch_refusal(item: Item, queue: dict) -> str | None:
+    """ما يمنع أي ختمٍ أو توقيع: لا شيء يُختم بلا ترجمة، ولا عربيٌّ معلَّق التوثيق."""
+    if not is_translation(item):
+        return "nothing to vouch for — the English is empty or the Arabic verbatim"
+    held = queue.get(item.key) or {}
+    if held.get("category") == "source-unverified":
+        return ("source-unverified hold — the Arabic is not verified against its source; "
+                f"release it (`unqueue`) only after re-extraction: {held.get('reason', '')[:100]}")
+    return None
+
+
+def cmd_queue(items: list[Item], reason: str, category: str, authors: list[str]) -> int:
+    """يُدرج إنجليزيًّا حيًّا بلا ختم في الطابور، مربوطًا ببصمة نصّه الحالي، بسبب مكتوب.
+
+    ما يُدرَج لا يُشهد له: إن كان مختومًا يُسقط ختمه (الإدراج نفسه قرار «لا نشهد
+    له الآن»). ولا يُدرَج إنجليزيٌّ لم يكن حيًّا في HEAD — الطابور ليس طريقًا لنصٍّ
+    جديد يتخطّى المراجعة.
+    """
+    if not reason.strip():
+        sys.exit("❌ --reason مطلوب: إدراجٌ بلا سبب ختمٌ بلا اسم")
+    if category not in QUEUE_CATEGORIES:
+        sys.exit(f"❌ --category: {sorted(QUEUE_CATEGORIES)}")
+    queue = load_queue()
+    today = date.today().isoformat()
+    done = refused = 0
+    for it in items:
+        if not it.published or not is_translation(it):
+            print(f"  · {it.key}: unpublished or not a translation — nothing to hold")
+            continue
+        if _head_en(it) is None:
+            print(f"  ⛔ {it.key}: new English (not in HEAD) — review it; the queue holds live text only")
+            refused += 1
+            continue
+        if clear_stamp(it):
+            print(f"  ↓ {it.key}: stamp removed — the queue holds what is not vouched for")
+        prev = queue.get(it.key) or {}
+        names = list(prev.get("english_authors") or [])
+        for a in authors:
+            if a not in names:
+                names.append(a)
+        entry = {"category": category, "reason": reason.strip(), "content_sha256": it.sha,
+                 "queued_on": today}
+        if names:
+            entry["english_authors"] = names
+        queue[it.key] = entry
+        done += 1
+    save_queue(queue)
+    print(f"  ✅ queued {done} · refused {refused}")
+    return 0 if not refused else 1
+
+
+def cmd_unqueue(keys: list[str]) -> int:
+    """يرفع الإدراج (بعد مراجعةٍ أو إعادة استخراج، أو لوحدةٍ سُحبت). لا يختم شيئًا."""
+    queue = load_queue()
+    gone = [k for k in keys if queue.pop(k, None) is not None]
+    save_queue(queue)
+    print(f"  ✅ unqueued {len(gone)} of {len(keys)}")
+    return 0
+
+
+def cmd_sign(items: list[Item], by: str) -> int:
+    """توقيع إنسانٍ قرأ النصّين — بالبصمة نفسها التي يحملها الختم الآلي.
+
+    كان أي `approved_by` لا يبدأ بـ`auto-review:` يُقبل «توقيعًا بشريًّا» إلى الأبد،
+    ولو تغيّر النص بعده كله. الآن يُكتب بهذا الأمر وحده، ويبطل بأي تعديل.
+    """
+    by = (by or "").strip()
+    if not by or by.startswith(STAMP_PREFIX) or model_family(by):
+        sys.exit("❌ --by: اسم إنسانٍ قرأ النصّين — لا نموذج (النماذج تختم بـrun أو stamp-reviewed)")
+    queue = load_queue()
+    done = refused = 0
+    for it in items:
+        why = _vouch_refusal(it, queue)
+        bad = [d for d in deterministic_defects(it)]
+        if why or bad:
+            print(f"  ⛔ {it.key}: {why or bad[0]['type'] + '@' + bad[0]['field']}")
+            refused += 1
+            continue
+        doc = _load(it.en_file)
+        tr = _translation_block(it, doc)
+        tr["approved_by"] = by
+        tr["approval"] = {"by": by, "content_sha256": it.sha,
+                          "signed_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+                          "meaning": "a person read this exact Arabic and English side by side"}
+        tr.pop("auto_review", None)
+        _settle_queue_entry(it, tr)
+        if it.kind in CURRICULUM_FIELDS and isinstance(doc, dict) and "approved_by" in doc:
+            doc["approved_by"] = by
+        _dump(it.en_file, doc)
+        if it.kind == "stories":
+            shutil.copyfile(STORIES_EN, STORIES_EN_MIRROR)
+        done += 1
+    print(f"  ✅ signed {done} · refused {refused}")
     return 0 if not refused else 1
 
 
@@ -1791,10 +2196,10 @@ def cmd_stamp_reviewed(items: list[Item], reviewer: str, notes_path: Path | None
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[1])
     ap.add_argument("command", choices=("inventory", "check", "run", "unpublish", "apply-arabic",
-                                        "stamp-reviewed"))
+                                        "stamp-reviewed", "queue", "unqueue", "sign"))
     ap.add_argument("--kind", action="append", choices=sorted(COLLECTORS))
     ap.add_argument("--all", action="store_true")
-    ap.add_argument("--only", help="مفاتيح مفصولة بفواصل")
+    ap.add_argument("--only", help="مفاتيح مفصولة بفواصل، أو @ملف (سطر لكل مفتاح)")
     ap.add_argument("--limit", type=int)
     ap.add_argument("--unstamped", action="store_true", help="فقط ما لم يجتز البوابة بعد")
     ap.add_argument("--rounds", type=int, default=3)
@@ -1823,6 +2228,11 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--proposals", type=Path, help="apply-arabic: قائمة الإصلاحات المفحوصة")
     ap.add_argument("--reviewer", default=MANUAL_REVIEWER, help="stamp-reviewed: اسم المراجع")
     ap.add_argument("--notes", type=Path, help="stamp-reviewed: {key: [ملاحظات منخفضة]}")
+    ap.add_argument("--category", default="awaiting-review", choices=sorted(QUEUE_CATEGORIES),
+                    help="queue: نوع الانتظار")
+    ap.add_argument("--author", action="append", default=[],
+                    help="queue: كاتبٌ للإنجليزي لم يُسجَّل في ملفه (يتكرّر)")
+    ap.add_argument("--by", help="sign: اسم الإنسان الذي قرأ النصّين")
     args = ap.parse_args(argv)
 
     kinds = sorted(COLLECTORS) if (args.all or not args.kind) else args.kind
@@ -1836,9 +2246,17 @@ def main(argv: list[str] | None = None) -> int:
             sys.exit("❌ --proposals مطلوب")
         return cmd_apply_arabic(args.proposals)
 
+    wanted: set[str] = set()
+    if args.only:
+        raw = (Path(args.only[1:]).read_text(encoding="utf-8").splitlines()
+               if args.only.startswith("@") else args.only.split(","))
+        wanted = {k.strip() for k in raw if k.strip() and not k.strip().startswith("#")}
+    if args.command == "unqueue":
+        if not wanted:
+            sys.exit("❌ --only مطلوب")
+        return cmd_unqueue(sorted(wanted))
     items = collect(kinds)
     if args.only:
-        wanted = {k.strip() for k in args.only.split(",") if k.strip()}
         items = [it for it in items if it.key in wanted]
     if args.exclude:
         skip = {ln.strip() for ln in args.exclude.read_text(encoding="utf-8").splitlines()
@@ -1855,6 +2273,15 @@ def main(argv: list[str] | None = None) -> int:
         if not args.only:
             sys.exit("❌ --only مطلوب: يُختم ما رُوجع فعلًا، واحدًا واحدًا")
         return cmd_stamp_reviewed(items, args.reviewer, args.notes)
+    if args.command in ("queue", "sign"):
+        if not args.only:
+            sys.exit("❌ --only مطلوب")
+        missing = wanted - {it.key for it in items}
+        if missing:
+            sys.exit(f"❌ not found: {', '.join(sorted(missing)[:5])}")
+        if args.command == "sign":
+            return cmd_sign(items, args.by)
+        return cmd_queue(items, args.reason, args.category, args.author)
 
     set_concurrency(args.max_concurrent)
     global CACHE_ONLY
