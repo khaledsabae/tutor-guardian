@@ -6973,6 +6973,294 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'أهلًا {name}! هذا وقتك 🌟'**
   String childModeHandoff(String name);
+
+  /// No description provided for @todayStepTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'خطوة اليوم مع {name}'**
+  String todayStepTitle(String name);
+
+  /// No description provided for @todayStepTitleNoName.
+  ///
+  /// In ar, this message translates to:
+  /// **'خطوة اليوم مع طفلك'**
+  String get todayStepTitleNoName;
+
+  /// No description provided for @todayAskTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'اسأل المربّي'**
+  String get todayAskTitle;
+
+  /// No description provided for @todayAskBody.
+  ///
+  /// In ar, this message translates to:
+  /// **'اكتب ما يشغلك في تربية {name}، وسيجيبك المربّي.'**
+  String todayAskBody(String name);
+
+  /// No description provided for @todayAskBodyNoName.
+  ///
+  /// In ar, this message translates to:
+  /// **'اكتب ما يشغلك في تربية طفلك، وسيجيبك المربّي.'**
+  String get todayAskBodyNoName;
+
+  /// No description provided for @todayAskCta.
+  ///
+  /// In ar, this message translates to:
+  /// **'اكتب سؤالك'**
+  String get todayAskCta;
+
+  /// No description provided for @todayMissionTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'مهمة {name} اليوم'**
+  String todayMissionTitle(String name);
+
+  /// No description provided for @todayMissionTitleNoName.
+  ///
+  /// In ar, this message translates to:
+  /// **'مهمة الطفل اليوم'**
+  String get todayMissionTitleNoName;
+
+  /// No description provided for @todayMissionReady.
+  ///
+  /// In ar, this message translates to:
+  /// **'مهمة اليوم جاهزة: نشاط قصير بعيدًا عن الشاشة. سلّم الجهاز لـ{name} لقراءتها.'**
+  String todayMissionReady(String name);
+
+  /// No description provided for @todayMissionOpen.
+  ///
+  /// In ar, this message translates to:
+  /// **'افتح مهمة اليوم'**
+  String get todayMissionOpen;
+
+  /// No description provided for @todayDayTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'يوم {name}'**
+  String todayDayTitle(String name);
+
+  /// No description provided for @todayRoutineBody.
+  ///
+  /// In ar, this message translates to:
+  /// **'سجّل النوم والطعام في دقيقة، وتابع يوم {name}.'**
+  String todayRoutineBody(String name);
+
+  /// No description provided for @todayRoutineCta.
+  ///
+  /// In ar, this message translates to:
+  /// **'سجّل الآن'**
+  String get todayRoutineCta;
+
+  /// No description provided for @todayAddChildBody.
+  ///
+  /// In ar, this message translates to:
+  /// **'أضف طفلك ليصلك كل يوم ما يناسب عمره.'**
+  String get todayAddChildBody;
+
+  /// No description provided for @todayMoreTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'المزيد لك اليوم'**
+  String get todayMoreTitle;
+
+  /// No description provided for @todaySwitchChildHint.
+  ///
+  /// In ar, this message translates to:
+  /// **'اضغط للتبديل أو إضافة طفل آخر'**
+  String get todaySwitchChildHint;
+
+  /// No description provided for @todayPickChildHint.
+  ///
+  /// In ar, this message translates to:
+  /// **'اضغط لاختيار طفل أو إضافته لمتابعة مساره'**
+  String get todayPickChildHint;
+
+  /// No description provided for @inviteReachedTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'أجرك الجاري'**
+  String get inviteReachedTitle;
+
+  /// No description provided for @inviteReachedCount.
+  ///
+  /// In ar, this message translates to:
+  /// **'{count, plural, =1{وصل المربّي إلى أسرة واحدة بسببك} =2{وصل المربّي إلى أسرتين بسببك} few{وصل المربّي إلى {count} أسر بسببك} other{وصل المربّي إلى {count} أسرة بسببك}}'**
+  String inviteReachedCount(int count);
+
+  /// No description provided for @inviteReachedHint.
+  ///
+  /// In ar, this message translates to:
+  /// **'كلما انتفعت هذه الأسر بدرس أو نصيحة، نرجو أن يكون لك مثل أجرها 🤍'**
+  String get inviteReachedHint;
+
+  /// No description provided for @inviteReachedNone.
+  ///
+  /// In ar, this message translates to:
+  /// **'لم تصل دعوتك إلى أسرة بعد. شارك المربّي، ونرجو أن يكون لك مثل أجر كل أسرة تنتفع به.'**
+  String get inviteReachedNone;
+
+  /// No description provided for @inviteCoinsNote.
+  ///
+  /// In ar, this message translates to:
+  /// **'ومكافأة صغيرة داخل التطبيق: {coins} عملة لك ولصديقك.'**
+  String inviteCoinsNote(int coins);
+
+  /// No description provided for @inviteShareMessage.
+  ///
+  /// In ar, this message translates to:
+  /// **'جرّب «المربّي» معي 🤍 — تطبيق تربية إسلامي، مجاني تمامًا وبلا إعلانات.'**
+  String get inviteShareMessage;
+
+  /// No description provided for @inviteCardEyebrow.
+  ///
+  /// In ar, this message translates to:
+  /// **'دعوة لوجه الله'**
+  String get inviteCardEyebrow;
+
+  /// No description provided for @inviteCardHeadline.
+  ///
+  /// In ar, this message translates to:
+  /// **'جرّب «المربّي» معي'**
+  String get inviteCardHeadline;
+
+  /// No description provided for @inviteCardBody.
+  ///
+  /// In ar, this message translates to:
+  /// **'تطبيق تربية إسلامي يرافقك خطوة بخطوة — مجاني وبلا إعلانات.'**
+  String get inviteCardBody;
+
+  /// No description provided for @supportTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'ادعم المربّي'**
+  String get supportTitle;
+
+  /// No description provided for @supportIntro.
+  ///
+  /// In ar, this message translates to:
+  /// **'المربّي مجاني بالكامل، ولن تُقفَل فيه أي ميزة أبدًا. دعمك يغطي جزءًا من تكاليف تشغيله — الخوادم والذكاء الاصطناعي — ليبقى مجانيًا لكل أسرة.'**
+  String get supportIntro;
+
+  /// No description provided for @supportMonthCost.
+  ///
+  /// In ar, this message translates to:
+  /// **'تكلفة المربّي هذا الشهر: {amount}'**
+  String supportMonthCost(String amount);
+
+  /// No description provided for @supportCoveredPct.
+  ///
+  /// In ar, this message translates to:
+  /// **'غطّى الداعمون {pct}٪'**
+  String supportCoveredPct(int pct);
+
+  /// No description provided for @supportCoveredAmount.
+  ///
+  /// In ar, this message translates to:
+  /// **'قدّم الداعمون هذا الشهر {amount}'**
+  String supportCoveredAmount(String amount);
+
+  /// No description provided for @supportApproxNote.
+  ///
+  /// In ar, this message translates to:
+  /// **'الأرقام تقريبية: بعد رسوم Google والضرائب، ومحوّلة إلى الدولار بسعر تقريبي.'**
+  String get supportApproxNote;
+
+  /// No description provided for @supportCostServer.
+  ///
+  /// In ar, this message translates to:
+  /// **'الخوادم'**
+  String get supportCostServer;
+
+  /// No description provided for @supportCostAi.
+  ///
+  /// In ar, this message translates to:
+  /// **'الذكاء الاصطناعي'**
+  String get supportCostAi;
+
+  /// No description provided for @supportCostDomain.
+  ///
+  /// In ar, this message translates to:
+  /// **'النطاق والخدمات'**
+  String get supportCostDomain;
+
+  /// No description provided for @supportCostOther.
+  ///
+  /// In ar, this message translates to:
+  /// **'أخرى'**
+  String get supportCostOther;
+
+  /// No description provided for @supportChooseAmount.
+  ///
+  /// In ar, this message translates to:
+  /// **'اختر مبلغ الدعم'**
+  String get supportChooseAmount;
+
+  /// No description provided for @supportProductSmall.
+  ///
+  /// In ar, this message translates to:
+  /// **'دعم صغير'**
+  String get supportProductSmall;
+
+  /// No description provided for @supportProductMedium.
+  ///
+  /// In ar, this message translates to:
+  /// **'دعم متوسط'**
+  String get supportProductMedium;
+
+  /// No description provided for @supportProductLarge.
+  ///
+  /// In ar, this message translates to:
+  /// **'دعم كبير'**
+  String get supportProductLarge;
+
+  /// No description provided for @supportNoPerks.
+  ///
+  /// In ar, this message translates to:
+  /// **'الدعم لا يفتح أي ميزة ولا يمنح عملات أو أوسمة. الدفع عبر Google Play، ويمكنك الدعم أكثر من مرة.'**
+  String get supportNoPerks;
+
+  /// No description provided for @supportThanks.
+  ///
+  /// In ar, this message translates to:
+  /// **'جزاك الله خيرًا 🤍 وصل دعمك.'**
+  String get supportThanks;
+
+  /// No description provided for @supportPending.
+  ///
+  /// In ar, this message translates to:
+  /// **'الدفع قيد المعالجة، وسنؤكّده حين يكتمل.'**
+  String get supportPending;
+
+  /// No description provided for @supportRetryLater.
+  ///
+  /// In ar, this message translates to:
+  /// **'تمّ الدفع، وسنؤكّده في زيارتك القادمة.'**
+  String get supportRetryLater;
+
+  /// No description provided for @supportError.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعذّر إتمام الدفع. حاول مرة أخرى.'**
+  String get supportError;
+
+  /// No description provided for @supportStoreUnavailable.
+  ///
+  /// In ar, this message translates to:
+  /// **'متجر Google Play غير متاح على هذا الجهاز الآن.'**
+  String get supportStoreUnavailable;
+
+  /// No description provided for @supportHubTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'ادعم المربّي 🤍'**
+  String get supportHubTitle;
+
+  /// No description provided for @supportHubBody.
+  ///
+  /// In ar, this message translates to:
+  /// **'مجاني لكل أسرة — ساهم في تكاليف تشغيله'**
+  String get supportHubBody;
 }
 
 class _AppLocalizationsDelegate

@@ -24,10 +24,20 @@ class ReferralInfo {
     required this.code,
     required this.invitedCount,
     required this.shareUrl,
+    this.rewardCoins = 0,
   });
   final String code;
+
+  /// Families who installed through this parent's code and opened the app —
+  /// `invited_count` from `/api/referral/me`, which counts every recorded
+  /// claim (Play Install Referrer, or the web-landing fallback). Shown as
+  /// «وصل المربّي إلى N أسرة بسببك».
   final int invitedCount;
   final String shareUrl;
+
+  /// Coins each side earns. Secondary on purpose: the motive this audience
+  /// actually acts on is the reward, not the coins.
+  final int rewardCoins;
 }
 
 enum ClaimOutcome { success, alreadyClaimed, invalid, error }
@@ -122,6 +132,7 @@ class ReferralService {
         code: code,
         invitedCount: invited,
         shareUrl: (m['share_url'] as String?) ?? '',
+        rewardCoins: (m['reward_coins'] as num?)?.toInt() ?? 0,
       );
     } catch (_) {
       return null;

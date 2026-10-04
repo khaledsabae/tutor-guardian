@@ -1079,6 +1079,47 @@ class TgClient {
     return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
   }
 
+  /// `GET /api/support/transparency` (public) → `{enabled, month, cost_usd,
+  /// covered_usd, covered_pct, supports, breakdown, approximate}`.
+  /// Older servers 404 — callers treat any failure as "nothing to show".
+  Future<Map<String, dynamic>> fetchSupportTransparency() async {
+    return _guard(() async {
+      final resp = await _http
+          .get(Uri.parse('$_baseUrl/api/support/transparency'))
+          .timeout(AppConfig.httpTimeout);
+      if (resp.statusCode != 200) throw _wrap(resp);
+      return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
+    });
+  }
+
+  /// `POST /api/support/verify` (authed). The server checks the token with
+  /// Play, records it, and consumes it. Returns the body with `status` added:
+  /// 200 recorded · 202 still pending at Play. Throws [TgApiError] otherwise
+  /// (400 rejected, 503 retry later).
+  Future<Map<String, dynamic>> verifySupportPurchase({
+    required String productId,
+    required String purchaseToken,
+    int? priceMicros,
+    String? currency,
+  }) async {
+    return _guard(() async {
+      final session = await ensureSession();
+      final resp = await _http
+          .post(Uri.parse('$_baseUrl/api/support/verify'),
+              headers: _authHeaders(session.token),
+              body: jsonEncode({
+                'product_id': productId,
+                'purchase_token': purchaseToken,
+                'price_micros': ?priceMicros,
+                if (currency != null && currency.length == 3) 'currency': currency,
+              }))
+          .timeout(AppConfig.httpTimeout);
+      if (resp.statusCode != 200 && resp.statusCode != 202) throw _wrap(resp);
+      final body = jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
+      return {...body, 'status': resp.statusCode};
+    });
+  }
+
   /// `POST /api/referral/claim` (authed) → `{ok, already_claimed,
   /// reward_coins}`. Records this device as referred by [code].
   Future<Map<String, dynamic>> claimReferral(String code) async {
@@ -1609,8 +1650,14 @@ class TgClient {
     return _guard(() async {
       final session = await ensureSession();
       final offset = DateTime.now().timeZoneOffset.inMinutes;
+      // `lang` so the mission title reaches an English parent in English
+      // where the bank has a translation (the endpoint has accepted it since
+      // it shipped; this call never sent it).
       final uri = Uri.parse('$_baseUrl/api/children/$childId/today')
-          .replace(queryParameters: {'tz_offset_minutes': '$offset'});
+          .replace(queryParameters: {
+        'tz_offset_minutes': '$offset',
+        ..._langParam(),
+      });
       final resp = await _http
           .get(uri, headers: _authHeaders(session.token))
           .timeout(AppConfig.httpTimeout);

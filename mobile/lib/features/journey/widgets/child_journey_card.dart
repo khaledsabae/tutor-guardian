@@ -88,7 +88,8 @@ class ChildJourneyCard extends ConsumerWidget {
                   ],
                 ),
               ),
-              const Icon(Icons.chevron_left, color: Colors.white70),
+              // chevron_right mirrors to ‹ in Arabic — "open" in both directions.
+              const Icon(Icons.chevron_right, color: Colors.white70),
             ],
           ),
         ),

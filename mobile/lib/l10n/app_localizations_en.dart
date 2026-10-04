@@ -3923,4 +3923,192 @@ class AppLocalizationsEn extends AppLocalizations {
   String childModeHandoff(String name) {
     return 'Hi $name! This is your time 🌟';
   }
+
+  @override
+  String todayStepTitle(String name) {
+    return 'Today\'s step with $name';
+  }
+
+  @override
+  String get todayStepTitleNoName => 'Today\'s step with your child';
+
+  @override
+  String get todayAskTitle => 'Ask Al-Murabbi';
+
+  @override
+  String todayAskBody(String name) {
+    return 'Tell Al-Murabbi what\'s on your mind about raising $name.';
+  }
+
+  @override
+  String get todayAskBodyNoName =>
+      'Tell Al-Murabbi what\'s on your mind about raising your child.';
+
+  @override
+  String get todayAskCta => 'Ask your question';
+
+  @override
+  String todayMissionTitle(String name) {
+    return '$name\'s mission today';
+  }
+
+  @override
+  String get todayMissionTitleNoName => 'Your child\'s mission today';
+
+  @override
+  String todayMissionReady(String name) {
+    return 'Today\'s mission is ready: a short activity away from the screen. Hand the phone to $name to read it.';
+  }
+
+  @override
+  String get todayMissionOpen => 'Open today\'s mission';
+
+  @override
+  String todayDayTitle(String name) {
+    return '$name\'s day';
+  }
+
+  @override
+  String todayRoutineBody(String name) {
+    return 'Log sleep and meals in a minute, and follow $name\'s day.';
+  }
+
+  @override
+  String get todayRoutineCta => 'Log now';
+
+  @override
+  String get todayAddChildBody =>
+      'Add your child to get what fits their age, every day.';
+
+  @override
+  String get todayMoreTitle => 'More for today';
+
+  @override
+  String get todaySwitchChildHint => 'Tap to switch or add another child';
+
+  @override
+  String get todayPickChildHint =>
+      'Tap to choose or add a child and follow their path';
+
+  @override
+  String get inviteReachedTitle => 'Your ongoing reward';
+
+  @override
+  String inviteReachedCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count families reached through you',
+      one: '1 family reached through you',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get inviteReachedHint =>
+      'Whenever these families benefit from a lesson or a piece of advice, we hope you share in its reward 🤍';
+
+  @override
+  String get inviteReachedNone =>
+      'Your invitation hasn\'t reached a family yet. Share Al-Murabbi — we hope you share the reward of every family it helps.';
+
+  @override
+  String inviteCoinsNote(int coins) {
+    return 'And a small in-app thank-you: $coins coins for you and your friend.';
+  }
+
+  @override
+  String get inviteShareMessage =>
+      'Try Al-Murabbi with me 🤍 — an Islamic parenting app, completely free with no ads.';
+
+  @override
+  String get inviteCardEyebrow => 'An invitation, for the sake of Allah';
+
+  @override
+  String get inviteCardHeadline => 'Try Al-Murabbi with me';
+
+  @override
+  String get inviteCardBody =>
+      'An Islamic parenting app that walks with you step by step — free, with no ads.';
+
+  @override
+  String get supportTitle => 'Support Al-Murabbi';
+
+  @override
+  String get supportIntro =>
+      'Al-Murabbi is completely free, and no feature will ever be locked. Your support covers part of its running costs — servers and AI — so it stays free for every family.';
+
+  @override
+  String supportMonthCost(String amount) {
+    return 'Al-Murabbi\'s cost this month: $amount';
+  }
+
+  @override
+  String supportCoveredPct(int pct) {
+    return 'Supporters covered $pct%';
+  }
+
+  @override
+  String supportCoveredAmount(String amount) {
+    return 'Supporters gave $amount this month';
+  }
+
+  @override
+  String get supportApproxNote =>
+      'Approximate figures: after Google\'s fee and taxes, converted to USD at rough rates.';
+
+  @override
+  String get supportCostServer => 'Servers';
+
+  @override
+  String get supportCostAi => 'AI';
+
+  @override
+  String get supportCostDomain => 'Domain & services';
+
+  @override
+  String get supportCostOther => 'Other';
+
+  @override
+  String get supportChooseAmount => 'Choose an amount';
+
+  @override
+  String get supportProductSmall => 'Small support';
+
+  @override
+  String get supportProductMedium => 'Medium support';
+
+  @override
+  String get supportProductLarge => 'Large support';
+
+  @override
+  String get supportNoPerks =>
+      'Support unlocks nothing and gives no coins or badges. Payment is through Google Play, and you can support more than once.';
+
+  @override
+  String get supportThanks =>
+      'Thank you — may Allah reward you 🤍 Your support arrived.';
+
+  @override
+  String get supportPending =>
+      'Your payment is processing; we\'ll confirm it once it completes.';
+
+  @override
+  String get supportRetryLater =>
+      'Payment received — we\'ll confirm it on your next visit.';
+
+  @override
+  String get supportError =>
+      'The payment couldn\'t be completed. Please try again.';
+
+  @override
+  String get supportStoreUnavailable =>
+      'Google Play isn\'t available on this device right now.';
+
+  @override
+  String get supportHubTitle => 'Support Al-Murabbi 🤍';
+
+  @override
+  String get supportHubBody =>
+      'Free for every family — help cover its running costs';
 }

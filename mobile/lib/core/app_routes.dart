@@ -76,6 +76,7 @@ import '../features/tools/screens/tasbeeh_screen.dart';
 import '../features/tools/screens/hijri_converter_screen.dart';
 import '../features/adhkar/screens/adhkar_screen.dart';
 import '../features/referral/invite_screen.dart';
+import '../features/support/support_screen.dart';
 import '../features/routine/screens/child_mode_lock_screen.dart';
 import '../features/routine/screens/daily_routine_screen.dart';
 import '../features/routine/screens/habit_customize_screen.dart';
@@ -168,6 +169,7 @@ abstract final class Screens {
   static const settings = 'settings';
   static const identity = 'identity';
   static const invite = 'invite';
+  static const support = 'support';
   static const feedback = 'feedback';
   static const hub = 'hub';
 }
@@ -485,6 +487,11 @@ abstract final class AppRoutes {
 
   static Route<void> invite() =>
       _r(Screens.invite, (_) => const InviteScreen());
+
+  /// «ادعم المربّي». Only offered when the server flag is on and the store
+  /// returned the products — see `supportVisibleProvider`.
+  static Route<void> support() =>
+      _r(Screens.support, (_) => const SupportScreen());
 
   static Route<void> feedback() =>
       _r(Screens.feedback, (_) => const FeedbackScreen());

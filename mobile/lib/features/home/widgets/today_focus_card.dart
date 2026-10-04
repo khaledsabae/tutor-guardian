@@ -120,9 +120,13 @@ class TodayFocusCard extends ConsumerWidget {
               label: next == null ? l10n.browsePaths : l10n.startThisLesson,
               color: Dt.accent,
               onTap: next == null
-                  ? onStartFirstPath
+                  ? () {
+                      Analytics.todayBlockTapped('step', 'browse');
+                      onStartFirstPath();
+                    }
                   : () {
                       Analytics.homeCardTapped('focus_first_lesson');
+                      Analytics.todayBlockTapped('step', 'first_lesson');
                       Navigator.of(context).push(
                         AppRoutes.lesson(
                           next.lessonId,
@@ -137,7 +141,10 @@ class TodayFocusCard extends ConsumerWidget {
               Align(
                 alignment: AlignmentDirectional.centerStart,
                 child: TextButton(
-                  onPressed: onStartFirstPath,
+                  onPressed: () {
+                    Analytics.todayBlockTapped('step', 'browse');
+                    onStartFirstPath();
+                  },
                   child: Text(
                     l10n.browsePaths,
                     style: TextStyle(
@@ -236,9 +243,12 @@ class TodayFocusCard extends ConsumerWidget {
             label: l10n.continueBtn,
             color: Colors.white.withValues(alpha: .22),
             edgeColor: Colors.white.withValues(alpha: .35),
-            onTap: () => Navigator.of(context).push(
-              AppRoutes.pathDetail(resume!.id, ageGroup),
-            ),
+            onTap: () {
+              Analytics.todayBlockTapped('step', 'continue');
+              Navigator.of(context).push(
+                AppRoutes.pathDetail(resume!.id, ageGroup),
+              );
+            },
           ),
         ],
       ),

@@ -20,7 +20,16 @@ import '../../state/chat_notifier.dart' show tgClientProvider;
 import '../program/providers/progress_providers.dart' show activeChildIdProvider;
 
 class ChildDayCard extends ConsumerStatefulWidget {
-  const ChildDayCard({super.key});
+  const ChildDayCard({super.key, this.whenEmpty, this.onOpened});
+
+  /// Shown instead of nothing — while loading, when the backend cannot be
+  /// reached, and on a day with nothing to report. The «اليوم» tab passes the
+  /// block's call to action here, so «مهمة الطفل» always has something to do;
+  /// left null, the card keeps its old behaviour and simply hides.
+  final Widget? whenEmpty;
+
+  /// Called when the parent opens the full day from this card.
+  final VoidCallback? onOpened;
 
   @override
   ConsumerState<ChildDayCard> createState() => _ChildDayCardState();
@@ -45,8 +54,9 @@ class _ChildDayCardState extends ConsumerState<ChildDayCard> {
 
   @override
   Widget build(BuildContext context) {
+    final empty = widget.whenEmpty ?? const SizedBox.shrink();
     final childId = ref.watch(activeChildIdProvider);
-    if (childId == null) return const SizedBox.shrink();
+    if (childId == null) return empty;
     if (_loadedFor != childId) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (mounted && _loadedFor != childId) _load(childId);
@@ -54,7 +64,9 @@ class _ChildDayCardState extends ConsumerState<ChildDayCard> {
     }
 
     final day = _day;
-    if (_failed || day == null) return const SizedBox.shrink();
+    // A day loaded for the previous child is not this child's day.
+    if (_failed || day == null) return empty;
+    if (day['child_id'] != null && day['child_id'] != childId) return empty;
 
     final screen = day['screen'] as Map<String, dynamic>? ?? const {};
     final listening = day['listening'] as Map<String, dynamic>? ?? const {};
@@ -66,7 +78,7 @@ class _ChildDayCardState extends ConsumerState<ChildDayCard> {
     // Nothing happened today and nothing is pending: an empty card is noise on
     // the one screen that should stay calm.
     if (screenMin == 0 && audioMin == 0 && mission == null) {
-      return const SizedBox.shrink();
+      return empty;
     }
 
     final theme = Theme.of(context);
@@ -76,6 +88,7 @@ class _ChildDayCardState extends ConsumerState<ChildDayCard> {
       child: InkWell(
         borderRadius: BorderRadius.circular(12),
         onTap: () async {
+          widget.onOpened?.call();
           await Navigator.of(context).push(AppRoutes.parentDay());
           if (mounted) _load(childId);
         },

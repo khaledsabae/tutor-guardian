@@ -1,9 +1,21 @@
-/// «ادعُ صديقًا» — the dedicated referral surface (Phase 0.2).
+/// «أجرك الجاري» — the dedicated referral surface (Phase 0.2, reframed 2026-10).
 ///
-/// Framed as «صدقة جارية / دلالة على خير», not a marketing pitch. Shows the
-/// parent's referral code + how many parents they've already brought, a big
-/// WhatsApp-first share button, and a manual code-entry box for parents who
-/// heard about the app but didn't install through a link.
+/// Leads with what the parent's sharing has already done — «وصل المربّي إلى
+/// N أسرة بسببك» — because the motive this audience acts on is the ongoing
+/// reward of guiding a family to good, not the coins. The coins stay, one
+/// muted line at the bottom. Below the count: the share button (WhatsApp-first
+/// via the share sheet), the parent's code, and a box for entering a friend's
+/// code by hand.
+///
+/// No hadith is quoted here. The share card used to carry «الدالُّ على الخير
+/// كفاعله», which is not in al-Bukhari or Muslim; the reward is phrased as a
+/// hope («نرجو أن يكون لك مثل أجرها»), never as a citation.
+///
+/// TODO(hadith-numbering): the closely related «مَن دلَّ على خيرٍ فله مثلُ أجرِ
+/// فاعله» IS in Sahih Muslim (1893 in the common Abd al-Baqi numbering), but
+/// the pre-commit hadith guard's index numbers Muslim differently (Darussalam)
+/// and is being fixed separately. Once the guard accepts Abd al-Baqi numbers,
+/// this screen may quote it with book + number — not before.
 library;
 
 import 'package:flutter/material.dart';
@@ -60,25 +72,23 @@ class _InviteScreenState extends State<InviteScreen> {
     setState(() => _sharing = true);
     Analytics.inviteShared();
     try {
+      final l10n = AppLocalizations.of(context);
       final ok = await ShareService.shareMomentCard(
         fileTag: 'invite_${info.code}',
         referralCode: info.code,
-        message: 'جرّب «المربّي» معي 🤍 — تطبيق تربية إسلامي ذكي، '
-            'مجاني تمامًا بلا إعلانات. دلالة على الخير صدقة 🌿',
-        card: const ShareableMomentCard(
+        message: l10n.inviteShareMessage,
+        card: ShareableMomentCard(
           emoji: '🤍',
-          eyebrow: 'دعوة لوجه الله',
-          headline: 'جرّب «المربّي» معي',
-          body: 'تطبيق تربية إسلامي ذكي يجاوبك بثقة — مجاني بلا إعلانات.\n'
-              '«الدالُّ على الخير كفاعله»',
+          eyebrow: l10n.inviteCardEyebrow,
+          headline: l10n.inviteCardHeadline,
+          body: l10n.inviteCardBody,
           icon: Icons.favorite_outline,
         ),
       );
       if (!ok && mounted) {
         // Fallback: plain text share if image capture/share sheet fails.
         await ShareService.shareWhatsApp(
-          'جرّب «المربّي» معي 🤍 — تطبيق تربية إسلامي ذكي، '
-          'مجاني تمامًا بلا إعلانات. دلالة على الخير صدقة 🌿',
+          l10n.inviteShareMessage,
           referralCode: info.code,
         );
       }
@@ -112,8 +122,9 @@ class _InviteScreenState extends State<InviteScreen> {
   @override
   Widget build(BuildContext context) {
     final info = _info;
+    final l10n = AppLocalizations.of(context);
     return Scaffold(
-      appBar: AppBar(title: Text(AppLocalizations.of(context).inviteTitle)),
+      appBar: AppBar(title: Text(l10n.inviteReachedTitle)),
       body: _loading
           ? const LoadingView(count: 2, itemHeight: 160)
           : SingleChildScrollView(
@@ -121,8 +132,14 @@ class _InviteScreenState extends State<InviteScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
+                  // The count leads. Without it (offline) the screen still
+                  // works: description, share, code entry.
+                  if (info != null) ...[
+                    _reachedCard(info),
+                    const SizedBox(height: 20),
+                  ],
                   Text(
-                    AppLocalizations.of(context).inviteDesc,
+                    l10n.inviteDesc,
                     style: const TextStyle(fontSize: 15, height: 1.7),
                   ),
                   const SizedBox(height: 16),
@@ -131,22 +148,30 @@ class _InviteScreenState extends State<InviteScreen> {
                   // reader is already a user. It hides itself until the numbers
                   // are large enough to be persuasive.
                   const CommunityProofCard(),
-                  const SizedBox(height: 24),
-                  if (info != null) _codeCard(info),
-                  const SizedBox(height: 24),
+                  const SizedBox(height: 20),
                   FilledButton.icon(
                     onPressed: info == null || _sharing ? null : _share,
                     icon: const Icon(Icons.share),
-                    label: Text(_sharing ? AppLocalizations.of(context).inviteSharePreparing : AppLocalizations.of(context).inviteShareBtn),
+                    label: Text(_sharing ? l10n.inviteSharePreparing : l10n.inviteShareBtn),
                     style: FilledButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 16),
                       backgroundColor: AppTheme.primary,
                     ),
                   ),
+                  const SizedBox(height: 20),
+                  if (info != null) _codeCard(info),
+                  if (info != null && info.rewardCoins > 0) ...[
+                    const SizedBox(height: 12),
+                    Text(
+                      l10n.inviteCoinsNote(info.rewardCoins),
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 12, color: AppTheme.textMuted),
+                    ),
+                  ],
                   const SizedBox(height: 32),
                   const Divider(),
                   const SizedBox(height: 12),
-                  Text(AppLocalizations.of(context).inviteHaveCode,
+                  Text(l10n.inviteHaveCode,
                       style: const TextStyle(fontWeight: FontWeight.w700)),
                   const SizedBox(height: 8),
                   Row(
@@ -156,8 +181,7 @@ class _InviteScreenState extends State<InviteScreen> {
                           controller: _codeCtrl,
                           textCapitalization: TextCapitalization.characters,
                           decoration: InputDecoration(
-                            hintText:
-                                AppLocalizations.of(context).inviteCodeHint,
+                            hintText: l10n.inviteCodeHint,
                             border: const OutlineInputBorder(),
                             isDense: true,
                           ),
@@ -165,12 +189,66 @@ class _InviteScreenState extends State<InviteScreen> {
                       ),
                       const SizedBox(width: 8),
                       OutlinedButton(
-                          onPressed: _claim, child: Text(AppLocalizations.of(context).inviteActivate)),
+                          onPressed: _claim, child: Text(l10n.inviteActivate)),
                     ],
                   ),
                 ],
               ),
             ),
+    );
+  }
+
+  /// «وصل المربّي إلى N أسرة بسببك» — the reason to share, stated as a fact
+  /// about what sharing has already done.
+  Widget _reachedCard(ReferralInfo info) {
+    final l10n = AppLocalizations.of(context);
+    final n = info.invitedCount;
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: AppTheme.primary.withValues(alpha: 0.10),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: AppTheme.primary.withValues(alpha: 0.25)),
+      ),
+      child: Column(
+        children: [
+          if (n > 0)
+            Text(
+              '$n',
+              style: TextStyle(
+                fontSize: 44,
+                fontWeight: FontWeight.w900,
+                color: AppTheme.primary,
+                height: 1.1,
+              ),
+            )
+          else
+            const Text('🌱', style: TextStyle(fontSize: 36)),
+          const SizedBox(height: 8),
+          Text(
+            n > 0 ? l10n.inviteReachedCount(n) : l10n.inviteReachedNone,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: n > 0 ? 17 : 15,
+              fontWeight: n > 0 ? FontWeight.w800 : FontWeight.w600,
+              color: AppTheme.textPrimary,
+              height: 1.6,
+            ),
+          ),
+          if (n > 0) ...[
+            const SizedBox(height: 8),
+            Text(
+              l10n.inviteReachedHint,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 13,
+                color: AppTheme.textSecondary,
+                height: 1.6,
+              ),
+            ),
+          ],
+        ],
+      ),
     );
   }
 
@@ -220,14 +298,6 @@ class _InviteScreenState extends State<InviteScreen> {
             ),
           ),
         ),
-          if (info.invitedCount > 0) ...[
-            const SizedBox(height: 12),
-            Text(
-              AppLocalizations.of(context).inviteCodeUsed(info.invitedCount),
-              style: TextStyle(
-                  fontWeight: FontWeight.w600, color: AppTheme.primary),
-            ),
-          ],
         ],
       ),
     );

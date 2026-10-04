@@ -3873,4 +3873,187 @@ class AppLocalizationsAr extends AppLocalizations {
   String childModeHandoff(String name) {
     return 'أهلًا $name! هذا وقتك 🌟';
   }
+
+  @override
+  String todayStepTitle(String name) {
+    return 'خطوة اليوم مع $name';
+  }
+
+  @override
+  String get todayStepTitleNoName => 'خطوة اليوم مع طفلك';
+
+  @override
+  String get todayAskTitle => 'اسأل المربّي';
+
+  @override
+  String todayAskBody(String name) {
+    return 'اكتب ما يشغلك في تربية $name، وسيجيبك المربّي.';
+  }
+
+  @override
+  String get todayAskBodyNoName =>
+      'اكتب ما يشغلك في تربية طفلك، وسيجيبك المربّي.';
+
+  @override
+  String get todayAskCta => 'اكتب سؤالك';
+
+  @override
+  String todayMissionTitle(String name) {
+    return 'مهمة $name اليوم';
+  }
+
+  @override
+  String get todayMissionTitleNoName => 'مهمة الطفل اليوم';
+
+  @override
+  String todayMissionReady(String name) {
+    return 'مهمة اليوم جاهزة: نشاط قصير بعيدًا عن الشاشة. سلّم الجهاز لـ$name لقراءتها.';
+  }
+
+  @override
+  String get todayMissionOpen => 'افتح مهمة اليوم';
+
+  @override
+  String todayDayTitle(String name) {
+    return 'يوم $name';
+  }
+
+  @override
+  String todayRoutineBody(String name) {
+    return 'سجّل النوم والطعام في دقيقة، وتابع يوم $name.';
+  }
+
+  @override
+  String get todayRoutineCta => 'سجّل الآن';
+
+  @override
+  String get todayAddChildBody => 'أضف طفلك ليصلك كل يوم ما يناسب عمره.';
+
+  @override
+  String get todayMoreTitle => 'المزيد لك اليوم';
+
+  @override
+  String get todaySwitchChildHint => 'اضغط للتبديل أو إضافة طفل آخر';
+
+  @override
+  String get todayPickChildHint => 'اضغط لاختيار طفل أو إضافته لمتابعة مساره';
+
+  @override
+  String get inviteReachedTitle => 'أجرك الجاري';
+
+  @override
+  String inviteReachedCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'وصل المربّي إلى $count أسرة بسببك',
+      few: 'وصل المربّي إلى $count أسر بسببك',
+      two: 'وصل المربّي إلى أسرتين بسببك',
+      one: 'وصل المربّي إلى أسرة واحدة بسببك',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get inviteReachedHint =>
+      'كلما انتفعت هذه الأسر بدرس أو نصيحة، نرجو أن يكون لك مثل أجرها 🤍';
+
+  @override
+  String get inviteReachedNone =>
+      'لم تصل دعوتك إلى أسرة بعد. شارك المربّي، ونرجو أن يكون لك مثل أجر كل أسرة تنتفع به.';
+
+  @override
+  String inviteCoinsNote(int coins) {
+    return 'ومكافأة صغيرة داخل التطبيق: $coins عملة لك ولصديقك.';
+  }
+
+  @override
+  String get inviteShareMessage =>
+      'جرّب «المربّي» معي 🤍 — تطبيق تربية إسلامي، مجاني تمامًا وبلا إعلانات.';
+
+  @override
+  String get inviteCardEyebrow => 'دعوة لوجه الله';
+
+  @override
+  String get inviteCardHeadline => 'جرّب «المربّي» معي';
+
+  @override
+  String get inviteCardBody =>
+      'تطبيق تربية إسلامي يرافقك خطوة بخطوة — مجاني وبلا إعلانات.';
+
+  @override
+  String get supportTitle => 'ادعم المربّي';
+
+  @override
+  String get supportIntro =>
+      'المربّي مجاني بالكامل، ولن تُقفَل فيه أي ميزة أبدًا. دعمك يغطي جزءًا من تكاليف تشغيله — الخوادم والذكاء الاصطناعي — ليبقى مجانيًا لكل أسرة.';
+
+  @override
+  String supportMonthCost(String amount) {
+    return 'تكلفة المربّي هذا الشهر: $amount';
+  }
+
+  @override
+  String supportCoveredPct(int pct) {
+    return 'غطّى الداعمون $pct٪';
+  }
+
+  @override
+  String supportCoveredAmount(String amount) {
+    return 'قدّم الداعمون هذا الشهر $amount';
+  }
+
+  @override
+  String get supportApproxNote =>
+      'الأرقام تقريبية: بعد رسوم Google والضرائب، ومحوّلة إلى الدولار بسعر تقريبي.';
+
+  @override
+  String get supportCostServer => 'الخوادم';
+
+  @override
+  String get supportCostAi => 'الذكاء الاصطناعي';
+
+  @override
+  String get supportCostDomain => 'النطاق والخدمات';
+
+  @override
+  String get supportCostOther => 'أخرى';
+
+  @override
+  String get supportChooseAmount => 'اختر مبلغ الدعم';
+
+  @override
+  String get supportProductSmall => 'دعم صغير';
+
+  @override
+  String get supportProductMedium => 'دعم متوسط';
+
+  @override
+  String get supportProductLarge => 'دعم كبير';
+
+  @override
+  String get supportNoPerks =>
+      'الدعم لا يفتح أي ميزة ولا يمنح عملات أو أوسمة. الدفع عبر Google Play، ويمكنك الدعم أكثر من مرة.';
+
+  @override
+  String get supportThanks => 'جزاك الله خيرًا 🤍 وصل دعمك.';
+
+  @override
+  String get supportPending => 'الدفع قيد المعالجة، وسنؤكّده حين يكتمل.';
+
+  @override
+  String get supportRetryLater => 'تمّ الدفع، وسنؤكّده في زيارتك القادمة.';
+
+  @override
+  String get supportError => 'تعذّر إتمام الدفع. حاول مرة أخرى.';
+
+  @override
+  String get supportStoreUnavailable =>
+      'متجر Google Play غير متاح على هذا الجهاز الآن.';
+
+  @override
+  String get supportHubTitle => 'ادعم المربّي 🤍';
+
+  @override
+  String get supportHubBody => 'مجاني لكل أسرة — ساهم في تكاليف تشغيله';
 }
