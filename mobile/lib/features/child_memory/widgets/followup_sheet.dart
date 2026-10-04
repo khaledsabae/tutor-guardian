@@ -223,6 +223,11 @@ class _FollowupSheetState extends ConsumerState<FollowupSheet> {
       content = const SizedBox.shrink();
     } else if (!_followup!.isPending) {
       content = _Closed(followup: _followup!);
+    } else if (ref.watch(memorySettingsProvider).valueOrNull?.enabled ==
+        false) {
+      // Memory is off: the loop is paused. No answer is offered that memory
+      // would then keep — and a push sent before the switch can still land.
+      content = _MemoryOff(followup: _followup!);
     } else {
       content = _Ask(
         followup: _followup!,
@@ -277,7 +282,10 @@ class _Ask extends ConsumerWidget {
     final colors = context.colors;
     final who = _who(ref, followup.childId);
     final strategy = renderMemoryText(followup.strategy,
-        childName: who.name, family: who.family);
+        childName: who.name,
+        family: who.family,
+        subjectId: followup.childId,
+        lang: followup.lang);
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -347,6 +355,45 @@ class _Ask extends ConsumerWidget {
   }
 }
 
+class _MemoryOff extends ConsumerWidget {
+  const _MemoryOff({required this.followup});
+
+  final Followup followup;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
+    final colors = context.colors;
+    final who = _who(ref, followup.childId);
+    final strategy = renderMemoryText(followup.strategy,
+        childName: who.name,
+        family: who.family,
+        subjectId: followup.childId,
+        lang: followup.lang);
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Text(
+          strategy,
+          textDirection: ContentDirectionality.resolve(
+              text: strategy, fallback: Directionality.of(context)),
+          style: TextStyle(color: colors.ink, fontSize: 15, height: 1.5),
+        ),
+        const SizedBox(height: 12),
+        Text(l10n.followupMemoryOff,
+            style: TextStyle(
+                color: colors.textSecondary, fontSize: 13.5, height: 1.6)),
+        const SizedBox(height: 16),
+        OutlinedButton(
+          onPressed: () => Navigator.of(context).maybePop(),
+          child: Text(l10n.close),
+        ),
+      ],
+    );
+  }
+}
+
 class _Thanks extends StatelessWidget {
   const _Thanks({required this.answer});
 
@@ -406,7 +453,10 @@ class _Closed extends ConsumerWidget {
     final colors = context.colors;
     final who = _who(ref, followup.childId);
     final strategy = renderMemoryText(followup.strategy,
-        childName: who.name, family: who.family);
+        childName: who.name,
+        family: who.family,
+        subjectId: followup.childId,
+        lang: followup.lang);
     final result = switch (followup.status) {
       'answered' => l10n.followupAnsweredResult(
           outcomeLabel(l10n, followup.outcome ?? FollowupOutcome.didntTry)),

@@ -88,6 +88,26 @@ class IdentityService {
     Analytics.identityUnlinked();
   }
 
+  /// Link this phone to its Google account again, silently (no account
+  /// picker), from the CURRENT session. Called by account deletion right
+  /// after the device proof: a link made before this build — or by a session
+  /// that had not proven — is unconfirmed, and a deletion follows only
+  /// confirmed links (§10), so the Google record and its backups would be
+  /// kept. The server upgrades the link to confirmed when a proven session
+  /// links the same account again (identity.py keeps the higher of the two).
+  /// False when it could not be done; never throws.
+  Future<bool> relinkSilently() async {
+    if (_serverClientId.isEmpty) return false;
+    try {
+      final account = await _googleSignIn.signInSilently();
+      if (account == null) return false;
+      await _link(account);
+      return true;
+    } catch (_) {
+      return false;
+    }
+  }
+
   /// The account was deleted (MOBILE_API §10): sign out of Google in the app
   /// so the next launch does not silently re-link a fresh install to it. The
   /// server already erased the link; nothing is sent.

@@ -16,6 +16,7 @@
 library;
 
 import '../../../api/tg_client.dart';
+import '../../../l10n/l10n_global.dart';
 import 'memory_models.dart';
 
 class MemoryRepository {
@@ -133,4 +134,30 @@ class MemoryRepository {
   Future<AccountDeletionResult> deleteAccount() async =>
       AccountDeletionResult.fromJson(
           await _client.withDeviceProof(() => _client.deleteAccount()));
+
+  /// Where an account deletion stands on this phone (null: none pending).
+  Future<String?> deletionState() => _client.accountDeletionState();
+
+  /// "Check again" after a deletion whose answer was lost: the deletion's
+  /// result (scope unknown) when the account is gone, null when nothing was
+  /// deleted, or `account_deletion_unconfirmed` when that still cannot be
+  /// told.
+  Future<AccountDeletionResult?> resolvePendingDeletion() async {
+    final state = await _client.accountDeletionState();
+    if (state == null) return null;
+    if (state == kAccountDeletionConfirmed) {
+      return const AccountDeletionResult.scopeUnknown();
+    }
+    final deleted = await _client.probeAccountDeleted();
+    if (deleted == true) {
+      await _client.startOverAfterAccountDeletion();
+      return const AccountDeletionResult.scopeUnknown();
+    }
+    if (deleted == false) {
+      await _client.clearAccountDeletionState();
+      return null;
+    }
+    throw TgApiError(null, AppL10n.current.deleteAccountUnconfirmed,
+        code: 'account_deletion_unconfirmed');
+  }
 }

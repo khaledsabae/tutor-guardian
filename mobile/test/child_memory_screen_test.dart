@@ -107,7 +107,8 @@ void main() {
     await settle(tester);
     expect(server.lastPatch, {'category': 'challenge'});
 
-    // 2. New words go back as typed (the server re-redacts names).
+    // 2. New words go back — but never the name the app put in: it is the
+    // placeholder again (PR #36 review, item 2).
     await _openMenu(tester, 'أحمد يخاف من الظلام');
     await tester.tap(find.text('تعديل').last);
     await settle(tester);
@@ -115,7 +116,7 @@ void main() {
     await tester.pump();
     await tester.tap(find.text('حفظ'));
     await settle(tester);
-    expect(server.lastPatch, {'fact': 'أحمد يخاف من الظلام قليلًا'});
+    expect(server.lastPatch, {'fact': 'طفلي يخاف من الظلام قليلًا'});
   });
 
   testWidgets('reject and delete one fact', (tester) async {

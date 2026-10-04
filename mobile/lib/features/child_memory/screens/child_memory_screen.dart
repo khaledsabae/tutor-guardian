@@ -16,6 +16,7 @@
 library;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../api/tg_client.dart';
@@ -78,24 +79,26 @@ class _ChildMemoryScreenState extends ConsumerState<ChildMemoryScreen> {
     }
   }
 
-  Future<void> _editFact(MemoryFact fact, String shown, int maxChars) async {
+  Future<void> _editFact(
+      MemoryFact fact, RenderedMemoryText shown, int maxChars) async {
     final result = await showFactEditSheet(
       context,
       maxChars: maxChars,
-      initialText: shown,
+      original: shown,
       initialCategory: fact.category,
     );
     if (result == null || !mounted) return;
-    final textChanged = result.text.trim() != shown.trim();
+    // Both in the stored form: the names the app put in are placeholders
+    // again (RenderedMemoryText.restore), so an untouched text compares equal
+    // and a touched one goes back without the names the app inserted.
+    final textChanged = result.text != fact.fact.trim();
     final categoryChanged = result.category != fact.category;
     if (!textChanged && !categoryChanged) return;
     final repo = ref.read(memoryRepositoryProvider);
     await _change(() => repo.updateFact(
           widget.childId,
           fact.id,
-          // The swapped-in name is for display only: the words go back only
-          // when the parent actually changed them (the server re-redacts).
-          fact: textChanged ? result.text.trim() : null,
+          fact: textChanged ? result.text : null,
           category: categoryChanged ? result.category : null,
         ));
   }
@@ -105,7 +108,7 @@ class _ChildMemoryScreenState extends ConsumerState<ChildMemoryScreen> {
     if (result == null || !mounted) return;
     final repo = ref.read(memoryRepositoryProvider);
     await _change(() => repo.addFact(widget.childId,
-        category: result.category, fact: result.text.trim()));
+        category: result.category, fact: result.text));
   }
 
   Future<void> _setStatus(MemoryFact fact, String status) async {
@@ -287,13 +290,13 @@ class _MemoryList extends StatelessWidget {
   final int childId;
   final ValueChanged<MemoryFact> onConfirm;
   final ValueChanged<MemoryFact> onReject;
-  final void Function(MemoryFact fact, String shown) onEdit;
+  final void Function(MemoryFact fact, RenderedMemoryText shown) onEdit;
   final ValueChanged<MemoryFact> onDelete;
   final VoidCallback onAdd;
   final VoidCallback onForget;
 
-  String _shown(MemoryFact f) =>
-      renderMemoryText(f.fact, childName: childName, family: family);
+  RenderedMemoryText _shown(MemoryFact f) => renderMemory(f.fact,
+      childName: childName, family: family, subjectId: childId, lang: f.lang);
 
   @override
   Widget build(BuildContext context) {
@@ -319,7 +322,7 @@ class _MemoryList extends StatelessWidget {
           ),
           for (final f in pending)
             _PendingFactCard(
-              text: _shown(f),
+              text: _shown(f).text,
               lang: f.lang,
               onConfirm: () => onConfirm(f),
               onReject: () => onReject(f),
@@ -334,7 +337,7 @@ class _MemoryList extends StatelessWidget {
             for (final f in entry.value)
               _FactTile(
                 fact: f,
-                shown: _shown(f),
+                shown: _shown(f).text,
                 onEdit: () => onEdit(f, _shown(f)),
                 onReject: () => onReject(f),
                 onDelete: () => onDelete(f),
@@ -638,11 +641,13 @@ class _NeverKeptFooter extends StatelessWidget {
   }
 }
 
-/// The add/edit sheet. Resolves to the text and category, or null.
+/// The add/edit sheet. Resolves to the text — in the STORED form, with the
+/// names the app put in turned back into their placeholders — and the
+/// category; or null.
 Future<({String text, String category})?> showFactEditSheet(
   BuildContext context, {
   required int maxChars,
-  String? initialText,
+  RenderedMemoryText? original,
   String? initialCategory,
 }) {
   return showModalBottomSheet<({String text, String category})>(
@@ -651,7 +656,7 @@ Future<({String text, String category})?> showFactEditSheet(
     showDragHandle: true,
     builder: (_) => _FactEditSheet(
       maxChars: maxChars,
-      initialText: initialText,
+      original: original,
       initialCategory: initialCategory,
     ),
   );
@@ -660,12 +665,14 @@ Future<({String text, String category})?> showFactEditSheet(
 class _FactEditSheet extends StatefulWidget {
   const _FactEditSheet({
     required this.maxChars,
-    this.initialText,
+    this.original,
     this.initialCategory,
   });
 
   final int maxChars;
-  final String? initialText;
+
+  /// The fact being edited, as shown (null: adding a new one).
+  final RenderedMemoryText? original;
   final String? initialCategory;
 
   @override
@@ -674,7 +681,12 @@ class _FactEditSheet extends StatefulWidget {
 
 class _FactEditSheetState extends State<_FactEditSheet> {
   late final TextEditingController _text =
-      TextEditingController(text: widget.initialText ?? '');
+      TextEditingController(text: widget.original?.text ?? '');
+
+  /// What would be stored: the limit is the server's, on the stored form —
+  /// «طفلي» is four characters whatever the child's name is.
+  String get _stored =>
+      (widget.original?.restore(_text.text) ?? _text.text).trim();
   late String _category = widget.initialCategory ?? FactCategory.other;
 
   @override
@@ -692,9 +704,9 @@ class _FactEditSheetState extends State<_FactEditSheet> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    final editing = widget.initialText != null;
-    final canSave = _text.text.trim().isNotEmpty &&
-        _text.text.trim().length <= widget.maxChars;
+    final editing = widget.original != null;
+    final stored = _stored;
+    final canSave = stored.isNotEmpty && stored.length <= widget.maxChars;
     return Padding(
       padding: EdgeInsets.fromLTRB(
           20, 0, 20, 20 + MediaQuery.viewInsetsOf(context).bottom),
@@ -728,15 +740,25 @@ class _FactEditSheetState extends State<_FactEditSheet> {
               autofocus: !editing,
               minLines: 2,
               maxLines: 4,
-              maxLength: widget.maxChars,
+              // A generous cap on the field; the real limit is on what is
+              // stored, and the counter shows that.
+              inputFormatters: [
+                LengthLimitingTextInputFormatter(widget.maxChars * 2),
+              ],
               textInputAction: TextInputAction.done,
-              decoration: InputDecoration(hintText: l10n.memoryFactHint),
+              decoration: InputDecoration(
+                hintText: l10n.memoryFactHint,
+                counterText: '${stored.length}/${widget.maxChars}',
+                errorText: stored.length > widget.maxChars
+                    ? l10n.memoryFactTooLong(widget.maxChars)
+                    : null,
+              ),
             ),
             const SizedBox(height: 8),
             FilledButton(
               onPressed: canSave
                   ? () => Navigator.of(context)
-                      .pop((text: _text.text, category: _category))
+                      .pop((text: stored, category: _category))
                   : null,
               child: Text(l10n.save),
             ),

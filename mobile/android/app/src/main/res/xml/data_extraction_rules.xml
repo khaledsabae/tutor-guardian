@@ -10,12 +10,16 @@
                       copy of a child's recordings onto new hardware.
 -->
 <data-extraction-rules>
+    <!-- NarrationStore's folder is <data dir>/app_flutter/narrations — the
+         "root" domain (see backup_rules.xml for why "file" alone missed it). -->
     <cloud-backup>
+        <exclude domain="root" path="app_flutter/narrations/" />
         <exclude domain="file" path="narrations/" />
         <exclude domain="sharedpref" path="FlutterSecureStorage.xml" />
         <exclude domain="sharedpref" path="FlutterSecureKeyStorage.xml" />
     </cloud-backup>
     <device-transfer>
+        <exclude domain="root" path="app_flutter/narrations/" />
         <exclude domain="file" path="narrations/" />
         <exclude domain="sharedpref" path="FlutterSecureStorage.xml" />
         <exclude domain="sharedpref" path="FlutterSecureKeyStorage.xml" />

@@ -429,7 +429,16 @@ class AccountDeletionResult {
     required this.devices,
     required this.signedIn,
     this.deletedAt,
+    this.scopeKnown = true,
   });
+
+  /// The deletion was confirmed, but its answer was lost: only the old token
+  /// being refused says it happened, so how far it reached is not known.
+  const AccountDeletionResult.scopeUnknown()
+      : devices = 1,
+        signedIn = false,
+        deletedAt = null,
+        scopeKnown = false;
 
   /// How many devices were erased (this one included).
   final int devices;
@@ -438,10 +447,16 @@ class AccountDeletionResult {
   final bool signedIn;
   final DateTime? deletedAt;
 
+  /// False when [devices] and [signedIn] are not the server's answer — the
+  /// screen then claims nothing about other phones or the Google record.
+  final bool scopeKnown;
+
   factory AccountDeletionResult.fromJson(Map<String, dynamic> j) =>
-      AccountDeletionResult(
-        devices: _int(j['devices']) ?? 1,
-        signedIn: j['signed_in'] == true,
-        deletedAt: parseServerTime(j['deleted_at']),
-      );
+      j.containsKey('devices')
+          ? AccountDeletionResult(
+              devices: _int(j['devices']) ?? 1,
+              signedIn: j['signed_in'] == true,
+              deletedAt: parseServerTime(j['deleted_at']),
+            )
+          : const AccountDeletionResult.scopeUnknown();
 }

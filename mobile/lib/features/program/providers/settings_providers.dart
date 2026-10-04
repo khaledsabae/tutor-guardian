@@ -15,6 +15,8 @@ library;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../state/chat_notifier.dart';
+import '../../child_memory/providers/memory_providers.dart'
+    show childMemoryProvider, dueFollowupsProvider, weeklyPlanProvider;
 import '../../onboarding/providers/onboarding_providers.dart';
 import '../data/progress_models.dart';
 import '../data/settings_repository.dart';
@@ -143,6 +145,14 @@ class DeleteChildNotifier extends AutoDisposeAsyncNotifier<bool?> {
       final repo = ref.read(settingsRepositoryProvider);
       final ok = await repo.deleteChild(childId);
       ref.invalidate(childrenListProvider);
+      // What was keyed by the child goes with it: its due follow-ups (the
+      // Today card would keep offering one for a child that is gone), its
+      // weekly plan and its memory — and the sibling letters, which are
+      // positional, are re-read with the list above.
+      ref
+        ..invalidate(dueFollowupsProvider)
+        ..invalidate(weeklyPlanProvider)
+        ..invalidate(childMemoryProvider);
       if (ok) await _repointActiveChild(childId);
       state = AsyncValue.data(ok);
       return ok;

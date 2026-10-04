@@ -18,7 +18,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:almorabbi/api/tg_client.dart';
 import 'package:almorabbi/features/child_memory/data/local_wipe.dart';
 import 'package:almorabbi/features/child_memory/data/memory_models.dart';
 import 'package:almorabbi/features/child_memory/screens/account_deletion_screen.dart';
@@ -29,10 +28,15 @@ import 'memory_fakes.dart';
 
 class _Steps {
   int wipes = 0;
+  int relinks = 0;
   bool linked = false;
   AccountDeletionSteps get steps => AccountDeletionSteps(
         wipeLocal: () async => wipes++,
         wasLinkedToGoogle: () async => linked,
+        relinkGoogle: () async {
+          relinks++;
+          return true;
+        },
       );
 }
 
@@ -157,11 +161,13 @@ void main() {
     expect(deleteAccountPageUri.path, '/delete-account');
   });
 
-  testWidgets('a server error: nothing was deleted, try again',
+  testWidgets('a server error proven harmless: nothing was deleted, try again',
       (tester) async {
+    // TgClient answers `account_not_deleted` only after the old token was
+    // shown to still work (pr36_review_fixes_test pins that part).
     final server = FakeMemoryServer()
       ..proven = true
-      ..deletionError = const TgApiError(500, 'boom');
+      ..deletionError = coded(502, 'account_not_deleted');
     final steps = await _pumpDeletion(tester, server);
     await _confirmDeletion(tester);
     await settle(tester);
@@ -187,7 +193,9 @@ void main() {
     await _confirmDeletion(tester);
     await settle(tester);
     expect(find.textContaining('(العدد: 2)'), findsOneWidget);
-    expect(find.textContaining('دون تحقق لم تُحذف'), findsOneWidget);
+    // Linked, but the deletion did not reach the Google record: say so.
+    expect(find.textContaining('أبقينا سجلّ حسابك في Google ونسخه الاحتياطية'),
+        findsOneWidget);
   });
 
   testWidgets('the deleted page: back and the button both close the app',

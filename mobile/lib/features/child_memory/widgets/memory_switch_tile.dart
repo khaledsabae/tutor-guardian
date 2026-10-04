@@ -42,7 +42,10 @@ class _MemorySwitchTileState extends ConsumerState<MemorySwitchTile> {
     final container = ProviderScope.containerOf(context, listen: false);
     try {
       await container.read(memoryRepositoryProvider).setEnabled(enabled);
-      container.invalidate(memorySettingsProvider);
+      container
+        ..invalidate(memorySettingsProvider)
+        // The Today follow-up card follows the switch (hidden while off).
+        ..invalidate(dueFollowupsProvider);
       // Switching on proved this session: the facts can load now. Switching
       // off must not reload anything that needs a proof — it would start a
       // challenge the parent did not ask for.

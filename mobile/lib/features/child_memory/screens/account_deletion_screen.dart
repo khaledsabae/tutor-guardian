@@ -13,18 +13,28 @@
 ///     and the public deletion page.
 /// After the server answers 200 the client has already become a new device;
 /// this screen clears the phone and ends on a page whose only way out is
-/// closing the app — the next launch starts fresh.
+/// closing the app — for real (MainActivity.finishAndRemoveTask), so the next
+/// launch starts fresh.
+///
+/// PR #36 review:
+///   * item 3 — a phone signed in with Google is linked again from the proven
+///     session before the deletion, so the link is a confirmed one and the
+///     deletion reaches the Google record and its backups; if the server
+///     still says it did not, the result page says what was kept;
+///   * item 4 — an answer that never arrived is not "nothing was deleted":
+///     the old token is asked (TgClient.deleteAccount), and when even that
+///     cannot tell, the screen says so and offers to check again.
 library;
 
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../api/tg_client.dart';
 import '../../../config/app_config.dart';
+import '../../../core/app_closer.dart';
 import '../../../core/app_routes.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../theme/app_colors.dart';
@@ -40,13 +50,23 @@ import '../widgets/proof_views.dart';
 /// "Delete account URL").
 Uri get deleteAccountPageUri => Uri.parse('${AppConfig.apiBaseUrl}/delete-account');
 
-enum _Phase { loading, unavailable, paused, ready, proving, deleting, failed }
+enum _Phase {
+  loading,
+  unavailable,
+  paused,
+  ready,
+  proving,
+  deleting,
+  unconfirmed,
+  failed,
+}
 
 /// The steps a deletion runs, injectable so tests need no plugins.
 class AccountDeletionSteps {
   const AccountDeletionSteps({
     this.wipeLocal = wipeLocalDataAfterAccountDeletion,
     this.wasLinkedToGoogle = _linkedLocally,
+    this.relinkGoogle = _relink,
   });
 
   /// Clears the phone after the server deleted the account.
@@ -55,7 +75,12 @@ class AccountDeletionSteps {
   /// Whether this phone believed it was signed in with Google.
   final Future<bool> Function() wasLinkedToGoogle;
 
+  /// Links this phone to its Google account again from the current — just
+  /// proven — session, so the link is confirmed. False when it could not.
+  final Future<bool> Function() relinkGoogle;
+
   static Future<bool> _linkedLocally() => IdentityService.instance.isLinked;
+  static Future<bool> _relink() => IdentityService.instance.relinkSilently();
 }
 
 final accountDeletionStepsProvider =
@@ -75,6 +100,9 @@ class _AccountDeletionScreenState extends ConsumerState<AccountDeletionScreen> {
   Object? _error;
   bool _understood = false;
 
+  /// Read once, before anything can clear it: decides a line of the result.
+  bool _wasLinked = false;
+
   @override
   void initState() {
     super.initState();
@@ -86,8 +114,20 @@ class _AccountDeletionScreenState extends ConsumerState<AccountDeletionScreen> {
       _phase = _Phase.loading;
       _error = null;
     });
+    final repo = ref.read(memoryRepositoryProvider);
+    final steps = ref.read(accountDeletionStepsProvider);
     try {
-      final status = await ref.read(memoryRepositoryProvider).proofStatus();
+      _wasLinked = await steps.wasLinkedToGoogle();
+    } catch (_) {}
+    // A deletion of this session that was never settled comes first: the
+    // screen must not offer to delete what may already be gone.
+    if (await repo.deletionState() != null) {
+      if (!mounted) return;
+      await _checkAgain();
+      return;
+    }
+    try {
+      final status = await repo.proofStatus();
       if (!mounted) return;
       final until = status?.deletionPausedUntil;
       setState(() {
@@ -135,7 +175,6 @@ class _AccountDeletionScreenState extends ConsumerState<AccountDeletionScreen> {
     final repo = ref.read(memoryRepositoryProvider);
     final proof = ref.read(deviceProofServiceProvider);
     final steps = ref.read(accountDeletionStepsProvider);
-    final navigator = Navigator.of(context);
 
     // 1. Prove the phone first, so the parent sees which step is running.
     setState(() => _phase = _Phase.proving);
@@ -146,14 +185,20 @@ class _AccountDeletionScreenState extends ConsumerState<AccountDeletionScreen> {
       return;
     }
 
-    // 2. Delete. A 5xx means nothing was deleted (one transaction).
+    // 2. Signed in with Google: link again from this proven session. A link
+    // made before this build — or by a session that had not proven — is
+    // unconfirmed, and the deletion follows only confirmed links (§10): the
+    // Google record and its backups would be kept. Best effort: if it cannot
+    // be done, the result page says what was kept.
+    if (_wasLinked) {
+      try {
+        await steps.relinkGoogle();
+      } catch (_) {}
+    }
+
+    // 3. Delete.
     if (!mounted) return;
     setState(() => _phase = _Phase.deleting);
-    // Read before the wipe clears it: it decides one line of the result.
-    var wasLinked = false;
-    try {
-      wasLinked = await steps.wasLinkedToGoogle();
-    } catch (_) {}
     final AccountDeletionResult result;
     try {
       result = await repo.deleteAccount();
@@ -161,14 +206,43 @@ class _AccountDeletionScreenState extends ConsumerState<AccountDeletionScreen> {
       _fail(e);
       return;
     }
+    await _finish(result);
+  }
 
-    // 3. The server is done and this install is already a new device; clear
-    // the phone, then leave nothing to navigate back into.
+  /// The server is done and this install is already a new device: clear the
+  /// phone, then leave nothing to navigate back into.
+  Future<void> _finish(AccountDeletionResult result) async {
+    final steps = ref.read(accountDeletionStepsProvider);
+    final navigator = Navigator.of(context);
     await steps.wipeLocal();
     unawaited(navigator.pushAndRemoveUntil(
-      AppRoutes.accountDeleted(result: result, wasLinkedToGoogle: wasLinked),
+      AppRoutes.accountDeleted(result: result, wasLinkedToGoogle: _wasLinked),
       (_) => false,
     ));
+  }
+
+  /// After an answer that never arrived: ask again whether the account is
+  /// gone (the old token tells), and act on what that says.
+  Future<void> _checkAgain() async {
+    setState(() => _phase = _Phase.deleting);
+    final AccountDeletionResult? result;
+    try {
+      result = await ref.read(memoryRepositoryProvider).resolvePendingDeletion();
+    } catch (e) {
+      _fail(e);
+      return;
+    }
+    if (!mounted) return;
+    if (result != null) {
+      await _finish(result);
+      return;
+    }
+    // Nothing was deleted: the account is as it was.
+    setState(() {
+      _error = TgApiError(null, AppLocalizations.of(context).deleteAccountServerError,
+          code: 'account_not_deleted');
+      _phase = _Phase.failed;
+    });
   }
 
   void _fail(Object e) {
@@ -179,6 +253,8 @@ class _AccountDeletionScreenState extends ConsumerState<AccountDeletionScreen> {
         _phase = _Phase.paused;
       } else if (e is TgApiError && e.isMissingEndpoint) {
         _phase = _Phase.unavailable;
+      } else if (e is TgApiError && e.code == 'account_deletion_unconfirmed') {
+        _phase = _Phase.unconfirmed;
       } else {
         _error = e;
         _phase = _Phase.failed;
@@ -246,6 +322,20 @@ class _AccountDeletionScreenState extends ConsumerState<AccountDeletionScreen> {
             const _WhatGoes(),
           ],
         );
+      case _Phase.unconfirmed:
+        return ListView(
+          padding: const EdgeInsets.all(20),
+          children: [
+            Text(l10n.deleteAccountUnconfirmed,
+                style: TextStyle(
+                    color: context.colors.ink, fontSize: 15, height: 1.6)),
+            const SizedBox(height: 16),
+            FilledButton(
+                onPressed: _checkAgain, child: Text(l10n.deleteAccountCheckAgain)),
+            const SizedBox(height: 20),
+            const _WithoutTheApp(),
+          ],
+        );
       case _Phase.failed:
         final e = _error;
         if (e != null && isProofError(e)) {
@@ -261,12 +351,14 @@ class _AccountDeletionScreenState extends ConsumerState<AccountDeletionScreen> {
             ],
           );
         }
-        final serverDown = e is TgApiError && (e.statusCode ?? 0) >= 500;
+        // «لم يُحذف شيء» only when it is known: the old token still worked.
+        final nothingDeleted =
+            e is TgApiError && e.code == 'account_not_deleted';
         return ListView(
           padding: const EdgeInsets.all(20),
           children: [
             Text(
-              serverDown
+              nothingDeleted
                   ? l10n.deleteAccountServerError
                   : describeActionFailure(context, e ?? 'error'),
               style: TextStyle(
@@ -448,14 +540,15 @@ class AccountDeletedScreen extends StatelessWidget {
     super.key,
     required this.result,
     required this.wasLinkedToGoogle,
-    this.closeApp = _closeApp,
+    this.closeApp = closeAppForFreshStart,
   });
 
   final AccountDeletionResult result;
   final bool wasLinkedToGoogle;
-  final Future<void> Function() closeApp;
 
-  static Future<void> _closeApp() => SystemNavigator.pop();
+  /// Ends the activity and its engine (not Back, which on Android 12+ only
+  /// moves the task to the back with the old state alive).
+  final Future<void> Function() closeApp;
 
   @override
   Widget build(BuildContext context) {
@@ -487,14 +580,22 @@ class AccountDeletedScreen extends StatelessWidget {
               const SizedBox(height: 12),
               Text(l10n.accountDeletedBody,
                   textAlign: TextAlign.center, style: soft),
-              if (others > 0) ...[
+              if (result.scopeKnown && others > 0) ...[
                 const SizedBox(height: 10),
                 Text(l10n.accountDeletedOthers(others),
                     textAlign: TextAlign.center, style: soft),
               ],
-              if (wasLinkedToGoogle && !result.signedIn) ...[
+              // Signed in with Google, and the deletion did not reach the
+              // Google record (an unconfirmed link): say what was kept, and
+              // how to remove it — not "everything was deleted".
+              if (wasLinkedToGoogle && result.scopeKnown && !result.signedIn) ...[
                 const SizedBox(height: 10),
-                Text(l10n.accountDeletedUnconfirmed(kSupportEmail),
+                Text(l10n.accountDeletedGoogleKept(kSupportEmail),
+                    textAlign: TextAlign.center, style: soft),
+              ],
+              if (wasLinkedToGoogle && !result.scopeKnown) ...[
+                const SizedBox(height: 10),
+                Text(l10n.accountDeletedGoogleUnknown(kSupportEmail),
                     textAlign: TextAlign.center, style: soft),
               ],
               const SizedBox(height: 28),

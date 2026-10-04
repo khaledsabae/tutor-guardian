@@ -5272,7 +5272,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get deleteAccountGoogle =>
-      'وإن كنت ربطت هذا الهاتف بحساب Google بعد التحقق منه، فيُحذف معه كل هاتف آخر رُبط بالطريقة نفسها، ويُحذف سجل الحساب.';
+      'وإن كان هذا الهاتف مسجّلًا بحساب Google فنؤكّد ربطه أولًا، ثم يُحذف سجلّ الحساب ونسخه الاحتياطية، ومعه كل هاتف آخر رُبط به بعد التحقق منه.';
 
   @override
   String get deleteAccountPhone =>
@@ -5334,11 +5334,6 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String accountDeletedUnconfirmed(String email) {
-    return 'الهواتف المرتبطة بحسابك في Google دون تحقق لم تُحذف. لحذفها احذف الحساب من التطبيق عليها، أو راسلنا على $email.';
-  }
-
-  @override
   String get accountDeletedClose => 'أغلق التطبيق';
 
   @override
@@ -5348,4 +5343,25 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get memoryYourChild => 'طفلك';
+
+  @override
+  String get deleteAccountUnconfirmed =>
+      'انقطع الاتصال قبل أن يصلنا ردّ الخادم، فلا نعرف بعد هل حُذف حسابك. لن نفعل شيئًا قبل أن نتأكّد: تحقّق من اتصالك ثم اضغط «تحقّق مرة أخرى».';
+
+  @override
+  String get deleteAccountCheckAgain => 'تحقّق مرة أخرى';
+
+  @override
+  String accountDeletedGoogleKept(String email) {
+    return 'أبقينا سجلّ حسابك في Google ونسخه الاحتياطية، لأن ربط هذا الهاتف به لم يُتحقَّق منه. لحذفها — ومعها أي هاتف آخر مرتبط به — راسلنا على $email.';
+  }
+
+  @override
+  String accountDeletedGoogleUnknown(String email) {
+    return 'لم نتمكّن من التأكّد هل حُذف سجلّ حسابك في Google معه. للتأكّد أو لحذفه راسلنا على $email.';
+  }
+
+  @override
+  String get followupMemoryOff =>
+      'الذاكرة متوقّفة، فلا يسأل المربّي عن المتابعات ولا يحفظ إجاباتها. يمكنك تشغيلها من «ما يعرفه المربّي».';
 }

@@ -9143,7 +9143,7 @@ abstract class AppLocalizations {
   /// No description provided for @deleteAccountGoogle.
   ///
   /// In ar, this message translates to:
-  /// **'وإن كنت ربطت هذا الهاتف بحساب Google بعد التحقق منه، فيُحذف معه كل هاتف آخر رُبط بالطريقة نفسها، ويُحذف سجل الحساب.'**
+  /// **'وإن كان هذا الهاتف مسجّلًا بحساب Google فنؤكّد ربطه أولًا، ثم يُحذف سجلّ الحساب ونسخه الاحتياطية، ومعه كل هاتف آخر رُبط به بعد التحقق منه.'**
   String get deleteAccountGoogle;
 
   /// No description provided for @deleteAccountPhone.
@@ -9248,12 +9248,6 @@ abstract class AppLocalizations {
   /// **'وحُذفت كذلك بيانات الهواتف الأخرى المرتبطة بحسابك في Google (العدد: {count}).'**
   String accountDeletedOthers(int count);
 
-  /// No description provided for @accountDeletedUnconfirmed.
-  ///
-  /// In ar, this message translates to:
-  /// **'الهواتف المرتبطة بحسابك في Google دون تحقق لم تُحذف. لحذفها احذف الحساب من التطبيق عليها، أو راسلنا على {email}.'**
-  String accountDeletedUnconfirmed(String email);
-
   /// No description provided for @accountDeletedClose.
   ///
   /// In ar, this message translates to:
@@ -9271,6 +9265,36 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'طفلك'**
   String get memoryYourChild;
+
+  /// No description provided for @deleteAccountUnconfirmed.
+  ///
+  /// In ar, this message translates to:
+  /// **'انقطع الاتصال قبل أن يصلنا ردّ الخادم، فلا نعرف بعد هل حُذف حسابك. لن نفعل شيئًا قبل أن نتأكّد: تحقّق من اتصالك ثم اضغط «تحقّق مرة أخرى».'**
+  String get deleteAccountUnconfirmed;
+
+  /// No description provided for @deleteAccountCheckAgain.
+  ///
+  /// In ar, this message translates to:
+  /// **'تحقّق مرة أخرى'**
+  String get deleteAccountCheckAgain;
+
+  /// No description provided for @accountDeletedGoogleKept.
+  ///
+  /// In ar, this message translates to:
+  /// **'أبقينا سجلّ حسابك في Google ونسخه الاحتياطية، لأن ربط هذا الهاتف به لم يُتحقَّق منه. لحذفها — ومعها أي هاتف آخر مرتبط به — راسلنا على {email}.'**
+  String accountDeletedGoogleKept(String email);
+
+  /// No description provided for @accountDeletedGoogleUnknown.
+  ///
+  /// In ar, this message translates to:
+  /// **'لم نتمكّن من التأكّد هل حُذف سجلّ حسابك في Google معه. للتأكّد أو لحذفه راسلنا على {email}.'**
+  String accountDeletedGoogleUnknown(String email);
+
+  /// No description provided for @followupMemoryOff.
+  ///
+  /// In ar, this message translates to:
+  /// **'الذاكرة متوقّفة، فلا يسأل المربّي عن المتابعات ولا يحفظ إجاباتها. يمكنك تشغيلها من «ما يعرفه المربّي».'**
+  String get followupMemoryOff;
 }
 
 class _AppLocalizationsDelegate

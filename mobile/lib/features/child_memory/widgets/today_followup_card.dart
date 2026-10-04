@@ -101,7 +101,10 @@ class _TodayFollowupCardState extends ConsumerState<TodayFollowupCard> {
     final colors = context.colors;
     final name = ref.watch(childNameProvider(f.childId));
     final strategy = renderMemoryText(f.strategy,
-        childName: name, family: ref.watch(familyMembersProvider));
+        childName: name,
+        family: ref.watch(familyMembersProvider),
+        subjectId: f.childId,
+        lang: f.lang);
 
     void open(String? outcome) {
       unawaited(Analytics.todayBlockTapped('loop', 'followup_answer'));

@@ -19,6 +19,7 @@ import 'package:flutter/foundation.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../api/tg_client.dart' show kAccountDeletionKey;
 import '../../adhkar/services/notification_service.dart';
 import '../../identity/identity_service.dart';
 
@@ -27,12 +28,17 @@ import '../../identity/identity_service.dart';
 /// gate, the brand-new device id's backup, and the install's one-shot analytics
 /// markers (they name no one, and resetting them would count this phone as a
 /// brand-new install in every funnel).
+///
+/// The deletion record ([kAccountDeletionKey]) is kept through the clear and
+/// removed as the wipe's LAST step: a wipe cut short (the app killed in the
+/// middle) is finished by the next launch, not forgotten.
 @visibleForTesting
 const Set<String> keptPreferenceKeys = {
   'tg.ui_language',
   'tg.theme_mode',
   'cached_minimum_build_number',
   'tg_device_id_backup',
+  kAccountDeletionKey,
 };
 
 @visibleForTesting
@@ -104,4 +110,7 @@ Future<void> wipeLocalDataAfterAccountDeletion() async {
   // A new token on the next launch: nothing left that the deleted account's
   // push rows (already erased on the server) could be matched against.
   await _step(() => FirebaseMessaging.instance.deleteToken());
+  // Last: the deletion is complete on this phone too.
+  await _step(() async =>
+      (await SharedPreferences.getInstance()).remove(kAccountDeletionKey));
 }

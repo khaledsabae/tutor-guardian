@@ -152,10 +152,16 @@ class PushService {
   /// server's CHILD_MEMORY_MIN_BUILD census never saw their build. A data
   /// message needs no notification permission; refusing notifications still
   /// means no notification is ever shown.
-  Future<void> registerToken() {
+  ///
+  /// [askPermission] only on the launch path. Every other registration — the
+  /// answer to a `no_push_token` in the middle of a device proof, the
+  /// `account_alert` that takes the device back — runs while the parent is
+  /// doing something else (deleting the account, reading a notice): an OS
+  /// permission dialog popping up there is an interruption, not a question.
+  Future<void> registerToken({bool askPermission = false}) {
     final running = _registering;
     if (running != null) return running;
-    final run = _registerToken();
+    final run = _registerToken(askPermission: askPermission);
     _registering = run;
     run.whenComplete(() {
       if (identical(_registering, run)) _registering = null;
@@ -163,7 +169,7 @@ class PushService {
     return run;
   }
 
-  Future<void> _registerToken() async {
+  Future<void> _registerToken({required bool askPermission}) async {
     try {
       // Belt and braces: main() already does this on a path with no network
       // in it, and a repeat create is a no-op that preserves whatever the
@@ -178,7 +184,7 @@ class PushService {
       await registerWith(
         // Android defaults to authorized; iOS requires explicit permission.
         // Usually a no-op by now — main() asks after the first frame.
-        askPermission: requestNotificationPermission,
+        askPermission: askPermission ? requestNotificationPermission : null,
         fetchToken: () async {
           if (defaultTargetPlatform == TargetPlatform.android) {
             return _messaging.getToken();
@@ -220,15 +226,16 @@ class PushService {
   }
 
   /// The registration's decision, without Firebase: the permission is asked
-  /// (and its answer recorded by [requestNotificationPermission]), but it does
-  /// not gate the upload. Returns the token uploaded, or null.
+  /// when [askPermission] is given (its answer is recorded by
+  /// [requestNotificationPermission]), and it never gates the upload. Returns
+  /// the token uploaded, or null.
   @visibleForTesting
   static Future<String?> registerWith({
-    required Future<bool> Function() askPermission,
+    Future<bool> Function()? askPermission,
     required Future<String?> Function() fetchToken,
     required Future<void> Function(String token) upload,
   }) async {
-    await askPermission();
+    if (askPermission != null) await askPermission();
     final token = await fetchToken();
     if (token == null || token.isEmpty) return null;
     await upload(token);

@@ -62,9 +62,15 @@ final childMemoryProvider =
 
 /// Follow-ups due now, every child, oldest first. Empty on anything the
 /// Today card cannot show — it hides itself then.
+///
+/// Empty while memory is switched off, too: the switch pauses the whole loop
+/// (§9.2 — no follow-up is opened), so the card must not keep asking about
+/// one opened before, nor offer an answer that memory would then keep.
 final dueFollowupsProvider =
     FutureProvider.autoDispose<List<Followup>>((ref) async {
   _provenEpoch(ref);
+  final settings = await ref.watch(memorySettingsProvider.future);
+  if (settings != null && !settings.enabled) return const <Followup>[];
   return await ref.watch(memoryRepositoryProvider).dueFollowups() ??
       const <Followup>[];
 });

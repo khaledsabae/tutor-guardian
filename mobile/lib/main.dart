@@ -31,6 +31,7 @@ import 'features/onboarding/screens/update_splash_screen.dart';
 import 'features/program/providers/settings_providers.dart';
 import 'features/program/providers/progress_providers.dart';
 import 'features/deeplink/deep_link_handler.dart';
+import 'features/child_memory/data/pending_deletion.dart';
 import 'features/child_memory/device_proof/device_proof_service.dart';
 import 'features/push/push_service.dart';
 import 'features/referral/referral_service.dart';
@@ -195,6 +196,17 @@ void main() async {
     );
   }
 
+  // An account deletion this app did not see through — the answer was lost,
+  // or the app was killed before the phone was cleared — is finished here,
+  // before anything reads the onboarding state or can mint a session for
+  // the erased device id (MOBILE_API §10). No network unless one is pending.
+  try {
+    await completePendingAccountDeletion();
+  } catch (e, s) {
+    FirebaseCrashlytics.instance.recordError(e, s,
+        reason: 'pending account deletion not settled', fatal: false);
+  }
+
   // Before onboarding can complete: the only moment a first install is
   // distinguishable from an upgrade, and therefore the only moment the
   // «what's new» card can be silenced for someone with no "before".
@@ -278,7 +290,8 @@ Future<void> _postLaunchGrowthLoop() async {
   } catch (_) {
     return;
   }
-  await PushService.instance.registerToken();
+  // The launch path is the one registration allowed to ask for permission.
+  await PushService.instance.registerToken(askPermission: true);
   await PushService.instance.listenForeground();
   // Prove this session in the background once its push token is on the
   // server (MOBILE_API §9.0.1) — answers and coach tips use memory only for a

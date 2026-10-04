@@ -74,14 +74,33 @@ class TgApiError implements Exception {
   }
 
   /// The route answered "not here" rather than "not yours": a server that
-  /// predates the endpoint. FastAPI's own 404 carries no code.
+  /// predates the endpoint. Only FastAPI's own bare `{"detail": "Not Found"}`
+  /// (and 405) says that — a 404 with a message of our own («الطفل غير
+  /// موجود», a coded `followup_not_found`) is about the data, and must not
+  /// hide a feature the server does have.
   bool get isMissingEndpoint =>
-      (statusCode == 404 || statusCode == 405) && code == null;
+      statusCode == 405 ||
+      (statusCode == 404 && code == null && message == kFastApiNotFound);
+
+  /// FastAPI's detail for a path no route matches.
+  static const String kFastApiNotFound = 'Not Found';
 
   @override
   String toString() =>
       'TgApiError(${statusCode ?? '?'}${code == null ? '' : ' $code'}): $message';
 }
+
+/// Where an account deletion stands on this phone (MOBILE_API §10) — a
+/// SharedPreferences key, so it survives the process.
+const String kAccountDeletionKey = 'tg.account_deletion';
+
+/// The DELETE was sent with this install's token; whether the server
+/// committed it is not known yet. No session may be minted meanwhile.
+const String kAccountDeletionRequested = 'requested';
+
+/// The server deleted the account and this install is already a new device;
+/// the phone still has to be cleared.
+const String kAccountDeletionConfirmed = 'confirmed';
 
 /// One event yielded by `streamQuery`.
 sealed class TgStreamEvent {
@@ -501,6 +520,14 @@ class TgClient {
   Future<SessionResponse> createSession({
     Map<String, dynamic>? metadata,
   }) async {
+    // An account deletion whose answer never arrived: the server may have
+    // erased this device id. Minting for it now would bring it back to life.
+    // Settled first — at launch (completePendingAccountDeletion) or on the
+    // deletion screen's "check again".
+    if (await accountDeletionState() == kAccountDeletionRequested) {
+      throw TgApiError(null, AppL10n.current.deleteAccountUnconfirmed,
+          code: 'account_deletion_unconfirmed');
+    }
     final deviceId = await _auth.getOrCreateDeviceId();
     final body = <String, dynamic>{
       'device_id': deviceId,
@@ -944,6 +971,11 @@ class TgClient {
   /// parent mid-conversation keeps it — and its history after a restart.
   Future<String?> _recoverSession(String rejectedToken) async {
     try {
+      // During an account deletion a 401 most likely means the account is
+      // gone: never paper over it with a fresh session for the erased id.
+      if (await accountDeletionState() == kAccountDeletionRequested) {
+        return null;
+      }
       final (sessionId, current) = await _auth.readSession();
       if (current != null && current != rejectedToken) {
         return current; // another request already renewed it
@@ -1744,11 +1776,100 @@ class TgClient {
   /// run: the session is forgotten and a brand-new device id replaces the old
   /// one. Otherwise the next call would 401, and the session recovery would
   /// mint a fresh session for the very device id that was just erased.
+  ///
+  /// The deletion is one transaction on the server, but not on the way back
+  /// (PR #36 review, item 4): the origin can commit and the answer still be
+  /// lost — a dropped connection, or an edge 502/504/52x. So the attempt is
+  /// recorded first ([kAccountDeletionRequested]) and an answer that might
+  /// hide a deletion is settled by asking the server with the old token,
+  /// without session recovery ([probeAccountDeleted]): 401 means the account
+  /// is gone. Results: the server's body; `{}` when the deletion was confirmed
+  /// only that way (its scope is then unknown); `account_not_deleted` when
+  /// the old token still works (nothing was deleted, say so); and
+  /// `account_deletion_unconfirmed` when even that cannot be told — the
+  /// record stays, no session can be minted for this id, and the next launch
+  /// settles it before anything else.
   Future<Map<String, dynamic>> deleteAccount() async {
-    final body = await _authedJson('DELETE', '/api/privacy/account',
-        query: const {'confirm': 'true'});
+    await _setAccountDeletionState(kAccountDeletionRequested);
+    try {
+      final body = await _authedJson('DELETE', '/api/privacy/account',
+          query: const {'confirm': 'true'});
+      await startOverAfterAccountDeletion();
+      return body;
+    } on TgApiError catch (e) {
+      final status = e.statusCode;
+      final mayHaveHappened = status == null || status == 401 || status >= 500;
+      if (!mayHaveHappened) {
+        // Refused (a pause, no proof, no route): nothing was deleted.
+        await _setAccountDeletionState(null);
+        rethrow;
+      }
+      final deleted = await probeAccountDeleted();
+      if (deleted == true) {
+        await startOverAfterAccountDeletion();
+        return const <String, dynamic>{};
+      }
+      if (deleted == false) {
+        await _setAccountDeletionState(null);
+        throw TgApiError(status, AppL10n.current.deleteAccountServerError,
+            code: 'account_not_deleted');
+      }
+      throw TgApiError(status, AppL10n.current.deleteAccountUnconfirmed,
+          code: 'account_deletion_unconfirmed');
+    }
+  }
+
+  /// Where an account deletion stands on this phone (SharedPreferences):
+  /// [kAccountDeletionRequested], [kAccountDeletionConfirmed], or null.
+  Future<String?> accountDeletionState() async {
+    try {
+      return (await SharedPreferences.getInstance())
+          .getString(kAccountDeletionKey);
+    } catch (_) {
+      return null;
+    }
+  }
+
+  Future<void> _setAccountDeletionState(String? state) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      if (state == null) {
+        await prefs.remove(kAccountDeletionKey);
+      } else {
+        await prefs.setString(kAccountDeletionKey, state);
+      }
+    } catch (_) {}
+  }
+
+  /// The phone has been cleared too: nothing of the deletion is left to do.
+  Future<void> clearAccountDeletionState() => _setAccountDeletionState(null);
+
+  /// The server deleted the account: become a brand-new device now, and
+  /// record that only the phone still has to be cleared.
+  Future<void> startOverAfterAccountDeletion() async {
     await _auth.startOverAsNewDevice();
-    return body;
+    await _setAccountDeletionState(kAccountDeletionConfirmed);
+  }
+
+  /// Is the account behind this install's token gone? Asked with the stored
+  /// token and the raw transport — never the session-recovering one, which
+  /// would answer a 401 by minting a session for the erased id. True: 401
+  /// (the token was revoked with the account). False: the token still works
+  /// (nothing was deleted). Null: no token here, or no answer.
+  Future<bool?> probeAccountDeleted() async {
+    try {
+      final (_, token) = await _auth.readSession();
+      if (token == null || token.isEmpty) return null;
+      final resp = await _raw
+          .get(Uri.parse('$_baseUrl/api/children'),
+              headers: _authHeaders(token))
+          .timeout(AppConfig.httpTimeout);
+      if (resp.statusCode == 401) return true;
+      if (resp.statusCode == 200) return false;
+      return null;
+    } catch (_) {
+      return null;
+    }
   }
 
   // ── Daily routine — حساب اليوم ───────────────────────────────────────

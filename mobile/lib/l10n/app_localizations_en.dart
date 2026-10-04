@@ -5336,7 +5336,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get deleteAccountGoogle =>
-      'If you linked this phone to a Google account after it was verified, every other phone linked the same way is deleted too, along with the account record.';
+      'If this phone is signed in with Google, we confirm its link first; then the account record and its backups are deleted too, along with every other phone linked to it after it was verified.';
 
   @override
   String get deleteAccountPhone =>
@@ -5399,11 +5399,6 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String accountDeletedUnconfirmed(String email) {
-    return 'Phones linked to your Google account without verification weren\'t included. To delete them, delete the account from the app on them, or email us at $email.';
-  }
-
-  @override
   String get accountDeletedClose => 'Close the app';
 
   @override
@@ -5413,4 +5408,25 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get memoryYourChild => 'your child';
+
+  @override
+  String get deleteAccountUnconfirmed =>
+      'The connection dropped before the server\'s answer reached us, so we don\'t know yet whether your account was deleted. We won\'t do anything until we know: check your connection, then tap \"Check again\".';
+
+  @override
+  String get deleteAccountCheckAgain => 'Check again';
+
+  @override
+  String accountDeletedGoogleKept(String email) {
+    return 'We kept your Google account record and its backups, because this phone\'s link to it wasn\'t verified. To remove them — and any other phone linked to it — email us at $email.';
+  }
+
+  @override
+  String accountDeletedGoogleUnknown(String email) {
+    return 'We couldn\'t confirm whether your Google account record was deleted with it. To check, or to remove it, email us at $email.';
+  }
+
+  @override
+  String get followupMemoryOff =>
+      'Memory is off, so Almorabbi doesn\'t ask about follow-ups or keep the answers. You can turn it on in \"What Almorabbi knows\".';
 }

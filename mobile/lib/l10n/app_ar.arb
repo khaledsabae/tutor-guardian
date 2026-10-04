@@ -1710,7 +1710,7 @@
   "deleteAccountItemChat": "أسئلتك وإجاباتها وتقييماتك",
   "deleteAccountItemMemory": "ما يتذكّره المربّي، والمتابعات، وخطط الأسابيع",
   "deleteAccountItemOther": "رمز الإشعارات، ورمز الدعوة، والنسخ الاحتياطية",
-  "deleteAccountGoogle": "وإن كنت ربطت هذا الهاتف بحساب Google بعد التحقق منه، فيُحذف معه كل هاتف آخر رُبط بالطريقة نفسها، ويُحذف سجل الحساب.",
+  "deleteAccountGoogle": "وإن كان هذا الهاتف مسجّلًا بحساب Google فنؤكّد ربطه أولًا، ثم يُحذف سجلّ الحساب ونسخه الاحتياطية، ومعه كل هاتف آخر رُبط به بعد التحقق منه.",
   "deleteAccountPhone": "ثم يُمسح ما على هذا الهاتف، ويبدأ التطبيق من جديد.",
   "deleteAccountBackups": "وتختفي بياناتك من النسخ الاحتياطية لخادمنا خلال 14 يومًا.",
   "deleteAccountPermanent": "لا يمكن التراجع عن الحذف.",
@@ -1729,10 +1729,15 @@
   "accountDeletedBody": "حذفنا كل ما يرتبط بهذا الهاتف من خوادمنا، ومسحنا ما عليه. أغلق التطبيق، وسيبدأ من جديد حين تفتحه.",
   "accountDeletedOthers": "وحُذفت كذلك بيانات الهواتف الأخرى المرتبطة بحسابك في Google (العدد: {count}).",
   "@accountDeletedOthers": {"placeholders": {"count": {"type": "int"}}},
-  "accountDeletedUnconfirmed": "الهواتف المرتبطة بحسابك في Google دون تحقق لم تُحذف. لحذفها احذف الحساب من التطبيق عليها، أو راسلنا على {email}.",
-  "@accountDeletedUnconfirmed": {"placeholders": {"email": {"type": "String"}}},
   "accountDeletedClose": "أغلق التطبيق",
   "supportEmailCopied": "نسخنا العنوان: {email}",
   "@supportEmailCopied": {"placeholders": {"email": {"type": "String"}}},
-  "memoryYourChild": "طفلك"
+  "memoryYourChild": "طفلك",
+  "deleteAccountUnconfirmed": "انقطع الاتصال قبل أن يصلنا ردّ الخادم، فلا نعرف بعد هل حُذف حسابك. لن نفعل شيئًا قبل أن نتأكّد: تحقّق من اتصالك ثم اضغط «تحقّق مرة أخرى».",
+  "deleteAccountCheckAgain": "تحقّق مرة أخرى",
+  "accountDeletedGoogleKept": "أبقينا سجلّ حسابك في Google ونسخه الاحتياطية، لأن ربط هذا الهاتف به لم يُتحقَّق منه. لحذفها — ومعها أي هاتف آخر مرتبط به — راسلنا على {email}.",
+  "@accountDeletedGoogleKept": {"placeholders": {"email": {"type": "String"}}},
+  "accountDeletedGoogleUnknown": "لم نتمكّن من التأكّد هل حُذف سجلّ حسابك في Google معه. للتأكّد أو لحذفه راسلنا على {email}.",
+  "@accountDeletedGoogleUnknown": {"placeholders": {"email": {"type": "String"}}},
+  "followupMemoryOff": "الذاكرة متوقّفة، فلا يسأل المربّي عن المتابعات ولا يحفظ إجاباتها. يمكنك تشغيلها من «ما يعرفه المربّي»."
 }

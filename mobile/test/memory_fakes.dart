@@ -67,6 +67,31 @@ class FakeMemoryServer extends TgClient {
   List<Map<String, dynamic>> children = [];
   bool noteDropped = false;
 
+  /// Where an account deletion stands on this phone, and what asking the
+  /// server with the old token answers (TgClient's real logic is tested at
+  /// the HTTP level in memory_api_test / pr36_review_fixes_test).
+  String? deletionStateValue;
+  bool? probeAnswer;
+  int startOvers = 0;
+
+  @override
+  Future<String?> accountDeletionState() async => deletionStateValue;
+
+  @override
+  Future<void> clearAccountDeletionState() async => deletionStateValue = null;
+
+  @override
+  Future<void> startOverAfterAccountDeletion() async {
+    startOvers++;
+    deletionStateValue = kAccountDeletionConfirmed;
+  }
+
+  @override
+  Future<bool?> probeAccountDeleted() async {
+    calls.add('PROBE old token');
+    return probeAnswer;
+  }
+
   /// What the account deletion returns, or the error it throws.
   Map<String, dynamic> deletionResult = {
     'devices': 1,
@@ -341,7 +366,13 @@ class FakeMemoryServer extends TgClient {
     }
     _requireProof();
     final err = deletionError;
-    if (err != null) throw err;
+    if (err != null) {
+      if (err.code == 'account_deletion_unconfirmed') {
+        deletionStateValue = kAccountDeletionRequested;
+      }
+      throw err;
+    }
+    deletionStateValue = kAccountDeletionConfirmed;
     return deletionResult;
   }
 
@@ -477,6 +508,7 @@ Future<ProviderContainer> pumpMemoryApp(
   bool withActiveChild = true,
   List<NavigatorObserver> observers = const [],
   List<Override> overrides = const [],
+  GlobalKey<NavigatorState>? navigatorKey,
 }) async {
   tester.view.physicalSize = phone * 3.0;
   tester.view.devicePixelRatio = 3.0;
@@ -506,6 +538,7 @@ Future<ProviderContainer> pumpMemoryApp(
     UncontrolledProviderScope(
       container: container,
       child: MaterialApp(
+        navigatorKey: navigatorKey,
         locale: locale,
         theme: dark ? AppTheme.dark() : AppTheme.light(),
         localizationsDelegates: AppLocalizations.localizationsDelegates,

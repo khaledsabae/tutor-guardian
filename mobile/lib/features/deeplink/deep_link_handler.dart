@@ -209,6 +209,7 @@ class DeepLinkHandler {
     // Follow-up: /followup/{id} — the `followup_due` push (MOBILE_API §9.4).
     // Its text is generic on the lock screen; the sheet fetches the follow-up
     // (in any status: one answered meanwhile shows its result) and asks.
+    // Parent-only content (the child-mode guard above covers it).
     final followupId = followupIdFromPath(path);
     if (followupId != null) {
       navigator.popUntil((route) => route.isFirst);
