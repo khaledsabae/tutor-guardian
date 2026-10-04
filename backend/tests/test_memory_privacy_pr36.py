@@ -16,6 +16,7 @@
 from __future__ import annotations
 
 import json
+import re
 from datetime import datetime, timedelta, timezone
 
 import pytest
@@ -25,8 +26,8 @@ from app.db.init_db import get_conn
 from app.services import ai_gateway
 from app.services import child_memory as cm
 from app.services.privacy import (
-    Family, family_for_device, family_mentions, redact_family, reletter_siblings,
-    scrub_child_name,
+    Family, _name_variants, family_for_device, family_mentions, redact_family,
+    reletter_siblings, scrub_child_name,
 )
 from tests.device_proof_support import prove
 
@@ -266,6 +267,7 @@ def test_no_family_name_survives_in_a_fact(members, subject, text):
     family = Family(members)
     out = cm.clean_fact_text(text, family, subject)
     assert out and family_mentions(out, family, strict=True) == [], out
+    assert _oracle_left(out, family.names) == [], out      # independent of the matcher
 
 
 def test_a_sibling_keeps_its_letter_and_the_subject_is_my_child():
@@ -277,7 +279,8 @@ def test_a_sibling_keeps_its_letter_and_the_subject_is_my_child():
 
 @pytest.mark.parametrize("name,text,expected", [
     ("نور", "اشتريت لنور لعبة ولنور أخرى", "اشتريت لطفلي لعبة ولطفلي أخرى"),
-    ("أمل", "فبأمل نبدأ وكأمل نختم", "فبطفلي نبدأ وكطفلي نختم"),
+    ("أمل", "وبأمل نبدأ ولأمل نختم", "وبطفلي نبدأ ولطفلي نختم"),
+    ("أحمد", "فبأحمد بدأنا وكأحمد ختمنا", "فبطفلي بدأنا وكطفلي ختمنا"),
     ("محمد", "رأيت محمدًا يبكي ثم محمداً يضحك", "رأيت طفلي يبكي ثم طفلي يضحك"),
     ("علي", "كافأنا عليًّا", "كافأنا طفلي"),
 ])
@@ -527,3 +530,383 @@ def test_scrubbing_a_deleted_childs_name_is_strict():
     assert scrub_child_name("طفلي تغار من نور ولنور لعبة", "نور") == \
         "طفلي تغار من طفل آخر ولطفل آخر لعبة"
     assert scrub_child_name("My child copies Adam", "Adam") == "My child copies another child"
+
+
+# ── PR #39 review ─────────────────────────────────────────────────────────
+#
+# An independent oracle — a test that asks the matcher whether the matcher
+# missed something cannot fail. This one folds spelling crudely and looks for
+# every name, and every name token of 3+ letters, as a word: behind any
+# particle, with or without the accusative alif or a final hamza. It
+# over-reports by design, so cases where a name may rightly stay (a religious
+# reference, «فعلا» for a child «علا») are not given to it.
+
+_ORACLE_MARKS = re.compile("[ً-ْٰـ‌-‏؜]")
+_ORACLE_FOLD = str.maketrans({"أ": "ا", "إ": "ا", "آ": "ا", "ٱ": "ا", "ة": "ه",
+                              "ى": "ي", "ئ": "ي", "ؤ": "و"})
+_ORACLE_PARTICLES = ("وب", "ول", "وك", "فب", "فل", "فك", "و", "ف", "ب", "ل", "ك")
+
+
+def _oracle_fold(text: str) -> str:
+    folded = _ORACLE_MARKS.sub("", text or "").translate(_ORACLE_FOLD).lower()
+    return re.sub(r"عبد\s+", "عبد", folded)
+
+
+def _oracle_left(text: str, names) -> list[str]:
+    """The names among `names` still readable in `text`."""
+    folded = _oracle_fold(text)
+    words = set(re.findall(r"[a-zء-ي]+", folded))
+    stems = set(words)
+    for w in words:
+        stems |= {w[len(p):] for p in _ORACLE_PARTICLES if w.startswith(p)}
+    stems |= {w[:-1] for w in stems if w.endswith("ا")}             # the accusative
+    left = []
+    for name in names:
+        n = _oracle_fold(name.strip())
+        if n in ("طفلي", "my child"):
+            continue                                                 # a default: no name
+        forms = {n} | {t for t in n.split() if len(t) >= 3}
+        forms |= {f[:-1] for f in forms if f.endswith("اء")}         # «دعا» for «دعاء»
+        forms |= {"ل" + f[2:] for f in forms if f.startswith("ال")}  # «للحسن»
+        if forms & stems or (" " in n and n in folded):
+            left.append(name)
+    return left
+
+
+def test_the_oracle_sees_what_it_must():
+    assert _oracle_left("طفلي تغار من لـأحمدًا", ["أحمد"]) == ["أحمد"]
+    assert _oracle_left("طفلي تغار من اسما", ["أسماء"]) == ["أسماء"]
+    assert _oracle_left("طفلي تغار من الطفل أ", ["أحمد", "طفلي"]) == []
+
+
+def _fake_llm(monkeypatch, fact_text: str) -> None:
+    payload = json.dumps({"sensitive": False, "facts": [{
+        "category": "challenge", "fact": fact_text, "confidence": 0.9,
+        "replaces": None, "sensitive": False}], "followup": None}, ensure_ascii=False)
+    monkeypatch.setattr(ai_gateway, "aux_cloud_provider", lambda **kw: object())
+    monkeypatch.setattr(ai_gateway, "aux_generate", lambda *a, **k: payload)
+    monkeypatch.setattr(cm, "extraction_budget_ok", lambda: True)
+
+
+# 1 + 2. A default name — «طفلي», "My child" — is no name.
+
+
+@pytest.mark.parametrize("proven", [True, False])
+def test_deleting_a_child_named_tifli_keeps_its_siblings_subject(client, proven):
+    """R1: «طفلي» is the onboarding default (3,323 of 4,375 children on
+    production). Deleting such a child must not scrub the siblings' own
+    «طفلي» into «طفل آخر» — by either delete path."""
+    dev = f"dev-tifli-{proven}"
+    h = _session(client, dev, proven=proven)
+    first = _child(client, h, "طفلي")                      # أ
+    ahmad = _child(client, h, "أحمد")
+    own = _insert_fact(dev, ahmad, "طفلي يحب الرسم")
+    sibling = _insert_fact(dev, ahmad, "طفلي يغار من الطفل أ")
+    assert client.delete(f"/api/children/{first}", headers=h).status_code == 200
+    assert _fact_text(own) == "طفلي يحب الرسم"
+    assert _fact_text(sibling) == "طفلي يغار من طفل آخر"
+
+
+def test_a_default_name_is_never_read_as_a_sibling():
+    """R2: the subject's «طفلي» is not the sibling who carries «طفلي» as a
+    name. Such a child keeps its place — its letter — in the family."""
+    fam = Family(((1, "طفلي"), (2, "أحمد")))
+    assert cm.clean_fact_text("طفلي يحب الرسم", fam, 2) == "طفلي يحب الرسم"
+    assert redact_family("طفلي بيحب الرسم وأحمد بيغير", fam, 1) == \
+        "طفلي بيحب الرسم والطفل ب بيغير"
+    three = Family(((1, "طفلي"), (2, "أحمد"), (3, "سارة")))
+    assert cm.clean_fact_text("سارة تغار من أحمد", three, 3) == "طفلي تغار من الطفل ب"
+    # A real name with a default word in it keeps its real part.
+    variants = {v for v, _, _ in _name_variants("طفلي أحمد")}
+    assert "احمد" in variants and "طفلي" not in variants
+
+
+def test_my_child_is_no_name_in_english_either():
+    one = Family(((1, "My child"),))
+    q = "My child refuses to pray and my husband says I should be strict with the child"
+    assert redact_family(q, one, 1) == q
+    fact = "My child refuses to pray when my husband is away"
+    assert cm.clean_fact_text(fact, one, 1) == fact
+    two = Family(((1, "My child"), (2, "Adam")))
+    assert cm.clean_fact_text("My child is afraid of the dark", two, 2) == \
+        "My child is afraid of the dark"
+    assert scrub_child_name("My child is afraid of the dark", "My child") == \
+        "My child is afraid of the dark"
+    # A Latin name's word-tokens are not names either.
+    assert {v for v, _, _ in _name_variants("Baby Adam")} == {"baby adam", "adam"}
+
+
+def test_the_api_keeps_my_child_beside_a_sibling_named_my_child(client):
+    """R2b, through the API: stored as typed, and still so after the
+    default-named sibling is deleted."""
+    dev = "dev-default-api"
+    h = _session(client, dev)
+    default = _child(client, h, "طفلي")
+    ahmad = _child(client, h, "أحمد")
+    stored = client.post(f"/api/children/{ahmad}/memory", headers=h,
+                         json={"category": "other", "fact": "طفلي يحب الرسم"}).json()
+    assert stored["fact"] == "طفلي يحب الرسم"
+    assert client.delete(f"/api/children/{default}", headers=h).status_code == 200
+    assert _fact_text(stored["id"]) == "طفلي يحب الرسم"
+
+
+# 3. A child recognised in a question does not take over every word use.
+
+
+@pytest.mark.parametrize("name,question,kept", [
+    ("دعاء", "بنتي دعاء عندها ٥ سنين، أعلمها دعاء قبل النوم إزاي؟", "أعلمها دعاء قبل"),
+    ("آية", "بنتي آية حافظة جزء عم، عايزة أحفظها آية كل يوم", "أحفظها آية كل"),
+    ("جنة", "بنتي جنة بتسأل عن جنة ونار، أشرح لها إزاي؟", "عن جنة ونار"),
+    ("إيمان", "بنتي إيمان عندها ١٠ سنين، إزاي أعلمها إن إيمان بالله أهم حاجة؟",
+     "إن إيمان بالله"),
+    ("أمل", "بنتي أمل عندها توحد، هل في أمل إنها تتكلم؟", "في أمل إنها"),
+])
+def test_a_recognised_child_does_not_take_every_word_use(name, question, kept):
+    """R6: only a mention that opens a clause extends («…ونور كمان بترفض»,
+    still redacted by test_a_child_recognised_once_…); not after «إن/أن»."""
+    out = redact_family(question, Family(((1, name),)), 1)
+    assert kept in out and out.startswith("بنتي طفلي"), out
+
+
+# 4. A token two children share.
+
+
+def test_a_token_two_children_share_is_nobodys():
+    """R5: «محمد» is in both names — alone it is likelier their father than
+    either child, and it must not swallow «سارة محمد» and leave «سارة»."""
+    fam = Family(((1, "أحمد محمد"), (2, "سارة محمد")))
+    out = cm.clean_fact_text("سارة محمد تغار من أحمد", fam, 2)
+    assert out == "طفلي تغار من الطفل أ" and _oracle_left(out, ["أحمد", "سارة"]) == []
+    assert cm.clean_fact_text("سارة تحب والدها محمد كثيرًا", fam, 2) == \
+        "طفلي تحب والدها محمد كثيرًا"
+    assert redact_family("سارة محمد بتغير من أحمد", fam, 2) == "طفلي بتغير من الطفل أ"
+    assert family_mentions("سارة محمد بتغير من أحمد", fam) == [1, 2]
+    assert family_mentions("والدها محمد مسافر", fam) == []
+    # A whole name still beats another child's token.
+    assert redact_family("محمد بيضرب أحمد", Family(((1, "محمد"), (2, "أحمد محمد")))) == \
+        "الطفل أ بيضرب الطفل ب"
+
+
+# 5. Races: a deletion while a question is being learned from.
+
+
+def test_a_deletion_inside_the_extraction_is_refused(client, monkeypatch):
+    """R4: deleted between the family read and the generation read."""
+    from app.routers.privacy import erase_child
+    dev = "dev-r4"
+    h = _session(client, dev)
+    sara = _child(client, h, "سارة")
+    ahmad = _child(client, h, "أحمد")
+    _child(client, h, "نور")
+    _memory_build(monkeypatch, dev)
+    _fake_llm(monkeypatch, "طفلي تغار من نور")
+
+    def delete_then_ok():
+        erase_child(dev, ahmad)
+        return True
+    monkeypatch.setattr(cm, "extraction_budget_ok", delete_then_ok)
+    stats = cm.extract_and_store(dev, sara, question="سارة بتغار من نور وبتضربها كل يوم",
+                                 answer="جرّب وقتًا خاصًا لكل طفل.", proven=True)
+    assert stats is None or stats["refused"] is True
+    assert _rows("SELECT COUNT(*) FROM child_facts WHERE device_id = ?", dev) == [(0,)]
+
+
+def test_a_deletion_after_the_question_refuses_what_its_answer_teaches(client, monkeypatch):
+    """R3: the question arrives (generation, then family), the parent deletes
+    a child while the answer streams, the extraction runs after: refused —
+    «أحمد» never lands in a fact."""
+    dev = "dev-r3"
+    h = _session(client, dev)
+    sara = _child(client, h, "سارة")
+    ahmad = _child(client, h, "أحمد")
+    _memory_build(monkeypatch, dev)
+    asked = cm.memory_generation(dev)
+    assert client.delete(f"/api/children/{ahmad}", headers=h).status_code == 200
+    _fake_llm(monkeypatch, "طفلي تغار من أحمد وتضربه")
+    stats = cm.extract_and_store(dev, sara, question="سارة بتغار من أحمد وبتضربه كل يوم",
+                                 answer="جرّب وقتًا خاصًا لكل طفل.", proven=True,
+                                 generation=asked)
+    assert stats["refused"] is True
+    assert _rows("SELECT COUNT(*) FROM child_facts WHERE device_id = ?", dev) == [(0,)]
+
+
+def _quiet_pipeline(monkeypatch) -> list[str]:
+    """The assistant with retrieval and every model call replaced; returns the
+    list the classifier and rewriter inputs are recorded in."""
+    from app.routers import assistant
+    from app.services import answer_cache
+
+    async def no_ayah(_t):
+        return None
+
+    _Recorder.prompts = []
+    seen: list[str] = []
+    monkeypatch.setattr(assistant, "classify_domains", lambda t: seen.append(t) or ["tarbiyah"])
+    monkeypatch.setattr(assistant, "rewrite_query", lambda t, **k: seen.append(t) or "")
+    monkeypatch.setattr(assistant, "retrieve_hybrid", lambda **kw: [{
+        "unit_id": "u1", "document": "passage: الروتين الثابت يساعد على النوم.",
+        "metadata": {"domain": "tarbiyah", "reference_info": "دليل"},
+        "rerank_score": 2.0, "source_domain": "tarbiyah"}])
+    monkeypatch.setattr(assistant, "_ensure_index", lambda: None)
+    monkeypatch.setattr(assistant, "log_retrieval", lambda *a, **k: None)
+    monkeypatch.setattr(assistant, "resolve_ayah_reference", no_ayah)
+    monkeypatch.setattr(answer_cache, "lookup", lambda *a, **k: None)
+    monkeypatch.setattr(answer_cache, "store", lambda *a, **k: None)
+    monkeypatch.setattr(ai_gateway, "OllamaProvider", _Recorder)
+    ai_gateway._gateway = None
+    return seen
+
+
+def test_the_assistant_reads_the_generation_before_the_family(client, monkeypatch):
+    """The real path: the generation is read before the question's family and
+    handed to the extraction, which a deletion in between then refuses."""
+    from app.routers import assistant
+    dev = "dev-gen-order"
+    h = _session(client, dev)
+    sara = _child(client, h, "سارة")
+    ahmad = _child(client, h, "أحمد")
+    _memory_build(monkeypatch, dev)
+    _quiet_pipeline(monkeypatch)
+    order: list[str] = []
+    real_generation, real_family = cm.memory_generation, assistant.family_for_device
+    monkeypatch.setattr(cm, "memory_generation",
+                        lambda d: order.append("generation") or real_generation(d))
+    monkeypatch.setattr(assistant, "family_for_device",
+                        lambda d: order.append("family") or real_family(d))
+    scheduled: dict = {}
+    monkeypatch.setattr(cm, "schedule_extraction",
+                        lambda *a, **k: scheduled.update(args=a, kwargs=k))
+    try:
+        r = client.post("/api/assistant/stream", headers=h, json={
+            "age_group": "4-6", "severity": "خفيف", "child_id": sara,
+            "message_text": "سارة بتغار من أحمد وبتضربه كل يوم، أعمل إيه؟"})
+        assert r.status_code == 200
+    finally:
+        ai_gateway._gateway = None
+    assert order[:2] == ["generation", "family"]
+    assert scheduled["kwargs"]["generation"] == cm.memory_generation(dev)
+    assert client.delete(f"/api/children/{ahmad}", headers=h).status_code == 200
+    _fake_llm(monkeypatch, "طفلي تغار من أحمد وتضربه")
+    stats = cm.extract_and_store(*scheduled["args"], **scheduled["kwargs"])
+    assert stats["refused"] is True
+
+
+def test_manual_writes_clean_with_the_family_as_it_is_now(client, monkeypatch):
+    """add, edit and a follow-up answer read the family under their write
+    lock — never a stale one from before a deletion (old letters)."""
+    dev = "dev-stale-family"
+    h = _session(client, dev)
+    sara = _child(client, h, "سارة")
+    ahmad = _child(client, h, "أحمد")
+    _child(client, h, "عمر")                                # ج, then ب
+    stale = family_for_device(dev)
+    assert client.delete(f"/api/children/{ahmad}", headers=h).status_code == 200
+    monkeypatch.setattr(cm, "family_for_device", lambda d: stale)
+    added = client.post(f"/api/children/{sara}/memory", headers=h,
+                        json={"category": "other", "fact": "سارة تلعب مع عمر"}).json()
+    assert added["fact"] == "طفلي تلعب مع الطفل ب"
+    edited = client.patch(f"/api/children/{sara}/memory/{added['id']}", headers=h,
+                          json={"fact": "سارة تحب عمر كثيرًا"}).json()
+    assert edited["fact"] == "طفلي تحب الطفل ب كثيرًا"
+    fid = _due_followup(dev, sara, "لعب مشترك كل يوم", "siblings")
+    answered = client.post(f"/api/children/followups/{fid}/answer", headers=h,
+                           json={"outcome": "worked", "note": "عمر فرح كثيرًا"}).json()
+    assert "الطفل ب فرح" in answered["fact"]["fact"]
+
+
+# 6. Spelling gaps in strict matching.
+
+
+@pytest.mark.parametrize("members,subject,text,expected", [
+    ([(1, "الحسن"), (2, "سارة")], 2, "سارة تعطي ألعابها للحسن دائمًا",
+     "طفلي تعطي ألعابها للطفل أ دائمًا"),
+    ([(1, "عبد الله محمد"), (2, "سارة")], 2, "سارة تغار من عبدالله", "طفلي تغار من الطفل أ"),
+    ([(1, "عبد الله"), (2, "سارة")], 2, "سارة تغار من عبد  الله", "طفلي تغار من الطفل أ"),
+    ([(1, "أسماء"), (2, "أحمد")], 2, "أحمد يغار من اسما", "طفلي يغار من الطفل أ"),
+    ([(1, "سماء"), (2, "أحمد")], 2, "أحمد يغار من سما", "طفلي يغار من الطفل أ"),
+    ([(1, "دعاء"), (2, "أحمد")], 2, "أحمد يغار من دعا", "طفلي يغار من الطفل أ"),
+    ([(1, "أحمد"), (2, "سارة")], 2, "اشتريت هدية لـأحمد وبـأحمد",
+     "اشتريت هدية للطفل أ وبالطفل أ"),
+    ([(1, "محمد"), (2, "سارة")], 2, "سارة تغار من ـمحمد", "طفلي تغار من الطفل أ"),
+    ([(1, "محمد"), (2, "سارة")], 2, "سارة تغار من مح‌مد", "طفلي تغار من الطفل أ"),
+    ([(1, "أحمد"), (2, "نور")], 1, "أحمد|نور يلعبان معًا", "طفلي الطفل ب يلعبان معًا"),
+])
+def test_strict_closes_the_spelling_gaps(members, subject, text, expected):
+    fam = Family(tuple(members))
+    out = cm.clean_fact_text(text, fam, subject)
+    assert out == expected
+    assert _oracle_left(out, fam.names) == [], out
+
+
+def test_a_hamzaless_name_stays_a_verb_in_a_question():
+    assert redact_family("أحمد دعا ربه قبل النوم", Family(((1, "دعاء"), (2, "أحمد"))), 2) == \
+        "طفلي دعا ربه قبل النوم"
+
+
+# 7. Rename, notes, particles.
+
+
+def test_a_rename_across_the_floor_reletters(client):
+    """A child renamed across the 2-character floor enters (or leaves) the
+    letter order: its siblings' memory follows."""
+    dev = "dev-rename-floor"
+    h = _session(client, dev)
+    sara = _child(client, h, "سارة")                       # أ
+    short = _child(client, h, "م")                          # no letter
+    _child(client, h, "عمر")                                # ب
+    fid = _insert_fact(dev, sara, "طفلي تلعب مع الطفل ب")
+    assert client.patch(f"/api/children/{short}", headers=h,
+                        json={"name": "مريم"}).status_code == 200
+    assert _fact_text(fid) == "طفلي تلعب مع الطفل ج"         # عمر is ج now
+    assert client.patch(f"/api/children/{short}", headers=h,
+                        json={"name": "م"}).status_code == 200
+    assert _fact_text(fid) == "طفلي تلعب مع الطفل ب"
+
+
+def test_a_renamed_childs_old_name_does_not_outlive_the_rename(client):
+    """Written before he had a profile, «يوسف» was redacted on its way into
+    a prompt only while it was his name; after the rename it is his letter."""
+    dev = "dev-rename-old"
+    h = _session(client, dev)
+    sara = _child(client, h, "سارة")
+    yusuf = _child(client, h, "يوسف")
+    fid = _insert_fact(dev, sara, "طفلي تقلّد أخاها يوسف")
+    assert client.patch(f"/api/children/{yusuf}", headers=h,
+                        json={"name": "جود"}).status_code == 200
+    assert _fact_text(fid) == "طفلي تقلّد أخاها الطفل ب"
+    block, used = cm.facts_block(dev, sara, "")
+    assert used == 1 and "يوسف" not in block
+
+
+def test_a_deleted_childs_name_leaves_its_siblings_notes(client):
+    dev = "dev-note-scrub"
+    h = _session(client, dev)
+    sara = _child(client, h, "سارة")
+    ahmad = _child(client, h, "أحمد")
+    fid = _due_followup(dev, sara)
+    conn = get_conn()
+    conn.execute("UPDATE followups SET note = ? WHERE id = ?", ("أحمد كان يضحك عليها", fid))
+    conn.commit()
+    conn.close()
+    assert client.delete(f"/api/children/{ahmad}", headers=h).status_code == 200
+    assert _rows("SELECT note FROM followups WHERE id = ?", fid) == [
+        ("طفل آخر كان يضحك عليها",)]
+
+
+@pytest.mark.parametrize("members,subject,text,word", [
+    ([(1, "علا"), (2, "سارة")], 2, "سارة فعلا بتكذب", "فعلا"),
+    ([(1, "ريم"), (2, "أحمد")], 2, "أحمد بيقول رمضان كريم لكل الناس", "رمضان كريم"),
+])
+def test_f_and_k_do_not_split_a_short_name_off_a_word(members, subject, text, word):
+    fam = Family(tuple(members))
+    assert word in redact_family(text, fam, subject)
+    assert word in cm.clean_fact_text(text, fam, subject)
+    # «و/ب/ل» still do, for every name.
+    assert redact_family("سارة تلعب مع علا ولعلا لعبة", Family(((1, "علا"), (2, "سارة"))), 2) \
+        == "طفلي تلعب مع الطفل أ وللطفل أ لعبة"
+
+
+def test_huna_is_here_unless_it_is_the_child():
+    fam = Family(((1, "هنا"), (2, "أحمد")))
+    assert redact_family("أحمد بيحب يقعد هنا وهنا", fam, 2) == "طفلي بيحب يقعد هنا وهنا"
+    assert redact_family("بنتي هنا بتخاف من الضلمة", fam, 1) == "بنتي طفلي بتخاف من الضلمة"

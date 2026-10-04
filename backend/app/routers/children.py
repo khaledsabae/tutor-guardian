@@ -636,7 +636,17 @@ def update_child(
     device_id = _require_device_id(request)
     conn = get_conn()
     try:
-        _load_owned_child(conn, child_id, device_id)
+        current = _load_owned_child(conn, child_id, device_id)
+        # A new name can move the child across the 2-character floor (its
+        # siblings' letters shift) and leaves its old name unredacted in any
+        # memory text still carrying it: both are rewritten in this transaction
+        # (child_memory.on_child_renamed, PR #39 review).
+        before = None
+        if payload.name is not None and \
+                payload.name.strip() != (current["name"] or "").strip():
+            from app.services.privacy import family_from_conn
+            conn.execute("BEGIN IMMEDIATE")
+            before = family_from_conn(conn, device_id)
         sets: list[str] = []
         params: list = []
         for field in ("name", "age_group", "gender", "avatar_emoji"):
@@ -653,6 +663,9 @@ def update_child(
             f"UPDATE child_profiles SET {', '.join(sets)} WHERE id = ?",
             params,
         )
+        if before is not None:
+            from app.services.child_memory import on_child_renamed
+            on_child_renamed(conn, device_id, child_id, current["name"], before)
         conn.commit()
         row = conn.execute(
             "SELECT * FROM child_profiles WHERE id = ?", (child_id,)

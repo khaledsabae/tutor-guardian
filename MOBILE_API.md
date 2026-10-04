@@ -276,8 +276,11 @@ are additive; older builds keep working and simply never call them.
   القرآن» in a fact of a family with a نور is stored «يحب طفلي القرآن» (or
   «الطفل ب…» for a sibling). That is deliberate; the on-device swap gives the
   parent back the words they wrote. Not replaced: the name with «ال» attached
-  (النور), a religious reference (النبي محمد ﷺ، سورة يوسف), and «على» for a
-  child named علي.
+  (النور), a religious reference (النبي محمد ﷺ، سورة يوسف), «على» for a
+  child named علي, and «ف/ك» read off a name of ≤ 3 letters («فعلا» for a
+  child «علا»). A child whose name is the onboarding default — «طفلي» /
+  "My child" — has no name to replace: in any text «طفلي» stays the fact's
+  own child, never that sibling (it keeps its letter for placeholders).
 - **What is never remembered** (say so in the screen's footer): medicines —
   names, doses, prescriptions — test results, doctors or hospitals; anything
   about self-harm, suicide, abuse, sexual matters or drugs; anything about the
@@ -292,10 +295,13 @@ are additive; older builds keep working and simply never call them.
   The letters always match the family **as it is now**: when a child is
   deleted, the server rewrites the siblings' memory in the same step — a
   remaining sibling gets its new letter, and a mention of the deleted child
-  becomes the plain words «طفل آخر» (`another child` in English text; «طفلة
-  أخرى» where it was written «الطفلة ب»). Render «طفل آخر» as it is. Never
-  keep rendered memory text across a child deletion — re-fetch, then render
-  with the current child list.
+  (by letter, by name, or by name in a follow-up's `note`) becomes the plain
+  words «طفل آخر» (`another child` in English text; «طفلة أخرى» where it was
+  written «الطفلة ب»). A rename (`PATCH /api/children/{id}` with `name`) that
+  crosses the 2-character floor re-letters the same way, and a stored mention
+  of the child's old name becomes its placeholder. Render «طفل آخر» as it is.
+  Never keep rendered memory text across a child deletion or rename —
+  re-fetch, then render with the current child list.
 - **When memory is used and learned:** only for a **proven session** (above),
   while the parent's switch is on, on a device that reports a build ≥ the
   server's `CHILD_MEMORY_MIN_BUILD` (the build number the app already sends on
@@ -540,8 +546,9 @@ topic).
 Answering stores the result as an `outcome` fact, e.g.
 «جُرِّب مع طفلي: روتين نوم ثابت مع قصة قبل النوم — ولم ينجح.» — and from then
 on the assistant is told not to repeat a strategy that did not work and to
-offer an alternative instead. The note is shown back to the parent as typed;
-only its name-free form reaches the fact.
+offer an alternative instead. The note is shown back to the parent as typed
+(except that a deleted sibling's name in it becomes «طفل آخر»); only its
+name-free form reaches the fact.
 
 Errors: `404 followup_not_found` · `409 followup_closed` (answer/dismiss on a
 follow-up that is no longer pending — show "already answered") ·

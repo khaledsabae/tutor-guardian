@@ -57,8 +57,9 @@ from typing import Iterable, Optional, Union
 from app.db.init_db import get_conn
 from app.core.times import iso_z
 from app.services.privacy import (
-    CHILD_PLACEHOLDER, Family, family_for_device, family_from_conn, family_mentions,
-    redact_family, redact_with_names, reletter_siblings, scrub_child_name,
+    CHILD_PLACEHOLDER, OTHER_CHILD, Family, family_for_device, family_from_conn,
+    family_mentions, redact_family, redact_with_names, relabel_name, reletter_siblings,
+    scrub_child_name,
 )
 from app.services.sensitive_content import is_harmful, must_not_remember
 
@@ -230,9 +231,12 @@ def clean_fact_text(text: str, family: FamilyOrNames = None,
     """
     if not isinstance(text, str):
         return None
-    t = _redact(text, family, subject_id)
-    t = t.replace("\r", " ").replace("\n", " ").replace("\t", " ")
-    t = _STRUCTURE_RE.sub("", t)
+    # One line, single spaces, prompt-structure characters turned into spaces
+    # — all BEFORE the names are looked for (PR #39 review): «عبد  الله»
+    # across two spaces is still the name, and «أحمد|نور» must not become
+    # «أحمدنور» — nor «أح*مد» «أحمد» — after the search has run.
+    t = re.sub(r"\s+", " ", _STRUCTURE_RE.sub(" ", text))
+    t = _redact(t, family, subject_id)
     t = re.sub(r"\s+", " ", t).strip().strip("\"'«»“”").strip()
     if _URL_RE.search(t) or _PHONE_RE.search(t):
         return None
@@ -303,6 +307,22 @@ def _generation(device_id: str) -> int:
     finally:
         conn.close()
     return int(row["generation"]) if row is not None and row["generation"] is not None else 0
+
+
+def memory_generation(device_id: Optional[str]) -> Optional[int]:
+    """The erase generation now, or None (no device, or unreadable).
+
+    Read when a question arrives — BEFORE its family is read for redaction —
+    and handed to the extraction that follows the answer (PR #39 review): a
+    child deleted while the answer streamed bumps it, so what was learned from
+    a question redacted for the old family is refused rather than stored with
+    a name or a letter that now means someone else."""
+    if not device_id:
+        return None
+    try:
+        return _generation(device_id)
+    except sqlite3.Error:
+        return None
 
 
 def record_tz_offset(device_id: str, tz_offset_minutes: Optional[int]) -> None:
@@ -631,13 +651,21 @@ def add_manual_fact(device_id: str, child_id: int, category: str, fact: str) -> 
     """A fact the parent typed. Refused while memory is off (MemoryOffError):
     off means nothing new goes in, whoever brings it — the parent turns memory
     on to add. Editing, confirming, rejecting and deleting stay open while off:
-    they are the parent's control over what is already kept."""
+    they are the parent's control over what is already kept.
+
+    The family is read under the write lock (PR #39 review): a sibling deleted
+    a moment ago — its letters already rewritten — must not come back in this
+    text under its old letter."""
     if category not in CATEGORIES:
         raise FactValidationError("category")
-    cleaned = _validated_manual(fact, family_for_device(device_id), child_id)
     conn = get_conn()
     try:
         conn.execute("BEGIN IMMEDIATE")
+        try:
+            cleaned = _validated_manual(fact, family_from_conn(conn, device_id), child_id)
+        except FactValidationError:
+            conn.rollback()
+            raise
         if not _switch_on(conn, device_id):
             conn.rollback()
             raise MemoryOffError("memory_off")
@@ -663,32 +691,39 @@ def update_fact(
     fact: Optional[str] = None, category: Optional[str] = None,
     status: Optional[str] = None,
 ) -> Optional[dict]:
-    """Parent edit. An edited fact becomes the parent's (source parent_manual)."""
+    """Parent edit. An edited fact becomes the parent's (source parent_manual).
+    Cleaned with the family as it is under the write lock (add_manual_fact)."""
     current = get_fact(device_id, child_id, fact_id)
     if current is None:
         return None
-    sets: list[str] = []
-    params: list = []
-    if fact is not None:
-        cleaned = _validated_manual(fact, family_for_device(device_id), child_id)
-        sets += ["fact = ?", "lang = ?", "source = 'parent_manual'", "confidence = 1.0"]
-        params += [cleaned, lang_of(cleaned)]
-    if category is not None:
-        if category not in CATEGORIES:
-            raise FactValidationError("category")
-        sets.append("category = ?")
-        params.append(category)
-    if status is not None:
-        if status not in ("active", "rejected"):
-            raise FactValidationError("status")
-        sets.append("status = ?")
-        params.append(status)
-    if not sets:
+    if fact is None and category is None and status is None:
         return current
-    sets.append("updated_at = ?")
-    params.append(_ts(_now()))
     conn = get_conn()
     try:
+        conn.execute("BEGIN IMMEDIATE")
+        sets: list[str] = []
+        params: list = []
+        try:
+            if fact is not None:
+                cleaned = _validated_manual(fact, family_from_conn(conn, device_id), child_id)
+                sets += ["fact = ?", "lang = ?", "source = 'parent_manual'",
+                         "confidence = 1.0"]
+                params += [cleaned, lang_of(cleaned)]
+            if category is not None:
+                if category not in CATEGORIES:
+                    raise FactValidationError("category")
+                sets.append("category = ?")
+                params.append(category)
+            if status is not None:
+                if status not in ("active", "rejected"):
+                    raise FactValidationError("status")
+                sets.append("status = ?")
+                params.append(status)
+        except FactValidationError:
+            conn.rollback()
+            raise
+        sets.append("updated_at = ?")
+        params.append(_ts(_now()))
         conn.execute(
             f"UPDATE child_facts SET {', '.join(sets)} "
             "WHERE id = ? AND device_id = ? AND child_id = ?",
@@ -733,9 +768,38 @@ def delete_child_memory(device_id: str, child_id: int) -> dict:
         conn.close()
 
 
-# Memory texts that can carry a sibling placeholder: (table, column). A
-# follow-up's note is kept as the parent typed it and never reaches a model.
+# Memory texts that can carry a sibling placeholder or a child's name:
+# (table, column). A follow-up's note is kept as the parent typed it: it never
+# reaches a model, so a rename leaves it alone — but a deleted child's name
+# goes from it too.
 _SIBLING_TEXTS = (("child_facts", "fact"), ("followups", "strategy"))
+_NOTE_TEXTS = (("followups", "note"),)
+
+
+def _memory_tables(conn: sqlite3.Connection) -> set[str]:
+    return {r[0] for r in conn.execute(
+        "SELECT name FROM sqlite_master WHERE type = 'table' AND name IN (?, ?, ?)",
+        ("child_facts", "followups", "child_memory_settings"))}
+
+
+def _rewrite_texts(conn: sqlite3.Connection, device_id: str, columns, present: set[str],
+                   rewrite, *, skip_child: Optional[int] = None) -> int:
+    """Apply `rewrite(text, owner_child_id)` to every row of `columns` of the
+    device (but `skip_child`'s); store what changed. Returns rows changed."""
+    changed = 0
+    for table, column in columns:
+        if table not in present:
+            continue
+        for r in conn.execute(
+                f"SELECT id, {column}, child_id FROM {table} WHERE device_id = ? "
+                "AND child_id != ?", (device_id, -1 if skip_child is None else skip_child)
+        ).fetchall():
+            text = r[1] or ""
+            new = rewrite(text, r[2])
+            if new != text:
+                conn.execute(f"UPDATE {table} SET {column} = ? WHERE id = ?", (new, r[0]))
+                changed += 1
+    return changed
 
 
 def forget_sibling(conn: sqlite3.Connection, device_id: str, child_id: int) -> int:
@@ -747,35 +811,71 @@ def forget_sibling(conn: sqlite3.Connection, device_id: str, child_id: int) -> i
     a child moves every later sibling's letter. Every other child's facts and
     follow-up strategies are rewritten for the family that remains: a sibling
     keeps meaning the same child under its new letter, and the deleted child —
-    by letter, or by a name written before it had a profile — becomes «طفل
-    آخر». No name is written anywhere. The erase generation is bumped too: an
+    by letter, or by a name written before it had a profile (or typed in a
+    note) — becomes «طفل آخر». No name is written anywhere. A child named
+    «طفلي» (the app's default) has no name to look for: its siblings' own
+    «طفلي» is theirs (PR #39 review). The erase generation is bumped too: an
     extraction in flight redacted with the old letters must not land after.
     """
-    present = {r[0] for r in conn.execute(
-        "SELECT name FROM sqlite_master WHERE type = 'table' AND name IN (?, ?, ?)",
-        ("child_facts", "followups", "child_memory_settings"))}
+    present = _memory_tables(conn)
     before = family_from_conn(conn, device_id)
     after = Family(tuple(m for m in before.members if m[0] != child_id))
+    keep = [n for _, n in after.members]
     row = conn.execute("SELECT name FROM child_profiles WHERE id = ? AND device_id = ?",
                        (child_id, device_id)).fetchone()
     name = (row[0] or "").strip() if row is not None else ""
     # A name another child still carries is that child's to redact, not ours.
-    if len(name) < 2 or any(_norm(name) == _norm(n) for _, n in after.members):
+    if len(name) < 2 or any(_norm(name) == _norm(n) for n in keep):
         name = ""
-    changed = 0
-    for table, column in _SIBLING_TEXTS:
-        if table not in present:
-            continue
-        for r in conn.execute(
-                f"SELECT id, {column}, child_id FROM {table} "
-                "WHERE device_id = ? AND child_id != ?",
-                (device_id, child_id)).fetchall():
-            text = r[1] or ""
-            new = reletter_siblings(scrub_child_name(text, name) if name else text,
-                                    before, after, owner=r[2])
-            if new != text:
-                conn.execute(f"UPDATE {table} SET {column} = ? WHERE id = ?", (new, r[0]))
-                changed += 1
+
+    def rewrite(text: str, owner: int) -> str:
+        if name:
+            text = scrub_child_name(text, name, keep)
+        return reletter_siblings(text, before, after, owner=owner)
+
+    changed = _rewrite_texts(conn, device_id, _SIBLING_TEXTS + _NOTE_TEXTS, present,
+                             rewrite, skip_child=child_id)
+    if "child_memory_settings" in present:
+        bump_generation(conn, device_id)
+    return changed
+
+
+def on_child_renamed(conn: sqlite3.Connection, device_id: str, child_id: int,
+                     old_name: str, before: Family) -> int:
+    """Called inside the transaction that renamed `child_id`, after the UPDATE
+    (routers/children.py, PATCH). `before`: the family read before it.
+
+    A rename can move the child across the 2-character floor and so shift
+    every later sibling's letter: the memory texts are re-lettered, as on a
+    deletion. And the old name, once it is not the child's name, is no longer
+    redacted on its way into a prompt: wherever a fact or a strategy still
+    carries it (written before the child had a profile), it becomes the
+    child's placeholder now (PR #39 review). Notes stay as the parent typed
+    them — they never reach a model. Returns how many texts changed."""
+    present = _memory_tables(conn)
+    after = family_from_conn(conn, device_id)
+    current = dict(after.members)
+    old = (old_name or "").strip()
+    others = [n for cid, n in after.members if cid != child_id]
+    if len(old) < 2 or (child_id in current and _norm(old) == _norm(current[child_id])) \
+            or any(_norm(old) == _norm(n) for n in others):
+        old = ""
+    moved = [cid for cid, _ in before.members] != [cid for cid, _ in after.members]
+    if not old and not moved:
+        return 0
+
+    def rewrite(text: str, owner: int) -> str:
+        if moved:
+            text = reletter_siblings(text, before, after, owner=owner)
+        if old:
+            if child_id in current:
+                label = after.placeholder(child_id, subject_id=owner)
+            else:                       # renamed below the floor: no letter now
+                label = CHILD_PLACEHOLDER if owner == child_id else OTHER_CHILD
+            text = relabel_name(text, old, label, others)
+        return text
+
+    changed = _rewrite_texts(conn, device_id, _SIBLING_TEXTS, present, rewrite)
     if "child_memory_settings" in present:
         bump_generation(conn, device_id)
     return changed
@@ -1186,17 +1286,23 @@ def extraction_budget_ok() -> bool:
 def extract_and_store(
     device_id: str, child_id: int, *, question: str, answer: str,
     age_group: str = "", source_message_id: Optional[int] = None,
-    proven: bool = False,
+    proven: bool = False, generation: Optional[int] = None,
 ) -> Optional[dict]:
     """One extraction pass. Synchronous; call it from a worker thread.
 
     `proven`: the asking session proved it holds the phone (§9.0) — nothing is
-    learned from a session that did not. Returns the store stats, or None when
-    nothing was attempted. Never raises.
+    learned from a session that did not. `generation`: the erase generation
+    when the question arrived (memory_generation) — anything learned is
+    refused if a child was deleted, or memory erased, since. Returns the store
+    stats, or None when nothing was attempted. Never raises.
     """
     try:
         if not collection_allowed(device_id, proven=proven):
             return None
+        # The generation before the family: a deletion between the two would
+        # otherwise pass the write check with the old family's letters.
+        if generation is None:
+            generation = _generation(device_id)
         if is_harmful(question or ""):
             logger.info("child memory: sensitive disclosure — not remembered")
             return None
@@ -1221,7 +1327,6 @@ def extract_and_store(
         provider = aux_cloud_provider(timeout=EXTRACT_TIMEOUT_S)
         if provider is None:
             return None
-        generation = _generation(device_id)
         red_q = redact_family(question or "", family, child_id)
         red_a = redact_family(answer or "", family, child_id)
         conn = get_conn()
@@ -1266,9 +1371,10 @@ _QUEUE_LOCK = threading.Lock()
 def schedule_extraction(
     device_id: Optional[str], child_id: Optional[int], *, question: str,
     answer: str, age_group: str = "", source_message_id: Optional[int] = None,
-    proven: bool = False,
+    proven: bool = False, generation: Optional[int] = None,
 ) -> Optional[Future]:
-    """Fire-and-forget extraction. Returns the future (tests wait on it)."""
+    """Fire-and-forget extraction. Returns the future (tests wait on it).
+    `generation`: memory_generation() from when the question arrived."""
     if not device_id or child_id is None or not (answer or "").strip() or not proven:
         return None
     with _QUEUE_LOCK:
@@ -1280,6 +1386,7 @@ def schedule_extraction(
                 extract_and_store, device_id, child_id, question=question,
                 answer=answer, age_group=age_group,
                 source_message_id=source_message_id, proven=proven,
+                generation=generation,
             )
         except Exception:  # noqa: BLE001 — e.g. executor shut down at exit
             logger.warning("child memory: could not schedule extraction", exc_info=True)
@@ -1444,27 +1551,20 @@ def answer_followup(
         raise FollowupStateError(current["status"])
     if not memory_enabled(device_id):
         return _not_remembered(current)
-    family = family_for_device(device_id)
-    child_id = current["child_id"]
-    note_dropped = False
-    clean_note = None
     raw_note = (note or "").strip()[:MAX_NOTE_CHARS] or None
-    if raw_note:
-        if must_not_remember(raw_note):
-            raw_note, note_dropped = None, True
-        else:
-            clean_note = clean_fact_text(raw_note, family, child_id)
-    lang = current["lang"] or "ar"
-    fact_text = outcome_fact_text(current["strategy"], outcome, clean_note, lang)
-    fact_text = (clean_fact_text(fact_text, family, child_id) or fact_text)[:MAX_OUTCOME_FACT_CHARS]
+    note_dropped = bool(raw_note) and must_not_remember(raw_note)
+    if note_dropped:
+        raw_note = None
     conn = get_conn()
     try:
         conn.execute("BEGIN IMMEDIATE")
-        # Asked again under the write lock: the switch may have gone off, and
-        # an erase or another answer may have closed the follow-up meanwhile —
-        # an outcome fact must never outlive the erase that removed its row.
+        # Asked again under the write lock: the switch may have gone off, an
+        # erase or another answer may have closed the follow-up, and a
+        # sibling's deletion may have rewritten its strategy's letters — so the
+        # follow-up and the family are read here, and the texts built from
+        # them (PR #39 review). An outcome fact never outlives an erase.
         row = conn.execute(
-            "SELECT status FROM followups WHERE id = ? AND device_id = ?",
+            "SELECT * FROM followups WHERE id = ? AND device_id = ?",
             (followup_id, device_id),
         ).fetchone()
         if row is None:
@@ -1475,7 +1575,13 @@ def answer_followup(
             raise FollowupStateError(row["status"])
         if not _switch_on(conn, device_id):
             conn.rollback()
-            return _not_remembered(current)
+            return _not_remembered(followup_to_dict(row))
+        child_id, strategy, lang = row["child_id"], row["strategy"], row["lang"] or "ar"
+        family = family_from_conn(conn, device_id)
+        clean_note = clean_fact_text(raw_note, family, child_id) if raw_note else None
+        fact_text = outcome_fact_text(strategy, outcome, clean_note, lang)
+        fact_text = (clean_fact_text(fact_text, family, child_id)
+                     or fact_text)[:MAX_OUTCOME_FACT_CHARS]
         # The previous outcome for the same strategy, if any, is the fact to
         # update: the newest result wins rather than a second, contradictory one.
         earlier = conn.execute(
@@ -1486,8 +1592,8 @@ def answer_followup(
             (device_id, child_id, followup_id),
         ).fetchall()
         target = next((r["fid"] for r in earlier
-                       if _norm(r["strategy"]) == _norm(current["strategy"])
-                       or (_similar(r["strategy"], current["strategy"]))), None)
+                       if _norm(r["strategy"]) == _norm(strategy)
+                       or _similar(r["strategy"], strategy)), None)
         now = _ts(_now())
         if target is not None:
             conn.execute(
