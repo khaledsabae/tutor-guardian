@@ -267,6 +267,9 @@ def test_blocking_honours_only_adjudications_bound_to_this_text(rp, tree):
 def test_arabic_left_in_english_is_leakage_except_where_it_belongs(rp):
     assert rp.leaked_arabic("Be gentle ﷺ ﴿وَقُل رَّبِّ﴾ «خيركم»") == ""
     assert rp.leaked_arabic("تربية الأولاد في الإسلام") != ""
+    # A letter named as a letter is the subject, not untranslated text.
+    assert rp.leaked_arabic("most children master ب (ba), م (meem) and ت early") == ""
+    assert rp.leaked_arabic("say بسم before eating") != ""
 
 
 def test_deterministic_layer_catches_what_actually_shipped(rp):
@@ -379,3 +382,42 @@ def test_a_fix_lands_in_the_simplified_text_not_the_original(rp, tmp_path):
     rp.apply_arabic(item, {"text_simplified": "للوسائط"})
     assert ar.read_text(encoding="utf-8") == \
         '{\n  "text_original": "لل mediated",\n  "text_simplified": "للوسائط"\n}'
+
+
+def test_an_adjudication_can_excuse_a_deliberate_omission_but_never_a_certainty(rp, tree):
+    item = _lesson(rp)
+    det = [{"field": "summary", "type": "omission", "severity": "high", "side": "english",
+            "why": "no English"},
+           {"field": "summary", "type": "hadith", "severity": "high", "side": "english",
+            "why": "invented isnad"}]
+    v = rp.Verdict(item, det=det)
+    adj = {"lesson_x": {"content_sha256": item.sha, "overrides": [
+        {"field": "summary", "type": "omission", "reason": "hadith outside the Sahihayn not carried over"},
+        {"field": "summary", "type": "hadith", "reason": "trying to excuse an invented isnad"}]}}
+    left = v.blocking(rp.adjudicated_for(item, adj))
+    assert [d["type"] for d in left] == ["hadith"]
+
+
+def test_a_fabricated_unit_leaves_with_its_source_and_the_index_stays_true(rp, tree, monkeypatch):
+    units = tree / "knowledge_base" / "units"
+    ar = {"id": "isl-x", "domain": "islamic_parenting", "title": "تحليل سلوك ناطقشلا",
+          "text_simplified": "مفهوم 'ناطقشلا' سلوك عدواني"}
+    en = {**ar, "id": "isl-x__en", "title": "Analysing Natiqshila", "text_simplified": "x",
+          "translation": {"approved_by": None}}
+    (units / "isl-x.json").write_text(json.dumps(ar, ensure_ascii=False))
+    (units / "isl-x__en.json").write_text(json.dumps(en, ensure_ascii=False))
+    index = tree / "knowledge_base" / "units_index.json"
+    index.write_text(json.dumps({"total_units": 3, "by_domain": {"islamic_parenting": 3},
+                                 "units": [{"id": "isl-x", "domain": "islamic_parenting"},
+                                           {"id": "isl-x__en", "domain": "islamic_parenting"},
+                                           {"id": "keep", "domain": "islamic_parenting"}]},
+                                indent=2))
+    monkeypatch.setattr(rp, "UNITS_INDEX", index)
+    monkeypatch.setattr(rp, "UNPUBLISHED", tree / "ops" / "data" / "en_unpublished")
+    (item,) = rp.collect_units()
+    rp.cmd_unpublish([item], "summary invents a meaning for reversed PDF letters", with_source=True)
+    assert not (units / "isl-x.json").exists() and not (units / "isl-x__en.json").exists()
+    idx = json.loads(index.read_text())
+    assert idx["total_units"] == 1 and idx["by_domain"]["islamic_parenting"] == 1
+    assert [u["id"] for u in idx["units"]] == ["keep"]
+    assert not index.read_text().endswith("\n")          # format kept as found

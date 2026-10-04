@@ -538,10 +538,15 @@ def _as_text(v: Any) -> str:
     return v if isinstance(v, str) else ("" if v is None else str(v))
 
 
+# حرف عربي مفرد يُذكر بوصفه حرفًا («يتقن الطفل ب (ba) وم (meem) مبكرًا») ليس
+# نصًّا لم يُترجم — هو موضوع الجملة. وحدة النطق c456b140 أُوقفت به وهي سليمة.
+_LONE_LETTER = re.compile(r"(?<![\u0600-\u06ff])[\u0621-\u064a](?![\u0600-\u06ff])")
+
+
 def leaked_arabic(text: str) -> str:
-    """العربي المتبقّي في نص إنجليزي خارج المواضع المسموحة (آية ﴿﴾، اقتباس، تبجيل)."""
+    """العربي المتبقّي في نص إنجليزي خارج المواضع المسموحة (آية ﴿﴾، اقتباس، تبجيل، حرف مفرد)."""
     stripped = HONORIFICS.sub("", ALLOWED_ARABIC_SPANS.sub("", text))
-    return "".join(ARABIC.findall(stripped))
+    return "".join(ARABIC.findall(_LONE_LETTER.sub("", stripped)))
 
 
 def deterministic_defects(item: Item) -> list[dict]:
@@ -1008,6 +1013,9 @@ def adjudicated_for(item: Item, adj: dict) -> list[dict]:
     return [r for r in rec.get("overrides", []) if r.get("reason")]
 
 
+OVERRIDABLE_DET = frozenset({"omission", "leakage"})
+
+
 def _matches_override(d: dict, overrides: list[dict]) -> bool:
     for o in overrides:
         if o.get("field") == d.get("field") and o.get("type", d.get("type")) == d.get("type"):
@@ -1027,7 +1035,11 @@ class Verdict:
     unreviewed: list = field(default_factory=list)  # models that returned nothing
 
     def blocking(self, overrides: list[dict]) -> list[dict]:
-        out = [d for d in self.det]
+        # نقضٌ موثَّق قد يغطّي «حذفًا» أو «تسرّبًا» حتميًّا مقصودًا (حديث خارج
+        # الصحيحين لا يُنقل إلى الإنجليزية) — لا يغطّي أبدًا حقنة مسرد ولا إسنادًا
+        # مخترعًا ولا عرض قرآن ولا كسر بنية: تلك يقين لا رأي.
+        out = [d for d in self.det
+               if not (d["type"] in OVERRIDABLE_DET and _matches_override(d, overrides))]
         for model, ds in self.defects.items():
             for d in ds:
                 if d["severity"] in BLOCKING and not _matches_override(d, overrides):
@@ -1463,23 +1475,64 @@ def cmd_inventory(kinds: list[str]) -> None:
     print(f"  {'stories':12} {len(miss)}  {' '.join(miss)}")
 
 
-def cmd_unpublish(items: list[Item], reason: str) -> None:
-    """ينقل الترجمة خارج ما يُحمَّل؛ المستخدم الإنجليزي يرجع للعربي. لا حذف."""
+UNITS_INDEX = ROOT / "knowledge_base" / "units_index.json"
+
+
+def _drop_from_units_index(unit_ids: list[str]) -> None:
+    """يُخرج الوحدات المسحوبة من units_index.json تعديلًا لا إعادة توليد.
+
+    check_kb_integrity يُوقف الـcommit إن خالف total_units عدد الملفات، وإعادة
+    التوليد الكاملة (build_vector_db) تلمس ١٧٧٦ مدخلًا وطابعًا زمنيًّا — تعارضٌ مضمون
+    مع كل فرع آخر يمسّ الوحدات.
+    """
+    if not UNITS_INDEX.exists() or not unit_ids:
+        return
+    idx = _load(UNITS_INDEX)
+    gone = set(unit_ids)
+    kept = []
+    for u in idx.get("units", []):
+        if u.get("id") in gone:
+            dom = u.get("domain")
+            if dom in idx.get("by_domain", {}):
+                idx["by_domain"][dom] -= 1
+            continue
+        kept.append(u)
+    idx["units"] = kept
+    idx["total_units"] = len(kept)
+    _dump(UNITS_INDEX, idx)
+
+
+def cmd_unpublish(items: list[Item], reason: str, with_source: bool = False) -> None:
+    """ينقل الترجمة خارج ما يُحمَّل؛ المستخدم الإنجليزي يرجع للعربي. لا حذف.
+
+    `with_source` لوحدات المعرفة فقط: حين يثبت أن **المصدر العربي نفسه** مختلَق أو
+    تالف بلا رجعة (ملخّص اخترع معنى لحروف PDF مقلوبة)، فبقاؤه حيًّا في الاسترجاع
+    العربي هو الخيار الأقل أمانًا وإن بدا محافظًا.
+    """
     if not reason:
         sys.exit("❌ --reason مطلوب: السحب بلا سبب مكتوب لا يُراجَع")
     manifest_p = UNPUBLISHED / "MANIFEST.json"
     manifest = _load(manifest_p) if manifest_p.exists() else []
+    dropped_ids: list[str] = []
     for it in items:
         if it.kind not in ("lessons", "paths", "daily_tips", "kb_units"):
             sys.exit(f"❌ {it.kind}: لا سحب لملف متعدد العناصر — أصلحه أو أعد العنصر للعربي")
-        dest = UNPUBLISHED / it.kind / it.en_file.name
-        dest.parent.mkdir(parents=True, exist_ok=True)
-        shutil.move(str(it.en_file), dest)
-        manifest.append({"key": it.key, "kind": it.kind, "from": it.rel(),
-                         "to": str(dest.relative_to(ROOT)), "reason": reason,
-                         "on": date.today().isoformat()})
-        print(f"  ↩︎ {it.key} → {dest.relative_to(ROOT)}")
+        moves = [(it.en_file, UNPUBLISHED / it.kind / it.en_file.name)]
+        if with_source:
+            if it.kind != "kb_units":
+                sys.exit("❌ --with-source لوحدات المعرفة فقط")
+            moves.append((it.ar_file, UNPUBLISHED / "kb_units_source" / it.ar_file.name))
+        for src, dest in moves:
+            dest.parent.mkdir(parents=True, exist_ok=True)
+            if it.kind == "kb_units":
+                dropped_ids.append(_load(src).get("id", src.stem))
+            shutil.move(str(src), dest)
+            manifest.append({"key": it.key, "kind": it.kind, "from": str(src.relative_to(ROOT)),
+                             "to": str(dest.relative_to(ROOT)), "reason": reason,
+                             "on": date.today().isoformat()})
+            print(f"  ↩︎ {src.relative_to(ROOT)} → {dest.relative_to(ROOT)}")
     _dump(manifest_p, manifest)
+    _drop_from_units_index(dropped_ids)
 
 
 _AYAH_SPAN = re.compile(r"﴿[^﴾]*﴾")
@@ -1568,6 +1621,8 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--date", help="تاريخ الختم (افتراضيًّا اليوم)")
     ap.add_argument("--reason", default="")
+    ap.add_argument("--with-source", action="store_true",
+                    help="unpublish: اسحب المصدر العربي أيضًا (وحدات المعرفة المختلَقة فقط)")
     ap.add_argument("--report", type=Path)
     ap.add_argument("--staged", action="store_true",
                     help="check: فقط الوحدات التي يمسّ الـcommit ترجمتها أو مصدرها (pre-commit)")
@@ -1600,7 +1655,7 @@ def main(argv: list[str] | None = None) -> int:
     if args.limit:
         items = items[:args.limit]
     if args.command == "unpublish":
-        cmd_unpublish(items, args.reason)
+        cmd_unpublish(items, args.reason, args.with_source)
         return 0
 
     set_concurrency(args.max_concurrent)
