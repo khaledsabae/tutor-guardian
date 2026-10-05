@@ -1,0 +1,33 @@
+{
+  "id": "app-f59d4579",
+  "domain": "app_help",
+  "title": "كيف أستعمل المسارات والدروس في تبويب «التعلّم»؟",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "دليل التطبيق: المسارات والدروس",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_info": "دليل تطبيق «المربّي» — «التعلّم»: المسارات والدروس",
+  "text_original": "مصدر الوحدة تطبيق «المربّي» نفسه. نصوص الواجهة (mobile/lib/l10n/app_ar.arb): navLearn: «التعلّم» · pathsReaderBanner: «📖 هذه الدروس تقرؤها أنت — ثم تطبّقها مع طفلك.» · pathsFilterAll: «الكل» · pathDetailDays: «⏱️ {count} يوم» · pathDetailStart: «ابدأ المسار» · pathDetailContinue: «واصل المسار» · lessonListenPodcast: «🎧 استمع للبودكاست» · lessonWatchVideo: «🎥 الفيديو التعليمي» · lessonFlashcards: «📇 فلاش كاردز ({count} بطاقة)» · lessonQuiz: «❓ اختبر نفسك ({count} سؤال)» · lessonInfographic: «📊 إنفوجرافيك الدرس» · lessonSummary: «ملخص الدرس» · lessonTryThis: «جرّب هذا» · lessonReflections: «أسئلة للتأمل» · lessonMarkComplete: «أتممت هذا الدرس» · lessonNextStepTitle: «خطوتك مع طفلك الليلة» · lessonNextStepIntro: «درسٌ لا يُطبَّق يبقى معلومة. هذه خطوة واحدة، صغيرة، تبدأ بها اليوم.» · favoritesEmptyHint: «اضغط أيقونة القلب ♡ على أي درس أو نصيحة\nلإضافتها هنا والوصول لها بسرعة.» · favoritesTitle: «المفضلة» · pathDetailStreakDays: «🔥 {count} يوم متتالي» · search: «بحث» · helpWhoAreLessonsFor: «لمن هذه الدروس — لي أم لطفلي؟» — ومن الشيفرة والوثائق: lesson_progress في الخادم مفهرس بـchild_id: التقدم محفوظ لكل طفل",
+  "text_simplified": "كيف أستعمل المسارات والدروس؟ دروس «المربّي» تقرؤها أنت أيها الوالد، ثم تطبّقها مع طفلك، وهي مختارة لعمر طفلك النشط.\n• افتح تبويب «التعلّم» من الشريط السفلي، واختر مجالًا من الأعلى أو اترك «الكل».\n• اختر مسارًا لترى دروسه ومدته بالأيام، ثم اضغط «ابدأ المسار» أو «واصل المسار».\n• في الدرس تجد بحسب المتاح: بودكاست، وفيديو، وبطاقات، واختبارًا قصيرًا، وإنفوجرافيك، ثم «ملخص الدرس» و«جرّب هذا» و«أسئلة للتأمل».\n• حين تنتهي اضغط «أتممت هذا الدرس»، فيقترح عليك «خطوتك مع طفلك الليلة»: خطوة واحدة صغيرة تبدأ بها اليوم.\n• احفظ أي درس أو نصيحة بأيقونة القلب، وتجدها في «المزيد» ثم «المفضلة».\n• يُحفظ تقدّمك لكل طفل على حدة، ويعرض المسار عدد أيامك المتتالية.\n• وللبحث عن موضوع معيّن: «المزيد» ثم «بحث».",
+  "labels": [
+    "المسارات",
+    "الدروس",
+    "التعلم",
+    "بودكاست",
+    "فيديو",
+    "المفضلة",
+    "إتمام الدرس",
+    "لمن الدروس"
+  ],
+  "created_at": "2026-10-05T00:00:00Z",
+  "updated_at": "2026-10-05T00:00:00Z",
+  "version": "1.0.0",
+  "source_kind": "authored_guidance",
+  "authored_references": [
+    "تبويب «التعلّم» — mobile/lib/features/program/screens/paths_screen.dart",
+    "المسار والدرس — mobile/lib/features/program/screens/path_detail_screen.dart، lesson_screen.dart",
+    "«المزيد»: «المفضلة» و«بحث» — mobile/lib/features/hub/data/hub_catalog.dart"
+  ],
+  "source_note": "Written 2026-10-05 as app-help guidance from the app code on main (0c9dccd9), which carries every feature of release 1.0.68+113: the UI strings in mobile/lib/l10n/app_ar.arb and the screens named in authored_references. text_original lists the strings and code facts the unit rests on — its provenance, not a passage it summarises."
+}

@@ -188,3 +188,19 @@ domains:
       طارئ:
         require_human_review: true
         escalate_to: "emergency_services"
+
+  app_help:
+    description: >-
+      "كيف يعمل تطبيق «المربّي» نفسه: إضافة الأطفال، وشاشة «اليوم»، ووضع الطفل،
+      والذاكرة، وحذف الحساب، ومجانية التطبيق. ليس محتوى تربويًا، ولا يصل إليه إلا
+      سؤال عن التطبيق (قاعدة app_help في domain_classifier). مجال يمكن الوصول إليه
+      فلا يُترك بلا سياسة، كما تقرّر لـaqeedah وdevelopment."
+    default_policy:
+      require_human_review: false
+    severity_overrides:
+      طارئ:
+        require_human_review: true
+        escalate_to: "emergency_services"
+    notes: >-
+      "يُجاب من وحدات دليل التطبيق وحدها، بخطواتها وأسماء أزرارها كما في التطبيق.
+      وما ليس فيها لا يُخترع: يُدعى الوالد إلى إرساله من «شاركنا رأيك»."

@@ -12,6 +12,7 @@ import json
 import secrets
 import uuid
 
+from app.core.taxonomy import client_domain
 from app.db.init_db import get_conn, hash_token, token_ttl_days
 from app.models.api import ConversationTurn
 
@@ -193,7 +194,11 @@ def add_message(
     classifier has run (so the question survives a failed answer), which
     leaves domain/severity NULL. The caller backfills them through
     `update_classification` once classification completes.
+
+    `domain` is stored as a client may see it (taxonomy.client_domain): the
+    app reads these rows back as chat history and labels them by domain.
     """
+    domain = client_domain(domain)
     conn = get_conn()
     try:
         cur = conn.execute(
@@ -230,8 +235,9 @@ def update_classification(
     """
     sets, params = [], []
     if domain is not None:
+        # Read back by the app as chat history — stored as a client may see it.
         sets.append("domain = ?")
-        params.append(domain)
+        params.append(client_domain(domain))
     if severity is not None:
         sets.append("severity = ?")
         params.append(severity)
@@ -336,7 +342,7 @@ def get_session(session_id: str) -> dict | None:
                 "id": m["id"],
                 "role": m["role"],
                 "content": m["content"],
-                "domain": m["domain"],
+                "domain": client_domain(m["domain"]),
                 "severity": m["severity"],
                 "mode": m["mode"],
                 "needs_human_review": bool(m["needs_human_review"]),

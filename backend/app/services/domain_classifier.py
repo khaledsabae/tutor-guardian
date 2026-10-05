@@ -62,6 +62,83 @@ UNCERTAIN_DOMAINS: Tuple[str, ...] = (
     "medical", "cyber", "fiqh", "development", "aqeedah",
 )
 
+# ── App help: questions about the app itself ──────────────────────────────────
+# Built from parts so each can be read (and tested) on its own; see the note at
+# the rule's place in KEYWORD_RULES. `(?s:.*?)` lets a lookahead see a question
+# written over several lines.
+#
+# 🚨 Every paired lookahead is anchored with `^`. Unanchored, `re.search` retries
+# it at every position and a 4,000-character question (MAX_MESSAGE_CHARS) took
+# 0.15–2 s depending on the machine — on the event loop, since
+# `matched_fast_path` runs there. Anchored it is one pass (~1 ms) with identical
+# results; test_app_help_routing times it.
+_WORD_END = r"(?![ء-ي])"
+# «التطبيق» as the app — not «التطبيقات» (apps in general), not «التطبيقية»,
+# and not «التطبيق العملي/الفعلي» (putting advice into practice).
+_APP_NOUN = (r"(?:ال|هذا\s+ال|بال|فال|وال|لل)تطبيق" + _WORD_END
+             + r"(?!\s+(?:ال)?(?:عملي|فعلي|صحيح|سليم))")
+_APP_ACTION = (
+    r"(?:أضيف|اضيف|إضافة|اضافة|أحذف|احذف|حذف|أمسح|امسح|مسح|أغير|اغير|أغيّر|تغيير|"
+    r"أستخدم|استخدم|استخدام|أستعمل|استعمل|استعمال|يعمل|يشتغل|بيشتغل|شغال|"
+    r"مجان|بفلوس|مدفوع|اشتراك|إعلان|اعلان|حساب|تسجيل|إشعار|اشعار|لغة|الإنجليزي|الانجليزي|"
+    r"نسخة|تحديث|خصوصية|بيانات|العملات|الشارات|المسارات|الدروس|المساعد|الذاكرة|"
+    r"(?:ال|لل|بال)ذكاء\s+(?:ال)?اصطناعي|وضع\s+الطفل|ميزة|مميزات|خاصية|إعدادات|اعدادات|"
+    r"أين\s+أجد|اين\s+اجد)"
+)
+# The WEAK signal: «التطبيق» next to an app action. It is also how parents talk
+# about practice — «بعد التطبيق لمدة أسبوع لم تنجح الطريقة… هل أغير الأسلوب؟»,
+# «يخطئ في التطبيق», «لا يحسن التطبيق في الدروس» — so the keywords alone never
+# decide it. Beside a domain a parenting rule found, `_keyword_fast_path` adds
+# app_help to the search. Alone, the model decides (`_classify_cached`): a
+# parenting domain from the model wins, and when the model finds none —
+# «general», nothing, or no answer at all — the question is about the app.
+_APP_GENERAL = rf"^(?=(?s:.*?){_APP_NOUN})(?=(?s:.*?){_APP_ACTION})"
+# «وضع الطفل» is also "the child's situation" and "putting the child (in front of
+# the TV)": it counts only next to an enter/exit verb, or with a PIN, a passcode,
+# handing over the phone, or «في التطبيق» — never with bare «التطبيق» or «رمز».
+_APP_CHILD_MODE = (
+    r"(?:أخرج|اخرج|الخروج|خروج|أطلع|اطلع)\s+(?:من\s+)?وضع\s+الطفل"
+    r"|(?:أدخل|ادخل|دخول|الدخول\s+(?:إلى|الى|في|ل))\s*وضع\s+الطفل"
+    r"|(?:أفعل|افعل|أفعّل|تفعيل|أشغل|اشغل|تشغيل|أقفل|اقفل|أغلق|اغلق|إغلاق|اغلاق|أفتح|افتح|فتح)"
+    r"\s+وضع\s+الطفل"
+    r"|^(?=(?s:.*?)وضع\s+الطفل)(?=(?s:.*?)(?:(?<![A-Za-z])(?i:pin)(?![A-Za-z])|رمز\s+(?:ال)?(?:بن|القفل|الدخول)"
+    r"|الرقم\s+السري|الرمز\s+السري|كلمة\s+(?:السر|المرور)"
+    r"|(?:في|داخل)\s+(?:التطبيق" + _WORD_END + r"(?!\s+(?:ال)?(?:عملي|فعلي|صحيح|سليم))"
+    r"|تطبيق\s+(?:ال)?مرب)"
+    r"|(?:أسلم|اسلم|أسلّم|تسليم)\s+(?:ال)?(?:جهاز|هاتف|جوال|موبايل)))"
+)
+# Deleting «my account / my data» is about this app only when no other platform
+# is named: «أحذف حسابي على فيسبوك» is a question about Facebook. Google is not
+# in the list: the app's own delete screen talks about the linked Google account.
+_OTHER_PLATFORMS = (
+    r"(?:فيسبوك|فيس\s+بوك|إنستغرام|انستغرام|إنستقرام|انستقرام|انستجرام|انستا|تيك\s*توك|يوتيوب|"
+    r"واتساب|واتس\s*اب|واتس|سناب|تويتر|تلغرام|تلجرام|تليجرام|ديسكورد|روبلوكس|ماينكرافت|ببجي|"
+    r"بابجي|فري\s*فاير|فورتنايت|ستيم|بلايستيشن|بلاي\s+ستيشن|اكس\s*بوكس|إكس\s*بوكس|"
+    r"(?i:facebook|instagram|tiktok|youtube|whatsapp|snapchat|twitter|telegram|discord|roblox|"
+    r"minecraft|pubg|fortnite|steam|playstation|xbox))"
+)
+_APP_DELETE = (
+    rf"^(?!(?s:.*?){_OTHER_PLATFORMS})(?=(?s:.*?)(?:"
+    r"(?:أحذف|احذف|حذف|إلغاء|الغاء|ألغي|الغي)\s+حسابي" + _WORD_END
+    + r"|(?:أحذف|احذف|حذف|أمسح|امسح|مسح)\s+(?:كل\s+)?(?:بياناتي|بيانات\s+(?:أطفالي|اطفالي|طفلي))"
+    + _WORD_END + r"))"
+)
+# Names only the app uses. Bare card names («مهمة اليوم», «خطوة اليوم»,
+# «رمضان العائلة») are not here: parents quote a card to ask about its topic —
+# «مهمة اليوم: كيف أعلم ابني الصدق؟» is a question about truthfulness.
+_APP_FEATURES = (
+    r"ما\s+يعرفه\s+المرب|ذاكرة\s+(?:ال)?مرب"
+    r"|رحلة\s+الصلا[ةه]"
+    r"|مساراتي|اسأل\s+المرب|شاركنا\s+رأيك"
+    r"|عهد\s+المكافآت|بوابة\s+الأهل|الشارات\s+الحصرية|شارات\s+حصرية"
+    r"|(?:أحفظ|احفظ)\s+تقدمي"
+    r"|أراسلكم|اراسلكم|أتواصل\s+معكم|اتواصل\s+معكم|التواصل\s+معكم"
+    r"|تطبيق\s+(?:ال)?مرب|المرب[يّى]\s+(?:مجان|بفلوس|مدفوع)"
+)
+# The STRONG signals — each enough on its own.
+_APP_HELP_RULE = rf"{_APP_CHILD_MODE}|{_APP_DELETE}|{_APP_FEATURES}"
+_APP_GENERAL_RE = re.compile(_APP_GENERAL, re.UNICODE)
+
 # ── Keyword Fast-Path ──────────────────────────────────────────────────────────
 # Maps clear Arabic keywords directly to domains. The key insight:
 # these are unambiguous terms that an LLM would always classify the same way.
@@ -117,6 +194,23 @@ KEYWORD_RULES: List[Tuple[str, str]] = [
      r"|(صحاب|أصحاب|صديق|أصدقاء|رفاق).{0,15}(يدخن|بيدخن)|ضغط\s*(الأقران|أصدقاء|رفاق)|تدخين|سجاير|سيجارة|إدمان\s*النيكوتين|نيكوتين", "medical"),
     # Development — milestones, physical growth (expanded: more milestone phrases)
     (r"مشي|يمشي|حبو|زحف|أسنان|تسنين|نمو|تطور|مهارات\s*حركية|مهارات\s*حسية|مراحل\s*عمرية|شهور|سنين|وزن|طول|رضاعة|فطام|طعام|أكل|يأكل|تغذية|تدريب\s*حمام|نونية|كلام|كلمات|جمل|يتكلم|تحدث|تواصل|نظرة|ابتسامة|ملامسة|إمساك|جلوس|يجلس|وقوف|يقف|عناق|تفاعل|اجتماعي|لعب|يلعب|ألعاب\s*تعليمية|مهارات.*يدوية|تدخل\s*مبكر|تطعيم|تحصين|أطفال.*رضع|مولود|حديث.*ولادة|منعكس|انعكاس|حواس|بصر|سمع|milestone|CDC|نمو.*طفل|تطور.*طفل|النمو|التطور|المشي|الحبو|الكلام|النطق|لا\s*يبتسم|لا\s*يجلس|لا\s*يمسك\s*الرضاعة|لا\s*يكلم|لا\s*يستعمل\s*الحمام|لا\s*يركض|متأخر\s*في\s*النمو|تأخر\s*في\s*النمو|أكل\s*رمل|يأكل\s*رمل|يضرب\s*نفسها|تضرب\s*نفسها", "development"),
+    # App help — a question about «المربّي» itself (adding a child, child mode,
+    # memory, deleting the account, is it free…). Without this rule such a
+    # question went to the model classifier, came back "general", and was
+    # answered with no retrieval at all — so the app-help units could never be
+    # found and the model was left to guess at menus. Last on purpose: when a
+    # question also matches a parenting rule («رحلة الصلاة» → fiqh), that
+    # domain stays the label and both are searched.
+    #
+    # Narrow by construction (tests: test_app_help_routing.py). Only strong
+    # signals live in this rule: names only the app uses, «وضع الطفل» with an
+    # enter/exit verb or a PIN, and deleting «حسابي/بياناتي» when no other
+    # platform is named. «التطبيق» + an app action is NOT here — parents say
+    # «التطبيق» for putting advice into practice — it is the weak signal that
+    # `_keyword_fast_path` handles after this list (alone → the model decides).
+    # Card names are never triggers: «نصيحة اليوم» starts 28% of questions, and
+    # «مهمة اليوم»/«خطوة اليوم»/«رمضان العائلة» are quoted to ask about a topic.
+    (_APP_HELP_RULE, "app_help"),
 ]
 
 # Compile patterns once at module load
@@ -154,6 +248,13 @@ def _keyword_fast_path(question: str) -> Optional[List[str]]:
         if pattern.search(question):
             if domain not in matched:
                 matched.append(domain)
+    if "app_help" not in matched and _APP_GENERAL_RE.search(question):
+        # The weak app signal (see _APP_GENERAL): beside a parenting domain it
+        # adds app_help to the search; alone it defers to the model
+        # (_classify_cached).
+        if not matched:
+            return None
+        matched.append("app_help")
     if matched:
         logger.debug("Keyword fast-path matched '%s...' → %s", question[:40], matched)
         return matched
@@ -195,6 +296,11 @@ def _mentions_own_child(question: str) -> bool:
     return bool(_OWN_CHILD_RE.search(question))
 
 
+def _weak_app_signal(question: str) -> bool:
+    """«التطبيق» next to an app action — the weak app signal (see _APP_GENERAL)."""
+    return bool(_APP_GENERAL_RE.search(question))
+
+
 def _parse_domains(raw: str, question: str) -> Optional[List[str]]:
     """Extract the domain list from the model's JSON answer, or None."""
     start = raw.find("{")
@@ -223,7 +329,11 @@ def _parse_domains(raw: str, question: str) -> Optional[List[str]]:
             # that, but a prompt is guidance, not a guarantee. When the parent
             # is plainly talking about their own child we refuse the verdict
             # and search broadly instead: a diluted answer beats none.
-            if _mentions_own_child(question):
+            #
+            # Except beside the weak app signal: there «general» means "about the
+            # app, not the child" — «كيف أضيف طفلي الثاني في التطبيق؟» — and
+            # _classify_cached turns it into app_help.
+            if _mentions_own_child(question) and not _weak_app_signal(question):
                 logger.info(
                     "Overriding 'general' — question is about the parent's child: '%s...'",
                     question[:40],
@@ -270,6 +380,11 @@ def _classify_cached(question: str) -> Tuple[str, ...]:
         return tuple(fast_result)
 
     llm_result = _call_llm(question)
+    if llm_result == ["general"] and _weak_app_signal(question):
+        # «التطبيق» + an app action, and the model found no parenting domain:
+        # a question about the app. A parenting domain from the model is kept
+        # as it is — «بعد التطبيق لمدة أسبوع لم تنجح الطريقة…» stays parenting.
+        return ("app_help",)
     if llm_result:
         return tuple(llm_result)
 
@@ -293,11 +408,33 @@ def classify_domains(question: str) -> List[str]:
     try:
         return list(_classify_cached(question))
     except _ClassificationUnavailable:
+        fallback = fallback_domains(question)
         logger.info(
-            "All classifier tiers failed for '%s...' — searching all domains",
-            question[:40],
+            "All classifier tiers failed for '%s...' — searching %s",
+            question[:40], fallback,
         )
+        return fallback
+
+
+def fallback_domains(question: str) -> List[str]:
+    """The domains for a question the model gave no verdict on — down, slow,
+    unparseable, or naming no domain.
+
+    The keywords' verdict when they have one (the router's deadline can expire
+    before a busy executor even ran the fast path). Otherwise the broad search,
+    UNCERTAIN_DOMAINS — except when «التطبيق» + an app action is the only
+    evidence: then the model's silence reads like its «general», no parenting
+    domain was found, and the question goes to app_help. Computed, never
+    cached — once the model is back, the next call gets its verdict.
+    """
+    if not question or not question.strip():
         return list(UNCERTAIN_DOMAINS)
+    fast = _keyword_fast_path(question)
+    if fast:
+        return fast
+    if _weak_app_signal(question):
+        return ["app_help"]
+    return list(UNCERTAIN_DOMAINS)
 
 
 def is_uncertain(domains: Sequence[str]) -> bool:
