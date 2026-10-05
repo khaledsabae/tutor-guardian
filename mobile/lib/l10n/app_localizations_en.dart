@@ -2146,7 +2146,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String coinsEarnInviteDesc(Object count) {
-    return '+$count coins per friend who installs';
+    return '+$count coins for each family that joins through your invite';
   }
 
   @override
@@ -4010,7 +4010,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String inviteCoinsNote(int coins) {
-    return 'And a small in-app thank-you: $coins coins for you per family that joins, and $coins for your friend — within the daily coin limit.';
+    return 'And a small in-app thank-you: $coins coins for you per family that joins, and $coins for your friend — paid in full, a day later if you have reached the daily coin limit.';
   }
 
   @override

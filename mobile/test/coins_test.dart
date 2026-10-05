@@ -50,6 +50,25 @@ void main() {
       expect(state.balance, lessThanOrEqualTo(CoinsService.dailyEarnCap));
     });
 
+    test('a badge that does not fit today waits and is paid in full later', () async {
+      // An invite on a busy day used to pay 10 of 50: the badge was marked
+      // credited, then clipped by the ceiling, and the rest was lost.
+      await CoinsService.instance.earn(CoinsService.dailyEarnCap - 10);
+      await CoinsService.instance.creditBadges(['referral_invite_1']);
+      expect((await CoinsService.instance.read()).balance, CoinsService.dailyEarnCap - 10,
+          reason: 'no room for a whole badge today: nothing paid, nothing lost');
+      // The next day there is room again: the same call pays the whole badge.
+      final p = await SharedPreferences.getInstance();
+      await p.setString('coins.earned_today_date', _day(DateTime.now().subtract(const Duration(days: 1))));
+      await CoinsService.instance.creditBadges(['referral_invite_1']);
+      expect((await CoinsService.instance.read()).balance,
+          CoinsService.dailyEarnCap - 10 + CoinsService.badgeReward);
+      // And never twice.
+      await CoinsService.instance.creditBadges(['referral_invite_1']);
+      expect((await CoinsService.instance.read()).balance,
+          CoinsService.dailyEarnCap - 10 + CoinsService.badgeReward);
+    });
+
     test('a badge is only ever credited once', () async {
       await CoinsService.instance.creditBadges(['a']);
       final first = (await CoinsService.instance.read()).balance;

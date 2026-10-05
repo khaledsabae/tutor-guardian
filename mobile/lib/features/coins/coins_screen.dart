@@ -122,7 +122,7 @@ class CoinsScreen extends ConsumerWidget {
           _EarnRow(
             emoji: '🤝',
             title: AppLocalizations.of(context).coinsEarnInvite,
-            detail: AppLocalizations.of(context).coinsEarnInviteDesc(CoinsService.referralReward),
+            detail: AppLocalizations.of(context).coinsEarnInviteDesc(CoinsService.badgeReward),
             onTap: () => Navigator.of(context).push(AppRoutes.invite()),
           ),
           const SizedBox(height: 24),
