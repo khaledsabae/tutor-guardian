@@ -1,0 +1,29 @@
+{
+  "id": "cyb-60a0c4df",
+  "domain": "cyber",
+  "source_file": "Screen_Time_2025.pdf",
+  "title": "كم يقضي الأطفال دون الثامنة أمام الشاشات؟ أرقام إحصاء Common Sense لعام 2025",
+  "language": "ar",
+  "age_group": "4-6",
+  "behavior_type": "وقت الشاشة",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_سيبراني",
+  "reference_info": "Common Sense Media — The Common Sense Census: Media Use by Kids Zero to Eight, 2025، ص ١ و١٥ و٣٥",
+  "text_original": "The Common Sense Census: Media Use by Kids Zero to Eight, 2025. [Report p.1 — Key Findings] 1. Children age 8 and younger spend about two and a half hours (2:27) a day with screen media. In 2024, caregivers reported that children age 8 and younger spent roughly the same amount of time with screen media as they did in 2020 (2:27 vs. 2:24 daily). Screen time varies significantly by age: Children under 2 years old average one hour and three minutes daily, and 2- to 4-year-olds spend two hours and eight minutes. Those age 5 to 8 use screens for about three and a half hours daily (3:28). Boys spend over 30 minutes more on screen media each day than girls (2:38 vs. 2:07). This includes more time watching television and videos (1:36 vs. 1:19) and playing video games (:45 vs. :29). Screen use also differs by income and ethnicity. Children from households earning less than $50,000 per year spend twice as much time with screen media as those from households earning $100,000 or more per year (3:48 vs. 1:52). [Report p.15 — Overall Screen Media Use] … On a given day, more than one-quarter (27%) of children don't use any screen media, while 1 in 5 children use screen media for four or more hours. Overall, patterns of screen media use have remained fairly consistent for children age 8 and younger, with a majority of screen time spent watching television and videos (60%) and gaming (26%) (see Figure 1). [Report p.35 — Methodology] This report presents the results of a nationally representative, probability-based online survey of 1,578 parents of children age 8 or younger, conducted from August 5 to August 29, 2024. … research panel that is representative of the entire U.S. population.",
+  "text_simplified": "كم يقضي الأطفال دون الثامنة أمام الشاشات؟ هذه أرقام وصفية من إحصاء Common Sense لعام 2025، وهو استبيان لعيّنة ممثِّلة من آباء الأطفال في الولايات المتحدة أُجري في 2024؛ وليست توصية بمقدار مناسب:\n• يقضي الأطفال من الولادة حتى الثامنة نحو ساعتين ونصف يوميًّا مع الشاشات (2:27)، وهو قريب مما كان عليه في 2020 (2:24).\n• ويختلف ذلك كثيرًا بالعمر: نحو ساعة و3 دقائق يوميًّا لمن هم دون السنتين، ونحو ساعتين و8 دقائق لمن بين سنتين و4 سنوات، ونحو 3 ساعات ونصف (3:28) لمن بين 5 و8 سنوات.\n• ويقضي الأولاد أكثر من البنات بما يزيد على 30 دقيقة يوميًّا (2:38 مقابل 2:07)، ويقضي أطفال الأسر التي يقل دخلها عن 50 ألف دولار سنويًّا ضعف ما يقضيه أطفال الأسر التي يبلغ دخلها 100 ألف دولار فأكثر (3:48 مقابل 1:52).\n• وأغلب هذا الوقت مشاهدة للتلفاز والفيديو (60٪)، ثم الألعاب (26٪).\n• وفي اليوم الواحد لا يستخدم أكثر من ربع الأطفال (27٪) أي شاشة، بينما يستخدمها طفل من كل خمسة 4 ساعات أو أكثر.",
+  "labels": [
+    "وقت الشاشة",
+    "الأجهزة الذكية",
+    "مشاهدة الفيديو",
+    "الألعاب الإلكترونية",
+    "الأطفال الصغار"
+  ],
+  "created_at": "2026-10-05T00:00:00Z",
+  "updated_at": "2026-10-05T00:00:00Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "The Common Sense Census: Media Use by Kids Zero to Eight, 2025",
+    "source_author": "Common Sense Media"
+  }
+}
