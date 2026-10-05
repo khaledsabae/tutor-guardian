@@ -2150,14 +2150,64 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get coinsRedeemTitle => 'Redeem Your Coins 🎁';
+  String get coinsRedeemTitle => 'Spend your coins 🎁';
+
+  @override
+  String get agreementShareTooltip => 'Share or print';
+
+  @override
+  String get agreementYourChild => 'your child';
+
+  @override
+  String get agreementPickChildFirst => 'Choose a child first.';
+
+  @override
+  String get agreementKeepOneClause =>
+      'You removed every clause. Keep at least one.';
+
+  @override
+  String get agreementParentSigned =>
+      'You signed. Your child signs next, in child mode.';
+
+  @override
+  String get agreementUnavailable =>
+      'The family agreement is available now for ages 7–9 and 13–15.\n\nClauses are written for each age: a clause for a seven-year-old is not one for a twelve-year-old, and an agreement in words that don\'t fit the child\'s age is signed and then forgotten.';
+
+  @override
+  String get agreementIntro =>
+      'Every clause for your child has one for you. That is what makes it an agreement, not a list of orders — and your child will hold you to it from the first day.';
+
+  @override
+  String agreementOf(String name) {
+    return '$name\'s agreement';
+  }
+
+  @override
+  String get agreementWaitingChild =>
+      'You signed — waiting for your child\'s signature';
+
+  @override
+  String get agreementSignedBoth => 'Signed by both ✍️';
+
+  @override
+  String get agreementSignHere => 'Sign here';
+
+  @override
+  String get agreementSaveAndSign => 'Save and sign';
+
+  @override
+  String get agreementAfterSign =>
+      'After you sign, open child mode so your child can read the clauses and sign. The agreement only works with both signatures.';
+
+  @override
+  String get coinsAlsoFreeTitle => 'Also in the app — no coins needed';
 
   @override
   String get coinsRedeemStory => 'Custom Story for Your Child';
 
   @override
   String get coinsRedeemStoryDesc =>
-      'A short story starring your child teaching a value you choose';
+      'A short story starring your child, teaching a value you choose — free';
 
   @override
   String get coinsRedeemCovenant => 'Real Rewards Covenant';
@@ -2170,7 +2220,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get coinsRedeemBadges => 'Exclusive Badges';
 
   @override
-  String get coinsRedeemBadgesDesc => 'Unlock special badges with your coins';
+  String get coinsRedeemBadgesDesc =>
+      'Badges you unlock by doing, not with coins';
 
   @override
   String get favoritesTitle => 'Favorites';

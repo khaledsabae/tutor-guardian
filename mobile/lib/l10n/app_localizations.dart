@@ -3941,8 +3941,92 @@ abstract class AppLocalizations {
   /// No description provided for @coinsRedeemTitle.
   ///
   /// In ar, this message translates to:
-  /// **'استبدل عملاتك 🎁'**
+  /// **'اصرف عملاتك 🎁'**
   String get coinsRedeemTitle;
+
+  /// No description provided for @agreementShareTooltip.
+  ///
+  /// In ar, this message translates to:
+  /// **'شارك أو اطبع'**
+  String get agreementShareTooltip;
+
+  /// No description provided for @agreementYourChild.
+  ///
+  /// In ar, this message translates to:
+  /// **'ابنك'**
+  String get agreementYourChild;
+
+  /// No description provided for @agreementPickChildFirst.
+  ///
+  /// In ar, this message translates to:
+  /// **'اختر طفلاً أولاً.'**
+  String get agreementPickChildFirst;
+
+  /// No description provided for @agreementKeepOneClause.
+  ///
+  /// In ar, this message translates to:
+  /// **'اخترت أن تحذف كل البنود. اترك بندًا واحدًا على الأقل.'**
+  String get agreementKeepOneClause;
+
+  /// No description provided for @agreementParentSigned.
+  ///
+  /// In ar, this message translates to:
+  /// **'وقّعتَ. بقي توقيع ابنك من وضع الطفل.'**
+  String get agreementParentSigned;
+
+  /// No description provided for @agreementUnavailable.
+  ///
+  /// In ar, this message translates to:
+  /// **'الميثاق متاح الآن لسنّ ٧–٩ و١٣–١٥.\n\nالبنود تُكتب لكل سنّ على حدة — بند لطفل في السابعة ليس نفس البند لابن في الثانية عشرة، وميثاق بكلام لا يناسب سنّه يُوقَّع ثم يُنسى.'**
+  String get agreementUnavailable;
+
+  /// No description provided for @agreementIntro.
+  ///
+  /// In ar, this message translates to:
+  /// **'كل بند على ابنك يقابله بند عليك. هذا ما يجعله ميثاقًا لا قائمة أوامر — وابنك سيقيسه عليك في أول يوم.'**
+  String get agreementIntro;
+
+  /// No description provided for @agreementOf.
+  ///
+  /// In ar, this message translates to:
+  /// **'ميثاق {name}'**
+  String agreementOf(String name);
+
+  /// No description provided for @agreementWaitingChild.
+  ///
+  /// In ar, this message translates to:
+  /// **'وقّعتَ — في انتظار توقيع ابنك'**
+  String get agreementWaitingChild;
+
+  /// No description provided for @agreementSignedBoth.
+  ///
+  /// In ar, this message translates to:
+  /// **'موقَّع من الطرفين ✍️'**
+  String get agreementSignedBoth;
+
+  /// No description provided for @agreementSignHere.
+  ///
+  /// In ar, this message translates to:
+  /// **'وقّع هنا'**
+  String get agreementSignHere;
+
+  /// No description provided for @agreementSaveAndSign.
+  ///
+  /// In ar, this message translates to:
+  /// **'احفظ ووقّع'**
+  String get agreementSaveAndSign;
+
+  /// No description provided for @agreementAfterSign.
+  ///
+  /// In ar, this message translates to:
+  /// **'بعد أن توقّع، افتح وضع الطفل ليقرأ ابنك البنود ويوقّع. لا يعمل الميثاق إلا بالتوقيعين.'**
+  String get agreementAfterSign;
+
+  /// No description provided for @coinsAlsoFreeTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'وفي التطبيق أيضًا — بلا عملات'**
+  String get coinsAlsoFreeTitle;
 
   /// No description provided for @coinsRedeemStory.
   ///
@@ -3953,7 +4037,7 @@ abstract class AppLocalizations {
   /// No description provided for @coinsRedeemStoryDesc.
   ///
   /// In ar, this message translates to:
-  /// **'قصة قصيرة بطلها طفلك تعلّم قيمة تختارها'**
+  /// **'قصة قصيرة بطلها طفلك تعلّم قيمة تختارها — مجانًا'**
   String get coinsRedeemStoryDesc;
 
   /// No description provided for @coinsRedeemCovenant.
@@ -3977,7 +4061,7 @@ abstract class AppLocalizations {
   /// No description provided for @coinsRedeemBadgesDesc.
   ///
   /// In ar, this message translates to:
-  /// **'افتح شارات مميزة بعملاتك'**
+  /// **'شارات تُفتح بالإنجاز، لا بالعملات'**
   String get coinsRedeemBadgesDesc;
 
   /// No description provided for @favoritesTitle.

@@ -2120,13 +2120,62 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String get coinsRedeemTitle => 'استبدل عملاتك 🎁';
+  String get coinsRedeemTitle => 'اصرف عملاتك 🎁';
+
+  @override
+  String get agreementShareTooltip => 'شارك أو اطبع';
+
+  @override
+  String get agreementYourChild => 'ابنك';
+
+  @override
+  String get agreementPickChildFirst => 'اختر طفلاً أولاً.';
+
+  @override
+  String get agreementKeepOneClause =>
+      'اخترت أن تحذف كل البنود. اترك بندًا واحدًا على الأقل.';
+
+  @override
+  String get agreementParentSigned => 'وقّعتَ. بقي توقيع ابنك من وضع الطفل.';
+
+  @override
+  String get agreementUnavailable =>
+      'الميثاق متاح الآن لسنّ ٧–٩ و١٣–١٥.\n\nالبنود تُكتب لكل سنّ على حدة — بند لطفل في السابعة ليس نفس البند لابن في الثانية عشرة، وميثاق بكلام لا يناسب سنّه يُوقَّع ثم يُنسى.';
+
+  @override
+  String get agreementIntro =>
+      'كل بند على ابنك يقابله بند عليك. هذا ما يجعله ميثاقًا لا قائمة أوامر — وابنك سيقيسه عليك في أول يوم.';
+
+  @override
+  String agreementOf(String name) {
+    return 'ميثاق $name';
+  }
+
+  @override
+  String get agreementWaitingChild => 'وقّعتَ — في انتظار توقيع ابنك';
+
+  @override
+  String get agreementSignedBoth => 'موقَّع من الطرفين ✍️';
+
+  @override
+  String get agreementSignHere => 'وقّع هنا';
+
+  @override
+  String get agreementSaveAndSign => 'احفظ ووقّع';
+
+  @override
+  String get agreementAfterSign =>
+      'بعد أن توقّع، افتح وضع الطفل ليقرأ ابنك البنود ويوقّع. لا يعمل الميثاق إلا بالتوقيعين.';
+
+  @override
+  String get coinsAlsoFreeTitle => 'وفي التطبيق أيضًا — بلا عملات';
 
   @override
   String get coinsRedeemStory => 'قصة مخصصة لطفلك';
 
   @override
-  String get coinsRedeemStoryDesc => 'قصة قصيرة بطلها طفلك تعلّم قيمة تختارها';
+  String get coinsRedeemStoryDesc =>
+      'قصة قصيرة بطلها طفلك تعلّم قيمة تختارها — مجانًا';
 
   @override
   String get coinsRedeemCovenant => 'عهد المكافآت الواقعية';
@@ -2139,7 +2188,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get coinsRedeemBadges => 'شارات حصرية';
 
   @override
-  String get coinsRedeemBadgesDesc => 'افتح شارات مميزة بعملاتك';
+  String get coinsRedeemBadgesDesc => 'شارات تُفتح بالإنجاز، لا بالعملات';
 
   @override
   String get favoritesTitle => 'المفضلة';
