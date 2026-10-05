@@ -244,15 +244,20 @@ are additive; older builds keep working and simply never call them.
   `device_proof_required`, run §9.0.1 once, then retry the request once.
   **Always allowed without a proof:** `GET /api/children/memory/settings`,
   switching memory **off** (`PUT … {"enabled": false}`), and the weekly plan (§9.5).
-- **Destructive child routes** — `DELETE /api/children/{id}` and
-  `DELETE /api/children/{id}/progress` — need a proven session too, **once this
-  device has proven at least once** (and for every device once the server's
-  `MINIMUM_BUILD_NUMBER` reaches `CHILD_MEMORY_MIN_BUILD`). Same `403`, same flow.
+- **Destructive child routes** — `DELETE /api/children/{id}`,
+  `DELETE /api/children/{id}/progress`, and `PATCH /api/children/{id}` **when it
+  changes `name`** (a rename rewrites the siblings' memory, see *Placeholders*) —
+  need a proven session too, **once this device has proven at least once** (and
+  for every device once the server's `MINIMUM_BUILD_NUMBER` reaches
+  `CHILD_MEMORY_MIN_BUILD`). Same `403`, same flow: wrap a rename in the same
+  prove-and-retry-once as a child deletion. A `PATCH` that leaves `name` as it
+  is (age group, gender, avatar) never needs it.
   Any push-token pause (§9.0.1) refuses them for every session, proven or not.
   **What a child deletion removes:** from a proven session, everything tied to the
   child (progress, memory, tools…); from any other session — possible only on a
   device that never proved, outside every pause — only the profile row, exactly
-  as before this change.
+  as before this change. Either way the siblings' memory is re-lettered (see
+  *Placeholders* below); nothing of theirs is deleted.
 - **A proof belongs to one session and one push token.** Minting a new session
   (`POST /api/chat/sessions`) or a new FCM token (`onTokenRefresh`, reinstall,
   another phone) means proving again. Earlier tokens never vouch for a new one —
@@ -269,6 +274,17 @@ are additive; older builds keep working and simply never call them.
   in a fact, the server replaces it. The app **may** swap the placeholder for
   the child's name when rendering (on the device only), e.g. «طفلي يخاف من
   الظلام» → «أحمد يخاف من الظلام». Never send the swapped text back unedited.
+  In memory text **every** child name of the family is replaced wherever it
+  stands as a word — with و/ف/ب/ل/ك attached, and in the accusative («محمدًا»)
+  — even a name that is also an ordinary word (نور، أمل، هدى، دعاء…): «يحب نور
+  القرآن» in a fact of a family with a نور is stored «يحب طفلي القرآن» (or
+  «الطفل ب…» for a sibling). That is deliberate; the on-device swap gives the
+  parent back the words they wrote. Not replaced: the name with «ال» attached
+  (النور), a religious reference (النبي محمد ﷺ، سورة يوسف), «على» for a
+  child named علي, and «ف/ك» read off a word that is an everyday word as a
+  whole («فعلا» for a child «علا», «كريم» for «ريم»; «فعمر» is still عمر). A child whose name is the onboarding default — «طفلي» /
+  "My child" — has no name to replace: in any text «طفلي» stays the fact's
+  own child, never that sibling (it keeps its letter for placeholders).
 - **What is never remembered** (say so in the screen's footer): medicines —
   names, doses, prescriptions — test results, doctors or hospitals; anything
   about self-harm, suicide, abuse, sexual matters or drugs; anything about the
@@ -278,6 +294,18 @@ are additive; older builds keep working and simply never call them.
 - **Placeholders:** one child → «طفلي»; several → the question's child is «طفلي»
   and siblings «الطفل أ», «الطفل ب»… by profile order. A fact may therefore
   mention «الطفل ب»: render it with that sibling's name on the device.
+  "Profile order" is ascending child `id`, counting only children whose
+  trimmed name has ≥ 2 characters; letters `أبجدهوزحطيكلمن`, then `15`, `16`…
+  The letters always match the family **as it is now**: when a child is
+  deleted, the server rewrites the siblings' memory in the same step — a
+  remaining sibling gets its new letter, and a mention of the deleted child
+  (by letter, by name, or by name in a follow-up's `note`) becomes the plain
+  words «طفل آخر» (`another child` in English text; «طفلة أخرى» where it was
+  written «الطفلة ب»). A rename (`PATCH /api/children/{id}` with `name`) that
+  crosses the 2-character floor re-letters the same way, and a stored mention
+  of the child's old name becomes its placeholder. Render «طفل آخر» as it is.
+  Never keep rendered memory text across a child deletion or rename —
+  re-fetch, then render with the current child list.
 - **When memory is used and learned:** only for a **proven session** (above),
   while the parent's switch is on, on a device that reports a build ≥ the
   server's `CHILD_MEMORY_MIN_BUILD` (the build number the app already sends on
@@ -389,6 +417,17 @@ when the screen opens (§9.0.1, push-token cooldown); otherwise run §9.0.1 firs
   learned, no follow-up is opened, and remembered facts stop reaching the
   assistant. **Off deletes nothing** — deletion is §9.3/§9.6 — and **deleting
   keeps the switch as it was** (off stays off).
+  **While off, nothing new goes into memory by any route** (since PR #36's
+  review): the follow-up loop pauses — `followups/due` answers
+  `{"followups": [], "memory_enabled": false}`, an answer is not kept (§9.4:
+  `200`, `"remembered": false`, `"fact": null`, the follow-up stays `pending`)
+  and no follow-up push is sent — and adding a fact is refused
+  (`409 memory_off`, §9.3). Still open while off: reading memory, editing,
+  confirming, rejecting and deleting facts, dismissing a follow-up, erasing
+  (§9.3/§9.6). Switched back on, pending follow-ups that are still due come back.
+  **Client:** while off, hide the Today follow-up card, show the follow-up
+  sheet without its four answer buttons (say memory is paused, with a way to
+  turn it on), and disable "add a fact" on the memory screen.
 - `collecting` — `enabled` AND a memory build AND this session is proven (§9.0).
 
 ### 9.3 Facts — what the assistant knows about a child
@@ -471,6 +510,7 @@ Deleting the child profile (`DELETE /api/children/{id}`) removes all of it too.
 | 422 | `category` / `status` | value outside the enums above |
 | 403 | `device_proof_required` | session not proven — run the device proof (§9.0.1), retry once |
 | 422 | `empty_patch` | PATCH with no field |
+| 409 | `memory_off` | POST (add) while the memory switch is off — nothing was stored; offer to turn memory on (§9.2). PATCH and DELETE never get it. |
 
 ### 9.4 Follow-ups — «جرّبت النصيحة؟ نفعت؟»
 
@@ -501,17 +541,18 @@ topic).
 
 | Route | Returns |
 |---|---|
-| `GET /api/children/followups/due?limit=10&tz_offset_minutes=180` | `{"followups": [ … ]}` — pending and due now, every child, oldest first (`limit` 1–20). Drive the Home card from this. **Send `tz_offset_minutes`** (the device's UTC offset): the follow-up push only goes out during the family's daytime, and a device whose offset was never sent gets no push. |
-| `GET /api/children/followups/{id}` | `{"followup": {…}}` in **any** status — what the deep link opens. |
+| `GET /api/children/followups/due?limit=10&tz_offset_minutes=180` | `{"followups": [ … ], "memory_enabled": true}` — pending and due now, every child, oldest first (`limit` 1–20). Drive the Home card from this. While memory is off: `{"followups": [], "memory_enabled": false}` (§9.2). **Send `tz_offset_minutes`** (the device's UTC offset): the follow-up push only goes out during the family's daytime, and a device whose offset was never sent gets no push. |
+| `GET /api/children/followups/{id}` | `{"followup": {…}, "memory_enabled": true}` in **any** status — what the deep link opens. `memory_enabled: false`: an answer would not be kept — show the strategy without the answer buttons. |
 | `GET /api/children/{child_id}/followups?status=pending` | `{"child_id": 12, "followups": [ … ]}`; `status` ∈ `pending` (default), `answered`, `dismissed`, `expired`, `all`. |
-| `POST /api/children/followups/{id}/answer` | body `{"outcome": "didnt_work", "note": "optional, ≤ 300 chars"}` → `{"followup": {…answered…}, "fact": {Fact}, "note_dropped": false}` — `note_dropped: true` when the note was something memory never keeps (it was discarded; tell the parent gently). Answering the same strategy again updates the outcome fact (the latest result wins). |
+| `POST /api/children/followups/{id}/answer` | body `{"outcome": "didnt_work", "note": "optional, ≤ 300 chars"}` → `{"followup": {…answered…}, "fact": {Fact}, "note_dropped": false, "remembered": true}` — `note_dropped: true` when the note was something memory never keeps (it was discarded; tell the parent gently). Answering the same strategy again updates the outcome fact (the latest result wins). **Memory off:** `200 {"followup": {…still pending…}, "fact": null, "note_dropped": false, "remembered": false}` — nothing was kept (no outcome, no note, no fact); say so («الذاكرة متوقفة، فلم نحفظ إجابتك») rather than the usual thank-you, which promises to remember. Treat a missing `remembered` (older server) as `true`. |
 | `POST /api/children/followups/{id}/dismiss` | `{"followup": {…dismissed…}}` |
 
 Answering stores the result as an `outcome` fact, e.g.
 «جُرِّب مع طفلي: روتين نوم ثابت مع قصة قبل النوم — ولم ينجح.» — and from then
 on the assistant is told not to repeat a strategy that did not work and to
-offer an alternative instead. The note is shown back to the parent as typed;
-only its name-free form reaches the fact.
+offer an alternative instead. The note is shown back to the parent as typed
+(except that a deleted sibling's name in it becomes «طفل آخر»); only its
+name-free form reaches the fact.
 
 Errors: `404 followup_not_found` · `409 followup_closed` (answer/dismiss on a
 follow-up that is no longer pending — show "already answered") ·
@@ -551,9 +592,10 @@ for the follow-up push. When it is absent, the offset last sent (here or with
 §9.4's `followups/due`) is used, and nothing is recorded — an omitted offset never
 resets the family's clock to UTC.
 This route does not require a proven session — but only a proven session (§9.0)
-on a memory build gets a plan shaped by memory, and only such a session's
-`tz_offset_minutes` is recorded; any other session gets the plan built from the
-chosen challenge and the default topic order.
+on a memory build, while the memory switch is on, gets a plan shaped by memory
+(any other request gets the plan built from the chosen challenge and the
+default topic order), and only a proven session's `tz_offset_minutes` is
+recorded.
 
 ```json
 {

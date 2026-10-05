@@ -636,7 +636,22 @@ def update_child(
     device_id = _require_device_id(request)
     conn = get_conn()
     try:
-        _load_owned_child(conn, child_id, device_id)
+        current = _load_owned_child(conn, child_id, device_id)
+        # A new name can move the child across the 2-character floor (its
+        # siblings' letters shift) and leaves its old name unredacted in any
+        # memory text still carrying it: both are rewritten in this transaction
+        # (child_memory.on_child_renamed, PR #39 review).
+        before = None
+        if payload.name is not None and \
+                payload.name.strip() != (current["name"] or "").strip():
+            # Rewriting every child's memory is not for a bare session (PR #39
+            # review): on a device that has proven once, a name change needs a
+            # proven session — the same rule, and the same 403s, as deleting a
+            # child. The other fields never do.
+            require_device_proof_once_enrolled(request)
+            from app.services.privacy import family_from_conn
+            conn.execute("BEGIN IMMEDIATE")
+            before = family_from_conn(conn, device_id)
         sets: list[str] = []
         params: list = []
         for field in ("name", "age_group", "gender", "avatar_emoji"):
@@ -653,6 +668,9 @@ def update_child(
             f"UPDATE child_profiles SET {', '.join(sets)} WHERE id = ?",
             params,
         )
+        if before is not None:
+            from app.services.child_memory import on_child_renamed
+            on_child_renamed(conn, device_id, child_id, current["name"], before)
         conn.commit()
         row = conn.execute(
             "SELECT * FROM child_profiles WHERE id = ?", (child_id,)
@@ -721,14 +739,20 @@ def delete_child(child_id: int, request: Request):
     on a device that never proved, outside every pause — gets exactly what
     this route did before: the profile row (and what the schema cascades from
     it), nothing more (PR #26 final review). A bare session for a known device
-    id is cheap until SESSION_MINT_ENFORCE, so it must not reach further."""
+    id is cheap until SESSION_MINT_ENFORCE, so it must not reach further.
+    Either way the siblings' memory texts are re-lettered for the new profile
+    order (child_memory.forget_sibling, PR #36 review): that deletes nothing —
+    it keeps «الطفل ب» from naming another child once this one is gone."""
     from app.routers.privacy import erase_child
+    from app.services.child_memory import forget_sibling
 
     device_id = _require_device_id(request)
     conn = get_conn()
     try:
         _load_owned_child(conn, child_id, device_id)
         if not confirmed_session(request):
+            conn.execute("BEGIN IMMEDIATE")
+            forget_sibling(conn, device_id, child_id)
             conn.execute(
                 "DELETE FROM child_profiles WHERE id = ? AND device_id = ?",
                 (child_id, device_id),

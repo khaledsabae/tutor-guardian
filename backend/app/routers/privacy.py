@@ -426,12 +426,20 @@ def erase_child(device_id: str, child_id: int) -> dict[str, int]:
     scenario answers, screen sessions and streaks behind (PR #26 review, P3).
     Legacy lesson_progress rows (child_id 0) belong to the device, not a child,
     and stay.
+
+    The siblings' memory is rewritten in the same transaction
+    (child_memory.forget_sibling): their placeholder letters follow the new
+    profile order, and a mention of this child becomes «طفل آخر» (PR #36
+    review) — otherwise «الطفل ب» would start naming the next sibling.
     """
+    from app.services.child_memory import forget_sibling
+
     conn = get_conn()
     try:
         conn.execute("PRAGMA foreign_keys = OFF")
         conn.execute("BEGIN IMMEDIATE")
         tables = _table_columns(conn)
+        forget_sibling(conn, device_id, child_id)
         counts: Counter = Counter()
         for table, column, parent, parent_col in DEPENDENT_TABLES:
             pcols = tables.get(parent, set())

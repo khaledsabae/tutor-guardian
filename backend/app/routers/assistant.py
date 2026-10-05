@@ -443,16 +443,26 @@ async def _memory_context(caller_device, user_message: UserMessage, query_text: 
 
 
 def _remember(caller_device, child_id, query_text: str, answer: str,
-              age_group: str | None, proven: bool) -> None:
+              age_group: str | None, proven: bool, generation: int | None = None) -> None:
     """Hand the finished turn to the background extractor. Fire-and-forget:
     submitting is microseconds, and nothing downstream waits on it. Nothing is
-    learned from a session that did not prove it holds the phone."""
+    learned from a session that did not prove it holds the phone.
+    `generation`: read when the question arrived (_generation_then_family)."""
     if child_id is None or not answer or not proven:
         return
     child_memory.schedule_extraction(
         caller_device, child_id, question=query_text, answer=answer,
-        age_group=age_group or "", proven=proven,
+        age_group=age_group or "", proven=proven, generation=generation,
     )
+
+
+def _generation_then_family(caller_device) -> tuple[int | None, Family]:
+    """The memory erase generation, THEN the family the question is redacted
+    for — in that order (PR #39 review). A child deleted after this point
+    bumps the generation, so whatever the extraction learns from a question
+    redacted for the old family is refused instead of stored with a name or a
+    letter that now means someone else."""
+    return child_memory.memory_generation(caller_device), family_for_device(caller_device)
 
 
 logger = logging.getLogger(__name__)
@@ -625,7 +635,7 @@ async def _draft_answer(
     # Every text that leaves for a model has the family's child names
     # replaced first. The primary provider is a cloud API, so "the cloud
     # tier" is every tier — the classifier and rewriter calls included.
-    family = await asyncio.to_thread(family_for_device, caller_device)
+    mem_generation, family = await asyncio.to_thread(_generation_then_family, caller_device)
     # Which child the question is about decides whose name becomes «طفلي»
     # (siblings keep «الطفل ب»…), so it is resolved before anything leaves.
     mem_child, mem_block, mem_used = await _memory_context(
@@ -832,7 +842,7 @@ async def _draft_answer(
     }
     if mode == "llm_generated" and not reply.needs_human_review:
         _remember(caller_device, mem_child, query_text, reply.reply_text,
-                  user_message.age_group, memory_proven)
+                  user_message.age_group, memory_proven, mem_generation)
 
     await asyncio.to_thread(
         log_session,
@@ -1110,7 +1120,7 @@ async def _stream_answer(
     else:
         history = user_message.conversation_history or []
     # Names out of every model-bound text — see /draft.
-    family = await asyncio.to_thread(family_for_device, caller_device)
+    mem_generation, family = await asyncio.to_thread(_generation_then_family, caller_device)
     # Which child the question is about decides whose name becomes «طفلي»
     # (siblings keep «الطفل ب»…), so it is resolved before anything leaves.
     mem_child, mem_block, mem_used = await _memory_context(
@@ -1554,7 +1564,7 @@ async def _stream_answer(
                                 and not decision["needs_human_review"]):
                             _remember(caller_device, mem_child, query_text,
                                       final_text, user_message.age_group,
-                                      memory_proven)
+                                      memory_proven, mem_generation)
                         # Feed the answer cache: grounded, local, review-free,
                         # first-question answers only (§5.1) — and only whole
                         # ones: an answer cut by max_tokens or a filter (R3)

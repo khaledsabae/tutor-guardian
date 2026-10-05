@@ -56,6 +56,10 @@ OPEN = {
     ("DELETE", "/api/daily-routine/events/{event_id}"): "pre-PR: one routine event the "
                                                         "parent logged — unchanged",
     ("DELETE", "/api/value-tracking/events/{event_id}"): "pre-PR: one habit event — unchanged",
+    ("PATCH", "/api/children/{child_id}"): "a name change rewrites memory, so it calls "
+                                          "require_device_proof_once_enrolled inside the "
+                                          "handler (as DELETE does); age, gender and avatar "
+                                          "stay open (PR #39 review)",
 }
 
 # What a handler's own source shows when it reads, writes or deletes memory or data.

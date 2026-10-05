@@ -44,6 +44,11 @@ def _fact_error(exc: cm.FactValidationError) -> HTTPException:
     return _err(422, code, _FACT_ERRORS.get(code, "قيمة غير صالحة."))
 
 
+def _memory_off() -> HTTPException:
+    return _err(409, "memory_off",
+                "ذاكرة المربّي متوقفة، فلا يُضاف إليها شيء. فعّلها أولًا ثم أضف المعلومة.")
+
+
 def _owned_child(request: Request, child_id: int) -> str:
     device_id = _require_device_id(request)
     conn = get_conn()
@@ -88,9 +93,11 @@ def get_memory_settings(request: Request):
 @router.put("/children/memory/settings",
             summary="Turn child memory on or off for this device")
 def put_memory_settings(body: MemorySettingsIn, request: Request):
-    """Off pauses everything: nothing new is learned, no follow-up is opened,
-    and remembered facts stop reaching the assistant. Nothing is deleted —
-    that is DELETE /api/children/{id}/memory or DELETE /api/privacy/memory.
+    """Off pauses everything: nothing new is learned, no follow-up is opened
+    or asked (due → []), an answer to one is not kept, a parent cannot add a
+    fact, and remembered facts stop reaching the assistant. Nothing is
+    deleted — that is DELETE /api/children/{id}/memory or DELETE
+    /api/privacy/memory.
 
     Switching OFF never needs a proof: stopping must always be possible.
     Switching ON does (§9.0)."""
@@ -114,10 +121,15 @@ class FollowupAnswerIn(BaseModel):
             dependencies=[Depends(require_device_proof)])
 def followups_due(request: Request, limit: int = Query(10, ge=1, le=20),
                   tz_offset_minutes: Optional[int] = Query(None)):
+    """While the parent's memory switch is off the follow-up loop is paused:
+    no items, and `memory_enabled: false` says why (PR #36 review). Nothing is
+    closed or deleted — switched back on, what is still due comes back."""
     device_id = _require_device_id(request)
     # Where the follow-up push learns the family's night (quiet hours).
     cm.record_tz_offset(device_id, tz_offset_minutes)
-    return {"followups": cm.due_followups(device_id, limit=limit)}
+    enabled = cm.memory_enabled(device_id)
+    return {"followups": cm.due_followups(device_id, limit=limit) if enabled else [],
+            "memory_enabled": enabled}
 
 
 @router.get("/children/followups/{followup_id}",
@@ -125,18 +137,22 @@ def followups_due(request: Request, limit: int = Query(10, ge=1, le=20),
             dependencies=[Depends(require_device_proof)])
 def get_followup(followup_id: int, request: Request):
     """Any status: a push can be tapped after the follow-up was answered on
-    another device or expired, and the screen should say so, not 404."""
+    another device or expired, and the screen should say so, not 404.
+    `memory_enabled: false` — memory is off, so an answer would not be kept:
+    show that instead of the four answer buttons."""
     device_id = _require_device_id(request)
     fu = cm.get_followup(device_id, followup_id)
     if fu is None:
         raise _err(404, "followup_not_found", "متابعة غير موجودة.")
-    return {"followup": fu}
+    return {"followup": fu, "memory_enabled": cm.memory_enabled(device_id)}
 
 
 @router.post("/children/followups/{followup_id}/answer",
              summary="Did the advice work? Records it as an outcome fact",
             dependencies=[Depends(require_device_proof)])
 def answer_followup(followup_id: int, body: FollowupAnswerIn, request: Request):
+    """While memory is off nothing is kept: 200 with `remembered: false`,
+    `fact: null`, and the follow-up unchanged (still pending)."""
     device_id = _require_device_id(request)
     try:
         result = cm.answer_followup(device_id, followup_id, body.outcome, body.note)
@@ -217,11 +233,15 @@ def list_memory(
              summary="Add a fact the parent typed",
             dependencies=[Depends(require_device_proof)])
 def add_memory(child_id: int, body: FactIn, request: Request):
+    """`409 memory_off` while the parent's switch is off: nothing new goes in
+    (PR #36 review). Edit, confirm, reject and delete still work while off."""
     device_id = _owned_child(request, child_id)
     try:
         return cm.add_manual_fact(device_id, child_id, body.category, body.fact)
     except cm.FactValidationError as exc:
         raise _fact_error(exc) from exc
+    except cm.MemoryOffError as exc:
+        raise _memory_off() from exc
 
 
 @router.patch("/children/{child_id}/memory/{fact_id}",
