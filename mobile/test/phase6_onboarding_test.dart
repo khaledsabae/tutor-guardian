@@ -4,7 +4,7 @@
 //   1. Pure-Dart tests for OnboardingStorage (no widgets).
 //   2. Widget tests for OnboardingScreen + AvatarPickerSheet that
 //      pump the real screens and assert the expected fields render.
-//   3. Widget tests for StreakChip and DailyTipCard.
+//   3. Widget tests for StreakChip.
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -20,7 +20,6 @@ import 'package:almorabbi/features/onboarding/screens/update_splash_screen.dart'
     show updateSplashVersion;
 import 'package:almorabbi/features/program/providers/progress_providers.dart';
 import 'package:almorabbi/features/program/screens/path_detail_screen.dart';
-import 'package:almorabbi/features/program/widgets/daily_tip_card.dart';
 import 'package:almorabbi/l10n/app_localizations.dart';
 import 'package:almorabbi/state/chat_notifier.dart';
 
@@ -322,39 +321,6 @@ void main() {
     await tester.tap(find.text('👧'));
     await tester.pumpAndSettle();
     expect(picked, '👧');
-  });
-
-  // ── DailyTipCard hides when no child ───────────────────────────────────
-
-  testWidgets('DailyTipCard hides when no active child', (tester) async {
-    SharedPreferences.setMockInitialValues({});
-    final prefs = await SharedPreferences.getInstance();
-    final fake = _FakeTgClient();
-
-    // Build the widget tree inside a container so we can await the
-    // sharedPreferencesProvider future before the widget builds.
-    final container = ProviderContainer(
-      overrides: [
-        tgClientProvider.overrideWithValue(fake),
-        sharedPreferencesProvider.overrideWith((_) async => prefs),
-      ],
-    );
-    addTearDown(container.dispose);
-
-    // Wait for SharedPreferences to load BEFORE building the widget tree.
-    await container.read(sharedPreferencesProvider.future);
-
-    await tester.pumpWidget(
-      UncontrolledProviderScope(
-        container: container,
-        child: const MaterialApp(
-          home: Scaffold(body: DailyTipCard()),
-        ),
-      ),
-    );
-    await tester.pumpAndSettle();
-    expect(find.byType(DailyTipCard), findsOneWidget);
-    expect(find.textContaining('نصيحة'), findsNothing);
   });
 
   // ── StreakChip rendered via path detail screen ─────────────────────────

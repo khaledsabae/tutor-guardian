@@ -3,14 +3,13 @@
 /// With the app in English, each share still went out in Arabic: the install
 /// line under every message (ShareService), the brand line and install hint
 /// on every card (ShareCardBrandFooter), and the messages and card labels of
-/// the path, milestone, first-surah, coach-tip, daily-tip and infographic
-/// shares. The path message also sent a literal backslash-n where a line
-/// break was meant.
+/// the path, milestone, first-surah, coach-tip and infographic shares. The
+/// path message also sent a literal backslash-n where a line break was meant.
 ///
 /// A card is captured off-tree (ShareService → captureFromWidget) under a
 /// left-to-right Directionality and no Localizations, so card chrome reads
-/// [AppL10n.current], which the app keeps in step with its language; the
-/// daily-tip card asked `AppLocalizations.of(context)` there, which throws.
+/// [AppL10n.current], which the app keeps in step with its language —
+/// `AppLocalizations.of(context)` throws there.
 /// [_cardLines] reads a card's words without Localizations above it; the
 /// real capture runs in the last widget test, through the share button.
 ///
@@ -34,8 +33,6 @@ import 'package:almorabbi/features/program/data/models.dart';
 import 'package:almorabbi/features/program/providers/program_providers.dart';
 import 'package:almorabbi/features/program/screens/path_detail_screen.dart';
 import 'package:almorabbi/features/program/widgets/coach_tip_card.dart';
-import 'package:almorabbi/features/program/widgets/daily_tip_card.dart';
-import 'package:almorabbi/features/program/widgets/shareable_tip_card.dart';
 import 'package:almorabbi/features/programs/data/programs_models.dart';
 import 'package:almorabbi/features/programs/widgets/ramadan_recap_card.dart';
 import 'package:almorabbi/features/share/share_service.dart';
@@ -88,16 +85,6 @@ Future<List<String>> _sent(
   ShareService.shareText(share.message, l10n),
   ...await _cardLines(tester, share.card, l10n),
 ];
-
-DailyTip _tip(String text) => DailyTip(
-  id: 't1',
-  ageGroup: '7-9',
-  domain: 'development',
-  text: text,
-  timeOfDay: 'bedtime',
-  tags: const [],
-  isPublished: true,
-);
 
 const _servedTip = 'Read to your child tonight.';
 
@@ -251,20 +238,6 @@ void main() {
       expect(_arabicIn(sent), isEmpty);
     });
 
-    testWidgets('the daily tip', (tester) async {
-      final lines = await _cardLines(
-        tester,
-        ShareableTipCard(tip: _tip(_servedTip), childName: 'Sara'),
-        _en,
-      );
-      expect(lines, contains(_servedTip));
-      final text = ShareService.shareText(
-        dailyTipShareMessage(_en, _servedTip),
-        _en,
-      );
-      expect(_arabicIn([text, ...lines]), isEmpty);
-    });
-
     test('an infographic', () {
       expect(_arabicIn([_en.shareInfographicText]), isEmpty);
     });
@@ -338,32 +311,8 @@ void main() {
       expect(share.card.body, 'اقرأ لطفلك قبل النوم');
     });
 
-    test('the daily tip', () {
-      expect(
-        dailyTipShareMessage(_ar, 'اقرأ لطفلك قبل النوم'),
-        'نصيحة اليوم من المربي الذكي: اقرأ لطفلك قبل النوم',
-      );
-    });
-
     test('an infographic', () {
       expect(_ar.shareInfographicText, 'إنفوجراف من تطبيق المربّي 🌿');
-    });
-
-    testWidgets('the daily-tip card', (tester) async {
-      final lines = await _cardLines(
-        tester,
-        ShareableTipCard(tip: _tip('اقرأ لطفلك قبل النوم'), childName: 'سارة'),
-        _ar,
-      );
-      expect(
-        lines,
-        containsAll([
-          'نصيحة اليوم لـ سارة',
-          'المربي الذكي',
-          'شريكك في رحلة التربية',
-          '📲 مجانًا على Google Play — ابحث: «المربّي»',
-        ]),
-      );
     });
   });
 
@@ -427,9 +376,7 @@ void main() {
     const files = [
       'lib/features/share/share_service.dart',
       'lib/features/share/shareable_moment_card.dart',
-      'lib/features/program/widgets/shareable_tip_card.dart',
       'lib/features/program/widgets/coach_tip_card.dart',
-      'lib/features/program/widgets/daily_tip_card.dart',
       'lib/features/program/screens/infographic_screen.dart',
       'lib/features/journey/screens/child_journey_screen.dart',
     ];

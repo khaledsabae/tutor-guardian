@@ -2946,18 +2946,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get timeOfDayAnytime => 'Anytime';
 
   @override
-  String shareTipOfDayFor(Object name) {
-    return 'Today\'s tip for $name';
-  }
-
-  @override
-  String get shareTagline => 'Your partner on the parenting journey';
-
-  @override
-  String get shareStoreHint =>
-      '📲 Free on Google Play — search for “Al-Murabbi”';
-
-  @override
   String get shareInstallLine => '📲 Al-Murabbi — free, for the sake of Allah:';
 
   @override
@@ -3017,11 +3005,6 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String shareCoachTipMessage(String tip) {
     return 'Today\'s tip on raising our children 🌱\n\n$tip\n\nPass it on — an ongoing charity for every mother and father:';
-  }
-
-  @override
-  String shareDailyTipMessage(String tip) {
-    return 'Today\'s tip from Al-Murabbi: $tip';
   }
 
   @override
@@ -3308,11 +3291,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get coachAskAboutTip => 'Ask Al-Murabbi about this';
-
-  @override
-  String dailyTipShareError(Object error) {
-    return 'Failed to share the tip: $error';
-  }
 
   @override
   String get onbChooseAvatar => 'Choose your child\'s photo';

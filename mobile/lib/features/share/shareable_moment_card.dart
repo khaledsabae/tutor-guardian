@@ -3,7 +3,7 @@
 /// completion, Quran memorization, weekly progress).
 ///
 /// A square 1080×1080 card rendered off-screen via [ScreenshotController]
-/// and shared as a PNG. Generalizes the original [ShareableTipCard] so the
+/// and shared as a PNG. Generalizes the original daily-tip share card so the
 /// app's highest-emotion moments all become reverent, branded, shareable
 /// artifacts that carry an install CTA — the core of the zero-budget
 /// WhatsApp growth loop. Framed as «تذكير/نصيحة», never as a marketing pitch.

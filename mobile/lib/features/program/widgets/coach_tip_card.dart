@@ -1,4 +1,4 @@
-/// Proactive parenting coach card — replaces [DailyTipCard] on Home.
+/// Proactive parenting coach card — the day's tip on Home.
 ///
 /// Fetches a personalized (or gracefully-degraded) coach tip for the active
 /// child via [coachTipProvider]. The fetch itself records the "shown" signal
