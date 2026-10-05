@@ -38,6 +38,11 @@ on the topic.
    is stated as the app's in the PR #27 units and in `backend/guardrails/policies.v1.yaml`.
    Write any further units the same way: what the scholars said, described as theirs,
    then the app's position as the app's.
+   **Filled 2026-10-05 (batch 2):** isl-d38b9114 (Alukah pp.58–65: Ibn Uthaymin, Ahmad and
+   Ibn al-Jawzi described as theirs, with their limits; the face hadith, Bukhari 2559; rebuke as
+   discipline), isl-7a57602c and isl-0bf3f3b0 (Kayfa pp.49–53: reward rules, immediate in early
+   childhood and delayed later; the punishment ladder, «avoid hitting as far as possible» as the
+   author's, and her rules). Each ends with the app's no-hitting sentence.
 3. **Truthfulness and lying** (10 / 78 / 15). isl-390466e2, isl-68df90c4 and
    isl-756e7d81 invented stories and narrators. Alukah p.74 (Umar checking on his son
    without warning, so that no lie is prompted) is the real material.
@@ -50,15 +55,34 @@ on the topic.
    content: isl-22d62ea2 (a violent child), isl-50f95326 and isl-05aa623c. None of their
    pages treats anger. New units need a source that does, for example the Sahihayn's
    «لا تغضب» through the verified hadith cards.
+   **Filled 2026-10-05:** isl-d8fa6d4a (causes and prevention) and isl-8e3e1052 (calming steps),
+   from Ulwan pp.344–350, «ظاهرة الغضب». Bukhari 6116, 6114 and 6115 and Muslim 2204 are quoted in
+   the Sahihayn wording, not the book's. Left out: «من كظم غيظًا…», which Ulwan gives to al-Bukhari
+   (it is al-Tirmidhi 2021). Ahmad's and Abu Dawud's steps are described, not quoted. Ramadan day 12
+   cites both units first.
 6. **Du'a, tawakkul, adhkar** (8 / 42 / 9). isl-91f5606a invented a healing miracle,
    and isl-0b607846 replaced a chapter on teaching tawhid (Nuh, Ibrahim, Ya'qub's wills).
+   **Filled 2026-10-05** from Alukah:
+   - The tawhid chapter (pp.82–86): isl-487460bb (Nuh, Ibrahim, Ya'qub, Luqman) and isl-f4d4bad0
+     (Ibn Abbas; al-Zubayr's «فاستعن عليه مولاي», Bukhari 3129; Umar and Hafsa; Umm Sulaym).
+   - Du'a for children and against cursing them (pp.23–26): isl-572e7df3. Ramadan day 22 cites it
+     first. The book's «مسلم (٣٠٠٩)» is described without a number, because the guard's index files
+     that narration under 3006/3014.
+   - The du'a before intimacy and what «لم يضره» means (pp.18–20): isl-8f2c2336.
+   - The newborn (pp.27–28): isl-1ba05ed7, covering ta'widh, tahnik and du'a, with the app's
+     hygiene note.
+   - Ruqya (pp.130–131): isl-3fe9f565, covering Bukhari 3371, 5742 and 5739, with the app's
+     "see a doctor too" line.
 7. **Birr, kinship, neighbours, others' rights** (17 / 53 / 7). The family programmes
    need topic units here. Ramadan day 9 (neighbour) and day 16 (kinship) now rest on
    general "learning by example" units.
    **Filled 2026-10-05** from Ulwan, «Tarbiyat al-Awlad», «مراعاة حقوق الآخرين» (pp.376–397,
    OCR'd; the Alukah book has no chapter on them): isl-9b1b1eec (birr), isl-59632ca7 (kinship),
-   isl-14660eb4 (neighbours). Ramadan days 7, 16 and 9 cite them first. Still open: the
-   teacher, companion and elder rights of the same chapter (pp.398 ff.).
+   isl-14660eb4 (neighbours). Ramadan days 7, 16 and 9 cite them first.
+   **Filled 2026-10-05 (batch 2):** the teacher, companion and elder rights of the same chapter
+   (pp.398–419): isl-de9e2767, isl-8510c683, isl-1d2d3cc0. Seeking permission (Alukah pp.170–171,
+   al-Nur 58–59): isl-1deaad1d. Ulwan gives «لقد كنت على عهد رسول الله ﷺ غلامًا…» to Abu Sa'id
+   "in the Sahihayn". It is Samura ibn Jundub in Muslim 964, and the unit says so.
 8. **Charity and generosity** (5 / 11 / 0 left). Ramadan day 6 (generosity) and day 27
    (zakat al-fitr) have no topic unit at all.
    Day 21 (dhikr) has the same problem.

@@ -301,7 +301,7 @@ def test_the_seven_hadith_is_described_not_quoted(prayer):
 #
 # The KB fidelity review of 2026-10-04 withdrew the units these notes once cited,
 # and left them resting on general «children learn by example» units
-# (ops/data/kb_fidelity/gaps.md, gaps 1, 3, 7, 8). Each now also cites a unit
+# (ops/data/kb_fidelity/gaps.md, gaps 1, 3, 5, 6, 7, 8). Each now also cites a unit
 # written from its source page about the note's own topic. An edit that drops it
 # should fail here, not quietly re-open the gap.
 _UNITS = ROOT / "knowledge_base" / "units"
@@ -320,6 +320,7 @@ def _labels_of(unit_ids):
     ("charity_box", "الصدقة"), ("honouring_parents", "بر الوالدين"),
     ("neighbour_plate", "حق الجار"), ("truth_day", "الصدق"), ("family_ties", "صلة الرحم"),
     ("light_words", "الأذكار"), ("zakat_al_fitr_together", "زكاة الفطر"),
+    ("calm_when_angry", "الغضب"), ("night_of_dua", "الدعاء للأولاد"),
 ])
 def test_ramadan_topic_days_rest_on_a_unit_about_their_topic(ramadan, key, label):
     day = next(d for d in ramadan[0]["days"] if d["key"] == key)
