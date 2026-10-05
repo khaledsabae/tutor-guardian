@@ -270,15 +270,6 @@ jobs:
             echo "::warning::tg_backend not running — skipping pre-deploy backup"
           fi
 
-          # ── 4. Recreate the container ────────────────────────────────
-          # Compose resolves this service to tutor-guardian-backend:latest
-          # (`<project>-<service>`; it declares no `image:`), so the pulled
-          # image takes that tag only now — after the backup, right before
-          # the swap. A failure above leaves :latest where it was.
-          docker tag "$IMAGE:$GITHUB_SHA" tutor-guardian-backend:latest
-          echo "→ docker compose up -d --no-build backend"
-          docker compose -f docker-compose.production.yml up -d --no-build --remove-orphans backend
-
           # ── Helper: rollback to previous SHA ─────────────────────────
           _rollback() {
             echo "::warning::Rolling back to SHA: $PREVIOUS_SHA ..."
@@ -300,6 +291,37 @@ jobs:
             fi
             echo "::warning::Rollback complete."
           }
+
+
+          # ── 4. Recreate the container ────────────────────────────────
+          # Compose resolves this service to tutor-guardian-backend:latest
+          # (`<project>-<service>`; it declares no `image:`), so the pulled
+          # image takes that tag only now — after the backup, right before
+          # the swap. A failure above leaves :latest where it was.
+          docker tag "$IMAGE:$GITHUB_SHA" tutor-guardian-backend:latest
+          echo "→ docker compose up -d --no-build backend"
+          # The swap itself can fail: on 2026-10-05, under a 20% CPU limit,
+          # Docker could not stop the old container ("PID … is zombie and can
+          # not be killed"), `set -e` ended the step right here — before any
+          # rollback — and production stayed down (502) until a hand-run
+          # `compose up` a few minutes later, once the old container had
+          # exited. So: retry while the old container winds down, then roll
+          # back rather than leave nothing running.
+          UP_OK=0
+          for _try in 1 2 3 4; do
+            if docker compose -f docker-compose.production.yml up -d --no-build --remove-orphans backend; then
+              UP_OK=1
+              break
+            fi
+            echo "::warning::compose up failed (attempt $_try/4) — waiting 45s for the old container to exit"
+            sleep 45
+          done
+          if [ "$UP_OK" != "1" ]; then
+            echo "::error::compose up kept failing — rolling back"
+            docker ps -a --filter name=tg_backend --format '{{.ID}} {{.Status}} {{.Image}}' || true
+            _rollback
+            exit 1
+          fi
 
           # ── 5. Wait for the new container to be healthy ──────────────
           # Cold start loads the embedding model weights + ChromaDB, which
