@@ -71,7 +71,6 @@ class CoinsService {
   static const dailyBase = 10;
   static const streakBonusCap = 20; // +2/day up to +20
   static const badgeReward = 50;
-  static const referralReward = 100; // Doubled temporarily for growth push (was 50)
 
   /// Ceiling on coins earnable in one day from all sources except the daily
   /// login claim. Without it the four games are an unbounded mint, and the
@@ -213,9 +212,20 @@ class CoinsService {
     final credited = (p.getStringList(_kCreditedBadges) ?? <String>[]).toSet();
     final fresh = earnedBadgeIds.where((id) => !credited.contains(id)).toList();
     if (fresh.isEmpty) return p.getInt(_kBalance) ?? 0;
-    credited.addAll(fresh);
+    // A badge pays in full or waits. It used to be marked credited and then
+    // clipped by the day's ceiling — an invite on a busy day paid 10 of 50 and
+    // the other 40 were gone for good. Now a badge that does not fit today is
+    // left uncredited, and the next call (callers pass every earned badge
+    // each time) pays it once there is room: the ceiling still paces the
+    // flow, and nothing is lost.
+    final earned = await _earnedToday(p);
+    final room = (dailyEarnCap - earned).clamp(0, dailyEarnCap);
+    final fits = (room ~/ badgeReward).clamp(0, fresh.length);
+    if (fits == 0) return p.getInt(_kBalance) ?? 0;
+    final paying = fresh.take(fits).toList();
+    credited.addAll(paying);
     await p.setStringList(_kCreditedBadges, credited.toList());
-    await earn(badgeReward * fresh.length);
+    await earn(badgeReward * paying.length);
     return p.getInt(_kBalance) ?? 0;
   }
 

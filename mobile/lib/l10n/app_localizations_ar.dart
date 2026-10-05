@@ -2116,7 +2116,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String coinsEarnInviteDesc(Object count) {
-    return '+$count عملة لكل صديق يحمل التطبيق';
+    return '+$count عملة عن كل أسرة تنضم بدعوتك';
   }
 
   @override
@@ -3960,7 +3960,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String inviteCoinsNote(int coins) {
-    return 'ومكافأة صغيرة داخل التطبيق: $coins عملة لك عن كل أسرة تنضم، و$coins لصديقك — ضمن حدّ العملات اليومي.';
+    return 'ومكافأة صغيرة داخل التطبيق: $coins عملة لك عن كل أسرة تنضم، و$coins لصديقك — كاملةً، وقد تتأخّر إلى يوم تالٍ إن بلغتَ حدّ العملات اليومي.';
   }
 
   @override

@@ -3935,7 +3935,7 @@ abstract class AppLocalizations {
   /// No description provided for @coinsEarnInviteDesc.
   ///
   /// In ar, this message translates to:
-  /// **'+{count} عملة لكل صديق يحمل التطبيق'**
+  /// **'+{count} عملة عن كل أسرة تنضم بدعوتك'**
   String coinsEarnInviteDesc(Object count);
 
   /// No description provided for @coinsRedeemTitle.
@@ -7097,7 +7097,7 @@ abstract class AppLocalizations {
   /// No description provided for @inviteCoinsNote.
   ///
   /// In ar, this message translates to:
-  /// **'ومكافأة صغيرة داخل التطبيق: {coins} عملة لك عن كل أسرة تنضم، و{coins} لصديقك — ضمن حدّ العملات اليومي.'**
+  /// **'ومكافأة صغيرة داخل التطبيق: {coins} عملة لك عن كل أسرة تنضم، و{coins} لصديقك — كاملةً، وقد تتأخّر إلى يوم تالٍ إن بلغتَ حدّ العملات اليومي.'**
   String inviteCoinsNote(int coins);
 
   /// No description provided for @inviteShareMessage.
