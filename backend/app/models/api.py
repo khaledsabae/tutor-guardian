@@ -63,6 +63,17 @@ class AssistantReply(BaseModel):
     mode: str = "retrieval_only"
     session_id: str | None = None
 
+    @field_validator("domain")
+    @classmethod
+    def _domain_a_client_knows(cls, value: str) -> str:
+        """Every reply leaves the server through this model — the JSON answer
+        and the SSE `done` frame alike — so an internal-only domain (app_help)
+        is mapped here, once, to the code the apps already know. Guardrails
+        and logging have used the internal domain before the reply is built."""
+        from app.core.taxonomy import client_domain
+
+        return client_domain(value) or value
+
 
 # ── Auth & session management (mobile-ready) ─────────────────────────────────
 # The device-id rule, shared with services/device_twins.py and mirrored by the

@@ -23,7 +23,7 @@ import sqlite3
 from typing import Optional
 
 from app import curriculum_loader as cl
-from app.core.taxonomy import canonical_age_group, canonical_domain
+from app.core.taxonomy import canonical_age_group, canonical_domain, client_domain
 from app.db.init_db import get_conn
 from app.services import conversation_store as store
 from app.services import llm_service
@@ -643,7 +643,9 @@ async def get_proactive_tip(
             core_text, child_name, age_group, recent_topic,
             is_challenge=signal_is_challenge,
         )
-        chosen_domain = domain if domain else "development"
+        # The tip card shows its domain; a question's internal-only domain (app_help)
+        # leaves the server as the code the apps know.
+        chosen_domain = (client_domain(domain) if domain else None) or "development"
         tip_id = _store_tip(conn, device_id, child_id, date, chosen_domain, text, source, lang)
         if mark_shown:
             _mark_shown_once(conn, tip_id)

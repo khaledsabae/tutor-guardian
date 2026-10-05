@@ -41,6 +41,26 @@ DOMAIN_ALIASES: dict[str, str] = {
     "pregnancy": "infant_pregnancy",
 }
 
+# ── Domains a client never sees ─────────────────────────────────────────────
+# Every installed build labels the answer chip from the domain code
+# (mobile `Domain.fromWire`), and none of them knows these. So the server keeps
+# them internal — routing, retrieval, guardrails, the prompt label — and a
+# client is shown the general domain instead: the code every build already
+# receives for a general answer, so old and new builds show the same chip.
+# Applied where a domain leaves the server: AssistantReply (every response and
+# SSE `done` frame) and the chat rows a client reads back (conversation_store).
+CLIENT_DOMAIN_FOR: dict[str, str] = {
+    "app_help": "general",
+}
+
+
+def client_domain(value: str | None) -> str | None:
+    """The domain code a client may see for `value` — unchanged for every
+    domain the apps know."""
+    if value is None:
+        return None
+    return CLIENT_DOMAIN_FOR.get(value, value)
+
 # ── Age groups (kept in sync with age_normalization) ────────────────────────
 CANONICAL_AGE_GROUPS: set[str] = {
     "prenatal-1", "2-3", "4-6", "7-9", "10-12", "13-15", "16-18", "unspecified",
