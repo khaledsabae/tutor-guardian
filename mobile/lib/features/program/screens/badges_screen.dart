@@ -6,6 +6,7 @@ import '../../../l10n/app_localizations.dart';
 import '../../../theme/app_theme.dart';
 import '../../../theme/design_tokens.dart';
 import '../../../widgets/ui/empty_state.dart';
+import '../../../widgets/ui/two_column_rows.dart';
 import '../../share/share_service.dart';
 import '../../share/shareable_moment_card.dart';
 import '../data/badges.dart';
@@ -65,24 +66,25 @@ class _BadgesGrid extends StatelessWidget {
           ),
         ),
         Expanded(
-          child: GridView.count(
-            crossAxisCount: 2,
+          // Not GridView.count — see TwoColumnRows. Its fixed aspect ratio
+          // clipped these tiles on a 360dp phone, and by far more at 200% text.
+          child: SingleChildScrollView(
             padding: const EdgeInsets.all(16),
-            mainAxisSpacing: 12,
-            crossAxisSpacing: 12,
-            childAspectRatio: 0.95,
-            children: [
-              for (var i = 0; i < badges.length; i++)
-                // "Unlock pop" — earned badges spring in, staggered.
-                _BadgeTile(badge: badges[i])
-                    .animate(delay: (80 * (i % Dt.maxStaggeredItems)).ms)
-                    .scale(
-                      begin: const Offset(.5, .5),
-                      duration: Dt.base,
-                      curve: Curves.easeOutBack,
-                    )
-                    .fadeIn(duration: Dt.fast),
-            ],
+            child: TwoColumnRows(
+              spacing: 12,
+              children: [
+                for (var i = 0; i < badges.length; i++)
+                  // "Unlock pop" — earned badges spring in, staggered.
+                  _BadgeTile(badge: badges[i])
+                      .animate(delay: (80 * (i % Dt.maxStaggeredItems)).ms)
+                      .scale(
+                        begin: const Offset(.5, .5),
+                        duration: Dt.base,
+                        curve: Curves.easeOutBack,
+                      )
+                      .fadeIn(duration: Dt.fast),
+              ],
+            ),
           ),
         ),
       ],
@@ -147,8 +149,6 @@ class _BadgeTile extends StatelessWidget {
             Text(
               badge.description,
               textAlign: TextAlign.center,
-              maxLines: 3,
-              overflow: TextOverflow.ellipsis,
               style: TextStyle(
                 fontSize: 12,
                 color: earned
