@@ -5,6 +5,7 @@ Google Play Store — رفع AAB تلقائي
 الاستخدام:
   python3 scripts/play_upload.py --track internal
   python3 scripts/play_upload.py --track alpha --notes "إصلاحات عاجلة"
+  python3 scripts/play_upload.py --track production --notes-file docs/release_notes/1.0.68+113.json
   python3 scripts/play_upload.py --track production --rollout 0.1
 
 المتطلبات:
@@ -17,6 +18,7 @@ Google Play Store — رفع AAB تلقائي
 """
 
 import argparse
+import json
 import mimetypes
 import os
 import sys
@@ -106,6 +108,29 @@ def _bump_version_code() -> int:
 
 
 # ── منطق الرفع ──────────────────────────────────────────────────────────────
+def _release_notes(notes: str, notes_file: Path | None) -> list[dict]:
+    """«ما الجديد» لكل لغة. ملف JSON {"ar": "...", "en-US": "..."} يغلب --notes.
+
+    Play يقصّ النص عند ٥٠٠ حرف بصمت؛ فالأطول خطأ هنا لا مفاجأة على المتجر.
+    """
+    if notes_file is None:
+        return [{"language": "ar-SA", "text": notes}]
+    try:
+        data = json.loads(notes_file.read_text(encoding="utf-8"))
+    except (OSError, ValueError) as exc:
+        _die(f"تعذّر قراءة ملف الملاحظات {notes_file}: {exc}")
+    if not isinstance(data, dict) or not data:
+        _die(f"ملف الملاحظات {notes_file} يجب أن يكون كائن JSON: لغة → نص")
+    out = []
+    for language, text in data.items():
+        if not isinstance(text, str) or not text.strip():
+            _die(f"نص فارغ للغة {language} في {notes_file}")
+        if len(text) > 500:
+            _die(f"ملاحظات {language} طولها {len(text)} حرفًا — حدّ Play ٥٠٠")
+        out.append({"language": language, "text": text})
+    return out
+
+
 def upload(
     track: str,
     notes: str,
@@ -113,7 +138,9 @@ def upload(
     sa_path: Path,
     aab_path: Path,
     dry_run: bool,
+    notes_file: Path | None = None,
 ) -> None:
+    release_notes = _release_notes(notes, notes_file)
     if not aab_path.exists():
         _die(
             f"AAB غير موجود: {aab_path}\n"
@@ -182,7 +209,7 @@ def upload(
             "status": "completed" if track != "production" else (
                 "inProgress" if rollout_fraction < 1.0 else "completed"
             ),
-            "releaseNotes": [{"language": "ar-SA", "text": notes}],
+            "releaseNotes": release_notes,
         }
         if track == "production" and rollout_fraction < 1.0:
             release_body["userFraction"] = rollout_fraction
@@ -235,6 +262,12 @@ def main() -> None:
         help="ملاحظات الإصدار بالعربية",
     )
     parser.add_argument(
+        "--notes-file",
+        type=Path,
+        default=None,
+        help='ملف JSON لـ«ما الجديد» بكل لغة: {"ar": "...", "en-US": "..."} (يغلب --notes)',
+    )
+    parser.add_argument(
         "--rollout",
         type=float,
         default=1.0,
@@ -271,6 +304,7 @@ def main() -> None:
         sa_path=args.sa,
         aab_path=args.aab,
         dry_run=args.dry_run,
+        notes_file=args.notes_file,
     )
 
 
