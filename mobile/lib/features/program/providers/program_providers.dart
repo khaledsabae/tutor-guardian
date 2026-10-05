@@ -13,11 +13,8 @@
 ///       ├──► pathDetailProvider      ── FutureProvider.family(...)
 ///       │       key: (pathId, includeLessons)
 ///       │
-///       ├──► lessonProvider          ── FutureProvider.family(...)
-///       │       key: lessonId
-///       │
-///       └──► dailyTipProvider        ── AsyncNotifierProvider<...>
-///               args: (ageGroup, timeOfDay)
+///       └──► lessonProvider          ── FutureProvider.family(...)
+///               key: lessonId
 ///
 /// Screens use `ref.watch(...)` to subscribe; they use
 /// `ref.read(...).notifier.refresh()` to force a re-fetch on pull-to-refresh.
@@ -115,45 +112,6 @@ final lessonProvider = FutureProvider.autoDispose
   final repo = ref.watch(programRepositoryProvider);
   return repo.getLesson(lessonId);
 });
-
-// ── dailyTipProvider ─────────────────────────────────────────────────────
-
-class DailyTipArgs {
-  final String ageGroup;
-  final String? timeOfDay;
-  const DailyTipArgs({required this.ageGroup, this.timeOfDay});
-
-  @override
-  bool operator ==(Object other) =>
-      other is DailyTipArgs &&
-      other.ageGroup == ageGroup &&
-      other.timeOfDay == timeOfDay;
-
-  @override
-  int get hashCode => Object.hash(ageGroup, timeOfDay);
-}
-
-class DailyTipNotifier
-    extends AutoDisposeFamilyAsyncNotifier<DailyTip, DailyTipArgs> {
-  @override
-  Future<DailyTip> build(DailyTipArgs arg) {
-    final repo = ref.watch(programRepositoryProvider);
-    return repo.getDailyTip(ageGroup: arg.ageGroup, timeOfDay: arg.timeOfDay);
-  }
-
-  Future<void> refresh() async {
-    state = const AsyncValue.loading();
-    state = await AsyncValue.guard(() {
-      final repo = ref.read(programRepositoryProvider);
-      return repo.getDailyTip(ageGroup: arg.ageGroup, timeOfDay: arg.timeOfDay);
-    });
-  }
-}
-
-final dailyTipProvider = AsyncNotifierProvider.autoDispose.family<
-    DailyTipNotifier, DailyTip, DailyTipArgs>(
-  DailyTipNotifier.new,
-);
 
 // ── coachTipProvider ─────────────────────────────────────────────────────
 // Proactive coach tip keyed by the active child's id. Gracefully degrades

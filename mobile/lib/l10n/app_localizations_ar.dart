@@ -2893,18 +2893,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get pathDomainCyber => 'أمان رقمي';
 
   @override
-  String get timeOfDayMorning => 'صباحاً';
-
-  @override
-  String get timeOfDayEvening => 'مساءً';
-
-  @override
-  String get timeOfDayBedtime => 'قبل النوم';
-
-  @override
-  String get timeOfDayAnytime => 'أي وقت';
-
-  @override
   String get shareInstallLine => '📲 «المربّي» مجانًا لوجه الله:';
 
   @override

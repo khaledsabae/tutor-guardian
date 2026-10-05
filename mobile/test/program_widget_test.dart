@@ -73,15 +73,6 @@ void main() {
       expect(lesson.title, 'الرفق: قيمة تربوية قبل أسلوب');
       expect(lesson.needsProfessionalFollowup, isTrue);
     });
-
-    test('getDailyTip() parses tip', () async {
-      final fake = _FakeTgClient();
-      fake.dailyTipJson = _tipJson(id: 'tip_4-6_001');
-      final repo = ProgramRepository(fake);
-      final tip = await repo.getDailyTip(ageGroup: '4-6');
-      expect(tip.id, 'tip_4-6_001');
-      expect(tip.timeOfDay, 'morning');
-    });
     });
 
     group('Program widgets', () {
@@ -643,7 +634,6 @@ class _FakeTgClient extends TgClient {
   Map<String, dynamic>? pathsListJson;
   Map<String, dynamic>? pathDetailJson;
   Map<String, dynamic>? lessonJson;
-  Map<String, dynamic>? dailyTipJson;
   Map<String, dynamic>? lessonAssetsJson;
   bool throwOnPathsList = false;
 
@@ -676,14 +666,6 @@ class _FakeTgClient extends TgClient {
   Future<Map<String, dynamic>> getLessonAssets(String lessonId, {String? lang}) async {
     if (lessonAssetsJson != null) return lessonAssetsJson!;
     throw const TgApiError(404, 'not-found');
-  }
-
-  @override
-  Future<Map<String, dynamic>> getDailyTip({
-    required String ageGroup,
-    String? timeOfDay,
-  }) async {
-    return dailyTipJson ?? _tipJson(id: 'tip_${ageGroup}_000');
   }
 }
 
@@ -738,21 +720,6 @@ Map<String, dynamic> _lessonJson({
     'estimated_minutes': 5,
     'reflection_prompts': reflectionPrompts ?? [],
     'warning_flags': withWarning ? ['needs_professional_followup'] : [],
-    'is_published': true,
-    'version': '1.0.0',
-  };
-}
-
-Map<String, dynamic> _tipJson({required String id}) {
-  return {
-    'id': id,
-    'age_group': '4-6',
-    'domain': 'islamic_parenting',
-    'text': 'ابدأ يومك بابتسامة.',
-    'unit_id': '0bd76d3c-548a-46ed-b17b-78874741662a',
-    'day_of_week': 0,
-    'time_of_day': 'morning',
-    'tags': ['رفق', 'صباح'],
     'is_published': true,
     'version': '1.0.0',
   };

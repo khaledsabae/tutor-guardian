@@ -1108,7 +1108,6 @@ class TgClient {
   //   GET /api/program/paths?age_group=&domain=
   //   GET /api/program/paths/{id}?include=lessons
   //   GET /api/program/lessons/{id}
-  //   GET /api/program/daily-tip?age_group=&time_of_day=
   //
   // The repository layer is the only consumer of these; tests should
   // mock [TgClient] rather than call them directly.
@@ -1247,29 +1246,6 @@ class TgClient {
         if (lang != null && lang.isNotEmpty) 'lang': lang,
       },
     );
-    final resp = await _http
-        .get(uri, headers: const {'Accept': 'application/json'})
-        .timeout(AppConfig.httpTimeout);
-    if (resp.statusCode != 200) {
-      throw _wrap(resp);
-    }
-    return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
-  }
-
-  Future<Map<String, dynamic>> getDailyTip({
-    required String ageGroup,
-    String? timeOfDay,
-  }) async {
-    final qs = <String, String>{'age_group': ageGroup};
-    if (timeOfDay != null && timeOfDay.isNotEmpty) qs['time_of_day'] = timeOfDay;
-    // All 210 daily tips have English translations on disk and none of them
-    // were reachable from the app: this call carried no `lang`. The daily tip
-    // is a quarter of all conversation starts.
-    final lang = uiLanguage;
-    if (lang != null && lang.isNotEmpty) qs['lang'] = lang;
-    final uri = Uri.parse(
-      '$_baseUrl/api/program/daily-tip',
-    ).replace(queryParameters: qs);
     final resp = await _http
         .get(uri, headers: const {'Accept': 'application/json'})
         .timeout(AppConfig.httpTimeout);

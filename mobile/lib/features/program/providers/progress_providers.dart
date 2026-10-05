@@ -234,9 +234,6 @@ Future<void> _setActiveAndPersist(Ref ref, ChildProfile child) async {
   ref.invalidate(childProgressProvider);
   // childProgressProvider is a family, so invalidate(childId) is the
   // targeted way; childProgressProvider alone invalidates all families.
-  // The dailyTipProvider is keyed by DailyTipArgs(ageGroup) — since
-  // the age_group may differ, drop the whole cache.
-  ref.invalidate(dailyTipProvider);
   ref.invalidate(pathsListProvider);
 }
 
