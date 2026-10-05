@@ -2565,6 +2565,20 @@ class AppLocalizationsEn extends AppLocalizations {
   String get childModePinMismatch => 'The PINs do not match. Try again.';
 
   @override
+  String get childModePinSetupSubtitle =>
+      'Choose a 4-digit PIN to protect child mode. You will need it to leave child mode.';
+
+  @override
+  String get childModePinConfirmSubtitle => 'Enter the PIN again to confirm.';
+
+  @override
+  String get childModePinEnterSubtitle =>
+      'Enter your child-mode PIN, then hand the phone to your child.';
+
+  @override
+  String get childModePinExitSubtitle => 'Enter your PIN to leave child mode.';
+
+  @override
   String get childModeSessionExpired =>
       'The secure session has ended. Please hand the phone back to the parent.';
 

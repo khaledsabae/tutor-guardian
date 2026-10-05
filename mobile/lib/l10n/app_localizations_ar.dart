@@ -2531,6 +2531,20 @@ class AppLocalizationsAr extends AppLocalizations {
   String get childModePinMismatch => 'الرقم غير متطابق. حاول مرة أخرى.';
 
   @override
+  String get childModePinSetupSubtitle =>
+      'اختر رمزًا من أربعة أرقام يحمي وضع الطفل. ستحتاج إليه للخروج منه.';
+
+  @override
+  String get childModePinConfirmSubtitle => 'أدخل الرمز مرة أخرى للتأكيد.';
+
+  @override
+  String get childModePinEnterSubtitle =>
+      'أدخل رمز وضع الطفل ثم سلّم الهاتف لطفلك.';
+
+  @override
+  String get childModePinExitSubtitle => 'أدخل الرمز للخروج من وضع الطفل.';
+
+  @override
   String get childModeSessionExpired =>
       'انتهى وقت الجلسة الآمنة. يُرجى إعادة الهاتف للمربي.';
 

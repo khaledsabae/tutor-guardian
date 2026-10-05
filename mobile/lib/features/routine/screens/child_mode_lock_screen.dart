@@ -143,9 +143,17 @@ class _ChildModeLockScreenState extends ConsumerState<ChildModeLockScreen> {
   @override
   Widget build(BuildContext context) {
     final title = widget.isExit ? AppLocalizations.of(context).habitChildModeExitTitle : AppLocalizations.of(context).childMode;
-    final subtitle = _firstSetup && !widget.isExit
-        ? AppLocalizations.of(context).onbAgeGroup
-        : AppLocalizations.of(context).chatOffline;
+    // What to do on this screen, in each of its four states. (It used to
+    // say «المرحلة العمرية» on first setup and «غير متصل بالإنترنت» otherwise —
+    // two unrelated strings left behind by a key migration.)
+    final l10n = AppLocalizations.of(context);
+    final subtitle = widget.isExit
+        ? l10n.childModePinExitSubtitle
+        : !_firstSetup
+            ? l10n.childModePinEnterSubtitle
+            : _confirmPin.isEmpty
+                ? l10n.childModePinSetupSubtitle
+                : l10n.childModePinConfirmSubtitle;
 
     return Scaffold(
       appBar: AppBar(title: Text(title)),

@@ -4670,6 +4670,30 @@ abstract class AppLocalizations {
   /// **'الرقم غير متطابق. حاول مرة أخرى.'**
   String get childModePinMismatch;
 
+  /// No description provided for @childModePinSetupSubtitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'اختر رمزًا من أربعة أرقام يحمي وضع الطفل. ستحتاج إليه للخروج منه.'**
+  String get childModePinSetupSubtitle;
+
+  /// No description provided for @childModePinConfirmSubtitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'أدخل الرمز مرة أخرى للتأكيد.'**
+  String get childModePinConfirmSubtitle;
+
+  /// No description provided for @childModePinEnterSubtitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'أدخل رمز وضع الطفل ثم سلّم الهاتف لطفلك.'**
+  String get childModePinEnterSubtitle;
+
+  /// No description provided for @childModePinExitSubtitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'أدخل الرمز للخروج من وضع الطفل.'**
+  String get childModePinExitSubtitle;
+
   /// No description provided for @childModeSessionExpired.
   ///
   /// In ar, this message translates to:
