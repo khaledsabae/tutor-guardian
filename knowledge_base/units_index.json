@@ -1,10 +1,10 @@
 {
-  "total_units": 1353,
-  "generated_at": "2026-10-04T23:51:29.608382+00:00",
+  "total_units": 1368,
+  "generated_at": "2026-10-05T01:05:21.725153+00:00",
   "by_domain": {
     "medical": 355,
     "cyber": 280,
-    "islamic_parenting": 566,
+    "islamic_parenting": 581,
     "development": 131,
     "aqeedah": 21
   },
@@ -7126,6 +7126,18 @@
       "size_chars": 1428
     },
     {
+      "id": "isl-0bf3f3b0",
+      "domain": "islamic_parenting",
+      "title": "كيف أعاقب طفلي إذا أخطأ؟ ضوابط العقاب كما في كتاب «كيف تربي ",
+      "source_file": "Kayfa_Turabbi_Waladak.pdf",
+      "language": "ar",
+      "original_age_group": "7-9",
+      "normalized_age_group": "7-9",
+      "behavior_type": "التأديب والعقاب",
+      "needs_ocr": false,
+      "size_chars": 1848
+    },
+    {
       "id": "isl-0d5120d9",
       "domain": "islamic_parenting",
       "title": "أهمية تربية البنات واختيار الزوج الصالح",
@@ -7546,6 +7558,18 @@
       "size_chars": 1427
     },
     {
+      "id": "isl-1ba05ed7",
+      "domain": "islamic_parenting",
+      "title": "ماذا أفعل لطفلي حين يولد؟ التعويذ والتحنيك والدعاء له بالبرك",
+      "source_file": "Alukah_Rights_of_Children.pdf",
+      "language": "ar",
+      "original_age_group": "prenatal-1",
+      "normalized_age_group": "prenatal-1",
+      "behavior_type": "سنن المولود",
+      "needs_ocr": false,
+      "size_chars": 1199
+    },
+    {
       "id": "isl-1bceeaf6",
       "domain": "islamic_parenting",
       "title": "تعويد الطفل على الصلاة والعبادات بالتدريج",
@@ -7568,6 +7592,30 @@
       "behavior_type": "تعويد على الصلاة والعبادات",
       "needs_ocr": false,
       "size_chars": 1392
+    },
+    {
+      "id": "isl-1d2d3cc0",
+      "domain": "islamic_parenting",
+      "title": "كيف أعلّم طفلي توقير الكبير؟ آداب عملية مع الكبار",
+      "source_file": "Tarbiya_Al_Awlad_Alwan.pdf",
+      "language": "ar",
+      "original_age_group": "7-9",
+      "normalized_age_group": "7-9",
+      "behavior_type": "احترام الكبير",
+      "needs_ocr": false,
+      "size_chars": 2448
+    },
+    {
+      "id": "isl-1deaad1d",
+      "domain": "islamic_parenting",
+      "title": "كيف أعلّم طفلي الاستئذان؟ الأوقات الثلاثة في سورة النور",
+      "source_file": "Alukah_Rights_of_Children.pdf",
+      "language": "ar",
+      "original_age_group": "7-9",
+      "normalized_age_group": "7-9",
+      "behavior_type": "الاستئذان",
+      "needs_ocr": false,
+      "size_chars": 826
     },
     {
       "id": "isl-1e4f7969",
@@ -8422,6 +8470,18 @@
       "size_chars": 1530
     },
     {
+      "id": "isl-3fe9f565",
+      "domain": "islamic_parenting",
+      "title": "كيف أرقي طفلي إذا مرض؟ رقى من السنة، مع مراجعة الطبيب",
+      "source_file": "Alukah_Rights_of_Children.pdf",
+      "language": "ar",
+      "original_age_group": "unspecified",
+      "normalized_age_group": "unspecified",
+      "behavior_type": "الرقية الشرعية",
+      "needs_ocr": false,
+      "size_chars": 1277
+    },
+    {
       "id": "isl-3ff7f46d",
       "domain": "islamic_parenting",
       "title": "البيئة العامة وأثرها في التربية النبوية",
@@ -8588,6 +8648,18 @@
       "behavior_type": "تربية دينية ومظهر",
       "needs_ocr": false,
       "size_chars": 1293
+    },
+    {
+      "id": "isl-487460bb",
+      "domain": "islamic_parenting",
+      "title": "كيف أعلّم طفلي التوحيد؟ وصايا الأنبياء لأبنائهم كما في القرآ",
+      "source_file": "Alukah_Rights_of_Children.pdf",
+      "language": "ar",
+      "original_age_group": "7-9",
+      "normalized_age_group": "7-9",
+      "behavior_type": "تعليم العقيدة",
+      "needs_ocr": false,
+      "size_chars": 1695
     },
     {
       "id": "isl-487be1c7",
@@ -8864,6 +8936,18 @@
       "behavior_type": "تربية",
       "needs_ocr": false,
       "size_chars": 1293
+    },
+    {
+      "id": "isl-572e7df3",
+      "domain": "islamic_parenting",
+      "title": "بماذا أدعو لأولادي؟ أدعية الأنبياء لذرياتهم، والنهي عن الدعا",
+      "source_file": "Alukah_Rights_of_Children.pdf",
+      "language": "ar",
+      "original_age_group": "unspecified",
+      "normalized_age_group": "unspecified",
+      "behavior_type": "الدعاء للأولاد",
+      "needs_ocr": false,
+      "size_chars": 1404
     },
     {
       "id": "isl-59632ca7",
@@ -9874,6 +9958,18 @@
       "size_chars": 1358
     },
     {
+      "id": "isl-7a57602c",
+      "domain": "islamic_parenting",
+      "title": "كيف أكافئ طفلي دون أن تصير المكافأة شرطًا للعمل؟",
+      "source_file": "Kayfa_Turabbi_Waladak.pdf",
+      "language": "ar",
+      "original_age_group": "4-6",
+      "normalized_age_group": "4-6",
+      "behavior_type": "التحفيز والمكافأة",
+      "needs_ocr": false,
+      "size_chars": 1530
+    },
+    {
       "id": "isl-7ad7d768",
       "domain": "islamic_parenting",
       "title": "استثمار الأحداث اليومية في التربية النبوية",
@@ -10126,6 +10222,18 @@
       "size_chars": 1333
     },
     {
+      "id": "isl-8510c683",
+      "domain": "islamic_parenting",
+      "title": "كيف أعين طفلي على اختيار أصدقائه؟ الرفيق الصالح وحقوق الصحبة",
+      "source_file": "Tarbiya_Al_Awlad_Alwan.pdf",
+      "language": "ar",
+      "original_age_group": "7-9",
+      "normalized_age_group": "7-9",
+      "behavior_type": "الصحبة والأصدقاء",
+      "needs_ocr": false,
+      "size_chars": 1971
+    },
+    {
       "id": "isl-85e3c490",
       "domain": "islamic_parenting",
       "title": "أساسيات تربية الطفل باحترام وتوجيه",
@@ -10376,6 +10484,30 @@
       "behavior_type": "تربية دينية وأسرية",
       "needs_ocr": false,
       "size_chars": 804
+    },
+    {
+      "id": "isl-8e3e1052",
+      "domain": "islamic_parenting",
+      "title": "كيف أعلّم طفلي أن يهدّئ غضبه؟ خطوات من الهدي النبوي",
+      "source_file": "Tarbiya_Al_Awlad_Alwan.pdf",
+      "language": "ar",
+      "original_age_group": "7-9",
+      "normalized_age_group": "7-9",
+      "behavior_type": "الغضب",
+      "needs_ocr": false,
+      "size_chars": 1534
+    },
+    {
+      "id": "isl-8f2c2336",
+      "domain": "islamic_parenting",
+      "title": "كيف أحصّن طفلي من الشيطان قبل أن يولد؟ الدعاء عند إتيان الأه",
+      "source_file": "Alukah_Rights_of_Children.pdf",
+      "language": "ar",
+      "original_age_group": "prenatal-1",
+      "normalized_age_group": "prenatal-1",
+      "behavior_type": "تحصين الأولاد",
+      "needs_ocr": false,
+      "size_chars": 891
     },
     {
       "id": "isl-8f891c3d",
@@ -11830,6 +11962,18 @@
       "size_chars": 1401
     },
     {
+      "id": "isl-d38b9114",
+      "domain": "islamic_parenting",
+      "title": "ماذا قال العلماء في تأديب الأولاد بالضرب؟ أقوالهم وقيودها، و",
+      "source_file": "Alukah_Rights_of_Children.pdf",
+      "language": "ar",
+      "original_age_group": "7-9",
+      "normalized_age_group": "7-9",
+      "behavior_type": "التأديب والعقاب",
+      "needs_ocr": false,
+      "size_chars": 2321
+    },
+    {
       "id": "isl-d4327cab",
       "domain": "islamic_parenting",
       "title": "تعزيز ثقة الطفل واستقلاليته منذ الصغر",
@@ -11986,6 +12130,18 @@
       "size_chars": 1477
     },
     {
+      "id": "isl-d8fa6d4a",
+      "domain": "islamic_parenting",
+      "title": "كيف أقي طفلي من الغضب المذموم؟ أسبابه وكيف نتجنبها",
+      "source_file": "Tarbiya_Al_Awlad_Alwan.pdf",
+      "language": "ar",
+      "original_age_group": "unspecified",
+      "normalized_age_group": "unspecified",
+      "behavior_type": "الغضب",
+      "needs_ocr": false,
+      "size_chars": 3276
+    },
+    {
       "id": "isl-d9ea1e3c",
       "domain": "islamic_parenting",
       "title": "التربية بالقدوة في السيرة النبوية",
@@ -12092,6 +12248,18 @@
       "behavior_type": "اختيار الزوجة",
       "needs_ocr": false,
       "size_chars": 1255
+    },
+    {
+      "id": "isl-de9e2767",
+      "domain": "islamic_parenting",
+      "title": "كيف أعلّم طفلي احترام معلّمه؟ آداب الطالب مع أستاذه",
+      "source_file": "Tarbiya_Al_Awlad_Alwan.pdf",
+      "language": "ar",
+      "original_age_group": "7-9",
+      "normalized_age_group": "7-9",
+      "behavior_type": "احترام المعلم",
+      "needs_ocr": false,
+      "size_chars": 2341
     },
     {
       "id": "isl-dfa52092",
@@ -12452,6 +12620,18 @@
       "behavior_type": "تربية أخلاقية",
       "needs_ocr": false,
       "size_chars": 1461
+    },
+    {
+      "id": "isl-f4d4bad0",
+      "domain": "islamic_parenting",
+      "title": "كيف علّم الصحابة أبناءهم التوحيد والاستعانة بالله؟",
+      "source_file": "Alukah_Rights_of_Children.pdf",
+      "language": "ar",
+      "original_age_group": "4-6",
+      "normalized_age_group": "4-6",
+      "behavior_type": "تعليم العقيدة",
+      "needs_ocr": false,
+      "size_chars": 1581
     },
     {
       "id": "isl-f4e75ff2",
