@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
+import '../../l10n/content_direction.dart';
 import '../../l10n/l10n_global.dart';
 import '../../theme/app_theme.dart';
 import '../referral/referral_service.dart';
@@ -56,50 +57,63 @@ class ShareableMomentCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ShareCardFrame(
-      // Deterministic, flex-free layout. ScreenshotController's
-      // captureFromWidget renders in a detached tree that mishandles
-      // Expanded/Flexible/Spacer/SingleChildScrollView (per its own
-      // docs), which previously starved/clipped the [body]. Plain
-      // Text with a maxLines guard renders reliably; [ShareService]
-      // pins the canvas to 1080×1080 so this always fits.
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(emoji, style: const TextStyle(fontSize: 116)),
-          const SizedBox(height: 22),
-          ShareCardEyebrow(eyebrow),
-          const SizedBox(height: 28),
-          Text(
-            headline,
-            textAlign: TextAlign.center,
-            maxLines: 3,
-            overflow: TextOverflow.ellipsis,
-            style: GoogleFonts.cairo(
-              fontSize: 44,
-              fontWeight: FontWeight.w800,
-              color: AppTheme.textPrimary,
-              height: 1.3,
-            ),
-          ),
-          if (body != null && body!.trim().isNotEmpty) ...[
-            const SizedBox(height: 26),
+    // The capture tree reads left to right whatever the language, so the card
+    // sets its own direction: the app's, for the app's words — the label and
+    // the footer — and for the headline and body, which can be content in
+    // another language (a path's title, a parent's note), the direction of
+    // their own letters.
+    final appDirection = directionOfLanguage(AppL10n.current.localeName);
+    TextDirection ownDirection(String text) =>
+        ContentDirectionality.resolve(text: text, fallback: appDirection);
+    return Directionality(
+      textDirection: appDirection,
+      child: ShareCardFrame(
+        // Deterministic, flex-free layout. ScreenshotController's
+        // captureFromWidget renders in a detached tree that mishandles
+        // Expanded/Flexible/Spacer/SingleChildScrollView (per its own
+        // docs), which previously starved/clipped the [body]. Plain
+        // Text with a maxLines guard renders reliably; [ShareService]
+        // pins the canvas to 1080×1080 so this always fits.
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(emoji, style: const TextStyle(fontSize: 116)),
+            const SizedBox(height: 22),
+            ShareCardEyebrow(eyebrow),
+            const SizedBox(height: 28),
             Text(
-              body!,
+              headline,
               textAlign: TextAlign.center,
-              maxLines: 6,
+              textDirection: ownDirection(headline),
+              maxLines: 3,
               overflow: TextOverflow.ellipsis,
               style: GoogleFonts.cairo(
-                fontSize: 30,
-                fontWeight: FontWeight.w600,
+                fontSize: 44,
+                fontWeight: FontWeight.w800,
                 color: AppTheme.textPrimary,
-                height: 1.55,
+                height: 1.3,
               ),
             ),
+            if (body != null && body!.trim().isNotEmpty) ...[
+              const SizedBox(height: 26),
+              Text(
+                body!,
+                textAlign: TextAlign.center,
+                textDirection: ownDirection(body!),
+                maxLines: 6,
+                overflow: TextOverflow.ellipsis,
+                style: GoogleFonts.cairo(
+                  fontSize: 30,
+                  fontWeight: FontWeight.w600,
+                  color: AppTheme.textPrimary,
+                  height: 1.55,
+                ),
+              ),
+            ],
+            const SizedBox(height: 40),
+            ShareCardBrandFooter(icon: icon),
           ],
-          const SizedBox(height: 40),
-          ShareCardBrandFooter(icon: icon),
-        ],
+        ),
       ),
     );
   }
@@ -170,9 +184,16 @@ class ShareCardFrame extends StatelessWidget {
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(64),
-                child: child,
+              // The content gets the whole card less the padding, so a
+              // Column in it is as wide as the card and centres each line on
+              // the card's centre. Left to the Stack's defaults — loose,
+              // top-start — it was only as wide as its widest line and sat at
+              // the start edge whenever no line wrapped.
+              Positioned.fill(
+                child: Padding(
+                  padding: const EdgeInsets.all(64),
+                  child: child,
+                ),
               ),
             ],
           ),
@@ -222,65 +243,71 @@ class ShareCardBrandFooter extends StatelessWidget {
     // AppLocalizations.of would throw and the error box would be shared. The
     // app keeps AppL10n.current in step with its language.
     final l10n = AppL10n.current;
-    return Column(
-      children: [
-        Container(
-          width: 64,
-          height: 64,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [AppTheme.primary, AppTheme.accent],
+    // Its words are the app's, so is their direction — not the capture
+    // tree's, which is always left to right, nor the content's above it
+    // (the Ramadan card reads in its headline's direction).
+    return Directionality(
+      textDirection: directionOfLanguage(l10n.localeName),
+      child: Column(
+        children: [
+          Container(
+            width: 64,
+            height: 64,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [AppTheme.primary, AppTheme.accent],
+              ),
+              shape: BoxShape.circle,
             ),
-            shape: BoxShape.circle,
+            child: Icon(icon, color: Colors.white, size: 32),
           ),
-          child: Icon(icon, color: Colors.white, size: 32),
-        ),
-        const SizedBox(height: 14),
-        Text(
-          l10n.shareCardBrandLine,
-          style: GoogleFonts.cairo(
-            fontSize: 24,
-            fontWeight: FontWeight.w700,
-            color: AppTheme.primary,
-          ),
-        ),
-        const SizedBox(height: 8),
-        Text(
-          l10n.shareCardInstallHint,
-          textAlign: TextAlign.center,
-          style: GoogleFonts.cairo(
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
-            color: AppTheme.primary,
-          ),
-        ),
-        const SizedBox(height: 12),
-        Container(
-          padding: const EdgeInsets.all(8),
-          decoration: BoxDecoration(
-            color: Dt.surface,
-            borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: AppTheme.primary.withValues(alpha: 0.15)),
-          ),
-          child: QrImageView(
-            data: ShareService.installUrlFor(
-              referralCode: ReferralService.cachedCode,
-            ),
-            size: qrSize,
-            gapless: true,
-            eyeStyle: QrEyeStyle(
-              eyeShape: QrEyeShape.square,
-              color: AppTheme.primary,
-            ),
-            dataModuleStyle: QrDataModuleStyle(
-              dataModuleShape: QrDataModuleShape.square,
+          const SizedBox(height: 14),
+          Text(
+            l10n.shareCardBrandLine,
+            style: GoogleFonts.cairo(
+              fontSize: 24,
+              fontWeight: FontWeight.w700,
               color: AppTheme.primary,
             ),
           ),
-        ),
-      ],
+          const SizedBox(height: 8),
+          Text(
+            l10n.shareCardInstallHint,
+            textAlign: TextAlign.center,
+            style: GoogleFonts.cairo(
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+              color: AppTheme.primary,
+            ),
+          ),
+          const SizedBox(height: 12),
+          Container(
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              color: Dt.surface,
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: AppTheme.primary.withValues(alpha: 0.15)),
+            ),
+            child: QrImageView(
+              data: ShareService.installUrlFor(
+                referralCode: ReferralService.cachedCode,
+              ),
+              size: qrSize,
+              gapless: true,
+              eyeStyle: QrEyeStyle(
+                eyeShape: QrEyeShape.square,
+                color: AppTheme.primary,
+              ),
+              dataModuleStyle: QrDataModuleStyle(
+                dataModuleShape: QrDataModuleShape.square,
+                color: AppTheme.primary,
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
