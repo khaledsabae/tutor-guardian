@@ -43,6 +43,7 @@ class _InfographicScreenState extends State<InfographicScreen> {
 
   Future<void> _download() async {
     if (_saving) return;
+    final shareText = AppLocalizations.of(context).shareInfographicText;
     setState(() => _saving = true);
     try {
       final bytes = await _buildWatermarked();
@@ -52,7 +53,7 @@ class _InfographicScreenState extends State<InfographicScreen> {
       await File(path).writeAsBytes(bytes);
       await SharePlus.instance.share(ShareParams(
         files: [XFile(path, mimeType: 'image/png')],
-        text: 'إنفوجراف من تطبيق المربّي 🌿',
+        text: shareText,
       ));
     } catch (_) {
       if (mounted) {

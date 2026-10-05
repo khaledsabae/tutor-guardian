@@ -42,6 +42,10 @@ class DailyTipCard extends ConsumerWidget {
   }
 }
 
+/// The line that travels with a shared daily tip.
+String dailyTipShareMessage(AppLocalizations l10n, String tip) =>
+    l10n.shareDailyTipMessage(tip);
+
 class _Card extends ConsumerStatefulWidget {
   const _Card({required this.tip, required this.childName});
   final DailyTip tip;
@@ -70,7 +74,8 @@ class _CardState extends ConsumerState<_Card> {
       // to be shared.
       await ShareService.shareMomentCard(
         fileTag: 'tip_${widget.tip.id}',
-        message: 'نصيحة اليوم من المربي الذكي: ${widget.tip.text}',
+        message:
+            dailyTipShareMessage(AppLocalizations.of(context), widget.tip.text),
         card: ShareableTipCard(
           tip: widget.tip,
           childName: widget.childName,

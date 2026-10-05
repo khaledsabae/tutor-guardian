@@ -68,18 +68,14 @@ class CoachTipCard extends ConsumerWidget {
           // Render the tip as a reverent, branded 1080×1080 card and open the
           // share sheet — turns the daily tip into a صدقة جارية growth surface.
           // The shared artifact stays child-agnostic for privacy.
-          onShare: () => ShareService.shareMomentCard(
-            fileTag: 'coachtip_${tip.id}',
-            message: 'نصيحة اليوم في تربية أبنائنا 🌱\n\n${tip.text}\n\n'
-                'انشرها تكن صدقة جارية لكل أب وأم:',
-            card: ShareableMomentCard(
-              emoji: '🌱',
-              eyebrow: 'نصيحة اليوم',
-              headline: 'وقفة في تربية أبنائنا',
-              body: tip.text,
-              icon: Icons.lightbulb_outline,
-            ),
-          ),
+          onShare: () {
+            final share = coachTipShare(AppLocalizations.of(context), tip.text);
+            ShareService.shareMomentCard(
+              fileTag: 'coachtip_${tip.id}',
+              message: share.message,
+              card: share.card,
+            );
+          },
         ),
         loading: () => const SizedBox.shrink(),
         error: (_, _) => const SizedBox.shrink(),
@@ -87,6 +83,19 @@ class CoachTipCard extends ConsumerWidget {
     );
   }
 }
+
+/// Today's coach tip, as the parent shares it — child-agnostic for privacy:
+/// the [tip] text only, never the child's name.
+MomentShare coachTipShare(AppLocalizations l10n, String tip) => (
+      message: l10n.shareCoachTipMessage(tip),
+      card: ShareableMomentCard(
+        emoji: '🌱',
+        eyebrow: l10n.shareCoachTipEyebrow,
+        headline: l10n.shareCoachTipHeadline,
+        body: tip,
+        icon: Icons.lightbulb_outline,
+      ),
+    );
 
 class _CoachCard extends StatelessWidget {
   const _CoachCard({

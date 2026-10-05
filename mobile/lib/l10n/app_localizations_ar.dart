@@ -2916,6 +2916,74 @@ class AppLocalizationsAr extends AppLocalizations {
   String get shareStoreHint => '📲 مجانًا على Google Play — ابحث: «المربّي»';
 
   @override
+  String get shareInstallLine => '📲 «المربّي» مجانًا لوجه الله:';
+
+  @override
+  String get shareCardBrandLine => 'المربّي — شريكك في رحلة التربية';
+
+  @override
+  String get shareCardInstallHint =>
+      '📲 مجانًا لوجه الله — امسح الكود أو ابحث: «المربّي»';
+
+  @override
+  String get sharePathCompleteEyebrow => 'مسار مكتمل';
+
+  @override
+  String sharePathCompleteMessage(String title) {
+    return 'ما شاء الله 🤍 أتممت مسار «$title» في «المربّي»!\nكل خطوة في تربية أولادك صدقة جارية:';
+  }
+
+  @override
+  String shareMilestoneEyebrow(String name) {
+    return 'محطة في رحلة $name';
+  }
+
+  @override
+  String shareMilestoneMessage(String name, String title) {
+    return 'ما شاء الله 🤍 سجّلت محطة جديدة في رحلة $name:\n«$title»\nاللهم بارك له واجعله من الصالحين.';
+  }
+
+  @override
+  String get shareMilestoneDua => 'اللهم بارك له واجعله قرة عين لوالديه 🤍';
+
+  @override
+  String shareFirstSurahEyebrow(String name) {
+    return 'محطة قرآنية لـ $name';
+  }
+
+  @override
+  String shareFirstSurahHeadline(String surah) {
+    return 'حفظ أول سورة — سورة $surah';
+  }
+
+  @override
+  String shareFirstSurahMessage(String name, String surah) {
+    return 'ما شاء الله 📖 $name حفظ أول سورة — سورة $surah 🌟\nاللهم اجعله من أهل القرآن وخاصته.';
+  }
+
+  @override
+  String get shareFirstSurahDua => 'اللهم اجعله من أهل القرآن وخاصّتك يا رب 🤍';
+
+  @override
+  String get shareCoachTipEyebrow => 'نصيحة اليوم';
+
+  @override
+  String get shareCoachTipHeadline => 'وقفة في تربية أبنائنا';
+
+  @override
+  String shareCoachTipMessage(String tip) {
+    return 'نصيحة اليوم في تربية أبنائنا 🌱\n\n$tip\n\nانشرها تكن صدقة جارية لكل أب وأم:';
+  }
+
+  @override
+  String shareDailyTipMessage(String tip) {
+    return 'نصيحة اليوم من المربي الذكي: $tip';
+  }
+
+  @override
+  String get shareInfographicText => 'إنفوجراف من تطبيق المربّي 🌿';
+
+  @override
   String get eduGameChooseLevel => 'اختر المستوى';
 
   @override
