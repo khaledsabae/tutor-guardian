@@ -17,6 +17,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
 import 'core/analytics.dart';
+import 'core/local_only_files.dart';
 import 'core/crash_triage.dart';
 import 'core/nav_observer.dart';
 
@@ -31,6 +32,11 @@ import 'features/onboarding/screens/update_splash_screen.dart';
 import 'features/program/providers/settings_providers.dart';
 import 'features/program/providers/progress_providers.dart';
 import 'features/deeplink/deep_link_handler.dart';
+import 'features/child_memory/data/local_wipe.dart' show renewPushTokenAfterWipe;
+import 'features/child_memory/data/pending_deletion.dart';
+import 'features/child_memory/screens/account_deletion_screen.dart'
+    show finishDeletedAccount;
+import 'features/child_memory/device_proof/device_proof_service.dart';
 import 'features/push/push_service.dart';
 import 'features/referral/referral_service.dart';
 import 'firebase_options.dart';
@@ -194,6 +200,30 @@ void main() async {
     );
   }
 
+  // Every session mint says which build asks (`X-App-Build`, the versionCode):
+  // a build that handles `410 device_erased` gets it for a device id erased
+  // with its account — a phone backup restored after the deletion, or a
+  // deletion whose answer was lost (MOBILE_API §3.2). The client then becomes
+  // a new device and mints again; the app clears what the backup brought
+  // back and ends calmly on the deleted page. Both before anything can mint.
+  TgClient.appBuild = await buildNumber;
+  TgClient.shared.onDeviceErased = () {
+    _accountGone = true;
+    return finishDeletedAccount(appNavigatorKey);
+  };
+
+  // A deletion the server confirmed but the app did not see through (killed
+  // before the phone was cleared) is finished here, before anything reads the
+  // onboarding state. Local only: a deletion still waiting for its answer is
+  // settled after the first frame (_settleLostDeletion), never holding it.
+  var clearedBeforeFirstFrame = false;
+  try {
+    clearedBeforeFirstFrame = await completePendingAccountDeletion();
+  } catch (e, s) {
+    FirebaseCrashlytics.instance.recordError(e, s,
+        reason: 'pending account deletion not finished', fatal: false);
+  }
+
   // Before onboarding can complete: the only moment a first install is
   // distinguishable from an upgrade, and therefore the only moment the
   // «what's new» card can be silenced for someone with no "before".
@@ -250,6 +280,12 @@ void main() async {
   // ensureSession() throws, silently dropping the tap that opened the app.
   unawaited(PushService.instance.listenTaps());
 
+  // The device-proof inbox (MOBILE_API §9.0.1), for the same reason: a code
+  // can arrive before the growth loop below gets anywhere, and this isolate
+  // must be the one the background handler hands it to — registered once,
+  // here, in the app's own `main()`.
+  PushService.instance.listenDeviceProof();
+
   // Channels, for exactly the same reason. They are a local OS call with no
   // network in it, and putting them behind ensureSession() would mean a
   // device that cold-started offline never creates the safety channel — so
@@ -258,12 +294,58 @@ void main() async {
   unawaited(ensureNotificationChannels());
 
   // Phase 0.2 + Phase 1 growth loops — fire-and-forget so it never blocks
-  // cold start. Order: session → push token → referral → identity.
-  unawaited(_postLaunchGrowthLoop());
+  // cold start. Order: a lost account deletion settled → session → push
+  // token → referral → identity.
+  unawaited(() async {
+    // Deleted after all: the deleted page is up, and nothing below is
+    // wanted for a phone about to close.
+    if (await _settleLostDeletion()) return;
+    await _postLaunchGrowthLoop();
+  }());
+
+  // Voice notes and agreement images older builds left where every backup
+  // picked them up (core/local_only_files.dart).
+  unawaited(removeStrayPrivateFiles());
+
+  // The one network step of a deletion's clearing, kept out of the first
+  // frame's way (PR #36 review, round 3): a new push token for this phone.
+  if (clearedBeforeFirstFrame) unawaited(renewPushTokenAfterWipe());
 
   // Activation-funnel bookkeeping (first-open day → one-shot day2_return).
   unawaited(Analytics.appOpened());
 }
+
+/// An account deletion whose answer was lost: the same DELETE is sent again
+/// (TgClient.settleAccountDeletion), before the growth loop — nothing there
+/// should work for an account that turns out gone. After the first frame,
+/// because it needs the network. No network when nothing is pending. True
+/// when the account turned out deleted (the phone is cleared and the deleted
+/// page is up).
+Future<bool> _settleLostDeletion() async {
+  try {
+    final settled = await settlePendingAccountDeletion();
+    switch (settled.outcome) {
+      case PendingDeletion.deleted:
+        await finishDeletedAccount(appNavigatorKey, result: settled.result);
+        return true;
+      case PendingDeletion.notDeleted:
+        // The parent last saw «we don't know yet»: say how it ended.
+        messengerKey.currentState?.showSnackBar(SnackBar(
+            content: Text(AppL10n.current.deleteAccountNotDeletedNotice)));
+      case PendingDeletion.none || PendingDeletion.unknown:
+        break;
+    }
+  } catch (e, s) {
+    FirebaseCrashlytics.instance.recordError(e, s,
+        reason: 'lost account deletion not settled', fatal: false);
+  }
+  return false;
+}
+
+/// The account behind this install turned out deleted during this run (a
+/// mint answered `410 device_erased`): the deleted page is up, and the
+/// growth loop has nothing left to do for a phone about to close.
+bool _accountGone = false;
 
 Future<void> _postLaunchGrowthLoop() async {
   try {
@@ -271,10 +353,27 @@ Future<void> _postLaunchGrowthLoop() async {
   } catch (_) {
     return;
   }
-  await PushService.instance.registerToken();
+  // Checked after every step, not once: a `410 device_erased` can meet any
+  // request of this loop, and nothing after it is wanted for a phone about
+  // to close — least of all a silent Google re-link.
+  if (_accountGone) return;
+  // The launch path is the one registration allowed to ask for permission.
+  await PushService.instance.registerToken(askPermission: true);
+  if (_accountGone) return;
   await PushService.instance.listenForeground();
+  if (_accountGone) return;
+  // Prove this session in the background once its push token is on the
+  // server (MOBILE_API §9.0.1) — answers and coach tips use memory only for a
+  // proven session. Alongside the referral work, and before the Google
+  // re-link: a link made by a proven session is a confirmed one, the only kind
+  // an account deletion follows to the family's other phones (§10).
+  final proof = DeviceProofService.instance.proveIfUseful();
   await ReferralService.instance.captureAndClaimOnFirstRun();
+  if (_accountGone) return;
   await ReferralService.instance.refresh();
+  if (_accountGone) return;
+  await proof;
+  if (_accountGone) return;
   await IdentityService.instance.silentRestore();
 }
 

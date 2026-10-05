@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../l10n/app_localizations.dart';
+import '../../child_memory/widgets/memory_errors.dart';
 import '../../../models/enums.dart';
 import '../../../theme/app_theme.dart';
 import '../../../widgets/ui/bouncy_button.dart';
@@ -15,7 +16,6 @@ import '../../programs/widgets/birth_month_field.dart';
 import '../data/progress_models.dart';
 import '../providers/settings_providers.dart';
 import '../../../theme/design_tokens.dart';
-import '../../../widgets/ui/error_retry_view.dart';
 
 class EditChildScreen extends ConsumerStatefulWidget {
   const EditChildScreen({super.key, required this.child});
@@ -59,6 +59,8 @@ class _EditChildScreenState extends ConsumerState<EditChildScreen> {
       // Sent only when it changed: an explicit null removes it, an absent key
       // leaves it alone.
       final monthChanged = _offerBirthMonth && _birthMonth != widget.child.birthMonth;
+      // A rename may have to prove the phone first (PR #39): the notifier
+      // proves and retries whenever the server asks.
       await ref.read(updateChildProvider.notifier).call(
             childId: widget.child.id,
             name: _nameController.text.trim(),
@@ -81,7 +83,10 @@ class _EditChildScreenState extends ConsumerState<EditChildScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(AppLocalizations.of(context).editChildSaveError(describeFailure(AppLocalizations.of(context), e))),
+            // A rename can be paused for 72 h after a push-token change, like
+            // a deletion (MOBILE_API §9.0.1): say until when.
+            content: Text(AppLocalizations.of(context)
+                .editChildSaveError(describeActionFailure(context, e))),
             backgroundColor: AppTheme.dangerFg,
           ),
         );

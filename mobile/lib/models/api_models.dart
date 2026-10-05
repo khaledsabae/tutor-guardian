@@ -69,6 +69,19 @@ class AssistantReply {
     ].take(4).toList();
   }
 
+  /// How many remembered facts shaped this answer (MOBILE_API §9.1). Zero
+  /// from older servers and for answers that used no memory.
+  int get memoryFactsUsed {
+    final raw = metadata?['memory_facts_used'];
+    return raw is num ? raw.toInt() : 0;
+  }
+
+  /// The child the server resolved the question to, or null.
+  int? get memoryChildId {
+    final raw = metadata?['child_id'];
+    return raw is num ? raw.toInt() : null;
+  }
+
   /// True when the server signalled an out-of-scope / banned request.
   bool get isBanned => mode == ReplyMode.banned;
 
@@ -239,12 +252,18 @@ class AssistantQuery {
   final String messageText;
   final String? sessionId;
 
+  /// The active child the parent asked from (MOBILE_API §9.1). Without it
+  /// the server can only guess the child, or answer with no memory at all.
+  /// Servers that predate it ignore the field.
+  final int? childId;
+
   const AssistantQuery({
     required this.ageGroup,
     required this.severity,
     required this.messageText,
     this.behaviorType,
     this.sessionId,
+    this.childId,
   });
 
   Map<String, dynamic> toJson() => {
@@ -254,6 +273,7 @@ class AssistantQuery {
           'behavior_type': behaviorType,
         'message_text': messageText,
         if (sessionId != null) 'session_id': sessionId,
+        if (childId != null && childId! > 0) 'child_id': childId,
       };
 }
 

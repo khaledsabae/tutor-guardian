@@ -8,9 +8,9 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:record/record.dart';
 
+import '../../core/local_only_files.dart';
 import '../../l10n/app_localizations.dart';
 import '../../state/chat_notifier.dart' show tgClientProvider;
 import '../../theme/app_theme.dart';
@@ -57,9 +57,10 @@ class _FeedbackScreenState extends ConsumerState<FeedbackScreen> {
         return;
       }
       // App's private docs dir — always writable (the cache/temp dir can be
-      // read-only on some devices, which surfaced as "errno = 30").
-      final dir = await getApplicationDocumentsDirectory();
-      await dir.create(recursive: true);
+      // read-only on some devices, which surfaced as "errno = 30") — in its
+      // folder that no backup carries: a parent's voice must not come back
+      // from Google Drive after an account deletion cleared the phone.
+      final dir = await localOnlyDirectory();
       final path =
           '${dir.path}/feedback_${DateTime.now().millisecondsSinceEpoch}.m4a';
       await _rec.start(const RecordConfig(encoder: AudioEncoder.aacLc),

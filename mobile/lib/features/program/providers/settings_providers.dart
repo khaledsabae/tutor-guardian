@@ -15,6 +15,8 @@ library;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../state/chat_notifier.dart';
+import '../../child_memory/providers/memory_providers.dart'
+    show childMemoryProvider, dueFollowupsProvider, weeklyPlanProvider;
 import '../../onboarding/providers/onboarding_providers.dart';
 import '../data/progress_models.dart';
 import '../data/settings_repository.dart';
@@ -50,6 +52,17 @@ final childrenListProvider = AsyncNotifierProvider.autoDispose<
 /// Update the active child. After success:
 ///   * invalidates [childrenListProvider] so the list re-fetches
 ///   * re-hydrates [OnboardingStorage] with the new values
+///   * re-fetches what renders the child's name into memory text (MOBILE_API
+///     §9.0, PR #39: a rename re-letters the family and rewrites a stored
+///     mention of the old name — rendered text must not outlive it).
+///
+/// A rename on a device that has proven needs a proven session (PR #39),
+/// answered with the same `device_proof_required` as a child deletion: prove
+/// and send once more. Every save goes that way: whether the name really
+/// changes is the server's to say — the screen's copy of it may be stale —
+/// and a save that changes no name is simply never asked. An older server
+/// never asks either. For the same reason memory is re-fetched after every
+/// save, not only after what looked like a rename.
 class UpdateChildNotifier extends AutoDisposeAsyncNotifier<ChildProfile?> {
   @override
   Future<ChildProfile?> build() async => null;
@@ -66,15 +79,16 @@ class UpdateChildNotifier extends AutoDisposeAsyncNotifier<ChildProfile?> {
     state = const AsyncValue.loading();
     try {
       final repo = ref.read(settingsRepositoryProvider);
-      final child = await repo.updateChild(
-        childId: childId,
-        name: name,
-        ageGroup: ageGroup,
-        gender: gender,
-        avatarEmoji: avatarEmoji,
-        birthMonth: birthMonth,
-        clearBirthMonth: clearBirthMonth,
-      );
+      Future<ChildProfile> save() => repo.updateChild(
+            childId: childId,
+            name: name,
+            ageGroup: ageGroup,
+            gender: gender,
+            avatarEmoji: avatarEmoji,
+            birthMonth: birthMonth,
+            clearBirthMonth: clearBirthMonth,
+          );
+      final child = await ref.read(tgClientProvider).withDeviceProof(save);
       // If we just changed the active child, sync the on-disk profile
       // so the rest of the app (DailyTipCard, path detail) refetches
       // with the new age_group.
@@ -91,6 +105,10 @@ class UpdateChildNotifier extends AutoDisposeAsyncNotifier<ChildProfile?> {
       }
       // Re-hydrate the on-disk list.
       ref.invalidate(childrenListProvider);
+      ref
+        ..invalidate(childMemoryProvider)
+        ..invalidate(dueFollowupsProvider)
+        ..invalidate(weeklyPlanProvider);
       state = AsyncValue.data(child);
       return child;
     } catch (e, st) {
@@ -143,6 +161,14 @@ class DeleteChildNotifier extends AutoDisposeAsyncNotifier<bool?> {
       final repo = ref.read(settingsRepositoryProvider);
       final ok = await repo.deleteChild(childId);
       ref.invalidate(childrenListProvider);
+      // What was keyed by the child goes with it: its due follow-ups (the
+      // Today card would keep offering one for a child that is gone), its
+      // weekly plan and its memory — and the sibling letters, which are
+      // positional, are re-read with the list above.
+      ref
+        ..invalidate(dueFollowupsProvider)
+        ..invalidate(weeklyPlanProvider)
+        ..invalidate(childMemoryProvider);
       if (ok) await _repointActiveChild(childId);
       state = AsyncValue.data(ok);
       return ok;

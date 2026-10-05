@@ -43,17 +43,79 @@ class TgApiError implements Exception {
   /// `{"detail": {"error": "<code>", ...extra}}`. Before this field existed the
   /// whole object was thrown away and every refusal read as "HTTP 409", so a
   /// screen could not tell "already recorded" (show ✓) from a real failure.
+  /// The branchable errors of §9.0 send it as `detail.code` instead, e.g.
+  /// `device_proof_required`. Null for plain-string details and transport
+  /// failures.
   final String? code;
 
-  /// The rest of that object (`next_stage`, `available_on`, `markable_up_to`…).
+  /// The rest of that object (`next_stage`, `available_on`, `markable_up_to`,
+  /// `support_email`, `available_at`…), as the server sent it.
   final Map<String, dynamic>? details;
 
   const TgApiError(this.statusCode, this.message,
       {this.retryAfter, this.code, this.details});
 
+  /// The address to offer when the automatic path cannot work (§9.0.1).
+  String? get supportEmail {
+    final v = details?['support_email'];
+    return v is String && v.isNotEmpty ? v : null;
+  }
+
+  /// When a paused route opens again (`device_proof_cooldown`), as UTC. The
+  /// contract sends ISO 8601 with `Z`; a value without a zone is UTC as well,
+  /// never the phone's local time.
+  DateTime? get availableAt {
+    final v = details?['available_at'];
+    if (v is! String || v.trim().isEmpty) return null;
+    final s = v.trim();
+    final zoned = RegExp(r'(Z|[+-]\d{2}:?\d{2})$').hasMatch(s);
+    return DateTime.tryParse(zoned ? s : '${s.replaceFirst(' ', 'T')}Z')
+        ?.toUtc();
+  }
+
+  /// The route answered "not here" rather than "not yours": a server that
+  /// predates the endpoint. Only FastAPI's own bare `{"detail": "Not Found"}`
+  /// (and 405) says that — a 404 with a message of our own («الطفل غير
+  /// موجود», a coded `followup_not_found`) is about the data, and must not
+  /// hide a feature the server does have.
+  bool get isMissingEndpoint =>
+      statusCode == 405 ||
+      (statusCode == 404 && code == null && message == kFastApiNotFound);
+
+  /// FastAPI's detail for a path no route matches.
+  static const String kFastApiNotFound = 'Not Found';
+
   @override
-  String toString() => 'TgApiError(${statusCode ?? '?'}): $message';
+  String toString() =>
+      'TgApiError(${statusCode ?? '?'}${code == null ? '' : ' $code'}): $message';
 }
+
+/// An answer about an account deletion arrived after the install moved on
+/// (it became a new device meanwhile): not acted on.
+class _InstallMovedOn implements Exception {
+  const _InstallMovedOn();
+}
+
+/// Where an account deletion stands on this phone (MOBILE_API §10) — a
+/// SharedPreferences key, so it survives the process.
+const String kAccountDeletionKey = 'tg.account_deletion';
+
+/// The DELETE is on its way, or its answer was lost: whether the server
+/// committed it is not known yet. The token it carries is kept apart from the
+/// session (clearing the session never touches it), because sending that same
+/// DELETE again is how the answer is settled (`TgClient.settleAccountDeletion`).
+/// The app works on meanwhile: for an erased device id the server refuses the
+/// session mint with `410 device_erased`.
+const String kAccountDeletionRequested = 'requested';
+
+/// The server deleted the account; this install is a new device, or becoming
+/// one. The phone still has to be cleared.
+const String kAccountDeletionConfirmed = 'confirmed';
+
+/// The device id the deletion erased, recorded with [kAccountDeletionConfirmed]
+/// BEFORE the keystore is cleared: a launch that finds it still held — the app
+/// was killed in the middle — starts over again before the phone is cleared.
+const String kAccountDeletionErasedIdKey = 'tg.account_deletion.erased_id';
 
 /// One event yielded by `streamQuery`.
 sealed class TgStreamEvent {
@@ -128,6 +190,12 @@ class _AuthStore {
   /// A copy of the device id outside the keystore. Only ever read when the
   /// secure copy is missing or unreadable — see [getOrCreateDeviceId].
   static const _kDeviceIdBackup = 'tg_device_id_backup';
+
+  /// The token an account DELETE was sent with (MOBILE_API §10). Not part of
+  /// the session: "new conversation" and the 401 handlers clear the session,
+  /// and this token is the only way to send the same DELETE again when its
+  /// answer was lost.
+  static const _kDeletionToken = 'tg_deletion_token';
 
   final FlutterSecureStorage _storage;
   final DeviceIdClaim _claim;
@@ -330,6 +398,62 @@ class _AuthStore {
   Future<void> clearChildToken() async {
     await _safeDelete(_kChildToken);
   }
+
+  Future<void> writeDeletionToken(String token) =>
+      _safeWrite(_kDeletionToken, token);
+
+  Future<String?> readDeletionToken() => _safeRead(_kDeletionToken);
+
+  Future<void> clearDeletionToken() => _safeDelete(_kDeletionToken);
+
+  /// The device id this install holds, without creating one.
+  Future<String?> peekDeviceId() async {
+    final cached = _cachedDeviceId;
+    if (cached != null) return cached;
+    final (stored, _) = await _readChecked(_kDeviceId);
+    if (isValidDeviceId(stored)) return stored;
+    final backup = await _readDeviceIdBackup();
+    return isValidDeviceId(backup) ? backup : null;
+  }
+
+  /// Whether [id] is still this install's id anywhere it lives — the memory
+  /// cache, the keystore, the backup copy. A keystore that cannot be read
+  /// counts as holding it: starting over once more costs nothing.
+  Future<bool> stillHolds(String id) async {
+    if (_cachedDeviceId == id) return true;
+    final (stored, readOk) = await _readChecked(_kDeviceId);
+    if (!readOk || stored == id) return true;
+    return await _readDeviceIdBackup() == id;
+  }
+
+  /// After the account was deleted (MOBILE_API §10): forget the session and
+  /// every secret this install held, and become a brand-new device.
+  ///
+  /// The fresh id goes everywhere the id lives — the keystore, the backup
+  /// and the cross-isolate claim (DeviceIdClaim) — straight away, rather
+  /// than left for [getOrCreateDeviceId] to make on demand: the claim in
+  /// particular would otherwise hand the erased id back to a launch that
+  /// found the keystore and the backup empty.
+  Future<void> startOverAsNewDevice() async {
+    _cachedSessionId = null;
+    _cachedToken = null;
+    try {
+      // Session, token, device proof, child tokens, child-mode PIN: all of
+      // it belonged to the account that no longer exists.
+      await _storage.deleteAll();
+    } catch (_) {
+      for (final key in [_kSessionId, _kToken, _kDeviceProof, _kChildToken,
+          _kActiveChildId, _kDeviceId, _kDeletionToken]) {
+        await _safeDelete(key);
+      }
+    }
+    final fresh = _uuid.v4();
+    _cachedDeviceId = fresh;
+    _deviceIdLoad = Future.value(fresh);
+    await _safeWrite(_kDeviceId, fresh);
+    await _writeDeviceIdBackup(fresh);
+    await _claim.replace(fresh);
+  }
 }
 
 /// The Tutor Guardian API client.
@@ -388,7 +512,15 @@ class TgClient {
   /// the app. Set by the app when the locale changes; `null` keeps Arabic.
   static String? uiLanguage;
 
-  /// The transport as injected. Only session minting uses it directly.
+  /// This build's number, sent as `X-App-Build` with every session mint. A
+  /// build that handles `410 device_erased` says so this way, and only such a
+  /// build gets that answer for an erased device id (MOBILE_API §10). Set once
+  /// in `main()`; null (host tests, no platform channel) sends nothing, and
+  /// the server answers as it always did.
+  static int? appBuild;
+
+  /// The transport as injected. Only session minting and the account DELETE
+  /// use it directly.
   final http.Client _raw;
 
   /// Everything else goes through this: it renews an expired session once
@@ -400,6 +532,33 @@ class TgClient {
   /// Settable so `tgClientProvider` can wire the Riverpod active child into
   /// the shared instance.
   Future<int?> Function()? onNeedActiveChildId;
+
+  /// Runs the device-proof challenge for this session (MOBILE_API §9.0.1):
+  /// completes once the session is proven, throws a [TgApiError] when it
+  /// cannot be. Wired by `DeviceProofService.init`; null means "no way to
+  /// prove here", and a `device_proof_required` reaches the caller as is.
+  Future<void> Function()? onDeviceProofRequired;
+
+  /// Called once this install has become a new device because a session mint
+  /// was answered `410 device_erased`: its device id belongs to a deleted
+  /// account — a phone backup restored after the deletion, or a deletion
+  /// whose answer was lost. The app clears the phone and says the account was
+  /// deleted. Wired in `main()`; null does the start-over alone.
+  Future<void> Function()? onDeviceErased;
+
+  /// Sends [send]; on `device_proof_required` proves the session once and
+  /// sends it once more — the client flow §9.0 prescribes. A cooldown
+  /// (`device_proof_cooldown`) is never retried: the proof cannot lift it.
+  Future<T> withDeviceProof<T>(Future<T> Function() send) async {
+    try {
+      return await send();
+    } on TgApiError catch (e) {
+      final prove = onDeviceProofRequired;
+      if (e.code != 'device_proof_required' || prove == null) rethrow;
+      await prove();
+      return await send();
+    }
+  }
 
   /// A stream that delivers no bytes for this long is treated as dead
   /// (audit M13). The server sends an SSE comment every 15 s while the
@@ -424,42 +583,80 @@ class TgClient {
   Future<SessionResponse> createSession({
     Map<String, dynamic>? metadata,
   }) async {
-    final deviceId = await _auth.getOrCreateDeviceId();
-    final body = <String, dynamic>{
+    // A deletion still waiting for its answer, on a server that would not
+    // refuse an erased id to this build: settled first, so no mint ever gives
+    // the erased id a live token again (see [_settleBeforeMinting]).
+    await _settleBeforeMinting();
+    var deviceId = await _auth.getOrCreateDeviceId();
+    var resp = await _postMint(deviceId, metadata: metadata);
+    if (resp.statusCode == 410) {
+      final error = _wrap(resp);
+      if (error.code != 'device_erased') throw error;
+      // This device id was erased with its account — a phone backup restored
+      // after the deletion, or a deletion whose answer was lost (MOBILE_API
+      // §3.2). Never retry it: become a new device (session, last token, id
+      // and its backup copy all go), mint for that, and let the app clear
+      // what the backup brought back. Not an error for the caller.
+      await _deviceErased();
+      deviceId = await _auth.getOrCreateDeviceId();
+      resp = await _postMint(deviceId, metadata: metadata);
+      if (resp.statusCode == 410) throw _wrap(resp); // never twice
+    }
+    if (resp.statusCode != 201) {
+      throw _wrapStreamed(resp.statusCode, const {});
+    }
+    return _keepMinted(resp, deviceId);
+  }
+
+  /// `POST /api/chat/sessions` for [deviceId], with the last token as proof.
+  ///
+  /// Prove this is the same device (audit H5): the server refuses a proof
+  /// that belongs to another device, and — once SESSION_MINT_ENFORCE is on —
+  /// refuses to mint for a known device without one. [proof] overrides the
+  /// stored one (settling a deletion sends the token the DELETE carried).
+  Future<http.Response> _postMint(String deviceId,
+      {Map<String, dynamic>? metadata, String? proof}) async {
+    final body = jsonEncode(<String, dynamic>{
       'device_id': deviceId,
       'metadata': ?metadata,
-    };
-
-    // Prove this is the same device (audit H5): the server refuses a proof
-    // that belongs to another device, and — once SESSION_MINT_ENFORCE is on —
-    // refuses to mint for a known device without one.
+    });
+    final build = appBuild;
     Future<http.Response> post(String? proof) => _raw
         .post(
           Uri.parse('$_baseUrl/api/chat/sessions'),
           headers: {
             'Content-Type': 'application/json; charset=utf-8',
             if (proof != null && proof.isNotEmpty) 'Authorization': 'Bearer $proof',
+            // "I handle 410 device_erased" (MOBILE_API §3.2): the Android
+            // versionCode, on every mint.
+            'X-App-Build': ?build?.toString(),
           },
-          body: jsonEncode(body),
+          body: body,
         )
         .timeout(AppConfig.httpTimeout);
 
-    final proof = await _auth.readDeviceProof();
-    var resp = await post(proof);
-    if ((resp.statusCode == 401 || resp.statusCode == 403) && proof != null) {
+    final token = proof ?? await _auth.readDeviceProof();
+    var resp = await post(token);
+    if ((resp.statusCode == 401 || resp.statusCode == 403) && token != null) {
       // A proof the server no longer accepts (e.g. a restored backup whose
       // token was never issued for this id). Drop it and try once without.
       await _auth.clearDeviceProof();
       resp = await post(null);
     }
+    return resp;
+  }
 
-    if (resp.statusCode != 201) {
-      throw _wrapStreamed(resp.statusCode, const {});
-    }
-
+  /// Store the session a `201` mint returned for [deviceId]. With
+  /// [keepConversation] only the token is taken: the conversation stays the
+  /// one already open (the server checks session ownership by device).
+  Future<SessionResponse> _keepMinted(http.Response resp, String deviceId,
+      {bool keepConversation = false}) async {
     final parsed =
         SessionResponse.fromJson(jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>);
-    await _auth.setSession(sessionId: parsed.sessionId, token: parsed.token);
+    final (current, _) = await _auth.readSession();
+    await _auth.setSession(
+        sessionId: keepConversation && current != null ? current : parsed.sessionId,
+        token: parsed.token);
     // The server minted for a different device than we asked for: this
     // install had split into twins and the server re-attached it to the one
     // holding the family's data. Become that device for good.
@@ -867,13 +1064,21 @@ class TgClient {
   /// parent mid-conversation keeps it — and its history after a restart.
   Future<String?> _recoverSession(String rejectedToken) async {
     try {
+      // During an unsettled account deletion too: the mint settles it first
+      // where it must, and for an erased id it answers `410 device_erased`,
+      // which starts this install over (createSession) instead of bringing
+      // the account back.
       final (sessionId, current) = await _auth.readSession();
       if (current != null && current != rejectedToken) {
         return current; // another request already renewed it
       }
+      final erasures = _erasures;
       if (_minting == null) await _auth.clearSession();
       final fresh = await _mintOnce();
-      if (sessionId != null) {
+      // The conversation stays — unless the mint made this a new device: the
+      // old session is then the erased account's, never paired with the
+      // fresh device's token.
+      if (sessionId != null && _erasures == erasures) {
         await _auth.setSession(sessionId: sessionId, token: fresh.token);
       }
       return fresh.token;
@@ -1498,35 +1703,550 @@ class TgClient {
     return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
   }
 
-  Future<Map<String, dynamic>> resetChildProgress(int childId) async {
-    final session = await ensureSession();
-    final token = session.token;
-    final resp = await _http
-        .delete(
-          Uri.parse('$_baseUrl/api/children/$childId/progress'),
-          headers: _authHeaders(token),
-        )
-        .timeout(AppConfig.httpTimeout);
-    if (resp.statusCode != 200) {
-      throw _wrap(resp);
-    }
-    return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
+  /// `DELETE /api/children/{id}/progress`. Destructive: once this device has
+  /// proven, the server wants a proven session (§9.0), so a
+  /// `device_proof_required` proves and retries once.
+  Future<Map<String, dynamic>> resetChildProgress(int childId) =>
+      withDeviceProof(() async {
+        final session = await ensureSession();
+        final token = session.token;
+        final resp = await _http
+            .delete(
+              Uri.parse('$_baseUrl/api/children/$childId/progress'),
+              headers: _authHeaders(token),
+            )
+            .timeout(AppConfig.httpTimeout);
+        if (resp.statusCode != 200) {
+          throw _wrap(resp);
+        }
+        return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
+      });
+
+  /// `DELETE /api/children/{id}` — removes the child profile entirely. Same
+  /// proof rule as [resetChildProgress].
+  Future<Map<String, dynamic>> deleteChild(int childId) =>
+      withDeviceProof(() async {
+        final session = await ensureSession();
+        final token = session.token;
+        final resp = await _http
+            .delete(
+              Uri.parse('$_baseUrl/api/children/$childId'),
+              headers: _authHeaders(token),
+            )
+            .timeout(AppConfig.httpTimeout);
+        if (resp.statusCode != 200) {
+          throw _wrap(resp);
+        }
+        return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
+      });
+
+  // ── «المربّي يعرف ابنك» — MOBILE_API §9–§10 ──────────────────────────
+  //
+  // Raw calls: each returns the decoded body or throws [TgApiError] (with
+  // `code` for the branchable errors). Which of them prove-and-retry on
+  // `device_proof_required` is decided one level up, in MemoryRepository —
+  // the Today cards must never start a challenge on their own.
+
+  /// One authed JSON call; [ok] lists the statuses that carry the answer.
+  Future<Map<String, dynamic>> _authedJson(
+    String method,
+    String path, {
+    Map<String, String>? query,
+    Object? body,
+    Set<int> ok = const {200},
+  }) {
+    return _guard(() async {
+      final session = await ensureSession();
+      final uri = Uri.parse('$_baseUrl$path')
+          .replace(queryParameters: query == null || query.isEmpty ? null : query);
+      final request = http.Request(method, uri)
+        ..headers.addAll(_authHeaders(session.token));
+      if (body != null) request.body = jsonEncode(body);
+      final resp = await http.Response.fromStream(
+        await _http.send(request).timeout(AppConfig.httpTimeout),
+      ).timeout(AppConfig.httpTimeout);
+      if (!ok.contains(resp.statusCode)) throw _wrap(resp);
+      final text = utf8.decode(resp.bodyBytes);
+      if (text.trim().isEmpty) return <String, dynamic>{};
+      final decoded = jsonDecode(text);
+      return decoded is Map<String, dynamic> ? decoded : <String, dynamic>{};
+    });
   }
 
-  /// `DELETE /api/children/{id}` — removes the child profile entirely.
-  Future<Map<String, dynamic>> deleteChild(int childId) async {
-    final session = await ensureSession();
-    final token = session.token;
-    final resp = await _http
-        .delete(
-          Uri.parse('$_baseUrl/api/children/$childId'),
-          headers: _authHeaders(token),
-        )
-        .timeout(AppConfig.httpTimeout);
-    if (resp.statusCode != 200) {
-      throw _wrap(resp);
+  /// `GET /api/device-proof` → `{proven, proven_at, push_registered,
+  /// cooldown_until, deletion_paused_until}`.
+  Future<Map<String, dynamic>> getDeviceProofStatus() =>
+      _authedJson('GET', '/api/device-proof');
+
+  /// `POST /api/device-proof/start` → `202 {challenge_id, expires_in}`; the
+  /// code itself arrives as a silent FCM data message.
+  Future<Map<String, dynamic>> startDeviceProof() =>
+      _authedJson('POST', '/api/device-proof/start', ok: const {200, 202});
+
+  /// `POST /api/device-proof/complete` with the same session that started.
+  Future<Map<String, dynamic>> completeDeviceProof(
+          String challengeId, String code) =>
+      _authedJson('POST', '/api/device-proof/complete',
+          body: {'challenge_id': challengeId, 'code': code});
+
+  /// `GET /api/children/memory/settings` — no proof needed.
+  Future<Map<String, dynamic>> getMemorySettings() =>
+      _authedJson('GET', '/api/children/memory/settings');
+
+  /// `PUT /api/children/memory/settings` — off never needs a proof; on does.
+  Future<Map<String, dynamic>> putMemorySettings({required bool enabled}) =>
+      _authedJson('PUT', '/api/children/memory/settings',
+          body: {'enabled': enabled});
+
+  /// `GET /api/children/{id}/memory?status=all`.
+  Future<Map<String, dynamic>> getChildMemory(int childId,
+          {String status = 'all'}) =>
+      _authedJson('GET', '/api/children/$childId/memory',
+          query: {'status': status});
+
+  /// `POST /api/children/{id}/memory` → 201 Fact (`parent_manual`, active).
+  Future<Map<String, dynamic>> addChildFact(int childId,
+          {required String category, required String fact}) =>
+      _authedJson('POST', '/api/children/$childId/memory',
+          body: {'category': category, 'fact': fact}, ok: const {200, 201});
+
+  /// `PATCH /api/children/{id}/memory/{factId}` — at least one field.
+  Future<Map<String, dynamic>> patchChildFact(int childId, int factId,
+          {String? fact, String? category, String? status}) =>
+      _authedJson('PATCH', '/api/children/$childId/memory/$factId', body: {
+        'fact': ?fact,
+        'category': ?category,
+        'status': ?status,
+      });
+
+  /// `DELETE /api/children/{id}/memory/{factId}`.
+  Future<Map<String, dynamic>> deleteChildFact(int childId, int factId) =>
+      _authedJson('DELETE', '/api/children/$childId/memory/$factId');
+
+  /// `DELETE /api/children/{id}/memory` — everything about one child.
+  Future<Map<String, dynamic>> deleteChildMemory(int childId) =>
+      _authedJson('DELETE', '/api/children/$childId/memory');
+
+  /// `GET /api/children/followups/due` — pending and due, every child.
+  /// [tzOffsetMinutes] is how the follow-up push learns the family's evening.
+  Future<Map<String, dynamic>> getDueFollowups(
+          {int limit = 10, int? tzOffsetMinutes}) =>
+      _authedJson('GET', '/api/children/followups/due', query: {
+        'limit': '$limit',
+        if (tzOffsetMinutes != null) 'tz_offset_minutes': '$tzOffsetMinutes',
+      });
+
+  /// `GET /api/children/followups/{id}` — any status (the deep link).
+  Future<Map<String, dynamic>> getFollowup(int followupId) =>
+      _authedJson('GET', '/api/children/followups/$followupId');
+
+  /// `POST /api/children/followups/{id}/answer`.
+  Future<Map<String, dynamic>> answerFollowup(int followupId,
+          {required String outcome, String? note}) =>
+      _authedJson('POST', '/api/children/followups/$followupId/answer',
+          body: {
+            'outcome': outcome,
+            if (note != null && note.trim().isNotEmpty) 'note': note.trim(),
+          });
+
+  /// `POST /api/children/followups/{id}/dismiss`.
+  Future<Map<String, dynamic>> dismissFollowup(int followupId) =>
+      _authedJson('POST', '/api/children/followups/$followupId/dismiss');
+
+  /// `GET /api/children/{id}/weekly-plan` — no proof needed.
+  Future<Map<String, dynamic>> getWeeklyPlan(int childId,
+          {String? lang, int? tzOffsetMinutes}) =>
+      _authedJson('GET', '/api/children/$childId/weekly-plan', query: {
+        'lang': ?lang,
+        if (tzOffsetMinutes != null) 'tz_offset_minutes': '$tzOffsetMinutes',
+      });
+
+  /// `DELETE /api/privacy/memory` — memory of every child of this device.
+  Future<Map<String, dynamic>> deleteAllMemory() =>
+      _authedJson('DELETE', '/api/privacy/memory');
+
+  /// `DELETE /api/privacy/account?confirm=true` (§10).
+  ///
+  /// The token the DELETE carries is revoked by it, so on success this install
+  /// stops being the deleted device at once, before any other request can
+  /// run: a brand-new device id replaces the old one (and a mint for the old
+  /// one is refused with `410 device_erased` by servers that keep erased ids).
+  ///
+  /// The deletion is one transaction on the server, but not on the way back
+  /// (PR #36 reviews): the origin can commit and the answer still be lost — a
+  /// dropped connection, a client timeout while the origin works on, an edge
+  /// 502/504/52x. So, before the DELETE leaves:
+  ///   * the token is one the server accepts right now (an idle-lapsed token
+  ///     is renewed first, H5), so a 401 to the DELETE can only mean the
+  ///     account is gone;
+  ///   * that token is copied to a key of its own, which clearing the session
+  ///     ("new conversation", a 401 handler) never touches;
+  ///   * the attempt is recorded ([kAccountDeletionRequested]).
+  /// Then the answer decides — see [_sendAccountDeletion]: the server's body
+  /// (200); `{}` when the account was already gone (401/410 — its scope is
+  /// then unknown); the server's refusal when it deleted nothing (any other
+  /// 4xx: nothing is left pending); or `account_deletion_unconfirmed` when
+  /// there is no answer (5xx, timeout, no connection), with the record and
+  /// the token kept for [settleAccountDeletion]. Nothing is ever concluded
+  /// from a token merely still working: an in-flight DELETE can commit after.
+  Future<Map<String, dynamic>> deleteAccount() async {
+    final token = await _liveToken();
+    // Making the token live met `410 device_erased`: the account was already
+    // deleted (another phone of the family), and this install has started
+    // over. Nothing is left to delete — never the fresh device's account.
+    if (await accountDeletionState() == kAccountDeletionConfirmed) {
+      return const <String, dynamic>{};
     }
-    return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
+    final askedId = await _auth.peekDeviceId();
+    await _auth.writeDeletionToken(token);
+    await _setAccountDeletionState(kAccountDeletionRequested);
+    try {
+      return await _sendAccountDeletion(token, askedId: askedId, resend: false);
+    } on _InstallMovedOn {
+      // A `410 device_erased` met elsewhere started this install over while
+      // the answer travelled: the account is gone either way.
+      return const <String, dynamic>{};
+    }
+  }
+
+  /// Settle a deletion whose answer was lost (MOBILE_API §10) — find out,
+  /// never guess:
+  ///   * where the server keeps erased device ids for this build
+  ///     (`GET /api/app-config` → `erased_device_410_min_build` ≤ [appBuild]):
+  ///     a mint for the same device id, with the old token as proof, is the
+  ///     authoritative answer ([_settleByMint]) — `410 device_erased`: it was
+  ///     deleted; `201`: it was not, and the DELETE is not sent again without
+  ///     asking the parent;
+  ///   * otherwise (that gate off, an older server): the same DELETE is sent
+  ///     again with the token it first carried and no session recovery
+  ///     ([_sendAccountDeletion]) — `200`: deleted now; `401`: already
+  ///     deleted; only the handler's own refusals prove the account is still
+  ///     there.
+  /// Returns the server's body (`{}` when the deletion is known only that
+  /// way: scope unknown), or null when nothing is pending — or when the
+  /// install moved on while the answer travelled (a `410` met elsewhere, the
+  /// parent's way out): whoever moved it reports. Throws
+  /// `account_not_deleted` (nothing was deleted, nothing is pending any more
+  /// — a 72-hour pause keeps its own code, `device_proof_cooldown`), or
+  /// `account_deletion_unconfirmed` while there is still no answer.
+  ///
+  /// Single-flight: a mint waiting for it ([_settleBeforeMinting]) joins the
+  /// one in flight. Nothing in it mints through [createSession], and a mint
+  /// started from inside it never waits for it (the zone marks it).
+  Future<Map<String, dynamic>?> settleAccountDeletion() =>
+      _settling ??= runZoned(_settleNow, zoneValues: {_settlingZone: true})
+          .whenComplete(() => _settling = null);
+
+  Future<Map<String, dynamic>?>? _settling;
+  static const Symbol _settlingZone = #tgSettlingAccountDeletion;
+
+  Future<Map<String, dynamic>?> _settleNow() async {
+    final state = await accountDeletionState();
+    if (state == null) return null;
+    if (state == kAccountDeletionConfirmed) {
+      await startOverAfterAccountDeletion();
+      return const <String, dynamic>{};
+    }
+    final askedId = await _auth.peekDeviceId();
+    try {
+      if (askedId != null && await _erasedIdsKeptForThisBuild()) {
+        return await _settleByMint(askedId);
+      }
+      var token = await _auth.readDeletionToken();
+      if (token == null || token.isEmpty) {
+        // The DELETE's own token is gone (a keystore reset): the session's,
+        // and failing that a session minted for the device as it stands.
+        token = (await _auth.readSession()).$2;
+        if (token == null || token.isEmpty) {
+          token = await _mintToSettle(askedId);
+          if (token == null) return const <String, dynamic>{}; // erased
+        }
+        await _auth.writeDeletionToken(token);
+      }
+      return await _sendAccountDeletion(token, askedId: askedId, resend: true);
+    } on _InstallMovedOn {
+      return null;
+    } on TgApiError catch (e) {
+      switch (e.code) {
+        case 'account_deletion_unconfirmed' ||
+              'account_not_deleted' ||
+              'device_proof_cooldown':
+          rethrow;
+      }
+      throw TgApiError(e.statusCode, AppL10n.current.deleteAccountServerError,
+          code: 'account_not_deleted', details: e.details);
+    }
+  }
+
+  /// MOBILE_API §10 (PR #36 review, round 3): while a deletion waits for its
+  /// answer on a server that does not refuse erased ids to this build, a mint
+  /// for the old id would give a deleted account a live token again — rows
+  /// written under it would outlive the deletion. So the deletion is settled
+  /// first (the same DELETE again): deleted — the install is a new device and
+  /// the app is told; still there — the mint is for a live account; no answer
+  /// — no mint at all, rather than one that may bring the account back.
+  Future<void> _settleBeforeMinting() async {
+    if (Zone.current[_settlingZone] == true) return; // the settle's own mint
+    if (await accountDeletionState() != kAccountDeletionRequested) return;
+    if (await _erasedIdsKeptForThisBuild()) return; // the 410 guards the mint
+    try {
+      if (await settleAccountDeletion() != null) _tellDeviceErased();
+    } on TgApiError catch (e) {
+      if (e.code == 'account_deletion_unconfirmed') rethrow;
+      // Refused or intact: the account is there, and minting brings nothing
+      // back.
+    }
+  }
+
+  /// Does the server answer `410 device_erased` to this build? Only then is a
+  /// mint for the old id a statement about the deletion. Any failure to tell
+  /// is a no — the DELETE path then decides.
+  Future<bool> _erasedIdsKeptForThisBuild() async {
+    final build = appBuild;
+    if (build == null) return false;
+    try {
+      final floor = (await fetchAppConfig())['erased_device_410_min_build'];
+      return floor is int && floor <= build;
+    } catch (_) {
+      return false;
+    }
+  }
+
+  /// The authoritative answer (§10): mint for [askedId], with the token the
+  /// DELETE carried as proof. `410 device_erased` → deleted: start over, `{}`
+  /// (scope unknown). `201` → not deleted: the token is kept (the
+  /// conversation stays), the record is dropped, and `account_not_deleted`
+  /// is thrown («لم يُحذف شيء» — the parent may try again). No answer →
+  /// `account_deletion_unconfirmed`.
+  Future<Map<String, dynamic>> _settleByMint(String askedId) async {
+    await _requireStillAwaiting(askedId); // never with a fresh install's proof
+    final proof =
+        await _auth.readDeletionToken() ?? await _auth.readDeviceProof();
+    final http.Response resp;
+    try {
+      resp = await _postMint(askedId, proof: proof);
+    } catch (_) {
+      throw _deletionUnconfirmed(null);
+    }
+    await _requireStillAwaiting(askedId);
+    if (resp.statusCode == 410 && _wrap(resp).code == 'device_erased') {
+      await startOverAfterAccountDeletion();
+      return const <String, dynamic>{};
+    }
+    if (resp.statusCode == 201) {
+      try {
+        await _keepMinted(resp, askedId, keepConversation: true);
+      } catch (_) {}
+      await _abandonAccountDeletion();
+      throw TgApiError(201, AppL10n.current.deleteAccountServerError,
+          code: 'account_not_deleted');
+    }
+    throw _deletionUnconfirmed(resp.statusCode);
+  }
+
+  /// Neither the DELETE's token nor a session is left (a keystore reset):
+  /// mint one for [askedId] — raw, never through [createSession] — to send
+  /// the DELETE with. Null when that mint says the id was erased (the install
+  /// has started over). On a server without erased ids the mint brings the id
+  /// back for a moment, and the DELETE sent with it removes it again at once.
+  Future<String?> _mintToSettle(String? askedId) async {
+    if (askedId == null) throw _deletionUnconfirmed(null); // nothing to ask
+    await _requireStillAwaiting(askedId);
+    final http.Response resp;
+    try {
+      resp = await _postMint(askedId);
+    } catch (_) {
+      throw _deletionUnconfirmed(null);
+    }
+    await _requireStillAwaiting(askedId);
+    if (resp.statusCode == 410 && _wrap(resp).code == 'device_erased') {
+      await startOverAfterAccountDeletion();
+      return null;
+    }
+    if (resp.statusCode != 201) throw _deletionUnconfirmed(resp.statusCode);
+    return (await _keepMinted(resp, askedId)).token;
+  }
+
+  /// A token the server accepted a moment ago: a request through the
+  /// session-recovering transport first (it renews an idle-lapsed token), then
+  /// the session as it stands.
+  Future<String> _liveToken() async {
+    await getDeviceProofStatus();
+    final (_, token) = await _auth.readSession();
+    if (token == null || token.isEmpty) {
+      throw TgApiError(401, AppL10n.current.noActiveSession);
+    }
+    return token;
+  }
+
+  /// Send the account DELETE with [token] over the raw transport — a 401 must
+  /// reach this code, never a session recovery minting for the erased id —
+  /// and act on the answer, if the install is still [askedId] waiting for it
+  /// (otherwise [_InstallMovedOn]):
+  ///   * 200: deleted. The install starts over; the server's body is returned.
+  ///   * 401 / 410: the token died with the account — an earlier attempt went
+  ///     through (a token lapses only after 180 idle days). The install
+  ///     starts over; `{}` (scope unknown).
+  ///   * another 4xx on the first attempt: the server refused it (a pause, no
+  ///     proof, no route, a rate limit). Nothing was deleted; nothing is left
+  ///     pending; the refusal is rethrown as the server sent it.
+  ///   * another 4xx on a [resend]: only the handler's own refusals
+  ///     (`device_proof_*`, `confirm_required`) prove the account is still
+  ///     there. A rate limit (429) or an uncoded answer from an edge may come
+  ///     before the token is even read — unknown.
+  ///   * 5xx, a timeout, no connection: unknown — the record and the token
+  ///     stay, and `account_deletion_unconfirmed` is thrown.
+  Future<Map<String, dynamic>> _sendAccountDeletion(String token,
+      {required String? askedId, required bool resend}) async {
+    await _requireStillAwaiting(askedId);
+    final http.Response resp;
+    try {
+      resp = await _raw
+          .delete(
+            Uri.parse('$_baseUrl/api/privacy/account')
+                .replace(queryParameters: const {'confirm': 'true'}),
+            headers: _authHeaders(token),
+          )
+          .timeout(AppConfig.httpTimeout);
+    } catch (_) {
+      throw _deletionUnconfirmed(null);
+    }
+    await _requireStillAwaiting(askedId);
+    final status = resp.statusCode;
+    if (status == 200) {
+      Map<String, dynamic> body = const {};
+      try {
+        final decoded = jsonDecode(utf8.decode(resp.bodyBytes));
+        if (decoded is Map<String, dynamic>) body = decoded;
+      } catch (_) {}
+      await startOverAfterAccountDeletion();
+      return body;
+    }
+    if (status == 401 || status == 410) {
+      await startOverAfterAccountDeletion();
+      return const <String, dynamic>{};
+    }
+    if (status >= 500 || status < 400) throw _deletionUnconfirmed(status);
+    final refusal = _wrap(resp);
+    final code = refusal.code;
+    final provesAccount = code != null &&
+        (code.startsWith('device_proof_') || code == 'confirm_required');
+    if (resend && !provesAccount) throw _deletionUnconfirmed(status);
+    await _abandonAccountDeletion();
+    throw refusal;
+  }
+
+  /// Act on an answer about [askedId] only while the deletion still waits for
+  /// it and the install is still that device. Anything else means it moved
+  /// on while the answer travelled — a `410 device_erased` met elsewhere, the
+  /// parent's way out — and the answer is not acted on: no session kept,
+  /// nothing abandoned, no second start-over.
+  Future<void> _requireStillAwaiting(String? askedId) async {
+    if (await accountDeletionState() != kAccountDeletionRequested ||
+        await _auth.peekDeviceId() != askedId) {
+      throw const _InstallMovedOn();
+    }
+  }
+
+  TgApiError _deletionUnconfirmed(int? status) => TgApiError(
+      status, AppL10n.current.deleteAccountUnconfirmed,
+      code: 'account_deletion_unconfirmed');
+
+  /// The server refused the DELETE: nothing was deleted, nothing is pending.
+  /// Only a deletion still waiting for its answer is dropped — never a
+  /// confirmed one whose phone is still to be cleared.
+  Future<void> _abandonAccountDeletion() async {
+    if (await accountDeletionState() != kAccountDeletionRequested) return;
+    await _auth.clearDeletionToken();
+    await _setAccountDeletionState(null);
+  }
+
+  /// Where an account deletion stands on this phone (SharedPreferences):
+  /// [kAccountDeletionRequested], [kAccountDeletionConfirmed], or null.
+  Future<String?> accountDeletionState() async {
+    try {
+      return (await SharedPreferences.getInstance())
+          .getString(kAccountDeletionKey);
+    } catch (_) {
+      return null;
+    }
+  }
+
+  Future<void> _setAccountDeletionState(String? state) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      if (state == null) {
+        await prefs.remove(kAccountDeletionKey);
+      } else {
+        await prefs.setString(kAccountDeletionKey, state);
+      }
+    } catch (_) {}
+  }
+
+  /// Nothing of a deletion is left to do on this phone: the record, the id it
+  /// erased and the token it was sent with all go.
+  Future<void> clearAccountDeletionState() async {
+    await _auth.clearDeletionToken();
+    await _setAccountDeletionState(null);
+    try {
+      await (await SharedPreferences.getInstance())
+          .remove(kAccountDeletionErasedIdKey);
+    } catch (_) {}
+  }
+
+  Future<void>? _startingOver;
+
+  /// The server deleted the account, or erased this device id: become a
+  /// brand-new device. What happened is recorded first —
+  /// [kAccountDeletionConfirmed] and the erased id, BEFORE the keystore is
+  /// cleared — so a launch that finds the record finishes the job even if the
+  /// app was killed in the middle: it starts over again while the erased id is
+  /// still held anywhere, then clears the phone (completePendingAccountDeletion).
+  ///
+  /// Single-flight, and a no-op once the erased id is gone from everywhere —
+  /// a second caller (the DELETE's answer and a `410` racing) never erases the
+  /// fresh id it just got. Also the parent's way out of a deletion that cannot
+  /// be settled («ابدأ من جديد على هذا الهاتف»).
+  Future<void> startOverAfterAccountDeletion() =>
+      _startingOver ??= _startOver().whenComplete(() => _startingOver = null);
+
+  Future<void> _startOver() async {
+    SharedPreferences? prefs;
+    try {
+      prefs = await SharedPreferences.getInstance();
+    } catch (_) {}
+    if (prefs?.getString(kAccountDeletionKey) == kAccountDeletionConfirmed) {
+      final erased = prefs!.getString(kAccountDeletionErasedIdKey);
+      if (erased == null || !await _auth.stillHolds(erased)) return;
+    } else {
+      final erased = await _auth.peekDeviceId();
+      try {
+        if (erased != null) {
+          await prefs?.setString(kAccountDeletionErasedIdKey, erased);
+        }
+        await prefs?.setString(kAccountDeletionKey, kAccountDeletionConfirmed);
+      } catch (_) {}
+    }
+    _erasures++;
+    await _auth.startOverAsNewDevice();
+  }
+
+  /// How many times this client became a new device (session recovery must
+  /// not pair the erased account's session id with a fresh token).
+  int _erasures = 0;
+
+  /// A mint answered `410 device_erased`: start over (nothing may mint for
+  /// that id again), then let the app clear the phone and say so.
+  Future<void> _deviceErased() async {
+    await startOverAfterAccountDeletion();
+    _tellDeviceErased();
+  }
+
+  void _tellDeviceErased() {
+    final handler = onDeviceErased;
+    if (handler != null) {
+      unawaited(Future<void>.sync(handler).catchError((Object _) {}));
+    }
   }
 
   // ── Daily routine — حساب اليوم ───────────────────────────────────────
@@ -2497,28 +3217,25 @@ class TgClient {
       final j = jsonDecode(body);
       if (j is Map && j['detail'] is String) {
         message = j['detail'] as String;
-      } else if (j is Map &&
-          j['detail'] is Map &&
-          (j['detail'] as Map)['error'] is String) {
-        // `{"detail": {"error": "<code>", ...}}` — the programs contract.
-        // Screens map these codes to their own words (§11.6).
+      } else if (j is Map && j['detail'] is Map) {
         details = Map<String, dynamic>.from(j['detail'] as Map);
-        code = details['error'] as String;
-        message = AppL10n.current.apiHttpError('$status');
-      } else if (j is Map &&
-          j['detail'] is Map &&
-          (j['detail'] as Map)['code'] is String) {
-        // `{"detail": {"code": "<code>", "message": "<Arabic to show>",
-        // "message_en": ...}}` — §9's branchable errors, e.g. a child deletion
-        // refused with `device_proof_required` / `device_proof_cooldown`. The
-        // server writes these for the parent; show them rather than "HTTP 403".
-        details = Map<String, dynamic>.from(j['detail'] as Map);
-        code = details['code'] as String;
-        final text = (uiLanguage == 'en' ? details['message_en'] : null) ??
-            details['message'];
-        message = text is String && text.trim().isNotEmpty
-            ? text
-            : AppL10n.current.apiHttpError('$status');
+        final error = details['error'];
+        if (error is String) {
+          // `{"detail": {"error": "<code>", ...}}` — the programs contract.
+          // Screens map these codes to their own words (§11.6).
+          code = error;
+          message = AppL10n.current.apiHttpError('$status');
+        } else {
+          // `{"detail": {"code": "<code>", "message": "<Arabic to show>",
+          // "message_en": ...}}` — §9's branchable errors, e.g. a child
+          // deletion refused with `device_proof_required` /
+          // `device_proof_cooldown`. The server writes these for the parent;
+          // show them rather than "HTTP 403".
+          final c = details['code'];
+          code = c is String && c.isNotEmpty ? c : null;
+          message = _detailMessage(details) ??
+              AppL10n.current.apiHttpError('$status');
+        }
       } else {
         message = AppL10n.current.apiHttpError('$status');
       }
@@ -2535,6 +3252,20 @@ class TgClient {
 
     return TgApiError(status, message,
         retryAfter: retryAfter, code: code, details: details);
+  }
+
+  /// The detail's message in the app's language. The server writes Arabic in
+  /// `message` and, where it has one, English in `message_en`. An English
+  /// reader with no `message_en` gets null — the caller's generic line — not
+  /// a sentence they cannot read: the memory routes' refusals (§9) are
+  /// Arabic-only today.
+  static String? _detailMessage(Map<String, dynamic> details) {
+    String? pick(String key) {
+      final v = details[key];
+      return v is String && v.trim().isNotEmpty ? v.trim() : null;
+    }
+
+    return uiLanguage == 'en' ? pick('message_en') : pick('message');
   }
 
   /// Close the underlying HTTP client. Safe to call multiple times.

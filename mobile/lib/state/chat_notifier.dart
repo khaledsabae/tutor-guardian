@@ -172,10 +172,17 @@ class ChatNotifier extends StateNotifier<ChatState> {
     this._client, {
     this.recoveryDelay = const Duration(seconds: 2),
     this.recoveryDeadline = answerDeadline,
+    this.activeChildId,
   }) : super(const ChatState());
 
   final TgClient _client;
   int _localId = 0;
+
+  /// The child the parent is asking about right now — read at send time so a
+  /// switch of child between two questions is honoured. Sent as `child_id`
+  /// (MOBILE_API §9.1): the server's only reliable way to know which child's
+  /// memory an answer may use and learn from.
+  final int? Function()? activeChildId;
 
   /// The longest the server may still be writing an answer after its reader
   /// left: its per-answer deadline (LLM_STREAM_DEADLINE_S, 300 s) plus the
@@ -396,6 +403,7 @@ class ChatNotifier extends StateNotifier<ChatState> {
       behaviorType: state.behaviorType.isEmpty ? null : state.behaviorType,
       messageText: trimmed,
       sessionId: sid,
+      childId: activeChildId?.call(),
     );
 
     try {
@@ -413,6 +421,7 @@ class ChatNotifier extends StateNotifier<ChatState> {
             behaviorType: query.behaviorType,
             messageText: query.messageText,
             sessionId: s.sessionId,
+            childId: query.childId,
           );
           await _stream(retry, placeholder.id);
           return;

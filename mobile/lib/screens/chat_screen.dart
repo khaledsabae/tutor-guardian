@@ -23,6 +23,8 @@ import '../models/api_models.dart';
 import '../models/enums.dart';
 import '../features/onboarding/providers/onboarding_providers.dart';
 import '../features/program/providers/program_providers.dart';
+import '../features/program/providers/progress_providers.dart'
+    show activeChildIdProvider;
 import '../state/chat_notifier.dart';
 import '../state/connectivity_provider.dart';
 import '../theme/app_theme.dart';
@@ -34,7 +36,10 @@ import 'package:almorabbi/widgets/ui/loading_view.dart';
 final chatNotifierProvider =
     StateNotifierProvider<ChatNotifier, ChatState>((ref) {
   final client = ref.watch(tgClientProvider);
-  return ChatNotifier(client);
+  // Read at send time, not watched: switching child must not rebuild the
+  // notifier and drop the conversation on screen.
+  return ChatNotifier(client,
+      activeChildId: () => ref.read(activeChildIdProvider));
 });
 
 class ChatScreen extends ConsumerStatefulWidget {

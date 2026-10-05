@@ -335,9 +335,11 @@ class Analytics {
   /// these three (2026-10) because «مش عارف أبدأ منين» was the first complaint,
   /// so their tap shares are the measure of whether that worked.
   ///
-  /// `block` ∈ step · ask · mission · programs.
+  /// `block` ∈ step · ask · mission · loop · programs.
   /// `action` ∈ first_lesson · browse · continue (step) · tip · compose (ask) ·
   /// open_day · child_mode · routine · add_child (mission) ·
+  /// followup_answer · followup_dismiss · plan_expand · plan_lesson (loop —
+  /// the follow-up and weekly-plan cards between ① and ②) ·
   /// open · ramadan · prayer · milestones (programs — the card under the three).
   static Future<void> todayBlockTapped(String block, String action) =>
       _log('today_block_tapped', {'block': block, 'action': action});
@@ -348,6 +350,20 @@ class Analytics {
   /// never free text — the pair stays a small, closed set in GA4.
   static Future<void> programAction(String program, String action) =>
       _log('program_action', {'program': program, 'action': action});
+
+  /// A follow-up was answered — the loop the plan's Phase 1 gate measures
+  /// (reply rate ≥ 20%). `outcome` ∈ worked · partly · didnt_work · didnt_try;
+  /// `source` ∈ today · push. Never the strategy or the note.
+  static Future<void> followupAnswered(String outcome, String source) =>
+      _log('followup_answered', {'outcome': outcome, 'source': source});
+
+  /// How a device-proof challenge ended (MOBILE_API §9.0.1). Every protected
+  /// memory screen sits behind it, so a field failure rate here is the first
+  /// sign that memory is unreachable for real phones. `result` ∈ proven ·
+  /// timeout · no_push_token · push_unavailable · rate_limited · cooldown ·
+  /// failed · unsupported · error.
+  static Future<void> deviceProofResult(String result) =>
+      _log('device_proof_result', {'result': result});
 
   /// «ادعم المربّي» opened. Only reachable when the server flag is on and the
   /// store returned products, so this counts real exposure.

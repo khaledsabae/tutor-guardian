@@ -10,13 +10,22 @@
                       copy of a child's recordings onto new hardware.
 -->
 <data-extraction-rules>
+    <!-- NarrationStore's folder is <data dir>/app_flutter/narrations — the
+         "root" domain (see backup_rules.xml for why "file" alone missed it).
+         app_flutter/local_only holds feedback voice notes and agreement
+         images: what an account deletion clears must not come back with a
+         restore (backup_rules.xml says more). -->
     <cloud-backup>
+        <exclude domain="root" path="app_flutter/narrations/" />
         <exclude domain="file" path="narrations/" />
+        <exclude domain="root" path="app_flutter/local_only/" />
         <exclude domain="sharedpref" path="FlutterSecureStorage.xml" />
         <exclude domain="sharedpref" path="FlutterSecureKeyStorage.xml" />
     </cloud-backup>
     <device-transfer>
+        <exclude domain="root" path="app_flutter/narrations/" />
         <exclude domain="file" path="narrations/" />
+        <exclude domain="root" path="app_flutter/local_only/" />
         <exclude domain="sharedpref" path="FlutterSecureStorage.xml" />
         <exclude domain="sharedpref" path="FlutterSecureKeyStorage.xml" />
     </device-transfer>

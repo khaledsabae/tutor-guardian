@@ -23,8 +23,9 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
+
+import '../../core/local_only_files.dart';
 
 /// Rendering scale. 3.0 is the floor for print: at 1.0 the image is screen
 /// resolution and the text turns to mush on paper.
@@ -51,11 +52,13 @@ String agreementFileName(String childName) {
   return 'agreement_${safe.isEmpty ? 'child' : safe}.png';
 }
 
-/// Writes the PNG into the app's documents directory and returns its path.
+/// Writes the PNG into the app's folder that no backup carries (its file name
+/// holds the child's name, and an account deletion must not come back with a
+/// restore) and returns its path.
 Future<String?> saveAgreementPng(GlobalKey boundaryKey, String childName) async {
   final bytes = await captureAgreementPng(boundaryKey);
   if (bytes == null) return null;
-  final dir = await getApplicationDocumentsDirectory();
+  final dir = await localOnlyDirectory();
   final file = File('${dir.path}/${agreementFileName(childName)}');
   await file.writeAsBytes(bytes, flush: true);
   return file.path;

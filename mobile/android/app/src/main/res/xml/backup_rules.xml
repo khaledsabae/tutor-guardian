@@ -11,9 +11,32 @@
   A recording of a parent reading to their child is the most personal thing
   this app holds. It is excluded here, and `data_extraction_rules.xml` does
   the same for Android 12+, which ignores this file entirely.
+
+  WHERE it lives matters (PR #36 review, item 10). NarrationStore writes under
+  path_provider's getApplicationDocumentsDirectory(), which on Android is
+  Context.getDir("flutter") = <data dir>/app_flutter — the "root" domain, not
+  "file" (getFilesDir() = <data dir>/files). The rule that named domain="file"
+  matched nothing, and the recordings went to Google Drive anyway. The "file"
+  rule stays only as a guard should the folder ever move there; the "root"
+  rule is the one that holds today. test/pr36_review_fixes_test.dart (group
+  10) and test/pr36_delta_review_test.dart (group 3) pin these rules against
+  the code that writes the folders.
+
+  app_flutter/local_only/ (lib/core/local_only_files.dart) holds what an
+  account deletion clears and a restore must not bring back: feedback voice
+  notes and agreement images (the child's name is in the file name). The
+  rules take no wildcards, so those files live in that folder rather than
+  loose in app_flutter/.
+
+  FlutterSharedPreferences.xml stays in the backup on purpose: it carries
+  tg_device_id_backup, which gives a reinstalled phone its family back. A
+  restore of a DELETED account's copy is answered by the server instead — the
+  session mint says 410 device_erased, and the app clears itself.
 -->
 <full-backup-content>
+    <exclude domain="root" path="app_flutter/narrations/" />
     <exclude domain="file" path="narrations/" />
+    <exclude domain="root" path="app_flutter/local_only/" />
     <!-- The child-mode PIN and tokens live in EncryptedSharedPreferences;
          restoring them onto a different device would carry a family's lock
          to a phone their child might be holding, and restoring them without
