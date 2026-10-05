@@ -466,7 +466,7 @@ abstract final class AppRoutes {
   static Route<void> covenant() =>
       _r(Screens.covenant, (_) => const CovenantScreen());
 
-  static Route<void> agreement({String childName = 'ابنك'}) =>
+  static Route<void> agreement({String? childName}) =>
       _r(Screens.agreement, (_) => AgreementScreen(childName: childName));
 
   /// Listening with the display dark — bills the audio ledger, not the screen.

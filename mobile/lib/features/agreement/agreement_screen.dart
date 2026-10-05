@@ -12,6 +12,7 @@ library;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:almorabbi/l10n/app_localizations.dart';
 
 import '../../state/chat_notifier.dart' show tgClientProvider;
 import '../program/providers/progress_providers.dart' show activeChildIdProvider;
@@ -20,9 +21,11 @@ import 'signature_pad.dart';
 import 'package:almorabbi/widgets/ui/loading_view.dart';
 
 class AgreementScreen extends ConsumerStatefulWidget {
-  const AgreementScreen({super.key, this.childName = 'ابنك'});
+  const AgreementScreen({super.key, this.childName});
 
-  final String childName;
+  /// Null when the caller has no name (Parent Day): the screen says
+  /// «ابنك» / "your child" in the UI language.
+  final String? childName;
 
   @override
   ConsumerState<AgreementScreen> createState() => _AgreementScreenState();
@@ -39,6 +42,7 @@ class _AgreementScreenState extends ConsumerState<AgreementScreen> {
   bool _signed = false;
   bool _hasSignature = false;
   String? _error;
+  bool _noChild = false;
 
   int? get _childId => ref.read(activeChildIdProvider);
 
@@ -53,7 +57,7 @@ class _AgreementScreenState extends ConsumerState<AgreementScreen> {
     if (childId == null) {
       setState(() {
         _loading = false;
-        _error = 'اختر طفلاً أولاً.';
+        _noChild = true; // worded in build(): no l10n lookup from initState
       });
       return;
     }
@@ -96,7 +100,7 @@ class _AgreementScreenState extends ConsumerState<AgreementScreen> {
       // The empty-bank case renders its own explanation on arrival and never
       // shows this button at all — putting the explanation behind a press was
       // the bug in 1.0.43.
-      setState(() => _error = 'اخترت أن تحذف كل البنود. اترك بندًا واحدًا على الأقل.');
+      setState(() => _error = AppLocalizations.of(context).agreementKeepOneClause);
       return;
     }
     setState(() { _loading = true; _error = null; });
@@ -106,8 +110,8 @@ class _AgreementScreenState extends ConsumerState<AgreementScreen> {
       await client.signAgreementAsParent(childId);
       if (!mounted) return;
       setState(() { _agreement = draft; _loading = false; });
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text('وقّعتَ. بقي توقيع ابنك من وضع الطفل.'),
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(AppLocalizations.of(context).agreementParentSigned),
       ));
     } catch (e) {
       if (mounted) setState(() { _error = e.toString(); _loading = false; });
@@ -116,15 +120,17 @@ class _AgreementScreenState extends ConsumerState<AgreementScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final childName = widget.childName ?? l10n.agreementYourChild;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('ميثاق الأسرة'),
+        title: Text(l10n.agreementTitle),
         actions: [
           if (_signed)
             IconButton(
-              tooltip: 'شارك أو اطبع',
+              tooltip: l10n.agreementShareTooltip,
               icon: const Icon(Icons.ios_share),
-              onPressed: () => shareAgreementPng(_boundaryKey, widget.childName),
+              onPressed: () => shareAgreementPng(_boundaryKey, childName),
             ),
         ],
       ),
@@ -133,8 +139,9 @@ class _AgreementScreenState extends ConsumerState<AgreementScreen> {
           : ListView(
               padding: const EdgeInsets.all(16),
               children: [
-                if (_error != null) ...[
-                  Text(_error!, style: const TextStyle(color: Colors.red)),
+                if (_noChild || _error != null) ...[
+                  Text(_noChild ? l10n.agreementPickChildFirst : _error!,
+                      style: const TextStyle(color: Colors.red)),
                   const SizedBox(height: 12),
                 ],
                 // An empty bank, said at the top rather than after a button.
@@ -146,26 +153,22 @@ class _AgreementScreenState extends ConsumerState<AgreementScreen> {
                 // hidden. The result was a screen with a title and nothing
                 // else at all — worse than what it replaced.
                 //
-                // A clause bank exists for 7-9 only; every other band lands
+                // Clause banks exist for 7-9 and 13-15; every other band lands
                 // here, and this is the whole content of the screen for them.
                 if (!_loading && _pairs.isEmpty) ...[
                   const Text('🕊️', style: TextStyle(fontSize: 44)),
                   const SizedBox(height: 12),
-                  const Text(
-                    'الميثاق متاح الآن لسنّ ٧–٩ فقط.\n\n'
-                    'البنود تُكتب لكل سنّ على حدة — بند لطفل في السابعة ليس '
-                    'نفس البند لابن في الثانية عشرة، وميثاق بكلام لا يناسب '
-                    'سنّه يُوقَّع ثم يُنسى.',
+                  Text(
+                    l10n.agreementUnavailable,
                     textAlign: TextAlign.center,
-                    style: TextStyle(height: 1.9),
+                    style: const TextStyle(height: 1.9),
                   ),
                   const SizedBox(height: 20),
                 ],
                 if (_pairs.isNotEmpty) ...[
-                  const Text(
-                    'كل بند على ابنك يقابله بند عليك. هذا ما يجعله ميثاقًا '
-                    'لا قائمة أوامر — وابنك سيقيسه عليك في أول يوم.',
-                    style: TextStyle(height: 1.7),
+                  Text(
+                    l10n.agreementIntro,
+                    style: const TextStyle(height: 1.7),
                   ),
                   const SizedBox(height: 16),
                 ],
@@ -177,7 +180,7 @@ class _AgreementScreenState extends ConsumerState<AgreementScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        Text('ميثاق ${widget.childName}',
+                        Text(l10n.agreementOf(childName),
                             textAlign: TextAlign.center,
                             style: const TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.w800)),
@@ -196,13 +199,13 @@ class _AgreementScreenState extends ConsumerState<AgreementScreen> {
                           ),
                         const SizedBox(height: 8),
                         if (_agreement?['signed_by_parent_at'] != null && !_signed)
-                          const Text('وقّعتَ — في انتظار توقيع ابنك',
+                          Text(l10n.agreementWaitingChild,
                               textAlign: TextAlign.center,
-                              style: TextStyle(fontWeight: FontWeight.w600)),
+                              style: const TextStyle(fontWeight: FontWeight.w600)),
                         if (_signed)
-                          const Text('موقَّع من الطرفين ✍️',
+                          Text(l10n.agreementSignedBoth,
                               textAlign: TextAlign.center,
-                              style: TextStyle(fontWeight: FontWeight.w700)),
+                              style: const TextStyle(fontWeight: FontWeight.w700)),
                       ],
                     ),
                   ),
@@ -211,19 +214,18 @@ class _AgreementScreenState extends ConsumerState<AgreementScreen> {
                 if (!_signed && _pairs.isNotEmpty) ...[
                   SignaturePad(
                     key: _signatureKey,
-                    label: 'وقّع هنا',
+                    label: l10n.agreementSignHere,
                     onChanged: (has) => setState(() => _hasSignature = has),
                   ),
                   const SizedBox(height: 16),
                   FilledButton(
                     onPressed: _hasSignature ? _saveAndSign : null,
-                    child: const Text('احفظ ووقّع'),
+                    child: Text(l10n.agreementSaveAndSign),
                   ),
                   const SizedBox(height: 8),
-                  const Text(
-                    'بعد أن توقّع، افتح وضع الطفل ليقرأ ابنك البنود ويوقّع. '
-                    'لا يعمل الميثاق إلا بالتوقيعين.',
-                    style: TextStyle(fontSize: 12, height: 1.6),
+                  Text(
+                    l10n.agreementAfterSign,
+                    style: const TextStyle(fontSize: 12, height: 1.6),
                   ),
                 ],
               ],

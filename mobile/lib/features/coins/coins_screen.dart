@@ -134,17 +134,29 @@ class CoinsScreen extends ConsumerWidget {
                 ?.copyWith(fontWeight: FontWeight.w800),
           ),
           const SizedBox(height: 10),
-          _RedeemRow(
-            emoji: '📖',
-            title: AppLocalizations.of(context).coinsRedeemStory,
-            detail: AppLocalizations.of(context).coinsRedeemStoryDesc,
-            onTap: () => Navigator.of(context).push(AppRoutes.storyGenerator()),
-          ),
+          // The covenant is the only thing coins buy. Stories are free and
+          // badges are earned by doing — listing them under «redeem» told
+          // families both cost coins.
           _RedeemRow(
             emoji: '📜',
             title: AppLocalizations.of(context).coinsRedeemCovenant,
             detail: AppLocalizations.of(context).coinsRedeemCovenantDesc,
             onTap: () => Navigator.of(context).push(AppRoutes.covenant()),
+          ),
+          const SizedBox(height: 24),
+          Text(
+            AppLocalizations.of(context).coinsAlsoFreeTitle,
+            style: Theme.of(context)
+                .textTheme
+                .titleMedium
+                ?.copyWith(fontWeight: FontWeight.w800),
+          ),
+          const SizedBox(height: 10),
+          _RedeemRow(
+            emoji: '📖',
+            title: AppLocalizations.of(context).coinsRedeemStory,
+            detail: AppLocalizations.of(context).coinsRedeemStoryDesc,
+            onTap: () => Navigator.of(context).push(AppRoutes.storyGenerator()),
           ),
           _RedeemRow(
             emoji: '🏅',
