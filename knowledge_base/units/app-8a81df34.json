@@ -1,0 +1,31 @@
+{
+  "id": "app-8a81df34",
+  "domain": "app_help",
+  "title": "ماذا أجد في شاشة «اليوم»؟ المحطات الثلاث",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "دليل التطبيق: شاشة اليوم",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_info": "دليل تطبيق «المربّي» — شاشة «اليوم»",
+  "text_original": "مصدر الوحدة تطبيق «المربّي» نفسه. نصوص الواجهة (mobile/lib/l10n/app_ar.arb): navToday: «اليوم» · todayStepTitleNoName: «خطوة اليوم مع طفلك» · startThisLesson: «ابدأ هذا الدرس» · continueBtn: «متابعة» · startFirstPath: «ابدأ مسارك الأول» · startFirstPathDesc: «دروس قصيرة تقرؤها أنت، مختارة لعمر طفلك. ابدأ اليوم.» · followupTitle: «متابعة» · planTitleFor: «خطة {name} هذا الأسبوع» · todayAskTitle: «اسأل المربّي» · todayAskBodyNoName: «اكتب ما يشغلك في تربية طفلك، وسيجيبك المربّي.» · todayAskCta: «اكتب سؤالك» · todayMissionTitleNoName: «مهمة الطفل اليوم» · todayMissionOpen: «افتح مهمة اليوم» · todayMissionReady: «مهمة اليوم جاهزة: نشاط قصير بعيدًا عن الشاشة. سلّم الجهاز لـ{name} لقراءتها.» · todayRoutineBody: «سجّل النوم والطعام في دقيقة، وتابع يوم {name}.» · todayRoutineCta: «سجّل الآن» · programsTitle: «برامج الأسرة» · programsHomeIntro: «رمضان العائلة، ورحلة الصلاة، والمراحل المهمة في عمر طفلك.» · todayMoreTitle: «المزيد لك اليوم» · navMore: «المزيد» — ومن الشيفرة والوثائق: home_screen.dart: «① خطوة اليوم» ثم بطاقتا «المتابعة» و«خطة الأسبوع» ثم «② اسأل المربّي» ثم «③ مهمة الطفل»، ثم بطاقة «برامج الأسرة»، ثم «المزيد لك اليوم»: «Every destination below is also in «المزيد»» · today_child_block.dart: kMissionBands = {'4-6', '7-9', '10-12', '13-15', '16-18'}؛ و«prenatal-1 · 0-3 · 2-3» يظهر لهم متتبّع النوم والطعام · today_ask_block.dart: نصيحة اليوم ومعها زر السؤال دائمًا",
+  "text_simplified": "ماذا أجد في شاشة «اليوم»؟ هي أول شاشة في التطبيق. في أعلاها بطاقة طفلك النشط، اضغط عليها لتبدّل الطفل، وتحتها ثلاث محطات بالترتيب:\n• «خطوة اليوم مع طفلك»: درس قصير مختار لعمر طفلك تقرؤه أنت؛ اضغط «ابدأ هذا الدرس» أو «متابعة» لتكمل مسارك. وقد تظهر تحتها بطاقة «متابعة» تسألك عن نصيحة جرّبتها، وبطاقة خطة طفلك هذا الأسبوع.\n• «اسأل المربّي»: فيها نصيحة اليوم، وزر «اكتب سؤالك» الذي ينقلك إلى المساعد.\n• «مهمة الطفل اليوم»: لمن عمره من 4 إلى 18 سنة تظهر مهمة اليوم، وهي نشاط قصير بعيد عن الشاشة؛ اضغط «افتح مهمة اليوم» وسلّم الجهاز لطفلك ليقرأها في «وضع الطفل». ولمن هو أصغر تظهر بدلًا منها بطاقة لتسجيل النوم والطعام في دقيقة، بزر «سجّل الآن».\nوتحت المحطات الثلاث بطاقة «برامج الأسرة» (رمضان العائلة، ورحلة الصلاة، والمراحل المهمة)، ثم قسم «المزيد لك اليوم» وفيه الإحصاءات والاختصارات. وكل ما في هذا القسم تجده أيضًا في تبويب «المزيد».",
+  "labels": [
+    "شاشة اليوم",
+    "خطوة اليوم",
+    "اسأل المربي",
+    "مهمة اليوم",
+    "نصيحة اليوم",
+    "من أين أبدأ"
+  ],
+  "created_at": "2026-10-05T00:00:00Z",
+  "updated_at": "2026-10-05T00:00:00Z",
+  "version": "1.0.0",
+  "source_kind": "authored_guidance",
+  "authored_references": [
+    "شاشة «اليوم» — mobile/lib/screens/home_screen.dart",
+    "المحطات الثلاث — mobile/lib/features/home/widgets/today_focus_card.dart، today_ask_block.dart، today_child_block.dart",
+    "بطاقتا المتابعة وخطة الأسبوع — mobile/lib/features/home/widgets/today_loop_cards.dart"
+  ],
+  "source_note": "Written 2026-10-05 as app-help guidance from the app code on main (0c9dccd9), which carries every feature of release 1.0.68+113: the UI strings in mobile/lib/l10n/app_ar.arb and the screens named in authored_references. text_original lists the strings and code facts the unit rests on — its provenance, not a passage it summarises."
+}

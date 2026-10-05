@@ -24,14 +24,15 @@
     },
     "domain": {
       "type": "string",
-      "description": "المجال العلمي للوحدة (القيمة المخزّنة — القانونية).",
+      "description": "المجال العلمي للوحدة (القيمة المخزّنة — القانونية). «app_help»: دليل استخدام التطبيق نفسه، لا محتوى تربوي.",
       "enum": [
         "medical",
         "cyber",
         "islamic_parenting",
         "development",
         "aqeedah",
-        "infant_pregnancy"
+        "infant_pregnancy",
+        "app_help"
       ]
     },
     "age_group": {

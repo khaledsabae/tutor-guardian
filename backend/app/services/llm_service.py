@@ -121,6 +121,7 @@ _DOMAIN_LABELS = {
     "medical": "🧠 نفسي/طبي",
     "cyber": "💻 رقمي/سيبراني",
     "development": "📈 تطور الطفل",
+    "app_help": "📱 دليل التطبيق",
 }
 
 # Length guidance by severity — replaces the old rigid «4-6 جمل» cap.

@@ -1,0 +1,32 @@
+{
+  "id": "app-06bb2e07",
+  "domain": "app_help",
+  "title": "ما «المتابعة» و«خطة الأسبوع» في شاشة «اليوم»؟",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "دليل التطبيق: المتابعة وخطة الأسبوع",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_info": "دليل تطبيق «المربّي» — المتابعة وخطة الأسبوع",
+  "text_original": "مصدر الوحدة تطبيق «المربّي» نفسه. نصوص الواجهة (mobile/lib/l10n/app_ar.arb): followupTitle: «متابعة» · followupQuestion: «هل جرّبت: {strategy}؟» · followupWorked: «نجحت» · followupPartly: «نجحت جزئيًا» · followupDidntWork: «لم تنجح» · followupDidntTry: «لم أجرّب بعد» · followupNoteHint: «ملاحظة اختيارية: ماذا حدث؟» · followupThanksDidntWork: «لا بأس، فلكل طفل طريقه. لن يكرّر المربّي هذه النصيحة، وسيقترح بديلًا.» · followupDismiss: «لا تسألني عن هذا» · followupMemoryOff: «الذاكرة متوقّفة، فلا يحفظ المربّي إجابات المتابعات الآن. شغّلها إن أردت أن تجيب.» · planTitleFor: «خطة {name} هذا الأسبوع» · planSteps: «ثلاث خطوات صغيرة» · planWorship: «عبادة نعملها معًا» · planLesson: «درس الأسبوع» · planAdapted: «غيّرنا خطوة لم تنجح معكم من قبل.» · planShowAll: «اعرض الخطة كاملة» — ومن الشيفرة والوثائق: MOBILE_API.md §9.4: «When an answer recommends a concrete action for a concrete problem, the server opens one follow-up, due 3–7 days later» · followup_push.py: «a GENERIC text, private on the lock screen» · FOLLOWUP_LOCAL_HOUR = 19 «never at night» · weekly_plan.py: «one focus challenge, three small actions, one family worship act and one real lesson» · «A plan is built lazily on first read in a week and cached … so it does not change under the parent mid-week» · «decided from … the remembered facts, how earlier follow-ups went» · «An action whose wording matches a strategy the parent reported as not working is skipped»",
+  "text_simplified": "ما «المتابعة» و«خطة الأسبوع»؟\nالمتابعة:\n• إذا اقترح عليك المساعد خطوة عملية لمشكلة عند طفلك، يسألك المربّي بعد أيام قليلة: «هل جرّبت: …؟». تظهر البطاقة في شاشة «اليوم» تحت خطوة اليوم، وقد يصلك تنبيه مساءً بنص عام لا يذكر الاسم ولا النصيحة.\n• أجب بواحدة من: «نجحت»، أو «نجحت جزئيًا»، أو «لم تنجح»، أو «لم أجرّب بعد»، ويمكنك أن تضيف ملاحظة قصيرة.\n• إذا لم تنجح النصيحة لا يكرّرها المربّي، ويقترح بديلًا. وإن لم ترد أن يسألك عنها فاضغط «لا تسألني عن هذا».\n• تُحفظ إجابات المتابعات حين تكون الذاكرة مفعّلة، فإن كانت متوقّفة لا تُحفظ.\nخطة الأسبوع:\n• لكل طفل بطاقة خطته هذا الأسبوع في شاشة «اليوم»، وفيها: «ثلاث خطوات صغيرة»، و«عبادة نعملها معًا»، و«درس الأسبوع» من دروس عمره.\n• تُبنى الخطة مرة في الأسبوع ولا تتغيّر في منتصفه، ويختار المربّي خطواتها مما يعرفه عن طفلك ومن نتائج متابعاتك؛ فإذا لم تنجح خطوة من قبل وضع غيرها.\n• اضغط «اعرض الخطة كاملة» لترى التفاصيل.",
+  "labels": [
+    "المتابعة",
+    "خطة الأسبوع",
+    "هل جربت النصيحة",
+    "ثلاث خطوات",
+    "درس الأسبوع",
+    "عبادة نعملها معا"
+  ],
+  "created_at": "2026-10-05T00:00:00Z",
+  "updated_at": "2026-10-05T00:00:00Z",
+  "version": "1.0.0",
+  "source_kind": "authored_guidance",
+  "authored_references": [
+    "بطاقة المتابعة — mobile/lib/features/child_memory/widgets/today_followup_card.dart",
+    "بطاقة خطة الأسبوع — mobile/lib/features/child_memory/widgets/today_weekly_plan_card.dart",
+    "قواعد المتابعة وتنبيهها — MOBILE_API.md §9.4، backend/app/services/followup_push.py",
+    "بناء الخطة — backend/app/services/weekly_plan.py"
+  ],
+  "source_note": "Written 2026-10-05 as app-help guidance from the app code on main (0c9dccd9), which carries every feature of release 1.0.68+113: the UI strings in mobile/lib/l10n/app_ar.arb and the screens named in authored_references. text_original lists the strings and code facts the unit rests on — its provenance, not a passage it summarises."
+}

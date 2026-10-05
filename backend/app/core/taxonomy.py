@@ -25,6 +25,10 @@ CANONICAL_DOMAINS: set[str] = {
     "development",
     "aqeedah",
     "infant_pregnancy",
+    # How the app itself works (screens, child mode, memory, deletion). Not
+    # parenting content: it is reached only by the classifier's app-question
+    # rule, so it never competes with the parenting domains.
+    "app_help",
 }
 
 # ── Input-domain aliases → canonical storage domain ─────────────────────────

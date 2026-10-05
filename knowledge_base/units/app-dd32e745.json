@@ -1,0 +1,33 @@
+{
+  "id": "app-dd32e745",
+  "domain": "app_help",
+  "title": "كيف أبدأ مع «المربّي»؟ وكيف أضيف أطفالي وأعدّل بياناتهم؟",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "دليل التطبيق: البداية وإضافة الأطفال",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_info": "دليل تطبيق «المربّي» — البداية وملفات الأطفال",
+  "text_original": "مصدر الوحدة تطبيق «المربّي» نفسه. نصوص الواجهة (mobile/lib/l10n/app_ar.arb): onbAgeQuestion: «كم عمر طفلك؟» · onbAgeQuestionSub: «سؤال واحد فقط — ونجهّز لك تجربة مخصّصة فورًا.» · onbFirstTipTitle: «أول نصيحة مخصّصة لك 🎁» · onbStartJourney: «ابدأ الرحلة» · onbDefaultChildName: «طفلي» · onbDeferredHint: «يمكنك إضافة اسم طفلك وصورته لاحقًا من الإعدادات.» · ageGroupPrenatal: «فترة الحمل وحتى عام» · ageGroup2to3: «2–3 سنوات» · ageGroup4to6: «4–6 سنوات» · ageGroup7to9: «7–9 سنوات» · ageGroup10to12: «10–12 سنة» · ageGroup13to15: «13–15 سنة» · ageGroup16to18: «16–18 سنة» · settingsEditChild: «تعديل معلومات الطفل» · settingsEditChildDesc: «الاسم، المرحلة العمرية، الصورة، الجنس» · editChildTitle: «تعديل ملف الطفل» · editChildSaveBtn: «حفظ التغييرات» · hubMyChildren: «أطفالي» · childrenTitle: «إدارة الأطفال» · childrenAddNew: «إضافة طفل جديد» · addChildBtn: «إضافة الطفل» · onbChildAvatar: «صورة الطفل (اختياري)» · onbGender: «الجنس (اختياري)» · childrenCount: «لديك {count} من أصل {max} أطفال» · childrenMaxReached: «وصلت للحد الأقصى ({count} أطفال). احذف طفلاً لإضافة طفل جديد.» · childrenSwitchTo: «تم التبديل إلى {name}.» · childrenDelete: «حذف الطفل» · childrenDeleteConfirm: «هل أنت متأكد من حذف «{name}»؟ سيُحذف ملفه نهائيًا.» · settingsShareFeedback: «شاركنا رأيك» · settingsShareFeedbackDesc: «اقتراح أو مشكلة — كتابةً أو صوتاً، يصل لنا مباشرة» — ومن الشيفرة والوثائق: onboarding_screen.dart: «the CTA creates the child with a localized default name» (onbDefaultChildName) · children_list_screen.dart: kMaxChildren = 5؛ الضغط على الطفل يجعله النشط، وبجانبه زرا التعديل والحذف · home_screen.dart: بطاقة الطفل النشط أعلى «اليوم» تفتح قائمة الأطفال · docs/privacy-policy.md: «لا يطلب التطبيق إنشاء حساب: عند أول تشغيل ينشئ معرّفًا عشوائيًا لهاتفك»",
+  "text_simplified": "كيف أبدأ مع «المربّي» وأضيف أطفالي؟ لا يطلب التطبيق إنشاء حساب، وهذه الخطوات:\n• عند أول فتح يسألك سؤالًا واحدًا: «كم عمر طفلك؟». اختر المرحلة العمرية: فترة الحمل وحتى عام، أو 2–3 سنوات، أو 4–6، أو 7–9، أو 10–12، أو 13–15، أو 16–18 سنة.\n• تظهر لك أول نصيحة مخصّصة لهذه المرحلة، ثم اضغط «ابدأ الرحلة».\n• ينشئ التطبيق ملف طفلك باسم مؤقت هو «طفلي». لتغيير الاسم أو اختيار صورة (إيموجي) أو تحديد الجنس: افتح «المزيد» ثم «الإعدادات» ثم «تعديل معلومات الطفل»، ثم اضغط «حفظ التغييرات».\n• لإضافة طفل آخر: افتح «المزيد» ثم «أطفالي» ثم «إضافة طفل جديد»، واكتب الاسم واختر المرحلة العمرية (الصورة والجنس اختياريان)، ثم اضغط «إضافة الطفل». يتّسع التطبيق لخمسة أطفال.\n• للتبديل بين الأطفال: اضغط على بطاقة الطفل أعلى شاشة «اليوم»، أو افتح «أطفالي» واضغط على اسم الطفل، فيصبح هو النشط ويعرض التطبيق ما يناسب عمره.\n• لحذف ملف طفل: في «أطفالي» اضغط زر الحذف بجانبه وأكّد، فيُحذف ملفه نهائيًا.\nوإن واجهتك مشكلة أو عندك اقتراح فأرسله من «المزيد» ثم «شاركنا رأيك»، كتابةً أو صوتًا.",
+  "labels": [
+    "إضافة طفل",
+    "طفل آخر",
+    "تغيير اسم الطفل",
+    "طفلي",
+    "التبديل بين الأطفال",
+    "حذف ملف طفل",
+    "أول تشغيل"
+  ],
+  "created_at": "2026-10-05T00:00:00Z",
+  "updated_at": "2026-10-05T00:00:00Z",
+  "version": "1.0.0",
+  "source_kind": "authored_guidance",
+  "authored_references": [
+    "شاشة البداية — mobile/lib/features/onboarding/screens/onboarding_screen.dart",
+    "إدارة الأطفال وإضافتهم وتعديلهم — mobile/lib/features/program/screens/children_list_screen.dart، add_child_screen.dart، edit_child_screen.dart",
+    "«المزيد» — mobile/lib/features/hub/data/hub_catalog.dart",
+    "سياسة الخصوصية: «لا يطلب التطبيق إنشاء حساب» — docs/privacy-policy.md"
+  ],
+  "source_note": "Written 2026-10-05 as app-help guidance from the app code on main (0c9dccd9), which carries every feature of release 1.0.68+113: the UI strings in mobile/lib/l10n/app_ar.arb and the screens named in authored_references. text_original lists the strings and code facts the unit rests on — its provenance, not a passage it summarises."
+}

@@ -62,6 +62,48 @@ UNCERTAIN_DOMAINS: Tuple[str, ...] = (
     "medical", "cyber", "fiqh", "development", "aqeedah",
 )
 
+# ── App help: questions about the app itself ──────────────────────────────────
+# Built from parts so each can be read (and tested) on its own; see the note at
+# the rule's place in KEYWORD_RULES. `(?s:.*?)` lets the paired lookaheads see
+# a question written over several lines.
+_WORD_END = r"(?![ء-ي])"
+# «التطبيق» as the app — not «التطبيقات» (apps in general), not «التطبيقية»,
+# and not «التطبيق العملي/الفعلي» (putting advice into practice).
+_APP_NOUN = (r"(?:ال|هذا\s+ال|بال|فال|وال|لل)تطبيق" + _WORD_END
+             + r"(?!\s+(?:ال)?(?:عملي|فعلي|صحيح|سليم))")
+_APP_ACTION = (
+    r"(?:أضيف|اضيف|إضافة|اضافة|أحذف|احذف|حذف|أمسح|امسح|مسح|أغير|اغير|أغيّر|تغيير|"
+    r"أستخدم|استخدم|استخدام|أستعمل|استعمل|استعمال|يعمل|يشتغل|بيشتغل|شغال|"
+    r"مجان|بفلوس|مدفوع|اشتراك|إعلان|اعلان|حساب|تسجيل|إشعار|اشعار|لغة|الإنجليزي|الانجليزي|"
+    r"نسخة|تحديث|خصوصية|بيانات|العملات|الشارات|المسارات|الدروس|المساعد|الذاكرة|"
+    r"(?:ال|لل|بال)ذكاء\s+(?:ال)?اصطناعي|وضع\s+الطفل|ميزة|مميزات|خاصية|إعدادات|اعدادات|"
+    r"أين\s+أجد|اين\s+اجد)"
+)
+_APP_CHILD_MODE = (
+    r"(?:أخرج|اخرج|الخروج|خروج|أطلع|اطلع)\s+(?:من\s+)?وضع\s+الطفل"
+    r"|(?:أدخل|ادخل|دخول|الدخول\s+(?:إلى|الى|في|ل))\s*وضع\s+الطفل"
+    r"|(?:أفعل|افعل|أفعّل|تفعيل|أشغل|اشغل|تشغيل|أقفل|اقفل|أغلق|اغلق|إغلاق|اغلاق|أفتح|افتح|فتح)"
+    r"\s+وضع\s+الطفل"
+    r"|(?=(?s:.*?)وضع\s+الطفل)(?=(?s:.*?)(?:PIN|pin|Pin|رمز|الرقم\s+السري|كلمة\s+السر|التطبيق"
+    r"|(?:أسلم|اسلم|أسلّم|تسليم)\s+(?:ال)?(?:جهاز|هاتف|جوال|موبايل)))"
+)
+# Names that only the app uses, and first-person account/data requests.
+_APP_FEATURES = (
+    r"(?:أحذف|احذف|حذف|إلغاء|الغاء|ألغي|الغي)\s+حسابي" + _WORD_END
+    + r"|(?:أحذف|احذف|حذف|أمسح|امسح|مسح)\s+(?:كل\s+)?(?:بياناتي|بيانات\s+(?:أطفالي|اطفالي|طفلي))"
+    + _WORD_END
+    + r"|ما\s+يعرفه\s+المرب|ذاكرة\s+(?:ال)?مرب"
+    r"|رحلة\s+الصلا[ةه]|رمضان\s+(?:العائل[ةه]|عائلتنا)"
+    r"|مساراتي|مهم[ةه]\s+اليوم|خطو[ةه]\s+اليوم|اسأل\s+المرب|شاركنا\s+رأيك"
+    r"|عهد\s+المكافآت|بوابة\s+الأهل|الشارات\s+الحصرية|شارات\s+حصرية"
+    r"|(?:أحفظ|احفظ)\s+تقدمي"
+    r"|أراسلكم|اراسلكم|أتواصل\s+معكم|اتواصل\s+معكم|التواصل\s+معكم"
+    r"|تطبيق\s+(?:ال)?مرب|المرب[يّى]\s+(?:مجان|بفلوس|مدفوع)"
+)
+_APP_HELP_RULE = (
+    rf"(?=(?s:.*?){_APP_NOUN})(?=(?s:.*?){_APP_ACTION})|{_APP_CHILD_MODE}|{_APP_FEATURES}"
+)
+
 # ── Keyword Fast-Path ──────────────────────────────────────────────────────────
 # Maps clear Arabic keywords directly to domains. The key insight:
 # these are unambiguous terms that an LLM would always classify the same way.
@@ -117,6 +159,22 @@ KEYWORD_RULES: List[Tuple[str, str]] = [
      r"|(صحاب|أصحاب|صديق|أصدقاء|رفاق).{0,15}(يدخن|بيدخن)|ضغط\s*(الأقران|أصدقاء|رفاق)|تدخين|سجاير|سيجارة|إدمان\s*النيكوتين|نيكوتين", "medical"),
     # Development — milestones, physical growth (expanded: more milestone phrases)
     (r"مشي|يمشي|حبو|زحف|أسنان|تسنين|نمو|تطور|مهارات\s*حركية|مهارات\s*حسية|مراحل\s*عمرية|شهور|سنين|وزن|طول|رضاعة|فطام|طعام|أكل|يأكل|تغذية|تدريب\s*حمام|نونية|كلام|كلمات|جمل|يتكلم|تحدث|تواصل|نظرة|ابتسامة|ملامسة|إمساك|جلوس|يجلس|وقوف|يقف|عناق|تفاعل|اجتماعي|لعب|يلعب|ألعاب\s*تعليمية|مهارات.*يدوية|تدخل\s*مبكر|تطعيم|تحصين|أطفال.*رضع|مولود|حديث.*ولادة|منعكس|انعكاس|حواس|بصر|سمع|milestone|CDC|نمو.*طفل|تطور.*طفل|النمو|التطور|المشي|الحبو|الكلام|النطق|لا\s*يبتسم|لا\s*يجلس|لا\s*يمسك\s*الرضاعة|لا\s*يكلم|لا\s*يستعمل\s*الحمام|لا\s*يركض|متأخر\s*في\s*النمو|تأخر\s*في\s*النمو|أكل\s*رمل|يأكل\s*رمل|يضرب\s*نفسها|تضرب\s*نفسها", "development"),
+    # App help — a question about «المربّي» itself (adding a child, child mode,
+    # memory, deleting the account, is it free…). Without this rule such a
+    # question went to the model classifier, came back "general", and was
+    # answered with no retrieval at all — so the app-help units could never be
+    # found and the model was left to guess at menus. Last on purpose: when a
+    # question also matches a parenting rule («رحلة الصلاة» → fiqh), that
+    # domain stays the label and both are searched.
+    #
+    # Narrow by construction (tests: test_app_help_routing.py). «التطبيق»
+    # alone is not enough — «التطبيق العملي» is how parents say "putting it into
+    # practice" — so it must come with an app action or app noun. «وضع الطفل»
+    # alone is not enough either: it is also "the child's situation" and
+    # "putting the child (in front of the TV)"; it counts only next to an
+    # enter/exit verb or with a PIN/code. Plain «نصيحة اليوم» is never here:
+    # 28% of questions start with it and they are parenting questions.
+    (_APP_HELP_RULE, "app_help"),
 ]
 
 # Compile patterns once at module load
