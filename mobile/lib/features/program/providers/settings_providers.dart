@@ -52,15 +52,17 @@ final childrenListProvider = AsyncNotifierProvider.autoDispose<
 /// Update the active child. After success:
 ///   * invalidates [childrenListProvider] so the list re-fetches
 ///   * re-hydrates [OnboardingStorage] with the new values
-///   * after a rename, re-fetches what renders the child's name into memory
-///     text (MOBILE_API §9.0, PR #39: the server re-letters the family and
-///     rewrites a stored mention of the old name — rendered text must not
-///     outlive a rename).
+///   * re-fetches what renders the child's name into memory text (MOBILE_API
+///     §9.0, PR #39: a rename re-letters the family and rewrites a stored
+///     mention of the old name — rendered text must not outlive it).
 ///
-/// [renamed]: the name differs from the one the screen opened with. A rename
-/// on a device that has proven needs a proven session (PR #39), answered with
-/// the same `device_proof_required` as a child deletion: prove and send once
-/// more. Other edits go as they always did — and an older server never asks.
+/// A rename on a device that has proven needs a proven session (PR #39),
+/// answered with the same `device_proof_required` as a child deletion: prove
+/// and send once more. Every save goes that way: whether the name really
+/// changes is the server's to say — the screen's copy of it may be stale —
+/// and a save that changes no name is simply never asked. An older server
+/// never asks either. For the same reason memory is re-fetched after every
+/// save, not only after what looked like a rename.
 class UpdateChildNotifier extends AutoDisposeAsyncNotifier<ChildProfile?> {
   @override
   Future<ChildProfile?> build() async => null;
@@ -73,7 +75,6 @@ class UpdateChildNotifier extends AutoDisposeAsyncNotifier<ChildProfile?> {
     String? avatarEmoji,
     String? birthMonth,
     bool clearBirthMonth = false,
-    bool renamed = true,
   }) async {
     state = const AsyncValue.loading();
     try {
@@ -87,9 +88,7 @@ class UpdateChildNotifier extends AutoDisposeAsyncNotifier<ChildProfile?> {
             birthMonth: birthMonth,
             clearBirthMonth: clearBirthMonth,
           );
-      final child = renamed
-          ? await ref.read(tgClientProvider).withDeviceProof(save)
-          : await save();
+      final child = await ref.read(tgClientProvider).withDeviceProof(save);
       // If we just changed the active child, sync the on-disk profile
       // so the rest of the app (DailyTipCard, path detail) refetches
       // with the new age_group.
@@ -106,12 +105,10 @@ class UpdateChildNotifier extends AutoDisposeAsyncNotifier<ChildProfile?> {
       }
       // Re-hydrate the on-disk list.
       ref.invalidate(childrenListProvider);
-      if (renamed) {
-        ref
-          ..invalidate(childMemoryProvider)
-          ..invalidate(dueFollowupsProvider)
-          ..invalidate(weeklyPlanProvider);
-      }
+      ref
+        ..invalidate(childMemoryProvider)
+        ..invalidate(dueFollowupsProvider)
+        ..invalidate(weeklyPlanProvider);
       state = AsyncValue.data(child);
       return child;
     } catch (e, st) {

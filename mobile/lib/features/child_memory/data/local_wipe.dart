@@ -76,20 +76,36 @@ Future<void> emptyDirectory(Directory dir) async {
   }
 }
 
-Future<void> _step(Future<void> Function() step) async {
+/// One step of the wipe: best effort, and bounded — a plugin that never
+/// answers (the push token's renewal needs the network) must not keep the
+/// deleted page, or the first frame, waiting.
+@visibleForTesting
+Future<void> wipeStep(Future<void> Function() step,
+    {Duration timeout = const Duration(seconds: 10)}) async {
   try {
-    await step();
+    await step().timeout(timeout);
   } catch (_) {}
 }
+
+Future<void> _step(Future<void> Function() step) => wipeStep(step);
 
 Future<void>? _wiping;
 
 /// Clear the phone after the server deleted the account. Callers that arrive
 /// together (the deletion screen, a `410 device_erased`) share one run.
-Future<void> wipeLocalDataAfterAccountDeletion() =>
-    _wiping ??= _wipe().whenComplete(() => _wiping = null);
+///
+/// [pushTokenLater]: before the first frame the push token's renewal — the
+/// one step that needs the network — is left out; the caller runs
+/// [renewPushTokenAfterWipe] once the app is on screen.
+Future<void> wipeLocalDataAfterAccountDeletion({bool pushTokenLater = false}) =>
+    _wiping ??=
+        _wipe(pushTokenLater: pushTokenLater).whenComplete(() => _wiping = null);
 
-Future<void> _wipe() async {
+/// A new push token for this phone, after a wipe that left it for later.
+Future<void> renewPushTokenAfterWipe() =>
+    _step(() => FirebaseMessaging.instance.deleteToken());
+
+Future<void> _wipe({required bool pushTokenLater}) async {
   await _step(() => NotificationService.instance.cancelAll());
   await _step(() => IdentityService.instance.signOutAfterAccountDeletion());
   await _step(() async =>
@@ -107,7 +123,7 @@ Future<void> _wipe() async {
   }
   // A new token on the next launch: nothing left that the deleted account's
   // push rows (already erased on the server) could be matched against.
-  await _step(() => FirebaseMessaging.instance.deleteToken());
+  if (!pushTokenLater) await renewPushTokenAfterWipe();
   // Last: the deletion is complete on this phone too.
   await _step(() async {
     final prefs = await SharedPreferences.getInstance();

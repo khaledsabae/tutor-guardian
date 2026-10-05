@@ -214,8 +214,14 @@ void main() {
       await c.client.endSession();
       expect(c.storage.store.containsKey('tg_token'), isFalse);
       expect(c.storage.store['tg_deletion_token'], 'tok1');
-      // Nothing is blocked meanwhile.
-      expect((await c.client.ensureSession()).token, 'tok2');
+      // Still offline, on a server that keeps no erased ids: no mint for an
+      // id that may be erased (round 3) — the next launch settles it first.
+      await expectLater(
+          c.client.ensureSession(),
+          throwsA(isA<TgApiError>()
+              .having((e) => e.code, 'code', 'account_deletion_unconfirmed')));
+      expect(c.seen.where((s) => s.startsWith('POST /api/chat/sessions')),
+          isEmpty);
 
       // Next launch, online.
       deleteLeaves = true;
@@ -340,17 +346,24 @@ void main() {
         return _json({'detail': 'Token غير صالح'}, 401); // the account is gone
       });
       await expectLater(c.client.deleteAccount(), throwsA(isA<TgApiError>()));
-      // e.g. routine_providers: on 401 → endSession().
+      // e.g. routine_providers: on 401 → endSession(). Since round 3 that
+      // 401's own recovery settles the deletion before minting (the same
+      // DELETE, with the DELETE's token): already deleted — a new device.
       try {
         await c.client.fetchTodayRoutine(12);
       } on TgApiError catch (e) {
         if (e.statusCode == 401) await c.client.endSession();
       }
-      final settled = await settlePendingAccountDeletion(client: c.client);
-      expect(settled.outcome, PendingDeletion.deleted);
-      expect(settled.result!.scopeKnown, isFalse);
-      expect(c.seen.last, 'DELETE /api/privacy/account Bearer tok1');
+      expect(c.seen, contains('DELETE /api/privacy/account Bearer tok1'));
       expect(c.storage.store['tg_device_id'], isNot('dev-old'));
+      expect(await c.client.accountDeletionState(), kAccountDeletionConfirmed);
+      // The launch then clears the phone: nothing is stuck.
+      var wiped = 0;
+      expect(
+          await completePendingAccountDeletion(
+              client: c.client, wipe: () async => wiped++),
+          isTrue);
+      expect(wiped, 1);
     });
 
     test('the token the DELETE carries is one the server just accepted',
@@ -592,6 +605,10 @@ void main() {
       final c = _client((req) async {
         if (req.method == 'DELETE') {
           throw TimeoutException('client timeout; origin still working');
+        }
+        if (req.url.path == '/api/app-config') {
+          // The server refuses erased ids to this build (#42's gate).
+          return _json({'erased_device_410_min_build': 110});
         }
         if (_isMint(req)) {
           return _mintedFor(req) == 'dev-old' && committed
@@ -912,7 +929,8 @@ void main() {
 
   // ── 7 ──────────────────────────────────────────────────────────────────
   group('7 · names: a rename re-fetches memory; «طفلي» keeps its letter', () {
-    testWidgets('a rename re-fetches memory; another edit does not',
+    testWidgets('a saved edit re-fetches memory (round 3: whether the name '
+        'changed is the server\'s to say), and a rename shows the new name',
         (tester) async {
       final server = _RenamingServer()
         ..proven = true
@@ -930,14 +948,15 @@ void main() {
       addTearDown(keepAlive.close);
 
       await container.read(updateChildProvider.notifier).call(
-          childId: 30, name: 'نور', ageGroup: '10-12', renamed: false);
+          childId: 30, name: 'نور', ageGroup: '10-12');
       await settle(tester);
-      expect(reads(), before, reason: 'an age change renders nothing new');
+      final afterAgeEdit = reads();
+      expect(afterAgeEdit, greaterThan(before));
 
       await container.read(updateChildProvider.notifier).call(
-          childId: 30, name: 'نورة', ageGroup: '10-12', renamed: true);
+          childId: 30, name: 'نورة', ageGroup: '10-12');
       await settle(tester);
-      expect(reads(), greaterThan(before));
+      expect(reads(), greaterThan(afterAgeEdit));
       expect(find.text('أحمد يغار من نورة'), findsOneWidget);
     });
 
@@ -995,7 +1014,7 @@ void main() {
       final keepAlive = container.listen(updateChildProvider, (_, _) {});
       addTearDown(keepAlive.close);
       final saving = container.read(updateChildProvider.notifier).call(
-          childId: 30, name: 'نورة', ageGroup: '7-9', renamed: true);
+          childId: 30, name: 'نورة', ageGroup: '7-9');
       await settle(tester);
       final child = await saving;
       expect(child.name, 'نورة');
@@ -1005,7 +1024,7 @@ void main() {
       expect(server.calls, contains('POST /api/device-proof/complete'));
     });
 
-    testWidgets('another edit goes as before: one PATCH, no proof',
+    testWidgets('a save that changes no name is never asked: one PATCH, no proof',
         (tester) async {
       final server = _RenamingServer()
         ..children = [childJson(12, 'أحمد'), childJson(30, 'نور')]
@@ -1016,7 +1035,7 @@ void main() {
       final keepAlive = container.listen(updateChildProvider, (_, _) {});
       addTearDown(keepAlive.close);
       await container.read(updateChildProvider.notifier).call(
-          childId: 30, name: 'نور', ageGroup: '10-12', renamed: false);
+          childId: 30, name: 'نور', ageGroup: '10-12');
       expect(
           server.calls.where((c) => c.startsWith('PATCH /api/children/30')),
           hasLength(1));
@@ -1033,19 +1052,36 @@ void main() {
       final keepAlive = container.listen(updateChildProvider, (_, _) {});
       addTearDown(keepAlive.close);
       await container.read(updateChildProvider.notifier).call(
-          childId: 30, name: 'نورة', ageGroup: '7-9', renamed: true);
+          childId: 30, name: 'نورة', ageGroup: '7-9');
       expect(
           server.calls.where((c) => c.startsWith('PATCH /api/children/30')),
           hasLength(1));
       expect(server.calls.where((c) => c.contains('device-proof')), isEmpty);
     });
 
-    test('the edit screen says when a rename is one', () {
+    testWidgets('round 3: a stale name on the screen cannot skip the proof',
+        (tester) async {
+      // The screen opened with «نور»; the child was renamed elsewhere to
+      // «نورة»; saving «نور» back is a rename the screen cannot see.
+      final server = _RenamingServer()
+        ..children = [childJson(12, 'أحمد'), childJson(30, 'نورة')]
+        ..renameNeedsProof = true;
+      final container = await pumpMemoryApp(
+          tester, const Scaffold(body: Text('edit')),
+          server: server);
+      final keepAlive = container.listen(updateChildProvider, (_, _) {});
+      addTearDown(keepAlive.close);
+      final saving = container.read(updateChildProvider.notifier).call(
+          childId: 30, name: 'نور', ageGroup: '7-9');
+      await settle(tester);
+      expect((await saving).name, 'نور');
+      expect(server.calls, contains('POST /api/device-proof/complete'));
+    });
+
+    test('the edit screen says until when a pause holds a rename', () {
       final src = File('lib/features/program/screens/edit_child_screen.dart')
           .readAsStringSync();
-      expect(src, contains('renamed: name != widget.child.name.trim()'));
-      expect(src, contains('describeActionFailure(context, e)'),
-          reason: 'a 72-hour pause says until when');
+      expect(src, contains('describeActionFailure(context, e)'));
     });
   });
 }

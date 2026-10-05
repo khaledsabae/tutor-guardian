@@ -59,17 +59,16 @@ class _EditChildScreenState extends ConsumerState<EditChildScreen> {
       // Sent only when it changed: an explicit null removes it, an absent key
       // leaves it alone.
       final monthChanged = _offerBirthMonth && _birthMonth != widget.child.birthMonth;
-      final name = _nameController.text.trim();
+      // A rename may have to prove the phone first (PR #39): the notifier
+      // proves and retries whenever the server asks.
       await ref.read(updateChildProvider.notifier).call(
             childId: widget.child.id,
-            name: name,
+            name: _nameController.text.trim(),
             ageGroup: _ageGroup,
             gender: _gender,
             avatarEmoji: _avatarEmoji,
             birthMonth: monthChanged ? _birthMonth : null,
             clearBirthMonth: monthChanged && _birthMonth == null,
-            // A rename may have to prove the phone first (PR #39).
-            renamed: name != widget.child.name.trim(),
           );
       // The milestones and the journey are timed by the birth month and the
       // age group; the programs summary must not keep the old answer.

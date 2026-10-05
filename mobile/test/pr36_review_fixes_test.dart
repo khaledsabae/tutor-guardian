@@ -526,14 +526,20 @@ void main() {
       expect(c.storage.store['tg_device_id'], 'dev-old');
     });
 
-    test('while unsettled a session can still be minted', () async {
+    test('while unsettled a session is still minted — once the deletion is '
+        'settled (round 3: the same DELETE first, on a server that keeps no '
+        'erased ids)', () async {
       SharedPreferences.setMockInitialValues(
           {kAccountDeletionKey: kAccountDeletionRequested});
       final c = _client(server((_) async => _json({}, 200)));
       await c.client.endSession(); // "new conversation"
       final session = await c.client.ensureSession();
       expect(session.token, 'tok2');
-      expect(c.seen, contains('POST /api/chat/sessions'));
+      final delete = c.seen.indexOf('DELETE /api/privacy/account');
+      expect(delete, greaterThanOrEqualTo(0));
+      expect(c.seen.lastIndexOf('POST /api/chat/sessions'), greaterThan(delete));
+      expect(c.storage.store['tg_device_id'], isNot('dev-old'),
+          reason: 'deleted: the session is a fresh device\'s');
     });
 
     group('the next launch finishes it', () {

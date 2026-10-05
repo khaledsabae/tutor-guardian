@@ -29,7 +29,10 @@ Future<bool> completePendingAccountDeletion({
   final c = client ?? TgClient.shared;
   if (await c.accountDeletionState() != kAccountDeletionConfirmed) return false;
   await c.startOverAfterAccountDeletion();
-  await (wipe ?? wipeLocalDataAfterAccountDeletion)();
+  // Without the push token's renewal — the network must not hold the first
+  // frame; main() runs it after (renewPushTokenAfterWipe).
+  await (wipe ??
+      () => wipeLocalDataAfterAccountDeletion(pushTokenLater: true))();
   return true;
 }
 

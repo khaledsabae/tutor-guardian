@@ -9269,7 +9269,7 @@ abstract class AppLocalizations {
   /// No description provided for @deleteAccountUnconfirmed.
   ///
   /// In ar, this message translates to:
-  /// **'انقطع الاتصال قبل أن يصلنا ردّ الخادم، فلا نعرف بعد هل حُذف حسابك. سنُكمل طلبك حين يعود الاتصال: اضغط «تحقّق مرة أخرى»، أو يتمّ ذلك وحده حين تفتح التطبيق في المرة القادمة.'**
+  /// **'لم يصلنا ردّ واضح من الخادم، فلا نعرف بعد هل حُذف حسابك. سنتحقّق من ذلك حين يعود الاتصال: اضغط «تحقّق مرة أخرى»، أو يتحقّق التطبيق وحده حين تفتحه في المرة القادمة.'**
   String get deleteAccountUnconfirmed;
 
   /// No description provided for @deleteAccountCheckAgain.

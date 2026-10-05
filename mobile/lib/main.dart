@@ -32,6 +32,7 @@ import 'features/onboarding/screens/update_splash_screen.dart';
 import 'features/program/providers/settings_providers.dart';
 import 'features/program/providers/progress_providers.dart';
 import 'features/deeplink/deep_link_handler.dart';
+import 'features/child_memory/data/local_wipe.dart' show renewPushTokenAfterWipe;
 import 'features/child_memory/data/pending_deletion.dart';
 import 'features/child_memory/screens/account_deletion_screen.dart'
     show finishDeletedAccount;
@@ -215,8 +216,9 @@ void main() async {
   // before the phone was cleared) is finished here, before anything reads the
   // onboarding state. Local only: a deletion still waiting for its answer is
   // settled after the first frame (_settleLostDeletion), never holding it.
+  var clearedBeforeFirstFrame = false;
   try {
-    await completePendingAccountDeletion();
+    clearedBeforeFirstFrame = await completePendingAccountDeletion();
   } catch (e, s) {
     FirebaseCrashlytics.instance.recordError(e, s,
         reason: 'pending account deletion not finished', fatal: false);
@@ -305,6 +307,10 @@ void main() async {
   // picked them up (core/local_only_files.dart).
   unawaited(removeStrayPrivateFiles());
 
+  // The one network step of a deletion's clearing, kept out of the first
+  // frame's way (PR #36 review, round 3): a new push token for this phone.
+  if (clearedBeforeFirstFrame) unawaited(renewPushTokenAfterWipe());
+
   // Activation-funnel bookkeeping (first-open day → one-shot day2_return).
   unawaited(Analytics.appOpened());
 }
@@ -347,10 +353,15 @@ Future<void> _postLaunchGrowthLoop() async {
   } catch (_) {
     return;
   }
+  // Checked after every step, not once: a `410 device_erased` can meet any
+  // request of this loop, and nothing after it is wanted for a phone about
+  // to close — least of all a silent Google re-link.
   if (_accountGone) return;
   // The launch path is the one registration allowed to ask for permission.
   await PushService.instance.registerToken(askPermission: true);
+  if (_accountGone) return;
   await PushService.instance.listenForeground();
+  if (_accountGone) return;
   // Prove this session in the background once its push token is on the
   // server (MOBILE_API §9.0.1) — answers and coach tips use memory only for a
   // proven session. Alongside the referral work, and before the Google
@@ -358,8 +369,11 @@ Future<void> _postLaunchGrowthLoop() async {
   // an account deletion follows to the family's other phones (§10).
   final proof = DeviceProofService.instance.proveIfUseful();
   await ReferralService.instance.captureAndClaimOnFirstRun();
+  if (_accountGone) return;
   await ReferralService.instance.refresh();
+  if (_accountGone) return;
   await proof;
+  if (_accountGone) return;
   await IdentityService.instance.silentRestore();
 }
 

@@ -5411,7 +5411,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get deleteAccountUnconfirmed =>
-      'The connection dropped before the server\'s answer reached us, so we don\'t know yet whether your account was deleted. We\'ll finish your request once you\'re back online: tap \"Check again\", or it happens by itself the next time you open the app.';
+      'We didn\'t get a clear answer from the server, so we don\'t know yet whether your account was deleted. We\'ll check once you\'re back online: tap \"Check again\", or the app checks by itself next time you open it.';
 
   @override
   String get deleteAccountCheckAgain => 'Check again';

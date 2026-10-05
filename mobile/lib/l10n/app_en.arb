@@ -1620,7 +1620,7 @@
   "accountDeletedClose": "Close the app",
   "supportEmailCopied": "Address copied: {email}",
   "memoryYourChild": "your child",
-  "deleteAccountUnconfirmed": "The connection dropped before the server's answer reached us, so we don't know yet whether your account was deleted. We'll finish your request once you're back online: tap \"Check again\", or it happens by itself the next time you open the app.",
+  "deleteAccountUnconfirmed": "We didn't get a clear answer from the server, so we don't know yet whether your account was deleted. We'll check once you're back online: tap \"Check again\", or the app checks by itself next time you open it.",
   "deleteAccountCheckAgain": "Check again",
   "accountDeletedGoogleKept": "We kept your Google account record and its backups, because this phone's link to it wasn't verified. To remove them — and any other phone linked to it — email us at {email}.",
   "accountDeletedGoogleUnknown": "We couldn't confirm whether your Google account record was deleted with it. To check, or to remove it, email us at {email}.",

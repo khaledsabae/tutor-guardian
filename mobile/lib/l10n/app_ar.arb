@@ -1733,7 +1733,7 @@
   "supportEmailCopied": "نسخنا العنوان: {email}",
   "@supportEmailCopied": {"placeholders": {"email": {"type": "String"}}},
   "memoryYourChild": "طفلك",
-  "deleteAccountUnconfirmed": "انقطع الاتصال قبل أن يصلنا ردّ الخادم، فلا نعرف بعد هل حُذف حسابك. سنُكمل طلبك حين يعود الاتصال: اضغط «تحقّق مرة أخرى»، أو يتمّ ذلك وحده حين تفتح التطبيق في المرة القادمة.",
+  "deleteAccountUnconfirmed": "لم يصلنا ردّ واضح من الخادم، فلا نعرف بعد هل حُذف حسابك. سنتحقّق من ذلك حين يعود الاتصال: اضغط «تحقّق مرة أخرى»، أو يتحقّق التطبيق وحده حين تفتحه في المرة القادمة.",
   "deleteAccountCheckAgain": "تحقّق مرة أخرى",
   "accountDeletedGoogleKept": "أبقينا سجلّ حسابك في Google ونسخه الاحتياطية، لأن ربط هذا الهاتف به لم يُتحقَّق منه. لحذفها — ومعها أي هاتف آخر مرتبط به — راسلنا على {email}.",
   "@accountDeletedGoogleKept": {"placeholders": {"email": {"type": "String"}}},
