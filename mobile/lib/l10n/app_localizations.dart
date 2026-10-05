@@ -5342,6 +5342,108 @@ abstract class AppLocalizations {
   /// **'📲 مجانًا على Google Play — ابحث: «المربّي»'**
   String get shareStoreHint;
 
+  /// No description provided for @shareInstallLine.
+  ///
+  /// In ar, this message translates to:
+  /// **'📲 «المربّي» مجانًا لوجه الله:'**
+  String get shareInstallLine;
+
+  /// No description provided for @shareCardBrandLine.
+  ///
+  /// In ar, this message translates to:
+  /// **'المربّي — شريكك في رحلة التربية'**
+  String get shareCardBrandLine;
+
+  /// No description provided for @shareCardInstallHint.
+  ///
+  /// In ar, this message translates to:
+  /// **'📲 مجانًا لوجه الله — امسح الكود أو ابحث: «المربّي»'**
+  String get shareCardInstallHint;
+
+  /// No description provided for @sharePathCompleteEyebrow.
+  ///
+  /// In ar, this message translates to:
+  /// **'مسار مكتمل'**
+  String get sharePathCompleteEyebrow;
+
+  /// No description provided for @sharePathCompleteMessage.
+  ///
+  /// In ar, this message translates to:
+  /// **'ما شاء الله 🤍 أتممت مسار «{title}» في «المربّي»!\nكل خطوة في تربية أولادك صدقة جارية:'**
+  String sharePathCompleteMessage(String title);
+
+  /// No description provided for @shareMilestoneEyebrow.
+  ///
+  /// In ar, this message translates to:
+  /// **'محطة في رحلة {name}'**
+  String shareMilestoneEyebrow(String name);
+
+  /// Ends with a du'a — religious text, which other languages leave out rather than translate.
+  ///
+  /// In ar, this message translates to:
+  /// **'ما شاء الله 🤍 سجّلت محطة جديدة في رحلة {name}:\n«{title}»\nاللهم بارك له واجعله من الصالحين.'**
+  String shareMilestoneMessage(String name, String title);
+
+  /// A du'a on the milestone card when the parent wrote no note. Religious text: empty in other languages, so their card shows no line there.
+  ///
+  /// In ar, this message translates to:
+  /// **'اللهم بارك له واجعله قرة عين لوالديه 🤍'**
+  String get shareMilestoneDua;
+
+  /// No description provided for @shareFirstSurahEyebrow.
+  ///
+  /// In ar, this message translates to:
+  /// **'محطة قرآنية لـ {name}'**
+  String shareFirstSurahEyebrow(String name);
+
+  /// No description provided for @shareFirstSurahHeadline.
+  ///
+  /// In ar, this message translates to:
+  /// **'حفظ أول سورة — سورة {surah}'**
+  String shareFirstSurahHeadline(String surah);
+
+  /// Ends with a du'a — religious text, which other languages leave out rather than translate.
+  ///
+  /// In ar, this message translates to:
+  /// **'ما شاء الله 📖 {name} حفظ أول سورة — سورة {surah} 🌟\nاللهم اجعله من أهل القرآن وخاصته.'**
+  String shareFirstSurahMessage(String name, String surah);
+
+  /// A du'a on the first-surah card. Religious text: empty in other languages, so their card shows no line there.
+  ///
+  /// In ar, this message translates to:
+  /// **'اللهم اجعله من أهل القرآن وخاصّتك يا رب 🤍'**
+  String get shareFirstSurahDua;
+
+  /// No description provided for @shareCoachTipEyebrow.
+  ///
+  /// In ar, this message translates to:
+  /// **'نصيحة اليوم'**
+  String get shareCoachTipEyebrow;
+
+  /// No description provided for @shareCoachTipHeadline.
+  ///
+  /// In ar, this message translates to:
+  /// **'وقفة في تربية أبنائنا'**
+  String get shareCoachTipHeadline;
+
+  /// No description provided for @shareCoachTipMessage.
+  ///
+  /// In ar, this message translates to:
+  /// **'نصيحة اليوم في تربية أبنائنا 🌱\n\n{tip}\n\nانشرها تكن صدقة جارية لكل أب وأم:'**
+  String shareCoachTipMessage(String tip);
+
+  /// No description provided for @shareDailyTipMessage.
+  ///
+  /// In ar, this message translates to:
+  /// **'نصيحة اليوم من المربي الذكي: {tip}'**
+  String shareDailyTipMessage(String tip);
+
+  /// No description provided for @shareInfographicText.
+  ///
+  /// In ar, this message translates to:
+  /// **'إنفوجراف من تطبيق المربّي 🌿'**
+  String get shareInfographicText;
+
   /// No description provided for @eduGameChooseLevel.
   ///
   /// In ar, this message translates to:

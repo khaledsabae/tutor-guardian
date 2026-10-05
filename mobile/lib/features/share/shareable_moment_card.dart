@@ -13,10 +13,19 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
+import '../../l10n/l10n_global.dart';
 import '../../theme/app_theme.dart';
 import '../referral/referral_service.dart';
 import 'share_service.dart';
 import '../../theme/design_tokens.dart';
+
+/// One moment as a parent shares it: the line that travels with the image,
+/// and the card the image is captured from.
+///
+/// Each surface builds its moment with a plain function of the app's strings
+/// and the content (e.g. `coachTipShare`), so a test can read every word that
+/// would leave the phone, in each language, without the share plugin.
+typedef MomentShare = ({String message, ShareableMomentCard card});
 
 class ShareableMomentCard extends StatelessWidget {
   const ShareableMomentCard({
@@ -209,6 +218,10 @@ class ShareCardBrandFooter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Cards are captured off-tree, where there is no Localizations ancestor —
+    // AppLocalizations.of would throw and the error box would be shared. The
+    // app keeps AppL10n.current in step with its language.
+    final l10n = AppL10n.current;
     return Column(
       children: [
         Container(
@@ -226,7 +239,7 @@ class ShareCardBrandFooter extends StatelessWidget {
         ),
         const SizedBox(height: 14),
         Text(
-          'المربّي — شريكك في رحلة التربية',
+          l10n.shareCardBrandLine,
           style: GoogleFonts.cairo(
             fontSize: 24,
             fontWeight: FontWeight.w700,
@@ -235,7 +248,7 @@ class ShareCardBrandFooter extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         Text(
-          '📲 مجانًا لوجه الله — امسح الكود أو ابحث: «المربّي»',
+          l10n.shareCardInstallHint,
           textAlign: TextAlign.center,
           style: GoogleFonts.cairo(
             fontSize: 16,

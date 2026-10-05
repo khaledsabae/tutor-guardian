@@ -54,25 +54,22 @@ class QuranMemorizationScreen extends ConsumerWidget {
         .read(coinsProvider.notifier)
         .creditBadges([journeyRewardId(childId, m.key)]);
     if (context.mounted) {
+      final l10n = AppLocalizations.of(context);
       await showCelebration(
         context,
         emoji: '📖',
         imageAsset: milestoneBadgeAsset('first_surah'),
-        title: AppLocalizations.of(context).celebrationMashallah,
-        message: AppLocalizations.of(context).quranMemFirstSurahMsg(childName, surahNames[surah - 1]),
-        onShare: () => ShareService.shareMomentCard(
-          fileTag: 'quran_first_surah_$surah',
-          message: 'ما شاء الله 📖 $childName حفظ أول سورة — '
-              'سورة ${surahNames[surah - 1]} 🌟\n'
-              'اللهم اجعله من أهل القرآن وخاصته.',
-          card: ShareableMomentCard(
-            emoji: '📖',
-            eyebrow: 'محطة قرآنية لـ $childName',
-            headline: 'حفظ أول سورة — سورة ${surahNames[surah - 1]}',
-            body: 'اللهم اجعله من أهل القرآن وخاصّتك يا رب 🤍',
-            icon: Icons.menu_book_outlined,
-          ),
-        ),
+        title: l10n.celebrationMashallah,
+        message: l10n.quranMemFirstSurahMsg(childName, surahNames[surah - 1]),
+        onShare: () {
+          final share = firstSurahShare(l10n,
+              childName: childName, surah: surahNames[surah - 1]);
+          return ShareService.shareMomentCard(
+            fileTag: 'quran_first_surah_$surah',
+            message: share.message,
+            card: share.card,
+          );
+        },
       );
     }
   }
@@ -177,3 +174,22 @@ class QuranMemorizationScreen extends ConsumerWidget {
     );
   }
 }
+
+/// A child's first memorized surah, as the parent shares it. The du'a on the
+/// card is Arabic only ([AppLocalizations.shareFirstSurahDua] is empty in
+/// other languages); [surah] is the surah's name as the app lists it.
+MomentShare firstSurahShare(
+  AppLocalizations l10n, {
+  required String childName,
+  required String surah,
+}) =>
+    (
+      message: l10n.shareFirstSurahMessage(childName, surah),
+      card: ShareableMomentCard(
+        emoji: '📖',
+        eyebrow: l10n.shareFirstSurahEyebrow(childName),
+        headline: l10n.shareFirstSurahHeadline(surah),
+        body: l10n.shareFirstSurahDua,
+        icon: Icons.menu_book_outlined,
+      ),
+    );

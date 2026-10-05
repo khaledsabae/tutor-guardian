@@ -250,20 +250,33 @@ class _Body extends ConsumerWidget {
 
   void _sharePathCompletion(BuildContext context, CurriculumPath path) {
     Analytics.shareMoment('path');
+    final share = pathCompletionShare(AppLocalizations.of(context),
+        title: path.title, description: path.description);
     ShareService.shareMomentCard(
       fileTag: 'path_${path.id}',
-      message: 'ما شاء الله 🤍 أتممت مسار «${path.title}» في «المربّي»!\\n'
-          'كل خطوة في تربية أولادك صدقة جارية:',
-      card: ShareableMomentCard(
-        emoji: '🌟',
-        eyebrow: 'مسار مكتمل',
-        headline: path.title,
-        body: path.description,
-        icon: Icons.route_outlined,
-      ),
+      message: share.message,
+      card: share.card,
     );
   }
 }
+
+/// A finished path, as the parent shares it. The path's [title] and
+/// [description] are content and travel as the server sent them.
+MomentShare pathCompletionShare(
+  AppLocalizations l10n, {
+  required String title,
+  required String description,
+}) =>
+    (
+      message: l10n.sharePathCompleteMessage(title),
+      card: ShareableMomentCard(
+        emoji: '🌟',
+        eyebrow: l10n.sharePathCompleteEyebrow,
+        headline: title,
+        body: description,
+        icon: Icons.route_outlined,
+      ),
+    );
 
 class _Header extends ConsumerWidget {
   const _Header({

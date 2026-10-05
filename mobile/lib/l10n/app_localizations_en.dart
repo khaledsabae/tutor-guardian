@@ -2958,6 +2958,77 @@ class AppLocalizationsEn extends AppLocalizations {
       '📲 Free on Google Play — search for “Al-Murabbi”';
 
   @override
+  String get shareInstallLine => '📲 Al-Murabbi — free, for the sake of Allah:';
+
+  @override
+  String get shareCardBrandLine =>
+      'Al-Murabbi — your partner on the parenting journey';
+
+  @override
+  String get shareCardInstallHint =>
+      '📲 Free, for the sake of Allah — scan the code or search for “Al-Murabbi”';
+
+  @override
+  String get sharePathCompleteEyebrow => 'Path completed';
+
+  @override
+  String sharePathCompleteMessage(String title) {
+    return 'Masha\'Allah 🤍 I completed the “$title” path on Al-Murabbi!\nEvery step in raising your children is an ongoing charity:';
+  }
+
+  @override
+  String shareMilestoneEyebrow(String name) {
+    return 'A milestone in $name\'s journey';
+  }
+
+  @override
+  String shareMilestoneMessage(String name, String title) {
+    return 'Masha\'Allah 🤍 I recorded a new milestone in $name\'s journey:\n“$title”';
+  }
+
+  @override
+  String get shareMilestoneDua => '';
+
+  @override
+  String shareFirstSurahEyebrow(String name) {
+    return 'A Quran milestone for $name';
+  }
+
+  @override
+  String shareFirstSurahHeadline(String surah) {
+    return 'First Surah memorized — Surah $surah';
+  }
+
+  @override
+  String shareFirstSurahMessage(String name, String surah) {
+    return 'Masha\'Allah 📖 $name memorized their first Surah — Surah $surah 🌟';
+  }
+
+  @override
+  String get shareFirstSurahDua => '';
+
+  @override
+  String get shareCoachTipEyebrow => 'Today\'s tip';
+
+  @override
+  String get shareCoachTipHeadline =>
+      'A moment to reflect on raising our children';
+
+  @override
+  String shareCoachTipMessage(String tip) {
+    return 'Today\'s tip on raising our children 🌱\n\n$tip\n\nPass it on — an ongoing charity for every mother and father:';
+  }
+
+  @override
+  String shareDailyTipMessage(String tip) {
+    return 'Today\'s tip from Al-Murabbi: $tip';
+  }
+
+  @override
+  String get shareInfographicText =>
+      'An infographic from the Al-Murabbi app 🌿';
+
+  @override
   String get eduGameChooseLevel => 'Choose a level';
 
   @override

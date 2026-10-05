@@ -17,6 +17,8 @@ import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../core/analytics.dart';
+import '../../l10n/app_localizations.dart';
+import '../../l10n/l10n_global.dart';
 import '../referral/referral_service.dart';
 
 class ShareService {
@@ -40,15 +42,28 @@ class ShareService {
   static Uri whatsAppUri(String text) =>
       Uri.parse('https://wa.me/?text=${Uri.encodeComponent(text)}');
 
+  /// The text that goes out with a share: [message], then the install line
+  /// and link in [l10n]'s language — unless [appendInstallLink] is false.
+  ///
+  /// The app's language, not Arabic: this line went under every message an
+  /// English reader shared. A plain function, so a test can read exactly what
+  /// a parent sends without the share plugin.
+  static String shareText(
+    String message,
+    AppLocalizations l10n, {
+    String? referralCode,
+    bool appendInstallLink = true,
+  }) =>
+      appendInstallLink
+          ? '$message\n\n${l10n.shareInstallLine}\n'
+              '${installUrlFor(referralCode: referralCode)}'
+          : message;
+
   /// Open WhatsApp directly with a pre-filled text + install link.
   /// Falls back to the system share sheet if WhatsApp is not installed.
   static Future<bool> shareWhatsApp(String message, {String? referralCode}) async {
     referralCode ??= ReferralService.cachedCode;
-    final buffer = StringBuffer()
-      ..write(message)
-      ..write('\n\n📲 «المربّي» مجانًا لوجه الله:\n')
-      ..write(installUrlFor(referralCode: referralCode));
-    final text = buffer.toString();
+    final text = shareText(message, AppL10n.current, referralCode: referralCode);
     final uri = whatsAppUri(text);
     if (await canLaunchUrl(uri)) {
       return await launchUrl(uri, mode: LaunchMode.externalApplication);
@@ -61,7 +76,8 @@ class ShareService {
   /// pre-filled message plus the install link.
   ///
   /// [message] is the human line (e.g. «ما شاء الله، أتمّ محمد أول صلاة 🤍»);
-  /// the install CTA is appended automatically so callers never forget it.
+  /// the install CTA is appended automatically so callers never forget it,
+  /// in the app's language ([AppL10n.current] — this class has no context).
   ///
   /// [appendInstallLink] is false when [message] already carries the link —
   /// the «رمضان عائلتنا» card's `share_text` is written by the server with the
@@ -93,10 +109,8 @@ class ShareService {
       final file = File('${dir.path}/$fileTag.png');
       await file.writeAsBytes(image);
 
-      final text = appendInstallLink
-          ? '$message\n\n📲 «المربّي» مجانًا لوجه الله:\n'
-              '${installUrlFor(referralCode: referralCode)}'
-          : message;
+      final text = shareText(message, AppL10n.current,
+          referralCode: referralCode, appendInstallLink: appendInstallLink);
 
       final result = await SharePlus.instance.share(
           ShareParams(files: [XFile(file.path)], text: text));

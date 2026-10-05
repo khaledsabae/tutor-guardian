@@ -190,32 +190,53 @@ class ChildJourneyScreen extends ConsumerWidget {
         .creditBadges([journeyRewardId(childId, key)]);
 
     if (context.mounted) {
+      final l10n = AppLocalizations.of(context);
       final emoji = milestone?.emoji ?? '💛';
       await showCelebration(
         context,
         emoji: emoji,
         imageAsset: milestone != null ? milestoneBadgeAsset(milestone.key) : null,
-        title: AppLocalizations.of(context).lessonCelebrationTitle,
-        message: '${AppLocalizations.of(context).journeyNewMilestone} $childName:\n${result.title}',
-        onShare: () => ShareService.shareMomentCard(
-          fileTag: 'milestone_$key',
-          message: 'ما شاء الله 🤍 سجّلت محطة جديدة في رحلة $childName:\n'
-              '«${result.title}»\nاللهم بارك له واجعله من الصالحين.',
-          card: ShareableMomentCard(
-            emoji: emoji,
-            eyebrow: 'محطة في رحلة $childName',
-            headline: result.title,
-            body: result.note.trim().isNotEmpty
-                ? result.note
-                : 'اللهم بارك له واجعله قرة عين لوالديه 🤍',
-            icon: Icons.celebration_outlined,
-          ),
-        ),
+        title: l10n.lessonCelebrationTitle,
+        message: '${l10n.journeyNewMilestone} $childName:\n${result.title}',
+        onShare: () {
+          final share = milestoneShare(l10n,
+              childName: childName,
+              emoji: emoji,
+              title: result.title,
+              note: result.note);
+          return ShareService.shareMomentCard(
+            fileTag: 'milestone_$key',
+            message: share.message,
+            card: share.card,
+          );
+        },
       );
       if (context.mounted) await ReviewPrompt.maybeAsk(context);
     }
   }
 }
+
+/// A journey milestone, as the parent shares it: the parent's own [note] on
+/// the card, or else a du'a, which only Arabic carries —
+/// [AppLocalizations.shareMilestoneDua] is empty in other languages, and the
+/// card then shows no line there.
+MomentShare milestoneShare(
+  AppLocalizations l10n, {
+  required String childName,
+  required String emoji,
+  required String title,
+  required String note,
+}) =>
+    (
+      message: l10n.shareMilestoneMessage(childName, title),
+      card: ShareableMomentCard(
+        emoji: emoji,
+        eyebrow: l10n.shareMilestoneEyebrow(childName),
+        headline: title,
+        body: note.trim().isNotEmpty ? note : l10n.shareMilestoneDua,
+        icon: Icons.celebration_outlined,
+      ),
+    );
 
 class _Header extends StatelessWidget {
   const _Header({required this.name, required this.count});

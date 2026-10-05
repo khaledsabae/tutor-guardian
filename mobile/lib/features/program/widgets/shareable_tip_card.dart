@@ -12,9 +12,9 @@ library;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../../l10n/l10n_global.dart';
 import '../../../theme/app_theme.dart';
 import '../data/models.dart';
-import 'package:almorabbi/l10n/app_localizations.dart';
 
 /// A shareable daily tip card widget.
 ///
@@ -36,6 +36,10 @@ class ShareableTipCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Captured off-tree, where there is no Localizations ancestor and
+    // AppLocalizations.of throws; the app keeps AppL10n.current in step with
+    // its language.
+    final l10n = AppL10n.current;
     return SizedBox(
       width: size.width,
       height: size.height,
@@ -92,7 +96,7 @@ class ShareableTipCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 28),
                     Text(
-                      AppLocalizations.of(context).shareTipOfDayFor(childName),
+                      l10n.shareTipOfDayFor(childName),
                       textAlign: TextAlign.center,
                       style: GoogleFonts.cairo(
                         fontSize: 28,
@@ -109,7 +113,7 @@ class ShareableTipCard extends StatelessWidget {
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: Text(
-                        tip.timeOfDayLabel(AppLocalizations.of(context)),
+                        tip.timeOfDayLabel(l10n),
                         style: GoogleFonts.cairo(fontSize: 14, fontWeight: FontWeight.w600, color: AppTheme.primary),
                       ),
                     ),
@@ -140,12 +144,12 @@ class ShareableTipCard extends StatelessWidget {
                           child: const Icon(Icons.psychology_outlined, color: Colors.white, size: 28),
                         ),
                         const SizedBox(height: 16),
-                        Text(AppLocalizations.of(context).appTitle, style: GoogleFonts.cairo(fontSize: 22, fontWeight: FontWeight.w700, color: AppTheme.primary)),
+                        Text(l10n.appTitle, style: GoogleFonts.cairo(fontSize: 22, fontWeight: FontWeight.w700, color: AppTheme.primary)),
                         const SizedBox(height: 4),
-                        Text(AppLocalizations.of(context).shareTagline, style: GoogleFonts.cairo(fontSize: 14, fontWeight: FontWeight.w400, color: AppTheme.textSecondary)),
+                        Text(l10n.shareTagline, style: GoogleFonts.cairo(fontSize: 14, fontWeight: FontWeight.w400, color: AppTheme.textSecondary)),
                         const SizedBox(height: 8),
                         Text(
-                          AppLocalizations.of(context).shareStoreHint,
+                          l10n.shareStoreHint,
                           textAlign: TextAlign.center,
                           style: GoogleFonts.cairo(
                             fontSize: 12,
