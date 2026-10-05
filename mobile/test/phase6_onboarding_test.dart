@@ -387,7 +387,6 @@ class _FakeTgClient extends TgClient {
   Map<String, dynamic>? createChildJson;
   Map<String, dynamic>? childProgressJson;
   Map<String, dynamic>? pathDetailJson;
-  Map<String, dynamic>? dailyTipJson;
   Map<String, dynamic>? lastCreateChildBody;
 
   @override
@@ -421,20 +420,6 @@ class _FakeTgClient extends TgClient {
     bool includeLessons = false,
   }) async =>
       pathDetailJson ?? {..._pathJson(id: pathId), 'lessons': []};
-
-  @override
-  Future<Map<String, dynamic>> getDailyTip({
-    required String ageGroup,
-    String? timeOfDay,
-  }) async =>
-      dailyTipJson ??
-      {
-        'id': 'tip_4-6_001',
-        'age_group': ageGroup,
-        'domain': 'islamic_parenting',
-        'text': 'ابدأ يومك بابتسامة.',
-        'time_of_day': 'morning',
-      };
 }
 
 Map<String, dynamic> _pathJson({String id = 'path_4-6_islamic_parenting_adab'}) {

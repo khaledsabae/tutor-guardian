@@ -5300,30 +5300,6 @@ abstract class AppLocalizations {
   /// **'أمان رقمي'**
   String get pathDomainCyber;
 
-  /// No description provided for @timeOfDayMorning.
-  ///
-  /// In ar, this message translates to:
-  /// **'صباحاً'**
-  String get timeOfDayMorning;
-
-  /// No description provided for @timeOfDayEvening.
-  ///
-  /// In ar, this message translates to:
-  /// **'مساءً'**
-  String get timeOfDayEvening;
-
-  /// No description provided for @timeOfDayBedtime.
-  ///
-  /// In ar, this message translates to:
-  /// **'قبل النوم'**
-  String get timeOfDayBedtime;
-
-  /// No description provided for @timeOfDayAnytime.
-  ///
-  /// In ar, this message translates to:
-  /// **'أي وقت'**
-  String get timeOfDayAnytime;
-
   /// No description provided for @shareInstallLine.
   ///
   /// In ar, this message translates to:

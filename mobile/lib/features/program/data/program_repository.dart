@@ -2,7 +2,7 @@
 ///
 /// This is the only layer that knows about the [TgClient] and the
 /// `routers/program.py` wire format. Screens and providers consume
-/// [CurriculumPath] / [CurriculumLesson] / [DailyTip] typed objects.
+/// [CurriculumPath] / [CurriculumLesson] typed objects.
 ///
 /// Riverpod's `AsyncNotifier` + `keepAlive` caches within a session; this
 /// layer adds the part that survives one — a last-known-good copy on disk, so
@@ -158,21 +158,6 @@ class ProgramRepository {
         .whereType<Map<String, dynamic>>()
         .map(SearchResult.fromJson)
         .toList();
-  }
-
-  /// `GET /api/program/daily-tip?age_group=&time_of_day=`
-  ///
-  /// `timeOfDay` ∈ {`morning`, `evening`, `bedtime`, `anytime`} — pass
-  /// `null` to let the backend pick deterministically from `today`.
-  Future<DailyTip> getDailyTip({
-    required String ageGroup,
-    String? timeOfDay,
-  }) async {
-    final json = await _client.getDailyTip(
-      ageGroup: ageGroup,
-      timeOfDay: timeOfDay,
-    );
-    return DailyTip.fromJson(json);
   }
 
   /// `GET /api/program/coach-tip?child_id=` — proactive personalized tip

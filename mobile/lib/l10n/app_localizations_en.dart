@@ -2934,18 +2934,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pathDomainCyber => 'Digital safety';
 
   @override
-  String get timeOfDayMorning => 'Morning';
-
-  @override
-  String get timeOfDayEvening => 'Evening';
-
-  @override
-  String get timeOfDayBedtime => 'Bedtime';
-
-  @override
-  String get timeOfDayAnytime => 'Anytime';
-
-  @override
   String get shareInstallLine => '📲 Al-Murabbi — free, for the sake of Allah:';
 
   @override

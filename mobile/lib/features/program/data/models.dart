@@ -187,63 +187,6 @@ class CurriculumLesson {
       warningFlags.contains('developmental_red_flag');
 }
 
-/// A short (≤ 280 char) daily parenting tip.
-class DailyTip {
-  final String id;
-  final String ageGroup;
-  final String domain;
-  final String text;
-  final String? unitId;
-  final int? dayOfWeek; // 0..6 (Mon..Sun)
-  final String timeOfDay; // morning | evening | bedtime | anytime
-  final List<String> tags;
-  final bool isPublished;
-  final String? version;
-
-  const DailyTip({
-    required this.id,
-    required this.ageGroup,
-    required this.domain,
-    required this.text,
-    this.unitId,
-    this.dayOfWeek,
-    this.timeOfDay = 'anytime',
-    this.tags = const [],
-    this.isPublished = true,
-    this.version,
-  });
-
-  factory DailyTip.fromJson(Map<String, dynamic> json) {
-    return DailyTip(
-      id: json['id'] as String,
-      ageGroup: json['age_group'] as String,
-      domain: json['domain'] as String,
-      text: json['text'] as String? ?? '',
-      unitId: json['unit_id'] as String?,
-      dayOfWeek: (json['day_of_week'] as num?)?.toInt(),
-      timeOfDay: json['time_of_day'] as String? ?? 'anytime',
-      tags: ((json['tags'] as List?) ?? const [])
-          .map((e) => e as String)
-          .toList(),
-      isPublished: json['is_published'] as bool? ?? true,
-      version: json['version'] as String?,
-    );
-  }
-
-  String timeOfDayLabel(AppLocalizations l10n) {
-    switch (timeOfDay) {
-      case 'morning':
-        return l10n.timeOfDayMorning;
-      case 'evening':
-        return l10n.timeOfDayEvening;
-      case 'bedtime':
-        return l10n.timeOfDayBedtime;
-      default:
-        return l10n.timeOfDayAnytime;
-    }
-  }
-}
-
 /// Proactive parenting coach tip — `GET /api/program/coach-tip?child_id=`.
 /// The backend gracefully degrades to a plain daily tip when it can't
 /// produce a safe, topic-matched personal tip, so the card always renders.

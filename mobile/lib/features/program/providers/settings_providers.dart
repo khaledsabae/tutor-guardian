@@ -228,7 +228,6 @@ Future<void> repointActiveChildAwayFrom(Ref ref, int staleId) async {
   ref.read(activeChildIdProvider.notifier).state = null;
   ref.invalidate(activeChildProfileProvider);
   ref.invalidate(childProgressProvider);
-  ref.invalidate(dailyTipProvider);
   ref.invalidate(pathsListProvider);
 }
 
