@@ -36,6 +36,7 @@ import 'package:almorabbi/api/tg_client.dart';
 import 'package:almorabbi/core/app_closer.dart';
 import 'package:almorabbi/core/local_only_files.dart';
 import 'package:almorabbi/features/child_memory/data/local_wipe.dart';
+import 'package:almorabbi/features/child_memory/data/memory_repository.dart';
 import 'package:almorabbi/features/child_memory/data/pending_deletion.dart';
 import 'package:almorabbi/features/child_memory/data/placeholder_names.dart';
 import 'package:almorabbi/features/child_memory/providers/memory_providers.dart';
@@ -370,8 +371,8 @@ void main() {
           'DELETE /api/privacy/account Bearer tok2');
     });
 
-    test('a mint answered 410 device_erased: a new device at once, the app '
-        'told, and the next mint is for the fresh id', () async {
+    test('a mint answered 410 device_erased: never the old id again — a new '
+        'device, its own mint (201), and the app told', () async {
       TgClient.appBuild = 120;
       final c = _client(
           (req) async => _isMint(req)
@@ -380,22 +381,44 @@ void main() {
                   : _json({'session_id': 's9', 'token': 'tok9'}, 201))
               : _json({}),
           session: false);
+      c.storage.store['tg_device_proof'] = 'tok-before-deletion';
       var told = 0;
       c.client.onDeviceErased = () async => told++;
-      await expectLater(
-          c.client.ensureSession(),
-          throwsA(isA<TgApiError>()
-              .having((e) => e.statusCode, 'status', 410)
-              .having((e) => e.code, 'code', 'device_erased')));
+      final session = await c.client.ensureSession();
       await _drain();
+      expect(session.token, 'tok9');
       expect(told, 1);
-      expect(c.builds.first, '120', reason: 'the mint says which build asks');
-      expect(await c.client.accountDeletionState(), kAccountDeletionConfirmed);
+      expect(c.builds, everyElement('120'),
+          reason: 'every mint says which build asks');
+      expect(c.mints.map((m) => m['device_id'] == 'dev-old'), [true, false],
+          reason: 'the old id once, then a fresh one — never the old id again');
+      final fresh = c.storage.store['tg_device_id'];
+      expect(fresh, isNot('dev-old'));
+      expect(c.mints.last['device_id'], fresh);
       final prefs = await SharedPreferences.getInstance();
+      expect(prefs.getString('tg_device_id_backup'), fresh);
       expect(prefs.getString(kAccountDeletionErasedIdKey), 'dev-old');
-      expect(c.storage.store['tg_device_id'], isNot('dev-old'));
-      expect((await c.client.ensureSession()).token, 'tok9');
-      expect(c.mints.last['device_id'], c.storage.store['tg_device_id']);
+      expect(await c.client.accountDeletionState(), kAccountDeletionConfirmed,
+          reason: 'the launch clears the phone even if killed now');
+      expect(c.storage.store.containsKey('tg_device_proof'), isTrue);
+      expect(c.storage.store['tg_device_proof'], 'tok9',
+          reason: 'the last token now belongs to the fresh device');
+    });
+
+    test('making the token live meets the 410: the account was already '
+        'deleted, and the fresh device is never deleted', () async {
+      TgClient.appBuild = 120;
+      final c = _client(
+          (req) async => _isMint(req)
+              ? (_mintedFor(req) == 'dev-old'
+                  ? _erased()
+                  : _json({'session_id': 's9', 'token': 'tok9'}, 201))
+              : _json({'proven': true}),
+          session: false);
+      final body = await c.client.deleteAccount();
+      expect(body, isEmpty, reason: 'scope unknown: deleted elsewhere');
+      expect(c.seen.where((s) => s.startsWith('DELETE')), isEmpty);
+      expect(await c.client.accountDeletionState(), kAccountDeletionConfirmed);
     });
 
     test('no build number known: no header, and the server answers as before',
@@ -462,6 +485,106 @@ void main() {
 
   // ── 2 ──────────────────────────────────────────────────────────────────
   group('2 · a token that still works settles nothing', () {
+    /// A family whose DELETE answer was lost: `dev-old`, the DELETE's token
+    /// `tok1` kept, the record "requested". [config] is `GET /api/app-config`.
+    ({
+      TgClient client,
+      List<String> seen,
+      List<Map<String, dynamic>> mints,
+      List<String?> builds,
+      _MemStorage storage,
+    }) lost(Future<http.Response> Function(http.Request req) answer) {
+      SharedPreferences.setMockInitialValues(
+          {kAccountDeletionKey: kAccountDeletionRequested});
+      final c = _client(answer, session: false);
+      c.storage.store['tg_deletion_token'] = 'tok1';
+      return c;
+    }
+
+    http.Response config(int? floor) => _json(
+        {'minimum_build_number': 90, 'erased_device_410_min_build': floor});
+
+    test('the server keeps erased ids for this build: a mint for the same id '
+        'settles it — 410, deleted; no DELETE sent', () async {
+      TgClient.appBuild = 120;
+      final c = lost((req) async {
+        if (req.url.path == '/api/app-config') return config(110);
+        if (_isMint(req)) return _erased();
+        return _json({});
+      });
+      final settled = await settlePendingAccountDeletion(client: c.client);
+      expect(settled.outcome, PendingDeletion.deleted);
+      expect(settled.result!.scopeKnown, isFalse);
+      expect(c.seen, contains('POST /api/chat/sessions Bearer tok1'),
+          reason: 'the old token as proof, as always');
+      expect(c.mints.single['device_id'], 'dev-old');
+      expect(c.seen.where((s) => s.startsWith('DELETE')), isEmpty);
+      expect(c.storage.store['tg_device_id'], isNot('dev-old'));
+    });
+
+    test('…201: intact — «لم يُحذف شيء», the DELETE is not sent again, and '
+        'the session is this device\'s own', () async {
+      TgClient.appBuild = 120;
+      final c = lost((req) async {
+        if (req.url.path == '/api/app-config') return config(120);
+        if (_isMint(req)) return _json({'session_id': 's5', 'token': 'tok5'}, 201);
+        return _json({});
+      });
+      final settled = await settlePendingAccountDeletion(client: c.client);
+      expect(settled.outcome, PendingDeletion.notDeleted);
+      expect(await c.client.accountDeletionState(), isNull);
+      expect(c.storage.store.containsKey('tg_deletion_token'), isFalse);
+      expect(c.storage.store['tg_token'], 'tok5');
+      expect(c.storage.store['tg_device_id'], 'dev-old');
+      expect(c.seen.where((s) => s.startsWith('DELETE')), isEmpty);
+    });
+
+    test('…and "check again" says so, offering to try again', () async {
+      TgClient.appBuild = 120;
+      final c = lost((req) async {
+        if (req.url.path == '/api/app-config') return config(100);
+        if (_isMint(req)) return _json({'session_id': 's5', 'token': 'tok5'}, 201);
+        return _json({});
+      });
+      await expectLater(
+          MemoryRepository(c.client).resolvePendingDeletion(),
+          throwsA(isA<TgApiError>()
+              .having((e) => e.code, 'code', 'account_not_deleted')
+              .having((e) => e.message, 'message',
+                  'لم يُحذف شيء. حاول مرة أخرى بعد قليل.')));
+    });
+
+    test('…no answer to that mint: still unknown, the way out kept', () async {
+      TgClient.appBuild = 120;
+      final c = lost((req) async {
+        if (req.url.path == '/api/app-config') return config(110);
+        throw http.ClientException('offline');
+      });
+      final settled = await settlePendingAccountDeletion(client: c.client);
+      expect(settled.outcome, PendingDeletion.unknown);
+      expect(await c.client.accountDeletionState(), kAccountDeletionRequested);
+      expect(c.storage.store['tg_deletion_token'], 'tok1');
+    });
+
+    for (final (label, floor, build) in [
+      ('a gate above this build', 130, 120),
+      ('no gate yet', null, 120),
+      ('no build number (nothing to compare)', 110, null),
+    ]) {
+      test('$label: the same DELETE again — 401, already deleted', () async {
+        TgClient.appBuild = build;
+        final c = lost((req) async {
+          if (req.url.path == '/api/app-config') return config(floor);
+          if (req.method == 'DELETE') return _json({'detail': 'x'}, 401);
+          return _json({'session_id': 's5', 'token': 'tok5'}, 201);
+        });
+        final settled = await settlePendingAccountDeletion(client: c.client);
+        expect(settled.outcome, PendingDeletion.deleted);
+        expect(c.mints, isEmpty, reason: 'no mint stands in for the answer');
+        expect(c.seen.last, 'DELETE /api/privacy/account Bearer tok1');
+      });
+    }
+
     test('P4 · a slow DELETE: unknown, not "nothing deleted"; when it commits, '
         'the mint is refused — never served for the erased id', () async {
       TgClient.appBuild = 120;
@@ -489,11 +612,13 @@ void main() {
       expect(await c.client.accountDeletionState(), kAccountDeletionRequested);
 
       committed = true; // the in-flight DELETE commits now
-      await expectLater(c.client.getMemorySettings(), throwsA(isA<TgApiError>()));
+      // 401 → recovery → the mint for dev-old is refused (410) → a fresh
+      // device mints its own session, and the request goes on with it.
+      await c.client.getMemorySettings();
       expect(c.mints.where((m) => m['device_id'] == 'dev-old'), isNotEmpty);
-      expect(c.storage.store['tg_token'], isNot('tok9'),
+      expect(c.mints.last['device_id'], isNot('dev-old'),
           reason: 'no session was served for the erased id');
-      expect(c.storage.store['tg_device_id'], isNot('dev-old'));
+      expect(c.storage.store['tg_device_id'], c.mints.last['device_id']);
       expect(await c.client.accountDeletionState(), kAccountDeletionConfirmed);
     });
   });
@@ -516,12 +641,14 @@ void main() {
       var told = 0;
       c.client.onDeviceErased = () async => told++;
       expect(await completePendingAccountDeletion(client: c.client), isFalse);
-      await expectLater(c.client.ensureSession(), throwsA(isA<TgApiError>()));
-      await _drain();
-      expect(c.mints.single['device_id'], _erasedId);
-      expect(told, 1);
       await c.client.ensureSession();
+      await _drain();
+      expect(c.mints.first['device_id'], _erasedId);
       expect(c.mints.last['device_id'], isNot(_erasedId));
+      expect(told, 1);
+      final prefs = await SharedPreferences.getInstance();
+      expect(prefs.getString('tg_device_id_backup'), isNot(_erasedId),
+          reason: 'the restored backup copy of the id is replaced');
     });
 
     testWidgets('told, the app clears the phone and ends on the deleted page',
@@ -774,6 +901,12 @@ void main() {
           inInclusiveRange(0, run));
       expect(src.indexOf('await _settleLostDeletion()'), greaterThan(run));
       expect(src.indexOf('settlePendingAccountDeletion()'), greaterThan(run));
+      // An account found erased this run stops the growth loop: nothing in
+      // it is wanted for a phone about to close.
+      final loop = src.substring(src.indexOf('Future<void> _postLaunchGrowthLoop'));
+      expect(loop.indexOf('if (_accountGone) return;'),
+          inInclusiveRange(0, loop.indexOf('registerToken(')));
+      expect(src, contains('_accountGone = true;'));
     });
   });
 

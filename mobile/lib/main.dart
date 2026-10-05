@@ -199,13 +199,17 @@ void main() async {
     );
   }
 
-  // Every session mint says which build asks (`X-App-Build`): a build that
-  // handles `410 device_erased` gets it for a device id erased with its
-  // account, and a device so answered starts over and clears the phone —
-  // a restored backup of a deleted account, a deletion whose answer was lost
-  // (MOBILE_API §10). Both before anything can mint.
+  // Every session mint says which build asks (`X-App-Build`, the versionCode):
+  // a build that handles `410 device_erased` gets it for a device id erased
+  // with its account — a phone backup restored after the deletion, or a
+  // deletion whose answer was lost (MOBILE_API §3.2). The client then becomes
+  // a new device and mints again; the app clears what the backup brought
+  // back and ends calmly on the deleted page. Both before anything can mint.
   TgClient.appBuild = await buildNumber;
-  TgClient.shared.onDeviceErased = () => finishDeletedAccount(appNavigatorKey);
+  TgClient.shared.onDeviceErased = () {
+    _accountGone = true;
+    return finishDeletedAccount(appNavigatorKey);
+  };
 
   // A deletion the server confirmed but the app did not see through (killed
   // before the phone was cleared) is finished here, before anything reads the
@@ -332,12 +336,18 @@ Future<bool> _settleLostDeletion() async {
   return false;
 }
 
+/// The account behind this install turned out deleted during this run (a
+/// mint answered `410 device_erased`): the deleted page is up, and the
+/// growth loop has nothing left to do for a phone about to close.
+bool _accountGone = false;
+
 Future<void> _postLaunchGrowthLoop() async {
   try {
     await TgClient.shared.ensureSession();
   } catch (_) {
     return;
   }
+  if (_accountGone) return;
   // The launch path is the one registration allowed to ask for permission.
   await PushService.instance.registerToken(askPermission: true);
   await PushService.instance.listenForeground();

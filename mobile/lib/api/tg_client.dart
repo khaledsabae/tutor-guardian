@@ -580,52 +580,68 @@ class TgClient {
     // Not blocked while an account deletion is unsettled: a mint for a device
     // id the server erased is refused (`410 device_erased`, below), so nothing
     // comes back to life — and an install whose deletion never reached the
-    // server keeps working until the DELETE is sent again.
-    final deviceId = await _auth.getOrCreateDeviceId();
-    final body = <String, dynamic>{
+    // server keeps working until the deletion is settled.
+    var deviceId = await _auth.getOrCreateDeviceId();
+    var resp = await _postMint(deviceId, metadata: metadata);
+    if (resp.statusCode == 410) {
+      final error = _wrap(resp);
+      if (error.code != 'device_erased') throw error;
+      // This device id was erased with its account — a phone backup restored
+      // after the deletion, or a deletion whose answer was lost (MOBILE_API
+      // §3.2). Never retry it: become a new device (session, last token, id
+      // and its backup copy all go), mint for that, and let the app clear
+      // what the backup brought back. Not an error for the caller.
+      await _deviceErased();
+      deviceId = await _auth.getOrCreateDeviceId();
+      resp = await _postMint(deviceId, metadata: metadata);
+      if (resp.statusCode == 410) throw _wrap(resp); // never twice
+    }
+    if (resp.statusCode != 201) {
+      throw _wrapStreamed(resp.statusCode, const {});
+    }
+    return _keepMinted(resp, deviceId);
+  }
+
+  /// `POST /api/chat/sessions` for [deviceId], with the last token as proof.
+  ///
+  /// Prove this is the same device (audit H5): the server refuses a proof
+  /// that belongs to another device, and — once SESSION_MINT_ENFORCE is on —
+  /// refuses to mint for a known device without one. [proof] overrides the
+  /// stored one (settling a deletion sends the token the DELETE carried).
+  Future<http.Response> _postMint(String deviceId,
+      {Map<String, dynamic>? metadata, String? proof}) async {
+    final body = jsonEncode(<String, dynamic>{
       'device_id': deviceId,
       'metadata': ?metadata,
-    };
+    });
     final build = appBuild;
-
-    // Prove this is the same device (audit H5): the server refuses a proof
-    // that belongs to another device, and — once SESSION_MINT_ENFORCE is on —
-    // refuses to mint for a known device without one.
     Future<http.Response> post(String? proof) => _raw
         .post(
           Uri.parse('$_baseUrl/api/chat/sessions'),
           headers: {
             'Content-Type': 'application/json; charset=utf-8',
             if (proof != null && proof.isNotEmpty) 'Authorization': 'Bearer $proof',
-            // "I handle 410 device_erased" (MOBILE_API §10).
+            // "I handle 410 device_erased" (MOBILE_API §3.2): the Android
+            // versionCode, on every mint.
             'X-App-Build': ?build?.toString(),
           },
-          body: jsonEncode(body),
+          body: body,
         )
         .timeout(AppConfig.httpTimeout);
 
-    final proof = await _auth.readDeviceProof();
-    var resp = await post(proof);
-    if ((resp.statusCode == 401 || resp.statusCode == 403) && proof != null) {
+    final token = proof ?? await _auth.readDeviceProof();
+    var resp = await post(token);
+    if ((resp.statusCode == 401 || resp.statusCode == 403) && token != null) {
       // A proof the server no longer accepts (e.g. a restored backup whose
       // token was never issued for this id). Drop it and try once without.
       await _auth.clearDeviceProof();
       resp = await post(null);
     }
+    return resp;
+  }
 
-    if (resp.statusCode == 410) {
-      // This device id was erased with its account (a backup restored after
-      // the deletion, or a deletion whose answer was lost). Never mint for it:
-      // become a new device now, and let the app clear the phone.
-      final error = _wrap(resp);
-      if (error.code == 'device_erased') await _deviceErased();
-      throw error;
-    }
-
-    if (resp.statusCode != 201) {
-      throw _wrapStreamed(resp.statusCode, const {});
-    }
-
+  /// Store the session a `201` mint returned for [deviceId].
+  Future<SessionResponse> _keepMinted(http.Response resp, String deviceId) async {
     final parsed =
         SessionResponse.fromJson(jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>);
     await _auth.setSession(sessionId: parsed.sessionId, token: parsed.token);
@@ -1858,25 +1874,39 @@ class TgClient {
   /// from a token merely still working: an in-flight DELETE can commit after.
   Future<Map<String, dynamic>> deleteAccount() async {
     final token = await _liveToken();
+    // Making the token live met `410 device_erased`: the account was already
+    // deleted (another phone of the family), and this install has started
+    // over. Nothing is left to delete — never the fresh device's account.
+    if (await accountDeletionState() == kAccountDeletionConfirmed) {
+      return const <String, dynamic>{};
+    }
     await _auth.writeDeletionToken(token);
     await _setAccountDeletionState(kAccountDeletionRequested);
     return _sendAccountDeletion(token);
   }
 
-  /// Settle a deletion whose answer was lost (§10): send the same DELETE
-  /// again, with the token it first carried and no session recovery. Returns
-  /// the server's body (`{}` when the account was already gone: scope
-  /// unknown), or null when no deletion is pending. Throws
-  /// `account_not_deleted` when the server refused it (nothing was deleted;
-  /// nothing is pending any more — a 72-hour pause keeps its own code,
-  /// `device_proof_cooldown`), or `account_deletion_unconfirmed` while there
-  /// is still no answer.
+  /// Settle a deletion whose answer was lost (MOBILE_API §10) — find out,
+  /// never guess:
+  ///   * where the server keeps erased device ids for this build
+  ///     (`GET /api/app-config` → `erased_device_410_min_build` ≤ [appBuild]):
+  ///     a mint for the same device id, with the old token as proof, is the
+  ///     authoritative answer ([_settleByMint]) — `410 device_erased`: it was
+  ///     deleted; `201`: it was not, and the DELETE is not sent again without
+  ///     asking the parent;
+  ///   * otherwise (that gate off, an older server): the same DELETE is sent
+  ///     again with the token it first carried and no session recovery
+  ///     ([_sendAccountDeletion]) — `200`: deleted now; `401`: already
+  ///     deleted.
+  /// Returns the server's body (`{}` when the deletion is known only that
+  /// way: scope unknown), or null when no deletion is pending. Throws
+  /// `account_not_deleted` (nothing was deleted, nothing is pending any more
+  /// — a 72-hour pause keeps its own code, `device_proof_cooldown`), or
+  /// `account_deletion_unconfirmed` while there is still no answer.
   ///
   /// A record whose token is gone (a keystore reset) is settled with a live
   /// session instead: for an erased device id the mint answers
-  /// `410 device_erased`, which already started this install over; for an
-  /// account that is still there the DELETE is simply sent — the parent asked
-  /// for it.
+  /// `410 device_erased`, which starts this install over; for an account that
+  /// is still there the DELETE is simply sent — the parent asked for it.
   Future<Map<String, dynamic>?> settleAccountDeletion() async {
     final state = await accountDeletionState();
     if (state == null) return null;
@@ -1884,10 +1914,18 @@ class TgClient {
       await startOverAfterAccountDeletion();
       return const <String, dynamic>{};
     }
-    var token = await _auth.readDeletionToken();
     try {
+      if (await _erasedIdsKeptForThisBuild()) {
+        final settled = await _settleByMint();
+        if (settled != null) return settled;
+      }
+      var token = await _auth.readDeletionToken();
       if (token == null || token.isEmpty) {
         token = await _liveToken();
+        // Erased meanwhile: the live session is the fresh device's own.
+        if (await accountDeletionState() == kAccountDeletionConfirmed) {
+          return const <String, dynamic>{};
+        }
         await _auth.writeDeletionToken(token);
       }
       return await _sendAccountDeletion(token);
@@ -1895,7 +1933,9 @@ class TgClient {
       switch (e.code) {
         case 'device_erased':
           return const <String, dynamic>{};
-        case 'account_deletion_unconfirmed' || 'device_proof_cooldown':
+        case 'account_deletion_unconfirmed' ||
+              'account_not_deleted' ||
+              'device_proof_cooldown':
           rethrow;
       }
       if (await accountDeletionState() == kAccountDeletionRequested) {
@@ -1905,6 +1945,53 @@ class TgClient {
       throw TgApiError(e.statusCode, AppL10n.current.deleteAccountServerError,
           code: 'account_not_deleted', details: e.details);
     }
+  }
+
+  /// Does the server answer `410 device_erased` to this build? Only then is a
+  /// mint for the old id a statement about the deletion. Any failure to tell
+  /// is a no — the DELETE path then decides.
+  Future<bool> _erasedIdsKeptForThisBuild() async {
+    final build = appBuild;
+    if (build == null) return false;
+    try {
+      final floor = (await fetchAppConfig())['erased_device_410_min_build'];
+      return floor is int && floor <= build;
+    } catch (_) {
+      return false;
+    }
+  }
+
+  /// The authoritative answer (§10): mint for the same device id, with the
+  /// token the DELETE carried as proof. `410 device_erased` → deleted: start
+  /// over, `{}` (scope unknown). `201` → not deleted: the session it returns
+  /// is this device's own and is kept, the record is dropped, and
+  /// `account_not_deleted` is thrown («لم يُحذف شيء», and the parent may try
+  /// again). No answer → `account_deletion_unconfirmed`. Null when there is
+  /// no device id to ask about.
+  Future<Map<String, dynamic>?> _settleByMint() async {
+    final deviceId = await _auth.peekDeviceId();
+    if (deviceId == null) return null;
+    final proof =
+        await _auth.readDeletionToken() ?? await _auth.readDeviceProof();
+    final http.Response resp;
+    try {
+      resp = await _postMint(deviceId, proof: proof);
+    } catch (_) {
+      throw _deletionUnconfirmed(null);
+    }
+    if (resp.statusCode == 410 && _wrap(resp).code == 'device_erased') {
+      await startOverAfterAccountDeletion();
+      return const <String, dynamic>{};
+    }
+    if (resp.statusCode == 201) {
+      try {
+        await _keepMinted(resp, deviceId);
+      } catch (_) {}
+      await _abandonAccountDeletion();
+      throw TgApiError(201, AppL10n.current.deleteAccountServerError,
+          code: 'account_not_deleted');
+    }
+    throw _deletionUnconfirmed(resp.statusCode);
   }
 
   /// A token the server accepted a moment ago: a request through the
