@@ -5324,24 +5324,6 @@ abstract class AppLocalizations {
   /// **'أي وقت'**
   String get timeOfDayAnytime;
 
-  /// No description provided for @shareTipOfDayFor.
-  ///
-  /// In ar, this message translates to:
-  /// **'نصيحة اليوم لـ {name}'**
-  String shareTipOfDayFor(Object name);
-
-  /// No description provided for @shareTagline.
-  ///
-  /// In ar, this message translates to:
-  /// **'شريكك في رحلة التربية'**
-  String get shareTagline;
-
-  /// No description provided for @shareStoreHint.
-  ///
-  /// In ar, this message translates to:
-  /// **'📲 مجانًا على Google Play — ابحث: «المربّي»'**
-  String get shareStoreHint;
-
   /// No description provided for @shareInstallLine.
   ///
   /// In ar, this message translates to:
@@ -5431,12 +5413,6 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'نصيحة اليوم في تربية أبنائنا 🌱\n\n{tip}\n\nانشرها تكن صدقة جارية لكل أب وأم:'**
   String shareCoachTipMessage(String tip);
-
-  /// No description provided for @shareDailyTipMessage.
-  ///
-  /// In ar, this message translates to:
-  /// **'نصيحة اليوم من المربي الذكي: {tip}'**
-  String shareDailyTipMessage(String tip);
 
   /// No description provided for @shareInfographicText.
   ///
@@ -5929,12 +5905,6 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'اسأل المربّي عن هذه'**
   String get coachAskAboutTip;
-
-  /// No description provided for @dailyTipShareError.
-  ///
-  /// In ar, this message translates to:
-  /// **'تعذّر مشاركة النصيحة: {error}'**
-  String dailyTipShareError(Object error);
 
   /// No description provided for @onbChooseAvatar.
   ///

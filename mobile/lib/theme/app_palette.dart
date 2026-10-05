@@ -81,11 +81,10 @@ class AppPalette {
   final Color dangerBg;
   final Color dangerFg;
 
-  /// The amber "tip" card — the daily tip and the coach tip.
+  /// The amber "tip" card — the coach tip on Home.
   ///
-  /// Both mixed this by hand, identically and separately, outside the tokens.
-  /// That is why both stayed fully cream when everything around them went
-  /// dark: there was no token to change. One definition now, read by both.
+  /// It was mixed by hand outside the tokens, which is why it stayed fully
+  /// cream when everything around it went dark: there was no token to change.
   final List<Color> tipGradient;
   final Color tipInk;
 

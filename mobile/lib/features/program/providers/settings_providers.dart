@@ -90,7 +90,7 @@ class UpdateChildNotifier extends AutoDisposeAsyncNotifier<ChildProfile?> {
           );
       final child = await ref.read(tgClientProvider).withDeviceProof(save);
       // If we just changed the active child, sync the on-disk profile
-      // so the rest of the app (DailyTipCard, path detail) refetches
+      // so the rest of the app (paths list, path detail) refetches
       // with the new age_group.
       final activeId = ref.read(activeChildIdProvider);
       if (activeId == childId) {

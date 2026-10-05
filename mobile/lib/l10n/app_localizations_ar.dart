@@ -2905,17 +2905,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get timeOfDayAnytime => 'أي وقت';
 
   @override
-  String shareTipOfDayFor(Object name) {
-    return 'نصيحة اليوم لـ $name';
-  }
-
-  @override
-  String get shareTagline => 'شريكك في رحلة التربية';
-
-  @override
-  String get shareStoreHint => '📲 مجانًا على Google Play — ابحث: «المربّي»';
-
-  @override
   String get shareInstallLine => '📲 «المربّي» مجانًا لوجه الله:';
 
   @override
@@ -2973,11 +2962,6 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String shareCoachTipMessage(String tip) {
     return 'نصيحة اليوم في تربية أبنائنا 🌱\n\n$tip\n\nانشرها تكن صدقة جارية لكل أب وأم:';
-  }
-
-  @override
-  String shareDailyTipMessage(String tip) {
-    return 'نصيحة اليوم من المربي الذكي: $tip';
   }
 
   @override
@@ -3263,11 +3247,6 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get coachAskAboutTip => 'اسأل المربّي عن هذه';
-
-  @override
-  String dailyTipShareError(Object error) {
-    return 'تعذّر مشاركة النصيحة: $error';
-  }
 
   @override
   String get onbChooseAvatar => 'اختر صورة طفلك';
