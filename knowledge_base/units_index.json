@@ -1,6 +1,6 @@
 {
   "total_units": 1380,
-  "generated_at": "2026-10-05T02:33:45.053168+00:00",
+  "generated_at": "2026-10-05T02:57:22.575767+00:00",
   "by_domain": {
     "medical": 355,
     "cyber": 280,
@@ -1316,7 +1316,7 @@
       "normalized_age_group": "unspecified",
       "behavior_type": "دليل التطبيق: المهام والعملات والعهد",
       "needs_ocr": false,
-      "size_chars": 1871
+      "size_chars": 1933
     },
     {
       "id": "app-2e094883",
