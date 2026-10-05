@@ -4,10 +4,12 @@
 /// parents wrote. These tests pin what that cut promised: the order of the
 /// three stops, that each one always ends in an action (whatever the server
 /// says), that the content banks decide what block ③ offers, and that the
-/// layout survives English, dark mode and 200% text.
+/// layout survives English, dark mode and 200% text — with no Arabic left on
+/// the English screen.
 library;
 
 import 'dart:async';
+import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -34,6 +36,7 @@ void main() {
   Future<List<int>> pumpHome(
     WidgetTester tester, {
     String? ageGroup = '7-9',
+    String childName = 'سارة',
     Map<String, dynamic>? day,
     Map<String, dynamic>? progress,
     Locale locale = const Locale('ar'),
@@ -51,7 +54,7 @@ void main() {
     SharedPreferences.setMockInitialValues({
       if (ageGroup != null) ...{
         OnboardingStorage.keyActiveChildId: 1,
-        OnboardingStorage.keyActiveChildName: 'سارة',
+        OnboardingStorage.keyActiveChildName: childName,
         OnboardingStorage.keyActiveChildAgeGroup: ageGroup,
       },
       OnboardingStorage.keyOnboardingCompleted: true,
@@ -179,6 +182,48 @@ void main() {
       expect(tester.takeException(), isNull, reason: text);
       expect(find.text(text), findsOneWidget);
     }
+  });
+
+  testWidgets('English, dark: no Arabic script anywhere on the screen',
+      (tester) async {
+    // E2E run 37203122941 (English, dark) showed Arabic on «اليوم»: the switch
+    // hint and the games card were literals in home_screen.dart. The hint
+    // moved to the ARB files and the card went with the three-block cut; this
+    // pins the whole screen so the next literal is caught here, not on a
+    // device. The child gets a Latin name — a parent's Arabic name is no leak.
+    await pumpHome(tester,
+        locale: const Locale('en'), dark: true, childName: 'Sara');
+    expect(find.text('Tap to switch or add another child'), findsOneWidget);
+
+    // The list builds lazily: walk it to the end, reading every text on the way.
+    final seen = <String>{};
+    final position =
+        tester.state<ScrollableState>(find.byType(Scrollable).first).position;
+    for (var step = 0;; step++) {
+      for (final rich in tester.widgetList<RichText>(
+          find.byType(RichText, skipOffstage: false))) {
+        seen.add(rich.text.toPlainText());
+      }
+      if (position.pixels >= position.maxScrollExtent) break;
+      expect(step, lessThan(100), reason: 'the list never ended');
+      position.jumpTo(math.min(position.pixels + 300, position.maxScrollExtent));
+      await tester.pump();
+    }
+    // The walk really got below the divider, to the last cards.
+    expect(seen, containsAll(['More for today', 'Educational Games']));
+
+    // The four the E2E run caught, by name — and then any other.
+    expect(
+        seen.intersection({
+          'اضغط للتبديل أو إضافة طفل آخر',
+          'الألعاب والمسابقات التعليمية',
+          'ألعاب تفاعلية ومسابقات قيم وتربية لطفلك',
+          'العب الآن',
+        }),
+        isEmpty);
+    final arabic = RegExp(
+        r'[\u0600-\u06ff\u0750-\u077f\u08a0-\u08ff\ufb50-\ufdff\ufe70-\ufefc]');
+    expect(seen.where(arabic.hasMatch).toList(), isEmpty);
   });
 
   Map<String, dynamic> dayWith({
