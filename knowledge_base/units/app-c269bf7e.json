@@ -1,22 +1,23 @@
 {
   "id": "app-c269bf7e",
   "domain": "app_help",
-  "title": "ما «وضع الطفل»؟ وكيف أدخله وأخرج منه برمز PIN؟",
+  "title": "ما «وضع الطفل»؟ وكيف أدخله وأخرج منه؟ وماذا أفعل إن نسيت رمز PIN؟",
   "language": "ar",
   "age_group": "unspecified",
   "behavior_type": "دليل التطبيق: وضع الطفل",
   "intervention_type": "إرشادي",
   "severity": "خفيف",
   "reference_info": "دليل تطبيق «المربّي» — «وضع الطفل»",
-  "text_original": "مصدر الوحدة تطبيق «المربّي» نفسه. نصوص الواجهة (mobile/lib/l10n/app_ar.arb): childMode: «وضع الطفل» · todayMissionOpen: «افتح مهمة اليوم» · todayMissionReady: «مهمة اليوم جاهزة: نشاط قصير بعيدًا عن الشاشة. سلّم الجهاز لـ{name} لقراءتها.» · prayerHandOver: «سلّم الجهاز لـ{name} ليسجّل مهمته» · childModePinRequired: «يجب تحديد رمز PIN.» · childModePinMismatch: «الرقم غير متطابق. حاول مرة أخرى.» · childModePinIncorrect: «الرمز غير صحيح.» · habitChildModeExitTitle: «خروج من وضع الطفل» · habitChildModeExitConfirm: «هل تريد الخروج من وضع الطفل والعودة لحساب المربي؟» · childModeBudgetSpent: «انتهت مدة اليوم. نكمل غدًا إن شاء الله 🌙» · childModeOffline: «انقطع الاتصال، فأغلقنا الجلسة. نعود حين يعود الاتصال 🌙» · childModeSessionExpired: «انتهى وقت الجلسة الآمنة. يُرجى إعادة الهاتف للمربي.» · hubParentDay: «يوم الطفل ومهامه» — ومن الشيفرة والوثائق: child_mode_lock_screen.dart: «PIN is verified locally» · «if (_pin.length == 4)» · أول مرة يُطلب الرمز مرتين (childModePinMismatch) · child_surface.v1.yaml: under-2 «screen_allowed: false» · «2-3»: «لا واجهة بصرية — صوت فقط» · «4-6»: «requires_parent_present: true» · لكل فئة daily_budget_minutes يحسبه الخادم · parent_day_screen.dart: «اليوم مع طفلي»: دقائق الشاشة ودقائق الاستماع، و«سجل اليوم» · privacy-policy.md: «ورمز قفل وضع الطفل (محفوظًا بدالة تجزئة)» ضمن «ما يبقى على هاتفك»",
-  "text_simplified": "ما «وضع الطفل»؟ هو أن تسلّم هاتفك لطفلك ليقوم بنشاط محدد، مثل قراءة مهمة اليوم أو تسجيل مهامه في رحلة الصلاة، ولا يخرج منه إلى بقية التطبيق إلا برمز تعرفه أنت.\n• ادخله من الزر المخصّص، مثل «افتح مهمة اليوم» في شاشة «اليوم»، أو زر تسليم الجهاز لطفلك ليسجّل مهمته في رحلة الصلاة.\n• في أول مرة يطلب منك التطبيق أن تختار رمز PIN من 4 أرقام، وتكتبه مرتين للتأكيد. ويُحفظ الرمز على هاتفك وحده.\n• سلّم الجهاز لطفلك. وعند الخروج يطلب التطبيق الرمز، فاكتبه أنت لتعود إلى حسابك.\n• لكل عمر مدة يومية محدودة يحسبها خادم التطبيق، فإذا انتهت ظهرت رسالة «انتهت مدة اليوم. نكمل غدًا إن شاء الله»، وتُغلق الجلسة كذلك إذا انقطع الاتصال.\n• ما يناسب كل عمر: لا شاشة لمن هو دون السنتين، ولمن عمره من سنتين إلى 3 سنوات استماع فقط والشاشة مطفأة، ومن 4 إلى 6 سنوات يبقى الوالد حاضرًا مع طفله.\n• لترى ما فعله طفلك ودقائق يومه: «المزيد» ثم «يوم الطفل ومهامه».",
+  "text_original": "مصدر الوحدة تطبيق «المربّي» نفسه. نصوص الواجهة (mobile/lib/l10n/app_ar.arb): childMode: «وضع الطفل» · todayMissionOpen: «افتح مهمة اليوم» · todayMissionReady: «مهمة اليوم جاهزة: نشاط قصير بعيدًا عن الشاشة. سلّم الجهاز لـ{name} لقراءتها.» · prayerHandOver: «سلّم الجهاز لـ{name} ليسجّل مهمته» · childModePinRequired: «يجب تحديد رمز PIN.» · childModePinMismatch: «الرقم غير متطابق. حاول مرة أخرى.» · childModePinIncorrect: «الرمز غير صحيح.» · habitChildModeExit: «خروج» · habitChildModeExitTitle: «خروج من وضع الطفل» · habitChildModeExitConfirm: «هل تريد الخروج من وضع الطفل والعودة لحساب المربي؟» · missionUnderstoodGoing: «فهمت، سأذهب» · childModeBudgetSpent: «انتهت مدة اليوم. نكمل غدًا إن شاء الله 🌙» · childModeOffline: «انقطع الاتصال، فأغلقنا الجلسة. نعود حين يعود الاتصال 🌙» · childModeSessionExpired: «انتهى وقت الجلسة الآمنة. يُرجى إعادة الهاتف للمربي.» · hubParentDay: «يوم الطفل ومهامه» — ومن الشيفرة والوثائق: child_mode_lock_screen.dart: «PIN is verified locally» · «if (_pin.length == 4)» · أول مرة يُطلب الرمز مرتين (childModePinMismatch) · child_surface.v1.yaml: under-2 «screen_allowed: false» · «2-3»: «لا واجهة بصرية — صوت فقط» · «4-6»: «requires_parent_present: true» · لكل فئة daily_budget_minutes يحسبه الخادم · parent_day_screen.dart: «اليوم مع طفلي»: دقائق الشاشة ودقائق الاستماع، و«سجل اليوم» · privacy-policy.md: «ورمز قفل وضع الطفل (محفوظًا بدالة تجزئة)» ضمن «ما يبقى على هاتفك» · child_mode_providers.dart: كل دخول يمرّ بالرمز (enter: verifyChildModePin، أو setChildModePin أول مرة) · child_mode_shell.dart: زر «خروج» (Icons.logout) ثم التأكيد ثم الرمز (exit(pin)) · child_mission_screen.dart _understood(): exitWithoutPin() ثم SystemNavigator.pop() — «Leave child mode without a PIN» عند «فهمت، سأذهب» · child_mode_providers.dart restore(): عند فتح التطبيق من جديد ينتهي وضع الطفل في كل حال (_leaveChildMode) · child_mode_secure_storage.dart: setChildModePin لا يُستدعى إلا عند أول دخول — لا شاشة لتغيير الرمز أو استرجاعه في هذا الإصدار",
+  "text_simplified": "ما «وضع الطفل»؟ هو أن تسلّم هاتفك لطفلك ليقوم بنشاط محدد، مثل قراءة مهمة اليوم أو تسجيل مهامه في رحلة الصلاة. وتدخله أنت برمز PIN تعرفه.\n• ادخله من الزر المخصّص، مثل «افتح مهمة اليوم» في شاشة «اليوم»، أو زر تسليم الجهاز لطفلك ليسجّل مهمته في رحلة الصلاة.\n• في أول مرة يطلب منك التطبيق أن تختار رمز PIN من 4 أرقام، وتكتبه مرتين للتأكيد، ثم يطلبه في كل دخول. ويُحفظ الرمز على هاتفك وحده.\n• سلّم الجهاز لطفلك. وللعودة إلى حسابك: اضغط زر «خروج» في أعلى الشاشة، ثم «خروج» للتأكيد، واكتب الرمز.\n• وفي مهمة اليوم إذا ضغط طفلك «فهمت، سأذهب» انتهى «وضع الطفل» وأُغلق التطبيق دون رمز.\n• وإذا أُغلق التطبيق تمامًا انتهى «وضع الطفل»، ويعود التطبيق إلى حسابك حين يُفتح من جديد.\n• لا يمكن تغيير الرمز ولا استرجاعه في هذا الإصدار. فإن نسيته وطفلك في «وضع الطفل» فأغلق التطبيق تمامًا ثم افتحه من جديد، فينتهي «وضع الطفل».\n• لكل عمر مدة يومية محدودة يحسبها خادم التطبيق، فإذا انتهت ظهرت رسالة «انتهت مدة اليوم. نكمل غدًا إن شاء الله»، وتُغلق الجلسة كذلك إذا انقطع الاتصال.\n• ما يناسب كل عمر: لا شاشة لمن هو دون السنتين، ولمن عمره من سنتين إلى 3 سنوات استماع فقط والشاشة مطفأة، ومن 4 إلى 6 سنوات يبقى الوالد حاضرًا مع طفله.\n• لترى ما فعله طفلك ودقائق يومه: «المزيد» ثم «يوم الطفل ومهامه».",
   "labels": [
     "وضع الطفل",
     "رمز PIN",
     "الخروج من وضع الطفل",
     "تسليم الجهاز للطفل",
     "مدة الشاشة",
-    "يوم الطفل"
+    "يوم الطفل",
+    "نسيت الرمز"
   ],
   "created_at": "2026-10-05T00:00:00Z",
   "updated_at": "2026-10-05T00:00:00Z",
@@ -24,6 +25,7 @@
   "source_kind": "authored_guidance",
   "authored_references": [
     "قفل وضع الطفل — mobile/lib/features/routine/screens/child_mode_lock_screen.dart",
+    "الخروج — mobile/lib/features/routine/widgets/child_mode_shell.dart، mobile/lib/features/missions/child_mission_screen.dart، mobile/lib/features/routine/providers/child_mode_providers.dart",
     "حفظ الرمز على الهاتف — mobile/lib/features/routine/services/child_mode_secure_storage.dart",
     "الأعمار والمدة اليومية — backend/guardrails/child_surface.v1.yaml، backend/app/services/child_budget.py",
     "«يوم الطفل ومهامه» — mobile/lib/features/parent_day/parent_day_screen.dart",

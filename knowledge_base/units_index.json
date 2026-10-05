@@ -1,6 +1,6 @@
 {
   "total_units": 1380,
-  "generated_at": "2026-10-05T02:57:22.575767+00:00",
+  "generated_at": "2026-10-05T03:27:22.034986+00:00",
   "by_domain": {
     "medical": 355,
     "cyber": 280,
@@ -1304,7 +1304,7 @@
       "normalized_age_group": "unspecified",
       "behavior_type": "دليل التطبيق: المتابعة وخطة الأسبوع",
       "needs_ocr": false,
-      "size_chars": 1430
+      "size_chars": 1774
     },
     {
       "id": "app-088ecfc5",
@@ -1316,7 +1316,7 @@
       "normalized_age_group": "unspecified",
       "behavior_type": "دليل التطبيق: المهام والعملات والعهد",
       "needs_ocr": false,
-      "size_chars": 1933
+      "size_chars": 2291
     },
     {
       "id": "app-2e094883",
@@ -1328,7 +1328,7 @@
       "normalized_age_group": "unspecified",
       "behavior_type": "دليل التطبيق: الخصوصية وحذف الحساب",
       "needs_ocr": false,
-      "size_chars": 2191
+      "size_chars": 3236
     },
     {
       "id": "app-615f0eea",
@@ -1340,7 +1340,7 @@
       "normalized_age_group": "unspecified",
       "behavior_type": "دليل التطبيق: برامج الأسرة",
       "needs_ocr": false,
-      "size_chars": 2503
+      "size_chars": 2739
     },
     {
       "id": "app-6e3efa4b",
@@ -1352,7 +1352,7 @@
       "normalized_age_group": "unspecified",
       "behavior_type": "دليل التطبيق: ذاكرة المربي",
       "needs_ocr": false,
-      "size_chars": 2056
+      "size_chars": 2354
     },
     {
       "id": "app-7e3f1ed7",
@@ -1376,7 +1376,7 @@
       "normalized_age_group": "unspecified",
       "behavior_type": "دليل التطبيق: اللغات",
       "needs_ocr": false,
-      "size_chars": 641
+      "size_chars": 795
     },
     {
       "id": "app-8a81df34",
@@ -1400,19 +1400,19 @@
       "normalized_age_group": "unspecified",
       "behavior_type": "دليل التطبيق: المساعد",
       "needs_ocr": false,
-      "size_chars": 1409
+      "size_chars": 1639
     },
     {
       "id": "app-c269bf7e",
       "domain": "app_help",
-      "title": "ما «وضع الطفل»؟ وكيف أدخله وأخرج منه برمز PIN؟",
+      "title": "ما «وضع الطفل»؟ وكيف أدخله وأخرج منه؟ وماذا أفعل إن نسيت رمز",
       "source_file": "",
       "language": "ar",
       "original_age_group": "unspecified",
       "normalized_age_group": "unspecified",
       "behavior_type": "دليل التطبيق: وضع الطفل",
       "needs_ocr": false,
-      "size_chars": 1334
+      "size_chars": 1963
     },
     {
       "id": "app-dd32e745",
@@ -1424,7 +1424,7 @@
       "normalized_age_group": "unspecified",
       "behavior_type": "دليل التطبيق: البداية وإضافة الأطفال",
       "needs_ocr": false,
-      "size_chars": 1754
+      "size_chars": 2216
     },
     {
       "id": "app-f59d4579",

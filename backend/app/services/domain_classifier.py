@@ -64,8 +64,14 @@ UNCERTAIN_DOMAINS: Tuple[str, ...] = (
 
 # ── App help: questions about the app itself ──────────────────────────────────
 # Built from parts so each can be read (and tested) on its own; see the note at
-# the rule's place in KEYWORD_RULES. `(?s:.*?)` lets the paired lookaheads see
-# a question written over several lines.
+# the rule's place in KEYWORD_RULES. `(?s:.*?)` lets a lookahead see a question
+# written over several lines.
+#
+# 🚨 Every paired lookahead is anchored with `^`. Unanchored, `re.search` retries
+# it at every position and a 4,000-character question (MAX_MESSAGE_CHARS) took
+# 0.15–2 s depending on the machine — on the event loop, since
+# `matched_fast_path` runs there. Anchored it is one pass (~1 ms) with identical
+# results; test_app_help_routing times it.
 _WORD_END = r"(?![ء-ي])"
 # «التطبيق» as the app — not «التطبيقات» (apps in general), not «التطبيقية»,
 # and not «التطبيق العملي/الفعلي» (putting advice into practice).
@@ -79,30 +85,57 @@ _APP_ACTION = (
     r"(?:ال|لل|بال)ذكاء\s+(?:ال)?اصطناعي|وضع\s+الطفل|ميزة|مميزات|خاصية|إعدادات|اعدادات|"
     r"أين\s+أجد|اين\s+اجد)"
 )
+# The WEAK signal: «التطبيق» next to an app action. It is also how parents talk
+# about practice — «بعد التطبيق لمدة أسبوع لم تنجح الطريقة… هل أغير الأسلوب؟»,
+# «يخطئ في التطبيق», «لا يحسن التطبيق في الدروس» — so on its own it decides
+# nothing: `_keyword_fast_path` hands such a question to the model classifier,
+# and adds app_help only beside a domain a parenting rule found.
+_APP_GENERAL = rf"^(?=(?s:.*?){_APP_NOUN})(?=(?s:.*?){_APP_ACTION})"
+# «وضع الطفل» is also "the child's situation" and "putting the child (in front of
+# the TV)": it counts only next to an enter/exit verb, or with a PIN, a passcode,
+# handing over the phone, or «في التطبيق» — never with bare «التطبيق» or «رمز».
 _APP_CHILD_MODE = (
     r"(?:أخرج|اخرج|الخروج|خروج|أطلع|اطلع)\s+(?:من\s+)?وضع\s+الطفل"
     r"|(?:أدخل|ادخل|دخول|الدخول\s+(?:إلى|الى|في|ل))\s*وضع\s+الطفل"
     r"|(?:أفعل|افعل|أفعّل|تفعيل|أشغل|اشغل|تشغيل|أقفل|اقفل|أغلق|اغلق|إغلاق|اغلاق|أفتح|افتح|فتح)"
     r"\s+وضع\s+الطفل"
-    r"|(?=(?s:.*?)وضع\s+الطفل)(?=(?s:.*?)(?:PIN|pin|Pin|رمز|الرقم\s+السري|كلمة\s+السر|التطبيق"
+    r"|^(?=(?s:.*?)وضع\s+الطفل)(?=(?s:.*?)(?:(?<![A-Za-z])(?i:pin)(?![A-Za-z])|رمز\s+(?:ال)?(?:بن|القفل|الدخول)"
+    r"|الرقم\s+السري|الرمز\s+السري|كلمة\s+(?:السر|المرور)"
+    r"|(?:في|داخل)\s+(?:التطبيق" + _WORD_END + r"(?!\s+(?:ال)?(?:عملي|فعلي|صحيح|سليم))"
+    r"|تطبيق\s+(?:ال)?مرب)"
     r"|(?:أسلم|اسلم|أسلّم|تسليم)\s+(?:ال)?(?:جهاز|هاتف|جوال|موبايل)))"
 )
-# Names that only the app uses, and first-person account/data requests.
-_APP_FEATURES = (
+# Deleting «my account / my data» is about this app only when no other platform
+# is named: «أحذف حسابي على فيسبوك» is a question about Facebook. Google is not
+# in the list: the app's own delete screen talks about the linked Google account.
+_OTHER_PLATFORMS = (
+    r"(?:فيسبوك|فيس\s+بوك|إنستغرام|انستغرام|إنستقرام|انستقرام|انستجرام|انستا|تيك\s*توك|يوتيوب|"
+    r"واتساب|واتس\s*اب|واتس|سناب|تويتر|تلغرام|تلجرام|تليجرام|ديسكورد|روبلوكس|ماينكرافت|ببجي|"
+    r"بابجي|فري\s*فاير|فورتنايت|ستيم|بلايستيشن|بلاي\s+ستيشن|اكس\s*بوكس|إكس\s*بوكس|"
+    r"(?i:facebook|instagram|tiktok|youtube|whatsapp|snapchat|twitter|telegram|discord|roblox|"
+    r"minecraft|pubg|fortnite|steam|playstation|xbox))"
+)
+_APP_DELETE = (
+    rf"^(?!(?s:.*?){_OTHER_PLATFORMS})(?=(?s:.*?)(?:"
     r"(?:أحذف|احذف|حذف|إلغاء|الغاء|ألغي|الغي)\s+حسابي" + _WORD_END
     + r"|(?:أحذف|احذف|حذف|أمسح|امسح|مسح)\s+(?:كل\s+)?(?:بياناتي|بيانات\s+(?:أطفالي|اطفالي|طفلي))"
-    + _WORD_END
-    + r"|ما\s+يعرفه\s+المرب|ذاكرة\s+(?:ال)?مرب"
-    r"|رحلة\s+الصلا[ةه]|رمضان\s+(?:العائل[ةه]|عائلتنا)"
-    r"|مساراتي|مهم[ةه]\s+اليوم|خطو[ةه]\s+اليوم|اسأل\s+المرب|شاركنا\s+رأيك"
+    + _WORD_END + r"))"
+)
+# Names only the app uses. Bare card names («مهمة اليوم», «خطوة اليوم»,
+# «رمضان العائلة») are not here: parents quote a card to ask about its topic —
+# «مهمة اليوم: كيف أعلم ابني الصدق؟» is a question about truthfulness.
+_APP_FEATURES = (
+    r"ما\s+يعرفه\s+المرب|ذاكرة\s+(?:ال)?مرب"
+    r"|رحلة\s+الصلا[ةه]"
+    r"|مساراتي|اسأل\s+المرب|شاركنا\s+رأيك"
     r"|عهد\s+المكافآت|بوابة\s+الأهل|الشارات\s+الحصرية|شارات\s+حصرية"
     r"|(?:أحفظ|احفظ)\s+تقدمي"
     r"|أراسلكم|اراسلكم|أتواصل\s+معكم|اتواصل\s+معكم|التواصل\s+معكم"
     r"|تطبيق\s+(?:ال)?مرب|المرب[يّى]\s+(?:مجان|بفلوس|مدفوع)"
 )
-_APP_HELP_RULE = (
-    rf"(?=(?s:.*?){_APP_NOUN})(?=(?s:.*?){_APP_ACTION})|{_APP_CHILD_MODE}|{_APP_FEATURES}"
-)
+# The STRONG signals — each enough on its own.
+_APP_HELP_RULE = rf"{_APP_CHILD_MODE}|{_APP_DELETE}|{_APP_FEATURES}"
+_APP_GENERAL_RE = re.compile(_APP_GENERAL, re.UNICODE)
 
 # ── Keyword Fast-Path ──────────────────────────────────────────────────────────
 # Maps clear Arabic keywords directly to domains. The key insight:
@@ -167,13 +200,14 @@ KEYWORD_RULES: List[Tuple[str, str]] = [
     # question also matches a parenting rule («رحلة الصلاة» → fiqh), that
     # domain stays the label and both are searched.
     #
-    # Narrow by construction (tests: test_app_help_routing.py). «التطبيق»
-    # alone is not enough — «التطبيق العملي» is how parents say "putting it into
-    # practice" — so it must come with an app action or app noun. «وضع الطفل»
-    # alone is not enough either: it is also "the child's situation" and
-    # "putting the child (in front of the TV)"; it counts only next to an
-    # enter/exit verb or with a PIN/code. Plain «نصيحة اليوم» is never here:
-    # 28% of questions start with it and they are parenting questions.
+    # Narrow by construction (tests: test_app_help_routing.py). Only strong
+    # signals live in this rule: names only the app uses, «وضع الطفل» with an
+    # enter/exit verb or a PIN, and deleting «حسابي/بياناتي» when no other
+    # platform is named. «التطبيق» + an app action is NOT here — parents say
+    # «التطبيق» for putting advice into practice — it is the weak signal that
+    # `_keyword_fast_path` handles after this list (alone → the model decides).
+    # Card names are never triggers: «نصيحة اليوم» starts 28% of questions, and
+    # «مهمة اليوم»/«خطوة اليوم»/«رمضان العائلة» are quoted to ask about a topic.
     (_APP_HELP_RULE, "app_help"),
 ]
 
@@ -212,6 +246,13 @@ def _keyword_fast_path(question: str) -> Optional[List[str]]:
         if pattern.search(question):
             if domain not in matched:
                 matched.append(domain)
+    if "app_help" not in matched and _APP_GENERAL_RE.search(question):
+        # The weak app signal (see _APP_GENERAL): beside a parenting domain it
+        # adds app_help to the search; alone it decides nothing — the model
+        # classifier does.
+        if not matched:
+            return None
+        matched.append("app_help")
     if matched:
         logger.debug("Keyword fast-path matched '%s...' → %s", question[:40], matched)
         return matched

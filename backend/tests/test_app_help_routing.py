@@ -12,10 +12,17 @@ opens 28% of all questions — parenting questions about a tip. A rule that
 caught those would answer a parenting question from the app manual. So the
 negative side is asserted over every parenting-question corpus in the repo,
 not only over a hand-picked list.
+
+Only strong signals decide alone (names only the app uses, child mode with an
+enter/exit verb or a PIN, deleting «حسابي» with no other platform named).
+«التطبيق» next to an app action is weak — «بعد التطبيق لمدة أسبوع…» is a
+parenting question — so alone it hands the question to the model classifier,
+and beside a parenting domain it only adds app_help to the search.
 """
 from __future__ import annotations
 
 import json
+import time
 from pathlib import Path
 
 import pytest
@@ -73,41 +80,55 @@ def test_the_rule_comes_last_so_a_parenting_domain_keeps_the_label():
 # ── app questions route ────────────────────────────────────────────────────
 
 @pytest.mark.parametrize("question", [
-    "كيف أضيف طفلي الثاني في التطبيق؟",
-    "ازاي اضيف ابني التاني على التطبيق",
-    "كيف أغير اسم طفلي في التطبيق؟",
-    "هل التطبيق مجاني؟",
-    "هل في التطبيق إعلانات؟",
     "هل المربي مجاني",
     "كيف أحذف حسابي؟",
     "أريد حذف بياناتي",
     "عايزة امسح بياناتي من التطبيق",
+    "هل يمكن إلغاء حسابي في المربي؟",
+    # The app's own delete screen talks about the linked Google account.
+    "كيف أحذف حسابي المرتبط بحساب Google؟",
     "كيف أخرج من وضع الطفل؟",
     "كيف أفعّل وضع الطفل لابني؟",
     "نسيت رمز PIN الخاص بوضع الطفل",
+    "نسيت الـpin لوضع الطفل",
     "كيف اسلم الجهاز لابني في وضع الطفل",
+    "وضع الطفل في التطبيق لا يعمل",
     "ما هو ما يعرفه المربي عن طفلي؟",
-    "كيف أوقف الذاكرة في التطبيق؟",
-    "كيف أبدأ رحلة الصلاة مع ابني؟",
-    "متى يبدأ رمضان العائلة؟",
+    "كيف أوقف ذاكرة المربي؟",
     "أين أجد مساراتي؟",
-    "ما هي مهمة اليوم لابني؟",
-    "ما هي خطوة اليوم؟",
-    "كيف أغير لغة التطبيق إلى الإنجليزية؟",
-    "التطبيق لا يعمل عندي",
-    "كيف أستخدم التطبيق؟",
-    "هل التطبيق يحفظ بيانات أطفالي؟",
-    "هل التطبيق يرسل اسم طفلي للذكاء الاصطناعي؟",
     "كيف أحفظ تقدمي إذا غيرت الهاتف؟",
-    "كيف تعمل العملات في التطبيق؟",
-    "هل يمكن استخدام التطبيق بالفرنسية؟",
     "كيف أراسلكم؟",
     "ما هو تطبيق المربي؟",
-    # Over several lines, as parents do write them.
-    "السلام عليكم\nكيف أضيف طفلي الثاني\nفي التطبيق؟",
+    # Over several lines, as parents do write them — the anchored lookaheads
+    # must still see past the first line.
+    "السلام عليكم\nكيف أحذف حسابي؟",
+    "السلام عليكم\nوضع الطفل عندي مقفول\nونسيت رمز PIN",
 ])
 def test_app_questions_route_to_app_help(question):
     assert _routes_to_app_help(question)
+
+
+@pytest.mark.parametrize("question", [
+    "كيف أضيف طفلي الثاني في التطبيق؟",
+    "ازاي اضيف ابني التاني على التطبيق",
+    "هل التطبيق مجاني؟",
+    "كيف أغير لغة التطبيق إلى الإنجليزية؟",
+    "التطبيق لا يعمل عندي",
+    "كيف أستخدم التطبيق؟",
+    "السلام عليكم\nكيف أضيف طفلي الثاني\nفي التطبيق؟",
+    # Card names are quoted to ask about a topic; they are not triggers.
+    "ما هي مهمة اليوم لابني؟",
+    "ما هي خطوة اليوم؟",
+    "متى يبدأ رمضان العائلة؟",
+])
+def test_the_weak_app_signal_alone_leaves_the_question_to_the_model(question):
+    """«التطبيق» + an app action is also how parents describe practice, so on its
+    own it decides nothing: the fast path returns None and the model classifies."""
+    assert _keyword_fast_path(question) is None
+
+
+def test_the_weak_app_signal_beside_a_parenting_domain_adds_app_help():
+    assert _keyword_fast_path("كيف أستخدم التطبيق لمتابعة صلاة ابني؟") == ["fiqh", "app_help"]
 
 
 # ── parenting questions do not ─────────────────────────────────────────────
@@ -137,9 +158,33 @@ def test_app_questions_route_to_app_help(question):
     "دور المربي في تعديل السلوك",
     "كيف يتعامل المربي مع عناد الطفل",
     "ابني يتعلم اللغة الإنجليزية ببطء",
+    "ما وضع الطفل في التطبيق العملي للخطة؟",
 ])
 def test_parenting_questions_do_not_route_to_app_help(question):
     assert not _routes_to_app_help(question)
+
+
+@pytest.mark.parametrize("question", [
+    # «التطبيق» as practice, beside an app action
+    "بعد التطبيق لمدة أسبوع لم تنجح الطريقة… هل أغير الأسلوب؟",
+    "ابني يفهم قاعدة الحساب لكنه يخطئ في التطبيق",
+    "المعلمة قالت إن ابني لا يحسن التطبيق في الدروس",
+    # another app's account
+    "ابني أنشأ حساب على التطبيق بدون علمي",
+    # a card quoted to ask about its topic
+    "مهمة اليوم: كيف أعلم ابني الصدق؟",
+    "رمضان عائلتنا… بعد وفاة الجد",
+    # another platform's account
+    "أحذف حسابي على فيسبوك…",
+    "أريد حذف حسابي على انستغرام",
+    "حذف بياناتي من واتساب",
+    # apps in general
+    "وضع الطفل أمام التطبيقات",
+])
+def test_parenting_questions_are_never_answered_from_the_app_manual_alone(question):
+    """Found in review (PR #47): each of these was app_help-only. A question may
+    still search app_help beside a parenting domain, never instead of one."""
+    assert _keyword_fast_path(question) != ["app_help"]
 
 
 def _parenting_corpus() -> list[str]:
@@ -153,6 +198,36 @@ def _parenting_corpus() -> list[str]:
     arb = json.loads((ROOT / "mobile/lib/l10n/app_ar.arb").read_text(encoding="utf-8"))
     out += [v for k, v in arb.items() if k.startswith("chatQ_") and isinstance(v, str)]
     return out
+
+
+_FILLER = "ابني عمره تسع سنوات ويرفض الذهاب إلى المدرسة كل صباح ويبكي. "
+
+
+@pytest.mark.parametrize("name,head,filler,tail", [
+    ("plain", "", _FILLER, ""),
+    ("app noun first", "التطبيق ", _FILLER, ""),
+    ("child mode first", "وضع الطفل ", _FILLER, ""),
+    ("delete phrase last", "", _FILLER, " حذف حسابي"),
+    ("one letter", "", "ا", ""),
+    ("lines", "التطبيق\n", "سطر قصير بلا شيء\n", ""),
+])
+def test_a_question_of_the_maximum_length_classifies_fast(name, head, filler, tail):
+    """The fast path runs on the event loop (routers/assistant.py). Unanchored,
+    the paired lookaheads were quadratic: ~160 ms here and 1–2 s in review for a
+    4,000-character question. Anchored with `^` it is a few milliseconds."""
+    from app.models.api import MAX_MESSAGE_CHARS
+
+    body = head + filler * (MAX_MESSAGE_CHARS // len(filler) + 1)
+    text = body[:MAX_MESSAGE_CHARS - len(tail)] + tail
+    assert len(text) == MAX_MESSAGE_CHARS
+    best = min(_elapsed(_keyword_fast_path, text) for _ in range(3))
+    assert best < 0.050, f"{name}: {best * 1000:.0f} ms for {len(text)} characters"
+
+
+def _elapsed(fn, arg) -> float:
+    start = time.perf_counter()
+    fn(arg)
+    return time.perf_counter() - start
 
 
 def test_no_parenting_question_in_the_repo_routes_to_app_help():
