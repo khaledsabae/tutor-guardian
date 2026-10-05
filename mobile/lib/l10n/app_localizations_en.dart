@@ -3269,6 +3269,51 @@ class AppLocalizationsEn extends AppLocalizations {
   String get badgeLockedYet => 'Not unlocked yet';
 
   @override
+  String get badgeFirstStepTitle => 'First step';
+
+  @override
+  String get badgeFirstStepDesc =>
+      'You completed your first lesson — the start of the journey';
+
+  @override
+  String get badgeFiveLessonsTitle => 'Five lessons';
+
+  @override
+  String get badgeFiveLessonsDesc => 'You completed 5 lessons — keep going';
+
+  @override
+  String get badgeTenLessonsTitle => 'Ten lessons';
+
+  @override
+  String get badgeTenLessonsDesc => 'You completed 10 lessons — Masha\'Allah';
+
+  @override
+  String get badgeWeekStreakTitle => 'Week streak';
+
+  @override
+  String get badgeWeekStreakDesc => '7 days of learning in a row';
+
+  @override
+  String get badgeMonthStreakTitle => 'Month streak';
+
+  @override
+  String get badgeMonthStreakDesc => '30 days in a row — wonderful commitment';
+
+  @override
+  String get badgePathExplorerTitle => 'Path explorer';
+
+  @override
+  String get badgePathExplorerDesc => 'Completed lessons in 3 different paths';
+
+  @override
+  String get badgeShareEyebrow => 'New achievement';
+
+  @override
+  String badgeShareMessage(String title) {
+    return 'Masha\'Allah 🌟 I reached the “$title” achievement on my parenting journey with Al-Murabbi 🤍';
+  }
+
+  @override
   String get identityLinkIncomplete =>
       'Account linking didn\'t complete. Check your Google setup or try again.';
 

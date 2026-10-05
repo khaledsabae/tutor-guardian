@@ -5876,6 +5876,90 @@ abstract class AppLocalizations {
   /// **'لم يُفتح بعد'**
   String get badgeLockedYet;
 
+  /// No description provided for @badgeFirstStepTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'أول خطوة'**
+  String get badgeFirstStepTitle;
+
+  /// No description provided for @badgeFirstStepDesc.
+  ///
+  /// In ar, this message translates to:
+  /// **'أكملت أول درس — بداية الطريق'**
+  String get badgeFirstStepDesc;
+
+  /// No description provided for @badgeFiveLessonsTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'خمسة دروس'**
+  String get badgeFiveLessonsTitle;
+
+  /// No description provided for @badgeFiveLessonsDesc.
+  ///
+  /// In ar, this message translates to:
+  /// **'أكملت 5 دروس — استمرّ'**
+  String get badgeFiveLessonsDesc;
+
+  /// No description provided for @badgeTenLessonsTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'عشرة دروس'**
+  String get badgeTenLessonsTitle;
+
+  /// No description provided for @badgeTenLessonsDesc.
+  ///
+  /// In ar, this message translates to:
+  /// **'أكملت 10 دروس — ما شاء الله'**
+  String get badgeTenLessonsDesc;
+
+  /// No description provided for @badgeWeekStreakTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'أسبوع متواصل'**
+  String get badgeWeekStreakTitle;
+
+  /// No description provided for @badgeWeekStreakDesc.
+  ///
+  /// In ar, this message translates to:
+  /// **'7 أيام متتالية من التعلّم'**
+  String get badgeWeekStreakDesc;
+
+  /// No description provided for @badgeMonthStreakTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'سلسلة شهر'**
+  String get badgeMonthStreakTitle;
+
+  /// No description provided for @badgeMonthStreakDesc.
+  ///
+  /// In ar, this message translates to:
+  /// **'30 يوماً متتالية — التزام رائع'**
+  String get badgeMonthStreakDesc;
+
+  /// No description provided for @badgePathExplorerTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'مستكشف المسارات'**
+  String get badgePathExplorerTitle;
+
+  /// No description provided for @badgePathExplorerDesc.
+  ///
+  /// In ar, this message translates to:
+  /// **'دروس مكتملة في 3 مسارات مختلفة'**
+  String get badgePathExplorerDesc;
+
+  /// No description provided for @badgeShareEyebrow.
+  ///
+  /// In ar, this message translates to:
+  /// **'إنجاز جديد'**
+  String get badgeShareEyebrow;
+
+  /// No description provided for @badgeShareMessage.
+  ///
+  /// In ar, this message translates to:
+  /// **'ما شاء الله 🌟 وصلت لإنجاز «{title}» في رحلتي التربوية مع «المربّي» 🤍'**
+  String badgeShareMessage(String title);
+
   /// No description provided for @identityLinkIncomplete.
   ///
   /// In ar, this message translates to:
