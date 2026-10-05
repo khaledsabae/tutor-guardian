@@ -16,19 +16,29 @@ not only over a hand-picked list.
 Only strong signals decide alone (names only the app uses, child mode with an
 enter/exit verb or a PIN, deleting «حسابي» with no other platform named).
 «التطبيق» next to an app action is weak — «بعد التطبيق لمدة أسبوع…» is a
-parenting question — so alone it hands the question to the model classifier,
-and beside a parenting domain it only adds app_help to the search.
+parenting question — so the keywords hand it to the model classifier: a
+parenting domain from the model is kept, and when the model finds none
+(«general», nothing, or no answer) the question goes to app_help. Beside a
+parenting domain the keywords found, the weak signal adds app_help to the search.
 """
 from __future__ import annotations
 
+import asyncio
 import json
+import threading
 import time
 from pathlib import Path
 
 import pytest
 
+import app.services.domain_classifier as dc
 from app.core.taxonomy import CANONICAL_DOMAINS, canonical_domain
-from app.services.domain_classifier import KEYWORD_RULES, _keyword_fast_path
+from app.services.domain_classifier import (
+    KEYWORD_RULES, UNCERTAIN_DOMAINS, _keyword_fast_path, _parse_domains, classify_domains,
+)
+
+# Captured at import, before conftest's autouse stub replaces it per test.
+_REAL_CALL_LLM = dc._call_llm
 
 ROOT = Path(__file__).resolve().parents[2]
 UNITS = ROOT / "knowledge_base" / "units"
@@ -129,6 +139,121 @@ def test_the_weak_app_signal_alone_leaves_the_question_to_the_model(question):
 
 def test_the_weak_app_signal_beside_a_parenting_domain_adds_app_help():
     assert _keyword_fast_path("كيف أستخدم التطبيق لمتابعة صلاة ابني؟") == ["fiqh", "app_help"]
+
+
+# ── the model decides what the weak signal alone cannot ────────────────────
+
+_GENERAL = '{"domains": ["general"]}'
+
+
+@pytest.fixture
+def model_answers(monkeypatch):
+    """Make the classifier model answer `raw` (None = the model is unreachable),
+    through the real call and parse path — only the network is replaced."""
+    def _answer(raw):
+        monkeypatch.setattr(dc, "_call_llm", _REAL_CALL_LLM)
+        if raw is None:
+            monkeypatch.setattr(dc, "_classifier_provider", lambda: None)
+        else:
+            monkeypatch.setattr(dc, "_classifier_provider", lambda: object())
+            monkeypatch.setattr(dc, "aux_generate", lambda *a, **k: raw)
+        dc._classify_cached.cache_clear()
+
+    yield _answer
+    dc._classify_cached.cache_clear()
+
+
+_WEAK_ONLY_APP_QUESTIONS = [
+    "هل التطبيق مجاني؟",
+    "كيف أضيف طفلي الثاني في التطبيق؟",
+    "ازاي اضيف ابني التاني على التطبيق",
+    "كيف أغير لغة التطبيق إلى الإنجليزية؟",
+    "التطبيق لا يعمل عندي",
+    "كيف أستخدم التطبيق؟",
+    "السلام عليكم\nكيف أضيف طفلي الثاني\nفي التطبيق؟",
+]
+
+
+@pytest.mark.parametrize("question", _WEAK_ONLY_APP_QUESTIONS)
+def test_a_weak_only_question_the_model_calls_general_goes_to_app_help(model_answers, question):
+    """«طفلي» would normally veto «general» into the broad search; beside the
+    weak app signal it does not — «كيف أضيف طفلي الثاني في التطبيق؟» is about
+    the app."""
+    assert _keyword_fast_path(question) is None
+    model_answers(_GENERAL)
+    assert classify_domains(question) == ["app_help"]
+
+
+@pytest.mark.parametrize("raw", [None, '{"domains": []}', "لا أعرف"])
+def test_a_weak_only_question_the_model_names_no_domain_for_goes_to_app_help(model_answers, raw):
+    """Unreachable, naming nothing, or not JSON: no parenting domain was found."""
+    model_answers(raw)
+    assert classify_domains("هل التطبيق مجاني؟") == ["app_help"]
+
+
+def test_an_outage_verdict_is_not_kept_once_the_model_is_back(model_answers):
+    question = "ابني أنشأ حساب على التطبيق بدون علمي"
+    model_answers(None)
+    assert classify_domains(question) == ["app_help"]
+    model_answers('{"domains": ["cyber"]}')
+    assert classify_domains(question) == ["cyber"]
+
+
+@pytest.mark.parametrize("question,model_domain", [
+    # The review's eight (PR #47, 03ffba8b), each with the domain a working
+    # model gives. Four reach the model through the weak signal; two reach it
+    # with no keyword at all; two never reach it (a parenting rule matches).
+    ("بعد التطبيق لمدة أسبوع لم تنجح الطريقة… هل أغير الأسلوب؟", "medical"),
+    ("ابني يفهم قاعدة الحساب لكنه يخطئ في التطبيق", "medical"),
+    ("المعلمة قالت إن ابني لا يحسن التطبيق في الدروس", "medical"),
+    ("ابني أنشأ حساب على التطبيق بدون علمي", "cyber"),
+    ("مهمة اليوم: كيف أعلم ابني الصدق؟", "medical"),
+    ("رمضان عائلتنا… بعد وفاة الجد", "aqeedah"),
+    ("أحذف حسابي على فيسبوك…", "cyber"),
+    ("وضع الطفل أمام التطبيقات", "cyber"),
+])
+def test_the_models_parenting_domain_is_kept_for_the_review_cases(model_answers, question, model_domain):
+    model_answers('{"domains": ["%s", "general"]}' % model_domain)
+    domains = classify_domains(question)
+    assert domains == [model_domain]
+    assert "app_help" not in domains
+
+
+def test_the_own_child_veto_still_guards_questions_without_the_app_signal():
+    assert _parse_domains(_GENERAL, "ابني مابيحبش يروح المدرسة وبيعيط") == list(UNCERTAIN_DOMAINS)
+    assert _parse_domains(_GENERAL, "كيف أضيف طفلي الثاني في التطبيق؟") == ["general"]
+
+
+def test_a_question_without_the_app_signal_keeps_the_broad_fallback(model_answers):
+    model_answers(None)
+    assert classify_domains("بنتي عمرها 5 سنوات تصرفاتها غريبة") == list(UNCERTAIN_DOMAINS)
+
+
+@pytest.mark.parametrize("question,expected", [
+    ("هل التطبيق مجاني؟", ["app_help"]),
+    ("بنتي عمرها 5 سنوات تصرفاتها غريبة", list(UNCERTAIN_DOMAINS)),
+    # Keywords that matched keep their verdict, weak signal included.
+    ("كيف أستخدم التطبيق لمتابعة صلاة ابني؟", ["fiqh", "app_help"]),
+])
+def test_a_classifier_past_its_deadline_falls_back_the_same_way(monkeypatch, question, expected):
+    """The router's deadline (_classify_and_rewrite) is the other way the model
+    can give no verdict; it uses the same fallback."""
+    from app.routers import assistant
+
+    release = threading.Event()
+
+    def _slow_classify(q):
+        release.wait(5.0)
+        return ["medical"]
+
+    monkeypatch.setattr(assistant, "classify_domains", _slow_classify)
+    monkeypatch.setattr(assistant, "rewrite_query", lambda *a, **k: "")
+    monkeypatch.setattr(assistant, "_AUX_WAIT_S", 0.2, raising=False)
+    try:
+        domains, _ = asyncio.run(assistant._classify_and_rewrite(question))
+    finally:
+        release.set()
+    assert domains == expected
 
 
 # ── parenting questions do not ─────────────────────────────────────────────

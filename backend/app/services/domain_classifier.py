@@ -87,9 +87,11 @@ _APP_ACTION = (
 )
 # The WEAK signal: «التطبيق» next to an app action. It is also how parents talk
 # about practice — «بعد التطبيق لمدة أسبوع لم تنجح الطريقة… هل أغير الأسلوب؟»,
-# «يخطئ في التطبيق», «لا يحسن التطبيق في الدروس» — so on its own it decides
-# nothing: `_keyword_fast_path` hands such a question to the model classifier,
-# and adds app_help only beside a domain a parenting rule found.
+# «يخطئ في التطبيق», «لا يحسن التطبيق في الدروس» — so the keywords alone never
+# decide it. Beside a domain a parenting rule found, `_keyword_fast_path` adds
+# app_help to the search. Alone, the model decides (`_classify_cached`): a
+# parenting domain from the model wins, and when the model finds none —
+# «general», nothing, or no answer at all — the question is about the app.
 _APP_GENERAL = rf"^(?=(?s:.*?){_APP_NOUN})(?=(?s:.*?){_APP_ACTION})"
 # «وضع الطفل» is also "the child's situation" and "putting the child (in front of
 # the TV)": it counts only next to an enter/exit verb, or with a PIN, a passcode,
@@ -248,8 +250,8 @@ def _keyword_fast_path(question: str) -> Optional[List[str]]:
                 matched.append(domain)
     if "app_help" not in matched and _APP_GENERAL_RE.search(question):
         # The weak app signal (see _APP_GENERAL): beside a parenting domain it
-        # adds app_help to the search; alone it decides nothing — the model
-        # classifier does.
+        # adds app_help to the search; alone it defers to the model
+        # (_classify_cached).
         if not matched:
             return None
         matched.append("app_help")
@@ -294,6 +296,11 @@ def _mentions_own_child(question: str) -> bool:
     return bool(_OWN_CHILD_RE.search(question))
 
 
+def _weak_app_signal(question: str) -> bool:
+    """«التطبيق» next to an app action — the weak app signal (see _APP_GENERAL)."""
+    return bool(_APP_GENERAL_RE.search(question))
+
+
 def _parse_domains(raw: str, question: str) -> Optional[List[str]]:
     """Extract the domain list from the model's JSON answer, or None."""
     start = raw.find("{")
@@ -322,7 +329,11 @@ def _parse_domains(raw: str, question: str) -> Optional[List[str]]:
             # that, but a prompt is guidance, not a guarantee. When the parent
             # is plainly talking about their own child we refuse the verdict
             # and search broadly instead: a diluted answer beats none.
-            if _mentions_own_child(question):
+            #
+            # Except beside the weak app signal: there «general» means "about the
+            # app, not the child" — «كيف أضيف طفلي الثاني في التطبيق؟» — and
+            # _classify_cached turns it into app_help.
+            if _mentions_own_child(question) and not _weak_app_signal(question):
                 logger.info(
                     "Overriding 'general' — question is about the parent's child: '%s...'",
                     question[:40],
@@ -369,6 +380,11 @@ def _classify_cached(question: str) -> Tuple[str, ...]:
         return tuple(fast_result)
 
     llm_result = _call_llm(question)
+    if llm_result == ["general"] and _weak_app_signal(question):
+        # «التطبيق» + an app action, and the model found no parenting domain:
+        # a question about the app. A parenting domain from the model is kept
+        # as it is — «بعد التطبيق لمدة أسبوع لم تنجح الطريقة…» stays parenting.
+        return ("app_help",)
     if llm_result:
         return tuple(llm_result)
 
@@ -392,11 +408,33 @@ def classify_domains(question: str) -> List[str]:
     try:
         return list(_classify_cached(question))
     except _ClassificationUnavailable:
+        fallback = fallback_domains(question)
         logger.info(
-            "All classifier tiers failed for '%s...' — searching all domains",
-            question[:40],
+            "All classifier tiers failed for '%s...' — searching %s",
+            question[:40], fallback,
         )
+        return fallback
+
+
+def fallback_domains(question: str) -> List[str]:
+    """The domains for a question the model gave no verdict on — down, slow,
+    unparseable, or naming no domain.
+
+    The keywords' verdict when they have one (the router's deadline can expire
+    before a busy executor even ran the fast path). Otherwise the broad search,
+    UNCERTAIN_DOMAINS — except when «التطبيق» + an app action is the only
+    evidence: then the model's silence reads like its «general», no parenting
+    domain was found, and the question goes to app_help. Computed, never
+    cached — once the model is back, the next call gets its verdict.
+    """
+    if not question or not question.strip():
         return list(UNCERTAIN_DOMAINS)
+    fast = _keyword_fast_path(question)
+    if fast:
+        return fast
+    if _weak_app_signal(question):
+        return ["app_help"]
+    return list(UNCERTAIN_DOMAINS)
 
 
 def is_uncertain(domains: Sequence[str]) -> bool:

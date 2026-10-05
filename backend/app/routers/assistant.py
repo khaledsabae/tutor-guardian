@@ -36,7 +36,7 @@ from app.services.intent_guard import (
 from app.services.fiqh_guard import check_fiqh_guard, SAFE_REPLY as FIQH_SAFE_REPLY
 from app.services.discipline_guard import check_physical_discipline, discipline_reply
 from app.services.domain_classifier import (
-    UNCERTAIN_DOMAINS, classify_domains, is_uncertain, matched_fast_path,
+    classify_domains, fallback_domains, is_uncertain, matched_fast_path,
 )
 from app.services.tier_router import choose_tier
 from app.core.proof import request_proven
@@ -371,8 +371,10 @@ async def _classify_and_rewrite(query_text: str) -> tuple[list[str], str]:
         functools.partial(rewrite_query, query_text, classifier_fast_path=fast_path),
     )
     await asyncio.wait({classify, rewrite}, timeout=_AUX_WAIT_S)
+    # No verdict in time → the same fallback a failed classifier uses: the broad
+    # search, or app_help when «التطبيق» + an app action is all there is.
     domains = classify.result() if classify.done() and not classify.exception() \
-        else list(UNCERTAIN_DOMAINS)
+        else fallback_domains(query_text)
     rewritten = rewrite.result() if rewrite.done() and not rewrite.exception() else ""
     if not (classify.done() and rewrite.done()):
         logger.warning("classifier/rewriter still waiting after %.0fs — answering without them",
