@@ -114,6 +114,12 @@ Migration v34: family programs (Phase 2) — Ramadan, the Prayer Journey and the
                carries device_id (and child_id when it is about one child), so
                the delete paths reach it. Additive, ensured unconditionally
                (v33 = device twins).
+Migration v35: erased_devices — a one-way hash (never the id) of every device id
+               an account deletion removed, so a phone backup restored on a
+               reinstall cannot bring the account back: the session mint answers
+               410 device_erased to builds that understand it
+               (services/erased_devices.py). No device_id column on purpose —
+               an account deletion keeps these rows. Additive.
 """
 import hashlib
 import os
@@ -243,10 +249,11 @@ CREATE INDEX IF NOT EXISTS ix_referrals_referrer
 """
 
 # 30 = child memory, 31 = «ادعم المربّي» ledger, 32 = attribution provenance,
-# 33 = device twins (aliases + fold log), 34 = family programs.
+# 33 = device twins (aliases + fold log), 34 = family programs,
+# 35 = erased-device tombstones.
 # Every _ensure_* step runs unconditionally and the stamp only ever moves up,
 # so branches can land in any order: keep the highest number.
-SCHEMA_VERSION = 34
+SCHEMA_VERSION = 35
 
 
 def db_path() -> Path:
@@ -443,6 +450,7 @@ def init_db() -> None:
     _ensure_attribution_v32(conn)
     ensure_device_twin_tables(conn)
     _ensure_family_programs_v34(conn)
+    _ensure_erased_devices_v35(conn)
 
     row = conn.execute("SELECT version FROM schema_version LIMIT 1").fetchone()
     if row is None:
@@ -1534,6 +1542,14 @@ def _ensure_family_programs_v34(conn: sqlite3.Connection) -> None:
         ddl="ALTER TABLE child_missions ADD COLUMN source TEXT",
     )
     conn.executescript(_CREATE_FAMILY_PROGRAMS)
+
+
+def _ensure_erased_devices_v35(conn: sqlite3.Connection) -> None:
+    """v35: erased-device tombstones (services/erased_devices.py). Additive and
+    idempotent; the service creates the table too, inside an erase, should a
+    store not have been through this step yet."""
+    from app.services.erased_devices import CREATE_TABLE
+    conn.execute(CREATE_TABLE)
 
 
 def _ensure_referrals_table(conn: sqlite3.Connection) -> None:

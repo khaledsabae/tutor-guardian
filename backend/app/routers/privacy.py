@@ -19,7 +19,9 @@ paths:
   table with a `device_id` column, whatever its age), plus the rows that hang
   off them, plus the Google identity. Google Play requires in-app account
   deletion for an app with sign-in. tests/test_account_deletion.py fails if a
-  table exists that this module has not classified.
+  table exists that this module has not classified. Every device id it removes
+  is kept as a one-way hash (erased_devices, v35) so a phone backup cannot
+  bring the account back — the session mint answers 410 device_erased.
 """
 import logging
 import os
@@ -216,7 +218,8 @@ DELETE_ACCOUNT_HTML = """<!doctype html>
 
 <h2>ما لا يشمله الحذف</h2>
 <p>سجلات تقنية لا تحمل أي معرّف لك أو لهاتفك، وتُحذف تلقائيًا خلال 90 يومًا على
-الأكثر، والإحصاءات المجمّعة. وتبقى البيانات المحذوفة في النسخ الاحتياطية لقاعدة
+الأكثر، والإحصاءات المجمّعة. ونحتفظ ببصمة أحادية الاتجاه لمعرّف الهاتف المحذوف — لا يمكن
+استرجاع المعرّف منها — حتى لا يعود الحساب المحذوف من نسخة احتياطية للهاتف. وتبقى البيانات المحذوفة في النسخ الاحتياطية لقاعدة
 البيانات 14 يومًا على الأكثر. وما يحفظه مزوّدو الخدمة (مثل Google وDeepSeek) يخضع
 لسياساتهم.</p>
 <p><a href="/privacy-policy">سياسة الخصوصية</a></p>
@@ -267,7 +270,9 @@ with the subject "Data deletion request".</p>
 
 <h2>What deletion does not cover</h2>
 <p>Technical logs that carry no identifier of you or your phone, which are deleted
-automatically within 90 days at most, and aggregate statistics. Deleted data stays in
+automatically within 90 days at most, and aggregate statistics. We keep a one-way
+hash of a deleted phone's identifier — the identifier cannot be recovered from it —
+so the deleted account cannot be restored from a backup of the phone. Deleted data stays in
 our database backups for at most 14 days. What our service providers (such as Google
 and DeepSeek) keep is governed by their own policies.</p>
 <p><a href="/privacy-policy">Privacy policy</a></p>
@@ -339,7 +344,16 @@ NOT_DEVICE_DATA: dict[str, str] = {
     # Transient tables that exist only inside a migration's transaction.
     "child_challenges_v27": "v27 migration scratch table",
     "lesson_progress_new": "lesson_progress migration scratch table",
+    "erased_devices": "one-way hashes (never the id) of device ids an account deletion "
+                      "removed, kept so a phone backup cannot restore the account "
+                      "(services/erased_devices.py, v35); nothing here names a device",
 }
+
+# Columns that carry "device" in their name and are NOT a device id, so the
+# deletion discovery must leave them alone (tests/test_account_deletion.py).
+HASHED_DEVICE_COLUMNS: tuple[tuple[str, str], ...] = (
+    ("erased_devices", "device_hash"),
+)
 
 
 def _table_columns(conn: sqlite3.Connection) -> dict[str, set[str]]:
@@ -483,7 +497,13 @@ def _device_twins():
 
 
 def erase_account(device_id: str) -> dict:
-    """Delete every row tied to the caller's account, in one transaction."""
+    """Delete every row tied to the caller's account, in one transaction —
+    the bearer tokens with the data — and tombstone every device id it
+    removed (services/erased_devices.py) in the same transaction: a phone
+    backup restored on a reinstall cannot bring the account back, and a lost
+    answer can be settled by minting (MOBILE_API §10)."""
+    from app.services import erased_devices
+
     conn = get_conn()
     try:
         # Off for this connection, before the transaction opens: production's
@@ -525,6 +545,9 @@ def erase_account(device_id: str) -> dict:
         # 3b. PR #29's twin bookkeeping (aliases, fold log) for these devices.
         if twins is not None:
             counts.update({t: n for t, n in twins.forget_devices(conn, devices).items() if n})
+        # 3c. Each erased device id, as a one-way hash: the session mint
+        # refuses it to builds that understand 410 device_erased.
+        erased_devices.record(conn, devices)
         # 4. The Google identity itself.
         if google_ids:
             gmarks = ",".join("?" * len(google_ids))

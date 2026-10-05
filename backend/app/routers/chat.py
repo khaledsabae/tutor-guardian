@@ -15,7 +15,7 @@ from pydantic import BaseModel
 from app.core.log_safety import device_tag
 from app.models.api import SessionCreate, SessionCreateResponse, SessionResponse
 from app.services import conversation_store as store
-from app.services import device_twins
+from app.services import device_twins, erased_devices
 
 logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/chat", tags=["chat"])
@@ -56,6 +56,11 @@ def create_session(request: Request, body: SessionCreate | None = None) -> Sessi
     whose family identity went quiet, is folded and the session is the
     family's; a proven device on an id the API now refuses moves to the app's
     new valid id. The response names the device minted for; the app adopts it.
+
+    An id an account deletion removed (services/erased_devices.py), claimed
+    without a live token of it, answers 410 device_erased to builds that send
+    X-App-Build ≥ ERASED_DEVICE_410_MIN_BUILD — the install restored it from a
+    phone backup, or is settling a deletion whose answer it lost.
     """
     body = body or SessionCreate()
     # A device id folded into its family's device (services/device_twins.py)
@@ -70,6 +75,15 @@ def create_session(request: Request, body: SessionCreate | None = None) -> Sessi
     proof_device = store.token_device(proof) if proof else None
     if proof_device is not None:
         device_id = device_twins.resolve_mint(device_id, proof_device, proof=proof)
+    elif (device_id and erased_devices.understands_410(request.headers)
+          and erased_devices.is_erased(device_id)):
+        # An account deleted in the app, its id back from a phone backup (or
+        # a deletion whose answer was lost): no live token of it, so no new
+        # session either — for builds that know to start over as a new device
+        # (X-App-Build ≥ ERASED_DEVICE_410_MIN_BUILD). Older builds get the
+        # fresh, empty session they always got. A token minted for the id
+        # after the erase proves a live install and is served above.
+        raise HTTPException(status_code=status.HTTP_410_GONE, detail=erased_devices.refusal())
     elif device_id and store.device_has_tokens(device_id):
         if _session_mint_enforced():
             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,

@@ -109,7 +109,9 @@ def test_device_columns_under_other_names_are_covered(schema_name):
     other name is personal data the discovery pass would miss."""
     schema = (_full_local_schema() if schema_name == "local"
               else {t: set(c) for t, c in _PROD_TABLES_2026_10_04.items()})
-    covered = set(pv.OTHER_DEVICE_COLUMNS)
+    # A one-way hash of an erased device id (v35) carries "device" in its name
+    # but is not an id: declared, and kept by the deletion on purpose.
+    covered = set(pv.OTHER_DEVICE_COLUMNS) | set(pv.HASHED_DEVICE_COLUMNS)
     for table, cols in schema.items():
         for col in cols:
             if "device" in col and col not in ("device_id", "device_timestamp"):

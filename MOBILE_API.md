@@ -53,6 +53,38 @@ Response `201`:
 { "session_id": "f3c1...-uuid", "token": "tg_…" }
 ```
 
+**Erased devices — `410 device_erased`** (backend schema v35). An account
+deletion (§10) keeps a one-way hash of every device id it removed, never the id.
+A mint that claims such an id **without a live token of it** — an install
+restored from an Android Auto Backup after the deletion, or one settling a
+deletion whose answer was lost — answers:
+```http
+POST /api/chat/sessions
+X-App-Build: 120
+{"device_id": "<an erased id>"}
+→ 410 {"detail": {"code": "device_erased",
+                  "message": "حُذف هذا الحساب نهائيًا. سيبدأ التطبيق من جديد على هذا الهاتف.",
+                  "message_en": "This account was deleted. The app will start over on this phone."}}
+```
+- **Only for builds that send `X-App-Build: <build number>`** (the integer Android
+  `versionCode`, digits only) **≥ the server's `ERASED_DEVICE_410_MIN_BUILD`**,
+  which `GET /api/app-config` reports as `"erased_device_410_min_build": 120`
+  (`null` = no build yet). Send the header on every mint once the build handles
+  the 410; a build that does not handle it must not send it. Any other mint —
+  no header, a lower build, or the variable unset — gets the fresh, empty `201`
+  it always got.
+- **Client on `410 device_erased`:** this device id's account is gone. Wipe
+  everything the backup restored with it — the session and the last token kept
+  as mint proof, cached children and chat, preferences, the stored `device_id`
+  and its backup copy —
+  generate a **new** `device_id`, and mint again (`201`). Never retry the old id.
+  Show at most a calm notice (`message` / `message_en`); it is not an error.
+- **Not refused:** a brand-new device id; and an erased id presented together with
+  a token minted for it *after* the deletion (`Authorization: Bearer`) — an older
+  build reinstalled meanwhile and started a new account under the old id, which
+  is a live install. Only a token from before the deletion (gone with the data)
+  is no proof.
+
 ### 3.3 `GET /api/chat/sessions/{session_id}` — history
 Response `200`:
 ```json
@@ -698,11 +730,28 @@ Authorization: Bearer <token>
   memory, follow-ups, weekly plans), chat sessions and messages, ratings, app
   feedback and replies, push token and send log, referral code and referral
   links, backups, auth tokens. `deleted` lists non-zero counts per table.
-- **One transaction:** a `5xx` means nothing was deleted — safe to retry.
+- **One transaction:** a `5xx` means nothing was deleted — safe to retry. The
+  bearer tokens go in the same transaction as the data, and so does a one-way
+  hash (never the id) of every device id removed — see §3.2 `410 device_erased`.
+- **The answer was lost** (timeout, app killed) — find out, don't guess:
+  - **Authoritative, when `GET /api/app-config` → `erased_device_410_min_build`
+    is not `null` and ≤ this build:** mint for the same `device_id` with
+    `X-App-Build` (and the old token as `Authorization`, as always).
+    `410 device_erased` → the deletion went through: do the post-`200` steps below.
+    `201` → it did not: the account is intact (the old token works too); ask
+    again before retrying the DELETE.
+  - **Otherwise:** re-send the same `DELETE` with the same token. `200` → deleted
+    now. `401` → already deleted (its token was deleted with the data) — treat as
+    deleted. (A token lapses only after 180 idle days, so on a retry `401` means
+    deleted.)
+  - Re-sending a `DELETE` that went through never deletes anything new: there is
+    nothing left under that token.
 - **The token used for the call is revoked by it.** After `200`: sign out of
   Google in the app, wipe local storage (cached children, preferences, the
   stored `device_id`), generate a **new** `device_id`, and start over with
-  `POST /api/chat/sessions`. Any further call with the old token gets `401`.
+  `POST /api/chat/sessions`. Any further call with the old token gets `401`,
+  and a mint for the old `device_id` gets `410 device_erased` (§3.2) — the same
+  steps apply if a reinstall ever restores it from a phone backup.
 - Errors: `401` no/invalid token · `400 {"detail": {"code": "confirm_required", …}}`
   when `confirm=true` is missing · `403 {"detail": {"code": "device_proof_required", …}}`
   for a session that has not proven it holds the phone (§9.0.1, then retry once) ·

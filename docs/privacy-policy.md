@@ -137,6 +137,8 @@
   **90 يومًا**.
 - الإجابات العامة المخزّنة مؤقتًا مع أسئلتها: **45 يومًا**.
 - النسخ الاحتياطية لقاعدة البيانات على خادمنا: **14 يومًا**.
+- بصمة أحادية الاتجاه لمعرّف كل هاتف حُذف حسابه — لا يمكن استرجاع المعرّف منها — حتى لا
+  يعود الحساب المحذوف من نسخة احتياطية للهاتف: نحتفظ بها دون مدة محدّدة.
 - ما يحفظه مزوّدو الخدمة (Google وDeepSeek وTelegram): وفق سياساتهم.
 تُنفَّذ هذه المدد يوميًا بمهمة مجدولة، لا عند وصول بيانات جديدة فقط.
 
@@ -356,6 +358,9 @@ and backup files you export to a place you choose.
   details removed): **90 days**.
 - Cached general answers and their questions: **45 days**.
 - Database backups on our server: **14 days**.
+- A one-way hash of a deleted phone's identifier — the identifier cannot be
+  recovered from it — so the deleted account cannot be restored from a backup of
+  the phone: kept with no set end.
 - What our providers (Google, DeepSeek, Telegram) keep: according to their
   policies.
 These periods are enforced every day by a scheduled job, not only when new data
