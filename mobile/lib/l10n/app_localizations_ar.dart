@@ -3227,6 +3227,50 @@ class AppLocalizationsAr extends AppLocalizations {
   String get badgeLockedYet => 'لم يُفتح بعد';
 
   @override
+  String get badgeFirstStepTitle => 'أول خطوة';
+
+  @override
+  String get badgeFirstStepDesc => 'أكملت أول درس — بداية الطريق';
+
+  @override
+  String get badgeFiveLessonsTitle => 'خمسة دروس';
+
+  @override
+  String get badgeFiveLessonsDesc => 'أكملت 5 دروس — استمرّ';
+
+  @override
+  String get badgeTenLessonsTitle => 'عشرة دروس';
+
+  @override
+  String get badgeTenLessonsDesc => 'أكملت 10 دروس — ما شاء الله';
+
+  @override
+  String get badgeWeekStreakTitle => 'أسبوع متواصل';
+
+  @override
+  String get badgeWeekStreakDesc => '7 أيام متتالية من التعلّم';
+
+  @override
+  String get badgeMonthStreakTitle => 'سلسلة شهر';
+
+  @override
+  String get badgeMonthStreakDesc => '30 يوماً متتالية — التزام رائع';
+
+  @override
+  String get badgePathExplorerTitle => 'مستكشف المسارات';
+
+  @override
+  String get badgePathExplorerDesc => 'دروس مكتملة في 3 مسارات مختلفة';
+
+  @override
+  String get badgeShareEyebrow => 'إنجاز جديد';
+
+  @override
+  String badgeShareMessage(String title) {
+    return 'ما شاء الله 🌟 وصلت لإنجاز «$title» في رحلتي التربوية مع «المربّي» 🤍';
+  }
+
+  @override
   String get identityLinkIncomplete =>
       'لم يكتمل ربط الحساب. تحقق من إعداد Google أو جرّب مرة أخرى.';
 

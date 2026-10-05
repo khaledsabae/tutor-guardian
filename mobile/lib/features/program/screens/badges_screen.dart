@@ -96,16 +96,15 @@ class _BadgeTile extends StatelessWidget {
   final AchievementBadge badge;
   const _BadgeTile({required this.badge});
 
-  Future<void> _share() async {
+  Future<void> _share(AppLocalizations l10n) async {
     await ShareService.shareMomentCard(
       fileTag: 'badge_${badge.id}',
-      message: 'ما شاء الله 🌟 وصلت لإنجاز «${badge.title}» في رحلتي '
-          'التربوية مع «المربّي» 🤍',
+      message: badge.shareMessage(l10n),
       card: ShareableMomentCard(
         emoji: badge.emoji,
-        eyebrow: 'إنجاز جديد',
-        headline: badge.title,
-        body: badge.description,
+        eyebrow: l10n.badgeShareEyebrow,
+        headline: badge.title(l10n),
+        body: badge.description(l10n),
         icon: Icons.emoji_events_outlined,
       ),
     );
@@ -113,13 +112,16 @@ class _BadgeTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final earned = badge.earned;
+    final title = badge.title(l10n);
+    final description = badge.description(l10n);
     return Semantics(
       button: earned,
-      label: '${badge.title}. ${badge.description}. '
-          '${earned ? AppLocalizations.of(context).badgeEarnedTapShare : AppLocalizations.of(context).badgeLockedYet}',
+      label: '$title. $description. '
+          '${earned ? l10n.badgeEarnedTapShare : l10n.badgeLockedYet}',
       child: GestureDetector(
-        onTap: earned ? _share : null,
+        onTap: earned ? () => _share(l10n) : null,
         child: Container(
         decoration: BoxDecoration(
           gradient: earned ? Dt.accentGradient : null,
@@ -138,7 +140,7 @@ class _BadgeTile extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             Text(
-              badge.title,
+              title,
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontWeight: FontWeight.w800,
@@ -147,7 +149,7 @@ class _BadgeTile extends StatelessWidget {
             ),
             const SizedBox(height: 4),
             Text(
-              badge.description,
+              description,
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 12,
