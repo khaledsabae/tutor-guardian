@@ -25,34 +25,47 @@
   "translated_from": "0bd76d3c-548a-46ed-b17b-78874741662a",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
+    "review_verdict": "low_only",
     "review_defects": [
       {
-        "type": "term_error",
+        "model": "glm-5.2",
         "field": "text_simplified",
-        "arabic": "الرحمة",
-        "english": "mercy",
-        "why": "The term 'rahmah' is transliterated in the title as 'al-Rahmah' but translated as 'mercy' in the text, creating inconsistency in transliteration of an Islamic term.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "ويحسنون تربية أبنائهم وتكوينهم",
-        "english": "and excel in the tarbiyah (upbringing) of their children and their formation",
-        "why": "'يحسنون' means 'do well/improve', not 'excel'; 'excel' overstates the Arabic.",
-        "severity": "low"
+        "type": "addition",
+        "why": "The Arabic uses the definite singular 'the successful educator' while the English generalizes with 'every', slightly broadening the meaning."
       }
     ],
-    "approved_by": null,
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
     "english_authors": [
       "mistral-large-3:675b",
       "claude-opus-5.5"
     ],
     "fixer_model": "claude-opus-5.5",
     "fixed_at": "2026-10-04T18:17:56+00:00",
-    "manual_fix_note": "2026-10-04 PR #20 review: 'leaders' was the garbled «رؤساء»; the source says «رحماء» (merciful)"
+    "manual_fix_note": "2026-10-04 PR #20 review: 'leaders' was the garbled «رؤساء»; the source says «رحماء» (merciful)",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "044775ed3bf58cc3bfbbad908d272a8a8477192cd836642a752e126de34f112f",
+      "reviewed_at": "2026-10-07T07:14:10+00:00",
+      "residual_low": [
+        {
+          "model": "glm-5.2",
+          "field": "text_simplified",
+          "type": "addition",
+          "why": "The Arabic uses the definite singular 'the successful educator' while the English generalizes with 'every', slightly broadening the meaning."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-07T07:14:10+00:00"
   }
 }

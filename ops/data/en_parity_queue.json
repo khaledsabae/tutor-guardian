@@ -6,15 +6,6 @@
     "Written by `review_en_parity.py queue` / `unqueue`; stamping removes the entry."
   ],
   "units": {
-    "0bd76d3c-548a-46ed-b17b-78874741662a__en": {
-      "category": "awaiting-review",
-      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system · Arabic corrected 2026-10-04 per the PR #20 review · English corrected by Claude 2026-10-04 per the PR #20 review",
-      "content_sha256": "ec1629d69864662567f0e3e2bea30c9cf626485687baf8528d830f5bc399a084",
-      "queued_on": "2026-10-04",
-      "english_authors": [
-        "claude-opus-5.5"
-      ]
-    },
     "968f42b5-5184-4f4a-97d9-b854f507dbe6__en": {
       "category": "awaiting-review",
       "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
@@ -580,33 +571,6 @@
       "category": "awaiting-review",
       "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
       "content_sha256": "584b6083e74a30bdd6d49021cf8c24af090ba9fcb115b390dbfba70d0ad48d13",
-      "queued_on": "2026-10-04",
-      "english_authors": [
-        "claude-opus-5.5"
-      ]
-    },
-    "tip_16-18_012": {
-      "category": "awaiting-review",
-      "reason": "Arabic corrected 2026-10-04 per the PR #20 review and the English rewritten by Claude to match; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 after the Ollama weekly cap · English corrected by Claude 2026-10-04 per the PR #20 review",
-      "content_sha256": "51b223206c65c037beca8f1691be95028d2a0bd62813785d17548aa20242fea5",
-      "queued_on": "2026-10-04",
-      "english_authors": [
-        "claude-opus-5.5"
-      ]
-    },
-    "tip_7-9_024": {
-      "category": "awaiting-review",
-      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
-      "content_sha256": "66c124378e9318c4d3eec3679d85b41044a14cc61f143bafb3c93c6f281e1afc",
-      "queued_on": "2026-10-04",
-      "english_authors": [
-        "claude-opus-5.5"
-      ]
-    },
-    "tip_7-9_030": {
-      "category": "awaiting-review",
-      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
-      "content_sha256": "c6adb0ee30eb75ef6145f480be21a6b4962878f5682c8e14e90dbaabdf27d0b5",
       "queued_on": "2026-10-04",
       "english_authors": [
         "claude-opus-5.5"
