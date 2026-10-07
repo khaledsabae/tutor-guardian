@@ -30,27 +30,29 @@
   "translated_from": "isl-fd937511",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "term_error",
-        "field": "title",
-        "arabic": "الاعتدال في الترهيب والترغيب في تربية الطفل",
-        "english": "Al-I'tidal fi al-Tarhib wa al-Targhib fi Tarbiyat al-Talab",
-        "why": "The Arabic title ends with 'تربية الطفل' (tarbiyat al-tifl, upbringing of the child), but the English transliteration renders it as 'Tarbiyat al-Talab', which means 'upbringing of the students/request' and changes the meaning.",
-        "severity": "high"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "ليكفي ذلك بيانًا",
-        "english": "as that suffices as a lesson",
-        "why": "The Arabic 'بيانًا' means clarification or explanation, not 'a lesson'. The English shifts the nuance from sufficing as a clarification to sufficing as a moral lesson.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "f55e9bbccc67a71eacdd8b6a8a83dc5c867b5fee410d6e2546b2946f552cd907",
+      "reviewed_at": "2026-10-07T07:28:44+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-07T07:28:44+00:00",
+    "english_authors": [
+      "claude-opus-5.5"
+    ]
   }
 }

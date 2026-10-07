@@ -1,0 +1,196 @@
+{
+  "schema": "tg.source_recovery_canonical_review/1",
+  "base_commit": "ea626efbbdcf03faffc7f8ea6f4ed2b3689b94db",
+  "review_exit": 0,
+  "single_batch_per_reviewer": true,
+  "max_concurrent_provider_calls": 1,
+  "items": {
+    "isl-22f68950": {
+      "canonical_stamp": {
+        "reviewers": [
+          "deepseek-v4-pro",
+          "glm-5.2"
+        ],
+        "fixer": null,
+        "rounds": 1,
+        "prompt_version": "dfa8a5f39718",
+        "content_sha256": "9d7309ee84d4e52d016d10501379db4760feb16045dccd50f60b55aea02b56ae",
+        "reviewed_at": "2026-10-07T09:36:39+00:00",
+        "residual_low": [],
+        "adjudicated": [],
+        "tool": "ops/tools/review_en_parity.py",
+        "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+      },
+      "primary_proof_file": "ops/data/kb_fidelity/source_recovery/isl-22f68950.json",
+      "primary_proof_sha256": "3165505f832e1cd6ad3d35d0c71a0825646467610e767faada78d3ffaa39a44d",
+      "unchanged_source_and_en_wording": true,
+      "needs_scholar_review": true
+    },
+    "isl-620730b0": {
+      "canonical_stamp": {
+        "reviewers": [
+          "deepseek-v4-pro",
+          "glm-5.2"
+        ],
+        "fixer": null,
+        "rounds": 1,
+        "prompt_version": "dfa8a5f39718",
+        "content_sha256": "6744be3d859f648f7cbb98f29e1745f901a727fb0d72183bf757d45641451733",
+        "reviewed_at": "2026-10-07T09:36:39+00:00",
+        "residual_low": [],
+        "adjudicated": [],
+        "tool": "ops/tools/review_en_parity.py",
+        "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+      },
+      "primary_proof_file": "ops/data/kb_fidelity/source_recovery/isl-620730b0.json",
+      "primary_proof_sha256": "37f9363cc88425ddc766f73729e360f36f7dd1f4efab1d5839373d365bcc80fa",
+      "unchanged_source_and_en_wording": true,
+      "needs_scholar_review": true
+    }
+  },
+  "canonical_fields": {
+    "isl-22f68950__en": {
+      "sha": "9d7309ee84d4e52d016d10501379db4760feb16045dccd50f60b55aea02b56ae",
+      "fields": {
+        "title": {
+          "ar": "رحمة الأولاد ومحبتهم ومعانقتهم",
+          "en": "Mercy, Love, and Embracing Children"
+        },
+        "text_simplified": {
+          "ar": "حمل النبي ﷺ الحسن بن علي على عاتقه، ودعا له بمحبة الله. ومن رحمة الأولاد تقبيلهم ومعانقتهم.",
+          "en": "The Prophet ﷺ carried al-Hasan ibn Ali on his shoulder and prayed that Allah would love him. Mercy toward children includes kissing and embracing them."
+        }
+      },
+      "authors": [
+        "mistral-large-3:675b",
+        "openai:codex"
+      ],
+      "deterministic_defects": []
+    },
+    "isl-620730b0__en": {
+      "sha": "6744be3d859f648f7cbb98f29e1745f901a727fb0d72183bf757d45641451733",
+      "fields": {
+        "title": {
+          "ar": "حمل النبي ﷺ أمامة أثناء الصلاة",
+          "en": "The Prophet ﷺ Carrying Umama During Salah"
+        },
+        "text_simplified": {
+          "ar": "كان النبي ﷺ يصلي وهو يحمل أمامة بنت زينب بنت رسول الله ﷺ. فإذا سجد وضعها، وإذا قام حملها.",
+          "en": "The Prophet ﷺ prayed while carrying Umama, the daughter of Zaynab, the daughter of the Messenger of Allah ﷺ. When he went into sujud, he set her down; when he stood up, he carried her."
+        }
+      },
+      "authors": [
+        "mistral-large-3:675b",
+        "openai:codex"
+      ],
+      "deterministic_defects": []
+    }
+  },
+  "raw_reviews": [
+    {
+      "model": "deepseek-v4-pro",
+      "system": "You audit English translations of Arabic Islamic-parenting content in an app used by Muslim parents. Each item gives Arabic source fields and their English rendering side by side, plus the child's age band. Nobody reviews this after you: what you miss reaches parents as published religious and medical guidance.\n\nCheck EVERY field of EVERY item for:\n1. meaning — the English changes, reverses, overstates or understates the Arabic.\n2. omission / addition — a substantive point dropped, or content (advice, claims, religious statements, attributions) added that the Arabic does not contain.\n3. quran — English wording presented as the Qur'an. Correct form: the ayah stays in Arabic (inside ﴿﴾), any English is explicitly labelled \"interpretation of the meaning\". Also: an ayah that the Arabic attributes to Allah but the English makes read as someone else's words.\n4. hadith — a hadith's wording altered, softened, shortened or \"completed\" in English; an attribution (narrated by al-Bukhari/Muslim, etc.) present in English but not in Arabic, or a different collection named; anything attributed to the Prophet ﷺ in English that the Arabic does not attribute to him; ﷺ placed on someone else (high). In the ARABIC itself (side \"arabic\"): a saying attributed to the Prophet ﷺ that is known to be fabricated or not a hadith at all (high); an explicit citation of a collection other than Sahih al-Bukhari or Sahih Muslim — the app's policy cites hadith only from those two (medium). A well-known hadith quoted WITHOUT any source is not a defect by itself (a missing source is safer than an invented one) — report it as low at most, and never invent a source in \"suggestion\".\n5. medical — unsafe, overconfident or dosage advice; a referral to a doctor present in the Arabic but lost in English; clear red flags with no advice to seek care.\n6. tone / age — clinical, preachy or condescending where the Arabic is warm; content unfit for the age band.\n7. leakage — Arabic words left untranslated in English (allowed: Arabic ayah inside ﴿﴾, an Arabic quotation kept on purpose, ﷺ, and transliterated Islamic terms such as tarbiyah, akhlaq, adhkar, fitrah, rifq, aqeedah, seerah, haya, ihsan, amanah, birr al-walidayn, silat al-rahim, tazkiyah, salah, du'a, wudu, sunnah, halal, haram, insha'Allah); Chinese/ Japanese/Korean/Cyrillic characters; garbled text.\n8. ARABIC SOURCE CORRUPTION — read the Arabic on its own, critically. A word that does not fit (e.g. «سفينة» where «سكينة» is meant), a typo that changes meaning, a stray English fragment inside Arabic (e.g. «حق-half»), a cut-off or garbled sentence, broken encoding, Egyptian colloquial where Modern Standard Arabic is expected. Translators SMOOTH OVER such corruption, so a fluent English line is not evidence the Arabic is sound. Report with side \"arabic\" and put the corrected Arabic field text in \"suggestion\".\n\nSeverity — rate honestly; a false medium/high forces a needless rewrite:\n- high: religious error (items 3-4), unsafe medical advice, meaning reversed, Arabic corruption that changes meaning.\n- medium: a substantive point changed/omitted/added; visible untranslated Arabic or foreign script; an Arabic typo or dialect a reader would notice; tone clearly unfit.\n- low: nuance, word choice, style, transliteration preference.\nNever rate as medium/high: British vs American spelling, Oxford commas, a synonym that keeps the meaning, or a glossary term transliterated where the Arabic has that term.\n\nReturn JSON only, with exactly one entry for EVERY item id you were given, in the given order — an item with no defects still gets its entry with \"defects\": []. An empty or partial \"items\" array is invalid output and will be discarded.\n{\"items\": [{\"id\": \"<id>\", \"defects\": [{\"field\": \"<field path as given>\", \"side\": \"english\"|\"arabic\", \"type\": \"meaning\"|\"omission\"|\"addition\"|\"quran\"|\"hadith\"|\"medical\"|\"tone\"|\"leakage\"|\"source_corruption\"|\"structure\", \"severity\": \"high\"|\"medium\"|\"low\", \"arabic\": \"<short excerpt>\", \"english\": \"<short excerpt>\", \"why\": \"<one sentence>\", \"suggestion\": \"<corrected text for that field, or empty>\"}]}]}",
+      "user": "Review these 2 items. Your \"items\" array must hold exactly 2 entries, ids in this order: [\"isl-22f68950__en\", \"isl-620730b0__en\"]\n\n{\"items\": [{\"id\": \"isl-22f68950__en\", \"kind\": \"kb_units\", \"age_band\": \"unspecified\", \"fields\": {\"title\": {\"arabic\": \"رحمة الأولاد ومحبتهم ومعانقتهم\", \"english\": \"Mercy, Love, and Embracing Children\"}, \"text_simplified\": {\"arabic\": \"حمل النبي ﷺ الحسن بن علي على عاتقه، ودعا له بمحبة الله. ومن رحمة الأولاد تقبيلهم ومعانقتهم.\", \"english\": \"The Prophet ﷺ carried al-Hasan ibn Ali on his shoulder and prayed that Allah would love him. Mercy toward children includes kissing and embracing them.\"}}}, {\"id\": \"isl-620730b0__en\", \"kind\": \"kb_units\", \"age_band\": \"unspecified\", \"fields\": {\"title\": {\"arabic\": \"حمل النبي ﷺ أمامة أثناء الصلاة\", \"english\": \"The Prophet ﷺ Carrying Umama During Salah\"}, \"text_simplified\": {\"arabic\": \"كان النبي ﷺ يصلي وهو يحمل أمامة بنت زينب بنت رسول الله ﷺ. فإذا سجد وضعها، وإذا قام حملها.\", \"english\": \"The Prophet ﷺ prayed while carrying Umama, the daughter of Zaynab, the daughter of the Messenger of Allah ﷺ. When he went into sujud, he set her down; when he stood up, he carried her.\"}}}]}",
+      "prompt_version": "dfa8a5f39718",
+      "requested_at": "2026-10-07T09:36:16.961700+00:00",
+      "response": {
+        "id": "chatcmpl-519",
+        "object": "chat.completion",
+        "created": 1791365785,
+        "model": "deepseek-v4-pro",
+        "system_fingerprint": "fp_ollama",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "{\"items\": [{\"id\": \"isl-22f68950__en\", \"defects\": []}, {\"id\": \"isl-620730b0__en\", \"defects\": []}]}",
+              "reasoning": "We need answer JSON only. Need audit 2 items. Need carefully check every field. We need produce exactly 2 entries ids order. Let's inspect.\n\nItem isl-22f68950__en:\ntitle Arabic: رحمة الأولاد ومحبتهم ومعانقتهم\nEnglish: Mercy, Love, and Embracing Children\nCheck meaning: \"رحمة الأولاد\" could mean mercy toward children, love them, embracing them. English \"Mercy, Love, and Embracing Children\" maybe okay but \"Embracing Children\" as noun phrase ambiguous? Arabic \"معانقتهم\" hugging them. Fine. Could be \"Mercy, Love, and Hugging Children\" but no defect.\n\ntext_simplified Arabic: حمل النبي ﷺ الحسن بن علي على عاتقه، ودعا له بمحبة الله. ومن رحمة الأولاد تقبيلهم ومعانقتهم.\nEnglish: The Prophet ﷺ carried al-Hasan ibn Ali on his shoulder and prayed that Allah would love him. Mercy toward children includes kissing and embracing them.\nCheck: \"ودعا له بمحبة الله\" = and prayed for him for love of Allah? English \"prayed that Allah would love him\" maybe okay. \"بمحبة الله\" could mean \"with the love of Allah\" or \"that Allah love him\". Need maybe hadith? The Arabic says \"دعا له بمحبة الله\" not necessarily \"prayed that Allah would love him\" but likely. No source. Hadith? It attributes to Prophet carried al-Hasan and prayed. Is this known? Need check if hadith fabricated? The Arabic itself says Prophet carried al-Hasan ibn Ali on his shoulder and prayed for him with love of Allah. Is this a known hadith? Could be from Bukhari/Muslim? Need not report unless known fabricated or not hadith. I need assess. \"حمل النبي ﷺ الحسن بن علي على عاتقه، ودعا له بمحبة الله\" There is hadith: \"اللهم إني أحبه فأحبه\" maybe Prophet said for Hasan. But \"دعا له بمحبة الله\" maybe okay. No explicit source. Not defect by policy. English no addition. \"Mercy toward children includes kissing and embracing them.\" Arabic \"ومن رحمة الأولاد تقبيلهم ومعانقتهم.\" okay. No issues? Maybe \"embracing\" vs \"hugging\" okay. Need maybe \"carried al-Hasan ibn Ali on his shoulder\" Arabic \"على عاتقه\" singular shoulder. okay.\n\nItem isl-620730b0__en:\ntitle Arabic: حمل النبي ﷺ أمامة أثناء الصلاة\nEnglish: The Prophet ﷺ Carrying Umama During Salah\nCheck: Arabic title is nominal \"The Prophet's carrying Umama during prayer\" or \"The Prophet ﷺ carrying Umama during prayer\". English \"The Prophet ﷺ Carrying Umama During Salah\" okay. \"Salah\" transliteration allowed. No issue.\n\ntext_simplified Arabic: كان النبي ﷺ يصلي وهو يحمل أمامة بنت زينب بنت رسول الله ﷺ. فإذا سجد وضعها، وإذا قام حملها.\nEnglish: The Prophet ﷺ prayed while carrying Umama, the daughter of Zaynab, the daughter of the Messenger of Allah ﷺ. When he went into sujud, he set her down; when he stood up, he carried her.\nCheck meaning: Arabic \"أمامة بنت زينب بنت رسول الله ﷺ\" = Umama daughter of Zaynab daughter of Messenger of Allah. English \"Umama, the daughter of Zaynab, the daughter of the Messenger of Allah ﷺ\" okay. But note: \"بنت رسول الله ﷺ\" means Zaynab is daughter of Messenger, so ﷺ after Allah? Arabic has ﷺ after \"رسول الله\" yes. English has ﷺ after Allah. okay. \"فإذا سجد وضعها، وإذا قام حملها\" = when he prostrated he put her down, and when he stood he carried her. English \"When he went into sujud, he set her down; when he stood up, he carried her.\" okay. \"sujud\" transliteration allowed? It is Islamic term. No issue. But maybe \"went into sujud\" okay. No defects.\n\nNeed consider if any hidden issue: The Arabic text in item 2: \"أمامة بنت زينب بنت رسول الله ﷺ\" Actually Umama bint Zaynab bint Rasul Allah, yes. But \"بنت رسول الله ﷺ\" could be read as \"daughter of the Messenger of Allah\" and ﷺ after Allah. Fine.\n\nNeed maybe check Arabic source corruption: item 1 \"ودعا له بمحبة الله\" maybe \"بمحبة الله\" could be typo? It means \"with love of Allah\" maybe not \"that Allah would love him\". But not corruption. Item 2 no.\n\nNeed output JSON only. Each item with defects [] if none. But need be careful: The instruction says check EVERY field. We can return no defects. But maybe there is a subtle issue in item 1: \"Mercy, Love, and Embracing Children\" title: Arabic \"رحمة الأولاد ومحبتهم ومعانقتهم\" The English \"Mercy, Love, and Embracing Children\" could be parsed as \"Mercy, Love, and Embracing Children\" where \"Embracing Children\" is gerund phrase, okay. But \"Mercy\" and \"Love\" are nouns, \"Embracing\" gerund. Fine.\n\nCould there be a hadith issue in item 1: The Arabic says \"حمل النبي ﷺ الحسن بن علي على عاتقه، ودعا له بمحبة الله.\" Is this a hadith? It is a statement about Prophet. It doesn't cite source. Policy says well-known hadith quoted without source not defect by itself. But is it well-known? It might be from Sahih al-Bukhari? Let's recall: Hadith about Prophet carrying Hasan and saying \"O Allah, I love him, so love him\" maybe in Bukhari. The Arabic \"ودعا له بمحبة الله\" maybe not exact wording. But no source. Not defect. However, the English \"prayed that Allah would love him\" might be an interpretation of \"دعا له بمحبة الله\" but if Arabic means \"prayed for him with the love of Allah\" maybe not exactly. Could be low nuance? But likely acceptable.\n\nNeed maybe item 2: \"The Prophet ﷺ Carrying Umama During Salah\" title uses \"Carrying\" capital C, maybe style. No.\n\nNeed produce exactly 2 entries. Could include empty defects. Ensure JSON valid. No markdown."
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 1417,
+          "completion_tokens": 1493,
+          "total_tokens": 2910,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        }
+      },
+      "parsed": {
+        "items": [
+          {
+            "id": "isl-22f68950__en",
+            "defects": []
+          },
+          {
+            "id": "isl-620730b0__en",
+            "defects": []
+          }
+        ]
+      },
+      "received_at": "2026-10-07T09:36:26.164491+00:00"
+    },
+    {
+      "model": "glm-5.2",
+      "system": "You audit English translations of Arabic Islamic-parenting content in an app used by Muslim parents. Each item gives Arabic source fields and their English rendering side by side, plus the child's age band. Nobody reviews this after you: what you miss reaches parents as published religious and medical guidance.\n\nCheck EVERY field of EVERY item for:\n1. meaning — the English changes, reverses, overstates or understates the Arabic.\n2. omission / addition — a substantive point dropped, or content (advice, claims, religious statements, attributions) added that the Arabic does not contain.\n3. quran — English wording presented as the Qur'an. Correct form: the ayah stays in Arabic (inside ﴿﴾), any English is explicitly labelled \"interpretation of the meaning\". Also: an ayah that the Arabic attributes to Allah but the English makes read as someone else's words.\n4. hadith — a hadith's wording altered, softened, shortened or \"completed\" in English; an attribution (narrated by al-Bukhari/Muslim, etc.) present in English but not in Arabic, or a different collection named; anything attributed to the Prophet ﷺ in English that the Arabic does not attribute to him; ﷺ placed on someone else (high). In the ARABIC itself (side \"arabic\"): a saying attributed to the Prophet ﷺ that is known to be fabricated or not a hadith at all (high); an explicit citation of a collection other than Sahih al-Bukhari or Sahih Muslim — the app's policy cites hadith only from those two (medium). A well-known hadith quoted WITHOUT any source is not a defect by itself (a missing source is safer than an invented one) — report it as low at most, and never invent a source in \"suggestion\".\n5. medical — unsafe, overconfident or dosage advice; a referral to a doctor present in the Arabic but lost in English; clear red flags with no advice to seek care.\n6. tone / age — clinical, preachy or condescending where the Arabic is warm; content unfit for the age band.\n7. leakage — Arabic words left untranslated in English (allowed: Arabic ayah inside ﴿﴾, an Arabic quotation kept on purpose, ﷺ, and transliterated Islamic terms such as tarbiyah, akhlaq, adhkar, fitrah, rifq, aqeedah, seerah, haya, ihsan, amanah, birr al-walidayn, silat al-rahim, tazkiyah, salah, du'a, wudu, sunnah, halal, haram, insha'Allah); Chinese/ Japanese/Korean/Cyrillic characters; garbled text.\n8. ARABIC SOURCE CORRUPTION — read the Arabic on its own, critically. A word that does not fit (e.g. «سفينة» where «سكينة» is meant), a typo that changes meaning, a stray English fragment inside Arabic (e.g. «حق-half»), a cut-off or garbled sentence, broken encoding, Egyptian colloquial where Modern Standard Arabic is expected. Translators SMOOTH OVER such corruption, so a fluent English line is not evidence the Arabic is sound. Report with side \"arabic\" and put the corrected Arabic field text in \"suggestion\".\n\nSeverity — rate honestly; a false medium/high forces a needless rewrite:\n- high: religious error (items 3-4), unsafe medical advice, meaning reversed, Arabic corruption that changes meaning.\n- medium: a substantive point changed/omitted/added; visible untranslated Arabic or foreign script; an Arabic typo or dialect a reader would notice; tone clearly unfit.\n- low: nuance, word choice, style, transliteration preference.\nNever rate as medium/high: British vs American spelling, Oxford commas, a synonym that keeps the meaning, or a glossary term transliterated where the Arabic has that term.\n\nReturn JSON only, with exactly one entry for EVERY item id you were given, in the given order — an item with no defects still gets its entry with \"defects\": []. An empty or partial \"items\" array is invalid output and will be discarded.\n{\"items\": [{\"id\": \"<id>\", \"defects\": [{\"field\": \"<field path as given>\", \"side\": \"english\"|\"arabic\", \"type\": \"meaning\"|\"omission\"|\"addition\"|\"quran\"|\"hadith\"|\"medical\"|\"tone\"|\"leakage\"|\"source_corruption\"|\"structure\", \"severity\": \"high\"|\"medium\"|\"low\", \"arabic\": \"<short excerpt>\", \"english\": \"<short excerpt>\", \"why\": \"<one sentence>\", \"suggestion\": \"<corrected text for that field, or empty>\"}]}]}",
+      "user": "Review these 2 items. Your \"items\" array must hold exactly 2 entries, ids in this order: [\"isl-22f68950__en\", \"isl-620730b0__en\"]\n\n{\"items\": [{\"id\": \"isl-22f68950__en\", \"kind\": \"kb_units\", \"age_band\": \"unspecified\", \"fields\": {\"title\": {\"arabic\": \"رحمة الأولاد ومحبتهم ومعانقتهم\", \"english\": \"Mercy, Love, and Embracing Children\"}, \"text_simplified\": {\"arabic\": \"حمل النبي ﷺ الحسن بن علي على عاتقه، ودعا له بمحبة الله. ومن رحمة الأولاد تقبيلهم ومعانقتهم.\", \"english\": \"The Prophet ﷺ carried al-Hasan ibn Ali on his shoulder and prayed that Allah would love him. Mercy toward children includes kissing and embracing them.\"}}}, {\"id\": \"isl-620730b0__en\", \"kind\": \"kb_units\", \"age_band\": \"unspecified\", \"fields\": {\"title\": {\"arabic\": \"حمل النبي ﷺ أمامة أثناء الصلاة\", \"english\": \"The Prophet ﷺ Carrying Umama During Salah\"}, \"text_simplified\": {\"arabic\": \"كان النبي ﷺ يصلي وهو يحمل أمامة بنت زينب بنت رسول الله ﷺ. فإذا سجد وضعها، وإذا قام حملها.\", \"english\": \"The Prophet ﷺ prayed while carrying Umama, the daughter of Zaynab, the daughter of the Messenger of Allah ﷺ. When he went into sujud, he set her down; when he stood up, he carried her.\"}}}]}",
+      "prompt_version": "dfa8a5f39718",
+      "requested_at": "2026-10-07T09:36:26.165219+00:00",
+      "response": {
+        "id": "chatcmpl-205",
+        "object": "chat.completion",
+        "created": 1791365799,
+        "model": "glm-5.2",
+        "system_fingerprint": "fp_ollama",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "```json\n{\"items\": [{\"id\": \"isl-22f68950__en\", \"defects\": []}, {\"id\": \"isl-620730b0__en\", \"defects\": []}]}\n```",
+              "reasoning": "Let me review each item carefully.\n\nItem 1: isl-22f68950__en\n\nTitle:\n- Arabic: \"رحمة الأولاد ومحبتهم ومعانقتهم\" = \"Mercy toward children, loving them, and embracing them\"\n- English: \"Mercy, Love, and Embracing Children\" — This is acceptable, slightly condensed but meaning preserved.\n\nText:\n- Arabic: \"حمل النبي ﷺ الحسن بن علي على عاتقه، ودعا له بمحبة الله. ومن رحمة الأولاد تقبيلهم ومعانقتهم.\"\n- English: \"The Prophet ﷺ carried al-Hasan ibn Ali on his shoulder and prayed that Allah would love him. Mercy toward children includes kissing and embracing them.\"\n\nThe Arabic says \"دعا له بمحبة الله\" — \"prayed for him with Allah's love\" or \"prayed that Allah would love him.\" The English says \"prayed that Allah would love him.\" This is a reasonable interpretation. Actually, \"دعا له بمحبة الله\" could mean \"he prayed for him with Allah's love\" (i.e., invoking Allah's love) or \"prayed that Allah would love him.\" The English interpretation is reasonable.\n\nThe hadith about carrying al-Hasan on his shoulder — this is a known hadith from Sahih al-Bukhari. The Arabic doesn't cite a source, which per the instructions is not a defect by itself (low at most).\n\nNo major issues here.\n\nItem 2: isl-620730b0__en\n\nTitle:\n- Arabic: \"حمل النبي ﷺ أمامة أثناء الصلاة\" = \"The Prophet ﷺ carrying Umama during prayer\"\n- English: \"The Prophet ﷺ Carrying Umama During Salah\" — Fine, uses \"Salah\" which is an allowed transliterated term.\n\nText:\n- Arabic: \"كان النبي ﷺ يصلي وهو يحمل أمامة بنت زينب بنت رسول الله ﷺ. فإذا سجد وضعها، وإذا قام حملها.\"\n- English: \"The Prophet ﷺ prayed while carrying Umama, the daughter of Zaynab, the daughter of the Messenger of Allah ﷺ. When he went into sujud, he set her down; when he stood up, he carried her.\"\n\nThis is a well-known hadith from Sahih al-Bukhari. The Arabic doesn't cite a source, which is fine per instructions.\n\nThe English says \"the daughter of Zaynab, the daughter of the Messenger of Allah ﷺ\" — this places ﷺ on the Messenger of Allah, which is correct. The Arabic also has ﷺ after \"رسول الله\" which is correct.\n\nWait, let me re-read: \"أمامة بنت زينب بنت رسول الله ﷺ\" — Umama daughter of Zaynab daughter of the Messenger of Allah ﷺ. The ﷺ is on the Prophet, which is correct.\n\nThe English translation is accurate. \"When he went into sujud\" — sujud is an Arabic term but it's not in the allowed list. Wait, let me check: the allowed transliterated terms include \"salah, du'a, wudu, sunnah, halal, haram\" but not \"sujud.\" However, \"sujud\" is a common Islamic term. The Arabic says \"سجد\" (prostrated). The English uses \"sujud\" which is a transliterated Arabic term not in the allowed list. This could be considered leakage, but it's a minor issue. Actually, the instruction says \"transliterated Islamic terms such as\" — the list is not exhaustive (\"such as\"), so sujud could be acceptable as a transliterated Islamic term. I'll consider this low at most.\n\nActually, re-reading: \"allowed: Arabic ayah inside ﴿﴾, an Arabic quotation kept on purpose, ﷺ, and transliterated Islamic terms such as tarbiyah, akhlaq, adhkar, fitrah, rifq, aqeedah, seerah, haya, ihsan, amanah, birr al-walidayn, silat al-rahim, tazkiyah, salah, du'a, wudu, sunnah, halal, haram, insha'Allah\" — the \"such as\" suggests the list is illustrative, not exhaustive. Sujud is a well-known Islamic term. I'll leave this as no defect or low.\n\nBoth items seem clean. Let me check once more for any issues.\n\nItem 1: The hadith about al-Hasan — \"دعا له بمحبة الله\" — actually, the well-known hadith is \"اللهم إني أحبه فأحبه وأحب من يحبه\" (O Allah, I love him, so love him, and love those who love him). The Arabic text here is a simplified/paraphrased version. The English \"prayed that Allah would love him\" captures the meaning. No issue.\n\nBoth items look clean. I'll report no defects for both."
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 1404,
+          "completion_tokens": 1149,
+          "total_tokens": 2553,
+          "prompt_tokens_details": {
+            "cached_tokens": 10
+          }
+        }
+      },
+      "parsed": {
+        "items": [
+          {
+            "id": "isl-22f68950__en",
+            "defects": []
+          },
+          {
+            "id": "isl-620730b0__en",
+            "defects": []
+          }
+        ]
+      },
+      "received_at": "2026-10-07T09:36:39.768270+00:00"
+    }
+  ],
+  "report": {
+    "stamped": [
+      "isl-22f68950__en",
+      "isl-620730b0__en"
+    ],
+    "fixed": [],
+    "arabic_proposals": [],
+    "arabic_applied": [],
+    "unresolved": {},
+    "fix_rejected": [],
+    "rounds": 1
+  },
+  "meaning": "Model parity review only. Primary-source proofs unchanged. Scholar/human approval still pending. Earlier DRAFT source-recovery notes describe the pre-review state."
+}

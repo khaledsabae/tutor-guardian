@@ -39,6 +39,16 @@ def bank(dp):
     return dp.load_bank()
 
 
+@pytest.fixture(scope="module")
+def parity():
+    spec = importlib.util.spec_from_file_location(
+        "deepen_paths_parity", ROOT / "ops/tools/review_en_parity.py")
+    module = importlib.util.module_from_spec(spec)
+    sys.modules[spec.name] = module
+    spec.loader.exec_module(module)
+    return module
+
+
 GOOD_SUMMARY = " ".join(["الطفل يتعلّم بالقدوة قبل الكلام، فكن هادئًا معه."] * 22)
 
 
@@ -225,16 +235,118 @@ def test_every_verse_and_hadith_in_a_written_lesson_is_verbatim_from_the_bank(dp
                 assert m.group(1) in texts, (doc["id"], m.group(1)[:40])
 
 
-def test_written_lessons_are_well_formed_pairs(dp):
+def _lesson_parity_item(parity, ar, en, en_file):
+    return parity.Item(
+        kind="lessons", key=en["id"], en_file=en_file,
+        ar_file=CURRICULUM / "lessons" / en_file.name,
+        fields=parity._field_pairs(ar, en, parity.CURRICULUM_FIELDS["lessons"]),
+        age_band=str(ar.get("age_group", "")),
+    )
+
+
+def _assert_lesson_approval(parity, item):
+    translation = parity.read_translation(item)
+    if translation["approved_by"] is None:
+        return  # Generator drafts may still await independent review.
+    problem = parity._approval_problem(item, translation)
+    assert problem is None, (item.key, problem)
+    stamp = parity.parse_stamp(translation["approved_by"])
+    assert stamp is not None, (item.key, "not an automatic review stamp")
+    reviewers = stamp["reviewers"]
+    families = {parity.model_family(model) for model in reviewers}
+    assert len(reviewers) == len(families) == 2 and None not in families, (
+        item.key, "two independent reviewer families required")
+    assert translation["auto_review"].get("reviewers") == reviewers, (
+        item.key, "stamp and review record disagree")
+    conflict = parity.family_conflict(item, reviewers)
+    assert conflict is None, (item.key, conflict)
+    defects = parity.deterministic_defects(item)
+    assert not defects, (item.key, [defect["why"] for defect in defects])
+
+
+def test_written_lessons_are_well_formed_pairs(dp, parity):
     for ar, en in _generated_lessons():
         assert en["id"] == ar["id"] and en["path_id"] == ar["path_id"]
         assert ar["try_this"].startswith("اليوم:"), ar["id"]
         assert en["try_this"].startswith("Today:"), en["id"]
         assert en["warning_flags"] == ar["warning_flags"], ar["id"]
-        assert en["translation"]["approved_by"] is None
+        en_file = CURRICULUM / "i18n/en/lessons" / f"{en['id']}.json"
+        if not en_file.exists():
+            en_file = ROOT / "ops/data/en_unpublished/lessons" / en_file.name
+        _assert_lesson_approval(parity, _lesson_parity_item(parity, ar, en, en_file))
         path = json.loads((CURRICULUM / "paths" / f"{ar['path_id']}.json")
                           .read_text(encoding="utf-8"))
         assert ar["id"] in path["lesson_ids"], ar["id"]
+
+
+@pytest.fixture
+def reviewed_pair(tmp_path):
+    """Copy the recovered, genuinely reviewed lesson; never stamp repo content."""
+    name = "lesson_7-9_aqeedah_fundamentals_11.json"
+    # Preserve the actual db07c35f reviewed text: current production lesson 11
+    # is now a source-corrected draft and must not retain that old approval.
+    fixture = ROOT / "backend/tests/fixtures/lesson11_reviewed_db07c35f"
+    ar = json.loads((fixture / "ar.json").read_text())
+    en = json.loads((fixture / "en.json").read_text())
+    return ar, en, tmp_path / name
+
+
+def _check_reviewed_pair(parity, pair):
+    ar, en, en_file = pair
+    en_file.write_text(json.dumps(en, ensure_ascii=False))
+    _assert_lesson_approval(parity, _lesson_parity_item(parity, ar, en, en_file))
+
+
+def test_current_independent_review_is_allowed(parity, reviewed_pair):
+    _check_reviewed_pair(parity, reviewed_pair)
+
+
+def test_unapproved_generator_draft_is_still_allowed(parity, reviewed_pair):
+    reviewed_pair[1]["translation"]["approved_by"] = None
+    _check_reviewed_pair(parity, reviewed_pair)
+
+
+@pytest.mark.parametrize("side", [0, 1], ids=["source", "english"])
+def test_reviewed_lesson_rejects_text_changed_after_review(parity, reviewed_pair, side):
+    reviewed_pair[side]["summary"] += " Additional text."
+    with pytest.raises(AssertionError, match="stale"):
+        _check_reviewed_pair(parity, reviewed_pair)
+
+
+@pytest.mark.parametrize("stamp", ["auto-review::2026-10-07", "Unverified signer"])
+def test_reviewed_lesson_rejects_invalid_approval(parity, reviewed_pair, stamp):
+    reviewed_pair[1]["translation"]["approved_by"] = stamp
+    with pytest.raises(AssertionError, match="malformed|no content fingerprint"):
+        _check_reviewed_pair(parity, reviewed_pair)
+
+
+@pytest.mark.parametrize("reviewers,reason", [
+    (["deepseek-v4-pro"], "two independent"),
+    (["deepseek-v4-pro", "deepseek-v3.2"], "two independent"),
+    (["claude-opus-5.5", "glm-5.2"], "same family"),
+])
+def test_reviewed_lesson_requires_reviewers_independent_of_each_other_and_author(
+        parity, reviewed_pair, reviewers, reason):
+    translation = reviewed_pair[1]["translation"]
+    translation["approved_by"] = parity.stamp_value(reviewers, "2026-10-07")
+    translation["auto_review"]["reviewers"] = reviewers
+    with pytest.raises(AssertionError, match=reason):
+        _check_reviewed_pair(parity, reviewed_pair)
+
+
+def test_reviewed_lesson_rejects_mismatched_reviewer_record(parity, reviewed_pair):
+    reviewed_pair[1]["translation"]["auto_review"]["reviewers"] = ["glm-5.2"]
+    with pytest.raises(AssertionError, match="disagree"):
+        _check_reviewed_pair(parity, reviewed_pair)
+
+
+def test_current_hash_does_not_bypass_deterministic_guards(parity, reviewed_pair):
+    ar, en, en_file = reviewed_pair
+    en["summary"] += " 中文"
+    item = _lesson_parity_item(parity, ar, en, en_file)
+    en["translation"]["auto_review"]["content_sha256"] = item.sha
+    with pytest.raises(AssertionError, match="CJK/Cyrillic"):
+        _check_reviewed_pair(parity, reviewed_pair)
 
 
 # ── the reviewer call: one try per family, then wait ──────────────────────
@@ -434,3 +546,53 @@ def test_an_unpublished_english_twin_stays_unpublished_and_keeps_its_place(shelf
     assert shelf.served()["درسٌ جديد 3"] == ("lesson_7-9_test_worship_05", 5)
     assert held.exists()
     assert not (shelf.cur / "i18n" / "en" / "lessons" / f"{lid}.json").exists()
+
+# Lesson-only scripture references must come from the guarded corpus, not the
+# notification pack or author-supplied scripture text.
+@pytest.fixture
+def lesson_scripture(dp, tmp_path, monkeypatch):
+    p = tmp_path / 'lesson_scripture.json'
+    monkeypatch.setattr(dp, 'LESSON_SCRIPTURE_BANK', p, raising=False)
+    monkeypatch.setattr(dp, 'QURAN', ROOT / 'mobile/assets/data/quran.json', raising=False)
+    def put(items):
+        p.write_text(json.dumps({'schema': 'tg.lesson_scripture_refs/1', 'items': items}))
+    return put
+
+
+def test_lesson_only_verse_is_exact_corpus_text_in_both_languages(dp, lesson_scripture, scan):
+    lesson_scripture([{'id': 'v_007_157', 'surah': 7, 'ayah': 157}])
+    b = dp.load_bank()
+    assert 'v_007_157' in b
+    q = json.loads((ROOT / 'mobile/assets/data/quran.json').read_text())
+    text = next(r['text'] for r in q['7'] if r['verse'] == 157)
+    assert b['v_007_157']['text'] == text
+    for lang in ('ar', 'en'):
+        expanded = dp.expand('[[v_007_157]]', b, lang)
+        assert f'﴿{text}﴾' in expanded
+        assert not [f for f in scan.scan_text(expanded) if f.verdict != 'ok']
+    assert "Surah Al-A'raf, 7:157" in dp.expand('[[v_007_157]]', b, 'en')
+
+
+@pytest.mark.parametrize('items', [
+    [{'id': 'v_007_157', 'surah': 7, 'ayah': 157, 'text': 'author-supplied text'}],
+    [{'id': 'v_007_156', 'surah': 7, 'ayah': 157}],
+    [{'id': 'v_007_157', 'surah': True, 'ayah': 157}],
+    [{'id': 'v_007_157', 'surah': 7, 'ayah': 999}],
+    [{'id': 'v_007_157', 'surah': 7, 'ayah': 157}] * 2,
+    [{'id': 'v_020_132', 'surah': 20, 'ayah': 132}],
+])
+def test_lesson_scripture_rejects_unverified_or_ambiguous_declarations(dp, lesson_scripture, items):
+    lesson_scripture(items)
+    with pytest.raises(ValueError):
+        dp.load_bank()
+
+
+def test_lesson_verse_keeps_spec_allowlist_and_single_placeholder_guard(dp, lesson_scripture):
+    lesson_scripture([{'id': 'v_007_157', 'surah': 7, 'ayah': 157}])
+    b = dp.load_bank()
+    assert 'v_007_157' in b
+    doc = _lesson(summary=GOOD_SUMMARY + ' [[v_007_157]]')
+    assert not _gates(dp, doc, allowed=('v_007_157',))
+    assert any('غير مسموح' in p for p in _gates(dp, doc))
+    doc['summary'] += ' [[v_007_157]]'
+    assert any('أكثر من عنصر نائب' in p for p in _gates(dp, doc, allowed=('v_007_157',)))

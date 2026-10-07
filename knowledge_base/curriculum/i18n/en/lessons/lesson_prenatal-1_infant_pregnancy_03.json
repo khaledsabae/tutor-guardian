@@ -22,21 +22,89 @@
   "version": "1.0.0",
   "created_at": "2026-09-12T19:00:00",
   "updated_at": "2026-09-12T19:00:00",
-  "approved_by": null,
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
   "language": "en",
   "source_language": "ar",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": false,
     "scholar_signals": {
       "keyword": false,
       "quoted_arabic": false,
       "reviewer_model": false
     },
-    "review_verdict": "clean",
-    "review_defects": [],
-    "approved_by": null,
-    "revalidated_at": "2026-09-12T19:00:00.000000+00:00"
+    "review_verdict": "low_only",
+    "review_defects": [
+      {
+        "model": "deepseek-v4-pro",
+        "field": "summary",
+        "type": "source_corruption",
+        "why": "The verbal noun should be written «الالتقام» with hamzat wasl, not with a hamza under the alif."
+      },
+      {
+        "model": "deepseek-v4-pro",
+        "field": "reflection_prompts[0]",
+        "type": "meaning",
+        "why": "The Arabic asks how the husband is preparing to support; the English drops the preparation nuance and changes husband to partner."
+      },
+      {
+        "model": "glm-5.2",
+        "field": "reflection_prompts[0]",
+        "type": "meaning",
+        "why": "The Arabic asks how the husband is preparing to support you, while the English asks how the partner can assist, shifting from preparation to general assistance."
+      },
+      {
+        "model": "glm-5.2",
+        "field": "reflection_prompts[1]",
+        "type": "addition",
+        "why": "The English adds 'subtle', which has no counterpart in the Arabic."
+      }
+    ],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
+    "revalidated_at": "2026-10-07T07:44:58+00:00",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "93003567117ec779842f92f69caa6b9bf1c1f8e1f8c2c5bddca93a251ab63338",
+      "reviewed_at": "2026-10-07T07:44:58+00:00",
+      "residual_low": [
+        {
+          "model": "deepseek-v4-pro",
+          "field": "summary",
+          "type": "source_corruption",
+          "why": "The verbal noun should be written «الالتقام» with hamzat wasl, not with a hamza under the alif."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "field": "reflection_prompts[0]",
+          "type": "meaning",
+          "why": "The Arabic asks how the husband is preparing to support; the English drops the preparation nuance and changes husband to partner."
+        },
+        {
+          "model": "glm-5.2",
+          "field": "reflection_prompts[0]",
+          "type": "meaning",
+          "why": "The Arabic asks how the husband is preparing to support you, while the English asks how the partner can assist, shifting from preparation to general assistance."
+        },
+        {
+          "model": "glm-5.2",
+          "field": "reflection_prompts[1]",
+          "type": "addition",
+          "why": "The English adds 'subtle', which has no counterpart in the Arabic."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+    },
+    "english_authors": [
+      "claude-opus-5.5"
+    ]
   }
 }

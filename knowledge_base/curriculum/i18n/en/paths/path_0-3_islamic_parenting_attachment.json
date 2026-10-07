@@ -21,7 +21,7 @@
   "version": "1.0.0",
   "created_at": "2026-06-10T16:00:00",
   "updated_at": "2026-06-10T16:00:00",
-  "approved_by": null,
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
   "language": "en",
   "source_language": "ar",
   "translation": {
@@ -33,11 +33,43 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "pending",
-    "review_defects": [],
-    "approved_by": null,
-    "revalidated_at": "2026-10-04T11:18:18+00:00",
+    "review_verdict": "low_only",
+    "review_defects": [
+      {
+        "model": "glm-5.2",
+        "field": "description",
+        "type": "meaning",
+        "why": "«الوالد» can mean 'the parent' generically; rendering it as 'the father' narrows the scope in a parenting app addressed to both mothers and fathers."
+      }
+    ],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
+    "revalidated_at": "2026-10-07T07:41:31+00:00",
     "fixed_at": "2026-08-13T19:07:09.527351+00:00",
-    "fixer_model": "mistral-large-3:675b"
+    "fixer_model": "mistral-large-3:675b",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "35122539b68ca6448c1d26de8765f98256518177451596ed6824e9b4d3718a54",
+      "reviewed_at": "2026-10-07T07:41:31+00:00",
+      "residual_low": [
+        {
+          "model": "glm-5.2",
+          "field": "description",
+          "type": "meaning",
+          "why": "«الوالد» can mean 'the parent' generically; rendering it as 'the father' narrows the scope in a parenting app addressed to both mothers and fathers."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+    },
+    "english_authors": [
+      "claude-opus-5-5"
+    ]
   }
 }

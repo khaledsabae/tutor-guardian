@@ -1,0 +1,61 @@
+{
+  "id": "lesson_7-9_aqeedah_fundamentals_12",
+  "path_id": "path_7-9_aqeedah_fundamentals",
+  "title": "Halal and Haram: How Do We Ask When We Don't Know the Ruling?",
+  "age_group": "7-9",
+  "domain": "aqeedah",
+  "unit_ids": [
+    "isl-quran-halal-ref-7-157-16-43"
+  ],
+  "summary": "At this age, your child may ask: why is this permitted and that forbidden? Start with a specific reference instead of inventing an explanation for every ruling. Our discussion of what is permitted and prohibited refers here to wholesome and impure things in al-A'raf 7:157. Allah says: ﴿ٱلَّذِينَ يَتَّبِعُونَ ٱلرَّسُولَ ٱلنَّبِيَّ ٱلۡأُمِّيَّ ٱلَّذِي يَجِدُونَهُۥ مَكۡتُوبًا عِندَهُمۡ فِي ٱلتَّوۡرَىٰةِ وَٱلۡإِنجِيلِ يَأۡمُرُهُم بِٱلۡمَعۡرُوفِ وَيَنۡهَىٰهُمۡ عَنِ ٱلۡمُنكَرِ وَيُحِلُّ لَهُمُ ٱلطَّيِّبَٰتِ وَيُحَرِّمُ عَلَيۡهِمُ ٱلۡخَبَـٰٓئِثَ وَيَضَعُ عَنۡهُمۡ إِصۡرَهُمۡ وَٱلۡأَغۡلَٰلَ ٱلَّتِي كَانَتۡ عَلَيۡهِمۡۚ فَٱلَّذِينَ ءَامَنُواْ بِهِۦ وَعَزَّرُوهُ وَنَصَرُوهُ وَٱتَّبَعُواْ ٱلنُّورَ ٱلَّذِيٓ أُنزِلَ مَعَهُۥٓ أُوْلَـٰٓئِكَ هُمُ ٱلۡمُفۡلِحُونَ﴾ [Surah Al-A'raf, 7:157] This is a specific Qur'anic reference, not a list of detailed rulings for every food, toy or outing.\n\nSuggest a simple situation: your child asks about a new food or toy. Say: «Let's understand the question first: what is the food or toy, and what concerns you about it?» Write down the details. Do not decide a ruling from a name alone or guess the wisdom behind it. The aim is to help parent and child frame the question before seeking an answer.\n\nThe second Qur'anic reference is an-Nahl 16:43, concerning asking ahl adh-dhikr when one does not know, within a discussion of the messengers. Referring fiqh questions we cannot answer to people of knowledge is the application's own policy; the application issues no fatwas.\n\nIf you do not know the answer, say calmly: «I don't know the ruling; we will put the question to people of knowledge instead of my guessing.» Keep the question and its details, then note the answer and the body that supplied it so you know what to ask about if clarification is needed. Avoid calling every small mistake haram when you do not know the ruling. Being honest with your child about what you know and do not know is the suggested action here, instead of filling a gap in knowledge with an improvised answer.",
+  "try_this": "Today: Write down one question with your child about a real situation, its details and what you do not know about it. If you do not know the ruling, prepare the question for people of knowledge instead of guessing an answer.",
+  "order": 12,
+  "estimated_minutes": 3,
+  "reflection_prompts": [
+    "When you do not know the ruling on something your child asks about, do you say so and prepare the question together for people of knowledge, or try to answer by guessing?"
+  ],
+  "warning_flags": [],
+  "needs_professional_followup": false,
+  "is_published": true,
+  "version": "1.0.0",
+  "created_at": "2026-10-07T09:22:49",
+  "updated_at": "2026-10-07T09:22:49",
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "gpt-6",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": true,
+      "quoted_arabic": true,
+      "reviewer_model": true
+    },
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
+    "revalidated_at": "2026-10-07T09:24:44+00:00",
+    "generated_by": "ops/tools/deepen_paths.py",
+    "english_authors": [
+      "claude-opus-5-5",
+      "gpt-6"
+    ],
+    "manual_fix_note": "Source-faithful rewrite by GPT-6; exact Quran quotation derived from guarded local corpus, referral is application policy.",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "c35b590e66df360e50d89248afef89eb32672b0bd87990314a998a24ea0c8bcf",
+      "reviewed_at": "2026-10-07T09:24:44+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+    }
+  }
+}

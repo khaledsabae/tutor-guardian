@@ -17,7 +17,7 @@
   "needs_professional_followup": false,
   "is_published": true,
   "version": "1.0.0",
-  "approved_by": null,
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
   "language": "en",
   "source_language": "ar",
   "translation": {
@@ -29,16 +29,50 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "pending",
+    "review_verdict": "low_only",
     "review_defects": [
+      {
+        "model": "glm-5.2",
+        "field": "summary",
+        "type": "tone",
+        "why": "'In a beloved manner' is awkward English for «بأسلوبٍ محبَّب», which means 'in an endearing/affectionate way.'"
+      },
       {
         "model": "glm-5.2",
         "field": "reflection_prompts[1]",
         "type": "addition",
-        "why": "The English adds \"most want,\" which intensifies the Arabic that simply asks which quality you'd like your child to know first."
+        "why": "The English adds 'most', which intensifies the Arabic beyond its literal 'you would like your child to know first.'"
       }
     ],
-    "approved_by": null,
-    "revalidated_at": "2026-10-04T16:52:31+00:00"
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
+    "revalidated_at": "2026-10-07T07:42:53+00:00",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "901ccf04d04cfa600cdb2270c3c81b74fddef4fa9b93ef13a1e42b9584ab3471",
+      "reviewed_at": "2026-10-07T07:42:53+00:00",
+      "residual_low": [
+        {
+          "model": "glm-5.2",
+          "field": "summary",
+          "type": "tone",
+          "why": "'In a beloved manner' is awkward English for «بأسلوبٍ محبَّب», which means 'in an endearing/affectionate way.'"
+        },
+        {
+          "model": "glm-5.2",
+          "field": "reflection_prompts[1]",
+          "type": "addition",
+          "why": "The English adds 'most', which intensifies the Arabic beyond its literal 'you would like your child to know first.'"
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+    }
   }
 }

@@ -1,0 +1,47 @@
+{
+  "unit_id": "isl-22f68950",
+  "source_title": "حقوق الأولاد على الوالدين",
+  "source_author": "عماد أحمد عبدالعظيم",
+  "source_url": "https://www.alukah.net/Books/Files/Book_17337/BookFile/brotherandboys.pdf",
+  "pdf_sha256": "7fa6f88fbf1ba714947983c11cde1e8c67b576374ae06c08a081444743d1272c",
+  "pdf_pages_one_based": [
+    51,
+    52
+  ],
+  "printed_pages": [
+    50,
+    51
+  ],
+  "excerpt": "عن البراء رضي الله عنه، قال: رأيت النبي ﷺ والحسن بن علي على عاتقه، يقول: «اللهم إني أحبه فأحبه». أخرجه البخاري (٣٧٤٩) ومسلم (٢٤٢٢).\nقال البخاري: باب رحمة الولد وتقبيله ومعانقته.",
+  "excerpt_sha256": "01e4d8a3942e826359abda0911faf79373e3acd32b5e2cfda8dbdb7a20b95659",
+  "method": "Direct reading of rendered primary PDF pages; manual transcription of selected complete passage(s), removing vowel marks, footnote markers and line wraps, expanding honorific glyphs. Narrow excerpt only, not full page.",
+  "hadith_matches": [
+    {
+      "text": "اللهم إني أحبه فأحبه",
+      "citation": "صحيح البخاري — حديث ٣٧٤٩",
+      "exact_local_corpus_match": true
+    },
+    {
+      "text": "اللهم إني أحبه فأحبه",
+      "citation": "صحيح مسلم — حديث ٢٤٢٢",
+      "exact_local_corpus_match": true
+    }
+  ],
+  "approval": "Source evidence only; no scholar, human or model approval. Awaiting independent review.",
+  "validation": {
+    "guards": {
+      "check_kb_integrity.py": 0,
+      "check_kb_fidelity.py": 0,
+      "check_quran_citations.py": 0,
+      "check_hadith_citations.py": 0,
+      "check_scripture_coverage.py": 0,
+      "check_quran_rendering.py": 0
+    },
+    "pair_schema_exit": 0,
+    "canonical_sha256": "9d7309ee84d4e52d016d10501379db4760feb16045dccd50f60b55aea02b56ae",
+    "deterministic_parity_defects": [],
+    "queue": "awaiting-review",
+    "models_called": 0,
+    "approval": null
+  }
+}

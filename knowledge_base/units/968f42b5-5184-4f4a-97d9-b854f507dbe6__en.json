@@ -22,35 +22,29 @@
   "translated_from": "968f42b5-5184-4f4a-97d9-b854f507dbe6",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "structure",
-        "field": "text_simplified",
-        "arabic": "القرآن الكريم",
-        "english": "the Qur'an",
-        "why": "The honorific 'الكريم' (the Noble) is omitted, losing the reverential descriptor for the Qur'an.",
-        "severity": "low"
-      },
-      {
-        "type": "register",
-        "field": "text_simplified",
-        "arabic": "يجب",
-        "english": "It is essential",
-        "why": "The Arabic 'يجب' expresses a direct obligation ('must'), while 'essential' is a softer, more formal recommendation; the imperative force is weakened.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "التدريب المستمر",
-        "english": "Continuous practice",
-        "why": "The Arabic 'تدريب' means training, not practice; 'continuous training' would be more accurate.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "8ee2a2b2724dbdd1bd7fa7de538396c4753f4f18117a33f3fcb85a5955f1614f",
+      "reviewed_at": "2026-10-07T07:22:43+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-07T07:22:43+00:00",
+    "english_authors": [
+      "claude-opus-5.5"
+    ]
   }
 }

@@ -30,19 +30,29 @@
   "translated_from": "isl-27372b44",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "يحذر من شراء سيارة أو جهاز لمجرد رؤية الآخرين له",
-        "english": "It warns against buying a car or a device merely because others have it",
-        "why": "The Arabic says 'لمجرد رؤية الآخرين له' meaning 'just so that others see it' (i.e., showing off), but the English says 'merely because others have it', changing the motive from ostentation to envy or keeping up with others' possessions.",
-        "severity": "high"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "624f5ba1934eb01b979ffc7e7d3e4280e11eb11804e1ae4b75edfe34372d3f76",
+      "reviewed_at": "2026-10-07T07:29:32+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-07T07:29:32+00:00",
+    "english_authors": [
+      "claude-opus-5.5"
+    ]
   }
 }

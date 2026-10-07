@@ -1,0 +1,256 @@
+{
+  "schema": "tg.lesson11.canonical-review/1",
+  "source_fix_commit": "8d026a14b8d0aded4fc8f02ff4b2f75472947fa5",
+  "lesson_id": "lesson_7-9_aqeedah_fundamentals_11",
+  "reviewed_at": "2026-10-07T09:13:28+00:00",
+  "content_sha256": "5b8150f5b1387c8b6b8c4215b9ef09d81ed06c448ecfe2d8a0ef7cc5bb582129",
+  "canonical_prompt_version": "dfa8a5f39718",
+  "canonical_system_sha256": "dfa8a5f39718eaadde2dc124d6b65d443e032001c39f01cf5f6a3300e4e03dd8",
+  "reviewed_fields": {
+    "title": {
+      "ar": "«مَن خلق الله؟» حين يسأل السؤال المحيّر",
+      "en": "«Who Created Allah?» When They Ask the Puzzling Question"
+    },
+    "summary": {
+      "ar": "قد يسألك طفلك: «إذا كان الله خلق كل شيء، فمن خلق الله؟». نقترح أن تستمع إلى سؤاله بهدوء، وأن تطلب منه أن يوضح ما يريد فهمه. لا تحكم على إيمانه أو مشاعره من سؤال واحد، ولا تصف كل سؤال بأنه وسوسة.\n\nأجب بكلمات بسيطة عن المعنى الوارد في دعاء النبي ﷺ: أن الله هو الأول، وليس قبله شيء (صحيح مسلم — حديث ٢٧١٣؛ الصفحة العامة 2713a). اقتصر على هذا المعنى، ولا تضف تشبيهات أو تفسيرات من عندك. لا يلزم أن تطيل الجواب أو أن تحسم كل سؤال في جلسة واحدة.\n\nوإن ألحّت عليه الفكرة، ففي الحديث الذي يذكر السؤال عن خالق الرب توجيه إلى الاستعاذة بالله والكف عن متابعة الفكرة (صحيح البخاري — حديث ٣٢٧٦). يمكنك أن تشرح له هذا التوجيه بهدوء. ثم اقترح نشاطًا آخر معه، وابق مستعدًا للاستماع إليه؛ اختيار النشاط وطريقة الحوار اقتراحان تربويان من التطبيق، وليسا من لفظ الحديث.\n\nإذا سألك عما لا تعرف جوابه، فلا تخترع جوابًا. قل: «سأسأل من يعرف، ثم أخبرك»، وارجع إلى عالم موثوق. اختر كلمات قصيرة ولطيفة، واترك له فرصة للتعبير عما يريد فهمه. هذه اقتراحات للتعامل مع السؤال، وليست حكمًا على حالة الطفل أو وعدًا بزوال انشغاله.",
+      "en": "Your child may ask: «If Allah created everything, who created Allah?» We suggest listening calmly and asking them to explain what they want to understand. Do not judge their faith or feelings from one question, or label every question as an intrusive whisper.\n\nExplain in simple words the meaning in the Prophet's ﷺ supplication: Allah is the First, and there is nothing before Him (Sahih Muslim 2713; public page 2713a). Keep to this meaning and avoid adding comparisons or explanations of your own. You do not need to give a long answer or settle every question in one sitting.\n\nIf the thought persists, the hadith that mentions the question about the Lord's creator directs the person to seek refuge in Allah and stop pursuing the thought (Sahih al-Bukhari 3276). You can explain this guidance calmly. Then suggest another activity together and remain ready to listen; choosing an activity and how to talk with the child are parenting suggestions from the app, not the wording of the hadith.\n\nIf they ask something you do not know, do not invent an answer. Say: «I'll ask someone who knows, then tell you», and turn to a trusted scholar. Choose short, kind words and give them an opportunity to explain what they want to understand. These are suggestions for responding to the question, not a judgment about the child's condition or a promise that their preoccupation will end."
+    },
+    "try_this": {
+      "ar": "اليوم: جهّز جوابًا قصيرًا يشرح معنى أن الله هو الأول وليس قبله شيء، وخطوة هادئة للاستماع إلى طفلك. راجع النصين المذكورين، ولا تضف تشبيهًا أو قولًا لا تعرف مصدره.",
+      "en": "Today: prepare a short answer explaining that Allah is the First and nothing is before Him, and a calm way to listen to your child. Check the two cited narrations and avoid adding a comparison or statement whose source you do not know."
+    },
+    "reflection_prompts": {
+      "ar": [
+        "ما الذي يقلقك أكثر حين يسأل طفلك عن الله: صعوبة السؤال أم خوفك من ألّا تحسن الجواب؟"
+      ],
+      "en": [
+        "What worries you more when your child asks about Allah: the difficulty of the question, or your fear of not answering well?"
+      ]
+    }
+  },
+  "input_file_sha256": {
+    "knowledge_base/curriculum/lessons/lesson_7-9_aqeedah_fundamentals_11.json": "5093247d44a7573221546c965cde3a4840dd6b3e0a5355dafd878a1397521052",
+    "knowledge_base/curriculum/i18n/en/lessons/lesson_7-9_aqeedah_fundamentals_11.json": "02d664c7f6358be529b1c0521b0437b82f2a579a8bbb07070097c9b6e8de6e7c"
+  },
+  "specialist_source_packet": {
+    "lesson_pair_sha256": "5b8150f5b1387c8b6b8c4215b9ef09d81ed06c448ecfe2d8a0ef7cc5bb582129",
+    "source_fix_commit": "8d026a14b8d0aded4fc8f02ff4b2f75472947fa5",
+    "canonical_prompt_version": "dfa8a5f39718",
+    "primary_source_proof": {
+      "schema": "tg.lesson11.primary-source-proof/1",
+      "lesson_id": "lesson_7-9_aqeedah_fundamentals_11",
+      "unit_id": "aqe-who-created-allah-source-01",
+      "base_commit": "db07c35f36395ce5cee7a1344442d77c996d95bd",
+      "verified_on": "2026-10-07",
+      "method": "Arabic excerpts copied exactly from the retrieved primary narration pages and checked against the unmodified local canonical skeletons with check_hadith_citations.check_one; page delivery via agent-reach Jina reader. This is text/number verification, not human or scholar approval.",
+      "canon_path": "ops/data/hadith_index.json.gz",
+      "canon_sha256": "a2bb58b489022cfa585f0f2c3d8c3a08db74618b503f13ea09683987e76c57c0",
+      "sources": [
+        {
+          "book": "مسلم",
+          "local_number": 2713,
+          "public_url": "https://sunnah.com/muslim:2713a",
+          "public_number": "2713a",
+          "quote_ar": "اللَّهُمَّ أَنْتَ الأَوَّلُ فَلَيْسَ قَبْلَكَ شَىْءٌ",
+          "quote_sha256": "18d553520c65bb65f28d8886046e03b46928c7f52733ba69fda9060d88a15d89",
+          "reader_snapshot_sha256": "10c3b75c28f1f9366a86dcfb599e6dde03f4c09976c0556d233f0a5e6d6ccfdf"
+        },
+        {
+          "book": "البخاري",
+          "local_number": 3276,
+          "public_url": "https://sunnah.com/bukhari:3276",
+          "public_number": "3276",
+          "quote_ar": "يَأْتِي الشَّيْطَانُ أَحَدَكُمْ فَيَقُولُ مَنْ خَلَقَ كَذَا مَنْ خَلَقَ كَذَا حَتَّى يَقُولَ مَنْ خَلَقَ رَبَّكَ فَإِذَا بَلَغَهُ فَلْيَسْتَعِذْ بِاللَّهِ، وَلْيَنْتَهِ",
+          "quote_sha256": "2a359e7d5c731f034da117872aed95f2a63f95945b73474c6a6630f482340569",
+          "reader_snapshot_sha256": "a57f931a655e90f420607276ef6466a36e703cb16acb5fc051f8ba024cc7e787"
+        }
+      ],
+      "approval": {
+        "model_review_performed": false,
+        "human_approval": null,
+        "needs_scholar_review": true
+      }
+    },
+    "reference_unit": {
+      "id": "aqe-who-created-allah-source-01",
+      "domain": "aqeedah",
+      "source_file": "lesson11.source-proof.json",
+      "source_url": "https://sunnah.com/muslim:2713a",
+      "title": "سؤال من خلق الله: نصان من الصحيحين وإرشاد للأهل",
+      "language": "ar",
+      "age_group": "7-9",
+      "behavior_type": "التعامل الهادئ مع أسئلة الطفل عن الله",
+      "intervention_type": "إرشادي",
+      "severity": "خفيف",
+      "reference_type": "حديث",
+      "reference_info": "صحيح مسلم — حديث ٢٧١٣ (2713a في الصفحة العامة)؛ صحيح البخاري — حديث ٣٢٧٦",
+      "text_original": "صحيح مسلم — حديث ٢٧١٣ (الصفحة العامة 2713a):\nاللَّهُمَّ أَنْتَ الأَوَّلُ فَلَيْسَ قَبْلَكَ شَىْءٌ\n\nصحيح البخاري — حديث ٣٢٧٦:\nيَأْتِي الشَّيْطَانُ أَحَدَكُمْ فَيَقُولُ مَنْ خَلَقَ كَذَا مَنْ خَلَقَ كَذَا حَتَّى يَقُولَ مَنْ خَلَقَ رَبَّكَ فَإِذَا بَلَغَهُ فَلْيَسْتَعِذْ بِاللَّهِ، وَلْيَنْتَهِ",
+      "text_simplified": "ورد في دعاء النبي ﷺ: «اللَّهُمَّ أَنْتَ الأَوَّلُ فَلَيْسَ قَبْلَكَ شَىْءٌ» (صحيح مسلم — حديث ٢٧١٣). يدل هذا على أن الله هو الأول، وليس قبله شيء. وعند السؤال الملحّ عن خالق الرب، ورد: «يَأْتِي الشَّيْطَانُ أَحَدَكُمْ فَيَقُولُ مَنْ خَلَقَ كَذَا مَنْ خَلَقَ كَذَا حَتَّى يَقُولَ مَنْ خَلَقَ رَبَّكَ فَإِذَا بَلَغَهُ فَلْيَسْتَعِذْ بِاللَّهِ، وَلْيَنْتَهِ» (صحيح البخاري — حديث ٣٢٧٦).\n\nإرشاد التطبيق للأهل: استمع إلى سؤال الطفل بهدوء، واشرح المعنى بكلمات بسيطة. لا تحكم على إيمانه أو مشاعره من سؤال واحد، ولا تصف كل سؤال بأنه وسوسة. عند الفكرة الملحّة، ذكّره بالاستعاذة والكف عن متابعة الفكرة. الرجوع إلى أهل العلم عند عدم معرفة الجواب، واختيار نشاط آخر مع الطفل، اقتراحان تربويان من التطبيق؛ لا ينسبان إلى لفظ الحديث ولا إلى دراسة نفسية.",
+      "labels": [
+        "عقيدة",
+        "أسئلة الأطفال",
+        "إرشاد التطبيق"
+      ],
+      "keywords": [
+        "من خلق الله",
+        "الأول",
+        "الاستعاذة"
+      ],
+      "created_at": "2026-10-07T08:25:33+00:00",
+      "updated_at": "2026-10-07T08:25:33+00:00",
+      "version": "1.0.0",
+      "needs_ocr": false,
+      "source_meta": {
+        "source_title": "صحيح مسلم وصحيح البخاري",
+        "source_author": "مسلم بن الحجاج ومحمد بن إسماعيل البخاري",
+        "source_url": "https://sunnah.com/muslim:2713a"
+      },
+      "source_kind": "authored_guidance",
+      "authored_references": [
+        "صحيح مسلم — حديث ٢٧١٣؛ https://sunnah.com/muslim:2713a",
+        "صحيح البخاري — حديث ٣٢٧٦؛ https://sunnah.com/bukhari:3276"
+      ],
+      "source_note": "إرشاد مؤلف من التطبيق، 2026-10-07، قائم على نصين موثقين لفظًا ورقمًا في الأصل أعلاه. النصان منقولان دون إعادة صياغة من الصفحتين العامتين ومطابقان للفهرس المحلي غير المعدّل. لا تعتمد هذه الوحدة على ملخصات OCR أو قرارات مراجعة نماذج. اقتراحات التعامل مع الطفل من التطبيق، لا نص الحديث ولا نتائج سريرية. الإثبات وخريطة الادعاءات: ops/data/deepen_paths/lesson11.source-proof.json وlesson11.source-proof.md. لا اعتماد بشري أو شرعي ولا مراجعة نماذج لهذه المسودة.",
+      "translation": {
+        "needs_scholar_review": true,
+        "review_verdict": "pending",
+        "approved_by": null,
+        "draft_status": "awaiting-review"
+      }
+    },
+    "claim_boundaries": "Theology and the described thought guidance derive from the two exact primary excerpts. Calm listening, activity, referrals and advice on responding are app-authored guidance, not empirical clinical claims. Review critically; this context does not prescribe a verdict. No human/scholar approval is implied."
+  },
+  "english_authors": [
+    "claude-opus-5-5",
+    "openai:codex"
+  ],
+  "reviews": [
+    {
+      "requested_model": "glm-5.2",
+      "returned_model": "glm-5.2",
+      "response_id": "chatcmpl-440",
+      "response_created": 1791364323,
+      "elapsed_seconds": 28.49,
+      "usage": {
+        "prompt_tokens": 4362,
+        "completion_tokens": 1875,
+        "total_tokens": 6237,
+        "prompt_tokens_details": {
+          "cached_tokens": 11
+        }
+      },
+      "request_sha256": "48b029b40b89832f5f6ad1eb5b602d701a5e0e38958b050f76a01d9db2982446",
+      "raw_record_sha256": "fee407d22ce4b337060d8df99906b828762f325c8be5dd407065a5bbc65b7f0e",
+      "raw_content": "```json\n{\"items\": [{\"id\": \"lesson_7-9_aqeedah_fundamentals_11\", \"defects\": []}]}\n```",
+      "parsed_verdict": {
+        "items": [
+          {
+            "id": "lesson_7-9_aqeedah_fundamentals_11",
+            "defects": []
+          }
+        ]
+      },
+      "normalized_defects": []
+    },
+    {
+      "requested_model": "deepseek-v4-pro",
+      "returned_model": "deepseek-v4-pro",
+      "response_id": "chatcmpl-423",
+      "response_created": 1791364363,
+      "elapsed_seconds": 40.7,
+      "usage": {
+        "prompt_tokens": 4118,
+        "completion_tokens": 7303,
+        "total_tokens": 11421,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "request_sha256": "3ba962e9b018edf33fd8776fc515d924dcf838817c609e5fb77a97c1b41057b7",
+      "raw_record_sha256": "c914bd730a74cd3d7073cb500d6abf141e2269a0f4e0734bb00289eefd261195",
+      "raw_content": "{\"items\": [{\"id\": \"lesson_7-9_aqeedah_fundamentals_11\", \"defects\": []}]}",
+      "parsed_verdict": {
+        "items": [
+          {
+            "id": "lesson_7-9_aqeedah_fundamentals_11",
+            "defects": []
+          }
+        ]
+      },
+      "normalized_defects": []
+    }
+  ],
+  "path": {
+    "id": "path_7-9_aqeedah_fundamentals",
+    "content_sha256": "6394507cc6f7fce2a27a95470ca5d1ef005269736653c61e431e0f4dea5ec3f9",
+    "approval_state": "valid",
+    "unchanged_from": "db07c35f36395ce5cee7a1344442d77c996d95bd",
+    "new_review_needed": false
+  },
+  "acceptance": {
+    "canonical_model_parity": "clean",
+    "source_text_proof": "exact primary excerpts and unchanged local canon; see primary-source proof",
+    "scholar_signoff": false,
+    "human_approval": null,
+    "needs_scholar_review": true,
+    "no_text_changes": true,
+    "concurrency": "shared /tmp/tg-ollama-review.lock; maximum one active request in this worker",
+    "meaning": "Two actual independent model-family parity reviews of this exact pair; not specialist or human signoff."
+  },
+  "validation": {
+    "focused_tests": {
+      "command": "python3 -B -m pytest backend/tests/test_lesson11_source_proof.py backend/tests/test_deepen_paths.py -q -p no:cacheprovider --override-ini addopts=",
+      "exit": 0,
+      "passed": 54
+    },
+    "guards": [
+      {
+        "name": "check_kb_integrity.py",
+        "exit": 0
+      },
+      {
+        "name": "check_kb_fidelity.py",
+        "exit": 0
+      },
+      {
+        "name": "review_en_parity.py",
+        "exit": 0
+      },
+      {
+        "name": "check_quran_citations.py",
+        "exit": 0
+      },
+      {
+        "name": "check_hadith_citations.py",
+        "exit": 0
+      },
+      {
+        "name": "check_scripture_coverage.py",
+        "exit": 0
+      },
+      {
+        "name": "check_quran_rendering.py",
+        "exit": 0
+      },
+      {
+        "name": "check_curriculum_schema.py",
+        "exit": 0
+      },
+      {
+        "name": "check_adhkar_integrity.py",
+        "exit": 0
+      },
+      {
+        "name": "check_programs.py",
+        "exit": 0
+      },
+      {
+        "name": "ruff",
+        "exit": 0
+      }
+    ],
+    "diff_check_exit": 0,
+    "build_run": false,
+    "push_run": false
+  }
+}

@@ -28,50 +28,33 @@
   "translated_from": "med-ccf5e011",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "بعض الألعاب البسيطة",
-        "english": "some simple actions",
-        "why": "الألعاب means games/play activities, not actions; the English loses the playful developmental sense.",
-        "severity": "medium"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "الضحك والصراخ",
-        "english": "laughing and crying",
-        "why": "الصراخ means screaming/shrieking, not crying (بكاء).",
-        "severity": "medium"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "رفع ذيله",
-        "english": "lift their bottom",
-        "why": "ذيله literally means his tail; bottom is an interpretive substitution that is not in the Arabic.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text_simplified",
-        "arabic": "يستخدم يديه لمساعدته عند الجلوس",
-        "english": "uses their hands to help when sitting",
-        "why": "The Arabic says to help him (himself) when sitting; English drops the object, making it less precise.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null,
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
     "english_authors": [
       "mistral-large-3:675b",
       "claude-opus-5.5"
     ],
     "fixer_model": "claude-opus-5.5",
     "fixed_at": "2026-10-04T18:17:56+00:00",
-    "manual_fix_note": "2026-10-04 PR #20 review: the CDC 6-month milestones replace 'moves slowly backward and lifts their bottom', which are not milestones"
+    "manual_fix_note": "2026-10-04 PR #20 review: the CDC 6-month milestones replace 'moves slowly backward and lifts their bottom', which are not milestones",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "5de773fecc409b301a9f67757b0b86ba199d6bd4ad5ad3fb67ab7ac4c3c73ffd",
+      "reviewed_at": "2026-10-07T07:22:53+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-07T07:22:53+00:00"
   }
 }

@@ -22,7 +22,7 @@
   "version": "1.0.0",
   "created_at": "2026-09-12T19:00:00",
   "updated_at": "2026-09-12T19:00:00",
-  "approved_by": null,
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
   "language": "en",
   "source_language": "ar",
   "translation": {
@@ -34,16 +34,41 @@
       "quoted_arabic": false,
       "reviewer_model": false
     },
-    "review_verdict": "pending",
+    "review_verdict": "low_only",
     "review_defects": [
       {
         "model": "glm-5.2",
         "field": "description",
         "type": "meaning",
-        "why": "حظر means a ban or prohibition, but 'guidance' softens it into a recommendation rather than a rule."
+        "why": "«حظر» denotes a ban/prohibition, which is stronger than «guidance»; «strict» and «zero» are additions not present in the Arabic."
       }
     ],
-    "approved_by": null,
-    "revalidated_at": "2026-10-04T11:26:06+00:00"
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
+    "revalidated_at": "2026-10-07T07:29:59+00:00",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "aa1d34155b335689cad449fcc41d7a9fcaa4305e43a8cb0a6333885f801152be",
+      "reviewed_at": "2026-10-07T07:29:59+00:00",
+      "residual_low": [
+        {
+          "model": "glm-5.2",
+          "field": "description",
+          "type": "meaning",
+          "why": "«حظر» denotes a ban/prohibition, which is stronger than «guidance»; «strict» and «zero» are additions not present in the Arabic."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+    },
+    "english_authors": [
+      "claude-opus-5-5"
+    ]
   }
 }

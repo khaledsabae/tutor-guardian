@@ -27,19 +27,55 @@
   "translated_from": "isl-9933c64e",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
+    "review_verdict": "low_only",
     "review_defects": [
       {
-        "type": "meaning_change",
+        "model": "glm-5.2",
+        "field": "title",
+        "type": "meaning",
+        "why": "«ابني» means 'my son,' not the gender-neutral 'my child.'"
+      },
+      {
+        "model": "glm-5.2",
         "field": "text_simplified",
-        "arabic": "«ليس المؤمن بالطعّان ولا اللعّان ولا الفاحش ولا البذيء»",
-        "english": "«ليس المؤمن بالطعّان ولا اللعّان ولا الفاحش ولا البذيء»",
-        "why": "The hadith is left untranslated in the English text. The English reader cannot understand the teaching, so the core religious instruction is not conveyed. The translation should provide an English rendering of the hadith's meaning.",
-        "severity": "high"
+        "type": "meaning",
+        "why": "«بهدوء» means 'calmly' rather than 'gently,' a subtle but distinct nuance in parenting guidance."
       }
     ],
-    "approved_by": null
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "1e2579e3feb1a05673fd9475216f522799f48534f510c1808a62423330ad6961",
+      "reviewed_at": "2026-10-07T07:25:20+00:00",
+      "residual_low": [
+        {
+          "model": "glm-5.2",
+          "field": "title",
+          "type": "meaning",
+          "why": "«ابني» means 'my son,' not the gender-neutral 'my child.'"
+        },
+        {
+          "model": "glm-5.2",
+          "field": "text_simplified",
+          "type": "meaning",
+          "why": "«بهدوء» means 'calmly' rather than 'gently,' a subtle but distinct nuance in parenting guidance."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-07T07:25:20+00:00",
+    "english_authors": [
+      "claude-opus-5.5"
+    ]
   }
 }

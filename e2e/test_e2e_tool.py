@@ -1,6 +1,10 @@
 """Tests for e2e/e2e_tool.py — run: python3 -m unittest discover -s e2e -v"""
 import json
 import re
+import os
+import subprocess
+import sys
+import xml.etree.ElementTree as ET
 import tempfile
 import unittest
 from pathlib import Path
@@ -205,6 +209,110 @@ class LogcatGateTest(unittest.TestCase):
             rc = t.main(["logcat-gate", str(path), "--min-lines", "200", "--out", str(Path(d) / "g.txt")])
             self.assertEqual(rc, 1)
 
+
+
+class AnalyticsIsolationTest(unittest.TestCase):
+    ANDROID = "{http://schemas.android.com/apk/res/android}"
+    FLAG = "firebase_analytics_collection_deactivated"
+
+    def run_helper(self, path):
+        return subprocess.run(
+            [sys.executable, "-S", str(Path(t.__file__).resolve()),
+             "deactivate-analytics", "--manifest", str(path)],
+            capture_output=True, text=True,
+        )
+
+    def test_head_and_old_baseline_use_head_artifact_helper(self):
+        # Execute the workflow's injection script, with only the head helper
+        # downloaded outside the old checkout. No baseline e2e_tool exists.
+        workflow = (Path(__file__).resolve().parents[1] /
+                    ".github/workflows/mobile-e2e.yml").read_text()
+        producer = workflow.split("  keystore:\n", 1)[1].split("  build:\n", 1)[0]
+        self.assertIn("ref: ${{ github.event.pull_request.head.sha || github.sha }}", producer)
+        self.assertIn("sparse-checkout: e2e/e2e_tool.py", producer)
+        self.assertIn("sparse-checkout-cone-mode: false", producer)
+        self.assertIn("name: e2e-ci-helper", producer)
+        self.assertIn("path: e2e/e2e_tool.py", producer)
+        self.assertIn("if-no-files-found: error", producer)
+        build = workflow.split("  build:\n", 1)[1].split("  e2e:\n", 1)[0]
+        self.assertIn("needs: keystore", build)
+        self.assertIn("- variant: head", build)
+        self.assertIn("- variant: baseline", build)
+        self.assertIn("ref: ${{ matrix.ref }}", build)
+        self.assertIn("name: e2e-ci-helper\n          path: ${{ runner.temp }}/ci-helper", build)
+        self.assertIn("'$OUT/ci-config.txt'".replace("'", '"'), build)
+        self.assertIn("'firebase_analytics_collection_deactivated=true'", build)
+        marker = "      - name: Deactivate Firebase Analytics for CI APKs\n"
+        self.assertIn(marker, workflow)
+        section = workflow.split(marker, 1)[1].split("      - ", 1)[0]
+        self.assertNotIn("if:", section)
+        self.assertNotIn("continue-on-error", section)
+        script = section.split("        run: |\n", 1)[1]
+        script = "\n".join(line[10:] for line in script.splitlines())
+        self.assertLess(workflow.index(marker), workflow.index("      - name: Build the release APK"))
+        for variant in ("head", "baseline"):
+            with self.subTest(variant=variant), tempfile.TemporaryDirectory() as tmp:
+                root = Path(tmp)
+                helper = root / "ci-helper"
+                helper.mkdir()
+                (helper / "e2e_tool.py").write_bytes(Path(t.__file__).read_bytes())
+                mobile = root / variant / "mobile"
+                manifest = mobile / "android/app/src/main/AndroidManifest.xml"
+                manifest.parent.mkdir(parents=True)
+                manifest.write_text('<manifest xmlns:android="http://schemas.android.com/apk/res/android"><application android:name="${applicationName}" /></manifest>')
+                result = subprocess.run(["bash", "-e", "-c", script], cwd=mobile,
+                                        env={**os.environ, "RUNNER_TEMP": tmp},
+                                        capture_output=True, text=True)
+                self.assertEqual(result.returncode, 0, result.stderr)
+                flag = ET.parse(manifest).find("application/meta-data")
+                self.assertEqual(flag.get(self.ANDROID + "name"), self.FLAG)
+                self.assertEqual(flag.get(self.ANDROID + "value"), "true")
+                # Fail closed in the actual bash step: an injection error must
+                # prevent any subsequent build command from being reached.
+                manifest.write_text("<manifest/>")
+                reached = root / "build-started"
+                failed = subprocess.run(["bash", "-e", "-c", script +
+                                         '\ntouch "' + str(reached) + '"'],
+                                        cwd=mobile, env={**os.environ, "RUNNER_TEMP": tmp},
+                                        capture_output=True, text=True)
+                self.assertEqual(failed.returncode, 1, failed.stderr)
+                self.assertFalse(reached.exists())
+
+    def test_rejects_invalid_manifest_without_changing_it(self):
+        cases = ["<manifest/>", "<manifest><application/><application/></manifest>",
+                 "<manifest>",
+                 '<manifest xmlns:android="http://schemas.android.com/apk/res/android"><application><meta-data android:name="FLAG"/><meta-data android:name="FLAG"/></application></manifest>',
+                 '<manifest xmlns:android="http://schemas.android.com/apk/res/android"><application><meta-data android:name="FLAG" android:resource="@bool/analytics"/></application></manifest>']
+        for source in cases:
+            with self.subTest(source=source), tempfile.TemporaryDirectory() as tmp:
+                path = Path(tmp) / "AndroidManifest.xml"
+                path.write_text(source.replace("FLAG", self.FLAG))
+                before = path.read_bytes()
+                result = self.run_helper(path)
+                self.assertEqual(result.returncode, 1, result.stderr)
+                self.assertEqual(path.read_bytes(), before)
+
+    def test_missing_file_fails(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            self.assertEqual(self.run_helper(Path(tmp) / "missing.xml").returncode, 1)
+
+    def test_preserves_attributes_components_comments_and_is_idempotent(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "AndroidManifest.xml"
+            path.write_text('<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="example"><!--keep--><application android:name="${applicationName}" android:label="App"><activity android:name=".MainActivity"/><meta-data android:name="other" android:value="yes"/><meta-data android:name="FLAG" android:value="false" android:enabled="true"/></application></manifest>'.replace("FLAG", self.FLAG))
+            self.assertEqual(self.run_helper(path).returncode, 0)
+            app = ET.parse(path).find("application")
+            self.assertEqual(app.attrib, {self.ANDROID + "name": "${applicationName}", self.ANDROID + "label": "App"})
+            self.assertEqual(app.find("activity").get(self.ANDROID + "name"), ".MainActivity")
+            metas = app.findall("meta-data")
+            self.assertEqual(len(metas), 2)
+            self.assertEqual(metas[0].get(self.ANDROID + "value"), "yes")
+            self.assertEqual(metas[1].get(self.ANDROID + "value"), "true")
+            self.assertEqual(metas[1].get(self.ANDROID + "enabled"), "true")
+            self.assertIn("<!--keep-->", path.read_text())
+            before = path.read_bytes()
+            self.assertEqual(self.run_helper(path).returncode, 0)
+            self.assertEqual(path.read_bytes(), before)
 
 if __name__ == "__main__":
     unittest.main()

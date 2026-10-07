@@ -30,19 +30,43 @@
   "translated_from": "isl-8bf4e7a3",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
+    "review_verdict": "low_only",
     "review_defects": [
       {
-        "type": "meaning_change",
-        "field": "title",
-        "arabic": "العدل بين الأبناء في التربية",
-        "english": "Al-ʿAdl bayna al-Abna’ fi al-Tarbiyah",
-        "why": "The title is transliterated rather than translated, so the meaning 'Justice between children in upbringing' is not conveyed to English readers.",
-        "severity": "medium"
+        "model": "deepseek-v4-pro",
+        "field": "text_simplified",
+        "type": "leakage",
+        "why": "The Arabic «المربّي» (the educator) is transliterated as 'Almorabbi' without translation; if it is not a proper noun, it should be rendered as 'the educator'."
       }
     ],
-    "approved_by": null
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "1e29c5695163b0eed7dda73825f99b3418e9522b2629bbb76a55b61fe74d134e",
+      "reviewed_at": "2026-10-07T07:23:30+00:00",
+      "residual_low": [
+        {
+          "model": "deepseek-v4-pro",
+          "field": "text_simplified",
+          "type": "leakage",
+          "why": "The Arabic «المربّي» (the educator) is transliterated as 'Almorabbi' without translation; if it is not a proper noun, it should be rendered as 'the educator'."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-07T07:23:30+00:00",
+    "english_authors": [
+      "claude-opus-5.5"
+    ]
   }
 }

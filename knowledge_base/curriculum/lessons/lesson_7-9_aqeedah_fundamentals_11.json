@@ -1,0 +1,55 @@
+{
+  "id": "lesson_7-9_aqeedah_fundamentals_11",
+  "path_id": "path_7-9_aqeedah_fundamentals",
+  "title": "«مَن خلق الله؟» حين يسأل السؤال المحيّر",
+  "age_group": "7-9",
+  "domain": "aqeedah",
+  "unit_ids": [
+    "aqe-who-created-allah-source-01"
+  ],
+  "summary": "قد يسألك طفلك: «إذا كان الله خلق كل شيء، فمن خلق الله؟». نقترح أن تستمع إلى سؤاله بهدوء، وأن تطلب منه أن يوضح ما يريد فهمه. لا تحكم على إيمانه أو مشاعره من سؤال واحد، ولا تصف كل سؤال بأنه وسوسة.\n\nأجب بكلمات بسيطة عن المعنى الوارد في دعاء النبي ﷺ: أن الله هو الأول، وليس قبله شيء (صحيح مسلم — حديث ٢٧١٣؛ الصفحة العامة 2713a). اقتصر على هذا المعنى، ولا تضف تشبيهات أو تفسيرات من عندك. لا يلزم أن تطيل الجواب أو أن تحسم كل سؤال في جلسة واحدة.\n\nوإن ألحّت عليه الفكرة، ففي الحديث الذي يذكر السؤال عن خالق الرب توجيه إلى الاستعاذة بالله والكف عن متابعة الفكرة (صحيح البخاري — حديث ٣٢٧٦). يمكنك أن تشرح له هذا التوجيه بهدوء. ثم اقترح نشاطًا آخر معه، وابق مستعدًا للاستماع إليه؛ اختيار النشاط وطريقة الحوار اقتراحان تربويان من التطبيق، وليسا من لفظ الحديث.\n\nإذا سألك عما لا تعرف جوابه، فلا تخترع جوابًا. قل: «سأسأل من يعرف، ثم أخبرك»، وارجع إلى عالم موثوق. اختر كلمات قصيرة ولطيفة، واترك له فرصة للتعبير عما يريد فهمه. هذه اقتراحات للتعامل مع السؤال، وليست حكمًا على حالة الطفل أو وعدًا بزوال انشغاله.",
+  "try_this": "اليوم: جهّز جوابًا قصيرًا يشرح معنى أن الله هو الأول وليس قبله شيء، وخطوة هادئة للاستماع إلى طفلك. راجع النصين المذكورين، ولا تضف تشبيهًا أو قولًا لا تعرف مصدره.",
+  "order": 11,
+  "estimated_minutes": 3,
+  "reflection_prompts": [
+    "ما الذي يقلقك أكثر حين يسأل طفلك عن الله: صعوبة السؤال أم خوفك من ألّا تحسن الجواب؟"
+  ],
+  "warning_flags": [],
+  "needs_professional_followup": false,
+  "is_published": true,
+  "version": "1.0.0",
+  "created_at": "2026-10-07T07:19:31",
+  "updated_at": "2026-10-07T08:25:33+00:00",
+  "approved_by": null,
+  "translation": {
+    "needs_scholar_review": true,
+    "review_verdict": "pending",
+    "approved_by": null,
+    "draft_status": "awaiting-scholar-review",
+    "content_provenance": {
+      "reference_unit_ids": [
+        "aqe-who-created-allah-source-01"
+      ],
+      "primary_sources": [
+        {
+          "book": "Sahih Muslim",
+          "number": 2713,
+          "public_url": "https://sunnah.com/muslim:2713a"
+        },
+        {
+          "book": "Sahih al-Bukhari",
+          "number": 3276,
+          "public_url": "https://sunnah.com/bukhari:3276"
+        }
+      ],
+      "theology": "source_derived",
+      "persistent_thought_guidance": "source_derived",
+      "parenting_guidance": "app_authored",
+      "clinical_claims": false,
+      "proof": "ops/data/deepen_paths/lesson11.source-proof.json",
+      "human_approval": null,
+      "status": "independent-dual-model-review-passed; scholar/human review pending",
+      "canonical_review": "ops/data/deepen_paths/lesson11.canonical-review.json"
+    }
+  }
+}

@@ -23,23 +23,55 @@
   "version": "1.0.0",
   "created_at": "2026-06-08T19:00:00",
   "updated_at": "2026-06-08T19:00:00",
-  "approved_by": null,
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
   "language": "en",
   "source_language": "ar",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
     "scholar_signals": {
       "keyword": false,
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "clean",
-    "review_defects": [],
-    "approved_by": null,
-    "revalidated_at": "2026-08-13T17:53:41.448578+00:00",
+    "review_verdict": "low_only",
+    "review_defects": [
+      {
+        "model": "glm-5.2",
+        "field": "summary",
+        "type": "omission",
+        "why": "The adjective 'اليومية' (daily) is dropped, though 'every morning' partially conveys the idea."
+      }
+    ],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
+    "revalidated_at": "2026-10-07T07:50:10+00:00",
     "fixed_at": "2026-08-13T17:53:41.448598+00:00",
-    "fixer_model": "mistral-large-3:675b"
+    "fixer_model": "mistral-large-3:675b",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "5da1127432f1cd54c7ba0cab9c4b30c6af10d6ba8dc4fe202b48b9ae99e77c07",
+      "reviewed_at": "2026-10-07T07:50:10+00:00",
+      "residual_low": [
+        {
+          "model": "glm-5.2",
+          "field": "summary",
+          "type": "omission",
+          "why": "The adjective 'اليومية' (daily) is dropped, though 'every morning' partially conveys the idea."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+    },
+    "english_authors": [
+      "claude-opus-5.5"
+    ]
   }
 }

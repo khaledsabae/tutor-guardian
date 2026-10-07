@@ -1,0 +1,31 @@
+{
+  "id": "cyb-who-screen-under5-2019",
+  "title": "وقت الشاشة الخامل للرضع والأطفال: إرشادات WHO لعام 2019",
+  "source_file": "WHO_Physical_Activity_Sedentary_Behaviour_Sleep_Under5_2019",
+  "source_url": "https://www.who.int/publications/i/item/9789241550536",
+  "reference_info": "WHO. Guidelines on physical activity, sedentary behaviour and sleep for children under 5 years of age (2019). ISBN 9789241550536. Printed p. 8 (PDF p. 20), Recommendations: Sedentary behaviour. Official full PDF: https://iris.who.int/server/api/core/bitstreams/60a1cbaa-2bef-4251-9557-e52ce22112b3/content",
+  "text_original": "Guidelines on physical activity, sedentary behaviour and sleep for children under 5 years of age\n© World Health Organization 2019\n\nInfants (less than 1 year)\n\nScreen time is not recommended.\n\nFor 1-year-olds, sedentary screen time (such as watching TV or videos, playing computer games) is not recommended.\n\nFor those aged 2 years, sedentary screen time should be no more than 1 hour; less is better.\n\nWhen sedentary, engaging in reading and storytelling with a caregiver is encouraged.",
+  "text_simplified": "وفق إرشادات WHO لعام 2019، لا يُوصى بوقت الشاشة للرضع دون سنة، ولا بوقت الشاشة الخامل للأطفال بعمر سنة، مثل مشاهدة التلفاز والفيديو أو ألعاب الحاسوب. عند عمر سنتين، ينبغي ألا يزيد وقت الشاشة الخامل على ساعة يوميًا، والأقل أفضل. وعند الجلوس، تُشجّع القراءة وسرد القصص مع مقدم الرعاية. هذه توصيات WHO المحددة بالعمر، وليست صياغة موحدة لتوصيات WHO وAAP.",
+  "source_note": "2026-10-07: excerpts transcribed from the official WHO full guideline, printed p. 8 (PDF p. 20); line wraps and bullet markers normalized. No AAP video-chat exception is attributed to WHO. Arabic paraphrase written for this app, not an official translation or agency endorsement. 2026-10-07 quotation reduction: unrelated restraint paragraphs omitted; short verbatim screen-time excerpts retained, including one reading/storytelling sentence.",
+  "source_meta": {
+    "source_title": "Guidelines on physical activity, sedentary behaviour and sleep for children under 5 years of age",
+    "source_author": "World Health Organization",
+    "source_year": 2019,
+    "source_url": "https://www.who.int/publications/i/item/9789241550536"
+  },
+  "domain": "cyber",
+  "age_group": "unspecified",
+  "behavior_type": "وقت الشاشة في الطفولة المبكرة",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_سيبراني",
+  "language": "ar",
+  "created_at": "2026-10-07T07:57:56.718210+00:00",
+  "updated_at": "2026-10-07T07:57:56.718210+00:00",
+  "version": "1.0.0",
+  "keywords": [
+    "وقت الشاشة",
+    "الطفولة المبكرة",
+    "إرشادات بحسب العمر"
+  ]
+}

@@ -19,6 +19,10 @@ on:
       - 'ops/data/en_unpublished/**'
       - 'pytest.ini'
       - '.github/workflows/backend.yml'
+      - '.github/workflows/release-play.yml'
+      - 'scripts/tests/test_release_play_workflow.py'
+      - 'docs/release_notes/**'
+      - 'mobile/pubspec.yaml'
       - '.github/actions/backend-env/**'
       - '.github/ci/constraints-prod.txt'
       - 'frontend/**'
@@ -54,6 +58,10 @@ on:
       - 'ops/tools/**'
       - 'pytest.ini'
       - '.github/workflows/backend.yml'
+      - '.github/workflows/release-play.yml'
+      - 'scripts/tests/test_release_play_workflow.py'
+      - 'docs/release_notes/**'
+      - 'mobile/pubspec.yaml'
       - '.github/actions/backend-env/**'
       - '.github/ci/constraints-prod.txt'
   workflow_dispatch:
@@ -103,6 +111,10 @@ jobs:
       # and the knowledge index — see .github/actions/backend-env/action.yml.
       - name: Production environment, models and knowledge index
         uses: ./.github/actions/backend-env
+
+      - name: Release workflow shell tests (no build or upload)
+        working-directory: ${{ github.workspace }}
+        run: python -m unittest discover -s scripts/tests -p test_release_play_workflow.py
 
       - name: Run pytest (full suite; the smoke test honours SKIP_API_SMOKE)
         # One pass over everything. There used to be two: `--ignore` of the

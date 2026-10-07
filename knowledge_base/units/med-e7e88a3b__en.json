@@ -30,25 +30,33 @@
   "translated_from": "med-e7e88a3b",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "claude-opus",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "pending",
-    "review_defects": [
-      {
-        "model": "claude-opus",
-        "field": "text_simplified",
-        "type": "tone",
-        "why": "«في ولايتك» (your state) is US-specific in the source CDC text; kept faithfully."
-      }
-    ],
-    "approved_by": null,
-    "revalidated_at": "2026-10-04T17:12:35+00:00",
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
+    "revalidated_at": "2026-10-07T07:22:22+00:00",
     "english_authors": [
       "mistral-large-3:675b",
       "claude-opus-5.5"
     ],
     "fixer_model": "claude-opus-5.5",
     "fixed_at": "2026-10-04T18:17:56+00:00",
-    "manual_fix_note": "2026-10-04 PR #20 review: the US-only 'in your state' dropped with the Arabic «في ولايتك»"
+    "manual_fix_note": "2026-10-04 PR #20 review: the US-only 'in your state' dropped with the Arabic «في ولايتك»",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "004f583c19c902f3306573132f4b41c601b93538c482c9b56a1237cccf1fea7b",
+      "reviewed_at": "2026-10-07T07:22:22+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+    }
   }
 }

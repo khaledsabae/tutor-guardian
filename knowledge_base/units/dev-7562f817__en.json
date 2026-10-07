@@ -1,0 +1,65 @@
+{
+  "id": "dev-7562f817__en",
+  "domain": "development",
+  "title": "Puberty in boys: signs, normal ages, and how a father can talk with his son",
+  "language": "en",
+  "age_group": "10-12",
+  "behavior_type": "بلوغ الأولاد — العلامات والتوقيت وحديث الأب مع ابنه",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "إرشاد_مهني",
+  "reference_info": "الأكاديمية الأمريكية لطب الأطفال (HealthyChildren.org): Physical Changes During Puberty · Physical Development in Boys · Concerns Boys Have About Puberty · NHS: Testicle pain · Acne · Body odour — اطّلعنا عليها في 5 أكتوبر 2026",
+  "text_original": "This unit draws on public health guidance pages accessed on 5 October 2026. We restated their facts in our own words rather than quoting their text: (1) AAP, “Physical Changes During Puberty”: boys enter puberty about a year after girls; the first sign is enlargement of the testicles and thinning and reddening of the scrotum, at an average age of 11, though it can occur at any time between 9 and 14; a boy should be examined by a pediatrician if puberty begins before 9, and a doctor consulted if no sign has appeared by 14; peak growth occurs about two years after puberty begins; reassure your child that these changes are a normal part of maturing caused by hormones, monitor them while respecting his privacy, and remind him that friends grow at different rates and later catch up with one another; if he seems much shorter or taller than his peers, speak to the pediatrician. (2) AAP, “Physical Development in Boys: What to Expect”: an approximate doubling in testicular size signals the start of puberty, and in most boys one testicle hangs lower than the other; pubic hair appears next, followed about two years later by fine hair on the face, legs, arms and underarms; the first ejaculation occurs about a year after testicular enlargement begins; wet dreams occur in all boys during puberty and are nothing to be ashamed of; after the peak height growth spurt, the voice box enlarges and the voice breaks for a short time; three out of four boys or more develop some breast growth, which usually resolves within a year or two and should be assessed by a pediatrician, especially if it appears before puberty or in late adolescence; rarely, it persists for several years or grows very large. (3) AAP, “Concerns Boys Have About Puberty”: a wet dream is ejaculation, not urination; parents should explain it without blame and reassure him that he cannot prevent it; breast swelling may be tender and resolves after months, sometimes longer; asymmetry of the testicles is normal and common; respect his privacy, knock before entering his room, and avoid any teasing about his changing body or voice, even in jest. (4) AAP, “Physical Development: What's Normal? What's Not?”: the timing and pace of puberty are largely determined by what the child inherits from his parents. (5) NHS, “Testicle pain”: go to emergency care immediately for sudden, severe testicular pain, testicular pain with nausea, vomiting or abdominal pain, or pain lasting more than an hour or continuing at rest; the cause may be testicular torsion, a serious condition that can result in loss of the testicle if treatment is delayed; arrange an urgent doctor's appointment for a lump, swelling, a change in the shape or feel of a testicle, or one testicle becoming larger than the other. (6) NHS, “Acne”: hormonal changes at puberty are among the causes of facial acne; wash the face twice daily with a gentle cleanser. NHS, “Body odour (BO)”: wash the armpits, groin and feet with soap and water at least twice daily and dry them, use deodorant, and change and wash clothes regularly. (7) milestones.json, puberty_boys cards: the father or a trusted male relative leads the conversation; the mother can start it if that is not possible; wet dreams are neither a sin nor an illness, and are one sign of puberty by which he becomes personally responsible for prayer and fasting; he learns the subsequent rules of purification and ritual bathing from a trusted teacher or scholar.",
+  "text_simplified": "When does puberty begin in boys? It usually begins between 9 and 14, at an average age of about 11, around a year after girls, according to the American Academy of Pediatrics. Each boy has his own timing, largely determined by what he inherits from his parents. Do not compare him with friends: they grow at different rates and later catch up with one another.\n\nThe signs, in their usual order:\n• The testicles enlarge first. It is normal for one to hang lower than the other.\n• Pubic hair appears next; about two years later, hair appears on the face, underarms, arms and legs.\n• Peak height growth occurs about two years after puberty begins. The voice box then enlarges, and the voice breaks briefly before becoming deeper.\n• Many boys notice a small swelling under one or both nipples. It may be tender and usually goes away within a year or two.\n• About a year after testicular enlargement begins, the body starts producing semen, which may be released during sleep. This is a wet dream, not urine.\n• Hormonal changes may cause facial acne, and the body needs more daily care: wash the face twice daily with a gentle cleanser, wash and dry the underarms and feet with soap and water, use deodorant, and wear clean clothes.\n\nHow a father can talk with his son:\n• Start before changes appear, in private, calmly and honestly, over several conversations rather than one session. If the father cannot do this, a trusted male relative or the mother can.\n• Explain that these changes are normal, happen to all boys, are caused by hormones at this age, and mean he is growing up.\n• Explain wet dreams before they happen, without blame: he cannot prevent them; they are neither a sin nor an illness and are nothing to be ashamed of. They are one sign of puberty by which he becomes personally responsible for prayer and fasting. He should learn the rules of purification and ritual bathing from a trusted teacher or scholar.\n• Respect his privacy, knock before entering his room, and do not tease him about his voice or body, even in jest.\n\nWhen to see a doctor:\n• If signs of puberty appear before 9, or none have appeared by 14.\n• If he seems much shorter or taller than his peers.\n• If breast swelling is large, appears before puberty or near its end, or has not gone away after two years.\n• If there is a testicular lump or swelling, or a change in shape or size: see a doctor promptly.\n• Go to emergency care immediately for sudden, severe testicular pain, pain with nausea, vomiting or abdominal pain, or pain lasting more than an hour or continuing at rest. This may be testicular torsion requiring urgent treatment.",
+  "labels": [
+    "puberty",
+    "boys' puberty",
+    "signs of puberty",
+    "wet dreams",
+    "voice changes",
+    "breast swelling in boys",
+    "testicular pain",
+    "father-son conversation"
+  ],
+  "created_at": "2026-10-05T00:00:00Z",
+  "updated_at": "2026-10-05T00:00:00Z",
+  "version": "1.0.0",
+  "source_kind": "authored_guidance",
+  "authored_references": [
+    "الأكاديمية الأمريكية لطب الأطفال (AAP)، HealthyChildren.org — «Physical Changes During Puberty» — https://www.healthychildren.org/English/ages-stages/gradeschool/puberty/Pages/Physical-Development-of-School-Age-Children.aspx — اطُّلع عليها 2026-10-05 · آخر تحديث للصفحة 2014-12-19",
+    "AAP، HealthyChildren.org — «Physical Development in Boys: What to Expect» — https://www.healthychildren.org/English/ages-stages/gradeschool/puberty/Pages/Physical-Development-Boys-What-to-Expect.aspx — اطُّلع عليها 2026-10-05 · آخر تحديث للصفحة 2015-05-22",
+    "AAP، HealthyChildren.org — «Concerns Boys Have About Puberty» — https://www.healthychildren.org/English/ages-stages/gradeschool/puberty/Pages/Concerns-Boys-Have-About-Puberty.aspx — اطُّلع عليها 2026-10-05 · آخر تحديث للصفحة 2015-01-08",
+    "AAP، HealthyChildren.org — «Physical Development: What's Normal? What's Not?» — https://www.healthychildren.org/English/ages-stages/gradeschool/puberty/Pages/Physical-Development-Whats-Normal-Whats-Not.aspx — اطُّلع عليها 2026-10-05 · آخر تحديث للصفحة 2015-05-22",
+    "هيئة الخدمات الصحية البريطانية (NHS) — «Testicle pain» — https://www.nhs.uk/symptoms/testicle-pain/ — اطُّلع عليها 2026-10-05 · آخر مراجعة للصفحة 2025-06-26",
+    "هيئة الخدمات الصحية البريطانية (NHS) — «Acne» — https://www.nhs.uk/conditions/acne/ — اطُّلع عليها 2026-10-05 · آخر مراجعة للصفحة 2026-09-22",
+    "هيئة الخدمات الصحية البريطانية (NHS) — «Body odour (BO)» — https://www.nhs.uk/symptoms/body-odour-bo/ — اطُّلع عليها 2026-10-05 · آخر مراجعة للصفحة 2025-05-14",
+    "برنامج «المراحل المهمة» في «المربّي» — knowledge_base/curriculum/programs/milestones.json، الذي خضع لمراجعة برمجية في PR #23؛ ليس مصدرًا طبيًا أو اعتمادًا شرعيًا — للجمل الشرعية وحدها"
+  ],
+  "source_note": "Written 2026-10-05 for the medical gaps PR #23 listed (boys' puberty, early or delayed puberty, menstrual red flags, fasting dehydration), as the app's guidance from the public-health pages in authored_references, fetched that day. text_original lists, per source, the facts and figures each sentence rests on, paraphrased in Arabic — provenance, not a copy of the pages. The Islamic sentences restate positions the program files already hold after software review (not specialist medical or sharia approval) (knowledge_base/curriculum/programs/milestones.json, ramadan_family.json) and defer every ruling to scholars. Medicines are never named (medical policy: allow_medication_names false).",
+  "source_language": "ar",
+  "translated_from": "dev-7562f817",
+  "translation": {
+    "translator_model": "openai-gpt",
+    "needs_scholar_review": true,
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "e55e0a46a727ed032a943dbbf8e5181c1a2920499f41473014096feffce0f5bd",
+      "reviewed_at": "2026-10-07T07:29:24+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+    },
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
+    "review_verdict": "clean",
+    "review_defects": [],
+    "revalidated_at": "2026-10-07T07:29:24+00:00"
+  }
+}

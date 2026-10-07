@@ -2,7 +2,7 @@
   "id": "isl-22f68950__en",
   "domain": "islamic_parenting",
   "source_file": "Alukah_Rights_of_Children.pdf",
-  "title": "The Rights of Children upon Their Parents in Islam",
+  "title": "Mercy, Love, and Embracing Children",
   "language": "en",
   "age_group": "unspecified",
   "behavior_type": "تربية إيجابية",
@@ -10,31 +10,53 @@
   "severity": "خفيف",
   "reference_type": "كتاب_تربوي",
   "reference_info": "حقوق الأولاد على الوالدين - عماد عبدالعظيم (الألوكة)",
-  "text_original": ":فمقق فل :زآيا َٔ ٜٔدياًٛي اترض ٔهٜ ْٔٗأ ٔٗب ١كفػياٚ تآبياب ١حمسيا سدأ َٔٚ تْ س ِ فُ لَ ـَ كُ ـَ ف ِ قْ لَِ إ ـَ س حْ ل َ فَ ائً ْقشَ ت ِ اَـَبلْ ا ه ِ ذ ِ هَ ـْ ِ م ل ِ ؾيَ ـْ م . ف ِ ِ تؼَ كَ اعَ م وَ ف ِ ِ ؾق ِ بؼْ تَ وَ د ِ لَ قَ لْا ة ِ ؿ :ٙدلاٚأ ٢ًع بٛكعٜ ١كفغ ٙرٖٚ ب ٰ ن َ ۡ ةخ َ َ ۡ ٌِ ْ أ ُ يخ ُ د ۡ ٱو َ د خِ ٰو َ ب ا َ ة َۢ ٌِ ْ أ ُ يخ ُ د ۡ َ ح لَ َ نَي ذ ت َ ٰ ي َ ل َ ا َ كو َ ﴿ :كلاعت لاق ُ ۡ ذ َ َ ۡ َ َ ذ ذ ُ ۡ ُ ۡ ۡ َ ذ َ ّ ُ َ ۡ ُ ٓ َ َ َ ّ َ َ ُ ۡجكَّٔح ِّييغ ِۡللَِّ لَِإ ًؾلۡٱ نِ ِإ ٖءٍ شَ ٌَِ ِ للَّٱ ٌَِ ًؾِغ نَي .)194/15( »ؿمٚسمُ حشر« (1) .)2133( ؿمٚسمُو ،)3538( يراخبمًا فمضرمظأ (2) .)2629( ؿمٚسمُو ،)5995( يراخبمًا فمضرمظأ (3) ـــــــــــــــتــــــــ نيدلاىلا ىلع دلاولأا قىقح ـــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ َ َ ذ ُ ُ َ ۡ ُ َ َ َ ُ ۡ َ ۡ ْ ُ َ َ ذ َ َ َ ُ ّ َ َ ُ ۡ ذ َ َ َ ۡ َ ۡ َ َ َ نكَ اٌ ًْٔةخ ًْرمأ ديخ",
-  "text_simplified": "This text discusses the rights of children upon their parents, drawing evidence from the Qur'an and Prophetic hadiths. It clarifies that among the child’s rights is that their parents provide them with good *tarbiyah* (upbringing and nurturing) and education. It also highlights the importance of providing care and love to children.",
+  "text_original": "عن البراء رضي الله عنه، قال: رأيت النبي ﷺ والحسن بن علي على عاتقه، يقول: «اللهم إني أحبه فأحبه». أخرجه البخاري (٣٧٤٩) ومسلم (٢٤٢٢).\nقال البخاري: باب رحمة الولد وتقبيله ومعانقته.",
+  "text_simplified": "The Prophet ﷺ carried al-Hasan ibn Ali on his shoulder and prayed that Allah would love him. Mercy toward children includes kissing and embracing them.",
   "labels": [
-    "حقوق الطفل",
-    "تربية",
-    "آيات قرآنية",
-    "أحاديث نبوية",
-    "رعاية الوالدين"
+    "رحمة الأولاد",
+    "محبة الأولاد",
+    "معانقة الأولاد"
   ],
   "created_at": "2026-06-21T10:19:24Z",
-  "updated_at": "2026-06-21T10:19:24Z",
+  "updated_at": "2026-10-07T09:34:03.424762+00:00",
   "version": "1.0.0",
   "source_meta": {
-    "source_title": "Alukah_Rights_of_Children",
-    "source_author": ""
+    "source_title": "حقوق الأولاد على الوالدين",
+    "source_author": "عماد أحمد عبدالعظيم"
   },
   "source_language": "ar",
   "translated_from": "isl-22f68950",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "pending",
+    "review_verdict": "clean",
+    "draft_status": "draft",
+    "source_recovery_note": "Source-faithful draft; no model review or approval.",
+    "fixer_model": "openai:codex",
+    "english_authors": [
+      "mistral-large-3:675b",
+      "openai:codex"
+    ],
     "review_defects": [],
-    "approved_by": null,
-    "revalidated_at": "2026-10-04T11:18:18+00:00"
-  }
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "9d7309ee84d4e52d016d10501379db4760feb16045dccd50f60b55aea02b56ae",
+      "reviewed_at": "2026-10-07T09:36:39+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+    },
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
+    "revalidated_at": "2026-10-07T09:36:39+00:00"
+  },
+  "source_url": "https://www.alukah.net/Books/Files/Book_17337/BookFile/brotherandboys.pdf#page=51",
+  "source_note": "DRAFT source recovery, 2026-10-07. Selected primary PDF excerpt; provenance and exact local citation checks: ops/data/kb_fidelity/source_recovery/isl-22f68950.json. No scholar, human, model or publication approval."
 }

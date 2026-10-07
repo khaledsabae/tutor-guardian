@@ -21,30 +21,53 @@
   "needs_professional_followup": false,
   "is_published": true,
   "version": "1.0.0",
-  "approved_by": null,
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
   "language": "en",
   "source_language": "ar",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
     "scholar_signals": {
       "keyword": false,
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
+    "review_verdict": "low_only",
     "review_defects": [
       {
-        "type": "meaning_change",
-        "field": "reflection_prompts[1]",
-        "arabic": "هل أصبح ابنك أكثر حذراً في المشاركة؟",
-        "english": "Has your child become more cautious about sharing?",
-        "why": "The Arabic uses 'ابنك' (your son), specifying a male child, while the English uses the gender-neutral 'your child', losing the original gender specificity.",
-        "severity": "low"
+        "model": "deepseek-v4-pro",
+        "field": "title",
+        "type": "source_corruption",
+        "why": "The Arabic title uses a transliteration with a definite article that can be misread; the summary uses the standard term 'التزييف العميق'."
       }
     ],
-    "approved_by": null,
-    "revalidated_at": "2026-08-13T17:21:11.143548+00:00"
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
+    "revalidated_at": "2026-10-07T07:42:07+00:00",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "8e355e334bd1a55a3b0dc3aaf7344e27ab8e7b789828f83533503f02eb0faa2e",
+      "reviewed_at": "2026-10-07T07:42:07+00:00",
+      "residual_low": [
+        {
+          "model": "deepseek-v4-pro",
+          "field": "title",
+          "type": "source_corruption",
+          "why": "The Arabic title uses a transliteration with a definite article that can be misread; the summary uses the standard term 'التزييف العميق'."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+    },
+    "english_authors": [
+      "claude-opus-5.5"
+    ]
   }
 }

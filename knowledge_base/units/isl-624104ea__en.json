@@ -27,27 +27,67 @@
   "translated_from": "isl-624104ea",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
+    "review_verdict": "low_only",
     "review_defects": [
       {
-        "type": "meaning_change",
+        "model": "deepseek-v4-pro",
         "field": "text_simplified",
-        "arabic": "«من كان يؤمن بالله واليوم الآخر فليقل خيرًا أو ليصمت»",
-        "english": "«مَنْ كَانَ يُؤْمِنُ بِاللَّهِ وَالْيَوْمِ الْآخِرِ فَلْيَقُلْ خَيْرًا أَوْ لِيَصْمُتْ» (left untranslated)",
-        "why": "The hadith is quoted in Arabic without an English translation, so its meaning is not conveyed to English readers; the source Arabic also quotes it, but a translation should render it.",
-        "severity": "high"
+        "type": "leakage",
+        "why": "The Arabic word 'khayr' is left transliterated with a gloss; it is not a technical Islamic term in the allowed list and can simply be translated as 'good'."
       },
       {
-        "type": "meaning_change",
+        "model": "glm-5.2",
         "field": "text_simplified",
-        "arabic": "وقت مناسب",
-        "english": "the perfect time",
-        "why": "Arabic 'مناسب' means 'suitable/appropriate', not 'perfect'; the English overstates.",
-        "severity": "low"
+        "type": "leakage",
+        "why": "The Arabic word 'khayr' is left untranslated in the English; it is not among the allowed transliterated Islamic terms, though the parenthetical gloss mitigates it."
+      },
+      {
+        "model": "glm-5.2",
+        "field": "text_simplified",
+        "type": "meaning",
+        "why": "'Perfect' slightly overstates 'وقت مناسب' (a suitable/appropriate time)."
       }
     ],
-    "approved_by": null
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "a71e9a3257e0ff04691ed14b6602b9d1c01b17cdbde97857d6f47fde0a6f04ac",
+      "reviewed_at": "2026-10-07T07:30:49+00:00",
+      "residual_low": [
+        {
+          "model": "deepseek-v4-pro",
+          "field": "text_simplified",
+          "type": "leakage",
+          "why": "The Arabic word 'khayr' is left transliterated with a gloss; it is not a technical Islamic term in the allowed list and can simply be translated as 'good'."
+        },
+        {
+          "model": "glm-5.2",
+          "field": "text_simplified",
+          "type": "leakage",
+          "why": "The Arabic word 'khayr' is left untranslated in the English; it is not among the allowed transliterated Islamic terms, though the parenthetical gloss mitigates it."
+        },
+        {
+          "model": "glm-5.2",
+          "field": "text_simplified",
+          "type": "meaning",
+          "why": "'Perfect' slightly overstates 'وقت مناسب' (a suitable/appropriate time)."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-07T07:30:49+00:00",
+    "english_authors": [
+      "claude-opus-5.5"
+    ]
   }
 }

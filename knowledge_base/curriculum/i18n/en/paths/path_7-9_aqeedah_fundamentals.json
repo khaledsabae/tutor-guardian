@@ -3,7 +3,7 @@
   "title": "Foundations of Aqeedah — Planting Iman in the Young",
   "age_group": "7-9",
   "domain": "aqeedah",
-  "description": "A 10-lesson pathway that teaches the father/mother the foundations of the correct Islamic aqeedah so they can teach their children (ages 3-12). Built upon the Qur’an and Sunnah according to the understanding of the Salaf of the Ummah, far from disputes.",
+  "description": "A 12-lesson pathway that teaches the father/mother the foundations of the correct Islamic aqeedah so they can teach their children (ages 3-12). Built upon the Qur’an and Sunnah according to the understanding of the Salaf of the Ummah, far from disputes.",
   "lesson_ids": [
     "lesson_7-9_aqeedah_fundamentals_01",
     "lesson_7-9_aqeedah_fundamentals_02",
@@ -14,20 +14,22 @@
     "lesson_7-9_aqeedah_fundamentals_07",
     "lesson_7-9_aqeedah_fundamentals_08",
     "lesson_7-9_aqeedah_fundamentals_09",
-    "lesson_7-9_aqeedah_fundamentals_10"
+    "lesson_7-9_aqeedah_fundamentals_10",
+    "lesson_7-9_aqeedah_fundamentals_11",
+    "lesson_7-9_aqeedah_fundamentals_12"
   ],
-  "estimated_days": 10,
+  "estimated_days": 12,
   "pedagogical_framework": "aqeedah_parent_led",
   "primary_reference": {
     "type": "دراسات_عقدية",
-    "info": "al-Aqidah al-Tahawiyyah; al-Qawa'id al-Arba' and Thalathat al-Usul by Muhammad ibn Abd al-Wahhab, with Ibn Uthaymin's commentary; As'ilat al-Atfal al-Imaniyyah; al-Aqidah Awwalan (al-Juraysh)"
+    "info": "al-Aqidah al-Tahawiyyah; al-Qawa'id al-Arba' and Thalathat al-Usul by Muhammad ibn Abd al-Wahhab; Ibn Uthaymin's commentary; As'ilat al-Atfal al-Imaniyyah (al-Rukaf); al-Aqidah Awwalan (al-Juraysh)"
   },
   "prerequisites": [],
   "is_published": true,
   "version": "1.0.0",
   "created_at": "2026-06-24T00:00:00",
-  "updated_at": "2026-06-24T00:00:00",
-  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+  "updated_at": "2026-10-07T07:42:38",
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
   "language": "en",
   "source_language": "ar",
   "translation": {
@@ -43,21 +45,26 @@
     "review_defects": [
       {
         "model": "deepseek-v4-pro",
-        "field": "primary_reference.info",
-        "type": "omission",
-        "why": "The English omits the parenthetical author/attribution '(al-Rakf)' present in the Arabic."
+        "field": "description",
+        "type": "source_corruption",
+        "why": "The Arabic uses plural 'دروس' after the number 12, which is grammatically incorrect in Modern Standard Arabic; it should be singular accusative."
       },
       {
         "model": "glm-5.2",
-        "field": "primary_reference.info",
+        "field": "description",
         "type": "omission",
-        "why": "The Arabic includes the author attribution (الركف) in parentheses but the English drops it, while retaining the parenthetical author for al-Juraysh."
+        "why": "The English drops the adjective «قصيرة» (short), so the lessons' brevity — a key practical point for parents — is lost."
       }
     ],
-    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
-    "revalidated_at": "2026-10-04T16:52:31+00:00",
-    "fixed_at": "2026-08-13T18:18:22.728503+00:00",
-    "fixer_model": "mistral-large-3:675b",
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
+    "revalidated_at": "2026-10-07T07:46:06+00:00",
+    "fixed_at": "2026-10-07T07:45:38+00:00",
+    "fixer_model": "gpt-6",
+    "english_authors": [
+      "mistral-large-3:675b",
+      "gpt-6"
+    ],
+    "manual_fix_note": "Correct the article before twelve after the lesson-count update; final description receives genuine independent parity review.",
     "auto_review": {
       "reviewers": [
         "deepseek-v4-pro",
@@ -66,25 +73,25 @@
       "fixer": null,
       "rounds": 1,
       "prompt_version": "dfa8a5f39718",
-      "content_sha256": "1bd7dab97096396406b9cf5576422a52e4798c656d7169f359a48010da7be51f",
-      "reviewed_at": "2026-10-04T16:52:31+00:00",
+      "content_sha256": "ca26c3f408e6b6d81325072dbeaa44d199d94d51bd4b37a2c60e68d68563c9fc",
+      "reviewed_at": "2026-10-07T07:46:06+00:00",
       "residual_low": [
         {
           "model": "deepseek-v4-pro",
-          "field": "primary_reference.info",
-          "type": "omission",
-          "why": "The English omits the parenthetical author/attribution '(al-Rakf)' present in the Arabic."
+          "field": "description",
+          "type": "source_corruption",
+          "why": "The Arabic uses plural 'دروس' after the number 12, which is grammatically incorrect in Modern Standard Arabic; it should be singular accusative."
         },
         {
           "model": "glm-5.2",
-          "field": "primary_reference.info",
+          "field": "description",
           "type": "omission",
-          "why": "The Arabic includes the author attribution (الركف) in parentheses but the English drops it, while retaining the parenthetical author for al-Juraysh."
+          "why": "The English drops the adjective «قصيرة» (short), so the lessons' brevity — a key practical point for parents — is lost."
         }
       ],
       "adjudicated": [],
       "tool": "ops/tools/review_en_parity.py",
-      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
     }
   }
 }

@@ -5,7 +5,7 @@
     "deepseek-v4-pro",
     "glm-5.2"
   ],
-  "written_at": "2026-10-04T17:13:00",
+  "written_at": "2026-10-07T07:42:38",
   "lessons": [
     {
       "path_id": "path_4-6_aqeedah_seeds",
@@ -400,28 +400,6 @@
       "dispositions": []
     },
     {
-      "path_id": "path_7-9_aqeedah_fundamentals",
-      "key": "s01",
-      "brief": "«مَن خلق الله؟» حين يسأل السؤال المحيّر",
-      "accepted": false,
-      "blockers": [
-        "ar: current text not reviewed",
-        "en: current text not reviewed"
-      ],
-      "dispositions": []
-    },
-    {
-      "path_id": "path_7-9_aqeedah_fundamentals",
-      "key": "s02",
-      "brief": "الحلال والحرام: لماذا نهانا الله؟",
-      "accepted": false,
-      "blockers": [
-        "ar: current text not reviewed",
-        "en: current text not reviewed"
-      ],
-      "dispositions": []
-    },
-    {
       "path_id": "path_10-12_islamic_parenting_worship_love",
       "key": "s01",
       "brief": "من العاشرة: متابعةٌ حازمة بلا قسوة",
@@ -596,6 +574,77 @@
         "en: current text not reviewed"
       ],
       "dispositions": []
+    },
+    {
+      "path_id": "path_7-9_aqeedah_fundamentals",
+      "key": "s01",
+      "brief": "«مَن خلق الله؟» حين يسأل السؤال المحيّر",
+      "accepted": false,
+      "blockers": [
+        "Historical deepening reviews below describe earlier text. Current-hash canonical DeepSeek + GLM parity review passed; scholar/human review remains pending. See lesson11.canonical-review.json."
+      ],
+      "ar_review": {
+        "reviewer": "deepseek-v4-pro",
+        "at": "2026-10-07T07:18:27",
+        "rounds": 1,
+        "defects": [
+          {
+            "severity": "low",
+            "type": "age_fit",
+            "field": "summary",
+            "why": "The age band is 7-9, but the summary only mentions ages 7 and 8, omitting 9-year-olds. This may make parents of 9-year-olds feel the lesson is not for them."
+          }
+        ]
+      },
+      "en_review": {
+        "reviewer": "deepseek-v4-pro",
+        "at": "2026-10-07T07:18:27",
+        "rounds": 1,
+        "defects": []
+      },
+      "dispositions": [],
+      "written_as": "lesson_7-9_aqeedah_fundamentals_11",
+      "order": 11,
+      "title": "«مَن خلق الله؟» حين يسأل السؤال المحيّر",
+      "source_fix": {
+        "at": "2026-10-07T08:25:33+00:00",
+        "evidence": "ops/data/deepen_paths/lesson11.source-proof.json",
+        "approval": null,
+        "canonical_review": "ops/data/deepen_paths/lesson11.canonical-review.json",
+        "canonical_model_parity": "clean",
+        "content_sha256": "5b8150f5b1387c8b6b8c4215b9ef09d81ed06c448ecfe2d8a0ef7cc5bb582129",
+        "human_approval": null
+      }
+    },
+    {
+      "path_id": "path_7-9_aqeedah_fundamentals",
+      "key": "s02",
+      "brief": "الحلال والحرام: لماذا نهانا الله؟",
+      "accepted": true,
+      "blockers": [],
+      "ar_review": {
+        "reviewer": "deepseek-v4-pro",
+        "at": "2026-10-07T09:21:16",
+        "rounds": 7,
+        "defects": [
+          {
+            "severity": "low",
+            "type": "register",
+            "field": "summary",
+            "why": "الأفصح في العربية الفصحى: «بدلًا من أن أجيب بالتخمين»؛ صيغة «بدل أن» أقل رسمية وقد تُعد من الأسلوب المتراخي أو العامي."
+          }
+        ]
+      },
+      "en_review": {
+        "reviewer": "deepseek-v4-pro",
+        "at": "2026-10-07T09:21:16",
+        "rounds": 7,
+        "defects": []
+      },
+      "dispositions": [],
+      "written_as": "lesson_7-9_aqeedah_fundamentals_12",
+      "order": 12,
+      "title": "الحلال والحرام: كيف نسأل حين لا نعرف الحكم؟"
     }
   ]
 }

@@ -5,9 +5,10 @@
   "age_group": "prenatal-1",
   "domain": "infant_pregnancy",
   "unit_ids": [
-    "77e9aa1e-342f-4497-bb5b-a998ac638da2"
+    "cyb-who-screen-under5-2019",
+    "cyb-aap-digital-ecosystems-2026"
   ],
-  "summary": "In the first two years of life, a child's brain grows at the fastest pace of their whole life, through real human interaction and sensory play. All the major medical organisations recommend a 'zero screens' policy: no screens, phones or baby-song channels at all before the age of two, to protect the child from delayed speech, scattered attention and weak eye contact. At the same time, the mother's mental health needs care: telling the passing 'baby blues' apart from postpartum depression, and the spouses sharing the load to prevent burnout and chronic exhaustion.",
+  "summary": "In the first two years of life, a child's brain grows at the fastest pace of their whole life, through real human interaction and sensory play. WHO’s 2019 guidelines recommend no sedentary screen time for infants or one-year-olds. The updated AAP policy, published in January 2026, focuses on content quality, family needs, prioritising sleep, play, physical activity and reading, and shared media engagement. It states that infants do not learn from digital media and that occasional brief, high-quality videos are not detrimental; this does not recommend routine infant viewing. These guidelines do not promise to prevent speech delay or diagnose a child’s condition. At the same time, the mother's mental health needs care: telling the passing 'baby blues' apart from postpartum depression, and the spouses sharing the load to prevent burnout and chronic exhaustion.",
   "try_this": "This week: agree as a couple to make the baby's room completely free of screens and digital distractions. Set a flexible schedule for sharing night-time care so the mother gets at least 4 hours of unbroken sleep to restore her mental and physical energy.",
   "order": 5,
   "estimated_minutes": 14,
@@ -17,27 +18,72 @@
   ],
   "warning_flags": [
     "postpartum_mental_health",
-    "zero_screen_policy"
+    "screen_guidance"
   ],
   "is_published": true,
   "version": "1.0.0",
   "created_at": "2026-09-12T19:00:00",
   "updated_at": "2026-09-12T19:00:00",
-  "approved_by": null,
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
   "language": "en",
   "source_language": "ar",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": false,
     "scholar_signals": {
       "keyword": false,
       "quoted_arabic": false,
       "reviewer_model": false
     },
-    "review_verdict": "clean",
-    "review_defects": [],
-    "approved_by": null,
-    "revalidated_at": "2026-09-12T19:00:00.000000+00:00"
+    "review_verdict": "low_only",
+    "review_defects": [
+      {
+        "model": "deepseek-v4-pro",
+        "field": "try_this",
+        "type": "omission",
+        "why": "The English drops 'المفتوحة' (open/on), broadening the instruction from no open screens to no screens at all."
+      },
+      {
+        "model": "glm-5.2",
+        "field": "summary",
+        "type": "omission",
+        "why": "The Arabic specifies 'open/turned-on screens' while the English drops the qualifier 'المفتوحة'."
+      }
+    ],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
+    "revalidated_at": "2026-10-07T09:30:49+00:00",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "5ed1841220fe020bdf086b45730e64232ef5828d859801082332ecc5731d3840",
+      "reviewed_at": "2026-10-07T09:30:49+00:00",
+      "residual_low": [
+        {
+          "model": "deepseek-v4-pro",
+          "field": "try_this",
+          "type": "omission",
+          "why": "The English drops 'المفتوحة' (open/on), broadening the instruction from no open screens to no screens at all."
+        },
+        {
+          "model": "glm-5.2",
+          "field": "summary",
+          "type": "omission",
+          "why": "The Arabic specifies 'open/turned-on screens' while the English drops the qualifier 'المفتوحة'."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+    },
+    "english_authors": [
+      "claude-opus-5.5",
+      "openai:codex"
+    ]
   }
 }

@@ -1,0 +1,31 @@
+{
+  "id": "cyb-aap-digital-ecosystems-2026",
+  "domain": "cyber",
+  "age_group": "unspecified",
+  "title": "الشاشات والطفولة المبكرة: بيان AAP المحدّث لعام 2026",
+  "language": "ar",
+  "source_file": "AAP_Digital_Ecosystems_Children_Adolescents_2026",
+  "source_url": "https://publications.aap.org/pediatrics/article/157/2/e2025075320/206129/Digital-Ecosystems-Children-and-Adolescents-Policy",
+  "behavior_type": "وقت الشاشة في الطفولة المبكرة",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_سيبراني",
+  "reference_info": "AAP Council on Communications and Media. Digital Ecosystems, Children, and Adolescents: Policy Statement. Published January 20, 2026; Pediatrics (2026) 157(2):e2025075320 (February issue). doi:10.1542/peds.2025-075320. Recommendations for Children, Teens, and Families: Set time boundaries; Relationship-building.",
+  "text_original": "Published January 20, 2026.\n\nThe amount of screen media time spent per child might vary based on each family, their needs, and school nights vs weekends.\n\nTime limits might range from <1 hour/d for toddlers and preschoolers\n\nThe most important considerations are high-quality content and prioritizing healthy activities (eg, sleep, play, physical activity, reading)\n\nJoint media engagement can be a part of building relationships and learning.",
+  "text_simplified": "بيان AAP المنشور في 20 يناير 2026 يركّز على جودة المحتوى واحتياجات الأسرة وإعطاء الأولوية للنوم واللعب والحركة والقراءة. يذكر أن الرضع لا يتعلمون من الوسائط الرقمية، لكن مشاهدة فيديو قصير عالي الجودة أحيانًا ليست ضارة. ويقترح مناقشة حدود زمنية تناسب روتين الأسرة؛ قد تكون أقل من ساعة يوميًا للأطفال الدارجين وأطفال ما قبل المدرسة. المشاركة المشتركة في استخدام الوسائط قد تدعم العلاقة والتعلم. هذا وصف لموقف AAP في البيان المحدّث، ولا يغيّر توصيات WHO المنفصلة.",
+  "source_note": "2026-10-07: read the actual revised primary policy in the browser, reached from doi:10.1542/peds.2025-075320 linked by the 2016 statement. Short verbatim excerpts from the named family recommendations; non-breaking spaces normalized. Published January 20, 2026, not 2025 despite the DOI suffix. Arabic paraphrase by this app, not an official AAP translation. The 2016 source unit is preserved separately as historical provenance. 2026-10-07 quotation reduction: isolated verbatim excerpts only; omitted detail remains an app-authored Arabic paraphrase supported by the section locators in reference_info. Total English words including bibliographic date: 66. Date header is bibliographic metadata; paragraphs are isolated verbatim excerpts.",
+  "source_meta": {
+    "source_title": "Digital Ecosystems, Children, and Adolescents: Policy Statement",
+    "source_author": "American Academy of Pediatrics, Council on Communications and Media",
+    "source_year": 2026,
+    "source_url": "https://publications.aap.org/pediatrics/article/157/2/e2025075320/206129/Digital-Ecosystems-Children-and-Adolescents-Policy"
+  },
+  "created_at": "2026-10-07T09:13:07.475746+00:00",
+  "updated_at": "2026-10-07T09:13:07.475746+00:00",
+  "version": "1.0.0",
+  "keywords": [
+    "وقت الشاشة",
+    "جودة المحتوى",
+    "المشاركة الوالدية"
+  ]
+}

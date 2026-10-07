@@ -9,7 +9,8 @@ import unittest
 import yaml
 
 ROOT = Path(__file__).resolve().parents[2]
-NOTES_FILE = 'docs/release_notes/1.0.68+113.json'
+CURRENT_VERSION = yaml.safe_load((ROOT / 'mobile/pubspec.yaml').read_text())['version']
+NOTES_FILE = f'docs/release_notes/{CURRENT_VERSION}.json'
 
 
 class ReleasePlayWorkflowTests(unittest.TestCase):
@@ -19,7 +20,8 @@ class ReleasePlayWorkflowTests(unittest.TestCase):
         cls.upload = next(s for s in cls.workflow['jobs']['release']['steps']
                           if s['name'].startswith('Upload to Google Play'))
 
-    def run_upload(self, notes, *, version=None, matching_notes=False, expect_failure=False):
+    def run_upload(self, notes, *, version=None, matching_notes=False, expect_failure=False,
+                   missing_current_notes=False):
         with tempfile.TemporaryDirectory() as directory:
             temp = Path(directory)
             workspace = temp / 'repo'
@@ -30,7 +32,15 @@ class ReleasePlayWorkflowTests(unittest.TestCase):
                 pubspec = '\n'.join('version: ' + version if line.startswith('version:') else line
                                     for line in pubspec.splitlines())
             (workspace / 'mobile/pubspec.yaml').write_text(pubspec)
-            shutil.copy(ROOT / NOTES_FILE, workspace / NOTES_FILE)
+            if missing_current_notes:
+                previous_notes = [path for path in (ROOT / 'docs/release_notes').glob('*.json')
+                                  if path.name != Path(NOTES_FILE).name]
+                self.assertTrue(previous_notes, 'Negative case requires older committed notes')
+                for path in previous_notes:
+                    shutil.copy(path, workspace / 'docs/release_notes' / path.name)
+                self.assertFalse((workspace / NOTES_FILE).exists())
+            else:
+                shutil.copy(ROOT / NOTES_FILE, workspace / NOTES_FILE)
             if matching_notes:
                 (workspace / f'docs/release_notes/{version}.json').write_text(
                     json.dumps({'ar': 'جديد', 'en-US': 'New release'}))
@@ -81,6 +91,10 @@ class ReleasePlayWorkflowTests(unittest.TestCase):
         self.assertNotIn('--notes-file', args)
         self.assertEqual(args[args.index('--track') + 1], 'internal')
         self.assertEqual(args[args.index('--rollout') + 1], '1.0')
+
+    def test_missing_current_notes_rejects_previous_release_fallback(self):
+        self.run_upload('', version=CURRENT_VERSION, expect_failure=True,
+                        missing_current_notes=True)
 
     def test_changed_pubspec_requires_matching_notes_not_stale_file(self):
         self.run_upload('', version='2.0.0+999', expect_failure=True)

@@ -22,24 +22,92 @@
   "version": "1.0.0",
   "created_at": "2026-09-12T19:00:00",
   "updated_at": "2026-09-12T19:00:00",
-  "approved_by": null,
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
   "language": "en",
   "source_language": "ar",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": false,
     "scholar_signals": {
       "keyword": false,
       "quoted_arabic": false,
       "reviewer_model": false
     },
-    "review_verdict": "clean",
-    "review_defects": [],
-    "approved_by": null,
-    "revalidated_at": "2026-09-12T19:00:00.000000+00:00",
+    "review_verdict": "low_only",
+    "review_defects": [
+      {
+        "model": "deepseek-v4-pro",
+        "field": "title",
+        "type": "addition",
+        "why": "The English adds 'Safe', which is not present in the Arabic title."
+      },
+      {
+        "model": "deepseek-v4-pro",
+        "field": "try_this",
+        "type": "addition",
+        "why": "The English adds 'soft', which is not in the Arabic 'رتيبة' (steady/monotonous)."
+      },
+      {
+        "model": "glm-5.2",
+        "field": "title",
+        "type": "addition",
+        "why": "The Arabic title does not contain the word \"آمن\" (safe); \"Safe\" is added in English."
+      },
+      {
+        "model": "glm-5.2",
+        "field": "summary",
+        "type": "meaning",
+        "why": "«العناصر الخمسة» means \"the five elements,\" not \"five steps\"; the wording slightly shifts the concept."
+      }
+    ],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
+    "revalidated_at": "2026-10-07T07:45:35+00:00",
     "manual_fix_note": "2026-10-04: aligned with the Arabic register/safety fix (country-specific number removed, leaked or garbled wording corrected).",
     "fixed_at": "2026-10-04T07:31:52.180297+00:00",
-    "fixer_model": "claude-opus-5.5"
+    "fixer_model": "claude-opus-5.5",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "f8b33255c308abd00384f5e1924a772fac3c770e0b58c978b7f5171f1ec235d0",
+      "reviewed_at": "2026-10-07T07:45:35+00:00",
+      "residual_low": [
+        {
+          "model": "deepseek-v4-pro",
+          "field": "title",
+          "type": "addition",
+          "why": "The English adds 'Safe', which is not present in the Arabic title."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "field": "try_this",
+          "type": "addition",
+          "why": "The English adds 'soft', which is not in the Arabic 'رتيبة' (steady/monotonous)."
+        },
+        {
+          "model": "glm-5.2",
+          "field": "title",
+          "type": "addition",
+          "why": "The Arabic title does not contain the word \"آمن\" (safe); \"Safe\" is added in English."
+        },
+        {
+          "model": "glm-5.2",
+          "field": "summary",
+          "type": "meaning",
+          "why": "«العناصر الخمسة» means \"the five elements,\" not \"five steps\"; the wording slightly shifts the concept."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+    },
+    "english_authors": [
+      "claude-opus-5.5"
+    ]
   }
 }

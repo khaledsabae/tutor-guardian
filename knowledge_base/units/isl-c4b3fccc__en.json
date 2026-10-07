@@ -28,43 +28,67 @@
   "translated_from": "isl-c4b3fccc",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
+    "review_verdict": "low_only",
     "review_defects": [
       {
-        "type": "meaning_change",
-        "field": "title",
-        "arabic": "بدأ الإسلام غريبًا فطوبى للغرباء",
-        "english": "Bada al-Islam ghariban fa-tuba li-l-ghuraba'",
-        "why": "The title is transliterated but not translated; the English reader cannot understand the meaning of the hadith phrase.",
-        "severity": "high"
+        "model": "deepseek-v4-pro",
+        "field": "text_simplified",
+        "type": "meaning",
+        "why": "\"بشّر\" means \"gave glad tidings to,\" not \"promised,\" so the English loses the good-news nuance that is central to the hadith."
       },
       {
-        "type": "meaning_change",
+        "model": "deepseek-v4-pro",
         "field": "text_simplified",
-        "arabic": "«بدأ الإسلام غريبًا وسيعود غريبًا كما بدأ، فطوبى للغرباء»",
-        "english": "«Bada al-Islam ghariban wa-sa-ya‘udu ghariban kama bada’a, fa-tuba li-l-ghuraba’»",
-        "why": "The hadith is transliterated but not translated; the English reader cannot understand its meaning, so the instruction to teach the hadith is not fulfilled.",
-        "severity": "high"
+        "type": "meaning",
+        "why": "\"The committed\" as a standalone noun is an awkward calque from Arabic and reads unnaturally in English."
       },
       {
-        "type": "meaning_change",
+        "model": "glm-5.2",
         "field": "text_simplified",
-        "arabic": "بشّر به النبي ﷺ الملتزمين",
-        "english": "the Prophet ﷺ promised the committed",
-        "why": "بشّر means 'gave glad tidings' or 'announced good news', not 'promised'; 'promised' changes the meaning.",
-        "severity": "medium"
-      },
-      {
-        "type": "register",
-        "field": "text_simplified",
-        "arabic": "اشرح له أن الاختلاف عن الأغلبية في طاعة الله ليس نقصًا بل هو المديح الذي بشّر به النبي ﷺ الملتزمين في كل زمان.",
-        "english": "Explain to him that differing from the majority in obedience to Allah is not a deficiency, but rather the praise with which the Prophet ﷺ promised the committed in every era.",
-        "why": "The phrase 'the committed' is stiff and unnatural; the Arabic is warm and direct, using 'الملتزمين' as a natural noun.",
-        "severity": "low"
+        "type": "meaning",
+        "why": "«بشّر» means 'gave glad tidings to' rather than 'promised'; the nuance of conveying good news is softened."
       }
     ],
-    "approved_by": null
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "bcf29d3531418fd536b0c8ceb3b558e6b8b47d62fb6b077084e600a2c52377b4",
+      "reviewed_at": "2026-10-07T07:31:28+00:00",
+      "residual_low": [
+        {
+          "model": "deepseek-v4-pro",
+          "field": "text_simplified",
+          "type": "meaning",
+          "why": "\"بشّر\" means \"gave glad tidings to,\" not \"promised,\" so the English loses the good-news nuance that is central to the hadith."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "field": "text_simplified",
+          "type": "meaning",
+          "why": "\"The committed\" as a standalone noun is an awkward calque from Arabic and reads unnaturally in English."
+        },
+        {
+          "model": "glm-5.2",
+          "field": "text_simplified",
+          "type": "meaning",
+          "why": "«بشّر» means 'gave glad tidings to' rather than 'promised'; the nuance of conveying good news is softened."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-07T07:31:28+00:00",
+    "english_authors": [
+      "claude-opus-5.5"
+    ]
   }
 }
