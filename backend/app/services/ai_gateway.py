@@ -819,24 +819,13 @@ _telemetry_schema_ready = False
 
 
 def _ensure_telemetry_schema(conn: sqlite3.Connection) -> None:
-    """Run the llm_calls DDL once per process, not on every LLM call."""
+    """Validate/adopt this database; a process flag cannot identify its schema."""
+    from app.db.migrations.runner import apply_migrations
+    from app.db.migrations.telemetry_0001_llm_calls import MIGRATION
+
     global _telemetry_schema_ready
-    if _telemetry_schema_ready:
-        return
-    conn.execute(
-        """CREATE TABLE IF NOT EXISTS llm_calls (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            ts TEXT DEFAULT (datetime('now')),
-            provider TEXT, model TEXT, latency_ms INTEGER,
-            prompt_tokens INTEGER, completion_tokens INTEGER,
-            streamed INTEGER, ok INTEGER
-        )"""
-    )
-    for col in ("tier TEXT", "route_reason TEXT"):
-        try:
-            conn.execute(f"ALTER TABLE llm_calls ADD COLUMN {col}")
-        except sqlite3.OperationalError:
-            pass  # column already exists
+    apply_migrations(conn, "llm_telemetry", (MIGRATION,))
+    # Retained for existing diagnostic/test callers, never used to skip a DB.
     _telemetry_schema_ready = True
 
 
