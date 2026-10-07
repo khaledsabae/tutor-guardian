@@ -546,3 +546,53 @@ def test_an_unpublished_english_twin_stays_unpublished_and_keeps_its_place(shelf
     assert shelf.served()["درسٌ جديد 3"] == ("lesson_7-9_test_worship_05", 5)
     assert held.exists()
     assert not (shelf.cur / "i18n" / "en" / "lessons" / f"{lid}.json").exists()
+
+# Lesson-only scripture references must come from the guarded corpus, not the
+# notification pack or author-supplied scripture text.
+@pytest.fixture
+def lesson_scripture(dp, tmp_path, monkeypatch):
+    p = tmp_path / 'lesson_scripture.json'
+    monkeypatch.setattr(dp, 'LESSON_SCRIPTURE_BANK', p, raising=False)
+    monkeypatch.setattr(dp, 'QURAN', ROOT / 'mobile/assets/data/quran.json', raising=False)
+    def put(items):
+        p.write_text(json.dumps({'schema': 'tg.lesson_scripture_refs/1', 'items': items}))
+    return put
+
+
+def test_lesson_only_verse_is_exact_corpus_text_in_both_languages(dp, lesson_scripture, scan):
+    lesson_scripture([{'id': 'v_007_157', 'surah': 7, 'ayah': 157}])
+    b = dp.load_bank()
+    assert 'v_007_157' in b
+    q = json.loads((ROOT / 'mobile/assets/data/quran.json').read_text())
+    text = next(r['text'] for r in q['7'] if r['verse'] == 157)
+    assert b['v_007_157']['text'] == text
+    for lang in ('ar', 'en'):
+        expanded = dp.expand('[[v_007_157]]', b, lang)
+        assert f'﴿{text}﴾' in expanded
+        assert not [f for f in scan.scan_text(expanded) if f.verdict != 'ok']
+    assert "Surah Al-A'raf, 7:157" in dp.expand('[[v_007_157]]', b, 'en')
+
+
+@pytest.mark.parametrize('items', [
+    [{'id': 'v_007_157', 'surah': 7, 'ayah': 157, 'text': 'author-supplied text'}],
+    [{'id': 'v_007_156', 'surah': 7, 'ayah': 157}],
+    [{'id': 'v_007_157', 'surah': True, 'ayah': 157}],
+    [{'id': 'v_007_157', 'surah': 7, 'ayah': 999}],
+    [{'id': 'v_007_157', 'surah': 7, 'ayah': 157}] * 2,
+    [{'id': 'v_020_132', 'surah': 20, 'ayah': 132}],
+])
+def test_lesson_scripture_rejects_unverified_or_ambiguous_declarations(dp, lesson_scripture, items):
+    lesson_scripture(items)
+    with pytest.raises(ValueError):
+        dp.load_bank()
+
+
+def test_lesson_verse_keeps_spec_allowlist_and_single_placeholder_guard(dp, lesson_scripture):
+    lesson_scripture([{'id': 'v_007_157', 'surah': 7, 'ayah': 157}])
+    b = dp.load_bank()
+    assert 'v_007_157' in b
+    doc = _lesson(summary=GOOD_SUMMARY + ' [[v_007_157]]')
+    assert not _gates(dp, doc, allowed=('v_007_157',))
+    assert any('غير مسموح' in p for p in _gates(dp, doc))
+    doc['summary'] += ' [[v_007_157]]'
+    assert any('أكثر من عنصر نائب' in p for p in _gates(dp, doc, allowed=('v_007_157',)))

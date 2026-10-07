@@ -70,6 +70,8 @@ ROOT = Path(__file__).resolve().parents[2]
 CURRICULUM = ROOT / "knowledge_base" / "curriculum"
 UNITS = ROOT / "knowledge_base" / "units"
 BANK = ROOT / "mobile" / "assets" / "content" / "adhkar" / "family_adhkar.ar.json"
+LESSON_SCRIPTURE_BANK = ROOT / "ops" / "data" / "deepen_paths" / "scripture_refs.json"
+QURAN = ROOT / "mobile" / "assets" / "data" / "quran.json"
 LESSON_INDEX = ROOT / "docs" / "lesson_index.json"
 
 # نستورد أداة الترجمة بدل نسخ ثوابتها: المسرد وقيد الجذور ومراجع الطعن كلها مكوّدة من
@@ -166,10 +168,38 @@ HADITH_BOOKS_ALLOWED = {"البخاري", "مسلم"}
 
 def load_bank() -> dict:
     data = json.loads(BANK.read_text(encoding="utf-8"))
-    return {i["id"]: i for i in data["items"]
+    bank = {i["id"]: i for i in data["items"]
             if i.get("kind") == "verse" or (
                 i.get("kind") == "hadith"
                 and (i.get("provenance") or {}).get("book") in HADITH_BOOKS_ALLOWED)}
+    if not LESSON_SCRIPTURE_BANK.exists():
+        return bank
+    refs = json.loads(LESSON_SCRIPTURE_BANK.read_text(encoding="utf-8"))
+    if refs.get("schema") != "tg.lesson_scripture_refs/1" or not isinstance(refs.get("items"), list):
+        raise ValueError("invalid lesson scripture reference bank")
+    tools_dir = str(Path(__file__).parent)
+    if tools_dir not in sys.path:
+        sys.path.insert(0, tools_dir)
+    from check_quran_citations import SURAHS
+    corpus = json.loads(QURAN.read_text(encoding="utf-8"))
+    for ref in refs["items"]:
+        if not isinstance(ref, dict) or set(ref) != {"id", "surah", "ayah"}:
+            raise ValueError("lesson scripture accepts coordinates only, never authored text")
+        surah, ayah = ref["surah"], ref["ayah"]
+        if type(surah) is not int or type(ayah) is not int or not 1 <= surah <= 114 or ayah < 1:
+            raise ValueError("invalid Quran coordinates")
+        rid = f"v_{surah:03d}_{ayah:03d}"
+        if ref["id"] != rid or rid in bank:
+            raise ValueError("mismatched or duplicate lesson scripture id")
+        rows = [r for r in corpus.get(str(surah), [])
+                if r.get("chapter") == surah and r.get("verse") == ayah]
+        if len(rows) != 1 or not isinstance(rows[0].get("text"), str) or not rows[0]["text"]:
+            raise ValueError("Quran reference must select exactly one corpus verse")
+        number = str(ayah).translate(str.maketrans("0123456789", "٠١٢٣٤٥٦٧٨٩"))
+        bank[rid] = {"id": rid, "kind": "verse", "text": rows[0]["text"],
+                     "source": f"سورة {SURAHS[surah - 1]} — آية {number}",
+                     "provenance": {"type": "quran", "surah": surah, "ayah": ayah}}
+    return bank
 
 
 def _bank_ngrams(bank: dict, n: int = 4) -> set:
@@ -291,6 +321,7 @@ def english_gates(en: dict, ar: dict) -> list[str]:
 # ── النصوص الشرعية: إدخال حرفي من الحزمة ──────────────────────────────
 
 SURAH_EN = {
+    "الأعراف": "Al-A'raf",
     "إبراهيم": "Ibrahim", "طه": "Ta-Ha", "لقمان": "Luqman", "مريم": "Maryam",
     "البقرة": "Al-Baqarah", "آل عمران": "Al Imran", "النحل": "An-Nahl",
     "الإسراء": "Al-Isra", "فصلت": "Fussilat", "الفرقان": "Al-Furqan",
