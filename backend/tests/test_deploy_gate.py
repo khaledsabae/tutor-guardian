@@ -180,11 +180,15 @@ def test_every_smoke_test_file_exists():
 
 @repo_files
 def test_docker_ci_never_prunes_or_builds_on_the_production_runner():
-    # Opening a source PR triggers both Docker jobs. Their disk-prune/build
+    # Opening a source PR triggers Docker verification. Its disk-prune/build
     # steps must execute on a disposable hosted runner, away from live images.
     workflow = _workflow("docker.yml")
     assert "pull_request" in workflow["on"]
-    assert set(workflow["jobs"]) == {"build", "smoke"}
+    # Docker images are local to a runner: smoke must use the built image in
+    # the same hosted job rather than cold-build again on a second runner.
+    assert set(workflow["jobs"]) == {"build"}
     for name, job in workflow["jobs"].items():
         assert job["runs-on"] == "ubuntu-latest", name
-    assert workflow["jobs"]["smoke"]["needs"] == "build"
+    names = [step.get("name", "") for step in workflow["jobs"]["build"]["steps"]]
+    assert "Confirm Python can import the app" in names
+    assert "Confirm docs/privacy-policy.md is bundled" in names
