@@ -1,0 +1,56 @@
+{
+  "id": "lesson_0-3_medical_infant_sleep_01",
+  "path_id": "path_0-3_medical_infant_sleep",
+  "title": "Safe Sleep: On the Back in an Empty Cot",
+  "age_group": "prenatal-1",
+  "domain": "medical",
+  "unit_ids": [
+    "med-2dc3af5f"
+  ],
+  "summary": "Safe sleep is one of the most important ways to protect your baby in their first year. Following the guidance helps reduce the risk of sudden infant death and suffocation during sleep, but cannot guarantee prevention of every case. The rules are simple, but they need to be kept for every sleep, day and night.\n\nPut your baby on their back for every sleep until their first birthday, even if they sleep longer on their tummy. Let them sleep on a firm, flat surface: a firm mattress with a fitted sheet, with no pillows, loose blankets, cot bumpers or toys. If you worry they will be cold, choose suitable sleepwear or a baby sleeping bag instead of a blanket.\n\nIt is best for them to sleep in your room, on their own separate cot beside your bed, for at least the first six months, without sharing an adult bed; this makes feeding and watching easier and lowers the risks. Be extremely careful never to fall asleep with your baby on a sofa or armchair, even for a few minutes; these are among the most dangerous places for a baby to sleep.\n\nAvoid overheating them or covering their head, and keep them completely away from cigarette smoke, at home and in the car. When they are awake, place them on their tummy for a little while as you watch them; this strengthens their neck and back. These rules don't mean constant worry; they mean making a safe sleeping place for them, and then being at ease.",
+  "try_this": "Today: Check your baby's sleep space with a critical eye: remove every pillow, loose blanket or toy from the cot, make sure the mattress is firm and flat, and commit to placing them on their back for every sleep.",
+  "order": 1,
+  "estimated_minutes": 3,
+  "reflection_prompts": [
+    "What did you find in your baby's cot whose danger you didn't know, and which habit will you change from tonight?"
+  ],
+  "warning_flags": [],
+  "needs_professional_followup": false,
+  "is_published": true,
+  "version": "1.0.0",
+  "created_at": "2026-10-07T16:14:23",
+  "updated_at": "2026-10-07T16:14:23",
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "claude-opus-5-5",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
+    "revalidated_at": "2026-10-07T16:17:22+00:00",
+    "generated_by": "ops/tools/deepen_paths.py",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "784baafebde4334bcb4e3fd80305929c43f640cf06b2df37dbfd0710bc8464fc",
+      "reviewed_at": "2026-10-07T16:17:22+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+    }
+  }
+}

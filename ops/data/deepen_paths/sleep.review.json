@@ -1,0 +1,150 @@
+{
+  "spec": "ops/data/deepen_paths/sleep.json",
+  "author": "claude-opus-5-5",
+  "reviewers": [
+    "deepseek-v4-pro",
+    "glm-5.2"
+  ],
+  "written_at": "2026-10-07T16:14:23",
+  "lessons": [
+    {
+      "path_id": "path_0-3_medical_infant_sleep",
+      "key": "s01",
+      "brief": "النوم الآمن: على ظهره في سريرٍ خالٍ",
+      "accepted": true,
+      "blockers": [],
+      "ar_review": {
+        "reviewer": "deepseek-v4-pro",
+        "at": "2026-10-07T16:09:15",
+        "rounds": 1,
+        "defects": [
+          {
+            "severity": "low",
+            "type": "register",
+            "field": "summary",
+            "why": "خطأ نحوي: الصفة يجب أن تكون مجرورة منونة 'مخصّصٍ' لأنها تصف 'كيس نومٍ'، وليس حالًا منصوبًا."
+          }
+        ]
+      },
+      "en_review": {
+        "reviewer": "deepseek-v4-pro+glm-5.2",
+        "at": "2026-10-07T16:17:22+00:00",
+        "defects": [],
+        "source": {
+          "tool": "ops/tools/review_en_parity.py",
+          "content_sha256": "784baafebde4334bcb4e3fd80305929c43f640cf06b2df37dbfd0710bc8464fc",
+          "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07"
+        }
+      },
+      "dispositions": [],
+      "written_as": "lesson_0-3_medical_infant_sleep_01",
+      "order": 1,
+      "title": "النوم الآمن: على ظهره في سريرٍ خالٍ",
+      "ar_hash": "d22b3f6548eb43f4",
+      "en_hash": "35ff9b4c46cd5aa0d22b3f6548eb43f4",
+      "translation_content_sha256": "784baafebde4334bcb4e3fd80305929c43f640cf06b2df37dbfd0710bc8464fc",
+      "translation_reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "translation_stamp": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07"
+    },
+    {
+      "path_id": "path_0-3_medical_infant_sleep",
+      "key": "s02",
+      "brief": "كم ينام الرضيع؟ ولماذا يستيقظ كثيرًا؟",
+      "accepted": true,
+      "blockers": [],
+      "ar_review": {
+        "reviewer": "glm-5.2",
+        "at": "2026-10-07T16:13:12",
+        "rounds": 2,
+        "defects": []
+      },
+      "en_review": {
+        "reviewer": "glm-5.2",
+        "at": "2026-10-07T16:13:12",
+        "rounds": 2,
+        "defects": []
+      },
+      "dispositions": [],
+      "written_as": "lesson_0-3_medical_infant_sleep_02",
+      "order": 2,
+      "title": "كم ينام الرضيع؟ ولماذا يستيقظ كثيرًا؟",
+      "ar_hash": "eec5e70ad4fae9ca",
+      "en_hash": "0413799761ec15fceec5e70ad4fae9ca",
+      "translation_content_sha256": "4aded33661080c40d344df0139825afec2999a7f5ad7840281d654c2c410501f",
+      "translation_reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "translation_stamp": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07"
+    }
+  ],
+  "recovery": {
+    "base": "e70caf905188ea03404ca45aad2e1c06658228fb",
+    "prefix": [
+      "s01",
+      "s02"
+    ],
+    "age_scope": "birth until first birthday; canonical prenatal-1; legacy 0-3 retained only in stable IDs",
+    "corrections_by": "Codex",
+    "remaining_original_8_lessons": "held in preserved backup; not promised by this path description",
+    "excluded_unit_ids": [
+      "gap-med-co-sleeping-01",
+      "c88f868b-4f40-45eb-b357-f8867b2c327d"
+    ],
+    "medical_changes": [
+      "no delayed response to hunger or distress",
+      "no guaranteed sleep-training deadline",
+      "difficulty waking or breathing and blue/grey colour require immediate emergency help"
+    ],
+    "human_approval_claimed": false,
+    "wire_concurrency": 1,
+    "request_timeout_s": 90,
+    "deepen_review_patience_s": 1,
+    "primary_sources": [
+      {
+        "url": "https://www.healthychildren.org/English/ages-stages/baby/sleep/Pages/A-Parents-Guide-to-Safe-Sleep.aspx",
+        "reader_sha256": "b66f56603c56bc5f9d0590a90b240f6b1d7713841d0643e34f1b2dfe1fa691b7",
+        "checked_at": "2026-10-07T16:19:34+00:00"
+      },
+      {
+        "url": "https://www.nhs.uk/baby/caring-for-a-newborn/helping-your-baby-to-sleep/",
+        "reader_sha256": "51ecdac697e1d0de0210b3dfeba2c8186ccbf4ea2e1f31f5d56ce84ff49d5e9b",
+        "checked_at": "2026-10-07T16:19:34+00:00"
+      },
+      {
+        "url": "https://www.nhs.uk/baby/health/is-your-baby-or-toddler-seriously-ill/",
+        "reader_sha256": "05aab5d53479d385a1ba936ce6009bc16edc2ef53739ce9bc416be7d010fc729",
+        "checked_at": "2026-10-07T16:19:34+00:00"
+      }
+    ],
+    "path_translation_review": {
+      "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "237b3e0a535459f76c67684d379422c8602aa9c50afc281ca89806d98fa5af37",
+      "reviewed_at": "2026-10-07T16:20:39+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+    },
+    "verification": {
+      "regression_tests": 160,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "pytest_exit": 0,
+      "schema_files": 926,
+      "schema_exit": 0,
+      "path_description_mismatches": 0
+    }
+  }
+}
