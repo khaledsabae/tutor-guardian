@@ -1,11 +1,11 @@
 {
-  "total_units": 1384,
-  "generated_at": "2026-10-05T04:55:31.325561+00:00",
+  "total_units": 1388,
+  "generated_at": "2026-10-07T07:31:39.565264+00:00",
   "by_domain": {
-    "medical": 358,
+    "medical": 361,
     "cyber": 280,
     "islamic_parenting": 581,
-    "development": 132,
+    "development": 133,
     "app_help": 12,
     "aqeedah": 21
   },
@@ -16617,6 +16617,54 @@
       "behavior_type": "نوبات الغضب",
       "needs_ocr": false,
       "size_chars": 425
+    },
+    {
+      "id": "dev-7562f817__en",
+      "domain": "development",
+      "title": "Puberty in boys: signs, normal ages, and how a father can ta",
+      "source_file": "",
+      "language": "en",
+      "original_age_group": "10-12",
+      "normalized_age_group": "10-12",
+      "behavior_type": "بلوغ الأولاد — العلامات والتوقيت وحديث الأب مع ابنه",
+      "needs_ocr": false,
+      "size_chars": 3457
+    },
+    {
+      "id": "med-360b9041__en",
+      "domain": "medical",
+      "title": "Early and delayed puberty in boys and girls: when to see a d",
+      "source_file": "",
+      "language": "en",
+      "original_age_group": "10-12",
+      "normalized_age_group": "10-12",
+      "behavior_type": "توقيت البلوغ — المبكر والمتأخر ومتى يُراجَع الطبيب",
+      "needs_ocr": false,
+      "size_chars": 3301
+    },
+    {
+      "id": "med-80a3871c__en",
+      "domain": "medical",
+      "title": "Fasting in children: signs of dehydration, when to break the",
+      "source_file": "",
+      "language": "en",
+      "original_age_group": "10-12",
+      "normalized_age_group": "10-12",
+      "behavior_type": "صيام الأطفال — الجفاف وعلامات الإفطار الفوري والطوارئ",
+      "needs_ocr": false,
+      "size_chars": 3930
+    },
+    {
+      "id": "med-f8cc198a__en",
+      "domain": "medical",
+      "title": "Periods in the first few years: what is normal, and when doe",
+      "source_file": "",
+      "language": "en",
+      "original_age_group": "13-15",
+      "normalized_age_group": "13-15",
+      "behavior_type": "الدورة الشهرية في أول سنوات البلوغ — الطبيعي وعلامات الخطر",
+      "needs_ocr": false,
+      "size_chars": 3402
     }
   ]
 }

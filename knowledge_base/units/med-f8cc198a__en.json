@@ -40,6 +40,51 @@
   "translation": {
     "translator_model": "openai-gpt",
     "needs_scholar_review": true,
-    "approved_by": null
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "691650a89ef6590d8f921134b5fd6e47ec806c1bcd9ebdc857a3ec5d6bb1a484",
+      "reviewed_at": "2026-10-07T07:30:46+00:00",
+      "residual_low": [
+        {
+          "model": "deepseek-v4-pro",
+          "field": "title",
+          "type": "meaning",
+          "why": "The Arabic specifies a female doctor (الطبيبة), while the English uses the generic 'doctor'."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "field": "text_simplified",
+          "type": "meaning",
+          "why": "The Arabic uses feminine forms for both teacher and scholar, but the English 'scholar' is not explicitly female."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+    },
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
+    "review_verdict": "low_only",
+    "review_defects": [
+      {
+        "model": "deepseek-v4-pro",
+        "field": "title",
+        "type": "meaning",
+        "why": "The Arabic specifies a female doctor (الطبيبة), while the English uses the generic 'doctor'."
+      },
+      {
+        "model": "deepseek-v4-pro",
+        "field": "text_simplified",
+        "type": "meaning",
+        "why": "The Arabic uses feminine forms for both teacher and scholar, but the English 'scholar' is not explicitly female."
+      }
+    ],
+    "revalidated_at": "2026-10-07T07:30:46+00:00"
   }
 }

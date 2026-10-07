@@ -384,7 +384,8 @@
       ],
       "unit_ids": [
         "isl-3d476538",
-        "med-408796d1"
+        "med-408796d1",
+        "med-80a3871c"
       ],
       "evidence_ids": [
         "h_children_fasting"
@@ -459,7 +460,9 @@
       "unit_ids": [
         "dev-40436851",
         "med-88c1469a",
-        "isl-9738d757"
+        "isl-9738d757",
+        "med-360b9041",
+        "med-f8cc198a"
       ],
       "evidence_ids": [
         "h_haya_good",
@@ -533,7 +536,9 @@
       ],
       "unit_ids": [
         "med-88c1469a",
-        "89bf08a7-5d8f-4373-b48d-523b596f5f8a"
+        "89bf08a7-5d8f-4373-b48d-523b596f5f8a",
+        "dev-7562f817",
+        "med-360b9041"
       ],
       "evidence_ids": [
         "h_umm_sulaym",
