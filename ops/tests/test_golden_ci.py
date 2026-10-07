@@ -161,3 +161,19 @@ def test_incomplete_judge_payload_never_claims_completed_quality(tmp_path):
     report = ci.full_report([item()], tmp_path, env, lambda _: Harness)
     assert report["status"] == "PARTIAL"
     assert report["counts"]["errors"] == 1
+
+
+def test_interrupted_retrieval_keeps_completed_rows_and_remaining_ids(tmp_path):
+    def prepare(_):
+        def retrieve(row):
+            if row["id"] == "interrupted":
+                raise KeyboardInterrupt
+            return ["medical"], [{"unit_id": "unit-a"}]
+        return retrieve, {"medical"}, {"unit-a"}
+    with pytest.raises(KeyboardInterrupt):
+        ci.offline_report([item(), item("interrupted"), item("last")],
+                          tmp_path, prepare, checkpoint=tmp_path / "report.json")
+    report = json.loads((tmp_path / "report.json").read_text())
+    assert report["status"] == "PARTIAL"
+    assert report["counts"] == {"total": 3, "evaluated": 1, "errors": 0, "unavailable": 2}
+    assert [r["id"] for r in report["items"]] == ["a", "interrupted", "last"]

@@ -105,9 +105,11 @@ def prepare_offline(private):
     return retrieve, CANONICAL_DOMAINS, ids
 
 
-def offline_report(items, private, prepare=prepare_offline):
+def offline_report(items, private, prepare=prepare_offline, checkpoint=None):
     report = base_report(items, "offline keyword/fallback domains + hybrid retrieval",
                          "No generation, LLM classification/rewrite, or judge executed")
+    if checkpoint:
+        checkpoint.write_text(json.dumps(report, ensure_ascii=False), encoding="utf-8")
     try:
         retrieve, domains, ids = prepare(private)
     except Exception as exc:
@@ -120,6 +122,17 @@ def offline_report(items, private, prepare=prepare_offline):
             rows.append(score_retrieval(item, actual_domains, units, domains, ids))
         except Exception as exc:
             rows.append({"id": item["id"], "status": "ERROR", "error": type(exc).__name__})
+        if checkpoint:
+            errors_so_far = sum(r["status"] == "ERROR" for r in rows)
+            progress = report | {
+                "status": "PARTIAL",
+                "counts": {"total": len(items), "evaluated": len(rows) - errors_so_far,
+                           "errors": errors_so_far, "unavailable": len(items) - len(rows)},
+                "items": rows + report["items"][len(rows):],
+            }
+            pending = checkpoint.with_suffix(".tmp")
+            pending.write_text(json.dumps(progress, ensure_ascii=False), encoding="utf-8")
+            pending.replace(checkpoint)
     errors = sum(r["status"] == "ERROR" for r in rows)
     report.update(status="PARTIAL" if errors else "COMPLETED", items=rows,
                   counts={"total": len(items), "evaluated": len(items) - errors,
@@ -183,7 +196,8 @@ def valid_judgment(row):
             and isinstance(judge.get("safety_compliance"), bool))
 
 
-def full_report(items, private, env, loader=load_full_harness):
+def full_report(items, private, env, loader=load_full_harness, evidence=None):
+    evidence = evidence or private
     reason = provider_unavailable(env)
     report = base_report(items, "full HTTP pipeline + existing real judge",
                          reason or "Pipeline/judge not completed")
@@ -201,7 +215,7 @@ def full_report(items, private, env, loader=load_full_harness):
                     row[key] = "pipeline_error" if key == "error" else "retrieval_error"
         if [r["id"] for r in rows] != [r["id"] for r in items]:
             raise ValueError("pipeline item coverage mismatch")
-        save_rows(private / "pipeline.jsonl", rows)
+        save_rows(evidence / "pipeline.jsonl", rows)
         report["items"] = rows
         report["status"] = "PARTIAL"
         with contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()):
@@ -219,7 +233,7 @@ def full_report(items, private, env, loader=load_full_harness):
         report["status"] = "COMPLETED" if complete else "PARTIAL"
         report["answer_quality"] = {"status": report["status"],
                                      "reason": "Existing judge metrics; no quality pass threshold"}
-        save_rows(private / "judged.jsonl", rows)
+        save_rows(evidence / "judged.jsonl", rows)
     except Exception as exc:
         report["reason"] = f"pipeline/judge unavailable: {type(exc).__name__}"
     return report
@@ -242,14 +256,20 @@ def main(argv=None):
     parser.add_argument("--set", type=Path, default=ROOT / "ops/eval/golden_set.jsonl")
     parser.add_argument("--out", type=Path, required=True)
     parser.add_argument("--unavailable", help="runtime unavailable; report every valid item without imports")
+    parser.add_argument("--render-existing", action="store_true", help="render a partial checkpoint without evaluation")
     args = parser.parse_args(argv)
     args.out.mkdir(parents=True, exist_ok=True)
-    try:
-        items = load_set(args.set)
-    except (ValueError, OSError) as exc:
-        report = {"status": "INVALID_SET", "reason": type(exc).__name__, "items": [],
-                  "answer_quality": {"status": "UNAVAILABLE"}}
+    if args.render_existing:
+        report = json.loads((args.out / "report.json").read_text(encoding="utf-8"))
+        items = None
     else:
+        try:
+            items = load_set(args.set)
+        except (ValueError, OSError) as exc:
+            report = {"status": "INVALID_SET", "reason": type(exc).__name__, "items": [],
+                      "answer_quality": {"status": "UNAVAILABLE"}}
+            items = None
+    if items is not None:
         if args.mode == "offline" and not args.unavailable:
             os.environ.update(HF_HUB_OFFLINE="1", TRANSFORMERS_OFFLINE="1",
                               ANONYMIZED_TELEMETRY="False")
@@ -260,12 +280,10 @@ def main(argv=None):
                 report = base_report(items, args.mode, args.unavailable)
                 report["reason"] = args.unavailable
             else:
-                report = (offline_report(items, private) if args.mode == "offline"
-                          else full_report(items, private, os.environ))
-            for filename in ("pipeline.jsonl", "judged.jsonl"):
-                if (private / filename).exists():
-                    shutil.copyfile(private / filename, args.out / filename)
-    report["revision"] = os.environ.get("GOLDEN_REVISION", "unknown")
+                report = (offline_report(items, private, checkpoint=args.out / "report.json")
+                          if args.mode == "offline"
+                          else full_report(items, private, os.environ, evidence=args.out))
+    report["revision"] = report.get("revision", os.environ.get("GOLDEN_REVISION", "unknown"))
     (args.out / "report.json").write_text(json.dumps(report, ensure_ascii=False, indent=2),
                                           encoding="utf-8")
     summary = (f"Golden evaluation: **{report['status']}**\n\n"

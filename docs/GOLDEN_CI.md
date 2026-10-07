@@ -20,6 +20,10 @@ The report/summary is uploaded for 14 days. A failed build, unavailable model,
 empty index, retrieval exception or timeout never becomes a fake quality pass.
 Failed setup reports all items UNAVAILABLE; individual failures retain their
 IDs as ERROR. Fork PRs inherit the candidate workflow's existing skip policy.
+An atomic per-item checkpoint preserves completed rows and the remaining IDs
+on interruption; the wrapper renders that partial evidence after a timeout.
+The current source-label inventory has 17 distinct expected unit IDs absent
+from the committed KB; the runtime checks the actual baked index independently.
 
 ## Full answer quality remains pending
 

@@ -21,4 +21,6 @@ if [ ! -s "$output/report.json" ]; then
   python3 ops/tools/golden_ci.py --set ops/eval/golden_set.jsonl --out "$output" \
     --unavailable "Candidate runtime did not complete (exit $code)" || true
 fi
+GOLDEN_REVISION="${GITHUB_SHA:-unknown}" python3 ops/tools/golden_ci.py \
+  --render-existing --out "$output" || true
 exit "$code"
