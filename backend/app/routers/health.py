@@ -9,7 +9,7 @@ logger = logging.getLogger(__name__)
 
 
 @router.get("/health")
-async def health_check():
+def health_check():
     """Deep health check — verifies SQLite and ChromaDB readiness."""
     checks: dict = {}
 
