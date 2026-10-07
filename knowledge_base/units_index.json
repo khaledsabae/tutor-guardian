@@ -7417,26 +7417,26 @@
     {
       "id": "isl-10541fe2",
       "domain": "islamic_parenting",
-      "title": "أهمية العدل في تربية الأبناء",
+      "title": "العدل بين الأولاد في العطايا",
       "source_file": "Alukah_Rights_of_Children.pdf",
       "language": "ar",
       "original_age_group": "unspecified",
       "normalized_age_group": "unspecified",
       "behavior_type": "تربية أبناء",
       "needs_ocr": false,
-      "size_chars": 1415
+      "size_chars": 81
     },
     {
       "id": "isl-10541fe2__en",
       "domain": "islamic_parenting",
-      "title": "The Importance of Justice in the Tarbiyah of Children",
+      "title": "Fairness Between Children in Gifts",
       "source_file": "Alukah_Rights_of_Children.pdf",
       "language": "en",
       "original_age_group": "unspecified",
       "normalized_age_group": "unspecified",
       "behavior_type": "تربية أبناء",
       "needs_ocr": false,
-      "size_chars": 1415
+      "size_chars": 81
     },
     {
       "id": "isl-1057f72f",
@@ -10477,26 +10477,26 @@
     {
       "id": "isl-8aa15666",
       "domain": "islamic_parenting",
-      "title": "حقوق الأطفال في اللعب والترفيه",
+      "title": "ملاطفة أبي عمير ولعبه بالطائر",
       "source_file": "Alukah_Rights_of_Children.pdf",
       "language": "ar",
       "original_age_group": "4-6",
       "normalized_age_group": "4-6",
       "behavior_type": "حقوق الطفل واللعب",
       "needs_ocr": false,
-      "size_chars": 1382
+      "size_chars": 181
     },
     {
       "id": "isl-8aa15666__en",
       "domain": "islamic_parenting",
-      "title": "The Rights of Children to Play and Recreation",
+      "title": "Kindness to Abu Umayr and His Play with a Bird",
       "source_file": "Alukah_Rights_of_Children.pdf",
       "language": "en",
       "original_age_group": "4-6",
       "normalized_age_group": "4-6",
       "behavior_type": "حقوق الطفل واللعب",
       "needs_ocr": false,
-      "size_chars": 1382
+      "size_chars": 181
     },
     {
       "id": "isl-8b35ad26",
@@ -11605,26 +11605,26 @@
     {
       "id": "isl-be38b357",
       "domain": "islamic_parenting",
-      "title": "أهمية اللعب المباح للأطفال في التربية النبوية",
+      "title": "الفرح يوم العيد في رواية عائشة",
       "source_file": "Alukah_Rights_of_Children.pdf",
       "language": "ar",
       "original_age_group": "4-6",
       "normalized_age_group": "4-6",
       "behavior_type": "تربية ولعب",
       "needs_ocr": false,
-      "size_chars": 1197
+      "size_chars": 161
     },
     {
       "id": "isl-be38b357__en",
       "domain": "islamic_parenting",
-      "title": "The Importance of Permissible Play for Children in the Proph",
+      "title": "Celebration on Eid in Aisha’s Narration",
       "source_file": "Alukah_Rights_of_Children.pdf",
       "language": "en",
       "original_age_group": "4-6",
       "normalized_age_group": "4-6",
       "behavior_type": "تربية ولعب",
       "needs_ocr": false,
-      "size_chars": 1197
+      "size_chars": 161
     },
     {
       "id": "isl-beb6b0f0",

@@ -1,0 +1,57 @@
+{
+  "unit_id": "isl-10541fe2",
+  "source_title": "حقوق الأولاد على الوالدين",
+  "source_author": "عماد بن أحمد بن عبدالعظيم",
+  "source_url": "https://www.alukah.net/Books/Files/Book_17337/BookFile/brotherandboys.pdf",
+  "pdf_sha256": "7fa6f88fbf1ba714947983c11cde1e8c67b576374ae06c08a081444743d1272c",
+  "original_ocr_locator": "Printed p.68: قال المناوي; footnote (1), فيض القدير (2/728). The original reversed OCR contains the same gift/endowment/donation clause; no ruling on needs-based maintenance or equal treatment in all matters is inferred.",
+  "original_ocr_sha256": "e01690d62af9b77171d72b6569485e82e8ec1c44f87063c35775e89a740761e5",
+  "pdf_pages_one_based": [
+    69
+  ],
+  "printed_pages": [
+    68
+  ],
+  "selected_pdf_pages_one_based": [
+    69
+  ],
+  "selected_printed_pages": [
+    68
+  ],
+  "excerpt": "قال المناوي: «والعدل بينهم في العطية سواء كانت هبة أم هدية أم وقفا أم تبرعا آخر».",
+  "excerpt_sha256": "b6a213c1e8227196c8ca2d126423927a1a9d3be6fa4e6e216e1ea307d7bc0f9f",
+  "method": "Direct visual reading of the exact primary PDF pages; raw OCR used only to locate original passages. Selected short excerpts are manually transcribed without vowel marks/line wraps; honorific glyphs expanded. No full PDF or page copy added to the repository.",
+  "quotation_accounting": {
+    "new_modern_book_verbatim_words": 0,
+    "ancient_public_domain_material": [
+      {
+        "excerpt": "والعدل بينهم في العطية سواء كانت هبة أم هدية أم وقفا أم تبرعا آخر",
+        "historical_source": "al-Munawi, Fayd al-Qadir, 2/728 (as cited by the book)",
+        "classification": "ancient hadith or pre-modern scholarly commentary; excluded from modern-book quotation budget"
+      }
+    ],
+    "prior_two_recovered_units_unique_excerpt_words": 83,
+    "conservative_modern_book_aggregate_words": 83,
+    "limit": 90,
+    "note": "This recovery adds no modern-author verbatim prose. Identifying speaker labels are bibliographic attribution. Prior two excerpts conservatively counted in full (including their ancient material). Repeated AR/EN/evidence copies are the same distinct excerpts, not additional passages."
+  },
+  "hadith_matches": [],
+  "approval": "Source evidence only. No model, scholar, human or publication approval; drafts await independent translation and scholar review.",
+  "raw_ocr_anchor": "ةقطعلا في ؿفـقب لدعلاو",
+  "validation": {
+    "pair_schema_exit": 0,
+    "pair_schema_units": 2,
+    "guards": {
+      "check_kb_integrity.py": 0,
+      "check_kb_fidelity.py": 0,
+      "check_hadith_citations.py": 0,
+      "check_scripture_coverage.py": 0,
+      "review_en_parity.py check": 0
+    },
+    "canonical_sha256": "9fc119c817af991c576d2914dd1b657224a6db466ce527d533383a76c764d5c3",
+    "deterministic_parity_defects": [],
+    "queue": "awaiting-review",
+    "models_called": 0,
+    "approval": null
+  }
+}
