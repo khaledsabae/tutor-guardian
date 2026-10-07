@@ -165,42 +165,6 @@
         "claude-opus-5.5"
       ]
     },
-    "lesson_4-6_development_positive_parenting_02": {
-      "category": "awaiting-review",
-      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
-      "content_sha256": "5da1127432f1cd54c7ba0cab9c4b30c6af10d6ba8dc4fe202b48b9ae99e77c07",
-      "queued_on": "2026-10-04",
-      "english_authors": [
-        "claude-opus-5.5"
-      ]
-    },
-    "lesson_4-6_islamic_parenting_adab_02": {
-      "category": "awaiting-review",
-      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
-      "content_sha256": "c1b75671fc64c3f1fa48b2b94a44bd7c704c07a87ad259412cc2ecba162cf09d",
-      "queued_on": "2026-10-04",
-      "english_authors": [
-        "claude-opus-5.5"
-      ]
-    },
-    "lesson_7-9_aqeedah_fundamentals_04": {
-      "category": "awaiting-review",
-      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system · Arabic corrected 2026-10-04 per the PR #20 review · English corrected by Claude 2026-10-04 per the PR #20 review",
-      "content_sha256": "c0698c18b3ad33155e445cb79d5a244383a7d2f1fca054fa3673ebc58c464f31",
-      "queued_on": "2026-10-04",
-      "english_authors": [
-        "claude-opus-5.5"
-      ]
-    },
-    "lesson_prenatal-1_infant_pregnancy_05": {
-      "category": "awaiting-review",
-      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
-      "content_sha256": "97ff39a9f47bae37a745ffc756290ce4894ddbf4864ff6ebd4b7d01a5c5b2e75",
-      "queued_on": "2026-10-04",
-      "english_authors": [
-        "claude-opus-5.5"
-      ]
-    },
     "path_0-3_cyber_screen_foundations": {
       "category": "awaiting-review",
       "reason": "Phase 0 honest labels (content/p1-deep-paths): the description promised a duration its lessons cannot keep («لمدة 10/12/14 يومًا» / «10/12/14-day»), so that phrase was removed from the Arabic and the English together and nothing else changed (the prenatal path keeps #20's safe-sleep wording, without the 5 S's). The 2026-10-04 stamp covered the old text. Re-review after the Ollama weekly reset; Claude edited the English, so Claude may not stamp it.",
@@ -228,12 +192,6 @@
         "claude-opus-5.5"
       ]
     },
-    "story:bilal_forgiveness": {
-      "category": "awaiting-review",
-      "reason": "the Arabic gained interactive fields (age, category, three questions, Islamic value, challenge); their English is prepared in ops/data/en_parity_pending/ and is Claude-authored; waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
-      "content_sha256": "04cb99a78bf68187700ac1abbd77828591a7fba1f8963ebac822fcbca142d670",
-      "queued_on": "2026-10-04"
-    },
     "story:fatima_parents": {
       "category": "awaiting-review",
       "reason": "the Arabic gained interactive fields (age, category, three questions, Islamic value, challenge); their English is prepared in ops/data/en_parity_pending/ and is Claude-authored; waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
@@ -244,12 +202,6 @@
       "category": "awaiting-review",
       "reason": "the Arabic gained interactive fields (age, category, three questions, Islamic value, challenge); their English is prepared in ops/data/en_parity_pending/ and is Claude-authored; waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
       "content_sha256": "d88d8c377c7c38363e8abe9e7cdba1f86142c28806f60cffcf6ce36b15580653",
-      "queued_on": "2026-10-04"
-    },
-    "story:hope_sprout": {
-      "category": "awaiting-review",
-      "reason": "the Arabic gained interactive fields (age, category, three questions, Islamic value, challenge); their English is prepared in ops/data/en_parity_pending/ and is Claude-authored; waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
-      "content_sha256": "72a6a07a930921b7240abc928cb86b859b11b2ffc568307123874d81f4246738",
       "queued_on": "2026-10-04"
     },
     "story:khadija_neighbor": {

@@ -32,7 +32,7 @@
     "source_language": "ar",
     "translation": {
       "translator_model": "mistral-large-3:675b",
-      "reviewer_model": "deepseek-v4-pro",
+      "reviewer_model": "deepseek-v4-pro+glm-5.2",
       "attempts": 1,
       "needs_scholar_review": true,
       "scholar_signals": {
@@ -41,19 +41,53 @@
         "quran_ayah": false,
         "reviewer_model": false
       },
-      "review_verdict": "defects",
+      "review_verdict": "low_only",
       "review_defects": [
         {
-          "type": "term_error",
-          "field": "pages[2].text",
-          "arabic": "الزرع كالتربية... الصبر والرفق",
-          "english": "planting is like tarbiyah... patience, rifq",
-          "why": "The Arabic words 'التربية' (upbringing) and 'الرفق' (gentleness) are left untranslated as 'tarbiyah' and 'rifq'. These are not standard Islamic terms that must be kept in Arabic; they should be translated to convey the meaning clearly to English readers.",
-          "severity": "medium"
+          "model": "deepseek-v4-pro",
+          "field": "title",
+          "type": "meaning",
+          "why": "غرسة means seedling/planting, not seed, so the English shifts the metaphor slightly."
         }
       ],
-      "approved_by": null
-    }
+      "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
+      "english_authors": [
+        "mistral-large-3:675b",
+        "claude-opus-5.5"
+      ],
+      "auto_review": {
+        "reviewers": [
+          "deepseek-v4-pro",
+          "glm-5.2"
+        ],
+        "fixer": null,
+        "rounds": 1,
+        "prompt_version": "dfa8a5f39718",
+        "content_sha256": "8c04e7883a526347f7fb4008424cd9d03dab101d372967b8f49064fb178dc8ad",
+        "reviewed_at": "2026-10-07T07:55:29+00:00",
+        "residual_low": [
+          {
+            "model": "deepseek-v4-pro",
+            "field": "title",
+            "type": "meaning",
+            "why": "غرسة means seedling/planting, not seed, so the English shifts the metaphor slightly."
+          }
+        ],
+        "adjudicated": [],
+        "tool": "ops/tools/review_en_parity.py",
+        "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+      },
+      "revalidated_at": "2026-10-07T07:55:29+00:00"
+    },
+    "ageGroup": "4-7 years",
+    "category": "Patience and trusting Allah",
+    "discussionQuestions": [
+      "Why was Yusuf sad at first, and what was the secret in his father's advice?",
+      "How is caring for a plant like being patient while we memorise the Qur'an or learn to pray?",
+      "What would you like to be patient with until it bears fruit and its success makes you happy?"
+    ],
+    "islamicValue": "The Messenger of Allah ﷺ said: “No one is given a gift better and more abundant than patience.” (Sahih al-Bukhari 1469)",
+    "actionChallenge": "Patience challenge: choose something useful that needs patience today, like tidying your wardrobe or practising a short surah without getting bored."
   },
   {
     "id": "kitten_kindness",
@@ -1126,7 +1160,7 @@
     "source_language": "ar",
     "translation": {
       "translator_model": "mistral-large-3:675b",
-      "reviewer_model": "deepseek-v4-pro",
+      "reviewer_model": "deepseek-v4-pro+glm-5.2",
       "attempts": 1,
       "needs_scholar_review": true,
       "scholar_signals": {
@@ -1135,35 +1169,137 @@
         "quran_ayah": true,
         "reviewer_model": true
       },
-      "review_verdict": "defects",
+      "review_verdict": "low_only",
       "review_defects": [
         {
-          "type": "meaning_change",
+          "model": "deepseek-v4-pro",
+          "field": "description",
+          "type": "meaning",
+          "why": "القدوة الحسنة means a good example/model, not merely good character."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "field": "pages[0].text",
+          "type": "meaning",
+          "why": "بشغف means passionately/with enthusiasm, which is stronger than happily."
+        },
+        {
+          "model": "deepseek-v4-pro",
           "field": "pages[3].text",
-          "arabic": "المسلم يعفو ويسامح",
-          "english": "a Muslim forgives and shows kindness",
-          "why": "The Arabic 'يسامح' means 'pardons' or 'forgives', not 'shows kindness'. The translation adds a concept not present in the source.",
-          "severity": "low"
+          "type": "meaning",
+          "why": "يسامح means forgives, not shows kindness; the two verbs are near-synonyms for pardoning/forgiving."
         },
         {
-          "type": "meaning_change",
-          "field": "pages[5].text",
-          "arabic": "يرفع صاحب القدر والمنزلة",
-          "english": "lifts a person’s rank",
-          "why": "The Arabic includes 'القدر' (status/destiny) alongside 'المنزلة' (rank). The English omits 'status'.",
-          "severity": "low"
+          "model": "deepseek-v4-pro",
+          "field": "pages[4].text",
+          "type": "meaning",
+          "why": "تساهل means leniency/tolerance, not forgiveness."
         },
         {
-          "type": "meaning_change",
+          "model": "deepseek-v4-pro",
           "field": "pages[5].text",
-          "arabic": "ويعمر القلوب بالمحبة والسلام",
-          "english": "and fills hearts with love and harmony",
-          "why": "The Arabic 'سلام' means 'peace', not 'harmony'.",
-          "severity": "low"
+          "type": "meaning",
+          "why": "رضا means contentment/satisfaction, not peace, and سلام means peace, not harmony."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "field": "discussionQuestions[0]",
+          "type": "source_corruption",
+          "why": "The story takes place during art class/painting, not playing, so أثناء اللعب is inconsistent with the narrative."
+        },
+        {
+          "model": "glm-5.2",
+          "field": "pages[3].text",
+          "type": "meaning",
+          "why": "«يسامح» means 'is forgiving/tolerant,' not exactly 'shows kindness'; the English avoids repetition but slightly shifts the second verb's meaning."
+        },
+        {
+          "model": "glm-5.2",
+          "field": "pages[5].text",
+          "type": "meaning",
+          "why": "«السلام» means 'peace,' not 'harmony'; a minor word-choice shift."
         }
       ],
-      "approved_by": null
-    }
+      "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
+      "english_authors": [
+        "mistral-large-3:675b",
+        "claude-opus-5.5"
+      ],
+      "auto_review": {
+        "reviewers": [
+          "deepseek-v4-pro",
+          "glm-5.2"
+        ],
+        "fixer": null,
+        "rounds": 1,
+        "prompt_version": "dfa8a5f39718",
+        "content_sha256": "66df4d45b171b525847a5b317a47a4fb1a21e925a9a396bfb6fc4f8fecd2f824",
+        "reviewed_at": "2026-10-07T07:57:31+00:00",
+        "residual_low": [
+          {
+            "model": "deepseek-v4-pro",
+            "field": "description",
+            "type": "meaning",
+            "why": "القدوة الحسنة means a good example/model, not merely good character."
+          },
+          {
+            "model": "deepseek-v4-pro",
+            "field": "pages[0].text",
+            "type": "meaning",
+            "why": "بشغف means passionately/with enthusiasm, which is stronger than happily."
+          },
+          {
+            "model": "deepseek-v4-pro",
+            "field": "pages[3].text",
+            "type": "meaning",
+            "why": "يسامح means forgives, not shows kindness; the two verbs are near-synonyms for pardoning/forgiving."
+          },
+          {
+            "model": "deepseek-v4-pro",
+            "field": "pages[4].text",
+            "type": "meaning",
+            "why": "تساهل means leniency/tolerance, not forgiveness."
+          },
+          {
+            "model": "deepseek-v4-pro",
+            "field": "pages[5].text",
+            "type": "meaning",
+            "why": "رضا means contentment/satisfaction, not peace, and سلام means peace, not harmony."
+          },
+          {
+            "model": "deepseek-v4-pro",
+            "field": "discussionQuestions[0]",
+            "type": "source_corruption",
+            "why": "The story takes place during art class/painting, not playing, so أثناء اللعب is inconsistent with the narrative."
+          },
+          {
+            "model": "glm-5.2",
+            "field": "pages[3].text",
+            "type": "meaning",
+            "why": "«يسامح» means 'is forgiving/tolerant,' not exactly 'shows kindness'; the English avoids repetition but slightly shifts the second verb's meaning."
+          },
+          {
+            "model": "glm-5.2",
+            "field": "pages[5].text",
+            "type": "meaning",
+            "why": "«السلام» means 'peace,' not 'harmony'; a minor word-choice shift."
+          }
+        ],
+        "adjudicated": [],
+        "tool": "ops/tools/review_en_parity.py",
+        "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+      },
+      "revalidated_at": "2026-10-07T07:57:31+00:00"
+    },
+    "ageGroup": "4-7 years",
+    "category": "Forgiveness and a clean heart",
+    "discussionQuestions": [
+      "What did Bilal do when his friend wronged him while they were playing?",
+      "Why does a person feel calm and at ease when they pardon and forgive?",
+      "How does forgiving raise a Muslim's standing with Allah and with people?"
+    ],
+    "islamicValue": "Allah says: ﴿وَأَن تَعْفُوا أَقْرَبُ لِلتَّقْوَىٰ﴾ (Al-Baqarah: 237) — interpretation of the meaning: 'And to forgo it is nearer to righteousness.' And the Prophet ﷺ said: “Allah increases a servant who pardons only in honour.” (Sahih Muslim 2588)",
+    "actionChallenge": "Forgiveness challenge: if you are upset with your brother or a friend about something in the past, shake their hand today and tell them: «I forgive you, and I love you for the sake of Allah.»"
   },
   {
     "id": "hamza_truth",
