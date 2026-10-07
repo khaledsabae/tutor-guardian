@@ -1,0 +1,23 @@
+{
+  "stamped": [],
+  "fixed": [],
+  "arabic_proposals": [],
+  "arabic_applied": [],
+  "unresolved": {
+    "story:bilal_forgiveness": [
+      {
+        "field": "pages[5].text",
+        "side": "arabic",
+        "type": "source_corruption",
+        "severity": "medium",
+        "arabic": "يرفع صاحب القدر والمنزلة",
+        "english": "lifts a person’s rank",
+        "why": "The Arabic phrase is grammatically/semantically off; it should be 'يرفع صاحبَه قدراً ومنزلة' to mean 'raises its possessor in rank and status'.",
+        "suggestion": "شعر بلال برضا كبير في قلبه، وعلم أن العفو يرفع صاحبَه قدراً ومنزلة، ويعمر القلوب بالمحبة والسلام.",
+        "model": "deepseek-v4-pro"
+      }
+    ]
+  },
+  "fix_rejected": [],
+  "rounds": 1
+}

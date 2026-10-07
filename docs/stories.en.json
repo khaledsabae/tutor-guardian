@@ -1394,16 +1394,52 @@
       "review_verdict": "low_only",
       "review_defects": [
         {
-          "model": "glm-5.2",
+          "model": "deepseek-v4-pro",
           "field": "description",
           "type": "meaning",
-          "why": "«القدوة الحسنة» means a good example or role model, whereas 'good character' (حسن الخلق) is a related but distinct concept."
+          "why": "The Arabic says meeting the bad deed with a good example (القدوة الحسنة), not merely good character."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "field": "pages[0].text",
+          "type": "meaning",
+          "why": "بشغف means passionately/with enthusiasm, which is stronger than happily."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "field": "pages[3].text",
+          "type": "meaning",
+          "why": "يسامح means forgives/pardons, not shows kindness; the English adds kindness and drops the second verb of forgiving."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "field": "pages[4].text",
+          "type": "meaning",
+          "why": "تساهل means leniency/forbearance, not forgiveness."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "field": "pages[5].text",
+          "type": "meaning",
+          "why": "رضا means contentment/satisfaction, not peace."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "field": "pages[5].text",
+          "type": "meaning",
+          "why": "السلام means peace, not harmony."
         },
         {
           "model": "glm-5.2",
-          "field": "pages[5].text",
+          "field": "description",
           "type": "meaning",
-          "why": "«رضا كبير» means great contentment/satisfaction, which is rendered as 'deep peace'; the feeling is related but not identical."
+          "why": "«القدوة الحسنة» means a good example/role model, which is slightly more specific than 'good character'."
+        },
+        {
+          "model": "glm-5.2",
+          "field": "pages[1].text",
+          "type": "omission",
+          "why": "The word «خائفاً» (afraid/fearful) is dropped from the English."
         }
       ],
       "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
@@ -1419,27 +1455,63 @@
         "fixer": null,
         "rounds": 1,
         "prompt_version": "dfa8a5f39718",
-        "content_sha256": "855c190f306f362e233612c5b72a910e174e80a76689408e731d81c5b4e053b2",
-        "reviewed_at": "2026-10-07T19:12:53+00:00",
+        "content_sha256": "a557aa47cdd96d2dcf6a42df4e7035ad3bd452492c31ace4f06a8f96cef55bfd",
+        "reviewed_at": "2026-10-07T19:29:49+00:00",
         "residual_low": [
+          {
+            "model": "deepseek-v4-pro",
+            "field": "description",
+            "type": "meaning",
+            "why": "The Arabic says meeting the bad deed with a good example (القدوة الحسنة), not merely good character."
+          },
+          {
+            "model": "deepseek-v4-pro",
+            "field": "pages[0].text",
+            "type": "meaning",
+            "why": "بشغف means passionately/with enthusiasm, which is stronger than happily."
+          },
+          {
+            "model": "deepseek-v4-pro",
+            "field": "pages[3].text",
+            "type": "meaning",
+            "why": "يسامح means forgives/pardons, not shows kindness; the English adds kindness and drops the second verb of forgiving."
+          },
+          {
+            "model": "deepseek-v4-pro",
+            "field": "pages[4].text",
+            "type": "meaning",
+            "why": "تساهل means leniency/forbearance, not forgiveness."
+          },
+          {
+            "model": "deepseek-v4-pro",
+            "field": "pages[5].text",
+            "type": "meaning",
+            "why": "رضا means contentment/satisfaction, not peace."
+          },
+          {
+            "model": "deepseek-v4-pro",
+            "field": "pages[5].text",
+            "type": "meaning",
+            "why": "السلام means peace, not harmony."
+          },
           {
             "model": "glm-5.2",
             "field": "description",
             "type": "meaning",
-            "why": "«القدوة الحسنة» means a good example or role model, whereas 'good character' (حسن الخلق) is a related but distinct concept."
+            "why": "«القدوة الحسنة» means a good example/role model, which is slightly more specific than 'good character'."
           },
           {
             "model": "glm-5.2",
-            "field": "pages[5].text",
-            "type": "meaning",
-            "why": "«رضا كبير» means great contentment/satisfaction, which is rendered as 'deep peace'; the feeling is related but not identical."
+            "field": "pages[1].text",
+            "type": "omission",
+            "why": "The word «خائفاً» (afraid/fearful) is dropped from the English."
           }
         ],
         "adjudicated": [],
         "tool": "ops/tools/review_en_parity.py",
         "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
       },
-      "revalidated_at": "2026-10-07T19:12:53+00:00"
+      "revalidated_at": "2026-10-07T19:29:49+00:00"
     },
     "ageGroup": "4-7 years",
     "category": "Forgiveness and a clean heart",

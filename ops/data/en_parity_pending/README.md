@@ -44,13 +44,17 @@ English unit that is live without a stamp, bound to the sha of its current text,
 a reason and a category (`check` — and CI — fail on anything unstamped that is not
 there, or that changed after it was queued):
 
-- `awaiting-review` (46): English Claude wrote or rewrote (fixing reviewer-located
-  defects, or with PR #27's Arabic), the 9 stories waiting on the fields above, and
-  `lesson_7-9_islamic_parenting_worship_01` (owned by #31). `run` stamps them and
-  removes their entries.
-- `source-unverified` (130): Alukah units whose Arabic summary was never shown to
-  match its reversed-PDF source. `run`, `stamp-reviewed` and `sign` refuse them until
-  the hold is released (`unqueue`) after re-extraction.
+As of 2026-10-07 the queue is **empty** (`[]`): every published English unit is stamped.
+The two categories it can hold:
+
+- `awaiting-review`: English Claude wrote or rewrote. `run` stamps them and removes
+  their entries.
+- `source-unverified`: Alukah units whose Arabic summary was never shown to match its
+  reversed-PDF source. `run`, `stamp-reviewed` and `sign` refuse them until the hold is
+  released (`unqueue`) after re-extraction.
+
+History (counts were 46 awaiting-review and 130 source-unverified before the
+October 2026 closeout) lives in git and `docs/EN_CONTENT_STATUS.md`.
 
 ```bash
 python3 ops/tools/review_en_parity.py inventory     # queued / src-hold columns
