@@ -2,19 +2,22 @@
 
 The semantic classifier uses the existing auxiliary provider/budget/breaker.
 Off (the default) and unknown modes make no model call. Shadow compares a
-proposal with the legacy guard and ALWAYS keeps the legacy live decision.
-Fresh deidentified week samples reviewed with Khaled are unavailable: these
-examples/tests are neither training data nor evidence of human label approval.
-Enforcement needs that real label review (including wrapped-ruling precision,
-parenting false positives and emergency cases), independent implementation
-review, and a separately reviewed activation change. There is no enforce mode.
+proposal with the lexical baseline; models NEVER change live decisions.
+The authorized narrow deterministic parenting-after-divorce exception applies
+in every mode and is independent of the semantic classifier.
+Examples/tests derive from approved deidentified examples, not fresh week logs,
+model training or a newly completed human label review.
+Broad semantic enforcement is not implemented or accuracy-validated. It needs
+engineering evaluation against the existing approved masked cases, including
+wrapped rulings and emergencies, using an authorized no-cost route. Unavailable
+fresh week logs do not gate the deterministic exception. No new human approval
+gate is introduced, and there is no enforce mode.
 """
 from __future__ import annotations
 
 import hashlib
 import json
 import os
-import re
 import sqlite3
 from dataclasses import dataclass
 
@@ -46,7 +49,7 @@ help parent discuss music without issuing a ruling -> parent_guidance/none.
 Untrusted JSON data follows:\n"""
 
 # Selection cues save side calls; they NEVER supply a semantic verdict.
-_CUES = re.compile(
+_CUES = fiqh_guard._compile(
     r"الإسلام|الاسلام|ديني|شرعي|فقهي|بنصلي|الصلاة|موسيقي|موسيقى|الله|عقيد"
     r"|(?i:\b(?:religion|islam|divorce|halal|haram|prayer|hadith|fatwa)\b)"
 )
@@ -100,10 +103,10 @@ def parse_classification(raw: object) -> tuple[str, str] | None:
 def _hard_ruling(text: str, baseline_rule: str) -> bool:
     # Existing non-divorce blocks remain conservative. Divorce is the one
     # topic-only baseline block we can propose relaxing after semantic review.
-    if baseline_rule and baseline_rule != "fiqh_talaq_khalaa":
+    if any(rule != "fiqh_talaq_khalaa" for rule in fiqh_guard._matching_fiqh_rules(text)):
         return True
-    return bool((baseline_rule or _CUES.search(text))
-                and _EXPLICIT.search(fiqh_guard._normalize(text)))
+    norm = fiqh_guard._normalize(text)
+    return bool((baseline_rule or _CUES.search(norm)) and _EXPLICIT.search(norm))
 
 
 def combine(baseline: tuple[bool, str], classification: tuple[str, str] | None,
@@ -127,11 +130,8 @@ _CALL_LANE = _Lane("fiqh-intent-shadow", 1)
 
 def _classify(text: str, device_id: str | None) -> tuple[tuple[str, str] | None, str]:
     from app.config.llm_config import DEFAULT_HOME_OLLAMA_URL
-    from app.services import ai_gateway, privacy
-    try:
-        redacted = privacy.redact_for_cloud(text, device_id)
-    except Exception:
-        return None, "redaction_failed"
+    from app.services import ai_gateway
+    redacted = fiqh_guard._scrub(text, device_id)
     if not isinstance(redacted, str) or len(redacted) > MAX_INPUT_CHARS:
         return None, "redaction_failed"
     redacted = fiqh_guard._EMAIL.sub("[email]", redacted)
@@ -172,16 +172,22 @@ def evaluate(text: str, device_id: str | None = None, *, mode: str | None = None
         return Decision(False, "", False, False, status="emergency", emergency=True)
     baseline = fiqh_guard._match_fiqh_guard(text)
     selected = mode if mode is not None else os.environ.get("FIQH_INTENT_MODE", "off")
+    live = fiqh_guard._effective_fiqh_guard(text, device_id)
+    if baseline[0] and not live[0]:
+        result = Decision(*baseline, False, False, "parent_guidance", "none", "deterministic_parenting")
+        if selected == "shadow":
+            report_shadow(text, result)
+        return result
     if selected != "shadow":
         return combine(baseline, None, "off")
     if len(text) > MAX_INPUT_CHARS:
         result = combine(baseline, None, "input_too_long")
     elif _hard_ruling(text, baseline[1]):
         result = combine(baseline, None, "hard_ruling", hard_ruling=True)
-    elif not baseline[0] and not _CUES.search(text):
+    elif not baseline[0] and not _CUES.search(fiqh_guard._normalize(text)):
         result = combine(baseline, None, "not_selected")
     else:
-        classification, status = _classify(text, device_id)
+        classification, status = _classify(fiqh_guard._normalize(text), device_id)
         result = combine(baseline, classification, status)
     report_shadow(text, result)
     return result
