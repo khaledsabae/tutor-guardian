@@ -174,6 +174,45 @@ _HEARING_TOKEN = _short_arabic_token([
 ] + ["السمع", "بالسمع", "للسمع", "بيسمعوا", "بتسمعوا", "بيسمعوني", "بتسمعوني",
      "بيسمعوه", "بيسمعوها", "بتسمعوه", "بتسمعوها"])
 
+
+def _spelled_words(forms: list[str]) -> str:
+    """Whole following words for a lookahead, tolerant of optional marks."""
+    marks = r"[\u064b-\u065f\u0670\u0640]*"
+    return (r"(?:" + "|".join("".join(re.escape(c) + marks for c in form)
+                              for form in forms)
+            + r")(?![\w\u064b-\u065f\u0670\u0640])")
+
+
+# The past forms in _HEARING_TOKEN (سمع/سمعنا/سمعه/سمعها/سمعك/…) are also the
+# noun «his/her/our hearing», so they stay. But followed by reported speech —
+# «عن …», «من الشيخ», «في الإذاعة», «أن …» — they are someone hearing *about*
+# something, the same reading «سمعت عن» already has. Only that word is masked
+# before the rules run; a child's hearing named elsewhere in the question
+# («ابني لا يسمع، سمعنا عن طبيب») still reaches development.
+_REPORTED_HEARING_RE = re.compile(
+    _short_arabic_token(["سمع" + suffix
+                         for suffix in ("", "ني", "ه", "ها", "نا", "ك", "هم")])
+    + r"(?=(?:\s+" + _spelled_words([
+        "أحد", "احد", "حد", "كثير", "كثيرا", "الكثير", "مرة", "مرارا",
+        "سابقا", "مؤخرا", "شيئا", "شيء", "كلاما", "كلام",
+        "مني", "منك", "منه", "منها", "منكم"]) + r"){0,2}\s+(?:"
+    + _spelled_words(["عن"]) + r"(?!\s+(?:بعد|قرب)(?!\w))"
+    + r"|" + _spelled_words(["من"]) + r"\s+" + _spelled_words([
+        "الشيخ", "شيخ", "الإمام", "الامام", "إمام", "الخطيب", "الداعية",
+        "المحاضر", "صديق", "صديقي", "صديقتي", "صديقه", "صديقها", "أصدقائي",
+        "الناس", "الإذاعة", "الاذاعة", "الراديو", "التلفزيون", "التلفاز",
+        "يوتيوب", "اليوتيوب"])
+    + r"|" + _spelled_words(["في"]) + r"\s+" + _spelled_words([
+        "الإذاعة", "الاذاعة", "إذاعة", "الراديو", "راديو", "التلفزيون",
+        "التليفزيون", "التلفاز", "المحاضرة", "محاضرة", "الدرس", "درس",
+        "الخطبة", "خطبة", "المسجد", "البودكاست", "بودكاست", "يوتيوب",
+        "اليوتيوب", "الأخبار", "الاخبار", "برنامج", "البرنامج"])
+    + r"|" + _spelled_words(["أن", "ان", "إن", "أنه", "انه", "إنه",
+                             "أنها", "انها", "إنها"]) + r"(?!\s+شاء(?!\w))"
+    + r"))",
+    re.UNICODE,
+)
+
 # «سمعت» is also feminine past tense: she heard. Restore that reading only
 # with a child subject at a clause boundary and an explicit auditory object.
 # A child mentioned elsewhere, an adult speaker, or «سمعت عن ...» is not enough.
@@ -190,7 +229,10 @@ _CHILD_PAST_HEARING_RE = re.compile(
     + r"|سمعت(?:ه|ها)\s+(?:لما|حين|عندما)\s+(?:رن|رنت|دق|دقت)\s+" + _AUDITORY_OBJECT
     # Parent heard the daughter explicitly report inability to perceive sound.
     + r"|سمعتها\s+(?:تقول|قالت)\s+(?:إنها|أنها|انها)\s+(?:لا|ما)\s+"
-    r"تلتقط\s+(?:أي\s+)?" + _AUDITORY_OBJECT + r")",
+    r"تلتقط\s+(?:أي\s+)?" + _AUDITORY_OBJECT
+    # Parent never heard the daughter respond to her name or a sound.
+    + r"|سمعت(?:ه|ها)\s+(?:تستجيب|تلتفت|ترد)\s+(?:لل|ل|على\s+|إلى\s+)?"
+    + _AUDITORY_OBJECT + r")",
     re.UNICODE,
 )
 
@@ -299,8 +341,9 @@ CLASSIFY_PROMPT = """صنّف سؤال الوالد/الوالدة في مجال
 def _keyword_fast_path(question: str) -> Optional[List[str]]:
     """Check keyword rules. Returns domain list if unambiguous match found."""
     matched: List[str] = []
+    rule_text = _REPORTED_HEARING_RE.sub(lambda m: " " * len(m.group()), question)
     for pattern, domain in _COMPILED_RULES:
-        if pattern.search(question):
+        if pattern.search(rule_text):
             if domain not in matched:
                 matched.append(domain)
     hearing_text = re.sub(r"[\u064b-\u065f\u0670\u0640]", "", question)

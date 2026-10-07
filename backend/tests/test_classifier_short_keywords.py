@@ -135,6 +135,46 @@ def test_adult_or_reported_topic_is_not_child_hearing(question):
     assert "development" not in (classifier._keyword_fast_path(question) or [])
 
 
+_ADULT_REPORTED_HEARING = [
+    "سمعنا عن عبدالله علوان",
+    "وسَمِعْنَا عن عبدالله علوان من صديقي",
+    "زوجي سمعه عن عبدالله علوان",
+    "هل سمعك أحد عن الكتاب",
+    "سمعها في الإذاعة",
+    "زوجي سمع عن عبدالله علوان",
+    "سمعنا كثيرًا عن هذا الكتاب",
+    "سمعنا من الشيخ في المحاضرة",
+    "أبي سمعهم في الراديو",
+    "سمعنا أن هذا الكتاب مفيد",
+]
+
+
+@pytest.mark.parametrize("question", _ADULT_REPORTED_HEARING)
+def test_adult_reported_hearing_suffix_forms_are_not_development(question):
+    assert "development" not in (classifier._keyword_fast_path(question) or [])
+
+
+@pytest.mark.parametrize("question", _ADULT_REPORTED_HEARING)
+def test_adult_reported_hearing_beside_app_help_stays_app_help(question):
+    assert classifier._keyword_fast_path(f"{question}، كيف أحذف حسابي؟") == ["app_help"]
+
+
+@pytest.mark.parametrize("question", [
+    "ابني ما بيسمعنا لما نناديه",
+    "بنتي ما سمعتها تستجيب لاسمها",
+    "ابني لا يسمعه حين أكلمه من الخلف",
+    "طفلي عمره سنة ولا يلتفت لما نسمّعه صوت",
+    "ابني عنده ضعف في سمعه من الولادة",
+    "طفلي سمعه ضعيف عن باقي إخوته",
+    "بنتي سمعها ضعيف في الأذن اليسرى",
+    "ابني لا يسمع، سمعنا عن طبيب ممتاز",
+    "ابني سمعه إن شاء الله سليم؟",
+    "طفلي سمعه عن بعد ضعيف",
+])
+def test_child_hearing_with_suffix_forms_keeps_development(question):
+    assert "development" in (classifier._keyword_fast_path(question) or [])
+
+
 def test_explicit_fiqh_remains_additive_to_real_biting():
     domains = classifier._keyword_fast_path("طفلي يعضني وقت الصلاة")
     assert "fiqh" in domains and "medical" in domains
