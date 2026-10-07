@@ -45,15 +45,6 @@
       "content_sha256": "3761ac07dccbd665fe717ccc205da270d99511a14cde6dc2acd927c59a7409c5",
       "queued_on": "2026-10-04"
     },
-    "isl-22f68950__en": {
-      "category": "awaiting-review",
-      "reason": "Primary Book_17337 PDF re-read and selected excerpt manually transcribed; source-proof checksums, pages, excerpts and exact local hadith checks recorded in ops/data/kb_fidelity/source_recovery/<AR-id>.json. Unsupported claims removed; deterministic source guards passed. AR+EN are unapproved drafts, needs_scholar_review true; independent parity and scholar review remain pending.",
-      "content_sha256": "9d7309ee84d4e52d016d10501379db4760feb16045dccd50f60b55aea02b56ae",
-      "queued_on": "2026-10-07",
-      "english_authors": [
-        "openai:codex"
-      ]
-    },
     "isl-23c2dd25__en": {
       "category": "source-unverified",
       "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
@@ -83,15 +74,6 @@
       "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
       "content_sha256": "586d46cbe6f9a964d01438b1f5e23268300c1b9963faa2082e7344ab351b1b39",
       "queued_on": "2026-10-04"
-    },
-    "isl-620730b0__en": {
-      "category": "awaiting-review",
-      "reason": "Primary Book_17337 PDF re-read and selected excerpt manually transcribed; source-proof checksums, pages, excerpts and exact local hadith checks recorded in ops/data/kb_fidelity/source_recovery/<AR-id>.json. Unsupported claims removed; deterministic source guards passed. AR+EN are unapproved drafts, needs_scholar_review true; independent parity and scholar review remain pending.",
-      "content_sha256": "6744be3d859f648f7cbb98f29e1745f901a727fb0d72183bf757d45641451733",
-      "queued_on": "2026-10-07",
-      "english_authors": [
-        "openai:codex"
-      ]
     },
     "isl-7349e59c__en": {
       "category": "source-unverified",

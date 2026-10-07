@@ -29,7 +29,7 @@
   "translation": {
     "translator_model": "mistral-large-3:675b",
     "needs_scholar_review": true,
-    "review_verdict": "pending",
+    "review_verdict": "clean",
     "draft_status": "draft",
     "source_recovery_note": "Source-faithful draft; no model review or approval.",
     "fixer_model": "openai:codex",
@@ -38,7 +38,24 @@
       "openai:codex"
     ],
     "review_defects": [],
-    "approved_by": null
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "9d7309ee84d4e52d016d10501379db4760feb16045dccd50f60b55aea02b56ae",
+      "reviewed_at": "2026-10-07T09:36:39+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+    },
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
+    "revalidated_at": "2026-10-07T09:36:39+00:00"
   },
   "source_url": "https://www.alukah.net/Books/Files/Book_17337/BookFile/brotherandboys.pdf#page=51",
   "source_note": "DRAFT source recovery, 2026-10-07. Selected primary PDF excerpt; provenance and exact local citation checks: ops/data/kb_fidelity/source_recovery/isl-22f68950.json. No scholar, human, model or publication approval."
