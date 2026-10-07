@@ -33,7 +33,7 @@
     "review_defects": [],
     "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
     "draft_status": "draft",
-    "source_recovery_note": "Source-verified draft, current content awaits genuine independent translation and scholar review.",
+    "source_recovery_note": "English parity independently approved by DeepSeek and GLM at this exact content hash; scholar/source-content and human approval remain pending.",
     "english_authors": [
       "mistral-large-3:675b",
       "openai:codex"
@@ -57,5 +57,5 @@
     "revalidated_at": "2026-10-07T14:34:13+00:00"
   },
   "source_url": "https://www.alukah.net/Books/Files/Book_17337/BookFile/brotherandboys.pdf#page=134",
-  "source_note": "DRAFT native source recovery 2026-10-07. Raw OCR anchor, exact primary page, historical attribution and quote-budget proof: ops/data/kb_fidelity/source_recovery/isl-2fee1086.json. App-authored summaries are narrow paraphrases, not broader rulings or promised outcomes. No model, scholar, human or publication approval."
+  "source_note": "Primary-source historical draft; exact page/quotation evidence: ops/data/kb_fidelity/source_recovery/isl-2fee1086.json. Actual canonical English parity review is retained in ops/reports/SOURCE_FOUR_B_EN_REVIEW_OCT7.json. Scholar/source-content and human approval remain pending."
 }

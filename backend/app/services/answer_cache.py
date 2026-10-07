@@ -68,6 +68,19 @@ def _key(question: str, age_group: str, domain: str, severity: str) -> str:
     return hashlib.sha256(payload.encode("utf-8")).hexdigest()
 
 
+def _kb_revision() -> str:
+    """Bind answers to current sources before index startup or cache purge.
+
+    Reuse the retrieval fingerprint without initializing its index or model.
+    Re-read the serving corpus so source removals and edits take effect even
+    when the rebuild/purge has not run or the purge failed.
+    """
+    from app.services.knowledge_loader import load_default_knowledge_units
+    from app.services.retrieval import _fingerprint
+
+    return _fingerprint(load_default_knowledge_units())
+
+
 def _conn() -> sqlite3.Connection:
     _DB.parent.mkdir(parents=True, exist_ok=True)
     conn = sqlite3.connect(_DB)
@@ -86,11 +99,16 @@ def _conn() -> sqlite3.Connection:
             embedding TEXT,
             created_at TEXT DEFAULT (datetime('now')),
             hit_count INTEGER DEFAULT 0,
-            redacted INTEGER
+            redacted INTEGER,
+            kb_revision TEXT
         )"""
     )
     from app.services.retention import ensure_marker
     ensure_marker(conn, "answer_cache")
+    columns = {row["name"] for row in conn.execute("PRAGMA table_info(answer_cache)")}
+    if "kb_revision" not in columns:
+        # Legacy answers have no source provenance and remain cache misses.
+        conn.execute("ALTER TABLE answer_cache ADD COLUMN kb_revision TEXT")
     conn.execute(
         "CREATE INDEX IF NOT EXISTS idx_answer_cache_scope "
         "ON answer_cache (age_group, domain)"
@@ -126,6 +144,7 @@ def lookup(question: str, age_group: str, domain: str, severity: str) -> str | N
         return None
     start = time.monotonic()
     try:
+        revision = _kb_revision()
         conn = _conn()
         try:
             fresh = f"-{_TTL_DAYS} days"
@@ -133,8 +152,9 @@ def lookup(question: str, age_group: str, domain: str, severity: str) -> str | N
                 # Only rows stored since names were matched properly: an older
                 # one may carry a child's name into another family (P4).
                 "SELECT id, answer FROM answer_cache "
-                "WHERE qhash = ? AND redacted = 1 AND created_at >= datetime('now', ?)",
-                (_key(question, age_group, domain, severity), fresh),
+                "WHERE qhash = ? AND kb_revision = ? AND redacted = 1 "
+                "AND created_at >= datetime('now', ?)",
+                (_key(question, age_group, domain, severity), revision, fresh),
             ).fetchone()
             match_kind = "exact"
             if row is None:
@@ -144,10 +164,11 @@ def lookup(question: str, age_group: str, domain: str, severity: str) -> str | N
                 candidates = conn.execute(
                     "SELECT id, answer, embedding FROM answer_cache "
                     "WHERE age_group = ? AND domain = ? AND severity = ? "
+                    "AND kb_revision = ? "
                     "AND embedding IS NOT NULL AND redacted = 1 "
                     "AND created_at >= datetime('now', ?) "
                     "ORDER BY hit_count DESC LIMIT ?",
-                    (age_group, domain, severity, fresh, _MAX_CANDIDATES),
+                    (age_group, domain, severity, revision, fresh, _MAX_CANDIDATES),
                 ).fetchall()
                 best, best_sim = None, _MIN_SIM
                 for cand in candidates:
@@ -221,6 +242,7 @@ def store(question: str, age_group: str, domain: str, severity: str, answer: str
     if len(answer) < _MIN_ANSWER_LEN:
         return False
     try:
+        revision = _kb_revision()
         vec = _embed(question)
         conn = _conn()
         try:
@@ -234,14 +256,16 @@ def store(question: str, age_group: str, domain: str, severity: str, answer: str
             conn.execute(
                 "INSERT INTO answer_cache "
                 "(qhash, question_norm, age_group, domain, severity, answer, embedding, "
-                "redacted) VALUES (?, ?, ?, ?, ?, ?, ?, 1) "
+                "redacted, kb_revision) VALUES (?, ?, ?, ?, ?, ?, ?, 1, ?) "
                 "ON CONFLICT(qhash) DO UPDATE SET "
-                "answer = excluded.answer, created_at = datetime('now'), redacted = 1",
+                "answer = excluded.answer, created_at = datetime('now'), redacted = 1, "
+                "kb_revision = excluded.kb_revision",
                 (
                     _key(question, age_group, domain, severity),
                     normalize(question)[:500],
                     age_group, domain, severity, answer,
                     json.dumps(vec) if vec else None,
+                    revision,
                 ),
             )
             conn.commit()

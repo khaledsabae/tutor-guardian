@@ -1,10 +1,10 @@
 {
-  "total_units": 1393,
+  "total_units": 1389,
   "generated_at": "2026-10-07T07:31:39.565264+00:00",
   "by_domain": {
     "medical": 361,
     "cyber": 283,
-    "islamic_parenting": 582,
+    "islamic_parenting": 578,
     "development": 133,
     "app_help": 12,
     "aqeedah": 22
@@ -7907,30 +7907,6 @@
       "size_chars": 1336
     },
     {
-      "id": "isl-23c2dd25",
-      "domain": "islamic_parenting",
-      "title": "منهج المؤلف في جمع روايات حقوق الأولاد",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية إسلامية",
-      "needs_ocr": false,
-      "size_chars": 294
-    },
-    {
-      "id": "isl-23c2dd25__en",
-      "domain": "islamic_parenting",
-      "title": "The Author's Method of Collecting Reports on Children's Rights",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية إسلامية",
-      "needs_ocr": false,
-      "size_chars": 294
-    },
-    {
       "id": "isl-24a45a01",
       "domain": "islamic_parenting",
       "title": "التدريس في تعليم القرآن",
@@ -9933,30 +9909,6 @@
       "behavior_type": "تربية إسلامية شاملة",
       "needs_ocr": false,
       "size_chars": 1433
-    },
-    {
-      "id": "isl-7349e59c",
-      "domain": "islamic_parenting",
-      "title": "فهرس موضوعات الكتاب المتعلقة بالأولاد",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية أطفال",
-      "needs_ocr": false,
-      "size_chars": 38
-    },
-    {
-      "id": "isl-7349e59c__en",
-      "domain": "islamic_parenting",
-      "title": "The Book’s Contents on Topics Concerning Children",
-      "source_file": "Alukah_Rights_of_Children.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية أطفال",
-      "needs_ocr": false,
-      "size_chars": 38
     },
     {
       "id": "isl-7365e833",

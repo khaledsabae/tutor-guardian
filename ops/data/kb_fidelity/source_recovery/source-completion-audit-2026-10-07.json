@@ -1,0 +1,207 @@
+{
+  "schema": "tg.source_completion_audit/1",
+  "base": "afdf8acdf26819869291754471fcdf26952e418c",
+  "original_chronological_commits": [
+    "78895565",
+    "d0806de9",
+    "6016bb4c",
+    "cbd81a099"
+  ],
+  "chronological_cherries": [
+    "dcdc7c83",
+    "519e2416",
+    "27995bb2",
+    "d1f41dc4"
+  ],
+  "integrated_current_pairs": [
+    {
+      "id": "isl-1057f72f__en",
+      "content_sha256": "c4127f42604c80e5f56e26be191dedea73bfd6b74382b5a1b1def05b0211925a",
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "authors": [
+        "mistral-large-3:675b",
+        "openai:codex"
+      ],
+      "proof_path": "ops/data/kb_fidelity/source_recovery/isl-1057f72f.json",
+      "pdf_pages": [
+        80
+      ],
+      "printed_pages": [
+        79
+      ],
+      "raw_review_path": "ops/data/kb_fidelity/source_recovery/three-real-source-en-review-2026-10-07.json"
+    },
+    {
+      "id": "isl-14bc16f5__en",
+      "content_sha256": "6f8b33f049d9991776e59592b0ec6cacd4385d18f2b441f7f76e8e3e7d61943d",
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "authors": [
+        "mistral-large-3:675b",
+        "openai:codex"
+      ],
+      "proof_path": "ops/data/kb_fidelity/source_recovery/isl-14bc16f5.json",
+      "pdf_pages": [
+        53
+      ],
+      "printed_pages": [
+        52
+      ],
+      "raw_review_path": "ops/data/kb_fidelity/source_recovery/three-real-source-en-review-2026-10-07.json"
+    },
+    {
+      "id": "isl-2aa57245__en",
+      "content_sha256": "752732cd1b86e43b9a6512f2713d0fb83032776a480507d790273eba206b5b89",
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "authors": [
+        "mistral-large-3:675b",
+        "openai:codex"
+      ],
+      "proof_path": "ops/data/kb_fidelity/source_recovery/isl-2aa57245.json",
+      "pdf_pages": [
+        57
+      ],
+      "printed_pages": [
+        56
+      ],
+      "raw_review_path": "ops/data/kb_fidelity/source_recovery/three-real-source-en-review-2026-10-07.json"
+    },
+    {
+      "id": "isl-2fee1086__en",
+      "content_sha256": "5bf1065f6281df926fe785a8b477fd34a23b72f01f22a935c644546c1bab4f62",
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "authors": [
+        "mistral-large-3:675b",
+        "openai:codex"
+      ],
+      "proof_path": "ops/data/kb_fidelity/source_recovery/isl-2fee1086.json",
+      "pdf_pages": [
+        134
+      ],
+      "printed_pages": [
+        133
+      ],
+      "raw_review_path": "ops/reports/SOURCE_FOUR_B_EN_REVIEW_OCT7.json"
+    },
+    {
+      "id": "isl-552b4f5a__en",
+      "content_sha256": "09672e0ea924d75a0a991ac0ebd2115fe48b9117ca2d128cfd28a5c570ee971f",
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "authors": [
+        "mistral-large-3:675b",
+        "openai:codex"
+      ],
+      "proof_path": "ops/data/kb_fidelity/source_recovery/isl-552b4f5a.json",
+      "pdf_pages": [
+        79
+      ],
+      "printed_pages": [
+        78
+      ],
+      "raw_review_path": "ops/reports/SOURCE_FOUR_B_EN_REVIEW_OCT7.json"
+    },
+    {
+      "id": "isl-8f8f836b__en",
+      "content_sha256": "dd3b28ba61d065108a8096a10d9d74939f1e0114a2bf3c39f75d7ffd2111d963",
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "authors": [
+        "mistral-large-3:675b",
+        "openai:codex"
+      ],
+      "proof_path": "ops/data/kb_fidelity/source_recovery/isl-8f8f836b.json",
+      "pdf_pages": [
+        173
+      ],
+      "printed_pages": [
+        172
+      ],
+      "raw_review_path": "ops/reports/SOURCE_FOUR_B_EN_REVIEW_OCT7.json"
+    }
+  ],
+  "quarantined_pairs": [
+    "isl-23c2dd25",
+    "isl-7349e59c"
+  ],
+  "quarantine_manifest": "ops/data/en_unpublished/MANIFEST.json",
+  "quarantine_directories": [
+    "ops/data/en_unpublished/kb_units",
+    "ops/data/en_unpublished/kb_units_source"
+  ],
+  "quarantine_meaning": "Author collection/assessment method and table of contents are bibliographic facts, not substantive parenting evidence. No scholar/human/verified approval. Recoverable files and all primary proofs retained outside serving loaders.",
+  "curriculum_graph": {
+    "documents_scanned": 934,
+    "references": []
+  },
+  "preservation": {
+    "authored_files_and_index_rows": 1389,
+    "affected_retained_index_rows": 12,
+    "unrelated_retained_rows_unchanged": 1377,
+    "remaining_source_holds": [
+      "isl-c0936200__en",
+      "isl-d6faddeb__en",
+      "isl-f6bbab53__en",
+      "isl-f782f2ed__en",
+      "isl-fb04bcd3__en",
+      "isl-fe2f3c39__en"
+    ],
+    "unrelated_awaiting_review": [
+      "adhkar:family_adhkar"
+    ],
+    "all_other_queue_entries_byte_equivalent_json": true,
+    "all_other_faithfulness_verdicts_unchanged": true
+  },
+  "cache": {
+    "previous_key_had_kb_revision": false,
+    "lookup_precedes_index_initialization": true,
+    "guard": "Both exact and semantic lookups require the stored kb_revision to equal retrieval._fingerprint(load_default_knowledge_units()). No embeddings/index initialization needed to compute it. Legacy NULL revisions cannot hit.",
+    "regression_red_exit": 1,
+    "regression_red_failed": 6,
+    "regression_red_passed": 1,
+    "focused_green_exit": 0,
+    "focused_green_passed": 28,
+    "native_guard_probe_ms": 127.0,
+    "native_guard_probe_embedder_initialized": false,
+    "native_guard_probe_index_initialized": false
+  },
+  "source_checks": {
+    "cached_pdf_sha256": "7fa6f88fbf1ba714947983c11cde1e8c67b576374ae06c08a081444743d1272c",
+    "targeted_pdf_pages_freshly_reread": [
+      53,
+      57,
+      79,
+      80,
+      134,
+      173
+    ],
+    "current_primary_excerpt_hashes_checked": 8,
+    "local_numbered_hadith_fragments_matched": 4,
+    "current_parity_hashes_checked": 6,
+    "actual_raw_verdict_batches_checked": 2,
+    "models_called_by_this_phase": 0
+  },
+  "verification_logs": "/home/khalednew/.codex/tmp/source-completion-oct7",
+  "verification": {
+    "canonical_parity_check_exit": 0,
+    "canonical_parity_examined": 347,
+    "ruff_exit": 0,
+    "diff_check_exit": 0,
+    "merge60_tree_equals_e20_base": true
+  }
+}
