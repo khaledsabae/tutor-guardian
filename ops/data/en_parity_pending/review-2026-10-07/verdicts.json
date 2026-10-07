@@ -1,0 +1,392 @@
+{
+  "run": "ops/tools/review_en_parity.py run --only @keys.txt --rounds 1 --no-fix --workers 1 --max-concurrent 1 --request-timeout 120 --request-attempts 4 (patience: 4 attempts x 120 s = 480 s per call)",
+  "reviewers": [
+    "deepseek-v4-pro",
+    "glm-5.2"
+  ],
+  "transport": "Ollama Cloud, existing subscription key; no fixer, no Arabic changes, no OpenRouter",
+  "model_calls": {
+    "deepseek-v4-pro": 9,
+    "glm-5.2": 9
+  },
+  "call_outcomes": {
+    "deepseek-v4-pro:ok": 9,
+    "glm-5.2:ok": 9
+  },
+  "total_tokens": 176884,
+  "accepted": 13,
+  "held": 7,
+  "scholar_review": "pending — the model review certifies English-Arabic parity only; no human or scholar approval is claimed",
+  "items": [
+    {
+      "key": "story:hope_sprout",
+      "verdict": "accepted",
+      "reviewed_sha256": "8c04e7883a526347f7fb4008424cd9d03dab101d372967b8f49064fb178dc8ad",
+      "approval_state": "valid",
+      "current_sha256": "8c04e7883a526347f7fb4008424cd9d03dab101d372967b8f49064fb178dc8ad",
+      "ar_file": "mobile/assets/data/stories.json",
+      "ar_file_sha256": "de1803be6e7cd47f048a4a667ddcfc88c4213fcc58e5555ffd1efa16ec8aebe9",
+      "reason": "deepseek-v4-pro and glm-5.2 found no medium/high defect in this exact text; deterministic guards clean; scripture gate exact"
+    },
+    {
+      "key": "story:maryam_toys",
+      "verdict": "held",
+      "reviewed_sha256": "55d13d53c2f6fd8ad7869d3e8935468221f78126e5c58c95847f2692c6d0d81c",
+      "reason": "deepseek-v4-pro: English category and all three discussionQuestions do not match the Arabic (4 medium meaning defects). English-side; live text reverted to the HEAD version (its earlier stamp still holds); candidate stays pending.",
+      "blocking": [
+        {
+          "field": "category",
+          "side": "english",
+          "type": "meaning",
+          "severity": "medium",
+          "arabic": "مشاركة الألعاب والكرم",
+          "english": "Time management and responsibility",
+          "why": "The English category is unrelated to the Arabic, which is about sharing toys and generosity.",
+          "suggestion": "Sharing toys and generosity",
+          "model": "deepseek-v4-pro"
+        },
+        {
+          "field": "discussionQuestions[0]",
+          "side": "english",
+          "type": "meaning",
+          "severity": "medium",
+          "arabic": "لماذا ترددت مريم في مشاركة ألعابها مع فاطمة؟",
+          "english": "What did Maryam learn when she put every toy in its own place?",
+          "why": "The English question is unrelated to the Arabic question about why Maryam hesitated to share.",
+          "suggestion": "Why did Maryam hesitate to share her toys with Fatimah?",
+          "model": "deepseek-v4-pro"
+        },
+        {
+          "field": "discussionQuestions[1]",
+          "side": "english",
+          "type": "meaning",
+          "severity": "medium",
+          "arabic": "ماذا قالت والدة مريم عن اللعب معاً ومشاركة الفرح؟",
+          "english": "How does keeping things tidy save time and make life easier for everyone?",
+          "why": "The English question is unrelated to the Arabic question about what Maryam's mother said about playing together and sharing joy.",
+          "suggestion": "What did Maryam's mother say about playing together and sharing joy?",
+          "model": "deepseek-v4-pro"
+        },
+        {
+          "field": "discussionQuestions[2]",
+          "side": "english",
+          "type": "meaning",
+          "severity": "medium",
+          "arabic": "كيف شعرت فاطمة عندما شاركتها مريم ألعابها؟",
+          "english": "How does your mother feel when she sees your room tidy and beautiful?",
+          "why": "The English question is unrelated to the Arabic question about how Fatimah felt when Maryam shared her toys.",
+          "suggestion": "How did Fatimah feel when Maryam shared her toys with her?",
+          "model": "deepseek-v4-pro"
+        },
+        {
+          "field": "actionChallenge",
+          "side": "english",
+          "type": "meaning",
+          "severity": "medium",
+          "arabic": "تحدي المشاركة: ادعُ صديقاً للعب معك بألعابك، وشاركه فرحة اللعب معاً.",
+          "english": "Doing-it-well challenge: when you finish playing today, put every block and toy back in its box carefully and neatly.",
+          "why": "The English action challenge is unrelated to the Arabic sharing challenge and instead gives tidying instructions.",
+          "suggestion": "Sharing challenge: invite a friend to play with you with your toys, and share the joy of playing together.",
+          "model": "deepseek-v4-pro"
+        },
+        {
+          "field": "category",
+          "side": "english",
+          "type": "meaning",
+          "severity": "high",
+          "arabic": "مشاركة الألعاب والكرم",
+          "english": "Time management and responsibility",
+          "why": "The English category is entirely unrelated to the Arabic; the Arabic says 'Sharing toys and generosity' while the English says 'Time management and responsibility', which appears to come from a different story.",
+          "suggestion": "Sharing toys and generosity",
+          "model": "glm-5.2"
+        },
+        {
+          "field": "discussionQuestions[0]",
+          "side": "english",
+          "type": "meaning",
+          "severity": "high",
+          "arabic": "لماذا ترددت مريم في مشاركة ألعابها مع فاطمة؟",
+          "english": "What did Maryam learn when she put every toy in its own place?",
+          "why": "The English question is completely different from the Arabic, which asks why Maryam hesitated to share her toys with Fatimah; the English appears to come from a different story about tidiness.",
+          "suggestion": "Why did Maryam hesitate to share her toys with Fatimah?",
+          "model": "glm-5.2"
+        },
+        {
+          "field": "discussionQuestions[1]",
+          "side": "english",
+          "type": "meaning",
+          "severity": "high",
+          "arabic": "ماذا قالت والدة مريم عن اللعب معاً ومشاركة الفرح؟",
+          "english": "How does keeping things tidy save time and make life easier for everyone?",
+          "why": "The English question is entirely unrelated to the Arabic, which asks what Maryam's mother said about playing together and sharing joy.",
+          "suggestion": "What did Maryam's mother say about playing together and sharing joy?",
+          "model": "glm-5.2"
+        },
+        {
+          "field": "discussionQuestions[2]",
+          "side": "english",
+          "type": "meaning",
+          "severity": "high",
+          "arabic": "كيف شعرت فاطمة عندما شاركتها مريم ألعابها؟",
+          "english": "How does your mother feel when she sees your room tidy and beautiful?",
+          "why": "The English question is completely different from the Arabic, which asks how Fatimah felt when Maryam shared her toys with her.",
+          "suggestion": "How did Fatimah feel when Maryam shared her toys with her?",
+          "model": "glm-5.2"
+        },
+        {
+          "field": "actionChallenge",
+          "side": "english",
+          "type": "meaning",
+          "severity": "high",
+          "arabic": "تحدي المشاركة: ادعُ صديقاً للعب معك بألعابك، وشاركه فرحة اللعب معاً.",
+          "english": "Doing-it-well challenge: when you finish playing today, put every block and toy back in its box carefully and neatly.",
+          "why": "The English challenge is entirely unrelated to the Arabic, which asks the child to invite a friend to play and share the joy; the English instead talks about tidying up, coming from a different story.",
+          "suggestion": "Sharing challenge: invite a friend to play with your toys, and share the joy of playing together.",
+          "model": "glm-5.2"
+        }
+      ]
+    },
+    {
+      "key": "story:omar_prayer",
+      "verdict": "accepted",
+      "reviewed_sha256": "90a6085378b9e4d3e666e42a1d0bb26ac52a1d3253678683ff218aa53917947e",
+      "approval_state": "valid",
+      "current_sha256": "90a6085378b9e4d3e666e42a1d0bb26ac52a1d3253678683ff218aa53917947e",
+      "ar_file": "mobile/assets/data/stories.json",
+      "ar_file_sha256": "de1803be6e7cd47f048a4a667ddcfc88c4213fcc58e5555ffd1efa16ec8aebe9",
+      "reason": "deepseek-v4-pro and glm-5.2 found no medium/high defect in this exact text; deterministic guards clean; scripture gate exact"
+    },
+    {
+      "key": "story:khadija_neighbor",
+      "verdict": "accepted",
+      "reviewed_sha256": "0273f101dc8a6e3a26a93a60c7a3228358d5ebafd5f3e1fedd54f29a154b2d49",
+      "approval_state": "valid",
+      "current_sha256": "0273f101dc8a6e3a26a93a60c7a3228358d5ebafd5f3e1fedd54f29a154b2d49",
+      "ar_file": "mobile/assets/data/stories.json",
+      "ar_file_sha256": "de1803be6e7cd47f048a4a667ddcfc88c4213fcc58e5555ffd1efa16ec8aebe9",
+      "reason": "deepseek-v4-pro and glm-5.2 found no medium/high defect in this exact text; deterministic guards clean; scripture gate exact"
+    },
+    {
+      "key": "story:abdullah_bismillah",
+      "verdict": "accepted",
+      "reviewed_sha256": "457d3b3c3d7aa1e55f1718f7de50f1e30882d07cb690b728c73847d0b988b892",
+      "approval_state": "valid",
+      "current_sha256": "457d3b3c3d7aa1e55f1718f7de50f1e30882d07cb690b728c73847d0b988b892",
+      "ar_file": "mobile/assets/data/stories.json",
+      "ar_file_sha256": "de1803be6e7cd47f048a4a667ddcfc88c4213fcc58e5555ffd1efa16ec8aebe9",
+      "reason": "deepseek-v4-pro and glm-5.2 found no medium/high defect in this exact text; deterministic guards clean; scripture gate exact"
+    },
+    {
+      "key": "story:yaseen_creation",
+      "verdict": "held",
+      "reviewed_sha256": "baf116681c3ecd3685e03851373a976575c0c486cab480f0d056765d6c83039c",
+      "reason": "both families: discussionQuestions[0] replaces the Arabic ant/stars/trees/flowers with \"sky and birds\" (glm-5.2 high, deepseek-v4-pro medium). English-side; live text reverted to HEAD version; candidate stays pending.",
+      "blocking": [
+        {
+          "field": "discussionQuestions[0]",
+          "side": "english",
+          "type": "meaning",
+          "severity": "medium",
+          "arabic": "ما عجائب خلق الله التي تأملها ياسين في النملة والنجوم والأشجار والأزهار؟",
+          "english": "What amazing signs did Yaseen reflect on in the sky and the birds?",
+          "why": "The English replaces the ant, stars, trees, and flowers with 'sky and birds,' changing the question's content.",
+          "suggestion": "What wonders of Allah's creation did Yaseen reflect on in the ant, the stars, the trees, and the flowers?",
+          "model": "deepseek-v4-pro"
+        },
+        {
+          "field": "discussionQuestions[0]",
+          "side": "english",
+          "type": "meaning",
+          "severity": "high",
+          "arabic": "ما عجائب خلق الله التي تأملها ياسين في النملة والنجوم والأشجار والأزهار؟",
+          "english": "What amazing signs did Yaseen reflect on in the sky and the birds?",
+          "why": "The Arabic asks about the ant, the stars, the trees, and the flowers, but the English replaces these entirely with 'the sky and the birds,' which are not mentioned in the Arabic at all.",
+          "suggestion": "What amazing signs of Allah's creation did Yaseen reflect on in the ant, the stars, the trees, and the flowers?",
+          "model": "glm-5.2"
+        }
+      ]
+    },
+    {
+      "key": "story:fatima_parents",
+      "verdict": "held",
+      "reviewed_sha256": "97ed5d2ddce39005f719af9663bb098e6e8c81dd1b89d3cb96c67e207e54a965",
+      "reason": "deepseek-v4-pro: description drops «بالمعروف» (obedience qualified by what is right) — medium omission with religious nuance; glm-5.2: pages[4] renders «جوري» as a red carnation (medium). English-side; live text reverted to HEAD version; candidate stays pending.",
+      "blocking": [
+        {
+          "field": "description",
+          "side": "english",
+          "type": "omission",
+          "severity": "medium",
+          "arabic": "وطاعتهما بالمعروف",
+          "english": "kind obedience",
+          "why": "The English drops the condition 'بالمعروف' (in what is right), changing the Islamic nuance of obedience.",
+          "suggestion": "An Islamic tarbiyah story that plants the seeds of birr al-walidayn and obedience to them in what is right in children’s hearts, bringing joy to their parents.",
+          "model": "deepseek-v4-pro"
+        },
+        {
+          "field": "pages[4].text",
+          "side": "english",
+          "type": "meaning",
+          "severity": "medium",
+          "arabic": "زهرة جوري جميلة",
+          "english": "a beautiful red carnation",
+          "why": "«جوري» is a rose, not a carnation, and the color «red» is added with no basis in the Arabic.",
+          "suggestion": "Fatima's father felt so proud of her. He gave her a beautiful rose as a gift for her ihsan and her birr al-walidayn.",
+          "model": "glm-5.2"
+        }
+      ]
+    },
+    {
+      "key": "story:bilal_forgiveness",
+      "verdict": "held",
+      "reviewed_sha256": "66df4d45b171b525847a5b317a47a4fb1a21e925a9a396bfb6fc4f8fecd2f824",
+      "reason": "deepseek-v4-pro: the Arabic discussionQuestions[0] places the incident during play while the story has it in art class (medium, Arabic-side). Arabic not rewritten here; live text reverted to HEAD version; candidate stays pending until the Arabic is corrected and re-reviewed.",
+      "blocking": [
+        {
+          "field": "discussionQuestions[0]",
+          "side": "arabic",
+          "type": "source_corruption",
+          "severity": "medium",
+          "arabic": "أثناء اللعب",
+          "english": "while they were playing",
+          "why": "The story incident occurs during art class, not play, so the Arabic question contradicts the story context.",
+          "suggestion": "ماذا فعل بلال عندما أخطأ زميله في حقه أثناء الرسم؟",
+          "model": "deepseek-v4-pro"
+        }
+      ]
+    },
+    {
+      "key": "story:hamza_truth",
+      "verdict": "accepted",
+      "reviewed_sha256": "900db069fbf1595d80ed186e44bd6ab021c5c92a983b9f170718fd9035f89372",
+      "approval_state": "valid",
+      "current_sha256": "900db069fbf1595d80ed186e44bd6ab021c5c92a983b9f170718fd9035f89372",
+      "ar_file": "mobile/assets/data/stories.json",
+      "ar_file_sha256": "de1803be6e7cd47f048a4a667ddcfc88c4213fcc58e5555ffd1efa16ec8aebe9",
+      "reason": "deepseek-v4-pro and glm-5.2 found no medium/high defect in this exact text; deterministic guards clean; scripture gate exact"
+    },
+    {
+      "key": "story:badr_broken_toy",
+      "verdict": "accepted",
+      "reviewed_sha256": "705f57a786be8fff4d2ee3f55495644604a7a86349c9b9e14934bfb93e836d66",
+      "approval_state": "valid",
+      "current_sha256": "705f57a786be8fff4d2ee3f55495644604a7a86349c9b9e14934bfb93e836d66",
+      "ar_file": "mobile/assets/data/stories.json",
+      "ar_file_sha256": "de1803be6e7cd47f048a4a667ddcfc88c4213fcc58e5555ffd1efa16ec8aebe9",
+      "reason": "deepseek-v4-pro and glm-5.2 found no medium/high defect in this exact text; deterministic guards clean; scripture gate exact"
+    },
+    {
+      "key": "story:sarah_basil_sprout",
+      "verdict": "held",
+      "reviewed_sha256": "7c6f98734d6cd401f67826d26edd7b5c050bdaa623b56437c8a70c72fbcd533b",
+      "reason": "deepseek-v4-pro (medium, Arabic-side): says Bukhari 2989 reads «وتميط» not «ويميط». Probably a false positive (the scripture gate matches the cited Bukhari 2989 text; «وتميط» is the wording in Muslim 1009), but overriding a blocking finding needs a recorded adjudication, and Claude must not make one on English it wrote. New story — not published; stays pending.",
+      "blocking": [
+        {
+          "field": "islamicValue",
+          "side": "arabic",
+          "type": "source_corruption",
+          "severity": "medium",
+          "arabic": "ويميط الأذى عن الطريق صدقة",
+          "english": "and removing harm from the path is charity",
+          "why": "The Arabic hadith wording uses «ويميط» but the Sahih al-Bukhari hadith is «وتميط», a grammatical error in the quoted hadith.",
+          "suggestion": "قال رسول الله ﷺ: «وتميط الأذى عن الطريق صدقة» (صحيح البخاري — حديث ٢٩٨٩).",
+          "model": "deepseek-v4-pro"
+        }
+      ]
+    },
+    {
+      "key": "story:tamim_anger_volcano",
+      "verdict": "accepted",
+      "reviewed_sha256": "9ccde54706846c29532679662a8da72e5264de23997a0a07438d4a23a72d0ce0",
+      "approval_state": "valid",
+      "current_sha256": "9ccde54706846c29532679662a8da72e5264de23997a0a07438d4a23a72d0ce0",
+      "ar_file": "mobile/assets/data/stories.json",
+      "ar_file_sha256": "de1803be6e7cd47f048a4a667ddcfc88c4213fcc58e5555ffd1efa16ec8aebe9",
+      "reason": "deepseek-v4-pro and glm-5.2 found no medium/high defect in this exact text; deterministic guards clean; scripture gate exact"
+    },
+    {
+      "key": "story:noura_sharing_box",
+      "verdict": "accepted",
+      "reviewed_sha256": "13e573375a5d669494f9f0a9fa4fead78652ed977d985657b3a8e559762c626f",
+      "approval_state": "valid",
+      "current_sha256": "13e573375a5d669494f9f0a9fa4fead78652ed977d985657b3a8e559762c626f",
+      "ar_file": "mobile/assets/data/stories.json",
+      "ar_file_sha256": "de1803be6e7cd47f048a4a667ddcfc88c4213fcc58e5555ffd1efa16ec8aebe9",
+      "reason": "deepseek-v4-pro and glm-5.2 found no medium/high defect in this exact text; deterministic guards clean; scripture gate exact"
+    },
+    {
+      "key": "story:salman_secret_trust",
+      "verdict": "held",
+      "reviewed_sha256": "86a801dd7b617e5bd5af00af0bad652f3434aa02d2237bed9b752e5f28066921",
+      "reason": "deepseek-v4-pro: Arabic pages[2] uses colloquial «أكيد» (medium, Arabic-side register). Arabic not rewritten here. New story — not published; stays pending.",
+      "blocking": [
+        {
+          "field": "pages[2].text",
+          "side": "arabic",
+          "type": "source_corruption",
+          "severity": "medium",
+          "arabic": "وأكيد صاحبها يبحث عنها",
+          "english": "Its owner must be looking for it",
+          "why": "أكيد is colloquial; Modern Standard Arabic is expected.",
+          "suggestion": "توجه سلمان مباشرة إلى غرفة المعلم وسلّمه المحفظة وقال: «يا أستاذ، وجدتها في الممر وبالتأكيد صاحبها يبحث عنها وقلق عليها الآن». شكره المعلم وأعلن في الإذاعة عن العثور عليها.",
+          "model": "deepseek-v4-pro"
+        }
+      ]
+    },
+    {
+      "key": "tip_prenatal-1_006",
+      "verdict": "accepted",
+      "reviewed_sha256": "a7177d1b3765f09119d1d3b84b3dd01ac918b2891f76dabdded3503fc279c4e3",
+      "approval_state": "valid",
+      "current_sha256": "a7177d1b3765f09119d1d3b84b3dd01ac918b2891f76dabdded3503fc279c4e3",
+      "ar_file": "knowledge_base/curriculum/daily_tips/tip_prenatal-1_006.json",
+      "ar_file_sha256": "ff2cf2910b594400a81c20069f43c6d782f4f745ce46293de59a5aa2cedc5737",
+      "reason": "deepseek-v4-pro and glm-5.2 found no medium/high defect in this exact text; deterministic guards clean; scripture gate exact"
+    },
+    {
+      "key": "lesson_7-9_islamic_parenting_worship_05",
+      "verdict": "accepted",
+      "reviewed_sha256": "dbe74b00dbaf901eb9060f1f3e5ad53cde2a731b7c7348bb214554bcf4825f36",
+      "approval_state": "valid",
+      "current_sha256": "dbe74b00dbaf901eb9060f1f3e5ad53cde2a731b7c7348bb214554bcf4825f36",
+      "ar_file": "knowledge_base/curriculum/lessons/lesson_7-9_islamic_parenting_worship_05.json",
+      "ar_file_sha256": "f1373fce163a4ea5d4c634791e1bf2ca86d3716bec1872db9dfee5699bbc737f",
+      "reason": "deepseek-v4-pro and glm-5.2 found no medium/high defect in this exact text; deterministic guards clean; scripture gate exact"
+    },
+    {
+      "key": "lesson_7-9_islamic_parenting_worship_07",
+      "verdict": "accepted",
+      "reviewed_sha256": "fccf68b19c8a2c041c2e40f53f9a520a220422bcedb76b03ff23821df18fb3bb",
+      "approval_state": "valid",
+      "current_sha256": "fccf68b19c8a2c041c2e40f53f9a520a220422bcedb76b03ff23821df18fb3bb",
+      "ar_file": "knowledge_base/curriculum/lessons/lesson_7-9_islamic_parenting_worship_07.json",
+      "ar_file_sha256": "540ff1d96c258d3a9f3ce96e1068a097445c6f5b819e0a9fba016a8e63b20b51",
+      "reason": "deepseek-v4-pro and glm-5.2 found no medium/high defect in this exact text; deterministic guards clean; scripture gate exact"
+    },
+    {
+      "key": "lesson_7-9_islamic_parenting_worship_08",
+      "verdict": "accepted",
+      "reviewed_sha256": "85eb945d94b16423c1f548101f29cfa687ec695140ee83ae00bb55899cf9fcb8",
+      "approval_state": "valid",
+      "current_sha256": "85eb945d94b16423c1f548101f29cfa687ec695140ee83ae00bb55899cf9fcb8",
+      "ar_file": "knowledge_base/curriculum/lessons/lesson_7-9_islamic_parenting_worship_08.json",
+      "ar_file_sha256": "8665732a48470f84f3ccc1eb2df7a152d1c3f4c5afc32bc65dae839e6f7ae162",
+      "reason": "deepseek-v4-pro and glm-5.2 found no medium/high defect in this exact text; deterministic guards clean; scripture gate exact"
+    },
+    {
+      "key": "lesson_7-9_islamic_parenting_worship_09",
+      "verdict": "accepted",
+      "reviewed_sha256": "8665700378bb00026e42a871718921ab155403a1d15f7432a79f132dc76038ed",
+      "approval_state": "valid",
+      "current_sha256": "8665700378bb00026e42a871718921ab155403a1d15f7432a79f132dc76038ed",
+      "ar_file": "knowledge_base/curriculum/lessons/lesson_7-9_islamic_parenting_worship_09.json",
+      "ar_file_sha256": "4b270e11480695cd6ab06e49c48340c3a733471a8eaf5c128346fe0e628bd63e",
+      "reason": "deepseek-v4-pro and glm-5.2 found no medium/high defect in this exact text; deterministic guards clean; scripture gate exact"
+    },
+    {
+      "key": "lesson_7-9_islamic_parenting_worship_06",
+      "verdict": "held",
+      "reason": "source audit: the English links the withdrawn unit isl-ab49af82 (judged unfaithful — its page is not about wudu) and no longer matches the Arabic unit_ids; the detailed wudu steps have no verified source unit (isl-c4d83813 is authored guidance on teaching prayer). Not sent for model review; stays in ops/data/en_unpublished/."
+    }
+  ]
+}

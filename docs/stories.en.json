@@ -44,10 +44,16 @@
       "review_verdict": "low_only",
       "review_defects": [
         {
-          "model": "deepseek-v4-pro",
+          "model": "glm-5.2",
           "field": "title",
           "type": "meaning",
-          "why": "غرسة means seedling/planting, not seed, so the English shifts the metaphor slightly."
+          "why": "«غرسة» means a planted sapling/seedling, not a seed («بذرة»); the title shifts the image from a growing plant to a seed."
+        },
+        {
+          "model": "glm-5.2",
+          "field": "pages[3].text",
+          "type": "omission",
+          "why": "The adverb «بقوة» (with force/strength) is dropped, slightly softening the imagery of the shoot breaking through."
         }
       ],
       "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
@@ -64,20 +70,26 @@
         "rounds": 1,
         "prompt_version": "dfa8a5f39718",
         "content_sha256": "8c04e7883a526347f7fb4008424cd9d03dab101d372967b8f49064fb178dc8ad",
-        "reviewed_at": "2026-10-07T07:55:29+00:00",
+        "reviewed_at": "2026-10-07T18:47:52+00:00",
         "residual_low": [
           {
-            "model": "deepseek-v4-pro",
+            "model": "glm-5.2",
             "field": "title",
             "type": "meaning",
-            "why": "غرسة means seedling/planting, not seed, so the English shifts the metaphor slightly."
+            "why": "«غرسة» means a planted sapling/seedling, not a seed («بذرة»); the title shifts the image from a growing plant to a seed."
+          },
+          {
+            "model": "glm-5.2",
+            "field": "pages[3].text",
+            "type": "omission",
+            "why": "The adverb «بقوة» (with force/strength) is dropped, slightly softening the imagery of the shoot breaking through."
           }
         ],
         "adjudicated": [],
         "tool": "ops/tools/review_en_parity.py",
         "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
       },
-      "revalidated_at": "2026-10-07T07:55:29+00:00"
+      "revalidated_at": "2026-10-07T18:47:52+00:00"
     },
     "ageGroup": "4-7 years",
     "category": "Patience and trusting Allah",
@@ -761,34 +773,22 @@
       "review_verdict": "low_only",
       "review_defects": [
         {
-          "model": "deepseek-v4-pro",
-          "field": "discussionQuestions[0]",
-          "type": "structure",
-          "why": "The name عمر is transliterated as 'Umar' throughout the story but as 'Omar' in this question, creating an inconsistency."
+          "model": "glm-5.2",
+          "field": "pages[1].text",
+          "type": "hadith",
+          "why": "A well-known hadith (Sahih al-Bukhari) is paraphrased and attributed to the Prophet ﷺ without any source citation."
         },
         {
           "model": "glm-5.2",
           "field": "discussionQuestions[0]",
-          "type": "tone",
-          "why": "The protagonist's name is rendered 'Umar' in the title and story pages but 'Omar' here, an inconsistent transliteration."
-        },
-        {
-          "model": "glm-5.2",
-          "field": "discussionQuestions[1]",
-          "type": "tone",
-          "why": "The rest of the item transliterates المسجد as 'masjid', but here it is translated as 'mosque', creating an inconsistent style."
-        },
-        {
-          "model": "glm-5.2",
-          "field": "discussionQuestions[2]",
-          "type": "tone",
-          "why": "خشوع is transliterated as 'khushu'' elsewhere in this item but translated as 'focus' here, an inconsistent treatment of the term."
+          "type": "meaning",
+          "why": "The protagonist's name is rendered 'Omar' here but 'Umar' in the title and story pages, creating an inconsistency."
         },
         {
           "model": "glm-5.2",
           "field": "actionChallenge",
-          "type": "tone",
-          "why": "خشوع is transliterated as 'khushu'' in the story pages but translated as 'focus' here, an inconsistent treatment of the term."
+          "type": "omission",
+          "why": "The word 'جماعة' (in congregation) is dropped; 'together with' implies praying alongside but does not convey the specific Islamic concept of congregational prayer."
         }
       ],
       "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
@@ -805,44 +805,32 @@
         "rounds": 1,
         "prompt_version": "dfa8a5f39718",
         "content_sha256": "90a6085378b9e4d3e666e42a1d0bb26ac52a1d3253678683ff218aa53917947e",
-        "reviewed_at": "2026-10-07T09:17:42+00:00",
+        "reviewed_at": "2026-10-07T18:47:52+00:00",
         "residual_low": [
           {
-            "model": "deepseek-v4-pro",
-            "field": "discussionQuestions[0]",
-            "type": "structure",
-            "why": "The name عمر is transliterated as 'Umar' throughout the story but as 'Omar' in this question, creating an inconsistency."
+            "model": "glm-5.2",
+            "field": "pages[1].text",
+            "type": "hadith",
+            "why": "A well-known hadith (Sahih al-Bukhari) is paraphrased and attributed to the Prophet ﷺ without any source citation."
           },
           {
             "model": "glm-5.2",
             "field": "discussionQuestions[0]",
-            "type": "tone",
-            "why": "The protagonist's name is rendered 'Umar' in the title and story pages but 'Omar' here, an inconsistent transliteration."
-          },
-          {
-            "model": "glm-5.2",
-            "field": "discussionQuestions[1]",
-            "type": "tone",
-            "why": "The rest of the item transliterates المسجد as 'masjid', but here it is translated as 'mosque', creating an inconsistent style."
-          },
-          {
-            "model": "glm-5.2",
-            "field": "discussionQuestions[2]",
-            "type": "tone",
-            "why": "خشوع is transliterated as 'khushu'' elsewhere in this item but translated as 'focus' here, an inconsistent treatment of the term."
+            "type": "meaning",
+            "why": "The protagonist's name is rendered 'Omar' here but 'Umar' in the title and story pages, creating an inconsistency."
           },
           {
             "model": "glm-5.2",
             "field": "actionChallenge",
-            "type": "tone",
-            "why": "خشوع is transliterated as 'khushu'' in the story pages but translated as 'focus' here, an inconsistent treatment of the term."
+            "type": "omission",
+            "why": "The word 'جماعة' (in congregation) is dropped; 'together with' implies praying alongside but does not convey the specific Islamic concept of congregational prayer."
           }
         ],
         "adjudicated": [],
         "tool": "ops/tools/review_en_parity.py",
         "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
       },
-      "revalidated_at": "2026-10-07T09:17:42+00:00"
+      "revalidated_at": "2026-10-07T18:47:52+00:00"
     },
     "ageGroup": "5-8 years",
     "category": "Love of prayer and its light",
@@ -909,16 +897,16 @@
       "review_verdict": "low_only",
       "review_defects": [
         {
-          "model": "deepseek-v4-pro",
+          "model": "glm-5.2",
           "field": "pages[1].text",
           "type": "hadith",
-          "why": "A well-known hadith (Sahih Muslim) is quoted without any source citation, which is acceptable but worth noting per policy."
+          "why": "A well-known hadith (Sahih Muslim) is quoted and attributed to the Prophet ﷺ without any source citation."
         },
         {
-          "model": "deepseek-v4-pro",
+          "model": "glm-5.2",
           "field": "discussionQuestions[0]",
           "type": "meaning",
-          "why": "The name is transliterated as 'Khadijah' throughout the story but as 'Khadija' in this question, a minor inconsistency."
+          "why": "The protagonist's name is rendered 'Khadija' here but 'Khadijah' in the title and story pages, creating an inconsistency."
         }
       ],
       "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
@@ -935,26 +923,26 @@
         "rounds": 1,
         "prompt_version": "dfa8a5f39718",
         "content_sha256": "0273f101dc8a6e3a26a93a60c7a3228358d5ebafd5f3e1fedd54f29a154b2d49",
-        "reviewed_at": "2026-10-07T08:43:47+00:00",
+        "reviewed_at": "2026-10-07T18:47:52+00:00",
         "residual_low": [
           {
-            "model": "deepseek-v4-pro",
+            "model": "glm-5.2",
             "field": "pages[1].text",
             "type": "hadith",
-            "why": "A well-known hadith (Sahih Muslim) is quoted without any source citation, which is acceptable but worth noting per policy."
+            "why": "A well-known hadith (Sahih Muslim) is quoted and attributed to the Prophet ﷺ without any source citation."
           },
           {
-            "model": "deepseek-v4-pro",
+            "model": "glm-5.2",
             "field": "discussionQuestions[0]",
             "type": "meaning",
-            "why": "The name is transliterated as 'Khadijah' throughout the story but as 'Khadija' in this question, a minor inconsistency."
+            "why": "The protagonist's name is rendered 'Khadija' here but 'Khadijah' in the title and story pages, creating an inconsistency."
           }
         ],
         "adjudicated": [],
         "tool": "ops/tools/review_en_parity.py",
         "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
       },
-      "revalidated_at": "2026-10-07T08:43:47+00:00"
+      "revalidated_at": "2026-10-07T18:47:52+00:00"
     },
     "ageGroup": "4-7 years",
     "category": "The neighbour's right and ihsan (doing good)",
@@ -969,7 +957,7 @@
   {
     "id": "abdullah_bismillah",
     "title": "Abdullah and 'Bismillah'",
-    "description": "An engaging tarbiyah story that instils the Islamic manners of eating and drinking—saying 'Bismillah,' using the right hand, and praising Allah.",
+    "description": "A warm tarbiyah story that gently shows the Sunnah manners of eating and drinking—saying 'Bismillah,' using the right hand, and praising Allah.",
     "coverImage": "docs/stories/abdullah_bismillah_cover.png",
     "themeColor": "0xFF2563EB",
     "videoFile": "docs/stories/abdullah_bismillah_cover.mp4",
@@ -1018,8 +1006,15 @@
         "quran_ayah": false,
         "reviewer_model": true
       },
-      "review_verdict": "clean",
-      "review_defects": [],
+      "review_verdict": "low_only",
+      "review_defects": [
+        {
+          "model": "glm-5.2",
+          "field": "description",
+          "type": "meaning",
+          "why": "«مشوقة» means engaging/captivating, but the English renders it as 'warm,' which is a different quality."
+        }
+      ],
       "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
       "english_authors": [
         "mistral-large-3:675b",
@@ -1033,14 +1028,21 @@
         "fixer": null,
         "rounds": 1,
         "prompt_version": "dfa8a5f39718",
-        "content_sha256": "227b74f39994eab8f9fa4a1acc361de8c772d17fc14b456b3da06d2224ffc29e",
-        "reviewed_at": "2026-10-07T09:15:33+00:00",
-        "residual_low": [],
+        "content_sha256": "457d3b3c3d7aa1e55f1718f7de50f1e30882d07cb690b728c73847d0b988b892",
+        "reviewed_at": "2026-10-07T18:47:52+00:00",
+        "residual_low": [
+          {
+            "model": "glm-5.2",
+            "field": "description",
+            "type": "meaning",
+            "why": "«مشوقة» means engaging/captivating, but the English renders it as 'warm,' which is a different quality."
+          }
+        ],
         "adjudicated": [],
         "tool": "ops/tools/review_en_parity.py",
         "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
       },
-      "revalidated_at": "2026-10-07T09:15:33+00:00"
+      "revalidated_at": "2026-10-07T18:47:52+00:00"
     },
     "ageGroup": "3-6 years",
     "category": "Barakah and remembering Allah",
@@ -1569,21 +1571,8 @@
         "quran_ayah": true,
         "reviewer_model": true
       },
-      "review_verdict": "low_only",
-      "review_defects": [
-        {
-          "model": "deepseek-v4-pro",
-          "field": "pages[1].text",
-          "type": "source_corruption",
-          "why": "The Quranic ayah is missing the jussive sukun on 'يَسْخَرْ', making it read as indicative instead of prohibition."
-        },
-        {
-          "model": "glm-5.2",
-          "field": "pages[2].text",
-          "type": "omission",
-          "why": "The Arabic has two qualities — rifq (gentleness) and lin (softness/tenderness) — but the English renders only the first."
-        }
-      ],
+      "review_verdict": "clean",
+      "review_defects": [],
       "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
       "english_authors": [
         "mistral-large-3:675b",
@@ -1598,26 +1587,13 @@
         "rounds": 1,
         "prompt_version": "dfa8a5f39718",
         "content_sha256": "900db069fbf1595d80ed186e44bd6ab021c5c92a983b9f170718fd9035f89372",
-        "reviewed_at": "2026-10-07T08:38:25+00:00",
-        "residual_low": [
-          {
-            "model": "deepseek-v4-pro",
-            "field": "pages[1].text",
-            "type": "source_corruption",
-            "why": "The Quranic ayah is missing the jussive sukun on 'يَسْخَرْ', making it read as indicative instead of prohibition."
-          },
-          {
-            "model": "glm-5.2",
-            "field": "pages[2].text",
-            "type": "omission",
-            "why": "The Arabic has two qualities — rifq (gentleness) and lin (softness/tenderness) — but the English renders only the first."
-          }
-        ],
+        "reviewed_at": "2026-10-07T18:47:52+00:00",
+        "residual_low": [],
         "adjudicated": [],
         "tool": "ops/tools/review_en_parity.py",
         "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
       },
-      "revalidated_at": "2026-10-07T08:38:25+00:00"
+      "revalidated_at": "2026-10-07T18:47:52+00:00"
     },
     "ageGroup": "5-8 years",
     "category": "Truthful words and courage",
@@ -1628,5 +1604,254 @@
     ],
     "islamicValue": "The Messenger of Allah ﷺ said: “Truthfulness leads to righteousness, and righteousness leads to Paradise.” (Sahih al-Bukhari 6094)",
     "actionChallenge": "Truthful-words challenge: today, make sure nothing comes out of your mouth except a kind word, a smile and sincere truth."
+  },
+  {
+    "id": "badr_broken_toy",
+    "title": "Badr and the Broken Toy",
+    "description": "A story from the kindergarten curriculum that teaches children the courage to tell the truth and to apologise sincerely.",
+    "coverImage": "docs/stories/badr_broken_toy_cover.png",
+    "themeColor": "0xFF0F766E",
+    "videoFile": null,
+    "pages": [
+      {
+        "pageNumber": 1,
+        "text": "Badr was playing in the living room with a beautiful blue racing car that belonged to his big brother, Omar. He drove it eagerly across the carpet, happily copying the sound of the engine.",
+        "image": "docs/stories/badr_broken_toy_1.png"
+      },
+      {
+        "pageNumber": 2,
+        "text": "Suddenly, the car crashed hard into the edge of the table, and one of its little wheels broke! Badr's heart pounded. He felt scared and thought about quickly hiding the car behind the sofa so that no one would know.",
+        "image": "docs/stories/badr_broken_toy_2.png"
+      },
+      {
+        "pageNumber": 3,
+        "text": "But Badr remembered his father's advice: «A believer is truthful and brave, my son, and truthfulness brings peace of heart and blessing.» So Badr stopped, took a deep breath, and decided to tell the truth, whatever happened.",
+        "image": "docs/stories/badr_broken_toy_3.png"
+      },
+      {
+        "pageNumber": 4,
+        "text": "Badr picked up the car and walked over to his brother Omar with his head held high. He said honestly, «I'm sorry, brother. The wheel broke by accident while I was playing with it.» Omar smiled, hugged him and said, «Thank you for your honesty and your courage, Badr. Truthfulness is worth more than any toy. Come on, let's fix it together with Dad's help.»",
+        "image": "docs/stories/badr_broken_toy_4.png"
+      }
+    ],
+    "language": "en",
+    "source_language": "ar",
+    "translation": {
+      "translator_model": "claude-opus-5.5",
+      "reviewer_model": "deepseek-v4-pro+glm-5.2",
+      "needs_scholar_review": true,
+      "review_verdict": "low_only",
+      "review_defects": [
+        {
+          "model": "glm-5.2",
+          "field": "description",
+          "type": "omission",
+          "why": "The adjective «تربوية» (educational / tarbiyah-based) is dropped, losing a minor qualitative descriptor."
+        }
+      ],
+      "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
+      "auto_review": {
+        "reviewers": [
+          "deepseek-v4-pro",
+          "glm-5.2"
+        ],
+        "fixer": null,
+        "rounds": 1,
+        "prompt_version": "dfa8a5f39718",
+        "content_sha256": "705f57a786be8fff4d2ee3f55495644604a7a86349c9b9e14934bfb93e836d66",
+        "reviewed_at": "2026-10-07T18:47:52+00:00",
+        "residual_low": [
+          {
+            "model": "glm-5.2",
+            "field": "description",
+            "type": "omission",
+            "why": "The adjective «تربوية» (educational / tarbiyah-based) is dropped, losing a minor qualitative descriptor."
+          }
+        ],
+        "adjudicated": [],
+        "tool": "ops/tools/review_en_parity.py",
+        "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+      },
+      "revalidated_at": "2026-10-07T18:47:52+00:00"
+    },
+    "ageGroup": "3-6 years",
+    "category": "Honesty and courage",
+    "discussionQuestions": [
+      "What could have happened if Badr had lied and hidden the toy behind the sofa?",
+      "Does it take courage to admit a mistake? And why did Omar love his brother Badr even more when he told him the truth?",
+      "If your friend broke your toy and then honestly admitted it and said sorry, what would you do?"
+    ],
+    "islamicValue": "The Messenger of Allah ﷺ said: “Hold fast to truthfulness, for truthfulness leads to righteousness, and righteousness leads to Paradise.” (Sahih Muslim 2607)",
+    "actionChallenge": "Honesty challenge: if you make any small mistake today at home or at nursery, go straight to your parents — bravely and with a smile — tell the truth and say sorry."
+  },
+  {
+    "id": "tamim_anger_volcano",
+    "title": "Tamim and the Volcano of Anger",
+    "description": "An interactive story that trains a kindergarten child in the Prophetic steps to calm down and to manage their feelings when they lose.",
+    "coverImage": "docs/stories/tamim_anger_volcano_cover.png",
+    "themeColor": "0xFFD97706",
+    "videoFile": null,
+    "pages": [
+      {
+        "pageNumber": 1,
+        "text": "Tamim was building a tall, tall tower of coloured blocks to win the class competition for the most beautiful building. Suddenly, the table shook, the whole tower fell down, and the blocks scattered all over the floor!",
+        "image": "docs/stories/tamim_anger_volcano_1.png"
+      },
+      {
+        "pageNumber": 2,
+        "text": "Tamim felt a strong heat in his chest and his face, as if a red volcano was about to erupt. He clenched his fists tightly and wanted to scream and throw the rest of the blocks everywhere because he was so cross.",
+        "image": "docs/stories/tamim_anger_volcano_2.png"
+      },
+      {
+        "pageNumber": 3,
+        "text": "His mother came over to him gently, stroked his head and whispered to him: «Tamim, remember the secret of the patient hero: say A'udhu billahi min ash-shaytan ir-rajim, take a deep breath, and make wudu with cool water to put out the volcano of anger.»",
+        "image": "docs/stories/tamim_anger_volcano_3.png"
+      },
+      {
+        "pageNumber": 4,
+        "text": "Tamim followed his mother's advice step by step: he breathed calmly, sought refuge in Allah and made wudu — and he felt wonderfully refreshed, and the volcano went out. He came back with a confident smile and said, «I'll build the tower again, and it will be stronger and more beautiful, in sha' Allah!»",
+        "image": "docs/stories/tamim_anger_volcano_4.png"
+      }
+    ],
+    "language": "en",
+    "source_language": "ar",
+    "translation": {
+      "translator_model": "claude-opus-5.5",
+      "reviewer_model": "deepseek-v4-pro+glm-5.2",
+      "needs_scholar_review": true,
+      "review_verdict": "low_only",
+      "review_defects": [
+        {
+          "model": "glm-5.2",
+          "field": "pages[1].text",
+          "type": "meaning",
+          "why": "«الغيظ» denotes intense fury/rage, while 'cross' conveys only mild annoyance, understating the emotion the volcano metaphor depends on."
+        },
+        {
+          "model": "glm-5.2",
+          "field": "discussionQuestions[1]",
+          "type": "meaning",
+          "why": "«السلاح» means 'weapon', softened to 'tool'; the martial metaphor is part of the Arabic's rhetorical force."
+        }
+      ],
+      "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
+      "auto_review": {
+        "reviewers": [
+          "deepseek-v4-pro",
+          "glm-5.2"
+        ],
+        "fixer": null,
+        "rounds": 1,
+        "prompt_version": "dfa8a5f39718",
+        "content_sha256": "9ccde54706846c29532679662a8da72e5264de23997a0a07438d4a23a72d0ce0",
+        "reviewed_at": "2026-10-07T18:47:52+00:00",
+        "residual_low": [
+          {
+            "model": "glm-5.2",
+            "field": "pages[1].text",
+            "type": "meaning",
+            "why": "«الغيظ» denotes intense fury/rage, while 'cross' conveys only mild annoyance, understating the emotion the volcano metaphor depends on."
+          },
+          {
+            "model": "glm-5.2",
+            "field": "discussionQuestions[1]",
+            "type": "meaning",
+            "why": "«السلاح» means 'weapon', softened to 'tool'; the martial metaphor is part of the Arabic's rhetorical force."
+          }
+        ],
+        "adjudicated": [],
+        "tool": "ops/tools/review_en_parity.py",
+        "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+      },
+      "revalidated_at": "2026-10-07T18:47:52+00:00"
+    },
+    "ageGroup": "4-7 years",
+    "category": "Managing feelings and staying calm",
+    "discussionQuestions": [
+      "What could have happened if Tamim had given in to the volcano of anger, screamed and spoiled other children's toys?",
+      "What great Prophetic tool did Tamim use to put out the fire of anger in his heart?",
+      "When you feel upset or lose a game, what is the first thing you will do to stay a calm hero?"
+    ],
+    "islamicValue": "The Messenger of Allah ﷺ said: “The strong one is not the one who overcomes others in wrestling; the strong one is the one who controls himself when angry.” (Sahih al-Bukhari 6114)",
+    "actionChallenge": "Calm challenge: whenever something upsets you today, stop straight away, seek refuge in Allah from the accursed Shaytan, and slowly drink a sip of cool water."
+  },
+  {
+    "id": "noura_sharing_box",
+    "title": "Noura and the Sharing Box",
+    "description": "A warm story that shows children the joy of giving and sharing with their brothers, sisters and friends at nursery and at home.",
+    "coverImage": "docs/stories/noura_sharing_box_cover.png",
+    "themeColor": "0xFFE11D48",
+    "videoFile": null,
+    "pages": [
+      {
+        "pageNumber": 1,
+        "text": "Noura had bought a special box of wooden colouring pencils, full of sparkle and bright colours, and she was very excited for art class at nursery so she could draw a wonderful rainbow.",
+        "image": "docs/stories/noura_sharing_box_1.png"
+      },
+      {
+        "pageNumber": 2,
+        "text": "Noura looked at the seat next to her and saw her classmate Layla sitting silently, her eyes full of sadness, because she had left her pencil box on the school bus and had nothing to draw with.",
+        "image": "docs/stories/noura_sharing_box_2.png"
+      },
+      {
+        "pageNumber": 3,
+        "text": "Noura hesitated for a moment and thought, «Should I give her some of my new pencils?» Then she remembered her teacher's words: «The people most beloved to Allah are those most useful to others, and no wealth or good is ever lessened by charity and sharing.»",
+        "image": "docs/stories/noura_sharing_box_3.png"
+      },
+      {
+        "pageNumber": 4,
+        "text": "Noura held out her hand with a big smile, split the pencils into two halves and said to Layla, «These are for you, my friend. We'll draw one picture together.» Layla wiped away her tear and laughed — and it was the most beautiful picture in the exhibition!",
+        "image": "docs/stories/noura_sharing_box_4.png"
+      }
+    ],
+    "language": "en",
+    "source_language": "ar",
+    "translation": {
+      "translator_model": "claude-opus-5.5",
+      "reviewer_model": "deepseek-v4-pro+glm-5.2",
+      "needs_scholar_review": true,
+      "review_verdict": "low_only",
+      "review_defects": [
+        {
+          "model": "glm-5.2",
+          "field": "discussionQuestions[1]",
+          "type": "meaning",
+          "why": "The Arabic plural «أشياء أعظم» (greater things) is rendered as singular «something greater», slightly narrowing the scope."
+        }
+      ],
+      "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
+      "auto_review": {
+        "reviewers": [
+          "deepseek-v4-pro",
+          "glm-5.2"
+        ],
+        "fixer": null,
+        "rounds": 1,
+        "prompt_version": "dfa8a5f39718",
+        "content_sha256": "13e573375a5d669494f9f0a9fa4fead78652ed977d985657b3a8e559762c626f",
+        "reviewed_at": "2026-10-07T18:47:52+00:00",
+        "residual_low": [
+          {
+            "model": "glm-5.2",
+            "field": "discussionQuestions[1]",
+            "type": "meaning",
+            "why": "The Arabic plural «أشياء أعظم» (greater things) is rendered as singular «something greater», slightly narrowing the scope."
+          }
+        ],
+        "adjudicated": [],
+        "tool": "ops/tools/review_en_parity.py",
+        "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+      },
+      "revalidated_at": "2026-10-07T18:47:52+00:00"
+    },
+    "ageGroup": "3-6 years",
+    "category": "Generosity and putting others first",
+    "discussionQuestions": [
+      "How did Layla's sadness turn into great joy because of what Noura did?",
+      "Did Noura lose anything when she shared her new pencils? Or did she gain something greater?",
+      "What lovely thing would you like to share today with your brother or sister to make them happy?"
+    ],
+    "islamicValue": "Aisha (may Allah be pleased with her) said: “The Messenger of Allah ﷺ used to accept gifts and give something in return for them.” (Sahih al-Bukhari 2585) And Allah says: ﴿وَيُؤْثِرُونَ عَلَىٰ أَنفُسِهِمْ﴾ (Al-Hashr: 9) — interpretation of the meaning: 'but give [them] preference over themselves.'",
+    "actionChallenge": "Sharing challenge: today, give one of your favourite toys, or a piece of your fruit, to your brother or a friend, gladly and with love."
   }
 ]

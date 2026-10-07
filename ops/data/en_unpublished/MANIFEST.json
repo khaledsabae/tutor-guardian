@@ -448,44 +448,13 @@
     "on": "2026-10-04"
   },
   {
-    "key": "lesson_7-9_islamic_parenting_worship_05",
-    "kind": "lessons",
-    "from": "knowledge_base/curriculum/i18n/en/lessons/lesson_7-9_islamic_parenting_worship_05.json",
-    "to": "ops/data/en_unpublished/lessons/lesson_7-9_islamic_parenting_worship_05.json",
-    "reason": "New lesson from ops/tools/deepen_paths.py (content/p1-deep-paths), Arabic and English authored by claude-opus-5-5. The Arabic+English pair was cleared by one cross-family reviewer (deepseek-v4-pro or glm-5.2; ops/data/deepen_paths/prayer_religion.review.json), but this gate's two-reviewer stamp needs Ollama, capped for the week, and Claude may not stamp its own English. English users see the Arabic until review_en_parity run stamps it after the reset.",
-    "on": "2026-10-04"
-  },
-  {
     "key": "lesson_7-9_islamic_parenting_worship_06",
     "kind": "lessons",
     "from": "knowledge_base/curriculum/i18n/en/lessons/lesson_7-9_islamic_parenting_worship_06.json",
     "to": "ops/data/en_unpublished/lessons/lesson_7-9_islamic_parenting_worship_06.json",
     "reason": "New lesson from ops/tools/deepen_paths.py (content/p1-deep-paths), Arabic and English authored by claude-opus-5-5. The Arabic+English pair was cleared by one cross-family reviewer (deepseek-v4-pro or glm-5.2; ops/data/deepen_paths/prayer_religion.review.json), but this gate's two-reviewer stamp needs Ollama, capped for the week, and Claude may not stamp its own English. English users see the Arabic until review_en_parity run stamps it after the reset.",
-    "on": "2026-10-04"
-  },
-  {
-    "key": "lesson_7-9_islamic_parenting_worship_07",
-    "kind": "lessons",
-    "from": "knowledge_base/curriculum/i18n/en/lessons/lesson_7-9_islamic_parenting_worship_07.json",
-    "to": "ops/data/en_unpublished/lessons/lesson_7-9_islamic_parenting_worship_07.json",
-    "reason": "New lesson from ops/tools/deepen_paths.py (content/p1-deep-paths), Arabic and English authored by claude-opus-5-5. The Arabic+English pair was cleared by one cross-family reviewer (deepseek-v4-pro or glm-5.2; ops/data/deepen_paths/prayer_religion.review.json), but this gate's two-reviewer stamp needs Ollama, capped for the week, and Claude may not stamp its own English. English users see the Arabic until review_en_parity run stamps it after the reset.",
-    "on": "2026-10-04"
-  },
-  {
-    "key": "lesson_7-9_islamic_parenting_worship_08",
-    "kind": "lessons",
-    "from": "knowledge_base/curriculum/i18n/en/lessons/lesson_7-9_islamic_parenting_worship_08.json",
-    "to": "ops/data/en_unpublished/lessons/lesson_7-9_islamic_parenting_worship_08.json",
-    "reason": "New lesson from ops/tools/deepen_paths.py (content/p1-deep-paths), Arabic and English authored by claude-opus-5-5. The Arabic+English pair was cleared by one cross-family reviewer (deepseek-v4-pro or glm-5.2; ops/data/deepen_paths/prayer_religion.review.json), but this gate's two-reviewer stamp needs Ollama, capped for the week, and Claude may not stamp its own English. English users see the Arabic until review_en_parity run stamps it after the reset.",
-    "on": "2026-10-04"
-  },
-  {
-    "key": "lesson_7-9_islamic_parenting_worship_09",
-    "kind": "lessons",
-    "from": "knowledge_base/curriculum/i18n/en/lessons/lesson_7-9_islamic_parenting_worship_09.json",
-    "to": "ops/data/en_unpublished/lessons/lesson_7-9_islamic_parenting_worship_09.json",
-    "reason": "New lesson from ops/tools/deepen_paths.py (content/p1-deep-paths), Arabic and English authored by claude-opus-5-5. The Arabic+English pair was cleared by one cross-family reviewer (deepseek-v4-pro or glm-5.2; ops/data/deepen_paths/prayer_religion.review.json), but this gate's two-reviewer stamp needs Ollama, capped for the week, and Claude may not stamp its own English. English users see the Arabic until review_en_parity run stamps it after the reset.",
-    "on": "2026-10-04"
+    "on": "2026-10-04",
+    "hold_2026-10-07": "Kept unpublished after the 2026-10-07 closeout source audit (not sent for model review): (1) the English still links isl-ab49af82, a unit withdrawn as unfaithful (ops/data/kb_fidelity/quarantined.json: its Alukah p.144 is not about wudu) while the Arabic now links only isl-c4d83813 — unit_ids no longer match; (2) the step-by-step wudu list has no verified source unit — isl-c4d83813 is authored guidance on teaching prayer, not a wudu text. Restore only after a verified wudu source is linked, the English unit_ids follow the Arabic, and review_en_parity run stamps it."
   },
   {
     "key": "isl-e20d927a__en",
