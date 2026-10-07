@@ -1,0 +1,107 @@
+name: Unsigned release bundle
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/build-release-unsigned.yml'
+      - 'mobile/android/app/build.gradle.kts'
+      - 'scripts/release_bundle.py'
+      - 'scripts/tests/test_release_bundle.py'
+      - 'scripts/release_play_validate.py'
+      - 'scripts/tests/test_release_play_validate.py'
+  workflow_dispatch:
+    inputs:
+      approved_source_sha:
+        description: Exact reviewed 40-character main commit SHA approved for this build
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: unsigned-release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  verifier_tests:
+    name: Release bundle verifier tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - run: |
+          python3 -m pip install PyYAML==6.0.2
+          python3 -m unittest discover -s scripts/tests -p test_release_bundle.py -v
+          python3 -m unittest discover -s scripts/tests -p test_release_play_validate.py -v
+
+  build:
+    name: Build unsigned production AAB only
+    needs: verifier_tests
+    # No PR builds, signing, Play credentials or upload. Exact dispatch SHA.
+    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - name: Require an unmodified production source tree
+        env:
+          APPROVED_SOURCE_SHA: ${{ inputs.approved_source_sha }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          [[ "$APPROVED_SOURCE_SHA" =~ ^[0-9a-f]{40}$ ]]
+          test "$APPROVED_SOURCE_SHA" = "$GITHUB_SHA"
+          test "$(git rev-parse HEAD)" = "$APPROVED_SOURCE_SHA"
+          test ! -e mobile/android/app/key.properties
+          test ! -e mobile/android/app/almorabbi-upload.jks
+          test -z "$(git status --porcelain --untracked-files=all)"
+      - uses: actions/setup-java@de7274f081f381c8f8158605e0321c36c376e2e6 # v6.0.1
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2.23.0
+        with:
+          flutter-version: '3.44.1'
+          channel: stable
+          cache: true
+      - name: Build full production release payload without a signature
+        working-directory: mobile
+        shell: bash
+        run: |
+          set -euo pipefail
+          flutter pub get
+          # GITHUB_ACTIONS is supplied by GitHub. The switch is scoped to this
+          # command, absent from ordinary releases and the E2E workflow.
+          TG_CI_UNSIGNED_AAB=true flutter build appbundle --release
+      - name: Validate pinned bundletool and package artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          BUNDLETOOL="$RUNNER_TEMP/bundletool-all-1.18.3.jar"
+          curl --fail --location --silent --show-error \
+            https://github.com/google/bundletool/releases/download/1.18.3/bundletool-all-1.18.3.jar \
+            --output "$BUNDLETOOL"
+          printf '%s  %s\n' a099cfa1543f55593bc2ed16a70a7c67fe54b1747bb7301f37fdfd6d91028e29 "$BUNDLETOOL" | sha256sum --check -
+          OUT="$RUNNER_TEMP/unsigned-release"
+          mkdir -p "$OUT"
+          cp mobile/build/app/outputs/bundle/release/app-release.aab "$OUT/app-release-unsigned.aab"
+          VERSION=$(python3 -c 'from pathlib import Path; import re; print(re.search(r"^version:\s*(\S+)", Path("mobile/pubspec.yaml").read_text(), re.M)[1])')
+          python3 scripts/release_bundle.py unsigned \
+            --aab "$OUT/app-release-unsigned.aab" --bundletool "$BUNDLETOOL" \
+            --source-sha "$GITHUB_SHA" --version "$VERSION" --output "$OUT/unsigned-manifest.json"
+          # No build may silently rewrite tracked production configuration.
+          git diff --exit-code
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: unsigned-release-${{ github.sha }}
+          path: ${{ runner.temp }}/unsigned-release
+          if-no-files-found: error
+          retention-days: 7
