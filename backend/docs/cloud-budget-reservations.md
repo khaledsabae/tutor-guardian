@@ -1,13 +1,14 @@
 # Monthly cloud reservation design
 
-**HELD — review-ready milestone, not merge/deployment-ready or a proven provider
-billing hard cap.** Atomic SQLite admission works against the supplied numeric
-reservation, but input UTF-8 bytes + 1024 framing tokens is an unverified billing
-assumption. A deliberately failing acceptance test requires unknown tokenizer,
-framing and input-billing contracts to be denied before the first paid wire.
-Receiving over-bound usage and quarantining afterward is too late to guarantee
-that first bill. Ampere must resolve this before acceptance; no independent
-review or production-hard-cap approval is claimed here.
+**Independent follow-up:** capped admission now requires an exact documented
+endpoint/model profile and reserves its entire input+generated context window.
+The prior UTF-8/framing estimate has been removed. Unknown profiles fail closed
+before transport; the local chain remains available. Explicit primary cap `0`
+continues to opt out of the ledger and is **not** a hard-cap configuration.
+This is an admission-accounting ceiling under the documented provider contract,
+not an absolute guarantee against provider misbilling, hidden charges, external
+account consumers or loss of the persistent ledger. Production cutover remains
+an operational prerequisite; no production rollout is authorized here.
 
 Scope: the configured monthly **token** ceilings, not a fixed currency bill. No
 production settings, credentials, provider purchases or deployment change here.
@@ -48,15 +49,38 @@ negative or non-integral counts makes that month's opening spend unknown and
 denies cloud admission. A fresh DB starts at zero. Unreadable/corrupt/busy SQLite
 denies admission. Existing lower telemetry totals never reduce the ledger.
 
-Reserve UTF-8 bytes of the exact serialized message list, plus 1024 tokens of
-framing allowance, plus the strictly positive integer `max_tokens` actually sent.
-This deliberately overestimates tokenization for the supported byte-backed
-tokenizers and a single user-message framing. Input bounds and provider-enforced
-output caps are billing assumptions, not independently verified invoices. Unknown
-usage, HTTP errors, network ambiguity, generator close, cancellation, process
-death and failed settlement retain the entire bound. Unresolved older-month
-attempts also consume current-month capacity until their billing becomes known.
-Do not assume a connection error or rejected request was free.
+Reserve **1,048,576 tokens per attempt** for exact official DeepSeek HTTPS
+origin `api.deepseek.com:443`, path root or `/v1`, model `deepseek-flash` or
+`deepseek-v4-pro`. The [model pricing documentation](https://api-docs.deepseek.com/quick_start/pricing)
+retrieved 2026-10-07 specifies a 1M context and bills input + output; the
+[chat API contract](https://api-docs.deepseek.com/api/create-chat-completion)
+explicitly limits total input plus generated tokens to the context window and
+requires `max_tokens` between 1 and 393,216. Rounding 1M up to 2**20 is
+conservative regardless of decimal/binary display. Reserve the **entire** window,
+not a guessed byte/token bound plus completion allowance; the context already
+includes completion. Validate the actual model after every switch and the actual
+positive integer `max_tokens` sent on every attempt, never a configured label
+that differs from the wire. A small request is refused if that full window cannot
+fit; completed valid usage may later reduce the charge.
+
+Mutable legacy aliases (`deepseek-chat`), Azure deployment labels, generic
+OpenAI-compatible services, other paths/origins and undocumented models have no
+verified profile here, so capped mode denies them. Do not add profiles from a
+model name alone. The native default model is now the documented `deepseek-flash`;
+explicit `DEEPSEEK_MODEL` values are preserved, including unknown values that
+will fall back locally in capped mode. Defaults remain local primary `ollama`,
+cloud safety valve disabled, Azure tier disabled, primary cap 100,000,000 and
+fallback cap 10,000,000. No live environment/credentials were read or changed.
+Primary `0` preserves the explicit unlimited opt-out even for an unknown profile;
+fallback `0` still disables that safety valve. Only positive caps with known
+profiles have the contract-bounded admission guarantee.
+
+Unknown usage, HTTP errors, network ambiguity, generator close, cancellation,
+process death and failed settlement retain the entire bound. Unresolved older
+months consume current capacity until billing becomes known. Provider violations
+of the documented context/output contract are outside the admission guarantee;
+over-bound reported usage quarantines the wallet without pretending the bill
+was prevented.
 
 Only a completed successful protocol response with both valid counts may reduce
 its charge once to actual usage at or below its bound. A completed response
@@ -99,13 +123,13 @@ production rollout.
 ## TDD acceptance checks (written before implementation)
 
 Race independent SQLite connections for the final slot; share main/aux in-flight
-charges; reject oversized UTF-8 input before transport; charge each ambiguous
+charges; reject requests whose full context bound cannot fit before transport; charge each ambiguous
 network retry; preserve closed-stream charges; allow local answers when the
 ledger is unreadable; settle only complete bounded usage once; keep orphans;
 import legacy aliases together; and settle a previous-month ticket without
 freeing current-month capacity. Exact validation results and the held acceptance contract are recorded below.
 
-## Bounded milestone evidence / Ampere handoff
+## Historical held milestone evidence / Ampere handoff
 
 Base: `3d40ae7bcd93b909fc410a6dcd8fba95e1f932bd`, own managed worktree
 `/home/khalednew/.codex/worktrees/cloud-budget-cap/tutor-guardian`, branch
@@ -153,7 +177,7 @@ without offline isolation timed out after 180 seconds; neither was counted as
 success. Subsequent bounded offline runs used the existing complete virtualenv.
 Ruff and `git diff --check` exited 0.
 
-Remaining technical acceptance blockers:
+Historical technical acceptance blockers at the held milestone:
 
 1. Prove supported tokenizer, provider-added framing and billable input bounds,
    or refuse unverified provider/model profiles before transport. A 1024-token
@@ -179,3 +203,59 @@ in 46.86 seconds. The sole failure is
 explicit-unknown-model version was checked separately: **exit 1, 1 failed,
 27 deselected**. This is an intentional, unmarked merge-blocking acceptance
 failure, not an xfail or a fabricated success. All other focused contracts pass.
+
+## Independent wallet/persistence review (2026-10-07)
+
+Main, auxiliary, model-switch retries and fallback aliases on one normalized
+origin share one wallet; `/v1` and explicit `:443` do not mint another wallet.
+API-key rotation also cannot reset it. Primary versus fallback cap selection is
+one configured policy, not additive quotas. Azure has a separate endpoint wallet
+but is denied in capped mode until a specific deployment contract is verified.
+Different origins/accounts cannot automatically be proven to share a physical
+wallet, and external tools are not counted; audit these before rollout. Legacy
+opening totals are intentionally imported conservatively to every wallet because
+old telemetry has no endpoint/account attribution.
+
+Production Compose maps `tg_sessions:/app/ops`; `_TELEMETRY_DB` resolves to
+`/app/ops/sessions.db` inside the image. This is shared persistent state only if
+all admitted gateway workers actually use that same volume/file. Cutover must
+stop/drain old unreserved writers (including retries/in-flight SDK calls), take an
+SQLite online backup preserving telemetry and all `cloud_budget_*` tables, record
+known external opening spend/aliases, then start only reserved writers against the
+same DB. Never substitute an empty DB, delete a ledger to clear a cap, restore an
+older snapshot without reconciling intervening spend, or mix old/new writers.
+These are deployment preconditions, not actions performed by this commit.
+
+Test-only small `BillingProfile` fixtures exercise contention, Azure boundary and
+retry accounting without asserting real profiles exist for synthetic models.
+Localhost protocol tests explicitly opt out with primary cap zero; the separate
+reservation suite keeps real cap enforcement at every mocked wire. Unknown-profile
+rejection, local continuity and model-switch revalidation have independent tests.
+Historical held counts above remain evidence of the earlier milestone, not the
+follow-up result. Final focused validation is recorded below after completion.
+
+### Follow-up acceptance evidence
+
+Independent worktree `cloud-budget-profile-review`, based exactly on held
+`5be9627bfed04c16b108499aa40cfd476eb21dda`. New contract tests first failed:
+exit 1, 13 failed / 27 deselected, including the original unverified-billing
+admission failure. Profile/reservation suite after implementation: exit 0,
+40 passed. Final complete focused command (the eight held modules plus
+`test_cloud_billing_profiles.py`), offline HF/Transformers, existing virtualenv,
+`-B -m pytest -v -p no:cacheprovider --override-ini addopts='' --durations=5`:
+**exit 0, 161 passed, 3 dependency warnings, 51.91 seconds**. This includes
+main/aux contention, internal model-switch/retry admission, SDK/stream aborts,
+unknown-profile local fallback, ledger persistence/rollover and explicit zero
+opt-out semantics. Ruff and `git diff --check`: exit 0. No live provider requests,
+mobile builds, production changes, credentials, deployment or purchases.
+
+One intermediate aggregate had exit 124 at its 150-second limit and a new
+fixture mistakenly used HTTP404 where the model-switch protocol requires 400;
+neither was counted as a pass. The fixture was corrected, then the entire suite
+above passed. Raw bounded logs and official-source captures remain private under
+`/tmp/tg-cloud-profile-private/`. The original held history is preserved above.
+
+The original merge-blocking unknown-profile admission test is now green because
+unknown capped profiles cannot reach transport. Acceptance is restricted to
+known-profile, contract-bounded gateway admissions with a persistent shared ledger.
+No absolute provider-invoice guarantee or production-cutover approval is implied.

@@ -41,6 +41,11 @@ def sse(usage=True):
 
 @pytest.fixture
 def wire(monkeypatch, tmp_path):
+    m = budget_module()
+    monkeypatch.setattr(m, "_BILLING_PROFILES", {
+        ("https://api.deepseek.com:443", "test-model"): m.BillingProfile(1400, 1024),
+        ("https://account.openai.azure.com:443", "model"): m.BillingProfile(1400, 1024),
+    })
     monkeypatch.setattr(gw, "_TELEMETRY_DB", tmp_path / "calls.db")
     monkeypatch.setattr(gw, "_telemetry_schema_ready", False)
     monkeypatch.setattr(gw, "LLM", dataclasses.replace(
@@ -87,7 +92,9 @@ def test_simultaneous_main_and_aux_cannot_both_spend_last_reservation(wire):
     assert len(calls) == 1
 
 
-def test_utf8_input_plus_output_bound_blocks_before_any_wire(wire):
+def test_context_reservation_blocks_before_wire_when_cap_is_too_small(wire, monkeypatch):
+    monkeypatch.setattr(gw, "LLM", dataclasses.replace(
+        gw.LLM, deepseek_primary_monthly_token_cap=1399))
     calls = []
     p = provider(lambda r: calls.append(r) or httpx.Response(
         200, headers={"content-type": "text/event-stream"}, content=sse()))
@@ -297,7 +304,7 @@ def test_budget_denial_does_not_poison_next_small_request_or_provider_health(wir
 
     monkeypatch.setattr(gw.AIGateway, "_try_provider", local)
     for _ in range(2):
-        assert asyncio.run(gateway.generate("س" * 1000, options={"num_predict": 100})).text == "local"
+        assert asyncio.run(gateway.generate("س" * 1000, options={"num_predict": 1025})).text == "local"
     assert not gw.primary_breaker.is_open(), "budget denial is not a provider outage"
     assert p.generate("سؤال", options={"num_predict": 100})["response"] == "answer"
     assert len(calls) == 1
@@ -411,3 +418,36 @@ def test_unverified_input_billing_contract_is_denied_before_any_paid_wire(wire):
     with pytest.raises(RuntimeError, match="budget|billing|bound"):
         unverified.generate("سؤال", options={"num_predict": 100})
     assert calls == [], "unverified billing cannot authorize the first paid wire"
+
+
+def test_unknown_billing_profile_stays_on_local_chain(wire, monkeypatch):
+    calls = []
+    gateway = gw.AIGateway.__new__(gw.AIGateway)
+    gateway.provider = provider(lambda r: calls.append(r) or httpx.Response(500))
+    gateway.provider.model = 'unverified-input-billing-model'
+    gateway.primary_model = gateway.model = gateway.provider.model
+
+    async def local(self, *args, **kwargs):
+        return gw.LLMResult(text='local answer', model='local', latency_ms=1)
+
+    monkeypatch.setattr(gw.AIGateway, '_try_provider', local)
+    assert asyncio.run(gateway.generate('سؤال')).text == 'local answer'
+    assert calls == []
+    assert not gw.primary_breaker.is_open()
+
+
+def test_model_switch_rechecks_profile_before_second_wire(wire, monkeypatch):
+    monkeypatch.setattr(gw, 'LLM', dataclasses.replace(
+        gw.LLM, deepseek_primary_monthly_token_cap=10000))
+    monkeypatch.setattr(gw, '_MODEL_SWITCHED', {})
+    calls = []
+
+    def rejected(request):
+        calls.append(request)
+        return httpx.Response(400, json={'error': {'message': 'model not found'}})
+
+    p = provider(rejected)
+    p.fallback_model = 'unverified-input-billing-model'
+    with pytest.raises(RuntimeError, match='profile'):
+        p.generate('سؤال', options={'num_predict': 100})
+    assert len(calls) == 1

@@ -2,7 +2,6 @@
 from __future__ import annotations
 
 import contextlib
-import json
 import logging
 import sqlite3
 import uuid
@@ -27,18 +26,47 @@ def _count(value) -> bool:
     return type(value) is int and 0 <= value <= _MAX_INTEGER
 
 
-def upper_token_bound(messages: list[dict], max_output_tokens: int) -> int:
-    """UTF-8 message bytes + conservative framing + enforced output ceiling.
+@dataclass(frozen=True)
+class BillingProfile:
+    """Documented input+generated context ceiling, not a billing prediction."""
 
-    Assumes a byte-backed tokenizer and provider-enforced max_tokens. Do not
-    treat this admission bound as proof of an arbitrary provider's invoice.
+    context_tokens: int
+    max_output_tokens: int
+
+
+# Verified 2026-10-07: api-docs.deepseek.com/quick_start/pricing and
+# api-docs.deepseek.com/api/create-chat-completion. 1M rounded up to 2**20.
+# Legacy aliases, Azure deployment names and compatible hosts are not verified.
+_BILLING_PROFILES = {
+    ("https://api.deepseek.com:443", model): BillingProfile(1048576, 393216)
+    for model in ("deepseek-flash", "deepseek-v4-pro")
+}
+
+
+def upper_token_bound(messages: list[dict], max_output_tokens: int, *,
+                      endpoint: str, model: str) -> int:
+    """Reserve the entire verified context, independent of input tokenization.
+
+    The profile requires the actual max_tokens parameter on every wire attempt.
+    Provider violations of its documented contract are outside this guarantee.
     """
-    if not _count(max_output_tokens) or not 0 < max_output_tokens <= (1 << 31) - 1:
+    from urllib.parse import urlsplit
+
+    if not _count(max_output_tokens) or max_output_tokens == 0:
         raise BudgetDenied("cloud budget requires a bounded positive max_tokens")
-    amount = len(json.dumps(messages, ensure_ascii=False).encode("utf-8")) + 1024 + max_output_tokens
-    if amount > _MAX_INTEGER:
-        raise BudgetDenied("cloud budget reservation overflow")
-    return amount
+    try:
+        parsed = urlsplit(endpoint)
+        port = parsed.port or (443 if parsed.scheme == "https" else 80)
+        origin = f"{parsed.scheme}://{(parsed.hostname or '').lower()}:{port}"
+    except ValueError as exc:
+        raise BudgetDenied("cloud budget invalid billing profile endpoint") from exc
+    profile = _BILLING_PROFILES.get((origin, model))
+    if (profile is None or parsed.path.rstrip('/') not in ("", "/v1")
+            or parsed.query or parsed.fragment or parsed.username or parsed.password):
+        raise BudgetDenied("cloud budget unverified provider/model billing profile")
+    if max_output_tokens > profile.max_output_tokens:
+        raise BudgetDenied("cloud budget output limit exceeds verified profile")
+    return profile.context_tokens
 
 
 @dataclass(frozen=True)

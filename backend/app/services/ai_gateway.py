@@ -370,7 +370,8 @@ class OpenAICompatProvider:
     def generate(self, prompt: str, *, options: dict) -> dict:
         messages = [{"role": "user", "content": prompt}]
         output_cap = options.get("num_predict", 1024)
-        charge = _reserve_wire_budget(self._budget_endpoint, self.name, messages, output_cap)
+        charge = _reserve_wire_budget(self._budget_endpoint, self.name, messages, output_cap,
+                                     model=self.model)
         try:
             r = self._client.chat.completions.create(
                 model=self.model,
@@ -397,7 +398,8 @@ class OpenAICompatProvider:
     def stream(self, prompt: str, *, options: dict) -> Iterator[dict]:
         messages = [{"role": "user", "content": prompt}]
         output_cap = options.get("num_predict", 1024)
-        charge = _reserve_wire_budget(self._budget_endpoint, self.name, messages, output_cap)
+        charge = _reserve_wire_budget(self._budget_endpoint, self.name, messages, output_cap,
+                                     model=self.model)
         try:
             stream = self._client.chat.completions.create(
                 model=self.model,
@@ -696,7 +698,8 @@ class OpenAIChatProvider:
             payload = self._payload(prompt, options)
             try:
                 charge = _reserve_wire_budget(self._base, self.name,
-                                              payload["messages"], payload["max_tokens"])
+                                              payload["messages"], payload["max_tokens"],
+                                              model=payload["model"])
             except BudgetDenied as exc:
                 if state["attempted"]:
                     exc.usage = (None, None)  # earlier retry's billing remains unknown
@@ -966,11 +969,11 @@ def primary_budget_available(provider_name: str) -> bool:
     return True
 
 
-def _reserve_wire_budget(endpoint: str, provider_name: str, messages: list[dict], output_cap: int):
+def _reserve_wire_budget(endpoint: str, provider_name: str, messages: list[dict],
+                         output_cap: int, *, model: str):
     """Authorize one physical wire attempt, never a whole gateway operation."""
     from urllib.parse import urlsplit
 
-    bound = upper_token_bound(messages, output_cap)
     parsed = urlsplit(endpoint)
     if parsed.scheme not in ("http", "https") or not parsed.hostname:
         raise BudgetDenied("cloud budget cannot identify the provider wallet")
@@ -985,6 +988,7 @@ def _reserve_wire_budget(endpoint: str, provider_name: str, messages: list[dict]
         raise BudgetDenied("cloud budget invalid monthly cap")
     if cap == 0 and primary:
         return None  # explicit documented unlimited opt-out, not a hard-cap mode
+    bound = upper_token_bound(messages, output_cap, endpoint=endpoint, model=model)
     # Old telemetry has no endpoint/account identifier. It cannot prove that
     # these aliases spent from different wallets, so conservatively import all.
     aliases = tuple(sorted({"azure_deepseek", "deepseek", "deepseek_aux",
