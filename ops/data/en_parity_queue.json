@@ -153,24 +153,6 @@
       "content_sha256": "905aa31b8730ec6962d79fff874cdb87b110cbb41185e1ab44798d27e9421c8f",
       "queued_on": "2026-10-04"
     },
-    "lesson_13-15_cyber_digital_maturity_02": {
-      "category": "awaiting-review",
-      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
-      "content_sha256": "8e355e334bd1a55a3b0dc3aaf7344e27ab8e7b789828f83533503f02eb0faa2e",
-      "queued_on": "2026-10-04",
-      "english_authors": [
-        "claude-opus-5.5"
-      ]
-    },
-    "lesson_13-15_cyber_digital_maturity_03": {
-      "category": "awaiting-review",
-      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
-      "content_sha256": "f3a2154b65578dc5ec441f91adc473d0e8d9f164bec9efc0f09cbc8c4c3e0a31",
-      "queued_on": "2026-10-04",
-      "english_authors": [
-        "claude-opus-5.5"
-      ]
-    },
     "lesson_13-15_islamic_mockery_01": {
       "category": "awaiting-review",
       "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
@@ -179,39 +161,6 @@
       "english_authors": [
         "claude-opus-5.5"
       ]
-    },
-    "lesson_16-18_cyber_digital_professional_02": {
-      "category": "awaiting-review",
-      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
-      "content_sha256": "d55c2125566db52da040a82c6c6960f73344602bb96c7f0eff81fa6b468e4ccb",
-      "queued_on": "2026-10-04",
-      "english_authors": [
-        "claude-opus-5.5"
-      ]
-    },
-    "lesson_4-6_aqeedah_seeds_02": {
-      "category": "awaiting-review",
-      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
-      "content_sha256": "f561dc935cac1de8295daf0a9649dfd2b32eaf60fb69ce5a39484079dbd26315",
-      "queued_on": "2026-10-04",
-      "english_authors": [
-        "claude-opus-5.5"
-      ]
-    },
-    "lesson_4-6_aqeedah_seeds_03": {
-      "category": "awaiting-review",
-      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
-      "content_sha256": "4c0fa55bb1a00263f17bc3ffad5e9017742c7a8b0450e47ea5a2eed95819fd21",
-      "queued_on": "2026-10-04",
-      "english_authors": [
-        "claude-opus-5.5"
-      ]
-    },
-    "lesson_4-6_aqeedah_seeds_04": {
-      "category": "awaiting-review",
-      "reason": "Arabic grammar fix on content/p1-deep-paths: «وعلّميه يقول» → «وعلّميه أن يقول» in try_this. The English is unchanged and still matches; its 2026-10-04 stamp went stale only because the Arabic changed. Re-review after the Ollama weekly reset (key capped; Claude may not stamp).",
-      "content_sha256": "901ccf04d04cfa600cdb2270c3c81b74fddef4fa9b93ef13a1e42b9584ab3471",
-      "queued_on": "2026-10-04"
     },
     "lesson_4-6_development_positive_parenting_02": {
       "category": "awaiting-review",
@@ -231,37 +180,10 @@
         "claude-opus-5.5"
       ]
     },
-    "lesson_7-9_aqeedah_fundamentals_01": {
-      "category": "awaiting-review",
-      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
-      "content_sha256": "141bd1295c45146b56264d8994276d789f4cf72b14247fd2d6ac66de588f25d1",
-      "queued_on": "2026-10-04",
-      "english_authors": [
-        "claude-opus-5.5"
-      ]
-    },
     "lesson_7-9_aqeedah_fundamentals_04": {
       "category": "awaiting-review",
       "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system · Arabic corrected 2026-10-04 per the PR #20 review · English corrected by Claude 2026-10-04 per the PR #20 review",
       "content_sha256": "c0698c18b3ad33155e445cb79d5a244383a7d2f1fca054fa3673ebc58c464f31",
-      "queued_on": "2026-10-04",
-      "english_authors": [
-        "claude-opus-5.5"
-      ]
-    },
-    "lesson_prenatal-1_infant_pregnancy_03": {
-      "category": "awaiting-review",
-      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
-      "content_sha256": "93003567117ec779842f92f69caa6b9bf1c1f8e1f8c2c5bddca93a251ab63338",
-      "queued_on": "2026-10-04",
-      "english_authors": [
-        "claude-opus-5.5"
-      ]
-    },
-    "lesson_prenatal-1_infant_pregnancy_04": {
-      "category": "awaiting-review",
-      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
-      "content_sha256": "f8b33255c308abd00384f5e1924a772fac3c770e0b58c978b7f5171f1ec235d0",
       "queued_on": "2026-10-04",
       "english_authors": [
         "claude-opus-5.5"
@@ -289,24 +211,6 @@
       "category": "awaiting-review",
       "reason": "Phase 0 honest labels (content/p1-deep-paths): the description promised a duration its lessons cannot keep («لمدة 10/12/14 يومًا» / «10/12/14-day»), so that phrase was removed from the Arabic and the English together and nothing else changed (the prenatal path keeps #20's safe-sleep wording, without the 5 S's). The 2026-10-04 stamp covered the old text. Re-review after the Ollama weekly reset; Claude edited the English, so Claude may not stamp it.",
       "content_sha256": "5c4ff031103d0ddde30d611a3b6ce715b4009d264d6722533bd4174aeefce8db",
-      "queued_on": "2026-10-04",
-      "english_authors": [
-        "claude-opus-5-5"
-      ]
-    },
-    "path_0-3_islamic_parenting_attachment": {
-      "category": "awaiting-review",
-      "reason": "Phase 0 honest labels (content/p1-deep-paths): the description promised a duration its lessons cannot keep («لمدة 10/12/14 يومًا» / «10/12/14-day»), so that phrase was removed from the Arabic and the English together and nothing else changed (the prenatal path keeps #20's safe-sleep wording, without the 5 S's). The 2026-10-04 stamp covered the old text. Re-review after the Ollama weekly reset; Claude edited the English, so Claude may not stamp it.",
-      "content_sha256": "35122539b68ca6448c1d26de8765f98256518177451596ed6824e9b4d3718a54",
-      "queued_on": "2026-10-04",
-      "english_authors": [
-        "claude-opus-5-5"
-      ]
-    },
-    "path_4-6_islamic_parenting_adab": {
-      "category": "awaiting-review",
-      "reason": "Phase 0 honest labels (content/p1-deep-paths): the description promised a duration its lessons cannot keep («لمدة 10/12/14 يومًا» / «10/12/14-day»), so that phrase was removed from the Arabic and the English together and nothing else changed (the prenatal path keeps #20's safe-sleep wording, without the 5 S's). The 2026-10-04 stamp covered the old text. Re-review after the Ollama weekly reset; Claude edited the English, so Claude may not stamp it.",
-      "content_sha256": "2a39ac0ab0d3ce9464e57cdcd6ae2e06234e5ece440e8d05a7f6acdd12fa47a0",
       "queued_on": "2026-10-04",
       "english_authors": [
         "claude-opus-5-5"
