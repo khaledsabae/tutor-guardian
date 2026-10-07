@@ -25,13 +25,13 @@
     "source_author": "عماد أحمد عبدالعظيم"
   },
   "source_url": "https://www.alukah.net/Books/Files/Book_17337/BookFile/brotherandboys.pdf#page=92",
-  "source_note": "DRAFT source recovery, 2026-10-07. Selected primary PDF excerpt; provenance and exact local citation checks: ops/data/kb_fidelity/source_recovery/isl-3d476538.json. No scholar, human, model or publication approval.",
+  "source_note": "Primary-source recovery evidence: ops/data/kb_fidelity/source_recovery/isl-3d476538.json. Actual English parity approval is recorded at its exact hash in three-units-parity-2026-10-07.json. Scholar/source-content and human approval remain pending.",
   "translation": {
     "needs_scholar_review": true,
     "review_verdict": "pending",
     "review_defects": [],
     "approved_by": null,
     "draft_status": "draft",
-    "source_recovery_note": "Source-faithful draft; no model review or approval."
+    "source_recovery_note": "Source-faithful historical draft. English parity was independently approved by DeepSeek and GLM; this is not scholar/source-content or human approval."
   }
 }
