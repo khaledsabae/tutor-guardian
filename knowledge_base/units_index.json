@@ -1,10 +1,10 @@
 {
-  "total_units": 1389,
+  "total_units": 1390,
   "generated_at": "2026-10-07T07:31:39.565264+00:00",
   "by_domain": {
     "medical": 361,
     "cyber": 280,
-    "islamic_parenting": 581,
+    "islamic_parenting": 582,
     "development": 133,
     "app_help": 12,
     "aqeedah": 22
@@ -16677,6 +16677,18 @@
       "behavior_type": "التعامل الهادئ مع أسئلة الطفل عن الله",
       "needs_ocr": false,
       "size_chars": 293
+    },
+    {
+      "id": "isl-quran-halal-ref-7-157-16-43",
+      "domain": "islamic_parenting",
+      "title": "الطيبات والخبائث وسؤال أهل الذكر — نص قرآني",
+      "source_file": "mobile/assets/data/quran.json",
+      "language": "ar",
+      "original_age_group": "7-9",
+      "normalized_age_group": "7-9",
+      "behavior_type": "مرجع_قرآني",
+      "needs_ocr": false,
+      "size_chars": 626
     }
   ]
 }

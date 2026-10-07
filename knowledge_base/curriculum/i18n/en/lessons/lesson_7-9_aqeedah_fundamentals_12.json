@@ -1,50 +1,47 @@
 {
   "id": "lesson_7-9_aqeedah_fundamentals_12",
   "path_id": "path_7-9_aqeedah_fundamentals",
-  "title": "Halal and Haram: Why Has Allah Forbidden Things?",
+  "title": "Halal and Haram: How Do We Ask When We Don't Know the Ruling?",
   "age_group": "7-9",
   "domain": "aqeedah",
   "unit_ids": [
-    "gap-isl-haram-halal-q-01",
-    "isl-c8183443"
+    "isl-quran-halal-ref-7-157-16-43"
   ],
-  "summary": "At seven and eight your child is no longer satisfied with «this is haram (forbidden)»; they want to know why. It is a legitimate question that opens a door for you to teach a great principle: Allah is merciful to us; He has permitted many good things. His prohibitions have wisdoms, some of which we may understand and some of which we may not; preventing harm to us and others can be among these wisdoms.\n\nStart with the abundance of what is permitted before the little that is forbidden: «Look how much Allah has permitted us: fruit, toys, friends, trips.» Then give clear examples that all Muslims know, with a reason they can grasp: lying is haram because it destroys trust between people; stealing is haram because it wrongs the owner; hurting others is haram because Allah loves justice and mercy. So they understand that the haram is not a meaningless restriction but protection for them and for others.\n\nTeach them too that we may not know the wisdom behind some things, and that we obey Allah in them because we trust His mercy and knowledge — just as they trust you when you stop them from something whose danger they can't see. This trust is part of faith.\n\nWhen they ask about a matter people differ on, or one whose ruling you don't know for certain, don't answer from yourself. Say: «This is a question we ask a trusted scholar about», and ask a body known for its knowledge together. This way they learn that religion has its people of knowledge, and that rulings are not taken from just anyone. And avoid calling every small mistake «haram» to frighten them; exaggeration weakens the weight of the word and fills their heart with anxiety instead of understanding.",
-  "try_this": "Today: In a calm sitting, ask your child to list with you ten lovely things Allah has permitted for us, then mention one thing Allah has forbidden, with its reason in one short sentence they can understand.",
+  "summary": "At this age, your child may ask: why is this permitted and that forbidden? Start with a specific reference instead of inventing an explanation for every ruling. Our discussion of what is permitted and prohibited refers here to wholesome and impure things in al-A'raf 7:157. Allah says: ﴿ٱلَّذِينَ يَتَّبِعُونَ ٱلرَّسُولَ ٱلنَّبِيَّ ٱلۡأُمِّيَّ ٱلَّذِي يَجِدُونَهُۥ مَكۡتُوبًا عِندَهُمۡ فِي ٱلتَّوۡرَىٰةِ وَٱلۡإِنجِيلِ يَأۡمُرُهُم بِٱلۡمَعۡرُوفِ وَيَنۡهَىٰهُمۡ عَنِ ٱلۡمُنكَرِ وَيُحِلُّ لَهُمُ ٱلطَّيِّبَٰتِ وَيُحَرِّمُ عَلَيۡهِمُ ٱلۡخَبَـٰٓئِثَ وَيَضَعُ عَنۡهُمۡ إِصۡرَهُمۡ وَٱلۡأَغۡلَٰلَ ٱلَّتِي كَانَتۡ عَلَيۡهِمۡۚ فَٱلَّذِينَ ءَامَنُواْ بِهِۦ وَعَزَّرُوهُ وَنَصَرُوهُ وَٱتَّبَعُواْ ٱلنُّورَ ٱلَّذِيٓ أُنزِلَ مَعَهُۥٓ أُوْلَـٰٓئِكَ هُمُ ٱلۡمُفۡلِحُونَ﴾ [Surah Al-A'raf, 7:157] This is a specific Qur'anic reference, not a list of detailed rulings for every food, toy or outing.\n\nSuggest a simple situation: your child asks about a new food or toy. Say: «Let's understand the question first: what is the food or toy, and what concerns you about it?» Write down the details. Do not decide a ruling from a name alone or guess the wisdom behind it. The aim is to help parent and child frame the question before seeking an answer.\n\nThe second Qur'anic reference is an-Nahl 16:43, concerning asking ahl adh-dhikr when one does not know, within a discussion of the messengers. Referring fiqh questions we cannot answer to people of knowledge is the application's own policy; the application issues no fatwas.\n\nIf you do not know the answer, say calmly: «I don't know the ruling; we will put the question to people of knowledge instead of my guessing.» Keep the question and its details, then note the answer and the body that supplied it so you know what to ask about if clarification is needed. Avoid calling every small mistake haram when you do not know the ruling. Being honest with your child about what you know and do not know is the suggested action here, instead of filling a gap in knowledge with an improvised answer.",
+  "try_this": "Today: Write down one question with your child about a real situation, its details and what you do not know about it. If you do not know the ruling, prepare the question for people of knowledge instead of guessing an answer.",
   "order": 12,
   "estimated_minutes": 3,
   "reflection_prompts": [
-    "When your child asks «why?» about a religious matter, do you have a calm answer, or do you settle for «because it's haram»?"
+    "When you do not know the ruling on something your child asks about, do you say so and prepare the question together for people of knowledge, or try to answer by guessing?"
   ],
   "warning_flags": [],
   "needs_professional_followup": false,
   "is_published": true,
   "version": "1.0.0",
-  "created_at": "2026-10-07T07:42:38",
-  "updated_at": "2026-10-07T07:42:38",
+  "created_at": "2026-10-07T09:22:49",
+  "updated_at": "2026-10-07T09:22:49",
   "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
   "language": "en",
   "source_language": "ar",
   "translation": {
-    "translator_model": "claude-opus-5-5",
+    "translator_model": "gpt-6",
     "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
     "scholar_signals": {
       "keyword": true,
       "quoted_arabic": true,
-      "reviewer_model": false
+      "reviewer_model": true
     },
     "review_verdict": "clean",
     "review_defects": [],
     "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
-    "revalidated_at": "2026-10-07T07:45:12+00:00",
+    "revalidated_at": "2026-10-07T09:24:44+00:00",
     "generated_by": "ops/tools/deepen_paths.py",
     "english_authors": [
       "claude-opus-5-5",
       "gpt-6"
     ],
-    "fixer_model": "gpt-6",
-    "fixed_at": "2026-10-07T07:42:59+00:00",
-    "manual_fix_note": "Narrow correction to the opening claim about the wisdom of prohibitions, matching the corrected Arabic; independently re-reviewed current draft by DeepSeek.",
+    "manual_fix_note": "Source-faithful rewrite by GPT-6; exact Quran quotation derived from guarded local corpus, referral is application policy.",
     "auto_review": {
       "reviewers": [
         "deepseek-v4-pro",
@@ -53,8 +50,8 @@
       "fixer": null,
       "rounds": 1,
       "prompt_version": "dfa8a5f39718",
-      "content_sha256": "b2560ea6290114bc4bb2e969c6163572133b83cf8e6651a7e782420da10ffeaf",
-      "reviewed_at": "2026-10-07T07:45:12+00:00",
+      "content_sha256": "c35b590e66df360e50d89248afef89eb32672b0bd87990314a998a24ea0c8bcf",
+      "reviewed_at": "2026-10-07T09:24:44+00:00",
       "residual_low": [],
       "adjudicated": [],
       "tool": "ops/tools/review_en_parity.py",

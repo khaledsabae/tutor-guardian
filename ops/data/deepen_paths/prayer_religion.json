@@ -265,7 +265,7 @@
         },
         {
           "title": "الحلال والحرام: لماذا نهانا الله؟",
-          "focus": "Explaining that Allah allows the good and forbids what harms us out of mercy; a few clear agreed examples (lying, stealing, hurting others); obeying with understanding; when he asks about a matter people differ on, the answer is «we ask a trustworthy scholar».",
+          "focus": "Use the exact verified Quran 7:157 text for the permitted/prohibited topic; cite 16:43 with its messenger context through the verified reference unit. Teach parents to frame an unanswered question. Referral is the application policy, not a fatwa or expert endorsement.",
           "keywords": [
             "الحلال",
             "الحرام",
@@ -273,7 +273,10 @@
             "الطاعة"
           ],
           "pin_units": [
-            "gap-isl-haram-halal-q-01"
+            "isl-quran-halal-ref-7-157-16-43"
+          ],
+          "bank": [
+            "v_007_157"
           ]
         }
       ]
