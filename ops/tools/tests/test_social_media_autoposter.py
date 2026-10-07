@@ -6,7 +6,7 @@ import os
 import tempfile
 from pathlib import Path
 import unittest
-from unittest.mock import patch
+from unittest.mock import Mock, patch
 
 ROOT = Path(__file__).resolve().parents[3]
 SPEC = importlib.util.spec_from_file_location('autoposter', ROOT / 'ops/tools/social_media_autoposter.py')
@@ -109,6 +109,86 @@ class CuratedSocialTipsTests(unittest.TestCase):
         with patch.object(poster, 'load_state', return_value={'last_posted_id': 14, 'history': []}), patch.object(poster, 'save_state') as save, patch.object(poster.requests, 'post', side_effect=AssertionError('network forbidden')), patch('sys.argv', ['autoposter', '--post-id', 'tip_7-9_001', '--dry-run']):
             poster.main()
         save.assert_not_called()
+
+
+class TelegramPayloadTests(unittest.TestCase):
+    def setUp(self):
+        self.tokens = patch.multiple(poster, TG_BOT_TOKEN='test-token', TG_CHANNEL_ID='test-channel')
+        self.tokens.start()
+        self.addCleanup(self.tokens.stop)
+        self.network = patch.object(poster.requests, 'post')
+        self.post = self.network.start()
+        self.addCleanup(self.network.stop)
+        self.response = Mock()
+        self.response.json.return_value = {'ok': True}
+        self.post.return_value = self.response
+
+    def assert_message(self, text):
+        self.post.assert_called_once_with(
+            'https://api.telegram.org/bottest-token/sendMessage',
+            data={'chat_id': 'test-channel', 'text': text, 'parse_mode': 'HTML'}, timeout=15)
+
+    def test_no_image_sends_exact_escaped_html_message(self):
+        text = poster.format_post_text({'category': '<عمر>&', 'text': '<script> & نص'})
+        self.assertIn('(&lt;عمر&gt;&amp;)', text)
+        self.assertIn('&lt;script&gt; &amp; نص', text)
+        self.assertTrue(poster.post_to_telegram(text, None))
+        self.assert_message(text)
+
+    def test_missing_image_sends_exact_message(self):
+        with tempfile.TemporaryDirectory() as directory:
+            self.assertTrue(poster.post_to_telegram('نصيحة', Path(directory) / 'missing.png'))
+        self.assert_message('نصيحة')
+
+    def test_photo_at_1024_has_exact_multipart_payload(self):
+        # Entities and wrapper markup do not count toward Telegram's parsed limit.
+        text = '<b>' + '&amp;' * 1024 + '</b>'
+        with tempfile.TemporaryDirectory() as directory:
+            image = Path(directory) / 'photo.png'
+            image.write_bytes(b'image-bytes')
+            def inspect(url, **kwargs):
+                self.assertEqual(url, 'https://api.telegram.org/bottest-token/sendPhoto')
+                self.assertEqual(set(kwargs), {'files', 'data', 'timeout'})
+                self.assertEqual(kwargs['timeout'], 15)
+                self.assertEqual(kwargs['data'], {'chat_id': 'test-channel', 'caption': text, 'parse_mode': 'HTML'})
+                self.assertEqual(set(kwargs['files']), {'photo'})
+                self.assertEqual(kwargs['files']['photo'].read(), b'image-bytes')
+                return self.response
+            self.post.side_effect = inspect
+            self.assertTrue(poster.post_to_telegram(text, image))
+        self.assertEqual(self.post.call_count, 1)
+
+    def test_caption_over_1024_uses_message_without_truncation(self):
+        text = 'ن' * 1025
+        with tempfile.TemporaryDirectory() as directory:
+            image = Path(directory) / 'photo.png'
+            image.write_bytes(b'image')
+            self.assertTrue(poster.post_to_telegram(text, image))
+        self.assert_message(text)
+
+    def test_message_at_4096_is_sent_intact(self):
+        text = '<b>' + 'ن' * 4096 + '</b>'
+        self.assertTrue(poster.post_to_telegram(text, None))
+        self.assert_message(text)
+
+    def test_message_over_4096_is_rejected_without_network(self):
+        self.assertFalse(poster.post_to_telegram('ن' * 4097, None))
+        self.post.assert_not_called()
+
+    def test_astral_characters_use_conservative_utf16_limit(self):
+        self.assertFalse(poster.post_to_telegram('🤍' * 2049, None))
+        self.post.assert_not_called()
+
+    def test_api_error_is_not_success(self):
+        self.response.json.return_value = {'ok': False, 'description': 'rejected'}
+        self.assertFalse(poster.post_to_telegram('نصيحة', None))
+
+    def test_all_curated_formatted_captions_fit_telegram_photo_limit(self):
+        # Independent calculation, including escaping, against the full real bank.
+        import html
+        lengths = [(t['id'], len(html.unescape(poster.format_post_text(t).replace('<b>', '').replace('</b>', '')).encode('utf-16-le')) // 2) for t in poster.parse_tips()]
+        self.assertEqual(len(lengths), 220)
+        self.assertLessEqual(max(n for _, n in lengths), 1024)
 
 
 if __name__ == '__main__':

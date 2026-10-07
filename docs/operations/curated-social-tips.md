@@ -15,7 +15,9 @@ or renumbering is needed. Its integer `last_posted_id` and every existing histor
 entry are retained. The first successful curated post adds
 `curated_last_posted_id` and appends a history entry with the source string ID.
 The two ID namespaces are distinct; a legacy number is never interpreted as an
-index into the curated bank. With only legacy history, curated selection begins
+index into the curated bank or reused as a curated ID. Curated advice may
+semantically overlap legacy advice; retaining IDs prevents identity reuse, not
+semantic repetition across the two banks. With only legacy history, curated selection begins
 at the first stable ID. If a curated cursor is absent or removed from the bank,
 selection skips curated IDs already in history; if all are recorded, it stops
 instead of restarting. A valid curated cursor advances to the following ID and
@@ -34,8 +36,22 @@ was changed for this patch.
 Only existing generic graphics in `docs/marketing/launch_graphics/` are used:
 announcement for prenatal/infant/toddler, AI feature for ages 4–9, journey feature
 for ages 10–18. Never attach legacy text cards to curated text. Unknown age groups
-or missing graphics omit the image URL. Telegram's existing photo-only path
-skips posting without an image; Buffer receives text without an image asset.
+or missing graphics omit the image URL. Telegram uses `sendMessage` with the
+complete formatted HTML text when no image exists or the parsed caption exceeds
+1,024 units. Otherwise it uses `sendPhoto`. Source text and category are HTML
+escaped; the trusted bold heading is retained. Length is measured after parsing
+entities, conservatively in UTF-16 units. Messages over 4,096 units are rejected
+before any network call; tip text is never truncated. Telegram success requires
+both an HTTP success and `ok: true`. Buffer receives text without an image asset
+when the image is omitted.
+
+Correction verification: all 220 curated captions fit the photo limit. The
+longest, `tip_0-3_012`, is 421 HTML characters, 414 parsed characters, or 417
+parsed UTF-16 units. Mock-only exact payload tests cover `sendPhoto` multipart
+content, no-image/missing-image `sendMessage`, escaped source/category, the
+1,024 and 4,096 boundaries, astral characters, and Telegram API rejection.
+24 focused regressions plus one compatibility test passed with real exit 0.
+No Telegram or Buffer request was actually sent.
 
 Safe previews (no network calls or state writes):
 

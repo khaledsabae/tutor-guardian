@@ -7,6 +7,7 @@ social_media_autoposter.py — أداة النشر التلقائي لمنشور
 import os
 import sys
 import json
+import html
 import argparse
 from pathlib import Path
 from datetime import datetime, timezone
@@ -254,30 +255,36 @@ def post_to_buffer(profiles: list[dict], text: str, image_url: str, now: bool) -
     return False
 
 def post_to_telegram(text: str, image_path: Path | None) -> bool:
-    """إرسال النصيحة مع الصورة مباشرة إلى قناة التليجرام"""
+    """Use a photo caption when it fits; otherwise send intact HTML text."""
     if not TG_BOT_TOKEN or not TG_CHANNEL_ID:
         print("⚠️ TELEGRAM_BOT_TOKEN أو TELEGRAM_CHANNEL_ID غير مضبوط في ملف .env")
         return False
-    
-    url = f"https://api.telegram.org/bot{TG_BOT_TOKEN}/sendPhoto"
-    
-    # إرسال الصورة كملف محلي
-    if image_path is None or not image_path.exists():
-        print(f"❌ لم يتم العثور على ملف الصورة محلياً في: {image_path}")
+
+    # format_post_text emits only trusted <b> wrappers; source/category are
+    # escaped. Telegram limits apply after entity parsing. Count UTF-16 units
+    # conservatively so astral characters cannot exceed the platform limits.
+    visible_text = html.unescape(text.replace("<b>", "").replace("</b>", ""))
+    text_length = len(visible_text.encode("utf-16-le")) // 2
+    if text_length > 4096:
+        print("❌ نص Telegram يتجاوز 4096؛ لن يُرسل أو يُقتطع.")
         return False
-        
+    use_photo = image_path is not None and image_path.is_file() and text_length <= 1024
+    method = "sendPhoto" if use_photo else "sendMessage"
+    url = f"https://api.telegram.org/bot{TG_BOT_TOKEN}/{method}"
+    data = {"chat_id": TG_CHANNEL_ID, "parse_mode": "HTML",
+            "caption" if use_photo else "text": text}
     try:
-        with open(image_path, "rb") as photo_file:
-            files = {"photo": photo_file}
-            data = {
-                "chat_id": TG_CHANNEL_ID,
-                "caption": text,
-                "parse_mode": "HTML"
-            }
-            resp = requests.post(url, files=files, data=data, timeout=15)
-            resp.raise_for_status()
-            print("✅ تم النشر في قناة التليجرام بنجاح.")
-            return True
+        if use_photo:
+            with open(image_path, "rb") as photo_file:
+                resp = requests.post(url, files={"photo": photo_file}, data=data, timeout=15)
+        else:
+            resp = requests.post(url, data=data, timeout=15)
+        resp.raise_for_status()
+        if resp.json().get("ok") is not True:
+            print("❌ رفض Telegram المنشور.")
+            return False
+        print("✅ تم النشر في قناة التليجرام بنجاح.")
+        return True
     except Exception as e:
         print(f"❌ فشل النشر في تليجرام: {e}")
         if hasattr(e, 'response') and e.response is not None:
@@ -290,8 +297,8 @@ def format_post_text(tip: dict) -> str:
     store_link = "حمّل «المربّي» مجانًا على Google Play 🤍\n👉 https://play.google.com/store/apps/details?id=com.alsaba.almorabbi"
     
     formatted = (
-        f"💡 <b>نصيحة اليوم التربوية ({tip['category']}):</b>\n\n"
-        f"{tip['text']}\n\n"
+        f"💡 <b>نصيحة اليوم التربوية ({html.escape(tip['category'])}):</b>\n\n"
+        f"{html.escape(tip['text'])}\n\n"
         f"{store_link}\n\n"
         f"{hashtags}"
     )
