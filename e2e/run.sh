@@ -7,7 +7,7 @@
 #   E2E_OUT   dir for everything uploaded as artifacts
 #
 # Two install lineages, each = one device_id + one child named $CHILD_NAME:
-#   fresh    PR head, fresh install, Arabic: eight checkpoints
+#   fresh    PR head, fresh install, Arabic: nine checkpoints
 #   upgrade  baseline build, English onboarding → restart (control) →
 #            `adb install -r` PR head
 # A failed checkpoint does not stop the next one (each starts by returning to
@@ -57,7 +57,13 @@ adb logcat -v threadtime > "$OUT/logcat/logcat.txt" 2>&1 &
 LOGCAT_PID=$!
 trap 'kill "$LOGCAT_PID" 2>/dev/null || true' EXIT
 
-l10n_for() { python3 "$E2E/e2e_tool.py" l10n --arb-dir "$APKS/$1/l10n" --out "$FLOWS/common/l10n.js"; }
+l10n_for() {
+  if ! python3 "$E2E/e2e_tool.py" l10n --arb-dir "$APKS/$1/l10n" --out "$FLOWS/common/l10n.js"; then
+    echo "::error::selector generation failed for $1"
+    FAILED=1
+    return 1
+  fi
+}
 
 pkg_field() { adb shell dumpsys package "$PKG" | tr -d '\r' | grep -m1 -oE "$1=[^ ]+( [0-9:]+)?" | cut -d= -f2-; }
 
@@ -107,7 +113,7 @@ install_fresh() {  # variant
 # One process from onboarding through 06 (no restarts), so the checkpoints that
 # need the child do not depend on the identity surviving a cold start; 07/08
 # then restart and check exactly that.
-FRESH=(02_today_lesson 03_assistant 04_child_mode 05_dark_mode 06_english 07_cold_start 08_child_survives_restart)
+FRESH=(02_today_lesson 03_assistant 04_child_mode 05_dark_mode 06_english 07_cold_start 08_child_survives_restart 09_programs)
 if install_fresh head && l10n_for head \
    && run_flow gate fresh 01_onboarding fresh/01_onboarding.yaml -e UI_LANG=ar; then
   for f in "${FRESH[@]}"; do
@@ -116,11 +122,6 @@ if install_fresh head && l10n_for head \
 else
   for f in "${FRESH[@]}"; do skip fresh "$f" "onboarding failed"; done
 fi
-# fresh/09_programs is written but not run yet: the app hides the programs
-# while production answers 404 to GET /api/programs (API in PR #32). The TODO
-# at the top of the flow says how to turn it on once that is deployed.
-skip fresh 09_programs "disabled until the programs API (PR #32) is live in production"
-
 # ── lineage 2: baseline → install -r PR head (English) ──────────────────
 UPGRADE=(02_baseline_restart 03_after_upgrade 04_child_kept)
 if install_fresh baseline && l10n_for baseline \
@@ -139,12 +140,18 @@ if install_fresh baseline && l10n_for baseline \
       echo "::error::install -r did not upgrade in place (firstInstallTime changed) — app data was not kept"
       FAILED=1
     fi
-    l10n_for head
-    run_flow gate upgrade 03_after_upgrade upgrade/03_after_upgrade.yaml -e UI_LANG=en || true
-    if [ "$baseline_kept" = yes ]; then
-      run_flow gate upgrade 04_child_kept upgrade/04_child_kept.yaml -e UI_LANG=en || true
+    if ! l10n_for head; then
+      echo "::error::head selector generation failed after install -r"
+      FAILED=1
+      skip upgrade 03_after_upgrade "head selector generation failed"
+      skip upgrade 04_child_kept "head selector generation failed"
     else
-      skip upgrade 04_child_kept "baseline lost its own child on restart (control 02) — not attributable to the upgrade"
+      run_flow gate upgrade 03_after_upgrade upgrade/03_after_upgrade.yaml -e UI_LANG=en || true
+      if [ "$baseline_kept" = yes ]; then
+        run_flow gate upgrade 04_child_kept upgrade/04_child_kept.yaml -e UI_LANG=en || true
+      else
+        skip upgrade 04_child_kept "baseline lost its own child on restart (control 02) — not attributable to the upgrade"
+      fi
     fi
   else
     echo "::error::adb install -r of the head APK over the baseline failed (signature or downgrade?)"

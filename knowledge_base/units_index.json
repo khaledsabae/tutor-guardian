@@ -1,11 +1,11 @@
 {
-  "total_units": 1380,
-  "generated_at": "2026-10-05T03:27:22.034986+00:00",
+  "total_units": 1384,
+  "generated_at": "2026-10-05T04:55:31.325561+00:00",
   "by_domain": {
-    "medical": 355,
+    "medical": 358,
     "cyber": 280,
     "islamic_parenting": 581,
-    "development": 131,
+    "development": 132,
     "app_help": 12,
     "aqeedah": 21
   },
@@ -5385,6 +5385,18 @@
       "behavior_type": "التكيف المدرسي",
       "needs_ocr": false,
       "size_chars": 1816
+    },
+    {
+      "id": "dev-7562f817",
+      "domain": "development",
+      "title": "البلوغ عند الأولاد: علاماته وأعماره الطبيعية، وكيف يتحدث الأ",
+      "source_file": "",
+      "language": "ar",
+      "original_age_group": "10-12",
+      "normalized_age_group": "10-12",
+      "behavior_type": "بلوغ الأولاد — العلامات والتوقيت وحديث الأب مع ابنه",
+      "needs_ocr": false,
+      "size_chars": 2572
     },
     {
       "id": "dev-77d7ab2f",
@@ -13679,6 +13691,18 @@
       "size_chars": 1772
     },
     {
+      "id": "med-360b9041",
+      "domain": "medical",
+      "title": "البلوغ المبكر والمتأخر عند الأولاد والبنات: متى نراجع الطبيب",
+      "source_file": "",
+      "language": "ar",
+      "original_age_group": "10-12",
+      "normalized_age_group": "10-12",
+      "behavior_type": "توقيت البلوغ — المبكر والمتأخر ومتى يُراجَع الطبيب",
+      "needs_ocr": false,
+      "size_chars": 2649
+    },
+    {
       "id": "med-391fed72",
       "domain": "medical",
       "title": "أهمية التدخل المبكر ومراعاة مراحل النمو",
@@ -14409,6 +14433,18 @@
       "behavior_type": "تخطيط سياسات الصحة النفسية",
       "needs_ocr": false,
       "size_chars": 1770
+    },
+    {
+      "id": "med-80a3871c",
+      "domain": "medical",
+      "title": "صيام الطفل: علامات الجفاف، ومتى يُفطر فورًا، ومتى نطلب الإسع",
+      "source_file": "",
+      "language": "ar",
+      "original_age_group": "10-12",
+      "normalized_age_group": "10-12",
+      "behavior_type": "صيام الأطفال — الجفاف وعلامات الإفطار الفوري والطوارئ",
+      "needs_ocr": false,
+      "size_chars": 2902
     },
     {
       "id": "med-81dee4c8",
@@ -15957,6 +15993,18 @@
       "behavior_type": "سياسات الصحة النفسية",
       "needs_ocr": false,
       "size_chars": 1768
+    },
+    {
+      "id": "med-f8cc198a",
+      "domain": "medical",
+      "title": "الدورة الشهرية في سنواتها الأولى: ما الطبيعي؟ ومتى تحتاج الب",
+      "source_file": "",
+      "language": "ar",
+      "original_age_group": "13-15",
+      "normalized_age_group": "13-15",
+      "behavior_type": "الدورة الشهرية في أول سنوات البلوغ — الطبيعي وعلامات الخطر",
+      "needs_ocr": false,
+      "size_chars": 2471
     },
     {
       "id": "med-f9832e73",

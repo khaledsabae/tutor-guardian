@@ -27,9 +27,9 @@ on:
         options: [internal, alpha, beta, production]
         default: internal
       notes:
-        description: "Release notes (Arabic)"
+        description: "Release notes override (Arabic; leave empty for committed Arabic/English notes)"
         type: string
-        default: "تحسينات في الأمان والأداء وتجربة المحادثة"
+        default: ""
       rollout:
         description: "Production rollout fraction (0.01–1.0; ignored for other tracks)"
         type: string
@@ -127,12 +127,40 @@ jobs:
           ROLLOUT: ${{ inputs.rollout }}
         run: |
           umask 077
+          # Explicit notes retain the legacy Arabic override; otherwise require
+          # notes for the exact pubspec version, never the latest or a fallback.
+          if [ -n "$NOTES" ]; then
+            notes_args=(--notes "$NOTES")
+          else
+            NOTES_FILE=$(python3 - <<'PYTHON'
+          from pathlib import Path
+          import re
+          import sys
+
+          versions = [line.partition(":")[2].partition("#")[0].strip()
+                      for line in Path("mobile/pubspec.yaml").read_text(encoding="utf-8").splitlines()
+                      if line.startswith("version:")]
+          if len(versions) != 1:
+              sys.exit("Expected exactly one version in mobile/pubspec.yaml")
+          version = versions[0]
+          if len(version) >= 2 and version[0] in ("'", '"') and version[-1] == version[0]:
+              version = version[1:-1]
+          if not re.fullmatch(r"[0-9]+\.[0-9]+\.[0-9]+(?:-[0-9A-Za-z.-]+)?\+[0-9]+", version):
+              sys.exit("Invalid release version in mobile/pubspec.yaml")
+          notes_file = Path("docs/release_notes") / f"{version}.json"
+          if not notes_file.is_file():
+              sys.exit(f"Missing release notes: {notes_file}. Commit matching notes or supply an explicit notes override.")
+          print(notes_file.as_posix())
+          PYTHON
+            )
+            notes_args=(--notes-file "$NOTES_FILE")
+          fi
           SA="$RUNNER_TEMP/play_sa.json"
           printf '%s' "$PLAY_SERVICE_ACCOUNT_JSON" > "$SA"
           python3 -m pip install --quiet google-api-python-client google-auth httplib2
           python3 scripts/play_upload.py \
             --track "$TRACK" \
-            --notes "$NOTES" \
+            "${notes_args[@]}" \
             --rollout "$ROLLOUT" \
             --aab mobile/build/app/outputs/bundle/release/app-release.aab \
             --sa "$SA"

@@ -8,7 +8,7 @@ overwrote cards tip_1…tip_12: tip_11.png showed «ليه التطبيق ده �
 internal marketing note) next to a post about ten minutes of play.
 
 Pinned here: the generator reads section أ only, ids are 1..30 exactly once,
-the generator and the autoposter agree on id -> (category, text), a repeated id
+the curated autoposter never uses legacy text cards, a repeated id
 is an error, and the rendered cards keep the «نصيحة اليوم» chip visible and the
 text inside the frame of the background art.
 """
@@ -90,11 +90,12 @@ def test_no_reel_script_leaks_into_a_card(generator):
         assert tips.get(n) != reel, f"card tip_{n} would carry reel script {n}"
 
 
-def test_generator_and_autoposter_agree_on_every_tip(generator, autoposter):
+def test_autoposter_curated_tips_never_use_legacy_text_cards(generator, autoposter):
     posts = autoposter.parse_tips()
-    assert len({t["id"] for t in posts}) == len(posts), "the autoposter parsed a tip id twice"
-    cards = {t["id"]: (t["category"], t["text"]) for t in generator.parse_tips()}
-    assert cards == {t["id"]: (t["category"], t["text"]) for t in posts}
+    assert len({t["id"] for t in posts}) == len(posts)
+    legacy_ids = {t["id"] for t in generator.parse_tips()}
+    assert legacy_ids.isdisjoint(t["id"] for t in posts)
+    assert all(t["image"] is None or t["image"].startswith("social_") for t in posts)
 
 
 def test_a_repeated_tip_id_is_an_error(generator, tmp_path):

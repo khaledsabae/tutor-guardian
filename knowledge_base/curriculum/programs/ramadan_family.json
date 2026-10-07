@@ -393,7 +393,7 @@
       "بول قليل جدًا أو داكن، أو جفاف شديد في الفم.",
       "قبل البلوغ: أن يقول الطفل إنه لا يستطيع أن يكمل."
     ],
-    "stop_action": "يفطر الطفل فورًا على ماء وتمرة أو عصير، ثم يستريح. قولوا له: «أحسنت المحاولة، وغدًا يوم جديد»، بلا لوم ولا مقارنة. وإن لم تتحسّن حاله خلال ساعة فاستشيروا الطبيب.",
+    "stop_action": "يفطر الطفل فورًا على ماء وتمرة أو عصير، ثم يستريح. قولوا له: «أحسنت المحاولة، وغدًا يوم جديد»، بلا لوم ولا مقارنة. اطلبوا رعاية طبية عاجلة الآن إذا كان البول داكنًا أو قليلًا، أو بدا ناعسًا على غير عادته، أو استمرت الدوخة عند الوقوف، أو تسارع التنفّس أو نبض القلب، أو قلّت الدموع؛ لا تنتظروا تحسّنه بعد الإفطار.",
     "urgent_signs": [
       "إغماء أو تشنّج.",
       "تشوّش، أو كلام غير مفهوم، أو صعوبة في الاستيقاظ.",
@@ -2965,7 +2965,7 @@
   },
   "generation": {
     "drafter_model": "claude-opus-5.5",
-    "reviewer_model": "glm-5.2 (every item) + deepseek-v4-pro (days 4–6, fasting ladder) + PR #23 sharia/medical/child-safety review",
+    "reviewer_model": "glm-5.2 (every item) + deepseek-v4-pro (days 4–6, fasting ladder) + PR #23 software/model review of content safety (not human specialist approval)",
     "translator_model": "claude-opus-5.5",
     "reviewed_at": "2026-10-04",
     "review_rounds": 2,

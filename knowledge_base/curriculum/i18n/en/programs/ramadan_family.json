@@ -422,7 +422,7 @@
       "Very little or very dark urine, or a very dry mouth.",
       "Before puberty: the child says he cannot carry on."
     ],
-    "stop_action": "The child breaks the fast at once with water and a date or some juice, then rests. Tell him: 'Well done for trying; tomorrow is a new day', with no blame and no comparison. If he does not feel better within an hour, call the doctor.",
+    "stop_action": "The child breaks the fast at once with water and a date or some juice, then rests. Tell him: 'Well done for trying; tomorrow is a new day', with no blame and no comparison. Seek urgent medical care now for dark or reduced urine, unusual drowsiness, persistent dizziness on standing, rapid breathing or heartbeat, or few tears; do not wait for improvement after breaking the fast.",
     "urgent_signs": [
       "Fainting or a seizure.",
       "Confusion, slurred speech or being hard to wake.",
@@ -2994,7 +2994,7 @@
   },
   "generation": {
     "drafter_model": "claude-opus-5.5",
-    "reviewer_model": "glm-5.2 (every item) + deepseek-v4-pro (days 4–6, fasting ladder) + PR #23 sharia/medical/child-safety review",
+    "reviewer_model": "glm-5.2 (every item) + deepseek-v4-pro (days 4–6, fasting ladder) + PR #23 software/model review of content safety (not human specialist approval)",
     "translator_model": "claude-opus-5.5",
     "reviewed_at": "2026-10-04",
     "review_rounds": 2,

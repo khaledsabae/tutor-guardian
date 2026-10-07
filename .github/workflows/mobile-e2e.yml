@@ -10,6 +10,17 @@ name: Mobile E2E (emulator)
 # Never give a job here a self-hosted label: [self-hosted, production] is the
 # production VPS. Nothing in this workflow runs on Khaled's machine either.
 #
+# ── Stable required check ────────────────────────────────────────────────
+# Every PR targeting main runs this workflow, including backend/docs-only PRs.
+# This deliberately pays for two release APK builds and emulator journeys on
+# GitHub-hosted runners so requiring "Mobile delivery gate" cannot leave a
+# path-filtered PR waiting forever for a check that was never reported.
+# The final job uses always() and requires keystore, the complete build matrix,
+# and e2e to succeed. Failure, cancellation, skipped jobs, or missing results
+# cannot produce a green gate. Branch protection is configured separately by
+# the parent after the first green hosted gate; this workflow does not set it.
+# Manual workflow_dispatch remains available for baseline/upgrade validation.
+#
 # ── What it checks (e2e/run.sh, flows in e2e/flows/) ──────────────────────
 # Lineage "fresh" — PR head, fresh install, Arabic UI, one process for 01-06:
 #   01 onboarding → child in band 7-9 → Today renders
@@ -18,6 +29,7 @@ name: Mobile E2E (emulator)
 #   06 English → Today/Learn/Assistant/More
 #   07 force-stop → cold start → Today renders (no white screen, no spinner,
 #      not stuck in child mode)          08 the child survived that restart
+#   09 family programs list → Prayer Journey (read-only)
 # Lineage "upgrade" — BASELINE build: 01 English onboarding + child,
 #   02 restart on the baseline (control, informational), then `adb install -r`
 #   the PR head: 03 it opens and Today renders, 04 the child is kept (skipped
@@ -29,11 +41,8 @@ name: Mobile E2E (emulator)
 # flows and every selector matches Arabic and English alike.
 #
 # ── Baseline (the build users have now) ─────────────────────────────────
-# Default: 007e71b7 = 1.0.66+111, live on Play (production, 100%). There is no
-# v1.0.66+111 tag (tags stop at v1.0.65+110); identified from
-# publishing-center/OPERATIONS_LOG.md, 2026-09-26: «main عند 007e71b7 … build
-# appbundle --release» for the 1.0.66+111 upload. mobile/ at 007e71b7 is the
-# same tree as the bump commit 6699e249 (`git rev-parse <c>:mobile`).
+# Default: efaa740f = released 1.0.68+113. E2E_BASELINE_REF is also set to
+# this released commit; explicit manual input still takes precedence.
 # After each Play release, point it at the released commit: the repository
 # variable E2E_BASELINE_REF (Settings → Variables), or the default below.
 # A manual run can pass any ref as `baseline_ref`.
@@ -73,14 +82,10 @@ name: Mobile E2E (emulator)
 on:
   pull_request:
     branches: [main]
-    paths:
-      - 'mobile/**'
-      - 'e2e/**'
-      - '.github/workflows/mobile-e2e.yml'
   workflow_dispatch:
     inputs:
       baseline_ref:
-        description: 'Commit/tag of the build users run now (upgrade test starts there). Empty = E2E_BASELINE_REF or 007e71b7 (1.0.66+111).'
+        description: 'Commit/tag of the build users run now (upgrade test starts there). Empty = E2E_BASELINE_REF or efaa740f (1.0.68+113).'
         required: false
         type: string
         default: ''
@@ -131,7 +136,7 @@ jobs:
           - variant: head
             ref: ${{ github.event.pull_request.head.sha || github.sha }}
           - variant: baseline
-            ref: ${{ inputs.baseline_ref || vars.E2E_BASELINE_REF || '007e71b7bbca8cbb0eb93c210b719e0b99cff241' }}
+            ref: ${{ inputs.baseline_ref || vars.E2E_BASELINE_REF || 'efaa740f48389636ea4bf06b6a71bbe3f324e8bc' }}
     defaults:
       run:
         working-directory: mobile
@@ -221,7 +226,9 @@ jobs:
           echo "E2E_OUT=$RUNNER_TEMP/e2e/out" >> "$GITHUB_ENV"
 
       - name: Unit-test the E2E tooling
-        run: python3 -m unittest discover -s e2e -v
+        run: |
+          python3 -m pip install PyYAML==6.0.2
+          python3 -m unittest discover -s e2e -v
 
       - name: Enable KVM
         run: |
@@ -339,3 +346,31 @@ jobs:
             ${{ env.E2E_OUT }}/results.tsv
           if-no-files-found: warn
           retention-days: 14
+
+  delivery_gate:
+    name: Mobile delivery gate
+    if: ${{ always() }}
+    needs: [keystore, build, e2e]
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Require every mandatory job to succeed
+        env:
+          NEEDS_JSON: ${{ toJSON(needs) }}
+        run: |
+          python3 - <<'PY'
+          import json
+          import os
+          import sys
+
+          results = json.loads(os.environ["NEEDS_JSON"])
+          failed = [
+              f"{job}={results.get(job, {}).get('result', 'missing')}"
+              for job in ("keystore", "build", "e2e")
+              if results.get(job, {}).get("result") != "success"
+          ]
+          if failed:
+              print("::error::Mandatory mobile delivery jobs did not succeed: " + ", ".join(failed))
+              sys.exit(1)
+          print("All mandatory mobile delivery jobs succeeded.")
+          PY
