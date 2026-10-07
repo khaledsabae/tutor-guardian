@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
 """
 social_media_autoposter.py — أداة النشر التلقائي لمنشورات التسويق والتربية اليومية.
-تقرأ النصائح من docs/marketing/02_content_arsenal.md وتنشرها مع الصورة الملائمة
+تقرأ النصائح من knowledge_base/curriculum/daily_tips/*.json مع صورة عامة ملائمة
 عبر Buffer API (لإنستجرام، فيسبوك، إكس، تيك توك) وTelegram Bot API (للقنوات).
 """
 import os
-import re
 import sys
 import json
 import argparse
@@ -16,6 +15,7 @@ import requests
 # تحديد مسارات المشروع
 ROOT = Path(__file__).resolve().parents[2]
 DOCS_DIR = ROOT / "docs"
+TIPS_DIR = ROOT / "knowledge_base" / "curriculum" / "daily_tips"
 STATE_FILE = ROOT / "ops" / "tools" / "autoposter_state.json"
 
 # تحميل ملف البيئة .env يدوياً لتجنب الاعتماديات الخارجية
@@ -39,79 +39,75 @@ TG_BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN", "").strip()
 TG_CHANNEL_ID = os.environ.get("TELEGRAM_CHANNEL_ID", "").strip()
 API_BASE_URL = os.environ.get("API_BASE_URL", "https://tg-api.alsaba.cloud").strip()
 
-# تصنيف الصور لكل فئة عمرية
+# Curated age groups reuse only generic campaign graphics. Legacy tip_N cards
+# contain obsolete text and must never be paired with curated tips.
+AGE_CATEGORIES = {
+    "prenatal-1": "الحمل وحتى عام", "0-3": "رضّع (0-3)",
+    "2-3": "دارج (2-3)", "4-6": "ما قبل المدرسة (4-6)",
+    "7-9": "مدرسي (7-9)", "10-12": "ما قبل المراهقة (10-12)",
+    "13-15": "مراهق (13-15)", "16-18": "مراهق (16-18)",
+}
 IMAGE_MAPPING = {
-    "رضّع (0-3)": "social_announce_square.webp",
-    "دارج (2-3)": "social_announce_square.webp",
-    "ما قبل المدرسة (4-6)": "social_feature_ai.webp",
-    "مدرسي (7-9)": "social_feature_ai.webp",
-    "ما قبل المراهقة (10-12)": "social_feature_journey.webp",
-    "مراهق (13-18)": "social_feature_journey.webp",
-    "عابر للأعمار": "social_announce_square.webp"
+    "prenatal-1": "social_announce_square.webp",
+    "0-3": "social_announce_square.webp", "2-3": "social_announce_square.webp",
+    "4-6": "social_feature_ai.webp", "7-9": "social_feature_ai.webp",
+    "10-12": "social_feature_journey.webp", "13-15": "social_feature_journey.webp",
+    "16-18": "social_feature_journey.webp",
 }
 
 def parse_tips() -> list[dict]:
-    """يقرأ ويحلل ملف 02_content_arsenal.md لاستخراج النصائح وتصنيفاتها"""
-    tips_file = DOCS_DIR / "marketing" / "02_content_arsenal.md"
-    if not tips_file.exists():
-        print(f"❌ لم يتم العثور على ملف النصائح في: {tips_file}")
-        sys.exit(1)
-
+    """Load curated Arabic text verbatim, ordered by stable source ID."""
+    if not TIPS_DIR.is_dir():
+        raise FileNotFoundError(f"Curated daily tips directory missing: {TIPS_DIR}")
     tips = []
-    current_category = "عابر للأعمار"
-    in_tips_bank = False
+    seen = set()
+    for path in sorted(TIPS_DIR.glob("*.json")):
+        tip = json.loads(path.read_text(encoding="utf-8"))
+        tip_id = tip.get("id")
+        if not isinstance(tip_id, str) or not tip_id.startswith("tip_") or tip_id in seen:
+            raise ValueError(f"Invalid or duplicate curated tip ID in {path}")
+        if not isinstance(tip.get("text"), str) or not tip["text"].strip():
+            raise ValueError(f"Missing curated tip text in {path}")
+        seen.add(tip_id)
+        # Absent is_published is the original curated schema; explicit false is
+        # a draft and must not be published by this consumer.
+        if tip.get("is_published") is False:
+            continue
+        age = tip["age_group"]
+        image = IMAGE_MAPPING.get(age)
+        if image and not (DOCS_DIR / "marketing" / "launch_graphics" / image).is_file():
+            image = None
+        tips.append({"id": tip_id, "category": AGE_CATEGORIES.get(age, age),
+                     "text": tip["text"], "image": image})
+    return sorted(tips, key=lambda tip: tip["id"])
 
-    with open(tips_file, "r", encoding="utf-8") as f:
-        for line in f:
-            line_str = line.strip()
-            if not line_str:
-                continue
+def select_next_tip(tips: list[dict], state: dict) -> dict | None:
+    """Keep legacy state intact; cycle by curated ID, never by numeric offset."""
+    if not tips:
+        return None
+    cursor = state.get("curated_last_posted_id")
+    for index, tip in enumerate(tips):
+        if tip["id"] == cursor:
+            return tips[(index + 1) % len(tips)]
+    # Migration (or a removed cursor): do not reset onto an already posted
+    # curated ID. Integer history IDs belong to the separate legacy namespace.
+    posted = {entry.get("tip_id") for entry in state.get("history", [])}
+    return next((tip for tip in tips if tip["id"] not in posted), None)
 
-            # الملف فيه أكتر من قائمة مرقّمة (النصائح + سكربتات الريلز) —
-            # نلتقط أرقام قسم بنك النصائح (أ) فقط وإلا تتكرر الـ ids
-            if line_str.startswith("## "):
-                in_tips_bank = line_str.startswith("## أ)")
-                continue
-            if not in_tips_bank:
-                continue
-
-            # استخراج التصنيف العمري
-            cat_match = re.match(r"^\*\*(.*?)\*\*", line_str)
-            if cat_match:
-                current_category = cat_match.group(1).strip().rstrip(":")
-                continue
-                
-            # استخراج رقم النصيحة ومحتواها
-            tip_match = re.match(r"^(\d+)\.\s*(.*)", line_str)
-            if tip_match:
-                tip_id = int(tip_match.group(1))
-                text = tip_match.group(2).strip()
-                
-                # نفضل الكارت المخصص للمنشور (tip_X.png) إذا كان موجوداً
-                card_name = f"tip_{tip_id}.png"
-                card_path = DOCS_DIR / "marketing" / "daily_tips_cards" / card_name
-                if card_path.exists():
-                    image_name = card_name
-                else:
-                    image_name = IMAGE_MAPPING.get(current_category, "social_announce_square.webp")
-                
-                tips.append({
-                    "id": tip_id,
-                    "category": current_category,
-                    "text": text,
-                    "image": image_name
-                })
-                
-    return tips
+def record_posted_tip(state: dict, tip: dict, telegram: bool, buffer: bool):
+    """Append success without overwriting the legacy cursor or any old history."""
+    state["curated_last_posted_id"] = tip["id"]
+    state.setdefault("history", []).append({
+        "tip_id": tip["id"], "posted_at": datetime.now(timezone.utc).isoformat(),
+        "telegram": telegram, "buffer": buffer,
+    })
 
 def load_state() -> dict:
     """تحميل حالة النشر السابقة"""
     if STATE_FILE.exists():
-        try:
-            with open(STATE_FILE, "r", encoding="utf-8") as f:
-                return json.load(f)
-        except Exception:
-            pass
+        # Corrupt/unreadable state must stop the run, never erase posting history.
+        with open(STATE_FILE, "r", encoding="utf-8") as f:
+            return json.load(f)
     return {"last_posted_id": 0, "history": []}
 
 def save_state(state: dict):
@@ -257,7 +253,7 @@ def post_to_buffer(profiles: list[dict], text: str, image_url: str, now: bool) -
         return True
     return False
 
-def post_to_telegram(text: str, image_path: Path) -> bool:
+def post_to_telegram(text: str, image_path: Path | None) -> bool:
     """إرسال النصيحة مع الصورة مباشرة إلى قناة التليجرام"""
     if not TG_BOT_TOKEN or not TG_CHANNEL_ID:
         print("⚠️ TELEGRAM_BOT_TOKEN أو TELEGRAM_CHANNEL_ID غير مضبوط في ملف .env")
@@ -266,7 +262,7 @@ def post_to_telegram(text: str, image_path: Path) -> bool:
     url = f"https://api.telegram.org/bot{TG_BOT_TOKEN}/sendPhoto"
     
     # إرسال الصورة كملف محلي
-    if not image_path.exists():
+    if image_path is None or not image_path.exists():
         print(f"❌ لم يتم العثور على ملف الصورة محلياً في: {image_path}")
         return False
         
@@ -305,7 +301,7 @@ def main():
     parser = argparse.ArgumentParser(description="أداة النشر التلقائي لتطبيق المربي الذكي")
     parser.add_argument("--list-profiles", action="store_true", help="عرض الحسابات المربوطة بـ Buffer")
     parser.add_argument("--post-next", action="store_true", help="نشر النصيحة التالية في الطابور فوراً")
-    parser.add_argument("--post-id", type=int, help="نشر نصيحة محددة برقمها")
+    parser.add_argument("--post-id", help="نشر نصيحة بمعرّفها الثابت، مثل tip_7-9_001")
     parser.add_argument("--test-post", action="store_true", help="إجراء منشور تجريبي للتحقق من الاتصال")
     parser.add_argument("--dry-run", action="store_true", help="محاكاة النشر دون إرسال البيانات الفعلي للأجهزة")
     parser.add_argument("--queue", action="store_true", help="إضافة المنشور لطابور الجدولة في Buffer بدلاً من النشر الفوري")
@@ -344,35 +340,26 @@ def main():
             "image": "social_announce_square.webp"
         }
     else:
-        # النشر التلقائي للخطوة التالية — الدورة على أعلى id فعلي، مش عدد
-        # العناصر (len كان أكبر من أقصى id فتجمّد النشر عند آخر نصيحة)
-        max_id = max(t["id"] for t in tips)
-        next_id = state["last_posted_id"] + 1
-        if next_id > max_id:
-            # إعادة تشغيل الدورة من البداية
-            next_id = 1
-
-        matching = [t for t in tips if t["id"] == next_id]
-        if not matching:
+        target_tip = select_next_tip(tips, state)
+        if target_tip is None:
             print("❌ لا توجد نصائح متبقية للنشر.")
             return
-        target_tip = matching[0]
 
     # تحضير النص والصورة
     post_text = format_post_text(target_tip)
     
-    # تحديد مكان الصورة الفعلي (كارت مصمم مسبقاً أو صورة عامة)
+    # Only generic launch graphics are eligible, never legacy text cards.
     image_name = target_tip["image"]
-    card_path = DOCS_DIR / "marketing" / "daily_tips_cards" / image_name
-    if card_path.exists():
-        local_image_path = card_path
-        public_image_url = f"{API_BASE_URL}/docs/marketing/daily_tips_cards/{image_name}"
-    else:
-        local_image_path = DOCS_DIR / "marketing" / "launch_graphics" / image_name
-        public_image_url = f"{API_BASE_URL}/docs/marketing/launch_graphics/{image_name}"
+    local_image_path = None
+    public_image_url = ""
+    if image_name:
+        candidate = DOCS_DIR / "marketing" / "launch_graphics" / image_name
+        if candidate.is_file():
+            local_image_path = candidate
+            public_image_url = f"{API_BASE_URL}/docs/marketing/launch_graphics/{image_name}"
 
     print(f"📋 النصيحة المستهدفة: #{target_tip['id']} ({target_tip['category']})")
-    print(f"🖼️ الصورة المحلية: {local_image_path.name}")
+    print(f"🖼️ الصورة المحلية: {local_image_path.name if local_image_path else 'بدون صورة'}")
     print(f"🌐 الصورة العامة لـ Buffer: {public_image_url}")
 
     if args.dry_run:
@@ -400,13 +387,7 @@ def main():
 
     # حفظ الحالة في حال نجاح العملية
     if success and not args.test_post:
-        state["last_posted_id"] = target_tip["id"]
-        state["history"].append({
-            "tip_id": target_tip["id"],
-            "posted_at": datetime.now(timezone.utc).isoformat(),
-            "telegram": tg_success,
-            "buffer": buffer_success
-        })
+        record_posted_tip(state, target_tip, tg_success, buffer_success)
         save_state(state)
         print(f"💾 تم حفظ الحالة بنجاح. آخر نصيحة تم نشرها: #{target_tip['id']}")
 
