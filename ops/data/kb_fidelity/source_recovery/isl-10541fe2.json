@@ -36,9 +36,9 @@
     "note": "This recovery adds no modern-author verbatim prose. Identifying speaker labels are bibliographic attribution. Prior two excerpts conservatively counted in full (including their ancient material). Repeated AR/EN/evidence copies are the same distinct excerpts, not additional passages."
   },
   "hadith_matches": [],
-  "approval": "Source evidence only. No model, scholar, human or publication approval; drafts await independent translation and scholar review.",
+  "approval": "Primary-source evidence only, not scholar/human source-content approval. Actual independent English parity review is recorded below; scholar review remains required.",
   "raw_ocr_anchor": "ةقطعلا في ؿفـقب لدعلاو",
-  "validation": {
+  "draft_validation": {
     "pair_schema_exit": 0,
     "pair_schema_units": 2,
     "guards": {
@@ -53,5 +53,25 @@
     "queue": "awaiting-review",
     "models_called": 0,
     "approval": null
+  },
+  "translation_review": {
+    "content_sha256": "9fc119c817af991c576d2914dd1b657224a6db466ce527d533383a76c764d5c3",
+    "reviewers": [
+      "deepseek-v4-pro",
+      "glm-5.2"
+    ],
+    "reviewed_at": "2026-10-07T10:02:15+00:00",
+    "approval": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
+    "needs_scholar_review": true,
+    "residual_low": [
+      {
+        "model": "glm-5.2",
+        "field": "text_simplified",
+        "type": "addition",
+        "why": "The English inserts 'other' before 'voluntary donations' where the Arabic simply says 'التبرع' with no such qualifier."
+      }
+    ],
+    "adjudications": [],
+    "meaning": "Actual canonical dual-family translation-parity approval only; not source-content/scholar/human endorsement."
   }
 }

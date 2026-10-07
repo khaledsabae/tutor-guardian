@@ -15,15 +15,6 @@
         "claude-opus-5.5"
       ]
     },
-    "isl-10541fe2__en": {
-      "category": "awaiting-review",
-      "reason": "2026-10-07 native recovery: exact original Book_17337 passages located via raw OCR and visually verified against primary PDF checksum 7fa6f88fbf1ba714947983c11cde1e8c67b576374ae06c08a081444743d1272c. Source-recovery evidence records page maps, historical speakers and ancient quotation exclusions; modern-book aggregate remains 83/90 words. Native AR/EN summaries narrowed to verified material, unsupported developmental/general-ruling claims removed. Current hash awaits genuine independent translation review and scholar review; approvals null, no models called.",
-      "content_sha256": "9fc119c817af991c576d2914dd1b657224a6db466ce527d533383a76c764d5c3",
-      "queued_on": "2026-10-07",
-      "english_authors": [
-        "openai:codex"
-      ]
-    },
     "isl-1057f72f__en": {
       "category": "source-unverified",
       "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
@@ -66,29 +57,11 @@
       "content_sha256": "84867b11f841d5332c5e9fce085ee6eede881bf0732da005883fb86d426e8327",
       "queued_on": "2026-10-04"
     },
-    "isl-8aa15666__en": {
-      "category": "awaiting-review",
-      "reason": "2026-10-07 native recovery: exact original Book_17337 passages located via raw OCR and visually verified against primary PDF checksum 7fa6f88fbf1ba714947983c11cde1e8c67b576374ae06c08a081444743d1272c. Source-recovery evidence records page maps, historical speakers and ancient quotation exclusions; modern-book aggregate remains 83/90 words. Native AR/EN summaries narrowed to verified material, unsupported developmental/general-ruling claims removed. Current hash awaits genuine independent translation review and scholar review; approvals null, no models called.",
-      "content_sha256": "90365a62e08fdb8f04b728e2d320d0f30537176958885150cee0c6269f3b8209",
-      "queued_on": "2026-10-07",
-      "english_authors": [
-        "openai:codex"
-      ]
-    },
     "isl-8f8f836b__en": {
       "category": "source-unverified",
       "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
       "content_sha256": "84c01e9beddda3fcbea92ea5a77df35d8ac55da55e88ea4c993532495121fbc1",
       "queued_on": "2026-10-04"
-    },
-    "isl-be38b357__en": {
-      "category": "awaiting-review",
-      "reason": "2026-10-07 native recovery: exact original Book_17337 passages located via raw OCR and visually verified against primary PDF checksum 7fa6f88fbf1ba714947983c11cde1e8c67b576374ae06c08a081444743d1272c. Source-recovery evidence records page maps, historical speakers and ancient quotation exclusions; modern-book aggregate remains 83/90 words. Native AR/EN summaries narrowed to verified material, unsupported developmental/general-ruling claims removed. Current hash awaits genuine independent translation review and scholar review; approvals null, no models called.",
-      "content_sha256": "a0c7f08a7ac0a12d0cec8f0a67d3c5be165241f3d18d40aef33cb84f331a2b28",
-      "queued_on": "2026-10-07",
-      "english_authors": [
-        "openai:codex"
-      ]
     },
     "isl-c0936200__en": {
       "category": "source-unverified",

@@ -49,9 +49,9 @@
       "exact_local_corpus_match": true
     }
   ],
-  "approval": "Source evidence only. No model, scholar, human or publication approval; drafts await independent translation and scholar review.",
+  "approval": "Primary-source evidence only, not scholar/human source-content approval. Actual independent English parity review is recorded below; scholar review remains required.",
   "raw_ocr_anchor": "رقطلاب رقغصلا بعل زاقج فقفو",
-  "validation": {
+  "draft_validation": {
     "pair_schema_exit": 0,
     "pair_schema_units": 2,
     "guards": {
@@ -66,5 +66,25 @@
     "queue": "awaiting-review",
     "models_called": 0,
     "approval": null
+  },
+  "translation_review": {
+    "content_sha256": "90365a62e08fdb8f04b728e2d320d0f30537176958885150cee0c6269f3b8209",
+    "reviewers": [
+      "deepseek-v4-pro",
+      "glm-5.2"
+    ],
+    "reviewed_at": "2026-10-07T10:02:15+00:00",
+    "approval": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
+    "needs_scholar_review": true,
+    "residual_low": [
+      {
+        "model": "glm-5.2",
+        "field": "text_simplified",
+        "type": "meaning",
+        "why": "The Arabic is active ('letting him play') but the English renders it passively ('being allowed to play'), slightly shifting the agency from the parent to the child."
+      }
+    ],
+    "adjudications": [],
+    "meaning": "Actual canonical dual-family translation-parity approval only; not source-content/scholar/human endorsement."
   }
 }

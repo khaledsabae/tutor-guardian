@@ -24,13 +24,13 @@
     "source_author": "عماد بن أحمد بن عبدالعظيم"
   },
   "source_url": "https://www.alukah.net/Books/Files/Book_17337/BookFile/brotherandboys.pdf#page=69",
-  "source_note": "DRAFT source recovery, 2026-10-07. Actual original passage verified visually; exact page/ancient-attribution/quotation evidence: ops/data/kb_fidelity/source_recovery/isl-10541fe2.json. Summaries are app-authored paraphrases, not verbatim translations or general legal rulings. No scholar, human, model or publication approval.",
+  "source_note": "Primary-source recovery 2026-10-07: actual original passage/page/ancient-attribution evidence is recorded in ops/data/kb_fidelity/source_recovery/isl-10541fe2.json. Summaries are app-authored paraphrases, not general legal rulings. English translation parity was genuinely reviewed separately by DeepSeek and GLM; its exact-hash record is in the English translation metadata. No scholar/human source-content approval or publication approval.",
   "translation": {
     "needs_scholar_review": true,
     "review_verdict": "pending",
     "review_defects": [],
     "approved_by": null,
     "draft_status": "draft",
-    "source_recovery_note": "Primary-source-faithful draft; current text has no independent model review or approval."
+    "source_recovery_note": "Primary-source-faithful recovery. English parity review is recorded separately at its exact current hash; Arabic source-content scholar review remains required."
   }
 }

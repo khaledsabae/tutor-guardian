@@ -59,9 +59,9 @@
       "exact_local_corpus_match": true
     }
   ],
-  "approval": "Source evidence only. No model, scholar, human or publication approval; drafts await independent translation and scholar review.",
+  "approval": "Primary-source evidence only, not scholar/human source-content approval. Actual independent English parity review is recorded below; scholar review remains required.",
   "raw_ocr_anchor": "ثاعب مقي راصكٕا",
-  "validation": {
+  "draft_validation": {
     "pair_schema_exit": 0,
     "pair_schema_units": 2,
     "guards": {
@@ -76,5 +76,18 @@
     "queue": "awaiting-review",
     "models_called": 0,
     "approval": null
+  },
+  "translation_review": {
+    "content_sha256": "8a78b2b6961b339b33ed7a35dda7f394fc8c8a976f972ec28c2f93de1525fb6c",
+    "reviewers": [
+      "deepseek-v4-pro",
+      "glm-5.2"
+    ],
+    "reviewed_at": "2026-10-07T10:03:19+00:00",
+    "approval": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
+    "needs_scholar_review": true,
+    "residual_low": [],
+    "adjudications": [],
+    "meaning": "Actual canonical dual-family translation-parity approval only; not source-content/scholar/human endorsement."
   }
 }
