@@ -29,27 +29,75 @@
   "translated_from": "isl-f6c0c64a",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
+    "review_verdict": "low_only",
     "review_defects": [
       {
-        "type": "meaning_change",
-        "field": "title",
-        "arabic": "«ما نحل والدٌ ولداً أفضل من أدب حسن» — فضل تأديب الأبناء",
-        "english": "«Mā naḥala wālidun waladan afḍala min adabin ḥasan» – Faḍl Taʼdīb al-Abnāʼ",
-        "why": "The English title is a transliteration of the Arabic, not a translation. It does not convey the meaning of the hadith or the subtitle 'The Virtue of Disciplining Children' to an English reader.",
-        "severity": "high"
+        "model": "deepseek-v4-pro",
+        "field": "text_simplified",
+        "type": "source_corruption",
+        "why": "«كن» should be «كُنَّ» (feminine plural past of كان) to agree with «البنات»; the shadda is missing."
       },
       {
-        "type": "meaning_change",
+        "model": "deepseek-v4-pro",
+        "field": "title",
+        "type": "meaning",
+        "why": "Arabic «والد» means father, not the gender-neutral 'parent'."
+      },
+      {
+        "model": "deepseek-v4-pro",
         "field": "text_simplified",
-        "arabic": "«ما نحل والدٌ ولداً من نحلٍ أفضل من أدب حسن»",
-        "english": "«Mā naḥala wālidun waladan min naḥlin afḍala min adabin ḥasan»",
-        "why": "The hadith is left in Arabic transliteration without an English translation, so the English reader cannot understand the core religious quote. The surrounding text only paraphrases it, but the actual hadith wording is not rendered in English.",
-        "severity": "high"
+        "type": "meaning",
+        "why": "Arabic «الوالد» is father; English broadens to 'parent'."
       }
     ],
-    "approved_by": null
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "98011199c372376ac80f4ba3c07c1e37b7db6ed5e0643a1f3e24b0b6d51408bc",
+      "reviewed_at": "2026-10-07T07:24:59+00:00",
+      "residual_low": [
+        {
+          "model": "deepseek-v4-pro",
+          "field": "text_simplified",
+          "type": "source_corruption",
+          "why": "«كن» should be «كُنَّ» (feminine plural past of كان) to agree with «البنات»; the shadda is missing."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "field": "title",
+          "type": "meaning",
+          "why": "Arabic «والد» means father, not the gender-neutral 'parent'."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "field": "text_simplified",
+          "type": "meaning",
+          "why": "Arabic «الوالد» is father; English broadens to 'parent'."
+        }
+      ],
+      "adjudicated": [
+        {
+          "field": "text_simplified",
+          "type": "hadith",
+          "reason": "Sahih al-Bukhari 1418 reads exactly «من ابتلي من هذه البنات بشيء كن له سترا من النار»; «فأحسن إليهن» belongs to Bukhari 5995 / Muslim 2629. Both sides quote 1418 faithfully; check_scripture_coverage verifies it.",
+          "by": "claude-opus-5.5 (en-parity review, PR #20)",
+          "on": "2026-10-04"
+        }
+      ],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-07T07:24:59+00:00",
+    "english_authors": [
+      "claude-opus-5.5"
+    ]
   }
 }

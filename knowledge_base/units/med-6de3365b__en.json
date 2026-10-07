@@ -30,19 +30,29 @@
   "translated_from": "med-6de3365b",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "register",
-        "field": "text_simplified",
-        "arabic": "حدد وقتًا محددًا لمشاهدة الشاشات",
-        "english": "Set a specific time for screen exposure",
-        "why": "The Arabic uses the direct, everyday phrase 'watching screens' (مشاهدة الشاشات), while the English 'screen exposure' is clinical and less warm, shifting the register.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "ecd971135df75a75274a3842f43c7ff1946102f2f83c821a9dc7c9fece02906a",
+      "reviewed_at": "2026-10-07T07:23:41+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-07T07:23:41+00:00",
+    "english_authors": [
+      "claude-opus-5.5"
+    ]
   }
 }

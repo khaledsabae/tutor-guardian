@@ -30,22 +30,32 @@
   "translated_from": "isl-73905b43",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "term_error",
-        "field": "title",
-        "arabic": "بدون عنف",
-        "english": "without 'Unf",
-        "why": "The Arabic word عنف means 'violence' and should be translated into English. Transliterating it as 'Unf leaves the title unintelligible to English readers and is not an Islamic technical term requiring transliteration.",
-        "severity": "high"
-      }
-    ],
-    "approved_by": null,
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
     "manual_fix_note": "2026-10-04 PR #27 review: no claims the source text does not make; app stance in its own sentence",
     "fixed_at": "2026-10-04T12:34:44.900780+00:00",
-    "fixer_model": "claude-opus-5.5"
+    "fixer_model": "claude-opus-5.5",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "2ecd5fa763ba952fa4acce235da165f90b09f5ab2a29779ca3bf743434defbdc",
+      "reviewed_at": "2026-10-07T07:24:20+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-07T07:24:20+00:00",
+    "english_authors": [
+      "claude-opus-5.5"
+    ]
   }
 }

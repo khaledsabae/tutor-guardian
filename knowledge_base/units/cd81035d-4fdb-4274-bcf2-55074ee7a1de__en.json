@@ -22,10 +22,55 @@
   "translated_from": "cd81035d-4fdb-4274-bcf2-55074ee7a1de",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "clean",
-    "review_defects": [],
-    "approved_by": null
+    "review_verdict": "low_only",
+    "review_defects": [
+      {
+        "model": "glm-5.2",
+        "field": "title",
+        "type": "addition",
+        "why": "The English adds a parenthetical transliteration of the title not present in the Arabic."
+      },
+      {
+        "model": "glm-5.2",
+        "field": "text_simplified",
+        "type": "meaning",
+        "why": "The book title is transliterated instead of translated, whereas the title field translates it as 'How to Raise Your Child', creating an inconsistency."
+      }
+    ],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "073f739746099fe48326691aece5a5fc3b5ca5606945f43c44c8330e5e05a2e6",
+      "reviewed_at": "2026-10-07T07:24:14+00:00",
+      "residual_low": [
+        {
+          "model": "glm-5.2",
+          "field": "title",
+          "type": "addition",
+          "why": "The English adds a parenthetical transliteration of the title not present in the Arabic."
+        },
+        {
+          "model": "glm-5.2",
+          "field": "text_simplified",
+          "type": "meaning",
+          "why": "The book title is transliterated instead of translated, whereas the title field translates it as 'How to Raise Your Child', creating an inconsistency."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-07T07:24:14+00:00",
+    "english_authors": [
+      "claude-opus-5.5"
+    ]
   }
 }
