@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Helpers for the emulator E2E gate (.github/workflows/mobile-e2e.yml).
 
-Three subcommands, all stdlib-only so they run on a bare GitHub runner:
+Four subcommands, all stdlib-only so they run on a bare GitHub runner:
 
+  deactivate-analytics  Permanently disable Firebase Analytics in a CI manifest.
   l10n         Build flows/common/l10n.js from the app's ARB files, so every
                Maestro selector is written against an ARB *key* and matches
                the Arabic and the English rendering alike. Re-run per install
@@ -16,9 +17,57 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
+import tempfile
+import xml.etree.ElementTree as ET
 import re
 import sys
 from pathlib import Path
+
+# Firebase Android configuration: this build-time deactivation cannot be
+# re-enabled through setAnalyticsCollectionEnabled at runtime.
+# https://firebase.google.com/docs/analytics/android/configure-data-collection
+_ANDROID = "{http://schemas.android.com/apk/res/android}"
+_ANALYTICS_FLAG = "firebase_analytics_collection_deactivated"
+
+
+def cmd_deactivate_analytics(args: argparse.Namespace) -> int:
+    """Change only a disposable CI manifest; reject ambiguous SDK settings."""
+    path = Path(args.manifest)
+    temporary = None
+    try:
+        parser = ET.XMLParser(target=ET.TreeBuilder(insert_comments=True))
+        tree = ET.parse(path, parser=parser)
+        root = tree.getroot()
+        apps = root.findall("application")
+        if root.tag != "manifest" or len(apps) != 1:
+            raise ValueError("expected exactly one manifest/application")
+        app = apps[0]
+        flags = [node for node in app.findall("meta-data")
+                 if node.get(_ANDROID + "name") == _ANALYTICS_FLAG]
+        if len(flags) > 1:
+            raise ValueError("duplicate Analytics deactivation metadata")
+        if flags and _ANDROID + "resource" in flags[0].attrib:
+            raise ValueError("Analytics deactivation uses an ambiguous resource")
+        if not flags:
+            flags = [ET.SubElement(app, "meta-data", {_ANDROID + "name": _ANALYTICS_FLAG})]
+        flags[0].set(_ANDROID + "value", "true")
+        ET.register_namespace("android", _ANDROID[1:-1])
+        # Replace atomically: failures must not leave a partly written manifest.
+        with tempfile.NamedTemporaryFile(dir=path.parent, delete=False) as stream:
+            temporary = Path(stream.name)
+            tree.write(stream, encoding="utf-8", xml_declaration=True)
+        os.chmod(temporary, path.stat().st_mode & 0o777)
+        os.replace(temporary, path)
+    except (OSError, ET.ParseError, ValueError) as exc:
+        print(f"::error::Analytics isolation failed: {exc}", file=sys.stderr)
+        return 1
+    finally:
+        if temporary is not None:
+            temporary.unlink(missing_ok=True)
+    print(f"{_ANALYTICS_FLAG}=true in {path}")
+    return 0
+
 
 # ── l10n ─────────────────────────────────────────────────────────────────
 
@@ -328,6 +377,10 @@ def cmd_summary(args: argparse.Namespace) -> int:
 def main(argv: list[str] | None = None) -> int:
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = p.add_subparsers(dest="cmd", required=True)
+
+    s = sub.add_parser("deactivate-analytics", help="disable Analytics in a disposable CI manifest")
+    s.add_argument("--manifest", required=True)
+    s.set_defaults(func=cmd_deactivate_analytics)
 
     s = sub.add_parser("l10n", help="generate flows/common/l10n.js")
     s.add_argument("--arb-dir", required=True)

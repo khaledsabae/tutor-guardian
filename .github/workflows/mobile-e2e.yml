@@ -66,8 +66,10 @@ name: Mobile E2E (emulator)
 # A run that dies before onboarding leaves only childless devices (a token, an
 # empty chat session, a push token); exclude them by the UTC window printed in
 # the job summary.
-# GA4: run.sh sets `debug.firebase.analytics.app` — events go to DebugView and
-# Firebase excludes them from reports and the BigQuery export.
+# GA4: both CI APKs inject firebase_analytics_collection_deactivated=true
+# before building. Collection stays disabled even if app code enables it.
+# The packaged ci-config.txt records this CI-only configuration; production
+# manifests and release workflows retain their normal Analytics settings.
 # Crashlytics: E2E devices report as model sdk_gphone64_x86_64 (filter it out).
 #
 # ── Signing ──────────────────────────────────────────────────────────────
@@ -111,6 +113,22 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
+      # Supply the head helper independently: old baseline refs lack this command.
+      # Sparse checkout avoids downloading the repository's large content assets.
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+          sparse-checkout: e2e/e2e_tool.py
+          sparse-checkout-cone-mode: false
+
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: e2e-ci-helper
+          path: e2e/e2e_tool.py
+          if-no-files-found: error
+          retention-days: 1
+
       - name: Generate a throwaway debug keystore
         run: |
           keytool -genkeypair -noprompt -keystore "$RUNNER_TEMP/debug.keystore" \
@@ -176,6 +194,19 @@ jobs:
             echo "keyPassword=android"
           } > android/app/key.properties
 
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: e2e-ci-helper
+          path: ${{ runner.temp }}/ci-helper
+
+      - name: Deactivate Firebase Analytics for CI APKs
+        # Pure stdlib head helper, applied to BOTH matrix checkout manifests.
+        # https://firebase.google.com/docs/analytics/android/configure-data-collection
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -S "$RUNNER_TEMP/ci-helper/e2e_tool.py" deactivate-analytics --manifest android/app/src/main/AndroidManifest.xml
+
       - name: Build the release APK (x86_64, as the emulator runs it)
         # R8 full mode + shrinkResources run exactly as for Play; only the ABI
         # is narrowed to the emulator's.
@@ -200,6 +231,7 @@ jobs:
           cp build/app/outputs/flutter-apk/app-release.apk "$OUT/app.apk"
           cp lib/l10n/app_ar.arb lib/l10n/app_en.arb "$OUT/l10n/"
           echo "$VARIANT $(git rev-parse --short HEAD) $(grep -m1 '^version:' pubspec.yaml | awk '{print $2}')" > "$OUT/ref.txt"
+          printf '%s\n' 'signing=ci-debug-keystore' 'firebase_analytics_collection_deactivated=true' > "$OUT/ci-config.txt"
           cat "$OUT/ref.txt"; ls -la "$OUT"
 
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
