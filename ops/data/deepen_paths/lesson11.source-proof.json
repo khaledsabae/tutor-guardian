@@ -1,0 +1,35 @@
+{
+  "schema": "tg.lesson11.primary-source-proof/1",
+  "lesson_id": "lesson_7-9_aqeedah_fundamentals_11",
+  "unit_id": "aqe-who-created-allah-source-01",
+  "base_commit": "db07c35f36395ce5cee7a1344442d77c996d95bd",
+  "verified_on": "2026-10-07",
+  "method": "Arabic excerpts copied exactly from the retrieved primary narration pages and checked against the unmodified local canonical skeletons with check_hadith_citations.check_one; page delivery via agent-reach Jina reader. This is text/number verification, not human or scholar approval.",
+  "canon_path": "ops/data/hadith_index.json.gz",
+  "canon_sha256": "a2bb58b489022cfa585f0f2c3d8c3a08db74618b503f13ea09683987e76c57c0",
+  "sources": [
+    {
+      "book": "مسلم",
+      "local_number": 2713,
+      "public_url": "https://sunnah.com/muslim:2713a",
+      "public_number": "2713a",
+      "quote_ar": "اللَّهُمَّ أَنْتَ الأَوَّلُ فَلَيْسَ قَبْلَكَ شَىْءٌ",
+      "quote_sha256": "18d553520c65bb65f28d8886046e03b46928c7f52733ba69fda9060d88a15d89",
+      "reader_snapshot_sha256": "10c3b75c28f1f9366a86dcfb599e6dde03f4c09976c0556d233f0a5e6d6ccfdf"
+    },
+    {
+      "book": "البخاري",
+      "local_number": 3276,
+      "public_url": "https://sunnah.com/bukhari:3276",
+      "public_number": "3276",
+      "quote_ar": "يَأْتِي الشَّيْطَانُ أَحَدَكُمْ فَيَقُولُ مَنْ خَلَقَ كَذَا مَنْ خَلَقَ كَذَا حَتَّى يَقُولَ مَنْ خَلَقَ رَبَّكَ فَإِذَا بَلَغَهُ فَلْيَسْتَعِذْ بِاللَّهِ، وَلْيَنْتَهِ",
+      "quote_sha256": "2a359e7d5c731f034da117872aed95f2a63f95945b73474c6a6630f482340569",
+      "reader_snapshot_sha256": "a57f931a655e90f420607276ef6466a36e703cb16acb5fc051f8ba024cc7e787"
+    }
+  ],
+  "approval": {
+    "model_review_performed": false,
+    "human_approval": null,
+    "needs_scholar_review": true
+  }
+}

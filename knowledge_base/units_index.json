@@ -1,5 +1,5 @@
 {
-  "total_units": 1388,
+  "total_units": 1389,
   "generated_at": "2026-10-07T07:31:39.565264+00:00",
   "by_domain": {
     "medical": 361,
@@ -7,7 +7,7 @@
     "islamic_parenting": 581,
     "development": 133,
     "app_help": 12,
-    "aqeedah": 21
+    "aqeedah": 22
   },
   "units": [
     {
@@ -16665,6 +16665,18 @@
       "behavior_type": "الدورة الشهرية في أول سنوات البلوغ — الطبيعي وعلامات الخطر",
       "needs_ocr": false,
       "size_chars": 3402
+    },
+    {
+      "id": "aqe-who-created-allah-source-01",
+      "domain": "aqeedah",
+      "title": "سؤال من خلق الله: نصان من الصحيحين وإرشاد للأهل",
+      "source_file": "lesson11.source-proof.json",
+      "language": "ar",
+      "original_age_group": "7-9",
+      "normalized_age_group": "7-9",
+      "behavior_type": "التعامل الهادئ مع أسئلة الطفل عن الله",
+      "needs_ocr": false,
+      "size_chars": 293
     }
   ]
 }

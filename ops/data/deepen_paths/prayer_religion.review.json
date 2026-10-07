@@ -579,8 +579,10 @@
       "path_id": "path_7-9_aqeedah_fundamentals",
       "key": "s01",
       "brief": "«مَن خلق الله؟» حين يسأل السؤال المحيّر",
-      "accepted": true,
-      "blockers": [],
+      "accepted": false,
+      "blockers": [
+        "Current lesson 11 source fix changes AR/EN and anchors; historical reviews below do not approve it. Awaiting actual independent dual-family review and scholar/human review."
+      ],
       "ar_review": {
         "reviewer": "deepseek-v4-pro",
         "at": "2026-10-07T07:18:27",
@@ -603,7 +605,12 @@
       "dispositions": [],
       "written_as": "lesson_7-9_aqeedah_fundamentals_11",
       "order": 11,
-      "title": "«مَن خلق الله؟» حين يسأل السؤال المحيّر"
+      "title": "«مَن خلق الله؟» حين يسأل السؤال المحيّر",
+      "source_fix": {
+        "at": "2026-10-07T08:25:33+00:00",
+        "evidence": "ops/data/deepen_paths/lesson11.source-proof.json",
+        "approval": null
+      }
     },
     {
       "path_id": "path_7-9_aqeedah_fundamentals",

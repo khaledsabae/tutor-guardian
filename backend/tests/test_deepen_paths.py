@@ -283,8 +283,11 @@ def test_written_lessons_are_well_formed_pairs(dp, parity):
 def reviewed_pair(tmp_path):
     """Copy the recovered, genuinely reviewed lesson; never stamp repo content."""
     name = "lesson_7-9_aqeedah_fundamentals_11.json"
-    ar = json.loads((CURRICULUM / "lessons" / name).read_text())
-    en = json.loads((CURRICULUM / "i18n/en/lessons" / name).read_text())
+    # Preserve the actual db07c35f reviewed text: current production lesson 11
+    # is now a source-corrected draft and must not retain that old approval.
+    fixture = ROOT / "backend/tests/fixtures/lesson11_reviewed_db07c35f"
+    ar = json.loads((fixture / "ar.json").read_text())
+    en = json.loads((fixture / "en.json").read_text())
     return ar, en, tmp_path / name
 
 
