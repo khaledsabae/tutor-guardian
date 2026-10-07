@@ -69,7 +69,7 @@ def test_configured_exact_token_uses_constant_time_comparison_and_reads_metrics(
     response = client.get("/api/stats/ops-llm?days=3", headers={"X-Ops-Token": token})
 
     assert response.status_code == 200, response.text
-    digest.assert_called_once_with(token, token)
+    digest.assert_called_once_with(token.encode("utf-8"), token.encode("utf-8"))
     data = response.json()
     assert data["window_days"] == 3
     assert data["calls"] == 1
@@ -77,3 +77,18 @@ def test_configured_exact_token_uses_constant_time_comparison_and_reads_metrics(
     assert data["success_rate"] == 1.0
     assert data["cache_hit_rate"] == 1.0
     assert "telemetry_error" not in data
+
+
+def test_non_ascii_latin1_header_is_forbidden_before_metrics_access(client, monkeypatch):
+    monkeypatch.setenv("OPS_METRICS_TOKEN", "test-ops-token")
+    telemetry = Mock(side_effect=AssertionError("unauthorized telemetry read"))
+    database = Mock(side_effect=AssertionError("unauthorized operational DB read"))
+    monkeypatch.setattr(stats.sqlite3, "connect", telemetry)
+    monkeypatch.setattr(stats, "get_conn", database)
+
+    response = client.get("/api/stats/ops-llm", headers=[(b"X-Ops-Token", b"caf\xe9")])
+
+    assert response.status_code == 403
+    assert response.json() == {"detail": "forbidden"}
+    telemetry.assert_not_called()
+    database.assert_not_called()

@@ -70,7 +70,9 @@ def ops_llm_metrics(
     environment; missing or whitespace-only configuration fails closed.
     """
     expected = os.environ.get("OPS_METRICS_TOKEN", "")
-    if not expected.strip() or not secrets.compare_digest(x_ops_token or "", expected):
+    if not expected.strip() or not secrets.compare_digest(
+        (x_ops_token or "").encode("utf-8"), expected.encode("utf-8"),
+    ):
         raise HTTPException(status_code=403, detail="forbidden")
     days = max(1, min(days, 30))
 
