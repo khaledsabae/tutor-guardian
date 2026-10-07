@@ -59,6 +59,41 @@ def test_real_hearing_forms_remain_development(form):
     assert "development" in classifier._keyword_fast_path(f"طفلي {form} ماذا أفعل؟")
 
 
+@pytest.mark.parametrize("form,domain", [
+    ("يعضونني", "medical"),
+    ("يعضونه", "medical"),
+    ("يعضونها", "medical"),
+    ("تعضونني", "medical"),
+    ("ويعضونني", "medical"),
+    ("فَيَعُضُّونَني", "medical"),
+    ("بيلعبوا", "development"),
+    ("بيلعبوه", "development"),
+    ("بيلعبوها", "development"),
+    ("بتلعبوا", "development"),
+    ("وبيلعبوا", "development"),
+    ("فَبِيَلْعَبُوا", "development"),
+    ("بيسمعوا", "development"),
+    ("بيسمعوني", "development"),
+    ("بيسمعوه", "development"),
+    ("بيسمعوها", "development"),
+    ("بتسمعوا", "development"),
+    ("وبيسمعوا", "development"),
+    ("فَبِيَسْمَعُوا", "development"),
+    ("يسمعونني", "development"),
+])
+def test_plural_verbs_and_object_suffixes_keep_their_domain(form, domain):
+    assert domain in (classifier._keyword_fast_path(f"أطفالي {form}") or [])
+
+
+@pytest.mark.parametrize("question", [
+    "ماذا تنصح لبعضهم؟", "فبعضهن مختلفات", "ماذا أقرأ ولعبدالله علوان؟",
+    "ماذا أقرأ لِعَبْدِالله علوان؟", "فسمعت عن عبدالله علوان",
+    "وسَمِعْتُ عن عبدالله علوان",
+])
+def test_plural_expansion_does_not_restore_embedded_roots_or_adult_reports(question):
+    assert classifier._keyword_fast_path(question) is None
+
+
 @pytest.mark.parametrize("question", [
     "بنتي ما سمعت الجرس لما رن جنبها",
     "طفلتي ما سمعته لما رن الجرس جنبها",
