@@ -31,16 +31,33 @@
   "translation": {
     "translator_model": "mistral-large-3:675b",
     "needs_scholar_review": true,
-    "review_verdict": "pending",
+    "review_verdict": "clean",
     "review_defects": [],
-    "approved_by": null,
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
     "fixer_model": "openai:codex",
     "english_authors": [
       "mistral-large-3:675b",
       "openai:codex"
     ],
     "draft_status": "draft",
-    "source_recovery_note": "Rewritten from the recovered Arabic excerpt and Arabic draft on 2026-10-07; not reviewed or approved."
+    "source_recovery_note": "Rewritten from the recovered Arabic excerpt and Arabic draft on 2026-10-07; not reviewed or approved.",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "300e7ec20c529db8df6fd8508159ac02592e38d7abb892f14fc4f6c4b35c3722",
+      "reviewed_at": "2026-10-07T08:24:08+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+    },
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
+    "revalidated_at": "2026-10-07T08:24:08+00:00"
   },
   "source_url": "https://www.alukah.net/Books/Files/Book_17337/BookFile/brotherandboys.pdf#page=103",
   "source_note": "DRAFT source recovery, 2026-10-07: manually transcribed from the publisher PDF, PDF page 103 (printed page 102), the two complete sections on Abu Bakra and Usama ibn Umayr. Line wrapping and vowel marks normalized; honorific glyphs expanded; footnote markers/footnotes and the preceding incomplete paragraph omitted. Source provenance and transcription evidence: ops/data/kb_fidelity/source_recovery/isl-752169b4.md. Source evidence only: no human approval, specialist signoff, model review, or publication approval."

@@ -93,15 +93,6 @@
       "content_sha256": "84867b11f841d5332c5e9fce085ee6eede881bf0732da005883fb86d426e8327",
       "queued_on": "2026-10-04"
     },
-    "isl-752169b4__en": {
-      "category": "awaiting-review",
-      "reason": "DRAFT source recovery on 2026-10-07: publisher brotherandboys.pdf PDF page 103 (printed page 102) visually verified; corrupted Arabic excerpt manually transcribed and AR/EN summaries rewritten from its two complete sections. Evidence and PDF/excerpt SHA-256: ops/data/kb_fidelity/source_recovery/isl-752169b4.md. Source fidelity detector reports no flags. Awaiting independent AR/EN parity review and required scholar/human review; needs_scholar_review=true, approved_by=null; no approval or publication.",
-      "content_sha256": "300e7ec20c529db8df6fd8508159ac02592e38d7abb892f14fc4f6c4b35c3722",
-      "queued_on": "2026-10-07",
-      "english_authors": [
-        "openai:codex"
-      ]
-    },
     "isl-8aa15666__en": {
       "category": "source-unverified",
       "reason": "It attributes words or deeds to the Prophet ﷺ or cites a hadith — check these first. Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
