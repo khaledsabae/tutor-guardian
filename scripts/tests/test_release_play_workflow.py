@@ -1,6 +1,6 @@
 """Execute only the upload shell with a fake python; never build or upload."""
 import json
-import os
+import shutil
 from pathlib import Path
 import subprocess
 import tempfile
@@ -19,11 +19,25 @@ class ReleasePlayWorkflowTests(unittest.TestCase):
         cls.upload = next(s for s in cls.workflow['jobs']['release']['steps']
                           if s['name'].startswith('Upload to Google Play'))
 
-    def run_upload(self, notes):
+    def run_upload(self, notes, *, version=None, matching_notes=False, expect_failure=False):
         with tempfile.TemporaryDirectory() as directory:
             temp = Path(directory)
+            workspace = temp / 'repo'
+            (workspace / 'mobile').mkdir(parents=True)
+            (workspace / 'docs/release_notes').mkdir(parents=True)
+            pubspec = (ROOT / 'mobile/pubspec.yaml').read_text()
+            if version is not None:
+                pubspec = '\n'.join('version: ' + version if line.startswith('version:') else line
+                                    for line in pubspec.splitlines())
+            (workspace / 'mobile/pubspec.yaml').write_text(pubspec)
+            shutil.copy(ROOT / NOTES_FILE, workspace / NOTES_FILE)
+            if matching_notes:
+                (workspace / f'docs/release_notes/{version}.json').write_text(
+                    json.dumps({'ar': 'جديد', 'en-US': 'New release'}))
             fake = temp / 'python3'
             fake.write_text('#!/usr/bin/python3\nimport json, os, sys\n'
+                            'if sys.argv[1] == "-":\n'
+                            '    os.execv("/usr/bin/python3", ["python3"] + sys.argv[1:])\n'
                             'if sys.argv[1] == "scripts/play_upload.py":\n'
                             '    open(os.environ["CAPTURE"], "w").write(json.dumps(sys.argv[2:]))\n')
             fake.chmod(0o755)
@@ -32,9 +46,16 @@ class ReleasePlayWorkflowTests(unittest.TestCase):
                        PLAY_SERVICE_ACCOUNT_JSON='{}', TRACK='internal',
                        ROLLOUT='1.0', NOTES=notes, CAPTURE=str(temp / 'args.json'))
             result = subprocess.run(['bash', '-e', '-c', self.upload['run']],
-                                    cwd=ROOT, env=env, capture_output=True, text=True)
+                                    cwd=workspace, env=env, capture_output=True, text=True)
+            if expect_failure:
+                self.assertNotEqual(result.returncode, 0)
+                self.assertIn(f'docs/release_notes/{version}.json', result.stderr)
+                self.assertIn('Missing release notes', result.stderr)
+                self.assertFalse((temp / 'args.json').exists())
+                self.assertFalse((temp / 'play_sa.json').exists())
+                return None
             self.assertEqual(result.returncode, 0, result.stderr)
-            self.assertFalse((ROOT / 'COPY_RELEASE_INJECTION').exists())
+            self.assertFalse((workspace / 'COPY_RELEASE_INJECTION').exists())
             return json.loads((temp / 'args.json').read_text())
 
     def test_dispatch_defaults_to_committed_bilingual_notes(self):
@@ -60,6 +81,19 @@ class ReleasePlayWorkflowTests(unittest.TestCase):
         self.assertNotIn('--notes-file', args)
         self.assertEqual(args[args.index('--track') + 1], 'internal')
         self.assertEqual(args[args.index('--rollout') + 1], '1.0')
+
+    def test_changed_pubspec_requires_matching_notes_not_stale_file(self):
+        self.run_upload('', version='2.0.0+999', expect_failure=True)
+
+    def test_changed_pubspec_selects_exact_matching_notes(self):
+        args = self.run_upload('', version='2.0.0+999', matching_notes=True)
+        self.assertEqual(args[args.index('--notes-file') + 1],
+                         'docs/release_notes/2.0.0+999.json')
+
+    def test_override_works_without_matching_version_notes(self):
+        args = self.run_upload('Custom release', version='2.0.0+999')
+        self.assertEqual(args[args.index('--notes') + 1], 'Custom release')
+        self.assertNotIn('--notes-file', args)
 
     def test_inputs_enter_shell_only_through_env(self):
         self.assertNotIn('${{', self.upload['run'])
