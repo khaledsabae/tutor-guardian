@@ -16,28 +16,40 @@
       ]
     },
     "isl-1057f72f__en": {
-      "category": "source-unverified",
-      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
-      "content_sha256": "10522b8b45748bd10abe4af88e88a38a6843d54607b238d510281d94ab145a05",
-      "queued_on": "2026-10-04"
+      "category": "awaiting-review",
+      "reason": "Primary Book17337 PDF pages located from raw OCR before rewriting and directly read. Source-ID/page/checksum proofs, quote-versus-paraphrase status, citation limitations and zero new modern-book verbatim words recorded in ops/data/kb_fidelity/source_recovery/<AR-id>.json. Source-faithful AR+EN drafts passed deterministic source guards. No model, scholar or human approval; independent parity and scholar review pending.",
+      "content_sha256": "c4127f42604c80e5f56e26be191dedea73bfd6b74382b5a1b1def05b0211925a",
+      "queued_on": "2026-10-07",
+      "english_authors": [
+        "openai:codex"
+      ]
     },
     "isl-14bc16f5__en": {
-      "category": "source-unverified",
-      "reason": "It attributes words or deeds to the Prophet ﷺ or cites a hadith — check these first. Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
-      "content_sha256": "3761ac07dccbd665fe717ccc205da270d99511a14cde6dc2acd927c59a7409c5",
-      "queued_on": "2026-10-04"
+      "category": "awaiting-review",
+      "reason": "Primary Book17337 PDF pages located from raw OCR before rewriting and directly read. Source-ID/page/checksum proofs, quote-versus-paraphrase status, citation limitations and zero new modern-book verbatim words recorded in ops/data/kb_fidelity/source_recovery/<AR-id>.json. Source-faithful AR+EN drafts passed deterministic source guards. No model, scholar or human approval; independent parity and scholar review pending.",
+      "content_sha256": "6f8b33f049d9991776e59592b0ec6cacd4385d18f2b441f7f76e8e3e7d61943d",
+      "queued_on": "2026-10-07",
+      "english_authors": [
+        "openai:codex"
+      ]
     },
     "isl-23c2dd25__en": {
-      "category": "source-unverified",
-      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
-      "content_sha256": "977a8b4774ed5b3edeb4d3e6b94bd1c9641cdaaac7e7a8a5070ee7b9be1d4303",
-      "queued_on": "2026-10-04"
+      "category": "awaiting-review",
+      "reason": "Primary Book17337 PDF pages located from raw OCR before rewriting and directly read. Source-ID/page/checksum proofs, quote-versus-paraphrase status, citation limitations and zero new modern-book verbatim words recorded in ops/data/kb_fidelity/source_recovery/<AR-id>.json. Source-faithful AR+EN drafts passed deterministic source guards. No model, scholar or human approval; independent parity and scholar review pending.",
+      "content_sha256": "fa8b7c8c1b8fdd08b0a12641321fb837c0d8aac9b85968f290a5fe005454f90c",
+      "queued_on": "2026-10-07",
+      "english_authors": [
+        "openai:codex"
+      ]
     },
     "isl-2aa57245__en": {
-      "category": "source-unverified",
-      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
-      "content_sha256": "6c12dadbd89d391b63c19e6fe3e6675f462a7213dafbb7c3f1eb3a3f2aa17346",
-      "queued_on": "2026-10-04"
+      "category": "awaiting-review",
+      "reason": "Primary Book17337 PDF pages located from raw OCR before rewriting and directly read. Source-ID/page/checksum proofs, quote-versus-paraphrase status, citation limitations and zero new modern-book verbatim words recorded in ops/data/kb_fidelity/source_recovery/<AR-id>.json. Source-faithful AR+EN drafts passed deterministic source guards. No model, scholar or human approval; independent parity and scholar review pending.",
+      "content_sha256": "752732cd1b86e43b9a6512f2713d0fb83032776a480507d790273eba206b5b89",
+      "queued_on": "2026-10-07",
+      "english_authors": [
+        "openai:codex"
+      ]
     },
     "isl-2fee1086__en": {
       "category": "source-unverified",

@@ -1,0 +1,62 @@
+{
+  "unit_id": "isl-14bc16f5",
+  "source_title": "حقوق الأولاد على الوالدين",
+  "source_author": "عماد أحمد عبدالعظيم",
+  "source_url": "https://www.alukah.net/Books/Files/Book_17337/BookFile/brotherandboys.pdf",
+  "pdf_sha256": "7fa6f88fbf1ba714947983c11cde1e8c67b576374ae06c08a081444743d1272c",
+  "pdf_pages_one_based": [
+    53
+  ],
+  "printed_pages": [
+    52
+  ],
+  "excerpt": "وعن أسامة بن زيد رضي الله عنهما، عن النبي ﷺ أنه كان يأخذه والحسن، ويقول: «اللهم إني أحبهما فأحبهما» أو كما قال.\nأخرجه البخاري (٣٧٤٧).",
+  "excerpt_sha256": "5601472aa8e7d37ff692312800bb8132f9320a57454043ca6f6d090860c47359",
+  "method": "Read targeted rendered primary PDF page located by raw OCR references BEFORE rewriting. Source representation documented separately; editorial paraphrases are not claimed as verbatim extraction.",
+  "hadith_matches": [
+    {
+      "text": "اللهم إني أحبهما فأحبهما",
+      "citation": "صحيح البخاري — حديث ٣٧٤٧",
+      "exact_local_corpus_match": true
+    }
+  ],
+  "approval": "Source evidence only; no scholar, human or model approval. Awaiting independent review.",
+  "source_representation": "Selected ancient Usama/al-Hasan report, with normalized marks and expanded honorifics; Bukhari3747 exact match limited to the quoted dua.",
+  "scope": "This selection is Usama and al-Hasan, not al-Hasan and al-Husayn. Adjacent Ibn Majah143, Ibn Abi al-Dunya232, Saadi commentary, verses and later anecdotes excluded. No new instruction to teach love of Ahl al-Bayt.",
+  "pre_rewrite_mapping": {
+    "pdf_page_one_based": 53,
+    "printed_page": 52,
+    "raw_OCR_locator": "Usama ibn Zayd / al-Hasan; Bukhari3747; adjacent Ibn Majah143 and Ibn Abi al-Dunya232",
+    "raw_original_sha256": "aba28d28800139185771e560e613632066c15a321ea8b51cc97e69aa6a0d5d66"
+  },
+  "quotation_budget": {
+    "additional_verbatim_modern_book_words": 0,
+    "given_existing_modern_total": 83,
+    "given_cap": 90,
+    "ancient_quote_scope": "Only historically attributed public-domain reports/fragments; modern commentary excluded."
+  },
+  "excerpt_description": "Current source representation stored in text_original; consult source_representation for quote-versus-paraphrase status.",
+  "validation": {
+    "guards": {
+      "check_kb_integrity.py": 0,
+      "check_kb_fidelity.py": 0,
+      "check_quran_citations.py": 0,
+      "check_hadith_citations.py": 0,
+      "check_scripture_coverage.py": 0,
+      "check_quran_rendering.py": 0
+    },
+    "pair_schema_exit": 0,
+    "canonical_sha256": "6f8b33f049d9991776e59592b0ec6cacd4385d18f2b441f7f76e8e3e7d61943d",
+    "deterministic_parity_defects": [],
+    "queue": "awaiting-review",
+    "models_called": 0,
+    "approval": null
+  },
+  "raw_OCR_source_locator": {
+    "commit": "42a67c4a3c50cabed21f63ec4bb30cbe2c66712a",
+    "file": "knowledge_base/units/isl-14bc16f5.json",
+    "field": "text_original",
+    "sha256": "aba28d28800139185771e560e613632066c15a321ea8b51cc97e69aa6a0d5d66",
+    "meaning": "Corrupt historical OCR preserved in Git; hash/locator retained without duplicating modern book text."
+  }
+}

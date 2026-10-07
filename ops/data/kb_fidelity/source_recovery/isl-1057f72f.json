@@ -1,0 +1,59 @@
+{
+  "unit_id": "isl-1057f72f",
+  "source_title": "حقوق الأولاد على الوالدين",
+  "source_author": "عماد أحمد عبدالعظيم",
+  "source_url": "https://www.alukah.net/Books/Files/Book_17337/BookFile/brotherandboys.pdf",
+  "pdf_sha256": "7fa6f88fbf1ba714947983c11cde1e8c67b576374ae06c08a081444743d1272c",
+  "pdf_pages_one_based": [
+    80
+  ],
+  "printed_pages": [
+    79
+  ],
+  "excerpt": "صياغة تحريرية لرواية عمرو بن سلمة بن قيس الجرمي في صفحة ٨٠ من ملف الكتاب: تعلّم وفد قومه القرآن وسألوا النبي ﷺ عمن يصلي بهم. وجّههم إلى من كان أكثر أخذا للقرآن، ولم يجدوا في قومهم من جمع أكثر من عمرو، وكان يومئذ غلاما. هذه إعادة صياغة وليست نقلا حرفيا للحديث.",
+  "excerpt_sha256": "cb2ea11bedf9468c633411292abee308aa1ca09e1ef63aebf5b6403094bba98d",
+  "method": "Read targeted rendered primary PDF page located by raw OCR references BEFORE rewriting. Source representation documented separately; editorial paraphrases are not claimed as verbatim extraction.",
+  "hadith_matches": [],
+  "approval": "Source evidence only; no scholar, human or model approval. Awaiting independent review.",
+  "source_representation": "Editorial paraphrase, explicitly labelled in text_original; not a verbatim hadith or reconstructed original.",
+  "selected_ancient_report": "وعن عمرو بن سلمة بن قيس الجرمي، قال: فجاؤوا النبي ﷺ حين أسلم الناس، وتعلموا القرآن، وقضوا حوائجهم، فقالوا له: من يصلي بنا أو لنا، فقال: ليصل بكم أكثركم جمعا، أو أخذا للقرآن، فجاوزوا إلى قومهم فسألوا فيهم فلم يجدوا فيهم أحدا أكثر أخذا أو جمعا من القرآن أكثر مما جمعت أو أخذت، قال: وأنا يومئذ غلام.",
+  "scope": "Only the Amr narrative is represented. Neighboring Said ibn al-As and Dahhak ibn Qays material is excluded. Paradise-entry and elevated-afterlife-status claims removed; no author guarantee or endorsement.",
+  "citation_limit": "The selected Book17337 report cites Abu Dawud587 and other collections in its footnote. No local Sahih corpus match is asserted for the full selected wording. Existing local Bukhari4302 check rejects the exact book clause «ليصل بكم أكثركم جمعا أو أخذا للقرآن»; no substitute number or exact Sahih stamp fabricated.",
+  "pre_rewrite_mapping": {
+    "pdf_page_one_based": 80,
+    "printed_page": 79,
+    "raw_OCR_locator": "Amr ibn Salama ibn Qays; Abu Dawud587; neighboring Said ibn al-As and Dahhak ibn Qays",
+    "raw_original_sha256": "6252d4c27499f581fe1ae88ae8b8c546785726454f66686db84474a7b98d485a"
+  },
+  "quotation_budget": {
+    "additional_verbatim_modern_book_words": 0,
+    "given_existing_modern_total": 83,
+    "given_cap": 90,
+    "ancient_quote_scope": "Only historically attributed public-domain reports/fragments; modern commentary excluded."
+  },
+  "excerpt_description": "Current source representation stored in text_original; consult source_representation for quote-versus-paraphrase status.",
+  "validation": {
+    "guards": {
+      "check_kb_integrity.py": 0,
+      "check_kb_fidelity.py": 0,
+      "check_quran_citations.py": 0,
+      "check_hadith_citations.py": 0,
+      "check_scripture_coverage.py": 0,
+      "check_quran_rendering.py": 0
+    },
+    "pair_schema_exit": 0,
+    "canonical_sha256": "c4127f42604c80e5f56e26be191dedea73bfd6b74382b5a1b1def05b0211925a",
+    "deterministic_parity_defects": [],
+    "queue": "awaiting-review",
+    "models_called": 0,
+    "approval": null
+  },
+  "selected_ancient_report_sha256": "2a336a511ef41fe73743b29986a629b113bfca1cd93f9906ee2a274f5446a6cd",
+  "raw_OCR_source_locator": {
+    "commit": "42a67c4a3c50cabed21f63ec4bb30cbe2c66712a",
+    "file": "knowledge_base/units/isl-1057f72f.json",
+    "field": "text_original",
+    "sha256": "6252d4c27499f581fe1ae88ae8b8c546785726454f66686db84474a7b98d485a",
+    "meaning": "Corrupt historical OCR preserved in Git; hash/locator retained without duplicating modern book text."
+  }
+}
