@@ -8,22 +8,22 @@
         "title": "نوم الرضيع: نومٌ آمن وليالٍ أهدأ (حتى عام)",
         "age_group": "prenatal-1",
         "domain": "medical",
-        "description": "أربعة دروس للوالدين من الولادة حتى إكمال عام: تجهيز مكان نوم آمن في كل نومة، وفهم الاستيقاظ والرضاعة الليلية، وقراءة إشارات التعب والنعاس، وروتين قصير هادئ قبل النوم؛ مع التمييز في كل ذلك بين التفاوت الطبيعي وعلامات الخطر التي تتطلّب مساعدة عاجلة.",
+        "description": "ستة دروس للوالدين من الولادة حتى إكمال عام: تجهيز مكان نوم آمن في كل نومة، وفهم الاستيقاظ الليلي، وقراءة إشارات التعب والنعاس، وروتين قصير هادئ قبل النوم، ورضعات ليلية هادئة وآمنة، والانتقال التدريجي من الحضن إلى السرير؛ مع التمييز في كل ذلك بين التفاوت الطبيعي وعلامات الخطر التي تتطلّب مساعدة عاجلة.",
         "pedagogical_framework": "attachment_rahma",
         "primary_reference": {
           "type": "تقرير_طبي",
-          "info": "الأكاديمية الأمريكية لطب الأطفال: النوم الآمن. هيئة الخدمات الصحية البريطانية: نوم الرضيع وعلامات المرض الخطير. مراكز السيطرة على الأمراض والوقاية منها الأمريكية: نصائح مراحل النموّ."
+          "info": "الأكاديمية الأمريكية لطب الأطفال: النوم الآمن والتغذية. هيئة الخدمات الصحية البريطانية: النوم والرضاعة والطوارئ. مراكز مكافحة الأمراض الأمريكية: النموّ وعلامات الجوع. منظمة الصحة العالمية: الرضاعة."
         },
         "en": {
           "title": "Baby Sleep: Safe Sleep and Calmer Nights (Up to One Year)",
-          "description": "Four lessons for parents from birth until the first birthday: prepare a safe space for every sleep, understand waking and night feeds, read tired and sleepy cues, and keep a short, calm bedtime routine; throughout, tell normal variation apart from danger signs needing urgent help."
+          "description": "Six lessons for parents from birth until the first birthday: prepare a safe space for every sleep, understand night waking, read tired and sleepy cues, keep a short, calm bedtime routine, keep night feeds calm and safe, and move gradually from your arms to the cot; throughout, tell normal variation apart from danger signs needing urgent help."
         }
       },
       "unit_bands": [
         "prenatal-1",
         "unspecified"
       ],
-      "band_notes": "Birth until first birthday only; prenatal-1 is the canonical band. This recovery publishes only the first four contiguous lessons; the remaining six original drafts stay held in the preserved backup. Lessons 3-4 follow CDC milestone tips (2, 4 and 9 months), AAP drowsy-but-awake from about 4 months, and NHS bedtime-routine guidance; no routine length, no deadline, and no unit outside prenatal-1. Follow AAP safe sleep and NHS infant feeding/waking guidance. Never delay responding to hunger or distress, never recommend leaving a newborn to cry, never promise a sleep-training deadline. Inability to wake, stopped breathing, or blue/grey colour requires emergency help immediately.",
+      "band_notes": "Birth until first birthday only; prenatal-1 is the canonical band. This recovery publishes only the first six contiguous lessons; the remaining four original drafts (s07-s10) stay held in the preserved backup. Lessons 3-4 follow CDC milestone tips (2, 4 and 9 months), AAP drowsy-but-awake from about 4 months, and NHS bedtime-routine guidance; no routine length, no deadline, and no unit outside prenatal-1. Lessons 5-6 follow WHO (breastfeed responsively, as often as the baby wants, day and night), NHS (night breastfeeds help milk supply; never leave a baby alone with a propped bottle; fewer night feeds as babies grow, and for some babies 6-12 months night feeds may no longer be necessary; bed-sharing exclusions; early weeks some babies only fall asleep in arms), AAP (feed on demand, crying is a late hunger sign, not every cry is hunger; avoid feeding on a couch or armchair when sleepy; return the baby to their own sleep space; drowsy from about 4 months; graded soothing: look, voice, touch, allowing time between steps; normal for a 6-month-old to wake and resettle; attend when hungry, needing a change or unwell) and CDC (hunger cues; some newborns are sleepy and may need waking to feed; holding and responding does not spoil); no age to stop night feeds, no wait times, no deadline. Follow AAP safe sleep and NHS infant feeding/waking guidance. Never delay responding to hunger or distress, never recommend leaving a newborn to cry, never promise a sleep-training deadline. Inability to wake, stopped breathing, or blue/grey colour requires emergency help immediately.",
       "lessons": [
         {
           "title": "النوم الآمن: على ظهره في سريرٍ خالٍ",
@@ -68,18 +68,40 @@
           "pin_units": [
             "med-2dc3af5f"
           ]
+        },
+        {
+          "title": "الرضاعة الليلية والنوم",
+          "focus": "Night feeds are a real need: breastfeed responsively, as often as the baby wants, day and night (WHO); night breastfeeds help milk supply (NHS); breast milk protects against infection and lowers SIDS risk (NHS/AAP); hunger cues before crying (CDC/AAP), not every cry is hunger (AAP); sleepy newborns may need waking to feed — ask the doctor (CDC); calm, dim, quiet night feeds then back in the cot on the back (NHS/AAP); never a propped bottle or a bottle in bed (NHS); no feeding on a sofa/armchair when sleepy, back to own sleep space, bed-sharing exclusions (AAP/NHS); night feeds lessen with age and for some babies 6-12 months may no longer be needed (NHS) — no fixed age, ask the doctor; emergency signs (NHS).",
+          "keywords": [
+            "الرضاعة",
+            "النوم"
+          ],
+          "pin_units": [
+            "med-2dc3af5f"
+          ]
+        },
+        {
+          "title": "من الحضن إلى السرير: خطواتٌ هادئة",
+          "focus": "Early weeks some babies only fall asleep in arms (NHS), not spoiling (CDC); the safe place is the own cot on the back in the parents' room, put down before the parent sleeps, never dozing on a sofa/armchair, move from a carrier (AAP/NHS); from about 4 months put down drowsy, babies rocked or held to sleep may struggle to resettle (AAP); graded soothing — look, voice, touch, time between steps, then pick up if needed (AAP/CDC); a 6-month-old waking and resettling is normal, attend to hunger, nappy or illness (AAP); no deadline, setbacks with illness/teething/growth (NHS); emergency signs (NHS).",
+          "keywords": [
+            "النوم",
+            "الحضن"
+          ],
+          "pin_units": [
+            "med-2dc3af5f"
+          ]
         }
       ],
       "description_replace_ar": [
         [
-          "درسان للوالدين من الولادة حتى إكمال عام: تجهيز مكان نوم آمن في كل نومة، وفهم الاستيقاظ والرضاعة الليلية، والتمييز بين التفاوت الطبيعي وعلامات الخطر التي تتطلّب مساعدة عاجلة.",
-          "أربعة دروس للوالدين من الولادة حتى إكمال عام: تجهيز مكان نوم آمن في كل نومة، وفهم الاستيقاظ والرضاعة الليلية، وقراءة إشارات التعب والنعاس، وروتين قصير هادئ قبل النوم؛ مع التمييز في كل ذلك بين التفاوت الطبيعي وعلامات الخطر التي تتطلّب مساعدة عاجلة."
+          "أربعة دروس للوالدين من الولادة حتى إكمال عام: تجهيز مكان نوم آمن في كل نومة، وفهم الاستيقاظ والرضاعة الليلية، وقراءة إشارات التعب والنعاس، وروتين قصير هادئ قبل النوم؛ مع التمييز في كل ذلك بين التفاوت الطبيعي وعلامات الخطر التي تتطلّب مساعدة عاجلة.",
+          "ستة دروس للوالدين من الولادة حتى إكمال عام: تجهيز مكان نوم آمن في كل نومة، وفهم الاستيقاظ الليلي، وقراءة إشارات التعب والنعاس، وروتين قصير هادئ قبل النوم، ورضعات ليلية هادئة وآمنة، والانتقال التدريجي من الحضن إلى السرير؛ مع التمييز في كل ذلك بين التفاوت الطبيعي وعلامات الخطر التي تتطلّب مساعدة عاجلة."
         ]
       ],
       "description_replace_en": [
         [
-          "Two lessons for parents from birth until the first birthday: prepare a safe space for every sleep, understand waking and night feeds, and distinguish normal variation from danger signs needing urgent help.",
-          "Four lessons for parents from birth until the first birthday: prepare a safe space for every sleep, understand waking and night feeds, read tired and sleepy cues, and keep a short, calm bedtime routine; throughout, tell normal variation apart from danger signs needing urgent help."
+          "Four lessons for parents from birth until the first birthday: prepare a safe space for every sleep, understand waking and night feeds, read tired and sleepy cues, and keep a short, calm bedtime routine; throughout, tell normal variation apart from danger signs needing urgent help.",
+          "Six lessons for parents from birth until the first birthday: prepare a safe space for every sleep, understand night waking, read tired and sleepy cues, keep a short, calm bedtime routine, keep night feeds calm and safe, and move gradually from your arms to the cot; throughout, tell normal variation apart from danger signs needing urgent help."
         ]
       ]
     },
