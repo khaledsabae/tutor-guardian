@@ -3,7 +3,7 @@
   "title": "Foundations of Aqeedah — Planting Iman in the Young",
   "age_group": "7-9",
   "domain": "aqeedah",
-  "description": "An 11-lesson pathway that teaches the father/mother the foundations of the correct Islamic aqeedah so they can teach their children (ages 3-12). Built upon the Qur’an and Sunnah according to the understanding of the Salaf of the Ummah, far from disputes.",
+  "description": "A 12-lesson pathway that teaches the father/mother the foundations of the correct Islamic aqeedah so they can teach their children (ages 3-12). Built upon the Qur’an and Sunnah according to the understanding of the Salaf of the Ummah, far from disputes.",
   "lesson_ids": [
     "lesson_7-9_aqeedah_fundamentals_01",
     "lesson_7-9_aqeedah_fundamentals_02",
@@ -15,9 +15,10 @@
     "lesson_7-9_aqeedah_fundamentals_08",
     "lesson_7-9_aqeedah_fundamentals_09",
     "lesson_7-9_aqeedah_fundamentals_10",
-    "lesson_7-9_aqeedah_fundamentals_11"
+    "lesson_7-9_aqeedah_fundamentals_11",
+    "lesson_7-9_aqeedah_fundamentals_12"
   ],
-  "estimated_days": 11,
+  "estimated_days": 12,
   "pedagogical_framework": "aqeedah_parent_led",
   "primary_reference": {
     "type": "دراسات_عقدية",
@@ -27,7 +28,7 @@
   "is_published": true,
   "version": "1.0.0",
   "created_at": "2026-06-24T00:00:00",
-  "updated_at": "2026-10-07T07:19:31",
+  "updated_at": "2026-10-07T07:42:38",
   "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
   "language": "en",
   "source_language": "ar",
@@ -43,21 +44,27 @@
     "review_verdict": "low_only",
     "review_defects": [
       {
+        "model": "deepseek-v4-pro",
+        "field": "description",
+        "type": "source_corruption",
+        "why": "The Arabic uses plural 'دروس' after the number 12, which is grammatically incorrect in Modern Standard Arabic; it should be singular accusative."
+      },
+      {
         "model": "glm-5.2",
         "field": "description",
         "type": "omission",
-        "why": "The English drops the adjective قصيرة ('short'), so parents lose the reassurance that the lessons are brief."
+        "why": "The English drops the adjective «قصيرة» (short), so the lessons' brevity — a key practical point for parents — is lost."
       }
     ],
     "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
-    "revalidated_at": "2026-10-07T07:27:12+00:00",
-    "fixed_at": "2026-10-07T07:26:51+00:00",
+    "revalidated_at": "2026-10-07T07:46:06+00:00",
+    "fixed_at": "2026-10-07T07:45:38+00:00",
     "fixer_model": "gpt-6",
     "english_authors": [
       "mistral-large-3:675b",
       "gpt-6"
     ],
-    "manual_fix_note": "Retain all reference titles and author attributions within the existing 200-character schema limit; independent parity review required.",
+    "manual_fix_note": "Correct the article before twelve after the lesson-count update; final description receives genuine independent parity review.",
     "auto_review": {
       "reviewers": [
         "deepseek-v4-pro",
@@ -66,14 +73,20 @@
       "fixer": null,
       "rounds": 1,
       "prompt_version": "dfa8a5f39718",
-      "content_sha256": "6394507cc6f7fce2a27a95470ca5d1ef005269736653c61e431e0f4dea5ec3f9",
-      "reviewed_at": "2026-10-07T07:27:12+00:00",
+      "content_sha256": "ca26c3f408e6b6d81325072dbeaa44d199d94d51bd4b37a2c60e68d68563c9fc",
+      "reviewed_at": "2026-10-07T07:46:06+00:00",
       "residual_low": [
+        {
+          "model": "deepseek-v4-pro",
+          "field": "description",
+          "type": "source_corruption",
+          "why": "The Arabic uses plural 'دروس' after the number 12, which is grammatically incorrect in Modern Standard Arabic; it should be singular accusative."
+        },
         {
           "model": "glm-5.2",
           "field": "description",
           "type": "omission",
-          "why": "The English drops the adjective قصيرة ('short'), so parents lose the reassurance that the lessons are brief."
+          "why": "The English drops the adjective «قصيرة» (short), so the lessons' brevity — a key practical point for parents — is lost."
         }
       ],
       "adjudicated": [],
