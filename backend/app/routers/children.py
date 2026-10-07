@@ -37,6 +37,7 @@ from pydantic import BaseModel, Field, field_validator
 from app.config.guardrails_loader import load_child_surface_policy
 from app.core.proof import confirmed_session, require_device_proof_once_enrolled
 from app.core.taxonomy import CANONICAL_AGE_GROUPS, map_profile_age_to_band
+from app.core.times import now_z
 from app.db.init_db import get_conn
 from app.services import child_budget, child_license, child_missions, family_agreement
 from app.services import programs_common
@@ -395,7 +396,7 @@ def get_child_progress(
         # the app was opened for this child. We upsert today's row idempotently
         # and compute the run from the stored dates, so opening the app daily
         # increments the streak even when no lesson is completed.
-        today_str = datetime.utcnow().strftime("%Y-%m-%d")
+        today_str = datetime.now(timezone.utc).strftime("%Y-%m-%d")
         conn.execute(
             """
             INSERT INTO daily_login_streaks (device_id, child_id, date)
@@ -429,7 +430,7 @@ def get_child_progress(
             "streak_days": streak_days,
             "daily_login_streak": daily_login_streak,
             "last_completed_at": last_completed_at,
-            "fetched_at": datetime.utcnow().isoformat(timespec="seconds") + "Z",
+            "fetched_at": now_z(),
         }
     finally:
         conn.close()
@@ -717,7 +718,7 @@ def reset_child_progress(child_id: int, request: Request):
             "child_id": child_id,
             "device_id": device_id,
             "deleted": deleted,
-            "reset_at": datetime.utcnow().isoformat(timespec="seconds") + "Z",
+            "reset_at": now_z(),
         }
     finally:
         conn.close()
@@ -761,7 +762,7 @@ def delete_child(child_id: int, request: Request):
             return {
                 "child_id": child_id,
                 "deleted": True,
-                "deleted_at": datetime.utcnow().isoformat(timespec="seconds") + "Z",
+                "deleted_at": now_z(),
             }
     finally:
         conn.close()
@@ -769,7 +770,7 @@ def delete_child(child_id: int, request: Request):
     return {
         "child_id": child_id,
         "deleted": True,
-        "deleted_at": datetime.utcnow().isoformat(timespec="seconds") + "Z",
+        "deleted_at": now_z(),
     }
 
 

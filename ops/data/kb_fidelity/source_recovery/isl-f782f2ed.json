@@ -1,0 +1,73 @@
+{
+  "unit_id": "isl-f782f2ed",
+  "source_title": "حقوق الأولاد على الوالدين",
+  "source_author": "عماد بن أحمد بن عبدالعظيم",
+  "source_url": "https://www.alukah.net/Books/Files/Book_17337/BookFile/brotherandboys.pdf",
+  "pdf_sha256": "7fa6f88fbf1ba714947983c11cde1e8c67b576374ae06c08a081444743d1272c",
+  "original_ocr_sha256": "085ea20f81b7ee2c1aef98fceadaaa301011c58847c78716ad1e5bd07a37e8f5",
+  "original_ocr_git_locator": {
+    "commit": "6016bb4c796dc4b7a12835092c6f998bd3619c62",
+    "file": "knowledge_base/units/isl-f782f2ed.json",
+    "field": "text_original"
+  },
+  "raw_ocr_anchor": "ؿ مُٝ مَٗ مٞمٕض",
+  "pdf_pages_one_based": [
+    7
+  ],
+  "printed_pages": [
+    6
+  ],
+  "selected_pdf_pages_one_based": [
+    7
+  ],
+  "selected_printed_pages": [
+    6
+  ],
+  "excerpt": "قال تعالى: ﴿يا أيها الذين آمنوا قوا أنفسكم وأهليكم نارًا وقودها الناس والحجارة عليها ملائكة غلاظ شداد لا يعصون الله ما أمرهم ويفعلون ما يؤمرون﴾ [التحريم: 6].",
+  "excerpt_sha256": "0e84242e119917fbcdb7ca0d0755cfcd4c2dc4c709fa28b72a899eeb4a4731cc",
+  "excerpt_kind": "Quran quotation used in the author’s substantive discussion; the surrounding modern commentary is paraphrased, not copied.",
+  "method": "Downloaded actual primary PDF from Book17337; checksum matches previous recovery. Raw original OCR anchors checked before title/summary changes. Only candidate and adjacent pages extracted and visually read with native system Poppler. Ancient quotation transcribed with diacritics omitted and honorific glyphs omitted, without modern-author copied prose.",
+  "historical_attribution": "Quran quotation used in the author’s substantive discussion; the surrounding modern commentary is paraphrased, not copied.",
+  "scope_limit": "The introduction paragraph gives substantive author views on upbringing, not contents or research method. It is presented as the author’s account, not a new ruling or guarantee. No translation of the Quran is presented as Quran; the English is a paraphrase of the author’s discussion.",
+  "quotation_accounting": {
+    "new_modern_verbatim_words_this_batch": 0,
+    "prior_modern_book_aggregate_words": 89,
+    "modern_book_aggregate_words": 89,
+    "limit": 90,
+    "ancient_public_domain_exclusion": true,
+    "modern_material": "Own paraphrases only; original corrupted OCR is recoverable from base Git blob, not copied again."
+  },
+  "scripture_verification": {
+    "quran_66_6_local_mushaf_match": true
+  },
+  "approval": null,
+  "needs_scholar_review": true,
+  "models_called": 0,
+  "previous_translation_review": {
+    "base_commit": "6016bb4c796dc4b7a12835092c6f998bd3619c62",
+    "content_sha256": "537e9107d872181199927d0a4cec762613ddbc44b6c259a2639c8d903b365797",
+    "translation": {
+      "translator_model": "mistral-large-3:675b",
+      "reviewer_model": "deepseek-v4-pro+glm-5.2",
+      "needs_scholar_review": true,
+      "review_verdict": "pending",
+      "review_defects": [
+        {
+          "model": "deepseek-v4-pro",
+          "field": "title",
+          "type": "omission",
+          "why": "The English title omits the qualifier 'الدينية' (religious), making the title broader than the Arabic."
+        },
+        {
+          "model": "glm-5.2",
+          "field": "title",
+          "type": "omission",
+          "why": "The Arabic specifies 'religious upbringing' (الدينية) but the English title drops 'religious'."
+        }
+      ],
+      "approved_by": null,
+      "revalidated_at": "2026-10-04T11:18:18+00:00"
+    },
+    "meaning": "Historical verdicts on the previous text, retained verbatim as evidence; not fresh review of the recovered draft."
+  }
+}

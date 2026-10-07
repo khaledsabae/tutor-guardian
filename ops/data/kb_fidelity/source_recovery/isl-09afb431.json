@@ -1,0 +1,36 @@
+{
+  "unit_id": "isl-09afb431",
+  "source_title": "حقوق الأولاد على الوالدين",
+  "source_author": "عماد أحمد عبدالعظيم",
+  "source_url": "https://www.alukah.net/Books/Files/Book_17337/BookFile/brotherandboys.pdf",
+  "pdf_sha256": "7fa6f88fbf1ba714947983c11cde1e8c67b576374ae06c08a081444743d1272c",
+  "pdf_pages_one_based": [
+    105
+  ],
+  "printed_pages": [
+    104
+  ],
+  "excerpt": "وعن العلاء بن عبد الرحمن بن يعقوب، مولى الحرقة، قال: قال لي أبي: إن لي إليك حاجة، فظننت أنه يريد شيئا من عرض الدنيا، فقلت: يا أبه، سل ما شئت، قال: فإني أسألك أن تبكر إلى الجمعة.",
+  "excerpt_sha256": "b09d4bd76013ac8ddba56943d2ac014e264e7d584d8f4a6fa71b7c32fb17b667",
+  "method": "Direct reading of targeted rendered primary PDF pages, located by raw OCR references. Selected excerpt manually transcribed; line wraps, vowel marks and footnote markers removed, honorifics expanded. Selection boundaries documented; not a full-page transcription.",
+  "hadith_matches": [],
+  "approval": "Source evidence only; no scholar, human or model approval. Awaiting independent review.",
+  "selection": "Continuous opening narrative on PDF p.105, ending at the father’s request to arrive early for Jumu‘ah; the ensuing quoted Prophetic report and the separate recitation/learning/drinking paragraphs are outside the selected excerpt. No claim about mosque etiquette or children’s training is retained.",
+  "raw_anchor": "Al-Ala ibn Abd al-Rahman ibn Yaqub / early Jumuah request; adjacent al-Qiraah khalf al-Imam (166).",
+  "validation": {
+    "guards": {
+      "check_kb_integrity.py": 0,
+      "check_kb_fidelity.py": 0,
+      "check_quran_citations.py": 0,
+      "check_hadith_citations.py": 0,
+      "check_scripture_coverage.py": 0,
+      "check_quran_rendering.py": 0
+    },
+    "pair_schema_exit": 0,
+    "canonical_sha256": "04567292a1c300417c29acdd9ff70ebd79f28509f59b930146e555990cb8fb4a",
+    "deterministic_parity_defects": [],
+    "queue": "awaiting-review",
+    "models_called": 0,
+    "approval": null
+  }
+}

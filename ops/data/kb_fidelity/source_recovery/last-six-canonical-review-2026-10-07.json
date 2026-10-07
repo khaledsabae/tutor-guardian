@@ -1,0 +1,367 @@
+{
+  "schema": "tg.source_recovery_canonical_review/2",
+  "started_at": "2026-10-07T15:03:13.510128+00:00",
+  "tool": "ops/tools/review_en_parity.py",
+  "tool_sha256": "037d1c92eee71bd8a9f2096f9b624851f29f67178e3af2dde61d035609f7f33e",
+  "prompt_version": "dfa8a5f39718",
+  "max_concurrent_provider_calls_this_worker": 1,
+  "deadline_seconds": 1200,
+  "scholar_approval": false,
+  "calls": [
+    {
+      "requested_model": "deepseek-v4-pro",
+      "request_sha256": "4b212b8fd2da00acf883f57ec6dca983a9f2903fa2bf8883abfdcb225e6253fd",
+      "started_at": "2026-10-07T15:03:13.703080+00:00",
+      "reported_model": "deepseek-v4-pro",
+      "usage": {
+        "prompt_tokens": 2301,
+        "completion_tokens": 8305,
+        "total_tokens": 10606,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "raw_verdict": "{\"items\": [{\"id\": \"isl-c0936200__en\", \"defects\": [{\"field\": \"title\", \"side\": \"english\", \"type\": \"omission\", \"severity\": \"low\", \"arabic\": \"تفسير سبب النهي للأبناء\", \"english\": \"Explaining Restrictions to Children\", \"why\": \"The English title omits 'سبب' (reason), so it loses the Arabic emphasis on explaining the reason for the prohibition.\", \"suggestion\": \"Explaining the Reason for the Prohibition to Children in Ibn Battal's Commentary\"}]}, {\"id\": \"isl-d6faddeb__en\", \"defects\": [{\"field\": \"text_simplified\", \"side\": \"english\", \"type\": \"meaning\", \"severity\": \"low\", \"arabic\": \"نهته عن ممازحة الصبيان\", \"english\": \"discouraged him from joking with boys\", \"why\": \"نهته means she forbade him, which is stronger than 'discouraged'.\", \"suggestion\": \"forbade him from joking with boys\"}]}, {\"id\": \"isl-f6bbab53__en\", \"defects\": []}, {\"id\": \"isl-f782f2ed__en\", \"defects\": [{\"field\": \"text_simplified\", \"side\": \"english\", \"type\": \"meaning\", \"severity\": \"low\", \"arabic\": \"وتأديبهم وإبعادهم عن المحرمات\", \"english\": \"guiding their conduct, and keeping them away from prohibited acts\", \"why\": \"تأديبهم means disciplining them, which is stronger than 'guiding their conduct'.\", \"suggestion\": \"disciplining them and keeping them away from prohibited acts\"}, {\"field\": \"text_simplified\", \"side\": \"english\", \"type\": \"addition\", \"severity\": \"low\", \"arabic\": \"آية التحريم\", \"english\": \"the verse in Surah al-Tahrim\", \"why\": \"The Arabic does not name Surah al-Tahrim; the English adds this identification.\", \"suggestion\": \"the verse of prohibition\"}]}, {\"id\": \"isl-fb04bcd3__en\", \"defects\": [{\"field\": \"text_simplified\", \"side\": \"english\", \"type\": \"meaning\", \"severity\": \"low\", \"arabic\": \"هذا أثر عن عائشة\", \"english\": \"This is a report about Aisha\", \"why\": \"عن عائشة means 'from Aisha' (a narration attributed to her), not merely 'about Aisha'.\", \"suggestion\": \"This is a report from Aisha as transmitted by the author.\"}]}, {\"id\": \"isl-fe2f3c39__en\", \"defects\": []}]}",
+      "completed_at": "2026-10-07T15:04:17.761299+00:00",
+      "raw_verdict_sha256": "d80398127bc03a0a4df2fca2d8022b125dc3be29c6d7847304f86aeddce6cc71",
+      "elapsed_seconds": 64.058,
+      "parsed_verdicts": {
+        "isl-c0936200__en": [
+          {
+            "field": "title",
+            "side": "english",
+            "type": "omission",
+            "severity": "low",
+            "arabic": "تفسير سبب النهي للأبناء",
+            "english": "Explaining Restrictions to Children",
+            "why": "The English title omits 'سبب' (reason), so it loses the Arabic emphasis on explaining the reason for the prohibition.",
+            "suggestion": "Explaining the Reason for the Prohibition to Children in Ibn Battal's Commentary"
+          }
+        ],
+        "isl-d6faddeb__en": [
+          {
+            "field": "text_simplified",
+            "side": "english",
+            "type": "meaning",
+            "severity": "low",
+            "arabic": "نهته عن ممازحة الصبيان",
+            "english": "discouraged him from joking with boys",
+            "why": "نهته means she forbade him, which is stronger than 'discouraged'.",
+            "suggestion": "forbade him from joking with boys"
+          }
+        ],
+        "isl-f6bbab53__en": [],
+        "isl-f782f2ed__en": [
+          {
+            "field": "text_simplified",
+            "side": "english",
+            "type": "meaning",
+            "severity": "low",
+            "arabic": "وتأديبهم وإبعادهم عن المحرمات",
+            "english": "guiding their conduct, and keeping them away from prohibited acts",
+            "why": "تأديبهم means disciplining them, which is stronger than 'guiding their conduct'.",
+            "suggestion": "disciplining them and keeping them away from prohibited acts"
+          },
+          {
+            "field": "text_simplified",
+            "side": "english",
+            "type": "addition",
+            "severity": "low",
+            "arabic": "آية التحريم",
+            "english": "the verse in Surah al-Tahrim",
+            "why": "The Arabic does not name Surah al-Tahrim; the English adds this identification.",
+            "suggestion": "the verse of prohibition"
+          }
+        ],
+        "isl-fb04bcd3__en": [
+          {
+            "field": "text_simplified",
+            "side": "english",
+            "type": "meaning",
+            "severity": "low",
+            "arabic": "هذا أثر عن عائشة",
+            "english": "This is a report about Aisha",
+            "why": "عن عائشة means 'from Aisha' (a narration attributed to her), not merely 'about Aisha'.",
+            "suggestion": "This is a report from Aisha as transmitted by the author."
+          }
+        ],
+        "isl-fe2f3c39__en": []
+      }
+    },
+    {
+      "requested_model": "glm-5.2",
+      "request_sha256": "b44ea1621c298fa3c9702db57981e279fe1ddd5429c20f93daee654407c31b89",
+      "started_at": "2026-10-07T15:04:17.762424+00:00",
+      "reported_model": "glm-5.2",
+      "usage": {
+        "prompt_tokens": 2295,
+        "completion_tokens": 2476,
+        "total_tokens": 4771,
+        "prompt_tokens_details": {
+          "cached_tokens": 960
+        }
+      },
+      "raw_verdict": "```json\n{\"items\": [{\"id\": \"isl-c0936200__en\", \"defects\": [{\"field\": \"fields.title\", \"side\": \"english\", \"type\": \"meaning\", \"severity\": \"low\", \"arabic\": \"تفسير سبب النهي للأبناء\", \"english\": \"Explaining Restrictions to Children\", \"why\": \"The Arabic specifies explaining the *reason* (سبب) for the *prohibition* (النهي), but the English drops 'reason' and softens 'prohibition' to 'restrictions'.\", \"suggestion\": \"Explaining the Reason for Prohibition to Children in Ibn Battal's Commentary\"}]}, {\"id\": \"isl-d6faddeb__en\", \"defects\": [{\"field\": \"fields.text_simplified\", \"side\": \"english\", \"type\": \"meaning\", \"severity\": \"low\", \"arabic\": \"نهته عن ممازحة الصبيان\", \"english\": \"discouraged him from joking with boys\", \"why\": \"The Arabic نهته conveys forbidding or prohibiting, which is stronger than 'discouraged'.\", \"suggestion\": \"forbade him from joking with boys\"}]}, {\"id\": \"isl-f6bbab53__en\", \"defects\": []}, {\"id\": \"isl-f782f2ed__en\", \"defects\": []}, {\"id\": \"isl-fb04bcd3__en\", \"defects\": []}, {\"id\": \"isl-fe2f3c39__en\", \"defects\": [{\"field\": \"fields.text_simplified\", \"side\": \"english\", \"type\": \"meaning\", \"severity\": \"low\", \"arabic\": \"وأن الأب سبقه\", \"english\": \"and that his father won\", \"why\": \"سبقه means the father outraced/beat him specifically, slightly more precise than the generic 'won'.\", \"suggestion\": \"and that his father outraced him\"}]}]}\n```",
+      "completed_at": "2026-10-07T15:04:50.062667+00:00",
+      "raw_verdict_sha256": "28f29fa1c578d27e0a967190093b2d1c2d748ce2482ffab268b0d3f80d55447e",
+      "elapsed_seconds": 32.3,
+      "parsed_verdicts": {
+        "isl-c0936200__en": [
+          {
+            "field": "title",
+            "side": "english",
+            "type": "meaning",
+            "severity": "low",
+            "arabic": "تفسير سبب النهي للأبناء",
+            "english": "Explaining Restrictions to Children",
+            "why": "The Arabic specifies explaining the *reason* (سبب) for the *prohibition* (النهي), but the English drops 'reason' and softens 'prohibition' to 'restrictions'.",
+            "suggestion": "Explaining the Reason for Prohibition to Children in Ibn Battal's Commentary"
+          }
+        ],
+        "isl-d6faddeb__en": [
+          {
+            "field": "text_simplified",
+            "side": "english",
+            "type": "meaning",
+            "severity": "low",
+            "arabic": "نهته عن ممازحة الصبيان",
+            "english": "discouraged him from joking with boys",
+            "why": "The Arabic نهته conveys forbidding or prohibiting, which is stronger than 'discouraged'.",
+            "suggestion": "forbade him from joking with boys"
+          }
+        ],
+        "isl-f6bbab53__en": [],
+        "isl-f782f2ed__en": [],
+        "isl-fb04bcd3__en": [],
+        "isl-fe2f3c39__en": [
+          {
+            "field": "text_simplified",
+            "side": "english",
+            "type": "meaning",
+            "severity": "low",
+            "arabic": "وأن الأب سبقه",
+            "english": "and that his father won",
+            "why": "سبقه means the father outraced/beat him specifically, slightly more precise than the generic 'won'.",
+            "suggestion": "and that his father outraced him"
+          }
+        ]
+      }
+    }
+  ],
+  "items": [
+    {
+      "id": "isl-c0936200__en",
+      "content_sha256": "6cbc93eb96399b76c72925bcb8e9cd2875a70c798ff2599a6cc33b30ef0d70b5",
+      "deterministic_defects": [],
+      "authors": [
+        "openai:codex",
+        "mistral-large-3:675b"
+      ]
+    },
+    {
+      "id": "isl-d6faddeb__en",
+      "content_sha256": "0ce2c5ce2df076e7f7586c5429c0e46e040e38b00e92734ec5c8d1e39e1bced4",
+      "deterministic_defects": [],
+      "authors": [
+        "openai:codex",
+        "mistral-large-3:675b"
+      ]
+    },
+    {
+      "id": "isl-f6bbab53__en",
+      "content_sha256": "6082e5993de0398cf854dd611d530f7ed455ab6a41d238a26e690f64c6d8c236",
+      "deterministic_defects": [],
+      "authors": [
+        "openai:codex",
+        "mistral-large-3:675b"
+      ]
+    },
+    {
+      "id": "isl-f782f2ed__en",
+      "content_sha256": "ec09dce7df2ac9836b4da4c7fd9263859e93123608732c9aac82244c2260440d",
+      "deterministic_defects": [],
+      "authors": [
+        "mistral-large-3:675b",
+        "openai:codex"
+      ]
+    },
+    {
+      "id": "isl-fb04bcd3__en",
+      "content_sha256": "6216c131a2fbb88f319be3576cc4115d53659a5fe61c1a53298d71c1b2638a93",
+      "deterministic_defects": [],
+      "authors": [
+        "mistral-large-3:675b",
+        "openai:codex"
+      ]
+    },
+    {
+      "id": "isl-fe2f3c39__en",
+      "content_sha256": "4b51131897ff1a51358ca8edfdccd3d971183458c7ae8fd3e00fc30ee1b0101d",
+      "deterministic_defects": [],
+      "authors": [
+        "mistral-large-3:675b",
+        "openai:codex"
+      ]
+    }
+  ],
+  "exit_code": 0,
+  "report": {
+    "stamped": [
+      "isl-c0936200__en",
+      "isl-d6faddeb__en",
+      "isl-f6bbab53__en",
+      "isl-f782f2ed__en",
+      "isl-fb04bcd3__en",
+      "isl-fe2f3c39__en"
+    ],
+    "fixed": [],
+    "arabic_proposals": [],
+    "arabic_applied": [],
+    "unresolved": {},
+    "fix_rejected": [],
+    "rounds": 1
+  },
+  "cache_records": [
+    {
+      "k": "deepseek-v4-pro|dfa8a5f39718|6cbc93eb96399b76c72925bcb8e9cd2875a70c798ff2599a6cc33b30ef0d70b5",
+      "v": [
+        {
+          "field": "title",
+          "side": "english",
+          "type": "omission",
+          "severity": "low",
+          "arabic": "تفسير سبب النهي للأبناء",
+          "english": "Explaining Restrictions to Children",
+          "why": "The English title omits 'سبب' (reason), so it loses the Arabic emphasis on explaining the reason for the prohibition.",
+          "suggestion": "Explaining the Reason for the Prohibition to Children in Ibn Battal's Commentary"
+        }
+      ]
+    },
+    {
+      "k": "glm-5.2|dfa8a5f39718|6cbc93eb96399b76c72925bcb8e9cd2875a70c798ff2599a6cc33b30ef0d70b5",
+      "v": [
+        {
+          "field": "title",
+          "side": "english",
+          "type": "meaning",
+          "severity": "low",
+          "arabic": "تفسير سبب النهي للأبناء",
+          "english": "Explaining Restrictions to Children",
+          "why": "The Arabic specifies explaining the *reason* (سبب) for the *prohibition* (النهي), but the English drops 'reason' and softens 'prohibition' to 'restrictions'.",
+          "suggestion": "Explaining the Reason for Prohibition to Children in Ibn Battal's Commentary"
+        }
+      ]
+    },
+    {
+      "k": "deepseek-v4-pro|dfa8a5f39718|0ce2c5ce2df076e7f7586c5429c0e46e040e38b00e92734ec5c8d1e39e1bced4",
+      "v": [
+        {
+          "field": "text_simplified",
+          "side": "english",
+          "type": "meaning",
+          "severity": "low",
+          "arabic": "نهته عن ممازحة الصبيان",
+          "english": "discouraged him from joking with boys",
+          "why": "نهته means she forbade him, which is stronger than 'discouraged'.",
+          "suggestion": "forbade him from joking with boys"
+        }
+      ]
+    },
+    {
+      "k": "glm-5.2|dfa8a5f39718|0ce2c5ce2df076e7f7586c5429c0e46e040e38b00e92734ec5c8d1e39e1bced4",
+      "v": [
+        {
+          "field": "text_simplified",
+          "side": "english",
+          "type": "meaning",
+          "severity": "low",
+          "arabic": "نهته عن ممازحة الصبيان",
+          "english": "discouraged him from joking with boys",
+          "why": "The Arabic نهته conveys forbidding or prohibiting, which is stronger than 'discouraged'.",
+          "suggestion": "forbade him from joking with boys"
+        }
+      ]
+    },
+    {
+      "k": "deepseek-v4-pro|dfa8a5f39718|6082e5993de0398cf854dd611d530f7ed455ab6a41d238a26e690f64c6d8c236",
+      "v": []
+    },
+    {
+      "k": "glm-5.2|dfa8a5f39718|6082e5993de0398cf854dd611d530f7ed455ab6a41d238a26e690f64c6d8c236",
+      "v": []
+    },
+    {
+      "k": "deepseek-v4-pro|dfa8a5f39718|ec09dce7df2ac9836b4da4c7fd9263859e93123608732c9aac82244c2260440d",
+      "v": [
+        {
+          "field": "text_simplified",
+          "side": "english",
+          "type": "meaning",
+          "severity": "low",
+          "arabic": "وتأديبهم وإبعادهم عن المحرمات",
+          "english": "guiding their conduct, and keeping them away from prohibited acts",
+          "why": "تأديبهم means disciplining them, which is stronger than 'guiding their conduct'.",
+          "suggestion": "disciplining them and keeping them away from prohibited acts"
+        },
+        {
+          "field": "text_simplified",
+          "side": "english",
+          "type": "addition",
+          "severity": "low",
+          "arabic": "آية التحريم",
+          "english": "the verse in Surah al-Tahrim",
+          "why": "The Arabic does not name Surah al-Tahrim; the English adds this identification.",
+          "suggestion": "the verse of prohibition"
+        }
+      ]
+    },
+    {
+      "k": "glm-5.2|dfa8a5f39718|ec09dce7df2ac9836b4da4c7fd9263859e93123608732c9aac82244c2260440d",
+      "v": []
+    },
+    {
+      "k": "deepseek-v4-pro|dfa8a5f39718|6216c131a2fbb88f319be3576cc4115d53659a5fe61c1a53298d71c1b2638a93",
+      "v": [
+        {
+          "field": "text_simplified",
+          "side": "english",
+          "type": "meaning",
+          "severity": "low",
+          "arabic": "هذا أثر عن عائشة",
+          "english": "This is a report about Aisha",
+          "why": "عن عائشة means 'from Aisha' (a narration attributed to her), not merely 'about Aisha'.",
+          "suggestion": "This is a report from Aisha as transmitted by the author."
+        }
+      ]
+    },
+    {
+      "k": "glm-5.2|dfa8a5f39718|6216c131a2fbb88f319be3576cc4115d53659a5fe61c1a53298d71c1b2638a93",
+      "v": []
+    },
+    {
+      "k": "deepseek-v4-pro|dfa8a5f39718|4b51131897ff1a51358ca8edfdccd3d971183458c7ae8fd3e00fc30ee1b0101d",
+      "v": []
+    },
+    {
+      "k": "glm-5.2|dfa8a5f39718|4b51131897ff1a51358ca8edfdccd3d971183458c7ae8fd3e00fc30ee1b0101d",
+      "v": [
+        {
+          "field": "text_simplified",
+          "side": "english",
+          "type": "meaning",
+          "severity": "low",
+          "arabic": "وأن الأب سبقه",
+          "english": "and that his father won",
+          "why": "سبقه means the father outraced/beat him specifically, slightly more precise than the generic 'won'.",
+          "suggestion": "and that his father outraced him"
+        }
+      ]
+    }
+  ],
+  "completed_at": "2026-10-07T15:04:50.096365+00:00",
+  "defect_counts": {
+    "low": 8
+  },
+  "accepted_count": 6,
+  "held_count": 0
+}

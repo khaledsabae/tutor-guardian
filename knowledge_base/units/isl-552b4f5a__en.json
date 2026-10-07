@@ -2,28 +2,26 @@
   "id": "isl-552b4f5a__en",
   "domain": "islamic_parenting",
   "source_file": "Alukah_Rights_of_Children.pdf",
-  "title": "The Rights of Children in Tarbiyah (religious upbringing)",
+  "title": "Learning and Teaching the Quran in Uthman’s Hadith",
   "language": "en",
   "age_group": "unspecified",
   "behavior_type": "تربية دينية",
   "intervention_type": "إرشادي",
   "severity": "خفيف",
   "reference_type": "كتاب_تربوي",
-  "reference_info": "حقوق الأولاد على الوالدين - عماد عبدالعظيم (الألوكة)",
-  "text_original": "ـم اصقؿق فمأ فتسبلأ دق رقغص فل ـبا ؽمأ كلإ بهذا :لاق ؿث ,)2(فؼشف فـم اكدف فكدأ :لاق ,؟اذه ؽسبلأ ـم لـب .)3(»هرقغ ابقث ؽسبؾتؾف ُآشكلا دلألأا يٗمعت :شؼع َواجلا للحا فقف للها ركذي يذلا تقبلا ؾثم« :لاق ﷺ لبـلا ـط )779( ؿؾسم جرخأ .»تقؿلاو لحلا ؾثم فقف للها ركذي ٓ يذلا تقبلاو »ؼمِمُد خيرامش« مذ رمياسمق ـمساو ،)385ص( »دهزمًا« مذ دحمأ فمضرمظأ (1) ـمُ )227/21( »ؼمِمُد خيرامش« مذ رمياسمق ـمساو ،ؿمٚسمُ ـمس دمٞمًقمًا ؼيرمـ ـمُ )227/21( ـمس ديزي ـمس ـحمرمًا دبمق ـمق ؿمٝتمٕمسرأ ةمٛم٘مٚمق ـمس ةبتمقو كرابمعا ـمساو دمًامظ ـمس ةمىدص ؼيرمـ .اموقمىقمُ فمس فمٞمسأ ـمق ،دمٕمؾ ـمس للامس ـمق ،رمسامض ،)45/6( »مػبمٙمًا« مذ نيامؼمٓمًا دمٜمق مامي – فمٜمق نياثمًا فمضقمًا مذ – كرابمعا ـمسا امٕمٞجم ؿمٝمٗمًامظو عمٛمج« مذ لمٛثمٞلها لامى ،ﷺ لبمٜمٚمً فمٕمور فمٟأ مػمه ؼيرمٓمًا سمٗمٟ ـمُ ،)611( »ملمٞمُامِمًا« مذو .»ـسمط هدامٜمؾإو نيامؼمٓمًا هاور« :»دئاوزمًا فمٕمور نم٠ميو« )48/3( »ةمساصلإا« مذ رجمط ـمسا لامى ػمىقمًا مغمق ةمقمالجا ةياور باقمّمًاو قهو )282/3( »ـَمٜمؾَ مقمىٕ يدالها ـَمٜسّ مًاو دمٞمٟاسمعا عمُامض« مذ مػثمي ـمسا لامىو ،»ؿهو .عقمورمعا ـمُ فبمؿأ اذهو :فقمىقمعا حمضري .ؿهرمٖص ـمُ للها ةمقامـ مغمق ؿهدٓوأ نقمسردي ػمٞمي رمٔمٟا (2) .ـسمط دامٜمؾم٢مس )135/5( »نمايلإا بمٕمؿ« مذ لم٘مٝمٞبمًا فمضرمظأ (3) ـــــــــــــــتــــــــ نيدلاىلا ىلع دلاولأا قىقح ـــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ :ﷺ للها لقسر لاق :لاق ,ﭬ ناؿثط ـط )5427( يراخبلا جرخأو )1( تُ أْ ر َ قَ دْ قَ وَ ـَ قـس ر ِ شْ طَ ـُ بْ ا اكَ أَ وَ ﷺ للها لُ قس ُ ر َ لفِ قُ تُ : سٍ ابَ طَ ـُ بْ ا لَ اقَ وَ .نآرؼلا ناقبصلا",
-  "text_simplified": "The text discusses the rights children have over their parents, citing Prophetic hadith that mention the virtue of teaching children the Noble Qur’an and the importance of tarbiyah. It advises the necessity of instilling Islamic values in children’s hearts from a young age.",
+  "reference_info": "حقوق الأولاد على الوالدين — عماد بن أحمد بن عبدالعظيم (الألوكة)، PDF 79 / المطبوعة 78. صحيح البخاري — حديث ٥٠٢٧",
+  "text_original": "عن عثمان قال: قال رسول الله ﷺ: «خيركم من تعلم القرآن وعلمه».",
+  "text_simplified": "In Uthman’s narration, the Prophet ﷺ says: “The best of you are those who learn the Quran and teach it” (Sahih al-Bukhari, hadith 5027). The book includes this hadith in its section on teaching the Quran to children.",
   "labels": [
-    "تربية",
-    "حقوق الأطفال",
-    "تعليم ديني",
-    "أحاديث نبوية"
+    "تعلم القرآن",
+    "حديث عثمان"
   ],
   "created_at": "2026-06-21T10:22:29Z",
-  "updated_at": "2026-06-21T10:22:29Z",
+  "updated_at": "2026-10-07T10:17:56.040541+00:00",
   "version": "1.0.0",
   "source_meta": {
-    "source_title": "Alukah_Rights_of_Children",
-    "source_author": ""
+    "source_title": "حقوق الأولاد على الوالدين",
+    "source_author": "عماد بن أحمد بن عبدالعظيم"
   },
   "source_language": "ar",
   "translated_from": "isl-552b4f5a",
@@ -31,9 +29,33 @@
     "translator_model": "mistral-large-3:675b",
     "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "pending",
+    "review_verdict": "clean",
     "review_defects": [],
-    "approved_by": null,
-    "revalidated_at": "2026-10-04T11:18:18+00:00"
-  }
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
+    "draft_status": "draft",
+    "source_recovery_note": "English parity independently approved by DeepSeek and GLM at this exact content hash; scholar/source-content and human approval remain pending.",
+    "english_authors": [
+      "mistral-large-3:675b",
+      "openai:codex"
+    ],
+    "fixer_model": "openai:codex",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "09672e0ea924d75a0a991ac0ebd2115fe48b9117ca2d128cfd28a5c570ee971f",
+      "reviewed_at": "2026-10-07T14:34:13+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-07T14:34:13+00:00"
+  },
+  "source_url": "https://www.alukah.net/Books/Files/Book_17337/BookFile/brotherandboys.pdf#page=79",
+  "source_note": "Primary-source historical draft; exact page/quotation evidence: ops/data/kb_fidelity/source_recovery/isl-552b4f5a.json. Actual canonical English parity review is retained in ops/reports/SOURCE_FOUR_B_EN_REVIEW_OCT7.json. Scholar/source-content and human approval remain pending."
 }

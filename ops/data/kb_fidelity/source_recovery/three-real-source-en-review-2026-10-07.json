@@ -1,0 +1,308 @@
+{
+  "schema": "tg.source_recovery_canonical_review/2",
+  "base_commit": "78895565cca73cbf703d95a2d5b9b2f78f3c8f9f",
+  "started_at": "2026-10-07T14:33:14.484721+00:00",
+  "tool": "ops/tools/review_en_parity.py",
+  "prompt_version": "dfa8a5f39718",
+  "max_concurrent_provider_calls_this_worker": 1,
+  "other_worker_active_user_reported": true,
+  "max_overall_calls_user_limit": 2,
+  "calls": [
+    {
+      "requested_model": "deepseek-v4-pro",
+      "attempt": 1,
+      "request_sha256": "9c9a0e9b5271d7e9f10b0e486d79917625caf3e0a397d1ba0a2188bf55602f23",
+      "started_at": "2026-10-07T14:33:14.651633+00:00",
+      "reported_model": "deepseek-v4-pro",
+      "usage": {
+        "prompt_tokens": 1647,
+        "completion_tokens": 2524,
+        "total_tokens": 4171,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "raw_verdict": "{\"items\":[{\"id\":\"isl-1057f72f__en\",\"defects\":[]},{\"id\":\"isl-14bc16f5__en\",\"defects\":[]},{\"id\":\"isl-2aa57245__en\",\"defects\":[]}]}",
+      "elapsed_seconds": 24.312,
+      "parsed_verdicts": {
+        "isl-1057f72f__en": [],
+        "isl-14bc16f5__en": [],
+        "isl-2aa57245__en": []
+      },
+      "raw_verdict_sha256": "b75af2688f9ad4507359f88ca9cacb4c2e2be2f6b4154371510f7dd7db9e8d47"
+    },
+    {
+      "requested_model": "glm-5.2",
+      "attempt": 1,
+      "request_sha256": "7950b626288a3d9b0072691fa80083ba480f181476996abb18f51791ce27738a",
+      "started_at": "2026-10-07T14:33:38.966838+00:00",
+      "reported_model": "glm-5.2",
+      "usage": {
+        "prompt_tokens": 1640,
+        "completion_tokens": 1742,
+        "total_tokens": 3382,
+        "prompt_tokens_details": {
+          "cached_tokens": 1024
+        }
+      },
+      "raw_verdict": "```json\n{\"items\": [{\"id\": \"isl-1057f72f__en\", \"defects\": []}, {\"id\": \"isl-14bc16f5__en\", \"defects\": []}, {\"id\": \"isl-2aa57245__en\", \"defects\": [{\"field\": \"title\", \"side\": \"english\", \"type\": \"meaning\", \"severity\": \"low\", \"arabic\": \"ملاطفة النبي ﷺ\", \"english\": \"Playful Interaction\", \"why\": \"«ملاطفة» means gentle or affectionate treatment, not specifically 'playful'; the English adds a connotation not present in the Arabic.\", \"suggestion\": \"Mahmud ibn al-Rabi's Memory of the Prophet's ﷺ Gentle Affection\"}]}]}\n```",
+      "elapsed_seconds": 5.14,
+      "parsed_verdicts": {
+        "isl-1057f72f__en": [],
+        "isl-14bc16f5__en": [],
+        "isl-2aa57245__en": [
+          {
+            "field": "title",
+            "side": "english",
+            "type": "meaning",
+            "severity": "low",
+            "arabic": "ملاطفة النبي ﷺ",
+            "english": "Playful Interaction",
+            "why": "«ملاطفة» means gentle or affectionate treatment, not specifically 'playful'; the English adds a connotation not present in the Arabic.",
+            "suggestion": "Mahmud ibn al-Rabi's Memory of the Prophet's ﷺ Gentle Affection"
+          }
+        ]
+      },
+      "raw_verdict_sha256": "5227e72419c94f7fad3ece0c913b3cd9fab718675ce5e06a99015040ba892ad9"
+    }
+  ],
+  "items": {
+    "isl-1057f72f__en": {
+      "content_sha256": "c4127f42604c80e5f56e26be191dedea73bfd6b74382b5a1b1def05b0211925a",
+      "english_authors": [
+        "mistral-large-3:675b",
+        "openai:codex"
+      ],
+      "primary_proof_file": "ops/data/kb_fidelity/source_recovery/isl-1057f72f.json",
+      "primary_proof_sha256": "b33ecffeaefac24e438160090867910d30318c463a57c41966a34fdaa259bc53",
+      "pdf_sha256": "7fa6f88fbf1ba714947983c11cde1e8c67b576374ae06c08a081444743d1272c",
+      "pdf_pages_one_based": [
+        80
+      ],
+      "needs_scholar_review": true,
+      "initial_deterministic_defects": [],
+      "canonical_stamp": {
+        "reviewers": [
+          "deepseek-v4-pro",
+          "glm-5.2"
+        ],
+        "fixer": null,
+        "rounds": 1,
+        "prompt_version": "dfa8a5f39718",
+        "content_sha256": "c4127f42604c80e5f56e26be191dedea73bfd6b74382b5a1b1def05b0211925a",
+        "reviewed_at": "2026-10-07T14:33:44+00:00",
+        "residual_low": [],
+        "adjudicated": [],
+        "tool": "ops/tools/review_en_parity.py",
+        "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+      },
+      "current_content_sha256": "c4127f42604c80e5f56e26be191dedea73bfd6b74382b5a1b1def05b0211925a"
+    },
+    "isl-14bc16f5__en": {
+      "content_sha256": "6f8b33f049d9991776e59592b0ec6cacd4385d18f2b441f7f76e8e3e7d61943d",
+      "english_authors": [
+        "mistral-large-3:675b",
+        "openai:codex"
+      ],
+      "primary_proof_file": "ops/data/kb_fidelity/source_recovery/isl-14bc16f5.json",
+      "primary_proof_sha256": "7dadffd92b685892b755b206f72a3873f039259c5937f5a4b71fd974e9a242ae",
+      "pdf_sha256": "7fa6f88fbf1ba714947983c11cde1e8c67b576374ae06c08a081444743d1272c",
+      "pdf_pages_one_based": [
+        53
+      ],
+      "needs_scholar_review": true,
+      "initial_deterministic_defects": [],
+      "canonical_stamp": {
+        "reviewers": [
+          "deepseek-v4-pro",
+          "glm-5.2"
+        ],
+        "fixer": null,
+        "rounds": 1,
+        "prompt_version": "dfa8a5f39718",
+        "content_sha256": "6f8b33f049d9991776e59592b0ec6cacd4385d18f2b441f7f76e8e3e7d61943d",
+        "reviewed_at": "2026-10-07T14:33:44+00:00",
+        "residual_low": [],
+        "adjudicated": [],
+        "tool": "ops/tools/review_en_parity.py",
+        "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+      },
+      "current_content_sha256": "6f8b33f049d9991776e59592b0ec6cacd4385d18f2b441f7f76e8e3e7d61943d"
+    },
+    "isl-2aa57245__en": {
+      "content_sha256": "752732cd1b86e43b9a6512f2713d0fb83032776a480507d790273eba206b5b89",
+      "english_authors": [
+        "mistral-large-3:675b",
+        "openai:codex"
+      ],
+      "primary_proof_file": "ops/data/kb_fidelity/source_recovery/isl-2aa57245.json",
+      "primary_proof_sha256": "7bec39b0bbff19355c5e520bdd3cdb7ebf88a61b28b89f72af872fbd6bd1786e",
+      "pdf_sha256": "7fa6f88fbf1ba714947983c11cde1e8c67b576374ae06c08a081444743d1272c",
+      "pdf_pages_one_based": [
+        57
+      ],
+      "needs_scholar_review": true,
+      "initial_deterministic_defects": [],
+      "canonical_stamp": {
+        "reviewers": [
+          "deepseek-v4-pro",
+          "glm-5.2"
+        ],
+        "fixer": null,
+        "rounds": 1,
+        "prompt_version": "dfa8a5f39718",
+        "content_sha256": "752732cd1b86e43b9a6512f2713d0fb83032776a480507d790273eba206b5b89",
+        "reviewed_at": "2026-10-07T14:33:44+00:00",
+        "residual_low": [
+          {
+            "model": "glm-5.2",
+            "field": "title",
+            "type": "meaning",
+            "why": "«ملاطفة» means gentle or affectionate treatment, not specifically 'playful'; the English adds a connotation not present in the Arabic."
+          }
+        ],
+        "adjudicated": [],
+        "tool": "ops/tools/review_en_parity.py",
+        "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+      },
+      "current_content_sha256": "752732cd1b86e43b9a6512f2713d0fb83032776a480507d790273eba206b5b89"
+    }
+  },
+  "excluded": [
+    "isl-23c2dd25__en"
+  ],
+  "scholar_approval": null,
+  "report": {
+    "stamped": [
+      "isl-1057f72f__en",
+      "isl-14bc16f5__en",
+      "isl-2aa57245__en"
+    ],
+    "fixed": [],
+    "arabic_proposals": [],
+    "arabic_applied": [],
+    "unresolved": {},
+    "fix_rejected": [],
+    "rounds": 1
+  },
+  "accepted_count": 3,
+  "held_count": 0,
+  "completed_at": "2026-10-07T14:33:44.138524+00:00",
+  "validation": {
+    "schema_files_checked": 6,
+    "schema_exit": 0,
+    "deterministic_pairs_checked": 3,
+    "deterministic_parity_exit": 0,
+    "source_proof_pairs_checked": 3,
+    "source_proof_exit": 0,
+    "current_hash_stamps_checked": 3,
+    "stamp_exit": 0,
+    "wording_unchanged_pairs": 3,
+    "index_unchanged": true,
+    "excluded_pair_unchanged": true,
+    "adjudications_unchanged": true,
+    "queue_before": 45,
+    "queue_after": 42,
+    "removed_only": [
+      "isl-1057f72f__en",
+      "isl-14bc16f5__en",
+      "isl-2aa57245__en"
+    ],
+    "other_queue_entries_preserved": 42,
+    "guards": {
+      "check_kb_integrity.py": {
+        "exit_code": 0,
+        "summary": [
+          "     (223 units missing optional metadata — non-blocking)",
+          "",
+          "===================================================================",
+          "  ✅  KNOWLEDGE BASE IN SYNC — 1388 units, schema ≡ taxonomy",
+          "===================================================================",
+          ""
+        ]
+      },
+      "check_kb_fidelity.py": {
+        "exit_code": 0,
+        "summary": [
+          "🔍 KB fidelity: 716 served base units · 246 carry a detector flag · 281 judged faithful · 205 quarantined by this review · 231 withdrawn sources held",
+          "✅ quarantine holds; every flagged live unit was read and judged on its current text"
+        ]
+      },
+      "check_quran_citations.py": {
+        "exit_code": 0,
+        "summary": [
+          "  آيات مقتبسة: 142   ·   مطابقة: 142",
+          "",
+          "===================================================================",
+          "  ✅  QUR'AN CITATIONS OK — 142/142 مطابقة لنص المصحف",
+          "===================================================================",
+          ""
+        ]
+      },
+      "check_hadith_citations.py": {
+        "exit_code": 0,
+        "summary": [
+          "",
+          "===================================================================",
+          "  ✅  HADITH OK — 15 مطابقة للصحيحين لفظًا ورقمًا",
+          "  (مطابقة آلية على طبعة واحدة — ليست تحقيقًا ولا اختيارًا شرعيًا)",
+          "===================================================================",
+          ""
+        ]
+      },
+      "check_scripture_coverage.py": {
+        "exit_code": 0,
+        "summary": [
+          "",
+          "===================================================================",
+          "  ✅  SCRIPTURE COVERAGE OK — كل اقتباس في كل سطح مطابق ومُسنَد",
+          "  (مطابقة آلية على طبعة واحدة — ليست تحقيقًا ولا اختيارًا شرعيًا)",
+          "===================================================================",
+          ""
+        ]
+      },
+      "check_quran_rendering.py": {
+        "exit_code": 0,
+        "summary": [
+          "  ملفات إنجليزية مفحوصة: 808",
+          "",
+          "===================================================================",
+          "  ✅ QUR'AN RENDERING OK — لا إنجليزية مقدَّمة على أنها قرآن",
+          "  (فحص شكلي — لا يُغني عن مراجعة أهل العلم لأمانة التفسير)",
+          "==================================================================="
+        ]
+      }
+    },
+    "regression_tests": {
+      "exit_code": 0,
+      "tests": 97,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "staged_parity_gate_exit": 0,
+    "staged_parity_pairs": 3
+  },
+  "tool_sha256": "037d1c92eee71bd8a9f2096f9b624851f29f67178e3af2dde61d035609f7f33e",
+  "execution": {
+    "canonical_system_prompt_and_batch_payload": true,
+    "cache_used": false,
+    "adjudications_applied": false,
+    "reviewers_sequential": true,
+    "single_three_item_batch_per_model": true,
+    "transport_retry_limit": 1,
+    "transport_retries_used": 0,
+    "halt_on_any_429_auth_quota": true,
+    "no_english_wording_fix_needed": true,
+    "source_evidence": "Previously committed primary PDF checksum/page and ancient-report scope proofs retained unchanged; this run rechecked proof file hashes and served excerpt consistency.",
+    "adapter_sha256": "c7fb123072441259a1dc3ab55c77b7a904af61dd15cec78005d81a8b042a0db7",
+    "billing_route": "Existing Ollama subscription authentication only",
+    "remaining_quota": "unknown"
+  },
+  "defect_counts": {
+    "high": 0,
+    "medium": 0,
+    "low": 1
+  },
+  "privacy": "Only public source-unit IDs, supplied source excerpts/model verdicts, hashes, guard counts and serving-model usage; no credentials, user PII or private chat content."
+}

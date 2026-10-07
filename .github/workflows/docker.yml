@@ -41,12 +41,12 @@ jobs:
   #     needs docs/privacy-policy.md, Phase 0 regression check)
   #   * The uvicorn entrypoint parses its argument set
   build:
-    name: docker build
-    # C3 (AUDIT_AND_ROADMAP.md): this runner IS the production VPS. Never run
-    # code from a fork PR on it — only pushes, manual runs, and PRs whose
-    # head branch lives in this repository (pushing one needs write access).
+    name: docker build and smoke
+    # Build and prune only on disposable hosted runners. Opening a source PR
+    # must never touch production images or compete with the live backend.
+    # Keep the existing same-repository PR trust boundary.
     if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
-    runs-on: [self-hosted, production]
+    runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
       - name: Checkout
@@ -87,34 +87,8 @@ jobs:
           rm -rf /tmp/.buildx-cache
           mv /tmp/.buildx-cache-new /tmp/.buildx-cache
 
-  # ── 2. Smoke-run the container ──────────────────────────────────────
-  # Boots uvicorn with the real entrypoint, hits /health, and
-  # checks that the privacy-policy file is present. The expensive
-  # RAG index is *not* built — we override the entrypoint to skip
-  # the import chain that loads sentence-transformers.
-  smoke:
-    name: docker smoke
-    # C3 (AUDIT_AND_ROADMAP.md): this runner IS the production VPS. Never run
-    # code from a fork PR on it — only pushes, manual runs, and PRs whose
-    # head branch lives in this repository (pushing one needs write access).
-    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
-    runs-on: [self-hosted, production]
-    timeout-minutes: 10
-    needs: build
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Build the smoke image
-        # Re-build from the previous job's image so we don't re-pull
-        # heavy layers.
-        run: |
-          docker buildx build \
-            --tag tutor-guardian-backend:ci \
-            -f backend/Dockerfile \
-            --load \
-            .
-
+      # Verify the exact image built above on this disposable runner. A
+      # separate hosted job cannot reuse its local image or freed disk space.
       - name: Confirm docs/privacy-policy.md is bundled
         # Phase 0 regression — if this is missing, /privacy-policy
         # returns 503 in production.

@@ -1,0 +1,129 @@
+{
+  "schema": "tg.clinical_seed_canonical_review/1",
+  "started_at": "2026-10-07T15:32:58.242418+00:00",
+  "tool": "ops/tools/review_en_parity.py",
+  "tool_sha256": "037d1c92eee71bd8a9f2096f9b624851f29f67178e3af2dde61d035609f7f33e",
+  "prompt_version": "dfa8a5f39718",
+  "max_concurrent_provider_calls_this_worker": 1,
+  "deadline_seconds": 480,
+  "scholar_approval": false,
+  "calls": [
+    {
+      "requested_model": "glm-5.2",
+      "request_sha256": "cc97c573515cbc753ab206a601f9f72be904294d432381975083d1b37598071d",
+      "started_at": "2026-10-07T15:32:58.393413+00:00",
+      "reported_model": "glm-5.2",
+      "usage": {
+        "prompt_tokens": 3038,
+        "completion_tokens": 2473,
+        "total_tokens": 5511,
+        "prompt_tokens_details": {
+          "cached_tokens": 1018
+        }
+      },
+      "raw_verdict": "```json\n{\"items\": [{\"id\": \"seed-fear-23__en\", \"defects\": []}, {\"id\": \"seed-jealousy-79__en\", \"defects\": []}, {\"id\": \"seed-tantrum-23__en\", \"defects\": []}]}\n```",
+      "completed_at": "2026-10-07T15:33:25.816941+00:00",
+      "raw_verdict_sha256": "b20560b3c23181917ecc1c07ba594ab4e2973f13715231e1eff1b63a759f90b1",
+      "elapsed_seconds": 27.424,
+      "parsed_verdict": {
+        "seed-fear-23__en": [],
+        "seed-jealousy-79__en": [],
+        "seed-tantrum-23__en": []
+      }
+    },
+    {
+      "requested_model": "deepseek-v4-pro",
+      "request_sha256": "da6f45e351e5ad5f99ab69a3548f1b1edcfff3e9bc5aea637485f520c2f7c5c4",
+      "started_at": "2026-10-07T15:33:25.818217+00:00",
+      "reported_model": "deepseek-v4-pro",
+      "usage": {
+        "prompt_tokens": 2963,
+        "completion_tokens": 4980,
+        "total_tokens": 7943,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "raw_verdict": "{\"items\": [{\"id\": \"seed-fear-23__en\", \"defects\": []}, {\"id\": \"seed-jealousy-79__en\", \"defects\": []}, {\"id\": \"seed-tantrum-23__en\", \"defects\": []}]}",
+      "completed_at": "2026-10-07T15:33:53.947627+00:00",
+      "raw_verdict_sha256": "16bd02a3ac30bf062359c432db9656a1c01c6c1422f9d31faca9eb805c26f6b3",
+      "elapsed_seconds": 28.129,
+      "parsed_verdict": {
+        "seed-fear-23__en": [],
+        "seed-jealousy-79__en": [],
+        "seed-tantrum-23__en": []
+      }
+    }
+  ],
+  "items": [
+    {
+      "id": "seed-fear-23__en",
+      "content_sha256": "a92454ac9e5028faad49212e5207799f79786a053dd05913ce42de210737cfe1",
+      "deterministic_defects": [],
+      "authors": [
+        "openai:codex"
+      ]
+    },
+    {
+      "id": "seed-jealousy-79__en",
+      "content_sha256": "006a744646eb4cf8875d42ce1340f35e5dad02b92ab741c5b70c0829150b25fa",
+      "deterministic_defects": [],
+      "authors": [
+        "openai:codex"
+      ]
+    },
+    {
+      "id": "seed-tantrum-23__en",
+      "content_sha256": "8450b8c1f98b7ad70178c9d1a23a339f9d34fb411e0ea5023df3a1ef1370b6db",
+      "deterministic_defects": [],
+      "authors": [
+        "openai:codex",
+        "mistral-large-3:675b"
+      ]
+    }
+  ],
+  "exit_code": 0,
+  "report": {
+    "stamped": [
+      "seed-fear-23__en",
+      "seed-jealousy-79__en",
+      "seed-tantrum-23__en"
+    ],
+    "fixed": [],
+    "arabic_proposals": [],
+    "arabic_applied": [],
+    "unresolved": {},
+    "fix_rejected": [],
+    "rounds": 1
+  },
+  "cache_records": [
+    {
+      "k": "deepseek-v4-pro|dfa8a5f39718|a92454ac9e5028faad49212e5207799f79786a053dd05913ce42de210737cfe1",
+      "v": []
+    },
+    {
+      "k": "glm-5.2|dfa8a5f39718|a92454ac9e5028faad49212e5207799f79786a053dd05913ce42de210737cfe1",
+      "v": []
+    },
+    {
+      "k": "deepseek-v4-pro|dfa8a5f39718|006a744646eb4cf8875d42ce1340f35e5dad02b92ab741c5b70c0829150b25fa",
+      "v": []
+    },
+    {
+      "k": "glm-5.2|dfa8a5f39718|006a744646eb4cf8875d42ce1340f35e5dad02b92ab741c5b70c0829150b25fa",
+      "v": []
+    },
+    {
+      "k": "deepseek-v4-pro|dfa8a5f39718|8450b8c1f98b7ad70178c9d1a23a339f9d34fb411e0ea5023df3a1ef1370b6db",
+      "v": []
+    },
+    {
+      "k": "glm-5.2|dfa8a5f39718|8450b8c1f98b7ad70178c9d1a23a339f9d34fb411e0ea5023df3a1ef1370b6db",
+      "v": []
+    }
+  ],
+  "completed_at": "2026-10-07T15:33:53.950389+00:00",
+  "validated_current_pairs": 3,
+  "raw_item_verdicts": 6,
+  "total_defects": 0
+}

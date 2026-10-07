@@ -586,17 +586,6 @@
    ],
    "why": "Matches Kayfa p.54 (with p.51): fit deterrence to the child's age, mistake and personality (a sensitive child needs only a look), ignore a hidden mistake, punish a mistake made before relatives or strangers privately so he is not broken; immediate rather than delayed consequence."
   },
-  "isl-23c2dd25": {
-   "fingerprint": "6f8f19b648422090",
-   "judged_on": "2026-10-04",
-   "source_file": "Alukah_Rights_of_Children.pdf",
-   "flags": [
-    "reversed",
-    "glyph_substituted",
-    "meta_framing"
-   ],
-   "why": "Gist matches pp.8-9: parents answer for their household (shepherd hadith), most corruption in children comes from parents' neglect of teaching them the obligations of the religion (Ibn al-Qayyim), al-Sa'di's neglected-garden analogy. 'Justice between them' is one unsupported clause, not attributed."
-  },
   "isl-24dda124": {
    "fingerprint": "592970de3edb46a7",
    "judged_on": "2026-10-04",
@@ -1350,17 +1339,6 @@
    ],
    "why": "Matches Khulayfi p.4: the comprehensiveness of the prophetic method - spirit and body, mind and heart, this world and the next, the person's relation with his Lord, himself and his surroundings."
   },
-  "isl-7349e59c": {
-   "fingerprint": "e482f918a6d07543",
-   "judged_on": "2026-10-04",
-   "source_file": "Alukah_Rights_of_Children.pdf",
-   "flags": [
-    "reversed",
-    "glyph_substituted",
-    "meta_framing"
-   ],
-   "why": "The source (p.184) is the book's table of contents; the summary accurately lists rights it covers - choosing a righteous mother, upbringing, teaching prayer, justice between children, protection from Satan. An overview, nothing invented."
-  },
   "isl-73905b43": {
    "fingerprint": "e64ca5a7d1372e42",
    "judged_on": "2026-10-04",
@@ -2038,15 +2016,11 @@
    "why": "Matches Khulayfi p.5: the Ibn Abbas hadith rooting reliance on Allah ('nothing benefits or harms you except what Allah has written'), and behavioural education linking all of life to worship."
   },
   "isl-c0936200": {
-   "fingerprint": "0dfc5bfd4328a54f",
-   "judged_on": "2026-10-04",
+   "fingerprint": "214cf1ebb1634959",
+   "judged_on": "2026-10-07",
    "source_file": "Alukah_Rights_of_Children.pdf",
-   "flags": [
-    "reversed",
-    "glyph_substituted",
-    "meta_framing"
-   ],
-   "why": "Matches p.181: the chapter on parents' dying wills - Nuh's will to his son of 'la ilaha illa Allah' and warning against shirk and pride (the Prophet's hadith in Ahmad), Ya'qub's will (al-Baqara 133) - and explaining to children why something is forbidden (Ibn Battal)."
+   "flags": [],
+   "why": "Actual primary PDF source recovery draft: PDF p.181, printed p.180; Own editorial paraphrase of the selected Ibn Battal paragraph; no verbatim modern-book quotation. Scope and checksum proof: ops/data/kb_fidelity/source_recovery/isl-c0936200.json. Source reading only; no scholar or translation approval."
   },
   "isl-c0adb8a0": {
    "fingerprint": "e3581e6071d92057",
@@ -2225,15 +2199,11 @@
    "why": "Matches p.115: dolls and play permitted for girls - Aisha playing with dolls in the Prophet's house, the friends he sent to play with her, dolls with music forbidden. 'The Prophet played with Aisha' is a loose rendering of his engagement in her play, not a different story."
   },
   "isl-d6faddeb": {
-   "fingerprint": "bda336833e945880",
-   "judged_on": "2026-10-04",
+   "fingerprint": "f43c070c60912772",
+   "judged_on": "2026-10-07",
    "source_file": "Alukah_Rights_of_Children.pdf",
-   "flags": [
-    "reversed",
-    "glyph_substituted",
-    "meta_framing"
-   ],
-   "why": "General but on-theme for pp.176-177: parents' supervision against outside influences - Bakr Abu Zayd warning against mixing in kindergartens 'away from parents' supervision', immodest clothing for girls, joking that belittles. Adds no specific claim."
+   "flags": [],
+   "why": "Actual primary PDF source recovery draft: PDF p.176, printed p.175; Selected ancient historical report, quoted as attributed to the narrator and his mother. Not a Prophetic hadith; no modern commentary quoted. Scope and checksum proof: ops/data/kb_fidelity/source_recovery/isl-d6faddeb.json. Source reading only; no scholar or translation approval."
   },
   "isl-d7b55818": {
    "fingerprint": "6dd78e62cd417b68",
@@ -2443,15 +2413,11 @@
    "why": "Matches Kayfa p.48: education by a look or hint when the child errs before guests (punishing him in front of people can make him stubborn), indirect speech that preserves his dignity, and admonition through story and dialogue."
   },
   "isl-f6bbab53": {
-   "fingerprint": "6f257c70f7ec66a7",
-   "judged_on": "2026-10-04",
+   "fingerprint": "401882f6b952becc",
+   "judged_on": "2026-10-07",
    "source_file": "Alukah_Rights_of_Children.pdf",
-   "flags": [
-    "reversed",
-    "glyph_substituted",
-    "meta_framing"
-   ],
-   "why": "Matches pp.127-128: the author forbids weapon play and fireworks that frighten Muslims, card games and dominoes, and phone/computer games that waste time and distract from prayer; wrestling raising youth on cruelty. The summary is a softened but faithful rendering."
+   "flags": [],
+   "why": "Actual primary PDF source recovery draft: PDF p.128, printed p.127; Own editorial paraphrase of the author's phone/computer-game commentary. Zero additional verbatim modern-book words. Scope and checksum proof: ops/data/kb_fidelity/source_recovery/isl-f6bbab53.json. Source reading only; no scholar or translation approval."
   },
   "isl-f6c0c64a": {
    "fingerprint": "61846d2be8df6ac3",
@@ -2483,15 +2449,11 @@
    "why": "Matches Tarbiyat al-Banat p.6: Ibn al-Qayyim on parents' neglect ruining children, and the prophets' care for their children's faith - Ya'qub's question (al-Baqara 133), Ibrahim and Ismail's du'a, al-Furqan 74 with Ibn Kathir."
   },
   "isl-f782f2ed": {
-   "fingerprint": "ecb92e78ddb15d8a",
-   "judged_on": "2026-10-04",
+   "fingerprint": "fe4d22634c06cc91",
+   "judged_on": "2026-10-07",
    "source_file": "Alukah_Rights_of_Children.pdf",
-   "flags": [
-    "reversed",
-    "glyph_substituted",
-    "meta_framing"
-   ],
-   "why": "Matches the author's introduction (p.7): upbringing and good character are children's right (al-Tahrim 6, al-Nisa 11), teach them the Quran, Sunnah and sound creed from young, so they grow into a generation that obeys Allah and His Messenger."
+   "flags": [],
+   "why": "Native primary-page recovery: The introduction paragraph gives substantive author views on upbringing, not contents or research method. It is presented as the author’s account, not a new ruling or guarantee. No translation of the Quran is presented as Quran; the English is a paraphrase of the author’s discussion. Evidence: ops/data/kb_fidelity/source_recovery/isl-f782f2ed.json; original OCR checksum and committed blob locator retained. No model or scholar approval."
   },
   "isl-f8bc202e": {
    "fingerprint": "fcf4f96f726435ce",
@@ -2504,15 +2466,11 @@
    "why": "Matches Khulayfi p.14 (conclusion): the prophetic method is distinctive and comprehensive, raises a person balanced in religion and worldly life, and Muslims today need to draw on that experience."
   },
   "isl-fb04bcd3": {
-   "fingerprint": "62508200fa94f690",
-   "judged_on": "2026-10-04",
+   "fingerprint": "13f271f2a1f58c32",
+   "judged_on": "2026-10-07",
    "source_file": "Alukah_Rights_of_Children.pdf",
-   "flags": [
-    "partially_reversed",
-    "glyph_substituted",
-    "meta_framing"
-   ],
-   "why": "Matches p.30: rights at birth - Aisha praising Allah for a healthy newborn regardless of sex, naming the child (the Prophet naming Ibrahim, Abdullah ibn Abi Talha, al-Mundhir) and Samura's hadith 'slaughtered for on the seventh day and named'."
+   "flags": [],
+   "why": "Native primary-page recovery: The raw anchor includes the Aisha report and naming discussion across PDF30–31. The recovery selects the actual Aisha report on PDF30, without importing aqiqah requirements, diagnosis, gender preference, mandatory practice or a prophetic attribution. Printed footnote grading is the author’s; no independent grading or Sahihayn corpus match is claimed. Evidence: ops/data/kb_fidelity/source_recovery/isl-fb04bcd3.json; original OCR checksum and committed blob locator retained. No model or scholar approval."
   },
   "isl-fb584945": {
    "fingerprint": "bcb79faa458c9c74",
@@ -2552,15 +2510,11 @@
    "why": "Matches Tarbiyat al-Banat pp.15-16: prayer with encouragement and small rewards on the prayer mat and making the girl watch prayer times, the 'command at seven' narration and Ibn Taymiyya; then individual differences and channelling talents into Quran memorisation."
   },
   "isl-fe2f3c39": {
-   "fingerprint": "b207ba98e1d5d480",
-   "judged_on": "2026-10-04",
+   "fingerprint": "e11609f8cbb0bab7",
+   "judged_on": "2026-10-07",
    "source_file": "Alukah_Rights_of_Children.pdf",
-   "flags": [
-    "reversed",
-    "glyph_substituted",
-    "meta_framing"
-   ],
-   "why": "Consistent with p.121: the salaf's children's play was purposeful and built intelligence and strength, unlike today's long hours of play. The opening (morals, following the Sunnah, the Companions teaching their children) is general and unattributed to a specific report."
+   "flags": [],
+   "why": "Native primary-page recovery: Raw OCR crosses the historical racing reports on PDF120–121 and modern discussion of long play hours and purposeful play. The selected report is the actual father-son footrace on PDF121. No electronic-games claim is established, no mental/physical outcome promised, no modern gender prescription or mandatory parental practice imported, and no independent isnad grading claimed. Evidence: ops/data/kb_fidelity/source_recovery/isl-fe2f3c39.json; original OCR checksum and committed blob locator retained. No model or scholar approval."
   },
   "isl-fe625918": {
    "fingerprint": "bf396c0e60eb71be",

@@ -3542,5 +3542,37 @@
     "to": "ops/data/en_unpublished/kb_units_source/isl-fedf4c8c.json",
     "reason": "KB fidelity quarantine 2026-10-04 (unfaithful): Topic invented (truthfulness, honesty, respecting elders, avoiding violence); the source (pp.100-101) is fathers teaching sons the Sunnah - Abu Bakra's du'a, Abu Malik al-Ashja'i's father calling qunut an innovation, Sa'd teaching the du'as after prayer and correcting his son's ruku'.",
     "on": "2026-10-04"
+  },
+  {
+    "key": "isl-23c2dd25__en",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/isl-23c2dd25__en.json",
+    "to": "ops/data/en_unpublished/kb_units/isl-23c2dd25__en.json",
+    "reason": "Nonknowledge source quarantine: isl-23c2dd25 is the author collection/assessment method (PDF9); isl-7349e59c is table-of-contents headings (PDF184-185). These facts are not substantive parenting evidence. Zero curriculum references were confirmed across 934 JSON documents. No scholar, human or verified approval; proofs retained in ops/data/kb_fidelity/source_recovery.",
+    "on": "2026-10-07"
+  },
+  {
+    "key": "isl-23c2dd25__en",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/isl-23c2dd25.json",
+    "to": "ops/data/en_unpublished/kb_units_source/isl-23c2dd25.json",
+    "reason": "Nonknowledge source quarantine: isl-23c2dd25 is the author collection/assessment method (PDF9); isl-7349e59c is table-of-contents headings (PDF184-185). These facts are not substantive parenting evidence. Zero curriculum references were confirmed across 934 JSON documents. No scholar, human or verified approval; proofs retained in ops/data/kb_fidelity/source_recovery.",
+    "on": "2026-10-07"
+  },
+  {
+    "key": "isl-7349e59c__en",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/isl-7349e59c__en.json",
+    "to": "ops/data/en_unpublished/kb_units/isl-7349e59c__en.json",
+    "reason": "Nonknowledge source quarantine: isl-23c2dd25 is the author collection/assessment method (PDF9); isl-7349e59c is table-of-contents headings (PDF184-185). These facts are not substantive parenting evidence. Zero curriculum references were confirmed across 934 JSON documents. No scholar, human or verified approval; proofs retained in ops/data/kb_fidelity/source_recovery.",
+    "on": "2026-10-07"
+  },
+  {
+    "key": "isl-7349e59c__en",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/isl-7349e59c.json",
+    "to": "ops/data/en_unpublished/kb_units_source/isl-7349e59c.json",
+    "reason": "Nonknowledge source quarantine: isl-23c2dd25 is the author collection/assessment method (PDF9); isl-7349e59c is table-of-contents headings (PDF184-185). These facts are not substantive parenting evidence. Zero curriculum references were confirmed across 934 JSON documents. No scholar, human or verified approval; proofs retained in ops/data/kb_fidelity/source_recovery.",
+    "on": "2026-10-07"
   }
 ]

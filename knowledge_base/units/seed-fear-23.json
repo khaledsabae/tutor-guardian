@@ -1,7 +1,7 @@
 {
   "id": "seed-fear-23",
   "domain": "medical",
-  "source_file": "curated/AAP - HealthyChildren.org / Toddler Fears",
+  "source_file": "curated/NHS / AACAP / CDC — app-authored childhood fear guidance",
   "title": "مخاوف الطفل وقلق الانفصال في عمر سنتين إلى ثلاث",
   "language": "ar",
   "age_group": "2-3",
@@ -9,9 +9,9 @@
   "intervention_type": "إرشادي",
   "severity": "خفيف",
   "reference_type": "تقرير_طبي",
-  "reference_info": "AAP - HealthyChildren.org / Toddler Fears",
-  "text_original": "الخوف في عمر سنتين إلى ثلاث (مثل الخوف من الظلام، الأصوات العالية، المكنسة، وقلق الانفصال عند غياب الأم) طبيعي تماماً ويعكس نمو الوعي والخيال. لا تجبر الطفل على مواجهة ما يخيفه بالقوة ولا تصفه بالجبن. احضنه وطمئنه بنبرة هادئة وكلمات بسيطة: «أنا بجانبك، أنت في أمان». عند الخوف من الظلام استخدم ضوءاً ليلياً خافتاً واترك الباب مفتوحاً. ودّعه دائماً قبل المغادرة بروتين وداع قصير ومطمئن بدلاً من التسلل خلسة. لا تستخدم التخويف أسلوباً للتربية أو الضبط. إذا كان الهلع مصحوباً ببكاء هيستيري لا يهدأ أو كوابيس متكررة فاستشر طبيب الأطفال.",
-  "text_simplified": "الخوف في عمر سنتين إلى ثلاث (مثل الخوف من الظلام، الأصوات العالية، المكنسة، وقلق الانفصال عند غياب الأم) طبيعي تماماً ويعكس نمو الوعي والخيال. لا تجبر الطفل على مواجهة ما يخيفه بالقوة ولا تصفه بالجبن. احضنه وطمئنه بنبرة هادئة وكلمات بسيطة: «أنا بجانبك، أنت في أمان». عند الخوف من الظلام استخدم ضوءاً ليلياً خافتاً واترك الباب مفتوحاً. ودّعه دائماً قبل المغادرة بروتين وداع قصير ومطمئن بدلاً من التسلل خلسة. لا تستخدم التخويف أسلوباً للتربية أو الضبط. إذا كان الهلع مصحوباً ببكاء هيستيري لا يهدأ أو كوابيس متكررة فاستشر طبيب الأطفال.",
+  "reference_info": "NHS / AACAP / CDC — app-authored childhood fear guidance; fetched primary guidance 2026-10-07; exact source mapping: ops/data/clinical_seed_safety/seed-fear-23.json",
+  "text_original": "صياغة إرشادية من التطبيق، وليست اقتباسًا حرفيًا: قد يخاف الطفل في عمر سنتين إلى ثلاث من الظلام أو الانفصال عن والديه، وهذا شائع في نموه؛ لكن شدة الخوف وتأثيره في حياته مهمان. طمئنوه بكلمات بسيطة ونبرة هادئة، واستمعوا لما يخيفه دون سخرية أو تهديد. عند المغادرة اجعلوا الوداع واضحًا ومطمئنًا، وتدرّبوا على انفصال قصير مع شخص مألوف ثم زيدوه تدريجيًا. حافظوا على روتين يمكن توقعه.\n\nاستشيروا طبيب الأطفال إذا كان الخوف شديدًا أو يزداد، أو كان الطفل يبقى شديد الضيق بعد الانفصال، أو تعطّل نومه أو لعبه أو ذهابه إلى الحضانة أو تفاعله مع الآخرين. الكوابيس المستمرة والشكاوى الجسدية المتكررة تستحق التقييم أيضًا؛ لا تفترضوا أن كل ألم سببه القلق. إذا فقد الطفل مهارة كان قد اكتسبها، تحدثوا مع طبيبه عن فحص النمو دون تأخير. لا تنتظروا اكتمال مدة محددة لطلب المساعدة عندما يتعطّل نشاطه المعتاد أو يفقد مهاراته.",
+  "text_simplified": "قد يخاف الطفل في عمر سنتين إلى ثلاث من الظلام أو الانفصال عن والديه، وهذا شائع في نموه؛ لكن شدة الخوف وتأثيره في حياته مهمان. طمئنوه بكلمات بسيطة ونبرة هادئة، واستمعوا لما يخيفه دون سخرية أو تهديد. عند المغادرة اجعلوا الوداع واضحًا ومطمئنًا، وتدرّبوا على انفصال قصير مع شخص مألوف ثم زيدوه تدريجيًا. حافظوا على روتين يمكن توقعه.\n\nاستشيروا طبيب الأطفال إذا كان الخوف شديدًا أو يزداد، أو كان الطفل يبقى شديد الضيق بعد الانفصال، أو تعطّل نومه أو لعبه أو ذهابه إلى الحضانة أو تفاعله مع الآخرين. الكوابيس المستمرة والشكاوى الجسدية المتكررة تستحق التقييم أيضًا؛ لا تفترضوا أن كل ألم سببه القلق. إذا فقد الطفل مهارة كان قد اكتسبها، تحدثوا مع طبيبه عن فحص النمو دون تأخير. لا تنتظروا اكتمال مدة محددة لطلب المساعدة عندما يتعطّل نشاطه المعتاد أو يفقد مهاراته.",
   "labels": [
     "الخوف",
     "قلق الانفصال",
@@ -20,10 +20,19 @@
     "2-3 سنوات"
   ],
   "created_at": "2026-09-24T18:00:00Z",
-  "updated_at": "2026-09-24T18:00:00Z",
+  "updated_at": "2026-10-07T15:32:16.820688+00:00",
   "version": "1.0.0",
   "source_meta": {
-    "source_title": "AAP - HealthyChildren.org / Toddler Fears",
-    "source_author": ""
-  }
+    "source_title": "NHS / AACAP / CDC — app-authored childhood fear guidance",
+    "source_author": "App editorial synthesis; primary references listed separately"
+  },
+  "source_kind": "authored_guidance",
+  "authored_references": [
+    "https://www.nhs.uk/mental-health/children-and-young-adults/advice-for-parents/anxiety-disorders-in-children/",
+    "https://www.nhs.uk/baby/babys-development/behaviour/separation-anxiety/",
+    "https://www.aacap.org/AACAP/Families_and_Youth/Facts_for_Families/FFF-Guide/The-Anxious-Child-047.aspx",
+    "https://www.cdc.gov/act-early/milestones/2-years.html",
+    "https://www.aacap.org/AACAP/Families_and_Youth/Facts_for_Families/FFF-Guide/When-To-Seek-Help-For-Your-Child-024.aspx"
+  ],
+  "source_note": "App-authored guidance from fetched primary public-health pages. External report was AI-generated, not clinician/human approval. No numeric waiting threshold. Exact claims and fetched-page hashes are in ops/data/clinical_seed_safety/seed-fear-23.json"
 }

@@ -334,12 +334,12 @@ def test_expired_cached_answers_are_deleted(tmp_path, monkeypatch):
     monkeypatch.setattr(answer_cache, "_DB", tmp_path / "cache.db")
     monkeypatch.setattr(answer_cache, "_embed", lambda q: None)
     long_answer = "إجابة عامة " * 20
-    assert answer_cache.store("كيف أعوّد ابني على النوم", "4-6", "tarbiyah", "خفيف", long_answer)
+    assert answer_cache.store("كيف أعوّد ابني على النوم", "4-6", "tarbiyah", "خفيف", long_answer, generation_revision=answer_cache.capture_revision())
     conn = sqlite3.connect(tmp_path / "cache.db")
     conn.execute("UPDATE answer_cache SET created_at = datetime('now', '-46 days')")
     conn.commit()
     conn.close()
-    assert answer_cache.store("كيف أعلّم ابني الصدق", "4-6", "tarbiyah", "خفيف", long_answer)
+    assert answer_cache.store("كيف أعلّم ابني الصدق", "4-6", "tarbiyah", "خفيف", long_answer, generation_revision=answer_cache.capture_revision())
     conn = sqlite3.connect(tmp_path / "cache.db")
     questions = [r[0] for r in conn.execute("SELECT question_norm FROM answer_cache")]
     conn.close()

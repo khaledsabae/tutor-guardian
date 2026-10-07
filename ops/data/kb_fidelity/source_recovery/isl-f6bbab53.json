@@ -1,0 +1,97 @@
+{
+  "unit_id": "isl-f6bbab53",
+  "base_commit": "cbd81a099607f0823a62a35ce109239f1dc690e2",
+  "source_title": "حقوق الأولاد على الوالدين",
+  "source_author": "عماد بن أحمد بن عبدالعظيم",
+  "source_url": "https://www.alukah.net/Books/Files/Book_17337/BookFile/brotherandboys.pdf",
+  "pdf_sha256": "7fa6f88fbf1ba714947983c11cde1e8c67b576374ae06c08a081444743d1272c",
+  "pdf_page_count": 189,
+  "pdf_pages_one_based": [
+    128
+  ],
+  "printed_pages": [
+    127
+  ],
+  "source_representation": "Own editorial paraphrase of the author's phone/computer-game commentary. Zero additional verbatim modern-book words.",
+  "excerpt": "صياغة تحريرية للفقرة الأولى في صفحة ١٢٧ المطبوعة من الكتاب: يعترض المؤلف على ألعاب الهاتف والكمبيوتر التي يذكرها لما يراه فيها من تضييع الوقت والانشغال عن العبادة، ومن صور للإنسان أو الحيوان وموسيقى وأغان. هذه إعادة صياغة لموقف المؤلف وليست نقلا حرفيا أو حكما جديدا.",
+  "excerpt_sha256": "a5ea9b4d562ccce82f7173e319c4d065c12865dd42935f71cafe2c39b41eaf9d",
+  "method": "Matched actual raw OCR anchors to targeted original PDF rendered pages before writing title/summary. Independently inspected page number, passage attribution, adjacent sections and footnotes. Jina used as fetch/provenance reader; visual PDF is authoritative.",
+  "source_classification": "knowledge passage; not TOC, catalogue or author collection methodology",
+  "scope": "Only the opening phone/computer-game discussion on PDF p.128. Historical weapons/khadhf hadiths, yoga/wrestling judgments and following sleeping-arrangement section excluded. The author's objections are attributed; no new religious ruling, present-day mandatory practice, addiction diagnosis or claim about every modern game.",
+  "citation_limit": "No scripture quotation included and no local hadith corpus exactness asserted. Citations on the adjacent weapons/khadhf page do not authenticate the author's phone/computer-game opinion.",
+  "hadith_matches": [],
+  "approval": null,
+  "needs_scholar_review": true,
+  "raw_OCR_source_locator": {
+    "commit": "cbd81a099607f0823a62a35ce109239f1dc690e2",
+    "file": "knowledge_base/units/isl-f6bbab53.json",
+    "field": "text_original",
+    "sha256": "ec2832837ad020d0c6a73492656ba6572b7728a5ee7459f510133aac0261e71d",
+    "anchor": "Raw OCR begins with Abu Musa/weapons and khadhf on PDF p.127 (printed 126), then crosses to the first paragraph on PDF p.128 (printed 127): phone/computer games, time, worship, images of humans/animals, music and songs.",
+    "pdf_pages_one_based": [
+      127,
+      128
+    ],
+    "printed_pages": [
+      126,
+      127
+    ],
+    "meaning": "Original raw OCR retained at immutable Git base; no long modern-book raw copy added."
+  },
+  "targeted_render_evidence": [
+    {
+      "pdf_page_one_based": 127,
+      "render_png_sha256": "7cbdd662e9198228015b5c0968d0b9b63606e48318e03a6d61c180988f9e250f",
+      "pdftotext_sha256": "75c4984f9c9958a4cb73ba736abe4ad7656989c4dd27574c734203d7b044e79f",
+      "render_command_parameters": {
+        "tool": "pdftoppm",
+        "format": "png",
+        "singlefile": true,
+        "scale_to_pixels": 1800
+      }
+    },
+    {
+      "pdf_page_one_based": 128,
+      "render_png_sha256": "89501950455bee85e950f56c718348f383d119c988553e646e92df8a416e864a",
+      "pdftotext_sha256": "7573d8f57c1e18d07b9a89bae85ec448ca8d4f50098e97d3719be024d9478875",
+      "render_command_parameters": {
+        "tool": "pdftoppm",
+        "format": "png",
+        "singlefile": true,
+        "scale_to_pixels": 1600
+      }
+    }
+  ],
+  "quotation_budget": {
+    "additional_verbatim_modern_book_words": 0,
+    "cap_user_reported": 90,
+    "ancient_quote_scope": "No ancient quotation in selected excerpt.",
+    "existing_modern_total_prior_proof_reported": 83
+  },
+  "models_called": 0,
+  "review_state": "pending independent canonical English parity after parent authorization",
+  "validation": {
+    "pair_schema_exit": 0,
+    "source_excerpt_hash_exit": 0,
+    "raw_OCR_hash_exit": 0,
+    "canonical_sha256": "6082e5993de0398cf854dd611d530f7ed455ab6a41d238a26e690f64c6d8c236",
+    "deterministic_parity_defects": [],
+    "queue": "awaiting-review",
+    "models_called": 0,
+    "approval": null,
+    "source_detector_flags": [],
+    "guards": {
+      "check_kb_integrity.py": 0,
+      "check_kb_fidelity.py": 0,
+      "check_quran_citations.py": 0,
+      "check_hadith_citations.py": 0,
+      "check_scripture_coverage.py": 0,
+      "check_quran_rendering.py": 0
+    }
+  },
+  "bibliographic_cover": {
+    "pdf_page_one_based": 1,
+    "render_png_sha256": "418790b44b6769194d0eafd02b20123045b88574236846e9ac19d3c176f0fb86",
+    "scale_to_pixels": 1200
+  }
+}

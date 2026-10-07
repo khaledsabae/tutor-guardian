@@ -1,0 +1,63 @@
+{
+  "unit_id": "isl-2aa57245",
+  "source_title": "حقوق الأولاد على الوالدين",
+  "source_author": "عماد أحمد عبدالعظيم",
+  "source_url": "https://www.alukah.net/Books/Files/Book_17337/BookFile/brotherandboys.pdf",
+  "pdf_sha256": "7fa6f88fbf1ba714947983c11cde1e8c67b576374ae06c08a081444743d1272c",
+  "pdf_pages_one_based": [
+    57
+  ],
+  "printed_pages": [
+    56
+  ],
+  "excerpt": "روى محمود بن الربيع رضي الله عنه أنه تذكر من النبي ﷺ: «مجة مجها في وجهي وأنا ابن خمس سنين من دلو».\nصحيح البخاري — حديث ٧٧.",
+  "excerpt_sha256": "f25be33ac9eabb630bfbedd9e4d66f6df708b160c52c4fc80e10e27c96841033",
+  "method": "Read targeted rendered primary PDF page located by raw OCR references BEFORE rewriting. Source representation documented separately; editorial paraphrases are not claimed as verbatim extraction.",
+  "hadith_matches": [
+    {
+      "text": "مجة مجها في وجهي وأنا ابن خمس سنين من دلو",
+      "citation": "صحيح البخاري — حديث ٧٧",
+      "exact_local_corpus_match": true
+    }
+  ],
+  "approval": "Source evidence only; no scholar, human or model approval. Awaiting independent review.",
+  "source_representation": "Selected exact ancient quote fragment, matched in local Bukhari77, with editorial narrator introduction. Source book rendering says «عقلت من النبي ...»; the preserved shared core is checked verbatim.",
+  "scope": "Only Mahmud’s childhood memory on PDF p.57, not the surrounding Hasan/Husayn story, modern Nawawi commentary or Umm Khalid account. No recommendation to spray water at today’s children, developmental claim or clinician endorsement.",
+  "citation_limit": "Full prefixed book wording does not match either local Sahih entry verbatim. The selected contiguous core matches Bukhari77. The book also cites Muslim33; that full core does NOT match Muslim33, so the served selected fragment cites only verified Bukhari77. No invented Muslim exactness.",
+  "pre_rewrite_mapping": {
+    "pdf_page_one_based": 57,
+    "printed_page": 56,
+    "raw_OCR_locator": "Mahmud ibn al-Rabi / bucket / five years; Bukhari77 and Muslim33; neighboring Umm Khalid",
+    "raw_original_sha256": "59c2c5000ab6d89c4eb5bfaec1bd54d6844ca369085050d0d0519923f2cfc3e0"
+  },
+  "quotation_budget": {
+    "additional_verbatim_modern_book_words": 0,
+    "given_existing_modern_total": 83,
+    "given_cap": 90,
+    "ancient_quote_scope": "Only historically attributed public-domain reports/fragments; modern commentary excluded."
+  },
+  "excerpt_description": "Current source representation stored in text_original; consult source_representation for quote-versus-paraphrase status.",
+  "validation": {
+    "guards": {
+      "check_kb_integrity.py": 0,
+      "check_kb_fidelity.py": 0,
+      "check_quran_citations.py": 0,
+      "check_hadith_citations.py": 0,
+      "check_scripture_coverage.py": 0,
+      "check_quran_rendering.py": 0
+    },
+    "pair_schema_exit": 0,
+    "canonical_sha256": "752732cd1b86e43b9a6512f2713d0fb83032776a480507d790273eba206b5b89",
+    "deterministic_parity_defects": [],
+    "queue": "awaiting-review",
+    "models_called": 0,
+    "approval": null
+  },
+  "raw_OCR_source_locator": {
+    "commit": "42a67c4a3c50cabed21f63ec4bb30cbe2c66712a",
+    "file": "knowledge_base/units/isl-2aa57245.json",
+    "field": "text_original",
+    "sha256": "59c2c5000ab6d89c4eb5bfaec1bd54d6844ca369085050d0d0519923f2cfc3e0",
+    "meaning": "Corrupt historical OCR preserved in Git; hash/locator retained without duplicating modern book text."
+  }
+}

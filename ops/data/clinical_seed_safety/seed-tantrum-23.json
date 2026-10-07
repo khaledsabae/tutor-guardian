@@ -1,0 +1,64 @@
+{
+  "schema": "tg.clinical_seed_primary_proof/1",
+  "unit_id": "seed-tantrum-23",
+  "base_commit": "c7fed338",
+  "external_review_kind": "AI opinion; not a doctor or scholar signoff",
+  "source_representation": "Own editorial public-health guidance and paraphrases; no modern primary-page prose copied verbatim.",
+  "primary_sources": [
+    {
+      "title": "Tips for Redirecting your Attention",
+      "url": "https://www.cdc.gov/parenting-toddlers/responding-to-behavior/ignoring.html",
+      "accessed_at": "2026-10-07T15:32:16.813497+00:00",
+      "reader": "agent-reach Jina Reader",
+      "fetched_text_sha256": "81778e17af84813e58cca2309c54ce65f303114d63261ea346b36d5a31cf336d",
+      "meaning": "Hash binds the fetched primary-page representation, not a clinical approval."
+    },
+    {
+      "title": "Temper Tantrums and Outbursts",
+      "url": "https://www.aacap.org/AACAP/Families_and_Youth/Facts_for_Families/FFF-Guide/Temper_Tantrums-136.aspx",
+      "accessed_at": "2026-10-07T15:32:16.813736+00:00",
+      "reader": "agent-reach Jina Reader",
+      "fetched_text_sha256": "5bc895eed8f53d16accf8254c7ec73a00332ab15c266bedc96eae479299b090c",
+      "meaning": "Hash binds the fetched primary-page representation, not a clinical approval."
+    },
+    {
+      "title": "Milestones by 2 Years",
+      "url": "https://www.cdc.gov/act-early/milestones/2-years.html",
+      "accessed_at": "2026-10-07T15:32:16.812801+00:00",
+      "reader": "agent-reach Jina Reader",
+      "fetched_text_sha256": "f0956f38429dc83f4133bcc3b47bb7b6bcc8a66221c1cc03cde4e0de2776ced6",
+      "meaning": "Hash binds the fetched primary-page representation, not a clinical approval."
+    },
+    {
+      "title": "Emotion Dysregulation Resource Center",
+      "url": "https://www.aacap.org/AACAP/Families_and_Youth/Resource_Centers/Emotional_Dysregulation/Home.aspx",
+      "accessed_at": "2026-10-07T15:32:16.814009+00:00",
+      "reader": "agent-reach Jina Reader",
+      "fetched_text_sha256": "bc00e5f508a23ca881c4a5a8d583df4aa4d0ac15c06c2a55415756d1013bf334",
+      "meaning": "Hash binds the fetched primary-page representation, not a clinical approval."
+    }
+  ],
+  "claims": {
+    "core": "AACAP tantrums: frustration/distress and physical needs; calm/nonviolent response. CDC two-year milestones supports predictable routines.",
+    "ignoring": "Current CDC redirecting-attention page confines ignoring to safe minor attention-seeking behavior, excludes needs/distress, and requires dangerous/destructive behavior to stop immediately.",
+    "referral": "AACAP tantrums: dangerous aggression/self-injury, inability to calm, frequency/severity or functional impairment warrant assessment; active serious safety concerns need immediate help.",
+    "timing": "External 15–20-minute rule not supported. AACAP gives different duration examples; none is made a prerequisite to safeguarding or referral."
+  },
+  "original_field_sha256": "48dc625bab58a7514d65ccecdeb3d0248ea2bec862e44cbf84bbe3fc2751f220",
+  "ar_guidance_sha256": "7a914ac305bae5dc983a65dd5442d2622e00aba70170799d8ab186a8eaf13d59",
+  "en_guidance_sha256": "684fce68e0ab1f2afd25452d7ee97baa71ad8b77b275e7e1be65b96ea29c88cb",
+  "human_clinical_approval": null,
+  "human_sharia_approval": null,
+  "parity_review": {
+    "evidence": "ops/data/clinical_seed_safety/canonical-review-2026-10-07.json",
+    "content_sha256": "8450b8c1f98b7ad70178c9d1a23a339f9d34fb411e0ea5023df3a1ef1370b6db",
+    "reviewers": [
+      "deepseek-v4-pro",
+      "glm-5.2"
+    ],
+    "verdict": "clean",
+    "raw_item_verdicts": 2,
+    "defects": 0,
+    "human_approval": false
+  }
+}

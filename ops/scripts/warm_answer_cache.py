@@ -129,12 +129,13 @@ async def _generate_answer(question: str, age_group: str) -> tuple[str, str, str
         return None
 
 
-def _store_in_cache(question: str, age_group: str, domain: str, severity: str, answer: str) -> bool:
+def _store_in_cache(question: str, age_group: str, domain: str, severity: str, answer: str,
+                    *, generation_revision: str | None = None) -> bool:
     """Store the generated answer in the answer cache."""
     try:
         from app.services.answer_cache import store
-        store(question, age_group, domain, severity, answer)
-        return True
+        return store(question, age_group, domain, severity, answer,
+                     generation_revision=generation_revision)
     except Exception as e:
         print(f"  Error storing in cache: {e}", file=sys.stderr)
         return False
@@ -142,6 +143,7 @@ def _store_in_cache(question: str, age_group: str, domain: str, severity: str, a
 
 async def _main():
     """Warm the answer cache with pre-computed answers."""
+    from app.services import answer_cache
     print(f"Starting cache warming: {len(_QUESTIONS)} questions × {len(_AGE_GROUPS)} age groups")
     print(f"Maximum possible entries: {len(_QUESTIONS) * len(_AGE_GROUPS)}")
 
@@ -152,10 +154,12 @@ async def _main():
         for age_group in _AGE_GROUPS:
             print(f"  Processing: '{question[:40]}...' ({age_group})")
 
+            generation_revision = answer_cache.capture_revision()
             result = await _generate_answer(question, age_group)
             if result:
                 answer, domain, severity = result
-                if _store_in_cache(question, age_group, domain, severity, answer):
+                if _store_in_cache(question, age_group, domain, severity, answer,
+                                   generation_revision=generation_revision):
                     warmed += 1
                     print(f"    ✓ Cached")
                 else:

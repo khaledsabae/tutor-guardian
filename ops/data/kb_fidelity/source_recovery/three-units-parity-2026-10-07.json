@@ -1,0 +1,249 @@
+{
+  "schema": "tg.source_recovery_canonical_review/1",
+  "base_commit": "5324b17721f93971534b963b0ed084ac427c0bc4",
+  "review_exit": 0,
+  "single_batch_per_reviewer": true,
+  "max_concurrent_provider_calls": 1,
+  "items": {
+    "isl-09afb431": {
+      "canonical_stamp": {
+        "reviewers": [
+          "deepseek-v4-pro",
+          "glm-5.2"
+        ],
+        "fixer": null,
+        "rounds": 1,
+        "prompt_version": "dfa8a5f39718",
+        "content_sha256": "04567292a1c300417c29acdd9ff70ebd79f28509f59b930146e555990cb8fb4a",
+        "reviewed_at": "2026-10-07T10:02:47+00:00",
+        "residual_low": [],
+        "adjudicated": [],
+        "tool": "ops/tools/review_en_parity.py",
+        "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+      },
+      "primary_proof_file": "ops/data/kb_fidelity/source_recovery/isl-09afb431.json",
+      "primary_proof_sha256": "4569bcae067f6ba72caab340b09ceaaaf1efb253553d01c66147cbbfb54582fe",
+      "unchanged_source_and_en_wording": true,
+      "needs_scholar_review": true
+    },
+    "isl-14009a8e": {
+      "canonical_stamp": {
+        "reviewers": [
+          "deepseek-v4-pro",
+          "glm-5.2"
+        ],
+        "fixer": null,
+        "rounds": 1,
+        "prompt_version": "dfa8a5f39718",
+        "content_sha256": "04175f90493abe1678629be444c141f88488f98ccbaedbd01e931208e51b940e",
+        "reviewed_at": "2026-10-07T10:02:47+00:00",
+        "residual_low": [],
+        "adjudicated": [],
+        "tool": "ops/tools/review_en_parity.py",
+        "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+      },
+      "primary_proof_file": "ops/data/kb_fidelity/source_recovery/isl-14009a8e.json",
+      "primary_proof_sha256": "e6eaa19415d3bd836f97030eb644a40ddd9a6cc92b71be59e49a761812182ff5",
+      "unchanged_source_and_en_wording": true,
+      "needs_scholar_review": true
+    },
+    "isl-3d476538": {
+      "canonical_stamp": {
+        "reviewers": [
+          "deepseek-v4-pro",
+          "glm-5.2"
+        ],
+        "fixer": null,
+        "rounds": 1,
+        "prompt_version": "dfa8a5f39718",
+        "content_sha256": "15a3f85b864233d37a67b1aef4cf46ac6e3e8cfbe7f1b05f0c8b8cdaca4dc4e9",
+        "reviewed_at": "2026-10-07T10:02:47+00:00",
+        "residual_low": [],
+        "adjudicated": [],
+        "tool": "ops/tools/review_en_parity.py",
+        "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+      },
+      "primary_proof_file": "ops/data/kb_fidelity/source_recovery/isl-3d476538.json",
+      "primary_proof_sha256": "6e008326481f56b35672e7c4e2c9de953478ea4eeae28881411b269ba4d7c1fa",
+      "unchanged_source_and_en_wording": true,
+      "needs_scholar_review": true
+    }
+  },
+  "canonical_fields": {
+    "isl-09afb431__en": {
+      "sha": "04567292a1c300417c29acdd9ff70ebd79f28509f59b930146e555990cb8fb4a",
+      "fields": {
+        "title": {
+          "ar": "طلب الأب من ابنه التبكير إلى الجمعة",
+          "en": "A Father's Request That His Son Arrive Early for Jumu'ah"
+        },
+        "text_simplified": {
+          "ar": "طلب والد العلاء بن عبد الرحمن بن يعقوب من ابنه أن يبكر إلى الجمعة. وكان الابن قد ظن أن حاجة أبيه تتعلق بشيء من متاع الدنيا، فأخبره أبوه بطلبه.",
+          "en": "The father of al-Ala ibn Abd al-Rahman ibn Ya'qub asked his son to arrive early for Jumu'ah. The son had thought his father's request concerned something worldly, before his father told him what he wanted."
+        }
+      },
+      "authors": [
+        "mistral-large-3:675b",
+        "openai:codex"
+      ],
+      "deterministic_defects": []
+    },
+    "isl-14009a8e__en": {
+      "sha": "04175f90493abe1678629be444c141f88488f98ccbaedbd01e931208e51b940e",
+      "fields": {
+        "title": {
+          "ar": "نداء أبي قرصافة لابنه عياض إلى الصلاة",
+          "en": "Abu Qirsafa Calling His Son Iyad to Salah"
+        },
+        "text_simplified": {
+          "ar": "كان أبو قرصافة ينادي ابنه عياضا إلى صلاة الغداة، فيجيبه: لبيك لبيك يا أبة. وبعد خروج عياض إلى أرض الروم، بقي أبوه يناديه عند استيقاظه وهو بالشام.",
+          "en": "Abu Qirsafa would call his son Iyad to the dawn salah, and Iyad would answer, \"Here I am, here I am, Father.\" After Iyad left for the land of the Romans, his father continued to call him when he awoke in al-Sham."
+        }
+      },
+      "authors": [
+        "mistral-large-3:675b",
+        "openai:codex"
+      ],
+      "deterministic_defects": []
+    },
+    "isl-3d476538__en": {
+      "sha": "15a3f85b864233d37a67b1aef4cf46ac6e3e8cfbe7f1b05f0c8b8cdaca4dc4e9",
+      "fields": {
+        "title": {
+          "ar": "رواية الربيع بنت معوذ عن صيام عاشوراء",
+          "en": "Al-Rubayyi' bint Mu'awwidh's Account of Ashura Fasting"
+        },
+        "text_simplified": {
+          "ar": "روت الربيع بنت معوذ أنهم كانوا يصومون عاشوراء ويصوّمون صبيانهم. وكانوا يجعلون للصبيان لعبة من الصوف، ويعطونها لمن بكى منهم على الطعام حتى الإفطار.",
+          "en": "Al-Rubayyi' bint Mu'awwidh reported that they used to fast on Ashura and have their children fast. They made a wool toy for the children and gave it to a child who cried for food until the time to break the fast."
+        }
+      },
+      "authors": [
+        "mistral-large-3:675b",
+        "openai:codex"
+      ],
+      "deterministic_defects": []
+    }
+  },
+  "review_context": {
+    "context": "Task-specific review context, not an approval or exception: these are primary-source recovery drafts. Read the Arabic critically as well as the English. In particular, isl-3d476538 describes al-Rubayyi' bint Mu'awwidh's historical Ashura account; the selected ancient toy/food wording is verified in local Bukhari 1960. Distinguish historical narration from modern parenting advice. Flag any Arabic or English wording that implies a current mandate or prescription to make today's child fast or withhold food, an age/quota, medical benefit, or guaranteed outcome. Do not infer modern advice merely from accurately attributed historical wording; do not add scientific claims, clinician endorsements or fabricated citations. Preserve exact quoted source wording. Scholar review remains pending. No extra clinician-context cross-reference was added because no independently verified relevant anchor was established for this batch. Other two items are narrow historical father/son accounts, not age-based discipline instructions.",
+    "context_sha256": "73d63b4defa6c64d6977414d4a9c07cb80a523171e89dce08681f94728ccf290",
+    "base_system_prompt_version": "dfa8a5f39718"
+  },
+  "raw_reviews": [
+    {
+      "model": "deepseek-v4-pro",
+      "system": "You audit English translations of Arabic Islamic-parenting content in an app used by Muslim parents. Each item gives Arabic source fields and their English rendering side by side, plus the child's age band. Nobody reviews this after you: what you miss reaches parents as published religious and medical guidance.\n\nCheck EVERY field of EVERY item for:\n1. meaning — the English changes, reverses, overstates or understates the Arabic.\n2. omission / addition — a substantive point dropped, or content (advice, claims, religious statements, attributions) added that the Arabic does not contain.\n3. quran — English wording presented as the Qur'an. Correct form: the ayah stays in Arabic (inside ﴿﴾), any English is explicitly labelled \"interpretation of the meaning\". Also: an ayah that the Arabic attributes to Allah but the English makes read as someone else's words.\n4. hadith — a hadith's wording altered, softened, shortened or \"completed\" in English; an attribution (narrated by al-Bukhari/Muslim, etc.) present in English but not in Arabic, or a different collection named; anything attributed to the Prophet ﷺ in English that the Arabic does not attribute to him; ﷺ placed on someone else (high). In the ARABIC itself (side \"arabic\"): a saying attributed to the Prophet ﷺ that is known to be fabricated or not a hadith at all (high); an explicit citation of a collection other than Sahih al-Bukhari or Sahih Muslim — the app's policy cites hadith only from those two (medium). A well-known hadith quoted WITHOUT any source is not a defect by itself (a missing source is safer than an invented one) — report it as low at most, and never invent a source in \"suggestion\".\n5. medical — unsafe, overconfident or dosage advice; a referral to a doctor present in the Arabic but lost in English; clear red flags with no advice to seek care.\n6. tone / age — clinical, preachy or condescending where the Arabic is warm; content unfit for the age band.\n7. leakage — Arabic words left untranslated in English (allowed: Arabic ayah inside ﴿﴾, an Arabic quotation kept on purpose, ﷺ, and transliterated Islamic terms such as tarbiyah, akhlaq, adhkar, fitrah, rifq, aqeedah, seerah, haya, ihsan, amanah, birr al-walidayn, silat al-rahim, tazkiyah, salah, du'a, wudu, sunnah, halal, haram, insha'Allah); Chinese/ Japanese/Korean/Cyrillic characters; garbled text.\n8. ARABIC SOURCE CORRUPTION — read the Arabic on its own, critically. A word that does not fit (e.g. «سفينة» where «سكينة» is meant), a typo that changes meaning, a stray English fragment inside Arabic (e.g. «حق-half»), a cut-off or garbled sentence, broken encoding, Egyptian colloquial where Modern Standard Arabic is expected. Translators SMOOTH OVER such corruption, so a fluent English line is not evidence the Arabic is sound. Report with side \"arabic\" and put the corrected Arabic field text in \"suggestion\".\n\nSeverity — rate honestly; a false medium/high forces a needless rewrite:\n- high: religious error (items 3-4), unsafe medical advice, meaning reversed, Arabic corruption that changes meaning.\n- medium: a substantive point changed/omitted/added; visible untranslated Arabic or foreign script; an Arabic typo or dialect a reader would notice; tone clearly unfit.\n- low: nuance, word choice, style, transliteration preference.\nNever rate as medium/high: British vs American spelling, Oxford commas, a synonym that keeps the meaning, or a glossary term transliterated where the Arabic has that term.\n\nReturn JSON only, with exactly one entry for EVERY item id you were given, in the given order — an item with no defects still gets its entry with \"defects\": []. An empty or partial \"items\" array is invalid output and will be discarded.\n{\"items\": [{\"id\": \"<id>\", \"defects\": [{\"field\": \"<field path as given>\", \"side\": \"english\"|\"arabic\", \"type\": \"meaning\"|\"omission\"|\"addition\"|\"quran\"|\"hadith\"|\"medical\"|\"tone\"|\"leakage\"|\"source_corruption\"|\"structure\", \"severity\": \"high\"|\"medium\"|\"low\", \"arabic\": \"<short excerpt>\", \"english\": \"<short excerpt>\", \"why\": \"<one sentence>\", \"suggestion\": \"<corrected text for that field, or empty>\"}]}]}",
+      "user": "Review these 3 items. Your \"items\" array must hold exactly 3 entries, ids in this order: [\"isl-09afb431__en\", \"isl-14009a8e__en\", \"isl-3d476538__en\"]\n\n{\"items\": [{\"id\": \"isl-09afb431__en\", \"kind\": \"kb_units\", \"age_band\": \"4-6\", \"fields\": {\"title\": {\"arabic\": \"طلب الأب من ابنه التبكير إلى الجمعة\", \"english\": \"A Father's Request That His Son Arrive Early for Jumu'ah\"}, \"text_simplified\": {\"arabic\": \"طلب والد العلاء بن عبد الرحمن بن يعقوب من ابنه أن يبكر إلى الجمعة. وكان الابن قد ظن أن حاجة أبيه تتعلق بشيء من متاع الدنيا، فأخبره أبوه بطلبه.\", \"english\": \"The father of al-Ala ibn Abd al-Rahman ibn Ya'qub asked his son to arrive early for Jumu'ah. The son had thought his father's request concerned something worldly, before his father told him what he wanted.\"}}}, {\"id\": \"isl-14009a8e__en\", \"kind\": \"kb_units\", \"age_band\": \"7-9\", \"fields\": {\"title\": {\"arabic\": \"نداء أبي قرصافة لابنه عياض إلى الصلاة\", \"english\": \"Abu Qirsafa Calling His Son Iyad to Salah\"}, \"text_simplified\": {\"arabic\": \"كان أبو قرصافة ينادي ابنه عياضا إلى صلاة الغداة، فيجيبه: لبيك لبيك يا أبة. وبعد خروج عياض إلى أرض الروم، بقي أبوه يناديه عند استيقاظه وهو بالشام.\", \"english\": \"Abu Qirsafa would call his son Iyad to the dawn salah, and Iyad would answer, \\\"Here I am, here I am, Father.\\\" After Iyad left for the land of the Romans, his father continued to call him when he awoke in al-Sham.\"}}}, {\"id\": \"isl-3d476538__en\", \"kind\": \"kb_units\", \"age_band\": \"7-9\", \"fields\": {\"title\": {\"arabic\": \"رواية الربيع بنت معوذ عن صيام عاشوراء\", \"english\": \"Al-Rubayyi' bint Mu'awwidh's Account of Ashura Fasting\"}, \"text_simplified\": {\"arabic\": \"روت الربيع بنت معوذ أنهم كانوا يصومون عاشوراء ويصوّمون صبيانهم. وكانوا يجعلون للصبيان لعبة من الصوف، ويعطونها لمن بكى منهم على الطعام حتى الإفطار.\", \"english\": \"Al-Rubayyi' bint Mu'awwidh reported that they used to fast on Ashura and have their children fast. They made a wool toy for the children and gave it to a child who cried for food until the time to break the fast.\"}}}]}\n\nTask-specific review context, not an approval or exception: these are primary-source recovery drafts. Read the Arabic critically as well as the English. In particular, isl-3d476538 describes al-Rubayyi' bint Mu'awwidh's historical Ashura account; the selected ancient toy/food wording is verified in local Bukhari 1960. Distinguish historical narration from modern parenting advice. Flag any Arabic or English wording that implies a current mandate or prescription to make today's child fast or withhold food, an age/quota, medical benefit, or guaranteed outcome. Do not infer modern advice merely from accurately attributed historical wording; do not add scientific claims, clinician endorsements or fabricated citations. Preserve exact quoted source wording. Scholar review remains pending. No extra clinician-context cross-reference was added because no independently verified relevant anchor was established for this batch. Other two items are narrow historical father/son accounts, not age-based discipline instructions.",
+      "prompt_version": "dfa8a5f39718",
+      "requested_at": "2026-10-07T10:01:58.809286+00:00",
+      "response": {
+        "id": "chatcmpl-821",
+        "object": "chat.completion",
+        "created": 1791367345,
+        "model": "deepseek-v4-pro",
+        "system_fingerprint": "fp_ollama",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "{\n  \"items\": [\n    {\n      \"id\": \"isl-09afb431__en\",\n      \"defects\": []\n    },\n    {\n      \"id\": \"isl-14009a8e__en\",\n      \"defects\": []\n    },\n    {\n      \"id\": \"isl-3d476538__en\",\n      \"defects\": []\n    }\n  ]\n}",
+              "reasoning": "We need answer JSON only. Need review 3 items. Need carefully inspect Arabic and English. Need output exactly 3 entries ids order. Need identify defects. Let's analyze each.\n\nWe need follow instructions. Fields: title, text_simplified. Need check meaning, omission/addition, quran, hadith, medical, tone/age, leakage, source corruption. Also task context: primary-source recovery drafts, historical narration not modern advice. Need flag any wording implies current mandate/prescription to make today's child fast or withhold food, age/quota, medical benefit, guaranteed outcome. Do not infer modern advice merely from accurately attributed historical wording. Need preserve exact quoted source wording. Scholar review pending. No extra clinician context.\n\nItem 1 isl-09afb431__en:\nArabic title: طلب الأب من ابنه التبكير إلى الجمعة\nEnglish: A Father's Request That His Son Arrive Early for Jumu'ah\nArabic text: طلب والد العلاء بن عبد الرحمن بن يعقوب من ابنه أن يبكر إلى الجمعة. وكان الابن قد ظن أن حاجة أبيه تتعلق بشيء من متاع الدنيا، فأخبره أبوه بطلبه.\nEnglish: The father of al-Ala ibn Abd al-Rahman ibn Ya'qub asked his son to arrive early for Jumu'ah. The son had thought his father's request concerned something worldly, before his father told him what he wanted.\n\nCheck meaning: Arabic \"طلب والد ... من ابنه أن يبكر إلى الجمعة\" = father asked son to go early to Jumu'ah. English \"arrive early for Jumu'ah\" okay. \"وكان الابن قد ظن أن حاجة أبيه تتعلق بشيء من متاع الدنيا، فأخبره أبوه بطلبه.\" English \"The son had thought his father's request concerned something worldly, before his father told him what he wanted.\" \"حاجة أبيه\" = his father's need/request? English \"his father's request\" maybe okay. \"بشيء من متاع الدنيا\" = something of worldly goods. \"before his father told him what he wanted\" okay. No defects? Maybe \"Jumu'ah\" transliteration allowed? It's Islamic term. No issue. Age 4-6? Content historical, simple. No medical. No hadith? It mentions al-Ala ibn Abd al-Rahman ibn Ya'qub, not attributed to Prophet. No source. Fine. Need maybe \"al-Ala\" transliteration? Arabic \"العلاء\" should be \"al-'Ala'\" maybe but low. Not defect. No Arabic corruption. So likely no defects.\n\nItem 2 isl-14009a8e__en:\nArabic title: نداء أبي قرصافة لابنه عياض إلى الصلاة\nEnglish: Abu Qirsafa Calling His Son Iyad to Salah\nArabic text: كان أبو قرصافة ينادي ابنه عياضا إلى صلاة الغداة، فيجيبه: لبيك لبيك يا أبة. وبعد خروج عياض إلى أرض الروم، بقي أبوه يناديه عند استيقاظه وهو بالشام.\nEnglish: Abu Qirsafa would call his son Iyad to the dawn salah, and Iyad would answer, \"Here I am, here I am, Father.\" After Iyad left for the land of the Romans, his father continued to call him when he awoke in al-Sham.\n\nCheck: Arabic \"صلاة الغداة\" = dawn prayer. English \"dawn salah\" okay. \"لبيك لبيك يا أبة\" = \"Here I am, here I am, O father\" English \"Here I am, here I am, Father.\" okay. \"وبعد خروج عياض إلى أرض الروم، بقي أبوه يناديه عند استيقاظه وهو بالشام.\" English \"After Iyad left for the land of the Romans, his father continued to call him when he awoke in al-Sham.\" \"بقي أبوه يناديه عند استيقاظه وهو بالشام\" = his father remained calling him when he woke while he (father?) was in al-Sham. English \"his father continued to call him when he awoke in al-Sham.\" Ambiguity: \"when he awoke\" could refer to father or son? Arabic \"عند استيقاظه\" pronoun could refer to father? Let's parse: \"بقي أبوه يناديه عند استيقاظه وهو بالشام\" The father remained calling him (son) upon his (father's?) waking while he (father) was in al-Sham. Since son left to land of Romans, father is in al-Sham, so \"his father continued to call him when he awoke in al-Sham\" likely means father awoke. English \"when he awoke\" ambiguous but okay. No defect. \"Abu Qirsafa\" transliteration? Arabic \"أبي قرصافة\" maybe \"Abi Qirsafa\" in title? Actually title \"نداء أبي قرصافة\" = call of Abu Qirsafa? Arabic \"أبي\" is genitive of Abu, but English \"Abu Qirsafa\" okay. No issue. Age 7-9. No medical. No hadith? It is historical account, not attributed to Prophet. Fine. No defects.\n\nItem 3 isl-3d476538__en:\nArabic title: رواية الربيع بنت معوذ عن صيام عاشوراء\nEnglish: Al-Rubayyi' bint Mu'awwidh's Account of Ashura Fasting\nArabic text: روت الربيع بنت معوذ أنهم كانوا يصومون عاشوراء ويصوّمون صبيانهم. وكانوا يجعلون للصبيان لعبة من الصوف، ويعطونها لمن بكى منهم على الطعام حتى الإفطار.\nEnglish: Al-Rubayyi' bint Mu'awwidh reported that they used to fast on Ashura and have their children fast. They made a wool toy for the children and gave it to a child who cried for food until the time to break the fast.\n\nNeed check. Arabic \"روت الربيع بنت معوذ أنهم كانوا يصومون عاشوراء ويصوّمون صبيانهم.\" English \"reported that they used to fast on Ashura and have their children fast.\" \"يصوّمون صبيانهم\" = they made their children fast. English \"have their children fast\" okay. \"وكانوا يجعلون للصبيان لعبة من الصوف، ويعطونها لمن بكى منهم على الطعام حتى الإفطار.\" English \"They made a wool toy for the children and gave it to a child who cried for food until the time to break the fast.\" Need parse Arabic: \"يجعلون للصبيان لعبة من الصوف\" = they would make for the children a toy of wool. \"ويعطونها لمن بكى منهم على الطعام حتى الإفطار\" = and give it to whoever among them cried for food until iftar. English \"gave it to a child who cried for food until the time to break the fast.\" Singular \"a child\" vs Arabic \"لمن\" = to whoever, generic. Not substantive? Could be low. \"until the time to break the fast\" okay. \"the time to break the fast\" = الإفطار. No medical advice? It is historical narration. Task context says distinguish historical narration from modern parenting advice. English \"have their children fast\" could be read as current? But it's reported past. \"They made a wool toy for the children and gave it to a child who cried for food until the time to break the fast.\" This is historical. No explicit modern mandate. No age/quota. No medical benefit. No guaranteed outcome. So no defect? But need check Arabic source corruption: \"الربيع بنت معوذ\" maybe should be \"الربيع بنت معوذ\" yes. \"يصوّمون\" is correct? It means make fast. \"لعبة من الصوف\" maybe \"لعبة من العهن\"? In hadith maybe \"العهن\" = wool. Arabic \"الصوف\" okay. \"حتى الإفطار\" okay. No corruption. But maybe English \"Al-Rubayyi' bint Mu'awwidh's Account\" vs Arabic \"رواية\" = narration/account. okay. \"Ashura Fasting\" okay. No hadith citation? Arabic doesn't cite source. English doesn't add. Fine.\n\nNeed consider if any defect in item 3: The English \"gave it to a child who cried for food until the time to break the fast\" could be ambiguous: \"gave it to a child who cried for food until the time to break the fast\" means the child cried until iftar, then given toy? Arabic \"يعطونها لمن بكى منهم على الطعام حتى الإفطار\" = they gave it to whoever cried for food until iftar. That implies they gave toy to distract them until iftar? Actually Arabic: they made wool toy for children, and they gave it to whoever among them cried for food until iftar. The toy was given to the crying child to distract until iftar. English \"gave it to a child who cried for food until the time to break the fast\" could be read as gave it to a child who cried until iftar, not necessarily to distract until iftar. But meaning preserved. Maybe \"a child\" vs \"whoever\" low. Could report low? Need decide. The instruction says rate honestly; low for nuance. But if no substantive issue, maybe no defects. We need not invent. But maybe there is a subtle issue: Arabic \"لمن بكى منهم على الطعام حتى الإفطار\" = to whoever among them cried for food until iftar. English \"gave it to a child who cried for food until the time to break the fast\" loses \"among them\" and \"whoever\" but not substantive. Low maybe. But output can have no defects. Need be careful: The task context specifically says \"Flag any Arabic or English wording that implies a current mandate or prescription to make today's child fast or withhold food, an age/quota, medical benefit, or guaranteed outcome.\" Does English \"have their children fast\" imply current mandate? It says \"reported that they used to fast ... and have their children fast.\" Past tense, historical. No. \"They made a wool toy for the children and gave it to a child who cried for food until the time to break the fast.\" This is historical. No modern advice. So no high/medium. Could there be a low omission: Arabic \"ويعطونها لمن بكى منهم على الطعام حتى الإفطار\" English \"gave it to a child who cried for food until the time to break the fast\" — \"لمن\" is \"to whoever\", not \"a child\"; but not substantive. Maybe no defect.\n\nNeed also check item 1 and 2 for any hidden issues. Item 1: Arabic \"طلب والد العلاء بن عبد الرحمن بن يعقوب من ابنه أن يبكر إلى الجمعة.\" English \"The father of al-Ala ibn Abd al-Rahman ibn Ya'qub asked his son to arrive early for Jumu'ah.\" \"العلاء\" transliteration \"al-Ala\" missing hamza? Arabic \"العلاء\" = al-'Ala' (with hamza at end). English \"al-Ala\" maybe acceptable. No. \"وكان الابن قد ظن أن حاجة أبيه تتعلق بشيء من متاع الدنيا، فأخبره أبوه بطلبه.\" English \"The son had thought his father's request concerned something worldly, before his father told him what he wanted.\" \"حاجة أبيه\" = his father's need, not request. But context \"طلبه\" at end. English \"request\" maybe okay. \"بشيء من متاع الدنيا\" = something of worldly goods; English \"something worldly\" okay. No defect.\n\nItem 2: Arabic \"كان أبو قرصافة ينادي ابنه عياضا إلى صلاة الغداة، فيجيبه: لبيك لبيك يا أبة.\" English \"Abu Qirsafa would call his son Iyad to the dawn salah, and Iyad would answer, \"Here I am, here I am, Father.\"\" \"صلاة الغداة\" = dawn prayer. \"salah\" allowed. \"يا أبة\" = O father; English \"Father\" okay. \"وبعد خروج عياض إلى أرض الروم، بقي أبوه يناديه عند استيقاظه وهو بالشام.\" English \"After Iyad left for the land of the Romans, his father continued to call him when he awoke in al-Sham.\" \"أرض الروم\" = land of the Romans/Byzantines. English \"land of the Romans\" okay. \"بقي أبوه يناديه عند استيقاظه وهو بالشام\" = his father remained calling him when he woke while he was in al-Sham. English \"when he awoke in al-Sham\" could be ambiguous but okay. No defect.\n\nNeed output JSON exactly. Could include all three with defects empty. But maybe we should include low defect for item 3? Let's think if there is any issue with \"Al-Rubayyi' bint Mu'awwidh's Account of Ashura Fasting\" vs Arabic \"رواية الربيع بنت معوذ عن صيام عاشوراء\" — \"Account\" vs \"narration\" okay. \"Ashura Fasting\" okay. No.\n\nPotential issue: In item 3, Arabic \"ويعطونها لمن بكى منهم على الطعام حتى الإفطار\" could be translated \"and gave it to whoever among them cried for food until iftar\" but English \"gave it to a child who cried for food until the time to break the fast\" changes \"whoever\" to \"a child\" and omits \"among them\". Is that a substantive point? It might slightly alter that the toy was given to any child who cried, not just one specific child. But the context \"for the children\" already plural. Low at most. The instruction says low: nuance, word choice. Could report low. But if we report low, need field path \"text_simplified\", side english, type meaning? Or omission? It's a nuance. Could be \"meaning\" low. But is it worth? The output should be honest. I think it's a minor nuance, not necessary. But maybe the evaluator expects no defects? We need decide.\n\nGiven the task context: \"Do not infer modern advice merely from accurately attributed historical wording; do not add scientific claims, clinician endorsements or fabricated citations. Preserve exact quoted source wording.\" The English is accurate. No defects. I'll output empty defects for all.\n\nBut wait: Need check \"Arabic source corruption\" for item 3: \"الربيع بنت معوذ\" maybe should be \"الربيع بنت معوذ\" yes. \"يصوّمون\" maybe correct. \"لعبة من الصوف\" maybe in hadith \"لعبة من العهن\" but Arabic uses \"الصوف\" which is wool. No corruption. \"حتى الإفطار\" okay. No.\n\nNeed ensure JSON only, no markdown. Provide exactly 3 entries. Use ids as given. Defects arrays empty. Let's craft."
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 1924,
+          "completion_tokens": 3376,
+          "total_tokens": 5300,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        }
+      },
+      "parsed": {
+        "items": [
+          {
+            "id": "isl-09afb431__en",
+            "defects": []
+          },
+          {
+            "id": "isl-14009a8e__en",
+            "defects": []
+          },
+          {
+            "id": "isl-3d476538__en",
+            "defects": []
+          }
+        ]
+      },
+      "received_at": "2026-10-07T10:02:25.398396+00:00"
+    },
+    {
+      "model": "glm-5.2",
+      "system": "You audit English translations of Arabic Islamic-parenting content in an app used by Muslim parents. Each item gives Arabic source fields and their English rendering side by side, plus the child's age band. Nobody reviews this after you: what you miss reaches parents as published religious and medical guidance.\n\nCheck EVERY field of EVERY item for:\n1. meaning — the English changes, reverses, overstates or understates the Arabic.\n2. omission / addition — a substantive point dropped, or content (advice, claims, religious statements, attributions) added that the Arabic does not contain.\n3. quran — English wording presented as the Qur'an. Correct form: the ayah stays in Arabic (inside ﴿﴾), any English is explicitly labelled \"interpretation of the meaning\". Also: an ayah that the Arabic attributes to Allah but the English makes read as someone else's words.\n4. hadith — a hadith's wording altered, softened, shortened or \"completed\" in English; an attribution (narrated by al-Bukhari/Muslim, etc.) present in English but not in Arabic, or a different collection named; anything attributed to the Prophet ﷺ in English that the Arabic does not attribute to him; ﷺ placed on someone else (high). In the ARABIC itself (side \"arabic\"): a saying attributed to the Prophet ﷺ that is known to be fabricated or not a hadith at all (high); an explicit citation of a collection other than Sahih al-Bukhari or Sahih Muslim — the app's policy cites hadith only from those two (medium). A well-known hadith quoted WITHOUT any source is not a defect by itself (a missing source is safer than an invented one) — report it as low at most, and never invent a source in \"suggestion\".\n5. medical — unsafe, overconfident or dosage advice; a referral to a doctor present in the Arabic but lost in English; clear red flags with no advice to seek care.\n6. tone / age — clinical, preachy or condescending where the Arabic is warm; content unfit for the age band.\n7. leakage — Arabic words left untranslated in English (allowed: Arabic ayah inside ﴿﴾, an Arabic quotation kept on purpose, ﷺ, and transliterated Islamic terms such as tarbiyah, akhlaq, adhkar, fitrah, rifq, aqeedah, seerah, haya, ihsan, amanah, birr al-walidayn, silat al-rahim, tazkiyah, salah, du'a, wudu, sunnah, halal, haram, insha'Allah); Chinese/ Japanese/Korean/Cyrillic characters; garbled text.\n8. ARABIC SOURCE CORRUPTION — read the Arabic on its own, critically. A word that does not fit (e.g. «سفينة» where «سكينة» is meant), a typo that changes meaning, a stray English fragment inside Arabic (e.g. «حق-half»), a cut-off or garbled sentence, broken encoding, Egyptian colloquial where Modern Standard Arabic is expected. Translators SMOOTH OVER such corruption, so a fluent English line is not evidence the Arabic is sound. Report with side \"arabic\" and put the corrected Arabic field text in \"suggestion\".\n\nSeverity — rate honestly; a false medium/high forces a needless rewrite:\n- high: religious error (items 3-4), unsafe medical advice, meaning reversed, Arabic corruption that changes meaning.\n- medium: a substantive point changed/omitted/added; visible untranslated Arabic or foreign script; an Arabic typo or dialect a reader would notice; tone clearly unfit.\n- low: nuance, word choice, style, transliteration preference.\nNever rate as medium/high: British vs American spelling, Oxford commas, a synonym that keeps the meaning, or a glossary term transliterated where the Arabic has that term.\n\nReturn JSON only, with exactly one entry for EVERY item id you were given, in the given order — an item with no defects still gets its entry with \"defects\": []. An empty or partial \"items\" array is invalid output and will be discarded.\n{\"items\": [{\"id\": \"<id>\", \"defects\": [{\"field\": \"<field path as given>\", \"side\": \"english\"|\"arabic\", \"type\": \"meaning\"|\"omission\"|\"addition\"|\"quran\"|\"hadith\"|\"medical\"|\"tone\"|\"leakage\"|\"source_corruption\"|\"structure\", \"severity\": \"high\"|\"medium\"|\"low\", \"arabic\": \"<short excerpt>\", \"english\": \"<short excerpt>\", \"why\": \"<one sentence>\", \"suggestion\": \"<corrected text for that field, or empty>\"}]}]}",
+      "user": "Review these 3 items. Your \"items\" array must hold exactly 3 entries, ids in this order: [\"isl-09afb431__en\", \"isl-14009a8e__en\", \"isl-3d476538__en\"]\n\n{\"items\": [{\"id\": \"isl-09afb431__en\", \"kind\": \"kb_units\", \"age_band\": \"4-6\", \"fields\": {\"title\": {\"arabic\": \"طلب الأب من ابنه التبكير إلى الجمعة\", \"english\": \"A Father's Request That His Son Arrive Early for Jumu'ah\"}, \"text_simplified\": {\"arabic\": \"طلب والد العلاء بن عبد الرحمن بن يعقوب من ابنه أن يبكر إلى الجمعة. وكان الابن قد ظن أن حاجة أبيه تتعلق بشيء من متاع الدنيا، فأخبره أبوه بطلبه.\", \"english\": \"The father of al-Ala ibn Abd al-Rahman ibn Ya'qub asked his son to arrive early for Jumu'ah. The son had thought his father's request concerned something worldly, before his father told him what he wanted.\"}}}, {\"id\": \"isl-14009a8e__en\", \"kind\": \"kb_units\", \"age_band\": \"7-9\", \"fields\": {\"title\": {\"arabic\": \"نداء أبي قرصافة لابنه عياض إلى الصلاة\", \"english\": \"Abu Qirsafa Calling His Son Iyad to Salah\"}, \"text_simplified\": {\"arabic\": \"كان أبو قرصافة ينادي ابنه عياضا إلى صلاة الغداة، فيجيبه: لبيك لبيك يا أبة. وبعد خروج عياض إلى أرض الروم، بقي أبوه يناديه عند استيقاظه وهو بالشام.\", \"english\": \"Abu Qirsafa would call his son Iyad to the dawn salah, and Iyad would answer, \\\"Here I am, here I am, Father.\\\" After Iyad left for the land of the Romans, his father continued to call him when he awoke in al-Sham.\"}}}, {\"id\": \"isl-3d476538__en\", \"kind\": \"kb_units\", \"age_band\": \"7-9\", \"fields\": {\"title\": {\"arabic\": \"رواية الربيع بنت معوذ عن صيام عاشوراء\", \"english\": \"Al-Rubayyi' bint Mu'awwidh's Account of Ashura Fasting\"}, \"text_simplified\": {\"arabic\": \"روت الربيع بنت معوذ أنهم كانوا يصومون عاشوراء ويصوّمون صبيانهم. وكانوا يجعلون للصبيان لعبة من الصوف، ويعطونها لمن بكى منهم على الطعام حتى الإفطار.\", \"english\": \"Al-Rubayyi' bint Mu'awwidh reported that they used to fast on Ashura and have their children fast. They made a wool toy for the children and gave it to a child who cried for food until the time to break the fast.\"}}}]}\n\nTask-specific review context, not an approval or exception: these are primary-source recovery drafts. Read the Arabic critically as well as the English. In particular, isl-3d476538 describes al-Rubayyi' bint Mu'awwidh's historical Ashura account; the selected ancient toy/food wording is verified in local Bukhari 1960. Distinguish historical narration from modern parenting advice. Flag any Arabic or English wording that implies a current mandate or prescription to make today's child fast or withhold food, an age/quota, medical benefit, or guaranteed outcome. Do not infer modern advice merely from accurately attributed historical wording; do not add scientific claims, clinician endorsements or fabricated citations. Preserve exact quoted source wording. Scholar review remains pending. No extra clinician-context cross-reference was added because no independently verified relevant anchor was established for this batch. Other two items are narrow historical father/son accounts, not age-based discipline instructions.",
+      "prompt_version": "dfa8a5f39718",
+      "requested_at": "2026-10-07T10:02:25.399113+00:00",
+      "response": {
+        "id": "chatcmpl-469",
+        "object": "chat.completion",
+        "created": 1791367366,
+        "model": "glm-5.2",
+        "system_fingerprint": "fp_ollama",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "```json\n{\"items\": [{\"id\": \"isl-09afb431__en\", \"defects\": []}, {\"id\": \"isl-14009a8e__en\", \"defects\": []}, {\"id\": \"isl-3d476538__en\", \"defects\": []}]}\n```",
+              "reasoning": "Let me review each item carefully.\n\n**Item 1: isl-09afb431__en**\n\nArabic title: \"طلب الأب من ابنه التبكير إلى الجمعة\" = \"A father's request from his son to go early to Jumu'ah\"\nEnglish title: \"A Father's Request That His Son Arrive Early for Jumu'ah\" - fine.\n\nArabic text: \"طلب والد العلاء بن عبد الرحمن بن يعقوب من ابنه أن يبكر إلى الجمعة. وكان الابن قد ظن أن حاجة أبيه تتعلق بشيء من متاع الدنيا، فأخبره أبوه بطلبه.\"\nEnglish: \"The father of al-Ala ibn Abd al-Rahman ibn Ya'qub asked his son to arrive early for Jumu'ah. The son had thought his father's request concerned something worldly, before his father told him what he wanted.\"\n\nThe Arabic says \"فأخبره أبوه بطلبه\" = \"so his father told him his request/what he wanted.\" The English says \"before his father told him what he wanted\" - the \"before\" is a slight shift from \"ف\" (so/then) which indicates sequence, not \"before.\" Actually, \"before his father told him\" could work as a translation of the narrative flow - the son thought X, then his father told him. But \"before\" implies the thinking happened prior to the telling, which is actually what the Arabic conveys with the past perfect \"كان قد ظن\" (had thought). So \"before\" works reasonably well here. Minor nuance at most.\n\nNo major issues.\n\n**Item 2: isl-14009a8e__en**\n\nArabic title: \"نداء أبي قرصافة لابنه عياض إلى الصلاة\" = \"Abu Qirsafa's call to his son Iyad to prayer\"\nEnglish title: \"Abu Qirsafa Calling His Son Iyad to Salah\" - fine.\n\nArabic text: \"كان أبو قرصافة ينادي ابنه عياضا إلى صلاة الغداة، فيجيبه: لبيك لبيك يا أبة. وبعد خروج عياض إلى أرض الروم، بقي أبوه يناديه عند استيقاظه وهو بالشام.\"\nEnglish: \"Abu Qirsafa would call his son Iyad to the dawn salah, and Iyad would answer, \\\"Here I am, here I am, Father.\\\" After Iyad left for the land of the Romans, his father continued to call him when he awoke in al-Sham.\"\n\nThe Arabic says \"وهو بالشام\" = \"while he (the father) was in al-Sham\" or \"while he (Iyad) was in al-Sham.\" The English says \"when he awoke in al-Sham\" - this is ambiguous. The Arabic \"عند استيقاظه وهو بالشام\" - \"when he (the father) awoke, while he (the father) was in al-Sham\" or \"while he (Iyad) was in al-Sham.\" Given context, the father stayed and continued calling when he (the father) awoke, while Iyad was in al-Sham (the land of the Romans/Byzantines). Actually, \"أرض الروم\" is the land of the Romans (Byzantine territory), and \"بالشام\" means in al-Sham (Greater Syria). These are different places. So \"وهو بالشام\" likely refers to the father being in al-Sham, while Iyad went to the land of the Romans. The English \"when he awoke in al-Sham\" is ambiguous about who \"he\" is and where. But this is a minor ambiguity issue.\n\nActually, let me reconsider. \"بقي أبوه يناديه عند استيقاظه وهو بالشام\" - \"his father continued to call him when he (father) awoke, while he (father) was in al-Sham.\" The father was in al-Sham, and Iyad had left for the land of the Romans. The English \"when he awoke in al-Sham\" - the \"he\" could refer to either, but given the sentence structure, \"he\" most naturally refers to Iyad (the nearest antecedent in \"continued to call him\"), which would be wrong since Iyad was in the land of the Romans, not al-Sham. This is a potential meaning issue - medium at most, but let me think about whether it's really ambiguous enough to flag.\n\nActually, re-reading: \"his father continued to call him when he awoke in al-Sham\" - \"he awoke\" most naturally refers to the father (subject of \"continued\"), and \"in al-Sham\" modifies where the father was. So it's actually reasonably clear. Low at most.\n\n**Item 3: isl-3d476538__en**\n\nArabic title: \"رواية الربيع بنت معوذ عن صيام عاشوراء\" = \"Al-Rubayyi' bint Mu'awwidh's narration about Ashura fasting\"\nEnglish title: \"Al-Rubayyi' bint Mu'awwidh's Account of Ashura Fasting\" - fine.\n\nArabic text: \"روت الربيع بنت معوذ أنهم كانوا يصومون عاشوراء ويصوّمون صبيانهم. وكانوا يجعلون للصبيان لعبة من الصوف، ويعطونها لمن بكى منهم على الطعام حتى الإفطار.\"\nEnglish: \"Al-Rubayyi' bint Mu'awwidh reported that they used to fast on Ashura and have their children fast. They made a wool toy for the children and gave it to a child who cried for food until the time to break the fast.\"\n\nThis is a historical narration. The Arabic and English both accurately present it as historical (\"they used to\"). No modern mandate or prescription is implied. The wording matches the known hadith in Bukhari 1960. No issues with medical advice - it's clearly historical.\n\nLet me check: \"ويصوّمون صبيانهم\" = \"and they would make their children fast\" - the English \"have their children fast\" is accurate. \"لمن بكى منهم على الطعام حتى الإفطار\" = \"to whoever cried among them for food until iftar\" - the English \"gave it to a child who cried for food until the time to break the fast\" is accurate.\n\nNo issues found. The task context says this is verified in local Bukhari 1960, and the wording is accurately attributed historical narration, not modern advice.\n\nLet me check for Arabic source corruption in all three items - all Arabic text reads fluently and correctly. No typos, no dialect issues, no encoding problems.\n\nLet me reconsider item 2 more carefully. \"صلاة الغداة\" = dawn prayer (Fajr). The English says \"dawn salah\" - correct. \"لبيك لبيك يا أبة\" = \"Here I am, here I am, O father\" - translated as \"Here I am, here I am, Father\" - fine.\n\nI think all three items are clean. Let me do one more pass.\n\nItem 1: \"فأخبره أبوه بطلبه\" - \"so his father informed him of his request.\" English: \"before his father told him what he wanted.\" The \"before\" vs \"so/then\" is a slight connector shift but the meaning is preserved (the son had thought X, then the father told him). Low at most, probably not worth flagging.\n\nActually, I think I should flag item 1's \"before\" as a minor meaning shift since \"ف\" indicates consequence/sequence (\"so/then\") not \"before.\" But the past perfect \"كان قد ظن\" already establishes the temporal relationship, so \"before\" works as a narrative bridge. I'll leave it as no defect or low.\n\nI'll report all three as clean with no defects."
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 1917,
+          "completion_tokens": 1809,
+          "total_tokens": 3726,
+          "prompt_tokens_details": {
+            "cached_tokens": 1041
+          }
+        }
+      },
+      "parsed": {
+        "items": [
+          {
+            "id": "isl-09afb431__en",
+            "defects": []
+          },
+          {
+            "id": "isl-14009a8e__en",
+            "defects": []
+          },
+          {
+            "id": "isl-3d476538__en",
+            "defects": []
+          }
+        ]
+      },
+      "received_at": "2026-10-07T10:02:47.103396+00:00"
+    }
+  ],
+  "report": {
+    "stamped": [
+      "isl-09afb431__en",
+      "isl-14009a8e__en",
+      "isl-3d476538__en"
+    ],
+    "fixed": [],
+    "arabic_proposals": [],
+    "arabic_applied": [],
+    "unresolved": {},
+    "fix_rejected": [],
+    "rounds": 1
+  },
+  "meaning": "Model parity review only. Historical accounts were distinguished from modern advice; no current child fasting prescription, age/quota, scientific claim or clinician endorsement added. Primary-source proofs unchanged. Scholar/human approval still pending. Earlier DRAFT source-recovery notes describe the pre-review state."
+}

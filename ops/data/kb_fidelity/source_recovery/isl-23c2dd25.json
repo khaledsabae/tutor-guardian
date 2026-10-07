@@ -1,0 +1,56 @@
+{
+  "unit_id": "isl-23c2dd25",
+  "source_title": "حقوق الأولاد على الوالدين",
+  "source_author": "عماد أحمد عبدالعظيم",
+  "source_url": "https://www.alukah.net/Books/Files/Book_17337/BookFile/brotherandboys.pdf",
+  "pdf_sha256": "7fa6f88fbf1ba714947983c11cde1e8c67b576374ae06c08a081444743d1272c",
+  "pdf_pages_one_based": [
+    9
+  ],
+  "printed_pages": [
+    8
+  ],
+  "excerpt": "إعادة صياغة تحريرية لمقدمة عماد أحمد عبدالعظيم في صفحة ٩ من ملف الكتاب: جمع الروايات المتعلقة بحقوق الأولاد، ودوّن حكمه على أسانيدها، ونظمها في أبواب يستعين فيها بكلام أهل العلم. أراد بذلك بيان ما يقع على الوالدين تجاه أولادهم. هذا تلخيص للمقدمة، وليس اقتباسا حرفيا أو إقرارا بصحة أحكام المؤلف.",
+  "excerpt_sha256": "1900779c7a8babb4966c3c76f2d4c222dd4c310f4a137adbaffb469ae0b31384",
+  "method": "Read targeted rendered primary PDF page located by raw OCR references BEFORE rewriting. Source representation documented separately; editorial paraphrases are not claimed as verbatim extraction.",
+  "hadith_matches": [],
+  "approval": "Source evidence only; no scholar, human or model approval. Awaiting independent review.",
+  "source_representation": "Brief original editorial paraphrase of the modern author’s introduction; explicitly NOT a verbatim quotation in text_original. No modern book wording quoted in proof.",
+  "scope": "Only the author’s stated collection, assessment and organization method on PDF p.9. His judgements are attributed to him, not adopted as independently verified scholarship. Prior generic prayer/values/fairness/patience claims removed.",
+  "pre_rewrite_mapping": {
+    "pdf_page_one_based": 9,
+    "printed_page": 8,
+    "raw_OCR_locator": "End of introduction signed by Imad ibn Ahmad ibn Abd al-Azim; Bahjat qulub al-abrar218",
+    "raw_original_sha256": "964640ee52a8f29dfd0a7dc4f5b3089f9b726103f90e058aa4dca96a94e6850d"
+  },
+  "quotation_budget": {
+    "additional_verbatim_modern_book_words": 0,
+    "given_existing_modern_total": 83,
+    "given_cap": 90,
+    "ancient_quote_scope": "Only historically attributed public-domain reports/fragments; modern commentary excluded."
+  },
+  "excerpt_description": "Current source representation stored in text_original; consult source_representation for quote-versus-paraphrase status.",
+  "validation": {
+    "guards": {
+      "check_kb_integrity.py": 0,
+      "check_kb_fidelity.py": 0,
+      "check_quran_citations.py": 0,
+      "check_hadith_citations.py": 0,
+      "check_scripture_coverage.py": 0,
+      "check_quran_rendering.py": 0
+    },
+    "pair_schema_exit": 0,
+    "canonical_sha256": "fa8b7c8c1b8fdd08b0a12641321fb837c0d8aac9b85968f290a5fe005454f90c",
+    "deterministic_parity_defects": [],
+    "queue": "awaiting-review",
+    "models_called": 0,
+    "approval": null
+  },
+  "raw_OCR_source_locator": {
+    "commit": "42a67c4a3c50cabed21f63ec4bb30cbe2c66712a",
+    "file": "knowledge_base/units/isl-23c2dd25.json",
+    "field": "text_original",
+    "sha256": "964640ee52a8f29dfd0a7dc4f5b3089f9b726103f90e058aa4dca96a94e6850d",
+    "meaning": "Corrupt historical OCR preserved in Git; hash/locator retained without duplicating modern book text."
+  }
+}

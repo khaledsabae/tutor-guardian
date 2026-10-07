@@ -1,0 +1,34 @@
+name: Golden full answer evaluation
+
+# No provider credentials are wired here. Configuring a verified existing
+# route requires runtime wiring; dispatch currently reports UNAVAILABLE.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  full-report:
+    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.sha }}
+      - name: Full pipeline availability report
+        continue-on-error: true
+        env:
+          GOLDEN_REVISION: ${{ github.sha }}
+        run: python3 ops/tools/golden_ci.py --mode full --out "$RUNNER_TEMP/golden-full"
+      - name: Publish full evaluation status
+        if: always()
+        run: cat "$RUNNER_TEMP/golden-full/summary.md" >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: golden-full-${{ github.sha }}
+          path: ${{ runner.temp }}/golden-full/
+          if-no-files-found: warn
+          retention-days: 14

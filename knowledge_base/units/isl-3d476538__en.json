@@ -2,7 +2,7 @@
   "id": "isl-3d476538__en",
   "domain": "islamic_parenting",
   "source_file": "Alukah_Rights_of_Children.pdf",
-  "title": "Accustoming Children to Fasting and 'Ibadat",
+  "title": "Al-Rubayyi' bint Mu'awwidh's Account of Ashura Fasting",
   "language": "en",
   "age_group": "7-9",
   "behavior_type": "تربية دينية",
@@ -10,31 +10,53 @@
   "severity": "خفيف",
   "reference_type": "كتاب_تربوي",
   "reference_info": "حقوق الأولاد على الوالدين - عماد عبدالعظيم (الألوكة)",
-  "text_original": "(5) .نارمٝمُ ـمس نقمٛمٞمُ ـــــــــــــــتــــــــ نيدلاىلا ىلع دلاولأا قىقح ـــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ كؽَ بَ اذَ ِ نفَ , ـِ فْ ع ِ لْا ـْ ِ م ةَ بَ عْ ؾُ لا ؿ فُ لَ ؾُ عَ جْ كَ وَ ,اَـكَ اقَ بْ ص ِ م قِ صَ كُ وَ دُ عْ بَ فُ م قصُ كَ اَـؽُ فَ .)1(» ر ِ اطَ فْ لإ ِ ْ ا دَ ْـط ِ نَ قؽُ يَ كتَ حَ كَ اذَ هُ اَـقْ طَ طْ أَ مِ اعَ طَ لا كؾَ طَ ؿ ارقثك نأ ٓإ ,غقؾبلا دـط ٓإ ضئارػلاو تادابعلا مزؾت ٓ فكأ ءاؿؾعلا عؿجأ« افتكرب ءاجر تادابعلاو ماقصلا كؾط ناقبصلا بردي نأ اقبحتسا ءاؿؾعلا ـم .)2(»ؿفتمزل اذإ ؿفقؾط ؾفستو ,اهوداتعقلو ,ؿفل تيأ ﭬ رؿط نأ :ؾيذفلا لبأ ـب للها دبط تعؿس :لاق ,ناـس لبأ ـطو ,ؽفجقب وأ ؽفجو كؾط :لاؼف ,رثط فقلإ عفر اؿؾف ,ناضمر في رطفأ دق ؾجرب .)3(»دحلا فبرضف ,ماقص اـكاقبصو :٠اعطيا ٤اضزإٚ ,٠انصيا زاسخإ ٢ًع دلاٚلأا حس ٞػبٜٓٚ تُ ؽْ تَ َلافَ قُ دِ صَ ؿ اجَ اذَ إ , ل ـبَ ايَ :لـبَ ل تُ ؾْ قُ :لَ اقَ ,ر ٍ ير ِ جَ ـْ طَ .)4(»ائً قْ شَ ؿ .)1136( ؿمٚسمُو ،)1961( يراخبمًا فمضرمظأ (1) .)117/4( »يراخبمًا حمٞحص حشر« (2) ,ؽلذب رقجلم فكنف فعئارش مازتلا كؾط فبردو للها ةطاص كؾط اقبص ؾؿح ـمو« :بًٗلما ٔبا ٍاق حقحص حرش« »افقؾط ؿفؾؿح ـم ابه بساحم رقغ ؽلذ في ناقبصلا مزؾت لتلا ةؼشؿلا نأو .)147/4( »يراخبلا ،)382/7( قازرمًا دبمقو ،)595( »هدمٜسمُ« مذ دمٕلجا ـمسا فمٚصوو فمس امُوزمج يراخبمًا فم٘مٚمق (3) .حمٞحص دامٜمؾم٢مس",
-  "text_simplified": "This text discusses the importance of accustoming children to fasting and 'ibadat (acts of worship) from a young age, mentioning stories from Islamic heritage about encouraging children to fast. It explains that accustoming a child to fasting and 'ibadat helps them adhere to them in the future. It also notes that fasting is not obligatory for young children, but it is beneficial for their tarbiyah (upbringing).",
+  "text_original": "وعن الربيع بنت معوذ قالت: أرسل النبي ﷺ غداة عاشوراء إلى قرى الأنصار: «من أصبح مفطرا فليتم بقية يومه، ومن أصبح صائما فليصم»، قالت: «فكنا نصومه بعد، ونصوم صبياننا، ونجعل لهم اللعبة من العهن، فإذا بكى أحدهم على الطعام أعطيناه ذاك حتى يكون عند الإفطار».\nأخرجه البخاري (١٩٦٠) ومسلم (١١٣٦).",
+  "text_simplified": "Al-Rubayyi' bint Mu'awwidh reported that they used to fast on Ashura and have their children fast. They made a wool toy for the children and gave it to a child who cried for food until the time to break the fast.",
   "labels": [
-    "صيام",
-    "تربية",
-    "أطفال",
-    "عبادات",
-    "تعويد"
+    "عاشوراء",
+    "الربيع بنت معوذ",
+    "الصبيان"
   ],
   "created_at": "2026-06-21T10:23:58Z",
-  "updated_at": "2026-06-21T10:23:58Z",
+  "updated_at": "2026-10-07T09:47:34.215999+00:00",
   "version": "1.0.0",
   "source_meta": {
-    "source_title": "Alukah_Rights_of_Children",
-    "source_author": ""
+    "source_title": "حقوق الأولاد على الوالدين",
+    "source_author": "عماد أحمد عبدالعظيم"
   },
   "source_language": "ar",
   "translated_from": "isl-3d476538",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "pending",
+    "review_verdict": "clean",
     "review_defects": [],
-    "approved_by": null,
-    "revalidated_at": "2026-10-04T11:18:18+00:00"
-  }
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
+    "draft_status": "draft",
+    "source_recovery_note": "Source-faithful historical draft. English parity was independently approved by DeepSeek and GLM; this is not scholar/source-content or human approval.",
+    "fixer_model": "openai:codex",
+    "english_authors": [
+      "mistral-large-3:675b",
+      "openai:codex"
+    ],
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "15a3f85b864233d37a67b1aef4cf46ac6e3e8cfbe7f1b05f0c8b8cdaca4dc4e9",
+      "reviewed_at": "2026-10-07T10:02:47+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+    },
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
+    "revalidated_at": "2026-10-07T10:02:47+00:00"
+  },
+  "source_url": "https://www.alukah.net/Books/Files/Book_17337/BookFile/brotherandboys.pdf#page=92",
+  "source_note": "Primary-source recovery evidence: ops/data/kb_fidelity/source_recovery/isl-3d476538.json. Actual English parity approval is recorded at its exact hash in three-units-parity-2026-10-07.json. Scholar/source-content and human approval remain pending."
 }

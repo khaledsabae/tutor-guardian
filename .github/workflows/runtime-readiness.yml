@@ -1,0 +1,91 @@
+name: Private runtime readiness
+on:
+  workflow_dispatch:
+    inputs:
+      expected_sha:
+        description: Exact current main SHA (40 hex characters)
+        required: true
+        type: string
+      public_key_pem:
+        description: Ephemeral RSA PUBLIC key PEM; retain private key locally
+        required: true
+        type: string
+permissions:
+  contents: read
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+jobs:
+  guard:
+    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    outputs:
+      sha: ${{ steps.guard.outputs.sha }}
+    steps:
+      - id: guard
+        uses: actions/github-script@v8
+        env:
+          EXPECTED_SHA: ${{ inputs.expected_sha }}
+          WORKFLOW_SHA: ${{ github.workflow_sha }}
+        with:
+          script: |
+            const expected = process.env.EXPECTED_SHA;
+            const ref = await github.rest.git.getRef({...context.repo, ref: 'heads/main'});
+            if (!/^[0-9a-f]{40}$/.test(expected) || expected !== context.sha ||
+                expected !== ref.data.object.sha || expected !== process.env.WORKFLOW_SHA) {
+              core.setFailed('Trusted main SHA guard refused this run.');
+              return;
+            }
+            core.setOutput('sha', expected);
+  diagnostic:
+    needs: guard
+    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && needs.guard.outputs.sha == github.sha
+    runs-on: [self-hosted, production]
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ needs.guard.outputs.sha }}
+          persist-credentials: false
+          sparse-checkout: ops/tools/runtime_readiness_report.py
+          sparse-checkout-cone-mode: false
+      - name: Recheck exact main SHA before runtime access
+        uses: actions/github-script@v8
+        env:
+          EXPECTED_SHA: ${{ needs.guard.outputs.sha }}
+          WORKFLOW_SHA: ${{ github.workflow_sha }}
+        with:
+          script: |
+            const ref = await github.rest.git.getRef({...context.repo, ref: 'heads/main'});
+            if (ref.data.object.sha !== process.env.EXPECTED_SHA ||
+                context.sha !== process.env.EXPECTED_SHA || context.ref !== 'refs/heads/main' ||
+                process.env.WORKFLOW_SHA !== context.sha) {
+              core.setFailed('Trusted main SHA guard refused this run.');
+            }
+      - name: Collect encrypted aggregate report
+        env:
+          REPORT_PUBLIC_KEY_PEM: ${{ inputs.public_key_pem }}
+          READINESS_EXPECTED_SHA: ${{ needs.guard.outputs.sha }}
+          READINESS_WORKFLOW_SHA: ${{ github.workflow_sha }}
+        shell: bash
+        run: |
+          set -eu
+          set +x
+          umask 077
+          REPORT_DIR=$(mktemp -d "$RUNNER_TEMP/runtime-readiness.XXXXXX")
+          echo "REPORT_DIR=$REPORT_DIR" >> "$GITHUB_ENV"
+          python3 ops/tools/runtime_readiness_report.py > "$REPORT_DIR/report.enc.json"
+      - name: Upload ciphertext only
+        uses: actions/upload-artifact@v4
+        with:
+          name: runtime-readiness-${{ github.run_id }}
+          path: ${{ env.REPORT_DIR }}/report.enc.json
+          retention-days: 1
+          compression-level: 0
+          if-no-files-found: error
+      - name: Remove runner ciphertext
+        if: always()
+        shell: bash
+        run: |
+          if [ -n "${REPORT_DIR:-}" ]; then rm -rf -- "$REPORT_DIR"; fi

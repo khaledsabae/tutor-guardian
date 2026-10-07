@@ -1,0 +1,81 @@
+{
+  "schema": {
+    "units": 6,
+    "errors": 0,
+    "exit_code": 0
+  },
+  "source_proof": {
+    "units": 3,
+    "raw_ocr_hashes_verified": 3,
+    "ancient_excerpt_hashes_verified": 3,
+    "quran_exact_matches": 1,
+    "hadith_corpus_matches_claimed": 0,
+    "modern_book_words": 89,
+    "exit_code": 0
+  },
+  "scope": {
+    "prior_commits_preserved": true,
+    "queue_entries": 42,
+    "unrelated_queue_index_ledger_preserved": true,
+    "models_called": 0,
+    "approval": null,
+    "needs_scholar_review": true
+  },
+  "drafts": {
+    "isl-f782f2ed__en": {
+      "content_sha256": "ec09dce7df2ac9836b4da4c7fd9263859e93123608732c9aac82244c2260440d",
+      "source_fingerprint": "fe4d22634c06cc91",
+      "deterministic_parity_defects": [],
+      "approval": null
+    },
+    "isl-fb04bcd3__en": {
+      "content_sha256": "6216c131a2fbb88f319be3576cc4115d53659a5fe61c1a53298d71c1b2638a93",
+      "source_fingerprint": "13f271f2a1f58c32",
+      "deterministic_parity_defects": [],
+      "approval": null
+    },
+    "isl-fe2f3c39__en": {
+      "content_sha256": "4b51131897ff1a51358ca8edfdccd3d971183458c7ae8fd3e00fc30ee1b0101d",
+      "source_fingerprint": "e11609f8cbb0bab7",
+      "deterministic_parity_defects": [],
+      "approval": null
+    }
+  },
+  "gates": {
+    "check_kb_integrity.py": {
+      "exit_code": 0,
+      "elapsed_seconds": 0.67,
+      "output": "\n===================================================================\n  KNOWLEDGE-BASE INTEGRITY GUARD — حارس سلامة قاعدة المعرفة\n===================================================================\n===================================================================\n  CJK PURITY CHECK — فحص نقاء النصوص من الحروف الصينية/اليابانية/الكورية\n===================================================================\n  ✅  CJK PURITY OK — 0 files with CJK characters (curriculum, units, backend source, docs markdown)\n===================================================================\n  REPORT FORMAT CHECK — فحص صياغة وجودة التقارير التربوية\n===================================================================\n  ✅  REPORT FORMAT OK — all reports are clean and fully translated\n\n🟡  WARNINGS (223):\n     (223 units missing optional metadata — non-blocking)\n\n===================================================================\n  ✅  KNOWLEDGE BASE IN SYNC — 1388 units, schema ≡ taxonomy\n===================================================================\n\n"
+    },
+    "check_kb_fidelity.py": {
+      "exit_code": 0,
+      "elapsed_seconds": 5.45,
+      "output": "🔍 KB fidelity: 716 served base units · 243 carry a detector flag · 281 judged faithful · 205 quarantined by this review · 231 withdrawn sources held\n✅ quarantine holds; every flagged live unit was read and judged on its current text\n"
+    },
+    "check_hadith_citations.py": {
+      "exit_code": 0,
+      "elapsed_seconds": 0.51,
+      "output": "\n===================================================================\n  HADITH CITATION CHECK — فحص الأحاديث على الصحيحين\n===================================================================\n  الفهرس: البخاري 7554 · مسلم 3016\n  self-tests: 13 قبول · 11 رفض · وحدات 3/2 · برامج 1/2 ✓\n  وحدات مترجَمة مفحوصة: 349   ·   إسناد مخترَع: 0\n  بطاقات أحاديث في البرامج (عربي + إنجليزي): 100   ·   مخالفة: 0\n  أحاديث في التطبيق: 15   ·   مطابقة: 15\n\n===================================================================\n  ✅  HADITH OK — 15 مطابقة للصحيحين لفظًا ورقمًا\n  (مطابقة آلية على طبعة واحدة — ليست تحقيقًا ولا اختيارًا شرعيًا)\n===================================================================\n\n"
+    },
+    "check_scripture_coverage.py": {
+      "exit_code": 0,
+      "elapsed_seconds": 15.22,
+      "output": "\n===================================================================\n  SCRIPTURE COVERAGE — الآيات والأحاديث في كل ما يُعرض، لا في ملف واحد\n===================================================================\n  self-tests: 13 رصد · 13 سليم · ترجمة 2/1 ✓\n  الأسطح: 31 · نصوص 35102 · بطاقات 130 · أزواج ترجمة 6426\n  مُتحقَّق: أحاديث 147 · آيات 74 · بطاقات 130\n\n===================================================================\n  ✅  SCRIPTURE COVERAGE OK — كل اقتباس في كل سطح مطابق ومُسنَد\n  (مطابقة آلية على طبعة واحدة — ليست تحقيقًا ولا اختيارًا شرعيًا)\n===================================================================\n\n"
+    },
+    "check_quran_citations.py": {
+      "exit_code": 0,
+      "elapsed_seconds": 0.17,
+      "output": "\n===================================================================\n  QUR'AN CITATION CHECK — فحص مطابقة الآيات لنص المصحف\n===================================================================\n  self-tests: 4/4 ok\n  آيات مقتبسة: 142   ·   مطابقة: 142\n\n===================================================================\n  ✅  QUR'AN CITATIONS OK — 142/142 مطابقة لنص المصحف\n===================================================================\n\n"
+    },
+    "check_quran_rendering.py": {
+      "exit_code": 0,
+      "elapsed_seconds": 0.1,
+      "output": "===================================================================\n  QUR'AN RENDERING CHECK — القرآن لا يُترجَم، والمعنى يُعلَن أنه تفسير\n===================================================================\n  self-tests: 4 مسك · 5 تمرير ✓\n  ملفات إنجليزية مفحوصة: 808\n\n===================================================================\n  ✅ QUR'AN RENDERING OK — لا إنجليزية مقدَّمة على أنها قرآن\n  (فحص شكلي — لا يُغني عن مراجعة أهل العلم لأمانة التفسير)\n===================================================================\n"
+    },
+    "review_en_parity.py": {
+      "exit_code": 0,
+      "elapsed_seconds": 0.19,
+      "output": "==================================================================\n  EN PARITY GATE — كل إنجليزي منشور مختوم وختمه يطابق نصّه\n==================================================================\n  مفحوص: adhkar 1 · banks 9 · daily_tips 219 · kb_units 349 · lessons 180 · offscreen 1 · paths 41 · stories 14\n  في الطابور (حيٌّ بلا ختم، مربوط ببصمة نصّه): awaiting-review 32 · source-unverified 10\n  ✅ كل الإنجليزي المنشور مختوم وختمه يطابق نصّه، أو مُدرَج في الطابور بنصّه نفسه.\n"
+    }
+  }
+}

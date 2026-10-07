@@ -1,0 +1,67 @@
+{
+  "id": "seed-jealousy-79__en",
+  "domain": "development",
+  "source_file": "curated/AAP / AACAP — app-authored sibling safety guidance",
+  "title": "Jealousy and Rivalry Between Siblings Aged Seven to Nine",
+  "language": "en",
+  "age_group": "7-9",
+  "behavior_type": "الغيرة بين الإخوة",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "مقال_تنموي",
+  "reference_info": "AAP / AACAP — app-authored sibling safety guidance; fetched primary guidance 2026-10-07; exact source mapping: ops/data/clinical_seed_safety/seed-jealousy-79.json",
+  "text_original": "صياغة إرشادية من التطبيق، وليست اقتباسًا حرفيًا: الخلافات والمنافسة بين الإخوة قد تظهر في سن المدرسة. استمعوا إلى كل طفل بهدوء، وتجنبوا المقارنات والاتهامات. خصّصوا وقتًا فرديًا لكل طفل، وشجّعوا أنشطة تعاونية تناسب اهتماماتهم وقدراتهم. ضعوا قواعد واضحة: لا ضرب، ولا إهانة، ولا تعدٍّ على خصوصية الآخر. في خلاف بسيط وآمن أعطوهم فرصة للحل والتفاوض؛ وتدخلوا بهدوء إذا عجزوا عن الحل أو خفتم على سلامتهم الجسدية أو النفسية.\n\nإذا ظهر ضرب أو تهديد مؤذٍ، أوقفوا السلوك وافصلوا بينهم بأمان قبل مناقشة الحل؛ لا تتركوا الطفل يتعرض للأذى بحجة أن الإخوة سيتفاهمون وحدهم. اطلبوا تقييمًا من طبيب الأطفال أو مختص نفسي عند تكرر العدوان المؤذي أو التنمر، أو ظهور خوف شديد أو انسحاب أو تراجع في المدرسة أو تعطّل الأنشطة المعتادة. الشكاوى الجسدية المتكررة تحتاج تقييمًا طبيًا، ولا يصح نسبتها إلى الغيرة دون فحص. عند إصابة خطيرة أو خطر وشيك تعجزون عن منعه، اطلبوا المساعدة العاجلة فورًا.",
+  "text_simplified": "Disagreements and rivalry between siblings may occur during the school years. Listen calmly to each child and avoid comparisons and accusations. Make one-to-one time for each child and encourage cooperative activities that suit their interests and abilities. Set clear rules: no hitting, insults or invasions of each other’s privacy. For a simple, safe disagreement, give them a chance to negotiate a solution. Step in calmly if they cannot resolve it or you are concerned about their physical or emotional safety.\n\nIf harmful hitting or threats occur, stop the behavior and separate them safely before discussing a solution. Do not leave a child exposed to harm on the assumption that siblings will work things out themselves. Seek an assessment from the child’s doctor or a mental health professional for repeated harmful aggression or bullying, severe fear or withdrawal, declining school performance or disruption of usual activities. Recurring physical complaints need medical assessment; do not attribute them to jealousy without an examination. For serious injury or imminent danger you cannot prevent, seek urgent help immediately.",
+  "labels": [
+    "الغيرة بين الإخوة",
+    "الشجار بين الأبناء",
+    "العدل بين الأولاد",
+    "الأخوة",
+    "7-9 سنوات"
+  ],
+  "created_at": "2026-09-24T18:00:00Z",
+  "updated_at": "2026-10-07T15:32:16.821640+00:00",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "AAP / AACAP — app-authored sibling safety guidance",
+    "source_author": "App editorial synthesis; primary references listed separately"
+  },
+  "source_kind": "authored_guidance",
+  "authored_references": [
+    "https://www.healthychildren.org/English/family-life/family-dynamics/Pages/Sibling-Synergy.aspx",
+    "https://www.aacap.org/AACAP/Families_and_Youth/Facts_for_Families/FFF-Guide/When-To-Seek-Help-For-Your-Child-024.aspx",
+    "https://www.nhs.uk/mental-health/children-and-young-adults/advice-for-parents/anxiety-disorders-in-children/",
+    "https://www.aacap.org/AACAP/Families_and_Youth/Resource_Centers/Emotional_Dysregulation/Home.aspx"
+  ],
+  "source_note": "App-authored guidance from fetched primary public-health pages. External report was AI-generated, not clinician/human approval. No numeric waiting threshold. Exact claims and fetched-page hashes are in ops/data/clinical_seed_safety/seed-jealousy-79.json",
+  "translation": {
+    "translator_model": "openai:codex",
+    "fixer_model": "openai:codex",
+    "english_authors": [
+      "openai:codex"
+    ],
+    "needs_scholar_review": true,
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
+    "draft_status": "draft",
+    "clinical_human_approval": null,
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "006a744646eb4cf8875d42ce1340f35e5dad02b92ab741c5b70c0829150b25fa",
+      "reviewed_at": "2026-10-07T15:33:53+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+    },
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
+    "revalidated_at": "2026-10-07T15:33:53+00:00"
+  }
+}
