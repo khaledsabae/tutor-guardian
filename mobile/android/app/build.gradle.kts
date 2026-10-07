@@ -18,6 +18,13 @@ val keystoreProperties: Properties = Properties().apply {
     if (f.exists()) f.inputStream().use { load(it) }
 }
 
+// Explicit build-only switch, with a guard against accidental local use.
+// Environment values are not an authentication boundary; the workflow owns gating.
+val ciUnsignedAab = System.getenv("TG_CI_UNSIGNED_AAB") == "true"
+check(!ciUnsignedAab || System.getenv("GITHUB_ACTIONS") == "true") {
+    "Unsigned release flag is restricted to hosted CI"
+}
+
 android {
     namespace = "com.alsaba.almorabbi"
     // Pinned to 36: newer P1 plugins (flutter_plugin_android_lifecycle,
@@ -60,13 +67,14 @@ android {
             // Use the real upload keystore if key.properties is present;
             // otherwise fall back to the debug key (still works for
             // `flutter build appbundle --release` on a fresh machine).
-            signingConfig = if (keystoreProperties.getProperty("storeFile") != null) {
+            signingConfig = if (ciUnsignedAab) {
+                null
+            } else if (keystoreProperties.getProperty("storeFile") != null) {
                 signingConfigs.getByName("release")
             } else {
                 signingConfigs.getByName("debug")
             }
-            // Strip unused ABIs / split per ABI for smaller artefacts.
-            // (Re-enable if you want a fat AAB; not needed for Play.)
+            // Retain full Flutter release ABIs and normal production shrinking.
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(
