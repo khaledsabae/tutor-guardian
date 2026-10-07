@@ -96,6 +96,10 @@ def test_personal_questions_skip_the_answer_cache(client, monkeypatch):
     monkeypatch.setattr("app.routers.assistant._classify_and_rewrite",
                         lambda q: asyncio.sleep(0, result=(["development"], q)))
     monkeypatch.setattr("app.routers.assistant.retrieve_hybrid", lambda **k: [])
+    # Neither question cites an ayah, but both are long enough to reach the
+    # full-Quran search on mcp.tafsir.net — a real HTTPS call from a test.
+    monkeypatch.setattr("app.routers.assistant.resolve_ayah_reference",
+                        lambda text: asyncio.sleep(0, result=None))
 
     _ask(client, h, message_text="ليلى لا تنام مبكرًا ماذا أفعل", session_id=sid)
     assert calls == [], "a question naming the family's child must not hit the cache"
