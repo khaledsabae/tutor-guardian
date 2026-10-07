@@ -173,6 +173,14 @@ def _strip_json(raw: str) -> dict | None:
     return json.loads(raw)
 
 
+def _record(client, **kwargs):
+    """ai_gateway.record_chat_completion: the extraction call is a paid
+    DeepSeek request, so it is an llm_calls row like the app's own."""
+    sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "backend"))
+    from app.services.ai_gateway import record_chat_completion
+    return record_chat_completion(client, **kwargs)
+
+
 def call_deepseek(chunk: str) -> dict | None:
     """Extract a knowledge unit via DeepSeek (OpenAI-compatible)."""
     from openai import OpenAI
@@ -180,7 +188,8 @@ def call_deepseek(chunk: str) -> dict | None:
     prompt = EXTRACTION_PROMPT.format(chunk=chunk)
     try:
         client = OpenAI(api_key=DEEPSEEK_KEY, base_url=DEEPSEEK_BASE, timeout=90)
-        r = client.chat.completions.create(
+        r = _record(
+            client, tier="ingest_pdf", provider="deepseek",
             model=DEEPSEEK_MODEL,
             messages=[{"role": "user", "content": prompt}],
             temperature=0.1, max_tokens=900,

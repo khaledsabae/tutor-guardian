@@ -112,13 +112,21 @@ def database_report(path, month, now):
         conn.set_progress_handler(lambda: int(time.monotonic() > deadline), 1000)
         conn.execute('BEGIN')
         valid = "typeof(prompt_tokens)='integer' AND prompt_tokens>=0 AND typeof(completion_tokens)='integer' AND completion_tokens>=0"
+        # usage_estimated=1 (telemetry migration 2): counts the provider did
+        # not report, estimated by the gateway. Kept apart: known_tokens is
+        # what the provider itself reported. Older stores have no such rows.
+        flagged = _aggregate(conn, "SELECT COUNT(*) FROM pragma_table_info('llm_calls') WHERE name='usage_estimated'")
+        estimated = "usage_estimated=1" if flagged and flagged[0] == 1 else "0"
         marks = ','.join('?' for _ in PAID)
         row = _aggregate(conn, f"SELECT COUNT(*), COALESCE(SUM(CASE WHEN {valid} THEN 0 ELSE 1 END),0), "
                          "COALESCE(SUM(CASE WHEN strftime('%Y-%m',ts) IS NULL THEN 1 ELSE 0 END),0), "
-                         f"COALESCE(SUM(CASE WHEN {valid} THEN prompt_tokens+completion_tokens ELSE 0 END),0) "
+                         f"COALESCE(SUM(CASE WHEN {valid} AND NOT ({estimated}) THEN prompt_tokens+completion_tokens ELSE 0 END),0), "
+                         f"COALESCE(SUM(CASE WHEN {valid} AND ({estimated}) THEN 1 ELSE 0 END),0), "
+                         f"COALESCE(SUM(CASE WHEN {valid} AND ({estimated}) THEN prompt_tokens+completion_tokens ELSE 0 END),0) "
                          f"FROM llm_calls WHERE provider IN ({marks}) AND (strftime('%Y-%m',ts)=? OR strftime('%Y-%m',ts) IS NULL)", (*PAID, month))
         if row and all(type(n) is int and n >= 0 for n in row):
-            result['monthly_paid_usage'] = dict(zip(('rows', 'invalid_usage_rows', 'unknown_timestamp_rows', 'known_tokens'), row), status='available', month=month)
+            result['monthly_paid_usage'] = dict(zip(('rows', 'invalid_usage_rows', 'unknown_timestamp_rows', 'known_tokens',
+                                                     'estimated_usage_rows', 'estimated_tokens'), row), status='available', month=month)
         row = _aggregate(conn, "SELECT COUNT(*), COALESCE(SUM(typeof(build_number)='integer' AND build_number>=106),0), "
                          "COALESCE(SUM(typeof(build_number)='integer' AND build_number>=0 AND build_number<106),0), "
                          "COALESCE(SUM(build_number IS NULL OR typeof(build_number)!='integer' OR build_number<0),0), "

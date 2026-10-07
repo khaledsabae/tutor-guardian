@@ -22,6 +22,12 @@ The default is --provider auto, which picks ollama only where OLLAMA_API_KEY
 exists. That key is on the laptop and NOT in the production container, so the
 weekly VPS cron still resolves to deepseek and is unchanged by this. See
 ops/scripts/weekly_kb_gap_report.py for what to add to the VPS .env to move it.
+
+Every request — the preflight and each verdict, on either provider — is an
+llm_calls row (tier "kb_gap_judge") written through the gateway's
+record_chat_completion. Until 2026-10 this judge used its own client and
+wrote nothing: the 10-03 run judged 196 pairs on DEEPSEEK_API_KEY while the
+telemetry held 30 DeepSeek rows for that window.
 """
 import argparse
 import collections
@@ -31,8 +37,18 @@ import sys
 import threading
 import time
 from concurrent.futures import ThreadPoolExecutor
+from pathlib import Path
 
 from openai import OpenAI
+
+# The recorder lives in the backend; in the container this is /app/backend.
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "backend"))
+from app.services.ai_gateway import record_chat_completion  # noqa: E402
+
+TIER = "kb_gap_judge"
+# llm_calls.provider per --provider: "deepseek" is the app's own name for
+# that wallet, so the judge's spend sums with the app's.
+TELEMETRY_PROVIDER = {"deepseek": "deepseek", "ollama": "ollama_cloud"}
 
 # Both endpoints speak the OpenAI chat-completions protocol, so only the key and
 # the base URL change. The Ollama Cloud URL and OLLAMA_API_KEY are exactly the
@@ -125,7 +141,7 @@ _progress_lock = threading.Lock()
 _done = 0
 
 
-def _judge_one(cl, model, row, unit, quiet):
+def _judge_one(cl, model, row, unit, quiet, provider="deepseek"):
     """One verdict. Never raises: a dead judge degrades to grade '?'."""
     global _done
     prompt = (RUBRIC.replace("{q}", row["question"])
@@ -134,7 +150,8 @@ def _judge_one(cl, model, row, unit, quiet):
     grade, why = "?", ""
     for attempt in range(3):
         try:
-            r = cl.chat.completions.create(
+            r = record_chat_completion(
+                cl, tier=TIER, provider=TELEMETRY_PROVIDER.get(provider, provider),
                 model=model,
                 messages=[{"role": "user", "content": prompt}],
                 # Headroom, not a fix for an observed bug: 120 did not truncate
@@ -185,14 +202,16 @@ def summarize(results: list[dict]) -> dict:
     }
 
 
-def _preflight(cl, model: str) -> None:
+def _preflight(cl, model: str, provider: str = "deepseek") -> None:
     """One live call before spending hundreds.
 
     Without it a wrong model name or a dead key costs a full run of retries
     before surfacing, and surfaces as 600 pairs graded "?" — which reads like a
     knowledge-base finding and is not one.
     """
-    cl.chat.completions.create(
+    record_chat_completion(
+        cl, tier=TIER, provider=TELEMETRY_PROVIDER.get(provider, provider),
+        route_reason="preflight",
         model=model, messages=[{"role": "user", "content": "رد بكلمة واحدة: تم"}],
         temperature=0, max_tokens=16)
 
@@ -243,7 +262,7 @@ def main(argv: list[str] | None = None):
     # can be checked against which provider actually paid for it.
     print(f"المحكّم: {provider} · {model}", flush=True)
     try:
-        _preflight(cl, model)
+        _preflight(cl, model, provider)
     except Exception as exc:  # noqa: BLE001
         print(f"🚨 المحكّم «{provider}/{model}» لا يستجيب "
               f"({type(exc).__name__}: {exc}) — أُلغي الحكم قبل صرف أي طلب.",
@@ -252,7 +271,7 @@ def main(argv: list[str] | None = None):
 
     with ThreadPoolExecutor(max_workers=args.concurrency) as pool:
         results = list(pool.map(
-            lambda j: _judge_one(cl, model, j[0], j[1], args.quiet), jobs
+            lambda j: _judge_one(cl, model, j[0], j[1], args.quiet, provider), jobs
         ))
 
     with open(args.out, "w", encoding="utf-8") as fh:

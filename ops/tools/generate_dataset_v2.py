@@ -33,6 +33,8 @@ from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(PROJECT_ROOT / "backend"))
+# Paid generation (DeepSeek/Azure) is an llm_calls row per request.
+from app.services.ai_gateway import record_chat_completion  # noqa: E402
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(message)s",
                     datefmt="%H:%M:%S")
@@ -104,7 +106,8 @@ def chat(client, model, prompt: str, max_tokens: int = 4000, retries: int = 5) -
 
     for attempt in range(retries):
         try:
-            r = client.chat.completions.create(
+            r = record_chat_completion(
+                client, tier="dataset_v2",
                 model=model,
                 messages=[{"role": "user", "content": prompt}],
                 max_tokens=max_tokens, temperature=0.7,

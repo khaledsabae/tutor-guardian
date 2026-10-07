@@ -278,3 +278,24 @@ def test_host_valid_context_emits_only_valid_encrypted_envelope(key, monkeypatch
     assert m.main([]) == 0
     captured = capsys.readouterr()
     assert json.loads(captured.out) == json.loads(envelope) and captured.err == ''
+
+
+def test_estimated_usage_is_counted_apart_from_measured_usage(tmp_path):
+    """The gateway now flags counts the provider did not report
+    (llm_calls.usage_estimated). A budget bootstrap must see them as such:
+    estimated tokens are never folded into known_tokens."""
+    m = utility(); p = tmp_path / 'estimated.db'
+    with sqlite3.connect(p) as c:
+        c.execute('CREATE TABLE llm_calls(ts TEXT,provider TEXT,prompt_tokens INTEGER,'
+                  'completion_tokens INTEGER,usage_estimated INTEGER NOT NULL DEFAULT 0)')
+        c.executemany('INSERT INTO llm_calls VALUES(?,?,?,?,?)', [
+            ('2026-10-07', 'deepseek', 5, 2, 0), ('2026-10-07', 'deepseek', 300, 40, 1),
+            ('2026-10-07', 'deepseek', None, None, 0), ('2026-10-07', 'gateway', 0, 0, 0)])
+    r = m.database_report(p, '2026-10', '2026-10-07T00:00:00+00:00')['monthly_paid_usage']
+    assert (r['rows'], r['invalid_usage_rows'], r['known_tokens']) == (3, 1, 7)
+    assert (r['estimated_usage_rows'], r['estimated_tokens']) == (1, 340)
+
+
+def test_a_store_without_the_flag_reports_zero_estimated(db):
+    r = utility().database_report(db, '2026-10', '2026-10-07T00:00:00+00:00')['monthly_paid_usage']
+    assert (r['estimated_usage_rows'], r['estimated_tokens'], r['known_tokens']) == (0, 0, 10)

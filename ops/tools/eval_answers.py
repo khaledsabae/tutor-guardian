@@ -48,6 +48,9 @@ RUNS_DIR = ROOT / "ops" / "eval" / "runs"
 sys.path.insert(0, str(BACKEND))
 
 from app.core.eval_traffic import EVAL_DEVICE_PREFIX  # noqa: E402 — needs BACKEND on the path
+# Judge calls are paid (DeepSeek/Azure/Ollama Cloud): each one is an llm_calls
+# row, like the gateway's own calls.
+from app.services.ai_gateway import record_chat_completion  # noqa: E402
 
 JUDGE_PROMPT = """أنت محكّم جودة لإجابات مساعد تربوي عربي للأهل. قيّم الإجابة أدناه بدقة وصرامة.
 
@@ -150,7 +153,8 @@ def _judge(client, model: str, item: dict, retries: int = 4) -> dict:
 
     for attempt in range(retries):
         try:
-            r = client.chat.completions.create(
+            r = record_chat_completion(
+                client, tier="eval_judge",
                 model=model,
                 messages=[{"role": "user", "content": prompt}],
                 max_tokens=500,
