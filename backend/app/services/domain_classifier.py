@@ -305,7 +305,10 @@ def _keyword_fast_path(question: str) -> Optional[List[str]]:
                 matched.append(domain)
     hearing_text = re.sub(r"[\u064b-\u065f\u0670\u0640]", "", question)
     if "development" not in matched and _CHILD_PAST_HEARING_RE.search(hearing_text):
-        matched.append("development")
+        # Same slot the development rule would give it: after the parenting
+        # domains, before app_help (last on purpose — see KEYWORD_RULES).
+        at = matched.index("app_help") if "app_help" in matched else len(matched)
+        matched.insert(at, "development")
     if "app_help" not in matched and _APP_GENERAL_RE.search(question):
         # The weak app signal (see _APP_GENERAL): beside a parenting domain it
         # adds app_help to the search; alone it defers to the model

@@ -150,3 +150,57 @@ def test_ambiguous_golden_keeps_uncertain_fallback_when_model_unavailable(monkey
     classifier._classify_cached.cache_clear()
     assert classifier.classify_domains(question) == list(classifier.UNCERTAIN_DOMAINS)
     classifier._classify_cached.cache_clear()
+
+
+# ── P2: contextual child hearing beside a strong app-help signal ────────────
+# The contextual hearing check ran after the keyword rules, so it appended
+# development AFTER app_help. A worried parent who also asks about the app must
+# keep the parenting domain as the label (domains[0]); app_help stays searched.
+
+@pytest.mark.parametrize("question", [
+    "بنتي ما سمعت الجرس، كيف أحذف حسابي؟",
+    "بِنْتِي ما سَمِعَتْ الجَرَسَ، كيف أحذف حسابي؟",
+    "ابنتي ما سمعته لما رن الجرس جنبها، احذف حسابي",
+    "بنتي سمعتها تقول إنها لا تلتقط أي صوت، كيف أخرج من وضع الطفل؟",
+    "أولادي ما بيسمعوا الجرس، كيف أحذف حسابي؟",
+])
+def test_child_hearing_outranks_strong_app_help(question):
+    assert classifier._keyword_fast_path(question) == ["development", "app_help"]
+
+
+def test_child_hearing_p2_label_is_parenting_first(monkeypatch):
+    question = "بنتي ما سمعت الجرس، كيف أحذف حسابي؟"
+    monkeypatch.setattr(classifier, "_call_llm", lambda _: pytest.fail("LLM called"))
+    classifier._classify_cached.cache_clear()
+    assert classifier.classify_domains(question) == ["development", "app_help"]
+    assert classifier.classify_single_domain(question) == "development"
+    classifier._classify_cached.cache_clear()
+
+
+@pytest.mark.parametrize("question", ["كيف أحذف حسابي؟", "كيف أخرج من وضع الطفل؟"])
+def test_standalone_app_help_stays_app_help_only(question):
+    assert classifier._keyword_fast_path(question) == ["app_help"]
+
+
+@pytest.mark.parametrize("question,expected", [
+    ("بنتي ما سمعت الجرس وعندها حرارة وألم في أذنها، هل أذهب للطبيب؟ وكيف أحذف حسابي؟",
+     ["medical", "development", "app_help"]),
+    ("بنتي ما سمعت الجرس وقت الصلاة، كيف أحذف حسابي؟",
+     ["fiqh", "development", "app_help"]),
+])
+def test_medical_and_fiqh_keep_priority_over_child_hearing(question, expected):
+    assert classifier._keyword_fast_path(question) == expected
+
+
+def test_emergency_phrase_with_child_hearing_still_takes_the_emergency_lane():
+    from app.services.intent_guard import check_emergency_keywords
+    question = "بنتي ما سمعت الجرس وعندها تشنج، كيف أحذف حسابي؟"
+    # The router checks emergencies before it ever classifies a domain.
+    assert check_emergency_keywords(question) is True
+    assert classifier._keyword_fast_path(question)[0] != "app_help"
+
+
+def test_adult_hearing_report_beside_app_help_is_not_child_hearing():
+    assert classifier._keyword_fast_path(
+        "سمعت عن عبدالله علوان، كيف أحذف حسابي؟"
+    ) == ["app_help"]
