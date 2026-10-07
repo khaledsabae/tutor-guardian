@@ -200,15 +200,6 @@
       "reason": "the Arabic gained interactive fields (age, category, three questions, Islamic value, challenge); their English is prepared in ops/data/en_parity_pending/ and is Claude-authored; waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
       "content_sha256": "6f183269240e8fa043aa34380decdd474cd99d56efcc5d349b0e30317cea839d",
       "queued_on": "2026-10-04"
-    },
-    "lesson_7-9_aqeedah_fundamentals_11": {
-      "category": "awaiting-review",
-      "reason": "Primary source correction replaces unsupported anchors and revises both languages. Historical English approval cleared; actual independent dual-family and scholar/human review remain pending. Evidence: ops/data/deepen_paths/lesson11.source-proof.json. No model review performed.",
-      "content_sha256": "5b8150f5b1387c8b6b8c4215b9ef09d81ed06c448ecfe2d8a0ef7cc5bb582129",
-      "queued_on": "2026-10-07",
-      "english_authors": [
-        "openai:codex"
-      ]
     }
   }
 }

@@ -581,7 +581,7 @@
       "brief": "«مَن خلق الله؟» حين يسأل السؤال المحيّر",
       "accepted": false,
       "blockers": [
-        "Current lesson 11 source fix changes AR/EN and anchors; historical reviews below do not approve it. Awaiting actual independent dual-family review and scholar/human review."
+        "Historical deepening reviews below describe earlier text. Current-hash canonical DeepSeek + GLM parity review passed; scholar/human review remains pending. See lesson11.canonical-review.json."
       ],
       "ar_review": {
         "reviewer": "deepseek-v4-pro",
@@ -609,7 +609,11 @@
       "source_fix": {
         "at": "2026-10-07T08:25:33+00:00",
         "evidence": "ops/data/deepen_paths/lesson11.source-proof.json",
-        "approval": null
+        "approval": null,
+        "canonical_review": "ops/data/deepen_paths/lesson11.canonical-review.json",
+        "canonical_model_parity": "clean",
+        "content_sha256": "5b8150f5b1387c8b6b8c4215b9ef09d81ed06c448ecfe2d8a0ef7cc5bb582129",
+        "human_approval": null
       }
     },
     {

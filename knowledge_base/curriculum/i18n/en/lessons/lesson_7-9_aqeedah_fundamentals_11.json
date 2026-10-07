@@ -20,16 +20,16 @@
   "version": "1.0.0",
   "created_at": "2026-10-07T07:19:31",
   "updated_at": "2026-10-07T08:25:33+00:00",
-  "approved_by": null,
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
   "language": "en",
   "source_language": "ar",
   "translation": {
     "translator_model": "claude-opus-5-5",
     "needs_scholar_review": true,
-    "review_verdict": "pending",
-    "approved_by": null,
+    "review_verdict": "clean",
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
     "generated_by": "ops/tools/deepen_paths.py",
-    "draft_status": "awaiting-review",
+    "draft_status": "awaiting-scholar-review",
     "content_provenance": {
       "reference_unit_ids": [
         "aqe-who-created-allah-source-01"
@@ -52,7 +52,8 @@
       "clinical_claims": false,
       "proof": "ops/data/deepen_paths/lesson11.source-proof.json",
       "human_approval": null,
-      "status": "awaiting-independent-dual-review"
+      "status": "independent-dual-model-review-passed; scholar/human review pending",
+      "canonical_review": "ops/data/deepen_paths/lesson11.canonical-review.json"
     },
     "fixer_model": "openai:codex",
     "english_authors": [
@@ -60,6 +61,24 @@
       "openai:codex"
     ],
     "fixed_at": "2026-10-07T08:25:33+00:00",
-    "source_fix_note": "Primary-source fix by Codex; all prior approval/revalidation cleared. Current wording has not received model or human review."
+    "source_fix_note": "Primary-source fix by Codex. Current-hash canonical DeepSeek + GLM parity review passed; scholar/human approval remains pending.",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "5b8150f5b1387c8b6b8c4215b9ef09d81ed06c448ecfe2d8a0ef7cc5bb582129",
+      "reviewed_at": "2026-10-07T09:13:28+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+    },
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
+    "review_defects": [],
+    "revalidated_at": "2026-10-07T09:13:28+00:00"
   }
 }

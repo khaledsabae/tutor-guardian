@@ -25,7 +25,7 @@
     "needs_scholar_review": true,
     "review_verdict": "pending",
     "approved_by": null,
-    "draft_status": "awaiting-review",
+    "draft_status": "awaiting-scholar-review",
     "content_provenance": {
       "reference_unit_ids": [
         "aqe-who-created-allah-source-01"
@@ -48,7 +48,8 @@
       "clinical_claims": false,
       "proof": "ops/data/deepen_paths/lesson11.source-proof.json",
       "human_approval": null,
-      "status": "awaiting-independent-dual-review"
+      "status": "independent-dual-model-review-passed; scholar/human review pending",
+      "canonical_review": "ops/data/deepen_paths/lesson11.canonical-review.json"
     }
   }
 }

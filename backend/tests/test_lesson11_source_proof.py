@@ -47,20 +47,41 @@ def test_primary_proof_cannot_silently_change_the_canon():
     assert proof["approval"]["model_review_performed"] is False
 
 
-def test_source_fix_is_pending_and_bound_to_the_current_pair():
+def test_source_fix_is_bound_to_actual_current_review_without_scholar_signoff():
     ar = _read(ROOT / f"knowledge_base/curriculum/lessons/{LESSON}.json")
     en = _read(ROOT / f"knowledge_base/curriculum/i18n/en/lessons/{LESSON}.json")
     assert ar["unit_ids"] == en["unit_ids"] == [UNIT]
     for doc in (ar, en):
-        assert doc["approved_by"] is None
         assert doc["translation"]["needs_scholar_review"] is True
         assert doc["translation"]["content_provenance"]["parenting_guidance"] == "app_authored"
-        assert not doc["translation"].get("auto_review")
+        assert doc["translation"]["content_provenance"]["human_approval"] is None
+    assert ar["approved_by"] is None
+    assert not ar["translation"].get("auto_review")
     parity = _tool("review_en_parity")
     fields = parity._field_pairs(ar, en, parity.CURRICULUM_FIELDS["lessons"])
-    queue = _read(ROOT / "ops/data/en_parity_queue.json")["units"][LESSON]
-    assert queue["category"] == "awaiting-review"
-    assert queue["content_sha256"] == parity.content_sha(fields)
+    proof = _read(ROOT / "ops/data/deepen_paths/lesson11.canonical-review.json")
+    assert proof["reviewed_fields"] == fields
+    assert proof["content_sha256"] == parity.content_sha(fields)
+    assert proof["acceptance"]["scholar_signoff"] is False
+    assert proof["acceptance"]["human_approval"] is None
+    assert LESSON not in _read(ROOT / "ops/data/en_parity_queue.json")["units"]
+    review = en["translation"]["auto_review"]
+    assert review["content_sha256"] == proof["content_sha256"]
+    assert set(review["reviewers"]) == {"deepseek-v4-pro", "glm-5.2"}
+    assert en["approved_by"] == en["translation"]["approved_by"]
+    item = parity.Item(
+        kind="lessons", key=LESSON,
+        en_file=ROOT / f"knowledge_base/curriculum/i18n/en/lessons/{LESSON}.json",
+        ar_file=ROOT / f"knowledge_base/curriculum/lessons/{LESSON}.json",
+        fields=fields,
+    )
+    assert parity.approval_state(item) == ("valid", None)
+    assert parity.family_conflict(item, review["reviewers"]) is None
+    for call in proof["reviews"]:
+        assert parity.parse_json(call["raw_content"]) == {
+            "items": [{"id": LESSON, "defects": []}]
+        }
+    assert {call["requested_model"] for call in proof["reviews"]} == set(review["reviewers"])
     assert "عقله يعمل ويبحث" not in ar["summary"]
     assert "التشبيه يزيد الحيرة" not in ar["summary"]
     assert "means their mind is working" not in en["summary"]
