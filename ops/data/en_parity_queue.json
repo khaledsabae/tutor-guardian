@@ -46,10 +46,13 @@
       "queued_on": "2026-10-04"
     },
     "isl-22f68950__en": {
-      "category": "source-unverified",
-      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
-      "content_sha256": "e87074a2c01840e36778dae3f09e28b2e70fd2912118536e4b80dd9d24630773",
-      "queued_on": "2026-10-04"
+      "category": "awaiting-review",
+      "reason": "Primary Book_17337 PDF re-read and selected excerpt manually transcribed; source-proof checksums, pages, excerpts and exact local hadith checks recorded in ops/data/kb_fidelity/source_recovery/<AR-id>.json. Unsupported claims removed; deterministic source guards passed. AR+EN are unapproved drafts, needs_scholar_review true; independent parity and scholar review remain pending.",
+      "content_sha256": "9d7309ee84d4e52d016d10501379db4760feb16045dccd50f60b55aea02b56ae",
+      "queued_on": "2026-10-07",
+      "english_authors": [
+        "openai:codex"
+      ]
     },
     "isl-23c2dd25__en": {
       "category": "source-unverified",
@@ -82,10 +85,13 @@
       "queued_on": "2026-10-04"
     },
     "isl-620730b0__en": {
-      "category": "source-unverified",
-      "reason": "It attributes words or deeds to the Prophet ﷺ or cites a hadith — check these first. Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
-      "content_sha256": "5ebbf57531abc54fe1d35a1ea8053b3ddd563d59ab9a93d9dd8c3136e97c3ea8",
-      "queued_on": "2026-10-04"
+      "category": "awaiting-review",
+      "reason": "Primary Book_17337 PDF re-read and selected excerpt manually transcribed; source-proof checksums, pages, excerpts and exact local hadith checks recorded in ops/data/kb_fidelity/source_recovery/<AR-id>.json. Unsupported claims removed; deterministic source guards passed. AR+EN are unapproved drafts, needs_scholar_review true; independent parity and scholar review remain pending.",
+      "content_sha256": "6744be3d859f648f7cbb98f29e1745f901a727fb0d72183bf757d45641451733",
+      "queued_on": "2026-10-07",
+      "english_authors": [
+        "openai:codex"
+      ]
     },
     "isl-7349e59c__en": {
       "category": "source-unverified",

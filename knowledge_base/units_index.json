@@ -7873,26 +7873,26 @@
     {
       "id": "isl-22f68950",
       "domain": "islamic_parenting",
-      "title": "حقوق الأطفال على الوالدين في الإسلام",
+      "title": "رحمة الأولاد ومحبتهم ومعانقتهم",
       "source_file": "Alukah_Rights_of_Children.pdf",
       "language": "ar",
       "original_age_group": "unspecified",
       "normalized_age_group": "unspecified",
       "behavior_type": "تربية إيجابية",
       "needs_ocr": false,
-      "size_chars": 893
+      "size_chars": 177
     },
     {
       "id": "isl-22f68950__en",
       "domain": "islamic_parenting",
-      "title": "The Rights of Children upon Their Parents in Islam",
+      "title": "Mercy, Love, and Embracing Children",
       "source_file": "Alukah_Rights_of_Children.pdf",
       "language": "en",
       "original_age_group": "unspecified",
       "normalized_age_group": "unspecified",
       "behavior_type": "تربية إيجابية",
       "needs_ocr": false,
-      "size_chars": 893
+      "size_chars": 177
     },
     {
       "id": "isl-232f3ebf",
@@ -9373,26 +9373,26 @@
     {
       "id": "isl-620730b0",
       "domain": "islamic_parenting",
-      "title": "لطف النبي مع الأطفال في الصلاة",
+      "title": "حمل النبي ﷺ أمامة أثناء الصلاة",
       "source_file": "Alukah_Rights_of_Children.pdf",
       "language": "ar",
       "original_age_group": "unspecified",
       "normalized_age_group": "unspecified",
       "behavior_type": "قدوة تربوية",
       "needs_ocr": false,
-      "size_chars": 1047
+      "size_chars": 260
     },
     {
       "id": "isl-620730b0__en",
       "domain": "islamic_parenting",
-      "title": "Rifq of the Prophet ﷺ with Children in Salah",
+      "title": "The Prophet ﷺ Carrying Umama During Salah",
       "source_file": "Alukah_Rights_of_Children.pdf",
       "language": "en",
       "original_age_group": "unspecified",
       "normalized_age_group": "unspecified",
       "behavior_type": "قدوة تربوية",
       "needs_ocr": false,
-      "size_chars": 1047
+      "size_chars": 260
     },
     {
       "id": "isl-624104ea",

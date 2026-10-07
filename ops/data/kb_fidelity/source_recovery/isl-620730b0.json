@@ -1,0 +1,51 @@
+{
+  "unit_id": "isl-620730b0",
+  "source_title": "حقوق الأولاد على الوالدين",
+  "source_author": "عماد أحمد عبدالعظيم",
+  "source_url": "https://www.alukah.net/Books/Files/Book_17337/BookFile/brotherandboys.pdf",
+  "pdf_sha256": "7fa6f88fbf1ba714947983c11cde1e8c67b576374ae06c08a081444743d1272c",
+  "pdf_pages_one_based": [
+    50
+  ],
+  "printed_pages": [
+    49
+  ],
+  "excerpt": "ومن شفقته ﷺ بالصغار ورحمته بهم حمله لأمامة بنت زينب وهو يصلي:\nعن أبي قتادة الأنصاري رضي الله عنه، أن رسول الله ﷺ كان يصلي وهو حامل أمامة بنت زينب بنت رسول الله ﷺ، ولأبي العاص بن ربيعة بن عبد شمس، فإذا سجد وضعها وإذا قام حملها.\nأخرجه البخاري (٥١٦)، ومسلم (٥٤٣).",
+  "excerpt_sha256": "90bfcb2e41f554d8885ac3cdd143d35cda01b00a9bc27200eb462752b00121d1",
+  "method": "Direct reading of rendered primary PDF pages; manual transcription of selected complete passage(s), removing vowel marks, footnote markers and line wraps, expanding honorific glyphs. Narrow excerpt only, not full page.",
+  "hadith_matches": [
+    {
+      "text": "كان يصلي وهو حامل أمامة بنت زينب بنت رسول الله",
+      "citation": "صحيح البخاري — حديث ٥١٦",
+      "exact_local_corpus_match": true
+    },
+    {
+      "text": "فإذا سجد وضعها وإذا قام حملها",
+      "citation": "صحيح البخاري — حديث ٥١٦",
+      "exact_local_corpus_match": true
+    },
+    {
+      "text": "كان يصلي وهو حامل أمامة بنت زينب بنت رسول الله",
+      "citation": "صحيح مسلم — حديث ٥٤٣",
+      "exact_local_corpus_match": true
+    }
+  ],
+  "approval": "Source evidence only; no scholar, human or model approval. Awaiting independent review.",
+  "citation_limit": "The selected book wording of the down/up clause matches Bukhari 516. The subject phrase matches Muslim 543, but the identical down/up clause does not: local matcher returns «النص موجود في صحيح البخاري حديث 516، لا مسلم 543». The book cites both; this evidence does not claim identical wording in Muslim.",
+  "validation": {
+    "guards": {
+      "check_kb_integrity.py": 0,
+      "check_kb_fidelity.py": 0,
+      "check_quran_citations.py": 0,
+      "check_hadith_citations.py": 0,
+      "check_scripture_coverage.py": 0,
+      "check_quran_rendering.py": 0
+    },
+    "pair_schema_exit": 0,
+    "canonical_sha256": "6744be3d859f648f7cbb98f29e1745f901a727fb0d72183bf757d45641451733",
+    "deterministic_parity_defects": [],
+    "queue": "awaiting-review",
+    "models_called": 0,
+    "approval": null
+  }
+}
