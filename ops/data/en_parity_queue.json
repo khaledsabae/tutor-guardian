@@ -57,15 +57,6 @@
       "content_sha256": "977a8b4774ed5b3edeb4d3e6b94bd1c9641cdaaac7e7a8a5070ee7b9be1d4303",
       "queued_on": "2026-10-04"
     },
-    "isl-27372b44__en": {
-      "category": "awaiting-review",
-      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
-      "content_sha256": "624f5ba1934eb01b979ffc7e7d3e4280e11eb11804e1ae4b75edfe34372d3f76",
-      "queued_on": "2026-10-04",
-      "english_authors": [
-        "claude-opus-5.5"
-      ]
-    },
     "isl-2aa57245__en": {
       "category": "source-unverified",
       "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
@@ -95,15 +86,6 @@
       "reason": "It attributes words or deeds to the Prophet ﷺ or cites a hadith — check these first. Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
       "content_sha256": "5ebbf57531abc54fe1d35a1ea8053b3ddd563d59ab9a93d9dd8c3136e97c3ea8",
       "queued_on": "2026-10-04"
-    },
-    "isl-624104ea__en": {
-      "category": "awaiting-review",
-      "reason": "English rewritten by PR #27 (a Claude agent) with its Arabic; waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system · Arabic corrected 2026-10-04 per the PR #20 review",
-      "content_sha256": "a71e9a3257e0ff04691ed14b6602b9d1c01b17cdbde97857d6f47fde0a6f04ac",
-      "queued_on": "2026-10-04",
-      "english_authors": [
-        "claude-opus-5.5"
-      ]
     },
     "isl-7349e59c__en": {
       "category": "source-unverified",
@@ -141,15 +123,6 @@
       "content_sha256": "f9be2ea8471a03862e2a27fdc48af50fd3405dcd9b8a2edaa5c813812e53f0e7",
       "queued_on": "2026-10-04"
     },
-    "isl-c4b3fccc__en": {
-      "category": "awaiting-review",
-      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
-      "content_sha256": "bcf29d3531418fd536b0c8ceb3b558e6b8b47d62fb6b077084e600a2c52377b4",
-      "queued_on": "2026-10-04",
-      "english_authors": [
-        "claude-opus-5.5"
-      ]
-    },
     "isl-d6faddeb__en": {
       "category": "source-unverified",
       "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
@@ -173,15 +146,6 @@
       "reason": "It attributes words or deeds to the Prophet ﷺ or cites a hadith — check these first. Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
       "content_sha256": "ec0adee4c14e63cf75d300a94941736a7e2a5a78830f3c49d5e33b4ac12c9511",
       "queued_on": "2026-10-04"
-    },
-    "isl-fd937511__en": {
-      "category": "awaiting-review",
-      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
-      "content_sha256": "f55e9bbccc67a71eacdd8b6a8a83dc5c867b5fee410d6e2546b2946f552cd907",
-      "queued_on": "2026-10-04",
-      "english_authors": [
-        "claude-opus-5.5"
-      ]
     },
     "isl-fe2f3c39__en": {
       "category": "source-unverified",
@@ -211,15 +175,6 @@
       "category": "awaiting-review",
       "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
       "content_sha256": "e3bb16579e347c2c0949297e9318fe43e8242ad3a29aef36204f183168839d60",
-      "queued_on": "2026-10-04",
-      "english_authors": [
-        "claude-opus-5.5"
-      ]
-    },
-    "lesson_13-15_islamic_parenting_steadfast_04": {
-      "category": "awaiting-review",
-      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
-      "content_sha256": "22fef9b37902c856e4d40bb63f7735e489514e3cd7d66b6dfdcb8554d854ca78",
       "queued_on": "2026-10-04",
       "english_authors": [
         "claude-opus-5.5"
@@ -294,12 +249,6 @@
         "claude-opus-5.5"
       ]
     },
-    "lesson_7-9_islamic_parenting_worship_01": {
-      "category": "awaiting-review",
-      "reason": "Arabic script-leak fix (content/p1-deep-paths): a Hebrew letter inside «أثّرت فيه» was replaced with the Arabic word; the English is unchanged. Still awaiting a different-family review, as before; re-queued at the new text.",
-      "content_sha256": "94770197fddf9d9f6c2dcb1c281c305dc703be45ec1fb09fee4a05ce8af532dc",
-      "queued_on": "2026-10-04"
-    },
     "lesson_prenatal-1_infant_pregnancy_03": {
       "category": "awaiting-review",
       "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
@@ -322,15 +271,6 @@
       "category": "awaiting-review",
       "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
       "content_sha256": "97ff39a9f47bae37a745ffc756290ce4894ddbf4864ff6ebd4b7d01a5c5b2e75",
-      "queued_on": "2026-10-04",
-      "english_authors": [
-        "claude-opus-5.5"
-      ]
-    },
-    "med-b99c1ea8__en": {
-      "category": "awaiting-review",
-      "reason": "Arabic corrected 2026-10-04 per the PR #20 review and the English rewritten by Claude to match; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 after the Ollama weekly cap · English corrected by Claude 2026-10-04 per the PR #20 review",
-      "content_sha256": "915bfaccd2374595260b76b5e96a62d33373d11af40b07d559ee9f5f99dedf16",
       "queued_on": "2026-10-04",
       "english_authors": [
         "claude-opus-5.5"
@@ -363,46 +303,10 @@
         "claude-opus-5-5"
       ]
     },
-    "path_0-3_medical_early_milestones": {
-      "category": "awaiting-review",
-      "reason": "Phase 0 honest labels (content/p1-deep-paths): the description promised a duration its lessons cannot keep («لمدة 10/12/14 يومًا» / «10/12/14-day»), so that phrase was removed from the Arabic and the English together and nothing else changed (the prenatal path keeps #20's safe-sleep wording, without the 5 S's). The 2026-10-04 stamp covered the old text. Re-review after the Ollama weekly reset; Claude edited the English, so Claude may not stamp it.",
-      "content_sha256": "9f0ef794095ee538fd8dd579eeb27dd2096153a0485514e47057690da9f3fb91",
-      "queued_on": "2026-10-04",
-      "english_authors": [
-        "claude-opus-5-5"
-      ]
-    },
-    "path_4-6_development_positive_parenting": {
-      "category": "awaiting-review",
-      "reason": "Phase 0 honest labels (content/p1-deep-paths): the description promised a duration its lessons cannot keep («لمدة 10/12/14 يومًا» / «10/12/14-day»), so that phrase was removed from the Arabic and the English together and nothing else changed (the prenatal path keeps #20's safe-sleep wording, without the 5 S's). The 2026-10-04 stamp covered the old text. Re-review after the Ollama weekly reset; Claude edited the English, so Claude may not stamp it.",
-      "content_sha256": "79e5b8d8dc11886238d271fb519206ab649aa1d84be8ac706b433a28768f01b5",
-      "queued_on": "2026-10-04",
-      "english_authors": [
-        "claude-opus-5-5"
-      ]
-    },
     "path_4-6_islamic_parenting_adab": {
       "category": "awaiting-review",
       "reason": "Phase 0 honest labels (content/p1-deep-paths): the description promised a duration its lessons cannot keep («لمدة 10/12/14 يومًا» / «10/12/14-day»), so that phrase was removed from the Arabic and the English together and nothing else changed (the prenatal path keeps #20's safe-sleep wording, without the 5 S's). The 2026-10-04 stamp covered the old text. Re-review after the Ollama weekly reset; Claude edited the English, so Claude may not stamp it.",
       "content_sha256": "2a39ac0ab0d3ce9464e57cdcd6ae2e06234e5ece440e8d05a7f6acdd12fa47a0",
-      "queued_on": "2026-10-04",
-      "english_authors": [
-        "claude-opus-5-5"
-      ]
-    },
-    "path_4-6_islamic_parenting_bond": {
-      "category": "awaiting-review",
-      "reason": "Phase 0 honest labels (content/p1-deep-paths): the description promised a duration its lessons cannot keep («لمدة 10/12/14 يومًا» / «10/12/14-day»), so that phrase was removed from the Arabic and the English together and nothing else changed (the prenatal path keeps #20's safe-sleep wording, without the 5 S's). The 2026-10-04 stamp covered the old text. Re-review after the Ollama weekly reset; Claude edited the English, so Claude may not stamp it.",
-      "content_sha256": "a84fdb378b68596cf7ccc204f802e3ffdd023f4762624f112bf086ae68f7c5c5",
-      "queued_on": "2026-10-04",
-      "english_authors": [
-        "claude-opus-5-5"
-      ]
-    },
-    "path_prenatal-1_infant_pregnancy_foundations": {
-      "category": "awaiting-review",
-      "reason": "Phase 0 honest labels (content/p1-deep-paths): the description promised a duration its lessons cannot keep («لمدة 10/12/14 يومًا» / «10/12/14-day»), so that phrase was removed from the Arabic and the English together and nothing else changed (the prenatal path keeps #20's safe-sleep wording, without the 5 S's). The 2026-10-04 stamp covered the old text. Re-review after the Ollama weekly reset; Claude edited the English, so Claude may not stamp it.",
-      "content_sha256": "aa1d34155b335689cad449fcc41d7a9fcaa4305e43a8cb0a6333885f801152be",
       "queued_on": "2026-10-04",
       "english_authors": [
         "claude-opus-5-5"

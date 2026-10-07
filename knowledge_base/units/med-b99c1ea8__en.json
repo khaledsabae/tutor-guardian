@@ -30,16 +30,31 @@
     "translator_model": "mistral-large-3:675b",
     "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "pending",
+    "review_verdict": "clean",
     "review_defects": [],
-    "approved_by": null,
-    "revalidated_at": "2026-10-04T16:52:31+00:00",
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
+    "revalidated_at": "2026-10-07T07:33:59+00:00",
     "english_authors": [
       "mistral-large-3:675b",
       "claude-opus-5.5"
     ],
     "fixer_model": "claude-opus-5.5",
     "fixed_at": "2026-10-04T18:17:56+00:00",
-    "manual_fix_note": "2026-10-04 PR #20 review: rewritten with the Arabic — core ADHD symptoms get a doctor-led plan supported by school accommodations, not 'school programs'; parents, not mothers"
+    "manual_fix_note": "2026-10-04 PR #20 review: rewritten with the Arabic — core ADHD symptoms get a doctor-led plan supported by school accommodations, not 'school programs'; parents, not mothers",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "915bfaccd2374595260b76b5e96a62d33373d11af40b07d559ee9f5f99dedf16",
+      "reviewed_at": "2026-10-07T07:33:59+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+    }
   }
 }
