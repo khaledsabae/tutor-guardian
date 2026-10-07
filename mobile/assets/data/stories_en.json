@@ -600,7 +600,6 @@
     "source_language": "ar",
     "translation": {
       "translator_model": "mistral-large-3:675b",
-      "reviewer_model": "deepseek-v4-pro",
       "attempts": 1,
       "needs_scholar_review": true,
       "scholar_signals": {
@@ -609,19 +608,103 @@
         "quran_ayah": false,
         "reviewer_model": false
       },
-      "review_verdict": "defects",
+      "review_verdict": "low_only",
       "review_defects": [
         {
-          "type": "meaning_change",
+          "model": "deepseek-v4-pro",
           "field": "pages[1].text",
-          "arabic": "ابنة جارتهم الصغيرة فاطمة",
-          "english": "Their little neighbour Fatimah",
-          "why": "The Arabic specifies 'the daughter of their neighbour' (ابنة جارتهم), but the English makes Fatimah the neighbour herself, altering the relationship.",
-          "severity": "low"
+          "type": "omission",
+          "why": "The English drops 'daughter of their neighbour', so Fatimah could be read as the neighbour herself rather than the neighbour's child."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "field": "pages[3].text",
+          "type": "meaning",
+          "why": "الكرم means generosity, not kindness; using 'kindness' loses the specific virtue named in the Arabic."
+        },
+        {
+          "model": "glm-5.2",
+          "field": "pages[1].text",
+          "type": "omission",
+          "why": "The Arabic specifies she is the neighbour's daughter (ابنة جارتهم), but the English drops 'daughter' and renders her simply as the neighbour."
+        },
+        {
+          "model": "glm-5.2",
+          "field": "pages[3].text",
+          "type": "meaning",
+          "why": "الكرم means generosity, not kindness (اللطف); the category field itself translates الكرم as 'generosity', so this is inconsistent."
+        },
+        {
+          "model": "glm-5.2",
+          "field": "pages[4].text",
+          "type": "meaning",
+          "why": "كبير means big/large, not tall (طويل); the tower is described as big, not necessarily tall."
         }
       ],
-      "approved_by": null
-    }
+      "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
+      "english_authors": [
+        "mistral-large-3:675b",
+        "claude-opus-5.5",
+        "gpt-6"
+      ],
+      "auto_review": {
+        "reviewers": [
+          "deepseek-v4-pro",
+          "glm-5.2"
+        ],
+        "fixer": null,
+        "rounds": 1,
+        "prompt_version": "dfa8a5f39718",
+        "content_sha256": "152e2e9ba28546d019275d359ce634f32c44c8ebf232cc884c151ee954559afe",
+        "reviewed_at": "2026-10-07T09:29:21+00:00",
+        "residual_low": [
+          {
+            "model": "deepseek-v4-pro",
+            "field": "pages[1].text",
+            "type": "omission",
+            "why": "The English drops 'daughter of their neighbour', so Fatimah could be read as the neighbour herself rather than the neighbour's child."
+          },
+          {
+            "model": "deepseek-v4-pro",
+            "field": "pages[3].text",
+            "type": "meaning",
+            "why": "الكرم means generosity, not kindness; using 'kindness' loses the specific virtue named in the Arabic."
+          },
+          {
+            "model": "glm-5.2",
+            "field": "pages[1].text",
+            "type": "omission",
+            "why": "The Arabic specifies she is the neighbour's daughter (ابنة جارتهم), but the English drops 'daughter' and renders her simply as the neighbour."
+          },
+          {
+            "model": "glm-5.2",
+            "field": "pages[3].text",
+            "type": "meaning",
+            "why": "الكرم means generosity, not kindness (اللطف); the category field itself translates الكرم as 'generosity', so this is inconsistent."
+          },
+          {
+            "model": "glm-5.2",
+            "field": "pages[4].text",
+            "type": "meaning",
+            "why": "كبير means big/large, not tall (طويل); the tower is described as big, not necessarily tall."
+          }
+        ],
+        "adjudicated": [],
+        "tool": "ops/tools/review_en_parity.py",
+        "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+      },
+      "reviewer_model": "deepseek-v4-pro+glm-5.2",
+      "revalidated_at": "2026-10-07T09:29:21+00:00"
+    },
+    "ageGroup": "3-6 years",
+    "category": "Sharing toys and generosity",
+    "discussionQuestions": [
+      "Why did Maryam hesitate to share her toys with Fatimah?",
+      "What did Maryam’s mother say about playing together and sharing joy?",
+      "How did Fatimah feel when Maryam shared her toys with her?"
+    ],
+    "islamicValue": "The Messenger of Allah ﷺ said: “Allah has prescribed ihsan (excellence) in everything.” (Sahih Muslim 1955)",
+    "actionChallenge": "Sharing challenge: invite a friend to play with your toys alongside you, and share the joy of playing together."
   },
   {
     "id": "omar_prayer",

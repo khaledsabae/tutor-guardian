@@ -147,12 +147,6 @@
       "content_sha256": "905aa31b8730ec6962d79fff874cdb87b110cbb41185e1ab44798d27e9421c8f",
       "queued_on": "2026-10-04"
     },
-    "story:maryam_toys": {
-      "category": "awaiting-review",
-      "reason": "the Arabic gained interactive fields (age, category, three questions, Islamic value, challenge); their English is prepared in ops/data/en_parity_pending/ and is Claude-authored; waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
-      "content_sha256": "fa78e4654af9af4e4c597be20b8a69f1c559944cc997f396efe86a50fec8f1f5",
-      "queued_on": "2026-10-04"
-    },
     "story:yaseen_creation": {
       "category": "awaiting-review",
       "reason": "the Arabic gained interactive fields (age, category, three questions, Islamic value, challenge); their English is prepared in ops/data/en_parity_pending/ and is Claude-authored; waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
