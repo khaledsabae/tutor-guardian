@@ -58,6 +58,44 @@ def test_complete_actual_fragment_proof_has_no_missing_family(rp, monkeypatch):
     assert v.unreviewed == [] and v.blocking([]) == []
 
 
+def test_malformed_defect_cannot_disappear_into_approval(rp, monkeypatch):
+    item, proof = example(rp)
+    monkeypatch.setattr(rp, "deterministic_defects", lambda item: [])
+    proof["responses"][0]["raw"] = json.dumps(
+        {"items": [{"id": "tip-0", "defects": ["invalid defect record"]}]}
+    )
+    with pytest.raises(ValueError):
+        rp.replay_proof(item, ("deepseek-v4-pro", "glm-5.2"), proof)
+
+
+@pytest.mark.parametrize("reviewers", [
+    ("deepseek-v4-pro", "deepseek-v4-pro"),
+    ("deepseek-v4-pro", "deepseek-v3"),
+    ("deepseek-v4-pro", "unidentified-model"),
+])
+def test_two_distinct_known_families_required(rp, monkeypatch, reviewers):
+    item, proof = example(rp)
+    monkeypatch.setattr(rp, "deterministic_defects", lambda item: [])
+    proof["responses"][1]["model"] = reviewers[1]
+    with pytest.raises(ValueError):
+        rp.replay_proof(item, reviewers, proof)
+
+
+@pytest.mark.parametrize("reviewers", [
+    ("deepseek-v4-pro", "deepseek-v4-pro"),
+    ("deepseek-v4-pro", "deepseek-v3"),
+])
+def test_invalid_reviewers_cannot_start_a_run(rp, monkeypatch, reviewers):
+    from types import SimpleNamespace
+
+    def unexpected_access():
+        raise AssertionError("Invalid reviewer configuration reached review state")
+
+    monkeypatch.setattr(rp, "load_adjudications", unexpected_access)
+    with pytest.raises(ValueError):
+        rp.run([], SimpleNamespace(reviewer_a=reviewers[0], reviewer_b=reviewers[1]))
+
+
 def test_changed_field_cannot_reuse_old_raw_judgment(rp, monkeypatch):
     item, proof = example(rp)
     monkeypatch.setattr(rp, "deterministic_defects", lambda item: [])

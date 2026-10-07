@@ -1310,12 +1310,19 @@ class Verdict:
                 for m, ds in self.defects.items() for d in ds if d["severity"] == "low"]
 
 
+def require_dual_families(reviewers: tuple[str, str]) -> None:
+    families = [model_family(name) for name in reviewers]
+    if len(reviewers) != 2 or None in families or len(set(families)) != 2:
+        raise ValueError("proof requires two distinct known reviewer families")
+
+
 def replay_proof(item: Item, reviewers: tuple[str, str], proof: dict) -> Verdict:
     """Replay actual raw judgments; reuse only fields equal in both languages.
 
     A fragment hash authenticates its recorded input, not the current pack.
     Missing current fields remain unreviewed. No combined cache entry is made.
     """
+    require_dual_families(reviewers)
     if (proof.get("key") != item.key or proof.get("content_sha256") != item.sha
             or proof.get("prompt_version") != PROMPT_V):
         raise ValueError("proof pack fingerprint or prompt version differs")
@@ -1348,7 +1355,9 @@ def replay_proof(item: Item, reviewers: tuple[str, str], proof: dict) -> Verdict
         if (not isinstance(entries, list)
                 or [entry.get("id") for entry in entries if isinstance(entry, dict)] != batch_ids
                 or any(not isinstance(entry, dict)
-                       or not isinstance(entry.get("defects"), list) for entry in entries)):
+                       or not isinstance(entry.get("defects"), list)
+                       or any(not isinstance(defect, dict) for defect in entry["defects"])
+                       for entry in entries)):
             raise ValueError("raw review does not explicitly cover its recorded batch")
         chunk = Chunk(item, cid, fields)
         parsed = parse_review(response["raw"], [chunk])
@@ -1566,6 +1575,7 @@ def apply_arabic(item: Item, new_ar: dict) -> None:
 
 def run(items: list[Item], args) -> dict:
     reviewers = (args.reviewer_a, args.reviewer_b)
+    require_dual_families(reviewers)
     adj = load_adjudications()
     today = args.date or date.today().isoformat()
     report = {"stamped": [], "fixed": set(), "arabic_proposals": [], "arabic_applied": [],
