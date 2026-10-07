@@ -15,15 +15,6 @@
         "claude-opus-5.5"
       ]
     },
-    "isl-09afb431__en": {
-      "category": "awaiting-review",
-      "reason": "Primary Book_17337 PDF passages located by original OCR anchors and re-read on targeted pages; selected excerpts, PDF checksum, page mapping and citation limits recorded in ops/data/kb_fidelity/source_recovery/<AR-id>.json. Source-faithful AR+EN drafts passed deterministic guards; no model, scholar or human approval. Independent parity and scholar review pending.",
-      "content_sha256": "04567292a1c300417c29acdd9ff70ebd79f28509f59b930146e555990cb8fb4a",
-      "queued_on": "2026-10-07",
-      "english_authors": [
-        "openai:codex"
-      ]
-    },
     "isl-10541fe2__en": {
       "category": "awaiting-review",
       "reason": "2026-10-07 native recovery: exact original Book_17337 passages located via raw OCR and visually verified against primary PDF checksum 7fa6f88fbf1ba714947983c11cde1e8c67b576374ae06c08a081444743d1272c. Source-recovery evidence records page maps, historical speakers and ancient quotation exclusions; modern-book aggregate remains 83/90 words. Native AR/EN summaries narrowed to verified material, unsupported developmental/general-ruling claims removed. Current hash awaits genuine independent translation review and scholar review; approvals null, no models called.",
@@ -38,15 +29,6 @@
       "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
       "content_sha256": "10522b8b45748bd10abe4af88e88a38a6843d54607b238d510281d94ab145a05",
       "queued_on": "2026-10-04"
-    },
-    "isl-14009a8e__en": {
-      "category": "awaiting-review",
-      "reason": "Primary Book_17337 PDF passages located by original OCR anchors and re-read on targeted pages; selected excerpts, PDF checksum, page mapping and citation limits recorded in ops/data/kb_fidelity/source_recovery/<AR-id>.json. Source-faithful AR+EN drafts passed deterministic guards; no model, scholar or human approval. Independent parity and scholar review pending.",
-      "content_sha256": "04175f90493abe1678629be444c141f88488f98ccbaedbd01e931208e51b940e",
-      "queued_on": "2026-10-07",
-      "english_authors": [
-        "openai:codex"
-      ]
     },
     "isl-14bc16f5__en": {
       "category": "source-unverified",
@@ -71,15 +53,6 @@
       "reason": "It attributes words or deeds to the Prophet ﷺ or cites a hadith — check these first. Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
       "content_sha256": "8cfc8a4563c8f3d9088b166fd46ff66dbaa760bb2616cee716739cd204ed3f6d",
       "queued_on": "2026-10-04"
-    },
-    "isl-3d476538__en": {
-      "category": "awaiting-review",
-      "reason": "Primary Book_17337 PDF passages located by original OCR anchors and re-read on targeted pages; selected excerpts, PDF checksum, page mapping and citation limits recorded in ops/data/kb_fidelity/source_recovery/<AR-id>.json. Source-faithful AR+EN drafts passed deterministic guards; no model, scholar or human approval. Independent parity and scholar review pending.",
-      "content_sha256": "15a3f85b864233d37a67b1aef4cf46ac6e3e8cfbe7f1b05f0c8b8cdaca4dc4e9",
-      "queued_on": "2026-10-07",
-      "english_authors": [
-        "openai:codex"
-      ]
     },
     "isl-552b4f5a__en": {
       "category": "source-unverified",
