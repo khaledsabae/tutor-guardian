@@ -136,6 +136,10 @@ QUEUE_CATEGORIES = {
 }
 
 API_URL = "https://ollama.com/v1/chat/completions"
+# حدّ النداء الواحد وعدد محاولاته — قابلان للضبط بـ`--request-timeout/--request-attempts`
+# كي يقدر المشغّل على تحديد سقف زمني لمراجعته بدل انتظار ٦٠٠ ثانية × ٨ محاولات.
+REQUEST_TIMEOUT = 600
+REQUEST_ATTEMPTS = 8
 REVIEWER_A = "deepseek-v4-pro"
 REVIEWER_B = "glm-5.2"
 FIXER = "mistral-large-3:675b"
@@ -902,13 +906,14 @@ def _is_usage_cap(body: str) -> bool:
     return "limit" in b and any(w in b for w in ("hour", "week", "month", "usage"))
 
 
-def post(model: str, system: str, user: str, timeout: int = 600) -> tuple[str, dict]:
+def post(model: str, system: str, user: str, timeout: int | None = None) -> tuple[str, dict]:
     """نداء واحد، بتراجع أُسّي على العابر وتبريد مشترك على 429، وسقوط فوري على 401/402/403."""
     body = json.dumps({"model": model, "temperature": 0.1,
                        "messages": [{"role": "system", "content": system},
                                     {"role": "user", "content": user}]}).encode()
+    timeout = REQUEST_TIMEOUT if timeout is None else timeout
     last = None
-    for attempt in range(8):
+    for attempt in range(REQUEST_ATTEMPTS):
         if _capped.is_set():
             raise UsageCapError("usage cap reached earlier in this run")
         _wait_cooldown()
@@ -941,8 +946,9 @@ def post(model: str, system: str, user: str, timeout: int = 600) -> tuple[str, d
             # IncompleteRead (جسم مقطوع في منتصف الرد) ليس OSError — أسقط تشغيلةً
             # من ٢٢٨ وحدة بعد ساعة كاملة على 2026-10-04. عابرٌ مثل غيره: أعد المحاولة.
             last = e
-        time.sleep(min(90, 5 * 2 ** attempt))
-    raise RuntimeError(f"{model}: فشل بعد ٨ محاولات: {last}")
+        if attempt + 1 < REQUEST_ATTEMPTS:
+            time.sleep(min(90, 5 * 2 ** attempt))
+    raise RuntimeError(f"{model}: failed after {REQUEST_ATTEMPTS} attempts: {last}")
 
 
 def parse_json(text: str) -> Any:
@@ -2196,6 +2202,12 @@ def cmd_sign(items: list[Item], by: str) -> int:
 # ═════════════════════════════════════════════════════════════════════════
 
 def main(argv: list[str] | None = None) -> int:
+    def positive_int(value: str) -> int:
+        number = int(value)
+        if number <= 0:
+            raise argparse.ArgumentTypeError("must be a positive integer")
+        return number
+
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[1])
     ap.add_argument("command", choices=("inventory", "check", "run", "unpublish", "apply-arabic",
                                         "stamp-reviewed", "queue", "unqueue", "sign"))
@@ -2205,6 +2217,10 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--limit", type=int)
     ap.add_argument("--unstamped", action="store_true", help="فقط ما لم يجتز البوابة بعد")
     ap.add_argument("--rounds", type=int, default=3)
+    ap.add_argument("--request-timeout", type=positive_int, default=600,
+                    help="timeout in seconds per model request")
+    ap.add_argument("--request-attempts", type=positive_int, default=8,
+                    help="maximum attempts per model request")
     ap.add_argument("--workers", type=int, default=2, help="خيوط لكل مراجع")
     ap.add_argument("--max-concurrent", type=int, default=3,
                     help="سقف النداءات المتزامنة كلها (الحصّة مشتركة مع وكلاء آخرين)")
@@ -2286,6 +2302,9 @@ def main(argv: list[str] | None = None) -> int:
         return cmd_queue(items, args.reason, args.category, args.author)
 
     set_concurrency(args.max_concurrent)
+    global REQUEST_TIMEOUT, REQUEST_ATTEMPTS
+    REQUEST_TIMEOUT = args.request_timeout
+    REQUEST_ATTEMPTS = args.request_attempts
     global CACHE_ONLY
     CACHE_ONLY = args.cache_only
     if CACHE_ONLY:
