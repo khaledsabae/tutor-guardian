@@ -244,3 +244,129 @@ def test_adult_hearing_report_beside_app_help_is_not_child_hearing():
     assert classifier._keyword_fast_path(
         "سمعت عن عبدالله علوان، كيف أحذف حسابي؟"
     ) == ["app_help"]
+
+
+# ── Review oct7: dialect negation/suffix forms the explicit lists dropped ───
+# The base classifier matched bare «عض/لعب/سمع» anywhere, so these routed; the
+# explicit forms must keep them without bringing «بعض/لعبدالله/سمعة» back.
+
+@pytest.mark.parametrize("question,domain", [
+    ("ابني مايسمع زين لما أناديه", "development"),
+    ("ابني مابيسمعش لما بنده عليه", "development"),
+    ("عيالي ما يسمعوا الجرس", "development"),
+    ("عيالي ما يسمعو الجرس", "development"),
+    ("ابني ما بيلعبش مع الأطفال التانيين", "development"),
+    ("ولادي مابيلعبوش", "development"),
+    ("ابني مايلعب مع أحد", "development"),
+    ("عيالي مايلعبون", "development"),
+    ("ابني ما يلعبو مع حد", "development"),
+    ("ابني مايعض إلا أخوه", "medical"),
+    ("ولادي بيعضوا بعض", "medical"),
+    ("ومش بيسمعلنا خالص", "development"),
+    ("ابني ميسمعش لما أناديه", "development"),
+    ("بنتي مبتلعبش مع حد", "development"),
+])
+def test_dialect_negation_and_suffix_forms_keep_their_domain(question, domain):
+    assert domain in (classifier._keyword_fast_path(question) or [])
+
+
+@pytest.mark.parametrize("question,domain", [
+    ("ابني يريد أن يكون عضو في النادي", "medical"),
+    ("ابني يريد أن يكون عضوًا في النادي", "medical"),
+    ("ابني يريد أن يكون عضواً في النادي", "medical"),
+    ("ابني عنده عضلات قوية", "medical"),
+    ("هل يتعلمون من بعض؟", "medical"),
+    ("الأشياء داخل بعض", "medical"),
+    ("يقوم بعض الأطفال بالرسم", "medical"),
+    ("ابني يحب بعضهم", "medical"),
+    ("هل أقرأ لعبدالله علوان؟", "development"),
+    ("سمعة العائلة مهمة", "development"),
+    ("ابني يهتم بسمعته", "development"),
+    ("سمعته بين الناس سيئة", "development"),
+    ("العبادة عند الأطفال", "development"),
+    ("ابني يحب الملعب الكبير", "development"),
+])
+def test_broadened_forms_keep_embedded_and_lookalike_exclusions(question, domain):
+    assert domain not in (classifier._keyword_fast_path(question) or [])
+
+
+@pytest.mark.parametrize("question", [
+    "طفلي يقوم بعض يده وجرح نفسه",
+    "طفلي عمره سنتين يعاني من عصبية شديدة ويقوم بعض يده وجرح نفسه عندما ترفض أمه طلبه.",
+    "بنتي بتقوم بعض صوابعها لما تتعصب",
+    "ابني يقوم بعض نفسه",
+])
+def test_self_biting_is_medical(question):
+    assert "medical" in (classifier._keyword_fast_path(question) or [])
+
+
+@pytest.mark.parametrize("question", [
+    "ابني عنده ضعف سمعي",
+    "ابنتي تعاني من إعاقة سمعية",
+    "هل الفحص السمعي ضروري للمولود؟",
+    "متى نجري فحص القدرة السمعية؟",
+    "طفلي يحتاج سماعة أذن",
+    "بنتي تلبس سماعات من سنة",
+])
+def test_hearing_adjectives_and_devices_are_development(question):
+    assert "development" in (classifier._keyword_fast_path(question) or [])
+
+
+@pytest.mark.parametrize("question", [
+    "نسمع عن التربية الإيجابية",
+    "نسمع كثيرًا عن التربية الإيجابية",
+    "بنسمع عن التنمر كتير",
+    "تسمع عن طريقة مونتيسوري؟",
+    "بتسمع عن طريقة مونتيسوري؟",
+    "سمعنا على اليوتيوب عن العناد",
+    "سمعنا من الدكتور أن هذه مرحلة",
+    "سمعنا من الطبيب أن هذه مرحلة",
+    "سمعنا من الأستاذ أن هذه مرحلة",
+    "سمعنا من المعلم أن هذه مرحلة",
+])
+def test_present_and_new_channel_reported_hearing_is_not_development(question):
+    assert "development" not in (classifier._keyword_fast_path(question) or [])
+
+
+@pytest.mark.parametrize("question", [
+    "ابني ما بيسمع عن بعد",
+    "بنتي تسمع عن قرب فقط",
+    "بنتي تسمع عن طريق الأذن اليسرى فقط",
+    "هل ضعف سمعه أن يكون من الالتهاب؟",
+])
+def test_child_hearing_with_reported_lookalikes_keeps_development(question):
+    assert "development" in (classifier._keyword_fast_path(question) or [])
+
+
+@pytest.mark.parametrize("question", ["عضة الطفل لأمه", "عضته تركت أثرًا على يد أخيه"])
+def test_bite_noun_is_medical(question):
+    assert "medical" in (classifier._keyword_fast_path(question) or [])
+
+
+@pytest.mark.parametrize("question,domain", [
+    ("ابني یسمع بصعوبة", "development"),   # Persian yeh U+06CC
+    ("طفلي یلعب وحده", "development"),
+    ("ابني يکذب كثيرًا", "fiqh"),          # Persian keheh U+06A9
+])
+def test_persian_keyboard_letters_are_normalised(question, domain):
+    assert domain in (classifier._keyword_fast_path(question) or [])
+
+
+@pytest.mark.parametrize("question", [
+    "ابني مابيسمعش، كيف أحذف حسابي؟",
+    "عيالي ما يسمعو الجرس، كيف أحذف حسابي؟",
+])
+def test_dialect_child_hearing_outranks_strong_app_help(question):
+    assert classifier._keyword_fast_path(question) == ["development", "app_help"]
+
+
+@pytest.mark.parametrize("question", [
+    "سمع " * 12500, "مابيسمعش " * 5000, "ما" * 25000, "بيعضوا " * 7000,
+    "نسمع" + " كثير" * 10000, "سمعنا" + " مرة" * 12500 + " x",
+    "بعض " * 12500, "ي" * 50000,
+])
+def test_keyword_rules_stay_linear_on_50k_inputs(question):
+    import time
+    start = time.perf_counter()
+    classifier._keyword_fast_path(question)
+    assert time.perf_counter() - start < 1.0

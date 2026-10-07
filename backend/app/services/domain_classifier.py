@@ -140,78 +140,160 @@ _APP_HELP_RULE = rf"{_APP_CHILD_MODE}|{_APP_DELETE}|{_APP_FEATURES}"
 _APP_GENERAL_RE = re.compile(_APP_GENERAL, re.UNICODE)
 
 # ── Keyword Fast-Path ──────────────────────────────────────────────────────────
-def _short_arabic_token(forms: list[str]) -> str:
-    """Match explicit word forms, including conjunctions and optional marks."""
-    marks = r"[\u064b-\u065f\u0670\u0640]*"
-    spellings = ["".join(re.escape(letter) + marks for letter in form)
-                 for form in forms]
-    edge = r"[\w\u064b-\u065f\u0670\u0640]"
-    return (r"(?<!" + edge + r")(?:[وف]" + marks + r")?(?:"
-            + "|".join(spellings) + r")(?!" + edge + r")")
+_MARKS = r"[\u064b-\u065f\u0670\u0640]*"
+_EDGE = r"[\w\u064b-\u065f\u0670\u0640]"
+
+
+def _spell(form: str, marks: str = _MARKS) -> str:
+    """One word form, tolerant of tashkeel/tatweel after every letter."""
+    return "".join(re.escape(letter) + marks for letter in form)
+
+
+# Dialect verbs carry what MSA says with separate words: a joined negation
+# («مايسمع», «مابيلعبش», «ميسمعش»), a subject ending («يسمعو», «مايلعبون»), an
+# object or «لـ» pronoun («بيسمعلنا», «بيعضوه») and the Egyptian «ـش». Only the
+# imperfect stems take them — past/noun stems stay explicit, because «م» + «لعب»
+# is «ملعب», «عض» + «و» is «عضو», and «ب» + «عض» is «بعض».
+_VERB_SUFFIX = (
+    r"(?:" + "|".join(_spell(f) for f in ("وا", "ون", "و", "ين", "ي")) + r")?"
+    r"(?:" + "|".join(_spell(f) for f in ("ني", "نا", "ها", "هم", "هن", "ه", "كم", "ك",
+                                          "لنا", "لها", "لهم", "له", "لي", "لك")) + r")?"
+    r"(?:" + _spell("ش") + r")?"
+)
+
+
+def _short_arabic_token(forms: list[str], verbs: Sequence[str] = ()) -> str:
+    """Match explicit word forms, including conjunctions and optional marks.
+
+    `verbs` are imperfect stems that also take a joined negation («ما»/«م») and
+    the dialect endings in _VERB_SUFFIX. Every alternative is a fixed set of
+    short pieces between word edges, so a match is linear in the input.
+    """
+    alternatives = [_spell(form) for form in forms]
+    if verbs:
+        alternatives.append(
+            r"(?:" + _spell("ما") + r"|" + _spell("م") + r")?(?:"
+            + "|".join(_spell(verb) for verb in verbs) + r")" + _VERB_SUFFIX)
+    return (r"(?<!" + _EDGE + r")(?:[وف]" + _MARKS + r")?(?:"
+            + "|".join(alternatives) + r")(?!" + _EDGE + r")")
 
 
 # Bare roots used to match عض in بعض and لعب in لعبدالله. Keep this boundary
 # local to these two roots; Arabic articles/clitics and verbal forms are explicit.
-_BITE_TOKEN = _short_arabic_token([
-    stem + suffix
-    for stem in ("عض", "عضت", "يعض", "تعض", "نعض", "أعض", "اعض",
-                 "بيعض", "بتعض", "سيعض", "ستعض", "هيعض", "يعضون", "تعضون")
-    for suffix in ("", "ني", "ه", "ها", "هم", "نا", "ك")
-] + ["العض", "بالعض", "للعض", "عضوا", "يعضون", "يعضوا", "تعضون"])
-_PLAY_TOKEN = _short_arabic_token([
-    stem + suffix
-    for stem in ("لعب", "لعبت", "يلعب", "تلعب", "ألعب", "العب", "نلعب",
-                 "بيلعب", "بتلعب", "بلعب", "هيلعب", "هتلعب", "سيلعب", "ستلعب")
-    for suffix in ("", "ه", "ها", "هم", "ك")
-] + ["اللعب", "باللعب", "للعب", "لعبة", "اللعبة", "باللعبة", "للعبة",
-     "لعبنا", "لعبوا", "يلعبون", "يلعبوا", "تلعبون",
-     "بيلعبوا", "بتلعبوا", "بيلعبوه", "بيلعبوها", "بتلعبوه", "بتلعبوها"])
+_BITE_TOKEN = r"(?:" + _short_arabic_token(
+    [stem + suffix
+     for stem in ("عض", "عضت")
+     for suffix in ("", "ني", "ه", "ها", "هم", "نا", "ك")]
+    + ["العض", "بالعض", "للعض",
+       # The noun «a bite»: «عضة الطفل لأمه».
+       "عضة", "العضة", "عضات", "العضات", "عضتي"],
+    verbs=("يعض", "تعض", "نعض", "أعض", "اعض", "بيعض", "بتعض", "بنعض",
+           "سيعض", "ستعض", "هيعض", "هتعض"),
+) + (
+    # «عضوا» is «they bit»; «عضوًا/عضواً» with tanween is «a member».
+    r"|(?<!" + _EDGE + r")(?:[وف]" + _MARKS + r")?" + _spell("عض")
+    + _spell("و", r"[\u064c-\u065f\u0670\u0640]*")
+    + _spell("ا", r"[\u064c-\u065f\u0670\u0640]*") + r"(?!" + _EDGE + r"))"
+)
+# Biting oneself: «ويقوم بعض يده» is «بـ» + «عض», which the token above must
+# refuse to keep the quantifier «بعض» out. A body part or «نفسه» after it is
+# never the quantifier («بعض الأطفال»), and self-injury belongs in medical.
+_SELF_BITE = (
+    r"(?<!\w)(?:[وف])?بعض\s+(?:يده|يدها|يديه|يديها|ايده|إيده|ايدها|إيدها"
+    r"|أصابعه|اصابعه|أصابعها|اصابعها|صوابعه|صوابعها|إصبعه|اصبعه|إصبعها|اصبعها"
+    r"|صباعه|صباعها|نفسه|نفسها|لسانه|لسانها|شفته|شفتها|شفايفه|شفايفها"
+    r"|ذراعه|ذراعها)(?!\w)"
+)
+_PLAY_TOKEN = _short_arabic_token(
+    [stem + suffix
+     for stem in ("لعب", "لعبت")
+     for suffix in ("", "ه", "ها", "هم", "ك")]
+    + ["اللعب", "باللعب", "للعب", "لعبة", "اللعبة", "باللعبة", "للعبة",
+       "لعبنا", "لعبوا"],
+    verbs=("يلعب", "تلعب", "ألعب", "العب", "نلعب", "بيلعب", "بتلعب", "بلعب",
+           "بنلعب", "هيلعب", "هتلعب", "سيلعب", "ستلعب"),
+)
 # First-person reports such as "سمعت عنه" are not a child's hearing signal.
-_HEARING_TOKEN = _short_arabic_token([
-    stem + suffix
-    for stem in ("سمع", "يسمع", "تسمع", "بيسمع", "بتسمع", "نسمع", "يسمعون", "تسمعون")
-    for suffix in ("", "ني", "ه", "ها", "نا", "ك", "هم")
-] + ["السمع", "بالسمع", "للسمع", "بيسمعوا", "بتسمعوا", "بيسمعوني", "بتسمعوني",
-     "بيسمعوه", "بيسمعوها", "بتسمعوه", "بتسمعوها"])
+_HEARING_TOKEN = _short_arabic_token(
+    ["سمع" + suffix for suffix in ("", "ني", "ه", "ها", "نا", "ك", "هم")]
+    + ["السمع", "بالسمع", "للسمع",
+       # Hearing adjectives and hearing aids: «ضعف سمعي», «إعاقة سمعية».
+       "سمعي", "سمعية", "سمعيه", "السمعي", "السمعية", "السمعيه",
+       "سماعة", "سماعات", "السماعة", "السماعات", "بالسماعة", "بسماعة", "بسماعات"],
+    verbs=("يسمع", "تسمع", "بيسمع", "بتسمع", "نسمع"),
+)
 
 
 def _spelled_words(forms: list[str]) -> str:
     """Whole following words for a lookahead, tolerant of optional marks."""
-    marks = r"[\u064b-\u065f\u0670\u0640]*"
-    return (r"(?:" + "|".join("".join(re.escape(c) + marks for c in form)
-                              for form in forms)
-            + r")(?![\w\u064b-\u065f\u0670\u0640])")
+    return (r"(?:" + "|".join(_spell(form) for form in forms)
+            + r")(?!" + _EDGE + r")")
 
+
+_MEDIA = [
+    "الإذاعة", "الاذاعة", "إذاعة", "الراديو", "راديو", "التلفزيون",
+    "التليفزيون", "التلفاز", "يوتيوب", "اليوتيوب", "البودكاست", "بودكاست",
+    "الأخبار", "الاخبار", "برنامج", "البرنامج", "قناة", "القناة",
+    "النت", "الإنترنت", "الانترنت", "فيسبوك", "الفيسبوك", "تيك", "التيك",
+]
 
 # The past forms in _HEARING_TOKEN (سمع/سمعنا/سمعه/سمعها/سمعك/…) are also the
 # noun «his/her/our hearing», so they stay. But followed by reported speech —
-# «عن …», «من الشيخ», «في الإذاعة», «أن …» — they are someone hearing *about*
-# something, the same reading «سمعت عن» already has. Only that word is masked
+# «عن …», «من الشيخ», «في الإذاعة», «على اليوتيوب», «أن …» — they are someone
+# hearing *about* something, the same reading «سمعت عن» already has; so are the
+# parents' present «نسمع/بنسمع/تسمع/بتسمع عن …». Only that word is masked
 # before the rules run; a child's hearing named elsewhere in the question
-# («ابني لا يسمع، سمعنا عن طبيب») still reaches development.
+# («ابني لا يسمع، سمعنا عن طبيب») still reaches development. «عن بعد/قرب/طريق»
+# is how far or how a child hears, never a topic.
 _REPORTED_HEARING_RE = re.compile(
-    _short_arabic_token(["سمع" + suffix
-                         for suffix in ("", "ني", "ه", "ها", "نا", "ك", "هم")])
+    _short_arabic_token(
+        [stem + suffix
+         for stem in ("سمع", "نسمع", "بنسمع", "تسمع", "بتسمع")
+         for suffix in ("", "ني", "ه", "ها", "نا", "ك", "هم")])
     + r"(?=(?:\s+" + _spelled_words([
-        "أحد", "احد", "حد", "كثير", "كثيرا", "الكثير", "مرة", "مرارا",
-        "سابقا", "مؤخرا", "شيئا", "شيء", "كلاما", "كلام",
+        "أحد", "احد", "حد", "كثير", "كثيرا", "الكثير", "كتير", "مرة", "مرارا",
+        "دائما", "دايما", "سابقا", "مؤخرا", "شيئا", "شيء", "كلاما", "كلام",
         "مني", "منك", "منه", "منها", "منكم"]) + r"){0,2}\s+(?:"
-    + _spelled_words(["عن"]) + r"(?!\s+(?:بعد|قرب)(?!\w))"
+    + _spelled_words(["عن"]) + r"(?!\s+(?:بعد|قرب|طريق)(?!\w))"
     + r"|" + _spelled_words(["من"]) + r"\s+" + _spelled_words([
         "الشيخ", "شيخ", "الإمام", "الامام", "إمام", "الخطيب", "الداعية",
         "المحاضر", "صديق", "صديقي", "صديقتي", "صديقه", "صديقها", "أصدقائي",
-        "الناس", "الإذاعة", "الاذاعة", "الراديو", "التلفزيون", "التلفاز",
+        "الناس", "الدكتور", "الدكتورة", "دكتور", "الطبيب", "الطبيبة", "طبيب",
+        "الأستاذ", "الاستاذ", "الأستاذة", "الاستاذة", "المعلم", "المعلمة",
+        "الإذاعة", "الاذاعة", "الراديو", "التلفزيون", "التلفاز",
         "يوتيوب", "اليوتيوب"])
-    + r"|" + _spelled_words(["في"]) + r"\s+" + _spelled_words([
-        "الإذاعة", "الاذاعة", "إذاعة", "الراديو", "راديو", "التلفزيون",
-        "التليفزيون", "التلفاز", "المحاضرة", "محاضرة", "الدرس", "درس",
-        "الخطبة", "خطبة", "المسجد", "البودكاست", "بودكاست", "يوتيوب",
-        "اليوتيوب", "الأخبار", "الاخبار", "برنامج", "البرنامج"])
+    + r"|" + _spelled_words(["في"]) + r"\s+" + _spelled_words(_MEDIA + [
+        "المحاضرة", "محاضرة", "الدرس", "درس", "الخطبة", "خطبة", "المسجد"])
+    + r"|" + _spelled_words(["على", "علي"]) + r"\s+" + _spelled_words(_MEDIA)
     + r"|" + _spelled_words(["أن", "ان", "إن", "أنه", "انه", "إنه",
                              "أنها", "انها", "إنها"]) + r"(?!\s+شاء(?!\w))"
     + r"))",
     re.UNICODE,
 )
+# «ضعف سمعه أن يكون…» — after one of these nouns «سمعه» is the child's hearing
+# whatever follows it.
+_HEARING_HEAD_NOUNS = frozenset({
+    "ضعف", "فقد", "فقدان", "فحص", "نقص", "حاسة", "حاسه", "قوة", "قوه",
+    "سلامة", "سلامه", "مستوى", "اختبار", "تقييم", "مشكلة", "مشكله", "مشاكل",
+})
+_PREVIOUS_WORD_RE = re.compile(r"(\w+)\s+$")
+
+
+def _mask_reported_hearing(question: str) -> str:
+    def mask(match: "re.Match[str]") -> str:
+        # A bounded window keeps this constant per match on a 50k-char input.
+        before = re.sub(_MARKS, "", question[max(0, match.start() - 24):match.start()])
+        previous = _PREVIOUS_WORD_RE.search(before)
+        if previous and previous.group(1) in _HEARING_HEAD_NOUNS:
+            return match.group()
+        return " " * len(match.group())
+    return _REPORTED_HEARING_RE.sub(mask, question)
+
+
+# The Persian keyboard's yeh and kaf are the Arabic ones (privacy._keyboard
+# does the same; «ى» stays itself). Not imported from there: privacy pulls in
+# the DB layer, and the classifier sits on the request path of every question.
+_KEYBOARD = str.maketrans({"\u06cc": "ي", "\u06a9": "ك"})
 
 # «سمعت» is also feminine past tense: she heard. Restore that reading only
 # with a child subject at a clause boundary and an explicit auditory object.
@@ -280,7 +362,7 @@ KEYWORD_RULES: List[Tuple[str, str]] = [
     # Cyber — digital/screen/gaming terms (expanded: streaming, social, platform names)
     (r"إدمان\s*(ألعاب|إنترنت|شاشة|هاتف|موبايل|تيك\s*توك|يوتيوب|فيديو|بلاي\s*ستيشن|xbox|نيتفلكس|نتفلكس|يوتيوب|سوشال|ألعاب)|تيك\s*توك|يوتيوب|شاشة|هاتف|موبايل|إنترنت|سوشيال|سوشال\s*ميديا|فيسبوك|واتساب|سناب|تويتر|إنستغرام|انستقرام|انستا|فايبر|فكونتاكت|واتس\s*اب|تليجرام|تلجرام|تويت|ريلز|لايك|followers|تنمر\s*إلكتروني|تنمر\s*رقمي|أمان\s*رقمي|خصوصية|محتوى\s*غير\s*لائق|محتويات\s*إباحية|إباحية|العاب\s*إلكترونية|بلايستيشن|screen|تلفزيون|أندرويد|ios|تطبيقات|porn|محتوى.*رقمي|رقمي|سيبراني|إلكتروني|محتوى\s*عنيف|ألعاب\s*مخيفة|قناة\s*سيئة|مواقع|أونلاين|تواصل\s*مع\s*غريب|غريب\s*على\s*النت|إرسال\s*صور|ترسل\s*صور|رسائل\s*لولد|حدود\s*لاستخدام\s*الشاشة|ساعات\s*على\s*الموبايل|كلمات\s*من\s*النت|إنستغرام|يسكرولين|فيس\s*بوك|واتس\s*أب", "cyber"),
     # Medical — clear health/psychological terms (incl. verb forms) (expanded: more clinical terms)
-    (r"توحد|اضطراب|طيف\s*توحد|autism|adhd|فرط\s*حركة|نقص\s*انتباه|قلق|اكتئاب|وسواس|وساوس|نوبات\s*هلع|فوبيا|رهاب|خوف|يخاف|غضب|نوبات|عدوان|عنف|ضرب|" + _BITE_TOKEN + r"|قضم|صراخ|تبول\s*لاإرادي|تبول\s*فراش|تأتأة|تلعثم|كلام|يتكلم|نطق|تخاطب|تأخر\s*نطق|تأخر\s*كلام|تأخر\s*نمائي|تقييم|تشخيص|علاج|دواء|طبيب|أخصائي|نفسي|مستشفى|حالة|مرض|صحة\s*نفسية|نوم|أرق|أحلام.*مزعجة|كوابيس|نقص.*وزن|سمنة.*أطفال|بدانة|سمنة|حساسية|ربو|سكري.*أطفال|تشنجات|صرع|لجنة|إعاقة|إعاقات|صعوبات.*تعلم|عسر.*قراءة|عسر.*كتابة|dyslexia|انطواء|عزلة|انعزال|مخاوف|نفسي|توتر|قلقي|القلق|الاكتئاب|التوحد|الوسواس|الرهاب|الخوف|الغضب|النوم|الأرق|أظافره|أظافرها|يأكل\s*التراب|يشد\s*شعرها|كثير\s*البكاء|تخاف\s*من\s*الناس|لا\s*تريد\s*الذهاب\s*للمدرسة|لا\s*ينام|لا\s*يتكلم|يرفض\s*الأكل|يعنف\s*إخوته|يتبول\s*في\s*الفراش|تشد\s*شعرها|عنده\s*ADHD"
+    (r"توحد|اضطراب|طيف\s*توحد|autism|adhd|فرط\s*حركة|نقص\s*انتباه|قلق|اكتئاب|وسواس|وساوس|نوبات\s*هلع|فوبيا|رهاب|خوف|يخاف|غضب|نوبات|عدوان|عنف|ضرب|" + _BITE_TOKEN + r"|" + _SELF_BITE + r"|قضم|صراخ|تبول\s*لاإرادي|تبول\s*فراش|تأتأة|تلعثم|كلام|يتكلم|نطق|تخاطب|تأخر\s*نطق|تأخر\s*كلام|تأخر\s*نمائي|تقييم|تشخيص|علاج|دواء|طبيب|أخصائي|نفسي|مستشفى|حالة|مرض|صحة\s*نفسية|نوم|أرق|أحلام.*مزعجة|كوابيس|نقص.*وزن|سمنة.*أطفال|بدانة|سمنة|حساسية|ربو|سكري.*أطفال|تشنجات|صرع|لجنة|إعاقة|إعاقات|صعوبات.*تعلم|عسر.*قراءة|عسر.*كتابة|dyslexia|انطواء|عزلة|انعزال|مخاوف|نفسي|توتر|قلقي|القلق|الاكتئاب|التوحد|الوسواس|الرهاب|الخوف|الغضب|النوم|الأرق|أظافره|أظافرها|يأكل\s*التراب|يشد\s*شعرها|كثير\s*البكاء|تخاف\s*من\s*الناس|لا\s*تريد\s*الذهاب\s*للمدرسة|لا\s*ينام|لا\s*يتكلم|يرفض\s*الأكل|يعنف\s*إخوته|يتبول\s*في\s*الفراش|تشد\s*شعرها|عنده\s*ADHD"
      # «ابني يدخن» alone stays a fiqh-only match above (bare moral-prohibition
      # framing, covered by an existing test). But smoking driven by friends is
      # a health/peer-pressure question, and the medical KB's smoking-cessation
@@ -341,7 +423,8 @@ CLASSIFY_PROMPT = """صنّف سؤال الوالد/الوالدة في مجال
 def _keyword_fast_path(question: str) -> Optional[List[str]]:
     """Check keyword rules. Returns domain list if unambiguous match found."""
     matched: List[str] = []
-    rule_text = _REPORTED_HEARING_RE.sub(lambda m: " " * len(m.group()), question)
+    question = question.translate(_KEYBOARD)
+    rule_text = _mask_reported_hearing(question)
     for pattern, domain in _COMPILED_RULES:
         if pattern.search(rule_text):
             if domain not in matched:
