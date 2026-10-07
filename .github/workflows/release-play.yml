@@ -27,9 +27,9 @@ on:
         options: [internal, alpha, beta, production]
         default: internal
       notes:
-        description: "Release notes (Arabic)"
+        description: "Release notes override (Arabic; leave empty for committed Arabic/English notes)"
         type: string
-        default: "تحسينات في الأمان والأداء وتجربة المحادثة"
+        default: ""
       rollout:
         description: "Production rollout fraction (0.01–1.0; ignored for other tracks)"
         type: string
@@ -130,9 +130,16 @@ jobs:
           SA="$RUNNER_TEMP/play_sa.json"
           printf '%s' "$PLAY_SERVICE_ACCOUNT_JSON" > "$SA"
           python3 -m pip install --quiet google-api-python-client google-auth httplib2
+          # Explicit notes retain the legacy Arabic override; otherwise use
+          # the committed bilingual release notes (no version inferred here).
+          if [ -n "$NOTES" ]; then
+            notes_args=(--notes "$NOTES")
+          else
+            notes_args=(--notes-file "docs/release_notes/1.0.68+113.json")
+          fi
           python3 scripts/play_upload.py \
             --track "$TRACK" \
-            --notes "$NOTES" \
+            "${notes_args[@]}" \
             --rollout "$ROLLOUT" \
             --aab mobile/build/app/outputs/bundle/release/app-release.aab \
             --sa "$SA"
