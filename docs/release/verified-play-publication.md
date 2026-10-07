@@ -15,6 +15,15 @@ service-account path with `--sa`, and a fresh private `--journal` path. Exact
 artifact; none is a signing password. Passwords and private key files remain
 local and must never enter GitHub secrets or command values.
 
+Reuse an existing verified Python runtime that already provides `google-auth`
+and `google-api-python-client`, including a bundled runtime when available.
+Check imports of `google.oauth2.service_account`, `googleapiclient.discovery`
+and `googleapiclient.http` offline before invoking the release helpers; an API
+permission probe alone does not prove those local imports are available. No
+package installation is needed when this check succeeds. Preserve the primary
+project environment; if dependencies are unavailable, use a separate private,
+lightweight environment. This import check neither signs nor uploads a bundle.
+
 The tool freezes private read-only copies, re-inspects the signed AAB and binds
 every validation-receipt field to the copied payload, certificate, source SHA,
 unsigned-map hash and notes hash before contacting Play. It reserves a new
