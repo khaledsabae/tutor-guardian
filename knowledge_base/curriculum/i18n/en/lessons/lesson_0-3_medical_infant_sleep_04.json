@@ -1,0 +1,56 @@
+{
+  "id": "lesson_0-3_medical_infant_sleep_04",
+  "path_id": "path_0-3_medical_infant_sleep",
+  "title": "A Short Bedtime Routine",
+  "age_group": "prenatal-1",
+  "domain": "medical",
+  "unit_ids": [
+    "med-2dc3af5f"
+  ],
+  "summary": "Babies are comforted by what they can expect. When feeding and sleep follow similar steps every day, your baby gradually begins to learn what comes next. That is why a simple, calm routine before sleep may help them settle, and it is also a chance for special time you spend with them.\n\nKeep the routine short and easy enough to repeat every night, such as: a bath or a warm wipe, then a clean nappy and sleepwear, then dim lights, then a soft song or a quiet du'a for them, then a cuddle and a kiss, then their cot. What matters is not which steps you choose, but that they stay simple and are repeated in the same order, at roughly the same time as far as possible.\n\nBefore sleep, cut down on excitement and noisy play; too much excitement can wake your baby up instead of calming them. If they wake at night for a feed or a nappy change, keep the lights low, talk little in a quiet voice, then put them back in their cot.\n\nAlways end the routine with safe sleep: on their back, in their own empty cot, in your room for at least the first six months. A routine does not mean your baby will sleep through the night; sleep patterns change as they grow, and teething, illness and growth spurts affect them. If the routine is disrupted, return to it without frustration, and adjust it as your baby grows. If you are worried about their sleep or need advice on their routine, ask their doctor or the health worker who follows them.",
+  "try_this": "Today: Choose three or four calm steps for tonight, such as a warm wipe, then sleepwear, then dim lights and a quiet du'a, then put them on their back in their cot, and follow them in the same order.",
+  "order": 4,
+  "estimated_minutes": 3,
+  "reflection_prompts": [
+    "Which step in tonight's routine seemed to calm your baby most, and which one could you do without?"
+  ],
+  "warning_flags": [],
+  "needs_professional_followup": false,
+  "is_published": true,
+  "version": "1.0.0",
+  "created_at": "2026-10-07T20:59:32",
+  "updated_at": "2026-10-07T20:59:32",
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "claude-opus-5-5",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
+    "revalidated_at": "2026-10-07T21:00:50+00:00",
+    "generated_by": "ops/tools/deepen_paths.py",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "84f11069ce9a76909928ea2fb5516078b15624eefabc7c92c622ecbec095d6f8",
+      "reviewed_at": "2026-10-07T21:00:50+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+    }
+  }
+}
