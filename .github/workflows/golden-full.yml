@@ -1,7 +1,7 @@
 name: Golden full answer evaluation
 
-# No provider credentials are wired here. Approving a route is a separate
-# reviewed change; dispatching this workflow currently reports UNAVAILABLE.
+# No provider credentials are wired here. Configuring a verified existing
+# route requires runtime wiring; dispatch currently reports UNAVAILABLE.
 on:
   workflow_dispatch:
 

@@ -146,8 +146,8 @@ def offline_report(items, private, prepare=prepare_offline, checkpoint=None):
 
 
 def provider_unavailable(env):
-    if env.get("GOLDEN_PROVIDER_ROUTE_APPROVED") != "true":
-        return "No approved CI provider credential route"
+    if env.get("GOLDEN_PROVIDER_ROUTE_VERIFIED") != "true":
+        return "No verified CI provider credential route"
     if env.get("LLM_PRIMARY_PROVIDER") != "deepseek" or not env.get("DEEPSEEK_API_KEY"):
         return "Generation/judge credentials or provider absent"
     if env.get("DEEPSEEK_BASE_URL", "https://api.deepseek.com") != "https://api.deepseek.com":

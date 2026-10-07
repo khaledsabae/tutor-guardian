@@ -34,14 +34,16 @@ retried; this is not a claim that repository secrets do not exist. Production's
 self-hosted `.env` is not a sanctioned hosted-CI credential route and is never
 read or mounted. No keys, credits, providers or paid executions were added.
 
-`golden_ci.py --mode full` implements the orchestration for a future explicitly
-approved DeepSeek route: preflight requires `GOLDEN_PROVIDER_ROUTE_APPROVED=true`,
+`golden_ci.py --mode full` implements orchestration for a configured and
+verified DeepSeek route: preflight requires `GOLDEN_PROVIDER_ROUTE_VERIFIED=true`,
 `LLM_PRIMARY_PROVIDER=deepseek`, a present `DEEPSEEK_API_KEY`, and the public
-`https://api.deepseek.com` endpoint. These are names, not credential evidence.
-Do not enable this route without the user's approval. A later reviewed change
-must wire the approved credential into a trusted, pinned candidate runtime;
-the current manual workflow intentionally supplies none and does not build
-an image or execute the application. Other providers need separate route work.
+`https://api.deepseek.com` endpoint. These are configuration names, not evidence
+that usable credentials exist. The user's authorization to complete the plan
+already covers evaluation; the current limitation is missing verified runtime
+wiring. No new credentials, credits, key exports or paid executions were added.
+A later change must wire an existing verified route into an isolated, pinned
+candidate runtime. This hosted workflow supplies none. Other providers need
+separate route work.
 
 When enabled in that isolated runtime, the wrapper invokes the existing
 `eval_answers.run_pipeline` real TestClient HTTP pipeline and `judge_all` real

@@ -84,8 +84,8 @@ def test_missing_index_is_unavailable_for_entire_set(tmp_path):
 
 
 @pytest.mark.parametrize("env", [{}, {"DEEPSEEK_API_KEY": "test-placeholder"},
-    {"GOLDEN_PROVIDER_ROUTE_APPROVED": "true"},
-    {"GOLDEN_PROVIDER_ROUTE_APPROVED": "true", "DEEPSEEK_API_KEY": "test-placeholder",
+    {"GOLDEN_PROVIDER_ROUTE_VERIFIED": "true"},
+    {"GOLDEN_PROVIDER_ROUTE_VERIFIED": "true", "DEEPSEEK_API_KEY": "test-placeholder",
      "LLM_PRIMARY_PROVIDER": "deepseek", "DEEPSEEK_BASE_URL": "http://private.invalid"}])
 def test_full_unapproved_or_unavailable_never_imports_pipeline(tmp_path, env):
     def forbidden(_):
@@ -97,7 +97,7 @@ def test_full_unapproved_or_unavailable_never_imports_pipeline(tmp_path, env):
 
 
 def test_judge_failure_keeps_raw_pipeline_rows_and_does_not_pass(tmp_path):
-    env = {"GOLDEN_PROVIDER_ROUTE_APPROVED": "true", "DEEPSEEK_API_KEY": "test-placeholder",
+    env = {"GOLDEN_PROVIDER_ROUTE_VERIFIED": "true", "DEEPSEEK_API_KEY": "test-placeholder",
            "LLM_PRIMARY_PROVIDER": "deepseek"}
     class Harness:
         @staticmethod
@@ -127,7 +127,7 @@ def test_offline_network_guard_blocks_even_loopback_provider(monkeypatch):
 
 
 def test_cli_full_missing_route_preserves_entire_manifest(tmp_path, monkeypatch):
-    monkeypatch.delenv("GOLDEN_PROVIDER_ROUTE_APPROVED", raising=False)
+    monkeypatch.delenv("GOLDEN_PROVIDER_ROUTE_VERIFIED", raising=False)
     assert ci.main(["--mode", "full", "--out", str(tmp_path)]) == 2
     report = json.loads((tmp_path / "report.json").read_text())
     ids = [r["id"] for r in ci.load_set(ROOT / "ops/eval/golden_set.jsonl")]
@@ -156,7 +156,7 @@ def test_incomplete_judge_payload_never_claims_completed_quality(tmp_path):
         @staticmethod
         def summarize(rows):
             return {"overall": {"n": 0}}
-    env = {"GOLDEN_PROVIDER_ROUTE_APPROVED": "true", "DEEPSEEK_API_KEY": "test-placeholder",
+    env = {"GOLDEN_PROVIDER_ROUTE_VERIFIED": "true", "DEEPSEEK_API_KEY": "test-placeholder",
            "LLM_PRIMARY_PROVIDER": "deepseek"}
     report = ci.full_report([item()], tmp_path, env, lambda _: Harness)
     assert report["status"] == "PARTIAL"
