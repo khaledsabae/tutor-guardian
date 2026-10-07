@@ -16700,7 +16700,7 @@
       "normalized_age_group": "unspecified",
       "behavior_type": "وقت الشاشة في الطفولة المبكرة",
       "needs_ocr": false,
-      "size_chars": 891
+      "size_chars": 500
     },
     {
       "id": "cyb-who-screen-under5-2019",
@@ -16724,7 +16724,7 @@
       "normalized_age_group": "unspecified",
       "behavior_type": "وقت الشاشة في الطفولة المبكرة",
       "needs_ocr": false,
-      "size_chars": 1074
+      "size_chars": 443
     }
   ]
 }
