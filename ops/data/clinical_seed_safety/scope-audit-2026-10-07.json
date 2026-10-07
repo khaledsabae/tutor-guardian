@@ -1,0 +1,77 @@
+{
+  "schema": "tg.clinical_seed_scope_audit/1",
+  "verified_at": "2026-10-07T15:39:37.775098+00:00",
+  "base_commit": "c7fed338b7c74e7d0562c30031ba42f89ae126cd",
+  "owned_ar_en_pairs": [
+    "seed-fear-23",
+    "seed-jealousy-79",
+    "seed-tantrum-23"
+  ],
+  "current_reviewed_pairs": 3,
+  "raw_model_item_verdicts": 6,
+  "model_defects": 0,
+  "review_concurrency": 1,
+  "model_deadline_seconds": 480,
+  "review_elapsed_seconds": 55.708,
+  "deadline_started_at": "2026-10-07T15:24:52+00:00",
+  "task_deadline": "2026-10-07T15:44:52+00:00",
+  "index_units": 1391,
+  "new_english_companions": [
+    "seed-fear-23__en",
+    "seed-jealousy-79__en"
+  ],
+  "unchanged_unrelated_index_rows": 1385,
+  "queue_unchanged": true,
+  "queue_keys": [
+    "adhkar:family_adhkar"
+  ],
+  "source_unverified_queue_count": 0,
+  "medical_comparisons": [
+    {
+      "unit_id": "dev-7562f817",
+      "unit_unchanged_from_base": true,
+      "primary_url": "https://www.nhs.uk/symptoms/testicle-pain/",
+      "fetched_text_sha256": "22f25f348f3b4bdc4b61dc01ef865a22090b590abb5e4189a3b34e4aa5cdb4c3"
+    },
+    {
+      "unit_id": "med-f8cc198a",
+      "unit_unchanged_from_base": true,
+      "primary_url": "https://www.healthychildren.org/English/tips-tools/symptom-checker/Pages/symptomviewer.aspx?symptom=Vaginal+Bleeding",
+      "fetched_text_sha256": "92596290058af418c3dc37c1178b88a92888edf151c9e55368596f6ac9a4bddc"
+    }
+  ],
+  "medical_disposition": "Current committed guidance already separates immediate emergency triggers with OR; one-hour/resting torsion and bleeding thresholds are additional triggers, never prerequisites. No confirmed primary mismatch; no scope expansion.",
+  "external_ai_reports": {
+    "clinical_or_sharia_signoffs": "No human approval evidence; manufactured signatures are not adopted.",
+    "four_week_panic_and_15_20_minute_tantrum_rules": "Not adopted as general waiting rules. Referrals follow severity, function, regression, self-harm and safety.",
+    "old_752_rehold_request": "No change; current source original preserved; parent audits independently.",
+    "lesson_11_old_hash": "No change; outside this assigned scope; parent owns verification.",
+    "corrected_document_copies": "Assigned by parent to Ampere; not this worktree."
+  },
+  "human_clinical_approval": null,
+  "human_sharia_approval": null,
+  "clinical_source_method": "Fetched actual primary NHS/AAP/AACAP/CDC pages via agent-reach Jina Reader; claim mappings and hashes in each unit proof. Not a doctor review.",
+  "source_gate_passes": 11,
+  "source_gate_total": 11,
+  "backend_tests_run": false,
+  "mobile_build_or_emulator_run": false,
+  "fiqh_work_preserved": "/home/khalednew/.codex/worktrees/fiqh-intent-phase1/tutor-guardian/.hermes-tmp.fiqh-phase1/paused.md",
+  "activation": "Local commit only; no push, PR, production activation, or human signoff.",
+  "expected_ci": {
+    "guards": "Existing content/scripture/schema/source-fidelity/parity guards, all expected exit 0; exact current-pair stamps required.",
+    "production_activation": "Parent review required; no production activation in this patch.",
+    "tests": "No backend code change; parent owns backend test review. No mobile compilation."
+  },
+  "short_primary_evidence": [
+    {
+      "url": "https://www.cdc.gov/parenting-toddlers/responding-to-behavior/ignoring.html",
+      "excerpt": "Dangerous and destructive behaviors should not be ignored.",
+      "local_verified_file_sha256": "81778e17af84813e58cca2309c54ce65f303114d63261ea346b36d5a31cf336d"
+    },
+    {
+      "url": "https://www.cdc.gov/act-early/milestones/2-years.html",
+      "excerpt": "Don't wait.",
+      "interpretation": "Loss of acquired skills is a reason to act early and ask about developmental screening."
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "schema": "tg.clinical_seed_primary_proof/1",
+  "unit_id": "seed-jealousy-79",
+  "base_commit": "c7fed338",
+  "external_review_kind": "AI opinion; not a doctor or scholar signoff",
+  "source_representation": "Own editorial public-health guidance and paraphrases; no modern primary-page prose copied verbatim.",
+  "primary_sources": [
+    {
+      "title": "Sibling Relationships: How to Help Your Kids Build Healthy Bonds",
+      "url": "https://www.healthychildren.org/English/family-life/family-dynamics/Pages/Sibling-Synergy.aspx",
+      "accessed_at": "2026-10-07T15:32:16.812966+00:00",
+      "reader": "agent-reach Jina Reader",
+      "fetched_text_sha256": "a47fe776e0c9a1a628151e71477116f39cfb6643f876ee29b315a8525a9a4176",
+      "meaning": "Hash binds the fetched primary-page representation, not a clinical approval."
+    },
+    {
+      "title": "When To Seek Help For Your Child",
+      "url": "https://www.aacap.org/AACAP/Families_and_Youth/Facts_for_Families/FFF-Guide/When-To-Seek-Help-For-Your-Child-024.aspx",
+      "accessed_at": "2026-10-07T15:32:16.813271+00:00",
+      "reader": "agent-reach Jina Reader",
+      "fetched_text_sha256": "adc233cf9955538ff990aa0ba5e6421260927a27596785798cea1fdc73e9d33a",
+      "meaning": "Hash binds the fetched primary-page representation, not a clinical approval."
+    },
+    {
+      "title": "Anxiety disorders in children",
+      "url": "https://www.nhs.uk/mental-health/children-and-young-adults/advice-for-parents/anxiety-disorders-in-children/",
+      "accessed_at": "2026-10-07T15:32:16.811271+00:00",
+      "reader": "agent-reach Jina Reader",
+      "fetched_text_sha256": "62eec05d70675a3f1d6bac55683c52ff881fce48bb4ad06c1c74c182463dea2d",
+      "meaning": "Hash binds the fetched primary-page representation, not a clinical approval."
+    },
+    {
+      "title": "Emotion Dysregulation Resource Center",
+      "url": "https://www.aacap.org/AACAP/Families_and_Youth/Resource_Centers/Emotional_Dysregulation/Home.aspx",
+      "accessed_at": "2026-10-07T15:32:16.814009+00:00",
+      "reader": "agent-reach Jina Reader",
+      "fetched_text_sha256": "bc00e5f508a23ca881c4a5a8d583df4aa4d0ac15c06c2a55415756d1013bf334",
+      "meaning": "Hash binds the fetched primary-page representation, not a clinical approval."
+    }
+  ],
+  "claims": {
+    "family_support": "AAP sibling bonds: one-to-one time, cooperation, clear no-hitting rules and calm intervention for physical/emotional wellbeing concerns. Comparison advice retained as app parenting guidance, not a quoted diagnosis.",
+    "referral": "AACAP help and NHS anxiety support assessment for school/function decline, severe fears and frequent physical complaints. Repeated injurious aggression/bullying is a safety concern, not normal rivalry to ignore.",
+    "immediate_safety": "AAP intervention plus AACAP outburst active safety concerns: protect children now, urgent help for serious injury or imminent harm.",
+    "timing": "No six-month aggression waiting rule, no fixed delay before safeguarding."
+  },
+  "original_field_sha256": "6fa6773af5b333ba3027d7a5cb66a43ca2af0cab663efe7d354c0c353504c9d6",
+  "ar_guidance_sha256": "1410208d03a6fd133bc9cc7a909530faf3e78f06f51dbcead7f727f929f3bb46",
+  "en_guidance_sha256": "4d8b3c37df74f704aba8f488f0014365d8586dd4f5ffb1019bc1429cfd548b36",
+  "human_clinical_approval": null,
+  "human_sharia_approval": null,
+  "parity_review": {
+    "evidence": "ops/data/clinical_seed_safety/canonical-review-2026-10-07.json",
+    "content_sha256": "006a744646eb4cf8875d42ce1340f35e5dad02b92ab741c5b70c0829150b25fa",
+    "reviewers": [
+      "deepseek-v4-pro",
+      "glm-5.2"
+    ],
+    "verdict": "clean",
+    "raw_item_verdicts": 2,
+    "defects": 0,
+    "human_approval": false
+  }
+}

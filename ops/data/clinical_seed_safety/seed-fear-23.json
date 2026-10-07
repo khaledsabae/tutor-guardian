@@ -1,0 +1,72 @@
+{
+  "schema": "tg.clinical_seed_primary_proof/1",
+  "unit_id": "seed-fear-23",
+  "base_commit": "c7fed338",
+  "external_review_kind": "AI opinion; not a doctor or scholar signoff",
+  "source_representation": "Own editorial public-health guidance and paraphrases; no modern primary-page prose copied verbatim.",
+  "primary_sources": [
+    {
+      "title": "Anxiety disorders in children",
+      "url": "https://www.nhs.uk/mental-health/children-and-young-adults/advice-for-parents/anxiety-disorders-in-children/",
+      "accessed_at": "2026-10-07T15:32:16.811271+00:00",
+      "reader": "agent-reach Jina Reader",
+      "fetched_text_sha256": "62eec05d70675a3f1d6bac55683c52ff881fce48bb4ad06c1c74c182463dea2d",
+      "meaning": "Hash binds the fetched primary-page representation, not a clinical approval."
+    },
+    {
+      "title": "Separation anxiety",
+      "url": "https://www.nhs.uk/baby/babys-development/behaviour/separation-anxiety/",
+      "accessed_at": "2026-10-07T15:32:16.812124+00:00",
+      "reader": "agent-reach Jina Reader",
+      "fetched_text_sha256": "10c6109298d75c2d48ef26522b97116a9e206ca52ed8df32d79b949730f056e0",
+      "meaning": "Hash binds the fetched primary-page representation, not a clinical approval."
+    },
+    {
+      "title": "Anxiety and Children",
+      "url": "https://www.aacap.org/AACAP/Families_and_Youth/Facts_for_Families/FFF-Guide/The-Anxious-Child-047.aspx",
+      "accessed_at": "2026-10-07T15:32:16.812469+00:00",
+      "reader": "agent-reach Jina Reader",
+      "fetched_text_sha256": "2345cd3915b12f050d3f3666dab0b62341677b4f467b508aa385e517a057d174",
+      "meaning": "Hash binds the fetched primary-page representation, not a clinical approval."
+    },
+    {
+      "title": "Milestones by 2 Years",
+      "url": "https://www.cdc.gov/act-early/milestones/2-years.html",
+      "accessed_at": "2026-10-07T15:32:16.812801+00:00",
+      "reader": "agent-reach Jina Reader",
+      "fetched_text_sha256": "f0956f38429dc83f4133bcc3b47bb7b6bcc8a66221c1cc03cde4e0de2776ced6",
+      "meaning": "Hash binds the fetched primary-page representation, not a clinical approval."
+    },
+    {
+      "title": "When To Seek Help For Your Child",
+      "url": "https://www.aacap.org/AACAP/Families_and_Youth/Facts_for_Families/FFF-Guide/When-To-Seek-Help-For-Your-Child-024.aspx",
+      "accessed_at": "2026-10-07T15:32:16.813271+00:00",
+      "reader": "agent-reach Jina Reader",
+      "fetched_text_sha256": "adc233cf9955538ff990aa0ba5e6421260927a27596785798cea1fdc73e9d33a",
+      "meaning": "Hash binds the fetched primary-page representation, not a clinical approval."
+    }
+  ],
+  "claims": {
+    "normality": "NHS separation and AACAP anxiety: common developmental fears, not a guarantee all panic is normal.",
+    "referral": "NHS anxiety: severe/worsening or self-help ineffective and daily functioning affected; AACAP anxiety/help: usual activity interference, persistent nightmares and physical complaints.",
+    "regression": "CDC two-year milestones: act early when previously acquired skills are lost; ask about developmental screening.",
+    "timing": "No four-week waiting condition or separation-anxiety diagnostic duration is imported."
+  },
+  "original_field_sha256": "a5520cf48dad1ce91f377a64fd86114a72945127d4a9429e094180e76be4a214",
+  "ar_guidance_sha256": "c61aa3b047f225674725b67c6e77faf91048ce45b60d95e06495774b91843726",
+  "en_guidance_sha256": "290fb91c4579aea093db129b777b2dc7019c35380defce939e4af8b757abddec",
+  "human_clinical_approval": null,
+  "human_sharia_approval": null,
+  "parity_review": {
+    "evidence": "ops/data/clinical_seed_safety/canonical-review-2026-10-07.json",
+    "content_sha256": "a92454ac9e5028faad49212e5207799f79786a053dd05913ce42de210737cfe1",
+    "reviewers": [
+      "deepseek-v4-pro",
+      "glm-5.2"
+    ],
+    "verdict": "clean",
+    "raw_item_verdicts": 2,
+    "defects": 0,
+    "human_approval": false
+  }
+}

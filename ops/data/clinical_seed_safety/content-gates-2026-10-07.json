@@ -1,0 +1,156 @@
+{
+  "schema": "tg.clinical_seed_content_gates/1",
+  "started_at": "2026-10-07T15:40:19.253253+00:00",
+  "scope": "content/scripture/schema/parity guards only; no backend or mobile tests/build/emulator",
+  "checks": [
+    {
+      "name": "kb_integrity",
+      "command": [
+        "python3",
+        "ops/tools/check_kb_integrity.py"
+      ],
+      "exit_code": 0,
+      "count_lines": [
+        "  ✅  CJK PURITY OK — 0 files with CJK characters (curriculum, units, backend source, docs markdown)",
+        "  ✅  REPORT FORMAT OK — all reports are clean and fully translated",
+        "🟡  WARNINGS (224):",
+        "     (224 units missing optional metadata — non-blocking)",
+        "  ✅  KNOWLEDGE BASE IN SYNC — 1391 units, schema ≡ taxonomy"
+      ]
+    },
+    {
+      "name": "quran_citations",
+      "command": [
+        "python3",
+        "ops/tools/check_quran_citations.py"
+      ],
+      "exit_code": 0,
+      "count_lines": [
+        "  self-tests: 4/4 ok",
+        "  آيات مقتبسة: 142   ·   مطابقة: 142",
+        "  ✅  QUR'AN CITATIONS OK — 142/142 مطابقة لنص المصحف"
+      ]
+    },
+    {
+      "name": "quran_rendering",
+      "command": [
+        "python3",
+        "ops/tools/check_quran_rendering.py"
+      ],
+      "exit_code": 0,
+      "count_lines": [
+        "  self-tests: 4 مسك · 5 تمرير ✓",
+        "  ملفات إنجليزية مفحوصة: 809",
+        "  ✅ QUR'AN RENDERING OK — لا إنجليزية مقدَّمة على أنها قرآن"
+      ]
+    },
+    {
+      "name": "english_parity",
+      "command": [
+        "python3",
+        "ops/tools/review_en_parity.py",
+        "check"
+      ],
+      "exit_code": 0,
+      "count_lines": [
+        "  مفحوص: adhkar 1 · banks 9 · daily_tips 219 · kb_units 349 · lessons 181 · offscreen 1 · paths 41 · stories 14",
+        "  في الطابور (حيٌّ بلا ختم، مربوط ببصمة نصّه): awaiting-review 1",
+        "  ✅ كل الإنجليزي المنشور مختوم وختمه يطابق نصّه، أو مُدرَج في الطابور بنصّه نفسه."
+      ]
+    },
+    {
+      "name": "adhkar_integrity",
+      "command": [
+        "python3",
+        "ops/tools/check_adhkar_integrity.py"
+      ],
+      "exit_code": 0,
+      "count_lines": [
+        "  العناصر: 281   ·   hadith=15   ·   tip=124   ·   verse=142",
+        "  نصوص فريدة بعد نزع الحشو: 281",
+        "  ✅  ADHKAR OK — 281 عنصرًا، كلها فريدة ومُسنَدة"
+      ]
+    },
+    {
+      "name": "hadith_citations",
+      "command": [
+        "python3",
+        "ops/tools/check_hadith_citations.py"
+      ],
+      "exit_code": 0,
+      "count_lines": [
+        "  الفهرس: البخاري 7554 · مسلم 3016",
+        "  self-tests: 13 قبول · 11 رفض · وحدات 3/2 · برامج 1/2 ✓",
+        "  وحدات مترجَمة مفحوصة: 349   ·   إسناد مخترَع: 0",
+        "  بطاقات أحاديث في البرامج (عربي + إنجليزي): 100   ·   مخالفة: 0",
+        "  أحاديث في التطبيق: 15   ·   مطابقة: 15",
+        "  ✅  HADITH OK — 15 مطابقة للصحيحين لفظًا ورقمًا"
+      ]
+    },
+    {
+      "name": "scripture_coverage",
+      "command": [
+        "python3",
+        "ops/tools/check_scripture_coverage.py"
+      ],
+      "exit_code": 0,
+      "count_lines": [
+        "  self-tests: 13 رصد · 13 سليم · ترجمة 2/1 ✓",
+        "  الأسطح: 31 · نصوص 35226 · بطاقات 130 · أزواج ترجمة 6539",
+        "  مُتحقَّق: أحاديث 148 · آيات 86 · بطاقات 130",
+        "  ✅  SCRIPTURE COVERAGE OK — كل اقتباس في كل سطح مطابق ومُسنَد"
+      ]
+    },
+    {
+      "name": "curriculum_schema",
+      "command": [
+        "python3",
+        "ops/tools/check_curriculum_schema.py"
+      ],
+      "exit_code": 0,
+      "count_lines": [
+        "  ملفات مفحوصة (عربي + إنجليزي): 920",
+        "  وعود الطول (مسار/متجر/واجهة) المخالفة للمحتوى: 0",
+        "  ✅ CURRICULUM SCHEMA OK — لا انحراف بين المخطّط والمحتوى"
+      ]
+    },
+    {
+      "name": "programs",
+      "command": [
+        "python3",
+        "ops/tools/check_programs.py"
+      ],
+      "exit_code": 0,
+      "count_lines": [
+        "  برامج مفحوصة: 3 (عربي + إنجليزي)",
+        "  ✅ PROGRAMS OK"
+      ]
+    },
+    {
+      "name": "source_fidelity",
+      "command": [
+        "python3",
+        "ops/tools/check_kb_fidelity.py",
+        "check"
+      ],
+      "exit_code": 0,
+      "count_lines": [
+        "🔍 KB fidelity: 719 served base units · 233 carry a detector flag · 279 judged faithful · 205 quarantined by this review · 233 withdrawn sources held",
+        "✅ quarantine holds; every flagged live unit was read and judged on its current text"
+      ]
+    },
+    {
+      "name": "whitespace",
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0,
+      "count_lines": []
+    }
+  ],
+  "passed_checks": 11,
+  "total_checks": 11,
+  "completed_at": "2026-10-07T15:40:38.037229+00:00"
+}

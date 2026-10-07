@@ -1,11 +1,11 @@
 {
-  "total_units": 1389,
+  "total_units": 1391,
   "generated_at": "2026-10-07T07:31:39.565264+00:00",
   "by_domain": {
-    "medical": 361,
+    "medical": 362,
     "cyber": 283,
     "islamic_parenting": 578,
-    "development": 133,
+    "development": 134,
     "app_help": 12,
     "aqeedah": 22
   },
@@ -16154,13 +16154,13 @@
       "id": "seed-fear-23",
       "domain": "medical",
       "title": "مخاوف الطفل وقلق الانفصال في عمر سنتين إلى ثلاث",
-      "source_file": "curated/AAP - HealthyChildren.org / Toddler Fears",
+      "source_file": "curated/NHS / AACAP / CDC — app-authored childhood fear guidance",
       "language": "ar",
       "original_age_group": "2-3",
       "normalized_age_group": "2-3",
       "behavior_type": "الخوف",
       "needs_ocr": false,
-      "size_chars": 532
+      "size_chars": 798
     },
     {
       "id": "seed-fear-46",
@@ -16262,13 +16262,13 @@
       "id": "seed-jealousy-79",
       "domain": "development",
       "title": "الغيرة والمنافسة بين الإخوة في عمر سبعة إلى تسعة",
-      "source_file": "curated/AAP / Sibling Rivalry in School Age",
+      "source_file": "curated/AAP / AACAP — app-authored sibling safety guidance",
       "language": "ar",
       "original_age_group": "7-9",
       "normalized_age_group": "7-9",
       "behavior_type": "الغيرة بين الإخوة",
       "needs_ocr": false,
-      "size_chars": 482
+      "size_chars": 865
     },
     {
       "id": "seed-lying-46",
@@ -16526,25 +16526,25 @@
       "id": "seed-tantrum-23",
       "domain": "medical",
       "title": "إدارة نوبات الغضب لدى الطفل في عمر سنتين إلى ثلاث",
-      "source_file": "curated/CDC - Positive Parenting / AAP",
+      "source_file": "curated/CDC / AACAP — app-authored tantrum safety guidance",
       "language": "ar",
       "original_age_group": "2-3",
       "normalized_age_group": "2-3",
       "behavior_type": "نوبات الغضب",
       "needs_ocr": false,
-      "size_chars": 408
+      "size_chars": 932
     },
     {
       "id": "seed-tantrum-23__en",
       "domain": "medical",
       "title": "Managing Tantrums in Children Aged Two to Three",
-      "source_file": "curated/CDC - Positive Parenting / AAP",
+      "source_file": "curated/CDC / AACAP — app-authored tantrum safety guidance",
       "language": "en",
       "original_age_group": "2-3",
       "normalized_age_group": "2-3",
       "behavior_type": "نوبات الغضب",
       "needs_ocr": false,
-      "size_chars": 408
+      "size_chars": 932
     },
     {
       "id": "seed-tantrum-46",
@@ -16677,6 +16677,30 @@
       "behavior_type": "وقت الشاشة في الطفولة المبكرة",
       "needs_ocr": false,
       "size_chars": 443
+    },
+    {
+      "id": "seed-fear-23__en",
+      "domain": "medical",
+      "title": "Fears and Separation Anxiety in Children Aged Two to Three",
+      "source_file": "curated/NHS / AACAP / CDC — app-authored childhood fear guidance",
+      "language": "en",
+      "original_age_group": "2-3",
+      "normalized_age_group": "2-3",
+      "behavior_type": "الخوف",
+      "needs_ocr": false,
+      "size_chars": 798
+    },
+    {
+      "id": "seed-jealousy-79__en",
+      "domain": "development",
+      "title": "Jealousy and Rivalry Between Siblings Aged Seven to Nine",
+      "source_file": "curated/AAP / AACAP — app-authored sibling safety guidance",
+      "language": "en",
+      "original_age_group": "7-9",
+      "normalized_age_group": "7-9",
+      "behavior_type": "الغيرة بين الإخوة",
+      "needs_ocr": false,
+      "size_chars": 865
     }
   ]
 }
