@@ -149,20 +149,22 @@
     },
     "path_0-3_cyber_screen_foundations": {
       "category": "awaiting-review",
-      "reason": "Phase 0 honest labels (content/p1-deep-paths): the description promised a duration its lessons cannot keep («لمدة 10/12/14 يومًا» / «10/12/14-day»), so that phrase was removed from the Arabic and the English together and nothing else changed (the prenatal path keeps #20's safe-sleep wording, without the 5 S's). The 2026-10-04 stamp covered the old text. Re-review after the Ollama weekly reset; Claude edited the English, so Claude may not stamp it.",
-      "content_sha256": "d4522e83efb5317db581c9cb3550a7fd2766ea8b58de4a9d375e56735c83d964",
-      "queued_on": "2026-10-04",
+      "reason": "2026-10-07 source correction: full 0–3 scope and historical AAP 2016 / WHO 2019 age-specific screen guidance verified from official primary documents. English edited by Codex; awaiting an actual eligible review of this exact AR/EN hash. No model review or approval stamp performed.",
+      "content_sha256": "6c38aa6b0c2413e85ef8fcd4d728d095099055462a84ddb66460609d1076f7e7",
+      "queued_on": "2026-10-07",
       "english_authors": [
-        "claude-opus-5-5"
+        "claude-opus-5-5",
+        "codex"
       ]
     },
     "path_0-3_development_early_moments": {
       "category": "awaiting-review",
-      "reason": "Phase 0 honest labels (content/p1-deep-paths): the description promised a duration its lessons cannot keep («لمدة 10/12/14 يومًا» / «10/12/14-day»), so that phrase was removed from the Arabic and the English together and nothing else changed (the prenatal path keeps #20's safe-sleep wording, without the 5 S's). The 2026-10-04 stamp covered the old text. Re-review after the Ollama weekly reset; Claude edited the English, so Claude may not stamp it.",
-      "content_sha256": "5c4ff031103d0ddde30d611a3b6ce715b4009d264d6722533bd4174aeefce8db",
-      "queued_on": "2026-10-04",
+      "reason": "2026-10-07: corrected the incomplete first-year title to the existing 0–3 scope, verified against linked age-two lesson _03 and CDC unit 2b2d1fdd-1a30-40f3-aa2b-0dbadea2ce2c. English edited by Codex; awaits actual independent review of this exact AR/EN hash; no review stamp.",
+      "content_sha256": "91ad63cd0a3f7851d3c1afa58604139b9f77cda659416671d336b872082a4c5b",
+      "queued_on": "2026-10-07",
       "english_authors": [
-        "claude-opus-5-5"
+        "claude-opus-5-5",
+        "codex"
       ]
     },
     "story:maryam_toys": {
@@ -176,6 +178,24 @@
       "reason": "the Arabic gained interactive fields (age, category, three questions, Islamic value, challenge); their English is prepared in ops/data/en_parity_pending/ and is Claude-authored; waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
       "content_sha256": "6f183269240e8fa043aa34380decdd474cd99d56efcc5d349b0e30317cea839d",
       "queued_on": "2026-10-04"
+    },
+    "lesson_0-3_cyber_screen_foundations_b04": {
+      "category": "awaiting-review",
+      "reason": "2026-10-07: scoped the video-chat exception to AAP 2016 guidance before 18 months and replaced unrelated KB anchors with cyb-aap-media-young-minds-2016, verified from the official policy. Existing activity and reflections preserved. English edited by Codex; awaits actual independent review of this exact AR/EN hash; no review stamp.",
+      "content_sha256": "84d32c40e4d12de77a48b80e92b3f901139c88d52c8b36b2c075b737c304c5a4",
+      "queued_on": "2026-10-07",
+      "english_authors": [
+        "codex"
+      ]
+    },
+    "lesson_0-3_cyber_screen_foundations_01": {
+      "category": "awaiting-review",
+      "reason": "2026-10-07 source correction: full 0–3 scope and AAP 2016 / WHO 2019 age-specific screen guidance verified on official primary pages; unrelated KB anchors replaced by two narrowly extracted guideline units. English edited by Codex and not reviewed; approved_by must remain null until an actual eligible review of this exact AR/EN hash. No model review or approval stamp performed.",
+      "content_sha256": "3090b8e5ec6618fcd802258a1874628c9df80cd8d8bde908e1ee7b6d7d72f020",
+      "queued_on": "2026-10-07",
+      "english_authors": [
+        "codex"
+      ]
     }
   }
 }

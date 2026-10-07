@@ -3,7 +3,7 @@
   "title": "أساسيات الشاشات والأجهزة: حماية الطفل الصغير من الولادة",
   "age_group": "0-3",
   "domain": "cyber",
-  "description": "مسار تربوي سيبراني يغطي أهم أسس التعامل مع الشاشات والأجهزة للأطفال حتى عام: صفر شاشات تحت السنتين (توصية AAP/WHO)، بدائل اللعب الحقيقي، حماية النوم والتطور، ومخاطر التعرض المبكر للألعاب والإعلانات. مستند لإرشادات أكاديمية طب الأطفال الأمريكية ومنظمة الصحة العالمية.",
+  "description": "مسار تربوي يغطي أسس التعامل مع الشاشات والأجهزة من الولادة حتى عمر ثلاث سنوات: إرشادات وقت الشاشة بحسب العمر، بدائل اللعب والتفاعل المباشر، وحماية النوم والتطور. يوضح الفرق بين بيان AAP لعام 2016، الذي يستثني مكالمات الفيديو قبل 18 شهرًا ويسمح بإدخال محتوى عالي الجودة بمشاركة الوالدين بين 18 و24 شهرًا لمن يختار ذلك، وإرشادات WHO لعام 2019، التي لا توصي بوقت الشاشة الخامل قبل السنتين وتحدّه بساعة يوميًا عند عمر سنتين، والأقل أفضل.",
   "lesson_ids": [
     "lesson_0-3_cyber_screen_foundations_01",
     "lesson_0-3_cyber_screen_foundations_02",
@@ -14,12 +14,12 @@
   "pedagogical_framework": "attachment_rahma",
   "primary_reference": {
     "type": "تقرير_سيبراني",
-    "info": "AAP Council on Communications and Media 2016 + WHO Guidelines on physical activity, sedentary behaviour and sleep for children under 5 (2019)"
+    "info": "AAP: Media and Young Minds (2016), Recommendations, doi:10.1542/peds.2016-2591; WHO: Physical activity, sedentary behaviour and sleep under 5 (2019), p. 8, ISBN 9789241550536"
   },
   "prerequisites": [],
   "is_published": true,
   "version": "1.0.0",
   "created_at": "2026-06-10T18:00:00",
-  "updated_at": "2026-06-13T00:00:00",
+  "updated_at": "2026-10-07T07:57:56.718210+00:00",
   "approved_by": null
 }

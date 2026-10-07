@@ -1,9 +1,9 @@
 {
-  "total_units": 1390,
+  "total_units": 1392,
   "generated_at": "2026-10-07T07:31:39.565264+00:00",
   "by_domain": {
     "medical": 361,
-    "cyber": 280,
+    "cyber": 282,
     "islamic_parenting": 582,
     "development": 133,
     "app_help": 12,
@@ -16689,6 +16689,30 @@
       "behavior_type": "مرجع_قرآني",
       "needs_ocr": false,
       "size_chars": 626
+    },
+    {
+      "id": "cyb-aap-media-young-minds-2016",
+      "domain": "cyber",
+      "title": "إرشادات وقت الشاشة بحسب العمر: بيان AAP لعام 2016",
+      "source_file": "AAP_Media_and_Young_Minds_2016",
+      "language": "ar",
+      "original_age_group": "unspecified",
+      "normalized_age_group": "unspecified",
+      "behavior_type": "وقت الشاشة في الطفولة المبكرة",
+      "needs_ocr": false,
+      "size_chars": 891
+    },
+    {
+      "id": "cyb-who-screen-under5-2019",
+      "domain": "cyber",
+      "title": "وقت الشاشة الخامل للرضع والأطفال: إرشادات WHO لعام 2019",
+      "source_file": "WHO_Physical_Activity_Sedentary_Behaviour_Sleep_Under5_2019",
+      "language": "ar",
+      "original_age_group": "unspecified",
+      "normalized_age_group": "unspecified",
+      "behavior_type": "وقت الشاشة في الطفولة المبكرة",
+      "needs_ocr": false,
+      "size_chars": 892
     }
   ]
 }
