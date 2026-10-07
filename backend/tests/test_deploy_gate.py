@@ -176,3 +176,15 @@ def test_every_smoke_test_file_exists():
     smoke = _load("candidate_smoke")
     missing = [p for p in smoke.PYTEST_SUBSET if not (ROOT / p).exists()]
     assert not missing, missing
+
+
+@repo_files
+def test_docker_ci_never_prunes_or_builds_on_the_production_runner():
+    # Opening a source PR triggers both Docker jobs. Their disk-prune/build
+    # steps must execute on a disposable hosted runner, away from live images.
+    workflow = _workflow("docker.yml")
+    assert "pull_request" in workflow["on"]
+    assert set(workflow["jobs"]) == {"build", "smoke"}
+    for name, job in workflow["jobs"].items():
+        assert job["runs-on"] == "ubuntu-latest", name
+    assert workflow["jobs"]["smoke"]["needs"] == "build"
