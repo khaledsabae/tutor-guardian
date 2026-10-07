@@ -18,6 +18,8 @@ on:
       - 'ops/data/kb_fidelity/**'
       - 'ops/data/en_unpublished/**'
       - 'pytest.ini'
+      - 'ops/tests/test_golden_ci.py'
+      - 'ops/eval/**'
       - '.github/workflows/backend.yml'
       - '.github/workflows/release-play.yml'
       - 'scripts/tests/test_release_play_workflow.py'
@@ -57,6 +59,8 @@ on:
       - 'ops/data/en_unpublished/**'
       - 'ops/tools/**'
       - 'pytest.ini'
+      - 'ops/tests/test_golden_ci.py'
+      - 'ops/eval/**'
       - '.github/workflows/backend.yml'
       - '.github/workflows/release-play.yml'
       - 'scripts/tests/test_release_play_workflow.py'
@@ -124,7 +128,9 @@ jobs:
         # pushed the job past its timeout.
         run: |
           cd "$GITHUB_WORKSPACE"
-          pytest -v
+          # ops/tests/test_golden_ci.py: its backend_env cases need this job's
+          # package set; the light step in candidate-image.yml runs the rest.
+          pytest -v backend/tests ops/tests/test_golden_ci.py
 
   # ── 2. Knowledge-base integrity (catches schema drift) ───────────────
   kb-integrity:

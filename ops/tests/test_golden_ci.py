@@ -102,6 +102,7 @@ def test_missing_index_is_unavailable_for_entire_set(tmp_path):
     assert len(report["items"]) == 2
 
 
+@pytest.mark.backend_env
 @pytest.mark.parametrize("question,language", [
     ("ar-g024", "ar"),
     ("How can I teach my child good manners and help our community?", "en"),
