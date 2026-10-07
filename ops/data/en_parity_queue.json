@@ -5,15 +5,5 @@
     "awaiting-review: waits for a reviewer from a family other than its English authors'. source-unverified: the Arabic is not verified against its own source — never stamped until the hold is released (unqueue) after re-extraction.",
     "Written by `review_en_parity.py queue` / `unqueue`; stamping removes the entry."
   ],
-  "units": {
-    "adhkar:family_adhkar": {
-      "category": "awaiting-review",
-      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
-      "content_sha256": "34e847e50f009fd70efd1956ec0f1c526a548cab65cc9835cf1b191839314d45",
-      "queued_on": "2026-10-04",
-      "english_authors": [
-        "claude-opus-5.5"
-      ]
-    }
-  }
+  "units": {}
 }

@@ -1,0 +1,36 @@
+{
+  "schema": "tg.adhkar_review_result/1",
+  "key": "adhkar:family_adhkar",
+  "content_sha256": "55a234d9af5d7e1135982b05650ed19184ccaefcacb99d9da93316e53cea519c",
+  "proof_sha256": "54b7333e9ad0c889ab1a2940c27e006dce795bbd07702269e2b129d1ea549928",
+  "current_covered_entries": 281,
+  "total_entries": 281,
+  "dual_tip_fields": 372,
+  "dual_tips": 124,
+  "exact_scripture_items": 157,
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
+  "canonical_report": {
+    "stamped": [
+      "adhkar:family_adhkar"
+    ],
+    "fixed": [],
+    "arabic_proposals": [],
+    "arabic_applied": [],
+    "unresolved": {},
+    "fix_rejected": [],
+    "rounds": 1
+  },
+  "actual_blocking": [],
+  "human_scholar_status": "pending",
+  "pack_file_sha256": {
+    "ar": "bfb2a03e3aa4ab032b493da6da23ec22792ac10f71b7a999be800ec3f4a311be",
+    "en": "554acaf8273903f7cbfb4a1dd9de572553b49ed63f8a316773d538ffbf56be86"
+  },
+  "targeted_tests": {
+    "exit": 0,
+    "tests": 97,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  }
+}
