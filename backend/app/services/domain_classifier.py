@@ -186,9 +186,13 @@ _BITE_TOKEN = r"(?:" + _short_arabic_token(
      for suffix in ("", "ني", "ه", "ها", "هم", "نا", "ك")]
     + ["العض", "بالعض", "للعض",
        # The noun «a bite»: «عضة الطفل لأمه».
-       "عضة", "العضة", "عضات", "العضات", "عضتي"],
+       "عضة", "العضة", "عضات", "العضات", "عضتي",
+       # «تعرض لعضة» — the noun after «لـ»; «لعض» alone stays out (لعضو).
+       "لعضة", "لعضات", "للعضة", "للعضات"],
     verbs=("يعض", "تعض", "نعض", "أعض", "اعض", "بيعض", "بتعض", "بنعض",
-           "سيعض", "ستعض", "هيعض", "هتعض"),
+           "سيعض", "ستعض", "هيعض", "هتعض",
+           # Reduplicated «يعضعض»: biting repeatedly.
+           "يعضعض", "تعضعض", "بيعضعض", "بتعضعض"),
 ) + (
     # «عضوا» is «they bit»; «عضوًا/عضواً» with tanween is «a member».
     r"|(?<!" + _EDGE + r")(?:[وف]" + _MARKS + r")?" + _spell("عض")
@@ -196,13 +200,19 @@ _BITE_TOKEN = r"(?:" + _short_arabic_token(
     + _spell("ا", r"[\u064c-\u065f\u0670\u0640]*") + r"(?!" + _EDGE + r"))"
 )
 # Biting oneself: «ويقوم بعض يده» is «بـ» + «عض», which the token above must
-# refuse to keep the quantifier «بعض» out. A body part or «نفسه» after it is
-# never the quantifier («بعض الأطفال»), and self-injury belongs in medical.
+# refuse to keep the quantifier «بعض» out. But «بعض» before a plural or
+# «نفسه» is still the quantifier («بعض أصابعها بالحناء», «لعل بعض نفسه»), so
+# it is biting only after «يقوم/قام/صار/بدأ…» («بـ» + verbal noun), or before
+# a single organ the quantifier cannot take («بعض يده», «بعض لسانه»).
+_SELF_BITE_ORGANS_SINGLE = (
+    r"يده|يدها|ايده|إيده|ايدها|إيدها|لسانه|لسانها|شفته|شفتها|ذراعه|ذراعها"
+)
 _SELF_BITE = (
-    r"(?<!\w)(?:[وف])?بعض\s+(?:يده|يدها|يديه|يديها|ايده|إيده|ايدها|إيدها"
-    r"|أصابعه|اصابعه|أصابعها|اصابعها|صوابعه|صوابعها|إصبعه|اصبعه|إصبعها|اصبعها"
-    r"|صباعه|صباعها|نفسه|نفسها|لسانه|لسانها|شفته|شفتها|شفايفه|شفايفها"
-    r"|ذراعه|ذراعها)(?!\w)"
+    r"(?<!\w)(?:[وف])?(?:(?:يقوم|بيقوم|تقوم|بتقوم|قام|قامت|صار|صارت|بدأ|بدأت"
+    r"|بدا|بدات)\s+بعض\s+(?:" + _SELF_BITE_ORGANS_SINGLE
+    + r"|يديه|يديها|أصابعه|اصابعه|أصابعها|اصابعها|صوابعه|صوابعها|إصبعه|اصبعه"
+    r"|إصبعها|اصبعها|صباعه|صباعها|نفسه|نفسها|شفايفه|شفايفها)"
+    r"|بعض\s+(?:" + _SELF_BITE_ORGANS_SINGLE + r"))(?!\w)"
 )
 _PLAY_TOKEN = _short_arabic_token(
     [stem + suffix
@@ -217,9 +227,10 @@ _PLAY_TOKEN = _short_arabic_token(
 _HEARING_TOKEN = _short_arabic_token(
     ["سمع" + suffix for suffix in ("", "ني", "ه", "ها", "نا", "ك", "هم")]
     + ["السمع", "بالسمع", "للسمع",
-       # Hearing adjectives and hearing aids: «ضعف سمعي», «إعاقة سمعية».
+       # Hearing adjectives: «ضعف سمعي», «إعاقة سمعية».
        "سمعي", "سمعية", "سمعيه", "السمعي", "السمعية", "السمعيه",
-       "سماعة", "سماعات", "السماعة", "السماعات", "بالسماعة", "بسماعة", "بسماعات"],
+       # Egyptian negated past: «مسمعش ابني حاجة».
+       "مسمعش", "ماسمعش", "سمعش"],
     verbs=("يسمع", "تسمع", "بيسمع", "بتسمع", "نسمع"),
 )
 
@@ -237,11 +248,43 @@ _MEDIA = [
     "النت", "الإنترنت", "الانترنت", "فيسبوك", "الفيسبوك", "تيك", "التيك",
 ]
 
+# «سماعة/سماعات» is a hearing aid and also headphones («سماعة بلوتوث»,
+# «سماعات الأذن هل تضر»). It counts as a child's hearing only with a medical
+# qualifier after it, a need/wear verb before it, or a hearing-loss word
+# anywhere in the question («زراعة قوقعة وسماعة»). Every piece is fixed-length.
+_HEARING_AID_DEVICE = (
+    r"(?<!\w)(?:[وف])?(?:بال|ال|لل|ب)?سماع(?:ة|ات|تين|ته|تها|اته|اتها)(?!\w)"
+)
+_HEARING_AID_RE = re.compile(
+    r"(?<!\w)(?:[وف])?(?:يحتاج|تحتاج|يحتاجون|محتاج|محتاجة|محتاجه|يلبس|تلبس|بيلبس"
+    r"|بتلبس|لبس|لبست|يركب|تركب|ركب|ركبت|ركبنا|ركبوا)\s+(?:(?:له|لها|لهم)\s+)?"
+    + _HEARING_AID_DEVICE
+    + r"|" + _HEARING_AID_DEVICE + r"\s+(?:(?:ال)?(?:طبية|طبيه|طبي|سمعية|سمعيه)"
+    r"|للسمع|(?:ال)?(?:أذن|اذن)\s+(?:ال)?(?:طبية|طبيه))(?!\w)",
+    re.UNICODE,
+)
+_HEARING_AID_DEVICE_RE = re.compile(_HEARING_AID_DEVICE, re.UNICODE)
+_HEARING_LOSS_CONTEXT_RE = re.compile(
+    r"(?<!\w)(?:[وف])?(?:(?:ال|بال)?(?:قوقعة|قوقعه)|ضعف\s+(?:في\s+)?(?:ال)?سمع\w*"
+    r"|(?:ضعيف|ضعيفة|ضعيفه)\s+السمع|ثقل\s+(?:في\s+)?(?:ال)?سمع\w*|أصم|اصم|صماء"
+    r"|الصمم|بالصمم|سمعه|سمعها)(?!\w)",
+    re.UNICODE,
+)
+
+
+def _hearing_aid(text: str) -> bool:
+    return bool(_HEARING_AID_RE.search(text)
+                or (_HEARING_AID_DEVICE_RE.search(text)
+                    and _HEARING_LOSS_CONTEXT_RE.search(text)))
+
+
 # The past forms in _HEARING_TOKEN (سمع/سمعنا/سمعه/سمعها/سمعك/…) are also the
 # noun «his/her/our hearing», so they stay. But followed by reported speech —
 # «عن …», «من الشيخ», «في الإذاعة», «على اليوتيوب», «أن …» — they are someone
 # hearing *about* something, the same reading «سمعت عن» already has; so are the
-# parents' present «نسمع/بنسمع/تسمع/بتسمع عن …». Only that word is masked
+# parents' present «نسمع/بنسمع/تسمع/بتسمع عن …» («تسمع» here is «you hear»;
+# behind a negation or a girl it is «she hears» and is kept, see
+# _mask_reported_hearing). Only that word is masked
 # before the rules run; a child's hearing named elsewhere in the question
 # («ابني لا يسمع، سمعنا عن طبيب») still reaches development. «عن بعد/قرب/طريق»
 # is how far or how a child hears, never a topic.
@@ -277,15 +320,31 @@ _HEARING_HEAD_NOUNS = frozenset({
     "سلامة", "سلامه", "مستوى", "اختبار", "تقييم", "مشكلة", "مشكله", "مشاكل",
 })
 _PREVIOUS_WORD_RE = re.compile(r"(\w+)\s+$")
+# «تسمع/بتسمع» is also the third person feminine: «بنتي ما تسمع إن ناديتها»
+# is the girl's hearing, whatever reported-speech lookalike follows it.
+_SHE_HEARS_RE = re.compile(r"(?:[وف])?ب?تسمع")
+_NEGATIONS = frozenset({"ما", "لا", "مش", "مو", "لم", "مب"})
+_GIRL_REFERENTS = frozenset({
+    "بنتي", "ابنتي", "بنتنا", "ابنتنا", "طفلتي", "طفلتنا", "رضيعتي", "رضيعتنا",
+    "بنيتي", "البنت", "الطفلة", "بنوتي",
+})
+
+
+def _strip_conjunction(word: str) -> str:
+    return word[1:] if len(word) > 2 and word[0] in "وف" else word
 
 
 def _mask_reported_hearing(question: str) -> str:
     def mask(match: "re.Match[str]") -> str:
         # A bounded window keeps this constant per match on a 50k-char input.
-        before = re.sub(_MARKS, "", question[max(0, match.start() - 24):match.start()])
+        before = re.sub(_MARKS, "", question[max(0, match.start() - 48):match.start()])
         previous = _PREVIOUS_WORD_RE.search(before)
         if previous and previous.group(1) in _HEARING_HEAD_NOUNS:
             return match.group()
+        if _SHE_HEARS_RE.match(re.sub(_MARKS, "", match.group())):
+            words = [_strip_conjunction(w) for w in re.findall(r"\w+", before)[-3:]]
+            if (words and words[-1] in _NEGATIONS) or _GIRL_REFERENTS.intersection(words):
+                return match.group()
         return " " * len(match.group())
     return _REPORTED_HEARING_RE.sub(mask, question)
 
@@ -430,7 +489,10 @@ def _keyword_fast_path(question: str) -> Optional[List[str]]:
             if domain not in matched:
                 matched.append(domain)
     hearing_text = re.sub(r"[\u064b-\u065f\u0670\u0640]", "", question)
-    if "development" not in matched and _CHILD_PAST_HEARING_RE.search(hearing_text):
+    if "development" not in matched and (
+            _CHILD_PAST_HEARING_RE.search(hearing_text)
+            # The masked text: a reported «سمعه من…» is no hearing-loss context.
+            or _hearing_aid(re.sub(r"[\u064b-\u065f\u0670\u0640]", "", rule_text))):
         # Same slot the development rule would give it: after the parenting
         # domains, before app_help (last on purpose — see KEYWORD_RULES).
         at = matched.index("app_help") if "app_help" in matched else len(matched)

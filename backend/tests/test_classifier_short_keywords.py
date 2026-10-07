@@ -370,3 +370,67 @@ def test_keyword_rules_stay_linear_on_50k_inputs(question):
     start = time.perf_counter()
     classifier._keyword_fast_path(question)
     assert time.perf_counter() - start < 1.0
+
+
+# «تسمع/بتسمع» is also «she hears». Behind a negation or a girl, a reported
+# lookalike after it («إن ناديتها», «من المعلمة», «في الدرس») is still her
+# hearing, not a parent reporting a topic.
+@pytest.mark.parametrize("question", [
+    "بنتي ما تسمع إن ناديتها من بعيد",
+    "بنتي لا تسمع أن ناديتها",
+    "بنتي ما تسمع في الدرس وتطلب من المعلمة الإعادة",
+    "بنتي ما تسمع من المعلمة في الفصل",
+    "بنتي ما تسمع عن يمينها",
+    "بنتي تسمع أن أحدًا يناديها وهو لا يناديها",
+    "بنتي تسمع كثير عن البنات الثانيين",
+    "بنتي ما بتسمع على التلفزيون إلا بصوت عالي",
+])
+def test_girl_present_hearing_is_not_masked_as_reported(question):
+    assert "development" in (classifier._keyword_fast_path(question) or [])
+
+
+@pytest.mark.parametrize("question,expected", [
+    ("بنتي لا تسمع في المسجد صوت الإمام", ["fiqh", "development"]),
+    ("بنتي ما تسمع من الطبيب ولا من الممرضة", ["medical", "development"]),
+])
+def test_girl_present_hearing_keeps_priority_order(question, expected):
+    assert classifier._keyword_fast_path(question) == expected
+
+
+@pytest.mark.parametrize("question", [
+    "هل أشتري سماعة بلوتوث لابني؟",
+    "سماعات الأذن هل تضر ابني؟",
+])
+def test_bare_headphones_are_not_hearing_development(question):
+    assert "development" not in (classifier._keyword_fast_path(question) or [])
+
+
+@pytest.mark.parametrize("question", [
+    "ابني عنده زراعة قوقعة وسماعة",
+    "ابني يحتاج سماعة طبية",
+])
+def test_hearing_aid_with_context_is_development(question):
+    assert "development" in (classifier._keyword_fast_path(question) or [])
+
+
+@pytest.mark.parametrize("question", [
+    "بنتي تلون بعض أصابعها بالحناء",
+    "لعل بعض نفسه يطمئن",
+])
+def test_quantifier_before_body_part_is_not_self_biting(question):
+    assert "medical" not in (classifier._keyword_fast_path(question) or [])
+
+
+@pytest.mark.parametrize("question,domain", [
+    ("مسمعش ابني حاجة", "development"),
+    ("ابني تعرض لعضة", "medical"),
+    ("ابني يعضعض الأشياء", "medical"),
+    ("ابني بيعض نفسه", "medical"),
+])
+def test_dialect_negated_past_bite_noun_and_reduplicated_bite(question, domain):
+    assert domain in (classifier._keyword_fast_path(question) or [])
+
+
+def test_girl_hearing_beside_app_help_keeps_order():
+    assert classifier._keyword_fast_path(
+        "بنتي ما سمعت الجرس، كيف أحذف حسابي؟") == ["development", "app_help"]
