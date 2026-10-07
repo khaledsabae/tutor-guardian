@@ -1,0 +1,57 @@
+{
+  "id": "lesson_7-9_aqeedah_fundamentals_11",
+  "path_id": "path_7-9_aqeedah_fundamentals",
+  "title": "«Who Created Allah?» When They Ask the Puzzling Question",
+  "age_group": "7-9",
+  "domain": "aqeedah",
+  "unit_ids": [
+    "aqe-b1e103fc",
+    "isl-a10b175c"
+  ],
+  "summary": "At seven and eight your child asks «why?» and «who?» a great deal, and one day may reach the question that unsettles many parents: «If Allah created everything, who created Allah?» This question doesn't mean their faith is weak; it means their mind is working and searching. Your reaction in that moment teaches them whether questions are welcome in your home.\n\nReceive the question calmly and say: «Many people think about this question, and I'm glad you asked me.» Then answer simply: everything we see did not exist and then came to exist, so it must have a creator. As for Allah, He is not created; He is the First, existing before everything, with no beginning, and He is the Creator who resembles nothing of His creation — so we don't ask about Him the way we ask about created things. Don't give them examples that liken Allah to anything in His creation; likening only increases confusion.\n\nThey may not be convinced the first time, and may come back to the question days later. That's fine; repeat the answer in the same words or simpler ones, and don't show irritation. If the thought presses on them and worries them, teach them to seek refuge in Allah, to occupy themselves with something else, and to come to you whenever they like to talk.\n\nIf they ask you something you don't know, don't invent an answer. Say: «I'll ask someone who knows, then tell you», and turn to a trusted scholar or an approved children's aqeedah (creed) book. Your honesty, and your calm in the face of their question, teach them that faith can hold questions and is not afraid of them.",
+  "try_this": "Today: Prepare your answer to this question before it comes: write three short sentences in your own words, with no likening of Allah to anything in His creation, and read them aloud once so you can say them calmly if your child asks.",
+  "order": 11,
+  "estimated_minutes": 3,
+  "reflection_prompts": [
+    "What worries you more when your child asks about Allah: the difficulty of the question, or your fear of not answering well?"
+  ],
+  "warning_flags": [],
+  "needs_professional_followup": false,
+  "is_published": true,
+  "version": "1.0.0",
+  "created_at": "2026-10-07T07:19:31",
+  "updated_at": "2026-10-07T07:19:31",
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "claude-opus-5-5",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": true
+    },
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
+    "revalidated_at": "2026-10-07T07:27:12+00:00",
+    "generated_by": "ops/tools/deepen_paths.py",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "26900f1375fbc831656e4effb0296c4556f9a36ee403d55970583d724f3c705f",
+      "reviewed_at": "2026-10-07T07:27:12+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+    }
+  }
+}

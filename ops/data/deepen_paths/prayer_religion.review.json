@@ -5,7 +5,7 @@
     "deepseek-v4-pro",
     "glm-5.2"
   ],
-  "written_at": "2026-10-04T17:13:00",
+  "written_at": "2026-10-07T07:19:31",
   "lessons": [
     {
       "path_id": "path_4-6_aqeedah_seeds",
@@ -400,28 +400,6 @@
       "dispositions": []
     },
     {
-      "path_id": "path_7-9_aqeedah_fundamentals",
-      "key": "s01",
-      "brief": "«مَن خلق الله؟» حين يسأل السؤال المحيّر",
-      "accepted": false,
-      "blockers": [
-        "ar: current text not reviewed",
-        "en: current text not reviewed"
-      ],
-      "dispositions": []
-    },
-    {
-      "path_id": "path_7-9_aqeedah_fundamentals",
-      "key": "s02",
-      "brief": "الحلال والحرام: لماذا نهانا الله؟",
-      "accepted": false,
-      "blockers": [
-        "ar: current text not reviewed",
-        "en: current text not reviewed"
-      ],
-      "dispositions": []
-    },
-    {
       "path_id": "path_10-12_islamic_parenting_worship_love",
       "key": "s01",
       "brief": "من العاشرة: متابعةٌ حازمة بلا قسوة",
@@ -595,6 +573,84 @@
         "ar: current text not reviewed",
         "en: current text not reviewed"
       ],
+      "dispositions": []
+    },
+    {
+      "path_id": "path_7-9_aqeedah_fundamentals",
+      "key": "s01",
+      "brief": "«مَن خلق الله؟» حين يسأل السؤال المحيّر",
+      "accepted": true,
+      "blockers": [],
+      "ar_review": {
+        "reviewer": "deepseek-v4-pro",
+        "at": "2026-10-07T07:18:27",
+        "rounds": 1,
+        "defects": [
+          {
+            "severity": "low",
+            "type": "age_fit",
+            "field": "summary",
+            "why": "The age band is 7-9, but the summary only mentions ages 7 and 8, omitting 9-year-olds. This may make parents of 9-year-olds feel the lesson is not for them."
+          }
+        ]
+      },
+      "en_review": {
+        "reviewer": "deepseek-v4-pro",
+        "at": "2026-10-07T07:18:27",
+        "rounds": 1,
+        "defects": []
+      },
+      "dispositions": [],
+      "written_as": "lesson_7-9_aqeedah_fundamentals_11",
+      "order": 11,
+      "title": "«مَن خلق الله؟» حين يسأل السؤال المحيّر"
+    },
+    {
+      "path_id": "path_7-9_aqeedah_fundamentals",
+      "key": "s02",
+      "brief": "الحلال والحرام: لماذا نهانا الله؟",
+      "accepted": false,
+      "blockers": [
+        "ar review #0 [medium/sharia] summary: «أن الله رحيمٌ بنا، أحلّ لنا الطيّبات الكثيرة، ونهانا عن أشياء قليلة لأ» — يقدّم الضرر كعلّة عامة لكل نهي، وهذا غير متفق عليه عند أهل السنة وقد يوحي بمذهب المعتزلة؛ الأولى تقييده بأنه من الحكمة غالبًا أو أن بعض الحِكم قد لا نعرفها (وقد ورد لاحقًا لكن الجملة الافتتاحية مطلقة)."
+      ],
+      "ar_review": {
+        "reviewer": "deepseek-v4-pro",
+        "at": "2026-10-07T07:19:19",
+        "rounds": 1,
+        "defects": [
+          {
+            "severity": "medium",
+            "type": "sharia",
+            "field": "summary",
+            "why": "يقدّم الضرر كعلّة عامة لكل نهي، وهذا غير متفق عليه عند أهل السنة وقد يوحي بمذهب المعتزلة؛ الأولى تقييده بأنه من الحكمة غالبًا أو أن بعض الحِكم قد لا نعرفها (وقد ورد لاحقًا لكن الجملة الافتتاحية مطلقة)."
+          },
+          {
+            "severity": "low",
+            "type": "sharia",
+            "field": "summary",
+            "why": "إطلاق تحريم الإيذاء يشمل ما هو مشروع كالتأديب والدفاع عن النفس؛ الأفضل تقييده بغير حق."
+          },
+          {
+            "severity": "low",
+            "type": "age_fit",
+            "field": "summary",
+            "why": "الفرقة العمرية 7-9 لكن النص يذكر السابعة والثامنة فقط ويترك التاسعة."
+          }
+        ]
+      },
+      "en_review": {
+        "reviewer": "deepseek-v4-pro",
+        "at": "2026-10-07T07:19:19",
+        "rounds": 1,
+        "defects": [
+          {
+            "severity": "low",
+            "type": "register",
+            "field": "try_this",
+            "why": "ترجمة حرفية لجلسة هادئة، وهي ركيكة؛ الأفضل 'During a quiet moment' أو 'In a calm moment'."
+          }
+        ]
+      },
       "dispositions": []
     }
   ]

@@ -1,0 +1,799 @@
+{
+  "schema": "lesson-recovery-review-evidence.v1",
+  "lesson_id": "lesson_7-9_aqeedah_fundamentals_11",
+  "deepen": {
+    "ar_hash": "f3ffb985eba30437",
+    "en_hash": "79e3f52071194a7ff3ffb985eba30437",
+    "ar_review": {
+      "reviewer": "deepseek-v4-pro",
+      "at": "2026-10-07T07:18:27",
+      "defects": [
+        {
+          "type": "age_fit",
+          "field": "summary",
+          "quote": "في السابعة والثامنة يكثر طفلك من سؤال «لماذا؟» و«مَن؟»",
+          "why": "The age band is 7-9, but the summary only mentions ages 7 and 8, omitting 9-year-olds. This may make parents of 9-year-olds feel the lesson is not for them.",
+          "severity": "low",
+          "fix": "Change to «في السابعة والثامنة والتاسعة» or «في هذه المرحلة العمرية»."
+        }
+      ],
+      "combined": true,
+      "contains_religious_text": true
+    },
+    "en_review": {
+      "reviewer": "deepseek-v4-pro",
+      "at": "2026-10-07T07:18:27",
+      "defects": [],
+      "combined": true,
+      "contains_religious_text": true
+    }
+  },
+  "parity_runs": [
+    {
+      "canonical_items": {
+        "lesson_7-9_aqeedah_fundamentals_11": {
+          "sha": "26900f1375fbc831656e4effb0296c4556f9a36ee403d55970583d724f3c705f",
+          "fields": {
+            "title": {
+              "ar": "«مَن خلق الله؟» حين يسأل السؤال المحيّر",
+              "en": "«Who Created Allah?» When They Ask the Puzzling Question"
+            },
+            "summary": {
+              "ar": "في السابعة والثامنة يكثر طفلك من سؤال «لماذا؟» و«مَن؟»، وقد يصل يومًا إلى السؤال الذي يربك كثيرًا من الآباء: «إذا كان الله خلق كل شيء، فمَن خلق الله؟». هذا السؤال لا يعني أن إيمانه ضعيف، بل يعني أن عقله يعمل ويبحث. وردّ فعلك في تلك اللحظة يعلّمه: هل الأسئلة مرحّبٌ بها في بيتكم أم لا؟\n\nاستقبل السؤال بهدوء، وقل: «هذا سؤالٌ يفكّر فيه كثيرون، وجميلٌ أنك سألتني». ثم أجب ببساطة: كل شيءٍ نراه لم يكن موجودًا ثم وُجد، فلا بدّ له من خالق. أما الله فليس مخلوقًا؛ هو الأول، موجودٌ قبل كل شيءٍ ولا بداية له، وهو الخالق الذي لا يشبه شيئًا من خلقه، ولذلك لا نسأل عنه كما نسأل عن المخلوقات. ولا تضرب له أمثلةً تشبّه الله بشيءٍ من خلقه، فالتشبيه يزيد الحيرة.\n\nوقد لا يقتنع من المرة الأولى، وقد يعود إلى السؤال بعد أيام. لا بأس؛ أعد الجواب بالكلمات نفسها أو بكلماتٍ أبسط، ولا تُظهر انزعاجًا. وإن ألحّت عليه الفكرة وأقلقته، فعلّمه أن يستعيذ بالله، وأن يشغل نفسه بشيءٍ آخر، وأن يأتيك متى شاء ليتكلّم.\n\nوإن سألك سؤالًا لا تعرف جوابه، فلا تخترع جوابًا. قل: «سأسأل من يعرف، ثم أخبرك»، وارجع إلى عالمٍ موثوق أو كتاب عقيدةٍ معتمد للأطفال. صدقك معه، وهدوؤك أمام سؤاله، يعلّمانه أن الإيمان يحتمل الأسئلة ولا يخاف منها.",
+              "en": "At seven and eight your child asks «why?» and «who?» a great deal, and one day may reach the question that unsettles many parents: «If Allah created everything, who created Allah?» This question doesn't mean their faith is weak; it means their mind is working and searching. Your reaction in that moment teaches them whether questions are welcome in your home.\n\nReceive the question calmly and say: «Many people think about this question, and I'm glad you asked me.» Then answer simply: everything we see did not exist and then came to exist, so it must have a creator. As for Allah, He is not created; He is the First, existing before everything, with no beginning, and He is the Creator who resembles nothing of His creation — so we don't ask about Him the way we ask about created things. Don't give them examples that liken Allah to anything in His creation; likening only increases confusion.\n\nThey may not be convinced the first time, and may come back to the question days later. That's fine; repeat the answer in the same words or simpler ones, and don't show irritation. If the thought presses on them and worries them, teach them to seek refuge in Allah, to occupy themselves with something else, and to come to you whenever they like to talk.\n\nIf they ask you something you don't know, don't invent an answer. Say: «I'll ask someone who knows, then tell you», and turn to a trusted scholar or an approved children's aqeedah (creed) book. Your honesty, and your calm in the face of their question, teach them that faith can hold questions and is not afraid of them."
+            },
+            "try_this": {
+              "ar": "اليوم: جهّز جوابك لهذا السؤال قبل أن يأتي: اكتب ثلاث جملٍ قصيرة بكلماتك، ليس فيها تشبيهٌ لله بشيءٍ من خلقه، واقرأها مرةً بصوتٍ مسموع حتى تقولها بهدوءٍ إن سألك طفلك.",
+              "en": "Today: Prepare your answer to this question before it comes: write three short sentences in your own words, with no likening of Allah to anything in His creation, and read them aloud once so you can say them calmly if your child asks."
+            },
+            "reflection_prompts": {
+              "ar": [
+                "ما الذي يقلقك أكثر حين يسأل طفلك عن الله: صعوبة السؤال أم خوفك من ألّا تحسن الجواب؟"
+              ],
+              "en": [
+                "What worries you more when your child asks about Allah: the difficulty of the question, or your fear of not answering well?"
+              ]
+            }
+          },
+          "authors": [
+            "claude-opus-5-5"
+          ],
+          "deterministic_defects": []
+        },
+        "path_7-9_aqeedah_fundamentals": {
+          "sha": "50b9e41d7a8a6fb8b0be5a3dabdda20de4c27875a4cfb1e4ba3fdc4869d035b7",
+          "fields": {
+            "title": {
+              "ar": "أساسيات العقيدة — زراعة الإيمان في النشء",
+              "en": "Foundations of Aqeedah — Planting Iman in the Young"
+            },
+            "description": {
+              "ar": "مسار 11 دروس قصيرة يُعلّم الأب/الأم أسس العقيدة الإسلامية الصحيحة لتعليم أطفالهم (3-12 سنة). مبني على القرآن والسنة على فهم سلف الأمة، بعيد عن الخلافات.",
+              "en": "A 11-lesson pathway that teaches the father/mother the foundations of the correct Islamic aqeedah so they can teach their children (ages 3-12). Built upon the Qur’an and Sunnah according to the understanding of the Salaf of the Ummah, far from disputes."
+            },
+            "primary_reference.info": {
+              "ar": "العقيدة الطحاوية، القواعد الأربع وثلاثة الأصول لمحمد بن عبد الوهاب بشرح ابن عثيمين، أسئلة الأطفال الإيمانية (الركف)، العقيدة أولاً (الجريش)",
+              "en": "al-Aqidah al-Tahawiyyah; al-Qawa'id al-Arba' and Thalathat al-Usul by Muhammad ibn Abd al-Wahhab, with Ibn Uthaymin's commentary; As'ilat al-Atfal al-Imaniyyah; al-Aqidah Awwalan (al-Juraysh)"
+            }
+          },
+          "authors": [
+            "mistral-large-3:675b"
+          ],
+          "deterministic_defects": []
+        }
+      },
+      "responses": [
+        {
+          "model": "deepseek-v4-pro",
+          "prompt_version": "dfa8a5f39718",
+          "request_sha256": "ed5866be87bd11178d4489ec8eeb237bf93db638c68a3fe309b9ccf0d463cc40",
+          "parsed_response": {
+            "items": [
+              {
+                "id": "lesson_7-9_aqeedah_fundamentals_11",
+                "defects": []
+              },
+              {
+                "id": "path_7-9_aqeedah_fundamentals",
+                "defects": [
+                  {
+                    "field": "description",
+                    "side": "english",
+                    "type": "structure",
+                    "severity": "low",
+                    "arabic": "مسار 11 دروس قصيرة",
+                    "english": "A 11-lesson pathway",
+                    "why": "The indefinite article should be 'An' before the vowel sound of '11'.",
+                    "suggestion": "An 11-lesson pathway that teaches the father/mother the foundations of the correct Islamic aqeedah so they can teach their children (ages 3-12). Built upon the Qur’an and Sunnah according to the understanding of the Salaf of the Ummah, far from disputes."
+                  },
+                  {
+                    "field": "primary_reference.info",
+                    "side": "english",
+                    "type": "omission",
+                    "severity": "low",
+                    "arabic": "أسئلة الأطفال الإيمانية (الركف)",
+                    "english": "As'ilat al-Atfal al-Imaniyyah",
+                    "why": "The parenthetical author attribution (الركف) is dropped in the English reference.",
+                    "suggestion": "As'ilat al-Atfal al-Imaniyyah (al-Rukaf)"
+                  }
+                ]
+              }
+            ]
+          },
+          "raw_response": {
+            "id": "chatcmpl-978",
+            "object": "chat.completion",
+            "created": 1791357824,
+            "model": "deepseek-v4-pro",
+            "system_fingerprint": "fp_ollama",
+            "choices": [
+              {
+                "index": 0,
+                "message": {
+                  "role": "assistant",
+                  "content": "{\n  \"items\": [\n    {\n      \"id\": \"lesson_7-9_aqeedah_fundamentals_11\",\n      \"defects\": []\n    },\n    {\n      \"id\": \"path_7-9_aqeedah_fundamentals\",\n      \"defects\": [\n        {\n          \"field\": \"description\",\n          \"side\": \"english\",\n          \"type\": \"structure\",\n          \"severity\": \"low\",\n          \"arabic\": \"مسار 11 دروس قصيرة\",\n          \"english\": \"A 11-lesson pathway\",\n          \"why\": \"The indefinite article should be 'An' before the vowel sound of '11'.\",\n          \"suggestion\": \"An 11-lesson pathway that teaches the father/mother the foundations of the correct Islamic aqeedah so they can teach their children (ages 3-12). Built upon the Qur’an and Sunnah according to the understanding of the Salaf of the Ummah, far from disputes.\"\n        },\n        {\n          \"field\": \"primary_reference.info\",\n          \"side\": \"english\",\n          \"type\": \"omission\",\n          \"severity\": \"low\",\n          \"arabic\": \"أسئلة الأطفال الإيمانية (الركف)\",\n          \"english\": \"As'ilat al-Atfal al-Imaniyyah\",\n          \"why\": \"The parenthetical author attribution (الركف) is dropped in the English reference.\",\n          \"suggestion\": \"As'ilat al-Atfal al-Imaniyyah (al-Rukaf)\"\n        }\n      ]\n    }\n  ]\n}",
+                  "reasoning": "We need answer JSON only. Need review 2 items. Need inspect every field. Need be careful. Let's parse.\n\nItem 1 lesson_7-9_aqeedah_fundamentals_11. Fields title, summary, try_this, reflection_prompts. Need compare Arabic and English.\n\nTitle Arabic: «مَن خلق الله؟» حين يسأل السؤال المحيّر. English: «Who Created Allah?» When They Ask the Puzzling Question. Seems okay. \"السؤال المحيّر\" maybe \"the puzzling question\" okay. No defect.\n\nSummary Arabic long. English translation. Need check meaning, omissions/additions, quran/hadith, medical, tone, leakage, source corruption. Let's compare.\n\nArabic: \"في السابعة والثامنة يكثر طفلك من سؤال «لماذا؟» و«مَن؟»، وقد يصل يومًا إلى السؤال الذي يربك كثيرًا من الآباء: «إذا كان الله خلق كل شيء، فمَن خلق الله؟». هذا السؤال لا يعني أن إيمانه ضعيف، بل يعني أن عقله يعمل ويبحث. وردّ فعلك في تلك اللحظة يعلّمه: هل الأسئلة مرحّبٌ بها في بيتكم أم لا؟\"\n\nEnglish: \"At seven and eight your child asks «why?» and «who?» a great deal, and one day may reach the question that unsettles many parents: «If Allah created everything, who created Allah?» This question doesn't mean their faith is weak; it means their mind is working and searching. Your reaction in that moment teaches them whether questions are welcome in your home.\"\n\nLooks fine. \"في السابعة والثامنة\" at seven and eight. okay.\n\nNext: \"استقبل السؤال بهدوء، وقل: «هذا سؤالٌ يفكّر فيه كثيرون، وجميلٌ أنك سألتني». ثم أجب ببساطة: كل شيءٍ نراه لم يكن موجودًا ثم وُجد، فلا بدّ له من خالق. أما الله فليس مخلوقًا؛ هو الأول، موجودٌ قبل كل شيءٍ ولا بداية له، وهو الخالق الذي لا يشبه شيئًا من خلقه، ولذلك لا نسأل عنه كما نسأل عن المخلوقات. ولا تضرب له أمثلةً تشبّه الله بشيءٍ من خلقه، فالتشبيه يزيد الحيرة.\"\n\nEnglish: \"Receive the question calmly and say: «Many people think about this question, and I'm glad you asked me.» Then answer simply: everything we see did not exist and then came to exist, so it must have a creator. As for Allah, He is not created; He is the First, existing before everything, with no beginning, and He is the Creator who resembles nothing of His creation — so we don't ask about Him the way we ask about created things. Don't give them examples that liken Allah to anything in His creation; likening only increases confusion.\"\n\nCheck \"كل شيءٍ نراه لم يكن موجودًا ثم وُجد\" = everything we see did not exist and then came to exist. okay. \"فلا بدّ له من خالق\" so it must have a creator. okay. \"أما الله فليس مخلوقًا؛ هو الأول، موجودٌ قبل كل شيءٍ ولا بداية له\" = As for Allah, He is not created; He is the First, existing before everything, with no beginning. okay. \"وهو الخالق الذي لا يشبه شيئًا من خلقه\" = He is the Creator who resembles nothing of His creation. okay. \"ولذلك لا نسأل عنه كما نسأل عن المخلوقات\" = so we don't ask about Him the way we ask about created things. okay. \"ولا تضرب له أمثلةً تشبّه الله بشيءٍ من خلقه، فالتشبيه يزيد الحيرة.\" = Don't give them examples that liken Allah to anything in His creation; likening only increases confusion. okay.\n\nNext: \"وقد لا يقتنع من المرة الأولى، وقد يعود إلى السؤال بعد أيام. لا بأس؛ أعد الجواب بالكلمات نفسها أو بكلماتٍ أبسط، ولا تُظهر انزعاجًا. وإن ألحّت عليه الفكرة وأقلقته، فعلّمه أن يستعيذ بالله، وأن يشغل نفسه بشيءٍ آخر، وأن يأتيك متى شاء ليتكلّم.\"\n\nEnglish: \"They may not be convinced the first time, and may come back to the question days later. That's fine; repeat the answer in the same words or simpler ones, and don't show irritation. If the thought presses on them and worries them, teach them to seek refuge in Allah, to occupy themselves with something else, and to come to you whenever they like to talk.\"\n\nCheck \"وقد لا يقتنع من المرة الأولى\" They may not be convinced the first time. okay. \"وقد يعود إلى السؤال بعد أيام\" may come back to the question days later. okay. \"لا بأس؛ أعد الجواب بالكلمات نفسها أو بكلماتٍ أبسط، ولا تُظهر انزعاجًا.\" That's fine; repeat answer in same words or simpler ones, don't show irritation. okay. \"وإن ألحّت عليه الفكرة وأقلقته\" If the thought presses on them and worries them. \"ألحّت عليه الفكرة\" maybe \"the thought persists/keeps coming to him\" but \"presses on them\" okay. \"فعلّمه أن يستعيذ بالله، وأن يشغل نفسه بشيءٍ آخر، وأن يأتيك متى شاء ليتكلّم.\" teach them to seek refuge in Allah, to occupy themselves with something else, and to come to you whenever they like to talk. okay.\n\nNext: \"وإن سألك سؤالًا لا تعرف جوابه، فلا تخترع جوابًا. قل: «سأسأل من يعرف، ثم أخبرك»، وارجع إلى عالمٍ موثوق أو كتاب عقيدةٍ معتمد للأطفال. صدقك معه، وهدوؤك أمام سؤاله، يعلّمانه أن الإيمان يحتمل الأسئلة ولا يخاف منها.\"\n\nEnglish: \"If they ask you something you don't know, don't invent an answer. Say: «I'll ask someone who knows, then tell you», and turn to a trusted scholar or an approved children's aqeedah (creed) book. Your honesty, and your calm in the face of their question, teach them that faith can hold questions and is not afraid of them.\"\n\nCheck \"وإن سألك سؤالًا لا تعرف جوابه\" If they ask you something you don't know. okay. \"فلا تخترع جوابًا\" don't invent an answer. okay. \"قل: «سأسأل من يعرف، ثم أخبرك»\" Say: I'll ask someone who knows, then tell you. okay. \"وارجع إلى عالمٍ موثوق أو كتاب عقيدةٍ معتمد للأطفال.\" and turn to a trusted scholar or an approved children's aqeedah (creed) book. okay. \"صدقك معه، وهدوؤك أمام سؤاله، يعلّمانه أن الإيمان يحتمل الأسئلة ولا يخاف منها.\" Your honesty, and your calm in the face of their question, teach them that faith can hold questions and is not afraid of them. okay.\n\nNo quran/hadith. No medical. Tone okay. Leakage: \"aqeedah (creed)\" transliterated allowed. No Arabic left untranslated except maybe \"Allah\" allowed? Allah is transliterated term? allowed. No issue.\n\nTry_this Arabic: \"اليوم: جهّز جوابك لهذا السؤال قبل أن يأتي: اكتب ثلاث جملٍ قصيرة بكلماتك، ليس فيها تشبيهٌ لله بشيءٍ من خلقه، واقرأها مرةً بصوتٍ مسموع حتى تقولها بهدوءٍ إن سألك طفلك.\"\n\nEnglish: \"Today: Prepare your answer to this question before it comes: write three short sentences in your own words, with no likening of Allah to anything in His creation, and read them aloud once so you can say them calmly if your child asks.\"\n\nCheck \"اقرأها مرةً بصوتٍ مسموع\" read them aloud once. okay. \"حتى تقولها بهدوءٍ إن سألك طفلك\" so you can say them calmly if your child asks. okay. No defect.\n\nReflection_prompts Arabic array one: \"ما الذي يقلقك أكثر حين يسأل طفلك عن الله: صعوبة السؤال أم خوفك من ألّا تحسن الجواب؟\" English: \"What worries you more when your child asks about Allah: the difficulty of the question, or your fear of not answering well?\" okay. \"ألّا تحسن الجواب\" not answering well. okay.\n\nSo item 1 likely no defects. But need check Arabic source corruption. Arabic seems sound. \"المحيّر\" maybe \"المحيّر\" okay. \"مرحّبٌ بها\" okay. \"ألّا تحسن\" okay. No typos. So defects [].\n\nItem 2 path_7-9_aqeedah_fundamentals. Fields title, description, primary_reference.info. Need compare.\n\nTitle Arabic: \"أساسيات العقيدة — زراعة الإيمان في النشء\" English: \"Foundations of Aqeedah — Planting Iman in the Young\". Check \"النشء\" means the young/rising generation. \"Planting Iman in the Young\" okay. \"Iman\" transliterated allowed? It is Islamic term. okay. No issue.\n\nDescription Arabic: \"مسار 11 دروس قصيرة يُعلّم الأب/الأم أسس العقيدة الإسلامية الصحيحة لتعليم أطفالهم (3-12 سنة). مبني على القرآن والسنة على فهم سلف الأمة، بعيد عن الخلافات.\"\n\nEnglish: \"A 11-lesson pathway that teaches the father/mother the foundations of the correct Islamic aqeedah so they can teach their children (ages 3-12). Built upon the Qur’an and Sunnah according to the understanding of the Salaf of the Ummah, far from disputes.\"\n\nCheck \"مسار 11 دروس قصيرة\" = A path of 11 short lessons. English \"A 11-lesson pathway\" grammar \"A 11\" should be \"An 11-lesson pathway\" but that's low style/grammar? The instruction says never rate British vs American spelling, Oxford commas, synonym. Grammar article \"A 11\" is a grammatical error but low? Could be low. But need decide if defect. It is English grammar, not meaning. Could report low? The task says check every field for meaning, omission/addition, quran, hadith, medical, tone/age, leakage, source corruption. Grammar not explicitly listed except maybe structure? There is type \"structure\" in allowed types. But severity low. However \"A 11-lesson pathway\" is a visible grammar error. Should we report? The instruction says \"Never rate as medium/high: British vs American spelling, Oxford commas, a synonym that keeps the meaning, or a glossary term transliterated where the Arabic has that term.\" It doesn't mention grammar. Could report low structure? But maybe not necessary? Need be honest. \"A 11-lesson pathway\" is incorrect; should be \"An 11-lesson pathway\". But is it a defect? It is English text quality. The type \"structure\" maybe for structure. Could include low. But the output should not over-report? It says \"an item with no defects still gets entry with defects []\". If we report low grammar, okay. But need not if not substantive. Let's continue.\n\n\"يُعلّم الأب/الأم أسس العقيدة الإسلامية الصحيحة لتعليم أطفالهم (3-12 سنة).\" English \"that teaches the father/mother the foundations of the correct Islamic aqeedah so they can teach their children (ages 3-12).\" okay. \"مبني على القرآن والسنة على فهم سلف الأمة، بعيد عن الخلافات.\" English \"Built upon the Qur’an and Sunnah according to the understanding of the Salaf of the Ummah, far from disputes.\" okay. \"بعيد عن الخلافات\" far from disputes. okay.\n\nPrimary_reference.info Arabic: \"العقيدة الطحاوية، القواعد الأربع وثلاثة الأصول لمحمد بن عبد الوهاب بشرح ابن عثيمين، أسئلة الأطفال الإيمانية (الركف)، العقيدة أولاً (الجريش)\"\n\nEnglish: \"al-Aqidah al-Tahawiyyah; al-Qawa'id al-Arba' and Thalathat al-Usul by Muhammad ibn Abd al-Wahhab, with Ibn Uthaymin's commentary; As'ilat al-Atfal al-Imaniyyah; al-Aqidah Awwalan (al-Juraysh)\"\n\nNeed check Arabic source corruption. \"أسئلة الأطفال الإيمانية (الركف)\" — \"الركف\" seems suspicious. Could be a typo? Maybe author name? \"الركف\" maybe \"الركف\"? Could be \"الركف\" not known. Maybe \"الركف\" is a corruption of \"الركف\"? Let's think. The English renders \"As'ilat al-Atfal al-Imaniyyah\" without translating the parenthetical \"(الركف)\"? Actually English: \"As'ilat al-Atfal al-Imaniyyah; al-Aqidah Awwalan (al-Juraysh)\". It omitted \"(الركف)\" after As'ilat al-Atfal al-Imaniyyah. Wait Arabic has \"أسئلة الأطفال الإيمانية (الركف)\" and English has \"As'ilat al-Atfal al-Imaniyyah\" no parenthetical. That is an omission of \"(الركف)\"? But maybe \"الركف\" is a typo/corruption? Need inspect. The Arabic \"الركف\" maybe should be \"الركف\"? Could be author surname? \"الركف\" maybe \"الركف\" not known. Could be \"الركف\" is a corruption of \"الركف\"? Let's search memory: There is a book \"أسئلة الأطفال الإيمانية\" maybe by \"عبد الله الركف\"? Actually \"الركف\" maybe \"الركف\"? I know \"أسئلة الأطفال الإيمانية\" by \"د. خالد بن عبد الله الركف\"? Hmm. \"الركف\" maybe a family name \"الركف\" (Al-Rukaf?) Not sure. The English omitted it. But if Arabic has \"(الركف)\" and English omitted, that's omission. But maybe the Arabic itself is corrupted: \"الركف\" could be a typo for \"الركف\"? Need determine. The instruction says read Arabic critically. \"الركف\" looks odd. Could be \"الركف\" maybe \"الركف\" with letter? Let's examine: Arabic string: \"أسئلة الأطفال الإيمانية (الركف)، العقيدة أولاً (الجريش)\". The word \"الركف\" maybe should be \"الركف\"? Actually Arabic letters: ا ل ر ك ف? \"الركف\" = al-r-k-f. Is that a known name? Maybe \"الركف\" is a typo for \"الركف\"? Hmm.\n\nMaybe \"الركف\" is a corruption of \"الركف\"? Could be \"الركف\" is not a word. Could be \"الركف\" maybe \"الركف\" with \"ك\" instead of \"ك\"? No.\n\nLet's think of known authors: \"أسئلة الأطفال الإيمانية\" maybe by \"د. خالد بن عبد الله الركف\"?? I recall a book \"أسئلة الأطفال الإيمانية\" by \"د. خالد بن عبد الله الركف\" maybe? Actually \"الركف\" is a Saudi family name? There is \"د. خالد بن عبد الله الركف\" maybe. The Arabic \"الركف\" could be correct if it's a name. But English omitted it. The English has \"As'ilat al-Atfal al-Imaniyyah\" without author. That is an omission of the parenthetical author attribution. Is that substantive? It is a reference info; omitting author name maybe medium? But maybe the Arabic \"الركف\" is corrupted and translator omitted because unsure. Need report? The instruction says omission/addition: a substantive point dropped. Author attribution in references is substantive? Could be low/medium. But also Arabic source corruption if \"الركف\" is typo. Need decide.\n\nAlso \"القواعد الأربع وثلاثة الأصول لمحمد بن عبد الوهاب بشرح ابن عثيمين\" English \"al-Qawa'id al-Arba' and Thalathat al-Usul by Muhammad ibn Abd al-Wahhab, with Ibn Uthaymin's commentary\". Check: Arabic says \"القواعد الأربع وثلاثة الأصول لمحمد بن عبد الوهاب بشرح ابن عثيمين\" meaning \"al-Qawa'id al-Arba' and Thalathat al-Usul by Muhammad ibn Abd al-Wahhab with Ibn Uthaymin's commentary\". English okay. But note \"ثلاثة الأصول\" is \"Thalathat al-Usul\" (Three Principles) okay. \"القواعد الأربع\" = Four Rules. okay.\n\n\"العقيدة أولاً (الجريش)\" English \"al-Aqidah Awwalan (al-Juraysh)\". okay.\n\nPotential defect: English \"A 11-lesson pathway\" grammar. Also omission of \"(الركف)\"? Need maybe report as omission medium? But if Arabic source corruption, maybe side arabic. Let's investigate \"الركف\". Could be \"الركف\" is actually \"الركف\" but maybe the correct name is \"الركف\"? I can search memory internally: There is a book \"أسئلة الأطفال الإيمانية\" by \"د. خالد بن عبد الله الركف\" maybe yes. \"الركف\" is a family name. If so Arabic is correct, English omitted author. That is omission. But is it substantive? The field is primary_reference.info, listing references. Omitting an author's name in parentheses might be low or medium? The instruction says \"a substantive point dropped\" medium. Author attribution is not a substantive point? It is metadata. Could be low. But maybe not report? Need be precise.\n\nAlso \"A 11-lesson pathway\" grammar. Could report low structure. But maybe the output should not include trivial grammar? The instruction says \"Check EVERY field of EVERY item for: 1. meaning ... 8. ARABIC SOURCE CORRUPTION\". Grammar not listed. But type \"structure\" exists. Could include low. However \"Never rate as medium/high: British vs American spelling, Oxford commas, a synonym that keeps the meaning, or a glossary term transliterated where the Arabic has that term.\" It doesn't say don't report grammar. But maybe grammar is low. I can include one low defect for \"A 11\" if I want. But need not overdo.\n\nLet's check if there are any quran/hadith issues in item 2. Description mentions \"القرآن والسنة\" and \"سلف الأمة\" no quotes. No hadith citation. No quran. No medical. Tone okay. Leakage: \"Aqeedah\", \"Iman\", \"Qur’an\", \"Sunnah\", \"Salaf\", \"Ummah\" transliterated allowed. No Arabic left untranslated except maybe \"al-Aqidah al-Tahawiyyah\" etc. That's transliteration of titles, allowed? The instruction allows transliterated Islamic terms such as ... but not necessarily book titles. However English uses transliterated Arabic titles, which is normal. No defect.\n\nNeed decide final defects for item 2. Could be:\n- field \"description\", side english, type structure, severity low, arabic \"مسار 11 دروس قصيرة\", english \"A 11-lesson pathway\", why \"grammatical article should be 'An' before '11'\", suggestion \"An 11-lesson pathway...\"\n- field \"primary_reference.info\", side english, type omission, severity low/medium, arabic \"أسئلة الأطفال الإيمانية (الركف)\", english \"As'ilat al-Atfal al-Imaniyyah\", why \"the parenthetical author attribution (الركف) is dropped\", suggestion \"As'ilat al-Atfal al-Imaniyyah (al-Rukaf?)\" But need not invent transliteration. Could suggest \"As'ilat al-Atfal al-Imaniyyah (al-Rukaf)\"? Need know correct transliteration. Maybe \"al-Rukaf\" or \"al-Rukaf\"? The Arabic \"الركف\" transliterates \"al-Rukaf\" maybe. But if unsure, suggestion could be \"As'ilat al-Atfal al-Imaniyyah (al-Rukaf)\"? Hmm.\n\nBut maybe the Arabic \"الركف\" is a source corruption. If it is a typo, we should report side arabic. Need determine. Let's think of Arabic names. \"الركف\" with kaf and fa? Could be \"الركف\" maybe a typo for \"الركف\"? Actually Arabic letters: ر ك ف. The name \"الركف\" is plausible? I know \"الركف\" maybe not. \"الركف\" could be \"الركف\" but there is no \"الركف\" common. Maybe it is \"الركف\" a typo for \"الركف\"? Wait \"الركف\" maybe should be \"الركف\"? Let's search memory: Saudi scholar \"د. خالد بن عبد الله الركف\" maybe? I recall \"الركف\" is a family name in Saudi. Yes, \"الركف\" (Al-Rukaf) is a known family. So Arabic likely correct. English omitted it. So omission.\n\nBut is omission of author in parentheses a defect? The field is \"primary_reference.info\" and includes authors for other works: \"لمحمد بن عبد الوهاب بشرح ابن عثيمين\" and \"(الجريش)\". So omitting \"(الركف)\" is inconsistent and drops attribution. I'd rate low or medium? The instruction: \"omission / addition — a substantive point dropped, or content (advice, claims, religious statements, attributions) added that the Arabic does not contain.\" Author attribution is an attribution, but not religious statement. Could be low. But maybe medium because it's a reference field and attribution matters. However severity medium is for substantive point changed/omitted/added. Author name in a reference list is substantive? I'd say low, because it doesn't affect meaning/advice. But the instruction says \"attributions\" in hadith context high. Here not hadith. I'd rate low.\n\nAlso \"A 11-lesson pathway\" grammar low. Could include both. But maybe the output should not include grammar? The type \"structure\" maybe for structure. I can include one low defect for grammar. But if I include too many low defects, okay.\n\nNeed also check item 1 for any subtle issue. Let's re-read Arabic summary for possible source corruption: \"في السابعة والثامنة يكثر طفلك من سؤال «لماذا؟» و«مَن؟»\" — \"يكثر طفلك من سؤال\" maybe should be \"يكثر طفلك من السؤال\" or \"يكثر سؤال طفلك\"? The phrase \"يكثر طفلك من سؤال\" is a bit odd but acceptable? It means \"your child asks a lot of 'why?' and 'who?'\" Actually Arabic \"يكثر من سؤال\" means \"does a lot of asking\". \"يكثر طفلك من سؤال\" is grammatically okay? \"يكثر\" is verb, subject طفلك, prepositional phrase \"من سؤال\". It is fine. No corruption.\n\n\"وردّ فعلك في تلك اللحظة يعلّمه: هل الأسئلة مرحّبٌ بها في بيتكم أم لا؟\" — \"وردّ فعلك\" maybe \"ورد فعلك\" but okay. \"مرحّبٌ بها\" okay.\n\n\"كل شيءٍ نراه لم يكن موجودًا ثم وُجد\" — okay.\n\n\"فلا بدّ له من خالق\" — okay.\n\n\"أما الله فليس مخلوقًا؛ هو الأول، موجودٌ قبل كل شيءٍ ولا بداية له\" — okay.\n\n\"وهو الخالق الذي لا يشبه شيئًا من خلقه\" — okay.\n\n\"ولذلك لا نسأل عنه كما نسأل عن المخلوقات\" — okay.\n\n\"ولا تضرب له أمثلةً تشبّه الله بشيءٍ من خلقه، فالتشبيه يزيد الحيرة.\" — okay.\n\n\"وقد لا يقتنع من المرة الأولى\" — okay.\n\n\"وإن ألحّت عليه الفكرة وأقلقته\" — okay.\n\n\"فعلّمه أن يستعيذ بالله\" — okay.\n\n\"وأن يأتيك متى شاء ليتكلّم\" — okay.\n\n\"وإن سألك سؤالًا لا تعرف جوابه\" — okay.\n\n\"فلا تخترع جوابًا\" — okay.\n\n\"سأسأل من يعرف، ثم أخبرك\" — okay.\n\n\"وارجع إلى عالمٍ موثوق أو كتاب عقيدةٍ معتمد للأطفال\" — okay.\n\n\"صدقك معه، وهدوؤك أمام سؤاله، يعلّمانه أن الإيمان يحتمل الأسئلة ولا يخاف منها.\" — okay.\n\nNo defects.\n\nNeed output JSON exactly with items array 2 entries. For item 1 defects []. For item 2 defects maybe two low. Need decide if include grammar. The instruction says \"Return JSON only, with exactly one entry for EVERY item id you were given, in the given order — an item with no defects still gets its entry with \"defects\": [].\" So okay.\n\nLet's craft item 2 defects. Need field path as given. For description field path \"description\". For primary_reference.info field path \"primary_reference.info\". Side english. Type omission for author. Type structure for grammar? Could use \"structure\" or \"meaning\"? Grammar is not meaning. \"structure\" maybe. But the allowed types include \"structure\". I'll use \"structure\" for grammar. Severity low.\n\nNeed include arabic and english excerpts. For grammar: arabic \"مسار 11 دروس قصيرة\", english \"A 11-lesson pathway\", why \"The indefinite article should be 'An' before the vowel sound of '11'.\" suggestion \"An 11-lesson pathway that teaches...\" But the field is description, suggestion should be full corrected text? The instruction says suggestion: \"<corrected text for that field, or empty>\". Could provide just the phrase or full field? Better provide full corrected description? But maybe just phrase. I'll provide full corrected description? It says corrected text for that field. Could be full. But to be concise, maybe just \"An 11-lesson pathway...\"? Hmm. I'll provide full corrected description with \"An\". But need not include entire? I'll include full.\n\nFor omission: arabic \"أسئلة الأطفال الإيمانية (الركف)\", english \"As'ilat al-Atfal al-Imaniyyah\", why \"The parenthetical author attribution (الركف) is dropped in the English reference.\" suggestion \"As'ilat al-Atfal al-Imaniyyah (al-Rukaf)\"? Need transliterate. The Arabic \"الركف\" = al-Rukaf? Let's transliterate: ر = r, ك = k, ف = f. So \"al-Rukaf\". But maybe \"al-Rukaf\" with u? Actually \"الركف\" could be \"ar-Rukaf\" if sun? No, lam before r? \"الر\" is sun letter? Actually ر is sun letter, so \"الركف\" pronounced \"ar-Rukaf\" not \"al-Rukaf\". But transliteration often \"al-Rukaf\". I'll use \"al-Rukaf\". But maybe the name is \"al-Rukaf\" with \"u\" after r? \"Rukaf\" yes. Could also be \"al-Rukaf\". I'll suggest \"As'ilat al-Atfal al-Imaniyyah (al-Rukaf)\". But if unsure, maybe leave suggestion empty? The instruction says suggestion can be empty. But better provide. However if I provide wrong transliteration, not ideal. Could just say \"As'ilat al-Atfal al-Imaniyyah (al-Rukaf)\"? Hmm.\n\nMaybe the Arabic \"الركف\" is actually \"الركف\" and transliteration \"al-Rukaf\". I'll use that.\n\nBut is omission of \"(الركف)\" really a defect? Let's consider if the English \"As'ilat al-Atfal al-Imaniyyah\" without author is acceptable because the Arabic parenthetical might be a typo? If Arabic source corruption, we'd report side arabic. But I think it's a name. I'll report omission low.\n\nCould there be another defect: \"A 11-lesson pathway\" maybe also \"pathway\" vs \"مسار\" okay. \"A 11\" grammar. I'll include.\n\nNeed ensure no high/medium false. Both low.\n\nNow final JSON. Need exactly 2 entries. Use ids as given. Ensure valid JSON. No markdown. Let's produce."
+                },
+                "finish_reason": "stop"
+              }
+            ],
+            "usage": {
+              "prompt_tokens": 2597,
+              "completion_tokens": 6814,
+              "total_tokens": 9411,
+              "prompt_tokens_details": {
+                "cached_tokens": 0
+              }
+            }
+          }
+        },
+        {
+          "model": "glm-5.2",
+          "prompt_version": "dfa8a5f39718",
+          "request_sha256": "ed5866be87bd11178d4489ec8eeb237bf93db638c68a3fe309b9ccf0d463cc40",
+          "parsed_response": {
+            "items": [
+              {
+                "id": "lesson_7-9_aqeedah_fundamentals_11",
+                "defects": []
+              },
+              {
+                "id": "path_7-9_aqeedah_fundamentals",
+                "defects": [
+                  {
+                    "field": "description.english",
+                    "side": "english",
+                    "type": "tone",
+                    "severity": "low",
+                    "arabic": "مسار 11 دروس قصيرة",
+                    "english": "A 11-lesson pathway",
+                    "why": "Grammatically should be \"An 11-lesson pathway\"; minor article error before a vowel sound.",
+                    "suggestion": "An 11-lesson pathway that teaches the father/mother the foundations of the correct Islamic aqeedah so they can teach their children (ages 3-12). Built upon the Qur'an and Sunnah according to the understanding of the Salaf of the Ummah, far from disputes."
+                  },
+                  {
+                    "field": "primary_reference.info.english",
+                    "side": "english",
+                    "type": "omission",
+                    "severity": "medium",
+                    "arabic": "أسئلة الأطفال الإيمانية (الركف)",
+                    "english": "As'ilat al-Atfal al-Imaniyyah",
+                    "why": "The English drops the author attribution (الركف) that the Arabic includes for this reference.",
+                    "suggestion": "As'ilat al-Atfal al-Imaniyyah (al-Rukaf)"
+                  }
+                ]
+              }
+            ]
+          },
+          "raw_response": {
+            "id": "chatcmpl-842",
+            "object": "chat.completion",
+            "created": 1791357851,
+            "model": "glm-5.2",
+            "system_fingerprint": "fp_ollama",
+            "choices": [
+              {
+                "index": 0,
+                "message": {
+                  "role": "assistant",
+                  "content": "```json\n{\n  \"items\": [\n    {\n      \"id\": \"lesson_7-9_aqeedah_fundamentals_11\",\n      \"defects\": []\n    },\n    {\n      \"id\": \"path_7-9_aqeedah_fundamentals\",\n      \"defects\": [\n        {\n          \"field\": \"description.english\",\n          \"side\": \"english\",\n          \"type\": \"tone\",\n          \"severity\": \"low\",\n          \"arabic\": \"مسار 11 دروس قصيرة\",\n          \"english\": \"A 11-lesson pathway\",\n          \"why\": \"Grammatically should be \\\"An 11-lesson pathway\\\"; minor article error before a vowel sound.\",\n          \"suggestion\": \"An 11-lesson pathway that teaches the father/mother the foundations of the correct Islamic aqeedah so they can teach their children (ages 3-12). Built upon the Qur'an and Sunnah according to the understanding of the Salaf of the Ummah, far from disputes.\"\n        },\n        {\n          \"field\": \"primary_reference.info.english\",\n          \"side\": \"english\",\n          \"type\": \"omission\",\n          \"severity\": \"medium\",\n          \"arabic\": \"أسئلة الأطفال الإيمانية (الركف)\",\n          \"english\": \"As'ilat al-Atfal al-Imaniyyah\",\n          \"why\": \"The English drops the author attribution (الركف) that the Arabic includes for this reference.\",\n          \"suggestion\": \"As'ilat al-Atfal al-Imaniyyah (al-Rukaf)\"\n        }\n      ]\n    }\n  ]\n}\n```",
+                  "reasoning": "Let me review each item carefully.\n\n**Item 1: lesson_7-9_aqeedah_fundamentals_11**\n\nTitle:\n- Arabic: «مَن خلق الله؟» حين يسأل السؤال المحيّر\n- English: «Who Created Allah?» When They Ask the Puzzling Question\n- Looks fine.\n\nSummary:\n- Arabic text is long, let me check carefully.\n- \"في السابعة والثامنة يكثر طفلك من سؤال «لماذا؟» و«مَن؟»، وقد يصل يومًا إلى السؤال الذي يربك كثيرًا من الآباء: «إذا كان الله خلق كل شيء، فمَن خلق الله؟».\" → \"At seven and eight your child asks «why?» and «who?» a great deal, and one day may reach the question that unsettles many parents: «If Allah created everything, who created Allah?»\" — Good.\n- \"هذا السؤال لا يعني أن إيمانه ضعيف، بل يعني أن عقله يعمل ويبحث.\" → \"This question doesn't mean their faith is weak; it means their mind is working and searching.\" — Good.\n- \"وردّ فعلك في تلك اللحظة يعلّمه: هل الأسئلة مرحّبٌ بها في بيتكم أم لا؟\" → \"Your reaction in that moment teaches them whether questions are welcome in your home.\" — The Arabic says \"whether questions are welcomed in your home or not\" — the English drops \"or not\" but that's implied. Fine.\n- \"استقبل السؤال بهدوء، وقل: «هذا سؤالٌ يفكّر فيه كثيرون، وجميلٌ أنك سألتني».\" → \"Receive the question calmly and say: «Many people think about this question, and I'm glad you asked me.»\" — Good.\n- \"ثم أجب ببساطة: كل شيءٍ نراه لم يكن موجودًا ثم وُجد، فلا بدّ له من خالق.\" → \"Then answer simply: everything we see did not exist and then came to exist, so it must have a creator.\" — Good.\n- \"أما الله فليس مخلوقًا؛ هو الأول، موجودٌ قبل كل شيءٍ ولا بداية له، وهو الخالق الذي لا يشبه شيئًا من خلقه، ولذلك لا نسأل عنه كما نسأل عن المخلوقات.\" → \"As for Allah, He is not created; He is the First, existing before everything, with no beginning, and He is the Creator who resembles nothing of His creation — so we don't ask about Him the way we ask about created things.\" — Good.\n- \"ولا تضرب له أمثلةً تشبّه الله بشيءٍ من خلقه، فالتشبيه يزيد الحيرة.\" → \"Don't give them examples that liken Allah to anything in His creation; likening only increases confusion.\" — Good.\n- \"وقد لا يقتنع من المرة الأولى، وقد يعود إلى السؤال بعد أيام.\" → \"They may not be convinced the first time, and may come back to the question days later.\" — Good.\n- \"لا بأس؛ أعد الجواب بالكلمات نفسها أو بكلماتٍ أبسط، ولا تُظهر انزعاجًا.\" → \"That's fine; repeat the answer in the same words or simpler ones, and don't show irritation.\" — Good.\n- \"وإن ألحّت عليه الفكرة وأقلقته، فعلّمه أن يستعيذ بالله، وأن يشغل نفسه بشيءٍ آخر، وأن يأتيك متى شاء ليتكلّم.\" → \"If the thought presses on them and worries them, teach them to seek refuge in Allah, to occupy themselves with something else, and to come to you whenever they like to talk.\" — Good.\n- \"وإن سألك سؤالًا لا تعرف جوابه، فلا تخترع جوابًا.\" → \"If they ask you something you don't know, don't invent an answer.\" — Good.\n- \"قل: «سأسأل من يعرف، ثم أخبرك»، وارجع إلى عالمٍ موثوق أو كتاب عقيدةٍ معتمد للأطفال.\" → \"Say: «I'll ask someone who knows, then tell you», and turn to a trusted scholar or an approved children's aqeedah (creed) book.\" — Good.\n- \"صدقك معه، وهدوؤك أمام سؤاله، يعلّمانه أن الإيمان يحتمل الأسئلة ولا يخاف منها.\" → \"Your honesty, and your calm in the face of their question, teach them that faith can hold questions and is not afraid of them.\" — Good.\n\ntry_this:\n- Arabic: \"اليوم: جهّز جوابك لهذا السؤال قبل أن يأتي: اكتب ثلاث جملٍ قصيرة بكلماتك، ليس فيها تشبيهٌ لله بشيءٍ من خلقه، واقرأها مرةً بصوتٍ مسموع حتى تقولها بهدوءٍ إن سألك طفلك.\"\n- English: \"Today: Prepare your answer to this question before it comes: write three short sentences in your own words, with no likening of Allah to anything in His creation, and read them aloud once so you can say them calmly if your child asks.\"\n- Good.\n\nreflection_prompts:\n- Arabic: \"ما الذي يقلقك أكثر حين يسأل طفلك عن الله: صعوبة السؤال أم خوفك من ألّا تحسن الجواب؟\"\n- English: \"What worries you more when your child asks about Allah: the difficulty of the question, or your fear of not answering well?\"\n- Good.\n\nNo defects found in item 1.\n\n**Item 2: path_7-9_aqeedah_fundamentals**\n\nTitle:\n- Arabic: \"أساسيات العقيدة — زراعة الإيمان في النشء\"\n- English: \"Foundations of Aqeedah — Planting Iman in the Young\"\n- \"النشء\" means \"the young\" or \"the youth/young generation.\" \"Planting Iman in the Young\" — fine. Good.\n\nDescription:\n- Arabic: \"مسار 11 دروس قصيرة يُعلّم الأب/الأم أسس العقيدة الإسلامية الصحيحة لتعليم أطفالهم (3-12 سنة). مبني على القرآن والسنة على فهم سلف الأمة، بعيد عن الخلافات.\"\n- English: \"A 11-lesson pathway that teaches the father/mother the foundations of the correct Islamic aqeedah so they can teach their children (ages 3-12). Built upon the Qur'an and Sunnah according to the understanding of the Salaf of the Ummah, far from disputes.\"\n- \"A 11-lesson\" should be \"An 11-lesson\" but that's a grammar/style issue, low at most. Actually, this is a minor grammar issue. Let me consider — \"A 11-lesson\" is grammatically incorrect (should be \"An 11-lesson\"). This is a low severity issue.\n- Otherwise the translation looks accurate.\n\nprimary_reference.info:\n- Arabic: \"العقيدة الطحاوية، القواعد الأربع وثلاثة الأصول لمحمد بن عبد الوهاب بشرح ابن عثيمين، أسئلة الأطفال الإيمانية (الركف)، العقيدة أولاً (الجريش)\"\n- English: \"al-Aqidah al-Tahawiyyah; al-Qawa'id al-Arba' and Thalathat al-Usul by Muhammad ibn Abd al-Wahhab, with Ibn Uthaymin's commentary; As'ilat al-Atfal al-Imaniyyah; al-Aqidah Awwalan (al-Juraysh)\"\n- Let me check: \"ثلاثة الأصول\" → \"Thalathat al-Usul\" — this is correct transliteration. \"القواعد الأربع\" → \"al-Qawa'id al-Arba'\" — correct. \"بشرح ابن عثيمين\" → \"with Ibn Uthaymin's commentary\" — correct. \"أسئلة الأطفال الإيمانية (الركف)\" → \"As'ilat al-Atfal al-Imaniyyah\" — the English drops the author attribution \"(الركف)\" which is \"al-Rukaf\" or similar. Wait, \"الركف\" — this seems to be an author's name. The English omits \"(al-Rukaf)\" / \"(الركف)\". That's an omission of an attribution. Let me think about severity — it's a substantive omission of an author's name. Medium? Actually, it's a reference list, and dropping an author's name is a substantive omission. But \"الركف\" — I'm not sure what this refers to. It could be a surname/nisba. The English also drops \"(الجريش)\" → wait, no, the English has \"(al-Juraysh)\". Let me recheck.\n\nArabic: \"العقيدة أولاً (الجريش)\" → English: \"al-Aqidah Awwalan (al-Juraysh)\" — Good, that's kept.\n\nArabic: \"أسئلة الأطفال الإيمانية (الركف)\" → English: \"As'ilat al-Atfal al-Imaniyyah\" — The \"(الركف)\" is dropped. This is an omission of an author attribution. Medium severity since it's a reference and the author name is missing.\n\nActually, wait — let me reconsider. \"الركف\" might be a typo or corruption. It could be \"الركابي\" or something else. But as it stands, the English drops it. This is an omission.\n\nLet me also check: \"Thalathat al-Usul\" — the Arabic says \"ثلاثة الأصول\" which is \"Thalathat al-Usul\" — correct. Some might write \"Thalath\" but \"Thalathat\" is fine.\n\nSo for item 2, I found:\n1. \"A 11-lesson\" grammar issue — low\n2. Omission of \"(الركف)\" author attribution — medium\n\nLet me finalize."
+                },
+                "finish_reason": "stop"
+              }
+            ],
+            "usage": {
+              "prompt_tokens": 2635,
+              "completion_tokens": 2630,
+              "total_tokens": 5265,
+              "prompt_tokens_details": {
+                "cached_tokens": 1018
+              }
+            }
+          }
+        }
+      ],
+      "report": {
+        "stamped": [
+          "lesson_7-9_aqeedah_fundamentals_11"
+        ],
+        "fixed": [],
+        "arabic_proposals": [],
+        "arabic_applied": [],
+        "unresolved": {
+          "path_7-9_aqeedah_fundamentals": [
+            {
+              "field": "primary_reference.info.english",
+              "side": "english",
+              "type": "omission",
+              "severity": "medium",
+              "arabic": "أسئلة الأطفال الإيمانية (الركف)",
+              "english": "As'ilat al-Atfal al-Imaniyyah",
+              "why": "The English drops the author attribution (الركف) that the Arabic includes for this reference.",
+              "suggestion": "As'ilat al-Atfal al-Imaniyyah (al-Rukaf)",
+              "model": "glm-5.2"
+            }
+          ]
+        },
+        "fix_rejected": [],
+        "rounds": 1
+      }
+    },
+    {
+      "canonical_items": {
+        "lesson_7-9_aqeedah_fundamentals_11": {
+          "sha": "26900f1375fbc831656e4effb0296c4556f9a36ee403d55970583d724f3c705f",
+          "fields": {
+            "title": {
+              "ar": "«مَن خلق الله؟» حين يسأل السؤال المحيّر",
+              "en": "«Who Created Allah?» When They Ask the Puzzling Question"
+            },
+            "summary": {
+              "ar": "في السابعة والثامنة يكثر طفلك من سؤال «لماذا؟» و«مَن؟»، وقد يصل يومًا إلى السؤال الذي يربك كثيرًا من الآباء: «إذا كان الله خلق كل شيء، فمَن خلق الله؟». هذا السؤال لا يعني أن إيمانه ضعيف، بل يعني أن عقله يعمل ويبحث. وردّ فعلك في تلك اللحظة يعلّمه: هل الأسئلة مرحّبٌ بها في بيتكم أم لا؟\n\nاستقبل السؤال بهدوء، وقل: «هذا سؤالٌ يفكّر فيه كثيرون، وجميلٌ أنك سألتني». ثم أجب ببساطة: كل شيءٍ نراه لم يكن موجودًا ثم وُجد، فلا بدّ له من خالق. أما الله فليس مخلوقًا؛ هو الأول، موجودٌ قبل كل شيءٍ ولا بداية له، وهو الخالق الذي لا يشبه شيئًا من خلقه، ولذلك لا نسأل عنه كما نسأل عن المخلوقات. ولا تضرب له أمثلةً تشبّه الله بشيءٍ من خلقه، فالتشبيه يزيد الحيرة.\n\nوقد لا يقتنع من المرة الأولى، وقد يعود إلى السؤال بعد أيام. لا بأس؛ أعد الجواب بالكلمات نفسها أو بكلماتٍ أبسط، ولا تُظهر انزعاجًا. وإن ألحّت عليه الفكرة وأقلقته، فعلّمه أن يستعيذ بالله، وأن يشغل نفسه بشيءٍ آخر، وأن يأتيك متى شاء ليتكلّم.\n\nوإن سألك سؤالًا لا تعرف جوابه، فلا تخترع جوابًا. قل: «سأسأل من يعرف، ثم أخبرك»، وارجع إلى عالمٍ موثوق أو كتاب عقيدةٍ معتمد للأطفال. صدقك معه، وهدوؤك أمام سؤاله، يعلّمانه أن الإيمان يحتمل الأسئلة ولا يخاف منها.",
+              "en": "At seven and eight your child asks «why?» and «who?» a great deal, and one day may reach the question that unsettles many parents: «If Allah created everything, who created Allah?» This question doesn't mean their faith is weak; it means their mind is working and searching. Your reaction in that moment teaches them whether questions are welcome in your home.\n\nReceive the question calmly and say: «Many people think about this question, and I'm glad you asked me.» Then answer simply: everything we see did not exist and then came to exist, so it must have a creator. As for Allah, He is not created; He is the First, existing before everything, with no beginning, and He is the Creator who resembles nothing of His creation — so we don't ask about Him the way we ask about created things. Don't give them examples that liken Allah to anything in His creation; likening only increases confusion.\n\nThey may not be convinced the first time, and may come back to the question days later. That's fine; repeat the answer in the same words or simpler ones, and don't show irritation. If the thought presses on them and worries them, teach them to seek refuge in Allah, to occupy themselves with something else, and to come to you whenever they like to talk.\n\nIf they ask you something you don't know, don't invent an answer. Say: «I'll ask someone who knows, then tell you», and turn to a trusted scholar or an approved children's aqeedah (creed) book. Your honesty, and your calm in the face of their question, teach them that faith can hold questions and is not afraid of them."
+            },
+            "try_this": {
+              "ar": "اليوم: جهّز جوابك لهذا السؤال قبل أن يأتي: اكتب ثلاث جملٍ قصيرة بكلماتك، ليس فيها تشبيهٌ لله بشيءٍ من خلقه، واقرأها مرةً بصوتٍ مسموع حتى تقولها بهدوءٍ إن سألك طفلك.",
+              "en": "Today: Prepare your answer to this question before it comes: write three short sentences in your own words, with no likening of Allah to anything in His creation, and read them aloud once so you can say them calmly if your child asks."
+            },
+            "reflection_prompts": {
+              "ar": [
+                "ما الذي يقلقك أكثر حين يسأل طفلك عن الله: صعوبة السؤال أم خوفك من ألّا تحسن الجواب؟"
+              ],
+              "en": [
+                "What worries you more when your child asks about Allah: the difficulty of the question, or your fear of not answering well?"
+              ]
+            }
+          },
+          "authors": [
+            "claude-opus-5-5"
+          ],
+          "deterministic_defects": []
+        },
+        "path_7-9_aqeedah_fundamentals": {
+          "sha": "41bf9dca02c10bd36d3c0c402d814e27459a7d8f224104c8c433f9d4e79e5957",
+          "fields": {
+            "title": {
+              "ar": "أساسيات العقيدة — زراعة الإيمان في النشء",
+              "en": "Foundations of Aqeedah — Planting Iman in the Young"
+            },
+            "description": {
+              "ar": "مسار 11 دروس قصيرة يُعلّم الأب/الأم أسس العقيدة الإسلامية الصحيحة لتعليم أطفالهم (3-12 سنة). مبني على القرآن والسنة على فهم سلف الأمة، بعيد عن الخلافات.",
+              "en": "An 11-lesson pathway that teaches the father/mother the foundations of the correct Islamic aqeedah so they can teach their children (ages 3-12). Built upon the Qur’an and Sunnah according to the understanding of the Salaf of the Ummah, far from disputes."
+            },
+            "primary_reference.info": {
+              "ar": "العقيدة الطحاوية، القواعد الأربع وثلاثة الأصول لمحمد بن عبد الوهاب بشرح ابن عثيمين، أسئلة الأطفال الإيمانية (الركف)، العقيدة أولاً (الجريش)",
+              "en": "al-Aqidah al-Tahawiyyah; al-Qawa'id al-Arba' and Thalathat al-Usul by Muhammad ibn Abd al-Wahhab, with Ibn Uthaymin's commentary; As'ilat al-Atfal al-Imaniyyah (al-Rukaf); al-Aqidah Awwalan (al-Juraysh)"
+            }
+          },
+          "authors": [
+            "mistral-large-3:675b",
+            "gpt-6",
+            "claude-opus"
+          ],
+          "deterministic_defects": []
+        }
+      },
+      "responses": [
+        {
+          "model": "deepseek-v4-pro",
+          "prompt_version": "dfa8a5f39718",
+          "request_sha256": "ed5866be87bd11178d4489ec8eeb237bf93db638c68a3fe309b9ccf0d463cc40",
+          "parsed_response": {
+            "items": [
+              {
+                "id": "lesson_7-9_aqeedah_fundamentals_11",
+                "defects": []
+              },
+              {
+                "id": "path_7-9_aqeedah_fundamentals",
+                "defects": [
+                  {
+                    "field": "description",
+                    "side": "english",
+                    "type": "structure",
+                    "severity": "low",
+                    "arabic": "مسار 11 دروس قصيرة",
+                    "english": "A 11-lesson pathway",
+                    "why": "The indefinite article should be 'An' before the vowel sound of '11'.",
+                    "suggestion": "An 11-lesson pathway that teaches the father/mother the foundations of the correct Islamic aqeedah so they can teach their children (ages 3-12). Built upon the Qur’an and Sunnah according to the understanding of the Salaf of the Ummah, far from disputes."
+                  },
+                  {
+                    "field": "primary_reference.info",
+                    "side": "english",
+                    "type": "omission",
+                    "severity": "low",
+                    "arabic": "أسئلة الأطفال الإيمانية (الركف)",
+                    "english": "As'ilat al-Atfal al-Imaniyyah",
+                    "why": "The parenthetical author attribution (الركف) is dropped in the English reference.",
+                    "suggestion": "As'ilat al-Atfal al-Imaniyyah (al-Rukaf)"
+                  }
+                ]
+              }
+            ]
+          },
+          "raw_response": {
+            "id": "chatcmpl-978",
+            "object": "chat.completion",
+            "created": 1791357824,
+            "model": "deepseek-v4-pro",
+            "system_fingerprint": "fp_ollama",
+            "choices": [
+              {
+                "index": 0,
+                "message": {
+                  "role": "assistant",
+                  "content": "{\n  \"items\": [\n    {\n      \"id\": \"lesson_7-9_aqeedah_fundamentals_11\",\n      \"defects\": []\n    },\n    {\n      \"id\": \"path_7-9_aqeedah_fundamentals\",\n      \"defects\": [\n        {\n          \"field\": \"description\",\n          \"side\": \"english\",\n          \"type\": \"structure\",\n          \"severity\": \"low\",\n          \"arabic\": \"مسار 11 دروس قصيرة\",\n          \"english\": \"A 11-lesson pathway\",\n          \"why\": \"The indefinite article should be 'An' before the vowel sound of '11'.\",\n          \"suggestion\": \"An 11-lesson pathway that teaches the father/mother the foundations of the correct Islamic aqeedah so they can teach their children (ages 3-12). Built upon the Qur’an and Sunnah according to the understanding of the Salaf of the Ummah, far from disputes.\"\n        },\n        {\n          \"field\": \"primary_reference.info\",\n          \"side\": \"english\",\n          \"type\": \"omission\",\n          \"severity\": \"low\",\n          \"arabic\": \"أسئلة الأطفال الإيمانية (الركف)\",\n          \"english\": \"As'ilat al-Atfal al-Imaniyyah\",\n          \"why\": \"The parenthetical author attribution (الركف) is dropped in the English reference.\",\n          \"suggestion\": \"As'ilat al-Atfal al-Imaniyyah (al-Rukaf)\"\n        }\n      ]\n    }\n  ]\n}",
+                  "reasoning": "We need answer JSON only. Need review 2 items. Need inspect every field. Need be careful. Let's parse.\n\nItem 1 lesson_7-9_aqeedah_fundamentals_11. Fields title, summary, try_this, reflection_prompts. Need compare Arabic and English.\n\nTitle Arabic: «مَن خلق الله؟» حين يسأل السؤال المحيّر. English: «Who Created Allah?» When They Ask the Puzzling Question. Seems okay. \"السؤال المحيّر\" maybe \"the puzzling question\" okay. No defect.\n\nSummary Arabic long. English translation. Need check meaning, omissions/additions, quran/hadith, medical, tone, leakage, source corruption. Let's compare.\n\nArabic: \"في السابعة والثامنة يكثر طفلك من سؤال «لماذا؟» و«مَن؟»، وقد يصل يومًا إلى السؤال الذي يربك كثيرًا من الآباء: «إذا كان الله خلق كل شيء، فمَن خلق الله؟». هذا السؤال لا يعني أن إيمانه ضعيف، بل يعني أن عقله يعمل ويبحث. وردّ فعلك في تلك اللحظة يعلّمه: هل الأسئلة مرحّبٌ بها في بيتكم أم لا؟\"\n\nEnglish: \"At seven and eight your child asks «why?» and «who?» a great deal, and one day may reach the question that unsettles many parents: «If Allah created everything, who created Allah?» This question doesn't mean their faith is weak; it means their mind is working and searching. Your reaction in that moment teaches them whether questions are welcome in your home.\"\n\nLooks fine. \"في السابعة والثامنة\" at seven and eight. okay.\n\nNext: \"استقبل السؤال بهدوء، وقل: «هذا سؤالٌ يفكّر فيه كثيرون، وجميلٌ أنك سألتني». ثم أجب ببساطة: كل شيءٍ نراه لم يكن موجودًا ثم وُجد، فلا بدّ له من خالق. أما الله فليس مخلوقًا؛ هو الأول، موجودٌ قبل كل شيءٍ ولا بداية له، وهو الخالق الذي لا يشبه شيئًا من خلقه، ولذلك لا نسأل عنه كما نسأل عن المخلوقات. ولا تضرب له أمثلةً تشبّه الله بشيءٍ من خلقه، فالتشبيه يزيد الحيرة.\"\n\nEnglish: \"Receive the question calmly and say: «Many people think about this question, and I'm glad you asked me.» Then answer simply: everything we see did not exist and then came to exist, so it must have a creator. As for Allah, He is not created; He is the First, existing before everything, with no beginning, and He is the Creator who resembles nothing of His creation — so we don't ask about Him the way we ask about created things. Don't give them examples that liken Allah to anything in His creation; likening only increases confusion.\"\n\nCheck \"كل شيءٍ نراه لم يكن موجودًا ثم وُجد\" = everything we see did not exist and then came to exist. okay. \"فلا بدّ له من خالق\" so it must have a creator. okay. \"أما الله فليس مخلوقًا؛ هو الأول، موجودٌ قبل كل شيءٍ ولا بداية له\" = As for Allah, He is not created; He is the First, existing before everything, with no beginning. okay. \"وهو الخالق الذي لا يشبه شيئًا من خلقه\" = He is the Creator who resembles nothing of His creation. okay. \"ولذلك لا نسأل عنه كما نسأل عن المخلوقات\" = so we don't ask about Him the way we ask about created things. okay. \"ولا تضرب له أمثلةً تشبّه الله بشيءٍ من خلقه، فالتشبيه يزيد الحيرة.\" = Don't give them examples that liken Allah to anything in His creation; likening only increases confusion. okay.\n\nNext: \"وقد لا يقتنع من المرة الأولى، وقد يعود إلى السؤال بعد أيام. لا بأس؛ أعد الجواب بالكلمات نفسها أو بكلماتٍ أبسط، ولا تُظهر انزعاجًا. وإن ألحّت عليه الفكرة وأقلقته، فعلّمه أن يستعيذ بالله، وأن يشغل نفسه بشيءٍ آخر، وأن يأتيك متى شاء ليتكلّم.\"\n\nEnglish: \"They may not be convinced the first time, and may come back to the question days later. That's fine; repeat the answer in the same words or simpler ones, and don't show irritation. If the thought presses on them and worries them, teach them to seek refuge in Allah, to occupy themselves with something else, and to come to you whenever they like to talk.\"\n\nCheck \"وقد لا يقتنع من المرة الأولى\" They may not be convinced the first time. okay. \"وقد يعود إلى السؤال بعد أيام\" may come back to the question days later. okay. \"لا بأس؛ أعد الجواب بالكلمات نفسها أو بكلماتٍ أبسط، ولا تُظهر انزعاجًا.\" That's fine; repeat answer in same words or simpler ones, don't show irritation. okay. \"وإن ألحّت عليه الفكرة وأقلقته\" If the thought presses on them and worries them. \"ألحّت عليه الفكرة\" maybe \"the thought persists/keeps coming to him\" but \"presses on them\" okay. \"فعلّمه أن يستعيذ بالله، وأن يشغل نفسه بشيءٍ آخر، وأن يأتيك متى شاء ليتكلّم.\" teach them to seek refuge in Allah, to occupy themselves with something else, and to come to you whenever they like to talk. okay.\n\nNext: \"وإن سألك سؤالًا لا تعرف جوابه، فلا تخترع جوابًا. قل: «سأسأل من يعرف، ثم أخبرك»، وارجع إلى عالمٍ موثوق أو كتاب عقيدةٍ معتمد للأطفال. صدقك معه، وهدوؤك أمام سؤاله، يعلّمانه أن الإيمان يحتمل الأسئلة ولا يخاف منها.\"\n\nEnglish: \"If they ask you something you don't know, don't invent an answer. Say: «I'll ask someone who knows, then tell you», and turn to a trusted scholar or an approved children's aqeedah (creed) book. Your honesty, and your calm in the face of their question, teach them that faith can hold questions and is not afraid of them.\"\n\nCheck \"وإن سألك سؤالًا لا تعرف جوابه\" If they ask you something you don't know. okay. \"فلا تخترع جوابًا\" don't invent an answer. okay. \"قل: «سأسأل من يعرف، ثم أخبرك»\" Say: I'll ask someone who knows, then tell you. okay. \"وارجع إلى عالمٍ موثوق أو كتاب عقيدةٍ معتمد للأطفال.\" and turn to a trusted scholar or an approved children's aqeedah (creed) book. okay. \"صدقك معه، وهدوؤك أمام سؤاله، يعلّمانه أن الإيمان يحتمل الأسئلة ولا يخاف منها.\" Your honesty, and your calm in the face of their question, teach them that faith can hold questions and is not afraid of them. okay.\n\nNo quran/hadith. No medical. Tone okay. Leakage: \"aqeedah (creed)\" transliterated allowed. No Arabic left untranslated except maybe \"Allah\" allowed? Allah is transliterated term? allowed. No issue.\n\nTry_this Arabic: \"اليوم: جهّز جوابك لهذا السؤال قبل أن يأتي: اكتب ثلاث جملٍ قصيرة بكلماتك، ليس فيها تشبيهٌ لله بشيءٍ من خلقه، واقرأها مرةً بصوتٍ مسموع حتى تقولها بهدوءٍ إن سألك طفلك.\"\n\nEnglish: \"Today: Prepare your answer to this question before it comes: write three short sentences in your own words, with no likening of Allah to anything in His creation, and read them aloud once so you can say them calmly if your child asks.\"\n\nCheck \"اقرأها مرةً بصوتٍ مسموع\" read them aloud once. okay. \"حتى تقولها بهدوءٍ إن سألك طفلك\" so you can say them calmly if your child asks. okay. No defect.\n\nReflection_prompts Arabic array one: \"ما الذي يقلقك أكثر حين يسأل طفلك عن الله: صعوبة السؤال أم خوفك من ألّا تحسن الجواب؟\" English: \"What worries you more when your child asks about Allah: the difficulty of the question, or your fear of not answering well?\" okay. \"ألّا تحسن الجواب\" not answering well. okay.\n\nSo item 1 likely no defects. But need check Arabic source corruption. Arabic seems sound. \"المحيّر\" maybe \"المحيّر\" okay. \"مرحّبٌ بها\" okay. \"ألّا تحسن\" okay. No typos. So defects [].\n\nItem 2 path_7-9_aqeedah_fundamentals. Fields title, description, primary_reference.info. Need compare.\n\nTitle Arabic: \"أساسيات العقيدة — زراعة الإيمان في النشء\" English: \"Foundations of Aqeedah — Planting Iman in the Young\". Check \"النشء\" means the young/rising generation. \"Planting Iman in the Young\" okay. \"Iman\" transliterated allowed? It is Islamic term. okay. No issue.\n\nDescription Arabic: \"مسار 11 دروس قصيرة يُعلّم الأب/الأم أسس العقيدة الإسلامية الصحيحة لتعليم أطفالهم (3-12 سنة). مبني على القرآن والسنة على فهم سلف الأمة، بعيد عن الخلافات.\"\n\nEnglish: \"A 11-lesson pathway that teaches the father/mother the foundations of the correct Islamic aqeedah so they can teach their children (ages 3-12). Built upon the Qur’an and Sunnah according to the understanding of the Salaf of the Ummah, far from disputes.\"\n\nCheck \"مسار 11 دروس قصيرة\" = A path of 11 short lessons. English \"A 11-lesson pathway\" grammar \"A 11\" should be \"An 11-lesson pathway\" but that's low style/grammar? The instruction says never rate British vs American spelling, Oxford commas, synonym. Grammar article \"A 11\" is a grammatical error but low? Could be low. But need decide if defect. It is English grammar, not meaning. Could report low? The task says check every field for meaning, omission/addition, quran, hadith, medical, tone/age, leakage, source corruption. Grammar not explicitly listed except maybe structure? There is type \"structure\" in allowed types. But severity low. However \"A 11-lesson pathway\" is a visible grammar error. Should we report? The instruction says \"Never rate as medium/high: British vs American spelling, Oxford commas, a synonym that keeps the meaning, or a glossary term transliterated where the Arabic has that term.\" It doesn't mention grammar. Could report low structure? But maybe not necessary? Need be honest. \"A 11-lesson pathway\" is incorrect; should be \"An 11-lesson pathway\". But is it a defect? It is English text quality. The type \"structure\" maybe for structure. Could include low. But the output should not over-report? It says \"an item with no defects still gets entry with defects []\". If we report low grammar, okay. But need not if not substantive. Let's continue.\n\n\"يُعلّم الأب/الأم أسس العقيدة الإسلامية الصحيحة لتعليم أطفالهم (3-12 سنة).\" English \"that teaches the father/mother the foundations of the correct Islamic aqeedah so they can teach their children (ages 3-12).\" okay. \"مبني على القرآن والسنة على فهم سلف الأمة، بعيد عن الخلافات.\" English \"Built upon the Qur’an and Sunnah according to the understanding of the Salaf of the Ummah, far from disputes.\" okay. \"بعيد عن الخلافات\" far from disputes. okay.\n\nPrimary_reference.info Arabic: \"العقيدة الطحاوية، القواعد الأربع وثلاثة الأصول لمحمد بن عبد الوهاب بشرح ابن عثيمين، أسئلة الأطفال الإيمانية (الركف)، العقيدة أولاً (الجريش)\"\n\nEnglish: \"al-Aqidah al-Tahawiyyah; al-Qawa'id al-Arba' and Thalathat al-Usul by Muhammad ibn Abd al-Wahhab, with Ibn Uthaymin's commentary; As'ilat al-Atfal al-Imaniyyah; al-Aqidah Awwalan (al-Juraysh)\"\n\nNeed check Arabic source corruption. \"أسئلة الأطفال الإيمانية (الركف)\" — \"الركف\" seems suspicious. Could be a typo? Maybe author name? \"الركف\" maybe \"الركف\"? Could be \"الركف\" not known. Maybe \"الركف\" is a corruption of \"الركف\"? Let's think. The English renders \"As'ilat al-Atfal al-Imaniyyah\" without translating the parenthetical \"(الركف)\"? Actually English: \"As'ilat al-Atfal al-Imaniyyah; al-Aqidah Awwalan (al-Juraysh)\". It omitted \"(الركف)\" after As'ilat al-Atfal al-Imaniyyah. Wait Arabic has \"أسئلة الأطفال الإيمانية (الركف)\" and English has \"As'ilat al-Atfal al-Imaniyyah\" no parenthetical. That is an omission of \"(الركف)\"? But maybe \"الركف\" is a typo/corruption? Need inspect. The Arabic \"الركف\" maybe should be \"الركف\"? Could be author surname? \"الركف\" maybe \"الركف\" not known. Could be \"الركف\" is a corruption of \"الركف\"? Let's search memory: There is a book \"أسئلة الأطفال الإيمانية\" maybe by \"عبد الله الركف\"? Actually \"الركف\" maybe \"الركف\"? I know \"أسئلة الأطفال الإيمانية\" by \"د. خالد بن عبد الله الركف\"? Hmm. \"الركف\" maybe a family name \"الركف\" (Al-Rukaf?) Not sure. The English omitted it. But if Arabic has \"(الركف)\" and English omitted, that's omission. But maybe the Arabic itself is corrupted: \"الركف\" could be a typo for \"الركف\"? Need determine. The instruction says read Arabic critically. \"الركف\" looks odd. Could be \"الركف\" maybe \"الركف\" with letter? Let's examine: Arabic string: \"أسئلة الأطفال الإيمانية (الركف)، العقيدة أولاً (الجريش)\". The word \"الركف\" maybe should be \"الركف\"? Actually Arabic letters: ا ل ر ك ف? \"الركف\" = al-r-k-f. Is that a known name? Maybe \"الركف\" is a typo for \"الركف\"? Hmm.\n\nMaybe \"الركف\" is a corruption of \"الركف\"? Could be \"الركف\" is not a word. Could be \"الركف\" maybe \"الركف\" with \"ك\" instead of \"ك\"? No.\n\nLet's think of known authors: \"أسئلة الأطفال الإيمانية\" maybe by \"د. خالد بن عبد الله الركف\"?? I recall a book \"أسئلة الأطفال الإيمانية\" by \"د. خالد بن عبد الله الركف\" maybe? Actually \"الركف\" is a Saudi family name? There is \"د. خالد بن عبد الله الركف\" maybe. The Arabic \"الركف\" could be correct if it's a name. But English omitted it. The English has \"As'ilat al-Atfal al-Imaniyyah\" without author. That is an omission of the parenthetical author attribution. Is that substantive? It is a reference info; omitting author name maybe medium? But maybe the Arabic \"الركف\" is corrupted and translator omitted because unsure. Need report? The instruction says omission/addition: a substantive point dropped. Author attribution in references is substantive? Could be low/medium. But also Arabic source corruption if \"الركف\" is typo. Need decide.\n\nAlso \"القواعد الأربع وثلاثة الأصول لمحمد بن عبد الوهاب بشرح ابن عثيمين\" English \"al-Qawa'id al-Arba' and Thalathat al-Usul by Muhammad ibn Abd al-Wahhab, with Ibn Uthaymin's commentary\". Check: Arabic says \"القواعد الأربع وثلاثة الأصول لمحمد بن عبد الوهاب بشرح ابن عثيمين\" meaning \"al-Qawa'id al-Arba' and Thalathat al-Usul by Muhammad ibn Abd al-Wahhab with Ibn Uthaymin's commentary\". English okay. But note \"ثلاثة الأصول\" is \"Thalathat al-Usul\" (Three Principles) okay. \"القواعد الأربع\" = Four Rules. okay.\n\n\"العقيدة أولاً (الجريش)\" English \"al-Aqidah Awwalan (al-Juraysh)\". okay.\n\nPotential defect: English \"A 11-lesson pathway\" grammar. Also omission of \"(الركف)\"? Need maybe report as omission medium? But if Arabic source corruption, maybe side arabic. Let's investigate \"الركف\". Could be \"الركف\" is actually \"الركف\" but maybe the correct name is \"الركف\"? I can search memory internally: There is a book \"أسئلة الأطفال الإيمانية\" by \"د. خالد بن عبد الله الركف\" maybe yes. \"الركف\" is a family name. If so Arabic is correct, English omitted author. That is omission. But is it substantive? The field is primary_reference.info, listing references. Omitting an author's name in parentheses might be low or medium? The instruction says \"a substantive point dropped\" medium. Author attribution is not a substantive point? It is metadata. Could be low. But maybe not report? Need be precise.\n\nAlso \"A 11-lesson pathway\" grammar. Could report low structure. But maybe the output should not include trivial grammar? The instruction says \"Check EVERY field of EVERY item for: 1. meaning ... 8. ARABIC SOURCE CORRUPTION\". Grammar not listed. But type \"structure\" exists. Could include low. However \"Never rate as medium/high: British vs American spelling, Oxford commas, a synonym that keeps the meaning, or a glossary term transliterated where the Arabic has that term.\" It doesn't say don't report grammar. But maybe grammar is low. I can include one low defect for \"A 11\" if I want. But need not overdo.\n\nLet's check if there are any quran/hadith issues in item 2. Description mentions \"القرآن والسنة\" and \"سلف الأمة\" no quotes. No hadith citation. No quran. No medical. Tone okay. Leakage: \"Aqeedah\", \"Iman\", \"Qur’an\", \"Sunnah\", \"Salaf\", \"Ummah\" transliterated allowed. No Arabic left untranslated except maybe \"al-Aqidah al-Tahawiyyah\" etc. That's transliteration of titles, allowed? The instruction allows transliterated Islamic terms such as ... but not necessarily book titles. However English uses transliterated Arabic titles, which is normal. No defect.\n\nNeed decide final defects for item 2. Could be:\n- field \"description\", side english, type structure, severity low, arabic \"مسار 11 دروس قصيرة\", english \"A 11-lesson pathway\", why \"grammatical article should be 'An' before '11'\", suggestion \"An 11-lesson pathway...\"\n- field \"primary_reference.info\", side english, type omission, severity low/medium, arabic \"أسئلة الأطفال الإيمانية (الركف)\", english \"As'ilat al-Atfal al-Imaniyyah\", why \"the parenthetical author attribution (الركف) is dropped\", suggestion \"As'ilat al-Atfal al-Imaniyyah (al-Rukaf?)\" But need not invent transliteration. Could suggest \"As'ilat al-Atfal al-Imaniyyah (al-Rukaf)\"? Need know correct transliteration. Maybe \"al-Rukaf\" or \"al-Rukaf\"? The Arabic \"الركف\" transliterates \"al-Rukaf\" maybe. But if unsure, suggestion could be \"As'ilat al-Atfal al-Imaniyyah (al-Rukaf)\"? Hmm.\n\nBut maybe the Arabic \"الركف\" is a source corruption. If it is a typo, we should report side arabic. Need determine. Let's think of Arabic names. \"الركف\" with kaf and fa? Could be \"الركف\" maybe a typo for \"الركف\"? Actually Arabic letters: ر ك ف. The name \"الركف\" is plausible? I know \"الركف\" maybe not. \"الركف\" could be \"الركف\" but there is no \"الركف\" common. Maybe it is \"الركف\" a typo for \"الركف\"? Wait \"الركف\" maybe should be \"الركف\"? Let's search memory: Saudi scholar \"د. خالد بن عبد الله الركف\" maybe? I recall \"الركف\" is a family name in Saudi. Yes, \"الركف\" (Al-Rukaf) is a known family. So Arabic likely correct. English omitted it. So omission.\n\nBut is omission of author in parentheses a defect? The field is \"primary_reference.info\" and includes authors for other works: \"لمحمد بن عبد الوهاب بشرح ابن عثيمين\" and \"(الجريش)\". So omitting \"(الركف)\" is inconsistent and drops attribution. I'd rate low or medium? The instruction: \"omission / addition — a substantive point dropped, or content (advice, claims, religious statements, attributions) added that the Arabic does not contain.\" Author attribution is an attribution, but not religious statement. Could be low. But maybe medium because it's a reference field and attribution matters. However severity medium is for substantive point changed/omitted/added. Author name in a reference list is substantive? I'd say low, because it doesn't affect meaning/advice. But the instruction says \"attributions\" in hadith context high. Here not hadith. I'd rate low.\n\nAlso \"A 11-lesson pathway\" grammar low. Could include both. But maybe the output should not include grammar? The type \"structure\" maybe for structure. I can include one low defect for grammar. But if I include too many low defects, okay.\n\nNeed also check item 1 for any subtle issue. Let's re-read Arabic summary for possible source corruption: \"في السابعة والثامنة يكثر طفلك من سؤال «لماذا؟» و«مَن؟»\" — \"يكثر طفلك من سؤال\" maybe should be \"يكثر طفلك من السؤال\" or \"يكثر سؤال طفلك\"? The phrase \"يكثر طفلك من سؤال\" is a bit odd but acceptable? It means \"your child asks a lot of 'why?' and 'who?'\" Actually Arabic \"يكثر من سؤال\" means \"does a lot of asking\". \"يكثر طفلك من سؤال\" is grammatically okay? \"يكثر\" is verb, subject طفلك, prepositional phrase \"من سؤال\". It is fine. No corruption.\n\n\"وردّ فعلك في تلك اللحظة يعلّمه: هل الأسئلة مرحّبٌ بها في بيتكم أم لا؟\" — \"وردّ فعلك\" maybe \"ورد فعلك\" but okay. \"مرحّبٌ بها\" okay.\n\n\"كل شيءٍ نراه لم يكن موجودًا ثم وُجد\" — okay.\n\n\"فلا بدّ له من خالق\" — okay.\n\n\"أما الله فليس مخلوقًا؛ هو الأول، موجودٌ قبل كل شيءٍ ولا بداية له\" — okay.\n\n\"وهو الخالق الذي لا يشبه شيئًا من خلقه\" — okay.\n\n\"ولذلك لا نسأل عنه كما نسأل عن المخلوقات\" — okay.\n\n\"ولا تضرب له أمثلةً تشبّه الله بشيءٍ من خلقه، فالتشبيه يزيد الحيرة.\" — okay.\n\n\"وقد لا يقتنع من المرة الأولى\" — okay.\n\n\"وإن ألحّت عليه الفكرة وأقلقته\" — okay.\n\n\"فعلّمه أن يستعيذ بالله\" — okay.\n\n\"وأن يأتيك متى شاء ليتكلّم\" — okay.\n\n\"وإن سألك سؤالًا لا تعرف جوابه\" — okay.\n\n\"فلا تخترع جوابًا\" — okay.\n\n\"سأسأل من يعرف، ثم أخبرك\" — okay.\n\n\"وارجع إلى عالمٍ موثوق أو كتاب عقيدةٍ معتمد للأطفال\" — okay.\n\n\"صدقك معه، وهدوؤك أمام سؤاله، يعلّمانه أن الإيمان يحتمل الأسئلة ولا يخاف منها.\" — okay.\n\nNo defects.\n\nNeed output JSON exactly with items array 2 entries. For item 1 defects []. For item 2 defects maybe two low. Need decide if include grammar. The instruction says \"Return JSON only, with exactly one entry for EVERY item id you were given, in the given order — an item with no defects still gets its entry with \"defects\": [].\" So okay.\n\nLet's craft item 2 defects. Need field path as given. For description field path \"description\". For primary_reference.info field path \"primary_reference.info\". Side english. Type omission for author. Type structure for grammar? Could use \"structure\" or \"meaning\"? Grammar is not meaning. \"structure\" maybe. But the allowed types include \"structure\". I'll use \"structure\" for grammar. Severity low.\n\nNeed include arabic and english excerpts. For grammar: arabic \"مسار 11 دروس قصيرة\", english \"A 11-lesson pathway\", why \"The indefinite article should be 'An' before the vowel sound of '11'.\" suggestion \"An 11-lesson pathway that teaches...\" But the field is description, suggestion should be full corrected text? The instruction says suggestion: \"<corrected text for that field, or empty>\". Could provide just the phrase or full field? Better provide full corrected description? But maybe just phrase. I'll provide full corrected description? It says corrected text for that field. Could be full. But to be concise, maybe just \"An 11-lesson pathway...\"? Hmm. I'll provide full corrected description with \"An\". But need not include entire? I'll include full.\n\nFor omission: arabic \"أسئلة الأطفال الإيمانية (الركف)\", english \"As'ilat al-Atfal al-Imaniyyah\", why \"The parenthetical author attribution (الركف) is dropped in the English reference.\" suggestion \"As'ilat al-Atfal al-Imaniyyah (al-Rukaf)\"? Need transliterate. The Arabic \"الركف\" = al-Rukaf? Let's transliterate: ر = r, ك = k, ف = f. So \"al-Rukaf\". But maybe \"al-Rukaf\" with u? Actually \"الركف\" could be \"ar-Rukaf\" if sun? No, lam before r? \"الر\" is sun letter? Actually ر is sun letter, so \"الركف\" pronounced \"ar-Rukaf\" not \"al-Rukaf\". But transliteration often \"al-Rukaf\". I'll use \"al-Rukaf\". But maybe the name is \"al-Rukaf\" with \"u\" after r? \"Rukaf\" yes. Could also be \"al-Rukaf\". I'll suggest \"As'ilat al-Atfal al-Imaniyyah (al-Rukaf)\". But if unsure, maybe leave suggestion empty? The instruction says suggestion can be empty. But better provide. However if I provide wrong transliteration, not ideal. Could just say \"As'ilat al-Atfal al-Imaniyyah (al-Rukaf)\"? Hmm.\n\nMaybe the Arabic \"الركف\" is actually \"الركف\" and transliteration \"al-Rukaf\". I'll use that.\n\nBut is omission of \"(الركف)\" really a defect? Let's consider if the English \"As'ilat al-Atfal al-Imaniyyah\" without author is acceptable because the Arabic parenthetical might be a typo? If Arabic source corruption, we'd report side arabic. But I think it's a name. I'll report omission low.\n\nCould there be another defect: \"A 11-lesson pathway\" maybe also \"pathway\" vs \"مسار\" okay. \"A 11\" grammar. I'll include.\n\nNeed ensure no high/medium false. Both low.\n\nNow final JSON. Need exactly 2 entries. Use ids as given. Ensure valid JSON. No markdown. Let's produce."
+                },
+                "finish_reason": "stop"
+              }
+            ],
+            "usage": {
+              "prompt_tokens": 2597,
+              "completion_tokens": 6814,
+              "total_tokens": 9411,
+              "prompt_tokens_details": {
+                "cached_tokens": 0
+              }
+            }
+          }
+        },
+        {
+          "model": "glm-5.2",
+          "prompt_version": "dfa8a5f39718",
+          "request_sha256": "9c7714acd35a20ebbcd0780f23191ca799e525db3d4a555b0bf7442749873ec4",
+          "parsed_response": {
+            "items": [
+              {
+                "id": "path_7-9_aqeedah_fundamentals",
+                "defects": [
+                  {
+                    "field": "description",
+                    "side": "english",
+                    "type": "omission",
+                    "severity": "low",
+                    "arabic": "مسار 11 دروس قصيرة",
+                    "english": "An 11-lesson pathway",
+                    "why": "The English drops the adjective قصيرة ('short'), so the lessons' brevity — a key selling point for busy parents — is lost.",
+                    "suggestion": "A pathway of 11 short lessons that teaches the father/mother the foundations of the correct Islamic aqeedah so they can teach their children (ages 3-12). Built upon the Qur'an and Sunnah according to the understanding of the Salaf of the Ummah, far from disputes."
+                  }
+                ]
+              }
+            ]
+          },
+          "raw_response": {
+            "id": "chatcmpl-729",
+            "object": "chat.completion",
+            "created": 1791357892,
+            "model": "glm-5.2",
+            "system_fingerprint": "fp_ollama",
+            "choices": [
+              {
+                "index": 0,
+                "message": {
+                  "role": "assistant",
+                  "content": "```json\n{\"items\": [{\"id\": \"path_7-9_aqeedah_fundamentals\", \"defects\": [{\"field\": \"description\", \"side\": \"english\", \"type\": \"omission\", \"severity\": \"low\", \"arabic\": \"مسار 11 دروس قصيرة\", \"english\": \"An 11-lesson pathway\", \"why\": \"The English drops the adjective قصيرة ('short'), so the lessons' brevity — a key selling point for busy parents — is lost.\", \"suggestion\": \"A pathway of 11 short lessons that teaches the father/mother the foundations of the correct Islamic aqeedah so they can teach their children (ages 3-12). Built upon the Qur'an and Sunnah according to the understanding of the Salaf of the Ummah, far from disputes.\"}]}]}\n```",
+                  "reasoning": "Let me review each field carefully.\n\n1. Title: Arabic \"أساسيات العقيدة — زراعة الإيمان في النشء\" → English \"Foundations of Aqeedah — Planting Iman in the Young\". \"النشء\" means \"the young\" or \"the youth/young generation\". This is fine. \"زراعة الإيمان\" = \"planting faith/iman\". Good.\n\n2. Description: Arabic \"مسار 11 دروس قصيرة يُعلّم الأب/الأم أسس العقيدة الإسلامية الصحيحة لتعليم أطفالهم (3-12 سنة). مبني على القرآن والسنة على فهم سلف الأمة، بعيد عن الخلافات.\" → English \"An 11-lesson pathway that teaches the father/mother the foundations of the correct Islamic aqeedah so they can teach their children (ages 3-12). Built upon the Qur'an and Sunnah according to the understanding of the Salaf of the Ummah, far from disputes.\"\n\n\"مسار 11 دروس قصيرة\" = \"a pathway of 11 short lessons\" — English says \"An 11-lesson pathway\" which drops \"قصيرة\" (short). Minor omission. Low severity.\n\n\"بعيد عن الخلافات\" = \"far from disputes\" — fine.\n\n3. primary_reference.info: Arabic \"العقيدة الطحاوية، القواعد الأربع وثلاثة الأصول لمحمد بن عبد الوهاب بشرح ابن عثيمين، أسئلة الأطفال الإيمانية (الركف)، العقيدة أولاً (الجريش)\" → English \"al-Aqidah al-Tahawiyyah; al-Qawa'id al-Arba' and Thalathat al-Usul by Muhammad ibn Abd al-Wahhab, with Ibn Uthaymin's commentary; As'ilat al-Atfal al-Imaniyyah (al-Rukaf); al-Aqidah Awwalan (al-Juraysh)\"\n\nLet me check the Arabic author name \"الركف\" — this seems like it could be a typo. The book \"أسئلة الأطفال الإيمانية\" — I'm not sure about the author. \"الركف\" could be a corruption. Let me think... There's a book by عبد الله الركف? Not sure. The English renders it as \"al-Rukaf\" which matches \"الركف\". This might be a name I'm not familiar with, so I can't confirm it's corrupted.\n\nActually, \"الجريش\" = al-Juraysh — this could refer to عبد العزيز الجريش? There's a book \"العقيدة أولاً\" by عبد العزيز الجريش. That seems plausible.\n\n\"الركف\" — I'm not certain. Let me not flag this unless I'm confident it's corrupted.\n\nThe description says \"مسار 11 دروس قصيرة\" — \"pathway of 11 short lessons\" — English omits \"short\" (قصيرة). This is a minor omission, low severity.\n\nEverything else looks fine. The Qur'an is mentioned as \"القرآن\" and rendered as \"Qur'an\" — not presented as a quote, so no issue there.\n\nLet me check for any other issues. The age band is 7-9 but the description mentions children ages 3-12. This is a pathway description that covers a range, and the age_band field says 7-9. This might be intentional — the pathway is for parents to teach children 3-12, but the path itself is categorized for 7-9. Actually, looking at the id \"path_7-9_aqeedah_fundamentals\", the age band is 7-9, but the content references ages 3-12. This could be a mismatch but it's in the source Arabic too, so it's not a translation issue. The Arabic says \"(3-12 سنة)\" and English says \"(ages 3-12)\". Both match. The age_band field is metadata, not a translation field. So no defect there.\n\nI think the only issue is the omission of \"short\" (قصيرة) in the description, which is low severity."
+                },
+                "finish_reason": "stop"
+              }
+            ],
+            "usage": {
+              "prompt_tokens": 1432,
+              "completion_tokens": 1091,
+              "total_tokens": 2523,
+              "prompt_tokens_details": {
+                "cached_tokens": 1039
+              }
+            }
+          }
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "prompt_version": "dfa8a5f39718",
+          "request_sha256": "9c7714acd35a20ebbcd0780f23191ca799e525db3d4a555b0bf7442749873ec4",
+          "parsed_response": {
+            "items": [
+              {
+                "id": "path_7-9_aqeedah_fundamentals",
+                "defects": [
+                  {
+                    "field": "description",
+                    "side": "english",
+                    "type": "omission",
+                    "severity": "low",
+                    "arabic": "مسار 11 دروس قصيرة",
+                    "english": "An 11-lesson pathway",
+                    "why": "The adjective «قصيرة» (short) is dropped, slightly understating the lesson format.",
+                    "suggestion": "An 11-lesson pathway of short lessons that teaches the father/mother the foundations of the correct Islamic aqeedah so they can teach their children (ages 3-12). Built upon the Qur’an and Sunnah according to the understanding of the Salaf of the Ummah, far from disputes."
+                  }
+                ]
+              }
+            ]
+          },
+          "raw_response": {
+            "id": "chatcmpl-573",
+            "object": "chat.completion",
+            "created": 1791357899,
+            "model": "deepseek-v4-pro",
+            "system_fingerprint": "fp_ollama",
+            "choices": [
+              {
+                "index": 0,
+                "message": {
+                  "role": "assistant",
+                  "content": "```json\n{\"items\": [{\"id\": \"path_7-9_aqeedah_fundamentals\", \"defects\": [{\"field\": \"description\", \"side\": \"english\", \"type\": \"omission\", \"severity\": \"low\", \"arabic\": \"مسار 11 دروس قصيرة\", \"english\": \"An 11-lesson pathway\", \"why\": \"The adjective «قصيرة» (short) is dropped, slightly understating the lesson format.\", \"suggestion\": \"An 11-lesson pathway of short lessons that teaches the father/mother the foundations of the correct Islamic aqeedah so they can teach their children (ages 3-12). Built upon the Qur’an and Sunnah according to the understanding of the Salaf of the Ummah, far from disputes.\"}]}]}\n```",
+                  "reasoning": "Let me check each field carefully.\n\nTitle: Arabic \"أساسيات العقيدة — زراعة الإيمان في النشء\" English \"Foundations of Aqeedah — Planting Iman in the Young\". Meaning preserved. \"النشء\" = the young/rising generation. Fine.\n\nDescription: Arabic \"مسار 11 دروس قصيرة يُعلّم الأب/الأم أسس العقيدة الإسلامية الصحيحة لتعليم أطفالهم (3-12 سنة). مبني على القرآن والسنة على فهم سلف الأمة، بعيد عن الخلافات.\" English \"An 11-lesson pathway that teaches the father/mother the foundations of the correct Islamic aqeedah so they can teach their children (ages 3-12). Built upon the Qur'an and Sunnah according to the understanding of the Salaf of the Ummah, far from disputes.\"\n\nCheck: \"مسار 11 دروس قصيرة\" — \"An 11-lesson pathway\" — the Arabic says \"a pathway of 11 short lessons\" — \"short\" is dropped. Minor omission of \"قصيرة\" (short). Low.\n\n\"يُعلّم الأب/الأم\" — teaches the father/mother — fine.\n\n\"أسس العقيدة الإسلامية الصحيحة\" — foundations of correct Islamic aqeedah — fine.\n\n\"لتعليم أطفالهم (3-12 سنة)\" — so they can teach their children (ages 3-12) — fine.\n\n\"مبني على القرآن والسنة على فهم سلف الأمة\" — Built upon Qur'an and Sunnah according to understanding of Salaf of Ummah — fine.\n\n\"بعيد عن الخلافات\" — far from disputes — fine.\n\nprimary_reference.info: Arabic \"العقيدة الطحاوية، القواعد الأربع وثلاثة الأصول لمحمد بن عبد الوهاب بشرح ابن عثيمين، أسئلة الأطفال الإيمانية (الركف)، العقيدة أولاً (الجريش)\"\n\nEnglish: \"al-Aqidah al-Tahawiyyah; al-Qawa'id al-Arba' and Thalathat al-Usul by Muhammad ibn Abd al-Wahhab, with Ibn Uthaymin's commentary; As'ilat al-Atfal al-Imaniyyah (al-Rukaf); al-Aqidah Awwalan (al-Juraysh)\"\n\nCheck Arabic source corruption: \"أسئلة الأطفال الإيمانية (الركف)\" — \"الركف\" — this looks odd. Could be a typo for \"الركف\"? Actually there's a known book \"أسئلة الأطفال الإيمانية\" — author? Possibly \"الركف\" is a corruption. Hmm. Could be \"الركف\" is a name? Let me think. There's a book \"أسئلة الأطفال الإيمانية\" by... maybe \"عبد الله الركف\"? Actually there is a Saudi author named \"عبد الله بن عبد العزيز الركف\"? Hmm, not sure. \"الركف\" could be a valid family name. Actually there is \"د. عبد الله الركف\" who wrote about children's questions? I'm not certain. It might be a real name. I shouldn't flag it without confidence.\n\n\"العقيدة أولاً (الجريش)\" — \"الجريش\" — there's a book \"العقيدة أولاً لو كانت هي الأساس\" by... \"خالد الجريش\"? Actually there is a Saudi author \"خالد بن عبد الرحمن الجريش\" who wrote \"العقيدة أولاً\". That seems plausible.\n\n\"القواعد الأربع وثلاثة الأصول لمحمد بن عبد الوهاب بشرح ابن عثيمين\" — English \"al-Qawa'id al-Arba' and Thalathat al-Usul by Muhammad ibn Abd al-Wahhab, with Ibn Uthaymin's commentary\" — the Arabic says both books by Muhammad ibn Abd al-Wahhab with Ibn Uthaymin's commentary. English structure: \"al-Qawa'id al-Arba' and Thalathat al-Usul by Muhammad ibn Abd al-Wahhab, with Ibn Uthaymin's commentary\" — this could be read as commentary applies to both, which matches. Fine.\n\n\"العقيدة الطحاوية\" — al-Aqidah al-Tahawiyyah — fine.\n\nNo hadith/quran issues. No medical. Tone fine. No leakage — transliterated terms are allowed.\n\nThe only possible defect: \"قصيرة\" (short) omitted in description. Low severity omission.\n\nAlso \"مسار 11 دروس قصيرة\" — \"An 11-lesson pathway\" — the word \"short\" dropped. Low.\n\nAnything else? \"النشء\" translated as \"the Young\" — fine.\n\nI'll report the omission of \"short\" as low."
+                },
+                "finish_reason": "stop"
+              }
+            ],
+            "usage": {
+              "prompt_tokens": 1447,
+              "completion_tokens": 1211,
+              "total_tokens": 2658,
+              "prompt_tokens_details": {
+                "cached_tokens": 0
+              }
+            }
+          }
+        },
+        {
+          "model": "glm-5.2",
+          "prompt_version": "dfa8a5f39718",
+          "request_sha256": "ed5866be87bd11178d4489ec8eeb237bf93db638c68a3fe309b9ccf0d463cc40",
+          "parsed_response": {
+            "items": [
+              {
+                "id": "lesson_7-9_aqeedah_fundamentals_11",
+                "defects": []
+              },
+              {
+                "id": "path_7-9_aqeedah_fundamentals",
+                "defects": [
+                  {
+                    "field": "description.english",
+                    "side": "english",
+                    "type": "tone",
+                    "severity": "low",
+                    "arabic": "مسار 11 دروس قصيرة",
+                    "english": "A 11-lesson pathway",
+                    "why": "Grammatically should be \"An 11-lesson pathway\"; minor article error before a vowel sound.",
+                    "suggestion": "An 11-lesson pathway that teaches the father/mother the foundations of the correct Islamic aqeedah so they can teach their children (ages 3-12). Built upon the Qur'an and Sunnah according to the understanding of the Salaf of the Ummah, far from disputes."
+                  },
+                  {
+                    "field": "primary_reference.info.english",
+                    "side": "english",
+                    "type": "omission",
+                    "severity": "medium",
+                    "arabic": "أسئلة الأطفال الإيمانية (الركف)",
+                    "english": "As'ilat al-Atfal al-Imaniyyah",
+                    "why": "The English drops the author attribution (الركف) that the Arabic includes for this reference.",
+                    "suggestion": "As'ilat al-Atfal al-Imaniyyah (al-Rukaf)"
+                  }
+                ]
+              }
+            ]
+          },
+          "raw_response": {
+            "id": "chatcmpl-842",
+            "object": "chat.completion",
+            "created": 1791357851,
+            "model": "glm-5.2",
+            "system_fingerprint": "fp_ollama",
+            "choices": [
+              {
+                "index": 0,
+                "message": {
+                  "role": "assistant",
+                  "content": "```json\n{\n  \"items\": [\n    {\n      \"id\": \"lesson_7-9_aqeedah_fundamentals_11\",\n      \"defects\": []\n    },\n    {\n      \"id\": \"path_7-9_aqeedah_fundamentals\",\n      \"defects\": [\n        {\n          \"field\": \"description.english\",\n          \"side\": \"english\",\n          \"type\": \"tone\",\n          \"severity\": \"low\",\n          \"arabic\": \"مسار 11 دروس قصيرة\",\n          \"english\": \"A 11-lesson pathway\",\n          \"why\": \"Grammatically should be \\\"An 11-lesson pathway\\\"; minor article error before a vowel sound.\",\n          \"suggestion\": \"An 11-lesson pathway that teaches the father/mother the foundations of the correct Islamic aqeedah so they can teach their children (ages 3-12). Built upon the Qur'an and Sunnah according to the understanding of the Salaf of the Ummah, far from disputes.\"\n        },\n        {\n          \"field\": \"primary_reference.info.english\",\n          \"side\": \"english\",\n          \"type\": \"omission\",\n          \"severity\": \"medium\",\n          \"arabic\": \"أسئلة الأطفال الإيمانية (الركف)\",\n          \"english\": \"As'ilat al-Atfal al-Imaniyyah\",\n          \"why\": \"The English drops the author attribution (الركف) that the Arabic includes for this reference.\",\n          \"suggestion\": \"As'ilat al-Atfal al-Imaniyyah (al-Rukaf)\"\n        }\n      ]\n    }\n  ]\n}\n```",
+                  "reasoning": "Let me review each item carefully.\n\n**Item 1: lesson_7-9_aqeedah_fundamentals_11**\n\nTitle:\n- Arabic: «مَن خلق الله؟» حين يسأل السؤال المحيّر\n- English: «Who Created Allah?» When They Ask the Puzzling Question\n- Looks fine.\n\nSummary:\n- Arabic text is long, let me check carefully.\n- \"في السابعة والثامنة يكثر طفلك من سؤال «لماذا؟» و«مَن؟»، وقد يصل يومًا إلى السؤال الذي يربك كثيرًا من الآباء: «إذا كان الله خلق كل شيء، فمَن خلق الله؟».\" → \"At seven and eight your child asks «why?» and «who?» a great deal, and one day may reach the question that unsettles many parents: «If Allah created everything, who created Allah?»\" — Good.\n- \"هذا السؤال لا يعني أن إيمانه ضعيف، بل يعني أن عقله يعمل ويبحث.\" → \"This question doesn't mean their faith is weak; it means their mind is working and searching.\" — Good.\n- \"وردّ فعلك في تلك اللحظة يعلّمه: هل الأسئلة مرحّبٌ بها في بيتكم أم لا؟\" → \"Your reaction in that moment teaches them whether questions are welcome in your home.\" — The Arabic says \"whether questions are welcomed in your home or not\" — the English drops \"or not\" but that's implied. Fine.\n- \"استقبل السؤال بهدوء، وقل: «هذا سؤالٌ يفكّر فيه كثيرون، وجميلٌ أنك سألتني».\" → \"Receive the question calmly and say: «Many people think about this question, and I'm glad you asked me.»\" — Good.\n- \"ثم أجب ببساطة: كل شيءٍ نراه لم يكن موجودًا ثم وُجد، فلا بدّ له من خالق.\" → \"Then answer simply: everything we see did not exist and then came to exist, so it must have a creator.\" — Good.\n- \"أما الله فليس مخلوقًا؛ هو الأول، موجودٌ قبل كل شيءٍ ولا بداية له، وهو الخالق الذي لا يشبه شيئًا من خلقه، ولذلك لا نسأل عنه كما نسأل عن المخلوقات.\" → \"As for Allah, He is not created; He is the First, existing before everything, with no beginning, and He is the Creator who resembles nothing of His creation — so we don't ask about Him the way we ask about created things.\" — Good.\n- \"ولا تضرب له أمثلةً تشبّه الله بشيءٍ من خلقه، فالتشبيه يزيد الحيرة.\" → \"Don't give them examples that liken Allah to anything in His creation; likening only increases confusion.\" — Good.\n- \"وقد لا يقتنع من المرة الأولى، وقد يعود إلى السؤال بعد أيام.\" → \"They may not be convinced the first time, and may come back to the question days later.\" — Good.\n- \"لا بأس؛ أعد الجواب بالكلمات نفسها أو بكلماتٍ أبسط، ولا تُظهر انزعاجًا.\" → \"That's fine; repeat the answer in the same words or simpler ones, and don't show irritation.\" — Good.\n- \"وإن ألحّت عليه الفكرة وأقلقته، فعلّمه أن يستعيذ بالله، وأن يشغل نفسه بشيءٍ آخر، وأن يأتيك متى شاء ليتكلّم.\" → \"If the thought presses on them and worries them, teach them to seek refuge in Allah, to occupy themselves with something else, and to come to you whenever they like to talk.\" — Good.\n- \"وإن سألك سؤالًا لا تعرف جوابه، فلا تخترع جوابًا.\" → \"If they ask you something you don't know, don't invent an answer.\" — Good.\n- \"قل: «سأسأل من يعرف، ثم أخبرك»، وارجع إلى عالمٍ موثوق أو كتاب عقيدةٍ معتمد للأطفال.\" → \"Say: «I'll ask someone who knows, then tell you», and turn to a trusted scholar or an approved children's aqeedah (creed) book.\" — Good.\n- \"صدقك معه، وهدوؤك أمام سؤاله، يعلّمانه أن الإيمان يحتمل الأسئلة ولا يخاف منها.\" → \"Your honesty, and your calm in the face of their question, teach them that faith can hold questions and is not afraid of them.\" — Good.\n\ntry_this:\n- Arabic: \"اليوم: جهّز جوابك لهذا السؤال قبل أن يأتي: اكتب ثلاث جملٍ قصيرة بكلماتك، ليس فيها تشبيهٌ لله بشيءٍ من خلقه، واقرأها مرةً بصوتٍ مسموع حتى تقولها بهدوءٍ إن سألك طفلك.\"\n- English: \"Today: Prepare your answer to this question before it comes: write three short sentences in your own words, with no likening of Allah to anything in His creation, and read them aloud once so you can say them calmly if your child asks.\"\n- Good.\n\nreflection_prompts:\n- Arabic: \"ما الذي يقلقك أكثر حين يسأل طفلك عن الله: صعوبة السؤال أم خوفك من ألّا تحسن الجواب؟\"\n- English: \"What worries you more when your child asks about Allah: the difficulty of the question, or your fear of not answering well?\"\n- Good.\n\nNo defects found in item 1.\n\n**Item 2: path_7-9_aqeedah_fundamentals**\n\nTitle:\n- Arabic: \"أساسيات العقيدة — زراعة الإيمان في النشء\"\n- English: \"Foundations of Aqeedah — Planting Iman in the Young\"\n- \"النشء\" means \"the young\" or \"the youth/young generation.\" \"Planting Iman in the Young\" — fine. Good.\n\nDescription:\n- Arabic: \"مسار 11 دروس قصيرة يُعلّم الأب/الأم أسس العقيدة الإسلامية الصحيحة لتعليم أطفالهم (3-12 سنة). مبني على القرآن والسنة على فهم سلف الأمة، بعيد عن الخلافات.\"\n- English: \"A 11-lesson pathway that teaches the father/mother the foundations of the correct Islamic aqeedah so they can teach their children (ages 3-12). Built upon the Qur'an and Sunnah according to the understanding of the Salaf of the Ummah, far from disputes.\"\n- \"A 11-lesson\" should be \"An 11-lesson\" but that's a grammar/style issue, low at most. Actually, this is a minor grammar issue. Let me consider — \"A 11-lesson\" is grammatically incorrect (should be \"An 11-lesson\"). This is a low severity issue.\n- Otherwise the translation looks accurate.\n\nprimary_reference.info:\n- Arabic: \"العقيدة الطحاوية، القواعد الأربع وثلاثة الأصول لمحمد بن عبد الوهاب بشرح ابن عثيمين، أسئلة الأطفال الإيمانية (الركف)، العقيدة أولاً (الجريش)\"\n- English: \"al-Aqidah al-Tahawiyyah; al-Qawa'id al-Arba' and Thalathat al-Usul by Muhammad ibn Abd al-Wahhab, with Ibn Uthaymin's commentary; As'ilat al-Atfal al-Imaniyyah; al-Aqidah Awwalan (al-Juraysh)\"\n- Let me check: \"ثلاثة الأصول\" → \"Thalathat al-Usul\" — this is correct transliteration. \"القواعد الأربع\" → \"al-Qawa'id al-Arba'\" — correct. \"بشرح ابن عثيمين\" → \"with Ibn Uthaymin's commentary\" — correct. \"أسئلة الأطفال الإيمانية (الركف)\" → \"As'ilat al-Atfal al-Imaniyyah\" — the English drops the author attribution \"(الركف)\" which is \"al-Rukaf\" or similar. Wait, \"الركف\" — this seems to be an author's name. The English omits \"(al-Rukaf)\" / \"(الركف)\". That's an omission of an attribution. Let me think about severity — it's a substantive omission of an author's name. Medium? Actually, it's a reference list, and dropping an author's name is a substantive omission. But \"الركف\" — I'm not sure what this refers to. It could be a surname/nisba. The English also drops \"(الجريش)\" → wait, no, the English has \"(al-Juraysh)\". Let me recheck.\n\nArabic: \"العقيدة أولاً (الجريش)\" → English: \"al-Aqidah Awwalan (al-Juraysh)\" — Good, that's kept.\n\nArabic: \"أسئلة الأطفال الإيمانية (الركف)\" → English: \"As'ilat al-Atfal al-Imaniyyah\" — The \"(الركف)\" is dropped. This is an omission of an author attribution. Medium severity since it's a reference and the author name is missing.\n\nActually, wait — let me reconsider. \"الركف\" might be a typo or corruption. It could be \"الركابي\" or something else. But as it stands, the English drops it. This is an omission.\n\nLet me also check: \"Thalathat al-Usul\" — the Arabic says \"ثلاثة الأصول\" which is \"Thalathat al-Usul\" — correct. Some might write \"Thalath\" but \"Thalathat\" is fine.\n\nSo for item 2, I found:\n1. \"A 11-lesson\" grammar issue — low\n2. Omission of \"(الركف)\" author attribution — medium\n\nLet me finalize."
+                },
+                "finish_reason": "stop"
+              }
+            ],
+            "usage": {
+              "prompt_tokens": 2635,
+              "completion_tokens": 2630,
+              "total_tokens": 5265,
+              "prompt_tokens_details": {
+                "cached_tokens": 1018
+              }
+            }
+          }
+        }
+      ],
+      "report": {
+        "stamped": [
+          "lesson_7-9_aqeedah_fundamentals_11",
+          "path_7-9_aqeedah_fundamentals"
+        ],
+        "fixed": [],
+        "arabic_proposals": [],
+        "arabic_applied": [],
+        "unresolved": {},
+        "fix_rejected": [],
+        "rounds": 1
+      }
+    },
+    {
+      "canonical_items": {
+        "lesson_7-9_aqeedah_fundamentals_11": {
+          "sha": "26900f1375fbc831656e4effb0296c4556f9a36ee403d55970583d724f3c705f",
+          "fields": {
+            "title": {
+              "ar": "«مَن خلق الله؟» حين يسأل السؤال المحيّر",
+              "en": "«Who Created Allah?» When They Ask the Puzzling Question"
+            },
+            "summary": {
+              "ar": "في السابعة والثامنة يكثر طفلك من سؤال «لماذا؟» و«مَن؟»، وقد يصل يومًا إلى السؤال الذي يربك كثيرًا من الآباء: «إذا كان الله خلق كل شيء، فمَن خلق الله؟». هذا السؤال لا يعني أن إيمانه ضعيف، بل يعني أن عقله يعمل ويبحث. وردّ فعلك في تلك اللحظة يعلّمه: هل الأسئلة مرحّبٌ بها في بيتكم أم لا؟\n\nاستقبل السؤال بهدوء، وقل: «هذا سؤالٌ يفكّر فيه كثيرون، وجميلٌ أنك سألتني». ثم أجب ببساطة: كل شيءٍ نراه لم يكن موجودًا ثم وُجد، فلا بدّ له من خالق. أما الله فليس مخلوقًا؛ هو الأول، موجودٌ قبل كل شيءٍ ولا بداية له، وهو الخالق الذي لا يشبه شيئًا من خلقه، ولذلك لا نسأل عنه كما نسأل عن المخلوقات. ولا تضرب له أمثلةً تشبّه الله بشيءٍ من خلقه، فالتشبيه يزيد الحيرة.\n\nوقد لا يقتنع من المرة الأولى، وقد يعود إلى السؤال بعد أيام. لا بأس؛ أعد الجواب بالكلمات نفسها أو بكلماتٍ أبسط، ولا تُظهر انزعاجًا. وإن ألحّت عليه الفكرة وأقلقته، فعلّمه أن يستعيذ بالله، وأن يشغل نفسه بشيءٍ آخر، وأن يأتيك متى شاء ليتكلّم.\n\nوإن سألك سؤالًا لا تعرف جوابه، فلا تخترع جوابًا. قل: «سأسأل من يعرف، ثم أخبرك»، وارجع إلى عالمٍ موثوق أو كتاب عقيدةٍ معتمد للأطفال. صدقك معه، وهدوؤك أمام سؤاله، يعلّمانه أن الإيمان يحتمل الأسئلة ولا يخاف منها.",
+              "en": "At seven and eight your child asks «why?» and «who?» a great deal, and one day may reach the question that unsettles many parents: «If Allah created everything, who created Allah?» This question doesn't mean their faith is weak; it means their mind is working and searching. Your reaction in that moment teaches them whether questions are welcome in your home.\n\nReceive the question calmly and say: «Many people think about this question, and I'm glad you asked me.» Then answer simply: everything we see did not exist and then came to exist, so it must have a creator. As for Allah, He is not created; He is the First, existing before everything, with no beginning, and He is the Creator who resembles nothing of His creation — so we don't ask about Him the way we ask about created things. Don't give them examples that liken Allah to anything in His creation; likening only increases confusion.\n\nThey may not be convinced the first time, and may come back to the question days later. That's fine; repeat the answer in the same words or simpler ones, and don't show irritation. If the thought presses on them and worries them, teach them to seek refuge in Allah, to occupy themselves with something else, and to come to you whenever they like to talk.\n\nIf they ask you something you don't know, don't invent an answer. Say: «I'll ask someone who knows, then tell you», and turn to a trusted scholar or an approved children's aqeedah (creed) book. Your honesty, and your calm in the face of their question, teach them that faith can hold questions and is not afraid of them."
+            },
+            "try_this": {
+              "ar": "اليوم: جهّز جوابك لهذا السؤال قبل أن يأتي: اكتب ثلاث جملٍ قصيرة بكلماتك، ليس فيها تشبيهٌ لله بشيءٍ من خلقه، واقرأها مرةً بصوتٍ مسموع حتى تقولها بهدوءٍ إن سألك طفلك.",
+              "en": "Today: Prepare your answer to this question before it comes: write three short sentences in your own words, with no likening of Allah to anything in His creation, and read them aloud once so you can say them calmly if your child asks."
+            },
+            "reflection_prompts": {
+              "ar": [
+                "ما الذي يقلقك أكثر حين يسأل طفلك عن الله: صعوبة السؤال أم خوفك من ألّا تحسن الجواب؟"
+              ],
+              "en": [
+                "What worries you more when your child asks about Allah: the difficulty of the question, or your fear of not answering well?"
+              ]
+            }
+          },
+          "authors": [
+            "claude-opus-5-5"
+          ],
+          "deterministic_defects": []
+        },
+        "path_7-9_aqeedah_fundamentals": {
+          "sha": "6394507cc6f7fce2a27a95470ca5d1ef005269736653c61e431e0f4dea5ec3f9",
+          "fields": {
+            "title": {
+              "ar": "أساسيات العقيدة — زراعة الإيمان في النشء",
+              "en": "Foundations of Aqeedah — Planting Iman in the Young"
+            },
+            "description": {
+              "ar": "مسار 11 دروس قصيرة يُعلّم الأب/الأم أسس العقيدة الإسلامية الصحيحة لتعليم أطفالهم (3-12 سنة). مبني على القرآن والسنة على فهم سلف الأمة، بعيد عن الخلافات.",
+              "en": "An 11-lesson pathway that teaches the father/mother the foundations of the correct Islamic aqeedah so they can teach their children (ages 3-12). Built upon the Qur’an and Sunnah according to the understanding of the Salaf of the Ummah, far from disputes."
+            },
+            "primary_reference.info": {
+              "ar": "العقيدة الطحاوية، القواعد الأربع وثلاثة الأصول لمحمد بن عبد الوهاب بشرح ابن عثيمين، أسئلة الأطفال الإيمانية (الركف)، العقيدة أولاً (الجريش)",
+              "en": "al-Aqidah al-Tahawiyyah; al-Qawa'id al-Arba' and Thalathat al-Usul by Muhammad ibn Abd al-Wahhab; Ibn Uthaymin's commentary; As'ilat al-Atfal al-Imaniyyah (al-Rukaf); al-Aqidah Awwalan (al-Juraysh)"
+            }
+          },
+          "authors": [
+            "mistral-large-3:675b",
+            "gpt-6",
+            "claude-opus"
+          ],
+          "deterministic_defects": []
+        }
+      },
+      "responses": [
+        {
+          "model": "deepseek-v4-pro",
+          "prompt_version": "dfa8a5f39718",
+          "request_sha256": "c42cf1a0d9b7c0511d70cf2a462cb826dc4149a4cd117ac2b63ee3408d92c363",
+          "parsed_response": {
+            "items": [
+              {
+                "id": "path_7-9_aqeedah_fundamentals",
+                "defects": []
+              }
+            ]
+          },
+          "raw_response": {
+            "id": "chatcmpl-0",
+            "object": "chat.completion",
+            "created": 1791358019,
+            "model": "deepseek-v4-pro",
+            "system_fingerprint": "fp_ollama",
+            "choices": [
+              {
+                "index": 0,
+                "message": {
+                  "role": "assistant",
+                  "content": "{\"items\": [{\"id\": \"path_7-9_aqeedah_fundamentals\", \"defects\": []}]}",
+                  "reasoning": "We need answer JSON only. Need audit item. Need inspect fields. We have one item id path_7-9_aqeedah_fundamentals. Fields title, description, primary_reference.info. Need check every field.\n\nLet's parse Arabic and English.\n\nTitle Arabic: \"أساسيات العقيدة — زراعة الإيمان في النشء\"\nEnglish: \"Foundations of Aqeedah — Planting Iman in the Young\"\nMeaning okay. \"النشء\" young generation, \"the Young\" okay. No defects.\n\nDescription Arabic: \"مسار 11 دروس قصيرة يُعلّم الأب/الأم أسس العقيدة الإسلامية الصحيحة لتعليم أطفالهم (3-12 سنة). مبني على القرآن والسنة على فهم سلف الأمة، بعيد عن الخلافات.\"\nEnglish: \"An 11-lesson pathway that teaches the father/mother the foundations of the correct Islamic aqeedah so they can teach their children (ages 3-12). Built upon the Qur’an and Sunnah according to the understanding of the Salaf of the Ummah, far from disputes.\"\n\nCheck Arabic grammar: \"مسار 11 دروس قصيرة\" maybe should be \"مسار 11 درسًا قصيرًا\" or \"مسار من 11 درسًا قصيرًا\". But meaning clear. English \"An 11-lesson pathway\" okay. \"يُعلّم الأب/الأم\" teaches father/mother. English \"that teaches the father/mother\" okay. \"أسس العقيدة الإسلامية الصحيحة\" foundations of correct Islamic aqeedah. English \"foundations of the correct Islamic aqeedah\" okay. \"لتعليم أطفالهم (3-12 سنة)\" so they can teach their children ages 3-12. okay. \"مبني على القرآن والسنة على فهم سلف الأمة\" built upon Qur'an and Sunnah according to understanding of Salaf of Ummah. English okay. \"بعيد عن الخلافات\" far from disputes. okay. No defects? Maybe \"مسار 11 دروس قصيرة\" Arabic source corruption? It is a bit awkward but not corruption. Could be \"مسار 11 درسًا قصيرًا\" but not high. Maybe low? But instruction says Arabic source corruption: word doesn't fit, typo, cut-off, dialect. Here \"11 دروس قصيرة\" is grammatical error but understandable. Could report low source_corruption? But need be honest. It's not corruption, just non-ideal grammar. Maybe no defect.\n\nPrimary_reference.info Arabic: \"العقيدة الطحاوية، القواعد الأربع وثلاثة الأصول لمحمد بن عبد الوهاب بشرح ابن عثيمين، أسئلة الأطفال الإيمانية (الركف)، العقيدة أولاً (الجريش)\"\nEnglish: \"al-Aqidah al-Tahawiyyah; al-Qawa'id al-Arba' and Thalathat al-Usul by Muhammad ibn Abd al-Wahhab; Ibn Uthaymin's commentary; As'ilat al-Atfal al-Imaniyyah (al-Rukaf); al-Aqidah Awwalan (al-Juraysh)\"\n\nNeed check transliteration and meaning. Arabic: \"القواعد الأربع وثلاثة الأصول لمحمد بن عبد الوهاب بشرح ابن عثيمين\" means \"al-Qawa'id al-Arba' and Thalathat al-Usul by Muhammad ibn Abd al-Wahhab with commentary by Ibn Uthaymin\". English: \"al-Qawa'id al-Arba' and Thalathat al-Usul by Muhammad ibn Abd al-Wahhab; Ibn Uthaymin's commentary\" okay. \"أسئلة الأطفال الإيمانية (الركف)\" English \"As'ilat al-Atfal al-Imaniyyah (al-Rukaf)\" okay. \"العقيدة أولاً (الجريش)\" English \"al-Aqidah Awwalan (al-Juraysh)\" okay. No defects.\n\nBut need consider \"الركف\" maybe transliteration? Arabic has (الركف) maybe author name? English al-Rukaf. okay. \"الجريش\" al-Juraysh. okay.\n\nPotential issue: \"مسار 11 دروس قصيرة\" in Arabic: number 11 should be followed by singular accusative? \"أحد عشر درسًا قصيرًا\" not \"11 دروس قصيرة\". But this is Arabic source field, maybe typo/grammar. Is it a defect? The instruction says \"ARABIC SOURCE CORRUPTION — read the Arabic on its own, critically. A word that does not fit, a typo that changes meaning, a stray English fragment, a cut-off or garbled sentence, broken encoding, Egyptian colloquial where Modern Standard Arabic is expected.\" Here \"11 دروس قصيرة\" is not a word that doesn't fit, not typo changing meaning, not stray English, not cut-off, not encoding, not dialect. It's a grammatical number agreement issue. Could be low source_corruption? But type source_corruption maybe not exactly. Could report as low? But if no defects, output empty. Need decide.\n\nAlso \"مسار 11 دروس قصيرة\" maybe missing \"من\" or \"مكوّن من\". But English \"An 11-lesson pathway\" is fine. The Arabic is understandable. I'd lean no defect, because not substantive and not corruption. But maybe \"11 دروس قصيرة\" is a visible grammar error a reader would notice. Severity low. But the instruction says \"an Arabic typo or dialect a reader would notice\" medium? Actually severity definitions: medium includes \"an Arabic typo or dialect a reader would notice\". So if we consider this a typo/grammar, medium? But it's not a typo, it's grammar. Could be low. But we need not over-report. The task is audit translations, not proofread Arabic grammar unless corruption. I'd avoid.\n\nNeed output exactly one entry with defects [].\n\nBut let's double-check if any hidden issue: \"primary_reference.info\" field path. English uses semicolons; Arabic uses commas. No issue. \"al-Aqidah al-Tahawiyyah\" transliteration okay. \"Muhammad ibn Abd al-Wahhab\" okay. \"Ibn Uthaymin's commentary\" okay. \"As'ilat al-Atfal al-Imaniyyah\" okay. \"al-Rukaf\" maybe Arabic \"الركف\" could be \"الركف\" not known; but transliteration okay. \"al-Juraysh\" okay.\n\nNo quran/hadith/medical/tone/leakage.\n\nThus output JSON with one item id and defects empty.\n\nNeed ensure JSON only."
+                },
+                "finish_reason": "stop"
+              }
+            ],
+            "usage": {
+              "prompt_tokens": 1446,
+              "completion_tokens": 1476,
+              "total_tokens": 2922,
+              "prompt_tokens_details": {
+                "cached_tokens": 0
+              }
+            }
+          }
+        },
+        {
+          "model": "glm-5.2",
+          "prompt_version": "dfa8a5f39718",
+          "request_sha256": "9c7714acd35a20ebbcd0780f23191ca799e525db3d4a555b0bf7442749873ec4",
+          "parsed_response": {
+            "items": [
+              {
+                "id": "path_7-9_aqeedah_fundamentals",
+                "defects": [
+                  {
+                    "field": "description",
+                    "side": "english",
+                    "type": "omission",
+                    "severity": "low",
+                    "arabic": "مسار 11 دروس قصيرة",
+                    "english": "An 11-lesson pathway",
+                    "why": "The English drops the adjective قصيرة ('short'), so the lessons' brevity — a key selling point for busy parents — is lost.",
+                    "suggestion": "A pathway of 11 short lessons that teaches the father/mother the foundations of the correct Islamic aqeedah so they can teach their children (ages 3-12). Built upon the Qur'an and Sunnah according to the understanding of the Salaf of the Ummah, far from disputes."
+                  }
+                ]
+              }
+            ]
+          },
+          "raw_response": {
+            "id": "chatcmpl-729",
+            "object": "chat.completion",
+            "created": 1791357892,
+            "model": "glm-5.2",
+            "system_fingerprint": "fp_ollama",
+            "choices": [
+              {
+                "index": 0,
+                "message": {
+                  "role": "assistant",
+                  "content": "```json\n{\"items\": [{\"id\": \"path_7-9_aqeedah_fundamentals\", \"defects\": [{\"field\": \"description\", \"side\": \"english\", \"type\": \"omission\", \"severity\": \"low\", \"arabic\": \"مسار 11 دروس قصيرة\", \"english\": \"An 11-lesson pathway\", \"why\": \"The English drops the adjective قصيرة ('short'), so the lessons' brevity — a key selling point for busy parents — is lost.\", \"suggestion\": \"A pathway of 11 short lessons that teaches the father/mother the foundations of the correct Islamic aqeedah so they can teach their children (ages 3-12). Built upon the Qur'an and Sunnah according to the understanding of the Salaf of the Ummah, far from disputes.\"}]}]}\n```",
+                  "reasoning": "Let me review each field carefully.\n\n1. Title: Arabic \"أساسيات العقيدة — زراعة الإيمان في النشء\" → English \"Foundations of Aqeedah — Planting Iman in the Young\". \"النشء\" means \"the young\" or \"the youth/young generation\". This is fine. \"زراعة الإيمان\" = \"planting faith/iman\". Good.\n\n2. Description: Arabic \"مسار 11 دروس قصيرة يُعلّم الأب/الأم أسس العقيدة الإسلامية الصحيحة لتعليم أطفالهم (3-12 سنة). مبني على القرآن والسنة على فهم سلف الأمة، بعيد عن الخلافات.\" → English \"An 11-lesson pathway that teaches the father/mother the foundations of the correct Islamic aqeedah so they can teach their children (ages 3-12). Built upon the Qur'an and Sunnah according to the understanding of the Salaf of the Ummah, far from disputes.\"\n\n\"مسار 11 دروس قصيرة\" = \"a pathway of 11 short lessons\" — English says \"An 11-lesson pathway\" which drops \"قصيرة\" (short). Minor omission. Low severity.\n\n\"بعيد عن الخلافات\" = \"far from disputes\" — fine.\n\n3. primary_reference.info: Arabic \"العقيدة الطحاوية، القواعد الأربع وثلاثة الأصول لمحمد بن عبد الوهاب بشرح ابن عثيمين، أسئلة الأطفال الإيمانية (الركف)، العقيدة أولاً (الجريش)\" → English \"al-Aqidah al-Tahawiyyah; al-Qawa'id al-Arba' and Thalathat al-Usul by Muhammad ibn Abd al-Wahhab, with Ibn Uthaymin's commentary; As'ilat al-Atfal al-Imaniyyah (al-Rukaf); al-Aqidah Awwalan (al-Juraysh)\"\n\nLet me check the Arabic author name \"الركف\" — this seems like it could be a typo. The book \"أسئلة الأطفال الإيمانية\" — I'm not sure about the author. \"الركف\" could be a corruption. Let me think... There's a book by عبد الله الركف? Not sure. The English renders it as \"al-Rukaf\" which matches \"الركف\". This might be a name I'm not familiar with, so I can't confirm it's corrupted.\n\nActually, \"الجريش\" = al-Juraysh — this could refer to عبد العزيز الجريش? There's a book \"العقيدة أولاً\" by عبد العزيز الجريش. That seems plausible.\n\n\"الركف\" — I'm not certain. Let me not flag this unless I'm confident it's corrupted.\n\nThe description says \"مسار 11 دروس قصيرة\" — \"pathway of 11 short lessons\" — English omits \"short\" (قصيرة). This is a minor omission, low severity.\n\nEverything else looks fine. The Qur'an is mentioned as \"القرآن\" and rendered as \"Qur'an\" — not presented as a quote, so no issue there.\n\nLet me check for any other issues. The age band is 7-9 but the description mentions children ages 3-12. This is a pathway description that covers a range, and the age_band field says 7-9. This might be intentional — the pathway is for parents to teach children 3-12, but the path itself is categorized for 7-9. Actually, looking at the id \"path_7-9_aqeedah_fundamentals\", the age band is 7-9, but the content references ages 3-12. This could be a mismatch but it's in the source Arabic too, so it's not a translation issue. The Arabic says \"(3-12 سنة)\" and English says \"(ages 3-12)\". Both match. The age_band field is metadata, not a translation field. So no defect there.\n\nI think the only issue is the omission of \"short\" (قصيرة) in the description, which is low severity."
+                },
+                "finish_reason": "stop"
+              }
+            ],
+            "usage": {
+              "prompt_tokens": 1432,
+              "completion_tokens": 1091,
+              "total_tokens": 2523,
+              "prompt_tokens_details": {
+                "cached_tokens": 1039
+              }
+            }
+          }
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "prompt_version": "dfa8a5f39718",
+          "request_sha256": "9c7714acd35a20ebbcd0780f23191ca799e525db3d4a555b0bf7442749873ec4",
+          "parsed_response": {
+            "items": [
+              {
+                "id": "path_7-9_aqeedah_fundamentals",
+                "defects": [
+                  {
+                    "field": "description",
+                    "side": "english",
+                    "type": "omission",
+                    "severity": "low",
+                    "arabic": "مسار 11 دروس قصيرة",
+                    "english": "An 11-lesson pathway",
+                    "why": "The adjective «قصيرة» (short) is dropped, slightly understating the lesson format.",
+                    "suggestion": "An 11-lesson pathway of short lessons that teaches the father/mother the foundations of the correct Islamic aqeedah so they can teach their children (ages 3-12). Built upon the Qur’an and Sunnah according to the understanding of the Salaf of the Ummah, far from disputes."
+                  }
+                ]
+              }
+            ]
+          },
+          "raw_response": {
+            "id": "chatcmpl-573",
+            "object": "chat.completion",
+            "created": 1791357899,
+            "model": "deepseek-v4-pro",
+            "system_fingerprint": "fp_ollama",
+            "choices": [
+              {
+                "index": 0,
+                "message": {
+                  "role": "assistant",
+                  "content": "```json\n{\"items\": [{\"id\": \"path_7-9_aqeedah_fundamentals\", \"defects\": [{\"field\": \"description\", \"side\": \"english\", \"type\": \"omission\", \"severity\": \"low\", \"arabic\": \"مسار 11 دروس قصيرة\", \"english\": \"An 11-lesson pathway\", \"why\": \"The adjective «قصيرة» (short) is dropped, slightly understating the lesson format.\", \"suggestion\": \"An 11-lesson pathway of short lessons that teaches the father/mother the foundations of the correct Islamic aqeedah so they can teach their children (ages 3-12). Built upon the Qur’an and Sunnah according to the understanding of the Salaf of the Ummah, far from disputes.\"}]}]}\n```",
+                  "reasoning": "Let me check each field carefully.\n\nTitle: Arabic \"أساسيات العقيدة — زراعة الإيمان في النشء\" English \"Foundations of Aqeedah — Planting Iman in the Young\". Meaning preserved. \"النشء\" = the young/rising generation. Fine.\n\nDescription: Arabic \"مسار 11 دروس قصيرة يُعلّم الأب/الأم أسس العقيدة الإسلامية الصحيحة لتعليم أطفالهم (3-12 سنة). مبني على القرآن والسنة على فهم سلف الأمة، بعيد عن الخلافات.\" English \"An 11-lesson pathway that teaches the father/mother the foundations of the correct Islamic aqeedah so they can teach their children (ages 3-12). Built upon the Qur'an and Sunnah according to the understanding of the Salaf of the Ummah, far from disputes.\"\n\nCheck: \"مسار 11 دروس قصيرة\" — \"An 11-lesson pathway\" — the Arabic says \"a pathway of 11 short lessons\" — \"short\" is dropped. Minor omission of \"قصيرة\" (short). Low.\n\n\"يُعلّم الأب/الأم\" — teaches the father/mother — fine.\n\n\"أسس العقيدة الإسلامية الصحيحة\" — foundations of correct Islamic aqeedah — fine.\n\n\"لتعليم أطفالهم (3-12 سنة)\" — so they can teach their children (ages 3-12) — fine.\n\n\"مبني على القرآن والسنة على فهم سلف الأمة\" — Built upon Qur'an and Sunnah according to understanding of Salaf of Ummah — fine.\n\n\"بعيد عن الخلافات\" — far from disputes — fine.\n\nprimary_reference.info: Arabic \"العقيدة الطحاوية، القواعد الأربع وثلاثة الأصول لمحمد بن عبد الوهاب بشرح ابن عثيمين، أسئلة الأطفال الإيمانية (الركف)، العقيدة أولاً (الجريش)\"\n\nEnglish: \"al-Aqidah al-Tahawiyyah; al-Qawa'id al-Arba' and Thalathat al-Usul by Muhammad ibn Abd al-Wahhab, with Ibn Uthaymin's commentary; As'ilat al-Atfal al-Imaniyyah (al-Rukaf); al-Aqidah Awwalan (al-Juraysh)\"\n\nCheck Arabic source corruption: \"أسئلة الأطفال الإيمانية (الركف)\" — \"الركف\" — this looks odd. Could be a typo for \"الركف\"? Actually there's a known book \"أسئلة الأطفال الإيمانية\" — author? Possibly \"الركف\" is a corruption. Hmm. Could be \"الركف\" is a name? Let me think. There's a book \"أسئلة الأطفال الإيمانية\" by... maybe \"عبد الله الركف\"? Actually there is a Saudi author named \"عبد الله بن عبد العزيز الركف\"? Hmm, not sure. \"الركف\" could be a valid family name. Actually there is \"د. عبد الله الركف\" who wrote about children's questions? I'm not certain. It might be a real name. I shouldn't flag it without confidence.\n\n\"العقيدة أولاً (الجريش)\" — \"الجريش\" — there's a book \"العقيدة أولاً لو كانت هي الأساس\" by... \"خالد الجريش\"? Actually there is a Saudi author \"خالد بن عبد الرحمن الجريش\" who wrote \"العقيدة أولاً\". That seems plausible.\n\n\"القواعد الأربع وثلاثة الأصول لمحمد بن عبد الوهاب بشرح ابن عثيمين\" — English \"al-Qawa'id al-Arba' and Thalathat al-Usul by Muhammad ibn Abd al-Wahhab, with Ibn Uthaymin's commentary\" — the Arabic says both books by Muhammad ibn Abd al-Wahhab with Ibn Uthaymin's commentary. English structure: \"al-Qawa'id al-Arba' and Thalathat al-Usul by Muhammad ibn Abd al-Wahhab, with Ibn Uthaymin's commentary\" — this could be read as commentary applies to both, which matches. Fine.\n\n\"العقيدة الطحاوية\" — al-Aqidah al-Tahawiyyah — fine.\n\nNo hadith/quran issues. No medical. Tone fine. No leakage — transliterated terms are allowed.\n\nThe only possible defect: \"قصيرة\" (short) omitted in description. Low severity omission.\n\nAlso \"مسار 11 دروس قصيرة\" — \"An 11-lesson pathway\" — the word \"short\" dropped. Low.\n\nAnything else? \"النشء\" translated as \"the Young\" — fine.\n\nI'll report the omission of \"short\" as low."
+                },
+                "finish_reason": "stop"
+              }
+            ],
+            "usage": {
+              "prompt_tokens": 1447,
+              "completion_tokens": 1211,
+              "total_tokens": 2658,
+              "prompt_tokens_details": {
+                "cached_tokens": 0
+              }
+            }
+          }
+        },
+        {
+          "model": "glm-5.2",
+          "prompt_version": "dfa8a5f39718",
+          "request_sha256": "c42cf1a0d9b7c0511d70cf2a462cb826dc4149a4cd117ac2b63ee3408d92c363",
+          "parsed_response": {
+            "items": [
+              {
+                "id": "path_7-9_aqeedah_fundamentals",
+                "defects": [
+                  {
+                    "field": "description",
+                    "side": "english",
+                    "type": "omission",
+                    "severity": "low",
+                    "arabic": "مسار 11 دروس قصيرة",
+                    "english": "An 11-lesson pathway",
+                    "why": "The English drops the adjective قصيرة ('short'), so parents lose the reassurance that the lessons are brief.",
+                    "suggestion": "A pathway of 11 short lessons that teaches the father/mother the foundations of the correct Islamic aqeedah so they can teach their children (ages 3-12). Built upon the Qur'an and Sunnah according to the understanding of the Salaf of the Ummah, far from disputes."
+                  }
+                ]
+              }
+            ]
+          },
+          "raw_response": {
+            "id": "chatcmpl-869",
+            "object": "chat.completion",
+            "created": 1791358032,
+            "model": "glm-5.2",
+            "system_fingerprint": "fp_ollama",
+            "choices": [
+              {
+                "index": 0,
+                "message": {
+                  "role": "assistant",
+                  "content": "```json\n{\"items\": [{\"id\": \"path_7-9_aqeedah_fundamentals\", \"defects\": [{\"field\": \"description\", \"side\": \"english\", \"type\": \"omission\", \"severity\": \"low\", \"arabic\": \"مسار 11 دروس قصيرة\", \"english\": \"An 11-lesson pathway\", \"why\": \"The English drops the adjective قصيرة ('short'), so parents lose the reassurance that the lessons are brief.\", \"suggestion\": \"A pathway of 11 short lessons that teaches the father/mother the foundations of the correct Islamic aqeedah so they can teach their children (ages 3-12). Built upon the Qur'an and Sunnah according to the understanding of the Salaf of the Ummah, far from disputes.\"}]}]}\n```",
+                  "reasoning": "Let me review each field carefully.\n\n1. Title: Arabic \"أساسيات العقيدة — زراعة الإيمان في النشء\" → English \"Foundations of Aqeedah — Planting Iman in the Young\". \"النشء\" means \"the young\" or \"the youth/young generation\". This is fine. \"زراعة الإيمان\" = \"planting faith/iman\". Good.\n\n2. Description: Arabic \"مسار 11 دروس قصيرة يُعلّم الأب/الأم أسس العقيدة الإسلامية الصحيحة لتعليم أطفالهم (3-12 سنة). مبني على القرآن والسنة على فهم سلف الأمة، بعيد عن الخلافات.\" → English \"An 11-lesson pathway that teaches the father/mother the foundations of the correct Islamic aqeedah so they can teach their children (ages 3-12). Built upon the Qur'an and Sunnah according to the understanding of the Salaf of the Ummah, far from disputes.\"\n\nLet me check: \"مسار 11 دروس قصيرة\" = \"a pathway of 11 short lessons\". The English says \"An 11-lesson pathway\" — it drops \"قصيرة\" (short). That's a minor omission. Low severity.\n\n\"يُعلّم الأب/الأم\" = \"teaches the father/mother\" — English says \"teaches the father/mother\". Good.\n\n\"أسس العقيدة الإسلامية الصحيحة\" = \"the foundations of the correct Islamic aqeedah\" — Good.\n\n\"لتعليم أطفالهم (3-12 سنة)\" = \"to teach their children (3-12 years)\" — English says \"so they can teach their children (ages 3-12)\". Good.\n\n\"مبني على القرآن والسنة على فهم سلف الأمة، بعيد عن الخلافات\" = \"Built upon the Qur'an and Sunnah according to the understanding of the Salaf of the Ummah, far from disputes.\" Good.\n\n3. primary_reference.info: Arabic \"العقيدة الطحاوية، القواعد الأربع وثلاثة الأصول لمحمد بن عبد الوهاب بشرح ابن عثيمين، أسئلة الأطفال الإيمانية (الركف)، العقيدة أولاً (الجريش)\" → English \"al-Aqidah al-Tahawiyyah; al-Qawa'id al-Arba' and Thalathat al-Usul by Muhammad ibn Abd al-Wahhab; Ibn Uthaymin's commentary; As'ilat al-Atfal al-Imaniyyah (al-Rukaf); al-Aqidah Awwalan (al-Juraysh)\"\n\nLet me check the Arabic: \"الركف\" — this seems like a typo. The book \"أسئلة الأطفال الإيمانية\" is by \"الركف\" or \"الركاب\"? Actually, let me think. The author might be \"الركف\" — I'm not sure. Let me check: \"أسئلة الأطفال الإيمانية\" — I think the author's name might be \"الركف\" but it could be a corruption. Actually, I'm not familiar enough with this specific reference to confirm. The English transliterates it as \"al-Rukaf\" which matches \"الركف\". Let me not flag this unless I'm confident it's wrong.\n\nActually, wait — \"ثلاثة الأصول\" should be \"ثلاثة الأصول\" (Three Fundamental Principles). The Arabic says \"ثلاثة الأصول\" — that's correct. English says \"Thalathat al-Usul\" — correct.\n\n\"القواعد الأربع\" = \"al-Qawa'id al-Arba'\" — correct (Four Principles).\n\n\"بشرح ابن عثيمين\" = \"with commentary by Ibn Uthaymin\" — English says \"Ibn Uthaymin's commentary\" — good.\n\n\"العقيدة أولاً (الجريش)\" = \"al-Aqidah Awwalan (al-Juraysh)\" — correct.\n\nNow, the age band is 7-9 but the description mentions children ages 3-12. This is a pathway description that covers a range, and the age_band field says 7-9. This might be a mismatch but the description is about the pathway teaching parents of children 3-12, while the age_band is 7-9. This could be a structural issue but it's the source data itself — the Arabic also says 3-12. So this is consistent within the Arabic. The age_band is assigned to this path as 7-9, but the content references 3-12. This might be intentional (the path is categorized for 7-9 but references the broader range). I won't flag this as it's in the source Arabic and the English faithfully translates it.\n\nLet me reconsider the \"قصيرة\" omission. \"11 دروس قصيرة\" = \"11 short lessons\". English: \"An 11-lesson pathway\" — drops \"short\". This is a minor omission, low severity.\n\nActually, I should also check: \"الركف\" — could this be \"الركن\" or something else? I'm not confident enough to flag it as source corruption. Let me leave it.\n\nOverall, I think the only defect is the omission of \"short\" (قصيرة) in the description, which is low severity."
+                },
+                "finish_reason": "stop"
+              }
+            ],
+            "usage": {
+              "prompt_tokens": 1431,
+              "completion_tokens": 1346,
+              "total_tokens": 2777,
+              "prompt_tokens_details": {
+                "cached_tokens": 1385
+              }
+            }
+          }
+        }
+      ],
+      "report": {
+        "stamped": [
+          "lesson_7-9_aqeedah_fundamentals_11",
+          "path_7-9_aqeedah_fundamentals"
+        ],
+        "fixed": [],
+        "arabic_proposals": [],
+        "arabic_applied": [],
+        "unresolved": {},
+        "fix_rejected": [],
+        "rounds": 1
+      }
+    }
+  ]
+}
