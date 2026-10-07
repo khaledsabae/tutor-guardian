@@ -1,0 +1,135 @@
+[
+  {
+    "key": "story:hope_sprout",
+    "sha256": "8c04e7883a526347f7fb4008424cd9d03dab101d372967b8f49064fb178dc8ad",
+    "fields": 13,
+    "deterministic_defects": [],
+    "family_conflict": null
+  },
+  {
+    "key": "story:maryam_toys",
+    "sha256": "55d13d53c2f6fd8ad7869d3e8935468221f78126e5c58c95847f2692c6d0d81c",
+    "fields": 15,
+    "deterministic_defects": [],
+    "family_conflict": null
+  },
+  {
+    "key": "story:omar_prayer",
+    "sha256": "90a6085378b9e4d3e666e42a1d0bb26ac52a1d3253678683ff218aa53917947e",
+    "fields": 15,
+    "deterministic_defects": [],
+    "family_conflict": null
+  },
+  {
+    "key": "story:khadija_neighbor",
+    "sha256": "0273f101dc8a6e3a26a93a60c7a3228358d5ebafd5f3e1fedd54f29a154b2d49",
+    "fields": 15,
+    "deterministic_defects": [],
+    "family_conflict": null
+  },
+  {
+    "key": "story:abdullah_bismillah",
+    "sha256": "457d3b3c3d7aa1e55f1718f7de50f1e30882d07cb690b728c73847d0b988b892",
+    "fields": 15,
+    "deterministic_defects": [],
+    "family_conflict": null
+  },
+  {
+    "key": "story:yaseen_creation",
+    "sha256": "baf116681c3ecd3685e03851373a976575c0c486cab480f0d056765d6c83039c",
+    "fields": 15,
+    "deterministic_defects": [],
+    "family_conflict": null
+  },
+  {
+    "key": "story:fatima_parents",
+    "sha256": "97ed5d2ddce39005f719af9663bb098e6e8c81dd1b89d3cb96c67e207e54a965",
+    "fields": 15,
+    "deterministic_defects": [],
+    "family_conflict": null
+  },
+  {
+    "key": "story:bilal_forgiveness",
+    "sha256": "66df4d45b171b525847a5b317a47a4fb1a21e925a9a396bfb6fc4f8fecd2f824",
+    "fields": 15,
+    "deterministic_defects": [],
+    "family_conflict": null
+  },
+  {
+    "key": "story:hamza_truth",
+    "sha256": "900db069fbf1595d80ed186e44bd6ab021c5c92a983b9f170718fd9035f89372",
+    "fields": 15,
+    "deterministic_defects": [],
+    "family_conflict": null
+  },
+  {
+    "key": "story:badr_broken_toy",
+    "sha256": "705f57a786be8fff4d2ee3f55495644604a7a86349c9b9e14934bfb93e836d66",
+    "fields": 13,
+    "deterministic_defects": [],
+    "family_conflict": null
+  },
+  {
+    "key": "story:sarah_basil_sprout",
+    "sha256": "7c6f98734d6cd401f67826d26edd7b5c050bdaa623b56437c8a70c72fbcd533b",
+    "fields": 13,
+    "deterministic_defects": [],
+    "family_conflict": null
+  },
+  {
+    "key": "story:tamim_anger_volcano",
+    "sha256": "9ccde54706846c29532679662a8da72e5264de23997a0a07438d4a23a72d0ce0",
+    "fields": 13,
+    "deterministic_defects": [],
+    "family_conflict": null
+  },
+  {
+    "key": "story:noura_sharing_box",
+    "sha256": "13e573375a5d669494f9f0a9fa4fead78652ed977d985657b3a8e559762c626f",
+    "fields": 13,
+    "deterministic_defects": [],
+    "family_conflict": null
+  },
+  {
+    "key": "story:salman_secret_trust",
+    "sha256": "86a801dd7b617e5bd5af00af0bad652f3434aa02d2237bed9b752e5f28066921",
+    "fields": 13,
+    "deterministic_defects": [],
+    "family_conflict": null
+  },
+  {
+    "key": "tip_prenatal-1_006",
+    "sha256": "a7177d1b3765f09119d1d3b84b3dd01ac918b2891f76dabdded3503fc279c4e3",
+    "fields": 1,
+    "deterministic_defects": [],
+    "family_conflict": null
+  },
+  {
+    "key": "lesson_7-9_islamic_parenting_worship_05",
+    "sha256": "dbe74b00dbaf901eb9060f1f3e5ad53cde2a731b7c7348bb214554bcf4825f36",
+    "fields": 4,
+    "deterministic_defects": [],
+    "family_conflict": null
+  },
+  {
+    "key": "lesson_7-9_islamic_parenting_worship_07",
+    "sha256": "fccf68b19c8a2c041c2e40f53f9a520a220422bcedb76b03ff23821df18fb3bb",
+    "fields": 4,
+    "deterministic_defects": [],
+    "family_conflict": null
+  },
+  {
+    "key": "lesson_7-9_islamic_parenting_worship_08",
+    "sha256": "85eb945d94b16423c1f548101f29cfa687ec695140ee83ae00bb55899cf9fcb8",
+    "fields": 4,
+    "deterministic_defects": [],
+    "family_conflict": null
+  },
+  {
+    "key": "lesson_7-9_islamic_parenting_worship_09",
+    "sha256": "8665700378bb00026e42a871718921ab155403a1d15f7432a79f132dc76038ed",
+    "fields": 4,
+    "deterministic_defects": [],
+    "family_conflict": null
+  }
+]

@@ -136,9 +136,6 @@ def _mutated(pair, fn):
     ("unknown knowledge unit",
      lambda ar, en: [d["parent_note"]["unit_ids"].append("isl-does-not-exist") for d in (ar["days"][0], en["days"][0])],
      "ليست وحدة"),
-    ("story with no English version",
-     lambda ar, en: [d.__setitem__("story_id", "badr_broken_toy") for d in (ar["days"][0], en["days"][0])],
-     "بلا ترجمة"),
     ("ayah outside its surah",
      lambda ar, en: [d["quran"]["together"].__setitem__("to", 99) for d in (ar["days"][0], en["days"][0])],
      "خارج حدود السورة"),
@@ -200,6 +197,22 @@ def _mutated(pair, fn):
 def test_ramadan_rule_bites(cp, src, ramadan, label, mutate, needle):
     ar, en = _mutated(ramadan, mutate)
     _expect(_problems(cp, src, "ramadan_family", ar, en), needle)
+
+
+def test_story_without_english_is_caught(cp, src, ramadan):
+    """A day may not point at a story the English reader cannot open.
+
+    Every shipped story has English now (the last ones landed 2026-10-07), so no
+    real story id can play the untranslated one: the case takes one story's English
+    out of a copy of the real sources instead of hoping a gap stays in the data.
+    """
+    story = "badr_broken_toy"
+    assert story in src["stories_ar"] and story in src["stories_en"]
+    without = {**src, "stories_en": set(src["stories_en"]) - {story}}
+    ar, en = _mutated(ramadan, lambda a, e: [d["days"][0].__setitem__("story_id", story)
+                                             for d in (a, e)])
+    _expect(_problems(cp, without, "ramadan_family", ar, en), "بلا ترجمة")
+    assert not any("بلا ترجمة" in p for p in _problems(cp, src, "ramadan_family", ar, en))
 
 
 def test_pasted_verse_is_caught_even_without_brackets(cp, src, ramadan):

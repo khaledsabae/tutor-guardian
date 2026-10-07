@@ -1,0 +1,55 @@
+{
+  "_doc": "Source and age-fit audit for the five live-Arabic lessons whose English was unpublished (2026-10-07 closeout). Unit verdicts are read from ops/data/kb_fidelity/judged_faithful.json and ops/data/kb_fidelity/quarantined.json; scripture by ops/tools/check_scripture_coverage.py (exit 0). Not a scholar's review.",
+  "lessons": {
+    "lesson_7-9_islamic_parenting_worship_05": {
+      "units": {
+        "isl-d54fd8e8": "judged faithful — Kayfa_Turabbi_Waladak.pdf pp.20-21 (7-9)",
+        "isl-1bceeaf6": "judged faithful — Kayfa p.21 (7-9)"
+      },
+      "scripture": "Luqman 31:17 quoted in Arabic inside ﴿﴾, exact per scripture gate",
+      "age_fit": "7-9 unit, 7-9 lesson — fits",
+      "source_verdict": "verified",
+      "decision": "restored (stamped by both families)"
+    },
+    "lesson_7-9_islamic_parenting_worship_06": {
+      "units": {
+        "isl-c4d83813 (Arabic and English)": "authored guidance on teaching prayer (PR #27), not judged against its PDF and not a wudu text",
+        "isl-ab49af82 (English only)": "withdrawn as unfaithful — Alukah p.144 is about sleep after Fajr and circumcision, not wudu"
+      },
+      "scripture": "none quoted",
+      "age_fit": "fits 7-9, but moot",
+      "source_verdict": "unverified — the step-by-step wudu list has no verified source unit; English unit_ids differ from the Arabic",
+      "decision": "kept unpublished; not sent for model review"
+    },
+    "lesson_7-9_islamic_parenting_worship_07": {
+      "units": {
+        "isl-c4d83813": "authored guidance (PR #27), read on its own",
+        "isl-1bceeaf6": "judged faithful — Kayfa p.21 (7-9)"
+      },
+      "scripture": "none quoted; prayer-time anchors (Fajr before sunrise, Maghrib at sunset) are common knowledge and the lesson defers to local times",
+      "age_fit": "7-9 — fits",
+      "source_verdict": "verified for its claims (gradual training from isl-1bceeaf6); routine-mapping advice is app guidance, not attributed to a source",
+      "decision": "restored (stamped by both families)"
+    },
+    "lesson_7-9_islamic_parenting_worship_08": {
+      "units": {
+        "isl-1bceeaf6": "judged faithful — Kayfa p.21: the middle way with reluctant children",
+        "gap-dev-stubborn-01": "authored development guidance (gap_fill_2026-09), app policy rather than a cited source"
+      },
+      "scripture": "Bukhari 6927 «إن الله رفيق يحب الرفق في الأمر كله» — exact per scripture gate",
+      "age_fit": "7-9 — fits",
+      "source_verdict": "verified for its religious claims; behaviour advice is app guidance",
+      "decision": "restored (stamped; 2 low notes from deepseek on the phrasing 'finish your game for five minutes')"
+    },
+    "lesson_7-9_islamic_parenting_worship_09": {
+      "units": {
+        "isl-b793e864": "judged faithful — Kayfa p.50; tagged 4-6",
+        "isl-1bceeaf6": "judged faithful — Kayfa p.21 (7-9), includes the caution against tying worship to material rewards"
+      },
+      "scripture": "none quoted",
+      "age_fit": "OK — the 4-6 unit states an age-general principle (moral reward before material, praise and hugs, rewards not a condition, prefer surprise); the 7-9 unit carries the same caution, and the lesson applies it to a 7-9 prayer chart. Earlier single-model note: the summary names 7 and 8 but not 9 (low).",
+      "source_verdict": "verified",
+      "decision": "restored (stamped by both families)"
+    }
+  }
+}

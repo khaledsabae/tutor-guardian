@@ -1,0 +1,106 @@
+{
+  "run": "ops/tools/review_en_parity.py run --only @items.txt --rounds 1 --no-fix --workers 1 --max-concurrent 1 --request-timeout 120 --request-attempts 4, via run_review.py (fresh cache: every verdict is a new call; stop on first 429)",
+  "reviewers": [
+    "deepseek-v4-pro",
+    "glm-5.2"
+  ],
+  "transport": "Ollama Cloud, existing subscription key; no fixer, no OpenRouter, no new keys",
+  "model_calls": {
+    "review": {
+      "deepseek-v4-pro": 4,
+      "glm-5.2": 4
+    },
+    "evidence_consult": {
+      "deepseek-v4-pro": 1,
+      "glm-5.2": 1
+    }
+  },
+  "call_outcomes": {
+    "glm-5.2:ok": 5,
+    "deepseek-v4-pro:ok": 5
+  },
+  "http_429": 0,
+  "total_tokens": 74953,
+  "accepted": 7,
+  "held": 0,
+  "scholar_review": "pending — the model review certifies English-Arabic parity only; the sarah adjudication is an automated/agent one; no human or scholar approval is claimed",
+  "proof_sha256": {
+    "raw-calls.json": "a63d8a6dc0d91d3ca1131efac2486500072599676f6a41c2ac23a269c841e7d9",
+    "run-report.json": "649d433deee37afff88c1f46d3fc7cdedac8d5ac45f88ccac37f60520c44c5fe",
+    "sarah-evidence.json": "2b128ea71b6d037c12bc28adf715524ad48e992733909efd6ea305083d30f91a",
+    "sarah-evidence-consult.json": "7a6fed336536cbe4732d74518eb8d8d33415489e9cc0e6ee2b50e54f79147531",
+    "pre-run-deterministic.json": "9d6603988113dd1558b82544cda8a7edc8ec068caa22856df0d24973d5303a91"
+  },
+  "items": [
+    {
+      "key": "story:bilal_forgiveness",
+      "verdict": "accepted",
+      "reviewed_sha256": "855c190f306f362e233612c5b72a910e174e80a76689408e731d81c5b4e053b2",
+      "current_sha256": "855c190f306f362e233612c5b72a910e174e80a76689408e731d81c5b4e053b2",
+      "approval_state": "valid",
+      "ar_file": "mobile/assets/data/stories.json",
+      "ar_file_sha256": "5f78cc6cc41af5d2d1402795b0ce71be1ee5c2465dbffc2fc46901de212335e9",
+      "reason": "Arabic discussionQuestions[0] corrected «أثناء اللعب» → «أثناء حصة الرسم» (the story's incident is in art class; story text untouched), English to 'during art class' (and 'classmate' for زميله). Both copies of the Arabic (mobile/assets/data/stories.json, docs/stories.json) identical. Fresh dual-family review: 2 low notes (glm). Stamped."
+    },
+    {
+      "key": "story:salman_secret_trust",
+      "verdict": "accepted",
+      "reviewed_sha256": "491f78f7d55a4d9c385dc86c01f1cd0ba3a4bf9dbeeb24dcb20e2c4e627c7b6d",
+      "current_sha256": "491f78f7d55a4d9c385dc86c01f1cd0ba3a4bf9dbeeb24dcb20e2c4e627c7b6d",
+      "approval_state": "valid",
+      "ar_file": "mobile/assets/data/stories.json",
+      "ar_file_sha256": "5f78cc6cc41af5d2d1402795b0ce71be1ee5c2465dbffc2fc46901de212335e9",
+      "reason": "Arabic pages[2] colloquial «وأكيد صاحبها يبحث عنها» → MSA «ولا بدّ أن صاحبها يبحث عنها» (one phrase; English unchanged — it already read 'must be'). Fresh dual-family review: low only (could vs was seeing; ID card; لا تحل لي nuance). New story — now live in English."
+    },
+    {
+      "key": "story:sarah_basil_sprout",
+      "verdict": "accepted",
+      "reviewed_sha256": "7c6f98734d6cd401f67826d26edd7b5c050bdaa623b56437c8a70c72fbcd533b",
+      "current_sha256": "7c6f98734d6cd401f67826d26edd7b5c050bdaa623b56437c8a70c72fbcd533b",
+      "approval_state": "valid",
+      "ar_file": "mobile/assets/data/stories.json",
+      "ar_file_sha256": "5f78cc6cc41af5d2d1402795b0ce71be1ee5c2465dbffc2fc46901de212335e9",
+      "reason": "Citation verified, not changed: the quote is verbatim Sahih al-Bukhari 2989 («ويميط»); «وتميط» is Muslim 1009 (sarah-evidence.json: fawazahmed0 full text, an independent sunnah.com-derived dataset, the project corpus and the scripture gate). Given the texts (without the agent's conclusion) both families answered quote verbatim / finding incorrect / English faithful (sarah-evidence-consult.json). Agent adjudication recorded in ops/data/en_parity_adjudications.json, bound to the content sha. In the blind fresh run glm-5.2 found nothing; deepseek-v4-pro re-raised the same field as medium source_corruption — now claiming «وإماطة» and Muslim 1009 — which the adjudication covers. No other defect. New story — now live in English. This is an automated/agent adjudication, NOT a human or scholar approval."
+    },
+    {
+      "key": "story:maryam_toys",
+      "verdict": "accepted",
+      "reviewed_sha256": "152e2e9ba28546d019275d359ce634f32c44c8ebf232cc884c151ee954559afe",
+      "current_sha256": "152e2e9ba28546d019275d359ce634f32c44c8ebf232cc884c151ee954559afe",
+      "approval_state": "valid",
+      "ar_file": "mobile/assets/data/stories.json",
+      "ar_file_sha256": "5f78cc6cc41af5d2d1402795b0ce71be1ee5c2465dbffc2fc46901de212335e9",
+      "reason": "The held candidate (ops/data/en_parity_pending, translated from the stale Arabic in docs/stories.json: tidiness category/questions/challenge) is discarded. The live English already carries the Arabic's sharing category, all three questions and the sharing challenge (commit 9d4d8d9a); a fresh dual-family review of that exact text found only low notes (pages[1] 'neighbour' vs 'neighbour's daughter'; pages[3] الكرم as kindness). Re-stamped."
+    },
+    {
+      "key": "story:yaseen_creation",
+      "verdict": "accepted",
+      "reviewed_sha256": "66bcd1f7b9f240f91f640302251716ca7e2cfb0b2dae8dbb7ad4ceaccb6ef4c0",
+      "current_sha256": "66bcd1f7b9f240f91f640302251716ca7e2cfb0b2dae8dbb7ad4ceaccb6ef4c0",
+      "approval_state": "valid",
+      "ar_file": "mobile/assets/data/stories.json",
+      "ar_file_sha256": "5f78cc6cc41af5d2d1402795b0ce71be1ee5c2465dbffc2fc46901de212335e9",
+      "reason": "The held candidate (sky-and-birds question from the stale docs/stories.json Arabic; pages[4] dropping 'with His praise') is discarded. The live English already lists the ant, stars, trees and flowers (commit 22d5e96e); fresh dual-family review: one low note (glm, 'steady steps'). Re-stamped deepseek+glm (was gemini+glm)."
+    },
+    {
+      "key": "story:fatima_parents",
+      "verdict": "accepted",
+      "reviewed_sha256": "2ae0275b570aa7d642608b84c600a49c7c42e4a61167eb60d0e54002d1fdf2a3",
+      "current_sha256": "2ae0275b570aa7d642608b84c600a49c7c42e4a61167eb60d0e54002d1fdf2a3",
+      "approval_state": "valid",
+      "ar_file": "mobile/assets/data/stories.json",
+      "ar_file_sha256": "5f78cc6cc41af5d2d1402795b0ce71be1ee5c2465dbffc2fc46901de212335e9",
+      "reason": "The held candidate ('kind obedience', 'red carnation') is discarded. The live English already reads 'obedience to parents in what is right' (بالمعروف) and 'damask rose' (جوري) (commit 9d4d8d9a); fresh dual-family review: low only (both: pages[4] بوالدتها generalised to birr al-walidayn). Re-stamped."
+    },
+    {
+      "key": "lesson_7-9_islamic_parenting_worship_06",
+      "verdict": "accepted",
+      "reviewed_sha256": "33abfeed87dbd0a4547b0043646737f4d86e859631f2a2dc382693fa1b3d820a",
+      "current_sha256": "33abfeed87dbd0a4547b0043646737f4d86e859631f2a2dc382693fa1b3d820a",
+      "approval_state": "valid",
+      "ar_file": "knowledge_base/curriculum/lessons/lesson_7-9_islamic_parenting_worship_06.json",
+      "ar_file_sha256": "eafdf2fb9384d827a1f416e97cc9b87ebc39af58848d181828ff9e7170c72635",
+      "reason": "Source: the verified live unit isl-3f0af447 (Alukah 'حقوق الأولاد' pp.99–102, refilled from OCR'd pages and page-image-reviewed in PR #41; already the source of the prayer journey's wudu stage) carries al-Bara' ibn 'Azib showing his family the Prophet's wudu member by member. It is now linked in the Arabic and English unit_ids alike (['isl-3f0af447','isl-c4d83813']); the withdrawn isl-ab49af82 is gone from the English. Fresh dual-family review: no defect. Restored from ops/data/en_unpublished and stamped. Coverage limits in lesson-source-audit.json."
+    }
+  ]
+}
