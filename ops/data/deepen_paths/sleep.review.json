@@ -5,7 +5,7 @@
     "deepseek-v4-pro",
     "glm-5.2"
   ],
-  "written_at": "2026-10-07T16:14:23",
+  "written_at": "2026-10-07T20:59:32",
   "lessons": [
     {
       "path_id": "path_0-3_medical_infant_sleep",
@@ -79,6 +79,114 @@
         "glm-5.2"
       ],
       "translation_stamp": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07"
+    },
+    {
+      "path_id": "path_0-3_medical_infant_sleep",
+      "key": "s03",
+      "brief": "علامات النعاس: اللحظة المناسبة للنوم",
+      "accepted": true,
+      "blockers": [],
+      "ar_review": {
+        "reviewer": "deepseek-v4-pro+glm-5.2",
+        "at": "2026-10-07T20:59:26",
+        "rounds": 2,
+        "defects": [
+          {
+            "severity": "low",
+            "type": "pedagogy",
+            "field": "summary",
+            "why": "«توقظه» يفترض أن الرضيع نائم فيُيقظ، لكن السياق هو طفلٌ نعسان لم ينم بعد؛ الأدق أن كثرة الإثارة تعيق استغراقه في النوم أو تزيد تململه، لا أنها توقظه من نوم."
+          },
+          {
+            "severity": "low",
+            "type": "register",
+            "field": "summary",
+            "why": "تركيب «إشارات رضيعك أنت» متعثر قليلًا؛ إقحام «أنت» للتوكيد يبدو ثقيلًا في سياق نصٍّ سلس."
+          }
+        ]
+      },
+      "en_review": {
+        "reviewer": "deepseek-v4-pro+glm-5.2",
+        "at": "2026-10-07T20:59:26",
+        "rounds": 2,
+        "defects": [
+          {
+            "severity": "low",
+            "type": "meaning_change",
+            "field": "summary",
+            "why": "The Arabic says 'لم يستيقظ' (did not wake up) in the past tense, while the English uses future 'will not wake up', slightly shifting the meaning from a past observation to a future prediction."
+          },
+          {
+            "severity": "low",
+            "type": "structure",
+            "field": "needs_professional_followup",
+            "why": "The Arabic lesson object includes \"needs_professional_followup\": true as a standalone boolean field, but the English object omits it entirely, keeping only the warning_flags array entry. This is a dropped field."
+          },
+          {
+            "severity": "low",
+            "type": "register",
+            "field": "summary",
+            "why": "\"cut down on\" is slightly informal/colloquial where the Arabic «قلّل اللعب والإثارة» is straightforward MSA; \"reduce\" or \"lessen\" would better match the register."
+          }
+        ]
+      },
+      "dispositions": [],
+      "written_as": "lesson_0-3_medical_infant_sleep_03",
+      "order": 3,
+      "title": "علامات النعاس: اللحظة المناسبة للنوم",
+      "ar_hash": "6e5351d76ba10f00",
+      "en_hash": "c06e71c5f30ce4f26e5351d76ba10f00",
+      "translation_content_sha256": "fa022fb853aaf7d2002dd56877b040f6b1fdd6cd3fd1f31c735197c0f377c113",
+      "translation_reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "translation_stamp": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07"
+    },
+    {
+      "path_id": "path_0-3_medical_infant_sleep",
+      "key": "s04",
+      "brief": "روتينٌ قصير قبل النوم",
+      "accepted": true,
+      "blockers": [],
+      "ar_review": {
+        "reviewer": "deepseek-v4-pro+glm-5.2",
+        "at": "2026-10-07T20:53:18",
+        "rounds": 3,
+        "defects": [
+          {
+            "severity": "low",
+            "type": "register",
+            "field": "try_this",
+            "why": "الصياغة ركيكة نحويًا: العدد (أربعًا) جاء بدون معدود بعد وصف (ثلاث خطواتٍ هادئة)، فيلتبس هل الأربع هادئة أيضًا. الأفضل تكرار المعدود."
+          }
+        ]
+      },
+      "en_review": {
+        "reviewer": "deepseek-v4-pro+glm-5.2",
+        "at": "2026-10-07T20:53:18",
+        "rounds": 3,
+        "defects": [
+          {
+            "severity": "low",
+            "type": "meaning_change",
+            "field": "try_this",
+            "why": "العربية تقول (ثلاث خطواتٍ هادئة أو أربعًا) فتصف الثلاث فقط بالهدوء، بينما الإنجليزية تجعل الهدوء وصفًا للعددين معًا."
+          }
+        ]
+      },
+      "dispositions": [],
+      "written_as": "lesson_0-3_medical_infant_sleep_04",
+      "order": 4,
+      "title": "روتينٌ قصير قبل النوم",
+      "ar_hash": "7f8f3f1b3bb08c4f",
+      "en_hash": "553735846294f95a7f8f3f1b3bb08c4f",
+      "translation_content_sha256": "84f11069ce9a76909928ea2fb5516078b15624eefabc7c92c622ecbec095d6f8",
+      "translation_reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "translation_stamp": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07"
     }
   ],
   "recovery": {
@@ -89,7 +197,7 @@
     ],
     "age_scope": "birth until first birthday; canonical prenatal-1; legacy 0-3 retained only in stable IDs",
     "corrections_by": "Codex",
-    "remaining_original_8_lessons": "held in preserved backup; not promised by this path description",
+    "remaining_original_8_lessons": "superseded by continuation: s03-s04 recovered 2026-10-07; remaining six original drafts (s05-s10) held in preserved backup; not promised by this path description",
     "excluded_unit_ids": [
       "gap-med-co-sleeping-01",
       "c88f868b-4f40-45eb-b357-f8867b2c327d"
@@ -121,7 +229,6 @@
       }
     ],
     "path_translation_review": {
-      "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
       "reviewers": [
         "deepseek-v4-pro",
         "glm-5.2"
@@ -129,12 +236,13 @@
       "fixer": null,
       "rounds": 1,
       "prompt_version": "dfa8a5f39718",
-      "content_sha256": "237b3e0a535459f76c67684d379422c8602aa9c50afc281ca89806d98fa5af37",
-      "reviewed_at": "2026-10-07T16:20:39+00:00",
+      "content_sha256": "02ea372485da6d2237bef9940c489228ba7cd3e3b96b08c09b5dc172994251ce",
+      "reviewed_at": "2026-10-07T21:02:45+00:00",
       "residual_low": [],
       "adjudicated": [],
       "tool": "ops/tools/review_en_parity.py",
-      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah",
+      "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08"
     },
     "verification": {
       "regression_tests": 160,
@@ -145,6 +253,136 @@
       "schema_files": 926,
       "schema_exit": 0,
       "path_description_mismatches": 0
+    },
+    "continuation_s03_s04": {
+      "base": "a89835b47344a5e3cabf898b5a60017ce4d16794",
+      "prefix": [
+        "s03",
+        "s04"
+      ],
+      "source_drafts": "~/.local/share/tg-deepen-paths/work/sleep/path_0-3_medical_infant_sleep.drafts.json (98 backup hashes verified unchanged before and after; read-only)",
+      "corrections_by": "claude-opus-5-5",
+      "excluded_unit_ids": [
+        "gap-med-co-sleeping-01",
+        "c7b72252-7135-405e-98fd-a46d466d9055"
+      ],
+      "exclusion_reasons": {
+        "gap-med-co-sleeping-01": "no source URL, pending review, invented 2-3 minute wait and 10-14 night promise",
+        "c7b72252-7135-405e-98fd-a46d466d9055": "age_group 2-3, outside prenatal-1; its 20-minute routine cap is not in the primary sources"
+      },
+      "removed_from_original_drafts": [
+        "eye/ear rubbing cue (not in fetched sources)",
+        "overtired-baby claim (not in fetched sources)",
+        "'watch two or three days'",
+        "15-20 minute routine length",
+        "'a habit takes weeks'",
+        "unscoped 'after the first months' replaced by AAP 'about 4 months'"
+      ],
+      "medical_changes": [
+        "tired signals limited to CDC wording (turning head away, yawning, fussing)",
+        "you will not spoil a baby by holding or responding (CDC)",
+        "move a baby asleep in car seat/pram/swing/carrier to a firm flat surface on the back (AAP)",
+        "dozing at feeds early on is normal; carry on the feed (NHS)",
+        "drowsy-but-awake only from about 4 months, no deadline (AAP)",
+        "emergency now: hard to wake, floppy, breathing difficulty, blue/grey, 38C+ under 3 months (NHS)",
+        "routine ends in safe sleep; no promise of sleeping through the night; no fixed length (NHS/CDC)"
+      ],
+      "lesson_review": {
+        "tool": "ops/tools/deepen_paths.py prompts/payload/hash (SYSTEM_REVIEW_BOTH) via sequential driver",
+        "reviewers": [
+          "deepseek-v4-pro",
+          "glm-5.2"
+        ],
+        "both_families_on_final_hash": true,
+        "concurrency": 1,
+        "request_timeout_s": 120,
+        "stop_on_429": true,
+        "fallback_substitution": false,
+        "calls_ok": 14,
+        "calls_timed_out": 5,
+        "http_429": 0,
+        "rounds": {
+          "s03": 2,
+          "s04": 3,
+          "path": 2
+        }
+      },
+      "translation_review": {
+        "tool": "ops/tools/review_en_parity.py run --rounds 1 --request-attempts 1 --workers 1 --max-concurrent 1 --request-timeout 120 --no-fix",
+        "calls_ok": 6,
+        "http_429": 0
+      },
+      "primary_sources": [
+        {
+          "url": "https://www.cdc.gov/act-early/milestones/2-months.html",
+          "reader_sha256": "fb5f3ddcf968882409125f97e8593ed136b0c2009c910310e391bc2e739d8568",
+          "checked_at": "2026-10-07T20:30:50Z",
+          "used_for": "tired signals; not spoiling; sleepy baby on back in safe sleep area; routines for sleeping and feeding"
+        },
+        {
+          "url": "https://www.cdc.gov/act-early/milestones/4-months.html",
+          "reader_sha256": "6423006e4d252d9f46e10f85962fd056a358b4a827d1a552f74ea308abf0fc79",
+          "checked_at": "2026-10-07T20:30:50Z",
+          "used_for": "steady routines for sleeping and feeding"
+        },
+        {
+          "url": "https://www.cdc.gov/act-early/milestones/9-months.html",
+          "reader_sha256": "1257e431dff3f1c655cb2a005d1f627805aa5fa188381bf728dbf9faa53b2c55",
+          "checked_at": "2026-10-07T20:30:50Z",
+          "used_for": "consistent sleep times"
+        },
+        {
+          "url": "https://www.healthychildren.org/English/ages-stages/baby/sleep/Pages/Getting-Your-Baby-to-Sleep.aspx",
+          "reader_sha256": "d2543ba030398d66dfd11b48884e1dcc6d8b534cf112c4db63ddb7f2629d4bd8",
+          "checked_at": "2026-10-07T20:29:52Z",
+          "used_for": "drowsy, not asleep, from 4 months; calm and quiet at night"
+        },
+        {
+          "url": "https://www.healthychildren.org/English/ages-stages/baby/sleep/Pages/A-Parents-Guide-to-Safe-Sleep.aspx",
+          "reader_sha256": "a43617379cb51778c8550b6cf480f770fa97b75e385e96bbba5f1e43321c7789",
+          "checked_at": "2026-10-07T20:29:52Z",
+          "used_for": "AAP 2022 policy explained: back, firm flat surface, room-share 6 months, move from car seat/swing/sling"
+        },
+        {
+          "url": "https://www.nhs.uk/baby/caring-for-a-newborn/helping-your-baby-to-sleep/",
+          "reader_sha256": "ba72f02f95eaa558153e86faca6cca22095f8e86f19e676ebdb0a92042c02c78",
+          "checked_at": "2026-10-07T20:29:52Z",
+          "used_for": "bedtime routine items; too much excitement; night-time calm; dozing at feeds; patterns change with teething/illness/growth"
+        },
+        {
+          "url": "https://www.nhs.uk/baby/health/is-your-baby-or-toddler-seriously-ill/",
+          "reader_sha256": "ef643fdc7a408be6f38d86c7a096fda4ce1203aa119739b280fe212e475c581a",
+          "checked_at": "2026-10-07T20:29:52Z",
+          "used_for": "emergency signs incl. 38C+ under 3 months"
+        }
+      ],
+      "unreachable_sources": {
+        "https://publications.aap.org/pediatrics/article/150/1/e2022057990": "Cloudflare challenge; not bypassed; HealthyChildren AAP policy page used instead"
+      },
+      "human_approval_claimed": false,
+      "verification": {
+        "tests": 195,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "pytest_exit": 0,
+        "test_files": [
+          "test_deepen_paths",
+          "test_review_en_parity",
+          "test_review_en_parity_proof",
+          "test_review_en_parity_transport",
+          "test_curriculum_i18n",
+          "test_lesson_index_integrity",
+          "test_lesson11_source_proof"
+        ],
+        "schema_files": 942,
+        "schema_exit": 0,
+        "en_parity_check_all_exit": 0,
+        "pre_commit_exit": 0,
+        "preserved_backup_files": 98,
+        "backup_mismatches": 0,
+        "existing_s01_s02_files_unchanged": true
+      }
     }
   }
 }

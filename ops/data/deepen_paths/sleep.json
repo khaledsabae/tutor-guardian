@@ -8,22 +8,22 @@
         "title": "نوم الرضيع: نومٌ آمن وليالٍ أهدأ (حتى عام)",
         "age_group": "prenatal-1",
         "domain": "medical",
-        "description": "درسان للوالدين من الولادة حتى إكمال عام: تجهيز مكان نوم آمن في كل نومة، وفهم الاستيقاظ والرضاعة الليلية، والتمييز بين التفاوت الطبيعي وعلامات الخطر التي تتطلّب مساعدة عاجلة.",
+        "description": "أربعة دروس للوالدين من الولادة حتى إكمال عام: تجهيز مكان نوم آمن في كل نومة، وفهم الاستيقاظ والرضاعة الليلية، وقراءة إشارات التعب والنعاس، وروتين قصير هادئ قبل النوم؛ مع التمييز في كل ذلك بين التفاوت الطبيعي وعلامات الخطر التي تتطلّب مساعدة عاجلة.",
         "pedagogical_framework": "attachment_rahma",
         "primary_reference": {
           "type": "تقرير_طبي",
-          "info": "الأكاديمية الأمريكية لطب الأطفال: النوم الآمن. هيئة الخدمات الصحية البريطانية: نوم الرضيع وعلامات المرض الخطير."
+          "info": "الأكاديمية الأمريكية لطب الأطفال: النوم الآمن. هيئة الخدمات الصحية البريطانية: نوم الرضيع وعلامات المرض الخطير. مراكز السيطرة على الأمراض والوقاية منها الأمريكية: نصائح مراحل النموّ."
         },
         "en": {
           "title": "Baby Sleep: Safe Sleep and Calmer Nights (Up to One Year)",
-          "description": "Two lessons for parents from birth until the first birthday: prepare a safe space for every sleep, understand waking and night feeds, and distinguish normal variation from danger signs needing urgent help."
+          "description": "Four lessons for parents from birth until the first birthday: prepare a safe space for every sleep, understand waking and night feeds, read tired and sleepy cues, and keep a short, calm bedtime routine; throughout, tell normal variation apart from danger signs needing urgent help."
         }
       },
       "unit_bands": [
         "prenatal-1",
         "unspecified"
       ],
-      "band_notes": "Birth until first birthday only; prenatal-1 is the canonical band. This recovery publishes only the first two contiguous lessons; the remaining eight original drafts stay held in the preserved backup. Follow AAP safe sleep and NHS infant feeding/waking guidance. Never delay responding to hunger or distress, never recommend leaving a newborn to cry, never promise a sleep-training deadline. Inability to wake, stopped breathing, or blue/grey colour requires emergency help immediately.",
+      "band_notes": "Birth until first birthday only; prenatal-1 is the canonical band. This recovery publishes only the first four contiguous lessons; the remaining six original drafts stay held in the preserved backup. Lessons 3-4 follow CDC milestone tips (2, 4 and 9 months), AAP drowsy-but-awake from about 4 months, and NHS bedtime-routine guidance; no routine length, no deadline, and no unit outside prenatal-1. Follow AAP safe sleep and NHS infant feeding/waking guidance. Never delay responding to hunger or distress, never recommend leaving a newborn to cry, never promise a sleep-training deadline. Inability to wake, stopped breathing, or blue/grey colour requires emergency help immediately.",
       "lessons": [
         {
           "title": "النوم الآمن: على ظهره في سريرٍ خالٍ",
@@ -46,7 +46,41 @@
           "pin_units": [
             "med-2dc3af5f"
           ]
+        },
+        {
+          "title": "علامات النعاس: اللحظة المناسبة للنوم",
+          "focus": "Reading tired signals (turning the head away, yawning, fussing — CDC), responding without fear of spoiling, winding down, placing the sleepy baby on the back in a safe sleep space, moving a baby who fell asleep in a car seat/swing/carrier to a firm flat surface; dozing at feeds is normal early on; from about 4 months put down drowsy (AAP); ordinary sleepiness versus emergency signs (NHS).",
+          "keywords": [
+            "النعاس",
+            "النوم"
+          ],
+          "pin_units": [
+            "med-2dc3af5f"
+          ]
+        },
+        {
+          "title": "روتينٌ قصير قبل النوم",
+          "focus": "A simple, soothing bedtime routine (NHS): bath or wash, fresh nappy and night clothes, dim lights, a lullaby or quiet du'a, a cuddle, then the cot; routines help the baby learn what to expect (CDC); calm night feeds; always ending in safe sleep; no promised result or fixed length; adjust as the baby grows.",
+          "keywords": [
+            "روتين",
+            "النوم"
+          ],
+          "pin_units": [
+            "med-2dc3af5f"
+          ]
         }
+      ],
+      "description_replace_ar": [
+        [
+          "درسان للوالدين من الولادة حتى إكمال عام: تجهيز مكان نوم آمن في كل نومة، وفهم الاستيقاظ والرضاعة الليلية، والتمييز بين التفاوت الطبيعي وعلامات الخطر التي تتطلّب مساعدة عاجلة.",
+          "أربعة دروس للوالدين من الولادة حتى إكمال عام: تجهيز مكان نوم آمن في كل نومة، وفهم الاستيقاظ والرضاعة الليلية، وقراءة إشارات التعب والنعاس، وروتين قصير هادئ قبل النوم؛ مع التمييز في كل ذلك بين التفاوت الطبيعي وعلامات الخطر التي تتطلّب مساعدة عاجلة."
+        ]
+      ],
+      "description_replace_en": [
+        [
+          "Two lessons for parents from birth until the first birthday: prepare a safe space for every sleep, understand waking and night feeds, and distinguish normal variation from danger signs needing urgent help.",
+          "Four lessons for parents from birth until the first birthday: prepare a safe space for every sleep, understand waking and night feeds, read tired and sleepy cues, and keep a short, calm bedtime routine; throughout, tell normal variation apart from danger signs needing urgent help."
+        ]
       ]
     },
     {

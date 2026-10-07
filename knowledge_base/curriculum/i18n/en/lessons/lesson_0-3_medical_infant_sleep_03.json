@@ -1,0 +1,58 @@
+{
+  "id": "lesson_0-3_medical_infant_sleep_03",
+  "path_id": "path_0-3_medical_infant_sleep",
+  "title": "Sleepy Cues: The Right Moment for Sleep",
+  "age_group": "prenatal-1",
+  "domain": "medical",
+  "unit_ids": [
+    "med-2dc3af5f"
+  ],
+  "summary": "Your baby sends signals that tell you what they feel and what they need. When they are tired or need a break, they may turn their head away from you, yawn, or start to fuss. Every baby has their own way, so learn your own baby's signals by watching calmly, and respond to them; your response makes them feel safe and loved, and you will not spoil them by holding them or responding to them.\n\nWhen you notice these signals, help them calm down: lower the lights, lower your voice, and cut down on play and excitement; too much excitement before sleep can wake them up instead of calming them. If they seem sleepy, put them on their back in their empty cot, as in the safe-sleep lesson. If they doze off in a car seat, pram, swing or baby carrier, move them onto a firm, flat surface on their back as soon as you can.\n\nIn the first weeks, it is normal for a baby to doze off during a feed or in your arms; carry on with the feed until you feel they have had enough or are fully asleep. From about four months, try putting them in their cot while drowsy, before they are deeply asleep; this helps them learn to fall asleep in their own cot. It is fine if this does not work every time; there is no set deadline for learning it.\n\nTell ordinary sleepiness apart from danger signs: if your baby is difficult to wake or will not wake up, is unusually floppy, has difficulty breathing, turns blue or grey, or has a temperature of 38 degrees Celsius or higher and is under three months old, call an ambulance or go to the emergency department immediately.",
+  "try_this": "Today: Watch your baby before their next sleep time and write down the first tired signal you notice, then help them calm down and put them on their back in their empty cot.",
+  "order": 3,
+  "estimated_minutes": 3,
+  "reflection_prompts": [
+    "What is the first tired signal your baby gives, and how do you usually respond when you notice it?"
+  ],
+  "warning_flags": [
+    "needs_professional_followup"
+  ],
+  "needs_professional_followup": true,
+  "is_published": true,
+  "version": "1.0.0",
+  "created_at": "2026-10-07T20:59:32",
+  "updated_at": "2026-10-07T20:59:32",
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "claude-opus-5-5",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
+    "revalidated_at": "2026-10-07T21:00:50+00:00",
+    "generated_by": "ops/tools/deepen_paths.py",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "fa022fb853aaf7d2002dd56877b040f6b1fdd6cd3fd1f31c735197c0f377c113",
+      "reviewed_at": "2026-10-07T21:00:50+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+    }
+  }
+}
