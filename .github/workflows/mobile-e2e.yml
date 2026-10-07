@@ -10,6 +10,17 @@ name: Mobile E2E (emulator)
 # Never give a job here a self-hosted label: [self-hosted, production] is the
 # production VPS. Nothing in this workflow runs on Khaled's machine either.
 #
+# ── Stable required check ────────────────────────────────────────────────
+# Every PR targeting main runs this workflow, including backend/docs-only PRs.
+# This deliberately pays for two release APK builds and emulator journeys on
+# GitHub-hosted runners so requiring "Mobile delivery gate" cannot leave a
+# path-filtered PR waiting forever for a check that was never reported.
+# The final job uses always() and requires keystore, the complete build matrix,
+# and e2e to succeed. Failure, cancellation, skipped jobs, or missing results
+# cannot produce a green gate. Branch protection is configured separately by
+# the parent after the first green hosted gate; this workflow does not set it.
+# Manual workflow_dispatch remains available for baseline/upgrade validation.
+#
 # ── What it checks (e2e/run.sh, flows in e2e/flows/) ──────────────────────
 # Lineage "fresh" — PR head, fresh install, Arabic UI, one process for 01-06:
 #   01 onboarding → child in band 7-9 → Today renders
@@ -71,10 +82,6 @@ name: Mobile E2E (emulator)
 on:
   pull_request:
     branches: [main]
-    paths:
-      - 'mobile/**'
-      - 'e2e/**'
-      - '.github/workflows/mobile-e2e.yml'
   workflow_dispatch:
     inputs:
       baseline_ref:
@@ -219,7 +226,9 @@ jobs:
           echo "E2E_OUT=$RUNNER_TEMP/e2e/out" >> "$GITHUB_ENV"
 
       - name: Unit-test the E2E tooling
-        run: python3 -m unittest discover -s e2e -v
+        run: |
+          python3 -m pip install PyYAML==6.0.2
+          python3 -m unittest discover -s e2e -v
 
       - name: Enable KVM
         run: |
@@ -337,3 +346,31 @@ jobs:
             ${{ env.E2E_OUT }}/results.tsv
           if-no-files-found: warn
           retention-days: 14
+
+  delivery_gate:
+    name: Mobile delivery gate
+    if: ${{ always() }}
+    needs: [keystore, build, e2e]
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Require every mandatory job to succeed
+        env:
+          NEEDS_JSON: ${{ toJSON(needs) }}
+        run: |
+          python3 - <<'PY'
+          import json
+          import os
+          import sys
+
+          results = json.loads(os.environ["NEEDS_JSON"])
+          failed = [
+              f"{job}={results.get(job, {}).get('result', 'missing')}"
+              for job in ("keystore", "build", "e2e")
+              if results.get(job, {}).get("result") != "success"
+          ]
+          if failed:
+              print("::error::Mandatory mobile delivery jobs did not succeed: " + ", ".join(failed))
+              sys.exit(1)
+          print("All mandatory mobile delivery jobs succeeded.")
+          PY
