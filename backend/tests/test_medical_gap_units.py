@@ -73,7 +73,7 @@ def test_the_fasting_unit_keeps_the_ladders_order_and_actions():
     # The ladder's actions, as the unit must carry them.
     assert "ماء وتمرة أو عصير" in ladder["stop_action"] and "ماء وتمرة أو عصير" in text
     assert "لا تعطوه شيئًا بالفم حتى يستعيد وعيه تمامًا" in text
-    assert "خلال ساعة" in ladder["stop_action"] and "خلال ساعة" in text
+    assert "خلال ساعة" not in ladder["stop_action"] and "خلال ساعة" not in text
     for sign in ("إغماء", "تشنّج", "قيء متكرر", "هبوط السكر"):
         assert sign in text, sign
 
@@ -100,3 +100,64 @@ def _bm25():
         from app.services.bm25_index import _Bm25Index
         _INDEX = _Bm25Index()
     return _INDEX
+
+
+@pytest.mark.parametrize("uid", sorted(GAP_UNITS))
+def test_program_provenance_does_not_claim_specialist_review(uid):
+    d = _unit(uid)
+    provenance = " ".join(d["authored_references"]) + d["source_note"]
+    assert "المراجَع شرعيًا وطبيًا" not in provenance
+    assert "reviewed program files" not in provenance
+    assert "software" in d["source_note"]
+
+
+def test_dehydration_urgent_signs_require_care_now_without_a_timer():
+    d = _unit("med-80a3871c")
+    assert "خلال ساعة" not in d["text_original"] + d["text_simplified"]
+    assert "• اطلبوا رعاية طبية عاجلة الآن:" in d["text_simplified"]
+    urgent = d["text_simplified"].split("• اطلبوا رعاية طبية عاجلة الآن:")[1].split("\n•")[0]
+    for sign in ("بول داكن أو قليل", "ناعسًا", "الوقوف", "تنفّسه أو نبضه", "دموعه"):
+        assert sign in urgent
+    assert "واعيًا تمامًا وقادرًا على الشرب بأمان" in d["text_simplified"]
+
+
+@pytest.mark.parametrize("language,path,forbidden,required", [
+    ("ar", "programs", "خلال ساعة", "رعاية طبية عاجلة الآن"),
+    ("en", "i18n/en/programs", "within an hour", "urgent medical care now"),
+])
+def test_fasting_ladder_does_not_delay_urgent_care(language, path, forbidden, required):
+    ladder = json.loads((ROOT / "knowledge_base/curriculum" / path / "ramadan_family.json").read_text())["fasting_ladder"]
+    assert forbidden not in ladder["stop_action"]
+    assert required in ladder["stop_action"]
+
+
+def test_adolescent_cycle_uses_first_day_intervals_and_45_day_upper_limit():
+    d = _unit("med-f8cc198a")
+    for key in ("text_original", "text_simplified"):
+        assert "أكثر النساء" in d[key]
+        assert "أبعد من كل 45 يومًا" in d[key]
+        assert "من أول يوم" in d[key] and "أول يوم في الدورة التالية" in d[key]
+        assert "أكثر من 3 أشهر" in d[key]
+
+
+def test_period_bleeding_has_distinct_now_and_24_hour_triage():
+    text = _unit("med-f8cc198a")["text_simplified"]
+    assert "• اطلبوا رعاية طبية الآن:" in text
+    now = text.split("• اطلبوا رعاية طبية الآن:")[1].split("\n•")[0]
+    for sign in ("فوطة واحدة في الساعة", "6 ساعات", "شحوب جديد", "كدمات", "الأنف", "قبل علامات البلوغ"):
+        assert sign in now
+    assert "خلال 24 ساعة" in text and "6 فوط ممتلئة أو أكثر في اليوم" in text
+    assert "فوطتان في الساعة لساعتين أو أكثر مع استمرار النزف" in text
+    assert "الإسعاف إن أغمي عليها" in text and "لا تقدر على الوقوف" in text
+
+
+def test_puberty_opening_is_sex_specific():
+    opening = _unit("med-360b9041")["text_simplified"].split("\n\n")[0]
+    assert "8 و13 سنة عند البنات" in opening
+    assert "9 و14 سنة عند الأولاد" in opening
+
+
+@pytest.mark.parametrize("key", ["text_original", "text_simplified"])
+def test_testicular_pain_at_rest_is_an_emergency(key):
+    text = _unit("dev-7562f817")[key]
+    assert "يستمر في أثناء الراحة" in text
