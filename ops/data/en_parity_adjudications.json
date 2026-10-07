@@ -145,5 +145,29 @@
         "on": "2026-10-04"
       }
     ]
+  },
+  "lesson_0-3_cyber_screen_foundations_01": {
+    "content_sha256": "8aea720321cf73f381dda20f393c72266b99268348859ebcc0df48eb7053ea9d",
+    "overrides": [
+      {
+        "field": "summary",
+        "type": "source_corruption",
+        "reason": "The sole GLM objection is that 2026 is a future/nonexistent publication date. Actual session date is 2026-10-07. The official revised AAP primary article was read directly and displays JANUARY 20 2026, Pediatrics (2026) 157 (2): e2025075320, DOI 10.1542/peds.2025-075320. https://publications.aap.org/pediatrics/article/157/2/e2025075320/206129/Digital-Ecosystems-Children-and-Adolescents-Policy . Set time boundaries and Relationship-building supply the quoted guidance; cyb-aap-digital-ecosystems-2026 and ops/reports/SCREEN_GUIDANCE_REVISED_AAP_OCT7.md preserve the dated evidence. The DOI suffix 2025 is not the publication year. Replacing the correct date with 2016 would falsify current-source provenance. Both reviewers actually reviewed this unchanged hash; this override rejects only this source-date hallucination, not translation defects.",
+        "by": "openai:codex (native primary-source verification; author disclosed, not an additional independent model reviewer)",
+        "on": "2026-10-07"
+      }
+    ]
+  },
+  "lesson_0-3_cyber_screen_foundations_b04": {
+    "content_sha256": "2c3b5391178d2a94a66af9744ba051042dea706244ac684482a1c0a70a5e68bc",
+    "overrides": [
+      {
+        "field": "summary",
+        "type": "source_corruption",
+        "reason": "The sole GLM objection is that 2026 is a future/nonexistent publication date. Actual session date is 2026-10-07. The official revised AAP primary article was read directly and displays JANUARY 20 2026, Pediatrics (2026) 157 (2): e2025075320, DOI 10.1542/peds.2025-075320. https://publications.aap.org/pediatrics/article/157/2/e2025075320/206129/Digital-Ecosystems-Children-and-Adolescents-Policy . Set time boundaries and Relationship-building supply the quoted guidance; cyb-aap-digital-ecosystems-2026 and ops/reports/SCREEN_GUIDANCE_REVISED_AAP_OCT7.md preserve the dated evidence. The DOI suffix 2025 is not the publication year. Replacing the correct date with 2016 would falsify current-source provenance. Both reviewers actually reviewed this unchanged hash; this override rejects only this source-date hallucination, not translation defects.",
+        "by": "openai:codex (native primary-source verification; author disclosed, not an additional independent model reviewer)",
+        "on": "2026-10-07"
+      }
+    ]
   }
 }

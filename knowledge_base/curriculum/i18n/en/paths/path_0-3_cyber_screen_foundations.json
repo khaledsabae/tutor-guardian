@@ -3,7 +3,7 @@
   "title": "Foundations of Screens and Devices: Protecting the Young Child from Birth",
   "age_group": "0-3",
   "domain": "cyber",
-  "description": "A parenting pathway on screens from birth to age three: quality content, parent participation, real play and direct interaction, and protecting sleep and development. AAP’s statement of 20 January 2026 focuses on family needs and healthy activities; suggested limits might be under one hour daily for toddlers and preschoolers. WHO 2019 is presented separately: sedentary screen time is not recommended before age two; at age two, no more than one hour daily, less is better. These are distinct recommendations, not one shared rule.",
+  "description": "A parenting pathway on screens and devices from birth to age three: quality content, parent participation, play and direct interaction as alternatives, and protecting sleep and development. AAP’s statement of 20 January 2026 focuses on family needs, content quality and healthy activities; suggested limits might be under one hour daily for toddlers and preschoolers. WHO 2019 is presented separately: sedentary screen time is not recommended before age two; at age two, no more than one hour daily, less is better. These are distinct recommendations, not one shared rule.",
   "lesson_ids": [
     "lesson_0-3_cyber_screen_foundations_01",
     "lesson_0-3_cyber_screen_foundations_02",
@@ -21,7 +21,7 @@
   "version": "1.0.0",
   "created_at": "2026-06-10T18:00:00",
   "updated_at": "2026-10-07T09:13:07.475746+00:00",
-  "approved_by": null,
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
   "language": "en",
   "source_language": "ar",
   "translation": {
@@ -33,9 +33,54 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "pending",
-    "review_defects": [],
-    "approved_by": null,
-    "revalidated_at": "2026-10-04T11:18:18+00:00"
+    "review_verdict": "low_only",
+    "review_defects": [
+      {
+        "model": "deepseek-v4-pro",
+        "field": "description",
+        "type": "omission",
+        "why": "The English omits 'updated' (المحدّث), losing the nuance that the AAP statement is an updated version."
+      },
+      {
+        "model": "glm-5.2",
+        "field": "description",
+        "type": "omission",
+        "why": "The English drops «المحدّث» (updated), a minor qualifier describing the AAP statement."
+      }
+    ],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
+    "revalidated_at": "2026-10-07T09:32:00+00:00",
+    "english_authors": [
+      "claude-opus-5-5",
+      "openai:codex"
+    ],
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "003ed78891dfdc786e182d744c659e14251f7bfe58feb049f7d1397685c6619e",
+      "reviewed_at": "2026-10-07T09:32:00+00:00",
+      "residual_low": [
+        {
+          "model": "deepseek-v4-pro",
+          "field": "description",
+          "type": "omission",
+          "why": "The English omits 'updated' (المحدّث), losing the nuance that the AAP statement is an updated version."
+        },
+        {
+          "model": "glm-5.2",
+          "field": "description",
+          "type": "omission",
+          "why": "The English drops «المحدّث» (updated), a minor qualifier describing the AAP statement."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+    }
   }
 }

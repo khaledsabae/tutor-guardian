@@ -147,26 +147,6 @@
       "content_sha256": "905aa31b8730ec6962d79fff874cdb87b110cbb41185e1ab44798d27e9421c8f",
       "queued_on": "2026-10-04"
     },
-    "path_0-3_cyber_screen_foundations": {
-      "category": "awaiting-review",
-      "reason": "2026-10-07: updated screen draft from revised AAP primary policy, published 2026-01-20, doi:10.1542/peds.2025-075320. WHO 2019 remains separate; 2016 source retained as history. Codex edited English; actual independent review of this exact hash remains pending, approvals null.",
-      "content_sha256": "b92792d33fb6f181c3ec11328ba2f0e7ed98c03a64e9c7f023f1eefb82d1d061",
-      "queued_on": "2026-10-07",
-      "english_authors": [
-        "claude-opus-5-5",
-        "codex"
-      ]
-    },
-    "path_0-3_development_early_moments": {
-      "category": "awaiting-review",
-      "reason": "2026-10-07: corrected the incomplete first-year title to the existing 0–3 scope, verified against linked age-two lesson _03 and CDC unit 2b2d1fdd-1a30-40f3-aa2b-0dbadea2ce2c. English edited by Codex; awaits actual independent review of this exact AR/EN hash; no review stamp.",
-      "content_sha256": "91ad63cd0a3f7851d3c1afa58604139b9f77cda659416671d336b872082a4c5b",
-      "queued_on": "2026-10-07",
-      "english_authors": [
-        "claude-opus-5-5",
-        "codex"
-      ]
-    },
     "story:maryam_toys": {
       "category": "awaiting-review",
       "reason": "the Arabic gained interactive fields (age, category, three questions, Islamic value, challenge); their English is prepared in ops/data/en_parity_pending/ and is Claude-authored; waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
@@ -178,24 +158,6 @@
       "reason": "the Arabic gained interactive fields (age, category, three questions, Islamic value, challenge); their English is prepared in ops/data/en_parity_pending/ and is Claude-authored; waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
       "content_sha256": "6f183269240e8fa043aa34380decdd474cd99d56efcc5d349b0e30317cea839d",
       "queued_on": "2026-10-04"
-    },
-    "lesson_0-3_cyber_screen_foundations_b04": {
-      "category": "awaiting-review",
-      "reason": "2026-10-07: revised AAP primary policy verified, published 2026-01-20, doi:10.1542/peds.2025-075320; screen draft updated to current content-quality/shared-engagement/family-context guidance. WHO 2019 remains distinctly attributed; 2016 source preserved as historical provenance. Codex edited English; this exact AR/EN hash awaits genuine independent review, with null approvals and no review stamp.",
-      "content_sha256": "2c3b5391178d2a94a66af9744ba051042dea706244ac684482a1c0a70a5e68bc",
-      "queued_on": "2026-10-07",
-      "english_authors": [
-        "codex"
-      ]
-    },
-    "lesson_0-3_cyber_screen_foundations_01": {
-      "category": "awaiting-review",
-      "reason": "2026-10-07: revised AAP primary policy verified, published 2026-01-20, doi:10.1542/peds.2025-075320; screen draft updated to current content-quality/shared-engagement/family-context guidance. WHO 2019 remains distinctly attributed; 2016 source preserved as historical provenance. Codex edited English; this exact AR/EN hash awaits genuine independent review, with null approvals and no review stamp.",
-      "content_sha256": "8aea720321cf73f381dda20f393c72266b99268348859ebcc0df48eb7053ea9d",
-      "queued_on": "2026-10-07",
-      "english_authors": [
-        "codex"
-      ]
     }
   }
 }
