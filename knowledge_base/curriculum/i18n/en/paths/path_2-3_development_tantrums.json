@@ -1,0 +1,49 @@
+{
+  "id": "path_2-3_development_tantrums",
+  "title": "Tantrums at Ages Two and Three: Understanding and Prevention",
+  "age_group": "2-3",
+  "domain": "development",
+  "description": "Two daily lessons for parents of two- and three-year-olds: understanding tantrums and noticing hunger, tiredness and transitions, with a calm response that keeps children safe and meets their needs.",
+  "lesson_ids": [
+    "lesson_2-3_development_tantrums_01",
+    "lesson_2-3_development_tantrums_02"
+  ],
+  "estimated_days": 2,
+  "pedagogical_framework": "attachment_rahma",
+  "primary_reference": {
+    "type": "دليل_تربوي",
+    "info": "American Academy of Child and Adolescent Psychiatry guidance on tantrums, and Centers for Disease Control and Prevention guidance on child development and safe responses."
+  },
+  "prerequisites": [],
+  "is_published": true,
+  "version": "1.0.0",
+  "created_at": "2026-10-07T17:38:16",
+  "updated_at": "2026-10-07T17:38:16",
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "gpt-6 (Codex source revision)",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
+    "review_verdict": "clean",
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
+    "generated_by": "ops/tools/deepen_paths.py",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "b56bbc45c3619c23f340c69706df3649d0c8ae1d5f8da75ece2f2efe2f615294",
+      "reviewed_at": "2026-10-07T17:41:22+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+    },
+    "review_defects": [],
+    "revalidated_at": "2026-10-07T17:41:22+00:00"
+  }
+}

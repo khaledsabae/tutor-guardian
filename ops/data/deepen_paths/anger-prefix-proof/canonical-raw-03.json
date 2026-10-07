@@ -1,0 +1,18 @@
+{
+  "schema": "tg.canonical_actual_wire/1",
+  "model": "deepseek-v4-pro",
+  "prompt_version": "dfa8a5f39718",
+  "system_sha256": "dfa8a5f39718eaadde2dc124d6b65d443e032001c39f01cf5f6a3300e4e03dd8",
+  "user": "Review these 1 items. Your \"items\" array must hold exactly 1 entries, ids in this order: [\"path_2-3_development_tantrums\"]\n\n{\"items\": [{\"id\": \"path_2-3_development_tantrums\", \"kind\": \"paths\", \"age_band\": \"2-3\", \"fields\": {\"title\": {\"arabic\": \"نوبات الغضب في الثانية والثالثة: الفهم والوقاية\", \"english\": \"Tantrums at Ages Two and Three: Understanding and Prevention\"}, \"description\": {\"arabic\": \"درسان يوميان للوالد مع طفل في الثانية والثالثة: فهم نوبات الغضب، وملاحظة الجوع والتعب والانتقالات، مع استجابة هادئة تحافظ على الأمان وتلبي احتياجات الطفل.\", \"english\": \"Two daily lessons for parents of two- and three-year-olds: understanding tantrums and noticing hunger, tiredness and transitions, with a calm response that keeps children safe and meets their needs.\"}, \"primary_reference.info\": {\"arabic\": \"إرشادات الأكاديمية الأمريكية للطب النفسي للأطفال والمراهقين عن نوبات الغضب، ومراكز السيطرة على الأمراض عن نمو الطفل والاستجابة الآمنة.\", \"english\": \"American Academy of Child and Adolescent Psychiatry guidance on tantrums, and Centers for Disease Control and Prevention guidance on child development and safe responses.\"}}}]}",
+  "raw_response": "{\"items\": [{\"id\": \"path_2-3_development_tantrums\", \"defects\": []}]}",
+  "usage": {
+    "prompt_tokens": 1359,
+    "completion_tokens": 574,
+    "total_tokens": 1933,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    }
+  },
+  "duration_s": 11.42539458200008,
+  "human_approval": false
+}

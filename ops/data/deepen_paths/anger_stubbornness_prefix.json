@@ -1,0 +1,58 @@
+{
+  "topic": "anger_stubbornness",
+  "demand": "الغضب والعناد — 102 من 1,284 سؤالًا، الثاني بعد الصلاة والدين. لا يوجد مسار مخصّص له في أي فئة: دروسه متفرّقة في مسارات أخرى.",
+  "paths": [
+    {
+      "path_id": "path_2-3_development_tantrums",
+      "create": {
+        "title": "نوبات الغضب في الثانية والثالثة: الفهم والوقاية",
+        "age_group": "2-3",
+        "domain": "development",
+        "description": "درسان يوميان للوالد مع طفل في الثانية والثالثة: فهم نوبات الغضب، وملاحظة الجوع والتعب والانتقالات، مع استجابة هادئة تحافظ على الأمان وتلبي احتياجات الطفل.",
+        "pedagogical_framework": "attachment_rahma",
+        "primary_reference": {
+          "type": "دليل_تربوي",
+          "info": "إرشادات الأكاديمية الأمريكية للطب النفسي للأطفال والمراهقين عن نوبات الغضب، ومراكز السيطرة على الأمراض عن نمو الطفل والاستجابة الآمنة."
+        },
+        "en": {
+          "title": "Tantrums at Ages Two and Three: Understanding and Prevention",
+          "description": "Two daily lessons for parents of two- and three-year-olds: understanding tantrums and noticing hunger, tiredness and transitions, with a calm response that keeps children safe and meets their needs."
+        }
+      },
+      "unit_bands": [
+        "2-3",
+        "0-3",
+        "prenatal-1",
+        "4-6",
+        "unspecified"
+      ],
+      "band_notes": "Ages 2-3: self-regulation and communication are developing. No deterministic diagnosis, guaranteed prevention, punishment, hitting or shaming. Safety, hunger, pain and distress must always be addressed.",
+      "lessons": [
+        {
+          "title": "لماذا يغضب بهذه القوة؟",
+          "focus": "Understand common toddler frustration while assessing needs and safety; calm support without labels or guarantees.",
+          "keywords": [
+            "نوبات الغضب"
+          ],
+          "pin_units": [
+            "d7a09c7e-769c-48b5-aaf8-0511fedfc0db",
+            "dev-35865ddb",
+            "seed-tantrum-23"
+          ]
+        },
+        {
+          "title": "قبل النوبة: الجوع والنعاس والانتقال المفاجئ",
+          "focus": "Notice hunger, tiredness and difficult transitions; predictable feeding/sleep routines and simple choices, without guaranteed prevention or fixed countdowns.",
+          "keywords": [
+            "نوبات الغضب",
+            "الروتين"
+          ],
+          "pin_units": [
+            "d7a09c7e-769c-48b5-aaf8-0511fedfc0db",
+            "seed-tantrum-23"
+          ]
+        }
+      ]
+    }
+  ]
+}

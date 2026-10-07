@@ -1,0 +1,115 @@
+{
+  "spec": "ops/data/deepen_paths/anger_stubbornness_prefix.json",
+  "author": "gpt-6 (Codex source revision)",
+  "reviewers": [
+    "deepseek-v4-pro",
+    "glm-5.2"
+  ],
+  "written_at": "2026-10-07T17:38:16",
+  "lessons": [
+    {
+      "path_id": "path_2-3_development_tantrums",
+      "key": "s01",
+      "brief": "لماذا يغضب بهذه القوة؟",
+      "accepted": true,
+      "blockers": [],
+      "ar_review": {
+        "reviewer": "deepseek-v4-pro",
+        "at": "2026-10-07T17:32:46",
+        "rounds": 2,
+        "defects": [
+          {
+            "severity": "low",
+            "type": "pedagogy",
+            "field": "summary",
+            "why": "يتداخل هذا المقطع مع درس المسار الآخر «قبل النوبة: الجوع والنعاس والانتقال المفاجئ» الذي يغطي الجوع والنعاس والانتقال المفاجئ قبل النوبة، فيضعف تميّز الدرس."
+          },
+          {
+            "severity": "low",
+            "type": "medical",
+            "field": "summary",
+            "why": "تغفل هذه القائمة علامة الخطر «يصعب تهدئته» الواردة في وحدة المعرفة؛ فقد يحتاج الطفل الذي يصعب تهدئته إلى تقييم طبي حتى لو لم يؤذِ نفسه أو لم تكن النوبات شديدة ومتكررة."
+          }
+        ]
+      },
+      "en_review": {
+        "reviewer": "deepseek-v4-pro",
+        "at": "2026-10-07T17:32:46",
+        "rounds": 2,
+        "defects": [
+          {
+            "severity": "low",
+            "type": "register",
+            "field": "summary",
+            "why": "صياغة إنجليزية متكلفة؛ الترجمة الأدق لعبارة «هدوء سريع» هي quick calm."
+          }
+        ]
+      },
+      "dispositions": [],
+      "written_as": "lesson_2-3_development_tantrums_01",
+      "order": 1,
+      "title": "لماذا يغضب بهذه القوة؟",
+      "translation_content_sha256": "734913abb1b9b461aa5828703e5da9018ddd87ea7af62886a1b9ebe041f976e0",
+      "translation_reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "translation_stamp": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07"
+    },
+    {
+      "path_id": "path_2-3_development_tantrums",
+      "key": "s02",
+      "brief": "قبل النوبة: الجوع والنعاس والانتقال المفاجئ",
+      "accepted": true,
+      "blockers": [],
+      "ar_review": {
+        "reviewer": "glm-5.2",
+        "at": "2026-10-07T17:38:16",
+        "rounds": 4,
+        "defects": []
+      },
+      "en_review": {
+        "reviewer": "glm-5.2",
+        "at": "2026-10-07T17:38:16",
+        "rounds": 4,
+        "defects": []
+      },
+      "dispositions": [],
+      "written_as": "lesson_2-3_development_tantrums_02",
+      "order": 2,
+      "title": "قبل النوبة: الجوع والنعاس والانتقال المفاجئ",
+      "translation_content_sha256": "5a0da2741428531914f9924a28edde073458b432504b0f978445c1db59320343",
+      "translation_reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "translation_stamp": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07"
+    }
+  ],
+  "canonical_parity": {
+    "lesson_2-3_development_tantrums_01": {
+      "content_sha256": "734913abb1b9b461aa5828703e5da9018ddd87ea7af62886a1b9ebe041f976e0",
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "stamp": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07"
+    },
+    "lesson_2-3_development_tantrums_02": {
+      "content_sha256": "5a0da2741428531914f9924a28edde073458b432504b0f978445c1db59320343",
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "stamp": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07"
+    },
+    "path_2-3_development_tantrums": {
+      "content_sha256": "b56bbc45c3619c23f340c69706df3649d0c8ae1d5f8da75ece2f2efe2f615294",
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "stamp": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07"
+    }
+  }
+}

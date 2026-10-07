@@ -1,0 +1,46 @@
+{
+  "stamped": [
+    "lesson_2-3_development_tantrums_01",
+    "lesson_2-3_development_tantrums_02"
+  ],
+  "fixed": [],
+  "arabic_proposals": [],
+  "arabic_applied": [],
+  "unresolved": {
+    "path_2-3_development_tantrums": [
+      {
+        "field": "primary_reference.info",
+        "side": "english",
+        "type": "leakage",
+        "severity": "medium",
+        "why": "untranslated Arabic in English (115 letters)",
+        "english": "إرشادات الأكاديمية الأمريكية للطب النفسي للأطفال والمراهقين عن نوبات الغضب، ومراكز السيطرة على الأمراض عن نمو الطفل والاستجابة الآمنة.",
+        "source": "deterministic"
+      },
+      {
+        "field": "primary_reference.info",
+        "side": "english",
+        "type": "leakage",
+        "severity": "medium",
+        "arabic": "إرشادات الأكاديمية الأمريكية للطب النفسي للأطفال والمراهقين عن نوبات الغضب، ومراكز السيطرة على الأمراض عن نمو الطفل والاستجابة الآمنة.",
+        "english": "إرشادات الأكاديمية الأمريكية للطب النفسي للأطفال والمراهقين عن نوبات الغضب، ومراكز السيطرة على الأمراض عن نمو الطفل والاستجابة الآمنة.",
+        "why": "The English field contains the Arabic source text instead of an English translation.",
+        "suggestion": "Guidance from the American Academy of Child and Adolescent Psychiatry on tantrums, and from the Centers for Disease Control and Prevention on child development and safe responses.",
+        "model": "deepseek-v4-pro"
+      },
+      {
+        "field": "primary_reference.info",
+        "side": "english",
+        "type": "leakage",
+        "severity": "medium",
+        "arabic": "إرشادات الأكاديمية الأمريكية للطب النفسي للأطفال والمراهقين عن نوبات الغضب، ومراكز السيطرة على الأمراض عن نمو الطفل والاستجابة الآمنة.",
+        "english": "إرشادات الأكاديمية الأمريكية للطب النفسي للأطفال والمراهقين عن نوبات الغضب، ومراكز السيطرة على الأمراض عن نمو الطفل والاستجابة الآمنة.",
+        "why": "The English field contains untranslated Arabic text instead of an English translation.",
+        "suggestion": "Guidelines from the American Academy of Child and Adolescent Psychiatry on tantrums, and the Centers for Disease Control on child development and safe response.",
+        "model": "glm-5.2"
+      }
+    ]
+  },
+  "fix_rejected": [],
+  "rounds": 1
+}

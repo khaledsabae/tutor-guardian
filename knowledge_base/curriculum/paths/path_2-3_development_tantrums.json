@@ -1,0 +1,23 @@
+{
+  "id": "path_2-3_development_tantrums",
+  "title": "نوبات الغضب في الثانية والثالثة: الفهم والوقاية",
+  "age_group": "2-3",
+  "domain": "development",
+  "description": "درسان يوميان للوالد مع طفل في الثانية والثالثة: فهم نوبات الغضب، وملاحظة الجوع والتعب والانتقالات، مع استجابة هادئة تحافظ على الأمان وتلبي احتياجات الطفل.",
+  "lesson_ids": [
+    "lesson_2-3_development_tantrums_01",
+    "lesson_2-3_development_tantrums_02"
+  ],
+  "estimated_days": 2,
+  "pedagogical_framework": "attachment_rahma",
+  "primary_reference": {
+    "type": "دليل_تربوي",
+    "info": "إرشادات الأكاديمية الأمريكية للطب النفسي للأطفال والمراهقين عن نوبات الغضب، ومراكز السيطرة على الأمراض عن نمو الطفل والاستجابة الآمنة."
+  },
+  "prerequisites": [],
+  "is_published": true,
+  "version": "1.0.0",
+  "created_at": "2026-10-07T17:38:16",
+  "updated_at": "2026-10-07T17:38:16",
+  "approved_by": null
+}

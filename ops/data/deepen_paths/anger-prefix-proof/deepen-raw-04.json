@@ -1,0 +1,91 @@
+{
+  "schema": "tg.anger_prefix_raw_review/1",
+  "at": "2026-10-07T17:31:47",
+  "model": "deepseek-v4-pro",
+  "duration_s": 59.65445220800029,
+  "payload_sha256": "a8715840502da5f4506be157da93fe72b4a8a2e5b713f686bf4e292acc8021f0",
+  "payload": {
+    "age_band": "2-3",
+    "path_title": "نوبات الغضب في الثانية والثالثة: الفهم والوقاية",
+    "band_notes": "Ages 2-3: self-regulation and communication are developing. No deterministic diagnosis, guaranteed prevention, punishment, hitting or shaming. Safety, hunger, pain and distress must always be addressed.",
+    "other_lessons_in_path": [
+      "قبل النوبة: الجوع والنعاس والانتقال المفاجئ"
+    ],
+    "verified_texts": [],
+    "knowledge_units": [
+      {
+        "id": "seed-tantrum-23",
+        "title": "إدارة نوبات الغضب لدى الطفل في عمر سنتين إلى ثلاث",
+        "age_group": "2-3",
+        "reference": "CDC / AACAP — app-authored tantrum safety guidance; fetched primary guidance 2026-10-07; exact source mapping: ops/data/clinical_seed_safety/seed-tantrum-23.jso",
+        "text": "نوبات الغضب شائعة في هذا العمر وقد ترتبط بالإحباط أو التعب أو الجوع أو الألم. حافظوا على هدوئكم، ولا تردّوا بصراخ أو عقاب جسدي. تأكدوا من سلامة الطفل، وحاولوا فهم حاجته وطمأنته ومساعدته على الهدوء. حافظوا على روتين للنوم والطعام، وأعطوه خيارات بسيطة مناسبة لعمره، وعلّموه كلمات للتعبير عن شعوره عندما يهدأ.\n\nتقليل الانتباه يكون فقط لسلوك بسيط وآمن لطلب الانتباه، مثل الأنين، مع مراقبة الطفل والعودة إلى الاهتمام الإيجابي حين يتوقف السلوك. لا تتجاهلوا الجوع أو التعب أو المرض أو الألم أو الضيق، ولا تتركوا الطفل وحده أثناء نوبة غير آمنة. أوقفوا إيذاء النفس أو الآخرين أو تخريب الأشياء فورًا وبأمان، دون عنف.\n\nاستشيروا طبيب الأطفال إذا كانت النوبات شديدة أو متكررة على نحو مقلق، أو يصعب تهدئته، أو تعطل حياته المعتادة أو يصاحبها عدوان أو إيذاء للنفس. لا تجعلوا بلوغ عدد معين من الدقائق شرطًا للمساعدة. إذا كانت هناك إصابة خطيرة أو خطر وشيك لا تستطيعون منعه، فاطلبوا مساعدة عاجلة فورًا."
+      }
+    ],
+    "lesson": {
+      "title": "لماذا يغضب بهذه القوة؟",
+      "summary": "يصرخ طفلك لأن قطعة البسكويت انكسرت، أو يبكي حين ينتهي اللعب. قد تشعر بالحيرة أو تتساءل إن كنت أخطأت في تربيته. نوبات الغضب شائعة في الثانية والثالثة، ولا تكفي وحدها للحكم على الطفل أو على والديه. هو يتعلم التعبير عن رغباته ومشاعره، لكنه ما زال يحتاج إلى مساعدتك حين يشعر بالإحباط.\n\nقبل أن تسمي ما يحدث عنادًا، انظر إلى حاجته: هل هو جائع أو متعب؟ هل يتألم أو تبدو عليه علامات المرض؟ قد يبدو البكاء متشابهًا، لكن الاستجابة تبدأ بملاحظة الطفل والموقف. قدم الطعام أو الراحة أو الرعاية المناسبة للحاجة، ولا تتجاهل الألم أو الخوف بحثًا عن هدوء سريع.\n\nحاول أن تخفض صوتك وتبقى قريبًا منه. قل كلمات قليلة، مثل: «أرى أنك غاضب، وأنا هنا». يمكنك فهم شعوره مع الحفاظ على حد آمن، كإبعاد شيء مؤذ. لا تضربه ولا تهدده أو تهنه، وأوقف أي فعل يعرضه أو يعرض غيره للخطر. بعد أن يهدأ، ساعده على تسمية شعوره بكلمة بسيطة، دون محاضرة طويلة.\n\nلا يلزم أن تمنع كل نوبة كي تكون والدًا داعمًا. راقب ما يحتاجه طفلك، وما يساعدكما على العودة إلى الهدوء. إذا كان يؤذي نفسه أو غيره، أو كانت النوبات شديدة ومتكررة وتعطّل حياته اليومية، فتحدث مع طبيبه. وإذا عجزت عن الحفاظ على الأمان أو حدثت إصابة خطيرة، فاطلب مساعدة عاجلة ولا تنتظر مدة محددة.",
+      "try_this": "اليوم: اكتب جملة «ألاحظ حاجة طفلي قبل أن أحكم على سلوكه»، وضعها في مكان تراه لتُذكِّرك في الموقف القادم.",
+      "reflection_prompts": [
+        "هل تغيرت استجابتك حين لاحظت حاجة طفلك بدل أن تسمي النوبة عنادًا؟"
+      ],
+      "unit_ids": [
+        "seed-tantrum-23"
+      ],
+      "warning_flags": [],
+      "needs_professional_followup": false
+    },
+    "note": "Tokens of the form [[id]] are verified Qur'an/hadith texts inserted later in Arabic in both languages; they must appear identically in both versions.",
+    "english": {
+      "title": "Why Is Their Anger So Strong?",
+      "summary": "Your child screams because a biscuit broke, or cries when playtime ends. You may feel confused or wonder whether you made a parenting mistake. Tantrums are common at ages two and three, and on their own they are not enough to judge a child or their parents. Your child is learning to express wishes and feelings, but still needs your help when frustrated.\n\nBefore calling the behavior stubbornness, look at their needs: are they hungry or tired? Are they in pain or showing signs of illness? Crying may look similar, but your response starts with noticing the child and the situation. Offer food, rest or care suited to the need, and do not ignore pain or fear in search of quick quiet.\n\nTry lowering your voice and staying nearby. Use a few words, such as: «I see that you are angry, and I am here.» You can understand the feeling while keeping a safe limit, such as moving a harmful object away. Do not hit, threaten or humiliate your child, and stop actions that put them or others at risk. Once they calm down, help them name the feeling with a simple word, without a long lecture.\n\nYou do not have to prevent every tantrum to be a supportive parent. Notice what your child needs and what helps you both return to calm. If they harm themselves or others, or tantrums are severe, frequent and disrupt daily life, talk with their doctor. If you cannot maintain safety or a serious injury occurs, seek urgent help without waiting for a set duration.",
+      "try_this": "Today: Write «I notice my child's need before judging their behavior» and put it somewhere visible to remind you in the next situation.",
+      "reflection_prompts": [
+        "Did your response change when you noticed your child's need rather than calling the tantrum stubbornness?"
+      ]
+    }
+  },
+  "primary_context": {
+    "sources": [
+      {
+        "title": "Tips for Redirecting your Attention",
+        "url": "https://www.cdc.gov/parenting-toddlers/responding-to-behavior/ignoring.html",
+        "accessed_at": "2026-10-07T15:32:16.813497+00:00",
+        "reader": "agent-reach Jina Reader",
+        "fetched_text_sha256": "81778e17af84813e58cca2309c54ce65f303114d63261ea346b36d5a31cf336d",
+        "meaning": "Hash binds the fetched primary-page representation, not a clinical approval.",
+        "current_fetch_sha256": "81778e17af84813e58cca2309c54ce65f303114d63261ea346b36d5a31cf336d",
+        "current_fetch_matches_prior": true
+      },
+      {
+        "title": "Temper Tantrums and Outbursts",
+        "url": "https://www.aacap.org/AACAP/Families_and_Youth/Facts_for_Families/FFF-Guide/Temper_Tantrums-136.aspx",
+        "accessed_at": "2026-10-07T15:32:16.813736+00:00",
+        "reader": "agent-reach Jina Reader",
+        "fetched_text_sha256": "5bc895eed8f53d16accf8254c7ec73a00332ab15c266bedc96eae479299b090c",
+        "meaning": "Hash binds the fetched primary-page representation, not a clinical approval.",
+        "current_fetch_sha256": "5bc895eed8f53d16accf8254c7ec73a00332ab15c266bedc96eae479299b090c",
+        "current_fetch_matches_prior": true
+      },
+      {
+        "title": "Milestones by 2 Years",
+        "url": "https://www.cdc.gov/act-early/milestones/2-years.html",
+        "accessed_at": "2026-10-07T15:32:16.812801+00:00",
+        "reader": "agent-reach Jina Reader",
+        "fetched_text_sha256": "f0956f38429dc83f4133bcc3b47bb7b6bcc8a66221c1cc03cde4e0de2776ced6",
+        "meaning": "Hash binds the fetched primary-page representation, not a clinical approval.",
+        "current_fetch_sha256": "f0956f38429dc83f4133bcc3b47bb7b6bcc8a66221c1cc03cde4e0de2776ced6",
+        "current_fetch_matches_prior": true
+      }
+    ],
+    "verified_relevant_claims": {
+      "AACAP": "Tantrums common in toddlers; frustration, hunger, tiredness, pain or illness can contribute. Calm responses and words rather than unsafe actions. Never physical aggression. Dangerous aggression/self-injury or functional impairment warrants assessment. No duration is a prerequisite to safety help.",
+      "CDC two years": "Steady sleep/feeding routines; do not force the amount of food; use simple words and help with conflicts.",
+      "CDC ignoring": "Only safe non-needs-based minor behavior; never dangerous behavior, pain or distress. Safe transition statements/choices are editorial examples, not validated guaranteed interventions."
+    },
+    "human_expert_approval": null,
+    "fresh_user_logs_analyzed": false,
+    "demand_basis": "Historical preserved specification; current live demand not newly measured"
+  },
+  "raw_response": "{\"arabic\":{\"verdict\":\"defects\",\"defects\":[{\"type\":\"pedagogy\",\"field\":\"summary\",\"quote\":\"قبل أن تسمي ما يحدث عنادًا، انظر إلى حاجته: هل هو جائع أو متعب؟ هل يتألم أو تبدو عليه علامات المرض؟ ... قدم الطعام أو الراحة أو الرعاية المناسبة للحاجة\",\"why\":\"يتداخل هذا المقطع مع درس المسار الآخر «قبل النوبة: الجوع والنعاس والانتقال المفاجئ» الذي يغطي الجوع والنعاس والانتقال المفاجئ قبل النوبة، فيضعف تميّز الدرس.\",\"severity\":\"low\",\"fix\":\"اختصار الفقرة والإحالة إلى درس المسار الآخر بدل تكرار توجيهات الجوع والتعب.\"},{\"type\":\"medical\",\"field\":\"summary\",\"quote\":\"إذا كان يؤذي نفسه أو غيره، أو كانت النوبات شديدة ومتكررة وتعطّل حياته اليومية، فتحدث مع طبيبه\",\"why\":\"تغفل هذه القائمة علامة الخطر «يصعب تهدئته» الواردة في وحدة المعرفة؛ فقد يحتاج الطفل الذي يصعب تهدئته إلى تقييم طبي حتى لو لم يؤذِ نفسه أو لم تكن النوبات شديدة ومتكررة.\",\"severity\":\"low\",\"fix\":\"إضافة «أو يصعب تهدئته» إلى أسباب استشارة الطبيب.\"}]},\"english\":{\"verdict\":\"defects\",\"contains_religious_text\":false,\"defects\":[{\"type\":\"register\",\"field\":\"summary\",\"quote\":\"in search of quick quiet\",\"why\":\"صياغة إنجليزية متكلفة؛ الترجمة الأدق لعبارة «هدوء سريع» هي quick calm.\",\"severity\":\"low\",\"fix\":\"استبدالها بـ in search of quick calm.\"}]}}",
+  "human_approval": false
+}
