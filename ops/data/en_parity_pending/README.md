@@ -8,29 +8,32 @@ hamza_truth — interactive fields; badr_broken_toy, tamim_anger_volcano,
 noura_sharing_box — new) and `tip_prenatal-1_006`. Proof, raw responses and
 reasons: `review-2026-10-07/` (`verdicts.json`, `raw-calls.json`, `run-report.json`).
 
-Six stories are held in `stories_en.pending.json`, each with a blocking finding:
+Six stories were held in `stories_en.pending.json`, and `worship_06` stayed in
+`ops/data/en_unpublished/`. **All seven were resolved the same evening** (fresh dual-family
+review, `review-2026-10-07-held/`: 8 review calls + 2 evidence calls, all ok, no 429), and the
+pending file is now empty (`[]`):
 
-| story | blocking finding | side |
-|---|---|---|
-| maryam_toys | category + all three discussionQuestions do not match the Arabic (deepseek, 4× medium) | English |
-| yaseen_creation | discussionQuestions[0] swaps ant/stars/trees/flowers for "sky and birds" (glm high, deepseek medium) | English |
-| fatima_parents | description drops «بالمعروف»; pages[4] «جوري» rendered as a red carnation (both medium) | English |
-| bilal_forgiveness | the Arabic question puts the incident at play; the story has it in art class (deepseek medium) | Arabic |
-| sarah_basil_sprout | deepseek says Bukhari 2989 reads «وتميط» — probably a false positive (scripture gate matches 2989; «وتميط» is Muslim 1009); needs an adjudication Claude may not record on its own English | Arabic |
-| salman_secret_trust | colloquial «أكيد» in the Arabic pages[2] (deepseek medium) | Arabic |
+| item | resolution |
+|---|---|
+| maryam_toys, yaseen_creation, fatima_parents | the held candidates had been translated from the stale Arabic in `docs/stories.json`; the live English already carried the corrected fields (sharing category/questions/challenge; ant-stars-trees-flowers; «بالمعروف» as "in what is right", «جوري» as damask rose). Candidates discarded; live text re-reviewed fresh — low notes only — and re-stamped |
+| bilal_forgiveness | Arabic question «أثناء اللعب» → «أثناء حصة الرسم» (the story is unchanged), English to match; stamped |
+| salman_secret_trust | colloquial «وأكيد» → «ولا بدّ أن» in the Arabic; stamped and live |
+| sarah_basil_sprout | the citation is right: «ويميط» is verbatim Bukhari 2989, «وتميط» is Muslim 1009. Evidence + both families' verdict on it in `sarah-evidence*.json`; **agent** adjudication (not human) in `ops/data/en_parity_adjudications.json`; stamped and live |
+| lesson worship_06 | the verified unit `isl-3f0af447` (al-Bara' showing the Prophet's wudu, Alukah pp.99–102) now sits in the Arabic and English `unit_ids` alike; the withdrawn `isl-ab49af82` is gone; restored and stamped |
 
-The four existing stories (maryam_toys, yaseen_creation, fatima_parents,
-bilal_forgiveness) stay live with their earlier stamped text, without the new
-interactive fields; the two new ones are not served in English. Arabic-side
-findings need an Arabic correction by a human — the review never rewrites the Arabic.
-Fix the English (or the Arabic), put a story in place as before, and run:
+The Arabic of every story now lives in two identical copies, `mobile/assets/data/stories.json` (bundled) and
+`docs/stories.json` (fetched first by the app). They had drifted — the served copy still carried
+older text (tidiness questions for maryam_toys, «تروّخ», «يده الشمال») — and were made byte-identical here.
+
+To hold a future story: put the candidate here, fix the English (or the Arabic, in both copies),
+put it in place as before, and run:
 
 ```bash
 python3 ops/tools/review_en_parity.py run --only story:<id> --rounds 1 --no-fix --workers 1 --max-concurrent 1
 ```
 
-Authorship: the 2 new stories carry `translator_model: claude-opus-5.5`; the 4 updated
-ones carry `english_authors: [mistral-large-3:675b, claude-opus-5.5]`. Claude cannot
+Authorship: sarah_basil_sprout and salman_secret_trust carry `translator_model: claude-opus-5.5`;
+bilal_forgiveness carries `english_authors: [mistral-large-3:675b, claude-opus-5.5]`. Claude cannot
 stamp any of them; deepseek-v4-pro + glm-5.2 can. A stamp certifies English–Arabic
 parity only — scholar review stays pending.
 

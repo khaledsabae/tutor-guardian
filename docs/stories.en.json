@@ -626,31 +626,13 @@
           "model": "deepseek-v4-pro",
           "field": "pages[1].text",
           "type": "omission",
-          "why": "The English drops 'daughter of their neighbour', so Fatimah could be read as the neighbour herself rather than the neighbour's child."
+          "why": "The English drops 'daughter', making Fatimah sound like the neighbour herself rather than the neighbour's daughter."
         },
         {
           "model": "deepseek-v4-pro",
           "field": "pages[3].text",
           "type": "meaning",
-          "why": "الكرم means generosity, not kindness; using 'kindness' loses the specific virtue named in the Arabic."
-        },
-        {
-          "model": "glm-5.2",
-          "field": "pages[1].text",
-          "type": "omission",
-          "why": "The Arabic specifies she is the neighbour's daughter (ابنة جارتهم), but the English drops 'daughter' and renders her simply as the neighbour."
-        },
-        {
-          "model": "glm-5.2",
-          "field": "pages[3].text",
-          "type": "meaning",
-          "why": "الكرم means generosity, not kindness (اللطف); the category field itself translates الكرم as 'generosity', so this is inconsistent."
-        },
-        {
-          "model": "glm-5.2",
-          "field": "pages[4].text",
-          "type": "meaning",
-          "why": "كبير means big/large, not tall (طويل); the tower is described as big, not necessarily tall."
+          "why": "The Arabic 'الكرم' means generosity, not kindness, so the specific virtue is slightly altered."
         }
       ],
       "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
@@ -668,37 +650,19 @@
         "rounds": 1,
         "prompt_version": "dfa8a5f39718",
         "content_sha256": "152e2e9ba28546d019275d359ce634f32c44c8ebf232cc884c151ee954559afe",
-        "reviewed_at": "2026-10-07T09:29:21+00:00",
+        "reviewed_at": "2026-10-07T19:12:53+00:00",
         "residual_low": [
           {
             "model": "deepseek-v4-pro",
             "field": "pages[1].text",
             "type": "omission",
-            "why": "The English drops 'daughter of their neighbour', so Fatimah could be read as the neighbour herself rather than the neighbour's child."
+            "why": "The English drops 'daughter', making Fatimah sound like the neighbour herself rather than the neighbour's daughter."
           },
           {
             "model": "deepseek-v4-pro",
             "field": "pages[3].text",
             "type": "meaning",
-            "why": "الكرم means generosity, not kindness; using 'kindness' loses the specific virtue named in the Arabic."
-          },
-          {
-            "model": "glm-5.2",
-            "field": "pages[1].text",
-            "type": "omission",
-            "why": "The Arabic specifies she is the neighbour's daughter (ابنة جارتهم), but the English drops 'daughter' and renders her simply as the neighbour."
-          },
-          {
-            "model": "glm-5.2",
-            "field": "pages[3].text",
-            "type": "meaning",
-            "why": "الكرم means generosity, not kindness (اللطف); the category field itself translates الكرم as 'generosity', so this is inconsistent."
-          },
-          {
-            "model": "glm-5.2",
-            "field": "pages[4].text",
-            "type": "meaning",
-            "why": "كبير means big/large, not tall (طويل); the tower is described as big, not necessarily tall."
+            "why": "The Arabic 'الكرم' means generosity, not kindness, so the specific virtue is slightly altered."
           }
         ],
         "adjudicated": [],
@@ -706,7 +670,7 @@
         "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
       },
       "reviewer_model": "deepseek-v4-pro+glm-5.2",
-      "revalidated_at": "2026-10-07T09:29:21+00:00"
+      "revalidated_at": "2026-10-07T19:12:53+00:00"
     },
     "ageGroup": "3-6 years",
     "category": "Sharing toys and generosity",
@@ -1213,9 +1177,16 @@
         "quran_ayah": true,
         "reviewer_model": true
       },
-      "review_verdict": "clean",
-      "review_defects": [],
-      "approved_by": "auto-review:gemini-3.1-pro-low+glm-5.2:2026-10-07",
+      "review_verdict": "low_only",
+      "review_defects": [
+        {
+          "model": "glm-5.2",
+          "field": "pages[0].text",
+          "type": "addition",
+          "why": "The Arabic says 'with steadiness' (بثبات); 'steady steps' adds the word 'steps' not present in the source."
+        }
+      ],
+      "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
       "english_authors": [
         "mistral-large-3:675b",
         "claude-opus-5.5",
@@ -1223,21 +1194,28 @@
       ],
       "auto_review": {
         "reviewers": [
-          "gemini-3.1-pro-low",
+          "deepseek-v4-pro",
           "glm-5.2"
         ],
         "fixer": null,
         "rounds": 1,
         "prompt_version": "dfa8a5f39718",
         "content_sha256": "66bcd1f7b9f240f91f640302251716ca7e2cfb0b2dae8dbb7ad4ceaccb6ef4c0",
-        "reviewed_at": "2026-10-07T09:48:37+00:00",
-        "residual_low": [],
+        "reviewed_at": "2026-10-07T19:12:53+00:00",
+        "residual_low": [
+          {
+            "model": "glm-5.2",
+            "field": "pages[0].text",
+            "type": "addition",
+            "why": "The Arabic says 'with steadiness' (بثبات); 'steady steps' adds the word 'steps' not present in the source."
+          }
+        ],
         "adjudicated": [],
         "tool": "ops/tools/review_en_parity.py",
         "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
       },
-      "reviewer_model": "gemini-3.1-pro-low+glm-5.2",
-      "revalidated_at": "2026-10-07T09:48:37+00:00"
+      "reviewer_model": "deepseek-v4-pro+glm-5.2",
+      "revalidated_at": "2026-10-07T19:12:53+00:00"
     },
     "ageGroup": "5-8 years",
     "category": "Reflecting on Allah's creation and greatness",
@@ -1301,8 +1279,21 @@
         "quran_ayah": true,
         "reviewer_model": true
       },
-      "review_verdict": "clean",
-      "review_defects": [],
+      "review_verdict": "low_only",
+      "review_defects": [
+        {
+          "model": "deepseek-v4-pro",
+          "field": "pages[4].text",
+          "type": "meaning",
+          "why": "The Arabic specifies kindness to her mother (بوالدتها), while the English generalizes to parents (birr al-walidayn)."
+        },
+        {
+          "model": "glm-5.2",
+          "field": "pages[4].text",
+          "type": "meaning",
+          "why": "The Arabic refers specifically to her birr towards her mother (بوالدتها), while 'birr al-walidayn' generalises to both parents."
+        }
+      ],
       "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
       "english_authors": [
         "mistral-large-3:675b",
@@ -1317,13 +1308,26 @@
         "rounds": 1,
         "prompt_version": "dfa8a5f39718",
         "content_sha256": "2ae0275b570aa7d642608b84c600a49c7c42e4a61167eb60d0e54002d1fdf2a3",
-        "reviewed_at": "2026-10-07T09:19:39+00:00",
-        "residual_low": [],
+        "reviewed_at": "2026-10-07T19:12:53+00:00",
+        "residual_low": [
+          {
+            "model": "deepseek-v4-pro",
+            "field": "pages[4].text",
+            "type": "meaning",
+            "why": "The Arabic specifies kindness to her mother (بوالدتها), while the English generalizes to parents (birr al-walidayn)."
+          },
+          {
+            "model": "glm-5.2",
+            "field": "pages[4].text",
+            "type": "meaning",
+            "why": "The Arabic refers specifically to her birr towards her mother (بوالدتها), while 'birr al-walidayn' generalises to both parents."
+          }
+        ],
         "adjudicated": [],
         "tool": "ops/tools/review_en_parity.py",
         "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
       },
-      "revalidated_at": "2026-10-07T09:19:39+00:00"
+      "revalidated_at": "2026-10-07T19:12:53+00:00"
     },
     "ageGroup": "3-6 years",
     "category": "Birr al-walidayn (kindness to parents) and bringing smiles",
@@ -1390,52 +1394,16 @@
       "review_verdict": "low_only",
       "review_defects": [
         {
-          "model": "deepseek-v4-pro",
+          "model": "glm-5.2",
           "field": "description",
           "type": "meaning",
-          "why": "القدوة الحسنة means a good example/model, not merely good character."
-        },
-        {
-          "model": "deepseek-v4-pro",
-          "field": "pages[0].text",
-          "type": "meaning",
-          "why": "بشغف means passionately/with enthusiasm, which is stronger than happily."
-        },
-        {
-          "model": "deepseek-v4-pro",
-          "field": "pages[3].text",
-          "type": "meaning",
-          "why": "يسامح means forgives, not shows kindness; the two verbs are near-synonyms for pardoning/forgiving."
-        },
-        {
-          "model": "deepseek-v4-pro",
-          "field": "pages[4].text",
-          "type": "meaning",
-          "why": "تساهل means leniency/tolerance, not forgiveness."
-        },
-        {
-          "model": "deepseek-v4-pro",
-          "field": "pages[5].text",
-          "type": "meaning",
-          "why": "رضا means contentment/satisfaction, not peace, and سلام means peace, not harmony."
-        },
-        {
-          "model": "deepseek-v4-pro",
-          "field": "discussionQuestions[0]",
-          "type": "source_corruption",
-          "why": "The story takes place during art class/painting, not playing, so أثناء اللعب is inconsistent with the narrative."
-        },
-        {
-          "model": "glm-5.2",
-          "field": "pages[3].text",
-          "type": "meaning",
-          "why": "«يسامح» means 'is forgiving/tolerant,' not exactly 'shows kindness'; the English avoids repetition but slightly shifts the second verb's meaning."
+          "why": "«القدوة الحسنة» means a good example or role model, whereas 'good character' (حسن الخلق) is a related but distinct concept."
         },
         {
           "model": "glm-5.2",
           "field": "pages[5].text",
           "type": "meaning",
-          "why": "«السلام» means 'peace,' not 'harmony'; a minor word-choice shift."
+          "why": "«رضا كبير» means great contentment/satisfaction, which is rendered as 'deep peace'; the feeling is related but not identical."
         }
       ],
       "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
@@ -1451,68 +1419,32 @@
         "fixer": null,
         "rounds": 1,
         "prompt_version": "dfa8a5f39718",
-        "content_sha256": "66df4d45b171b525847a5b317a47a4fb1a21e925a9a396bfb6fc4f8fecd2f824",
-        "reviewed_at": "2026-10-07T07:57:31+00:00",
+        "content_sha256": "855c190f306f362e233612c5b72a910e174e80a76689408e731d81c5b4e053b2",
+        "reviewed_at": "2026-10-07T19:12:53+00:00",
         "residual_low": [
           {
-            "model": "deepseek-v4-pro",
+            "model": "glm-5.2",
             "field": "description",
             "type": "meaning",
-            "why": "القدوة الحسنة means a good example/model, not merely good character."
-          },
-          {
-            "model": "deepseek-v4-pro",
-            "field": "pages[0].text",
-            "type": "meaning",
-            "why": "بشغف means passionately/with enthusiasm, which is stronger than happily."
-          },
-          {
-            "model": "deepseek-v4-pro",
-            "field": "pages[3].text",
-            "type": "meaning",
-            "why": "يسامح means forgives, not shows kindness; the two verbs are near-synonyms for pardoning/forgiving."
-          },
-          {
-            "model": "deepseek-v4-pro",
-            "field": "pages[4].text",
-            "type": "meaning",
-            "why": "تساهل means leniency/tolerance, not forgiveness."
-          },
-          {
-            "model": "deepseek-v4-pro",
-            "field": "pages[5].text",
-            "type": "meaning",
-            "why": "رضا means contentment/satisfaction, not peace, and سلام means peace, not harmony."
-          },
-          {
-            "model": "deepseek-v4-pro",
-            "field": "discussionQuestions[0]",
-            "type": "source_corruption",
-            "why": "The story takes place during art class/painting, not playing, so أثناء اللعب is inconsistent with the narrative."
-          },
-          {
-            "model": "glm-5.2",
-            "field": "pages[3].text",
-            "type": "meaning",
-            "why": "«يسامح» means 'is forgiving/tolerant,' not exactly 'shows kindness'; the English avoids repetition but slightly shifts the second verb's meaning."
+            "why": "«القدوة الحسنة» means a good example or role model, whereas 'good character' (حسن الخلق) is a related but distinct concept."
           },
           {
             "model": "glm-5.2",
             "field": "pages[5].text",
             "type": "meaning",
-            "why": "«السلام» means 'peace,' not 'harmony'; a minor word-choice shift."
+            "why": "«رضا كبير» means great contentment/satisfaction, which is rendered as 'deep peace'; the feeling is related but not identical."
           }
         ],
         "adjudicated": [],
         "tool": "ops/tools/review_en_parity.py",
         "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
       },
-      "revalidated_at": "2026-10-07T07:57:31+00:00"
+      "revalidated_at": "2026-10-07T19:12:53+00:00"
     },
     "ageGroup": "4-7 years",
     "category": "Forgiveness and a clean heart",
     "discussionQuestions": [
-      "What did Bilal do when his friend wronged him while they were playing?",
+      "What did Bilal do when his classmate wronged him during art class?",
       "Why does a person feel calm and at ease when they pardon and forgive?",
       "How does forgiving raise a Muslim's standing with Allah and with people?"
     ],
@@ -1685,6 +1617,85 @@
     "actionChallenge": "Honesty challenge: if you make any small mistake today at home or at nursery, go straight to your parents — bravely and with a smile — tell the truth and say sorry."
   },
   {
+    "id": "sarah_basil_sprout",
+    "title": "Sarah and the Basil Plant",
+    "description": "A gentle story that encourages kindergarten children to remove harm, and to care for the environment and for plants, as a beautiful Prophetic manner.",
+    "coverImage": "docs/stories/sarah_basil_sprout_cover.png",
+    "themeColor": "0xFF10B981",
+    "videoFile": null,
+    "pages": [
+      {
+        "pageNumber": 1,
+        "text": "In the bright nursery yard, Sarah was running between the trees at break time when she noticed a small plant pot in the corner. Its leaves were drooping, and dry leaves and blown-about tissues had gathered around it.",
+        "image": "docs/stories/sarah_basil_sprout_1.png"
+      },
+      {
+        "pageNumber": 2,
+        "text": "Sarah felt sad to see the plant, and she said to her friend Hind, «This plant is a living thing. It feels, and it needs us to be gentle with it — and cleanliness is part of faith.» She decided not to leave until the corner looked lovely again.",
+        "image": "docs/stories/sarah_basil_sprout_2.png"
+      },
+      {
+        "pageNumber": 3,
+        "text": "Sarah put on a pair of small gloves, eagerly picked up the leaves and litter and threw them in the bin. Then she brought a watering can and watered the dry soil with love and care.",
+        "image": "docs/stories/sarah_basil_sprout_3.png"
+      },
+      {
+        "pageNumber": 4,
+        "text": "A few days later, the basil plant perked up, its leaves turned green again, and its sweet, fragrant smell filled the whole nursery yard! The teacher gave Sarah the title «Friend of Nature», and Sarah was happy because she had left a good mark.",
+        "image": "docs/stories/sarah_basil_sprout_4.png"
+      }
+    ],
+    "language": "en",
+    "source_language": "ar",
+    "translation": {
+      "translator_model": "claude-opus-5.5",
+      "reviewer_model": "deepseek-v4-pro+glm-5.2",
+      "needs_scholar_review": true,
+      "review_verdict": "clean",
+      "review_defects": [],
+      "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
+      "auto_review": {
+        "reviewers": [
+          "deepseek-v4-pro",
+          "glm-5.2"
+        ],
+        "fixer": null,
+        "rounds": 1,
+        "prompt_version": "dfa8a5f39718",
+        "content_sha256": "7c6f98734d6cd401f67826d26edd7b5c050bdaa623b56437c8a70c72fbcd533b",
+        "reviewed_at": "2026-10-07T19:12:53+00:00",
+        "residual_low": [],
+        "adjudicated": [
+          {
+            "field": "islamicValue",
+            "type": "source_corruption",
+            "reason": "«ويميط الأذى عن الطريق صدقة» is verbatim Sahih al-Bukhari 2989 (Book 56, Hadith 198: «وَيُمِيطُ الأَذَى عَنِ الطَّرِيقِ صَدَقَةٌ», third person like يعدل/يعين/يخطوها in that narration); «وتميط» is the wording of Sahih Muslim 1009. The reviewer's suggestion would put Muslim's wording under Bukhari's number, which the scripture gate rejects. Evidence: ops/data/en_parity_pending/review-2026-10-07-held/sarah-evidence.json (two text sources + the project corpus); both reviewer families, given the texts without the agent's conclusion, answered quote_verbatim_in_cited_hadith=true, finding_correct=false, english_faithful=true (sarah-evidence-consult.json).",
+            "by": "agent adjudication (claude-opus-5.5, automated) backed by a dual-family evidence check (deepseek-v4-pro + glm-5.2) — NOT a human or scholar approval",
+            "on": "2026-10-07",
+            "evidence": {
+              "file": "ops/data/en_parity_pending/review-2026-10-07-held/sarah-evidence.json",
+              "sha256": "2b128ea71b6d037c12bc28adf715524ad48e992733909efd6ea305083d30f91a",
+              "consult": "ops/data/en_parity_pending/review-2026-10-07-held/sarah-evidence-consult.json",
+              "consult_sha256": "7a6fed336536cbe4732d74518eb8d8d33415489e9cc0e6ee2b50e54f79147531"
+            }
+          }
+        ],
+        "tool": "ops/tools/review_en_parity.py",
+        "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+      },
+      "revalidated_at": "2026-10-07T19:12:53+00:00"
+    },
+    "ageGroup": "3-6 years",
+    "category": "Cleanliness and caring for the environment",
+    "discussionQuestions": [
+      "What was the difference in the nursery yard before and after what Sarah did?",
+      "Why is Allah pleased with a Muslim who removes harm from the path and keeps their surroundings clean?",
+      "How can we make our room and our garden clean, comfortable and beautiful every day?"
+    ],
+    "islamicValue": "The Messenger of Allah ﷺ said: “…and removing harm from the path is charity.” (Sahih al-Bukhari 2989)",
+    "actionChallenge": "Environment challenge: pick up three bits of litter or tissues you see in your room or home and put them in the bin, then gently water a plant pot."
+  },
+  {
     "id": "tamim_anger_volcano",
     "title": "Tamim and the Volcano of Anger",
     "description": "An interactive story that trains a kindergarten child in the Prophetic steps to calm down and to manage their feelings when they lose.",
@@ -1853,5 +1864,120 @@
     ],
     "islamicValue": "Aisha (may Allah be pleased with her) said: “The Messenger of Allah ﷺ used to accept gifts and give something in return for them.” (Sahih al-Bukhari 2585) And Allah says: ﴿وَيُؤْثِرُونَ عَلَىٰ أَنفُسِهِمْ﴾ (Al-Hashr: 9) — interpretation of the meaning: 'but give [them] preference over themselves.'",
     "actionChallenge": "Sharing challenge: today, give one of your favourite toys, or a piece of your fruit, to your brother or a friend, gladly and with love."
+  },
+  {
+    "id": "salman_secret_trust",
+    "title": "Salman and the Secret of Trust",
+    "description": "An exciting story about being mindful that Allah sees us, returning what is entrusted to us, and respecting other people's rights at nursery and in the community.",
+    "coverImage": "docs/stories/salman_secret_trust_cover.png",
+    "themeColor": "0xFF4338CA",
+    "videoFile": null,
+    "pages": [
+      {
+        "pageNumber": 1,
+        "text": "As Salman was walking along the nursery corridor at the end of the day, he found a small, shiny wallet on the floor with a spaceship drawn on it. Inside it were some pocket money and a colourful name card.",
+        "image": "docs/stories/salman_secret_trust_1.png"
+      },
+      {
+        "pageNumber": 2,
+        "text": "The corridor was completely empty, and no one could see him. Salman opened the wallet, and its sparkle tempted him to keep it — but a voice of faith whispered in his heart: «Allah sees me everywhere. This is something entrusted to me, and it is not mine to keep.»",
+        "image": "docs/stories/salman_secret_trust_2.png"
+      },
+      {
+        "pageNumber": 3,
+        "text": "Salman went straight to the teacher's room, handed him the wallet and said, «Sir, I found this in the corridor. Its owner must be looking for it and worrying about it right now.» The teacher thanked him and announced over the school speakers that it had been found.",
+        "image": "docs/stories/salman_secret_trust_3.png"
+      },
+      {
+        "pageNumber": 4,
+        "text": "His classmate Ziyad came running, his eyes shining with tears of joy at getting back the wallet his grandfather had given him. At the morning assembly the head teacher gave Salman the «Trustworthy One of the Nursery» award, and Salman was proud that Allah was pleased with him.",
+        "image": "docs/stories/salman_secret_trust_4.png"
+      }
+    ],
+    "language": "en",
+    "source_language": "ar",
+    "translation": {
+      "translator_model": "claude-opus-5.5",
+      "reviewer_model": "deepseek-v4-pro+glm-5.2",
+      "needs_scholar_review": true,
+      "review_verdict": "low_only",
+      "review_defects": [
+        {
+          "model": "deepseek-v4-pro",
+          "field": "discussionQuestions[0]",
+          "type": "meaning",
+          "why": "The Arabic asks who was actually seeing him (implying Allah), while 'could see' weakens it to ability and may suggest no one."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "field": "pages[0].text",
+          "type": "meaning",
+          "why": "'بطاقة تعريف' is an ID card, not merely a name card."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "field": "pages[1].text",
+          "type": "meaning",
+          "why": "The Arabic says it is not lawful/permissible for him, a religious nuance lost in 'not mine to keep'."
+        },
+        {
+          "model": "glm-5.2",
+          "field": "pages[1].text",
+          "type": "meaning",
+          "why": "The Arabic «لا تحل لي» carries the Islamic concept of permissibility (it is not lawful/halal for me to keep), while the English renders it as a general ethical statement without the religious-legal nu"
+        }
+      ],
+      "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
+      "auto_review": {
+        "reviewers": [
+          "deepseek-v4-pro",
+          "glm-5.2"
+        ],
+        "fixer": null,
+        "rounds": 1,
+        "prompt_version": "dfa8a5f39718",
+        "content_sha256": "491f78f7d55a4d9c385dc86c01f1cd0ba3a4bf9dbeeb24dcb20e2c4e627c7b6d",
+        "reviewed_at": "2026-10-07T19:12:53+00:00",
+        "residual_low": [
+          {
+            "model": "deepseek-v4-pro",
+            "field": "discussionQuestions[0]",
+            "type": "meaning",
+            "why": "The Arabic asks who was actually seeing him (implying Allah), while 'could see' weakens it to ability and may suggest no one."
+          },
+          {
+            "model": "deepseek-v4-pro",
+            "field": "pages[0].text",
+            "type": "meaning",
+            "why": "'بطاقة تعريف' is an ID card, not merely a name card."
+          },
+          {
+            "model": "deepseek-v4-pro",
+            "field": "pages[1].text",
+            "type": "meaning",
+            "why": "The Arabic says it is not lawful/permissible for him, a religious nuance lost in 'not mine to keep'."
+          },
+          {
+            "model": "glm-5.2",
+            "field": "pages[1].text",
+            "type": "meaning",
+            "why": "The Arabic «لا تحل لي» carries the Islamic concept of permissibility (it is not lawful/halal for me to keep), while the English renders it as a general ethical statement without the religious-legal nu"
+          }
+        ],
+        "adjudicated": [],
+        "tool": "ops/tools/review_en_parity.py",
+        "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+      },
+      "revalidated_at": "2026-10-07T19:12:53+00:00"
+    },
+    "ageGroup": "4-7 years",
+    "category": "Trustworthiness and giving back what belongs to others",
+    "discussionQuestions": [
+      "Who could see Salman in the corridor when he found the wallet on his own?",
+      "Why did Salman feel so much happier when he gave back what was entrusted to him than he would have felt if he had kept it?",
+      "What would you do if you found money, a pen or a toy at your school or in the mosque?"
+    ],
+    "islamicValue": "Allah says: ﴿إِنَّ اللَّهَ يَأْمُرُكُمْ أَن تُؤَدُّوا الْأَمَانَاتِ إِلَىٰ أَهْلِهَا﴾ (An-Nisa: 58) — interpretation of the meaning: 'Indeed, Allah commands you to render trusts to whom they are due.'",
+    "actionChallenge": "Trust challenge: look through your room or your bag, and if you find anything you borrowed from a friend or your brother, give it back to them today in good condition, with a word of thanks."
   }
 ]

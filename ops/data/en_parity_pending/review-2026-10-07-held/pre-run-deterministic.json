@@ -1,0 +1,37 @@
+{
+  "story:bilal_forgiveness": {
+    "content_sha256": "855c190f306f362e233612c5b72a910e174e80a76689408e731d81c5b4e053b2",
+    "deterministic_defects": [],
+    "approval_state": "invalid"
+  },
+  "story:salman_secret_trust": {
+    "content_sha256": "491f78f7d55a4d9c385dc86c01f1cd0ba3a4bf9dbeeb24dcb20e2c4e627c7b6d",
+    "deterministic_defects": [],
+    "approval_state": "none"
+  },
+  "story:sarah_basil_sprout": {
+    "content_sha256": "7c6f98734d6cd401f67826d26edd7b5c050bdaa623b56437c8a70c72fbcd533b",
+    "deterministic_defects": [],
+    "approval_state": "none"
+  },
+  "story:maryam_toys": {
+    "content_sha256": "152e2e9ba28546d019275d359ce634f32c44c8ebf232cc884c151ee954559afe",
+    "deterministic_defects": [],
+    "approval_state": "valid"
+  },
+  "story:yaseen_creation": {
+    "content_sha256": "66bcd1f7b9f240f91f640302251716ca7e2cfb0b2dae8dbb7ad4ceaccb6ef4c0",
+    "deterministic_defects": [],
+    "approval_state": "valid"
+  },
+  "story:fatima_parents": {
+    "content_sha256": "2ae0275b570aa7d642608b84c600a49c7c42e4a61167eb60d0e54002d1fdf2a3",
+    "deterministic_defects": [],
+    "approval_state": "valid"
+  },
+  "lesson_7-9_islamic_parenting_worship_06": {
+    "content_sha256": "33abfeed87dbd0a4547b0043646737f4d86e859631f2a2dc382693fa1b3d820a",
+    "deterministic_defects": [],
+    "approval_state": "none"
+  }
+}
