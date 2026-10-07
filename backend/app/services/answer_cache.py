@@ -78,7 +78,27 @@ def _kb_revision() -> str:
     from app.services.knowledge_loader import load_default_knowledge_units
     from app.services.retrieval import _fingerprint
 
-    return _fingerprint(load_default_knowledge_units())
+    revision = _fingerprint(load_default_knowledge_units())
+    # Files are independently published: a read can straddle a source change.
+    # Require matching complete reads, without claiming a filesystem lock.
+    if revision != _fingerprint(load_default_knowledge_units()):
+        raise RuntimeError("knowledge sources changed during revision capture")
+    return revision
+
+
+def capture_revision() -> str | None:
+    """Capture provenance BEFORE retrieval/generation; None disables storage.
+
+    This is an optimistic content check, not an atomic snapshot of the files.
+    store() and lookup() independently validate it at their own boundaries.
+    """
+    if not ANSWER_CACHE_ENABLED:
+        return None
+    try:
+        return _kb_revision()
+    except Exception as exc:  # noqa: BLE001 — cache must never break generation
+        logger.warning("answer-cache revision capture failed: %s", exc)
+        return None
 
 
 def _conn() -> sqlite3.Connection:
@@ -188,6 +208,8 @@ def lookup(question: str, age_group: str, domain: str, severity: str) -> str | N
             conn.commit()
         finally:
             conn.close()
+        if _kb_revision() != revision:
+            return None
         latency = int((time.monotonic() - start) * 1000)
         try:
             from app.services.ai_gateway import _log_call
@@ -234,15 +256,18 @@ def purge(reason: str = "") -> int:
         return 0
 
 
-def store(question: str, age_group: str, domain: str, severity: str, answer: str) -> bool:
-    """Store a freshly generated first-question answer. Best-effort."""
-    if not ANSWER_CACHE_ENABLED:
+def store(question: str, age_group: str, domain: str, severity: str, answer: str,
+          *, generation_revision: str | None = None) -> bool:
+    """Store only with unchanged provenance captured before generation."""
+    if not ANSWER_CACHE_ENABLED or not generation_revision:
         return False
     answer = (answer or "").strip()
     if len(answer) < _MIN_ANSWER_LEN:
         return False
     try:
-        revision = _kb_revision()
+        revision = generation_revision
+        if _kb_revision() != revision:
+            return False
         vec = _embed(question)
         conn = _conn()
         try:
@@ -253,6 +278,10 @@ def store(question: str, age_group: str, domain: str, severity: str, answer: str
                 "DELETE FROM answer_cache WHERE created_at < datetime('now', ?)",
                 (f"-{_TTL_DAYS} days",),
             )
+            # Recheck after embedding and acquiring SQLite's write transaction.
+            # A stale writer must not overwrite a newly generated answer.
+            if _kb_revision() != revision:
+                return False
             conn.execute(
                 "INSERT INTO answer_cache "
                 "(qhash, question_norm, age_group, domain, severity, answer, embedding, "
@@ -268,6 +297,8 @@ def store(question: str, age_group: str, domain: str, severity: str, answer: str
                     revision,
                 ),
             )
+            if _kb_revision() != revision:
+                return False
             conn.commit()
             return True
         finally:

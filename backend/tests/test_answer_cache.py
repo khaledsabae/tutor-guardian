@@ -20,18 +20,18 @@ def _isolated(tmp_path, monkeypatch):
 
 
 def test_exact_round_trip():
-    assert ac.store("ابني لا يصلي", "4-6", "islamic_parenting", "خفيف", ANSWER)
+    assert ac.store("ابني لا يصلي", "4-6", "islamic_parenting", "خفيف", ANSWER, generation_revision=ac.capture_revision())
     got = ac.lookup("ابني لا يصلي", "4-6", "islamic_parenting", "خفيف")
     assert got == ANSWER
 
 
 def test_normalization_bridges_orthography_and_punctuation():
-    ac.store("ابني لا يصلي", "4-6", "islamic_parenting", "خفيف", ANSWER)
+    ac.store("ابني لا يصلي", "4-6", "islamic_parenting", "خفيف", ANSWER, generation_revision=ac.capture_revision())
     assert ac.lookup("إبني  لا يصلي!؟", "4-6", "islamic_parenting", "خفيف") == ANSWER
 
 
 def test_scope_isolation():
-    ac.store("ابني لا يصلي", "4-6", "islamic_parenting", "خفيف", ANSWER)
+    ac.store("ابني لا يصلي", "4-6", "islamic_parenting", "خفيف", ANSWER, generation_revision=ac.capture_revision())
     assert ac.lookup("ابني لا يصلي", "7-9", "islamic_parenting", "خفيف") is None
     assert ac.lookup("ابني لا يصلي", "4-6", "medical", "خفيف") is None
     assert ac.lookup("ابني لا يصلي", "4-6", "islamic_parenting", "شديد") is None
@@ -44,7 +44,7 @@ def test_semantic_match_via_embeddings(monkeypatch):
         ac.normalize("ابني يكذب كثيرا"): [0.0, 1.0],
     }
     monkeypatch.setattr(ac, "_embed", lambda text: vecs.get(ac.normalize(text)))
-    ac.store("ابني لا يصلي", "4-6", "islamic_parenting", "خفيف", ANSWER)
+    ac.store("ابني لا يصلي", "4-6", "islamic_parenting", "خفيف", ANSWER, generation_revision=ac.capture_revision())
     # Different wording, same meaning → semantic hit.
     assert ac.lookup("طفلي يرفض الصلاة", "4-6", "islamic_parenting", "خفيف") == ANSWER
     # Orthogonal question → miss.
@@ -52,18 +52,18 @@ def test_semantic_match_via_embeddings(monkeypatch):
 
 
 def test_disabled_flag_bypasses_everything(monkeypatch):
-    ac.store("سؤال ما للتخزين المسبق", "4-6", "development", "خفيف", ANSWER)
+    ac.store("سؤال ما للتخزين المسبق", "4-6", "development", "خفيف", ANSWER, generation_revision=ac.capture_revision())
     monkeypatch.setattr(ac, "ANSWER_CACHE_ENABLED", False)
     assert ac.lookup("سؤال ما للتخزين المسبق", "4-6", "development", "خفيف") is None
-    assert not ac.store("آخر", "4-6", "development", "خفيف", ANSWER)
+    assert not ac.store("آخر", "4-6", "development", "خفيف", ANSWER, generation_revision=ac.capture_revision())
 
 
 def test_short_answers_rejected():
-    assert not ac.store("سؤال", "4-6", "development", "خفيف", "رد قصير جدًا")
+    assert not ac.store("سؤال", "4-6", "development", "خفيف", "رد قصير جدًا", generation_revision=ac.capture_revision())
 
 
 def test_ttl_expiry(monkeypatch):
-    ac.store("ابني لا يصلي", "4-6", "islamic_parenting", "خفيف", ANSWER)
+    ac.store("ابني لا يصلي", "4-6", "islamic_parenting", "خفيف", ANSWER, generation_revision=ac.capture_revision())
     conn = ac._conn()
     conn.execute("UPDATE answer_cache SET created_at = datetime('now', '-90 days')")
     conn.commit()

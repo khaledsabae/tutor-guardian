@@ -195,6 +195,7 @@ def main() -> None:
             continue
 
         # Generate answer
+        generation_revision = answer_cache.capture_revision()
         t0 = time.monotonic()
         answer = _generate_one(base_url, model, question, age_group, domain, severity)
         elapsed = time.monotonic() - t0
@@ -205,7 +206,8 @@ def main() -> None:
             continue
 
         # Store in cache
-        ok = answer_cache.store(question, age_group, domain, severity, answer)
+        ok = answer_cache.store(question, age_group, domain, severity, answer,
+                                generation_revision=generation_revision)
         if ok:
             log.info("  → stored (%d chars, %.1fs)", len(answer), elapsed)
             stored += 1
