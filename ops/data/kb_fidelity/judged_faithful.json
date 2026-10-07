@@ -2449,15 +2449,11 @@
    "why": "Matches Tarbiyat al-Banat p.6: Ibn al-Qayyim on parents' neglect ruining children, and the prophets' care for their children's faith - Ya'qub's question (al-Baqara 133), Ibrahim and Ismail's du'a, al-Furqan 74 with Ibn Kathir."
   },
   "isl-f782f2ed": {
-   "fingerprint": "ecb92e78ddb15d8a",
-   "judged_on": "2026-10-04",
+   "fingerprint": "fe4d22634c06cc91",
+   "judged_on": "2026-10-07",
    "source_file": "Alukah_Rights_of_Children.pdf",
-   "flags": [
-    "reversed",
-    "glyph_substituted",
-    "meta_framing"
-   ],
-   "why": "Matches the author's introduction (p.7): upbringing and good character are children's right (al-Tahrim 6, al-Nisa 11), teach them the Quran, Sunnah and sound creed from young, so they grow into a generation that obeys Allah and His Messenger."
+   "flags": [],
+   "why": "Native primary-page recovery: The introduction paragraph gives substantive author views on upbringing, not contents or research method. It is presented as the author’s account, not a new ruling or guarantee. No translation of the Quran is presented as Quran; the English is a paraphrase of the author’s discussion. Evidence: ops/data/kb_fidelity/source_recovery/isl-f782f2ed.json; original OCR checksum and committed blob locator retained. No model or scholar approval."
   },
   "isl-f8bc202e": {
    "fingerprint": "fcf4f96f726435ce",
@@ -2470,15 +2466,11 @@
    "why": "Matches Khulayfi p.14 (conclusion): the prophetic method is distinctive and comprehensive, raises a person balanced in religion and worldly life, and Muslims today need to draw on that experience."
   },
   "isl-fb04bcd3": {
-   "fingerprint": "62508200fa94f690",
-   "judged_on": "2026-10-04",
+   "fingerprint": "13f271f2a1f58c32",
+   "judged_on": "2026-10-07",
    "source_file": "Alukah_Rights_of_Children.pdf",
-   "flags": [
-    "partially_reversed",
-    "glyph_substituted",
-    "meta_framing"
-   ],
-   "why": "Matches p.30: rights at birth - Aisha praising Allah for a healthy newborn regardless of sex, naming the child (the Prophet naming Ibrahim, Abdullah ibn Abi Talha, al-Mundhir) and Samura's hadith 'slaughtered for on the seventh day and named'."
+   "flags": [],
+   "why": "Native primary-page recovery: The raw anchor includes the Aisha report and naming discussion across PDF30–31. The recovery selects the actual Aisha report on PDF30, without importing aqiqah requirements, diagnosis, gender preference, mandatory practice or a prophetic attribution. Printed footnote grading is the author’s; no independent grading or Sahihayn corpus match is claimed. Evidence: ops/data/kb_fidelity/source_recovery/isl-fb04bcd3.json; original OCR checksum and committed blob locator retained. No model or scholar approval."
   },
   "isl-fb584945": {
    "fingerprint": "bcb79faa458c9c74",
@@ -2518,15 +2510,11 @@
    "why": "Matches Tarbiyat al-Banat pp.15-16: prayer with encouragement and small rewards on the prayer mat and making the girl watch prayer times, the 'command at seven' narration and Ibn Taymiyya; then individual differences and channelling talents into Quran memorisation."
   },
   "isl-fe2f3c39": {
-   "fingerprint": "b207ba98e1d5d480",
-   "judged_on": "2026-10-04",
+   "fingerprint": "e11609f8cbb0bab7",
+   "judged_on": "2026-10-07",
    "source_file": "Alukah_Rights_of_Children.pdf",
-   "flags": [
-    "reversed",
-    "glyph_substituted",
-    "meta_framing"
-   ],
-   "why": "Consistent with p.121: the salaf's children's play was purposeful and built intelligence and strength, unlike today's long hours of play. The opening (morals, following the Sunnah, the Companions teaching their children) is general and unattributed to a specific report."
+   "flags": [],
+   "why": "Native primary-page recovery: Raw OCR crosses the historical racing reports on PDF120–121 and modern discussion of long play hours and purposeful play. The selected report is the actual father-son footrace on PDF121. No electronic-games claim is established, no mental/physical outcome promised, no modern gender prescription or mandatory parental practice imported, and no independent isnad grading claimed. Evidence: ops/data/kb_fidelity/source_recovery/isl-fe2f3c39.json; original OCR checksum and committed blob locator retained. No model or scholar approval."
   },
   "isl-fe625918": {
    "fingerprint": "bf396c0e60eb71be",

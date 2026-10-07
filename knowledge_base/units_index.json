@@ -12877,26 +12877,26 @@
     {
       "id": "isl-f782f2ed",
       "domain": "islamic_parenting",
-      "title": "أساسيات التربية الدينية للأطفال",
+      "title": "تعليم الدين في عرض المؤلف لحقوق الأولاد",
       "source_file": "Alukah_Rights_of_Children.pdf",
       "language": "ar",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
+      "original_age_group": "unspecified",
+      "normalized_age_group": "unspecified",
       "behavior_type": "تربية دينية وأخلاقية",
       "needs_ocr": false,
-      "size_chars": 1358
+      "size_chars": 157
     },
     {
       "id": "isl-f782f2ed__en",
       "domain": "islamic_parenting",
-      "title": "Foundations of Tarbiyah for Children",
+      "title": "Religious Education in the Author’s Account of Children’s Rights",
       "source_file": "Alukah_Rights_of_Children.pdf",
       "language": "en",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
+      "original_age_group": "unspecified",
+      "normalized_age_group": "unspecified",
       "behavior_type": "تربية دينية وأخلاقية",
       "needs_ocr": false,
-      "size_chars": 1358
+      "size_chars": 157
     },
     {
       "id": "isl-f8bc202e",
@@ -12925,26 +12925,26 @@
     {
       "id": "isl-fb04bcd3",
       "domain": "islamic_parenting",
-      "title": "حقوق الأطفال في الإسلام من الأحاديث النبوية",
+      "title": "سؤال عائشة عن حال المولود وحمدها لله",
       "source_file": "Alukah_Rights_of_Children.pdf",
       "language": "ar",
       "original_age_group": "unspecified",
       "normalized_age_group": "unspecified",
       "behavior_type": "تربية إسلامية",
       "needs_ocr": false,
-      "size_chars": 1325
+      "size_chars": 139
     },
     {
       "id": "isl-fb04bcd3__en",
       "domain": "islamic_parenting",
-      "title": "The Rights of Children in Islam from the Prophetic Ahadith",
+      "title": "Aisha’s Question about a Newborn and Her Praise of Allah",
       "source_file": "Alukah_Rights_of_Children.pdf",
       "language": "en",
       "original_age_group": "unspecified",
       "normalized_age_group": "unspecified",
       "behavior_type": "تربية إسلامية",
       "needs_ocr": false,
-      "size_chars": 1325
+      "size_chars": 139
     },
     {
       "id": "isl-fb584945",
@@ -13057,26 +13057,26 @@
     {
       "id": "isl-fe2f3c39",
       "domain": "islamic_parenting",
-      "title": "تربية الأبناء على الأخلاق الحسنة",
+      "title": "سباق عبد الرحمن مع أبيه في رواية الأعمش",
       "source_file": "Alukah_Rights_of_Children.pdf",
       "language": "ar",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
+      "original_age_group": "unspecified",
+      "normalized_age_group": "unspecified",
       "behavior_type": "تربية أخلاقية",
       "needs_ocr": false,
-      "size_chars": 1332
+      "size_chars": 110
     },
     {
       "id": "isl-fe2f3c39__en",
       "domain": "islamic_parenting",
-      "title": "Tarbiyah of Children upon Good Akhlaq",
+      "title": "Abd al-Rahman’s Race with His Father in al-Aʿmash’s Report",
       "source_file": "Alukah_Rights_of_Children.pdf",
       "language": "en",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
+      "original_age_group": "unspecified",
+      "normalized_age_group": "unspecified",
       "behavior_type": "تربية أخلاقية",
       "needs_ocr": false,
-      "size_chars": 1332
+      "size_chars": 110
     },
     {
       "id": "isl-fe625918",
