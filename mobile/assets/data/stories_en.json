@@ -666,7 +666,7 @@
     "source_language": "ar",
     "translation": {
       "translator_model": "mistral-large-3:675b",
-      "reviewer_model": "deepseek-v4-pro",
+      "reviewer_model": "deepseek-v4-pro+glm-5.2",
       "attempts": 1,
       "needs_scholar_review": true,
       "scholar_signals": {
@@ -675,27 +675,101 @@
         "quran_ayah": false,
         "reviewer_model": true
       },
-      "review_verdict": "defects",
+      "review_verdict": "low_only",
       "review_defects": [
         {
-          "type": "religious_error",
-          "field": "pages[1].text",
-          "arabic": "الصلاة على وقتها",
-          "english": "Salah at its appointed time",
-          "why": "The Arabic hadith says 'الصلاة على وقتها' (prayer on its time). The English adds the word 'appointed', which is not in the original wording. This alters the phrasing of a hadith.",
-          "severity": "medium"
+          "model": "deepseek-v4-pro",
+          "field": "discussionQuestions[0]",
+          "type": "structure",
+          "why": "The name عمر is transliterated as 'Umar' throughout the story but as 'Omar' in this question, creating an inconsistency."
         },
         {
-          "type": "meaning_change",
-          "field": "pages[2].text",
-          "arabic": "أسبغ الوضوء بتمهل وعناية",
-          "english": "performed wudu slowly and carefully",
-          "why": "The Arabic verb 'أسبغ' means to perform wudu thoroughly and completely, covering all required parts. The English omits this key concept of thoroughness, reducing it to only slowness and care.",
-          "severity": "medium"
+          "model": "glm-5.2",
+          "field": "discussionQuestions[0]",
+          "type": "tone",
+          "why": "The protagonist's name is rendered 'Umar' in the title and story pages but 'Omar' here, an inconsistent transliteration."
+        },
+        {
+          "model": "glm-5.2",
+          "field": "discussionQuestions[1]",
+          "type": "tone",
+          "why": "The rest of the item transliterates المسجد as 'masjid', but here it is translated as 'mosque', creating an inconsistent style."
+        },
+        {
+          "model": "glm-5.2",
+          "field": "discussionQuestions[2]",
+          "type": "tone",
+          "why": "خشوع is transliterated as 'khushu'' elsewhere in this item but translated as 'focus' here, an inconsistent treatment of the term."
+        },
+        {
+          "model": "glm-5.2",
+          "field": "actionChallenge",
+          "type": "tone",
+          "why": "خشوع is transliterated as 'khushu'' in the story pages but translated as 'focus' here, an inconsistent treatment of the term."
         }
       ],
-      "approved_by": null
-    }
+      "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
+      "english_authors": [
+        "mistral-large-3:675b",
+        "claude-opus-5.5"
+      ],
+      "auto_review": {
+        "reviewers": [
+          "deepseek-v4-pro",
+          "glm-5.2"
+        ],
+        "fixer": null,
+        "rounds": 1,
+        "prompt_version": "dfa8a5f39718",
+        "content_sha256": "90a6085378b9e4d3e666e42a1d0bb26ac52a1d3253678683ff218aa53917947e",
+        "reviewed_at": "2026-10-07T09:17:42+00:00",
+        "residual_low": [
+          {
+            "model": "deepseek-v4-pro",
+            "field": "discussionQuestions[0]",
+            "type": "structure",
+            "why": "The name عمر is transliterated as 'Umar' throughout the story but as 'Omar' in this question, creating an inconsistency."
+          },
+          {
+            "model": "glm-5.2",
+            "field": "discussionQuestions[0]",
+            "type": "tone",
+            "why": "The protagonist's name is rendered 'Umar' in the title and story pages but 'Omar' here, an inconsistent transliteration."
+          },
+          {
+            "model": "glm-5.2",
+            "field": "discussionQuestions[1]",
+            "type": "tone",
+            "why": "The rest of the item transliterates المسجد as 'masjid', but here it is translated as 'mosque', creating an inconsistent style."
+          },
+          {
+            "model": "glm-5.2",
+            "field": "discussionQuestions[2]",
+            "type": "tone",
+            "why": "خشوع is transliterated as 'khushu'' elsewhere in this item but translated as 'focus' here, an inconsistent treatment of the term."
+          },
+          {
+            "model": "glm-5.2",
+            "field": "actionChallenge",
+            "type": "tone",
+            "why": "خشوع is transliterated as 'khushu'' in the story pages but translated as 'focus' here, an inconsistent treatment of the term."
+          }
+        ],
+        "adjudicated": [],
+        "tool": "ops/tools/review_en_parity.py",
+        "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+      },
+      "revalidated_at": "2026-10-07T09:17:42+00:00"
+    },
+    "ageGroup": "5-8 years",
+    "category": "Love of prayer and its light",
+    "discussionQuestions": [
+      "Why did Omar feel light and joy in his heart when he heard the adhan?",
+      "What are the benefits of praying with the family or at the mosque?",
+      "How do we get ready for prayer with good manners, focus and a clean wudu?"
+    ],
+    "islamicValue": "Allah says: ﴿وَأَقِمِ الصَّلَاةَ لِذِكْرِي﴾ (Taha: 14) — interpretation of the meaning: 'and establish prayer for My remembrance.'",
+    "actionChallenge": "Prayer challenge: today, make wudu and pray one prayer together with your father or mother, with focus and a smile."
   },
   {
     "id": "khadija_neighbor",
@@ -812,7 +886,7 @@
   {
     "id": "abdullah_bismillah",
     "title": "Abdullah and 'Bismillah'",
-    "description": "A warm tarbiyah story that gently shows the Sunnah manners of eating and drinking—saying 'Bismillah,' using the right hand, and praising Allah.",
+    "description": "An engaging tarbiyah story that instils the Islamic manners of eating and drinking—saying 'Bismillah,' using the right hand, and praising Allah.",
     "coverImage": "docs/stories/abdullah_bismillah_cover.png",
     "themeColor": "0xFF2563EB",
     "videoFile": "docs/stories/abdullah_bismillah_cover.mp4",
@@ -852,7 +926,7 @@
     "source_language": "ar",
     "translation": {
       "translator_model": "mistral-large-3:675b",
-      "reviewer_model": "deepseek-v4-pro",
+      "reviewer_model": "deepseek-v4-pro+glm-5.2",
       "attempts": 1,
       "needs_scholar_review": true,
       "scholar_signals": {
@@ -861,51 +935,39 @@
         "quran_ayah": false,
         "reviewer_model": true
       },
-      "review_verdict": "defects",
-      "review_defects": [
-        {
-          "type": "religious_error",
-          "field": "pages[1].text",
-          "arabic": "«يا غلام، سمّ الله، وكل بيمينك، وكل مما يليك»",
-          "english": "\"O young boy, say 'Bismillah,' eat with your right hand, and eat from what is in front of you.\"",
-          "why": "The Arabic hadith says 'سمّ الله' (mention Allah's name), not specifically 'say Bismillah'. The English alters the wording of the hadith.",
-          "severity": "medium"
-        },
-        {
-          "type": "term_error",
-          "field": "pages[3].text and pages[5].text",
-          "arabic": "التسمية",
-          "english": "saying 'Bismillah' / Saying 'Bismillah'",
-          "why": "The Islamic term 'tasmiyah' is translated away instead of being transliterated or explained. The Arabic uses the general term, not the specific phrase.",
-          "severity": "low"
-        },
-        {
-          "type": "meaning_change",
-          "field": "description",
-          "arabic": "الآداب الشرعية",
-          "english": "Sunnah manners",
-          "why": "The Arabic says 'Shariah etiquettes', not 'Sunnah manners'. 'Sunnah' is a specific term not present in the source.",
-          "severity": "low"
-        },
-        {
-          "type": "meaning_change",
-          "field": "pages[4].text",
-          "arabic": "تطبيق السنن الصغيرة",
-          "english": "following even the small Sunnahs",
-          "why": "The word 'even' is added, not present in the Arabic.",
-          "severity": "low"
-        },
-        {
-          "type": "meaning_change",
-          "field": "pages[5].text",
-          "arabic": "مائدة عائلته الكريمة",
-          "english": "the table of his kind family",
-          "why": "'كريمة' means noble or generous, not 'kind'.",
-          "severity": "low"
-        }
+      "review_verdict": "clean",
+      "review_defects": [],
+      "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
+      "english_authors": [
+        "mistral-large-3:675b",
+        "claude-opus-5.5"
       ],
-      "approved_by": null
-    }
+      "auto_review": {
+        "reviewers": [
+          "deepseek-v4-pro",
+          "glm-5.2"
+        ],
+        "fixer": null,
+        "rounds": 1,
+        "prompt_version": "dfa8a5f39718",
+        "content_sha256": "227b74f39994eab8f9fa4a1acc361de8c772d17fc14b456b3da06d2224ffc29e",
+        "reviewed_at": "2026-10-07T09:15:33+00:00",
+        "residual_low": [],
+        "adjudicated": [],
+        "tool": "ops/tools/review_en_parity.py",
+        "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+      },
+      "revalidated_at": "2026-10-07T09:15:33+00:00"
+    },
+    "ageGroup": "3-6 years",
+    "category": "Barakah and remembering Allah",
+    "discussionQuestions": [
+      "What happens to our food and our work when we begin them in the name of Allah?",
+      "In which everyday moments should we say «Bismillah»?",
+      "Why does Allah protect us and give us good when we remember Him?"
+    ],
+    "islamicValue": "The Messenger of Allah ﷺ said: “Young boy, mention the name of Allah, eat with your right hand, and eat from what is in front of you.” (Sahih al-Bukhari 5376)",
+    "actionChallenge": "Remembrance challenge: today, remember to say «Bismillah» before every meal and every drink of water, and before you start anything you do."
   },
   {
     "id": "aisha_permission",
@@ -1084,7 +1146,7 @@
   {
     "id": "fatima_parents",
     "title": "Fatima and the Flower of Birr",
-    "description": "An Islamic tarbiyah story that plants the seeds of birr al-walidayn and kind obedience in children’s hearts, bringing joy to their parents.",
+    "description": "An Islamic tarbiyah story that plants the seeds of birr al-walidayn and obedience to parents in what is right in children’s hearts, bringing joy to their parents.",
     "coverImage": "docs/stories/fatima_parents_cover.png",
     "themeColor": "0xFF8B5CF6",
     "videoFile": "docs/stories/fatima_parents_cover.mp4",
@@ -1111,7 +1173,7 @@
       },
       {
         "pageNumber": 5,
-        "text": "Fatima’s father felt so proud of her. He gave her a beautiful red carnation as a gift for her ihsan and her birr al-walidayn.",
+        "text": "Fatima’s father felt so proud of her. He gave her a beautiful damask rose as a gift for her ihsan and her birr al-walidayn.",
         "image": "docs/stories/fatima_parents_5.png"
       },
       {
@@ -1124,7 +1186,7 @@
     "source_language": "ar",
     "translation": {
       "translator_model": "mistral-large-3:675b",
-      "reviewer_model": "deepseek-v4-pro",
+      "reviewer_model": "deepseek-v4-pro+glm-5.2",
       "attempts": 1,
       "needs_scholar_review": true,
       "scholar_signals": {
@@ -1133,35 +1195,39 @@
         "quran_ayah": true,
         "reviewer_model": true
       },
-      "review_verdict": "defects",
-      "review_defects": [
-        {
-          "type": "meaning_change",
-          "field": "pages[4].text",
-          "arabic": "زهرة جوري جميلة",
-          "english": "a beautiful red carnation",
-          "why": "جوري is a type of rose (Damask rose), not a carnation.",
-          "severity": "low"
-        },
-        {
-          "type": "religious_error",
-          "field": "pages[6].text",
-          "arabic": "الله تعالى",
-          "english": "Allah",
-          "why": "The honorific 'تعالى' (the Exalted) is omitted.",
-          "severity": "medium"
-        },
-        {
-          "type": "meaning_change",
-          "field": "pages[5].text",
-          "arabic": "برها بوالدتها",
-          "english": "birr al-walidayn",
-          "why": "The Arabic specifies birr to her mother, but the English uses the general term for birr to both parents.",
-          "severity": "low"
-        }
+      "review_verdict": "clean",
+      "review_defects": [],
+      "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
+      "english_authors": [
+        "mistral-large-3:675b",
+        "claude-opus-5.5"
       ],
-      "approved_by": null
-    }
+      "auto_review": {
+        "reviewers": [
+          "deepseek-v4-pro",
+          "glm-5.2"
+        ],
+        "fixer": null,
+        "rounds": 1,
+        "prompt_version": "dfa8a5f39718",
+        "content_sha256": "2ae0275b570aa7d642608b84c600a49c7c42e4a61167eb60d0e54002d1fdf2a3",
+        "reviewed_at": "2026-10-07T09:19:39+00:00",
+        "residual_low": [],
+        "adjudicated": [],
+        "tool": "ops/tools/review_en_parity.py",
+        "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+      },
+      "revalidated_at": "2026-10-07T09:19:39+00:00"
+    },
+    "ageGroup": "3-6 years",
+    "category": "Birr al-walidayn (kindness to parents) and bringing smiles",
+    "discussionQuestions": [
+      "How did Fatima make her mother's heart happy after a tiring day at work?",
+      "Why did Allah make pleasing our parents one of the greatest causes of happiness and of entering Paradise?",
+      "What kind word or beautiful deed can you do right now to make your parents happy?"
+    ],
+    "islamicValue": "Allah says: ﴿وَقَضَىٰ رَبُّكَ أَلَّا تَعْبُدُوا إِلَّا إِيَّاهُ وَبِالْوَالِدَيْنِ إِحْسَانًا﴾ (Al-Isra: 23) — interpretation of the meaning: 'And your Lord has decreed that you not worship except Him, and to parents, good treatment.'",
+    "actionChallenge": "Birr challenge: go to your mother and your father, kiss their heads and tell them: «I love you both, and thank you for everything you do for me.»"
   },
   {
     "id": "bilal_forgiveness",

@@ -165,35 +165,11 @@
         "claude-opus-5-5"
       ]
     },
-    "story:abdullah_bismillah": {
-      "category": "awaiting-review",
-      "reason": "the Arabic gained interactive fields (age, category, three questions, Islamic value, challenge); their English is prepared in ops/data/en_parity_pending/ and is Claude-authored; parts of the live English were rewritten by PR #27 (Claude); waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
-      "content_sha256": "49ef802db60ab69fa47686b6b3f6751b7e807fb44a4cc66af90af21feca2b5ab",
-      "queued_on": "2026-10-04",
-      "english_authors": [
-        "claude-opus-5.5"
-      ]
-    },
-    "story:fatima_parents": {
-      "category": "awaiting-review",
-      "reason": "the Arabic gained interactive fields (age, category, three questions, Islamic value, challenge); their English is prepared in ops/data/en_parity_pending/ and is Claude-authored; waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
-      "content_sha256": "7205e0f9b09e9fc8665f07756871ff7bd4325200d8db5a753fd12f60323ee086",
-      "queued_on": "2026-10-04"
-    },
     "story:maryam_toys": {
       "category": "awaiting-review",
       "reason": "the Arabic gained interactive fields (age, category, three questions, Islamic value, challenge); their English is prepared in ops/data/en_parity_pending/ and is Claude-authored; waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
       "content_sha256": "fa78e4654af9af4e4c597be20b8a69f1c559944cc997f396efe86a50fec8f1f5",
       "queued_on": "2026-10-04"
-    },
-    "story:omar_prayer": {
-      "category": "awaiting-review",
-      "reason": "the Arabic gained interactive fields (age, category, three questions, Islamic value, challenge); their English is prepared in ops/data/en_parity_pending/ and is Claude-authored; parts of the live English were rewritten by PR #27 (Claude); waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
-      "content_sha256": "855d3d1bea6059f0023adec661537807e7a19a1a58b42e85264714df32c71b51",
-      "queued_on": "2026-10-04",
-      "english_authors": [
-        "claude-opus-5.5"
-      ]
     },
     "story:yaseen_creation": {
       "category": "awaiting-review",
