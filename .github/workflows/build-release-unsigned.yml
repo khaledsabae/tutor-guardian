@@ -10,6 +10,8 @@ on:
       - 'scripts/tests/test_release_bundle.py'
       - 'scripts/release_play_validate.py'
       - 'scripts/tests/test_release_play_validate.py'
+      - 'scripts/release_play_publish.py'
+      - 'scripts/tests/test_release_play_publish.py'
   workflow_dispatch:
     inputs:
       approved_source_sha:
@@ -38,6 +40,7 @@ jobs:
           python3 -m pip install PyYAML==6.0.2
           python3 -m unittest discover -s scripts/tests -p test_release_bundle.py -v
           python3 -m unittest discover -s scripts/tests -p test_release_play_validate.py -v
+          python3 -m unittest discover -s scripts/tests -p test_release_play_publish.py -v
 
   build:
     name: Build unsigned production AAB only
