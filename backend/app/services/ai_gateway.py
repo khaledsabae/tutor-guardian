@@ -821,19 +821,81 @@ _telemetry_schema_ready = False
 def _ensure_telemetry_schema(conn: sqlite3.Connection) -> None:
     """Validate/adopt this database; a process flag cannot identify its schema."""
     from app.db.migrations.runner import apply_migrations
-    from app.db.migrations.telemetry_0001_llm_calls import MIGRATION
+    from app.db.migrations.telemetry_0001_llm_calls import MIGRATION as LLM_CALLS
+    from app.db.migrations.telemetry_0002_usage_estimated import MIGRATION as USAGE_ESTIMATED
 
     global _telemetry_schema_ready
-    apply_migrations(conn, "llm_telemetry", (MIGRATION,))
+    apply_migrations(conn, "llm_telemetry", (LLM_CALLS, USAGE_ESTIMATED))
     # Retained for existing diagnostic/test callers, never used to skip a DB.
     _telemetry_schema_ready = True
+
+
+# ── Token counts the provider did not report ───────────────────────────────
+# DeepSeek reports usage in the LAST chunk of a stream. A stream cut before it
+# (the parent left, the turn was cut, a deadline, a broken stream), a timeout,
+# or a host that ignores include_usage leaves the counts unknown — and in
+# October 2026 that was 26 paid rows with NULL tokens, which a monthly cap
+# cannot sum. They are now estimated from the text sent and received and
+# flagged usage_estimated=1: never NULL, never a silent zero.
+#
+# The estimate is UTF-8 bytes / 3, rounded up. DeepSeek documents ~0.3 token
+# per English character and ~0.6 per Chinese one; bytes/3 gives 0.33 and 1.0,
+# and 0.67 for Arabic (2 bytes a letter) — on the high side, which is the
+# safe side for a spending cap. The completion estimate counts only the text
+# that arrived, so for a cut stream it is a lower bound: the provider may
+# have generated a little more before it saw the connection close.
+_ESTIMATE_BYTES_PER_TOKEN = 3
+
+
+def _estimate_tokens(text: str | None) -> int:
+    if not text:
+        return 0
+    return -(-len(text.encode("utf-8", "replace")) // _ESTIMATE_BYTES_PER_TOKEN)
+
+
+def _never_generated(exc: BaseException | None) -> bool:
+    """The provider refused the request or never received it: nothing was
+    generated, so nothing is billed. The row then carries an explicit zero."""
+    if exc is None:
+        return False
+    if isinstance(exc, (ProviderHTTPError, LLMProviderBusy,
+                        httpx.ConnectError, httpx.ConnectTimeout)):
+        return True
+    # openai SDK errors (tools using record_chat_completion): an HTTP status
+    # answer is a refusal; a timeout or a dropped connection is not.
+    return isinstance(getattr(exc, "status_code", None), int)
+
+
+def _fill_usage(prompt_tokens: int | None, completion_tokens: int | None,
+                prompt: str | None, received: str,
+                exc: BaseException | None) -> tuple[int | None, int | None, bool]:
+    """(prompt_tokens, completion_tokens, estimated) for one llm_calls row."""
+    if prompt_tokens is not None and completion_tokens is not None:
+        return prompt_tokens, completion_tokens, False
+    if prompt is None:
+        # The caller knows nothing about the request (a local fallback with
+        # no prompt at hand): unknown stays unknown, visibly.
+        return prompt_tokens, completion_tokens, False
+    if _never_generated(exc):
+        return (prompt_tokens if prompt_tokens is not None else 0,
+                completion_tokens if completion_tokens is not None else 0, True)
+    return (prompt_tokens if prompt_tokens is not None else _estimate_tokens(prompt),
+            completion_tokens if completion_tokens is not None else _estimate_tokens(received),
+            True)
 
 
 def _log_call(provider: str, model: str, latency_ms: int,
               prompt_tokens: int | None, completion_tokens: int | None,
               streamed: bool, ok: bool,
-              tier: str | None = None, route_reason: str | None = None) -> None:
+              tier: str | None = None, route_reason: str | None = None, *,
+              prompt: str | None = None, received: str = "",
+              exc: BaseException | None = None) -> None:
+    """One llm_calls row. Pass `prompt` (and `received`, `exc`) for any call
+    that may have reached a provider: counts it did not report are then
+    estimated and flagged instead of left NULL. Never raises."""
     try:
+        prompt_tokens, completion_tokens, estimated = _fill_usage(
+            prompt_tokens, completion_tokens, prompt, received, exc)
         _TELEMETRY_DB.parent.mkdir(parents=True, exist_ok=True)
         conn = sqlite3.connect(_TELEMETRY_DB)
         conn.execute("PRAGMA journal_mode = WAL")
@@ -841,9 +903,10 @@ def _log_call(provider: str, model: str, latency_ms: int,
         _ensure_telemetry_schema(conn)
         conn.execute(
             "INSERT INTO llm_calls (provider,model,latency_ms,prompt_tokens,"
-            "completion_tokens,streamed,ok,tier,route_reason) VALUES (?,?,?,?,?,?,?,?,?)",
+            "completion_tokens,streamed,ok,tier,route_reason,usage_estimated) "
+            "VALUES (?,?,?,?,?,?,?,?,?,?)",
             (provider, model, latency_ms, prompt_tokens, completion_tokens,
-             int(streamed), int(ok), tier, route_reason),
+             int(streamed), int(ok), tier, route_reason, int(estimated)),
         )
         conn.commit()
         conn.close()
@@ -1021,8 +1084,8 @@ def aux_generate(provider: LLMProvider, prompt: str, *,
             )
     except Exception as e:
         _log_call(provider.name, model, int((time.monotonic() - start) * 1000),
-                  None, None, streamed=False, ok=False, tier=tier,
-                  route_reason=_failure_reason(e))
+                  *getattr(e, "usage", (None, None)), streamed=False, ok=False, tier=tier,
+                  route_reason=_failure_reason(e), prompt=prompt, exc=e)
         if breaker is not None:
             breaker.record(False)
         logger.warning("auxiliary %s call failed: %s", tier, e)
@@ -1030,10 +1093,82 @@ def aux_generate(provider: LLMProvider, prompt: str, *,
     latency = int((time.monotonic() - start) * 1000)
     _log_call(provider.name, model, latency,
               data.get("prompt_eval_count"), data.get("eval_count"),
-              streamed=False, ok=True, tier=tier)
+              streamed=False, ok=True, tier=tier,
+              prompt=prompt, received=data.get("response") or "")
     if breaker is not None:
         breaker.record(True)
     return (data.get("response") or "").strip()
+
+
+# ── Paid calls made outside the gateway ────────────────────────────────────
+# Batch tools (the weekly KB-gap judge on the VPS, eval/golden judges, the
+# dataset generator, PDF ingestion) talk to an OpenAI-compatible API with
+# their own client. In October 2026 the weekly judge spent 196 DeepSeek
+# requests that llm_calls never saw. Every such call goes through
+# record_chat_completion: same table, same provider identity, same usage
+# rules as the gateway's own calls. tests/test_deepseek_callers_are_recorded.py
+# fails on a new caller that does not.
+def _provider_label(base_url: object) -> str:
+    """llm_calls.provider for an OpenAI-compatible endpoint, by its host.
+
+    api.deepseek.com is "deepseek" — the gateway's own name for that wallet,
+    so batch spend counts against the same monthly sum as the app's."""
+    try:
+        host = (httpx.URL(str(base_url)).host or "").lower()
+    except Exception:  # noqa: BLE001 — a label must never break the call
+        host = ""
+    if host == "deepseek.com" or host.endswith(".deepseek.com"):
+        return "deepseek"
+    if host == "ollama.com" or host.endswith(".ollama.com"):
+        return "ollama_cloud"
+    if host in ("localhost", "127.0.0.1", "::1") or host.endswith(".localhost"):
+        return "ollama"
+    if "azure" in host:
+        return "azure"
+    return host or "unknown"
+
+
+def record_chat_completion(client, *, tier: str, provider: str | None = None,
+                           route_reason: str | None = None, **create_kwargs):
+    """client.chat.completions.create(**create_kwargs), recorded in llm_calls.
+
+    Returns the response unchanged and re-raises the client's errors after
+    recording them; telemetry itself never raises. `tier` names the caller
+    (e.g. "kb_gap_judge"); `provider` overrides the host-derived label. Not
+    for streams: their usage arrives in the last chunk, which this wrapper
+    would not see — stream through the gateway instead.
+    """
+    if create_kwargs.get("stream"):
+        raise ValueError("record_chat_completion does not record streams; use the gateway")
+    messages = create_kwargs.get("messages") or []
+    prompt = "\n".join(str(m.get("content") or "") for m in messages if isinstance(m, dict))
+    model = str(create_kwargs.get("model") or "unknown")
+    name = provider or _provider_label(getattr(client, "base_url", None))
+    start = time.monotonic()
+    try:
+        response = client.chat.completions.create(**create_kwargs)
+    except Exception as e:
+        _log_call(name, model, int((time.monotonic() - start) * 1000), None, None,
+                  streamed=False, ok=False, tier=tier,
+                  route_reason=_failure_reason(e) or route_reason, prompt=prompt, exc=e)
+        raise
+    latency = int((time.monotonic() - start) * 1000)
+    received, prompt_tokens, completion_tokens = "", None, None
+    try:
+        usage = getattr(response, "usage", None)
+        prompt_tokens = getattr(usage, "prompt_tokens", None)
+        completion_tokens = getattr(usage, "completion_tokens", None)
+        received = "".join((getattr(getattr(c, "message", None), "content", None) or "")
+                           for c in (getattr(response, "choices", None) or []))
+        served = getattr(response, "model", None)
+        if isinstance(served, str) and served:
+            model = served
+    except Exception:  # noqa: BLE001 — an odd response shape is estimated, not fatal
+        pass
+    _log_call(name, model, latency, prompt_tokens, completion_tokens,
+              streamed=False, ok=True, tier=tier, route_reason=route_reason,
+              prompt=prompt, received=received)
+    return response
 
 
 def _failure_reason(exc: BaseException) -> str | None:
@@ -1048,6 +1183,14 @@ def _failure_reason(exc: BaseException) -> str | None:
         return f"http_{exc.status}"
     if isinstance(exc, ProviderStreamError):
         return "bad_stream"
+    if isinstance(exc, LLMCancelled):
+        return "cancelled"
+    # openai SDK errors, for callers recorded through record_chat_completion.
+    status = getattr(exc, "status_code", None)
+    if isinstance(status, int):
+        return f"http_{status}"
+    if "Timeout" in type(exc).__name__:
+        return "read_timeout"
     return None
 
 
@@ -1249,12 +1392,20 @@ class AIGateway:
                             _log_call(cloud.name, cloud.model, latency,
                                       result.prompt_tokens, result.completion_tokens,
                                       streamed=False, ok=True,
-                                      tier=tier, route_reason=route_reason)
+                                      tier=tier, route_reason=route_reason,
+                                      prompt=prompt, received=text)
                             return result
+                        _log_call(cloud.name, cloud.model, latency,
+                                  data.get("prompt_eval_count"), data.get("eval_count"),
+                                  streamed=False, ok=False, tier=tier, route_reason="empty",
+                                  prompt=prompt)
                     except Exception as e:
-                        _log_call(cloud.name, cloud.model, 0, None, None,
+                        _log_call(cloud.name, cloud.model,
+                                  int((time.monotonic() - start) * 1000),
+                                  *getattr(e, "usage", (None, None)),
                                   streamed=False, ok=False,
-                                  tier=tier, route_reason=route_reason)
+                                  tier=tier, route_reason=_failure_reason(e) or route_reason,
+                                  prompt=prompt, exc=e)
                         logger.warning("cloud quality tier failed, using local: %s", e)
 
             # 1. Try primary model with retries — unless the paid primary has
@@ -1287,7 +1438,7 @@ class AIGateway:
                         # the monthly cap is a sum over llm_calls.
                         _log_call(self.provider.name, data.get("model") or self._provider_model(),
                                   latency, data.get("prompt_eval_count"), data.get("eval_count"),
-                                  streamed=False, ok=False, route_reason="empty")
+                                  streamed=False, ok=False, route_reason="empty", prompt=prompt)
                         logger.warning("Primary returned empty response on attempt %d/%d", attempt, retries)
                         if attempt < retries:
                             await asyncio.sleep(0.5 * (2 ** (attempt - 1)))
@@ -1302,7 +1453,8 @@ class AIGateway:
                     _log_call(self.provider.name, result.model, latency,
                               result.prompt_tokens, result.completion_tokens,
                               streamed=False, ok=True,
-                              route_reason=f"truncated:{result.truncated}" if result.truncated else None)
+                              route_reason=f"truncated:{result.truncated}" if result.truncated else None,
+                              prompt=prompt, received=text)
                     if paid_primary:
                         primary_breaker.record(True)
                     return result
@@ -1313,13 +1465,14 @@ class AIGateway:
                     # Recorded, not silently dropped. The monthly cap is a sum
                     # over this table, and a timeout here is the case where the
                     # provider most likely *did* count the tokens — the request
-                    # reached it and the answer did not come back. Tokens stay
-                    # null because they are genuinely unknown; inventing an
-                    # estimate would be the same mistake with the opposite sign.
+                    # reached it and the answer did not come back. Counts it did
+                    # not report are estimated from the prompt and flagged
+                    # (usage_estimated=1): a NULL here was 9 of October's 26
+                    # unsummable rows.
                     _log_call(self.provider.name, self._provider_model(),
                               int((time.monotonic() - start) * 1000),
                               *getattr(e, "usage", (None, None)), streamed=False, ok=False,
-                              route_reason=_failure_reason(e))
+                              route_reason=_failure_reason(e), prompt=prompt, exc=e)
                     logger.warning("Primary attempt %d/%d failed: %s", attempt, retries, e)
                     # A held, silent or saturated provider is not retried: each
                     # retry was another paid request into the same hold (all of
@@ -1360,16 +1513,27 @@ class AIGateway:
                         _log_call(valve.name, valve.model, latency,
                                   result.prompt_tokens, result.completion_tokens,
                                   streamed=False, ok=True,
-                                  tier=tier, route_reason=route_reason)
+                                  tier=tier, route_reason=route_reason,
+                                  prompt=prompt, received=text)
                         return result
+                    _log_call(valve.name, valve.model, latency,
+                              data.get("prompt_eval_count"), data.get("eval_count"),
+                              streamed=False, ok=False, tier=tier, route_reason="empty",
+                              prompt=prompt)
                 except Exception as e:
-                    _log_call(valve.name, valve.model, 0, None, None,
+                    _log_call(valve.name, valve.model, int((time.monotonic() - start) * 1000),
+                              *getattr(e, "usage", (None, None)),
                               streamed=False, ok=False,
-                              tier=tier, route_reason=route_reason)
+                              tier=tier, route_reason=_failure_reason(e) or route_reason,
+                              prompt=prompt, exc=e)
                     logger.warning("cloud safety valve failed: %s", e)
 
-            _log_call(self.provider.name, self._provider_model(), 0, None, None,
-                      streamed=False, ok=False)
+            # The failure of the whole call, as its own event. Not under the
+            # provider's name: no request goes with this row (every attempt
+            # above wrote its own), and in October 2026 seven such rows were
+            # counted as paid DeepSeek calls with unknown usage.
+            _log_call("gateway", self._provider_model(), 0, 0, 0,
+                      streamed=False, ok=False, tier=tier, route_reason="all_failed")
             raise RuntimeError(f"LLM generation failed after all retries and fallbacks: {last_err}") from last_err
         finally:
             _GENERATE_DEADLINE.reset(budget_token)
@@ -1403,10 +1567,24 @@ class AIGateway:
             # The consumer closed us mid-answer (SSE client disconnected, see
             # assistant._pump_stream). Record the partial call so llm_calls
             # still shows the spend, then let the close unwind the provider.
+            # DeepSeek's usage chunk comes last, so it never arrived: the
+            # counts are estimated from what was sent and received.
             _log_call(provider.name, provider.model,
                       int((time.monotonic() - start) * 1000),
                       None, None, streamed=True, ok=False,
-                      tier=tier, route_reason="client_disconnected")
+                      tier=tier, route_reason="client_disconnected",
+                      prompt=prompt, received="".join(text_parts))
+            raise
+        except Exception as e:
+            # Every other end of a stream that did not finish — a cut turn, a
+            # deadline, a broken stream, an HTTP refusal — is recorded HERE,
+            # where the elapsed time and the text already received are known
+            # (stream() used to log these with latency 0 and no tokens).
+            _log_call(provider.name, provider.model,
+                      int((time.monotonic() - start) * 1000),
+                      *getattr(e, "usage", (None, None)), streamed=True, ok=False,
+                      tier=tier, route_reason=_failure_reason(e) or route_reason,
+                      prompt=prompt, received="".join(text_parts), exc=e)
             raise
         latency = int((time.monotonic() - start) * 1000)
         result = LLMResult(
@@ -1419,7 +1597,8 @@ class AIGateway:
         )
         _log_call(provider.name, result.model, latency,
                   prompt_tokens, completion_tokens, streamed=True, ok=ok,
-                  tier=tier, route_reason=f"truncated:{truncated}" if truncated else route_reason)
+                  tier=tier, route_reason=f"truncated:{truncated}" if truncated else route_reason,
+                  prompt=prompt, received=result.text)
         yield StreamChunk(delta="", done=True, result=result)
 
     def note_stream_stall(self, tracker: "StreamTracker | None" = None) -> None:
@@ -1505,15 +1684,11 @@ class AIGateway:
                     primary_breaker.record(True)
                 return  # success
             except LLMCancelled:
-                _log_call(provider.name, provider.model, 0, None, None,
-                          streamed=True, ok=False, tier=tier, route_reason="cancelled")
-                raise
+                raise   # recorded by _stream_provider
             except Exception as e:
                 if is_primary:
                     primary_breaker.record(False)
-                _log_call(provider.name, provider.model, 0, *getattr(e, "usage", (None, None)),
-                          streamed=True, ok=False,
-                          tier=tier, route_reason=_failure_reason(e) or route_reason)
+                # The failed attempt's row was written by _stream_provider.
                 if should_stop is not None and should_stop():
                     raise LLMCancelled(f"turn cut while {label} failed") from e
                 if tokens_sent:
