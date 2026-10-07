@@ -87,8 +87,10 @@ def apply_migrations(
         raise MigrationError("registry must be consecutively numbered with SHA-256 checksums")
     if connection.in_transaction:
         raise MigrationError("migration requires a connection without caller-owned work")
-    connection.execute("BEGIN IMMEDIATE")
     try:
+        # SQLite may acquire the writer lock before an interrupted BEGIN
+        # raises, so acquisition needs the same cleanup as subsequent work.
+        connection.execute("BEGIN IMMEDIATE")
         connection.execute(_LEDGER_SQL)
         _validate_ledger(connection)
         rows = connection.execute(

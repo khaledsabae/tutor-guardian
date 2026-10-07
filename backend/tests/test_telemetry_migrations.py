@@ -165,6 +165,30 @@ def test_sqlite_interrupt_after_first_alter_rolls_back_adapter_work(conn, monkey
         fresh.rollback()
 
 
+@pytest.mark.parametrize("progress_interval", [1, 2, 3, 4, 5])
+def test_interrupted_begin_releases_owned_writer_lock_without_schema_changes(tmp_path, progress_interval):
+    path = tmp_path / "interrupted-acquisition.db"
+    c = sqlite3.connect(path)
+    c.set_progress_handler(lambda: int(c.in_transaction), progress_interval)
+    try:
+        with pytest.raises(sqlite3.OperationalError, match="interrupted"):
+            migrate(c)
+        # A separate real connection must obtain the writer lock immediately;
+        # checking only schema contents misses an interrupted open transaction.
+        with sqlite3.connect(path, timeout=0) as next_startup:
+            next_startup.execute("BEGIN IMMEDIATE")
+            assert next_startup.execute("SELECT name FROM sqlite_master").fetchall() == []
+            next_startup.rollback()
+        # Cleanup may close a connection when its persistent callback prevents
+        # ROLLBACK, but must never leave a usable connection owning work.
+        try:
+            assert not c.in_transaction
+        except sqlite3.ProgrammingError:
+            pass
+    finally:
+        c.close()
+
+
 @pytest.mark.parametrize("cancellation", [RuntimeError, asyncio.CancelledError, KeyboardInterrupt])
 def test_error_or_cancellation_rolls_back_all_owned_work(conn, cancellation):
     runner, mod = modules()
