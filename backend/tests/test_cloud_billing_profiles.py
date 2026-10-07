@@ -4,6 +4,7 @@ import sqlite3
 import pytest
 from app.services import ai_gateway as gw
 from app.services import cloud_budget as cb
+from tests.budget_test_helpers import activate
 
 
 def test_documented_context_reserves_entire_window_not_utf8_estimate():
@@ -58,6 +59,7 @@ def test_fallback_zero_remains_disabled_not_unlimited(monkeypatch, tmp_path):
 
 def test_same_origin_v1_aliases_share_one_reserved_wallet(monkeypatch, tmp_path):
     path = config(monkeypatch, tmp_path, primary_provider='deepseek', deepseek_primary_monthly_token_cap=1048576)
+    activate(cb.CloudBudget(path), wallets=('cloud:https://api.deepseek.com:443',))
     gw._reserve_wire_budget('https://api.deepseek.com', 'deepseek', [], 100, model='deepseek-flash')
     with pytest.raises(cb.BudgetDenied):
         gw._reserve_wire_budget('https://api.deepseek.com:443/v1', 'deepseek_aux', [], 100, model='deepseek-v4-pro')

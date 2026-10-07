@@ -46,8 +46,10 @@ separate old wallets: each wallet imports all known paid aliases conservatively.
 Both
 known prompt and completion counts are required; a matching legacy row with null,
 negative or non-integral counts makes that month's opening spend unknown and
-denies cloud admission. A fresh DB starts at zero. Unreadable/corrupt/busy SQLite
-denies admission. Existing lower telemetry totals never reduce the ledger.
+denies cloud admission. Missing/fresh/uninitialized history never authorizes zero
+opening spend. Explicit activation on an existing verified telemetry DB is required;
+unreadable/corrupt/busy SQLite denies admission. Existing lower telemetry totals
+never reduce the ledger.
 
 Reserve **1,048,576 tokens per attempt** for exact official DeepSeek HTTPS
 origin `api.deepseek.com:443`, path root or `/v1`, model `deepseek-flash` or
@@ -71,6 +73,7 @@ explicit `DEEPSEEK_MODEL` values are preserved, including unknown values that
 will fall back locally in capped mode. Defaults remain local primary `ollama`,
 cloud safety valve disabled, Azure tier disabled, primary cap 100,000,000 and
 fallback cap 10,000,000. No live environment/credentials were read or changed.
+These are source defaults only; production model and caps are runtime-unverified.
 Primary `0` preserves the explicit unlimited opt-out even for an unknown profile;
 fallback `0` still disables that safety valve. Only positive caps with known
 profiles have the contract-bounded admission guarantee.
@@ -113,12 +116,73 @@ old/new rollout cannot provide a hard admission guarantee. Human review must
 confirm endpoint/account alias mapping and billing assumptions. No rollout is
 performed in this task.
 
-SQLite persistence is a required premise: deleting/replacing the database,
-restoring an older snapshot, or starting a new deployment with an empty volume
-can reset accounted spend. A fresh DB is a new accounting history, not proof of
+SQLite persistence is a required premise. Admission now refuses a missing DB,
+lost schema, uninitialized wallet/month, missing continuity witness, or an older
+DB snapshot that disagrees with its retained witness. A fresh DB is no proof of
 zero prior provider billing. Migration/rollout must establish its opening balance
-and storage identity; this change does not authorize an automatic fresh-volume
-production rollout.
+and storage identity; there is no automatic fresh-volume activation.
+
+## Explicit activation and operator CLI
+
+`CloudBudget.bootstrap(receipt)` is the only initializer. It opens an **existing**
+telemetry DB in SQLite `mode=rw`; admission and bootstrap cannot create a missing
+DB or silently recreate an activated ledger's lost tables. It accepts an intact
+pre-activation ledger while preserving existing opening totals, settled charges,
+pending attempts and quarantine. Diagnostic reads/writes also cannot recreate
+lost activated telemetry. Every wallet and each new UTC month needs its own
+receipt before a paid wire; unresolved older tickets still consume capacity.
+
+Receipt fields are mandatory:
+
+| Field | Required evidence |
+| --- | --- |
+| `db_identity` | Nonempty operator-recorded identity of the verified persistent DB; reused for all its wallets/months. |
+| `wallet` | Exact normalized gateway wallet, e.g. `cloud:https://api.deepseek.com:443`; verify account/origin aliases externally. |
+| `month` | Current UTC `YYYY-MM`. |
+| `opening_tokens` | Explicit nonnegative integer covering **all actual monthly token charges** through the cutoff, including external writers, main, aux, fallback and Azure aliases. At least the known telemetry sum; no absent/empty history inference. |
+| `reconciled_through` | Timezone-aware ISO timestamp in that month, not in the future and not before any matching historical row. |
+| `legacy_aliases` | List including `azure_deepseek`, `deepseek`, `deepseek_aux`, `deepseek_fallback` and any additional paid aliases; new unreconciled aliases deny admission. |
+| `evidence_reference` | Nonempty reference to the actual reconciliation evidence, retained with the receipt. |
+| `unreserved_writers_drained` | Literal `true`: old and external unreserved writers are quiesced through activation. |
+
+The software validates this receipt and historical lower bound; it cannot prove
+provider invoice completeness or authenticate an operator's evidence reference.
+Explicit zero is accepted only as attested evidence, never supplied as a default.
+An identical receipt is idempotent. Any changed receipt for an already activated
+wallet/month is refused, even a lower opening balance. Bootstrap never clears
+attempts, carry charges or quarantine; first adoption may conservatively count
+overlapping legacy telemetry and existing reservations twice rather than drop
+known charges.
+
+For a later approved deployment, drain writers, verify the persistent telemetry
+history and all provider/account aliases, reconcile charges through the cutoff,
+and prepare the receipt from that evidence. Execute with explicit paths from an
+installed backend runtime (the CLI has no environment/config/provider reads):
+
+```sh
+python -m app.services.cloud_budget_bootstrap \
+  --db /verified/persistent/history/sessions.db \
+  --receipt /verified/reconciliation/wallet-month.json
+```
+
+No operational receipt, zero opening balance, activation or deployment is created
+by this change. Repeat the same command safely with the same receipt; monthly
+rollover requires a new current-month reconciliation and preserves uncertain carry.
+
+The durable witness `<DB>.cloud-budget-anchor` stores the DB identity and a hash
+of all ledger schema/rows. An OS lock serializes each SQLite transaction and
+atomic, fsynced witness replacement across workers. A commit/witness-write crash
+leaves traffic refused until offline reconciliation; the committed charge remains.
+Hashing scans ledger rows, so latency grows with retained attempts; admission
+remains fail-closed on lock contention. Keep the lock/witness on the same shared
+persistent filesystem with working advisory locks and fsync, accessible to every
+worker. Preserve the **latest witness separately from rollback DB snapshots**.
+Replacing only the DB with an older snapshot fails closed, as does deleting the
+witness. Restoring both DB and its old witness, losing both, or unauthorized edits
+to both cannot be detected by local state alone: reconcile against independently
+retained provider/account evidence before recovery. This CLI deliberately refuses
+to repair a continuity mismatch or accept a changed reseed; it is not a recovery
+tool and supplies no invoice guarantee.
 
 ## TDD acceptance checks (written before implementation)
 
@@ -259,3 +323,34 @@ The original merge-blocking unknown-profile admission test is now green because
 unknown capped profiles cannot reach transport. Acceptance is restricted to
 known-profile, contract-bounded gateway admissions with a persistent shared ledger.
 No absolute provider-invoice guarantee or production-cutover approval is implied.
+
+### Activation fix acceptance evidence (2026-10-07)
+
+Native bounded follow-up on `f59b66d9976c139244f308421fad61df42b1deb8`, atop the
+held `5be9627` baseline, in the same isolated worktree. The checkout was detached;
+`codex/cloud-budget-profile-review` was created at that exact HEAD. The existing
+untracked cutover test was inspected, preserved privately, then extended; the
+primary checkout and other workers' files were not changed. The supplied
+independent `/tmp/tg-f59-review-5wuyxlxi/test_cutover_review.py` was absent here.
+
+TDD: initial cutover suite **exit 1, 24 failed**, including actual admission on a
+missing DB and uninitialized telemetry. After the initial gate: **exit 0, 24
+passed**. Additional witness-corruption, operational-CLI and diagnostic-healing
+probes: **exit 1, 3 failed / 1 passed**; those behaviors were corrected. Existing
+reservation tests now explicitly initialize simulated evidence instead of silently
+granting fresh-history budget. Added regressions cover all lost tables, database
+deletion/restore, missing/corrupt witness, settled/pending reseed preservation,
+legacy ledger adoption, all paid aliases, DB/wallet/cutoff binding, rollover carry,
+and local generate/stream continuity with no paid transport.
+
+Final offline focused run used the existing virtualenv, `HF_HUB_OFFLINE=1
+TRANSFORMERS_OFFLINE=1`, `timeout 150`, `-B -m pytest -q -p no:cacheprovider
+--override-ini addopts='' --durations=5`, against the nine previously accepted
+modules plus `test_cloud_budget_cutover.py`: **exit 0, 201 passed, 3 dependency
+warnings, 64.72 seconds**. Ruff and `git diff --check`: exit 0. Temporary raw logs
+and the preserved prior-worker test are under `/tmp/tg-budget-activation/`.
+Earlier intermediate fixture/collection failures are not counted as acceptance.
+No production reads/config changes, deploy, push, external model calls, mobile
+build or emulator use occurred. Source defaults are runtime-unverified. Activation
+still requires real independently verified reconciliation evidence and persistence;
+there is no automatic zero seed or provider-invoice guarantee.

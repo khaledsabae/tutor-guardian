@@ -15,6 +15,7 @@ import httpx
 import pytest
 
 from app.services import ai_gateway as gw
+from tests.budget_test_helpers import activate
 
 
 def budget_module():
@@ -54,6 +55,8 @@ def wire(monkeypatch, tmp_path):
         cloud_tier_enabled=False, max_retries=1,
     ))
     monkeypatch.setattr(gw, "_PREFLIGHT_BACKOFF_S", (0, 0, 0))
+    activate(m.CloudBudget(tmp_path / "calls.db"), wallets=(
+        "cloud:https://api.deepseek.com:443", "cloud:https://account.openai.azure.com:443"))
     gw._budget_cache.clear()
     gw.primary_breaker.reset()
     yield tmp_path / "calls.db"
@@ -146,6 +149,7 @@ def test_unknown_budget_keeps_gateway_answering_locally(wire, monkeypatch, tmp_p
 def test_independent_sqlite_connections_admit_only_one_last_slot(tmp_path):
     m = budget_module()
     path = tmp_path / "ledger.db"
+    activate(m.CloudBudget(path))
     barrier = threading.Barrier(12)
 
     def contender(_):
@@ -162,6 +166,7 @@ def test_independent_sqlite_connections_admit_only_one_last_slot(tmp_path):
 
 
 def test_separate_processes_share_the_same_last_slot(tmp_path):
+    activate(budget_module().CloudBudget(tmp_path / "ledger.db"))
     with concurrent.futures.ProcessPoolExecutor(
         max_workers=4, mp_context=multiprocessing.get_context("spawn")
     ) as pool:
@@ -186,7 +191,7 @@ def test_unknown_budget_stream_stays_on_local_chain(wire, monkeypatch, tmp_path)
 
 def test_settlement_releases_only_verified_complete_usage(tmp_path):
     m = budget_module()
-    ledger = m.CloudBudget(tmp_path / "ledger.db")
+    ledger = activate(m.CloudBudget(tmp_path / "ledger.db"))
     ticket = ledger.reserve("wallet", 100, 90, legacy_aliases=())
     ledger.settle(ticket, 5, 5)
     assert ledger.reserve("wallet", 100, 90, legacy_aliases=()) is not None
@@ -198,7 +203,7 @@ def test_settlement_releases_only_verified_complete_usage(tmp_path):
 
 def test_missing_or_over_bound_usage_never_frees_budget(tmp_path):
     m = budget_module()
-    ledger = m.CloudBudget(tmp_path / "ledger.db")
+    ledger = activate(m.CloudBudget(tmp_path / "ledger.db"))
     ticket = ledger.reserve("wallet", 100, 90, legacy_aliases=())
     ledger.settle(ticket, None, 1)
     with pytest.raises(m.BudgetDenied):
@@ -215,7 +220,7 @@ def test_legacy_main_and_fallback_are_one_opening_balance(tmp_path):
         conn.execute("CREATE TABLE llm_calls (ts TEXT,provider TEXT,prompt_tokens INTEGER,completion_tokens INTEGER)")
         for alias in ("deepseek", "deepseek_fallback"):
             conn.execute("INSERT INTO llm_calls VALUES(datetime('now'),?,40,0)", (alias,))
-    ledger = m.CloudBudget(path)
+    ledger = activate(m.CloudBudget(path), opening=80)
     with pytest.raises(m.BudgetDenied):
         ledger.reserve("wallet", 100, 21, legacy_aliases=("deepseek", "deepseek_fallback"))
     assert ledger.reserve("wallet", 100, 20, legacy_aliases=("deepseek", "deepseek_fallback"))
@@ -225,11 +230,11 @@ def test_late_completion_is_charged_to_both_potential_billing_months(tmp_path):
     m = budget_module()
     now = [datetime(2026, 10, 31, 23, 59, tzinfo=timezone.utc)]
     path = tmp_path / "ledger.db"
-    old = m.CloudBudget(path, clock=lambda: now[0]).reserve("wallet", 100, 100, legacy_aliases=())
+    old = activate(m.CloudBudget(path, clock=lambda: now[0])).reserve("wallet", 100, 100, legacy_aliases=())
     with pytest.raises(m.BudgetDenied):
         m.CloudBudget(path, clock=lambda: now[0]).reserve("wallet", 100, 1, legacy_aliases=())
     now[0] = datetime(2026, 11, 1, tzinfo=timezone.utc)
-    ledger = m.CloudBudget(path, clock=lambda: now[0])
+    ledger = activate(m.CloudBudget(path, clock=lambda: now[0]))
     with pytest.raises(m.BudgetDenied):
         ledger.reserve("wallet", 100, 1, legacy_aliases=())
     ledger.settle(old, 1, 1)
@@ -245,13 +250,13 @@ def test_unknown_legacy_billing_blocks_admission(tmp_path):
         conn.execute("CREATE TABLE llm_calls (ts TEXT,provider TEXT,prompt_tokens INTEGER,completion_tokens INTEGER)")
         conn.execute("INSERT INTO llm_calls VALUES(datetime('now'),'deepseek',NULL,NULL)")
     with pytest.raises(m.BudgetDenied, match="unknown"):
-        m.CloudBudget(path).reserve("wallet", 100, 1, legacy_aliases=("deepseek",))
+        activate(m.CloudBudget(path))
 
 
 def test_busy_accounting_denies_instead_of_spending_blind(tmp_path):
     m = budget_module()
     path = tmp_path / "ledger.db"
-    m.CloudBudget(path).reserve("wallet", 100, 1, legacy_aliases=())
+    activate(m.CloudBudget(path)).reserve("wallet", 100, 1, legacy_aliases=())
     with sqlite3.connect(path) as conn:
         conn.execute("BEGIN IMMEDIATE")
         with pytest.raises(m.BudgetDenied):
@@ -336,7 +341,7 @@ def test_azure_abort_closes_transport_and_retains_charge(wire, monkeypatch):
 def test_settlement_failure_retains_durable_upper_bound(tmp_path):
     m = budget_module()
     path = tmp_path / "ledger.db"
-    ledger = m.CloudBudget(path)
+    ledger = activate(m.CloudBudget(path))
     ticket = ledger.reserve("wallet", 100, 100, legacy_aliases=())
     with sqlite3.connect(path) as conn:
         conn.execute("BEGIN IMMEDIATE")
@@ -348,12 +353,14 @@ def test_settlement_failure_retains_durable_upper_bound(tmp_path):
 def test_unknown_orphan_is_carried_across_months_until_billing_is_known(tmp_path):
     m = budget_module()
     now = [datetime(2026, 10, 31, 23, 59, tzinfo=timezone.utc)]
-    ledger = m.CloudBudget(tmp_path / "ledger.db", clock=lambda: now[0])
+    ledger = activate(m.CloudBudget(tmp_path / "ledger.db", clock=lambda: now[0]))
     ledger.reserve("wallet", 100, 100, legacy_aliases=())
     now[0] = datetime(2026, 11, 1, tzinfo=timezone.utc)
+    activate(ledger)
     with pytest.raises(m.BudgetDenied):
         ledger.reserve("wallet", 100, 1, legacy_aliases=())
     now[0] = datetime(2026, 12, 1, tzinfo=timezone.utc)
+    activate(ledger)
     with pytest.raises(m.BudgetDenied):
         ledger.reserve("wallet", 100, 1, legacy_aliases=())
 
@@ -361,12 +368,13 @@ def test_unknown_orphan_is_carried_across_months_until_billing_is_known(tmp_path
 def test_completed_missing_usage_charges_bound_but_is_not_an_inflight_orphan(tmp_path):
     m = budget_module()
     now = [datetime(2026, 10, 31, 23, 59, tzinfo=timezone.utc)]
-    ledger = m.CloudBudget(tmp_path / "ledger.db", clock=lambda: now[0])
+    ledger = activate(m.CloudBudget(tmp_path / "ledger.db", clock=lambda: now[0]))
     ticket = ledger.reserve("wallet", 100, 100, legacy_aliases=())
     ledger.settle(ticket, None, None)
     with pytest.raises(m.BudgetDenied):
         ledger.reserve("wallet", 100, 1, legacy_aliases=())
     now[0] = datetime(2026, 11, 1, tzinfo=timezone.utc)
+    activate(ledger)
     assert ledger.reserve("wallet", 100, 100, legacy_aliases=())
 
 
@@ -384,10 +392,14 @@ def test_azure_usage_without_terminal_choice_never_refunds_reservation(wire, mon
         p.generate("سؤال", options={"num_predict": 100})
 
 
-def test_legacy_paid_aliases_without_endpoint_metadata_are_imported_conservatively(wire, monkeypatch):
+def test_legacy_paid_aliases_without_endpoint_metadata_are_imported_conservatively(wire, monkeypatch, tmp_path):
+    wire = tmp_path / 'legacy-calls.db'
+    monkeypatch.setattr(gw, '_TELEMETRY_DB', wire)
+    monkeypatch.setattr(gw, '_telemetry_schema_ready', False)
     with sqlite3.connect(wire) as conn:
         gw._ensure_telemetry_schema(conn)
         conn.execute("INSERT INTO llm_calls(provider,prompt_tokens,completion_tokens) VALUES('deepseek',1000,0)")
+    activate(budget_module().CloudBudget(wire), wallets=("cloud:https://account.openai.azure.com:443",), opening=1000)
     response = SimpleNamespace(usage=SimpleNamespace(prompt_tokens=5, completion_tokens=2),
         choices=[SimpleNamespace(message=SimpleNamespace(content="answer"))])
     monkeypatch.setitem(sys.modules, "openai", SimpleNamespace(AzureOpenAI=lambda **k:
@@ -451,3 +463,54 @@ def test_model_switch_rechecks_profile_before_second_wire(wire, monkeypatch):
     with pytest.raises(RuntimeError, match='profile'):
         p.generate('سؤال', options={'num_predict': 100})
     assert len(calls) == 1
+
+
+@pytest.mark.parametrize('damage', ['missing', 'uninitialized', 'lost_schema', 'restored'])
+@pytest.mark.parametrize('streamed', [False, True])
+def test_cutover_damage_denies_wire_and_keeps_local_fallback(wire, monkeypatch, tmp_path, damage, streamed):
+    import shutil
+    if damage == 'missing':
+        wire.unlink()
+    elif damage == 'uninitialized':
+        wire = tmp_path / 'fresh-history.db'
+        monkeypatch.setattr(gw, '_TELEMETRY_DB', wire)
+        with sqlite3.connect(wire) as conn:
+            monkeypatch.setattr(gw, '_telemetry_schema_ready', False)
+            gw._ensure_telemetry_schema(conn)
+    elif damage == 'lost_schema':
+        with sqlite3.connect(wire) as conn:
+            conn.execute('DROP TABLE cloud_budget_attempts')
+    else:
+        snapshot = tmp_path / 'snapshot.db'
+        shutil.copyfile(wire, snapshot)
+        gw._reserve_wire_budget('https://api.deepseek.com', 'deepseek', [], 100, model='test-model')
+        shutil.copyfile(snapshot, wire)
+    calls = []
+    gateway = gw.AIGateway.__new__(gw.AIGateway)
+    gateway.provider = provider(lambda r: calls.append(r) or httpx.Response(500))
+    gateway.primary_model = gateway.model = 'test-model'
+    async def local(self, *args, **kwargs):
+        return gw.LLMResult(text='local answer', model='local', latency_ms=1)
+    def local_stream(self, prompt, *, options):
+        yield {'response': 'local answer', 'done': False}
+        yield {'response': '', 'done': True}
+    monkeypatch.setattr(gw.AIGateway, '_try_provider', local)
+    monkeypatch.setattr(gw.OllamaProvider, 'stream', local_stream)
+    if streamed:
+        assert ''.join(c.delta for c in gateway.stream('question') if not c.done) == 'local answer'
+    else:
+        assert asyncio.run(gateway.generate('question')).text == 'local answer'
+    assert calls == []
+    assert not gw.primary_breaker.is_open()
+
+
+def test_diagnostics_never_recreate_lost_activated_history(wire, monkeypatch):
+    with sqlite3.connect(wire) as conn:
+        conn.execute('DROP TABLE llm_calls')
+    monkeypatch.setattr(gw, '_telemetry_schema_ready', False)
+    gw._log_call('deepseek', 'test-model', 1, 0, 0, False, False)
+    gw._monthly_tokens_used('deepseek')
+    with sqlite3.connect(wire) as conn:
+        assert not conn.execute("SELECT 1 FROM sqlite_master WHERE name='llm_calls'").fetchone()
+    with pytest.raises(budget_module().BudgetDenied):
+        gw._reserve_wire_budget('https://api.deepseek.com', 'deepseek', [], 100, model='test-model')

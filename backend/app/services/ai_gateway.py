@@ -860,6 +860,10 @@ _telemetry_schema_ready = False
 def _ensure_telemetry_schema(conn: sqlite3.Connection) -> None:
     """Run the llm_calls DDL once per process, not on every LLM call."""
     global _telemetry_schema_ready
+    if (CloudBudget(_TELEMETRY_DB).anchor_path.exists()
+            or conn.execute("SELECT 1 FROM sqlite_master WHERE name='cloud_budget_identity'").fetchone()):
+        # Diagnostic writes must not silently heal lost activated history.
+        conn.execute('SELECT ts,provider,prompt_tokens,completion_tokens FROM llm_calls LIMIT 0')
     if _telemetry_schema_ready:
         return
     conn.execute(
@@ -879,13 +883,21 @@ def _ensure_telemetry_schema(conn: sqlite3.Connection) -> None:
     _telemetry_schema_ready = True
 
 
+def _connect_telemetry() -> sqlite3.Connection:
+    ledger = CloudBudget(_TELEMETRY_DB)
+    if ledger.anchor_path.exists():
+        # A diagnostic call on a lost activated volume must not create a DB.
+        return sqlite3.connect(ledger.path.as_uri() + '?mode=rw', uri=True)
+    return sqlite3.connect(_TELEMETRY_DB)
+
+
 def _log_call(provider: str, model: str, latency_ms: int,
               prompt_tokens: int | None, completion_tokens: int | None,
               streamed: bool, ok: bool,
               tier: str | None = None, route_reason: str | None = None) -> None:
     try:
         _TELEMETRY_DB.parent.mkdir(parents=True, exist_ok=True)
-        conn = sqlite3.connect(_TELEMETRY_DB)
+        conn = _connect_telemetry()
         conn.execute("PRAGMA journal_mode = WAL")
         conn.execute("PRAGMA busy_timeout = 5000")
         _ensure_telemetry_schema(conn)
@@ -917,7 +929,7 @@ def _monthly_tokens_used(provider_name: str) -> int:
     impossibly large number, so a budget-gated caller refuses to spend.
     """
     try:
-        conn = sqlite3.connect(_TELEMETRY_DB)
+        conn = _connect_telemetry()
         conn.execute("PRAGMA busy_timeout = 5000")
         _ensure_telemetry_schema(conn)
         row = conn.execute(
