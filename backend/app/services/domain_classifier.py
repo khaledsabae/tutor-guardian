@@ -172,6 +172,26 @@ _HEARING_TOKEN = _short_arabic_token([
     for suffix in ("", "ني", "ه", "ها", "نا", "ك", "هم")
 ] + ["السمع", "بالسمع", "للسمع"])
 
+# «سمعت» is also feminine past tense: she heard. Restore that reading only
+# with a child subject at a clause boundary and an explicit auditory object.
+# A child mentioned elsewhere, an adult speaker, or «سمعت عن ...» is not enough.
+_CHILD_HEARING_SUBJECT = (
+    r"(?:^|[.!؟\n،؛]|\b(?:لأن|لان|لكن|إن|ان)\s+)\s*"
+    r"(?:[وف])?(?:بنتي|ابنتي|بنتنا|ابنتنا|طفلتي|طفلتنا|رضيعتي|رضيعتنا)"
+    r"\s+(?:هي\s+)?(?:ما\s+|لا\s+)?"
+)
+_AUDITORY_OBJECT = r"(?:(?:ال)?(?:صوت|أصوات|جرس|صفارة)|ندائي|نداء|اسمي|اسمها)(?!\w)"
+_CHILD_PAST_HEARING_RE = re.compile(
+    _CHILD_HEARING_SUBJECT + r"(?:"
+    r"سمعت\s+" + _AUDITORY_OBJECT
+    # An object pronoun needs its audible referent, not a reported topic.
+    + r"|سمعت(?:ه|ها)\s+(?:لما|حين|عندما)\s+(?:رن|رنت|دق|دقت)\s+" + _AUDITORY_OBJECT
+    # Parent heard the daughter explicitly report inability to perceive sound.
+    + r"|سمعتها\s+(?:تقول|قالت)\s+(?:إنها|أنها|انها)\s+(?:لا|ما)\s+"
+    r"تلتقط\s+(?:أي\s+)?" + _AUDITORY_OBJECT + r")",
+    re.UNICODE,
+)
+
 
 # Maps clear Arabic keywords directly to domains. The key insight:
 # these are unambiguous terms that an LLM would always classify the same way.
@@ -281,6 +301,9 @@ def _keyword_fast_path(question: str) -> Optional[List[str]]:
         if pattern.search(question):
             if domain not in matched:
                 matched.append(domain)
+    hearing_text = re.sub(r"[\u064b-\u065f\u0670\u0640]", "", question)
+    if "development" not in matched and _CHILD_PAST_HEARING_RE.search(hearing_text):
+        matched.append("development")
     if "app_help" not in matched and _APP_GENERAL_RE.search(question):
         # The weak app signal (see _APP_GENERAL): beside a parenting domain it
         # adds app_help to the search; alone it defers to the model

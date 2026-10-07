@@ -59,6 +59,47 @@ def test_real_hearing_forms_remain_development(form):
     assert "development" in classifier._keyword_fast_path(f"طفلي {form} ماذا أفعل؟")
 
 
+@pytest.mark.parametrize("question", [
+    "بنتي ما سمعت الجرس لما رن جنبها",
+    "طفلتي ما سمعته لما رن الجرس جنبها",
+    "ابنتي ما سمعتها لما رنت الصفارة جنبها",
+    "بِنْتِي ما سَمِعَتْ الجَرَسَ لما رن جنبها",
+    "وبنتي هي ما سمعت صوت الباب",
+    "ابنتنا سمعت ندائي مرة فقط",
+    "بنتي سمعتها تقول إنها لا تلتقط أي صوت",
+    "أنا قلقة لأن بنتي ما سمعت الجرس",
+    "ناديتها، بنتي هي ما سمعت صوت الباب",
+])
+def test_child_subject_past_hearing_keeps_development(question):
+    assert "development" in (classifier._keyword_fast_path(question) or [])
+
+
+def test_child_hearing_remains_additive_beside_parent_anxiety():
+    assert classifier._keyword_fast_path(
+        "بنتي ما سمعت الجرس لما رن جنبها وأنا قلقة"
+    ) == ["medical", "development"]
+
+
+@pytest.mark.parametrize("question", [
+    "سمعت عن عبدالله علوان من صديقي",
+    "سمعته يحكي عن عبدالله علوان",
+    "سمعتها تحكي عن عبدالله علوان",
+    "سَمِعْتُ عن عبدالله علوان",
+    "أنا ما سمعت الجرس",
+    "زوجتي ما سمعت الجرس",
+    "هي ما سمعت الجرس",
+    "بنتي أنا ما سمعت الجرس جنبها",
+    "بنتي سمعت عن عبدالله علوان",
+    "بنتي سمعتها تحكي عن عبدالله علوان",
+    "بنتي ما سمعته عن عبدالله علوان",
+    "بنتي سمعت عن الجرس الجديد",
+    "أم بنتي ما سمعت الجرس",
+    "ابني أنا ما سمعته لما رن الجرس",
+])
+def test_adult_or_reported_topic_is_not_child_hearing(question):
+    assert "development" not in (classifier._keyword_fast_path(question) or [])
+
+
 def test_explicit_fiqh_remains_additive_to_real_biting():
     domains = classifier._keyword_fast_path("طفلي يعضني وقت الصلاة")
     assert "fiqh" in domains and "medical" in domains

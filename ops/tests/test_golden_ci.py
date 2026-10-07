@@ -24,6 +24,25 @@ def test_actual_set_includes_original_92_and_all_distinct_items():
     assert {f"g-{i:03d}" for i in range(1, 93)} <= {r["id"] for r in rows}
 
 
+def test_one_year_golden_case_is_eligible_for_its_existing_cdc_target_without_fake_hit():
+    from app.core.taxonomy import age_bands_apart, age_equivalents
+
+    row = next(r for r in ci.load_set(ROOT / "ops/eval/golden_set.jsonl")
+               if r["id"] == "g-074")
+    target_id = "d0d2dc99-520c-4ade-a1ee-9715df0c2dfd"
+    target = json.loads((ROOT / "knowledge_base/units" / f"{target_id}.json").read_text())
+    assert row["expected_domains"] == ["development"]
+    assert row["expected_unit_ids"] == [target_id]
+    assert target["title"] == "Your baby at 12 months"
+    assert target["age_group"] == "prenatal-1"
+    assert target["age_group"] in age_equivalents(row["age_group"])
+    assert age_bands_apart(target["age_group"], row["age_group"]) == 0
+    # Eligibility and catalog support do not mean that retrieval found the unit.
+    scored = ci.score_retrieval(row, ["development"], [], {"development"}, {target_id})
+    assert scored["missing_expected_unit_ids"] == []
+    assert scored["supported_unit_recall"] == 0
+
+
 @pytest.mark.parametrize("change", [{"id": ""}, {"question": ""},
                                     {"expected_domains": "medical"},
                                     {"expected_unit_ids": [3]}, {"age_group": None}])
