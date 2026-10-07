@@ -110,17 +110,32 @@ _RULES: list[tuple[str, "re.Pattern[str]"]] = [
 ]
 
 
-def check_fiqh_guard(text: str, device_id: str | None = None) -> tuple[bool, str]:
-    """Return (blocked, rule_id) for explicit fiqh/aqeedah ruling questions.
-
-    `device_id` is used only to mask that family's child names in the log.
-    """
+def _match_fiqh_guard(text: str) -> tuple[bool, str]:
+    """Pure legacy decision, shared with the opt-in semantic shadow protocol."""
     norm = _normalize(text)
     for rule_id, pattern in _RULES:
         if pattern.search(norm):
-            _log_block(text, rule_id, device_id)
             return True, rule_id
     return False, ""
+
+
+def check_fiqh_guard(text: str, device_id: str | None = None) -> tuple[bool, str]:
+    """Keep legacy decisions; shadow mode only compares semantic proposals.
+
+    Unknown modes (including enforce/active) cannot activate classification.
+    Existing router emergency checks still precede this function.
+    """
+    blocked, rule = _match_fiqh_guard(text)
+    if os.environ.get("FIQH_INTENT_MODE") == "shadow":
+        try:
+            from app.services.fiqh_intent import evaluate
+            decision = evaluate(text, device_id, mode="shadow")
+            blocked, rule = decision.effective_blocked, decision.baseline_rule
+        except Exception:
+            pass  # Shadow failures never alter the existing decision.
+    if blocked:
+        _log_block(text, rule, device_id)
+    return blocked, rule
 
 
 # ── Telemetry: blocked_fiqh_log (FIQH_GUARD.md v3 — point ج) ────────────────

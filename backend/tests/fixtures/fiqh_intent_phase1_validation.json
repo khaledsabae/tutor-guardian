@@ -1,0 +1,105 @@
+{
+  "schema": "tg.fiqh_intent_phase1_mock_validation/1",
+  "base_commit": "5d566611efb09808bb4b94f47ae7ea25b0abe4b2",
+  "started_at": "2026-10-07T15:50:37Z",
+  "task_deadline": "2026-10-07T16:10:37Z",
+  "recorded_at": "2026-10-07T16:07:28.093171+00:00",
+  "scope": [
+    "backend/app/services/fiqh_guard.py",
+    "backend/app/services/fiqh_intent.py",
+    "backend/tests/test_fiqh_intent_phase1.py",
+    "backend/tests/fixtures/fiqh_intent_phase1_validation.json"
+  ],
+  "test_runs": {
+    "red-verified": {
+      "exit_code": 1,
+      "tests": 46,
+      "failures": 1,
+      "errors": 0,
+      "skipped": 45,
+      "seconds": 7.927,
+      "junit_sha256": "1afffa125efa0b693785f46e22f85054a2a6dbb8116e2e666bc69be4729e7a1d"
+    },
+    "boundary-red": {
+      "exit_code": 1,
+      "tests": 2,
+      "failures": 2,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.539,
+      "junit_sha256": "1b726c6cb7f1581a3a6babba0389a50150c6d216b61a5ce7054b24ccc586e665"
+    },
+    "selection-red": {
+      "exit_code": 1,
+      "tests": 1,
+      "failures": 1,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.671,
+      "junit_sha256": "cbee9e7641acdf47acad72d64781b2e021434b7ae89cfdcf827814518197dc2e"
+    },
+    "privacy-red": {
+      "exit_code": 1,
+      "tests": 1,
+      "failures": 1,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.477,
+      "junit_sha256": "43bd94c8faa252e5f0e187f03e94d260cc917277f0f18699d1017c5d5e8c5320"
+    },
+    "final-green": {
+      "exit_code": 0,
+      "tests": 274,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 42.84,
+      "junit_sha256": "dd67c1d233b7b505f443cdd6da7344ad84ae4a987e0afa1cde8ea63d669cd818"
+    }
+  },
+  "test_counts_by_module": {
+    "backend.tests.test_fiqh_intent_phase1": 54,
+    "backend.tests.test_fiqh_guard_precision": 31,
+    "backend.tests.test_fiqh_log_privacy": 5,
+    "backend.tests.test_intent_guard": 171,
+    "backend.tests.test_aux_llm_routing": 13
+  },
+  "test_command": "PYTHONDONTWRITEBYTECODE=1 SKIP_API_SMOKE=1 /home/khalednew/projects/tutor-guardian/backend/.venv/bin/python -m pytest backend/tests/test_fiqh_intent_phase1.py backend/tests/test_fiqh_guard_precision.py backend/tests/test_fiqh_log_privacy.py backend/tests/test_intent_guard.py backend/tests/test_aux_llm_routing.py",
+  "real_classifier_evaluation_calls": 0,
+  "new_classifier_test_transport": "Mocked auxiliary boundary only; new cases deny socket connections. Tests establish protocol behavior, not model accuracy.",
+  "training_on_live_week_data": false,
+  "human_label_review_complete": false,
+  "independent_review_complete": false,
+  "activation": "No activation performed. Default/unknown/enforce/active modes cannot enable calls. Only explicit shadow permits classification; effective decisions preserve legacy guard.",
+  "activation_prerequisite": "Fresh deidentified actual-week labels reviewed with Khaled, including explicit wrapped rulings/parenting contexts/emergencies; independent implementation review; separately reviewed activation change. Current code has no enforce mode.",
+  "limitations": [
+    "Only divorce topic-level legacy matches can propose relaxation; other legacy category matches stay conservative. Shadow does not fix their live false positives.",
+    "Model missed rulings can propose a block but never change live behavior in shadow.",
+    "A four-second caller ceiling uses a single bounded lane; an underlying gateway transport may finish after the caller has returned. Its lane slot remains held until completion.",
+    "Static eligibility cues select side calls; classification itself uses a semantic prompt and strict JSON. Accuracy has not been evaluated against a real provider or live labels."
+  ],
+  "golden_case_provenance": [
+    {
+      "path": "ops/FIQH_GUARD.md",
+      "sha256": "3fed026981157c37b462f5afe508e4ce65989dcf139833370b66e153466ca984",
+      "meaning": "Approved examples/precision regression source, not live logs or new human approval"
+    },
+    {
+      "path": "backend/tests/test_fiqh_guard_precision.py",
+      "sha256": "186d78216faa90ca248f70c88dd3ce7af902fdf3ad25ea149cad7ca73ce6f6f3",
+      "meaning": "Approved examples/precision regression source, not live logs or new human approval"
+    }
+  ],
+  "worker_attempt": {
+    "provider": "Z.AI coding CLI",
+    "result": "HTTP429 rate_limit, failed exit1, no implementation produced; not retried on another account or paid API",
+    "coordinator": "Implemented and verified locally after worker failure; full logs private."
+  },
+  "tdd_note": "Initial fixture-only RED produced setup errors and was not accepted. Corrected verified RED: one missing-feature assertion failure, zero errors, 45 temporarily skipped. All 54 new cases execute in final GREEN. Two boundary regressions, one cue-selection regression and one contact-privacy regression were observed failing before their fixes.",
+  "lint": {
+    "ruff_exit_code": 0,
+    "git_diff_check_exit_code": 0,
+    "note": "System ruff used; backend virtualenv does not include ruff."
+  },
+  "runtime_changes": "No environment/config changes, push, deployment, production activation, keys, mobile build, emulator or full backend test suite."
+}
