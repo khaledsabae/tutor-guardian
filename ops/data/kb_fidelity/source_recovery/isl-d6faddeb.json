@@ -1,0 +1,97 @@
+{
+  "unit_id": "isl-d6faddeb",
+  "base_commit": "cbd81a099607f0823a62a35ce109239f1dc690e2",
+  "source_title": "حقوق الأولاد على الوالدين",
+  "source_author": "عماد بن أحمد بن عبدالعظيم",
+  "source_url": "https://www.alukah.net/Books/Files/Book_17337/BookFile/brotherandboys.pdf",
+  "pdf_sha256": "7fa6f88fbf1ba714947983c11cde1e8c67b576374ae06c08a081444743d1272c",
+  "pdf_page_count": 189,
+  "pdf_pages_one_based": [
+    176
+  ],
+  "printed_pages": [
+    175
+  ],
+  "source_representation": "Selected ancient historical report, quoted as attributed to the narrator and his mother. Not a Prophetic hadith; no modern commentary quoted.",
+  "excerpt": "عن محمد بن المنكدر قال: قالت لي أمي: «لا تمازح الصبيان فتهون عليهم».",
+  "excerpt_sha256": "752042117c845565e7be287168445745d2f913146189d29c9eb2df13e596ed6d",
+  "method": "Matched actual raw OCR anchors to targeted original PDF rendered pages before writing title/summary. Independently inspected page number, passage attribution, adjacent sections and footnotes. Jina used as fetch/provenance reader; visual PDF is authoritative.",
+  "source_classification": "knowledge passage; not TOC, catalogue or author collection methodology",
+  "scope": "Only the mother-to-son historical advice. «فتهون عليهم» concerns the son losing standing in the boys' eyes, not belittling the boys. No inference that parents today must avoid all play/joking. Surrounding wedding-curtain narrative and Bakr Abu Zayd mixing/clothing claims excluded.",
+  "citation_limit": "Rendered book footnote identifies Ibn Abi al-Dunya, al-Samt 390, used only as a book locator. No independent classical edition or Sahih corpus verification performed, no authenticity grade adopted.",
+  "hadith_matches": [],
+  "approval": null,
+  "needs_scholar_review": true,
+  "raw_OCR_source_locator": {
+    "commit": "cbd81a099607f0823a62a35ce109239f1dc690e2",
+    "file": "knowledge_base/units/isl-d6faddeb.json",
+    "field": "text_original",
+    "sha256": "a4cefadec1e3e5eaca716e5fe0de73a4227a70d273e4710084b419f58995bfe5",
+    "anchor": "Middle of PDF p.176: heading on unsuitable joking; Muhammad ibn al-Munkadir reports his mother saying «لا تمازح الصبيان فتهون عليهم»; footnote 1, Ibn Abi al-Dunya, al-Samt 390. Raw OCR continues into Bakr Abu Zayd mixing/clothing sections on pp.176-177.",
+    "pdf_pages_one_based": [
+      176,
+      177
+    ],
+    "printed_pages": [
+      175,
+      176
+    ],
+    "meaning": "Original raw OCR retained at immutable Git base; no long modern-book raw copy added."
+  },
+  "targeted_render_evidence": [
+    {
+      "pdf_page_one_based": 176,
+      "render_png_sha256": "9336a181526c207cbac57dd254806c5b83a7a4b7b95b0eea6eea2bab6cc88c13",
+      "pdftotext_sha256": "37e129a8853ab5c3e385345cf1b255bfdad02f566e358dd5163364fb0e35f5a3",
+      "render_command_parameters": {
+        "tool": "pdftoppm",
+        "format": "png",
+        "singlefile": true,
+        "scale_to_pixels": 1800
+      }
+    },
+    {
+      "pdf_page_one_based": 177,
+      "render_png_sha256": "a4dda567fda305426439576c846e71f789049fd27e237d9e2cb1074543bb4fa6",
+      "pdftotext_sha256": "0676994cc42e64ea037c9a06e86cf40dcf3ef9d05f41eb64887f8db26c96847c",
+      "render_command_parameters": {
+        "tool": "pdftoppm",
+        "format": "png",
+        "singlefile": true,
+        "scale_to_pixels": 1600
+      }
+    }
+  ],
+  "quotation_budget": {
+    "additional_verbatim_modern_book_words": 0,
+    "cap_user_reported": 90,
+    "ancient_quote_scope": "Only Muhammad ibn al-Munkadir's historical mother-to-son report; not attributed to the Prophet.",
+    "existing_modern_total_prior_proof_reported": 83
+  },
+  "models_called": 0,
+  "review_state": "pending independent canonical English parity after parent authorization",
+  "validation": {
+    "pair_schema_exit": 0,
+    "source_excerpt_hash_exit": 0,
+    "raw_OCR_hash_exit": 0,
+    "canonical_sha256": "0ce2c5ce2df076e7f7586c5429c0e46e040e38b00e92734ec5c8d1e39e1bced4",
+    "deterministic_parity_defects": [],
+    "queue": "awaiting-review",
+    "models_called": 0,
+    "approval": null,
+    "source_detector_flags": [],
+    "guards": {
+      "check_kb_integrity.py": 0,
+      "check_kb_fidelity.py": 0,
+      "check_quran_citations.py": 0,
+      "check_hadith_citations.py": 0,
+      "check_scripture_coverage.py": 0,
+      "check_quran_rendering.py": 0
+    }
+  },
+  "bibliographic_cover": {
+    "pdf_page_one_based": 1,
+    "render_png_sha256": "418790b44b6769194d0eafd02b20123045b88574236846e9ac19d3c176f0fb86",
+    "scale_to_pixels": 1200
+  }
+}

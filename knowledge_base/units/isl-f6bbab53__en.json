@@ -2,39 +2,46 @@
   "id": "isl-f6bbab53__en",
   "domain": "islamic_parenting",
   "source_file": "Alukah_Rights_of_Children.pdf",
-  "title": "Rulings on Electronic Games and Parental Guidance",
+  "title": "The Author's Criticism of Some Phone and Computer Games",
   "language": "en",
-  "age_group": "7-9",
-  "behavior_type": "إدمان ألعاب إلكترونية",
+  "age_group": "unspecified",
+  "behavior_type": "تنظيم وقت اللعب",
   "intervention_type": "إرشادي",
-  "severity": "متوسط",
+  "severity": "خفيف",
   "reference_type": "كتاب_تربوي",
   "reference_info": "حقوق الأولاد على الوالدين - عماد عبدالعظيم (الألوكة)",
-  "text_original": "لا لَ عَ لَ ,ير ِ دْ ي َلا هُ ىَِ إفَ ,حِ لاَ س ءاقمؾ هقحمٟو حلاسمس ؿمٚسمُ ممإ ةرامؿلإا ـمق لمٝمٜمًا بامس « ً :ٟٚٛٓيا ّاَلإا ٍاق .» اً مطزامُ وأ اًدامض ناميأ سَ و ْ لَ فَ حَ لاَ س ِ لا اَنو ْ لَ عَ لَ حمَ َ نْ م َ « :لَ امىَ ،ﷺ ل ِ ِ بَمٜمًا ـ ِ مقَ ،ﭬ كمؾ َ قمُ ُ بي ِ أَ ـْ مقَ و ,ةرصابلاو ,ةـمقضلاو ,)ةـقشتقؽلا( ةقرقلاب بعؾلا ـط دٓوٕا كفـيو ,ةمرحؿلا باعلٕا ـم اهرقغو ,)4(فذخلاو ,جكرطشلاو ,تاقرو ثلاثلاو .)2616( ؿمٚسمُ فمضرمظأ (1) .)2617( ؿمٚسمُو ،)7172( يراخبمًا فمضرمظأ (2) .)98( ؿمٚسمُو ،)7171( يراخبمًا فمضرمظأ (3) دَ وََّْ لا لُ تُقْ يَ لاَ هُ ىَِإ« : لَامىَ وَ ، ف ِ ذْ َلخْ ا ـْ مقَ ﷺ لّ ِبَمٜمًا ك نهَ : لَامىَ ، ني ِ زَُْمعا ؾٍ مَٗ مَٖ مُُ ـِ مسْ للها د ِ بْمقَ ثيدلح (4) مَلحا لمُر قه :فذلخاو ملحمٞحمّمًا مذ قهو » نَ سِ لا سِ ِ كْ يَوَ يَْ ْعَ ْلا ي ُ قَ فْ يَ هُ ىَِإوَ وَ دُ عَ لْا ُ يكَ ْنيَ لاَوَ .ملمٛمٚسمعا ىذأ ـمق لمٝمٜمًا دقمّم٘معاو ،مابهلإاو ،ةمسابسمًامس لمُرمًا قه :ؾمٞمىو ،عمساصٕامس ــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ نيدلاىلا ىلع دلاولأا قىقح ــــــــــــــــــــ عققضت لتلا رتققبؿؽلا زافجو ػتافلا كؾط لتلا باعلٕا ؽلذ كلإ فاضيو ,ناققحلا وأ ناسكلإل رقص افقف نقؽيو ,ةدابعلا ـط ؿفقفؾتو ,تاقوٕا ػشك ـم افقف اؿل ةطراصؿلاو ,)1(اجققلا بعل مرحيو ,نياغٕاو ,كؼقسقؿلاو ةقسؼلا كؾط لشـلا ةقبرتو ,ةؾتاؼؿلا ـكامأو فجقلا كؾط برضلاو ,تارقعلا .ؽلذ قحكو رقغلا ماترحا مدطو ٚشػاعلا َط",
-  "text_simplified": "The text discusses the rulings on electronic and recreational games in Islam, clarifying that some games may contain prohibitions such as gambling, violence, or neglecting prayer. Parents must choose beneficial and safe games for their children and reinforce religious values and *akhlaq* (moral character).",
+  "text_original": "صياغة تحريرية للفقرة الأولى في صفحة ١٢٧ المطبوعة من الكتاب: يعترض المؤلف على ألعاب الهاتف والكمبيوتر التي يذكرها لما يراه فيها من تضييع الوقت والانشغال عن العبادة، ومن صور للإنسان أو الحيوان وموسيقى وأغان. هذه إعادة صياغة لموقف المؤلف وليست نقلا حرفيا أو حكما جديدا.",
+  "text_simplified": "The book's author criticizes the phone and computer games discussed in this passage as wasting time and distracting from worship. He also objects to their depictions of people or animals, music, and songs.",
   "labels": [
-    "ألعاب إلكترونية",
-    "تربية إسلامية",
-    "حماية الأطفال",
-    "وقت الفراغ",
-    "قيم دينية"
+    "ألعاب الهاتف",
+    "ألعاب الكمبيوتر",
+    "موقف المؤلف",
+    "وقت اللعب"
   ],
   "created_at": "2026-06-21T10:27:20Z",
-  "updated_at": "2026-06-21T10:27:20Z",
+  "updated_at": "2026-10-07T14:46:18.417566+00:00",
   "version": "1.0.0",
   "source_meta": {
-    "source_title": "Alukah_Rights_of_Children",
-    "source_author": ""
+    "source_title": "حقوق الأولاد على الوالدين",
+    "source_author": "عماد بن أحمد بن عبدالعظيم"
   },
   "source_language": "ar",
   "translated_from": "isl-f6bbab53",
   "translation": {
-    "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro+glm-5.2",
+    "translator_model": "openai:codex",
+    "fixer_model": "openai:codex",
+    "english_authors": [
+      "mistral-large-3:675b",
+      "openai:codex"
+    ],
     "needs_scholar_review": true,
     "review_verdict": "pending",
     "review_defects": [],
     "approved_by": null,
-    "revalidated_at": "2026-10-04T11:26:06+00:00"
-  }
+    "draft_status": "draft",
+    "source_recovery_note": "Source-faithful draft; no model review or approval."
+  },
+  "source_url": "https://www.alukah.net/Books/Files/Book_17337/BookFile/brotherandboys.pdf#page=128",
+  "source_note": "DRAFT source recovery, 2026-10-07. Selected primary PDF passage; quote-versus-paraphrase and scope: ops/data/kb_fidelity/source_recovery/isl-f6bbab53.json. No model, scholar, human or publication approval.",
+  "needs_ocr": false
 }

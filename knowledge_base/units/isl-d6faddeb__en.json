@@ -2,39 +2,45 @@
   "id": "isl-d6faddeb__en",
   "domain": "islamic_parenting",
   "source_file": "Alukah_Rights_of_Children.pdf",
-  "title": "The Importance of Akhlaq Tarbiyah for Children",
+  "title": "Muhammad ibn al-Munkadir's Mother's Advice about Joking with Boys",
   "language": "en",
   "age_group": "unspecified",
-  "behavior_type": "تربية أخلاقية",
+  "behavior_type": "مزاح مع الأطفال",
   "intervention_type": "إرشادي",
   "severity": "خفيف",
   "reference_type": "كتاب_تربوي",
   "reference_info": "حقوق الأولاد على الوالدين - عماد عبدالعظيم (الألوكة)",
-  "text_original": ",للها دَ بْ طَ يأَ :لَ اؼَ فَ , ر ضَ خْ أَ يٍ داَـجُ ِ ب رتَ س كشَ خْ أَ َلا فَ ء ِـلا فُ بَ ؾغْ يَ نْ أَ كشَ خْ أَ ـْ م : لَ اقَ ,بَ قيُ أَ ابَ أَ ايَ ء ِـلا اَـبَ ؾَ غَ :كقَ حْ تَ س ثُ ,اتً قْ بَ ؽَ لَ ؾُ خُ دْ أَ َٓ وَ ,ام عَ صْ أَ َٓ ,ؽَ َـبَ ؾغْ يَ نْ أَ :عسػًي فيادلما حاصلما ٔع ٕٜٛٗٓٚ نقفتف ناقبصلا حزاؿت ٓ :لمأ لل تلاق :لاق ,ردؽـؿلا ـب دؿحم ـط :ٞصاعلما فيإ ٢ًع ِٖداٝتعلا ٍٚؤٜ ٟريا طلاتخلاا ٔع ٕٜٛٗٓٚ :دٜش ٛبأ سهب ٍاق جراخ طلاتخٓا تايادب كلوأ هذه :لاػصٕا ضاير في طلاتخٓا« ؾخاد -ةقخإ ؿهو- دٓوٕا ـقب عجاضؿلا في طلاتخٓا ناك اذإو ,تققبلا باقغ عم تققبلا جراخ فب ػقؽف ,عرشلا فـط كنه اؿم ؿفئابآ فارشنب تققبلا ـضاحؿلا هذه في ؿهدٓولب جّ زلا ـم نادلاقلا للها ؼتقؾف !!؟ـيدلاقلا ةباقر .حمٞحص دامٜمؾم٢مس )391( »تمٛمّمًا« مذ امٞمٟدمًا بيأ ـمسا فمضرمظأ (1) .)186ص( »ةمٚمٞمْمٗمًا ةمؾارمط« (2) ـــــــــــــــتــــــــ نيدلاىلا ىلع دلاولأا قىقح ـــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ :١دبرتلما باٝجيا ظبي ٔع تآبيا ٢ٜٗٓٚ :دٜش ٛبأ سهب ٍاق ايزٕا ,ةزقؿؿلا ةقَ بصلا سُ ابلإ :سابؾلا في جبرتلا ةيادب« رقصؼلاك ,انهدب عقؿج ترست ٓ لتلا وأ ,ةفاػشلا وأ ,ةؼقضلا ةسبلٕاك ,ةغلابلا كلإ ,تارفاؽلا وأ ,لاجرلا سابؾب فبشت وأ ,نابؾص وأ ,ريواصت فقف ام وأ ,افـم ,اياغبلا ندل ـم انهأ ءارؼتسٓاب تبث لتلا ,ؽتُ فتَ لاو يّ رعُ لا ةسبلأ ـم ؽلذ رقغ .)1(»ةبقاعلا ـسحو ترسلا للها للسك ,ـفضارطلب تارجاتؿلا :اْصياٚ ,برهيا ٔع دلاٚلأا ٢ٜٗٓٚ فقـب بـجأ",
-  "text_simplified": "The text discusses the importance of raising children upon religious values and akhlaq (moral character), emphasizing the necessity of monitoring children’s behavior and guiding them toward what is right. It also mentions some of the challenges parents face in the tarbiyah (upbringing) of their children amid external influences.",
+  "text_original": "عن محمد بن المنكدر قال: قالت لي أمي: «لا تمازح الصبيان فتهون عليهم».",
+  "text_simplified": "Muhammad ibn al-Munkadir reported that his mother discouraged him from joking with boys, fearing that they would think less of him. The advice is attributed to his mother in this account.",
   "labels": [
-    "تربية",
-    "قيم دينية",
-    "مراقبة",
-    "توجيه",
-    "أبناء"
+    "محمد بن المنكدر",
+    "نصيحة الأم",
+    "المزاح"
   ],
   "created_at": "2026-06-21T10:32:46Z",
-  "updated_at": "2026-06-21T10:32:46Z",
+  "updated_at": "2026-10-07T14:46:18.417566+00:00",
   "version": "1.0.0",
   "source_meta": {
-    "source_title": "Alukah_Rights_of_Children",
-    "source_author": ""
+    "source_title": "حقوق الأولاد على الوالدين",
+    "source_author": "عماد بن أحمد بن عبدالعظيم"
   },
   "source_language": "ar",
   "translated_from": "isl-d6faddeb",
   "translation": {
-    "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro+glm-5.2",
+    "translator_model": "openai:codex",
+    "fixer_model": "openai:codex",
+    "english_authors": [
+      "mistral-large-3:675b",
+      "openai:codex"
+    ],
     "needs_scholar_review": true,
     "review_verdict": "pending",
     "review_defects": [],
     "approved_by": null,
-    "revalidated_at": "2026-10-04T11:18:18+00:00"
-  }
+    "draft_status": "draft",
+    "source_recovery_note": "Source-faithful draft; no model review or approval."
+  },
+  "source_url": "https://www.alukah.net/Books/Files/Book_17337/BookFile/brotherandboys.pdf#page=176",
+  "source_note": "DRAFT source recovery, 2026-10-07. Selected primary PDF passage; quote-versus-paraphrase and scope: ops/data/kb_fidelity/source_recovery/isl-d6faddeb.json. No model, scholar, human or publication approval.",
+  "needs_ocr": false
 }

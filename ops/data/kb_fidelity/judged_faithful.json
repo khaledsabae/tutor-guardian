@@ -2016,15 +2016,11 @@
    "why": "Matches Khulayfi p.5: the Ibn Abbas hadith rooting reliance on Allah ('nothing benefits or harms you except what Allah has written'), and behavioural education linking all of life to worship."
   },
   "isl-c0936200": {
-   "fingerprint": "0dfc5bfd4328a54f",
-   "judged_on": "2026-10-04",
+   "fingerprint": "214cf1ebb1634959",
+   "judged_on": "2026-10-07",
    "source_file": "Alukah_Rights_of_Children.pdf",
-   "flags": [
-    "reversed",
-    "glyph_substituted",
-    "meta_framing"
-   ],
-   "why": "Matches p.181: the chapter on parents' dying wills - Nuh's will to his son of 'la ilaha illa Allah' and warning against shirk and pride (the Prophet's hadith in Ahmad), Ya'qub's will (al-Baqara 133) - and explaining to children why something is forbidden (Ibn Battal)."
+   "flags": [],
+   "why": "Actual primary PDF source recovery draft: PDF p.181, printed p.180; Own editorial paraphrase of the selected Ibn Battal paragraph; no verbatim modern-book quotation. Scope and checksum proof: ops/data/kb_fidelity/source_recovery/isl-c0936200.json. Source reading only; no scholar or translation approval."
   },
   "isl-c0adb8a0": {
    "fingerprint": "e3581e6071d92057",
@@ -2203,15 +2199,11 @@
    "why": "Matches p.115: dolls and play permitted for girls - Aisha playing with dolls in the Prophet's house, the friends he sent to play with her, dolls with music forbidden. 'The Prophet played with Aisha' is a loose rendering of his engagement in her play, not a different story."
   },
   "isl-d6faddeb": {
-   "fingerprint": "bda336833e945880",
-   "judged_on": "2026-10-04",
+   "fingerprint": "f43c070c60912772",
+   "judged_on": "2026-10-07",
    "source_file": "Alukah_Rights_of_Children.pdf",
-   "flags": [
-    "reversed",
-    "glyph_substituted",
-    "meta_framing"
-   ],
-   "why": "General but on-theme for pp.176-177: parents' supervision against outside influences - Bakr Abu Zayd warning against mixing in kindergartens 'away from parents' supervision', immodest clothing for girls, joking that belittles. Adds no specific claim."
+   "flags": [],
+   "why": "Actual primary PDF source recovery draft: PDF p.176, printed p.175; Selected ancient historical report, quoted as attributed to the narrator and his mother. Not a Prophetic hadith; no modern commentary quoted. Scope and checksum proof: ops/data/kb_fidelity/source_recovery/isl-d6faddeb.json. Source reading only; no scholar or translation approval."
   },
   "isl-d7b55818": {
    "fingerprint": "6dd78e62cd417b68",
@@ -2421,15 +2413,11 @@
    "why": "Matches Kayfa p.48: education by a look or hint when the child errs before guests (punishing him in front of people can make him stubborn), indirect speech that preserves his dignity, and admonition through story and dialogue."
   },
   "isl-f6bbab53": {
-   "fingerprint": "6f257c70f7ec66a7",
-   "judged_on": "2026-10-04",
+   "fingerprint": "401882f6b952becc",
+   "judged_on": "2026-10-07",
    "source_file": "Alukah_Rights_of_Children.pdf",
-   "flags": [
-    "reversed",
-    "glyph_substituted",
-    "meta_framing"
-   ],
-   "why": "Matches pp.127-128: the author forbids weapon play and fireworks that frighten Muslims, card games and dominoes, and phone/computer games that waste time and distract from prayer; wrestling raising youth on cruelty. The summary is a softened but faithful rendering."
+   "flags": [],
+   "why": "Actual primary PDF source recovery draft: PDF p.128, printed p.127; Own editorial paraphrase of the author's phone/computer-game commentary. Zero additional verbatim modern-book words. Scope and checksum proof: ops/data/kb_fidelity/source_recovery/isl-f6bbab53.json. Source reading only; no scholar or translation approval."
   },
   "isl-f6c0c64a": {
    "fingerprint": "61846d2be8df6ac3",

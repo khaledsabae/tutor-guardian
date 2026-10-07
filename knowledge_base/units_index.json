@@ -11665,26 +11665,26 @@
     {
       "id": "isl-c0936200",
       "domain": "islamic_parenting",
-      "title": "تعليم الأطفال القيم الدينية والأخلاقية",
+      "title": "تفسير سبب النهي للأبناء في كلام ابن بطال",
       "source_file": "Alukah_Rights_of_Children.pdf",
       "language": "ar",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تربية دينية",
+      "original_age_group": "unspecified",
+      "normalized_age_group": "unspecified",
+      "behavior_type": "تعليم ديني",
       "needs_ocr": false,
-      "size_chars": 1251
+      "size_chars": 219
     },
     {
       "id": "isl-c0936200__en",
       "domain": "islamic_parenting",
-      "title": "Teaching Children Religious and Moral Values",
+      "title": "Explaining Restrictions to Children in Ibn Battal's Commentary",
       "source_file": "Alukah_Rights_of_Children.pdf",
       "language": "en",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "تربية دينية",
+      "original_age_group": "unspecified",
+      "normalized_age_group": "unspecified",
+      "behavior_type": "تعليم ديني",
       "needs_ocr": false,
-      "size_chars": 1251
+      "size_chars": 219
     },
     {
       "id": "isl-c0a98146",
@@ -12169,26 +12169,26 @@
     {
       "id": "isl-d6faddeb",
       "domain": "islamic_parenting",
-      "title": "أهمية التربية الأخلاقية للأبناء",
+      "title": "نصيحة أم محمد بن المنكدر عن المزاح مع الصبيان",
       "source_file": "Alukah_Rights_of_Children.pdf",
       "language": "ar",
       "original_age_group": "unspecified",
       "normalized_age_group": "unspecified",
-      "behavior_type": "تربية أخلاقية",
+      "behavior_type": "مزاح مع الأطفال",
       "needs_ocr": false,
-      "size_chars": 1350
+      "size_chars": 68
     },
     {
       "id": "isl-d6faddeb__en",
       "domain": "islamic_parenting",
-      "title": "The Importance of Akhlaq Tarbiyah for Children",
+      "title": "Muhammad ibn al-Munkadir's Mother's Advice about Joking with Boys",
       "source_file": "Alukah_Rights_of_Children.pdf",
       "language": "en",
       "original_age_group": "unspecified",
       "normalized_age_group": "unspecified",
-      "behavior_type": "تربية أخلاقية",
+      "behavior_type": "مزاح مع الأطفال",
       "needs_ocr": false,
-      "size_chars": 1350
+      "size_chars": 68
     },
     {
       "id": "isl-d7872363",
@@ -12781,26 +12781,26 @@
     {
       "id": "isl-f6bbab53",
       "domain": "islamic_parenting",
-      "title": "حكم الألعاب الإلكترونية وتوجيه الأهل",
+      "title": "نقد مؤلف الكتاب لبعض ألعاب الهاتف والكمبيوتر",
       "source_file": "Alukah_Rights_of_Children.pdf",
       "language": "ar",
-      "original_age_group": "7-9",
-      "normalized_age_group": "7-9",
-      "behavior_type": "إدمان ألعاب إلكترونية",
+      "original_age_group": "unspecified",
+      "normalized_age_group": "unspecified",
+      "behavior_type": "تنظيم وقت اللعب",
       "needs_ocr": false,
-      "size_chars": 1337
+      "size_chars": 266
     },
     {
       "id": "isl-f6bbab53__en",
       "domain": "islamic_parenting",
-      "title": "Rulings on Electronic Games and Parental Guidance",
+      "title": "The Author's Criticism of Some Phone and Computer Games",
       "source_file": "Alukah_Rights_of_Children.pdf",
       "language": "en",
-      "original_age_group": "7-9",
-      "normalized_age_group": "7-9",
-      "behavior_type": "إدمان ألعاب إلكترونية",
+      "original_age_group": "unspecified",
+      "normalized_age_group": "unspecified",
+      "behavior_type": "تنظيم وقت اللعب",
       "needs_ocr": false,
-      "size_chars": 1337
+      "size_chars": 266
     },
     {
       "id": "isl-f6c0c64a",
