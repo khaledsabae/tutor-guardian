@@ -18,6 +18,7 @@ name: Mobile E2E (emulator)
 #   06 English → Today/Learn/Assistant/More
 #   07 force-stop → cold start → Today renders (no white screen, no spinner,
 #      not stuck in child mode)          08 the child survived that restart
+#   09 family programs list → Prayer Journey (read-only)
 # Lineage "upgrade" — BASELINE build: 01 English onboarding + child,
 #   02 restart on the baseline (control, informational), then `adb install -r`
 #   the PR head: 03 it opens and Today renders, 04 the child is kept (skipped
@@ -29,11 +30,8 @@ name: Mobile E2E (emulator)
 # flows and every selector matches Arabic and English alike.
 #
 # ── Baseline (the build users have now) ─────────────────────────────────
-# Default: 007e71b7 = 1.0.66+111, live on Play (production, 100%). There is no
-# v1.0.66+111 tag (tags stop at v1.0.65+110); identified from
-# publishing-center/OPERATIONS_LOG.md, 2026-09-26: «main عند 007e71b7 … build
-# appbundle --release» for the 1.0.66+111 upload. mobile/ at 007e71b7 is the
-# same tree as the bump commit 6699e249 (`git rev-parse <c>:mobile`).
+# Default: efaa740f = released 1.0.68+113. E2E_BASELINE_REF is also set to
+# this released commit; explicit manual input still takes precedence.
 # After each Play release, point it at the released commit: the repository
 # variable E2E_BASELINE_REF (Settings → Variables), or the default below.
 # A manual run can pass any ref as `baseline_ref`.
@@ -80,7 +78,7 @@ on:
   workflow_dispatch:
     inputs:
       baseline_ref:
-        description: 'Commit/tag of the build users run now (upgrade test starts there). Empty = E2E_BASELINE_REF or 007e71b7 (1.0.66+111).'
+        description: 'Commit/tag of the build users run now (upgrade test starts there). Empty = E2E_BASELINE_REF or efaa740f (1.0.68+113).'
         required: false
         type: string
         default: ''
@@ -131,7 +129,7 @@ jobs:
           - variant: head
             ref: ${{ github.event.pull_request.head.sha || github.sha }}
           - variant: baseline
-            ref: ${{ inputs.baseline_ref || vars.E2E_BASELINE_REF || '007e71b7bbca8cbb0eb93c210b719e0b99cff241' }}
+            ref: ${{ inputs.baseline_ref || vars.E2E_BASELINE_REF || 'efaa740f48389636ea4bf06b6a71bbe3f324e8bc' }}
     defaults:
       run:
         working-directory: mobile

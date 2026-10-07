@@ -1,14 +1,8 @@
 # Checkpoint 9 — «برامج الأسرة» (family programs, MOBILE_API §11).
 #
-# DISABLED: not in run.sh's FRESH list. The app hides every programs entry
-# while the server answers `GET /api/programs` with 404 (the API ships in
-# PR #32), so against today's production this checkpoint cannot pass.
-# TODO(after #32 is deployed): when
-#   curl -s -o /dev/null -w '%{http_code}' https://tg-api.alsaba.cloud/api/programs
-# prints 401 (the route exists and wants a token) instead of 404, replace the
-# `skip fresh 09_programs` line in e2e/run.sh with
-#   run_flow info fresh 09_programs fresh/09_programs.yaml -e UI_LANG=ar || true
-# and promote `info` to `gate` after its first green run.
+# Enabled as a gate: public GET /api/programs returns 401 (authentication
+# required), confirming the route is deployed. The onboarded app authenticates
+# and must render the list and Prayer Journey; failures remain gating.
 #
 # Walk (read-only — it starts nothing, so it writes no production rows):
 # «المزيد» → «برامج الأسرة» → the list renders for the onboarded child (band

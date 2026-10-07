@@ -46,7 +46,7 @@ KEYS = [
     "childModeOffline",
     # failure screens
     "bootError", "forceUpdateTitle",
-    # family programs (fresh/09 — disabled until the programs API is live)
+    # family programs (fresh/09)
     "programsTitle", "programsIntro", "programsPrayerTitle", "prayerStagesTitle",
 ]
 
