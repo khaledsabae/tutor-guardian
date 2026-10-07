@@ -1,9 +1,13 @@
 # Hosted unsigned AAB and local upload-key boundary
 
-This build-only workflow is ready for review after PR60 merged as
-`5d566611efb09808bb4b94f47ae7ea25b0abe4b2`. The current implementation task
-authorizes an offline commit and rebase, with no dispatch, signing or upload. It does
-not publish to Play, contain production signing secrets, or start a local build.
+This build-only workflow is based on main after PR60 merged as
+`5d566611efb09808bb4b94f47ae7ea25b0abe4b2`. The user has authorized development,
+PR merge, hosted build dispatch, local signing, upload and a full 100% Play rollout.
+This worktree's current task is documentation correction, commit, push and PR
+creation; dispatch, build, signing and upload remain separate execution steps.
+The workflow does not publish to Play, contain production signing secrets, or
+start a local build. No local emulator or APK/AAB compilation is authorized;
+the production upload key must never be uploaded.
 
 ## Build and provenance
 
@@ -47,9 +51,12 @@ rejected alongside the E2E deactivation marker.
 
 The production upload key and passwords stay local. Signing is a separate
 operator-controlled step; these tools never sign. Passwords must not enter
-command arguments, shell history, logs or GitHub secrets. JDK17's interactive
-password prompts are suitable; any automation must use a private input channel
-without exposing values. Never use a debug-signed E2E APK or bundle as a release.
+command arguments, shell history, logs or GitHub secrets. JDK17 signing must use
+only environment-backed password options: `-storepass:env TG_UPLOAD_STORE_PASSWORD`
+and `-keypass:env TG_UPLOAD_KEY_PASSWORD`. Populate those process-local variables
+through the existing private local credential channel without printing values or
+recording them in shell history. Never use interactive password prompts or literal
+password argument values. Never use a debug-signed E2E APK or bundle as a release.
 
 After signing a copy, run `scripts/release_bundle.py signed` with the original
 unsigned map, pinned bundletool, full source SHA, exact version, expected signed
@@ -105,18 +112,18 @@ AAB upload and validation must establish that.
 
 The existing `scripts/play_upload.py --dry-run` only checks file existence and
 notes; it is not validation. The legacy uploader/publishing workflow is unchanged.
-Before the later authorized 100% publication, the publication path must consume
-and recheck the same validated artifact identity rather than use the legacy
-pubspec-based reuse shortcut. Do not treat the validate-only receipt as permission
-to publish a different artifact. This change intentionally supplies build and
-acceptance-proof stages, not that final publication implementation.
+For the authorized 100% publication, `scripts/release_play_publish.py` consumes
+and rechecks the same validated artifact identity; versionCode reuse also requires
+the exact AAB SHA256. Do not treat the validate-only receipt as permission to
+publish a different artifact. The final publication stage and its private journal
+are described in [verified-play-publication.md](verified-play-publication.md).
 
 ## Offline tests and scope
 
 Tests use synthetic ZIP/XML and fake Play requests; no APK/AAB compilation,
 real signing, Play request, credentials read, emulator, or model call is needed.
-PR60's separate release-note fixture correction is part of merged main and must
-arrive through the rebase onto `5d566611`, without editing that test here. No
+PR60's separate release-note fixture correction is already included in this
+worktree's main baseline `5d566611`, without a separate test edit here. No
 production keystore or service-account values were inspected.
 
 Fresh baseline validation: 16 bundle/workflow tests and 6 Play lifecycle tests,
