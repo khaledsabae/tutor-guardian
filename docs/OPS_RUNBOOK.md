@@ -386,7 +386,7 @@ docker exec tg_backend curl -fsS http://localhost:8000/health
 | الاسم | وظيفته |
 |---|---|
 | `TELEGRAM_BOT_TOKEN` / `TELEGRAM_CHAT_ID` / `TELEGRAM_CHANNEL_ID` | تقارير تلجرام (الداشبورد الأسبوعي/OMAR/النشر) |
-| `OPS_METRICS_TOKEN` | حماية `/api/stats/ops-llm` على الباكند |
+| `OPS_METRICS_TOKEN` | مطلوب في كل البيئات لحماية `/api/stats/ops-llm`؛ غيابه أو كونه فارغًا/مسافات فقط يُرجع 403 قبل قراءة المقاييس |
 | `TG_OPS_METRICS_TOKEN` | نفس التوكن من جهة OMAR (`~/.omar/.env`) |
 | `DEEPSEEK_API_KEY` + `DEEPSEEK_FALLBACK_ENABLED` + `DEEPSEEK_FALLBACK_MONTHLY_TOKEN_CAP` | صمام الأمان السحابي وسقفه |
 | `CHILD_MODE_SECRET` | توقيع وضع الطفل — الكود يرفض الإقلاع بدونه |

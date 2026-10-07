@@ -35,11 +35,15 @@ Status: ✅ **fixed in this PR** · 📋 **roadmap** (needs an owner decision, p
 
 ## 1. Summary
 
+M15 completed on 2026-10-07: operational metrics require a nonblank token in all
+environments, including development; unauthorized requests return 403 before
+telemetry or database access. Configured tokens retain constant-time comparison.
+
 | Severity | Found | Fixed here | Roadmap |
 |---|---:|---:|---:|
 | Critical | 3 | 3 | 0 (C3 settings toggle still advised) |
 | High | 9 | 9 | 0 (flip `SESSION_MINT_ENFORCE` once build ≥ 106 is the floor) |
-| Medium | 17 | 15 | 2 (M15 partly: fail closed when `OPS_METRICS_TOKEN` is unset; M17 is the Phase 3 migration refactor) |
+| Medium | 17 | 16 | 1 (M17 is the Phase 3 migration refactor) |
 | Low | 12 | 6 | 6 |
 
 *Updated for release v1.0.61 (release-hardening pass): C3, H4, H6, H7 fixed; H5 partly
@@ -254,7 +258,7 @@ Two independent defects:
 | M12 | Mobile creates `TgClient()` ad hoc in 19 places. Each has its own un-closed `http.Client` and session cache, and concurrent `ensureSession()` calls can mint duplicate sessions | `mobile/lib/**` | ✅ `TgClient.shared` (services) and `tgClientProvider` (widgets) are one instance; in-flight mints are shared; a refused token is renewed once below every caller |
 | M13 | Mobile SSE has a timeout only on the headers, so a server stall mid-stream hangs the chat indefinitely | `tg_client.dart::streamQuery` | ✅ 45 s idle timeout per chunk → retryable «توقّف الرد» error; the server sends an SSE keep-alive every 15 s while the model is silent |
 | M14 | Each token rebuilds the full chat state and re-parses the whole Markdown, which is O(n²) on long answers | `state/chat_notifier.dart` | ✅ deltas batched every 60 ms and flushed on done, error, stop and pause (UX-2) |
-| M15 | `ops-llm` metrics are open when `OPS_METRICS_TOKEN` is unset, and the token was compared in non-constant time | `routers/stats.py` | ✅ `compare_digest`; 📋 fail closed in production |
+| M15 | `ops-llm` metrics are open when `OPS_METRICS_TOKEN` is unset, and the token was compared in non-constant time | `routers/stats.py` | ✅ Constant-time comparison; required token in every environment; missing/blank configuration returns 403 before telemetry access |
 | M16 | Error `detail` strings echo internal exceptions (`f"DB error: {exc}"`, `f"bad audio: {exc}"`) | `routers/feedback.py` | ✅ decoder and SQLite messages are logged, callers get a fixed Arabic message |
 | M17 | Monolithic `init_db.py` (1,100 lines of hand-written migrations); two SQLite files, with DDL scattered across `ai_gateway`, `answer_cache`, `retrieval`, `fiqh_guard` and `query_rewriter` | `db/`, services | 📋 see Phase 3 |
 

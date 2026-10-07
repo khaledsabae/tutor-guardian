@@ -8,8 +8,8 @@ retention — the cheapest network-effect lever.
 
   GET /api/stats/community → {families, lessons_completed, active_this_week}
 
-Public: /api/stats is not in the auth-middleware protected prefixes, so no
-token is required (the numbers are aggregate and non-identifying).
+The community endpoint is public: /api/stats is outside the auth middleware
+protected prefixes. Operational metrics enforce their own required token.
 """
 from __future__ import annotations
 
@@ -66,11 +66,11 @@ def ops_llm_metrics(
     """Aggregate LLM cost/latency metrics for external monitoring (OMAR).
 
     Growth plan §5.1 (تتبع التكلفة/مستخدم) + §4.4 (p95). No PII — counts,
-    tokens and latencies only. Gated by OPS_METRICS_TOKEN when set; open in
-    dev when the env var is absent.
+    tokens and latencies only. OPS_METRICS_TOKEN is required in every
+    environment; missing or whitespace-only configuration fails closed.
     """
     expected = os.environ.get("OPS_METRICS_TOKEN", "")
-    if expected and not secrets.compare_digest(x_ops_token or "", expected):
+    if not expected.strip() or not secrets.compare_digest(x_ops_token or "", expected):
         raise HTTPException(status_code=403, detail="forbidden")
     days = max(1, min(days, 30))
 
