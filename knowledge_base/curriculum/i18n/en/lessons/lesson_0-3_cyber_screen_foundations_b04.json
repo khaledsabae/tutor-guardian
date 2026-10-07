@@ -1,13 +1,14 @@
 {
   "id": "lesson_0-3_cyber_screen_foundations_b04",
   "path_id": "path_0-3_cyber_screen_foundations",
-  "title": "Video Chatting: The AAP Exception Before 18 Months",
+  "title": "Video Chatting: Shared Interaction with Parent Supervision",
   "age_group": "0-3",
   "domain": "cyber",
   "unit_ids": [
+    "cyb-aap-digital-ecosystems-2026",
     "cyb-aap-media-young-minds-2016"
   ],
-  "summary": "The American Academy of Pediatrics’ (AAP) 2016 statement makes an exception for video chatting in its advice to avoid screen media before 18 months. The difference is that the call is a real, two-way social interaction (Grandma responds to the baby’s smile), not passive broadcasting. Even this should be short and with your presence, naming the person and encouraging the child to wave and coo. The screen here is a means of relationship, not a means of entertainment—this is the balance that protects the child’s developing brain.",
+  "summary": "The American Academy of Pediatrics’ (AAP) 2026 statement focuses on content quality and joint engagement in building relationships and learning. Its earlier 2016 statement discussed video chatting with relatives as social interaction. This lesson suggests a shared call with your supervision; it does not present it as the only permitted exception in the updated guidance. The difference is that the call is a real, two-way social interaction (Grandma responds to the baby’s smile), not passive broadcasting. Even this should be short and with your presence, naming the person and encouraging the child to wave and coo. The screen here is a means of relationship, not a means of entertainment—this is the balance that protects the child’s developing brain.",
   "try_this": "This week: Arrange a short video call (two minutes) with a beloved relative, and sit beside your child. Name the person, wave your child’s hand, and comment on the relative’s responses. Notice: Did your child interact (smile/coo) or remain a spectator?",
   "order": 4,
   "estimated_minutes": 44,
@@ -19,7 +20,7 @@
   "is_published": true,
   "version": "1.0.0",
   "created_at": "2026-06-13T00:00:00",
-  "updated_at": "2026-10-07T07:57:56.718210+00:00",
+  "updated_at": "2026-10-07T09:13:07.475746+00:00",
   "approved_by": null,
   "language": "en",
   "source_language": "ar",

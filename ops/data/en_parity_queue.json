@@ -149,8 +149,8 @@
     },
     "path_0-3_cyber_screen_foundations": {
       "category": "awaiting-review",
-      "reason": "2026-10-07 source correction: full 0–3 scope and historical AAP 2016 / WHO 2019 age-specific screen guidance verified from official primary documents. English edited by Codex; awaiting an actual eligible review of this exact AR/EN hash. No model review or approval stamp performed.",
-      "content_sha256": "6c38aa6b0c2413e85ef8fcd4d728d095099055462a84ddb66460609d1076f7e7",
+      "reason": "2026-10-07: updated screen draft from revised AAP primary policy, published 2026-01-20, doi:10.1542/peds.2025-075320. WHO 2019 remains separate; 2016 source retained as history. Codex edited English; actual independent review of this exact hash remains pending, approvals null.",
+      "content_sha256": "b92792d33fb6f181c3ec11328ba2f0e7ed98c03a64e9c7f023f1eefb82d1d061",
       "queued_on": "2026-10-07",
       "english_authors": [
         "claude-opus-5-5",
@@ -181,8 +181,8 @@
     },
     "lesson_0-3_cyber_screen_foundations_b04": {
       "category": "awaiting-review",
-      "reason": "2026-10-07: scoped the video-chat exception to AAP 2016 guidance before 18 months and replaced unrelated KB anchors with cyb-aap-media-young-minds-2016, verified from the official policy. Existing activity and reflections preserved. English edited by Codex; awaits actual independent review of this exact AR/EN hash; no review stamp.",
-      "content_sha256": "84d32c40e4d12de77a48b80e92b3f901139c88d52c8b36b2c075b737c304c5a4",
+      "reason": "2026-10-07: revised AAP primary policy verified, published 2026-01-20, doi:10.1542/peds.2025-075320; screen draft updated to current content-quality/shared-engagement/family-context guidance. WHO 2019 remains distinctly attributed; 2016 source preserved as historical provenance. Codex edited English; this exact AR/EN hash awaits genuine independent review, with null approvals and no review stamp.",
+      "content_sha256": "2c3b5391178d2a94a66af9744ba051042dea706244ac684482a1c0a70a5e68bc",
       "queued_on": "2026-10-07",
       "english_authors": [
         "codex"
@@ -190,8 +190,8 @@
     },
     "lesson_0-3_cyber_screen_foundations_01": {
       "category": "awaiting-review",
-      "reason": "2026-10-07 source correction: full 0–3 scope and AAP 2016 / WHO 2019 age-specific screen guidance verified on official primary pages; unrelated KB anchors replaced by two narrowly extracted guideline units. English edited by Codex and not reviewed; approved_by must remain null until an actual eligible review of this exact AR/EN hash. No model review or approval stamp performed.",
-      "content_sha256": "3090b8e5ec6618fcd802258a1874628c9df80cd8d8bde908e1ee7b6d7d72f020",
+      "reason": "2026-10-07: revised AAP primary policy verified, published 2026-01-20, doi:10.1542/peds.2025-075320; screen draft updated to current content-quality/shared-engagement/family-context guidance. WHO 2019 remains distinctly attributed; 2016 source preserved as historical provenance. Codex edited English; this exact AR/EN hash awaits genuine independent review, with null approvals and no review stamp.",
+      "content_sha256": "8aea720321cf73f381dda20f393c72266b99268348859ebcc0df48eb7053ea9d",
       "queued_on": "2026-10-07",
       "english_authors": [
         "codex"

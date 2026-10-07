@@ -1,9 +1,9 @@
 {
-  "total_units": 1392,
+  "total_units": 1393,
   "generated_at": "2026-10-07T07:31:39.565264+00:00",
   "by_domain": {
     "medical": 361,
-    "cyber": 282,
+    "cyber": 283,
     "islamic_parenting": 582,
     "development": 133,
     "app_help": 12,
@@ -16713,6 +16713,18 @@
       "behavior_type": "وقت الشاشة في الطفولة المبكرة",
       "needs_ocr": false,
       "size_chars": 892
+    },
+    {
+      "id": "cyb-aap-digital-ecosystems-2026",
+      "domain": "cyber",
+      "title": "الشاشات والطفولة المبكرة: بيان AAP المحدّث لعام 2026",
+      "source_file": "AAP_Digital_Ecosystems_Children_Adolescents_2026",
+      "language": "ar",
+      "original_age_group": "unspecified",
+      "normalized_age_group": "unspecified",
+      "behavior_type": "وقت الشاشة في الطفولة المبكرة",
+      "needs_ocr": false,
+      "size_chars": 1074
     }
   ]
 }
