@@ -164,6 +164,26 @@ def test_both_endpoints_deliver_parenting_path(parenting_pipeline, path, text):
 
 
 @pytest.mark.parametrize("path", ["/api/assistant/draft", "/api/assistant/stream"])
+def test_documented_parenting_after_divorce_is_supported(parenting_pipeline, path):
+    client, calls = parenting_pipeline
+    result = ask(client, path, "كيف أتعامل مع أطفالي بعد الطلاق")
+    assert result.status_code == 200 and calls
+    assert "Mock parenting support" in result.text and "fiqh_guard" not in result.text
+
+
+@pytest.mark.parametrize("suffix", [" وهل يجوز الخلع؟", " وابني يسأل هل هذا الحديث صحيح؟"])
+@pytest.mark.parametrize("path", ["/api/assistant/draft", "/api/assistant/stream"])
+def test_documented_parenting_cannot_hide_a_compound_ruling(client, monkeypatch, path, suffix):
+    def unexpected_generation(*args, **kwargs):
+        raise AssertionError("Compound ruling reached generation")
+
+    from app.routers import assistant
+    monkeypatch.setattr(assistant, "_classify_and_rewrite", unexpected_generation)
+    result = ask(client, path, "كيف أتعامل مع أطفالي بعد الطلاق" + suffix)
+    assert result.status_code == 200 and "fiqh_guard" in result.text
+
+
+@pytest.mark.parametrize("path", ["/api/assistant/draft", "/api/assistant/stream"])
 @pytest.mark.parametrize("text", COMPOUND)
 def test_both_endpoints_block_wrapped_or_compound_before_models(client, monkeypatch, path, text):
     from app.routers import assistant
