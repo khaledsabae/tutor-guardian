@@ -10,8 +10,8 @@
   "severity": "خفيف",
   "reference_type": "كتاب_تربوي",
   "reference_info": "حقوق الأولاد على الوالدين - عماد عبدالعظيم (الألوكة)",
-  "text_original": "ب قطُ دْ أَ اكَ أَ وَ ل ِ ب ر فَ : لَ اقَ , ةلاَ صَ ؾِ كُ ـَ فُ تُ ذْ خَ ل َ فَ , ة ٍ لاَ صَ ؾِ كُ ر ِ بُ دُ ل ِ ف ـَ ف ِ ِ ب قطُ دْ تَ ؽَ تُ عْ ؿ ِ س هُ اتَ بَ أَ ايَ : لَ اقَ ,؟ ت ِ اؿ ؾِ كُ ر ِ بُ دُ لف ـَ ف ِ ِ ب قطُ دْ يَ نَ اكَ ﷺ للها لَ قس نَ ِ نفَ , لَـبُ ايَ ـَ فُ م زَ لْافَ : لَ اقَ , ؽَ ْـطَ :يرطلما ّٛٝيا في ٠لاصيا ٘ٓبا ًِعٜ ٞيرلها يرُع ٔب ١َاضأ ارٖٚ ؾَ فَ , د ِ ج ِ س لْا كلَِ إ ة ٍ ر ة ٍ ؾَ قْ لَ تَ اذَ تُ جْ ر خَ : لَ اقَ ,حِ ق ِ ؾؿ لْا ل ِ بأَ ـْ طَ دْ ؼَ لَ : لَ اقَ ,حِ ق ِ ؾؿ لْا قبُ أَ :اقلُاقَ ,؟ اذَ هَ ـْ م :ل ِ بأَ لَ اقَ ,تُ حْ تَ ػْ تَ س ىدَ اَـفَ ,اَـلاعَ ك ؾَ فاس اـَ تْ بَ اصَ أَ وَ , ةقَ ِ بيْ دَ حُ لْا م ؽُ ِ لاحَ ر ِ ل ِ ف اقؾُ صَ نْ أَ :ﷺ ِ للها ل ِ قس »مؼم٘مًا باذمق تابمصإ« مذو ، )294( »تاقمقدمًا باتمي« مذ لم٘مٝمٞبمًاو ،)44/5( دحمأ فمضرمظأ (1) .ؿمٚسمُ طشر مغمق يقمى دامٜمؾم٢مس )533/1( ؿميالحاو ،)3513( يذمُمؽمًاو )216( ـمق ،ةمسلامى بيأ",
-  "text_simplified": "The text discusses a story related to salah and its importance, mentioning some Prophetic hadiths that urge its preservation. It shows that the topic revolves around instilling the value of salah in the hearts of children.",
+  "text_original": "وهذا أبو بكرة رضي الله عنه يعلم ولده ويحثه بالتمسك بالسنة:\nعن مسلم بن أبي بكرة أنه مر بوالده وهو يدعو ويقول: اللهم إني أعوذ بك من الكفر والفقر وعذاب القبر، قال: فأخذتهن عنه، وكنت أدعو بهن في دبر كل صلاة، فمر بي وأنا أدعو بهن، فقال: يا بني أنى عقلت هؤلاء الكلمات؟ قال: يا أبتاه سمعتك تدعو بهن في دبر كل صلاة، فأخذتهن عنك، قال: فالزمهن يا بني، فإن رسول الله ﷺ كان يدعو بهن في دبر كل صلاة.\n\nوهذا أسامة بن عمير الهذلي رضي الله عنه يعلم ابنه الصلاة في اليوم المطير:\nعن أبي المليح، قال: خرجت ذات ليلة مطيرة إلى المسجد، فلما رجعت استفتحت، فقال أبي: من هذا؟ قالوا: أبو المليح، قال: لقد رأيتنا مع رسول الله ﷺ يوم الحديبية، وأصابتنا سماء لم تبل أسافل نعالنا، فنادى منادي رسول الله ﷺ: أن صلوا في رحالكم.",
+  "text_simplified": "Abu Bakra taught his son Muslim a supplication seeking refuge from disbelief, poverty, and the punishment of the grave. His son heard him recite it after every prayer, learned it, and continued to use it. His father told him that the Messenger of Allah ﷺ used to recite it. Abu al-Malih also narrated that his father, Usama ibn Umayr al-Hudhali, told him about the day of al-Hudaybiyya, when the Messenger of Allah's ﷺ caller announced that people should pray in their dwellings after rain fell.",
   "labels": [
     "صلاة",
     "تربية دينية",
@@ -19,21 +19,29 @@
     "قيم إسلامية"
   ],
   "created_at": "2026-06-21T10:25:03Z",
-  "updated_at": "2026-06-21T10:25:03Z",
+  "updated_at": "2026-10-07T07:45:57+00:00",
   "version": "1.0.0",
   "source_meta": {
-    "source_title": "Alukah_Rights_of_Children",
-    "source_author": ""
+    "source_title": "حقوق الأولاد على الوالدين",
+    "source_author": "عماد أحمد عبدالعظيم",
+    "source_url": "https://www.alukah.net/Books/Files/Book_17337/BookFile/brotherandboys.pdf"
   },
   "source_language": "ar",
   "translated_from": "isl-752169b4",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
     "review_verdict": "pending",
     "review_defects": [],
     "approved_by": null,
-    "revalidated_at": "2026-10-04T11:18:18+00:00"
-  }
+    "fixer_model": "openai:codex",
+    "english_authors": [
+      "mistral-large-3:675b",
+      "openai:codex"
+    ],
+    "draft_status": "draft",
+    "source_recovery_note": "Rewritten from the recovered Arabic excerpt and Arabic draft on 2026-10-07; not reviewed or approved."
+  },
+  "source_url": "https://www.alukah.net/Books/Files/Book_17337/BookFile/brotherandboys.pdf#page=103",
+  "source_note": "DRAFT source recovery, 2026-10-07: manually transcribed from the publisher PDF, PDF page 103 (printed page 102), the two complete sections on Abu Bakra and Usama ibn Umayr. Line wrapping and vowel marks normalized; honorific glyphs expanded; footnote markers/footnotes and the preceding incomplete paragraph omitted. Source provenance and transcription evidence: ops/data/kb_fidelity/source_recovery/isl-752169b4.md. Source evidence only: no human approval, specialist signoff, model review, or publication approval."
 }
