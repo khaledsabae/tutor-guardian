@@ -1,4 +1,4 @@
-"""Reviewed route policy inventory for main 5d566611 (Phase 3, item 2).
+"""Route inventory for main 5d566611, with the feedback ownership follow-up.
 
 Documentation/test contract only: neither app.main nor AuthMiddleware imports
 this table. Every method/path is explicit; new routes never inherit a policy
@@ -171,11 +171,11 @@ _add(
 _add(
     "app.routers.feedback",
     "device",
-    "device",
+    "session",
     """
     POST /api/feedback submit_feedback
 """,
-    exception="Device Bearer; submitted session_id is not checked for ownership (inventory exception)",
+    exception="Device Bearer; session must be owned by device; ownerless legacy session requires exact authenticated session binding",
 )
 
 _add(

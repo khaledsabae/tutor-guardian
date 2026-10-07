@@ -1,9 +1,10 @@
 # Route policy inventory — Phase 3, item 2
 
 The table in `backend/app/security/route_policy.py` records the effective
-FastAPI registrations at main `5d566611`. It is a review/test contract;
-the application and middleware do not consume it. This change adds no runtime
-authentication, rate limits, feature restrictions, or production configuration.
+FastAPI registrations at main `5d566611`, with the subsequent feedback session
+ownership fix. It is a review/test contract; the application and middleware do
+not consume it. The table itself adds no runtime authentication, rate limits,
+feature restrictions, or production configuration.
 
 The inventory contains **166 route objects / 170 method-and-path entries**:
 157 API entries, eight framework GET/HEAD entries, and five static mounts.
@@ -50,10 +51,19 @@ than assuming a protected pathname is sufficient.
 - Session-owned assistant/chat handlers retain compatibility for legacy
   ownerless sessions. Parent-owned child handlers use their existing ownership
   checks; lesson progress retains its legacy child-ID fallback.
-- **Observed ownership exception:** `POST /api/feedback` authenticates the
-  device but accepts the caller's supplied `session_id` without checking its
-  owner (`feedback.submit_feedback`). The table records this rather than
-  describing it as session authorization. No behavior change is included.
+- `POST /api/feedback` now checks the effective session against the authenticated
+  device before inserting a rating. Foreign and nonexistent sessions, and
+  ownerless sessions without a matching credential binding, get the same fixed
+  Arabic 403 without storing feedback or notifying anyone. Omitted/null/empty
+  `session_id` still uses the authenticated session; an older conversation owned
+  by the same device remains valid after token/session renewal. An ownerless
+  legacy session requires the validated Bearer's exact session ID, so it is
+  preserved on proof of that binding rather than made accessible by ID alone.
+  This route has no child-ID or client-supplied message-ID field. Production's
+  documented feedback table lacks `message_id`; fresh databases require it.
+  The handler supports both, using the latest assistant message from the owned
+  session (or 0 when none exists) only for a table that has that column. No
+  migrations, schemas, device-proof guards or mint middleware are changed.
 - OpenAPI, Swagger, ReDoc and the five known static mounts are explicitly
   public. Known static mounts are optional because main registers them only
   when their directories exist. Unknown mounts, route types and schema routes
@@ -105,3 +115,15 @@ regressions passed (117 total), exit 0, zero failures/errors/skips**. The relate
 suite covers story auth, monthly-report ownership, ops metrics, audit
 regressions, child web/claims and device proof. Ruff checks/format and
 `git diff --check` passed. This is a focused gate, not a full-backend-suite claim.
+
+The feedback ownership follow-up has **26 new real-HTTP tests**, run against
+both documented production and fresh database shapes. Before the fix, three
+production-shape unauthorized-reference cases returned 201 and fresh-schema
+valid cases returned 500. All 26 now pass. Together with policy, token, existing
+feedback/reply/alias, audit and safe-error checks, **122 focused tests pass,
+exit 0, zero failures/errors/skips**. Real HTTP transports are blocked; Telegram
+callbacks are mocked. Missing/invalid/child-role credentials still get middleware
+401; an authenticated caller's unauthorized session reference gets the safe 403.
+One broader run hit an unrelated answer-cache test's attempted model download,
+which the transport guard blocked. That cache test is outside this focused gate;
+no provider/model changes or network fallback were made.

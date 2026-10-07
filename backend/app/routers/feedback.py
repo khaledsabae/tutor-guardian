@@ -11,6 +11,7 @@ import logging
 import os
 import re
 import uuid
+from contextlib import closing
 from datetime import datetime, timezone
 
 import httpx
@@ -28,6 +29,7 @@ from pydantic import BaseModel, Field, field_validator
 
 from app.core.log_safety import device_tag
 from app.db.init_db import get_conn
+from app.services import conversation_store
 from app.services.device_twins import canonical_of
 
 router = APIRouter(prefix="/feedback", tags=["feedback"])
@@ -55,6 +57,7 @@ _TG_CHAT_ID = os.environ.get("FEEDBACK_TELEGRAM_CHAT_ID", "")
 logger = logging.getLogger(__name__)
 
 _SAVE_FAILED = "تعذّر حفظ ملاحظتك الآن، حاول مرة أخرى بعد قليل."
+_SESSION_FEEDBACK_DENIED = "غير مسموح بإرسال ملاحظات لهذه المحادثة."
 
 
 def _tg_url(method: str) -> str:
@@ -644,22 +647,52 @@ class FeedbackIn(BaseModel):
 def submit_feedback(body: FeedbackIn, request: Request) -> dict:
     """Record 👍/👎 feedback.
 
-    The authenticated session_id is used when body.session_id is omitted.
+    Omitted session_id uses the authenticated session. A supplied conversation
+    must belong to the authenticated device (including its previous sessions).
+    An ownerless legacy row needs the Bearer's exact session binding instead.
     """
-    session_id = body.session_id or getattr(request.state, "session_id", None)
-    created_at = datetime.now(timezone.utc).isoformat()
+    authenticated_session = getattr(request.state, "session_id", None)
+    session_id = body.session_id or authenticated_session
+    device_id = getattr(request.state, "device_id", None)
 
     try:
-        con = get_conn()
-        con.execute(
-            """
-            INSERT INTO user_feedback (session_id, rating, comment, created_at)
-            VALUES (?, ?, ?, ?)
-            """,
-            (session_id, body.rating, body.comment, created_at),
+        exists, owner = (
+            conversation_store.session_owner(session_id) if session_id else (False, None)
         )
-        con.commit()
-        con.close()
+        if (
+            not device_id
+            or not exists
+            or (owner is not None and owner != device_id)
+            or (owner is None and session_id != authenticated_session)
+        ):
+            raise HTTPException(status_code=403, detail=_SESSION_FEEDBACK_DENIED)
+
+        with closing(get_conn()) as con:
+            columns = ["session_id", "rating", "comment", "created_at"]
+            values = [session_id, body.rating, body.comment, datetime.now(timezone.utc).isoformat()]
+            # Production's existing table has no message_id; fresh init_db
+            # requires it. The API rates a conversation, not a supplied message
+            # id: bind the latest assistant reply from this owned session, or
+            # 0 when there is no reply yet. No schema/legacy-row changes.
+            if any(
+                row["name"] == "message_id"
+                for row in con.execute("PRAGMA table_info(user_feedback)")
+            ):
+                message = con.execute(
+                    "SELECT id FROM chat_messages WHERE session_id=? AND role='assistant' "
+                    "ORDER BY id DESC LIMIT 1",
+                    (session_id,),
+                ).fetchone()
+                columns.append("message_id")
+                values.append(message["id"] if message else 0)
+            con.execute(
+                f"INSERT INTO user_feedback ({', '.join(columns)}) "
+                f"VALUES ({', '.join('?' for _ in columns)})",
+                values,
+            )
+            con.commit()
+    except HTTPException:
+        raise
     except Exception as exc:
         logger.exception("answer feedback not stored")
         raise HTTPException(status_code=500, detail=_SAVE_FAILED) from exc
