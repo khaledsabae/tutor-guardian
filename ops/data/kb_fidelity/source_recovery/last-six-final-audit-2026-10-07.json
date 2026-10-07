@@ -1,0 +1,184 @@
+{
+  "schema": "tg.source_final_six_audit/1",
+  "verified_at": "2026-10-07T15:09:42.630382+00:00",
+  "phase_base": "5f1951ea",
+  "original_queue_base": "e20fe437",
+  "integrated_drafts": {
+    "72c9e921": "526ed1a0",
+    "77cb1938": "c61d0df0"
+  },
+  "primary": {
+    "url": "https://www.alukah.net/Books/Files/Book_17337/BookFile/brotherandboys.pdf",
+    "sha256": "7fa6f88fbf1ba714947983c11cde1e8c67b576374ae06c08a081444743d1272c",
+    "pdf_pages": 189,
+    "fresh_direct_fetch_exit": 0,
+    "jina_fetch_exit": 0,
+    "method": "agent-reach Jina reader plus authoritative direct PDF fetch; native Poppler render and visual reading",
+    "excerpt_hashes_checked": 6,
+    "immutable_raw_ocr_hashes_checked": 6,
+    "local_quran_66_6_match": true,
+    "ancient_athar_corpus_match_or_independent_authenticity_grade_claimed": false
+  },
+  "verified_pairs": [
+    {
+      "id": "isl-c0936200",
+      "proof_path": "ops/data/kb_fidelity/source_recovery/isl-c0936200.json",
+      "content_sha256": "6cbc93eb96399b76c72925bcb8e9cd2875a70c798ff2599a6cc33b30ef0d70b5",
+      "excerpt_sha256": "0f1162adfa0d01571a8b40c633eaba76523c5826b071c8e75d5db60e3a6db622",
+      "immutable_ocr_sha256": "8c9772f25e06cd63bb4478b3a139de168f858c20fd37c6f1145fd9c90ead0ac8",
+      "pdf_pages_freshly_visually_read": [
+        181
+      ],
+      "page_render_sha256": {
+        "181": "a1b00e202671e9b3c42deb24bcedb54286c582a8fcc41d9a328422549cceee2f"
+      },
+      "scholar_approval": null
+    },
+    {
+      "id": "isl-d6faddeb",
+      "proof_path": "ops/data/kb_fidelity/source_recovery/isl-d6faddeb.json",
+      "content_sha256": "0ce2c5ce2df076e7f7586c5429c0e46e040e38b00e92734ec5c8d1e39e1bced4",
+      "excerpt_sha256": "752042117c845565e7be287168445745d2f913146189d29c9eb2df13e596ed6d",
+      "immutable_ocr_sha256": "a4cefadec1e3e5eaca716e5fe0de73a4227a70d273e4710084b419f58995bfe5",
+      "pdf_pages_freshly_visually_read": [
+        176
+      ],
+      "page_render_sha256": {
+        "176": "9336a181526c207cbac57dd254806c5b83a7a4b7b95b0eea6eea2bab6cc88c13"
+      },
+      "scholar_approval": null
+    },
+    {
+      "id": "isl-f6bbab53",
+      "proof_path": "ops/data/kb_fidelity/source_recovery/isl-f6bbab53.json",
+      "content_sha256": "6082e5993de0398cf854dd611d530f7ed455ab6a41d238a26e690f64c6d8c236",
+      "excerpt_sha256": "a5ea9b4d562ccce82f7173e319c4d065c12865dd42935f71cafe2c39b41eaf9d",
+      "immutable_ocr_sha256": "ec2832837ad020d0c6a73492656ba6572b7728a5ee7459f510133aac0261e71d",
+      "pdf_pages_freshly_visually_read": [
+        128
+      ],
+      "page_render_sha256": {
+        "128": "3c58a5ed21f4a02a47ad4b9165329a8b903eb3df0a6bd44d12e4fa6b26bf20b1"
+      },
+      "scholar_approval": null
+    },
+    {
+      "id": "isl-f782f2ed",
+      "proof_path": "ops/data/kb_fidelity/source_recovery/isl-f782f2ed.json",
+      "content_sha256": "ec09dce7df2ac9836b4da4c7fd9263859e93123608732c9aac82244c2260440d",
+      "excerpt_sha256": "0e84242e119917fbcdb7ca0d0755cfcd4c2dc4c709fa28b72a899eeb4a4731cc",
+      "immutable_ocr_sha256": "085ea20f81b7ee2c1aef98fceadaaa301011c58847c78716ad1e5bd07a37e8f5",
+      "pdf_pages_freshly_visually_read": [
+        7
+      ],
+      "page_render_sha256": {
+        "7": "b57ec21dcf05d62e5d0ad3e0ff5a48089bfdd664503040bbafe67cdcbdb4f7f3"
+      },
+      "scholar_approval": null
+    },
+    {
+      "id": "isl-fb04bcd3",
+      "proof_path": "ops/data/kb_fidelity/source_recovery/isl-fb04bcd3.json",
+      "content_sha256": "6216c131a2fbb88f319be3576cc4115d53659a5fe61c1a53298d71c1b2638a93",
+      "excerpt_sha256": "dd9149f01e332219124dbefff9a45955e93a2e863f9b1221dfc9613631b359f1",
+      "immutable_ocr_sha256": "f8a0b54c6ba97bbe306986953803db2c713dd9b9cea362951303d748aeb9ee38",
+      "pdf_pages_freshly_visually_read": [
+        30
+      ],
+      "page_render_sha256": {
+        "30": "1600c386437b155d2d0673ce6e9110fc549b7bd8971477ad11b25ab58ff5fcc4"
+      },
+      "scholar_approval": null
+    },
+    {
+      "id": "isl-fe2f3c39",
+      "proof_path": "ops/data/kb_fidelity/source_recovery/isl-fe2f3c39.json",
+      "content_sha256": "4b51131897ff1a51358ca8edfdccd3d971183458c7ae8fd3e00fc30ee1b0101d",
+      "excerpt_sha256": "20e5eef9dbc013e27abcece65d5801351b2c3313cf325ceb0f50acb736533e4e",
+      "immutable_ocr_sha256": "c1e5f9aea9bc61f3e510faaee259d961d1ef5b856688c1722f5de10b3959e8d6",
+      "pdf_pages_freshly_visually_read": [
+        121
+      ],
+      "page_render_sha256": {
+        "121": "b818a5ff5f19f4d2d972481974535dc0eb274937f71ec663415fd830d33af20b"
+      },
+      "scholar_approval": null
+    }
+  ],
+  "counts": {
+    "original_sources": 23,
+    "baseline_already_accepted": 3,
+    "original_source_holds": 20,
+    "accepted_before_this_phase": 12,
+    "newly_dual_review_accepted": 6,
+    "source_holds_recovered_total": 18,
+    "nonknowledge_quarantined_pairs": 2,
+    "original_sources_currently_accepted": 21,
+    "remaining_source_unverified": 0,
+    "remaining_source_awaiting_review": 0,
+    "unrelated_adhkar_awaiting_review": 1,
+    "authored_json_files": 1389,
+    "index_rows": 1389,
+    "translated_kb_units": 347,
+    "current_valid_kb_translation_stamps": 347,
+    "provider_calls": 2,
+    "raw_model_item_verdicts": 12,
+    "canonical_cache_records": 12,
+    "low_defects": 8,
+    "medium_defects": 0,
+    "high_defects": 0
+  },
+  "accepted_original_held_ids": [
+    "isl-09afb431__en",
+    "isl-10541fe2__en",
+    "isl-1057f72f__en",
+    "isl-14009a8e__en",
+    "isl-14bc16f5__en",
+    "isl-2aa57245__en",
+    "isl-2fee1086__en",
+    "isl-3d476538__en",
+    "isl-552b4f5a__en",
+    "isl-8aa15666__en",
+    "isl-8f8f836b__en",
+    "isl-be38b357__en",
+    "isl-c0936200__en",
+    "isl-d6faddeb__en",
+    "isl-f6bbab53__en",
+    "isl-f782f2ed__en",
+    "isl-fb04bcd3__en",
+    "isl-fe2f3c39__en"
+  ],
+  "baseline_accepted_ids": [
+    "isl-22f68950__en",
+    "isl-620730b0__en",
+    "isl-752169b4__en"
+  ],
+  "quarantined_ids": [
+    "isl-23c2dd25__en",
+    "isl-7349e59c__en"
+  ],
+  "preservation": {
+    "unrelated_index_rows_unchanged": 1377,
+    "prior_12_accepted_pairs_byte_unchanged": true,
+    "baseline_3_accepted_en_files_byte_unchanged": true,
+    "unrelated_adhkar_queue_unchanged": true
+  },
+  "canonical_review": "ops/data/kb_fidelity/source_recovery/last-six-canonical-review-2026-10-07.json",
+  "human_sharia_approval": null,
+  "drafts_remain_drafts": true,
+  "external_source_audit_attempt": {
+    "provider": "zai via Claude Code",
+    "requested_model": "glm-5.3",
+    "status": "timeout",
+    "actual_exit": 143,
+    "timeout_seconds": 240,
+    "completed_approval_claimed": false
+  },
+  "cache_release_hold": {
+    "user_reported": "independent review found 2 P1 races (8 pass, 6 fail); Jason owns cache/caller fixes",
+    "cache_tests_or_fix_run_by_this_content_phase": false,
+    "push_or_source_pr_permitted_now": false,
+    "old_cache_closeout_claim_superseded": true
+  },
+  "no_backend_or_mobile_tests_build_emulator_deploy_or_paid_purchase": true
+}

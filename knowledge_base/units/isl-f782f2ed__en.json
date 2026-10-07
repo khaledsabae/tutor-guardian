@@ -29,17 +29,59 @@
     "translator_model": "mistral-large-3:675b",
     "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "pending",
-    "review_defects": [],
-    "approved_by": null,
+    "review_verdict": "low_only",
+    "review_defects": [
+      {
+        "model": "deepseek-v4-pro",
+        "field": "text_simplified",
+        "type": "meaning",
+        "why": "تأديبهم means disciplining them, which is stronger than 'guiding their conduct'."
+      },
+      {
+        "model": "deepseek-v4-pro",
+        "field": "text_simplified",
+        "type": "addition",
+        "why": "The Arabic does not name Surah al-Tahrim; the English adds this identification."
+      }
+    ],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
     "draft_status": "draft",
-    "source_recovery_note": "Native source-verified draft; fresh English awaits authorized independent canonical dual-family parity review and scholar review.",
+    "source_recovery_note": "Primary source recovered and checked; exact English parity reviewed by DeepSeek and GLM on 2026-10-07. Auto parity is not source or scholar approval; draft status and human Sharia review remain pending. Raw verdicts: ops/data/kb_fidelity/source_recovery/last-six-canonical-review-2026-10-07.json.",
     "fixer_model": "openai:codex",
     "english_authors": [
       "mistral-large-3:675b",
       "openai:codex"
-    ]
+    ],
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "ec09dce7df2ac9836b4da4c7fd9263859e93123608732c9aac82244c2260440d",
+      "reviewed_at": "2026-10-07T15:04:50+00:00",
+      "residual_low": [
+        {
+          "model": "deepseek-v4-pro",
+          "field": "text_simplified",
+          "type": "meaning",
+          "why": "تأديبهم means disciplining them, which is stronger than 'guiding their conduct'."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "field": "text_simplified",
+          "type": "addition",
+          "why": "The Arabic does not name Surah al-Tahrim; the English adds this identification."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-07T15:04:50+00:00"
   },
   "source_url": "https://www.alukah.net/Books/Files/Book_17337/BookFile/brotherandboys.pdf#page=7",
-  "source_note": "DRAFT native source recovery 2026-10-07. Raw OCR checksum and exact primary-page proof: ops/data/kb_fidelity/source_recovery/isl-f782f2ed.json. Original field contains an identified ancient Quran/athar excerpt; modern-author discussion is paraphrased. No model, scholar, human or publication approval."
+  "source_note": "Primary-source recovery 2026-10-07. Immutable raw OCR locator, exact primary PDF and excerpt proof: ops/data/kb_fidelity/source_recovery/isl-f782f2ed.json. Source-specific historical attribution and scope limits retained. Fresh DeepSeek+GLM English parity recorded separately; no scholar/human/publication approval."
 }

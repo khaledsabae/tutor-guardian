@@ -35,13 +35,30 @@
       "openai:codex"
     ],
     "needs_scholar_review": true,
-    "review_verdict": "pending",
+    "review_verdict": "clean",
     "review_defects": [],
-    "approved_by": null,
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
     "draft_status": "draft",
-    "source_recovery_note": "Source-faithful draft; no model review or approval."
+    "source_recovery_note": "Primary source recovered and checked; exact English parity reviewed by DeepSeek and GLM on 2026-10-07. Auto parity is not source or scholar approval; draft status and human Sharia review remain pending. Raw verdicts: ops/data/kb_fidelity/source_recovery/last-six-canonical-review-2026-10-07.json.",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "6082e5993de0398cf854dd611d530f7ed455ab6a41d238a26e690f64c6d8c236",
+      "reviewed_at": "2026-10-07T15:04:50+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+    },
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
+    "revalidated_at": "2026-10-07T15:04:50+00:00"
   },
   "source_url": "https://www.alukah.net/Books/Files/Book_17337/BookFile/brotherandboys.pdf#page=128",
-  "source_note": "DRAFT source recovery, 2026-10-07. Selected primary PDF passage; quote-versus-paraphrase and scope: ops/data/kb_fidelity/source_recovery/isl-f6bbab53.json. No model, scholar, human or publication approval.",
+  "source_note": "Primary-source recovery 2026-10-07. Immutable raw OCR locator, exact primary PDF and excerpt proof: ops/data/kb_fidelity/source_recovery/isl-f6bbab53.json. Source-specific historical attribution and scope limits retained. Fresh DeepSeek+GLM English parity recorded separately; no scholar/human/publication approval.",
   "needs_ocr": false
 }

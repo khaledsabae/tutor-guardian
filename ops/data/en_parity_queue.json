@@ -14,63 +14,6 @@
       "english_authors": [
         "claude-opus-5.5"
       ]
-    },
-    "isl-c0936200__en": {
-      "category": "awaiting-review",
-      "reason": "Actual Book17337 PDF passage recovered from raw OCR anchors and visually read before rewrite. Source checksum, page, attribution and quote/paraphrase scope in ops/data/kb_fidelity/source_recovery/isl-c0936200.json. Fresh source-faithful AR+EN drafts; no model, scholar or human approval. Independent canonical parity needs parent authorization.",
-      "content_sha256": "6cbc93eb96399b76c72925bcb8e9cd2875a70c798ff2599a6cc33b30ef0d70b5",
-      "queued_on": "2026-10-07",
-      "english_authors": [
-        "mistral-large-3:675b",
-        "openai:codex"
-      ]
-    },
-    "isl-d6faddeb__en": {
-      "category": "awaiting-review",
-      "reason": "Actual Book17337 PDF passage recovered from raw OCR anchors and visually read before rewrite. Source checksum, page, attribution and quote/paraphrase scope in ops/data/kb_fidelity/source_recovery/isl-d6faddeb.json. Fresh source-faithful AR+EN drafts; no model, scholar or human approval. Independent canonical parity needs parent authorization.",
-      "content_sha256": "0ce2c5ce2df076e7f7586c5429c0e46e040e38b00e92734ec5c8d1e39e1bced4",
-      "queued_on": "2026-10-07",
-      "english_authors": [
-        "mistral-large-3:675b",
-        "openai:codex"
-      ]
-    },
-    "isl-f6bbab53__en": {
-      "category": "awaiting-review",
-      "reason": "Actual Book17337 PDF passage recovered from raw OCR anchors and visually read before rewrite. Source checksum, page, attribution and quote/paraphrase scope in ops/data/kb_fidelity/source_recovery/isl-f6bbab53.json. Fresh source-faithful AR+EN drafts; no model, scholar or human approval. Independent canonical parity needs parent authorization.",
-      "content_sha256": "6082e5993de0398cf854dd611d530f7ed455ab6a41d238a26e690f64c6d8c236",
-      "queued_on": "2026-10-07",
-      "english_authors": [
-        "mistral-large-3:675b",
-        "openai:codex"
-      ]
-    },
-    "isl-f782f2ed__en": {
-      "category": "awaiting-review",
-      "reason": "2026-10-07 native primary-source recovery: actual Book17337 PDF checksum, raw OCR Git anchor and exact page verified in ops/data/kb_fidelity/source_recovery/isl-f782f2ed.json. Fresh faithful English draft is native openai:codex-authored; approved_by null, scholar review required, no models called. Awaits parent-authorized fresh canonical DeepSeek+GLM parity review.",
-      "content_sha256": "ec09dce7df2ac9836b4da4c7fd9263859e93123608732c9aac82244c2260440d",
-      "queued_on": "2026-10-07",
-      "english_authors": [
-        "openai:codex"
-      ]
-    },
-    "isl-fb04bcd3__en": {
-      "category": "awaiting-review",
-      "reason": "2026-10-07 native primary-source recovery: actual Book17337 PDF checksum, raw OCR Git anchor and exact page verified in ops/data/kb_fidelity/source_recovery/isl-fb04bcd3.json. Fresh faithful English draft is native openai:codex-authored; approved_by null, scholar review required, no models called. Awaits parent-authorized fresh canonical DeepSeek+GLM parity review.",
-      "content_sha256": "6216c131a2fbb88f319be3576cc4115d53659a5fe61c1a53298d71c1b2638a93",
-      "queued_on": "2026-10-07",
-      "english_authors": [
-        "openai:codex"
-      ]
-    },
-    "isl-fe2f3c39__en": {
-      "category": "awaiting-review",
-      "reason": "2026-10-07 native primary-source recovery: actual Book17337 PDF checksum, raw OCR Git anchor and exact page verified in ops/data/kb_fidelity/source_recovery/isl-fe2f3c39.json. Fresh faithful English draft is native openai:codex-authored; approved_by null, scholar review required, no models called. Awaits parent-authorized fresh canonical DeepSeek+GLM parity review.",
-      "content_sha256": "4b51131897ff1a51358ca8edfdccd3d971183458c7ae8fd3e00fc30ee1b0101d",
-      "queued_on": "2026-10-07",
-      "english_authors": [
-        "openai:codex"
-      ]
     }
   }
 }
