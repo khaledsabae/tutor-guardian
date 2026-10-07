@@ -1,0 +1,354 @@
+{
+  "schema": "tg.source_recovery_nextbatch_audit/1",
+  "base_commit": "e20fe437",
+  "integrated_original_commits": [
+    "5324b177",
+    "8493250b",
+    "42a67c4a",
+    "fdb2fc23"
+  ],
+  "integrated_cherries": [
+    "049902d5",
+    "ccb4c458",
+    "792a849b",
+    "a68bc515"
+  ],
+  "scope": "Six approved parity pairs plus two nonknowledge impact audits. No new review/model calls.",
+  "pdf": {
+    "cached_path": "/home/khalednew/projects/tutor-guardian/knowledge_base/raw_sources/islamic_parenting/Alukah_Rights_of_Children.pdf",
+    "url": "https://www.alukah.net/Books/Files/Book_17337/BookFile/brotherandboys.pdf",
+    "sha256": "7fa6f88fbf1ba714947983c11cde1e8c67b576374ae06c08a081444743d1272c",
+    "verification": "Fresh checksum plus native visual re-read of only PDF pages 9,69,90,91,92,93,105,113,116,184,185."
+  },
+  "pairs": [
+    {
+      "id": "isl-09afb431",
+      "review_commit": "42a67c4a",
+      "content_sha256": "04567292a1c300417c29acdd9ff70ebd79f28509f59b930146e555990cb8fb4a",
+      "excerpt_sha256": "b09d4bd76013ac8ddba56943d2ac014e264e7d584d8f4a6fa71b7c32fb17b667",
+      "pdf_pages": [
+        105
+      ],
+      "printed_pages": [
+        104
+      ],
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "english_authors": [
+        "mistral-large-3:675b",
+        "openai:codex"
+      ],
+      "provider_raw_response_available": true,
+      "canonical_verdict_available": true
+    },
+    {
+      "id": "isl-14009a8e",
+      "review_commit": "42a67c4a",
+      "content_sha256": "04175f90493abe1678629be444c141f88488f98ccbaedbd01e931208e51b940e",
+      "excerpt_sha256": "73d306f57bc767bd5144d7020e84626dbe7f2296a88e0f875fe1435e745dcb0d",
+      "pdf_pages": [
+        90,
+        91
+      ],
+      "printed_pages": [
+        89,
+        90
+      ],
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "english_authors": [
+        "mistral-large-3:675b",
+        "openai:codex"
+      ],
+      "provider_raw_response_available": true,
+      "canonical_verdict_available": true
+    },
+    {
+      "id": "isl-3d476538",
+      "review_commit": "42a67c4a",
+      "content_sha256": "15a3f85b864233d37a67b1aef4cf46ac6e3e8cfbe7f1b05f0c8b8cdaca4dc4e9",
+      "excerpt_sha256": "60a5675c3fdd3f2d00b0b8ace7831ff7fa379ec8dfd7514131b0a0ab49884227",
+      "pdf_pages": [
+        92,
+        93
+      ],
+      "printed_pages": [
+        91,
+        92
+      ],
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "english_authors": [
+        "mistral-large-3:675b",
+        "openai:codex"
+      ],
+      "provider_raw_response_available": true,
+      "canonical_verdict_available": true
+    },
+    {
+      "id": "isl-10541fe2",
+      "review_commit": "fdb2fc23",
+      "content_sha256": "9fc119c817af991c576d2914dd1b657224a6db466ce527d533383a76c764d5c3",
+      "excerpt_sha256": "b6a213c1e8227196c8ca2d126423927a1a9d3be6fa4e6e216e1ea307d7bc0f9f",
+      "pdf_pages": [
+        69
+      ],
+      "printed_pages": [
+        68
+      ],
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "english_authors": [
+        "mistral-large-3:675b",
+        "openai:codex"
+      ],
+      "provider_raw_response_available": false,
+      "canonical_verdict_available": true
+    },
+    {
+      "id": "isl-8aa15666",
+      "review_commit": "fdb2fc23",
+      "content_sha256": "90365a62e08fdb8f04b728e2d320d0f30537176958885150cee0c6269f3b8209",
+      "excerpt_sha256": "6940b7ddd0a541268d64ee9ab4c1aa0ee9174db359949e6e43e19d9109541aed",
+      "pdf_pages": [
+        116
+      ],
+      "printed_pages": [
+        115
+      ],
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "english_authors": [
+        "mistral-large-3:675b",
+        "openai:codex"
+      ],
+      "provider_raw_response_available": false,
+      "canonical_verdict_available": true
+    },
+    {
+      "id": "isl-be38b357",
+      "review_commit": "fdb2fc23",
+      "content_sha256": "8a78b2b6961b339b33ed7a35dda7f394fc8c8a976f972ec28c2f93de1525fb6c",
+      "excerpt_sha256": "15125953dfa5e1c1eca492e4471dac56438d4193e6058f71971fa21b302858d2",
+      "pdf_pages": [
+        113
+      ],
+      "printed_pages": [
+        112
+      ],
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "english_authors": [
+        "mistral-large-3:675b",
+        "openai:codex"
+      ],
+      "provider_raw_response_available": false,
+      "canonical_verdict_available": true
+    }
+  ],
+  "proof_limits": [
+    "Old /tmp worktrees and private review caches are gone. Group A committed raw response content was parsed and matched committed parsed verdicts for both reviewers and all three pairs.",
+    "Group B canonical approval/verdict JSON survives in committed unit auto_review and source translation_review records, with historical actual-call report. Provider transport raw responses are not present in the preserved fdb2fc23 tree; not reconstructed or claimed freshly inspected. Accepted from authoritative actual commits and documented prior audits; no new model invocation."
+  ],
+  "preservation": {
+    "index_units": 1393,
+    "affected_index_rows": 12,
+    "unrelated_index_rows_unchanged": 1381,
+    "all_unrelated_unit_files_unchanged": true,
+    "queue_base_source_holds": 20,
+    "queue_source_holds_now": 14,
+    "queue_unrelated_awaiting_review_unchanged": 1,
+    "remaining_source_hold_ids": [
+      "isl-1057f72f__en",
+      "isl-14bc16f5__en",
+      "isl-23c2dd25__en",
+      "isl-2aa57245__en",
+      "isl-2fee1086__en",
+      "isl-552b4f5a__en",
+      "isl-7349e59c__en",
+      "isl-8f8f836b__en",
+      "isl-c0936200__en",
+      "isl-d6faddeb__en",
+      "isl-f6bbab53__en",
+      "isl-f782f2ed__en",
+      "isl-fb04bcd3__en",
+      "isl-fe2f3c39__en"
+    ],
+    "eight_drafts_not_integrated": [
+      "1057f72f",
+      "14bc16f5",
+      "23c2dd25",
+      "2aa57245",
+      "2fee1086",
+      "552b4f5a",
+      "7349e59c",
+      "8f8f836b"
+    ]
+  },
+  "source_graph": {
+    "scanned_json_documents": 934,
+    "roots": [
+      "knowledge_base/curriculum",
+      "docs/lesson_index.json",
+      "docs/source_inventory.json",
+      "source_to_lesson.json",
+      "remaining_lessons_queue.json"
+    ],
+    "curriculum_references": []
+  },
+  "nonknowledge": [
+    {
+      "id": "isl-23c2dd25",
+      "draft_commit": "78895565",
+      "proof": {
+        "unit_id": "isl-23c2dd25",
+        "source_title": "حقوق الأولاد على الوالدين",
+        "source_author": "عماد أحمد عبدالعظيم",
+        "source_url": "https://www.alukah.net/Books/Files/Book_17337/BookFile/brotherandboys.pdf",
+        "pdf_sha256": "7fa6f88fbf1ba714947983c11cde1e8c67b576374ae06c08a081444743d1272c",
+        "pdf_pages_one_based": [
+          9
+        ],
+        "printed_pages": [
+          8
+        ],
+        "excerpt": "إعادة صياغة تحريرية لمقدمة عماد أحمد عبدالعظيم في صفحة ٩ من ملف الكتاب: جمع الروايات المتعلقة بحقوق الأولاد، ودوّن حكمه على أسانيدها، ونظمها في أبواب يستعين فيها بكلام أهل العلم. أراد بذلك بيان ما يقع على الوالدين تجاه أولادهم. هذا تلخيص للمقدمة، وليس اقتباسا حرفيا أو إقرارا بصحة أحكام المؤلف.",
+        "excerpt_sha256": "1900779c7a8babb4966c3c76f2d4c222dd4c310f4a137adbaffb469ae0b31384",
+        "method": "Read targeted rendered primary PDF page located by raw OCR references BEFORE rewriting. Source representation documented separately; editorial paraphrases are not claimed as verbatim extraction.",
+        "hadith_matches": [],
+        "approval": "Source evidence only; no scholar, human or model approval. Awaiting independent review.",
+        "source_representation": "Brief original editorial paraphrase of the modern author’s introduction; explicitly NOT a verbatim quotation in text_original. No modern book wording quoted in proof.",
+        "scope": "Only the author’s stated collection, assessment and organization method on PDF p.9. His judgements are attributed to him, not adopted as independently verified scholarship. Prior generic prayer/values/fairness/patience claims removed.",
+        "pre_rewrite_mapping": {
+          "pdf_page_one_based": 9,
+          "printed_page": 8,
+          "raw_OCR_locator": "End of introduction signed by Imad ibn Ahmad ibn Abd al-Azim; Bahjat qulub al-abrar218",
+          "raw_original_sha256": "964640ee52a8f29dfd0a7dc4f5b3089f9b726103f90e058aa4dca96a94e6850d"
+        },
+        "quotation_budget": {
+          "additional_verbatim_modern_book_words": 0,
+          "given_existing_modern_total": 83,
+          "given_cap": 90,
+          "ancient_quote_scope": "Only historically attributed public-domain reports/fragments; modern commentary excluded."
+        },
+        "excerpt_description": "Current source representation stored in text_original; consult source_representation for quote-versus-paraphrase status.",
+        "validation": {
+          "guards": {
+            "check_kb_integrity.py": 0,
+            "check_kb_fidelity.py": 0,
+            "check_quran_citations.py": 0,
+            "check_hadith_citations.py": 0,
+            "check_scripture_coverage.py": 0,
+            "check_quran_rendering.py": 0
+          },
+          "pair_schema_exit": 0,
+          "canonical_sha256": "fa8b7c8c1b8fdd08b0a12641321fb837c0d8aac9b85968f290a5fe005454f90c",
+          "deterministic_parity_defects": [],
+          "queue": "awaiting-review",
+          "models_called": 0,
+          "approval": null
+        },
+        "raw_OCR_source_locator": {
+          "commit": "42a67c4a3c50cabed21f63ec4bb30cbe2c66712a",
+          "file": "knowledge_base/units/isl-23c2dd25.json",
+          "field": "text_original",
+          "sha256": "964640ee52a8f29dfd0a7dc4f5b3089f9b726103f90e058aa4dca96a94e6850d",
+          "meaning": "Corrupt historical OCR preserved in Git; hash/locator retained without duplicating modern book text."
+        }
+      },
+      "curriculum_references": [],
+      "held_action": "PROPOSED ONLY: quarantine AR and EN outside knowledge_base/units; remove exactly their four index rows and two parity queue entries after approved quarantine change; preserve source proof and remove stale judged_faithful entries for these ids. Do not replace any curriculum anchor.",
+      "serving_status_today": "Still retained in baseline retrieval corpus; source-unverified parity queue is not a retrieval exclusion."
+    },
+    {
+      "id": "isl-7349e59c",
+      "draft_commit": "d0806de9",
+      "proof": {
+        "unit_id": "isl-7349e59c",
+        "source_title": "حقوق الأولاد على الوالدين",
+        "source_author": "عماد بن أحمد بن عبدالعظيم",
+        "source_url": "https://www.alukah.net/Books/Files/Book_17337/BookFile/brotherandboys.pdf",
+        "pdf_sha256": "7fa6f88fbf1ba714947983c11cde1e8c67b576374ae06c08a081444743d1272c",
+        "original_ocr_sha256": "6e22b0b2ab2b00ba143bed76dfedabdfd28b5795fdcbf4ebe004fbcef15df20d",
+        "raw_ocr_anchor": "دٓوٕا ـقب لدعلا",
+        "original_ocr_locator": "Raw OCR includes the closing al-Asmai account on PDF183/printed182, then the actual table of contents on PDF184–185/printed183–184. This unit is recovered as a catalogue only. Table-of-contents titles are not proof of substantive parenting duties, religious rulings or chapter claims. Listed chapter page numbers are not the physical PDF/printed pages of this evidence.",
+        "pdf_pages_one_based": [
+          183,
+          184,
+          185
+        ],
+        "selected_pdf_pages_one_based": [
+          184,
+          185
+        ],
+        "selected_printed_pages": [
+          183,
+          184
+        ],
+        "excerpt": "العدل بين الأولاد\nتعليم الأولاد القرآن",
+        "excerpt_sha256": "626d8d053a6f04154d4d1af602b8cd72b09e0857a67aef18f4f1016d6539257d",
+        "method": "Raw original OCR anchors located actual primary pages first. Direct visual reading of rendered primary pages; selected short excerpt manually transcribed, vowel marks/line wraps omitted and honorific glyphs expanded. No PDF or page copy added to repository.",
+        "historical_attribution": "Modern compiler’s table-of-contents headings. Not prophetic hadith or a substantive legal proof.",
+        "quotation_accounting": {
+          "new_modern_verbatim_words_this_unit": 6,
+          "new_modern_words_this_four_unit_batch": 6,
+          "previous_recovery_modern_words_conservative": 83,
+          "modern_book_aggregate_words": 89,
+          "limit": 90,
+          "ancient_public_domain_exclusion": false,
+          "note": "Only the two short contents headings add modern-author wording (six words). Other excerpts are explicitly ancient hadith/athar, not new modern prose. Duplicate AR/EN/evidence copies are the same distinct excerpts."
+        },
+        "hadith_matches": [],
+        "scope_limit": "Catalogue only; no substantive religious duties inferred.",
+        "approval": "Native primary-source evidence only; no model, scholar, human or publication approval. Drafts await independent translation and scholar review.",
+        "validation": {
+          "pair_schema_exit": 0,
+          "pair_schema_units": 2,
+          "guards": {
+            "check_kb_integrity.py": 0,
+            "check_kb_fidelity.py": 0,
+            "check_hadith_citations.py": 0,
+            "check_scripture_coverage.py": 0,
+            "check_quran_citations.py": 0,
+            "check_quran_rendering.py": 0,
+            "review_en_parity.py": 0
+          },
+          "canonical_sha256": "a06e22b8952b04df9e02f350d28991236b314f4f4e5de9ec40522dcd11acddcc",
+          "deterministic_parity_defects": [],
+          "queue": "awaiting-review",
+          "models_called": 0,
+          "approval": null
+        }
+      },
+      "curriculum_references": [],
+      "held_action": "PROPOSED ONLY: quarantine AR and EN outside knowledge_base/units; remove exactly their four index rows and two parity queue entries after approved quarantine change; preserve source proof and remove stale judged_faithful entries for these ids. Do not replace any curriculum anchor.",
+      "serving_status_today": "Still retained in baseline retrieval corpus; source-unverified parity queue is not a retrieval exclusion."
+    }
+  ],
+  "verification": {
+    "preflight_pairs": 6,
+    "independent_reviewer_pairs": 6,
+    "primary_excerpt_hashes": 6,
+    "canonical_hashes": 6,
+    "normal_approval_cherry_commit_exit": 0,
+    "parity_gate_kb_units_exit": 0,
+    "parity_gate_examined": 349,
+    "index_integrity_units": 1393,
+    "model_calls_this_audit": 0,
+    "builds_emulators_pushes_deployments": 0,
+    "fresh_hadith_excerpt_matches": 5,
+    "fresh_hadith_excerpt_match_exit": 0
+  }
+}

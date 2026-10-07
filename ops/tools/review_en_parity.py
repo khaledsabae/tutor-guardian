@@ -136,6 +136,10 @@ QUEUE_CATEGORIES = {
 }
 
 API_URL = "https://ollama.com/v1/chat/completions"
+# حدّ النداء الواحد وعدد محاولاته — قابلان للضبط بـ`--request-timeout/--request-attempts`
+# كي يقدر المشغّل على تحديد سقف زمني لمراجعته بدل انتظار ٦٠٠ ثانية × ٨ محاولات.
+REQUEST_TIMEOUT = 600
+REQUEST_ATTEMPTS = 8
 REVIEWER_A = "deepseek-v4-pro"
 REVIEWER_B = "glm-5.2"
 FIXER = "mistral-large-3:675b"
@@ -902,13 +906,14 @@ def _is_usage_cap(body: str) -> bool:
     return "limit" in b and any(w in b for w in ("hour", "week", "month", "usage"))
 
 
-def post(model: str, system: str, user: str, timeout: int = 600) -> tuple[str, dict]:
+def post(model: str, system: str, user: str, timeout: int | None = None) -> tuple[str, dict]:
     """نداء واحد، بتراجع أُسّي على العابر وتبريد مشترك على 429، وسقوط فوري على 401/402/403."""
     body = json.dumps({"model": model, "temperature": 0.1,
                        "messages": [{"role": "system", "content": system},
                                     {"role": "user", "content": user}]}).encode()
+    timeout = REQUEST_TIMEOUT if timeout is None else timeout
     last = None
-    for attempt in range(8):
+    for attempt in range(REQUEST_ATTEMPTS):
         if _capped.is_set():
             raise UsageCapError("usage cap reached earlier in this run")
         _wait_cooldown()
@@ -941,8 +946,9 @@ def post(model: str, system: str, user: str, timeout: int = 600) -> tuple[str, d
             # IncompleteRead (جسم مقطوع في منتصف الرد) ليس OSError — أسقط تشغيلةً
             # من ٢٢٨ وحدة بعد ساعة كاملة على 2026-10-04. عابرٌ مثل غيره: أعد المحاولة.
             last = e
-        time.sleep(min(90, 5 * 2 ** attempt))
-    raise RuntimeError(f"{model}: فشل بعد ٨ محاولات: {last}")
+        if attempt + 1 < REQUEST_ATTEMPTS:
+            time.sleep(min(90, 5 * 2 ** attempt))
+    raise RuntimeError(f"{model}: failed after {REQUEST_ATTEMPTS} attempts: {last}")
 
 
 def parse_json(text: str) -> Any:
@@ -1304,6 +1310,69 @@ class Verdict:
                 for m, ds in self.defects.items() for d in ds if d["severity"] == "low"]
 
 
+def require_dual_families(reviewers: tuple[str, str]) -> None:
+    families = [model_family(name) for name in reviewers]
+    if len(reviewers) != 2 or None in families or len(set(families)) != 2:
+        raise ValueError("proof requires two distinct known reviewer families")
+
+
+def replay_proof(item: Item, reviewers: tuple[str, str], proof: dict) -> Verdict:
+    """Replay actual raw judgments; reuse only fields equal in both languages.
+
+    A fragment hash authenticates its recorded input, not the current pack.
+    Missing current fields remain unreviewed. No combined cache entry is made.
+    """
+    require_dual_families(reviewers)
+    if (proof.get("key") != item.key or proof.get("content_sha256") != item.sha
+            or proof.get("prompt_version") != PROMPT_V):
+        raise ValueError("proof pack fingerprint or prompt version differs")
+    responses = proof.get("responses")
+    if not isinstance(responses, list):
+        raise ValueError("proof responses must be a list")
+    verdict = Verdict(item, det=deterministic_defects(item))
+    covered = {model: set() for model in reviewers}
+    for response in responses:
+        model = response.get("model")
+        if model not in covered:
+            raise ValueError("proof contains an unexpected reviewer")
+        fields = response.get("fields")
+        if (not isinstance(fields, dict) or not fields
+                or content_sha(fields) != response.get("content_sha256")):
+            raise ValueError("fragment input fingerprint differs")
+        if any(not isinstance(pair, dict) or set(pair) != {"ar", "en"}
+               for pair in fields.values()):
+            raise ValueError("fragment fields must contain both languages")
+        cid = response.get("id")
+        batch_ids = response.get("batch_ids")
+        if (not isinstance(batch_ids, list) or cid not in batch_ids
+                or len(set(batch_ids)) != len(batch_ids)):
+            raise ValueError("invalid recorded batch identifiers")
+        try:
+            data = parse_json(response["raw"])
+        except (KeyError, TypeError, json.JSONDecodeError) as error:
+            raise ValueError("invalid actual raw review") from error
+        entries = data.get("items") if isinstance(data, dict) else None
+        if (not isinstance(entries, list)
+                or [entry.get("id") for entry in entries if isinstance(entry, dict)] != batch_ids
+                or any(not isinstance(entry, dict)
+                       or not isinstance(entry.get("defects"), list)
+                       or any(not isinstance(defect, dict) for defect in entry["defects"])
+                       for entry in entries)):
+            raise ValueError("raw review does not explicitly cover its recorded batch")
+        chunk = Chunk(item, cid, fields)
+        parsed = parse_review(response["raw"], [chunk])
+        if parsed is None or cid not in parsed:
+            raise ValueError("recorded fragment has no actual judgment")
+        same = {path for path, pair in fields.items() if item.fields.get(path) == pair}
+        covered[model].update(same)
+        verdict.defects.setdefault(model, []).extend(
+            defect for defect in parsed[cid]
+            if defect["field"] in same or defect["field"] not in fields)
+    verdict.unreviewed = [model for model in reviewers
+                          if covered[model] != set(item.fields)]
+    return verdict
+
+
 def review_items(items: list[Item], reviewers: tuple[str, str], workers: int,
                  budget: int, max_items: int) -> dict[str, Verdict]:
     verdicts = {it.key: Verdict(it, det=deterministic_defects(it)) for it in items}
@@ -1506,6 +1575,7 @@ def apply_arabic(item: Item, new_ar: dict) -> None:
 
 def run(items: list[Item], args) -> dict:
     reviewers = (args.reviewer_a, args.reviewer_b)
+    require_dual_families(reviewers)
     adj = load_adjudications()
     today = args.date or date.today().isoformat()
     report = {"stamped": [], "fixed": set(), "arabic_proposals": [], "arabic_applied": [],
@@ -1531,7 +1601,12 @@ def run(items: list[Item], args) -> dict:
         report["rounds"] = rnd
         print(f"\n━━ جولة {rnd}: {len(pending)} وحدة · {reviewers[0]} + {reviewers[1]}", flush=True)
         try:
-            verdicts = review_items(pending, reviewers, args.workers, args.budget, args.max_items)
+            proof_path = getattr(args, "coverage_proof", None)
+            if proof_path:
+                proof = _load(proof_path)
+                verdicts = {it.key: replay_proof(it, reviewers, proof) for it in pending}
+            else:
+                verdicts = review_items(pending, reviewers, args.workers, args.budget, args.max_items)
         except UsageCapError as e:
             print(f"\n⏸️  سقف استهلاك Ollama: {e}\n   الكاش محفوظ؛ أعد التشغيل لاحقًا.", flush=True)
             report["capped"] = True
@@ -1547,6 +1622,10 @@ def run(items: list[Item], args) -> dict:
             if not block:
                 rec = build_record(it, reviewers, rnd, key in report["fixed"], v.low(),
                                    overrides, today)
+                if proof_path:
+                    rec["auto_review"]["coverage_proof_sha256"] = hashlib.sha256(
+                        proof_path.read_bytes()).hexdigest()
+                    rec["auto_review"]["coverage_mode"] = "actual raw responses; exact current field equality"
                 if not args.dry_run:
                     write_stamp(it, rec)
                 report["stamped"].append(key)
@@ -2196,6 +2275,12 @@ def cmd_sign(items: list[Item], by: str) -> int:
 # ═════════════════════════════════════════════════════════════════════════
 
 def main(argv: list[str] | None = None) -> int:
+    def positive_int(value: str) -> int:
+        number = int(value)
+        if number <= 0:
+            raise argparse.ArgumentTypeError("must be a positive integer")
+        return number
+
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[1])
     ap.add_argument("command", choices=("inventory", "check", "run", "unpublish", "apply-arabic",
                                         "stamp-reviewed", "queue", "unqueue", "sign"))
@@ -2205,6 +2290,10 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--limit", type=int)
     ap.add_argument("--unstamped", action="store_true", help="فقط ما لم يجتز البوابة بعد")
     ap.add_argument("--rounds", type=int, default=3)
+    ap.add_argument("--request-timeout", type=positive_int, default=600,
+                    help="timeout in seconds per model request")
+    ap.add_argument("--request-attempts", type=positive_int, default=8,
+                    help="maximum attempts per model request")
     ap.add_argument("--workers", type=int, default=2, help="خيوط لكل مراجع")
     ap.add_argument("--max-concurrent", type=int, default=3,
                     help="سقف النداءات المتزامنة كلها (الحصّة مشتركة مع وكلاء آخرين)")
@@ -2215,6 +2304,8 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--no-fix", action="store_true")
     ap.add_argument("--cache-only", action="store_true",
                     help="احكم بالمراجعات المخزَّنة فقط (لا نداء مراجعة جديد) — لما بعد سقف الحساب")
+    ap.add_argument("--coverage-proof", type=Path,
+                    help="run --cache-only: validate actual mixed-size raw judgments without synthetic cache entries")
     ap.add_argument("--apply-arabic", action="store_true",
                     help="اكتب إصلاحات المصدر العربي (بعد فحصها في تقرير سابق)")
     ap.add_argument("--dry-run", action="store_true")
@@ -2236,6 +2327,8 @@ def main(argv: list[str] | None = None) -> int:
                     help="queue: كاتبٌ للإنجليزي لم يُسجَّل في ملفه (يتكرّر)")
     ap.add_argument("--by", help="sign: اسم الإنسان الذي قرأ النصّين")
     args = ap.parse_args(argv)
+    if args.coverage_proof and (args.command != "run" or not args.cache_only or args.rounds != 1):
+        ap.error("--coverage-proof requires run --cache-only --rounds 1")
 
     kinds = sorted(COLLECTORS) if (args.all or not args.kind) else args.kind
     if args.command == "check":
@@ -2286,6 +2379,9 @@ def main(argv: list[str] | None = None) -> int:
         return cmd_queue(items, args.reason, args.category, args.author)
 
     set_concurrency(args.max_concurrent)
+    global REQUEST_TIMEOUT, REQUEST_ATTEMPTS
+    REQUEST_TIMEOUT = args.request_timeout
+    REQUEST_ATTEMPTS = args.request_attempts
     global CACHE_ONLY
     CACHE_ONLY = args.cache_only
     if CACHE_ONLY:

@@ -1,0 +1,157 @@
+{
+  "schema": "tg.last_three_primary_source_drafts/1",
+  "base_commit": "cbd81a099607f0823a62a35ce109239f1dc690e2",
+  "branch": "codex/source-last-lasta",
+  "state": "source-recovered drafts; independent model parity pending parent grant",
+  "models_called": 0,
+  "source_recovered_count": 3,
+  "quarantine_candidate_count": 0,
+  "independent_parity_approved_count": 0,
+  "approval": null,
+  "scholar_review_required_count": 3,
+  "quotation_budget": {
+    "additional_modern_verbatim_words": 0,
+    "cap_user_reported": 90,
+    "existing_modern_words_prior_proof_reported": 83
+  },
+  "items": {
+    "isl-c0936200": {
+      "primary_proof_file": "ops/data/kb_fidelity/source_recovery/isl-c0936200.json",
+      "current_canonical_sha256": "6cbc93eb96399b76c72925bcb8e9cd2875a70c798ff2599a6cc33b30ef0d70b5",
+      "pdf_pages_one_based": [
+        181
+      ],
+      "printed_pages": [
+        180
+      ],
+      "source_detector_flags": [],
+      "approval": null,
+      "needs_scholar_review": true,
+      "primary_proof_sha256": "50c28f63640ec66adecb2881e5dc2c4326102c3f7eb90b7eb38d0023ec67b8b4"
+    },
+    "isl-d6faddeb": {
+      "primary_proof_file": "ops/data/kb_fidelity/source_recovery/isl-d6faddeb.json",
+      "current_canonical_sha256": "0ce2c5ce2df076e7f7586c5429c0e46e040e38b00e92734ec5c8d1e39e1bced4",
+      "pdf_pages_one_based": [
+        176
+      ],
+      "printed_pages": [
+        175
+      ],
+      "source_detector_flags": [],
+      "approval": null,
+      "needs_scholar_review": true,
+      "primary_proof_sha256": "b9a02e75dbc9dea287d4fb267a05d3df7189b0f056bd9c5a18a9932a651c532a"
+    },
+    "isl-f6bbab53": {
+      "primary_proof_file": "ops/data/kb_fidelity/source_recovery/isl-f6bbab53.json",
+      "current_canonical_sha256": "6082e5993de0398cf854dd611d530f7ed455ab6a41d238a26e690f64c6d8c236",
+      "pdf_pages_one_based": [
+        128
+      ],
+      "printed_pages": [
+        127
+      ],
+      "source_detector_flags": [],
+      "approval": null,
+      "needs_scholar_review": true,
+      "primary_proof_sha256": "00b45d599f3bcb869c9ab44f11d3c0e862eca5af7a6f598f64b89c90465414a9"
+    }
+  },
+  "validation": {
+    "schema_files_checked": 6,
+    "pair_schema_exit": 0,
+    "queue_entry_count_before": 42,
+    "queue_entry_count_after": 42,
+    "only_requested_queue_entries_changed": true,
+    "only_six_index_rows_changed": true,
+    "prior_accepted_commit_preserved": true,
+    "guards": {
+      "check_kb_integrity.py": {
+        "exit_code": 0,
+        "summary": [
+          "     (223 units missing optional metadata — non-blocking)",
+          "",
+          "===================================================================",
+          "  ✅  KNOWLEDGE BASE IN SYNC — 1388 units, schema ≡ taxonomy",
+          "===================================================================",
+          ""
+        ]
+      },
+      "check_kb_fidelity.py": {
+        "exit_code": 0,
+        "summary": [
+          "🔍 KB fidelity: 716 served base units · 243 carry a detector flag · 281 judged faithful · 205 quarantined by this review · 231 withdrawn sources held",
+          "✅ quarantine holds; every flagged live unit was read and judged on its current text"
+        ]
+      },
+      "check_quran_citations.py": {
+        "exit_code": 0,
+        "summary": [
+          "  آيات مقتبسة: 142   ·   مطابقة: 142",
+          "",
+          "===================================================================",
+          "  ✅  QUR'AN CITATIONS OK — 142/142 مطابقة لنص المصحف",
+          "===================================================================",
+          ""
+        ]
+      },
+      "check_hadith_citations.py": {
+        "exit_code": 0,
+        "summary": [
+          "",
+          "===================================================================",
+          "  ✅  HADITH OK — 15 مطابقة للصحيحين لفظًا ورقمًا",
+          "  (مطابقة آلية على طبعة واحدة — ليست تحقيقًا ولا اختيارًا شرعيًا)",
+          "===================================================================",
+          ""
+        ]
+      },
+      "check_scripture_coverage.py": {
+        "exit_code": 0,
+        "summary": [
+          "",
+          "===================================================================",
+          "  ✅  SCRIPTURE COVERAGE OK — كل اقتباس في كل سطح مطابق ومُسنَد",
+          "  (مطابقة آلية على طبعة واحدة — ليست تحقيقًا ولا اختيارًا شرعيًا)",
+          "===================================================================",
+          ""
+        ]
+      },
+      "check_quran_rendering.py": {
+        "exit_code": 0,
+        "summary": [
+          "  ملفات إنجليزية مفحوصة: 808",
+          "",
+          "===================================================================",
+          "  ✅ QUR'AN RENDERING OK — لا إنجليزية مقدَّمة على أنها قرآن",
+          "  (فحص شكلي — لا يُغني عن مراجعة أهل العلم لأمانة التفسير)",
+          "==================================================================="
+        ]
+      }
+    },
+    "prior_three_parity_files_and_proof_unchanged": true,
+    "excluded_method_unit_and_adjudications_unchanged": true,
+    "all_guards_exit": 0,
+    "regression_tests": {
+      "exit_code": 0,
+      "tests": 97,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "queue_categories_before": {
+      "awaiting-review": 29,
+      "source-unverified": 13
+    },
+    "queue_categories_after": {
+      "awaiting-review": 32,
+      "source-unverified": 10
+    },
+    "staged_parity_gate_exit": 0,
+    "staged_parity_pairs": 3,
+    "staged_gate_meaning": "Current unapproved English is permitted only as explicitly queued exact-hash drafts; this gate is not a model review."
+  },
+  "completed_source_validation_at": "2026-10-07T14:49:49.218234+00:00",
+  "privacy": "Public primary-source locators, source-unit hashes, source classification and guard/test counts only; no credentials, user PII or private chat."
+}

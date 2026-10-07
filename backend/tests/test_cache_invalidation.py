@@ -14,7 +14,7 @@ def _seed(monkeypatch, tmp_path, rows=3):
     monkeypatch.setattr(answer_cache, "_DB", tmp_path / "cache.db")
     monkeypatch.setattr(answer_cache, "_embed", lambda text: [0.1, 0.2, 0.3])
     for i in range(rows):
-        answer_cache.store(f"سؤال رقم {i}", "7-9", "medical", "خفيف", "إجابة " * 40)
+        answer_cache.store(f"سؤال رقم {i}", "7-9", "medical", "خفيف", "إجابة " * 40, generation_revision=answer_cache.capture_revision())
 
 
 def _count(tmp_path):

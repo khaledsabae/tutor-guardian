@@ -1,0 +1,84 @@
+{
+  "unit_id": "isl-c0936200",
+  "base_commit": "cbd81a099607f0823a62a35ce109239f1dc690e2",
+  "source_title": "حقوق الأولاد على الوالدين",
+  "source_author": "عماد بن أحمد بن عبدالعظيم",
+  "source_url": "https://www.alukah.net/Books/Files/Book_17337/BookFile/brotherandboys.pdf",
+  "pdf_sha256": "7fa6f88fbf1ba714947983c11cde1e8c67b576374ae06c08a081444743d1272c",
+  "pdf_page_count": 189,
+  "pdf_pages_one_based": [
+    181
+  ],
+  "printed_pages": [
+    180
+  ],
+  "source_representation": "Own editorial paraphrase of the selected Ibn Battal paragraph; no verbatim modern-book quotation.",
+  "excerpt": "تلخيص تحريري للمقطع المنسوب إلى ابن بطال في صفحة ١٨٠ المطبوعة من الكتاب: يوجه الوالدين إلى تعريف الأبناء بسبب النهي عن الشيء، لينشؤوا على العلم ويبلغوا وقت التكليف وهم على علم بالشريعة. هذه إعادة صياغة وليست نقلا حرفيا.",
+  "excerpt_sha256": "0f1162adfa0d01571a8b40c633eaba76523c5826b071c8e75d5db60e3a6db622",
+  "method": "Matched actual raw OCR anchors to targeted original PDF rendered pages before writing title/summary. Independently inspected page number, passage attribution, adjacent sections and footnotes. Jina used as fetch/provenance reader; visual PDF is authoritative.",
+  "source_classification": "knowledge passage; not TOC, catalogue or author collection methodology",
+  "scope": "Only the opening Ibn Battal paragraph. Neighboring Nuh report attributed to Ahmad and Yaqub Quran quotation are excluded; neither a Prophetic quotation nor a current mandatory parenting ruling is served.",
+  "citation_limit": "The book identifies Ibn Battal, Sharh Sahih al-Bukhari 3/352 as this commentary locator. This is not a numbered Sahih hadith; no corpus exactness or authenticity grade asserted.",
+  "hadith_matches": [],
+  "approval": null,
+  "needs_scholar_review": true,
+  "raw_OCR_source_locator": {
+    "commit": "cbd81a099607f0823a62a35ce109239f1dc690e2",
+    "file": "knowledge_base/units/isl-c0936200.json",
+    "field": "text_original",
+    "sha256": "8c9772f25e06cd63bb4478b3a139de168f858c20fd37c6f1145fd9c90ead0ac8",
+    "anchor": "Top paragraph «تنبيه»: parents explaining why children are told not to do something; Ibn Battal, Sharh Sahih al-Bukhari 3/352. Followed by Nuh/Yaqub dying-will sections.",
+    "pdf_pages_one_based": [
+      181
+    ],
+    "printed_pages": [
+      180
+    ],
+    "meaning": "Original raw OCR retained at immutable Git base; no long modern-book raw copy added."
+  },
+  "targeted_render_evidence": [
+    {
+      "pdf_page_one_based": 181,
+      "render_png_sha256": "a1b00e202671e9b3c42deb24bcedb54286c582a8fcc41d9a328422549cceee2f",
+      "pdftotext_sha256": "7fe1efdfb70fe7f6c8aed64051fba206d607e8c474b829008dd0a071bd62252d",
+      "render_command_parameters": {
+        "tool": "pdftoppm",
+        "format": "png",
+        "singlefile": true,
+        "scale_to_pixels": 1800
+      }
+    }
+  ],
+  "quotation_budget": {
+    "additional_verbatim_modern_book_words": 0,
+    "cap_user_reported": 90,
+    "ancient_quote_scope": "No ancient quotation in selected excerpt.",
+    "existing_modern_total_prior_proof_reported": 83
+  },
+  "models_called": 0,
+  "review_state": "pending independent canonical English parity after parent authorization",
+  "validation": {
+    "pair_schema_exit": 0,
+    "source_excerpt_hash_exit": 0,
+    "raw_OCR_hash_exit": 0,
+    "canonical_sha256": "6cbc93eb96399b76c72925bcb8e9cd2875a70c798ff2599a6cc33b30ef0d70b5",
+    "deterministic_parity_defects": [],
+    "queue": "awaiting-review",
+    "models_called": 0,
+    "approval": null,
+    "source_detector_flags": [],
+    "guards": {
+      "check_kb_integrity.py": 0,
+      "check_kb_fidelity.py": 0,
+      "check_quran_citations.py": 0,
+      "check_hadith_citations.py": 0,
+      "check_scripture_coverage.py": 0,
+      "check_quran_rendering.py": 0
+    }
+  },
+  "bibliographic_cover": {
+    "pdf_page_one_based": 1,
+    "render_png_sha256": "418790b44b6769194d0eafd02b20123045b88574236846e9ac19d3c176f0fb86",
+    "scale_to_pixels": 1200
+  }
+}

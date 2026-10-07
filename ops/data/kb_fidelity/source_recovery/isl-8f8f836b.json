@@ -1,0 +1,54 @@
+{
+  "unit_id": "isl-8f8f836b",
+  "source_title": "حقوق الأولاد على الوالدين",
+  "source_author": "عماد بن أحمد بن عبدالعظيم",
+  "source_url": "https://www.alukah.net/Books/Files/Book_17337/BookFile/brotherandboys.pdf",
+  "pdf_sha256": "7fa6f88fbf1ba714947983c11cde1e8c67b576374ae06c08a081444743d1272c",
+  "original_ocr_sha256": "e967c51547fdc3c0fa6f05071b838fbf34b6ddc5fca591705b9d4a9a284efb69",
+  "raw_ocr_anchor": "رؿتعم لاق",
+  "original_ocr_locator": "Original raw OCR maps to PDF173/printed172 (Ibn al-Jawzi advice, Muʿtamir and household night prayer, truth-speaking accounts), continuing to next chapter on PDF174. Recovery selects only Muʿtamir’s historical report. PDF173 footnote (1) visibly cites Ibn Abi al-Dunya, al-Tahajjud wa-Qiyam al-Layl 180; corrupted OCR has 181. This is an athar, not a prophetic hadith or a Companion report. No claim that children should be woken, nor a future behavioural benefit. The quoted final هذه is preserved as printed rather than silently repaired. The printed لا تدركوه spelling is also preserved; no grammatical repair inside the quote.",
+  "pdf_pages_one_based": [
+    173,
+    174
+  ],
+  "selected_pdf_pages_one_based": [
+    173
+  ],
+  "selected_printed_pages": [
+    172
+  ],
+  "excerpt": "قال معتمر: «كان أبي يوقظ كل من في الدار إذا دخل شهر رمضان، ويقول: قوموا فلعلكم لا تدركوه بعد عامكم هذه».",
+  "excerpt_sha256": "2be48cdde9b3ce2babf12fdcaf0e290c650031c838cea01619387b75b98ec01a",
+  "method": "Raw original OCR anchors located actual primary pages first. Direct visual reading of rendered primary pages; selected short excerpt manually transcribed, vowel marks/line wraps omitted and honorific glyphs expanded. No PDF or page copy added to repository.",
+  "historical_attribution": "Muʿtamir’s report about his father; Ibn Abi al-Dunya, al-Tahajjud wa-Qiyam al-Layl 180 as cited in primary book footnote (1). Ancient public-domain historical report, not prophetic hadith. No independent isnad grading claimed.",
+  "quotation_accounting": {
+    "new_modern_verbatim_words_this_unit": 0,
+    "new_modern_words_this_four_unit_batch": 6,
+    "previous_recovery_modern_words_conservative": 83,
+    "modern_book_aggregate_words": 89,
+    "limit": 90,
+    "ancient_public_domain_exclusion": true,
+    "note": "Only the two short contents headings add modern-author wording (six words). Other excerpts are explicitly ancient hadith/athar, not new modern prose. Duplicate AR/EN/evidence copies are the same distinct excerpts."
+  },
+  "hadith_matches": [],
+  "scope_limit": "Original raw OCR maps to PDF173/printed172 (Ibn al-Jawzi advice, Muʿtamir and household night prayer, truth-speaking accounts), continuing to next chapter on PDF174. Recovery selects only Muʿtamir’s historical report. PDF173 footnote (1) visibly cites Ibn Abi al-Dunya, al-Tahajjud wa-Qiyam al-Layl 180; corrupted OCR has 181. This is an athar, not a prophetic hadith or a Companion report. No claim that children should be woken, nor a future behavioural benefit. The quoted final هذه is preserved as printed rather than silently repaired.",
+  "approval": "Native primary-source evidence only; no model, scholar, human or publication approval. Drafts await independent translation and scholar review.",
+  "validation": {
+    "pair_schema_exit": 0,
+    "pair_schema_units": 2,
+    "guards": {
+      "check_kb_integrity.py": 0,
+      "check_kb_fidelity.py": 0,
+      "check_hadith_citations.py": 0,
+      "check_scripture_coverage.py": 0,
+      "check_quran_citations.py": 0,
+      "check_quran_rendering.py": 0,
+      "review_en_parity.py": 0
+    },
+    "canonical_sha256": "dd3b28ba61d065108a8096a10d9d74939f1e0114a2bf3c39f75d7ffd2111d963",
+    "deterministic_parity_defects": [],
+    "queue": "awaiting-review",
+    "models_called": 0,
+    "approval": null
+  }
+}

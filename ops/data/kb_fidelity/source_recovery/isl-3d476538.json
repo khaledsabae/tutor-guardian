@@ -1,0 +1,46 @@
+{
+  "unit_id": "isl-3d476538",
+  "source_title": "حقوق الأولاد على الوالدين",
+  "source_author": "عماد أحمد عبدالعظيم",
+  "source_url": "https://www.alukah.net/Books/Files/Book_17337/BookFile/brotherandboys.pdf",
+  "pdf_sha256": "7fa6f88fbf1ba714947983c11cde1e8c67b576374ae06c08a081444743d1272c",
+  "pdf_pages_one_based": [
+    92,
+    93
+  ],
+  "printed_pages": [
+    91,
+    92
+  ],
+  "excerpt": "وعن الربيع بنت معوذ قالت: أرسل النبي ﷺ غداة عاشوراء إلى قرى الأنصار: «من أصبح مفطرا فليتم بقية يومه، ومن أصبح صائما فليصم»، قالت: «فكنا نصومه بعد، ونصوم صبياننا، ونجعل لهم اللعبة من العهن، فإذا بكى أحدهم على الطعام أعطيناه ذاك حتى يكون عند الإفطار».\nأخرجه البخاري (١٩٦٠) ومسلم (١١٣٦).",
+  "excerpt_sha256": "60a5675c3fdd3f2d00b0b8ace7831ff7fa379ec8dfd7514131b0a0ab49884227",
+  "method": "Direct reading of targeted rendered primary PDF pages, located by raw OCR references. Selected excerpt manually transcribed; line wraps, vowel marks and footnote markers removed, honorifics expanded. Selection boundaries documented; not a full-page transcription.",
+  "hadith_matches": [
+    {
+      "text": "فكنا نصومه بعد ونصوم صبياننا ونجعل لهم اللعبة من العهن فإذا بكى أحدهم على الطعام أعطيناه ذاك حتى يكون عند الإفطار",
+      "citation": "صحيح البخاري — حديث ١٩٦٠",
+      "exact_local_corpus_match": true
+    }
+  ],
+  "approval": "Source evidence only; no scholar, human or model approval. Awaiting independent review.",
+  "selection": "Only al-Rubayyi bint Muawwidh’s historical Ashura account spanning PDF pp.92–93. The Ibn Battal discussion, Umar punishment anecdote, zakah and collector guidance are outside the excerpt. Draft describes historical practice; no current instruction, age, duration, health benefit or guarantee is added.",
+  "raw_anchor": "Wool toy / children crying for food / iftar; Muslim1136 and the corrupted OCR Bukhari1961.",
+  "citation_limit": "Rendered primary PDF p.93 actually cites Bukhari1960, not OCR1961. Exact selected toy clause matches the local Bukhari1960 corpus. The same clause does not match local Muslim1136 verbatim; the book’s paired citation is transcribed, not asserted as identical wording in Muslim. Local matcher returns «النص موجود في صحيح البخاري حديث 1960، لا مسلم 1136».",
+  "rejected_ocr_citation": 1961,
+  "validation": {
+    "guards": {
+      "check_kb_integrity.py": 0,
+      "check_kb_fidelity.py": 0,
+      "check_quran_citations.py": 0,
+      "check_hadith_citations.py": 0,
+      "check_scripture_coverage.py": 0,
+      "check_quran_rendering.py": 0
+    },
+    "pair_schema_exit": 0,
+    "canonical_sha256": "15a3f85b864233d37a67b1aef4cf46ac6e3e8cfbe7f1b05f0c8b8cdaca4dc4e9",
+    "deterministic_parity_defects": [],
+    "queue": "awaiting-review",
+    "models_called": 0,
+    "approval": null
+  }
+}

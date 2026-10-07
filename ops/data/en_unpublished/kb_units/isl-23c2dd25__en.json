@@ -1,0 +1,45 @@
+{
+  "id": "isl-23c2dd25__en",
+  "domain": "islamic_parenting",
+  "source_file": "Alukah_Rights_of_Children.pdf",
+  "title": "The Author's Method of Collecting Reports on Children's Rights",
+  "language": "en",
+  "age_group": "unspecified",
+  "behavior_type": "تربية إسلامية",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "حقوق الأولاد على الوالدين - عماد عبدالعظيم (الألوكة)",
+  "text_original": "إعادة صياغة تحريرية لمقدمة عماد أحمد عبدالعظيم في صفحة ٩ من ملف الكتاب: جمع الروايات المتعلقة بحقوق الأولاد، ودوّن حكمه على أسانيدها، ونظمها في أبواب يستعين فيها بكلام أهل العلم. أراد بذلك بيان ما يقع على الوالدين تجاه أولادهم. هذا تلخيص للمقدمة، وليس اقتباسا حرفيا أو إقرارا بصحة أحكام المؤلف.",
+  "text_simplified": "Imad Ahmad Abd al-Azim collected reports concerning children's rights, recorded his assessments of their chains of transmission, and arranged them in chapters informed by scholarly discussion. His aim was to explain children's rights and parents' duties toward them.",
+  "labels": [
+    "مقدمة الكتاب",
+    "حقوق الأولاد",
+    "منهج المؤلف"
+  ],
+  "created_at": "2026-06-21T10:14:39Z",
+  "updated_at": "2026-10-07T10:15:41.933252+00:00",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "حقوق الأولاد على الوالدين",
+    "source_author": "عماد أحمد عبدالعظيم"
+  },
+  "source_language": "ar",
+  "translated_from": "isl-23c2dd25",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "needs_scholar_review": true,
+    "review_verdict": "pending",
+    "review_defects": [],
+    "approved_by": null,
+    "draft_status": "draft",
+    "source_recovery_note": "Source-faithful draft; no model review or approval.",
+    "fixer_model": "openai:codex",
+    "english_authors": [
+      "mistral-large-3:675b",
+      "openai:codex"
+    ]
+  },
+  "source_url": "https://www.alukah.net/Books/Files/Book_17337/BookFile/brotherandboys.pdf#page=9",
+  "source_note": "DRAFT source recovery, 2026-10-07. Selected primary PDF excerpt; provenance and exact local citation checks: ops/data/kb_fidelity/source_recovery/isl-23c2dd25.json. No scholar, human, model or publication approval."
+}

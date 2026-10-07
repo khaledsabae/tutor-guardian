@@ -30,6 +30,10 @@ on:
       - '.dockerignore'
       - 'ops/tools/candidate_smoke.py'
       - 'ops/tools/candidate_smoke.sh'
+      - 'ops/tools/golden_ci.py'
+      - 'ops/tools/golden_ci.sh'
+      - 'ops/eval/golden_set.jsonl'
+      - 'ops/tests/test_golden_ci.py'
       - '.github/actions/backend-image/**'
       - '.github/workflows/candidate-image.yml'
       - '.github/workflows/deploy.yml'
@@ -56,11 +60,48 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
 
+      - name: Golden reporting regression tests (no app/provider)
+        run: |
+          python3 -m pip install 'pytest>=8,<9'
+          python3 -m pytest ops/tests/test_golden_ci.py --junitxml="$RUNNER_TEMP/golden-tests.xml"
+
       - name: Build and smoke (nothing pushed)
         id: image
         uses: ./.github/actions/backend-image
         with:
           mode: check
+
+      # Informational only: real hybrid retrieval over every golden item.
+      # Reuses the candidate's baked models/index; no credentials or network.
+      - name: Golden retrieval report (nonblocking)
+        if: always()
+        continue-on-error: true
+        timeout-minutes: 12
+        run: |
+          if [ '${{ steps.image.outcome }}' = 'success' ]; then
+            bash ops/tools/golden_ci.sh '${{ steps.image.outputs.image }}' "$RUNNER_TEMP/golden-report"
+          else
+            GOLDEN_REVISION="$GITHUB_SHA" python3 ops/tools/golden_ci.py \
+              --out "$RUNNER_TEMP/golden-report" --unavailable 'Candidate build unavailable'
+          fi
+
+      - name: Publish golden scope and counts
+        if: always()
+        run: |
+          if [ -f "$RUNNER_TEMP/golden-report/summary.md" ]; then
+            cat "$RUNNER_TEMP/golden-report/summary.md" >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo 'Golden report UNAVAILABLE: reporting step did not complete.' >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Preserve golden retrieval evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: golden-retrieval-${{ github.sha }}
+          path: ${{ runner.temp }}/golden-report/
+          if-no-files-found: warn
+          retention-days: 14
 
       - name: The smoke rejects broken images
         run: .github/ci/reject-broken-images.sh "${{ steps.image.outputs.image }}"

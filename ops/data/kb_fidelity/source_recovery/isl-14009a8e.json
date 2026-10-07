@@ -1,0 +1,38 @@
+{
+  "unit_id": "isl-14009a8e",
+  "source_title": "حقوق الأولاد على الوالدين",
+  "source_author": "عماد أحمد عبدالعظيم",
+  "source_url": "https://www.alukah.net/Books/Files/Book_17337/BookFile/brotherandboys.pdf",
+  "pdf_sha256": "7fa6f88fbf1ba714947983c11cde1e8c67b576374ae06c08a081444743d1272c",
+  "pdf_pages_one_based": [
+    90,
+    91
+  ],
+  "printed_pages": [
+    89,
+    90
+  ],
+  "excerpt": "وكان أبو قرصافة رضي الله عنه له ابن يقال له: عياض، فكان أبو قرصافة إذا انتبه لصلاة الغداة، نادى: يا عياض الصلاة، فيقول: لبيك لبيك يا أبة، قال: وإن عياضا خرج إلى أرض الروم، وأن أبا قرصافة كان إذا انتبه وهو بالشام نادى كما كان يصنع: يا عياض الصلاة الصلاة، وهو بأرض الروم، فإذا انتبه يقول: يا عياض، فيقول عياض: يا أبة لبيك لبيك.",
+  "excerpt_sha256": "73d306f57bc767bd5144d7020e84626dbe7f2296a88e0f875fe1435e745dcb0d",
+  "method": "Direct reading of targeted rendered primary PDF pages, located by raw OCR references. Selected excerpt manually transcribed; line wraps, vowel marks and footnote markers removed, honorifics expanded. Selection boundaries documented; not a full-page transcription.",
+  "hadith_matches": [],
+  "approval": "Source evidence only; no scholar, human or model approval. Awaiting independent review.",
+  "selection": "The single Abu Qirsafa / Iyad narrative spans PDF pp.90–91. The surrounding punishment/age/obligation discussions are outside this excerpt. No childhood age is inferred for Iyad, and no pedagogy or spiritual-result guarantee is added.",
+  "raw_anchor": "Abu Qirsafa, Iyad and the land of the Romans; surrounding footnotes Tuhfat al-Mawdud p.132, Abu Dawud495, Majmu al-Fatawa4/278.",
+  "validation": {
+    "guards": {
+      "check_kb_integrity.py": 0,
+      "check_kb_fidelity.py": 0,
+      "check_quran_citations.py": 0,
+      "check_hadith_citations.py": 0,
+      "check_scripture_coverage.py": 0,
+      "check_quran_rendering.py": 0
+    },
+    "pair_schema_exit": 0,
+    "canonical_sha256": "04175f90493abe1678629be444c141f88488f98ccbaedbd01e931208e51b940e",
+    "deterministic_parity_defects": [],
+    "queue": "awaiting-review",
+    "models_called": 0,
+    "approval": null
+  }
+}

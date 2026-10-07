@@ -68,6 +68,39 @@ def _key(question: str, age_group: str, domain: str, severity: str) -> str:
     return hashlib.sha256(payload.encode("utf-8")).hexdigest()
 
 
+def _kb_revision() -> str:
+    """Bind answers to current sources before index startup or cache purge.
+
+    Reuse the retrieval fingerprint without initializing its index or model.
+    Re-read the serving corpus so source removals and edits take effect even
+    when the rebuild/purge has not run or the purge failed.
+    """
+    from app.services.knowledge_loader import load_default_knowledge_units
+    from app.services.retrieval import _fingerprint
+
+    revision = _fingerprint(load_default_knowledge_units())
+    # Files are independently published: a read can straddle a source change.
+    # Require matching complete reads, without claiming a filesystem lock.
+    if revision != _fingerprint(load_default_knowledge_units()):
+        raise RuntimeError("knowledge sources changed during revision capture")
+    return revision
+
+
+def capture_revision() -> str | None:
+    """Capture provenance BEFORE retrieval/generation; None disables storage.
+
+    This is an optimistic content check, not an atomic snapshot of the files.
+    store() and lookup() independently validate it at their own boundaries.
+    """
+    if not ANSWER_CACHE_ENABLED:
+        return None
+    try:
+        return _kb_revision()
+    except Exception as exc:  # noqa: BLE001 — cache must never break generation
+        logger.warning("answer-cache revision capture failed: %s", exc)
+        return None
+
+
 def _conn() -> sqlite3.Connection:
     _DB.parent.mkdir(parents=True, exist_ok=True)
     conn = sqlite3.connect(_DB)
@@ -86,11 +119,16 @@ def _conn() -> sqlite3.Connection:
             embedding TEXT,
             created_at TEXT DEFAULT (datetime('now')),
             hit_count INTEGER DEFAULT 0,
-            redacted INTEGER
+            redacted INTEGER,
+            kb_revision TEXT
         )"""
     )
     from app.services.retention import ensure_marker
     ensure_marker(conn, "answer_cache")
+    columns = {row["name"] for row in conn.execute("PRAGMA table_info(answer_cache)")}
+    if "kb_revision" not in columns:
+        # Legacy answers have no source provenance and remain cache misses.
+        conn.execute("ALTER TABLE answer_cache ADD COLUMN kb_revision TEXT")
     conn.execute(
         "CREATE INDEX IF NOT EXISTS idx_answer_cache_scope "
         "ON answer_cache (age_group, domain)"
@@ -126,6 +164,7 @@ def lookup(question: str, age_group: str, domain: str, severity: str) -> str | N
         return None
     start = time.monotonic()
     try:
+        revision = _kb_revision()
         conn = _conn()
         try:
             fresh = f"-{_TTL_DAYS} days"
@@ -133,8 +172,9 @@ def lookup(question: str, age_group: str, domain: str, severity: str) -> str | N
                 # Only rows stored since names were matched properly: an older
                 # one may carry a child's name into another family (P4).
                 "SELECT id, answer FROM answer_cache "
-                "WHERE qhash = ? AND redacted = 1 AND created_at >= datetime('now', ?)",
-                (_key(question, age_group, domain, severity), fresh),
+                "WHERE qhash = ? AND kb_revision = ? AND redacted = 1 "
+                "AND created_at >= datetime('now', ?)",
+                (_key(question, age_group, domain, severity), revision, fresh),
             ).fetchone()
             match_kind = "exact"
             if row is None:
@@ -144,10 +184,11 @@ def lookup(question: str, age_group: str, domain: str, severity: str) -> str | N
                 candidates = conn.execute(
                     "SELECT id, answer, embedding FROM answer_cache "
                     "WHERE age_group = ? AND domain = ? AND severity = ? "
+                    "AND kb_revision = ? "
                     "AND embedding IS NOT NULL AND redacted = 1 "
                     "AND created_at >= datetime('now', ?) "
                     "ORDER BY hit_count DESC LIMIT ?",
-                    (age_group, domain, severity, fresh, _MAX_CANDIDATES),
+                    (age_group, domain, severity, revision, fresh, _MAX_CANDIDATES),
                 ).fetchall()
                 best, best_sim = None, _MIN_SIM
                 for cand in candidates:
@@ -167,6 +208,8 @@ def lookup(question: str, age_group: str, domain: str, severity: str) -> str | N
             conn.commit()
         finally:
             conn.close()
+        if _kb_revision() != revision:
+            return None
         latency = int((time.monotonic() - start) * 1000)
         try:
             from app.services.ai_gateway import _log_call
@@ -213,14 +256,18 @@ def purge(reason: str = "") -> int:
         return 0
 
 
-def store(question: str, age_group: str, domain: str, severity: str, answer: str) -> bool:
-    """Store a freshly generated first-question answer. Best-effort."""
-    if not ANSWER_CACHE_ENABLED:
+def store(question: str, age_group: str, domain: str, severity: str, answer: str,
+          *, generation_revision: str | None = None) -> bool:
+    """Store only with unchanged provenance captured before generation."""
+    if not ANSWER_CACHE_ENABLED or not generation_revision:
         return False
     answer = (answer or "").strip()
     if len(answer) < _MIN_ANSWER_LEN:
         return False
     try:
+        revision = generation_revision
+        if _kb_revision() != revision:
+            return False
         vec = _embed(question)
         conn = _conn()
         try:
@@ -231,19 +278,27 @@ def store(question: str, age_group: str, domain: str, severity: str, answer: str
                 "DELETE FROM answer_cache WHERE created_at < datetime('now', ?)",
                 (f"-{_TTL_DAYS} days",),
             )
+            # Recheck after embedding and acquiring SQLite's write transaction.
+            # A stale writer must not overwrite a newly generated answer.
+            if _kb_revision() != revision:
+                return False
             conn.execute(
                 "INSERT INTO answer_cache "
                 "(qhash, question_norm, age_group, domain, severity, answer, embedding, "
-                "redacted) VALUES (?, ?, ?, ?, ?, ?, ?, 1) "
+                "redacted, kb_revision) VALUES (?, ?, ?, ?, ?, ?, ?, 1, ?) "
                 "ON CONFLICT(qhash) DO UPDATE SET "
-                "answer = excluded.answer, created_at = datetime('now'), redacted = 1",
+                "answer = excluded.answer, created_at = datetime('now'), redacted = 1, "
+                "kb_revision = excluded.kb_revision",
                 (
                     _key(question, age_group, domain, severity),
                     normalize(question)[:500],
                     age_group, domain, severity, answer,
                     json.dumps(vec) if vec else None,
+                    revision,
                 ),
             )
+            if _kb_revision() != revision:
+                return False
             conn.commit()
             return True
         finally:

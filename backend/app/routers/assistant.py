@@ -1166,6 +1166,8 @@ async def _stream_answer(
                     mode="llm_generated",
                 ))
 
+    # Bind the finished answer to the sources BEFORE any retrieval/generation.
+    generation_revision = await asyncio.to_thread(answer_cache.capture_revision)
     # Cache missed, proceed with index assurance and hybrid retrieval
     if is_general:
         await asyncio.to_thread(_ensure_index)
@@ -1584,6 +1586,7 @@ async def _stream_answer(
                                 answer_cache.store,
                                 query_text, user_message.age_group or "unspecified",
                                 primary_domain, severity, final_text,
+                                generation_revision=generation_revision,
                             )
                         yield _sse("done", reply.model_dump())
                     elif chunk.delta:

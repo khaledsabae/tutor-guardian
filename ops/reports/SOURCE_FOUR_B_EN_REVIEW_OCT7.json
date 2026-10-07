@@ -1,0 +1,97 @@
+{
+  "base_head": "d0806de9cbd2a6c5a767dba125a64bdcdd4a23eb",
+  "tool": "ops/tools/review_en_parity.py",
+  "prompt_version": "dfa8a5f39718",
+  "canonical_system_sha256": "dfa8a5f39718eaadde2dc124d6b65d443e032001c39f01cf5f6a3300e4e03dd8",
+  "canonical_user_message": "Review these 3 items. Your \"items\" array must hold exactly 3 entries, ids in this order: [\"isl-2fee1086__en\", \"isl-552b4f5a__en\", \"isl-8f8f836b__en\"]\n\n{\"items\": [{\"id\": \"isl-2fee1086__en\", \"kind\": \"kb_units\", \"age_band\": \"unspecified\", \"fields\": {\"title\": {\"arabic\": \"دعاء النبي ﷺ بالشفاء في رواية عائشة\", \"english\": \"The Prophet’s ﷺ Supplication for Healing in Aisha’s Narration\"}, \"text_simplified\": {\"arabic\": \"تروي عائشة أن النبي ﷺ كان يعوذ بعض أهله، ويمسح بيده اليمنى، ويدعو الله لهم بالشفاء. الدعاء الوارد يسأل الله شفاءً لا يترك مرضًا.\", \"english\": \"Aisha relates that the Prophet ﷺ would recite a supplication for some members of his family, wipe with his right hand, and ask Allah to heal them. The supplication asks for healing that leaves no illness.\"}}}, {\"id\": \"isl-552b4f5a__en\", \"kind\": \"kb_units\", \"age_band\": \"unspecified\", \"fields\": {\"title\": {\"arabic\": \"تعلم القرآن وتعليمه في حديث عثمان\", \"english\": \"Learning and Teaching the Quran in Uthman’s Hadith\"}, \"text_simplified\": {\"arabic\": \"في حديث عثمان، يقول النبي ﷺ: «خيركم من تعلم القرآن وعلمه» (صحيح البخاري — حديث ٥٠٢٧). يرد الحديث في باب الكتاب المتعلق بتعليم الأولاد القرآن.\", \"english\": \"In Uthman’s narration, the Prophet ﷺ says: “The best of you are those who learn the Quran and teach it” (Sahih al-Bukhari, hadith 5027). The book includes this hadith in its section on teaching the Quran to children.\"}}}, {\"id\": \"isl-8f8f836b__en\", \"kind\": \"kb_units\", \"age_band\": \"4-6\", \"fields\": {\"title\": {\"arabic\": \"قيام أهل البيت في رمضان في أثر معتمر\", \"english\": \"Household Night Prayer in Ramadan in Muʿtamir’s Account\"}, \"text_simplified\": {\"arabic\": \"يروي معتمر أن أباه كان يوقظ أهل الدار عند دخول رمضان، ويحثهم على القيام، مذكّرًا بأنهم قد لا يدركون رمضان في العام التالي.\", \"english\": \"Muʿtamir recounts that his father would wake the people in the household when Ramadan began and urge them to pray at night, reminding them that they might not reach Ramadan the following year.\"}}}]}",
+  "hashes": {
+    "isl-2fee1086__en": "5bf1065f6281df926fe785a8b477fd34a23b72f01f22a935c644546c1bab4f62",
+    "isl-552b4f5a__en": "09672e0ea924d75a0a991ac0ebd2115fe48b9117ca2d128cfd28a5c570ee971f",
+    "isl-8f8f836b__en": "dd3b28ba61d065108a8096a10d9d74939f1e0114a2bf3c39f75d7ffd2111d963"
+  },
+  "deterministic": {
+    "isl-2fee1086__en": [],
+    "isl-552b4f5a__en": [],
+    "isl-8f8f836b__en": []
+  },
+  "policy": {
+    "batch_items": 3,
+    "max_concurrent": 2,
+    "transport_retries": 1,
+    "cache_used": false,
+    "adjudications_used": false
+  },
+  "reviews": {
+    "deepseek-v4-pro": {
+      "model": "deepseek-v4-pro",
+      "attempts": [
+        {
+          "attempt": 1,
+          "elapsed_seconds": 13.91,
+          "http_status": 200
+        }
+      ],
+      "raw_verdict": "{\"items\": [{\"id\": \"isl-2fee1086__en\", \"defects\": []}, {\"id\": \"isl-552b4f5a__en\", \"defects\": []}, {\"id\": \"isl-8f8f836b__en\", \"defects\": []}]}",
+      "usage": {
+        "prompt_tokens": 1692,
+        "completion_tokens": 2181,
+        "total_tokens": 3873,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "parsed": {
+        "isl-2fee1086__en": [],
+        "isl-552b4f5a__en": [],
+        "isl-8f8f836b__en": []
+      }
+    },
+    "glm-5.2": {
+      "model": "glm-5.2",
+      "attempts": [
+        {
+          "attempt": 1,
+          "elapsed_seconds": 5.46,
+          "http_status": 200
+        }
+      ],
+      "raw_verdict": "```json\n{\"items\": [{\"id\": \"isl-2fee1086__en\", \"defects\": []}, {\"id\": \"isl-552b4f5a__en\", \"defects\": []}, {\"id\": \"isl-8f8f836b__en\", \"defects\": []}]}\n```",
+      "usage": {
+        "prompt_tokens": 1685,
+        "completion_tokens": 1432,
+        "total_tokens": 3117,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "parsed": {
+        "isl-2fee1086__en": [],
+        "isl-552b4f5a__en": [],
+        "isl-8f8f836b__en": []
+      }
+    }
+  },
+  "acceptance": {
+    "accepted_ids": [
+      "isl-2fee1086__en",
+      "isl-552b4f5a__en",
+      "isl-8f8f836b__en"
+    ],
+    "queue_removed": [
+      "isl-2fee1086__en",
+      "isl-552b4f5a__en",
+      "isl-8f8f836b__en"
+    ],
+    "queue_before": 45,
+    "queue_after": 42,
+    "translation_edits": 0,
+    "adjudications": 0,
+    "source_approval": null,
+    "needs_scholar_review": true,
+    "excluded_id": "isl-7349e59c__en",
+    "excluded_preserved": true,
+    "canonical_tool_sha256": "037d1c92eee71bd8a9f2096f9b624851f29f67178e3af2dde61d035609f7f33e",
+    "worker_sha256": "38967120c3c5f60981daf4a550d8abf43b2379f59e3acd7de96cae6f2bbe875d",
+    "review_elapsed_seconds": 13.91
+  }
+}

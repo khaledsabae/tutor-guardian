@@ -1,0 +1,60 @@
+{
+  "unit_id": "isl-2fee1086",
+  "source_title": "حقوق الأولاد على الوالدين",
+  "source_author": "عماد بن أحمد بن عبدالعظيم",
+  "source_url": "https://www.alukah.net/Books/Files/Book_17337/BookFile/brotherandboys.pdf",
+  "pdf_sha256": "7fa6f88fbf1ba714947983c11cde1e8c67b576374ae06c08a081444743d1272c",
+  "original_ocr_sha256": "13c137110d0fcbf276dc7bf4c134bb10f8943cccdf17024606c3ee3666d118be",
+  "raw_ocr_anchor": "قُ لْا ه ِ د ِ قَ ِ ب حُ س يَ",
+  "original_ocr_locator": "Raw OCR contains medical footnotes on PDF133/printed132, Bukhari5713/Muslim2214, then begins Aisha’s narration on PDF134/printed133. Recovery selects the actual next-page Aisha supplication, not generic child-care or a treatment recommendation.",
+  "pdf_pages_one_based": [
+    133,
+    134
+  ],
+  "selected_pdf_pages_one_based": [
+    134
+  ],
+  "selected_printed_pages": [
+    133
+  ],
+  "excerpt": "عن عائشة أن النبي ﷺ كان يعوذ بعض أهله، يمسح بيده اليمنى، ويقول: «اللهم رب الناس أذهب البأس اشفه وأنت الشافي لا شفاء إلا شفاؤك شفاء لا يغادر سقما».",
+  "excerpt_sha256": "26f1df9ad14334d1eeca26b07e63008da253fc4968d071d277fc078abb9da378",
+  "method": "Raw original OCR anchors located actual primary pages first. Direct visual reading of rendered primary pages; selected short excerpt manually transcribed, vowel marks/line wraps omitted and honorific glyphs expanded. No PDF or page copy added to repository.",
+  "historical_attribution": "Aisha narration; Sahih al-Bukhari 5743 (visible primary page footnote 1). Ancient public-domain hadith.",
+  "quotation_accounting": {
+    "new_modern_verbatim_words_this_unit": 0,
+    "new_modern_words_this_four_unit_batch": 6,
+    "previous_recovery_modern_words_conservative": 83,
+    "modern_book_aggregate_words": 89,
+    "limit": 90,
+    "ancient_public_domain_exclusion": true,
+    "note": "Only the two short contents headings add modern-author wording (six words). Other excerpts are explicitly ancient hadith/athar, not new modern prose. Duplicate AR/EN/evidence copies are the same distinct excerpts."
+  },
+  "hadith_matches": [
+    {
+      "text": "اللهم رب الناس أذهب البأس اشفه وأنت الشافي لا شفاء إلا شفاؤك شفاء لا يغادر سقما",
+      "citation": "صحيح البخاري — حديث ٥٧٤٣",
+      "exact_local_corpus_match": true
+    }
+  ],
+  "scope_limit": "Raw OCR contains medical footnotes on PDF133/printed132, Bukhari5713/Muslim2214, then begins Aisha’s narration on PDF134/printed133. Recovery selects the actual next-page Aisha supplication, not generic child-care or a treatment recommendation.",
+  "approval": "Native primary-source evidence only; no model, scholar, human or publication approval. Drafts await independent translation and scholar review.",
+  "validation": {
+    "pair_schema_exit": 0,
+    "pair_schema_units": 2,
+    "guards": {
+      "check_kb_integrity.py": 0,
+      "check_kb_fidelity.py": 0,
+      "check_hadith_citations.py": 0,
+      "check_scripture_coverage.py": 0,
+      "check_quran_citations.py": 0,
+      "check_quran_rendering.py": 0,
+      "review_en_parity.py": 0
+    },
+    "canonical_sha256": "5bf1065f6281df926fe785a8b477fd34a23b72f01f22a935c644546c1bab4f62",
+    "deterministic_parity_defects": [],
+    "queue": "awaiting-review",
+    "models_called": 0,
+    "approval": null
+  }
+}

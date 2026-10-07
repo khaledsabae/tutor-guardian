@@ -1,0 +1,68 @@
+{
+  "id": "seed-fear-23__en",
+  "domain": "medical",
+  "source_file": "curated/NHS / AACAP / CDC — app-authored childhood fear guidance",
+  "title": "Fears and Separation Anxiety in Children Aged Two to Three",
+  "language": "en",
+  "age_group": "2-3",
+  "behavior_type": "الخوف",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "NHS / AACAP / CDC — app-authored childhood fear guidance; fetched primary guidance 2026-10-07; exact source mapping: ops/data/clinical_seed_safety/seed-fear-23.json",
+  "text_original": "صياغة إرشادية من التطبيق، وليست اقتباسًا حرفيًا: قد يخاف الطفل في عمر سنتين إلى ثلاث من الظلام أو الانفصال عن والديه، وهذا شائع في نموه؛ لكن شدة الخوف وتأثيره في حياته مهمان. طمئنوه بكلمات بسيطة ونبرة هادئة، واستمعوا لما يخيفه دون سخرية أو تهديد. عند المغادرة اجعلوا الوداع واضحًا ومطمئنًا، وتدرّبوا على انفصال قصير مع شخص مألوف ثم زيدوه تدريجيًا. حافظوا على روتين يمكن توقعه.\n\nاستشيروا طبيب الأطفال إذا كان الخوف شديدًا أو يزداد، أو كان الطفل يبقى شديد الضيق بعد الانفصال، أو تعطّل نومه أو لعبه أو ذهابه إلى الحضانة أو تفاعله مع الآخرين. الكوابيس المستمرة والشكاوى الجسدية المتكررة تستحق التقييم أيضًا؛ لا تفترضوا أن كل ألم سببه القلق. إذا فقد الطفل مهارة كان قد اكتسبها، تحدثوا مع طبيبه عن فحص النمو دون تأخير. لا تنتظروا اكتمال مدة محددة لطلب المساعدة عندما يتعطّل نشاطه المعتاد أو يفقد مهاراته.",
+  "text_simplified": "A child aged two to three may fear the dark or separation from their parents. This is common during development, but the intensity of the fear and its effect on daily life matter. Reassure them with simple words and a calm voice, and listen without ridicule or threats. Make goodbyes clear and reassuring. Practise brief separations with a familiar person, then gradually extend them. Keep a predictable routine.\n\nConsult the child’s doctor if the fear is severe or worsening, the child remains very distressed after separation, or sleep, play, nursery attendance or interactions with others are affected. Persistent nightmares and recurring physical complaints also deserve assessment; do not assume every pain is caused by anxiety. If the child loses a skill they had acquired, speak with their doctor about developmental screening without delay. Do not wait for a fixed period before seeking help when usual activities are disrupted or skills are lost.",
+  "labels": [
+    "الخوف",
+    "قلق الانفصال",
+    "الخوف من الظلام",
+    "الطمأنينة",
+    "2-3 سنوات"
+  ],
+  "created_at": "2026-09-24T18:00:00Z",
+  "updated_at": "2026-10-07T15:32:16.820688+00:00",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "NHS / AACAP / CDC — app-authored childhood fear guidance",
+    "source_author": "App editorial synthesis; primary references listed separately"
+  },
+  "source_kind": "authored_guidance",
+  "authored_references": [
+    "https://www.nhs.uk/mental-health/children-and-young-adults/advice-for-parents/anxiety-disorders-in-children/",
+    "https://www.nhs.uk/baby/babys-development/behaviour/separation-anxiety/",
+    "https://www.aacap.org/AACAP/Families_and_Youth/Facts_for_Families/FFF-Guide/The-Anxious-Child-047.aspx",
+    "https://www.cdc.gov/act-early/milestones/2-years.html",
+    "https://www.aacap.org/AACAP/Families_and_Youth/Facts_for_Families/FFF-Guide/When-To-Seek-Help-For-Your-Child-024.aspx"
+  ],
+  "source_note": "App-authored guidance from fetched primary public-health pages. External report was AI-generated, not clinician/human approval. No numeric waiting threshold. Exact claims and fetched-page hashes are in ops/data/clinical_seed_safety/seed-fear-23.json",
+  "translation": {
+    "translator_model": "openai:codex",
+    "fixer_model": "openai:codex",
+    "english_authors": [
+      "openai:codex"
+    ],
+    "needs_scholar_review": true,
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
+    "draft_status": "draft",
+    "clinical_human_approval": null,
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "a92454ac9e5028faad49212e5207799f79786a053dd05913ce42de210737cfe1",
+      "reviewed_at": "2026-10-07T15:33:53+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+    },
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
+    "revalidated_at": "2026-10-07T15:33:53+00:00"
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "unit_id": "isl-7349e59c",
+  "source_title": "حقوق الأولاد على الوالدين",
+  "source_author": "عماد بن أحمد بن عبدالعظيم",
+  "source_url": "https://www.alukah.net/Books/Files/Book_17337/BookFile/brotherandboys.pdf",
+  "pdf_sha256": "7fa6f88fbf1ba714947983c11cde1e8c67b576374ae06c08a081444743d1272c",
+  "original_ocr_sha256": "6e22b0b2ab2b00ba143bed76dfedabdfd28b5795fdcbf4ebe004fbcef15df20d",
+  "raw_ocr_anchor": "دٓوٕا ـقب لدعلا",
+  "original_ocr_locator": "Raw OCR includes the closing al-Asmai account on PDF183/printed182, then the actual table of contents on PDF184–185/printed183–184. This unit is recovered as a catalogue only. Table-of-contents titles are not proof of substantive parenting duties, religious rulings or chapter claims. Listed chapter page numbers are not the physical PDF/printed pages of this evidence.",
+  "pdf_pages_one_based": [
+    183,
+    184,
+    185
+  ],
+  "selected_pdf_pages_one_based": [
+    184,
+    185
+  ],
+  "selected_printed_pages": [
+    183,
+    184
+  ],
+  "excerpt": "العدل بين الأولاد\nتعليم الأولاد القرآن",
+  "excerpt_sha256": "626d8d053a6f04154d4d1af602b8cd72b09e0857a67aef18f4f1016d6539257d",
+  "method": "Raw original OCR anchors located actual primary pages first. Direct visual reading of rendered primary pages; selected short excerpt manually transcribed, vowel marks/line wraps omitted and honorific glyphs expanded. No PDF or page copy added to repository.",
+  "historical_attribution": "Modern compiler’s table-of-contents headings. Not prophetic hadith or a substantive legal proof.",
+  "quotation_accounting": {
+    "new_modern_verbatim_words_this_unit": 6,
+    "new_modern_words_this_four_unit_batch": 6,
+    "previous_recovery_modern_words_conservative": 83,
+    "modern_book_aggregate_words": 89,
+    "limit": 90,
+    "ancient_public_domain_exclusion": false,
+    "note": "Only the two short contents headings add modern-author wording (six words). Other excerpts are explicitly ancient hadith/athar, not new modern prose. Duplicate AR/EN/evidence copies are the same distinct excerpts."
+  },
+  "hadith_matches": [],
+  "scope_limit": "Catalogue only; no substantive religious duties inferred.",
+  "approval": "Native primary-source evidence only; no model, scholar, human or publication approval. Drafts await independent translation and scholar review.",
+  "validation": {
+    "pair_schema_exit": 0,
+    "pair_schema_units": 2,
+    "guards": {
+      "check_kb_integrity.py": 0,
+      "check_kb_fidelity.py": 0,
+      "check_hadith_citations.py": 0,
+      "check_scripture_coverage.py": 0,
+      "check_quran_citations.py": 0,
+      "check_quran_rendering.py": 0,
+      "review_en_parity.py": 0
+    },
+    "canonical_sha256": "a06e22b8952b04df9e02f350d28991236b314f4f4e5de9ec40522dcd11acddcc",
+    "deterministic_parity_defects": [],
+    "queue": "awaiting-review",
+    "models_called": 0,
+    "approval": null
+  }
+}

@@ -2,28 +2,26 @@
   "id": "isl-be38b357__en",
   "domain": "islamic_parenting",
   "source_file": "Alukah_Rights_of_Children.pdf",
-  "title": "The Importance of Permissible Play for Children in the Prophetic Tarbiyah",
+  "title": "Celebration on Eid in Aisha’s Narration",
   "language": "en",
   "age_group": "4-6",
   "behavior_type": "تربية ولعب",
   "intervention_type": "إرشادي",
   "severity": "خفيف",
   "reference_type": "كتاب_تربوي",
-  "reference_info": "حقوق الأولاد على الوالدين - عماد عبدالعظيم (الألوكة)",
-  "text_original": "حَ لْاوَ ,ل ِ تر جْ حُ بِ ا بَ كؾَ طَ ام ف ِ ِ بعلَ كلَِ إ ر ظُ كْ أَ فئادَ ر ِ ِ ب لكر اصً قرو ابً ثُ اقت قر دَ لاو بارحلاب ابً عل ناؽف دجسؿلا في ةشبحلا بعل امأو« ـم قهو ,فقؾط طقشـتلاو ـيرؿتلاو بورحلا كؾط بيردتلا باب ـم قهو ,ابه .)2(»دجسؿلا في ﷺ لبـلا فحابأ ؽلذلو ,بودـؿلا ؾقبق :دٝعيا ّٜٛ ٘ٝف ١فيامخ لا ٟريا ٍافطلأا بعًب عأب لاٚ يدـطو رؽب قبأ لؾط ؾخد :تلاق ,ڤ ةشئاط ـط »ـقحقحصلا« فيو ,ثاعب مقي راصكٕا فب تلواؼت اؿب ,ناقـغت راصكٕا يراقج ـم ناتيراج للها لقسر تقب في ناطقشلا رقمزؿبأ :رؽب قبأ لاؼف ,ـقتقـغؿب اتسقلو :تلاق ادقط مقق ؾؽل نإ رؽب ابأ اي« :ﷺ للها لقسر لاؼف ,دقط مقي في ؽلذو ,؟ﷺ ـم ؾحي ام كلإ سقػـلا طسبو تاحارؾل عقضقم دقعلا نأ ؾقلد فقفو« بارشلاو ؾكٕاو بعؾلا ـم للها ؾحأ امو قزرلا تابقطب ذخٕاو اقكدلا .)892( ؿمٚسمُو ،)454( يراخبمًا فمضرمظأ (1) .)13/8( »ؿمٝمٗمعا« (2) .)549/2( »يراخبمًا حمٞحص حشر« (3) ــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ نيدلاىلا ىلع دلاولأا قىقح ــــــــــــــــــــ :زسض ِث ٔهٜ لم اذإ ١سٛدزلأاب بعًيا شٛيجٚ دؼَ فَ ـَ قـس تِ س تُ ْـ ِ ب اكَ أَ وَ ﷺ ل ِ بَـلا لـجَ وَ زَ تَ : تْ لَاقَ ,ڤ ةَ شَ ئاطَ ـْ طَ كفَ قَ فَ ير ِ عَ شَ قَ ر تَ فَ تُ ؽْ ط ِ قُ فَ , جٍ ر زْ خَ ـِ بْ ث ِ ر ِ احَ لْا ل ِ ـبَ ل ِ ف اـَ لْ زَ َـفَ ةَ َـيد ِ",
-  "text_simplified": "The text discusses the importance of permissible play for children, mentioning that the Prophet Muhammad ﷺ used to play with children and allow them to play. It also points out that beneficial play strengthens a child’s physical and mental growth. Parents should encourage their children to engage in useful play rather than harmful games.",
+  "reference_info": "حقوق الأولاد على الوالدين — عماد بن أحمد بن عبدالعظيم (الألوكة)، صفحة PDF 113 / المطبوعة 112. صحيح مسلم — حديث ٨٩٢; صحيح البخاري — حديث ٩٥٢; صحيح مسلم — حديث ٨٩٢",
+  "text_original": "عن عائشة قالت: «دخل علي أبو بكر وعندي جاريتان من جواري الأنصار تغنيان، بما تقاولت به الأنصار يوم بعاث».\nقال رسول الله ﷺ: «يا أبا بكر إن لكل قوم عيدا وهذا عيدنا».",
+  "text_simplified": "Aisha recounts that on Eid two girls from the Ansar were with her, singing words spoken on the day of Buath. Abu Bakr objected, and the Prophet ﷺ said, “Every people has a festival, and this is our festival.”",
   "labels": [
-    "لعب الأطفال",
-    "تربية نبوية",
-    "نمو الطفل",
-    "اللعب المباح"
+    "عيد",
+    "رواية عائشة"
   ],
   "created_at": "2026-06-21T10:25:58Z",
-  "updated_at": "2026-06-21T10:25:58Z",
+  "updated_at": "2026-10-07T09:49:49.289633+00:00",
   "version": "1.0.0",
   "source_meta": {
-    "source_title": "Alukah_Rights_of_Children",
-    "source_author": ""
+    "source_title": "حقوق الأولاد على الوالدين",
+    "source_author": "عماد بن أحمد بن عبدالعظيم"
   },
   "source_language": "ar",
   "translated_from": "isl-be38b357",
@@ -31,9 +29,33 @@
     "translator_model": "mistral-large-3:675b",
     "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "pending",
+    "review_verdict": "clean",
     "review_defects": [],
-    "approved_by": null,
-    "revalidated_at": "2026-10-04T11:18:18+00:00"
-  }
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
+    "draft_status": "draft",
+    "source_recovery_note": "Primary-source-faithful recovery. English parity review is recorded separately at its exact current hash; Arabic source-content scholar review remains required.",
+    "english_authors": [
+      "mistral-large-3:675b",
+      "openai:codex"
+    ],
+    "fixer_model": "openai:codex",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "8a78b2b6961b339b33ed7a35dda7f394fc8c8a976f972ec28c2f93de1525fb6c",
+      "reviewed_at": "2026-10-07T10:03:19+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-07T10:03:19+00:00"
+  },
+  "source_url": "https://www.alukah.net/Books/Files/Book_17337/BookFile/brotherandboys.pdf#page=113",
+  "source_note": "Primary-source recovery 2026-10-07: actual original passage/page/ancient-attribution evidence is recorded in ops/data/kb_fidelity/source_recovery/isl-be38b357.json. Summaries are app-authored paraphrases, not general legal rulings. English translation parity was genuinely reviewed separately by DeepSeek and GLM; its exact-hash record is in the English translation metadata. No scholar/human source-content approval or publication approval."
 }
