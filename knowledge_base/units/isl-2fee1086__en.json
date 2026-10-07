@@ -29,16 +29,32 @@
     "translator_model": "mistral-large-3:675b",
     "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
-    "review_verdict": "pending",
+    "review_verdict": "clean",
     "review_defects": [],
-    "approved_by": null,
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
     "draft_status": "draft",
     "source_recovery_note": "Source-verified draft, current content awaits genuine independent translation and scholar review.",
     "english_authors": [
       "mistral-large-3:675b",
       "openai:codex"
     ],
-    "fixer_model": "openai:codex"
+    "fixer_model": "openai:codex",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "5bf1065f6281df926fe785a8b477fd34a23b72f01f22a935c644546c1bab4f62",
+      "reviewed_at": "2026-10-07T14:34:13+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+    },
+    "revalidated_at": "2026-10-07T14:34:13+00:00"
   },
   "source_url": "https://www.alukah.net/Books/Files/Book_17337/BookFile/brotherandboys.pdf#page=134",
   "source_note": "DRAFT native source recovery 2026-10-07. Raw OCR anchor, exact primary page, historical attribution and quote-budget proof: ops/data/kb_fidelity/source_recovery/isl-2fee1086.json. App-authored summaries are narrow paraphrases, not broader rulings or promised outcomes. No model, scholar, human or publication approval."

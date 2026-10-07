@@ -51,37 +51,10 @@
         "openai:codex"
       ]
     },
-    "isl-2fee1086__en": {
-      "category": "awaiting-review",
-      "reason": "2026-10-07 native recovery: raw original OCR anchors and actual primary PDF pages verified; evidence per unit records exact page/checksum, historical attribution and 89/90 modern-book quotation budget. Scope: Aisha healing supplication; Uthman Quran-teaching hadith with directly verified Bukhari5027 inline citation; contents catalogue only; Mu’tamir historical athar. Current hash awaits genuine independent translation and scholar review; null approval, no models called.",
-      "content_sha256": "5bf1065f6281df926fe785a8b477fd34a23b72f01f22a935c644546c1bab4f62",
-      "queued_on": "2026-10-07",
-      "english_authors": [
-        "openai:codex"
-      ]
-    },
-    "isl-552b4f5a__en": {
-      "category": "awaiting-review",
-      "reason": "2026-10-07 native recovery: raw original OCR anchors and actual primary PDF pages verified; evidence per unit records exact page/checksum, historical attribution and 89/90 modern-book quotation budget. Scope: Aisha healing supplication; Uthman Quran-teaching hadith with directly verified Bukhari5027 inline citation; contents catalogue only; Mu’tamir historical athar. Current hash awaits genuine independent translation and scholar review; null approval, no models called.",
-      "content_sha256": "09672e0ea924d75a0a991ac0ebd2115fe48b9117ca2d128cfd28a5c570ee971f",
-      "queued_on": "2026-10-07",
-      "english_authors": [
-        "openai:codex"
-      ]
-    },
     "isl-7349e59c__en": {
       "category": "awaiting-review",
       "reason": "2026-10-07 native recovery: raw original OCR anchors and actual primary PDF pages verified; evidence per unit records exact page/checksum, historical attribution and 89/90 modern-book quotation budget. Scope: Aisha healing supplication; Uthman Quran-teaching hadith with directly verified Bukhari5027 inline citation; contents catalogue only; Mu’tamir historical athar. Current hash awaits genuine independent translation and scholar review; null approval, no models called.",
       "content_sha256": "a06e22b8952b04df9e02f350d28991236b314f4f4e5de9ec40522dcd11acddcc",
-      "queued_on": "2026-10-07",
-      "english_authors": [
-        "openai:codex"
-      ]
-    },
-    "isl-8f8f836b__en": {
-      "category": "awaiting-review",
-      "reason": "2026-10-07 native recovery: raw original OCR anchors and actual primary PDF pages verified; evidence per unit records exact page/checksum, historical attribution and 89/90 modern-book quotation budget. Scope: Aisha healing supplication; Uthman Quran-teaching hadith with directly verified Bukhari5027 inline citation; contents catalogue only; Mu’tamir historical athar. Current hash awaits genuine independent translation and scholar review; null approval, no models called.",
-      "content_sha256": "dd3b28ba61d065108a8096a10d9d74939f1e0114a2bf3c39f75d7ffd2111d963",
       "queued_on": "2026-10-07",
       "english_authors": [
         "openai:codex"
