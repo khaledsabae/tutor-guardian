@@ -8281,26 +8281,26 @@
     {
       "id": "isl-2fee1086",
       "domain": "islamic_parenting",
-      "title": "حقوق الأطفال على الآباء في التربية والرعاية",
+      "title": "دعاء النبي ﷺ بالشفاء في رواية عائشة",
       "source_file": "Alukah_Rights_of_Children.pdf",
       "language": "ar",
       "original_age_group": "unspecified",
       "normalized_age_group": "unspecified",
       "behavior_type": "تربية الأطفال",
       "needs_ocr": false,
-      "size_chars": 1469
+      "size_chars": 146
     },
     {
       "id": "isl-2fee1086__en",
       "domain": "islamic_parenting",
-      "title": "The Rights of Children upon Parents in Tarbiyah and Care",
+      "title": "The Prophet’s ﷺ Supplication for Healing in Aisha’s Narratio",
       "source_file": "Alukah_Rights_of_Children.pdf",
       "language": "en",
       "original_age_group": "unspecified",
       "normalized_age_group": "unspecified",
       "behavior_type": "تربية الأطفال",
       "needs_ocr": false,
-      "size_chars": 1469
+      "size_chars": 146
     },
     {
       "id": "isl-303f1e46",
@@ -9037,26 +9037,26 @@
     {
       "id": "isl-552b4f5a",
       "domain": "islamic_parenting",
-      "title": "حقوق الأطفال في التربية الدينية",
+      "title": "تعلم القرآن وتعليمه في حديث عثمان",
       "source_file": "Alukah_Rights_of_Children.pdf",
       "language": "ar",
       "original_age_group": "unspecified",
       "normalized_age_group": "unspecified",
       "behavior_type": "تربية دينية",
       "needs_ocr": false,
-      "size_chars": 1508
+      "size_chars": 60
     },
     {
       "id": "isl-552b4f5a__en",
       "domain": "islamic_parenting",
-      "title": "The Rights of Children in Tarbiyah (religious upbringing)",
+      "title": "Learning and Teaching the Quran in Uthman’s Hadith",
       "source_file": "Alukah_Rights_of_Children.pdf",
       "language": "en",
       "original_age_group": "unspecified",
       "normalized_age_group": "unspecified",
       "behavior_type": "تربية دينية",
       "needs_ocr": false,
-      "size_chars": 1508
+      "size_chars": 60
     },
     {
       "id": "isl-55a861c7",
@@ -9937,26 +9937,26 @@
     {
       "id": "isl-7349e59c",
       "domain": "islamic_parenting",
-      "title": "حقوق الأطفال على والديهم في التربية والدين",
+      "title": "فهرس موضوعات الكتاب المتعلقة بالأولاد",
       "source_file": "Alukah_Rights_of_Children.pdf",
       "language": "ar",
       "original_age_group": "unspecified",
       "normalized_age_group": "unspecified",
       "behavior_type": "تربية أطفال",
       "needs_ocr": false,
-      "size_chars": 1899
+      "size_chars": 38
     },
     {
       "id": "isl-7349e59c__en",
       "domain": "islamic_parenting",
-      "title": "The Rights of Children over Their Parents in Tarbiyah and Di",
+      "title": "The Book’s Contents on Topics Concerning Children",
       "source_file": "Alukah_Rights_of_Children.pdf",
       "language": "en",
       "original_age_group": "unspecified",
       "normalized_age_group": "unspecified",
       "behavior_type": "تربية أطفال",
       "needs_ocr": false,
-      "size_chars": 1899
+      "size_chars": 38
     },
     {
       "id": "isl-7365e833",
@@ -10681,26 +10681,26 @@
     {
       "id": "isl-8f8f836b",
       "domain": "islamic_parenting",
-      "title": "تربية الأبناء على القيم الدينية والأخلاقية",
+      "title": "قيام أهل البيت في رمضان في أثر معتمر",
       "source_file": "Alukah_Rights_of_Children.pdf",
       "language": "ar",
       "original_age_group": "4-6",
       "normalized_age_group": "4-6",
       "behavior_type": "تربية دينية وأخلاقية",
       "needs_ocr": false,
-      "size_chars": 1587
+      "size_chars": 104
     },
     {
       "id": "isl-8f8f836b__en",
       "domain": "islamic_parenting",
-      "title": "Tarbiyah of Children upon Religious and Moral Values",
+      "title": "Household Night Prayer in Ramadan in Muʿtamir’s Account",
       "source_file": "Alukah_Rights_of_Children.pdf",
       "language": "en",
       "original_age_group": "4-6",
       "normalized_age_group": "4-6",
       "behavior_type": "تربية دينية وأخلاقية",
       "needs_ocr": false,
-      "size_chars": 1587
+      "size_chars": 104
     },
     {
       "id": "isl-901bde3f",

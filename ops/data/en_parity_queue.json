@@ -52,28 +52,40 @@
       ]
     },
     "isl-2fee1086__en": {
-      "category": "source-unverified",
-      "reason": "It attributes words or deeds to the Prophet ﷺ or cites a hadith — check these first. Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
-      "content_sha256": "8cfc8a4563c8f3d9088b166fd46ff66dbaa760bb2616cee716739cd204ed3f6d",
-      "queued_on": "2026-10-04"
+      "category": "awaiting-review",
+      "reason": "2026-10-07 native recovery: raw original OCR anchors and actual primary PDF pages verified; evidence per unit records exact page/checksum, historical attribution and 89/90 modern-book quotation budget. Scope: Aisha healing supplication; Uthman Quran-teaching hadith with directly verified Bukhari5027 inline citation; contents catalogue only; Mu’tamir historical athar. Current hash awaits genuine independent translation and scholar review; null approval, no models called.",
+      "content_sha256": "5bf1065f6281df926fe785a8b477fd34a23b72f01f22a935c644546c1bab4f62",
+      "queued_on": "2026-10-07",
+      "english_authors": [
+        "openai:codex"
+      ]
     },
     "isl-552b4f5a__en": {
-      "category": "source-unverified",
-      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
-      "content_sha256": "586d46cbe6f9a964d01438b1f5e23268300c1b9963faa2082e7344ab351b1b39",
-      "queued_on": "2026-10-04"
+      "category": "awaiting-review",
+      "reason": "2026-10-07 native recovery: raw original OCR anchors and actual primary PDF pages verified; evidence per unit records exact page/checksum, historical attribution and 89/90 modern-book quotation budget. Scope: Aisha healing supplication; Uthman Quran-teaching hadith with directly verified Bukhari5027 inline citation; contents catalogue only; Mu’tamir historical athar. Current hash awaits genuine independent translation and scholar review; null approval, no models called.",
+      "content_sha256": "09672e0ea924d75a0a991ac0ebd2115fe48b9117ca2d128cfd28a5c570ee971f",
+      "queued_on": "2026-10-07",
+      "english_authors": [
+        "openai:codex"
+      ]
     },
     "isl-7349e59c__en": {
-      "category": "source-unverified",
-      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
-      "content_sha256": "84867b11f841d5332c5e9fce085ee6eede881bf0732da005883fb86d426e8327",
-      "queued_on": "2026-10-04"
+      "category": "awaiting-review",
+      "reason": "2026-10-07 native recovery: raw original OCR anchors and actual primary PDF pages verified; evidence per unit records exact page/checksum, historical attribution and 89/90 modern-book quotation budget. Scope: Aisha healing supplication; Uthman Quran-teaching hadith with directly verified Bukhari5027 inline citation; contents catalogue only; Mu’tamir historical athar. Current hash awaits genuine independent translation and scholar review; null approval, no models called.",
+      "content_sha256": "a06e22b8952b04df9e02f350d28991236b314f4f4e5de9ec40522dcd11acddcc",
+      "queued_on": "2026-10-07",
+      "english_authors": [
+        "openai:codex"
+      ]
     },
     "isl-8f8f836b__en": {
-      "category": "source-unverified",
-      "reason": "Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
-      "content_sha256": "84c01e9beddda3fcbea92ea5a77df35d8ac55da55e88ea4c993532495121fbc1",
-      "queued_on": "2026-10-04"
+      "category": "awaiting-review",
+      "reason": "2026-10-07 native recovery: raw original OCR anchors and actual primary PDF pages verified; evidence per unit records exact page/checksum, historical attribution and 89/90 modern-book quotation budget. Scope: Aisha healing supplication; Uthman Quran-teaching hadith with directly verified Bukhari5027 inline citation; contents catalogue only; Mu’tamir historical athar. Current hash awaits genuine independent translation and scholar review; null approval, no models called.",
+      "content_sha256": "dd3b28ba61d065108a8096a10d9d74939f1e0114a2bf3c39f75d7ffd2111d963",
+      "queued_on": "2026-10-07",
+      "english_authors": [
+        "openai:codex"
+      ]
     },
     "isl-c0936200__en": {
       "category": "source-unverified",

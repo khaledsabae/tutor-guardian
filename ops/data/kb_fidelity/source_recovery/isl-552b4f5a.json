@@ -1,0 +1,60 @@
+{
+  "unit_id": "isl-552b4f5a",
+  "source_title": "حقوق الأولاد على الوالدين",
+  "source_author": "عماد بن أحمد بن عبدالعظيم",
+  "source_url": "https://www.alukah.net/Books/Files/Book_17337/BookFile/brotherandboys.pdf",
+  "pdf_sha256": "7fa6f88fbf1ba714947983c11cde1e8c67b576374ae06c08a081444743d1272c",
+  "original_ocr_sha256": "e347c10191eae08ae17b2d73b235529d49c092d6ec71e312b7071b39557204ef",
+  "raw_ocr_anchor": "ناؿثط ـط )5427(",
+  "original_ocr_locator": "Raw OCR spans PDF78/printed77 (teaching-Quran heading; Muslim779) and PDF79/printed78 (Uthman narration). Raw OCR has 5427; the actual PDF visibly prints Bukhari 5027. This is a visually proved OCR-digit correction, not an invented citation change. No broader duty or guaranteed outcome inferred.",
+  "pdf_pages_one_based": [
+    78,
+    79
+  ],
+  "selected_pdf_pages_one_based": [
+    79
+  ],
+  "selected_printed_pages": [
+    78
+  ],
+  "excerpt": "عن عثمان قال: قال رسول الله ﷺ: «خيركم من تعلم القرآن وعلمه».",
+  "excerpt_sha256": "a7406276449ca5f41a1f691798fa0826ebb5e8409b2c1d2125262e63e8f990cd",
+  "method": "Raw original OCR anchors located actual primary pages first. Direct visual reading of rendered primary pages; selected short excerpt manually transcribed, vowel marks/line wraps omitted and honorific glyphs expanded. No PDF or page copy added to repository.",
+  "historical_attribution": "Uthman narration; Sahih al-Bukhari 5027, visibly printed in the primary page body and independently matched in local corpus. Ancient public-domain hadith.",
+  "quotation_accounting": {
+    "new_modern_verbatim_words_this_unit": 0,
+    "new_modern_words_this_four_unit_batch": 6,
+    "previous_recovery_modern_words_conservative": 83,
+    "modern_book_aggregate_words": 89,
+    "limit": 90,
+    "ancient_public_domain_exclusion": true,
+    "note": "Only the two short contents headings add modern-author wording (six words). Other excerpts are explicitly ancient hadith/athar, not new modern prose. Duplicate AR/EN/evidence copies are the same distinct excerpts."
+  },
+  "hadith_matches": [
+    {
+      "text": "خيركم من تعلم القرآن وعلمه",
+      "citation": "صحيح البخاري — حديث ٥٠٢٧",
+      "exact_local_corpus_match": true
+    }
+  ],
+  "scope_limit": "Raw OCR spans PDF78/printed77 (teaching-Quran heading; Muslim779) and PDF79/printed78 (Uthman narration). Raw OCR has 5427; the actual PDF visibly prints Bukhari 5027. This is a visually proved OCR-digit correction, not an invented citation change. No broader duty or guaranteed outcome inferred.",
+  "approval": "Native primary-source evidence only; no model, scholar, human or publication approval. Drafts await independent translation and scholar review.",
+  "validation": {
+    "pair_schema_exit": 0,
+    "pair_schema_units": 2,
+    "guards": {
+      "check_kb_integrity.py": 0,
+      "check_kb_fidelity.py": 0,
+      "check_hadith_citations.py": 0,
+      "check_scripture_coverage.py": 0,
+      "check_quran_citations.py": 0,
+      "check_quran_rendering.py": 0,
+      "review_en_parity.py": 0
+    },
+    "canonical_sha256": "09672e0ea924d75a0a991ac0ebd2115fe48b9117ca2d128cfd28a5c570ee971f",
+    "deterministic_parity_defects": [],
+    "queue": "awaiting-review",
+    "models_called": 0,
+    "approval": null
+  }
+}
