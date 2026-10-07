@@ -134,12 +134,6 @@
       "reason": "It attributes words or deeds to the Prophet ﷺ or cites a hadith — check these first. Alukah_Rights_of_Children.pdf was extracted with its letters reversed, and this summary is model meta-voice («النص يتحدث عن…»); in the PR #20 review's sample of 7 such units none matched its source. The English matches the Arabic, but the Arabic is unverified, so it is held rather than certified until the PDF is re-extracted and the summary rewritten from it (KB-fidelity task).",
       "content_sha256": "905aa31b8730ec6962d79fff874cdb87b110cbb41185e1ab44798d27e9421c8f",
       "queued_on": "2026-10-04"
-    },
-    "story:yaseen_creation": {
-      "category": "awaiting-review",
-      "reason": "the Arabic gained interactive fields (age, category, three questions, Islamic value, challenge); their English is prepared in ops/data/en_parity_pending/ and is Claude-authored; waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
-      "content_sha256": "6f183269240e8fa043aa34380decdd474cd99d56efcc5d349b0e30317cea839d",
-      "queued_on": "2026-10-04"
     }
   }
 }

@@ -1190,7 +1190,7 @@
       },
       {
         "pageNumber": 5,
-        "text": "Yaseen raised his little hands and said, \"SubhanAllah, Alhamdulillah.\" He knew that every creature in nature glorifies Allah and points to His Oneness.",
+        "text": "Yaseen raised his little hands and said, \"SubhanAllah, Alhamdulillah.\" He knew that every creature in nature glorifies Allah with His praise and points to His Oneness.",
         "image": "docs/stories/yaseen_creation_5.png"
       },
       {
@@ -1203,7 +1203,6 @@
     "source_language": "ar",
     "translation": {
       "translator_model": "mistral-large-3:675b",
-      "reviewer_model": "deepseek-v4-pro",
       "attempts": 1,
       "needs_scholar_review": true,
       "scholar_signals": {
@@ -1212,19 +1211,41 @@
         "quran_ayah": true,
         "reviewer_model": true
       },
-      "review_verdict": "defects",
-      "review_defects": [
-        {
-          "type": "meaning_change",
-          "field": "pages[4].text",
-          "arabic": "يسبح بحمد الله",
-          "english": "glorifies Allah",
-          "why": "The Arabic says 'glorifies with the praise of Allah' (يسبح بحمد الله), but the English omits 'with His praise', losing a key Qur'anic nuance.",
-          "severity": "medium"
-        }
+      "review_verdict": "clean",
+      "review_defects": [],
+      "approved_by": "auto-review:gemini-3.1-pro-low+glm-5.2:2026-10-07",
+      "english_authors": [
+        "mistral-large-3:675b",
+        "claude-opus-5.5",
+        "gpt-6"
       ],
-      "approved_by": null
-    }
+      "auto_review": {
+        "reviewers": [
+          "gemini-3.1-pro-low",
+          "glm-5.2"
+        ],
+        "fixer": null,
+        "rounds": 1,
+        "prompt_version": "dfa8a5f39718",
+        "content_sha256": "66bcd1f7b9f240f91f640302251716ca7e2cfb0b2dae8dbb7ad4ceaccb6ef4c0",
+        "reviewed_at": "2026-10-07T09:48:37+00:00",
+        "residual_low": [],
+        "adjudicated": [],
+        "tool": "ops/tools/review_en_parity.py",
+        "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+      },
+      "reviewer_model": "gemini-3.1-pro-low+glm-5.2",
+      "revalidated_at": "2026-10-07T09:48:37+00:00"
+    },
+    "ageGroup": "5-8 years",
+    "category": "Reflecting on Allah's creation and greatness",
+    "discussionQuestions": [
+      "What wonders of Allah’s creation did Yaseen reflect on in the ant, stars, trees and flowers?",
+      "How does reflecting on nature make our love for Allah, glorified and exalted is He, stronger?",
+      "What is the most beautiful thing in Allah's creation that amazes you and makes you say «SubhanAllah»?"
+    ],
+    "islamicValue": "Allah says: ﴿رَبَّنَا مَا خَلَقْتَ هَٰذَا بَاطِلًا سُبْحَانَكَ فَقِنَا عَذَابَ النَّارِ﴾ (Al Imran: 191) — interpretation of the meaning: 'Our Lord, You did not create this aimlessly; exalted are You [above such a thing]; then protect us from the punishment of the Fire.'",
+    "actionChallenge": "Reflection challenge: look out of the window at the sky or the trees and say from your heart, with full attention: «Subhan Allah al-Azim wa bihamdih»."
   },
   {
     "id": "fatima_parents",
