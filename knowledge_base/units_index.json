@@ -5396,7 +5396,7 @@
       "normalized_age_group": "10-12",
       "behavior_type": "بلوغ الأولاد — العلامات والتوقيت وحديث الأب مع ابنه",
       "needs_ocr": false,
-      "size_chars": 2572
+      "size_chars": 2597
     },
     {
       "id": "dev-77d7ab2f",
@@ -14444,7 +14444,7 @@
       "normalized_age_group": "10-12",
       "behavior_type": "صيام الأطفال — الجفاف وعلامات الإفطار الفوري والطوارئ",
       "needs_ocr": false,
-      "size_chars": 2902
+      "size_chars": 2957
     },
     {
       "id": "med-81dee4c8",
@@ -16004,7 +16004,7 @@
       "normalized_age_group": "13-15",
       "behavior_type": "الدورة الشهرية في أول سنوات البلوغ — الطبيعي وعلامات الخطر",
       "needs_ocr": false,
-      "size_chars": 2471
+      "size_chars": 2704
     },
     {
       "id": "med-f9832e73",
