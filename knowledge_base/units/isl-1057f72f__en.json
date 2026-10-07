@@ -29,17 +29,34 @@
   "translation": {
     "translator_model": "mistral-large-3:675b",
     "needs_scholar_review": true,
-    "review_verdict": "pending",
+    "review_verdict": "clean",
     "review_defects": [],
-    "approved_by": null,
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
     "draft_status": "draft",
-    "source_recovery_note": "Source-faithful draft; no model review or approval.",
+    "source_recovery_note": "Source-faithful draft; canonical English parity reviewed by deepseek-v4-pro + glm-5.2. No scholar, human or publication approval.",
     "fixer_model": "openai:codex",
     "english_authors": [
       "mistral-large-3:675b",
       "openai:codex"
-    ]
+    ],
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "c4127f42604c80e5f56e26be191dedea73bfd6b74382b5a1b1def05b0211925a",
+      "reviewed_at": "2026-10-07T14:33:44+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+    },
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
+    "revalidated_at": "2026-10-07T14:33:44+00:00"
   },
   "source_url": "https://www.alukah.net/Books/Files/Book_17337/BookFile/brotherandboys.pdf#page=80",
-  "source_note": "DRAFT source recovery, 2026-10-07. Selected primary PDF excerpt; provenance and exact local citation checks: ops/data/kb_fidelity/source_recovery/isl-1057f72f.json. No scholar, human, model or publication approval."
+  "source_note": "DRAFT source recovery, 2026-10-07. Selected primary PDF excerpt; provenance and exact local citation checks: ops/data/kb_fidelity/source_recovery/isl-1057f72f.json. Canonical English parity review recorded; no scholar, human or publication approval."
 }
