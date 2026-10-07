@@ -2,7 +2,7 @@
   "id": "isl-09afb431__en",
   "domain": "islamic_parenting",
   "source_file": "Alukah_Rights_of_Children.pdf",
-  "title": "Teaching Children Salah and the Adab of the Masjid",
+  "title": "A Father's Request That His Son Arrive Early for Jumu'ah",
   "language": "en",
   "age_group": "4-6",
   "behavior_type": "تربية دينية",
@@ -10,30 +10,36 @@
   "severity": "خفيف",
   "reference_type": "كتاب_تربوي",
   "reference_info": "حقوق الأولاد على الوالدين - عماد عبدالعظيم (الألوكة)",
-  "text_original": "فتَلاصَ ـْ م ء :لبأ لل لاق :لاق ,ةقرحلا كلقم ,بقؼعي ـب ـؿحرلا دبط ـب ءلاعلا ـطو ؾس ,فبأ اي :تؾؼف ,اقكدلا ضرط ـم ائقش ديري فكأ تــظف ,ةجاح ؽقلإ لل نإ :لقؼي دقعس ابأ تعؿس نينف ,ةعؿجلا كلإ رؽبت نأ ؽللسأ نينف :لاق ,تئش ام ,ارقعب يدفؿلاؽف ,ساـلا نقبتؽي ةعؿجلا مقي ةؽئلاؿلا :ﷺ للها لقسر لاق دعق اذنف ,ةضقب مدؼؿلاكو ,ارئاص مدؼؿلاكو ,ةاش مدؼؿلاكو ,ةرؼب مدؼؿلاكو .)2(»ػحصلا تيقص برـؿلا كؾط ماملإا ـط حقحص داـسنب )166( »ماملإا ػؾخ ةءارؼلا« في يراخبلا جرخأو ٓو رفج اؿقف اقتؽساو ماملإا تؽسي اؿقف اوءرقا لـب اي :لاق ,فقبأ ـط ,ماشه .»ةبحتسمو ةبقتؽم ,ادطاصف باتؽلا ةحتاػب افقف أرؼي ٓ ةلاص ؿتت وْ أَ ,اكَ افَ َـفَ دحاوَ سٍ ػْ َـ ِ ب بُ ر شْ كَ ـُ حْ كَ وَ ل ِ بأَ لكآر : لَ اقَ ,سٍ ووُ اصَ ـِ بْ ا ـِ طَ و ،ةدابمق ـمس حور امٜمصدمط :لامى )317/1( ةبمٞمؿ بيأ ـمسا فمضرمظأ (1) :ًِطَ طسغ ٢ًع حٝشص ٙدآضإ .فمًقمى فمس فمٞمسأ ـمق ،ةورمق ـمس مامِه ـمق ،ةمٛمٚمؾ ـمس داحم ـمق ـمس دمٛمح لالح ـسمط دامٜمؾم٢مس )81/3( دحمأو ،)2324( »هدمٜسمُ« مذ سيمًامٞمٓمًا فمضرمظأ (2) .دحمأ دمٜمق ثيدحتمًامس حصر دمىو سمًدمُ قهو راسي ـمس قاحمؾإ .فمٜمق حمٞحص دامٜمؾم٢مس )28/8( ةبمٞمؿ بيأ ـمسا فمضرمظأ (3) ــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ نيدلاىلا ىلع دلاولأا قىقح ــــــــــــــــــــ ٛٗعشؼلا ًٕمعلا يمعتل يّبٗغشتٔ دلألأا حح :ُٔشؼعلأ ٌ٘اجلا للحا .)1(باتؽلاب ؿؾعلا اودقق لـب اي :فقـبل لقؼي ﭬ سكأ ناك ,مقق راغص اقكقؽت ننف اقؿؾعت لـب اي :لقؼقف ,فقـب عؿجي ةورط ناكو .)2(ؿؾط هدـط سقل للسي خقش كؾط حبقأ امو ,ـيرخآ رابك اقكقؽت نأ",
-  "text_simplified": "The text discusses the importance of teaching children Salah (prayer) and the adab (proper conduct) of the masjid. It highlights the necessity of guiding children toward Salah and habituating them to it from a young age. It also mentions some Prophetic hadiths that encourage this.",
+  "text_original": "وعن العلاء بن عبد الرحمن بن يعقوب، مولى الحرقة، قال: قال لي أبي: إن لي إليك حاجة، فظننت أنه يريد شيئا من عرض الدنيا، فقلت: يا أبه، سل ما شئت، قال: فإني أسألك أن تبكر إلى الجمعة.",
+  "text_simplified": "The father of al-Ala ibn Abd al-Rahman ibn Ya'qub asked his son to arrive early for Jumu'ah. The son had thought his father's request concerned something worldly, before his father told him what he wanted.",
   "labels": [
-    "تعليم الصلاة",
-    "أدب المسجد",
-    "تربية الأطفال",
-    "أحاديث نبوية"
+    "الجمعة",
+    "التبكير",
+    "العلاء بن عبد الرحمن"
   ],
   "created_at": "2026-06-21T10:25:15Z",
-  "updated_at": "2026-06-21T10:25:15Z",
+  "updated_at": "2026-10-07T09:47:34.205158+00:00",
   "version": "1.0.0",
   "source_meta": {
-    "source_title": "Alukah_Rights_of_Children",
-    "source_author": ""
+    "source_title": "حقوق الأولاد على الوالدين",
+    "source_author": "عماد أحمد عبدالعظيم"
   },
   "source_language": "ar",
   "translated_from": "isl-09afb431",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
     "review_verdict": "pending",
     "review_defects": [],
     "approved_by": null,
-    "revalidated_at": "2026-10-04T11:18:18+00:00"
-  }
+    "draft_status": "draft",
+    "source_recovery_note": "Source-faithful draft; no model review or approval.",
+    "fixer_model": "openai:codex",
+    "english_authors": [
+      "mistral-large-3:675b",
+      "openai:codex"
+    ]
+  },
+  "source_url": "https://www.alukah.net/Books/Files/Book_17337/BookFile/brotherandboys.pdf#page=105",
+  "source_note": "DRAFT source recovery, 2026-10-07. Selected primary PDF excerpt; provenance and exact local citation checks: ops/data/kb_fidelity/source_recovery/isl-09afb431.json. No scholar, human, model or publication approval."
 }

@@ -2,7 +2,7 @@
   "id": "isl-14009a8e__en",
   "domain": "islamic_parenting",
   "source_file": "Alukah_Rights_of_Children.pdf",
-  "title": "Teaching Children Salah and the Importance of Commitment to It",
+  "title": "Abu Qirsafa Calling His Son Iyad to Salah",
   "language": "en",
   "age_group": "7-9",
   "behavior_type": "تربية دينية",
@@ -10,31 +10,36 @@
   "severity": "خفيف",
   "reference_type": "كتاب_تربوي",
   "reference_info": "حقوق الأولاد على الوالدين - عماد عبدالعظيم (الألوكة)",
-  "text_original": "يُ ل ِ بصَ لا« ل ِ ف فُ كَ أَ اؿ كَ ف ِ يْ قَ بَ َٕ ِ ام كْ إ ف ِ ِ ب ؾُ عَ ػْ يُ ام قْ غَ اذَ هَ وَ ف ِ ِ ؾؿ كؾَ طَ ؽَ ِ لذَ ِ ب كؾَ طَ ؽَ ل ذَ ِ ب زُ قَ ؿ تَ يَ وَ هُ اقَ بَ أَ فقطعْ يُ اؿ ِ بوَ فُ بُ سؽْ يَ اؿ ِ ب عُ ػتَ ْـيَ دْ قَ ةيَ ق ِ قَ كْ دُ لا ؿِ عَ ِـلا .)3(» ؽَ لذَ كَ فبتكا اذإ ةفاصرق قبُ أَ ناؽف ضاقط :فل لاؼي ـبا فل ﭬ ةفاصرق قبأ ناكو نإو :لاق ,ةبأ اي ؽقبل ؽقبل :لقؼقف ,ةلاصلا ضاقط اي :ىداك ,ةادغلا ةلاصل .)132ص( »دودقمعا ةمٗتح« (1) .فمٞمسأ ـمق بمٞمٕمؿ ـمس ورمٛمق لالح ـسمط دامٜمؾم٢مس همػمهو )495( دواد قمسأ فمضرمظأ (2) .)278/4( »ىواتمٗمًا عقمٛمج« (3) ـــــــــــــــتــــــــ نيدلاىلا ىلع دلاولأا قىقح ـــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ ىداك ماشلاب قهو فبتكا اذإ ناك ةفاصرق ابأ نأو ,مورلا ضرأ كلإ جرخ اضاقط :لقؼي فبتكا اذنف ,مورلا ضرلب قهو ,ةلاصلا ةلاصلا ضاقط اي :عـصي ناك اؿك .)1(»ؽقبل ؽقبل ةبأ اي :ضاقط لقؼقف ,ضاقط اي ؽُ ئاَـبْ أَ كؾَ طَ اقظُ فاحَ :ﭬ للها دُ بْ طَ لَ اقَ : لَ اقَ ,صِ قَ حْ َٕا ل ِ بأَ ـْ طَ ش ـْ م فُ َـقؿيَ فَ ر طَ اذَ إ ةَ َلاصَ لا ل ِ بصَ لا ؿ ؾَ عَ يُ : لَ اقَ ,ﭭ ر طُ ـِ بْ ا ـِ طَ و رػعجو اكأو ـقسحلا ـب",
-  "text_simplified": "The text speaks about the importance of salah and teaching children to perform it from a young age. It mentions a story about a father who would wake his son for salah and urge him to maintain it. The goal is to instill worship and religious commitment in the hearts of children.",
+  "text_original": "وكان أبو قرصافة رضي الله عنه له ابن يقال له: عياض، فكان أبو قرصافة إذا انتبه لصلاة الغداة، نادى: يا عياض الصلاة، فيقول: لبيك لبيك يا أبة، قال: وإن عياضا خرج إلى أرض الروم، وأن أبا قرصافة كان إذا انتبه وهو بالشام نادى كما كان يصنع: يا عياض الصلاة الصلاة، وهو بأرض الروم، فإذا انتبه يقول: يا عياض، فيقول عياض: يا أبة لبيك لبيك.",
+  "text_simplified": "Abu Qirsafa would call his son Iyad to the dawn salah, and Iyad would answer, \"Here I am, here I am, Father.\" After Iyad left for the land of the Romans, his father continued to call him when he awoke in al-Sham.",
   "labels": [
-    "صلاة",
-    "تربية",
-    "أطفال",
-    "التزام ديني",
-    "قدوة"
+    "صلاة الغداة",
+    "أبو قرصافة",
+    "عياض"
   ],
   "created_at": "2026-06-21T10:23:42Z",
-  "updated_at": "2026-06-21T10:23:42Z",
+  "updated_at": "2026-10-07T09:47:34.210358+00:00",
   "version": "1.0.0",
   "source_meta": {
-    "source_title": "Alukah_Rights_of_Children",
-    "source_author": ""
+    "source_title": "حقوق الأولاد على الوالدين",
+    "source_author": "عماد أحمد عبدالعظيم"
   },
   "source_language": "ar",
   "translated_from": "isl-14009a8e",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
     "review_verdict": "pending",
     "review_defects": [],
     "approved_by": null,
-    "revalidated_at": "2026-10-04T11:18:18+00:00"
-  }
+    "draft_status": "draft",
+    "source_recovery_note": "Source-faithful draft; no model review or approval.",
+    "fixer_model": "openai:codex",
+    "english_authors": [
+      "mistral-large-3:675b",
+      "openai:codex"
+    ]
+  },
+  "source_url": "https://www.alukah.net/Books/Files/Book_17337/BookFile/brotherandboys.pdf#page=90",
+  "source_note": "DRAFT source recovery, 2026-10-07. Selected primary PDF excerpt; provenance and exact local citation checks: ops/data/kb_fidelity/source_recovery/isl-14009a8e.json. No scholar, human, model or publication approval."
 }

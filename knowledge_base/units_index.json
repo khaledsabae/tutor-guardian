@@ -7261,26 +7261,26 @@
     {
       "id": "isl-09afb431",
       "domain": "islamic_parenting",
-      "title": "تعليم الأطفال الصلاة وأدب المسجد",
+      "title": "طلب الأب من ابنه التبكير إلى الجمعة",
       "source_file": "Alukah_Rights_of_Children.pdf",
       "language": "ar",
       "original_age_group": "4-6",
       "normalized_age_group": "4-6",
       "behavior_type": "تربية دينية",
       "needs_ocr": false,
-      "size_chars": 1428
+      "size_chars": 177
     },
     {
       "id": "isl-09afb431__en",
       "domain": "islamic_parenting",
-      "title": "Teaching Children Salah and the Adab of the Masjid",
+      "title": "A Father's Request That His Son Arrive Early for Jumu'ah",
       "source_file": "Alukah_Rights_of_Children.pdf",
       "language": "en",
       "original_age_group": "4-6",
       "normalized_age_group": "4-6",
       "behavior_type": "تربية دينية",
       "needs_ocr": false,
-      "size_chars": 1428
+      "size_chars": 177
     },
     {
       "id": "isl-0bf3f3b0",
@@ -7489,26 +7489,26 @@
     {
       "id": "isl-14009a8e",
       "domain": "islamic_parenting",
-      "title": "تعليم الأطفال الصلاة وأهمية الالتزام بها",
+      "title": "نداء أبي قرصافة لابنه عياض إلى الصلاة",
       "source_file": "Alukah_Rights_of_Children.pdf",
       "language": "ar",
       "original_age_group": "7-9",
       "normalized_age_group": "7-9",
       "behavior_type": "تربية دينية",
       "needs_ocr": false,
-      "size_chars": 1094
+      "size_chars": 325
     },
     {
       "id": "isl-14009a8e__en",
       "domain": "islamic_parenting",
-      "title": "Teaching Children Salah and the Importance of Commitment to ",
+      "title": "Abu Qirsafa Calling His Son Iyad to Salah",
       "source_file": "Alukah_Rights_of_Children.pdf",
       "language": "en",
       "original_age_group": "7-9",
       "normalized_age_group": "7-9",
       "behavior_type": "تربية دينية",
       "needs_ocr": false,
-      "size_chars": 1094
+      "size_chars": 325
     },
     {
       "id": "isl-14660eb4",
@@ -8545,26 +8545,26 @@
     {
       "id": "isl-3d476538",
       "domain": "islamic_parenting",
-      "title": "تعويد الأطفال على الصيام والعبادات",
+      "title": "رواية الربيع بنت معوذ عن صيام عاشوراء",
       "source_file": "Alukah_Rights_of_Children.pdf",
       "language": "ar",
       "original_age_group": "7-9",
       "normalized_age_group": "7-9",
       "behavior_type": "تربية دينية",
       "needs_ocr": false,
-      "size_chars": 1272
+      "size_chars": 284
     },
     {
       "id": "isl-3d476538__en",
       "domain": "islamic_parenting",
-      "title": "Accustoming Children to Fasting and 'Ibadat",
+      "title": "Al-Rubayyi' bint Mu'awwidh's Account of Ashura Fasting",
       "source_file": "Alukah_Rights_of_Children.pdf",
       "language": "en",
       "original_age_group": "7-9",
       "normalized_age_group": "7-9",
       "behavior_type": "تربية دينية",
       "needs_ocr": false,
-      "size_chars": 1272
+      "size_chars": 284
     },
     {
       "id": "isl-3e91893e",
