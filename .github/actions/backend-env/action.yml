@@ -24,6 +24,7 @@ runs:
         cache: pip
         cache-dependency-path: |
           backend/requirements.txt
+          backend/requirements-dev.txt
           .github/ci/constraints-prod.txt
 
     # requirements.txt alone is not enough: its ranges resolve to whatever PyPI
@@ -44,7 +45,7 @@ runs:
         # --no-deps so its dependencies resolve below, under the constraints.
         torch_pin="$(grep '^torch==' "$C")"
         pip install --no-deps --index-url https://download.pytorch.org/whl/cpu "$torch_pin"
-        pip install -r backend/requirements.txt -c "$C"
+        pip install -r backend/requirements.txt -r backend/requirements-dev.txt -c "$C"
         pip check
         cuda="$(pip list 2>/dev/null | grep -i '^nvidia-' || true)"
         if [ -n "$cuda" ]; then echo "::error::CUDA wheels installed: $cuda"; exit 1; fi
@@ -75,8 +76,8 @@ runs:
             print("::warning::in production's set but no longer required: " + ", ".join(gone))
         if recorded != hashlib.sha256(open("backend/requirements.txt", "rb").read()).hexdigest():
             print("::warning::backend/requirements.txt changed since .github/ci/constraints-prod.txt "
-                  "was generated. Production re-resolves every package on the next deploy; run "
-                  ".github/ci/refresh-constraints-from-prod.sh once that deploy is live.")
+                  "was generated. This snapshot's provenance remains historical; review manifest "
+                  "compatibility before changing its pins. Both CI and Docker still apply it.")
         EOF
 
     # Keys are derived from what the code actually loads, not from file paths:
