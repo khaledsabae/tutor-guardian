@@ -740,7 +740,7 @@
     "source_language": "ar",
     "translation": {
       "translator_model": "mistral-large-3:675b",
-      "reviewer_model": "deepseek-v4-pro",
+      "reviewer_model": "deepseek-v4-pro+glm-5.2",
       "attempts": 1,
       "needs_scholar_review": true,
       "scholar_signals": {
@@ -749,19 +749,65 @@
         "quran_ayah": false,
         "reviewer_model": true
       },
-      "review_verdict": "defects",
+      "review_verdict": "low_only",
       "review_defects": [
         {
-          "type": "term_error",
-          "field": "pages[4].text",
-          "arabic": "الشرع الإسلامي",
-          "english": "Islamic law",
-          "why": "The Arabic term 'الشرع' is translated as 'law' instead of being transliterated as 'Shariah', while the description transliterates 'السنة' as 'Sunnah'. This inconsistency in handling Islamic terms within the same document is a term error.",
-          "severity": "low"
+          "model": "deepseek-v4-pro",
+          "field": "pages[1].text",
+          "type": "hadith",
+          "why": "A well-known hadith (Sahih Muslim) is quoted without any source citation, which is acceptable but worth noting per policy."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "field": "discussionQuestions[0]",
+          "type": "meaning",
+          "why": "The name is transliterated as 'Khadijah' throughout the story but as 'Khadija' in this question, a minor inconsistency."
         }
       ],
-      "approved_by": null
-    }
+      "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
+      "english_authors": [
+        "mistral-large-3:675b",
+        "claude-opus-5.5"
+      ],
+      "auto_review": {
+        "reviewers": [
+          "deepseek-v4-pro",
+          "glm-5.2"
+        ],
+        "fixer": null,
+        "rounds": 1,
+        "prompt_version": "dfa8a5f39718",
+        "content_sha256": "0273f101dc8a6e3a26a93a60c7a3228358d5ebafd5f3e1fedd54f29a154b2d49",
+        "reviewed_at": "2026-10-07T08:43:47+00:00",
+        "residual_low": [
+          {
+            "model": "deepseek-v4-pro",
+            "field": "pages[1].text",
+            "type": "hadith",
+            "why": "A well-known hadith (Sahih Muslim) is quoted without any source citation, which is acceptable but worth noting per policy."
+          },
+          {
+            "model": "deepseek-v4-pro",
+            "field": "discussionQuestions[0]",
+            "type": "meaning",
+            "why": "The name is transliterated as 'Khadijah' throughout the story but as 'Khadija' in this question, a minor inconsistency."
+          }
+        ],
+        "adjudicated": [],
+        "tool": "ops/tools/review_en_parity.py",
+        "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+      },
+      "revalidated_at": "2026-10-07T08:43:47+00:00"
+    },
+    "ageGroup": "4-7 years",
+    "category": "The neighbour's right and ihsan (doing good)",
+    "discussionQuestions": [
+      "What did Khadija give her elderly neighbour to make her happy?",
+      "What did the Prophet ﷺ advise about being good to neighbours?",
+      "What would you do if you saw your neighbour needing help, or if they were ill?"
+    ],
+    "islamicValue": "The Messenger of Allah ﷺ said: “Jibril kept urging me to treat the neighbour well until I thought he would make him an heir.” (Sahih al-Bukhari 6015)",
+    "actionChallenge": "Ihsan challenge: today, share a plate of sweets or some good food with your neighbour, or send them a warm greeting of salam."
   },
   {
     "id": "abdullah_bismillah",
@@ -1344,7 +1390,7 @@
     "source_language": "ar",
     "translation": {
       "translator_model": "mistral-large-3:675b",
-      "reviewer_model": "deepseek-v4-pro",
+      "reviewer_model": "deepseek-v4-pro+glm-5.2",
       "attempts": 1,
       "needs_scholar_review": true,
       "scholar_signals": {
@@ -1353,26 +1399,64 @@
         "quran_ayah": true,
         "reviewer_model": true
       },
-      "review_verdict": "defects",
+      "review_verdict": "low_only",
       "review_defects": [
         {
-          "type": "meaning_change",
-          "field": "page 3 text",
-          "arabic": "برفق ولين",
-          "english": "with rifq (gentleness)",
-          "why": "Omitted 'ولين' (and softness). The Arabic says 'with gentleness and softness', but the English only mentions gentleness.",
-          "severity": "low"
+          "model": "deepseek-v4-pro",
+          "field": "pages[1].text",
+          "type": "source_corruption",
+          "why": "The Quranic ayah is missing the jussive sukun on 'يَسْخَرْ', making it read as indicative instead of prohibition."
         },
         {
-          "type": "term_error",
-          "field": "page 6 text",
-          "arabic": "بالحق والرفق",
-          "english": "with truth and rifq",
-          "why": "Inconsistent handling of 'rifq'. On page 3, 'rifq' was translated as 'gentleness' in parentheses, but here it is left untranslated, which may confuse readers.",
-          "severity": "low"
+          "model": "glm-5.2",
+          "field": "pages[2].text",
+          "type": "omission",
+          "why": "The Arabic has two qualities — rifq (gentleness) and lin (softness/tenderness) — but the English renders only the first."
         }
       ],
-      "approved_by": null
-    }
+      "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
+      "english_authors": [
+        "mistral-large-3:675b",
+        "claude-opus-5.5"
+      ],
+      "auto_review": {
+        "reviewers": [
+          "deepseek-v4-pro",
+          "glm-5.2"
+        ],
+        "fixer": null,
+        "rounds": 1,
+        "prompt_version": "dfa8a5f39718",
+        "content_sha256": "900db069fbf1595d80ed186e44bd6ab021c5c92a983b9f170718fd9035f89372",
+        "reviewed_at": "2026-10-07T08:38:25+00:00",
+        "residual_low": [
+          {
+            "model": "deepseek-v4-pro",
+            "field": "pages[1].text",
+            "type": "source_corruption",
+            "why": "The Quranic ayah is missing the jussive sukun on 'يَسْخَرْ', making it read as indicative instead of prohibition."
+          },
+          {
+            "model": "glm-5.2",
+            "field": "pages[2].text",
+            "type": "omission",
+            "why": "The Arabic has two qualities — rifq (gentleness) and lin (softness/tenderness) — but the English renders only the first."
+          }
+        ],
+        "adjudicated": [],
+        "tool": "ops/tools/review_en_parity.py",
+        "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+      },
+      "revalidated_at": "2026-10-07T08:38:25+00:00"
+    },
+    "ageGroup": "5-8 years",
+    "category": "Truthful words and courage",
+    "discussionQuestions": [
+      "Why did Hamza choose to tell the truth even though it was hard?",
+      "How does honesty always save the one who tells the truth, even when they think otherwise?",
+      "Why is it important for a Muslim's tongue to be truthful and to speak only good?"
+    ],
+    "islamicValue": "The Messenger of Allah ﷺ said: “Truthfulness leads to righteousness, and righteousness leads to Paradise.” (Sahih al-Bukhari 6094)",
+    "actionChallenge": "Truthful-words challenge: today, make sure nothing comes out of your mouth except a kind word, a smile and sincere truth."
   }
 ]

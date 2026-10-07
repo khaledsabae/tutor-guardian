@@ -21,41 +21,50 @@
   "needs_professional_followup": false,
   "is_published": true,
   "version": "1.0.0",
-  "approved_by": null,
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
   "language": "en",
   "source_language": "ar",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "deepseek-v4-pro",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
     "scholar_signals": {
       "keyword": true,
       "quoted_arabic": true,
       "reviewer_model": true
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "summary",
-        "arabic": "عند أول ضغط اجتماعي",
-        "english": "at the first sign of social pressure",
-        "why": "The Arabic says 'at the first social pressure' without the word 'sign'. The addition of 'sign of' slightly alters the meaning.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "reflection_prompts[1]",
-        "arabic": "عند أول ضغط",
-        "english": "at the first sign of pressure",
-        "why": "The Arabic says 'at the first pressure' without the word 'sign'. The addition of 'sign of' slightly alters the meaning.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null,
-    "revalidated_at": "2026-08-13T17:22:41.775096+00:00",
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
+    "revalidated_at": "2026-10-07T08:37:10+00:00",
     "manual_fix_note": "2026-10-04 scripture fix: hadith quoted only from the Sahihayn with book + number (Muslim by Abd al-Baqi); non-Sahihayn or paraphrased quotes replaced, mirrored from the Arabic.",
     "fixed_at": "2026-10-04T08:15:36.331649+00:00",
-    "fixer_model": "claude-opus-5.5"
+    "fixer_model": "claude-opus-5.5",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "e3bb16579e347c2c0949297e9318fe43e8242ad3a29aef36204f183168839d60",
+      "reviewed_at": "2026-10-07T08:37:10+00:00",
+      "residual_low": [],
+      "adjudicated": [
+        {
+          "field": "summary",
+          "type": "hadith",
+          "reason": "The Arabic names the prayer-at-seven narration's real source (Abu Dawud) in indirect speech, as in isl-f2bef952 — same decision and the same open question for Khaled; check_scripture_coverage passes.",
+          "by": "claude-opus-5.5 (en-parity review, PR #20)",
+          "on": "2026-10-04"
+        }
+      ],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+    },
+    "english_authors": [
+      "claude-opus-5.5"
+    ]
   }
 }

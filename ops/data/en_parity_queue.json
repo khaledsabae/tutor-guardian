@@ -147,15 +147,6 @@
       "content_sha256": "905aa31b8730ec6962d79fff874cdb87b110cbb41185e1ab44798d27e9421c8f",
       "queued_on": "2026-10-04"
     },
-    "lesson_13-15_islamic_mockery_01": {
-      "category": "awaiting-review",
-      "reason": "English rewritten by Claude to fix reviewer-located defects; Claude does not stamp its own English — waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
-      "content_sha256": "e3bb16579e347c2c0949297e9318fe43e8242ad3a29aef36204f183168839d60",
-      "queued_on": "2026-10-04",
-      "english_authors": [
-        "claude-opus-5.5"
-      ]
-    },
     "path_0-3_cyber_screen_foundations": {
       "category": "awaiting-review",
       "reason": "Phase 0 honest labels (content/p1-deep-paths): the description promised a duration its lessons cannot keep («لمدة 10/12/14 يومًا» / «10/12/14-day»), so that phrase was removed from the Arabic and the English together and nothing else changed (the prenatal path keeps #20's safe-sleep wording, without the 5 S's). The 2026-10-04 stamp covered the old text. Re-review after the Ollama weekly reset; Claude edited the English, so Claude may not stamp it.",
@@ -187,18 +178,6 @@
       "category": "awaiting-review",
       "reason": "the Arabic gained interactive fields (age, category, three questions, Islamic value, challenge); their English is prepared in ops/data/en_parity_pending/ and is Claude-authored; waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
       "content_sha256": "7205e0f9b09e9fc8665f07756871ff7bd4325200d8db5a753fd12f60323ee086",
-      "queued_on": "2026-10-04"
-    },
-    "story:hamza_truth": {
-      "category": "awaiting-review",
-      "reason": "the Arabic gained interactive fields (age, category, three questions, Islamic value, challenge); their English is prepared in ops/data/en_parity_pending/ and is Claude-authored; waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
-      "content_sha256": "d88d8c377c7c38363e8abe9e7cdba1f86142c28806f60cffcf6ce36b15580653",
-      "queued_on": "2026-10-04"
-    },
-    "story:khadija_neighbor": {
-      "category": "awaiting-review",
-      "reason": "the Arabic gained interactive fields (age, category, three questions, Islamic value, challenge); their English is prepared in ops/data/en_parity_pending/ and is Claude-authored; waits for deepseek-v4-pro + glm-5.2 — the Ollama key hit its weekly cap on 2026-10-04 and also serves a live system",
-      "content_sha256": "aabbd16917fc9c37f36c6eadd185cc1dcf42fc92c9ecad0554851ec050480378",
       "queued_on": "2026-10-04"
     },
     "story:maryam_toys": {
