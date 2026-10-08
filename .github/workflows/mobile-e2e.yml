@@ -104,8 +104,12 @@ env:
   MAESTRO_VERSION: '2.11.0'
   # checksums_sha256.txt of the cli-2.11.0 release
   MAESTRO_SHA256: 5384593cb4e7a106489e75a821d157dd43f4e438df6bc308b72e82c685e1283a
-  # Bump the suffix when the emulator settings below change.
+  # Bump the suffix when the emulator settings below change — here AND in
+  # e2e-avd-cache.yml, which keeps this key warm on main (test_workflow.py
+  # checks the two match). This workflow runs only for PRs, and a PR's cache is
+  # visible to that PR alone, so without the main copy every new PR missed.
   AVD_CACHE_KEY: avd-api35-google_apis-x86_64-pixel_7-r1
+  SYSTEM_IMAGE: 'system-images;android-35;google_apis;x86_64'
 
 jobs:
   keystore:
@@ -303,6 +307,12 @@ jobs:
           BIN=$(dirname "$(find "$RUNNER_TEMP/maestro-cli" -path '*/bin/maestro' -type f | head -1)")
           echo "$BIN" >> "$GITHUB_PATH"
           "$BIN/maestro" --version
+
+      # The action downloads the image once per job without retrying; a corrupt
+      # download (2026-10-08) left no emulator at all. Already installed, the
+      # action skips it.
+      - name: Install the system image (retried, verified)
+        run: bash e2e/install_system_image.sh "$SYSTEM_IMAGE"
 
       - name: Restore the AVD
         uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
