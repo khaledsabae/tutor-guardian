@@ -56,8 +56,10 @@ PROD_LOCK = Path(".github/ci/requirements-prod.lock")
 DEV_LOCK = Path(".github/ci/requirements-dev.lock")
 
 TORCH_INDEX = "https://download.pytorch.org/whl/cpu"
-# Not in the freeze (pip hides it), required by torch. Bump deliberately.
-TOOLING = {"setuptools": "84.0.0"}
+# Not in the freeze (pip hides it), required by torch (>=77.0.3). Production's
+# own version, read from tg_backend with importlib.metadata on 2026-10-08
+# (Python 3.11.17, pip 24.0, setuptools 79.0.1). Change only with production.
+TOOLING = {"setuptools": "79.0.1"}
 
 # Every tag pip on production's image (or a GitHub-hosted Ubuntu runner) could
 # accept: CPython 3.11, any manylinux glibc level on x86_64. A file outside this

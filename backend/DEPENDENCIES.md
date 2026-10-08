@@ -83,10 +83,10 @@ from PyPI. The image build still fails if any `nvidia-*` package appears.
 
 **setuptools** is the one locked package the constraints lack: `pip freeze`
 hides it, but torch 2.13 requires `setuptools>=77.0.3`. It is pinned in the
-generator (`TOOLING`, currently 84.0.0 — the release the constrained resolve picks,
-published 2026-08-08, before the 2026-10-04 freeze) rather than left to whatever
-the base image or runner ships. Production's actual setuptools version was not
-recorded by the freeze; a future refresh could capture it with `pip freeze --all`.
+generator (`TOOLING`) at production's own version, 79.0.1, read from `tg_backend`
+with `importlib.metadata` on 2026-10-08 (same container: Python 3.11.17, pip
+24.0), rather than left to whatever the base image or runner ships. Keep it equal
+to production's; a future refresh could capture it with `pip freeze --all`.
 
 ### Regenerating
 
