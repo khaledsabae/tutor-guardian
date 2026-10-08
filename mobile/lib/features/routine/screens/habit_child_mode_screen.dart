@@ -314,8 +314,13 @@ class _HabitChildCardState extends ConsumerState<_HabitChildCard> {
       unawaited(Haptics.warning());
       messenger.showSnackBar(SnackBar(content: Text(l10n.habitChildModeFailed)));
     } else if (r.milestone != null && navigator.mounted) {
+      // quiet (phase 1: مستويات الاحتفال): a streak milestone in child mode
+      // is acknowledged, not staged — the child's screen stays its own calm
+      // place, and confetti over a routine tracker was a volume the moment
+      // did not ask for.
       await showCelebration(
         navigator.context,
+        tier: CelebrationTier.quiet,
         emoji: '🔥',
         title: l10n.habitMilestoneTitle(switch (r.milestone) {
           3 => 'three',

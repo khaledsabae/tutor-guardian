@@ -41,6 +41,7 @@ import '../providers/favorites_provider.dart';
 import '../widgets/next_step_sheet.dart';
 import '../../../config/app_config.dart';
 import '../providers/program_providers.dart';
+import '../../coins/coins_providers.dart';
 import '../providers/progress_providers.dart';
 import '../../../theme/app_palette.dart';
 import '../../../widgets/ui/error_retry_view.dart';
@@ -81,6 +82,32 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
   /// watches the provider directly so it still rebuilds on a child switch.
   int? get _childId => widget.childId ?? ref.read(activeChildIdProvider);
 
+  /// «{n} من {total} في «{path}»» — where this lesson sits, read from the
+  /// lesson and the path list already in memory. The celebration message
+  /// carries it (phase 1: النصوص) so the moment says what was accomplished,
+  /// not merely that something was recorded.
+  ({int n, int total, String path}) _lessonPosition() {
+    final lesson = ref.read(lessonProvider(widget.lessonId)).valueOrNull;
+    final paths = ref
+            .read(pathsListProvider(PathsListArgs(ageGroup: widget.ageGroup)))
+            .valueOrNull
+            ?.paths ??
+        const <CurriculumPath>[];
+    CurriculumPath? path;
+    for (final p in paths) {
+      if (p.id == lesson?.pathId) {
+        path = p;
+        break;
+      }
+    }
+    final total = path?.lessonIds.length ?? 0;
+    final index = path?.lessonIds.indexOf(widget.lessonId) ?? -1;
+    final n = index >= 0
+        ? index + 1
+        : ((lesson?.order ?? 0) > 0 ? lesson!.order : 1);
+    return (n: n, total: total > 0 ? total : n, path: path?.title ?? '');
+  }
+
   Future<void> _markComplete() async {
     final childId = _childId;
     if (childId == null) return;
@@ -92,11 +119,26 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
             ?.tryThis
             .trim() ??
         '';
+    // «أول خطوة 🌱» merges into the lesson's own celebration (phase 1: هدية
+    // اليوم والشارات) instead of a separate, silent credit on Today. This is
+    // the first completed lesson when the bundle has none yet — read before
+    // the PATCH, which invalidates and refetches it.
+    final firstCompletion =
+        (ref.read(childProgressProvider(childId)).valueOrNull?.completedCount ??
+                0) ==
+            0;
+    final coins = ref.read(coinsProvider.notifier);
+    final position = _lessonPosition();
     setState(() => _marking = true);
     try {
       await ref.read(markLessonProgressProvider(widget.lessonId).notifier)
           .markProgress(ProgressStatus.completed, childId: childId);
       unawaited(Analytics.lessonCompleted(widget.lessonId));
+      // Idempotent by badge id: crediting here means the badge is paid in
+      // the moment that earned it, and Today's claim can never double-pay.
+      final paidBadges = firstCompletion
+          ? await coins.creditBadges(const ['first_step'])
+          : const <String>[];
       if (mounted) {
         // Confetti celebration, then return to path detail so the
         // progress bar refreshes immediately (same auto-pop contract
@@ -106,7 +148,15 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
           emoji: '🎉',
           imageAsset: 'assets/images/generated/mascot_celebrate.webp',
           title: AppLocalizations.of(context).lessonCelebrationTitle,
-          message: AppLocalizations.of(context).lessonCelebrationMsg,
+          message: AppLocalizations.of(context).lessonCelebrationMsg(
+                position.n,
+                position.total,
+                position.path,
+              ),
+          badge: paidBadges.contains('first_step')
+              ? (emoji: '🌱',
+                  title: AppLocalizations.of(context).badgeFirstStepTitle)
+              : null,
         );
         // «كيفية تنفيذ القيمة» — the complaint this answers. The lesson's
         // `try_this` is a single doable action, and it was buried as section 4
