@@ -86,6 +86,11 @@ run_flow() {  # severity(gate|info) lineage name file [extra maestro args...]
   find "$dir" -path '*takeScreenshot*' -name '*.png' | while read -r png; do
     cp "$png" "$OUT/screens/${lineage}__${name}__$(basename "$png")"
   done
+  # A flow that retried as a parent would (a 5xx from production, a lost tap)
+  # leaves a *retry* screenshot. A pass is still a pass, but it is said aloud.
+  if [ -n "$(find "$dir" -path '*takeScreenshot*' -name '*retry*.png' -print -quit)" ]; then
+    echo "::warning title=E2E $lineage/$name::passed only after a retry — see the *retry* screenshot in e2e-screenshots"
+  fi
   echo "::endgroup::"
   if [ "$rc" -ne 0 ]; then
     if [ "$severity" = info ]; then

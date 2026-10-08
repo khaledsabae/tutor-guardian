@@ -126,8 +126,62 @@ class UnitTestStepTest(unittest.TestCase):
     def test_the_tooling_tests_leak_no_workflow_command(self):
         # The pause is the backstop; the tests themselves should not need it.
         e2e = Path(__file__).resolve().parent
-        proc = subprocess.run([sys.executable, '-m', 'unittest', 'test_e2e_tool', 'test_run'],
+        proc = subprocess.run([sys.executable, '-m', 'unittest', 'test_e2e_tool', 'test_run', 'test_install_system_image'],
                               cwd=e2e, capture_output=True, text=True, timeout=120)
         self.assertEqual(proc.returncode, 0, proc.stderr[-2000:])
         leaked = [l for l in (proc.stdout + proc.stderr).splitlines() if l.startswith('::')]
         self.assertEqual(leaked, [])
+
+
+class AvdCacheTest(unittest.TestCase):
+    """The AVD cache mobile-e2e.yml restores must exist on main: a PR-scoped
+    cache serves only its own PR, so every new PR missed it (2026-10-08)."""
+
+    @classmethod
+    def setUpClass(cls):
+        load = lambda p: yaml.load(p.read_text(), Loader=yaml.BaseLoader)
+        cls.e2e = load(WORKFLOW)
+        cls.warm = load(WORKFLOW.parent / 'e2e-avd-cache.yml')
+
+    @staticmethod
+    def step(steps, name):
+        found = [s for s in steps if s.get('name') == name]
+        assert len(found) == 1, name
+        return found[0]
+
+    def test_same_key_and_image(self):
+        for var in ('AVD_CACHE_KEY', 'SYSTEM_IMAGE'):
+            self.assertEqual(self.warm['env'][var], self.e2e['env'][var], var)
+
+    def test_warm_creates_exactly_the_avd_the_journeys_restore(self):
+        e2e_steps, warm_steps = self.e2e['jobs']['e2e']['steps'], self.warm['jobs']['avd']['steps']
+        name = 'Create the AVD and a boot snapshot'
+        self.assertEqual(self.step(warm_steps, name)['with'], self.step(e2e_steps, name)['with'])
+        restore = self.step(e2e_steps, 'Restore the AVD')['with']
+        lookup = self.step(warm_steps, 'Is the AVD cached already?')['with']
+        save = self.step(warm_steps, 'Save the AVD on main')['with']
+        self.assertEqual(lookup['lookup-only'], 'true')
+        for w in (lookup, save):
+            self.assertEqual((w['path'], w['key']), (restore['path'], restore['key']))
+
+    def test_warm_runs_on_main_and_never_saves_from_a_pr(self):
+        on = self.warm['on']
+        self.assertEqual(on['push']['branches'], ['main'])
+        self.assertIn('.github/workflows/mobile-e2e.yml', on['push']['paths'])
+        self.assertIn('schedule', on)
+        self.assertIn('workflow_dispatch', on)
+        save = self.step(self.warm['jobs']['avd']['steps'], 'Save the AVD on main')
+        self.assertIn("github.event_name != 'pull_request'", save['if'])
+
+    def test_system_image_is_installed_before_any_emulator_step(self):
+        for workflow, job in ((self.e2e, 'e2e'), (self.warm, 'avd')):
+            steps = workflow['jobs'][job]['steps']
+            names = [s.get('name') or s.get('uses', '') for s in steps]
+            install = names.index('Install the system image (retried, verified)')
+            self.assertIn('e2e/install_system_image.sh "$SYSTEM_IMAGE"', steps[install]['run'])
+            runners = [i for i, s in enumerate(steps)
+                       if s.get('uses', '').startswith('reactivecircus/android-emulator-runner@')]
+            self.assertTrue(runners)
+            self.assertLess(install, min(runners), job)
+        e2e_install = self.step(self.e2e['jobs']['e2e']['steps'], 'Install the system image (retried, verified)')
+        self.assertNotIn('if', e2e_install, 'the journeys step needs the image on a cache hit too')

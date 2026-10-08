@@ -10,10 +10,30 @@ name: fresh/02 Today → first lesson → back
     env:
       SHOT: today_before_lesson
 - tapOn: '${output.t.startThisLesson}'
+# Either outcome ends the wait: the lesson, or the lesson's error page.
+- extendedWaitUntil:
+    visible: '(?:${output.t.lessonMarkComplete}|${output.t.lessonCompleted}|${output.t.lessonErrorLoading})'
+    timeout: 45000
+    optional: true
+# A 5xx from the production server is the server's moment, not this build's:
+# on 2026-10-08 Cloudflare answered 502 and the page offered Retry. Retry as a
+# parent would, at most twice, and only for a server status — a client-side
+# error, a timeout or a 4xx is left to fail below.
+- repeat:
+    times: 2
+    while:
+      visible: '(?s).*TgApiError\(5\d\d\).*'
+    commands:
+      - takeScreenshot: lesson_server_error_retry
+      - tapOn: '${output.t.retry}'
+      - extendedWaitUntil:
+          visible: '(?:${output.t.lessonMarkComplete}|${output.t.lessonCompleted}|${output.t.lessonErrorLoading})'
+          timeout: 45000
+          optional: true
 # The bottom button exists only once the lesson payload loaded for this child.
 - extendedWaitUntil:
     visible: '(?:${output.t.lessonMarkComplete}|${output.t.lessonCompleted})'
-    timeout: 45000
+    timeout: 10000
 - assertNotVisible: '${output.c.lit_errorWidget}'
 - takeScreenshot: lesson_first
 - back
