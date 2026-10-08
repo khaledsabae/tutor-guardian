@@ -20,8 +20,9 @@ pyver="$(ssh "$VPS" 'docker exec tg_backend python -V' | awk '{print $2}')"
 grep -q '^torch==' <<<"$freeze" || { echo "no torch pin in the freeze — wrong container?" >&2; exit 1; }
 
 {
-  echo "# Production's resolved package set — the GitHub-hosted backend jobs install"
-  echo "# backend/requirements.txt with \`-c\` this file, so a pull request is tested"
+  echo "# Production's resolved package set. .github/ci/lock-backend-deps.py turns it"
+  echo "# into the hash locks (requirements-prod.lock / requirements-dev.lock) that the"
+  echo "# image and the GitHub-hosted backend jobs install, so a pull request is tested"
   echo "# against exactly what the live container runs, not whatever PyPI resolves today."
   echo "#"
   echo "# backend/requirements.txt keeps its ranges: the deploy image resolves them at"
@@ -36,3 +37,4 @@ grep -q '^torch==' <<<"$freeze" || { echo "no torch pin in the freeze — wrong 
   echo "$freeze"
 } > "$OUT"
 echo "wrote $OUT ($(grep -c '==' "$OUT") pins, Python ${pyver})"
+echo "next: regenerate the hash locks — .github/ci/lock-backend-deps.py (see backend/DEPENDENCIES.md)"

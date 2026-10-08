@@ -23,15 +23,15 @@ runs:
         python-version: ${{ steps.prod.outputs.python }}
         cache: pip
         cache-dependency-path: |
-          backend/requirements.txt
-          backend/requirements-dev.txt
-          .github/ci/constraints-prod.txt
+          .github/ci/requirements-prod.lock
+          .github/ci/requirements-dev.lock
 
     # requirements.txt alone is not enough: its ranges resolve to whatever PyPI
     # has today (on 2026-10-04: 25 packages off production's, fastapi among
-    # them, and FastAPI changed how include_router nests routes). The
-    # constraints are production's own freeze, and backend/Dockerfile installs
-    # with the same file — one package set for CI and the image.
+    # them, and FastAPI changed how include_router nests routes). The locks are
+    # production's own freeze (.github/ci/constraints-prod.txt) with the sha256
+    # of every allowed file, and backend/Dockerfile installs the same prod lock —
+    # one package set for CI and the image, and a republished wheel fails here.
     - name: Install production's package set
       shell: bash
       env:
@@ -40,12 +40,12 @@ runs:
         set -euo pipefail
         C=.github/ci/constraints-prod.txt
         python -m pip install --upgrade pip
-        # CPU-only torch from the PyTorch index first, as backend/Dockerfile does:
-        # the default PyPI wheel is the CUDA build and drags in ~4 GB of nvidia-*.
-        # --no-deps so its dependencies resolve below, under the constraints.
-        torch_pin="$(grep '^torch==' "$C")"
-        pip install --no-deps --index-url https://download.pytorch.org/whl/cpu "$torch_pin"
-        pip install -r backend/requirements.txt -r backend/requirements-dev.txt -c "$C"
+        # torch is the CPU-only wheel from download.pytorch.org/whl/cpu (a direct
+        # URL in the prod lock), as in backend/Dockerfile: the default PyPI wheel
+        # is the CUDA build and drags in ~4 GB of nvidia-*. The locks are the
+        # whole closure, so --no-deps; pip check below proves nothing is missing.
+        pip install --require-hashes --no-deps --only-binary=:all: \
+          -r .github/ci/requirements-prod.lock -r .github/ci/requirements-dev.lock
         pip check
         cuda="$(pip list 2>/dev/null | grep -i '^nvidia-' || true)"
         if [ -n "$cuda" ]; then echo "::error::CUDA wheels installed: $cuda"; exit 1; fi

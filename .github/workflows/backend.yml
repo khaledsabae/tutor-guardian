@@ -27,6 +27,8 @@ on:
       - 'mobile/pubspec.yaml'
       - '.github/actions/backend-env/**'
       - '.github/ci/constraints-prod.txt'
+      - '.github/ci/requirements-prod.lock'
+      - '.github/ci/requirements-dev.lock'
       - 'frontend/**'
       - 'docs/lesson_index.json'
       - 'docs/lesson_assets/**'
@@ -68,6 +70,8 @@ on:
       - 'mobile/pubspec.yaml'
       - '.github/actions/backend-env/**'
       - '.github/ci/constraints-prod.txt'
+      - '.github/ci/requirements-prod.lock'
+      - '.github/ci/requirements-dev.lock'
   workflow_dispatch:
 
 # A newer push to a PR cancels the older run. On main nothing is cancelled:
