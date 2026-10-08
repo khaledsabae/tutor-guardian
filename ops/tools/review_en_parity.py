@@ -730,6 +730,7 @@ def build_record(item: Item, reviewers: tuple[str, str], rounds: int, fixed: boo
         "approved_by": stamp_value(reviewers, on),
         "auto_review": {
             "reviewers": list(reviewers),
+            "providers": {r: provider_of(r) for r in reviewers},
             "fixer": FIXER if fixed else None,
             "rounds": rounds,
             "prompt_version": PROMPT_V,
@@ -861,6 +862,110 @@ def _api_key() -> str:
     sys.exit("❌ OLLAMA_API_KEY غير مضبوط (ولا في ~/projects/email-twin/.env)")
 
 
+# ── مسار المزوّد (اختياري) ──────────────────────────────────────────────
+# حين يُغلق سقف Ollama يُوجَّه مراجعٌ بعينه إلى واجهة أخرى متوافقة مع OpenAI
+# (OpenRouter، DeepSeek الرسمية…) بمتغيّر بيئة واحد. المفتاح يُقرأ داخل العملية فقط
+# (من متغيّر بيئة أو من ملف .env واحد مسمّى) — لا سطر أوامر ولا سجل ولا نسخة.
+# اسم المراجع في الختم يبقى هو هو (العائلة تُعرف منه)، والمزوّد والنموذج الذي ردّ
+# فعلًا يُسجَّلان في `auto_review.providers`. غير مضبوط = Ollama كما كان.
+#   REVIEW_ROUTES='{"glm-5.2": {"provider": "openrouter",
+#       "base_url": "https://openrouter.ai/api/v1/chat/completions",
+#       "key_env": "OPENROUTER_API_KEY", "key_file": "/path/to/.env", "model": "z-ai/glm-5.2"}}'
+# `extra` (اختياري): حقول طلبٍ خاصة بالمزوّد تُضاف ولا تستبدل model/messages/temperature.
+# `key_env` المنتهي بـ`*` بادئة: أول متغيّر في key_file يبدأ بها وفي اسمه KEY.
+# مزوّدٌ موجَّه مدفوع: أول 402/429 يوقف التشغيلة كلها (لا إعادة ولا تبريد).
+ROUTES_ENV = "REVIEW_ROUTES"
+CALL_LOG_ENV = "REVIEW_CALL_LOG"
+_ROUTE_FIELDS = ("provider", "base_url", "key_env", "model")
+_route_keys: dict[str, str] = {}
+
+
+def routes() -> dict:
+    raw = os.environ.get(ROUTES_ENV, "").strip()
+    if not raw:
+        return {}
+    table = json.loads(raw)
+    for name, r in table.items():
+        missing = [f for f in _ROUTE_FIELDS if not r.get(f)]
+        if missing:
+            raise ValueError(f"{ROUTES_ENV}[{name!r}]: missing {missing}")
+        if model_family(name) is None or model_family(name) != model_family(r["model"]):
+            raise ValueError(f"{ROUTES_ENV}[{name!r}]: routed model {r['model']!r} is not "
+                             f"the same family as the reviewer name")
+    return table
+
+
+def route_for(model: str) -> dict | None:
+    return routes().get(model)
+
+
+def provider_of(model: str) -> dict:
+    """ما يُسجَّل مع كل حكم وختم: المزوّد والنموذج الذي ردّ فعلًا."""
+    r = route_for(model)
+    if r is None:
+        return {"provider": "ollama-cloud", "model": model}
+    return {"provider": r["provider"], "model": r["model"]}
+
+
+def _route_key(r: dict) -> str:
+    name = r["key_env"]
+    cache_id = f"{name}|{r.get('key_file', '')}"
+    if cache_id in _route_keys:
+        return _route_keys[cache_id]
+    key = None if name.endswith("*") else os.environ.get(name)
+    f = Path(r["key_file"]) if r.get("key_file") else None
+    if not key and f is not None and f.exists():
+        for line in f.read_text(encoding="utf-8").splitlines():
+            line = line.strip()
+            if line.startswith("export "):
+                line = line[len("export "):].strip()
+            var, sep, val = line.partition("=")
+            var = var.strip()
+            hit = (var.startswith(name[:-1]) and "KEY" in var) if name.endswith("*") \
+                else var == name
+            if sep and hit and val.strip().strip("'\""):
+                key = val.strip().strip("'\"")
+                break
+    if not key:
+        sys.exit(f"❌ {name} غير مضبوط (ولا في key_file)")
+    _route_keys[cache_id] = key
+    return key
+
+
+def _open_json(req, timeout: float, hard: bool = False) -> dict:
+    """`timeout` في urlopen حدٌّ لكل قراءة لا للنداء كله: مزوّدٌ يرسل مسافاتٍ لإبقاء
+    الاتصال حيًّا (OpenRouter أثناء تفكير النموذج) أبقى نداءً واحدًا ١١ دقيقة بمهلة ١٢٠ث
+    (2026-10-08). للمزوّد الموجَّه حدٌّ صارم على النداء كله."""
+    if not hard:
+        with urllib.request.urlopen(req, timeout=timeout) as r:
+            return json.load(r)
+    box: dict = {}
+
+    def work():
+        try:
+            with urllib.request.urlopen(req, timeout=timeout) as r:
+                box["out"] = json.load(r)
+        except BaseException as e:  # noqa: BLE001 — يُعاد رفعه في الخيط المستدعي
+            box["err"] = e
+
+    t = threading.Thread(target=work, daemon=True)
+    t.start()
+    t.join(timeout)
+    if t.is_alive():
+        raise TimeoutError(f"no complete reply within {timeout}s")
+    if "err" in box:
+        raise box["err"]
+    return box["out"]
+
+
+def _log_call(entry: dict) -> None:
+    """سطر لكل نداء: المراجع والمزوّد والنموذج والحالة والرموز — بلا مفتاح ولا نص."""
+    path = os.environ.get(CALL_LOG_ENV)
+    if path:
+        with open(path, "a", encoding="utf-8") as fh:
+            fh.write(json.dumps(entry, ensure_ascii=False) + "\n")
+
+
 # حصّة Ollama Cloud مشتركة مع وكلاء آخرين على نفس المفتاح. ستّة نداءات متوازية
 # أعادت 429 في أول تشغيلة كاملة، فصار الحدّ سقفًا عامًّا (لا لكل مراجع) ومعه
 # تبريد مشترك: أول 429 يُبطئ كل الخيوط، لا الخيط الذي أصابه وحده.
@@ -908,27 +1013,49 @@ def _is_usage_cap(body: str) -> bool:
 
 def post(model: str, system: str, user: str, timeout: int | None = None) -> tuple[str, dict]:
     """نداء واحد، بتراجع أُسّي على العابر وتبريد مشترك على 429، وسقوط فوري على 401/402/403."""
-    body = json.dumps({"model": model, "temperature": 0.1,
-                       "messages": [{"role": "system", "content": system},
-                                    {"role": "user", "content": user}]}).encode()
+    route = route_for(model)
+    url = route["base_url"] if route else API_URL
+    upstream = route["model"] if route else model
+    prov = provider_of(model)["provider"]
+    payload = {"model": upstream, "temperature": 0.1,
+               "messages": [{"role": "system", "content": system},
+                            {"role": "user", "content": user}]}
+    # `extra` في المسار: حقول المزوّد فقط (مثل {"provider": {"sort": "throughput"}})،
+    # ولا تمسّ النموذج ولا الرسائل ولا الحرارة.
+    for k, v in ((route or {}).get("extra") or {}).items():
+        if k not in payload:
+            payload[k] = v
+    body = json.dumps(payload).encode()
     timeout = REQUEST_TIMEOUT if timeout is None else timeout
     last = None
     for attempt in range(REQUEST_ATTEMPTS):
         if _capped.is_set():
             raise UsageCapError("usage cap reached earlier in this run")
         _wait_cooldown()
-        req = urllib.request.Request(API_URL, data=body, headers={
-            "Authorization": f"Bearer {_api_key()}", "Content-Type": "application/json"})
+        key = _route_key(route) if route else _api_key()
+        req = urllib.request.Request(url, data=body, headers={
+            "Authorization": f"Bearer {key}", "Content-Type": "application/json"})
+        t0 = time.time()
         try:
             with _slots:
-                with urllib.request.urlopen(req, timeout=timeout) as r:
-                    out = json.load(r)
+                out = _open_json(req, timeout, hard=route is not None)
             content = out["choices"][0]["message"].get("content") or ""
+            usage = out.get("usage") or {}
+            _log_call({"reviewer": model, "provider": prov, "model": upstream, "status": 200,
+                       "s": round(time.time() - t0),
+                       "prompt_tokens": usage.get("prompt_tokens"),
+                       "completion_tokens": usage.get("completion_tokens"),
+                       "total_tokens": usage.get("total_tokens"),
+                       "cost": usage.get("cost")})
             if not content.strip():
                 raise ValueError("empty content")
-            return content, out.get("usage", {})
+            return content, usage
         except urllib.error.HTTPError as e:
+            _log_call({"reviewer": model, "provider": prov, "model": upstream,
+                       "status": e.code, "s": round(time.time() - t0)})
             if e.code in (401, 402, 403):
+                if route is not None:
+                    _capped.set()   # مزوّدٌ مدفوع: رفض الحساب يوقف التشغيلة كلها
                 raise RuntimeError(f"{model}: HTTP {e.code} — غير متاح على هذا المفتاح") from e
             last = e
             if e.code == 429:
@@ -936,13 +1063,16 @@ def post(model: str, system: str, user: str, timeout: int | None = None) -> tupl
                     detail = e.read().decode("utf-8", "replace")
                 except OSError:
                     detail = ""
-                if _is_usage_cap(detail):
+                if route is not None or _is_usage_cap(detail):
                     _capped.set()
                     raise UsageCapError(detail[:200]) from e
                 _cooldown(min(300, 30 * 2 ** min(attempt, 3)))
                 continue
         except (urllib.error.URLError, TimeoutError, OSError, ValueError, KeyError,
                 http.client.HTTPException) as e:
+            if route is not None:
+                _log_call({"reviewer": model, "provider": prov, "model": upstream,
+                           "status": type(e).__name__, "s": round(time.time() - t0)})
             # IncompleteRead (جسم مقطوع في منتصف الرد) ليس OSError — أسقط تشغيلةً
             # من ٢٢٨ وحدة بعد ساعة كاملة على 2026-10-04. عابرٌ مثل غيره: أعد المحاولة.
             last = e
@@ -1063,12 +1193,14 @@ _LEGACY_PROMPT_V = "dfa8a5f39718"
 
 
 def _cache_key(model: str, sha: str) -> str:
-    return f"{model}|{PROMPT_V}|{sha}"
+    r = route_for(model)
+    tag = f"{model}@{r['provider']}:{r['model']}" if r else model
+    return f"{tag}|{PROMPT_V}|{sha}"
 
 
 def _cache_get(cache: dict, model: str, sha: str):
     hit = cache.get(_cache_key(model, sha))
-    if hit is None and PROMPT_V == _LEGACY_PROMPT_V:
+    if hit is None and PROMPT_V == _LEGACY_PROMPT_V and route_for(model) is None:
         hit = cache.get(f"{model}|{sha}")
     return hit
 
@@ -2164,6 +2296,7 @@ def cmd_stamp_reviewed(items: list[Item], reviewer: str, notes_path: Path | None
             continue
         rec = build_record(it, (reviewer,), 1, False, notes.get(it.key, []), overrides, today)
         rec["auto_review"]["prompt_version"] = f"manual:{PROMPT_V}"
+        rec["auto_review"]["providers"] = {reviewer: {"provider": "manual", "model": reviewer}}
         rec["auto_review"]["meaning"] = (
             "deterministic guards passed and one reviewer from a model family different from "
             "every author of the English read the Arabic and English side by side against the "
