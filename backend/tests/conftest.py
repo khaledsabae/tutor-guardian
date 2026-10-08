@@ -3,7 +3,6 @@ import ipaddress
 import os
 import socket
 import sys
-import tempfile
 
 import pytest
 
@@ -174,14 +173,8 @@ def _skip_startup_warmup(monkeypatch):
 @pytest.fixture(autouse=True)
 def _temp_conversations_db(monkeypatch):
     """Point every test at a throwaway SQLite DB so tests don't touch ops/."""
-    fd, path = tempfile.mkstemp(suffix=".db")
-    os.close(fd)
-    monkeypatch.setenv("CONVERSATIONS_DB", path)  # resolved at call time by db_path()
+    from tests.conversations_db_support import isolated_conversations_db
+
     monkeypatch.setenv("CHILD_MODE_SECRET", "test-child-mode-secret")  # child_token fails closed without it
-    from app.db.init_db import init_db
-    init_db()
-    yield
-    try:
-        os.remove(path)
-    except OSError:
-        pass
+    with isolated_conversations_db(monkeypatch):
+        yield
