@@ -2,7 +2,7 @@
   "id": "tip_0-3_020",
   "age_group": "0-3",
   "domain": "development",
-  "text": "Free play is the best teacher. No directing, no correcting, no teaching. Come down to his level, let him lead, and describe what he is doing: 'Oh! You built a tall tower!' Your silent presence is more precious than a thousand educational toys.",
+  "text": "Free play is a great teacher: get down to his level, let him lead without much directing or correcting, and describe what he does: 'Oh! You built a tall tower!' Step in if he is in danger or asks for help. Your attention is worth more than a thousand educational toys.",
   "unit_id": "dev-8fdf563b",
   "day_of_week": 1,
   "time_of_day": "anytime",
@@ -15,7 +15,7 @@
   "is_published": true,
   "version": "1.0.0",
   "created_at": "2026-06-10T20:00:00",
-  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+  "approved_by": null,
   "language": "en",
   "source_language": "ar",
   "translation": {
@@ -27,24 +27,9 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "clean",
+    "review_verdict": "pending",
     "review_defects": [],
-    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
-    "revalidated_at": "2026-10-04T11:18:18+00:00",
-    "auto_review": {
-      "reviewers": [
-        "deepseek-v4-pro",
-        "glm-5.2"
-      ],
-      "fixer": null,
-      "rounds": 1,
-      "prompt_version": "dfa8a5f39718",
-      "content_sha256": "0fca8bb14d203edeb155aebfa70b585e0a02e0072687394e634e1be6727b9c4b",
-      "reviewed_at": "2026-10-04T11:18:18+00:00",
-      "residual_low": [],
-      "adjudicated": [],
-      "tool": "ops/tools/review_en_parity.py",
-      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
-    }
+    "approved_by": null,
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

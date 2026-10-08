@@ -2,7 +2,7 @@
   "id": "tip_0-3_011",
   "age_group": "0-3",
   "domain": "cyber",
-  "text": "Children under two: no screens (except video calls with a grandparent). The brain builds 1 million neural connections per second through play, movement, and interaction—not through pixels.",
+  "text": "Children under two: avoid entertainment screens; video calls with a grandparent, with you joining in, are fine. In the early years the brain forms more than a million new neural connections every second, and interaction with you, play and movement support this growth.",
   "unit_id": null,
   "day_of_week": 5,
   "time_of_day": "morning",
@@ -15,7 +15,7 @@
   "is_published": true,
   "version": "1.0.0",
   "created_at": "2026-06-10T18:00:00",
-  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+  "approved_by": null,
   "language": "en",
   "source_language": "ar",
   "translation": {
@@ -27,24 +27,9 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "clean",
+    "review_verdict": "pending",
     "review_defects": [],
-    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
-    "revalidated_at": "2026-10-04T11:18:18+00:00",
-    "auto_review": {
-      "reviewers": [
-        "deepseek-v4-pro",
-        "glm-5.2"
-      ],
-      "fixer": null,
-      "rounds": 1,
-      "prompt_version": "dfa8a5f39718",
-      "content_sha256": "62834da36c842e5de489df04bc78a8bee484d4e9ea1ddcdef42baf6b9a92f973",
-      "reviewed_at": "2026-10-04T11:18:18+00:00",
-      "residual_low": [],
-      "adjudicated": [],
-      "tool": "ops/tools/review_en_parity.py",
-      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
-    }
+    "approved_by": null,
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }
