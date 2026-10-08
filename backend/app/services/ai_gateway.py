@@ -41,7 +41,7 @@ import requests
 
 from app.config.llm_config import LLM
 from app.core.circuit_breaker import CircuitBreaker
-from app.services.cloud_budget import BudgetDenied, CloudBudget, upper_token_bound
+from app.services.cloud_budget import BudgetDenied, CloudBudget, unknown_usage_bounds, upper_token_bound
 
 logger = logging.getLogger(__name__)
 
@@ -373,22 +373,25 @@ class OpenAICompatProvider:
         charge = _reserve_wire_budget(self._budget_endpoint, self.name, messages, output_cap,
                                      model=self.model)
         try:
-            r = self._client.chat.completions.create(
-                model=self.model,
-                messages=messages,
-                temperature=options.get("temperature", 0.3),
-                max_tokens=output_cap,
-            )
-        except Exception:
-            self._report(False)
-            raise
-        self._report(True)
-        text = r.choices[0].message.content or ""
-        flt = _ThinkFilter()
-        text = flt.feed(text)
-        usage = getattr(r, "usage", None)
-        _settle_wire_budget(charge, getattr(usage, "prompt_tokens", None),
-                            getattr(usage, "completion_tokens", None))
+            try:
+                r = self._client.chat.completions.create(
+                    model=self.model,
+                    messages=messages,
+                    temperature=options.get("temperature", 0.3),
+                    max_tokens=output_cap,
+                )
+            except Exception:
+                self._report(False)
+                raise
+            self._report(True)
+            text = r.choices[0].message.content or ""
+            flt = _ThinkFilter()
+            text = flt.feed(text)
+            usage = getattr(r, "usage", None)
+            _settle_wire_budget(charge, getattr(usage, "prompt_tokens", None),
+                                getattr(usage, "completion_tokens", None))
+        finally:
+            _settle_wire_budget(charge, None, None)  # no-op after a settled success
         return {
             "response": text, "done": True,
             "prompt_eval_count": getattr(usage, "prompt_tokens", None),
@@ -400,6 +403,12 @@ class OpenAICompatProvider:
         output_cap = options.get("num_predict", 1024)
         charge = _reserve_wire_budget(self._budget_endpoint, self.name, messages, output_cap,
                                      model=self.model)
+        try:
+            yield from self._stream_reserved(charge, messages, output_cap, options)
+        finally:
+            _settle_wire_budget(charge, None, None)  # no-op after a settled success
+
+    def _stream_reserved(self, charge, messages, output_cap, options) -> Iterator[dict]:
         try:
             stream = self._client.chat.completions.create(
                 model=self.model,
@@ -758,6 +767,11 @@ class OpenAIChatProvider:
                     raise
                 attempt += 1
                 logger.info("%s connection failed (%s) — retry %d", self.name, type(e).__name__, attempt)
+            finally:
+                # This attempt ended without a settled answer: an error, a
+                # retry (`continue`), a cut stream, or the consumer leaving
+                # (GeneratorExit). Charge its own bound, not the context.
+                _settle_wire_budget(charge, None, None)
 
     def _read_stream(self, resp: httpx.Response, tick, state: dict) -> Iterator[tuple]:
         finish: str | None = None
@@ -1061,13 +1075,31 @@ def _reserve_wire_budget(endpoint: str, provider_name: str, messages: list[dict]
     aliases = tuple(sorted({"azure_deepseek", "deepseek", "deepseek_aux",
                             "deepseek_fallback", provider_name}))
     ledger = CloudBudget(_TELEMETRY_DB)
-    return ledger, ledger.reserve(wallet, cap, bound, legacy_aliases=aliases)
+    ticket = ledger.reserve(wallet, cap, bound, legacy_aliases=aliases,
+                            unknown_usage_bounds=unknown_usage_bounds(messages, output_cap))
+    return _WireCharge(ledger, ticket)
+
+
+class _WireCharge:
+    """One reserved wire attempt; settled exactly once.
+
+    Every exit settles: success with the reported usage, anything else
+    (error, retry, cut stream, consumer gone) with unknown usage, which the
+    ledger charges at the request's own bound instead of the whole context.
+    """
+
+    def __init__(self, ledger: CloudBudget, ticket):
+        self.ledger, self.ticket, self.done = ledger, ticket, False
+
+    def settle(self, prompt_tokens, completion_tokens) -> None:
+        if not self.done:
+            self.done = True
+            self.ledger.settle(self.ticket, prompt_tokens, completion_tokens)
 
 
 def _settle_wire_budget(charge, prompt_tokens, completion_tokens) -> None:
     if charge is not None:
-        ledger, ticket = charge
-        ledger.settle(ticket, prompt_tokens, completion_tokens)
+        charge.settle(prompt_tokens, completion_tokens)
 
 
 # ─────────────────────────────────────────────────────────────────────────────

@@ -424,3 +424,48 @@ operator's monthly reconciliation, not used by the code.
   `python -m app.services.cloud_budget_bootstrap --db /app/ops/sessions.db --list-unknown-rows 2026-11`
   prints the ids (and ts/counts) to paste into the receipt; it opens the DB
   `mode=ro` and never creates the anchor.
+
+### 3. Unknown usage settles to the request's bound, not the whole context
+
+Before: `settle()` charged the full reservation (1,048,576 tokens) for any
+attempt without final usage, and attempts that ended in an exception, a retry
+(`continue`) or a consumer leaving mid-stream were never settled at all (held
+in full and carried into later months). At October's rate (26 unknown rows in
+~7 days, ~115/month) that parks ~120M tokens against a 100M cap for <1M of real
+spend; ten such calls exhaust the 10M fallback cap.
+
+Now every reserved attempt is settled exactly once (`_WireCharge`), on every
+exit path (DeepSeek `_events` per attempt, Azure generate/stream), and a
+missing count is charged at the request's own bound
+(`cloud_budget.unknown_usage_bounds`):
+
+- **input** = UTF-8 bytes of the serialized messages (keys/roles/escapes
+  included) + `UNKNOWN_USAGE_FRAMING_TOKENS` (4096, chat-template headroom);
+- **output** = the request's `max_tokens`;
+- a reported half (e.g. prompt known, completion missing) is kept;
+- never above the reservation, and an estimate never quarantines the wallet.
+
+Why not the telemetry's bytes/3 estimate itself (which `llm_calls` still
+records, flagged `usage_estimated=1`)? It is an estimate, not a bound: digits,
+punctuation and emoji can tokenize at more than one token per 3 bytes, and for
+a cut stream the received text is a lower bound on what was generated. The
+ledger needs a bound, so it charges bytes (≥ 3× the estimate) + framing +
+`max_tokens`. For an Arabic RAG prompt of ~10 KB and `max_tokens` 1024 that is
+~15K tokens per unknown call — ~1.7M/month at October's rate, versus ~120M
+before.
+
+**Trade-off (explicit):** the full-context hold was provable from the
+documented context limit alone; the request bound additionally assumes (a) the
+tokenizer emits no more text tokens than bytes (true of byte-level BPE and of
+byte-fallback tokenizers) and (b) provider-added input stays within the 4096
+framing allowance, and (c) the provider honours `max_tokens`. Hidden
+provider-side input beyond that would be under-charged **only on calls whose
+usage never arrived**; calls with reported usage are charged exactly as before
+and still quarantine the wallet if they exceed the reservation. The monthly
+reconciliation against DeepSeek's billing export is the backstop. Unchanged:
+a reservation whose process died mid-call is never settled and keeps its full
+bound (carried across months).
+
+HTTP refusals (4xx/5xx before a stream) are also charged the request bound
+here, although DeepSeek most likely bills nothing for them — conservative by a
+few thousand tokens per refusal.

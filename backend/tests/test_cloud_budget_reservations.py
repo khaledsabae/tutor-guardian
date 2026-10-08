@@ -514,3 +514,150 @@ def test_diagnostics_never_recreate_lost_activated_history(wire, monkeypatch):
         assert not conn.execute("SELECT 1 FROM sqlite_master WHERE name='llm_calls'").fetchone()
     with pytest.raises(budget_module().BudgetDenied):
         gw._reserve_wire_budget('https://api.deepseek.com', 'deepseek', [], 100, model='test-model')
+
+
+# ── Unknown usage settles to the request's own bound, not the whole context ──
+# Production, October 2026: 26 paid rows without usage. Holding the full
+# 1,048,576-token reservation for each would have parked ~27M tokens of a
+# 100M cap for <1M of real spend, and 10 of them exhaust the 10M fallback.
+def _charges(path):
+    with sqlite3.connect(path) as conn:
+        return conn.execute("SELECT charged_tokens, settled FROM cloud_budget_attempts "
+                            "ORDER BY rowid").fetchall()
+
+
+def test_request_bound_covers_every_byte_plus_framing_and_the_output_cap():
+    m = budget_module()
+    messages = [{"role": "user", "content": "س" * 3000 + "123 456 !?"}]
+    input_bound, output_bound = m.unknown_usage_bounds(messages, 700)
+    payload = len(json.dumps(messages, ensure_ascii=False).encode("utf-8"))
+    assert input_bound >= payload + m.UNKNOWN_USAGE_FRAMING_TOKENS
+    assert input_bound >= 3 * gw._estimate_tokens(messages[0]["content"])  # never below the telemetry estimate
+    assert output_bound == 700
+
+
+def test_unknown_usage_settles_to_the_request_bound(tmp_path):
+    m = budget_module()
+    path = tmp_path / "ledger.db"
+    ledger = activate(m.CloudBudget(path))
+    ticket = ledger.reserve("wallet", 1000, 900, legacy_aliases=(), unknown_usage_bounds=(300, 50))
+    ledger.settle(ticket, None, None)
+    assert _charges(path) == [(350, 1)]
+    ledger.reserve("wallet", 1000, 650, legacy_aliases=())
+    with pytest.raises(m.BudgetDenied):
+        ledger.reserve("wallet", 1000, 1, legacy_aliases=())
+
+
+def test_partial_usage_keeps_the_reported_half(tmp_path):
+    m = budget_module()
+    path = tmp_path / "ledger.db"
+    ledger = activate(m.CloudBudget(path))
+    ticket = ledger.reserve("wallet", 1000, 900, legacy_aliases=(), unknown_usage_bounds=(300, 50))
+    ledger.settle(ticket, 10, None)
+    assert _charges(path) == [(60, 1)]
+
+
+def test_request_bound_never_exceeds_reservation_or_quarantines(tmp_path):
+    m = budget_module()
+    path = tmp_path / "ledger.db"
+    ledger = activate(m.CloudBudget(path))
+    ticket = ledger.reserve("wallet", 1000, 900, legacy_aliases=(), unknown_usage_bounds=(5000, 5000))
+    ledger.settle(ticket, None, None)
+    assert _charges(path) == [(900, 1)]
+    ledger.reserve("wallet", 1000, 100, legacy_aliases=())   # not quarantined
+
+
+@pytest.mark.parametrize("bounds", [(-1, 5), (5, 0), (True, 5), (1.5, 5), ("5", 5), (5,)])
+def test_invalid_request_bounds_are_refused(tmp_path, bounds):
+    m = budget_module()
+    ledger = activate(m.CloudBudget(tmp_path / "ledger.db"))
+    with pytest.raises(m.BudgetDenied):
+        ledger.reserve("wallet", 1000, 900, legacy_aliases=(), unknown_usage_bounds=bounds)
+
+
+@pytest.fixture
+def big_wire(wire, monkeypatch):
+    """A real-size context: 1M profile, cap = one reservation + headroom."""
+    m = budget_module()
+    monkeypatch.setattr(m, "_BILLING_PROFILES", {
+        ("https://api.deepseek.com:443", "test-model"): m.BillingProfile(1048576, 4096),
+        ("https://account.openai.azure.com:443", "model"): m.BillingProfile(1048576, 4096),
+    })
+    monkeypatch.setattr(gw, "LLM", dataclasses.replace(
+        gw.LLM, deepseek_primary_monthly_token_cap=1048576 + 100000))
+    return wire
+
+
+def _sse_cut():
+    obj = {"choices": [{"delta": {"content": "half an ans"}, "finish_reason": None}]}
+    return ("data: " + json.dumps(obj) + "\n\n").encode()   # no usage, no [DONE]
+
+
+def _assert_request_bound(charge, *, max_tokens=100):
+    m = budget_module()
+    assert charge[1] == 1, "an ended attempt is settled, not an in-flight orphan"
+    assert max_tokens < charge[0] <= 50000 + m.UNKNOWN_USAGE_FRAMING_TOKENS + max_tokens, charge
+
+
+def test_cut_stream_settles_to_request_bound_and_frees_the_context(big_wire):
+    calls = []
+    p = provider(lambda r: calls.append(r) or httpx.Response(
+        200, headers={"content-type": "text/event-stream"}, content=_sse_cut()))
+    with pytest.raises(gw.ProviderStreamError):
+        p.generate("سؤال", options={"num_predict": 100})
+    [charge] = _charges(big_wire)
+    _assert_request_bound(charge)
+    # The old full-context hold would deny this second full-size admission.
+    with pytest.raises(gw.ProviderStreamError):
+        p.generate("سؤال", options={"num_predict": 100})
+    assert len(calls) == 2
+
+
+def test_consumer_leaving_mid_stream_settles_to_request_bound(big_wire):
+    body = (b'data: {"choices":[{"delta":{"content":"one"},"finish_reason":null}]}\n\n'
+            b'data: {"choices":[{"delta":{"content":"two"},"finish_reason":null}]}\n\n')
+    p = provider(lambda r: httpx.Response(200, headers={"content-type": "text/event-stream"}, content=body))
+    chunks = p.stream("سؤال", options={"num_predict": 100})
+    assert next(chunks)["response"]
+    chunks.close()
+    [charge] = _charges(big_wire)
+    _assert_request_bound(charge)
+
+
+def test_success_without_usage_settles_to_request_bound(big_wire):
+    p = provider(lambda r: httpx.Response(200, headers={"content-type": "text/event-stream"},
+                                          content=sse(usage=False)))
+    assert p.generate("سؤال", options={"num_predict": 100})["response"] == "answer"
+    [charge] = _charges(big_wire)
+    _assert_request_bound(charge)
+
+
+def test_retried_attempt_is_settled_not_orphaned(big_wire):
+    seen = []
+
+    def handler(request):
+        seen.append(request)
+        if len(seen) == 1:
+            return httpx.Response(429, headers={"retry-after": "0"}, content=b"busy")
+        return httpx.Response(200, headers={"content-type": "text/event-stream"}, content=sse())
+
+    p = provider(handler)
+    assert p.generate("سؤال", options={"num_predict": 100})["response"] == "answer"
+    first, second = _charges(big_wire)
+    _assert_request_bound(first)
+    assert second == (7, 1)
+
+
+def test_azure_failure_settles_to_request_bound(big_wire, monkeypatch):
+    def create(**kwargs):
+        raise httpx.ReadTimeout("slow")
+
+    monkeypatch.setitem(sys.modules, "openai", SimpleNamespace(AzureOpenAI=lambda **k:
+        SimpleNamespace(chat=SimpleNamespace(completions=SimpleNamespace(create=create)))))
+    p = gw.OpenAICompatProvider("https://account.openai.azure.com", "test-key", "v1", "model", 3)
+    with pytest.raises(httpx.ReadTimeout):
+        p.generate("سؤال", options={"num_predict": 100})
+    with pytest.raises(httpx.ReadTimeout):
+        list(p.stream("سؤال", options={"num_predict": 100}))
+    for charge in _charges(big_wire):
+        _assert_request_bound(charge)

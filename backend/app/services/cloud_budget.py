@@ -106,12 +106,35 @@ def upper_token_bound(messages: list[dict], max_output_tokens: int, *,
     return profile.context_tokens
 
 
+# Chat-template/special tokens a provider adds around the messages. DeepSeek's
+# template adds a handful per message; 4096 is deliberately generous.
+UNKNOWN_USAGE_FRAMING_TOKENS = 4096
+
+
+def unknown_usage_bounds(messages: list[dict], max_output_tokens: int) -> tuple[int, int]:
+    """(input, output) charged for an attempt whose usage never arrived.
+
+    Input: every UTF-8 byte of the serialized messages (keys, roles and JSON
+    escapes included) plus UNKNOWN_USAGE_FRAMING_TOKENS. A byte-level
+    tokenizer never emits more text tokens than bytes, so this is >= the
+    telemetry's bytes/3 estimate by construction. Output: the max_tokens the
+    request carried (the provider's documented ceiling on generated tokens).
+    Not a proof against hidden provider-side input — see the cap doc.
+    """
+    payload = json.dumps(messages, ensure_ascii=False).encode("utf-8", "replace")
+    return len(payload) + UNKNOWN_USAGE_FRAMING_TOKENS, max_output_tokens
+
+
 @dataclass(frozen=True)
 class Reservation:
     id: str
     wallet: str
     month: str
     bound: int
+    # Charged instead of `bound` when the provider reports no usage; None =
+    # retain the full reservation (process death, legacy callers).
+    input_bound: int | None = None
+    output_bound: int | None = None
 
 
 class CloudBudget:
@@ -361,9 +384,13 @@ class CloudBudget:
             conn.close()
 
     def reserve(self, wallet: str, cap: int, bound: int, *,
-                legacy_aliases: tuple[str, ...]) -> Reservation:
+                legacy_aliases: tuple[str, ...], unknown_usage_bounds=None) -> Reservation:
         if not _count(cap) or cap == 0 or not _count(bound) or bound == 0 or not wallet:
             raise BudgetDenied("cloud budget invalid cap or reservation")
+        if unknown_usage_bounds is not None and (
+                not isinstance(unknown_usage_bounds, (tuple, list)) or len(unknown_usage_bounds) != 2
+                or not all(_count(v) and v > 0 for v in unknown_usage_bounds)):
+            raise BudgetDenied("cloud budget invalid unknown-usage bounds")
         with self._transaction() as conn:
             now = self.clock()
             if now.tzinfo is None:
@@ -375,7 +402,8 @@ class CloudBudget:
                 raise BudgetDenied('cloud budget cutover uninitialized wallet/month; explicit bootstrap required')
             if not set(legacy_aliases).issubset(json.loads(activation[0])['legacy_aliases']):
                 raise BudgetDenied('cloud budget cutover missing paid alias reconciliation')
-            ticket = Reservation(uuid.uuid4().hex, wallet, month, bound)
+            ticket = Reservation(uuid.uuid4().hex, wallet, month, bound,
+                                 *(unknown_usage_bounds or (None, None)))
             if conn.execute("SELECT 1 FROM cloud_budget_months WHERE wallet=? AND blocked=1",
                             (wallet,)).fetchone():
                 raise BudgetDenied("cloud budget wallet quarantined; billing bounds require review")
@@ -403,13 +431,24 @@ class CloudBudget:
         return ticket
 
     def settle(self, ticket: Reservation, prompt_tokens, completion_tokens) -> None:
-        """No valid final usage => retain the full reservation. Never free on error.
+        """Charge reported usage; otherwise the request's own upper bound.
 
-        An accounting-write failure retains the committed original charge. A
-        duplicate settlement cannot alter a previously settled charge.
+        A missing count is replaced by the ticket's input/output bound (see
+        unknown_usage_bounds), never above the reservation and never a
+        quarantine trigger. A ticket without bounds retains the full
+        reservation. Never free on error: an accounting-write failure retains
+        the committed original charge; a duplicate settlement cannot alter a
+        previously settled charge.
         """
         complete_counts = _count(prompt_tokens) and _count(completion_tokens)
-        actual = prompt_tokens + completion_tokens if complete_counts else ticket.bound
+        if complete_counts:
+            actual = prompt_tokens + completion_tokens
+        elif ticket.input_bound is not None and ticket.output_bound is not None:
+            actual = min(ticket.bound,
+                         (prompt_tokens if _count(prompt_tokens) else ticket.input_bound)
+                         + (completion_tokens if _count(completion_tokens) else ticket.output_bound))
+        else:
+            actual = ticket.bound
         try:
             with self._transaction() as conn:
                 row = conn.execute("SELECT bound,settled FROM cloud_budget_attempts "
@@ -431,7 +470,7 @@ class CloudBudget:
                         # possible months rather than silently freeing this one.
                         conn.execute("INSERT OR IGNORE INTO cloud_budget_carry VALUES(?,?,?,?)",
                                      (ticket.wallet, month, ticket.id, actual))
-                    if complete_counts:
+                    if actual < bound:
                         conn.execute("UPDATE cloud_budget_carry SET charged_tokens=MIN(charged_tokens,?) "
                                      "WHERE wallet=? AND attempt_id=?", (actual, ticket.wallet, ticket.id))
         except BudgetDenied as exc:
