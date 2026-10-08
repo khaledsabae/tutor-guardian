@@ -1,4 +1,6 @@
 """Tests for e2e/e2e_tool.py — run: python3 -m unittest discover -s e2e -v"""
+import contextlib
+import io
 import json
 import re
 import os
@@ -202,12 +204,46 @@ class LogcatGateTest(unittest.TestCase):
         self.assertEqual(failures, [])
         self.assertFalse(any(n.startswith("main() runs") for n in notes))
 
-    def test_gate_refuses_an_empty_capture(self):
+    def run_gate(self, lines, *extra):
+        """main() on a logcat file, its stdout captured: an uncaptured `::error::`
+        line becomes a real annotation on the CI job that runs these tests (it
+        did — every E2E run since the gate landed showed "logcat has only 10
+        lines" from this test, and three reruns on 2026-10-08 chased it)."""
         with tempfile.TemporaryDirectory() as d:
             path = Path(d) / "logcat.txt"
-            path.write_text("\n".join(lc(1, "I", "x", "y") for _ in range(10)), encoding="utf-8")
-            rc = t.main(["logcat-gate", str(path), "--min-lines", "200", "--out", str(Path(d) / "g.txt")])
-            self.assertEqual(rc, 1)
+            path.write_text("\n".join(lines), encoding="utf-8")
+            out = io.StringIO()
+            with contextlib.redirect_stdout(out):
+                rc = t.main(["logcat-gate", str(path), "--out", str(Path(d) / "g.txt"), *extra])
+            return rc, out.getvalue(), (Path(d) / "g.txt").read_text(encoding="utf-8")
+
+    def test_gate_refuses_an_empty_capture(self):
+        rc, stdout, report = self.run_gate([lc(1, "I", "x", "y") for _ in range(10)], "--min-lines", "200")
+        self.assertEqual(rc, 1)
+        self.assertIn("::error::logcat has only 10 lines", stdout)
+        # The verdict file (job summary, artifact) says why, not "PASS".
+        self.assertIn("FAIL  capture: only 10 lines", report)
+        self.assertNotIn("PASS", report)
+
+    def test_gate_refuses_a_truly_empty_file(self):
+        rc, stdout, report = self.run_gate([], "--min-lines", "200")
+        self.assertEqual(rc, 1)
+        self.assertIn("FAIL  capture: only 0 lines", report)
+
+    def test_short_capture_still_reports_the_crash_it_saw(self):
+        rc, _, report = self.run_gate([
+            lc(4242, "E", "AndroidRuntime", "FATAL EXCEPTION: main"),
+            lc(4242, "E", "AndroidRuntime", f"Process: {PKG}, PID: 4242"),
+        ], "--package", PKG, "--min-lines", "200")
+        self.assertEqual(rc, 1)
+        self.assertIn("FAIL  capture:", report)
+        self.assertIn("FATAL EXCEPTION", report)
+
+    def test_full_capture_passes_without_capture_failure(self):
+        rc, stdout, report = self.run_gate([lc(1, "I", "x", "y") for _ in range(250)], "--min-lines", "200")
+        self.assertEqual(rc, 0)
+        self.assertNotIn("::error::", stdout)
+        self.assertIn("PASS", report)
 
 
 

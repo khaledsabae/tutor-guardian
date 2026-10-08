@@ -4,6 +4,8 @@ import json
 import os
 from pathlib import Path
 import subprocess
+import sys
+import tempfile
 import unittest
 
 import yaml
@@ -74,3 +76,58 @@ class DeliveryWorkflowTest(unittest.TestCase):
             results[job] = {}
             with self.subTest(empty=job):
                 self.assertEqual(self.verdict(results).returncode, 1)
+
+
+class UnitTestStepTest(unittest.TestCase):
+    """The tooling's tests must never annotate the E2E job: a test of the
+    gate's "capture failed" path once put that error on every run, and it was
+    read as a flaky logcat capture."""
+
+    @classmethod
+    def setUpClass(cls):
+        workflow = yaml.load(WORKFLOW.read_text(), Loader=yaml.BaseLoader)
+        steps = [s for s in workflow['jobs']['e2e']['steps']
+                 if s.get('name') == 'Unit-test the E2E tooling']
+        assert len(steps) == 1, 'unit-test step not found'
+        cls.script = steps[0]['run']
+
+    def run_step(self, unittest_rc):
+        """The step's script with python3 stubbed: the "tests" leak a command."""
+        with tempfile.TemporaryDirectory() as d:
+            stub = Path(d) / 'python3'
+            stub.write_text('#!/bin/bash\n'
+                            'if [ "$2" = unittest ]; then echo "::error::leaked by a test"; '
+                            f'exit {unittest_rc}; fi\nexit 0\n')
+            stub.chmod(0o755)
+            env = dict(os.environ, PATH=f"{d}:{os.environ['PATH']}")
+            return subprocess.run(['bash', '-e', '-c', self.script], env=env,
+                                  capture_output=True, text=True, timeout=10)
+
+    def test_commands_are_paused_around_the_tests(self):
+        proc = self.run_step(0)
+        lines = proc.stdout.splitlines()
+        leak = lines.index('::error::leaked by a test')
+        stops = [i for i, l in enumerate(lines) if l.startswith('::stop-commands::')]
+        self.assertEqual(len(stops), 1, proc.stdout)
+        token = lines[stops[0]].split('::stop-commands::', 1)[1]
+        self.assertTrue(token)
+        self.assertLess(stops[0], leak)
+        self.assertIn(f'::{token}::', lines[leak + 1:], 'commands must resume after the tests')
+        self.assertEqual(proc.returncode, 0)
+
+    def test_failing_tests_still_fail_the_step(self):
+        for rc in (1, 5):
+            with self.subTest(rc=rc):
+                proc = self.run_step(rc)
+                self.assertEqual(proc.returncode, rc, proc.stdout + proc.stderr)
+                self.assertTrue(proc.stdout.rstrip().splitlines()[-1].startswith('::e2e-unit-tests-'),
+                                'commands must resume even when the tests fail')
+
+    def test_the_tooling_tests_leak_no_workflow_command(self):
+        # The pause is the backstop; the tests themselves should not need it.
+        e2e = Path(__file__).resolve().parent
+        proc = subprocess.run([sys.executable, '-m', 'unittest', 'test_e2e_tool', 'test_run'],
+                              cwd=e2e, capture_output=True, text=True, timeout=120)
+        self.assertEqual(proc.returncode, 0, proc.stderr[-2000:])
+        leaked = [l for l in (proc.stdout + proc.stderr).splitlines() if l.startswith('::')]
+        self.assertEqual(leaked, [])

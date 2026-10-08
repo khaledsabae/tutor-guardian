@@ -322,6 +322,11 @@ def cmd_logcat_gate(args: argparse.Namespace) -> int:
     lines = Path(args.logcat).read_text(encoding="utf-8", errors="replace").splitlines()
     allow = load_allowlist(Path(args.allowlist) if args.allowlist else None)
     failures, notes = scan_logcat(lines, args.package, allow)
+    # A capture this short proves nothing, so it is a failure in its own right —
+    # recorded in the verdict file too, which used to say "PASS" beside it.
+    short = len(lines) < args.min_lines
+    if short:
+        failures = [f"capture: only {len(lines)} lines (< {args.min_lines}) — the gate proves nothing"] + failures
     report = [f"logcat lines scanned: {len(lines)}"]
     report += [f"FAIL  {f}" for f in failures] or ["PASS  no crash, ANR or Flutter error"]
     report += [f"note  {n}" for n in notes]
@@ -329,9 +334,8 @@ def cmd_logcat_gate(args: argparse.Namespace) -> int:
     if args.out:
         Path(args.out).write_text(text, encoding="utf-8")
     sys.stdout.write(text)
-    if len(lines) < args.min_lines:
+    if short:
         print(f"::error::logcat has only {len(lines)} lines — capture failed, so the gate proves nothing")
-        return 1
     return 1 if failures else 0
 
 
