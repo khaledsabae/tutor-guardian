@@ -3,24 +3,49 @@ LLM configuration — Ollama settings (env-driven).
 All model-dependent values come from environment variables with safe local
 defaults, so deployments (Docker, mobile-backend) can override without code edits.
 """
+import logging
 import os
 from dataclasses import dataclass, field
+
+logger = logging.getLogger(__name__)
 
 
 def parse_billing_profile_aliases(raw: str) -> tuple:
     """'a=b,c=d' -> (('a','b'),('c','d')). Any malformed or repeated entry
-    voids the whole setting (fail closed: no alias, cloud denied)."""
+    voids the whole setting (fail closed: no alias, cloud denied) — logged."""
     pairs = []
     for entry in (raw or "").split(","):
         if not entry.strip():
             continue
         parts = entry.split("=")
         if len(parts) != 2 or not parts[0].strip() or not parts[1].strip():
-            return ()
+            pairs = None
+            break
         pairs.append((parts[0].strip(), parts[1].strip()))
-    if len({name for name, _ in pairs}) != len(pairs):
+    if pairs is None or len({name for name, _ in pairs}) != len(pairs):
+        logger.warning("DEEPSEEK_BILLING_PROFILE_ALIASES=%r is malformed — ignored entirely; "
+                       "capped calls on unprofiled models are denied", raw)
         return ()
     return tuple(pairs)
+
+
+_ENFORCE_ON = ("1", "true", "yes", "on")
+_ENFORCE_OFF = ("", "0", "false", "no", "off")
+
+
+def parse_cloud_budget_enforce(raw: str | None) -> bool:
+    """CLOUD_BUDGET_ENFORCE. An unrecognised value is never silently off: it
+    is read as ON (the safe side for spend — cloud fails closed and the local
+    chain answers until a bootstrap) and logged."""
+    value = (raw or "").strip().lower()
+    if value in _ENFORCE_ON:
+        return True
+    if value in _ENFORCE_OFF:
+        return False
+    logger.warning("CLOUD_BUDGET_ENFORCE=%r is not one of %s / %s — treated as ON "
+                   "(fail closed); set it explicitly", raw, "|".join(_ENFORCE_ON),
+                   "|".join(v for v in _ENFORCE_OFF if v))
+    return True
 
 
 # The home server, reached over Tailscale. Five modules read this address from
@@ -90,7 +115,7 @@ class LLMConfig:
     primary_provider: str = os.environ.get("LLM_PRIMARY_PROVIDER", "ollama").lower()
     deepseek_api_key: str = os.environ.get("DEEPSEEK_API_KEY", "")
     deepseek_base_url: str = os.environ.get("DEEPSEEK_BASE_URL", "https://api.deepseek.com")
-    deepseek_model: str = os.environ.get("DEEPSEEK_MODEL", "deepseek-flash")
+    deepseek_model: str = os.environ.get("DEEPSEEK_MODEL", "deepseek-chat")
     # DeepSeek's docs (2026-10) list deepseek-chat as a legacy name due to be
     # discontinued; the documented model is deepseek-flash (thinking off via
     # the request's "thinking" field). When the configured model is refused
@@ -119,10 +144,11 @@ class LLMConfig:
     # ceiling above over llm_calls (failing OPEN on unreadable telemetry),
     # batch tools unreserved; telemetry is recorded either way. On: every paid
     # wire attempt is reserved in the ledger and fails CLOSED until an explicit
-    # bootstrap (backend/docs/cloud-budget-reservations.md, runbook). Only
-    # "1"/"true"/"yes" turn it on.
-    cloud_budget_enforce: bool = field(default_factory=lambda: os.environ.get(
-        "CLOUD_BUDGET_ENFORCE", "false").strip().lower() in ("1", "true", "yes"))
+    # bootstrap (backend/docs/cloud-budget-reservations.md, runbook).
+    # 1/true/yes/on = on; unset/empty/0/false/no/off = off; anything else is
+    # logged and read as ON (never silently off).
+    cloud_budget_enforce: bool = field(default_factory=lambda: parse_cloud_budget_enforce(
+        os.environ.get("CLOUD_BUDGET_ENFORCE")))
 
     # backward-compat shim: older code reads .model
     @property

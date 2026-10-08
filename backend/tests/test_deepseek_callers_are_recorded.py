@@ -144,10 +144,6 @@ class _FakeOpenAI:
 @pytest.fixture
 def tdb(monkeypatch, tmp_path):
     monkeypatch.setattr(gw, "_TELEMETRY_DB", tmp_path / "sessions.db")
-    # Telemetry-only tests: explicit cap opt-out (0 = unlimited, no ledger).
-    # Reservation by the recorder is tested in test_deepseek_callers_are_recorded.
-    monkeypatch.setattr(gw, "LLM", dataclasses.replace(
-        gw.LLM, primary_provider="deepseek", deepseek_primary_monthly_token_cap=0))
     _FakeOpenAI.instances = []
     return tmp_path / "sessions.db"
 

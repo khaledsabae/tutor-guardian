@@ -38,9 +38,6 @@ def wire(server, monkeypatch, tmp_path):
         llm_config.LLM, base_url=server, local_base_url=server,
         local_fast_model="local_ok", local_fallback_model="local_ok", fallback_model="local_ok",
         deepseek_fallback_enabled=False, cloud_tier_enabled=False,
-        # Localhost protocol tests explicitly opt out; capped admission is
-        # independently exercised by test_cloud_budget_reservations.
-        primary_provider="deepseek", deepseek_primary_monthly_token_cap=0,
     ))
     monkeypatch.setattr(gw, "primary_budget_available", lambda name: True)
     # raising=False: on code without the fix these names do not exist, and

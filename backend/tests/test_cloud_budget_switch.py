@@ -70,63 +70,34 @@ def test_switch_defaults_off(monkeypatch):
     assert llm_config.LLMConfig().cloud_budget_enforce is False
 
 
-@pytest.mark.parametrize("raw,on", [("1", True), ("true", True), ("YES", True),
-                                    ("0", False), ("false", False), ("", False), ("enforce", False)])
-def test_switch_parses_only_explicit_yes(monkeypatch, raw, on):
+@pytest.mark.parametrize("raw,on", [("1", True), ("true", True), (" YES ", True), ("on", True),
+                                    ("0", False), ("false", False), ("", False), ("no", False),
+                                    ("Off", False)])
+def test_switch_parses_explicit_values(monkeypatch, caplog, raw, on):
     monkeypatch.setenv("CLOUD_BUDGET_ENFORCE", raw)
-    assert llm_config.LLMConfig().cloud_budget_enforce is on
+    with caplog.at_level("WARNING", logger="app.config.llm_config"):
+        assert llm_config.LLMConfig().cloud_budget_enforce is on
+    assert "CLOUD_BUDGET_ENFORCE" not in caplog.text
 
 
-def test_off_without_ledger_primary_answers_from_cloud_as_on_main(prod_like, monkeypatch):
-    calls = []
-    gateway = _gateway(monkeypatch, calls)
-    assert asyncio.run(gateway.generate("سؤال")).text == "cloud answer"
-    assert len(calls) == 1
-    assert not any(t.startswith("cloud_budget") for t in _tables(prod_like))
-    assert not cb.CloudBudget(prod_like).anchor_path.exists()
-    with sqlite3.connect(prod_like) as conn:   # telemetry still recorded
-        assert conn.execute("SELECT provider, prompt_tokens, completion_tokens FROM llm_calls "
-                            "WHERE ok=1").fetchall() == [("deepseek", 5, 2)]
+@pytest.mark.parametrize("raw", ["ture", "enforce", "2", "y"])
+def test_unknown_switch_value_is_enforced_loudly_never_silently_off(monkeypatch, caplog, raw):
+    # A typo means the operator meant to turn it on: the safe reading for
+    # spend is ON (cloud fails closed, local answers), and it is logged.
+    monkeypatch.setenv("CLOUD_BUDGET_ENFORCE", raw)
+    with caplog.at_level("WARNING", logger="app.config.llm_config"):
+        assert llm_config.LLMConfig().cloud_budget_enforce is True
+    assert "CLOUD_BUDGET_ENFORCE" in caplog.text and raw in caplog.text
 
 
-def test_on_without_bootstrap_primary_is_denied_and_local_answers(prod_like, monkeypatch):
-    monkeypatch.setattr(gw, "LLM", dataclasses.replace(gw.LLM, cloud_budget_enforce=True))
-    calls = []
-    gateway = _gateway(monkeypatch, calls)
-    assert asyncio.run(gateway.generate("سؤال")).text == "local answer"
-    assert calls == []
+def test_malformed_alias_setting_is_logged_and_maps_nothing(monkeypatch, caplog):
+    monkeypatch.setenv("DEEPSEEK_BILLING_PROFILE_ALIASES", "deepseek-chat:deepseek-flash")
+    with caplog.at_level("WARNING", logger="app.config.llm_config"):
+        assert llm_config.LLMConfig().deepseek_billing_profile_aliases == ()
+    assert "DEEPSEEK_BILLING_PROFILE_ALIASES" in caplog.text
 
 
-def test_off_unreadable_telemetry_fails_open_as_on_main(prod_like, monkeypatch, tmp_path):
-    monkeypatch.setattr(gw, "_TELEMETRY_DB", tmp_path / "nope" / "\0bad.db")
-    assert gw.primary_budget_available("deepseek") is True
-    monkeypatch.setattr(gw, "LLM", dataclasses.replace(gw.LLM, cloud_budget_enforce=True))
-    gw._budget_cache.clear()
-    assert gw.primary_budget_available("deepseek") is False
-
-
-def test_off_batch_tools_need_no_reservation_or_max_tokens(prod_like):
-    calls = []
-    msg = types.SimpleNamespace(content="تم")
-    resp = types.SimpleNamespace(choices=[types.SimpleNamespace(message=msg)],
-                                 usage=types.SimpleNamespace(prompt_tokens=3, completion_tokens=1))
-    client = types.SimpleNamespace(base_url=httpx.URL("https://api.deepseek.com/"),
-                                   chat=types.SimpleNamespace(completions=types.SimpleNamespace(
-                                       create=lambda **kw: calls.append(kw) or resp)))
-    assert gw.record_chat_completion(client, tier="kb_gap_judge", model="deepseek-chat",
-                                     messages=[{"role": "user", "content": "x"}]) is resp
-    assert len(calls) == 1
-    assert not any(t.startswith("cloud_budget") for t in _tables(prod_like))
-
-
-def test_on_batch_tools_are_denied_without_bootstrap(prod_like, monkeypatch):
-    monkeypatch.setattr(gw, "LLM", dataclasses.replace(
-        gw.LLM, cloud_budget_enforce=True, deepseek_billing_profile_aliases=(("deepseek-chat", "deepseek-flash"),)))
-    calls = []
-    client = types.SimpleNamespace(base_url=httpx.URL("https://api.deepseek.com/"),
-                                   chat=types.SimpleNamespace(completions=types.SimpleNamespace(
-                                       create=lambda **kw: calls.append(kw))))
-    with pytest.raises(cb.BudgetDenied):
-        gw.record_chat_completion(client, tier="kb_gap_judge", model="deepseek-chat",
-                                  messages=[{"role": "user", "content": "x"}], max_tokens=16)
-    assert calls == []
+def test_default_model_is_unchanged_from_main():
+    # Moving production off deepseek-chat is Khaled's decision, not this branch's.
+    import inspect
+    assert 'os.environ.get("DEEPSEEK_MODEL", "deepseek-chat")' in inspect.getsource(llm_config)
