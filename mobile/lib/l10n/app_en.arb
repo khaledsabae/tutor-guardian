@@ -1678,9 +1678,13 @@
   "deleteAccountNotDeletedNotice": "Your account was not deleted. You can try again from Settings → Privacy & your data.",
   "a11ySendQuestion": "Send question",
   "a11yExitChildMode": "Exit child mode",
-  "a11yChooseChild": "Choose child: {name}",
-  "@a11yChooseChild": {
-    "description": "Screen-reader action for selecting the active child, including their full name.",
+  "a11yCurrentChild": "Current child: {name}, tap to switch",
+  "@a11yCurrentChild": {
+    "description": "Screen-reader label for the active-child chip: names the current child (full name) and says a tap opens the list to switch. It must not sound like it selects this child.",
     "placeholders": {"name": {"type": "String"}}
+  },
+  "a11yChooseAChild": "Choose a child",
+  "@a11yChooseAChild": {
+    "description": "Screen-reader label for the active-child chip when no child is active yet; a tap opens the children list."
   }
 }

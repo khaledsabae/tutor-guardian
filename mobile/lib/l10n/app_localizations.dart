@@ -9608,11 +9608,17 @@ abstract class AppLocalizations {
   /// **'الخروج من وضع الطفل'**
   String get a11yExitChildMode;
 
-  /// Screen-reader action for selecting the active child, including their full name.
+  /// Screen-reader label for the active-child chip: names the current child (full name) and says a tap opens the list to switch. It must not sound like it selects this child.
   ///
   /// In ar, this message translates to:
-  /// **'اختيار الطفل: {name}'**
-  String a11yChooseChild(String name);
+  /// **'الطفل الحالي: {name}، اضغط للتبديل'**
+  String a11yCurrentChild(String name);
+
+  /// Screen-reader label for the active-child chip when no child is active yet; a tap opens the children list.
+  ///
+  /// In ar, this message translates to:
+  /// **'اختيار طفل'**
+  String get a11yChooseAChild;
 }
 
 class _AppLocalizationsDelegate

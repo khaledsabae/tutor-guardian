@@ -5550,7 +5550,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get a11yExitChildMode => 'الخروج من وضع الطفل';
 
   @override
-  String a11yChooseChild(String name) {
-    return 'اختيار الطفل: $name';
+  String a11yCurrentChild(String name) {
+    return 'الطفل الحالي: $name، اضغط للتبديل';
   }
+
+  @override
+  String get a11yChooseAChild => 'اختيار طفل';
 }

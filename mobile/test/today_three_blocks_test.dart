@@ -110,7 +110,8 @@ void main() {
         final child = find.byType(ActiveChildChip);
         final childData = t.getSemantics(child).getSemanticsData();
         expect(childData.label, locale.languageCode == 'ar'
-            ? 'اختيار الطفل: سارة' : 'Choose child: سارة');
+            ? 'الطفل الحالي: سارة، اضغط للتبديل'
+            : 'Current child: سارة, tap to switch');
         expect(childData.flagsCollection.isButton, isTrue);
         expect(t.getSize(child).height, greaterThanOrEqualTo(48));
         expect(t.getSize(child).width, greaterThanOrEqualTo(48));

@@ -5,6 +5,8 @@
 // canned JSON shaped exactly like the backend responses, then assert
 // the UI renders the expected widgets (titles, counts, error state).
 
+import 'dart:ui' show Tristate;
+
 import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -213,13 +215,20 @@ void main() {
           final l10n = AppLocalizations.of(t.element(find.byType(LessonScreen)));
           final favorite = find.bySemanticsLabel(l10n.lessonFavAdd);
           expect(favorite, findsOneWidget);
-          expect(t.getSemantics(favorite).getSemanticsData().hasAction(SemanticsAction.tap), isTrue);
+          final offData = t.getSemantics(favorite).getSemanticsData();
+          expect(offData.hasAction(SemanticsAction.tap), isTrue);
+          // A favourite is an on/off state, not just a button: TalkBack must
+          // announce "off" here and "on" after the tap.
+          expect(offData.flagsCollection.isToggled, Tristate.isFalse);
           final button = find.byTooltip(l10n.lessonFavAdd);
           expect(t.getSize(button).height, greaterThanOrEqualTo(48));
           expect(t.getSize(button).width, greaterThanOrEqualTo(48));
           await t.tap(button);
           await t.pumpAndSettle();
-          expect(find.bySemanticsLabel(l10n.lessonFavRemove), findsOneWidget);
+          final removed = find.bySemanticsLabel(l10n.lessonFavRemove);
+          expect(removed, findsOneWidget);
+          expect(t.getSemantics(removed).getSemanticsData().flagsCollection.isToggled,
+              Tristate.isTrue);
         } finally {
           semantics.dispose();
         }

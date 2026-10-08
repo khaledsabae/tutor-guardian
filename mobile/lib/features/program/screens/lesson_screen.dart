@@ -441,6 +441,7 @@ class _Hero extends ConsumerWidget {
                       Semantics(
                         container: true,
                         button: true,
+                        toggled: isFav,
                         label: isFav
                             ? AppLocalizations.of(context).lessonFavRemove
                             : AppLocalizations.of(context).lessonFavAdd,

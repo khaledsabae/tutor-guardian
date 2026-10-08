@@ -1805,9 +1805,13 @@
   "deleteAccountNotDeletedNotice": "لم يُحذف حسابك. يمكنك أن تحاول مرة أخرى من الإعدادات ← الخصوصية وبياناتك.",
   "a11ySendQuestion": "إرسال السؤال",
   "a11yExitChildMode": "الخروج من وضع الطفل",
-  "a11yChooseChild": "اختيار الطفل: {name}",
-  "@a11yChooseChild": {
-    "description": "Screen-reader action for selecting the active child, including their full name.",
+  "a11yCurrentChild": "الطفل الحالي: {name}، اضغط للتبديل",
+  "@a11yCurrentChild": {
+    "description": "Screen-reader label for the active-child chip: names the current child (full name) and says a tap opens the list to switch. It must not sound like it selects this child.",
     "placeholders": {"name": {"type": "String"}}
+  },
+  "a11yChooseAChild": "اختيار طفل",
+  "@a11yChooseAChild": {
+    "description": "Screen-reader label for the active-child chip when no child is active yet; a tap opens the children list."
   }
 }

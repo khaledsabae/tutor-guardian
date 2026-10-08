@@ -5621,7 +5621,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get a11yExitChildMode => 'Exit child mode';
 
   @override
-  String a11yChooseChild(String name) {
-    return 'Choose child: $name';
+  String a11yCurrentChild(String name) {
+    return 'Current child: $name, tap to switch';
   }
+
+  @override
+  String get a11yChooseAChild => 'Choose a child';
 }
