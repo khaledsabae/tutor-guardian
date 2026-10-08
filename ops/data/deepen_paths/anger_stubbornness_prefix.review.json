@@ -5,7 +5,7 @@
     "deepseek-v4-pro",
     "glm-5.2"
   ],
-  "written_at": "2026-10-07T17:38:16",
+  "written_at": "2026-10-08T08:03:33",
   "lessons": [
     {
       "path_id": "path_2-3_development_tantrums",
@@ -84,6 +84,100 @@
         "glm-5.2"
       ],
       "translation_stamp": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07"
+    },
+    {
+      "path_id": "path_2-3_development_tantrums",
+      "key": "s03",
+      "brief": "أثناء النوبة: أمانٌ وكلماتٌ قليلة",
+      "accepted": true,
+      "blockers": [],
+      "ar_review": {
+        "reviewer": "deepseek-v4-pro+glm-5.2",
+        "at": "2026-10-08T07:54:44",
+        "rounds": 2,
+        "defects": [
+          {
+            "severity": "low",
+            "type": "register",
+            "field": "summary",
+            "why": "استخدام «عليه» بعد «شعور قوي» غير دقيق وقد يوحي بأن الشعور ضدّه؛ الأصوب «لديه» أو «يغمره»."
+          },
+          {
+            "severity": "low",
+            "type": "register",
+            "field": "summary",
+            "why": "«لتنتهي النوبة» قد تُفهم خطأً أن الغاية أن تنتهي النوبة وليس أن تغيير القرار هو الوسيلة؛ الأوضح «لإنهاء النوبة»."
+          },
+          {
+            "severity": "low",
+            "type": "register",
+            "field": "summary",
+            "why": "«صرف انتباهك عنه» تركيب ملتبس؛ قد يُقرأ «صرف انتباهه عنك» والأوضح «أمّا تجاهلك إيّاه»."
+          }
+        ]
+      },
+      "en_review": {
+        "reviewer": "deepseek-v4-pro+glm-5.2",
+        "at": "2026-10-08T07:54:44",
+        "rounds": 2,
+        "defects": []
+      },
+      "dispositions": [],
+      "written_as": "lesson_2-3_development_tantrums_03",
+      "order": 3,
+      "title": "أثناء النوبة: أمانٌ وكلماتٌ قليلة",
+      "ar_hash": "b1d7749c2ea6c1f8",
+      "en_hash": "ee1a7a32fc84f143b1d7749c2ea6c1f8",
+      "translation_content_sha256": "2ed7e4dff865569b7550a15cb574f9fabf75b7b0e69fccfae369815238b8790c",
+      "translation_reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "translation_stamp": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08"
+    },
+    {
+      "path_id": "path_2-3_development_tantrums",
+      "key": "s04",
+      "brief": "بعد أن يهدأ: الحضن أولًا ثم الكلمات",
+      "accepted": true,
+      "blockers": [],
+      "ar_review": {
+        "reviewer": "deepseek-v4-pro+glm-5.2",
+        "at": "2026-10-08T08:02:57",
+        "rounds": 5,
+        "defects": [
+          {
+            "severity": "low",
+            "type": "register",
+            "field": "try_this",
+            "why": "الضمير «ها» يعود على «لمسة» المؤنثة فقط، فيُفهم أن الشرط خاص باللمسة دون الحضن، والصواب أن يشمل الاثنين."
+          },
+          {
+            "severity": "low",
+            "type": "pedagogy",
+            "field": "try_this",
+            "why": "الدرس مخصص لما بعد نوبة الغضب الكاملة، لكن try_this يقول «أول لحظة غضبٍ أو بكاءٍ» وهو أوسع نطاقًا وقد يطبّق على انفعال بسيط لا يستدعي كل هذه الخطوات، ما يخلّ بدقة الربط بين الملخص والفعل المطلوب."
+          }
+        ]
+      },
+      "en_review": {
+        "reviewer": "deepseek-v4-pro+glm-5.2",
+        "at": "2026-10-08T08:02:57",
+        "rounds": 5,
+        "defects": []
+      },
+      "dispositions": [],
+      "written_as": "lesson_2-3_development_tantrums_04",
+      "order": 4,
+      "title": "بعد أن يهدأ: الحضن أولًا ثم الكلمات",
+      "ar_hash": "2e5000cac3e4a369",
+      "en_hash": "fac67e943d6140a62e5000cac3e4a369",
+      "translation_content_sha256": "b57ed85fa25e7eaab606b550bf9b15b869e3a91bbfedfc2192e85e0ae25e378d",
+      "translation_reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "translation_stamp": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08"
     }
   ],
   "canonical_parity": {
@@ -104,12 +198,243 @@
       "stamp": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07"
     },
     "path_2-3_development_tantrums": {
-      "content_sha256": "b56bbc45c3619c23f340c69706df3649d0c8ae1d5f8da75ece2f2efe2f615294",
+      "content_sha256": "6b54104b329a846eed85ef7a387d5439d5d0a13adf1497619d46df98e17a67ff",
       "reviewers": [
         "deepseek-v4-pro",
         "glm-5.2"
       ],
-      "stamp": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07"
+      "stamp": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08"
+    },
+    "lesson_2-3_development_tantrums_03": {
+      "content_sha256": "2ed7e4dff865569b7550a15cb574f9fabf75b7b0e69fccfae369815238b8790c",
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "stamp": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08"
+    },
+    "lesson_2-3_development_tantrums_04": {
+      "content_sha256": "b57ed85fa25e7eaab606b550bf9b15b869e3a91bbfedfc2192e85e0ae25e378d",
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "stamp": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08"
+    }
+  },
+  "continuation_s03_s04": {
+    "base": "875651b75113905915a1df0a27febb2e7f3014d0",
+    "prefix": [
+      "s03",
+      "s04"
+    ],
+    "age_scope": "both backup drafts target ages two and three (spec age_group 2-3, unit_bands 2-3/0-3/prenatal-1/4-6/unspecified); canonical 2-3, same path, appended in spec order as lessons 03 and 04",
+    "source_drafts": "~/.local/share/tg-deepen-paths/work/anger_stubbornness/path_2-3_development_tantrums.drafts.json (s03, s04), copied to a work dir; 98 backup hashes verified unchanged before and after; read-only",
+    "corrections_by": "claude-opus-5-5",
+    "excluded_unit_ids": [
+      "d7a09c7e-769c-48b5-aaf8-0511fedfc0db"
+    ],
+    "exclusion_reasons": {
+      "d7a09c7e-769c-48b5-aaf8-0511fedfc0db": "both backup drafts were pinned to it; no source URL; it carries invented thresholds (tantrums over a quarter hour, more than five a day after age four) and 'persuasion always fails'; lessons rebuilt from primary sources and seed-tantrum-23 (+ dev-35865ddb for naming feelings in s04)"
+    },
+    "removed_from_original_drafts": [
+      "s03: 'in that moment your child can't listen or think' and 'lectures may even feed their anger' (overstated certainty)",
+      "s03: 'most tantrums last no more than a few minutes' (duration claim; AACAP gives ranges, not used: no duration or count in either lesson)",
+      "s03: 'giving in ... so tantrums repeat and grow stronger' softened to the CDC/NHS wording (giving in teaches that a tantrum gets what they want)",
+      "s03: 'your child reads your body before your words' (not in fetched sources)",
+      "s04: 'one of the most precious moments for learning' and 'love is steadier than anger' (rhetoric not in sources)",
+      "s04: 'don't deprive them of anything because of it' (CDC/AAP allow a related, logical consequence for unsafe behaviour; replaced by no shaming/reproach and returning to warmth)",
+      "s04: repair examples (stroking a sibling's hand, picking up together) not in fetched sources",
+      "s03/s04: unit d7a09c7e-769c-48b5-aaf8-0511fedfc0db"
+    ],
+    "safety_changes": [
+      "s03: safety first; hitting, biting, kicking, throwing or self-harm stopped at once, calmly and without violence, never ignored (AAP/CDC/AACAP); hold a child rushing into danger (AAP)",
+      "s03: check tiredness, hunger, pain or starting illness and meet the need first (AACAP/NHS/CDC)",
+      "s03: stay close, give time and space, few calm words; no shouting, hitting, threats or humiliation (CDC/AACAP/NHS/AAP)",
+      "s03: gentle hug only if more sad than angry and the parent is calm (NHS)",
+      "s03: do not give in or bribe with sweets after a reasoned no (NHS/CDC)",
+      "s03: turning attention away only from minor, safe attention-seeking behaviour such as whining, while watching, attention returned as soon as it stops; never for hunger, tiredness, illness, pain, fear or distress (CDC)",
+      "s03: parent's own pause with the child in a safe place or with a trusted adult (AAP/CDC)",
+      "s03/s04: talk with the pediatrician if very frequent or longer than expected for age, cannot calm down, harm to self (on purpose) or others/danger, disrupts daily life, lost skills (AACAP/CDC milestones); s04 adds persistently sad, withdrawn, or very demanding and unsatisfied most of the time (AAP); urgent help for serious injury or when safety cannot be kept (seed-tantrum-23)",
+      "s04: both calm first; closeness before words (hug if wanted, gentle touch, eye contact, smile); name the feeling, accept correction; validate feeling, limit behaviour, two simple choices; do not rush to solutions (CDC emotion coaching/AAP/NHS)",
+      "s04: if they hit: 'hitting hurts, I will not allow it'; never hit back (NHS); no shaming or reproach, return to warmth and praise words (AAP/CDC/NHS)"
+    ],
+    "religious_content": {
+      "s03": "none",
+      "s04": "none"
+    },
+    "lesson_review": {
+      "tool": "ops/tools/deepen_paths.py prompts/payload/hash (SYSTEM_REVIEW_BOTH; path: tc.SYSTEM_REVIEW) via sequential driver (dual_review.py; replies cached per exact ar+en hash and model)",
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "both_families_on_final_hash": true,
+      "concurrency": 1,
+      "request_timeout_s": 120,
+      "stop_on_429": true,
+      "fallback_substitution": false,
+      "provider": "Ollama Cloud (existing key), no OpenRouter",
+      "calls_total": 16,
+      "calls_ok": 16,
+      "calls_timed_out": 0,
+      "http_429": 0,
+      "rounds": {
+        "s03": 2,
+        "s04": 5,
+        "path": 1
+      },
+      "fixed_medium": [
+        "s03 r1 deepseek medium/pedagogy: try_this asked for two actions -> one",
+        "s04 r1 deepseek medium/register: 'ما زلت' -> 'لا تزال'",
+        "s04 r2 deepseek medium/medical: referral list lacked 'disrupts daily life' and 'very demanding' -> added (AACAP/AAP)",
+        "s04 r3 deepseek medium/meaning_change (EN): 'never satisfied most of the time' -> 'unsatisfied most of the time'",
+        "s04 r4 deepseek medium/register: reported 'إن' after قال; sentence rephrased as direct speech"
+      ],
+      "medium_high_on_final_hashes": 0
+    },
+    "translation_review": {
+      "tool": "ops/tools/review_en_parity.py run --only lesson_2-3_development_tantrums_03,lesson_2-3_development_tantrums_04,path_2-3_development_tantrums --rounds 1 --request-attempts 1 --workers 1 --max-concurrent 1 --request-timeout 120 --no-fix",
+      "stamped": 3,
+      "batches": {
+        "deepseek-v4-pro": 2,
+        "glm-5.2": 2
+      },
+      "http_429": 0,
+      "path_content_sha256": "6b54104b329a846eed85ef7a387d5439d5d0a13adf1497619d46df98e17a67ff"
+    },
+    "path_changes": [
+      "description two -> four lessons (adds safety with few words during a tantrum, and closeness and naming feelings after); EN in parity",
+      "estimated_days 4",
+      "title and primary_reference unchanged (per-lesson sources recorded here)"
+    ],
+    "restored_untouched": "deepen_paths --write rewrote lesson_2-3_development_tantrums_01/02 (AR+EN); all four files restored byte-identical from HEAD before stamping",
+    "primary_sources": [
+      {
+        "url": "https://www.healthychildren.org/English/family-life/family-dynamics/communication-discipline/Pages/Temper-Tantrums.aspx",
+        "final_url": "https://www.healthychildren.org/English/family-life/family-dynamics/communication-discipline/Pages/Temper-Tantrums.aspx",
+        "http": "200",
+        "html_sha256": "756d8e8c34e1587ebd0166ea3eff7b9feb6412d2fd30e4e140c3afd9a67fa6b6",
+        "text_sha256": "8d8fa778a177686632ee1ff51577e0cfb2cee6ca841cd3b35678122a168ad919",
+        "checked_at": "2026-10-08T07:46:24Z",
+        "used_for": "AAP (served as 'Top Tips for Surviving Tantrums'): tantrums normal; do not ignore hitting, kicking, biting, throwing; stop it immediately; hold a child in danger; distraction; give yourself a break; talk with your pediatrician"
+      },
+      {
+        "url": "https://www.healthychildren.org/English/family-life/family-dynamics/communication-discipline/Pages/Disciplining-Your-Child.aspx",
+        "final_url": "https://www.healthychildren.org/English/family-life/family-dynamics/communication-discipline/Pages/Disciplining-Your-Child.aspx",
+        "http": "200",
+        "html_sha256": "02698688365f55e43271c9d34afdfcd6d6fdf87af4a3234b13575214e5d5931a",
+        "text_sha256": "3cd68319cc776d1335b6dc0978ff911d9084fbcf0f0843216cd98922aedcf143",
+        "checked_at": "2026-10-08T07:46:26Z",
+        "used_for": "AAP: spanking, yelling and shaming harmful; parent's own time-out with the child in a safe place, then hug and start over; never take away something the child truly needs"
+      },
+      {
+        "url": "https://www.healthychildren.org/English/ages-stages/toddler/Pages/Emotional-Development-2-Year-Olds.aspx",
+        "final_url": "https://www.healthychildren.org/English/ages-stages/toddler/Pages/Emotional-Development-2-Year-Olds.aspx",
+        "http": "200",
+        "html_sha256": "94b94cd819dff1ccbace379e6f045d3904cd025b4d401b37e2934dfc990b2512",
+        "text_sha256": "9ae8b1a7680df86129fc58a8f40e417fa34378057c67b3853a09197ebf7b4e95",
+        "checked_at": "2026-10-08T07:46:27Z",
+        "used_for": "AAP: anger erupts as tantrum, may hit, bite or kick; consult pediatrician if very withdrawn, perpetually sad, or highly demanding and unsatisfied most of the time"
+      },
+      {
+        "url": "https://www.aacap.org/AACAP/Families_and_Youth/Facts_for_Families/FFF-Guide/Temper_Tantrums-136.aspx",
+        "final_url": "https://www.aacap.org/AACAP/Families_and_Youth/Facts_for_Families/FFF-Guide/Temper_Tantrums-136.aspx",
+        "http": "200",
+        "html_sha256": "4955c0650cf013fbda06348af765dd71b5fd7c5bf9480c8850f26753e07cbc65",
+        "text_sha256": "9876a7f8fc85cff5a6e00ac16f3eab80027de9a7ac011e388359d185fb123672",
+        "checked_at": "2026-10-08T07:46:34Z",
+        "used_for": "AACAP: tired, hungry, pain, mild illness; remain calm (modeling); words not unsafe actions; distraction; state calmly which behaviour must stop; never physically aggressive; seek help for danger, self-harm, not calming, very frequent/longer than expected, interfering with life (minute figures not used)"
+      },
+      {
+        "url": "https://www.cdc.gov/parenting-toddlers/responding-to-behavior/ignoring.html",
+        "final_url": "https://www.cdc.gov/parenting-toddlers/responding-to-behavior/ignoring.html",
+        "http": "200",
+        "html_sha256": "b1870162b98bac098ca031461726ea74e3ae9777364fb625f793a08829e81d6e",
+        "text_sha256": "e8a41418e1ff164abe4d9755beceb26b4613337b75c187284c7529d1dad1b5e6",
+        "checked_at": "2026-10-08T07:46:29Z",
+        "used_for": "CDC: ignoring only for minor safe attention-seeking behaviour (whining); never needs-based, distress or danger; do not leave alone unless safe; return attention when it stops"
+      },
+      {
+        "url": "https://www.cdc.gov/parenting-toddlers/noticing-and-naming/emotion-coaching.html",
+        "final_url": "https://www.cdc.gov/parenting-toddlers/noticing-and-naming/emotion-coaching.html",
+        "http": "200",
+        "html_sha256": "1f458b12a3101571489e7993f0be9b5b156a2f86d337b146f057854b696d6f4c",
+        "text_sha256": "8956363397686fc229c49b96e9327b732c2bef531a43fff89637983a5451e294",
+        "checked_at": "2026-10-08T07:47:02Z",
+        "used_for": "CDC: ensure safety, remain close, hands free, time and space; wait until both calm; notice, connect (eye contact, smile, touch), name the emotion, accept correction; validate feelings and limit behaviour; do not rush to solutions; parent's pause or another trusted caregiver"
+      },
+      {
+        "url": "https://www.cdc.gov/parenting-toddlers/responding-to-behavior/index.html",
+        "final_url": "https://www.cdc.gov/parenting-toddlers/responding-to-behavior/index.html",
+        "http": "200",
+        "html_sha256": "7bc67d4dbf5d0959b62d51b8a7d66d372947059b1c32d397309192f794b796d3",
+        "text_sha256": "a1681cb3df77a9b68b9dbd587ddcc6d417e10b67931a1de997407b12a2f4d42a",
+        "checked_at": "2026-10-08T07:47:02Z",
+        "used_for": "CDC: giving in rewards the tantrum; spanking, yelling and embarrassing are unhealthy; go back to being positive"
+      },
+      {
+        "url": "https://www.cdc.gov/child-development/positive-parenting-tips/toddlers-2-3-years.html",
+        "final_url": "https://www.cdc.gov/child-development/positive-parenting-tips/toddlers-2-3-years.html",
+        "http": "200",
+        "html_sha256": "f36162045368adca188fee708af73d102beb4f4e9ea8a98090d30159197087f9",
+        "text_sha256": "c18b1890c7105f905aa7d7e3bcfd7527fe4934a8d9ee832a3a08431562e38596",
+        "checked_at": "2026-10-08T07:46:31Z",
+        "used_for": "CDC: teach acceptable ways to show they are upset; praise positive behaviour"
+      },
+      {
+        "url": "https://www.cdc.gov/act-early/milestones/2-years.html",
+        "final_url": "https://www.cdc.gov/act-early/milestones/2-years.html",
+        "http": "200",
+        "html_sha256": "867a1bf1cfd3eb5cc443bf2d324532d739a6bacc1f794fa9c8a8eae2a692297c",
+        "text_sha256": "f66434e5f205f4aa28579d2f23ca5aed01c5bf7e25e38c9b3304abde54e5ad57",
+        "checked_at": "2026-10-08T07:46:32Z",
+        "used_for": "CDC: lost skills or other concerns -> talk with the child's doctor"
+      },
+      {
+        "url": "https://www.nhs.uk/baby/babys-development/behaviour/temper-tantrums/",
+        "final_url": "https://www.nhs.uk/baby/babys-development/behaviour/temper-tantrums/",
+        "http": "200",
+        "html_sha256": "d2b0c72e59bbeb5d53413e54e40a44f706108b9741cb3c18969d4fc2557ed92b",
+        "text_sha256": "93c487998834c6f5c04bff6f5c0a975614a212533b400092a6d49dda3b66b18a",
+        "checked_at": "2026-10-08T07:46:23Z",
+        "used_for": "NHS: find out why (tired, hungry); shouting back will not end it; do not change your mind or bribe with sweets; distraction; holding when more upset than angry and you are calm; do not hit back, make clear hitting hurts; 'I know you're feeling angry'; praise and cuddles; GP if seriously concerned"
+      }
+    ],
+    "fetched_not_cited": {
+      "https://www.cdc.gov/act-early/milestones/3-years.html": "no tip used",
+      "https://www.cdc.gov/parenting-toddlers/time-out/index.html": "time-out not taught in these lessons"
+    },
+    "fetch_failed": {
+      "https://www.zerotothree.org/resource/toddler-tantrums-101-why-they-happen-and-what-you-can-do/": "HTTP 403 direct; Jina reader returned only a tracker stub; not used",
+      "https://www.zerotothree.org/resource/toddlers-and-challenging-behavior-why-they-do-it-and-how-to-respond/": "HTTP 403; not used",
+      "https://www.healthychildren.org/English/family-life/family-dynamics/communication-discipline/Pages/Top-Tips-for-Surviving-Tantrums.aspx": "404 (same article served at the Temper-Tantrums URL above)"
+    },
+    "human_approval_claimed": false,
+    "verification": {
+      "tests": 195,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "pytest_exit": 0,
+      "test_files": [
+        "test_deepen_paths",
+        "test_review_en_parity",
+        "test_review_en_parity_proof",
+        "test_review_en_parity_transport",
+        "test_curriculum_i18n",
+        "test_lesson_index_integrity",
+        "test_lesson11_source_proof"
+      ],
+      "anger_specific_tests": "none exist in backend/tests for curriculum tantrum lessons",
+      "schema_files": 950,
+      "schema_exit": 0,
+      "en_parity_check_all_exit": 0,
+      "pre_commit_exit": 0,
+      "preserved_backup_files": 98,
+      "backup_mismatches": 0,
+      "backup_verify_exit": 0,
+      "existing_s01_s02_files_unchanged": true
     }
   }
 }
