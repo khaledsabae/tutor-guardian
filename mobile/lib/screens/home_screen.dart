@@ -33,6 +33,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../l10n/app_localizations.dart';
 
+import '../features/home/greeting.dart';
 import '../features/home/widgets/home_app_bar.dart';
 import '../features/home/widgets/home_community_note.dart';
 import '../features/home/widgets/home_shortcuts_grid.dart';
@@ -46,6 +47,7 @@ import '../features/home/widgets/today_section.dart';
 import '../features/onboarding/providers/onboarding_providers.dart';
 import '../features/program/data/badges.dart';
 import '../features/program/providers/program_providers.dart';
+import '../features/program/data/progress_models.dart';
 import '../features/program/providers/progress_providers.dart';
 import '../features/programs/widgets/programs_home_card.dart';
 import '../features/referral/pride_invite_card.dart';
@@ -60,7 +62,7 @@ import '../features/whats_new/widgets/whats_new_card.dart';
 import '../core/analytics.dart';
 import '../core/app_routes.dart';
 
-class HomeScreen extends ConsumerWidget {
+class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key, required this.onGoToTab, this.focusCardKey});
 
   /// Switches the root scaffold tab. Always pass a [RootTab] constant — a
@@ -72,36 +74,58 @@ class HomeScreen extends ConsumerWidget {
   final Key? focusCardKey;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final profile = ref.watch(activeChildProfileProvider);
-    final childId = ref.watch(activeChildIdProvider);
-    final ageGroup = ref.watch(selectedAgeGroupProvider);
-    final asyncBundle =
-        childId == null ? null : ref.watch(childProgressProvider(childId));
-    final bundle = asyncBundle?.maybeWhen(
-      data: (b) => b,
-      orElse: () => null,
-    );
+  ConsumerState<HomeScreen> createState() => _HomeScreenState();
+}
 
-    // One-shot per build pass: claim the daily login reward + credit any
-    // newly-unlocked badges. Both are idempotent (once/day, once/badge).
+class _HomeScreenState extends ConsumerState<HomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+    // «هدية اليوم والشارات» — the daily claim and the badge credits used to
+    // run in an addPostFrameCallback inside build: every rebuild re-ran them,
+    // and both rewards happened with no one looking. A manual listener
+    // outside build runs when the active child's progress *changes* (and
+    // once up front) — the claim lands at the moment something was earned,
+    // and neither a rebuild nor a tab switch can re-fire it.
+    ref.listenManual<AsyncValue<ChildProgressBundle>?>(
+      activeChildProgressProvider,
+      (_, next) => _claimDailyRewards(next?.valueOrNull),
+      fireImmediately: true,
+    );
+  }
+
+  void _claimDailyRewards(ChildProgressBundle? bundle) {
+    if (!mounted) return;
+    final notifier = ref.read(coinsProvider.notifier);
+    unawaited(notifier.claimDaily());
     final earnedBadgeIds = computeBadges(bundle)
         .where((b) => b.earned)
         .map((b) => b.id)
         .toList();
+    if (earnedBadgeIds.isNotEmpty) {
+      // Idempotent per badge id: passing every earned badge each time is how
+      // a badge that did not fit under the day's ceiling gets paid later.
+      unawaited(notifier.creditBadges(earnedBadgeIds));
+    }
+    // Here, not in HomeStatsRow: since the stats moved below the divider
+    // the row is built only when scrolled near, and the funnel event fired
+    // only for parents who scrolled. Once per install either way.
     final lessonStreak = bundle?.streakDays ?? 0;
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(coinsProvider.notifier).claimDaily();
-      if (earnedBadgeIds.isNotEmpty) {
-        ref.read(coinsProvider.notifier).creditBadges(earnedBadgeIds);
-      }
-      // Here, not in HomeStatsRow: since the stats moved below the divider
-      // the row is built only when scrolled near, and the funnel event fired
-      // only for parents who scrolled. Once per install either way.
-      if (lessonStreak >= 3) {
-        unawaited(Analytics.habitStreak3(lessonStreak));
-      }
-    });
+    if (lessonStreak >= 3) {
+      unawaited(Analytics.habitStreak3(lessonStreak));
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final profile = ref.watch(activeChildProfileProvider);
+    final ageGroup = ref.watch(selectedAgeGroupProvider);
+    final bundle = ref.watch(activeChildProgressProvider)?.maybeWhen(
+          data: (b) => b,
+          orElse: () => null,
+        );
+    final coins = ref.watch(coinsProvider);
+    final gift = ref.watch(dailyGiftProvider).valueOrNull;
 
     final l10n = AppLocalizations.of(context);
     return Scaffold(
@@ -122,9 +146,17 @@ class HomeScreen extends ConsumerWidget {
               const SizedBox(width: 10),
               Expanded(
                 child: Text(
+                  // Time-aware, and honest on day one («النصوص»): the hour
+                  // picks صباح/مساء, and a first-day streak (≤1) drops the
+                  // «مستمرة» — nothing has continued yet.
                   profile == null
                       ? l10n.greetingPeace
-                      : l10n.greetingWithName(profile.name),
+                      : greetingFor(
+                          l10n,
+                          profile.name,
+                          DateTime.now(),
+                          firstDay: coins.dailyStreak <= 1,
+                        ),
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
                         color: AppTheme.textSecondary,
                         fontWeight: FontWeight.w600,
@@ -135,6 +167,20 @@ class HomeScreen extends ConsumerWidget {
             ],
           ),
           const SizedBox(height: 12),
+          // «هدية اليوم» as a line in the page, not a silent credit: the
+          // child's login reward is the one coin flow the parent never saw.
+          if (gift != null && gift > 0)
+            Padding(
+              padding: const EdgeInsets.only(bottom: 10),
+              child: Text(
+                l10n.dailyGiftLine(gift),
+                style: TextStyle(
+                  fontSize: 12.5,
+                  fontWeight: FontWeight.w600,
+                  color: AppTheme.textMuted,
+                ),
+              ),
+            ),
           // Whose day this is — and the one-tap way to change it.
           _ActiveChildBanner(profile: profile),
           const SizedBox(height: 20),
@@ -147,10 +193,10 @@ class HomeScreen extends ConsumerWidget {
                 : l10n.todayStepTitle(profile.name),
           ),
           TodayFocusCard(
-            key: focusCardKey,
+            key: widget.focusCardKey,
             bundle: bundle,
             ageGroup: ageGroup,
-            onStartFirstPath: () => onGoToTab(RootTab.learn),
+            onStartFirstPath: () => widget.onGoToTab(RootTab.learn),
           ),
           // «المتابعة» then «خطة الأسبوع» (plan §1.2, §1.3), between ① and ②:
           // the weekly plan is the week-sized version of today's step, and a
@@ -164,7 +210,7 @@ class HomeScreen extends ConsumerWidget {
           // ② اسأل المربّي
           TodayAskBlock(
             childName: profile?.name,
-            onAsk: () => onGoToTab(RootTab.assistant),
+            onAsk: () => widget.onGoToTab(RootTab.assistant),
           ),
           const SizedBox(height: 24),
 

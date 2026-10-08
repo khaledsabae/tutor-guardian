@@ -54,6 +54,14 @@ class CoinsNotifier extends StateNotifier<CoinsState> {
 final coinsProvider =
     StateNotifierProvider<CoinsNotifier, CoinsState>((ref) => CoinsNotifier());
 
+/// The gift Today shows as «هدية اليوم: {n} 🪙» — what a claim would pay
+/// now, or what today's claim already paid. Re-reads whenever the ledger
+/// changes, so the line settles on the paid amount the moment a claim lands.
+final dailyGiftProvider = FutureProvider<int>((ref) {
+  ref.watch(coinsProvider);
+  return CoinsService.instance.todayGift();
+});
+
 /// Cosmetic badges the user owns from before they could no longer be bought.
 final ownedBadgesProvider = FutureProvider<Set<String>>((ref) async {
   ref.watch(coinsProvider);
