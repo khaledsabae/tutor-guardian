@@ -6,7 +6,7 @@
   "unit_id": "med-c974d9d8",
   "day_of_week": 3,
   "time_of_day": "evening",
-  "approved_by": null,
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
   "language": "en",
   "source_language": "ar",
   "translation": {
@@ -18,12 +18,63 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "pending",
-    "review_defects": [],
-    "approved_by": null,
-    "revalidated_at": "2026-10-04T17:02:06+00:00",
+    "review_verdict": "low_only",
+    "review_defects": [
+      {
+        "model": "deepseek-v4-pro",
+        "field": "text",
+        "type": "omission",
+        "why": "The phrase 'في بلدكم' (in your country) is omitted, losing the reminder to use local numbers."
+      },
+      {
+        "model": "glm-5.2",
+        "field": "text",
+        "type": "omission",
+        "why": "The qualifier «في بلدكم» (in your country) is dropped, losing the guidance to use local numbers."
+      }
+    ],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
+    "revalidated_at": "2026-10-08T18:17:08+00:00",
     "manual_fix_note": "Rewritten 2026-10-04 with the Arabic: the Saudi-only 937 line replaced by country-neutral emergency guidance, and the card is made with the child.",
     "fixed_at": "2026-10-04T07:11:53.626353+00:00",
-    "fixer_model": "claude-opus-5.5"
+    "fixer_model": "claude-opus-5.5",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "providers": {
+        "deepseek-v4-pro": {
+          "provider": "openrouter",
+          "model": "deepseek/deepseek-v4-pro"
+        },
+        "glm-5.2": {
+          "provider": "openrouter",
+          "model": "z-ai/glm-5.2"
+        }
+      },
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "ae0c443a8fbeea706935a439914dc037886e5681b3745b7004370956c5dda3b9",
+      "reviewed_at": "2026-10-08T18:17:08+00:00",
+      "residual_low": [
+        {
+          "model": "deepseek-v4-pro",
+          "field": "text",
+          "type": "omission",
+          "why": "The phrase 'في بلدكم' (in your country) is omitted, losing the reminder to use local numbers."
+        },
+        {
+          "model": "glm-5.2",
+          "field": "text",
+          "type": "omission",
+          "why": "The qualifier «في بلدكم» (in your country) is dropped, losing the guidance to use local numbers."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+    }
   }
 }

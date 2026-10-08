@@ -6,7 +6,7 @@
   "unit_id": "isl-7365e833",
   "day_of_week": 0,
   "time_of_day": "morning",
-  "approved_by": null,
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
   "language": "en",
   "source_language": "ar",
   "translation": {
@@ -18,11 +18,50 @@
       "quoted_arabic": true,
       "reviewer_model": true
     },
-    "review_verdict": "pending",
-    "review_defects": [],
-    "approved_by": null,
-    "revalidated_at": "2026-10-04T11:18:18+00:00",
+    "review_verdict": "low_only",
+    "review_defects": [
+      {
+        "model": "deepseek-v4-pro",
+        "field": "text",
+        "type": "meaning",
+        "why": "The Arabic addresses 'your son' (ابنك) specifically, while the English generalizes to 'your teen', which could include daughters and loses the direct address to a son."
+      }
+    ],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
+    "revalidated_at": "2026-10-08T18:17:08+00:00",
     "fixed_at": "2026-08-13T18:53:27.499878+00:00",
-    "fixer_model": "mistral-large-3:675b"
+    "fixer_model": "mistral-large-3:675b",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "providers": {
+        "deepseek-v4-pro": {
+          "provider": "openrouter",
+          "model": "deepseek/deepseek-v4-pro"
+        },
+        "glm-5.2": {
+          "provider": "openrouter",
+          "model": "z-ai/glm-5.2"
+        }
+      },
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "19f6d3f556ac05283972221b16e7bf9668eb989ad38cf7d5fa47e61c4b935896",
+      "reviewed_at": "2026-10-08T18:17:08+00:00",
+      "residual_low": [
+        {
+          "model": "deepseek-v4-pro",
+          "field": "text",
+          "type": "meaning",
+          "why": "The Arabic addresses 'your son' (ابنك) specifically, while the English generalizes to 'your teen', which could include daughters and loses the direct address to a son."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+    }
   }
 }

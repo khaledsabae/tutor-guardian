@@ -6,7 +6,7 @@
   "unit_id": "78431bb2-354f-43ef-a874-d17bc11ed6e6",
   "day_of_week": 1,
   "time_of_day": "evening",
-  "approved_by": null,
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
   "language": "en",
   "source_language": "ar",
   "translation": {
@@ -18,12 +18,37 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "pending",
+    "review_verdict": "clean",
     "review_defects": [],
-    "approved_by": null,
-    "revalidated_at": "2026-10-04T17:02:06+00:00",
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
+    "revalidated_at": "2026-10-08T18:17:08+00:00",
     "fixed_at": "2026-10-04T07:26:56.760370+00:00",
     "fixer_model": "claude-opus-5.5",
-    "manual_fix_note": "Rewritten 2026-10-04 with the Arabic register fix (Latin words / dialect removed from the Arabic); meaning re-aligned."
+    "manual_fix_note": "Rewritten 2026-10-04 with the Arabic register fix (Latin words / dialect removed from the Arabic); meaning re-aligned.",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "providers": {
+        "deepseek-v4-pro": {
+          "provider": "openrouter",
+          "model": "deepseek/deepseek-v4-pro"
+        },
+        "glm-5.2": {
+          "provider": "openrouter",
+          "model": "z-ai/glm-5.2"
+        }
+      },
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "f7a85e956bed3cf5e99fc6884bcefdf1639a5700368388d84d6a07c102f36369",
+      "reviewed_at": "2026-10-08T18:17:08+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+    }
   }
 }

@@ -15,7 +15,7 @@
   "is_published": true,
   "version": "1.0.0",
   "created_at": "2026-06-10T20:00:00",
-  "approved_by": null,
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
   "language": "en",
   "source_language": "ar",
   "translation": {
@@ -27,19 +27,37 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "pending",
-    "review_defects": [
-      {
-        "model": "glm-5.2",
-        "field": "text",
-        "type": "leakage",
-        "why": "«itqan» is a common Arabic word not in the app's allowed transliteration list; it should simply be rendered as 'mastery'."
-      }
-    ],
-    "approved_by": null,
-    "revalidated_at": "2026-10-07T07:22:37+00:00",
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
+    "revalidated_at": "2026-10-08T18:17:08+00:00",
     "english_authors": [
       "claude-opus-5.5"
-    ]
+    ],
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "providers": {
+        "deepseek-v4-pro": {
+          "provider": "openrouter",
+          "model": "deepseek/deepseek-v4-pro"
+        },
+        "glm-5.2": {
+          "provider": "openrouter",
+          "model": "z-ai/glm-5.2"
+        }
+      },
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "b62a3c5d1367a18fa0e3e0eb6689cd25325090b7c0fbca0dc2deaaafa1479d7e",
+      "reviewed_at": "2026-10-08T18:17:08+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+    }
   }
 }
