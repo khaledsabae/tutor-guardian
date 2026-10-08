@@ -2,9 +2,28 @@
 import ipaddress
 import os
 import socket
+import sys
 import tempfile
 
 import pytest
+
+
+# ── Hugging Face models load from the local cache only ────────────────────
+# SentenceTransformer("intfloat/multilingual-e5-small") sends HEAD requests to
+# huggingface.co on every load, even with the weights fully cached — so any
+# test that reaches the real embedder (an index rebuild, a vector query)
+# connects out. Under the guard below that connect is refused, and
+# huggingface_hub 1.16 then closes its shared httpx client and retries on the
+# closed one: "Cannot send a request, as the client has been closed" — a
+# RuntimeError its cache fallback never catches, so /assistant/stream answered
+# `event: error`. Offline mode is what the golden CI (ops/tools/golden_ci.py)
+# already runs with; the weights come from the cache that CI's backend-env
+# step fills before pytest starts. huggingface_hub reads the flag once, at
+# import — hence module level, before any test can import it.
+os.environ["HF_HUB_OFFLINE"] = "1"
+os.environ["TRANSFORMERS_OFFLINE"] = "1"
+if "huggingface_hub.constants" in sys.modules:  # a plugin imported it first
+    sys.modules["huggingface_hub.constants"].HF_HUB_OFFLINE = True
 
 
 # ── No test reaches the network ───────────────────────────────────────────
