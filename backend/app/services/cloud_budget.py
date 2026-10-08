@@ -9,10 +9,11 @@ import logging
 import os
 import sqlite3
 import tempfile
+import threading
 import time
 import uuid
 from dataclasses import dataclass
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Callable
 
@@ -22,8 +23,6 @@ PAID_ALIASES = ('azure_deepseek', 'deepseek', 'deepseek_aux', 'deepseek_fallback
 # llm_calls.provider values that are never a request to any wallet: the
 # gateway's all-failed marker row (telemetry from codex/batch-oct8).
 NON_WALLET_PROVIDERS = ('gateway',)
-_LEDGER_TABLES = ('cloud_budget_months', 'cloud_budget_attempts', 'cloud_budget_carry',
-                  'cloud_budget_activation', 'cloud_budget_identity')
 
 
 class BudgetDenied(RuntimeError):
@@ -137,6 +136,47 @@ class Reservation:
     output_bound: int | None = None
 
 
+# How long a ledger transaction waits for the cross-process lock / SQLite
+# write lock. A reservation sits on the answer's critical path; a settlement
+# is never a denial (losing one leaves an orphan holding its full bound), so
+# it waits far longer and retries until this deadline.
+RESERVE_TIMEOUT_S = 5.0
+SETTLE_TIMEOUT_S = 120.0
+ADMIN_TIMEOUT_S = 30.0
+
+# Tables whose rows the continuity witness covers, and the running totals a
+# trigger keeps for each (column in cloud_budget_witness -> SQL of the row).
+_WITNESSED = {
+    'cloud_budget_attempts': (('attempts_n', '1'), ('attempts_charged', 'charged_tokens'),
+                              ('attempts_settled', 'settled')),
+    'cloud_budget_carry': (('carry_n', '1'), ('carry_charged', 'charged_tokens')),
+    'cloud_budget_months': (('months_n', '1'), ('months_opening', 'opening_tokens'),
+                            ('months_blocked', 'blocked')),
+    'cloud_budget_activation': (('activation_n', '1'),),
+    'cloud_budget_identity': (('identity_n', '1'),),
+    'cloud_budget_attempts_archive': (('archive_n', '1'), ('archive_charged', 'charged_tokens')),
+    'cloud_budget_attempt_meta': (('meta_n', '1'),),
+    'cloud_budget_audit': (('audit_n', '1'),),
+}
+_WITNESS_COLUMNS = tuple(col for spec in _WITNESSED.values() for col, _ in spec)
+_LEDGER_OBJECTS = (*_WITNESSED, 'cloud_budget_witness')
+
+
+class LedgerBusy(BudgetDenied):
+    """The ledger stayed locked past this transaction's timeout."""
+
+
+# Threads of one process queue on a lock that wakes the next waiter at
+# release; only cross-process contention falls back to polling the flock.
+_PROCESS_LOCKS: dict[str, threading.Lock] = {}
+_PROCESS_LOCKS_GUARD = threading.Lock()
+
+
+def _process_lock(path: Path) -> threading.Lock:
+    with _PROCESS_LOCKS_GUARD:
+        return _PROCESS_LOCKS.setdefault(str(path), threading.Lock())
+
+
 class CloudBudget:
     def __init__(self, path: Path, *, clock: Callable | None = None):
         try:
@@ -146,30 +186,47 @@ class CloudBudget:
         self.anchor_path = Path(str(self.path) + '.cloud-budget-anchor')
         self.clock = clock or (lambda: datetime.now(timezone.utc))
 
+    # ── continuity witness: O(1) per transaction ──────────────────────────
+    # Triggers bump a sequence number and keep running totals on every
+    # INSERT/UPDATE/DELETE of a ledger row — including edits made outside
+    # this code. The anchor file mirrors (sequence, totals, schema hash) at
+    # each commit, so a restored snapshot, a deleted or edited row, or a
+    # dropped trigger/table no longer matches. A forged witness row is caught
+    # by the full recount (_recount) at every monthly rollover.
     @staticmethod
-    def _digest(conn) -> str:
-        """Witness ledger contents, including deletions and restored snapshots.
+    def _schema_hash(conn) -> str:
+        marks = ','.join('?' for _ in _LEDGER_OBJECTS)
+        rows = conn.execute(
+            f"SELECT type,name,tbl_name,sql FROM sqlite_master WHERE name IN ({marks}) "
+            f"OR tbl_name IN ({marks}) ORDER BY type,name", (*_LEDGER_OBJECTS, *_LEDGER_OBJECTS)).fetchall()
+        return hashlib.sha256(json.dumps(rows).encode()).hexdigest()
 
-        Diagnostic telemetry rows are intentionally excluded: they are written
-        after admission and cannot change the activated opening balance.
-        """
-        digest = hashlib.sha256()
-        for table in _LEDGER_TABLES:
-            schema = conn.execute('SELECT sql FROM sqlite_master WHERE type=\'table\' AND name=?',
-                                  (table,)).fetchone()
-            if not schema:
-                raise BudgetDenied('cloud budget lost schema; reconciliation required')
-            digest.update(json.dumps(schema).encode())
-            for row in conn.execute(f'SELECT * FROM {table} ORDER BY rowid'):
-                digest.update(json.dumps(row, separators=(',', ':')).encode())
-                digest.update(b'\n')
-        return digest.hexdigest()
+    @staticmethod
+    def _witness(conn) -> list:
+        try:
+            row = conn.execute(f"SELECT seq,{','.join(_WITNESS_COLUMNS)} FROM cloud_budget_witness "
+                               "WHERE id=1").fetchone()
+        except sqlite3.OperationalError as exc:
+            raise BudgetDenied('cloud budget lost schema; reconciliation required') from exc
+        if row is None:
+            raise BudgetDenied('cloud budget lost witness; reconciliation required')
+        return list(row)
+
+    @staticmethod
+    def _recount(conn) -> list:
+        """The witness totals recomputed from every row — O(history)."""
+        totals = []
+        for table, spec in _WITNESSED.items():
+            exprs = ','.join(f'COALESCE(SUM({expr}),0)' for _, expr in spec)
+            totals.extend(conn.execute(f'SELECT {exprs} FROM {table}').fetchone())
+        return totals
 
     def _write_anchor(self, conn):
         identity = conn.execute('SELECT db_identity FROM cloud_budget_identity WHERE id=1').fetchone()
         if not identity:
             raise BudgetDenied('cloud budget uninitialized DB identity')
-        data = json.dumps({'db_identity': identity[0], 'digest': self._digest(conn)})
+        data = json.dumps({'db_identity': identity[0], 'witness': self._witness(conn),
+                           'schema': self._schema_hash(conn)})
         fd, name = tempfile.mkstemp(prefix=self.anchor_path.name + '.', dir=self.path.parent)
         try:
             with os.fdopen(fd, 'w') as stream:
@@ -187,9 +244,13 @@ class CloudBudget:
                 os.unlink(name)
 
     @contextlib.contextmanager
-    def _transaction(self, *, bootstrap=False):
+    def _transaction(self, *, bootstrap=False, timeout: float | None = None):
         conn = None
         lock = None
+        deadline = time.monotonic() + (RESERVE_TIMEOUT_S if timeout is None else timeout)
+        local = _process_lock(self.anchor_path)
+        if not local.acquire(timeout=max(0.0, deadline - time.monotonic())):
+            raise LedgerBusy('cloud budget continuity witness busy')
         try:
             if not self.path.is_file():
                 raise BudgetDenied('cloud budget cutover unknown: existing history DB required')
@@ -198,18 +259,20 @@ class CloudBudget:
             # Serialize DB commit + separate durable witness across processes.
             # A crash between them denies further traffic rather than resetting.
             lock = open(str(self.anchor_path) + '.lock', 'a')
-            deadline = time.monotonic() + 0.2
+            pause = 0.001
             while True:
                 try:
                     fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
                     break
                 except BlockingIOError:
                     if time.monotonic() >= deadline:
-                        raise BudgetDenied('cloud budget continuity witness busy')
-                    time.sleep(0.002)
+                        raise LedgerBusy('cloud budget continuity witness busy')
+                    time.sleep(min(pause, max(0.0, deadline - time.monotonic())))
+                    pause = min(pause * 2, 0.02)
+            remaining = max(0.05, deadline - time.monotonic())
             identity_stat = self.path.stat()
-            conn = sqlite3.connect(self.path.as_uri() + '?mode=rw', uri=True, timeout=0.2)
-            conn.execute("PRAGMA busy_timeout = 200")
+            conn = sqlite3.connect(self.path.as_uri() + '?mode=rw', uri=True, timeout=remaining)
+            conn.execute(f"PRAGMA busy_timeout = {int(remaining * 1000)}")
             conn.execute('PRAGMA synchronous = FULL')
             conn.execute("BEGIN IMMEDIATE")
             # Missing telemetry is unknown history, even on explicit bootstrap.
@@ -217,16 +280,19 @@ class CloudBudget:
             tables = {row[0] for row in conn.execute("SELECT name FROM sqlite_master WHERE type='table'")}
             if self.anchor_path.exists():
                 anchor = json.loads(self.anchor_path.read_text())
-                identity = conn.execute('SELECT db_identity FROM cloud_budget_identity WHERE id=1').fetchone()
+                identity = conn.execute('SELECT db_identity FROM cloud_budget_identity WHERE id=1').fetchone() \
+                    if 'cloud_budget_identity' in tables else None
                 if (not identity or anchor.get('db_identity') != identity[0]
-                        or anchor.get('digest') != self._digest(conn)):
+                        or 'cloud_budget_witness' not in tables
+                        or anchor.get('witness') != self._witness(conn)
+                        or anchor.get('schema') != self._schema_hash(conn)):
                     raise BudgetDenied('cloud budget continuity/restore identity mismatch; reconcile offline')
             elif not bootstrap or 'cloud_budget_activation' in tables or 'cloud_budget_identity' in tables:
                 raise BudgetDenied('cloud budget continuity anchor lost; reconciliation required')
             else:
                 # Adopt an intact pre-activation ledger; never repair partial loss.
-                legacy = set(_LEDGER_TABLES[:3]) & tables
-                if legacy and legacy != set(_LEDGER_TABLES[:3]):
+                legacy = {'cloud_budget_months', 'cloud_budget_attempts', 'cloud_budget_carry'} & tables
+                if legacy and legacy != {'cloud_budget_months', 'cloud_budget_attempts', 'cloud_budget_carry'}:
                     raise BudgetDenied('cloud budget lost legacy schema; reconciliation required')
                 self._create_schema(conn)
             yield conn
@@ -235,6 +301,10 @@ class CloudBudget:
                 raise BudgetDenied('cloud budget DB identity replaced during accounting')
             conn.commit()
             self._write_anchor(conn)
+        except sqlite3.OperationalError as exc:
+            if 'locked' in str(exc) or 'busy' in str(exc):
+                raise LedgerBusy('cloud budget ledger busy') from exc
+            raise BudgetDenied("cloud budget accounting unknown or unavailable") from exc
         except (sqlite3.Error, OSError, ValueError, TypeError, AttributeError) as exc:
             raise BudgetDenied("cloud budget accounting unknown or unavailable") from exc
         finally:
@@ -242,6 +312,7 @@ class CloudBudget:
                 conn.close()  # rolls back on exceptions; never leaves a writer open
             if lock is not None:
                 lock.close()
+            local.release()
 
     @staticmethod
     def _create_schema(conn):
@@ -255,6 +326,8 @@ class CloudBudget:
             settled INTEGER NOT NULL DEFAULT 0)""")
         conn.execute("CREATE INDEX IF NOT EXISTS cloud_budget_wallet_month "
                      "ON cloud_budget_attempts(wallet,month)")
+        conn.execute("CREATE INDEX IF NOT EXISTS cloud_budget_unsettled "
+                     "ON cloud_budget_attempts(wallet,month) WHERE settled=0")
         conn.execute("""CREATE TABLE IF NOT EXISTS cloud_budget_carry (
             wallet TEXT NOT NULL, month TEXT NOT NULL, attempt_id TEXT NOT NULL,
             charged_tokens INTEGER NOT NULL,
@@ -264,6 +337,36 @@ class CloudBudget:
                      'PRIMARY KEY(wallet,month))')
         conn.execute('CREATE TABLE cloud_budget_identity ('
                      'id INTEGER PRIMARY KEY CHECK(id=1), db_identity TEXT NOT NULL)')
+        conn.execute('CREATE TABLE cloud_budget_attempts_archive ('
+                     'id TEXT PRIMARY KEY, wallet TEXT NOT NULL, month TEXT NOT NULL, '
+                     'bound INTEGER NOT NULL, charged_tokens INTEGER NOT NULL, '
+                     'settled INTEGER NOT NULL, archived_in TEXT NOT NULL)')
+        conn.execute('CREATE TABLE cloud_budget_attempt_meta ('
+                     'attempt_id TEXT PRIMARY KEY, reserved_at TEXT NOT NULL, unknown_charge INTEGER)')
+        conn.execute('CREATE TABLE cloud_budget_audit ('
+                     'id INTEGER PRIMARY KEY AUTOINCREMENT, ts TEXT NOT NULL, action TEXT NOT NULL, '
+                     'attempt_id TEXT, wallet TEXT, month TEXT, old_charge INTEGER, new_charge INTEGER, '
+                     'policy TEXT, evidence TEXT NOT NULL)')
+        columns = ','.join(f'{col} INTEGER NOT NULL DEFAULT 0' for col in _WITNESS_COLUMNS)
+        conn.execute(f'CREATE TABLE cloud_budget_witness (id INTEGER PRIMARY KEY CHECK(id=1), '
+                     f'seq INTEGER NOT NULL DEFAULT 0, {columns})')
+        # Adopted pre-activation rows are counted once, here.
+        totals = CloudBudget._recount(conn)
+        conn.execute(f"INSERT INTO cloud_budget_witness(id,seq,{','.join(_WITNESS_COLUMNS)}) "
+                     f"VALUES(1,0,{','.join('?' for _ in totals)})", totals)
+        for table, spec in _WITNESSED.items():
+            for event, sign_old, sign_new in (('INSERT', None, '+'), ('DELETE', '-', None),
+                                              ('UPDATE', '-', '+')):
+                sets = ['seq=seq+1']
+                for col, expr in spec:
+                    term = col
+                    if sign_old:
+                        term += f"-({expr.replace('charged_tokens', 'OLD.charged_tokens').replace('opening_tokens', 'OLD.opening_tokens').replace('settled', 'OLD.settled').replace('blocked', 'OLD.blocked')})"
+                    if sign_new:
+                        term += f"+({expr.replace('charged_tokens', 'NEW.charged_tokens').replace('opening_tokens', 'NEW.opening_tokens').replace('settled', 'NEW.settled').replace('blocked', 'NEW.blocked')})"
+                    sets.append(f'{col}={term}')
+                conn.execute(f'CREATE TRIGGER {table}_witness_{event.lower()} AFTER {event} ON {table} '
+                             f'BEGIN UPDATE cloud_budget_witness SET {", ".join(sets)} WHERE id=1; END')
 
     def bootstrap(self, receipt: dict) -> None:
         """Explicit operator-attested cutover, never evidence inferred from emptiness.
@@ -300,7 +403,7 @@ class CloudBudget:
             encoded = json.dumps(receipt, sort_keys=True, separators=(',', ':'))
         except (KeyError, TypeError, ValueError, AttributeError) as exc:
             raise BudgetDenied('cloud budget cutover evidence unknown') from exc
-        with self._transaction(bootstrap=True) as conn:
+        with self._transaction(bootstrap=True, timeout=ADMIN_TIMEOUT_S) as conn:
             identity = conn.execute('SELECT db_identity FROM cloud_budget_identity WHERE id=1').fetchone()
             if identity and identity[0] != receipt['db_identity']:
                 raise BudgetDenied('cloud budget cutover DB identity mismatch')
@@ -377,6 +480,8 @@ class CloudBudget:
         then opens at what the ledger measured: opening 0, plus the late
         settlements already carried into it. Returns None when rolled over.
         """
+        if self._recount(conn) != self._witness(conn)[1:]:
+            return 'ledger rows disagree with the continuity witness (edited or forged)'
         year, mon = (int(part) for part in month.split('-'))
         prev = f'{year - 1}-12' if mon == 1 else f'{year}-{mon - 1:02d}'
         month_start = datetime(year, mon, 1, tzinfo=timezone.utc)
@@ -435,6 +540,17 @@ class CloudBudget:
         conn.execute('INSERT INTO cloud_budget_activation VALUES(?,?,?)',
                      (wallet, month, json.dumps(receipt, sort_keys=True, separators=(',', ':'))))
         conn.execute('INSERT INTO cloud_budget_months VALUES(?,?,0,0)', (wallet, month))
+        # Keep the hot tables to two months: settled attempts and carries of
+        # earlier months move to the archive (still witnessed, never re-read
+        # on the reservation path).
+        conn.execute('INSERT INTO cloud_budget_attempts_archive '
+                     'SELECT id,wallet,month,bound,charged_tokens,settled,? FROM cloud_budget_attempts '
+                     'WHERE wallet=? AND month<? AND settled=1', (month, wallet, prev))
+        conn.execute('DELETE FROM cloud_budget_attempts WHERE wallet=? AND month<? AND settled=1',
+                     (wallet, prev))
+        conn.execute('DELETE FROM cloud_budget_carry WHERE wallet=? AND month<?', (wallet, prev))
+        conn.execute('DELETE FROM cloud_budget_attempt_meta WHERE attempt_id NOT IN '
+                     '(SELECT id FROM cloud_budget_attempts)')
         logger.info('cloud budget rolled %s over from %s to %s', wallet, prev, month)
         return None
 
@@ -466,7 +582,7 @@ class CloudBudget:
                 not isinstance(unknown_usage_bounds, (tuple, list)) or len(unknown_usage_bounds) != 2
                 or not all(_count(v) and v > 0 for v in unknown_usage_bounds)):
             raise BudgetDenied("cloud budget invalid unknown-usage bounds")
-        with self._transaction() as conn:
+        with self._transaction(timeout=RESERVE_TIMEOUT_S) as conn:
             now = self.clock()
             if now.tzinfo is None:
                 raise BudgetDenied("cloud budget requires a UTC accounting clock")
@@ -509,6 +625,9 @@ class CloudBudget:
                 raise BudgetDenied("cloud budget monthly reservation would exceed cap")
             conn.execute("INSERT INTO cloud_budget_attempts VALUES(?,?,?,?,?,0)",
                          (ticket.id, wallet, month, bound, bound))
+            conn.execute("INSERT INTO cloud_budget_attempt_meta VALUES(?,?,?)",
+                         (ticket.id, now.astimezone(timezone.utc).isoformat(),
+                          sum(unknown_usage_bounds) if unknown_usage_bounds else None))
         return ticket
 
     def settle(self, ticket: Reservation, prompt_tokens, completion_tokens) -> None:
@@ -530,29 +649,82 @@ class CloudBudget:
                          + (completion_tokens if _count(completion_tokens) else ticket.output_bound))
         else:
             actual = ticket.bound
-        try:
-            with self._transaction() as conn:
-                row = conn.execute("SELECT bound,settled FROM cloud_budget_attempts "
-                                   "WHERE id=? AND wallet=? AND month=?",
-                                   (ticket.id, ticket.wallet, ticket.month)).fetchone()
-                if row is None:
-                    raise BudgetDenied("cloud budget settlement has no reservation")
-                bound, settled = row
-                if actual > bound:
-                    conn.execute("UPDATE cloud_budget_months SET blocked=1 WHERE wallet=? AND month=?",
-                                 (ticket.wallet, ticket.month))
-                    return
-                if not settled:
-                    conn.execute("UPDATE cloud_budget_attempts SET charged_tokens=?,settled=1 WHERE id=?",
-                                 (actual, ticket.id))
-                    month = self.clock().astimezone(timezone.utc).strftime("%Y-%m")
-                    if month > ticket.month:
-                        # The invoice may use completion month. Count it in both
-                        # possible months rather than silently freeing this one.
-                        conn.execute("INSERT OR IGNORE INTO cloud_budget_carry VALUES(?,?,?,?)",
-                                     (ticket.wallet, month, ticket.id, actual))
-                    if actual < bound:
-                        conn.execute("UPDATE cloud_budget_carry SET charged_tokens=MIN(charged_tokens,?) "
-                                     "WHERE wallet=? AND attempt_id=?", (actual, ticket.wallet, ticket.id))
-        except BudgetDenied as exc:
-            logger.warning("cloud budget settlement retained original charge: %s", exc)
+        deadline = time.monotonic() + SETTLE_TIMEOUT_S
+        while True:
+            try:
+                self._settle_once(ticket, actual, max(0.05, deadline - time.monotonic()))
+                return
+            except LedgerBusy as exc:
+                if time.monotonic() < deadline:
+                    continue  # a settlement waits; it is never a denial
+                logger.error("cloud budget settlement still busy after %.0fs; attempt %s stays an "
+                             "orphan holding its bound (settle it with --settle-orphans): %s",
+                             SETTLE_TIMEOUT_S, ticket.id, exc)
+                return
+            except BudgetDenied as exc:
+                logger.warning("cloud budget settlement retained original charge: %s", exc)
+                return
+
+    def _settle_once(self, ticket: Reservation, actual: int, timeout: float) -> None:
+        with self._transaction(timeout=timeout) as conn:
+            row = conn.execute("SELECT bound,settled FROM cloud_budget_attempts "
+                               "WHERE id=? AND wallet=? AND month=?",
+                               (ticket.id, ticket.wallet, ticket.month)).fetchone()
+            if row is None:
+                raise BudgetDenied("cloud budget settlement has no reservation")
+            bound, settled = row
+            if actual > bound:
+                conn.execute("UPDATE cloud_budget_months SET blocked=1 WHERE wallet=? AND month=?",
+                             (ticket.wallet, ticket.month))
+                return
+            if not settled:
+                conn.execute("UPDATE cloud_budget_attempts SET charged_tokens=?,settled=1 WHERE id=?",
+                             (actual, ticket.id))
+                month = self.clock().astimezone(timezone.utc).strftime("%Y-%m")
+                if month > ticket.month:
+                    # The invoice may use completion month. Count it in both
+                    # possible months rather than silently freeing this one.
+                    conn.execute("INSERT OR IGNORE INTO cloud_budget_carry VALUES(?,?,?,?)",
+                                 (ticket.wallet, month, ticket.id, actual))
+                if actual < bound:
+                    conn.execute("UPDATE cloud_budget_carry SET charged_tokens=MIN(charged_tokens,?) "
+                                 "WHERE wallet=? AND attempt_id=?", (actual, ticket.wallet, ticket.id))
+
+    def settle_orphans(self, *, older_than: timedelta, evidence: str, now: datetime,
+                       policy: str = 'request-bound', dry_run: bool = False) -> list[str]:
+        """Offline: settle reservations whose process died, with an audit row each.
+
+        Only attempts reserved before `now - older_than` (an in-flight call is
+        never touched). 'request-bound' charges the attempt's own unknown-usage
+        bound (as a settle without usage would have); 'full' keeps the whole
+        reservation. Either way the attempt becomes settled, so it no longer
+        blocks the monthly rollover; a later real settle cannot rewrite it.
+        """
+        if not isinstance(evidence, str) or not evidence.strip() or policy not in ('request-bound', 'full'):
+            raise BudgetDenied('cloud budget orphan settlement needs evidence and a known policy')
+        if now.tzinfo is None or older_than <= timedelta(0):
+            raise BudgetDenied('cloud budget orphan settlement needs a UTC time and a positive age')
+        cutoff = (now - older_than).astimezone(timezone.utc).isoformat()
+        query = ("SELECT a.id,a.wallet,a.month,a.charged_tokens,a.bound,m.unknown_charge "
+                 "FROM cloud_budget_attempts a JOIN cloud_budget_attempt_meta m ON m.attempt_id=a.id "
+                 "WHERE a.settled=0 AND m.reserved_at < ? ORDER BY m.reserved_at")
+        if dry_run:
+            conn = sqlite3.connect(self.path.as_uri() + '?mode=ro', uri=True)
+            try:
+                return [r[0] for r in conn.execute(query, (cutoff,))]
+            finally:
+                conn.close()
+        settled = []
+        with self._transaction(timeout=ADMIN_TIMEOUT_S) as conn:
+            for attempt_id, wallet, month, old, bound, unknown in conn.execute(query, (cutoff,)).fetchall():
+                new = min(bound, unknown) if policy == 'request-bound' and _count(unknown) else bound
+                conn.execute('UPDATE cloud_budget_attempts SET charged_tokens=?,settled=1 WHERE id=?',
+                             (new, attempt_id))
+                conn.execute('UPDATE cloud_budget_carry SET charged_tokens=MIN(charged_tokens,?) '
+                             'WHERE wallet=? AND attempt_id=?', (new, wallet, attempt_id))
+                conn.execute('INSERT INTO cloud_budget_audit(ts,action,attempt_id,wallet,month,old_charge,'
+                             'new_charge,policy,evidence) VALUES(?,?,?,?,?,?,?,?,?)',
+                             (now.astimezone(timezone.utc).isoformat(), 'settle_orphan', attempt_id,
+                              wallet, month, old, new, policy, evidence.strip()))
+                settled.append(attempt_id)
+        return settled

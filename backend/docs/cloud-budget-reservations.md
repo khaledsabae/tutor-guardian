@@ -616,3 +616,44 @@ the bootstrap moment. Spend between a cutoff and switch-on is unreserved: it
 would sit in telemetry after the cutoff without a ledger charge and refuse
 the first rollover. Take `opening_tokens` = max(export through its last
 complete day + `llm_calls` tokens after that day, telemetry floor).
+
+### 7. Contention and history (review of PR #71, P1)
+
+Found by review probes p2/p3: `_transaction` gave up after 0.2 s and
+`_digest` hashed every ledger row of every month twice per transaction. At 5k
+prior rows with 4 concurrent streams, 15 of 49 settles were swallowed, each
+leaving a 1,048,576-token orphan that carries forever and blocks rollover
+(~95 lost settles exhaust 100M).
+
+- **A settle is never a denial.** It retries until `SETTLE_TIMEOUT_S` (120 s);
+  only if the ledger stays locked that long is the attempt left as an orphan,
+  logged at ERROR with the remedy. `reserve` waits up to `RESERVE_TIMEOUT_S`
+  (5 s, it is on the answer's critical path), bootstrap/admin 30 s. Threads of
+  one process queue on an in-process lock (woken at release, no polling
+  starvation); processes still serialize on the flock.
+- **O(1) continuity witness.** SQLite triggers on every ledger table bump
+  `cloud_budget_witness.seq` and keep running totals (rows, charged, settled,
+  opening, blocked, …) on *any* INSERT/UPDATE/DELETE, including edits made
+  outside this code. The anchor mirrors `(db_identity, witness row, hash of
+  the ledger's schema incl. triggers)`. A restored snapshot, an edited or
+  deleted row, or a dropped trigger/table no longer matches → denied.
+  Unrelated schema changes in `sessions.db` (app tables, telemetry
+  migrations) are outside the hash. A forged witness row (edit rows, then
+  write the old totals back) is caught by `_recount` — the full O(history)
+  recount — at every monthly rollover, which refuses on disagreement.
+- **Closed months are archived.** At rollover, settled attempts and carries
+  of months before the previous one move to `cloud_budget_attempts_archive`
+  (still witnessed); unsettled attempts never move. A partial index on
+  unsettled attempts keeps the carry scan off settled history.
+- **Orphans: offline, audited.**
+  `python -m app.services.cloud_budget_bootstrap --db … --settle-orphans --older-than-minutes 60 --evidence "<why>" [--policy request-bound|full] [--dry-run]`
+  settles unsettled attempts reserved before the age limit (an in-flight call
+  is never touched), at their request bound (from `cloud_budget_attempt_meta`)
+  or in full, and writes one `cloud_budget_audit` row each (time, attempt,
+  old/new charge, policy, evidence). A later real settle cannot rewrite them.
+
+Probe results on this branch (copies of the review probes, scratch DBs):
+p3 at 50k rows × 8 streams × 15 iterations: 120 reserved, **0 unsettled**;
+p2 at 0/3k/10k/50k/150k rows × 8 threads: 40/40 reserve+settle each, single
+reserve+settle 14–70 ms independent of history; p1 (12 processes × 20 for 10
+slots): 10 admitted, never more.

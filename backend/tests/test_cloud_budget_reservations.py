@@ -253,8 +253,9 @@ def test_unknown_legacy_billing_blocks_admission(tmp_path):
         activate(m.CloudBudget(path))
 
 
-def test_busy_accounting_denies_instead_of_spending_blind(tmp_path):
+def test_busy_accounting_denies_instead_of_spending_blind(tmp_path, monkeypatch):
     m = budget_module()
+    monkeypatch.setattr(m, "RESERVE_TIMEOUT_S", 0.3)
     path = tmp_path / "ledger.db"
     activate(m.CloudBudget(path)).reserve("wallet", 100, 1, legacy_aliases=())
     with sqlite3.connect(path) as conn:
@@ -338,8 +339,9 @@ def test_azure_abort_closes_transport_and_retains_charge(wire, monkeypatch):
         p.generate("سؤال", options={"num_predict": 100})
 
 
-def test_settlement_failure_retains_durable_upper_bound(tmp_path):
+def test_settlement_failure_retains_durable_upper_bound(tmp_path, monkeypatch):
     m = budget_module()
+    monkeypatch.setattr(m, "SETTLE_TIMEOUT_S", 0.3)   # held by this very thread: it would wait it out
     path = tmp_path / "ledger.db"
     ledger = activate(m.CloudBudget(path))
     ticket = ledger.reserve("wallet", 100, 100, legacy_aliases=())
