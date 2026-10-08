@@ -8,19 +8,19 @@
     "isl-59686545",
     "isl-71d65f43"
   ],
-  "summary": "Your daughter's desire to work is not a sin in itself, and the scholars have a valid difference of opinion regarding the fundamental permissibility of a woman working outside the home—there is no single decisive fatwa. The prevalent conditions in the opinion of Shaykh Ibn Baz are: modest clothing, avoiding prohibited ikhtilat (mixing between unrelated men and women), and work that suits her nature. Discuss this with her calmly instead of outright refusal, and consult a trusted scholar to detail the ruling. There is another valid, more cautious opinion (Shaykh Ibn Uthaymeen): the default is for her to remain in her home, and her going out to work without financial need poses a risk to her household later. If she truly needs to (no one to provide for her), it is permissible with conditions: work that suits her nature, a female environment without ikhtilat, Islamic hijab, and no travel without a mahram. Present this opinion alongside the other, and let a trusted scholar detail her specific case.",
-  "try_this": "This week: Sit with your daughter for a discussion, not a decision. Listen to why she specifically wants to work (ambition, financial need, desire for independence), and together, present the question to a trusted scholar you both trust to detail the ruling according to her actual circumstances instead of deciding alone.",
+  "summary": "Your daughter's desire to work is not a sin in itself, and the scholars have a valid difference of opinion regarding the fundamental question of a woman working outside the home—there is no single decisive fatwa. Shaykh Ibn Baz permits a woman's work with conditions, among them: Islamic hijab, work among women without prohibited ikhtilat (mixing between unrelated men and women), and, if she is a mother, that her children's right to care is met. Discuss this with her calmly instead of outright refusal, and consult a trusted scholar to detail the ruling. There is another valid, more cautious opinion (Shaykh Ibn Uthaymeen): he holds that the default is for a woman to look after her home, and he warned against a mother going out to work and leaving her children, and did not permit it if her children need her and no one else can care for them; even so, he permits a woman to go out when there is a need, especially when she goes out to meet the needs of others, such as teaching Muslim women, with conditions: the work is in a women's field without mixing with men, with Islamic hijab, and without tabarruj (display of adornment) or perfume. Present this opinion alongside the other, and let a trusted scholar detail her specific case.",
+  "try_this": "Today: Sit with your daughter for a discussion, not a decision. Listen to why she specifically wants to work (ambition, financial need, a wish for independence), and agree to put the question together to a trusted scholar who can detail the ruling according to her actual circumstances.",
   "order": 1,
   "estimated_minutes": 9,
   "reflection_prompts": [
-    "Is your refusal or approval based on clear shar'i (legal) guidelines, or merely on social custom?",
+    "Which shar'i (legal) guidelines does your view on your daughter's work rest on, and which part of it comes from social custom?",
     "Have you truly listened to your daughter's real motivation before making your decision?"
   ],
   "warning_flags": [],
   "needs_professional_followup": false,
   "is_published": true,
   "version": "1.0.0",
-  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
   "language": "en",
   "source_language": "ar",
   "translation": {
@@ -32,10 +32,17 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "clean",
-    "review_defects": [],
-    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
-    "revalidated_at": "2026-10-04T11:18:18+00:00",
+    "review_verdict": "low_only",
+    "review_defects": [
+      {
+        "model": "glm-5.2",
+        "field": "summary",
+        "type": "meaning",
+        "why": "«منعه» means he forbade/prohibited it, which is stronger than \"did not permit it,\" slightly understating the Arabic."
+      }
+    ],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
+    "revalidated_at": "2026-10-08T16:29:33+00:00",
     "fixed_at": "2026-08-13T18:09:25.431863+00:00",
     "fixer_model": "mistral-large-3:675b",
     "auto_review": {
@@ -43,15 +50,36 @@
         "deepseek-v4-pro",
         "glm-5.2"
       ],
+      "providers": {
+        "deepseek-v4-pro": {
+          "provider": "openrouter",
+          "model": "deepseek/deepseek-v4-pro"
+        },
+        "glm-5.2": {
+          "provider": "openrouter",
+          "model": "z-ai/glm-5.2"
+        }
+      },
       "fixer": null,
       "rounds": 1,
       "prompt_version": "dfa8a5f39718",
-      "content_sha256": "a1e7b9084b51047ee1d5a40b9e4bdf82d6e007d1a1a6b687d41df71e5eaa9ee0",
-      "reviewed_at": "2026-10-04T11:18:18+00:00",
-      "residual_low": [],
+      "content_sha256": "3cdae057a112d471e18cc176f658d15782ccb48763674f6a6808eb2737b189cd",
+      "reviewed_at": "2026-10-08T16:29:33+00:00",
+      "residual_low": [
+        {
+          "model": "glm-5.2",
+          "field": "summary",
+          "type": "meaning",
+          "why": "«منعه» means he forbade/prohibited it, which is stronger than \"did not permit it,\" slightly understating the Arabic."
+        }
+      ],
       "adjudicated": [],
       "tool": "ops/tools/review_en_parity.py",
-      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
-    }
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+    },
+    "english_authors": [
+      "mistral-large-3:675b",
+      "claude-opus-5-5"
+    ]
   }
 }
