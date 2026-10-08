@@ -20,6 +20,8 @@ import '../../core/app_routes.dart';
 import '../../state/chat_notifier.dart' show tgClientProvider;
 import '../program/providers/progress_providers.dart' show activeChildIdProvider;
 import 'package:almorabbi/widgets/ui/loading_view.dart';
+import 'package:almorabbi/core/failures.dart';
+import 'package:almorabbi/l10n/app_localizations.dart';
 
 class ParentDayScreen extends ConsumerStatefulWidget {
   const ParentDayScreen({super.key});
@@ -49,7 +51,7 @@ class _ParentDayScreenState extends ConsumerState<ParentDayScreen> {
       final day = await ref.read(tgClientProvider).fetchChildDay(childId);
       if (mounted) setState(() { _day = day; _loading = false; });
     } catch (e) {
-      if (mounted) setState(() { _error = e.toString(); _loading = false; });
+      if (mounted) setState(() { _error = describeFailure(AppLocalizations.of(context), e); _loading = false; });
     }
   }
 

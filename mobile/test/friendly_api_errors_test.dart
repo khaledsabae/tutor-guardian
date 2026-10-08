@@ -312,8 +312,9 @@ void main() {
       RegExp(r"""['"]\$\{?(e|err|error|ex|exception)\}?['"]"""),
       // e.toString() — the exception's own text
       RegExp(r'\b(e|err|error|ex|exception)\.toString\(\)'),
-      // l10n.somethingFailed(e.message) — a server/transport string in a sentence
-      RegExp(r'\w+\((e|err|error|ex|inner)\.message\)'),
+      // l10n.somethingFailed(e.message), `? e.message :` — a server or
+      // transport string used as text
+      RegExp(r'\b(e|err|error|ex|inner)\.message\s*[),;:]'),
       // '…: $e' / '${l10n.x}\n$error' inside a longer literal
       RegExp(r"""['"][^'"]*\$\{?(e|err|error|ex)\}?[^'"\w][^'"]*['"]"""),
     ];
@@ -344,6 +345,8 @@ void main() {
           'server-written proof message',
       // A backup file's JSON parse error — the user's own file, not the server.
       'lib/features/program/data/backup_service.dart': 'local file parse',
+      // Reads a FlutterError's text to triage it for Crashlytics.
+      'lib/core/crash_triage.dart': 'crash triage, not UI',
     };
 
     final hits = <String>[];

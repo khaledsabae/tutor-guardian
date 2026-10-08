@@ -56,6 +56,7 @@ import 'theme/design_tokens.dart';
 import 'features/push/notification_channels.dart';
 import 'core/haptics.dart';
 import 'features/routine/widgets/child_mode_shell.dart';
+import 'core/failures.dart';
 
 // FCM background handler lives in features/push/push_service.dart
 // (registered there via FirebaseMessaging.onBackgroundMessage).
@@ -662,7 +663,7 @@ class _AppBootstrapper extends ConsumerWidget {
         );
       },
       loading: () => const _SplashScreen(),
-      error: (e, _) => _BootErrorScreen(error: '$e'),
+      error: (e, _) => _BootErrorScreen(error: e),
     );
   }
 }
@@ -714,7 +715,7 @@ class _SplashScreen extends StatelessWidget {
 
 class _BootErrorScreen extends StatelessWidget {
   const _BootErrorScreen({required this.error});
-  final String error;
+  final Object error;
 
   @override
   Widget build(BuildContext context) {
@@ -730,7 +731,7 @@ class _BootErrorScreen extends StatelessWidget {
                   size: 56, color: AppTheme.dangerFg),
               const SizedBox(height: 12),
               Text(
-                '${l10n.bootError}\n$error',
+                '${l10n.bootError}\n${describeFailure(l10n, error)}',
                 textAlign: TextAlign.center,
               ),
             ],

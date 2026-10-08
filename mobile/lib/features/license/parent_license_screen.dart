@@ -23,6 +23,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../api/tg_client.dart';
 import '../../l10n/app_localizations.dart';
+import 'package:almorabbi/core/failures.dart';
 import '../../state/chat_notifier.dart' show tgClientProvider;
 import '../program/providers/progress_providers.dart' show activeChildIdProvider;
 
@@ -82,7 +83,7 @@ class _ParentLicenseScreenState extends ConsumerState<ParentLicenseScreen> {
       final data = await ref.read(tgClientProvider).fetchLicenseSummary(childId);
       if (mounted) setState(() { _summary = data; _error = null; });
     } on TgApiError catch (e) {
-      if (mounted) setState(() => _error = e.toString());
+      if (mounted) setState(() => _error = describeFailure(AppLocalizations.of(context), e));
     }
   }
 
@@ -94,7 +95,7 @@ class _ParentLicenseScreenState extends ConsumerState<ParentLicenseScreen> {
       await ref.read(tgClientProvider).recordLicenseTalk(childId, levelKey);
       await _load();
     } on TgApiError catch (e) {
-      if (mounted) setState(() => _error = e.toString());
+      if (mounted) setState(() => _error = describeFailure(AppLocalizations.of(context), e));
     }
     if (mounted) setState(() => _busy = false);
   }
