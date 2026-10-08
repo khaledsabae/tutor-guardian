@@ -139,12 +139,20 @@ String? milestoneBadgeAsset(String key) {
     'keeps_prayer', 'quran_khatma', 'shahada',
   };
   if (branded.contains(key)) {
+    // The keys already carry their own prefix (`first_prayer`), so the file
+    // name is `milestone_$key` — an extra `first_` used to be prepended
+    // here, producing `milestone_first_first_prayer.webp`: a path matching
+    // no file, which quietly cost all three illustrations.
     if ({'first_prayer', 'first_surah', 'first_fast'}.contains(key)) {
-      return 'assets/images/generated/milestone_first_$key.webp';
+      return 'assets/images/generated/milestone_$key.webp';
     }
     return 'assets/images/generated/badge_$key.webp';
   }
-  return 'assets/images/milestones/$key.png';
+  // No PNG fallback: `assets/images/milestones/` has not existed since the
+  // brand set replaced the old PNGs, so the "fallback" was a broken path on
+  // top of a broken path. Null lets the caller show the milestone's emoji —
+  // the designed behaviour for keys outside the branded set.
+  return null;
 }
 
 /// Developmental milestones for a child's age band. `0-3` is the legacy
