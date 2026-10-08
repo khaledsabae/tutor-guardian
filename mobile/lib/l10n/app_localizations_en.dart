@@ -3103,7 +3103,7 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get pathsFrameworkProphetic => 'Prophetic 7-7-7 Method';
+  String get pathsFrameworkProphetic => 'Age-stage approach';
 
   @override
   String get pathsFrameworkGhazali => 'Ghazali Tazkiyah';
@@ -3362,6 +3362,26 @@ class AppLocalizationsEn extends AppLocalizations {
   String identityLinkFailed(Object error) {
     return 'Account linking failed: $error';
   }
+
+  @override
+  String get identityErrorNoGoogleAccount =>
+      'There\'s no Google account on this phone. Add one in your phone settings, then try again.';
+
+  @override
+  String get identityErrorGoogleUnavailable =>
+      'Google sign-in isn\'t available on this phone right now. Make sure Google Play services is up to date, then try again.';
+
+  @override
+  String get identityErrorAppMisconfigured =>
+      'Sign-in isn\'t set up in this version of the app. Update the app or try again later.';
+
+  @override
+  String get identityErrorGoogleUi =>
+      'Couldn\'t open Google sign-in. Please try again.';
+
+  @override
+  String get identityErrorGoogleGeneric =>
+      'Google sign-in didn\'t complete. Please try again in a moment.';
 
   @override
   String get identityLocalNote =>
@@ -5613,4 +5633,18 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get deleteAccountNotDeletedNotice =>
       'Your account was not deleted. You can try again from Settings → Privacy & your data.';
+
+  @override
+  String get a11ySendQuestion => 'Send question';
+
+  @override
+  String get a11yExitChildMode => 'Exit child mode';
+
+  @override
+  String a11yCurrentChild(String name) {
+    return 'Current child: $name, tap to switch';
+  }
+
+  @override
+  String get a11yChooseAChild => 'Choose a child';
 }

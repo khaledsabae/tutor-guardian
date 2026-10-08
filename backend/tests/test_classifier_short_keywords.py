@@ -1,5 +1,8 @@
 """Short Arabic keyword regressions: lexical routing only, no provider calls."""
 import json
+import math
+import statistics
+import time
 from pathlib import Path
 
 import pytest
@@ -360,16 +363,41 @@ def test_dialect_child_hearing_outranks_strong_app_help(question):
     assert classifier._keyword_fast_path(question) == ["development", "app_help"]
 
 
-@pytest.mark.parametrize("question", [
-    "سمع " * 12500, "مابيسمعش " * 5000, "ما" * 25000, "بيعضوا " * 7000,
-    "نسمع" + " كثير" * 10000, "سمعنا" + " مرة" * 12500 + " x",
-    "بعض " * 12500, "ي" * 50000,
+@pytest.mark.parametrize("head,filler,repeats,tail", [
+    ("", "سمع ", 12500, ""), ("", "مابيسمعش ", 5000, ""),
+    ("", "ما", 25000, ""), ("", "بيعضوا ", 7000, ""),
+    ("نسمع", " كثير", 10000, ""), ("سمعنا", " مرة", 12500, " x"),
+    ("", "بعض ", 12500, ""), ("", "ي", 50000, ""),
 ])
-def test_keyword_rules_stay_linear_on_50k_inputs(question):
-    import time
-    start = time.perf_counter()
-    classifier._keyword_fast_path(question)
-    assert time.perf_counter() - start < 1.0
+def test_keyword_rules_stay_linear_on_50k_inputs(head, filler, repeats, tail):
+    # Keep the original long inputs, including the reported-hearing sentinel,
+    # while varying only the filler. Quadratic searches approach 16x for 4x
+    # input; linear searches remain below 8x even with fixed setup overhead.
+    short = head + filler * (repeats // 4) + tail
+    question = head + filler * repeats + tail
+    short_cpu, long_cpu = _keyword_cpu_samples(short, question)
+    ratio = long_cpu / short_cpu
+    assert ratio < 8, f"4x filler took {ratio:.2f}x CPU ({short_cpu:.6f}s -> {long_cpu:.6f}s)"
+    assert long_cpu < 1.0, f"{len(question)} characters took {long_cpu:.6f}s CPU"
+
+
+def _keyword_cpu_samples(short, long):
+    def elapsed(text, repeats=1):
+        start = time.process_time()
+        for _ in range(repeats):
+            classifier._keyword_fast_path(text)
+        return (time.process_time() - start) / repeats
+
+    # Warm caches and batch enough calls to avoid clock granularity/noise.
+    pilot = elapsed(short)
+    elapsed(long)
+    repeats = max(1, min(32, math.ceil(0.020 / max(pilot, 1e-9))))
+    samples = {short: [], long: []}
+    # Alternate the order so a changing machine load does not favor one size.
+    for order in ((short, long), (long, short), (short, long)):
+        for text in order:
+            samples[text].append(elapsed(text, repeats))
+    return statistics.median(samples[short]), statistics.median(samples[long])
 
 
 # «تسمع/بتسمع» is also «she hears». Behind a negation or a girl, a reported

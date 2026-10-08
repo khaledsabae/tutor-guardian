@@ -3059,7 +3059,7 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String get pathsFrameworkProphetic => 'المنهج النبوي 7-7-7';
+  String get pathsFrameworkProphetic => 'مراحل عمرية تربوية';
 
   @override
   String get pathsFrameworkGhazali => 'تزكية الغزالي';
@@ -3317,6 +3317,26 @@ class AppLocalizationsAr extends AppLocalizations {
   String identityLinkFailed(Object error) {
     return 'فشل ربط الحساب: $error';
   }
+
+  @override
+  String get identityErrorNoGoogleAccount =>
+      'لا يوجد حساب Google على هذا الهاتف. أضِف حسابًا من إعدادات الهاتف ثم أعِد المحاولة.';
+
+  @override
+  String get identityErrorGoogleUnavailable =>
+      'تسجيل الدخول بحساب Google غير متاح على هذا الهاتف الآن. تأكّد من تحديث خدمات Google Play ثم أعِد المحاولة.';
+
+  @override
+  String get identityErrorAppMisconfigured =>
+      'تسجيل الدخول غير مُهيّأ في هذا الإصدار من التطبيق. حدِّث التطبيق أو حاول لاحقًا.';
+
+  @override
+  String get identityErrorGoogleUi =>
+      'تعذّر فتح نافذة تسجيل الدخول بحساب Google. أعِد المحاولة.';
+
+  @override
+  String get identityErrorGoogleGeneric =>
+      'لم يكتمل تسجيل الدخول بحساب Google. أعِد المحاولة بعد قليل.';
 
   @override
   String get identityLocalNote =>
@@ -5542,4 +5562,18 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get deleteAccountNotDeletedNotice =>
       'لم يُحذف حسابك. يمكنك أن تحاول مرة أخرى من الإعدادات ← الخصوصية وبياناتك.';
+
+  @override
+  String get a11ySendQuestion => 'إرسال السؤال';
+
+  @override
+  String get a11yExitChildMode => 'الخروج من وضع الطفل';
+
+  @override
+  String a11yCurrentChild(String name) {
+    return 'الطفل الحالي: $name، اضغط للتبديل';
+  }
+
+  @override
+  String get a11yChooseAChild => 'اختيار طفل';
 }

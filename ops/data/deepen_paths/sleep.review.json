@@ -1276,5 +1276,431 @@
         "unharmonised_s01_s02_s04_s06_s08_files_unchanged": true
       }
     }
+  },
+  "continuation_gpt_review_2026_10_08": {
+    "trigger": "artifacts/gpt-content-review-2026-10-08.md (independent GPT review: 2 P1, 8 P2)",
+    "base": "2efea0b4 (origin/main ec130d05 merged)",
+    "corrections_by": "claude-opus-5-5",
+    "method": "each cited source re-fetched and its quoted line confirmed (URL + sha256 of extracted text); minimal AR+EN edits; dual-family lesson review with deepen_paths SYSTEM_REVIEW_BOTH + source excerpts, concurrency 1, 120 s per reply, stop on 402/429; EN parity stamped by review_en_parity.py",
+    "provider_note": "Ollama Cloud still at its weekly cap (429 probe 2026-10-08); both families via OpenRouter on the existing analytics-platform key read in-process; GLM routed provider order baseten/z-ai with low reasoning effort after repeated 120 s timeouts",
+    "lessons": [
+      {
+        "key": "s01",
+        "written_as": "lesson_0-3_medical_infant_sleep_01",
+        "finding": "P2",
+        "change": "non-weighted sleeping bag; no weighted blankets, sleepwear, swaddles or objects",
+        "ar_hash": "4db35b033df0b6c4",
+        "en_hash": "676bdd8657c67e674db35b033df0b6c4",
+        "lesson_review": {
+          "reviewers": [
+            "deepseek-v4-pro",
+            "glm-5.2"
+          ],
+          "providers": {
+            "deepseek-v4-pro": {
+              "provider": "openrouter",
+              "model": "deepseek/deepseek-v4-pro"
+            },
+            "glm-5.2": {
+              "provider": "openrouter",
+              "model": "z-ai/glm-5.2"
+            }
+          },
+          "by_model": {
+            "deepseek-v4-pro": {
+              "arabic": {
+                "high": 0,
+                "medium": 0,
+                "low": 25
+              },
+              "english": {
+                "high": 0,
+                "medium": 0,
+                "low": 21
+              }
+            },
+            "glm-5.2": {
+              "arabic": {
+                "high": 0,
+                "medium": 0,
+                "low": 0
+              },
+              "english": {
+                "high": 0,
+                "medium": 0,
+                "low": 0
+              }
+            }
+          },
+          "no_medium_high_from_either": true,
+          "adjudicated_residuals": []
+        },
+        "translation_content_sha256": "4a3cd3619f80fc54ea4078a6e209806c145d98a04169946f0b86cdb0445c6c54",
+        "translation_stamp": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
+        "translation_providers": {
+          "deepseek-v4-pro": {
+            "provider": "openrouter",
+            "model": "deepseek/deepseek-v4-pro"
+          },
+          "glm-5.2": {
+            "provider": "openrouter",
+            "model": "z-ai/glm-5.2"
+          }
+        },
+        "translation_adjudicated": 0,
+        "sources": [
+          {
+            "url": "https://www.healthychildren.org/English/ages-stages/baby/sleep/Pages/A-Parents-Guide-to-Safe-Sleep.aspx",
+            "final_url": "https://www.healthychildren.org/English/ages-stages/baby/sleep/Pages/A-Parents-Guide-to-Safe-Sleep.aspx",
+            "http": "200",
+            "text_sha256": "82951ff0f4a65b85687aa7b4f7226dabe1d6cd9268667fc94534c9a2f3f22130",
+            "fetched_at": "2026-10-08T11:03:30Z"
+          }
+        ]
+      },
+      {
+        "key": "s02",
+        "written_as": "lesson_0-3_medical_infant_sleep_02",
+        "finding": "P1",
+        "change": "not feeding / not responding as usual / lethargic or much sleepier / weak, high-pitched or continuous cry -> ambulance; fewer feeds but alert -> doctor without delay; pointer to lesson 10",
+        "ar_hash": "f1a717b762e5512d",
+        "en_hash": "92d35c4c16f9ebb4f1a717b762e5512d",
+        "lesson_review": {
+          "reviewers": [
+            "deepseek-v4-pro",
+            "glm-5.2"
+          ],
+          "providers": {
+            "deepseek-v4-pro": {
+              "provider": "openrouter",
+              "model": "deepseek/deepseek-v4-pro"
+            },
+            "glm-5.2": {
+              "provider": "openrouter",
+              "model": "z-ai/glm-5.2"
+            }
+          },
+          "by_model": {
+            "deepseek-v4-pro": {
+              "arabic": {
+                "high": 0,
+                "medium": 0,
+                "low": 4
+              },
+              "english": {
+                "high": 0,
+                "medium": 0,
+                "low": 6
+              }
+            },
+            "glm-5.2": {
+              "arabic": {
+                "high": 0,
+                "medium": 0,
+                "low": 0
+              },
+              "english": {
+                "high": 0,
+                "medium": 0,
+                "low": 2
+              }
+            }
+          },
+          "no_medium_high_from_either": true,
+          "adjudicated_residuals": []
+        },
+        "translation_content_sha256": "f656c66a82abedd8f78b8bd803a8a063b1848e4cde54829495b3cb1db4d1aa30",
+        "translation_stamp": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
+        "translation_providers": {
+          "deepseek-v4-pro": {
+            "provider": "openrouter",
+            "model": "deepseek/deepseek-v4-pro"
+          },
+          "glm-5.2": {
+            "provider": "openrouter",
+            "model": "z-ai/glm-5.2"
+          }
+        },
+        "translation_adjudicated": 1,
+        "sources": [
+          {
+            "url": "https://www.nhs.uk/conditions/sepsis/",
+            "final_url": "https://www.nhs.uk/conditions/sepsis/",
+            "http": "200",
+            "text_sha256": "466932886824ff6b2f1ad0c95f8134d7c3c4367d07b5f08ce0083bb7e1069b5d",
+            "fetched_at": "2026-10-08T11:03:28Z"
+          }
+        ]
+      },
+      {
+        "key": "s03",
+        "written_as": "lesson_0-3_medical_infant_sleep_03",
+        "finding": "P2",
+        "change": "dozing during a feed is not proof of a full feed; ask doctor or nurse (matches lesson 05)",
+        "ar_hash": "dd89a88ce7af5394",
+        "en_hash": "345763dc58c61d60dd89a88ce7af5394",
+        "lesson_review": {
+          "reviewers": [
+            "deepseek-v4-pro",
+            "glm-5.2"
+          ],
+          "providers": {
+            "deepseek-v4-pro": {
+              "provider": "openrouter",
+              "model": "deepseek/deepseek-v4-pro"
+            },
+            "glm-5.2": {
+              "provider": "openrouter",
+              "model": "z-ai/glm-5.2"
+            }
+          },
+          "by_model": {
+            "deepseek-v4-pro": {
+              "arabic": {
+                "high": 0,
+                "medium": 1,
+                "low": 4
+              },
+              "english": {
+                "high": 0,
+                "medium": 0,
+                "low": 3
+              }
+            },
+            "glm-5.2": {
+              "arabic": {
+                "high": 0,
+                "medium": 0,
+                "low": 0
+              },
+              "english": {
+                "high": 0,
+                "medium": 0,
+                "low": 1
+              }
+            }
+          },
+          "no_medium_high_from_either": false,
+          "adjudicated_residuals": [
+            {
+              "severity": "medium",
+              "quote": "فانقله إلى سريره الخالي على ظهره في أقرب وقتٍ ممكن",
+              "adjudication": "reviewer itself says the instruction 'is correct and aligns with AAP/NHS guidance'; the wording is AAP's own ('move them to a firm sleep surface on their back as soon as possible', Safe-Sleep page line 125). Pre-existing sentence (only 'flat surface' -> 'empty cot' changed in r5)."
+            }
+          ]
+        },
+        "translation_content_sha256": "dc5118ecbed0f23171355f7dcf3281fb65a2f5fc2d2fba3167adb6b2883bfaca",
+        "translation_stamp": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
+        "translation_providers": {
+          "deepseek-v4-pro": {
+            "provider": "openrouter",
+            "model": "deepseek/deepseek-v4-pro"
+          },
+          "glm-5.2": {
+            "provider": "openrouter",
+            "model": "z-ai/glm-5.2"
+          }
+        },
+        "translation_adjudicated": 1,
+        "sources": [
+          {
+            "url": "https://www.cdc.gov/infant-toddler-nutrition/breastfeeding/how-much-and-how-often.html",
+            "final_url": "https://www.cdc.gov/infant-toddler-nutrition/breastfeeding/how-much-and-how-often.html",
+            "http": "200",
+            "text_sha256": "62e12177059082838d59c262760a1292e1479a5b928d5fab1047ef6c54155ae1",
+            "fetched_at": "2026-10-08T11:03:32Z"
+          }
+        ]
+      },
+      {
+        "key": "s09",
+        "written_as": "lesson_0-3_medical_infant_sleep_09",
+        "finding": "P2",
+        "change": "postpartum psychosis signs; family calls a doctor for a same-day urgent assessment; emergency help if imminent harm",
+        "ar_hash": "90de42177f7cba6b",
+        "en_hash": "a9939d41db92299b90de42177f7cba6b",
+        "lesson_review": {
+          "reviewers": [
+            "deepseek-v4-pro",
+            "glm-5.2"
+          ],
+          "providers": {
+            "deepseek-v4-pro": {
+              "provider": "openrouter",
+              "model": "deepseek/deepseek-v4-pro"
+            },
+            "glm-5.2": {
+              "provider": "openrouter",
+              "model": "z-ai/glm-5.2"
+            }
+          },
+          "by_model": {
+            "deepseek-v4-pro": {
+              "arabic": {
+                "high": 0,
+                "medium": 0,
+                "low": 3
+              },
+              "english": {
+                "high": 0,
+                "medium": 0,
+                "low": 3
+              }
+            },
+            "glm-5.2": {
+              "arabic": {
+                "high": 0,
+                "medium": 0,
+                "low": 0
+              },
+              "english": {
+                "high": 0,
+                "medium": 0,
+                "low": 2
+              }
+            }
+          },
+          "no_medium_high_from_either": true,
+          "adjudicated_residuals": []
+        },
+        "translation_content_sha256": "a3f1013be05f17f7aad86ddf807d3bd22302c70e0fe6f699de451966fecf789c",
+        "translation_stamp": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
+        "translation_providers": {
+          "deepseek-v4-pro": {
+            "provider": "openrouter",
+            "model": "deepseek/deepseek-v4-pro"
+          },
+          "glm-5.2": {
+            "provider": "openrouter",
+            "model": "z-ai/glm-5.2"
+          }
+        },
+        "translation_adjudicated": 1,
+        "sources": [
+          {
+            "url": "https://www.nhs.uk/mental-health/conditions/post-partum-psychosis/",
+            "final_url": "https://www.nhs.uk/mental-health/conditions/post-partum-psychosis/",
+            "http": "200",
+            "text_sha256": "830137ed0a94aae033e7020f37804a57bc84c0389ac989d80b41382ae67a8039",
+            "fetched_at": "2026-10-08T11:03:29Z"
+          }
+        ]
+      },
+      {
+        "key": "s10",
+        "written_as": "lesson_0-3_medical_infant_sleep_10",
+        "finding": "P1",
+        "change": "39C+ at 3-6 months -> emergency; not feeding / not responding / much sleepier -> emergency; fewer feeds but alert -> doctor; >5-day fever from 3 months -> doctor or advice line",
+        "ar_hash": "76c57f64891bc7c2",
+        "en_hash": "8ecee28e4298a6c576c57f64891bc7c2",
+        "lesson_review": {
+          "reviewers": [
+            "deepseek-v4-pro",
+            "glm-5.2"
+          ],
+          "providers": {
+            "deepseek-v4-pro": {
+              "provider": "openrouter",
+              "model": "deepseek/deepseek-v4-pro"
+            },
+            "glm-5.2": {
+              "provider": "openrouter",
+              "model": "z-ai/glm-5.2"
+            }
+          },
+          "by_model": {
+            "deepseek-v4-pro": {
+              "arabic": {
+                "high": 1,
+                "medium": 2,
+                "low": 3
+              },
+              "english": {
+                "high": 1,
+                "medium": 1,
+                "low": 2
+              }
+            },
+            "glm-5.2": {
+              "arabic": {
+                "high": 0,
+                "medium": 0,
+                "low": 0
+              },
+              "english": {
+                "high": 0,
+                "medium": 0,
+                "low": 0
+              }
+            }
+          },
+          "no_medium_high_from_either": false,
+          "adjudicated_residuals": [
+            {
+              "severity": "high",
+              "quote": "أو 39 درجةً أو أكثر وعمره من ثلاثة أشهر إلى ستة",
+              "adjudication": "reviewer wrong: the vaccine caveat sits only in the NHS 'signs of serious illness' section; both NHS 'Immediate action required: Call 999 or go to A&E' lists (sepsis page; seriously-ill page) give '39C or higher in babies 3 to 6 months old' with no caveat. This line is the P1 fix itself."
+            },
+            {
+              "severity": "medium",
+              "quote": "وعمره ثلاثة أشهر أو أكثر (>5-day fever)",
+              "adjudication": "the lesson and path cover the first year only (path title «حتى عام»); NHS '3 months to 5 years' therefore equals 'three months or older' for this audience."
+            },
+            {
+              "severity": "medium",
+              "quote": "try_this: write emergency signs on one sheet",
+              "adjudication": "pre-existing action, unchanged; not flagged in any earlier round by either family; GLM clean."
+            },
+            {
+              "severity": "high",
+              "quote": "on black or brown skin this may show on the palms...",
+              "adjudication": "reviewer wrong: the English it quotes contains 'on black or brown skin' verbatim."
+            },
+            {
+              "severity": "medium",
+              "quote": "from three months of age ... five days (EN)",
+              "adjudication": "same as the AR age-range item above."
+            }
+          ]
+        },
+        "translation_content_sha256": "dbf89484ec7627a61f342a5df20259abc0a81ad63a86f485c05dcea145edf776",
+        "translation_stamp": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
+        "translation_providers": {
+          "deepseek-v4-pro": {
+            "provider": "openrouter",
+            "model": "deepseek/deepseek-v4-pro"
+          },
+          "glm-5.2": {
+            "provider": "openrouter",
+            "model": "z-ai/glm-5.2"
+          }
+        },
+        "translation_adjudicated": 0,
+        "sources": [
+          {
+            "url": "https://www.nhs.uk/conditions/sepsis/",
+            "final_url": "https://www.nhs.uk/conditions/sepsis/",
+            "http": "200",
+            "text_sha256": "466932886824ff6b2f1ad0c95f8134d7c3c4367d07b5f08ce0083bb7e1069b5d",
+            "fetched_at": "2026-10-08T11:03:28Z"
+          },
+          {
+            "url": "https://www.nhs.uk/conditions/baby/health/is-your-baby-or-toddler-seriously-ill/",
+            "final_url": "https://www.nhs.uk/baby/health/when-to-get-urgent-medical-help-for-babies-and-children-under-5/",
+            "http": "200",
+            "text_sha256": "133da3a14f020cd694acdea5fbf3c8cc3cde555e26d3512b89afd9e59714b2e3",
+            "fetched_at": "2026-10-08T11:03:29Z"
+          }
+        ]
+      }
+    ],
+    "non_convergence_note": "deepseek-v4-pro raised new medium/high findings on unchanged, previously passed sentences in successive rounds and reversed its own requests (r1 asked to split the emergency tiers in sleep_02, r3 asked to merge them; r8 asked for the NHS weight caveat in tantrums_06, r9 called it a generalisation). Iteration stopped after round 9.",
+    "evidence": "~/.codex/evidence/tutor-guardian/oct8-gpt-fixes/ (sources, raw replies, provider-calls*.jsonl, review-results.json, lesson-review-adjudications.json)",
+    "model_calls_logged": {
+      "calls": 128,
+      "total_tokens": 682964,
+      "logged_cost_usd": 1.5386
+    },
+    "human_approval_claimed": false
   }
 }

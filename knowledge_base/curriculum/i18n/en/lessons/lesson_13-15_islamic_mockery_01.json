@@ -9,19 +9,19 @@
     "isl-ac979c60",
     "isl-f2bef952"
   ],
-  "summary": "If your child’s friends mock his commitment to Salah, remind him of the hadith of the Prophet ﷺ: «Seven whom Allah will shade in His shade on the Day when there is no shade except His shade»—among them, «a youth who grew up in the worship of his Lord» (Sahih al-Bukhari 660). His persistence in obedience during the age of ridicule is a great virtue for which he will be rewarded; there is no place for shame. Connect the hadith to his reality so he feels that his commitment is something to be valued, not mocked. Read with him Surah al-Mutaffifin (verses 29-34), which describes how the criminals mocked the believers in this world, then Allah’s words: ﴿فَالْيَوْمَ الَّذِينَ آمَنُوا مِنَ الْكُفَّارِ يَضْحَكُونَ﴾ (Al-Mutaffifin: 34; interpretation of the meaning: “So Today those who believed are laughing at the disbelievers”)—meaning, the situation will be reversed on the Day of Judgment. The goal is not gloating but to reinforce his conviction that the laughter of others today does not measure the correctness of his stance. The Prophet ﷺ commanded fathers to train their children in Salah from the age of seven and to follow up firmly from the age of ten (reported by Abu Dawud and authenticated by al-Albani). If your child faces mockery from his friends for his Salah, this is an expected test, not an exception. Your role is to connect his commitment to the command of the Prophet ﷺ himself and to follow up with him with firmness and rifq (gentleness), not blame at the first sign of social pressure.",
-  "try_this": "This week: If your child faces a situation of mockery for his commitment, read with him the hadith of the «seven whom Allah will shade» (Sahih al-Bukhari 660) or the verses from Surah al-Mutaffifin immediately afterward, and discuss together how he should respond next time with confidence, not defensiveness.",
+  "summary": "If your child’s friends mock his commitment to Salah, remind him of the hadith of the Prophet ﷺ: «Seven whom Allah will shade in His shade on the Day when there is no shade except His shade»—among them, «a youth who grew up in the worship of his Lord» (Sahih al-Bukhari 660). The hadith praises growing up in worship in general, and his steadfastness in it during the age of ridicule is a great virtue for which he will be rewarded; there is no place for shame. Connect the hadith to his reality so he feels that his commitment is something to be valued, not mocked. Read with him the verses of Surah al-Mutaffifin (verses 29-34) together with their tafsir; they describe how the criminals mocked the believers in this world, then Allah’s words: ﴿فَالْيَوْمَ الَّذِينَ آمَنُوا مِنَ الْكُفَّارِ يَضْحَكُونَ﴾ (Al-Mutaffifin: 34; interpretation of the meaning: “So Today those who believed are laughing at the disbelievers”)—meaning on the Day of Judgment, as Ibn Kathir explains in his tafsir. Make clear to him that these verses were revealed about the mocking disbelievers, so we do not apply them to his friends or call them disbelievers. The goal is not gloating but to reinforce his conviction that the laughter of others today does not measure the correctness of his stance. Follow up with him through teaching, example, and firmness with rifq (gentleness). If your child faces mockery from his friends for his Salah, this is an expected test, not an exception. Your role is to connect his commitment to obedience to Allah and His Messenger ﷺ and to follow up with him with firmness and rifq (gentleness), not blame at the first sign of social pressure. If the mockery repeats and becomes ongoing harm, seek support from the school or an adult you trust.",
+  "try_this": "Today: Read with your child the hadith of the «seven whom Allah will shade» (Sahih al-Bukhari 660), and discuss together how he can respond with confidence, not defensiveness, if someone mocks him for his Salah.",
   "order": 1,
   "estimated_minutes": 9,
   "reflection_prompts": [
-    "Does your child know that the Prophetic hadith praises his steadfastness specifically in the face of mockery?",
+    "Does your child know that the Prophetic hadith praises the youth who grew up in the worship of his Lord, and that his steadfastness despite mockery is part of that upbringing?",
     "Do you follow up with him with firmness and rifq, or do you merely give the command without follow-up at the first sign of pressure?"
   ],
   "warning_flags": [],
   "needs_professional_followup": false,
   "is_published": true,
   "version": "1.0.0",
-  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
   "language": "en",
   "source_language": "ar",
   "translation": {
@@ -35,8 +35,8 @@
     },
     "review_verdict": "clean",
     "review_defects": [],
-    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
-    "revalidated_at": "2026-10-07T08:37:10+00:00",
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
+    "revalidated_at": "2026-10-08T16:40:56+00:00",
     "manual_fix_note": "2026-10-04 scripture fix: hadith quoted only from the Sahihayn with book + number (Muslim by Abd al-Baqi); non-Sahihayn or paraphrased quotes replaced, mirrored from the Arabic.",
     "fixed_at": "2026-10-04T08:15:36.331649+00:00",
     "fixer_model": "claude-opus-5.5",
@@ -45,26 +45,30 @@
         "deepseek-v4-pro",
         "glm-5.2"
       ],
+      "providers": {
+        "deepseek-v4-pro": {
+          "provider": "openrouter",
+          "model": "deepseek/deepseek-v4-pro"
+        },
+        "glm-5.2": {
+          "provider": "openrouter",
+          "model": "z-ai/glm-5.2"
+        }
+      },
       "fixer": null,
       "rounds": 1,
       "prompt_version": "dfa8a5f39718",
-      "content_sha256": "e3bb16579e347c2c0949297e9318fe43e8242ad3a29aef36204f183168839d60",
-      "reviewed_at": "2026-10-07T08:37:10+00:00",
+      "content_sha256": "7818a149d0ca272317ad90fa6941e636798028a929a05621d219e3de0b243e6c",
+      "reviewed_at": "2026-10-08T16:40:56+00:00",
       "residual_low": [],
-      "adjudicated": [
-        {
-          "field": "summary",
-          "type": "hadith",
-          "reason": "The Arabic names the prayer-at-seven narration's real source (Abu Dawud) in indirect speech, as in isl-f2bef952 — same decision and the same open question for Khaled; check_scripture_coverage passes.",
-          "by": "claude-opus-5.5 (en-parity review, PR #20)",
-          "on": "2026-10-04"
-        }
-      ],
+      "adjudicated": [],
       "tool": "ops/tools/review_en_parity.py",
       "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
     },
     "english_authors": [
-      "claude-opus-5.5"
+      "claude-opus-5.5",
+      "mistral-large-3:675b",
+      "claude-opus-5-5"
     ]
   }
 }

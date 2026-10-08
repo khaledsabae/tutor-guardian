@@ -890,14 +890,16 @@ class _Composer extends StatelessWidget {
             // long-press hint; Semantics + Tooltip give it both.
             Semantics(
               button: true,
+              enabled: isStreaming || enabled,
+              onTap: isStreaming ? onStop : (enabled ? onSend : null),
               excludeSemantics: true,
               label: isStreaming
                   ? AppLocalizations.of(context).chatStop
-                  : AppLocalizations.of(context).send,
+                  : l10n.a11ySendQuestion,
               child: Tooltip(
                 message: isStreaming
                     ? AppLocalizations.of(context).chatStop
-                    : AppLocalizations.of(context).send,
+                    : l10n.a11ySendQuestion,
                 child: GestureDetector(
                   onTap: isStreaming ? onStop : (enabled ? onSend : null),
                   child: Container(

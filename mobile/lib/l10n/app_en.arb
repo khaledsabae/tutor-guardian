@@ -933,7 +933,7 @@
   "pathsRefreshTooltip": "Refresh",
   "pathsFilterSemantics": "Filter: {label}",
   "pathsPathSemantics": "Path: {title}. {description}",
-  "pathsFrameworkProphetic": "Prophetic 7-7-7 Method",
+  "pathsFrameworkProphetic": "Age-stage approach",
   "pathsFrameworkGhazali": "Ghazali Tazkiyah",
   "pathsFrameworkAttachment": "Attachment & Rahma",
   "pathsFrameworkZpd": "Zone of Proximal Development",
@@ -1009,6 +1009,11 @@
   "identityLinkIncomplete": "Account linking didn't complete. Check your Google setup or try again.",
   "identityServerUnreachable": "Couldn't reach the server. Check your internet connection.",
   "identityLinkFailed": "Account linking failed: {error}",
+  "identityErrorNoGoogleAccount": "There's no Google account on this phone. Add one in your phone settings, then try again.",
+  "identityErrorGoogleUnavailable": "Google sign-in isn't available on this phone right now. Make sure Google Play services is up to date, then try again.",
+  "identityErrorAppMisconfigured": "Sign-in isn't set up in this version of the app. Update the app or try again later.",
+  "identityErrorGoogleUi": "Couldn't open Google sign-in. Please try again.",
+  "identityErrorGoogleGeneric": "Google sign-in didn't complete. Please try again in a moment.",
   "identityLocalNote": "Data stays on this device unless you choose to sign in.",
   "exclusiveBadgeOwned": "Owned ✓",
   "gameClosingTitle": "That's it for today 🌙",
@@ -1675,5 +1680,16 @@
   "deleteAccountStartOverConfirm": "Start over",
   "accountStartedOverTitle": "The app has started over on this phone",
   "accountStartedOverBody": "We cleared everything that was on this phone. We couldn't confirm whether your account was deleted from our servers; to make sure it is, email us at {email}. Close the app — it will start fresh when you open it.",
-  "deleteAccountNotDeletedNotice": "Your account was not deleted. You can try again from Settings → Privacy & your data."
+  "deleteAccountNotDeletedNotice": "Your account was not deleted. You can try again from Settings → Privacy & your data.",
+  "a11ySendQuestion": "Send question",
+  "a11yExitChildMode": "Exit child mode",
+  "a11yCurrentChild": "Current child: {name}, tap to switch",
+  "@a11yCurrentChild": {
+    "description": "Screen-reader label for the active-child chip: names the current child (full name) and says a tap opens the list to switch. It must not sound like it selects this child.",
+    "placeholders": {"name": {"type": "String"}}
+  },
+  "a11yChooseAChild": "Choose a child",
+  "@a11yChooseAChild": {
+    "description": "Screen-reader label for the active-child chip when no child is active yet; a tap opens the children list."
+  }
 }

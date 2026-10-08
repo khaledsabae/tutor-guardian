@@ -8,7 +8,7 @@
     "isl-b793e864",
     "isl-1bceeaf6"
   ],
-  "summary": "Seven- and eight-year-olds love to see their progress with their own eyes, which is why a «prayer chart» is a useful tool at the start of the journey: a sheet with the days of the week and the five prayers, where they put a mark or a star after each prayer. The chart turns a big goal into small steps they can see and be happy to complete.\n\nBut notice the difference between an incentive and a bribe. An incentive encourages a child into a new habit and then fades gradually, while a bribe turns worship into a deal: «I pray to get sweets.» Educators have warned against too many material rewards, lest the child attach to worship for their sake alone.\n\nSo make the most important reward a moral one: specific praise, a hug, and a word in front of the family: «Today he prayed all his prayers on time.» If you want an end-of-week reward, let it be a shared activity rather than something bought: an outing, playtime with you, or letting them choose the family dinner. Don't announce the reward as a condition every time; sometimes make it a surprise you celebrate together.\n\nAs the weeks pass, ease off the chart gradually: from a mark after every prayer, to a daily review, then a weekly one, until the chart becomes a fond memory of the start of the road. And link prayer in your talk to its meaning: «We pray because we love Allah and thank Him», so that the motivation stays in their heart when the chart leaves the wall.",
+  "summary": "Seven- and eight-year-olds love to see their progress with their own eyes, which is why a «prayer chart» is a useful tool at the start of the journey: a sheet with the days of the week and the five prayers, where they put a mark or a star after each prayer. The chart turns a big goal into small steps they can see and be happy to complete.\n\nBut notice the difference between an incentive and a bribe. An incentive encourages a child into a new habit and then fades gradually, while a bribe turns worship into a deal: «I pray to get sweets.» Educators have warned against too many material rewards, lest the child attach to worship for their sake alone.\n\nSo make the most important reward a non-material one: specific praise, a hug, and a word in front of the family: «Today he prayed all his prayers on time.» If you want an end-of-week reward, let it be a shared activity rather than something bought: an outing, playtime with you, or letting them choose the family dinner. Don't announce the reward as a condition every time; sometimes make it a surprise you celebrate together.\n\nAs the weeks pass, ease off the chart gradually: from a mark after every prayer, to a daily review, then a weekly one, until the chart becomes a fond memory of the start of the road. And link prayer in your talk to its meaning: «We pray because we love Allah and thank Him», so that the motivation stays in their heart when the chart leaves the wall.",
   "try_this": "Today: Design a simple weekly prayer chart on paper with your child, letting them choose its colours and the shape of the mark. Hang it somewhere visible, and agree that the end-of-week reward will be a shared activity of their choosing.",
   "order": 9,
   "estimated_minutes": 3,
@@ -21,7 +21,7 @@
   "version": "1.0.0",
   "created_at": "2026-10-04T17:13:00",
   "updated_at": "2026-10-04T17:13:00",
-  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
   "language": "en",
   "source_language": "ar",
   "translation": {
@@ -33,25 +33,52 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "clean",
-    "review_defects": [],
-    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
-    "revalidated_at": "2026-10-07T18:47:52+00:00",
+    "review_verdict": "low_only",
+    "review_defects": [
+      {
+        "model": "deepseek-v4-pro",
+        "field": "summary",
+        "type": "meaning",
+        "why": "The Arabic 'من أجلها وحدها' means 'for their sake alone' (the rewards), but the English 'attach to worship for their sake alone' is ambiguous—it could be read as attaching to worship for the sake of t"
+      }
+    ],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
+    "revalidated_at": "2026-10-08T15:21:56+00:00",
     "generated_by": "ops/tools/deepen_paths.py",
     "auto_review": {
       "reviewers": [
         "deepseek-v4-pro",
         "glm-5.2"
       ],
+      "providers": {
+        "deepseek-v4-pro": {
+          "provider": "openrouter",
+          "model": "deepseek/deepseek-v4-pro"
+        },
+        "glm-5.2": {
+          "provider": "openrouter",
+          "model": "z-ai/glm-5.2"
+        }
+      },
       "fixer": null,
       "rounds": 1,
       "prompt_version": "dfa8a5f39718",
-      "content_sha256": "8665700378bb00026e42a871718921ab155403a1d15f7432a79f132dc76038ed",
-      "reviewed_at": "2026-10-07T18:47:52+00:00",
-      "residual_low": [],
+      "content_sha256": "48c59b9e0a383fa06d0ce98e8dbb4eb24b61828136bf150ec95f7bd1546ab557",
+      "reviewed_at": "2026-10-08T15:21:56+00:00",
+      "residual_low": [
+        {
+          "model": "deepseek-v4-pro",
+          "field": "summary",
+          "type": "meaning",
+          "why": "The Arabic 'من أجلها وحدها' means 'for their sake alone' (the rewards), but the English 'attach to worship for their sake alone' is ambiguous—it could be read as attaching to worship for the sake of t"
+        }
+      ],
       "adjudicated": [],
       "tool": "ops/tools/review_en_parity.py",
       "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
-    }
+    },
+    "english_authors": [
+      "claude-opus-5-5"
+    ]
   }
 }

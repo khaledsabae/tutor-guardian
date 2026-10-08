@@ -5573,7 +5573,7 @@ abstract class AppLocalizations {
   /// No description provided for @pathsFrameworkProphetic.
   ///
   /// In ar, this message translates to:
-  /// **'المنهج النبوي 7-7-7'**
+  /// **'مراحل عمرية تربوية'**
   String get pathsFrameworkProphetic;
 
   /// No description provided for @pathsFrameworkGhazali.
@@ -6025,6 +6025,36 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'فشل ربط الحساب: {error}'**
   String identityLinkFailed(Object error);
+
+  /// No description provided for @identityErrorNoGoogleAccount.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا يوجد حساب Google على هذا الهاتف. أضِف حسابًا من إعدادات الهاتف ثم أعِد المحاولة.'**
+  String get identityErrorNoGoogleAccount;
+
+  /// No description provided for @identityErrorGoogleUnavailable.
+  ///
+  /// In ar, this message translates to:
+  /// **'تسجيل الدخول بحساب Google غير متاح على هذا الهاتف الآن. تأكّد من تحديث خدمات Google Play ثم أعِد المحاولة.'**
+  String get identityErrorGoogleUnavailable;
+
+  /// No description provided for @identityErrorAppMisconfigured.
+  ///
+  /// In ar, this message translates to:
+  /// **'تسجيل الدخول غير مُهيّأ في هذا الإصدار من التطبيق. حدِّث التطبيق أو حاول لاحقًا.'**
+  String get identityErrorAppMisconfigured;
+
+  /// No description provided for @identityErrorGoogleUi.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعذّر فتح نافذة تسجيل الدخول بحساب Google. أعِد المحاولة.'**
+  String get identityErrorGoogleUi;
+
+  /// No description provided for @identityErrorGoogleGeneric.
+  ///
+  /// In ar, this message translates to:
+  /// **'لم يكتمل تسجيل الدخول بحساب Google. أعِد المحاولة بعد قليل.'**
+  String get identityErrorGoogleGeneric;
 
   /// No description provided for @identityLocalNote.
   ///
@@ -9595,6 +9625,30 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'لم يُحذف حسابك. يمكنك أن تحاول مرة أخرى من الإعدادات ← الخصوصية وبياناتك.'**
   String get deleteAccountNotDeletedNotice;
+
+  /// No description provided for @a11ySendQuestion.
+  ///
+  /// In ar, this message translates to:
+  /// **'إرسال السؤال'**
+  String get a11ySendQuestion;
+
+  /// No description provided for @a11yExitChildMode.
+  ///
+  /// In ar, this message translates to:
+  /// **'الخروج من وضع الطفل'**
+  String get a11yExitChildMode;
+
+  /// Screen-reader label for the active-child chip: names the current child (full name) and says a tap opens the list to switch. It must not sound like it selects this child.
+  ///
+  /// In ar, this message translates to:
+  /// **'الطفل الحالي: {name}، اضغط للتبديل'**
+  String a11yCurrentChild(String name);
+
+  /// Screen-reader label for the active-child chip when no child is active yet; a tap opens the children list.
+  ///
+  /// In ar, this message translates to:
+  /// **'اختيار طفل'**
+  String get a11yChooseAChild;
 }
 
 class _AppLocalizationsDelegate

@@ -5,7 +5,7 @@
   "age_group": "10-12",
   "domain": "islamic_parenting",
   "unit_ids": [],
-  "summary": "Fasting is training in willpower and taqwa. Train your child gradually (half a day, then a full day), and create joy and beloved rituals for Ramadan. A beautiful experience ties worship to happiness, not deprivation.",
+  "summary": "Fasting is training in willpower and taqwa. Before puberty fasting is not obligatory for your child, so train him gradually according to his health and ability (part of the day, then a full day), and stop the training if he becomes tired or ill; fasting part of the day is training, not a Ramadan day's fast. Once he reaches puberty, fasting Ramadan becomes obligatory for him, so ask a scholar you trust if he has an excuse such as illness, and consult the doctor if he has a health problem. Create joy and beloved rituals for Ramadan. A beautiful experience ties worship to happiness, not deprivation.",
   "try_this": "This week (or in Ramadan): Agree with your child on a suitable fasting goal, and celebrate their achievement.",
   "order": 2,
   "estimated_minutes": 8,
@@ -17,7 +17,7 @@
   "needs_professional_followup": false,
   "is_published": true,
   "version": "1.0.0",
-  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
   "language": "en",
   "source_language": "ar",
   "translation": {
@@ -29,50 +29,38 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "low_only",
-    "review_defects": [
-      {
-        "model": "deepseek-v4-pro",
-        "field": "summary",
-        "type": "meaning",
-        "why": "Arabic addresses a son specifically; English broadens to any child."
-      },
-      {
-        "model": "glm-5.2",
-        "field": "try_this",
-        "type": "meaning",
-        "why": "The Arabic pronoun in «إنجازه» is singular masculine (his), but the English uses «their»."
-      }
-    ],
-    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
-    "revalidated_at": "2026-10-04T11:18:18+00:00",
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
+    "revalidated_at": "2026-10-08T15:21:56+00:00",
     "auto_review": {
       "reviewers": [
         "deepseek-v4-pro",
         "glm-5.2"
       ],
+      "providers": {
+        "deepseek-v4-pro": {
+          "provider": "openrouter",
+          "model": "deepseek/deepseek-v4-pro"
+        },
+        "glm-5.2": {
+          "provider": "openrouter",
+          "model": "z-ai/glm-5.2"
+        }
+      },
       "fixer": null,
       "rounds": 1,
       "prompt_version": "dfa8a5f39718",
-      "content_sha256": "4fd8577f0395916c477e4d9807913aa0ed2930367208905da4a8c8c862deddc9",
-      "reviewed_at": "2026-10-04T11:18:18+00:00",
-      "residual_low": [
-        {
-          "model": "deepseek-v4-pro",
-          "field": "summary",
-          "type": "meaning",
-          "why": "Arabic addresses a son specifically; English broadens to any child."
-        },
-        {
-          "model": "glm-5.2",
-          "field": "try_this",
-          "type": "meaning",
-          "why": "The Arabic pronoun in «إنجازه» is singular masculine (his), but the English uses «their»."
-        }
-      ],
+      "content_sha256": "532e55cad454e13896943340d2cf5dd9eaea140f6d7b8c3f4baa9079afffabac",
+      "reviewed_at": "2026-10-08T15:21:56+00:00",
+      "residual_low": [],
       "adjudicated": [],
       "tool": "ops/tools/review_en_parity.py",
-      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
-    }
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+    },
+    "english_authors": [
+      "mistral-large-3:675b",
+      "claude-opus-5-5"
+    ]
   }
 }

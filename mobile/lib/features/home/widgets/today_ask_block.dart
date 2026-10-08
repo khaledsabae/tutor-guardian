@@ -32,6 +32,11 @@ class TodayAskBlock extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final name = childName;
+    final body = name == null ? l10n.todayAskBodyNoName : l10n.todayAskBody(name);
+    void ask() {
+      unawaited(Analytics.todayBlockTapped('ask', 'compose'));
+      onAsk();
+    }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -46,19 +51,23 @@ class TodayAskBlock extends StatelessWidget {
         Material(
           color: Dt.surface,
           borderRadius: BorderRadius.circular(Dt.rCard),
-          child: InkWell(
-            borderRadius: BorderRadius.circular(Dt.rCard),
-            onTap: () {
-              unawaited(Analytics.todayBlockTapped('ask', 'compose'));
-              onAsk();
-            },
-            child: Padding(
-              padding: const EdgeInsets.all(14),
-              child: _ComposeRow(
-                body: name == null
-                    ? l10n.todayAskBodyNoName
-                    : l10n.todayAskBody(name),
-                cta: l10n.todayAskCta,
+          child: Semantics(
+            container: true,
+            button: true,
+            label: l10n.todayAskCta,
+            hint: body,
+            onTap: ask,
+            excludeSemantics: true,
+            child: InkWell(
+              excludeFromSemantics: true,
+              borderRadius: BorderRadius.circular(Dt.rCard),
+              onTap: ask,
+              child: Padding(
+                padding: const EdgeInsets.all(14),
+                child: _ComposeRow(
+                  body: body,
+                  cta: l10n.todayAskCta,
+                ),
               ),
             ),
           ),

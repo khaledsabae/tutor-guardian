@@ -5,8 +5,8 @@
   "age_group": "7-9",
   "domain": "islamic_parenting",
   "unit_ids": [],
-  "summary": "The Prophet ﷺ taught, when anger arises: seeking refuge in Allah, silence, changing one’s posture, and wudu. Teach your child that anger is natural, but it has tools. Be a model in your own calmness first.",
-  "try_this": "This week: Teach your child one step to take when angry (a deep breath or sitting down), and apply it yourself in front of them.",
+  "summary": "The Prophet ﷺ guided the angry person to seek refuge in Allah from Shaytan (Sahih al-Bukhari 3282); and he ﷺ said: «The strong one is not the one who overcomes others in wrestling; the strong one is the one who controls himself when angry» (Sahih al-Bukhari 6114). Teach your child that anger is natural, but it has tools: to seek refuge in Allah, to keep silent instead of saying hurtful words, and to sit down until they calm down. Be a model in your own calmness first.",
+  "try_this": "Today: Teach your child to sit down if they get angry while standing, and do it yourself in front of them.",
   "order": 4,
   "estimated_minutes": 7,
   "reflection_prompts": [
@@ -17,7 +17,7 @@
   "needs_professional_followup": false,
   "is_published": true,
   "version": "1.0.0",
-  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
   "language": "en",
   "source_language": "ar",
   "translation": {
@@ -31,22 +31,36 @@
     },
     "review_verdict": "clean",
     "review_defects": [],
-    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
-    "revalidated_at": "2026-10-04T11:18:18+00:00",
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
+    "revalidated_at": "2026-10-08T16:40:56+00:00",
     "auto_review": {
       "reviewers": [
         "deepseek-v4-pro",
         "glm-5.2"
       ],
+      "providers": {
+        "deepseek-v4-pro": {
+          "provider": "openrouter",
+          "model": "deepseek/deepseek-v4-pro"
+        },
+        "glm-5.2": {
+          "provider": "openrouter",
+          "model": "z-ai/glm-5.2"
+        }
+      },
       "fixer": null,
       "rounds": 1,
       "prompt_version": "dfa8a5f39718",
-      "content_sha256": "a76fe53409082dce2f39900db001217d0d6f9f950bba1e702e3167b24ba3c635",
-      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "content_sha256": "9295a405c63ca4d39414e94e6a2e552a97a7f74d68dad9502e3427d105852170",
+      "reviewed_at": "2026-10-08T16:40:56+00:00",
       "residual_low": [],
       "adjudicated": [],
       "tool": "ops/tools/review_en_parity.py",
-      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
-    }
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+    },
+    "english_authors": [
+      "mistral-large-3:675b",
+      "claude-opus-5-5"
+    ]
   }
 }

@@ -1,27 +1,27 @@
 {
   "id": "lesson_2-3_islamic_tantrums_04",
   "path_id": "path_2-3_islamic_attachment",
-  "title": "The Secure Bond and Dealing with Tantrums with Rifq",
+  "title": "The Secure Bond and Dealing with Tantrums with Rifq (Gentleness)",
   "age_group": "2-3",
   "domain": "islamic_parenting",
   "unit_ids": [
     "1c519127-2129-447d-bff6-6937524da1f8",
     "0f0b0373-517a-42b4-a306-c295bc84e578"
   ],
-  "summary": "This lesson addresses 'the secure bond and dealing with tantrums with rifq (gentleness)' for children from two to three years old. Practise 'the 30-second response.' Respond to his call immediately, even if just with a reassuring word. Quick response builds 'secure attachment' and makes the child feel safe, while ignoring causes him chronic stress. Expect tantrums because they are natural. Take a deep breath, use a calm voice, and say to him: 'I am here with you, you are safe.' You can try to distract him or give him time to calm down on his own without getting upset yourself. Dedicate minutes daily for full presence without screens or phones. Sit on the floor, make eye contact, smile at him, and imitate his sounds. This physical and heartfelt presence builds his confidence in himself and in the world around him.",
-  "try_this": "Try this week: practise 'the 30-second response.' Respond to his call immediately, even if just with a reassuring word. Quick response builds 'secure attachment' and makes the child feel safe, while ignoring causes him chronic stress.",
+  "summary": "This lesson addresses 'the secure bond and dealing with tantrums with rifq (gentleness)' for children from two to three years old. Respond to his call and his needs gently and as far as you are able, even if just with a reassuring word; a caring response builds 'secure attachment' and makes the child feel safe. Do not ignore his hunger, tiredness, pain, fear or illness. As for a minor, safe behaviour he uses to get your attention, such as whining, you may briefly turn your attention away from it while watching him, then return your attention to him when it stops. Expect tantrums because they are natural. Take a deep breath, use a calm voice, and say to him: 'I am here with you, you are safe.' Stay close to him and move away anything that could hurt him. Do not ignore hitting, biting or hurting himself; stop it calmly and without violence. Check whether he is hungry, tired, in pain or ill. Then you can try to distract him, or give him time to calm down while you stay close and ready to help, without getting upset yourself. Talk with his doctor if the tantrums hurt him or others or disrupt his day, and seek urgent help if there is a serious injury or you cannot keep him safe. Dedicate minutes daily for full presence without screens or phones. Sit on the floor, make eye contact, smile at him, and imitate his sounds. This physical and heartfelt presence builds his confidence in himself and in the world around him.",
+  "try_this": "Try today: the next time your child cries, go to him calmly and reassure him, even with just a word, and check whether he needs food or rest or is in pain.",
   "order": 4,
   "estimated_minutes": 5,
   "reflection_prompts": [
-    "My child cries constantly. Should I leave him to cry to avoid spoiling him with pampering?",
-    "My child is having a tantrum and refuses to stop screaming. How do I handle this with rifq?"
+    "When my child cries, how can I tell why he is crying and respond to what he needs?",
+    "My child is having a tantrum and cannot stop screaming. How do I handle this with rifq (gentleness)?"
   ],
   "warning_flags": [],
   "is_published": true,
   "version": "1.0.0",
   "created_at": "2026-06-13T10:00:00",
-  "updated_at": "2026-06-13T10:00:00",
-  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+  "updated_at": "2026-10-08T18:00:00",
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
   "language": "en",
   "source_language": "ar",
   "translation": {
@@ -35,8 +35,8 @@
     },
     "review_verdict": "clean",
     "review_defects": [],
-    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
-    "revalidated_at": "2026-10-04T16:52:31+00:00",
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
+    "revalidated_at": "2026-10-08T13:38:23+00:00",
     "fixed_at": "2026-08-13T19:02:35.793814+00:00",
     "fixer_model": "mistral-large-3:675b",
     "auto_review": {
@@ -44,15 +44,25 @@
         "deepseek-v4-pro",
         "glm-5.2"
       ],
+      "providers": {
+        "deepseek-v4-pro": {
+          "provider": "openrouter",
+          "model": "deepseek/deepseek-v4-pro"
+        },
+        "glm-5.2": {
+          "provider": "openrouter",
+          "model": "z-ai/glm-5.2"
+        }
+      },
       "fixer": null,
       "rounds": 1,
       "prompt_version": "dfa8a5f39718",
-      "content_sha256": "e487676abc4d7b3dd62f5256e3fbe428fb12673c6789d083bd08ec31b71d55ff",
-      "reviewed_at": "2026-10-04T16:52:31+00:00",
+      "content_sha256": "a13fbf01dc5a2a125e9b1f1b04374fa5168100805624937c5ff745124af6ae14",
+      "reviewed_at": "2026-10-08T13:38:23+00:00",
       "residual_low": [],
       "adjudicated": [],
       "tool": "ops/tools/review_en_parity.py",
-      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
     }
   }
 }

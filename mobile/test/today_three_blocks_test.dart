@@ -12,6 +12,8 @@ import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/semantics.dart';
+import 'package:almorabbi/features/program/widgets/active_child_chip.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -93,6 +95,31 @@ void main() {
   }
 
   double topOf(WidgetTester tester, Finder f) => tester.getTopLeft(f).dy;
+
+  for (final locale in const [Locale('ar'), Locale('en')]) {
+    testWidgets('Today actions have localized button semantics (${locale.languageCode})', (t) async {
+      final semantics = t.ensureSemantics();
+      try {
+        await pumpHome(t, locale: locale);
+        final l10n = AppLocalizations.of(t.element(find.byType(HomeScreen)));
+        final ask = find.bySemanticsLabel(l10n.todayAskCta);
+        expect(ask, findsOneWidget);
+        final data = t.getSemantics(ask).getSemanticsData();
+        expect(data.flagsCollection.isButton, isTrue);
+        expect(data.hasAction(SemanticsAction.tap), isTrue);
+        final child = find.byType(ActiveChildChip);
+        final childData = t.getSemantics(child).getSemanticsData();
+        expect(childData.label, locale.languageCode == 'ar'
+            ? 'الطفل الحالي: سارة، اضغط للتبديل'
+            : 'Current child: سارة, tap to switch');
+        expect(childData.flagsCollection.isButton, isTrue);
+        expect(t.getSize(child).height, greaterThanOrEqualTo(48));
+        expect(t.getSize(child).width, greaterThanOrEqualTo(48));
+      } finally {
+        semantics.dispose();
+      }
+    });
+  }
 
   testWidgets('three blocks, in order, all above the divider', (tester) async {
     await pumpHome(tester);

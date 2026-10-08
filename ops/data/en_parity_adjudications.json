@@ -187,5 +187,53 @@
         }
       }
     ]
+  },
+  "lesson_0-3_medical_infant_sleep_02": {
+    "content_sha256": "f656c66a82abedd8f78b8bd803a8a063b1848e4cde54829495b3cb1db4d1aa30",
+    "overrides": [
+      {
+        "field": "summary",
+        "type": "omission",
+        "reason": "deepseek says the English drops «ولا تنتظر موعدًا مع الطبيب»; the English it quotes contains it verbatim: \"Call an ambulance immediately, without waiting for a doctor's appointment, …\". Its own suggested fix is identical to the current text.",
+        "by": "claude-opus-5-5 (GPT-review fixes, branch content/gpt-review-fixes)",
+        "on": "2026-10-08"
+      }
+    ]
+  },
+  "lesson_0-3_medical_infant_sleep_03": {
+    "content_sha256": "dc5118ecbed0f23171355f7dcf3281fb65a2f5fc2d2fba3167adb6b2883bfaca",
+    "overrides": [
+      {
+        "field": "summary",
+        "type": "omission",
+        "reason": "deepseek says the English drops «كيف تساعده على الرضاعة»; the English reads \"ask the doctor or nurse how to help them feed\" — the same instruction (رضاعة covers breast and bottle; 'feed' is the lesson's consistent rendering). Nothing omitted.",
+        "by": "claude-opus-5-5 (GPT-review fixes, branch content/gpt-review-fixes)",
+        "on": "2026-10-08"
+      }
+    ]
+  },
+  "lesson_0-3_medical_infant_sleep_09": {
+    "content_sha256": "a3f1013be05f17f7aad86ddf807d3bd22302c70e0fe6f699de451966fecf789c",
+    "overrides": [
+      {
+        "field": "summary",
+        "type": "omission",
+        "reason": "«الأريكة أو الكرسي الوثير» ↔ 'sofa or armchair' is the path's fixed rendering of the NHS wording 'sofa or armchair' (same pair in lesson_0-3_medical_infant_sleep_05, stamped); the danger is any armchair, so adding 'soft' would narrow it. Text unchanged from the hash both families passed in the lesson review.",
+        "by": "claude-opus-5-5 (GPT-review fixes, branch content/gpt-review-fixes)",
+        "on": "2026-10-08"
+      }
+    ]
+  },
+  "lesson_7-9_islamic_parenting_worship_02": {
+    "content_sha256": "767b0d2a133f31fe6a14a6efe1d76197902a8909ac398dcf45622945494581eb",
+    "overrides": [
+      {
+        "field": "summary",
+        "type": "omission",
+        "reason": "The English summary contains the clause it is said to omit, word for word: «When his practice ends, serve him his food and complete your own fast until sunset» renders «فإذا انتهت تجربته فقدّم له طعامه، وأكمل أنت صيامك إلى غروب الشمس»; the reviewer's own suggestion is identical to the current text. glm-5.2 found nothing here.",
+        "by": "claude-opus-5.5 (worship-review fixes R02, oct8)",
+        "on": "2026-10-08"
+      }
+    ]
   }
 }

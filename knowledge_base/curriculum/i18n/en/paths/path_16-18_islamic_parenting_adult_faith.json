@@ -3,7 +3,7 @@
   "title": "Toward Independent Imani Growth: Accompanying Your Young Adult at Life’s Threshold (16-18 Years)",
   "age_group": "16-18",
   "domain": "islamic_parenting",
-  "description": "A pathway to help parents guide their child from inherited iman to firmly rooted conviction, while preparing for marriage and upholding `iffah (chastity) through open dialogue. It focuses on crafting a life mission that connects ambition with purpose, and independence with decision-making and responsibility—before leaving home.",
+  "description": "A pathway to help parents guide their child from the iman they received at home to an iman they deepen through understanding and conviction, while preparing for marriage and upholding `iffah (chastity) through open dialogue. It focuses on crafting a life mission that connects ambition with purpose, and independence with decision-making and responsibility—before leaving home.",
   "lesson_ids": [
     "lesson_16-18_islamic_parenting_adult_faith_02",
     "lesson_16-18_islamic_parenting_adult_faith_04"
@@ -17,7 +17,7 @@
   "prerequisites": [],
   "is_published": true,
   "version": "1.0.0",
-  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
   "language": "en",
   "source_language": "ar",
   "translation": {
@@ -35,44 +35,58 @@
         "model": "deepseek-v4-pro",
         "field": "description",
         "type": "meaning",
-        "why": "The Arabic says 'their son' (ابنهم) but the English neutralizes it to 'their child'."
+        "why": "The Arabic specifies 'ابنهم' (their son), while the English uses the gender-neutral 'child', which loses the specific reference to a male child."
       },
       {
         "model": "glm-5.2",
         "field": "description",
-        "type": "meaning",
-        "why": "The Arabic says 'firmly rooted iman with conviction' (إيمانٍ راسخٍ بقناعة), but the English drops 'iman' at the end, reducing it to 'conviction' alone."
+        "type": "leakage",
+        "why": "The backtick character before 'iffah' is a non-standard transliteration marker for the Arabic letter ʿayn; it should use the standard ʿ symbol."
       }
     ],
-    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
-    "revalidated_at": "2026-10-04T11:18:19+00:00",
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
+    "revalidated_at": "2026-10-08T15:21:56+00:00",
     "auto_review": {
       "reviewers": [
         "deepseek-v4-pro",
         "glm-5.2"
       ],
+      "providers": {
+        "deepseek-v4-pro": {
+          "provider": "openrouter",
+          "model": "deepseek/deepseek-v4-pro"
+        },
+        "glm-5.2": {
+          "provider": "openrouter",
+          "model": "z-ai/glm-5.2"
+        }
+      },
       "fixer": null,
       "rounds": 1,
       "prompt_version": "dfa8a5f39718",
-      "content_sha256": "51e6385be11b1ca93e59c17458e8bd2bcd5eb5078299d62afe0d7d5ef8f56bc2",
-      "reviewed_at": "2026-10-04T11:18:19+00:00",
+      "content_sha256": "f849e53afea82fa6aba9bc2d37328f694b381be8f7d238cede8940430655b37a",
+      "reviewed_at": "2026-10-08T15:21:56+00:00",
       "residual_low": [
         {
           "model": "deepseek-v4-pro",
           "field": "description",
           "type": "meaning",
-          "why": "The Arabic says 'their son' (ابنهم) but the English neutralizes it to 'their child'."
+          "why": "The Arabic specifies 'ابنهم' (their son), while the English uses the gender-neutral 'child', which loses the specific reference to a male child."
         },
         {
           "model": "glm-5.2",
           "field": "description",
-          "type": "meaning",
-          "why": "The Arabic says 'firmly rooted iman with conviction' (إيمانٍ راسخٍ بقناعة), but the English drops 'iman' at the end, reducing it to 'conviction' alone."
+          "type": "leakage",
+          "why": "The backtick character before 'iffah' is a non-standard transliteration marker for the Arabic letter ʿayn; it should use the standard ʿ symbol."
         }
       ],
       "adjudicated": [],
       "tool": "ops/tools/review_en_parity.py",
-      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
-    }
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+    },
+    "english_authors": [
+      "mistral-large-3:675b",
+      "claude-opus-5-5"
+    ]
   }
 }

@@ -8,8 +8,8 @@
     "isl-1bceeaf6",
     "gap-dev-stubborn-01"
   ],
-  "summary": "A day will come when your child says: «I don't want to pray.» They may say it while busy playing, or tired, or because prayer feels long and boring, or because they want to see what you will do. This moment is a test for you before it is a test for them.\n\nThe first thing to do: stay calm. Shouting and threats may make them pray today, but they tie prayer in their heart to fear and pressure. Rifq (gentleness) in this situation is not weakness. The Prophet ﷺ said: «إِنَّ اللَّهَ رَفِيقٌ يُحِبُّ الرِّفْقَ فِي الأَمْرِ كُلِّهِ» (Sahih al-Bukhari 6927)\n\nThen look for the reason with a calm question: «What makes you not want to pray now?» If they are absorbed in play, give a short, clear grace period: «Finish your game for five minutes, then we'll pray together.» If they are tired, offer to pray together right now so they can rest after. If they are bored, ask them how you could make prayer nicer: a spot they choose, or letting them be the one who calls the iqamah.\n\nAvoid a long battle of wills: state your request once, clearly, then wait calmly, and repeat it a little later without getting worked up. The prayer time is wide, so it is fine for them to choose when to pray within it; feeling they have a choice softens stubbornness. When they pray after an initial refusal, praise them without blaming them for what came before. And if the refusal repeats every day along with stubbornness about many things, look at the wider picture: do they get more of your attention when they refuse than when they cooperate?",
-  "try_this": "Today: Write a calm sentence to say to your child if they refuse to pray, offering a clear grace period, such as: «Finish your game for five minutes, then we'll pray Asr together.» Say it once quietly to yourself so it is ready when you need it.",
+  "summary": "A day will come when your child says: «I don't want to pray.» They may say it while busy playing, or tired, or because prayer feels long and boring, or because they want to see what you will do. This moment is a test for you before it is a test for them.\n\nThe first thing to do: stay calm. Shouting and threats may make them pray today, but they tie prayer in their heart to fear and pressure. Rifq (gentleness) in this situation is not weakness. The Prophet ﷺ said: «إِنَّ اللَّهَ رَفِيقٌ يُحِبُّ الرِّفْقَ فِي الأَمْرِ كُلِّهِ» (Sahih al-Bukhari 6927)\n\nThen look for the reason with a calm question: «What makes you not want to pray now?» If they are absorbed in play, give a short, clear grace period: «Play for five more minutes, then we'll pray together.» If they are tired, offer to pray together right now so they can rest after. If they are bored, ask them how you could make prayer nicer: a spot they choose, or letting them be the one who calls the iqamah.\n\nAvoid a long battle of wills: state your request once, clearly, then wait calmly, and repeat it a little later without getting worked up. Each prayer's time extends beyond the adhan, so offer them two suitable choices within the time, such as: «Shall we pray now or in five minutes?», leaving enough time for wudu and prayer; feeling they have a choice softens stubbornness. When they pray after an initial refusal, praise them without blaming them for what came before. And if the refusal repeats every day along with stubbornness about many things, look at the wider picture: do they get more of your attention when they refuse than when they cooperate?",
+  "try_this": "Today: Write a calm sentence to say to your child if they refuse to pray, offering a clear grace period, such as: «Play for five more minutes, then we'll pray Asr together.» Say it once quietly to yourself so it is ready when you need it.",
   "order": 8,
   "estimated_minutes": 3,
   "reflection_prompts": [
@@ -21,7 +21,7 @@
   "version": "1.0.0",
   "created_at": "2026-10-04T17:13:00",
   "updated_at": "2026-10-04T17:13:00",
-  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
   "language": "en",
   "source_language": "ar",
   "translation": {
@@ -33,51 +33,38 @@
       "quoted_arabic": true,
       "reviewer_model": true
     },
-    "review_verdict": "low_only",
-    "review_defects": [
-      {
-        "model": "deepseek-v4-pro",
-        "field": "summary",
-        "type": "meaning",
-        "why": "The English 'finish for five minutes' is contradictory and suggests completing the game, whereas the Arabic means to continue playing for five more minutes as a grace period."
-      },
-      {
-        "model": "deepseek-v4-pro",
-        "field": "try_this",
-        "type": "meaning",
-        "why": "Same phrasing issue: 'finish for five minutes' is not idiomatic and slightly changes the intended grace-period meaning."
-      }
-    ],
-    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
-    "revalidated_at": "2026-10-07T18:47:52+00:00",
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
+    "revalidated_at": "2026-10-08T16:29:33+00:00",
     "generated_by": "ops/tools/deepen_paths.py",
     "auto_review": {
       "reviewers": [
         "deepseek-v4-pro",
         "glm-5.2"
       ],
+      "providers": {
+        "deepseek-v4-pro": {
+          "provider": "openrouter",
+          "model": "deepseek/deepseek-v4-pro"
+        },
+        "glm-5.2": {
+          "provider": "openrouter",
+          "model": "z-ai/glm-5.2"
+        }
+      },
       "fixer": null,
       "rounds": 1,
       "prompt_version": "dfa8a5f39718",
-      "content_sha256": "85eb945d94b16423c1f548101f29cfa687ec695140ee83ae00bb55899cf9fcb8",
-      "reviewed_at": "2026-10-07T18:47:52+00:00",
-      "residual_low": [
-        {
-          "model": "deepseek-v4-pro",
-          "field": "summary",
-          "type": "meaning",
-          "why": "The English 'finish for five minutes' is contradictory and suggests completing the game, whereas the Arabic means to continue playing for five more minutes as a grace period."
-        },
-        {
-          "model": "deepseek-v4-pro",
-          "field": "try_this",
-          "type": "meaning",
-          "why": "Same phrasing issue: 'finish for five minutes' is not idiomatic and slightly changes the intended grace-period meaning."
-        }
-      ],
+      "content_sha256": "3ab92b5709b0802826624fb2257aebaf501dd1cfbd971e679eaac57ef52b7ee9",
+      "reviewed_at": "2026-10-08T16:29:33+00:00",
+      "residual_low": [],
       "adjudicated": [],
       "tool": "ops/tools/review_en_parity.py",
       "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
-    }
+    },
+    "english_authors": [
+      "claude-opus-5-5"
+    ]
   }
 }
