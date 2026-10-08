@@ -8,7 +8,7 @@
     "dev-35865ddb",
     "seed-tantrum-23"
   ],
-  "summary": "You may hear «No!» from your two- or three-year-old many times: when getting dressed, at bath time, and at bedtime. This refusal may tire you, or you may feel they are pulling away from you, and that feeling is understandable. But at this age your child is beginning to show their independence, and they test limits to learn what is allowed and what is not. Repeated refusal does not mean they are a bad child, or that you have failed in raising them.\n\nBefore you call it stubbornness, look at how they are: difficult behavior can come from tiredness, hunger, pain or the start of an illness, or from frustration or boredom. If a need shows, meet it first.\n\nThen keep limits few and clear, and hold to them: what concerns their safety, and what hurts others. Explain the reason in simple words, such as: «Hold my hand when we cross the street so you stay safe.» As for small matters that do no harm, do not turn each one into a battle, and be flexible when you can.\n\nIf the matter does not allow a «no», do not ask a question whose answer is yes or no. Instead of «Do you want a bath?», say calmly: «It is bath time.» You can also make what they refuse more fun, such as a small toy in the bath water.\n\nRespond the same way every time, agree with whoever cares for them on the same approach, and calmly carry out what you said. When they cooperate, praise them with specific words: «You put your shoes on by yourself!» Do not promise them a reward before they do what you asked; that is a bribe, not a reward. Do not hit them, shout at them, threaten them or humiliate them; hitting teaches them that hitting is acceptable. If you feel your own anger rising, take deep breaths while staying close to them, or ask someone you trust to stay with them until you calm down, then go back to them.\n\nTalk with the pediatrician if the tantrums are very frequent or last longer than expected for their age, if they cannot calm down, if they hurt themselves or others, if the tantrums get in the way of daily life, if they lose skills they once had, or if they seem withdrawn, sad, or very demanding and unsatisfied most of the time. If there is a serious injury or you cannot keep them safe, seek urgent help straight away.",
+  "summary": "You may hear «No!» from your two- or three-year-old many times: when getting dressed, at bath time, and at bedtime. This refusal may tire you, or you may feel they are pulling away from you, and that feeling is understandable. But at this age your child is beginning to show their independence, and they test limits to learn what is allowed and what is not. Repeated refusal does not mean they are a bad child, or that you have failed in raising them.\n\nBefore you call it stubbornness, look at how they are: difficult behavior can come from tiredness, hunger, pain or the start of an illness, or from frustration or boredom. If a need shows, meet it first.\n\nThen keep limits few and clear, and hold to them: what concerns their safety, and what hurts others. Explain the reason in simple words, such as: «Hold my hand when we cross the street so you stay safe.» As for small matters that do no harm, do not turn each one into a battle, and be flexible when you can.\n\nIf the matter does not allow a «no», do not ask a question whose answer is yes or no. Instead of «Do you want a bath?», say calmly: «It is bath time.» You can also make what they refuse more fun, such as a small toy in the bath water.\n\nRespond the same way every time, agree with whoever cares for them on the same approach, and calmly carry out what you said. When they cooperate, praise them with specific words: «You put your shoes on by yourself!» Do not give them the reward before they have done what you asked, or give them sweets to end a tantrum; that is a bribe, not a reward. But if you agree in advance on a simple reward for a clear behavior that suits their age, such as an extra story or a game with you, give it to them right after they do it, with specific praise; that is encouragement, not a bribe. Do not hit them, shout at them, threaten them or humiliate them; hitting teaches them that hitting is acceptable. If you feel your own anger rising, take deep breaths while staying close to them, or ask someone you trust to stay with them until you calm down, then go back to them.\n\nTalk with the pediatrician if the tantrums are very frequent or last longer than expected for their age, if they cannot calm down, if they hurt themselves or others, if the tantrums get in the way of daily life, if they lose skills they once had, or if they seem withdrawn, sad, or very demanding and unsatisfied most of the time. If there is a serious injury or you cannot keep them safe, seek urgent help straight away.",
   "try_this": "Today: Choose one situation in which your child usually says «no», and use a calm, clear sentence instead of a question, such as «It is bath time» instead of «Do you want a bath?»",
   "order": 5,
   "estimated_minutes": 3,
@@ -20,7 +20,7 @@
   "is_published": true,
   "version": "1.0.0",
   "created_at": "2026-10-08T08:43:40",
-  "updated_at": "2026-10-08T08:43:40",
+  "updated_at": "2026-10-08T18:00:00",
   "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
   "language": "en",
   "source_language": "ar",
@@ -33,22 +33,46 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "clean",
-    "review_defects": [],
+    "review_verdict": "low_only",
+    "review_defects": [
+      {
+        "model": "glm-5.2",
+        "field": "summary",
+        "type": "meaning",
+        "why": "«أخطأت» means 'you erred / made a mistake', whereas 'failed' overstates it as complete failure."
+      }
+    ],
     "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
-    "revalidated_at": "2026-10-08T08:45:12+00:00",
+    "revalidated_at": "2026-10-08T13:38:23+00:00",
     "generated_by": "ops/tools/deepen_paths.py",
     "auto_review": {
       "reviewers": [
         "deepseek-v4-pro",
         "glm-5.2"
       ],
+      "providers": {
+        "deepseek-v4-pro": {
+          "provider": "openrouter",
+          "model": "deepseek/deepseek-v4-pro"
+        },
+        "glm-5.2": {
+          "provider": "openrouter",
+          "model": "z-ai/glm-5.2"
+        }
+      },
       "fixer": null,
       "rounds": 1,
       "prompt_version": "dfa8a5f39718",
-      "content_sha256": "28176770327ac3ad6978a4ff8e53eaab36e61ea194f65ac3e9ee6add393c7043",
-      "reviewed_at": "2026-10-08T08:45:12+00:00",
-      "residual_low": [],
+      "content_sha256": "3a718168a5af4cf2c681885c96f0c9ba27f119a7dbe4a84723d1577619ab82d9",
+      "reviewed_at": "2026-10-08T13:38:23+00:00",
+      "residual_low": [
+        {
+          "model": "glm-5.2",
+          "field": "summary",
+          "type": "meaning",
+          "why": "«أخطأت» means 'you erred / made a mistake', whereas 'failed' overstates it as complete failure."
+        }
+      ],
       "adjudicated": [],
       "tool": "ops/tools/review_en_parity.py",
       "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
