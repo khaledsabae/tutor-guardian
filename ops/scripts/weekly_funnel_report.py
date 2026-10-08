@@ -52,6 +52,7 @@ sys.path.insert(1, str(_ROOT / "backend"))
 from app.core.real_traffic import (  # noqa: E402
     e2e_devices, real_device_sql, real_session_sql, table_names,
 )
+from app.services.family_actions import ACTION_SOURCES as _ACTION_SOURCES  # noqa: E402
 
 _DB = Path(os.environ.get(
     "CONVERSATIONS_DB", str(_ROOT / "ops" / "conversations.db"),
@@ -153,25 +154,11 @@ def _parse_ts(value: str | None) -> datetime | None:
 
 
 # ── Meaningful family actions (the North Star's numerator) ──────────────
-# (table, timestamp column, extra WHERE). Timestamps go through SQLite's
-# datetime() because the tables disagree on format: chat rows use
-# "YYYY-MM-DD HH:MM:SS", missions and feedback write ISO-8601 with a "T" and
-# an offset — compared as raw strings, those sort wrongly within a day.
-_ACTION_SOURCES: tuple[tuple[str, str, str], ...] = (
-    ("lesson_progress", "started_at", ""),
-    ("lesson_progress", "updated_at", ""),
-    ("lesson_progress", "completed_at", ""),
-    ("habits_value_events", "created_at", ""),
-    ("child_missions", "assigned_at", ""),
-    ("child_missions", "claimed_at", ""),
-    ("child_missions", "confirmed_at", ""),
-    ("child_challenges", "started_at", ""),
-    # Family programs (backend schema v34): a Ramadan «تمّ» and a Prayer
-    # Journey started are parenting acts. The journey's tasks are already
-    # child_missions rows above. Absent tables are skipped.
-    ("ramadan_marks", "created_at", ""),
-    ("prayer_journeys", "created_at", ""),
-)
+# The list itself lives in the backend service so the funnel report and the
+# lantern counter (/api/family/week) can never disagree about what counts.
+# Timestamps still go through SQLite's datetime() below because the tables
+# disagree on format: chat rows use "YYYY-MM-DD HH:MM:SS", missions and
+# feedback write ISO-8601 with a "T" and an offset.
 
 
 def get_action_events(db_path: Path, since: datetime) -> list[tuple[str, datetime]]:
