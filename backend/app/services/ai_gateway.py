@@ -1157,6 +1157,20 @@ def _settle_wire_budget(charge, prompt_tokens, completion_tokens) -> None:
         charge.settle(prompt_tokens, completion_tokens)
 
 
+def shutdown_cloud_budget() -> None:
+    """Drain the active cap's settlements after HTTP requests have finished."""
+    if getattr(LLM, "cloud_budget_enforce", False):
+        cloud_budget.SETTLER.drain()
+
+
+def _reset_budget_context_after_fork() -> None:
+    # Child reservations belong to the child call, never the parent's sink.
+    _RESERVATION_SINK.set(None)
+
+
+os.register_at_fork(after_in_child=_reset_budget_context_after_fork)
+
+
 # ─────────────────────────────────────────────────────────────────────────────
 # Auxiliary (non-chat) call sites — classifier, query rewriter
 # ─────────────────────────────────────────────────────────────────────────────

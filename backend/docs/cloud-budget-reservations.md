@@ -705,10 +705,33 @@ request is not denied by its own predecessor); otherwise the attempt goes on a
 bounded in-memory queue (10,000) that one worker thread drains with the long
 retry (`SETTLE_TIMEOUT_S`). The request never waits on the ledger lock to
 settle. A full queue, or a submit after shutdown began, leaves the attempt an
-orphan holding its bound, logged at ERROR with the remedy. At interpreter exit
-`SETTLER.drain` waits up to `SHUTDOWN_DRAIN_S` (10 s) and logs the ids still
-unsettled; they stay orphans recoverable with `--settle-orphans`.
+orphan holding its bound, logged at ERROR with the remedy. FastAPI lifespan
+shutdown calls `ai_gateway.shutdown_cloud_budget` after in-flight HTTP requests
+finish: when enforcement is on, `SETTLER.drain` stops accepting queued work,
+waits up to `SHUTDOWN_DRAIN_S` (10 s), and joins the worker once its queue drains.
+The production `tg_backend` service has `stop_grace_period: 20s` to allow this
+cleanup before Docker sends SIGKILL. A persistently locked/unavailable ledger
+can still exceed the bounded drain; remaining ids are logged and stay orphans
+recoverable with `--settle-orphans`. Interpreter exit also drains as a fallback.
+With enforcement off, the lifespan hook does not touch the settler or ledger.
 Only `reserve` remains on the request path (≤ `RESERVE_TIMEOUT_S`).
+
+On Linux, `os.register_at_fork(after_in_child=...)` replaces the module-level
+settler (queue, pending map, thread and guard) and ledger process locks in the
+child without acquiring inherited locks or replaying the parent's reservations.
+A guarded registry tracks transaction flock descriptors: fork is serialized with
+opening/closing descriptors, and the child closes its inherited copies so it
+cannot prolong a parent's flock after the parent closes it. The parent retains
+its descriptors and continues settlement normally. The gateway also clears its
+inherited reservation context. Ledger SQLite
+connections are opened per transaction, never cached across workers. The
+interpreter-exit callback resolves the current child settler rather than a bound
+method on the parent's instance.
+
+`deploy_gate --check-env` removes whitespace-prefixed inline comments outside
+single/double quotes before validating the switch: `CLOUD_BUDGET_ENFORCE=1 # note`
+is on, while a quoted value containing `#` remains intact (and is rejected if
+it is not a recognised switch value). The last assignment still wins.
 
 **Anchor location.** `CLOUD_BUDGET_ANCHOR_PATH` (default empty = next to
 `sessions.db`, unchanged). The lock file and the atomic-replace temp file live

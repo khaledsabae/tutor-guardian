@@ -4,6 +4,7 @@ services:
       context: .
       dockerfile: backend/Dockerfile
     container_name: tg_backend
+    stop_grace_period: 20s
     restart: unless-stopped
     # deploy.yml runs `up -d --no-build --remove-orphans backend`, naming this
     # service alone. Redis has to be a dependency of it or the deploy would

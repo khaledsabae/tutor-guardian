@@ -30,7 +30,7 @@ from app.routers import (
     family_programs,
 )
 from app.services import (
-    child_token, device_alerts, followup_push, milestone_push, mission_digest,
+    ai_gateway, child_token, device_alerts, followup_push, milestone_push, mission_digest,
 )
 from app.services.push_sender import send_to_device
 from app import curriculum_loader as curriculum
@@ -170,15 +170,19 @@ async def lifespan(app: FastAPI):
     # cannot do — see mission_digest.run_due_digests.
     digest_task = asyncio.create_task(_digest_loop())
 
-    yield
-
-    # Shutdown: stop the digest loop. Without this the task is cancelled at
-    # interpreter exit and logs a spurious traceback on every restart.
-    digest_task.cancel()
     try:
-        await digest_task
-    except asyncio.CancelledError:
-        pass
+        yield
+    finally:
+        # Uvicorn finishes in-flight HTTP requests before lifespan shutdown.
+        # Drain off the event loop, before the interpreter stops daemon threads.
+        try:
+            await asyncio.to_thread(ai_gateway.shutdown_cloud_budget)
+        finally:
+            digest_task.cancel()
+            try:
+                await digest_task
+            except asyncio.CancelledError:
+                pass
 
 
 app = FastAPI(

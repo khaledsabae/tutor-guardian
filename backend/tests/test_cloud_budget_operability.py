@@ -265,3 +265,32 @@ def test_deploy_runs_the_preflight_before_switching_the_checkout():
     reset = text.index('git reset --hard "$GITHUB_SHA"')
     assert check < reset
     assert 'git show "$GITHUB_SHA:ops/tools/deploy_gate.py"' in text[:check]
+
+
+@pytest.mark.parametrize("line,code", [
+    ("CLOUD_BUDGET_ENFORCE=1 # note", 0),
+    ("CLOUD_BUDGET_ENFORCE=off # disabled", 0),
+    ('CLOUD_BUDGET_ENFORCE="true" # enabled', 0),
+    ("export CLOUD_BUDGET_ENFORCE='off' # disabled", 0),
+    ("CLOUD_BUDGET_ENFORCE=\t # empty", 0),
+    ('CLOUD_BUDGET_ENFORCE="on # literal"', 1),
+    ("CLOUD_BUDGET_ENFORCE='off # literal' # outside", 1),
+    ("CLOUD_BUDGET_ENFORCE=on#literal", 1),
+    ('CLOUD_BUDGET_ENFORCE="on \\" # literal" # outside', 1),
+    ("CLOUD_BUDGET_ENFORCE=ture # typo", 1),
+    ("CLOUD_BUDGET_ENFORCE=maybe # old\nCLOUD_BUDGET_ENFORCE=1 # last wins", 0),
+])
+def test_deploy_preflight_handles_inline_comments(tmp_path, line, code):
+    env = tmp_path / ".env"
+    env.write_text(line + "\n")
+    assert _gate().main(["--check-env", str(env)]) == code
+
+
+@pytest.mark.parametrize("value,expected", [
+    (' "on # literal" # outside', 'on # literal'),
+    (" 'off # literal' # outside", 'off # literal'),
+    (r''' "on \" # literal" # outside''', r'on \" # literal'),
+    (r" 'off \' # literal' # outside", r"off \' # literal"),
+])
+def test_deploy_preflight_preserves_quoted_hashes(value, expected):
+    assert _gate()._env_value(value) == expected
