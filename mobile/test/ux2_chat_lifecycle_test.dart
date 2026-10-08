@@ -90,36 +90,42 @@ void main() {
   setUp(() => SharedPreferences.setMockInitialValues({}));
 
   testWidgets('batched tokens reach the bubble, and Stop keeps the unflushed tail',
-      (tester) async {
+      (t) async {
     final http_ = _LiveSseClient();
     final tg = TgClient.forTesting(
         baseUrl: 'http://x', httpClient: http_, storage: _MemStorage());
     final notifier = ChatNotifier(tg);
     try {
-      await tester.runAsync(notifier.bootstrap);
+      // Bootstrap may perform platform/device initialization outside Flutter's
+      // fake clock; await its completion before testing the streaming timers.
+      await t.runAsync(notifier.bootstrap);
 
       unawaited(notifier.sendMessage('question'));
-      await tester.pump(); // Settle setup without advancing the flush clock.
+      // Finish async session/SSE setup before delivering tokens. pump drains
+      // microtasks without advancing the batching clock.
+      await t.pump();
+      expect(http_.sse.hasListener, isTrue);
       http_.token('Hel');
       http_.token('lo ');
-      await tester.pump(); // Deliver both tokens to the pending batch.
+      await t.pump();
+      await t.pump(const Duration(milliseconds: 59));
       expect(notifier.state.messages.last.content, isEmpty,
-          reason: 'tokens must be batched instead of updating on each delta');
-      await tester.pump(const Duration(milliseconds: 59));
-      expect(notifier.state.messages.last.content, isEmpty);
-      await tester.pump(const Duration(milliseconds: 1));
+          reason: 'deltas remain batched before the 60 ms flush');
+      await t.pump(const Duration(milliseconds: 1));
       expect(notifier.state.messages.last.content, 'Hello ',
           reason: 'batched deltas must land within the flush window');
 
       http_.token('world');
-      await tester.pump();
-      expect(notifier.state.messages.last.content, 'Hello ',
-          reason: 'the next delta must still be pending before Stop');
-      notifier.stopStreaming(); // before the next 60 ms flush fires
+      await t.pump(); // Deliver the tail without advancing its flush timer.
+      expect(notifier.state.messages.last.content, 'Hello ');
+      notifier.stopStreaming(); // before the 60 ms flush fires
       expect(notifier.state.messages.last.content, 'Hello world');
       expect(notifier.state.phase, ChatPhase.idle);
     } finally {
       notifier.dispose();
+      // Drain stream cancellation so its idle timeout is gone before the
+      // widget binding checks for pending timers.
+      await t.pump();
       await http_.sse.close();
     }
   });
