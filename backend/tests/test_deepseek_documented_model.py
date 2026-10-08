@@ -272,6 +272,9 @@ def _gate():
     ("DEEPSEEK_MODEL=deepseek-reasoner\nDEEPSEEK_PRIMARY_MONTHLY_USD_CAP=30\n", 1, "deepseek-reasoner"),
     ("DEEPSEEK_PRIMARY_MONTHLY_TOKEN_CAP=1e7\n", 1, "DEEPSEEK_PRIMARY_MONTHLY_TOKEN_CAP"),
     ("", 0, "100000000"),
+    # inline comments are read as env_file reads them (PR #91's _env_value)
+    ("DEEPSEEK_PRIMARY_MONTHLY_USD_CAP=30 # Khaled 2026-10-08\n", 0, "25000000"),
+    ("DEEPSEEK_MODEL='deepseek-chat' # legacy\nDEEPSEEK_PRIMARY_MONTHLY_USD_CAP=30\n", 0, "25000000"),
 ])
 def test_preflight_validates_and_shows_the_effective_cap(tmp_path, capsys, body, code, shown):
     env = tmp_path / ".env"

@@ -167,7 +167,7 @@ def monthly_token_cap_for_usd(usd: Decimal, models, *, endpoint: str) -> int:
 
 
 def _assignments(lines: list[str], keys: tuple[str, ...]) -> dict:
-    """The last value of each key, unquoted, as env_file reads it."""
+    """The last value of each key, as env_file reads it (_env_value)."""
     found = {}
     for line in lines:
         line = line.strip()
@@ -175,10 +175,7 @@ def _assignments(lines: list[str], keys: tuple[str, ...]) -> dict:
             line = line[7:].lstrip()
         key, sep, value = line.partition("=")
         if sep and key.strip() in keys:
-            value = value.strip()
-            if len(value) >= 2 and value[0] == value[-1] and value[0] in "\"'":
-                value = value[1:-1]
-            found[key.strip()] = value
+            found[key.strip()] = _env_value(value)
     return found
 
 
