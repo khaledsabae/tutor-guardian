@@ -31,7 +31,7 @@ import '../program/screens/paths_screen.dart';
 import '../tour/tour_controller.dart';
 import '../tour/tour_overlay.dart';
 import '../tour/tour_step.dart';
-import 'root_tab.dart';
+import 'root_tab.dart' show RootTab, rootTabRequestProvider;
 import 'package:almorabbi/core/haptics.dart';
 
 /// How many switches inside [_thrashWindow] read as hunting rather than
@@ -140,6 +140,14 @@ class _RootScaffoldState extends ConsumerState<RootScaffold> with RouteAware {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
+    // A tab switch requested from outside the shell (e.g. the follow-up
+    // sheet handing the parent to the assistant). Served once, then the
+    // request is cleared so a later rebuild cannot replay it.
+    ref.listen<int?>(rootTabRequestProvider, (_, next) {
+      if (next == null) return;
+      if (next >= 0 && next < RootTab.count) _onSelect(next);
+      ref.read(rootTabRequestProvider.notifier).state = null;
+    });
 
     return Scaffold(
       body: IndexedStack(
