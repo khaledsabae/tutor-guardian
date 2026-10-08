@@ -1,6 +1,7 @@
 // UX-4 (UX_UI_ROADMAP §4.3): the child theme and the child-mode frame.
 
 import 'package:flutter/material.dart';
+import 'package:flutter/semantics.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -32,6 +33,41 @@ void main() {
     expect(AppTheme.child(Brightness.dark).brightness, Brightness.dark);
   });
 
+  for (final locale in const [Locale('ar'), Locale('en')]) {
+    testWidgets('child mode exit is localized and avatar is decorative (${locale.languageCode})', (t) async {
+      final semantics = t.ensureSemantics();
+      try {
+        SharedPreferences.setMockInitialValues({});
+        final prefs = await SharedPreferences.getInstance();
+        final container = ProviderContainer(overrides: [
+          sharedPreferencesProvider.overrideWith((_) async => prefs),
+        ]);
+        addTearDown(container.dispose);
+        await container.read(sharedPreferencesProvider.future);
+        await t.pumpWidget(UncontrolledProviderScope(
+          container: container,
+          child: MaterialApp(
+            locale: locale,
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            home: const ChildModeShell(child: Scaffold(body: Text('surface'))),
+          ),
+        ));
+        await t.pump(ChildModeShell.handoffHold);
+        await t.pump(ChildModeShell.fade);
+        final exit = find.bySemanticsLabel(locale.languageCode == 'ar'
+            ? 'الخروج من وضع الطفل' : 'Exit child mode');
+        expect(exit, findsOneWidget);
+        expect(t.getSemantics(exit).getSemanticsData().hasAction(SemanticsAction.tap), isTrue);
+        expect(t.getSize(find.byTooltip(locale.languageCode == 'ar'
+            ? 'الخروج من وضع الطفل' : 'Exit child mode')).height, greaterThanOrEqualTo(56));
+        expect(find.bySemanticsLabel(RegExp('👶')), findsNothing);
+      } finally {
+        semantics.dispose();
+      }
+    });
+  }
+
   testWidgets('frame: hand-over card first, then the surface under a '
       'persistent child-mode bar', (t) async {
     // The app only enters child mode once preferences are loaded; so here.
@@ -62,7 +98,7 @@ void main() {
     ));
     expect(card.opacity, 0);
     expect(find.textContaining('Child Mode'), findsOneWidget);
-    expect(find.byTooltip('Exit'), findsOneWidget);
+    expect(find.byTooltip('Exit child mode'), findsOneWidget);
     expect(find.text('surface'), findsOneWidget);
     // The surface inherits the child theme.
     final ctx = t.element(find.text('surface'));

@@ -1,0 +1,68 @@
+{
+  "id": "lesson_0-3_medical_infant_sleep_10",
+  "path_id": "path_0-3_medical_infant_sleep",
+  "title": "Signs That Cannot Wait Until Morning: When to Get Medical Help",
+  "age_group": "prenatal-1",
+  "domain": "medical",
+  "unit_ids": [
+    "med-2dc3af5f"
+  ],
+  "summary": "A baby waking often at night in their first months is normal; they wake to feed, and being too hot or too cold can disturb them. But it is not always easy to tell when they are seriously ill, so learn the signs now, before you need them in the middle of the night.\n\nCall an ambulance or go to the emergency department straight away if they stop breathing, or have difficulty breathing or are breathing very fast, for example making grunting noises as they breathe or sucking their tummy in when they breathe, or if their skin, lips or tongue turn blue, grey, pale or blotchy; on black or brown skin this may show on the palms of the hands and soles of the feet. Do the same if they are hard to wake or will not wake when you try, are floppy in an unusual way, have a seizure, or have a weak, high-pitched or continuous cry, or if their temperature is 38C or higher while under three months old, 39C or higher while aged three to six months, or lower than 36C, or they have a rash that does not fade when you press on it, or they have not wet their nappy for 12 hours.\n\nTrust your instincts: if you feel something is seriously wrong, get help straight away, even if you do not find the sign here. If they are unwell, keep checking on them, even at night, to see whether a sign has appeared or changed. Also call an ambulance or go to the emergency department straight away if they are not feeding, are not responding to what is around them as they usually would, or are unusually lethargic or clearly sleepier than usual; do not wait for every sign to appear. If they are feeding less than usual but are alert and responsive, contact the doctor without delay. Other signs of serious illness that also need urgent medical help are pauses in their breathing or irregular breathing, or not settling whatever you do.\n\nCall the doctor or your country's medical advice line if you are worried about any symptom, or do not know what to do, or their nappies are less wet than usual, or they are not their usual self, or, from three months of age, their temperature stays at 38C or higher for more than five days. If you are worried about their sleep itself, ask their doctor or nurse. Even when they are unwell, put them to sleep on their back in their empty cot in your room.",
+  "try_this": "Today: On a single sheet, write the emergency signs, your country's ambulance number and your baby's doctor's number, and hang it somewhere visible at home where everyone who cares for your baby can see it.",
+  "order": 10,
+  "estimated_minutes": 3,
+  "reflection_prompts": [
+    "Which of these signs did you not know before, and what will you do if you see one at night?"
+  ],
+  "warning_flags": [
+    "needs_professional_followup"
+  ],
+  "needs_professional_followup": true,
+  "is_published": true,
+  "version": "1.0.0",
+  "created_at": "2026-10-08T08:35:59",
+  "updated_at": "2026-10-08T18:00:00",
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "claude-opus-5-5",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
+    "revalidated_at": "2026-10-08T13:38:23+00:00",
+    "generated_by": "ops/tools/deepen_paths.py",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "providers": {
+        "deepseek-v4-pro": {
+          "provider": "openrouter",
+          "model": "deepseek/deepseek-v4-pro"
+        },
+        "glm-5.2": {
+          "provider": "openrouter",
+          "model": "z-ai/glm-5.2"
+        }
+      },
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "dbf89484ec7627a61f342a5df20259abc0a81ad63a86f485c05dcea145edf776",
+      "reviewed_at": "2026-10-08T13:38:23+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+    }
+  }
+}

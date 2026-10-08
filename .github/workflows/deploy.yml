@@ -46,6 +46,7 @@ on:
       - '.github/workflows/deploy.yml'
       - 'requirements*.txt'
       - '.github/ci/constraints-prod.txt'
+      - '.github/ci/requirements-prod.lock'
       - '.dockerignore'
   workflow_dispatch: {}
 

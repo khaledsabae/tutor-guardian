@@ -24,7 +24,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
       title: Text(l10n.todaySun),
       actions: [
         const Padding(
-          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 4),
+          padding: EdgeInsets.symmetric(vertical: 4, horizontal: 4),
           child: Center(child: ActiveChildChip()),
         ),
         IconButton(

@@ -32,17 +32,19 @@ runs:
         python-version: '3.11'
         cache: pip
         cache-dependency-path: |
-          backend/requirements-dev.txt
-          .github/ci/constraints-prod.txt
+          .github/ci/requirements-dev.lock
 
     - name: Prepare constrained test tools outside the image
       shell: bash
       run: |
         set -euo pipefail
         tools="$(mktemp -d "$RUNNER_TEMP/candidate-test-tools.XXXXXX")"
-        python -m pip install --only-binary=:all: --no-compile \
-          --target "$tools" -r backend/requirements-dev.txt \
-          -c .github/ci/constraints-prod.txt
+        # Hash-locked, production's pins. Only the test tools themselves
+        # (--no-deps): what they import besides (packaging, pygments, anyio) is
+        # already in the image at the same pinned version, so the mount does not
+        # shadow the image's own packages with a second copy.
+        python -m pip install --require-hashes --no-deps --only-binary=:all: --no-compile \
+          --target "$tools" -r .github/ci/requirements-dev.lock
         # Mount must be readable by the image's non-root appuser (uid 10001).
         chmod -R a+rX "$tools"
         echo "CANDIDATE_TEST_TOOLS_DIR=$tools" >> "$GITHUB_ENV"

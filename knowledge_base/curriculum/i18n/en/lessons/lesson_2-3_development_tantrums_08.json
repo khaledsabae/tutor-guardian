@@ -1,0 +1,66 @@
+{
+  "id": "lesson_2-3_development_tantrums_08",
+  "path_id": "path_2-3_development_tantrums",
+  "title": "A Tantrum at the Market or in Front of Guests",
+  "age_group": "2-3",
+  "domain": "development",
+  "unit_ids": [
+    "seed-tantrum-23"
+  ],
+  "summary": "A tantrum may come in the shop or in front of guests, and eyes turn to you and you feel embarrassed. That feeling is understandable; tantrums often happen in shops, and embarrassment makes staying calm harder. You may be tempted to give them what they want to quiet them, or to lose your temper with them in front of people. But giving in does not help them, as they may come to think that a tantrum gets them what they want, and shouting at them will not end the tantrum.\n\nGetting ready before you go out helps: choose a time when they are not hungry or tired, put their sleep first even if you miss some things, and take a healthy snack with you. Keep shopping time as short as you can. Before you go in, tell them what will happen in a simple sentence: «We will buy bread and milk, and we will not buy sweets today.» Involve them: talk with them about what you need, let them help you, or play a small game together, such as having them point to the blue things. Before meeting guests or going somewhere new, tell them simply whom they will meet and what will happen.\n\nIf the tantrum starts, look first: Are they hungry, tired, in pain or ill? If a need shows, meet it. If you notice it starting, try to turn their attention to something else. If you said «no» for a good reason, hold to it calmly, do not buy what they asked for to quiet them, and do not promise them sweets. If you can, move calmly with them to a quieter place, and stay with them, without leaving them alone, until they calm down. Ignore the looks of the people around you, and focus on staying calm. Do not hit them, shout at them, threaten them or embarrass them in front of people. If they hit, bite or rush toward danger, stop them straight away, calmly. If someone you trust is with you and you feel your own temper rising, let that person stay with them until you calm down.\n\nAfter they calm down, return calmly to your day, without long blame or scolding. When they stay calmly by your side, praise them with specific words: «Thank you for being patient and staying by me.»\n\nTalk with the pediatrician if the tantrums are very frequent or last longer than expected for their age, if they cannot calm down, if they hurt themselves or others, if the tantrums get in the way of daily life, if they lose skills they once had, or if they seem withdrawn, sad, or very demanding and unsatisfied most of the time. If there is a serious injury or you cannot keep them safe, seek urgent help straight away.",
+  "try_this": "Today: If you go out on an errand with your child, tell them before you start, in one clear sentence, what you will buy and what you will not buy, and give them a small task to help you with during the errand.",
+  "order": 8,
+  "estimated_minutes": 3,
+  "reflection_prompts": [
+    "What is harder for you when a tantrum comes in front of people: your child's behavior, or the looks of others at you?"
+  ],
+  "warning_flags": [],
+  "needs_professional_followup": false,
+  "is_published": true,
+  "version": "1.0.0",
+  "created_at": "2026-10-08T10:47:40",
+  "updated_at": "2026-10-08T10:47:40",
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "claude-opus-5-5",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
+    "revalidated_at": "2026-10-08T10:48:36+00:00",
+    "generated_by": "ops/tools/deepen_paths.py",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "providers": {
+        "deepseek-v4-pro": {
+          "provider": "openrouter",
+          "model": "deepseek/deepseek-v4-pro"
+        },
+        "glm-5.2": {
+          "provider": "openrouter",
+          "model": "z-ai/glm-5.2"
+        }
+      },
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "55480730bd7a6da58bb3ba03a3594edf68e34587595780efd2eda061c7d3b144",
+      "reviewed_at": "2026-10-08T10:48:36+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+    }
+  }
+}

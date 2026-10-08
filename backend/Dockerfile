@@ -15,22 +15,22 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Point HF model cache to a path inside /app so appuser can write to it.
 ENV HF_HOME=/app/.cache/huggingface
 
-COPY backend/requirements.txt ./backend/requirements.txt
-# Production's frozen package set (refresh with .github/ci/refresh-constraints-from-prod.sh).
-# Without it every deploy re-resolved requirements.txt's ranges and silently
-# upgraded packages (2026-10-04: fastapi 0.141→0.142, oauthlib 3→4, +22 more),
-# so CI and production tested different code. The same file pins the hosted CI.
-COPY .github/ci/constraints-prod.txt ./backend/constraints-prod.txt
-# torch from the CPU-only index first. The default PyPI wheel for Linux is the
-# CUDA build and drags in ~4 GB of nvidia-* libraries; this host has no GPU and
-# the models run on CPU. The version comes from requirements.txt (the pin stays
-# in one place); `2.13.0+cpu` satisfies `torch==2.13.0`, so the second install
-# keeps it instead of pulling the CUDA build.
-RUN TORCH_VERSION="$(sed -n 's/^torch==\([^ #]*\).*/\1/p' backend/requirements.txt)" \
-    && test -n "$TORCH_VERSION" \
-    && pip install --no-cache-dir "torch==${TORCH_VERSION}" \
-        --index-url https://download.pytorch.org/whl/cpu \
-    && pip install --no-cache-dir -r backend/requirements.txt -c backend/constraints-prod.txt \
+# Production's frozen package set, hash-locked: every file pip may install is
+# named by its sha256, so a republished or compromised wheel fails the build
+# instead of entering the image. Versions are .github/ci/constraints-prod.txt's
+# (production's own freeze — without it every deploy re-resolved
+# requirements.txt's ranges: 2026-10-04 fastapi 0.141→0.142, oauthlib 3→4, +22
+# more); regenerate with .github/ci/lock-backend-deps.py, never by hand.
+# The hosted CI installs the same file (.github/actions/backend-env).
+# torch is in it as a direct URL to the CPU-only wheel on
+# download.pytorch.org/whl/cpu: the PyPI torch wheel for Linux is the CUDA build
+# and drags in ~4 GB of nvidia-* libraries; this host has no GPU. Everything
+# else comes from PyPI. --no-deps: the lock is the whole closure (pip check
+# proves it); --only-binary: no package's build code runs here.
+COPY .github/ci/requirements-prod.lock ./backend/requirements-prod.lock
+RUN pip install --no-cache-dir --require-hashes --no-deps --only-binary=:all: \
+        -r backend/requirements-prod.lock \
+    && pip check \
     && ! pip list 2>/dev/null | grep -qi '^nvidia-'
 
 # Pre-download the embedding + reranker models into the image so cold

@@ -1675,5 +1675,16 @@
   "deleteAccountStartOverConfirm": "Start over",
   "accountStartedOverTitle": "The app has started over on this phone",
   "accountStartedOverBody": "We cleared everything that was on this phone. We couldn't confirm whether your account was deleted from our servers; to make sure it is, email us at {email}. Close the app — it will start fresh when you open it.",
-  "deleteAccountNotDeletedNotice": "Your account was not deleted. You can try again from Settings → Privacy & your data."
+  "deleteAccountNotDeletedNotice": "Your account was not deleted. You can try again from Settings → Privacy & your data.",
+  "a11ySendQuestion": "Send question",
+  "a11yExitChildMode": "Exit child mode",
+  "a11yCurrentChild": "Current child: {name}, tap to switch",
+  "@a11yCurrentChild": {
+    "description": "Screen-reader label for the active-child chip: names the current child (full name) and says a tap opens the list to switch. It must not sound like it selects this child.",
+    "placeholders": {"name": {"type": "String"}}
+  },
+  "a11yChooseAChild": "Choose a child",
+  "@a11yChooseAChild": {
+    "description": "Screen-reader label for the active-child chip when no child is active yet; a tap opens the children list."
+  }
 }

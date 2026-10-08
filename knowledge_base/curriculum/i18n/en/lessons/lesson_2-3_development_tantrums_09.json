@@ -1,0 +1,66 @@
+{
+  "id": "lesson_2-3_development_tantrums_09",
+  "path_id": "path_2-3_development_tantrums",
+  "title": "When Your Own Energy Runs Out",
+  "age_group": "2-3",
+  "domain": "development",
+  "unit_ids": [
+    "seed-tantrum-23"
+  ],
+  "summary": "Raising a child of two or three is tiring work, and it is natural to feel upset, frustrated or angry at times, especially when the same thing happens again and again, or when you feel they are rejecting you and pulling away from you. This does not mean you are a bad parent. But your child learns from you: if they see you express your anger calmly, they will probably follow your example.\n\nSo try to notice your upset as it begins, before it grows stronger. When you notice it, stop for a moment, and take a few deep breaths before you respond to your child. If there is no danger to them, it is fine to sit together quietly, then go back to what you were doing once you calm down. If you need longer, such as a short walk, do not leave them alone: have someone you trust look after them until you come back. You can breathe deeply in front of them, and invite them to breathe with you; they love to copy you.\n\nLook at what weighs on your day: you may be going through tiredness, pressures or problems at home, and your child notices this quickly, and their behavior may become harder when you are less able to cope. So do not blame yourself, and do not blame your child. And do not carry this alone: ask for help from your partner, a friend or another parent, take turns caring for them when your upset grows, and talk with someone you trust about what you are going through. Take moments to be gentle with yourself; you and your child are both doing what you can.\n\nIf you raise your voice or make a mistake in a moment of anger, wait until you calm down, then apologize to your child, tell them how you will act next time, and keep your word: «I raised my voice at you, and that was wrong, and I am sorry. Next time I will stop and breathe.» This is how they learn from you how a mistake is put right. When you are angry, do not hit them, do not shout at them, and do not humiliate them; this does not correct their behavior, and it may harm their mental health.\n\nIf you feel your anger often gets out of your control, or you have become sad, worn out or anxious most of the time, or it has become hard for you to care for your child, talk with your doctor or a specialist. If you fear you might hurt your child or yourself right now, have someone you trust stay with them, and seek urgent help straight away.",
+  "try_this": "Today: Choose a short sentence to say to yourself when you notice your upset beginning, such as «I stop and breathe», and try it once while staying close to your child, and if you like, invite them to breathe with you.",
+  "order": 9,
+  "estimated_minutes": 3,
+  "reflection_prompts": [
+    "What makes calm harder for you in your day, and who could help you when your upset grows?"
+  ],
+  "warning_flags": [],
+  "needs_professional_followup": false,
+  "is_published": true,
+  "version": "1.0.0",
+  "created_at": "2026-10-08T10:47:40",
+  "updated_at": "2026-10-08T10:47:40",
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "claude-opus-5-5",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
+    "revalidated_at": "2026-10-08T10:48:36+00:00",
+    "generated_by": "ops/tools/deepen_paths.py",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "providers": {
+        "deepseek-v4-pro": {
+          "provider": "openrouter",
+          "model": "deepseek/deepseek-v4-pro"
+        },
+        "glm-5.2": {
+          "provider": "openrouter",
+          "model": "z-ai/glm-5.2"
+        }
+      },
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "45a148d0aa58063322fe83f5361de6b6adf4a20e1e443e3933d6d313f5e3769d",
+      "reviewed_at": "2026-10-08T10:48:36+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+    }
+  }
+}
