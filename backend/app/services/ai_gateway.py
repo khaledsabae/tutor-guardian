@@ -1054,7 +1054,8 @@ def _reserve_wire_budget(endpoint: str, provider_name: str, messages: list[dict]
         raise BudgetDenied("cloud budget invalid monthly cap")
     if cap == 0 and primary:
         return None  # explicit documented unlimited opt-out, not a hard-cap mode
-    bound = upper_token_bound(messages, output_cap, endpoint=endpoint, model=model)
+    bound = upper_token_bound(messages, output_cap, endpoint=endpoint, model=model,
+                              profile_aliases=dict(getattr(LLM, "deepseek_billing_profile_aliases", ())))
     # Old telemetry has no endpoint/account identifier. It cannot prove that
     # these aliases spent from different wallets, so conservatively import all.
     aliases = tuple(sorted({"azure_deepseek", "deepseek", "deepseek_aux",

@@ -354,3 +354,49 @@ No production reads/config changes, deploy, push, external model calls, mobile
 build or emulator use occurred. Source defaults are runtime-unverified. Activation
 still requires real independently verified reconciliation evidence and persistence;
 there is no automatic zero seed or provider-invoice guarantee.
+
+## Activation blockers fixed on fix/budget-cap-activatable (2026-10-08)
+
+Four blockers found against production (runtime report of 2026-10-07, sanitized
+aggregates only) kept this branch from ever admitting a paid call there. Each
+fix below was written test-first.
+
+### 1. `deepseek-chat` — explicit alias, never a built-in profile
+
+Production sets `DEEPSEEK_MODEL=deepseek-chat` (878 October rows), and the
+weekly `kb_gap_judge` hard-codes it. `_BILLING_PROFILES` knows only the two
+documented models, so every capped primary call would be `BudgetDenied`.
+
+DeepSeek's official pages, fetched 2026-10-08 ~07:13 UTC (SHA-256 of the HTML
+as served; the pages embed build assets, so the hash pins this snapshot, it is
+not a reproducibility promise):
+
+| URL | SHA-256 | What it says |
+|---|---|---|
+| https://api-docs.deepseek.com/quick_start/pricing/ | `210f102275ccf1a6542f08a3bc9e4b4c7c83278cb74b35217bffa112df6363b2` | Models: `deepseek-flash` (DeepSeek-V4.1-Flash) and `deepseek-v4-pro`; context 1M; max output 384K. Prices per 1M tokens, peak (off-peak is half): flash input cache-hit $0.006, cache-miss $0.30, output $1.20; v4-pro $0.044 / $1.32 / $3.96. Legacy names still accepted: **only** `deepseek-v4-flash`, `deepseek-v4-flash-vision-exp`. `deepseek-chat` is not mentioned. |
+| https://api-docs.deepseek.com/api/create-chat-completion/ | `e7133a7c2a7c2662567cca2e2392b503f97c2fb583009ff85f878744e0a36ba7` | `model` possible values: `deepseek-flash`, `deepseek-v4-pro`. `max_tokens` 1..393216; input+generated limited by context. |
+| https://api-docs.deepseek.com/updates/ | `2922113bc4e0e970fa6d3c4065c3cff3ec661a4db03d671cc2310545c5b5bb71` | V4 preview (2026-04-24): `deepseek-chat`/`deepseek-reasoner` "will be discontinued in three months (2026-07-24)"; until then they pointed to deepseek-v4-flash non-thinking/thinking. 2026-09-10: V4-Flash retired, `deepseek-v4-flash*` temporarily routed to V4.1-Flash. No later word on `deepseek-chat`. |
+| https://api-docs.deepseek.com/news/news260910/ | `f18dc22d37393381b31c9069996138f45aa7b02b08442d43af7c6c57f587bdce` | From 2026-09-14 04:00 UTC `deepseek-v4-pro` routes to V4.1-Flash at Flash rates. |
+| https://api-docs.deepseek.com/api/list-models/ | `41551c3c498a93b6e6459eaeee89829940ca8acf999b24436a38a2231c7e091b` | `/models` returns `context_window` and `max_output_tokens` per model (a live check an operator can run with the key). |
+
+**Verdict:** what `deepseek-chat` aliases today, its context length and its
+price are **not verifiable** from the official docs: its documented end date
+has passed and the current pages do not name it, yet production calls still
+succeed. So it gets no built-in profile. Instead:
+
+- `DEEPSEEK_BILLING_PROFILE_ALIASES="deepseek-chat=deepseek-flash"` (env, read
+  into `LLM.deepseek_billing_profile_aliases`) lets the cap reserve
+  `deepseek-chat` calls under the `deepseek-flash` profile. It is the
+  operator's attestation, not a verified fact.
+- Default is empty → `deepseek-chat` stays denied (fail closed; the local chain
+  answers). A malformed or duplicated entry voids the whole setting.
+- One hop, same origin, onto a verified profile only; a documented model can
+  never be re-pointed; another origin never inherits an alias.
+- Safety net if the attestation is wrong: a settled usage above the reserved
+  context still quarantines the wallet (`blocked=1`).
+- The verified alternative is to switch `DEEPSEEK_MODEL` (and the kb-gap
+  judge's model) to `deepseek-flash`, which needs no alias — a quality decision
+  for Khaled.
+
+The cap counts **tokens, not money**; the prices above are recorded for the
+operator's monthly reconciliation, not used by the code.

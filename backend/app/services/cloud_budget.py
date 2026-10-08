@@ -43,21 +43,46 @@ class BillingProfile:
     max_output_tokens: int
 
 
-# Verified 2026-10-07: api-docs.deepseek.com/quick_start/pricing and
-# api-docs.deepseek.com/api/create-chat-completion. 1M rounded up to 2**20.
+# Verified 2026-10-07 and re-verified 2026-10-08 (URLs + SHA-256 of the
+# fetched pages in docs/cloud-budget-reservations.md, "deepseek-chat"):
+# api-docs.deepseek.com/quick_start/pricing and /api/create-chat-completion.
+# 1M rounded up to 2**20; max_tokens 1..393216.
 # Legacy aliases, Azure deployment names and compatible hosts are not verified.
+# deepseek-chat in particular is NOT documented any more (its announced
+# discontinuation date, 2026-07-24, has passed and the current pages do not
+# name it); billing it under a profile is an explicit operator attestation via
+# DEEPSEEK_BILLING_PROFILE_ALIASES, never a built-in default.
 _BILLING_PROFILES = {
     ("https://api.deepseek.com:443", model): BillingProfile(1048576, 393216)
     for model in ("deepseek-flash", "deepseek-v4-pro")
 }
 
 
+def _profile_for(origin: str, model: str, profile_aliases) -> BillingProfile | None:
+    profile = _BILLING_PROFILES.get((origin, model))
+    if profile is not None:
+        if model in (profile_aliases or {}):
+            # A documented model is never re-pointed by configuration.
+            raise BudgetDenied("cloud budget alias cannot remap a documented model")
+        return profile
+    target = (profile_aliases or {}).get(model)
+    if not isinstance(target, str) or target == model:
+        return None
+    # One hop, same origin, onto a verified profile only.
+    return _BILLING_PROFILES.get((origin, target))
+
+
 def upper_token_bound(messages: list[dict], max_output_tokens: int, *,
-                      endpoint: str, model: str) -> int:
+                      endpoint: str, model: str, profile_aliases=None) -> int:
     """Reserve the entire verified context, independent of input tokenization.
 
     The profile requires the actual max_tokens parameter on every wire attempt.
     Provider violations of its documented contract are outside this guarantee.
+    `profile_aliases` ({undocumented name: documented name}) is the operator's
+    explicit attestation that a name the provider still accepts is served and
+    billed as the documented model; a settled usage above the bound still
+    quarantines the wallet, so a wrong attestation stops spend rather than
+    hiding it.
     """
     from urllib.parse import urlsplit
 
@@ -69,7 +94,7 @@ def upper_token_bound(messages: list[dict], max_output_tokens: int, *,
         origin = f"{parsed.scheme}://{(parsed.hostname or '').lower()}:{port}"
     except ValueError as exc:
         raise BudgetDenied("cloud budget invalid billing profile endpoint") from exc
-    profile = _BILLING_PROFILES.get((origin, model))
+    profile = _profile_for(origin, model, profile_aliases)
     if (profile is None or parsed.path.rstrip('/') not in ("", "/v1")
             or parsed.query or parsed.fragment or parsed.username or parsed.password):
         raise BudgetDenied("cloud budget unverified provider/model billing profile")

@@ -4,7 +4,24 @@ All model-dependent values come from environment variables with safe local
 defaults, so deployments (Docker, mobile-backend) can override without code edits.
 """
 import os
-from dataclasses import dataclass
+from dataclasses import dataclass, field
+
+
+def parse_billing_profile_aliases(raw: str) -> tuple:
+    """'a=b,c=d' -> (('a','b'),('c','d')). Any malformed or repeated entry
+    voids the whole setting (fail closed: no alias, cloud denied)."""
+    pairs = []
+    for entry in (raw or "").split(","):
+        if not entry.strip():
+            continue
+        parts = entry.split("=")
+        if len(parts) != 2 or not parts[0].strip() or not parts[1].strip():
+            return ()
+        pairs.append((parts[0].strip(), parts[1].strip()))
+    if len({name for name, _ in pairs}) != len(pairs):
+        return ()
+    return tuple(pairs)
+
 
 # The home server, reached over Tailscale. Five modules read this address from
 # the environment, each carrying its own copy of the literal as the fallback,
@@ -79,6 +96,15 @@ class LLMConfig:
     # the request's "thinking" field). When the configured model is refused
     # as unknown or retired, the gateway switches to this one for the process.
     deepseek_model_fallback: str = os.environ.get("DEEPSEEK_MODEL_FALLBACK", "deepseek-flash")
+    # Model names the monthly cap may bill under a documented profile, as
+    # "name=documented-name[,…]" (e.g. "deepseek-chat=deepseek-flash"). An
+    # operator attestation, not a fact the code can verify: deepseek-chat is
+    # no longer in DeepSeek's docs (see backend/docs/cloud-budget-reservations.md).
+    # Empty (the default) or malformed = no alias: a capped call on an
+    # unprofiled name is denied and the local chain answers.
+    deepseek_billing_profile_aliases: tuple = field(
+        default_factory=lambda: parse_billing_profile_aliases(
+            os.environ.get("DEEPSEEK_BILLING_PROFILE_ALIASES", "")))
     # Monthly spend ceiling for the PRIMARY path. The app is free forever (no
     # ads, no subscriptions), so every primary token is paid out of the owner's
     # own pocket — without a ceiling the bill is unbounded. Unlike the
