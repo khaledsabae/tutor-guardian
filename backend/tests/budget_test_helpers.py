@@ -6,9 +6,15 @@ from app.services.cloud_budget import PAID_ALIASES
 
 
 def activate(ledger, *, wallets=('wallet',), opening=0):
-    with sqlite3.connect(ledger.path) as conn:
-        conn.execute('CREATE TABLE IF NOT EXISTS llm_calls ('
-                     'ts TEXT, provider TEXT, prompt_tokens INTEGER, completion_tokens INTEGER)')
+    conn = sqlite3.connect(ledger.path)
+    try:
+        if not conn.execute("SELECT 1 FROM sqlite_master WHERE name='llm_calls'").fetchone():
+            # The real telemetry schema (numbered migrations), so gateway rows land.
+            from app.services.ai_gateway import _ensure_telemetry_schema
+            _ensure_telemetry_schema(conn)
+            conn.commit()
+    finally:
+        conn.close()
     now = ledger.clock().astimezone(timezone.utc)
     for wallet in wallets:
         ledger.bootstrap({

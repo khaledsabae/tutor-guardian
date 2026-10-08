@@ -41,7 +41,8 @@ import requests
 
 from app.config.llm_config import LLM
 from app.core.circuit_breaker import CircuitBreaker
-from app.services.cloud_budget import BudgetDenied, CloudBudget, unknown_usage_bounds, upper_token_bound
+from app.services.cloud_budget import (BudgetDenied, CloudBudget, record_call_reservations,
+                                       unknown_usage_bounds, upper_token_bound)
 
 logger = logging.getLogger(__name__)
 
@@ -956,10 +957,12 @@ def _log_call(provider: str, model: str, latency_ms: int,
               streamed: bool, ok: bool,
               tier: str | None = None, route_reason: str | None = None, *,
               prompt: str | None = None, received: str = "",
-              exc: BaseException | None = None) -> None:
+              exc: BaseException | None = None,
+              reservation_ids: list | None = None) -> None:
     """One llm_calls row. Pass `prompt` (and `received`, `exc`) for any call
     that may have reached a provider: counts it did not report are then
     estimated and flagged instead of left NULL. Never raises."""
+    ids = list(reservation_ids) if reservation_ids is not None else _drain_reservations()
     try:
         prompt_tokens, completion_tokens, estimated = _fill_usage(
             prompt_tokens, completion_tokens, prompt, received, exc)
@@ -968,13 +971,15 @@ def _log_call(provider: str, model: str, latency_ms: int,
         conn.execute("PRAGMA journal_mode = WAL")
         conn.execute("PRAGMA busy_timeout = 5000")
         _ensure_telemetry_schema(conn)
-        conn.execute(
+        cur = conn.execute(
             "INSERT INTO llm_calls (provider,model,latency_ms,prompt_tokens,"
             "completion_tokens,streamed,ok,tier,route_reason,usage_estimated) "
             "VALUES (?,?,?,?,?,?,?,?,?,?)",
             (provider, model, latency_ms, prompt_tokens, completion_tokens,
              int(streamed), int(ok), tier, route_reason, int(estimated)),
         )
+        if ids:
+            record_call_reservations(conn, cur.lastrowid, ids)
         conn.commit()
         conn.close()
     except Exception as e:  # telemetry must never break a request
@@ -1086,7 +1091,40 @@ def _reserve_wire_budget(endpoint: str, provider_name: str, messages: list[dict]
     ledger = CloudBudget(_TELEMETRY_DB)
     ticket = ledger.reserve(wallet, cap, bound, legacy_aliases=aliases,
                             unknown_usage_bounds=unknown_usage_bounds(messages, output_cap))
+    sink = _RESERVATION_SINK.get()
+    if sink is not None:
+        sink.append(ticket.id)
     return _WireCharge(ledger, ticket)
+
+
+# The ledger attempts made since the last llm_calls row in this call scope.
+# Set by each paid entry point (generate, _stream_provider, aux_generate,
+# record_chat_completion); lanes copy the context into their worker threads,
+# so a provider's reservation lands in its caller's list. _log_call drains it
+# into llm_call_reservations, which the monthly rollover requires.
+_RESERVATION_SINK: contextvars.ContextVar[list | None] = contextvars.ContextVar(
+    "cloud_budget_reservations", default=None)
+
+
+@contextlib.contextmanager
+def _reservation_scope():
+    token = _RESERVATION_SINK.set([])
+    try:
+        yield
+    finally:
+        try:
+            _RESERVATION_SINK.reset(token)
+        except ValueError:
+            pass  # a generator finalised from another context
+
+
+def _drain_reservations() -> list:
+    sink = _RESERVATION_SINK.get()
+    if not sink:
+        return []
+    ids = list(sink)
+    sink.clear()
+    return ids
 
 
 class _WireCharge:
@@ -1183,6 +1221,14 @@ _USE_AUX_BREAKER = object()
 def aux_generate(provider: LLMProvider, prompt: str, *,
                  options: dict, tier: str,
                  breaker: "CircuitBreaker | None | object" = _USE_AUX_BREAKER) -> str | None:
+    """See _aux_generate; its llm_calls row names its ledger reservations."""
+    with _reservation_scope():
+        return _aux_generate(provider, prompt, options=options, tier=tier, breaker=breaker)
+
+
+def _aux_generate(provider: LLMProvider, prompt: str, *,
+                  options: dict, tier: str,
+                  breaker: "CircuitBreaker | None | object" = _USE_AUX_BREAKER) -> str | None:
     """Run ONE auxiliary call. Returns the text, or None on any failure.
 
     Never raises and never retries — the caller's own degraded path is cheaper
@@ -1255,6 +1301,14 @@ def _provider_label(base_url: object) -> str:
 
 def record_chat_completion(client, *, tier: str, provider: str | None = None,
                            route_reason: str | None = None, **create_kwargs):
+    """See _record_chat_completion; its llm_calls row names its reservation."""
+    with _reservation_scope():
+        return _record_chat_completion(client, tier=tier, provider=provider,
+                                       route_reason=route_reason, **create_kwargs)
+
+
+def _record_chat_completion(client, *, tier: str, provider: str | None = None,
+                            route_reason: str | None = None, **create_kwargs):
     """client.chat.completions.create(**create_kwargs), recorded in llm_calls.
 
     Returns the response unchanged and re-raises the client's errors after
@@ -1504,6 +1558,7 @@ class AIGateway:
         last_err: Exception | None = None
         deadline = time.monotonic() + GENERATE_DEADLINE_S
         budget_token = _GENERATE_DEADLINE.set(deadline)
+        sink_token = _RESERVATION_SINK.set([])
 
         def _remaining() -> float:
             return max(0.1, deadline - time.monotonic())
@@ -1680,10 +1735,18 @@ class AIGateway:
             raise RuntimeError(f"LLM generation failed after all retries and fallbacks: {last_err}") from last_err
         finally:
             _GENERATE_DEADLINE.reset(budget_token)
+            _RESERVATION_SINK.reset(sink_token)
 
     def _stream_provider(self, provider: LLMProvider, prompt: str,
                          opts: dict, tier: str | None = None,
                          route_reason: str | None = None) -> Iterator[StreamChunk]:
+        """_stream_scoped inside its own reservation scope (see _RESERVATION_SINK)."""
+        with _reservation_scope():
+            yield from self._stream_scoped(provider, prompt, opts, tier, route_reason)
+
+    def _stream_scoped(self, provider: LLMProvider, prompt: str,
+                       opts: dict, tier: str | None = None,
+                       route_reason: str | None = None) -> Iterator[StreamChunk]:
         """Stream from one provider. Raises on failure (caller decides to fall back)."""
         start = time.monotonic()
         text_parts: list[str] = []

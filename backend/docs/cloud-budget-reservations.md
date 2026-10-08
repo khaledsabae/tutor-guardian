@@ -589,11 +589,12 @@ edited ledger never reaches it). It rolls over only if **all** hold:
 - the wallet is not quarantined and the previous month's opening row exists;
 - every reservation up to the previous month is settled (an in-flight call
   across midnight just delays the rollover until it settles);
-- telemetry shows no spend the ledger did not reserve: no paid row with
-  unknown usage, and paid `llm_calls` tokens ≤ ledger charges (attempts +
-  carry) — for the previous month after its attested cutoff, and for the new
-  month so far. More telemetry than ledger means a writer spent without a
-  reservation; that refuses the rollover.
+- the ledger rows agree with the continuity witness (full recount, §7);
+- telemetry shows no spend the ledger did not reserve: every paid
+  `llm_calls` row after the previous cutoff (previous month and the new month
+  so far) has known usage and, if it reports tokens, maps to settled ledger
+  attempts of this wallet that charged at least that much, each attempt
+  claimed by one row only (§8).
 
 Then the new month opens at what the ledger measured: an activation receipt
 marked `rollover_from`, `reconciled_through` = 00:00 UTC on the 1st,
@@ -604,11 +605,9 @@ answers) and the log says why:
 Recovery is a manual receipt for the new month (runbook steps 4–6).
 
 Known conservative edges: a skipped month (no activation for the previous
-month) never rolls; enabling Azure (another wallet with the same aliases in
-telemetry) would make telemetry exceed this wallet's ledger and refuse the
-rollover; the comparison relies on each telemetry row's tokens being ≤ the
-charge of the attempt(s) behind it, which holds for reported usage (equal)
-and for the bytes/3 estimates against the byte bound of §3.
+month) never rolls; enabling Azure (another wallet under the same aliases in
+telemetry) would leave its rows unmapped to this wallet and refuse the
+rollover.
 
 Runbook consequence: turn the switch on **before** bootstrapping (cloud is
 denied for those minutes, the local chain answers), and set the cutoff at
@@ -657,3 +656,38 @@ p3 at 50k rows × 8 streams × 15 iterations: 120 reserved, **0 unsettled**;
 p2 at 0/3k/10k/50k/150k rows × 8 threads: 40/40 reserve+settle each, single
 reserve+settle 14–70 ms independent of history; p1 (12 processes × 20 for 10
 slots): 10 admitted, never more.
+
+### 8. Telemetry rows map to their reservations (review of PR #71, P2/P3a)
+
+The first rollover compared monthly aggregates (telemetry tokens ≤ ledger
+charges). The request bound charged for usage-less attempts (bytes + 4096 +
+`max_tokens`) is far above the telemetry's bytes/3 estimate, so unreserved
+spend could hide in that slack: probe p4 got 116k unreserved tokens accepted.
+And a row logged a few ms after midnight for an attempt settled before it
+(probe p6) landed in the wrong month.
+
+Now each paid entry point (gateway `generate`, `_stream_provider`,
+`aux_generate`, `record_chat_completion`) opens a reservation scope (a
+ContextVar the lanes copy into their worker threads); every wire reservation
+joins it, and `_log_call` writes the ids gathered since the previous row into
+`llm_call_reservations(call_id, reservation_id)` in the same transaction as
+the `llm_calls` row. The table sits outside the telemetry migrations (the
+switch-off path and the telemetry schema stay identical to base) and outside
+the witnessed ledger (telemetry never takes the ledger lock); a lost or
+missing mapping can only refuse a rollover. Switch off: no reservations, no
+map rows.
+
+The rollover check is per row (§6): unknown usage refuses; 0/0 rows (refused,
+denied) need no reservation; any other row needs ids, each a settled attempt
+of this wallet (live or archived), claimed by no other row, together charging
+at least the row's tokens. Matching by id places p6's post-midnight row with
+its October attempt.
+
+Probe results: p4 with the call map — refused, "paid telemetry row 21 (2900
+tokens …) maps to no reservation: an unreserved writer spent from this
+wallet"; p6 with the call map — rolled over; p5 (exit paths) — every attempt
+settled (success 57, cut/abandoned/net-error/500 at the 4195 request bound),
+`num_predict` 64.0 refused before the wire, 0 unsettled. As written, p4/p6
+insert 4-value positional rows into `llm_calls`, which the test helper now
+creates with the real 12-column telemetry schema; the mapped variants differ
+only in naming their columns and recording the map, as the gateway does.

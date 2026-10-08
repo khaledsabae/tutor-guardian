@@ -162,6 +162,21 @@ _WITNESS_COLUMNS = tuple(col for spec in _WITNESSED.values() for col, _ in spec)
 _LEDGER_OBJECTS = (*_WITNESSED, 'cloud_budget_witness')
 
 
+def record_call_reservations(conn, call_id: int, reservation_ids) -> None:
+    """Map one llm_calls row to the ledger attempts behind it (same txn).
+
+    Outside the witnessed ledger on purpose: telemetry writes must not take
+    the ledger lock. A lost or missing mapping can only refuse a rollover.
+    """
+    ids = [r for r in dict.fromkeys(reservation_ids or ()) if isinstance(r, str) and r]
+    if not ids:
+        return
+    conn.execute('CREATE TABLE IF NOT EXISTS llm_call_reservations (call_id INTEGER NOT NULL, '
+                 'reservation_id TEXT NOT NULL, PRIMARY KEY(call_id, reservation_id))')
+    conn.executemany('INSERT OR IGNORE INTO llm_call_reservations VALUES(?,?)',
+                     [(call_id, r) for r in ids])
+
+
 class LedgerBusy(BudgetDenied):
     """The ledger stayed locked past this transaction's timeout."""
 
@@ -505,10 +520,16 @@ class CloudBudget:
             return f'unsettled reservations up to {prev}'
         aliases = tuple(previous['legacy_aliases'])
         cutoff = datetime.fromisoformat(previous['reconciled_through'])
-        telemetry = {}
+        # Every paid row after the attested cutoff must name the settled
+        # ledger attempts behind it (llm_call_reservations), each attempt
+        # claimed once, and report no more tokens than they charged. A row
+        # without a reservation is spend the cap never admitted. Matching by
+        # id, not by month, also places a row logged just after midnight.
+        has_map = conn.execute("SELECT 1 FROM sqlite_master WHERE type='table' "
+                               "AND name='llm_call_reservations'").fetchone()
+        claimed: dict[str, int] = {}
         for period, after in ((prev, cutoff), (month, month_start)):
-            total = 0
-            for _rowid, ts, prompt, completion in self.unknown_and_known_rows(conn, period, aliases):
+            for rowid, ts, prompt, completion in self.unknown_and_known_rows(conn, period, aliases):
                 try:
                     stamp = datetime.fromisoformat(ts)
                 except (TypeError, ValueError):
@@ -518,20 +539,32 @@ class CloudBudget:
                 if stamp <= after:
                     continue  # covered by the attested opening
                 if not (_count(prompt) and _count(completion)):
-                    return f'paid telemetry row with unknown usage in {period}'
-                total += prompt + completion
-            telemetry[period] = total
-
-        def ledger(period: str) -> int:
-            return (conn.execute('SELECT COALESCE(SUM(charged_tokens),0) FROM cloud_budget_attempts '
-                                 'WHERE wallet=? AND month=?', (wallet, period)).fetchone()[0]
-                    + conn.execute('SELECT COALESCE(SUM(charged_tokens),0) FROM cloud_budget_carry '
-                                   'WHERE wallet=? AND month=?', (wallet, period)).fetchone()[0])
-
-        for period in (prev, month):
-            if telemetry[period] > ledger(period):
-                return (f'telemetry shows {telemetry[period]} paid tokens in {period} but the ledger '
-                        f'charged {ledger(period)}: an unreserved writer may be spending')
+                    return f'paid telemetry row {rowid} with unknown usage in {period}'
+                tokens = prompt + completion
+                if tokens == 0:
+                    continue  # refused / denied before any request
+                ids = [r[0] for r in conn.execute('SELECT reservation_id FROM llm_call_reservations '
+                                                  'WHERE call_id=?', (rowid,))] if has_map else []
+                if not ids:
+                    return (f'paid telemetry row {rowid} ({tokens} tokens at {ts}) maps to no reservation: '
+                            'an unreserved writer spent from this wallet')
+                charged = 0
+                for rid in ids:
+                    if rid in claimed:
+                        return f'reservation {rid} is claimed by telemetry rows {claimed[rid]} and {rowid}'
+                    claimed[rid] = rowid
+                    hit = conn.execute(
+                        'SELECT charged_tokens,settled FROM cloud_budget_attempts WHERE id=? AND wallet=? '
+                        'UNION ALL SELECT charged_tokens,settled FROM cloud_budget_attempts_archive '
+                        'WHERE id=? AND wallet=?', (rid, wallet, rid, wallet)).fetchone()
+                    if hit is None:
+                        return f'telemetry row {rowid} names reservation {rid}, unknown to this wallet'
+                    if not hit[1]:
+                        return f'telemetry row {rowid} names unsettled reservation {rid}'
+                    charged += hit[0]
+                if tokens > charged:
+                    return (f'telemetry row {rowid} reports {tokens} tokens, above the {charged} '
+                            'its reservations charged')
         receipt = {'db_identity': identity[0], 'wallet': wallet, 'month': month, 'opening_tokens': 0,
                    'reconciled_through': month_start.isoformat(), 'legacy_aliases': sorted(set(aliases)),
                    'evidence_reference': f'auto-rollover from {prev}: continuous ledger, '

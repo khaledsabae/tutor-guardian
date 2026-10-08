@@ -361,11 +361,16 @@ def clocked(tmp_path, start=NOW):
     return l, now
 
 
-def row_at(l, when, provider, prompt, completion):
-    ts = when.strftime('%Y-%m-%d %H:%M:%S')   # SQLite datetime('now') shape
+def row_at(l, when, provider, prompt, completion, ids=()):
+    """A telemetry row as the gateway writes it: ts shape of SQLite's
+    datetime('now'), and the ledger attempts behind it in the call map."""
+    from app.services.cloud_budget import record_call_reservations
+    ts = when.strftime('%Y-%m-%d %H:%M:%S')
     with sqlite3.connect(l.path) as c:
-        c.execute('INSERT INTO llm_calls(ts,provider,prompt_tokens,completion_tokens,ok) VALUES(?,?,?,?,1)',
-                  (ts, provider, prompt, completion))
+        rowid = c.execute('INSERT INTO llm_calls(ts,provider,prompt_tokens,completion_tokens,ok) '
+                          'VALUES(?,?,?,?,1)', (ts, provider, prompt, completion)).lastrowid
+        record_call_reservations(c, rowid, list(ids))
+    return rowid
 
 
 def october_with_one_settled_call(tmp_path):
@@ -374,7 +379,7 @@ def october_with_one_settled_call(tmp_path):
     now[0] = NOW + timedelta(days=13)
     t = l.reserve('wallet', 1000, 100, legacy_aliases=ALIASES, unknown_usage_bounds=(60, 40))
     l.settle(t, 30, 10)
-    row_at(l, now[0], 'deepseek', 30, 10)
+    row_at(l, now[0], 'deepseek', 30, 10, ids=[t.id])
     return l, now
 
 
@@ -406,7 +411,7 @@ def test_rolled_month_opens_at_ledger_measured_late_settlements(tmp_path):
     with pytest.raises(BudgetDenied):                     # October not closed yet
         l.reserve('wallet', 1000, 1, legacy_aliases=ALIASES)
     l.settle(late, 50, 50)                                # completes after midnight
-    row_at(l, NOV, 'deepseek', 50, 50)
+    row_at(l, NOV, 'deepseek', 50, 50, ids=[late.id])
     l.reserve('wallet', 1000, 900, legacy_aliases=ALIASES)   # 100 carried + 900
     with pytest.raises(BudgetDenied):
         l.reserve('wallet', 1000, 1, legacy_aliases=ALIASES)
@@ -417,7 +422,7 @@ def test_rolled_month_rolls_again(tmp_path):
     now[0] = NOV
     t = l.reserve('wallet', 1000, 100, legacy_aliases=ALIASES)
     l.settle(t, 5, 5)
-    row_at(l, NOV, 'deepseek', 5, 5)
+    row_at(l, NOV, 'deepseek', 5, 5, ids=[t.id])
     now[0] = datetime(2026, 12, 1, 0, 1, tzinfo=timezone.utc)
     l.reserve('wallet', 1000, 1000, legacy_aliases=ALIASES)
     assert activation(l, '2026-12')[0]['rollover_from'] == '2026-11'
@@ -467,3 +472,87 @@ def test_rollover_without_proven_continuity_stays_fail_closed_and_says_why(tmp_p
     assert activation(l, month) == (None, None)
     if kind != 'tampered_ledger':     # continuity itself is unproven: refused before rollover runs
         assert 'auto-rollover refused' in caplog.text
+
+
+# ── every paid row maps to its own reservation (review of PR #71, P2/P3a) ──
+def _october(tmp_path):
+    l, now = clocked(tmp_path)
+    l.bootstrap(receipt(0))
+    return l, now
+
+
+def test_p4_unreserved_spend_hidden_in_estimate_slack_is_refused(tmp_path, caplog):
+    """Probe p4: 20 reserved attempts settled at the request bound while
+    telemetry estimated them at bytes/3, then 40 unreserved calls (switch
+    rolled back): 116k tokens fit inside the slack of an aggregate compare."""
+    from app.services.cloud_budget import unknown_usage_bounds
+    l, now = _october(tmp_path)
+    ub = unknown_usage_bounds([{'role': 'user', 'content': 'x' * 3000}], 1024)
+    for i in range(20):
+        now[0] = datetime(2026, 10, 9, 12, i, tzinfo=timezone.utc)
+        t = l.reserve('wallet', 10**9, 1048576, legacy_aliases=ALIASES, unknown_usage_bounds=ub)
+        l.settle(t, None, None)
+        row_at(l, now[0], 'deepseek', 1000, 0, ids=[t.id])
+    for i in range(40):
+        row_at(l, datetime(2026, 10, 20, 10, i, tzinfo=timezone.utc), 'deepseek', 2500, 400)
+    now[0] = datetime(2026, 11, 1, 0, 5, tzinfo=timezone.utc)
+    with caplog.at_level(logging.WARNING, logger='app.services.cloud_budget'):
+        with pytest.raises(BudgetDenied):
+            l.reserve('wallet', 10**9, 1048576, legacy_aliases=ALIASES, unknown_usage_bounds=ub)
+    assert 'no reservation' in caplog.text
+
+
+def test_mapped_estimates_inside_the_slack_still_roll_over(tmp_path):
+    from app.services.cloud_budget import unknown_usage_bounds
+    l, now = _october(tmp_path)
+    ub = unknown_usage_bounds([{'role': 'user', 'content': 'x' * 3000}], 1024)
+    for i in range(3):
+        now[0] = datetime(2026, 10, 9, 12, i, tzinfo=timezone.utc)
+        t = l.reserve('wallet', 10**9, 1048576, legacy_aliases=ALIASES, unknown_usage_bounds=ub)
+        l.settle(t, None, None)
+        row_at(l, now[0], 'deepseek', 1000, 0, ids=[t.id])
+    now[0] = NOV
+    l.reserve('wallet', 10**9, 1, legacy_aliases=ALIASES)
+
+
+def test_p6_row_logged_after_midnight_maps_to_its_october_reservation(tmp_path):
+    """Probe p6: settled at 23:59:59.99, logged at 00:00:01 — the row lands in
+    November while its charge is October's. Matched by id, not by month."""
+    l, now = clocked(tmp_path, datetime(2026, 10, 31, 23, 0, tzinfo=timezone.utc))
+    l.bootstrap({**receipt(0), 'reconciled_through': now[0].isoformat()})
+    t = l.reserve('wallet', 10**9, 1048576, legacy_aliases=ALIASES, unknown_usage_bounds=(5000, 1024))
+    now[0] = datetime(2026, 10, 31, 23, 59, 59, 990000, tzinfo=timezone.utc)
+    l.settle(t, 1200, 300)
+    row_at(l, datetime(2026, 11, 1, 0, 0, 1, tzinfo=timezone.utc), 'deepseek', 1200, 300, ids=[t.id])
+    now[0] = datetime(2026, 11, 1, 8, 0, tzinfo=timezone.utc)
+    l.reserve('wallet', 10**9, 1048576, legacy_aliases=ALIASES)
+
+
+@pytest.mark.parametrize('kind', ['unknown_id', 'claimed_twice', 'more_than_charged', 'other_wallet'])
+def test_a_paid_row_must_map_to_its_own_settled_reservations(tmp_path, kind):
+    l, now = _october(tmp_path)
+    now[0] = NOW + timedelta(days=1)
+    t = l.reserve('wallet', 10**9, 100, legacy_aliases=ALIASES)
+    l.settle(t, 10, 10)
+    if kind == 'unknown_id':
+        row_at(l, now[0], 'deepseek', 10, 10, ids=['not-a-reservation'])
+    elif kind == 'claimed_twice':
+        row_at(l, now[0], 'deepseek', 10, 10, ids=[t.id])
+        row_at(l, now[0], 'deepseek', 10, 10, ids=[t.id])
+    elif kind == 'more_than_charged':
+        row_at(l, now[0], 'deepseek', 30, 10, ids=[t.id])
+    elif kind == 'other_wallet':
+        l.bootstrap({**receipt(0), 'wallet': 'other'})
+        o = l.reserve('other', 10**9, 100, legacy_aliases=ALIASES)
+        l.settle(o, 10, 10)
+        row_at(l, now[0], 'deepseek', 10, 10, ids=[o.id])
+    now[0] = NOV
+    with pytest.raises(BudgetDenied):
+        l.reserve('wallet', 10**9, 1, legacy_aliases=ALIASES)
+
+
+def test_zero_token_rows_need_no_reservation(tmp_path):
+    l, now = _october(tmp_path)
+    row_at(l, NOW + timedelta(days=1), 'deepseek', 0, 0)      # budget_denied / refused
+    now[0] = NOV
+    l.reserve('wallet', 10**9, 1, legacy_aliases=ALIASES)

@@ -663,3 +663,86 @@ def test_azure_failure_settles_to_request_bound(big_wire, monkeypatch):
         list(p.stream("سؤال", options={"num_predict": 100}))
     for charge in _charges(big_wire):
         _assert_request_bound(charge)
+
+
+# ── every paid llm_calls row names the ledger attempts behind it ───────────
+def _mapped(db):
+    with sqlite3.connect(db) as conn:
+        calls = conn.execute("SELECT rowid, provider, ok FROM llm_calls ORDER BY rowid").fetchall()
+        has_map = conn.execute("SELECT 1 FROM sqlite_master WHERE name='llm_call_reservations'").fetchone()
+        pairs = conn.execute("SELECT call_id, reservation_id FROM llm_call_reservations").fetchall() if has_map else []
+        attempts = [r[0] for r in conn.execute("SELECT id FROM cloud_budget_attempts ORDER BY rowid")]
+    by_call = {}
+    for call_id, rid in pairs:
+        by_call.setdefault(call_id, set()).add(rid)
+    return calls, by_call, attempts
+
+
+def _sse_ok():
+    return httpx.Response(200, headers={"content-type": "text/event-stream"}, content=sse())
+
+
+def _gateway_with(p, monkeypatch):
+    gateway = gw.AIGateway.__new__(gw.AIGateway)
+    gateway.provider = p
+    gateway.primary_model = gateway.model = p.model
+
+    async def local(self, *args, **kwargs):
+        return gw.LLMResult(text="local", model="local", latency_ms=1)
+
+    monkeypatch.setattr(gw.AIGateway, "_try_provider", local)
+    return gateway
+
+
+def test_generate_row_maps_to_its_attempts_including_retries(big_wire, monkeypatch):
+    wire = big_wire
+    seen = []
+
+    def handler(request):
+        seen.append(request)
+        return httpx.Response(429, headers={"retry-after": "0"}) if len(seen) == 1 else _sse_ok()
+
+    gateway = _gateway_with(provider(handler), monkeypatch)
+    assert asyncio.run(gateway.generate("سؤال")).text == "answer"
+    calls, by_call, attempts = _mapped(wire)
+    [(call_id, _, ok)] = [c for c in calls if c[1] == "deepseek"]
+    assert ok == 1 and len(attempts) == 2 and by_call[call_id] == set(attempts)
+
+
+def test_stream_row_maps_to_its_attempt(wire, monkeypatch):
+    gateway = _gateway_with(provider(lambda r: _sse_ok()), monkeypatch)
+    chunks = list(gateway._stream_provider(gateway.provider, "سؤال", {"num_predict": 100}))
+    assert chunks[-1].done
+    calls, by_call, attempts = _mapped(wire)
+    [(call_id, _, _)] = calls
+    assert by_call[call_id] == set(attempts) and len(attempts) == 1
+
+
+def test_stream_left_mid_answer_still_maps(wire, monkeypatch):
+    body = (b'data: {"choices":[{"delta":{"content":"one"},"finish_reason":null}]}\n\n'
+            b'data: {"choices":[{"delta":{"content":"two"},"finish_reason":null}]}\n\n')
+    gateway = _gateway_with(provider(lambda r: httpx.Response(
+        200, headers={"content-type": "text/event-stream"}, content=body)), monkeypatch)
+    chunks = gateway._stream_provider(gateway.provider, "سؤال", {"num_predict": 100})
+    next(chunks)
+    chunks.close()
+    calls, by_call, attempts = _mapped(wire)
+    [(call_id, _, ok)] = calls
+    assert ok == 0 and by_call[call_id] == set(attempts)
+
+
+def test_aux_row_maps_to_its_attempt(wire):
+    assert gw.aux_generate(provider(lambda r: _sse_ok()), "صنّف", options={"num_predict": 100},
+                           tier="classifier", breaker=None) == "answer"
+    calls, by_call, attempts = _mapped(wire)
+    [(call_id, _, _)] = calls
+    assert by_call[call_id] == set(attempts)
+
+
+def test_switch_off_writes_no_call_map(wire, monkeypatch):
+    monkeypatch.setattr(gw, "LLM", dataclasses.replace(gw.LLM, cloud_budget_enforce=False))
+    assert provider(lambda r: _sse_ok()).generate("سؤال", options={"num_predict": 100})
+    gw.aux_generate(provider(lambda r: _sse_ok()), "صنّف", options={"num_predict": 100},
+                    tier="classifier", breaker=None)
+    calls, by_call, attempts = _mapped(wire)
+    assert calls and by_call == {} and attempts == []

@@ -312,3 +312,13 @@ def test_recorder_leaves_other_wallets_alone(capped):
     client = _FakeOpenAI(base_url="https://ollama.com/v1")
     gw.record_chat_completion(client, tier="t", model="m", messages=[{"role": "user", "content": "x"}])
     assert len(client.calls) == 1   # no ledger, no denial: not DeepSeek's wallet
+
+
+def test_recorder_row_maps_to_its_attempt(capped):
+    activate(cb.CloudBudget(capped), wallets=(WALLET,))
+    _ask(_FakeOpenAI(), max_tokens=200)
+    with sqlite3.connect(capped) as conn:
+        [(call_id,)] = conn.execute("SELECT rowid FROM llm_calls").fetchall()
+        [(attempt,)] = conn.execute("SELECT id FROM cloud_budget_attempts").fetchall()
+        assert conn.execute("SELECT call_id, reservation_id FROM llm_call_reservations").fetchall() == \
+            [(call_id, attempt)]
