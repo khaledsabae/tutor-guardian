@@ -97,7 +97,9 @@ def test_malformed_alias_setting_is_logged_and_maps_nothing(monkeypatch, caplog)
     assert "DEEPSEEK_BILLING_PROFILE_ALIASES" in caplog.text
 
 
-def test_default_model_is_unchanged_from_main():
-    # Moving production off deepseek-chat is Khaled's decision, not this branch's.
+def test_default_model_is_a_documented_id():
+    # Khaled moved production off deepseek-chat on 2026-10-08
+    # (tests/test_deepseek_documented_model.py covers the legacy alias).
     import inspect
-    assert 'os.environ.get("DEEPSEEK_MODEL", "deepseek-chat")' in inspect.getsource(llm_config)
+    assert 'os.environ.get("DEEPSEEK_MODEL", "deepseek-flash")' in inspect.getsource(llm_config)
+    assert '"deepseek-chat")' not in inspect.getsource(llm_config)

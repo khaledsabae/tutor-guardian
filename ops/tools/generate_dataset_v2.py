@@ -72,7 +72,7 @@ def deepseek_client():
     return OpenAI(
         api_key=os.environ["DEEPSEEK_API_KEY"],
         base_url=os.environ.get("DEEPSEEK_BASE_URL", "https://api.deepseek.com"),
-    ), os.environ.get("DEEPSEEK_MODEL", "deepseek-chat")
+    ), os.environ.get("DEEPSEEK_MODEL", "deepseek-flash")
 
 
 BACKEND = "ollama"  # set by main() from --backend

@@ -249,9 +249,10 @@ def test_recorder_writes_the_reported_usage(tdb):
         client, tier="kb_gap_judge", model="deepseek-chat",
         messages=[{"role": "user", "content": PROMPT}], temperature=0, max_tokens=200)
     assert out is resp
-    assert comp.calls[0]["model"] == "deepseek-chat" and comp.calls[0]["max_tokens"] == 200
+    # The legacy name goes out as its documented successor (2026-10-08).
+    assert comp.calls[0]["model"] == "deepseek-flash" and comp.calls[0]["max_tokens"] == 200
     (row,) = _rows(tdb)
-    assert row["model"] == "deepseek-chat" and row["tier"] == "kb_gap_judge"
+    assert row["model"] == "deepseek-flash" and row["tier"] == "kb_gap_judge"
     assert (row["prompt_tokens"], row["completion_tokens"], row["ok"]) == (11, 4, 1)
     assert row["usage_estimated"] == 0 and row["streamed"] == 0
 

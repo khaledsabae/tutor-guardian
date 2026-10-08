@@ -398,6 +398,11 @@ succeed. So it gets no built-in profile. Instead:
   judge's model) to `deepseek-flash`, which needs no alias — a quality decision
   for Khaled.
 
+**Superseded 2026-10-08** (Khaled moved off `deepseek-chat`): the app now
+sends the documented `deepseek-flash` and the cap can be set in US$ — see
+"Documented model and the US$ cap" at the end. The alias setting stays for
+other hand-written names.
+
 The cap counts **tokens, not money**; the prices above are recorded for the
 operator's monthly reconciliation, not used by the code.
 
@@ -534,10 +539,11 @@ Azure is disabled in production.
 
 Order matters: the switch goes on right before the bootstrap (§6).
 
-1. **Model decision.** Set `DEEPSEEK_BILLING_PROFILE_ALIASES=deepseek-chat=deepseek-flash`
-   (attestation, §1), or move `DEEPSEEK_MODEL` to `deepseek-flash`. The
-   weekly `kb_gap_judge` hard-codes `deepseek-chat`, so it needs the alias
-   either way, or move it to Ollama (`OLLAMA_API_KEY` on the VPS).
+1. **Model and cap.** Decided 2026-10-08: `deepseek-flash` and US$30/month —
+   set the two lines in "Documented model and the US$ cap" (end of this
+   file). No `DEEPSEEK_BILLING_PROFILE_ALIASES` is needed any more: the
+   gateway and `record_chat_completion` (so `kb_gap_judge` too) send the
+   documented name even when an old `.env` still says `deepseek-chat`.
 2. **Merge and deploy with the switch off.** Production behaves as before;
    telemetry keeps recording.
 3. **Drain unreserved writers** (§4): stop laptop/CI use of the key, list every
@@ -779,3 +785,98 @@ accepted, unmapped row / reclaimed reservation / tokens above charge refused;
 p4m `off_gap` refused; w_attacks unchanged (forged witness caught at
 rollover); w_restore (same-volume restore) admitted — the case the anchor
 path addresses.
+
+## Documented model and the US$ cap (2026-10-08)
+
+Khaled's decisions of 2026-10-08: the paid LLM may spend **at most US$30 a
+month**, and production moves off `deepseek-chat` to a documented model.
+
+**Ground truth**, fetched 2026-10-08 19:41–19:45 UTC (HTML as served; hashes
+pin the snapshot; copies and `fetch_log.txt` in the operator's evidence dir
+`~/.codex/evidence/tutor-guardian/oct8-ds-model/`):
+
+| URL | SHA-256 | What it says |
+|---|---|---|
+| https://api-docs.deepseek.com/quick_start/pricing/ | `210f1022…df6363b2` (unchanged since 07:13) | Only `deepseek-flash` (DeepSeek-V4.1-Flash) and `deepseek-v4-pro` (V4-Pro-0813). US$ per 1M, peak (off-peak = half): flash cache-hit 0.006 · cache-miss 0.30 · output 1.20; v4-pro 0.044 · 1.32 · 3.96. Peak = 01–04 and 06–10 UTC, Mon–Fri. |
+| https://api-docs.deepseek.com/api/create-chat-completion/ | `e7133a7c…0a36ba7` | `model` ∈ {`deepseek-flash`, `deepseek-v4-pro`}; `thinking.type` default `enabled`. |
+| https://api-docs.deepseek.com/guides/thinking_mode/ | `35350389…bd7a060` | Thinking is on by default; `{"thinking": {"type": "disabled"}}` turns it off. |
+| https://api-docs.deepseek.com/updates/ | `2922113b…b5bb71` | 2026-04-24: `deepseek-chat` = non-thinking deepseek-v4-flash until its discontinuation on 2026-07-24. 2026-09-10: `deepseek-v4-flash*` routed to V4.1-Flash; V4-Pro service continues, billing unchanged. |
+| https://api-docs.deepseek.com/news/news260910/ | `f18dc22d…587bdce` | Older wording: v4-pro to route to Flash at Flash rates from 2026-09-14 — contradicted by the changelog above and the pricing page; the cap uses the Pro rates. |
+
+**Model.** `DEEPSEEK_MODEL` defaults to `deepseek-flash`.
+`llm_config.resolve_deepseek_model` sends a legacy name as its documented
+successor — `deepseek-chat` and `deepseek-v4-flash` → `deepseek-flash`
+(both documented as the non-thinking Flash model) — **only** on
+`https://api.deepseek.com` (on a compatible host the name is that host's).
+`deepseek-reasoner` (the thinking mode) is not aliased. The gateway already
+sends `thinking: disabled`; `record_chat_completion` now does the same for
+batch tools unless the caller asks for thinking, so `kb_gap_judge`
+(`max_tokens` 16/200) cannot spend its budget on reasoning. Wire, ledger
+profile and telemetry all carry `deepseek-flash`.
+
+**Cap math** (`cloud_budget.monthly_token_cap_for_usd`). The ledger charges
+`prompt + completion` as one sum, so the cap has to hold for every split of
+that sum between input (priced at cache-miss) and output (priced at output),
+at peak. A sum is bounded only by its dearest per-token rate, so every token
+is priced at `max(cache-miss, output)` of the dearest model the app may send
+(`DEEPSEEK_MODEL` and `DEEPSEEK_MODEL_FALLBACK`):
+
+    cap_tokens = floor(USD × 1,000,000 / max_rate_per_1M)
+    deepseek-flash : floor(30 × 1e6 / 1.20) = 25,000,000 tokens
+    deepseek-v4-pro: floor(30 × 1e6 / 3.96) =  7,575,757 tokens
+
+Worst case at 25,000,000 tokens: all output = 25M × $1.20/1M = $30.00; all
+input = $7.50. The real bill sits between, by the input/output mix (a RAG
+answer is mostly input), so $30 is a ceiling, not a forecast. Cache hits and
+off-peak hours only lower it. Not covered: spend outside the ledger (another
+key, console use, an unreserved machine — §4) and price changes on the page
+(edit both tables; a test keeps the copies equal).
+
+**Configuration** (`primary_monthly_token_cap`):
+
+| `.env` | Effective primary cap |
+|---|---|
+| no `DEEPSEEK_PRIMARY_MONTHLY_USD_CAP` | `DEEPSEEK_PRIMARY_MONTHLY_TOKEN_CAP` as before (default 100M; 0 = no ceiling) |
+| `DEEPSEEK_PRIMARY_MONTHLY_USD_CAP=30` | derived (25,000,000 for flash); an explicit token cap only lowers it; `0` never lifts it |
+| USD cap malformed, ≤ 0, or a model/host without a documented price | **1 token** — cloud denied, local chain answers, logged |
+
+`DEEPSEEK_FALLBACK_MONTHLY_TOKEN_CAP` is unchanged; it applies only when
+`LLM_PRIMARY_PROVIDER` is not `deepseek` (production: it is).
+
+**Preflight.** `python3 ops/tools/deploy_gate.py --check-env <.env>` (run by
+`deploy.yml` before every deploy) now also prints the effective primary cap
+and exits 1 when the USD cap cannot be honoured or the token cap is not an
+integer (the backend would not start). Its tables are stdlib copies
+(`tests/test_deepseek_documented_model.py` keeps them equal to the app's).
+
+### Activation runbook — US$30 cap
+
+1. **Set on the VPS** (`/root/tutor-guardian/.env`, one line each, no leading
+   spaces — `printf '…\n' >> .env`, never an indented heredoc):
+
+       DEEPSEEK_MODEL=deepseek-flash
+       DEEPSEEK_PRIMARY_MONTHLY_USD_CAP=30
+
+   Remove `DEEPSEEK_PRIMARY_MONTHLY_TOKEN_CAP` (or leave it ≥ 25000000 — a
+   lower value wins), leave `DEEPSEEK_MODEL_FALLBACK` unset (set to
+   `deepseek-v4-pro` it cuts the cap to 7,575,757) and drop
+   `DEEPSEEK_BILLING_PROFILE_ALIASES` (no longer needed).
+2. **Check:** `python3 ops/tools/deploy_gate.py --check-env /root/tutor-guardian/.env`
+   → `✅ primary monthly cap: 25000000 tokens (US$30 at the peak rate of
+   deepseek-flash → 25000000; …)`, exit 0.
+3. **Apply:** `docker compose -f docker-compose.production.yml up -d backend`
+   (recreate; a restart keeps the old env). Verify by effect: a real chat,
+   then the newest `llm_calls` row shows `model=deepseek-flash`, and
+   `docker exec tg_backend python -c "from app.config.llm_config import LLM;
+   print(LLM.deepseek_model, LLM.deepseek_primary_monthly_token_cap)"` prints
+   `deepseek-flash 25000000`.
+4. **Soft vs hard.** With `CLOUD_BUDGET_ENFORCE` off this is the soft
+   ceiling (sum of `llm_calls`, checked before each call; in-flight calls can
+   overshoot slightly; unreadable telemetry fails open). The hard cap is the
+   reservation ledger: steps 3–8 of the activation runbook above
+   (`CLOUD_BUDGET_ENFORCE=true` + bootstrap) — same cap value.
+5. **Rollback:** delete the `DEEPSEEK_PRIMARY_MONTHLY_USD_CAP` line (back to
+   the token cap) and/or set `DEEPSEEK_MODEL` back, then recreate. Setting
+   `deepseek-chat` again still sends `deepseek-flash` on DeepSeek's host; to
+   send the literal old name, roll back the image to the commit before this
+   change. The ledger (if activated) is untouched either way.

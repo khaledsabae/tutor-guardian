@@ -89,7 +89,7 @@ PROVIDERS = {
     "deepseek": {
         "key_env": "DEEPSEEK_API_KEY",
         "base_url": "https://api.deepseek.com",
-        "model": "deepseek-chat",
+        "model": "deepseek-flash",  # documented ID; non-thinking via record_chat_completion
     },
 }
 
