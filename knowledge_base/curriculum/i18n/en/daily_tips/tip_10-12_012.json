@@ -2,11 +2,11 @@
   "id": "tip_10-12_012",
   "age_group": "10-12",
   "domain": "cyber",
-  "text": "Do not participate in bullying—stop it. Train him: screenshot → tell me → report to the platform. The silent one is a partner.",
+  "text": "Do not take part in bullying or share it. Train him: screenshot → tell me or another trusted adult → report it to the platform. Support the targeted child in a safe way, and do not confront the bully if you fear for your safety; being afraid is no sin.",
   "unit_id": "cyb-36b8ad48",
   "day_of_week": 2,
   "time_of_day": "morning",
-  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
   "language": "en",
   "source_language": "ar",
   "translation": {
@@ -20,8 +20,8 @@
     },
     "review_verdict": "clean",
     "review_defects": [],
-    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
-    "revalidated_at": "2026-10-04T11:18:18+00:00",
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
+    "revalidated_at": "2026-10-08T18:25:51+00:00",
     "fixed_at": "2026-08-13T18:52:50.609745+00:00",
     "fixer_model": "mistral-large-3:675b",
     "auto_review": {
@@ -29,15 +29,25 @@
         "deepseek-v4-pro",
         "glm-5.2"
       ],
+      "providers": {
+        "deepseek-v4-pro": {
+          "provider": "openrouter",
+          "model": "deepseek/deepseek-v4-pro"
+        },
+        "glm-5.2": {
+          "provider": "openrouter",
+          "model": "z-ai/glm-5.2"
+        }
+      },
       "fixer": null,
       "rounds": 1,
       "prompt_version": "dfa8a5f39718",
-      "content_sha256": "0f7f24c77aa2d62e6292bec5c3e1803ed239bbe0d09c7a532ede631e495e6366",
-      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "content_sha256": "5c5ac597300c3b91d382bcd6884054ee5e9afb493267745de8d2101e060acc02",
+      "reviewed_at": "2026-10-08T18:25:51+00:00",
       "residual_low": [],
       "adjudicated": [],
       "tool": "ops/tools/review_en_parity.py",
-      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
     }
   }
 }

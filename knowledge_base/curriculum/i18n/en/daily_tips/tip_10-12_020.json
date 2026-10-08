@@ -2,11 +2,11 @@
   "id": "tip_10-12_020",
   "age_group": "10-12",
   "domain": "medical",
-  "text": "Pressures at 10–12 years: school, friends, self-image, puberty. Listen without judgment: “I’m with you both, we’ll solve it together.”",
+  "text": "Pressures at 10–12 years: school, friends, self-image, puberty. Listen without judgment: “I’m with you; we’ll solve it together.”",
   "unit_id": "7eb24d4f-e1d0-4bfa-a5ed-6b215e3fa1a1",
   "day_of_week": 4,
   "time_of_day": "morning",
-  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
   "language": "en",
   "source_language": "ar",
   "translation": {
@@ -20,22 +20,32 @@
     },
     "review_verdict": "clean",
     "review_defects": [],
-    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
-    "revalidated_at": "2026-10-04T11:18:18+00:00",
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
+    "revalidated_at": "2026-10-08T18:17:08+00:00",
     "auto_review": {
       "reviewers": [
         "deepseek-v4-pro",
         "glm-5.2"
       ],
+      "providers": {
+        "deepseek-v4-pro": {
+          "provider": "openrouter",
+          "model": "deepseek/deepseek-v4-pro"
+        },
+        "glm-5.2": {
+          "provider": "openrouter",
+          "model": "z-ai/glm-5.2"
+        }
+      },
       "fixer": null,
       "rounds": 1,
       "prompt_version": "dfa8a5f39718",
-      "content_sha256": "302eb3ec95005b7710b27f0d1e10aa5bf6ee223030cbdbd36bd11a473dcf8135",
-      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "content_sha256": "07284856d41836909a9af4b9775102fff1fd259c3a25dcc1d31cf887acca2746",
+      "reviewed_at": "2026-10-08T18:17:08+00:00",
       "residual_low": [],
       "adjudicated": [],
       "tool": "ops/tools/review_en_parity.py",
-      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
     }
   }
 }

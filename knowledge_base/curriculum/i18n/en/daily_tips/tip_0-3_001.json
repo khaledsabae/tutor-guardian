@@ -2,7 +2,7 @@
   "id": "tip_0-3_001",
   "age_group": "0-3",
   "domain": "medical",
-  "text": "In the first two months: smile at your child and speak to them from a distance of 20-30 cm. Their first smile in response to you is the beginning of secure attachment and the development of the social brain.",
+  "text": "At around two months: smile and talk to your baby close to their face. Smiling when you talk or smile at them is one milestone of this age — a lovely moment of connection, not a measure of your bond. Ask their doctor if their development worries you.",
   "unit_id": "med-c7a1bbf6",
   "day_of_week": 0,
   "time_of_day": "morning",
@@ -14,7 +14,7 @@
   "is_published": true,
   "version": "1.0.0",
   "created_at": "2026-06-10T14:00:00",
-  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
   "language": "en",
   "source_language": "ar",
   "translation": {
@@ -28,22 +28,32 @@
     },
     "review_verdict": "clean",
     "review_defects": [],
-    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
-    "revalidated_at": "2026-10-04T11:18:18+00:00",
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
+    "revalidated_at": "2026-10-08T18:17:08+00:00",
     "auto_review": {
       "reviewers": [
         "deepseek-v4-pro",
         "glm-5.2"
       ],
+      "providers": {
+        "deepseek-v4-pro": {
+          "provider": "openrouter",
+          "model": "deepseek/deepseek-v4-pro"
+        },
+        "glm-5.2": {
+          "provider": "openrouter",
+          "model": "z-ai/glm-5.2"
+        }
+      },
       "fixer": null,
       "rounds": 1,
       "prompt_version": "dfa8a5f39718",
-      "content_sha256": "156ddd14e9e23dfc0b6467b983cf21fa50ad73f940ccb3210db1f8d5f9a5711b",
-      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "content_sha256": "b5de1acfc455cd8de133461b5eeecc5c01b84ba891d69fd21e21b416e1ed47c9",
+      "reviewed_at": "2026-10-08T18:17:08+00:00",
       "residual_low": [],
       "adjudicated": [],
       "tool": "ops/tools/review_en_parity.py",
-      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
     }
   }
 }

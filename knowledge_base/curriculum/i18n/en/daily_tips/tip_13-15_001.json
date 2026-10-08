@@ -2,11 +2,11 @@
   "id": "tip_13-15_001",
   "age_group": "13-15",
   "domain": "islamic_parenting",
-  "text": "When your son (13–15) asks, “Why do we pray?” — don’t say, “Because Allah said.” Say, “I feel comfort when I am close to Allah.”",
+  "text": "When your son (13–15) asks, “Why do we pray?”, welcome the question. Say: we pray as worship of Allah and in answer to His command, and I feel comfort when I am close to Allah. Do not expect them to feel at peace every time.",
   "unit_id": "isl-ddf22d9e",
   "day_of_week": 0,
   "time_of_day": "morning",
-  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
   "language": "en",
   "source_language": "ar",
   "translation": {
@@ -18,10 +18,17 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "clean",
-    "review_defects": [],
-    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
-    "revalidated_at": "2026-10-04T11:18:18+00:00",
+    "review_verdict": "low_only",
+    "review_defects": [
+      {
+        "model": "deepseek-v4-pro",
+        "field": "text",
+        "type": "meaning",
+        "why": "تشترط means 'require', not 'expect'; الراحة is 'comfort', not 'peace'."
+      }
+    ],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
+    "revalidated_at": "2026-10-08T18:17:08+00:00",
     "fixed_at": "2026-08-13T17:58:50.786040+00:00",
     "fixer_model": "mistral-large-3:675b",
     "auto_review": {
@@ -29,15 +36,32 @@
         "deepseek-v4-pro",
         "glm-5.2"
       ],
+      "providers": {
+        "deepseek-v4-pro": {
+          "provider": "openrouter",
+          "model": "deepseek/deepseek-v4-pro"
+        },
+        "glm-5.2": {
+          "provider": "openrouter",
+          "model": "z-ai/glm-5.2"
+        }
+      },
       "fixer": null,
       "rounds": 1,
       "prompt_version": "dfa8a5f39718",
-      "content_sha256": "f3ffef3e46c6e560ebbac516081c2b6ce06ed0748cb80d9630adb88c94ae0adf",
-      "reviewed_at": "2026-10-04T11:18:18+00:00",
-      "residual_low": [],
+      "content_sha256": "1092c8b7b5e31c2d0949e8f26fd55111a7cf79c3682609f96d88ea7f4c780135",
+      "reviewed_at": "2026-10-08T18:17:08+00:00",
+      "residual_low": [
+        {
+          "model": "deepseek-v4-pro",
+          "field": "text",
+          "type": "meaning",
+          "why": "تشترط means 'require', not 'expect'; الراحة is 'comfort', not 'peace'."
+        }
+      ],
       "adjudicated": [],
       "tool": "ops/tools/review_en_parity.py",
-      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
     }
   }
 }

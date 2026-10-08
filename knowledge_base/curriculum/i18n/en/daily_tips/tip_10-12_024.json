@@ -2,11 +2,11 @@
   "id": "tip_10-12_024",
   "age_group": "10-12",
   "domain": "medical",
-  "text": "Today’s habits shape tomorrow’s health: 9–11 hours of sleep, 60 minutes of movement, real food, screens <2 hours, no screens in the bedroom.",
+  "text": "Today’s habits shape tomorrow’s health: 9–12 hours of sleep, 60 minutes of activity a day, healthy food, a family screen plan that protects sleep, activity and schoolwork, and no screens in the bedroom.",
   "unit_id": "med-40813af4",
   "day_of_week": 6,
   "time_of_day": "morning",
-  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
   "language": "en",
   "source_language": "ar",
   "translation": {
@@ -20,22 +20,32 @@
     },
     "review_verdict": "clean",
     "review_defects": [],
-    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
-    "revalidated_at": "2026-10-04T11:18:18+00:00",
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
+    "revalidated_at": "2026-10-08T18:17:08+00:00",
     "auto_review": {
       "reviewers": [
         "deepseek-v4-pro",
         "glm-5.2"
       ],
+      "providers": {
+        "deepseek-v4-pro": {
+          "provider": "openrouter",
+          "model": "deepseek/deepseek-v4-pro"
+        },
+        "glm-5.2": {
+          "provider": "openrouter",
+          "model": "z-ai/glm-5.2"
+        }
+      },
       "fixer": null,
       "rounds": 1,
       "prompt_version": "dfa8a5f39718",
-      "content_sha256": "60bcf0bee20d2cefd6e574e3df4e7025caf478741e2ec6e764b49d5eda5fa9b7",
-      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "content_sha256": "cf7865410041ce819698bf51f7336f5ff4e59e7d82356b1bd0bbde3c1d352031",
+      "reviewed_at": "2026-10-08T18:17:08+00:00",
       "residual_low": [],
       "adjudicated": [],
       "tool": "ops/tools/review_en_parity.py",
-      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
     }
   }
 }

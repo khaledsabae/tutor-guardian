@@ -1,11 +1,15 @@
 # Fallback for a system "X isn't responding" dialog that is already up (run.sh
-# sets hide_error_dialogs, which stops new ones): answer "Wait".
+# sets hide_error_dialogs, which stops new ones from apps — System UI's own still
+# showed on 2026-10-08): answer "Wait", for as many as appear back to back.
 appId: com.alsaba.almorabbi
 ---
-- runFlow:
-    when:
+- repeat:
+    times: 3
+    while:
       visible:
         id: android:id/aerr_wait
     commands:
       - tapOn:
           id: android:id/aerr_wait
+      - waitForAnimationToEnd:
+          timeout: 2000

@@ -2,11 +2,11 @@
   "id": "tip_16-18_009",
   "age_group": "16-18",
   "domain": "medical",
-  "text": "Suggest that your teen rate their mood, energy and sleep from 1 to 10 each week. If the decline lasts more than two weeks, take them to a specialist; regular tracking reveals problems early.",
+  "text": "Suggest your teen rate their mood, energy and sleep from 1 to 10 each week; it aids conversation but does not diagnose. If a decline worries you or affects their life, see a professional without waiting a set time. If their safety is at imminent risk, call emergency services.",
   "unit_id": "85d5303f-da97-49ab-985a-8c31901d84a2",
   "day_of_week": 3,
   "time_of_day": "evening",
-  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
   "language": "en",
   "source_language": "ar",
   "translation": {
@@ -18,10 +18,17 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "clean",
-    "review_defects": [],
-    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
-    "revalidated_at": "2026-10-04T17:02:06+00:00",
+    "review_verdict": "low_only",
+    "review_defects": [
+      {
+        "model": "deepseek-v4-pro",
+        "field": "text",
+        "type": "meaning",
+        "why": "Arabic specifies 'your son' (ابنك) but English uses gender-neutral 'your teen'."
+      }
+    ],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
+    "revalidated_at": "2026-10-08T18:17:08+00:00",
     "manual_fix_note": "Rewritten 2026-10-04 with the Arabic: re-addressed to the parent (the tip spoke to the teen).",
     "fixed_at": "2026-10-04T07:11:53.626353+00:00",
     "fixer_model": "claude-opus-5.5",
@@ -30,15 +37,32 @@
         "deepseek-v4-pro",
         "glm-5.2"
       ],
+      "providers": {
+        "deepseek-v4-pro": {
+          "provider": "openrouter",
+          "model": "deepseek/deepseek-v4-pro"
+        },
+        "glm-5.2": {
+          "provider": "openrouter",
+          "model": "z-ai/glm-5.2"
+        }
+      },
       "fixer": null,
       "rounds": 1,
       "prompt_version": "dfa8a5f39718",
-      "content_sha256": "705bbb68f65c4f9f28d8cec81802c1a512343e593d5942ea6b7fa246ec270b1e",
-      "reviewed_at": "2026-10-04T17:02:06+00:00",
-      "residual_low": [],
+      "content_sha256": "89ed0f3d8f9826212b6d4652fd5ca093bb5ecf06bafcb76f774af9ebb0373348",
+      "reviewed_at": "2026-10-08T18:17:08+00:00",
+      "residual_low": [
+        {
+          "model": "deepseek-v4-pro",
+          "field": "text",
+          "type": "meaning",
+          "why": "Arabic specifies 'your son' (ابنك) but English uses gender-neutral 'your teen'."
+        }
+      ],
       "adjudicated": [],
       "tool": "ops/tools/review_en_parity.py",
-      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
     }
   }
 }
