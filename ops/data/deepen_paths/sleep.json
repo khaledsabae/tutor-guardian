@@ -8,7 +8,7 @@
         "title": "نوم الرضيع: نومٌ آمن وليالٍ أهدأ (حتى عام)",
         "age_group": "prenatal-1",
         "domain": "medical",
-        "description": "ستة دروس للوالدين من الولادة حتى إكمال عام: تجهيز مكان نوم آمن في كل نومة، وفهم الاستيقاظ الليلي، وقراءة إشارات التعب والنعاس، وروتين قصير هادئ قبل النوم، ورضعات ليلية هادئة وآمنة، والانتقال التدريجي من الحضن إلى السرير؛ مع التمييز في كل ذلك بين التفاوت الطبيعي وعلامات الخطر التي تتطلّب مساعدة عاجلة.",
+        "description": "ثمانية دروس للوالدين من الولادة حتى إكمال عام: تجهيز مكان نوم آمن في كل نومة، وفهم الاستيقاظ الليلي، وقراءة إشارات التعب والنعاس، وروتين قصير هادئ قبل النوم، ورضعات ليلية هادئة وآمنة، والانتقال التدريجي من الحضن إلى السرير، وتهدئة البكاء بأمان، وذِكر ودعاء بصوت هادئ قبل النوم؛ مع التمييز في كل ذلك بين التفاوت الطبيعي وعلامات الخطر التي تتطلّب مساعدة عاجلة.",
         "pedagogical_framework": "attachment_rahma",
         "primary_reference": {
           "type": "تقرير_طبي",
@@ -16,14 +16,14 @@
         },
         "en": {
           "title": "Baby Sleep: Safe Sleep and Calmer Nights (Up to One Year)",
-          "description": "Six lessons for parents from birth until the first birthday: prepare a safe space for every sleep, understand night waking, read tired and sleepy cues, keep a short, calm bedtime routine, keep night feeds calm and safe, and move gradually from your arms to the cot; throughout, tell normal variation apart from danger signs needing urgent help."
+          "description": "Eight lessons for parents from birth until the baby completes their first year: prepare a safe space for every sleep, understand night waking, read tired and sleepy cues, keep a short, calm bedtime routine, keep night feeds calm and safe, move gradually from your arms to the cot, soothe crying safely, and use dhikr and du'a in a soft voice before sleep; throughout, tell normal variation apart from danger signs needing urgent help."
         }
       },
       "unit_bands": [
         "prenatal-1",
         "unspecified"
       ],
-      "band_notes": "Birth until first birthday only; prenatal-1 is the canonical band. This recovery publishes only the first six contiguous lessons; the remaining four original drafts (s07-s10) stay held in the preserved backup. Lessons 3-4 follow CDC milestone tips (2, 4 and 9 months), AAP drowsy-but-awake from about 4 months, and NHS bedtime-routine guidance; no routine length, no deadline, and no unit outside prenatal-1. Lessons 5-6 follow WHO (breastfeed responsively, as often as the baby wants, day and night), NHS (night breastfeeds help milk supply; never leave a baby alone with a propped bottle; fewer night feeds as babies grow, and for some babies 6-12 months night feeds may no longer be necessary; bed-sharing exclusions; early weeks some babies only fall asleep in arms), AAP (feed on demand, crying is a late hunger sign, not every cry is hunger; avoid feeding on a couch or armchair when sleepy; return the baby to their own sleep space; drowsy from about 4 months; graded soothing: look, voice, touch, allowing time between steps; normal for a 6-month-old to wake and resettle; attend when hungry, needing a change or unwell) and CDC (hunger cues; some newborns are sleepy and may need waking to feed; holding and responding does not spoil); no age to stop night feeds, no wait times, no deadline. Follow AAP safe sleep and NHS infant feeding/waking guidance. Never delay responding to hunger or distress, never recommend leaving a newborn to cry, never promise a sleep-training deadline. Inability to wake, stopped breathing, or blue/grey colour requires emergency help immediately.",
+      "band_notes": "Birth until first birthday only; prenatal-1 is the canonical band. This recovery publishes only the first eight contiguous lessons; the remaining two original drafts (s09-s10) stay held in the preserved backup. Lessons 3-4 follow CDC milestone tips (2, 4 and 9 months), AAP drowsy-but-awake from about 4 months, and NHS bedtime-routine guidance; no routine length, no deadline, and no unit outside prenatal-1. Lessons 5-6 follow WHO (breastfeed responsively, as often as the baby wants, day and night), NHS (night breastfeeds help milk supply; never leave a baby alone with a propped bottle; fewer night feeds as babies grow, and for some babies 6-12 months night feeds may no longer be necessary; bed-sharing exclusions; early weeks some babies only fall asleep in arms), AAP (feed on demand, crying is a late hunger sign, not every cry is hunger; avoid feeding on a couch or armchair when sleepy; return the baby to their own sleep space; drowsy from about 4 months; graded soothing: look, voice, touch, allowing time between steps; normal for a 6-month-old to wake and resettle; attend when hungry, needing a change or unwell) and CDC (hunger cues; some newborns are sleepy and may need waking to feed; holding and responding does not spoil); no age to stop night feeds, no wait times, no deadline. Lesson 7 follows NHS (common reasons for crying; crying more in the afternoon and evening; ways to calm; take a baby who fell asleep in a car seat to a firm flat surface; urgent signs incl. a weak, high-pitched or continuous cry or a cry unlike their usual cry; if overwhelmed put the baby safely in the cot, go to another room to calm down, then go back; never shake), AAP (all babies cry, not a sign of bad parenting; respond promptly in the first months, you cannot spoil a young baby with attention; meet the most pressing need first; if losing control place the baby in a safe crib without blankets or toys, leave the room, call someone, check on them, do not pick up until calm; never shake or hit; tell every caregiver) and CDC (crying is worse in the first months and gets better; talk softly, hold, rock or sing; shaking can damage the brain or kill; put the baby in a safe place and walk away, check on them). Stepping away is a safety step for an overwhelmed parent, not sleep training; no time figure is given. Lesson 8: CDC (a baby calms down when spoken to or picked up; routines help a baby learn what to expect), bedtime adhkar from a trusted book and the parent's own du'a for the baby (isl-572e7df3: du'a for one's children is their right; avoid du'a against them when angry); the only scripture is the verified bank verse v_013_028; ends in safe sleep; no promise of sleeping through the night. Follow AAP safe sleep and NHS infant feeding/waking guidance. Never delay responding to hunger or distress, never recommend leaving a newborn to cry, never promise a sleep-training deadline. Inability to wake, stopped breathing, or blue/grey colour requires emergency help immediately.",
       "lessons": [
         {
           "title": "النوم الآمن: على ظهره في سريرٍ خالٍ",
@@ -90,18 +90,45 @@
           "pin_units": [
             "med-2dc3af5f"
           ]
+        },
+        {
+          "title": "البكاء ليلًا: تهدئةٌ آمنة",
+          "focus": "All babies cry; common reasons (NHS); crying more in the afternoon and evening and in the first months, then lessening (NHS/CDC); respond promptly, attention does not spoil (AAP/CDC); most pressing need first (AAP); ways to calm: hold and sway, talk or sing, stroke the back, calm background sound, breastfeed (NHS/CDC); asleep in arms -> on the back in own empty cot (AAP/NHS); never shake or hit, tell every caregiver (AAP/CDC/NHS); if losing control put the baby on their back in the cot clear of covers and toys, go to another room, call someone, check on them, do not pick up until calm (AAP/NHS/CDC); doctor for signs of illness; weak, high-pitched, continuous or unusual cry -> urgent help (NHS); emergency signs (NHS).",
+          "keywords": [
+            "البكاء",
+            "التهدئة"
+          ],
+          "pin_units": [
+            "med-1eb2b059",
+            "med-2dc3af5f"
+          ]
+        },
+        {
+          "title": "سكينة المساء: ذِكرٌ ودعاءٌ بصوتٍ هادئ",
+          "focus": "A baby may calm when spoken to calmly or picked up; routines help them learn what to expect (CDC); end the evening routine with the parent softly reciting bedtime adhkar from a trusted book or some Qur'an, then du'a for the baby in their own words; du'a for one's children is their right, avoid du'a against them when tired or angry (isl-572e7df3); the verified verse v_013_028 for the tired parent's heart; then safe sleep on the back in own cot, never dozing on a sofa/armchair; no promise of sleeping through the night; emergency signs (NHS).",
+          "keywords": [
+            "ذكر الله",
+            "الدعاء"
+          ],
+          "pin_units": [
+            "med-1eb2b059",
+            "isl-572e7df3"
+          ],
+          "bank": [
+            "v_013_028"
+          ]
         }
       ],
       "description_replace_ar": [
         [
-          "أربعة دروس للوالدين من الولادة حتى إكمال عام: تجهيز مكان نوم آمن في كل نومة، وفهم الاستيقاظ والرضاعة الليلية، وقراءة إشارات التعب والنعاس، وروتين قصير هادئ قبل النوم؛ مع التمييز في كل ذلك بين التفاوت الطبيعي وعلامات الخطر التي تتطلّب مساعدة عاجلة.",
-          "ستة دروس للوالدين من الولادة حتى إكمال عام: تجهيز مكان نوم آمن في كل نومة، وفهم الاستيقاظ الليلي، وقراءة إشارات التعب والنعاس، وروتين قصير هادئ قبل النوم، ورضعات ليلية هادئة وآمنة، والانتقال التدريجي من الحضن إلى السرير؛ مع التمييز في كل ذلك بين التفاوت الطبيعي وعلامات الخطر التي تتطلّب مساعدة عاجلة."
+          "ستة دروس للوالدين من الولادة حتى إكمال عام: تجهيز مكان نوم آمن في كل نومة، وفهم الاستيقاظ الليلي، وقراءة إشارات التعب والنعاس، وروتين قصير هادئ قبل النوم، ورضعات ليلية هادئة وآمنة، والانتقال التدريجي من الحضن إلى السرير؛ مع التمييز في كل ذلك بين التفاوت الطبيعي وعلامات الخطر التي تتطلّب مساعدة عاجلة.",
+          "ثمانية دروس للوالدين من الولادة حتى إكمال عام: تجهيز مكان نوم آمن في كل نومة، وفهم الاستيقاظ الليلي، وقراءة إشارات التعب والنعاس، وروتين قصير هادئ قبل النوم، ورضعات ليلية هادئة وآمنة، والانتقال التدريجي من الحضن إلى السرير، وتهدئة البكاء بأمان، وذِكر ودعاء بصوت هادئ قبل النوم؛ مع التمييز في كل ذلك بين التفاوت الطبيعي وعلامات الخطر التي تتطلّب مساعدة عاجلة."
         ]
       ],
       "description_replace_en": [
         [
-          "Four lessons for parents from birth until the first birthday: prepare a safe space for every sleep, understand waking and night feeds, read tired and sleepy cues, and keep a short, calm bedtime routine; throughout, tell normal variation apart from danger signs needing urgent help.",
-          "Six lessons for parents from birth until the first birthday: prepare a safe space for every sleep, understand night waking, read tired and sleepy cues, keep a short, calm bedtime routine, keep night feeds calm and safe, and move gradually from your arms to the cot; throughout, tell normal variation apart from danger signs needing urgent help."
+          "Six lessons for parents from birth until the first birthday: prepare a safe space for every sleep, understand night waking, read tired and sleepy cues, keep a short, calm bedtime routine, keep night feeds calm and safe, and move gradually from your arms to the cot; throughout, tell normal variation apart from danger signs needing urgent help.",
+          "Eight lessons for parents from birth until the baby completes their first year: prepare a safe space for every sleep, understand night waking, read tired and sleepy cues, keep a short, calm bedtime routine, keep night feeds calm and safe, move gradually from your arms to the cot, soothe crying safely, and use dhikr and du'a in a soft voice before sleep; throughout, tell normal variation apart from danger signs needing urgent help."
         ]
       ]
     },
