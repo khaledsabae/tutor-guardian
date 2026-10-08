@@ -19,6 +19,9 @@ from typing import Callable
 logger = logging.getLogger(__name__)
 _MAX_INTEGER = (1 << 63) - 1
 PAID_ALIASES = ('azure_deepseek', 'deepseek', 'deepseek_aux', 'deepseek_fallback')
+# llm_calls.provider values that are never a request to any wallet: the
+# gateway's all-failed marker row (telemetry from codex/batch-oct8).
+NON_WALLET_PROVIDERS = ('gateway',)
 _LEDGER_TABLES = ('cloud_budget_months', 'cloud_budget_attempts', 'cloud_budget_carry',
                   'cloud_budget_activation', 'cloud_budget_identity')
 
@@ -260,9 +263,17 @@ class CloudBudget:
                     or any(not isinstance(receipt[key], str) or not receipt[key].strip()
                            for key in ('db_identity', 'wallet', 'evidence_reference'))):
                 raise BudgetDenied('cloud budget cutover evidence incomplete or unknown')
+            covered = receipt.get('unknown_usage_rows_covered')
+            if covered is not None and (
+                    not isinstance(covered, list) or not all(type(r) is int and r > 0 for r in covered)
+                    or len(set(covered)) != len(covered)):
+                raise BudgetDenied('cloud budget unknown-usage coverage malformed')
             receipt = {key: receipt[key] for key in ('db_identity', 'wallet', 'month', 'opening_tokens',
                        'reconciled_through', 'legacy_aliases', 'evidence_reference', 'unreserved_writers_drained')}
             receipt['legacy_aliases'] = sorted(set(aliases))
+            if covered is not None:
+                # Part of the attested receipt: a changed list is a reseed.
+                receipt['unknown_usage_rows_covered'] = sorted(covered)
             encoded = json.dumps(receipt, sort_keys=True, separators=(',', ':'))
         except (KeyError, TypeError, ValueError, AttributeError) as exc:
             raise BudgetDenied('cloud budget cutover evidence unknown') from exc
@@ -277,7 +288,8 @@ class CloudBudget:
                 if existing[0] != encoded:
                     raise BudgetDenied('cloud budget cutover reseed forbidden; reconcile offline')
                 return
-            historical = self._opening(conn, month, tuple(receipt['legacy_aliases']), cutoff=cutoff)
+            historical = self._opening(conn, month, tuple(receipt['legacy_aliases']), cutoff=cutoff,
+                                       covered=frozenset(receipt.get('unknown_usage_rows_covered', ())))
             if receipt['opening_tokens'] < historical:
                 raise BudgetDenied('cloud budget opening below known historical spend')
             conn.execute('INSERT OR IGNORE INTO cloud_budget_identity VALUES(1,?)', (receipt['db_identity'],))
@@ -287,21 +299,31 @@ class CloudBudget:
                          'opening_tokens=MAX(opening_tokens,excluded.opening_tokens)',
                          (wallet, month, receipt['opening_tokens']))
 
-    def _opening(self, conn, month: str, aliases: tuple[str, ...], *, cutoff=None) -> int:
+    def _opening(self, conn, month: str, aliases: tuple[str, ...], *, cutoff=None,
+                 covered: frozenset = frozenset()) -> int:
+        """Known historical spend: the floor an attested opening must reach.
+
+        Rows flagged usage_estimated=1 carry numbers and count at face value
+        (bytes/3 over-reads Arabic, so for the floor that is the safe side).
+        A row with NULL counts is unknown spend: it blocks activation unless
+        the receipt lists exactly those rows as covered by the provider's
+        billing export behind opening_tokens. Gateway marker rows are never
+        requests and never spend.
+        """
+        aliases = tuple(a for a in aliases if a not in NON_WALLET_PROVIDERS)
         if not aliases or not conn.execute(
             "SELECT 1 FROM sqlite_master WHERE type='table' AND name='llm_calls'"
         ).fetchone():
             raise BudgetDenied('cloud budget opening billing unknown: missing history')
-        marks = ",".join("?" for _ in aliases)
-        rows = conn.execute(
-            f"SELECT ts,prompt_tokens,completion_tokens FROM llm_calls WHERE provider IN ({marks}) "
-            "AND (strftime('%Y-%m',ts)=? OR strftime('%Y-%m',ts) IS NULL)",
-            (*aliases, month),
-        )
+        rows = self.unknown_and_known_rows(conn, month, aliases)
         total = 0
-        for ts, prompt, completion in rows:
-            if not ts or not _count(prompt) or not _count(completion):
+        unknown = set()
+        for rowid, ts, prompt, completion in rows:
+            known = _count(prompt) and _count(completion)
+            if not ts or (not known and rowid not in covered):
                 raise BudgetDenied("cloud budget opening billing unknown")
+            if not known:
+                unknown.add(rowid)
             try:
                 stamp = datetime.fromisoformat(ts)
                 if stamp.tzinfo is None:
@@ -310,10 +332,33 @@ class CloudBudget:
                     raise BudgetDenied('cloud budget reconciliation cutoff precedes historical spend')
             except (ValueError, TypeError) as exc:
                 raise BudgetDenied('cloud budget historical timestamp unknown') from exc
-            total += prompt + completion
+            if known:
+                total += prompt + completion
             if total > _MAX_INTEGER:
                 raise BudgetDenied("cloud budget opening balance overflow")
+        if unknown != set(covered):
+            raise BudgetDenied('cloud budget unknown-usage coverage does not match history')
         return total
+
+    @staticmethod
+    def unknown_and_known_rows(conn, month: str, aliases: tuple[str, ...]):
+        aliases = tuple(a for a in aliases if a not in NON_WALLET_PROVIDERS)
+        marks = ",".join("?" for _ in aliases)
+        return conn.execute(
+            f"SELECT rowid,ts,prompt_tokens,completion_tokens FROM llm_calls WHERE provider IN ({marks}) "
+            "AND (strftime('%Y-%m',ts)=? OR strftime('%Y-%m',ts) IS NULL) ORDER BY rowid",
+            (*aliases, month),
+        ).fetchall()
+
+    def list_unknown_usage_rows(self, month: str, aliases: tuple[str, ...] = PAID_ALIASES) -> list[dict]:
+        """Read-only: the paid rows of `month` whose usage is unknown (NULL)."""
+        conn = sqlite3.connect(self.path.as_uri() + '?mode=ro', uri=True)
+        try:
+            return [{'id': rowid, 'ts': ts, 'prompt_tokens': p, 'completion_tokens': c}
+                    for rowid, ts, p, c in self.unknown_and_known_rows(conn, month, aliases)
+                    if not (_count(p) and _count(c))]
+        finally:
+            conn.close()
 
     def reserve(self, wallet: str, cap: int, bound: int, *,
                 legacy_aliases: tuple[str, ...]) -> Reservation:

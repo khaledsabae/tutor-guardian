@@ -258,3 +258,91 @@ def test_restored_snapshot_without_witness_cannot_be_reseeded_at_new_path(tmp_pa
         restored.bootstrap(receipt())
     with pytest.raises(BudgetDenied):
         restored.reserve('wallet', 100, 1, legacy_aliases=ALIASES)
+
+
+# ── Telemetry from codex/batch-oct8: estimated rows, gateway marker rows ───
+def telemetry_v2(l):
+    """The production llm_calls shape after telemetry_0002."""
+    with sqlite3.connect(l.path) as c:
+        c.execute('CREATE TABLE llm_calls(id INTEGER PRIMARY KEY AUTOINCREMENT, ts TEXT, provider TEXT, '
+                  'prompt_tokens INTEGER, completion_tokens INTEGER, ok INTEGER, '
+                  'usage_estimated INTEGER NOT NULL DEFAULT 0)')
+    return l
+
+
+def add_row(l, provider, prompt, completion, *, estimated=0, ok=1):
+    with sqlite3.connect(l.path) as c:
+        return c.execute('INSERT INTO llm_calls(ts,provider,prompt_tokens,completion_tokens,ok,'
+                         'usage_estimated) VALUES(?,?,?,?,?,?)',
+                         (NOW.isoformat(), provider, prompt, completion, ok, estimated)).lastrowid
+
+
+def test_estimated_usage_counts_toward_the_known_historical_floor(tmp_path):
+    l = telemetry_v2(ledger(tmp_path))
+    add_row(l, 'deepseek', 60, 0)
+    add_row(l, 'deepseek', 30, 10, estimated=1, ok=0)
+    with pytest.raises(BudgetDenied, match='below'):
+        l.bootstrap(receipt(99))
+    l.bootstrap(receipt(100))
+
+
+def test_gateway_marker_rows_are_never_wallet_spend(tmp_path):
+    l = telemetry_v2(ledger(tmp_path))
+    add_row(l, 'gateway', None, None, ok=0)   # all_failed marker: not a request
+    add_row(l, 'gateway', 0, 0, ok=0)
+    # Even an operator listing it as an alias cannot turn it into spend.
+    l.bootstrap({**receipt(0), 'legacy_aliases': [*ALIASES, 'gateway']})
+
+
+def test_legacy_null_rows_still_block_without_explicit_coverage(tmp_path):
+    l = telemetry_v2(ledger(tmp_path))
+    add_row(l, 'deepseek', None, None, ok=0)
+    with pytest.raises(BudgetDenied, match='unknown'):
+        l.bootstrap(receipt(100))
+
+
+def test_receipt_can_cover_exactly_the_listed_unknown_rows(tmp_path):
+    l = telemetry_v2(ledger(tmp_path))
+    add_row(l, 'deepseek', 50, 50)
+    a = add_row(l, 'deepseek', None, None, ok=0)
+    b = add_row(l, 'deepseek_aux', 7, None, ok=0)
+    covered = {**receipt(100), 'unknown_usage_rows_covered': [b, a]}
+    l.bootstrap(covered)
+    l.reserve('wallet', 1000, 1, legacy_aliases=ALIASES)
+    l.bootstrap(covered)                    # identical replay is a no-op
+
+
+@pytest.mark.parametrize('listed', [
+    'missing_one', 'extra_id', 'known_row', 'not_ints', 'bool', 'duplicate'])
+def test_unknown_row_coverage_must_match_exactly(tmp_path, listed):
+    l = telemetry_v2(ledger(tmp_path))
+    known = add_row(l, 'deepseek', 50, 50)
+    a = add_row(l, 'deepseek', None, None, ok=0)
+    b = add_row(l, 'deepseek', None, 3, ok=0)
+    rows = {'missing_one': [a], 'extra_id': [a, b, 999], 'known_row': [a, b, known],
+            'not_ints': [str(a), str(b)], 'bool': [True, b], 'duplicate': [a, a, b]}[listed]
+    with pytest.raises(BudgetDenied):
+        l.bootstrap({**receipt(100), 'unknown_usage_rows_covered': rows})
+
+
+def test_changed_coverage_after_activation_is_a_forbidden_reseed(tmp_path):
+    l = telemetry_v2(ledger(tmp_path))
+    a = add_row(l, 'deepseek', None, None, ok=0)
+    l.bootstrap({**receipt(100), 'unknown_usage_rows_covered': [a]})
+    with pytest.raises(BudgetDenied, match='reseed'):
+        l.bootstrap({**receipt(100), 'unknown_usage_rows_covered': []})
+
+
+def test_cli_lists_unknown_rows_read_only(tmp_path, capsys):
+    from app.services import cloud_budget_bootstrap as cli
+    l = telemetry_v2(ledger(tmp_path))
+    add_row(l, 'deepseek', 1, 1)
+    a = add_row(l, 'deepseek', None, None, ok=0)
+    add_row(l, 'gateway', None, None, ok=0)
+    add_row(l, 'ollama', None, None, ok=0)
+    before = l.path.read_bytes()
+    assert cli.main(['--db', str(l.path), '--list-unknown-rows', '2026-10']) == 0
+    out = json.loads(capsys.readouterr().out)
+    assert out['unknown_usage_rows'] == [a]
+    assert l.path.read_bytes() == before
+    assert not l.anchor_path.exists()

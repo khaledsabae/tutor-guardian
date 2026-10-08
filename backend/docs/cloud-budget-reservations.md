@@ -400,3 +400,27 @@ succeed. So it gets no built-in profile. Instead:
 
 The cap counts **tokens, not money**; the prices above are recorded for the
 operator's monthly reconciliation, not used by the code.
+
+### 2. Opening history with the new telemetry (PR #65, telemetry_0002)
+
+`_opening()` sums the month's paid `llm_calls` as the floor an attested
+`opening_tokens` must reach. With the batch-oct8 telemetry:
+
+- `usage_estimated=1` rows carry numbers (bytes/3 estimates, or an explicit
+  flagged zero for a refused request) and **count at face value**. For a floor
+  that is the safe direction: bytes/3 over-reads Arabic. If a real billing
+  export comes in below the telemetry floor, the operator enters
+  `opening_tokens = max(billing export, telemetry floor)` — over-counting, never
+  under-counting.
+- `provider='gateway'` rows (the all-failed marker, not a request) are never
+  wallet spend, even if someone lists `gateway` as an alias.
+- Legacy NULL-token rows still **block** activation, unless the receipt lists
+  them in `unknown_usage_rows_covered` (llm_calls row ids). The list must equal
+  the month's unknown paid rows up to the cutoff exactly — a missing, extra,
+  duplicated or known row id denies — and it is part of the stored receipt, so
+  changing it later is a forbidden reseed. Listing them asserts that the
+  billing export behind `opening_tokens` already includes whatever they cost.
+- Read-only helper for the operator:
+  `python -m app.services.cloud_budget_bootstrap --db /app/ops/sessions.db --list-unknown-rows 2026-11`
+  prints the ids (and ts/counts) to paste into the receipt; it opens the DB
+  `mode=ro` and never creates the anchor.
