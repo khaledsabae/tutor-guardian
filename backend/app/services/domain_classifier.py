@@ -15,6 +15,7 @@ telemetry, and its monthly spend ceiling — instead of being pinned to a
 local Ollama host that the main path may have already abandoned.
 """
 
+import bisect
 import json
 import logging
 import os
@@ -451,34 +452,220 @@ KEYWORD_RULES: List[Tuple[str, str]] = [
     (_APP_HELP_RULE, "app_help"),
 ]
 
-# English alternatives keep whole-word boundaries and the Arabic domain order.
-# Ambiguous everyday verbs need a child subject; reported hearing and store
-# names must not turn general conversation into a developmental concern.
-_EN_CHILD = r"\b(?:child(?:ren)?|son|daughter|baby|babies|toddler|infant|kid(?:s)?)\b"
-_EN_CHILD_CONTEXT = rf"^(?=(?s:.*?){_EN_CHILD})"
-_EN_SPEECH_ABILITY = rf"{_EN_CHILD_CONTEXT}(?s:.*?)\b(?:not\s+talking|cannot\s+(?:talk|speak))\b"
-_EN_HEARING_ABILITY = rf"{_EN_CHILD_CONTEXT}(?s:.*?)\b(?:cannot\s+hear|can[’']t\s+hear|does\s+not\s+respond\s+to\s+sounds)\b"
-_ENGLISH_RULES = {
-    "fiqh": r"\b(?:prayer(?:s)?|salah|salat|fasting|zakat|hajj|umrah|quran|koran|hadith|dua|wudu|halal|haram|repentance|Islamic\s+manners)\b",
-    "aqeedah": r"\b(?:who\s+is\s+(?:Allah|God)|where\s+is\s+(?:Allah|God)|who\s+created\s+(?:Allah|God|us|the\s+universe)|why\s+did\s+(?:Allah|God)\s+create\s+us|after\s+death|afterlife|heaven\s+and\s+hell|pillars\s+of\s+faith|explain\s+(?:angels|heaven|hell)(?:\s+to\s+(?:my|our|the)\s+child)?|asks?\s+about\s+(?:Allah|God|death|angels))\b",
-    "cyber": r"\b(?:screen\s+time|youtube|tiktok|instagram|facebook|whatsapp|snapchat|online\s+safety|cyberbullying|social\s+media|video\s+games?|internet|smartphones?|digital\s+privacy)\b",
-    "medical": (r"\b(?:anxiety|depression|tantrums?|sleep|fever|nightmares?|asthma|allergies|seizures?|stuttering|bedwetting|panic\s+attacks?|autism|adhd|dyslexia|(?:speech\s+(?:delay|problems?|therapy|development)|delayed\s+speech))\b"
-                + "|" + _EN_SPEECH_ABILITY
-                + rf"|{_EN_CHILD_CONTEXT}(?s:.*?)\b(?:bit(?:e|es|ing)|hits?|hitting)\b"),
-    "development": (r"\b(?:walking|crawling|teething|growth|motor\s+skills|milestones?|breastfeeding|weaning|potty\s+training|sitting|standing|eye\s+contact|(?:speech\s+(?:delay|problems?|therapy|development)|delayed\s+speech))\b"
-                    + "|" + _EN_SPEECH_ABILITY + "|" + _EN_HEARING_ABILITY
-                    + rf"|{_EN_CHILD_CONTEXT}(?s:.*?)\b(?:play(?:s|ing|ed)?|(?<!court )hearing(?:\s+aids)?)\b(?!\s+(?:about|from|that|store)\b)(?![\s\S]*\bcourt\b)"
-                    + rf"|{_EN_CHILD_CONTEXT}(?s:.*?)\bhear(?:s|d)?\s+(?:(?:her|his|the|a|any)\s+)?(?:name|bell|alarm|sounds?|voices?|noises?|nothing)\b"),
-    "app_help": (r"\b(?:exit|enter|enable|disable)\s+child\s+mode\b"
-                 + r"|^(?!(?s:.*?)\b(?:facebook|instagram|tiktok|youtube|whatsapp|snapchat|twitter|telegram|discord)\b)(?s:.*?)\bdelete\s+my\s+(?:account|data)\b"
-                 + r"|^(?=(?s:.*?)\b(?:this|the)\s+app\b)(?=(?s:.*?)\b(?:teach|add\s+a\s+child|change\s+the\s+language|subscription|settings|account|notifications)\b)"),
+# ── English fast path ──────────────────────────────────────────────────────────
+# A fast-path hit skips the model classifier and the query rewrite, so every
+# English rule is written for precision: an ambiguous word returns None and the
+# model decides. Each rule has a gate:
+#   "any"    — the phrase alone is unambiguous («potty training», «ADHD»).
+#   "child"  — a child is named anywhere in the question («phone», «TikTok»:
+#              «I found you on Facebook» is not a question about a child).
+#   "before" — a child is named earlier in the same sentence, so it is the
+#              child's fever / sleep / hitting, not the parent's or the wife's.
+#   "tablet" — "child", unless medicine is mentioned («takes a tablet for…»).
+#   "hearing"— "child", unless a court is mentioned («his hearing in court»).
+# The gates are computed once per question (no lookahead scans the rest of the
+# text), and "before" is a bounded look-back, so a 50k-character question stays
+# linear — test_fast_path_is_linear_on_50k_characters.
+_EN_CHILD_RE = re.compile(
+    r"\b(?:child(?:ren)?|sons?|daughters?|bab(?:y|ies)|toddlers?|infants?|kids?|"
+    r"teens?|teenagers?|newborns?|\d{1,2}[- ](?:years?|months?)[- ]olds?)\b", re.IGNORECASE)
+_EN_BEFORE_WINDOW = 80
+_EN_SENTENCE_BREAK_RE = re.compile(r"[.?!\n]")
+_EN_MEDICINE_RE = re.compile(
+    r"\b(?:medicines?|medications?|pills?|doses?|swallow\w*|mg|antibiotics?|vitamins?|"
+    r"paracetamol|ibuprofen|tylenol|panadol"
+    r"|(?:take|takes|took|taking|give|gives|gave|giving)\s+(?:him\s+|her\s+)?(?:a|an|one|two|half|the|his|her)"
+    r"\s+(?:\w+\s+)?tablets?)\b", re.IGNORECASE)
+_EN_COURT_RE = re.compile(r"\bcourt\b", re.IGNORECASE)
+# A child's ability, not a refusal or a language: «isn't talking yet», never
+# «isn't talking to me», «won't talk» or «doesn't speak Arabic».
+_EN_ABILITY_END = (r"(?=\s*(?:[.?!,;:\n]|$)|\s+(?:yet|at\s+all|any\s+words?"
+                   r"|a\s+(?:single\s+)?word|in\s+sentences)\b)")
+_EN_SPEECH_ABILITY = (r"\b(?:(?:not|isn't|isnt|aren't)\s+(?:talking|speaking)"
+                      r"|(?:cannot|can't|cant|can\s+not|doesn't|doesnt|does\s+not)\s+(?:talk|speak))"
+                      + _EN_ABILITY_END)
+# Hitting/biting is aggression only with a victim: «hits his sister», never
+# «hit puberty», «hit the books», «hits the charts» or «biting cold».
+_EN_VICTIM = (r"(?:(?:his|her|their|my|our)\s+(?:(?:little|younger|older|baby|big|new)\s+)?"
+              r"(?:brothers?|sisters?|siblings?|friends?|teachers?|classmates?|cousins?)"
+              r"|me|us|other\s+(?:kids|children|babies|toddlers|boys|girls)"
+              r"|himself|herself|themselves|friends|classmates)\b")
+# Walking/sitting/standing are milestones only when they are missing: «isn't
+# walking at 18 months», never «is walking to school» or «can't stand broccoli».
+_EN_MOTOR_DELAY = (r"\b(?:not|isn't|isnt|aren't|can't|cant|cannot|can\s+not|doesn't|doesnt|"
+                   r"does\s+not|hasn't|has\s+not|unable\s+to|never)\s+(?:yet\s+)?(?:started\s+)?"
+                   r"(?:walk(?:s|ing)?|sit(?:s|ting)?|stand(?:s|ing)?|crawl(?:s|ing)?)\b"
+                   r"(?!\s+up\s+for\b)"
+                   r"(?=\s*(?:[.?!,;:\n]|$)|\s+(?:yet|up|alone|unsupported|independently|without"
+                   r"|at\s+\d+|by\s+(?:him|her)self|on\s+(?:his|her|their)\s+own)\b)")
+# Play in its developmental sense only: «plays Fortnite» is cyber, «plays the
+# violin» or «playing football» is nothing to route.
+_EN_PLAY = (r"\b(?:plays?|playing|played)\s+with\s+(?:(?:his|her|their|other|the|any)\s+)?"
+            r"(?:toys?|blocks|dolls?|kids|children|peers)\b"
+            r"|\b(?:doesn't|doesnt|does\s+not|won't|will\s+not|never|isn't|is\s+not|not)\s+play(?:s|ing)?\b"
+            r"(?=\s*(?:[.?!,;:\n]|$)|\s+(?:at\s+all|with\s+(?:toys|other|others|anyone|kids|children|peers)"
+            r"|like\s+other|alone|yet)\b)")
+_EN_PLATFORMS = (r"youtube|tiktok|instagram|facebook|whatsapp|snapchat|roblox|fortnite|minecraft|"
+                 r"pubg|discord|twitch|playstation|xbox|nintendo")
+_EN_FAST_VERB_NEXT = (r"(?:(?=\s*(?:[.?!,;\n]|$))|(?=\s+(?:in|during|on|for|until|till|when|if|"
+                      r"while|at|all|the\s+whole|half|this|every)\b))")
+
+_EN_RULES = {
+    "fiqh": [
+        ("any", r"\b(?:prayers?|zakat|umrah|quran|koran|hadiths?|wudu|wudhu|halal|haram|repentance|"
+                r"islamic\s+manners|ramadan|mosques?|masjid|hijab|duas|du['’]a)\b"),
+        ("any", r"\bhajj\b(?!\s+(?:committee|agency|agencies|ministry|visa|package|tour|operator)s?\b)"),
+        # «I prayed for my son» is the parent's supplication, not the child's prayer.
+        ("any", r"\bpray(?:s|ing|ed)?\b(?!\s+(?:for|mantis)\b)"),
+        ("any", r"(?<!intermittent )\bfasting\b(?!\s+(?:blood|glucose|sugar|test)\b)|\bfast(?:s|ed)\b"),
+        # The verb, never the adjective: «to fast in Ramadan», not «a fast car».
+        ("any", r"\b(?:to|can|should|must|will|could|would|let\s+(?:him|her|them)|make\s+(?:him|her|them))"
+                r"\s+fast\b" + _EN_FAST_VERB_NEXT),
+        # «Salah» and «Dua» are also names (Mo Salah, Dua Lipa): only beside a
+        # word that makes them the prayer.
+        ("any", r"\b(?:pray(?:s|ing|ed)?|perform(?:s|ing)?|establish(?:ing)?|teach(?:ing)?|learn(?:ing)?|"
+                r"miss(?:es|ed|ing)?|offer(?:s|ing)?|during|after|before|about|for|his|her|their|our|my|"
+                r"your|the|child|son|daughter|kids?|children)\s+sala[ht]\b"
+                r"|\bsala[ht]\s+(?:times?|on\s+time|properly|regularly"
+                r"|in\s+(?:the\s+)?(?:mosque|masjid|congregation))\b"),
+        ("any", r"\b(?:make|makes|making|made|say|says|saying|recite[sd]?|reciting|read(?:s|ing)?|"
+                r"learn(?:s|ing)?|teach(?:es|ing)?|memori[sz](?:e|es|ing)|a|the|what|this|his|her|my|"
+                r"our|their|daily|morning|evening|bedtime|for|about|child|son|daughter|kids?|children)"
+                r"\s+dua\b(?!\s+lipa\b)"),
+    ],
+    "aqeedah": [
+        ("any", r"\b(?:who\s+is\s+(?:Allah|God)|where\s+is\s+(?:Allah|God)|who\s+created\s+(?:Allah|God|us|the\s+universe)|why\s+did\s+(?:Allah|God)\s+create\s+us|after\s+death|afterlife|heaven\s+and\s+hell|pillars\s+of\s+faith|explain\s+(?:angels|heaven|hell)(?:\s+to\s+(?:my|our|the)\s+child)?|asks?\s+about\s+(?:Allah|God|death|angels))\b"),
+    ],
+    "cyber": [
+        ("any", r"\b(?:screen\s+time|online\s+safety|cyber\s*bullying|digital\s+privacy)\b"),
+        ("child", r"\b(?:smart\s*phones?|cell\s*phones?|phones?|ipads?|gaming|video\s+games?|"
+                  r"online\s+games?|social\s+media|internet|" + _EN_PLATFORMS + r")\b"),
+        ("tablet", r"\btablets?\b"),
+    ],
+    "medical": [
+        ("any", r"\b(?:autism|adhd|dyslexia|speech\s+(?:delay|problems?|therapy|development)|delayed\s+speech)\b"),
+        ("before", r"(?<!\bno )\b(?:anxiety|depression|tantrums?|fever\b(?!\s+pitch)|nightmares?|asthma|"
+                   r"allerg(?:y|ies)|seizures?|stuttering|bedwetting|panic\s+attacks?|"
+                   r"(?<!before )(?<!after )sleep(?:s|ing)?\b(?!\s+mode))\b"),
+        ("any", r"\b(?:sleep|fever|anxiety|tantrums?|nightmares?)(?:\s+(?:tips|training|problems?|issues?|"
+                r"regression|schedule|routine|habits?|advice))?\s+(?:(?:in|for|of|with)\s+)?"
+                r"(?:my|our|a|the|your)\s+" + _EN_CHILD_RE.pattern),
+        ("before", r"\b(?:hit(?:s|ting)?|bit(?:es|ing|e)?)\s+" + _EN_VICTIM),
+        ("before", r"\b(?:biting|hitting)\s+(?:problems?|phases?|habits?|behaviou?rs?|stage)\b"),
+        ("before", _EN_SPEECH_ABILITY),
+    ],
+    "development": [
+        ("any", r"\b(?:motor\s+skills|breastfeeding|weaning|potty\s+training|"
+                r"speech\s+(?:delay|problems?|therapy|development)|delayed\s+speech|"
+                r"hearing\s+(?:loss|aids?|tests?|impair\w*|screening)|hard\s+of\s+hearing|"
+                r"(?:pretend|imaginative|parallel|symbolic|make[- ]believe)\s+play)\b"),
+        ("before", r"\b(?:crawl(?:s|ing)?|teething|milestones?|eye\s+contact|"
+                   r"growth\s+(?:spurts?|delay|problems?|hormones?|issues?)|(?:slow|stunted|delayed|poor)\s+growth|"
+                   r"(?:his|her|their)\s+growth\b(?!\s+mindset))\b"),
+        ("before", _EN_MOTOR_DELAY),
+        ("before", _EN_PLAY),
+        ("before", _EN_SPEECH_ABILITY),
+        # Hearing voices is not a hearing question (P2-c): no «voices» here.
+        ("before", r"\bhear(?:s|d)?\s+(?:(?:her|his|the|a|any)\s+)?(?:name|bell|alarm|sounds?|noises?|nothing)\b"),
+        ("before", r"\b(?:cannot|can't|cant|can\s+not|doesn't|doesnt|does\s+not)\s+hear\b"
+                   r"(?!\s+(?:about|from|that|of)\b)"
+                   r"|\b(?:does\s+not|doesn't|doesnt)\s+respond\s+to\s+(?:sounds?|(?:his|her)\s+name)\b"),
+        ("hearing", r"\b(?:his|her|their|child's|son's|daughter's|baby's)\s+hearing\b"
+                    r"(?!\s+(?:about|from|that|of)\b)"),
+    ],
+    "app_help": [
+        # Strong signals only: the app's own «child mode», and deleting «my
+        # account/data» when no other platform is named (see _OTHER_PLATFORMS).
+        ("any", r"\b(?:exit|enter|enable|disable|leave|open|close|turn\s+(?:on|off)|switch\s+(?:on|off|to)"
+                r"|get\s+out\s+of)\s+(?:the\s+)?child\s+mode\b"),
+        ("own_platform", r"\bdelete\s+my\s+(?:account|data)\b"),
+    ],
 }
-_COMPILED_ENGLISH_RULES = {
-    domain: re.compile(pattern, re.IGNORECASE | re.UNICODE)
-    for domain, pattern in _ENGLISH_RULES.items()
+_EN_COMPILED = {
+    domain: [(gate, re.compile(pattern, re.IGNORECASE)) for gate, pattern in rules]
+    for domain, rules in _EN_RULES.items()
 }
+_OTHER_PLATFORMS_RE = re.compile(_OTHER_PLATFORMS)
+# The English weak app signal — the same contract as _APP_GENERAL: «the app» +
+# an app action adds app_help beside a parenting domain; alone, the model
+# decides. «teach» is not an app action: «the app told me to teach my son…».
+_EN_APP_NOUN_RE = re.compile(r"\b(?:this|the|your)\s+app\b", re.IGNORECASE)
+_EN_APP_ACTION_RE = re.compile(
+    r"\b(?:add(?:ing)?\s+(?:a|my|another|the|her|his)\s+(?:(?:second|new|other)\s+)?child|"
+    r"change\s+the\s+language|language|subscription|subscribe|settings|account|notifications?|"
+    r"free|offline|premium|price|login|log\s+in|sign\s+in|password|update|version|install|"
+    r"uninstall|features?|works|working|load(?:s|ing)?|crash\w*)\b", re.IGNORECASE)
 _EN_REPORTED_SPEECH = re.compile(
     r"\breported\s+speech\b|\bspeech\s+(?:was|is)\s+reported\b", re.IGNORECASE)
+# Arabic text (an Arabic word of 2+ letters; a stray «أ» does not count) keeps
+# its Arabic verdict. The English layer there only adds domains beside an
+# Arabic match («ابني بيلعب Fortnite» → + cyber), never decides alone — except
+# ADHD, which the Arabic rule spells only in lower case.
+_AR_WORD_RE = re.compile(r"[ء-ي]{2,}")
+_EN_ADHD_RE = re.compile(r"\badhd\b", re.IGNORECASE)
+_LATIN_WORD_RE = re.compile(r"[A-Za-z]{2}")
+
+
+def _en_child_before(start: int, child_ends: List[int], breaks: List[int]) -> bool:
+    """A child named in the same sentence, ending at most 80 characters before."""
+    i = bisect.bisect_right(child_ends, start) - 1
+    if i < 0 or start - child_ends[i] > _EN_BEFORE_WINDOW:
+        return False
+    j = bisect.bisect_right(breaks, child_ends[i])
+    return j >= len(breaks) or breaks[j] >= start
+
+
+def _english_domains(text: str, child_assumed: bool = False) -> set:
+    """Domains the English rules find in `text` (see the gates above)."""
+    text = text.replace("’", "'")
+    child_ends = [m.end() for m in _EN_CHILD_RE.finditer(text)]
+    has_child = child_assumed or bool(child_ends)
+    breaks = [m.start() for m in _EN_SENTENCE_BREAK_RE.finditer(text)]
+    found = set()
+    for domain, rules in _EN_COMPILED.items():
+        for gate, pattern in rules:
+            if gate == "any":
+                hit = pattern.search(text) is not None
+            elif gate == "own_platform":
+                hit = (pattern.search(text) is not None
+                       and not _OTHER_PLATFORMS_RE.search(text))
+            elif gate == "before" and not child_assumed:
+                hit = any(_en_child_before(m.start(), child_ends, breaks)
+                          for m in pattern.finditer(text))
+            elif not has_child:
+                hit = False
+            elif gate == "tablet":
+                hit = pattern.search(text) is not None and not _EN_MEDICINE_RE.search(text)
+            elif gate == "hearing":
+                hit = pattern.search(text) is not None and not _EN_COURT_RE.search(text)
+            else:
+                hit = pattern.search(text) is not None
+            if hit:
+                found.add(domain)
+                break
+    return found
+
+
+def _english_weak_app(text: str) -> bool:
+    return bool(_EN_APP_NOUN_RE.search(text) and _EN_APP_ACTION_RE.search(text))
+
+
+def _english_signals(question: str) -> Tuple[set, set, bool]:
+    """(strong, additive, weak_app) English signals for the fast path.
+
+    strong   — enough on their own, like an Arabic rule match.
+    additive — added only beside a domain some other rule already found.
+    weak_app — «the app» + an app action (see _EN_APP_ACTION_RE).
+    """
+    if not _LATIN_WORD_RE.search(question):
+        return set(), set(), False  # nothing English to read (most questions)
+    text = _EN_REPORTED_SPEECH.sub(" ", question)
+    if _AR_WORD_RE.search(text):
+        strong = {"medical"} if _EN_ADHD_RE.search(text) else set()
+        own_child = bool(_OWN_CHILD_RE.search(text))
+        additive = _english_domains(text, child_assumed=own_child) - {"app_help"}
+        return strong, additive, False
+    return _english_domains(text), set(), _english_weak_app(text)
 
 
 # Compile patterns once at module load
@@ -514,12 +701,15 @@ def _keyword_fast_path(question: str) -> Optional[List[str]]:
     matched: List[str] = []
     question = question.translate(_KEYBOARD)
     rule_text = _mask_reported_hearing(question)
-    english_text = _EN_REPORTED_SPEECH.sub(" ", question)
-    for pattern, domain in _COMPILED_RULES:
-        if (pattern.search(rule_text)
-                or _COMPILED_ENGLISH_RULES[domain].search(english_text)):
-            if domain not in matched:
-                matched.append(domain)
+    en_strong, en_additive, en_weak_app = _english_signals(question)
+    rule_hits = {domain for pattern, domain in _COMPILED_RULES if pattern.search(rule_text)}
+    found = rule_hits | en_strong
+    if found:
+        # Additive English (inside Arabic text) never decides on its own.
+        found |= en_additive
+    for _pattern, domain in _COMPILED_RULES:
+        if domain in found and domain not in matched:
+            matched.append(domain)
     hearing_text = re.sub(r"[\u064b-\u065f\u0670\u0640]", "", question)
     if "development" not in matched and (
             _CHILD_PAST_HEARING_RE.search(hearing_text)
@@ -529,7 +719,7 @@ def _keyword_fast_path(question: str) -> Optional[List[str]]:
         # domains, before app_help (last on purpose — see KEYWORD_RULES).
         at = matched.index("app_help") if "app_help" in matched else len(matched)
         matched.insert(at, "development")
-    if "app_help" not in matched and _APP_GENERAL_RE.search(question):
+    if "app_help" not in matched and (_APP_GENERAL_RE.search(question) or en_weak_app):
         # The weak app signal (see _APP_GENERAL): beside a parenting domain it
         # adds app_help to the search; alone it defers to the model
         # (_classify_cached).
@@ -578,8 +768,11 @@ def _mentions_own_child(question: str) -> bool:
 
 
 def _weak_app_signal(question: str) -> bool:
-    """«التطبيق» next to an app action — the weak app signal (see _APP_GENERAL)."""
-    return bool(_APP_GENERAL_RE.search(question))
+    """«التطبيق» next to an app action — the weak app signal (see _APP_GENERAL);
+    in an English question, «the app» next to one (see _EN_APP_ACTION_RE)."""
+    if _APP_GENERAL_RE.search(question):
+        return True
+    return not _AR_WORD_RE.search(question) and _english_weak_app(question)
 
 
 def _parse_domains(raw: str, question: str) -> Optional[List[str]]:
