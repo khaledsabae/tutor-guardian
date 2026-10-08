@@ -3,16 +3,20 @@
   "title": "Baby Sleep: Safe Sleep and Calmer Nights (Up to One Year)",
   "age_group": "prenatal-1",
   "domain": "medical",
-  "description": "Six lessons for parents from birth until the first birthday: prepare a safe space for every sleep, understand night waking, read tired and sleepy cues, keep a short, calm bedtime routine, keep night feeds calm and safe, and move gradually from your arms to the cot; throughout, tell normal variation apart from danger signs needing urgent help.",
+  "description": "Ten lessons for parents from birth until the baby completes their first year: prepare a safe space for every sleep, understand night waking, read tired and sleepy cues, keep a short, calm bedtime routine, keep night feeds calm and safe, move gradually from your arms to the cot, soothe crying safely, use dhikr and du'a in a soft voice before sleep, look after the parents' own rest and ask for help, and know when to get medical help for the baby; throughout, tell normal variation apart from danger signs needing urgent help.",
   "lesson_ids": [
     "lesson_0-3_medical_infant_sleep_01",
     "lesson_0-3_medical_infant_sleep_02",
     "lesson_0-3_medical_infant_sleep_03",
     "lesson_0-3_medical_infant_sleep_04",
     "lesson_0-3_medical_infant_sleep_05",
-    "lesson_0-3_medical_infant_sleep_06"
+    "lesson_0-3_medical_infant_sleep_06",
+    "lesson_0-3_medical_infant_sleep_07",
+    "lesson_0-3_medical_infant_sleep_08",
+    "lesson_0-3_medical_infant_sleep_09",
+    "lesson_0-3_medical_infant_sleep_10"
   ],
-  "estimated_days": 6,
+  "estimated_days": 10,
   "pedagogical_framework": "attachment_rahma",
   "primary_reference": {
     "type": "تقرير_طبي",
@@ -22,14 +26,14 @@
   "is_published": true,
   "version": "1.0.0",
   "created_at": "2026-10-07T16:14:23",
-  "updated_at": "2026-10-07T21:36:36",
+  "updated_at": "2026-10-08T08:35:59",
   "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
   "language": "en",
   "source_language": "ar",
   "translation": {
     "translator_model": "claude-opus-5-5",
     "reviewer_model": "deepseek-v4-pro+glm-5.2",
-    "review_verdict": "low_only",
+    "review_verdict": "clean",
     "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
     "generated_by": "ops/tools/deepen_paths.py",
     "auto_review": {
@@ -40,28 +44,14 @@
       "fixer": null,
       "rounds": 1,
       "prompt_version": "dfa8a5f39718",
-      "content_sha256": "e1f354252fb7b1207d53e540a5ab9d78b7978ded1583e597020f65c091c9bd1e",
-      "reviewed_at": "2026-10-07T21:41:15+00:00",
-      "residual_low": [
-        {
-          "model": "glm-5.2",
-          "field": "title",
-          "type": "source_corruption",
-          "why": "The Arabic phrase «حتى عام» reads as truncated; it should be «حتى عام واحد» to be grammatically complete."
-        }
-      ],
+      "content_sha256": "9b08e259d7cdf0c9f6c26d7b03e9b5dd4e3912f505ae5cdd3bf39b4f75fa8214",
+      "reviewed_at": "2026-10-08T08:39:03+00:00",
+      "residual_low": [],
       "adjudicated": [],
       "tool": "ops/tools/review_en_parity.py",
       "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
     },
-    "review_defects": [
-      {
-        "model": "glm-5.2",
-        "field": "title",
-        "type": "source_corruption",
-        "why": "The Arabic phrase «حتى عام» reads as truncated; it should be «حتى عام واحد» to be grammatically complete."
-      }
-    ],
-    "revalidated_at": "2026-10-07T21:41:15+00:00"
+    "review_defects": [],
+    "revalidated_at": "2026-10-08T08:39:03+00:00"
   }
 }

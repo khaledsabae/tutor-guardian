@@ -1,0 +1,59 @@
+{
+  "id": "lesson_0-3_medical_infant_sleep_09",
+  "path_id": "path_0-3_medical_infant_sleep",
+  "title": "Parents' Tiredness: Your Rest Is Part of Caring for Your Baby",
+  "age_group": "prenatal-1",
+  "domain": "medical",
+  "unit_ids": [
+    "med-d880ebf0",
+    "med-2dc3af5f"
+  ],
+  "summary": "Caring for a baby is truly tiring, especially in the first months when they wake many times in the night, and most fathers and mothers go through this tiredness. This stage does not last; as they grow, their stretches of sleep get longer little by little, though babies differ in this. Your tiredness does not mean you are failing, but your rest needs a plan.\n\nSleep when your baby sleeps during the day, even a little, since rest is sometimes more important than housework, and set an alarm if you are worried about sleeping too long. Share the nights, you and your husband or wife, if you can: if your baby has formula milk, share their feeds, and if their mother breastfeeds them, let the father change their nappy or dress them in the morning so she can go back to sleep. Ask a relative or friend you trust to look after your baby while you sleep a little, or to help you with shopping and housework.\n\nIf sleep is overtaking you while you are holding your baby, put them on their back in their empty cot before you doze off, and never sleep with them on a sofa or armchair; it is one of the most dangerous places for them to sleep.\n\nWatch for what is more than tiredness. Feeling sad, anxious or irritable in the first days after the birth is common, and it usually goes away by itself. But if it continues, gets worse, or you are struggling to cope, it may be postnatal depression. Its signs include: sadness that does not leave you, losing enjoyment in what used to make you happy, feeling hopeless or guilty or that you are a bad parent, constant worry, and difficulty sleeping even when you have time to rest. It can begin in pregnancy, after the birth, or at any time in the first year, and fathers can have it too. It is a common condition that usually gets better with treatment, so speak to the doctor as soon as you can, even if you have only some of these signs.\n\nIf you have thoughts of harming yourself or your baby, or you feel you cannot keep yourself or your baby safe from harm, call an ambulance or go to the emergency department straight away; do not wait. Asking for help is not weakness or failing your baby; it is part of caring for them, because your health is part of their health.",
+  "try_this": "Today: Sit with whoever shares your baby's care, and agree on a plan for tonight: who does what, and in which hours, so that each of you gets some sleep. If you are on your own, choose a relative or friend to ask for help.",
+  "order": 9,
+  "estimated_minutes": 3,
+  "reflection_prompts": [
+    "What tires you most these days, and who could support you so that you get more rest?"
+  ],
+  "warning_flags": [
+    "needs_professional_followup"
+  ],
+  "needs_professional_followup": true,
+  "is_published": true,
+  "version": "1.0.0",
+  "created_at": "2026-10-08T08:35:59",
+  "updated_at": "2026-10-08T08:35:59",
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "claude-opus-5-5",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
+    "revalidated_at": "2026-10-08T08:39:03+00:00",
+    "generated_by": "ops/tools/deepen_paths.py",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "0a4201a6c51617e14c18567dffff857809ec702c6a13730590df84bfeed877c3",
+      "reviewed_at": "2026-10-08T08:39:03+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+    }
+  }
+}
