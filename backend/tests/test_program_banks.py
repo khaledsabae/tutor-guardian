@@ -454,10 +454,17 @@ def test_a_missed_prayer_is_made_up_not_skipped(prayer, milestones):
 
 def test_the_seven_and_ten_guidance_is_stated_honestly(prayer, milestones):
     basis = prayer[0]["basis"]["text"]
-    assert "الضرب" in basis and "لا يستعمله" in basis and "هذا البرنامج" in basis
+    # The wording is named for accurate transmission, the program never hits,
+    # and no blanket «scholars restricted it» clause reads as a usable permission
+    # (GPT programs review PG-07, 2026-10-08).
+    assert "الضرب" in basis and "لا يضرب" in basis and "هذا البرنامج" in basis
+    assert "أمانةً في النقل" in basis and "وقيّده العلماء" not in basis
     assert "h_anas_uff" in prayer[0]["basis"]["evidence_ids"]
     age_ten = _ms(milestones[0], "age_ten")
     assert age_ten["cards"][0]["title"] == "حزمٌ برفق"
+    for key in ("prayer_start", "age_ten"):
+        body = _ms(milestones[0], key)["cards"][0]["body"]
+        assert "لا يضرب" in body and "وقيّده العلماء" not in body
 
 
 def test_no_promise_of_an_adhan_or_prayer_times_feature(prayer):

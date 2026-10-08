@@ -49,7 +49,7 @@
     }
   ],
   "basis": {
-    "text": "The program starts at seven, following the well-known Prophetic guidance to command children to pray at seven and to be firm about it at ten. Its wording mentions striking, which scholars restricted to what is neither harmful nor humiliating; this program does not use it, and relies on example, gradualness and gentleness: the companions learned the prayer by watching, and Anas never heard a word of annoyance from the Prophet ﷺ in the ten years he served him, as in the two attached hadiths. We do not display the wording of the hadith about seven because this program only shows hadith from Sahih al-Bukhari and Sahih Muslim; its source is given in the linked knowledge unit.",
+    "text": "The program starts at seven, following the well-known Prophetic guidance to command children to pray at seven and to be firm about it at ten. Its wording mentions striking; we name it for accuracy in conveying the source, not as practical advice: this program does not hit, threaten or humiliate, and relies on example, gradualness and rifq (gentleness): the companions learned the prayer by watching, and Anas (may Allah be pleased with him) never heard a word of annoyance from the Prophet ﷺ in the ten years he served him, as in the two attached hadiths. We do not display the wording of the hadith about seven because this program only shows hadith from Sahih al-Bukhari and Sahih Muslim; its source is given in the linked knowledge unit.",
     "unit_ids": [
       "isl-f2bef952",
       "isl-1bceeaf6"
@@ -65,7 +65,8 @@
     "No punishment, no hitting, no shaming and no comparison with siblings or anyone else.",
     "Mistakes while learning are part of learning: correct one thing at a time, gently and in private.",
     "A missed prayer is prayed when the child remembers it, with no lecture and no blame.",
-    "The rulings of purification and prayer are learned from people whose knowledge you trust; the app does not issue rulings."
+    "The rulings of purification and prayer are learned from people whose knowledge you trust; the app does not issue rulings.",
+    "The prayer counts in the Journey's stages are learning goals before puberty. After puberty, the five prayers, fajr included, are an obligation at their times, so help him with them in the same gentle way: an early bedtime and your company, without hitting or shaming. Ask scholars about excuses and rulings."
   ],
   "reward_policy": {
     "text": "Coins here encourage the effort of learning; they are not a price for prayer. That is why they shrink from stage to stage until they almost disappear, while praise, hugs and your delight in him remain. The real reward is a covenant you agree with your child in advance and honour on time. Coins are never withheld or taken away as a punishment.",
@@ -445,7 +446,7 @@
         {
           "id": "prayer_s3_two_prayers",
           "title": "Two prayers a day",
-          "instruction": "Pray two prayers every day, at least one of them beside your dad or mum.",
+          "instruction": "Pray two prayers every day, at least one of them beside your dad or mum. Record each prayer once, after you pray it.",
           "estimated_minutes": 7,
           "needs_parent": false,
           "per_week": 14,
@@ -535,7 +536,7 @@
         {
           "id": "prayer_s4_three_prayers",
           "title": "Three prayers a day",
-          "instruction": "Pray three prayers every day, choosing ones that come while you are at home, such as asr, maghrib and isha.",
+          "instruction": "Pray three prayers every day, choosing ones that come while you are at home, such as asr, maghrib and isha. Record each prayer once, after you pray it.",
           "estimated_minutes": 7,
           "needs_parent": false,
           "per_week": 21,
@@ -599,7 +600,7 @@
         {
           "id": "prayer_s5_five_prayers",
           "title": "The five prayers",
-          "instruction": "Try to pray the five prayers every day. If you miss one, pray it when you remember it, and don't be sad.",
+          "instruction": "Try to pray the five prayers every day. If you miss one, pray it when you remember it, and don't be sad. Record each prayer once, after you pray it.",
           "estimated_minutes": 7,
           "needs_parent": false,
           "per_week": 35,
@@ -628,7 +629,7 @@
         "You woke up for fajr with us, and it was a beautiful prayer.",
         "Your day is organised around prayer now, and that makes me so happy."
       ],
-      "if_struggling": "If five feel heavy, celebrate the prayers he did pray instead of counting the ones he missed, and look together for the prayer he misses most and why. At this stage, fajr on school days is not asked of him at the expense of his sleep.",
+      "if_struggling": "If five feel heavy, celebrate the prayers he did pray instead of counting the ones he missed, and look together for the prayer he misses most and why. Before puberty, fajr on school days is not asked of him at this stage at the expense of his sleep; after puberty, fajr is an obligation at its time, so help him with an earlier bedtime.",
       "covenant": {
         "coins_target": 200,
         "examples": [
@@ -676,7 +677,7 @@
         {
           "id": "prayer_s6_self_track",
           "title": "I track my own prayers",
-          "instruction": "Pray the five prayers and tick them yourself in your prayer chart; your parents confirm them in the evening.",
+          "instruction": "Pray the five prayers and tick them yourself in your prayer chart; your parents confirm them in the evening. Record each prayer once, after you pray it.",
           "estimated_minutes": 7,
           "needs_parent": false,
           "per_week": 35,
@@ -731,8 +732,8 @@
   ],
   "graduation": {
     "title": "Prayer Journey graduation",
-    "text": "Twelve weeks of learning deserve a celebration: a certificate he hangs up, a big covenant you honour, and a du'a for him in front of the family. After graduating he moves on to 'My prayer, my responsibility'. The attached hadith shows that Allah loves deeds done consistently, even if small, so the aim is for prayer to stay with him.",
-    "certificate_text": "Prayer Journey certificate: the holder of this certificate has completed twelve weeks of learning the prayer with effort and love. We ask Allah to make him one of those who faithfully keep up the prayer.",
+    "text": "Completing the learning journey deserves a celebration: a certificate he hangs up, a big covenant you honour, and a du'a for him in front of the family. After graduating he moves on to 'My prayer, my responsibility'. The attached hadith shows that Allah loves deeds done consistently, even if small, so the aim is for prayer to stay with him.",
+    "certificate_text": "Prayer Journey certificate: the holder of this certificate has completed the journey of learning the prayer with effort and love. We ask Allah to make him one of those who faithfully keep up the prayer.",
     "journey_milestone_keys": [
       "keeps_prayer"
     ],
@@ -771,7 +772,7 @@
       {
         "id": "prayer_own_five",
         "title": "My five prayers",
-        "instruction": "Pray the five prayers at their times and record them yourself, honestly.",
+        "instruction": "Pray the five prayers at their times and record them yourself, honestly. Record each prayer once, after you pray it.",
         "estimated_minutes": 7,
         "needs_parent": false,
         "per_week": 35,

@@ -7,7 +7,7 @@
   "unit_ids": [
     "med-2dc3af5f"
   ],
-  "summary": "Especially in the first weeks, some babies will only fall asleep in a parent's arms, or while a parent stands by the cot. This is common, and it is not spoiling or stubbornness; you will not spoil your baby by holding them or responding to them, and your closeness makes them feel safe.\n\nBut their safe place to sleep is their cot, not your arms. If they fall asleep in your arms, put them on their back in their own empty cot in your room before you fall asleep yourself. Never doze off with them on your chest on a sofa or armchair. If they fall asleep in a baby carrier, move them to their cot on their back as soon as you can.\n\nFrom about four months, you can gradually help them fall asleep in their cot: put them down drowsy, before they are fully asleep; a baby who is used to falling asleep while held or rocked may struggle to get back to sleep if they wake at night. When they fuss in the cot, start with the lightest step: look at them, then talk to them in a calm voice, then touch them gently, giving each step time before the next; if they do not settle, pick them up and soothe them. It is normal for a baby of about six months to wake at night and go back to sleep after a few minutes, but if they are hungry, need a nappy change, or are unwell, go to them and respond.\n\nThere is no set deadline for this learning, and it may slip back after illness, teething or a growth stage; return to your steps calmly. If you are worried about their sleep, ask their doctor. If they are hard to wake or will not wake, are floppy in an unusual way, have difficulty breathing or stop breathing, turn blue or grey, or have a temperature of 38C or higher while under three months old, call an ambulance or go to the emergency department straight away.",
+  "summary": "Especially in the first weeks, some babies will only fall asleep in a parent's arms, or while a parent stands by the cot. This is common, and it is not spoiling or stubbornness; you will not spoil your baby by holding them or responding to them, and your closeness makes them feel safe.\n\nBut their safe place to sleep is their cot, not your arms. If they fall asleep in your arms, put them on their back in their own empty cot in your room before you fall asleep yourself. Never doze off with them on your chest on a sofa or armchair. If they fall asleep in a baby carrier, move them to their cot on their back as soon as you can.\n\nFrom about four months, you can gradually help them fall asleep in their cot: put them down drowsy, before they are fully asleep; a baby who is used to falling asleep while held or rocked may struggle to get back to sleep if they wake at night. When they fuss in the cot, start with the lightest step: look at them, then talk to them in a calm voice, then touch them gently, giving each step time before the next; if they do not settle, pick them up and soothe them. It is normal for a baby of about six months to wake at night and go back to sleep after a few minutes, but if they are hungry, need a nappy change, or are unwell, go to them and respond.\n\nThere is no set deadline for this learning, and it may slip back after illness, teething or a growth stage; return to your steps calmly. If you are worried about their sleep, ask their doctor. If they are hard to wake or will not wake, are floppy in an unusual way, have difficulty breathing or stop breathing, turn blue or grey, or have a temperature of 38C or higher while under three months old or 39C or higher while aged three to six months, call an ambulance or go to the emergency department straight away. You will find the other signs, such as a seizure, a low temperature or a rash that does not fade when you press on it, in the lesson «Signs That Cannot Wait Until Morning».",
   "try_this": "Today: At one daytime nap, if your baby is about four months or older, put them on their back in their cot while drowsy; if younger, move them to their cot after they fall asleep in your arms. Stay close and notice what calms them.",
   "order": 6,
   "estimated_minutes": 3,
@@ -19,7 +19,7 @@
   "is_published": true,
   "version": "1.0.0",
   "created_at": "2026-10-07T21:36:36",
-  "updated_at": "2026-10-07T21:36:36",
+  "updated_at": "2026-10-08T23:00:00",
   "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
   "language": "en",
   "source_language": "ar",
@@ -35,22 +35,35 @@
     "review_verdict": "clean",
     "review_defects": [],
     "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
-    "revalidated_at": "2026-10-07T21:38:34+00:00",
+    "revalidated_at": "2026-10-08T15:52:29+00:00",
     "generated_by": "ops/tools/deepen_paths.py",
     "auto_review": {
       "reviewers": [
         "deepseek-v4-pro",
         "glm-5.2"
       ],
+      "providers": {
+        "deepseek-v4-pro": {
+          "provider": "openrouter",
+          "model": "deepseek/deepseek-v4-pro"
+        },
+        "glm-5.2": {
+          "provider": "openrouter",
+          "model": "z-ai/glm-5.2"
+        }
+      },
       "fixer": null,
       "rounds": 1,
       "prompt_version": "dfa8a5f39718",
-      "content_sha256": "70e90f0ec9027444f00a0c4a3cf388f64d56b3de87f9bd3abe1a3acc3fa813de",
-      "reviewed_at": "2026-10-07T21:38:34+00:00",
+      "content_sha256": "ae2a99aa17332060730f538f931c8f52f58d133c8fa5942daf883594246e34d3",
+      "reviewed_at": "2026-10-08T15:52:29+00:00",
       "residual_low": [],
       "adjudicated": [],
       "tool": "ops/tools/review_en_parity.py",
       "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
-    }
+    },
+    "english_authors": [
+      "claude-opus-5.5"
+    ]
   }
 }

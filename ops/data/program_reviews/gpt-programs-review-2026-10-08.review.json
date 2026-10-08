@@ -1,0 +1,1734 @@
+{
+  "trigger": "artifacts/gpt-programs-review-2026-10-08.md (independent GPT review: 0 P0, 2 P1, 7 P2, 1 P3) + follow-ups from artifacts/gpt-content-review-2026-10-08.md",
+  "branch": "content/programs-review-fixes (stacked on PR #79, origin/main f1ddef4f merged)",
+  "corrections_by": "claude-opus-5-5",
+  "method": "each cited source re-fetched (URL + sha256); minimal AR+EN edits; dual-family review (deepseek-v4-pro + glm-5.2) of every changed item on its final hash with source excerpts, concurrency 1, 120 s hard limit, stop on 402/429; lessons/tips EN stamped by review_en_parity.py",
+  "provider_note": "Ollama Cloud at its weekly cap (429 probe 2026-10-08); both families via OpenRouter on the analytics-platform key read in-process; GLM provider order baseten->z-ai, low reasoning effort",
+  "prompt_note": "round 1 program prompt said hadith are never quoted in free text; deepseek read it as banning references to attached hadith. Round 2+ prompt states the real rule (check_programs.py). Raw replies of every round are kept in evidence.",
+  "items": {
+    "PG01": {
+      "finding": "P1",
+      "status": "fixed",
+      "change": "ladder_band routes a 13-15/16-18 child not marked pubertal to the 10-12 training steps (test added); 13-15 summary: prepubertal fasting is training; ladder principle: scholars differ on age as a sign (neutral)",
+      "final_hash": "e57420289fb60ae8a16928dca9447d4abfec82a6df35066715e1856c7b647b5d",
+      "hash_of": "sha256 of the reviewed AR+EN field texts (programs) / review_en_parity content hash (lessons) / AR+EN text (tips)",
+      "providers": {
+        "deepseek-v4-pro": {
+          "provider": "openrouter",
+          "model": "deepseek/deepseek-v4-pro"
+        },
+        "glm-5.2": {
+          "provider": "openrouter",
+          "model": "z-ai/glm-5.2"
+        }
+      },
+      "by_model": {
+        "deepseek-v4-pro": {
+          "arabic": {
+            "high": 0,
+            "medium": 1,
+            "low": 2
+          },
+          "english": {
+            "high": 0,
+            "medium": 1,
+            "low": 2
+          }
+        },
+        "glm-5.2": {
+          "arabic": {
+            "high": 0,
+            "medium": 0,
+            "low": 0
+          },
+          "english": {
+            "high": 0,
+            "medium": 0,
+            "low": 0
+          }
+        }
+      },
+      "no_medium_high_from_either": false,
+      "residual_adjudicated": [
+        {
+          "model": "deepseek-v4-pro",
+          "side": "ar",
+          "severity": "medium",
+          "type": "sharia",
+          "field": "ramadan_family:fasting_ladder/principles/2",
+          "quote": "وتفاصيل علامات البلوغ عند أهل العلم، ومنهم من يعدّ بلوغ سنٍّ معيّنة بلوغًا وإن لم تظهر علامة أخرى، على خلافٍ بينهم في تحديدها.",
+          "reviewer_why": "This is a fatwa-like statement on a disputed matter (the age of puberty without physical signs). The program rule states 'madhhab differences stated neutrally' but also 'rulings deferred to scholars'. Here the text itself enters the scholarly dispute by naming the existence of the opinion and the disagreement on the specific age, which is a ruling detail. It should simply defer to scholars without",
+          "adjudication": "Neutral by construction: it names no school's age and says scholars differ on it (dorar feqhia 814 records age as a sign for the Shafi'i/Hanbali and two Hanafi imams, with other views); the brief requires madhhab differences presented neutrally. GLM: clean."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "side": "en",
+          "severity": "medium",
+          "type": "meaning_change",
+          "field": "ramadan_family:fasting_ladder/principles/2",
+          "quote": "The details of the signs of puberty are for scholars; some count reaching a certain age as puberty even without another sign, and they differ on which age.",
+          "reviewer_why": "The Arabic says 'وتفاصيل علامات البلوغ عند أهل العلم' (the details of the signs of puberty are with the scholars), which is a deferral. The English adds 'are for scholars', which is a slight shift in meaning, implying the details are exclusively for scholars to know, rather than to be referred to them. More importantly, the English then elaborates on the scholarly disagreement about age, which the",
+          "adjudication": "'are for scholars' is the unchanged pre-existing English for «عند أهل العلم» and carries the same deferral."
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://sunnah.com/abudawud:4403",
+          "final_url": "https://sunnah.com/abudawud:4403",
+          "http": "403",
+          "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "fetched_at": "2026-10-08T14:09:11Z",
+          "via": "curl"
+        },
+        {
+          "url": "https://dorar.net/feqhia/814",
+          "page_sha256": "da3057496ac200ccecd9dc61bcb187876500b86299ecef4d0e18a28d9ef8a2d4",
+          "via": "desktop built-in browser (Cloudflare blocks curl)",
+          "fetched_at": "2026-10-08"
+        },
+        {
+          "url": "https://quran.com/2/185",
+          "final_url": "https://quran.com/al-baqarah/185",
+          "http": "200",
+          "text_sha256": "be4288d80dbcbf0925d584e2515cba7a7893c5046503d1a1c01e04a5f816b533",
+          "fetched_at": "2026-10-08T14:09:22Z",
+          "via": "curl"
+        }
+      ]
+    },
+    "PG02": {
+      "finding": "P1",
+      "status": "fixed",
+      "change": "Journey principle: stage counts are learning goals before puberty; after puberty the five incl. fajr are obligatory, helped gently, no hitting/shaming, ask scholars; stage-5 fajr exception scoped to before puberty",
+      "final_hash": "1ec7a013de80e97d6f86e621fdbb6971f4d0e625dc34107498ecf1cc1e45aa9d",
+      "hash_of": "sha256 of the reviewed AR+EN field texts (programs) / review_en_parity content hash (lessons) / AR+EN text (tips)",
+      "providers": {
+        "deepseek-v4-pro": {
+          "provider": "openrouter",
+          "model": "deepseek/deepseek-v4-pro"
+        },
+        "glm-5.2": {
+          "provider": "openrouter",
+          "model": "z-ai/glm-5.2"
+        }
+      },
+      "by_model": {
+        "deepseek-v4-pro": {
+          "arabic": {
+            "high": 2,
+            "medium": 2,
+            "low": 0
+          },
+          "english": {
+            "high": 2,
+            "medium": 0,
+            "low": 1
+          }
+        },
+        "glm-5.2": {
+          "arabic": {
+            "high": 0,
+            "medium": 0,
+            "low": 0
+          },
+          "english": {
+            "high": 0,
+            "medium": 0,
+            "low": 0
+          }
+        }
+      },
+      "no_medium_high_from_either": false,
+      "residual_adjudicated": [
+        {
+          "model": "deepseek-v4-pro",
+          "side": "ar",
+          "severity": "high",
+          "type": "sharia",
+          "field": "prayer_journey:principles/6",
+          "quote": "أما من بلغ فالصلوات الخمس فريضة عليه في أوقاتها، ومنها الفجر، فأعينوه عليها بالرفق نفسه: نوم مبكر وصحبة، بلا ضرب ولا تعيير.",
+          "reviewer_why": "This is a fatwa (ruling) stating that the five prayers, including fajr, are obligatory upon the pubescent child at their times, and prescribing specific parental assistance (early bedtime, company) while prohibiting hitting and shaming. The program rules state: 'rulings deferred to scholars'. This text issues a ruling directly to the parent rather than deferring to scholars. The instruction 'واسأل",
+          "adjudication": "Not a fatwa on a disputed matter: that a pubertal Muslim must pray the five prayers and fast, that ihtilam/menses mark puberty, that a menstruating girl neither prays nor fasts and makes the fasts up, and that illness has a concession are agreed points (Abu Dawud 4403 'the boy until he reaches puberty', Sahih per al-Albani on sunnah.com; dorar feqhia 814: ihtilam a sign of puberty by ijma'; Bukhari 304 'when she menstruates she neither prays nor fasts'; Qur'an 2:185). Each text already defers details and excuses to scholars. The P1/P2 findings asked for exactly these statements next to the obligation."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "side": "ar",
+          "severity": "high",
+          "type": "sharia",
+          "field": "prayer_journey:stages/4/if_struggling",
+          "quote": "أما من بلغ فالفجر فريضة عليه في وقته، فأعينوه عليه بنوم مبكر.",
+          "reviewer_why": "This is a fatwa (ruling) stating that fajr is an obligation upon the pubescent child at its time, and prescribing an early bedtime as assistance. The program rules state: 'rulings deferred to scholars'. This text issues a ruling directly to the parent.",
+          "adjudication": "Not a fatwa on a disputed matter: that a pubertal Muslim must pray the five prayers and fast, that ihtilam/menses mark puberty, that a menstruating girl neither prays nor fasts and makes the fasts up, and that illness has a concession are agreed points (Abu Dawud 4403 'the boy until he reaches puberty', Sahih per al-Albani on sunnah.com; dorar feqhia 814: ihtilam a sign of puberty by ijma'; Bukhari 304 'when she menstruates she neither prays nor fasts'; Qur'an 2:185). Each text already defers details and excuses to scholars. The P1/P2 findings asked for exactly these statements next to the obligation."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "side": "ar",
+          "severity": "medium",
+          "type": "register",
+          "field": "prayer_journey:principles/6",
+          "quote": "فأعينوه عليها بالرفق نفسه: نوم مبكر وصحبة، بلا ضرب ولا تعيير.",
+          "reviewer_why": "The phrase 'نوم مبكر وصحبة' is a noun phrase lacking a grammatical connector to the preceding clause. It reads as a stiff, awkward list rather than a flowing sentence in easy Modern Standard Arabic. A more natural phrasing would be 'مثل النوم المبكر والصُّحبة' or 'كالنوم المبكر والصُّحبة'.",
+          "adjudication": "Grammatical MSA (a colon introducing the means); register only, no meaning issue. GLM: clean."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "side": "ar",
+          "severity": "medium",
+          "type": "register",
+          "field": "prayer_journey:stages/4/if_struggling",
+          "quote": "وقبل البلوغ لا يُطلب الفجر في أيام المدرسة في هذه المرحلة على حساب نومه؛ أما من بلغ فالفجر فريضة عليه في وقته، فأعينوه عليه بنوم مبكر.",
+          "reviewer_why": "The sentence is long and convoluted, combining a concession for pre-puberty, a ruling for puberty, and a practical instruction. The flow is stiff and preachy, not the warm, easy MSA register required.",
+          "adjudication": "One sentence, two clauses separated by a semicolon, mirroring the before/after-puberty contrast the P1 finding requires."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "side": "en",
+          "severity": "high",
+          "type": "meaning_change",
+          "field": "prayer_journey:principles/6",
+          "quote": "After puberty, the five prayers, fajr included, are an obligation at their times, so help him with them in the same gentle way: an early bedtime and your company, without hitting or shaming. Ask scholars about excuses and rulings.",
+          "reviewer_why": "The Arabic says 'واسألوا أهل العلم عن الأعذار والأحكام' (Ask scholars about excuses and rulings). The English translates this as 'Ask scholars about excuses and rulings.' This is a direct translation, but the defect is that the English, like the Arabic, presents the obligation as a settled fact and only defers on excuses and rulings. This is a meaning change from the required stance of deferring a",
+          "adjudication": "Not a fatwa on a disputed matter: that a pubertal Muslim must pray the five prayers and fast, that ihtilam/menses mark puberty, that a menstruating girl neither prays nor fasts and makes the fasts up, and that illness has a concession are agreed points (Abu Dawud 4403 'the boy until he reaches puberty', Sahih per al-Albani on sunnah.com; dorar feqhia 814: ihtilam a sign of puberty by ijma'; Bukhari 304 'when she menstruates she neither prays nor fasts'; Qur'an 2:185). Each text already defers details and excuses to scholars. The P1/P2 findings asked for exactly these statements next to the obligation."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "side": "en",
+          "severity": "high",
+          "type": "meaning_change",
+          "field": "prayer_journey:stages/4/if_struggling",
+          "quote": "after puberty, fajr is an obligation at its time, so help him with an earlier bedtime.",
+          "reviewer_why": "The Arabic says 'أما من بلغ فالفجر فريضة عليه في وقته، فأعينوه عليه بنوم مبكر.' The English translates this directly, presenting the obligation as a fact. This is a meaning change from the required stance of deferring all rulings to scholars. The English should match a corrected Arabic that defers the ruling.",
+          "adjudication": "Not a fatwa on a disputed matter: that a pubertal Muslim must pray the five prayers and fast, that ihtilam/menses mark puberty, that a menstruating girl neither prays nor fasts and makes the fasts up, and that illness has a concession are agreed points (Abu Dawud 4403 'the boy until he reaches puberty', Sahih per al-Albani on sunnah.com; dorar feqhia 814: ihtilam a sign of puberty by ijma'; Bukhari 304 'when she menstruates she neither prays nor fasts'; Qur'an 2:185). Each text already defers details and excuses to scholars. The P1/P2 findings asked for exactly these statements next to the obligation."
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://sunnah.com/abudawud:4403",
+          "final_url": "https://sunnah.com/abudawud:4403",
+          "http": "403",
+          "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "fetched_at": "2026-10-08T14:09:11Z",
+          "via": "curl"
+        },
+        {
+          "url": "https://sunnah.com/abudawud:495",
+          "final_url": "https://sunnah.com/abudawud:495",
+          "http": "403",
+          "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "fetched_at": "2026-10-08T14:09:12Z",
+          "via": "curl"
+        },
+        {
+          "url": "https://dorar.net/h/hNFwnqPy",
+          "final_url": "https://dorar.net/h/hNFwnqPy",
+          "http": "403",
+          "text_sha256": "3e0a6cf019445ba91f4352bea16dcced8e5c9b69081e5b9e6e8db6c3390700bc",
+          "fetched_at": "2026-10-08T14:09:13Z",
+          "via": "curl"
+        }
+      ]
+    },
+    "PG03": {
+      "finding": "P2",
+      "status": "fixed",
+      "change": "preschool step: sweets wait for an agreed time; meals, nutritious snacks and water unchanged; EN label 'sweets'",
+      "final_hash": "01ffa35d7267535341ab5e117d29f14c08c7c0f32f5ca03b13ea0891b8845d69",
+      "hash_of": "sha256 of the reviewed AR+EN field texts (programs) / review_en_parity content hash (lessons) / AR+EN text (tips)",
+      "providers": {
+        "deepseek-v4-pro": {
+          "provider": "openrouter",
+          "model": "deepseek/deepseek-v4-pro"
+        },
+        "glm-5.2": {
+          "provider": "openrouter",
+          "model": "z-ai/glm-5.2"
+        }
+      },
+      "by_model": {
+        "deepseek-v4-pro": {
+          "arabic": {
+            "high": 0,
+            "medium": 2,
+            "low": 0
+          },
+          "english": {
+            "high": 0,
+            "medium": 1,
+            "low": 0
+          }
+        },
+        "glm-5.2": {
+          "arabic": {
+            "high": 0,
+            "medium": 0,
+            "low": 0
+          },
+          "english": {
+            "high": 0,
+            "medium": 0,
+            "low": 0
+          }
+        }
+      },
+      "no_medium_high_from_either": false,
+      "residual_adjudicated": [
+        {
+          "model": "deepseek-v4-pro",
+          "side": "ar",
+          "severity": "medium",
+          "type": "register",
+          "field": "ramadan_family:fasting_ladder/bands/4-6/steps/1/text",
+          "quote": "الوجبات الخفيفة المغذّية",
+          "reviewer_why": "The phrase 'الوجبات الخفيفة المغذّية' is grammatically awkward and stiff. The adjective 'المغذّية' should agree in definiteness with the noun it modifies. A more natural Modern Standard Arabic phrasing would be 'الوجبات الخفيفة المُغذِّية' (with shadda and correct definiteness) or rephrased for flow.",
+          "adjudication": "«الوجبات الخفيفة المغذّية» is standard MSA (غذّى → مُغذٍّ) and definite-agreeing; the reviewer's own 'fix' is the same words with diacritics."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "side": "ar",
+          "severity": "medium",
+          "type": "pedagogy",
+          "field": "ramadan_family:fasting_ladder/bands/4-6/steps/1/text",
+          "quote": "يومًا أو يومين في الأسبوع: تنتظر الحلوى إلى وقت تتفقون عليه، وتبقى الوجبات والوجبات الخفيفة المغذّية في أوقاتها المعتادة، والماء متاح دائمًا. هذا ليس صيامًا، بل تدريب على الصبر.",
+          "reviewer_why": "The 'try_this' instruction is not one concrete action. It combines multiple directives (waiting for sweets, keeping meals at usual times, water always available) and lacks a single, immediate, doable step for the parent to implement today.",
+          "adjudication": "This is a ladder step, not a lesson's try_this; one practice (sweets wait) with the safeguards the AAP source requires."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "side": "en",
+          "severity": "medium",
+          "type": "meaning_change",
+          "field": "ramadan_family:fasting_ladder/bands/4-6/steps/1/label",
+          "quote": "A day without sweets between meals",
+          "reviewer_why": "The English label says 'sweets' but the Arabic label 'يوم بلا حلوى بين الوجبات' also says 'حلوى' (sweets). However, the previous English label was 'A day without snacks between meals' and the change note says 'Preschool training removed nutritious snacks as well as sweets'. The current English label 'A day without sweets between meals' omits the 'nutritious snacks' aspect that was supposedly remov",
+          "adjudication": "Factually wrong: the English label already reads 'A day without sweets between meals', matching «يوم بلا حلوى بين الوجبات»."
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.healthychildren.org/English/ages-stages/preschool/nutrition-fitness/Pages/Feeding-and-Nutrition-Your-4-to-5-Year-Old.aspx",
+          "final_url": "https://www.healthychildren.org/English/ages-stages/preschool/nutrition-fitness/Pages/Feeding-and-Nutrition-Your-4-to-5-Year-Old.aspx",
+          "http": "200",
+          "text_sha256": "a42f653a5376fccf6151c22b7787c4c569642fa66a3544c5ccd44553ef994869",
+          "fetched_at": "2026-10-08T14:09:29Z",
+          "via": "curl"
+        }
+      ]
+    },
+    "PG04": {
+      "finding": "P2",
+      "status": "fixed",
+      "change": "urgent_action: one rule per situation (unresponsive -> emergency, nothing by mouth unless able to swallow; conscious diabetic hypo -> plan now, emergency if no improvement/less responsive; vomiting preventing drinking -> urgent care now)",
+      "final_hash": "7dea97358c5a870ae9325f186de2c7275268a033fd10e3daf0d07a17f1474100",
+      "hash_of": "sha256 of the reviewed AR+EN field texts (programs) / review_en_parity content hash (lessons) / AR+EN text (tips)",
+      "providers": {
+        "deepseek-v4-pro": {
+          "provider": "openrouter",
+          "model": "deepseek/deepseek-v4-pro"
+        },
+        "glm-5.2": {
+          "provider": "openrouter",
+          "model": "z-ai/glm-5.2"
+        }
+      },
+      "by_model": {
+        "deepseek-v4-pro": {
+          "arabic": {
+            "high": 0,
+            "medium": 1,
+            "low": 1
+          },
+          "english": {
+            "high": 0,
+            "medium": 0,
+            "low": 2
+          }
+        },
+        "glm-5.2": {
+          "arabic": {
+            "high": 0,
+            "medium": 0,
+            "low": 0
+          },
+          "english": {
+            "high": 0,
+            "medium": 0,
+            "low": 0
+          }
+        }
+      },
+      "no_medium_high_from_either": false,
+      "residual_adjudicated": [
+        {
+          "model": "deepseek-v4-pro",
+          "side": "ar",
+          "severity": "medium",
+          "type": "medical",
+          "field": "ramadan_family:fasting_ladder/urgent_action",
+          "quote": "وللطفل المصاب بالسكري: إن ظهرت علامة هبوط وهو واعٍ يستطيع البلع فاتبعوا خطة طبيبه فورًا (سكر سريع كالعصير أو أقراص الجلوكوز)، واتصلوا بالإسعاف إن لم يتحسّن أو ضعفت استجابته.",
+          "reviewer_why": "The instruction to call emergency services if the child does not improve or becomes less responsive is correct, but the text omits the critical step of checking blood sugar after 10-15 minutes as per the NHS source. It also does not mention giving a second dose of fast-acting sugar if blood sugar remains low, which is standard medical advice before escalating to emergency services. This could lead",
+          "adjudication": "NHS's 10-15 minute re-check is the self-treatment loop of a diabetes plan, which the text tells parents to follow; NHS's call-999 criterion is responsiveness (not responding normally / unconscious), which the text states. Adding a fixed minute count not in the parent's plan would be a new clinical rule."
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.nhs.uk/conditions/low-blood-sugar-hypoglycaemia/",
+          "final_url": "https://www.nhs.uk/conditions/low-blood-sugar-hypoglycaemia/",
+          "http": "200",
+          "text_sha256": "35e20dfe3688c8e3900d5cdacc900a796832f827807f9c72c0f2970d0da8f21f",
+          "fetched_at": "2026-10-08T14:09:24Z",
+          "via": "curl"
+        },
+        {
+          "url": "https://www.nhs.uk/conditions/dehydration/",
+          "final_url": "https://www.nhs.uk/conditions/dehydration/",
+          "http": "200",
+          "text_sha256": "672e16302d7397991ad2116cd5198dc9055373ddf22c5a8d5f4ed80c7a242563",
+          "fetched_at": "2026-10-08T14:09:26Z",
+          "via": "curl"
+        },
+        {
+          "url": "https://www.healthychildren.org/English/health-issues/injuries-emergencies/Pages/dehydration.aspx",
+          "final_url": "https://www.healthychildren.org/English/health-issues/injuries-emergencies/Pages/dehydration.aspx",
+          "http": "200",
+          "text_sha256": "ca9b2c7ea51f2cc8170e157afdb942fed81e919201f19ea5c218a997e7009c51",
+          "fetched_at": "2026-10-08T14:09:32Z",
+          "via": "curl"
+        }
+      ]
+    },
+    "PG05": {
+      "finding": "P2",
+      "status": "fixed (content); UI label/prayer-name dedup not changed",
+      "change": "every multi-slot prayer task: record each prayer once, after praying it",
+      "final_hash": "88548cf103aebb17c022bdf0606ec87e87802d2be0d0506dc5f405129fc512a1",
+      "hash_of": "sha256 of the reviewed AR+EN field texts (programs) / review_en_parity content hash (lessons) / AR+EN text (tips)",
+      "providers": {
+        "deepseek-v4-pro": {
+          "provider": "openrouter",
+          "model": "deepseek/deepseek-v4-pro"
+        },
+        "glm-5.2": {
+          "provider": "openrouter",
+          "model": "z-ai/glm-5.2"
+        }
+      },
+      "by_model": {
+        "deepseek-v4-pro": {
+          "arabic": {
+            "high": 0,
+            "medium": 1,
+            "low": 0
+          },
+          "english": {
+            "high": 0,
+            "medium": 1,
+            "low": 0
+          }
+        },
+        "glm-5.2": {
+          "arabic": {
+            "high": 0,
+            "medium": 0,
+            "low": 0
+          },
+          "english": {
+            "high": 0,
+            "medium": 0,
+            "low": 0
+          }
+        }
+      },
+      "no_medium_high_from_either": false,
+      "residual_adjudicated": [
+        {
+          "model": "deepseek-v4-pro",
+          "side": "ar",
+          "severity": "medium",
+          "type": "register",
+          "field": "prayer_journey:stages/5/child_tasks/0/instruction",
+          "quote": "ويثبّتها والداك في المساء",
+          "reviewer_why": "Spelling error: 'المساء' should be 'المساء' (with hamza on the alif: المساء). The current spelling is incorrect in Modern Standard Arabic.",
+          "adjudication": "Factually wrong: the text already reads «في المساء»; the reviewer's 'fix' is identical."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "side": "en",
+          "severity": "medium",
+          "type": "meaning_change",
+          "field": "prayer_journey:stages/5/child_tasks/0/instruction",
+          "quote": "tick them yourself in your prayer chart",
+          "reviewer_why": "The Arabic says 'وسجّلها بنفسك في جدول صلاتك' which means 'record them yourself in your prayer chart'. The English specifies 'tick them', which is a narrower, more specific action than the general 'record' in the Arabic. This changes the meaning of the instruction.",
+          "adjudication": "Pre-existing English; ticking a chart is recording, no meaning change."
+        }
+      ],
+      "sources": []
+    },
+    "PG06": {
+      "finding": "P2",
+      "status": "fixed",
+      "change": "certificate and graduation text celebrate completing the Journey, not twelve weeks",
+      "final_hash": "3f0ccf4b35c1d7d02fd9f7a8aa140bf2e78c497b158f009a04198d9db4f3ea1f",
+      "hash_of": "sha256 of the reviewed AR+EN field texts (programs) / review_en_parity content hash (lessons) / AR+EN text (tips)",
+      "providers": {
+        "deepseek-v4-pro": {
+          "provider": "openrouter",
+          "model": "deepseek/deepseek-v4-pro"
+        },
+        "glm-5.2": {
+          "provider": "openrouter",
+          "model": "z-ai/glm-5.2"
+        }
+      },
+      "by_model": {
+        "deepseek-v4-pro": {
+          "arabic": {
+            "high": 1,
+            "medium": 0,
+            "low": 0
+          },
+          "english": {
+            "high": 1,
+            "medium": 0,
+            "low": 0
+          }
+        },
+        "glm-5.2": {
+          "arabic": {
+            "high": 0,
+            "medium": 0,
+            "low": 0
+          },
+          "english": {
+            "high": 0,
+            "medium": 0,
+            "low": 1
+          }
+        }
+      },
+      "no_medium_high_from_either": false,
+      "residual_adjudicated": [
+        {
+          "model": "deepseek-v4-pro",
+          "side": "ar",
+          "severity": "high",
+          "type": "sharia",
+          "field": "prayer_journey:graduation/text",
+          "quote": "والحديث المرفق يبيّن أن الله يحب العمل الدائم ولو كان قليلًا",
+          "reviewer_why": "The text paraphrases the meaning of a hadith ('Allah loves deeds done consistently, even if small') and explicitly references the attached hadith. This is a direct paraphrase of a hadith wording, which is prohibited by the rules. The rules state: 'free text may refer to an attached hadith by its meaning... it must not quote hadith wording verbatim'. This paraphrase is too close to the wording of t",
+          "adjudication": "Design permits referring to an ATTACHED hadith by its meaning; only verbatim wording, «قال النبي»/«رواه» or unattached attribution are barred (check_programs.py). The cards are attached and verified against the Sahihayn by check_hadith_citations (HADITH OK, 100 program cards): basis -> h_pray_as_seen (Bukhari 631), h_anas_uff (Bukhari 6038); milestone age_ten -> h_gentle (Bukhari 6927), h_anas_uff; puberty cards -> h_umm_sulaym (Bukhari 130), h_haya_good (Bukhari 6117); graduation -> h_steady (Bukhari 6464). Text pre-dates this branch except where this branch only added honorifics."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "side": "en",
+          "severity": "high",
+          "type": "religious_error",
+          "field": "prayer_journey:graduation/text",
+          "quote": "The attached hadith shows that Allah loves deeds done consistently, even if small",
+          "reviewer_why": "The English text presents a paraphrase of a hadith as a statement of fact about what the hadith 'shows'. The Arabic text does the same, but the English rendering of this paraphrase is a direct translation of a well-known hadith meaning. Presenting this as a description of an attached hadith is acceptable, but the English phrasing 'Allah loves deeds done consistently, even if small' is a near-verba",
+          "adjudication": "Design permits referring to an ATTACHED hadith by its meaning; only verbatim wording, «قال النبي»/«رواه» or unattached attribution are barred (check_programs.py). The cards are attached and verified against the Sahihayn by check_hadith_citations (HADITH OK, 100 program cards): basis -> h_pray_as_seen (Bukhari 631), h_anas_uff (Bukhari 6038); milestone age_ten -> h_gentle (Bukhari 6927), h_anas_uff; puberty cards -> h_umm_sulaym (Bukhari 130), h_haya_good (Bukhari 6117); graduation -> h_steady (Bukhari 6464). Text pre-dates this branch except where this branch only added honorifics."
+        }
+      ],
+      "sources": []
+    },
+    "PG07": {
+      "finding": "P2",
+      "status": "fixed",
+      "change": "basis + milestone cards 2/6: striking wording named for accurate transmission, not advice; program does not hit, threaten or humiliate; permissive clause removed; card 2 adds the post-puberty obligation",
+      "final_hash": "71a88f1c0584b2c670b21bb99a8649fb6f99e788ab50db44d52a82ad30941fd1",
+      "hash_of": "sha256 of the reviewed AR+EN field texts (programs) / review_en_parity content hash (lessons) / AR+EN text (tips)",
+      "providers": {
+        "deepseek-v4-pro": {
+          "provider": "openrouter",
+          "model": "deepseek/deepseek-v4-pro"
+        },
+        "glm-5.2": {
+          "provider": "openrouter",
+          "model": "z-ai/glm-5.2"
+        }
+      },
+      "by_model": {
+        "deepseek-v4-pro": {
+          "arabic": {
+            "high": 4,
+            "medium": 2,
+            "low": 2
+          },
+          "english": {
+            "high": 0,
+            "medium": 2,
+            "low": 5
+          }
+        },
+        "glm-5.2": {
+          "arabic": {
+            "high": 0,
+            "medium": 2,
+            "low": 0
+          },
+          "english": {
+            "high": 0,
+            "medium": 0,
+            "low": 0
+          }
+        }
+      },
+      "no_medium_high_from_either": false,
+      "residual_adjudicated": [
+        {
+          "model": "deepseek-v4-pro",
+          "side": "ar",
+          "severity": "high",
+          "type": "sharia",
+          "field": "prayer_journey:basis/text",
+          "quote": "وقد ورد في لفظه الضرب، ونذكره أمانةً في النقل لا توجيهًا عمليًا",
+          "reviewer_why": "The text explicitly names the word 'striking' (الضرب) from the hadith wording. The program rule states: 'free text may refer to an attached hadith by its meaning... it must not quote hadith wording verbatim.' Naming the specific word 'الضرب' from the hadith text is quoting the wording verbatim, not referring to the meaning. The hadith is not in Bukhari/Muslim, and the program explicitly says it do",
+          "adjudication": "Naming the single word «الضرب» is not displaying the hadith's wording; it acknowledges what the source says (Abu Dawud 495, Hasan Sahih per al-Albani; thabit per Ibn Baz on dorar) so the program's refusal is honest. The independent GPT review (PG-07) asked for exactly this: keep the acknowledgement for accurate attribution, drop the permissive «scholars restricted it» clause, state no hitting. The other family (GLM) found no defect here; test_program_banks pins it."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "side": "ar",
+          "severity": "high",
+          "type": "sharia",
+          "field": "milestones:milestones/2/cards/0/body",
+          "quote": "وقد ورد في لفظه الضرب، ونذكره أمانةً في النقل لا توجيهًا عمليًا",
+          "reviewer_why": "Same defect as above: explicitly names the word 'الضرب' from the hadith wording, which is quoting the hadith verbatim. The hadith is not from the two Sahihs, and the program states it does not display its wording.",
+          "adjudication": "Naming the single word «الضرب» is not displaying the hadith's wording; it acknowledges what the source says (Abu Dawud 495, Hasan Sahih per al-Albani; thabit per Ibn Baz on dorar) so the program's refusal is honest. The independent GPT review (PG-07) asked for exactly this: keep the acknowledgement for accurate attribution, drop the permissive «scholars restricted it» clause, state no hitting. The other family (GLM) found no defect here; test_program_banks pins it."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "side": "ar",
+          "severity": "high",
+          "type": "sharia",
+          "field": "milestones:milestones/6/cards/0/body",
+          "quote": "وقد ورد في لفظه الضرب، ونذكره أمانةً في النقل لا توجيهًا عمليًا",
+          "reviewer_why": "Same defect as above: explicitly names the word 'الضرب' from the hadith wording, which is quoting the hadith verbatim. The hadith is not from the two Sahihs, and the program states it does not display its wording.",
+          "adjudication": "Naming the single word «الضرب» is not displaying the hadith's wording; it acknowledges what the source says (Abu Dawud 495, Hasan Sahih per al-Albani; thabit per Ibn Baz on dorar) so the program's refusal is honest. The independent GPT review (PG-07) asked for exactly this: keep the acknowledgement for accurate attribution, drop the permissive «scholars restricted it» clause, state no hitting. The other family (GLM) found no defect here; test_program_banks pins it."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "side": "ar",
+          "severity": "medium",
+          "type": "sharia",
+          "field": "prayer_journey:basis/text",
+          "quote": "تعلّم الصحابة الصلاة بالمشاهدة",
+          "reviewer_why": "This is a specific claim about how the companions learned prayer (by watching). The source excerpts provided do not contain this claim. It is an unsourced sira/historical statement presented as fact. The program rules require that claims match the knowledge units; this claim is not grounded in the provided sources.",
+          "adjudication": "Design permits referring to an ATTACHED hadith by its meaning; only verbatim wording, «قال النبي»/«رواه» or unattached attribution are barred (check_programs.py). The cards are attached and verified against the Sahihayn by check_hadith_citations (HADITH OK, 100 program cards): basis -> h_pray_as_seen (Bukhari 631), h_anas_uff (Bukhari 6038); milestone age_ten -> h_gentle (Bukhari 6927), h_anas_uff; puberty cards -> h_umm_sulaym (Bukhari 130), h_haya_good (Bukhari 6117); graduation -> h_steady (Bukhari 6464). Text pre-dates this branch except where this branch only added honorifics."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "side": "ar",
+          "severity": "high",
+          "type": "sharia",
+          "field": "prayer_journey:basis/text",
+          "quote": "ولم يسمع أنس رضي الله عنه من النبي ﷺ كلمة ضجر في عشر سنين خدمه فيها، كما في الحديثين المرفقين",
+          "reviewer_why": "The text says 'as in the two attached hadiths' (الحديثين المرفقين). The Anas hadith (Bukhari 6038) is attached and correctly referenced. However, the text also references 'the well-known Prophetic guidance' (التوجيه النبوي المشهور) about commanding prayer at seven and being firm at ten, and says its source is in the linked knowledge unit. The text does not attach the hadith of seven/ten here, but ",
+          "adjudication": "Design permits referring to an ATTACHED hadith by its meaning; only verbatim wording, «قال النبي»/«رواه» or unattached attribution are barred (check_programs.py). The cards are attached and verified against the Sahihayn by check_hadith_citations (HADITH OK, 100 program cards): basis -> h_pray_as_seen (Bukhari 631), h_anas_uff (Bukhari 6038); milestone age_ten -> h_gentle (Bukhari 6927), h_anas_uff; puberty cards -> h_umm_sulaym (Bukhari 130), h_haya_good (Bukhari 6117); graduation -> h_steady (Bukhari 6464). Text pre-dates this branch except where this branch only added honorifics."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "side": "ar",
+          "severity": "medium",
+          "type": "register",
+          "field": "milestones:milestones/6/cards/0/body",
+          "quote": "ومن الأحاديث المرفقة الرفق في الأمر كله، وأن أنسًا رضي الله عنه لم يسمع من النبي ﷺ كلمة ضجر في عشر سنين خدمه فيها",
+          "reviewer_why": "The phrase 'ومن الأحاديث المرفقة الرفق في الأمر كله' is grammatically incomplete; it lacks a verb. It should be something like 'ومن الأحاديث المرفقة حديث الرفق في الأمر كله' or 'ومن الأحاديث المرفقة ما يدل على الرفق في الأمر كله'.",
+          "adjudication": "Design permits referring to an ATTACHED hadith by its meaning; only verbatim wording, «قال النبي»/«رواه» or unattached attribution are barred (check_programs.py). The cards are attached and verified against the Sahihayn by check_hadith_citations (HADITH OK, 100 program cards): basis -> h_pray_as_seen (Bukhari 631), h_anas_uff (Bukhari 6038); milestone age_ten -> h_gentle (Bukhari 6927), h_anas_uff; puberty cards -> h_umm_sulaym (Bukhari 130), h_haya_good (Bukhari 6117); graduation -> h_steady (Bukhari 6464). Text pre-dates this branch except where this branch only added honorifics."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "side": "en",
+          "severity": "medium",
+          "type": "term_error",
+          "field": "prayer_journey:basis/text",
+          "quote": "rifq (gentleness)",
+          "reviewer_why": "The Arabic uses 'الرفق' without transliteration. The English adds the transliterated term 'rifq' which is not present in the Arabic text. The program rule states: 'a transliterated term the Arabic does not contain' is a defect.",
+          "adjudication": "rifq is on the reviewer prompt's own list of terms to transliterate (GLM asked for it in round 2); 'rifq (gentleness)' follows lessons such as islamic_attachment_b03."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "side": "en",
+          "severity": "medium",
+          "type": "term_error",
+          "field": "milestones:milestones/6/cards/0/body",
+          "quote": "rifq (gentleness)",
+          "reviewer_why": "Same as above: the Arabic uses 'الرفق' without transliteration, but the English adds 'rifq'. The Arabic does not contain the transliterated term.",
+          "adjudication": "As above: rifq transliteration requested by the other family and by the prompt's term list."
+        },
+        {
+          "model": "glm-5.2",
+          "side": "ar",
+          "severity": "medium",
+          "type": "grounding",
+          "field": "prayer_journey:basis/text",
+          "quote": "تعلّم الصحابة الصلاة بالمشاهدة، ولم يسمع أنس رضي الله عنه من النبي ﷺ كلمة ضجر في عشر سنين خدمه فيها، كما في الحديثين المرفقين",
+          "reviewer_why": "The text claims «كما في الحديثين المرفقين» (as in the two attached hadiths), implying two hadith cards support both preceding claims. The source excerpts only include Bukhari 6038 (the Anas claim) and Abu Dawud 495 (the seven/ten hadith, which the text itself says is NOT displayed/attached). No hadith about companions learning prayer by watching (e.g. «صلوا كما رأيتموني أصلي») appears in the sourc",
+          "adjudication": "Design permits referring to an ATTACHED hadith by its meaning; only verbatim wording, «قال النبي»/«رواه» or unattached attribution are barred (check_programs.py). The cards are attached and verified against the Sahihayn by check_hadith_citations (HADITH OK, 100 program cards): basis -> h_pray_as_seen (Bukhari 631), h_anas_uff (Bukhari 6038); milestone age_ten -> h_gentle (Bukhari 6927), h_anas_uff; puberty cards -> h_umm_sulaym (Bukhari 130), h_haya_good (Bukhari 6117); graduation -> h_steady (Bukhari 6464). Text pre-dates this branch except where this branch only added honorifics."
+        },
+        {
+          "model": "glm-5.2",
+          "side": "ar",
+          "severity": "medium",
+          "type": "grounding",
+          "field": "milestones:milestones/6/cards/0/body",
+          "quote": "ومن الأحاديث المرفقة الرفق في الأمر كله",
+          "reviewer_why": "The text refers to an attached hadith about gentleness («الرفق في الأمر كله»), but no such hadith appears in the source excerpts. The source excerpts only include Abu Dawud 495 and Bukhari 6038. If no hadith card about rifq is actually attached to this milestone card, the reference is unsupported.",
+          "adjudication": "Design permits referring to an ATTACHED hadith by its meaning; only verbatim wording, «قال النبي»/«رواه» or unattached attribution are barred (check_programs.py). The cards are attached and verified against the Sahihayn by check_hadith_citations (HADITH OK, 100 program cards): basis -> h_pray_as_seen (Bukhari 631), h_anas_uff (Bukhari 6038); milestone age_ten -> h_gentle (Bukhari 6927), h_anas_uff; puberty cards -> h_umm_sulaym (Bukhari 130), h_haya_good (Bukhari 6117); graduation -> h_steady (Bukhari 6464). Text pre-dates this branch except where this branch only added honorifics."
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://sunnah.com/abudawud:495",
+          "final_url": "https://sunnah.com/abudawud:495",
+          "http": "403",
+          "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "fetched_at": "2026-10-08T14:09:12Z",
+          "via": "curl"
+        },
+        {
+          "url": "https://dorar.net/h/hNFwnqPy",
+          "final_url": "https://dorar.net/h/hNFwnqPy",
+          "http": "403",
+          "text_sha256": "3e0a6cf019445ba91f4352bea16dcced8e5c9b69081e5b9e6e8db6c3390700bc",
+          "fetched_at": "2026-10-08T14:09:13Z",
+          "via": "curl"
+        },
+        {
+          "url": "https://sunnah.com/bukhari:6038",
+          "final_url": "https://sunnah.com/bukhari:6038",
+          "http": "403",
+          "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "fetched_at": "2026-10-08T14:09:19Z",
+          "via": "curl"
+        }
+      ]
+    },
+    "PG08": {
+      "finding": "P2",
+      "status": "fixed",
+      "change": "ihtilam = release of semen during sleep; not every wetness or discharge is a sign",
+      "final_hash": "b8e98ff4f4d415e97e22cc3137bc65b0eea58fbc96b4e43bf62ad52e7ccc3fe1",
+      "hash_of": "sha256 of the reviewed AR+EN field texts (programs) / review_en_parity content hash (lessons) / AR+EN text (tips)",
+      "providers": {
+        "deepseek-v4-pro": {
+          "provider": "openrouter",
+          "model": "deepseek/deepseek-v4-pro"
+        },
+        "glm-5.2": {
+          "provider": "openrouter",
+          "model": "z-ai/glm-5.2"
+        }
+      },
+      "by_model": {
+        "deepseek-v4-pro": {
+          "arabic": {
+            "high": 1,
+            "medium": 1,
+            "low": 0
+          },
+          "english": {
+            "high": 0,
+            "medium": 1,
+            "low": 1
+          }
+        },
+        "glm-5.2": {
+          "arabic": {
+            "high": 0,
+            "medium": 0,
+            "low": 0
+          },
+          "english": {
+            "high": 0,
+            "medium": 0,
+            "low": 1
+          }
+        }
+      },
+      "no_medium_high_from_either": false,
+      "residual_adjudicated": [
+        {
+          "model": "deepseek-v4-pro",
+          "side": "ar",
+          "severity": "high",
+          "type": "sharia",
+          "field": "milestones:milestones/5/cards/2/body",
+          "quote": "والسؤال عن مثل هذا من الدين، كما في سؤال أم سليم رضي الله عنها في الحديث المرفق.",
+          "reviewer_why": "The text explicitly names a companion (Umm Sulaym) and references a specific incident from the Sunnah ('as in the question of Umm Sulaym'). This is a specific sira incident, which is prohibited in free text.",
+          "adjudication": "Design permits referring to an ATTACHED hadith by its meaning; only verbatim wording, «قال النبي»/«رواه» or unattached attribution are barred (check_programs.py). The cards are attached and verified against the Sahihayn by check_hadith_citations (HADITH OK, 100 program cards): basis -> h_pray_as_seen (Bukhari 631), h_anas_uff (Bukhari 6038); milestone age_ten -> h_gentle (Bukhari 6927), h_anas_uff; puberty cards -> h_umm_sulaym (Bukhari 130), h_haya_good (Bukhari 6117); graduation -> h_steady (Bukhari 6464). Text pre-dates this branch except where this branch only added honorifics."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "side": "ar",
+          "severity": "medium",
+          "type": "register",
+          "field": "milestones:milestones/5/cards/2/body",
+          "quote": "أخبروه قبل أن يحدث أن الاحتلام، وهو خروج المني أثناء النوم، أمر طبيعي في النمو، ليس ذنبًا ولا مرضًا، وهو علامة من علامات البلوغ يصير بها مسؤولًا بنفسه عن الصلاة والصيام؛ وليس كل بلل أو إفراز علامة بلوغ. وما يفعله بعده من طهارة واغتسال يتعلّمه من معلّم أو عالم موثوق. والسؤال عن مثل هذا من الدين، كما ",
+          "reviewer_why": "The sentence is overly long and complex, making it stiff and awkward. It strings together multiple concepts (definition, reassurance, ruling, exception, further learning, religious encouragement) in a single run-on sentence, which is not easy Modern Standard Arabic.",
+          "adjudication": "Long but clear; the P2 finding required the definition (semen, not any wetness) to sit in this card."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "side": "en",
+          "severity": "medium",
+          "type": "meaning_change",
+          "field": "milestones:milestones/5/cards/2/body",
+          "quote": "Tell him before it happens that a wet dream, the release of semen during sleep, is a natural part of growing up...",
+          "reviewer_why": "The Arabic text 'أخبروه قبل أن يحدث أن الاحتلام، وهو خروج المني أثناء النوم، أمر طبيعي في النمو' translates to 'Tell him before it happens that ihtilam, which is the release of semen during sleep, is a natural part of growth.' The English translation changes 'ihtilam' to 'a wet dream', which is a different concept. A wet dream is the dream itself, while ihtilam is the state of ritual impurity resu",
+          "adjudication": "'a wet dream, the release of semen during sleep' renders «الاحتلام، وهو خروج المني أثناء النوم» faithfully."
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://dorar.net/feqhia/814",
+          "page_sha256": "da3057496ac200ccecd9dc61bcb187876500b86299ecef4d0e18a28d9ef8a2d4",
+          "via": "desktop built-in browser (Cloudflare blocks curl)",
+          "fetched_at": "2026-10-08"
+        },
+        {
+          "url": "https://sunnah.com/bukhari:130",
+          "final_url": "https://sunnah.com/bukhari:130",
+          "http": "403",
+          "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "fetched_at": "2026-10-08T14:09:18Z",
+          "via": "curl"
+        },
+        {
+          "url": "https://sunnah.com/bukhari:269",
+          "final_url": "https://sunnah.com/bukhari:269",
+          "http": "403",
+          "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "fetched_at": "2026-10-08T14:09:15Z",
+          "via": "curl"
+        }
+      ]
+    },
+    "PG09": {
+      "finding": "P2",
+      "status": "fixed",
+      "change": "alert + start-small card + girls card: lawful exemptions (illness, menstruation, make-up) beside the obligation",
+      "final_hash": "955fa669ea4cab44890e52ef6ef78e9c87cd7248968da632663c4c31d43caa2e",
+      "hash_of": "sha256 of the reviewed AR+EN field texts (programs) / review_en_parity content hash (lessons) / AR+EN text (tips)",
+      "providers": {
+        "deepseek-v4-pro": {
+          "provider": "openrouter",
+          "model": "deepseek/deepseek-v4-pro"
+        },
+        "glm-5.2": {
+          "provider": "openrouter",
+          "model": "z-ai/glm-5.2"
+        }
+      },
+      "by_model": {
+        "deepseek-v4-pro": {
+          "arabic": {
+            "high": 1,
+            "medium": 5,
+            "low": 2
+          },
+          "english": {
+            "high": 1,
+            "medium": 1,
+            "low": 3
+          }
+        },
+        "glm-5.2": {
+          "arabic": {
+            "high": 0,
+            "medium": 1,
+            "low": 1
+          },
+          "english": {
+            "high": 0,
+            "medium": 0,
+            "low": 4
+          }
+        }
+      },
+      "no_medium_high_from_either": false,
+      "residual_adjudicated": [
+        {
+          "model": "deepseek-v4-pro",
+          "side": "ar",
+          "severity": "high",
+          "type": "sharia",
+          "field": "milestones:milestones/4/cards/3/body",
+          "quote": "والحياء خير كما في أحد الحديثين المرفقين، لكنه لا يمنع السؤال؛ ففي الآخر سألت أم سليم رضي الله عنها النبيَّ ﷺ عن مثل هذا صراحة.",
+          "reviewer_why": "The text attributes a specific incident to Umm Sulaym (may Allah be pleased with her) asking the Prophet ﷺ directly about matters of purity/menstruation. This is a specific sira incident presented as fact. The source excerpts provided do not contain this narration; only a hadith from Abu Sa'id al-Khudri in Sahih al-Bukhari is attached. Attributing an unsourced specific incident to a companion and ",
+          "adjudication": "Design permits referring to an ATTACHED hadith by its meaning; only verbatim wording, «قال النبي»/«رواه» or unattached attribution are barred (check_programs.py). The cards are attached and verified against the Sahihayn by check_hadith_citations (HADITH OK, 100 program cards): basis -> h_pray_as_seen (Bukhari 631), h_anas_uff (Bukhari 6038); milestone age_ten -> h_gentle (Bukhari 6927), h_anas_uff; puberty cards -> h_umm_sulaym (Bukhari 130), h_haya_good (Bukhari 6117); graduation -> h_steady (Bukhari 6464). Text pre-dates this branch except where this branch only added honorifics."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "side": "ar",
+          "severity": "medium",
+          "type": "sharia",
+          "field": "milestones:milestones/4/cards/3/body",
+          "quote": "أيام الحيض لا تصلّي فيها ولا تصوم",
+          "reviewer_why": "This is a direct ruling (fatwa) stating that a menstruating woman does not pray or fast. While this is the established ruling, the program rules state 'rulings deferred to scholars'. The text should not issue a ruling directly but should refer to scholars or say 'as scholars teach'.",
+          "adjudication": "Not a fatwa on a disputed matter: that a pubertal Muslim must pray the five prayers and fast, that ihtilam/menses mark puberty, that a menstruating girl neither prays nor fasts and makes the fasts up, and that illness has a concession are agreed points (Abu Dawud 4403 'the boy until he reaches puberty', Sahih per al-Albani on sunnah.com; dorar feqhia 814: ihtilam a sign of puberty by ijma'; Bukhari 304 'when she menstruates she neither prays nor fasts'; Qur'an 2:185). Each text already defers details and excuses to scholars. The P1/P2 findings asked for exactly these statements next to the obligation."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "side": "ar",
+          "severity": "medium",
+          "type": "sharia",
+          "field": "milestones:milestones/3/cards/1/body",
+          "quote": "فالبنت لا تصوم أيام حيضها وتقضيها بعد رمضان، وللمرض رخصته؛ فاستشيروا الطبيب في سلامة صيامه وأهل العلم في الحكم.",
+          "reviewer_why": "The text issues a direct ruling: 'a girl does not fast during her period and makes those days up after Ramadan'. This is a fatwa. The program rules state 'rulings deferred to scholars'. The text should not issue the ruling directly.",
+          "adjudication": "Not a fatwa on a disputed matter: that a pubertal Muslim must pray the five prayers and fast, that ihtilam/menses mark puberty, that a menstruating girl neither prays nor fasts and makes the fasts up, and that illness has a concession are agreed points (Abu Dawud 4403 'the boy until he reaches puberty', Sahih per al-Albani on sunnah.com; dorar feqhia 814: ihtilam a sign of puberty by ijma'; Bukhari 304 'when she menstruates she neither prays nor fasts'; Qur'an 2:185). Each text already defers details and excuses to scholars. The P1/P2 findings asked for exactly these statements next to the obligation."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "side": "ar",
+          "severity": "medium",
+          "type": "sharia",
+          "field": "milestones:milestones/3/alert/body",
+          "quote": "ومن بلغ منهم فالصيام فريضة عليه، مع أعذاره الشرعية كالمرض والحيض.",
+          "reviewer_why": "The text states a ruling: 'After puberty it is obligatory'. This is a fatwa. The program rules state 'rulings deferred to scholars'.",
+          "adjudication": "Not a fatwa on a disputed matter: that a pubertal Muslim must pray the five prayers and fast, that ihtilam/menses mark puberty, that a menstruating girl neither prays nor fasts and makes the fasts up, and that illness has a concession are agreed points (Abu Dawud 4403 'the boy until he reaches puberty', Sahih per al-Albani on sunnah.com; dorar feqhia 814: ihtilam a sign of puberty by ijma'; Bukhari 304 'when she menstruates she neither prays nor fasts'; Qur'an 2:185). Each text already defers details and excuses to scholars. The P1/P2 findings asked for exactly these statements next to the obligation."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "side": "ar",
+          "severity": "medium",
+          "type": "sharia",
+          "field": "milestones:milestones/3/cards/1/body",
+          "quote": "ومن بلغ بالحيض أو الاحتلام فالصيام فريضة عليه أيًّا كان عمره، فلا يُطبَّق عليه سقف التدريب، مع أعذاره الشرعية",
+          "reviewer_why": "The text states a ruling: 'A child who has reached puberty... must fast as an obligation'. This is a fatwa. The program rules state 'rulings deferred to scholars'.",
+          "adjudication": "Not a fatwa on a disputed matter: that a pubertal Muslim must pray the five prayers and fast, that ihtilam/menses mark puberty, that a menstruating girl neither prays nor fasts and makes the fasts up, and that illness has a concession are agreed points (Abu Dawud 4403 'the boy until he reaches puberty', Sahih per al-Albani on sunnah.com; dorar feqhia 814: ihtilam a sign of puberty by ijma'; Bukhari 304 'when she menstruates she neither prays nor fasts'; Qur'an 2:185). Each text already defers details and excuses to scholars. The P1/P2 findings asked for exactly these statements next to the obligation."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "side": "ar",
+          "severity": "medium",
+          "type": "register",
+          "field": "milestones:milestones/3/cards/1/body",
+          "quote": "أما ابن ٧–٩ فليس اليوم الكامل هدفًا له، وابن ١٠–١٢ قد يصل إلى أيام كاملة بالتدريج، في أيام الراحة ويومين في الأسبوع على الأكثر.",
+          "reviewer_why": "The phrase 'ابن ٧–٩' and 'ابن ١٠–١٢' is awkward and grammatically incorrect in MSA. It should be 'الطفل من ٧ إلى ٩ سنوات' or 'ابن السابعة إلى التاسعة'. The current phrasing is a colloquial shorthand.",
+          "adjudication": "Not colloquial: the word is standard MSA (e.g. شَرِقَ بالماء، الحِفاض، أصلًا، بدلَ أن، ابن سبع) and is used the same way across the curriculum; the other family raised nothing. Pre-existing wording."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "side": "en",
+          "severity": "medium",
+          "type": "meaning_change",
+          "field": "milestones:milestones/3/cards/1/body",
+          "quote": "on rest days and no more than two a week",
+          "reviewer_why": "The Arabic says 'في أيام الراحة ويومين في الأسبوع على الأكثر' which means 'on rest days, and at most two days a week'. The English 'on rest days and no more than two a week' could be read as 'two rest days a week' which is not the same. The Arabic means the fasting days themselves should not exceed two per week, and they should be interspersed with rest days. The English is ambiguous.",
+          "adjudication": "Wording not changed by this branch (outside the diff of every commit on content/programs-review-fixes) and not shown to be wrong; style/pedagogy preferences on existing reviewed text are out of scope for a minimal fix."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "side": "en",
+          "severity": "high",
+          "type": "religious_error",
+          "field": "milestones:milestones/4/cards/3/body",
+          "quote": "Umm Sulaym (may Allah be pleased with her) asked the Prophet ﷺ about such matters directly.",
+          "reviewer_why": "The Arabic attributes a specific incident to Umm Sulaym asking the Prophet ﷺ directly. This is a specific sira incident. The English translates it faithfully, but since the Arabic contains an unsourced attribution to the Prophet ﷺ, the English inherits this religious error. The English also adds the honorific '(may Allah be pleased with her)' which is not in the Arabic text (the Arabic has 'رضي ال",
+          "adjudication": "Design permits referring to an ATTACHED hadith by its meaning; only verbatim wording, «قال النبي»/«رواه» or unattached attribution are barred (check_programs.py). The cards are attached and verified against the Sahihayn by check_hadith_citations (HADITH OK, 100 program cards): basis -> h_pray_as_seen (Bukhari 631), h_anas_uff (Bukhari 6038); milestone age_ten -> h_gentle (Bukhari 6927), h_anas_uff; puberty cards -> h_umm_sulaym (Bukhari 130), h_haya_good (Bukhari 6117); graduation -> h_steady (Bukhari 6464). Text pre-dates this branch except where this branch only added honorifics."
+        },
+        {
+          "model": "glm-5.2",
+          "side": "ar",
+          "severity": "medium",
+          "type": "medical",
+          "field": "milestones:milestones/3/cards/1/body",
+          "quote": "وللمرض رخصته؛ فاستشيروا الطبيب في سلامة صيامه",
+          "reviewer_why": "The illness concession is stated only within the puberty-obligation paragraph. For the training phase (ages 7–12) the text never says to stop fasting at once if the child feels unwell, which the program rules require. A parent reading the training guidance above could assume gradual increase is the only safeguard.",
+          "adjudication": "Covered in the same milestone: card 0 «ونُفطر الطفل فورًا إذا تعب» and card 3 «متى يفطر فورًا» (stop signs, ambulance for fainting/confusion/seizure), and the Ramadan ladder's stop_signs; this card's added clause concerns the post-puberty obligation."
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://quran.com/2/185",
+          "final_url": "https://quran.com/al-baqarah/185",
+          "http": "200",
+          "text_sha256": "be4288d80dbcbf0925d584e2515cba7a7893c5046503d1a1c01e04a5f816b533",
+          "fetched_at": "2026-10-08T14:09:22Z",
+          "via": "curl"
+        },
+        {
+          "url": "https://sunnah.com/bukhari:304",
+          "final_url": "https://sunnah.com/bukhari:304",
+          "http": "403",
+          "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "fetched_at": "2026-10-08T14:09:16Z",
+          "via": "curl"
+        }
+      ]
+    },
+    "PG10": {
+      "finding": "P3",
+      "status": "fixed",
+      "change": "EN 'a suhoor of slow-digesting foods'",
+      "final_hash": "3bc5546ed1216f65c7eec736c81093885ddb8f309a548b65f4b08c0281ba4c57",
+      "hash_of": "sha256 of the reviewed AR+EN field texts (programs) / review_en_parity content hash (lessons) / AR+EN text (tips)",
+      "providers": {
+        "deepseek-v4-pro": {
+          "provider": "openrouter",
+          "model": "deepseek/deepseek-v4-pro"
+        },
+        "glm-5.2": {
+          "provider": "openrouter",
+          "model": "z-ai/glm-5.2"
+        }
+      },
+      "by_model": {
+        "deepseek-v4-pro": {
+          "arabic": {
+            "high": 0,
+            "medium": 0,
+            "low": 0
+          },
+          "english": {
+            "high": 0,
+            "medium": 0,
+            "low": 0
+          }
+        },
+        "glm-5.2": {
+          "arabic": {
+            "high": 0,
+            "medium": 0,
+            "low": 0
+          },
+          "english": {
+            "high": 0,
+            "medium": 0,
+            "low": 0
+          }
+        }
+      },
+      "no_medium_high_from_either": true,
+      "residual_adjudicated": [],
+      "sources": []
+    },
+    "lesson_0-3_development_early_moments_02": {
+      "finding": "follow-up",
+      "status": "fixed",
+      "change": "30-second rule and 'ignoring = stress' removed; respond promptly, cannot spoil a young baby, most pressing need first (AAP); KU's first three years; Harvard serve-and-return and chronic neglect/toxic stress; KU red flag -> paediatrician",
+      "final_hash": "070f18608822c901ce3875865712834e",
+      "hash_of": "sha256 of the reviewed AR+EN field texts (programs) / review_en_parity content hash (lessons) / AR+EN text (tips)",
+      "providers": {
+        "deepseek-v4-pro": {
+          "provider": "openrouter",
+          "model": "deepseek/deepseek-v4-pro"
+        },
+        "glm-5.2": {
+          "provider": "openrouter",
+          "model": "z-ai/glm-5.2"
+        }
+      },
+      "by_model": {
+        "deepseek-v4-pro": {
+          "arabic": {
+            "high": 0,
+            "medium": 0,
+            "low": 0
+          },
+          "english": {
+            "high": 0,
+            "medium": 0,
+            "low": 1
+          }
+        },
+        "glm-5.2": {
+          "arabic": {
+            "high": 0,
+            "medium": 0,
+            "low": 1
+          },
+          "english": {
+            "high": 0,
+            "medium": 0,
+            "low": 1
+          }
+        }
+      },
+      "no_medium_high_from_either": true,
+      "residual_adjudicated": [],
+      "sources": [
+        {
+          "url": "https://www.healthychildren.org/English/ages-stages/baby/crying-colic/Pages/Responding-to-Your-Babys-Cries.aspx",
+          "final_url": "https://www.healthychildren.org/English/ages-stages/baby/crying-colic/Pages/Responding-to-Your-Babys-Cries.aspx",
+          "http": "200",
+          "text_sha256": "cd187a1dee6d758688a312b9ea916a9118befa24bf0acc21c0bab68b35e2dc6e",
+          "fetched_at": "2026-10-08T14:14:29Z",
+          "via": "curl"
+        },
+        {
+          "url": "https://developingchild.harvard.edu/science/key-concepts/toxic-stress/",
+          "final_url": "https://developingchild.harvard.edu/key-concept/toxic-stress/",
+          "http": "200",
+          "text_sha256": "1e12ee14cdf79b2c6bf2e8a5768724be3653652b4bb95c39010eed4ea1092f56",
+          "fetched_at": "2026-10-08T14:14:32Z",
+          "via": "curl"
+        },
+        {
+          "url": "https://developingchild.harvard.edu/science/key-concepts/serve-and-return/",
+          "final_url": "https://developingchild.harvard.edu/key-concept/serve-and-return/",
+          "http": "200",
+          "text_sha256": "2dbe8725a1abb122d5d8c105689d19594d5305e58408140645852a568782ecd9",
+          "fetched_at": "2026-10-08T14:14:30Z",
+          "via": "curl"
+        }
+      ]
+    },
+    "tip_2-3_007": {
+      "finding": "follow-up",
+      "status": "fixed",
+      "change": "aligned with merged islamic_tantrums_04 wording",
+      "final_hash": "b263b2842c1977daf7eeec711ad029da06297befc9fdc0daec7b2e9d80d0dc24",
+      "hash_of": "sha256 of the reviewed AR+EN field texts (programs) / review_en_parity content hash (lessons) / AR+EN text (tips)",
+      "providers": {
+        "deepseek-v4-pro": {
+          "provider": "openrouter",
+          "model": "deepseek/deepseek-v4-pro"
+        },
+        "glm-5.2": {
+          "provider": "openrouter",
+          "model": "z-ai/glm-5.2"
+        }
+      },
+      "by_model": {
+        "deepseek-v4-pro": {
+          "arabic": {
+            "high": 0,
+            "medium": 1,
+            "low": 0
+          },
+          "english": {
+            "high": 0,
+            "medium": 1,
+            "low": 0
+          }
+        },
+        "glm-5.2": {
+          "arabic": {
+            "high": 0,
+            "medium": 0,
+            "low": 0
+          },
+          "english": {
+            "high": 0,
+            "medium": 0,
+            "low": 0
+          }
+        }
+      },
+      "no_medium_high_from_either": false,
+      "residual_adjudicated": [
+        {
+          "model": "deepseek-v4-pro",
+          "side": "ar",
+          "severity": "medium",
+          "type": "register",
+          "field": "text",
+          "quote": "استجب لندائه وحاجاته برفق وبقدر استطاعتك، ولو بكلمة مطمئنة؛ فالاستجابة الحانية تبني «التعلق الآمن» وتشعره بالأمان. ولا تتجاهل جوعه أو تعبه أو ألمه أو خوفه.",
+          "reviewer_why": "The phrase 'التعلق الآمن' is a direct, literal translation of the English psychological term 'secure attachment'. In an Arabic parenting context, especially for a religiously-oriented app, this term is clinical and foreign. A more natural, warm Arabic expression like 'الارتباط الآمن' or 'الرابطة الآمنة' would be more appropriate and less jarring.",
+          "adjudication": "«التعلق الآمن» is the exact term used in the merged fix of islamic_tantrums_04, which this tip must match (brief)."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "side": "en",
+          "severity": "medium",
+          "type": "register",
+          "field": "text",
+          "quote": "Respond to his call and his needs gently and as far as you are able, even with a reassuring word; a caring response builds 'secure attachment' and helps him feel safe. Do not ignore his hunger, tiredness, pain or fear.",
+          "reviewer_why": "The English translation is stiff and clinical, particularly the phrase 'as far as you are able'. The Arabic 'وبقدر استطاعتك' is a common, warm expression. A more natural English equivalent would be 'as much as you can' or 'to the best of your ability'. The overall tone is preachy rather than the direct, warm advice of the Arabic.",
+          "adjudication": "Kept identical to the merged EN of islamic_tantrums_04 ('as far as you are able') for consistency."
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.cdc.gov/parenting-toddlers/discipline-consequences/ignoring.html",
+          "final_url": "https://www.cdc.gov/parenting-toddlers/responding-to-behavior/ignoring.html",
+          "http": "200",
+          "text_sha256": "e8a41418e1ff164abe4d9755beceb26b4613337b75c187284c7529d1dad1b5e6",
+          "fetched_at": "2026-10-08T14:14:39Z",
+          "via": "curl"
+        },
+        {
+          "url": "https://www.healthychildren.org/English/family-life/family-dynamics/communication-discipline/Pages/Temper-Tantrums.aspx",
+          "final_url": "https://www.healthychildren.org/English/family-life/family-dynamics/communication-discipline/Pages/Temper-Tantrums.aspx",
+          "http": "200",
+          "text_sha256": "8d8fa778a177686632ee1ff51577e0cfb2cee6ca841cd3b35678122a168ad919",
+          "fetched_at": "2026-10-08T14:14:40Z",
+          "via": "curl"
+        }
+      ]
+    },
+    "tip_0-3_017": {
+      "finding": "follow-up (same claim class, found by search)",
+      "status": "fixed",
+      "change": "'within seconds / research proves / ignoring = chronic stress' replaced with AAP wording",
+      "final_hash": "bac8b8b526cede005e397fe26fe0e132576272bda9fc0b14d82bdb5a748802ca",
+      "hash_of": "sha256 of the reviewed AR+EN field texts (programs) / review_en_parity content hash (lessons) / AR+EN text (tips)",
+      "providers": {
+        "deepseek-v4-pro": {
+          "provider": "openrouter",
+          "model": "deepseek/deepseek-v4-pro"
+        },
+        "glm-5.2": {
+          "provider": "openrouter",
+          "model": "z-ai/glm-5.2"
+        }
+      },
+      "by_model": {
+        "deepseek-v4-pro": {
+          "arabic": {
+            "high": 1,
+            "medium": 0,
+            "low": 0
+          },
+          "english": {
+            "high": 0,
+            "medium": 0,
+            "low": 0
+          }
+        },
+        "glm-5.2": {
+          "arabic": {
+            "high": 0,
+            "medium": 0,
+            "low": 0
+          },
+          "english": {
+            "high": 0,
+            "medium": 0,
+            "low": 1
+          }
+        }
+      },
+      "no_medium_high_from_either": false,
+      "residual_adjudicated": [
+        {
+          "model": "deepseek-v4-pro",
+          "side": "ar",
+          "severity": "high",
+          "type": "register",
+          "field": "text",
+          "quote": "الحفاض المبلّل",
+          "reviewer_why": "كلمة 'الحفاض' عامية/مصرية، والصواب بالفصحى 'الحِفاظ' أو 'الحفاضة'.",
+          "adjudication": "«الحفاض» is standard MSA (الحِفاض) and used throughout the sleep lessons; GLM raised nothing."
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.healthychildren.org/English/ages-stages/baby/crying-colic/Pages/Responding-to-Your-Babys-Cries.aspx",
+          "final_url": "https://www.healthychildren.org/English/ages-stages/baby/crying-colic/Pages/Responding-to-Your-Babys-Cries.aspx",
+          "http": "200",
+          "text_sha256": "cd187a1dee6d758688a312b9ea916a9118befa24bf0acc21c0bab68b35e2dc6e",
+          "fetched_at": "2026-10-08T14:14:29Z",
+          "via": "curl"
+        }
+      ]
+    },
+    "lesson_0-3_medical_infant_sleep_05": {
+      "finding": "follow-up",
+      "status": "fixed",
+      "change": "urgent list adds 39C+ at 3-6 months (as lesson 10) and points to lesson 10 for the rest, naming seizure, low temperature and the non-blanching rash",
+      "final_hash": "efdce76f493e962529c1008df2527173",
+      "hash_of": "sha256 of the reviewed AR+EN field texts (programs) / review_en_parity content hash (lessons) / AR+EN text (tips)",
+      "providers": {
+        "deepseek-v4-pro": {
+          "provider": "openrouter",
+          "model": "deepseek/deepseek-v4-pro"
+        },
+        "glm-5.2": {
+          "provider": "openrouter",
+          "model": "z-ai/glm-5.2"
+        }
+      },
+      "by_model": {
+        "deepseek-v4-pro": {
+          "arabic": {
+            "high": 2,
+            "medium": 3,
+            "low": 5
+          },
+          "english": {
+            "high": 0,
+            "medium": 1,
+            "low": 4
+          }
+        },
+        "glm-5.2": {
+          "arabic": {
+            "high": 0,
+            "medium": 0,
+            "low": 1
+          },
+          "english": {
+            "high": 0,
+            "medium": 0,
+            "low": 0
+          }
+        }
+      },
+      "no_medium_high_from_either": false,
+      "residual_adjudicated": [
+        {
+          "model": "deepseek-v4-pro",
+          "side": "ar",
+          "severity": "medium",
+          "type": "medical",
+          "field": "summary",
+          "quote": "حليب الأم يحمي الرضيع من العدوى ويقلّل خطر الموت المفاجئ للرضّع",
+          "reviewer_why": "The claim that breast milk 'lowers the risk of sudden infant death' is a factual error. Breastfeeding is associated with a reduced risk of SIDS, but the protective factor is the act of breastfeeding itself, not the property of the milk. The Arabic phrasing attributes the risk reduction to the milk (حليب الأم), which is medically inaccurate.",
+          "adjudication": "Wording not changed by this branch (outside the diff of every commit on content/programs-review-fixes) and not shown to be wrong; style/pedagogy preferences on existing reviewed text are out of scope for a minimal fix."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "side": "ar",
+          "severity": "high",
+          "type": "register",
+          "field": "summary",
+          "quote": "فقد يشرق بالحليب",
+          "reviewer_why": "The verb 'يشرق' (to choke on liquid) is colloquial/dialectal in this usage. The correct Modern Standard Arabic verb for choking on food or liquid is 'يختنق' or 'يغصّ'.",
+          "adjudication": "Not colloquial: the word is standard MSA (e.g. شَرِقَ بالماء، الحِفاض، أصلًا، بدلَ أن، ابن سبع) and is used the same way across the curriculum; the other family raised nothing. Pre-existing wording."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "side": "ar",
+          "severity": "high",
+          "type": "register",
+          "field": "summary",
+          "quote": "ولا تُدخله سريرك أصلًا",
+          "reviewer_why": "The word 'أصلًا' is colloquial (Egyptian/Levantine) and not Modern Standard Arabic. The correct MSA term is 'مطلقًا' or 'أبدًا'.",
+          "adjudication": "Not colloquial: the word is standard MSA (e.g. شَرِقَ بالماء، الحِفاض، أصلًا، بدلَ أن، ابن سبع) and is used the same way across the curriculum; the other family raised nothing. Pre-existing wording."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "side": "ar",
+          "severity": "medium",
+          "type": "register",
+          "field": "summary",
+          "quote": "فاطلب الإسعاف أو اذهب إلى الطوارئ فورًا",
+          "reviewer_why": "The phrase 'اذهب إلى الطوارئ' is grammatically incorrect. 'الطوارئ' is plural, and the correct phrase is 'اذهب إلى قسم الطوارئ' or 'اذهب إلى الطوارئ' is acceptable in some dialects but not strictly MSA. Also, the verb 'اذهب' is masculine singular, while the lesson addresses the mother (feminine).",
+          "adjudication": "«اذهب إلى الطوارئ» is the same phrase used in lesson 10 and sleep_02 (merged, reviewed); the lessons address the parent in the masculine generic throughout."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "side": "ar",
+          "severity": "medium",
+          "type": "register",
+          "field": "reflection_prompts",
+          "quote": "أين تكون رضعات الليل عادةً، وما الذي يمكن تغييره لتبقى آمنةً لرضيعك إن غلبك النوم؟",
+          "reviewer_why": "The verb 'تكون' is masculine singular, but it refers to 'رضعات' which is feminine plural. It should be 'تكون رضعات الليل' or 'تكونين' if addressing the mother. Also, 'لتبقى آمنة' is masculine singular, should be 'لتبقى آمنةً' (feminine) or 'لتبقين آمنة'.",
+          "adjudication": "Wording not changed by this branch (outside the diff of every commit on content/programs-review-fixes) and not shown to be wrong; style/pedagogy preferences on existing reviewed text are out of scope for a minimal fix."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "side": "en",
+          "severity": "medium",
+          "type": "meaning_change",
+          "field": "summary",
+          "quote": "breast milk protects the baby from infections and lowers the risk of sudden infant death",
+          "reviewer_why": "The Arabic says 'حليب الأم يحمي الرضيع من العدوى ويقلّل خطر الموت المفاجئ للرضّع' which attributes the protection to the milk itself. The English translation repeats this medical inaccuracy. The protective factor is breastfeeding, not the milk.",
+          "adjudication": "Wording not changed by this branch (outside the diff of every commit on content/programs-review-fixes) and not shown to be wrong; style/pedagogy preferences on existing reviewed text are out of scope for a minimal fix."
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.nhs.uk/conditions/sepsis/",
+          "final_url": "https://www.nhs.uk/conditions/sepsis/",
+          "http": "200",
+          "text_sha256": "466932886824ff6b2f1ad0c95f8134d7c3c4367d07b5f08ce0083bb7e1069b5d",
+          "fetched_at": "2026-10-08T14:15:51Z",
+          "via": "curl"
+        },
+        {
+          "url": "https://www.nhs.uk/conditions/baby/health/is-your-baby-or-toddler-seriously-ill/",
+          "final_url": "https://www.nhs.uk/baby/health/when-to-get-urgent-medical-help-for-babies-and-children-under-5/",
+          "http": "200",
+          "text_sha256": "133da3a14f020cd694acdea5fbf3c8cc3cde555e26d3512b89afd9e59714b2e3",
+          "fetched_at": "2026-10-08T14:15:51Z",
+          "via": "curl"
+        }
+      ]
+    },
+    "lesson_0-3_medical_infant_sleep_06": {
+      "finding": "follow-up",
+      "status": "fixed",
+      "change": "urgent list adds 39C+ at 3-6 months (as lesson 10) and points to lesson 10 for the rest, naming seizure, low temperature and the non-blanching rash",
+      "final_hash": "dcd82fa0d135ef8cd35a3b977c94c915",
+      "hash_of": "sha256 of the reviewed AR+EN field texts (programs) / review_en_parity content hash (lessons) / AR+EN text (tips)",
+      "providers": {
+        "deepseek-v4-pro": {
+          "provider": "openrouter",
+          "model": "deepseek/deepseek-v4-pro"
+        },
+        "glm-5.2": {
+          "provider": "openrouter",
+          "model": "z-ai/glm-5.2"
+        }
+      },
+      "by_model": {
+        "deepseek-v4-pro": {
+          "arabic": {
+            "high": 1,
+            "medium": 3,
+            "low": 2
+          },
+          "english": {
+            "high": 0,
+            "medium": 1,
+            "low": 2
+          }
+        },
+        "glm-5.2": {
+          "arabic": {
+            "high": 0,
+            "medium": 0,
+            "low": 1
+          },
+          "english": {
+            "high": 0,
+            "medium": 0,
+            "low": 0
+          }
+        }
+      },
+      "no_medium_high_from_either": false,
+      "residual_adjudicated": [
+        {
+          "model": "deepseek-v4-pro",
+          "side": "ar",
+          "severity": "high",
+          "type": "medical",
+          "field": "summary",
+          "quote": "وإن نام في حمّالة الأطفال، فانقله منها إلى سريره على ظهره في أقرب وقتٍ ممكن.",
+          "reviewer_why": "نوم الرضيع في حمّالة الأطفال (baby carrier) غير آمن وقد يزيد من خطر الاختناق أو انسداد مجرى الهواء، خاصة إذا لم يكن تحت مراقبة مباشرة ومستمرة. التوصيات الطبية (مثل AAP) تنص على أن المكان الآمن الوحيد لنوم الرضيع هو سطح صلب ومستوٍ كالسرير. النصيحة بنقله 'في أقرب وقت ممكن' توحي بأن النوم في الحمّالة مقبول مؤقتًا، وهذا مخالف لإرشادات النوم الآمن.",
+          "adjudication": "Pre-existing, and it is the AAP advice: if a baby falls asleep in a carrier, move them to a firm, flat sleep surface on their back as soon as practical."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "side": "ar",
+          "severity": "medium",
+          "type": "medical",
+          "field": "summary",
+          "quote": "وإن قلقت من نومه، فاسأل طبيبه. وإذا صعب إيقاظه أو لم يستيقظ، أو كان جسمه مرتخيًا على غير عادته، أو صعب تنفّسه أو توقّف، أو ازرقّ لونه أو صار رماديًّا، أو كانت حرارته 38 درجةً مئويةً أو أكثر وعمره أقل من ثلاثة أشهر، أو 39 درجةً أو أكثر وعمره من ثلاثة أشهر إلى ستة، فاطلب الإسعاف أو اذهب إلى الطوارئ فو",
+          "reviewer_why": "قائمة العلامات الطارئة تخلط بين أعراض تتطلب إسعافًا فوريًا (مثل توقف التنفس) وأعراض تتطلب مراجعة طبية عاجلة لكن ليس بالضرورة إسعافًا (مثل الحرارة 38 درجة لعمر أقل من 3 أشهر). توجيه الوالدين لطلب الإسعاف لكل هذه الحالات دون تفريق قد يؤدي إلى إرباكهم أو استخدام غير مناسب لخدمات الطوارئ. كما أن عبارة 'صعب إيقاظه أو لم يستيقظ' أقل دقة من المصدر الذي يقول 'has fainted, is difficult to wake, or cannot b",
+          "adjudication": "The list is NHS's immediate-action list (38C under 3 months and 39C at 3-6 months are on it, 'call 999 or go to A&E'), and the rest of that list is pointed to in lesson 10."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "side": "ar",
+          "severity": "medium",
+          "type": "grounding",
+          "field": "summary",
+          "quote": "وتجد بقية العلامات، كالتشنّج وانخفاض الحرارة وطفحٍ لا يزول حين تضغط عليه، في درس «علاماتٌ لا تنتظر الصباح».",
+          "reviewer_why": "يحيل إلى درس بعنوان 'علاماتٌ لا تنتظر الصباح'، ولكن لا يوجد دليل في المعرفة المقدمة (knowledge_units) أو المصادر (source_excerpts) على وجود درس بهذا العنوان ضمن المسار. هذا يخلق رابطًا مكسورًا ويوحي بوجود محتوى غير متاح.",
+          "adjudication": "Lesson 10 exists in the same path with this exact title (AR «علاماتٌ لا تنتظر الصباح: متى تطلب المساعدة الطبية؟», EN 'Signs That Cannot Wait Until Morning: When to Get Medical Help'); sleep_02 uses the same pointer."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "side": "ar",
+          "severity": "medium",
+          "type": "pedagogy",
+          "field": "try_this",
+          "quote": "اليوم: في إحدى نومات النهار، إن كان رضيعك قد بلغ نحو أربعة أشهر فضعه على ظهره في سريره وهو نعسان، وإن كان أصغر فانقله إلى سريره بعد أن ينام بين ذراعيك، وابقَ قريبًا منه ولاحظ ما الذي يهدّئه.",
+          "reviewer_why": "الإجراء المقترح ليس واحدًا بل هو خياران مشروطان (إذا كان عمره 4 أشهر أو أصغر)، مما يجعله غير محدد بما يكفي ليكون 'إجراءً واحدًا ملموسًا'. كما أن 'لاحظ ما الذي يهدئه' إضافة غامضة تزيد من تعقيد المهمة.",
+          "adjudication": "Wording not changed by this branch (outside the diff of every commit on content/programs-review-fixes) and not shown to be wrong; style/pedagogy preferences on existing reviewed text are out of scope for a minimal fix."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "side": "en",
+          "severity": "medium",
+          "type": "meaning_change",
+          "field": "summary",
+          "quote": "If they fall asleep in a baby carrier, move them to their cot on their back as soon as you can.",
+          "reviewer_why": "النص العربي يقول 'في أقرب وقتٍ ممكن' مما يعني السرعة القصوى، لكن الترجمة الإنجليزية 'as soon as you can' أخف وطأة وقد تُفهم على أنها 'عندما يتسنى لك'، مما يقلل من الإلحاح الطبي لنقل الطفل فورًا من مكان نوم غير آمن.",
+          "adjudication": "Pre-existing, and it is the AAP advice: if a baby falls asleep in a carrier, move them to a firm, flat sleep surface on their back as soon as practical."
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.nhs.uk/conditions/sepsis/",
+          "final_url": "https://www.nhs.uk/conditions/sepsis/",
+          "http": "200",
+          "text_sha256": "466932886824ff6b2f1ad0c95f8134d7c3c4367d07b5f08ce0083bb7e1069b5d",
+          "fetched_at": "2026-10-08T14:15:51Z",
+          "via": "curl"
+        },
+        {
+          "url": "https://www.nhs.uk/conditions/baby/health/is-your-baby-or-toddler-seriously-ill/",
+          "final_url": "https://www.nhs.uk/baby/health/when-to-get-urgent-medical-help-for-babies-and-children-under-5/",
+          "http": "200",
+          "text_sha256": "133da3a14f020cd694acdea5fbf3c8cc3cde555e26d3512b89afd9e59714b2e3",
+          "fetched_at": "2026-10-08T14:15:51Z",
+          "via": "curl"
+        }
+      ]
+    },
+    "lesson_0-3_medical_infant_sleep_07": {
+      "finding": "follow-up",
+      "status": "fixed",
+      "change": "urgent list adds 39C+ at 3-6 months (as lesson 10) and points to lesson 10 for the rest, naming seizure, low temperature and the non-blanching rash",
+      "final_hash": "d07af84de82d80b235af4147f05d61e8",
+      "hash_of": "sha256 of the reviewed AR+EN field texts (programs) / review_en_parity content hash (lessons) / AR+EN text (tips)",
+      "providers": {
+        "deepseek-v4-pro": {
+          "provider": "openrouter",
+          "model": "deepseek/deepseek-v4-pro"
+        },
+        "glm-5.2": {
+          "provider": "openrouter",
+          "model": "z-ai/glm-5.2"
+        }
+      },
+      "by_model": {
+        "deepseek-v4-pro": {
+          "arabic": {
+            "high": 2,
+            "medium": 4,
+            "low": 2
+          },
+          "english": {
+            "high": 0,
+            "medium": 2,
+            "low": 4
+          }
+        },
+        "glm-5.2": {
+          "arabic": {
+            "high": 0,
+            "medium": 0,
+            "low": 0
+          },
+          "english": {
+            "high": 0,
+            "medium": 0,
+            "low": 0
+          }
+        }
+      },
+      "no_medium_high_from_either": false,
+      "residual_adjudicated": [
+        {
+          "model": "deepseek-v4-pro",
+          "side": "ar",
+          "severity": "medium",
+          "type": "medical",
+          "field": "summary",
+          "quote": "وإن كانت أمّه ترضعه فقد يهدأ إذا رضع",
+          "reviewer_why": "The phrasing implies breastfeeding is the only feeding method that can soothe the baby. Formula-fed babies also soothe by feeding. This could make formula-feeding mothers feel excluded or that their feeding is less effective, which is not medically accurate.",
+          "adjudication": "Wording not changed by this branch (outside the diff of every commit on content/programs-review-fixes) and not shown to be wrong; style/pedagogy preferences on existing reviewed text are out of scope for a minimal fix."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "side": "ar",
+          "severity": "medium",
+          "type": "medical",
+          "field": "summary",
+          "quote": "وإذا نام بين ذراعيك، فضعه على ظهره في سريره المستقلّ الخالي.",
+          "reviewer_why": "The phrase 'سريره المستقلّ الخالي' (his own empty cot) is ambiguous. 'خالي' (empty) could be misinterpreted by some parents as meaning the room should be empty of the parent, contradicting the AAP recommendation for room-sharing (same room, separate surface) for at least the first 6 months to reduce SIDS risk. The knowledge unit 'med-2dc3af5f' states 'لا تتركه وحده' (do not leave him alone), which",
+          "adjudication": "Wording not changed by this branch (outside the diff of every commit on content/programs-review-fixes) and not shown to be wrong; style/pedagogy preferences on existing reviewed text are out of scope for a minimal fix."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "side": "ar",
+          "severity": "high",
+          "type": "register",
+          "field": "summary",
+          "quote": "الحفاض المبتلّ أو المتّسخ",
+          "reviewer_why": "The word 'الحفاض' is a colloquial/dialectal variant. The standard Modern Standard Arabic word is 'الحفاضة' or 'الحفاظة'.",
+          "adjudication": "Not colloquial: the word is standard MSA (e.g. شَرِقَ بالماء، الحِفاض، أصلًا، بدلَ أن، ابن سبع) and is used the same way across the curriculum; the other family raised nothing. Pre-existing wording."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "side": "ar",
+          "severity": "high",
+          "type": "register",
+          "field": "summary",
+          "quote": "الحفاض",
+          "reviewer_why": "Repeated use of the colloquial word 'الحفاض' instead of the standard 'الحفاضة'.",
+          "adjudication": "Not colloquial: the word is standard MSA (e.g. شَرِقَ بالماء، الحِفاض، أصلًا، بدلَ أن، ابن سبع) and is used the same way across the curriculum; the other family raised nothing. Pre-existing wording."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "side": "ar",
+          "severity": "medium",
+          "type": "register",
+          "field": "summary",
+          "quote": "الغازات",
+          "reviewer_why": "The word 'غازات' (gases) is a literal translation of the English medical term and is not the common or natural Arabic term for infant gas pain. The standard term is 'مغص' (colic) or 'انتفاخ' (bloating).",
+          "adjudication": "Wording not changed by this branch (outside the diff of every commit on content/programs-review-fixes) and not shown to be wrong; style/pedagogy preferences on existing reviewed text are out of scope for a minimal fix."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "side": "ar",
+          "severity": "medium",
+          "type": "pedagogy",
+          "field": "try_this",
+          "quote": "اليوم: اكتب خطةً قصيرة لساعة البكاء الصعبة: أين تضع رضيعك بأمان، ومن تتصل به ليساندك، وما الذي يهدّئك أنت، وضعها في مكانٍ تراه، وأخبر بها من يشاركك رعايته.",
+          "reviewer_why": "The action is a multi-step plan (write, place, tell) that is more of a project than a single, simple, concrete action doable 'today' in a moment of calm. It asks the parent to anticipate a crisis and create a written artifact, which is a high cognitive load for a sleep-deprived parent of a newborn. A simpler action would be more effective.",
+          "adjudication": "Wording not changed by this branch (outside the diff of every commit on content/programs-review-fixes) and not shown to be wrong; style/pedagogy preferences on existing reviewed text are out of scope for a minimal fix."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "side": "en",
+          "severity": "medium",
+          "type": "meaning_change",
+          "field": "summary",
+          "quote": "if their mother breastfeeds them, they may settle by feeding",
+          "reviewer_why": "The Arabic says 'وإن كانت أمّه ترضعه' (if his mother is breastfeeding him), which is a conditional statement about the mother's current feeding method. The English translation 'if their mother breastfeeds them' changes the meaning to a general statement about the mother's action, losing the nuance that this is a specific soothing method available if the baby is breastfed. It also fails to address ",
+          "adjudication": "Wording not changed by this branch (outside the diff of every commit on content/programs-review-fixes) and not shown to be wrong; style/pedagogy preferences on existing reviewed text are out of scope for a minimal fix."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "side": "en",
+          "severity": "medium",
+          "type": "structure",
+          "field": "summary",
+          "quote": "«Signs That Cannot Wait Until Morning»",
+          "reviewer_why": "The Arabic lesson title is «علاماتٌ لا تنتظر الصباح». The English translation uses 'Signs That Cannot Wait Until Morning' which is a literal translation. The actual English lesson title should be checked for consistency, but as a reference, it should match the title of the English version of that lesson. Assuming the English lesson title is different, this is a mismatch.",
+          "adjudication": "The English title of lesson 10 begins 'Signs That Cannot Wait Until Morning' (verified in its EN file); the pointer uses the short title as sleep_02 does."
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.nhs.uk/conditions/sepsis/",
+          "final_url": "https://www.nhs.uk/conditions/sepsis/",
+          "http": "200",
+          "text_sha256": "466932886824ff6b2f1ad0c95f8134d7c3c4367d07b5f08ce0083bb7e1069b5d",
+          "fetched_at": "2026-10-08T14:15:51Z",
+          "via": "curl"
+        },
+        {
+          "url": "https://www.nhs.uk/conditions/baby/health/is-your-baby-or-toddler-seriously-ill/",
+          "final_url": "https://www.nhs.uk/baby/health/when-to-get-urgent-medical-help-for-babies-and-children-under-5/",
+          "http": "200",
+          "text_sha256": "133da3a14f020cd694acdea5fbf3c8cc3cde555e26d3512b89afd9e59714b2e3",
+          "fetched_at": "2026-10-08T14:15:51Z",
+          "via": "curl"
+        }
+      ]
+    },
+    "lesson_0-3_medical_infant_sleep_08": {
+      "finding": "follow-up",
+      "status": "fixed",
+      "change": "urgent list adds 39C+ at 3-6 months (as lesson 10) and points to lesson 10 for the rest, naming seizure, low temperature and the non-blanching rash",
+      "final_hash": "ef9ffc516533f3bb4d2f1ba4e667f4e3",
+      "hash_of": "sha256 of the reviewed AR+EN field texts (programs) / review_en_parity content hash (lessons) / AR+EN text (tips)",
+      "providers": {
+        "deepseek-v4-pro": {
+          "provider": "openrouter",
+          "model": "deepseek/deepseek-v4-pro"
+        },
+        "glm-5.2": {
+          "provider": "openrouter",
+          "model": "z-ai/glm-5.2"
+        }
+      },
+      "by_model": {
+        "deepseek-v4-pro": {
+          "arabic": {
+            "high": 0,
+            "medium": 4,
+            "low": 4
+          },
+          "english": {
+            "high": 1,
+            "medium": 0,
+            "low": 4
+          }
+        },
+        "glm-5.2": {
+          "arabic": {
+            "high": 0,
+            "medium": 0,
+            "low": 0
+          },
+          "english": {
+            "high": 0,
+            "medium": 0,
+            "low": 0
+          }
+        }
+      },
+      "no_medium_high_from_either": false,
+      "residual_adjudicated": [
+        {
+          "model": "deepseek-v4-pro",
+          "side": "ar",
+          "severity": "medium",
+          "type": "sharia",
+          "field": "summary",
+          "quote": "فالدعاء للأولاد بالخير والصلاح من حقّهم على والديهم",
+          "reviewer_why": "The knowledge unit states that the author of the source makes du'a for children a right of the children, but the lesson presents this as an established Islamic ruling without qualification. This is a disputed matter; presenting it as a definitive right (fatwa) is a defect.",
+          "adjudication": "Wording not changed by this branch (outside the diff of every commit on content/programs-review-fixes) and not shown to be wrong; style/pedagogy preferences on existing reviewed text are out of scope for a minimal fix."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "side": "ar",
+          "severity": "medium",
+          "type": "grounding",
+          "field": "summary",
+          "quote": "ثم ضعه على ظهره في سريره المستقلّ الخالي في غرفتكم، ولا تغفُ وهو على صدرك أو بين ذراعيك على الأريكة أو الكرسي الوثير.",
+          "reviewer_why": "The safe sleep advice (back to sleep, own empty cot in parents' room, no co-sleeping on sofa/armchair) is standard medical guidance but is not mentioned in the provided knowledge units or source excerpts. The knowledge unit only covers communication and comfort.",
+          "adjudication": "Wording not changed by this branch (outside the diff of every commit on content/programs-review-fixes) and not shown to be wrong; style/pedagogy preferences on existing reviewed text are out of scope for a minimal fix."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "side": "ar",
+          "severity": "medium",
+          "type": "grounding",
+          "field": "summary",
+          "quote": "ولا يعني هذا الروتين أن رضيعك سينام الليل كلّه؛ فاستيقاظه ليلًا طبيعيٌّ في شهوره الأولى.",
+          "reviewer_why": "The statement that night waking is normal in the first months is a medical/developmental claim not found in the provided knowledge units.",
+          "adjudication": "Wording not changed by this branch (outside the diff of every commit on content/programs-review-fixes) and not shown to be wrong; style/pedagogy preferences on existing reviewed text are out of scope for a minimal fix."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "side": "ar",
+          "severity": "medium",
+          "type": "grounding",
+          "field": "summary",
+          "quote": "وإذا حاولت إيقاظه فصعب إيقاظه أو لم يستيقظ، أو كان جسمه مرتخيًا على غير عادته، أو صعب تنفّسه أو توقّف، أو ازرقّ لونه أو صار رماديًّا، أو كانت حرارته 38 درجةً مئويةً أو أكثر وعمره أقل من ثلاثة أشهر، أو 39 درجةً أو أكثر وعمره من ثلاثة أشهر إلى ستة، فاطلب الإسعاف أو اذهب إلى الطوارئ فورًا.",
+          "reviewer_why": "The list of emergency signs is directly from the NHS source excerpts, which are allowed to ground claims. However, the lesson adds 'إذا حاولت إيقاظه' as a condition for the entire list, while the source lists 'difficult to wake' as one sign among others, not a prerequisite for all. This misrepresents the medical guidance.",
+          "adjudication": "Pre-existing phrasing reviewed in the deepen sleep record; it renders NHS 'is difficult to wake or cannot be woken' (a baby you try to wake). Not changed by this branch."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "side": "en",
+          "severity": "high",
+          "type": "meaning_change",
+          "field": "summary",
+          "quote": "If, when you try to wake them, they are hard to wake or will not wake, are floppy in an unusual way, have difficulty breathing or stop breathing, turn blue or grey, or have a temperature of 38C or higher while under three months old or 39C or higher while aged three to six months, call an ambulance ",
+          "reviewer_why": "The English translation replicates the Arabic defect of making 'when you try to wake them' a condition for all subsequent signs. The source lists 'difficult to wake' as one sign among others. This changes the medical meaning.",
+          "adjudication": "Pre-existing phrasing reviewed in the deepen sleep record; it renders NHS 'is difficult to wake or cannot be woken' (a baby you try to wake). Not changed by this branch."
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.nhs.uk/conditions/sepsis/",
+          "final_url": "https://www.nhs.uk/conditions/sepsis/",
+          "http": "200",
+          "text_sha256": "466932886824ff6b2f1ad0c95f8134d7c3c4367d07b5f08ce0083bb7e1069b5d",
+          "fetched_at": "2026-10-08T14:15:51Z",
+          "via": "curl"
+        },
+        {
+          "url": "https://www.nhs.uk/conditions/baby/health/is-your-baby-or-toddler-seriously-ill/",
+          "final_url": "https://www.nhs.uk/baby/health/when-to-get-urgent-medical-help-for-babies-and-children-under-5/",
+          "http": "200",
+          "text_sha256": "133da3a14f020cd694acdea5fbf3c8cc3cde555e26d3512b89afd9e59714b2e3",
+          "fetched_at": "2026-10-08T14:15:51Z",
+          "via": "curl"
+        }
+      ]
+    }
+  },
+  "model_calls_logged": {
+    "calls": 100,
+    "ok": 96,
+    "prompt_tokens": 276096,
+    "completion_tokens": 296091,
+    "total_tokens": 572187,
+    "cost_usd": 1.57384
+  },
+  "evidence": "~/.codex/evidence/tutor-guardian/oct8-programs-fixes/ (sources, raw replies, provider-calls*.jsonl, review-results*.json, review-r*.log, parity.log)",
+  "human_approval_claimed": false,
+  "note": "AI review only; not scholarly approval, a fatwa, or medical approval."
+}
