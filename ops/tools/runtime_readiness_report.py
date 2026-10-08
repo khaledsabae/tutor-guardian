@@ -27,8 +27,6 @@ from urllib.parse import urlsplit
 
 AAD = b'tutor-guardian/runtime-readiness/v1'
 PAID = ('azure_deepseek', 'deepseek', 'deepseek_aux', 'deepseek_fallback')
-TABLES = ('cloud_budget_months', 'cloud_budget_attempts', 'cloud_budget_carry',
-          'cloud_budget_activation', 'cloud_budget_identity')
 UNKNOWN = {'status': 'unavailable'}
 
 
@@ -66,32 +64,34 @@ def _aggregate(conn, sql, args=()):
 
 
 def _continuity(conn, path, deadline):
-    result = {'anchor_present': Path(str(path) + '.cloud-budget-anchor').is_file(),
+    """Witness check against the anchor next to this DB (current format:
+    trigger-maintained sequence + totals + ledger-schema hash, O(1)). With
+    CLOUD_BUDGET_ANCHOR_PATH set, see cloud.budget.ledger instead."""
+    anchor_path = Path(str(path) + '.cloud-budget-anchor')
+    result = {'anchor_present': anchor_path.is_file(),
               'witness_matches': None, 'external_continuity_proof_required': True,
               'observation_atomic_with_writers': False}
     try:
+        from app.services.cloud_budget import CloudBudget
         identity = conn.execute('SELECT db_identity FROM cloud_budget_identity WHERE id=1').fetchone()
-        if not identity or not result['anchor_present']:
-            return result
-        anchor_path = Path(str(path) + '.cloud-budget-anchor')
-        if anchor_path.stat().st_size > 8192:
+        if not identity or not result['anchor_present'] or anchor_path.stat().st_size > 8192:
             return result
         anchor = json.loads(anchor_path.read_text())
-        digest = hashlib.sha256()
-        for table in TABLES:
-            schema = conn.execute("SELECT sql FROM sqlite_master WHERE type='table' AND name=?", (table,)).fetchone()
-            if not schema:
-                return result
-            digest.update(json.dumps(schema).encode())
-            for row in conn.execute(f'SELECT * FROM {table} ORDER BY rowid'):
-                if time.monotonic() > deadline:
-                    return result
-                digest.update(json.dumps(row, separators=(',', ':')).encode())
-                digest.update(b'\n')
-        result['witness_matches'] = anchor.get('db_identity') == identity[0] and anchor.get('digest') == digest.hexdigest()
-    except (sqlite3.Error, OSError, ValueError, TypeError, AttributeError):
+        result['witness_matches'] = (anchor.get('db_identity') == identity[0]
+                                     and anchor.get('witness') == CloudBudget._witness(conn)
+                                     and anchor.get('schema') == CloudBudget._schema_hash(conn))
+    except Exception:  # noqa: BLE001 — unknown, never proof
         pass
     return result
+
+
+def ledger_status(path, anchor):
+    """Read-only (mode=ro) activation state of the cap's ledger."""
+    try:
+        from app.services.cloud_budget import CloudBudget
+        return {'status': 'available', **CloudBudget(path, anchor_path=anchor or None).status()}
+    except Exception:  # noqa: BLE001 — unknown, never proof
+        return dict(UNKNOWN)
 
 
 def database_report(path, month, now):
@@ -175,6 +175,13 @@ def collect_report(mounts):
               'mounts': mounts,
               'telemetry': database_report(root / 'ops/sessions.db', month, now),
               'conversations': database_report(Path(os.environ.get('CONVERSATIONS_DB', str(root / 'ops/conversations.db'))), month, now)}
+    # Switch state as on/off/unrecognised (never the raw value), and the
+    # ledger's activation state. Private: this report, not the public /health.
+    anchor = getattr(cfg, 'cloud_budget_anchor_path', '') or ''
+    result['cloud']['budget'] = {
+        'enforce': llm_config.cloud_budget_enforce_state(os.environ.get('CLOUD_BUDGET_ENFORCE')),
+        'anchor_path_configured': bool(anchor),
+        'ledger': ledger_status(root / 'ops/sessions.db', anchor)}
     for name in ('telemetry', 'conversations'):
         path = Path(result[name]['path']).resolve()
         result[name]['path'] = str(path)
