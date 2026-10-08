@@ -469,3 +469,38 @@ bound (carried across months).
 HTTP refusals (4xx/5xx before a stream) are also charged the request bound
 here, although DeepSeek most likely bills nothing for them — conservative by a
 few thousand tokens per refusal.
+
+### 4. Writers: recorded is not reserved — batch writers now reserve too
+
+Inventory of every DeepSeek writer in the merged tree (guarded structurally by
+`tests/test_deepseek_callers_are_recorded.py`: only allow-listed files may name
+DeepSeek's host/key, and only the gateway may send a chat completion itself):
+
+| Writer | Path | Ledger |
+|---|---|---|
+| Chat primary/fallback, aux (classifier, rewriter, memory), Azure | `ai_gateway` providers | reserved per wire attempt |
+| `golden_ci`, `feedback_digest` | through the gateway | reserved |
+| `kb_gap_judge` (weekly VPS cron, `deepseek-chat`, max_tokens 200/16), `eval_answers`, `generate_dataset_v2`, `ingest_pdf` | `record_chat_completion` | **now reserved** when the host is DeepSeek's |
+| `feedback_auto_fix.py` | deleted on batch-oct8 (test asserts absence) | — |
+
+PR #65 made the batch tools *recorded* (`llm_calls`), but the cap's ledger only
+counts `cloud_budget_attempts`, so after activation the weekly judge would have
+spent from the capped wallet invisibly. `record_chat_completion` now reserves
+and settles exactly like a gateway attempt whenever the request goes to
+`api.deepseek.com`: bounded `max_tokens` required, SDK hidden retries disabled
+(`with_options(max_retries=0)`), `BudgetDenied` raised **before** any request
+when the cap is full or not activated (row `route_reason=budget_denied`,
+explicit 0/0). Other wallets (Ollama Cloud, local) are untouched.
+
+Consequence to know: any machine whose `ops/sessions.db` is not an activated
+ledger (the laptop) now gets `BudgetDenied` from these tools and from the
+gateway unless it sets `DEEPSEEK_PRIMARY_MONTHLY_TOKEN_CAP=0` (explicit
+unlimited opt-out) — which makes that machine an **unreserved writer** on the
+same DeepSeek account.
+
+What `unreserved_writers_drained: true` attests, and what code cannot prove:
+every process that can spend from this DeepSeek account outside the VPS
+container's ledger is stopped at the cutoff and stays stopped (or moves to a
+different account): laptop/CI runs with the key, any other API key on the
+account, untracked scripts or crons on the VPS host, console/playground use.
+The in-container writers above all reserve against `/app/ops/sessions.db`.

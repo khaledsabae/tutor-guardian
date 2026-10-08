@@ -243,6 +243,10 @@ def _response(content, usage=(11, 4)):
 @pytest.fixture
 def tdb(monkeypatch, tmp_path):
     monkeypatch.setattr(gw, "_TELEMETRY_DB", tmp_path / "sessions.db")
+    # Telemetry-only tests: explicit cap opt-out (0 = unlimited, no ledger).
+    # Reservation by the recorder is tested in test_deepseek_callers_are_recorded.
+    monkeypatch.setattr(gw, "LLM", dataclasses.replace(
+        gw.LLM, primary_provider="deepseek", deepseek_primary_monthly_token_cap=0))
     return tmp_path / "sessions.db"
 
 
@@ -296,6 +300,10 @@ def test_recorder_telemetry_failure_never_breaks_the_call(monkeypatch, tmp_path)
     blocked = tmp_path / "file"
     blocked.write_text("not a directory")
     monkeypatch.setattr(gw, "_TELEMETRY_DB", blocked / "sessions.db")
+    # Uncapped (0): with a cap, an unusable ledger denies the call before the
+    # wire instead — fail closed, tested in test_deepseek_callers_are_recorded.
+    monkeypatch.setattr(gw, "LLM", dataclasses.replace(
+        gw.LLM, primary_provider="deepseek", deepseek_primary_monthly_token_cap=0))
     resp = _response("x")
     client, _ = _client(resp)
     assert gw.record_chat_completion(client, tier="t", model="m",

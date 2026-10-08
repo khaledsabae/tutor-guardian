@@ -15,6 +15,7 @@ Two guards:
 """
 from __future__ import annotations
 
+import dataclasses
 import importlib.util
 import json
 import re
@@ -143,6 +144,10 @@ class _FakeOpenAI:
 @pytest.fixture
 def tdb(monkeypatch, tmp_path):
     monkeypatch.setattr(gw, "_TELEMETRY_DB", tmp_path / "sessions.db")
+    # Telemetry-only tests: explicit cap opt-out (0 = unlimited, no ledger).
+    # Reservation by the recorder is tested in test_deepseek_callers_are_recorded.
+    monkeypatch.setattr(gw, "LLM", dataclasses.replace(
+        gw.LLM, primary_provider="deepseek", deepseek_primary_monthly_token_cap=0))
     _FakeOpenAI.instances = []
     return tmp_path / "sessions.db"
 
@@ -218,3 +223,95 @@ def test_pdf_ingest_writes_a_row(tdb, monkeypatch):
     ing.call_deepseek("مقطع")
     (row,) = _rows(tdb)
     assert (row["provider"], row["tier"]) == ("deepseek", "ingest_pdf")
+
+
+# ── reserved, not only recorded: batch writers on the capped wallet ────────
+# A recorded-but-unreserved call is invisible to the cap's ledger: the weekly
+# VPS judge would spend from the same wallet after activation and the cap
+# would never see it. So record_chat_completion reserves (and settles)
+# exactly like the gateway whenever the request goes to DeepSeek's wallet.
+from app.services import cloud_budget as cb  # noqa: E402
+from tests.budget_test_helpers import activate  # noqa: E402
+
+WALLET = "cloud:https://api.deepseek.com:443"
+
+
+def _attempts(db):
+    with sqlite3.connect(db) as conn:
+        return conn.execute("SELECT charged_tokens, settled FROM cloud_budget_attempts ORDER BY rowid").fetchall()
+
+
+@pytest.fixture
+def capped(monkeypatch, tmp_path):
+    db = tmp_path / "sessions.db"
+    monkeypatch.setattr(gw, "_TELEMETRY_DB", db)
+    monkeypatch.setattr(gw, "_telemetry_schema_ready", False)
+    monkeypatch.setattr(gw, "LLM", dataclasses.replace(
+        gw.LLM, primary_provider="deepseek", deepseek_primary_monthly_token_cap=10 * 1048576,
+        deepseek_billing_profile_aliases=(("deepseek-chat", "deepseek-flash"),)))
+    _FakeOpenAI.instances = []
+    return db
+
+
+def _ask(client, **kw):
+    return gw.record_chat_completion(client, tier="kb_gap_judge", model="deepseek-chat",
+                                     messages=[{"role": "user", "content": "سؤال"}], **kw)
+
+
+def test_recorder_reserves_and_settles_reported_usage(capped):
+    activate(cb.CloudBudget(capped), wallets=(WALLET,))
+    _ask(_FakeOpenAI(), max_tokens=200)
+    assert _attempts(capped) == [(52, 1)]
+
+
+def test_recorder_is_denied_before_the_wire_without_activation(capped):
+    client = _FakeOpenAI()
+    with sqlite3.connect(capped) as conn:   # history exists, cutover does not
+        gw._ensure_telemetry_schema(conn)
+    with pytest.raises(cb.BudgetDenied):
+        _ask(client, max_tokens=200)
+    assert client.calls == []
+    (row,) = _rows(capped)
+    assert (row["route_reason"], row["prompt_tokens"], row["completion_tokens"]) == ("budget_denied", 0, 0)
+
+
+def test_recorder_requires_a_bounded_max_tokens_on_the_capped_wallet(capped):
+    activate(cb.CloudBudget(capped), wallets=(WALLET,))
+    client = _FakeOpenAI()
+    with pytest.raises(cb.BudgetDenied):
+        _ask(client)
+    assert client.calls == []
+
+
+def test_recorder_failure_settles_to_the_request_bound(capped):
+    activate(cb.CloudBudget(capped), wallets=(WALLET,))
+    client = _FakeOpenAI()
+
+    def boom(**kwargs):
+        client.calls.append(kwargs)
+        raise httpx.ReadTimeout("slow")
+
+    client.chat.completions.create = boom
+    with pytest.raises(httpx.ReadTimeout):
+        _ask(client, max_tokens=200)
+    [(charged, settled)] = _attempts(capped)
+    assert settled == 1 and 200 < charged < 1048576
+
+
+def test_recorder_disables_hidden_sdk_retries_on_the_capped_wallet(capped):
+    activate(cb.CloudBudget(capped), wallets=(WALLET,))
+    seen = []
+
+    class WithOptions(_FakeOpenAI):
+        def with_options(self, **kw):
+            seen.append(kw)
+            return self
+
+    _ask(WithOptions(), max_tokens=200)
+    assert seen == [{"max_retries": 0}], "an SDK retry is a second wire attempt under one reservation"
+
+
+def test_recorder_leaves_other_wallets_alone(capped):
+    client = _FakeOpenAI(base_url="https://ollama.com/v1")
+    gw.record_chat_completion(client, tier="t", model="m", messages=[{"role": "user", "content": "x"}])
+    assert len(client.calls) == 1   # no ledger, no denial: not DeepSeek's wallet

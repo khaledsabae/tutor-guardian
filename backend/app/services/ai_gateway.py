@@ -1249,7 +1249,10 @@ def record_chat_completion(client, *, tier: str, provider: str | None = None,
     """client.chat.completions.create(**create_kwargs), recorded in llm_calls.
 
     Returns the response unchanged and re-raises the client's errors after
-    recording them; telemetry itself never raises. `tier` names the caller
+    recording them; telemetry itself never raises. A request to DeepSeek's
+    wallet is also reserved and settled in the monthly cap's ledger, like a
+    gateway call: it needs a bounded max_tokens, and it raises BudgetDenied
+    (before any request) when the cap is full or not activated. `tier` names the caller
     (e.g. "kb_gap_judge"); `provider` overrides the host-derived label. Not
     for streams: their usage arrives in the last chunk, which this wrapper
     would not see — stream through the gateway instead.
@@ -1261,30 +1264,44 @@ def record_chat_completion(client, *, tier: str, provider: str | None = None,
     model = str(create_kwargs.get("model") or "unknown")
     name = provider or _provider_label(getattr(client, "base_url", None))
     start = time.monotonic()
+    charge = None
     try:
-        response = client.chat.completions.create(**create_kwargs)
-    except Exception as e:
-        _log_call(name, model, int((time.monotonic() - start) * 1000), None, None,
-                  streamed=False, ok=False, tier=tier,
-                  route_reason=_failure_reason(e) or route_reason, prompt=prompt, exc=e)
-        raise
-    latency = int((time.monotonic() - start) * 1000)
-    received, prompt_tokens, completion_tokens = "", None, None
-    try:
-        usage = getattr(response, "usage", None)
-        prompt_tokens = getattr(usage, "prompt_tokens", None)
-        completion_tokens = getattr(usage, "completion_tokens", None)
-        received = "".join((getattr(getattr(c, "message", None), "content", None) or "")
-                           for c in (getattr(response, "choices", None) or []))
-        served = getattr(response, "model", None)
-        if isinstance(served, str) and served:
-            model = served
-    except Exception:  # noqa: BLE001 — an odd response shape is estimated, not fatal
-        pass
-    _log_call(name, model, latency, prompt_tokens, completion_tokens,
-              streamed=False, ok=True, tier=tier, route_reason=route_reason,
-              prompt=prompt, received=received)
-    return response
+        try:
+            if _provider_label(getattr(client, "base_url", None)) == "deepseek":
+                # DeepSeek's wallet is the capped one: reserve this wire attempt
+                # exactly like the gateway does, or the cap never sees it.
+                charge = _reserve_wire_budget(str(client.base_url), "deepseek", messages,
+                                              create_kwargs.get("max_tokens"), model=model)
+                if charge is not None and hasattr(client, "with_options"):
+                    # An SDK retry is another paid attempt under one reservation.
+                    client = client.with_options(max_retries=0)
+            response = client.chat.completions.create(**create_kwargs)
+        except Exception as e:
+            usage = e.usage if isinstance(e, BudgetDenied) else (None, None)
+            _log_call(name, model, int((time.monotonic() - start) * 1000), *usage,
+                      streamed=False, ok=False, tier=tier,
+                      route_reason=_failure_reason(e) or route_reason, prompt=prompt, exc=e)
+            raise
+        latency = int((time.monotonic() - start) * 1000)
+        received, prompt_tokens, completion_tokens = "", None, None
+        try:
+            usage = getattr(response, "usage", None)
+            prompt_tokens = getattr(usage, "prompt_tokens", None)
+            completion_tokens = getattr(usage, "completion_tokens", None)
+            received = "".join((getattr(getattr(c, "message", None), "content", None) or "")
+                               for c in (getattr(response, "choices", None) or []))
+            served = getattr(response, "model", None)
+            if isinstance(served, str) and served:
+                model = served
+        except Exception:  # noqa: BLE001 — an odd response shape is estimated, not fatal
+            pass
+        _settle_wire_budget(charge, prompt_tokens, completion_tokens)
+        _log_call(name, model, latency, prompt_tokens, completion_tokens,
+                  streamed=False, ok=True, tier=tier, route_reason=route_reason,
+                  prompt=prompt, received=received)
+        return response
+    finally:
+        _settle_wire_budget(charge, None, None)  # an unsettled attempt: its own bound
 
 
 def _failure_reason(exc: BaseException) -> str | None:
