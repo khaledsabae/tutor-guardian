@@ -217,6 +217,12 @@ class Analytics {
   /// A child-journey milestone was logged — a key "first value" signal.
   static Future<void> milestoneLogged() => _log('milestone_logged');
 
+  /// A badge's coin reward was actually paid (phase 1: هدية اليوم والشارات).
+  /// Fired by the coins ledger the moment a badge is credited — not when it
+  /// is merely earned — so the funnel reads the same truth the wallet does.
+  static Future<void> badgeUnlocked(String badgeId) =>
+      _log('badge_unlocked', {'badge_id': badgeId});
+
   /// A Google identity was linked — data now survives reinstall.
   static Future<void> identityLinked() => _log('identity_linked');
 

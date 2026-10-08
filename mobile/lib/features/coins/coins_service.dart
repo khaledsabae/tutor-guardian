@@ -18,7 +18,11 @@
 /// the app hands a seven-year-old for a day their family was travelling.
 library;
 
+import 'dart:async';
+
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../core/analytics.dart';
 
 class CoinsState {
   final int balance;
@@ -58,6 +62,7 @@ class CoinsService {
 
   static const _kBalance = 'coins.balance';
   static const _kLastClaim = 'coins.last_claim_date'; // yyyy-MM-dd
+  static const _kLastReward = 'coins.last_claim_reward'; // coins, int
   static const _kStreak = 'coins.daily_streak';
   static const _kCreditedBadges = 'coins.credited_badges';
   static const _kOwnedBadges = 'coins.owned_exclusive_badges';
@@ -155,6 +160,34 @@ class CoinsService {
     return _snapshot(await SharedPreferences.getInstance());
   }
 
+  /// The daily streak a claim made on [last] would produce — the one
+  /// computation [claimDaily] and [todayGift] must agree on, so the gift
+  /// the Today screen promises is the gift `claimDaily` pays. Rest-day
+  /// spending is *computed* here, never written; only the claim writes.
+  Future<int> _nextStreak(SharedPreferences p, String? last) async {
+    final prevStreak = p.getInt(_kStreak) ?? 0;
+    final gap = _daysSince(last);
+    if (gap == null) return 1; // first ever claim
+    if (gap <= 1) return prevStreak + 1;
+    final missed = gap - 1;
+    final used = await _restDaysUsed(p);
+    final coverable = (restDaysPerMonth - used).clamp(0, restDaysPerMonth);
+    if (missed <= coverable) return prevStreak + 1;
+    return (prevStreak - (missed - coverable)).clamp(1, 1 << 30);
+  }
+
+  /// The gift the parent can see for today: what a claim *would* pay now, or
+  /// what today's claim already paid. Purely a read — claiming is the only
+  /// write. The Home screen shows this as «هدية اليوم: {n} 🪙» (phase 1:
+  /// هدية اليوم والشارات), so a reward that happens silently is still said.
+  Future<int> todayGift() async {
+    final p = await SharedPreferences.getInstance();
+    final last = p.getString(_kLastClaim);
+    if (last == _today()) return p.getInt(_kLastReward) ?? 0;
+    final streak = await _nextStreak(p, last);
+    return dailyBase + ((streak - 1) * 2).clamp(0, streakBonusCap);
+  }
+
   /// Claim the daily login reward exactly once per calendar day.
   ///
   /// A missed day is spent from the month's two rest days if any remain. When
@@ -169,49 +202,45 @@ class CoinsService {
       return _snapshot(p); // already claimed
     }
 
-    final prevStreak = p.getInt(_kStreak) ?? 0;
+    // The streak is computed BEFORE rest days are spent — [_nextStreak] must
+    // see the ledger as the parent left it, or a covered miss would be
+    // counted twice. Rest days are spent here, not there: only the claim
+    // writes.
+    final streak = await _nextStreak(p, last);
     final gap = _daysSince(last);
-    int streak;
-    if (gap == null) {
-      streak = 1; // first ever claim
-    } else if (gap <= 1) {
-      streak = prevStreak + 1;
-    } else {
+    if (gap != null && gap > 1) {
       final missed = gap - 1;
       final used = await _restDaysUsed(p);
       final coverable = (restDaysPerMonth - used).clamp(0, restDaysPerMonth);
-      if (missed <= coverable) {
-        await p.setInt(_kRestDaysUsed, used + missed);
-        streak = prevStreak + 1;
-      } else {
-        final uncovered = missed - coverable;
-        if (coverable > 0) await p.setInt(_kRestDaysUsed, used + coverable);
-        streak = (prevStreak - uncovered).clamp(1, 1 << 30);
-      }
+      final spend = missed < coverable ? missed : coverable;
+      if (spend > 0) await p.setInt(_kRestDaysUsed, used + spend);
     }
 
-    final bonus = ((streak - 1) * 2).clamp(0, streakBonusCap);
-    final reward = dailyBase + bonus;
+    final reward = dailyBase + ((streak - 1) * 2).clamp(0, streakBonusCap);
 
     await p.setInt(_kBalance, (p.getInt(_kBalance) ?? 0) + reward);
     await p.setInt(_kStreak, streak);
     await p.setString(_kLastClaim, today);
+    await p.setInt(_kLastReward, reward);
     await p.setInt(_kActiveDays, await _activeDays(p) + 1);
 
     return _snapshot(p, lastClaimReward: reward);
   }
 
   /// Credit coins for any newly-earned badges (idempotent — each badge id
-  /// is rewarded once, ever). Returns the new balance.
+  /// is rewarded once, ever). Returns the badge ids actually paid by *this*
+  /// call, so a caller can celebrate what really happened: an empty list
+  /// means everything was already credited (or is waiting for room under
+  /// the daily ceiling), and `badge_unlocked` is logged per paid id.
   ///
   /// Badges are unlocked by doing something, never bought. That is the whole
   /// distinction: a badge you earned is a record, a badge you bought is a
   /// purchase, and only one of them means anything a month later.
-  Future<int> creditBadges(Iterable<String> earnedBadgeIds) async {
+  Future<List<String>> creditBadges(Iterable<String> earnedBadgeIds) async {
     final p = await SharedPreferences.getInstance();
     final credited = (p.getStringList(_kCreditedBadges) ?? <String>[]).toSet();
     final fresh = earnedBadgeIds.where((id) => !credited.contains(id)).toList();
-    if (fresh.isEmpty) return p.getInt(_kBalance) ?? 0;
+    if (fresh.isEmpty) return const [];
     // A badge pays in full or waits. It used to be marked credited and then
     // clipped by the day's ceiling — an invite on a busy day paid 10 of 50 and
     // the other 40 were gone for good. Now a badge that does not fit today is
@@ -221,12 +250,17 @@ class CoinsService {
     final earned = await _earnedToday(p);
     final room = (dailyEarnCap - earned).clamp(0, dailyEarnCap);
     final fits = (room ~/ badgeReward).clamp(0, fresh.length);
-    if (fits == 0) return p.getInt(_kBalance) ?? 0;
+    if (fits == 0) return const [];
     final paying = fresh.take(fits).toList();
     credited.addAll(paying);
     await p.setStringList(_kCreditedBadges, credited.toList());
     await earn(badgeReward * paying.length);
-    return p.getInt(_kBalance) ?? 0;
+    // Measured when the coin actually lands (phase 1: هدية اليوم والشارات) —
+    // a badge waiting for ceiling room is not unlocked yet.
+    for (final id in paying) {
+      unawaited(Analytics.badgeUnlocked(id));
+    }
+    return paying;
   }
 
   /// The one sink. Deducts [amount] for a covenant the parent has agreed to

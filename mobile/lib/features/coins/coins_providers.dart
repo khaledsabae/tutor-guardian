@@ -23,10 +23,12 @@ class CoinsNotifier extends StateNotifier<CoinsState> {
     return next.lastClaimReward;
   }
 
-  /// Credit any newly-unlocked badges (idempotent).
-  Future<void> creditBadges(Iterable<String> earnedBadgeIds) async {
-    await CoinsService.instance.creditBadges(earnedBadgeIds);
+  /// Credit any newly-unlocked badges (idempotent). Returns the badge ids
+  /// actually paid by this call, so a caller can celebrate exactly those.
+  Future<List<String>> creditBadges(Iterable<String> earnedBadgeIds) async {
+    final paid = await CoinsService.instance.creditBadges(earnedBadgeIds);
     state = await CoinsService.instance.read();
+    return paid;
   }
 
   /// Redeem coins against a covenant — the only thing they buy, and it is
