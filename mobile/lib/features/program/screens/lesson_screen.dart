@@ -438,18 +438,36 @@ class _Hero extends ConsumerWidget {
                       const SizedBox(width: 8),
                       _HeroBadge(text: AppLocalizations.of(context).lessonMinutesBadge(lesson.estimatedMinutes)),
                       const Spacer(),
-                      IconButton(
-                        onPressed: () {
-                          ref
-                              .read(favoritesProvider.notifier)
-                              .toggleLesson(lesson.id);
-                        },
-                        icon: Icon(
-                          isFav ? Icons.favorite : Icons.favorite_border,
-                          color: isFav ? Colors.redAccent : Colors.white,
-                          size: 22,
+                      Semantics(
+                        container: true,
+                        button: true,
+                        toggled: isFav,
+                        label: isFav
+                            ? AppLocalizations.of(context).lessonFavRemove
+                            : AppLocalizations.of(context).lessonFavAdd,
+                        onTap: () => ref
+                            .read(favoritesProvider.notifier)
+                            .toggleLesson(lesson.id),
+                        excludeSemantics: true,
+                        child: IconButton(
+                          style: IconButton.styleFrom(
+                            minimumSize: const Size(48, 48),
+                            tapTargetSize: MaterialTapTargetSize.padded,
+                          ),
+                          onPressed: () {
+                            ref
+                                .read(favoritesProvider.notifier)
+                                .toggleLesson(lesson.id);
+                          },
+                          icon: Icon(
+                            isFav ? Icons.favorite : Icons.favorite_border,
+                            color: isFav ? Colors.redAccent : Colors.white,
+                            size: 22,
+                          ),
+                          tooltip: isFav
+                              ? AppLocalizations.of(context).lessonFavRemove
+                              : AppLocalizations.of(context).lessonFavAdd,
                         ),
-                        tooltip: isFav ? AppLocalizations.of(context).lessonFavRemove : AppLocalizations.of(context).lessonFavAdd,
                       ),
                     ],
                   ),
