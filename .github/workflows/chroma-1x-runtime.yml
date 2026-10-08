@@ -64,7 +64,7 @@ jobs:
             python -m venv "$RUNNER_TEMP/baseline-venv"
             "$RUNNER_TEMP/baseline-venv/bin/python" -m pip install \
               --require-hashes --no-deps --only-binary=:all: \
-              --constraints .github/ci/constraints-prod.txt \
+              --constraint .github/ci/constraints-prod.txt \
               -r .github/ci/requirements-prod.lock -r .github/ci/requirements-dev.lock
             "$RUNNER_TEMP/baseline-venv/bin/python" -m pip check
           ) 2>&1 | tee "$EVIDENCE/baseline-install.log"
@@ -124,14 +124,14 @@ jobs:
             candidate_python="$RUNNER_TEMP/candidate-venv/bin/python"
             "$candidate_python" -m pip install \
               --require-hashes --no-deps --only-binary=:all: \
-              --constraints .github/ci/constraints-prod.txt \
+              --constraint .github/ci/constraints-prod.txt \
               -r .github/ci/requirements-prod.lock -r .github/ci/requirements-dev.lock
             python ops/tools/chroma_runtime_probe.py constraints \
               --source .github/ci/constraints-prod.txt --out "$EVIDENCE/candidate-constraints.txt"
             # Only chromadb's pin is removed. New deps resolve under every other pin.
             # A conflict fails this experiment; do not weaken the production constraints.
             "$candidate_python" -m pip install --upgrade "chromadb==1.5.9" \
-              --constraints "$EVIDENCE/candidate-constraints.txt" \
+              --constraint "$EVIDENCE/candidate-constraints.txt" \
               --report "$EVIDENCE/candidate-resolve.json"
             "$candidate_python" -m pip check
           ) 2>&1 | tee "$EVIDENCE/candidate-install.log"
