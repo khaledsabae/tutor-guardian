@@ -6026,6 +6026,36 @@ abstract class AppLocalizations {
   /// **'فشل ربط الحساب: {error}'**
   String identityLinkFailed(Object error);
 
+  /// No description provided for @identityErrorNoGoogleAccount.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا يوجد حساب Google على هذا الهاتف. أضِف حسابًا من إعدادات الهاتف ثم أعِد المحاولة.'**
+  String get identityErrorNoGoogleAccount;
+
+  /// No description provided for @identityErrorGoogleUnavailable.
+  ///
+  /// In ar, this message translates to:
+  /// **'تسجيل الدخول بحساب Google غير متاح على هذا الهاتف الآن. تأكّد من تحديث خدمات Google Play ثم أعِد المحاولة.'**
+  String get identityErrorGoogleUnavailable;
+
+  /// No description provided for @identityErrorAppMisconfigured.
+  ///
+  /// In ar, this message translates to:
+  /// **'تسجيل الدخول غير مُهيّأ في هذا الإصدار من التطبيق. حدِّث التطبيق أو حاول لاحقًا.'**
+  String get identityErrorAppMisconfigured;
+
+  /// No description provided for @identityErrorGoogleUi.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعذّر فتح نافذة تسجيل الدخول بحساب Google. أعِد المحاولة.'**
+  String get identityErrorGoogleUi;
+
+  /// No description provided for @identityErrorGoogleGeneric.
+  ///
+  /// In ar, this message translates to:
+  /// **'لم يكتمل تسجيل الدخول بحساب Google. أعِد المحاولة بعد قليل.'**
+  String get identityErrorGoogleGeneric;
+
   /// No description provided for @identityLocalNote.
   ///
   /// In ar, this message translates to:

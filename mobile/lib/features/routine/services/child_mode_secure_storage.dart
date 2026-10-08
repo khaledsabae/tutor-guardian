@@ -8,12 +8,8 @@ import 'package:crypto/crypto.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 const _storage = FlutterSecureStorage(
-  aOptions: AndroidOptions(
-    resetOnError: true,
-  ),
-  iOptions: IOSOptions(
-    accessibility: KeychainAccessibility.first_unlock,
-  ),
+  aOptions: AndroidOptions(resetOnError: true),
+  iOptions: IOSOptions(accessibility: KeychainAccessibility.first_unlock),
 );
 
 const _kChildTokenKey = 'tg_child_session_token';
@@ -61,6 +57,11 @@ Future<void> setChildModeActive(bool active) async {
   } catch (_) {}
 }
 
+/// Like [isChildModeActive], but a failed read throws instead of reading as
+/// "off" — for callers that must fail closed.
+Future<bool> readChildModeActive() async =>
+    (await _storage.read(key: _kChildModeActiveKey)) == '1';
+
 Future<bool> isChildModeActive() async {
   try {
     return (await _storage.read(key: _kChildModeActiveKey)) == '1';
@@ -101,7 +102,8 @@ Future<bool> hasChildModePin() async {
   }
 }
 
-String _hashPin(String pin) => sha256.convert(utf8.encode(pin.trim())).toString();
+String _hashPin(String pin) =>
+    sha256.convert(utf8.encode(pin.trim())).toString();
 
 /// Generate a numeric PIN that is easy for a child to type.
 String generateChildPin({int digits = 4}) {

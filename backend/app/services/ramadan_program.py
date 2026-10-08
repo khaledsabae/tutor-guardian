@@ -353,10 +353,15 @@ def kickoff_payload(doc: dict) -> dict[str, Any]:
 def ladder_band(doc: dict, band_key: Optional[str], puberty: bool) -> Optional[str]:
     """Puberty, not age, makes fasting obligatory (schema.md §8.2): a child the
     parent marked as having reached it is on the 13-15 ladder, whatever the
-    band. Otherwise the ladder follows the day variants' band."""
+    band. Otherwise the ladder follows the day variants' band — except that the
+    13-15 ladder is the obligatory full month, so a 13-15 (or 16-18) child not
+    marked as having reached puberty stays on the 10-12 training steps, as the
+    13-15 summary itself says (GPT programs review PG-01, 2026-10-08)."""
     if puberty:
         return "13-15"
     bands = (doc.get("fasting_ladder") or {}).get("bands", {})
+    if band_key == "13-15" and "10-12" in bands:
+        return "10-12"
     return band_key if band_key in bands else None
 
 

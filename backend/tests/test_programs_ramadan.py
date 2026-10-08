@@ -381,6 +381,26 @@ def test_puberty_moves_any_child_to_the_13_15_ladder(monkeypatch):
     assert _set_step(c, cid, reached_puberty=False).json()["ladder_band"] == "7-9"
 
 
+@pytest.mark.parametrize("age_group", ["13-15", "16-18"])
+def test_a_teen_not_marked_pubertal_stays_on_the_training_steps(monkeypatch, age_group):
+    """The 13-15 ladder is the obligatory full month; its own summary says a
+    child who has not reached puberty continues the 10-12 steps, with their
+    weekly cap. Before PG-01 (2026-10-08) such a child got only the full month."""
+    freeze(monkeypatch, "2027-02-08T12:00:00")
+    c = client()
+    cid = add_child(c, age_group=age_group)
+    out = _fasting(c, cid)
+    assert out["ladder_band"] == "10-12" and out["fasts"] == "partial_to_full"
+    steps = {s["key"]: s for s in out["steps"]}
+    assert "full_day_supported" not in steps
+    assert steps["full_day_rest_days"]["max_days_per_week"] == 2
+    assert _set_step(c, cid, step_key="full_day_supported").status_code == 422
+    assert _set_step(c, cid, step_key="full_day_rest_days").status_code == 200
+    r = _set_step(c, cid, reached_puberty=True)
+    assert r.json()["ladder_band"] == "13-15"
+    assert [s["key"] for s in r.json()["steps"]] == ["full_day_supported"]
+
+
 def test_a_climb_is_counted_and_a_step_down_is_not(monkeypatch):
     c = client()
     cid = add_child(c, age_group="10-12")
