@@ -109,7 +109,7 @@ class _HabitCustomizeScreenState extends ConsumerState<HabitCustomizeScreen> {
       ref.invalidate(habitTemplatesProvider(childId));
       _showSnack(l10n.habitCustomizeAdded);
     } on TgApiError catch (e) {
-      _showSnack(l10n.habitCustomizeAddFailed(e.message));
+      _showSnack(l10n.habitCustomizeAddFailed(describeFailure(l10n, e)));
     } finally {
       if (mounted) setState(() => _saving = false);
     }
@@ -198,7 +198,7 @@ class _TemplateList extends ConsumerWidget {
       ref.invalidate(habitTemplatesProvider(template.childId));
     } on TgApiError catch (e) {
       messenger.showSnackBar(
-        SnackBar(content: Text(l10n.habitCustomizeUpdateFailed(e.message))),
+        SnackBar(content: Text(l10n.habitCustomizeUpdateFailed(describeFailure(l10n, e)))),
       );
     }
   }
