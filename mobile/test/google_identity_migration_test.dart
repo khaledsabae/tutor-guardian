@@ -112,6 +112,8 @@ void main() {
   // GET /api/identity/me — the server's view of this device's link.
   Map<String, dynamic> me = {'ok': true, 'linked': false};
   Object? backendError, meError;
+  void Function()? onMe;
+  final realChildModeRead = identity.readChildMode;
   Iterable<http.Request> linkRequests() =>
       requests.where((r) => r.url.path == '/api/identity/link-google');
   Iterable<http.Request> meRequests() =>
@@ -126,12 +128,15 @@ void main() {
     response = {'ok': true, 'google_id': 'parent'};
     me = {'ok': true, 'linked': false};
     backendError = meError = null;
+    onMe = null;
+    identity.readChildMode = realChildModeRead;
     SharedPreferences.setMockInitialValues({});
     FlutterSecureStorage.setMockInitialValues({});
     TgClient.shared = _SessionClient(
       MockClient((request) async {
         requests.add(request);
         final isMe = request.url.path == '/api/identity/me';
+        if (isMe) onMe?.call();
         if (isMe && meError != null) throw meError!;
         if (!isMe && backendError != null) throw backendError!;
         return http.Response(
@@ -347,6 +352,65 @@ void main() {
       expect(linkRequests(), isEmpty);
     },
   );
+  const rememberedButServerLost = {
+    'identity.linked': true,
+    'identity.google_id': 'parent',
+  };
+  for (final (outcome, arrange) in <(String, void Function())>[
+    ('no account', () => google.noLightweightAccount = true),
+    (
+      'a cancelled sheet',
+      () => google.lightweightError = const GoogleSignInException(
+        code: GoogleSignInExceptionCode.canceled,
+      ),
+    ),
+    ('a different account', () => google.accountId = 'someone-else'),
+  ]) {
+    test(
+      'after $outcome the sheet is not offered again on later launches',
+      () async {
+        SharedPreferences.setMockInitialValues(rememberedButServerLost);
+        arrange();
+        await identity.silentRestore(); // cold start 1
+        await identity.silentRestore(); // cold start 2
+        expect(google.lightweightAttempts, 1);
+        expect(google.authentications, 0);
+        expect(linkRequests(), isEmpty);
+      },
+    );
+  }
+  test('manual sign-in still links after silent restore gave up', () async {
+    SharedPreferences.setMockInitialValues(rememberedButServerLost);
+    google.noLightweightAccount = true;
+    await identity.silentRestore();
+    expect(await identity.signInAndLink(), isTrue);
+    expect(google.authentications, 1);
+    expect(linkRequests(), hasLength(1));
+    // A fresh link earns the silent path one attempt again.
+    google.noLightweightAccount = false;
+    await identity.silentRestore();
+    expect(google.lightweightAttempts, 2);
+  });
+  test(
+    'child mode starting during the server call stops the Google call',
+    () async {
+      SharedPreferences.setMockInitialValues(rememberedButServerLost);
+      var childMode = false;
+      identity.readChildMode = () async => childMode;
+      onMe = () => childMode = true;
+      await identity.silentRestore();
+      expect(meRequests(), hasLength(1));
+      expect(google.lightweightAttempts, 0);
+      expect(linkRequests(), isEmpty);
+    },
+  );
+  test('an unreadable child-mode flag counts as child mode', () async {
+    SharedPreferences.setMockInitialValues(rememberedButServerLost);
+    identity.readChildMode = () async => throw Exception('keystore');
+    await identity.silentRestore();
+    expect(google.lightweightAttempts, 0);
+    expect(requests, isEmpty);
+  });
   test(
     're-link uses current-session ID token without interactive sign-in',
     () async {

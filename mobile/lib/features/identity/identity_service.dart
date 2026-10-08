@@ -27,6 +27,12 @@ class IdentityService {
   /// account on the phone, so the silent paths only ever re-link this one.
   static const _kGoogleId = 'identity.google_id';
 
+  /// Set once cold-start restore has used its one silent Google attempt for
+  /// a link the server lost. Without it a reinstall that only got the
+  /// preferences back would offer the account sheet on every launch. Only a
+  /// successful link clears it; the identity screen still signs in.
+  static const _kSilentRestoreSpent = 'identity.silent_restore_spent';
+
   // Web client ID from Google Cloud Console → OAuth client ID → Web application.
   // Used by the google_sign_in plugin on Android to request an id_token.
   static const String _serverClientId = String.fromEnvironment(
@@ -57,6 +63,20 @@ class IdentityService {
   @visibleForTesting
   void resetInitializationForTesting() => _initialization = null;
 
+  /// Reads the child-mode flag; may throw. Replaceable in tests.
+  @visibleForTesting
+  Future<bool> Function() readChildMode =
+      child_mode_storage.readChildModeActive;
+
+  /// Child mode, failing closed: an unreadable flag counts as child mode.
+  Future<bool> _inChildMode() async {
+    try {
+      return await readChildMode();
+    } catch (_) {
+      return true;
+    }
+  }
+
   /// Returns true if a previous sign-in happened on this device.
   Future<bool> get isLinked async {
     final p = await SharedPreferences.getInstance();
@@ -75,7 +95,7 @@ class IdentityService {
   Future<void> silentRestore() async {
     if (!await isLinked) return;
     if (_serverClientId.isEmpty) return;
-    if (await child_mode_storage.isChildModeActive()) return;
+    if (await _inChildMode()) return;
     try {
       final me = await _fetchServerIdentity();
       final prefs = await SharedPreferences.getInstance();
@@ -89,7 +109,13 @@ class IdentityService {
       }
       final expected = prefs.getString(_kGoogleId);
       if (expected == null || expected.isEmpty) return;
+      if (prefs.getBool(_kSilentRestoreSpent) ?? false) return;
       await _ensureInitialized();
+      // Child mode may have started while the server answered.
+      if (await _inChildMode()) return;
+      // Spent before asking: a null, cancelled or wrong-account answer — or
+      // a crash mid-sheet — must not bring the sheet back next launch.
+      await prefs.setBool(_kSilentRestoreSpent, true);
       final account = await _googleSignIn.attemptLightweightAuthentication();
       if (account == null) return;
       if (!_isAccount(account, expected)) {
@@ -253,6 +279,7 @@ class IdentityService {
 
     final p = await SharedPreferences.getInstance();
     await p.setBool(_kLinked, true);
+    await p.remove(_kSilentRestoreSpent);
     final linkedId = response['google_id'];
     await p.setString(
       _kGoogleId,
