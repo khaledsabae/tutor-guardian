@@ -8,8 +8,8 @@
     "fa6e2d20-4ddc-401f-be85-f3e1e24c1091",
     "isl-8f891c3d"
   ],
-  "summary": "The moment of birth is not merely a medical event—it is a moment of covenant. The Prophet ﷺ taught us how to welcome the newborn: the adhan in the right ear and the iqamah in the left, so the first thing the child hears is the name of Allah. Congratulations, gratitude, and du'a follow. Naming the child on the seventh day is a ritual not to be delayed: choose a name that carries a beautiful meaning and servitude to Allah. The 'aqiqah on the seventh day is an expression of gratitude and a public announcement of the child’s arrival in the community. These sunnan are not mere formalities—they are the foundation of the child’s Islamic identity from their very first day.",
-  "try_this": "Before the birth or immediately after: study beautiful names (Abdullah, Abdur-Rahman, Muhammad, and the names of the prophets) and avoid names with negative meanings. Plan the 'aqiqah for the seventh day—slaughtering and distributing the meat to family, neighbors, and the poor. If the seventh day is not possible, then the fourteenth or twenty-first. Record the first day: the adhan, the name, the du'a you made—your child will love to hear this story one day.",
+  "summary": "The moment of birth is not merely a medical event—it is a moment of covenant. Among the Prophet's ﷺ guidance in welcoming a newborn is that he named a newborn, did tahneek for him, and made du'a for barakah for him (Sahih al-Bukhari 5467), so welcome your child with congratulations, gratitude, and du'a. Many jurists consider the adhan in the newborn's ear recommended, though hadith scholars differ over the authenticity of its hadith; as for the iqamah in the left ear, its hadith is weak and not established. Naming may be done on the day of birth or on the seventh day: choose a name that carries a beautiful meaning and servitude to Allah. The 'aqiqah on the seventh day is an expression of gratitude and a public announcement of the child’s arrival in the community; if the seventh day passes, jurists hold different views on its time after that, among them slaughtering it on the fourteenth or twenty-first day, and the hadith reported on this is disputed, so ask a scholar you trust and do not burden yourself with worry. These sunnan are not mere formalities—they are the foundation of the child’s Islamic identity from their very first day.",
+  "try_this": "Today: Write your child a short note about the day they were born: their name, its meaning and why you chose it, and the du'a you made for them, and keep it for them to read when they grow up.",
   "order": 1,
   "estimated_minutes": 28,
   "reflection_prompts": [
@@ -21,7 +21,7 @@
   "version": "1.0.0",
   "created_at": "2026-06-10T16:00:00",
   "updated_at": "2026-06-10T16:00:00",
-  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
   "language": "en",
   "source_language": "ar",
   "translation": {
@@ -33,50 +33,38 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "low_only",
-    "review_defects": [
-      {
-        "model": "deepseek-v4-pro",
-        "field": "title",
-        "type": "leakage",
-        "why": "The transliteration 'Sunnan' is a misspelling of the standard 'Sunan'."
-      },
-      {
-        "model": "deepseek-v4-pro",
-        "field": "summary",
-        "type": "hadith",
-        "why": "The specific practice of adhan and iqamah in the newborn's ears is based on a weak hadith not found in Sahih al-Bukhari or Sahih Muslim, and no source is cited."
-      }
-    ],
-    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
-    "revalidated_at": "2026-10-04T11:18:18+00:00",
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
+    "revalidated_at": "2026-10-08T15:21:56+00:00",
     "auto_review": {
       "reviewers": [
         "deepseek-v4-pro",
         "glm-5.2"
       ],
+      "providers": {
+        "deepseek-v4-pro": {
+          "provider": "openrouter",
+          "model": "deepseek/deepseek-v4-pro"
+        },
+        "glm-5.2": {
+          "provider": "openrouter",
+          "model": "z-ai/glm-5.2"
+        }
+      },
       "fixer": null,
       "rounds": 1,
       "prompt_version": "dfa8a5f39718",
-      "content_sha256": "bf0b6f74ba548efb6fc35a319516d24a806ff3bcaa4f07d0f1ed781ae9355376",
-      "reviewed_at": "2026-10-04T11:18:18+00:00",
-      "residual_low": [
-        {
-          "model": "deepseek-v4-pro",
-          "field": "title",
-          "type": "leakage",
-          "why": "The transliteration 'Sunnan' is a misspelling of the standard 'Sunan'."
-        },
-        {
-          "model": "deepseek-v4-pro",
-          "field": "summary",
-          "type": "hadith",
-          "why": "The specific practice of adhan and iqamah in the newborn's ears is based on a weak hadith not found in Sahih al-Bukhari or Sahih Muslim, and no source is cited."
-        }
-      ],
+      "content_sha256": "eefbb2087acb83b21ed772b609b0d6d13d165cf423c4a06cf05d74806f8596ca",
+      "reviewed_at": "2026-10-08T15:21:56+00:00",
+      "residual_low": [],
       "adjudicated": [],
       "tool": "ops/tools/review_en_parity.py",
-      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
-    }
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+    },
+    "english_authors": [
+      "mistral-large-3:675b",
+      "claude-opus-5-5"
+    ]
   }
 }

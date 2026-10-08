@@ -5,13 +5,13 @@
   "age_group": "16-18",
   "domain": "aqeedah",
   "unit_ids": [],
-  "summary": "As your young adult stands at the threshold of university and work, they will encounter ideas and pressures that test their iman far from you. Your goal is not to shield them from every question, but to ensure they emerge with iman built on conviction, not mere imitation—knowing *why* they believe and engaging with those who differ with confidence and adab. Inherited iman falters at the first gust of doubt, but iman built on evidence stands firm.",
-  "try_this": "This week: Ask your son about the idea he hears most often that shakes his certainty, and sit together to seek a solid answer from a trusted scholar, without denial or haste.",
+  "summary": "As your young adult stands at the threshold of university and work, they will encounter ideas and pressures that test their iman far from you. Your goal is not to shield them from every question, but to ensure they emerge with iman built on conviction, not mere imitation—knowing *why* they believe and engaging with those who differ with confidence and adab. What they learned at home is a solid foundation that understanding, dialogue, and evidence suited to their age make more firmly rooted, so let them feel that their questions take nothing from their standing or from your love for them.",
+  "try_this": "Today: Ask your child about the idea they hear most that raises questions about faith for them, and agree to look together for a solid answer from a trusted scholar, without denial or haste.",
   "order": 1,
   "estimated_minutes": 7,
   "reflection_prompts": [
-    "What idea is troubling your son’s iman these days?",
-    "Did he leave the discussion more at ease or more anxious?"
+    "What idea is troubling your child’s iman these days?",
+    "Did they leave the discussion more at ease or more anxious?"
   ],
   "warning_flags": [
     "انجراف نحو إنكار الدين أو ترك الصلاة",
@@ -20,7 +20,7 @@
   "needs_professional_followup": true,
   "is_published": true,
   "version": "1.0.0",
-  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
   "language": "en",
   "source_language": "ar",
   "translation": {
@@ -32,50 +32,38 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "low_only",
-    "review_defects": [
-      {
-        "model": "deepseek-v4-pro",
-        "field": "summary",
-        "type": "addition",
-        "why": "English adds 'of doubt' not in Arabic, narrowing the metaphor."
-      },
-      {
-        "model": "glm-5.2",
-        "field": "summary",
-        "type": "addition",
-        "why": "The Arabic says 'at the first wind' (a metaphor for any challenge); English specifies 'of doubt,' narrowing the metaphor."
-      }
-    ],
-    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
-    "revalidated_at": "2026-10-04T11:18:18+00:00",
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
+    "revalidated_at": "2026-10-08T16:29:33+00:00",
     "auto_review": {
       "reviewers": [
         "deepseek-v4-pro",
         "glm-5.2"
       ],
+      "providers": {
+        "deepseek-v4-pro": {
+          "provider": "openrouter",
+          "model": "deepseek/deepseek-v4-pro"
+        },
+        "glm-5.2": {
+          "provider": "openrouter",
+          "model": "z-ai/glm-5.2"
+        }
+      },
       "fixer": null,
       "rounds": 1,
       "prompt_version": "dfa8a5f39718",
-      "content_sha256": "4071316fd29e554a0317bea9f61a98effe9ecc9a369fa19ace0170eabcfe1b12",
-      "reviewed_at": "2026-10-04T11:18:18+00:00",
-      "residual_low": [
-        {
-          "model": "deepseek-v4-pro",
-          "field": "summary",
-          "type": "addition",
-          "why": "English adds 'of doubt' not in Arabic, narrowing the metaphor."
-        },
-        {
-          "model": "glm-5.2",
-          "field": "summary",
-          "type": "addition",
-          "why": "The Arabic says 'at the first wind' (a metaphor for any challenge); English specifies 'of doubt,' narrowing the metaphor."
-        }
-      ],
+      "content_sha256": "3ef0d137478602afe36ac67015cd40ac4960b545f0a18af4ee154fd8cecf92ff",
+      "reviewed_at": "2026-10-08T16:29:33+00:00",
+      "residual_low": [],
       "adjudicated": [],
       "tool": "ops/tools/review_en_parity.py",
-      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
-    }
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+    },
+    "english_authors": [
+      "mistral-large-3:675b",
+      "claude-opus-5-5"
+    ]
   }
 }

@@ -5,14 +5,16 @@
 | Field | Value |
 | --- | --- |
 | **Age Group** | 4-6 |
+| **Approved By** |  |
+| **Created At** | 2026-06-08T19:00:00 |
 | **Domain** | islamic_parenting |
 | **Estimated Minutes** | 5 |
 | **Is Published** | Yes |
-| **Needs Professional Followup** | No |
 | **Order** | 1 |
 | **Path Id** | path_4-6_islamic_parenting_adab |
 | **Reflection Prompts** | `في أي لحظة شعرت أن صوتك ارتفع اليوم رغم أن نيتك كانت التوجيه؟`, `كيف تغيّر وجه طفلك أو جسده (انكشاف/اقتراب) عندما خفّضت صوتك؟` |
 | **Unit Ids** | `0bd76d3c-548a-46ed-b17b-78874741662a`, `isl-440cdac2` |
+| **Updated At** | 2026-06-08T19:00:00 |
 | **Version** | 1.0.0 |
 | **Warning Flags** |  |
 
@@ -52,7 +54,8 @@
   "is_published": true,
   "version": "1.0.0",
   "created_at": "2026-06-08T19:00:00",
-  "updated_at": "2026-06-08T19:00:00"
+  "updated_at": "2026-06-08T19:00:00",
+  "approved_by": null
 }
 ```
 </details>

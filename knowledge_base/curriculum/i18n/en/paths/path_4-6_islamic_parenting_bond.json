@@ -3,7 +3,7 @@
   "title": "Building the Bond and Qudwah with Your Child (Ages 4-6)",
   "age_group": "4-6",
   "domain": "islamic_parenting",
-  "description": "A tarbiyah journey that helps the father build a secure emotional bond with his child in the preoperational stage (Piaget preoperational) through dramatic play, daily dialogue, and short stories, with practical application of the principle of qudwah (role modeling) that begins from the father himself.",
+  "description": "A parenting journey that helps the parent build a secure emotional bond with their child at an age when they learn through play and imitation, through dramatic play, daily dialogue, and short stories, with practical application of the principle of qudwah (role modeling) that begins with the parent.",
   "lesson_ids": [
     "lesson_4-6_islamic_parenting_bond_01",
     "lesson_4-6_islamic_parenting_bond_02",
@@ -34,8 +34,8 @@
     },
     "review_verdict": "clean",
     "review_defects": [],
-    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
-    "revalidated_at": "2026-10-07T07:29:18+00:00",
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
+    "revalidated_at": "2026-10-08T16:29:33+00:00",
     "fixed_at": "2026-08-13T19:07:50.186106+00:00",
     "fixer_model": "mistral-large-3:675b",
     "auto_review": {
@@ -43,18 +43,29 @@
         "deepseek-v4-pro",
         "glm-5.2"
       ],
+      "providers": {
+        "deepseek-v4-pro": {
+          "provider": "openrouter",
+          "model": "deepseek/deepseek-v4-pro"
+        },
+        "glm-5.2": {
+          "provider": "openrouter",
+          "model": "z-ai/glm-5.2"
+        }
+      },
       "fixer": null,
       "rounds": 1,
       "prompt_version": "dfa8a5f39718",
-      "content_sha256": "a84fdb378b68596cf7ccc204f802e3ffdd023f4762624f112bf086ae68f7c5c5",
-      "reviewed_at": "2026-10-07T07:29:18+00:00",
+      "content_sha256": "757349727a7571b0b0a73c442adf9aeb15297dba0186fae4baab12a9bb00a659",
+      "reviewed_at": "2026-10-08T16:29:33+00:00",
       "residual_low": [],
       "adjudicated": [],
       "tool": "ops/tools/review_en_parity.py",
       "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
     },
     "english_authors": [
-      "claude-opus-5-5"
+      "claude-opus-5-5",
+      "mistral-large-3:675b"
     ]
   }
 }
