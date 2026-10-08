@@ -2,11 +2,11 @@
   "id": "tip_10-12_028",
   "age_group": "10-12",
   "domain": "medical",
-  "text": "Less sugar, more movement, better sleep — a triad that will change your child’s mood and concentration in a week.",
+  "text": "Less sugar, more movement, better sleep — habits that may support your child’s mood and concentration over time, though children respond differently. If difficulties persist, consult a professional.",
   "unit_id": "med-af2d64fa",
   "day_of_week": 2,
   "time_of_day": "evening",
-  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+  "approved_by": null,
   "language": "en",
   "source_language": "ar",
   "translation": {
@@ -18,24 +18,9 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "clean",
+    "review_verdict": "pending",
     "review_defects": [],
-    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
-    "revalidated_at": "2026-10-04T11:18:18+00:00",
-    "auto_review": {
-      "reviewers": [
-        "deepseek-v4-pro",
-        "glm-5.2"
-      ],
-      "fixer": null,
-      "rounds": 1,
-      "prompt_version": "dfa8a5f39718",
-      "content_sha256": "fd3a38e57922f7af10f9cf5900a999d2b303db9e2f7f84cea684fa4237067148",
-      "reviewed_at": "2026-10-04T11:18:18+00:00",
-      "residual_low": [],
-      "adjudicated": [],
-      "tool": "ops/tools/review_en_parity.py",
-      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
-    }
+    "approved_by": null,
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

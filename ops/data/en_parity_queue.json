@@ -120,6 +120,90 @@
       "content_sha256": "f565a339e9419206214c0224bb0c51fe0b556fe383ea2661f23ddd8d00e311ae",
       "queued_on": "2026-10-08"
     },
+    "tip_10-12_002": {
+      "category": "awaiting-review",
+      "reason": "GPT daily-tips review 2026-10-08 fix applied (artifacts/gpt-daily-tips-review-2026-10-08.md); dual-family review + re-stamp pending on this branch",
+      "content_sha256": "8718807d02bae7ee01dfa1d3c251d7500d2bf56fd4cefa75e43f3fe373fcbd96",
+      "queued_on": "2026-10-08"
+    },
+    "tip_10-12_003": {
+      "category": "awaiting-review",
+      "reason": "GPT daily-tips review 2026-10-08 fix applied (artifacts/gpt-daily-tips-review-2026-10-08.md); dual-family review + re-stamp pending on this branch",
+      "content_sha256": "c3e5548e40e96b0f470a50d676f5980c15b33982780d86f84147a0671e75fd3d",
+      "queued_on": "2026-10-08"
+    },
+    "tip_10-12_008": {
+      "category": "awaiting-review",
+      "reason": "GPT daily-tips review 2026-10-08 fix applied (artifacts/gpt-daily-tips-review-2026-10-08.md); dual-family review + re-stamp pending on this branch",
+      "content_sha256": "884c1bbca24c04745ce4be9122f4282433db545445b00abeb97db36f10d443be",
+      "queued_on": "2026-10-08"
+    },
+    "tip_10-12_009": {
+      "category": "awaiting-review",
+      "reason": "GPT daily-tips review 2026-10-08 fix applied (artifacts/gpt-daily-tips-review-2026-10-08.md); dual-family review + re-stamp pending on this branch",
+      "content_sha256": "85816a06ce78d5033e488b2521ecde3276ac054058fbffc21feb9fb449f70709",
+      "queued_on": "2026-10-08"
+    },
+    "tip_10-12_010": {
+      "category": "awaiting-review",
+      "reason": "GPT daily-tips review 2026-10-08 fix applied (artifacts/gpt-daily-tips-review-2026-10-08.md); dual-family review + re-stamp pending on this branch",
+      "content_sha256": "5f262316dc6cb91dedba171b9e4a137a7a209ed2d6aadaed5fa38937e57092d6",
+      "queued_on": "2026-10-08"
+    },
+    "tip_10-12_012": {
+      "category": "awaiting-review",
+      "reason": "GPT daily-tips review 2026-10-08 fix applied (artifacts/gpt-daily-tips-review-2026-10-08.md); dual-family review + re-stamp pending on this branch",
+      "content_sha256": "8a24ba16852cbaf58c9ea313513e3930b5c0f1b845a49eb55ad8b2ba3423521c",
+      "queued_on": "2026-10-08"
+    },
+    "tip_10-12_016": {
+      "category": "awaiting-review",
+      "reason": "GPT daily-tips review 2026-10-08 fix applied (artifacts/gpt-daily-tips-review-2026-10-08.md); dual-family review + re-stamp pending on this branch",
+      "content_sha256": "5923a7f03692dfc2eee56de02a0716013e541fee174f3dadf2fd9ad49405a97f",
+      "queued_on": "2026-10-08"
+    },
+    "tip_10-12_018": {
+      "category": "awaiting-review",
+      "reason": "GPT daily-tips review 2026-10-08 fix applied (artifacts/gpt-daily-tips-review-2026-10-08.md); dual-family review + re-stamp pending on this branch",
+      "content_sha256": "29dbe654c0ad88df92ef0cf29006149bbc1a9cc63a7b2bc0398fb5e279ab2470",
+      "queued_on": "2026-10-08"
+    },
+    "tip_10-12_019": {
+      "category": "awaiting-review",
+      "reason": "GPT daily-tips review 2026-10-08 fix applied (artifacts/gpt-daily-tips-review-2026-10-08.md); dual-family review + re-stamp pending on this branch",
+      "content_sha256": "e8b094fb15cb84f2a172c665429ba6853c3c6676a435dd7dd07ba5cc043811b3",
+      "queued_on": "2026-10-08"
+    },
+    "tip_10-12_020": {
+      "category": "awaiting-review",
+      "reason": "GPT daily-tips review 2026-10-08 fix applied (artifacts/gpt-daily-tips-review-2026-10-08.md); dual-family review + re-stamp pending on this branch",
+      "content_sha256": "07284856d41836909a9af4b9775102fff1fd259c3a25dcc1d31cf887acca2746",
+      "queued_on": "2026-10-08"
+    },
+    "tip_10-12_021": {
+      "category": "awaiting-review",
+      "reason": "GPT daily-tips review 2026-10-08 fix applied (artifacts/gpt-daily-tips-review-2026-10-08.md); dual-family review + re-stamp pending on this branch",
+      "content_sha256": "655cde719e8880cfee1d1b80ae21cc821802613451fadce372ea9fd76a8378be",
+      "queued_on": "2026-10-08"
+    },
+    "tip_10-12_022": {
+      "category": "awaiting-review",
+      "reason": "GPT daily-tips review 2026-10-08 fix applied (artifacts/gpt-daily-tips-review-2026-10-08.md); dual-family review + re-stamp pending on this branch",
+      "content_sha256": "bf8d5aa585ab5c3d3865dc4b4379535f8b2b234271ca8fef01c48b51ca376af7",
+      "queued_on": "2026-10-08"
+    },
+    "tip_10-12_024": {
+      "category": "awaiting-review",
+      "reason": "GPT daily-tips review 2026-10-08 fix applied (artifacts/gpt-daily-tips-review-2026-10-08.md); dual-family review + re-stamp pending on this branch",
+      "content_sha256": "cf7865410041ce819698bf51f7336f5ff4e59e7d82356b1bd0bbde3c1d352031",
+      "queued_on": "2026-10-08"
+    },
+    "tip_10-12_028": {
+      "category": "awaiting-review",
+      "reason": "GPT daily-tips review 2026-10-08 fix applied (artifacts/gpt-daily-tips-review-2026-10-08.md); dual-family review + re-stamp pending on this branch",
+      "content_sha256": "0243e1caea1fb7c02b515616a18426807c18dfc17b76de60a4412e007b665701",
+      "queued_on": "2026-10-08"
+    },
     "tip_2-3_001": {
       "category": "awaiting-review",
       "reason": "GPT daily-tips review 2026-10-08 fix applied (artifacts/gpt-daily-tips-review-2026-10-08.md); dual-family review + re-stamp pending on this branch",
@@ -316,6 +400,96 @@
       "category": "awaiting-review",
       "reason": "GPT daily-tips review 2026-10-08 fix applied (artifacts/gpt-daily-tips-review-2026-10-08.md); dual-family review + re-stamp pending on this branch",
       "content_sha256": "a36b9a741b929ab56b003991a378513a648103dce988078297a8fdaf9cae2487",
+      "queued_on": "2026-10-08"
+    },
+    "tip_7-9_004": {
+      "category": "awaiting-review",
+      "reason": "GPT daily-tips review 2026-10-08 fix applied (artifacts/gpt-daily-tips-review-2026-10-08.md); dual-family review + re-stamp pending on this branch",
+      "content_sha256": "d19f16f9460502afe9f9dc8ae28e6924da8801919e59ab27d1a3249fc1c1df4f",
+      "queued_on": "2026-10-08"
+    },
+    "tip_7-9_007": {
+      "category": "awaiting-review",
+      "reason": "GPT daily-tips review 2026-10-08 fix applied (artifacts/gpt-daily-tips-review-2026-10-08.md); dual-family review + re-stamp pending on this branch",
+      "content_sha256": "74795e5be1c0689a66402c321089f48554b2921ec10b1b1d31d99c412d34ffaf",
+      "queued_on": "2026-10-08"
+    },
+    "tip_7-9_011": {
+      "category": "awaiting-review",
+      "reason": "GPT daily-tips review 2026-10-08 fix applied (artifacts/gpt-daily-tips-review-2026-10-08.md); dual-family review + re-stamp pending on this branch",
+      "content_sha256": "918f30a58db3d683ca276a33a675673bee70821758ee3123a96b25399dd958f3",
+      "queued_on": "2026-10-08"
+    },
+    "tip_7-9_012": {
+      "category": "awaiting-review",
+      "reason": "GPT daily-tips review 2026-10-08 fix applied (artifacts/gpt-daily-tips-review-2026-10-08.md); dual-family review + re-stamp pending on this branch",
+      "content_sha256": "d142c421aff0097e07f79bb6cadce898720b65cc5ebbda92c9493fa839c2c77e",
+      "queued_on": "2026-10-08"
+    },
+    "tip_7-9_013": {
+      "category": "awaiting-review",
+      "reason": "GPT daily-tips review 2026-10-08 fix applied (artifacts/gpt-daily-tips-review-2026-10-08.md); dual-family review + re-stamp pending on this branch",
+      "content_sha256": "f6a8ffc9a069ba7dfbdbcd7c51ceda1199067f9c3edb12908108c7fa5cd6578c",
+      "queued_on": "2026-10-08"
+    },
+    "tip_7-9_014": {
+      "category": "awaiting-review",
+      "reason": "GPT daily-tips review 2026-10-08 fix applied (artifacts/gpt-daily-tips-review-2026-10-08.md); dual-family review + re-stamp pending on this branch",
+      "content_sha256": "529cc5e59753863c7509c6c1590f187818cceea344171a518efb72e4936eae0e",
+      "queued_on": "2026-10-08"
+    },
+    "tip_7-9_020": {
+      "category": "awaiting-review",
+      "reason": "GPT daily-tips review 2026-10-08 fix applied (artifacts/gpt-daily-tips-review-2026-10-08.md); dual-family review + re-stamp pending on this branch",
+      "content_sha256": "33cac9e1113bd532b070c21497ca7e7c4aa02d794a4e3e5743475006f540de02",
+      "queued_on": "2026-10-08"
+    },
+    "tip_7-9_021": {
+      "category": "awaiting-review",
+      "reason": "GPT daily-tips review 2026-10-08 fix applied (artifacts/gpt-daily-tips-review-2026-10-08.md); dual-family review + re-stamp pending on this branch",
+      "content_sha256": "d710c1a7407cda09ee27cc11690a7d946adccded06dcad12c0978a79b6bf1fb3",
+      "queued_on": "2026-10-08"
+    },
+    "tip_7-9_023": {
+      "category": "awaiting-review",
+      "reason": "GPT daily-tips review 2026-10-08 fix applied (artifacts/gpt-daily-tips-review-2026-10-08.md); dual-family review + re-stamp pending on this branch",
+      "content_sha256": "6a6e2c76f6171d2eb0fe60a9de86c2979b64fdc2f49726accaf76e11b8f76db0",
+      "queued_on": "2026-10-08"
+    },
+    "tip_7-9_024": {
+      "category": "awaiting-review",
+      "reason": "GPT daily-tips review 2026-10-08 fix applied (artifacts/gpt-daily-tips-review-2026-10-08.md); dual-family review + re-stamp pending on this branch",
+      "content_sha256": "f3833b5726e8debf9af402439efde86ff490214c10c8a20bd2a4270a274ba3b4",
+      "queued_on": "2026-10-08"
+    },
+    "tip_7-9_025": {
+      "category": "awaiting-review",
+      "reason": "GPT daily-tips review 2026-10-08 fix applied (artifacts/gpt-daily-tips-review-2026-10-08.md); dual-family review + re-stamp pending on this branch",
+      "content_sha256": "f7a85e956bed3cf5e99fc6884bcefdf1639a5700368388d84d6a07c102f36369",
+      "queued_on": "2026-10-08"
+    },
+    "tip_7-9_027": {
+      "category": "awaiting-review",
+      "reason": "GPT daily-tips review 2026-10-08 fix applied (artifacts/gpt-daily-tips-review-2026-10-08.md); dual-family review + re-stamp pending on this branch",
+      "content_sha256": "8d97fb4e1ffb3bc64f780c6a26433714249a97c84c2b286e594d6a2d286c8316",
+      "queued_on": "2026-10-08"
+    },
+    "tip_7-9_028": {
+      "category": "awaiting-review",
+      "reason": "GPT daily-tips review 2026-10-08 fix applied (artifacts/gpt-daily-tips-review-2026-10-08.md); dual-family review + re-stamp pending on this branch",
+      "content_sha256": "724d57769f1311e42c95024d73ab58b6842417c2e185359075bc56584f9a214b",
+      "queued_on": "2026-10-08"
+    },
+    "tip_7-9_029": {
+      "category": "awaiting-review",
+      "reason": "GPT daily-tips review 2026-10-08 fix applied (artifacts/gpt-daily-tips-review-2026-10-08.md); dual-family review + re-stamp pending on this branch",
+      "content_sha256": "8ba0a84f015b68b48046805d0bf75124b9874d47495f8328cdec84d002ab5910",
+      "queued_on": "2026-10-08"
+    },
+    "tip_7-9_030": {
+      "category": "awaiting-review",
+      "reason": "GPT daily-tips review 2026-10-08 fix applied (artifacts/gpt-daily-tips-review-2026-10-08.md); dual-family review + re-stamp pending on this branch",
+      "content_sha256": "861d4c7b1f561824702d67497be39fe29c0ed7f4d227dfc8e4d903a8115c0bd7",
       "queued_on": "2026-10-08"
     },
     "tip_prenatal-1_001": {

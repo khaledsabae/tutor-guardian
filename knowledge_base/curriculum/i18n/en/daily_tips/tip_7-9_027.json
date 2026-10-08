@@ -2,11 +2,11 @@
   "id": "tip_7-9_027",
   "age_group": "7-9",
   "domain": "medical",
-  "text": "No screens an hour before sleep. Reading, inhaling the scent of a flower, a gentle massage—these are rituals that soothe the mind for deep sleep.",
+  "text": "No screens an hour before sleep. Reading, a gentle chat or a light massage — calm rituals like these can help your child get ready for sleep.",
   "unit_id": "36081e1a-c41f-4787-a38c-85d50dc9aa2a",
   "day_of_week": 3,
   "time_of_day": "evening",
-  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+  "approved_by": null,
   "language": "en",
   "source_language": "ar",
   "translation": {
@@ -18,24 +18,9 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "clean",
+    "review_verdict": "pending",
     "review_defects": [],
-    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
-    "revalidated_at": "2026-10-04T11:18:18+00:00",
-    "auto_review": {
-      "reviewers": [
-        "deepseek-v4-pro",
-        "glm-5.2"
-      ],
-      "fixer": null,
-      "rounds": 1,
-      "prompt_version": "dfa8a5f39718",
-      "content_sha256": "7520558663dbeea0f73fe21a37903c7ee5d5b999161422c18cd2cb43b0cbef49",
-      "reviewed_at": "2026-10-04T11:18:18+00:00",
-      "residual_low": [],
-      "adjudicated": [],
-      "tool": "ops/tools/review_en_parity.py",
-      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
-    }
+    "approved_by": null,
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

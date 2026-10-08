@@ -2,11 +2,11 @@
   "id": "tip_10-12_022",
   "age_group": "10-12",
   "domain": "medical",
-  "text": "Sadness > two weeks + withdrawal + academic decline = visit to a pediatrician/mental-health specialist. Early action saves years.",
+  "text": "Lasting sadness, withdrawal, falling grades and loss of interest are signs worth a visit to a pediatrician or mental-health specialist; they need not all appear together. Early help may ease distress. If he talks about harming himself, seek urgent help.",
   "unit_id": "8dc21832-df8b-4123-95a3-e0ec75ab9263",
   "day_of_week": 5,
   "time_of_day": "morning",
-  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+  "approved_by": null,
   "language": "en",
   "source_language": "ar",
   "translation": {
@@ -18,24 +18,9 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "clean",
+    "review_verdict": "pending",
     "review_defects": [],
-    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
-    "revalidated_at": "2026-10-04T11:18:18+00:00",
-    "auto_review": {
-      "reviewers": [
-        "deepseek-v4-pro",
-        "glm-5.2"
-      ],
-      "fixer": null,
-      "rounds": 1,
-      "prompt_version": "dfa8a5f39718",
-      "content_sha256": "f4c719013fa52d7045e6ee96d9cb2a0a6d9408b3a2cad7859636de0e793696ac",
-      "reviewed_at": "2026-10-04T11:18:18+00:00",
-      "residual_low": [],
-      "adjudicated": [],
-      "tool": "ops/tools/review_en_parity.py",
-      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
-    }
+    "approved_by": null,
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

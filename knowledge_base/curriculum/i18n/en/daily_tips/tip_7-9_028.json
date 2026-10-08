@@ -2,11 +2,11 @@
   "id": "tip_7-9_028",
   "age_group": "7-9",
   "domain": "medical",
-  "text": "If you notice: daily sadness, withdrawal, academic decline, or talk about death — do not wait. Consult a paediatrician or psychologist immediately.",
+  "text": "If you notice daily sadness, withdrawal, falling grades or talk about death, do not wait: see a paediatrician or psychologist soon. If he talks about harming himself or danger seems imminent, stay with him, remove means of harm and call emergency services.",
   "unit_id": "4c790c42-d81f-437c-b5e1-eab7f2a742b4",
   "day_of_week": 4,
   "time_of_day": "morning",
-  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+  "approved_by": null,
   "language": "en",
   "source_language": "ar",
   "translation": {
@@ -18,24 +18,9 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "clean",
+    "review_verdict": "pending",
     "review_defects": [],
-    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
-    "revalidated_at": "2026-10-04T11:18:18+00:00",
-    "auto_review": {
-      "reviewers": [
-        "deepseek-v4-pro",
-        "glm-5.2"
-      ],
-      "fixer": null,
-      "rounds": 1,
-      "prompt_version": "dfa8a5f39718",
-      "content_sha256": "b8cb4699487c0e299a408d6720adf02e4c9a7d534d5d7e4d459a299de43f8012",
-      "reviewed_at": "2026-10-04T11:18:18+00:00",
-      "residual_low": [],
-      "adjudicated": [],
-      "tool": "ops/tools/review_en_parity.py",
-      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
-    }
+    "approved_by": null,
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

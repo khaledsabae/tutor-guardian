@@ -2,11 +2,11 @@
   "id": "tip_10-12_016",
   "age_group": "10-12",
   "domain": "medical",
-  "text": "Puberty begins between the ages of 9 and 12. Initiate the conversation before the internet does—father with son, mother with daughter, using scientific language, not shame.",
+  "text": "Puberty starts at different ages: usually 8–13 in girls and 9–14 in boys. Start the conversation before the internet does, in clear scientific language without shame — often father with son and mother with daughter, or another trusted adult close to them.",
   "unit_id": "33d4c4fd-802f-4167-a79f-d56304f4b19d",
   "day_of_week": 0,
   "time_of_day": "morning",
-  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+  "approved_by": null,
   "language": "en",
   "source_language": "ar",
   "translation": {
@@ -18,24 +18,9 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "clean",
+    "review_verdict": "pending",
     "review_defects": [],
-    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
-    "revalidated_at": "2026-10-04T11:18:18+00:00",
-    "auto_review": {
-      "reviewers": [
-        "deepseek-v4-pro",
-        "glm-5.2"
-      ],
-      "fixer": null,
-      "rounds": 1,
-      "prompt_version": "dfa8a5f39718",
-      "content_sha256": "15f1c3f2b6d5ed6113eb0ee71cd92a1299924fb7cda7111350e4396c3ee67b56",
-      "reviewed_at": "2026-10-04T11:18:18+00:00",
-      "residual_low": [],
-      "adjudicated": [],
-      "tool": "ops/tools/review_en_parity.py",
-      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
-    }
+    "approved_by": null,
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

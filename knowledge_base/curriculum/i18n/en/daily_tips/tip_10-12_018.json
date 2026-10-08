@@ -2,11 +2,11 @@
   "id": "tip_10-12_018",
   "age_group": "10-12",
   "domain": "medical",
-  "text": "Read together a reliable book on puberty (such as Jismi Yataghayyar or its equivalent). Early conversation protects from incorrect information.",
+  "text": "Read an age-appropriate book on puberty together from a reliable health source, or ask your pediatrician to suggest one. Early conversation protects against wrong information.",
   "unit_id": "6765ccf5-a94c-5291-a561-9258dc0c475f",
   "day_of_week": 2,
   "time_of_day": "morning",
-  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+  "approved_by": null,
   "language": "en",
   "source_language": "ar",
   "translation": {
@@ -18,7 +18,7 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "low_only",
+    "review_verdict": "pending",
     "review_defects": [
       {
         "model": "deepseek-v4-pro",
@@ -27,29 +27,7 @@
         "why": "The Arabic book title is transliterated without translation, leaving English readers without the meaning."
       }
     ],
-    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
-    "revalidated_at": "2026-10-04T11:18:18+00:00",
-    "auto_review": {
-      "reviewers": [
-        "deepseek-v4-pro",
-        "glm-5.2"
-      ],
-      "fixer": null,
-      "rounds": 1,
-      "prompt_version": "dfa8a5f39718",
-      "content_sha256": "db796e8489b7f6ed70d24ac444b72af741b8dceac529dfad6c6cb0c2e9683a31",
-      "reviewed_at": "2026-10-04T11:18:18+00:00",
-      "residual_low": [
-        {
-          "model": "deepseek-v4-pro",
-          "field": "text",
-          "type": "leakage",
-          "why": "The Arabic book title is transliterated without translation, leaving English readers without the meaning."
-        }
-      ],
-      "adjudicated": [],
-      "tool": "ops/tools/review_en_parity.py",
-      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
-    }
+    "approved_by": null,
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

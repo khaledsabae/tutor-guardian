@@ -2,11 +2,11 @@
   "id": "tip_7-9_024",
   "age_group": "7-9",
   "domain": "medical",
-  "text": "Disruptive Mood Dysregulation Disorder (DMDD): Severe, recurrent anger lasting more than a year. If you notice: outbursts more than three times a week, irritable mood most days — consult a specialist.",
+  "text": "DMDD is diagnosed by a specialist; its signs include severe outbursts averaging 3 or more a week with irritable mood most of the day. But do not wait a year or count outbursts before seeking help: if they are severe and affect his life, see a specialist.",
   "unit_id": "med-08886df5",
   "day_of_week": 0,
   "time_of_day": "morning",
-  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
+  "approved_by": null,
   "language": "en",
   "source_language": "ar",
   "translation": {
@@ -18,7 +18,7 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "low_only",
+    "review_verdict": "pending",
     "review_defects": [
       {
         "model": "glm-5.2",
@@ -27,30 +27,8 @@
         "why": "The English adds the abbreviation '(DMDD)' which is not present in the Arabic."
       }
     ],
-    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
+    "approved_by": null,
     "revalidated_at": "2026-10-07T07:15:04+00:00",
-    "auto_review": {
-      "reviewers": [
-        "deepseek-v4-pro",
-        "glm-5.2"
-      ],
-      "fixer": null,
-      "rounds": 1,
-      "prompt_version": "dfa8a5f39718",
-      "content_sha256": "66c124378e9318c4d3eec3679d85b41044a14cc61f143bafb3c93c6f281e1afc",
-      "reviewed_at": "2026-10-07T07:15:04+00:00",
-      "residual_low": [
-        {
-          "model": "glm-5.2",
-          "field": "text",
-          "type": "addition",
-          "why": "The English adds the abbreviation '(DMDD)' which is not present in the Arabic."
-        }
-      ],
-      "adjudicated": [],
-      "tool": "ops/tools/review_en_parity.py",
-      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
-    },
     "english_authors": [
       "claude-opus-5.5"
     ]

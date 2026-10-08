@@ -2,11 +2,11 @@
   "id": "tip_10-12_010",
   "age_group": "10-12",
   "domain": "cyber",
-  "text": "Review the privacy settings together: private account, no location, approval before tagging — train him in protection.",
+  "text": "Review privacy settings together: a private account, location sharing off, approval before he is tagged in photos — and help him learn to protect himself.",
   "unit_id": "7e94871d-1929-4ea4-9bed-8841e09938af",
   "day_of_week": 1,
   "time_of_day": "morning",
-  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+  "approved_by": null,
   "language": "en",
   "source_language": "ar",
   "translation": {
@@ -18,24 +18,9 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "clean",
+    "review_verdict": "pending",
     "review_defects": [],
-    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
-    "revalidated_at": "2026-10-04T11:18:18+00:00",
-    "auto_review": {
-      "reviewers": [
-        "deepseek-v4-pro",
-        "glm-5.2"
-      ],
-      "fixer": null,
-      "rounds": 1,
-      "prompt_version": "dfa8a5f39718",
-      "content_sha256": "4e70c0a9aff2f9e21384b30d87a9f31f55abfadba4f24779cff8172c08efddc5",
-      "reviewed_at": "2026-10-04T11:18:18+00:00",
-      "residual_low": [],
-      "adjudicated": [],
-      "tool": "ops/tools/review_en_parity.py",
-      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
-    }
+    "approved_by": null,
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }
