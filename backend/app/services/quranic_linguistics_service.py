@@ -38,6 +38,9 @@ from pathlib import Path
 
 import httpx
 
+from app.db.migrations.bahouth_cache_0001_baseline import MIGRATION as CACHE_SCHEMA
+from app.db.migrations.runner import apply_migrations
+
 logger = logging.getLogger(__name__)
 
 # ── Configuration ────────────────────────────────────────────────────────────
@@ -130,21 +133,13 @@ def _cache_conn() -> sqlite3.Connection:
     conn.row_factory = sqlite3.Row
     conn.execute("PRAGMA journal_mode = WAL")
     conn.execute("PRAGMA busy_timeout = 5000")
-    conn.execute(
-        """CREATE TABLE IF NOT EXISTS bahouth_cache (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            cache_key TEXT UNIQUE,
-            tool TEXT NOT NULL,
-            arguments_json TEXT NOT NULL,
-            result_json TEXT NOT NULL,
-            created_at TEXT DEFAULT (datetime('now')),
-            hit_count INTEGER DEFAULT 0
-        )"""
-    )
-    conn.execute(
-        "CREATE INDEX IF NOT EXISTS idx_bahouth_cache_lookup "
-        "ON bahouth_cache (tool, cache_key)"
-    )
+    try:
+        # The numbered runner adopts production's table, creates it on a fresh
+        # DB, or refuses a shape the cache cannot use — never rebuilds it.
+        apply_migrations(conn, "bahouth_cache", (CACHE_SCHEMA,))
+    except BaseException:
+        conn.close()
+        raise
     return conn
 
 

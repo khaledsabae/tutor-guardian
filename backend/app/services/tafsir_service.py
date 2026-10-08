@@ -26,6 +26,9 @@ from pathlib import Path
 
 import httpx
 
+from app.db.migrations.tafsir_cache_0001_baseline import MIGRATION as CACHE_SCHEMA
+from app.db.migrations.runner import apply_migrations
+
 logger = logging.getLogger(__name__)
 
 # ── Configuration ────────────────────────────────────────────────────────────
@@ -74,24 +77,13 @@ def _cache_conn() -> sqlite3.Connection:
     conn.row_factory = sqlite3.Row
     conn.execute("PRAGMA journal_mode = WAL")
     conn.execute("PRAGMA busy_timeout = 5000")
-    conn.execute(
-        """CREATE TABLE IF NOT EXISTS tafsir_cache (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            cache_key TEXT UNIQUE,
-            surah INTEGER NOT NULL,
-            ayah INTEGER NOT NULL,
-            source TEXT NOT NULL,
-            attribution TEXT,
-            text TEXT NOT NULL,
-            footnotes_json TEXT,
-            created_at TEXT DEFAULT (datetime('now')),
-            hit_count INTEGER DEFAULT 0
-        )"""
-    )
-    conn.execute(
-        "CREATE INDEX IF NOT EXISTS idx_tafsir_cache_lookup "
-        "ON tafsir_cache (surah, ayah, source)"
-    )
+    try:
+        # The numbered runner adopts production's table, creates it on a fresh
+        # DB, or refuses a shape the cache cannot use — never rebuilds it.
+        apply_migrations(conn, "tafsir_cache", (CACHE_SCHEMA,))
+    except BaseException:
+        conn.close()
+        raise
     return conn
 
 
