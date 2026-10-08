@@ -8,45 +8,66 @@
   "units": {
     "lesson_0-3_development_early_moments_02": {
       "category": "awaiting-review",
-      "reason": "GPT-review follow-ups after dual-review round 2; stamp follows",
-      "content_sha256": "56e4da4022d7d5914291dbb49d71deedd409e8d42b784d07641898a2422bf2b5",
-      "queued_on": "2026-10-08"
+      "reason": "GPT-review follow-ups; English edited by Claude (claude-opus-5.5); dual-family review done on final hashes, parity stamp follows",
+      "content_sha256": "1cc1ae83f1fcc94077084e0d1a785dbb9f6a72ae63634984980433f7e7d63f79",
+      "queued_on": "2026-10-08",
+      "english_authors": [
+        "claude-opus-5.5"
+      ]
     },
     "lesson_0-3_medical_infant_sleep_05": {
       "category": "awaiting-review",
-      "reason": "GPT-review follow-ups after dual-review round 2; stamp follows",
+      "reason": "GPT-review follow-ups; English edited by Claude (claude-opus-5.5); dual-family review done on final hashes, parity stamp follows",
       "content_sha256": "de20a27e26d574b8c7ab8a0b713abfdf58c0f4d697014c296dac0c5e83b646df",
-      "queued_on": "2026-10-08"
+      "queued_on": "2026-10-08",
+      "english_authors": [
+        "claude-opus-5.5"
+      ]
     },
     "lesson_0-3_medical_infant_sleep_06": {
       "category": "awaiting-review",
-      "reason": "GPT-review follow-ups after dual-review round 2; stamp follows",
+      "reason": "GPT-review follow-ups; English edited by Claude (claude-opus-5.5); dual-family review done on final hashes, parity stamp follows",
       "content_sha256": "ae2a99aa17332060730f538f931c8f52f58d133c8fa5942daf883594246e34d3",
-      "queued_on": "2026-10-08"
+      "queued_on": "2026-10-08",
+      "english_authors": [
+        "claude-opus-5.5"
+      ]
     },
     "lesson_0-3_medical_infant_sleep_07": {
       "category": "awaiting-review",
-      "reason": "GPT-review follow-ups after dual-review round 2; stamp follows",
+      "reason": "GPT-review follow-ups; English edited by Claude (claude-opus-5.5); dual-family review done on final hashes, parity stamp follows",
       "content_sha256": "40b05dc088fbfdf66f66f15c1cb24a77c6ea51683d3141b2cb0fa22e90993c80",
-      "queued_on": "2026-10-08"
+      "queued_on": "2026-10-08",
+      "english_authors": [
+        "claude-opus-5.5"
+      ]
     },
     "lesson_0-3_medical_infant_sleep_08": {
       "category": "awaiting-review",
-      "reason": "GPT-review follow-ups after dual-review round 2; stamp follows",
+      "reason": "GPT-review follow-ups; English edited by Claude (claude-opus-5.5); dual-family review done on final hashes, parity stamp follows",
       "content_sha256": "7dc7370464d198f609aa072c158d316dee8b89ff4e28f6a50934ea7fce297ff6",
-      "queued_on": "2026-10-08"
+      "queued_on": "2026-10-08",
+      "english_authors": [
+        "claude-opus-5.5"
+      ]
     },
     "tip_0-3_017": {
       "category": "awaiting-review",
-      "reason": "GPT-review follow-ups (30-second rule / chronic stress removed; 39C at 3-6 months added) on content/programs-review-fixes; dual-family review in progress, stamp follows",
+      "reason": "GPT-review follow-ups; English edited by Claude (claude-opus-5.5); dual-family review done on final hashes, parity stamp follows",
       "content_sha256": "5a5bf88a6f62bf015c1e9a413b2f919e994231ea560bd0f202669aa1e3a57c48",
-      "queued_on": "2026-10-08"
+      "queued_on": "2026-10-08",
+      "english_authors": [
+        "claude-opus-5.5"
+      ]
     },
     "tip_2-3_007": {
       "category": "awaiting-review",
-      "reason": "GPT-review follow-ups (30-second rule / chronic stress removed; 39C at 3-6 months added) on content/programs-review-fixes; dual-family review in progress, stamp follows",
+      "reason": "GPT-review follow-ups; English edited by Claude (claude-opus-5.5); dual-family review done on final hashes, parity stamp follows",
       "content_sha256": "95199d93e8cbb122afd69bb3c82d5dd62d6324678af07854ab10e67db74dbf21",
-      "queued_on": "2026-10-08"
+      "queued_on": "2026-10-08",
+      "english_authors": [
+        "claude-opus-5.5"
+      ]
     }
   }
 }
