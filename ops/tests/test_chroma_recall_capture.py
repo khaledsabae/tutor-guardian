@@ -239,3 +239,15 @@ def test_prepare_replays_ordered_frozen_corpus_and_surfaces_swallowed_errors(tmp
         assert report["items"][0]["status"] == "ERROR"
     collection.fail, retrieval.unknown = False, False
     assert capture.offline_report([item], tmp_path, prepare=lambda _: prepared)["status"] == "COMPLETED"
+
+
+def test_plain_converts_numpy_vectors_for_json():
+    import json
+    import numpy as np
+    from ops.tools import chroma_recall_capture as cap
+
+    vectors = cap._plain(np.array([[0.5, 0.25], [1.0, 0.0]], dtype=np.float32))
+    assert vectors == [[0.5, 0.25], [1.0, 0.0]]
+    assert cap._plain([np.array([1.0]), np.array([2.0])]) == [[1.0], [2.0]]
+    json.dumps({"documents": vectors})
+

@@ -121,6 +121,15 @@ def policy(retrieval, reranker):
     }
 
 
+def _plain(value):
+    """Embedders return numpy arrays; the frozen bundle must be plain JSON lists."""
+    if hasattr(value, "tolist"):
+        return value.tolist()
+    if isinstance(value, (list, tuple)):
+        return [_plain(v) for v in value]
+    return value
+
+
 def freeze(golden, retrieval, reranker):
     from app.services.knowledge_loader import load_default_knowledge_units
 
@@ -130,8 +139,9 @@ def freeze(golden, retrieval, reranker):
               "ids": [u.id for u in units],
               "documents": [f"passage: {u.text_simplified}" for u in units],
               "metadatas": [retrieval._unit_metadata(u) for u in units]}
-    vectors = {"documents": retrieval._embedder()([u.embedding_text for u in units]),
-               "queries": {q: retrieval.embed_query(q) for q in dict.fromkeys(g["question"] for g in golden)}}
+    vectors = {"documents": _plain(retrieval._embedder()([u.embedding_text for u in units])),
+               "queries": {q: _plain(retrieval.embed_query(q))
+                           for q in dict.fromkeys(g["question"] for g in golden)}}
     reranker._get_model()  # Download/warm once; candidate uses this same offline snapshot.
     return {"corpus": corpus, "vectors": vectors, "policy": policy(retrieval, reranker)}
 
