@@ -1,0 +1,67 @@
+{
+  "id": "lesson_2-3_development_tantrums_07",
+  "path_id": "path_2-3_development_tantrums",
+  "title": "When They Hit or Bite",
+  "age_group": "2-3",
+  "domain": "development",
+  "unit_ids": [
+    "seed-aggression-23",
+    "seed-tantrum-23"
+  ],
+  "summary": "Your child may hit their brother because he took their toy, or bite another child while they are playing. Hitting and biting happen often among little ones; your child has not yet learned to control themselves, and does not have enough words to say they are angry or frustrated, so they express it with their body, and they may not yet understand that biting hurts. When this happens now and then, it does not mean they will grow up to be aggressive, but they need to learn another way.\n\nWhen it happens, do not ignore it: stop it straight away, calmly and firmly. Move the two children apart, and stay close to them until they calm down. Start with the child who was hurt: comfort them and look after them, then turn to your child and say one short, clear sentence: «I know you are angry, but no hitting. Hitting hurts.» Make sure they do not get the toy by hitting, so they do not learn that hitting gets them what they want.\n\nDo not hit them or bite them «so they know how it hurts»; this teaches them that hitting and biting are acceptable. Do not shout at them, threaten them or humiliate them. If you feel your own anger rising, take deep breaths while staying close to them, or ask someone you trust to stay with them until you calm down, then go back to them; your child learns from the way you handle your own anger.\n\nAfter they calm down, teach them what to do instead of hitting: to say «No» in a firm voice, or «I am angry», or «It is my turn», or to walk away. Watch them while they play with others, and step in early when you see their frustration building, before their hand reaches out. Look as well: Are they hungry or tired, in pain from teething, or do they seem anxious or sad? If a need shows, meet it. Praise them with specific words when they play gently or use words: «You said you were angry and you did not hit!», and show them your love with hugs and praise during their calm times.\n\nTalk with the pediatrician if the hitting or biting is frequent or severe, if it continues and you cannot manage it, if it leaves bite marks or bruises, if you have come to fear for the safety of those around them, if they have been kept from playing with other children because of it, if they hurt themselves, or if they seem sad or upset most of the time. If there is a serious injury or you cannot keep the children safe, seek urgent help straight away.",
+  "try_this": "Today: Agree with whoever cares for your child on what you will all do if they hit or bite: move the two children apart calmly, comfort the child who was hurt first, then say the same sentence to them: «I know you are angry, but no hitting. Hitting hurts.»",
+  "order": 7,
+  "estimated_minutes": 3,
+  "reflection_prompts": [
+    "In which situations does your child hit or bite most often, and what word could they learn to say instead?"
+  ],
+  "warning_flags": [],
+  "needs_professional_followup": false,
+  "is_published": true,
+  "version": "1.0.0",
+  "created_at": "2026-10-08T10:47:40",
+  "updated_at": "2026-10-08T10:47:40",
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "claude-opus-5-5",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
+    "revalidated_at": "2026-10-08T10:48:36+00:00",
+    "generated_by": "ops/tools/deepen_paths.py",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "providers": {
+        "deepseek-v4-pro": {
+          "provider": "openrouter",
+          "model": "deepseek/deepseek-v4-pro"
+        },
+        "glm-5.2": {
+          "provider": "openrouter",
+          "model": "z-ai/glm-5.2"
+        }
+      },
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "19ff0ded3a487e37d3a648239a3fbba879516cddbaaa8c2cc588fa2679445439",
+      "reviewed_at": "2026-10-08T10:48:36+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+    }
+  }
+}
