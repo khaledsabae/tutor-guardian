@@ -24,7 +24,9 @@ def test_runtime_workflow_is_manual_readonly_and_uses_copied_production_index():
     assert scripts.count("python -m venv") == 2
     assert "requirements-prod.lock" in scripts and "requirements-dev.lock" in scripts
     assert '"chromadb==1.5.9"' in scripts and "pip check" in scripts
-    assert "--constraints" in scripts and "candidate-constraints.txt" in scripts
+    # pip has no --constraints option (run 37800240035 failed with "no such option").
+    assert "--constraint " in scripts and "--constraints" not in scripts
+    assert "candidate-constraints.txt" in scripts
     assert "pytest backend/tests" in scripts and "--junitxml" in scripts
     assert job["env"]["SKIP_API_SMOKE"] == "1"
     build = next(i for i, s in enumerate(steps) if "chroma_runtime_probe.py build" in s.get("run", ""))
