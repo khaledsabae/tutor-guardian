@@ -49,7 +49,7 @@
     }
   ],
   "basis": {
-    "text": "The program starts at seven, following the well-known Prophetic guidance to command children to pray at seven and to be firm about it at ten. Its wording mentions striking; we name it for accuracy in conveying the source, not as practical advice: this program does not hit, threaten or humiliate, and relies on example, gradualness and rifq (gentleness): the companions learned the prayer by watching, and Anas never heard a word of annoyance from the Prophet ﷺ in the ten years he served him, as in the two attached hadiths. We do not display the wording of the hadith about seven because this program only shows hadith from Sahih al-Bukhari and Sahih Muslim; its source is given in the linked knowledge unit.",
+    "text": "The program starts at seven, following the well-known Prophetic guidance to command children to pray at seven and to be firm about it at ten. Its wording mentions striking; we name it for accuracy in conveying the source, not as practical advice: this program does not hit, threaten or humiliate, and relies on example, gradualness and rifq (gentleness): the companions learned the prayer by watching, and Anas (may Allah be pleased with him) never heard a word of annoyance from the Prophet ﷺ in the ten years he served him, as in the two attached hadiths. We do not display the wording of the hadith about seven because this program only shows hadith from Sahih al-Bukhari and Sahih Muslim; its source is given in the linked knowledge unit.",
     "unit_ids": [
       "isl-f2bef952",
       "isl-1bceeaf6"
@@ -446,7 +446,7 @@
         {
           "id": "prayer_s3_two_prayers",
           "title": "Two prayers a day",
-          "instruction": "Pray two prayers every day, at least one of them beside your dad or mum. After each prayer, record that one prayer, once.",
+          "instruction": "Pray two prayers every day, at least one of them beside your dad or mum. Record each prayer once, after you pray it.",
           "estimated_minutes": 7,
           "needs_parent": false,
           "per_week": 14,
@@ -536,7 +536,7 @@
         {
           "id": "prayer_s4_three_prayers",
           "title": "Three prayers a day",
-          "instruction": "Pray three prayers every day, choosing ones that come while you are at home, such as asr, maghrib and isha. After each prayer, record that one prayer, once.",
+          "instruction": "Pray three prayers every day, choosing ones that come while you are at home, such as asr, maghrib and isha. Record each prayer once, after you pray it.",
           "estimated_minutes": 7,
           "needs_parent": false,
           "per_week": 21,
@@ -600,7 +600,7 @@
         {
           "id": "prayer_s5_five_prayers",
           "title": "The five prayers",
-          "instruction": "Try to pray the five prayers every day. If you miss one, pray it when you remember it, and don't be sad. After each prayer, record that one prayer, once.",
+          "instruction": "Try to pray the five prayers every day. If you miss one, pray it when you remember it, and don't be sad. Record each prayer once, after you pray it.",
           "estimated_minutes": 7,
           "needs_parent": false,
           "per_week": 35,
@@ -677,7 +677,7 @@
         {
           "id": "prayer_s6_self_track",
           "title": "I track my own prayers",
-          "instruction": "Pray the five prayers and tick them yourself in your prayer chart; your parents confirm them in the evening. After each prayer, record that one prayer, once.",
+          "instruction": "Pray the five prayers and tick them yourself in your prayer chart; your parents confirm them in the evening. Record each prayer once, after you pray it.",
           "estimated_minutes": 7,
           "needs_parent": false,
           "per_week": 35,
@@ -772,7 +772,7 @@
       {
         "id": "prayer_own_five",
         "title": "My five prayers",
-        "instruction": "Pray the five prayers at their times and record them yourself, honestly. After each prayer, record that one prayer, once.",
+        "instruction": "Pray the five prayers at their times and record them yourself, honestly. Record each prayer once, after you pray it.",
         "estimated_minutes": 7,
         "needs_parent": false,
         "per_week": 35,
