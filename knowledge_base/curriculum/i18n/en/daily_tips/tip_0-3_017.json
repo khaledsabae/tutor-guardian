@@ -2,7 +2,7 @@
   "id": "tip_0-3_017",
   "age_group": "0-3",
   "domain": "development",
-  "text": "Respond to your child’s crying within seconds—not as indulgence, but as building their neurological security. Research confirms: swift response = a calm brain, high confidence, better learning. Ignoring = chronic stress.",
+  "text": "Respond promptly to your baby's crying in the first months: you cannot spoil a young baby with attention, and answering their calls means they cry less overall. Start with the most pressing need: hunger, cold or a wet nappy.",
   "unit_id": "dea6683e-62be-4f02-8bfe-a426ef123631",
   "day_of_week": 4,
   "time_of_day": "anytime",
@@ -15,7 +15,7 @@
   "is_published": true,
   "version": "1.0.0",
   "created_at": "2026-06-10T20:00:00",
-  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+  "approved_by": null,
   "language": "en",
   "source_language": "ar",
   "translation": {
@@ -27,24 +27,9 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "clean",
+    "review_verdict": "pending",
     "review_defects": [],
-    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
-    "revalidated_at": "2026-10-04T11:18:18+00:00",
-    "auto_review": {
-      "reviewers": [
-        "deepseek-v4-pro",
-        "glm-5.2"
-      ],
-      "fixer": null,
-      "rounds": 1,
-      "prompt_version": "dfa8a5f39718",
-      "content_sha256": "8249e137d1f7f0e69642c22f20aff4fdbf1d9f5717c4dfc0eff58d18d0c70de8",
-      "reviewed_at": "2026-10-04T11:18:18+00:00",
-      "residual_low": [],
-      "adjudicated": [],
-      "tool": "ops/tools/review_en_parity.py",
-      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
-    }
+    "approved_by": null,
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

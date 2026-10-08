@@ -8,7 +8,7 @@
     "med-1eb2b059",
     "med-2dc3af5f"
   ],
-  "summary": "All babies cry, and some more than others. Crying is your baby's way of telling you they need care and comfort; it is not a sign that you are a bad parent, or that they do not love you. Among the most common reasons are hunger, a wet or dirty nappy, tiredness, wanting a cuddle, wind, and being too hot or too cold. They may sometimes cry for no clear reason, most often in the afternoon and evening, when you are at your most tired. Crying usually increases in the first months, then lessens as they grow.\n\nRespond to them promptly in their first months; you will not spoil them with attention. Start with their most pressing need: Are they hungry? Do they need a clean nappy? Are their clothes right for the temperature? Then try ways of soothing, since what works for one baby may not work for another: hold them close and sway gently, talk to them in a calm voice or sing to them, gently stroke their back, or let them hear a calm sound in the background; if their mother breastfeeds them, they may settle by feeding. If they fall asleep in your arms, put them on their back in their own empty cot.\n\nThere is one rule with no exception: never shake or hit your baby, however hard they cry or however tired or angry you are; shaking them violently can cause serious injury to their brain, and can kill them. Tell everyone who cares for them this too. If you feel you are losing control, put them on their back in their cot, clear of covers and toys, and go to another room to calm down; call a relative or friend for support, come back to check on them from time to time, and do not pick them up until you have calmed down. Many fathers and mothers go through this moment, so do not be ashamed to ask for help.\n\nCall the doctor if they show signs of illness, such as a temperature or poor feeding, or if you are worried about them. If their cry is weak, high-pitched or continuous or does not sound like their usual cry, or, when you try to wake them, they are hard to wake or will not wake, are floppy in an unusual way, have difficulty breathing or stop breathing, turn blue or grey, or have a temperature of 38C or higher while under three months old, call an ambulance or go to the emergency department straight away.",
+  "summary": "All babies cry, and some more than others. Crying is your baby's way of telling you they need care and comfort; it is not a sign that you are a bad parent, or that they do not love you. Among the most common reasons are hunger, a wet or dirty nappy, tiredness, wanting a cuddle, wind, and being too hot or too cold. They may sometimes cry for no clear reason, most often in the afternoon and evening, when you are at your most tired. Crying usually increases in the first months, then lessens as they grow.\n\nRespond to them promptly in their first months; you will not spoil them with attention. Start with their most pressing need: Are they hungry? Do they need a clean nappy? Are their clothes right for the temperature? Then try ways of soothing, since what works for one baby may not work for another: hold them close and sway gently, talk to them in a calm voice or sing to them, gently stroke their back, or let them hear a calm sound in the background; if their mother breastfeeds them, they may settle by feeding. If they fall asleep in your arms, put them on their back in their own empty cot.\n\nThere is one rule with no exception: never shake or hit your baby, however hard they cry or however tired or angry you are; shaking them violently can cause serious injury to their brain, and can kill them. Tell everyone who cares for them this too. If you feel you are losing control, put them on their back in their cot, clear of covers and toys, and go to another room to calm down; call a relative or friend for support, come back to check on them from time to time, and do not pick them up until you have calmed down. Many fathers and mothers go through this moment, so do not be ashamed to ask for help.\n\nCall the doctor if they show signs of illness, such as a temperature or poor feeding, or if you are worried about them. If their cry is weak, high-pitched or continuous or does not sound like their usual cry, or, when you try to wake them, they are hard to wake or will not wake, are floppy in an unusual way, have difficulty breathing or stop breathing, turn blue or grey, or have a temperature of 38C or higher while under three months old or 39C or higher while aged three to six months, call an ambulance or go to the emergency department straight away.",
   "try_this": "Today: Write a short plan for the hard crying hour: where you will put your baby safely, whom you will call for support, and what calms you yourself. Put it somewhere you can see it, and share it with whoever helps you care for your baby.",
   "order": 7,
   "estimated_minutes": 3,
@@ -20,8 +20,8 @@
   "is_published": true,
   "version": "1.0.0",
   "created_at": "2026-10-08T07:35:57",
-  "updated_at": "2026-10-08T08:35:59",
-  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
+  "updated_at": "2026-10-08T21:00:00",
+  "approved_by": null,
   "language": "en",
   "source_language": "ar",
   "translation": {
@@ -33,25 +33,10 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "clean",
+    "review_verdict": "pending",
     "review_defects": [],
-    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
+    "approved_by": null,
     "revalidated_at": "2026-10-08T08:39:03+00:00",
-    "generated_by": "ops/tools/deepen_paths.py",
-    "auto_review": {
-      "reviewers": [
-        "deepseek-v4-pro",
-        "glm-5.2"
-      ],
-      "fixer": null,
-      "rounds": 1,
-      "prompt_version": "dfa8a5f39718",
-      "content_sha256": "7858b89c33543af812154a34bccdcff363f1fa9cccd4851290b5e43960694c99",
-      "reviewed_at": "2026-10-08T08:39:03+00:00",
-      "residual_low": [],
-      "adjudicated": [],
-      "tool": "ops/tools/review_en_parity.py",
-      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
-    }
+    "generated_by": "ops/tools/deepen_paths.py"
   }
 }

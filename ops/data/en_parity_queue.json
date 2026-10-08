@@ -5,5 +5,48 @@
     "awaiting-review: waits for a reviewer from a family other than its English authors'. source-unverified: the Arabic is not verified against its own source — never stamped until the hold is released (unqueue) after re-extraction.",
     "Written by `review_en_parity.py queue` / `unqueue`; stamping removes the entry."
   ],
-  "units": {}
+  "units": {
+    "lesson_0-3_development_early_moments_02": {
+      "category": "awaiting-review",
+      "reason": "GPT-review follow-ups (30-second rule / chronic stress removed; 39C at 3-6 months added) on content/programs-review-fixes; dual-family review in progress, stamp follows",
+      "content_sha256": "0b01bd80082f0b965cc9008a88b2546c35145d3c79e69fd767410a6f8bf973b5",
+      "queued_on": "2026-10-08"
+    },
+    "lesson_0-3_medical_infant_sleep_05": {
+      "category": "awaiting-review",
+      "reason": "GPT-review follow-ups (30-second rule / chronic stress removed; 39C at 3-6 months added) on content/programs-review-fixes; dual-family review in progress, stamp follows",
+      "content_sha256": "ac0aab2642da243a65936478f76f9cc1f1db4b05e7f31dd96fad5f6cbe2b1073",
+      "queued_on": "2026-10-08"
+    },
+    "lesson_0-3_medical_infant_sleep_06": {
+      "category": "awaiting-review",
+      "reason": "GPT-review follow-ups (30-second rule / chronic stress removed; 39C at 3-6 months added) on content/programs-review-fixes; dual-family review in progress, stamp follows",
+      "content_sha256": "62fc9e8834908e4b5f9e7a52c668be313b85cf8487cb37f8de132db0665e222f",
+      "queued_on": "2026-10-08"
+    },
+    "lesson_0-3_medical_infant_sleep_07": {
+      "category": "awaiting-review",
+      "reason": "GPT-review follow-ups (30-second rule / chronic stress removed; 39C at 3-6 months added) on content/programs-review-fixes; dual-family review in progress, stamp follows",
+      "content_sha256": "ad010cc4ada2a72a954adaacb25eb4d747ec39164f4fe052dcd66dd275ccd760",
+      "queued_on": "2026-10-08"
+    },
+    "lesson_0-3_medical_infant_sleep_08": {
+      "category": "awaiting-review",
+      "reason": "GPT-review follow-ups (30-second rule / chronic stress removed; 39C at 3-6 months added) on content/programs-review-fixes; dual-family review in progress, stamp follows",
+      "content_sha256": "066d006c80325fc80983e4c1b856db69bb43a3fb7145835d7d4f9c8d42b15024",
+      "queued_on": "2026-10-08"
+    },
+    "tip_0-3_017": {
+      "category": "awaiting-review",
+      "reason": "GPT-review follow-ups (30-second rule / chronic stress removed; 39C at 3-6 months added) on content/programs-review-fixes; dual-family review in progress, stamp follows",
+      "content_sha256": "5a5bf88a6f62bf015c1e9a413b2f919e994231ea560bd0f202669aa1e3a57c48",
+      "queued_on": "2026-10-08"
+    },
+    "tip_2-3_007": {
+      "category": "awaiting-review",
+      "reason": "GPT-review follow-ups (30-second rule / chronic stress removed; 39C at 3-6 months added) on content/programs-review-fixes; dual-family review in progress, stamp follows",
+      "content_sha256": "95199d93e8cbb122afd69bb3c82d5dd62d6324678af07854ab10e67db74dbf21",
+      "queued_on": "2026-10-08"
+    }
+  }
 }
