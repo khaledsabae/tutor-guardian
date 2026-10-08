@@ -5,10 +5,30 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:lottie/lottie.dart';
 
+import '../../core/motion.dart';
 import '../../l10n/app_localizations.dart';
 import '../../theme/design_tokens.dart';
 import 'bouncy_button.dart';
 import 'package:almorabbi/core/haptics.dart';
+
+/// How loud a celebration is («نور والقناديل» phase 1 — مستويات الاحتفال).
+///
+/// One celebration API, two volumes, so that a quiet "well done" and a full
+/// milestone feel like the same product deciding how big this moment is —
+/// not like two screens that were built separately.
+enum CelebrationTier {
+  /// Confetti + Lottie stars + success haptic. Reserved for the moments the
+  /// parent earns rarely: finishing a lesson, a journey milestone.
+  milestone,
+
+  /// Dialog + haptic only. The moment is acknowledged, not staged — quiz
+  /// results, follow-up answers, child-mode streaks.
+  quiet,
+}
+
+/// A badge surfaced inside a celebration dialog (e.g. «أول خطوة 🌱» on the
+/// very first lesson) instead of a second, silent window.
+typedef CelebrationBadge = ({String emoji, String title});
 
 /// Full-screen celebration: confetti burst + scale-in dialog with a big
 /// emoji. The reward moment for completing a lesson / acing a quiz.
@@ -21,10 +41,18 @@ Future<void> showCelebration(
   String? imageAsset,
   Future<void> Function()? onShare,
   String? shareLabel,
+  CelebrationTier tier = CelebrationTier.milestone,
+  CelebrationBadge? badge,
 }) {
   // Milestone = success + confetti, once (UX_UI_ROADMAP §4.2). Covers lesson
   // completion, journey milestones and habit streaks in one place.
   Haptics.success();
+  // Reduced motion (core/motion.dart): the dialog itself is information, the
+  // confetti burst and star rain are decoration — decoration is what the
+  // setting asks to drop. The entrance transitions collapse on their own
+  // (Flutter runs controllers at 5% under the setting).
+  final effects =
+      tier == CelebrationTier.milestone && !reduceMotion(context);
   return showGeneralDialog<void>(
     context: context,
     barrierColor: Colors.black54,
@@ -39,6 +67,8 @@ Future<void> showCelebration(
       imageAsset: imageAsset,
       onShare: onShare,
       shareLabel: shareLabel,
+      effects: effects,
+      badge: badge,
     ),
     transitionBuilder: (_, anim, _, child) => ScaleTransition(
       scale: CurvedAnimation(parent: anim, curve: Curves.easeOutBack),
@@ -56,6 +86,11 @@ class _CelebrationDialog extends StatefulWidget {
   final Future<void> Function()? onShare;
   final String? shareLabel;
 
+  /// Whether the confetti burst and Lottie stars are shown at all (quiet
+  /// tier, or the system asked for less motion).
+  final bool effects;
+  final CelebrationBadge? badge;
+
   const _CelebrationDialog({
     required this.emoji,
     required this.title,
@@ -64,6 +99,8 @@ class _CelebrationDialog extends StatefulWidget {
     this.imageAsset,
     this.onShare,
     this.shareLabel,
+    required this.effects,
+    this.badge,
   });
 
   @override
@@ -88,7 +125,7 @@ class _CelebrationDialogState extends State<_CelebrationDialog> {
   @override
   void initState() {
     super.initState();
-    _confetti.play();
+    if (widget.effects) _confetti.play();
   }
 
   @override
@@ -153,6 +190,40 @@ class _CelebrationDialogState extends State<_CelebrationDialog> {
                       height: 1.5,
                     ),
                   ),
+                  if (widget.badge != null) ...[
+                    const SizedBox(height: 14),
+                    // The badge earned *by this moment* rides inside it — one
+                    // window, one story, instead of a credit the parent never
+                    // sees (phase 1: هدية اليوم والشارات).
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 6),
+                      decoration: BoxDecoration(
+                        color: Dt.accent.withValues(alpha: 0.15),
+                        borderRadius: BorderRadius.circular(Dt.rChip),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(widget.badge!.emoji,
+                              style: const TextStyle(fontSize: 16)),
+                          const SizedBox(width: 6),
+                          Flexible(
+                            child: Text(
+                              widget.badge!.title,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                fontSize: 13,
+                                fontWeight: FontWeight.w800,
+                                color: Dt.ink,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                   const SizedBox(height: 24),
                   if (widget.onShare != null) ...[
                     BouncyButton(
@@ -177,36 +248,38 @@ class _CelebrationDialogState extends State<_CelebrationDialog> {
           ),
         ),
         // Burst from the top center, raining over the dialog.
-        Padding(
-          padding: const EdgeInsets.only(top: 120),
-          child: ConfettiWidget(
-            confettiController: _confetti,
-            blastDirectionality: BlastDirectionality.explosive,
-            blastDirection: math.pi / 2,
-            emissionFrequency: 0.6,
-            numberOfParticles: 30,
-            maxBlastForce: 18,
-            minBlastForce: 6,
-            gravity: .3,
-            colors: [
-              Dt.primary,
-              Dt.accent,
-              Color(0xFF8B5CF6),
-              Color(0xFFFB7185),
-              Dt.success,
-            ],
-          ),
-        ),
-        // Brand-aligned gentle Lottie stars behind the dialog.
-        Positioned.fill(
-          child: IgnorePointer(
-            child: Lottie.asset(
-              'assets/animations/celebration_stars.json',
-              fit: BoxFit.contain,
-              repeat: false,
+        if (widget.effects)
+          Padding(
+            padding: const EdgeInsets.only(top: 120),
+            child: ConfettiWidget(
+              confettiController: _confetti,
+              blastDirectionality: BlastDirectionality.explosive,
+              blastDirection: math.pi / 2,
+              emissionFrequency: 0.6,
+              numberOfParticles: 30,
+              maxBlastForce: 18,
+              minBlastForce: 6,
+              gravity: .3,
+              colors: [
+                Dt.primary,
+                Dt.accent,
+                Color(0xFF8B5CF6),
+                Color(0xFFFB7185),
+                Dt.success,
+              ],
             ),
           ),
-        ),
+        // Brand-aligned gentle Lottie stars behind the dialog.
+        if (widget.effects)
+          Positioned.fill(
+            child: IgnorePointer(
+              child: Lottie.asset(
+                'assets/animations/celebration_stars.json',
+                fit: BoxFit.contain,
+                repeat: false,
+              ),
+            ),
+          ),
       ],
     );
   }
