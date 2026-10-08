@@ -11,12 +11,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 60
     env:
-      HF_HOME: ${{ runner.temp }}/chroma-recall/huggingface
       ANONYMIZED_TELEMETRY: 'false'
       PYTHONDONTWRITEBYTECODE: '1'
       ANSWER_CACHE_ENABLED: 'false'
-      ANSWER_CACHE_DB: ${{ runner.temp }}/chroma-recall/answer-cache.db
-      CONVERSATIONS_DB: ${{ runner.temp }}/chroma-recall/conversations.db
       RERANK_ENABLED: 'true'
       RERANKER_MODEL: cross-encoder/mmarco-mMiniLMv2-L12-H384-v1
       RERANK_MIN_SCORE: '-6.0'
@@ -29,6 +26,15 @@ jobs:
         with:
           ref: ${{ github.sha }}
           persist-credentials: false
+
+      # runner.temp is not available in job-level env; export the paths here.
+      - name: Point caches and databases at the runner's temp dir
+        run: |
+          {
+            echo "HF_HOME=$RUNNER_TEMP/chroma-recall/huggingface"
+            echo "ANSWER_CACHE_DB=$RUNNER_TEMP/chroma-recall/answer-cache.db"
+            echo "CONVERSATIONS_DB=$RUNNER_TEMP/chroma-recall/conversations.db"
+          } >> "$GITHUB_ENV"
 
       - name: Read production Python version
         id: production
