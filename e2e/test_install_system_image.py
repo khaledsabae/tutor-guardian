@@ -65,6 +65,8 @@ class InstallSystemImageTest(unittest.TestCase):
         self.assertEqual((proc.returncode, calls, installed), (0, 2, True), proc.stdout)
         self.assertEqual(leftovers, '', 'the partial image and cached archive must be gone before the retry')
         self.assertIn('::warning title=SDK download::', proc.stdout)
+        # Not yet installed is the normal start, not a finding.
+        self.assertNotIn('incomplete', proc.stdout.split('attempt 1/')[0])
 
     def test_exit_zero_with_an_incomplete_image_is_not_success(self):
         proc, calls, _, _, installed = self.run_script('corrupt corrupt corrupt')

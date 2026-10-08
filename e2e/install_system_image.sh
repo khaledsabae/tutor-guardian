@@ -39,7 +39,7 @@ complete() {
   done
 }
 
-if complete 2>/dev/null; then
+if complete >/dev/null 2>&1; then
   echo "[sdk] $PKG already installed and complete"
   exit 0
 fi
