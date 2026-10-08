@@ -10,6 +10,7 @@ import '../../../l10n/app_localizations.dart';
 import '../../../l10n/content_direction.dart';
 import '../../../theme/design_tokens.dart';
 import '../../../widgets/ui/empty_state.dart';
+import '../../../widgets/ui/error_retry_view.dart';
 import '../data/story_models.dart';
 import '../../screen_off/narration_store.dart';
 import '../../../widgets/ui/night_sky.dart';
@@ -44,7 +45,7 @@ class StoryBookshelfScreen extends ConsumerWidget {
             error: (e, _) => EmptyState(
               emoji: '⚠️',
               title: AppLocalizations.of(context).storyLoadError,
-              subtitle: e.toString(),
+              subtitle: userFacingError(context, e).body,
             ),
             data: (stories) {
               if (stories.isEmpty) {

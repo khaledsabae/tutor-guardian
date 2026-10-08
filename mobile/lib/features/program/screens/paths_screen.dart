@@ -17,6 +17,7 @@ import '../../../l10n/app_localizations.dart';
 import '../../../theme/design_tokens.dart';
 import '../../../widgets/ui/bouncy_button.dart';
 import '../../../widgets/ui/empty_state.dart';
+import '../../../widgets/ui/error_retry_view.dart';
 import '../../../widgets/ui/emoji_hero.dart';
 import '../data/models.dart';
 import '../providers/program_providers.dart';
@@ -126,7 +127,7 @@ class _PathsScreenState extends ConsumerState<PathsScreen> {
         error: (err, _) => EmptyState(
           emoji: '📡',
           title: AppLocalizations.of(context).pathsError,
-          subtitle: '$err',
+          subtitle: userFacingError(context, err).body,
           actionLabel: AppLocalizations.of(context).retry,
           onAction: () => ref.read(pathsListProvider(args).notifier).refresh(),
         ),

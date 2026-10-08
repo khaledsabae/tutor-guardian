@@ -271,7 +271,7 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
         error: (err, _) => EmptyState(
           emoji: '📡',
           title: AppLocalizations.of(context).lessonErrorLoading,
-          subtitle: '$err',
+          subtitle: userFacingError(context, err).body,
           actionLabel: AppLocalizations.of(context).retry,
           onAction: () => ref.invalidate(lessonProvider(widget.lessonId)),
         ),

@@ -18,6 +18,7 @@ import '../../../theme/app_colors.dart';
 import '../../../widgets/ui/animated_progress_bar.dart';
 import '../../../widgets/ui/bouncy_button.dart';
 import '../../../widgets/ui/empty_state.dart';
+import '../../../widgets/ui/error_retry_view.dart';
 import '../../reflections/widgets/reflection_note_badge.dart';
 import '../data/models.dart';
 import '../data/progress_models.dart';
@@ -86,7 +87,7 @@ class PathDetailScreen extends ConsumerWidget {
         error: (err, _) => EmptyState(
           emoji: '📡',
           title: AppLocalizations.of(context).pathsError,
-          subtitle: '$err',
+          subtitle: userFacingError(context, err).body,
           actionLabel: AppLocalizations.of(context).retry,
           onAction: () => ref.invalidate(pathDetailProvider(args)),
         ),
