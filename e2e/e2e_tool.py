@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Helpers for the emulator E2E gate (.github/workflows/mobile-e2e.yml).
 
-Four subcommands, all stdlib-only so they run on a bare GitHub runner:
+Five subcommands, all stdlib-only so they run on a bare GitHub runner:
 
   deactivate-analytics  Permanently disable Firebase Analytics in a CI manifest.
   l10n         Build flows/common/l10n.js from the app's ARB files, so every
@@ -12,12 +12,17 @@ Four subcommands, all stdlib-only so they run on a bare GitHub runner:
                an ANR, a Flutter framework/Dart error (release mode), or the
                app's main() running more than once in one process.
   summary      Render results.tsv + the gate verdict as Markdown.
+  gallery      Pair the before/after gallery shots (lineage "gallery" in
+               run.sh) into gallery-summary.md + an images/ folder, uploaded
+               as the e2e-gallery artifact — one download, every pair side
+               by side.
 """
 from __future__ import annotations
 
 import argparse
 import json
 import os
+import shutil
 import tempfile
 import xml.etree.ElementTree as ET
 import re
@@ -98,6 +103,15 @@ KEYS = [
     "bootError", "forceUpdateTitle",
     # family programs (fresh/09)
     "programsTitle", "programsIntro", "programsPrayerTitle", "prayerStagesTitle",
+    # gallery (e2e/flows/gallery/shoot.yaml) — must exist in the BASELINE ARBs
+    # too, or the «before» runs lose every step that uses them (verified for
+    # efaa740f / 1.0.68+113 on 2026-10-08).
+    "pathDetailStart", "pathDetailContinue",
+    "lessonQuiz", "quizYourResult", "quizNextQuestion", "quizShowResult",
+    "quizErrorLoading",
+    "lessonCelebrationTitle", "lessonNextStepTitle", "lessonNextStepConfirm",
+    "followupTitle", "followupTitleFor", "followupWorked", "followupThanksTitle",
+    "reviewPromptTitle", "reviewPromptLater", "settingsThemeLight",
 ]
 
 # Strings the app hardcodes outside the ARB files.
@@ -111,6 +125,9 @@ LITERALS = {
         "تعذّر عرض هذا الجزء. حاول مرة أخرى، وإن تكرّر أرسل لنا ملاحظة.",
         "تعذّر عرض هذا الجزء. حاول مرة أخرى، وإن تكرّر أرسل لنا ملاحظة.",
     ),
+    # quiz_screen.dart, _OptionTile — the option letters are Arabic whatever
+    # the interface language (String.fromCharCode('أ' + index)).
+    "lit_quizOptionA": ("أ", "أ"),
 }
 
 _PLACEHOLDER = re.compile(r"(\{\w+\})")
@@ -339,6 +356,147 @@ def cmd_logcat_gate(args: argparse.Namespace) -> int:
     return 1 if failures else 0
 
 
+# ── gallery ──────────────────────────────────────────────────────────────
+#
+# run.sh's "gallery" lineage photographs the same screens on the baseline
+# build («before») and the PR head («after») — Arabic, English, and a 200%
+# font-scale pass. The shots land in the flat e2e-screenshots dir named
+#   gallery__<flow>__<tag>__<variant>__<screen>.png
+# where tag ∈ {before, after}. This subcommand pairs them into one Markdown
+# file with relative image links, so a single artifact download is the whole
+# review. Onboarding is paired across lineages: the gallery lineage's
+# baseline onboarding is the «before», the fresh lineage's head onboarding
+# (identical flow file, identical shot names) is the «after».
+
+GALLERY_VARIANTS = [
+    ("ar", "العربية"),
+    ("en", "English"),
+    ("ar_font2x", "العربية · خط ٢٠٠٪"),
+]
+
+# (screen id in the shot name, Arabic caption). Keep the ids in sync with
+# e2e/flows/gallery/shoot.yaml — the pairing is a lookup, not a glob, so a
+# shot that was never taken shows as a missing cell instead of vanishing.
+GALLERY_SCREENS = [
+    ("home", "اليوم — البداية"),
+    ("followup_card", "بطاقة المتابعة على «اليوم»"),
+    ("path_detail", "تفاصيل المسار"),
+    ("lesson", "شاشة الدرس"),
+    ("quiz", "سؤال الاختبار"),
+    ("quiz_summary", "نتيجة الاختبار"),
+    ("celebration", "احتفال إكمال الدرس"),
+    ("next_step", "خطوة الليلة"),
+    ("home_after_lesson", "اليوم بعد الإكمال"),
+    ("followup", "ورقة المتابعة"),
+    ("settings", "الإعدادات"),
+    ("settings_dark", "الإعدادات — داكن"),
+    ("home_dark", "اليوم — داكن"),
+]
+
+GALLERY_ONBOARDING = [
+    ("onboarding_1_language", "أول تشغيل — اختيار اللغة"),
+    ("onboarding_2_first_tip", "أول تشغيل — أول نصيحة"),
+]
+
+# gallery__01_before_ar__before__ar__home.png — the flow name is matched
+# lazily so renaming a flow cannot break the pairing. The optional trailing
+# _<digits> is Maestro's collision suffix. Screen ids are looked up one by
+# one, so home never swallows home_after_lesson.
+_GALLERY_FILE = re.compile(
+    r"^gallery__.*?__(?P<tag>before|after)__(?P<variant>ar_font2x|ar|en)"
+    r"__(?P<screen>[a-z0-9_]+?)(?:_\d+)?\.png$"
+)
+
+
+def index_gallery(screens: Path) -> dict[tuple[str, str, str], str]:
+    """{(tag, variant, screen): filename} for every gallery shot found."""
+    index: dict[tuple[str, str, str], str] = {}
+    for png in sorted(screens.glob("*.png")):
+        m = _GALLERY_FILE.match(png.name)
+        if m:
+            key = (m.group("tag"), m.group("variant"), m.group("screen"))
+            index.setdefault(key, png.name)
+    return index
+
+
+def _gallery_pair(screens: Path, before_pat: str, after_pat: str):
+    """First match of each pattern (oldest flow run wins on repeats)."""
+    def first(pat: str) -> str | None:
+        for name in sorted(screens.glob(pat)):
+            return name.name
+        return None
+    return first(before_pat), first(after_pat)
+
+
+def cmd_gallery(args: argparse.Namespace) -> int:
+    screens = Path(args.screens)
+    out = Path(args.out)
+    images = out / "images"
+    images.mkdir(parents=True, exist_ok=True)
+    index = index_gallery(screens)
+
+    def cell(fname: str | None, caption: str) -> str:
+        if fname is None:
+            return "—"
+        shutil.copy(screens / fname, images / fname)
+        return f'<img src="images/{fname}" width="270" alt="{caption}">'
+
+    md = [
+        "## معرض «قبل/بعد»",
+        "",
+        "«قبل» = نسخة الإنتاج الحالية (baseline APK) · «بعد» = رأس هذا الـPR.",
+        "الصور في مجلد `images/` بجوار هذا الملف — التنزيل واحد والمراجعة كاملة.",
+        "",
+    ]
+    counts = {"complete": 0, "before-only": 0, "after-only": 0, "missing": 0}
+
+    def table(rows) -> None:
+        md.extend(["| الشاشة | قبل | بعد |", "|---|---|---|"])
+        md.extend(rows)
+
+    for variant, label in GALLERY_VARIANTS:
+        rows = []
+        for screen, caption in GALLERY_SCREENS:
+            before = index.get(("before", variant, screen))
+            after = index.get(("after", variant, screen))
+            if before and after:
+                counts["complete"] += 1
+            elif before:
+                counts["before-only"] += 1
+            elif after:
+                counts["after-only"] += 1
+            else:
+                counts["missing"] += 1
+            rows.append(f"| {caption} | {cell(before, caption)} | {cell(after, caption)} |")
+        md.extend([f"### {label}", ""])
+        table(rows)
+        md.append("")
+
+    rows = []
+    for screen, caption in GALLERY_ONBOARDING:
+        before, after = _gallery_pair(
+            screens, f"gallery__*__{screen}.png", f"fresh__01_onboarding__{screen}.png")
+        if before and after:
+            counts["complete"] += 1
+        elif before:
+            counts["before-only"] += 1
+        elif after:
+            counts["after-only"] += 1
+        else:
+            counts["missing"] += 1
+        rows.append(f"| {caption} | {cell(before, caption)} | {cell(after, caption)} |")
+    md.extend(["### أول التشغيل (عربي، عبر المسارين gallery/fresh)", ""])
+    table(rows)
+    md.append("")
+
+    stats = "complete={complete} before-only={before-only} after-only={after-only} missing={missing}".format(**counts)
+    # Parsed by `summary` — keep the exact comment form.
+    md.append(f"<!-- gallery: {stats} -->")
+    (out / "gallery-summary.md").write_text("\n".join(md) + "\n", encoding="utf-8")
+    print(f"gallery: {stats} → {out / 'gallery-summary.md'}")
+    return 0
+
+
 # ── summary ──────────────────────────────────────────────────────────────
 
 def cmd_summary(args: argparse.Namespace) -> int:
@@ -373,6 +531,11 @@ def cmd_summary(args: argparse.Namespace) -> int:
     md += ["", "### logcat gate", "```", gate.read_text(encoding="utf-8").strip() if gate.exists() else "not run", "```"]
     shots = sorted((out / "screens").glob("*.png")) if (out / "screens").exists() else []
     md += ["", f"Screenshots: {len(shots)} (artifact `e2e-screenshots`)"]
+    gallery = out / "gallery" / "gallery-summary.md"
+    if gallery.exists():
+        m = re.search(r"<!-- gallery: (.+?) -->", gallery.read_text(encoding="utf-8"))
+        if m:
+            md += ["", f"Gallery قبل/بعد: {m.group(1)} (artifact `e2e-gallery`)"]
     text = "\n".join(md) + "\n"
     (out / "summary.md").write_text(text, encoding="utf-8")
     sys.stdout.write(text)
@@ -399,6 +562,11 @@ def main(argv: list[str] | None = None) -> int:
     s.add_argument("--out")
     s.add_argument("--min-lines", type=int, default=200)
     s.set_defaults(func=cmd_logcat_gate)
+
+    s = sub.add_parser("gallery", help="pair the before/after shots into gallery-summary.md")
+    s.add_argument("screens", help="dir with the flattened e2e screenshots")
+    s.add_argument("--out", required=True, help="dir for gallery-summary.md + images/")
+    s.set_defaults(func=cmd_gallery)
 
     s = sub.add_parser("summary", help="render the Markdown summary")
     s.add_argument("out_dir")

@@ -185,3 +185,29 @@ class AvdCacheTest(unittest.TestCase):
             self.assertLess(install, min(runners), job)
         e2e_install = self.step(self.e2e['jobs']['e2e']['steps'], 'Install the system image (retried, verified)')
         self.assertNotIn('if', e2e_install, 'the journeys step needs the image on a cache hit too')
+
+
+class GalleryArtifactTest(unittest.TestCase):
+    """The معرض قبل/بعد must ship as one downloadable artifact, uploaded even
+    from a red run (the shots are the evidence), and never gate anything."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.e2e = yaml.load(WORKFLOW.read_text(), Loader=yaml.BaseLoader)['jobs']['e2e']
+
+    def test_gallery_artifact_is_uploaded_always_and_warn_only(self):
+        uploads = [s for s in self.e2e['steps']
+                   if s.get('uses', '').startswith('actions/upload-artifact@')]
+        gallery = [s for s in uploads if s['with'].get('name') == 'e2e-gallery']
+        self.assertEqual(len(gallery), 1, 'exactly one e2e-gallery upload')
+        step = gallery[0]
+        self.assertEqual(step['if'], 'always()')
+        self.assertEqual(step['with']['if-no-files-found'], 'warn',
+                         'a run with no gallery shots still uploads the rest')
+        self.assertEqual(step['with']['path'], '${{ env.E2E_OUT }}/gallery')
+        self.assertGreaterEqual(int(step['with']['retention-days']), 14)
+
+    def test_the_emulator_job_allows_the_gallery_lineage_time(self):
+        # 75 covered the 13 journeys; the gallery lineage (a third onboarding
+        # and six shoots) needs the headroom the workflow now grants.
+        self.assertGreaterEqual(int(self.e2e['timeout-minutes']), 90)

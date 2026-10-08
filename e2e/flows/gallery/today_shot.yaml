@@ -1,0 +1,23 @@
+# The gallery's own Today capture: common/assert_today.yaml's contract, but
+# scroll-tolerant — at the 200% font pass the focus card sits below the fold,
+# and assert_today's plain `visible:` wait would fail on a screen that is
+# fine. Lives under flows/gallery/ so the 13 gate journeys' assert_today is
+# untouched. No child-name wait either: this lineage's child was proven by
+# 00_onboarding minutes earlier.
+# Env: SHOT. Requires l10n.js (runScript) from the calling flow.
+appId: com.alsaba.almorabbi
+---
+- extendedWaitUntil:
+    visible: '${output.lead.navToday}'
+    timeout: 60000
+- tapOn: '${output.lead.navToday}'
+- scrollUntilVisible:
+    element:
+      text: '(?:${output.t.startThisLesson}|${output.t.continueBtn}|${output.t.browsePaths})'
+    direction: DOWN
+    timeout: 30000
+- waitForAnimationToEnd:
+    timeout: 3000
+- assertNotVisible: '${output.c.lit_errorWidget}'
+- assertNotVisible: '${output.c.bootError}'
+- takeScreenshot: '${SHOT}'
