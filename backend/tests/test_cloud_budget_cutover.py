@@ -346,3 +346,124 @@ def test_cli_lists_unknown_rows_read_only(tmp_path, capsys):
     assert out['unknown_usage_rows'] == [a]
     assert l.path.read_bytes() == before
     assert not l.anchor_path.exists()
+
+
+# ── automatic monthly rollover, only on proven continuity ──────────────────
+from datetime import timedelta  # noqa: E402
+import logging  # noqa: E402
+
+NOV = datetime(2026, 11, 1, 0, 0, 5, tzinfo=timezone.utc)
+
+
+def clocked(tmp_path, start=NOW):
+    now = [start]
+    l = telemetry_v2(CloudBudget(tmp_path / 'sessions.db', clock=lambda: now[0]))
+    return l, now
+
+
+def row_at(l, when, provider, prompt, completion):
+    ts = when.strftime('%Y-%m-%d %H:%M:%S')   # SQLite datetime('now') shape
+    with sqlite3.connect(l.path) as c:
+        c.execute('INSERT INTO llm_calls(ts,provider,prompt_tokens,completion_tokens,ok) VALUES(?,?,?,?,1)',
+                  (ts, provider, prompt, completion))
+
+
+def october_with_one_settled_call(tmp_path):
+    l, now = clocked(tmp_path)
+    l.bootstrap(receipt(0))
+    now[0] = NOW + timedelta(days=13)
+    t = l.reserve('wallet', 1000, 100, legacy_aliases=ALIASES, unknown_usage_bounds=(60, 40))
+    l.settle(t, 30, 10)
+    row_at(l, now[0], 'deepseek', 30, 10)
+    return l, now
+
+
+def activation(l, month):
+    with sqlite3.connect(l.path) as c:
+        row = c.execute("SELECT receipt FROM cloud_budget_activation WHERE wallet='wallet' AND month=?",
+                        (month,)).fetchone()
+        opening = c.execute("SELECT opening_tokens FROM cloud_budget_months WHERE wallet='wallet' AND month=?",
+                            (month,)).fetchone()
+    return (json.loads(row[0]) if row else None), (opening[0] if opening else None)
+
+
+def test_continuous_ledger_rolls_into_the_new_month_by_itself(tmp_path):
+    l, now = october_with_one_settled_call(tmp_path)
+    now[0] = NOV
+    l.reserve('wallet', 1000, 1000, legacy_aliases=ALIASES)   # a full fresh month
+    rolled, opening = activation(l, '2026-11')
+    assert rolled['rollover_from'] == '2026-10' and rolled['opening_tokens'] == 0 and opening == 0
+    assert rolled['db_identity'] == 'independent-test-database'
+    assert rolled['reconciled_through'] == '2026-11-01T00:00:00+00:00'
+    with pytest.raises(BudgetDenied):
+        l.reserve('wallet', 1000, 1, legacy_aliases=ALIASES)
+
+
+def test_rolled_month_opens_at_ledger_measured_late_settlements(tmp_path):
+    l, now = october_with_one_settled_call(tmp_path)
+    late = l.reserve('wallet', 1000, 100, legacy_aliases=ALIASES)
+    now[0] = NOV
+    with pytest.raises(BudgetDenied):                     # October not closed yet
+        l.reserve('wallet', 1000, 1, legacy_aliases=ALIASES)
+    l.settle(late, 50, 50)                                # completes after midnight
+    row_at(l, NOV, 'deepseek', 50, 50)
+    l.reserve('wallet', 1000, 900, legacy_aliases=ALIASES)   # 100 carried + 900
+    with pytest.raises(BudgetDenied):
+        l.reserve('wallet', 1000, 1, legacy_aliases=ALIASES)
+
+
+def test_rolled_month_rolls_again(tmp_path):
+    l, now = october_with_one_settled_call(tmp_path)
+    now[0] = NOV
+    t = l.reserve('wallet', 1000, 100, legacy_aliases=ALIASES)
+    l.settle(t, 5, 5)
+    row_at(l, NOV, 'deepseek', 5, 5)
+    now[0] = datetime(2026, 12, 1, 0, 1, tzinfo=timezone.utc)
+    l.reserve('wallet', 1000, 1000, legacy_aliases=ALIASES)
+    assert activation(l, '2026-12')[0]['rollover_from'] == '2026-11'
+
+
+def test_rows_before_the_attested_cutoff_do_not_block_rollover(tmp_path):
+    l, now = clocked(tmp_path)
+    a = add_row(l, 'deepseek', None, None, ok=0)      # covered by the October receipt
+    l.bootstrap({**receipt(100), 'unknown_usage_rows_covered': [a]})
+    now[0] = NOV
+    l.reserve('wallet', 1000, 1, legacy_aliases=ALIASES)
+
+
+def _break(kind, l, now):
+    if kind == 'unsettled':
+        l.reserve('wallet', 1000, 10, legacy_aliases=ALIASES)
+    elif kind == 'unknown_usage_row':
+        row_at(l, now[0], 'deepseek_aux', None, None)
+    elif kind == 'unreserved_spend_last_month':
+        row_at(l, now[0], 'deepseek', 500, 0)            # ledger holds only 40
+    elif kind == 'unreserved_spend_this_month':
+        row_at(l, NOV - timedelta(seconds=3), 'deepseek', 10, 0)
+    elif kind == 'quarantined':
+        t = l.reserve('wallet', 1000, 10, legacy_aliases=ALIASES)
+        l.settle(t, 50, 50)                              # above its bound
+    elif kind == 'skipped_month':
+        now[0] = datetime(2026, 12, 1, 0, 1, tzinfo=timezone.utc)
+        return
+    elif kind == 'tampered_ledger':
+        with sqlite3.connect(l.path) as c:
+            c.execute('UPDATE cloud_budget_attempts SET charged_tokens=0')
+    now[0] = NOV
+
+
+@pytest.mark.parametrize('kind', ['unsettled', 'unknown_usage_row', 'unreserved_spend_last_month',
+                                  'unreserved_spend_this_month', 'quarantined', 'skipped_month',
+                                  'tampered_ledger'])
+def test_rollover_without_proven_continuity_stays_fail_closed_and_says_why(tmp_path, caplog, kind):
+    l, now = october_with_one_settled_call(tmp_path)
+    _break(kind, l, now)
+    if now[0] < NOV:
+        now[0] = NOV
+    with caplog.at_level(logging.WARNING, logger='app.services.cloud_budget'):
+        with pytest.raises(BudgetDenied):
+            l.reserve('wallet', 1000, 1, legacy_aliases=ALIASES)
+    month = now[0].strftime('%Y-%m')
+    assert activation(l, month) == (None, None)
+    if kind != 'tampered_ledger':     # continuity itself is unproven: refused before rollover runs
+        assert 'auto-rollover refused' in caplog.text

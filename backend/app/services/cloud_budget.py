@@ -363,6 +363,81 @@ class CloudBudget:
             raise BudgetDenied('cloud budget unknown-usage coverage does not match history')
         return total
 
+    def _auto_rollover(self, conn, wallet: str, month: str) -> str | None:
+        """Open `month` from the previous month's ledger, or say why not.
+
+        Runs inside a continuity-verified transaction (same anchor identity
+        and ledger digest), so a restored, replaced or edited ledger never
+        gets here. Rolls over only if the previous month was activated for
+        this wallet on this DB identity, the wallet is not quarantined, every
+        reservation up to the previous month is settled, and telemetry shows
+        no spend the ledger did not reserve: no unknown-usage paid row and no
+        more paid tokens than the ledger charged — for the previous month
+        after its attested cutoff, and for this month so far. The new month
+        then opens at what the ledger measured: opening 0, plus the late
+        settlements already carried into it. Returns None when rolled over.
+        """
+        year, mon = (int(part) for part in month.split('-'))
+        prev = f'{year - 1}-12' if mon == 1 else f'{year}-{mon - 1:02d}'
+        month_start = datetime(year, mon, 1, tzinfo=timezone.utc)
+        row = conn.execute('SELECT receipt FROM cloud_budget_activation WHERE wallet=? AND month=?',
+                           (wallet, prev)).fetchone()
+        if not row:
+            return f'no activation for the previous month {prev}'
+        previous = json.loads(row[0])
+        identity = conn.execute('SELECT db_identity FROM cloud_budget_identity WHERE id=1').fetchone()
+        if not identity or identity[0] != previous.get('db_identity'):
+            return 'DB identity differs from the previous receipt'
+        if previous.get('unreserved_writers_drained') is not True:
+            return 'previous receipt does not attest drained writers'
+        if conn.execute('SELECT 1 FROM cloud_budget_months WHERE wallet=? AND blocked=1', (wallet,)).fetchone():
+            return 'wallet quarantined'
+        if not conn.execute('SELECT 1 FROM cloud_budget_months WHERE wallet=? AND month=?',
+                            (wallet, prev)).fetchone():
+            return f'opening of {prev} lost'
+        if conn.execute('SELECT 1 FROM cloud_budget_attempts WHERE wallet=? AND month<=? AND settled=0',
+                        (wallet, prev)).fetchone():
+            return f'unsettled reservations up to {prev}'
+        aliases = tuple(previous['legacy_aliases'])
+        cutoff = datetime.fromisoformat(previous['reconciled_through'])
+        telemetry = {}
+        for period, after in ((prev, cutoff), (month, month_start)):
+            total = 0
+            for _rowid, ts, prompt, completion in self.unknown_and_known_rows(conn, period, aliases):
+                try:
+                    stamp = datetime.fromisoformat(ts)
+                except (TypeError, ValueError):
+                    return 'paid telemetry row without a timestamp'
+                if stamp.tzinfo is None:
+                    stamp = stamp.replace(tzinfo=timezone.utc)
+                if stamp <= after:
+                    continue  # covered by the attested opening
+                if not (_count(prompt) and _count(completion)):
+                    return f'paid telemetry row with unknown usage in {period}'
+                total += prompt + completion
+            telemetry[period] = total
+
+        def ledger(period: str) -> int:
+            return (conn.execute('SELECT COALESCE(SUM(charged_tokens),0) FROM cloud_budget_attempts '
+                                 'WHERE wallet=? AND month=?', (wallet, period)).fetchone()[0]
+                    + conn.execute('SELECT COALESCE(SUM(charged_tokens),0) FROM cloud_budget_carry '
+                                   'WHERE wallet=? AND month=?', (wallet, period)).fetchone()[0])
+
+        for period in (prev, month):
+            if telemetry[period] > ledger(period):
+                return (f'telemetry shows {telemetry[period]} paid tokens in {period} but the ledger '
+                        f'charged {ledger(period)}: an unreserved writer may be spending')
+        receipt = {'db_identity': identity[0], 'wallet': wallet, 'month': month, 'opening_tokens': 0,
+                   'reconciled_through': month_start.isoformat(), 'legacy_aliases': sorted(set(aliases)),
+                   'evidence_reference': f'auto-rollover from {prev}: continuous ledger, '
+                                         'telemetry within reserved charges',
+                   'unreserved_writers_drained': True, 'rollover_from': prev}
+        conn.execute('INSERT INTO cloud_budget_activation VALUES(?,?,?)',
+                     (wallet, month, json.dumps(receipt, sort_keys=True, separators=(',', ':'))))
+        conn.execute('INSERT INTO cloud_budget_months VALUES(?,?,0,0)', (wallet, month))
+        logger.info('cloud budget rolled %s over from %s to %s', wallet, prev, month)
+        return None
+
     @staticmethod
     def unknown_and_known_rows(conn, month: str, aliases: tuple[str, ...]):
         aliases = tuple(a for a in aliases if a not in NON_WALLET_PROVIDERS)
@@ -399,7 +474,13 @@ class CloudBudget:
             activation = conn.execute('SELECT receipt FROM cloud_budget_activation WHERE wallet=? AND month=?',
                                       (wallet, month)).fetchone()
             if not activation:
-                raise BudgetDenied('cloud budget cutover uninitialized wallet/month; explicit bootstrap required')
+                refusal = self._auto_rollover(conn, wallet, month)
+                if refusal is not None:
+                    logger.warning("cloud budget auto-rollover refused for %s %s: %s; "
+                                   "explicit bootstrap required", wallet, month, refusal)
+                    raise BudgetDenied('cloud budget cutover uninitialized wallet/month; explicit bootstrap required')
+                activation = conn.execute('SELECT receipt FROM cloud_budget_activation WHERE wallet=? AND month=?',
+                                          (wallet, month)).fetchone()
             if not set(legacy_aliases).issubset(json.loads(activation[0])['legacy_aliases']):
                 raise BudgetDenied('cloud budget cutover missing paid alias reconciliation')
             ticket = Reservation(uuid.uuid4().hex, wallet, month, bound,

@@ -532,7 +532,7 @@ Azure is disabled in production.
 
 ## Activation runbook (operator)
 
-Order matters: the switch goes on last, after a receipt is in the ledger.
+Order matters: the switch goes on right before the bootstrap (§6).
 
 1. **Model decision.** Set `DEEPSEEK_BILLING_PROFILE_ALIASES=deepseek-chat=deepseek-flash`
    (attestation, §1), or move `DEEPSEEK_MODEL` to `deepseek-flash`. The
@@ -551,21 +551,68 @@ Order matters: the switch goes on last, after a receipt is in the ledger.
    `unknown_usage_rows_covered`.
 5. **Write the receipt** (JSON, outside git):
    `wallet="cloud:https://api.deepseek.com:443"`, `month` = current UTC month,
-   `reconciled_through` = cutoff (tz-aware, ≤ now, same month),
-   `opening_tokens` = max(export tokens through cutoff, telemetry floor),
+   `reconciled_through` = the bootstrap moment (tz-aware, ≤ now, same month),
+   `opening_tokens` = max(export through its last complete day + `llm_calls`
+   tokens after that day, telemetry floor) (§6),
    `legacy_aliases` ⊇ the four paid aliases, `db_identity` (a name you choose
    for the volume), `evidence_reference` (where the export is kept),
    `unreserved_writers_drained: true`, and if needed
    `unknown_usage_rows_covered` from
    `python -m app.services.cloud_budget_bootstrap --db /app/ops/sessions.db --list-unknown-rows YYYY-MM`.
-6. **Bootstrap inside the container:**
+6. **Turn the switch on first:** `CLOUD_BUDGET_ENFORCE=true` in the VPS `.env`,
+   then Compose **recreate** (not restart) of `tg_backend`. From here until
+   step 7 every capped call is denied and the local chain answers — keep it
+   to minutes. (Spend after a cutoff but before switch-on would be
+   unreserved and refuse the first rollover, §6.)
+7. **Bootstrap inside the container** with `reconciled_through` = now:
    `python -m app.services.cloud_budget_bootstrap --db /app/ops/sessions.db --receipt <file>`
    → "activation verified"; the anchor file appears next to `sessions.db`.
-7. **Turn the switch on:** `CLOUD_BUDGET_ENFORCE=true` in the VPS `.env`, then
-   Compose **recreate** (not restart) of `tg_backend`.
 8. **Verify by effect:** after a real chat, a settled row in
    `cloud_budget_attempts` and an `llm_calls` row; no `BudgetDenied` in the logs.
    **Rollback:** switch off + recreate (the ledger stays, untouched).
 9. **Month boundaries** roll over automatically when continuity is proven
    (§6); otherwise cloud stays denied from 00:00 UTC on the 1st and the log
    says why — then repeat steps 4–6 for the new month.
+
+### 6. Automatic monthly rollover — only on proven continuity
+
+Before: every month needed a new manual receipt, so with enforcement on every
+capped call was denied from 00:00 UTC on the 1st until the operator acted.
+
+Now, when `reserve()` finds no activation for the current month, it tries
+`CloudBudget._auto_rollover` inside the same continuity-verified transaction
+(anchor identity + ledger digest already checked, so a restored, replaced or
+edited ledger never reaches it). It rolls over only if **all** hold:
+
+- the immediately previous month was activated for this wallet, on the same
+  `db_identity`, with `unreserved_writers_drained: true`;
+- the wallet is not quarantined and the previous month's opening row exists;
+- every reservation up to the previous month is settled (an in-flight call
+  across midnight just delays the rollover until it settles);
+- telemetry shows no spend the ledger did not reserve: no paid row with
+  unknown usage, and paid `llm_calls` tokens ≤ ledger charges (attempts +
+  carry) — for the previous month after its attested cutoff, and for the new
+  month so far. More telemetry than ledger means a writer spent without a
+  reservation; that refuses the rollover.
+
+Then the new month opens at what the ledger measured: an activation receipt
+marked `rollover_from`, `reconciled_through` = 00:00 UTC on the 1st,
+`opening_tokens` 0, plus the late settlements already in `cloud_budget_carry`.
+Otherwise nothing is written, cloud stays denied (fail closed; local chain
+answers) and the log says why:
+`cloud budget auto-rollover refused for <wallet> <month>: <reason>; explicit bootstrap required`.
+Recovery is a manual receipt for the new month (runbook steps 4–6).
+
+Known conservative edges: a skipped month (no activation for the previous
+month) never rolls; enabling Azure (another wallet with the same aliases in
+telemetry) would make telemetry exceed this wallet's ledger and refuse the
+rollover; the comparison relies on each telemetry row's tokens being ≤ the
+charge of the attempt(s) behind it, which holds for reported usage (equal)
+and for the bytes/3 estimates against the byte bound of §3.
+
+Runbook consequence: turn the switch on **before** bootstrapping (cloud is
+denied for those minutes, the local chain answers), and set the cutoff at
+the bootstrap moment. Spend between a cutoff and switch-on is unreserved: it
+would sit in telemetry after the cutoff without a ledger charge and refuse
+the first rollover. Take `opening_tokens` = max(export through its last
+complete day + `llm_calls` tokens after that day, telemetry floor).
