@@ -57,7 +57,7 @@ class _PathsScreenState extends ConsumerState<PathsScreen> {
         actions: [
           // Phase 8-B — active child chip (tap to switch).
           const Padding(
-            padding: EdgeInsets.symmetric(vertical: 10, horizontal: 4),
+            padding: EdgeInsets.symmetric(vertical: 4, horizontal: 4),
             child: Center(child: ActiveChildChip()),
           ),
           IconButton(

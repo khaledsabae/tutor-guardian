@@ -10,7 +10,7 @@ name: fresh/03 assistant answers
 - tapOn: '${output.lead.navAssistant}'
 - tapOn: '${output.t.chatTypeHint}'
 - inputText: '${QUESTION}'
-- tapOn: '${output.t.send}'
+- tapOn: '${output.t.a11ySendQuestion}'
 # While the reply streams, the send button turns into "stop reply".
 - extendedWaitUntil:
     visible: '${output.t.chatStop}'

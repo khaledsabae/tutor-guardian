@@ -35,21 +35,24 @@ class EmptyState extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            (imageAsset != null
-                    ? Image.asset(
-                        imageAsset!,
-                        height: 160,
-                        fit: BoxFit.contain,
-                        errorBuilder: (_, _, _) =>
-                            Text(emoji, style: const TextStyle(fontSize: 72)),
-                      )
-                    : Text(emoji, style: const TextStyle(fontSize: 72)))
-                .animate()
-                .scale(
-                  begin: const Offset(.6, .6),
-                  duration: Dt.slow,
-                  curve: Curves.easeOutBack,
-                ),
+            ExcludeSemantics(
+              child: (imageAsset != null
+                      ? Image.asset(
+                          imageAsset!,
+                          excludeFromSemantics: true,
+                          height: 160,
+                          fit: BoxFit.contain,
+                          errorBuilder: (_, _, _) =>
+                              Text(emoji, style: const TextStyle(fontSize: 72)),
+                        )
+                      : Text(emoji, style: const TextStyle(fontSize: 72)))
+                  .animate()
+                  .scale(
+                    begin: const Offset(.6, .6),
+                    duration: Dt.slow,
+                    curve: Curves.easeOutBack,
+                  ),
+            ),
             const SizedBox(height: 16),
             Text(
               title,

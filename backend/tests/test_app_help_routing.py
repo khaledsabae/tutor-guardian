@@ -25,6 +25,8 @@ from __future__ import annotations
 
 import asyncio
 import json
+import math
+import statistics
 import threading
 import time
 from pathlib import Path
@@ -339,20 +341,38 @@ _FILLER = "ابني عمره تسع سنوات ويرفض الذهاب إلى ا
 def test_a_question_of_the_maximum_length_classifies_fast(name, head, filler, tail):
     """The fast path runs on the event loop (routers/assistant.py). Unanchored,
     the paired lookaheads were quadratic: ~160 ms here and 1–2 s in review for a
-    4,000-character question. Anchored with `^` it is a few milliseconds."""
+    4,000-character question. Anchored with `^` it is a few milliseconds.
+    Compare CPU work at 1x/4x length so scheduler stalls cannot fail the test."""
     from app.models.api import MAX_MESSAGE_CHARS
 
-    body = head + filler * (MAX_MESSAGE_CHARS // len(filler) + 1)
-    text = body[:MAX_MESSAGE_CHARS - len(tail)] + tail
+    def question(length):
+        body = head + filler * (length // len(filler) + 1)
+        return body[:length - len(tail)] + tail
+
+    short = question(MAX_MESSAGE_CHARS // 4)
+    text = question(MAX_MESSAGE_CHARS)
     assert len(text) == MAX_MESSAGE_CHARS
-    best = min(_elapsed(_keyword_fast_path, text) for _ in range(3))
-    assert best < 0.050, f"{name}: {best * 1000:.0f} ms for {len(text)} characters"
+    short_cpu, long_cpu = _cpu_samples(_keyword_fast_path, short, text)
+    ratio = long_cpu / short_cpu
+    assert ratio < 8, f"{name}: 4x input took {ratio:.2f}x CPU ({short_cpu:.6f}s -> {long_cpu:.6f}s)"
+    assert long_cpu < 0.050, f"{name}: {long_cpu * 1000:.0f} ms CPU for {len(text)} characters"
 
 
-def _elapsed(fn, arg) -> float:
-    start = time.perf_counter()
-    fn(arg)
-    return time.perf_counter() - start
+def _cpu_samples(fn, short, long):
+    def elapsed(arg, repeats=1):
+        start = time.process_time()
+        for _ in range(repeats):
+            fn(arg)
+        return (time.process_time() - start) / repeats
+
+    pilot = elapsed(short)
+    elapsed(long)
+    repeats = max(1, min(32, math.ceil(0.020 / max(pilot, 1e-9))))
+    samples = {short: [], long: []}
+    for order in ((short, long), (long, short), (short, long)):
+        for text in order:
+            samples[text].append(elapsed(text, repeats))
+    return statistics.median(samples[short]), statistics.median(samples[long])
 
 
 def test_no_parenting_question_in_the_repo_routes_to_app_help():

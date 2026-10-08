@@ -16,6 +16,7 @@ class NoorMascot extends StatelessWidget {
       height: size,
       child: Image.asset(
         'assets/images/generated/mascot_serene.webp',
+        excludeFromSemantics: true,
         fit: BoxFit.contain,
         filterQuality: FilterQuality.medium,
         errorBuilder: (_, _, _) => const SizedBox.shrink(),
