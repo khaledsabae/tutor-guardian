@@ -187,6 +187,24 @@ class LedgerBusy(BudgetDenied):
 # release; only cross-process contention falls back to polling the flock.
 _PROCESS_LOCKS: dict[str, threading.Lock] = {}
 _PROCESS_LOCKS_GUARD = threading.Lock()
+# flock locks belong to an open-file description shared by forked processes.
+# Keep raw descriptors so the child can close its copies without taking a
+# potentially inherited Python file-object lock.
+_TRANSACTION_FDS: set[int] = set()
+_TRANSACTION_FDS_GUARD = threading.Lock()
+
+
+def _open_transaction_lock(path: Path) -> int:
+    with _TRANSACTION_FDS_GUARD:
+        fd = os.open(str(path) + '.lock', os.O_CREAT | os.O_WRONLY | os.O_APPEND, 0o666)
+        _TRANSACTION_FDS.add(fd)
+        return fd
+
+
+def _close_transaction_lock(fd: int) -> None:
+    with _TRANSACTION_FDS_GUARD:
+        _TRANSACTION_FDS.remove(fd)
+        os.close(fd)
 
 
 def _process_lock(path: Path) -> threading.Lock:
@@ -279,7 +297,7 @@ class CloudBudget:
                 raise BudgetDenied('cloud budget cutover uninitialized or continuity anchor lost')
             # Serialize DB commit + separate durable witness across processes.
             # A crash between them denies further traffic rather than resetting.
-            lock = open(str(self.anchor_path) + '.lock', 'a')
+            lock = _open_transaction_lock(self.anchor_path)
             pause = 0.001
             while True:
                 try:
@@ -332,7 +350,7 @@ class CloudBudget:
             if conn is not None:
                 conn.close()  # rolls back on exceptions; never leaves a writer open
             if lock is not None:
-                lock.close()
+                _close_transaction_lock(lock)
             local.release()
 
     @staticmethod
@@ -869,7 +887,13 @@ class BackgroundSettler:
 
     def _work(self) -> None:
         while True:
-            ledger, ticket, prompt_tokens, completion_tokens = self._queue.get()
+            try:
+                ledger, ticket, prompt_tokens, completion_tokens = self._queue.get(timeout=0.05)
+            except queue.Empty:
+                with self._guard:
+                    if self._stopping:
+                        return
+                continue
             try:
                 ledger.settle(ticket, prompt_tokens, completion_tokens)
             except Exception:  # noqa: BLE001 — the worker must survive any one settlement
@@ -894,9 +918,13 @@ class BackgroundSettler:
         """Shutdown: stop accepting, wait up to `timeout`, name what is left."""
         with self._guard:
             self._stopping = True
+        deadline = time.monotonic() + timeout
         self.flush(timeout)
         with self._guard:
             left = list(self._pending)
+            worker = self._thread
+        if worker is not None:
+            worker.join(max(0.0, deadline - time.monotonic()))
         if left:
             logger.error("cloud budget shutdown: %d settlement(s) not written (%s); they stay orphans "
                          "holding their bound — settle them with cloud_budget_bootstrap --settle-orphans",
@@ -905,4 +933,28 @@ class BackgroundSettler:
 
 
 SETTLER = BackgroundSettler()
-atexit.register(SETTLER.drain)
+
+
+def _reset_after_fork() -> None:
+    # Only the forking thread survives. Never acquire an inherited lock or
+    # drain copied reservations: their owner is still the parent process.
+    global SETTLER, _PROCESS_LOCKS, _PROCESS_LOCKS_GUARD
+    global _TRANSACTION_FDS, _TRANSACTION_FDS_GUARD
+    for fd in _TRANSACTION_FDS:
+        os.close(fd)  # parent retains its own descriptor and lock
+    _TRANSACTION_FDS = set()
+    _TRANSACTION_FDS_GUARD = threading.Lock()
+    _PROCESS_LOCKS = {}
+    _PROCESS_LOCKS_GUARD = threading.Lock()
+    SETTLER = BackgroundSettler(maxsize=SETTLER._queue.maxsize)
+    # SQLite connections are transaction-local and never cached here.
+
+
+os.register_at_fork(
+    # Serialize fork with descriptor creation/close, never with a transaction.
+    before=lambda: _TRANSACTION_FDS_GUARD.acquire(),
+    after_in_parent=lambda: _TRANSACTION_FDS_GUARD.release(),
+    after_in_child=_reset_after_fork,
+)
+# Resolve the current singleton at exit, including in a forked child.
+atexit.register(lambda: SETTLER.drain())

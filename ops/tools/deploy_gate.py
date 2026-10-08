@@ -59,6 +59,30 @@ def cloud_budget_enforce_state(raw: str | None) -> str:
     return "unrecognised"
 
 
+def _env_value(value: str) -> str:
+    """Remove whitespace-prefixed comments outside quotes, then unquote."""
+    quote = None
+    escaped = False
+    for index, char in enumerate(value):
+        if escaped:
+            escaped = False
+            continue
+        if char == "\\" and quote:
+            escaped = True
+        elif quote:
+            if char == quote:
+                quote = None
+        elif char in "\"'":
+            quote = char
+        elif char == "#" and index > 0 and value[index - 1].isspace():
+            value = value[:index]
+            break
+    value = value.strip()
+    if len(value) >= 2 and value[0] == value[-1] and value[0] in "\"'":
+        value = value[1:-1]
+    return value
+
+
 def check_env_file(path: str) -> int:
     """0 when CLOUD_BUDGET_ENFORCE in this .env is on/off/unset, 1 when it is
     a value the app would not recognise (read as ON and only logged), 2 when
@@ -75,10 +99,7 @@ def check_env_file(path: str) -> int:
             line = line[7:].lstrip()
         key, sep, value = line.partition("=")
         if sep and key.strip() == "CLOUD_BUDGET_ENFORCE":
-            value = value.strip()
-            if len(value) >= 2 and value[0] == value[-1] and value[0] in "\"'":
-                value = value[1:-1]
-            raw = value
+            raw = _env_value(value)
     state = cloud_budget_enforce_state(raw)
     if state == "unrecognised":
         print("❌ CLOUD_BUDGET_ENFORCE in .env is not one of "
