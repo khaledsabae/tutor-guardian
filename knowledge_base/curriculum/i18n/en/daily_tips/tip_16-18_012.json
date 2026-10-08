@@ -2,11 +2,11 @@
   "id": "tip_16-18_012",
   "age_group": "16-18",
   "domain": "cyber",
-  "text": "Gaming addiction can go as far as dropping out of school. Signs: prioritising play, continuing despite harm, anger when prevented. Seek help early.",
+  "text": "Excessive gaming can go as far as dropping out of school. Signs of gaming disorder: loss of control over gaming, putting it before responsibilities, and carrying on despite clear harm. Anger when stopped does not prove it on its own; seek an assessment early.",
   "unit_id": "cyb-26236b19",
   "day_of_week": 0,
   "time_of_day": "evening",
-  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
   "language": "en",
   "source_language": "ar",
   "translation": {
@@ -20,8 +20,8 @@
     },
     "review_verdict": "clean",
     "review_defects": [],
-    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
-    "revalidated_at": "2026-10-07T07:14:40+00:00",
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
+    "revalidated_at": "2026-10-08T18:17:08+00:00",
     "english_authors": [
       "mistral-large-3:675b",
       "claude-opus-5.5"
@@ -34,11 +34,21 @@
         "deepseek-v4-pro",
         "glm-5.2"
       ],
+      "providers": {
+        "deepseek-v4-pro": {
+          "provider": "openrouter",
+          "model": "deepseek/deepseek-v4-pro"
+        },
+        "glm-5.2": {
+          "provider": "openrouter",
+          "model": "z-ai/glm-5.2"
+        }
+      },
       "fixer": null,
       "rounds": 1,
       "prompt_version": "dfa8a5f39718",
-      "content_sha256": "51b223206c65c037beca8f1691be95028d2a0bd62813785d17548aa20242fea5",
-      "reviewed_at": "2026-10-07T07:14:40+00:00",
+      "content_sha256": "2cd9d25a701ed4d82942fddab698692d2fcc679f3b143f57c7142859684bb13f",
+      "reviewed_at": "2026-10-08T18:17:08+00:00",
       "residual_low": [],
       "adjudicated": [],
       "tool": "ops/tools/review_en_parity.py",

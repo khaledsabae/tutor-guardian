@@ -2,11 +2,11 @@
   "id": "tip_13-15_020",
   "age_group": "13-15",
   "domain": "medical",
-  "text": "Severe outbursts more than 3 times a week, with an irritable mood most days for over a year, may be a mood-regulation disorder, not stubbornness. Diagnosis is for a specialist; treatment is behavioural and may include medication.",
+  "text": "Severe, frequent outbursts with irritable mood most of the day, nearly every day, may be a mood-regulation disorder, not stubbornness; it usually starts in childhood. A specialist checks onset and other causes; treatment is behavioural, at times with medicine. Seek help early.",
   "unit_id": "9816082f-6564-42fd-a37b-5b38083a94a8",
   "day_of_week": 2,
   "time_of_day": "morning",
-  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
   "language": "en",
   "source_language": "ar",
   "translation": {
@@ -18,30 +18,54 @@
       "quoted_arabic": false,
       "reviewer_model": false
     },
-    "review_verdict": "clean",
-    "review_defects": [],
-    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
-    "revalidated_at": "2026-10-07T07:22:28+00:00",
+    "review_verdict": "low_only",
+    "review_defects": [
+      {
+        "model": "glm-5.2",
+        "field": "text",
+        "type": "omission",
+        "why": "The English drops 'possible' (محتملة), slightly overstating diagnostic certainty."
+      }
+    ],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
+    "revalidated_at": "2026-10-08T18:17:08+00:00",
     "manual_fix_note": "Rewritten 2026-10-04 with the Arabic register fix (Latin words / dialect removed from the Arabic); meaning re-aligned.",
     "fixed_at": "2026-10-04T07:26:56.760370+00:00",
     "fixer_model": "claude-opus-5.5",
+    "english_authors": [
+      "claude-opus-5.5"
+    ],
     "auto_review": {
       "reviewers": [
         "deepseek-v4-pro",
         "glm-5.2"
       ],
+      "providers": {
+        "deepseek-v4-pro": {
+          "provider": "openrouter",
+          "model": "deepseek/deepseek-v4-pro"
+        },
+        "glm-5.2": {
+          "provider": "openrouter",
+          "model": "z-ai/glm-5.2"
+        }
+      },
       "fixer": null,
       "rounds": 1,
       "prompt_version": "dfa8a5f39718",
-      "content_sha256": "584b6083e74a30bdd6d49021cf8c24af090ba9fcb115b390dbfba70d0ad48d13",
-      "reviewed_at": "2026-10-07T07:22:28+00:00",
-      "residual_low": [],
+      "content_sha256": "88bc2f4249407d887a5fced0b5b500fcdaea5af879b684df4d7a8d14f381aec4",
+      "reviewed_at": "2026-10-08T18:17:08+00:00",
+      "residual_low": [
+        {
+          "model": "glm-5.2",
+          "field": "text",
+          "type": "omission",
+          "why": "The English drops 'possible' (محتملة), slightly overstating diagnostic certainty."
+        }
+      ],
       "adjudicated": [],
       "tool": "ops/tools/review_en_parity.py",
       "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
-    },
-    "english_authors": [
-      "claude-opus-5.5"
-    ]
+    }
   }
 }

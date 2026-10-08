@@ -392,7 +392,7 @@ class _EventTile extends StatelessWidget {
                 await client.deleteRoutineEvent(eventId);
               } on TgApiError catch (e) {
                 messenger.showSnackBar(
-                  SnackBar(content: Text(l10n.routineDeleteFailed(e.message))),
+                  SnackBar(content: Text(l10n.routineDeleteFailed(describeFailure(l10n, e)))),
                 );
               }
             },
@@ -612,7 +612,7 @@ class _AddEventSheetState extends State<_AddEventSheet> {
         })
         .catchError((e) {
           if (mounted) setState(() => _saving = false);
-          final msg = e is TgApiError ? e.message : l10n.routineError;
+          final msg = e is TgApiError ? describeFailure(l10n, e) : l10n.routineError;
           messenger.showSnackBar(SnackBar(content: Text(msg)));
         });
   }
@@ -1195,7 +1195,8 @@ class _HabitCardState extends State<_HabitCard> {
     } on TgApiError catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(AppLocalizations.of(context).routineRecordFailed(e.message))),
+          SnackBar(content: Text(AppLocalizations.of(context).routineRecordFailed(
+              describeFailure(AppLocalizations.of(context), e)))),
         );
       }
     } finally {

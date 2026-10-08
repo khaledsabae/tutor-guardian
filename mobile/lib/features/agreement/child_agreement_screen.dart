@@ -19,6 +19,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../state/chat_notifier.dart' show tgClientProvider;
 import '../routine/services/child_mode_secure_storage.dart';
 import 'package:almorabbi/widgets/ui/loading_view.dart';
+import 'package:almorabbi/core/failures.dart';
+import 'package:almorabbi/l10n/app_localizations.dart';
 
 class ChildAgreementScreen extends ConsumerStatefulWidget {
   const ChildAgreementScreen({super.key});
@@ -74,7 +76,7 @@ class _ChildAgreementScreenState extends ConsumerState<ChildAgreementScreen> {
         _loading = false;
       });
     } catch (e) {
-      if (mounted) setState(() { _error = e.toString(); _loading = false; });
+      if (mounted) setState(() { _error = describeFailure(AppLocalizations.of(context), e); _loading = false; });
     }
   }
 
@@ -101,7 +103,7 @@ class _ChildAgreementScreenState extends ConsumerState<ChildAgreementScreen> {
       if (!mounted) return;
       setState(() { _loading = false; _done = activated; });
     } catch (e) {
-      if (mounted) setState(() { _error = e.toString(); _loading = false; });
+      if (mounted) setState(() { _error = describeFailure(AppLocalizations.of(context), e); _loading = false; });
     }
   }
 

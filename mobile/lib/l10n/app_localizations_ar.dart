@@ -2736,9 +2736,8 @@ class AppLocalizationsAr extends AppLocalizations {
   String get apiTimeout => 'انتهت مهلة الاتصال بالخادم.';
 
   @override
-  String apiConnectionFailed(Object error) {
-    return 'تعذّر الاتصال بالخادم: $error';
-  }
+  String get apiConnectionFailed =>
+      'تعذّر الاتصال بالخادم. تأكّد من اتصالك وحاول مرة أخرى.';
 
   @override
   String get apiNoSession => 'لا توجد جلسة نشطة.';
@@ -3518,6 +3517,24 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get errorUnknownBody =>
       'حاول مرة أخرى، وإن تكرّر الأمر أرسل لنا ملاحظة.';
+
+  @override
+  String get errorNotFoundTitle => 'هذا المحتوى غير متاح';
+
+  @override
+  String get errorNotFoundBody => 'ربما نُقل أو حُذف. ارجع وحاول مرة أخرى.';
+
+  @override
+  String get errorSessionTitle => 'انتهت الجلسة';
+
+  @override
+  String get errorSessionBody => 'اضغط «إعادة المحاولة» لنبدأ جلسة جديدة.';
+
+  @override
+  String get errorRateLimitedTitle => 'طلبات كثيرة في وقت قصير';
+
+  @override
+  String get errorRateLimitedBody => 'انتظر قليلًا ثم حاول مرة أخرى.';
 
   @override
   String get missionTodayLabel => 'مهمة اليوم';

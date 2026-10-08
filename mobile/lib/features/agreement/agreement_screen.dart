@@ -19,6 +19,7 @@ import '../program/providers/progress_providers.dart' show activeChildIdProvider
 import 'agreement_export.dart';
 import 'signature_pad.dart';
 import 'package:almorabbi/widgets/ui/loading_view.dart';
+import 'package:almorabbi/core/failures.dart';
 
 class AgreementScreen extends ConsumerStatefulWidget {
   const AgreementScreen({super.key, this.childName});
@@ -73,7 +74,7 @@ class _AgreementScreenState extends ConsumerState<AgreementScreen> {
         _loading = false;
       });
     } catch (e) {
-      if (mounted) setState(() { _error = e.toString(); _loading = false; });
+      if (mounted) setState(() { _error = describeFailure(AppLocalizations.of(context), e); _loading = false; });
     }
   }
 
@@ -114,7 +115,7 @@ class _AgreementScreenState extends ConsumerState<AgreementScreen> {
         content: Text(AppLocalizations.of(context).agreementParentSigned),
       ));
     } catch (e) {
-      if (mounted) setState(() { _error = e.toString(); _loading = false; });
+      if (mounted) setState(() { _error = describeFailure(AppLocalizations.of(context), e); _loading = false; });
     }
   }
 

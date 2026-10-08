@@ -2,7 +2,7 @@
   "id": "tip_2-3_029",
   "age_group": "2-3",
   "domain": "islamic_parenting",
-  "text": "Let your child see you praying; the silent qudwah (example) is more powerful than a thousand commands.",
+  "text": "Let your child see you praying; your quiet example is more powerful than a thousand commands.",
   "unit_id": null,
   "day_of_week": 2,
   "time_of_day": "anytime",
@@ -10,7 +10,7 @@
   "is_published": true,
   "version": "1.0.0",
   "created_at": "2026-06-19T12:00:00",
-  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
   "language": "en",
   "source_language": "ar",
   "translation": {
@@ -22,38 +22,34 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "low_only",
-    "review_defects": [
-      {
-        "model": "glm-5.2",
-        "field": "text",
-        "type": "leakage",
-        "why": "The transliteration 'qudwah' is not among the allowed glossary terms and is unnecessarily retained when 'example' or 'role model' alone would convey the meaning."
-      }
-    ],
-    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
-    "revalidated_at": "2026-10-04T11:18:18+00:00",
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
+    "revalidated_at": "2026-10-08T18:17:08+00:00",
     "auto_review": {
       "reviewers": [
         "deepseek-v4-pro",
         "glm-5.2"
       ],
+      "providers": {
+        "deepseek-v4-pro": {
+          "provider": "openrouter",
+          "model": "deepseek/deepseek-v4-pro"
+        },
+        "glm-5.2": {
+          "provider": "openrouter",
+          "model": "z-ai/glm-5.2"
+        }
+      },
       "fixer": null,
       "rounds": 1,
       "prompt_version": "dfa8a5f39718",
-      "content_sha256": "634594ac7ef2968a53dac425015f9f2966ffc544e03eb64c6d205f7aa1eae6d7",
-      "reviewed_at": "2026-10-04T11:18:18+00:00",
-      "residual_low": [
-        {
-          "model": "glm-5.2",
-          "field": "text",
-          "type": "leakage",
-          "why": "The transliteration 'qudwah' is not among the allowed glossary terms and is unnecessarily retained when 'example' or 'role model' alone would convey the meaning."
-        }
-      ],
+      "content_sha256": "804392be71b54ad38882e425e66837fd1bcfba9607d58c79637dfc2ff8635c54",
+      "reviewed_at": "2026-10-08T18:17:08+00:00",
+      "residual_low": [],
       "adjudicated": [],
       "tool": "ops/tools/review_en_parity.py",
-      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
     }
   }
 }

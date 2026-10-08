@@ -2,11 +2,11 @@
   "id": "tip_16-18_002",
   "age_group": "16-18",
   "domain": "medical",
-  "text": "Mental-health struggles are common among young people, and asking for help is strength, not weakness. Encourage your teen to talk to a university counsellor or a psychiatrist, and look up your country's mental-health helpline and save it on your phone and theirs.",
+  "text": "Mental-health struggles are common among young people, and asking for help is strength, not weakness. Encourage your teen to talk to a school or university counsellor, a doctor or a mental-health professional, and save your country's mental-health helpline on both your phones.",
   "unit_id": "85d5303f-da97-49ab-985a-8c31901d84a2",
   "day_of_week": 0,
   "time_of_day": "evening",
-  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
   "language": "en",
   "source_language": "ar",
   "translation": {
@@ -18,10 +18,17 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "clean",
-    "review_defects": [],
-    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
-    "revalidated_at": "2026-10-04T17:02:06+00:00",
+    "review_verdict": "low_only",
+    "review_defects": [
+      {
+        "model": "deepseek-v4-pro",
+        "field": "text",
+        "type": "omission",
+        "why": "The instruction to search for the helpline number ('وابحث عن') is omitted, skipping a step."
+      }
+    ],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
+    "revalidated_at": "2026-10-08T18:17:08+00:00",
     "fixed_at": "2026-10-04T07:11:28.621718+00:00",
     "fixer_model": "claude-opus-5.5",
     "manual_fix_note": "Rewritten 2026-10-04 with the Arabic: re-addressed to the parent (the tip spoke to the teen); the Saudi-only 937 line replaced by country-neutral emergency guidance.",
@@ -30,15 +37,32 @@
         "deepseek-v4-pro",
         "glm-5.2"
       ],
+      "providers": {
+        "deepseek-v4-pro": {
+          "provider": "openrouter",
+          "model": "deepseek/deepseek-v4-pro"
+        },
+        "glm-5.2": {
+          "provider": "openrouter",
+          "model": "z-ai/glm-5.2"
+        }
+      },
       "fixer": null,
       "rounds": 1,
       "prompt_version": "dfa8a5f39718",
-      "content_sha256": "80029908a6a7255387339a51d65fab035d1ee3ea3a2fe964f1d1122518dc424f",
-      "reviewed_at": "2026-10-04T17:02:06+00:00",
-      "residual_low": [],
+      "content_sha256": "83471a0cae01feda271487fe977c737bdc6af5465633118d46d6eb28042a1604",
+      "reviewed_at": "2026-10-08T18:17:08+00:00",
+      "residual_low": [
+        {
+          "model": "deepseek-v4-pro",
+          "field": "text",
+          "type": "omission",
+          "why": "The instruction to search for the helpline number ('وابحث عن') is omitted, skipping a step."
+        }
+      ],
       "adjudicated": [],
       "tool": "ops/tools/review_en_parity.py",
-      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
     }
   }
 }

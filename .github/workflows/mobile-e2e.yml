@@ -104,8 +104,12 @@ env:
   MAESTRO_VERSION: '2.11.0'
   # checksums_sha256.txt of the cli-2.11.0 release
   MAESTRO_SHA256: 5384593cb4e7a106489e75a821d157dd43f4e438df6bc308b72e82c685e1283a
-  # Bump the suffix when the emulator settings below change.
+  # Bump the suffix when the emulator settings below change — here AND in
+  # e2e-avd-cache.yml, which keeps this key warm on main (test_workflow.py
+  # checks the two match). This workflow runs only for PRs, and a PR's cache is
+  # visible to that PR alone, so without the main copy every new PR missed.
   AVD_CACHE_KEY: avd-api35-google_apis-x86_64-pixel_7-r1
+  SYSTEM_IMAGE: 'system-images;android-35;google_apis;x86_64'
 
 jobs:
   keystore:
@@ -258,9 +262,20 @@ jobs:
           echo "E2E_OUT=$RUNNER_TEMP/e2e/out" >> "$GITHUB_ENV"
 
       - name: Unit-test the E2E tooling
+        # The gate's tests print what the gate prints in a real run, `::error::`
+        # included, and the runner turns any such stdout line into an annotation
+        # on this job. Until 2026-10-08 every E2E run carried a false "logcat has
+        # only 10 lines — capture failed" from one test, and red runs were
+        # rerun for a capture that had in fact recorded 60–90k lines. Commands
+        # are paused while the tests run (e2e/test_workflow.py checks this).
         run: |
           python3 -m pip install PyYAML==6.0.2
-          python3 -m unittest discover -s e2e -v
+          token="e2e-unit-tests-$RANDOM$RANDOM"
+          echo "::stop-commands::$token"
+          rc=0
+          python3 -m unittest discover -s e2e -v || rc=$?
+          echo "::$token::"
+          exit "$rc"
 
       - name: Enable KVM
         run: |
@@ -292,6 +307,12 @@ jobs:
           BIN=$(dirname "$(find "$RUNNER_TEMP/maestro-cli" -path '*/bin/maestro' -type f | head -1)")
           echo "$BIN" >> "$GITHUB_PATH"
           "$BIN/maestro" --version
+
+      # The action downloads the image once per job without retrying; a corrupt
+      # download (2026-10-08) left no emulator at all. Already installed, the
+      # action skips it.
+      - name: Install the system image (retried, verified)
+        run: bash e2e/install_system_image.sh "$SYSTEM_IMAGE"
 
       - name: Restore the AVD
         uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0

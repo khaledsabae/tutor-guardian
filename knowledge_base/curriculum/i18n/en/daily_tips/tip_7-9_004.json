@@ -2,11 +2,11 @@
   "id": "tip_7-9_004",
   "age_group": "7-9",
   "domain": "islamic_parenting",
-  "text": "Fasting is not merely abstaining from food. Teach your child: \"We fast to feel for those who have no food, and to learn patience.\" — Understanding precedes action.",
+  "text": "Fasting is worship of Allah that teaches taqwa (mindfulness of Allah) and self-restraint, the meaning of the fasting verse (al-Baqarah 2:183), as well as patience and feeling for the hungry. Explain this gently, without pushing your child to fast beyond their ability.",
   "unit_id": "aedda350-cf2a-4d53-869a-2b07a694180d",
   "day_of_week": 3,
   "time_of_day": "morning",
-  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
   "language": "en",
   "source_language": "ar",
   "translation": {
@@ -20,22 +20,32 @@
     },
     "review_verdict": "clean",
     "review_defects": [],
-    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
-    "revalidated_at": "2026-10-04T11:18:18+00:00",
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
+    "revalidated_at": "2026-10-08T18:17:08+00:00",
     "auto_review": {
       "reviewers": [
         "deepseek-v4-pro",
         "glm-5.2"
       ],
+      "providers": {
+        "deepseek-v4-pro": {
+          "provider": "openrouter",
+          "model": "deepseek/deepseek-v4-pro"
+        },
+        "glm-5.2": {
+          "provider": "openrouter",
+          "model": "z-ai/glm-5.2"
+        }
+      },
       "fixer": null,
       "rounds": 1,
       "prompt_version": "dfa8a5f39718",
-      "content_sha256": "b102cb73b6e1c076d05d989558a8960e100ad8b25d25623581fc50645f04bc8f",
-      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "content_sha256": "d19f16f9460502afe9f9dc8ae28e6924da8801919e59ab27d1a3249fc1c1df4f",
+      "reviewed_at": "2026-10-08T18:17:08+00:00",
       "residual_low": [],
       "adjudicated": [],
       "tool": "ops/tools/review_en_parity.py",
-      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
     }
   }
 }

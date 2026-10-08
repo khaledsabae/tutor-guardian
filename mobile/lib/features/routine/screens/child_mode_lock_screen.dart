@@ -38,12 +38,12 @@ String _localizedChildModeError(String? code, AppLocalizations l10n) {
     kChildModeErrorPinIncorrect => l10n.childModePinIncorrect,
     kChildModeErrorSessionExpired => l10n.childModeSessionExpired,
     // Neither of these is a failure the child did anything to cause, and
-    // neither should ever surface as a raw code — which is what the fallback
-    // arm below would do.
+    // neither should ever surface as a raw code.
     kChildModeBudgetSpent => l10n.childModeBudgetSpent,
     kChildModeOffline => l10n.childModeOffline,
-    null => l10n.childModeEnterFailed,
-    _ => code,
+    // Anything else is a failure's own text (the provider keeps it for
+    // diagnostics) — never something to put in front of a child.
+    _ => l10n.childModeEnterFailed,
   };
 }
 

@@ -2,11 +2,11 @@
   "id": "tip_7-9_013",
   "age_group": "7-9",
   "domain": "medical",
-  "text": "Recurrent tantrums (>3/week) are not defiance—they are a call for help. Teach him: \"I am angry\" instead of screaming.",
+  "text": "Severe or frequent outbursts out of proportion to the situation are not just defiance; they can be a call for help. Teach him to say “I am angry” instead of screaming, and if the outbursts affect his life, seek a specialist assessment without waiting.",
   "unit_id": "3a15b379-edec-4916-a0cd-de4fc00863c9",
   "day_of_week": 3,
   "time_of_day": "morning",
-  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
   "language": "en",
   "source_language": "ar",
   "translation": {
@@ -20,22 +20,32 @@
     },
     "review_verdict": "clean",
     "review_defects": [],
-    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
-    "revalidated_at": "2026-10-04T11:18:18+00:00",
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
+    "revalidated_at": "2026-10-08T18:17:08+00:00",
     "auto_review": {
       "reviewers": [
         "deepseek-v4-pro",
         "glm-5.2"
       ],
+      "providers": {
+        "deepseek-v4-pro": {
+          "provider": "openrouter",
+          "model": "deepseek/deepseek-v4-pro"
+        },
+        "glm-5.2": {
+          "provider": "openrouter",
+          "model": "z-ai/glm-5.2"
+        }
+      },
       "fixer": null,
       "rounds": 1,
       "prompt_version": "dfa8a5f39718",
-      "content_sha256": "1799e6f077cf3c4e60ed80b2fa9a52becbae3563ffdfd93978865cdd39b4ec5a",
-      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "content_sha256": "c2c00ee8bfe7c1e49b9bc4371daafac9666cfc2b54973b8092b0f2a89044029e",
+      "reviewed_at": "2026-10-08T18:17:08+00:00",
       "residual_low": [],
       "adjudicated": [],
       "tool": "ops/tools/review_en_parity.py",
-      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
     }
   }
 }

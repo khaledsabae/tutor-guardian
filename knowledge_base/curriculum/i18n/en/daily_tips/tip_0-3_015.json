@@ -2,7 +2,7 @@
   "id": "tip_0-3_015",
   "age_group": "0-3",
   "domain": "cyber",
-  "text": "No screens an hour before sleep—the blue light kills melatonin. Routine: bath, story, du'a, sleep. Electronic games before bed = going to sleep late + night waking + bad mood in the morning.",
+  "text": "Put screens away about an hour before sleep; their light and exciting content can delay sleep. A calm routine: bath, story, du'a, then sleep. Electronic games before bed may delay or disturb your child's sleep, though the effect varies from child to child.",
   "unit_id": "cyb-9802937c",
   "day_of_week": 2,
   "time_of_day": "bedtime",
@@ -15,7 +15,7 @@
   "is_published": true,
   "version": "1.0.0",
   "created_at": "2026-06-10T18:00:00",
-  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
   "language": "en",
   "source_language": "ar",
   "translation": {
@@ -29,8 +29,8 @@
     },
     "review_verdict": "clean",
     "review_defects": [],
-    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
-    "revalidated_at": "2026-10-04T11:18:18+00:00",
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
+    "revalidated_at": "2026-10-08T18:17:08+00:00",
     "fixed_at": "2026-08-13T18:51:59.576083+00:00",
     "fixer_model": "mistral-large-3:675b",
     "auto_review": {
@@ -38,15 +38,25 @@
         "deepseek-v4-pro",
         "glm-5.2"
       ],
+      "providers": {
+        "deepseek-v4-pro": {
+          "provider": "openrouter",
+          "model": "deepseek/deepseek-v4-pro"
+        },
+        "glm-5.2": {
+          "provider": "openrouter",
+          "model": "z-ai/glm-5.2"
+        }
+      },
       "fixer": null,
       "rounds": 1,
       "prompt_version": "dfa8a5f39718",
-      "content_sha256": "3fc629b87465801b02ee35d7b0cfffc673bb5d7cfe9c902c3f510f1ccfbc2b9b",
-      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "content_sha256": "ed8ff5e4e71578e520d1bd29aefa4eff4ba278678cbeff9ca423bd39a2e1c25e",
+      "reviewed_at": "2026-10-08T18:17:08+00:00",
       "residual_low": [],
       "adjudicated": [],
       "tool": "ops/tools/review_en_parity.py",
-      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
     }
   }
 }

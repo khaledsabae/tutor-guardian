@@ -52,8 +52,14 @@ class TgApiError implements Exception {
   /// `support_email`, `available_at`…), as the server sent it.
   final Map<String, dynamic>? details;
 
+  /// The response body when it was not ours to show — an HTML error page, or
+  /// Cloudflare's JSON problem page (`application/problem+json`, whose
+  /// `detail` reads "The origin web server returned an invalid or incomplete
+  /// response to Cloudflare…"). Kept for logs; [message] is the generic line.
+  final String? raw;
+
   const TgApiError(this.statusCode, this.message,
-      {this.retryAfter, this.code, this.details});
+      {this.retryAfter, this.code, this.details, this.raw});
 
   /// The address to offer when the automatic path cannot work (§9.0.1).
   String? get supportEmail {
@@ -85,9 +91,11 @@ class TgApiError implements Exception {
   /// FastAPI's detail for a path no route matches.
   static const String kFastApiNotFound = 'Not Found';
 
+  /// For logs only. Never put this on a screen — see `friendlyError`.
   @override
   String toString() =>
-      'TgApiError(${statusCode ?? '?'}${code == null ? '' : ' $code'}): $message';
+      'TgApiError(${statusCode ?? '?'}${code == null ? '' : ' $code'}): $message'
+      '${raw == null ? '' : ' [raw: $raw]'}';
 }
 
 /// An answer about an account deletion arrived after the install moved on
@@ -694,7 +702,8 @@ class TgClient {
     } on TimeoutException {
       throw TgApiError(null, AppL10n.current.apiTimeout);
     } on SocketException catch (e) {
-      throw TgApiError(null, AppL10n.current.apiConnectionFailed(e.message));
+      throw TgApiError(null, AppL10n.current.apiConnectionFailed,
+          raw: e.message);
     }
 
     if (response.statusCode != 200) {
@@ -753,11 +762,13 @@ class TgClient {
       yield TgStreamError(AppL10n.current.apiStreamStalled);
       return;
     } on SocketException catch (e) {
-      yield TgStreamError(AppL10n.current.apiConnectionFailed(e.message));
+      debugPrint('[TgClient.streamQuery] connection lost: ${e.message}');
+      yield TgStreamError(AppL10n.current.apiConnectionFailed);
       return;
     } on http.ClientException catch (e) {
       // The connection died mid-response.
-      yield TgStreamError(AppL10n.current.apiConnectionFailed(e.message));
+      debugPrint('[TgClient.streamQuery] connection lost: ${e.message}');
+      yield TgStreamError(AppL10n.current.apiConnectionFailed);
       return;
     }
 
@@ -3121,10 +3132,12 @@ class TgClient {
     } on TimeoutException {
       throw TgApiError(null, AppL10n.current.apiTimeout);
     } on SocketException catch (e) {
-      throw TgApiError(null, AppL10n.current.apiConnectionFailed(e.message));
+      throw TgApiError(null, AppL10n.current.apiConnectionFailed,
+          raw: e.message);
     } on http.ClientException catch (e) {
       // Thrown when a connection dies mid-response; not a SocketException.
-      throw TgApiError(null, AppL10n.current.apiConnectionFailed(e.message));
+      throw TgApiError(null, AppL10n.current.apiConnectionFailed,
+          raw: e.message);
     }
   }
 
@@ -3189,9 +3202,15 @@ class TgClient {
     String message;
     String? code;
     Map<String, dynamic>? details;
+    String? raw;
     try {
       final j = jsonDecode(body);
-      if (j is Map && j['detail'] is String) {
+      if (j is Map && _isProxyProblem(j)) {
+        // Cloudflare's own error page, not our server: its `detail` is about
+        // Cloudflare's origin, in English, for an engineer.
+        message = AppL10n.current.apiHttpError('$status');
+        raw = _clip(body);
+      } else if (j is Map && j['detail'] is String) {
         message = j['detail'] as String;
       } else if (j is Map && j['detail'] is Map) {
         details = Map<String, dynamic>.from(j['detail'] as Map);
@@ -3216,7 +3235,9 @@ class TgClient {
         message = AppL10n.current.apiHttpError('$status');
       }
     } catch (_) {
-      message = body.isEmpty ? AppL10n.current.apiHttpError('$status') : body;
+      // Not JSON: an HTML page from a proxy, or plain text. Never the message.
+      message = AppL10n.current.apiHttpError('$status');
+      raw = body.isEmpty ? null : _clip(body);
     }
 
     Duration? retryAfter;
@@ -3227,8 +3248,19 @@ class TgClient {
     }
 
     return TgApiError(status, message,
-        retryAfter: retryAfter, code: code, details: details);
+        retryAfter: retryAfter, code: code, details: details, raw: raw);
   }
+
+  /// An RFC 9457 problem page from the proxy in front of us (Cloudflare sends
+  /// one to JSON clients for 52x and friends). Our API never sends these keys.
+  static bool _isProxyProblem(Map j) =>
+      j.containsKey('ray_id') ||
+      j.containsKey('cloudflare_error') ||
+      (j['type'] is String &&
+          (j['type'] as String).contains('cloudflare'));
+
+  static String _clip(String s) =>
+      s.length <= 500 ? s : '${s.substring(0, 500)}…';
 
   /// The detail's message in the app's language. The server writes Arabic in
   /// `message` and, where it has one, English in `message_en`. An English

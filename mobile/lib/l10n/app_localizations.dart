@@ -5033,8 +5033,8 @@ abstract class AppLocalizations {
   /// No description provided for @apiConnectionFailed.
   ///
   /// In ar, this message translates to:
-  /// **'تعذّر الاتصال بالخادم: {error}'**
-  String apiConnectionFailed(Object error);
+  /// **'تعذّر الاتصال بالخادم. تأكّد من اتصالك وحاول مرة أخرى.'**
+  String get apiConnectionFailed;
 
   /// No description provided for @apiNoSession.
   ///
@@ -6361,6 +6361,42 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'حاول مرة أخرى، وإن تكرّر الأمر أرسل لنا ملاحظة.'**
   String get errorUnknownBody;
+
+  /// No description provided for @errorNotFoundTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'هذا المحتوى غير متاح'**
+  String get errorNotFoundTitle;
+
+  /// No description provided for @errorNotFoundBody.
+  ///
+  /// In ar, this message translates to:
+  /// **'ربما نُقل أو حُذف. ارجع وحاول مرة أخرى.'**
+  String get errorNotFoundBody;
+
+  /// No description provided for @errorSessionTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'انتهت الجلسة'**
+  String get errorSessionTitle;
+
+  /// No description provided for @errorSessionBody.
+  ///
+  /// In ar, this message translates to:
+  /// **'اضغط «إعادة المحاولة» لنبدأ جلسة جديدة.'**
+  String get errorSessionBody;
+
+  /// No description provided for @errorRateLimitedTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'طلبات كثيرة في وقت قصير'**
+  String get errorRateLimitedTitle;
+
+  /// No description provided for @errorRateLimitedBody.
+  ///
+  /// In ar, this message translates to:
+  /// **'انتظر قليلًا ثم حاول مرة أخرى.'**
+  String get errorRateLimitedBody;
 
   /// No description provided for @missionTodayLabel.
   ///

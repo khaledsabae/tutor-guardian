@@ -2,11 +2,11 @@
   "id": "tip_13-15_010",
   "age_group": "13-15",
   "domain": "cyber",
-  "text": "Screen time >4 hours = danger to sleep and mood. Review: parental controls, screen-free zones, real alternatives.",
+  "text": "Notice how screens affect your teen's sleep, mood, schoolwork and relationships, and agree on a family plan with them: suitable parental controls, screen-free places and times, and real alternatives. Hours alone do not prove harm; content and effects matter.",
   "unit_id": "1af6f4d4-49af-440e-ae91-55ce73b4cee3",
   "day_of_week": 1,
   "time_of_day": "morning",
-  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
   "language": "en",
   "source_language": "ar",
   "translation": {
@@ -20,22 +20,32 @@
     },
     "review_verdict": "clean",
     "review_defects": [],
-    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
-    "revalidated_at": "2026-10-04T11:18:18+00:00",
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
+    "revalidated_at": "2026-10-08T18:17:08+00:00",
     "auto_review": {
       "reviewers": [
         "deepseek-v4-pro",
         "glm-5.2"
       ],
+      "providers": {
+        "deepseek-v4-pro": {
+          "provider": "openrouter",
+          "model": "deepseek/deepseek-v4-pro"
+        },
+        "glm-5.2": {
+          "provider": "openrouter",
+          "model": "z-ai/glm-5.2"
+        }
+      },
       "fixer": null,
       "rounds": 1,
       "prompt_version": "dfa8a5f39718",
-      "content_sha256": "19cc2c0212c2ea014344eee4b8b7f226233c7b001d45858bbc8e4e38ec32e183",
-      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "content_sha256": "ff2026cd4f6913bd46de6db86545cff3e974a649610c474e1533d6c450e055e0",
+      "reviewed_at": "2026-10-08T18:17:08+00:00",
       "residual_low": [],
       "adjudicated": [],
       "tool": "ops/tools/review_en_parity.py",
-      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
     }
   }
 }

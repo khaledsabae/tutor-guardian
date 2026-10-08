@@ -2,11 +2,11 @@
   "id": "tip_13-15_024",
   "age_group": "13-15",
   "domain": "medical",
-  "text": "Cognitive Behavioural Therapy (CBT) improves symptoms of ADHD and anxiety. Look for a therapist who specialises in adolescents.",
+  "text": "Cognitive behavioural therapy (CBT) can help with anxiety. For ADHD, a specialist sets a plan that suits your teen, which may include support at home and school and medicine. Look for a professional who specialises in adolescents.",
   "unit_id": "med-c974d9d8",
   "day_of_week": 3,
   "time_of_day": "morning",
-  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
   "language": "en",
   "source_language": "ar",
   "translation": {
@@ -18,38 +18,34 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "low_only",
-    "review_defects": [
-      {
-        "model": "glm-5.2",
-        "field": "text",
-        "type": "addition",
-        "why": "The English inserts the abbreviation (CBT) not present in the Arabic, though it is a standard gloss of the same term."
-      }
-    ],
-    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
-    "revalidated_at": "2026-10-04T17:02:06+00:00",
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
+    "revalidated_at": "2026-10-08T18:17:08+00:00",
     "auto_review": {
       "reviewers": [
         "deepseek-v4-pro",
         "glm-5.2"
       ],
+      "providers": {
+        "deepseek-v4-pro": {
+          "provider": "openrouter",
+          "model": "deepseek/deepseek-v4-pro"
+        },
+        "glm-5.2": {
+          "provider": "openrouter",
+          "model": "z-ai/glm-5.2"
+        }
+      },
       "fixer": null,
       "rounds": 1,
       "prompt_version": "dfa8a5f39718",
-      "content_sha256": "55f6c5062367fefaf0de9f0cb29a7859bef4b1e7cc54d1c5c1889aad74d9a613",
-      "reviewed_at": "2026-10-04T17:02:06+00:00",
-      "residual_low": [
-        {
-          "model": "glm-5.2",
-          "field": "text",
-          "type": "addition",
-          "why": "The English inserts the abbreviation (CBT) not present in the Arabic, though it is a standard gloss of the same term."
-        }
-      ],
+      "content_sha256": "5d45e98fac669ed607798ef1de48e8b102b87be2745af48dd327b173e073933c",
+      "reviewed_at": "2026-10-08T18:17:08+00:00",
+      "residual_low": [],
       "adjudicated": [],
       "tool": "ops/tools/review_en_parity.py",
-      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
     }
   }
 }

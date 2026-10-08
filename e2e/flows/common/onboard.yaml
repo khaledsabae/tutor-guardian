@@ -6,9 +6,23 @@ appId: com.alsaba.almorabbi
 - launchApp:
     clearState: true
 - runFlow: system_dialogs.yaml
+# A system ANR dialog can come back after it was answered. On 2026-10-08
+# "System UI isn't responding" was answered 5 s after launch, came back, and
+# covered the language page for the rest of the 60 s wait (the page was right
+# behind it). Keep answering it while waiting; the page is still required below.
+- repeat:
+    times: 6
+    while:
+      notVisible: '${output.t.lit_langTitle}'
+    commands:
+      - runFlow: system_dialogs.yaml
+      - extendedWaitUntil:
+          visible: '${output.t.lit_langTitle}'
+          timeout: 10000
+          optional: true
 - extendedWaitUntil:
     visible: '${output.t.lit_langTitle}'
-    timeout: 60000
+    timeout: 10000
 - takeScreenshot: onboarding_1_language
 - runFlow:
     when:
