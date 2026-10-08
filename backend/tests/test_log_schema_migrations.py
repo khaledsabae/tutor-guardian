@@ -10,6 +10,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 import importlib
+import logging
 import re
 import sqlite3
 
@@ -248,3 +249,21 @@ def test_incompatible_db_is_non_fatal_and_untouched(tmp_path, monkeypatch, owner
     conn = sqlite3.connect(path)
     assert (objects(conn), rows(conn, owner.table)) == before
     conn.close()
+
+
+def test_a_refused_rewrite_cache_warns_once_per_process(tmp_path, monkeypatch, caplog):
+    path = tmp_path / "variant.db"
+    conn = sqlite3.connect(path)
+    INCOMPATIBLE[REWRITES]["question_hash_not_primary_key"](conn)
+    conn.commit()
+    conn.close()
+    svc = _service(REWRITES, monkeypatch, path)
+    monkeypatch.setattr(svc, "_refusal_warned", False)
+    caplog.set_level(logging.DEBUG, logger=REWRITES.service)
+    for _ in range(3):
+        assert svc._cache_get("h1") is None
+        svc._cache_put("h1", "x")
+    warnings = [r for r in caplog.records
+                if r.levelno == logging.WARNING and r.name == REWRITES.service]
+    assert len(warnings) == 1
+    assert "query_rewrites" in warnings[0].getMessage() and "refused" in warnings[0].getMessage()

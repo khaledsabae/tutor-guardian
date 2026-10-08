@@ -101,7 +101,18 @@ them explicitly. It must not assume `init_db`'s DDL.
    * Columns are compared by affinity, NOT NULL, default and the hidden flag.
      Keys are compared by `index_list`/`pragma_index_xinfo`.
    * Extra columns are allowed if an INSERT that omits them still works.
-   * A missing performance index is recreated.
+   * A missing performance index is recreated **at adoption only**, i.e.
+     when the migration first runs on that DB.
+   * **After adoption, a missing index is refused, not repaired.** An applied
+     migration only validates, and validation requires the index. The owner
+     raises `MigrationError` and its cache is off (non-fatal). The service
+     logs **one WARNING per process** (`<table> refused by its baseline
+     migration; cache disabled: …`).
+     * Fix: run the migration's `_CREATE_INDEX` statement by hand.
+     * Why: this keeps the runner's single rule for applied migrations
+       (validate, never guess a repair) and leaves the pinned migration
+       files unchanged. Only a manual `DROP INDEX` can get there; the
+       backups (SQLite backup API) keep indexes.
    * Anything else raises `MigrationError` and leaves the DB unchanged.
      Nothing is rebuilt and nothing is dropped.
 3. Fixtures are production's own DDL, copied from the read-only dump. Variants
@@ -111,10 +122,21 @@ them explicitly. It must not assume `init_db`'s DDL.
 5. Insert style decides what "compatible" means. A positional insert
    (`sessions`) requires the exact columns in order. A named insert (the
    caches, `query_rewrites`) tolerates extra nullable or defaulted columns.
-6. Known cost: the runner takes `BEGIN IMMEDIATE` on every connection open.
-   The cache paths therefore now briefly take the sessions.db writer lock even
-   on a read (`busy_timeout` 5000), as telemetry already did. The cache-hit and
-   cache-put paths write anyway.
+6. **Opening an already-migrated DB is lock-free.** `apply_migrations`
+   first validates in a deferred transaction, which under WAL is a read
+   snapshot with no writer lock:
+   * If the ledger equals the registry exactly and every `validate()` passes
+     on the live shape, it returns `()`.
+   * Anything else falls through to `BEGIN IMMEDIATE`, which decides and raises.
+   * Validation is never skipped, only the lock.
+   * Before this, every open took the writer lock. With another writer
+     holding it, a pure read waited `busy_timeout` (5 s) and then failed.
+   * The cache-hit path's `hit_count` UPDATE and every put still write, and
+     so still wait for the lock. That was already true before M17.
+7. Every numbered migration's file checksum is pinned in
+   `backend/tests/test_migration_checksums.py`. Editing a pinned file, or
+   adding an unpinned numbered file, fails the suite. Changes to an applied
+   migration go in a new, higher number.
 
 ## Next owners, in order of risk
 

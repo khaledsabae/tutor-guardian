@@ -39,7 +39,7 @@ from pathlib import Path
 import httpx
 
 from app.db.migrations.bahouth_cache_0001_baseline import MIGRATION as CACHE_SCHEMA
-from app.db.migrations.runner import apply_migrations
+from app.db.migrations.runner import MigrationError, apply_migrations
 
 logger = logging.getLogger(__name__)
 
@@ -127,6 +127,18 @@ def _cache_key(tool: str, arguments: dict) -> str:
     return hashlib.sha256(payload.encode("utf-8")).hexdigest()
 
 
+_refusal_warned = False
+
+
+def _warn_refused(exc: MigrationError) -> None:
+    """A refused schema disables this cache until someone fixes the table:
+    say so once per process at WARNING, not on every lookup."""
+    global _refusal_warned
+    if not _refusal_warned:
+        _refusal_warned = True
+        logger.warning("bahouth_cache refused by its baseline migration; cache disabled: %s", exc)
+
+
 def _cache_conn() -> sqlite3.Connection:
     _TELEMETRY_DB.parent.mkdir(parents=True, exist_ok=True)
     conn = sqlite3.connect(_TELEMETRY_DB)
@@ -137,8 +149,10 @@ def _cache_conn() -> sqlite3.Connection:
         # The numbered runner adopts production's table, creates it on a fresh
         # DB, or refuses a shape the cache cannot use — never rebuilds it.
         apply_migrations(conn, "bahouth_cache", (CACHE_SCHEMA,))
-    except BaseException:
+    except BaseException as exc:
         conn.close()
+        if isinstance(exc, MigrationError):
+            _warn_refused(exc)
         raise
     return conn
 

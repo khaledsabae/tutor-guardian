@@ -23,7 +23,7 @@ from functools import lru_cache
 from pathlib import Path
 
 from app.db.migrations.query_rewrites_0001_baseline import MIGRATION as QUERY_REWRITES_SCHEMA
-from app.db.migrations.runner import apply_migrations
+from app.db.migrations.runner import MigrationError, apply_migrations
 
 logger = logging.getLogger(__name__)
 
@@ -36,6 +36,18 @@ _PROMPT = (
 )
 
 
+_refusal_warned = False
+
+
+def _warn_refused(exc: MigrationError) -> None:
+    """A refused schema disables this cache until someone fixes the table:
+    say so once per process at WARNING, not on every lookup."""
+    global _refusal_warned
+    if not _refusal_warned:
+        _refusal_warned = True
+        logger.warning("query_rewrites refused by its baseline migration; cache disabled: %s", exc)
+
+
 def _get_conn() -> sqlite3.Connection:
     """Open a WAL-mode connection with a busy timeout to prevent lock errors."""
     conn = sqlite3.connect(_CACHE_DB, timeout=5.0)
@@ -45,8 +57,10 @@ def _get_conn() -> sqlite3.Connection:
         # Every DB this process opens is adopted or refused by the numbered
         # runner — no process flag that a second DB could slip past.
         apply_migrations(conn, "query_rewrites", (QUERY_REWRITES_SCHEMA,))
-    except BaseException:
+    except BaseException as exc:
         conn.close()
+        if isinstance(exc, MigrationError):
+            _warn_refused(exc)
         raise
     return conn
 

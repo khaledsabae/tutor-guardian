@@ -9,6 +9,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 import importlib
+import logging
 from pathlib import Path
 import re
 import sqlite3
@@ -16,8 +17,8 @@ import sqlite3
 import pytest
 
 from app.db.migrations.runner import MigrationError, apply_migrations
-
-FIXTURE = Path(__file__).parent / "fixtures" / "prod_sessions_db_2026-10-08.sql"
+from tests import prod_schema_support as support
+from tests.prod_schema_support import ledger, objects, rows, shape, telemetry_ledger, variant
 
 
 @dataclass(frozen=True)
@@ -65,70 +66,17 @@ def migrate(conn, owner: Owner):
     return apply_migrations(conn, owner.namespace, (migration(owner),))
 
 
-def prod_statements() -> list[str]:
-    text = "\n".join(
-        line for line in FIXTURE.read_text(encoding="utf-8").splitlines()
-        if not line.startswith("--")
-    )
-    return [s.strip() for s in text.split(";\n") if s.strip()]
-
-
 def prod_table_sql(owner: Owner) -> str:
-    (sql,) = [s for s in prod_statements() if s.startswith(f"CREATE TABLE {owner.table} ")]
-    return sql
+    return support.prod_table_sql(owner.table)
 
 
 def prod_index_sql(owner: Owner) -> str:
-    (sql,) = [s for s in prod_statements() if s.startswith(f"CREATE INDEX {owner.index} ")]
-    return sql
-
-
-def telemetry_ledger():
-    rows = []
-    for name in ("telemetry_0001_llm_calls", "telemetry_0002_usage_estimated"):
-        m = importlib.import_module(f"app.db.migrations.{name}").MIGRATION
-        rows.append(("llm_telemetry", m.number, m.name, m.checksum))
-    return rows
+    return support.prod_index_sql(owner.index)
 
 
 def build_prod(path: Path) -> sqlite3.Connection:
-    """The whole production sessions.db schema, with its llm_telemetry ledger."""
-    conn = sqlite3.connect(path)
-    conn.executescript(FIXTURE.read_text(encoding="utf-8"))
-    conn.executemany(
-        "INSERT INTO schema_migrations(namespace,version,name,checksum,applied_at) "
-        "VALUES(?,?,?,?,'2026-10-08 06:38:24')", telemetry_ledger(),
-    )
-    for o in (TAFSIR, BAHOUTH):
-        conn.execute(o.insert)
-    conn.commit()
-    return conn
-
-
-def objects(conn) -> list[tuple]:
-    return sorted(tuple(r) for r in conn.execute(
-        "SELECT type,name,tbl_name,sql FROM sqlite_master"))
-
-
-def rows(conn, table: str) -> list[tuple]:
-    return sorted(tuple(r) for r in conn.execute(f"SELECT * FROM {table}"))
-
-
-def ledger(conn, namespace: str) -> list[tuple]:
-    if conn.execute("SELECT 1 FROM sqlite_master WHERE name='schema_migrations'").fetchone() is None:
-        return []
-    return [tuple(r) for r in conn.execute(
-        "SELECT version,name,checksum FROM schema_migrations WHERE namespace=? ORDER BY version",
-        (namespace,))]
-
-
-def shape(conn, table: str):
-    columns = [tuple(r) for r in conn.execute(f"PRAGMA table_xinfo({table})")]
-    indexes = []
-    for _, name, unique, origin, partial in conn.execute(f"PRAGMA index_list({table})"):
-        cols = tuple(r[2] for r in conn.execute(f"PRAGMA index_info({name})"))
-        indexes.append((name if origin == "c" else origin, unique, partial, cols))
-    return columns, sorted(indexes)
+    """The whole production sessions.db schema, a row in each cache, its ledger."""
+    return support.build_prod(path, (TAFSIR.insert, BAHOUTH.insert))
 
 
 @pytest.fixture
@@ -144,11 +92,8 @@ def test_fixture_is_production_with_the_telemetry_ledger(prod):
     assert tables == {"answer_cache", "bahouth_cache", "blocked_fiqh_log", "llm_calls",
                       "query_rewrites", "retrieval_log", "schema_migrations", "sessions",
                       "tafsir_cache"}
-    # The checked-in telemetry migrations are exactly what production recorded.
-    assert [r[1:] for r in telemetry_ledger()] == [
-        (1, "llm_calls", "83c9b23721f7cdaf2a23aa5dca3e62645c0128bbb1e15defa321754e4ecf212e"),
-        (2, "usage_estimated", "772d8c7769aa5c71b8a59dff1d25976fe9c217ae283d4bc09cbfdcbea4f1ca8f"),
-    ]
+    # Production's ledger checksums are pinned in test_migration_checksums.py.
+    assert [r[0] for r in ledger(prod, "llm_telemetry")] == [1, 2]
 
 
 # ── adopt: production's own shape is accepted untouched ────────────────────
@@ -207,37 +152,32 @@ def test_extra_nullable_extension_column_is_kept(prod, owner):
 
 
 # ── refuse: anything the service could not safely use ──────────────────────
-def _variant(sql: str, old: str, new: str) -> str:
-    assert old in sql, f"fixture no longer contains {old!r}"
-    return sql.replace(old, new, 1)
-
-
 INCOMPATIBLE = {
     "cache_key_not_unique": lambda o, c: c.execute(
-        _variant(prod_table_sql(o), "cache_key TEXT UNIQUE", "cache_key TEXT")),
+        variant(prod_table_sql(o), "cache_key TEXT UNIQUE", "cache_key TEXT")),
     "created_at_missing": lambda o, c: c.execute(
-        _variant(prod_table_sql(o), "created_at TEXT DEFAULT (datetime('now')),", "")),
+        variant(prod_table_sql(o), "created_at TEXT DEFAULT (datetime('now')),", "")),
     "created_at_wrong_affinity": lambda o, c: c.execute(
-        _variant(prod_table_sql(o), "created_at TEXT", "created_at BLOB")),
+        variant(prod_table_sql(o), "created_at TEXT", "created_at BLOB")),
     "created_at_lost_default": lambda o, c: c.execute(
-        _variant(prod_table_sql(o), "created_at TEXT DEFAULT (datetime('now'))", "created_at TEXT")),
+        variant(prod_table_sql(o), "created_at TEXT DEFAULT (datetime('now'))", "created_at TEXT")),
     "hit_count_lost_default": lambda o, c: c.execute(
-        _variant(prod_table_sql(o), "hit_count INTEGER DEFAULT 0", "hit_count INTEGER")),
+        variant(prod_table_sql(o), "hit_count INTEGER DEFAULT 0", "hit_count INTEGER")),
     "nullable_column_made_not_null": lambda o, c: c.execute(
-        _variant(prod_table_sql(o), "cache_key TEXT UNIQUE", "cache_key TEXT NOT NULL UNIQUE")),
+        variant(prod_table_sql(o), "cache_key TEXT UNIQUE", "cache_key TEXT NOT NULL UNIQUE")),
     "extra_not_null_column_without_default": lambda o, c: c.execute(
         re.sub(r"\)\s*$", ", required_extra TEXT NOT NULL)", prod_table_sql(o))),
     "id_not_rowid_alias": lambda o, c: c.execute(
-        _variant(prod_table_sql(o), "id INTEGER PRIMARY KEY AUTOINCREMENT", "id TEXT PRIMARY KEY")),
+        variant(prod_table_sql(o), "id INTEGER PRIMARY KEY AUTOINCREMENT", "id TEXT PRIMARY KEY")),
     "without_rowid": lambda o, c: c.execute(
-        _variant(prod_table_sql(o), "id INTEGER PRIMARY KEY AUTOINCREMENT",
+        variant(prod_table_sql(o), "id INTEGER PRIMARY KEY AUTOINCREMENT",
                  "id INTEGER PRIMARY KEY") + " WITHOUT ROWID"),
     "lookup_index_name_on_wrong_columns": lambda o, c: (
         c.execute(prod_table_sql(o)),
         c.execute(f"CREATE INDEX {o.index} ON {o.table} (created_at)")),
     "lookup_index_name_is_unique": lambda o, c: (
         c.execute(prod_table_sql(o)),
-        c.execute(_variant(prod_index_sql(o), "CREATE INDEX", "CREATE UNIQUE INDEX"))),
+        c.execute(variant(prod_index_sql(o), "CREATE INDEX", "CREATE UNIQUE INDEX"))),
     "table_name_is_a_view": lambda o, c: c.execute(
         f"CREATE VIEW {o.table} AS SELECT 1 AS cache_key"),
 }
@@ -333,3 +273,26 @@ def test_incompatible_db_disables_the_cache_without_touching_it(tmp_path, monkey
     conn = sqlite3.connect(path)
     assert objects(conn) == before
     conn.close()
+
+
+@pytest.mark.parametrize("owner", OWNERS)
+def test_a_refused_cache_warns_once_per_process(tmp_path, monkeypatch, caplog, owner):
+    path = tmp_path / "variant.db"
+    conn = sqlite3.connect(path)
+    INCOMPATIBLE["cache_key_not_unique"](owner, conn)
+    conn.commit()
+    conn.close()
+    svc = importlib.import_module(owner.service)
+    monkeypatch.setattr(svc, "_TELEMETRY_DB", path)
+    monkeypatch.setattr(svc, "_refusal_warned", False)
+    caplog.set_level(logging.DEBUG, logger=owner.service)
+    for _ in range(3):
+        if owner is TAFSIR:
+            monkeypatch.setattr(svc, "TAFSIR_CACHE_ENABLED", True)
+            assert svc._cache_get(1, 1, "saadi") is None
+        else:
+            monkeypatch.setattr(svc, "BAHOUTH_CACHE_ENABLED", True)
+            assert svc._cache_get("find_root", {"root": "x"}) is None
+    warnings = [r for r in caplog.records if r.levelno == logging.WARNING and r.name == owner.service]
+    assert len(warnings) == 1
+    assert owner.table in warnings[0].getMessage() and "refused" in warnings[0].getMessage()
