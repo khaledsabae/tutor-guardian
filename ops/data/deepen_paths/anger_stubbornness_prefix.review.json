@@ -5,7 +5,7 @@
     "deepseek-v4-pro",
     "glm-5.2"
   ],
-  "written_at": "2026-10-08T08:43:40",
+  "written_at": "2026-10-08T10:47:40",
   "lessons": [
     {
       "path_id": "path_2-3_development_tantrums",
@@ -260,6 +260,296 @@
         "glm-5.2"
       ],
       "translation_stamp": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08"
+    },
+    {
+      "path_id": "path_2-3_development_tantrums",
+      "key": "s07",
+      "brief": "حين يضرب أو يعضّ",
+      "accepted": true,
+      "blockers": [],
+      "ar_review": {
+        "reviewer": "deepseek-v4-pro+glm-5.2",
+        "at": "2026-10-08T08:59:38",
+        "rounds": 1,
+        "defects": [
+          {
+            "severity": "low",
+            "type": "register",
+            "field": "summary",
+            "why": "ينكسر تسلسل الزمن في السؤال: سبقها مضارع «يتألّم» ثم جاءت «بدا» ماضية، والصواب «يبدو» للمطابقة."
+          },
+          {
+            "severity": "low",
+            "type": "register",
+            "field": "summary",
+            "why": "الكلمة اسم مفعول من أحبط وتُكتب «مُحبَط» بضم الميم؛ ورودها دون الضمة قد يُقرأ خطأ."
+          },
+          {
+            "severity": "low",
+            "type": "pedagogy",
+            "field": "try_this",
+            "why": "The action assumes another caregiver exists and is available today. A parent who is the sole caregiver (e.g., alone at home with the child) cannot perform this action as written, making it not universally doable today."
+          }
+        ]
+      },
+      "en_review": {
+        "reviewer": "deepseek-v4-pro+glm-5.2",
+        "at": "2026-10-08T08:59:38",
+        "rounds": 1,
+        "defects": []
+      },
+      "dispositions": [],
+      "written_as": "lesson_2-3_development_tantrums_07",
+      "order": 7,
+      "title": "حين يضرب أو يعضّ",
+      "ar_hash": "440a5aa20f4d2b0d",
+      "en_hash": "3584226f1c701c1e440a5aa20f4d2b0d",
+      "review_providers": {
+        "deepseek-v4-pro": {
+          "provider": "ollama-cloud",
+          "model": "deepseek-v4-pro"
+        },
+        "glm-5.2": {
+          "provider": "ollama-cloud",
+          "model": "glm-5.2"
+        }
+      },
+      "translation_content_sha256": "19ff0ded3a487e37d3a648239a3fbba879516cddbaaa8c2cc588fa2679445439",
+      "translation_reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "translation_providers": {
+        "deepseek-v4-pro": {
+          "provider": "openrouter",
+          "model": "deepseek/deepseek-v4-pro"
+        },
+        "glm-5.2": {
+          "provider": "openrouter",
+          "model": "z-ai/glm-5.2"
+        }
+      },
+      "translation_stamp": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08"
+    },
+    {
+      "path_id": "path_2-3_development_tantrums",
+      "key": "s08",
+      "brief": "نوبةٌ في السوق أو أمام الضيوف",
+      "accepted": true,
+      "blockers": [],
+      "ar_review": {
+        "reviewer": "deepseek-v4-pro+glm-5.2",
+        "at": "2026-10-08T10:47:30",
+        "rounds": 6,
+        "defects": [
+          {
+            "severity": "low",
+            "type": "register",
+            "field": "summary",
+            "why": "The phrase 'فتتّجه إليك الأنظار' is slightly stiff and literary for a warm, direct parenting read. A more natural MSA phrasing would be 'فقد تتجه إليك الأنظار' or 'فينظر إليك الناس'."
+          },
+          {
+            "severity": "low",
+            "type": "register",
+            "field": "summary",
+            "why": "The phrase 'تغضب عليه' is slightly colloquial in this context. In MSA, 'تغضب منه' or 'تصرخ عليه' is more precise. The lesson itself later uses 'ولا تصرخ عليه'."
+          },
+          {
+            "severity": "low",
+            "type": "register",
+            "field": "summary",
+            "why": "The word 'متألم' is less common in everyday MSA than 'يشعر بألم'. It is not incorrect, but slightly stiff."
+          },
+          {
+            "severity": "low",
+            "type": "register",
+            "field": "summary",
+            "why": "The phrase 'ولا تَعِده بحلوى' is grammatically correct but slightly awkward. 'ولا تعده بالحلوى' or 'ولا تعده حلوى' flows better."
+          },
+          {
+            "severity": "low",
+            "type": "register",
+            "field": "summary",
+            "why": "The phrase 'فليبقَ هو معه' is grammatically correct but sounds stiff and formal. A warmer phrasing would be 'فدعه يبقى معه' or 'فليبقَ معه'."
+          },
+          {
+            "severity": "low",
+            "type": "register",
+            "field": "summary",
+            "why": "The word 'حساب' (reckoning) is a bit strong and preachy. 'عتاب' (blame) or 'لوم' (blame) is softer and more appropriate for a parenting context."
+          },
+          {
+            "severity": "low",
+            "type": "pedagogy",
+            "field": "try_this",
+            "why": "The action is concrete and doable, but it combines two distinct actions (telling + giving a task). The instruction says 'ONE concrete action'. This is a minor violation."
+          }
+        ]
+      },
+      "en_review": {
+        "reviewer": "deepseek-v4-pro+glm-5.2",
+        "at": "2026-10-08T10:47:30",
+        "rounds": 7,
+        "defects": [
+          {
+            "severity": "low",
+            "type": "meaning_change",
+            "field": "summary",
+            "why": "The Arabic says 'وقدّم نومه ولو فاتتك بعض الأمور' which means 'prioritize his sleep even if you miss some things'. The English 'put their sleep first' is a direct translation, but the Arabic uses the singular 'نومه' (his sleep) referring to the child, while the English uses 'their'. This is a minor inconsistency but not a meaning change. However, the phrase 'ولو فاتتك بعض الأمور' is more naturally 'even if it means missing out on some things' in English. The current translation is acceptable."
+          },
+          {
+            "severity": "low",
+            "type": "register",
+            "field": "summary",
+            "why": "The Arabic 'تغضب عليه' is translated as 'lose your temper with them', which is a good idiomatic equivalent. However, the Arabic later uses 'ولا تصرخ عليه' (do not shout at him), and the English uses 'shouting at them'. The consistency is fine."
+          },
+          {
+            "severity": "low",
+            "type": "register",
+            "field": "summary",
+            "why": "The English 'feel your own temper rising' is slightly more idiomatic than the Arabic 'اشتدّ انفعالك' (your emotion intensifies). This is a good translation choice."
+          },
+          {
+            "severity": "low",
+            "type": "structure",
+            "field": "summary",
+            "why": "The Arabic uses «سنشتري الخبز والحليب، ولن نشتري الحلوى اليوم». The English translation is accurate and maintains the quotation marks."
+          }
+        ]
+      },
+      "dispositions": [],
+      "written_as": "lesson_2-3_development_tantrums_08",
+      "order": 8,
+      "title": "نوبةٌ في السوق أو أمام الضيوف",
+      "ar_hash": "92a0ee7c10fae5a7",
+      "en_hash": "b224462f7cdf1b3692a0ee7c10fae5a7",
+      "review_providers": {
+        "deepseek-v4-pro": {
+          "provider": "openrouter",
+          "model": "deepseek/deepseek-v4-pro"
+        },
+        "glm-5.2": {
+          "provider": "openrouter",
+          "model": "z-ai/glm-5.2"
+        }
+      },
+      "translation_content_sha256": "55480730bd7a6da58bb3ba03a3594edf68e34587595780efd2eda061c7d3b144",
+      "translation_reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "translation_providers": {
+        "deepseek-v4-pro": {
+          "provider": "openrouter",
+          "model": "deepseek/deepseek-v4-pro"
+        },
+        "glm-5.2": {
+          "provider": "openrouter",
+          "model": "z-ai/glm-5.2"
+        }
+      },
+      "translation_stamp": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08"
+    },
+    {
+      "path_id": "path_2-3_development_tantrums",
+      "key": "s09",
+      "brief": "حين تنفد طاقتك أنت",
+      "accepted": true,
+      "blockers": [],
+      "ar_review": {
+        "reviewer": "deepseek-v4-pro+glm-5.2",
+        "at": "2026-10-08T10:44:32",
+        "rounds": 2,
+        "defects": [
+          {
+            "severity": "low",
+            "type": "register",
+            "field": "summary",
+            "why": "The phrase 'فحاول أن تلاحظ' is slightly stiff and preachy. A warmer, more direct phrasing would be 'حاول أن تلاحظ' without the فاء, or 'لاحظ انزعاجك'. Also, 'بضعة أنفاسٍ عميقة' is grammatically correct but 'بضعة' is less common in easy MSA; 'خذ أنفاسًا عميقة قليلة' or 'خذ ثلاثة أنفاس عميقة' would be smoother."
+          },
+          {
+            "severity": "low",
+            "type": "register",
+            "field": "summary",
+            "why": "The phrase 'ترفق فيها بنفسك' is slightly awkward. 'كن رفيقًا بنفسك' or 'ارفق بنفسك' is more natural in MSA."
+          },
+          {
+            "severity": "low",
+            "type": "register",
+            "field": "summary",
+            "why": "The passive form 'يُصلَح' is grammatically correct but sounds stiff. 'كيف يُصلِح الخطأ' (active) is more natural and aligns with the child learning to fix mistakes."
+          },
+          {
+            "severity": "low",
+            "type": "register",
+            "field": "try_this",
+            "why": "The phrase 'وأنت قريبٌ من طفلك' is slightly ambiguous. It could mean 'while you are close to your child' which is fine, but 'وأنت بجانب طفلك' or 'وأنت مع طفلك' is warmer and clearer. Also, 'فادعُه' is grammatically correct but 'فادعه' without the damma is more common in modern writing."
+          }
+        ]
+      },
+      "en_review": {
+        "reviewer": "deepseek-v4-pro+glm-5.2",
+        "at": "2026-10-08T10:44:32",
+        "rounds": 3,
+        "defects": [
+          {
+            "severity": "low",
+            "type": "meaning_change",
+            "field": "summary",
+            "why": "The Arabic says 'وإن احتجت وقتًا أطول، كأن تمشي قليلًا، فلا تتركه وحده: اجعل شخصًا تثق به يرعاه حتى تعود.' The English 'such as a short walk' is a direct translation, but the Arabic 'كأن تمشي قليلًا' implies 'like taking a short walk' which is a suggestion, not a strict example. The meaning is preserved, but the tone is slightly more prescriptive in English. However, the main issue is that the English omits the nuance of 'كأن' which is a hypothetical example, not a definitive one. This is minor."
+          },
+          {
+            "severity": "low",
+            "type": "register",
+            "field": "summary",
+            "why": "The English 'Take moments to be gentle with yourself' is a bit stiff and clinical. The Arabic 'وخذ لحظاتٍ ترفق فيها بنفسك' is warmer. A more natural English phrasing would be 'Take some moments to be kind to yourself'."
+          },
+          {
+            "severity": "low",
+            "type": "register",
+            "field": "summary",
+            "why": "The English 'how a mistake is put right' is passive and stiff. The Arabic 'كيف يُصلَح الخطأ' is also passive, but the English could be more active and natural: 'how to put a mistake right' or 'how to fix a mistake'."
+          },
+          {
+            "severity": "low",
+            "type": "register",
+            "field": "try_this",
+            "why": "The English 'while staying close to your child' is slightly clinical. The Arabic 'وأنت قريبٌ من طفلك' is warmer. 'while you are close to your child' or 'while you are with your child' would be more natural."
+          }
+        ]
+      },
+      "dispositions": [],
+      "written_as": "lesson_2-3_development_tantrums_09",
+      "order": 9,
+      "title": "حين تنفد طاقتك أنت",
+      "ar_hash": "bdb36097813f8b76",
+      "en_hash": "6eced9aa97d32a4dbdb36097813f8b76",
+      "review_providers": {
+        "deepseek-v4-pro": {
+          "provider": "openrouter",
+          "model": "deepseek/deepseek-v4-pro"
+        },
+        "glm-5.2": {
+          "provider": "openrouter",
+          "model": "z-ai/glm-5.2"
+        }
+      },
+      "translation_content_sha256": "45a148d0aa58063322fe83f5361de6b6adf4a20e1e443e3933d6d313f5e3769d",
+      "translation_reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "translation_providers": {
+        "deepseek-v4-pro": {
+          "provider": "openrouter",
+          "model": "deepseek/deepseek-v4-pro"
+        },
+        "glm-5.2": {
+          "provider": "openrouter",
+          "model": "z-ai/glm-5.2"
+        }
+      },
+      "translation_stamp": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08"
     }
   ],
   "canonical_parity": {
@@ -280,11 +570,21 @@
       "stamp": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07"
     },
     "path_2-3_development_tantrums": {
-      "content_sha256": "8d4b05f76bb04994ab04780b8f6049ad6dee83543dada773b7f65825ad99a170",
+      "content_sha256": "79f944f4548ef2632ac94bbfa062843d511cffbc68a847ba6bd21e3420b3072e",
       "reviewers": [
         "deepseek-v4-pro",
         "glm-5.2"
       ],
+      "providers": {
+        "deepseek-v4-pro": {
+          "provider": "openrouter",
+          "model": "deepseek/deepseek-v4-pro"
+        },
+        "glm-5.2": {
+          "provider": "openrouter",
+          "model": "z-ai/glm-5.2"
+        }
+      },
       "stamp": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08"
     },
     "lesson_2-3_development_tantrums_03": {
@@ -317,6 +617,60 @@
         "deepseek-v4-pro",
         "glm-5.2"
       ],
+      "stamp": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08"
+    },
+    "lesson_2-3_development_tantrums_07": {
+      "content_sha256": "19ff0ded3a487e37d3a648239a3fbba879516cddbaaa8c2cc588fa2679445439",
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "providers": {
+        "deepseek-v4-pro": {
+          "provider": "openrouter",
+          "model": "deepseek/deepseek-v4-pro"
+        },
+        "glm-5.2": {
+          "provider": "openrouter",
+          "model": "z-ai/glm-5.2"
+        }
+      },
+      "stamp": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08"
+    },
+    "lesson_2-3_development_tantrums_08": {
+      "content_sha256": "55480730bd7a6da58bb3ba03a3594edf68e34587595780efd2eda061c7d3b144",
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "providers": {
+        "deepseek-v4-pro": {
+          "provider": "openrouter",
+          "model": "deepseek/deepseek-v4-pro"
+        },
+        "glm-5.2": {
+          "provider": "openrouter",
+          "model": "z-ai/glm-5.2"
+        }
+      },
+      "stamp": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08"
+    },
+    "lesson_2-3_development_tantrums_09": {
+      "content_sha256": "45a148d0aa58063322fe83f5361de6b6adf4a20e1e443e3933d6d313f5e3769d",
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "providers": {
+        "deepseek-v4-pro": {
+          "provider": "openrouter",
+          "model": "deepseek/deepseek-v4-pro"
+        },
+        "glm-5.2": {
+          "provider": "openrouter",
+          "model": "z-ai/glm-5.2"
+        }
+      },
       "stamp": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08"
     }
   },
@@ -792,6 +1146,337 @@
       "backup_mismatches": 0,
       "backup_verify_exit": 0,
       "existing_s01_s04_files_unchanged": true
+    }
+  },
+  "continuation_s07_s09": {
+    "base": "c850bd2d4cb0f7456f21d4cfca89b81e960bd57d",
+    "prefix": [
+      "s07",
+      "s08",
+      "s09"
+    ],
+    "held": {
+      "s10": "not published: three review rounds left medium findings (Ollama deepseek r1: 2 register; OpenRouter deepseek r2: 1 register; r3: 6 grounding/meaning — the CDC milestone, lost-skills and early-intervention guidance has no sourced knowledge unit to pin); held to keep spend modest; draft and evidence kept"
+    },
+    "age_scope": "all three backup drafts target ages two and three (hitting and biting, a tantrum in public, the parent's own anger with a toddler); kept on path_2-3_development_tantrums as lessons 07-09; no relocation warranted",
+    "source_drafts": "~/.local/share/tg-deepen-paths/work/anger_stubbornness/path_2-3_development_tantrums.drafts.json (s07-s10), copied to a work dir; 98 backup hashes verified unchanged before and after; read-only",
+    "corrections_by": "claude-opus-5-5",
+    "excluded_unit_ids": [
+      "d7a09c7e-769c-48b5-aaf8-0511fedfc0db",
+      "6100b911-911d-4926-8f35-09b43a76303f"
+    ],
+    "exclusion_reasons": {
+      "d7a09c7e-769c-48b5-aaf8-0511fedfc0db": "backup s08 pin; no source URL; invented quarter-hour and five-a-day thresholds",
+      "6100b911-911d-4926-8f35-09b43a76303f": "backup s09 pin; app-authored without a source; 'thirty seconds' of distance and leaving the room after 'securing' the child"
+    },
+    "kept_unit_ids": {
+      "seed-aggression-23": "s07: curated 'AAP - HealthyChildren.org' without URL; every claim used matches the fetched AAP 10 Tips / AACAP Fighting and Biting / NHS pages ('crowding' not used)",
+      "seed-tantrum-23": "s07-s09: exact source mapping in ops/data/clinical_seed_safety/seed-tantrum-23.json"
+    },
+    "removed_from_original_drafts": [
+      "s07: 'attending to the hurt child teaches both that harm brings no attention' (rationale not in sources) -> AACAP order: separate, comfort the other child, then address the child who hit",
+      "s07: 'hold his hand gently' -> separate the children and stay close (AAP/AACAP)",
+      "s08: 'both make future tantrums more and stronger' -> NHS: giving in does not help, the child may think tantrums get them what they want; shouting back will not end it",
+      "s08: 'many onlookers are parents who went through it', 'your child matters more than strangers' opinion' (not in sources); 'the car' as a quiet place",
+      "s09: 'thirty seconds', body-sign list, 'the parent's agitation is the strongest influence', 'rested parent ... drained parent', 'gentleness with your child begins with gentleness with yourself' and [[h_004]] (no religious text, so no pending scholar review)",
+      "s10 (held): quarter-hour and six-month thresholds, 'speech much delayed', 'difficulties improve quickly when understood early'"
+    ],
+    "safety_changes": [
+      "s07: hitting and biting never ignored; stopped at once, calmly and firmly; children separated with the parent close; the hurt child comforted first; 'I know you are angry, but no hitting. Hitting hurts.' (AACAP); the toy not won by hitting; never hit or bite back (AACAP/NHS); no shouting, threats or humiliation; parent's pause close by or with a trusted adult; teach words and walking away (AAP); step in early (AACAP); hunger, tiredness, teething pain, worry or sadness checked; specific praise and cuddles (NHS/AAP); referral without numbers (frequent or severe, bite marks or bruises, fear for others' safety, kept from play, self-harm, persistent sadness — AAP/AACAP) and urgent help",
+      "s08: needs first; prepare (sleep first even if you miss some things, healthy snack — AAP; short trips, involve the child — NHS; say beforehand what will and will not be bought; eye-spy style game — CDC; prepare for guests or new places — CDC 3-year milestones); distraction; a reasoned no held without buying or promising sweets (NHS/CDC); move calmly to a quieter place and stay with the child (AAP/CDC); ignore the looks (NHS); no hitting, shouting, threats or embarrassing (CDC); a trusted adult takes over when the parent's temper rises (AAP); no long reckoning afterwards; specific praise (CDC)",
+      "s09: negative feelings are common and normal (CDC); the child follows a calm example (AAP); a pause of a few deep breaths, sitting together when there is no danger, a longer pause only with another trusted caregiver looking after the child (CDC); breathe together (CDC); do not blame yourself or the child, ask partner, friend or another parent, take turns (NHS/AAP); be gentle with yourself (AAP Creating Calm); after a real mistake: calm down, apologize, say what you will do next time, keep it (AAP); no hitting, shouting or humiliation (AAP); talk with a doctor or specialist if anger often escapes control or the parent is sad, worn out or anxious most of the time (NHS/AAP); urgent help with a trusted adult staying with the child if the parent fears hurting the child or themselves"
+    ],
+    "religious_content": {
+      "s07": "none",
+      "s08": "none",
+      "s09": "none"
+    },
+    "lesson_review": {
+      "tool": "ops/tools/deepen_paths.py prompts/payload/hash (SYSTEM_REVIEW_BOTH; path: tc.SYSTEM_REVIEW) via sequential driver dual_review.py; from the resume on, requests go through review_en_parity.post() with REVIEW_ROUTES (one attempt, hard 120 s deadline, stop on 402/429)",
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "both_families_on_final_hash": true,
+      "providers_on_final_hash": {
+        "s07": {
+          "deepseek-v4-pro": {
+            "provider": "ollama-cloud",
+            "model": "deepseek-v4-pro"
+          },
+          "glm-5.2": {
+            "provider": "ollama-cloud",
+            "model": "glm-5.2"
+          }
+        },
+        "s08": {
+          "deepseek-v4-pro": {
+            "provider": "openrouter",
+            "model": "deepseek/deepseek-v4-pro"
+          },
+          "glm-5.2": {
+            "provider": "openrouter",
+            "model": "z-ai/glm-5.2"
+          }
+        },
+        "s09": {
+          "deepseek-v4-pro": {
+            "provider": "openrouter",
+            "model": "deepseek/deepseek-v4-pro"
+          },
+          "glm-5.2": {
+            "provider": "openrouter",
+            "model": "z-ai/glm-5.2"
+          }
+        },
+        "path": {
+          "deepseek-v4-pro": {
+            "provider": "openrouter",
+            "model": "deepseek/deepseek-v4-pro"
+          },
+          "glm-5.2": {
+            "provider": "openrouter",
+            "model": "z-ai/glm-5.2"
+          }
+        }
+      },
+      "provider_note": "Ollama Cloud reached its weekly cap at 2026-10-08T09:30Z; Khaled authorized OpenRouter (the existing analytics-platform key, read in-process only) for both families",
+      "concurrency": 1,
+      "request_timeout_s": 120,
+      "ollama_calls": {
+        "total": 13,
+        "ok": 11,
+        "http_429": 2
+      },
+      "routed_usage_by_model": {
+        "openrouter:deepseek/deepseek-v4-pro": {
+          "calls": 20.0,
+          "ok": 18.0,
+          "prompt_tokens": 69011.0,
+          "completion_tokens": 28835.0,
+          "total_tokens": 97846.0,
+          "cost": 0.197374
+        },
+        "openrouter:z-ai/glm-5.2": {
+          "calls": 19.0,
+          "ok": 18.0,
+          "prompt_tokens": 70895.0,
+          "completion_tokens": 47747.0,
+          "total_tokens": 118642.0,
+          "cost": 0.208058
+        }
+      },
+      "unlogged": "one OpenRouter deepseek call (s08 a9ce036e...) held open about eleven minutes by keep-alive whitespace before the hard deadline existed; killed by hand, no usage returned",
+      "fixed_medium_high": [
+        "path r1 (ollama) deepseek medium: «للوالد» vs 'for a parent' -> «للأب والأم»; r2/r3 (openrouter) deepseek medium: 'a father or mother' / 'of a child' -> 'for the father and mother with a child'",
+        "s08: EN summary 2554 > schema 2500 -> trimmed (guests/new places sentence, praise sentence)",
+        "s08 r2 deepseek medium/register «العبا» -> «العب معه»; r3 glm high x3 register «مشوار/المشاوير» (colloquial) -> «وقت التسوّق», «لقضاء حاجة», «الخروج»",
+        "s08 r5 deepseek high/register «تنفعل عليه» -> «تغضب عليه»; r6 deepseek medium/meaning «قضاء بعض حاجاتك» vs 'errands' -> «ولو فاتتك بعض الأمور» / 'even if you miss some things' (AAP wording)",
+        "EN stamp r1 deepseek medium/omission (s08 'your own upset is rising', s09 shouting) — both present; English rephrased to make them explicit, then lesson re-review",
+        "s09 r5 deepseek high/register «في الثانية والثالثة» -> «في الثانية أو الثالثة من عمره»; medium «فتعلّم» -> «فحاول»"
+      ],
+      "medium_high_on_final_hashes": 0
+    },
+    "translation_review": {
+      "tool": "ops/tools/review_en_parity.py run --only <keys> --rounds 1 --request-attempts 1 --workers 1 --max-concurrent 1 --request-timeout 120 --no-fix, with REVIEW_ROUTES -> OpenRouter",
+      "stamped": [
+        "lesson_2-3_development_tantrums_07",
+        "lesson_2-3_development_tantrums_08",
+        "lesson_2-3_development_tantrums_09",
+        "path_2-3_development_tantrums"
+      ],
+      "providers": {
+        "deepseek-v4-pro": {
+          "provider": "openrouter",
+          "model": "deepseek/deepseek-v4-pro"
+        },
+        "glm-5.2": {
+          "provider": "openrouter",
+          "model": "z-ai/glm-5.2"
+        }
+      },
+      "http_402": 0,
+      "http_429": 0
+    },
+    "path_changes": [
+      "description six -> nine lessons (hitting and biting; preparing for a tantrum at the market or in front of guests; calming your own anger and asking for help), «للأب والأم» / 'for the father and mother with a child' in both languages",
+      "estimated_days 9",
+      "title and primary_reference unchanged (per-lesson sources recorded here)"
+    ],
+    "restored_untouched": "deepen_paths --write rewrote lesson_2-3_development_tantrums_01..06 (AR+EN); all twelve files restored byte-identical from HEAD before stamping",
+    "primary_sources": [
+      {
+        "url": "https://www.healthychildren.org/English/ages-stages/toddler/Pages/Aggressive-Behavior.aspx",
+        "final_url": "https://www.healthychildren.org/English/ages-stages/toddler/Pages/Aggressive-Behavior.aspx",
+        "http": "200",
+        "html_sha256": "6b889e2fffda6e69c7a2db25026d351414f2e2ccc054a5f7a56293498581f576",
+        "text_sha256": "e8b8b54f3f180b241c1ff22f700118cc0efc82651207612756f1f8c0d44ca6bb",
+        "checked_at": "2026-10-08T08:53:49Z",
+        "used_for": "s07: AAP 10 Tips to Prevent Aggressive Behavior (lack of self-control, hitting or biting in frustration; teach words; avoid threats; praise gentle behaviour; pull children apart until calm; say no firmly, turn away; control your own temper; warning signs: injuries such as teeth marks or bruises, barred from play, fear for others' safety; week/month figures and 'do not apologize' not used)"
+      },
+      {
+        "url": "https://www.aacap.org/AACAP/Families_and_Youth/Facts_for_Families/FFF-Guide/Fighting-And-Biting-081.aspx",
+        "final_url": "https://www.aacap.org/AACAP/Families_and_Youth/Facts_for_Families/FFF-Guide/Fighting-And-Biting-081.aspx",
+        "http": "200",
+        "html_sha256": "0bf50332fb1368bc3b8f6af828c1153ae87fe1fd16b8b8cf0095abefd8e95321",
+        "text_sha256": "da08772abf399c09c512692e21cdc1f01239a51fa4018ffc3c12bfa0a50ae98c",
+        "checked_at": "2026-10-08T08:54:19Z",
+        "used_for": "s07: AACAP (no, calmly but firmly; do not bite back; act early; separate, comfort and attend to the other child first, then 'I know you are angry, but don't hit. Hitting hurts.'; unintentional reward; teething, unhappy, anxious; frequent, severe or persistent aggression -> professional evaluation; five-minute withdrawal not used)"
+      },
+      {
+        "url": "https://www.nhs.uk/baby/babys-development/behaviour/temper-tantrums/",
+        "final_url": "https://www.nhs.uk/baby/babys-development/behaviour/temper-tantrums/",
+        "http": "200",
+        "html_sha256": "d2b0c72e59bbeb5d53413e54e40a44f706108b9741cb3c18969d4fc2557ed92b",
+        "text_sha256": "93c487998834c6f5c04bff6f5c0a975614a212533b400092a6d49dda3b66b18a",
+        "checked_at": "2026-10-08T08:53:52Z",
+        "used_for": "s07/s08: NHS (occasional biting or hitting does not mean the child will grow up aggressive; do not hit, bite or kick back; make clear it hurts; tantrums in shops, embarrassment, short trips, involve the child, ignore the looks, stay calm, do not change your mind or bribe with sweets; distraction)"
+      },
+      {
+        "url": "https://www.nhs.uk/baby/babys-development/behaviour/dealing-with-child-behaviour-problems/",
+        "final_url": "https://www.nhs.uk/baby/babys-development/behaviour/dealing-with-child-behaviour-problems/",
+        "http": "200",
+        "html_sha256": "0f53348441cd6f0ce12aea1df8ddbe73bac577b0568c802ce1a3ea2c486eabca",
+        "text_sha256": "b8105e8305318c4a26644b5bba9260e09f70777d041c9b1ffb148be936a4216d",
+        "checked_at": "2026-10-08T08:53:52Z",
+        "used_for": "s08/s09: NHS (tired or hungry; anger and frustration build up; support from partner, friend, another parent; children notice when you are upset; do not blame yourself or your child; do not cope alone)"
+      },
+      {
+        "url": "https://www.healthychildren.org/English/family-life/family-dynamics/communication-discipline/Pages/Temper-Tantrums.aspx",
+        "final_url": "https://www.healthychildren.org/English/family-life/family-dynamics/communication-discipline/Pages/Temper-Tantrums.aspx",
+        "http": "200",
+        "html_sha256": "b6a3560bf1984e749c3787b4ec4f15e108b980d936f2f35ddbbc98aa7e88eb2a",
+        "text_sha256": "8d8fa778a177686632ee1ff51577e0cfb2cee6ca841cd3b35678122a168ad919",
+        "checked_at": "2026-10-08T08:53:50Z",
+        "used_for": "s07-s09: AAP (do not ignore hitting or biting, stop it; healthy snack when out; prioritize sleep even if you miss things; distraction, move to a new room; give yourself a break, take turns with another parent or friend)"
+      },
+      {
+        "url": "https://www.healthychildren.org/English/family-life/family-dynamics/communication-discipline/Pages/Disciplining-Your-Child.aspx",
+        "final_url": "https://www.healthychildren.org/English/family-life/family-dynamics/communication-discipline/Pages/Disciplining-Your-Child.aspx",
+        "http": "200",
+        "html_sha256": "2af5fa30d2f5cf67f0ce8ccf1222f1c8a932e06663e960c182bfb6661a0821cd",
+        "text_sha256": "3cd68319cc776d1335b6dc0978ff911d9084fbcf0f0843216cd98922aedcf143",
+        "checked_at": "2026-10-08T08:53:51Z",
+        "used_for": "s09: AAP (after a real mistake: cool down, apologize, explain how you will handle it next time, keep the promise; yelling, shaming and physical punishment are ineffective and harmful)"
+      },
+      {
+        "url": "https://www.healthychildren.org/English/healthy-living/emotional-wellness/Building-Resilience/Pages/creating-calm-how-to-talk-with-your-child-when-theyre-stressed.aspx",
+        "final_url": "https://www.healthychildren.org/English/healthy-living/emotional-wellness/Building-Resilience/Pages/creating-calm-how-to-talk-with-your-child-when-theyre-stressed.aspx",
+        "http": "200",
+        "html_sha256": "b961df0670bfb5004dfe28c629158e6b255e31ff4800445188d18ab4b7383448",
+        "text_sha256": "5465e65b49eb77bde7a9973d2848f6e666abea650e9c77b0622737b2080b7ef5",
+        "checked_at": "2026-10-08T09:05:25Z",
+        "used_for": "s09: AAP Creating Calm (calm your own stress first, a few deep breaths, chat with a friend; be kind to yourself, both doing the best you can; reach out for more help)"
+      },
+      {
+        "url": "https://www.cdc.gov/parenting-toddlers/noticing-and-naming/emotion-coaching.html",
+        "final_url": "https://www.cdc.gov/parenting-toddlers/noticing-and-naming/emotion-coaching.html",
+        "http": "200",
+        "html_sha256": "1f458b12a3101571489e7993f0be9b5b156a2f86d337b146f057854b696d6f4c",
+        "text_sha256": "8956363397686fc229c49b96e9327b732c2bef531a43fff89637983a5451e294",
+        "checked_at": "2026-10-08T08:53:57Z",
+        "used_for": "s09: CDC (parenting is hard work, negative emotions common; pause, deep breaths; sit quietly together when safe; longer pause only with another trusted caregiver; children imitate, breathe together)"
+      },
+      {
+        "url": "https://www.cdc.gov/parenting-toddlers/understanding-the-early-years/index.html",
+        "final_url": "https://www.cdc.gov/parenting-toddlers/understanding-the-early-years/index.html",
+        "http": "200",
+        "html_sha256": "f552b42d5d6c6195aa4e300a48f257ac408d003cbe020eb99c4a75f474bcaccf",
+        "text_sha256": "8271f4f7b46f501d63230de5433597566180c9b14a822acb8b0daac6dd8c2537",
+        "checked_at": "2026-10-08T08:54:23Z",
+        "used_for": "s09: CDC (feeling frustrated or rejected is normal; pause and self-care)"
+      },
+      {
+        "url": "https://www.cdc.gov/parenting-toddlers/responding-to-behavior/ignoring.html",
+        "final_url": "https://www.cdc.gov/parenting-toddlers/responding-to-behavior/ignoring.html",
+        "http": "200",
+        "html_sha256": "b1870162b98bac098ca031461726ea74e3ae9777364fb625f793a08829e81d6e",
+        "text_sha256": "e8a41418e1ff164abe4d9755beceb26b4613337b75c187284c7529d1dad1b5e6",
+        "checked_at": "2026-10-08T08:54:21Z",
+        "used_for": "s07/s08: CDC (hurting others never ignored, stopped immediately; child not left alone unless safe; grocery-store giving-in example)"
+      },
+      {
+        "url": "https://www.cdc.gov/parenting-toddlers/responding-to-behavior/index.html",
+        "final_url": "https://www.cdc.gov/parenting-toddlers/responding-to-behavior/index.html",
+        "http": "200",
+        "html_sha256": "7bc67d4dbf5d0959b62d51b8a7d66d372947059b1c32d397309192f794b796d3",
+        "text_sha256": "a1681cb3df77a9b68b9dbd587ddcc6d417e10b67931a1de997407b12a2f4d42a",
+        "checked_at": "2026-10-08T08:53:54Z",
+        "used_for": "s08: CDC (spanking, yelling at or embarrassing your child is unhealthy; 'Thank you for being patient and staying by me')"
+      },
+      {
+        "url": "https://www.cdc.gov/parenting-toddlers/structure-rules/index.html",
+        "final_url": "https://www.cdc.gov/parenting-toddlers/structure-rules/index.html",
+        "http": "200",
+        "html_sha256": "3fe1a18b5a5d016ab3c7c6802bd9c89569916aab350afb00d345b2a6664d67f8",
+        "text_sha256": "e70d1968a92a936b59f3f4350b92929f242648233567a76ecb8ac1aa766fea2b",
+        "checked_at": "2026-10-08T08:53:59Z",
+        "used_for": "s08: CDC (eye-spy during errands; explain changes calmly; consistency)"
+      },
+      {
+        "url": "https://www.cdc.gov/act-early/milestones/3-years.html",
+        "final_url": "https://www.cdc.gov/act-early/milestones/3-years.html",
+        "http": "200",
+        "html_sha256": "c523a97c6ac684773ba6f859f19404dc4f072318f99a5e27bc14e6f212eeea13",
+        "text_sha256": "6d80a0e767968ed6eb18b78b11e9ce9eeca02a4b11f8b47c87d268fc19e6dd32",
+        "checked_at": "2026-10-08T08:54:01Z",
+        "used_for": "s08: CDC (help the child be ready for new places and meeting new people)"
+      },
+      {
+        "url": "https://www.nhs.uk/conditions/baby/support-and-services/services-and-support-for-parents/",
+        "final_url": "https://www.nhs.uk/baby/support-and-services/services-and-support-for-parents/",
+        "http": "200",
+        "html_sha256": "76a98ac4c7693b74ca37dec4bbe74b0f0606f0b80b585aed0df3aa2167ed355a",
+        "text_sha256": "2ada838146fa5fff78780e3219489a73b9c439a2e99932d57706176c19054530",
+        "checked_at": "2026-10-08T09:05:26Z",
+        "used_for": "s09: NHS (contact your GP for yourself; talk to a health visitor if struggling with your mental health)"
+      },
+      {
+        "url": "https://www.aacap.org/AACAP/Families_and_Youth/Facts_for_Families/FFF-Guide/Temper_Tantrums-136.aspx",
+        "final_url": "https://www.aacap.org/AACAP/Families_and_Youth/Facts_for_Families/FFF-Guide/Temper_Tantrums-136.aspx",
+        "http": "200",
+        "html_sha256": "e26c5690d57d46aa510cf336cd6e9474ac3adb1971fad7ebe9f27f07d6ddc02f",
+        "text_sha256": "9876a7f8fc85cff5a6e00ac16f3eab80027de9a7ac011e388359d185fb123672",
+        "checked_at": "2026-10-08T08:53:53Z",
+        "used_for": "s07-s09: AACAP (tired, hungry, pain, mild illness; remain calm, you are modeling; referral criteria; minute figures not used)"
+      }
+    ],
+    "fetched_not_cited": [
+      "https://www.cdc.gov/act-early/milestones/2-years.html",
+      "https://www.cdc.gov/child-development/positive-parenting-tips/toddlers-2-3-years.html",
+      "https://www.cdc.gov/parenting-toddlers/communication/index.html",
+      "https://www.cdc.gov/parenting-toddlers/responding-to-behavior/time-out.html",
+      "https://www.healthychildren.org/English/ages-stages/toddler/Pages/Emotional-Development-2-Year-Olds.aspx",
+      "https://www.healthychildren.org/English/family-life/family-dynamics/communication-discipline/Pages/How-to-Shape-Manage-Young-Child-Behavior.aspx",
+      "https://www.nhs.uk/mental-health/conditions/post-natal-depression/overview/"
+    ],
+    "fetch_failed": {
+      "https://www.healthychildren.org/English/ages-stages/toddler/Pages/Biting.aspx": "HTTP 404",
+      "https://www.healthychildren.org/English/ages-stages/toddler/discipline/Pages/Aggressive-Behavior.aspx": "HTTP 404"
+    },
+    "human_approval_claimed": false,
+    "verification": {
+      "tests": 204,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "pytest_exit": 0,
+      "test_files": [
+        "test_deepen_paths",
+        "test_review_en_parity",
+        "test_review_en_parity_proof",
+        "test_review_en_parity_transport",
+        "test_curriculum_i18n",
+        "test_lesson_index_integrity",
+        "test_lesson11_source_proof"
+      ],
+      "schema_exit": 0,
+      "en_parity_check_all_exit": 0,
+      "pre_commit_exit": 0,
+      "preserved_backup_files": 98,
+      "backup_mismatches": 0,
+      "backup_verify_exit": 0,
+      "existing_s01_s06_files_unchanged": true
     }
   }
 }
