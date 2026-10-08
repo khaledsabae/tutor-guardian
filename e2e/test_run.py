@@ -8,7 +8,7 @@ import unittest
 
 
 class RunnerTest(unittest.TestCase):
-    def run_runner(self, fail_flow='', fail_head_l10n=False, fail_l10n=''):
+    def run_runner(self, fail_flow='', fail_head_l10n=False, fail_l10n='', retry_flow=''):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             (root / 'e2e').mkdir()
@@ -23,7 +23,12 @@ fi
 exit 0
 ''',
                 'maestro': '''#!/bin/bash
-[[ "$*" != *"/$FAIL_FLOW.yaml"* || -z "$FAIL_FLOW" ]]
+out=''
+while [ $# -gt 0 ]; do [ "$1" = --test-output-dir ] && out=$2; shift; done
+if [[ -n "$RETRY_FLOW" && "$out" == *"/$RETRY_FLOW" ]]; then
+  mkdir -p "$out/run/takeScreenshot" && : > "$out/run/takeScreenshot/lesson_server_error_retry.png"
+fi
+[[ "$out" != *"/$FAIL_FLOW" || -z "$FAIL_FLOW" ]]
 ''',
                 'python3': '''#!/bin/bash
 if [[ "$2" == l10n && "$FAIL_L10N" == first-head && "$*" == *'/head/l10n'* && ! -f "$L10N_COUNT" ]]; then
@@ -46,7 +51,7 @@ exit 0
                 p.chmod(0o755)
             env = dict(os.environ, PATH=f'{bins}:{os.environ["PATH"]}',
                        E2E_APKS=str(root / 'apks'), E2E_OUT=str(root / 'out'),
-                       FAIL_FLOW=fail_flow, FAIL_L10N=fail_l10n, FAIL_HEAD_L10N=str(int(fail_head_l10n)),
+                       FAIL_FLOW=fail_flow, RETRY_FLOW=retry_flow, FAIL_L10N=fail_l10n, FAIL_HEAD_L10N=str(int(fail_head_l10n)),
                        L10N_COUNT=str(root / 'l10n_count'))
             proc = subprocess.run(['bash', str(root / 'e2e/run.sh')], env=env,
                                   capture_output=True, text=True, timeout=15)
@@ -100,3 +105,10 @@ exit 0
         rc, rows, output = self.run_runner(fail_l10n='baseline')
         self.assertEqual(rc, 1, output)
         self.assertEqual(rows['upgrade', '03_after_upgrade'][0], 'skip')
+
+    def test_a_retried_pass_is_announced(self):
+        rc, rows, output = self.run_runner(retry_flow='02_today_lesson')
+        self.assertEqual(rc, 0, output)
+        self.assertEqual(rows['fresh', '02_today_lesson'], ('0', ''))
+        self.assertIn('::warning title=E2E fresh/02_today_lesson::passed only after a retry', output)
+        self.assertEqual(output.count('passed only after a retry'), 1)

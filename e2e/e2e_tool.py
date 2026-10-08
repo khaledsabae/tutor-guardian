@@ -85,7 +85,7 @@ KEYS = [
     "settingsTheme", "settingsThemeDark",
     # today + lesson
     "startThisLesson", "browsePaths", "continueBtn",
-    "lessonMarkComplete", "lessonCompleted",
+    "lessonMarkComplete", "lessonCompleted", "lessonErrorLoading", "retry",
     # assistant
     "chatTypeHint", "a11ySendQuestion", "chatStop", "feedbackHelpful", "chatRetry",
     # child mode
