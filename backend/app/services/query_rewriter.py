@@ -22,6 +22,9 @@ import sqlite3
 from functools import lru_cache
 from pathlib import Path
 
+from app.db.migrations.query_rewrites_0001_baseline import MIGRATION as QUERY_REWRITES_SCHEMA
+from app.db.migrations.runner import apply_migrations
+
 logger = logging.getLogger(__name__)
 
 _CACHE_DB = Path(__file__).resolve().parents[3] / "ops" / "sessions.db"
@@ -33,25 +36,18 @@ _PROMPT = (
 )
 
 
-_schema_initialized = False
-
-
 def _get_conn() -> sqlite3.Connection:
     """Open a WAL-mode connection with a busy timeout to prevent lock errors."""
-    global _schema_initialized
     conn = sqlite3.connect(_CACHE_DB, timeout=5.0)
     conn.execute("PRAGMA journal_mode=WAL")
     conn.execute("PRAGMA busy_timeout=5000")
-    if not _schema_initialized:
-        conn.execute(
-            """CREATE TABLE IF NOT EXISTS query_rewrites (
-                question_hash TEXT PRIMARY KEY, rewritten TEXT,
-                ts TEXT DEFAULT (datetime('now')), redacted INTEGER)"""
-        )
-        from app.services.retention import ensure_marker
-        ensure_marker(conn, "query_rewrites")
-        conn.commit()
-        _schema_initialized = True
+    try:
+        # Every DB this process opens is adopted or refused by the numbered
+        # runner — no process flag that a second DB could slip past.
+        apply_migrations(conn, "query_rewrites", (QUERY_REWRITES_SCHEMA,))
+    except BaseException:
+        conn.close()
+        raise
     return conn
 
 

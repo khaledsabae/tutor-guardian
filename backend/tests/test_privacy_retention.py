@@ -52,7 +52,6 @@ def _telemetry(tmp_path, monkeypatch):
     from app.services import answer_cache
     monkeypatch.setattr(answer_cache, "_DB", db)
     monkeypatch.setattr(retrieval, "_log_schema_ready", False)
-    monkeypatch.setattr(query_rewriter, "_schema_initialized", False)
     return db
 
 
