@@ -41,6 +41,7 @@ import requests
 
 from app.config.llm_config import LLM
 from app.core.circuit_breaker import CircuitBreaker
+from app.services.cloud_budget import BudgetDenied, CloudBudget, upper_token_bound
 
 logger = logging.getLogger(__name__)
 
@@ -353,9 +354,10 @@ class OpenAICompatProvider:
 
         self.model = model
         self.timeout = timeout
+        self._budget_endpoint = endpoint
         self._client = AzureOpenAI(
             api_key=api_key, azure_endpoint=endpoint,
-            api_version=api_version, timeout=timeout,
+            api_version=api_version, timeout=timeout, max_retries=0, http_client=_HTTP,
         )
 
     def _report(self, ok: bool) -> None:
@@ -366,12 +368,16 @@ class OpenAICompatProvider:
             pass
 
     def generate(self, prompt: str, *, options: dict) -> dict:
+        messages = [{"role": "user", "content": prompt}]
+        output_cap = options.get("num_predict", 1024)
+        charge = _reserve_wire_budget(self._budget_endpoint, self.name, messages, output_cap,
+                                     model=self.model)
         try:
             r = self._client.chat.completions.create(
                 model=self.model,
-                messages=[{"role": "user", "content": prompt}],
+                messages=messages,
                 temperature=options.get("temperature", 0.3),
-                max_tokens=options.get("num_predict", 1024),
+                max_tokens=output_cap,
             )
         except Exception:
             self._report(False)
@@ -381,6 +387,8 @@ class OpenAICompatProvider:
         flt = _ThinkFilter()
         text = flt.feed(text)
         usage = getattr(r, "usage", None)
+        _settle_wire_budget(charge, getattr(usage, "prompt_tokens", None),
+                            getattr(usage, "completion_tokens", None))
         return {
             "response": text, "done": True,
             "prompt_eval_count": getattr(usage, "prompt_tokens", None),
@@ -388,19 +396,25 @@ class OpenAICompatProvider:
         }
 
     def stream(self, prompt: str, *, options: dict) -> Iterator[dict]:
+        messages = [{"role": "user", "content": prompt}]
+        output_cap = options.get("num_predict", 1024)
+        charge = _reserve_wire_budget(self._budget_endpoint, self.name, messages, output_cap,
+                                     model=self.model)
         try:
             stream = self._client.chat.completions.create(
                 model=self.model,
-                messages=[{"role": "user", "content": prompt}],
+                messages=messages,
                 temperature=options.get("temperature", 0.3),
-                max_tokens=options.get("num_predict", 1024),
+                max_tokens=output_cap,
                 stream=True,
+                stream_options={"include_usage": True},
             )
         except Exception:
             self._report(False)
             raise
         flt = _ThinkFilter()
         prompt_tokens = completion_tokens = None
+        finished = False
         try:
             for chunk in stream:
                 usage = getattr(chunk, "usage", None)
@@ -409,14 +423,24 @@ class OpenAICompatProvider:
                     completion_tokens = getattr(usage, "completion_tokens", None)
                 if not chunk.choices:
                     continue
+                finished = finished or any(getattr(choice, "finish_reason", None)
+                                          in ("stop", "length", "content_filter")
+                                          for choice in chunk.choices)
                 delta = chunk.choices[0].delta.content or ""
                 delta = flt.feed(delta)
                 if delta:
                     yield {"response": delta, "done": False}
+            if not finished:
+                raise ProviderStreamError("azure_deepseek: stream has no terminal choice")
         except Exception:
             self._report(False)
             raise
+        finally:
+            close = getattr(stream, "close", None)
+            if close is not None:
+                close()
         self._report(True)
+        _settle_wire_budget(charge, prompt_tokens, completion_tokens)
         yield {
             "response": "", "done": True,
             "prompt_eval_count": prompt_tokens,
@@ -633,7 +657,7 @@ class OpenAIChatProvider:
         start = time.monotonic()
         first_budget = limits.first_token if limits.first_token is not None else PRIMARY_FIRST_TOKEN_S
         timeout = httpx.Timeout(float(self.timeout), connect=min(10.0, float(self.timeout)))
-        state = {"last_progress": None, "bytes": False, "done": False}
+        state = {"last_progress": None, "bytes": False, "done": False, "attempted": False}
 
         def stopped() -> bool:
             return bool(limits.stop and limits.stop())
@@ -671,8 +695,19 @@ class OpenAIChatProvider:
         while True:
             if stopped():
                 raise LLMCancelled(f"{self.name}: turn cut")
+            payload = self._payload(prompt, options)
             try:
-                with self._http.stream("POST", self._url, json=self._payload(prompt, options),
+                charge = _reserve_wire_budget(self._base, self.name,
+                                              payload["messages"], payload["max_tokens"],
+                                              model=payload["model"])
+            except BudgetDenied as exc:
+                if state["attempted"]:
+                    exc.usage = (None, None)  # earlier retry's billing remains unknown
+                raise
+            final_usage = (None, None)
+            try:
+                state["attempted"] = True
+                with self._http.stream("POST", self._url, json=payload,
                                        headers=self._headers, timeout=timeout) as resp:
                     if resp.status_code >= 400:
                         body = _snippet(resp)
@@ -707,7 +742,11 @@ class OpenAIChatProvider:
                         body = _snippet(resp)
                         raise ProviderStreamError(
                             f"{self.name}: answered {ctype or 'no content type'}, not an event stream: {body}")
-                    yield from self._read_stream(resp, tick, state)
+                    for ev in self._read_stream(resp, tick, state):
+                        if ev[0] == "usage":
+                            final_usage = (ev[1], ev[2])
+                        yield ev
+                    _settle_wire_budget(charge, *final_usage)
                     return
             except (httpx.NetworkError, httpx.RemoteProtocolError) as e:
                 # Connect/read/protocol failures — never a timeout (R7) — and
@@ -825,6 +864,12 @@ def _ensure_telemetry_schema(conn: sqlite3.Connection) -> None:
     from app.db.migrations.telemetry_0002_usage_estimated import MIGRATION as USAGE_ESTIMATED
 
     global _telemetry_schema_ready
+    if (CloudBudget(_TELEMETRY_DB).anchor_path.exists()
+            or conn.execute("SELECT 1 FROM sqlite_master WHERE name='cloud_budget_identity'").fetchone()):
+        # Diagnostic writes must not silently heal lost activated history:
+        # an activated ledger whose llm_calls vanished fails here, before the
+        # migration runner could recreate an empty table.
+        conn.execute('SELECT ts,provider,prompt_tokens,completion_tokens FROM llm_calls LIMIT 0')
     apply_migrations(conn, "llm_telemetry", (LLM_CALLS, USAGE_ESTIMATED))
     # Retained for existing diagnostic/test callers, never used to skip a DB.
     _telemetry_schema_ready = True
@@ -884,6 +929,14 @@ def _fill_usage(prompt_tokens: int | None, completion_tokens: int | None,
             True)
 
 
+def _connect_telemetry() -> sqlite3.Connection:
+    ledger = CloudBudget(_TELEMETRY_DB)
+    if ledger.anchor_path.exists():
+        # A diagnostic call on a lost activated volume must not create a DB.
+        return sqlite3.connect(ledger.path.as_uri() + '?mode=rw', uri=True)
+    return sqlite3.connect(_TELEMETRY_DB)
+
+
 def _log_call(provider: str, model: str, latency_ms: int,
               prompt_tokens: int | None, completion_tokens: int | None,
               streamed: bool, ok: bool,
@@ -897,7 +950,7 @@ def _log_call(provider: str, model: str, latency_ms: int,
         prompt_tokens, completion_tokens, estimated = _fill_usage(
             prompt_tokens, completion_tokens, prompt, received, exc)
         _TELEMETRY_DB.parent.mkdir(parents=True, exist_ok=True)
-        conn = sqlite3.connect(_TELEMETRY_DB)
+        conn = _connect_telemetry()
         conn.execute("PRAGMA journal_mode = WAL")
         conn.execute("PRAGMA busy_timeout = 5000")
         _ensure_telemetry_schema(conn)
@@ -915,12 +968,10 @@ def _log_call(provider: str, model: str, latency_ms: int,
 
 
 # Sentinel returned when the telemetry DB can't be read. Callers that must not
-# spend blind (the safety valve) compare it against their cap and lose; callers
-# that must not go mute (the primary path) test for it explicitly and proceed.
+# spend blind compare it against their cap and lose; local fallback stays live.
 _BUDGET_UNKNOWN = 1 << 62
-# A sqlite SUM per request is pure overhead for a soft monthly budget, so the
-# total is memoised. A staleness window this short can overshoot the ceiling by
-# at most one minute of traffic — noise against a cap counted in millions.
+# This memo is an advisory routing shortcut ONLY. Every paid wire attempt
+# independently reserves atomically; a stale routing total cannot grant spend.
 _BUDGET_CACHE_TTL = 60.0
 _budget_cache: dict[str, tuple[float, int]] = {}
 
@@ -932,7 +983,7 @@ def _monthly_tokens_used(provider_name: str) -> int:
     impossibly large number, so a budget-gated caller refuses to spend.
     """
     try:
-        conn = sqlite3.connect(_TELEMETRY_DB)
+        conn = _connect_telemetry()
         conn.execute("PRAGMA busy_timeout = 5000")
         _ensure_telemetry_schema(conn)
         row = conn.execute(
@@ -959,23 +1010,21 @@ def _monthly_tokens_used_cached(provider_name: str) -> int:
 
 
 def primary_budget_available(provider_name: str) -> bool:
-    """Soft monthly spend ceiling on the PAID primary provider.
+    """Advisory primary routing check; paid-wire admission is atomic below.
 
     Shared by the chat path (AIGateway._primary_within_budget) and the
     auxiliary path (aux_cloud_provider) so both spend from ONE wallet against
     ONE ceiling — a classifier that had its own budget would be an invisible
     second bill.
 
-    Fails OPEN on an unreadable telemetry DB: unlike the optional safety valve
-    (which fails closed), the primary is the app's main way of answering at
-    all, and broken telemetry must not silence it.
+    Unreadable accounting fails closed to cloud and leaves the local chain live.
     """
     cap = LLM.deepseek_primary_monthly_token_cap
     if cap <= 0:
         return True  # 0 disables the ceiling
     used = _monthly_tokens_used_cached(provider_name)
     if used >= _BUDGET_UNKNOWN:
-        return True  # telemetry unreadable — fail OPEN, see docstring
+        return False
     if used >= cap:
         logger.warning(
             "primary provider budget exhausted (%d/%d tokens this month) — "
@@ -984,6 +1033,40 @@ def primary_budget_available(provider_name: str) -> bool:
         )
         return False
     return True
+
+
+def _reserve_wire_budget(endpoint: str, provider_name: str, messages: list[dict],
+                         output_cap: int, *, model: str):
+    """Authorize one physical wire attempt, never a whole gateway operation."""
+    from urllib.parse import urlsplit
+
+    parsed = urlsplit(endpoint)
+    if parsed.scheme not in ("http", "https") or not parsed.hostname:
+        raise BudgetDenied("cloud budget cannot identify the provider wallet")
+    # Route names, model changes and key rotation never create another wallet.
+    port = parsed.port or (443 if parsed.scheme == "https" else 80)
+    wallet = f"cloud:{parsed.scheme}://{parsed.hostname.lower()}:{port}"
+    azure = provider_name == "azure_deepseek"
+    primary = azure or getattr(LLM, "primary_provider", "deepseek") == "deepseek"
+    cap = (LLM.deepseek_primary_monthly_token_cap if primary
+           else LLM.deepseek_fallback_monthly_token_cap)
+    if type(cap) is not int or cap < 0:
+        raise BudgetDenied("cloud budget invalid monthly cap")
+    if cap == 0 and primary:
+        return None  # explicit documented unlimited opt-out, not a hard-cap mode
+    bound = upper_token_bound(messages, output_cap, endpoint=endpoint, model=model)
+    # Old telemetry has no endpoint/account identifier. It cannot prove that
+    # these aliases spent from different wallets, so conservatively import all.
+    aliases = tuple(sorted({"azure_deepseek", "deepseek", "deepseek_aux",
+                            "deepseek_fallback", provider_name}))
+    ledger = CloudBudget(_TELEMETRY_DB)
+    return ledger, ledger.reserve(wallet, cap, bound, legacy_aliases=aliases)
+
+
+def _settle_wire_budget(charge, prompt_tokens, completion_tokens) -> None:
+    if charge is not None:
+        ledger, ticket = charge
+        ledger.settle(ticket, prompt_tokens, completion_tokens)
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -1086,7 +1169,7 @@ def aux_generate(provider: LLMProvider, prompt: str, *,
         _log_call(provider.name, model, int((time.monotonic() - start) * 1000),
                   *getattr(e, "usage", (None, None)), streamed=False, ok=False, tier=tier,
                   route_reason=_failure_reason(e), prompt=prompt, exc=e)
-        if breaker is not None:
+        if breaker is not None and not isinstance(e, BudgetDenied):
             breaker.record(False)
         logger.warning("auxiliary %s call failed: %s", tier, e)
         return None
@@ -1173,6 +1256,8 @@ def record_chat_completion(client, *, tier: str, provider: str | None = None,
 
 def _failure_reason(exc: BaseException) -> str | None:
     """route_reason for a failed call's llm_calls row."""
+    if isinstance(exc, BudgetDenied):
+        return "budget_denied" if exc.usage == (0, 0) else "budget_denied_after_attempt"
     if isinstance(exc, LLMDeadlineExceeded):
         return "deadline"
     if isinstance(exc, LLMProviderBusy):
@@ -1311,8 +1396,7 @@ class AIGateway:
         is a module-level singleton built once at startup: a construction-time
         check would be evaluated exactly once and the cap would never bite.
 
-        The asymmetry with the safety valve is deliberate; see
-        primary_budget_available(), which the auxiliary tier shares.
+        Both lanes fail closed to paid cloud, while keeping local fallback.
         """
         if not isinstance(self.provider, OpenAIChatProvider):
             return True  # local primary — nothing is being billed
@@ -1460,7 +1544,7 @@ class AIGateway:
                     return result
                 except Exception as e:
                     last_err = e
-                    if paid_primary:
+                    if paid_primary and not isinstance(e, BudgetDenied):
                         primary_breaker.record(False)
                     # Recorded, not silently dropped. The monthly cap is a sum
                     # over this table, and a timeout here is the case where the
@@ -1478,7 +1562,7 @@ class AIGateway:
                     # retry was another paid request into the same hold (all of
                     # them running at once), and a read timeout had already
                     # spent 60 s of the budget the fallback needs.
-                    if isinstance(e, (LLMDeadlineExceeded, LLMProviderBusy,
+                    if isinstance(e, (BudgetDenied, LLMDeadlineExceeded, LLMProviderBusy,
                                       httpx.TimeoutException)):
                         break
                     if attempt < retries:
@@ -1686,7 +1770,7 @@ class AIGateway:
             except LLMCancelled:
                 raise   # recorded by _stream_provider
             except Exception as e:
-                if is_primary:
+                if is_primary and not isinstance(e, BudgetDenied):
                     primary_breaker.record(False)
                 # The failed attempt's row was written by _stream_provider.
                 if should_stop is not None and should_stop():

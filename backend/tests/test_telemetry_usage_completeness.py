@@ -48,6 +48,10 @@ def wire(server, monkeypatch, tmp_path):
         llm_config.LLM, base_url=server, local_base_url=server,
         local_fast_model="local_ok", local_fallback_model="local_ok", fallback_model="local_ok",
         deepseek_fallback_enabled=False, cloud_tier_enabled=False,
+        # Localhost telemetry tests explicitly opt out of the paid-wire cap
+        # (0 = documented unlimited); capped admission and its settlement of
+        # unknown usage are exercised by test_cloud_budget_reservations.
+        primary_provider="deepseek", deepseek_primary_monthly_token_cap=0,
     ))
     monkeypatch.setattr(gw, "primary_budget_available", lambda name: True)
     monkeypatch.setattr(gw, "_MODEL_SWITCHED", {}, raising=False)

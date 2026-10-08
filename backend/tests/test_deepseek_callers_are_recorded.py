@@ -40,6 +40,8 @@ needs_tools = pytest.mark.skipif(not TOOLS.is_dir(),
 ALLOWED = {
     "backend/app/config/llm_config.py": "configuration read by the gateway",
     "backend/app/services/ai_gateway.py": "the recorded path itself",
+    "backend/app/services/cloud_budget.py": "billing-profile table keyed by DeepSeek's origin; "
+                                            "sends no requests",
     "ops/tools/kb_gap_judge.py": "record_chat_completion",
     "ops/tools/eval_answers.py": "record_chat_completion",
     "ops/tools/generate_dataset_v2.py": "record_chat_completion",

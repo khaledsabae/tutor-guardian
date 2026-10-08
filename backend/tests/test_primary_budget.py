@@ -6,8 +6,9 @@ gateway must behave exactly as if the provider had failed: fall through to the
 local chain, never raise, never bill.
 
 The check has to happen per call, because the gateway is a module-level
-singleton built once at startup, and it must fail OPEN on an unreadable
-telemetry DB — the opposite of the safety valve, which fails CLOSED.
+singleton built once at startup. Unknown accounting denies paid cloud while
+the local chain stays available. The cached check is routing advice only;
+test_cloud_budget_reservations exercises the authoritative wire admission.
 """
 import asyncio
 from dataclasses import dataclass
@@ -121,11 +122,11 @@ def test_budget_total_is_cached(gateway, monkeypatch):
     assert calls["n"] == 1  # one sqlite aggregate, not five
 
 
-# ── fail-open vs fail-closed asymmetry ────────────────────────────────────
-def test_telemetry_failure_does_not_block_the_primary(gateway, monkeypatch, tmp_path):
+# ── all paid lanes fail closed; local fallback remains available ──────────
+def test_telemetry_failure_blocks_paid_primary(gateway, monkeypatch, tmp_path):
     # Real reader against an unreadable path — no stubbing of the sentinel.
     monkeypatch.setattr(ai_gateway, "_TELEMETRY_DB", tmp_path / "nope" / "\0bad.db")
-    assert gateway._primary_within_budget() is True
+    assert gateway._primary_within_budget() is False
 
 
 def test_telemetry_failure_still_blocks_the_safety_valve(monkeypatch, tmp_path):

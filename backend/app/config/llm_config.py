@@ -73,7 +73,7 @@ class LLMConfig:
     primary_provider: str = os.environ.get("LLM_PRIMARY_PROVIDER", "ollama").lower()
     deepseek_api_key: str = os.environ.get("DEEPSEEK_API_KEY", "")
     deepseek_base_url: str = os.environ.get("DEEPSEEK_BASE_URL", "https://api.deepseek.com")
-    deepseek_model: str = os.environ.get("DEEPSEEK_MODEL", "deepseek-chat")
+    deepseek_model: str = os.environ.get("DEEPSEEK_MODEL", "deepseek-flash")
     # DeepSeek's docs (2026-10) list deepseek-chat as a legacy name due to be
     # discontinued; the documented model is deepseek-flash (thinking off via
     # the request's "thinking" field). When the configured model is refused
@@ -82,8 +82,8 @@ class LLMConfig:
     # Monthly spend ceiling for the PRIMARY path. The app is free forever (no
     # ads, no subscriptions), so every primary token is paid out of the owner's
     # own pocket — without a ceiling the bill is unbounded. Unlike the
-    # safety-valve cap this is a SOFT budget: once exhausted the gateway simply
-    # falls through to the local Ollama chain, exactly as if the provider had
+    # safety-valve cap, exhaustion or unknown billing profiles make the gateway
+    # fall through to the local Ollama chain, exactly as if the provider had
     # failed, so the app keeps answering. 0 disables the ceiling.
     deepseek_primary_monthly_token_cap: int = int(
         os.environ.get("DEEPSEEK_PRIMARY_MONTHLY_TOKEN_CAP", "100000000")
