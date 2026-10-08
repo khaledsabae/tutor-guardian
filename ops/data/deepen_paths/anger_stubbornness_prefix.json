@@ -8,7 +8,7 @@
         "title": "نوبات الغضب في الثانية والثالثة: الفهم والوقاية",
         "age_group": "2-3",
         "domain": "development",
-        "description": "درسان يوميان للوالد مع طفل في الثانية والثالثة: فهم نوبات الغضب، وملاحظة الجوع والتعب والانتقالات، مع استجابة هادئة تحافظ على الأمان وتلبي احتياجات الطفل.",
+        "description": "أربعة دروس يومية للوالد مع طفل في الثانية والثالثة: فهم نوبات الغضب، وملاحظة الجوع والتعب والانتقالات، والأمان مع كلمات قليلة أثناء النوبة، والقرب وتسمية المشاعر بعد أن يهدأ، مع استجابة هادئة تحافظ على الأمان وتلبي احتياجات الطفل.",
         "pedagogical_framework": "attachment_rahma",
         "primary_reference": {
           "type": "دليل_تربوي",
@@ -16,7 +16,7 @@
         },
         "en": {
           "title": "Tantrums at Ages Two and Three: Understanding and Prevention",
-          "description": "Two daily lessons for parents of two- and three-year-olds: understanding tantrums and noticing hunger, tiredness and transitions, with a calm response that keeps children safe and meets their needs."
+          "description": "Four daily lessons for parents of two- and three-year-olds: understanding tantrums, noticing hunger, tiredness and transitions, keeping children safe with few words during a tantrum, and closeness and naming feelings once they calm down, with a calm response that keeps children safe and meets their needs."
         }
       },
       "unit_bands": [
@@ -26,7 +26,7 @@
         "4-6",
         "unspecified"
       ],
-      "band_notes": "Ages 2-3: self-regulation and communication are developing. No deterministic diagnosis, guaranteed prevention, punishment, hitting or shaming. Safety, hunger, pain and distress must always be addressed.",
+      "band_notes": "Ages 2-3: self-regulation and communication are developing. No deterministic diagnosis, guaranteed prevention, punishment, hitting or shaming. Safety, hunger, pain and distress must always be addressed. This recovery publishes only the first four contiguous lessons; the remaining original drafts (s05-s10) stay held in the preserved backup. The unit d7a09c7e-769c-48b5-aaf8-0511fedfc0db is not used (no source URL; invented quarter-hour and five-a-day thresholds). Lesson 3 (during the tantrum) follows AAP HealthyChildren (do not ignore hitting, kicking, biting or throwing; stop it immediately; hold a child rushing into danger; no spanking, yelling or shaming; parent's own time-out with the child in a safe place), AACAP (tired, hungry, pain or mild illness; remain calm, you are modeling; state calmly which behavior must stop; never respond with physical aggression; seek help for danger, self-harm on purpose, not able to calm down, very frequent or longer than expected for age, getting in the way of life), CDC (ensure safety first; remain close, hands free, time and space to calm; ignoring only for minor, safe, attention-seeking behavior such as whining, never needs-based, distress or danger, child not left alone unless safe, attention returned when it stops; giving in rewards the tantrum; a pause or another trusted caregiver for the parent; lost skills -> talk with the doctor) and NHS (losing your temper or shouting back will not end it; do not change your mind or bribe with sweets; distraction; holding a child who is more upset than angry, when you are calm). No duration or count threshold is given. Lesson 4 (after the tantrum): CDC emotion coaching (wait until both are calm; pause and breathe; connect with eye contact, a smile or gentle touch; name the emotion in simple words, 'it seems like you are upset' when unsure, accept the child's correction and expand; validate feelings but limit behavior, then simple choices; rushing to solutions can dismiss feelings and escalate; teach acceptable ways to show upset; return to being positive and praise), NHS (do not hit back; make clear that hitting hurts and you will not allow it; 'I know you're feeling angry' helps a child name feelings; praise and cuddles), AAP (hug and start over; no shaming; consult the pediatrician if very withdrawn, persistently sad or highly demanding most of the time). No withdrawal of love, no grudges; referral and urgent-help sentence as in lesson 3.",
       "lessons": [
         {
           "title": "لماذا يغضب بهذه القوة؟",
@@ -51,7 +51,41 @@
             "d7a09c7e-769c-48b5-aaf8-0511fedfc0db",
             "seed-tantrum-23"
           ]
+        },
+        {
+          "title": "أثناء النوبة: أمانٌ وكلماتٌ قليلة",
+          "focus": "During a tantrum: safety first (move harmful things away; stop hitting, biting, kicking, throwing or self-harm at once, calmly and without violence; hold a child rushing into danger); check tiredness, hunger, pain or illness and meet the need; stay close, give time to calm, few calm words; do not shout, hit, threaten or humiliate; a gentle hug if more sad than angry; do not give in or bribe after a reasoned no; turn attention away only from minor safe attention-seeking behaviour such as whining, while watching, never from need, pain, illness, fear or distress; parent's own pause with the child safe or with a trusted adult; referral and urgent help without numeric thresholds.",
+          "keywords": [
+            "نوبات الغضب"
+          ],
+          "pin_units": [
+            "seed-tantrum-23"
+          ]
+        },
+        {
+          "title": "بعد أن يهدأ: الحضن أولًا ثم الكلمات",
+          "focus": "After the tantrum: both calm first; closeness before words (hug if the child wants it, gentle touch, eye contact and a smile); name the feeling simply, accept correction; validate the feeling and limit the behaviour without a lecture, offer two simple choices; teach an acceptable way to say they are upset; do not rush to solutions; if they hit, say clearly that hitting hurts and is not allowed, never hit back; no shaming, return to the day warmly and praise words over screaming; referral (very frequent, longer than expected, cannot calm, harm, lost skills, persistently sad or withdrawn) and urgent help.",
+          "keywords": [
+            "نوبات الغضب",
+            "المشاعر"
+          ],
+          "pin_units": [
+            "seed-tantrum-23",
+            "dev-35865ddb"
+          ]
         }
+      ],
+      "description_replace_ar": [
+        [
+          "درسان يوميان للوالد مع طفل في الثانية والثالثة: فهم نوبات الغضب، وملاحظة الجوع والتعب والانتقالات، مع استجابة هادئة تحافظ على الأمان وتلبي احتياجات الطفل.",
+          "أربعة دروس يومية للوالد مع طفل في الثانية والثالثة: فهم نوبات الغضب، وملاحظة الجوع والتعب والانتقالات، والأمان مع كلمات قليلة أثناء النوبة، والقرب وتسمية المشاعر بعد أن يهدأ، مع استجابة هادئة تحافظ على الأمان وتلبي احتياجات الطفل."
+        ]
+      ],
+      "description_replace_en": [
+        [
+          "Two daily lessons for parents of two- and three-year-olds: understanding tantrums and noticing hunger, tiredness and transitions, with a calm response that keeps children safe and meets their needs.",
+          "Four daily lessons for parents of two- and three-year-olds: understanding tantrums, noticing hunger, tiredness and transitions, keeping children safe with few words during a tantrum, and closeness and naming feelings once they calm down, with a calm response that keeps children safe and meets their needs."
+        ]
       ]
     }
   ]

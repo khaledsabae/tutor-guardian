@@ -1,0 +1,56 @@
+{
+  "id": "lesson_2-3_development_tantrums_03",
+  "path_id": "path_2-3_development_tantrums",
+  "title": "During the Tantrum: Safety and Few Words",
+  "age_group": "2-3",
+  "domain": "development",
+  "unit_ids": [
+    "seed-tantrum-23"
+  ],
+  "summary": "When a tantrum is at its height, your child may scream, cry or throw themselves on the floor. Anger at this age is a strong feeling for them, and they are still learning how to calm down. Your task now is not to teach them a lesson or convince them, but to keep them safe, stay calm yourself, and help them return to calm.\n\nStart with safety: move away anything that could hurt them. If they are hitting, biting, kicking, throwing things or hurting themselves, stop it straight away, calmly and without violence; this is not to be ignored. If they rush toward danger, such as the street, hold them firmly. Then look at their needs: Are they tired, hungry, in pain, or starting to get ill? If a need shows, meet it first.\n\nStay close to them, give them time to calm down, and put down what is in your hands and pay attention to them. Keep words few: one short sentence in a calm voice, such as «I am here with you», or «I will not let you hit.» Do not shout at them; shouting does not end a tantrum, and your calm teaches them how to deal with distress. Do not hit them, threaten them or humiliate them. If they seem more sad than angry and you are calm, a gentle hug may reassure them.\n\nIf you said «no» for a good reason, do not change your decision to end the tantrum, and do not promise them a sweet to make them quiet; otherwise they learn that a tantrum gets them what they want. Turning your attention away from them is only for a minor, safe behavior they use to get your attention, such as whining, while you keep watching them, and you return your attention to them as soon as it stops. Never ignore them if they are hungry, tired, sick, in pain or afraid, or so overwhelmed that they cannot calm down on their own.\n\nIf you feel your own anger rising, make sure they are in a safe place, then take deep breaths, or ask someone you trust to stay with them until you calm down, then go back to them.\n\nTalk with the pediatrician if the tantrums are very frequent or last longer than expected for their age, if they cannot calm down, if they hurt themselves on purpose or put themselves or others in danger, if the tantrums get in the way of daily life, or if they lose skills they once had. If there is a serious injury or you cannot keep them safe, seek urgent help straight away.",
+  "try_this": "Today: Choose one short sentence to say calmly to your child during the next tantrum, such as «I am here with you».",
+  "order": 3,
+  "estimated_minutes": 3,
+  "reflection_prompts": [
+    "What is hardest for you during your child's tantrum: staying calm, or holding to your decision without shouting?"
+  ],
+  "warning_flags": [],
+  "needs_professional_followup": false,
+  "is_published": true,
+  "version": "1.0.0",
+  "created_at": "2026-10-08T08:03:33",
+  "updated_at": "2026-10-08T08:03:33",
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "claude-opus-5-5",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
+    "revalidated_at": "2026-10-08T08:05:09+00:00",
+    "generated_by": "ops/tools/deepen_paths.py",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "2ed7e4dff865569b7550a15cb574f9fabf75b7b0e69fccfae369815238b8790c",
+      "reviewed_at": "2026-10-08T08:05:09+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+    }
+  }
+}

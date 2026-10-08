@@ -3,12 +3,14 @@
   "title": "Tantrums at Ages Two and Three: Understanding and Prevention",
   "age_group": "2-3",
   "domain": "development",
-  "description": "Two daily lessons for parents of two- and three-year-olds: understanding tantrums and noticing hunger, tiredness and transitions, with a calm response that keeps children safe and meets their needs.",
+  "description": "Four daily lessons for parents of two- and three-year-olds: understanding tantrums, noticing hunger, tiredness and transitions, keeping children safe with few words during a tantrum, and closeness and naming feelings once they calm down, with a calm response that keeps children safe and meets their needs.",
   "lesson_ids": [
     "lesson_2-3_development_tantrums_01",
-    "lesson_2-3_development_tantrums_02"
+    "lesson_2-3_development_tantrums_02",
+    "lesson_2-3_development_tantrums_03",
+    "lesson_2-3_development_tantrums_04"
   ],
-  "estimated_days": 2,
+  "estimated_days": 4,
   "pedagogical_framework": "attachment_rahma",
   "primary_reference": {
     "type": "دليل_تربوي",
@@ -18,15 +20,15 @@
   "is_published": true,
   "version": "1.0.0",
   "created_at": "2026-10-07T17:38:16",
-  "updated_at": "2026-10-07T17:38:16",
-  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
+  "updated_at": "2026-10-08T08:03:33",
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
   "language": "en",
   "source_language": "ar",
   "translation": {
     "translator_model": "gpt-6 (Codex source revision)",
     "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "review_verdict": "clean",
-    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
     "generated_by": "ops/tools/deepen_paths.py",
     "auto_review": {
       "reviewers": [
@@ -36,14 +38,14 @@
       "fixer": null,
       "rounds": 1,
       "prompt_version": "dfa8a5f39718",
-      "content_sha256": "b56bbc45c3619c23f340c69706df3649d0c8ae1d5f8da75ece2f2efe2f615294",
-      "reviewed_at": "2026-10-07T17:41:22+00:00",
+      "content_sha256": "6b54104b329a846eed85ef7a387d5439d5d0a13adf1497619d46df98e17a67ff",
+      "reviewed_at": "2026-10-08T08:05:09+00:00",
       "residual_low": [],
       "adjudicated": [],
       "tool": "ops/tools/review_en_parity.py",
       "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
     },
     "review_defects": [],
-    "revalidated_at": "2026-10-07T17:41:22+00:00"
+    "revalidated_at": "2026-10-08T08:05:09+00:00"
   }
 }

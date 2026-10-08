@@ -1,0 +1,57 @@
+{
+  "id": "lesson_2-3_development_tantrums_04",
+  "path_id": "path_2-3_development_tantrums",
+  "title": "After They Calm Down: The Hug First, Then the Words",
+  "age_group": "2-3",
+  "domain": "development",
+  "unit_ids": [
+    "seed-tantrum-23",
+    "dev-35865ddb"
+  ],
+  "summary": "The tantrum is over, and your child has calmed down. Now they are able to listen to you, and this is a good time for them to learn something about their feelings. But make sure you have calmed down too; if you are still upset, take deep breaths first, then come close to them.\n\nStart with closeness before words: hug them if they want it, gently stroke their back, or look into their eyes and smile at them. This reassures them that you are still close to them after their anger. Then name their feeling in simple words: «You were angry because the tower fell.» If you do not know exactly what they feel, say: «It seems something upset you.» If they correct you, repeat what they said and add a word to it. This way they learn that their feelings have names, and that they can say them instead of screaming them out.\n\nThen set the limit calmly and without a lecture: «It is okay to be angry, but we do not throw the blocks.» Suggest a simple alternative: «Shall we build the tower again, or play with the puzzle?» Teach them an acceptable way to show they are upset, such as saying «I am angry», or asking you for help. Do not rush to solutions before they feel you have understood them; rushing may make them feel their feelings do not matter to you, and their upset may grow.\n\nIf they hit someone during the tantrum, tell them calmly and clearly: «Hitting hurts, and I will not allow it.» Do not hit them yourself to teach them; that teaches them hitting is acceptable. Do not shame them or reproach them for what happened; instead, go back to your day with them gently, and praise them when you see them express their anger with a word or ask for help.\n\nTalk with the pediatrician if the tantrums are very frequent or last longer than expected for their age, if they cannot calm down, if they hurt themselves or others, if the tantrums get in the way of daily life, if they lose skills they once had, or if they seem sad, withdrawn, or very demanding and unsatisfied most of the time. If there is a serious injury or you cannot keep them safe, seek urgent help straight away.",
+  "try_this": "Today: After your child's first moment of anger or crying, once you are both calm, come close to them with a hug or a gentle touch if they want it, then say one sentence that names their feeling, such as «You were sad because the toy broke.»",
+  "order": 4,
+  "estimated_minutes": 3,
+  "reflection_prompts": [
+    "How did your child respond when you named their feeling after they calmed down, and have they started using any of your words?"
+  ],
+  "warning_flags": [],
+  "needs_professional_followup": false,
+  "is_published": true,
+  "version": "1.0.0",
+  "created_at": "2026-10-08T08:03:33",
+  "updated_at": "2026-10-08T08:03:33",
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "claude-opus-5-5",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
+    "revalidated_at": "2026-10-08T08:05:09+00:00",
+    "generated_by": "ops/tools/deepen_paths.py",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "b57ed85fa25e7eaab606b550bf9b15b869e3a91bbfedfc2192e85e0ae25e378d",
+      "reviewed_at": "2026-10-08T08:05:09+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+    }
+  }
+}
