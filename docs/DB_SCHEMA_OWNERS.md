@@ -2,11 +2,11 @@
 
 Who issues DDL against which SQLite file, what production actually has, and
 which owners already go through the numbered runner
-(`backend/app/db/migrations/runner.py`). Snapshot 2026-10-08.
+(`backend/app/db/migrations/runner.py`). Snapshot 2026-10-08, rebased on main `cca4f207`.
 
 **Production evidence.** Schema only, read-only (`file:/app/ops/<db>?mode=ro`
 inside `tg_backend`, `SELECT type,name,tbl_name,sql FROM sqlite_master`), no
-rows. Taken twice that day; the two dumps are identical. The sessions.db dump
+rows. Taken three times that day, the last after main `cca4f207`. All three dumps are identical. The sessions.db dump
 is checked in as `backend/tests/fixtures/prod_sessions_db_2026-10-08.sql`; the
 conversations.db dump stays in the private evidence directory. SQLite 3.46.1.
 Regenerate them the same way. Do not write them by hand.
@@ -16,13 +16,16 @@ Regenerate them the same way. Do not write them by hand.
 | file | version stamp | numbered-runner ledger (`schema_migrations`) |
 |---|---|---|
 | `ops/conversations.db` (`CONVERSATIONS_DB`) | table `schema_version` = **35**. `PRAGMA user_version` is **0**: the "core v35" stamp lives in a table, not in the pragma | none yet |
-| `ops/sessions.db` (path hard-coded per service; one service reads it from `ANSWER_CACHE_DB`) | none | `llm_telemetry` 1 `llm_calls` and 2 `usage_estimated`. Both checksums match the source byte for byte. This change adds `tafsir_cache` 1 and `bahouth_cache` 1 |
+| `ops/sessions.db` (path hard-coded per service; one service reads it from `ANSWER_CACHE_DB`) | none | `llm_telemetry` 1 `llm_calls` and 2 `usage_estimated`. Both checksums match the source byte for byte. This change adds `tafsir_cache` 1, `bahouth_cache` 1, `sessions` 1 and `query_rewrites` 1 |
 
 ## Owner inventory
 
 An *owner* is a runtime function that issues `CREATE`/`ALTER`/`DROP` against a
-production DB. There are 16, not counting the runner's own ledger. **3 are on
-the runner**: telemetry, plus the two cache owners migrated here.
+production DB. There are 18, not counting the runner's own ledger. **5 are on
+the runner**: telemetry, plus the four owners migrated here (`tafsir_cache`,
+`bahouth_cache`, `sessions`, `query_rewrites`). Two owners (#17, #18) create
+nothing unless `CLOUD_BUDGET_ENFORCE` is on and the ledger has been
+bootstrapped. Production has neither set of tables.
 
 ### ops/sessions.db: one owner per table, each opens its own connection
 
@@ -31,13 +34,15 @@ the runner**: telemetry, plus the two cache owners migrated here.
 | 1 | `llm_calls` | `services/ai_gateway._ensure_telemetry_schema` | each telemetry write | 12 cols, incl. `tier`, `route_reason`, `usage_estimated INTEGER NOT NULL DEFAULT 0`; no `redacted` | ✅ `llm_telemetry` 0001+0002 |
 | 2 | `tafsir_cache` | `services/tafsir_service._cache_conn` | each cache get/put | 10 cols, `UNIQUE(cache_key)`, `idx_tafsir_cache_lookup(surah,ayah,source)` | ✅ `tafsir_cache` 0001 |
 | 3 | `bahouth_cache` | `services/quranic_linguistics_service._cache_conn` | each cache get/put | 7 cols, `UNIQUE(cache_key)`, `idx_bahouth_cache_lookup(tool,cache_key)` | ✅ `bahouth_cache` 0001 |
-| 4 | `query_rewrites` | `services/query_rewriter._get_conn` | each rewrite lookup | 4 cols incl. `redacted`; TEXT PK `question_hash` | — |
-| 5 | `sessions` | `services/session_logger._get_conn` | each logged turn | 11 cols, TEXT PK | — |
+| 4 | `query_rewrites` | `services/query_rewriter._get_conn` (the process flag `_schema_initialized` is removed) | each rewrite lookup | 4 cols incl. `redacted`; TEXT PK `question_hash` | ✅ `query_rewrites` 0001. A pre-marker table gains `redacted` additively |
+| 5 | `sessions` | `services/session_logger._get_conn` | each logged turn | 11 cols, TEXT PK. **Positional INSERT**, so the exact column order is part of the contract | ✅ `sessions` 0001 |
 | 6 | `answer_cache` | `services/answer_cache._conn` (+`ALTER ADD kb_revision`, `idx_answer_cache_scope`) | each cache access | 12 cols incl. `redacted`, `kb_revision`; `UNIQUE(qhash)` | — |
 | 7 | `blocked_fiqh_log` | `services/fiqh_guard._log_block` (+`retention.ensure_marker`) | each blocked question | 5 cols incl. `redacted` | — |
 | 8 | `retrieval_log` | `services/retrieval.log_retrieval` (process flag `_log_schema_ready`) | first log per process | 9 cols incl. `redacted` | — |
 | 9 | `fiqh_intent_shadow` | `services/fiqh_intent.report_shadow` | shadow mode only | **absent in production** (shadow mode has never run there) | — |
-| 10 | `redacted` column on 4, 6, 7, 8 | `services/retention.ensure_marker` / `_purge(drop_unmarked=True)` | nightly retention | ⚠ if the marker column is missing, `_purge` **deletes every row** and then adds the column. A baseline for 4/6/7/8 must treat `redacted` as part of the shape | — |
+| 10 | `redacted` column on 4, 6, 7, 8 | `services/retention.ensure_marker` / `_purge(drop_unmarked=True)` | nightly retention | ⚠ if the marker column is missing, `_purge` **deletes every row** and then adds the column. A baseline for 4/6/7/8 must treat `redacted` as part of the shape. For 4, the baseline now adds it first, so `ensure_marker` is a no-op there | — |
+| 17 | 9 ledger tables: `cloud_budget_months`, `_attempts`, `_carry`, `_activation`, `_identity`, `_attempts_archive`, `_attempt_meta`, `_audit`, `_witness`. Plus indexes `cloud_budget_wallet_month` and `cloud_budget_unsettled` (partial), and 24 `*_witness_{insert,delete,update}` triggers | `services/cloud_budget.CloudBudget._create_schema`, reached only from `_transaction(bootstrap=True)`, i.e. the operator CLI `services/cloud_budget_bootstrap.py` | **only with `CLOUD_BUDGET_ENFORCE` on, after an explicit bootstrap** | **absent in production**. Integrity comes from its own continuity anchor: `_schema_hash` hashes only the ledger's own `sqlite_master` rows, so other tables and the runner ledger in sessions.db do not disturb it. It must **not** move to the runner without moving that anchor too | — (by design) |
+| 18 | `llm_call_reservations` | `services/cloud_budget.record_call_reservations`, called from `ai_gateway._log_call` | **only when a call carried ledger reservations, which happens only with `CLOUD_BUDGET_ENFORCE` on** | **absent in production** | — |
 
 ### ops/conversations.db: one monolith plus satellites
 
@@ -103,18 +108,22 @@ them explicitly. It must not assume `init_db`'s DDL.
    are derived from that text.
 4. Before shipping a baseline, run its read-only `_check(..., complete=True)`
    against the live DB in `mode=ro`.
-5. Known cost: the runner takes `BEGIN IMMEDIATE` on every connection open.
+5. Insert style decides what "compatible" means. A positional insert
+   (`sessions`) requires the exact columns in order. A named insert (the
+   caches, `query_rewrites`) tolerates extra nullable or defaulted columns.
+6. Known cost: the runner takes `BEGIN IMMEDIATE` on every connection open.
    The cache paths therefore now briefly take the sessions.db writer lock even
    on a read (`busy_timeout` 5000), as telemetry already did. The cache-hit and
    cache-put paths write anyway.
 
 ## Next owners, in order of risk
 
-1. **sessions.db logs and caches:** `query_rewrites`, `sessions`,
-   `blocked_fiqh_log`, `retrieval_log`, `answer_cache`. Each has a single
-   owner. Their baselines must include `redacted` (and `kb_revision` for
-   `answer_cache`); `retention.ensure_marker` should become a no-op validator,
-   and `retrieval`'s process flag goes away.
+1. **The rest of sessions.db's logs and caches:** `blocked_fiqh_log`,
+   `retrieval_log`, `answer_cache`. Their baselines must include `redacted`
+   (and `kb_revision` for `answer_cache`). `retrieval`'s process flag goes
+   away, as `query_rewriter`'s did. `llm_call_reservations` could get a
+   baseline in the `llm_telemetry` namespace (0003) before enforcement is
+   switched on. The cloud-budget ledger (#17) stays with its own anchor.
 2. **conversations.db satellites outside `init_db`'s version stamp:**
    `story_cache`, `app_feedback`/`tg_updates_seen`, `erased_devices`. These
    would be the first runner ledger in conversations.db.
