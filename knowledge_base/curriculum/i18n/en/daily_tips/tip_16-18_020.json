@@ -2,11 +2,11 @@
   "id": "tip_16-18_020",
   "age_group": "16-18",
   "domain": "islamic_parenting",
-  "text": "Marriage is a partnership: affection, mercy, tranquility. Rights are mutual: provision/a good living (husband), obedience/preserving the home (wife). Mutual understanding = success.",
+  "text": "Marriage is a partnership of affection, mercy and tranquility, the meaning of ar-Rum 30:21. Rights are mutual, in kindness: provision and good companionship from the husband; obedience in what is right and care of the home from the wife. No obedience in sin; no coercion or harm.",
   "unit_id": "isl-7365e833",
   "day_of_week": 2,
   "time_of_day": "morning",
-  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
   "language": "en",
   "source_language": "ar",
   "translation": {
@@ -18,24 +18,60 @@
       "quoted_arabic": true,
       "reviewer_model": true
     },
-    "review_verdict": "clean",
-    "review_defects": [],
-    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
-    "revalidated_at": "2026-10-04T11:18:18+00:00",
+    "review_verdict": "low_only",
+    "review_defects": [
+      {
+        "model": "deepseek-v4-pro",
+        "field": "text",
+        "type": "meaning",
+        "why": "The Arabic says 'as in the verse', implying the verse itself, while the English says 'the meaning of', which slightly understates the direct reference to the verse."
+      },
+      {
+        "model": "glm-5.2",
+        "field": "text",
+        "type": "meaning",
+        "why": "The Arabic says 'as in the verse of ar-Rum (30:21)' referencing the ayah, while the English says 'the meaning of ar-Rum 30:21,' which slightly shifts the framing from a scriptural reference to a parap"
+      }
+    ],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
+    "revalidated_at": "2026-10-08T18:17:08+00:00",
     "auto_review": {
       "reviewers": [
         "deepseek-v4-pro",
         "glm-5.2"
       ],
+      "providers": {
+        "deepseek-v4-pro": {
+          "provider": "openrouter",
+          "model": "deepseek/deepseek-v4-pro"
+        },
+        "glm-5.2": {
+          "provider": "openrouter",
+          "model": "z-ai/glm-5.2"
+        }
+      },
       "fixer": null,
       "rounds": 1,
       "prompt_version": "dfa8a5f39718",
-      "content_sha256": "c206ff507b68b2587f70b436eb8182149e6901d8147bd4d4bda790bf5124a52e",
-      "reviewed_at": "2026-10-04T11:18:18+00:00",
-      "residual_low": [],
+      "content_sha256": "63f710f0fe67686035d52ecf0163df2fc32e57277bb7d5cc05e0cc4ea9fa2c2b",
+      "reviewed_at": "2026-10-08T18:17:08+00:00",
+      "residual_low": [
+        {
+          "model": "deepseek-v4-pro",
+          "field": "text",
+          "type": "meaning",
+          "why": "The Arabic says 'as in the verse', implying the verse itself, while the English says 'the meaning of', which slightly understates the direct reference to the verse."
+        },
+        {
+          "model": "glm-5.2",
+          "field": "text",
+          "type": "meaning",
+          "why": "The Arabic says 'as in the verse of ar-Rum (30:21)' referencing the ayah, while the English says 'the meaning of ar-Rum 30:21,' which slightly shifts the framing from a scriptural reference to a parap"
+        }
+      ],
       "adjudicated": [],
       "tool": "ops/tools/review_en_parity.py",
-      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
     }
   }
 }

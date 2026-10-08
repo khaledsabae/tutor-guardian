@@ -2,7 +2,7 @@
   "id": "tip_4-6_013",
   "age_group": "4-6",
   "domain": "medical",
-  "text": "In the morning: If you notice difficulty in communicating with other children (avoiding eye contact, withdrawal), observe for two weeks. Do not rush to judge—consult a child development specialist if it continues.",
+  "text": "In the morning: if you notice your child finds it hard to connect with other children (avoiding eye contact, withdrawing), note what you see and discuss it with the pediatrician or a child development specialist without waiting. Asking early is not a judgement on your child.",
   "unit_id": "b6093b18-99fe-5f58-acad-d3f5ee47e43d",
   "day_of_week": 2,
   "time_of_day": "morning",
@@ -14,7 +14,7 @@
   "is_published": true,
   "version": "1.0.0",
   "created_at": "2026-06-08T19:00:00",
-  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
   "language": "en",
   "source_language": "ar",
   "translation": {
@@ -26,24 +26,48 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "clean",
-    "review_defects": [],
-    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
-    "revalidated_at": "2026-10-04T11:18:18+00:00",
+    "review_verdict": "low_only",
+    "review_defects": [
+      {
+        "model": "glm-5.2",
+        "field": "text",
+        "type": "omission",
+        "why": "The Arabic specifically refers to requesting an evaluation (التقييم), a concrete medical/developmental step, while the English says only 'Asking early', which is vaguer and loses the reassurance that "
+      }
+    ],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
+    "revalidated_at": "2026-10-08T18:17:08+00:00",
     "auto_review": {
       "reviewers": [
         "deepseek-v4-pro",
         "glm-5.2"
       ],
+      "providers": {
+        "deepseek-v4-pro": {
+          "provider": "openrouter",
+          "model": "deepseek/deepseek-v4-pro"
+        },
+        "glm-5.2": {
+          "provider": "openrouter",
+          "model": "z-ai/glm-5.2"
+        }
+      },
       "fixer": null,
       "rounds": 1,
       "prompt_version": "dfa8a5f39718",
-      "content_sha256": "57c6d034cb27df100b0021073ca8ae086e6d6fb5ca8969c193919614e1865352",
-      "reviewed_at": "2026-10-04T11:18:18+00:00",
-      "residual_low": [],
+      "content_sha256": "f7c803f2386138e78d42405c3d363b8e5dad66ea354008a823ee22b902c9e1c0",
+      "reviewed_at": "2026-10-08T18:17:08+00:00",
+      "residual_low": [
+        {
+          "model": "glm-5.2",
+          "field": "text",
+          "type": "omission",
+          "why": "The Arabic specifically refers to requesting an evaluation (التقييم), a concrete medical/developmental step, while the English says only 'Asking early', which is vaguer and loses the reassurance that "
+        }
+      ],
       "adjudicated": [],
       "tool": "ops/tools/review_en_parity.py",
-      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
     }
   }
 }

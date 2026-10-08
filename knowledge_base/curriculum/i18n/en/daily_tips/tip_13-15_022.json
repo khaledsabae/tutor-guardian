@@ -2,11 +2,11 @@
   "id": "tip_13-15_022",
   "age_group": "13-15",
   "domain": "medical",
-  "text": "Autism is a difference, not a deficiency. Strengths: deep focus, visual memory, honesty. Early diagnosis + support = empowerment.",
+  "text": "Autism is a difference, not a deficiency, and strengths and support needs vary from person to person. Learn what your teen does well and finds hard, and seek an assessment and support that suit them at home and school.",
   "unit_id": "0650c50f-5267-458e-943e-15495ecf1610",
   "day_of_week": 2,
   "time_of_day": "morning",
-  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
   "language": "en",
   "source_language": "ar",
   "translation": {
@@ -20,22 +20,32 @@
     },
     "review_verdict": "clean",
     "review_defects": [],
-    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
-    "revalidated_at": "2026-10-04T11:18:18+00:00",
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
+    "revalidated_at": "2026-10-08T18:17:08+00:00",
     "auto_review": {
       "reviewers": [
         "deepseek-v4-pro",
         "glm-5.2"
       ],
+      "providers": {
+        "deepseek-v4-pro": {
+          "provider": "openrouter",
+          "model": "deepseek/deepseek-v4-pro"
+        },
+        "glm-5.2": {
+          "provider": "openrouter",
+          "model": "z-ai/glm-5.2"
+        }
+      },
       "fixer": null,
       "rounds": 1,
       "prompt_version": "dfa8a5f39718",
-      "content_sha256": "16acc2aa87811ed78f4a69cf729f5518f882eb85cff436d32ae8e38c5369a4e4",
-      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "content_sha256": "d475ad6adcdf314e1a55b0026f2ffc93667e5517f75ea8402aa806b84359a9d6",
+      "reviewed_at": "2026-10-08T18:17:08+00:00",
       "residual_low": [],
       "adjudicated": [],
       "tool": "ops/tools/review_en_parity.py",
-      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
     }
   }
 }

@@ -2,11 +2,11 @@
   "id": "tip_7-9_011",
   "age_group": "7-9",
   "domain": "cyber",
-  "text": "Review your child’s games: remove any game that contains violence or blood. Alternatives: Minecraft (creativity), puzzle games, sports games.",
+  "text": "Review your child's games: check age ratings and content, try them together, and remove any with violence or blood. Choose age-suitable building, puzzle or sports games, and manage chat, play with strangers and purchases; a game's name alone does not guarantee it is suitable.",
   "unit_id": "2dd953f6-aafe-4a67-9571-ba214533f43f",
   "day_of_week": 2,
   "time_of_day": "morning",
-  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
   "language": "en",
   "source_language": "ar",
   "translation": {
@@ -18,24 +18,48 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "clean",
-    "review_defects": [],
-    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
-    "revalidated_at": "2026-10-04T11:18:18+00:00",
+    "review_verdict": "low_only",
+    "review_defects": [
+      {
+        "model": "deepseek-v4-pro",
+        "field": "text",
+        "type": "meaning",
+        "why": "The dual imperatives addressing both parents are rendered as simple imperatives, losing the explicit joint address."
+      }
+    ],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
+    "revalidated_at": "2026-10-08T18:17:08+00:00",
     "auto_review": {
       "reviewers": [
         "deepseek-v4-pro",
         "glm-5.2"
       ],
+      "providers": {
+        "deepseek-v4-pro": {
+          "provider": "openrouter",
+          "model": "deepseek/deepseek-v4-pro"
+        },
+        "glm-5.2": {
+          "provider": "openrouter",
+          "model": "z-ai/glm-5.2"
+        }
+      },
       "fixer": null,
       "rounds": 1,
       "prompt_version": "dfa8a5f39718",
-      "content_sha256": "863ddda96d1832f60cbdfbf27e5b6ac6485d66d7fba3f9631aab037cfdd53627",
-      "reviewed_at": "2026-10-04T11:18:18+00:00",
-      "residual_low": [],
+      "content_sha256": "918f30a58db3d683ca276a33a675673bee70821758ee3123a96b25399dd958f3",
+      "reviewed_at": "2026-10-08T18:17:08+00:00",
+      "residual_low": [
+        {
+          "model": "deepseek-v4-pro",
+          "field": "text",
+          "type": "meaning",
+          "why": "The dual imperatives addressing both parents are rendered as simple imperatives, losing the explicit joint address."
+        }
+      ],
       "adjudicated": [],
       "tool": "ops/tools/review_en_parity.py",
-      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
     }
   }
 }

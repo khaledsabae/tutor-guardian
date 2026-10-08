@@ -2,11 +2,11 @@
   "id": "tip_13-15_030",
   "age_group": "13-15",
   "domain": "medical",
-  "text": "Safety card: 3 warning signs, 3 ways to calm down, 3 people your child trusts, and your country's emergency number. Make it together and keep it somewhere easy to reach.",
+  "text": "Once the safety plan is made with the professional, keep it easy to reach and, at a calm time, practise using it with your teen and contacting trusted people. Review it as things change; keep dangerous means away. In immediate danger, stay with them and call emergency services.",
   "unit_id": "med-ec6f874a",
   "day_of_week": 6,
   "time_of_day": "evening",
-  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
   "language": "en",
   "source_language": "ar",
   "translation": {
@@ -20,8 +20,8 @@
     },
     "review_verdict": "clean",
     "review_defects": [],
-    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
-    "revalidated_at": "2026-10-04T17:02:06+00:00",
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
+    "revalidated_at": "2026-10-08T18:17:08+00:00",
     "manual_fix_note": "Rewritten 2026-10-04 with the Arabic: the Saudi-only 937 line replaced by country-neutral emergency guidance, and the card is made with the child.",
     "fixed_at": "2026-10-04T07:11:53.626353+00:00",
     "fixer_model": "claude-opus-5.5",
@@ -30,15 +30,25 @@
         "deepseek-v4-pro",
         "glm-5.2"
       ],
+      "providers": {
+        "deepseek-v4-pro": {
+          "provider": "openrouter",
+          "model": "deepseek/deepseek-v4-pro"
+        },
+        "glm-5.2": {
+          "provider": "openrouter",
+          "model": "z-ai/glm-5.2"
+        }
+      },
       "fixer": null,
       "rounds": 1,
       "prompt_version": "dfa8a5f39718",
-      "content_sha256": "9e1af0fb3f7b1271800dcf0d1b0037c747c7f530e42cf9188374a64b2e6bf49f",
-      "reviewed_at": "2026-10-04T17:02:06+00:00",
+      "content_sha256": "af799c71702f75e50bed911646458aa55bd4c6af33a30d309a6832252cde30f2",
+      "reviewed_at": "2026-10-08T18:17:08+00:00",
       "residual_low": [],
       "adjudicated": [],
       "tool": "ops/tools/review_en_parity.py",
-      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
     }
   }
 }

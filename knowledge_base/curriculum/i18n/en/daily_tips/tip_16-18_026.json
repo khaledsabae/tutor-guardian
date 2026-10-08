@@ -2,11 +2,11 @@
   "id": "tip_16-18_026",
   "age_group": "16-18",
   "domain": "medical",
-  "text": "Talk of suicide, or planning it, is an emergency that cannot wait. Stay with your teen and do not leave them alone, call your country's emergency number or take them to the nearest hospital, and tell them plainly: you matter to me, and we will get through this together.",
+  "text": "After a mental-health crisis or hospital discharge, stay in touch with your teen and follow their care team's plan: listen without blame, review appointments and the safety plan, and say: you matter to me; I am with you. If self-harm risk returns, call emergency services.",
   "unit_id": "e19e72c2-d553-4e12-a6e6-5d7c6f3fc083",
   "day_of_week": 3,
   "time_of_day": "morning",
-  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
   "language": "en",
   "source_language": "ar",
   "translation": {
@@ -20,8 +20,8 @@
     },
     "review_verdict": "clean",
     "review_defects": [],
-    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
-    "revalidated_at": "2026-10-04T17:02:06+00:00",
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
+    "revalidated_at": "2026-10-08T18:17:08+00:00",
     "manual_fix_note": "Rewritten 2026-10-04 with the Arabic: re-addressed to the parent (the tip spoke to the teen); the Saudi-only 937 line replaced by country-neutral emergency guidance.",
     "fixed_at": "2026-10-04T07:11:53.626353+00:00",
     "fixer_model": "claude-opus-5.5",
@@ -30,15 +30,25 @@
         "deepseek-v4-pro",
         "glm-5.2"
       ],
+      "providers": {
+        "deepseek-v4-pro": {
+          "provider": "openrouter",
+          "model": "deepseek/deepseek-v4-pro"
+        },
+        "glm-5.2": {
+          "provider": "openrouter",
+          "model": "z-ai/glm-5.2"
+        }
+      },
       "fixer": null,
       "rounds": 1,
       "prompt_version": "dfa8a5f39718",
-      "content_sha256": "5336a4234a79896f8e4b5416097d1069d4d1c76de5556b2501959f5fe93ed74f",
-      "reviewed_at": "2026-10-04T17:02:06+00:00",
+      "content_sha256": "b3f10f6a741efbc580e57a9fa3210c479cb384b0d246478848c4e374808df22e",
+      "reviewed_at": "2026-10-08T18:17:08+00:00",
       "residual_low": [],
       "adjudicated": [],
       "tool": "ops/tools/review_en_parity.py",
-      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
     }
   }
 }

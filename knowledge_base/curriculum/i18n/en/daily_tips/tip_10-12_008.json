@@ -2,11 +2,11 @@
   "id": "tip_10-12_008",
   "age_group": "10-12",
   "domain": "islamic_parenting",
-  "text": "If he makes a mistake, do not expose him. Say: 'Mistakes are human; what matters is how we fix them.' Psychological safety builds tawbah (repentance).",
+  "text": "If your child makes a mistake, do not embarrass him in front of others. Say: “Everyone makes mistakes; what matters is how we put it right.” Feeling safe helps him repent (tawbah) and make amends.",
   "unit_id": "a9219a05-46a1-4ece-8961-686d0d27f960",
   "day_of_week": 0,
   "time_of_day": "evening",
-  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
   "language": "en",
   "source_language": "ar",
   "translation": {
@@ -20,22 +20,32 @@
     },
     "review_verdict": "clean",
     "review_defects": [],
-    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
-    "revalidated_at": "2026-10-04T11:18:18+00:00",
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
+    "revalidated_at": "2026-10-08T18:17:08+00:00",
     "auto_review": {
       "reviewers": [
         "deepseek-v4-pro",
         "glm-5.2"
       ],
+      "providers": {
+        "deepseek-v4-pro": {
+          "provider": "openrouter",
+          "model": "deepseek/deepseek-v4-pro"
+        },
+        "glm-5.2": {
+          "provider": "openrouter",
+          "model": "z-ai/glm-5.2"
+        }
+      },
       "fixer": null,
       "rounds": 1,
       "prompt_version": "dfa8a5f39718",
-      "content_sha256": "fae74abd74170f7f6defe79f09086d5176450bf9790efa7f49386ba61bd43063",
-      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "content_sha256": "884c1bbca24c04745ce4be9122f4282433db545445b00abeb97db36f10d443be",
+      "reviewed_at": "2026-10-08T18:17:08+00:00",
       "residual_low": [],
       "adjudicated": [],
       "tool": "ops/tools/review_en_parity.py",
-      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
     }
   }
 }

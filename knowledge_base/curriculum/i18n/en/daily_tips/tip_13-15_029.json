@@ -2,11 +2,11 @@
   "id": "tip_13-15_029",
   "age_group": "13-15",
   "domain": "medical",
-  "text": "Weekly Mood Tracker (1-10): Mood/Energy/Sleep. Decline >2 weeks = visit a specialist. Drawing creates awareness.",
+  "text": "Weekly mood tracker (1-10): mood/energy/sleep. It is a conversation aid, not a diagnosis; if a decline worries you or affects their life, seek an assessment without waiting a set time.",
   "unit_id": "med-e64897f2",
   "day_of_week": 5,
   "time_of_day": "evening",
-  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
   "language": "en",
   "source_language": "ar",
   "translation": {
@@ -20,22 +20,32 @@
     },
     "review_verdict": "clean",
     "review_defects": [],
-    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
-    "revalidated_at": "2026-10-04T11:18:18+00:00",
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
+    "revalidated_at": "2026-10-08T18:17:08+00:00",
     "auto_review": {
       "reviewers": [
         "deepseek-v4-pro",
         "glm-5.2"
       ],
+      "providers": {
+        "deepseek-v4-pro": {
+          "provider": "openrouter",
+          "model": "deepseek/deepseek-v4-pro"
+        },
+        "glm-5.2": {
+          "provider": "openrouter",
+          "model": "z-ai/glm-5.2"
+        }
+      },
       "fixer": null,
       "rounds": 1,
       "prompt_version": "dfa8a5f39718",
-      "content_sha256": "2127d6d9bf53920c21615e458ca385b6f2a82ea19f8f1c04063499b1f2a6e738",
-      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "content_sha256": "c30ba1c5f4158f9745f961a8934fa337cfc4002428be006366802a482cf9819d",
+      "reviewed_at": "2026-10-08T18:17:08+00:00",
       "residual_low": [],
       "adjudicated": [],
       "tool": "ops/tools/review_en_parity.py",
-      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
     }
   }
 }

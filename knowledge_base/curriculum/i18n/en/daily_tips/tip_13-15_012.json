@@ -2,11 +2,11 @@
   "id": "tip_13-15_012",
   "age_group": "13-15",
   "domain": "cyber",
-  "text": "Cyberbullying: harsh messages, rumours, exclusion. Do not participate, stop it, report it. The silent one is a partner.",
+  "text": "Cyberbullying: harsh messages, rumours, exclusion. Do not take part or share it; report it, ask a trusted adult for help, and support the targeted person in a safe way. Being afraid to confront it is not your fault.",
   "unit_id": "a51a2419-0d91-41ac-96ca-3c0f7419e197",
   "day_of_week": 2,
   "time_of_day": "morning",
-  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
   "language": "en",
   "source_language": "ar",
   "translation": {
@@ -18,10 +18,17 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "clean",
-    "review_defects": [],
-    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
-    "revalidated_at": "2026-10-04T11:18:18+00:00",
+    "review_verdict": "low_only",
+    "review_defects": [
+      {
+        "model": "deepseek-v4-pro",
+        "field": "text",
+        "type": "meaning",
+        "why": "The Arabic uses 'ذنباً' (sin), a religious term; the English 'not your fault' loses the Islamic nuance."
+      }
+    ],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
+    "revalidated_at": "2026-10-08T18:17:08+00:00",
     "fixed_at": "2026-08-13T18:53:03.137855+00:00",
     "fixer_model": "mistral-large-3:675b",
     "auto_review": {
@@ -29,15 +36,32 @@
         "deepseek-v4-pro",
         "glm-5.2"
       ],
+      "providers": {
+        "deepseek-v4-pro": {
+          "provider": "openrouter",
+          "model": "deepseek/deepseek-v4-pro"
+        },
+        "glm-5.2": {
+          "provider": "openrouter",
+          "model": "z-ai/glm-5.2"
+        }
+      },
       "fixer": null,
       "rounds": 1,
       "prompt_version": "dfa8a5f39718",
-      "content_sha256": "97b2f2cbb1da8e143368a95fcb7986c2ee30dc85591285e770ac77b7c8acc7af",
-      "reviewed_at": "2026-10-04T11:18:18+00:00",
-      "residual_low": [],
+      "content_sha256": "02eace7d5c00c4fa33a747ee43b80ec2303d1ba2004ce63f723b8257b6ba9177",
+      "reviewed_at": "2026-10-08T18:17:08+00:00",
+      "residual_low": [
+        {
+          "model": "deepseek-v4-pro",
+          "field": "text",
+          "type": "meaning",
+          "why": "The Arabic uses 'ذنباً' (sin), a religious term; the English 'not your fault' loses the Islamic nuance."
+        }
+      ],
       "adjudicated": [],
       "tool": "ops/tools/review_en_parity.py",
-      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
     }
   }
 }
