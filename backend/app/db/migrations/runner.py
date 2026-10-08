@@ -70,15 +70,64 @@ def _validate_ledger(connection: sqlite3.Connection) -> None:
             raise MigrationError("existing schema_migrations has an incompatible shape")
 
 
+def _discard(connection: sqlite3.Connection) -> None:
+    """End this module's own transaction; if that fails, drop the connection."""
+    if connection.in_transaction:
+        try:
+            connection.execute("ROLLBACK")
+        except sqlite3.Error:
+            # A persistent progress callback/authorizer can deny ROLLBACK.
+            # Closing rolls back uncommitted work without clearing caller
+            # policy. The failed caller must discard this connection.
+            connection.close()
+
+
+def _already_current(
+    connection: sqlite3.Connection, namespace: str, expected: list, migrations: Sequence[Migration],
+) -> bool:
+    """True only if the ledger is exactly complete and every live shape validates.
+
+    Runs in a deferred transaction: under WAL, a read snapshot that takes no
+    writer lock, so opening a migrated database never queues behind another
+    writer. Any doubt returns False and leaves the decision (and the error)
+    to the locked path. Nothing here writes: the context is read-only.
+    """
+    try:
+        connection.execute("BEGIN")
+        if connection.execute(
+            "SELECT 1 FROM main.sqlite_master WHERE type='table' AND name='schema_migrations'"
+        ).fetchone() is None:
+            return False
+        try:
+            _validate_ledger(connection)
+            rows = connection.execute(
+                "SELECT version,name,checksum FROM main.schema_migrations "
+                "WHERE namespace=? ORDER BY version", (namespace,),
+            ).fetchall()
+            if [tuple(row) for row in rows] != expected:
+                return False
+            read = MigrationContext(connection, readonly=True)
+            for migration in migrations:
+                migration.validate(read)
+        except MigrationError:
+            return False
+        return True
+    finally:
+        _discard(connection)
+
+
 def apply_migrations(
     connection: sqlite3.Connection, namespace: str, migrations: Sequence[Migration],
 ) -> tuple[int, ...]:
     """Apply one ordered registry atomically; return newly applied numbers.
 
-    The writer lock serializes concurrent processes on this database. Registry
-    entries are immutable source files. Existing ledger entries must be its exact
-    prefix; other namespaces are left alone. A valid ledger never bypasses live
-    schema validation. Caller-owned transactions are neither committed nor rolled back.
+    A database whose ledger already holds the whole registry, and whose live
+    shapes all validate, is confirmed from a lock-free read snapshot.
+    Otherwise the writer lock serializes concurrent processes on this
+    database. Registry entries are immutable source files. Existing ledger
+    entries must be its exact prefix; other namespaces are left alone. A valid
+    ledger never bypasses live schema validation, on either path. Caller-owned
+    transactions are neither committed nor rolled back.
     """
     if not re.fullmatch(r"[A-Za-z][A-Za-z_0-9-]*", namespace):
         raise MigrationError("invalid migration namespace")
@@ -87,6 +136,11 @@ def apply_migrations(
         raise MigrationError("registry must be consecutively numbered with SHA-256 checksums")
     if connection.in_transaction:
         raise MigrationError("migration requires a connection without caller-owned work")
+    expected = [(m.number, m.name, m.checksum) for m in migrations]
+    # Fast path: a complete ledger whose every live shape still validates is
+    # answered from a read snapshot. It skips the lock, never the validation.
+    if _already_current(connection, namespace, expected, migrations):
+        return ()
     try:
         # SQLite may acquire the writer lock before an interrupted BEGIN
         # raises, so acquisition needs the same cleanup as subsequent work.
@@ -97,7 +151,6 @@ def apply_migrations(
             "SELECT version,name,checksum FROM main.schema_migrations "
             "WHERE namespace=? ORDER BY version", (namespace,),
         ).fetchall()
-        expected = [(m.number, m.name, m.checksum) for m in migrations]
         if len(rows) > len(expected) or [tuple(row) for row in rows] != expected[:len(rows)]:
             raise MigrationError("migration ledger has unknown versions or changed names/checksums")
         applied = []
@@ -117,12 +170,5 @@ def apply_migrations(
         return tuple(applied)
     except BaseException:
         # Cancellation/KeyboardInterrupt also undo DDL and ledger writes.
-        if connection.in_transaction:
-            try:
-                connection.execute("ROLLBACK")
-            except sqlite3.Error:
-                # A persistent progress callback/authorizer can deny ROLLBACK.
-                # Closing rolls back uncommitted work without clearing caller
-                # policy. The failed caller must discard this connection.
-                connection.close()
+        _discard(connection)
         raise

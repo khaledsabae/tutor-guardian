@@ -5,6 +5,9 @@ import uuid
 from datetime import datetime, timezone
 from pathlib import Path
 
+from app.db.migrations.runner import apply_migrations
+from app.db.migrations.sessions_0001_baseline import MIGRATION as SESSIONS_SCHEMA
+
 DB_PATH = Path(__file__).resolve().parents[3] / "ops" / "sessions.db"
 
 
@@ -13,22 +16,13 @@ def _get_conn():
     conn = sqlite3.connect(DB_PATH)
     conn.execute("PRAGMA journal_mode = WAL")
     conn.execute("PRAGMA busy_timeout = 5000")
-    conn.execute("""
-        CREATE TABLE IF NOT EXISTS sessions (
-            id TEXT PRIMARY KEY,
-            ts TEXT,
-            domain TEXT,
-            behavior_type TEXT,
-            age_group TEXT,
-            severity TEXT,
-            mode TEXT,
-            needs_human_review INTEGER,
-            reply_length INTEGER,
-            retrieved_count INTEGER,
-            flag TEXT
-        )
-    """)
-    conn.commit()
+    try:
+        # The numbered runner adopts production's table, creates it on a fresh
+        # DB, or refuses a shape the positional INSERT below cannot fill.
+        apply_migrations(conn, "sessions", (SESSIONS_SCHEMA,))
+    except BaseException:
+        conn.close()
+        raise
     return conn
 
 
