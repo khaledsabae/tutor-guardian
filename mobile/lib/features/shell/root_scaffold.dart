@@ -75,7 +75,15 @@ class _RootScaffoldState extends ConsumerState<RootScaffold> with RouteAware {
     super.initState();
     // Post-frame, not in `_AppBootstrapper`: the tour measures the laid-out
     // NavigationBar, which does not exist until this scaffold's first frame.
-    WidgetsBinding.instance.addPostFrameCallback((_) => _maybeStartTour());
+    //
+    // A tab armed before the shell existed — onboarding's deferred «ask the
+    // mentor» — is consumed on the same frame, so the parent lands on the
+    // assistant tab as the shell appears, not one tap later.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final pending = takePendingRootTab(ref);
+      if (pending != null) _onSelect(pending);
+      _maybeStartTour();
+    });
   }
 
   @override
@@ -140,6 +148,14 @@ class _RootScaffoldState extends ConsumerState<RootScaffold> with RouteAware {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
+
+    // Tabs armed while the shell is already alive. The mount-time read in
+    // initState covers the value that predates this widget; this listener
+    // covers everything armed after it.
+    ref.listen<int?>(pendingRootTabProvider, (_, next) {
+      final tab = takePendingRootTab(ref);
+      if (tab != null) _onSelect(tab);
+    });
 
     return Scaffold(
       body: IndexedStack(

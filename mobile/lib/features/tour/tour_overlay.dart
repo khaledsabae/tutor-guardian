@@ -20,7 +20,7 @@ import '../../core/analytics.dart';
 import '../../l10n/app_localizations.dart';
 import '../../theme/design_tokens.dart';
 import '../../widgets/ui/bouncy_button.dart';
-import '../../widgets/ui/noor_mascot.dart';
+import '../companion/widgets/noor_presence.dart';
 import '../onboarding/providers/onboarding_providers.dart';
 import 'tour_controller.dart';
 import 'tour_step.dart';
@@ -252,7 +252,13 @@ class _TourCard extends StatelessWidget {
     final title = step.title?.call(l10n);
     return Row(
       children: [
-        const NoorMascot(size: 44),
+        // Noor framed in the moon window — calm while the tour walks, proud
+        // on the last stop, where the parent has earned the send-off.
+        NoorPresence(
+          size: 44,
+          mood: isLast ? NoorMood.proud : NoorMood.calm,
+          semanticLabel: l10n.noorName,
+        ),
         const SizedBox(width: 12),
         Expanded(
           child: Column(

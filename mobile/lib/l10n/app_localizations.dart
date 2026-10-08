@@ -1910,6 +1910,36 @@ abstract class AppLocalizations {
   /// **'تغيير العمر'**
   String get onbChangeAge;
 
+  /// No description provided for @onbPreparingStep1.
+  ///
+  /// In ar, this message translates to:
+  /// **'أجهّز ملف طفلك…'**
+  String get onbPreparingStep1;
+
+  /// No description provided for @onbPreparingStep2.
+  ///
+  /// In ar, this message translates to:
+  /// **'أختار لك أول درس…'**
+  String get onbPreparingStep2;
+
+  /// No description provided for @onbAskSampleHint.
+  ///
+  /// In ar, this message translates to:
+  /// **'المس السؤال ليسأله المربّي لك بعد التسجيل'**
+  String get onbAskSampleHint;
+
+  /// No description provided for @onbAskSampleArmed.
+  ///
+  /// In ar, this message translates to:
+  /// **'سنفتح المربّي على سؤالك بعد التسجيل ✓'**
+  String get onbAskSampleArmed;
+
+  /// No description provided for @noorName.
+  ///
+  /// In ar, this message translates to:
+  /// **'نور، مرشدك'**
+  String get noorName;
+
   /// No description provided for @prideStreakTitle.
   ///
   /// In ar, this message translates to:
