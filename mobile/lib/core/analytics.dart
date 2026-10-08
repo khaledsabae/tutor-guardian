@@ -7,10 +7,13 @@
 ///   share_moment → invite_opened → invite_shared → referral_claimed
 library;
 
+import 'dart:async';
+
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'engagement_signal.dart';
+import 'notification_permission_gate.dart';
 
 class Analytics {
   static FirebaseAnalytics get _fa => FirebaseAnalytics.instance;
@@ -67,8 +70,14 @@ class Analytics {
   // line and leaves the feature code untouched.
 
   /// A lesson was marked completed.
+  ///
+  /// Also the one moment the app asks to notify (Phase 1): the parent just
+  /// finished something, which is the first time a notification has a
+  /// reason to exist. The gate is one-shot per install and never throws —
+  /// see [NotificationPermissionGate].
   static Future<void> lessonCompleted(String lessonId) {
     EngagementSignal.mark();
+    unawaited(NotificationPermissionGate.maybeAsk());
     return _log('lesson_completed', {'lesson_id': lessonId});
   }
 
