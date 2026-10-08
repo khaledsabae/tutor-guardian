@@ -8,6 +8,7 @@ import '../../../l10n/app_localizations.dart';
 import '../../../theme/app_theme.dart';
 import '../../../theme/design_tokens.dart';
 import '../../../widgets/ui/empty_state.dart';
+import '../../../widgets/ui/error_retry_view.dart';
 import '../models/search_result.dart';
 import '../providers/program_providers.dart';
 import '../providers/progress_providers.dart';
@@ -120,7 +121,7 @@ class _Body extends ConsumerWidget {
       error: (e, _) => EmptyState(
         emoji: '📡',
         title: AppLocalizations.of(context).pathsError,
-        subtitle: '$e',
+        subtitle: userFacingError(context, e).body,
       ),
       data: (results) {
         if (results.isEmpty) {

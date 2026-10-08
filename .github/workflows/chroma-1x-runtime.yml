@@ -1,0 +1,207 @@
+name: Chroma 1.x runtime and migration experiment
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  runtime:
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+    env:
+      ANONYMIZED_TELEMETRY: 'false'
+      PYTHONDONTWRITEBYTECODE: '1'
+      PYTHONPATH: backend
+      SKIP_API_SMOKE: '1'
+      ANSWER_CACHE_ENABLED: 'false'
+      RERANK_ENABLED: 'true'
+      RERANKER_MODEL: cross-encoder/mmarco-mMiniLMv2-L12-H384-v1
+      OMP_NUM_THREADS: '2'
+      MKL_NUM_THREADS: '2'
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+
+      # runner.* is unavailable in job-level env. Never use a production DB/cache.
+      - name: Set isolated paths
+        run: |
+          mkdir -p "$RUNNER_TEMP/chroma-runtime/evidence"
+          {
+            echo "EVIDENCE=$RUNNER_TEMP/chroma-runtime/evidence"
+            echo "BASELINE_INDEX=$RUNNER_TEMP/chroma-runtime/baseline/chroma"
+            # The backend suite uses this hardcoded path in the hosted checkout.
+            echo "COPIED_INDEX=$GITHUB_WORKSPACE/knowledge_base/chroma_db"
+            echo "CHROMA_SEED_DIR=$RUNNER_TEMP/chroma-runtime/absent-seed"
+            echo "HF_HOME=$RUNNER_TEMP/chroma-runtime/huggingface"
+            echo "ANSWER_CACHE_DB=$RUNNER_TEMP/chroma-runtime/answer-cache.db"
+            echo "CONVERSATIONS_DB=$RUNNER_TEMP/chroma-runtime/conversations.db"
+          } >> "$GITHUB_ENV"
+          git rev-parse HEAD > "$RUNNER_TEMP/chroma-runtime/evidence/commit.txt"
+
+      - name: Read production Python version
+        id: production
+        run: |
+          set -euo pipefail
+          v="$(sed -n 's/^# python: *//p' .github/ci/constraints-prod.txt)"
+          test -n "$v"
+          echo "python=$v" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ steps.production.outputs.python }}
+
+      - name: Install hash-locked production baseline
+        id: baseline_install
+        continue-on-error: true
+        run: |
+          set +e
+          (
+            set -euo pipefail
+            python -m venv "$RUNNER_TEMP/baseline-venv"
+            "$RUNNER_TEMP/baseline-venv/bin/python" -m pip install \
+              --require-hashes --no-deps --only-binary=:all: \
+              --constraint .github/ci/constraints-prod.txt \
+              -r .github/ci/requirements-prod.lock -r .github/ci/requirements-dev.lock
+            "$RUNNER_TEMP/baseline-venv/bin/python" -m pip check
+          ) 2>&1 | tee "$EVIDENCE/baseline-install.log"
+          rc=${PIPESTATUS[0]}
+          echo "$rc" > "$EVIDENCE/baseline-install.exit"
+          "$RUNNER_TEMP/baseline-venv/bin/python" -m pip freeze --all > "$EVIDENCE/baseline-freeze.txt"
+          exit "$rc"
+
+      - name: Test experiment logic and workflow contract
+        if: always() && steps.baseline_install.outcome == 'success'
+        continue-on-error: true
+        run: |
+          set +e
+          "$RUNNER_TEMP/baseline-venv/bin/python" -m pytest \
+            ops/tests/test_chroma_runtime_probe.py ops/tests/test_chroma_runtime_workflow.py \
+            --junitxml="$EVIDENCE/harness-junit.xml" 2>&1 | tee "$EVIDENCE/harness-tests.log"
+          rc=${PIPESTATUS[0]}
+          echo "$rc" > "$EVIDENCE/harness-tests.exit"
+          exit "$rc"
+
+      - name: Build 0.6.3 index via production index seeding
+        id: build
+        if: always() && steps.baseline_install.outcome == 'success'
+        continue-on-error: true
+        run: |
+          set +e
+          "$RUNNER_TEMP/baseline-venv/bin/python" ops/tools/chroma_runtime_probe.py build \
+            --index "$BASELINE_INDEX" --out "$EVIDENCE/baseline.json" \
+            2>&1 | tee "$EVIDENCE/build.log"
+          rc=${PIPESTATUS[0]}
+          echo "$rc" > "$EVIDENCE/build.exit"
+          exit "$rc"
+
+      # Separate process: the 0.6.3 client has exited before copying SQLite/HNSW.
+      - name: Copy and verify entire closed 0.6.3 persisted directory
+        id: copy
+        if: always() && steps.build.outcome == 'success'
+        continue-on-error: true
+        run: |
+          set +e
+          python ops/tools/chroma_runtime_probe.py copy --source "$BASELINE_INDEX" \
+            --target "$COPIED_INDEX" --out "$EVIDENCE/copy.json" \
+            2>&1 | tee "$EVIDENCE/copy.log"
+          rc=${PIPESTATUS[0]}
+          echo "$rc" > "$EVIDENCE/copy.exit"
+          exit "$rc"
+
+      - name: Resolve exactly 1.5.9 under all remaining production pins
+        id: candidate_install
+        if: always() && steps.baseline_install.outcome == 'success'
+        continue-on-error: true
+        run: |
+          set +e
+          (
+            set -euo pipefail
+            python -m venv "$RUNNER_TEMP/candidate-venv"
+            candidate_python="$RUNNER_TEMP/candidate-venv/bin/python"
+            "$candidate_python" -m pip install \
+              --require-hashes --no-deps --only-binary=:all: \
+              --constraint .github/ci/constraints-prod.txt \
+              -r .github/ci/requirements-prod.lock -r .github/ci/requirements-dev.lock
+            python ops/tools/chroma_runtime_probe.py constraints \
+              --source .github/ci/constraints-prod.txt --out "$EVIDENCE/candidate-constraints.txt"
+            # Only chromadb's pin is removed. New deps resolve under every other pin.
+            # A conflict fails this experiment; do not weaken the production constraints.
+            "$candidate_python" -m pip install --upgrade "chromadb==1.5.9" \
+              --constraint "$EVIDENCE/candidate-constraints.txt" \
+              --report "$EVIDENCE/candidate-resolve.json"
+            "$candidate_python" -m pip check
+          ) 2>&1 | tee "$EVIDENCE/candidate-install.log"
+          rc=${PIPESTATUS[0]}
+          echo "$rc" > "$EVIDENCE/candidate-install.exit"
+          "$RUNNER_TEMP/candidate-venv/bin/python" -m pip freeze --all > "$EVIDENCE/candidate-freeze.txt"
+          exit "$rc"
+
+      - name: Open copied index, run real startup and Arabic/English vector smoke
+        id: migration
+        if: always() && steps.copy.outcome == 'success' && steps.candidate_install.outcome == 'success'
+        continue-on-error: true
+        env:
+          HF_HUB_OFFLINE: '1'
+          TRANSFORMERS_OFFLINE: '1'
+        run: |
+          set +e
+          "$RUNNER_TEMP/candidate-venv/bin/python" ops/tools/chroma_runtime_probe.py candidate \
+            --index "$COPIED_INDEX" --baseline "$EVIDENCE/baseline.json" \
+            --copy-report "$EVIDENCE/copy.json" --out "$EVIDENCE/migration.json" \
+            2>&1 | tee "$EVIDENCE/migration.log"
+          rc=${PIPESTATUS[0]}
+          echo "$rc" > "$EVIDENCE/migration.exit"
+          exit "$rc"
+
+      - name: Reopen migrated copy in a second fresh 1.5.9 process
+        if: always() && steps.migration.outcome == 'success'
+        continue-on-error: true
+        env:
+          HF_HUB_OFFLINE: '1'
+          TRANSFORMERS_OFFLINE: '1'
+        run: |
+          set +e
+          "$RUNNER_TEMP/candidate-venv/bin/python" ops/tools/chroma_runtime_probe.py candidate \
+            --index "$COPIED_INDEX" --baseline "$EVIDENCE/baseline.json" \
+            --copy-report "$EVIDENCE/copy.json" --out "$EVIDENCE/reopen.json" \
+            2>&1 | tee "$EVIDENCE/reopen.log"
+          rc=${PIPESTATUS[0]}
+          echo "$rc" > "$EVIDENCE/reopen.exit"
+          exit "$rc"
+
+      - name: Full backend runtime suite under 1.5.9
+        # A migration/smoke failure must not suppress independent runtime evidence.
+        if: always() && steps.candidate_install.outcome == 'success'
+        continue-on-error: true
+        env:
+          HF_HUB_OFFLINE: '1'
+          TRANSFORMERS_OFFLINE: '1'
+        run: |
+          set +e
+          "$RUNNER_TEMP/candidate-venv/bin/python" -m pytest backend/tests \
+            --junitxml="$EVIDENCE/backend-junit.xml" \
+            2>&1 | tee "$EVIDENCE/tests.log"
+          rc=${PIPESTATUS[0]}
+          echo "$rc" > "$EVIDENCE/tests.exit"
+          exit "$rc"
+
+      - name: Summarize migration, test counts and failure locations; fail closed
+        if: always()
+        run: |
+          set +e
+          python ops/tools/chroma_runtime_probe.py summary --evidence "$EVIDENCE"
+          rc=$?
+          cat "$EVIDENCE/summary.md" >> "$GITHUB_STEP_SUMMARY"
+          exit "$rc"
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: chroma-1x-runtime-${{ github.sha }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/chroma-runtime/evidence/
+          if-no-files-found: error
+          retention-days: 14

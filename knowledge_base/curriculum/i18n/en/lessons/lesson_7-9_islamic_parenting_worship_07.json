@@ -8,7 +8,7 @@
     "isl-c4d83813",
     "isl-1bceeaf6"
   ],
-  "summary": "Five prayers a day may seem a lot to a seven-year-old, but they become easy when they are tied to the rhythm of a day they already know. Children learn through routine: they know when they wake up, when they go to school, when they eat, play and sleep. If you tie each prayer to one of these stations, it becomes a natural part of their day.\n\nDraw a «map of the day» with them: Fajr when they wake for it, before sunrise, Dhuhr at school if possible, or after coming home while its time remains, Asr before playtime, Maghrib at sunset, and Isha before bed. This changes with your country, the season and their school hours; what matters is that they know each prayer has a time to look forward to.\n\nMake the adhan (call to prayer) a family signal: when it is called from the mosque or from an app at home, everyone pauses a little and gets ready. That doesn't mean cutting off their play suddenly; give them a warning a few minutes before: «Five more minutes, then we make wudu for Asr.» A sudden switch from play to prayer creates resistance that isn't needed.\n\nAt this age your child is still in training; if they are late for a prayer or forget it, don't make it a battle — remind them calmly and start again with the next prayer. The aim is for the prayers to become landmarks in their day that they know and expect, so that when they reach puberty they find their day already organised around them, without strain.",
+  "summary": "Five prayers a day may seem a lot to a seven-year-old, but they become easy when they are tied to the rhythm of a day they already know. Children learn through routine: they know when they wake up, when they go to school, when they eat, play and sleep. If you tie each prayer to one of these stations, it becomes a natural part of their day.\n\nDraw a «map of the day» with them: Fajr when they wake for it, before sunrise, Dhuhr at school if possible, or after coming home while its time remains, Asr before playtime, Maghrib at sunset, and Isha before bed. This changes with your country, the season and their school hours; what matters is that they know each prayer has a time to look forward to.\n\nMake the adhan (call to prayer) a family signal: when it is called from the mosque or from an app at home, everyone pauses a little and gets ready. That doesn't mean cutting off their play suddenly; give them a warning a few minutes before: «Five more minutes, then we make wudu for Asr.» A sudden switch from play to prayer creates resistance that isn't needed.\n\nAt this age your child is still in training; if they forget a prayer or are late for it, don't make it a battle and don't reproach them — remind them calmly and pray it with them when they remember it, then they carry on with their usual prayers for the day. The aim is for the prayers to become landmarks in their day that they know and expect, so that when they reach puberty they find their day already organised around them, without strain.",
   "try_this": "Today: Sit with your child for ten minutes and draw together, on a sheet of paper, the «map of their day»: the stations of their day in order, and next to each station the prayer that comes near it. Then hang it where they will see it every day.",
   "order": 7,
   "estimated_minutes": 3,
@@ -21,7 +21,7 @@
   "version": "1.0.0",
   "created_at": "2026-10-04T17:13:00",
   "updated_at": "2026-10-04T17:13:00",
-  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
   "language": "en",
   "source_language": "ar",
   "translation": {
@@ -33,25 +33,64 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "clean",
-    "review_defects": [],
-    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
-    "revalidated_at": "2026-10-07T18:47:52+00:00",
+    "review_verdict": "low_only",
+    "review_defects": [
+      {
+        "model": "deepseek-v4-pro",
+        "field": "summary",
+        "type": "meaning",
+        "why": "The Arabic says the child wakes up for Fajr before sunrise; the English phrasing 'when they wake for it, before sunrise' is slightly awkward and could be read as waking up before sunrise in general, n"
+      },
+      {
+        "model": "deepseek-v4-pro",
+        "field": "summary",
+        "type": "meaning",
+        "why": "The Arabic 'بلغ' (reaches puberty) is explicitly rendered as 'reach puberty' which is accurate, but the phrase 'already organised' adds 'already' which slightly overstates the Arabic 'منتظمًا' (organi"
+      }
+    ],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
+    "revalidated_at": "2026-10-08T15:21:56+00:00",
     "generated_by": "ops/tools/deepen_paths.py",
     "auto_review": {
       "reviewers": [
         "deepseek-v4-pro",
         "glm-5.2"
       ],
+      "providers": {
+        "deepseek-v4-pro": {
+          "provider": "openrouter",
+          "model": "deepseek/deepseek-v4-pro"
+        },
+        "glm-5.2": {
+          "provider": "openrouter",
+          "model": "z-ai/glm-5.2"
+        }
+      },
       "fixer": null,
       "rounds": 1,
       "prompt_version": "dfa8a5f39718",
-      "content_sha256": "fccf68b19c8a2c041c2e40f53f9a520a220422bcedb76b03ff23821df18fb3bb",
-      "reviewed_at": "2026-10-07T18:47:52+00:00",
-      "residual_low": [],
+      "content_sha256": "7f3daf73f36505989667b978198fffc124b0ada6fb51a25fcc88299867ff9648",
+      "reviewed_at": "2026-10-08T15:21:56+00:00",
+      "residual_low": [
+        {
+          "model": "deepseek-v4-pro",
+          "field": "summary",
+          "type": "meaning",
+          "why": "The Arabic says the child wakes up for Fajr before sunrise; the English phrasing 'when they wake for it, before sunrise' is slightly awkward and could be read as waking up before sunrise in general, n"
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "field": "summary",
+          "type": "meaning",
+          "why": "The Arabic 'بلغ' (reaches puberty) is explicitly rendered as 'reach puberty' which is accurate, but the phrase 'already organised' adds 'already' which slightly overstates the Arabic 'منتظمًا' (organi"
+        }
+      ],
       "adjudicated": [],
       "tool": "ops/tools/review_en_parity.py",
       "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
-    }
+    },
+    "english_authors": [
+      "claude-opus-5-5"
+    ]
   }
 }

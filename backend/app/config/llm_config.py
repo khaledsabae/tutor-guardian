@@ -3,8 +3,59 @@ LLM configuration — Ollama settings (env-driven).
 All model-dependent values come from environment variables with safe local
 defaults, so deployments (Docker, mobile-backend) can override without code edits.
 """
+import logging
 import os
-from dataclasses import dataclass
+from dataclasses import dataclass, field
+
+logger = logging.getLogger(__name__)
+
+
+def parse_billing_profile_aliases(raw: str) -> tuple:
+    """'a=b,c=d' -> (('a','b'),('c','d')). Any malformed or repeated entry
+    voids the whole setting (fail closed: no alias, cloud denied) — logged."""
+    pairs = []
+    for entry in (raw or "").split(","):
+        if not entry.strip():
+            continue
+        parts = entry.split("=")
+        if len(parts) != 2 or not parts[0].strip() or not parts[1].strip():
+            pairs = None
+            break
+        pairs.append((parts[0].strip(), parts[1].strip()))
+    if pairs is None or len({name for name, _ in pairs}) != len(pairs):
+        logger.warning("DEEPSEEK_BILLING_PROFILE_ALIASES=%r is malformed — ignored entirely; "
+                       "capped calls on unprofiled models are denied", raw)
+        return ()
+    return tuple(pairs)
+
+
+_ENFORCE_ON = ("1", "true", "yes", "on")
+_ENFORCE_OFF = ("", "0", "false", "no", "off")
+
+
+def cloud_budget_enforce_state(raw: str | None) -> str:
+    """"on" | "off" | "unrecognised" for a CLOUD_BUDGET_ENFORCE value.
+    ops/tools/deploy_gate.py carries a stdlib copy (a test keeps them equal)."""
+    value = (raw or "").strip().lower()
+    if value in _ENFORCE_ON:
+        return "on"
+    if value in _ENFORCE_OFF:
+        return "off"
+    return "unrecognised"
+
+
+def parse_cloud_budget_enforce(raw: str | None) -> bool:
+    """CLOUD_BUDGET_ENFORCE. An unrecognised value is never silently off: it
+    is read as ON (the safe side for spend — cloud fails closed and the local
+    chain answers until a bootstrap) and logged."""
+    state = cloud_budget_enforce_state(raw)
+    if state != "unrecognised":
+        return state == "on"
+    logger.warning("CLOUD_BUDGET_ENFORCE=%r is not one of %s / %s — treated as ON "
+                   "(fail closed); set it explicitly", raw, "|".join(_ENFORCE_ON),
+                   "|".join(v for v in _ENFORCE_OFF if v))
+    return True
+
 
 # The home server, reached over Tailscale. Five modules read this address from
 # the environment, each carrying its own copy of the literal as the fallback,
@@ -79,15 +130,39 @@ class LLMConfig:
     # the request's "thinking" field). When the configured model is refused
     # as unknown or retired, the gateway switches to this one for the process.
     deepseek_model_fallback: str = os.environ.get("DEEPSEEK_MODEL_FALLBACK", "deepseek-flash")
+    # Model names the monthly cap may bill under a documented profile, as
+    # "name=documented-name[,…]" (e.g. "deepseek-chat=deepseek-flash"). An
+    # operator attestation, not a fact the code can verify: deepseek-chat is
+    # no longer in DeepSeek's docs (see backend/docs/cloud-budget-reservations.md).
+    # Empty (the default) or malformed = no alias: a capped call on an
+    # unprofiled name is denied and the local chain answers.
+    deepseek_billing_profile_aliases: tuple = field(
+        default_factory=lambda: parse_billing_profile_aliases(
+            os.environ.get("DEEPSEEK_BILLING_PROFILE_ALIASES", "")))
     # Monthly spend ceiling for the PRIMARY path. The app is free forever (no
     # ads, no subscriptions), so every primary token is paid out of the owner's
     # own pocket — without a ceiling the bill is unbounded. Unlike the
-    # safety-valve cap this is a SOFT budget: once exhausted the gateway simply
-    # falls through to the local Ollama chain, exactly as if the provider had
+    # safety-valve cap, exhaustion or unknown billing profiles make the gateway
+    # fall through to the local Ollama chain, exactly as if the provider had
     # failed, so the app keeps answering. 0 disables the ceiling.
     deepseek_primary_monthly_token_cap: int = int(
         os.environ.get("DEEPSEEK_PRIMARY_MONTHLY_TOKEN_CAP", "100000000")
     )
+    # The hard monthly cap's activation switch. Off (default): the behaviour
+    # before the reservation ledger — no wire reservation or denial, the soft
+    # ceiling above over llm_calls (failing OPEN on unreadable telemetry),
+    # batch tools unreserved; telemetry is recorded either way. On: every paid
+    # wire attempt is reserved in the ledger and fails CLOSED until an explicit
+    # bootstrap (backend/docs/cloud-budget-reservations.md, runbook).
+    # 1/true/yes/on = on; unset/empty/0/false/no/off = off; anything else is
+    # logged and read as ON (never silently off).
+    cloud_budget_enforce: bool = field(default_factory=lambda: parse_cloud_budget_enforce(
+        os.environ.get("CLOUD_BUDGET_ENFORCE")))
+    # Where the ledger's continuity anchor lives. Empty = next to sessions.db
+    # (the default). Put it on a different volume so restoring one volume
+    # alone is detected (runbook in backend/docs/cloud-budget-reservations.md).
+    cloud_budget_anchor_path: str = field(default_factory=lambda: os.environ.get(
+        "CLOUD_BUDGET_ANCHOR_PATH", "").strip())
 
     # backward-compat shim: older code reads .model
     @property

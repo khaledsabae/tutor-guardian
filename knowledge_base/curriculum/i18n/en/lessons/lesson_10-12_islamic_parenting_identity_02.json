@@ -1,7 +1,7 @@
 {
   "id": "lesson_10-12_islamic_parenting_identity_02",
   "path_id": "path_10-12_islamic_parenting_identity",
-  "title": "The Qur'an: Life's Constitution and the Teen's Compass",
+  "title": "The Qur'an: Life's Constitution and the Young Adolescent's Compass",
   "age_group": "10-12",
   "domain": "islamic_parenting",
   "unit_ids": [
@@ -10,8 +10,8 @@
     "968f42b5-5184-4f4a-97d9-b854f507dbe6",
     "99515fe1-7bec-4a39-af86-bf1922262170"
   ],
-  "summary": "At this age, abstract thinking begins. The Qur'an is not just for memorisation, but for tadabbur (reflection) and action. Encourage your child: \"Choose a verse, understand its meaning, and apply it for a week.\"",
-  "try_this": "Choose a short surah (Al-'Alaq, Al-Qadr, Al-'Adiyat) — memorise one verse daily + reflect on the meaning of one word. Discuss: How do we apply it?",
+  "summary": "At this age, the child's ability to think abstractly grows. The Qur'an is not just for memorisation, but for tadabbur (reflection) and action. Encourage your child: \"Choose a verse, understand its meaning from a trusted, accessible tafsir, then act on it in your day.\"",
+  "try_this": "Today: Choose a verse with your child from a short surah (Al-'Alaq, Al-Qadr, Al-'Adiyat), read its meaning together in an accessible tafsir, then discuss: How can we act on it today?",
   "order": 2,
   "estimated_minutes": 35,
   "reflection_prompts": [
@@ -22,7 +22,7 @@
   "needs_professional_followup": false,
   "is_published": true,
   "version": "1.0.0",
-  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
   "language": "en",
   "source_language": "ar",
   "translation": {
@@ -36,8 +36,8 @@
     },
     "review_verdict": "clean",
     "review_defects": [],
-    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
-    "revalidated_at": "2026-10-04T11:18:18+00:00",
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
+    "revalidated_at": "2026-10-08T16:29:33+00:00",
     "fixed_at": "2026-08-13T18:03:53.112970+00:00",
     "fixer_model": "mistral-large-3:675b",
     "auto_review": {
@@ -45,15 +45,29 @@
         "deepseek-v4-pro",
         "glm-5.2"
       ],
+      "providers": {
+        "deepseek-v4-pro": {
+          "provider": "openrouter",
+          "model": "deepseek/deepseek-v4-pro"
+        },
+        "glm-5.2": {
+          "provider": "openrouter",
+          "model": "z-ai/glm-5.2"
+        }
+      },
       "fixer": null,
       "rounds": 1,
       "prompt_version": "dfa8a5f39718",
-      "content_sha256": "9217a54843412c9624f724ed1465f04780d4c037ffef0a8ab72a922351b49ac6",
-      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "content_sha256": "1842e6ca06167caf872bec0552ac3796ce838759e0f322ea54c78e5aba3bd33b",
+      "reviewed_at": "2026-10-08T16:29:33+00:00",
       "residual_low": [],
       "adjudicated": [],
       "tool": "ops/tools/review_en_parity.py",
-      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
-    }
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+    },
+    "english_authors": [
+      "mistral-large-3:675b",
+      "claude-opus-5-5"
+    ]
   }
 }

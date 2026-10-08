@@ -9,8 +9,8 @@
     "isl-cc4ee988",
     "isl-c1f0ce4d"
   ],
-  "summary": "At this age, the adolescent is searching for a cause to live by. Guide them from being an \"influenced\" to a \"maker\": discover their talent/passion, connect them to a cause (environment, education, orphans, technology), and create a small project together. Leadership: service, not authority—a council of consultation, not a solitary decision.",
-  "try_this": "This week: Ask them, \"What problem in your community would you like to solve?\"—then plan a small project together (fundraising, volunteering, awareness content). Implement one step this month.",
+  "summary": "At this age, the adolescent may be searching for a cause to live by. Guide them from being an \"influenced\" to a \"maker\": discover their talent/passion, connect them to a cause (environment, education, orphans, technology), and create a small project together. Teach them that leadership begins with serving others and consulting them, not with domineering or deciding alone.",
+  "try_this": "Today: Ask them, «What problem in your community would you like to help solve?», and listen to their answer without interrupting.",
   "order": 4,
   "estimated_minutes": 44,
   "reflection_prompts": [
@@ -21,7 +21,7 @@
   "needs_professional_followup": false,
   "is_published": true,
   "version": "1.0.0",
-  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
   "language": "en",
   "source_language": "ar",
   "translation": {
@@ -33,17 +33,10 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "low_only",
-    "review_defects": [
-      {
-        "model": "deepseek-v4-pro",
-        "field": "try_this.arabic",
-        "type": "source_corruption",
-        "why": "Imperatives mix singular («اسأله»), dual («خططا»), and plural («نفذوا») in one instruction."
-      }
-    ],
-    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
-    "revalidated_at": "2026-10-04T11:18:18+00:00",
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
+    "revalidated_at": "2026-10-08T16:29:33+00:00",
     "fixed_at": "2026-08-13T18:59:23.875352+00:00",
     "fixer_model": "mistral-large-3:675b",
     "auto_review": {
@@ -51,22 +44,29 @@
         "deepseek-v4-pro",
         "glm-5.2"
       ],
+      "providers": {
+        "deepseek-v4-pro": {
+          "provider": "openrouter",
+          "model": "deepseek/deepseek-v4-pro"
+        },
+        "glm-5.2": {
+          "provider": "openrouter",
+          "model": "z-ai/glm-5.2"
+        }
+      },
       "fixer": null,
       "rounds": 1,
       "prompt_version": "dfa8a5f39718",
-      "content_sha256": "7815ab34779543577d569f73430487ae46c5347dd6504847a502d1f94ddba68b",
-      "reviewed_at": "2026-10-04T11:18:18+00:00",
-      "residual_low": [
-        {
-          "model": "deepseek-v4-pro",
-          "field": "try_this.arabic",
-          "type": "source_corruption",
-          "why": "Imperatives mix singular («اسأله»), dual («خططا»), and plural («نفذوا») in one instruction."
-        }
-      ],
+      "content_sha256": "dc4b972361c911a2269568370cc15df0a7b412157bff1b450d3418178c731d92",
+      "reviewed_at": "2026-10-08T16:29:33+00:00",
+      "residual_low": [],
       "adjudicated": [],
       "tool": "ops/tools/review_en_parity.py",
-      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
-    }
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+    },
+    "english_authors": [
+      "mistral-large-3:675b",
+      "claude-opus-5-5"
+    ]
   }
 }

@@ -1,23 +1,23 @@
 {
   "id": "lesson_2-3_islamic_first_words_04",
   "path_id": "path_2-3_islamic_first_words",
-  "title": "Al-Qudwah, Not al-Talqeen: He Imitates What He Sees",
+  "title": "Example, Not Rote Instruction: He Imitates What He Sees",
   "age_group": "2-3",
   "domain": "islamic_parenting",
   "unit_ids": [],
-  "summary": "A child imitates his parents far more than he obeys their commands. When he sees you praying, making adhkar (remembrances of Allah), and treating people with akhlaq (good character), he absorbs the Deen as a living behaviour, not a lesson. Be the curriculum yourself.",
-  "try_this": "This week: Let your child see you in a moment of ‘ibadah (worship) or beautiful akhlaq, without commanding him to do anything.",
+  "summary": "A toddler imitates his parents far more than he obeys their commands. When he sees you praying, remembering Allah, and treating people with good character, he absorbs the religion as living behaviour, not a lesson. Be the curriculum yourself.",
+  "try_this": "Today: Let your child see you in a moment of worship or good character, without commanding him to do anything.",
   "order": 4,
   "estimated_minutes": 6,
   "reflection_prompts": [
     "What does your child imitate from you?",
-    "What qudwah (example) did you offer this week?"
+    "What example did you offer this week?"
   ],
   "warning_flags": [],
   "needs_professional_followup": false,
   "is_published": true,
   "version": "1.0.0",
-  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
   "language": "en",
   "source_language": "ar",
   "translation": {
@@ -29,50 +29,38 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "low_only",
-    "review_defects": [
-      {
-        "model": "deepseek-v4-pro",
-        "field": "summary",
-        "type": "meaning",
-        "why": "Changes 'hears/listens to' to 'obeys', overstating the Arabic."
-      },
-      {
-        "model": "deepseek-v4-pro",
-        "field": "summary",
-        "type": "omission",
-        "why": "Omits 'toddler' (الطفل الدارج)."
-      }
-    ],
-    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
-    "revalidated_at": "2026-10-04T16:52:31+00:00",
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
+    "revalidated_at": "2026-10-08T15:21:56+00:00",
     "auto_review": {
       "reviewers": [
         "deepseek-v4-pro",
         "glm-5.2"
       ],
+      "providers": {
+        "deepseek-v4-pro": {
+          "provider": "openrouter",
+          "model": "deepseek/deepseek-v4-pro"
+        },
+        "glm-5.2": {
+          "provider": "openrouter",
+          "model": "z-ai/glm-5.2"
+        }
+      },
       "fixer": null,
       "rounds": 1,
       "prompt_version": "dfa8a5f39718",
-      "content_sha256": "e8a91d9df8901edf6af73bec809039b37e7ccde4e86f4dfe9f74764ecbe42856",
-      "reviewed_at": "2026-10-04T16:52:31+00:00",
-      "residual_low": [
-        {
-          "model": "deepseek-v4-pro",
-          "field": "summary",
-          "type": "meaning",
-          "why": "Changes 'hears/listens to' to 'obeys', overstating the Arabic."
-        },
-        {
-          "model": "deepseek-v4-pro",
-          "field": "summary",
-          "type": "omission",
-          "why": "Omits 'toddler' (الطفل الدارج)."
-        }
-      ],
+      "content_sha256": "cd24550e00e02165843537e917c827785995cfeb1765f8e74214a18048673e1c",
+      "reviewed_at": "2026-10-08T15:21:56+00:00",
+      "residual_low": [],
       "adjudicated": [],
       "tool": "ops/tools/review_en_parity.py",
-      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
-    }
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+    },
+    "english_authors": [
+      "mistral-large-3:675b",
+      "claude-opus-5-5"
+    ]
   }
 }

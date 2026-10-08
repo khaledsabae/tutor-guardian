@@ -5,8 +5,9 @@
 | Field | Value |
 | --- | --- |
 | **Age Group** | 10-12 |
+| **Approved By** |  |
 | **Domain** | islamic_parenting |
-| **Estimated Minutes** | 7 |
+| **Estimated Minutes** | 47 |
 | **Is Published** | Yes |
 | **Needs Professional Followup** | No |
 | **Order** | 3 |
@@ -45,7 +46,7 @@
   "summary": "في ما قبل المراهقة يُختبر الخلق. الأمانة سراً وعلانية، الصدق في المواقف الصعبة، بر الوالدين عملياً. الوالدان: كونوا المرآة، والصحبة الصالحة درع.",
   "try_this": "هذا الأسبوع: تحدوا معاً \"أسبوع الأمانة\" — كل فرد يسجل موقفاً صعباً اختار فيه الأمانة. ناقشوا النتائج.",
   "order": 3,
-  "estimated_minutes": 7,
+  "estimated_minutes": 47,
   "reflection_prompts": [
     "ما أصعب موقف واجه طفلك فيه اختبار الأمانة؟",
     "كيف أثرت الصحبة على سلوكه؟"
@@ -53,7 +54,8 @@
   "warning_flags": [],
   "needs_professional_followup": false,
   "is_published": true,
-  "version": "1.0.0"
+  "version": "1.0.0",
+  "approved_by": null
 }
 ```
 </details>

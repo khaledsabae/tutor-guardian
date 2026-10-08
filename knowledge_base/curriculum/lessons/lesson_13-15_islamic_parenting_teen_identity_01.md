@@ -5,12 +5,13 @@
 | Field | Value |
 | --- | --- |
 | **Age Group** | 13-15 |
-| **Domain** | islamic_parenting |
-| **Estimated Minutes** | 7 |
+| **Approved By** |  |
+| **Domain** | aqeedah |
+| **Estimated Minutes** | 28 |
 | **Is Published** | Yes |
 | **Needs Professional Followup** | Yes |
 | **Order** | 1 |
-| **Path Id** | path_13-15_islamic_parenting_teen_identity |
+| **Path Id** | path_13-15_aqeedah_certainty |
 | **Reflection Prompts** | `ما الشبهة التي طرحها ابنك؟`, `هل شعر بالاطمئنان بعد النقاش؟` |
 | **Unit Ids** | `isl-ddf22d9e`, `isl-1812a28d`, `isl-199c7aaf` |
 | **Version** | 1.0.0 |
@@ -18,7 +19,7 @@
 
 ## Summary
 
-> في سن 13-15 يبدأ المراهق يسأل: "لماذا الصلاة؟ لم الحرام؟ هل الله موجود؟" — هذا ليس تمرداً بل بحث عن يقين. الوالدان: لا تُسكتا السؤال، قلوا: "سؤال ممتاز، لنبحث معاً". اعرضا أدلة عقلية/قلبية، وارجعا لكتاب/عالم ثقة.
+> في سن 13-15 يبدأ المراهق يسأل: "لماذا الصلاة؟ لم الحرام؟ هل الله موجود؟" — هذا ليس تمرداً بل بحث عن يقين. الوالدان: لا تُسكتا السؤال، قولا: "سؤال ممتاز، لنبحث معاً". اعرضا أدلة عقلية/قلبية، وارجعا لكتاب/عالم ثقة.
 
 ## Try This
 
@@ -32,19 +33,19 @@
 ```json
 {
   "id": "lesson_13-15_islamic_parenting_teen_identity_01",
-  "path_id": "path_13-15_islamic_parenting_teen_identity",
+  "path_id": "path_13-15_aqeedah_certainty",
   "title": "الشبهات الدينية: متى يسأل، وكيف يُجيب الوالدان",
   "age_group": "13-15",
-  "domain": "islamic_parenting",
+  "domain": "aqeedah",
   "unit_ids": [
     "isl-ddf22d9e",
     "isl-1812a28d",
     "isl-199c7aaf"
   ],
-  "summary": "في سن 13-15 يبدأ المراهق يسأل: \"لماذا الصلاة؟ لم الحرام؟ هل الله موجود؟\" — هذا ليس تمرداً بل بحث عن يقين. الوالدان: لا تُسكتا السؤال، قلوا: \"سؤال ممتاز، لنبحث معاً\". اعرضا أدلة عقلية/قلبية، وارجعا لكتاب/عالم ثقة.",
+  "summary": "في سن 13-15 يبدأ المراهق يسأل: \"لماذا الصلاة؟ لم الحرام؟ هل الله موجود؟\" — هذا ليس تمرداً بل بحث عن يقين. الوالدان: لا تُسكتا السؤال، قولا: \"سؤال ممتاز، لنبحث معاً\". اعرضا أدلة عقلية/قلبية، وارجعا لكتاب/عالم ثقة.",
   "try_this": "هذا الأسبوع: اختاروا شبهة واحدة يرددها ابنكم، ابحثا معاً عن جواب (كتاب/مقطع لعالم ثقة)، ناقشوا: ماذا اقتنعت؟",
   "order": 1,
-  "estimated_minutes": 7,
+  "estimated_minutes": 28,
   "reflection_prompts": [
     "ما الشبهة التي طرحها ابنك؟",
     "هل شعر بالاطمئنان بعد النقاش؟"
@@ -55,7 +56,8 @@
   ],
   "needs_professional_followup": true,
   "is_published": true,
-  "version": "1.0.0"
+  "version": "1.0.0",
+  "approved_by": null
 }
 ```
 </details>

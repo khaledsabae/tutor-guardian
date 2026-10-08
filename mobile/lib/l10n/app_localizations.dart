@@ -5033,8 +5033,8 @@ abstract class AppLocalizations {
   /// No description provided for @apiConnectionFailed.
   ///
   /// In ar, this message translates to:
-  /// **'تعذّر الاتصال بالخادم: {error}'**
-  String apiConnectionFailed(Object error);
+  /// **'تعذّر الاتصال بالخادم. تأكّد من اتصالك وحاول مرة أخرى.'**
+  String get apiConnectionFailed;
 
   /// No description provided for @apiNoSession.
   ///
@@ -5573,7 +5573,7 @@ abstract class AppLocalizations {
   /// No description provided for @pathsFrameworkProphetic.
   ///
   /// In ar, this message translates to:
-  /// **'المنهج النبوي 7-7-7'**
+  /// **'مراحل عمرية تربوية'**
   String get pathsFrameworkProphetic;
 
   /// No description provided for @pathsFrameworkGhazali.
@@ -6026,6 +6026,36 @@ abstract class AppLocalizations {
   /// **'فشل ربط الحساب: {error}'**
   String identityLinkFailed(Object error);
 
+  /// No description provided for @identityErrorNoGoogleAccount.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا يوجد حساب Google على هذا الهاتف. أضِف حسابًا من إعدادات الهاتف ثم أعِد المحاولة.'**
+  String get identityErrorNoGoogleAccount;
+
+  /// No description provided for @identityErrorGoogleUnavailable.
+  ///
+  /// In ar, this message translates to:
+  /// **'تسجيل الدخول بحساب Google غير متاح على هذا الهاتف الآن. تأكّد من تحديث خدمات Google Play ثم أعِد المحاولة.'**
+  String get identityErrorGoogleUnavailable;
+
+  /// No description provided for @identityErrorAppMisconfigured.
+  ///
+  /// In ar, this message translates to:
+  /// **'تسجيل الدخول غير مُهيّأ في هذا الإصدار من التطبيق. حدِّث التطبيق أو حاول لاحقًا.'**
+  String get identityErrorAppMisconfigured;
+
+  /// No description provided for @identityErrorGoogleUi.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعذّر فتح نافذة تسجيل الدخول بحساب Google. أعِد المحاولة.'**
+  String get identityErrorGoogleUi;
+
+  /// No description provided for @identityErrorGoogleGeneric.
+  ///
+  /// In ar, this message translates to:
+  /// **'لم يكتمل تسجيل الدخول بحساب Google. أعِد المحاولة بعد قليل.'**
+  String get identityErrorGoogleGeneric;
+
   /// No description provided for @identityLocalNote.
   ///
   /// In ar, this message translates to:
@@ -6331,6 +6361,42 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'حاول مرة أخرى، وإن تكرّر الأمر أرسل لنا ملاحظة.'**
   String get errorUnknownBody;
+
+  /// No description provided for @errorNotFoundTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'هذا المحتوى غير متاح'**
+  String get errorNotFoundTitle;
+
+  /// No description provided for @errorNotFoundBody.
+  ///
+  /// In ar, this message translates to:
+  /// **'ربما نُقل أو حُذف. ارجع وحاول مرة أخرى.'**
+  String get errorNotFoundBody;
+
+  /// No description provided for @errorSessionTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'انتهت الجلسة'**
+  String get errorSessionTitle;
+
+  /// No description provided for @errorSessionBody.
+  ///
+  /// In ar, this message translates to:
+  /// **'اضغط «إعادة المحاولة» لنبدأ جلسة جديدة.'**
+  String get errorSessionBody;
+
+  /// No description provided for @errorRateLimitedTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'طلبات كثيرة في وقت قصير'**
+  String get errorRateLimitedTitle;
+
+  /// No description provided for @errorRateLimitedBody.
+  ///
+  /// In ar, this message translates to:
+  /// **'انتظر قليلًا ثم حاول مرة أخرى.'**
+  String get errorRateLimitedBody;
 
   /// No description provided for @missionTodayLabel.
   ///

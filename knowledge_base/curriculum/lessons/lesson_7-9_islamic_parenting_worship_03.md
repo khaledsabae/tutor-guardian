@@ -5,6 +5,7 @@
 | Field | Value |
 | --- | --- |
 | **Age Group** | 7-9 |
+| **Approved By** |  |
 | **Domain** | islamic_parenting |
 | **Estimated Minutes** | 5 |
 | **Is Published** | Yes |
@@ -51,7 +52,8 @@
   "warning_flags": [],
   "needs_professional_followup": false,
   "is_published": true,
-  "version": "1.0.0"
+  "version": "1.0.0",
+  "approved_by": null
 }
 ```
 </details>

@@ -36,7 +36,8 @@ void main() {
     test('5xx reads as a server problem, 4xx does not', () {
       expect(classifyFailure(const TgApiError(500, 'x')), FailureKind.server);
       expect(classifyFailure(const TgApiError(503, 'x')), FailureKind.server);
-      expect(classifyFailure(const TgApiError(404, 'x')), FailureKind.unknown);
+      // 404 has its own words now (friendly_api_errors_test.dart).
+      expect(classifyFailure(const TgApiError(404, 'x')), FailureKind.notFound);
       expect(classifyFailure(const TgApiError(422, 'x')), FailureKind.unknown);
     });
 

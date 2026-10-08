@@ -39,6 +39,7 @@ import 'package:almorabbi/widgets/ui/loading_view.dart';
 import 'package:almorabbi/core/haptics.dart';
 import '../../child_memory/providers/memory_providers.dart';
 import '../../child_memory/widgets/memory_errors.dart';
+import 'package:almorabbi/core/failures.dart';
 
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
@@ -75,7 +76,7 @@ class SettingsScreen extends ConsumerWidget {
             onRetry: () => ref.invalidate(childrenListProvider),
           ),
           error: (e, _) => _ErrorView(
-            error: '$e',
+            error: e,
             onRetry: () => ref.invalidate(childrenListProvider),
           ),
           data: (envelope) {
@@ -741,7 +742,7 @@ class _SettingsRow extends StatelessWidget {
 
 class _ErrorView extends StatelessWidget {
   const _ErrorView({required this.error, required this.onRetry});
-  final String error;
+  final Object error;
   final VoidCallback onRetry;
 
   @override
@@ -755,7 +756,8 @@ class _ErrorView extends StatelessWidget {
             Icon(Icons.error_outline,
                 size: 48, color: AppTheme.dangerFg),
             const SizedBox(height: 12),
-            Text(AppLocalizations.of(context).settingsLoadFailed(error),
+            Text(AppLocalizations.of(context).settingsLoadFailed(
+                describeFailure(AppLocalizations.of(context), error)),
                 textAlign: TextAlign.center),
             const SizedBox(height: 16),
             ElevatedButton.icon(

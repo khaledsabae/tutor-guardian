@@ -258,9 +258,20 @@ jobs:
           echo "E2E_OUT=$RUNNER_TEMP/e2e/out" >> "$GITHUB_ENV"
 
       - name: Unit-test the E2E tooling
+        # The gate's tests print what the gate prints in a real run, `::error::`
+        # included, and the runner turns any such stdout line into an annotation
+        # on this job. Until 2026-10-08 every E2E run carried a false "logcat has
+        # only 10 lines — capture failed" from one test, and red runs were
+        # rerun for a capture that had in fact recorded 60–90k lines. Commands
+        # are paused while the tests run (e2e/test_workflow.py checks this).
         run: |
           python3 -m pip install PyYAML==6.0.2
-          python3 -m unittest discover -s e2e -v
+          token="e2e-unit-tests-$RANDOM$RANDOM"
+          echo "::stop-commands::$token"
+          rc=0
+          python3 -m unittest discover -s e2e -v || rc=$?
+          echo "::$token::"
+          exit "$rc"
 
       - name: Enable KVM
         run: |

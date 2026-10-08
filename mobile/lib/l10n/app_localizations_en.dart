@@ -2772,9 +2772,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get apiTimeout => 'The connection to the server timed out.';
 
   @override
-  String apiConnectionFailed(Object error) {
-    return 'Could not reach the server: $error';
-  }
+  String get apiConnectionFailed =>
+      'Could not reach the server. Check your connection and try again.';
 
   @override
   String get apiNoSession => 'No active session.';
@@ -3103,7 +3102,7 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get pathsFrameworkProphetic => 'Prophetic 7-7-7 Method';
+  String get pathsFrameworkProphetic => 'Age-stage approach';
 
   @override
   String get pathsFrameworkGhazali => 'Ghazali Tazkiyah';
@@ -3364,6 +3363,26 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get identityErrorNoGoogleAccount =>
+      'There\'s no Google account on this phone. Add one in your phone settings, then try again.';
+
+  @override
+  String get identityErrorGoogleUnavailable =>
+      'Google sign-in isn\'t available on this phone right now. Make sure Google Play services is up to date, then try again.';
+
+  @override
+  String get identityErrorAppMisconfigured =>
+      'Sign-in isn\'t set up in this version of the app. Update the app or try again later.';
+
+  @override
+  String get identityErrorGoogleUi =>
+      'Couldn\'t open Google sign-in. Please try again.';
+
+  @override
+  String get identityErrorGoogleGeneric =>
+      'Google sign-in didn\'t complete. Please try again in a moment.';
+
+  @override
   String get identityLocalNote =>
       'Data stays on this device unless you choose to sign in.';
 
@@ -3546,6 +3565,25 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get errorUnknownBody =>
       'Try again — if it keeps happening, send us a note.';
+
+  @override
+  String get errorNotFoundTitle => 'This isn\'t available';
+
+  @override
+  String get errorNotFoundBody =>
+      'It may have been moved or removed. Go back and try again.';
+
+  @override
+  String get errorSessionTitle => 'Your session has ended';
+
+  @override
+  String get errorSessionBody => 'Tap “Retry” to start a new session.';
+
+  @override
+  String get errorRateLimitedTitle => 'Too many requests at once';
+
+  @override
+  String get errorRateLimitedBody => 'Please wait a moment, then try again.';
 
   @override
   String get missionTodayLabel => 'Today\'s mission';

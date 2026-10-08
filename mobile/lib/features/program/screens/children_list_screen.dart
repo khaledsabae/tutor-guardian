@@ -43,7 +43,7 @@ class ChildrenListScreen extends ConsumerWidget {
             onRetry: () => ref.invalidate(childrenListProvider),
           ),
           error: (e, _) => _ErrorView(
-            error: '$e',
+            error: e,
             onRetry: () => ref.invalidate(childrenListProvider),
           ),
           data: (envelope) {
@@ -443,7 +443,7 @@ class _ChildTile extends StatelessWidget {
 
 class _ErrorView extends StatelessWidget {
   const _ErrorView({required this.error, required this.onRetry});
-  final String error;
+  final Object error;
   final VoidCallback onRetry;
 
   @override

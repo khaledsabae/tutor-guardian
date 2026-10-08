@@ -7,6 +7,7 @@ library;
 import 'dart:io' show SocketException;
 
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 import '../../../l10n/app_localizations.dart';
 import '../../../theme/app_theme.dart';
@@ -14,6 +15,36 @@ import '../../../theme/design_tokens.dart';
 import '../../../widgets/ui/noor_mascot.dart';
 import 'identity_service.dart';
 import 'package:almorabbi/widgets/ui/loading_view.dart';
+
+/// What the parent reads when linking fails — never the plugin's raw text.
+@visibleForTesting
+String identitySignInErrorMessage(AppLocalizations l, Object error) {
+  if (error is SocketException) return l.identityServerUnreachable;
+  if (error is UnsupportedError) return l.identityErrorGoogleUnavailable;
+  if (error is GoogleSignInException) {
+    switch (error.code) {
+      case GoogleSignInExceptionCode.providerConfigurationError:
+        return l.identityErrorGoogleUnavailable;
+      case GoogleSignInExceptionCode.clientConfigurationError:
+        return l.identityErrorAppMisconfigured;
+      case GoogleSignInExceptionCode.uiUnavailable:
+        return l.identityErrorGoogleUi;
+      case GoogleSignInExceptionCode.unknownError:
+        // google_sign_in_android reports Credential Manager's
+        // NoCredentialException — no Google account on the phone — this way.
+        final noAccount =
+            error.description?.startsWith('No credential available') ?? false;
+        return noAccount
+            ? l.identityErrorNoGoogleAccount
+            : l.identityErrorGoogleGeneric;
+      case GoogleSignInExceptionCode.canceled:
+      case GoogleSignInExceptionCode.interrupted:
+      case GoogleSignInExceptionCode.userMismatch:
+        return l.identityErrorGoogleGeneric;
+    }
+  }
+  return l.identityLinkFailed(error);
+}
 
 class IdentityScreen extends StatefulWidget {
   const IdentityScreen({super.key});
@@ -56,17 +87,17 @@ class _IdentityScreenState extends State<IdentityScreen> {
         );
       } else if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(AppLocalizations.of(context).identityLinkIncomplete)),
+          SnackBar(
+            content: Text(AppLocalizations.of(context).identityLinkIncomplete),
+          ),
         );
       }
     } catch (e) {
       if (mounted) {
-        final msg = e is SocketException
-            ? AppLocalizations.of(context).identityServerUnreachable
-            : AppLocalizations.of(context).identityLinkFailed(e);
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(msg)),
-        );
+        final msg = identitySignInErrorMessage(AppLocalizations.of(context), e);
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(msg)));
       }
     }
     await _load();
@@ -107,11 +138,24 @@ class _IdentityScreenState extends State<IdentityScreen> {
                     ),
                     const SizedBox(height: 32),
                     if (_linked) ...[
-                      Icon(Icons.verified_outlined, color: AppTheme.primary, size: 48),
+                      Icon(
+                        Icons.verified_outlined,
+                        color: AppTheme.primary,
+                        size: 48,
+                      ),
                       const SizedBox(height: 12),
-                      Text(_name ?? '', style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+                      Text(
+                        _name ?? '',
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
                       if (_email != null && _email!.isNotEmpty)
-                        Text(_email!, style: TextStyle(fontSize: 14, color: Dt.inkSoft)),
+                        Text(
+                          _email!,
+                          style: TextStyle(fontSize: 14, color: Dt.inkSoft),
+                        ),
                       const SizedBox(height: 24),
                       _Button(
                         label: AppLocalizations.of(context).logout,
@@ -143,7 +187,11 @@ class _Button extends StatelessWidget {
   final VoidCallback onTap;
   final bool outlined;
 
-  const _Button({required this.label, required this.onTap, this.outlined = false});
+  const _Button({
+    required this.label,
+    required this.onTap,
+    this.outlined = false,
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -5,8 +5,8 @@
   "age_group": "2-3",
   "domain": "islamic_parenting",
   "unit_ids": [],
-  "summary": "﴿وَقُولُوا لِلنَّاسِ حُسْنًا﴾ (Al-Baqarah: 83 — interpretation of the meaning: “And speak to people good [words].”) Teach your child as-salam (the greeting of peace) upon entering and gratitude upon receiving; the kind word is sadaqah (charity), and planting it early shapes a beautiful heart and tongue.",
-  "try_this": "This week: Train your child to give as-salam when entering the house, and be the qudwah (example) yourself every time.",
+  "summary": "Allah says: ﴿وَقُولُوا لِلنَّاسِ حُسْنًا﴾ (Surah Al-Baqarah, verse 83 — interpretation of the meaning: “And speak to people good [words].”) Teach your child as-salam (the greeting of peace) upon entering and saying thank you when given something; the Prophet ﷺ said: «And the good word is sadaqah (charity)» (Sahih al-Bukhari 2989), and planting it early shapes a beautiful heart and tongue.",
+  "try_this": "Today: When you enter the house, give as-salam in a clear voice, and encourage your child to imitate you and return the greeting.",
   "order": 2,
   "estimated_minutes": 6,
   "reflection_prompts": [
@@ -17,7 +17,7 @@
   "needs_professional_followup": false,
   "is_published": true,
   "version": "1.0.0",
-  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
   "language": "en",
   "source_language": "ar",
   "translation": {
@@ -29,38 +29,38 @@
       "quoted_arabic": true,
       "reviewer_model": true
     },
-    "review_verdict": "low_only",
-    "review_defects": [
-      {
-        "model": "deepseek-v4-pro",
-        "field": "summary",
-        "type": "addition",
-        "why": "Adds surah reference not present in the Arabic source."
-      }
-    ],
-    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
-    "revalidated_at": "2026-10-04T16:52:31+00:00",
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
+    "revalidated_at": "2026-10-08T16:29:33+00:00",
     "auto_review": {
       "reviewers": [
         "deepseek-v4-pro",
         "glm-5.2"
       ],
+      "providers": {
+        "deepseek-v4-pro": {
+          "provider": "openrouter",
+          "model": "deepseek/deepseek-v4-pro"
+        },
+        "glm-5.2": {
+          "provider": "openrouter",
+          "model": "z-ai/glm-5.2"
+        }
+      },
       "fixer": null,
       "rounds": 1,
       "prompt_version": "dfa8a5f39718",
-      "content_sha256": "9066d42ee6093c71f79c542f229cec6d737640df4148ea14fdb235584387bfc8",
-      "reviewed_at": "2026-10-04T16:52:31+00:00",
-      "residual_low": [
-        {
-          "model": "deepseek-v4-pro",
-          "field": "summary",
-          "type": "addition",
-          "why": "Adds surah reference not present in the Arabic source."
-        }
-      ],
+      "content_sha256": "591cfb7bbe593d42756504c0ab15fbab476d0832e10a2761590a1249135b9644",
+      "reviewed_at": "2026-10-08T16:29:33+00:00",
+      "residual_low": [],
       "adjudicated": [],
       "tool": "ops/tools/review_en_parity.py",
-      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
-    }
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+    },
+    "english_authors": [
+      "mistral-large-3:675b",
+      "claude-opus-5-5"
+    ]
   }
 }

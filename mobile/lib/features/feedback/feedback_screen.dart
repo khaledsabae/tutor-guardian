@@ -16,6 +16,7 @@ import '../../state/chat_notifier.dart' show tgClientProvider;
 import '../../theme/app_theme.dart';
 import '../../widgets/ui/bouncy_button.dart';
 import 'widgets/feedback_replies_section.dart';
+import 'package:almorabbi/core/failures.dart';
 
 class FeedbackScreen extends ConsumerStatefulWidget {
   const FeedbackScreen({super.key});
@@ -100,7 +101,7 @@ class _FeedbackScreenState extends ConsumerState<FeedbackScreen> {
       _snack(l10n.feedbackSent(id.substring(0, 8)), ok: true);
       Navigator.of(context).pop();
     } catch (e) {
-      _snack(l10n.feedbackSendError(e.toString()));
+      _snack(l10n.feedbackSendError(describeFailure(l10n, e)));
     } finally {
       if (mounted) setState(() => _sending = false);
     }

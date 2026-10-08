@@ -1,7 +1,7 @@
 {
   "id": "lesson_7-9_islamic_parenting_worship_01",
   "path_id": "path_7-9_islamic_parenting_worship",
-  "title": "Al-Salah: Love, Not Duty",
+  "title": "Salah: Love That Prepares for Duty",
   "age_group": "7-9",
   "domain": "islamic_parenting",
   "unit_ids": [
@@ -10,18 +10,18 @@
     "b1bd26fc-3144-4928-9bb4-ce2b30f95876"
   ],
   "summary": "At the age of 7–9, the child begins to understand the meaning of salah but may see it as burdensome. The key: good example, encouragement rather than compulsion, and connecting his heart to Allah through stories and love.",
-  "try_this": "This week: perform one salah daily with your child aloud, let him count the rak‘at, and praise him for every improvement.",
+  "try_this": "Today: Pray Maghrib or Isha with your child, recite aloud in its first two rak‘at, then ask him after the closing salam: How many rak‘at did we pray?",
   "order": 1,
   "estimated_minutes": 7,
   "reflection_prompts": [
     "How did your child react when you prayed with him?",
-    "Which story had the greatest impact on him?"
+    "What did your child enjoy most when you prayed together?"
   ],
   "warning_flags": [],
   "needs_professional_followup": false,
   "is_published": true,
   "version": "1.0.0",
-  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
   "language": "en",
   "source_language": "ar",
   "translation": {
@@ -35,8 +35,8 @@
     },
     "review_verdict": "clean",
     "review_defects": [],
-    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
-    "revalidated_at": "2026-10-07T07:28:58+00:00",
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
+    "revalidated_at": "2026-10-08T16:29:33+00:00",
     "fixed_at": "2026-08-13T18:16:22.371304+00:00",
     "fixer_model": "mistral-large-3:675b",
     "auto_review": {
@@ -44,15 +44,29 @@
         "deepseek-v4-pro",
         "glm-5.2"
       ],
+      "providers": {
+        "deepseek-v4-pro": {
+          "provider": "openrouter",
+          "model": "deepseek/deepseek-v4-pro"
+        },
+        "glm-5.2": {
+          "provider": "openrouter",
+          "model": "z-ai/glm-5.2"
+        }
+      },
       "fixer": null,
       "rounds": 1,
       "prompt_version": "dfa8a5f39718",
-      "content_sha256": "94770197fddf9d9f6c2dcb1c281c305dc703be45ec1fb09fee4a05ce8af532dc",
-      "reviewed_at": "2026-10-07T07:28:58+00:00",
+      "content_sha256": "06b97cb319287e86dea6648bc7a4678e0745330ab730ff8dd93afd7a98586245",
+      "reviewed_at": "2026-10-08T16:29:33+00:00",
       "residual_low": [],
       "adjudicated": [],
       "tool": "ops/tools/review_en_parity.py",
       "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
-    }
+    },
+    "english_authors": [
+      "mistral-large-3:675b",
+      "claude-opus-5-5"
+    ]
   }
 }
