@@ -6,6 +6,7 @@
 // the UI renders the expected widgets (titles, counts, error state).
 
 import 'package:flutter/material.dart';
+import 'package:flutter/semantics.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -186,6 +187,44 @@ void main() {
 
       expect(find.text('إعادة المحاولة'), findsOneWidget);
     });
+
+    for (final locale in const [Locale('ar'), Locale('en')]) {
+      testWidgets('lesson favorite has localized semantics and a 48dp target (${locale.languageCode})', (t) async {
+        final semantics = t.ensureSemantics();
+        try {
+          SharedPreferences.setMockInitialValues({});
+          final prefs = await SharedPreferences.getInstance();
+          final container = ProviderContainer(overrides: [
+            tgClientProvider.overrideWithValue(_FakeTgClient()),
+            sharedPreferencesProvider.overrideWith((_) async => prefs),
+          ]);
+          addTearDown(container.dispose);
+          await container.read(sharedPreferencesProvider.future);
+          await t.pumpWidget(UncontrolledProviderScope(
+            container: container,
+            child: MaterialApp(
+              locale: locale,
+              localizationsDelegates: AppLocalizations.localizationsDelegates,
+              supportedLocales: AppLocalizations.supportedLocales,
+              home: const LessonScreen(lessonId: 'a11y-lesson', ageGroup: '4-6'),
+            ),
+          ));
+          await t.pumpAndSettle();
+          final l10n = AppLocalizations.of(t.element(find.byType(LessonScreen)));
+          final favorite = find.bySemanticsLabel(l10n.lessonFavAdd);
+          expect(favorite, findsOneWidget);
+          expect(t.getSemantics(favorite).getSemanticsData().hasAction(SemanticsAction.tap), isTrue);
+          final button = find.byTooltip(l10n.lessonFavAdd);
+          expect(t.getSize(button).height, greaterThanOrEqualTo(48));
+          expect(t.getSize(button).width, greaterThanOrEqualTo(48));
+          await t.tap(button);
+          await t.pumpAndSettle();
+          expect(find.bySemanticsLabel(l10n.lessonFavRemove), findsOneWidget);
+        } finally {
+          semantics.dispose();
+        }
+      });
+    }
 
     testWidgets('LessonScreen renders try_this, summary, reflection prompts',
         (WidgetTester tester) async {

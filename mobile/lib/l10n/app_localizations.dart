@@ -9595,6 +9595,24 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'لم يُحذف حسابك. يمكنك أن تحاول مرة أخرى من الإعدادات ← الخصوصية وبياناتك.'**
   String get deleteAccountNotDeletedNotice;
+
+  /// No description provided for @a11ySendQuestion.
+  ///
+  /// In ar, this message translates to:
+  /// **'إرسال السؤال'**
+  String get a11ySendQuestion;
+
+  /// No description provided for @a11yExitChildMode.
+  ///
+  /// In ar, this message translates to:
+  /// **'الخروج من وضع الطفل'**
+  String get a11yExitChildMode;
+
+  /// Screen-reader action for selecting the active child, including their full name.
+  ///
+  /// In ar, this message translates to:
+  /// **'اختيار الطفل: {name}'**
+  String a11yChooseChild(String name);
 }
 
 class _AppLocalizationsDelegate

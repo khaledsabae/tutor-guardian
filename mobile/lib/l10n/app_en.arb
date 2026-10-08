@@ -1675,5 +1675,12 @@
   "deleteAccountStartOverConfirm": "Start over",
   "accountStartedOverTitle": "The app has started over on this phone",
   "accountStartedOverBody": "We cleared everything that was on this phone. We couldn't confirm whether your account was deleted from our servers; to make sure it is, email us at {email}. Close the app — it will start fresh when you open it.",
-  "deleteAccountNotDeletedNotice": "Your account was not deleted. You can try again from Settings → Privacy & your data."
+  "deleteAccountNotDeletedNotice": "Your account was not deleted. You can try again from Settings → Privacy & your data.",
+  "a11ySendQuestion": "Send question",
+  "a11yExitChildMode": "Exit child mode",
+  "a11yChooseChild": "Choose child: {name}",
+  "@a11yChooseChild": {
+    "description": "Screen-reader action for selecting the active child, including their full name.",
+    "placeholders": {"name": {"type": "String"}}
+  }
 }

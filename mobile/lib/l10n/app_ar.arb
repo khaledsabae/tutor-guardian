@@ -1802,5 +1802,12 @@
   "accountStartedOverTitle": "بدأ التطبيق من جديد على هذا الهاتف",
   "accountStartedOverBody": "مسحنا كل ما كان على هذا الهاتف. لم نتأكّد هل حُذف حسابك من خوادمنا؛ لتتأكّد من حذفه راسلنا على {email}. أغلق التطبيق، وسيبدأ من جديد حين تفتحه.",
   "@accountStartedOverBody": {"placeholders": {"email": {"type": "String"}}},
-  "deleteAccountNotDeletedNotice": "لم يُحذف حسابك. يمكنك أن تحاول مرة أخرى من الإعدادات ← الخصوصية وبياناتك."
+  "deleteAccountNotDeletedNotice": "لم يُحذف حسابك. يمكنك أن تحاول مرة أخرى من الإعدادات ← الخصوصية وبياناتك.",
+  "a11ySendQuestion": "إرسال السؤال",
+  "a11yExitChildMode": "الخروج من وضع الطفل",
+  "a11yChooseChild": "اختيار الطفل: {name}",
+  "@a11yChooseChild": {
+    "description": "Screen-reader action for selecting the active child, including their full name.",
+    "placeholders": {"name": {"type": "String"}}
+  }
 }
