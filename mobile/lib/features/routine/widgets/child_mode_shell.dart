@@ -116,14 +116,16 @@ class _ChildModeShellState extends ConsumerState<ChildModeShell> {
                   child: SafeArea(
                     bottom: false,
                     child: Padding(
-                      padding: const EdgeInsets.fromLTRB(16, 4, 4, 8),
+                      padding: const EdgeInsetsDirectional.fromSTEB(16, 4, 4, 8),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           Row(
                             children: [
-                              Text(avatar,
-                                  style: const TextStyle(fontSize: 26)),
+                              ExcludeSemantics(
+                                child: Text(avatar,
+                                    style: const TextStyle(fontSize: 26)),
+                              ),
                               const SizedBox(width: 10),
                               Expanded(
                                 child: Semantics(
@@ -140,10 +142,17 @@ class _ChildModeShellState extends ConsumerState<ChildModeShell> {
                                   ),
                                 ),
                               ),
-                              IconButton(
-                                tooltip: l10n.habitChildModeExit,
-                                icon: Icon(Icons.logout, color: c.onPrimary),
-                                onPressed: _askExit,
+                              Semantics(
+                                container: true,
+                                button: true,
+                                label: l10n.a11yExitChildMode,
+                                onTap: _askExit,
+                                excludeSemantics: true,
+                                child: IconButton(
+                                  tooltip: l10n.a11yExitChildMode,
+                                  icon: Icon(Icons.logout, color: c.onPrimary),
+                                  onPressed: _askExit,
+                                ),
                               ),
                             ],
                           ),

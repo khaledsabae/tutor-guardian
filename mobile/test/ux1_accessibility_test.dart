@@ -14,6 +14,8 @@ import 'package:almorabbi/models/api_models.dart';
 import 'package:almorabbi/state/chat_notifier.dart';
 import 'package:almorabbi/widgets/message_bubble.dart';
 import 'package:almorabbi/widgets/ui/bouncy_button.dart';
+import 'package:almorabbi/widgets/ui/empty_state.dart';
+import 'package:almorabbi/widgets/ui/noor_mascot.dart';
 import 'package:almorabbi/widgets/ui/error_retry_view.dart';
 import 'package:almorabbi/widgets/ui/night_sky.dart';
 import 'package:almorabbi/widgets/ui/skeleton.dart';
@@ -129,6 +131,30 @@ void main() {
       handle.dispose();
     });
   });
+
+  for (final locale in const [Locale('ar'), Locale('en')]) {
+    testWidgets('empty-state artwork and emoji fallback are decorative (${locale.languageCode})', (t) async {
+      final handle = t.ensureSemantics();
+      try {
+        Widget empty({String? image}) => _host(Builder(builder: (context) => EmptyState(
+          emoji: '👶',
+          title: AppLocalizations.of(context).childFallbackName,
+          imageAsset: image,
+        )), locale: locale);
+        await t.pumpWidget(empty(image: 'assets/images/generated/empty_children.webp'));
+        await t.pumpAndSettle();
+        expect(t.getSemantics(find.byType(Image)).getSemanticsData().flagsCollection.isImage, isFalse);
+        await t.pumpWidget(empty());
+        await t.pumpAndSettle();
+        expect(find.bySemanticsLabel(RegExp('👶')), findsNothing);
+        await t.pumpWidget(_host(const NoorMascot(), locale: locale));
+        await t.pumpAndSettle();
+        expect(t.getSemantics(find.byType(NoorMascot)).getSemanticsData().flagsCollection.isImage, isFalse);
+      } finally {
+        handle.dispose();
+      }
+    });
+  }
 
   group('reduce motion: loops stop', () {
     testWidgets('the thinking dots loop normally and hold still when reduced',

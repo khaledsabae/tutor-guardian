@@ -8,6 +8,7 @@
 //   3. Widget tests for ActiveChildChip, ChildrenListScreen.
 
 import 'package:flutter/material.dart';
+import 'package:flutter/semantics.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -191,6 +192,106 @@ void main() {
 
     expect(find.text('طفل نشط'), findsOneWidget);
   });
+
+  // ── Widget: ActiveChildChip size + semantics (PR #74 review) ────────
+  //
+  // The 48dp minimum belongs to the hit area, not to the decorated pill: the
+  // pill is what the user sees in the Home/Paths app bars and must keep its
+  // compact size. 35.0 is the pill height measured on origin/main (before
+  // the a11y PR) with the same host and test fonts — if this moves, the
+  // app-bar chip visibly changed size.
+  const prePrPillHeight = 35.0;
+
+  Future<void> pumpChipInAppBar(WidgetTester tester,
+      {required Locale locale, required bool withChild}) async {
+    final prefs = await SharedPreferences.getInstance();
+    if (withChild) {
+      await OnboardingStorage(prefs).setActiveChild(
+        id: 1,
+        name: 'سارة',
+        ageGroup: '4-6',
+        avatarEmoji: '👧',
+      );
+    }
+    final container = ProviderContainer(
+      overrides: [
+        tgClientProvider.overrideWithValue(_FakeTgClient()),
+        sharedPreferencesProvider.overrideWith((_) async => prefs),
+      ],
+    );
+    addTearDown(container.dispose);
+    await container.read(sharedPreferencesProvider.future);
+    if (withChild) container.read(activeChildIdProvider.notifier).state = 1;
+    await tester.pumpWidget(
+      UncontrolledProviderScope(
+        container: container,
+        child: MaterialApp(
+          locale: locale,
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          home: Scaffold(
+            appBar: AppBar(actions: const [ActiveChildChip()]),
+          ),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+  }
+
+  Finder chipPill() => find.descendant(
+        of: find.byType(ActiveChildChip),
+        matching: find.byWidgetPredicate(
+          (w) => w is Container && w.decoration != null,
+        ),
+      );
+
+  for (final locale in const [Locale('ar'), Locale('en')]) {
+    for (final withChild in const [true, false]) {
+      final tag = '${locale.languageCode}, ${withChild ? 'child' : 'no child'}';
+
+      testWidgets('ActiveChildChip keeps its pill size with a 48dp target ($tag)',
+          (tester) async {
+        await pumpChipInAppBar(tester, locale: locale, withChild: withChild);
+
+        expect(chipPill(), findsOneWidget);
+        expect(tester.getSize(chipPill()).height, prePrPillHeight);
+
+        final target = tester.getSize(find.byType(InkWell));
+        expect(target.height, greaterThanOrEqualTo(48));
+        expect(target.width, greaterThanOrEqualTo(48));
+
+        // The extra target area is live: a tap just above the pill (inside
+        // the 48dp area, outside the pill) still opens the children list.
+        final pillRect = tester.getRect(chipPill());
+        final inkRect = tester.getRect(find.byType(InkWell));
+        expect(inkRect.top, lessThan(pillRect.top));
+        await tester.tapAt(Offset(pillRect.center.dx, inkRect.top + 2));
+        await tester.pumpAndSettle();
+        expect(find.byType(ChildrenListScreen), findsOneWidget);
+      });
+
+      testWidgets('ActiveChildChip says who is current and that a tap switches ($tag)',
+          (tester) async {
+        final semantics = tester.ensureSemantics();
+        try {
+          await pumpChipInAppBar(tester, locale: locale, withChild: withChild);
+          final data = tester
+              .getSemantics(find.byType(ActiveChildChip))
+              .getSemanticsData();
+          final ar = locale.languageCode == 'ar';
+          final expected = withChild
+              ? (ar ? 'الطفل الحالي: سارة، اضغط للتبديل'
+                  : 'Current child: سارة, tap to switch')
+              : (ar ? 'اختيار طفل' : 'Choose a child');
+          expect(data.label, expected);
+          expect(data.flagsCollection.isButton, isTrue);
+          expect(data.hasAction(SemanticsAction.tap), isTrue);
+        } finally {
+          semantics.dispose();
+        }
+      });
+    }
+  }
 
   // ── Widget: ChildrenListScreen ──────────────────────────────────────
 

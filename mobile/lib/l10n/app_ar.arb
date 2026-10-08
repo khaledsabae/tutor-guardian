@@ -1802,5 +1802,16 @@
   "accountStartedOverTitle": "بدأ التطبيق من جديد على هذا الهاتف",
   "accountStartedOverBody": "مسحنا كل ما كان على هذا الهاتف. لم نتأكّد هل حُذف حسابك من خوادمنا؛ لتتأكّد من حذفه راسلنا على {email}. أغلق التطبيق، وسيبدأ من جديد حين تفتحه.",
   "@accountStartedOverBody": {"placeholders": {"email": {"type": "String"}}},
-  "deleteAccountNotDeletedNotice": "لم يُحذف حسابك. يمكنك أن تحاول مرة أخرى من الإعدادات ← الخصوصية وبياناتك."
+  "deleteAccountNotDeletedNotice": "لم يُحذف حسابك. يمكنك أن تحاول مرة أخرى من الإعدادات ← الخصوصية وبياناتك.",
+  "a11ySendQuestion": "إرسال السؤال",
+  "a11yExitChildMode": "الخروج من وضع الطفل",
+  "a11yCurrentChild": "الطفل الحالي: {name}، اضغط للتبديل",
+  "@a11yCurrentChild": {
+    "description": "Screen-reader label for the active-child chip: names the current child (full name) and says a tap opens the list to switch. It must not sound like it selects this child.",
+    "placeholders": {"name": {"type": "String"}}
+  },
+  "a11yChooseAChild": "اختيار طفل",
+  "@a11yChooseAChild": {
+    "description": "Screen-reader label for the active-child chip when no child is active yet; a tap opens the children list."
+  }
 }

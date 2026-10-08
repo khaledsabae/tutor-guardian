@@ -2,7 +2,10 @@
 // under a grounded answer, and the behaviour-type field folded from a
 // permanent bar above the chat into a context chip in the composer.
 
+import 'dart:ui' show Tristate;
+
 import 'package:flutter/material.dart';
+import 'package:flutter/semantics.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -93,7 +96,7 @@ void main() {
       }
     }
 
-    Future<ProviderContainer> pumpChat(WidgetTester t) async {
+    Future<ProviderContainer> pumpChat(WidgetTester t, {Locale locale = const Locale('en')}) async {
       SharedPreferences.setMockInitialValues({});
       final prefs = await SharedPreferences.getInstance();
       await OnboardingStorage(prefs).markOnboardingCompleted();
@@ -105,9 +108,9 @@ void main() {
       addTearDown(container.dispose);
       await t.pumpWidget(UncontrolledProviderScope(
         container: container,
-        child: const MaterialApp(
-          locale: Locale('en'),
-          home: ChatScreen(),
+        child: MaterialApp(
+          locale: locale,
+          home: const ChatScreen(),
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
         ),
@@ -115,6 +118,32 @@ void main() {
       await t.pump(const Duration(milliseconds: 100));
       await t.pump(const Duration(milliseconds: 100));
       return container;
+    }
+
+    for (final locale in const [Locale('ar'), Locale('en')]) {
+      testWidgets('assistant send exposes a localized tap action (${locale.languageCode})', (t) async {
+        final semantics = t.ensureSemantics();
+        try {
+          final container = await pumpChat(t, locale: locale);
+          container.read(chatNotifierProvider.notifier).setOnline(false);
+          final send = find.bySemanticsLabel(locale.languageCode == 'ar'
+              ? 'إرسال السؤال' : 'Send question');
+          expect(send, findsOneWidget);
+          final data = t.getSemantics(send).getSemanticsData();
+          expect(data.flagsCollection.isButton, isTrue);
+          expect(data.hasAction(SemanticsAction.tap), isTrue);
+          expect(data.flagsCollection.isEnabled, Tristate.isTrue);
+          expect(t.getSize(find.byTooltip(locale.languageCode == 'ar'
+              ? 'إرسال السؤال' : 'Send question')).height, greaterThanOrEqualTo(48));
+          await t.enterText(find.byType(TextField), 'A question');
+          final node = t.getSemantics(send);
+          node.owner!.performAction(node.id, SemanticsAction.tap);
+          await t.pump();
+          expect(t.widget<TextField>(find.byType(TextField)).controller!.text, isEmpty);
+        } finally {
+          semantics.dispose();
+        }
+      });
     }
 
     testWidgets('no permanent field; set, show and clear from the composer',

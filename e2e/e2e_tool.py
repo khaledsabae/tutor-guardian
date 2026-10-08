@@ -87,9 +87,10 @@ KEYS = [
     "startThisLesson", "browsePaths", "continueBtn",
     "lessonMarkComplete", "lessonCompleted",
     # assistant
-    "chatTypeHint", "send", "chatStop", "feedbackHelpful", "chatRetry",
+    "chatTypeHint", "a11ySendQuestion", "chatStop", "feedbackHelpful", "chatRetry",
     # child mode
     "routineTitle", "routineChildMode", "childMode", "habitChildModeExit",
+    "a11yExitChildMode",
     "habitChildModeExitTitle", "childModeHandoff", "childModePinMismatch",
     "childModePinIncorrect", "childModeEnterFailed", "childModeBudgetSpent",
     "childModeOffline",
