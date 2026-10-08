@@ -2,7 +2,7 @@
   "id": "tip_2-3_024",
   "age_group": "2-3",
   "domain": "development",
-  "text": "Give your child only two choices when they are being stubborn; the feeling of control reduces outbursts.",
+  "text": "If your child hits or bites, stop it straight away, calmly, and say clearly: “I won't let you hit.” Move them out of the situation, then help them find a safe way to show their anger.",
   "unit_id": null,
   "day_of_week": 4,
   "time_of_day": "anytime",
@@ -10,7 +10,7 @@
   "is_published": true,
   "version": "1.0.0",
   "created_at": "2026-06-19T12:00:00",
-  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+  "approved_by": null,
   "language": "en",
   "source_language": "ar",
   "translation": {
@@ -22,24 +22,9 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "clean",
+    "review_verdict": "pending",
     "review_defects": [],
-    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
-    "revalidated_at": "2026-10-04T11:18:18+00:00",
-    "auto_review": {
-      "reviewers": [
-        "deepseek-v4-pro",
-        "glm-5.2"
-      ],
-      "fixer": null,
-      "rounds": 1,
-      "prompt_version": "dfa8a5f39718",
-      "content_sha256": "7681c8aab2d1c75545fed3ddd7ecf54605b59c90b1940d98549d2b55bb922452",
-      "reviewed_at": "2026-10-04T11:18:18+00:00",
-      "residual_low": [],
-      "adjudicated": [],
-      "tool": "ops/tools/review_en_parity.py",
-      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
-    }
+    "approved_by": null,
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

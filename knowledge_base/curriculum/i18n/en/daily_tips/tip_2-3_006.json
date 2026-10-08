@@ -2,7 +2,7 @@
   "id": "tip_2-3_006",
   "age_group": "2-3",
   "domain": "cyber",
-  "text": "This is incorrect; screens before sleep suppress melatonin secretion and delay sleep. Implement a \"zero screens\" routine at least one hour before bedtime, and replace it with a warm bath, a short story, and a gentle massage, along with turning off bright lights [3, 4].",
+  "text": "Screens before sleep can delay your child's sleep, as their light can suppress melatonin. Put them away at least an hour before bedtime and replace them with a warm bath, a short story and a gentle massage, with bright lights turned off.",
   "unit_id": null,
   "day_of_week": 6,
   "time_of_day": "anytime",
@@ -10,7 +10,7 @@
   "is_published": true,
   "version": "1.0.0",
   "created_at": "2026-06-13T10:00:00",
-  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+  "approved_by": null,
   "language": "en",
   "source_language": "ar",
   "translation": {
@@ -22,26 +22,11 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "clean",
+    "review_verdict": "pending",
     "review_defects": [],
-    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "approved_by": null,
     "revalidated_at": "2026-10-04T11:18:18+00:00",
     "fixed_at": "2026-08-13T18:53:37.706847+00:00",
-    "fixer_model": "mistral-large-3:675b",
-    "auto_review": {
-      "reviewers": [
-        "deepseek-v4-pro",
-        "glm-5.2"
-      ],
-      "fixer": null,
-      "rounds": 1,
-      "prompt_version": "dfa8a5f39718",
-      "content_sha256": "389d74002c8dc66b8e7dbee9f45e333482dc5507400323af245d186bc3b615d5",
-      "reviewed_at": "2026-10-04T11:18:18+00:00",
-      "residual_low": [],
-      "adjudicated": [],
-      "tool": "ops/tools/review_en_parity.py",
-      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
-    }
+    "fixer_model": "mistral-large-3:675b"
   }
 }

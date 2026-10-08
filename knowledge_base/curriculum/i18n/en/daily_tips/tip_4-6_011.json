@@ -2,19 +2,19 @@
   "id": "tip_4-6_011",
   "age_group": "4-6",
   "domain": "islamic_parenting",
-  "text": "The Prophet ﷺ used to play with his grandchildren and laugh with them. Set aside 10 minutes to play their favourite game—no phone, no instructions, just play.",
+  "text": "The Prophet ﷺ kissed al-Hasan ibn Ali, and told a man who had never kissed his children: «Whoever is not merciful will not be shown mercy» (Sahih al-Bukhari 5997). Show your child love today with a kiss or a hug they welcome, without tying your love to obedience.",
   "unit_id": "isl-a4875a31",
   "day_of_week": 2,
   "time_of_day": "anytime",
   "tags": [
-    "لعب",
+    "رحمة",
     "نبي",
     "حب"
   ],
   "is_published": true,
   "version": "1.0.0",
   "created_at": "2026-06-08T19:00:00",
-  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+  "approved_by": null,
   "language": "en",
   "source_language": "ar",
   "translation": {
@@ -26,7 +26,7 @@
       "quoted_arabic": true,
       "reviewer_model": true
     },
-    "review_verdict": "low_only",
+    "review_verdict": "pending",
     "review_defects": [
       {
         "model": "glm-5.2",
@@ -35,29 +35,7 @@
         "why": "A statement about the Prophet ﷺ is presented without any source citation; per policy a missing source is safer than an invented one, so this is noted as low only."
       }
     ],
-    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
-    "revalidated_at": "2026-10-04T11:18:18+00:00",
-    "auto_review": {
-      "reviewers": [
-        "deepseek-v4-pro",
-        "glm-5.2"
-      ],
-      "fixer": null,
-      "rounds": 1,
-      "prompt_version": "dfa8a5f39718",
-      "content_sha256": "03eb15fe1b86e22d77f69da48f6dfede2a1037e823e6c141f59e27c95b3867f8",
-      "reviewed_at": "2026-10-04T11:18:18+00:00",
-      "residual_low": [
-        {
-          "model": "glm-5.2",
-          "field": "text",
-          "type": "hadith",
-          "why": "A statement about the Prophet ﷺ is presented without any source citation; per policy a missing source is safer than an invented one, so this is noted as low only."
-        }
-      ],
-      "adjudicated": [],
-      "tool": "ops/tools/review_en_parity.py",
-      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
-    }
+    "approved_by": null,
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }
