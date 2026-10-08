@@ -5,8 +5,9 @@
 | Field | Value |
 | --- | --- |
 | **Age Group** | 10-12 |
+| **Approved By** |  |
 | **Domain** | islamic_parenting |
-| **Estimated Minutes** | 7 |
+| **Estimated Minutes** | 34 |
 | **Is Published** | Yes |
 | **Needs Professional Followup** | No |
 | **Order** | 1 |
@@ -45,7 +46,7 @@
   "summary": "في سن 10-12 سنة يبدأ الطفل يفهم معنى التكليف. الصلاة ليست روتيناً بل صلة بالله. الوالدان: كونوا قدوة، ناقشوا: لم نصلي؟ وكيف نصلي بخشوع؟",
   "try_this": "هذا الأسبوع: اجعل لطفلك \"مفكرة صلاة\" يسجل فيها صلاته وشعوره بعدها. ناقشوا أسبوعياً: ماذا شعرتَ؟",
   "order": 1,
-  "estimated_minutes": 7,
+  "estimated_minutes": 34,
   "reflection_prompts": [
     "ما أصعب صلاة على طفلك؟ ولماذا؟",
     "كيف أثرت مفكرة الصلاة على التزامه؟"
@@ -53,7 +54,8 @@
   "warning_flags": [],
   "needs_professional_followup": false,
   "is_published": true,
-  "version": "1.0.0"
+  "version": "1.0.0",
+  "approved_by": null
 }
 ```
 </details>

@@ -3103,7 +3103,7 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get pathsFrameworkProphetic => 'Prophetic 7-7-7 Method';
+  String get pathsFrameworkProphetic => 'Age-stage approach';
 
   @override
   String get pathsFrameworkGhazali => 'Ghazali Tazkiyah';

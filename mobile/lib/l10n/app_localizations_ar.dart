@@ -3059,7 +3059,7 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String get pathsFrameworkProphetic => 'المنهج النبوي 7-7-7';
+  String get pathsFrameworkProphetic => 'مراحل عمرية تربوية';
 
   @override
   String get pathsFrameworkGhazali => 'تزكية الغزالي';

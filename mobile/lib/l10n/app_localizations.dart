@@ -5573,7 +5573,7 @@ abstract class AppLocalizations {
   /// No description provided for @pathsFrameworkProphetic.
   ///
   /// In ar, this message translates to:
-  /// **'المنهج النبوي 7-7-7'**
+  /// **'مراحل عمرية تربوية'**
   String get pathsFrameworkProphetic;
 
   /// No description provided for @pathsFrameworkGhazali.
