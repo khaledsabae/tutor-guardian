@@ -26,6 +26,8 @@ on:
       - 'backend/Dockerfile'
       - 'backend/requirements.txt'
       - '.github/ci/constraints-prod.txt'
+      - '.github/ci/requirements-prod.lock'
+      - '.github/ci/requirements-dev.lock'
       - '.github/ci/reject-broken-images.sh'
       - '.dockerignore'
       - 'ops/tools/candidate_smoke.py'
