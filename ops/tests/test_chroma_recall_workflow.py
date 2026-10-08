@@ -32,3 +32,15 @@ def test_recall_workflow_is_manual_hosted_and_isolated():
     assert upload["if"] == "always()"
     assert upload["with"]["path"] == "${{ runner.temp }}/chroma-recall/evidence/"
     assert any("--summary" in s.get("run", "") and s.get("if") == "always()" for s in steps)
+
+
+def test_job_env_does_not_use_runner_context():
+    """GitHub rejects ${{ runner.* }} in job-level env (HTTP 422 on dispatch)."""
+    import yaml
+    from pathlib import Path
+    wf = yaml.safe_load(Path(__file__).resolve().parents[2].joinpath(
+        ".github/workflows/chroma-1x-recall.yml").read_text())
+    for job in wf["jobs"].values():
+        for value in (job.get("env") or {}).values():
+            assert "runner." not in str(value)
+
