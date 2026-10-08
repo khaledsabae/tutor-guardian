@@ -1,0 +1,137 @@
+name: Chroma 1.x recall experiment
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  recall:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      HF_HOME: ${{ runner.temp }}/chroma-recall/huggingface
+      ANONYMIZED_TELEMETRY: 'false'
+      PYTHONDONTWRITEBYTECODE: '1'
+      ANSWER_CACHE_ENABLED: 'false'
+      ANSWER_CACHE_DB: ${{ runner.temp }}/chroma-recall/answer-cache.db
+      CONVERSATIONS_DB: ${{ runner.temp }}/chroma-recall/conversations.db
+      RERANK_ENABLED: 'true'
+      RERANKER_MODEL: cross-encoder/mmarco-mMiniLMv2-L12-H384-v1
+      RERANK_MIN_SCORE: '-6.0'
+      RERANK_BUDGET_S: '6.0'
+      RERANK_MAX_STRIKES: '3'
+      OMP_NUM_THREADS: '2'
+      MKL_NUM_THREADS: '2'
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+
+      - name: Read production Python version
+        id: production
+        run: |
+          set -euo pipefail
+          v="$(sed -n 's/^# python: *//p' .github/ci/constraints-prod.txt)"
+          test -n "$v"
+          echo "python=$v" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ steps.production.outputs.python }}
+
+      - name: Install exact production baseline in its own venv
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/chroma-recall/evidence"
+          python -m venv "$RUNNER_TEMP/baseline-venv"
+          "$RUNNER_TEMP/baseline-venv/bin/python" -m pip install \
+            --require-hashes --no-deps --only-binary=:all: \
+            -c .github/ci/constraints-prod.txt \
+            -r .github/ci/requirements-prod.lock -r .github/ci/requirements-dev.lock
+          "$RUNNER_TEMP/baseline-venv/bin/python" -m pip check
+          "$RUNNER_TEMP/baseline-venv/bin/python" -m pip freeze \
+            > "$RUNNER_TEMP/chroma-recall/evidence/baseline-packages.txt"
+
+      - name: Test capture logic and manual workflow contract
+        run: |
+          "$RUNNER_TEMP/baseline-venv/bin/python" -m pytest -q \
+            ops/tests/test_chroma_recall_capture.py \
+            ops/tests/test_chroma_recall_probe.py \
+            ops/tests/test_chroma_recall_workflow.py
+
+      - name: Freeze real inputs, build current index and capture hybrid recall
+        id: baseline
+        run: |
+          set -euo pipefail
+          "$RUNNER_TEMP/baseline-venv/bin/python" ops/tools/chroma_recall_capture.py baseline \
+            --golden ops/eval/golden_set.jsonl \
+            --frozen "$RUNNER_TEMP/chroma-recall/evidence/frozen-inputs.json" \
+            --index "$RUNNER_TEMP/chroma-recall/baseline/chroma" \
+            --catalog "$RUNNER_TEMP/chroma-recall/evidence/catalog.json" \
+            --out "$RUNNER_TEMP/chroma-recall/evidence/baseline.json"
+
+      - name: Install latest stable Chroma 1.x in a separate venv
+        run: |
+          set -euo pipefail
+          python -m venv "$RUNNER_TEMP/candidate-venv"
+          candidate_python="$RUNNER_TEMP/candidate-venv/bin/python"
+          "$candidate_python" -m pip install \
+            --require-hashes --no-deps --only-binary=:all: \
+            -c .github/ci/constraints-prod.txt \
+            -r .github/ci/requirements-prod.lock -r .github/ci/requirements-dev.lock
+          # Resolve the newest stable 1.x WITHOUT constraints first, then pin it.
+          # A dependency conflict must fail rather than select an older 1.x.
+          "$candidate_python" -m pip install --dry-run --ignore-installed --no-deps \
+            --report "$RUNNER_TEMP/chroma-recall/evidence/latest-chroma.json" "chromadb>=1,<2"
+          chroma_version="$("$candidate_python" -c 'import json,sys; print(json.load(open(sys.argv[1]))["install"][0]["metadata"]["version"])' \
+            "$RUNNER_TEMP/chroma-recall/evidence/latest-chroma.json")"
+          # All existing production pins except chromadb remain constraints,
+          # including the entire model stack. New SDK dependencies may be added.
+          sed '/^chromadb==/d' .github/ci/constraints-prod.txt \
+            > "$RUNNER_TEMP/chroma-recall/candidate-constraints.txt"
+          "$candidate_python" -m pip install --upgrade "chromadb==$chroma_version" \
+            -c "$RUNNER_TEMP/chroma-recall/candidate-constraints.txt"
+          "$candidate_python" -m pip check
+          "$candidate_python" -m pip freeze > "$RUNNER_TEMP/chroma-recall/evidence/candidate-packages.txt"
+
+      - name: Rebuild fresh 1.x index from the same inputs and capture again
+        env:
+          HF_HUB_OFFLINE: '1'
+          TRANSFORMERS_OFFLINE: '1'
+        run: |
+          set -euo pipefail
+          "$RUNNER_TEMP/candidate-venv/bin/python" ops/tools/chroma_recall_capture.py candidate \
+            --golden ops/eval/golden_set.jsonl \
+            --frozen "$RUNNER_TEMP/chroma-recall/evidence/frozen-inputs.json" \
+            --index "$RUNNER_TEMP/chroma-recall/candidate/chroma" \
+            --catalog "$RUNNER_TEMP/chroma-recall/evidence/candidate-catalog.json" \
+            --out "$RUNNER_TEMP/chroma-recall/evidence/candidate.json"
+
+      - name: Compare captures with the existing canonical comparator
+        if: always()
+        run: |
+          python ops/tools/chroma_recall_probe.py \
+            --golden ops/eval/golden_set.jsonl \
+            --catalog "$RUNNER_TEMP/chroma-recall/evidence/catalog.json" \
+            --baseline "$RUNNER_TEMP/chroma-recall/evidence/baseline.json" \
+            --candidate "$RUNNER_TEMP/chroma-recall/evidence/candidate.json" \
+            --out "$RUNNER_TEMP/chroma-recall/evidence/comparison.json"
+
+      - name: Publish comparison summary
+        if: always()
+        run: |
+          python ops/tools/chroma_recall_capture.py summary \
+            --summary "$RUNNER_TEMP/chroma-recall/evidence/comparison.json" \
+            --out "$RUNNER_TEMP/chroma-recall/evidence/summary.md"
+          cat "$RUNNER_TEMP/chroma-recall/evidence/summary.md" >> "$GITHUB_STEP_SUMMARY"
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: chroma-1x-recall-${{ github.sha }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/chroma-recall/evidence/
+          if-no-files-found: error
+          retention-days: 14
