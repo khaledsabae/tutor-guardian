@@ -114,6 +114,15 @@ class LLMConfig:
     deepseek_primary_monthly_token_cap: int = int(
         os.environ.get("DEEPSEEK_PRIMARY_MONTHLY_TOKEN_CAP", "100000000")
     )
+    # The hard monthly cap's activation switch. Off (default): the behaviour
+    # before the reservation ledger — no wire reservation or denial, the soft
+    # ceiling above over llm_calls (failing OPEN on unreadable telemetry),
+    # batch tools unreserved; telemetry is recorded either way. On: every paid
+    # wire attempt is reserved in the ledger and fails CLOSED until an explicit
+    # bootstrap (backend/docs/cloud-budget-reservations.md, runbook). Only
+    # "1"/"true"/"yes" turn it on.
+    cloud_budget_enforce: bool = field(default_factory=lambda: os.environ.get(
+        "CLOUD_BUDGET_ENFORCE", "false").strip().lower() in ("1", "true", "yes"))
 
     # backward-compat shim: older code reads .model
     @property

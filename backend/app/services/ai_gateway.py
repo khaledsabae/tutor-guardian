@@ -1024,21 +1024,24 @@ def _monthly_tokens_used_cached(provider_name: str) -> int:
 
 
 def primary_budget_available(provider_name: str) -> bool:
-    """Advisory primary routing check; paid-wire admission is atomic below.
+    """Soft monthly ceiling on the PAID primary; with CLOUD_BUDGET_ENFORCE on,
+    advisory routing only (paid-wire admission is atomic, below).
 
     Shared by the chat path (AIGateway._primary_within_budget) and the
     auxiliary path (aux_cloud_provider) so both spend from ONE wallet against
     ONE ceiling — a classifier that had its own budget would be an invisible
     second bill.
 
-    Unreadable accounting fails closed to cloud and leaves the local chain live.
+    Unreadable telemetry: switch off, fails OPEN as before the ledger (the
+    primary is the app's main way of answering and broken telemetry must not
+    silence it); switch on, fails closed to cloud, local chain stays live.
     """
     cap = LLM.deepseek_primary_monthly_token_cap
     if cap <= 0:
         return True  # 0 disables the ceiling
     used = _monthly_tokens_used_cached(provider_name)
     if used >= _BUDGET_UNKNOWN:
-        return False
+        return not getattr(LLM, "cloud_budget_enforce", False)
     if used >= cap:
         logger.warning(
             "primary provider budget exhausted (%d/%d tokens this month) — "
@@ -1051,8 +1054,14 @@ def primary_budget_available(provider_name: str) -> bool:
 
 def _reserve_wire_budget(endpoint: str, provider_name: str, messages: list[dict],
                          output_cap: int, *, model: str):
-    """Authorize one physical wire attempt, never a whole gateway operation."""
+    """Authorize one physical wire attempt, never a whole gateway operation.
+
+    None (no reservation, no denial) unless CLOUD_BUDGET_ENFORCE is on.
+    """
     from urllib.parse import urlsplit
+
+    if not getattr(LLM, "cloud_budget_enforce", False):
+        return None  # switch off: pre-ledger behaviour, nothing reserved or denied
 
     parsed = urlsplit(endpoint)
     if parsed.scheme not in ("http", "https") or not parsed.hostname:

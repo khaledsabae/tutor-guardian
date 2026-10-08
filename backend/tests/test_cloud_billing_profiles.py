@@ -35,7 +35,7 @@ def test_known_profile_requires_actual_enforced_output_limit():
 def config(monkeypatch, tmp_path, **kw):
     path = tmp_path / 'ledger.db'
     monkeypatch.setattr(gw, '_TELEMETRY_DB', path)
-    monkeypatch.setattr(gw, 'LLM', dataclasses.replace(gw.LLM, **kw))
+    monkeypatch.setattr(gw, 'LLM', dataclasses.replace(gw.LLM, **{'cloud_budget_enforce': True, **kw}))
     return path
 
 

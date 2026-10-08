@@ -11,6 +11,7 @@ the local chain stays available. The cached check is routing advice only;
 test_cloud_budget_reservations exercises the authoritative wire admission.
 """
 import asyncio
+import dataclasses
 from dataclasses import dataclass
 
 import pytest
@@ -30,6 +31,7 @@ class _FakeLLM:
     cloud_tier_timeout: int = 60
     max_retries: int = 1
     temperature: float = 0.3
+    cloud_budget_enforce: bool = False
 
     def fallback_chain(self) -> list[dict]:
         return [{"name": "local_fast", "url": "http://x", "model": "m", "timeout": 5}]
@@ -122,11 +124,19 @@ def test_budget_total_is_cached(gateway, monkeypatch):
     assert calls["n"] == 1  # one sqlite aggregate, not five
 
 
-# ── all paid lanes fail closed; local fallback remains available ──────────
+# ── enforced: all paid lanes fail closed; local fallback remains available ─
 def test_telemetry_failure_blocks_paid_primary(gateway, monkeypatch, tmp_path):
     # Real reader against an unreadable path — no stubbing of the sentinel.
+    monkeypatch.setattr(ai_gateway, "LLM", dataclasses.replace(ai_gateway.LLM, cloud_budget_enforce=True))
     monkeypatch.setattr(ai_gateway, "_TELEMETRY_DB", tmp_path / "nope" / "\0bad.db")
     assert gateway._primary_within_budget() is False
+
+
+# ── not enforced (default): the soft ceiling fails OPEN, as before the ledger
+def test_telemetry_failure_does_not_block_the_primary_when_not_enforced(gateway, monkeypatch, tmp_path):
+    monkeypatch.setattr(ai_gateway, "LLM", dataclasses.replace(ai_gateway.LLM, cloud_budget_enforce=False))
+    monkeypatch.setattr(ai_gateway, "_TELEMETRY_DB", tmp_path / "nope" / "\0bad.db")
+    assert gateway._primary_within_budget() is True
 
 
 def test_telemetry_failure_still_blocks_the_safety_valve(monkeypatch, tmp_path):

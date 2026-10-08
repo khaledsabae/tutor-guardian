@@ -248,7 +248,8 @@ def capped(monkeypatch, tmp_path):
     monkeypatch.setattr(gw, "_telemetry_schema_ready", False)
     monkeypatch.setattr(gw, "LLM", dataclasses.replace(
         gw.LLM, primary_provider="deepseek", deepseek_primary_monthly_token_cap=10 * 1048576,
-        deepseek_billing_profile_aliases=(("deepseek-chat", "deepseek-flash"),)))
+        deepseek_billing_profile_aliases=(("deepseek-chat", "deepseek-flash"),),
+        cloud_budget_enforce=True))
     _FakeOpenAI.instances = []
     return db
 

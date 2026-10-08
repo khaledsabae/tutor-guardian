@@ -52,7 +52,7 @@ def wire(monkeypatch, tmp_path):
     monkeypatch.setattr(gw, "LLM", dataclasses.replace(
         gw.LLM, primary_provider="deepseek", deepseek_primary_monthly_token_cap=1500,
         deepseek_fallback_monthly_token_cap=1500, deepseek_fallback_enabled=False,
-        cloud_tier_enabled=False, max_retries=1,
+        cloud_tier_enabled=False, max_retries=1, cloud_budget_enforce=True,
     ))
     monkeypatch.setattr(gw, "_PREFLIGHT_BACKOFF_S", (0, 0, 0))
     activate(m.CloudBudget(tmp_path / "calls.db"), wallets=(

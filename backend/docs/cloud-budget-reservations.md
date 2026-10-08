@@ -504,3 +504,68 @@ container's ledger is stopped at the cutoff and stays stopped (or moves to a
 different account): laptop/CI runs with the key, any other API key on the
 account, untracked scripts or crons on the VPS host, console/playground use.
 The in-container writers above all reserve against `/app/ops/sessions.db`.
+
+### 5. `CLOUD_BUDGET_ENFORCE` — safe to merge and deploy before any bootstrap
+
+Without a switch, deploying this branch to an un-bootstrapped production would
+deny every cloud call (fail closed) and put every parent on the local chain.
+So the ledger has an explicit activation switch, `CLOUD_BUDGET_ENFORCE`
+(`LLM.cloud_budget_enforce`; only `1`/`true`/`yes` turn it on):
+
+| | Off (default) | On |
+|---|---|---|
+| Paid wire attempt (gateway, Azure, `record_chat_completion`) | no reservation, never denied | reserved per attempt, fail closed |
+| No ledger / no bootstrap | calls proceed exactly as on `main` | `BudgetDenied` → local chain (batch tools raise) |
+| Soft ceiling `primary_budget_available` (sum of `llm_calls`) | applies; unreadable telemetry fails **open** (as on `main`) | advisory; unreadable fails **closed** |
+| `max_tokens` required by batch tools | no | yes |
+| Telemetry (`llm_calls`, estimates) | recorded | recorded |
+| `cloud_budget_*` tables / anchor | never created | created by bootstrap only |
+
+Tests: `tests/test_cloud_budget_switch.py` (off + no ledger → cloud answers,
+no ledger tables; on + no bootstrap → denied, local answers; batch tools; the
+soft ceiling's fail-open/closed). The transport tests in
+`test_answer_reliability.py` run unmodified with the switch off.
+
+Remaining off-mode differences from `main` are Azure-only hardening (SDK
+retries off, `include_usage`, a stream without a terminal choice is an error);
+Azure is disabled in production.
+
+## Activation runbook (operator)
+
+Order matters: the switch goes on last, after a receipt is in the ledger.
+
+1. **Model decision.** Set `DEEPSEEK_BILLING_PROFILE_ALIASES=deepseek-chat=deepseek-flash`
+   (attestation, §1), or move `DEEPSEEK_MODEL` to `deepseek-flash`. The
+   weekly `kb_gap_judge` hard-codes `deepseek-chat`, so it needs the alias
+   either way, or move it to Ollama (`OLLAMA_API_KEY` on the VPS).
+2. **Merge and deploy with the switch off.** Production behaves as before;
+   telemetry keeps recording.
+3. **Drain unreserved writers** (§4): stop laptop/CI use of the key, list every
+   key on the DeepSeek account, check the VPS host crontab for untracked jobs,
+   and confirm the kb-gap cron runs *inside* the container (writes
+   `/app/ops/sessions.db`).
+4. **Collect the evidence** (Khaled): DeepSeek usage/billing export for the
+   account from the 1st of the cutover month 00:00 UTC to the cutoff — daily,
+   per model, tokens (cache hit/miss/output) and amount. Bootstrap early in a
+   fresh month: October 2026 has 26 legacy NULL rows that would need
+   `unknown_usage_rows_covered`.
+5. **Write the receipt** (JSON, outside git):
+   `wallet="cloud:https://api.deepseek.com:443"`, `month` = current UTC month,
+   `reconciled_through` = cutoff (tz-aware, ≤ now, same month),
+   `opening_tokens` = max(export tokens through cutoff, telemetry floor),
+   `legacy_aliases` ⊇ the four paid aliases, `db_identity` (a name you choose
+   for the volume), `evidence_reference` (where the export is kept),
+   `unreserved_writers_drained: true`, and if needed
+   `unknown_usage_rows_covered` from
+   `python -m app.services.cloud_budget_bootstrap --db /app/ops/sessions.db --list-unknown-rows YYYY-MM`.
+6. **Bootstrap inside the container:**
+   `python -m app.services.cloud_budget_bootstrap --db /app/ops/sessions.db --receipt <file>`
+   → "activation verified"; the anchor file appears next to `sessions.db`.
+7. **Turn the switch on:** `CLOUD_BUDGET_ENFORCE=true` in the VPS `.env`, then
+   Compose **recreate** (not restart) of `tg_backend`.
+8. **Verify by effect:** after a real chat, a settled row in
+   `cloud_budget_attempts` and an `llm_calls` row; no `BudgetDenied` in the logs.
+   **Rollback:** switch off + recreate (the ledger stays, untouched).
+9. **Month boundaries** roll over automatically when continuity is proven
+   (§6); otherwise cloud stays denied from 00:00 UTC on the 1st and the log
+   says why — then repeat steps 4–6 for the new month.
