@@ -5,7 +5,7 @@
     "deepseek-v4-pro",
     "glm-5.2"
   ],
-  "written_at": "2026-10-07T21:36:36",
+  "written_at": "2026-10-08T07:35:57",
   "lessons": [
     {
       "path_id": "path_0-3_medical_infant_sleep",
@@ -276,6 +276,174 @@
         "glm-5.2"
       ],
       "translation_stamp": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08"
+    },
+    {
+      "path_id": "path_0-3_medical_infant_sleep",
+      "key": "s07",
+      "brief": "البكاء ليلًا: تهدئةٌ آمنة",
+      "accepted": true,
+      "blockers": [],
+      "ar_review": {
+        "reviewer": "deepseek-v4-pro+glm-5.2",
+        "at": "2026-10-08T07:20:49",
+        "rounds": 1,
+        "defects": [
+          {
+            "severity": "low",
+            "type": "register",
+            "field": "summary",
+            "why": "«في الخلفية» ترجمة حرفية لعبارة in the background، وتبدو غير طبيعية في العربية الفصيحة."
+          },
+          {
+            "severity": "low",
+            "type": "register",
+            "field": "summary",
+            "why": "الصياغة مفهومة لكنها متكلفة بعض الشيء، ويمكن تحسينها لتصبح أكثر سلاسة."
+          },
+          {
+            "severity": "low",
+            "type": "register",
+            "field": "summary",
+            "why": "ضمير «أنت» زائد ويجعل الجملة متصلبة قليلاً."
+          },
+          {
+            "severity": "low",
+            "type": "register",
+            "field": "summary",
+            "why": "«المستقلّ» قد توحي بمعنى غير المقصود؛ الأوضح وصف السرير بأنه خاص بالرضيع."
+          },
+          {
+            "severity": "low",
+            "type": "register",
+            "field": "summary",
+            "why": "كلمة «لحظة» مفردة تصف موقفًا متكررًا، والأدق استخدام كلمة أعم."
+          },
+          {
+            "severity": "low",
+            "type": "register",
+            "field": "summary",
+            "why": "ترتيب الشرط يمكن أن يكون أوضح بتقديم العمر أولاً."
+          },
+          {
+            "severity": "low",
+            "type": "pedagogy",
+            "field": "title",
+            "why": "العنوان يحدد البكاء ليلًا، لكن المحتوى يتناول البكاء عمومًا بما فيه بكاء ما بعد الظهر والمساء، ولا يخصّص الليل إلا في سياق المسار العام."
+          }
+        ]
+      },
+      "en_review": {
+        "reviewer": "deepseek-v4-pro+glm-5.2",
+        "at": "2026-10-08T07:20:49",
+        "rounds": 1,
+        "defects": [
+          {
+            "severity": "low",
+            "type": "register",
+            "field": "summary",
+            "why": "ينقص رمز الدرجة، والأوضح كتابة درجة الحرارة كاملة."
+          },
+          {
+            "severity": "low",
+            "type": "register",
+            "field": "try_this",
+            "why": "الصياغة غير طبيعية في الإنجليزية."
+          },
+          {
+            "severity": "low",
+            "type": "register",
+            "field": "try_this",
+            "why": "كلمة «yourself» زائدة عن الحاجة."
+          },
+          {
+            "severity": "low",
+            "type": "register",
+            "field": "summary",
+            "why": "مصطلح بريطاني قد لا يكون واضحًا لجميع القراء، والمقابل الأعم هو gas."
+          },
+          {
+            "severity": "low",
+            "type": "register",
+            "field": "summary",
+            "why": "مصطلحان بريطانيان؛ إذا كان التطبيق يستخدم الإنجليزية الأمريكية في مواضع أخرى فقد يحدث عدم اتساق."
+          },
+          {
+            "severity": "low",
+            "type": "structure",
+            "field": "summary",
+            "why": "النص العربي يكتب «38 درجةً مئويةً» بصيغة كاملة، بينما الإنجليزية تكتب «38C» دون رمز الدرجة، وهو اختلاف صياغي بسيط."
+          }
+        ]
+      },
+      "dispositions": [],
+      "written_as": "lesson_0-3_medical_infant_sleep_07",
+      "order": 7,
+      "title": "البكاء ليلًا: تهدئةٌ آمنة",
+      "ar_hash": "9ce568b3c9b8ab54",
+      "en_hash": "9d126d5eda27ac639ce568b3c9b8ab54",
+      "translation_content_sha256": "435bd1964606e206a0ab3a48b6bbdf1463b42180587b714e64c589c1bfbf5951",
+      "translation_reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "translation_stamp": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08"
+    },
+    {
+      "path_id": "path_0-3_medical_infant_sleep",
+      "key": "s08",
+      "brief": "سكينة المساء: ذِكرٌ ودعاءٌ بصوتٍ هادئ",
+      "accepted": true,
+      "blockers": [],
+      "ar_review": {
+        "reviewer": "deepseek-v4-pro+glm-5.2",
+        "at": "2026-10-08T07:31:00",
+        "rounds": 2,
+        "defects": [
+          {
+            "severity": "low",
+            "type": "register",
+            "field": "summary",
+            "why": "صيغة «لا تغفُ» صحيحة نحويًا لكنها نادرة الاستخدام ومختصرة جدًا في سياق توجيهٍ للوالدين؛ الأكثر طبيعية ووضوحًا صيغة مثل «ولا تغفَ أنت وهو…» أو «إيّاك أن تغفوَ وهو…»."
+          },
+          {
+            "severity": "low",
+            "type": "register",
+            "field": "summary",
+            "why": "جملة طويلة جدًا تربط ستّ علامات إسعافية مختلفة بـ«أو» في سلسلة واحدة دون فاصل أو تنسيق بصري، مما يصعّب القراءة السريعة في لحظة قلق."
+          }
+        ]
+      },
+      "en_review": {
+        "reviewer": "deepseek-v4-pro+glm-5.2",
+        "at": "2026-10-08T07:31:00",
+        "rounds": 2,
+        "defects": [
+          {
+            "severity": "low",
+            "type": "structure",
+            "field": "summary",
+            "why": "الرمز مكتوب «38C» دون علامة الدرجة (°)، بينما العربية تكتب «38 درجةً مئويةً» بشكل صحيح."
+          },
+          {
+            "severity": "low",
+            "type": "meaning_change",
+            "field": "summary",
+            "why": "العربية تقول «ولا تغفُ» (نهي بسيط: لا تغفُ)، بينما الإنجليزية تستخدم «never» (أبدًا) مما يضيف تأكيدًا أقوى غير موجود في الأصل."
+          }
+        ]
+      },
+      "dispositions": [],
+      "written_as": "lesson_0-3_medical_infant_sleep_08",
+      "order": 8,
+      "title": "سكينة المساء: ذِكرٌ ودعاءٌ بصوتٍ هادئ",
+      "ar_hash": "40eb449be8c7ac6d",
+      "en_hash": "911125ee26d0787540eb449be8c7ac6d",
+      "translation_content_sha256": "eebd754400f1abc26f319f126013da2bffd43712eb82e1f9c48cb09ac9dc7f67",
+      "translation_reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "translation_stamp": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08"
     }
   ],
   "recovery": {
@@ -286,7 +454,7 @@
     ],
     "age_scope": "birth until first birthday; canonical prenatal-1; legacy 0-3 retained only in stable IDs",
     "corrections_by": "Codex",
-    "remaining_original_8_lessons": "superseded by continuations: s03-s04 recovered 2026-10-07; s05-s06 recovered 2026-10-08 (rebuilt from primary sources, not from the excluded unit); remaining four original drafts (s07-s10) held in preserved backup; not promised by this path description",
+    "remaining_original_8_lessons": "superseded by continuations: s03-s04 recovered 2026-10-07; s05-s06 and s07-s08 recovered 2026-10-08 (rebuilt from primary sources, not from the excluded unit); remaining two original drafts (s09-s10) held in preserved backup; not promised by this path description",
     "excluded_unit_ids": [
       "gap-med-co-sleeping-01",
       "c88f868b-4f40-45eb-b357-f8867b2c327d"
@@ -688,6 +856,211 @@
         "preserved_backup_files": 98,
         "backup_mismatches": 0,
         "existing_s01_s04_files_unchanged": true
+      }
+    },
+    "continuation_s07_s08": {
+      "base": "875651b75113905915a1df0a27febb2e7f3014d0",
+      "prefix": [
+        "s07",
+        "s08"
+      ],
+      "age_scope": "both backup drafts target birth to twelve months (spec unit_bands prenatal-1/0-3/2-3/unspecified, band notes 'Birth to twelve months'); canonical prenatal-1, same path, appended in spec order",
+      "source_drafts": "~/.local/share/tg-deepen-paths/work/sleep/path_0-3_medical_infant_sleep.drafts.json, copied to a work dir; 98 backup hashes verified unchanged before and after; read-only",
+      "corrections_by": "claude-opus-5-5",
+      "excluded_unit_ids": [
+        "gap-med-co-sleeping-01",
+        "isl-f6342250"
+      ],
+      "exclusion_reasons": {
+        "gap-med-co-sleeping-01": "both backup drafts s07 and s08 were pinned to it; no source URL, invented wait and night promises; both lessons rebuilt from primary sources",
+        "isl-f6342250": "s08 backup pin no longer exists in knowledge_base/units; replaced by isl-572e7df3 (du'a for one's children, Alukah pp.23-26, re-extracted 2026-10-05 per ops/data/kb_fidelity/gaps.md)"
+      },
+      "removed_from_original_drafts": [
+        "s07: 'crying is a baby's only language' framing replaced by NHS/AAP wording",
+        "s07: 'leave the room for a few minutes' and 'how many minutes you will step away' (no time figure given; NHS/AAP/CDC disagree: 10 / 10-15 / check every 5-10)",
+        "s07: dummy suggestion dropped (CDC lists a pacifier for soothing, but AAP/NHS tie dummy use to sleep and to breastfeeding being established; left out to stay conservative)",
+        "s07: 'over the days you will know the hungry cry, the tired cry...' (overstated certainty)",
+        "s08: 'a baby understands tone' and 'few minutes are enough' / 'two minutes' (not in fetched sources)",
+        "s08: 'a first seed of their relationship with their Lord' (speculative claim)",
+        "s08: unit isl-f6342250 (missing) and gap-med-co-sleeping-01"
+      ],
+      "medical_changes": [
+        "s07: all babies cry; common reasons; more in the afternoon and evening; more in the first months, then less (NHS/CDC)",
+        "s07: respond promptly in the first months, attention does not spoil; most pressing need first (AAP/CDC)",
+        "s07: soothing: hold and sway, talk or sing, stroke the back, calm background sound, breastfeed (NHS/CDC); asleep in arms -> back in own empty cot (AAP/NHS)",
+        "s07: never shake or hit; shaking can injure the brain or kill; tell every caregiver (AAP/CDC/NHS)",
+        "s07: if losing control: baby on back in cot clear of covers and toys, another room, call someone, check on them, do not pick up until calm (AAP/NHS/CDC); framed as a safety step, not sleep training",
+        "s07: weak, high-pitched, continuous or unusual cry added to the emergency sentence (NHS 999 lists); doctor for signs of illness",
+        "s08: a baby may calm when spoken to or picked up; routines help them learn what to expect (CDC)",
+        "s08: ends in safe sleep, never dozing on a sofa/armchair; no promise of sleeping through the night",
+        "s08: emergency sentence clarified 'when you try to wake them' (deepseek-v4-pro medium/medical, round 1)",
+        "s07/s08: emergency now: hard to wake, floppy, breathing difficulty or stopped, blue/grey, 38C+ under 3 months (NHS)"
+      ],
+      "religious_content": {
+        "s08": "only scripture is [[v_013_028]] (Ar-Ra'd 13:28) inserted verbatim from the verified family_adhkar bank by the tool, Arabic in both languages; no hadith quoted; bedtime adhkar referred to a trusted book, not reproduced; du'a for one's children and avoiding du'a against them grounded in isl-572e7df3; EN marked needs_scholar_review by the tool",
+        "s07": "none"
+      },
+      "lesson_review": {
+        "tool": "ops/tools/deepen_paths.py prompts/payload/hash (SYSTEM_REVIEW_BOTH) via sequential driver (dual_review.py; replies cached per exact ar+en hash and model)",
+        "reviewers": [
+          "deepseek-v4-pro",
+          "glm-5.2"
+        ],
+        "both_families_on_final_hash": true,
+        "concurrency": 1,
+        "request_timeout_s": 120,
+        "stop_on_429": true,
+        "fallback_substitution": false,
+        "calls_ok": 10,
+        "calls_timed_out": 4,
+        "http_429": 0,
+        "rounds": {
+          "s07": 1,
+          "s08": 2,
+          "path": 2
+        },
+        "medium_high_on_final_hashes": 0
+      },
+      "translation_review": {
+        "tool": "ops/tools/review_en_parity.py run --only lesson_..._07,lesson_..._08,path_0-3_medical_infant_sleep --rounds 1 --request-attempts 1 --workers 1 --max-concurrent 1 --request-timeout 120 --no-fix",
+        "stamped": 3,
+        "batches": {
+          "deepseek-v4-pro": 2,
+          "glm-5.2": 2
+        },
+        "http_429": 0,
+        "path_content_sha256": "fbb4f4d2aac3ffbf9dd60ff5603deefbbca79a2e30c9a8f065fd64be6dbec69c"
+      },
+      "path_changes": [
+        "description six -> eight lessons (adds soothing crying safely and dhikr/du'a before sleep); EN 'first birthday' -> 'completes their first year' after glm-5.2 medium on the path text",
+        "estimated_days 8",
+        "primary_reference unchanged (197/200 characters; per-lesson sources recorded here)"
+      ],
+      "primary_sources": [
+        {
+          "url": "https://www.nhs.uk/baby/caring-for-a-newborn/soothing-a-crying-baby/",
+          "final_url": "https://www.nhs.uk/baby/caring-for-a-newborn/soothing-a-crying-baby/",
+          "html_sha256": "42cacb0803bc2916bb6e6e458040adaab569129f70a29f7514a91d93f20c382c",
+          "text_sha256": "053b4cde05df44245293ba5d036b34a083efee6f45fcbcf65f3c234ebcf040e6",
+          "checked_at": "2026-10-08T07:11:42Z",
+          "used_for": "reasons for crying; afternoon/evening; ways to calm; crying unlike normal can mean illness; if stressed put baby safely in cot, another room, calm down, go back; never shake"
+        },
+        {
+          "url": "https://www.nhs.uk/conditions/colic/",
+          "final_url": "https://www.nhs.uk/conditions/colic/",
+          "html_sha256": "db442253deeaf6000a38e7780372ca37591193c09248c6a5f67519a6f0e50b4e",
+          "text_sha256": "2f0c31f8027ac4d2dfbc48659a63e17decbfb2ee92c1401f6da8f1812d041f1b",
+          "checked_at": "2026-10-08T07:11:43Z",
+          "used_for": "cry that does not sound like their normal cry -> A&E/999; soothing; colic remedies not recommended (not used)"
+        },
+        {
+          "url": "https://www.nhs.uk/baby/health/is-your-baby-or-toddler-seriously-ill/",
+          "final_url": "https://www.nhs.uk/baby/health/when-to-get-urgent-medical-help-for-babies-and-children-under-5/",
+          "html_sha256": "ad02a6e89069493a9cf52720db93ed4655638fd3f716a367a4cdfc2e75210fd1",
+          "text_sha256": "133da3a14f020cd694acdea5fbf3c8cc3cde555e26d3512b89afd9e59714b2e3",
+          "checked_at": "2026-10-08T07:11:43Z",
+          "used_for": "redirects to when-to-get-urgent-medical-help; 999 list: weak, high-pitched or continuous cry, difficult to wake, floppy, breathing, blue/grey, 38C+ under 3 months"
+        },
+        {
+          "url": "https://www.nhs.uk/baby/caring-for-a-newborn/reduce-the-risk-of-sudden-infant-death-syndrome/",
+          "final_url": "https://www.nhs.uk/baby/caring-for-a-newborn/sudden-infant-death-syndrome-sids/",
+          "html_sha256": "4b0ddd3c624c743f06a772b174ead53299045ef8069f8568da79313e5bce96d5",
+          "text_sha256": "430343ed43f7394aaa267cb94c7612932b42d0abec24f99ce78bfd6709d2bb19",
+          "checked_at": "2026-10-08T07:11:43Z",
+          "used_for": "redirects to SIDS page; call 999 if baby stops breathing or will not wake; safe sleep"
+        },
+        {
+          "url": "https://www.nhs.uk/baby/caring-for-a-newborn/helping-your-baby-to-sleep/",
+          "final_url": "https://www.nhs.uk/baby/caring-for-a-newborn/helping-your-baby-to-sleep/",
+          "html_sha256": "6fdd2455ef0e2fdbde0474f9a0e9fef65a2f40bb7eb8ddf80e04090bf37f643e",
+          "text_sha256": "2aade78d195b23a4d69706e3b9551c28aa113cf6fe712ff94fdf6d3da7d34e04",
+          "checked_at": "2026-10-08T07:11:44Z",
+          "used_for": "night-time calm; singing a lullaby in the bedtime routine"
+        },
+        {
+          "url": "https://www.healthychildren.org/English/ages-stages/baby/crying-colic/Pages/Responding-to-Your-Babys-Cries.aspx",
+          "final_url": "https://www.healthychildren.org/English/ages-stages/baby/crying-colic/Pages/Responding-to-Your-Babys-Cries.aspx",
+          "html_sha256": "337257a969a268b811e1e92a4edd8594dc1f5ef4df1c14639afaeac4af420169",
+          "text_sha256": "cd187a1dee6d758688a312b9ea916a9118befa24bf0acc21c0bab68b35e2dc6e",
+          "checked_at": "2026-10-08T07:11:45Z",
+          "used_for": "all babies cry, not bad parenting; respond promptly, cannot spoil; most pressing need first; set baby down safely and get help; never shake or hit; tell caregivers"
+        },
+        {
+          "url": "https://www.healthychildren.org/English/ages-stages/baby/crying-colic/Pages/Calming-A-Fussy-Baby.aspx",
+          "final_url": "https://www.healthychildren.org/English/ages-stages/baby/crying-colic/Pages/Calming-A-Fussy-Baby.aspx",
+          "html_sha256": "a167dba47f426b2a7248aeeb195b871bd24b11cd7dec4f1e947fb890ee8aa8b6",
+          "text_sha256": "cd707eccf0bd2367d74d2a5461e035ce5d8c15fd028ab4be681675362fbd14d1",
+          "checked_at": "2026-10-08T07:11:46Z",
+          "used_for": "soothing; safe place without blankets or toys; do not pick up until calm; never shake/throw/hit"
+        },
+        {
+          "url": "https://www.healthychildren.org/English/safety-prevention/at-home/Pages/Abusive-Head-Trauma-Shaken-Baby-Syndrome.aspx",
+          "final_url": "https://www.healthychildren.org/English/safety-prevention/at-home/Pages/Abusive-Head-Trauma-Shaken-Baby-Syndrome.aspx",
+          "html_sha256": "369509880bcc45a5c58ce27ef003d2b8f25bc1b1c581462ed7247e5baa0c3674",
+          "text_sha256": "fb1389df4d0894f036905b1eda539302466d2cef798f377b4f548d0317ffc87e",
+          "checked_at": "2026-10-08T07:11:46Z",
+          "used_for": "abusive head trauma; crying does not mean the baby dislikes you; call someone; check on baby; never shake"
+        },
+        {
+          "url": "https://www.healthychildren.org/English/ages-stages/baby/sleep/Pages/A-Parents-Guide-to-Safe-Sleep.aspx",
+          "final_url": "https://www.healthychildren.org/English/ages-stages/baby/sleep/Pages/A-Parents-Guide-to-Safe-Sleep.aspx",
+          "html_sha256": "b85a50114da9000db17ea859395277a60f32e905d68b94d84955b40eee3f367e",
+          "text_sha256": "82951ff0f4a65b85687aa7b4f7226dabe1d6cd9268667fc94534c9a2f3f22130",
+          "checked_at": "2026-10-08T07:11:47Z",
+          "used_for": "back, own empty sleep surface, room sharing, no sofa/armchair"
+        },
+        {
+          "url": "https://www.cdc.gov/child-abuse-neglect/about/about-abusive-head-trauma.html",
+          "final_url": "https://www.cdc.gov/child-abuse-neglect/about/about-abusive-head-trauma.html",
+          "html_sha256": "4c8135facc7ab3a67de5c4663101268b110a6af146563a66e82280100ae24602",
+          "text_sha256": "f421902b5cd9506ed4aa2ded6c545b8b8048ebc5948d7dba7cc30567b8a45916",
+          "checked_at": "2026-10-08T07:11:48Z",
+          "used_for": "crying is normal and worse in the first months, gets better; never shake; walk away and check on the baby; ask for help"
+        },
+        {
+          "url": "https://www.cdc.gov/act-early/milestones/2-months.html",
+          "final_url": "https://www.cdc.gov/act-early/milestones/2-months.html",
+          "html_sha256": "cd437d5fa1e527d8f5ef100990fe4379083c1aceaaaa95161c546acf9d68ebe9",
+          "text_sha256": "d091a46a6eab85a80c9d7127b572d69f4e6bbaa0a6bc552dc5594bd29b7ac800",
+          "checked_at": "2026-10-08T07:11:48Z",
+          "used_for": "calms down when spoken to or picked up; talk softly, hold, rock or sing; do not shake; routines help a baby learn what to expect; holding does not spoil"
+        },
+        {
+          "url": "https://www.cdc.gov/act-early/milestones/4-months.html",
+          "final_url": "https://www.cdc.gov/act-early/milestones/4-months.html",
+          "html_sha256": "cee260708bbbc40c1632ed2e4f25ff6e54ad61a08a75144012ca0f8ba1658c33",
+          "text_sha256": "0e5cdae5f52e8ddb510900cbc191943f553b9bdad96d1fe18b1b25b316e326a3",
+          "checked_at": "2026-10-08T07:11:49Z",
+          "used_for": "steady routines for sleeping and feeding; talk and sing"
+        }
+      ],
+      "fetched_not_cited": {
+        "https://www.cdc.gov/act-early/milestones/6-months.html": "no tip used",
+        "https://www.who.int/news-room/fact-sheets/detail/child-maltreatment": "no tip used"
+      },
+      "human_approval_claimed": false,
+      "verification": {
+        "tests": 195,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "pytest_exit": 0,
+        "test_files": [
+          "test_deepen_paths",
+          "test_review_en_parity",
+          "test_review_en_parity_proof",
+          "test_review_en_parity_transport",
+          "test_curriculum_i18n",
+          "test_lesson_index_integrity",
+          "test_lesson11_source_proof"
+        ],
+        "schema_files": 950,
+        "schema_exit": 0,
+        "en_parity_check_all_exit": 0,
+        "pre_commit_exit": 0,
+        "preserved_backup_files": 98,
+        "backup_mismatches": 0,
+        "existing_s01_s06_files_unchanged": true
       }
     }
   }
