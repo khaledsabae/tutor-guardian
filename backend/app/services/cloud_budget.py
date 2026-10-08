@@ -16,6 +16,7 @@ import time
 import uuid
 from dataclasses import dataclass
 from datetime import datetime, timedelta, timezone
+from decimal import Decimal
 from pathlib import Path
 from typing import Callable
 
@@ -55,11 +56,67 @@ class BillingProfile:
 # deepseek-chat in particular is NOT documented any more (its announced
 # discontinuation date, 2026-07-24, has passed and the current pages do not
 # name it); billing it under a profile is an explicit operator attestation via
-# DEEPSEEK_BILLING_PROFILE_ALIASES, never a built-in default.
+# DEEPSEEK_BILLING_PROFILE_ALIASES, never a built-in default. Since 2026-10-08
+# the app no longer SENDS it to DeepSeek: llm_config.resolve_deepseek_model
+# rewrites it to deepseek-flash before the request (and before this profile
+# lookup), so the alias setting is only needed for other hand-written names.
 _BILLING_PROFILES = {
     ("https://api.deepseek.com:443", model): BillingProfile(1048576, 393216)
     for model in ("deepseek-flash", "deepseek-v4-pro")
 }
+
+
+@dataclass(frozen=True)
+class TokenPrice:
+    """US$ per 1M tokens at the documented PEAK rate (off-peak is half)."""
+
+    input_cache_hit: Decimal
+    input_cache_miss: Decimal
+    output: Decimal
+
+
+# api-docs.deepseek.com/quick_start/pricing/, fetched 2026-10-08 19:41 UTC
+# (SHA-256 210f1022…63b2, docs/cloud-budget-reservations.md). Peak rates —
+# the pessimistic ones. ops/tools/deploy_gate.py carries a stdlib copy; a test
+# keeps them equal. A price change on that page means editing both.
+DEEPSEEK_PRICES_USD_PER_M = {
+    ("https://api.deepseek.com:443", "deepseek-flash"):
+        TokenPrice(Decimal("0.006"), Decimal("0.30"), Decimal("1.20")),
+    ("https://api.deepseek.com:443", "deepseek-v4-pro"):
+        TokenPrice(Decimal("0.044"), Decimal("1.32"), Decimal("3.96")),
+}
+
+
+def _origin(endpoint: str) -> str:
+    from urllib.parse import urlsplit
+
+    parsed = urlsplit(endpoint)
+    port = parsed.port or (443 if parsed.scheme == "https" else 80)
+    return f"{parsed.scheme}://{(parsed.hostname or '').lower()}:{port}"
+
+
+def monthly_token_cap_for_usd(usd: Decimal, models, *, endpoint: str) -> int:
+    """The largest monthly token cap that cannot bill more than `usd`.
+
+    The ledger charges prompt + completion as ONE sum, so the cap must hold
+    for every input/output split: input priced at the cache-miss rate, output
+    at the output rate, both at peak. A sum is only bounded by its dearest
+    per-token rate — max(cache miss, output) of the dearest model the wallet
+    may be sent — so that rate prices every token. Raises ValueError when a
+    model has no documented price (no cap can be derived for it).
+    """
+    if not isinstance(usd, Decimal) or not usd.is_finite() or usd <= 0:
+        raise ValueError(f"monthly USD cap must be a positive amount, not {usd!r}")
+    origin = _origin(endpoint)
+    rates = []
+    for model in models:
+        price = DEEPSEEK_PRICES_USD_PER_M.get((origin, model))
+        if price is None:
+            raise ValueError(f"no documented price for {model!r} at {origin}")
+        rates.append(max(price.input_cache_miss, price.output))
+    if not rates:
+        raise ValueError("no model to price")
+    return int(usd * 1_000_000 // max(rates))
 
 
 def _profile_for(origin: str, model: str, profile_aliases) -> BillingProfile | None:

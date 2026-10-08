@@ -165,7 +165,7 @@ def chunk_text(text: str, max_words: int = 250, overlap: int = 50) -> list[str]:
 # CJK-prone local qwen model. Native api.deepseek.com endpoint.
 DEEPSEEK_KEY = os.environ.get("DEEPSEEK_API_KEY", "")
 DEEPSEEK_BASE = os.environ.get("DEEPSEEK_BASE_URL", "https://api.deepseek.com")
-DEEPSEEK_MODEL = os.environ.get("DEEPSEEK_MODEL", "deepseek-chat")
+DEEPSEEK_MODEL = os.environ.get("DEEPSEEK_MODEL", "deepseek-flash")
 
 
 def _strip_json(raw: str) -> dict | None:

@@ -1321,6 +1321,27 @@ def _provider_label(base_url: object) -> str:
     return host or "unknown"
 
 
+def _documented_deepseek_request(base_url: str, create_kwargs: dict) -> dict:
+    """A batch caller's DeepSeek request, as the gateway would send it.
+
+    A legacy model name (deepseek-chat) goes out as its documented successor
+    (llm_config.resolve_deepseek_model), and thinking is off unless the caller
+    asked for it: every batch tool was written for the non-thinking
+    deepseek-chat, and DeepSeek's current models think by default — which
+    would spend a small max_tokens on reasoning and return nothing.
+    """
+    from app.config.llm_config import resolve_deepseek_model
+
+    kwargs = dict(create_kwargs)
+    if isinstance(kwargs.get("model"), str):
+        kwargs["model"] = resolve_deepseek_model(kwargs["model"], base_url)
+    extra = dict(kwargs.get("extra_body") or {})
+    if "thinking" not in extra and "reasoning_effort" not in kwargs:
+        extra["thinking"] = {"type": "disabled"}
+        kwargs["extra_body"] = extra
+    return kwargs
+
+
 def record_chat_completion(client, *, tier: str, provider: str | None = None,
                            route_reason: str | None = None, **create_kwargs):
     """See _record_chat_completion; its llm_calls row names its reservation."""
@@ -1344,6 +1365,8 @@ def _record_chat_completion(client, *, tier: str, provider: str | None = None,
     """
     if create_kwargs.get("stream"):
         raise ValueError("record_chat_completion does not record streams; use the gateway")
+    if _provider_label(getattr(client, "base_url", None)) == "deepseek":
+        create_kwargs = _documented_deepseek_request(str(client.base_url), create_kwargs)
     messages = create_kwargs.get("messages") or []
     prompt = "\n".join(str(m.get("content") or "") for m in messages if isinstance(m, dict))
     model = str(create_kwargs.get("model") or "unknown")

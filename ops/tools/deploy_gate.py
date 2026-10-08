@@ -32,6 +32,8 @@ import sys
 import time
 import urllib.error
 import urllib.request
+from decimal import Decimal, InvalidOperation
+from urllib.parse import urlsplit
 
 WORKFLOW = "backend.yml"
 # Job names in backend.yml. backend/tests/test_deploy_gate_paths.py fails if
@@ -101,12 +103,118 @@ def check_env_file(path: str) -> int:
         if sep and key.strip() == "CLOUD_BUDGET_ENFORCE":
             raw = _env_value(value)
     state = cloud_budget_enforce_state(raw)
+    code = 0
     if state == "unrecognised":
         print("❌ CLOUD_BUDGET_ENFORCE in .env is not one of "
               f"{'/'.join(_ENFORCE_ON)} or {'/'.join(v for v in _ENFORCE_OFF if v)}/unset — "
               "the app would read it as ON; fix the value before deploying")
+        code = 1
+    else:
+        print(f"✅ CLOUD_BUDGET_ENFORCE: {state}")
+    return max(code, check_primary_cap(lines))
+
+
+# ── primary monthly cap preflight ────────────────────────────────────────
+# Stdlib copies of app.config.llm_config (DOCUMENTED_DEEPSEEK_MODELS,
+# LEGACY_DEEPSEEK_MODEL_ALIASES, resolve_deepseek_model) and
+# app.services.cloud_budget (DEEPSEEK_PRICES_USD_PER_M as (cache hit, cache
+# miss, output) US$ per 1M at PEAK, monthly_token_cap_for_usd);
+# backend/tests/test_deepseek_documented_model.py keeps them equal.
+DOCUMENTED_DEEPSEEK_MODELS = ("deepseek-flash", "deepseek-v4-pro")
+LEGACY_DEEPSEEK_MODEL_ALIASES = {
+    "deepseek-chat": "deepseek-flash",
+    "deepseek-v4-flash": "deepseek-flash",
+}
+DEEPSEEK_PRICES_USD_PER_M = {
+    ("https://api.deepseek.com:443", "deepseek-flash"):
+        (Decimal("0.006"), Decimal("0.30"), Decimal("1.20")),
+    ("https://api.deepseek.com:443", "deepseek-v4-pro"):
+        (Decimal("0.044"), Decimal("1.32"), Decimal("3.96")),
+}
+_DEFAULT_PRIMARY_TOKEN_CAP = 100_000_000
+
+
+def _origin(endpoint: str) -> str:
+    parsed = urlsplit(endpoint)
+    port = parsed.port or (443 if parsed.scheme == "https" else 80)
+    return f"{parsed.scheme}://{(parsed.hostname or '').lower()}:{port}"
+
+
+def resolve_deepseek_model(name: str, base_url: str) -> str:
+    name = (name or "").strip()
+    try:
+        on_deepseek = _origin(base_url or "") == "https://api.deepseek.com:443"
+    except ValueError:
+        on_deepseek = False
+    if not on_deepseek:
+        return name
+    return LEGACY_DEEPSEEK_MODEL_ALIASES.get(name.lower(), name)
+
+
+def monthly_token_cap_for_usd(usd: Decimal, models, *, endpoint: str) -> int:
+    if not isinstance(usd, Decimal) or not usd.is_finite() or usd <= 0:
+        raise ValueError(f"monthly USD cap must be a positive amount, not {usd!r}")
+    origin = _origin(endpoint)
+    rates = []
+    for model in models:
+        price = DEEPSEEK_PRICES_USD_PER_M.get((origin, model))
+        if price is None:
+            raise ValueError(f"no documented price for {model!r} at {origin}")
+        rates.append(max(price[1], price[2]))
+    if not rates:
+        raise ValueError("no model to price")
+    return int(usd * 1_000_000 // max(rates))
+
+
+def _assignments(lines: list[str], keys: tuple[str, ...]) -> dict:
+    """The last value of each key, unquoted, as env_file reads it."""
+    found = {}
+    for line in lines:
+        line = line.strip()
+        if line.startswith("export "):
+            line = line[7:].lstrip()
+        key, sep, value = line.partition("=")
+        if sep and key.strip() in keys:
+            value = value.strip()
+            if len(value) >= 2 and value[0] == value[-1] and value[0] in "\"'":
+                value = value[1:-1]
+            found[key.strip()] = value
+    return found
+
+
+def check_primary_cap(lines: list[str]) -> int:
+    """0 and the effective PRIMARY monthly cap, or 1 when the app would fail
+    closed (USD cap it cannot honour) or crash (malformed token cap)."""
+    env = _assignments(lines, ("DEEPSEEK_BASE_URL", "DEEPSEEK_MODEL", "DEEPSEEK_MODEL_FALLBACK",
+                               "DEEPSEEK_PRIMARY_MONTHLY_TOKEN_CAP",
+                               "DEEPSEEK_PRIMARY_MONTHLY_USD_CAP"))
+    raw_tokens = env.get("DEEPSEEK_PRIMARY_MONTHLY_TOKEN_CAP", "")
+    try:
+        tokens = int(raw_tokens) if raw_tokens else _DEFAULT_PRIMARY_TOKEN_CAP
+    except ValueError:
+        print(f"❌ DEEPSEEK_PRIMARY_MONTHLY_TOKEN_CAP={raw_tokens!r} is not an integer — "
+              "the backend would not start")
         return 1
-    print(f"✅ CLOUD_BUDGET_ENFORCE: {state}")
+    raw_usd = env.get("DEEPSEEK_PRIMARY_MONTHLY_USD_CAP", "").strip()
+    if not raw_usd:
+        print(f"✅ primary monthly cap: {tokens} tokens"
+              + (" (0 = no ceiling)" if tokens == 0 else "")
+              + " — no DEEPSEEK_PRIMARY_MONTHLY_USD_CAP")
+        return 0
+    base = env.get("DEEPSEEK_BASE_URL") or "https://api.deepseek.com"
+    models = sorted({resolve_deepseek_model(env.get("DEEPSEEK_MODEL") or "deepseek-flash", base),
+                     resolve_deepseek_model(env.get("DEEPSEEK_MODEL_FALLBACK") or "deepseek-flash",
+                                            base)})
+    try:
+        usd = Decimal(raw_usd)
+        derived = monthly_token_cap_for_usd(usd, models, endpoint=base)
+    except (InvalidOperation, ValueError) as exc:
+        print(f"❌ DEEPSEEK_PRIMARY_MONTHLY_USD_CAP={raw_usd!r} cannot be honoured for "
+              f"{'/'.join(models)} at {base} ({exc}) — the app would cap paid calls at 1 token")
+        return 1
+    effective = derived if tokens <= 0 else min(derived, tokens)
+    print(f"✅ primary monthly cap: {effective} tokens (US${usd} at the peak rate of "
+          f"{'/'.join(models)} → {derived}; DEEPSEEK_PRIMARY_MONTHLY_TOKEN_CAP={raw_tokens or 'unset'})")
     return 0
 
 

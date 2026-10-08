@@ -6,8 +6,90 @@ defaults, so deployments (Docker, mobile-backend) can override without code edit
 import logging
 import os
 from dataclasses import dataclass, field
+from decimal import Decimal, InvalidOperation
+from urllib.parse import urlsplit
+
+from app.services.cloud_budget import monthly_token_cap_for_usd
 
 logger = logging.getLogger(__name__)
+
+# DeepSeek's documented model IDs (api-docs.deepseek.com/quick_start/pricing,
+# fetched 2026-10-08; docs/cloud-budget-reservations.md). ops/tools/deploy_gate.py
+# carries a stdlib copy of these two tables; a test keeps them equal.
+DOCUMENTED_DEEPSEEK_MODELS = ("deepseek-flash", "deepseek-v4-pro")
+# Legacy names DeepSeek documented as the non-thinking Flash model:
+# deepseek-chat (changelog 2026-04-24: non-thinking deepseek-v4-flash until its
+# 2026-07-24 discontinuation) and deepseek-v4-flash (pricing page: retired,
+# served and billed as V4.1-Flash). deepseek-reasoner was the THINKING mode
+# and is deliberately absent.
+LEGACY_DEEPSEEK_MODEL_ALIASES = {
+    "deepseek-chat": "deepseek-flash",
+    "deepseek-v4-flash": "deepseek-flash",
+}
+_DEEPSEEK_ORIGIN = ("https", "api.deepseek.com", 443)
+
+
+def _is_deepseek_host(base_url: str) -> bool:
+    try:
+        parsed = urlsplit(base_url or "")
+        port = parsed.port or (443 if parsed.scheme == "https" else 80)
+    except ValueError:
+        return False
+    return (parsed.scheme, (parsed.hostname or "").lower(), port) == _DEEPSEEK_ORIGIN
+
+
+def resolve_deepseek_model(name: str, base_url: str) -> str:
+    """The documented ID to SEND for a configured model name.
+
+    Only on DeepSeek's own host: on a compatible host (OpenRouter, z.ai…) a
+    name like "deepseek-chat" is that host's, not DeepSeek's, and is kept.
+    """
+    name = (name or "").strip()
+    if not _is_deepseek_host(base_url):
+        return name
+    target = LEGACY_DEEPSEEK_MODEL_ALIASES.get(name.lower())
+    if target is None:
+        return name
+    logger.warning("DEEPSEEK_MODEL=%r is a legacy DeepSeek name — sending the documented "
+                   "%r instead; set DEEPSEEK_MODEL=%s", name, target, target)
+    return target
+
+
+def primary_monthly_token_cap(usd_raw: str | None, token_raw: str | None, *,
+                              models, base_url: str) -> tuple:
+    """(USD cap or None, token cap) for the PRIMARY wallet.
+
+    DEEPSEEK_PRIMARY_MONTHLY_USD_CAP unset/empty: the token cap is
+    DEEPSEEK_PRIMARY_MONTHLY_TOKEN_CAP as before (0 = no ceiling). Set: the
+    token cap is derived from it (cloud_budget.monthly_token_cap_for_usd, over
+    every model the app may send), and an explicit token cap only lowers it —
+    0 ("unlimited") never lifts a USD cap. A USD cap that cannot be honoured
+    (malformed, not positive, a model or host without a documented price)
+    fails closed: cap 1 token, so cloud is denied and the local chain answers.
+    deploy_gate --check-env refuses such a file before a deploy.
+    """
+    token_cap = int(token_raw if token_raw not in (None, "") else "100000000")
+    if usd_raw is None or not usd_raw.strip():
+        return None, token_cap
+    try:
+        usd = Decimal(usd_raw.strip())
+        derived = monthly_token_cap_for_usd(usd, models, endpoint=base_url)
+    except (InvalidOperation, ValueError) as exc:
+        logger.error("DEEPSEEK_PRIMARY_MONTHLY_USD_CAP=%r cannot be honoured (%s) — paid primary "
+                     "calls are capped at 1 token (fail closed) until it is fixed", usd_raw, exc)
+        return None, 1
+    return usd, derived if token_cap <= 0 else min(derived, token_cap)
+
+
+_DEEPSEEK_BASE_URL = os.environ.get("DEEPSEEK_BASE_URL", "https://api.deepseek.com")
+_DEEPSEEK_MODEL = resolve_deepseek_model(
+    os.environ.get("DEEPSEEK_MODEL", "deepseek-flash"), _DEEPSEEK_BASE_URL)
+_DEEPSEEK_MODEL_FALLBACK = resolve_deepseek_model(
+    os.environ.get("DEEPSEEK_MODEL_FALLBACK", "deepseek-flash"), _DEEPSEEK_BASE_URL)
+_PRIMARY_USD_CAP, _PRIMARY_TOKEN_CAP = primary_monthly_token_cap(
+    os.environ.get("DEEPSEEK_PRIMARY_MONTHLY_USD_CAP"),
+    os.environ.get("DEEPSEEK_PRIMARY_MONTHLY_TOKEN_CAP"),
+    models=sorted({_DEEPSEEK_MODEL, _DEEPSEEK_MODEL_FALLBACK}), base_url=_DEEPSEEK_BASE_URL)
 
 
 def parse_billing_profile_aliases(raw: str) -> tuple:
@@ -123,13 +205,15 @@ class LLMConfig:
     # (NOT Azure) — works with api.deepseek.com, z.ai, openrouter, etc.
     primary_provider: str = os.environ.get("LLM_PRIMARY_PROVIDER", "ollama").lower()
     deepseek_api_key: str = os.environ.get("DEEPSEEK_API_KEY", "")
-    deepseek_base_url: str = os.environ.get("DEEPSEEK_BASE_URL", "https://api.deepseek.com")
-    deepseek_model: str = os.environ.get("DEEPSEEK_MODEL", "deepseek-chat")
-    # DeepSeek's docs (2026-10) list deepseek-chat as a legacy name due to be
-    # discontinued; the documented model is deepseek-flash (thinking off via
-    # the request's "thinking" field). When the configured model is refused
-    # as unknown or retired, the gateway switches to this one for the process.
-    deepseek_model_fallback: str = os.environ.get("DEEPSEEK_MODEL_FALLBACK", "deepseek-flash")
+    deepseek_base_url: str = _DEEPSEEK_BASE_URL
+    # A documented ID (DOCUMENTED_DEEPSEEK_MODELS); thinking is switched off
+    # per request. A legacy name in DEEPSEEK_MODEL (production had
+    # deepseek-chat) is sent as its documented successor on DeepSeek's host —
+    # resolve_deepseek_model — so the old .env keeps working.
+    deepseek_model: str = _DEEPSEEK_MODEL
+    # When the configured model is refused as unknown or retired, the gateway
+    # switches to this one for the process.
+    deepseek_model_fallback: str = _DEEPSEEK_MODEL_FALLBACK
     # Model names the monthly cap may bill under a documented profile, as
     # "name=documented-name[,…]" (e.g. "deepseek-chat=deepseek-flash"). An
     # operator attestation, not a fact the code can verify: deepseek-chat is
@@ -145,9 +229,11 @@ class LLMConfig:
     # safety-valve cap, exhaustion or unknown billing profiles make the gateway
     # fall through to the local Ollama chain, exactly as if the provider had
     # failed, so the app keeps answering. 0 disables the ceiling.
-    deepseek_primary_monthly_token_cap: int = int(
-        os.environ.get("DEEPSEEK_PRIMARY_MONTHLY_TOKEN_CAP", "100000000")
-    )
+    # DEEPSEEK_PRIMARY_MONTHLY_USD_CAP (e.g. 30), when set, derives this cap
+    # from US$ at the documented peak prices — see primary_monthly_token_cap
+    # and backend/docs/cloud-budget-reservations.md.
+    deepseek_primary_monthly_token_cap: int = _PRIMARY_TOKEN_CAP
+    deepseek_primary_monthly_usd_cap: Decimal | None = _PRIMARY_USD_CAP
     # The hard monthly cap's activation switch. Off (default): the behaviour
     # before the reservation ledger — no wire reservation or denial, the soft
     # ceiling above over llm_calls (failing OPEN on unreadable telemetry),

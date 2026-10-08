@@ -103,7 +103,7 @@ def _get_judge_config(provider: str) -> tuple[any, str]:
         if not key:
             raise RuntimeError("DEEPSEEK_API_KEY environment variable is required for provider=deepseek")
         client = OpenAI(api_key=key, base_url="https://api.deepseek.com")
-        model = os.environ.get("JUDGE_DEEPSEEK_MODEL", "deepseek-chat")
+        model = os.environ.get("JUDGE_DEEPSEEK_MODEL", "deepseek-flash")
         return client, model
 
     if provider == "azure":
