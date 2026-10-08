@@ -691,3 +691,68 @@ settled (success 57, cut/abandoned/net-error/500 at the 4195 request bound),
 insert 4-value positional rows into `llm_calls`, which the test helper now
 creates with the real 12-column telemetry schema; the mapped variants differ
 only in naming their columns and recording the map, as the gateway does.
+
+### 9. Operability before enabling (re-review of c8597396, P3)
+
+**Settle off the request path.** A settle used to run on the request or aux
+thread and could wait up to 120 s for a stuck flock holder — holding the HTTP
+response and the aux pool, delaying the SSE done event, tripping the stall
+watchdog. Now `_WireCharge.settle` hands it to `cloud_budget.SETTLER`
+(`BackgroundSettler`): it settles inline only if the ledger is free *right
+now* (one non-blocking try — the same kind of work `reserve` already does, so
+uncontended attempts free their hold immediately and a retry within the same
+request is not denied by its own predecessor); otherwise the attempt goes on a
+bounded in-memory queue (10,000) that one worker thread drains with the long
+retry (`SETTLE_TIMEOUT_S`). The request never waits on the ledger lock to
+settle. A full queue, or a submit after shutdown began, leaves the attempt an
+orphan holding its bound, logged at ERROR with the remedy. At interpreter exit
+`SETTLER.drain` waits up to `SHUTDOWN_DRAIN_S` (10 s) and logs the ids still
+unsettled; they stay orphans recoverable with `--settle-orphans`.
+Only `reserve` remains on the request path (≤ `RESERVE_TIMEOUT_S`).
+
+**Anchor location.** `CLOUD_BUDGET_ANCHOR_PATH` (default empty = next to
+`sessions.db`, unchanged). The lock file and the atomic-replace temp file live
+beside the anchor. The bootstrap CLI takes the same path as `--anchor` (it
+reads no environment); a CLI run without it writes the default location,
+which the app then does not read — it stays denied (fail closed), never
+misattributed. Why move it: with both files on one volume, restoring that
+volume restores a consistent (DB, anchor) pair and the rollback of spend is
+undetectable (test `test_same_volume_restore_is_why_the_anchor_should_move`);
+on separate volumes, restoring either alone mismatches.
+
+**Recommended production placement (describe only; compose unchanged
+here):** a second named volume used for nothing else, e.g.
+`tutor-guardian_tg_budget_witness` mounted read-write at `/app/budget-witness`,
+with `CLOUD_BUDGET_ANCHOR_PATH=/app/budget-witness/sessions.anchor`; excluded
+from — or backed up on a different schedule than — the `tg_sessions` volume,
+so no single restore brings both back. Every bootstrap/orphan/list CLI run
+then passes `--anchor /app/budget-witness/sessions.anchor`.
+
+**Visible state.** `llm_config.cloud_budget_enforce_state(raw)` →
+`on`/`off`/`unrecognised`. `CloudBudget.status()` is read-only (mode=ro, no
+lock, creates nothing): activated wallets and months, current month
+activated, quarantined, unsettled attempts, continuity (anchor vs witness).
+`ops/tools/runtime_readiness_report.py` (encrypted, manual) now carries
+`cloud.budget = {enforce, anchor_path_configured, ledger: status}` — the
+state, never the raw value — and its per-DB `continuity` reads the current
+anchor format. Not added to `/health`: it is public (`AuthMiddleware` public
+list, `docs/ROUTE_POLICY.md`).
+
+**Deploy preflight.** `deploy.yml` runs the gated commit's own
+`ops/tools/deploy_gate.py --check-env $DEPLOY_PATH/.env` (via `git show`)
+before the checkout or the container changes; an unrecognised
+`CLOUD_BUDGET_ENFORCE` fails the deploy and the running release stays. The
+checker is a stdlib copy of the app's classifier; a test keeps them equal.
+
+Runbook additions: before step 6 set `CLOUD_BUDGET_ANCHOR_PATH` (and the
+volume) if you follow the placement above, and pass `--anchor` to every CLI
+call; after step 7, check `cloud.budget` in the readiness report (`enforce:
+on`, `continuity: true`, current month activated, unsettled 0 at rest).
+
+Review-2 probes re-run on this branch (scratch copies): p1 never
+overcommits; p2 up to 150k rows × 8 threads 40/40; p3 and p3mp 120/120 with 0
+unsettled; p6m on the reviewer's pre-rollover DB — post-midnight mapped row
+accepted, unmapped row / reclaimed reservation / tokens above charge refused;
+p4m `off_gap` refused; w_attacks unchanged (forged witness caught at
+rollover); w_restore (same-volume restore) admitted — the case the anchor
+path addresses.

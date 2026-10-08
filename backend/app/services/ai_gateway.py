@@ -41,6 +41,7 @@ import requests
 
 from app.config.llm_config import LLM
 from app.core.circuit_breaker import CircuitBreaker
+from app.services import cloud_budget
 from app.services.cloud_budget import (BudgetDenied, CloudBudget, record_call_reservations,
                                        unknown_usage_bounds, upper_token_bound)
 
@@ -879,7 +880,7 @@ def _ensure_telemetry_schema(conn: sqlite3.Connection) -> None:
     from app.db.migrations.telemetry_0002_usage_estimated import MIGRATION as USAGE_ESTIMATED
 
     global _telemetry_schema_ready
-    if (CloudBudget(_TELEMETRY_DB).anchor_path.exists()
+    if (_ledger().anchor_path.exists()
             or conn.execute("SELECT 1 FROM sqlite_master WHERE name='cloud_budget_identity'").fetchone()):
         # Diagnostic writes must not silently heal lost activated history:
         # an activated ledger whose llm_calls vanished fails here, before the
@@ -944,8 +945,13 @@ def _fill_usage(prompt_tokens: int | None, completion_tokens: int | None,
             True)
 
 
+def _ledger() -> CloudBudget:
+    """The cap's ledger on the telemetry DB, with the configured anchor."""
+    return CloudBudget(_TELEMETRY_DB, anchor_path=getattr(LLM, "cloud_budget_anchor_path", "") or None)
+
+
 def _connect_telemetry() -> sqlite3.Connection:
-    ledger = CloudBudget(_TELEMETRY_DB)
+    ledger = _ledger()
     if ledger.anchor_path.exists():
         # A diagnostic call on a lost activated volume must not create a DB.
         return sqlite3.connect(ledger.path.as_uri() + '?mode=rw', uri=True)
@@ -1088,7 +1094,7 @@ def _reserve_wire_budget(endpoint: str, provider_name: str, messages: list[dict]
     # these aliases spent from different wallets, so conservatively import all.
     aliases = tuple(sorted({"azure_deepseek", "deepseek", "deepseek_aux",
                             "deepseek_fallback", provider_name}))
-    ledger = CloudBudget(_TELEMETRY_DB)
+    ledger = _ledger()
     ticket = ledger.reserve(wallet, cap, bound, legacy_aliases=aliases,
                             unknown_usage_bounds=unknown_usage_bounds(messages, output_cap))
     sink = _RESERVATION_SINK.get()
@@ -1141,7 +1147,9 @@ class _WireCharge:
     def settle(self, prompt_tokens, completion_tokens) -> None:
         if not self.done:
             self.done = True
-            self.ledger.settle(self.ticket, prompt_tokens, completion_tokens)
+            # Never waits on the request path: inline if the ledger is free,
+            # else the background settler (cloud_budget.SETTLER).
+            cloud_budget.SETTLER.submit(self.ledger, self.ticket, prompt_tokens, completion_tokens)
 
 
 def _settle_wire_budget(charge, prompt_tokens, completion_tokens) -> None:

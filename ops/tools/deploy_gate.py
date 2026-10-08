@@ -20,6 +20,7 @@ runner is not held while tests run.
 Usage:
   CI:          python3 ops/tools/deploy_gate.py --sha "$GITHUB_SHA"
   local check: GH_TOKEN=$(gh auth token) python3 ops/tools/deploy_gate.py --sha <sha> --once
+  preflight:   python3 ops/tools/deploy_gate.py --check-env /root/tutor-guardian/.env
 Exit: 0 pass · 1 fail · 2 misuse · 3 still waiting (--once only).
 """
 from __future__ import annotations
@@ -39,6 +40,53 @@ WORKFLOW = "backend.yml"
 REQUIRED_JOBS = ("pytest", "KB integrity", "ruff")
 BRANCH = "main"
 EVENTS = ("push", "workflow_dispatch")
+
+
+# ── CLOUD_BUDGET_ENFORCE preflight (runs on the production host) ─────────
+# A stdlib copy of app.config.llm_config.cloud_budget_enforce_state, so the
+# check runs from `git show` before the checkout moves;
+# backend/tests/test_cloud_budget_operability.py keeps the two equal.
+_ENFORCE_ON = ("1", "true", "yes", "on")
+_ENFORCE_OFF = ("", "0", "false", "no", "off")
+
+
+def cloud_budget_enforce_state(raw: str | None) -> str:
+    value = (raw or "").strip().lower()
+    if value in _ENFORCE_ON:
+        return "on"
+    if value in _ENFORCE_OFF:
+        return "off"
+    return "unrecognised"
+
+
+def check_env_file(path: str) -> int:
+    """0 when CLOUD_BUDGET_ENFORCE in this .env is on/off/unset, 1 when it is
+    a value the app would not recognise (read as ON and only logged), 2 when
+    the file cannot be read. The last assignment wins, as in env_file."""
+    try:
+        lines = open(path, encoding="utf-8").read().splitlines()
+    except OSError as exc:
+        print(f"❌ cannot read {path}: {exc}")
+        return 2
+    raw = None
+    for line in lines:
+        line = line.strip()
+        if line.startswith("export "):
+            line = line[7:].lstrip()
+        key, sep, value = line.partition("=")
+        if sep and key.strip() == "CLOUD_BUDGET_ENFORCE":
+            value = value.strip()
+            if len(value) >= 2 and value[0] == value[-1] and value[0] in "\"'":
+                value = value[1:-1]
+            raw = value
+    state = cloud_budget_enforce_state(raw)
+    if state == "unrecognised":
+        print("❌ CLOUD_BUDGET_ENFORCE in .env is not one of "
+              f"{'/'.join(_ENFORCE_ON)} or {'/'.join(v for v in _ENFORCE_OFF if v)}/unset — "
+              "the app would read it as ON; fix the value before deploying")
+        return 1
+    print(f"✅ CLOUD_BUDGET_ENFORCE: {state}")
+    return 0
 
 
 def pick_run(runs: list[dict], sha: str, branch: str = BRANCH,
@@ -120,7 +168,9 @@ def _summary(text: str) -> None:
 
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n", 1)[0])
-    ap.add_argument("--sha", required=True)
+    ap.add_argument("--sha")
+    ap.add_argument("--check-env", metavar="ENV_FILE",
+                    help="only check CLOUD_BUDGET_ENFORCE in this .env (production preflight)")
     ap.add_argument("--repo", default=os.environ.get("GITHUB_REPOSITORY", ""))
     ap.add_argument("--ref", default=os.environ.get("GITHUB_REF", f"refs/heads/{BRANCH}"),
                     help="the ref being deployed; only main may deploy")
@@ -131,6 +181,11 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--once", action="store_true", help="evaluate once; exit 3 if not finished")
     args = ap.parse_args(argv)
 
+    if args.check_env:
+        return check_env_file(args.check_env)
+    if not args.sha:
+        print("need --sha (or --check-env ENV_FILE)")
+        return 2
     if args.ref != f"refs/heads/{BRANCH}":
         print(f"❌ refusing to deploy {args.ref}: only {BRANCH} deploys")
         return 1

@@ -33,15 +33,24 @@ _ENFORCE_ON = ("1", "true", "yes", "on")
 _ENFORCE_OFF = ("", "0", "false", "no", "off")
 
 
+def cloud_budget_enforce_state(raw: str | None) -> str:
+    """"on" | "off" | "unrecognised" for a CLOUD_BUDGET_ENFORCE value.
+    ops/tools/deploy_gate.py carries a stdlib copy (a test keeps them equal)."""
+    value = (raw or "").strip().lower()
+    if value in _ENFORCE_ON:
+        return "on"
+    if value in _ENFORCE_OFF:
+        return "off"
+    return "unrecognised"
+
+
 def parse_cloud_budget_enforce(raw: str | None) -> bool:
     """CLOUD_BUDGET_ENFORCE. An unrecognised value is never silently off: it
     is read as ON (the safe side for spend — cloud fails closed and the local
     chain answers until a bootstrap) and logged."""
-    value = (raw or "").strip().lower()
-    if value in _ENFORCE_ON:
-        return True
-    if value in _ENFORCE_OFF:
-        return False
+    state = cloud_budget_enforce_state(raw)
+    if state != "unrecognised":
+        return state == "on"
     logger.warning("CLOUD_BUDGET_ENFORCE=%r is not one of %s / %s — treated as ON "
                    "(fail closed); set it explicitly", raw, "|".join(_ENFORCE_ON),
                    "|".join(v for v in _ENFORCE_OFF if v))
@@ -149,6 +158,11 @@ class LLMConfig:
     # logged and read as ON (never silently off).
     cloud_budget_enforce: bool = field(default_factory=lambda: parse_cloud_budget_enforce(
         os.environ.get("CLOUD_BUDGET_ENFORCE")))
+    # Where the ledger's continuity anchor lives. Empty = next to sessions.db
+    # (the default). Put it on a different volume so restoring one volume
+    # alone is detected (runbook in backend/docs/cloud-budget-reservations.md).
+    cloud_budget_anchor_path: str = field(default_factory=lambda: os.environ.get(
+        "CLOUD_BUDGET_ANCHOR_PATH", "").strip())
 
     # backward-compat shim: older code reads .model
     @property

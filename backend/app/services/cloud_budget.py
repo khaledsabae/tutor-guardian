@@ -1,12 +1,14 @@
 """Durable per-wire-attempt admission; diagnostics never authorize paid traffic."""
 from __future__ import annotations
 
+import atexit
 import contextlib
 import fcntl
 import hashlib
 import json
 import logging
 import os
+import queue
 import sqlite3
 import tempfile
 import threading
@@ -193,12 +195,15 @@ def _process_lock(path: Path) -> threading.Lock:
 
 
 class CloudBudget:
-    def __init__(self, path: Path, *, clock: Callable | None = None):
+    def __init__(self, path: Path, *, clock: Callable | None = None, anchor_path=None):
         try:
             self.path = Path(path).resolve()
-        except (OSError, ValueError) as exc:
+            # Default: next to the DB. Elsewhere (another volume) a restore
+            # of one volume alone no longer matches the other.
+            self.anchor_path = (Path(anchor_path).resolve() if anchor_path
+                                else Path(str(self.path) + '.cloud-budget-anchor'))
+        except (OSError, ValueError, TypeError) as exc:
             raise BudgetDenied('cloud budget DB identity/path unknown') from exc
-        self.anchor_path = Path(str(self.path) + '.cloud-budget-anchor')
         self.clock = clock or (lambda: datetime.now(timezone.utc))
 
     # ── continuity witness: O(1) per transaction ──────────────────────────
@@ -242,14 +247,14 @@ class CloudBudget:
             raise BudgetDenied('cloud budget uninitialized DB identity')
         data = json.dumps({'db_identity': identity[0], 'witness': self._witness(conn),
                            'schema': self._schema_hash(conn)})
-        fd, name = tempfile.mkstemp(prefix=self.anchor_path.name + '.', dir=self.path.parent)
+        fd, name = tempfile.mkstemp(prefix=self.anchor_path.name + '.', dir=self.anchor_path.parent)
         try:
             with os.fdopen(fd, 'w') as stream:
                 stream.write(data)
                 stream.flush()
                 os.fsync(stream.fileno())
             os.replace(name, self.anchor_path)
-            directory = os.open(self.path.parent, os.O_RDONLY | os.O_DIRECTORY)
+            directory = os.open(self.anchor_path.parent, os.O_RDONLY | os.O_DIRECTORY)
             try:
                 os.fsync(directory)
             finally:
@@ -264,7 +269,8 @@ class CloudBudget:
         lock = None
         deadline = time.monotonic() + (RESERVE_TIMEOUT_S if timeout is None else timeout)
         local = _process_lock(self.anchor_path)
-        if not local.acquire(timeout=max(0.0, deadline - time.monotonic())):
+        wait = deadline - time.monotonic()
+        if not (local.acquire(timeout=wait) if wait > 0 else local.acquire(blocking=False)):
             raise LedgerBusy('cloud budget continuity witness busy')
         try:
             if not self.path.is_file():
@@ -673,15 +679,7 @@ class CloudBudget:
         the committed original charge; a duplicate settlement cannot alter a
         previously settled charge.
         """
-        complete_counts = _count(prompt_tokens) and _count(completion_tokens)
-        if complete_counts:
-            actual = prompt_tokens + completion_tokens
-        elif ticket.input_bound is not None and ticket.output_bound is not None:
-            actual = min(ticket.bound,
-                         (prompt_tokens if _count(prompt_tokens) else ticket.input_bound)
-                         + (completion_tokens if _count(completion_tokens) else ticket.output_bound))
-        else:
-            actual = ticket.bound
+        actual = self._actual(ticket, prompt_tokens, completion_tokens)
         deadline = time.monotonic() + SETTLE_TIMEOUT_S
         while True:
             try:
@@ -697,6 +695,70 @@ class CloudBudget:
             except BudgetDenied as exc:
                 logger.warning("cloud budget settlement retained original charge: %s", exc)
                 return
+
+    @staticmethod
+    def _actual(ticket: Reservation, prompt_tokens, completion_tokens) -> int:
+        if _count(prompt_tokens) and _count(completion_tokens):
+            return prompt_tokens + completion_tokens
+        if ticket.input_bound is not None and ticket.output_bound is not None:
+            return min(ticket.bound,
+                       (prompt_tokens if _count(prompt_tokens) else ticket.input_bound)
+                       + (completion_tokens if _count(completion_tokens) else ticket.output_bound))
+        return ticket.bound
+
+    def try_settle_now(self, ticket: Reservation, prompt_tokens, completion_tokens) -> bool:
+        """Settle only if the ledger is free right now; never wait for it.
+
+        False = busy (hand it to the background settler). True = settled, or
+        refused for a non-transient reason (logged; the charge is retained).
+        """
+        try:
+            self._settle_once(ticket, self._actual(ticket, prompt_tokens, completion_tokens), 0.0)
+        except LedgerBusy:
+            return False
+        except BudgetDenied as exc:
+            logger.warning("cloud budget settlement retained original charge: %s", exc)
+        return True
+
+    def status(self) -> dict:
+        """Read-only activation state (mode=ro, no lock, nothing created)."""
+        result = {'db_present': self.path.is_file(), 'anchor_present': self.anchor_path.is_file(),
+                  'activated': False, 'continuity': None, 'wallets': {}, 'unsettled_attempts': None}
+        if not result['db_present']:
+            return result
+        conn = sqlite3.connect(self.path.as_uri() + '?mode=ro', uri=True, timeout=0.2)
+        try:
+            conn.execute('PRAGMA query_only=ON')
+            tables = {r[0] for r in conn.execute("SELECT name FROM sqlite_master WHERE type='table'")}
+            if 'cloud_budget_activation' not in tables:
+                return result
+            month = self.clock().astimezone(timezone.utc).strftime('%Y-%m')
+            wallets: dict = {}
+            for wallet, activated in conn.execute('SELECT wallet, month FROM cloud_budget_activation '
+                                                  'ORDER BY wallet, month'):
+                entry = wallets.setdefault(wallet, {'activated_months': [], 'current_month_activated': False,
+                                                    'quarantined': False})
+                entry['activated_months'].append(activated)
+                entry['current_month_activated'] |= activated == month
+            for (wallet,) in conn.execute('SELECT DISTINCT wallet FROM cloud_budget_months WHERE blocked=1'):
+                if wallet in wallets:
+                    wallets[wallet]['quarantined'] = True
+            result['wallets'] = wallets
+            result['activated'] = bool(wallets)
+            result['unsettled_attempts'] = conn.execute(
+                'SELECT COUNT(*) FROM cloud_budget_attempts WHERE settled=0').fetchone()[0]
+            result['continuity'] = False
+            if result['anchor_present'] and 'cloud_budget_witness' in tables:
+                anchor = json.loads(self.anchor_path.read_text())
+                identity = conn.execute('SELECT db_identity FROM cloud_budget_identity WHERE id=1').fetchone()
+                result['continuity'] = bool(identity and anchor.get('db_identity') == identity[0]
+                                            and anchor.get('witness') == self._witness(conn)
+                                            and anchor.get('schema') == self._schema_hash(conn))
+        except (sqlite3.Error, OSError, ValueError, BudgetDenied):
+            result['continuity'] = False if result['activated'] else result['continuity']
+        finally:
+            conn.close()
+        return result
 
     def _settle_once(self, ticket: Reservation, actual: int, timeout: float) -> None:
         with self._transaction(timeout=timeout) as conn:
@@ -761,3 +823,86 @@ class CloudBudget:
                               wallet, month, old, new, policy, evidence.strip()))
                 settled.append(attempt_id)
         return settled
+
+
+SHUTDOWN_DRAIN_S = 10.0
+
+
+class BackgroundSettler:
+    """Settlements off the request path: one worker, a bounded queue.
+
+    submit() settles inline only if the ledger is free right now (the same
+    kind of work reserve already does); otherwise the attempt is queued and
+    the worker settles it with the long retry (SETTLE_TIMEOUT_S). A full
+    queue or a shutdown leaves the attempt an orphan holding its bound —
+    logged with the remedy, --settle-orphans — never a blocked request.
+    """
+
+    def __init__(self, maxsize: int = 10000):
+        self._queue: queue.Queue = queue.Queue(maxsize)
+        self._pending: dict[str, Reservation] = {}
+        self._guard = threading.Lock()
+        self._thread: threading.Thread | None = None
+        self._stopping = False
+
+    def submit(self, ledger: CloudBudget, ticket: Reservation, prompt_tokens, completion_tokens) -> bool:
+        if ledger.try_settle_now(ticket, prompt_tokens, completion_tokens):
+            return True
+        with self._guard:
+            if self._stopping:
+                accepted = False
+            else:
+                try:
+                    self._queue.put_nowait((ledger, ticket, prompt_tokens, completion_tokens))
+                    self._pending[ticket.id] = ticket
+                    accepted = True
+                except queue.Full:
+                    accepted = False
+            if accepted and (self._thread is None or not self._thread.is_alive()):
+                self._thread = threading.Thread(target=self._work, name='cloud-budget-settler', daemon=True)
+                self._thread.start()
+        if not accepted:
+            logger.error("cloud budget settler %s: attempt %s left as an orphan holding its bound; "
+                         "settle it with cloud_budget_bootstrap --settle-orphans",
+                         'stopping' if self._stopping else 'queue full', ticket.id)
+        return accepted
+
+    def _work(self) -> None:
+        while True:
+            ledger, ticket, prompt_tokens, completion_tokens = self._queue.get()
+            try:
+                ledger.settle(ticket, prompt_tokens, completion_tokens)
+            except Exception:  # noqa: BLE001 — the worker must survive any one settlement
+                logger.exception("cloud budget background settlement failed for %s", ticket.id)
+            finally:
+                with self._guard:
+                    self._pending.pop(ticket.id, None)
+                self._queue.task_done()
+
+    def flush(self, timeout: float) -> bool:
+        """Wait (bounded) until every queued settlement has been attempted."""
+        deadline = time.monotonic() + timeout
+        while time.monotonic() < deadline:
+            with self._guard:
+                if not self._pending:
+                    return True
+            time.sleep(0.01)
+        with self._guard:
+            return not self._pending
+
+    def drain(self, timeout: float = SHUTDOWN_DRAIN_S) -> list[str]:
+        """Shutdown: stop accepting, wait up to `timeout`, name what is left."""
+        with self._guard:
+            self._stopping = True
+        self.flush(timeout)
+        with self._guard:
+            left = list(self._pending)
+        if left:
+            logger.error("cloud budget shutdown: %d settlement(s) not written (%s); they stay orphans "
+                         "holding their bound — settle them with cloud_budget_bootstrap --settle-orphans",
+                         len(left), ', '.join(left))
+        return left
+
+
+SETTLER = BackgroundSettler()
+atexit.register(SETTLER.drain)
