@@ -77,7 +77,7 @@ Cloudflare ──► analytics_nginx (على الـVPS) ──► tg_backend (Fa
 
 | القاعدة | ماذا فيها | طبيعتها |
 |---|---|---|
-| `ops/sessions.db` | **تيليمتري التشغيل**: `llm_calls` (كل نداء LLM: المزوّد، التوكنز، الزمن — منها تُحسب p95 وميزانية الصمام ونسبة الكاش)، `answer_cache`، `retrieval_log`، `query_rewrites` | قابلة لإعادة البناء نظريًا؛ لكنها مصدر مقاييس التكلفة — لا تمسحها |
+| `ops/sessions.db` | **تيليمتري التشغيل**: `llm_calls` (كل نداء LLM: المزوّد، التوكنز، الزمن — منها تُحسب p95 وميزانية الصمام ونسبة الكاش؛ `usage_estimated=1` = توكنز لم يبلّغ بها المزوّد فقدّرتها البوابة، كبث قُطع قبل قطعة الاستعمال الأخيرة)، `answer_cache`، `retrieval_log`، `query_rewrites` | قابلة لإعادة البناء نظريًا؛ لكنها مصدر مقاييس التكلفة — لا تمسحها |
 | `ops/conversations.db` | **بيانات المنتج والمستخدمين**: `chat_sessions/chat_messages`، `child_profiles`، `lesson_progress`، `habits_*`، `referrals`، `push_tokens`، `user_backups`… | **حرجة** — عليها الباكاب اليومي (§5.1) |
 
 كل الاتصالات على WAL + `busy_timeout`. لا تفتح القاعدة الحية بأدوات كتابة من خارج الحاوية.
@@ -171,7 +171,7 @@ v1.0.30+75 دون أن يعترض شيء — لا لأن بوابة فشلت، �
 | `0 3 * * *` | `warm_answer_cache.py` — تسخين كاش الإجابات بأسئلة الألم الشائعة | `/var/log/tg-cache-warm.log` | نسبة الكاش في `/api/stats/ops-llm` |
 | `30 3 * * *` | `backup_user_data.sh` — باكاب `conversations.db` (sqlite3 online backup + integrity_check، gzip، احتفاظ 14 يومًا) → `/root/tg-backups/` | `/var/log/tg-backup.log` | ملف اليوم موجود **وحجمه منطقي** واسترجاع تجريبي يفتح |
 | أسبوعيًا `8:00` | `weekly_dashboard.py` — تقرير أسبوعي على تلجرام (مقاييس LLM + retention + إحصائيات DB) | `/var/log/tg-weekly-dashboard.log` | الرسالة وصلت فعلًا على تلجرام |
-| `0 6 * * 6` | `weekly_kb_gap_report.py` — أسئلة الأسبوع → استرجاع حقيقي → حكم DeepSeek → تقرير فجوات على تلجرام. يستبعد نصوص `chatQ_*` أولًا وإلا قاس الأزرار لا المستخدمين. **مخرجه تجميعي: نصوص أسئلة الآباء لا تغادر الخادم.** يستغرق ~١١ دقيقة على عيّنة ١٠٠ سؤال | `/var/log/tg-kb-gaps.log` | **`tg_message_id=` في اللوج** (لا كود الخروج) · ونسبة «بلا إجابة» تطابق استعلامًا يدويًا على `chat_messages` |
+| `0 6 * * 6` | `weekly_kb_gap_report.py` — أسئلة الأسبوع → استرجاع حقيقي → حكم DeepSeek (كل طلب صفّ في `llm_calls` بـ`tier=kb_gap_judge`) → تقرير فجوات على تلجرام. يستبعد نصوص `chatQ_*` أولًا وإلا قاس الأزرار لا المستخدمين. **مخرجه تجميعي: نصوص أسئلة الآباء لا تغادر الخادم.** يستغرق ~١١ دقيقة على عيّنة ١٠٠ سؤال | `/var/log/tg-kb-gaps.log` | **`tg_message_id=` في اللوج** (لا كود الخروج) · ونسبة «بلا إجابة» تطابق استعلامًا يدويًا على `chat_messages` |
 | `0 7 * * 6` | `weekly_funnel_report.py` — مسار التفعيل الأسبوعي (تسجيل ← درس ← سؤال) + احتفاظ D7 + الأسئلة الحقيقية ونسبة غير المخدوم وتفاعل نصائح اليوم والفيدباك → تلجرام. **مخرجه تجميعي فقط: بيانات الأهالي لا تغادر السيرفر.** | `/var/log/tg-weekly-funnel.log` | **`tg_message_id=` في اللوج** ورسالة تلجرام وصلت فعلًا |
 | (systemd timer) | `pcc-laptop-watchdog` — يراقب نبض لابتوب خالد وينبّه على تلجرام لو غاب > ساعتين (كود المؤقّت في `publishing-center/scripts/watchdog/`) | journalctl للـtimer | تنبيه فعلي عند إطفاء اللابتوب |
 

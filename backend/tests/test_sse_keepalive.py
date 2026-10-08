@@ -4,6 +4,7 @@ The app drops a stream that sends nothing for 45 s. A slow first token
 (retrieval, a cold local model, the fallback chain) must therefore still put
 bytes on the wire — an SSE comment, which every client ignores.
 """
+import asyncio
 import json
 import time
 
@@ -32,6 +33,9 @@ def test_silent_model_gets_keepalive_comments(monkeypatch):
 
     monkeypatch.setattr(ai_gateway, "OllamaProvider", _SlowProvider)
     monkeypatch.setattr(assistant, "_STREAM_KEEPALIVE_S", 0.05)
+    # no ayah reference → no full-Quran search on mcp.tafsir.net (real HTTPS)
+    monkeypatch.setattr(assistant, "resolve_ayah_reference",
+                        lambda text: asyncio.sleep(0, result=None))
     ai_gateway._gateway = None
     try:
         with TestClient(app) as client:

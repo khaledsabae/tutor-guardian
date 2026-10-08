@@ -3,6 +3,8 @@
 The LLM gateway and the vector retrieval are mocked, so these run fast and
 need neither Ollama nor the ONNX model download.
 """
+import asyncio
+
 import pytest
 from fastapi.testclient import TestClient
 
@@ -38,6 +40,9 @@ def client(monkeypatch):
             return LLMResult(text="رد تجريبي مفيد.", model="test", latency_ms=1)
 
     monkeypatch.setattr("app.services.llm_service.get_gateway", lambda: _GW())
+    # no ayah reference → no full-Quran search on mcp.tafsir.net (real HTTPS)
+    monkeypatch.setattr("app.routers.assistant.resolve_ayah_reference",
+                        lambda text: asyncio.sleep(0, result=None))
     with TestClient(app) as c:
         yield c
 

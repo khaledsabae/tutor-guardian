@@ -1,8 +1,100 @@
 """Shared test fixtures — isolates the conversation DB to a temp file."""
+import ipaddress
 import os
+import socket
+import sys
 import tempfile
 
 import pytest
+
+
+# ── Hugging Face models load from the local cache only ────────────────────
+# SentenceTransformer("intfloat/multilingual-e5-small") sends HEAD requests to
+# huggingface.co on every load, even with the weights fully cached — so any
+# test that reaches the real embedder (an index rebuild, a vector query)
+# connects out. Under the guard below that connect is refused, and
+# huggingface_hub 1.16 then closes its shared httpx client and retries on the
+# closed one: "Cannot send a request, as the client has been closed" — a
+# RuntimeError its cache fallback never catches, so /assistant/stream answered
+# `event: error`. Offline mode is what the golden CI (ops/tools/golden_ci.py)
+# already runs with; the weights come from the cache that CI's backend-env
+# step fills before pytest starts. huggingface_hub reads the flag once, at
+# import — hence module level, before any test can import it.
+os.environ["HF_HUB_OFFLINE"] = "1"
+os.environ["TRANSFORMERS_OFFLINE"] = "1"
+if "huggingface_hub.constants" in sys.modules:  # a plugin imported it first
+    sys.modules["huggingface_hub.constants"].HF_HUB_OFFLINE = True
+
+
+# ── No test reaches the network ───────────────────────────────────────────
+# A test that talks to a real host is slow, flaky and leaks the question it
+# sends. Production code often swallows a network error on purpose (best-effort
+# enrichment), so refusing the connect alone is not enough: the leak would pass
+# silently. Every non-loopback attempt is refused AND recorded, and the test
+# fails at teardown with the targets it tried. A test that truly needs the
+# network says so with @pytest.mark.allow_network (none does today).
+
+def _is_local(address) -> bool:
+    if not isinstance(address, tuple):  # AF_UNIX path / abstract socket
+        return True
+    host = str(address[0]).split("%", 1)[0]
+    if host == "localhost":
+        return True
+    try:
+        ip = ipaddress.ip_address(host)
+    except ValueError:
+        return False  # a hostname other than localhost would be resolved
+    mapped = getattr(ip, "ipv4_mapped", None)
+    ip = mapped or ip
+    return ip.is_loopback or ip.is_unspecified
+
+
+def pytest_configure(config):
+    config.addinivalue_line(
+        "markers",
+        "allow_network: this test may open non-loopback sockets (must be justified)",
+    )
+
+
+@pytest.fixture(autouse=True)
+def _no_network(request, monkeypatch):
+    if request.node.get_closest_marker("allow_network"):
+        yield
+        return
+
+    attempts: list[str] = []
+
+    def _guard(original, address_index):
+        def guarded(sock, *args, **kwargs):
+            address = args[address_index] if len(args) > address_index else kwargs.get("address")
+            if address is not None and not _is_local(address):
+                attempts.append(repr(address))
+                raise ConnectionRefusedError(
+                    f"test network guard: connection to {address!r} refused")
+            return original(sock, *args, **kwargs)
+        return guarded
+
+    monkeypatch.setattr(socket.socket, "connect", _guard(socket.socket.connect, 0))
+    monkeypatch.setattr(socket.socket, "connect_ex", _guard(socket.socket.connect_ex, 0))
+    # sendto(data, address) / sendto(data, flags, address): the address is last.
+    original_sendto = socket.socket.sendto
+
+    def guarded_sendto(sock, data, *rest):
+        if rest and not _is_local(rest[-1]):
+            attempts.append(repr(rest[-1]))
+            raise ConnectionRefusedError(
+                f"test network guard: datagram to {rest[-1]!r} refused")
+        return original_sendto(sock, data, *rest)
+
+    monkeypatch.setattr(socket.socket, "sendto", guarded_sendto)
+    yield
+    if attempts:
+        pytest.fail(
+            f"test opened {len(attempts)} non-loopback socket(s): "
+            f"{sorted(set(attempts))} — mock the client, or mark the test "
+            "@pytest.mark.allow_network",
+            pytrace=False,
+        )
 
 
 @pytest.fixture(autouse=True)

@@ -493,6 +493,16 @@ class Handler(socketserver.BaseRequestHandler):
             time.sleep(0.5)
         self._content([])
 
+    def s_no_usage(self, body):
+        # a host that ignores stream_options.include_usage: a complete answer,
+        # [DONE], and no token counts anywhere
+        self.headers()
+        self.send_chunk(data_line(ds_chunk("جواب", role="assistant", include_usage=False)))
+        self.send_chunk(data_line(ds_chunk(" كامل", include_usage=False)))
+        self.send_chunk(data_line(ds_chunk("", finish="stop", include_usage=False)))
+        self.send_chunk(b"data: [DONE]\n\n")
+        self.end_chunked()
+
     def s_openai_usage_chunk(self, body):
         # OpenAI-style separate usage chunk with choices: []
         self.headers()

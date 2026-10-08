@@ -336,7 +336,7 @@ def test_adapter_initializes_two_databases_and_replaced_file_despite_old_ready_f
             path.unlink()
         with sqlite3.connect(path) as c:
             ai_gateway._ensure_telemetry_schema(c)
-            assert c.execute("SELECT version FROM schema_migrations WHERE namespace=?", (NAMESPACE,)).fetchall() == [(1,)]
+            assert c.execute("SELECT version FROM schema_migrations WHERE namespace=?", (NAMESPACE,)).fetchall() == [(1,), (2,)]
 
 
 def test_adapter_logging_and_monthly_budget_keep_existing_contract_and_paths(tmp_path, monkeypatch):
@@ -350,7 +350,7 @@ def test_adapter_logging_and_monthly_budget_keep_existing_contract_and_paths(tmp
     assert ai_gateway._TELEMETRY_DB == path and db_path() == conversation_path
     with sqlite3.connect(path) as c:
         assert c.execute("SELECT provider,model,latency_ms,prompt_tokens,completion_tokens,streamed,ok,tier,route_reason FROM llm_calls").fetchall() == [("fixture-provider", "fixture-model", 12, 7, 3, 1, 0, "fixture-tier", "fixture-reason")]
-        assert c.execute("SELECT COUNT(*) FROM schema_migrations").fetchone() == (1,)
+        assert c.execute("SELECT COUNT(*) FROM schema_migrations").fetchone() == (2,)
 
 
 def _startup_worker(path, barrier, queue, worker_id):
@@ -378,7 +378,7 @@ def test_two_real_processes_start_concurrently_and_apply_exactly_once(tmp_path):
         assert results == ["ok", "ok"]
         assert [w.exitcode for w in workers] == [0, 0]
         with sqlite3.connect(path) as c:
-            assert c.execute("SELECT COUNT(*) FROM schema_migrations WHERE namespace=?", (NAMESPACE,)).fetchone() == (1,)
+            assert c.execute("SELECT COUNT(*) FROM schema_migrations WHERE namespace=?", (NAMESPACE,)).fetchone() == (2,)
             assert c.execute("SELECT model FROM llm_calls ORDER BY model").fetchall() == [("0",), ("1",)]
     finally:
         for worker in workers:

@@ -4,6 +4,7 @@ Covers: <think> stripping across chunk boundaries, tier routing policy,
 the circuit breaker, privacy redaction, and the SSE contract (token/done
 event sequence must be unchanged with the flag off).
 """
+import asyncio
 import json
 
 import pytest
@@ -136,6 +137,9 @@ def test_stream_sse_contract(monkeypatch):
 
     monkeypatch.setattr(ai_gateway, "OllamaProvider", _FakeProvider)
     ai_gateway._gateway = None  # rebuild with the fake
+    # no ayah reference → no full-Quran search on mcp.tafsir.net (real HTTPS)
+    monkeypatch.setattr("app.routers.assistant.resolve_ayah_reference",
+                        lambda text: asyncio.sleep(0, result=None))
 
     with TestClient(app) as client:
         sess = client.post("/api/chat/sessions", json={"device_id": "t"})
