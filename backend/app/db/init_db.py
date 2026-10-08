@@ -250,10 +250,11 @@ CREATE INDEX IF NOT EXISTS ix_referrals_referrer
 
 # 30 = child memory, 31 = «ادعم المربّي» ledger, 32 = attribution provenance,
 # 33 = device twins (aliases + fold log), 34 = family programs,
-# 35 = erased-device tombstones.
+# 35 = erased-device tombstones,
+# 36 = honest weekly counter: followups.source + weekly_plan_marks.
 # Every _ensure_* step runs unconditionally and the stamp only ever moves up,
 # so branches can land in any order: keep the highest number.
-SCHEMA_VERSION = 35
+SCHEMA_VERSION = 36
 
 
 def db_path() -> Path:
@@ -451,6 +452,7 @@ def init_db() -> None:
     ensure_device_twin_tables(conn)
     _ensure_family_programs_v34(conn)
     _ensure_erased_devices_v35(conn)
+    _ensure_honest_counter_v36(conn)
 
     row = conn.execute("SELECT version FROM schema_version LIMIT 1").fetchone()
     if row is None:
@@ -1550,6 +1552,46 @@ def _ensure_erased_devices_v35(conn: sqlite3.Connection) -> None:
     store not have been through this step yet."""
     from app.services.erased_devices import CREATE_TABLE
     conn.execute(CREATE_TABLE)
+
+
+# ── v36: the honest weekly counter (نور والقناديل, Phase 0) ───────────────
+#
+# One shared migration for both objects the honest counter needs. The rules
+# that govern them live in services/family_actions.py: worship acts never
+# light lantern counters, and a mark is a parenting step taken, never a
+# judgement on the child.
+_CREATE_WEEKLY_PLAN_MARKS: str = """
+-- One «تمّ» per child per plan item per day. Plain rowid table with a UNIQUE
+-- pair, like every user table here (the account-erase and twin-fold sweeps
+-- assume rowid tables that carry device_id). Positive only: un-marking is a
+-- DELETE of the row; nothing records a "missed" day.
+CREATE TABLE IF NOT EXISTS weekly_plan_marks (
+    id          INTEGER PRIMARY KEY AUTOINCREMENT,
+    device_id   TEXT NOT NULL,
+    child_id    INTEGER NOT NULL,
+    item_id     TEXT NOT NULL,
+    marked_on   TEXT NOT NULL,
+    created_at  TEXT NOT NULL DEFAULT (datetime('now')),
+    UNIQUE (device_id, child_id, item_id, marked_on),
+    FOREIGN KEY (child_id) REFERENCES child_profiles(id) ON DELETE CASCADE
+);
+CREATE INDEX IF NOT EXISTS ix_weekly_plan_marks_device_child
+    ON weekly_plan_marks (device_id, child_id);
+"""
+
+
+def _ensure_honest_counter_v36(conn: sqlite3.Connection) -> None:
+    """v36: followups.source + weekly_plan_marks. Additive and idempotent.
+
+    `followups.source` is nullable TEXT with no backfill: rows created before
+    this migration keep NULL, meaning "came from the chat follow-up engine" —
+    the only source that existed. New rows name where the follow-up came from
+    (e.g. a weekly-plan promise)."""
+    _ensure_column(
+        conn, table="followups", column="source",
+        ddl="ALTER TABLE followups ADD COLUMN source TEXT",
+    )
+    conn.executescript(_CREATE_WEEKLY_PLAN_MARKS)
 
 
 def _ensure_referrals_table(conn: sqlite3.Connection) -> None:
