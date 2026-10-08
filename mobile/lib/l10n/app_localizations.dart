@@ -9625,6 +9625,30 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'لم يُحذف حسابك. يمكنك أن تحاول مرة أخرى من الإعدادات ← الخصوصية وبياناتك.'**
   String get deleteAccountNotDeletedNotice;
+
+  /// No description provided for @a11ySendQuestion.
+  ///
+  /// In ar, this message translates to:
+  /// **'إرسال السؤال'**
+  String get a11ySendQuestion;
+
+  /// No description provided for @a11yExitChildMode.
+  ///
+  /// In ar, this message translates to:
+  /// **'الخروج من وضع الطفل'**
+  String get a11yExitChildMode;
+
+  /// Screen-reader label for the active-child chip: names the current child (full name) and says a tap opens the list to switch. It must not sound like it selects this child.
+  ///
+  /// In ar, this message translates to:
+  /// **'الطفل الحالي: {name}، اضغط للتبديل'**
+  String a11yCurrentChild(String name);
+
+  /// Screen-reader label for the active-child chip when no child is active yet; a tap opens the children list.
+  ///
+  /// In ar, this message translates to:
+  /// **'اختيار طفل'**
+  String get a11yChooseAChild;
 }
 
 class _AppLocalizationsDelegate

@@ -143,3 +143,54 @@ separate pending scope and is not implied by an offline recall comparison.
 
 This task's fixtures test report arithmetic/provenance/coverage only. They
 are not real Chroma, real embeddings, RAM measurements or 1.x recall results.
+
+## Manual hosted recall experiment
+
+`.github/workflows/chroma-1x-recall.yml` runs only on `workflow_dispatch`, on
+`ubuntu-latest`, with read-only repository permissions and no secrets or deploy
+step. It installs the production hashed locks under the production constraints
+in a baseline venv. A separate venv starts with the same package set, then
+installs the latest stable `chromadb>=1,<2`, resolved without constraints and
+pinned exactly before installation. A conflict with the remaining production
+pins fails the experiment rather than selecting an older candidate. Production
+requirements, constraints, images, indexes and volumes are never changed.
+
+`ops/tools/chroma_recall_capture.py` freezes the full default loader corpus
+(including merged directories and published daily tips) in insertion order,
+actual normalized document vectors, every golden query vector, model snapshot
+revisions, model library versions and retrieval source/configuration hashes.
+It builds fresh, separate cosine indexes below `RUNNER_TEMP` from these same
+records/vectors. The application's custom embedding-function collection API is
+used, but queries replay the frozen vectors; no candidate re-embedding occurs.
+BM25 and language metadata also use the frozen full unit records.
+
+Both sides reuse `golden_ci.offline_report` with deterministic fallback domains
+and production hybrid/rerank defaults. SDK query failures, unfrozen queries and
+reranker fallback invalidate affected items. Candidate model loading is offline;
+network access is denied during both retrieval captures. No LLM classifier,
+query rewrite, generation or judge is called. Identical input is not a promise
+of deterministic HNSW ranking, and this run does not measure migration, restart,
+rollback, memory fit or complete production API compatibility.
+
+The existing `chroma_recall_probe.py` compares the captures. The job summary
+shows coverage and paired macro/micro recall; the artifact
+`chroma-1x-recall-<commit>-<attempt>` retains `baseline.json`, `candidate.json`,
+`comparison.json`, `summary.md`, both actual catalogs, frozen inputs, dependency
+lists and the exact latest-1.x resolver report for 14 days. Reporting and upload
+run after capture failures too; missing/failed captures remain explicit and
+fail the job. `COMPARISON_COMPLETE` still means coverage, not upgrade approval.
+
+GitHub requires a manually dispatched workflow to exist on the default branch.
+Once this workflow is on `main`, select **Actions → Chroma 1.x recall
+experiment → Run workflow**, choose the ref to evaluate, and dispatch. CLI:
+
+```sh
+gh workflow run chroma-1x-recall.yml --repo khaledsabae/tutor-guardian --ref main
+gh run list --repo khaledsabae/tutor-guardian --workflow chroma-1x-recall.yml --limit 5
+gh run watch RUN_ID --repo khaledsabae/tutor-guardian --exit-status
+gh run download RUN_ID --repo khaledsabae/tutor-guardian --dir ./chroma-recall-evidence
+```
+
+The PR adding this workflow does not dispatch or merge itself. To evaluate a
+later branch after the workflow exists on `main`, replace `--ref main` with
+that branch name.

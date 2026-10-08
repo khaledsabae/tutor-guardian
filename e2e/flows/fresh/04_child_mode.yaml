@@ -37,7 +37,7 @@ name: fresh/04 child mode in → PIN out
 - extendedWaitUntil:
     notVisible: '${output.c.childModeHandoff}'
     timeout: 15000
-- tapOn: '${output.t.habitChildModeExit}'
+- tapOn: '${output.t.a11yExitChildMode}'
 - extendedWaitUntil:
     visible: '${output.t.habitChildModeExitTitle}'
     timeout: 15000

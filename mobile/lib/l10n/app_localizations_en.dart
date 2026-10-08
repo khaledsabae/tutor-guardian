@@ -5633,4 +5633,18 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get deleteAccountNotDeletedNotice =>
       'Your account was not deleted. You can try again from Settings → Privacy & your data.';
+
+  @override
+  String get a11ySendQuestion => 'Send question';
+
+  @override
+  String get a11yExitChildMode => 'Exit child mode';
+
+  @override
+  String a11yCurrentChild(String name) {
+    return 'Current child: $name, tap to switch';
+  }
+
+  @override
+  String get a11yChooseAChild => 'Choose a child';
 }

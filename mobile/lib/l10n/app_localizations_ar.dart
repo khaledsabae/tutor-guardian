@@ -5562,4 +5562,18 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get deleteAccountNotDeletedNotice =>
       'لم يُحذف حسابك. يمكنك أن تحاول مرة أخرى من الإعدادات ← الخصوصية وبياناتك.';
+
+  @override
+  String get a11ySendQuestion => 'إرسال السؤال';
+
+  @override
+  String get a11yExitChildMode => 'الخروج من وضع الطفل';
+
+  @override
+  String a11yCurrentChild(String name) {
+    return 'الطفل الحالي: $name، اضغط للتبديل';
+  }
+
+  @override
+  String get a11yChooseAChild => 'اختيار طفل';
 }

@@ -1478,5 +1478,204 @@
       "backup_verify_exit": 0,
       "existing_s01_s06_files_unchanged": true
     }
+  },
+  "continuation_gpt_review_2026_10_08": {
+    "trigger": "artifacts/gpt-content-review-2026-10-08.md (independent GPT review: 2 P1, 8 P2)",
+    "base": "2efea0b4 (origin/main ec130d05 merged)",
+    "corrections_by": "claude-opus-5-5",
+    "method": "each cited source re-fetched and its quoted line confirmed (URL + sha256 of extracted text); minimal AR+EN edits; dual-family lesson review with deepen_paths SYSTEM_REVIEW_BOTH + source excerpts, concurrency 1, 120 s per reply, stop on 402/429; EN parity stamped by review_en_parity.py",
+    "provider_note": "Ollama Cloud still at its weekly cap (429 probe 2026-10-08); both families via OpenRouter on the existing analytics-platform key read in-process; GLM routed provider order baseten/z-ai with low reasoning effort after repeated 120 s timeouts",
+    "lessons": [
+      {
+        "key": "s05",
+        "written_as": "lesson_2-3_development_tantrums_05",
+        "finding": "P2",
+        "change": "bribe (reward before the behaviour; sweets to end a tantrum) vs a simple non-food reward agreed in advance and given right after, with specific praise",
+        "ar_hash": "2b4c185b960dec12",
+        "en_hash": "ec3280a0297b29cf2b4c185b960dec12",
+        "lesson_review": {
+          "reviewers": [
+            "deepseek-v4-pro",
+            "glm-5.2"
+          ],
+          "providers": {
+            "deepseek-v4-pro": {
+              "provider": "openrouter",
+              "model": "deepseek/deepseek-v4-pro"
+            },
+            "glm-5.2": {
+              "provider": "openrouter",
+              "model": "z-ai/glm-5.2"
+            }
+          },
+          "by_model": {
+            "deepseek-v4-pro": {
+              "arabic": {
+                "high": 0,
+                "medium": 0,
+                "low": 5
+              },
+              "english": {
+                "high": 0,
+                "medium": 0,
+                "low": 3
+              }
+            },
+            "glm-5.2": {
+              "arabic": {
+                "high": 0,
+                "medium": 0,
+                "low": 1
+              },
+              "english": {
+                "high": 0,
+                "medium": 0,
+                "low": 0
+              }
+            }
+          },
+          "no_medium_high_from_either": true,
+          "adjudicated_residuals": []
+        },
+        "translation_content_sha256": "3a718168a5af4cf2c681885c96f0c9ba27f119a7dbe4a84723d1577619ab82d9",
+        "translation_stamp": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
+        "translation_providers": {
+          "deepseek-v4-pro": {
+            "provider": "openrouter",
+            "model": "deepseek/deepseek-v4-pro"
+          },
+          "glm-5.2": {
+            "provider": "openrouter",
+            "model": "z-ai/glm-5.2"
+          }
+        },
+        "translation_adjudicated": 0,
+        "sources": [
+          {
+            "url": "https://www.nhs.uk/conditions/baby/babys-development/behaviour/dealing-with-child-behaviour-problems/",
+            "final_url": "https://www.nhs.uk/baby/babys-development/behaviour/dealing-with-child-behaviour-problems/",
+            "http": "200",
+            "text_sha256": "b8105e8305318c4a26644b5bba9260e09f70777d041c9b1ffb148be936a4216d",
+            "fetched_at": "2026-10-08T11:03:38Z"
+          },
+          {
+            "url": "https://www.nhs.uk/baby/babys-development/behaviour/temper-tantrums/",
+            "final_url": "https://www.nhs.uk/baby/babys-development/behaviour/temper-tantrums/",
+            "http": "200",
+            "text_sha256": "93c487998834c6f5c04bff6f5c0a975614a212533b400092a6d49dda3b66b18a",
+            "fetched_at": "2026-10-08T11:03:38Z"
+          },
+          {
+            "url": "https://www.cdc.gov/parenting-toddlers/responding-to-behavior/using-rewards.html",
+            "final_url": "https://www.cdc.gov/parenting-toddlers/responding-to-behavior/using-rewards.html",
+            "http": "200",
+            "text_sha256": "7160dbb5ea16bca114d294b65676605a7f84bd794a900b4e415004b242360378",
+            "fetched_at": "2026-10-08T11:03:37Z"
+          }
+        ]
+      },
+      {
+        "key": "s06",
+        "written_as": "lesson_2-3_development_tantrums_06",
+        "finding": "P2 x2",
+        "change": "carrots/apple food choice removed (no raw-texture example left); parent offers, child decides whether and how much; refused food offered again; NHS weight caveat; offering sweets to make the child choose is a bribe",
+        "ar_hash": "88c3a164a4ae1dec",
+        "en_hash": "72f4eb5a8f8db26a88c3a164a4ae1dec",
+        "lesson_review": {
+          "reviewers": [
+            "deepseek-v4-pro",
+            "glm-5.2"
+          ],
+          "providers": {
+            "deepseek-v4-pro": {
+              "provider": "openrouter",
+              "model": "deepseek/deepseek-v4-pro"
+            },
+            "glm-5.2": {
+              "provider": "openrouter",
+              "model": "z-ai/glm-5.2"
+            }
+          },
+          "by_model": {
+            "deepseek-v4-pro": {
+              "arabic": {
+                "high": 0,
+                "medium": 1,
+                "low": 3
+              },
+              "english": {
+                "high": 0,
+                "medium": 0,
+                "low": 3
+              }
+            },
+            "glm-5.2": {
+              "arabic": {
+                "high": 0,
+                "medium": 0,
+                "low": 0
+              },
+              "english": {
+                "high": 0,
+                "medium": 0,
+                "low": 0
+              }
+            }
+          },
+          "no_medium_high_from_either": false,
+          "adjudicated_residuals": [
+            {
+              "severity": "medium",
+              "quote": "فإن كان نشيطًا ويزداد وزنه ويبدو بخير، فهو يأكل ما يكفيه",
+              "adjudication": "NHS fussy-eaters wording verbatim ('If your child is active and gaining weight, and they seem well, then they're getting enough to eat'); added in r9 because deepseek's r8 reply asked for exactly this caveat."
+            }
+          ]
+        },
+        "translation_content_sha256": "8384ac37660dc98eda50eb579cd5cecdd00620ca17c3ea9e56c5b60ec7dc0b3c",
+        "translation_stamp": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
+        "translation_providers": {
+          "deepseek-v4-pro": {
+            "provider": "openrouter",
+            "model": "deepseek/deepseek-v4-pro"
+          },
+          "glm-5.2": {
+            "provider": "openrouter",
+            "model": "z-ai/glm-5.2"
+          }
+        },
+        "translation_adjudicated": 0,
+        "sources": [
+          {
+            "url": "https://www.nhs.uk/conditions/baby/weaning-and-feeding/fussy-eaters/",
+            "final_url": "https://www.nhs.uk/baby/weaning-and-feeding/fussy-eaters/",
+            "http": "200",
+            "text_sha256": "ef6e862b4a5278160674110631192b14edd0d5891dcc6344bea5c2028356e7c2",
+            "fetched_at": "2026-10-08T11:03:34Z"
+          },
+          {
+            "url": "https://www.cdc.gov/infant-toddler-nutrition/mealtime/signs-your-child-is-hungry-or-full.html",
+            "final_url": "https://www.cdc.gov/infant-toddler-nutrition/mealtime/signs-your-child-is-hungry-or-full.html",
+            "http": "200",
+            "text_sha256": "145b62587938f89dc7da7ac832fa062110073603e2a7a92655ff5f41c904db46",
+            "fetched_at": "2026-10-08T11:03:36Z"
+          },
+          {
+            "url": "https://www.nhs.uk/baby/babys-development/behaviour/temper-tantrums/",
+            "final_url": "https://www.nhs.uk/baby/babys-development/behaviour/temper-tantrums/",
+            "http": "200",
+            "text_sha256": "93c487998834c6f5c04bff6f5c0a975614a212533b400092a6d49dda3b66b18a",
+            "fetched_at": "2026-10-08T11:03:38Z"
+          }
+        ]
+      }
+    ],
+    "non_convergence_note": "deepseek-v4-pro raised new medium/high findings on unchanged, previously passed sentences in successive rounds and reversed its own requests (r1 asked to split the emergency tiers in sleep_02, r3 asked to merge them; r8 asked for the NHS weight caveat in tantrums_06, r9 called it a generalisation). Iteration stopped after round 9.",
+    "evidence": "~/.codex/evidence/tutor-guardian/oct8-gpt-fixes/ (sources, raw replies, provider-calls*.jsonl, review-results.json, lesson-review-adjudications.json)",
+    "model_calls_logged": {
+      "calls": 128,
+      "total_tokens": 682964,
+      "logged_cost_usd": 1.5386
+    },
+    "human_approval_claimed": false
   }
 }
