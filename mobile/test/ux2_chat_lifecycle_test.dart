@@ -89,29 +89,39 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   setUp(() => SharedPreferences.setMockInitialValues({}));
 
-  test('batched tokens reach the bubble, and Stop keeps the unflushed tail',
-      () async {
+  testWidgets('batched tokens reach the bubble, and Stop keeps the unflushed tail',
+      (tester) async {
     final http_ = _LiveSseClient();
     final tg = TgClient.forTesting(
         baseUrl: 'http://x', httpClient: http_, storage: _MemStorage());
     final notifier = ChatNotifier(tg);
-    await notifier.bootstrap();
+    try {
+      await tester.runAsync(notifier.bootstrap);
 
-    unawaited(notifier.sendMessage('question'));
-    await Future<void>.delayed(const Duration(milliseconds: 20));
-    http_.token('Hel');
-    http_.token('lo ');
-    await Future<void>.delayed(const Duration(milliseconds: 120));
-    expect(notifier.state.messages.last.content, 'Hello ',
-        reason: 'batched deltas must land within the flush window');
+      unawaited(notifier.sendMessage('question'));
+      await tester.pump(); // Settle setup without advancing the flush clock.
+      http_.token('Hel');
+      http_.token('lo ');
+      await tester.pump(); // Deliver both tokens to the pending batch.
+      expect(notifier.state.messages.last.content, isEmpty,
+          reason: 'tokens must be batched instead of updating on each delta');
+      await tester.pump(const Duration(milliseconds: 59));
+      expect(notifier.state.messages.last.content, isEmpty);
+      await tester.pump(const Duration(milliseconds: 1));
+      expect(notifier.state.messages.last.content, 'Hello ',
+          reason: 'batched deltas must land within the flush window');
 
-    http_.token('world');
-    await Future<void>.delayed(const Duration(milliseconds: 5));
-    notifier.stopStreaming(); // before the 60 ms flush fires
-    expect(notifier.state.messages.last.content, 'Hello world');
-    expect(notifier.state.phase, ChatPhase.idle);
-    notifier.dispose();
-    await http_.sse.close();
+      http_.token('world');
+      await tester.pump();
+      expect(notifier.state.messages.last.content, 'Hello ',
+          reason: 'the next delta must still be pending before Stop');
+      notifier.stopStreaming(); // before the next 60 ms flush fires
+      expect(notifier.state.messages.last.content, 'Hello world');
+      expect(notifier.state.phase, ChatPhase.idle);
+    } finally {
+      notifier.dispose();
+      await http_.sse.close();
+    }
   });
 
   test('follow_ups from the server are parsed, capped at three', () {
