@@ -451,6 +451,36 @@ KEYWORD_RULES: List[Tuple[str, str]] = [
     (_APP_HELP_RULE, "app_help"),
 ]
 
+# English alternatives keep whole-word boundaries and the Arabic domain order.
+# Ambiguous everyday verbs need a child subject; reported hearing and store
+# names must not turn general conversation into a developmental concern.
+_EN_CHILD = r"\b(?:child(?:ren)?|son|daughter|baby|babies|toddler|infant|kid(?:s)?)\b"
+_EN_CHILD_CONTEXT = rf"^(?=(?s:.*?){_EN_CHILD})"
+_EN_SPEECH_ABILITY = rf"{_EN_CHILD_CONTEXT}(?s:.*?)\b(?:not\s+talking|cannot\s+(?:talk|speak))\b"
+_EN_HEARING_ABILITY = rf"{_EN_CHILD_CONTEXT}(?s:.*?)\b(?:cannot\s+hear|can[’']t\s+hear|does\s+not\s+respond\s+to\s+sounds)\b"
+_ENGLISH_RULES = {
+    "fiqh": r"\b(?:prayer(?:s)?|salah|salat|fasting|zakat|hajj|umrah|quran|koran|hadith|dua|wudu|halal|haram|repentance|Islamic\s+manners)\b",
+    "aqeedah": r"\b(?:who\s+is\s+(?:Allah|God)|where\s+is\s+(?:Allah|God)|who\s+created\s+(?:Allah|God|us|the\s+universe)|why\s+did\s+(?:Allah|God)\s+create\s+us|after\s+death|afterlife|heaven\s+and\s+hell|pillars\s+of\s+faith|explain\s+(?:angels|heaven|hell)(?:\s+to\s+(?:my|our|the)\s+child)?|asks?\s+about\s+(?:Allah|God|death|angels))\b",
+    "cyber": r"\b(?:screen\s+time|youtube|tiktok|instagram|facebook|whatsapp|snapchat|online\s+safety|cyberbullying|social\s+media|video\s+games?|internet|smartphones?|digital\s+privacy)\b",
+    "medical": (r"\b(?:anxiety|depression|tantrums?|sleep|fever|nightmares?|asthma|allergies|seizures?|stuttering|bedwetting|panic\s+attacks?|autism|adhd|dyslexia|(?:speech\s+(?:delay|problems?|therapy|development)|delayed\s+speech))\b"
+                + "|" + _EN_SPEECH_ABILITY
+                + rf"|{_EN_CHILD_CONTEXT}(?s:.*?)\b(?:bit(?:e|es|ing)|hits?|hitting)\b"),
+    "development": (r"\b(?:walking|crawling|teething|growth|motor\s+skills|milestones?|breastfeeding|weaning|potty\s+training|sitting|standing|eye\s+contact|(?:speech\s+(?:delay|problems?|therapy|development)|delayed\s+speech))\b"
+                    + "|" + _EN_SPEECH_ABILITY + "|" + _EN_HEARING_ABILITY
+                    + rf"|{_EN_CHILD_CONTEXT}(?s:.*?)\b(?:play(?:s|ing|ed)?|(?<!court )hearing(?:\s+aids)?)\b(?!\s+(?:about|from|that|store)\b)(?![\s\S]*\bcourt\b)"
+                    + rf"|{_EN_CHILD_CONTEXT}(?s:.*?)\bhear(?:s|d)?\s+(?:(?:her|his|the|a|any)\s+)?(?:name|bell|alarm|sounds?|voices?|noises?|nothing)\b"),
+    "app_help": (r"\b(?:exit|enter|enable|disable)\s+child\s+mode\b"
+                 + r"|^(?!(?s:.*?)\b(?:facebook|instagram|tiktok|youtube|whatsapp|snapchat|twitter|telegram|discord)\b)(?s:.*?)\bdelete\s+my\s+(?:account|data)\b"
+                 + r"|^(?=(?s:.*?)\b(?:this|the)\s+app\b)(?=(?s:.*?)\b(?:teach|add\s+a\s+child|change\s+the\s+language|subscription|settings|account|notifications)\b)"),
+}
+_COMPILED_ENGLISH_RULES = {
+    domain: re.compile(pattern, re.IGNORECASE | re.UNICODE)
+    for domain, pattern in _ENGLISH_RULES.items()
+}
+_EN_REPORTED_SPEECH = re.compile(
+    r"\breported\s+speech\b|\bspeech\s+(?:was|is)\s+reported\b", re.IGNORECASE)
+
+
 # Compile patterns once at module load
 _COMPILED_RULES = [(re.compile(p, re.UNICODE), d) for p, d in KEYWORD_RULES]
 
@@ -484,8 +514,10 @@ def _keyword_fast_path(question: str) -> Optional[List[str]]:
     matched: List[str] = []
     question = question.translate(_KEYBOARD)
     rule_text = _mask_reported_hearing(question)
+    english_text = _EN_REPORTED_SPEECH.sub(" ", question)
     for pattern, domain in _COMPILED_RULES:
-        if pattern.search(rule_text):
+        if (pattern.search(rule_text)
+                or _COMPILED_ENGLISH_RULES[domain].search(english_text)):
             if domain not in matched:
                 matched.append(domain)
     hearing_text = re.sub(r"[\u064b-\u065f\u0670\u0640]", "", question)
