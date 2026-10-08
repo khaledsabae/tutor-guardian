@@ -43,9 +43,14 @@ _RELEASE = threading.Event()  # frees every provider thread a test left blocked
 
 
 @pytest.fixture(autouse=True)
-def _release_blocked_threads():
+def _release_blocked_threads(monkeypatch):
     _RELEASE.clear()
     ai_gateway.aux_breaker.reset()
+    # These are transport-reliability tests on fake "deepseek" providers with
+    # fake model names. The paid-wire cap (fail closed without an activated
+    # ledger and a verified profile) is exercised per attempt — including
+    # retries, aborts and cut streams — in test_cloud_budget_reservations.
+    monkeypatch.setattr(ai_gateway, "_reserve_wire_budget", lambda *a, **k: None)
     yield
     _RELEASE.set()
     ai_gateway.aux_breaker.reset()
