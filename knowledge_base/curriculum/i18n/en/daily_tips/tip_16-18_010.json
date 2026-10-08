@@ -2,11 +2,11 @@
   "id": "tip_16-18_010",
   "age_group": "16-18",
   "domain": "medical",
-  "text": "As your teen starts university or work, agree on a simple mental-health plan together: a routine for sleep, movement and meals; people they can turn to; and what to do in an emergency. Independence means learning to look after their own health, with you behind them.",
+  "text": "As your teen grows more independent in study, training or work, agree on a simple mental-health plan: a routine for sleep, movement and meals; people they can turn to; and what to do in an emergency. Independence means learning to care for their health, with you behind them.",
   "unit_id": "e5d132da-cdb4-403a-a43e-e78640ee6270",
   "day_of_week": 3,
   "time_of_day": "evening",
-  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+  "approved_by": null,
   "language": "en",
   "source_language": "ar",
   "translation": {
@@ -18,27 +18,12 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "clean",
+    "review_verdict": "pending",
     "review_defects": [],
-    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "approved_by": null,
     "revalidated_at": "2026-10-04T17:02:06+00:00",
     "manual_fix_note": "Rewritten 2026-10-04 with the Arabic: re-addressed to the parent (the tip spoke to the teen); the Saudi-only 937 line replaced by country-neutral emergency guidance.",
     "fixed_at": "2026-10-04T07:11:53.626353+00:00",
-    "fixer_model": "claude-opus-5.5",
-    "auto_review": {
-      "reviewers": [
-        "deepseek-v4-pro",
-        "glm-5.2"
-      ],
-      "fixer": null,
-      "rounds": 1,
-      "prompt_version": "dfa8a5f39718",
-      "content_sha256": "65791a33131852d281cf5fd4850db6495f60ee5b385015f0a255565eccf3f91d",
-      "reviewed_at": "2026-10-04T17:02:06+00:00",
-      "residual_low": [],
-      "adjudicated": [],
-      "tool": "ops/tools/review_en_parity.py",
-      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
-    }
+    "fixer_model": "claude-opus-5.5"
   }
 }

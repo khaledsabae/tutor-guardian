@@ -2,11 +2,11 @@
   "id": "tip_16-18_025",
   "age_group": "16-18",
   "domain": "development",
-  "text": "Your decision, your responsibility, your future. Plan: values, dream, skills, steps for this year. You are building your man/woman (son/daughter).",
+  "text": "Help your teen plan for the future: talk about their values and dreams, the skills they want to learn, and this year's steps. Encourage them to choose their own goals, with your support.",
   "unit_id": "dev-c5e6f09a",
   "day_of_week": 2,
   "time_of_day": "morning",
-  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+  "approved_by": null,
   "language": "en",
   "source_language": "ar",
   "translation": {
@@ -18,7 +18,7 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "low_only",
+    "review_verdict": "pending",
     "review_defects": [
       {
         "model": "deepseek-v4-pro",
@@ -33,35 +33,7 @@
         "why": "The parenthetical '(son/daughter)' is not present in the Arabic; it is a helpful clarification but still an addition."
       }
     ],
-    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
-    "revalidated_at": "2026-10-04T11:18:18+00:00",
-    "auto_review": {
-      "reviewers": [
-        "deepseek-v4-pro",
-        "glm-5.2"
-      ],
-      "fixer": null,
-      "rounds": 1,
-      "prompt_version": "dfa8a5f39718",
-      "content_sha256": "e23f00fb2c9f022cca04665517a944fb4bbfb653f01ecb1ad45e10bea340874c",
-      "reviewed_at": "2026-10-04T11:18:18+00:00",
-      "residual_low": [
-        {
-          "model": "deepseek-v4-pro",
-          "field": "text",
-          "type": "addition",
-          "why": "The parenthetical (son/daughter) is added in English and not present in the Arabic."
-        },
-        {
-          "model": "glm-5.2",
-          "field": "text",
-          "type": "addition",
-          "why": "The parenthetical '(son/daughter)' is not present in the Arabic; it is a helpful clarification but still an addition."
-        }
-      ],
-      "adjudicated": [],
-      "tool": "ops/tools/review_en_parity.py",
-      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
-    }
+    "approved_by": null,
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

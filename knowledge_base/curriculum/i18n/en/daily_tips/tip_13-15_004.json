@@ -2,11 +2,11 @@
   "id": "tip_13-15_004",
   "age_group": "13-15",
   "domain": "islamic_parenting",
-  "text": "The Qur'an is for all mankind. Encourage your child: \"Pick a verse, understand its meaning, and live by it for a week.\" — The Qur'an is to be lived, not just memorised.",
+  "text": "The Qur'an is for all people. Encourage your child: “Pick a verse, understand its meaning from a reliable tafsir, and live by it for a week.” The Qur'an is memorised, understood and lived.",
   "unit_id": null,
   "day_of_week": 3,
   "time_of_day": "morning",
-  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+  "approved_by": null,
   "language": "en",
   "source_language": "ar",
   "translation": {
@@ -18,7 +18,7 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "low_only",
+    "review_verdict": "pending",
     "review_defects": [
       {
         "model": "deepseek-v4-pro",
@@ -33,35 +33,7 @@
         "why": "The Arabic specifies 'your son' (ابنك) but the English generalises to 'your child'."
       }
     ],
-    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
-    "revalidated_at": "2026-10-04T11:18:18+00:00",
-    "auto_review": {
-      "reviewers": [
-        "deepseek-v4-pro",
-        "glm-5.2"
-      ],
-      "fixer": null,
-      "rounds": 1,
-      "prompt_version": "dfa8a5f39718",
-      "content_sha256": "a777d59c7813a0c6eebd892368fc6530465a73b363b4bf8f251f172315ab7553",
-      "reviewed_at": "2026-10-04T11:18:18+00:00",
-      "residual_low": [
-        {
-          "model": "deepseek-v4-pro",
-          "field": "text",
-          "type": "meaning",
-          "why": "Arabic addresses a son specifically; English broadens to any child."
-        },
-        {
-          "model": "glm-5.2",
-          "field": "text",
-          "type": "meaning",
-          "why": "The Arabic specifies 'your son' (ابنك) but the English generalises to 'your child'."
-        }
-      ],
-      "adjudicated": [],
-      "tool": "ops/tools/review_en_parity.py",
-      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
-    }
+    "approved_by": null,
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

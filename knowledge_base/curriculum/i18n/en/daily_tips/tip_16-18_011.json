@@ -2,11 +2,11 @@
   "id": "tip_16-18_011",
   "age_group": "16-18",
   "domain": "cyber",
-  "text": "Internet addiction: statistics show an increase among males. Monitor: hours, impact on sleep/study/relationships. Establish a balance: time, boundaries, alternatives.",
+  "text": "Heavy internet use: watch its effect on your son's or daughter's sleep, studies and relationships, whatever their gender. Agree on a balance of time, limits and alternatives, and seek professional help if control is lost and harm continues.",
   "unit_id": "cyb-db2bb48f",
   "day_of_week": 0,
   "time_of_day": "morning",
-  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+  "approved_by": null,
   "language": "en",
   "source_language": "ar",
   "translation": {
@@ -18,24 +18,9 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "clean",
+    "review_verdict": "pending",
     "review_defects": [],
-    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
-    "revalidated_at": "2026-10-04T11:18:18+00:00",
-    "auto_review": {
-      "reviewers": [
-        "deepseek-v4-pro",
-        "glm-5.2"
-      ],
-      "fixer": null,
-      "rounds": 1,
-      "prompt_version": "dfa8a5f39718",
-      "content_sha256": "2d8ce632cf405e975c36258c30df893aac7c2afd3c9f3958d444ca6e5d8131a2",
-      "reviewed_at": "2026-10-04T11:18:18+00:00",
-      "residual_low": [],
-      "adjudicated": [],
-      "tool": "ops/tools/review_en_parity.py",
-      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
-    }
+    "approved_by": null,
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

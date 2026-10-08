@@ -2,11 +2,11 @@
   "id": "tip_16-18_001",
   "age_group": "16-18",
   "domain": "medical",
-  "text": "University or work brings your teen new pressures. Help them with three things: a steady routine for sleep, movement and meals; a safety net of people they trust; and a weekly check-in where they can tell you about their mood without blame.",
+  "text": "School, training or a move to university or work can bring your teen new pressures. Help them with: a steady routine for sleep, movement and meals; people they trust; and a weekly check-in where they can tell you about their mood without blame.",
   "unit_id": "83f8a5c4-defa-49a6-91ec-8504fee1140e",
   "day_of_week": 0,
   "time_of_day": "morning",
-  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+  "approved_by": null,
   "language": "en",
   "source_language": "ar",
   "translation": {
@@ -18,27 +18,12 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "clean",
+    "review_verdict": "pending",
     "review_defects": [],
-    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "approved_by": null,
     "revalidated_at": "2026-10-04T17:02:06+00:00",
     "manual_fix_note": "Rewritten 2026-10-04 with the Arabic: re-addressed to the parent (the tip spoke to the teen); the Saudi-only 937 line replaced by country-neutral emergency guidance.",
     "fixed_at": "2026-10-04T07:11:28.621718+00:00",
-    "fixer_model": "claude-opus-5.5",
-    "auto_review": {
-      "reviewers": [
-        "deepseek-v4-pro",
-        "glm-5.2"
-      ],
-      "fixer": null,
-      "rounds": 1,
-      "prompt_version": "dfa8a5f39718",
-      "content_sha256": "2a6cee576546925a5befc495c6743175844eb638885d18ce6c8e6f9a94e01311",
-      "reviewed_at": "2026-10-04T17:02:06+00:00",
-      "residual_low": [],
-      "adjudicated": [],
-      "tool": "ops/tools/review_en_parity.py",
-      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
-    }
+    "fixer_model": "claude-opus-5.5"
   }
 }

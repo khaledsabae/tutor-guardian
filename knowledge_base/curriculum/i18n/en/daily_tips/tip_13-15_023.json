@@ -2,11 +2,11 @@
   "id": "tip_13-15_023",
   "age_group": "13-15",
   "domain": "medical",
-  "text": "ADHD means a brain that works differently. It has strengths: creativity, deep focus on what they love, and energy. A diagnosis plus suitable school arrangements leads to success.",
+  "text": "ADHD means a brain that works differently, and each teen has their own strengths and difficulties. Diagnosis, the right support and school arrangements can help a great deal, though they cannot guarantee a particular outcome.",
   "unit_id": "med-b88b7ad3",
   "day_of_week": 2,
   "time_of_day": "evening",
-  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+  "approved_by": null,
   "language": "en",
   "source_language": "ar",
   "translation": {
@@ -18,27 +18,12 @@
       "quoted_arabic": false,
       "reviewer_model": false
     },
-    "review_verdict": "clean",
+    "review_verdict": "pending",
     "review_defects": [],
-    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "approved_by": null,
     "revalidated_at": "2026-10-04T17:02:06+00:00",
     "manual_fix_note": "Rewritten 2026-10-04 with the Arabic register fix (Latin words / dialect removed from the Arabic); meaning re-aligned.",
     "fixed_at": "2026-10-04T07:26:56.760370+00:00",
-    "fixer_model": "claude-opus-5.5",
-    "auto_review": {
-      "reviewers": [
-        "deepseek-v4-pro",
-        "glm-5.2"
-      ],
-      "fixer": null,
-      "rounds": 1,
-      "prompt_version": "dfa8a5f39718",
-      "content_sha256": "7b27ed32018b05b6211b36bc7bc209bbf8289d4d70c1560267e685d7cda7268a",
-      "reviewed_at": "2026-10-04T17:02:06+00:00",
-      "residual_low": [],
-      "adjudicated": [],
-      "tool": "ops/tools/review_en_parity.py",
-      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
-    }
+    "fixer_model": "claude-opus-5.5"
   }
 }

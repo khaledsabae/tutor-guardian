@@ -2,11 +2,11 @@
   "id": "tip_13-15_029",
   "age_group": "13-15",
   "domain": "medical",
-  "text": "Weekly Mood Tracker (1-10): Mood/Energy/Sleep. Decline >2 weeks = visit a specialist. Drawing creates awareness.",
+  "text": "Weekly mood tracker (1-10): mood/energy/sleep. It is a conversation aid, not a diagnosis; if a decline worries you or affects their life, seek an assessment without waiting a set time.",
   "unit_id": "med-e64897f2",
   "day_of_week": 5,
   "time_of_day": "evening",
-  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+  "approved_by": null,
   "language": "en",
   "source_language": "ar",
   "translation": {
@@ -18,24 +18,9 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "clean",
+    "review_verdict": "pending",
     "review_defects": [],
-    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
-    "revalidated_at": "2026-10-04T11:18:18+00:00",
-    "auto_review": {
-      "reviewers": [
-        "deepseek-v4-pro",
-        "glm-5.2"
-      ],
-      "fixer": null,
-      "rounds": 1,
-      "prompt_version": "dfa8a5f39718",
-      "content_sha256": "2127d6d9bf53920c21615e458ca385b6f2a82ea19f8f1c04063499b1f2a6e738",
-      "reviewed_at": "2026-10-04T11:18:18+00:00",
-      "residual_low": [],
-      "adjudicated": [],
-      "tool": "ops/tools/review_en_parity.py",
-      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
-    }
+    "approved_by": null,
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

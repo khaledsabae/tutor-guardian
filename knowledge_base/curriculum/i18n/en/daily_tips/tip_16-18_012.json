@@ -2,11 +2,11 @@
   "id": "tip_16-18_012",
   "age_group": "16-18",
   "domain": "cyber",
-  "text": "Gaming addiction can go as far as dropping out of school. Signs: prioritising play, continuing despite harm, anger when prevented. Seek help early.",
+  "text": "Excessive gaming can go as far as dropping out of school. Signs of gaming disorder: loss of control over gaming, putting it before responsibilities, and carrying on despite clear harm. Anger when stopped does not prove it on its own; seek an assessment early.",
   "unit_id": "cyb-26236b19",
   "day_of_week": 0,
   "time_of_day": "evening",
-  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
+  "approved_by": null,
   "language": "en",
   "source_language": "ar",
   "translation": {
@@ -18,9 +18,9 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "clean",
+    "review_verdict": "pending",
     "review_defects": [],
-    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
+    "approved_by": null,
     "revalidated_at": "2026-10-07T07:14:40+00:00",
     "english_authors": [
       "mistral-large-3:675b",
@@ -28,21 +28,6 @@
     ],
     "fixer_model": "claude-opus-5.5",
     "fixed_at": "2026-10-04T18:17:56+00:00",
-    "manual_fix_note": "2026-10-04 PR #20 review: 'two years' was one patient's story in the WHO source, not a general claim",
-    "auto_review": {
-      "reviewers": [
-        "deepseek-v4-pro",
-        "glm-5.2"
-      ],
-      "fixer": null,
-      "rounds": 1,
-      "prompt_version": "dfa8a5f39718",
-      "content_sha256": "51b223206c65c037beca8f1691be95028d2a0bd62813785d17548aa20242fea5",
-      "reviewed_at": "2026-10-07T07:14:40+00:00",
-      "residual_low": [],
-      "adjudicated": [],
-      "tool": "ops/tools/review_en_parity.py",
-      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
-    }
+    "manual_fix_note": "2026-10-04 PR #20 review: 'two years' was one patient's story in the WHO source, not a general claim"
   }
 }

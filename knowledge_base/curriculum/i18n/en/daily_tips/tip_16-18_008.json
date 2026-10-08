@@ -2,11 +2,11 @@
   "id": "tip_16-18_008",
   "age_group": "16-18",
   "domain": "medical",
-  "text": "Make a safety card with your teen: three warning signs they recognise in themselves, three ways to calm down, three people they trust, and your country's emergency number. Save it on their phone and yours.",
+  "text": "With your teen, and a professional's help if possible, make a safety card: warning signs they recognise in themselves, ways to calm down, people they trust, the professional's and emergency numbers, and steps to remove dangerous means. Save it on both your phones.",
   "unit_id": "83f8a5c4-defa-49a6-91ec-8504fee1140e",
   "day_of_week": 3,
   "time_of_day": "morning",
-  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+  "approved_by": null,
   "language": "en",
   "source_language": "ar",
   "translation": {
@@ -18,27 +18,12 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "clean",
+    "review_verdict": "pending",
     "review_defects": [],
-    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "approved_by": null,
     "revalidated_at": "2026-10-04T17:02:06+00:00",
     "manual_fix_note": "Rewritten 2026-10-04 with the Arabic: re-addressed to the parent (the tip spoke to the teen); the Saudi-only 937 line replaced by country-neutral emergency guidance.",
     "fixed_at": "2026-10-04T07:11:53.626353+00:00",
-    "fixer_model": "claude-opus-5.5",
-    "auto_review": {
-      "reviewers": [
-        "deepseek-v4-pro",
-        "glm-5.2"
-      ],
-      "fixer": null,
-      "rounds": 1,
-      "prompt_version": "dfa8a5f39718",
-      "content_sha256": "6061fdee438c81bcb8587deb402641a6698933e7367ce1f80599842c6eb3e306",
-      "reviewed_at": "2026-10-04T17:02:06+00:00",
-      "residual_low": [],
-      "adjudicated": [],
-      "tool": "ops/tools/review_en_parity.py",
-      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
-    }
+    "fixer_model": "claude-opus-5.5"
   }
 }

@@ -2,11 +2,11 @@
   "id": "tip_16-18_027",
   "age_group": "16-18",
   "domain": "medical",
-  "text": "Teach your teen that caring for their mental health is part of caring for themselves as a whole. If their university or workplace has a counsellor, encourage them to use it without embarrassment; the service is usually confidential.",
+  "text": "Teach your teen that caring for their mental health is part of caring for themselves. If their school, university or workplace has a counsellor, encourage them to use it without embarrassment, and ask about confidentiality and when information may be shared to keep them safe.",
   "unit_id": "e5d132da-cdb4-403a-a43e-e78640ee6270",
   "day_of_week": 3,
   "time_of_day": "evening",
-  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+  "approved_by": null,
   "language": "en",
   "source_language": "ar",
   "translation": {
@@ -18,27 +18,12 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "clean",
+    "review_verdict": "pending",
     "review_defects": [],
-    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "approved_by": null,
     "revalidated_at": "2026-10-04T17:02:06+00:00",
     "manual_fix_note": "Rewritten 2026-10-04 with the Arabic: re-addressed to the parent (the tip spoke to the teen).",
     "fixed_at": "2026-10-04T07:11:53.626353+00:00",
-    "fixer_model": "claude-opus-5.5",
-    "auto_review": {
-      "reviewers": [
-        "deepseek-v4-pro",
-        "glm-5.2"
-      ],
-      "fixer": null,
-      "rounds": 1,
-      "prompt_version": "dfa8a5f39718",
-      "content_sha256": "5db57f25bd49aba53d5f000fd9a8a6946e3079c8275f2ffffbbdd0179d028f55",
-      "reviewed_at": "2026-10-04T17:02:06+00:00",
-      "residual_low": [],
-      "adjudicated": [],
-      "tool": "ops/tools/review_en_parity.py",
-      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
-    }
+    "fixer_model": "claude-opus-5.5"
   }
 }

@@ -2,11 +2,11 @@
   "id": "tip_16-18_020",
   "age_group": "16-18",
   "domain": "islamic_parenting",
-  "text": "Marriage is a partnership: affection, mercy, tranquility. Rights are mutual: provision/a good living (husband), obedience/preserving the home (wife). Mutual understanding = success.",
+  "text": "Marriage is a partnership of affection, mercy and tranquility, the meaning of ar-Rum 30:21. Rights are mutual, in kindness: provision and good companionship from the husband; obedience in what is right and care of the home from the wife. No obedience in sin; no coercion or harm.",
   "unit_id": "isl-7365e833",
   "day_of_week": 2,
   "time_of_day": "morning",
-  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+  "approved_by": null,
   "language": "en",
   "source_language": "ar",
   "translation": {
@@ -18,24 +18,9 @@
       "quoted_arabic": true,
       "reviewer_model": true
     },
-    "review_verdict": "clean",
+    "review_verdict": "pending",
     "review_defects": [],
-    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
-    "revalidated_at": "2026-10-04T11:18:18+00:00",
-    "auto_review": {
-      "reviewers": [
-        "deepseek-v4-pro",
-        "glm-5.2"
-      ],
-      "fixer": null,
-      "rounds": 1,
-      "prompt_version": "dfa8a5f39718",
-      "content_sha256": "c206ff507b68b2587f70b436eb8182149e6901d8147bd4d4bda790bf5124a52e",
-      "reviewed_at": "2026-10-04T11:18:18+00:00",
-      "residual_low": [],
-      "adjudicated": [],
-      "tool": "ops/tools/review_en_parity.py",
-      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
-    }
+    "approved_by": null,
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

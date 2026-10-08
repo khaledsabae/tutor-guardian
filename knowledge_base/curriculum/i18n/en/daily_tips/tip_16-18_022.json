@@ -2,11 +2,11 @@
   "id": "tip_16-18_022",
   "age_group": "16-18",
   "domain": "development",
-  "text": "The Arts and the Brain: Creativity develops mental resilience. Encourage: drawing, music, writing, programming — exercise for the brain.",
+  "text": "Arts and creativity: encourage your teen in drawing, music, writing or programming; these may help them try new ideas and look at a problem from more than one angle.",
   "unit_id": null,
   "day_of_week": 0,
   "time_of_day": "evening",
-  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+  "approved_by": null,
   "language": "en",
   "source_language": "ar",
   "translation": {
@@ -18,7 +18,7 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "low_only",
+    "review_verdict": "pending",
     "review_defects": [
       {
         "model": "deepseek-v4-pro",
@@ -27,29 +27,7 @@
         "why": "The Arabic refers to mental flexibility/agility, while 'resilience' shifts the meaning toward stress recovery."
       }
     ],
-    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
-    "revalidated_at": "2026-10-04T11:18:18+00:00",
-    "auto_review": {
-      "reviewers": [
-        "deepseek-v4-pro",
-        "glm-5.2"
-      ],
-      "fixer": null,
-      "rounds": 1,
-      "prompt_version": "dfa8a5f39718",
-      "content_sha256": "806d8b69f41aea33c2fc786613a63325466373ee11f2eff63b0d03741b6f25e9",
-      "reviewed_at": "2026-10-04T11:18:18+00:00",
-      "residual_low": [
-        {
-          "model": "deepseek-v4-pro",
-          "field": "text.english",
-          "type": "meaning",
-          "why": "The Arabic refers to mental flexibility/agility, while 'resilience' shifts the meaning toward stress recovery."
-        }
-      ],
-      "adjudicated": [],
-      "tool": "ops/tools/review_en_parity.py",
-      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
-    }
+    "approved_by": null,
+    "revalidated_at": "2026-10-04T11:18:18+00:00"
   }
 }

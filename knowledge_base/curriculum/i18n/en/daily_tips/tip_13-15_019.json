@@ -2,11 +2,11 @@
   "id": "tip_13-15_019",
   "age_group": "13-15",
   "domain": "medical",
-  "text": "Teen depression: sadness lasting more than two weeks, withdrawal, academic decline, changes in sleep/appetite. It is not a mood—it is an illness that has treatment.",
+  "text": "Teen depression: lasting sadness, withdrawal, falling grades, changes in sleep or appetite, loss of interest. They need not all appear together; it is not just a mood but a condition that can be treated, so seek help early.",
   "unit_id": "b3b05246-1471-4374-bad2-200c2e33a3d2",
   "day_of_week": 1,
   "time_of_day": "evening",
-  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+  "approved_by": null,
   "language": "en",
   "source_language": "ar",
   "translation": {
@@ -18,26 +18,11 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "clean",
+    "review_verdict": "pending",
     "review_defects": [],
-    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "approved_by": null,
     "revalidated_at": "2026-10-04T11:18:18+00:00",
     "fixed_at": "2026-08-13T18:53:01.781831+00:00",
-    "fixer_model": "mistral-large-3:675b",
-    "auto_review": {
-      "reviewers": [
-        "deepseek-v4-pro",
-        "glm-5.2"
-      ],
-      "fixer": null,
-      "rounds": 1,
-      "prompt_version": "dfa8a5f39718",
-      "content_sha256": "a570f62e0f04c3eae40e4be3cecb8020a0a754fd46305abf4358ecabfac13fef",
-      "reviewed_at": "2026-10-04T11:18:18+00:00",
-      "residual_low": [],
-      "adjudicated": [],
-      "tool": "ops/tools/review_en_parity.py",
-      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
-    }
+    "fixer_model": "mistral-large-3:675b"
   }
 }
