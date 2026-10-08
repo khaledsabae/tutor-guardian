@@ -5,11 +5,8 @@
 /// opt-in only; the user can keep using the app anonymously.
 library;
 
-import 'dart:io' show SocketException;
-
 import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../api/tg_client.dart';
@@ -25,13 +22,19 @@ class IdentityService {
   // Used by the google_sign_in plugin on Android to request an id_token.
   static const String _serverClientId = String.fromEnvironment(
     'GOOGLE_SERVER_CLIENT_ID',
-    defaultValue: '620240456244-d7a3fd35ianuu34i1sobb0pj4ncttmdu.apps.googleusercontent.com',
+    defaultValue:
+        '620240456244-d7a3fd35ianuu34i1sobb0pj4ncttmdu.apps.googleusercontent.com',
   );
 
-  final GoogleSignIn _googleSignIn = GoogleSignIn(
-    scopes: ['email', 'profile'],
-    serverClientId: _serverClientId.isEmpty ? null : _serverClientId,
-  );
+  final GoogleSignIn _googleSignIn = GoogleSignIn.instance;
+  Future<void>? _initialization;
+
+  // Every entry point shares the same initialization, including concurrent
+  // cold-start restore and a Settings action. v7 requires exactly one call.
+  Future<void> _ensureInitialized() =>
+      _initialization ??= _googleSignIn.initialize(
+        serverClientId: _serverClientId.isEmpty ? null : _serverClientId,
+      );
 
   /// Returns true if a previous sign-in happened on this device.
   Future<bool> get isLinked async {
@@ -40,12 +43,14 @@ class IdentityService {
   }
 
   /// Best-effort restore on cold start. If the user previously signed in, we
-  /// re-auth silently and tell the backend to link this device_id.
+  /// attempt lightweight authentication and tell the backend to link this
+  /// device_id. Google may display an account-selection sheet on Android.
   Future<void> silentRestore() async {
     if (!await isLinked) return;
     if (_serverClientId.isEmpty) return;
     try {
-      final account = await _googleSignIn.signInSilently();
+      await _ensureInitialized();
+      final account = await _googleSignIn.attemptLightweightAuthentication();
       if (account == null) return;
       await _link(account);
     } catch (_) {
@@ -54,42 +59,48 @@ class IdentityService {
   }
 
   /// Explicit sign-in from Settings. Throws on network failure so the UI
-  /// can show a targeted message; returns false only for recoverable
-  /// (config / user-cancelled) errors.
+  /// can show a targeted message; returns false for cancellation/interruption
+  /// or a missing client ID. Other failures reach the localized error UI.
   Future<bool> signInAndLink() async {
     if (_serverClientId.isEmpty) {
-      debugPrint('GOOGLE_SERVER_CLIENT_ID not configured; Google Sign-In will fail.');
+      debugPrint(
+        'GOOGLE_SERVER_CLIENT_ID not configured; Google Sign-In will fail.',
+      );
       return false;
     }
     try {
-      final account = await _googleSignIn.signIn();
-      if (account == null) return false;
+      await _ensureInitialized();
+      if (!_googleSignIn.supportsAuthenticate()) {
+        throw UnsupportedError('Google Sign-In authentication is unavailable.');
+      }
+      // Identity uses only the ID token; no Google API scopes/access tokens or
+      // server authorization code are needed, so do not request authorization.
+      final account = await _googleSignIn.authenticate();
       await _link(account);
       Analytics.identityLinked();
       return true;
-    } on SocketException {
-      rethrow; // Network failure — let the UI show a connectivity message.
-    } on PlatformException catch (e) {
-      // Common Android failures: sign_in_failed / 10 = no web client ID configured.
-      debugPrint('Google Sign-In error: ${e.code} — ${e.message}');
-      return false;
-    } catch (e) {
-      debugPrint('Google Sign-In unexpected error: $e');
-      return false;
+    } on GoogleSignInException catch (e) {
+      if (e.code == GoogleSignInExceptionCode.canceled ||
+          e.code == GoogleSignInExceptionCode.interrupted) {
+        return false;
+      }
+      rethrow;
     }
   }
 
   /// Unlink this device from Google. Keeps the Google account, but this
   /// device becomes anonymous again.
   Future<void> unlink() async {
+    await _ensureInitialized();
     await _googleSignIn.signOut();
     final p = await SharedPreferences.getInstance();
     await p.setBool(_kLinked, false);
     Analytics.identityUnlinked();
   }
 
-  /// Link this phone to its Google account again, silently (no account
-  /// picker), from the CURRENT session. Called by account deletion right
+  /// Link this phone to its Google account again using lightweight
+  /// authentication from the CURRENT session. An Android account-selection
+  /// sheet is possible. Called by account deletion right
   /// after the device proof: a link made before this build — or by a session
   /// that had not proven — is unconfirmed, and a deletion follows only
   /// confirmed links (§10), so the Google record and its backups would be
@@ -99,7 +110,10 @@ class IdentityService {
   Future<bool> relinkSilently() async {
     if (_serverClientId.isEmpty) return false;
     try {
-      final account = await _googleSignIn.signInSilently();
+      await _ensureInitialized();
+      // A null Future means no immediate authentication result (e.g. web).
+      // Leave the link unconfirmed; account deletion must not assume success.
+      final account = await _googleSignIn.attemptLightweightAuthentication();
       if (account == null) return false;
       await _link(account);
       return true;
@@ -113,6 +127,7 @@ class IdentityService {
   /// server already erased the link; nothing is sent.
   Future<void> signOutAfterAccountDeletion() async {
     try {
+      await _ensureInitialized();
       await _googleSignIn.signOut();
     } catch (_) {
       // Not signed in, or no Play Services: nothing to sign out of.
@@ -130,10 +145,12 @@ class IdentityService {
   }
 
   Future<void> _link(GoogleSignInAccount account) async {
-    final auth = await account.authentication;
+    final auth = account.authentication;
     final idToken = auth.idToken;
     if (idToken == null || idToken.isEmpty) {
-      throw Exception('لم يتم استلام Google ID token. تأكد من ضبط GOOGLE_SERVER_CLIENT_ID.');
+      throw Exception(
+        'لم يتم استلام Google ID token. تأكد من ضبط GOOGLE_SERVER_CLIENT_ID.',
+      );
     }
 
     await TgClient.shared.ensureSession();
