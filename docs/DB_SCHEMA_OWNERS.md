@@ -135,7 +135,9 @@ them explicitly. It must not assume `init_db`'s DDL.
      so still wait for the lock. That was already true before M17.
 7. Every numbered migration's file checksum is pinned in
    `backend/tests/test_migration_checksums.py`. Editing a pinned file, or
-   adding an unpinned numbered file, fails the suite. Changes to an applied
+   adding an unpinned numbered file, fails the suite, and so does any module
+   in `app.db.migrations` that defines a `Migration` whatever its file name.
+   Changes to an applied
    migration go in a new, higher number.
 
 ## Next owners, in order of risk

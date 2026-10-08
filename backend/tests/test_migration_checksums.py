@@ -68,3 +68,20 @@ def test_numbers_are_consecutive_per_namespace():
         by_namespace.setdefault(namespace, []).append(number)
     for namespace, numbers in by_namespace.items():
         assert sorted(numbers) == list(range(1, len(numbers) + 1)), namespace
+
+
+def test_every_migration_object_lives_in_a_pinned_file():
+    # The file-name glob above misses a Migration in a differently named file
+    # (foo_0001.py, cloud_budget_1_x.py); find them by type instead.
+    import pkgutil
+
+    from app.db import migrations
+    from app.db.migrations.runner import Migration
+
+    unpinned = []
+    for info in pkgutil.iter_modules(migrations.__path__):
+        module = importlib.import_module(f"app.db.migrations.{info.name}")
+        if any(isinstance(value, Migration) for value in vars(module).values()):
+            if f"{info.name}.py" not in PINNED:
+                unpinned.append(info.name)
+    assert not unpinned, f"Migration defined in an unpinned file: {unpinned}"
