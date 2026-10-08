@@ -611,7 +611,7 @@ def _en_child_before(start: int, child_ends: List[int], breaks: List[int]) -> bo
     i = bisect.bisect_right(child_ends, start) - 1
     if i < 0 or start - child_ends[i] > _EN_BEFORE_WINDOW:
         return False
-    j = bisect.bisect_right(breaks, child_ends[i])
+    j = bisect.bisect_left(breaks, child_ends[i])
     return j >= len(breaks) or breaks[j] >= start
 
 

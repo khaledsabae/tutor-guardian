@@ -425,3 +425,14 @@ def test_fast_path_is_linear_on_50k_characters(text):
 @pytest.mark.parametrize("question", ["My son has tantrumz", "My son has anxietyx"])
 def test_medical_terms_end_on_a_word_boundary(question):
     assert _keyword_fast_path(question) is None
+
+
+@pytest.mark.parametrize("question", [
+    "I have a son. I can't sleep",
+    "Tips for my daughter? My husband has a fever",
+    "I have two kids! My wife hits me",
+    "My son. My wife has a fever",
+])
+def test_sentence_break_right_after_child_word_ends_the_sentence(question):
+    """A full stop/?/! directly after the child word closes that sentence."""
+    assert _keyword_fast_path(question) is None
