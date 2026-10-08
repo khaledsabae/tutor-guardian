@@ -5,18 +5,27 @@
 /// opt-in only; the user can keep using the app anonymously.
 library;
 
+import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../api/tg_client.dart';
 import '../../core/analytics.dart';
+import '../routine/services/child_mode_secure_storage.dart'
+    as child_mode_storage;
 
 class IdentityService {
   IdentityService._();
   static final IdentityService instance = IdentityService._();
 
   static const _kLinked = 'identity.linked';
+
+  /// The Google account (`sub`) this device was linked to. On Android 7.x
+  /// lightweight authentication can fall back to a sheet listing every
+  /// account on the phone, so the silent paths only ever re-link this one.
+  static const _kGoogleId = 'identity.google_id';
 
   // Web client ID from Google Cloud Console → OAuth client ID → Web application.
   // Used by the google_sign_in plugin on Android to request an id_token.
@@ -31,10 +40,22 @@ class IdentityService {
 
   // Every entry point shares the same initialization, including concurrent
   // cold-start restore and a Settings action. v7 requires exactly one call.
-  Future<void> _ensureInitialized() =>
-      _initialization ??= _googleSignIn.initialize(
-        serverClientId: _serverClientId.isEmpty ? null : _serverClientId,
-      );
+  // A failed initialization is forgotten so the next attempt retries instead
+  // of replaying the cached failure for the rest of the process.
+  Future<void> _ensureInitialized() {
+    final pending = _initialization ??= _googleSignIn
+        .initialize(
+          serverClientId: _serverClientId.isEmpty ? null : _serverClientId,
+        )
+        .catchError((Object e, StackTrace st) {
+          _initialization = null;
+          return Future<void>.error(e, st);
+        });
+    return pending;
+  }
+
+  @visibleForTesting
+  void resetInitializationForTesting() => _initialization = null;
 
   /// Returns true if a previous sign-in happened on this device.
   Future<bool> get isLinked async {
@@ -42,16 +63,39 @@ class IdentityService {
     return p.getBool(_kLinked) ?? false;
   }
 
-  /// Best-effort restore on cold start. If the user previously signed in, we
-  /// attempt lightweight authentication and tell the backend to link this
-  /// device_id. Google may display an account-selection sheet on Android.
+  /// Best-effort restore on cold start, for a device that was linked before.
+  ///
+  /// Asks the server first: when it still has the link — every ordinary
+  /// cold start — nothing touches Google. Only when the server has lost it
+  /// (a reinstall that kept this app's preferences) is lightweight
+  /// authentication attempted, and only the account this device was linked
+  /// to is accepted: on Android it may show a sheet listing every account on
+  /// the phone, and linking another one would merge that account's devices.
+  /// Never runs in child mode, and does nothing if the server is unreachable.
   Future<void> silentRestore() async {
     if (!await isLinked) return;
     if (_serverClientId.isEmpty) return;
+    if (await child_mode_storage.isChildModeActive()) return;
     try {
+      final me = await _fetchServerIdentity();
+      final prefs = await SharedPreferences.getInstance();
+      if (me['linked'] == true) {
+        // A link made before this build: remember which account it is.
+        final serverId = _googleIdOf(me);
+        if (serverId != null && prefs.getString(_kGoogleId) == null) {
+          await prefs.setString(_kGoogleId, serverId);
+        }
+        return;
+      }
+      final expected = prefs.getString(_kGoogleId);
+      if (expected == null || expected.isEmpty) return;
       await _ensureInitialized();
       final account = await _googleSignIn.attemptLightweightAuthentication();
       if (account == null) return;
+      if (!_isAccount(account, expected)) {
+        debugPrint('identity: restore refused a different Google account');
+        return;
+      }
       await _link(account);
     } catch (_) {
       // ignore — user will see the opt-in button again if needed.
@@ -95,6 +139,7 @@ class IdentityService {
     await _googleSignIn.signOut();
     final p = await SharedPreferences.getInstance();
     await p.setBool(_kLinked, false);
+    await p.remove(_kGoogleId);
     Analytics.identityUnlinked();
   }
 
@@ -110,11 +155,20 @@ class IdentityService {
   Future<bool> relinkSilently() async {
     if (_serverClientId.isEmpty) return false;
     try {
+      // Only the account the server already links this device to may be
+      // confirmed: a picker could hand back any account on the phone, and
+      // the deletion would then follow that account to its phones.
+      final expected = _googleIdOf(await _fetchServerIdentity());
+      if (expected == null) return false;
       await _ensureInitialized();
       // A null Future means no immediate authentication result (e.g. web).
       // Leave the link unconfirmed; account deletion must not assume success.
       final account = await _googleSignIn.attemptLightweightAuthentication();
       if (account == null) return false;
+      if (!_isAccount(account, expected)) {
+        debugPrint('identity: re-link refused a different Google account');
+        return false;
+      }
       await _link(account);
       return true;
     } catch (_) {
@@ -144,6 +198,41 @@ class IdentityService {
     }
   }
 
+  /// `GET /api/identity/me`, letting failures through: a silent path must
+  /// not read "unreachable" as "not linked".
+  Future<Map<String, dynamic>> _fetchServerIdentity() async {
+    await TgClient.shared.ensureSession();
+    return TgClient.shared.getIdentity();
+  }
+
+  static String? _googleIdOf(Map<String, dynamic> me) {
+    if (me['linked'] != true) return null;
+    final id = me['google_id'];
+    return id is String && id.isNotEmpty ? id : null;
+  }
+
+  /// Whether [account] is the Google account [googleId]. The server links the
+  /// ID token's `sub`, so that is checked too whenever the token is readable.
+  static bool _isAccount(GoogleSignInAccount account, String googleId) {
+    if (account.id != googleId) return false;
+    final sub = _subjectOf(account.authentication.idToken);
+    return sub == null || sub == googleId;
+  }
+
+  static String? _subjectOf(String? idToken) {
+    final parts = idToken?.split('.');
+    if (parts == null || parts.length != 3) return null;
+    try {
+      final payload = jsonDecode(
+        utf8.decode(base64Url.decode(base64Url.normalize(parts[1]))),
+      );
+      final sub = payload is Map ? payload['sub'] : null;
+      return sub is String ? sub : null;
+    } catch (_) {
+      return null;
+    }
+  }
+
   Future<void> _link(GoogleSignInAccount account) async {
     final auth = account.authentication;
     final idToken = auth.idToken;
@@ -164,5 +253,10 @@ class IdentityService {
 
     final p = await SharedPreferences.getInstance();
     await p.setBool(_kLinked, true);
+    final linkedId = response['google_id'];
+    await p.setString(
+      _kGoogleId,
+      linkedId is String && linkedId.isNotEmpty ? linkedId : account.id,
+    );
   }
 }
