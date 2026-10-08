@@ -187,5 +187,17 @@
         }
       }
     ]
+  },
+  "lesson_7-9_islamic_parenting_worship_02": {
+    "content_sha256": "767b0d2a133f31fe6a14a6efe1d76197902a8909ac398dcf45622945494581eb",
+    "overrides": [
+      {
+        "field": "summary",
+        "type": "omission",
+        "reason": "The English summary contains the clause it is said to omit, word for word: «When his practice ends, serve him his food and complete your own fast until sunset» renders «فإذا انتهت تجربته فقدّم له طعامه، وأكمل أنت صيامك إلى غروب الشمس»; the reviewer's own suggestion is identical to the current text. glm-5.2 found nothing here.",
+        "by": "claude-opus-5.5 (worship-review fixes R02, oct8)",
+        "on": "2026-10-08"
+      }
+    ]
   }
 }

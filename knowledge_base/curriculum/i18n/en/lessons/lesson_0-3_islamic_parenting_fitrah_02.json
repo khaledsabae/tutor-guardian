@@ -5,8 +5,8 @@
   "age_group": "0-3",
   "domain": "aqeedah",
   "unit_ids": [],
-  "summary": "From the guidance of the Prophet ﷺ is tahneek of the newborn, making du'a for him with barakah and righteousness, and the adhan in his ear. These sunnahs are not mere rituals but the first covenant between the parent and their Lord over this amanah.",
-  "try_this": "This week: Make a special du'a for your child every day (\"O Allah, make him among the righteous\"), and connect the du'a to the moment you hold him.",
+  "summary": "From the guidance of the Prophet ﷺ is tahneek of the newborn and making du'a for barakah for him (Sahih al-Bukhari 5467). Many jurists consider the adhan in his ear recommended, though hadith scholars differ over the authenticity of its hadith. These practices are not mere rituals but the parent's first steps in caring for this amanah. If your child is already past the newborn days, making du'a for barakah and righteousness for him remains an open door every day of his life.",
+  "try_this": "Today: Make a special du'a for your child (\"O Allah, make him among the righteous\") while you hold him, and make this your daily habit.",
   "order": 2,
   "estimated_minutes": 6,
   "reflection_prompts": [
@@ -17,7 +17,7 @@
   "needs_professional_followup": false,
   "is_published": true,
   "version": "1.0.0",
-  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
   "language": "en",
   "source_language": "ar",
   "translation": {
@@ -31,22 +31,36 @@
     },
     "review_verdict": "clean",
     "review_defects": [],
-    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
-    "revalidated_at": "2026-10-04T16:52:31+00:00",
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
+    "revalidated_at": "2026-10-08T15:21:56+00:00",
     "auto_review": {
       "reviewers": [
         "deepseek-v4-pro",
         "glm-5.2"
       ],
+      "providers": {
+        "deepseek-v4-pro": {
+          "provider": "openrouter",
+          "model": "deepseek/deepseek-v4-pro"
+        },
+        "glm-5.2": {
+          "provider": "openrouter",
+          "model": "z-ai/glm-5.2"
+        }
+      },
       "fixer": null,
       "rounds": 1,
       "prompt_version": "dfa8a5f39718",
-      "content_sha256": "f04aaac83545389bf7960d332a4f0d623c6b04d91f09e4ae08fa081be7877a75",
-      "reviewed_at": "2026-10-04T16:52:31+00:00",
+      "content_sha256": "c5315a97913e8af60f6de83d884de66e5116abd53eca4ecb9226b1a1707ddb72",
+      "reviewed_at": "2026-10-08T15:21:56+00:00",
       "residual_low": [],
       "adjudicated": [],
       "tool": "ops/tools/review_en_parity.py",
-      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
-    }
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+    },
+    "english_authors": [
+      "mistral-large-3:675b",
+      "claude-opus-5-5"
+    ]
   }
 }

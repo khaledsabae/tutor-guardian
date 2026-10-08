@@ -8,8 +8,8 @@
     "aedda350-cf2a-4d53-869a-2b07a694180d",
     "d0cb16b5-21cc-457f-8b87-2d74f18eea4f"
   ],
-  "summary": "At the age of 7-9, a child can try partial fasting. We focus on understanding the meaning of fasting (sabr, mindfulness of Allah, feeling for the poor) rather than merely abstaining from food.",
-  "try_this": "In the coming Ramadan: let him fast until Dhuhr (half a day), break your fast together, and discuss: What did you feel when you were hungry?",
+  "summary": "At the age of 7-9, a child can try partial fasting as training, since fasting is not obligatory for him before puberty. When his practice ends, serve him his food and complete your own fast until sunset; stop the practice if he becomes dizzy, very tired, or very thirsty, and consult the doctor if he is ill or takes medication. We focus on understanding the meaning of fasting (sabr, mindfulness of Allah, feeling for the poor) rather than merely abstaining from food.",
+  "try_this": "Today: Sit with your child and agree on a partial-fasting plan for the coming Ramadan, if he wants to and is in good health: he fasts part of the day suited to his ability, such as until Dhuhr, and may stop whenever he gets tired. Then ask him: What helps you be patient when you are hungry?",
   "order": 2,
   "estimated_minutes": 5,
   "reflection_prompts": [
@@ -20,7 +20,7 @@
   "needs_professional_followup": false,
   "is_published": true,
   "version": "1.0.0",
-  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
   "language": "en",
   "source_language": "ar",
   "translation": {
@@ -34,8 +34,8 @@
     },
     "review_verdict": "clean",
     "review_defects": [],
-    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
-    "revalidated_at": "2026-10-04T11:18:18+00:00",
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
+    "revalidated_at": "2026-10-08T15:22:24+00:00",
     "fixed_at": "2026-08-13T19:05:48.541793+00:00",
     "fixer_model": "mistral-large-3:675b",
     "auto_review": {
@@ -43,15 +43,37 @@
         "deepseek-v4-pro",
         "glm-5.2"
       ],
+      "providers": {
+        "deepseek-v4-pro": {
+          "provider": "openrouter",
+          "model": "deepseek/deepseek-v4-pro"
+        },
+        "glm-5.2": {
+          "provider": "openrouter",
+          "model": "z-ai/glm-5.2"
+        }
+      },
       "fixer": null,
       "rounds": 1,
       "prompt_version": "dfa8a5f39718",
-      "content_sha256": "cda144effae7b94e2eb2f1b64e2598a9ee5334c375b095bfadf58b5eee6bb6f8",
-      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "content_sha256": "767b0d2a133f31fe6a14a6efe1d76197902a8909ac398dcf45622945494581eb",
+      "reviewed_at": "2026-10-08T15:22:24+00:00",
       "residual_low": [],
-      "adjudicated": [],
+      "adjudicated": [
+        {
+          "field": "summary",
+          "type": "omission",
+          "reason": "The English summary contains the clause it is said to omit, word for word: «When his practice ends, serve him his food and complete your own fast until sunset» renders «فإذا انتهت تجربته فقدّم له طعامه، وأكمل أنت صيامك إلى غروب الشمس»; the reviewer's own suggestion is identical to the current text. glm-5.2 found nothing here.",
+          "by": "claude-opus-5.5 (worship-review fixes R02, oct8)",
+          "on": "2026-10-08"
+        }
+      ],
       "tool": "ops/tools/review_en_parity.py",
-      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
-    }
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+    },
+    "english_authors": [
+      "mistral-large-3:675b",
+      "claude-opus-5-5"
+    ]
   }
 }

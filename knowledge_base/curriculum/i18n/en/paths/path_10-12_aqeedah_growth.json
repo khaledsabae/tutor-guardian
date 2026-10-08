@@ -3,7 +3,7 @@
   "title": "Rooting the ʿAqeedah: From Knowledge to Watchfulness",
   "age_group": "10-12",
   "domain": "aqeedah",
-  "description": "A path that roots the ʿaqeedah of your child (10–12) before bulūgh (puberty): from knowledge to watchfulness and conviction—faith-based identity, deep understanding of the arkān al-īmān (pillars of faith), ikhlāṣ (sincerity) and watchfulness, and riḍā bi-l-qadr (contentment with divine decree).",
+  "description": "A path that roots the ʿaqeedah of your child (10–12) at an age when some children reach bulūgh (puberty) and others are approaching it: from knowledge to watchfulness and conviction—faith-based identity, deep understanding of the arkān al-īmān (pillars of faith), ikhlāṣ (sincerity) and watchfulness, and riḍā bi-l-qadr (contentment with divine decree).",
   "lesson_ids": [
     "lesson_10-12_islamic_parenting_identity_04",
     "lesson_10-12_aqeedah_growth_01",
@@ -21,7 +21,7 @@
   "version": "1.0.0",
   "created_at": "2026-06-27T00:00:00",
   "updated_at": "2026-06-27T00:00:00",
-  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
   "language": "en",
   "source_language": "ar",
   "translation": {
@@ -33,17 +33,10 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "low_only",
-    "review_defects": [
-      {
-        "model": "deepseek-v4-pro",
-        "field": "description",
-        "type": "meaning",
-        "why": "The Arabic addresses a son specifically; the English neutralizes gender."
-      }
-    ],
-    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
-    "revalidated_at": "2026-10-04T16:52:31+00:00",
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
+    "revalidated_at": "2026-10-08T15:21:56+00:00",
     "fixed_at": "2026-08-13T18:17:00.924315+00:00",
     "fixer_model": "mistral-large-3:675b",
     "auto_review": {
@@ -51,22 +44,29 @@
         "deepseek-v4-pro",
         "glm-5.2"
       ],
+      "providers": {
+        "deepseek-v4-pro": {
+          "provider": "openrouter",
+          "model": "deepseek/deepseek-v4-pro"
+        },
+        "glm-5.2": {
+          "provider": "openrouter",
+          "model": "z-ai/glm-5.2"
+        }
+      },
       "fixer": null,
       "rounds": 1,
       "prompt_version": "dfa8a5f39718",
-      "content_sha256": "206e64181f9ce15d4141fcdb5b99bd454ecc59f47ea35df82f39ae1c47994bde",
-      "reviewed_at": "2026-10-04T16:52:31+00:00",
-      "residual_low": [
-        {
-          "model": "deepseek-v4-pro",
-          "field": "description",
-          "type": "meaning",
-          "why": "The Arabic addresses a son specifically; the English neutralizes gender."
-        }
-      ],
+      "content_sha256": "d21ba718b53932af710e463ce9ce181f369c6fe82022cebae19ac43691858769",
+      "reviewed_at": "2026-10-08T15:21:56+00:00",
+      "residual_low": [],
       "adjudicated": [],
       "tool": "ops/tools/review_en_parity.py",
-      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
-    }
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+    },
+    "english_authors": [
+      "mistral-large-3:675b",
+      "claude-opus-5-5"
+    ]
   }
 }
