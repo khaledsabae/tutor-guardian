@@ -186,6 +186,17 @@ jobs:
           # commit gets its own gated deploy.
           echo "→ git fetch + reset --hard $GITHUB_SHA (the tested commit)"
           git fetch origin main
+          # ── 1b. Cloud-budget switch preflight, with the gated commit's own
+          # checker, before the checkout or the container changes: a value
+          # the app does not recognise is read as ON (cloud fails closed).
+          GATE_PY=$(mktemp)
+          git show "$GITHUB_SHA:ops/tools/deploy_gate.py" > "$GATE_PY"
+          if ! python3 "$GATE_PY" --check-env "$DEPLOY_PATH/.env"; then
+            rm -f "$GATE_PY"
+            echo "::error::CLOUD_BUDGET_ENFORCE in $DEPLOY_PATH/.env is unrecognised — not deploying"
+            exit 1
+          fi
+          rm -f "$GATE_PY"
           git reset --hard "$GITHUB_SHA"
           DEPLOY_SHA=$(git rev-parse --short HEAD)
           echo "Deploying SHA: $DEPLOY_SHA"

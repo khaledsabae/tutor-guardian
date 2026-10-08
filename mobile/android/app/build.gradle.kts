@@ -42,8 +42,8 @@ android {
     defaultConfig {
         // Tutor Guardian — mobile app
         applicationId = "com.alsaba.almorabbi"
-        // minSdk 23 = Android 6.0 (covers >99% of active devices and is
-        // required by several modern Flutter plugins).
+        // Flutter 3.44.1 supplies minSdk 24, also required by the Google
+        // Sign-In 7 Android implementation (Firebase BoM 34 requires 23).
         minSdk = flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode

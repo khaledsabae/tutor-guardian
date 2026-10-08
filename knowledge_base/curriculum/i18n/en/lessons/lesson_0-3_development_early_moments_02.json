@@ -7,8 +7,8 @@
   "unit_ids": [
     "dea6683e-62be-4f02-8bfe-a426ef123631"
   ],
-  "summary": "Attachment theory (Bowlby/Ainsworth) is established: a child who feels secure with a responsive parent develops a 'secure base' from which to explore the world with confidence. Consistent response to crying, eye contact, mutual smiling, and physical presence—these build an 'internal working model' of self-worth and trust in others. The 'Early Moments Matter' report (UNICEF) states: the first thousand days shape the brain’s structure—compassionate responsiveness = strong neural connections for emotion and learning. The opposite (neglect/indifference) = chronic stress circuits that impact learning and behavior for years.",
-  "try_this": "This week: practice 'Response in 30 Seconds'—when your child cries or calls you, respond within 30 seconds (even if just with the words: 'I’m coming, my love, I’m on my way'). Observe: does he calm down faster? Does he return to play sooner? Quick response = security; ignoring = stress.",
+  "summary": "Attachment theory (Bowlby/Ainsworth) is established: a child who feels secure with a responsive parent develops a 'secure base' from which to explore the world with confidence. Consistent response to crying, eye contact, mutual smiling, and physical presence—these build an 'internal working model' of self-worth and trust in others. The 'Early Moments Matter' report (UNICEF) states: the first three years are a critical period for brain development. According to Harvard's Center on the Developing Child, responsive back-and-forth interaction between a child and a caring adult builds the neural connections in the child's brain, while chronic neglect can cause 'toxic stress' that harms brain development, learning and health for years. If you notice no responsive smiling or following of faces and voices, or a clear delay in interaction and movement, see your paediatrician or a child development specialist.",
+  "try_this": "Today: when your child cries or calls you, respond warmly and as promptly as you can, even with a word: 'I'm coming, my love.' In the first months you cannot spoil a baby with attention. Start with his most pressing need: is he hungry, cold, tired or in pain, or does his nappy need changing? Notice: does he settle when you respond?",
   "order": 2,
   "estimated_minutes": 31,
   "reflection_prompts": [
@@ -21,13 +21,13 @@
   "is_published": true,
   "version": "1.0.0",
   "created_at": "2026-06-10T20:00:00",
-  "updated_at": "2026-06-10T20:00:00",
-  "approved_by": "auto-review:claude-opus:2026-10-04",
+  "updated_at": "2026-10-09T01:00:00",
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
   "language": "en",
   "source_language": "ar",
   "translation": {
     "translator_model": "mistral-large-3:675b",
-    "reviewer_model": "claude-opus",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "needs_scholar_review": true,
     "scholar_signals": {
       "keyword": false,
@@ -37,34 +37,60 @@
     "review_verdict": "low_only",
     "review_defects": [
       {
-        "model": "claude-opus",
-        "field": "try_this",
+        "model": "glm-5.2",
+        "field": "title",
+        "type": "meaning",
+        "why": "«الارتباط الآمن» is the established term 'secure attachment', which is used correctly in the summary; rendering it as 'The Secure Bond' in the title loses the technical term."
+      },
+      {
+        "model": "glm-5.2",
+        "field": "summary",
         "type": "addition",
-        "why": "The English reassurance adds 'I'm on my way' to «أنا قادم يا حبيبي» — harmless."
+        "why": "The Arabic says simply 'responsive interaction'; 'back-and-forth' is added, and 'من يرعاه' (his caregiver) is generalised to 'a caring adult'."
       }
     ],
-    "approved_by": "auto-review:claude-opus:2026-10-04",
-    "revalidated_at": "2026-10-04T17:12:35+00:00",
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-08",
+    "revalidated_at": "2026-10-08T15:52:29+00:00",
     "auto_review": {
       "reviewers": [
-        "claude-opus"
+        "deepseek-v4-pro",
+        "glm-5.2"
       ],
+      "providers": {
+        "deepseek-v4-pro": {
+          "provider": "openrouter",
+          "model": "deepseek/deepseek-v4-pro"
+        },
+        "glm-5.2": {
+          "provider": "openrouter",
+          "model": "z-ai/glm-5.2"
+        }
+      },
       "fixer": null,
       "rounds": 1,
-      "prompt_version": "manual:dfa8a5f39718",
-      "content_sha256": "881e5c4a032bf57cad1f3dadeeaa8a997246c22d3a7ff5fd17182f888054b50d",
-      "reviewed_at": "2026-10-04T17:12:35+00:00",
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "1cc1ae83f1fcc94077084e0d1a785dbb9f6a72ae63634984980433f7e7d63f79",
+      "reviewed_at": "2026-10-08T15:52:29+00:00",
       "residual_low": [
         {
-          "model": "claude-opus",
-          "field": "try_this",
+          "model": "glm-5.2",
+          "field": "title",
+          "type": "meaning",
+          "why": "«الارتباط الآمن» is the established term 'secure attachment', which is used correctly in the summary; rendering it as 'The Secure Bond' in the title loses the technical term."
+        },
+        {
+          "model": "glm-5.2",
+          "field": "summary",
           "type": "addition",
-          "why": "The English reassurance adds 'I'm on my way' to «أنا قادم يا حبيبي» — harmless."
+          "why": "The Arabic says simply 'responsive interaction'; 'back-and-forth' is added, and 'من يرعاه' (his caregiver) is generalised to 'a caring adult'."
         }
       ],
       "adjudicated": [],
       "tool": "ops/tools/review_en_parity.py",
-      "meaning": "deterministic guards passed and one reviewer from a model family different from the translator's read the Arabic and English side by side against the review rubric and found no medium/high defect in this exact text; not a scholar's ijazah"
-    }
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+    },
+    "english_authors": [
+      "claude-opus-5.5"
+    ]
   }
 }

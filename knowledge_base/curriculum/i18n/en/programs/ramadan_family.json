@@ -402,7 +402,7 @@
     "principles": [
       "Before puberty, fasting is training, not an obligation. The aim is for the child to love fasting, not to hold out as long as possible.",
       "In this program there is no fasting before seven: little ones share the atmosphere of Ramadan without fasting.",
-      "Puberty, not age, makes fasting obligatory: a child who shows a sign of puberty, such as menstruation or a wet dream, must fast whatever their age group, so the 13–15 step applies to them, not the two-days-a-week cap. The details of the signs of puberty are for scholars.",
+      "Puberty, not age, makes fasting obligatory: a child who shows a sign of puberty, such as menstruation or a wet dream, must fast whatever their age group, so the 13–15 step applies to them, not the two-days-a-week cap. The details of the signs of puberty are for scholars; some count reaching a certain age as puberty even without another sign, and they differ on which age.",
       "Move up a step only after two or three comfortable days on the current one, and only if the child wants to.",
       "Breaking the fast when tired is not failure: always praise the attempt, and never compare siblings.",
       "Keep school days, sport days and hot days shorter; rest days are the best days to try."
@@ -429,7 +429,7 @@
       "Repeated vomiting that stops him from drinking.",
       "In a child with diabetes: any sign of low blood sugar, such as shaking, sweating or confusion."
     ],
-    "urgent_action": "Call emergency services at once, and give nothing by mouth until the child is fully alert. For a child with diabetes, follow the doctor's low-blood-sugar plan (fast sugar such as juice or glucose tablets), then call emergency services if there is no improvement.",
+    "urgent_action": "For fainting, a seizure, confusion or being hard to wake, call emergency services at once, and give no food or drink while the child cannot swallow safely. For a child with diabetes who shows a sign of low blood sugar but is alert and can swallow, follow the doctor's low-blood-sugar plan straight away (fast sugar such as juice or glucose tablets), and call emergency services if there is no improvement or the child becomes less responsive. For repeated vomiting that stops the child drinking, seek urgent medical care now.",
     "tips": [
       "Suhoor: water plus slow-digesting food such as wholemeal bread, oats, eggs, yoghurt and pitted dates, not sweets on their own.",
       "Water little and often from iftar to bedtime, not a large amount all at once.",
@@ -469,13 +469,13 @@
           },
           {
             "key": "no_snacks_day",
-            "label": "A day without snacks between meals",
+            "label": "A day without sweets between meals",
             "until": "none",
             "approx_hours": 0,
             "min_age_years": 5,
             "max_days_per_week": 2,
             "advance_when": "This stays the highest step before age seven.",
-            "text": "One or two days a week: no sweets or snacks between meals, with water and meals as usual. This is not fasting; it is practice in patience."
+            "text": "One or two days a week: sweets wait until a time you agree on, while meals and nutritious snacks stay at their usual times and water is always available. This is not fasting; it is practice in patience."
           }
         ]
       },
@@ -551,7 +551,7 @@
       },
       "13-15": {
         "fasts": "full_supported",
-        "summary": "After puberty fasting becomes obligatory, so what is needed here is health support rather than training: a good suhoor, enough water, sleep, and care around exams and sport. A girl does not fast during her period and makes those days up after Ramadan, without being embarrassed; the details of the rulings come from scholars. A child who has not yet reached puberty continues the 10–12 steps.",
+        "summary": "After puberty fasting becomes obligatory, so what is needed here is health support rather than training: a good suhoor, enough water, sleep, and care around exams and sport. A girl does not fast during her period and makes those days up after Ramadan, without being embarrassed; the details of the rulings come from scholars. For a child who has not yet reached puberty, fasting is training, not an obligation: he continues the 10–12 steps and is not asked to fast the whole month.",
         "steps": [
           {
             "key": "full_day_supported",

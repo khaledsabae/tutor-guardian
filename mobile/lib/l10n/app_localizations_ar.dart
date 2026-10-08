@@ -3319,6 +3319,26 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
+  String get identityErrorNoGoogleAccount =>
+      'لا يوجد حساب Google على هذا الهاتف. أضِف حسابًا من إعدادات الهاتف ثم أعِد المحاولة.';
+
+  @override
+  String get identityErrorGoogleUnavailable =>
+      'تسجيل الدخول بحساب Google غير متاح على هذا الهاتف الآن. تأكّد من تحديث خدمات Google Play ثم أعِد المحاولة.';
+
+  @override
+  String get identityErrorAppMisconfigured =>
+      'تسجيل الدخول غير مُهيّأ في هذا الإصدار من التطبيق. حدِّث التطبيق أو حاول لاحقًا.';
+
+  @override
+  String get identityErrorGoogleUi =>
+      'تعذّر فتح نافذة تسجيل الدخول بحساب Google. أعِد المحاولة.';
+
+  @override
+  String get identityErrorGoogleGeneric =>
+      'لم يكتمل تسجيل الدخول بحساب Google. أعِد المحاولة بعد قليل.';
+
+  @override
   String get identityLocalNote =>
       'البيانات تبقى على نفس الجهاز إلا إذا اخترت تسجيل الدخول.';
 

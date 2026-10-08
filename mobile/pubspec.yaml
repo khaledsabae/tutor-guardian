@@ -85,13 +85,13 @@ dependencies:
 
   # Firebase
   flame: ^1.16.0
-  firebase_core: ^3.13.0
-  firebase_crashlytics: ^4.3.0
-  firebase_analytics: ^11.4.0
+  firebase_core: ^4.15.0
+  firebase_crashlytics: ^5.4.0
+  firebase_analytics: ^12.6.0
   # Phase 1 — server-side push re-engagement
-  firebase_messaging: ^15.2.0
+  firebase_messaging: ^16.7.0
   # Phase 1 — optional identity that survives reinstall
-  google_sign_in: ^6.2.0
+  google_sign_in: ^7.2.0
   # Phase 0/1 — deep links + whatsapp direct share
   app_links: ^6.3.3
   page_flip: ^0.2.5+1
@@ -103,6 +103,8 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  # Exercise the real Google Sign-In Dart client with a native-platform fake.
+  google_sign_in_platform_interface: ^3.1.0
   flutter_lints: ^6.0.0
   flutter_launcher_icons: ^0.14.1
   flutter_native_splash: ^2.4.0

@@ -3364,6 +3364,26 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get identityErrorNoGoogleAccount =>
+      'There\'s no Google account on this phone. Add one in your phone settings, then try again.';
+
+  @override
+  String get identityErrorGoogleUnavailable =>
+      'Google sign-in isn\'t available on this phone right now. Make sure Google Play services is up to date, then try again.';
+
+  @override
+  String get identityErrorAppMisconfigured =>
+      'Sign-in isn\'t set up in this version of the app. Update the app or try again later.';
+
+  @override
+  String get identityErrorGoogleUi =>
+      'Couldn\'t open Google sign-in. Please try again.';
+
+  @override
+  String get identityErrorGoogleGeneric =>
+      'Google sign-in didn\'t complete. Please try again in a moment.';
+
+  @override
   String get identityLocalNote =>
       'Data stays on this device unless you choose to sign in.';
 
