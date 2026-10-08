@@ -1,0 +1,223 @@
+{
+  "stamped": [
+    "tip_prenatal-1_006",
+    "lesson_7-9_islamic_parenting_worship_05",
+    "lesson_7-9_islamic_parenting_worship_07",
+    "lesson_7-9_islamic_parenting_worship_08",
+    "lesson_7-9_islamic_parenting_worship_09",
+    "story:hope_sprout",
+    "story:omar_prayer",
+    "story:khadija_neighbor",
+    "story:abdullah_bismillah",
+    "story:hamza_truth",
+    "story:badr_broken_toy",
+    "story:tamim_anger_volcano",
+    "story:noura_sharing_box"
+  ],
+  "fixed": [],
+  "arabic_proposals": [],
+  "arabic_applied": [],
+  "unresolved": {
+    "story:maryam_toys": [
+      {
+        "field": "category",
+        "side": "english",
+        "type": "meaning",
+        "severity": "medium",
+        "arabic": "مشاركة الألعاب والكرم",
+        "english": "Time management and responsibility",
+        "why": "The English category is unrelated to the Arabic, which is about sharing toys and generosity.",
+        "suggestion": "Sharing toys and generosity",
+        "model": "deepseek-v4-pro"
+      },
+      {
+        "field": "discussionQuestions[0]",
+        "side": "english",
+        "type": "meaning",
+        "severity": "medium",
+        "arabic": "لماذا ترددت مريم في مشاركة ألعابها مع فاطمة؟",
+        "english": "What did Maryam learn when she put every toy in its own place?",
+        "why": "The English question is unrelated to the Arabic question about why Maryam hesitated to share.",
+        "suggestion": "Why did Maryam hesitate to share her toys with Fatimah?",
+        "model": "deepseek-v4-pro"
+      },
+      {
+        "field": "discussionQuestions[1]",
+        "side": "english",
+        "type": "meaning",
+        "severity": "medium",
+        "arabic": "ماذا قالت والدة مريم عن اللعب معاً ومشاركة الفرح؟",
+        "english": "How does keeping things tidy save time and make life easier for everyone?",
+        "why": "The English question is unrelated to the Arabic question about what Maryam's mother said about playing together and sharing joy.",
+        "suggestion": "What did Maryam's mother say about playing together and sharing joy?",
+        "model": "deepseek-v4-pro"
+      },
+      {
+        "field": "discussionQuestions[2]",
+        "side": "english",
+        "type": "meaning",
+        "severity": "medium",
+        "arabic": "كيف شعرت فاطمة عندما شاركتها مريم ألعابها؟",
+        "english": "How does your mother feel when she sees your room tidy and beautiful?",
+        "why": "The English question is unrelated to the Arabic question about how Fatimah felt when Maryam shared her toys.",
+        "suggestion": "How did Fatimah feel when Maryam shared her toys with her?",
+        "model": "deepseek-v4-pro"
+      },
+      {
+        "field": "actionChallenge",
+        "side": "english",
+        "type": "meaning",
+        "severity": "medium",
+        "arabic": "تحدي المشاركة: ادعُ صديقاً للعب معك بألعابك، وشاركه فرحة اللعب معاً.",
+        "english": "Doing-it-well challenge: when you finish playing today, put every block and toy back in its box carefully and neatly.",
+        "why": "The English action challenge is unrelated to the Arabic sharing challenge and instead gives tidying instructions.",
+        "suggestion": "Sharing challenge: invite a friend to play with you with your toys, and share the joy of playing together.",
+        "model": "deepseek-v4-pro"
+      },
+      {
+        "field": "category",
+        "side": "english",
+        "type": "meaning",
+        "severity": "high",
+        "arabic": "مشاركة الألعاب والكرم",
+        "english": "Time management and responsibility",
+        "why": "The English category is entirely unrelated to the Arabic; the Arabic says 'Sharing toys and generosity' while the English says 'Time management and responsibility', which appears to come from a different story.",
+        "suggestion": "Sharing toys and generosity",
+        "model": "glm-5.2"
+      },
+      {
+        "field": "discussionQuestions[0]",
+        "side": "english",
+        "type": "meaning",
+        "severity": "high",
+        "arabic": "لماذا ترددت مريم في مشاركة ألعابها مع فاطمة؟",
+        "english": "What did Maryam learn when she put every toy in its own place?",
+        "why": "The English question is completely different from the Arabic, which asks why Maryam hesitated to share her toys with Fatimah; the English appears to come from a different story about tidiness.",
+        "suggestion": "Why did Maryam hesitate to share her toys with Fatimah?",
+        "model": "glm-5.2"
+      },
+      {
+        "field": "discussionQuestions[1]",
+        "side": "english",
+        "type": "meaning",
+        "severity": "high",
+        "arabic": "ماذا قالت والدة مريم عن اللعب معاً ومشاركة الفرح؟",
+        "english": "How does keeping things tidy save time and make life easier for everyone?",
+        "why": "The English question is entirely unrelated to the Arabic, which asks what Maryam's mother said about playing together and sharing joy.",
+        "suggestion": "What did Maryam's mother say about playing together and sharing joy?",
+        "model": "glm-5.2"
+      },
+      {
+        "field": "discussionQuestions[2]",
+        "side": "english",
+        "type": "meaning",
+        "severity": "high",
+        "arabic": "كيف شعرت فاطمة عندما شاركتها مريم ألعابها؟",
+        "english": "How does your mother feel when she sees your room tidy and beautiful?",
+        "why": "The English question is completely different from the Arabic, which asks how Fatimah felt when Maryam shared her toys with her.",
+        "suggestion": "How did Fatimah feel when Maryam shared her toys with her?",
+        "model": "glm-5.2"
+      },
+      {
+        "field": "actionChallenge",
+        "side": "english",
+        "type": "meaning",
+        "severity": "high",
+        "arabic": "تحدي المشاركة: ادعُ صديقاً للعب معك بألعابك، وشاركه فرحة اللعب معاً.",
+        "english": "Doing-it-well challenge: when you finish playing today, put every block and toy back in its box carefully and neatly.",
+        "why": "The English challenge is entirely unrelated to the Arabic, which asks the child to invite a friend to play and share the joy; the English instead talks about tidying up, coming from a different story.",
+        "suggestion": "Sharing challenge: invite a friend to play with your toys, and share the joy of playing together.",
+        "model": "glm-5.2"
+      }
+    ],
+    "story:yaseen_creation": [
+      {
+        "field": "discussionQuestions[0]",
+        "side": "english",
+        "type": "meaning",
+        "severity": "medium",
+        "arabic": "ما عجائب خلق الله التي تأملها ياسين في النملة والنجوم والأشجار والأزهار؟",
+        "english": "What amazing signs did Yaseen reflect on in the sky and the birds?",
+        "why": "The English replaces the ant, stars, trees, and flowers with 'sky and birds,' changing the question's content.",
+        "suggestion": "What wonders of Allah's creation did Yaseen reflect on in the ant, the stars, the trees, and the flowers?",
+        "model": "deepseek-v4-pro"
+      },
+      {
+        "field": "discussionQuestions[0]",
+        "side": "english",
+        "type": "meaning",
+        "severity": "high",
+        "arabic": "ما عجائب خلق الله التي تأملها ياسين في النملة والنجوم والأشجار والأزهار؟",
+        "english": "What amazing signs did Yaseen reflect on in the sky and the birds?",
+        "why": "The Arabic asks about the ant, the stars, the trees, and the flowers, but the English replaces these entirely with 'the sky and the birds,' which are not mentioned in the Arabic at all.",
+        "suggestion": "What amazing signs of Allah's creation did Yaseen reflect on in the ant, the stars, the trees, and the flowers?",
+        "model": "glm-5.2"
+      }
+    ],
+    "story:fatima_parents": [
+      {
+        "field": "description",
+        "side": "english",
+        "type": "omission",
+        "severity": "medium",
+        "arabic": "وطاعتهما بالمعروف",
+        "english": "kind obedience",
+        "why": "The English drops the condition 'بالمعروف' (in what is right), changing the Islamic nuance of obedience.",
+        "suggestion": "An Islamic tarbiyah story that plants the seeds of birr al-walidayn and obedience to them in what is right in children’s hearts, bringing joy to their parents.",
+        "model": "deepseek-v4-pro"
+      },
+      {
+        "field": "pages[4].text",
+        "side": "english",
+        "type": "meaning",
+        "severity": "medium",
+        "arabic": "زهرة جوري جميلة",
+        "english": "a beautiful red carnation",
+        "why": "«جوري» is a rose, not a carnation, and the color «red» is added with no basis in the Arabic.",
+        "suggestion": "Fatima's father felt so proud of her. He gave her a beautiful rose as a gift for her ihsan and her birr al-walidayn.",
+        "model": "glm-5.2"
+      }
+    ],
+    "story:bilal_forgiveness": [
+      {
+        "field": "discussionQuestions[0]",
+        "side": "arabic",
+        "type": "source_corruption",
+        "severity": "medium",
+        "arabic": "أثناء اللعب",
+        "english": "while they were playing",
+        "why": "The story incident occurs during art class, not play, so the Arabic question contradicts the story context.",
+        "suggestion": "ماذا فعل بلال عندما أخطأ زميله في حقه أثناء الرسم؟",
+        "model": "deepseek-v4-pro"
+      }
+    ],
+    "story:sarah_basil_sprout": [
+      {
+        "field": "islamicValue",
+        "side": "arabic",
+        "type": "source_corruption",
+        "severity": "medium",
+        "arabic": "ويميط الأذى عن الطريق صدقة",
+        "english": "and removing harm from the path is charity",
+        "why": "The Arabic hadith wording uses «ويميط» but the Sahih al-Bukhari hadith is «وتميط», a grammatical error in the quoted hadith.",
+        "suggestion": "قال رسول الله ﷺ: «وتميط الأذى عن الطريق صدقة» (صحيح البخاري — حديث ٢٩٨٩).",
+        "model": "deepseek-v4-pro"
+      }
+    ],
+    "story:salman_secret_trust": [
+      {
+        "field": "pages[2].text",
+        "side": "arabic",
+        "type": "source_corruption",
+        "severity": "medium",
+        "arabic": "وأكيد صاحبها يبحث عنها",
+        "english": "Its owner must be looking for it",
+        "why": "أكيد is colloquial; Modern Standard Arabic is expected.",
+        "suggestion": "توجه سلمان مباشرة إلى غرفة المعلم وسلّمه المحفظة وقال: «يا أستاذ، وجدتها في الممر وبالتأكيد صاحبها يبحث عنها وقلق عليها الآن». شكره المعلم وأعلن في الإذاعة عن العثور عليها.",
+        "model": "deepseek-v4-pro"
+      }
+    ]
+  },
+  "fix_rejected": [],
+  "rounds": 1
+}

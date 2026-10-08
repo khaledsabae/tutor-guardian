@@ -6,27 +6,47 @@
       "path_id": "path_0-3_medical_infant_sleep",
       "create": {
         "title": "نوم الرضيع: نومٌ آمن وليالٍ أهدأ (حتى عام)",
-        "age_group": "0-3",
+        "age_group": "prenatal-1",
         "domain": "medical",
-        "description": "مسار يومي للوالدين في السنة الأولى: النوم الآمن الذي يحمي الرضيع، وما هو طبيعي في نومه واستيقاظه، وعلامات النعاس، وروتين المساء، والرضاعة الليلية، والانتقال الهادئ إلى سريره، وتهدئة البكاء بأمان، وتعب الوالدين، ومتى تستشير الطبيب.",
+        "description": "درسان للوالدين من الولادة حتى إكمال عام: تجهيز مكان نوم آمن في كل نومة، وفهم الاستيقاظ والرضاعة الليلية، والتمييز بين التفاوت الطبيعي وعلامات الخطر التي تتطلّب مساعدة عاجلة.",
         "pedagogical_framework": "attachment_rahma",
-        "primary_reference": {"type": "تقرير_طبي", "info": "إرشادات الأكاديمية الأمريكية لطب الأطفال للنوم الآمن، ومنظمة الصحة العالمية، ووحدات المربّي المحرّرة"},
-        "en": {"title": "Baby Sleep: Safe Sleep and Calmer Nights (Up to One Year)",
-               "description": "A daily path for parents in the first year: safe sleep that protects the baby, what is normal in their sleeping and waking, signs of sleepiness, an evening routine, night feeds, a gentle move to their own cot, soothing crying safely, parents' exhaustion, and when to see the doctor."}
+        "primary_reference": {
+          "type": "تقرير_طبي",
+          "info": "الأكاديمية الأمريكية لطب الأطفال: النوم الآمن. هيئة الخدمات الصحية البريطانية: نوم الرضيع وعلامات المرض الخطير."
+        },
+        "en": {
+          "title": "Baby Sleep: Safe Sleep and Calmer Nights (Up to One Year)",
+          "description": "Two lessons for parents from birth until the first birthday: prepare a safe space for every sleep, understand waking and night feeds, and distinguish normal variation from danger signs needing urgent help."
+        }
       },
-      "unit_bands": ["prenatal-1", "0-3", "2-3", "unspecified"],
-      "band_notes": "Birth to twelve months. Medical safety first, following mainstream pediatric guidance (AAP/WHO): back to sleep for every sleep, a firm flat separate sleep surface, nothing soft in the cot, room-sharing without bed-sharing, never asleep with the baby on a sofa or armchair, never shaking a baby. Conservative; name the red flags that need a doctor or emergency care.",
+      "unit_bands": [
+        "prenatal-1",
+        "unspecified"
+      ],
+      "band_notes": "Birth until first birthday only; prenatal-1 is the canonical band. This recovery publishes only the first two contiguous lessons; the remaining eight original drafts stay held in the preserved backup. Follow AAP safe sleep and NHS infant feeding/waking guidance. Never delay responding to hunger or distress, never recommend leaving a newborn to cry, never promise a sleep-training deadline. Inability to wake, stopped breathing, or blue/grey colour requires emergency help immediately.",
       "lessons": [
-        {"title": "النوم الآمن: على ظهره في سريرٍ خالٍ", "focus": "Safe sleep for every sleep: on the back, a firm flat surface, nothing soft in the cot, own sleep surface in the parents' room, never on a sofa or armchair with a parent, no overheating, a smoke-free home; supervised tummy time while awake.", "keywords": ["نوم آمن", "النوم"], "pin_units": ["med-2dc3af5f", "gap-med-co-sleeping-01"]},
-        {"title": "كم ينام الرضيع؟ ولماذا يستيقظ كثيرًا؟", "focus": "Normal infant sleep: many hours in short stretches, frequent waking to feed in the first months, gradual lengthening of night sleep, wide differences between babies; what is normal versus worrying.", "keywords": ["النوم", "الرضيع"], "pin_units": ["med-2dc3af5f", "c88f868b-4f40-45eb-b357-f8867b2c327d"]},
-        {"title": "علامات النعاس: اللحظة المناسبة للنوم", "focus": "Reading sleepy cues (yawning, rubbing eyes, looking away, fussing), putting the baby down drowsy but awake as they grow, and why an overtired baby is harder to settle.", "keywords": ["النعاس", "النوم"], "pin_units": ["gap-med-co-sleeping-01"]},
-        {"title": "روتينٌ قصير قبل النوم", "focus": "A short, same-order evening routine from the early months: bath or wash, clean nappy, feed, a soft song or du'a, dim lights; consistency over weeks.", "keywords": ["روتين", "النوم"], "pin_units": ["gap-med-co-sleeping-01", "c7b72252-7135-405e-98fd-a46d466d9055"]},
-        {"title": "الرضاعة الليلية والنوم", "focus": "Night feeds are normal and needed in the early months; breastfeeding is protective; never prop a bottle; avoid falling asleep with the baby on a sofa while feeding; later, gently separating feeding from falling asleep; ask the doctor about night weaning.", "keywords": ["الرضاعة", "النوم"], "pin_units": ["med-2dc3af5f", "gap-med-co-sleeping-01"]},
-        {"title": "من الحضن إلى السرير: خطواتٌ هادئة", "focus": "Moving a baby who only sleeps in arms to their own cot gradually: cot beside the parents' bed, a steady routine, down drowsy not asleep, brief waits before picking up, patience over two weeks.", "keywords": ["الحضن", "السرير"], "pin_units": ["gap-med-co-sleeping-01"]},
-        {"title": "البكاء ليلًا: تهدئةٌ آمنة", "focus": "Soothing a crying baby safely: check basic needs, hold, rock, soft rhythmic sound, a dummy if used; never shake a baby; if overwhelmed, put the baby on their back in the cot and step away for a few minutes; when crying needs a doctor.", "keywords": ["البكاء", "التهدئة"], "pin_units": ["gap-med-co-sleeping-01", "med-1eb2b059"]},
-        {"title": "سكينة المساء: ذِكرٌ ودعاءٌ بصوتٍ هادئ", "focus": "A calm voice at bedtime: the parent recites dhikr and makes du'a for the baby softly as part of the routine; the baby is soothed by the parent's familiar calm voice; the parent's own heart finds rest.", "keywords": ["ذكر الله", "الدعاء"], "pin_units": ["isl-f6342250", "gap-med-co-sleeping-01"], "bank": ["v_013_028"]},
-        {"title": "إرهاق الوالدين: تعبك جزءٌ من الخطة", "focus": "Parents' sleep deprivation is real: sharing night shifts, sleeping when the baby sleeps, asking family for help, never dozing with the baby on a sofa; signs of postpartum depression that need a doctor.", "keywords": ["الاكتئاب", "التعب"], "pin_units": ["med-b972ac47", "gap-med-co-sleeping-01"]},
-        {"title": "متى تستشير الطبيب في نوم رضيعك؟", "focus": "Red flags: pauses in breathing, blue or grey colour, very noisy or laboured breathing, fever in a baby under three months, a baby who is unusually hard to wake or very floppy, poor feeding, inconsolable crying unlike usual — when to call the doctor and when to seek emergency care.", "keywords": ["النوم", "الطبيب"], "pin_units": ["med-2dc3af5f", "c88f868b-4f40-45eb-b357-f8867b2c327d"]}
+        {
+          "title": "النوم الآمن: على ظهره في سريرٍ خالٍ",
+          "focus": "Safe sleep for every sleep: on the back, a firm flat surface, nothing soft in the cot, own sleep surface in the parents' room, never on a sofa or armchair with a parent, no overheating, a smoke-free home; supervised tummy time while awake.",
+          "keywords": [
+            "نوم آمن",
+            "النوم"
+          ],
+          "pin_units": [
+            "med-2dc3af5f"
+          ]
+        },
+        {
+          "title": "كم ينام الرضيع؟ ولماذا يستيقظ كثيرًا؟",
+          "focus": "Normal infant sleep: many hours in short stretches, frequent waking to feed in the first months, gradual lengthening of night sleep, wide differences between babies; what is normal versus worrying.",
+          "keywords": [
+            "النوم",
+            "الرضيع"
+          ],
+          "pin_units": [
+            "med-2dc3af5f"
+          ]
+        }
       ]
     },
     {

@@ -24,6 +24,25 @@ def test_actual_set_includes_original_92_and_all_distinct_items():
     assert {f"g-{i:03d}" for i in range(1, 93)} <= {r["id"] for r in rows}
 
 
+def test_one_year_golden_case_is_eligible_for_its_existing_cdc_target_without_fake_hit():
+    from app.core.taxonomy import age_bands_apart, age_equivalents
+
+    row = next(r for r in ci.load_set(ROOT / "ops/eval/golden_set.jsonl")
+               if r["id"] == "g-074")
+    target_id = "d0d2dc99-520c-4ade-a1ee-9715df0c2dfd"
+    target = json.loads((ROOT / "knowledge_base/units" / f"{target_id}.json").read_text())
+    assert row["expected_domains"] == ["development"]
+    assert row["expected_unit_ids"] == [target_id]
+    assert target["title"] == "Your baby at 12 months"
+    assert target["age_group"] == "prenatal-1"
+    assert target["age_group"] in age_equivalents(row["age_group"])
+    assert age_bands_apart(target["age_group"], row["age_group"]) == 0
+    # Eligibility and catalog support do not mean that retrieval found the unit.
+    scored = ci.score_retrieval(row, ["development"], [], {"development"}, {target_id})
+    assert scored["missing_expected_unit_ids"] == []
+    assert scored["supported_unit_recall"] == 0
+
+
 @pytest.mark.parametrize("change", [{"id": ""}, {"question": ""},
                                     {"expected_domains": "medical"},
                                     {"expected_unit_ids": [3]}, {"age_group": None}])
@@ -81,6 +100,73 @@ def test_missing_index_is_unavailable_for_entire_set(tmp_path):
     assert report["status"] == "UNAVAILABLE"
     assert report["counts"]["unavailable"] == 2
     assert len(report["items"]) == 2
+
+
+@pytest.mark.backend_env
+@pytest.mark.parametrize("question,language", [
+    ("ar-g024", "ar"),
+    ("How can I teach my child good manners and help our community?", "en"),
+    ("؟", "en"),  # Insufficient script evidence retains neutral ranking.
+])
+def test_offline_report_keeps_production_language_preference_without_models(
+        tmp_path, monkeypatch, question, language):
+    """Real hybrid/language logic with synthetic candidates and rerank scores."""
+    from app.services import bm25_index, retrieval, reranker
+
+    if question == "ar-g024":
+        question = next(row["question"] for row in
+                        ci.load_set(ROOT / "ops/eval/golden_set.jsonl")
+                        if row["id"] == "g-024")
+    source = tmp_path / "source"
+    seed = source / "knowledge_base/chroma_seed"
+    seed.mkdir(parents=True)
+    (seed / "chroma.sqlite3").write_bytes(b"synthetic seed; never opened")
+    candidates = [
+        {"unit_id": f"unit-{lang}-{i}", "document": "synthetic candidate",
+         "metadata": {"language": lang, "age_group": "7-9",
+                      "domain": "islamic_parenting"},
+         "rerank_score": score}
+        for lang, score in (("en", 5.01), ("ar", 5.0)) for i in range(4)
+    ] + [{"unit_id": "unit-low", "document": "synthetic low score",
+          "metadata": {"age_group": "7-9"}, "rerank_score": -4.0}]
+    ids = {candidate["unit_id"] for candidate in candidates}
+
+    class Collection:
+        def get(self, include):
+            return {"ids": sorted(ids)}
+
+    class BM25:
+        def search(self, *args, **kwargs):
+            return []
+
+    def synthetic_rerank(query, pool, top_n):
+        return sorted(pool, key=lambda candidate: -candidate["rerank_score"])[:top_n]
+
+    monkeypatch.setattr(ci, "ROOT", source)
+    monkeypatch.setattr(retrieval, "CHROMA_PERSIST_DIR", retrieval.CHROMA_PERSIST_DIR)
+    monkeypatch.setattr(retrieval, "_collection", retrieval._collection)
+    monkeypatch.setattr(retrieval, "_TELEMETRY_DB", retrieval._TELEMETRY_DB)
+    monkeypatch.setattr(retrieval, "_get_collection", lambda: Collection())
+    monkeypatch.setattr(retrieval, "query_embedder", lambda: None)
+    monkeypatch.setattr(retrieval, "retrieve_relevant_units",
+                        lambda *args, **kwargs: candidates)
+    monkeypatch.setattr(retrieval, "retrieve_domain_only", lambda *args, **kwargs: [])
+    monkeypatch.setattr(bm25_index, "get_bm25", lambda: BM25())
+    monkeypatch.setattr(reranker, "rerank", synthetic_rerank)
+    # Resolve language from fixture metadata, without reading/loading the corpus.
+    monkeypatch.setattr(retrieval, "_candidate_language",
+                        lambda candidate: candidate["metadata"].get("language"))
+    work = tmp_path / "private"
+    work.mkdir()
+    report = ci.offline_report([item() | {
+        "question": question, "expected_domains": ["islamic_parenting"],
+        "expected_unit_ids": [f"unit-{language}-0"],
+    }], work)
+    row = report["items"][0]
+    assert row["retrieved_unit_ids"] == [f"unit-{language}-{i}" for i in range(4)]
+    assert row["supported_unit_recall"] == 1.0
+    assert report["answer_quality"]["status"] == "UNAVAILABLE"
+    assert report["scope"] == "offline keyword/fallback domains + hybrid retrieval"
 
 
 @pytest.mark.parametrize("env", [{}, {"DEEPSEEK_API_KEY": "test-placeholder"},

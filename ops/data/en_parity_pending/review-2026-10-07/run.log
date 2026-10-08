@@ -1,0 +1,31 @@
+
+━━ جولة 1: 19 وحدة · deepseek-v4-pro + glm-5.2
+   deepseek-v4-pro: 9/9 batches
+   glm-5.2: 9/9 batches
+
+══════════════════════════════════════════════════════════════
+  مختوم       : 13 / 19
+  أُصلح إنجليزيه: 0
+  اقتراحات للعربي: 0 (طُبّق: 0)
+  لم يُحسم    : 6
+  الزمن       : 1062 ث
+══════════════════════════════════════════════════════════════
+  ✗ story:maryam_toys
+      [medium/meaning/english] category (deepseek-v4-pro): The English category is unrelated to the Arabic, which is about sharing toys and generosity.
+      [medium/meaning/english] discussionQuestions[0] (deepseek-v4-pro): The English question is unrelated to the Arabic question about why Maryam hesitated to share.
+      [medium/meaning/english] discussionQuestions[1] (deepseek-v4-pro): The English question is unrelated to the Arabic question about what Maryam's mother said about playing together and sharing joy.
+      [medium/meaning/english] discussionQuestions[2] (deepseek-v4-pro): The English question is unrelated to the Arabic question about how Fatimah felt when Maryam shared her toys.
+  ✗ story:yaseen_creation
+      [medium/meaning/english] discussionQuestions[0] (deepseek-v4-pro): The English replaces the ant, stars, trees, and flowers with 'sky and birds,' changing the question's content.
+      [high/meaning/english] discussionQuestions[0] (glm-5.2): The Arabic asks about the ant, the stars, the trees, and the flowers, but the English replaces these entirely with 'the sky and the birds,' which are not mentio
+  ✗ story:fatima_parents
+      [medium/omission/english] description (deepseek-v4-pro): The English drops the condition 'بالمعروف' (in what is right), changing the Islamic nuance of obedience.
+      [medium/meaning/english] pages[4].text (glm-5.2): «جوري» is a rose, not a carnation, and the color «red» is added with no basis in the Arabic.
+  ✗ story:bilal_forgiveness
+      [medium/source_corruption/arabic] discussionQuestions[0] (deepseek-v4-pro): The story incident occurs during art class, not play, so the Arabic question contradicts the story context.
+  ✗ story:sarah_basil_sprout
+      [medium/source_corruption/arabic] islamicValue (deepseek-v4-pro): The Arabic hadith wording uses «ويميط» but the Sahih al-Bukhari hadith is «وتميط», a grammatical error in the quoted hadith.
+  ✗ story:salman_secret_trust
+      [medium/source_corruption/arabic] pages[2].text (deepseek-v4-pro): أكيد is colloquial; Modern Standard Arabic is expected.
+
+📄 ops/data/en_parity_pending/review-2026-10-07/run-report.json

@@ -1,0 +1,42 @@
+{
+  "sources": [
+    {
+      "title": "Tips for Redirecting your Attention",
+      "url": "https://www.cdc.gov/parenting-toddlers/responding-to-behavior/ignoring.html",
+      "accessed_at": "2026-10-07T15:32:16.813497+00:00",
+      "reader": "agent-reach Jina Reader",
+      "fetched_text_sha256": "81778e17af84813e58cca2309c54ce65f303114d63261ea346b36d5a31cf336d",
+      "meaning": "Hash binds the fetched primary-page representation, not a clinical approval.",
+      "current_fetch_sha256": "81778e17af84813e58cca2309c54ce65f303114d63261ea346b36d5a31cf336d",
+      "current_fetch_matches_prior": true
+    },
+    {
+      "title": "Temper Tantrums and Outbursts",
+      "url": "https://www.aacap.org/AACAP/Families_and_Youth/Facts_for_Families/FFF-Guide/Temper_Tantrums-136.aspx",
+      "accessed_at": "2026-10-07T15:32:16.813736+00:00",
+      "reader": "agent-reach Jina Reader",
+      "fetched_text_sha256": "5bc895eed8f53d16accf8254c7ec73a00332ab15c266bedc96eae479299b090c",
+      "meaning": "Hash binds the fetched primary-page representation, not a clinical approval.",
+      "current_fetch_sha256": "5bc895eed8f53d16accf8254c7ec73a00332ab15c266bedc96eae479299b090c",
+      "current_fetch_matches_prior": true
+    },
+    {
+      "title": "Milestones by 2 Years",
+      "url": "https://www.cdc.gov/act-early/milestones/2-years.html",
+      "accessed_at": "2026-10-07T15:32:16.812801+00:00",
+      "reader": "agent-reach Jina Reader",
+      "fetched_text_sha256": "f0956f38429dc83f4133bcc3b47bb7b6bcc8a66221c1cc03cde4e0de2776ced6",
+      "meaning": "Hash binds the fetched primary-page representation, not a clinical approval.",
+      "current_fetch_sha256": "f0956f38429dc83f4133bcc3b47bb7b6bcc8a66221c1cc03cde4e0de2776ced6",
+      "current_fetch_matches_prior": true
+    }
+  ],
+  "verified_relevant_claims": {
+    "AACAP": "Tantrums common in toddlers; frustration, hunger, tiredness, pain or illness can contribute. Calm responses and words rather than unsafe actions. Never physical aggression. Dangerous aggression/self-injury or functional impairment warrants assessment. No duration is a prerequisite to safety help.",
+    "CDC two years": "Steady sleep/feeding routines; do not force the amount of food; use simple words and help with conflicts.",
+    "CDC ignoring": "Only safe non-needs-based minor behavior; never dangerous behavior, pain or distress. Safe transition statements/choices are editorial examples, not validated guaranteed interventions."
+  },
+  "human_expert_approval": null,
+  "fresh_user_logs_analyzed": false,
+  "demand_basis": "Historical preserved specification; current live demand not newly measured"
+}

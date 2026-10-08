@@ -1,41 +1,41 @@
-# English prepared but not yet reviewed — not served
+# English prepared but not yet accepted — not served
 
-The Ollama Cloud **weekly** cap closed the review on 2026-10-04 before these
-were judged by both models. The English gate refuses new English that has not
-passed review, so they wait here, outside every loader:
+The 2026-10-07 closeout ran the canonical dual-family review (deepseek-v4-pro +
+glm-5.2 via Ollama Cloud, `run --rounds 1 --no-fix`, wire concurrency 1) on the
+15 items that waited here. Nine passed both families and are live with their
+stamp: 8 stories (hope_sprout, omar_prayer, khadija_neighbor, abdullah_bismillah,
+hamza_truth — interactive fields; badr_broken_toy, tamim_anger_volcano,
+noura_sharing_box — new) and `tip_prenatal-1_006`. Proof, raw responses and
+reasons: `review-2026-10-07/` (`verdicts.json`, `raw-calls.json`, `run-report.json`).
 
-- `stories_en.pending.json` — the 14 stories still unstamped: interactive
-  fields (age, category, three questions, Islamic value, challenge) for 9
-  existing stories, and the 5 kindergarten stories that have no English at all.
-  Islamic values follow #27's Arabic: Sahihayn hadith with Abd al-Baqi numbers,
-  or the ayah in Arabic with a labelled interpretation (Saheeh International).
-- `daily_tips/tip_prenatal-1_006.json` — translated from the current Arabic.
+Six stories were held in `stories_en.pending.json`, and `worship_06` stayed in
+`ops/data/en_unpublished/`. **All seven were resolved the same evening** (fresh dual-family
+review, `review-2026-10-07-held/`: 8 review calls + 2 evidence calls, all ok, no 429), and the
+pending file is now empty (`[]`):
 
-To finish, when the API is available:
+| item | resolution |
+|---|---|
+| maryam_toys, yaseen_creation, fatima_parents | the held candidates had been translated from the stale Arabic in `docs/stories.json`; the live English already carried the corrected fields (sharing category/questions/challenge; ant-stars-trees-flowers; «بالمعروف» as "in what is right", «جوري» as damask rose). Candidates discarded; live text re-reviewed fresh — low notes only — and re-stamped |
+| bilal_forgiveness | Arabic question «أثناء اللعب» → «أثناء حصة الرسم» (the story is unchanged), English to match; stamped |
+| salman_secret_trust | colloquial «وأكيد» → «ولا بدّ أن» in the Arabic; stamped and live |
+| sarah_basil_sprout | the citation is right: «ويميط» is verbatim Bukhari 2989, «وتميط» is Muslim 1009. Evidence + both families' verdict on it in `sarah-evidence*.json`; **agent** adjudication (not human) in `ops/data/en_parity_adjudications.json`; stamped and live |
+| lesson worship_06 | the verified unit `isl-3f0af447` (al-Bara' showing the Prophet's wudu, Alukah pp.99–102) now sits in the Arabic and English `unit_ids` alike; the withdrawn `isl-ab49af82` is gone; restored and stamped |
+
+The Arabic of every story now lives in two identical copies, `mobile/assets/data/stories.json` (bundled) and
+`docs/stories.json` (fetched first by the app). They had drifted — the served copy still carried
+older text (tidiness questions for maryam_toys, «تروّخ», «يده الشمال») — and were made byte-identical here.
+
+To hold a future story: put the candidate here, fix the English (or the Arabic, in both copies),
+put it in place as before, and run:
 
 ```bash
-python3 - <<'PY'   # put the prepared stories in place (keeps the stamped five)
-import json
-cur = json.load(open('mobile/assets/data/stories_en.json'))
-pend = {s['id']: s for s in json.load(open('ops/data/en_parity_pending/stories_en.pending.json'))}
-ar = json.load(open('mobile/assets/data/stories.json'))
-by = {s['id']: s for s in cur}; by.update(pend)
-out = [by[s['id']] for s in ar if s['id'] in by]
-blob = json.dumps(out, ensure_ascii=False, indent=2) + "\n"
-open('mobile/assets/data/stories_en.json', 'w').write(blob); open('docs/stories.en.json', 'w').write(blob)
-PY
-git mv ops/data/en_parity_pending/daily_tips/tip_prenatal-1_006.json knowledge_base/curriculum/i18n/en/daily_tips/
-python3 ops/tools/review_en_parity.py run --all --unstamped --workers 1 --max-concurrent 2
+python3 ops/tools/review_en_parity.py run --only story:<id> --rounds 1 --no-fix --workers 1 --max-concurrent 1
 ```
 
-Commit only what `run` stamped. New English cannot be queued, and English cannot be
-added to a unit that is not stamped, so any story or tip left unresolved goes back
-into this folder until it passes.
-
-Authorship is recorded so the family rule holds after they move: the 5 new stories and
-the tip carry `translator_model: claude-opus-5.5`; the 9 updated stories carry
-`english_authors: [mistral-large-3:675b, claude-opus-5.5]` (mistral's text, Claude's new
-fields). Claude cannot stamp any of them; deepseek-v4-pro + glm-5.2 can.
+Authorship: sarah_basil_sprout and salman_secret_trust carry `translator_model: claude-opus-5.5`;
+bilal_forgiveness carries `english_authors: [mistral-large-3:675b, claude-opus-5.5]`. Claude cannot
+stamp any of them; deepseek-v4-pro + glm-5.2 can. A stamp certifies English–Arabic
+parity only — scholar review stays pending.
 
 ## Queued live English — `ops/data/en_parity_queue.json`
 
@@ -44,13 +44,17 @@ English unit that is live without a stamp, bound to the sha of its current text,
 a reason and a category (`check` — and CI — fail on anything unstamped that is not
 there, or that changed after it was queued):
 
-- `awaiting-review` (46): English Claude wrote or rewrote (fixing reviewer-located
-  defects, or with PR #27's Arabic), the 9 stories waiting on the fields above, and
-  `lesson_7-9_islamic_parenting_worship_01` (owned by #31). `run` stamps them and
-  removes their entries.
-- `source-unverified` (130): Alukah units whose Arabic summary was never shown to
-  match its reversed-PDF source. `run`, `stamp-reviewed` and `sign` refuse them until
-  the hold is released (`unqueue`) after re-extraction.
+As of 2026-10-07 the queue is **empty** (`[]`): every published English unit is stamped.
+The two categories it can hold:
+
+- `awaiting-review`: English Claude wrote or rewrote. `run` stamps them and removes
+  their entries.
+- `source-unverified`: Alukah units whose Arabic summary was never shown to match its
+  reversed-PDF source. `run`, `stamp-reviewed` and `sign` refuse them until the hold is
+  released (`unqueue`) after re-extraction.
+
+History (counts were 46 awaiting-review and 130 source-unverified before the
+October 2026 closeout) lives in git and `docs/EN_CONTENT_STATUS.md`.
 
 ```bash
 python3 ops/tools/review_en_parity.py inventory     # queued / src-hold columns

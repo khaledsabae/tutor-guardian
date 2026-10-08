@@ -1,0 +1,72 @@
+[
+  {
+    "key": "s01",
+    "brief": "لماذا يغضب بهذه القوة؟",
+    "accepted": true,
+    "blockers": [],
+    "ar_hash": "38bf69991544d80d",
+    "ar_review": {
+      "reviewer": "deepseek-v4-pro",
+      "at": "2026-10-07T17:32:46",
+      "defects": [
+        {
+          "type": "pedagogy",
+          "field": "summary",
+          "quote": "قبل أن تسمي ما يحدث عنادًا، انظر إلى حاجته: هل هو جائع أو متعب؟ هل يتألم أو تبدو عليه علامات المرض؟ ... قدم الطعام أو الراحة أو الرعاية المناسبة للحاجة",
+          "why": "يتداخل هذا المقطع مع درس المسار الآخر «قبل النوبة: الجوع والنعاس والانتقال المفاجئ» الذي يغطي الجوع والنعاس والانتقال المفاجئ قبل النوبة، فيضعف تميّز الدرس.",
+          "severity": "low",
+          "fix": "اختصار الفقرة والإحالة إلى درس المسار الآخر بدل تكرار توجيهات الجوع والتعب."
+        },
+        {
+          "type": "medical",
+          "field": "summary",
+          "quote": "إذا كان يؤذي نفسه أو غيره، أو كانت النوبات شديدة ومتكررة وتعطّل حياته اليومية، فتحدث مع طبيبه",
+          "why": "تغفل هذه القائمة علامة الخطر «يصعب تهدئته» الواردة في وحدة المعرفة؛ فقد يحتاج الطفل الذي يصعب تهدئته إلى تقييم طبي حتى لو لم يؤذِ نفسه أو لم تكن النوبات شديدة ومتكررة.",
+          "severity": "low",
+          "fix": "إضافة «أو يصعب تهدئته» إلى أسباب استشارة الطبيب."
+        }
+      ],
+      "combined": true,
+      "contains_religious_text": false
+    },
+    "en_hash": "7f7e13fd36d39c9538bf69991544d80d",
+    "en_review": {
+      "reviewer": "deepseek-v4-pro",
+      "at": "2026-10-07T17:32:46",
+      "defects": [
+        {
+          "type": "register",
+          "field": "summary",
+          "quote": "in search of quick quiet",
+          "why": "صياغة إنجليزية متكلفة؛ الترجمة الأدق لعبارة «هدوء سريع» هي quick calm.",
+          "severity": "low",
+          "fix": "استبدالها بـ in search of quick calm."
+        }
+      ],
+      "combined": true,
+      "contains_religious_text": false
+    }
+  },
+  {
+    "key": "s02",
+    "brief": "قبل النوبة: الجوع والنعاس والانتقال المفاجئ",
+    "accepted": true,
+    "blockers": [],
+    "ar_hash": "e2c0d98e5ce403a6",
+    "ar_review": {
+      "reviewer": "glm-5.2",
+      "at": "2026-10-07T17:38:16",
+      "defects": [],
+      "combined": true,
+      "contains_religious_text": false
+    },
+    "en_hash": "4a9beebd2bb41e1ce2c0d98e5ce403a6",
+    "en_review": {
+      "reviewer": "glm-5.2",
+      "at": "2026-10-07T17:38:16",
+      "defects": [],
+      "combined": true,
+      "contains_religious_text": false
+    }
+  }
+]

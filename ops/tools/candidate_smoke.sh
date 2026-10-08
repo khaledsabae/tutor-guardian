@@ -23,7 +23,8 @@
 #                      the host into swap;
 #   --network none     hermetic: no production service, no model download,
 #                      no hanging on DNS. Loopback still works for uvicorn.
-# No .env, no secrets, no volumes: the image alone.
+# No .env, secrets or production volumes. Hosted CI may supply test tooling
+# through CANDIDATE_TEST_TOOLS_DIR: a read-only mount, not an image install.
 set -euo pipefail
 
 image="${1:?usage: candidate_smoke.sh IMAGE [CONTAINER_NAME] [-- COMMAND...]}"
@@ -32,8 +33,20 @@ shift $(( $# >= 2 ? 2 : 1 ))
 [ "${1:-}" = "--" ] && shift
 [ $# -gt 0 ] || set -- python ops/tools/candidate_smoke.py
 
+tool_mount=()
+pythonpath=/app/backend
+if [ -n "${CANDIDATE_TEST_TOOLS_DIR:-}" ]; then
+  [ -d "$CANDIDATE_TEST_TOOLS_DIR" ] || {
+    echo "::error::candidate test-tool directory does not exist" >&2
+    exit 1
+  }
+  tool_mount=(--mount "type=bind,source=$CANDIDATE_TEST_TOOLS_DIR,target=/opt/candidate-test-tools,readonly")
+  pythonpath=/opt/candidate-test-tools:/app/backend
+fi
+
 exec docker run --rm --name "$name" \
   --cpus "${SMOKE_CPUS:-1}" --cpu-shares 256 --memory 4g \
   --network none \
-  -e PYTHONPATH=/app/backend \
+  "${tool_mount[@]}" \
+  -e "PYTHONPATH=$pythonpath" \
   "$image" "$@"

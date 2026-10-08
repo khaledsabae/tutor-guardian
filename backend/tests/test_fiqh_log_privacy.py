@@ -65,7 +65,7 @@ def test_rows_older_than_the_retention_are_dropped(log_db, monkeypatch):
     assert _logged(log_db) == ["ما حكم التصوير؟"]
 
 
-def test_a_failing_redaction_still_logs_and_still_blocks(log_db, monkeypatch):
+def test_a_failing_redaction_logs_only_hash_and_still_blocks(log_db, monkeypatch):
     import app.services.privacy as privacy
 
     def boom(*a, **k):
@@ -73,4 +73,7 @@ def test_a_failing_redaction_still_logs_and_still_blocks(log_db, monkeypatch):
 
     monkeypatch.setattr(privacy, "redact_for_cloud", boom)
     assert fiqh_guard.check_fiqh_guard("هل الرسم حرام؟", "dev-1")[0]
-    assert _logged(log_db) == ["هل الرسم حرام؟"]
+    import hashlib
+    assert _logged(log_db) == ["sha256:" + hashlib.sha256("هل الرسم حرام؟".encode()).hexdigest()]
+    with sqlite3.connect(log_db) as db:
+        assert db.execute("SELECT redacted FROM blocked_fiqh_log").fetchone()[0] == 0

@@ -1,0 +1,5 @@
+# Test tooling only. Install alongside requirements.txt for a full dev environment.
+# CI applies the existing .github/ci/constraints-prod.txt to BOTH manifests.
+# These declarations retain their previous bounds; this file is not a resolved lock.
+pytest>=8.0
+pytest-anyio>=0.0.0

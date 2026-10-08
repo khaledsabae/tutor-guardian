@@ -1,0 +1,58 @@
+{
+  "id": "lesson_0-3_medical_infant_sleep_02",
+  "path_id": "path_0-3_medical_infant_sleep",
+  "title": "How Much Do Babies Sleep, and Why Do They Wake So Often?",
+  "age_group": "prenatal-1",
+  "domain": "medical",
+  "unit_ids": [
+    "med-2dc3af5f"
+  ],
+  "summary": "In the first weeks a newborn sleeps for most of the day, but in short, broken stretches, waking between them to feed and then going back to sleep, and at first they don't tell night from day. All of this is normal: their stomach is small, so they need to feed every few hours, and their internal clock is still forming.\n\nAs the weeks pass, night-time stretches of sleep gradually lengthen and the baby starts to tell night from day — especially if you help: light, activity and normal household sounds during the day, and quiet and dim light at night. But night waking remains common throughout the first year, and sometimes returns after calm periods, with teething, illness or developmental stages.\n\nBabies' needs vary a lot: some sleep longer than others, and some take longer to sleep for long stretches at night. So don't compare your baby with others, and don't worry about frequent waking alone as long as they feed well, gain weight, seem alert when awake, and settle when you hold them.\n\nRespond to signs of hunger or distress, and do not delay a feed to try to lengthen sleep. If your baby is difficult to wake or will not wake up, has difficulty breathing or stops breathing, or turns blue or grey, call emergency services immediately; do not wait for a doctor's appointment. If feeding decreases, they become unusually lethargic, or cry in an unusual way, contact a doctor without delay. Sleep may improve and then become broken again; there is no guaranteed deadline for uninterrupted sleep.",
+  "try_this": "Today: Help your baby tell night from day: keep their daytime bright, with the normal sounds of the house, and keep night feeds in dim light with few words and calm.",
+  "order": 2,
+  "estimated_minutes": 3,
+  "reflection_prompts": [
+    "What worries you most about your baby's sleep, and is it something normal and expected or one of the signs that need a doctor?"
+  ],
+  "warning_flags": [
+    "needs_professional_followup"
+  ],
+  "needs_professional_followup": true,
+  "is_published": true,
+  "version": "1.0.0",
+  "created_at": "2026-10-07T16:14:23",
+  "updated_at": "2026-10-07T16:14:23",
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "claude-opus-5-5",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
+    "revalidated_at": "2026-10-07T16:15:12+00:00",
+    "generated_by": "ops/tools/deepen_paths.py",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "4aded33661080c40d344df0139825afec2999a7f5ad7840281d654c2c410501f",
+      "reviewed_at": "2026-10-07T16:15:12+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+    }
+  }
+}

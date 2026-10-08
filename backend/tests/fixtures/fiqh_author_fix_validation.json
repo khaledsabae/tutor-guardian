@@ -1,0 +1,107 @@
+{
+  "schema": "tg.fiqh_author_fix_validation/1",
+  "parent_commit": "42b9578a86dbdc4acb9ff8fe73e0dbaea35bf96c",
+  "started_at": "2026-10-07T16:30:11Z",
+  "deadline": "2026-10-07T16:50:11Z",
+  "recorded_at": "2026-10-07T16:46:48.864415+00:00",
+  "independent_original_review": "/home/khalednew/.codex/review-proof/fiqh42-2026-10-07/review.md",
+  "independent_original_probe_sha256": "f534238c92384b04769e39a5f7d9304745bfc02ef8fe59ea2d4193a12239f3ea",
+  "four_independent_red": {
+    "tests": 4,
+    "failures": 4,
+    "errors": 0,
+    "skipped": 0,
+    "seconds": 0.384,
+    "exit_code": 1,
+    "junit_sha256": "ed7d88fe97f5b6ce0a33931c41d37401bd55b318228630dd1aea0a94f7df5370"
+  },
+  "author_replay_same_four_green": {
+    "tests": 4,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "seconds": 0.322,
+    "exit_code": 0,
+    "junit_sha256": "5315e78e0d2f083ffa47353095df9252623cdf2c9629cb77903c597e4431113e"
+  },
+  "live_parenting_tdd_red": {
+    "tests": 9,
+    "failures": 9,
+    "errors": 0,
+    "skipped": 0,
+    "seconds": 4.556,
+    "exit_code": 1,
+    "junit_sha256": "5333e703bb22fa1a625aa477d448913ecbffee72b05f476f26c174d1746c8a86"
+  },
+  "canonical_boundary_tdd_red": {
+    "tests": 1,
+    "failures": 1,
+    "errors": 0,
+    "skipped": 0,
+    "seconds": 1.024,
+    "exit_code": 1,
+    "junit_sha256": "f097d1267614be9830243947a51cf0c20897c32df5e19c4a496c7ea075825cf3"
+  },
+  "final_scoped_green": {
+    "tests": 317,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "seconds": 63.893,
+    "exit_code": 0,
+    "junit_sha256": "bc17bc4474067b06abcd1b5095ad618e89bc074bce6a3270d30fd0588cb32e36"
+  },
+  "test_counts_by_module": {
+    "backend.tests.test_fiqh_author_fix": 43,
+    "backend.tests.test_fiqh_intent_phase1": 54,
+    "backend.tests.test_fiqh_log_privacy": 5,
+    "backend.tests.test_fiqh_guard_precision": 31,
+    "backend.tests.test_intent_guard": 171,
+    "backend.tests.test_aux_llm_routing": 13
+  },
+  "endpoint_coverage": {
+    "positive_draft_stream": 6,
+    "compound_wrapped_negative_draft_stream": 14,
+    "emergency_priority_draft_stream": 2,
+    "transport": "Mock classification/retrieval/generation; sockets denied; no real provider calls"
+  },
+  "changes": [
+    "Inspect every existing hard-rule match before any divorce proposal or deterministic exemption.",
+    "Normalize cue patterns, matching input and semantic question consistently, including tashkeel/alef.",
+    "Raw-original full-question child-support grammar after divorce can pass the live guard in draft and stream. Extra clauses, personal-name/extra-token rewrites, unknown intent and all overlapping hard rules keep the block.",
+    "Name-redaction errors or silently unavailable name store yield no fiqh classifier prompt/provider call. Block logging stores sha256 metadata only and redacted=0, with no raw exception text."
+  ],
+  "deterministic_policy": "Implemented in default code under existing user authorization; no production deployment. It is not decided by a semantic model.",
+  "general_semantic_classifier": "Default off; opt-in shadow only; no broad model enforcement or accuracy claim.",
+  "data_provenance": "Approved masked examples, prior precision/privacy fixtures and independent synthetic adversarial combinations. Not current live logs, model training, or newly completed human label review.",
+  "new_human_approval_gate": false,
+  "provider_evaluation_calls": 0,
+  "independent_recheck_complete": false,
+  "future_validation": "Ampere independent recheck of committed follow-up. No new human approval prerequisite for the narrow deterministic policy. Broad semantic behavior still requires engineering accuracy validation through an authorized no-cost route.",
+  "protected_unchanged_paths": [
+    "backend/app/routers/assistant.py",
+    "backend/app/services/ai_gateway.py",
+    "backend/app/services/answer_cache.py",
+    "backend/app/services/intent_guard.py",
+    "backend/app/services/privacy.py"
+  ],
+  "cache_c7_merge_note": "This patch does not edit caches or routers. Parent integration must preserve c7 cache fixes; no merge/reset/rewrite was performed in this worktree.",
+  "lint": {
+    "ruff_exit_code": 0,
+    "whitespace_exit_code": 0
+  },
+  "pytest_warnings": "Two existing dependency deprecation warnings in final scoped run; no test failures/errors/skips.",
+  "private_intermediate_note": "An initial combined external+owned test invocation had two shadow-report failures; independent probes and owned protocol tests were verified separately, then final committed-scope317 all passed. Early successful-route stream stubs used the wrong mock chunk shape; corrected to real StreamChunk contract before final317 run.",
+  "no_push": true,
+  "no_env_changes": true,
+  "no_build_or_emulator": true,
+  "no_production_calls": true,
+  "scope": [
+    "backend/app/services/fiqh_guard.py",
+    "backend/app/services/fiqh_intent.py",
+    "backend/tests/test_fiqh_author_fix.py",
+    "backend/tests/test_fiqh_intent_phase1.py",
+    "backend/tests/test_fiqh_log_privacy.py",
+    "backend/tests/fixtures/fiqh_author_fix_validation.json"
+  ]
+}

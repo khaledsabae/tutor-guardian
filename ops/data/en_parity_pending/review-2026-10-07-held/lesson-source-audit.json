@@ -1,0 +1,42 @@
+{
+  "_doc": "Source audit for lesson_7-9_islamic_parenting_worship_06 (held in ../review-2026-10-07/lesson-source-audit.json). Agent audit 2026-10-07 against the live KB and the project's hadith corpus (ops/data/hadith_index.json.gz). Not a scholar's review.",
+  "lesson": "lesson_7-9_islamic_parenting_worship_06",
+  "search": "All Arabic KB units (knowledge_base/units/*.json) scanned for wudu vocabulary (وضوء/توضأ/المضمضة/الاستنشاق/المرفقين/الكعبين/المرافق/فاغسلوا وجوهكم/كفيه ثلاث) and for citations of Bukhari 159, Muslim 226 or al-Ma'ida 5:6. One unit describes wudu steps: isl-3f0af447. Two others matched only incidentally (968f42b5…: garbled Tarbiyat al-Tifl extraction about Qur'an recitation; isl-8e3e1052: anger). No unit quotes Bukhari 159 / Muslim 226 or Qur'an 5:6.",
+  "units": {
+    "isl-3f0af447": "verified live unit — Alukah «حقوق الأولاد على الوالدين» pp.99–102, refilled from the OCR'd pages on 2026-10-05 (kb_fidelity/gaps.md item 1) and corrected after an independent page-image review (PR #41, 9bcac491: non-Sahihayn narrations turned into reported speech). Age 7-9. Already the source of the prayer journey's wudu stage. Content: al-Bara' ibn 'Azib gathered his family and showed them the Prophet's ﷺ wudu: rinsing the mouth and nose, the face ×3, the right then the left arm ×3, wiping the head and both sides of the ears, the right then the left foot ×3 (Ahmad, graded hasan by the author — described, not quoted as Sahihayn).",
+    "isl-c4d83813": "authored guidance on teaching prayer (PR #27) — kept as in the Arabic",
+    "isl-ab49af82": "withdrawn as unfaithful (Alukah p.144 is about sleep after Fajr and circumcision) — removed from the English unit_ids"
+  },
+  "unit_ids": {
+    "before": {
+      "ar": [
+        "isl-c4d83813"
+      ],
+      "en": [
+        "isl-ab49af82",
+        "isl-c4d83813"
+      ]
+    },
+    "after": {
+      "ar": [
+        "isl-3f0af447",
+        "isl-c4d83813"
+      ],
+      "en": [
+        "isl-3f0af447",
+        "isl-c4d83813"
+      ]
+    }
+  },
+  "claims_vs_sources": {
+    "rinse mouth and nose, wash face, wash arms, wipe head and ears, wash feet — in that order": "isl-3f0af447",
+    "wash the palms first; arms 'to the elbows'; feet 'to the ankles'": "not in a KB unit; the project corpus holds it in Sahih al-Bukhari 159 / Sahih Muslim 226 (ʿUthmān's wudu: «فأفرغ على كفيه ثلاث مرار … ويديه إلى المرفقين … رجليه … إلى الكعبين»). The lesson states these as steps, quoting nothing.",
+    "intention in the heart": "general principle (Sahih al-Bukhari 1, «إنما الأعمال بالنيات»); stated as a step, not quoted",
+    "saying Bismillah": "no Sahihayn text on tasmiyah for wudu and no KB unit; stated as a step without attribution (a sunnah per most scholars, obligatory per the Hanbalis). Flagged for Khaled, not a blocker: nothing is attributed to the Prophet ﷺ",
+    "detailed fiqh questions (what breaks wudu, injuries)": "the lesson defers to a trusted fiqh book or scholar"
+  },
+  "scripture": "none quoted; check_scripture_coverage.py exit 0",
+  "age_fit": "7-9 lesson, 7-9 source unit — fits",
+  "source_verdict": "verified for the washed and wiped members and their order (isl-3f0af447); the remaining steps are standard practice stated without attribution and agree with Bukhari 159 / Muslim 226 in the corpus. No hadith text fabricated, no KB unit created.",
+  "decision": "restored from ops/data/en_unpublished; English unit_ids now equal the Arabic's; stamped by both families (no defect)"
+}

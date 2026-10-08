@@ -7,12 +7,14 @@ Per ops/FIQH_GUARD.md v3 (approved 2026-09-10):
   false-positive review and future classifier training — with the family's
   child names, emails and phone numbers masked, and kept for
   FIQH_LOG_RETENTION_DAYS (default 90).
-- Regex phase only (v3 plan step 3); the intent classifier comes after a week
-  of real samples.
+- A narrow deterministic parenting-after-divorce exception is enabled under
+  the approved parenting/ruling distinction. General model classification
+  remains opt-in shadow only; it cannot change live decisions.
 """
 from __future__ import annotations
 
 import logging
+import hashlib
 import os
 import re
 import sqlite3
@@ -109,18 +111,67 @@ _RULES: list[tuple[str, "re.Pattern[str]"]] = [
     (rule_id, _compile(src)) for rule_id, src in _RULE_SOURCES
 ]
 
+# Full-question grammar, not a bag of parenting words. Additional clauses,
+# legal details, quoted rulings, unknown intent and every overlapping hard
+# category retain the block. Canonical privacy placeholders are allowed.
+_PARENT_CHILD = (
+    r"(?:طفلي|ابني|ابنتي|بنتي|اطفالي|اولادي|الطفل\s+[ا-ي]"
+    r"|(?:ابني|ابنتي|بنتي)\s+(?:طفلي|الطفل\s+[ا-ي]))"
+)
+_PARENTING_AFTER_DIVORCE = _compile(
+    rf"\s*(?:كيف|ازاي)\s+(?:اساعد|ادعم|اطمئن|اتعامل\s+مع)\s+{_PARENT_CHILD}\s+"
+    r"(?:(?:على\s+)?(?:التاقلم|التكيف)\s+)?بعد\s+الطلاق\s*[؟?!.]*\s*"
+)
 
-def check_fiqh_guard(text: str, device_id: str | None = None) -> tuple[bool, str]:
-    """Return (blocked, rule_id) for explicit fiqh/aqeedah ruling questions.
 
-    `device_id` is used only to mask that family's child names in the log.
-    """
+def _match_fiqh_guard(text: str) -> tuple[bool, str]:
+    """Pure legacy decision, shared with the opt-in semantic shadow protocol."""
     norm = _normalize(text)
     for rule_id, pattern in _RULES:
         if pattern.search(norm):
-            _log_block(text, rule_id, device_id)
             return True, rule_id
     return False, ""
+
+
+def _matching_fiqh_rules(text: str) -> tuple[str, ...]:
+    """Inspect every category: an early divorce topic must not hide a ruling."""
+    norm = _normalize(text)
+    return tuple(rule_id for rule_id, pattern in _RULES if pattern.search(norm))
+
+
+def _effective_fiqh_guard(text: str, device_id: str | None = None) -> tuple[bool, str]:
+    """Live deterministic policy; semantic labels never decide an exemption."""
+    rules = _matching_fiqh_rules(text)
+    if not rules:
+        return False, ""
+    hard = next((rule for rule in rules if rule != "fiqh_talaq_khalaa"), None)
+    if hard:
+        return True, hard
+    if len(text) <= 2000:
+        if _PARENTING_AFTER_DIVORCE.fullmatch(_normalize(text)):
+            return False, ""
+    return True, rules[0]
+
+
+def check_fiqh_guard(text: str, device_id: str | None = None) -> tuple[bool, str]:
+    """Apply narrow deterministic parenting policy, then optional shadow.
+
+    Unknown modes (including enforce/active) cannot activate classification.
+    Existing router emergency checks still precede this function.
+    """
+    blocked, rule = _effective_fiqh_guard(text, device_id)
+    if os.environ.get("FIQH_INTENT_MODE") == "shadow":
+        try:
+            from app.services.fiqh_intent import evaluate
+            decision = evaluate(text, device_id, mode="shadow")
+            blocked = decision.effective_blocked
+            if not blocked:
+                rule = ""
+        except Exception:
+            pass  # Shadow failures never alter the deterministic decision.
+    if blocked:
+        _log_block(text, rule, device_id)
+    return blocked, rule
 
 
 # ── Telemetry: blocked_fiqh_log (FIQH_GUARD.md v3 — point ج) ────────────────
@@ -140,18 +191,34 @@ def _retention_days() -> int:
         return 90
 
 
-def _scrub(text: str, device_id: str | None) -> str:
+def _scrub(text: str, device_id: str | None) -> str | None:
     """What the review needs is the phrasing that tripped a rule, not who asked.
 
     The questions are verbatim parent text and used to be stored as typed,
     forever: children's names, and whatever contact details came with them.
     """
-    from app.services.privacy import redact_for_cloud  # lazy: avoids an import cycle
+    from app.services import privacy  # lazy: avoids an import cycle
 
     try:
-        text = redact_for_cloud(text, device_id)
-    except Exception:  # noqa: BLE001 — masking is best effort, the block is not
-        logger.warning("fiqh_guard: name redaction failed", exc_info=True)
+        text = privacy.redact_for_cloud(text, device_id)
+        if not isinstance(text, str):
+            raise ValueError("invalid redaction result")
+        # Shared privacy helpers deliberately fail open for other callers.
+        # Fiqh logs/model prompts must not interpret an unavailable name store
+        # as proof there are no names. Read strictly and apply this snapshot
+        # even if the shared helper silently returned the original question.
+        uri = Path(privacy.db_path()).resolve().as_uri() + "?mode=ro"
+        with sqlite3.connect(uri, uri=True, timeout=0.2) as conn:
+            if device_id:
+                family = privacy.family_from_conn(conn, device_id)
+                text = privacy.redact_family(text, family)
+            else:
+                names = tuple(row[0] for row in conn.execute(
+                    "SELECT name FROM child_profiles") if row[0])
+                text = privacy.redact_with_names(text, names)
+    except Exception:
+        logger.warning("fiqh_guard: redaction unavailable; metadata only")
+        return None
     text = _EMAIL.sub("[email]", text)
     return _PHONE.sub("[phone]", text)
 
@@ -171,9 +238,12 @@ def _log_block(text: str, rule_id: str, device_id: str | None = None) -> None:
         )
         from app.services.retention import ensure_marker
         ensure_marker(conn, "blocked_fiqh_log")
+        scrubbed = _scrub(text, device_id)
+        stored = scrubbed[:500] if scrubbed is not None else (
+            "sha256:" + hashlib.sha256(text.encode()).hexdigest())
         conn.execute(
-            "INSERT INTO blocked_fiqh_log (question, rule_id, redacted) VALUES (?, ?, 1)",
-            (_scrub(text, device_id)[:500], rule_id),
+            "INSERT INTO blocked_fiqh_log (question, rule_id, redacted) VALUES (?, ?, ?)",
+            (stored, rule_id, 1 if scrubbed is not None else 0),
         )
         conn.execute(
             "DELETE FROM blocked_fiqh_log WHERE created_at < datetime('now', ?)",
@@ -182,4 +252,4 @@ def _log_block(text: str, rule_id: str, device_id: str | None = None) -> None:
         conn.commit()
         conn.close()
     except Exception:
-        logger.warning("fiqh_guard: failed to log blocked question", exc_info=True)
+        logger.warning("fiqh_guard: failed to log block metadata")

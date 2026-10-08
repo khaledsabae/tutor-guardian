@@ -63,7 +63,9 @@ jobs:
       - name: Golden reporting regression tests (no app/provider)
         run: |
           python3 -m pip install 'pytest>=8,<9'
-          python3 -m pytest ops/tests/test_golden_ci.py --junitxml="$RUNNER_TEMP/golden-tests.xml"
+          # backend_env tests import the retrieval stack; backend.yml runs them
+          # with production's package set.
+          python3 -m pytest ops/tests/test_golden_ci.py -m "not backend_env" --junitxml="$RUNNER_TEMP/golden-tests.xml"
 
       - name: Build and smoke (nothing pushed)
         id: image

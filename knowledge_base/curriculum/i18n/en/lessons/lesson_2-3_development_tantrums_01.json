@@ -1,0 +1,56 @@
+{
+  "id": "lesson_2-3_development_tantrums_01",
+  "path_id": "path_2-3_development_tantrums",
+  "title": "Why Is Their Anger So Strong?",
+  "age_group": "2-3",
+  "domain": "development",
+  "unit_ids": [
+    "seed-tantrum-23"
+  ],
+  "summary": "Your child screams because a biscuit broke, or cries when playtime ends. You may feel confused or wonder whether you made a parenting mistake. Tantrums are common at ages two and three, and on their own they are not enough to judge a child or their parents. Your child is learning to express wishes and feelings, but still needs your help when frustrated.\n\nBefore calling the behavior stubbornness, look at their needs: are they hungry or tired? Are they in pain or showing signs of illness? Crying may look similar, but your response starts with noticing the child and the situation. Offer food, rest or care suited to the need, and do not ignore pain or fear in search of quick quiet.\n\nTry lowering your voice and staying nearby. Use a few words, such as: «I see that you are angry, and I am here.» You can understand the feeling while keeping a safe limit, such as moving a harmful object away. Do not hit, threaten or humiliate your child, and stop actions that put them or others at risk. Once they calm down, help them name the feeling with a simple word, without a long lecture.\n\nYou do not have to prevent every tantrum to be a supportive parent. Notice what your child needs and what helps you both return to calm. If they harm themselves or others, or tantrums are severe, frequent and disrupt daily life, talk with their doctor. If you cannot maintain safety or a serious injury occurs, seek urgent help without waiting for a set duration.",
+  "try_this": "Today: Write «I notice my child's need before judging their behavior» and put it somewhere visible to remind you in the next situation.",
+  "order": 1,
+  "estimated_minutes": 3,
+  "reflection_prompts": [
+    "Did your response change when you noticed your child's need rather than calling the tantrum stubbornness?"
+  ],
+  "warning_flags": [],
+  "needs_professional_followup": false,
+  "is_published": true,
+  "version": "1.0.0",
+  "created_at": "2026-10-07T17:38:16",
+  "updated_at": "2026-10-07T17:38:16",
+  "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "gpt-6 (Codex source revision)",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-07",
+    "revalidated_at": "2026-10-07T17:41:22+00:00",
+    "generated_by": "ops/tools/deepen_paths.py",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "734913abb1b9b461aa5828703e5da9018ddd87ea7af62886a1b9ebe041f976e0",
+      "reviewed_at": "2026-10-07T17:41:22+00:00",
+      "residual_low": [],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+    }
+  }
+}

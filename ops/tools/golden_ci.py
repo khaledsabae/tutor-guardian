@@ -100,7 +100,10 @@ def prepare_offline(private):
         # Production deterministic fast path + broad fallback. No LLM
         # classifier or query rewrite; the report labels this scope explicitly.
         domains = fallback_domains(item["question"])
-        return domains, retrieval.retrieve_hybrid(item["question"], domains, item["age_group"])
+        return domains, retrieval.retrieve_hybrid(
+            item["question"], domains, item["age_group"],
+            lang=retrieval.detect_query_language(item["question"]),
+        )
 
     return retrieve, CANONICAL_DOMAINS, ids
 

@@ -169,5 +169,23 @@
         "on": "2026-10-07"
       }
     ]
+  },
+  "story:sarah_basil_sprout": {
+    "content_sha256": "7c6f98734d6cd401f67826d26edd7b5c050bdaa623b56437c8a70c72fbcd533b",
+    "overrides": [
+      {
+        "field": "islamicValue",
+        "type": "source_corruption",
+        "reason": "«ويميط الأذى عن الطريق صدقة» is verbatim Sahih al-Bukhari 2989 (Book 56, Hadith 198: «وَيُمِيطُ الأَذَى عَنِ الطَّرِيقِ صَدَقَةٌ», third person like يعدل/يعين/يخطوها in that narration); «وتميط» is the wording of Sahih Muslim 1009. The reviewer's suggestion would put Muslim's wording under Bukhari's number, which the scripture gate rejects. Evidence: ops/data/en_parity_pending/review-2026-10-07-held/sarah-evidence.json (two text sources + the project corpus); both reviewer families, given the texts without the agent's conclusion, answered quote_verbatim_in_cited_hadith=true, finding_correct=false, english_faithful=true (sarah-evidence-consult.json).",
+        "by": "agent adjudication (claude-opus-5.5, automated) backed by a dual-family evidence check (deepseek-v4-pro + glm-5.2) — NOT a human or scholar approval",
+        "on": "2026-10-07",
+        "evidence": {
+          "file": "ops/data/en_parity_pending/review-2026-10-07-held/sarah-evidence.json",
+          "sha256": "2b128ea71b6d037c12bc28adf715524ad48e992733909efd6ea305083d30f91a",
+          "consult": "ops/data/en_parity_pending/review-2026-10-07-held/sarah-evidence-consult.json",
+          "consult_sha256": "7a6fed336536cbe4732d74518eb8d8d33415489e9cc0e6ee2b50e54f79147531"
+        }
+      }
+    ]
   }
 }
