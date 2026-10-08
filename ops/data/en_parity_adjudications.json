@@ -200,6 +200,18 @@
       }
     ]
   },
+  "lesson_0-3_medical_infant_sleep_03": {
+    "content_sha256": "dc5118ecbed0f23171355f7dcf3281fb65a2f5fc2d2fba3167adb6b2883bfaca",
+    "overrides": [
+      {
+        "field": "summary",
+        "type": "omission",
+        "reason": "deepseek says the English drops «كيف تساعده على الرضاعة»; the English reads \"ask the doctor or nurse how to help them feed\" — the same instruction (رضاعة covers breast and bottle; 'feed' is the lesson's consistent rendering). Nothing omitted.",
+        "by": "claude-opus-5-5 (GPT-review fixes, branch content/gpt-review-fixes)",
+        "on": "2026-10-08"
+      }
+    ]
+  },
   "lesson_0-3_medical_infant_sleep_09": {
     "content_sha256": "a3f1013be05f17f7aad86ddf807d3bd22302c70e0fe6f699de451966fecf789c",
     "overrides": [
