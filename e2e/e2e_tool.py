@@ -113,6 +113,7 @@ KEYS = [
     "followupTitle", "followupTitleFor", "followupWorked", "followupThanksTitle",
     "reviewPromptTitle", "reviewPromptLater", "settingsThemeLight",
     "todayMissionOpen", "praiseFromFamily", "dailyGiftLabel", "missionTodayLabel",
+    "ageGroup4to6", "missionDone", "missionConfirmAll", "praiseChipAhsant",
 ]
 
 # Strings the app hardcodes outside the ARB files.
@@ -394,10 +395,14 @@ GALLERY_SCREENS = [
     ("home_dark", "اليوم — داكن"),
     ("noor_face_today", "NoorFace في «اليوم»"),
     ("gift_moment", "لحظة الهدية على «اليوم»"),
+    ("gift_moment_0ms", "لحظة الهدية — ٠ms (البداية)"),
+    ("gift_moment_150ms", "لحظة الهدية — ١٥٠ms (الانفجار)"),
+    ("gift_moment_400ms", "لحظة الهدية — ٤٠٠ms (الاستقرار)"),
     ("praise_child_sticker", "كلمة الأب على شاشة الطفل — ٤–٦ (ملصق)"),
     ("praise_child_sticker_and_text", "كلمة الأب على شاشة الطفل — ٧–١٢ (ملصق ونص)"),
-    ("onboarding_language", "شاشة اللغة (BrandGlyph)"),
-    ("onboarding_first_tip", "أول نصيحة بعد BrandGlyph"),
+    ("praise_card_0ms", "كارت كلمة الأب — ٠ms (الظهور)"),
+    ("praise_card_150ms", "كارت كلمة الأب — ١٥٠ms (الحركة)"),
+    ("praise_card_400ms", "كارت كلمة الأب — ٤٠٠ms (الميل والاستقرار)"),
     ("home_dark_noor_face", "NoorFace في «اليوم» — داكن"),
     ("home_dark_gift", "لحظة الهدية على «اليوم» — داكن"),
 ]
@@ -421,10 +426,12 @@ GALLERY_GUARDED = {
     "path_detail",
     "noor_face_today",
     "gift_moment",
-    "praise_child_sticker",
-    "praise_child_sticker_and_text",
-    "onboarding_language",
-    "onboarding_first_tip",
+    "gift_moment_0ms",
+    "gift_moment_150ms",
+    "gift_moment_400ms",
+    "praise_card_0ms",
+    "praise_card_150ms",
+    "praise_card_400ms",
     "home_dark_noor_face",
     "home_dark_gift",
 }
@@ -590,6 +597,97 @@ def cmd_summary(args: argparse.Namespace) -> int:
     return 0
 
 
+# ── hierarchy verification ───────────────────────────────────────────────
+
+EXPECTED_SCREEN_MARKERS: dict[str, dict[str, list[str]]] = {
+    "settings": {
+        "required": ["الإعدادات", "Settings"],
+        "forbidden": ["علامة التبويب 1 من", "المزيد", "Tab 1 of"],
+    },
+    "settings_dark": {
+        "required": ["الإعدادات", "Settings"],
+    },
+    "home": {
+        "required": ["اليوم", "Today"],
+        "forbidden": ["الإعدادات", "Settings"],
+    },
+    "home_dark": {
+        "required": ["اليوم", "Today"],
+        "forbidden": ["الإعدادات", "Settings"],
+    },
+    "home_dark_noor_face": {
+        "required": ["اليوم", "Today"],
+        "forbidden": ["الإعدادات", "Settings", "المزيد"],
+    },
+    "home_dark_gift": {
+        "required": ["اليوم", "Today"],
+        "forbidden": ["الإعدادات", "Settings", "المزيد"],
+    },
+    "noor_face_today": {
+        "required": ["اليوم", "Today"],
+        "forbidden": ["الإعدادات", "Settings"],
+    },
+    "gift_moment": {
+        "required": ["اليوم", "Today"],
+    },
+    "praise_child_sticker": {
+        "required": ["مهمة اليوم", "Today's Mission", "أهلك يقولون لك", "Praise"],
+        "forbidden": ["الإعدادات", "Settings"],
+    },
+    "praise_child_sticker_and_text": {
+        "required": ["مهمة اليوم", "Today's Mission", "أهلك يقولون لك", "Praise"],
+        "forbidden": ["الإعدادات", "Settings"],
+    },
+    "lesson": {
+        "required": ["أكملت الدرس", "إكمال الدرس", "Lesson", "الدرس", "رجوع"],
+        "forbidden": ["الإعدادات", "Settings"],
+    },
+    "onboarding_1_language": {
+        "required": ["اختر لغة التطبيق", "Choose App Language", "Language"],
+        "forbidden": ["الإعدادات", "Settings"],
+    },
+    "onboarding_2_first_tip": {
+        "required": ["ابدأ رحلتك", "Start your journey", "7–9"],
+        "forbidden": ["الإعدادات", "Settings"],
+    },
+}
+
+
+def verify_screen_hierarchy(screen: str, hierarchy_text: str) -> list[str]:
+    """Check that the view hierarchy text matches expected markers for screen.
+
+    Returns list of error descriptions (empty if valid).
+    """
+    rules = EXPECTED_SCREEN_MARKERS.get(screen)
+    if not rules:
+        return []
+    errors = []
+    required = rules.get("required", [])
+    if required:
+        if not any(req in hierarchy_text for req in required):
+            errors.append(
+                f"Missing expected markers (any of {required}) for screen '{screen}'"
+            )
+    for forbidden in rules.get("forbidden", []):
+        if forbidden in hierarchy_text:
+            errors.append(
+                f"Found forbidden marker '{forbidden}' in screen '{screen}' hierarchy"
+            )
+    return errors
+
+
+def cmd_verify_hierarchy(args: argparse.Namespace) -> int:
+    path = Path(args.hierarchy)
+    text = path.read_text(encoding="utf-8", errors="replace")
+    errors = verify_screen_hierarchy(args.screen, text)
+    if errors:
+        for err in errors:
+            print(f"::error title=Hierarchy check::{err}", file=sys.stderr)
+        return 1
+    print(f"PASS  screen '{args.screen}' matches hierarchy in {path}")
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = p.add_subparsers(dest="cmd", required=True)
@@ -621,6 +719,11 @@ def main(argv: list[str] | None = None) -> int:
     s = sub.add_parser("summary", help="render the Markdown summary")
     s.add_argument("out_dir")
     s.set_defaults(func=cmd_summary)
+
+    s = sub.add_parser("verify-hierarchy", help="check view hierarchy text matches expected screen")
+    s.add_argument("screen", help="screen id")
+    s.add_argument("hierarchy", help="path to hierarchy dump file")
+    s.set_defaults(func=cmd_verify_hierarchy)
 
     args = p.parse_args(argv)
     return args.func(args)

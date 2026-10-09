@@ -8,6 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/app_routes.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../theme/app_theme.dart';
+import '../../../widgets/ui/brand_glyph.dart';
 import '../../onboarding/providers/onboarding_providers.dart';
 import '../screens/children_list_screen.dart';
 
@@ -43,6 +44,7 @@ class ActiveChildChip extends ConsumerWidget {
               widthFactor: 1,
               heightFactor: 1,
               child: Container(
+                height: 35,
                 padding: const EdgeInsets.symmetric(
                   horizontal: 10,
                   vertical: 5,
@@ -60,10 +62,14 @@ class ActiveChildChip extends ConsumerWidget {
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text(
-                      profile?.avatarEmoji ?? '👶',
-                      style: const TextStyle(fontSize: 16),
-                    ),
+                    if (profile?.avatarEmoji != null &&
+                        profile!.avatarEmoji!.trim().isNotEmpty)
+                      Text(
+                        profile.avatarEmoji!,
+                        style: const TextStyle(fontSize: 16),
+                      )
+                    else
+                      const BrandGlyph(BrandIcon.sprig, size: 16),
                     const SizedBox(width: 5),
                     if (profile != null) ...[
                       ConstrainedBox(

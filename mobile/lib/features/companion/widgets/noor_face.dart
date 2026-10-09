@@ -133,10 +133,29 @@ class _NoorFacePainter extends CustomPainter {
     final scale = s / 100;
     final center = Offset(50 * scale, 54 * scale);
 
-    // — The head: a filled crescent, opening toward the top-right. —
-    final body = math.max(34.0 * scale, s * 0.30);
-    final bite = math.max(29.0 * scale, s * 0.26);
-    final biteOffset = Offset(11 * scale, -10 * scale);
+    // — The night-navy disc: matches the mascot art exactly. —
+    final discRadius = math.max(40.0 * scale, s * 0.44);
+    final discColor = palette.isDark ? const Color(0xFF09141F) : const Color(0xFF0F1E2E);
+    canvas.drawCircle(
+      center,
+      discRadius,
+      Paint()
+        ..color = discColor
+        ..style = PaintingStyle.fill,
+    );
+    canvas.drawCircle(
+      center,
+      discRadius,
+      Paint()
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = math.max(1.0, s * 0.020)
+        ..color = palette.accent.withValues(alpha: 0.35),
+    );
+
+    // — The head: a refined crescent, opening toward the top-right. —
+    final body = math.max(30.0 * scale, s * 0.28);
+    final bite = math.max(25.0 * scale, s * 0.24);
+    final biteOffset = Offset(10 * scale, -9 * scale);
 
     final moon = Path.combine(
       PathOperation.difference,
@@ -145,10 +164,11 @@ class _NoorFacePainter extends CustomPainter {
         ..addOval(Rect.fromCircle(center: center + biteOffset, radius: bite)),
     );
 
+    // Warm ivory/cream for resting face; gold is reserved for happy only.
     final fill = switch (state) {
-      NoorFaceState.night => palette.primary,
-      NoorFaceState.tender => palette.accentDeep,
-      _ => palette.accent,
+      NoorFaceState.happy => palette.accent,
+      NoorFaceState.tender => const Color(0xFFFFF7ED),
+      _ => const Color(0xFFFBF8F2),
     };
     canvas.drawPath(
       moon,
@@ -156,15 +176,15 @@ class _NoorFacePainter extends CustomPainter {
         ..color = fill
         ..style = PaintingStyle.fill,
     );
-    // A thin deeper rim keeps the gold head off gold backgrounds.
+    // A thin delicate rim around the crescent.
     canvas.drawPath(
       moon,
       Paint()
         ..style = PaintingStyle.stroke
-        ..strokeWidth = math.max(1.0, s * 0.018)
-        ..color = palette.accentDeep.withValues(
-          alpha: state == NoorFaceState.tender ? 0.9 : 0.45,
-        ),
+        ..strokeWidth = math.max(1.0, s * 0.016)
+        ..color = state == NoorFaceState.happy
+            ? palette.accentDeep
+            : const Color(0xFFE2D8CC),
     );
 
     // — The halo breath (every state except night, whose sky is quiet). —
@@ -233,14 +253,17 @@ class _NoorFacePainter extends CustomPainter {
     }
 
     // — The features, on the crescent's broad lower-left body. —
+    final featureColor = state == NoorFaceState.happy
+        ? palette.onAccent
+        : const Color(0xFF1E293B);
     final feature = Paint()
       ..style = PaintingStyle.stroke
       ..strokeCap = StrokeCap.round
-      ..strokeWidth = math.max(1.2, s * 0.035)
-      ..color = palette.onAccent;
+      ..strokeWidth = math.max(1.3, s * 0.034)
+      ..color = featureColor;
 
-    final eyeL = center + Offset(-11 * scale, -3 * scale);
-    final eyeR = center + Offset(7 * scale, -3 * scale);
+    final eyeL = center + Offset(-9 * scale, -2 * scale);
+    final eyeR = center + Offset(7 * scale, -2 * scale);
     final eyeR_ = math.max(3.2 * scale, s * 0.030);
     final blink = _blinking(phase);
 

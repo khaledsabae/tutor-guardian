@@ -489,6 +489,61 @@ class GalleryTest(unittest.TestCase):
             self.assertEqual(rc, 0)
             self.assertIn("Gallery قبل/بعد: complete=1", out.getvalue())
 
+    def test_praise_screens_are_ungarded_and_fail_if_missing(self):
+        # praise_child_sticker and praise_child_sticker_and_text must NOT be guarded
+        self.assertNotIn("praise_child_sticker", t.GALLERY_GUARDED)
+        self.assertNotIn("praise_child_sticker_and_text", t.GALLERY_GUARDED)
+        rc, stdout, _, _ = self.run_gallery(
+            self.complete_shots(drop=("gallery__05_after_ar__after__ar__praise_child_sticker.png",)),
+            extra=("--require-after",),
+        )
+        self.assertEqual(rc, 1)
+        self.assertIn("ar:praise_child_sticker", stdout)
+
+
+class HierarchyVerificationTest(unittest.TestCase):
+    def test_matching_hierarchy_passes(self):
+        sample = '<node text="الإعدادات" resource-id="settings_title"/>'
+        errors = t.verify_screen_hierarchy("settings", sample)
+        self.assertEqual(errors, [])
+
+    def test_missing_required_marker_fails(self):
+        sample = '<node text="شاشة عشوائية"/>'
+        errors = t.verify_screen_hierarchy("settings", sample)
+        self.assertTrue(errors)
+        self.assertIn("Missing expected markers", errors[0])
+
+    def test_forbidden_marker_fails_home_dark_noor_face(self):
+        # A shot on "المزيد" mistakenly taken as home_dark_noor_face must fail
+        sample = '<node text="اليوم"/><node text="المزيد"/>'
+        errors = t.verify_screen_hierarchy("home_dark_noor_face", sample)
+        self.assertTrue(errors)
+        self.assertIn("Found forbidden marker 'المزيد'", errors[0])
+
+    def test_forbidden_marker_fails_settings(self):
+        # A settings shot mistakenly on tab root
+        sample = '<node text="الإعدادات"/><node text="علامة التبويب 1 من 4"/>'
+        errors = t.verify_screen_hierarchy("settings", sample)
+        self.assertTrue(errors)
+        self.assertIn("Found forbidden marker", errors[0])
+
+    def test_cli_verify_hierarchy(self):
+        with tempfile.TemporaryDirectory() as d:
+            dump_file = Path(d) / "dump.xml"
+            dump_file.write_text('<node text="اليوم"/>', encoding="utf-8")
+            out = io.StringIO()
+            with contextlib.redirect_stdout(out), contextlib.redirect_stderr(out):
+                rc = t.main(["verify-hierarchy", "home", str(dump_file)])
+            self.assertEqual(rc, 0)
+
+            dump_bad = Path(d) / "bad.xml"
+            dump_bad.write_text('<node text="المزيد"/>', encoding="utf-8")
+            err = io.StringIO()
+            with contextlib.redirect_stdout(err), contextlib.redirect_stderr(err):
+                rc_bad = t.main(["verify-hierarchy", "home_dark_noor_face", str(dump_bad)])
+            self.assertEqual(rc_bad, 1)
+            self.assertIn("Found forbidden marker 'المزيد'", err.getvalue())
+
 
 if __name__ == "__main__":
     unittest.main()

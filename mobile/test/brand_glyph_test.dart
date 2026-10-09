@@ -234,6 +234,12 @@ const guardedFiles = <String>[
   'lib/features/missions/praise_header.dart',
   'lib/features/companion/widgets/noor_face.dart',
   'lib/features/companion/widgets/noor_presence.dart',
+  'lib/features/home/widgets/home_app_bar.dart',
+  'lib/features/home/greeting.dart',
+  'lib/features/program/widgets/active_child_chip.dart',
+  'lib/features/program/screens/lesson_screen.dart',
+  'lib/features/hub/data/hub_catalog.dart',
+  'lib/features/hub/widgets/hub_group_card.dart',
 ];
 
 /// The emoji this tour replaced. Detected generically (any emoji range), but

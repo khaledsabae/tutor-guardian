@@ -68,6 +68,9 @@ enum BrandIcon {
 
   /// Medal with ribbons (badges, achievements).
   medal,
+
+  /// Sun with radiating rays (daytime).
+  sun,
 }
 
 /// One thin-line brand icon.
@@ -278,6 +281,16 @@ class _BrandGlyphPainter extends CustomPainter {
         canvas.drawCircle(const Offset(12, 10.2), 2.8, paint);
         canvas.drawPath(_medalRibbon(mirror: false), paint);
         canvas.drawPath(_medalRibbon(mirror: true), paint);
+      case BrandIcon.sun:
+        canvas.drawCircle(const Offset(12, 12), 4.8, paint);
+        for (var i = 0; i < 8; i++) {
+          final a = i * math.pi / 4;
+          canvas.drawLine(
+            Offset(12 + math.cos(a) * 6.6, 12 + math.sin(a) * 6.6),
+            Offset(12 + math.cos(a) * 9.2, 12 + math.sin(a) * 9.2),
+            paint,
+          );
+        }
     }
     canvas.restore();
   }

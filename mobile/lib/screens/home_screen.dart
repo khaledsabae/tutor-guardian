@@ -138,7 +138,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               // «نور» as a presence beside the greeting (جولة الحرفة):
               // the drawn face in its breathing moon window, not a loose
               // square illustration.
-              const NoorPresence(size: 44)
+              const NoorPresence(size: 56)
                   .animate()
                   .fadeIn(duration: Dt.slow)
                   .scale(

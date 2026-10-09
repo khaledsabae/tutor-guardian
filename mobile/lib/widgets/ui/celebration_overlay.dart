@@ -6,6 +6,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../core/motion.dart';
+import '../../features/companion/widgets/noor_presence.dart';
 import '../../l10n/app_localizations.dart';
 import '../../theme/design_tokens.dart';
 import 'bouncy_button.dart';
@@ -166,13 +167,10 @@ class _CelebrationDialogState extends State<_CelebrationDialog> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   (widget.imageAsset != null
-                          ? Image.asset(
-                              widget.imageAsset!,
-                              width: 110,
-                              height: 110,
-                              fit: BoxFit.contain,
-                              filterQuality: FilterQuality.medium,
-                              errorBuilder: (_, _, _) => _hero(),
+                          ? NoorPresence(
+                              size: 96,
+                              mood: NoorMood.proud,
+                              semanticLabel: widget.title,
                             )
                           : _hero())
                       .animate()
@@ -222,10 +220,13 @@ class _CelebrationDialogState extends State<_CelebrationDialog> {
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Text(
-                            widget.badge!.emoji,
-                            style: const TextStyle(fontSize: 16),
-                          ),
+                          if (widget.badge!.emoji.isNotEmpty)
+                            Text(
+                              widget.badge!.emoji,
+                              style: const TextStyle(fontSize: 16),
+                            )
+                          else
+                            const BrandGlyph(BrandIcon.sprig, size: 16),
                           const SizedBox(width: 6),
                           Flexible(
                             child: Text(

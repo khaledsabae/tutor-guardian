@@ -1073,19 +1073,19 @@ abstract class AppLocalizations {
   /// No description provided for @todaySun.
   ///
   /// In ar, this message translates to:
-  /// **'اليوم ☀️'**
+  /// **'اليوم'**
   String get todaySun;
 
   /// No description provided for @todaySunDay.
   ///
   /// In ar, this message translates to:
-  /// **'اليوم ☀️'**
+  /// **'اليوم'**
   String get todaySunDay;
 
   /// No description provided for @todaySunNight.
   ///
   /// In ar, this message translates to:
-  /// **'اليوم 🌙'**
+  /// **'اليوم'**
   String get todaySunNight;
 
   /// No description provided for @shareOpinion.
@@ -1121,25 +1121,25 @@ abstract class AppLocalizations {
   /// No description provided for @greetingMorningName.
   ///
   /// In ar, this message translates to:
-  /// **'صباح الخير 🌤️\nرحلة {name} مستمرة'**
+  /// **'صباح الخير\nرحلة {name} مستمرة'**
   String greetingMorningName(Object name);
 
   /// No description provided for @greetingEveningName.
   ///
   /// In ar, this message translates to:
-  /// **'مساء الخير 🌙\nرحلة {name} مستمرة'**
+  /// **'مساء الخير\nرحلة {name} مستمرة'**
   String greetingEveningName(Object name);
 
   /// No description provided for @greetingMorningFirst.
   ///
   /// In ar, this message translates to:
-  /// **'صباح الخير 🌤️\nاليوم أول يوم في رحلة {name}'**
+  /// **'صباح الخير\nاليوم أول يوم في رحلة {name}'**
   String greetingMorningFirst(Object name);
 
   /// No description provided for @greetingEveningFirst.
   ///
   /// In ar, this message translates to:
-  /// **'مساء الخير 🌙\nاليوم أول يوم في رحلة {name}'**
+  /// **'مساء الخير\nاليوم أول يوم في رحلة {name}'**
   String greetingEveningFirst(Object name);
 
   /// No description provided for @dailyGiftLine.
@@ -1883,7 +1883,7 @@ abstract class AppLocalizations {
   /// No description provided for @onbFirstTipTitle.
   ///
   /// In ar, this message translates to:
-  /// **'أول نصيحة مخصّصة لك 🎁'**
+  /// **'أول نصيحة مخصّصة لك'**
   String get onbFirstTipTitle;
 
   /// No description provided for @onbTipForAge.

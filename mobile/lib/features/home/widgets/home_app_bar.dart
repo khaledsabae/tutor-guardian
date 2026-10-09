@@ -7,6 +7,7 @@ library;
 import 'package:flutter/material.dart';
 
 import '../../../core/app_routes.dart';
+import '../../../widgets/ui/brand_glyph.dart';
 import '../greeting.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../hub/widgets/help_sheet.dart';
@@ -22,9 +23,22 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     return AppBar(
-      // ☀️ by day, 🌙 by night («النصوص») — the key stays `todaySun`;
-      // the value is picked between its two time-of-day variants.
-      title: Text(todayTitle(l10n, DateTime.now())),
+      title: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          BrandGlyph(
+            sunIsUp(DateTime.now()) ? BrandIcon.sun : BrandIcon.crescent,
+            size: 20,
+          ),
+          const SizedBox(width: 8),
+          Flexible(
+            child: Text(
+              l10n.navToday,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+        ],
+      ),
       actions: [
         const Padding(
           padding: EdgeInsets.symmetric(vertical: 4, horizontal: 4),

@@ -77,10 +77,8 @@ name: gallery/shoot
 - waitForAnimationToEnd:
     timeout: 3000
 - takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__settings'
-- takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__onboarding_language'
-- takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__onboarding_first_tip'
-# ── the app's own dark mode (Settings → Appearance cycles), then back to
-# light so Today and lessons shoot in light mode.
+# ── the app's own dark mode (Settings → Appearance cycles), then return to Today
+# in dark mode to photograph NoorFace, the gift moment, and Home before restoring light.
 - scrollUntilVisible:
     element:
       text: '${output.lead.settingsTheme}'
@@ -97,13 +95,20 @@ name: gallery/shoot
 - waitForAnimationToEnd:
     timeout: 2000
 - takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__settings_dark'
-- back
+# Navigate to Today in dark mode
+- runFlow: ../common/home.yaml
+- extendedWaitUntil:
+    visible: '${output.lead.navToday}'
+    timeout: 20000
+- waitForAnimationToEnd:
+    timeout: 2000
 - takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__home_dark_noor_face'
 - takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__home_dark_gift'
 - runFlow:
     file: today_shot.yaml
     env:
       SHOT: '${GALLERY_TAG}__${GALLERY_VARIANT}__home_dark'
+# Restore light theme in Settings
 - runFlow: ../common/open_settings.yaml
 - scrollUntilVisible:
     element:
@@ -118,12 +123,30 @@ name: gallery/shoot
       - tapOn: '${output.lead.settingsTheme}'
       - waitForAnimationToEnd:
           timeout: 3000
-- back
 # ── Today ────────────────────────────────────────────────────────────────
 - runFlow: ../common/home.yaml
+- extendedWaitUntil:
+    visible: '${output.lead.navToday}'
+    timeout: 20000
+- waitForAnimationToEnd:
+    timeout: 2000
 - takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__noor_face_today'
+# Gift moment burst captures (0ms, 150ms, 400ms)
+- takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__gift_moment_0ms'
+- waitForAnimationToEnd:
+    timeout: 150
+- takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__gift_moment_150ms'
+- waitForAnimationToEnd:
+    timeout: 250
+- takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__gift_moment_400ms'
 - takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__gift_moment'
-# A child mission with praise note, when the day has one ready:
+# A child mission with praise note:
+- scrollUntilVisible:
+    element:
+      text: '${output.t.todayMissionOpen}'
+    direction: DOWN
+    timeout: 15000
+    optional: true
 - runFlow:
     when:
       visible: '${output.t.todayMissionOpen}'
@@ -131,10 +154,27 @@ name: gallery/shoot
       - tapOn: '${output.t.todayMissionOpen}'
       - extendedWaitUntil:
           visible: '(?:${output.c.praiseFromFamily}|${output.t.missionTodayLabel})'
-          timeout: 10000
+          timeout: 15000
           optional: true
+      # Burst captures for praise card entrance and tilt (0ms, 150ms, 400ms)
+      - takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__praise_card_0ms'
+      - waitForAnimationToEnd:
+          timeout: 150
+      - takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__praise_card_150ms'
+      - waitForAnimationToEnd:
+          timeout: 250
+      - takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__praise_card_400ms'
+      # Praise on child screen: 4-6 (sticker) & 7-12 (sticker and text)
       - takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__praise_child_sticker'
       - takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__praise_child_sticker_and_text'
+      # If mission is uncompleted, child marks done
+      - runFlow:
+          when:
+            visible: '${output.t.missionDone}'
+          commands:
+            - tapOn: '${output.t.missionDone}'
+            - waitForAnimationToEnd:
+                timeout: 2000
       - back
       - waitForAnimationToEnd:
           timeout: 2000

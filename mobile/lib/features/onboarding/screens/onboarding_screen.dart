@@ -409,22 +409,42 @@ class _AgeQuestionPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Image.asset(
-                  'assets/images/generated/mascot_reading.webp',
-                  height: 120,
-                  fit: BoxFit.contain,
-                  // If the hero is ever missing the layout keeps a drawn brand
-                  // anchor instead of collapsing (جولة الحرفة: no emoji).
-                  errorBuilder: (_, _, _) => const SizedBox(
-                    height: 120,
-                    child: Center(
-                      child: BrandGlyph(BrandIcon.crescent, size: 64),
+            Center(
+              child: Container(
+                width: 120,
+                height: 120,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: const Color(0xFF0F1E2E),
+                  border: Border.all(
+                    color: const Color(0xFFE89838).withValues(alpha: 0.45),
+                    width: 2,
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: const Color(0xFFE89838).withValues(alpha: 0.25),
+                      blurRadius: 18,
+                      spreadRadius: 2,
+                    ),
+                  ],
+                ),
+                child: ClipOval(
+                  child: Padding(
+                    padding: const EdgeInsets.all(6),
+                    child: Image.asset(
+                      'assets/images/generated/mascot_reading.webp',
+                      fit: BoxFit.contain,
+                      errorBuilder: (_, _, _) => const Center(
+                        child: BrandGlyph(BrandIcon.crescent, size: 64),
+                      ),
                     ),
                   ),
-                )
-                .animate()
-                .fadeIn(duration: Dt.base)
-                .scale(begin: const Offset(.9, .9), curve: Curves.easeOutBack),
+                ),
+              ),
+            )
+            .animate()
+            .fadeIn(duration: Dt.base)
+            .scale(begin: const Offset(.9, .9), curve: Curves.easeOutBack),
             const SizedBox(height: 12),
             Text(
               l10n.onbWelcome,
