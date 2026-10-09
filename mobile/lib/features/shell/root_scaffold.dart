@@ -31,7 +31,8 @@ import '../program/screens/paths_screen.dart';
 import '../tour/tour_controller.dart';
 import '../tour/tour_overlay.dart';
 import '../tour/tour_step.dart';
-import 'root_tab.dart' show RootTab, rootTabRequestProvider;
+import 'root_tab.dart'
+    show RootTab, rootTabRequestProvider, pendingRootTabProvider, takePendingRootTab;
 import 'package:almorabbi/core/haptics.dart';
 
 /// How many switches inside [_thrashWindow] read as hunting rather than
