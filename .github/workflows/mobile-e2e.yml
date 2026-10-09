@@ -35,6 +35,11 @@ name: Mobile E2E (emulator)
 #   the PR head: 03 it opens and Today renders, 04 the child is kept (skipped
 #   when the control shows the baseline already lost it). run.sh also checks
 #   firstInstallTime survived (an in-place upgrade, data kept).
+# Lineage "gallery" — informational, never gates: the baseline photographed
+#   («before»), then `adb install -r` the head and the same shots «after» —
+#   Arabic and English plus a 200%-font pass (a runtime system setting, so the
+#   AVD cache key is untouched). Paired into the e2e-gallery artifact by
+#   e2e/e2e_tool.py gallery.
 # Logcat is captured for the whole run; the job fails on a FATAL EXCEPTION or
 # native crash in the app, an ANR, or a Flutter/Dart error (e2e/e2e_tool.py).
 # Selectors are ARB keys (e2e/e2e_tool.py l10n), so copy edits do not break
@@ -49,7 +54,8 @@ name: Mobile E2E (emulator)
 #
 # ── Test traffic in PRODUCTION — how to exclude it ──────────────────────
 # A release build talks to https://tg-api.alsaba.cloud. Each lineage creates one
-# child, renamed seconds after onboarding to the fixed name below:
+# child (fresh, upgrade, gallery — three per run since the gallery lineage),
+# renamed seconds after onboarding to the fixed name below:
 #   column  child_profiles.name      value  LIKE 'E2E-Maestro%'
 #   devices WITH e2e AS (SELECT device_id FROM child_profiles WHERE name LIKE 'E2E-Maestro%')
 #           SELECT device_id FROM e2e
@@ -79,7 +85,11 @@ name: Mobile E2E (emulator)
 # this run and signs nothing that ships.
 #
 # Artifacts: e2e-screenshots (checkpoint PNGs), e2e-logcat (+ gate verdict),
-# e2e-maestro-report (JUnit, Maestro output, failure screenshots, summary).
+# e2e-maestro-report (JUnit, Maestro output, failure screenshots, summary),
+# e2e-gallery (gallery-summary.md + the paired images — the معرض قبل/بعد of
+# docs/NOOR_WAL_QANADIL_PLAN.md Phase 0: the baseline build and the PR head
+# photographed side by side, Arabic/English plus a 200%-font pass; run.sh's
+# gallery lineage is informational and never gates the run).
 
 on:
   pull_request:
@@ -248,7 +258,10 @@ jobs:
     name: Emulator journeys (API 35)
     needs: build
     runs-on: ubuntu-latest
-    timeout-minutes: 75
+    # 75 min covered the 13 journeys; the informational gallery lineage (a
+    # third onboarding plus six shoots, two of them at 200% font) needs
+    # roughly half that again on a slow emulator.
+    timeout-minutes: 120
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -376,6 +389,17 @@ jobs:
         with:
           name: e2e-screenshots
           path: ${{ env.E2E_OUT }}/screens
+          if-no-files-found: warn
+          retention-days: 14
+
+      # The قبل/بعد pairs: gallery-summary.md + images/, built by run.sh's
+      # gallery lineage (e2e/e2e_tool.py gallery). warn, not error: a run that
+      # reached no gallery shot still uploads everything else.
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        if: always()
+        with:
+          name: e2e-gallery
+          path: ${{ env.E2E_OUT }}/gallery
           if-no-files-found: warn
           retention-days: 14
 

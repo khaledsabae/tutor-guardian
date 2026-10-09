@@ -10,6 +10,9 @@
 #   fresh    PR head, fresh install, Arabic: nine checkpoints
 #   upgrade  baseline build, English onboarding → restart (control) →
 #            `adb install -r` PR head
+# plus a third, informational lineage (see the gallery block below):
+#   gallery  baseline → same shots tagged «before» → install -r head →
+#            the same shots tagged «after» — the معرض قبل/بعد.
 # A failed checkpoint does not stop the next one (each starts by returning to
 # Today), except onboarding, which everything after it needs.
 set -uo pipefail
@@ -167,6 +170,56 @@ if install_fresh baseline && l10n_for baseline \
 else
   for f in "${UPGRADE[@]}"; do skip upgrade "$f" "baseline onboarding failed"; done
 fi
+
+# ── lineage 3: the before/after gallery (informational) ─────────────────
+# Phase 0 of docs/NOOR_WAL_QANADIL_PLAN.md: every run photographs the same
+# screens on the baseline build («before» — what users have now) and the PR
+# head («after»), in Arabic and English, plus one 200%-font pass. One child,
+# one install: the baseline is upgraded in place with install -r, exactly
+# like the upgrade lineage, so the head shoots see the same child's state.
+# The font scale is a runtime system setting (settings put system font_scale),
+# NOT AVD configuration — the avd cache key is untouched, and -no-snapshot-save
+# keeps the change out of the snapshot. It is reset after each pass.
+# Informational by design: a failed shoot is a warning, never a gate failure —
+# the 13 gate journeys above are the gate, the gallery is the eyes.
+font2x() {  # 2.0 = large, 1.0 = back to normal
+  adb shell settings put system font_scale "$1" >/dev/null 2>&1 || true
+  sleep 3
+}
+shoot() {  # name lang tag variant [extra -e args...]
+  local name=$1 lang=$2 tag=$3 variant=$4
+  shift 4
+  run_flow info gallery "$name" gallery/shoot.yaml -e UI_LANG="$lang" \
+    -e GALLERY_TAG="$tag" -e GALLERY_VARIANT="$variant" "$@" || true
+}
+if install_fresh baseline && l10n_for baseline \
+   && run_flow gate gallery 00_onboarding fresh/01_onboarding.yaml -e UI_LANG=ar; then
+  shoot 01_before_ar ar before ar
+  shoot 02_before_en en before en
+  font2x 2.0
+  shoot 03_before_font2x ar before ar_font2x
+  font2x 1.0
+  if adb install -r "$APKS/head/app.apk" && l10n_for head; then
+    shoot 04_after_en en after en
+    shoot 05_after_ar ar after ar
+    font2x 2.0
+    shoot 06_after_font2x ar after ar_font2x
+    font2x 1.0
+  else
+    echo "::warning title=E2E gallery::install -r / head selector generation failed — no «after» shots"
+    for f in 04_after_en 05_after_ar 06_after_font2x; do skip gallery "$f" "install -r failed"; done
+  fi
+else
+  for f in 00_onboarding 01_before_ar 02_before_en 03_before_font2x \
+           04_after_en 05_after_ar 06_after_font2x; do
+    skip gallery "$f" "baseline onboarding failed"
+  done
+fi
+
+# ── the gallery artifact: before/after pairs in one markdown ────────────
+# Never gates: a broken pairing must not fail a green run.
+python3 "$E2E/e2e_tool.py" gallery "$OUT/screens" --out "$OUT/gallery" \
+  || echo "::warning title=E2E gallery::summary generation failed (screenshots are still in e2e-screenshots)"
 
 # ── logcat gate ──────────────────────────────────────────────────────────
 sleep 3

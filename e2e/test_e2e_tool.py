@@ -352,3 +352,98 @@ class AnalyticsIsolationTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class GalleryTest(unittest.TestCase):
+    """The before/after pairing: names drive everything, so fabricate files."""
+
+    def run_gallery(self, names):
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            screens = root / "screens"
+            screens.mkdir()
+            for name in names:
+                (screens / name).write_bytes(b"\x89PNG")
+            out = io.StringIO()
+            with contextlib.redirect_stdout(out):
+                rc = t.main(["gallery", str(screens), "--out", str(root / "gallery")])
+            summary = (root / "gallery" / "gallery-summary.md").read_text(encoding="utf-8")
+            images = sorted(p.name for p in (root / "gallery" / "images").glob("*.png"))
+            return rc, out.getvalue(), summary, images
+
+    def test_pairs_before_and_after_and_copies_the_images(self):
+        rc, stdout, summary, images = self.run_gallery([
+            "gallery__01_before_ar__before__ar__home.png",
+            "gallery__05_after_ar__after__ar__home.png",
+            "fresh__01_onboarding__onboarding_1_language.png",
+        ])
+        self.assertEqual(rc, 0)
+        # The pair, side by side, linked relatively within the artifact.
+        self.assertIn('<img src="images/gallery__01_before_ar__before__ar__home.png" width="270"', summary)
+        self.assertIn('<img src="images/gallery__05_after_ar__after__ar__home.png" width="270"', summary)
+        self.assertIn("gallery__01_before_ar__before__ar__home.png", images)
+        self.assertIn("gallery__05_after_ar__after__ar__home.png", images)
+        # The one complete pair; everything else this run never took is missing.
+        self.assertIn("<!-- gallery: complete=1 before-only=0 after-only=1 missing=", summary)
+        self.assertIn("gallery: complete=1", stdout)
+
+    def test_home_does_not_swallow_home_after_lesson(self):
+        _, _, summary, images = self.run_gallery([
+            "gallery__01_before_ar__before__ar__home_after_lesson.png",
+        ])
+        self.assertIn("gallery__01_before_ar__before__ar__home_after_lesson.png", images)
+        # The home cell stayed empty — no greedy prefix match.
+        self.assertNotIn("before__ar__home.png\"", summary)
+        self.assertIn("before-only=1", summary)
+
+    def test_maestro_collision_suffix_is_ignored(self):
+        rc, _, summary, images = self.run_gallery([
+            "gallery__01_before_ar__before__ar__home_2.png",
+            "gallery__05_after_ar__after__ar__home.png",
+        ])
+        self.assertEqual(rc, 0)
+        self.assertIn("complete=1", summary)
+        self.assertIn("gallery__01_before_ar__before__ar__home_2.png", images)
+
+    def test_onboarding_pairs_across_lineages(self):
+        # «before» = the gallery lineage's baseline onboarding; «after» = the
+        # fresh lineage's head onboarding (same flow file, same shot names).
+        _, _, summary, _ = self.run_gallery([
+            "gallery__00_onboarding__onboarding_1_language.png",
+            "fresh__01_onboarding__onboarding_1_language.png",
+        ])
+        self.assertIn("complete=1", summary)
+        self.assertIn("images/gallery__00_onboarding__onboarding_1_language.png", summary)
+        self.assertIn("images/fresh__01_onboarding__onboarding_1_language.png", summary)
+
+    def test_repeated_flows_pair_the_oldest_run(self):
+        _, _, summary, _ = self.run_gallery([
+            "gallery__01_before_ar__before__ar__home.png",
+            "gallery__09_before_ar_retry__before__ar__home.png",
+            "gallery__05_after_ar__after__ar__home.png",
+        ])
+        self.assertIn("images/gallery__01_before_ar__before__ar__home.png", summary)
+        self.assertNotIn("gallery__09_before_ar_retry", summary)
+
+    def test_no_shots_at_all_still_writes_the_summary(self):
+        rc, _, summary, images = self.run_gallery([])
+        self.assertEqual(rc, 0)
+        self.assertEqual(images, [])
+        # 3 variants × 13 screens + 2 onboarding shots, all accounted for.
+        total = 3 * len(t.GALLERY_SCREENS) + len(t.GALLERY_ONBOARDING)
+        self.assertIn(f"missing={total}", summary)
+        self.assertEqual(summary.count("| — | — |"), total)
+
+    def test_summary_command_reads_the_gallery_stats(self):
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            (root / "screens").mkdir()
+            (root / "screens" / "gallery__01_before_ar__before__ar__home.png").write_bytes(b"\x89PNG")
+            (root / "gallery").mkdir()
+            (root / "gallery" / "gallery-summary.md").write_text(
+                "<!-- gallery: complete=1 before-only=0 after-only=0 missing=41 -->\n", encoding="utf-8")
+            out = io.StringIO()
+            with contextlib.redirect_stdout(out):
+                rc = t.main(["summary", str(root)])
+            self.assertEqual(rc, 0)
+            self.assertIn("Gallery قبل/بعد: complete=1", out.getvalue())
