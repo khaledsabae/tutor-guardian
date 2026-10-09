@@ -140,111 +140,18 @@ name: gallery/shoot
     timeout: 250
 - takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__gift_moment_400ms'
 - takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__gift_moment'
-# A child mission with praise note:
-- scrollUntilVisible:
-    element:
-      text: '${output.t.todayMissionOpen}'
-    direction: DOWN
-    timeout: 15000
-    optional: true
-- runFlow:
-    when:
-      visible: '${output.t.todayMissionOpen}'
-    commands:
-      - tapOn: '${output.t.todayMissionOpen}'
-      # The mission lives in child mode: the lock screen comes first. First
-      # use asks to choose a PIN and confirm it; later passes just unlock.
-      # Without this the camera photographed the PIN keypad and called it
-      # the praise card (2026-10-09).
-      - extendedWaitUntil:
-          visible: '(?:${output.t.childModePinSetupSubtitle}|${output.t.childModePinEnterSubtitle})'
-          timeout: 15000
-          optional: true
-      - runFlow:
-          when:
-            visible: '${output.t.childModePinSetupSubtitle}'
-          commands:
-            - runFlow: ../common/enter_pin.yaml
-            - extendedWaitUntil:
-                visible: '${output.t.childModePinConfirmSubtitle}'
-                timeout: 10000
-                optional: true
-            - runFlow:
-                when:
-                  visible: '${output.t.childModePinConfirmSubtitle}'
-                commands:
-                  - runFlow: ../common/enter_pin.yaml
-                  - waitForAnimationToEnd:
-                      timeout: 2000
-      - runFlow:
-          when:
-            visible: '${output.t.childModePinEnterSubtitle}'
-          commands:
-            - runFlow: ../common/enter_pin.yaml
-            - waitForAnimationToEnd:
-                timeout: 2000
-      - extendedWaitUntil:
-          visible: '(?:${output.c.praiseFromFamily}|${output.t.missionTodayLabel})'
-          timeout: 15000
-          optional: true
-      # Burst captures for praise card entrance and tilt (0ms, 150ms, 400ms)
-      - takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__praise_card_0ms'
-      - waitForAnimationToEnd:
-          timeout: 150
-      - takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__praise_card_150ms'
-      - waitForAnimationToEnd:
-          timeout: 250
-      - takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__praise_card_400ms'
-      # Praise on child screen: 4-6 (sticker) & 7-12 (sticker and text)
-      - takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__praise_child_sticker'
-      - takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__praise_child_sticker_and_text'
-      # If mission is uncompleted, child marks done
-      - runFlow:
-          when:
-            visible: '${output.t.missionDone}'
-          commands:
-            - tapOn: '${output.t.missionDone}'
-            - waitForAnimationToEnd:
-                timeout: 2000
-      - back
-      - waitForAnimationToEnd:
-          timeout: 2000
 - runFlow:
     file: today_shot.yaml
     env:
       SHOT: '${GALLERY_TAG}__${GALLERY_VARIANT}__home'
-# A due follow-up, if the server happens to have one for this child: the card
-# on Today, then the sheet with an answer chosen.
-- runFlow:
-    when:
-      visible: '${output.c.followupTitle}'
-    commands:
-      - takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__followup_card'
-      - tapOn:
-          text: '${output.t.followupWorked}'
-          optional: true
-      - extendedWaitUntil:
-          visible: '${output.c.followupThanksTitle}'
-          timeout: 15000
-          optional: true
-      - runFlow:
-          when:
-            visible: '${output.c.followupThanksTitle}'
-          commands:
-            - takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__followup'
-            - back
-# Still-open sheet (the answer never reached the thanks view): close it so the
-# lesson leg below finds Today.
-- runFlow:
-    when:
-      visible: '${output.c.followupTitleFor}'
-    commands:
-      - back
-      - waitForAnimationToEnd:
-          timeout: 2000
-# ── the lesson: first run opens Today's first lesson; after a completion the
-# card offers Continue → path detail, whose primary button opens the NEXT
-# incomplete lesson — so every shoot photographs a fresh completion.
+# ── The Lesson FIRST: complete the lesson before visiting child missions so Today
+# stays near the top and the 200% font pass easily reaches the lesson button.
+- scrollUntilVisible:
+    element:
+      text: '(?:${output.t.startThisLesson}|${output.t.continueBtn})'
+    direction: DOWN
+    timeout: 20000
+    optional: true
 - runFlow:
     when:
       visible: '${output.t.startThisLesson}'
@@ -375,3 +282,128 @@ name: gallery/shoot
     file: today_shot.yaml
     env:
       SHOT: '${GALLERY_TAG}__${GALLERY_VARIANT}__home_after_lesson'
+# A due follow-up, if the server happens to have one for this child: the card
+# on Today, then the sheet with an answer chosen.
+- runFlow:
+    when:
+      visible: '${output.c.followupTitle}'
+    commands:
+      - takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__followup_card'
+      - tapOn:
+          text: '${output.t.followupWorked}'
+          optional: true
+      - extendedWaitUntil:
+          visible: '${output.c.followupThanksTitle}'
+          timeout: 15000
+          optional: true
+      - runFlow:
+          when:
+            visible: '${output.c.followupThanksTitle}'
+          commands:
+            - takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__followup'
+            - back
+# Still-open sheet (the answer never reached the thanks view): close it so Today is clear
+- runFlow:
+    when:
+      visible: '${output.c.followupTitleFor}'
+    commands:
+      - back
+      - waitForAnimationToEnd:
+          timeout: 2000
+# ── Praise Card LAST: open today's mission in child mode, capture the moment,
+# and exit child mode cleanly back to Today using the PIN.
+- scrollUntilVisible:
+    element:
+      text: '${output.t.todayMissionOpen}'
+    direction: DOWN
+    timeout: 20000
+    optional: true
+- runFlow:
+    when:
+      visible: '${output.t.todayMissionOpen}'
+    commands:
+      - tapOn: '${output.t.todayMissionOpen}'
+      # The mission lives in child mode: the lock screen comes first. First
+      # use asks to choose a PIN and confirm it; later passes just unlock.
+      - extendedWaitUntil:
+          visible: '(?:${output.t.childModePinSetupSubtitle}|${output.t.childModePinEnterSubtitle}|${output.t.childMode})'
+          timeout: 15000
+          optional: true
+      - runFlow:
+          when:
+            visible: '${output.t.childModePinSetupSubtitle}'
+          commands:
+            - runFlow: ../common/enter_pin.yaml
+            - extendedWaitUntil:
+                visible: '${output.t.childModePinConfirmSubtitle}'
+                timeout: 10000
+                optional: true
+            - runFlow:
+                when:
+                  visible: '${output.t.childModePinConfirmSubtitle}'
+                commands:
+                  - runFlow: ../common/enter_pin.yaml
+                  - waitForAnimationToEnd:
+                      timeout: 2000
+      - runFlow:
+          when:
+            visible: '${output.t.childModePinEnterSubtitle}'
+          commands:
+            - runFlow: ../common/enter_pin.yaml
+            - waitForAnimationToEnd:
+                timeout: 2000
+      - extendedWaitUntil:
+          visible: '(?:${output.c.praiseFromFamily}|${output.t.missionTodayLabel})'
+          timeout: 15000
+          optional: true
+      # Burst captures for praise card entrance and tilt (0ms, 150ms, 400ms)
+      - takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__praise_card_0ms'
+      - waitForAnimationToEnd:
+          timeout: 150
+      - takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__praise_card_150ms'
+      - waitForAnimationToEnd:
+          timeout: 250
+      - takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__praise_card_400ms'
+      # Praise on child screen: 4-6 (sticker) & 7-12 (sticker and text)
+      - takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__praise_child_sticker'
+      - takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__praise_child_sticker_and_text'
+      # If mission is uncompleted, child marks done
+      - runFlow:
+          when:
+            visible: '${output.t.missionDone}'
+          commands:
+            - tapOn: '${output.t.missionDone}'
+            - waitForAnimationToEnd:
+                timeout: 2000
+      # Return to Today cleanly: exit child mode via PIN (matching fresh/04)
+      - extendedWaitUntil:
+          notVisible: '${output.c.childModeHandoff}'
+          timeout: 15000
+          optional: true
+      - tapOn:
+          text: '${output.t.a11yExitChildMode}'
+          optional: true
+      - extendedWaitUntil:
+          visible: '${output.t.habitChildModeExitTitle}'
+          timeout: 10000
+          optional: true
+      - runFlow:
+          when:
+            visible: '${output.t.habitChildModeExitTitle}'
+          commands:
+            - tapOn: '${output.t.habitChildModeExit}'
+            - waitForAnimationToEnd:
+                timeout: 2000
+            - runFlow: ../common/enter_pin.yaml
+      - extendedWaitUntil:
+          visible: '${output.lead.navToday}'
+          timeout: 20000
+          optional: true
+      # Fallback if still on child mode surface
+      - runFlow:
+          when:
+            notVisible: '${output.lead.navToday}'
+          commands:
+            - back
+            - waitForAnimationToEnd:
+                timeout: 2000

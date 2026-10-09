@@ -193,6 +193,7 @@ shoot() {  # name lang tag variant [extra -e args...]
   shift 4
   run_flow info gallery "$name" gallery/shoot.yaml -e UI_LANG="$lang" \
     -e GALLERY_TAG="$tag" -e GALLERY_VARIANT="$variant" "$@" || true
+  python3 "$E2E/e2e_tool.py" verify-hierarchy --report-dir "$OUT/maestro/gallery/$name" --lang "$lang" || true
 }
 # Every pass gets its OWN fresh install + onboarding. The pass's lesson leg
 # completes a lesson to photograph the celebration — with one shared install

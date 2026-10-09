@@ -544,6 +544,24 @@ class HierarchyVerificationTest(unittest.TestCase):
             self.assertEqual(rc_bad, 1)
             self.assertIn("Found forbidden marker 'المزيد'", err.getvalue())
 
+    def test_pin_pad_hierarchy_fails_when_labeled_praise_child_sticker(self):
+        # Exact PIN setup hierarchy text from run 37974593492 where camera captured
+        # the PIN keypad instead of the child's praise card.
+        sample_pin_hierarchy = (
+            '{"accessibilityText": "وضع الطفل"}, '
+            '{"accessibilityText": "اختر رمزًا من أربعة أرقام يحمي وضع الطفل. ستحتاج إليه للخروج منه."}, '
+            '{"accessibilityText": "1"}, {"accessibilityText": "2"}, {"accessibilityText": "3"}, '
+            '{"accessibilityText": "4"}, {"accessibilityText": "5"}, {"accessibilityText": "6"}, '
+            '{"accessibilityText": "7"}, {"accessibilityText": "8"}, {"accessibilityText": "9"}, '
+            '{"accessibilityText": "0"}, {"accessibilityText": "⌫"}'
+        )
+        errors = t.verify_screen_hierarchy(
+            "praise_child_sticker", sample_pin_hierarchy, lang="ar"
+        )
+        self.assertTrue(errors)
+        self.assertTrue(any("Missing expected markers" in e for e in errors))
+        self.assertTrue(any("Found forbidden marker 'وضع الطفل'" in e for e in errors))
+
 
 if __name__ == "__main__":
     unittest.main()

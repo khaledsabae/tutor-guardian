@@ -602,72 +602,99 @@ def cmd_summary(args: argparse.Namespace) -> int:
 
 EXPECTED_SCREEN_MARKERS: dict[str, dict[str, list[str]]] = {
     "settings": {
-        "required": ["الإعدادات", "Settings"],
+        "required_ar": ["الإعدادات"],
+        "required_en": ["Settings"],
         "forbidden": ["علامة التبويب 1 من", "المزيد", "Tab 1 of"],
     },
     "settings_dark": {
-        "required": ["الإعدادات", "Settings"],
+        "required_ar": ["الإعدادات"],
+        "required_en": ["Settings"],
     },
     "home": {
-        "required": ["اليوم", "Today"],
+        "required_ar": ["اليوم"],
+        "required_en": ["Today"],
         "forbidden": ["الإعدادات", "Settings"],
     },
     "home_dark": {
-        "required": ["اليوم", "Today"],
+        "required_ar": ["اليوم"],
+        "required_en": ["Today"],
         "forbidden": ["الإعدادات", "Settings"],
     },
     "home_dark_noor_face": {
-        "required": ["اليوم", "Today"],
+        "required_ar": ["اليوم"],
+        "required_en": ["Today"],
         "forbidden": ["الإعدادات", "Settings", "المزيد"],
     },
     "home_dark_gift": {
-        "required": ["اليوم", "Today"],
+        "required_ar": ["اليوم"],
+        "required_en": ["Today"],
         "forbidden": ["الإعدادات", "Settings", "المزيد"],
     },
     "noor_face_today": {
-        "required": ["اليوم", "Today"],
+        "required_ar": ["اليوم"],
+        "required_en": ["Today"],
         "forbidden": ["الإعدادات", "Settings"],
     },
     "gift_moment": {
-        "required": ["اليوم", "Today"],
+        "required_ar": ["اليوم"],
+        "required_en": ["Today"],
     },
     "praise_child_sticker": {
-        "required": ["مهمة اليوم", "Today's Mission", "أهلك يقولون لك", "Praise"],
-        "forbidden": ["الإعدادات", "Settings"],
+        "required_ar": ["مهمة اليوم", "أهلك يقولون لك"],
+        "required_en": ["Today's Mission", "Praise"],
+        "forbidden": ["الإعدادات", "Settings", "وضع الطفل", "اختر رمز", "أدخل رمز"],
     },
     "praise_child_sticker_and_text": {
-        "required": ["مهمة اليوم", "Today's Mission", "أهلك يقولون لك", "Praise"],
-        "forbidden": ["الإعدادات", "Settings"],
+        "required_ar": ["مهمة اليوم", "أهلك يقولون لك"],
+        "required_en": ["Today's Mission", "Praise"],
+        "forbidden": ["الإعدادات", "Settings", "وضع الطفل", "اختر رمز", "أدخل رمز"],
     },
     "lesson": {
-        "required": ["أكملت الدرس", "إكمال الدرس", "Lesson", "الدرس", "رجوع"],
+        "required_ar": ["أكملت الدرس", "إكمال الدرس", "الدرس", "رجوع"],
+        "required_en": ["Lesson", "Complete Lesson", "Back"],
         "forbidden": ["الإعدادات", "Settings"],
     },
     "onboarding_1_language": {
-        "required": ["اختر لغة التطبيق", "Choose App Language", "Language"],
+        "required_ar": ["اختر لغة التطبيق"],
+        "required_en": ["Choose App Language", "Language"],
         "forbidden": ["الإعدادات", "Settings"],
     },
     "onboarding_2_first_tip": {
-        "required": ["ابدأ رحلتك", "Start your journey", "7–9"],
+        "required_ar": ["ابدأ رحلتك", "7–9"],
+        "required_en": ["Start your journey", "7–9"],
         "forbidden": ["الإعدادات", "Settings"],
     },
 }
 
 
-def verify_screen_hierarchy(screen: str, hierarchy_text: str) -> list[str]:
+def verify_screen_hierarchy(
+    screen: str, hierarchy_text: str, lang: str | None = None
+) -> list[str]:
     """Check that the view hierarchy text matches expected markers for screen.
 
+    Requires at least one marker for the given language (or either language if
+    omitted), and ensures no forbidden markers are present.
     Returns list of error descriptions (empty if valid).
     """
     rules = EXPECTED_SCREEN_MARKERS.get(screen)
     if not rules:
         return []
     errors = []
-    required = rules.get("required", [])
+
+    required: list[str] = []
+    if lang == "ar" and "required_ar" in rules:
+        required = rules["required_ar"]
+    elif lang == "en" and "required_en" in rules:
+        required = rules["required_en"]
+    elif "required" in rules:
+        required = rules["required"]
+    elif "required_ar" in rules or "required_en" in rules:
+        required = rules.get("required_ar", []) + rules.get("required_en", [])
+
     if required:
         if not any(req in hierarchy_text for req in required):
             errors.append(
-                f"Missing expected markers (any of {required}) for screen '{screen}'"
+                f"Missing expected markers (at least one of {required}) for screen '{screen}'"
             )
     for forbidden in rules.get("forbidden", []):
         if forbidden in hierarchy_text:
@@ -678,9 +705,55 @@ def verify_screen_hierarchy(screen: str, hierarchy_text: str) -> list[str]:
 
 
 def cmd_verify_hierarchy(args: argparse.Namespace) -> int:
+    lang = getattr(args, "lang", "ar")
+    if getattr(args, "report_dir", None):
+        report_dir = Path(args.report_dir)
+        if not report_dir.is_dir():
+            return 0
+        dump_files = list(report_dir.rglob("screen-hierarchy/*.json")) + list(
+            report_dir.rglob("screen-hierarchy/*.xml")
+        )
+        if not dump_files:
+            return 0
+        total_errors = []
+        for path in dump_files:
+            text = path.read_text(encoding="utf-8", errors="replace")
+            matched_screen = None
+            for screen in EXPECTED_SCREEN_MARKERS:
+                if screen in path.name:
+                    matched_screen = screen
+                    break
+            if not matched_screen:
+                if "praise" in path.name or "praiseFromFa" in path.name:
+                    matched_screen = "praise_child_sticker"
+                elif "home" in path.name:
+                    matched_screen = "home"
+                elif "lesson" in path.name:
+                    matched_screen = "lesson"
+                elif "settings" in path.name:
+                    matched_screen = "settings"
+            if matched_screen:
+                errs = verify_screen_hierarchy(matched_screen, text, lang=lang)
+                if errs:
+                    total_errors.extend(
+                        [f"{path.name} ({matched_screen}): {e}" for e in errs]
+                    )
+        if total_errors:
+            for err in total_errors:
+                print(f"::error title=Hierarchy check::{err}", file=sys.stderr)
+            return 1
+        return 0
+
+    if not getattr(args, "hierarchy", None) or not getattr(args, "screen", None):
+        print(
+            "verify-hierarchy requires screen and hierarchy file (or --report-dir)",
+            file=sys.stderr,
+        )
+        return 2
+
     path = Path(args.hierarchy)
     text = path.read_text(encoding="utf-8", errors="replace")
-    errors = verify_screen_hierarchy(args.screen, text)
+    errors = verify_screen_hierarchy(args.screen, text, lang=lang)
     if errors:
         for err in errors:
             print(f"::error title=Hierarchy check::{err}", file=sys.stderr)
@@ -722,8 +795,10 @@ def main(argv: list[str] | None = None) -> int:
     s.set_defaults(func=cmd_summary)
 
     s = sub.add_parser("verify-hierarchy", help="check view hierarchy text matches expected screen")
-    s.add_argument("screen", help="screen id")
-    s.add_argument("hierarchy", help="path to hierarchy dump file")
+    s.add_argument("screen", nargs="?", help="screen id")
+    s.add_argument("hierarchy", nargs="?", help="path to hierarchy dump file")
+    s.add_argument("--report-dir", help="dir with maestro test reports to scan")
+    s.add_argument("--lang", default="ar", help="screen language (ar or en)")
     s.set_defaults(func=cmd_verify_hierarchy)
 
     args = p.parse_args(argv)

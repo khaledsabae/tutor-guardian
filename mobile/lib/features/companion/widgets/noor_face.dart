@@ -135,7 +135,9 @@ class _NoorFacePainter extends CustomPainter {
 
     // — The night-navy disc: matches the mascot art exactly. —
     final discRadius = math.max(40.0 * scale, s * 0.44);
-    final discColor = palette.isDark ? const Color(0xFF09141F) : const Color(0xFF0F1E2E);
+    final discColor = palette.isDark
+        ? const Color(0xFF09141F) // audit-ok: brand night disc
+        : const Color(0xFF0F1E2E); // audit-ok: brand night disc
     canvas.drawCircle(
       center,
       discRadius,
@@ -143,19 +145,20 @@ class _NoorFacePainter extends CustomPainter {
         ..color = discColor
         ..style = PaintingStyle.fill,
     );
+    // In light mode: exactly one delicate ring around the night disc (not 3).
     canvas.drawCircle(
       center,
       discRadius,
       Paint()
         ..style = PaintingStyle.stroke
-        ..strokeWidth = math.max(1.0, s * 0.020)
-        ..color = palette.accent.withValues(alpha: 0.35),
+        ..strokeWidth = math.max(1.0, s * 0.022)
+        ..color = palette.accent.withValues(alpha: palette.isDark ? 0.35 : 0.45),
     );
 
     // — The head: a refined crescent, opening toward the top-right. —
-    final body = math.max(30.0 * scale, s * 0.28);
-    final bite = math.max(25.0 * scale, s * 0.24);
-    final biteOffset = Offset(10 * scale, -9 * scale);
+    final body = math.max(30.0 * scale, s * 0.32);
+    final bite = math.max(25.0 * scale, s * 0.27);
+    final biteOffset = Offset(16 * scale, -3 * scale);
 
     final moon = Path.combine(
       PathOperation.difference,
@@ -167,8 +170,8 @@ class _NoorFacePainter extends CustomPainter {
     // Warm ivory/cream for resting face; gold is reserved for happy only.
     final fill = switch (state) {
       NoorFaceState.happy => palette.accent,
-      NoorFaceState.tender => const Color(0xFFFFF7ED),
-      _ => const Color(0xFFFBF8F2),
+      NoorFaceState.tender => const Color(0xFFFFF7ED), // audit-ok: brand crescent fill
+      _ => const Color(0xFFFBF8F2), // audit-ok: brand crescent fill
     };
     canvas.drawPath(
       moon,
@@ -184,11 +187,11 @@ class _NoorFacePainter extends CustomPainter {
         ..strokeWidth = math.max(1.0, s * 0.016)
         ..color = state == NoorFaceState.happy
             ? palette.accentDeep
-            : const Color(0xFFE2D8CC),
+            : const Color(0xFFE2D8CC), // audit-ok: brand crescent fill
     );
 
-    // — The halo breath (every state except night, whose sky is quiet). —
-    if (state != NoorFaceState.night) {
+    // — The halo breath: in dark mode or happy state only, keeping light mode to 1 clean ring. —
+    if (state == NoorFaceState.happy || (palette.isDark && state != NoorFaceState.night)) {
       final breathe = (math.sin(phase * 2 * math.pi) + 1) / 2;
       canvas.drawCircle(
         center,
@@ -252,19 +255,20 @@ class _NoorFacePainter extends CustomPainter {
       }
     }
 
-    // — The features, on the crescent's broad lower-left body. —
+    // — The features, drawn directly on the ivory crescent's broad belly. —
     final featureColor = state == NoorFaceState.happy
         ? palette.onAccent
-        : const Color(0xFF1E293B);
+        : const Color(0xFF0F1E2E); // audit-ok: brand night disc
+    final featureStroke = math.max(1.6, s * 0.050);
     final feature = Paint()
       ..style = PaintingStyle.stroke
       ..strokeCap = StrokeCap.round
-      ..strokeWidth = math.max(1.3, s * 0.034)
+      ..strokeWidth = featureStroke
       ..color = featureColor;
 
-    final eyeL = center + Offset(-9 * scale, -2 * scale);
-    final eyeR = center + Offset(7 * scale, -2 * scale);
-    final eyeR_ = math.max(3.2 * scale, s * 0.030);
+    final eyeL = center + Offset(-21 * scale, -3 * scale);
+    final eyeR = center + Offset(-12.5 * scale, -3 * scale);
+    final eyeR_ = math.max(3.0 * scale, s * 0.038);
     final blink = _blinking(phase);
 
     switch (state) {
@@ -315,7 +319,7 @@ class _NoorFacePainter extends CustomPainter {
     final rect = Rect.fromCircle(center: c, radius: r);
     canvas.drawArc(
       rect,
-      up ? math.pi : 0,
+      up ? 0 : math.pi,
       math.pi,
       false,
       paint..style = PaintingStyle.stroke,
@@ -330,11 +334,11 @@ class _NoorFacePainter extends CustomPainter {
     required bool open,
     bool small = false,
   }) {
-    final w = (small ? 6.5 : 8.5) * scale;
+    final w = (small ? 5.5 : 7.0) * scale;
     final rect = Rect.fromCenter(
-      center: center + Offset(-2 * scale, 12 * scale),
+      center: center + Offset(-17 * scale, 7 * scale),
       width: w * 2,
-      height: (open ? 11.0 : 8.0) * scale,
+      height: (open ? 9.0 : 6.0) * scale,
     );
     canvas.drawArc(
       rect,

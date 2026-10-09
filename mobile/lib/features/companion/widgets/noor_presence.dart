@@ -108,6 +108,7 @@ class NoorPresenceState extends State<NoorPresence>
     final dpr = MediaQuery.devicePixelRatioOf(context);
     final cacheWidth = (size * dpr).round();
 
+    final bool useDrawnFace = size < _kDrawnFaceBelow;
     final window = Container(
       width: size,
       height: size,
@@ -116,12 +117,14 @@ class NoorPresenceState extends State<NoorPresence>
         // The night ground the mascot tiles already sit on, and the gold rim
         // — both palette roles, so the window survives a theme flip.
         color: colors.surfaceAlt,
-        border: Border.all(color: colors.accent, width: rim),
+        border: useDrawnFace
+            ? null // NoorFace draws its own single delicate rim
+            : Border.all(color: colors.accent, width: rim),
       ),
       child: ClipOval(
         // Small windows take the drawn face — no asset decode, and it
         // blinks. Large windows keep the illustration art.
-        child: size < _kDrawnFaceBelow
+        child: useDrawnFace
             ? Center(
                 child: NoorFace(size: size * 0.92, state: _faceState),
               )
@@ -157,6 +160,8 @@ class NoorPresenceState extends State<NoorPresence>
               progress: _halo.value,
               halo: colors.accent,
               glow: colors.primary,
+              isDark: colors.isDark,
+              useDrawnFace: useDrawnFace,
             ),
             child: Center(child: window),
           ),
@@ -175,12 +180,16 @@ class _HaloPainter extends CustomPainter {
     required this.progress,
     required this.halo,
     required this.glow,
+    required this.isDark,
+    required this.useDrawnFace,
   });
 
   final NoorMood mood;
   final double progress;
   final Color halo;
   final Color glow;
+  final bool isDark;
+  final bool useDrawnFace;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -198,15 +207,18 @@ class _HaloPainter extends CustomPainter {
         ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 14),
     );
 
-    // The breathing ring.
-    canvas.drawCircle(
-      center,
-      radius * (1.0 + 0.045 * breathe),
-      Paint()
-        ..style = PaintingStyle.stroke
-        ..strokeWidth = math.max(1.2, radius * .035)
-        ..color = halo.withValues(alpha: 0.35 + 0.35 * breathe),
-    );
+    // The breathing ring. In light mode calm state with a drawn face,
+    // the single delicate rim on the face disc is the only ring.
+    if (mood == NoorMood.proud || isDark || !useDrawnFace) {
+      canvas.drawCircle(
+        center,
+        radius * (1.0 + 0.045 * breathe),
+        Paint()
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = math.max(1.2, radius * .035)
+          ..color = halo.withValues(alpha: 0.35 + 0.35 * breathe),
+      );
+    }
 
     if (mood == NoorMood.proud) {
       // Four short rays on the diagonals.
@@ -239,5 +251,9 @@ class _HaloPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(_HaloPainter old) =>
-      old.mood != mood || old.progress != progress || old.halo != halo;
+      old.mood != mood ||
+      old.progress != progress ||
+      old.halo != halo ||
+      old.isDark != isDark ||
+      old.useDrawnFace != useDrawnFace;
 }
