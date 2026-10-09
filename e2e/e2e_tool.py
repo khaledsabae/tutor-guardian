@@ -112,7 +112,7 @@ KEYS = [
     "lessonCelebrationTitle", "lessonNextStepTitle", "lessonNextStepConfirm",
     "followupTitle", "followupTitleFor", "followupWorked", "followupThanksTitle",
     "reviewPromptTitle", "reviewPromptLater", "settingsThemeLight",
-    "todayMissionOpen", "praiseFromFamily", "dailyGiftLabel",
+    "todayMissionOpen", "praiseFromFamily", "dailyGiftLabel", "missionTodayLabel",
 ]
 
 # Strings the app hardcodes outside the ARB files.
