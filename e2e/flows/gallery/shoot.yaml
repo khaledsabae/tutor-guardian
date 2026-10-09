@@ -170,7 +170,7 @@ name: gallery/shoot
     commands:
       - tapOn: '${output.t.lessonMarkComplete}'
       - extendedWaitUntil:
-          visible: '${output.t.lessonCelebrationTitle}'
+          visible: '(?:${output.t.lessonCelebrationTitle}|${output.t.continueBtn})'
           timeout: 30000
       - waitForAnimationToEnd:
           timeout: 3000

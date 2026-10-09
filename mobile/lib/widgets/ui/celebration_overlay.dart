@@ -171,13 +171,17 @@ class _CelebrationDialogState extends State<_CelebrationDialog> {
                         curve: Curves.easeOutBack,
                       ),
                   const SizedBox(height: 12),
-                  Text(
-                    widget.title,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.w800,
-                      color: Dt.ink,
+                  Semantics(
+                    header: true,
+                    label: widget.title,
+                    child: Text(
+                      widget.title,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.w800,
+                        color: Dt.ink,
+                      ),
                     ),
                   ),
                   const SizedBox(height: 8),
