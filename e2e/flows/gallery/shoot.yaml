@@ -25,6 +25,16 @@ appId: com.alsaba.almorabbi
 name: gallery/shoot
 ---
 - runScript: ../common/l10n.js
+# Every pass starts from a cold launch, exactly like upgrade/03: after
+# `adb install -r` of the PR head (the «after» passes) the app is NOT
+# running, and home.yaml's back-walk assumes a live process — the first
+# after-pass died on "اليوم not found" because of exactly that.
+- launchApp:
+    stopApp: true
+- runFlow: ../common/system_dialogs.yaml
+- extendedWaitUntil:
+    visible: '${output.lead.navToday}'
+    timeout: 60000
 # ── Today ────────────────────────────────────────────────────────────────
 - runFlow: ../common/home.yaml
 - runFlow:

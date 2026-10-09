@@ -357,7 +357,7 @@ if __name__ == "__main__":
 class GalleryTest(unittest.TestCase):
     """The before/after pairing: names drive everything, so fabricate files."""
 
-    def run_gallery(self, names):
+    def run_gallery(self, names, extra=()):
         with tempfile.TemporaryDirectory() as d:
             root = Path(d)
             screens = root / "screens"
@@ -366,10 +366,54 @@ class GalleryTest(unittest.TestCase):
                 (screens / name).write_bytes(b"\x89PNG")
             out = io.StringIO()
             with contextlib.redirect_stdout(out):
-                rc = t.main(["gallery", str(screens), "--out", str(root / "gallery")])
+                rc = t.main(["gallery", str(screens), "--out", str(root / "gallery"), *extra])
             summary = (root / "gallery" / "gallery-summary.md").read_text(encoding="utf-8")
             images = sorted(p.name for p in (root / "gallery" / "images").glob("*.png"))
             return rc, out.getvalue(), summary, images
+
+    # ── --require-after: the gate must never go green while blind ─────────
+
+    def complete_shots(self, drop=()):
+        """Every screen in every variant, before and after, plus onboarding."""
+        names = []
+        for v in ("ar", "en", "ar_font2x"):
+            for s, _c in t.GALLERY_SCREENS:
+                names.append(f"gallery__01_before_{v}__before__{v}__{s}.png")
+                names.append(f"gallery__05_after_{v}__after__{v}__{s}.png")
+        for s, _c in t.GALLERY_ONBOARDING:
+            names.append(f"gallery__00_onboarding__{s}.png")
+            names.append(f"fresh__01_onboarding__{s}.png")
+        return [n for n in names if n not in drop]
+
+    def test_require_after_is_green_on_a_complete_shoot(self):
+        rc, stdout, _, images = self.run_gallery(
+            self.complete_shots(), extra=("--require-after",))
+        self.assertEqual(rc, 0)
+        self.assertNotIn("::error", stdout)
+        self.assertTrue(images)
+
+    def test_require_after_fails_on_an_empty_after_cell(self):
+        # An «after» column showing «—» is a BLIND gate: run 37895766558
+        # shipped exactly this — every after cell empty, check still green.
+        rc, stdout, summary, _ = self.run_gallery(
+            self.complete_shots(drop=("gallery__05_after_en__after__en__celebration.png",)),
+            extra=("--require-after",))
+        self.assertEqual(rc, 1)
+        self.assertIn("::error title=E2E gallery", stdout)
+        self.assertIn("en:celebration", stdout)
+        # The summary is still written, with the hole visible for a human.
+        self.assertIn("| احتفال إكمال الدرس |", summary)
+
+    def test_guarded_screens_may_stay_empty_under_require_after(self):
+        drop = tuple(
+            f"gallery__05_after_{v}__after__{v}__{s}.png"
+            for v in ("ar", "en", "ar_font2x")
+            for s in t.GALLERY_GUARDED
+        )
+        rc, stdout, _, _ = self.run_gallery(
+            self.complete_shots(drop=drop), extra=("--require-after",))
+        self.assertEqual(rc, 0)
+        self.assertNotIn("::error", stdout)
 
     def test_pairs_before_and_after_and_copies_the_images(self):
         rc, stdout, summary, images = self.run_gallery([

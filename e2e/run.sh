@@ -217,9 +217,14 @@ else
 fi
 
 # ── the gallery artifact: before/after pairs in one markdown ────────────
-# Never gates: a broken pairing must not fail a green run.
-python3 "$E2E/e2e_tool.py" gallery "$OUT/screens" --out "$OUT/gallery" \
-  || echo "::warning title=E2E gallery::summary generation failed (screenshots are still in e2e-screenshots)"
+# Generation problems never gate (the raw shots live on in e2e-screenshots),
+# but a BLIND gallery does: with --require-after, any non-guarded screen
+# missing its «after» shot fails the job — the gate called «عين خالد» must
+# never go green while it cannot show the change.
+if ! python3 "$E2E/e2e_tool.py" gallery "$OUT/screens" --out "$OUT/gallery" --require-after; then
+  echo "::error title=E2E gallery::المعرض ناقص — خانة «بعد» فاضية (الجدول في e2e-gallery، والصور الخام في e2e-screenshots)"
+  exit 1
+fi
 
 # ── logcat gate ──────────────────────────────────────────────────────────
 sleep 3
