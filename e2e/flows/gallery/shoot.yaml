@@ -152,6 +152,37 @@ name: gallery/shoot
       visible: '${output.t.todayMissionOpen}'
     commands:
       - tapOn: '${output.t.todayMissionOpen}'
+      # The mission lives in child mode: the lock screen comes first. First
+      # use asks to choose a PIN and confirm it; later passes just unlock.
+      # Without this the camera photographed the PIN keypad and called it
+      # the praise card (2026-10-09).
+      - extendedWaitUntil:
+          visible: '(?:${output.t.childModePinSetupSubtitle}|${output.t.childModePinEnterSubtitle})'
+          timeout: 15000
+          optional: true
+      - runFlow:
+          when:
+            visible: '${output.t.childModePinSetupSubtitle}'
+          commands:
+            - runFlow: ../common/enter_pin.yaml
+            - extendedWaitUntil:
+                visible: '${output.t.childModePinConfirmSubtitle}'
+                timeout: 10000
+                optional: true
+            - runFlow:
+                when:
+                  visible: '${output.t.childModePinConfirmSubtitle}'
+                commands:
+                  - runFlow: ../common/enter_pin.yaml
+                  - waitForAnimationToEnd:
+                      timeout: 2000
+      - runFlow:
+          when:
+            visible: '${output.t.childModePinEnterSubtitle}'
+          commands:
+            - runFlow: ../common/enter_pin.yaml
+            - waitForAnimationToEnd:
+                timeout: 2000
       - extendedWaitUntil:
           visible: '(?:${output.c.praiseFromFamily}|${output.t.missionTodayLabel})'
           timeout: 15000

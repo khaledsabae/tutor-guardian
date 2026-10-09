@@ -98,7 +98,8 @@ KEYS = [
     "a11yExitChildMode",
     "habitChildModeExitTitle", "childModeHandoff", "childModePinMismatch",
     "childModePinIncorrect", "childModeEnterFailed", "childModeBudgetSpent",
-    "childModeOffline",
+    "childModeOffline", "childModePinSetupSubtitle", "childModePinConfirmSubtitle",
+    "childModePinEnterSubtitle",
     # failure screens
     "bootError", "forceUpdateTitle",
     # family programs (fresh/09)
