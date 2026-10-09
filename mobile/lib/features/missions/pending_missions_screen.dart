@@ -20,7 +20,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/analytics.dart';
 import '../../l10n/app_localizations.dart';
 import '../../state/chat_notifier.dart';
+import '../../theme/app_colors.dart';
 import '../coins/coins_providers.dart';
+import '../../widgets/ui/brand_glyph.dart';
 import '../../widgets/ui/error_retry_view.dart';
 import 'mission_confirmations.dart';
 import 'package:almorabbi/widgets/ui/loading_view.dart';
@@ -81,16 +83,25 @@ class _PendingMissionsScreenState extends ConsumerState<PendingMissionsScreen> {
     // before it: on a flaky network the resend can take the whole request
     // timeout, and the list must not wait behind it. The resend is the only
     // way left to pay cards the server applied but never answered for.
-    final flushing = MissionConfirmations.flush(client)
-        .then<MissionConfirmResult?>((r) => r, onError: (Object _) => null);
+    final flushing = MissionConfirmations.flush(
+      client,
+    ).then<MissionConfirmResult?>((r) => r, onError: (Object _) => null);
 
     try {
       final items = await client.fetchPendingMissions();
-      if (mounted) setState(() { _pending = items; _error = null; });
+      if (mounted) {
+        setState(() {
+          _pending = items;
+          _error = null;
+        });
+      }
     } catch (e) {
       if (mounted) {
         final message = describeFailure(AppLocalizations.of(context), e);
-        setState(() { _error = message; _pending = const []; });
+        setState(() {
+          _error = message;
+          _pending = const [];
+        });
       }
     }
 
@@ -99,9 +110,13 @@ class _PendingMissionsScreenState extends ConsumerState<PendingMissionsScreen> {
     if (flushed.coins > 0) {
       await coins.refresh();
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
             content: Text(
-                AppLocalizations.of(context).missionCoinsEarned(flushed.coins))));
+              AppLocalizations.of(context).missionCoinsEarned(flushed.coins),
+            ),
+          ),
+        );
       }
     }
     // The resend may have settled cards the list fetched beside it still shows.
@@ -164,7 +179,8 @@ class _PendingMissionsScreenState extends ConsumerState<PendingMissionsScreen> {
       if (result.coins > 0) {
         await coins.refresh(); // the wallet outlives this screen
         messenger.showSnackBar(
-            SnackBar(content: Text(l10n.missionCoinsEarned(result.coins))));
+          SnackBar(content: Text(l10n.missionCoinsEarned(result.coins))),
+        );
       }
       if (!mounted) return;
       Navigator.of(context).pop(true);
@@ -172,7 +188,10 @@ class _PendingMissionsScreenState extends ConsumerState<PendingMissionsScreen> {
       // Any failure, not just an HTTP one: a spinner with no way out is the
       // worst answer. The batch stays in the outbox for the next try.
       if (!mounted) return;
-      setState(() { _sending = false; _error = describeFailure(l10n, e); });
+      setState(() {
+        _sending = false;
+        _error = describeFailure(l10n, e);
+      });
     }
   }
 
@@ -180,44 +199,46 @@ class _PendingMissionsScreenState extends ConsumerState<PendingMissionsScreen> {
   /// not du'as — nothing here is pulled from family_adhkar) and one short
   /// optional line of the parent's own.
   Widget _praiseSection(AppLocalizations l10n) => Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      const SizedBox(height: 8),
+      Text(
+        l10n.praiseSectionTitle,
+        style: Theme.of(context).textTheme.labelLarge,
+      ),
+      const SizedBox(height: 8),
+      Wrap(
+        spacing: 8,
+        runSpacing: 8,
         children: [
-          const SizedBox(height: 8),
-          Text(l10n.praiseSectionTitle,
-              style: Theme.of(context).textTheme.labelLarge),
-          const SizedBox(height: 8),
-          Wrap(
-            spacing: 8,
-            runSpacing: 8,
-            children: [
-              for (final chip in [
-                l10n.praiseChipAhsant,
-                l10n.praiseChipBarakAllahuFik,
-                l10n.praiseChipProud,
-              ])
-                FilterChip(
-                  label: Text(chip),
-                  selected: _praiseChip == chip,
-                  onSelected: (on) =>
-                      setState(() => _praiseChip = on ? chip : null),
-                ),
-            ],
-          ),
-          const SizedBox(height: 8),
-          TextField(
-            controller: _praiseController,
-            maxLength: 80,
-            textInputAction: TextInputAction.done,
-            decoration: InputDecoration(
-              hintText: l10n.praiseOwnWordsHint,
-              isDense: true,
-              counterText: '',
-              border: const OutlineInputBorder(),
+          for (final chip in [
+            l10n.praiseChipAhsant,
+            l10n.praiseChipBarakAllahuFik,
+            l10n.praiseChipProud,
+          ])
+            FilterChip(
+              label: Text(chip),
+              selected: _praiseChip == chip,
+              onSelected: (on) =>
+                  setState(() => _praiseChip = on ? chip : null),
             ),
-            onChanged: (_) => setState(() {}),
-          ),
         ],
-      );
+      ),
+      const SizedBox(height: 8),
+      TextField(
+        controller: _praiseController,
+        maxLength: 80,
+        textInputAction: TextInputAction.done,
+        decoration: InputDecoration(
+          hintText: l10n.praiseOwnWordsHint,
+          isDense: true,
+          counterText: '',
+          border: const OutlineInputBorder(),
+        ),
+        onChanged: (_) => setState(() {}),
+      ),
+    ],
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -230,81 +251,108 @@ class _PendingMissionsScreenState extends ConsumerState<PendingMissionsScreen> {
       body: pending == null
           ? const LoadingView(count: 3)
           : pending.isEmpty
-              ? _Empty(message: _error ?? l10n.missionsPendingEmpty)
-              : Column(
-                  children: [
-                    Expanded(
-                      child: ListView.separated(
-                        padding: const EdgeInsets.all(16),
-                        // One item more than the cards: the kind-word section
-                        // rides at the end of the list, so the send button
-                        // keeps its fixed place whatever the font scale.
-                        itemCount: pending.length + 1,
-                        separatorBuilder: (_, _) => const SizedBox(height: 8),
-                        itemBuilder: (context, i) {
-                          if (i == pending.length) return _praiseSection(l10n);
-                          final card = pending[i];
-                          final id = card['mission_id'] as int;
-                          final excluded = _excluded.contains(id);
-                          return Card(
-                            elevation: 0,
-                            color: excluded
-                                ? theme.colorScheme.surfaceContainerHighest
-                                : null,
-                            child: ListTile(
-                              title: Text(card['title_ar'] as String? ?? ''),
-                              subtitle: Text(
-                                '${card['child_name'] ?? ''} · '
-                                '${card['estimated_minutes'] ?? 0} ${l10n.missionMinutesShort}'
-                                // A Prayer Journey card says what it earns.
-                                '${_coinsOf(card) > 0 ? ' · 🪙 ${l10n.programsCoins(_coinsOf(card))}' : ''}',
-                              ),
-                              trailing: TextButton(
-                                onPressed: () => setState(() {
-                                  excluded
-                                      ? _excluded.remove(id)
-                                      : _excluded.add(id);
-                                }),
-                                child: Text(excluded
-                                    ? l10n.missionMarkDone
-                                    : l10n.missionMarkNotYet),
-                              ),
+          ? _Empty(message: _error ?? l10n.missionsPendingEmpty)
+          : Column(
+              children: [
+                Expanded(
+                  child: ListView.separated(
+                    padding: const EdgeInsets.all(16),
+                    // One item more than the cards: the kind-word section
+                    // rides at the end of the list, so the send button
+                    // keeps its fixed place whatever the font scale.
+                    itemCount: pending.length + 1,
+                    separatorBuilder: (_, _) => const SizedBox(height: 8),
+                    itemBuilder: (context, i) {
+                      if (i == pending.length) return _praiseSection(l10n);
+                      final card = pending[i];
+                      final id = card['mission_id'] as int;
+                      final excluded = _excluded.contains(id);
+                      return Card(
+                        elevation: 0,
+                        color: excluded
+                            ? theme.colorScheme.surfaceContainerHighest
+                            : null,
+                        child: ListTile(
+                          title: Text(card['title_ar'] as String? ?? ''),
+                          // A Prayer Journey card says what it earns —
+                          // the coin is a drawn glyph inline (جولة
+                          // الحرفة), gold on both palettes.
+                          subtitle: Text.rich(
+                            TextSpan(
+                              text:
+                                  '${card['child_name'] ?? ''} · '
+                                  '${card['estimated_minutes'] ?? 0} ${l10n.missionMinutesShort}',
+                              children: [
+                                if (_coinsOf(card) > 0) ...[
+                                  const TextSpan(text: ' · '),
+                                  WidgetSpan(
+                                    alignment: PlaceholderAlignment.middle,
+                                    child: BrandGlyph(
+                                      BrandIcon.coin,
+                                      size: 15,
+                                      color: context.colors.accent,
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text:
+                                        ' ${l10n.programsCoins(_coinsOf(card))}',
+                                  ),
+                                ],
+                              ],
                             ),
-                          );
-                        },
-                      ),
-                    ),
-                    if (_error != null)
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        child: Text(_error!,
-                            style: TextStyle(color: theme.colorScheme.error)),
-                      ),
-                    SafeArea(
-                      child: Padding(
-                        padding: const EdgeInsets.all(16),
-                        child: FilledButton(
-                          onPressed: _sending ? null : _send,
-                          style: FilledButton.styleFrom(
-                            minimumSize: const Size.fromHeight(52),
                           ),
-                          child: Text(
-                            _excluded.isEmpty
-                                ? l10n.missionConfirmAll
-                                : l10n.missionConfirmRest(
-                                    pending.length - _excluded.length),
+                          trailing: TextButton(
+                            onPressed: () => setState(() {
+                              excluded
+                                  ? _excluded.remove(id)
+                                  : _excluded.add(id);
+                            }),
+                            child: Text(
+                              excluded
+                                  ? l10n.missionMarkDone
+                                  : l10n.missionMarkNotYet,
+                            ),
                           ),
                         ),
+                      );
+                    },
+                  ),
+                ),
+                if (_error != null)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Text(
+                      _error!,
+                      style: TextStyle(color: theme.colorScheme.error),
+                    ),
+                  ),
+                SafeArea(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: FilledButton(
+                      onPressed: _sending ? null : _send,
+                      style: FilledButton.styleFrom(
+                        minimumSize: const Size.fromHeight(52),
+                      ),
+                      child: Text(
+                        _excluded.isEmpty
+                            ? l10n.missionConfirmAll
+                            : l10n.missionConfirmRest(
+                                pending.length - _excluded.length,
+                              ),
                       ),
                     ),
-                  ],
+                  ),
                 ),
+              ],
+            ),
     );
   }
 }
 
 /// Coins a pending card carries — only Prayer Journey cards have any.
-int _coinsOf(Map<String, dynamic> card) => (card['coins'] as num?)?.toInt() ?? 0;
+int _coinsOf(Map<String, dynamic> card) =>
+    (card['coins'] as num?)?.toInt() ?? 0;
 
 class _Empty extends StatelessWidget {
   const _Empty({required this.message});
@@ -312,9 +360,9 @@ class _Empty extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Center(
-        child: Padding(
-          padding: const EdgeInsets.all(32),
-          child: Text(message, textAlign: TextAlign.center),
-        ),
-      );
+    child: Padding(
+      padding: const EdgeInsets.all(32),
+      child: Text(message, textAlign: TextAlign.center),
+    ),
+  );
 }

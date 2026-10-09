@@ -19,6 +19,7 @@ import '../../../theme/app_colors.dart';
 import '../../../widgets/ui/animated_progress_bar.dart';
 import '../../../widgets/ui/count_up_text.dart';
 import '../../../core/haptics.dart';
+import '../../../widgets/ui/brand_glyph.dart';
 import '../../../widgets/ui/celebration_overlay.dart';
 import '../../../widgets/ui/empty_state.dart';
 import '../../../widgets/ui/progress_ring.dart';
@@ -32,8 +33,7 @@ class QuizScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final decksAsync =
-        ref.watch(quizDecksProvider(quizIds.join(',')));
+    final decksAsync = ref.watch(quizDecksProvider(quizIds.join(',')));
 
     return Scaffold(
       appBar: AppBar(title: Text(AppLocalizations.of(context).lessonQuiz(0))),
@@ -43,17 +43,16 @@ class QuizScreen extends ConsumerWidget {
           child: LoadingView(count: 5, itemHeight: 90),
         ),
         error: (e, _) => EmptyState(
-          emoji: '📡',
+          icon: const BrandGlyph(BrandIcon.crescent, size: 72),
           title: AppLocalizations.of(context).quizErrorLoading,
           actionLabel: AppLocalizations.of(context).retry,
-          onAction: () =>
-              ref.invalidate(quizDecksProvider(quizIds.join(','))),
+          onAction: () => ref.invalidate(quizDecksProvider(quizIds.join(','))),
         ),
         data: (decks) {
           final questions = decks.expand((d) => d.questions).toList();
           if (questions.isEmpty) {
             return EmptyState(
-              emoji: '❓',
+              icon: const BrandGlyph(BrandIcon.speechBubble, size: 72),
               title: AppLocalizations.of(context).quizErrorLoading,
             );
           }
@@ -169,7 +168,9 @@ class _QuestionView extends StatelessWidget {
               Row(
                 children: [
                   Text(
-                    AppLocalizations.of(context).quizQuestionOf(index + 1, total),
+                    AppLocalizations.of(
+                      context,
+                    ).quizQuestionOf(index + 1, total),
                     style: TextStyle(
                       color: AppTheme.textSecondary,
                       fontWeight: FontWeight.w600,
@@ -178,8 +179,8 @@ class _QuestionView extends StatelessWidget {
                   const Spacer(),
                   if (showFeedback && selectedOptionIndex != null)
                     _AnswerIcon(
-                      isCorrect: question
-                          .options[selectedOptionIndex!].isCorrect,
+                      isCorrect:
+                          question.options[selectedOptionIndex!].isCorrect,
                     ),
                 ],
               ),
@@ -228,12 +229,10 @@ class _QuestionView extends StatelessWidget {
               ],
               if (showFeedback &&
                   selectedOptionIndex != null &&
-                  question.options[selectedOptionIndex!].rationale !=
-                      null) ...[
+                  question.options[selectedOptionIndex!].rationale != null) ...[
                 const SizedBox(height: 4),
                 _RationaleCard(
-                  text:
-                      question.options[selectedOptionIndex!].rationale!,
+                  text: question.options[selectedOptionIndex!].rationale!,
                 ),
               ],
             ],
@@ -249,7 +248,9 @@ class _QuestionView extends StatelessWidget {
                 onPressed: onNext,
                 icon: const Icon(Icons.arrow_forward),
                 label: Text(
-                  index < total - 1 ? AppLocalizations.of(context).quizNextQuestion : AppLocalizations.of(context).quizShowResult,
+                  index < total - 1
+                      ? AppLocalizations.of(context).quizNextQuestion
+                      : AppLocalizations.of(context).quizShowResult,
                 ),
                 style: FilledButton.styleFrom(
                   minimumSize: const Size.fromHeight(50),
@@ -278,16 +279,16 @@ class _HintCard extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(Icons.lightbulb_outline,
-              size: 18, color: AppTheme.textSecondary),
+          Icon(
+            Icons.lightbulb_outline,
+            size: 18,
+            color: AppTheme.textSecondary,
+          ),
           const SizedBox(width: 8),
           Expanded(
             child: Text(
               text,
-              style: TextStyle(
-                color: AppTheme.textSecondary,
-                height: 1.5,
-              ),
+              style: TextStyle(color: AppTheme.textSecondary, height: 1.5),
             ),
           ),
         ],
@@ -383,8 +384,7 @@ class _OptionTile extends StatelessWidget {
                     height: 1.5,
                     fontSize: 15,
                     color: onColored ? Colors.white : AppTheme.textPrimary,
-                    fontWeight:
-                        onColored ? FontWeight.w700 : FontWeight.w500,
+                    fontWeight: onColored ? FontWeight.w700 : FontWeight.w500,
                   ),
                 ),
               ),
@@ -399,12 +399,16 @@ class _OptionTile extends StatelessWidget {
     );
 
     if (isCorrectFeedback) {
-      tile = tile.animate().scale(
+      tile = tile
+          .animate()
+          .scale(
             begin: const Offset(1, 1),
             end: const Offset(1.03, 1.03),
             duration: 180.ms,
             curve: Curves.easeOutBack,
-          ).then().scale(
+          )
+          .then()
+          .scale(
             begin: const Offset(1.03, 1.03),
             end: const Offset(1, 1),
             duration: 180.ms,
@@ -431,16 +435,12 @@ class _RationaleCard extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(Icons.info_outline,
-              size: 18, color: AppTheme.textSecondary),
+          Icon(Icons.info_outline, size: 18, color: AppTheme.textSecondary),
           const SizedBox(width: 8),
           Expanded(
             child: Text(
               text,
-              style: TextStyle(
-                color: AppTheme.textSecondary,
-                height: 1.55,
-              ),
+              style: TextStyle(color: AppTheme.textSecondary, height: 1.55),
             ),
           ),
         ],
@@ -479,9 +479,8 @@ class _Summary extends StatefulWidget {
 }
 
 class _SummaryState extends State<_Summary> {
-  int get _pct => widget.total == 0
-      ? 0
-      : (widget.correct * 100 / widget.total).round();
+  int get _pct =>
+      widget.total == 0 ? 0 : (widget.correct * 100 / widget.total).round();
 
   @override
   void initState() {
@@ -498,7 +497,7 @@ class _SummaryState extends State<_Summary> {
           showCelebration(
             context,
             tier: CelebrationTier.quiet,
-            emoji: '🏆',
+            glyph: BrandIcon.medal,
             title: l10n.quizYourResult,
             message: l10n.quizResultExcellent,
           ),
@@ -513,18 +512,20 @@ class _SummaryState extends State<_Summary> {
     final color = pct >= 80
         ? AppTheme.success
         : pct >= 50
-            ? Dt.accentDeep
-            : AppTheme.dangerFg;
-    final emoji = pct >= 80
-        ? '🏆'
+        ? Dt.accentDeep
+        : AppTheme.dangerFg;
+    // The verdict glyph follows the score's colour (medal / star / sprig:
+    // "keep growing") — drawn, not an emoji (جولة الحرفة).
+    final glyph = pct >= 80
+        ? BrandIcon.medal
         : pct >= 50
-            ? '🌟'
-            : '💪';
+        ? BrandIcon.star
+        : BrandIcon.sprig;
     final verdict = pct >= 80
         ? AppLocalizations.of(context).quizResultExcellent
         : pct >= 50
-            ? AppLocalizations.of(context).quizResultGood
-            : AppLocalizations.of(context).quizResultReview;
+        ? AppLocalizations.of(context).quizResultGood
+        : AppLocalizations.of(context).quizResultReview;
 
     return Stack(
       alignment: Alignment.topCenter,
@@ -535,13 +536,11 @@ class _SummaryState extends State<_Summary> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text(emoji, style: const TextStyle(fontSize: 80))
-                    .animate()
-                    .scale(
-                      begin: const Offset(.3, .3),
-                      duration: Dt.slow,
-                      curve: Curves.easeOutBack,
-                    ),
+                BrandGlyph(glyph, size: 84, color: color).animate().scale(
+                  begin: const Offset(.3, .3),
+                  duration: Dt.slow,
+                  curve: Curves.easeOutBack,
+                ),
                 const SizedBox(height: 16),
                 Text(
                   AppLocalizations.of(context).quizYourResult,
@@ -549,9 +548,7 @@ class _SummaryState extends State<_Summary> {
                 ),
                 const SizedBox(height: 16),
                 ProgressRing(
-                  value: widget.total == 0
-                      ? 0
-                      : widget.correct / widget.total,
+                  value: widget.total == 0 ? 0 : widget.correct / widget.total,
                   size: 130,
                   strokeWidth: 12,
                   color: color,

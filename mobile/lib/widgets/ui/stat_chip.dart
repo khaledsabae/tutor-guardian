@@ -3,12 +3,19 @@ import 'package:flutter_animate/flutter_animate.dart';
 
 import '../../theme/design_tokens.dart';
 
-/// Pill chip with an emoji + value + label, on a tinted background.
-/// Used for 🔥 streak / 📚 lessons / 🏅 badges stats.
+/// Pill chip with a drawn icon + value + label, on a tinted background.
+/// Used for the streak / lessons / badges / coins stats.
 class StatChip extends StatelessWidget {
+  /// Leading graphic. The drawn [BrandGlyph] replaced the emoji the chip
+  /// was born with (جولة الحرفة); kept optional so the chip stays a plain
+  /// data row if a caller has neither icon nor emoji.
+  final Widget? icon;
+
+  /// Legacy leading graphic, used only when [icon] is null.
   final String emoji;
   final Widget value;
   final String label;
+
   /// Null means the live accent colour.
   final Color? color;
   final VoidCallback? onTap;
@@ -16,7 +23,8 @@ class StatChip extends StatelessWidget {
 
   const StatChip({
     super.key,
-    required this.emoji,
+    this.icon,
+    this.emoji = '',
     required this.value,
     required this.label,
     this.color,
@@ -35,7 +43,15 @@ class StatChip extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(emoji, style: const TextStyle(fontSize: 20)),
+          // Sized to the emoji it replaced (fontSize 20 ≈ 22px box) so the
+          // pill keeps its rhythm.
+          SizedBox(
+            width: 22,
+            height: 22,
+            child: Center(
+              child: icon ?? Text(emoji, style: const TextStyle(fontSize: 20)),
+            ),
+          ),
           const SizedBox(width: 6),
           // Flexible + ellipsis: four chips share one row, so on narrow
           // phones the label must give way rather than overflow the pill.
