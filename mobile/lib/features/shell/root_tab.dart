@@ -29,3 +29,21 @@ abstract final class RootTab {
   /// IndexedStack children — asserted by the shell's widget test.
   static const count = 4;
 }
+
+/// A tab the shell should land on, set by code that runs *before* the shell
+/// exists. Onboarding's deferred "ask the mentor" arms it: the sample
+/// question is tapped during onboarding, and the parent lands on the
+/// assistant tab — question already seeding the chat — once onboarding
+/// completes and [RootScaffold] mounts. Null means "no opinion".
+final pendingRootTabProvider = StateProvider<int?>((ref) => null);
+
+/// Reads and clears any pending tab. Call once when the shell mounts (the
+/// value may predate it) and again from a listener, so both orderings —
+/// armed before or after the shell exists — land on the tab exactly once.
+int? takePendingRootTab(WidgetRef ref) {
+  final pending = ref.read(pendingRootTabProvider);
+  if (pending == null) return null;
+  ref.read(pendingRootTabProvider.notifier).state = null;
+  return pending;
+}
+

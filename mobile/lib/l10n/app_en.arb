@@ -317,6 +317,11 @@
   "onbDefaultChildName": "My child",
   "onbDeferredHint": "You can add your child's name and photo later from Settings.",
   "onbChangeAge": "Change age",
+  "onbPreparingStep1": "Preparing your child's profile…",
+  "onbPreparingStep2": "Picking the first lesson for you…",
+  "onbAskSampleHint": "Tap the question and the mentor will ask it for you after sign-up",
+  "onbAskSampleArmed": "The mentor will open on your question after sign-up ✓",
+  "noorName": "Noor, your mentor",
   "prideStreakTitle": "MashaAllah — {days} days in a row! 🔥",
   "@prideStreakTitle": {
     "placeholders": {

@@ -25,13 +25,19 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/analytics.dart';
+import '../../../core/haptics.dart';
+import '../../../features/companion/widgets/noor_presence.dart';
+import '../../../features/shell/root_tab.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../models/enums.dart';
 import '../../../theme/app_theme.dart';
 import '../../../theme/design_tokens.dart';
 import '../../../theme/app_colors.dart';
 import '../../../widgets/ui/bouncy_button.dart';
+import '../../../widgets/ui/night_sky.dart';
 import '../../program/providers/progress_providers.dart';
+import '../../program/providers/program_providers.dart'
+    show pendingChatQuestionProvider;
 import '../data/onboarding_storage.dart';
 import '../providers/onboarding_providers.dart';
 import 'update_splash_screen.dart' show updateSplashVersion;
@@ -48,6 +54,11 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   final _pageController = PageController();
   int _page = 0;
   String? _ageGroup;
+
+  /// The parent tapped the sample question on the value page: after the
+  /// child is created, the shell should land on the assistant tab with the
+  /// question already seeding the chat (Phase 1 «التطبيق يصحو»).
+  bool _askAfterOnboard = false;
 
   static const _pageCount = 3;
 
@@ -69,6 +80,9 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   }
 
   void _pickAge(String wire) {
+    // The one decision onboarding asks for — it deserves a tick of
+    // acknowledgement (semantic haptics: a choice was made).
+    unawaited(Haptics.selection());
     setState(() => _ageGroup = wire);
     _goTo(2);
   }
@@ -109,6 +123,15 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
       // registered a child; 1,283 ever opened a lesson. This sits on that path.
       await storage.markUpdateSeen(updateSplashVersion);
       unawaited(Analytics.onboardingDone());
+      // The deferred ask, armed on the value page: seed the question and the
+      // target tab BEFORE the gate flips, because the shell (and ChatScreen
+      // inside it) mounts on the next build. ChatScreen consumes a question
+      // that predates it; the shell reads the pending tab on mount.
+      if (_askAfterOnboard && mounted) {
+        ref.read(pendingChatQuestionProvider.notifier).state =
+            sampleQuestionFor(AppLocalizations.of(context), ageGroup);
+        ref.read(pendingRootTabProvider.notifier).state = RootTab.assistant;
+      }
       // Flip the gate LAST: main.dart rebuilds and swaps OnboardingScreen →
       // RootScaffold. Only pop if this screen was actually pushed onto a
       // navigator; popping the ROOT route (first-run onboarding) leaves a
@@ -152,7 +175,15 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
       canPop: false, // onboarding is mandatory
       child: Stack(
         children: [
+          // The night sky behind the whole first-run flow — the app's night
+          // identity from the very first frame. TwinklingStars holds itself
+          // still under reduceMotion (night_sky.dart setStill).
+          Positioned.fill(
+            child: ColoredBox(color: AppTheme.background),
+          ),
+          const Positioned.fill(child: TwinklingStars(count: 28)),
           Scaffold(
+            backgroundColor: Colors.transparent,
             body: SafeArea(
               child: Column(
                 children: [
@@ -174,6 +205,9 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                         _InstantValuePage(
                           ageGroup: _ageGroup,
                           onChangeAge: () => _goTo(1),
+                          askArmed: _askAfterOnboard,
+                          onAskSample: () =>
+                              setState(() => _askAfterOnboard = true),
                         ),
                       ],
                     ),
@@ -250,33 +284,108 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                 child: ColoredBox(
                   color: Colors.black.withValues(alpha: 0.55),
                   child: Center(
-                    child: Container(
-                      padding: const EdgeInsets.all(28),
-                      decoration: BoxDecoration(
-                        color: AppTheme.surface,
-                        borderRadius: BorderRadius.circular(Dt.rSheet),
-                      ),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          const Text('👶', style: TextStyle(fontSize: 44)),
-                          const SizedBox(height: 16),
-                          const CircularProgressIndicator(),
-                          const SizedBox(height: 16),
-                          Text(
-                            AppLocalizations.of(context).onbPreparing,
-                            style: TextStyle(
-                              fontWeight: FontWeight.w700,
-                              color: AppTheme.textPrimary,
-                            ),
-                          ),
-                        ],
-                      ),
+                    child: _WaitingOverlay(
+                      lines: [
+                        AppLocalizations.of(context).onbPreparingStep1,
+                        AppLocalizations.of(context).onbPreparingStep2,
+                      ],
                     ),
                   ),
                 ),
               ),
             ),
+        ],
+      ),
+    );
+  }
+}
+
+/// The child-creation wait, told as progressive work instead of a bare
+/// spinner: Noor in a calm halo above status lines that appear one by one
+/// while the create call is in flight. The overlay's lifetime is bounded by
+/// `_submit`'s existing 45s timeout — this widget only ever adds lines,
+/// never decides when to stop.
+class _WaitingOverlay extends StatefulWidget {
+  const _WaitingOverlay({required this.lines});
+
+  final List<String> lines;
+
+  @override
+  State<_WaitingOverlay> createState() => _WaitingOverlayState();
+}
+
+class _WaitingOverlayState extends State<_WaitingOverlay> {
+  /// How many lines are visible. Starts at the first; a timer reveals the
+  /// rest so a slow backend reads as work happening, not a freeze.
+  int _revealed = 1;
+  Timer? _ticker;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.lines.length > 1) {
+      _ticker = Timer.periodic(_revealInterval, (_) {
+        if (!mounted || _revealed >= widget.lines.length) return;
+        setState(() => _revealed++);
+      });
+    }
+  }
+
+  /// Generous on purpose: the second line promises lesson-picking, which
+  /// the backend genuinely does after the child row exists.
+  static const _revealInterval = Duration(seconds: 4);
+
+  @override
+  void dispose() {
+    _ticker?.cancel();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    return Container(
+      padding: const EdgeInsets.all(28),
+      decoration: BoxDecoration(
+        color: AppTheme.surface,
+        borderRadius: BorderRadius.circular(Dt.rSheet),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          NoorPresence(size: 84, semanticLabel: l10n.noorName),
+          const SizedBox(height: 18),
+          for (var i = 0; i < _revealed; i++) ...[
+            if (i > 0) const SizedBox(height: 8),
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  // Every visible line except the last is done; the last one
+                  // is the work in progress.
+                  i < _revealed - 1
+                      ? Icons.check_circle_outline
+                      : Icons.radio_button_checked,
+                  size: 18,
+                  color: i < _revealed - 1
+                      ? AppTheme.primary
+                      : AppTheme.textSecondary,
+                ),
+                const SizedBox(width: 8),
+                Flexible(
+                  child: Text(
+                    widget.lines[i],
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w700,
+                      color: AppTheme.textPrimary,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
         ],
       ),
     );
@@ -380,13 +489,49 @@ class _AgeQuestionPage extends StatelessWidget {
   }
 }
 
+/// Sample mentor question for an age band — mirrors the age→pain-question
+/// mapping used by the chat empty state (topics match the backend's curated
+/// topic seeds so the first real answer lands grounded). Top-level because
+/// two places need the identical string: the value page shows it, and
+/// `_submit` seeds it into the chat when the parent asked for it.
+String sampleQuestionFor(AppLocalizations l10n, String? ageGroup) {
+  switch (ageGroup) {
+    case 'prenatal-1':
+      return l10n.chatQ_sleep;
+    case '2-3':
+      return l10n.chatQ_stubborn;
+    case '4-6':
+      return l10n.chatQ_pray5;
+    case '7-9':
+      return l10n.chatQ_study;
+    case '10-12':
+      return l10n.chatQ_gaming;
+    case '13-15':
+      return l10n.chatQ_socialMedia;
+    case '16-18':
+      return l10n.chatQ_talkOlder;
+    default:
+      return l10n.chatQ_tantrums;
+  }
+}
+
 /// Page 2 — the "wow" moment: an instant, fully-local personalized tip for
 /// the chosen age plus a preview of what's inside. No network, no waiting.
 class _InstantValuePage extends StatelessWidget {
-  const _InstantValuePage({required this.ageGroup, required this.onChangeAge});
+  const _InstantValuePage({
+    required this.ageGroup,
+    required this.onChangeAge,
+    required this.askArmed,
+    required this.onAskSample,
+  });
 
   final String? ageGroup;
   final VoidCallback onChangeAge;
+
+  /// Whether the parent tapped the sample question (arming the deferred
+  /// ask), and the tap handler that arms it.
+  final bool askArmed;
+  final VoidCallback onAskSample;
 
   /// Curated, age-specific first tip. Local by design: the first value
   /// moment must never wait on a cold backend.
@@ -408,30 +553,6 @@ class _InstantValuePage extends StatelessWidget {
         return l10n.onbTip_16to18;
       default:
         return l10n.onbTip_4to6;
-    }
-  }
-
-  /// Sample mentor question for this age — mirrors the age→pain-question
-  /// mapping used by the chat empty state (topics match the backend's
-  /// curated topic seeds so the first real answer lands grounded).
-  String _sampleQuestionFor(AppLocalizations l10n) {
-    switch (ageGroup) {
-      case 'prenatal-1':
-        return l10n.chatQ_sleep;
-      case '2-3':
-        return l10n.chatQ_stubborn;
-      case '4-6':
-        return l10n.chatQ_pray5;
-      case '7-9':
-        return l10n.chatQ_study;
-      case '10-12':
-        return l10n.chatQ_gaming;
-      case '13-15':
-        return l10n.chatQ_socialMedia;
-      case '16-18':
-        return l10n.chatQ_talkOlder;
-      default:
-        return l10n.chatQ_tantrums;
     }
   }
 
@@ -510,7 +631,10 @@ class _InstantValuePage extends StatelessWidget {
               ),
               child: Column(
                 children: [
-                  const Text('💡', style: TextStyle(fontSize: 40)),
+                  NoorPresence(
+                    size: 64,
+                    semanticLabel: l10n.noorName,
+                  ),
                   const SizedBox(height: 12),
                   Text(
                     _tipFor(l10n),
@@ -541,10 +665,16 @@ class _InstantValuePage extends StatelessWidget {
                 .fadeIn(duration: Dt.base)
                 .slideY(begin: .15),
             const SizedBox(height: 10),
-            _PreviewRow(
-              emoji: '💬',
-              text: l10n.onbReadyChat,
-              subText: '«${_sampleQuestionFor(l10n)}»',
+            // The sample question is a real button: tapping it arms a
+            // deferred ask — after onboarding, the shell lands on the
+            // assistant tab with this question already seeding the chat.
+            _SampleQuestionRow(
+              label: l10n.onbReadyChat,
+              question: '«${sampleQuestionFor(l10n, ageGroup)}»',
+              armed: askArmed,
+              armedHint: l10n.onbAskSampleArmed,
+              hint: l10n.onbAskSampleHint,
+              onTap: onAskSample,
             )
                 .animate(delay: 460.ms)
                 .fadeIn(duration: Dt.base)
@@ -557,11 +687,10 @@ class _InstantValuePage extends StatelessWidget {
 }
 
 class _PreviewRow extends StatelessWidget {
-  const _PreviewRow({required this.emoji, required this.text, this.subText});
+  const _PreviewRow({required this.emoji, required this.text});
 
   final String emoji;
   final String text;
-  final String? subText;
 
   @override
   Widget build(BuildContext context) {
@@ -588,21 +717,110 @@ class _PreviewRow extends StatelessWidget {
                     height: 1.5,
                   ),
                 ),
-                if (subText != null) ...[
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// The sample mentor question, as a button. Tapping arms the deferred ask:
+/// after the child is created, the assistant tab opens with this question
+/// already sent to the mentor.
+class _SampleQuestionRow extends StatelessWidget {
+  const _SampleQuestionRow({
+    required this.label,
+    required this.question,
+    required this.armed,
+    required this.armedHint,
+    required this.hint,
+    required this.onTap,
+  });
+
+  final String label;
+  final String question;
+  final bool armed;
+  final String armedHint;
+  final String hint;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return BouncyTap(
+      onTap: () {
+        unawaited(Haptics.selection());
+        onTap();
+      },
+      child: Container(
+        padding: const EdgeInsets.all(14),
+        decoration: BoxDecoration(
+          color: AppTheme.surface,
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: Dt.cardShadow,
+          border: Border.all(
+            color: armed
+                ? AppTheme.primary.withValues(alpha: 0.6)
+                : Colors.transparent,
+            width: 1.5,
+          ),
+        ),
+        child: Row(
+          children: [
+            const Text('💬', style: TextStyle(fontSize: 28)),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    label,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w700,
+                      fontSize: 14,
+                      height: 1.5,
+                    ),
+                  ),
                   const SizedBox(height: 4),
                   Text(
-                    subText!,
+                    question,
                     style: TextStyle(
                       color: AppTheme.textSecondary,
                       fontSize: 13,
                       height: 1.5,
                     ),
                   ),
+                  const SizedBox(height: 6),
+                  Row(
+                    children: [
+                      Icon(
+                        armed ? Icons.check_circle : Icons.touch_app_outlined,
+                        size: 16,
+                        color: armed ? AppTheme.primary : AppTheme.textMuted,
+                      ),
+                      const SizedBox(width: 4),
+                      Flexible(
+                        child: Text(
+                          armed ? armedHint : hint,
+                          style: TextStyle(
+                            color: armed
+                                ? Dt.primaryDeep
+                                : AppTheme.textMuted,
+                            fontSize: 12,
+                            fontWeight:
+                                armed ? FontWeight.w700 : FontWeight.w500,
+                            height: 1.4,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ],
-              ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -651,10 +869,17 @@ class _LanguageSelectionPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const Text(
-                '🌍',
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 64),
+              Image.asset(
+                'assets/images/generated/onboarding_welcome.webp',
+                height: 140,
+                fit: BoxFit.contain,
+                errorBuilder: (_, _, _) => const Text(
+                  // The hero is bundled; if it is ever missing the layout
+                  // keeps its anchor instead of collapsing.
+                  '🌍',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 64),
+                ),
               ).animate().fadeIn(duration: Dt.base).scale(
                     begin: const Offset(.9, .9),
                     curve: Curves.easeOutBack,

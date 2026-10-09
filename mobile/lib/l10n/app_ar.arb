@@ -317,6 +317,11 @@
   "onbDefaultChildName": "طفلي",
   "onbDeferredHint": "يمكنك إضافة اسم طفلك وصورته لاحقًا من الإعدادات.",
   "onbChangeAge": "تغيير العمر",
+  "onbPreparingStep1": "أجهّز ملف طفلك…",
+  "onbPreparingStep2": "أختار لك أول درس…",
+  "onbAskSampleHint": "المس السؤال ليسأله المربّي لك بعد التسجيل",
+  "onbAskSampleArmed": "سنفتح المربّي على سؤالك بعد التسجيل ✓",
+  "noorName": "نور، مرشدك",
   "prideStreakTitle": "ما شاء الله — {days} أيام متواصلة! 🔥",
   "@prideStreakTitle": {
     "placeholders": {

@@ -1010,6 +1010,23 @@ class AppLocalizationsEn extends AppLocalizations {
   String get onbChangeAge => 'Change age';
 
   @override
+  String get onbPreparingStep1 => 'Preparing your child\'s profile…';
+
+  @override
+  String get onbPreparingStep2 => 'Picking the first lesson for you…';
+
+  @override
+  String get onbAskSampleHint =>
+      'Tap the question and the mentor will ask it for you after sign-up';
+
+  @override
+  String get onbAskSampleArmed =>
+      'The mentor will open on your question after sign-up ✓';
+
+  @override
+  String get noorName => 'Noor, your mentor';
+
+  @override
   String prideStreakTitle(int days) {
     return 'MashaAllah — $days days in a row! 🔥';
   }

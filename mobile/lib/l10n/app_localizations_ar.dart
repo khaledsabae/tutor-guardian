@@ -993,6 +993,21 @@ class AppLocalizationsAr extends AppLocalizations {
   String get onbChangeAge => 'تغيير العمر';
 
   @override
+  String get onbPreparingStep1 => 'أجهّز ملف طفلك…';
+
+  @override
+  String get onbPreparingStep2 => 'أختار لك أول درس…';
+
+  @override
+  String get onbAskSampleHint => 'المس السؤال ليسأله المربّي لك بعد التسجيل';
+
+  @override
+  String get onbAskSampleArmed => 'سنفتح المربّي على سؤالك بعد التسجيل ✓';
+
+  @override
+  String get noorName => 'نور، مرشدك';
+
+  @override
   String prideStreakTitle(int days) {
     return 'ما شاء الله — $days أيام متواصلة! 🔥';
   }
