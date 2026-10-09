@@ -549,6 +549,9 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get dailyGiftLabel => 'Today\'s gift';
+
+  @override
   String get feedbackMessage =>
       'Your opinion matters! Share any feedback or issue — written or voice.';
 

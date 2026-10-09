@@ -548,6 +548,9 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
+  String get dailyGiftLabel => 'هدية اليوم';
+
+  @override
   String get feedbackMessage =>
       'رأيك يهمنا! شاركنا أي ملاحظة أو مشكلة — كتابةً أو صوتاً.';
 

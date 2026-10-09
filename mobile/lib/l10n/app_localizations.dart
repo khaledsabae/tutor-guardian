@@ -1148,6 +1148,12 @@ abstract class AppLocalizations {
   /// **'هدية اليوم: {n} 🪙'**
   String dailyGiftLine(Object n);
 
+  /// No description provided for @dailyGiftLabel.
+  ///
+  /// In ar, this message translates to:
+  /// **'هدية اليوم'**
+  String get dailyGiftLabel;
+
   /// No description provided for @feedbackMessage.
   ///
   /// In ar, this message translates to:
