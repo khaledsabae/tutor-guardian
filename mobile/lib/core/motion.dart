@@ -34,7 +34,9 @@ void syncLoop(
   bool reverse = false,
   double restValue = 0,
 }) {
-  if (reduceMotion(context)) {
+  final enabled =
+      TickerMode.valuesOf(context).enabled && !reduceMotion(context);
+  if (!enabled) {
     controller
       ..stop()
       ..value = restValue;

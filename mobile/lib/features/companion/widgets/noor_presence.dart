@@ -24,10 +24,16 @@ import 'package:flutter/material.dart';
 
 import '../../../core/motion.dart';
 import '../../../theme/app_colors.dart';
+import 'noor_face.dart';
 
 /// The two halo states of v0. Calm is the default; proud marks a moment
 /// that was earned (the last tour stop, a completed first lesson later).
 enum NoorMood { calm, proud }
+
+/// Below this window size the drawn [NoorFace] replaces the mascot image:
+/// a 1024² decode for a 44 dp avatar is waste, and the drawn face can
+/// blink. Hero placements (96+) keep the illustrations for their paint.
+const _kDrawnFaceBelow = 64.0;
 
 class NoorPresence extends StatefulWidget {
   const NoorPresence({
@@ -84,9 +90,14 @@ class NoorPresenceState extends State<NoorPresence>
   }
 
   String get _asset => switch (widget.mood) {
-        NoorMood.calm => 'assets/images/generated/mascot_serene.webp',
-        NoorMood.proud => 'assets/images/generated/mascot_celebrate.webp',
-      };
+    NoorMood.calm => 'assets/images/generated/mascot_serene.webp',
+    NoorMood.proud => 'assets/images/generated/mascot_celebrate.webp',
+  };
+
+  NoorFaceState get _faceState => switch (widget.mood) {
+    NoorMood.calm => NoorFaceState.calm,
+    NoorMood.proud => NoorFaceState.happy,
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -108,21 +119,27 @@ class NoorPresenceState extends State<NoorPresence>
         border: Border.all(color: colors.accent, width: rim),
       ),
       child: ClipOval(
-        child: Image.asset(
-          _asset,
-          fit: BoxFit.cover,
-          cacheWidth: cacheWidth,
-          filterQuality: FilterQuality.medium,
-          excludeFromSemantics: true,
-          // The mascot is bundled; a missing file is a build defect. The
-          // crescent fallback keeps the window — and the layout around it —
-          // intact instead of collapsing to an empty oval.
-          errorBuilder: (_, _, _) => Icon(
-            Icons.nightlight_round,
-            size: size * .6,
-            color: colors.primary,
-          ),
-        ),
+        // Small windows take the drawn face — no asset decode, and it
+        // blinks. Large windows keep the illustration art.
+        child: size < _kDrawnFaceBelow
+            ? Center(
+                child: NoorFace(size: size * 0.92, state: _faceState),
+              )
+            : Image.asset(
+                _asset,
+                fit: BoxFit.cover,
+                cacheWidth: cacheWidth,
+                filterQuality: FilterQuality.medium,
+                excludeFromSemantics: true,
+                // The mascot is bundled; a missing file is a build defect. The
+                // crescent fallback keeps the window — and the layout around it —
+                // intact instead of collapsing to an empty oval.
+                errorBuilder: (_, _, _) => Icon(
+                  Icons.nightlight_round,
+                  size: size * .6,
+                  color: colors.primary,
+                ),
+              ),
       ),
     );
 
