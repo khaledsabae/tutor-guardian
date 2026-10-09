@@ -9781,6 +9781,42 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'اختيار طفل'**
   String get a11yChooseAChild;
+
+  /// Evening missions screen: the heading above the quick-praise chips a parent can send with the confirmation.
+  ///
+  /// In ar, this message translates to:
+  /// **'كلمة طيبة مع التأكيد'**
+  String get praiseSectionTitle;
+
+  /// Fixed quick-praise chip. These are fixed strings, not du'as from family_adhkar.
+  ///
+  /// In ar, this message translates to:
+  /// **'أحسنت'**
+  String get praiseChipAhsant;
+
+  /// No description provided for @praiseChipBarakAllahuFik.
+  ///
+  /// In ar, this message translates to:
+  /// **'بارك الله فيك'**
+  String get praiseChipBarakAllahuFik;
+
+  /// No description provided for @praiseChipProud.
+  ///
+  /// In ar, this message translates to:
+  /// **'فخورون بك'**
+  String get praiseChipProud;
+
+  /// Hint text of the optional short free-text line beside the praise chips.
+  ///
+  /// In ar, this message translates to:
+  /// **'أو اكتب كلمة قصيرة من عندك'**
+  String get praiseOwnWordsHint;
+
+  /// Small label above the praise text on the child's mission card. Neutral family wording (أهلك), never بابا/ماما.
+  ///
+  /// In ar, this message translates to:
+  /// **'أهلك يقولون لك'**
+  String get praiseFromFamily;
 }
 
 class _AppLocalizationsDelegate

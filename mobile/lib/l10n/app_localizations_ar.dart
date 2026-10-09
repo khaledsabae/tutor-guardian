@@ -5656,4 +5656,22 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get a11yChooseAChild => 'اختيار طفل';
+
+  @override
+  String get praiseSectionTitle => 'كلمة طيبة مع التأكيد';
+
+  @override
+  String get praiseChipAhsant => 'أحسنت';
+
+  @override
+  String get praiseChipBarakAllahuFik => 'بارك الله فيك';
+
+  @override
+  String get praiseChipProud => 'فخورون بك';
+
+  @override
+  String get praiseOwnWordsHint => 'أو اكتب كلمة قصيرة من عندك';
+
+  @override
+  String get praiseFromFamily => 'أهلك يقولون لك';
 }

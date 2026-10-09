@@ -681,3 +681,29 @@ def test_a_typo_does_not_turn_the_gate_on(client, monkeypatch):
     for value in ("1", "true", "TRUE", "yes"):
         monkeypatch.setenv("AGREEMENT_REQUIRED", value)
         assert cb.agreement_required() is True, value
+
+
+def test_the_child_mission_card_carries_the_latest_praise(client):
+    """«كلمة طيبة»: the parent writes the note in the evening, the child
+    reads it on tomorrow's card — with the band, so the app can decide
+    sticker, sticker-and-text or text alone without a second round trip."""
+    from datetime import datetime, timezone
+
+    from app.services import child_budget, child_missions
+
+    cid = _child_without_agreement(client, "7-9")
+    local_date = child_budget.local_date_for(datetime.now(timezone.utc), 0)
+    card = child_missions.today_mission(DEVICE, cid, "7-9", local_date)
+    child_missions.claim(cid, card["mission_id"])
+    child_missions.confirm_batch(DEVICE, [
+        {"mission_id": card["mission_id"], "confirmed": True,
+         "note": "فخورون بك"}])
+
+    token = child_token.issue_child_token(DEVICE, cid, ttl_seconds=1800)
+    r = client.get("/api/value-tracking/child-mode/mission/today",
+                   headers={"Authorization": f"Child-Bearer {token}"})
+    assert r.status_code == 200, r.text
+    body = r.json()
+    assert body["age_band"] == "7-9"
+    assert body["recent_praise"]["note"] == "فخورون بك"
+    assert body["recent_praise"]["mission_id"] == card["mission_id"]

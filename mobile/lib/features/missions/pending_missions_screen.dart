@@ -12,9 +12,12 @@
 /// act only on the exception, and the common case is that the child did it.
 library;
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../core/analytics.dart';
 import '../../l10n/app_localizations.dart';
 import '../../state/chat_notifier.dart';
 import '../coins/coins_providers.dart';
@@ -38,6 +41,28 @@ class _PendingMissionsScreenState extends ConsumerState<PendingMissionsScreen> {
   /// Mission ids the parent has explicitly marked "not yet". Everything not in
   /// here is confirmed when they send.
   final Set<int> _excluded = {};
+
+  /// «كلمة طيبة» — the selected quick-praise chip's text, or null when the
+  /// parent sends none. Tapping a selected chip clears it again.
+  String? _praiseChip;
+
+  /// The optional short line the parent writes themselves.
+  final _praiseController = TextEditingController();
+
+  @override
+  void dispose() {
+    _praiseController.dispose();
+    super.dispose();
+  }
+
+  /// The note that rides with tonight's confirmations: the chip, the parent's
+  /// own line, or both. Empty when the parent sent no kind word at all.
+  String get _praiseNote {
+    final chip = _praiseChip;
+    final own = _praiseController.text.trim();
+    if (chip != null && own.isNotEmpty) return '$chip — $own';
+    return chip ?? own;
+  }
 
   @override
   void initState() {
@@ -101,13 +126,34 @@ class _PendingMissionsScreenState extends ConsumerState<PendingMissionsScreen> {
     // marked "not yet" is answered `confirmed: false`, not left pending. If it
     // were left, tonight's digest would carry it again tomorrow, which is how
     // a nudge becomes nagging.
-    final items = [
-      for (final card in pending)
-        {
-          'mission_id': card['mission_id'],
-          'confirmed': !_excluded.contains(card['mission_id'] as int),
-        }
-    ];
+    //
+    // The kind word rides only with the confirmed cards: a note on a "not
+    // yet" would reach the child as a contradiction. It is part of the item
+    // map itself, so it lives in the outbox with the confirmation and survives
+    // every retry — not just the first attempt.
+    final note = _praiseNote;
+    final items = <Map<String, dynamic>>[];
+    for (final card in pending) {
+      final confirmed = !_excluded.contains(card['mission_id'] as int);
+      items.add({
+        'mission_id': card['mission_id'],
+        'confirmed': confirmed,
+        if (confirmed && note.isNotEmpty) 'note': note,
+      });
+    }
+
+    if (note.isNotEmpty) {
+      // One event per praised band, not per card: three children in one
+      // family is one evening of praise, not three.
+      final bands = {
+        for (final card in pending)
+          if (!_excluded.contains(card['mission_id'] as int))
+            if (card['age_band'] is String) card['age_band'] as String,
+      };
+      for (final band in bands) {
+        unawaited(Analytics.praiseSent(band));
+      }
+    }
 
     try {
       // Prayer Journey cards come back with what they earned (MOBILE_API
@@ -130,6 +176,49 @@ class _PendingMissionsScreenState extends ConsumerState<PendingMissionsScreen> {
     }
   }
 
+  /// The «كلمة طيبة» section: three fixed chips (they are fixed l10n strings,
+  /// not du'as — nothing here is pulled from family_adhkar) and one short
+  /// optional line of the parent's own.
+  Widget _praiseSection(AppLocalizations l10n) => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(height: 8),
+          Text(l10n.praiseSectionTitle,
+              style: Theme.of(context).textTheme.labelLarge),
+          const SizedBox(height: 8),
+          Wrap(
+            spacing: 8,
+            runSpacing: 8,
+            children: [
+              for (final chip in [
+                l10n.praiseChipAhsant,
+                l10n.praiseChipBarakAllahuFik,
+                l10n.praiseChipProud,
+              ])
+                FilterChip(
+                  label: Text(chip),
+                  selected: _praiseChip == chip,
+                  onSelected: (on) =>
+                      setState(() => _praiseChip = on ? chip : null),
+                ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          TextField(
+            controller: _praiseController,
+            maxLength: 80,
+            textInputAction: TextInputAction.done,
+            decoration: InputDecoration(
+              hintText: l10n.praiseOwnWordsHint,
+              isDense: true,
+              counterText: '',
+              border: const OutlineInputBorder(),
+            ),
+            onChanged: (_) => setState(() {}),
+          ),
+        ],
+      );
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
@@ -147,9 +236,13 @@ class _PendingMissionsScreenState extends ConsumerState<PendingMissionsScreen> {
                     Expanded(
                       child: ListView.separated(
                         padding: const EdgeInsets.all(16),
-                        itemCount: pending.length,
+                        // One item more than the cards: the kind-word section
+                        // rides at the end of the list, so the send button
+                        // keeps its fixed place whatever the font scale.
+                        itemCount: pending.length + 1,
                         separatorBuilder: (_, _) => const SizedBox(height: 8),
                         itemBuilder: (context, i) {
+                          if (i == pending.length) return _praiseSection(l10n);
                           final card = pending[i];
                           final id = card['mission_id'] as int;
                           final excluded = _excluded.contains(id);

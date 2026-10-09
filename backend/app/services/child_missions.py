@@ -64,6 +64,11 @@ NO_REPEAT_DAYS = 21
 # is not a failure anyone needs to be told about, least of all the child.
 EXPIRE_AFTER_HOURS = 48
 
+# How long a «كلمة طيبة» stays deliverable. The parent writes it in the
+# evening; the child is meant to read it the next time they hold the phone —
+# the next morning, not a week later as a riddle about which mission it meant.
+PRAISE_WINDOW_DAYS = 7
+
 
 def _now() -> datetime:
     return datetime.now(_UTC)
@@ -273,8 +278,8 @@ def pending_for_device(device_id: str, lang: Optional[str] = None) -> list[dict[
         out = []
         for row in rows:
             from app.core.taxonomy import map_profile_age_to_band
-            missions = [] if _program_of(row) else load_missions(
-                map_profile_age_to_band(row["age_group"]), lang)
+            band = map_profile_age_to_band(row["age_group"])
+            missions = [] if _program_of(row) else load_missions(band, lang)
             card = _row_to_card(row, missions, lang)
             if card is None:
                 # Its program is unreadable this minute: hidden, still claimed,
@@ -282,6 +287,10 @@ def pending_for_device(device_id: str, lang: Optional[str] = None) -> list[dict[
                 continue
             card["child_id"] = row["child_id"]
             card["child_name"] = row["child_name"]
+            # «كلمة طيبة» analytics need the band as a dimension, and the
+            # parent's device learns it nowhere else: this list is the one
+            # place all of the family's children meet.
+            card["age_band"] = band
             out.append(card)
         return out
     finally:
@@ -353,6 +362,36 @@ def confirm_batch(device_id: str, items: list[dict[str, Any]]) -> dict[str, Any]
         return {"ok": True, "settled": settled, "coins": coins, "deferred": deferred}
     finally:
         conn.close()
+
+
+def recent_praise(child_id: int) -> Optional[dict[str, Any]]:
+    """The latest «كلمة طيبة» a parent attached to a confirmed mission.
+
+    The write side (`parent_note` in [confirm_batch]) has existed since the
+    column did; this is the read that closes the loop. Confirmed cards only —
+    a note on a "not yet" would arrive as a contradiction: the parent said the
+    mission did not happen. Recent only ([PRAISE_WINDOW_DAYS]); latest wins,
+    so a child with a chatty parent reads one warm line, not a wall.
+    """
+    cutoff = (_now().date() - timedelta(days=PRAISE_WINDOW_DAYS)).isoformat()
+    conn = get_conn()
+    try:
+        row = conn.execute(
+            "SELECT id, parent_note, confirmed_at FROM child_missions "
+            "WHERE child_id = ? AND status = 'confirmed' "
+            "AND parent_note IS NOT NULL AND parent_note != '' "
+            "AND local_date >= ? ORDER BY confirmed_at DESC LIMIT 1",
+            (child_id, cutoff),
+        ).fetchone()
+    finally:
+        conn.close()
+    if row is None:
+        return None
+    return {
+        "mission_id": row["id"],
+        "note": row["parent_note"],
+        "confirmed_at": row["confirmed_at"],
+    }
 
 
 def expire_stale(now: Optional[datetime] = None) -> int:

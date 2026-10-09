@@ -1726,6 +1726,24 @@
     "placeholders": {"name": {"type": "String"}}
   },
   "a11yChooseAChild": "Choose a child",
+  "praiseSectionTitle": "A kind word with the confirmation",
+  "@praiseSectionTitle": {
+    "description": "Evening missions screen: the heading above the quick-praise chips a parent can send with the confirmation."
+  },
+  "praiseChipAhsant": "Well done",
+  "praiseChipBarakAllahuFik": "May Allah bless you",
+  "praiseChipProud": "We are proud of you",
+  "@praiseChipAhsant": {
+    "description": "Fixed quick-praise chip. These are fixed strings, not du'as from family_adhkar."
+  },
+  "praiseOwnWordsHint": "Or add a short word of your own",
+  "@praiseOwnWordsHint": {
+    "description": "Hint text of the optional short free-text line beside the praise chips."
+  },
+  "praiseFromFamily": "Your family says to you",
+  "@praiseFromFamily": {
+    "description": "Small label above the praise text on the child's mission card. Neutral family wording, never dad/mum."
+  },
   "@a11yChooseAChild": {
     "description": "Screen-reader label for the active-child chip when no child is active yet; a tap opens the children list."
   }
