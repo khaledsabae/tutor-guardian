@@ -121,13 +121,13 @@ exit 0
         self.assertEqual(rc, 0, output)
         self.assertEqual(rows['gallery', '00_onboarding'], ('0', ''))
         self.assertEqual(rows['gallery', '01_before_ar'], ('1', 'informational'))
-        self.assertEqual(rows['gallery', '05_after_ar'][0], '0')
+        self.assertEqual(rows['gallery', '04_after_ar'][0], '0')
         self.assertIn('::warning title=E2E gallery/01_before_ar::informational checkpoint failed', output)
 
     def test_gallery_skips_when_its_onboarding_fails(self):
         rc, rows, _ = self.run_runner(fail_flow='00_onboarding')
         self.assertEqual(rc, 1)
         self.assertEqual(rows['gallery', '01_before_ar'], ('skip', 'baseline onboarding failed'))
-        self.assertEqual(rows['gallery', '05_after_ar'], ('skip', 'baseline onboarding failed'))
+        self.assertEqual(rows['gallery', '04_after_ar'], ('skip', 'baseline onboarding failed'))
         # The other two lineages are untouched by the gallery's failure.
         self.assertEqual(rows['fresh', '01_onboarding'], ('0', ''))

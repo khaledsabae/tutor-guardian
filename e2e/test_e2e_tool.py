@@ -350,9 +350,6 @@ class AnalyticsIsolationTest(unittest.TestCase):
             self.assertEqual(self.run_helper(path).returncode, 0)
             self.assertEqual(path.read_bytes(), before)
 
-if __name__ == "__main__":
-    unittest.main()
-
 
 class GalleryTest(unittest.TestCase):
     """The before/after pairing: names drive everything, so fabricate files."""
@@ -491,3 +488,7 @@ class GalleryTest(unittest.TestCase):
                 rc = t.main(["summary", str(root)])
             self.assertEqual(rc, 0)
             self.assertIn("Gallery قبل/بعد: complete=1", out.getvalue())
+
+
+if __name__ == "__main__":
+    unittest.main()

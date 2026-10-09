@@ -35,6 +35,86 @@ name: gallery/shoot
 - extendedWaitUntil:
     visible: '${output.lead.navToday}'
     timeout: 60000
+# ── settings, in this shoot's language ──────────────────────────────────
+# Ensure language matches UI_LANG before photographing Today or lessons
+- runFlow: ../common/open_settings.yaml
+- runFlow:
+    when:
+      true: "${UI_LANG == 'en'}"
+      notVisible: '${output.en.settingsTitle}'
+    commands:
+      - scrollUntilVisible:
+          element:
+            text: '${output.lead.language}'
+          direction: DOWN
+          timeout: 20000
+      - tapOn: '${output.lead.language}'
+- runFlow:
+    when:
+      true: "${UI_LANG != 'en'}"
+      notVisible: '${output.ar.settingsTitle}'
+    commands:
+      - scrollUntilVisible:
+          element:
+            text: '${output.lead.language}'
+          direction: DOWN
+          timeout: 20000
+      - tapOn: '${output.lead.language}'
+- runFlow:
+    when:
+      true: "${UI_LANG == 'en'}"
+    commands:
+      - extendedWaitUntil:
+          visible: '${output.en.settingsTitle}'
+          timeout: 20000
+- runFlow:
+    when:
+      true: "${UI_LANG != 'en'}"
+    commands:
+      - extendedWaitUntil:
+          visible: '${output.ar.settingsTitle}'
+          timeout: 20000
+- waitForAnimationToEnd:
+    timeout: 3000
+- takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__settings'
+# ── the app's own dark mode (Settings → Appearance cycles), then back to
+# light so Today and lessons shoot in light mode.
+- scrollUntilVisible:
+    element:
+      text: '${output.lead.settingsTheme}'
+    direction: DOWN
+    timeout: 20000
+- repeat:
+    times: 3
+    while:
+      notVisible: '${output.tile.settingsThemeDark}'
+    commands:
+      - tapOn: '${output.lead.settingsTheme}'
+      - waitForAnimationToEnd:
+          timeout: 3000
+- waitForAnimationToEnd:
+    timeout: 2000
+- takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__settings_dark'
+- back
+- runFlow:
+    file: today_shot.yaml
+    env:
+      SHOT: '${GALLERY_TAG}__${GALLERY_VARIANT}__home_dark'
+- runFlow: ../common/open_settings.yaml
+- scrollUntilVisible:
+    element:
+      text: '${output.lead.settingsTheme}'
+    direction: DOWN
+    timeout: 20000
+- repeat:
+    times: 3
+    while:
+      notVisible: '${output.tile.settingsThemeLight}'
+    commands:
+      - tapOn: '${output.lead.settingsTheme}'
+      - waitForAnimationToEnd:
+          timeout: 3000
+- back
 # ── Today ────────────────────────────────────────────────────────────────
 - runFlow: ../common/home.yaml
 - runFlow:
@@ -203,82 +283,3 @@ name: gallery/shoot
     file: today_shot.yaml
     env:
       SHOT: '${GALLERY_TAG}__${GALLERY_VARIANT}__home_after_lesson'
-# ── settings, in this shoot's language ──────────────────────────────────
-- runFlow: ../common/open_settings.yaml
-- runFlow:
-    when:
-      true: "${UI_LANG == 'en'}"
-      notVisible: '${output.en.settingsTitle}'
-    commands:
-      - scrollUntilVisible:
-          element:
-            text: '${output.lead.language}'
-          direction: DOWN
-          timeout: 20000
-      - tapOn: '${output.lead.language}'
-- runFlow:
-    when:
-      true: "${UI_LANG != 'en'}"
-      notVisible: '${output.ar.settingsTitle}'
-    commands:
-      - scrollUntilVisible:
-          element:
-            text: '${output.lead.language}'
-          direction: DOWN
-          timeout: 20000
-      - tapOn: '${output.lead.language}'
-- runFlow:
-    when:
-      true: "${UI_LANG == 'en'}"
-    commands:
-      - extendedWaitUntil:
-          visible: '${output.en.settingsTitle}'
-          timeout: 20000
-- runFlow:
-    when:
-      true: "${UI_LANG != 'en'}"
-    commands:
-      - extendedWaitUntil:
-          visible: '${output.ar.settingsTitle}'
-          timeout: 20000
-- waitForAnimationToEnd:
-    timeout: 3000
-- takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__settings'
-# ── the app's own dark mode (Settings → Appearance cycles), then back to
-# light so the next shoot starts from the same state.
-- scrollUntilVisible:
-    element:
-      text: '${output.lead.settingsTheme}'
-    direction: DOWN
-    timeout: 20000
-- repeat:
-    times: 3
-    while:
-      notVisible: '${output.tile.settingsThemeDark}'
-    commands:
-      - tapOn: '${output.lead.settingsTheme}'
-      - waitForAnimationToEnd:
-          timeout: 3000
-- waitForAnimationToEnd:
-    timeout: 2000
-- takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__settings_dark'
-- back
-- runFlow:
-    file: today_shot.yaml
-    env:
-      SHOT: '${GALLERY_TAG}__${GALLERY_VARIANT}__home_dark'
-- runFlow: ../common/open_settings.yaml
-- scrollUntilVisible:
-    element:
-      text: '${output.lead.settingsTheme}'
-    direction: DOWN
-    timeout: 20000
-- repeat:
-    times: 3
-    while:
-      notVisible: '${output.tile.settingsThemeLight}'
-    commands:
-      - tapOn: '${output.lead.settingsTheme}'
-      - waitForAnimationToEnd:
-          timeout: 3000
-- back

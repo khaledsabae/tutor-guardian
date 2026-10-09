@@ -199,19 +199,20 @@ if install_fresh baseline && l10n_for baseline \
   font2x 2.0
   shoot 03_before_font2x ar before ar_font2x
   font2x 1.0
-  if adb install -r "$APKS/head/app.apk" && l10n_for head; then
-    shoot 04_after_en en after en
-    shoot 05_after_ar ar after ar
+  if install_fresh head && l10n_for head \
+     && run_flow gate gallery_head 00_onboarding fresh/01_onboarding.yaml -e UI_LANG=ar; then
+    shoot 04_after_ar ar after ar
+    shoot 05_after_en en after en
     font2x 2.0
     shoot 06_after_font2x ar after ar_font2x
     font2x 1.0
   else
-    echo "::warning title=E2E gallery::install -r / head selector generation failed — no «after» shots"
-    for f in 04_after_en 05_after_ar 06_after_font2x; do skip gallery "$f" "install -r failed"; done
+    echo "::warning title=E2E gallery::install_fresh head failed — no «after» shots"
+    for f in 04_after_ar 05_after_en 06_after_font2x; do skip gallery "$f" "install_fresh head failed"; done
   fi
 else
   for f in 00_onboarding 01_before_ar 02_before_en 03_before_font2x \
-           04_after_en 05_after_ar 06_after_font2x; do
+           04_after_ar 05_after_en 06_after_font2x; do
     skip gallery "$f" "baseline onboarding failed"
   done
 fi

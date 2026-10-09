@@ -399,11 +399,12 @@ GALLERY_ONBOARDING = [
 ]
 
 # Screens a shoot may legitimately miss (guarded in shoot.yaml): a follow-up
-# only exists when one is due, and the in-lesson quiz retry is bounded. Every
-# OTHER screen must have an «after» shot in every variant — with
+# only exists when one is due, the in-lesson quiz retry is bounded, and the
+# first run starts the first lesson directly instead of continuing an existing
+# path. Every OTHER screen must have an «after» shot in every variant — with
 # --require-after (what run.sh passes on CI) a missing one fails the build, so
 # the gallery can never go green while blind again.
-GALLERY_GUARDED = {"followup_card", "followup", "quiz", "quiz_summary"}
+GALLERY_GUARDED = {"followup_card", "followup", "quiz", "quiz_summary", "path_detail"}
 
 # gallery__01_before_ar__before__ar__home.png — the flow name is matched
 # lazily so renaming a flow cannot break the pairing. The optional trailing
