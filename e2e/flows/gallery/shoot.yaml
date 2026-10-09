@@ -80,13 +80,17 @@ name: gallery/shoot
       - tapOn: '${output.t.startThisLesson}'
 - runFlow:
     when:
-      notVisible: '${output.t.startThisLesson}'
+      visible: '${output.t.continueBtn}'
     commands:
       - tapOn: '${output.t.continueBtn}'
-      - extendedWaitUntil:
-          visible: '(?:${output.t.pathDetailStart}|${output.t.pathDetailContinue})'
-          timeout: 30000
+      - waitForAnimationToEnd:
+          timeout: 3000
       - takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__path_detail'
+      - scrollUntilVisible:
+          element:
+            text: '(?:${output.t.pathDetailStart}|${output.t.pathDetailContinue})'
+          direction: DOWN
+          timeout: 30000
       - tapOn: '(?:${output.t.pathDetailStart}|${output.t.pathDetailContinue})'
 - extendedWaitUntil:
     visible: '(?:${output.t.lessonMarkComplete}|${output.t.lessonCompleted}|${output.t.lessonErrorLoading})'
