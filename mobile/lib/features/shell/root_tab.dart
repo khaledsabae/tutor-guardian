@@ -10,6 +10,15 @@
 /// to `3`. Never write the number; use these.
 library;
 
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+// A one-shot request to bring a tab to the front, from anywhere (phase 1:
+// شكر على كل نتيجة متابعة). The shell owns the index as private state, so
+// without this a modal sheet could seed the assistant with a question but
+// had no way to actually take the parent there. Set it, and the shell
+// switches and clears it.
+final rootTabRequestProvider = StateProvider<int?>((ref) => null);
+
 abstract final class RootTab {
   static const today = 0;
   static const learn = 1;

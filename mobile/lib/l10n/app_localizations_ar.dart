@@ -500,6 +500,12 @@ class AppLocalizationsAr extends AppLocalizations {
   String get todaySun => 'اليوم ☀️';
 
   @override
+  String get todaySunDay => 'اليوم ☀️';
+
+  @override
+  String get todaySunNight => 'اليوم 🌙';
+
+  @override
   String get shareOpinion => 'شاركنا رأيك';
 
   @override
@@ -514,6 +520,31 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String greetingWithName(Object name) {
     return 'السلام عليكم\nرحلة $name مستمرة';
+  }
+
+  @override
+  String greetingMorningName(Object name) {
+    return 'صباح الخير 🌤️\nرحلة $name مستمرة';
+  }
+
+  @override
+  String greetingEveningName(Object name) {
+    return 'مساء الخير 🌙\nرحلة $name مستمرة';
+  }
+
+  @override
+  String greetingMorningFirst(Object name) {
+    return 'صباح الخير 🌤️\nاليوم أول يوم في رحلة $name';
+  }
+
+  @override
+  String greetingEveningFirst(Object name) {
+    return 'مساء الخير 🌙\nاليوم أول يوم في رحلة $name';
+  }
+
+  @override
+  String dailyGiftLine(Object n) {
+    return 'هدية اليوم: $n 🪙';
   }
 
   @override
@@ -552,6 +583,13 @@ class AppLocalizationsAr extends AppLocalizations {
   String get startFirstLessonDesc => 'درس قصير مختار لعمر طفلك — يبدأ من هنا.';
 
   @override
+  String get focusPathDoneTitle => 'ما شاء الله، أتممتَ هذا المسار';
+
+  @override
+  String get focusPathDoneDesc =>
+      'خطوة خطوة وصلتَ إلى آخره — اختر المسار التالي لطفلك.';
+
+  @override
   String get continueJourney => 'واصل مسارك';
 
   @override
@@ -578,7 +616,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get askAlMurabbiNow => 'اسأل المربي الذكي الآن';
 
   @override
-  String get insightsTitle => 'تحليلات وتوصيات تربوية ذكية';
+  String get insightsTitle => 'نصيحة اليوم';
 
   @override
   String get insightsDesc => 'اطلع على تحليلات عادات طفلك ونشاطه';
@@ -1432,7 +1470,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get lessonCelebrationTitle => 'ما شاء الله!';
 
   @override
-  String get lessonCelebrationMsg => 'تم تسجيل إكمال الدرس';
+  String lessonCelebrationMsg(int n, int total, String path) {
+    return 'أتممتَ الدرس $n من $total في «$path»';
+  }
 
   @override
   String get lessonNextStepTitle => 'خطوتك مع طفلك الليلة';
@@ -5334,7 +5374,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get followupThanksTitle => 'شكرًا لك 🤍';
 
   @override
-  String get followupThanksWorked => 'الحمد لله! سيتذكّر المربّي أن هذا نفع.';
+  String get followupThanksWorked => 'الحمد لله، نفعت!';
 
   @override
   String get followupThanksPartly =>
@@ -5342,10 +5382,18 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get followupThanksDidntWork =>
-      'لا بأس، فلكل طفل طريقه. لن يكرّر المربّي هذه النصيحة، وسيقترح بديلًا.';
+      'لكل طفل مفتاحه — اطلب بديلًا الآن، ولن يكرّر المربّي هذه النصيحة.';
 
   @override
-  String get followupThanksDidntTry => 'لا بأس. جرّبها حين يناسبك.';
+  String get followupThanksDidntTry => 'لا بأس. أأذكّرك غدًا؟';
+
+  @override
+  String get followupAskAlternativeBtn => 'اطلب بديلًا الآن';
+
+  @override
+  String followupAskAlternativePrefill(String strategy, String name) {
+    return 'لم تنفع نصيحة «$strategy» مع $name. ما البديل العملي الذي أجرّبه معه؟';
+  }
 
   @override
   String get followupNoteDropped =>

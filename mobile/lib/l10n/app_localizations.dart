@@ -1076,6 +1076,18 @@ abstract class AppLocalizations {
   /// **'اليوم ☀️'**
   String get todaySun;
 
+  /// No description provided for @todaySunDay.
+  ///
+  /// In ar, this message translates to:
+  /// **'اليوم ☀️'**
+  String get todaySunDay;
+
+  /// No description provided for @todaySunNight.
+  ///
+  /// In ar, this message translates to:
+  /// **'اليوم 🌙'**
+  String get todaySunNight;
+
   /// No description provided for @shareOpinion.
   ///
   /// In ar, this message translates to:
@@ -1105,6 +1117,36 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'السلام عليكم\nرحلة {name} مستمرة'**
   String greetingWithName(Object name);
+
+  /// No description provided for @greetingMorningName.
+  ///
+  /// In ar, this message translates to:
+  /// **'صباح الخير 🌤️\nرحلة {name} مستمرة'**
+  String greetingMorningName(Object name);
+
+  /// No description provided for @greetingEveningName.
+  ///
+  /// In ar, this message translates to:
+  /// **'مساء الخير 🌙\nرحلة {name} مستمرة'**
+  String greetingEveningName(Object name);
+
+  /// No description provided for @greetingMorningFirst.
+  ///
+  /// In ar, this message translates to:
+  /// **'صباح الخير 🌤️\nاليوم أول يوم في رحلة {name}'**
+  String greetingMorningFirst(Object name);
+
+  /// No description provided for @greetingEveningFirst.
+  ///
+  /// In ar, this message translates to:
+  /// **'مساء الخير 🌙\nاليوم أول يوم في رحلة {name}'**
+  String greetingEveningFirst(Object name);
+
+  /// No description provided for @dailyGiftLine.
+  ///
+  /// In ar, this message translates to:
+  /// **'هدية اليوم: {n} 🪙'**
+  String dailyGiftLine(Object n);
 
   /// No description provided for @feedbackMessage.
   ///
@@ -1172,6 +1214,18 @@ abstract class AppLocalizations {
   /// **'درس قصير مختار لعمر طفلك — يبدأ من هنا.'**
   String get startFirstLessonDesc;
 
+  /// No description provided for @focusPathDoneTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'ما شاء الله، أتممتَ هذا المسار'**
+  String get focusPathDoneTitle;
+
+  /// No description provided for @focusPathDoneDesc.
+  ///
+  /// In ar, this message translates to:
+  /// **'خطوة خطوة وصلتَ إلى آخره — اختر المسار التالي لطفلك.'**
+  String get focusPathDoneDesc;
+
   /// No description provided for @continueJourney.
   ///
   /// In ar, this message translates to:
@@ -1223,7 +1277,7 @@ abstract class AppLocalizations {
   /// No description provided for @insightsTitle.
   ///
   /// In ar, this message translates to:
-  /// **'تحليلات وتوصيات تربوية ذكية'**
+  /// **'نصيحة اليوم'**
   String get insightsTitle;
 
   /// No description provided for @insightsDesc.
@@ -2756,11 +2810,11 @@ abstract class AppLocalizations {
   /// **'ما شاء الله!'**
   String get lessonCelebrationTitle;
 
-  /// No description provided for @lessonCelebrationMsg.
+  /// قيلت في لحظة الاحتفال: تحمل رقم الدرس ومجموع دروس المسار واسمه.
   ///
   /// In ar, this message translates to:
-  /// **'تم تسجيل إكمال الدرس'**
-  String get lessonCelebrationMsg;
+  /// **'أتممتَ الدرس {n} من {total} في «{path}»'**
+  String lessonCelebrationMsg(int n, int total, String path);
 
   /// No description provided for @lessonNextStepTitle.
   ///
@@ -9245,7 +9299,7 @@ abstract class AppLocalizations {
   /// No description provided for @followupThanksWorked.
   ///
   /// In ar, this message translates to:
-  /// **'الحمد لله! سيتذكّر المربّي أن هذا نفع.'**
+  /// **'الحمد لله، نفعت!'**
   String get followupThanksWorked;
 
   /// No description provided for @followupThanksPartly.
@@ -9257,14 +9311,26 @@ abstract class AppLocalizations {
   /// No description provided for @followupThanksDidntWork.
   ///
   /// In ar, this message translates to:
-  /// **'لا بأس، فلكل طفل طريقه. لن يكرّر المربّي هذه النصيحة، وسيقترح بديلًا.'**
+  /// **'لكل طفل مفتاحه — اطلب بديلًا الآن، ولن يكرّر المربّي هذه النصيحة.'**
   String get followupThanksDidntWork;
 
   /// No description provided for @followupThanksDidntTry.
   ///
   /// In ar, this message translates to:
-  /// **'لا بأس. جرّبها حين يناسبك.'**
+  /// **'لا بأس. أأذكّرك غدًا؟'**
   String get followupThanksDidntTry;
+
+  /// No description provided for @followupAskAlternativeBtn.
+  ///
+  /// In ar, this message translates to:
+  /// **'اطلب بديلًا الآن'**
+  String get followupAskAlternativeBtn;
+
+  /// تُزرع في المساعد وتُرسل كما هي — لغتها هي التي تحدد لغة الجواب.
+  ///
+  /// In ar, this message translates to:
+  /// **'لم تنفع نصيحة «{strategy}» مع {name}. ما البديل العملي الذي أجرّبه معه؟'**
+  String followupAskAlternativePrefill(String strategy, String name);
 
   /// No description provided for @followupNoteDropped.
   ///

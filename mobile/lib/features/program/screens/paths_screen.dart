@@ -14,6 +14,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/app_routes.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../../theme/app_colors.dart';
 import '../../../theme/design_tokens.dart';
 import '../../../widgets/ui/bouncy_button.dart';
 import '../../../widgets/ui/empty_state.dart';
@@ -359,7 +360,10 @@ class _PathCard extends StatelessWidget {
                               style: TextStyle(
                                 fontSize: 19,
                                 fontWeight: FontWeight.w800,
-                                color: Dt.surface,
+                                // onPrimary, not Dt.surface: this title is
+                                // ink on a coloured gradient, and Dt.surface
+                                // flips to near-black in dark mode.
+                                color: context.colors.onPrimary,
                                 height: 1.3,
                               ),
                             ),
@@ -454,7 +458,9 @@ class _Pill extends StatelessWidget {
         style: TextStyle(
           fontSize: 11.5,
           fontWeight: FontWeight.w700,
-          color: Dt.surface,
+          // Ink on the gradient card above (the pills sit on its colour),
+          // so onPrimary — Dt.surface is unreadable there in dark mode.
+          color: context.colors.onPrimary,
         ),
       ),
     );

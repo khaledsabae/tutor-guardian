@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../api/tg_client.dart';
+import '../../../features/shell/root_tab.dart';
 import '../../../core/analytics.dart';
 import '../../../core/app_routes.dart';
 import '../../../l10n/app_localizations.dart';
@@ -21,8 +22,11 @@ import '../../../theme/app_colors.dart';
 import '../data/memory_models.dart';
 import '../data/placeholder_names.dart';
 import '../device_proof/device_proof_service.dart';
+import '../../program/providers/program_providers.dart'
+    show pendingChatQuestionProvider;
 import '../providers/memory_providers.dart';
 import 'memory_errors.dart';
+import '../../../widgets/ui/celebration_overlay.dart';
 import 'proof_views.dart';
 
 /// Where a follow-up was answered from (`followup_answered.source`).
@@ -163,6 +167,21 @@ class _FollowupSheetState extends ConsumerState<FollowupSheet> {
         _answer = answer;
         _sending = false;
       });
+      // «نجحت» ← احتفال هادي و«الحمد لله، نفعت!» (phase 1: شكر على كل نتيجة
+      // متابعة). The celebration rides on top of the sheet; under it the
+      // thank-you still says anything the parent must be told (e.g. a note
+      // memory did not keep), which is why the sheet is not popped here.
+      if (outcome == FollowupOutcome.worked && answer.remembered) {
+        final l10n = AppLocalizations.of(context);
+        await showCelebration(
+          context,
+          tier: CelebrationTier.quiet,
+          emoji: '🤍',
+          title: l10n.followupThanksTitle,
+          message: l10n.followupThanksWorked,
+          buttonLabel: l10n.done,
+        );
+      }
     } on TgApiError catch (e) {
       if (!mounted) return;
       if (e.code == 'followup_closed') {
@@ -492,15 +511,45 @@ class _NotSaved extends StatelessWidget {
   }
 }
 
-class _Thanks extends StatelessWidget {
+class _Thanks extends ConsumerWidget {
   const _Thanks({required this.answer});
 
   final FollowupAnswer answer;
 
+  /// «لم تنجح» ← «لكل طفل مفتاحه — اطلب بديلًا الآن»: seed the assistant
+  /// with a concrete question about *this* advice, then land the parent on
+  /// its tab — the same hand-off the coach-tip card does. The strategy text
+  /// is rendered with the child's name back in, the way the sheet showed it.
+  void _askAlternative(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
+    final who = _who(ref, answer.followup.childId);
+    final strategy = renderMemoryText(
+      answer.followup.strategy,
+      childName: who.name,
+      family: who.family,
+      subjectId: answer.followup.childId,
+      lang: answer.followup.lang,
+    );
+    final container = ProviderScope.containerOf(context, listen: false);
+    container.read(pendingChatQuestionProvider.notifier).state =
+        l10n.followupAskAlternativePrefill(
+      strategy,
+      who.name ?? l10n.onbDefaultChildName,
+    );
+    Navigator.of(context).pop(); // the sheet
+    container.read(rootTabRequestProvider.notifier).state = RootTab.assistant;
+  }
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
     final colors = context.colors;
+    // «لم أجرّب بعد» ← «أأذكّرك غدًا؟». TODO(phase 2 «نور يتذكّر» promise
+    // loop): the message is an offer the app cannot honour locally yet — the
+    // local-notification slots are managed (channels, retired ids) and a
+    // follow-up reminder belongs to the server-side promise loop. Until that
+    // lands, this stays a gentle question, not a promise; do not wire a
+    // button that pretends to schedule.
     final line = switch (answer.followup.outcome) {
       FollowupOutcome.worked => l10n.followupThanksWorked,
       FollowupOutcome.partly => l10n.followupThanksPartly,
@@ -529,6 +578,14 @@ class _Thanks extends StatelessWidget {
           Text(l10n.followupNoteDropped,
               textAlign: TextAlign.center,
               style: TextStyle(color: colors.inkSoft, fontSize: 12.5, height: 1.5)),
+        ],
+        if (answer.followup.outcome == FollowupOutcome.didntWork) ...[
+          const SizedBox(height: 12),
+          OutlinedButton.icon(
+            icon: const Icon(Icons.forum_outlined),
+            label: Text(l10n.followupAskAlternativeBtn),
+            onPressed: () => _askAlternative(context, ref),
+          ),
         ],
         const SizedBox(height: 16),
         FilledButton(
