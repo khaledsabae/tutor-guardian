@@ -163,15 +163,27 @@ void main() {
             tgClientProvider.overrideWithValue(fake),
             sharedPreferencesProvider.overrideWith((_) async => prefs),
           ],
-          child: const MaterialApp(
-            locale: Locale('ar'),
-            home: OnboardingScreen(),
+          child: MaterialApp(
+            locale: const Locale('ar'),
+            // Reduced motion: onboarding now carries ambient loops (the
+            // night sky, Noor's halo) which never settle — pumpAndSettle
+            // would time out. They hold still under this flag, exactly as
+            // they do for a user who asked the system for less motion.
+            builder: (context, child) => MediaQuery(
+              data: MediaQuery.of(context).copyWith(disableAnimations: true),
+              child: child!,
+            ),
+            home: const OnboardingScreen(),
             localizationsDelegates: AppLocalizations.localizationsDelegates,
             supportedLocales: AppLocalizations.supportedLocales,
           ),
         ),
       );
       await tester.pumpAndSettle();
+      // The night sky added in Phase 1 arms its stars on random delays of
+      // up to 3 s; fire them here so no timer is left pending when a test
+      // ends before then.
+      await tester.pump(const Duration(seconds: 4));
     }
 
     testWidgets('page 1 asks the single age question', (tester) async {

@@ -16,12 +16,14 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../api/tg_client.dart';
 import '../../l10n/app_localizations.dart';
 import '../../state/chat_notifier.dart';
 import '../routine/providers/child_mode_providers.dart';
 import '../routine/services/child_mode_secure_storage.dart';
+import 'praise_header.dart';
 import 'package:almorabbi/widgets/ui/loading_view.dart';
 import 'package:almorabbi/core/haptics.dart';
 
@@ -43,6 +45,11 @@ class _ChildMissionScreenState extends ConsumerState<ChildMissionScreen> {
   /// have one as of 2026-08-21.
   bool _empty = false;
 
+  /// «كلمة طيبة» — the note riding with today's card, when the band gets one
+  /// and it has not been shown to this child already.
+  String? _praiseNote;
+  PraiseDisplay _praiseDisplay = PraiseDisplay.none;
+
   @override
   void initState() {
     super.initState();
@@ -56,7 +63,10 @@ class _ChildMissionScreenState extends ConsumerState<ChildMissionScreen> {
       return;
     }
     try {
-      final card = await ref.read(tgClientProvider).fetchChildMission(token);
+      final today = await ref.read(tgClientProvider).fetchChildMission(token);
+      if (!mounted) return;
+      final card = today?.mission;
+      await _maybeShowPraise(today);
       if (!mounted) return;
       setState(() {
         _mission = card;
@@ -69,6 +79,26 @@ class _ChildMissionScreenState extends ConsumerState<ChildMissionScreen> {
       // understand.
       if (mounted) setState(() { _loading = false; _empty = true; });
     }
+  }
+
+  /// Decides whether the praise header shows: once per note, in the band's
+  /// form, never for prenatal–3. Marked as shown the moment it is chosen —
+  /// the three seconds on screen are a visit, not a delivery receipt the
+  /// child has to complete.
+  Future<void> _maybeShowPraise(ChildMissionToday? today) async {
+    final praise = today?.recentPraise;
+    final note = praise?['note'];
+    final missionId = praise?['mission_id'];
+    if (praise == null || note is! String || note.isEmpty || missionId is! int) {
+      return;
+    }
+    final display = praiseDisplayFor(today?.ageBand);
+    if (display == PraiseDisplay.none) return;
+    final prefs = await SharedPreferences.getInstance();
+    if (await PraiseMemory.alreadyShown(prefs, missionId)) return;
+    await PraiseMemory.markShown(prefs, missionId);
+    if (!mounted) return;
+    setState(() { _praiseNote = note; _praiseDisplay = display; });
   }
 
   /// "I'm going" — and the app actually goes away.
@@ -173,6 +203,18 @@ class _ChildMissionScreenState extends ConsumerState<ChildMissionScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              // «كلمة طيبة»: a quiet header that leaves by itself in three
+              // seconds. It is not a dialog and not a gate — the card and its
+              // buttons are usable from the first frame.
+              if (_praiseNote != null)
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 12),
+                  child: PraiseHeader(
+                    note: _praiseNote!,
+                    display: _praiseDisplay,
+                    onGone: () => setState(() => _praiseNote = null),
+                  ),
+                ),
               const Spacer(),
               Text('🧭', style: theme.textTheme.displayLarge,
                   textAlign: TextAlign.center),

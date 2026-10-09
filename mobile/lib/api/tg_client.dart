@@ -464,6 +464,27 @@ class _AuthStore {
   }
 }
 
+/// The `/mission/today` answer in one object: the card, plus what rides with
+/// it — the latest «كلمة طيبة» and the child's band, so the mission screen
+/// can pick its praise form (sticker / sticker+text / text) without a second
+/// round trip.
+final class ChildMissionToday {
+  const ChildMissionToday({
+    required this.mission,
+    this.recentPraise,
+    this.ageBand,
+  });
+
+  final Map<String, dynamic>? mission;
+
+  /// `{mission_id, note, confirmed_at}` from the parent's latest confirmed
+  /// note, or null when there is none fresh enough to deliver.
+  final Map<String, dynamic>? recentPraise;
+
+  /// The child-surface band ("4-6", "7-9"… "16-18").
+  final String? ageBand;
+}
+
 /// The Tutor Guardian API client.
 ///
 /// Use [TgClient.shared] (or `tgClientProvider`, which returns it) — never a
@@ -2631,7 +2652,11 @@ class TgClient {
   /// only one when this was written), so an empty result is now the exception
   /// rather than the rule — but it is still a state to render, not an error to
   /// report: the youngest band has no bank by design.
-  Future<Map<String, dynamic>?> fetchChildMission(String childToken) async {
+  ///
+  /// The same answer also carries `recentPraise` («كلمة طيبة», the note the
+  /// parent attached to the latest confirmed mission) and `ageBand` — one
+  /// round trip is enough for the card and its praise header.
+  Future<ChildMissionToday?> fetchChildMission(String childToken) async {
     return _guard(() async {
       final uri = Uri.parse('$_baseUrl/api/value-tracking/child-mode/mission/today')
           .replace(queryParameters: {
@@ -2643,7 +2668,11 @@ class TgClient {
           .timeout(AppConfig.httpTimeout);
       if (resp.statusCode != 200) throw _wrap(resp);
       final body = jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
-      return body['mission'] as Map<String, dynamic>?;
+      return ChildMissionToday(
+        mission: body['mission'] as Map<String, dynamic>?,
+        recentPraise: body['recent_praise'] as Map<String, dynamic>?,
+        ageBand: body['age_band'] as String?,
+      );
     });
   }
 

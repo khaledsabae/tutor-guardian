@@ -6,9 +6,8 @@
 /// score with the option to retry.
 library;
 
-import 'dart:math' as math;
+import 'dart:async';
 
-import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -19,6 +18,8 @@ import '../../../theme/design_tokens.dart';
 import '../../../theme/app_colors.dart';
 import '../../../widgets/ui/animated_progress_bar.dart';
 import '../../../widgets/ui/count_up_text.dart';
+import '../../../core/haptics.dart';
+import '../../../widgets/ui/celebration_overlay.dart';
 import '../../../widgets/ui/empty_state.dart';
 import '../../../widgets/ui/progress_ring.dart';
 import '../models/quiz_deck.dart';
@@ -478,9 +479,6 @@ class _Summary extends StatefulWidget {
 }
 
 class _SummaryState extends State<_Summary> {
-  late final ConfettiController _confetti =
-      ConfettiController(duration: const Duration(milliseconds: 1500));
-
   int get _pct => widget.total == 0
       ? 0
       : (widget.correct * 100 / widget.total).round();
@@ -488,13 +486,25 @@ class _SummaryState extends State<_Summary> {
   @override
   void initState() {
     super.initState();
-    if (_pct >= 80) _confetti.play();
-  }
-
-  @override
-  void dispose() {
-    _confetti.dispose();
-    super.dispose();
+    // ≥80%: one quiet celebration (phase 1: مستويات الاحتفال) — the dialog
+    // and the haptic, without this screen's own hand-rolled confetti, which
+    // played with no haptic and no reduce-motion escape.
+    if (_pct >= 80) {
+      Haptics.success();
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!mounted) return;
+        final l10n = AppLocalizations.of(context);
+        unawaited(
+          showCelebration(
+            context,
+            tier: CelebrationTier.quiet,
+            emoji: '🏆',
+            title: l10n.quizYourResult,
+            message: l10n.quizResultExcellent,
+          ),
+        );
+      });
+    }
   }
 
   @override
@@ -590,23 +600,6 @@ class _SummaryState extends State<_Summary> {
               ],
             ),
           ),
-        ),
-        ConfettiWidget(
-          confettiController: _confetti,
-          blastDirectionality: BlastDirectionality.explosive,
-          blastDirection: math.pi / 2,
-          emissionFrequency: 0.6,
-          numberOfParticles: 30,
-          maxBlastForce: 18,
-          minBlastForce: 6,
-          gravity: .3,
-          colors: [
-            Dt.primary,
-            Dt.accent,
-            Color(0xFF8B5CF6),
-            Color(0xFFFB7185),
-            Dt.success,
-          ],
         ),
       ],
     );

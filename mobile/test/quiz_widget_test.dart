@@ -5,11 +5,13 @@
 // the quiz renders questions, options are tappable, feedback locks in,
 // navigation works, and the summary screen renders at the end.
 
+import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:almorabbi/api/tg_client.dart';
+import 'package:almorabbi/widgets/ui/bouncy_button.dart';
 import 'package:almorabbi/l10n/app_localizations.dart';
 import 'package:almorabbi/features/program/models/quiz_deck.dart';
 import 'package:almorabbi/features/program/screens/quiz_screen.dart';
@@ -181,10 +183,30 @@ void main() {
       await tester.tap(find.text('صحيح').first);
       await tester.pumpAndSettle();
       await tester.tap(find.text('عرض النتيجة'));
-      // ≥80% plays confetti, whose particle ticker never "settles" —
-      // use bounded pumps instead of pumpAndSettle.
-      await tester.pump();
-      await tester.pump(const Duration(seconds: 2));
+      // ≥80% now fires the quiet celebration (phase 1): a dialog and a
+      // success haptic, no confetti ticker. Short steps, so the dialog's
+      // entrance lands frame by frame — one 2s jump left its gesture
+      // detector not yet ready for the dismiss tap below.
+      await tester.pump(const Duration(milliseconds: 100));
+      await tester.pump(const Duration(milliseconds: 100));
+      await tester.pump(const Duration(milliseconds: 100));
+      await tester.pump(const Duration(milliseconds: 100));
+      await tester.pump(const Duration(milliseconds: 400));
+
+      // The quiet celebration is up, without confetti.
+      expect(find.byType(ConfettiWidget), findsNothing);
+      expect(find.text('ما شاء الله! أداء ممتاز.'), findsWidgets);
+
+      // Dismiss it (its own Continue button), and the summary stands alone.
+      await tester.tap(find
+          .descendant(
+            of: find.byType(BouncyButton),
+            matching: find.text('متابعة'),
+          )
+          .first);
+      // The quiet celebration has no looping ticker, so the route's exit
+      // can be waited out properly.
+      await tester.pumpAndSettle();
 
       expect(find.text('نتيجتك'), findsOneWidget);
       expect(find.text('1 / 1'), findsOneWidget);

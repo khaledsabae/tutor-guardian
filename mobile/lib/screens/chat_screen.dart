@@ -80,6 +80,14 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
         ref.read(connectivityProvider).maybeWhen(data: (v) => v, orElse: () => true),
       );
       notifier.bootstrap();
+      // A question seeded before this screen existed (onboarding's deferred
+      // «ask the mentor»): the listen below only fires on *changes*, so a
+      // value set while the chat was not yet mounted would be silently
+      // dropped. Consume whatever is already there, exactly once.
+      final seeded = ref.read(pendingChatQuestionProvider);
+      if (seeded != null && seeded.trim().isNotEmpty) {
+        _consumePendingQuestion(seeded);
+      }
     });
   }
 
@@ -130,6 +138,18 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
         duration: const Duration(milliseconds: 250),
         curve: Curves.easeOut,
       );
+    });
+  }
+
+  /// Sends a seeded question and clears the seed — shared by the listener
+  /// (question arrives while the chat is live) and the initState bootstrap
+  /// (question arrived before the chat mounted).
+  void _consumePendingQuestion(String question) {
+    ref.read(pendingChatQuestionProvider.notifier).state = null;
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      if (!mounted) return;
+      await ref.read(chatNotifierProvider.notifier).sendMessage(question);
+      _scrollToBottom();
     });
   }
 
@@ -190,12 +210,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
     // coach-tip card). Auto-send it once, then clear so it never re-fires.
     ref.listen<String?>(pendingChatQuestionProvider, (prev, next) {
       if (next == null || next.trim().isEmpty) return;
-      ref.read(pendingChatQuestionProvider.notifier).state = null;
-      WidgetsBinding.instance.addPostFrameCallback((_) async {
-        if (!mounted) return;
-        await ref.read(chatNotifierProvider.notifier).sendMessage(next);
-        _scrollToBottom();
-      });
+      _consumePendingQuestion(next);
     });
 
     // Push online/offline changes into the notifier so its `sendMessage` can

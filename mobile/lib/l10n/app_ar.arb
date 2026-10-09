@@ -162,11 +162,18 @@
   "incompleteResponse": "استجابة الخادم غير مكتملة.",
   "continuePath": "استمر",
   "todaySun": "اليوم ☀️",
+  "todaySunDay": "اليوم ☀️",
+  "todaySunNight": "اليوم 🌙",
   "shareOpinion": "شاركنا رأيك",
   "searchTooltip": "بحث",
   "settingsTooltip": "الإعدادات",
   "greetingPeace": "السلام عليكم",
   "greetingWithName": "السلام عليكم\nرحلة {name} مستمرة",
+  "greetingMorningName": "صباح الخير 🌤️\nرحلة {name} مستمرة",
+  "greetingEveningName": "مساء الخير 🌙\nرحلة {name} مستمرة",
+  "greetingMorningFirst": "صباح الخير 🌤️\nاليوم أول يوم في رحلة {name}",
+  "greetingEveningFirst": "مساء الخير 🌙\nاليوم أول يوم في رحلة {name}",
+  "dailyGiftLine": "هدية اليوم: {n} 🪙",
   "feedbackMessage": "رأيك يهمنا! شاركنا أي ملاحظة أو مشكلة — كتابةً أو صوتاً.",
   "bedtimeStories": "حكايات قبل النوم",
   "bedtimeStoriesDesc": "قصص قصيرة وهادئة مع صوت طبيعي للنوم 🐦",
@@ -178,6 +185,8 @@
   "browsePaths": "استعرض المسارات",
   "startThisLesson": "ابدأ هذا الدرس",
   "startFirstLessonDesc": "درس قصير مختار لعمر طفلك — يبدأ من هنا.",
+  "focusPathDoneTitle": "ما شاء الله، أتممتَ هذا المسار",
+  "focusPathDoneDesc": "خطوة خطوة وصلتَ إلى آخره — اختر المسار التالي لطفلك.",
   "continueJourney": "واصل مسارك",
   "lessonsRemaining_one": "🏆 درس واحد باقٍ!",
   "lessonsRemaining_other": "🏆 {count} دروس باقية",
@@ -186,7 +195,7 @@
   "quizDesc": "10 أسئلة سريعة • تعلّم وأنت تلعب",
   "askQuestion": "عندك سؤال تربوي؟",
   "askAlMurabbiNow": "اسأل المربي الذكي الآن",
-  "insightsTitle": "تحليلات وتوصيات تربوية ذكية",
+  "insightsTitle": "نصيحة اليوم",
   "insightsDesc": "اطلع على تحليلات عادات طفلك ونشاطه",
   "chatPreviousChats": "المحادثات السابقة",
   "chatAlMurabbiTitle": "🛡️  المربي الذكي",
@@ -308,6 +317,11 @@
   "onbDefaultChildName": "طفلي",
   "onbDeferredHint": "يمكنك إضافة اسم طفلك وصورته لاحقًا من الإعدادات.",
   "onbChangeAge": "تغيير العمر",
+  "onbPreparingStep1": "أجهّز ملف طفلك…",
+  "onbPreparingStep2": "أختار لك أول درس…",
+  "onbAskSampleHint": "المس السؤال ليسأله المربّي لك بعد التسجيل",
+  "onbAskSampleArmed": "سنفتح المربّي على سؤالك بعد التسجيل ✓",
+  "noorName": "نور، مرشدك",
   "prideStreakTitle": "ما شاء الله — {days} أيام متواصلة! 🔥",
   "@prideStreakTitle": {
     "placeholders": {
@@ -456,7 +470,15 @@
   "lessonErrorLoading": "تعذّر تحميل الدرس",
   "lessonErrorMarking": "تعذّر تسجيل الإكمال: {error}",
   "lessonCelebrationTitle": "ما شاء الله!",
-  "lessonCelebrationMsg": "تم تسجيل إكمال الدرس",
+  "lessonCelebrationMsg": "أتممتَ الدرس {n} من {total} في «{path}»",
+  "@lessonCelebrationMsg": {
+    "description": "قيلت في لحظة الاحتفال: تحمل رقم الدرس ومجموع دروس المسار واسمه.",
+    "placeholders": {
+      "n": {"type": "int"},
+      "total": {"type": "int"},
+      "path": {"type": "String"}
+    }
+  },
   "lessonNextStepTitle": "خطوتك مع طفلك الليلة",
   "lessonNextStepIntro": "درسٌ لا يُطبَّق يبقى معلومة. هذه خطوة واحدة، صغيرة، تبدأ بها اليوم.",
   "lessonNextStepConfirm": "تمام، سأفعلها 🤍",
@@ -1735,10 +1757,19 @@
   "followupDismiss": "لا تسألني عن هذا",
   "followupDismissed": "لن نسألك عن هذا مرة أخرى.",
   "followupThanksTitle": "شكرًا لك 🤍",
-  "followupThanksWorked": "الحمد لله! سيتذكّر المربّي أن هذا نفع.",
+  "followupThanksWorked": "الحمد لله، نفعت!",
   "followupThanksPartly": "خطوة طيبة. سيبني المربّي على ما نجح منها.",
-  "followupThanksDidntWork": "لا بأس، فلكل طفل طريقه. لن يكرّر المربّي هذه النصيحة، وسيقترح بديلًا.",
-  "followupThanksDidntTry": "لا بأس. جرّبها حين يناسبك.",
+  "followupThanksDidntWork": "لكل طفل مفتاحه — اطلب بديلًا الآن، ولن يكرّر المربّي هذه النصيحة.",
+  "followupThanksDidntTry": "لا بأس. أأذكّرك غدًا؟",
+  "followupAskAlternativeBtn": "اطلب بديلًا الآن",
+  "followupAskAlternativePrefill": "لم تنفع نصيحة «{strategy}» مع {name}. ما البديل العملي الذي أجرّبه معه؟",
+  "@followupAskAlternativePrefill": {
+    "description": "تُزرع في المساعد وتُرسل كما هي — لغتها هي التي تحدد لغة الجواب.",
+    "placeholders": {
+      "strategy": {"type": "String"},
+      "name": {"type": "String"}
+    }
+  },
   "followupNoteDropped": "حُفظت إجابتك، ولم نحفظ ملاحظتك لأنها مما لا يحفظه المربّي.",
   "followupAnsweredResult": "أجبت: {outcome}",
   "@followupAnsweredResult": {"placeholders": {"outcome": {"type": "String"}}},
@@ -1822,6 +1853,24 @@
     "placeholders": {"name": {"type": "String"}}
   },
   "a11yChooseAChild": "اختيار طفل",
+  "praiseSectionTitle": "كلمة طيبة مع التأكيد",
+  "@praiseSectionTitle": {
+    "description": "Evening missions screen: the heading above the quick-praise chips a parent can send with the confirmation."
+  },
+  "praiseChipAhsant": "أحسنت",
+  "praiseChipBarakAllahuFik": "بارك الله فيك",
+  "praiseChipProud": "فخورون بك",
+  "@praiseChipAhsant": {
+    "description": "Fixed quick-praise chip. These are fixed strings, not du'as from family_adhkar."
+  },
+  "praiseOwnWordsHint": "أو اكتب كلمة قصيرة من عندك",
+  "@praiseOwnWordsHint": {
+    "description": "Hint text of the optional short free-text line beside the praise chips."
+  },
+  "praiseFromFamily": "أهلك يقولون لك",
+  "@praiseFromFamily": {
+    "description": "Small label above the praise text on the child's mission card. Neutral family wording (أهلك), never بابا/ماما."
+  },
   "@a11yChooseAChild": {
     "description": "Screen-reader label for the active-child chip when no child is active yet; a tap opens the children list."
   }

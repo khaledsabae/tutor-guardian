@@ -11,6 +11,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/analytics.dart';
 import '../../../core/app_routes.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../../theme/app_colors.dart';
 import '../../../theme/design_tokens.dart';
 import '../../../widgets/ui/animated_progress_bar.dart';
 import '../../../widgets/ui/bouncy_button.dart';
@@ -76,6 +77,64 @@ class TodayFocusCard extends ConsumerWidget {
       // missing (older backend) or unreachable, the original browse nudge
       // stands — a slow network must never leave this card with no action.
       final next = asyncNext.valueOrNull;
+
+      // `resumed` (never read until now): the child has already completed
+      // lessons in the starter path — in fact the endpoint only says so when
+      // every lesson of it is done, and hands back its last lesson. Offering
+      // that lesson again under «ابدأ هذا الدرس» told a parent who had
+      // finished the path that they were at its beginning («أعطال اتلقت في
+      // الطريق»). The card says what happened, and points at what is next.
+      if (next != null && next.resumed) {
+        return Container(
+          padding: const EdgeInsets.all(20),
+          decoration: BoxDecoration(
+            gradient: Dt.primaryGradient,
+            borderRadius: BorderRadius.circular(Dt.rCard),
+            boxShadow: Dt.softShadow(Dt.primary),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  const EmojiHero(emoji: '🏁', size: 48),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Text(
+                      l10n.focusPathDoneTitle,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w800,
+                        height: 1.3,
+                      ),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10),
+              Text(
+                l10n.focusPathDoneDesc,
+                style: TextStyle(
+                  color: Colors.white.withValues(alpha: .92),
+                  height: 1.5,
+                ),
+              ),
+              const SizedBox(height: 14),
+              BouncyButton(
+                label: l10n.browsePaths,
+                color: Dt.accent,
+                onTap: () {
+                  Analytics.todayBlockTapped('step', 'browse');
+                  onStartFirstPath();
+                },
+              ),
+            ],
+          ),
+        ).animate().fadeIn(duration: Dt.base).slideY(begin: .06);
+      }
 
       return Container(
         padding: const EdgeInsets.all(20),
@@ -213,7 +272,11 @@ class TodayFocusCard extends ConsumerWidget {
               Expanded(
                 child: AnimatedProgressBar(
                   value: fraction,
-                  color: Dt.surface,
+                  // onPrimary, not Dt.surface: the bar sits on a coloured
+                  // gradient, and Dt.surface is a near-black ink in dark
+                  // mode — the fill disappeared into the card («أعطال اتلقت
+                  // في الطريق»).
+                  color: context.colors.onPrimary,
                   trackColor: Colors.white.withValues(alpha: .25),
                   height: 12,
                 ),

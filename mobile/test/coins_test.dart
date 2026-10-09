@@ -205,4 +205,57 @@ void main() {
       expect(await CovenantService.instance.deliveredThisMonth(1), 1);
     });
   });
+
+  group('the daily gift, said out loud (phase 1)', () {
+    test('a fresh ledger promises the base gift, claims pay exactly it',
+        () async {
+      expect(await CoinsService.instance.todayGift(), CoinsService.dailyBase);
+      final state = await CoinsService.instance.claimDaily();
+      expect(state.lastClaimReward, CoinsService.dailyBase);
+      // And it is still the number shown after the claim, not a zero.
+      expect(await CoinsService.instance.todayGift(), state.lastClaimReward);
+    });
+
+    test('a second day in a row promises base + 2', () async {
+      SharedPreferences.setMockInitialValues({
+        'coins.last_claim_date': _day(DateTime.now().subtract(const Duration(days: 1))),
+        'coins.daily_streak': 1,
+      });
+      expect(await CoinsService.instance.todayGift(), CoinsService.dailyBase + 2);
+      final state = await CoinsService.instance.claimDaily();
+      expect(state.lastClaimReward, CoinsService.dailyBase + 2);
+      expect(state.dailyStreak, 2);
+    });
+
+    test('a covered miss keeps the streak climbing — gift and claim agree',
+        () async {
+      // One day missed, one rest day left: the streak resumes at +1, and the
+      // gift the screen promised is what the claim pays.
+      SharedPreferences.setMockInitialValues({
+        'coins.last_claim_date': _day(DateTime.now().subtract(const Duration(days: 2))),
+        'coins.daily_streak': 3,
+      });
+      final gift = await CoinsService.instance.todayGift();
+      final state = await CoinsService.instance.claimDaily();
+      expect(state.lastClaimReward, gift);
+      expect(state.dailyStreak, 4);
+    });
+  });
+
+  group('creditBadges reports what it actually paid', () {
+    test('first call returns the paid ids, the retry returns none',
+        () async {
+      final paid = await CoinsService.instance.creditBadges(['first_step']);
+      expect(paid, ['first_step']);
+      expect(await CoinsService.instance.creditBadges(['first_step']), isEmpty);
+    });
+
+    test('a badge with no ceiling room today is not reported as paid',
+        () async {
+      await CoinsService.instance.earn(CoinsService.dailyEarnCap);
+      expect(await CoinsService.instance.creditBadges(['five_lessons']),
+          isEmpty,
+          reason: 'nothing paid, so nothing is celebrated yet');
+    });
+  });
 }

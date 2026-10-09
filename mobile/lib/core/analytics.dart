@@ -7,10 +7,13 @@
 ///   share_moment → invite_opened → invite_shared → referral_claimed
 library;
 
+import 'dart:async';
+
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'engagement_signal.dart';
+import 'notification_permission_gate.dart';
 
 class Analytics {
   static FirebaseAnalytics get _fa => FirebaseAnalytics.instance;
@@ -67,8 +70,14 @@ class Analytics {
   // line and leaves the feature code untouched.
 
   /// A lesson was marked completed.
+  ///
+  /// Also the one moment the app asks to notify (Phase 1): the parent just
+  /// finished something, which is the first time a notification has a
+  /// reason to exist. The gate is one-shot per install and never throws —
+  /// see [NotificationPermissionGate].
   static Future<void> lessonCompleted(String lessonId) {
     EngagementSignal.mark();
+    unawaited(NotificationPermissionGate.maybeAsk());
     return _log('lesson_completed', {'lesson_id': lessonId});
   }
 
@@ -216,6 +225,18 @@ class Analytics {
 
   /// A child-journey milestone was logged — a key "first value" signal.
   static Future<void> milestoneLogged() => _log('milestone_logged');
+
+  /// A badge's coin reward was actually paid (phase 1: هدية اليوم والشارات).
+  /// Fired by the coins ledger the moment a badge is credited — not when it
+  /// is merely earned — so the funnel reads the same truth the wallet does.
+  static Future<void> badgeUnlocked(String badgeId) =>
+      _log('badge_unlocked', {'badge_id': badgeId});
+
+  /// A parent sent a «كلمة طيبة» with the evening confirmation. The band is
+  /// the praised child's, from the evening list — it tells us whether the
+  /// feature reaches the bands it was designed for (4–18).
+  static Future<void> praiseSent(String ageBand) =>
+      _log('praise_sent', {'age_band': ageBand});
 
   /// A Google identity was linked — data now survives reinstall.
   static Future<void> identityLinked() => _log('identity_linked');

@@ -501,6 +501,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get todaySun => 'Today ☀️';
 
   @override
+  String get todaySunDay => 'Today ☀️';
+
+  @override
+  String get todaySunNight => 'Today 🌙';
+
+  @override
   String get shareOpinion => 'Share your opinion';
 
   @override
@@ -515,6 +521,31 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String greetingWithName(Object name) {
     return 'Peace be upon you\n$name\'s journey continues';
+  }
+
+  @override
+  String greetingMorningName(Object name) {
+    return 'Good morning 🌤️\n$name\'s journey continues';
+  }
+
+  @override
+  String greetingEveningName(Object name) {
+    return 'Good evening 🌙\n$name\'s journey continues';
+  }
+
+  @override
+  String greetingMorningFirst(Object name) {
+    return 'Good morning 🌤️\nToday is day one of $name\'s journey';
+  }
+
+  @override
+  String greetingEveningFirst(Object name) {
+    return 'Good evening 🌙\nToday is day one of $name\'s journey';
+  }
+
+  @override
+  String dailyGiftLine(Object n) {
+    return 'Today\'s gift: $n 🪙';
   }
 
   @override
@@ -555,6 +586,13 @@ class AppLocalizationsEn extends AppLocalizations {
       'A short lesson picked for your child\'s age — it starts here.';
 
   @override
+  String get focusPathDoneTitle => 'MashaAllah — you finished this path';
+
+  @override
+  String get focusPathDoneDesc =>
+      'Step by step, you reached its end — choose your child\'s next path.';
+
+  @override
   String get continueJourney => 'Continue your path';
 
   @override
@@ -581,7 +619,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get askAlMurabbiNow => 'Ask Al-Murabbi Now';
 
   @override
-  String get insightsTitle => 'Smart Parenting Insights';
+  String get insightsTitle => 'Today\'s Tip';
 
   @override
   String get insightsDesc => 'View your child\'s habit and activity analysis';
@@ -970,6 +1008,23 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get onbChangeAge => 'Change age';
+
+  @override
+  String get onbPreparingStep1 => 'Preparing your child\'s profile…';
+
+  @override
+  String get onbPreparingStep2 => 'Picking the first lesson for you…';
+
+  @override
+  String get onbAskSampleHint =>
+      'Tap the question and the mentor will ask it for you after sign-up';
+
+  @override
+  String get onbAskSampleArmed =>
+      'The mentor will open on your question after sign-up ✓';
+
+  @override
+  String get noorName => 'Noor, your mentor';
 
   @override
   String prideStreakTitle(int days) {
@@ -1455,7 +1510,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get lessonCelebrationTitle => 'MashaAllah!';
 
   @override
-  String get lessonCelebrationMsg => 'Lesson completion recorded';
+  String lessonCelebrationMsg(int n, int total, String path) {
+    return 'You finished lesson $n of $total in \"$path\"';
+  }
 
   @override
   String get lessonNextStepTitle => 'Your step with your child tonight';
@@ -5397,8 +5454,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get followupThanksTitle => 'Thank you 🤍';
 
   @override
-  String get followupThanksWorked =>
-      'Alhamdulillah! Almorabbi will remember this helped.';
+  String get followupThanksWorked => 'Alhamdulillah — it helped!';
 
   @override
   String get followupThanksPartly =>
@@ -5406,10 +5462,19 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get followupThanksDidntWork =>
-      'That\'s okay — every child is different. Almorabbi won\'t repeat this advice and will suggest something else.';
+      'Every child has their own key — ask for an alternative now; this advice won\'t be repeated.';
 
   @override
-  String get followupThanksDidntTry => 'No problem. Try it when it suits you.';
+  String get followupThanksDidntTry =>
+      'No problem. Shall I remind you tomorrow?';
+
+  @override
+  String get followupAskAlternativeBtn => 'Ask for an alternative';
+
+  @override
+  String followupAskAlternativePrefill(String strategy, String name) {
+    return 'The advice \"$strategy\" didn\'t work with $name. What practical alternative can I try?';
+  }
 
   @override
   String get followupNoteDropped =>
@@ -5665,4 +5730,22 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get a11yChooseAChild => 'Choose a child';
+
+  @override
+  String get praiseSectionTitle => 'A kind word with the confirmation';
+
+  @override
+  String get praiseChipAhsant => 'Well done';
+
+  @override
+  String get praiseChipBarakAllahuFik => 'May Allah bless you';
+
+  @override
+  String get praiseChipProud => 'We are proud of you';
+
+  @override
+  String get praiseOwnWordsHint => 'Or add a short word of your own';
+
+  @override
+  String get praiseFromFamily => 'Your family says to you';
 }

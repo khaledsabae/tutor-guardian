@@ -55,6 +55,16 @@ final childProgressProvider = FutureProvider.autoDispose
   return repo.getChildProgress(childId);
 });
 
+/// The active child's progress bundle, whoever is active — null when no
+/// child is selected. Exists so a listener (the Home screen's daily claim)
+/// follows a child switch without having to re-subscribe per child.
+final activeChildProgressProvider =
+    Provider<AsyncValue<ChildProgressBundle>?>((ref) {
+  final childId = ref.watch(activeChildIdProvider);
+  if (childId == null) return null;
+  return ref.watch(childProgressProvider(childId));
+});
+
 /// Derived: lesson-id → ProgressStatus for a given child + path.
 /// This is what the PathDetailScreen consumes.
 class PathProgressMap {

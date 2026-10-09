@@ -47,7 +47,8 @@
 - **برامج الأسرة** (في إصدارات التطبيق التي تعرضها): علامات «تمّ» العائلية في برنامج رمضان
   وكلمة رمضانكم المختارة، و**درجة الصيام** لكل طفل وأيام تدرّبه عليها، و**بلوغ الطفل** إن
   حدّدته أنت (يغيّر إرشادات الصيام)؛ ومسار **رحلة الصلاة** ومرحلتها والصلوات التي يسجّلها طفلك
-  (مع المهام اليومية)؛ وسجلًّا بـ**تذكيرات المراحل** التي أرسلناها؛ و**فرق التوقيت** في هاتفك
+  (مع المهام اليومية)؛ وسجلًّا بـ**تذكيرات المراحل** التي أرسلناها؛ و**علامات خطتك الأسبوعية**
+  التي تضعها على خطواتها؛ و**فرق التوقيت** في هاتفك
   ولغة التطبيق وتاريخ بداية رمضان الذي اخترته لأسرتك، ليصل التذكير مساءً وبلغتك. الغرض: أن
   تعمل البرامج لعمر طفلك وتقويمك. وبطاقة «رمضان عائلتنا» التي تشاركها لا تحمل اسمًا ولا
   عمرًا ولا صورة ولا نصًّا تكتبه.
@@ -241,7 +242,8 @@ to your phone's random identifier:
   step** and the days they practised it, and whether a child has **reached
   puberty** if you set it (it changes the fasting guidance); the child's **Prayer
   Journey** track and stage, and the prayers your child records (kept with the
-  daily missions); a log of the **milestone reminders we sent**; and your phone's
+  daily missions); a log of the **milestone reminders we sent**; the **weekly-plan
+  marks** you tick on your family's weekly plan; and your phone's
   **time-zone offset**, app language and the Ramadan start you chose for your
   family, so a reminder arrives in your evening and in your language. Purpose:
   the programs fit your child's age and your calendar. The "Our Family's Ramadan"

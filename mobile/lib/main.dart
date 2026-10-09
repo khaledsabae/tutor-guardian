@@ -17,6 +17,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
 import 'core/analytics.dart';
+import 'core/notification_permission_gate.dart';
 import 'core/local_only_files.dart';
 import 'core/crash_triage.dart';
 import 'core/nav_observer.dart';
@@ -255,25 +256,18 @@ void main() async {
         fatal: false,
       );
     }));
-    // The one place the app asks to notify — after the first frame, because a
-    // runtime permission prompt needs an Activity, and outside
-    // `_postLaunchGrowthLoop` because that returns early with no session, so a
-    // first launch without network used to skip the question entirely.
-    //
-    // Firebase first, and it now waits for the Activity rather than giving up
-    // on it — see `requestNotificationPermission`. At this exact moment there
-    // is no Activity attached yet (measured: it arrives ~1.4s later), and both
-    // this call and `flutter_local_notifications`' own request fail on that,
-    // the latter with a NullPointerException. The prompt used to appear only
-    // because `registerToken` happens to ask a second time, which is behind
-    // `ensureSession()` — so a first launch with no network asked nobody.
-    //
-    // The plugin request stays as the fallback for a device with no Play
-    // Services, where the Firebase call is the one that cannot answer.
-    unawaited(() async {
+    // The launch-time permission ask is gone (Phase 1, NOOR_WAL_QANADIL):
+    // it was a cold permission at the door — nothing seen, nothing at
+    // stake, one deny and the daily reminders never exist. The ask now
+    // happens once per install, right after the FIRST completed lesson
+    // (`Analytics.lessonCompleted` → `NotificationPermissionGate`). The
+    // platform ask itself is wired here — Firebase first (it waits for the
+    // Activity rather than giving up on it, see `requestNotificationPermission`),
+    // the plugin request as the fallback for a device with no Play Services.
+    NotificationPermissionGate.ask = () async {
       if (await PushService.instance.requestNotificationPermission()) return;
       await NotificationService.instance.ensurePermission();
-    }());
+    };
   });
 
   // Notification taps need neither a session nor a token, so they are handled

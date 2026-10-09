@@ -18,6 +18,10 @@ import 'package:almorabbi/api/tg_client.dart';
 import 'package:almorabbi/features/deeplink/deep_link_handler.dart';
 import 'package:almorabbi/features/home/widgets/today_loop_cards.dart';
 import 'package:almorabbi/features/child_memory/widgets/followup_sheet.dart';
+import 'package:almorabbi/features/program/providers/program_providers.dart'
+    show pendingChatQuestionProvider;
+import 'package:almorabbi/features/shell/root_tab.dart';
+import 'package:almorabbi/widgets/ui/bouncy_button.dart';
 import 'package:almorabbi/features/onboarding/providers/onboarding_providers.dart';
 import 'package:almorabbi/screens/home_screen.dart';
 
@@ -105,7 +109,7 @@ void main() {
     expect(find.text('شكرًا لك 🤍'), findsOneWidget);
     expect(
         find.text(
-            'لا بأس، فلكل طفل طريقه. لن يكرّر المربّي هذه النصيحة، وسيقترح بديلًا.'),
+            'لكل طفل مفتاحه — اطلب بديلًا الآن، ولن يكرّر المربّي هذه النصيحة.'),
         findsOneWidget);
 
     await tester.tap(find.text('تم'));
@@ -124,9 +128,56 @@ void main() {
     await settle(tester);
     await tester.tap(find.text('إرسال'));
     await settle(tester);
+    // «نجحت» gets the quiet celebration first — «الحمد لله، نفعت!» over the
+    // sheet (the thanks line under it is the same words: two while the
+    // celebration is up, one after it is dismissed).
+    expect(find.text('الحمد لله، نفعت!'), findsWidgets);
+    // Two 'تم' while the celebration is up (its BouncyButton + the sheet's
+    // FilledButton behind the barrier); tap the celebration's own.
+    await tester.tap(find
+        .descendant(
+          of: find.byType(BouncyButton),
+          matching: find.text('تم'),
+        )
+        .first);
+    await settle(tester, 12); // the dialog's 350ms exit transition
+    // Under it, the thank-you still tells the parent the note was not kept.
     expect(find.text('حُفظت إجابتك، ولم نحفظ ملاحظتك لأنها مما لا يحفظه المربّي.'),
         findsOneWidget);
-    expect(find.text('الحمد لله! سيتذكّر المربّي أن هذا نفع.'), findsOneWidget);
+    expect(find.text('الحمد لله، نفعت!'), findsOneWidget);
+  });
+
+  testWidgets(
+      '«لم تنجح» offers to ask the assistant for an alternative, now',
+      (tester) async {
+    // The deep link fetches by id, so the follow-up must be in the by-id
+    // map too, not only the due list.
+    final server = _server()..followups[7] = followupJson(7, 12);
+    final container =
+        await pumpMemoryApp(tester, _deepLinkHome(7), server: server);
+    await settle(tester);
+    await tester.tap(find.text('open'));
+    await settle(tester);
+    final chip = find.text('لم تنجح');
+    await tester.ensureVisible(chip); // third chip, below the fold at 360dp
+    await tester.tap(chip);
+    await settle(tester);
+    final send = find.text('إرسال');
+    await tester.ensureVisible(send);
+    await tester.tap(send);
+    await settle(tester);
+
+    final ask = find.text('اطلب بديلًا الآن');
+    expect(ask, findsOneWidget);
+    await tester.tap(ask);
+    await settle(tester);
+
+    // The sheet is gone, the assistant is seeded with a question about this
+    // very advice, and the shell was asked for its tab.
+    expect(find.text('اطلب بديلًا الآن'), findsNothing);
+    expect(container.read(pendingChatQuestionProvider),
+        contains('روتين نوم ثابت مع قصة قبل النوم لأحمد'));
+    expect(container.read(rootTabRequestProvider), RootTab.assistant);
   });
 
   testWidgets('"don\'t ask about this" dismisses it from the card',

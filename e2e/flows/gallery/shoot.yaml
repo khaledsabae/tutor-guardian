@@ -1,0 +1,285 @@
+# One pass of the before/after gallery (Phase 0 of docs/NOOR_WAL_QANADIL_PLAN.md).
+# run.sh runs this flow against the BASELINE build (tag=before) and the PR head
+# (tag=after), in Arabic and English, plus a 200% font-scale pass set through
+# `adb shell settings put system font_scale` — a runtime system setting, so no
+# second AVD and the avd cache key is untouched.
+#
+# Every screenshot is named ${GALLERY_TAG}__${GALLERY_VARIANT}__<screen> and the
+# pairing in e2e/e2e_tool.py gallery looks those names up exactly.
+#
+# The whole lineage is informational: a step that does not find its element
+# fails the flow, never the run — and anything the screen may not show (a
+# lesson without a quiz, no follow-up due) is guarded with `when:`/`optional:`.
+# Selectors are ARB keys via ../common/l10n.js, re-generated per build, so the
+# same flow drives the baseline and the head alike.
+#
+# Dark mode here is the app's OWN setting (Settings → Appearance), not
+# `adb shell cmd uimode night yes`: the plan's Phase 1 touches the app theme,
+# and staying inside the app keeps the AVD image — and e2e-avd-cache.yml's
+# key — untouched. A 360dp-density variant is deferred for the same reason:
+# it needs AVD config (`wm density 360` at boot-time scale or a new profile),
+# so adding it means a new AVD_CACHE_KEY suffix in BOTH workflow files.
+# Env: UI_LANG (ar|en), GALLERY_TAG (before|after), GALLERY_VARIANT (ar|en|ar_font2x),
+#      CHILD_NAME (inherited, unused since today_shot dropped the name wait).
+appId: com.alsaba.almorabbi
+name: gallery/shoot
+---
+- runScript: ../common/l10n.js
+# Every pass starts from a cold launch, exactly like upgrade/03: after
+# `adb install -r` of the PR head (the «after» passes) the app is NOT
+# running, and home.yaml's back-walk assumes a live process — the first
+# after-pass died on "اليوم not found" because of exactly that.
+- launchApp:
+    stopApp: true
+- runFlow: ../common/system_dialogs.yaml
+- extendedWaitUntil:
+    visible: '${output.lead.navToday}'
+    timeout: 60000
+# ── settings, in this shoot's language ──────────────────────────────────
+# Ensure language matches UI_LANG before photographing Today or lessons
+- runFlow: ../common/open_settings.yaml
+- runFlow:
+    when:
+      true: "${UI_LANG == 'en'}"
+      notVisible: '${output.en.settingsTitle}'
+    commands:
+      - scrollUntilVisible:
+          element:
+            text: '${output.lead.language}'
+          direction: DOWN
+          timeout: 20000
+      - tapOn: '${output.lead.language}'
+- runFlow:
+    when:
+      true: "${UI_LANG != 'en'}"
+      notVisible: '${output.ar.settingsTitle}'
+    commands:
+      - scrollUntilVisible:
+          element:
+            text: '${output.lead.language}'
+          direction: DOWN
+          timeout: 20000
+      - tapOn: '${output.lead.language}'
+- runFlow:
+    when:
+      true: "${UI_LANG == 'en'}"
+    commands:
+      - extendedWaitUntil:
+          visible: '${output.en.settingsTitle}'
+          timeout: 20000
+- runFlow:
+    when:
+      true: "${UI_LANG != 'en'}"
+    commands:
+      - extendedWaitUntil:
+          visible: '${output.ar.settingsTitle}'
+          timeout: 20000
+- waitForAnimationToEnd:
+    timeout: 3000
+- takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__settings'
+# ── the app's own dark mode (Settings → Appearance cycles), then back to
+# light so Today and lessons shoot in light mode.
+- scrollUntilVisible:
+    element:
+      text: '${output.lead.settingsTheme}'
+    direction: DOWN
+    timeout: 20000
+- repeat:
+    times: 3
+    while:
+      notVisible: '${output.tile.settingsThemeDark}'
+    commands:
+      - tapOn: '${output.lead.settingsTheme}'
+      - waitForAnimationToEnd:
+          timeout: 3000
+- waitForAnimationToEnd:
+    timeout: 2000
+- takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__settings_dark'
+- back
+- runFlow:
+    file: today_shot.yaml
+    env:
+      SHOT: '${GALLERY_TAG}__${GALLERY_VARIANT}__home_dark'
+- runFlow: ../common/open_settings.yaml
+- scrollUntilVisible:
+    element:
+      text: '${output.lead.settingsTheme}'
+    direction: DOWN
+    timeout: 20000
+- repeat:
+    times: 3
+    while:
+      notVisible: '${output.tile.settingsThemeLight}'
+    commands:
+      - tapOn: '${output.lead.settingsTheme}'
+      - waitForAnimationToEnd:
+          timeout: 3000
+- back
+# ── Today ────────────────────────────────────────────────────────────────
+- runFlow: ../common/home.yaml
+- runFlow:
+    file: today_shot.yaml
+    env:
+      SHOT: '${GALLERY_TAG}__${GALLERY_VARIANT}__home'
+# A due follow-up, if the server happens to have one for this child: the card
+# on Today, then the sheet with an answer chosen.
+- runFlow:
+    when:
+      visible: '${output.c.followupTitle}'
+    commands:
+      - takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__followup_card'
+      - tapOn:
+          text: '${output.t.followupWorked}'
+          optional: true
+      - extendedWaitUntil:
+          visible: '${output.c.followupThanksTitle}'
+          timeout: 15000
+          optional: true
+      - runFlow:
+          when:
+            visible: '${output.c.followupThanksTitle}'
+          commands:
+            - takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__followup'
+            - back
+# Still-open sheet (the answer never reached the thanks view): close it so the
+# lesson leg below finds Today.
+- runFlow:
+    when:
+      visible: '${output.c.followupTitleFor}'
+    commands:
+      - back
+      - waitForAnimationToEnd:
+          timeout: 2000
+# ── the lesson: first run opens Today's first lesson; after a completion the
+# card offers Continue → path detail, whose primary button opens the NEXT
+# incomplete lesson — so every shoot photographs a fresh completion.
+- runFlow:
+    when:
+      visible: '${output.t.startThisLesson}'
+    commands:
+      - tapOn: '${output.t.startThisLesson}'
+- runFlow:
+    when:
+      visible: '${output.t.continueBtn}'
+    commands:
+      - tapOn: '${output.t.continueBtn}'
+      - waitForAnimationToEnd:
+          timeout: 3000
+      - takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__path_detail'
+      - scrollUntilVisible:
+          element:
+            text: '(?:${output.t.pathDetailStart}|${output.t.pathDetailContinue})'
+          direction: DOWN
+          timeout: 30000
+      - tapOn: '(?:${output.t.pathDetailStart}|${output.t.pathDetailContinue})'
+- extendedWaitUntil:
+    visible: '(?:${output.t.lessonMarkComplete}|${output.t.lessonCompleted}|${output.t.lessonErrorLoading})'
+    timeout: 45000
+    optional: true
+# A 5xx from production is the server's moment (see fresh/02): retry twice,
+# only for a server status.
+- repeat:
+    times: 2
+    while:
+      visible: '(?s).*TgApiError\(5\d\d\).*'
+    commands:
+      - takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__lesson_server_error'
+      - tapOn: '${output.t.retry}'
+      - extendedWaitUntil:
+          visible: '(?:${output.t.lessonMarkComplete}|${output.t.lessonCompleted}|${output.t.lessonErrorLoading})'
+          timeout: 45000
+          optional: true
+- extendedWaitUntil:
+    visible: '(?:${output.t.lessonMarkComplete}|${output.t.lessonCompleted})'
+    timeout: 10000
+- takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__lesson'
+# ── the lesson's quiz, when the lesson has one: answer with the first option
+# (the letter circle stays Arabic in both languages) until the summary. The
+# quiz button sits in the lesson's assets section, below the fold at 200%
+# font — two blind swipes first; the leg stays guarded, so a lesson without a
+# quiz simply skips it.
+- swipe:
+    start: '50%,80%'
+    end: '50%,30%'
+- swipe:
+    start: '50%,80%'
+    end: '50%,30%'
+- runFlow:
+    when:
+      visible: '${output.t.lessonQuiz}'
+    commands:
+      - tapOn: '${output.t.lessonQuiz}'
+      - extendedWaitUntil:
+          visible: '(?:${output.tile.lit_quizOptionA}|${output.c.quizErrorLoading})'
+          timeout: 30000
+          optional: true
+      - takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__quiz'
+      - repeat:
+          times: 15
+          while:
+            notVisible: '${output.t.quizYourResult}'
+          commands:
+            - tapOn:
+                text: '${output.tile.lit_quizOptionA}'
+                optional: true
+            - waitForAnimationToEnd:
+                timeout: 2000
+            - tapOn:
+                text: '(?:${output.t.quizNextQuestion}|${output.t.quizShowResult})'
+                optional: true
+            - waitForAnimationToEnd:
+                timeout: 1000
+      - runFlow:
+          when:
+            visible: '${output.t.quizYourResult}'
+          commands:
+            - waitForAnimationToEnd:
+                timeout: 3000
+            - takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__quiz_summary'
+      - runFlow:
+          when:
+            visible: '(?:${output.c.lessonQuiz}|${output.c.quizErrorLoading})'
+          commands:
+            - back
+            - waitForAnimationToEnd:
+                timeout: 2000
+# ── completion: the celebration dialog, then the "tonight's step" sheet.
+- runFlow:
+    when:
+      visible: '${output.t.lessonMarkComplete}'
+    commands:
+      - tapOn: '${output.t.lessonMarkComplete}'
+      - extendedWaitUntil:
+          visible: '(?:${output.t.lessonCelebrationTitle}|${output.t.continueBtn})'
+          timeout: 30000
+      - waitForAnimationToEnd:
+          timeout: 3000
+      - takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__celebration'
+      # The dialog's own button defaults to the same «متابعة» / Continue label.
+      - tapOn:
+          text: '${output.t.continueBtn}'
+          optional: true
+      - waitForAnimationToEnd:
+          timeout: 2000
+- runFlow:
+    when:
+      visible: '${output.c.lessonNextStepTitle}'
+    commands:
+      - waitForAnimationToEnd:
+          timeout: 2000
+      - takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__next_step'
+      - tapOn:
+          text: '${output.t.lessonNextStepConfirm}'
+          optional: true
+- runFlow:
+    when:
+      visible: '${output.c.reviewPromptTitle}'
+    commands:
+      - tapOn:
+          text: '${output.t.reviewPromptLater}'
+          optional: true
+- runFlow: ../common/home.yaml
+- runFlow:
+    file: today_shot.yaml
+    env:
+      SHOT: '${GALLERY_TAG}__${GALLERY_VARIANT}__home_after_lesson'

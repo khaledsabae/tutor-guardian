@@ -162,11 +162,18 @@
   "incompleteResponse": "Incomplete server response.",
   "continuePath": "Continue",
   "todaySun": "Today ☀️",
+  "todaySunDay": "Today ☀️",
+  "todaySunNight": "Today 🌙",
   "shareOpinion": "Share your opinion",
   "searchTooltip": "Search",
   "settingsTooltip": "Settings",
   "greetingPeace": "Peace be upon you",
   "greetingWithName": "Peace be upon you\n{name}'s journey continues",
+  "greetingMorningName": "Good morning 🌤️\n{name}'s journey continues",
+  "greetingEveningName": "Good evening 🌙\n{name}'s journey continues",
+  "greetingMorningFirst": "Good morning 🌤️\nToday is day one of {name}'s journey",
+  "greetingEveningFirst": "Good evening 🌙\nToday is day one of {name}'s journey",
+  "dailyGiftLine": "Today's gift: {n} 🪙",
   "feedbackMessage": "Your opinion matters! Share any feedback or issue — written or voice.",
   "bedtimeStories": "Bedtime Stories",
   "bedtimeStoriesDesc": "Short, calm stories with natural sleep sounds 🐦",
@@ -178,6 +185,8 @@
   "browsePaths": "Browse Paths",
   "startThisLesson": "Start This Lesson",
   "startFirstLessonDesc": "A short lesson picked for your child's age — it starts here.",
+  "focusPathDoneTitle": "MashaAllah — you finished this path",
+  "focusPathDoneDesc": "Step by step, you reached its end — choose your child's next path.",
   "continueJourney": "Continue your path",
   "lessonsRemaining_one": "🏆 1 lesson remaining!",
   "lessonsRemaining_other": "🏆 {count} lessons remaining",
@@ -186,7 +195,7 @@
   "quizDesc": "10 quick questions • Learn while you play",
   "askQuestion": "Have a parenting question?",
   "askAlMurabbiNow": "Ask Al-Murabbi Now",
-  "insightsTitle": "Smart Parenting Insights",
+  "insightsTitle": "Today's Tip",
   "insightsDesc": "View your child's habit and activity analysis",
   "chatPreviousChats": "Previous Chats",
   "chatAlMurabbiTitle": "🛡️ Al-Murabbi AI",
@@ -308,6 +317,11 @@
   "onbDefaultChildName": "My child",
   "onbDeferredHint": "You can add your child's name and photo later from Settings.",
   "onbChangeAge": "Change age",
+  "onbPreparingStep1": "Preparing your child's profile…",
+  "onbPreparingStep2": "Picking the first lesson for you…",
+  "onbAskSampleHint": "Tap the question and the mentor will ask it for you after sign-up",
+  "onbAskSampleArmed": "The mentor will open on your question after sign-up ✓",
+  "noorName": "Noor, your mentor",
   "prideStreakTitle": "MashaAllah — {days} days in a row! 🔥",
   "@prideStreakTitle": {
     "placeholders": {
@@ -456,7 +470,15 @@
   "lessonErrorLoading": "Failed to load lesson",
   "lessonErrorMarking": "Failed to record completion: {error}",
   "lessonCelebrationTitle": "MashaAllah!",
-  "lessonCelebrationMsg": "Lesson completion recorded",
+  "lessonCelebrationMsg": "You finished lesson {n} of {total} in \"{path}\"",
+  "@lessonCelebrationMsg": {
+    "description": "Said at the celebration moment: carries the lesson number, the total and the path name.",
+    "placeholders": {
+      "n": {"type": "int"},
+      "total": {"type": "int"},
+      "path": {"type": "String"}
+    }
+  },
   "lessonNextStepTitle": "Your step with your child tonight",
   "lessonNextStepIntro": "A lesson you never act on stays a fact. Here is one small step to start with today.",
   "lessonNextStepConfirm": "Got it — I’ll do it 🤍",
@@ -1617,10 +1639,19 @@
   "followupDismiss": "Don't ask about this",
   "followupDismissed": "We won't ask about this again.",
   "followupThanksTitle": "Thank you 🤍",
-  "followupThanksWorked": "Alhamdulillah! Almorabbi will remember this helped.",
+  "followupThanksWorked": "Alhamdulillah — it helped!",
   "followupThanksPartly": "A good step. Almorabbi will build on what worked.",
-  "followupThanksDidntWork": "That's okay — every child is different. Almorabbi won't repeat this advice and will suggest something else.",
-  "followupThanksDidntTry": "No problem. Try it when it suits you.",
+  "followupThanksDidntWork": "Every child has their own key — ask for an alternative now; this advice won't be repeated.",
+  "followupThanksDidntTry": "No problem. Shall I remind you tomorrow?",
+  "followupAskAlternativeBtn": "Ask for an alternative",
+  "followupAskAlternativePrefill": "The advice \"{strategy}\" didn't work with {name}. What practical alternative can I try?",
+  "@followupAskAlternativePrefill": {
+    "description": "Seeded into the assistant and sent as-is — its language sets the answer's language.",
+    "placeholders": {
+      "strategy": {"type": "String"},
+      "name": {"type": "String"}
+    }
+  },
   "followupNoteDropped": "Your answer was saved. We didn't keep your note, because it's something Almorabbi doesn't store.",
   "followupAnsweredResult": "You answered: {outcome}",
   "followupDismissedResult": "You asked us not to ask about this advice.",
@@ -1695,6 +1726,24 @@
     "placeholders": {"name": {"type": "String"}}
   },
   "a11yChooseAChild": "Choose a child",
+  "praiseSectionTitle": "A kind word with the confirmation",
+  "@praiseSectionTitle": {
+    "description": "Evening missions screen: the heading above the quick-praise chips a parent can send with the confirmation."
+  },
+  "praiseChipAhsant": "Well done",
+  "praiseChipBarakAllahuFik": "May Allah bless you",
+  "praiseChipProud": "We are proud of you",
+  "@praiseChipAhsant": {
+    "description": "Fixed quick-praise chip. These are fixed strings, not du'as from family_adhkar."
+  },
+  "praiseOwnWordsHint": "Or add a short word of your own",
+  "@praiseOwnWordsHint": {
+    "description": "Hint text of the optional short free-text line beside the praise chips."
+  },
+  "praiseFromFamily": "Your family says to you",
+  "@praiseFromFamily": {
+    "description": "Small label above the praise text on the child's mission card. Neutral family wording, never dad/mum."
+  },
   "@a11yChooseAChild": {
     "description": "Screen-reader label for the active-child chip when no child is active yet; a tap opens the children list."
   }
