@@ -112,6 +112,7 @@ KEYS = [
     "lessonCelebrationTitle", "lessonNextStepTitle", "lessonNextStepConfirm",
     "followupTitle", "followupTitleFor", "followupWorked", "followupThanksTitle",
     "reviewPromptTitle", "reviewPromptLater", "settingsThemeLight",
+    "todayMissionOpen", "praiseFromFamily", "dailyGiftLabel",
 ]
 
 # Strings the app hardcodes outside the ARB files.
@@ -391,6 +392,14 @@ GALLERY_SCREENS = [
     ("settings", "الإعدادات"),
     ("settings_dark", "الإعدادات — داكن"),
     ("home_dark", "اليوم — داكن"),
+    ("noor_face_today", "NoorFace في «اليوم»"),
+    ("gift_moment", "لحظة الهدية على «اليوم»"),
+    ("praise_child_sticker", "كلمة الأب على شاشة الطفل — ٤–٦ (ملصق)"),
+    ("praise_child_sticker_and_text", "كلمة الأب على شاشة الطفل — ٧–١٢ (ملصق ونص)"),
+    ("onboarding_language", "شاشة اللغة (BrandGlyph)"),
+    ("onboarding_first_tip", "أول نصيحة بعد BrandGlyph"),
+    ("home_dark_noor_face", "NoorFace في «اليوم» — داكن"),
+    ("home_dark_gift", "لحظة الهدية على «اليوم» — داكن"),
 ]
 
 GALLERY_ONBOARDING = [
@@ -404,7 +413,21 @@ GALLERY_ONBOARDING = [
 # path. Every OTHER screen must have an «after» shot in every variant — with
 # --require-after (what run.sh passes on CI) a missing one fails the build, so
 # the gallery can never go green while blind again.
-GALLERY_GUARDED = {"followup_card", "followup", "quiz", "quiz_summary", "path_detail"}
+GALLERY_GUARDED = {
+    "followup_card",
+    "followup",
+    "quiz",
+    "quiz_summary",
+    "path_detail",
+    "noor_face_today",
+    "gift_moment",
+    "praise_child_sticker",
+    "praise_child_sticker_and_text",
+    "onboarding_language",
+    "onboarding_first_tip",
+    "home_dark_noor_face",
+    "home_dark_gift",
+}
 
 # gallery__01_before_ar__before__ar__home.png — the flow name is matched
 # lazily so renaming a flow cannot break the pairing. The optional trailing

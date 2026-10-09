@@ -77,6 +77,8 @@ name: gallery/shoot
 - waitForAnimationToEnd:
     timeout: 3000
 - takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__settings'
+- takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__onboarding_language'
+- takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__onboarding_first_tip'
 # ── the app's own dark mode (Settings → Appearance cycles), then back to
 # light so Today and lessons shoot in light mode.
 - scrollUntilVisible:
@@ -96,6 +98,8 @@ name: gallery/shoot
     timeout: 2000
 - takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__settings_dark'
 - back
+- takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__home_dark_noor_face'
+- takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__home_dark_gift'
 - runFlow:
     file: today_shot.yaml
     env:
@@ -117,6 +121,23 @@ name: gallery/shoot
 - back
 # ── Today ────────────────────────────────────────────────────────────────
 - runFlow: ../common/home.yaml
+- takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__noor_face_today'
+- takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__gift_moment'
+# A child mission with praise note, when the day has one ready:
+- runFlow:
+    when:
+      visible: '${output.t.todayMissionOpen}'
+    commands:
+      - tapOn: '${output.t.todayMissionOpen}'
+      - extendedWaitUntil:
+          visible: '(?:${output.c.praiseFromFamily}|${output.t.missionTodayLabel})'
+          timeout: 10000
+          optional: true
+      - takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__praise_child_sticker'
+      - takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__praise_child_sticker_and_text'
+      - back
+      - waitForAnimationToEnd:
+          timeout: 2000
 - runFlow:
     file: today_shot.yaml
     env:
