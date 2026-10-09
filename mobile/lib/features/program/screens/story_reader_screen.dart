@@ -12,6 +12,7 @@ import '../../../core/app_routes.dart';
 import '../data/story_models.dart';
 import '../services/bedtime_audio_service.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../../theme/app_colors.dart';
 import '../../../l10n/content_direction.dart';
 import '../../../widgets/ui/night_sky.dart';
 import '../../../theme/design_tokens.dart';
@@ -501,23 +502,23 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
               Container(
                 padding: const EdgeInsets.all(14),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFFFFBEB),
+                  color: context.colors.warningBg,
                   borderRadius: BorderRadius.circular(18),
                   border: Border.all(
-                    color: const Color(0xFFF59E0B).withValues(alpha: 0.35),
+                    color: context.colors.warningFg.withValues(alpha: 0.35),
                   ),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Row(
+                    Row(
                       children: [
-                        Text('🕌', style: TextStyle(fontSize: 18)),
-                        SizedBox(width: 8),
+                        const Text('🕌', style: TextStyle(fontSize: 18)),
+                        const SizedBox(width: 8),
                         Text(
                           'المرساة القيمية والأثر النبوي:',
                           style: TextStyle(
-                            color: Color(0xFF92400E),
+                            color: context.colors.warningFg,
                             fontSize: 13,
                             fontWeight: FontWeight.w800,
                           ),
@@ -527,8 +528,8 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
                     const SizedBox(height: 6),
                     Text(
                       widget.story.islamicValue!,
-                      style: const TextStyle(
-                        color: Color(0xFF78350F),
+                      style: TextStyle(
+                        color: context.colors.warningFg,
                         fontSize: 13,
                         height: 1.6,
                         fontWeight: FontWeight.w600,
@@ -545,23 +546,23 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
               Container(
                 padding: const EdgeInsets.all(14),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFF0FDF4),
+                  color: context.colors.success.withValues(alpha: 0.10),
                   borderRadius: BorderRadius.circular(18),
                   border: Border.all(
-                    color: const Color(0xFF10B981).withValues(alpha: 0.35),
+                    color: context.colors.success.withValues(alpha: 0.35),
                   ),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Row(
+                    Row(
                       children: [
-                        Text('🎯', style: TextStyle(fontSize: 18)),
-                        SizedBox(width: 8),
+                        const Text('🎯', style: TextStyle(fontSize: 18)),
+                        const SizedBox(width: 8),
                         Text(
                           'تحدي الغد للطفل البطل:',
                           style: TextStyle(
-                            color: Color(0xFF065F46),
+                            color: context.colors.successText,
                             fontSize: 13,
                             fontWeight: FontWeight.w800,
                           ),
@@ -571,8 +572,8 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
                     const SizedBox(height: 6),
                     Text(
                       widget.story.actionChallenge!,
-                      style: const TextStyle(
-                        color: Color(0xFF047857),
+                      style: TextStyle(
+                        color: context.colors.successText,
                         fontSize: 13,
                         height: 1.5,
                         fontWeight: FontWeight.w600,
