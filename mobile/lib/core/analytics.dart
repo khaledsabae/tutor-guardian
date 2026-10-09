@@ -232,6 +232,12 @@ class Analytics {
   static Future<void> badgeUnlocked(String badgeId) =>
       _log('badge_unlocked', {'badge_id': badgeId});
 
+  /// A parent sent a «كلمة طيبة» with the evening confirmation. The band is
+  /// the praised child's, from the evening list — it tells us whether the
+  /// feature reaches the bands it was designed for (4–18).
+  static Future<void> praiseSent(String ageBand) =>
+      _log('praise_sent', {'age_band': ageBand});
+
   /// A Google identity was linked — data now survives reinstall.
   static Future<void> identityLinked() => _log('identity_linked');
 

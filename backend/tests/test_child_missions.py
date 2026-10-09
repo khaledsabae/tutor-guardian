@@ -498,3 +498,76 @@ def test_the_teen_mission_bank_exists_and_is_not_the_child_one():
 def test_the_teen_missions_clear_the_same_leverage_floor():
     for m in cm.load_missions("13-15"):
         assert m["estimated_minutes"] >= 15, m["id"]
+
+
+# ── «كلمة طيبة» — the note that closes the loop ────────────────────────────
+#
+# The parent writes it in the evening; the child reads it the next time they
+# hold the phone. `child_missions.parent_note` has existed since the column
+# was added — nothing ever read it back. These tests hold the read side to the
+# same rules as the write side: confirmed cards only, recent only, latest wins.
+
+def _confirmed_with_note(child_id: int, note: str | None, local_date: str) -> int:
+    card = cm.today_mission(DEVICE, child_id, "7-9", local_date)
+    cm.claim(child_id, card["mission_id"])
+    cm.confirm_batch(DEVICE, [
+        {"mission_id": card["mission_id"], "confirmed": True, "note": note}])
+    return card["mission_id"]
+
+
+def test_recent_praise_is_the_latest_confirmed_note(child):
+    from datetime import date
+    cid = child()
+    today = date.today().isoformat()
+    mission_id = _confirmed_with_note(cid, "أحسنت", today)
+    praise = cm.recent_praise(cid)
+    assert praise is not None
+    assert praise["mission_id"] == mission_id
+    assert praise["note"] == "أحسنت"
+    assert praise["confirmed_at"]
+
+
+def test_recent_praise_is_none_without_a_note(child):
+    from datetime import date
+    cid = child()
+    _confirmed_with_note(cid, None, date.today().isoformat())
+    assert cm.recent_praise(cid) is None
+
+
+def test_recent_praise_skips_cards_answered_not_done(child):
+    """A "not yet" carries no warmth to deliver — the note would arrive as a
+    contradiction: the parent said the mission did not happen."""
+    from datetime import date
+    cid = child()
+    card = cm.today_mission(DEVICE, cid, "7-9", date.today().isoformat())
+    cm.claim(cid, card["mission_id"])
+    cm.confirm_batch(DEVICE, [
+        {"mission_id": card["mission_id"], "confirmed": False, "note": "أحسنت"}])
+    assert cm.recent_praise(cid) is None
+
+
+def test_recent_praise_ignores_a_note_beyond_the_window(child):
+    """A kind word surfaces the next morning, not a week later as a riddle."""
+    from datetime import date, timedelta
+    cid = child()
+    mission_id = _confirmed_with_note(cid, "أحسنت", date.today().isoformat())
+    old = (date.today() - timedelta(days=cm.PRAISE_WINDOW_DAYS + 1)).isoformat()
+    conn = get_conn()
+    try:
+        conn.execute("UPDATE child_missions SET local_date = ? WHERE id = ?",
+                     (old, mission_id))
+        conn.commit()
+    finally:
+        conn.close()
+    assert cm.recent_praise(cid) is None
+
+
+def test_the_evening_list_tells_the_parent_which_band_praised(child):
+    """`praise_sent` needs the band as a dimension, and the parent's own
+    device never learns it elsewhere: the evening list is the one place all
+    the children meet."""
+    cid = child()
+    card = cm.today_mission(DEVICE, cid, "7-9", "2026-08-16")
+    cm.claim(cid, card["mission_id"])
+    pending = cm.pending_for_device(DEVICE)
+    assert pending[0]["age_band"] == "7-9"

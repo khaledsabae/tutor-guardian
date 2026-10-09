@@ -5730,4 +5730,22 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get a11yChooseAChild => 'Choose a child';
+
+  @override
+  String get praiseSectionTitle => 'A kind word with the confirmation';
+
+  @override
+  String get praiseChipAhsant => 'Well done';
+
+  @override
+  String get praiseChipBarakAllahuFik => 'May Allah bless you';
+
+  @override
+  String get praiseChipProud => 'We are proud of you';
+
+  @override
+  String get praiseOwnWordsHint => 'Or add a short word of your own';
+
+  @override
+  String get praiseFromFamily => 'Your family says to you';
 }

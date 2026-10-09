@@ -1853,6 +1853,24 @@
     "placeholders": {"name": {"type": "String"}}
   },
   "a11yChooseAChild": "اختيار طفل",
+  "praiseSectionTitle": "كلمة طيبة مع التأكيد",
+  "@praiseSectionTitle": {
+    "description": "Evening missions screen: the heading above the quick-praise chips a parent can send with the confirmation."
+  },
+  "praiseChipAhsant": "أحسنت",
+  "praiseChipBarakAllahuFik": "بارك الله فيك",
+  "praiseChipProud": "فخورون بك",
+  "@praiseChipAhsant": {
+    "description": "Fixed quick-praise chip. These are fixed strings, not du'as from family_adhkar."
+  },
+  "praiseOwnWordsHint": "أو اكتب كلمة قصيرة من عندك",
+  "@praiseOwnWordsHint": {
+    "description": "Hint text of the optional short free-text line beside the praise chips."
+  },
+  "praiseFromFamily": "أهلك يقولون لك",
+  "@praiseFromFamily": {
+    "description": "Small label above the praise text on the child's mission card. Neutral family wording (أهلك), never بابا/ماما."
+  },
   "@a11yChooseAChild": {
     "description": "Screen-reader label for the active-child chip when no child is active yet; a tap opens the children list."
   }

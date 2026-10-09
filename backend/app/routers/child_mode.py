@@ -375,7 +375,14 @@ def child_mission_today(request: Request, tz_offset_minutes: int = Query(0),
     )
     card = child_missions.today_mission(
         device_id, child_id, band, local_date, lang)
-    return {"mission": card}
+    # «كلمة طيبة»: the note the parent attached to last night's confirmation,
+    # plus the band — so one round trip is enough for the app to decide
+    # sticker (4-6), sticker-and-text (7-12) or a single text line (13-18).
+    return {
+        "mission": card,
+        "recent_praise": child_missions.recent_praise(child_id),
+        "age_band": band,
+    }
 
 
 @router.post("/value-tracking/child-mode/mission/claim", response_model=dict)
