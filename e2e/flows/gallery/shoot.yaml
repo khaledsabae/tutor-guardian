@@ -312,6 +312,9 @@ name: gallery/shoot
           timeout: 2000
 # ── Praise Card: Praise moment from family, both 7–12 (sticker+text) and 4–6 (sticker only).
 # Step 1: Child 1 (7-9) opens child mode and marks mission done.
+- tapOn: '${output.lead.navToday}'
+- waitForAnimationToEnd:
+    timeout: 2000
 - scrollUntilVisible:
     element:
       text: '${output.t.todayMissionOpen}'
@@ -338,6 +341,9 @@ name: gallery/shoot
       - runFlow: ../common/exit_child_mode.yaml
 
 # Step 2: Parent opens claimed mission and confirms with kind words ("فخورون بك")
+- tapOn: '${output.lead.navToday}'
+- waitForAnimationToEnd:
+    timeout: 2000
 - scrollUntilVisible:
     element:
       text: '.*(?:أنجزها|did it|اليوم مع|Today with).*'
@@ -362,6 +368,12 @@ name: gallery/shoot
                 visible: '${output.t.missionConfirmAll}'
                 timeout: 15000
                 optional: true
+            - scrollUntilVisible:
+                element:
+                  text: '${output.t.praiseChipProud}'
+                direction: DOWN
+                timeout: 15000
+                optional: true
             - tapOn:
                 text: '${output.t.praiseChipProud}'
                 optional: true
@@ -373,6 +385,9 @@ name: gallery/shoot
                 timeout: 2000
 
 # Step 3: Child 1 (7-9) re-opens child mode: PraiseHeader appears with sticker AND text!
+- tapOn: '${output.lead.navToday}'
+- waitForAnimationToEnd:
+    timeout: 2000
 - scrollUntilVisible:
     element:
       text: '${output.t.todayMissionOpen}'
@@ -445,6 +460,9 @@ name: gallery/shoot
 - runFlow: ../common/home.yaml
 
 # Step 5: Child 2 (4-6) marks their mission done
+- tapOn: '${output.lead.navToday}'
+- waitForAnimationToEnd:
+    timeout: 2000
 - scrollUntilVisible:
     element:
       text: '${output.t.todayMissionOpen}'
@@ -471,6 +489,9 @@ name: gallery/shoot
       - runFlow: ../common/exit_child_mode.yaml
 
 # Step 6: Parent confirms Child 2's mission with kind words
+- tapOn: '${output.lead.navToday}'
+- waitForAnimationToEnd:
+    timeout: 2000
 - scrollUntilVisible:
     element:
       text: '.*(?:أنجزها|did it|اليوم مع|Today with).*'
@@ -495,6 +516,12 @@ name: gallery/shoot
                 visible: '${output.t.missionConfirmAll}'
                 timeout: 15000
                 optional: true
+            - scrollUntilVisible:
+                element:
+                  text: '${output.t.praiseChipProud}'
+                direction: DOWN
+                timeout: 15000
+                optional: true
             - tapOn:
                 text: '${output.t.praiseChipProud}'
                 optional: true
@@ -506,6 +533,9 @@ name: gallery/shoot
                 timeout: 2000
 
 # Step 7: Child 2 (4-6) re-opens child mode: PraiseHeader appears with STICKER ONLY!
+- tapOn: '${output.lead.navToday}'
+- waitForAnimationToEnd:
+    timeout: 2000
 - scrollUntilVisible:
     element:
       text: '${output.t.todayMissionOpen}'
