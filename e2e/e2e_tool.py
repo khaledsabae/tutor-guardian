@@ -115,6 +115,7 @@ KEYS = [
     "reviewPromptTitle", "reviewPromptLater", "settingsThemeLight",
     "todayMissionOpen", "praiseFromFamily", "dailyGiftLabel", "missionTodayLabel",
     "ageGroup4to6", "missionDone", "missionConfirmAll", "praiseChipAhsant",
+    "settingsSwitchChild", "childrenAddNew", "add",
 ]
 
 # Strings the app hardcodes outside the ARB files.
@@ -123,6 +124,7 @@ LITERALS = {
     "lit_langTitle": ("اختر لغة التطبيق", "Choose App Language"),
     "lit_langArabic": ("العربية", "العربية"),
     "lit_langEnglish": ("English", "English"),
+    "praiseChipProud": ("فخورون بك", "We are proud of you"),
     # main.dart, ErrorWidget.builder — what a parent sees when a build throws
     "lit_errorWidget": (
         "تعذّر عرض هذا الجزء. حاول مرة أخرى، وإن تكرّر أرسل لنا ملاحظة.",
@@ -640,13 +642,13 @@ EXPECTED_SCREEN_MARKERS: dict[str, dict[str, list[str]]] = {
         "required_en": ["Today"],
     },
     "praise_child_sticker": {
-        "required_ar": ["مهمة اليوم", "أهلك يقولون لك"],
-        "required_en": ["Today's Mission", "Praise"],
+        "required_ar": ["أهلك يقولون لك"],
+        "required_en": ["Your family says to you"],
         "forbidden": ["الإعدادات", "Settings", "وضع الطفل", "اختر رمز", "أدخل رمز"],
     },
     "praise_child_sticker_and_text": {
-        "required_ar": ["مهمة اليوم", "أهلك يقولون لك"],
-        "required_en": ["Today's Mission", "Praise"],
+        "required_ar": ["أهلك يقولون لك"],
+        "required_en": ["Your family says to you"],
         "forbidden": ["الإعدادات", "Settings", "وضع الطفل", "اختر رمز", "أدخل رمز"],
     },
     "lesson": {

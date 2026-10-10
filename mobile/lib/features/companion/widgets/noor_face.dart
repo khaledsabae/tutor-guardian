@@ -259,16 +259,16 @@ class _NoorFacePainter extends CustomPainter {
     final featureColor = state == NoorFaceState.happy
         ? palette.onAccent
         : const Color(0xFF0F1E2E); // audit-ok: brand night disc
-    final featureStroke = math.max(1.6, s * 0.050);
+    final featureStroke = math.max(1.8, s * 0.058);
     final feature = Paint()
       ..style = PaintingStyle.stroke
       ..strokeCap = StrokeCap.round
       ..strokeWidth = featureStroke
       ..color = featureColor;
 
-    final eyeL = center + Offset(-21 * scale, -3 * scale);
-    final eyeR = center + Offset(-12.5 * scale, -3 * scale);
-    final eyeR_ = math.max(3.0 * scale, s * 0.038);
+    final eyeL = center + Offset(-24.5 * scale, -2 * scale);
+    final eyeR = center + Offset(-15.5 * scale, -2 * scale);
+    final eyeR_ = math.max(3.6 * scale, s * 0.046);
     final blink = _blinking(phase);
 
     switch (state) {
@@ -334,11 +334,11 @@ class _NoorFacePainter extends CustomPainter {
     required bool open,
     bool small = false,
   }) {
-    final w = (small ? 5.5 : 7.0) * scale;
+    final w = (small ? 6.6 : 8.4) * scale;
     final rect = Rect.fromCenter(
-      center: center + Offset(-17 * scale, 7 * scale),
+      center: center + Offset(-20 * scale, 7.5 * scale),
       width: w * 2,
-      height: (open ? 9.0 : 6.0) * scale,
+      height: (open ? 10.8 : 7.2) * scale,
     );
     canvas.drawArc(
       rect,

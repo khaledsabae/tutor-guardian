@@ -1,0 +1,30 @@
+# Unlock or set up child mode PIN (enter_pin.yaml).
+appId: com.alsaba.almorabbi
+---
+- extendedWaitUntil:
+    visible: '(?:${output.t.childModePinSetupSubtitle}|${output.t.childModePinEnterSubtitle}|${output.t.childMode})'
+    timeout: 15000
+    optional: true
+- runFlow:
+    when:
+      visible: '${output.t.childModePinSetupSubtitle}'
+    commands:
+      - runFlow: enter_pin.yaml
+      - extendedWaitUntil:
+          visible: '${output.t.childModePinConfirmSubtitle}'
+          timeout: 10000
+          optional: true
+      - runFlow:
+          when:
+            visible: '${output.t.childModePinConfirmSubtitle}'
+          commands:
+            - runFlow: enter_pin.yaml
+            - waitForAnimationToEnd:
+                timeout: 2000
+- runFlow:
+    when:
+      visible: '${output.t.childModePinEnterSubtitle}'
+    commands:
+      - runFlow: enter_pin.yaml
+      - waitForAnimationToEnd:
+          timeout: 2000

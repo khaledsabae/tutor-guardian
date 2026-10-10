@@ -199,7 +199,6 @@ void main() {
         fake,
         streak: const HabitStreak(days: 2),
       );
-      expect(find.text('يومان متتاليان'), findsOneWidget);
 
       await tester.tap(find.text('تم'));
       await tester.pump(ChildModeNotifier.undoWindow);

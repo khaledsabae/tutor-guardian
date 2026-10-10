@@ -562,6 +562,28 @@ class HierarchyVerificationTest(unittest.TestCase):
         self.assertTrue(any("Missing expected markers" in e for e in errors))
         self.assertTrue(any("Found forbidden marker 'وضع الطفل'" in e for e in errors))
 
+    def test_ordinary_mission_hierarchy_without_praise_fails_praise_marker(self):
+        # Ordinary child mission card without praiseFromFamily must fail
+        # the praise screen marker check.
+        sample_mission_hierarchy = (
+            '{"text": "مهمة اليوم"}, '
+            '{"text": "رتّب غرفتك"}, '
+            '{"text": "رتّب سريرك وضع الألعاب في الصندوق"}, '
+            '{"text": "فهمت وسأنطلق"}, '
+            '{"text": "أنجزتها"}'
+        )
+        errors_ar = t.verify_screen_hierarchy(
+            "praise_child_sticker", sample_mission_hierarchy, lang="ar"
+        )
+        self.assertTrue(errors_ar)
+        self.assertTrue(any("Missing expected markers" in e for e in errors_ar))
+
+        errors_en = t.verify_screen_hierarchy(
+            "praise_child_sticker", sample_mission_hierarchy, lang="en"
+        )
+        self.assertTrue(errors_en)
+        self.assertTrue(any("Missing expected markers" in e for e in errors_en))
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -14,7 +14,7 @@ import '../../license/child_license_screen.dart';
 import '../../missions/child_mission_screen.dart';
 import '../../programs/widgets/child_prayer_card.dart';
 import '../providers/child_mode_providers.dart';
-import '../widgets/habit_week_strip.dart';
+import '../../../widgets/ui/brand_glyph.dart';
 import '../../../widgets/ui/celebration_overlay.dart';
 import 'package:almorabbi/widgets/ui/loading_view.dart';
 
@@ -94,16 +94,6 @@ class HabitChildModeScreen extends ConsumerWidget {
       body: SafeArea(
         child: Column(
           children: [
-            // Effort, celebrated: shown only once there is a streak, and never
-            // as a threat to lose it (§3.3).
-            if (state.day!.streak.days > 0)
-              Padding(
-                padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
-                child: Align(
-                  alignment: AlignmentDirectional.centerStart,
-                  child: HabitStreakBadge(streak: state.day!.streak, large: true),
-                ),
-              ),
             Expanded(
               child: CustomScrollView(
                 slivers: [
@@ -321,7 +311,7 @@ class _HabitChildCardState extends ConsumerState<_HabitChildCard> {
       await showCelebration(
         navigator.context,
         tier: CelebrationTier.quiet,
-        emoji: '🔥',
+        glyph: BrandIcon.star,
         title: l10n.habitMilestoneTitle(switch (r.milestone) {
           3 => 'three',
           7 => 'week',
