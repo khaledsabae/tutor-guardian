@@ -25,6 +25,8 @@ import '../routine/providers/child_mode_providers.dart';
 import '../routine/services/child_mode_secure_storage.dart';
 import 'praise_header.dart';
 import 'package:almorabbi/widgets/ui/loading_view.dart';
+import 'package:almorabbi/widgets/ui/brand_glyph.dart';
+import 'package:almorabbi/theme/app_colors.dart';
 import 'package:almorabbi/core/haptics.dart';
 
 class ChildMissionScreen extends ConsumerStatefulWidget {
@@ -59,7 +61,12 @@ class _ChildMissionScreenState extends ConsumerState<ChildMissionScreen> {
   Future<void> _load() async {
     final token = await getChildToken();
     if (token == null) {
-      if (mounted) setState(() { _loading = false; _empty = true; });
+      if (mounted) {
+        setState(() {
+          _loading = false;
+          _empty = true;
+        });
+      }
       return;
     }
     try {
@@ -77,7 +84,12 @@ class _ChildMissionScreenState extends ConsumerState<ChildMissionScreen> {
       // A child does not get an error dialog. An unreachable server looks
       // exactly like a day with no mission, which is a state they already
       // understand.
-      if (mounted) setState(() { _loading = false; _empty = true; });
+      if (mounted) {
+        setState(() {
+          _loading = false;
+          _empty = true;
+        });
+      }
     }
   }
 
@@ -89,7 +101,10 @@ class _ChildMissionScreenState extends ConsumerState<ChildMissionScreen> {
     final praise = today?.recentPraise;
     final note = praise?['note'];
     final missionId = praise?['mission_id'];
-    if (praise == null || note is! String || note.isEmpty || missionId is! int) {
+    if (praise == null ||
+        note is! String ||
+        note.isEmpty ||
+        missionId is! int) {
       return;
     }
     final display = praiseDisplayFor(today?.ageBand);
@@ -98,7 +113,10 @@ class _ChildMissionScreenState extends ConsumerState<ChildMissionScreen> {
     if (await PraiseMemory.alreadyShown(prefs, missionId)) return;
     await PraiseMemory.markShown(prefs, missionId);
     if (!mounted) return;
-    setState(() { _praiseNote = note; _praiseDisplay = display; });
+    setState(() {
+      _praiseNote = note;
+      _praiseDisplay = display;
+    });
   }
 
   /// "I'm going" — and the app actually goes away.
@@ -130,7 +148,9 @@ class _ChildMissionScreenState extends ConsumerState<ChildMissionScreen> {
     if (card == null || token == null || _claiming) return;
     setState(() => _claiming = true);
     try {
-      await ref.read(tgClientProvider).claimChildMission(
+      await ref
+          .read(tgClientProvider)
+          .claimChildMission(
             childToken: token,
             missionId: card['mission_id'] as int,
           );
@@ -153,7 +173,9 @@ class _ChildMissionScreenState extends ConsumerState<ChildMissionScreen> {
     final theme = Theme.of(context);
 
     if (_loading) {
-      return const Scaffold(body: SafeArea(child: LoadingView(count: 2, itemHeight: 200)));
+      return const Scaffold(
+        body: SafeArea(child: LoadingView(count: 2, itemHeight: 200)),
+      );
     }
 
     if (_empty || _mission == null) {
@@ -165,7 +187,12 @@ class _ChildMissionScreenState extends ConsumerState<ChildMissionScreen> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text('🌙', style: theme.textTheme.displayMedium),
+                  GlyphHero(
+                    BrandIcon.fullMoon,
+                    size: 56,
+                    color: context.colors.primary,
+                    background: context.colors.primary.withValues(alpha: .08),
+                  ),
                   const SizedBox(height: 16),
                   Text(
                     l10n.missionNoneToday,
@@ -186,7 +213,8 @@ class _ChildMissionScreenState extends ConsumerState<ChildMissionScreen> {
     }
 
     final card = _mission!;
-    final claimed = card['status'] == 'claimed' || card['status'] == 'confirmed';
+    final claimed =
+        card['status'] == 'claimed' || card['status'] == 'confirmed';
 
     return PopScope(
       // The system back gesture used to fall through to the root and close
@@ -197,88 +225,105 @@ class _ChildMissionScreenState extends ConsumerState<ChildMissionScreen> {
         if (!didPop) _understood();
       },
       child: Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              // «كلمة طيبة»: a quiet header that leaves by itself in three
-              // seconds. It is not a dialog and not a gate — the card and its
-              // buttons are usable from the first frame.
-              if (_praiseNote != null)
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 12),
-                  child: PraiseHeader(
-                    note: _praiseNote!,
-                    display: _praiseDisplay,
-                    onGone: () => setState(() => _praiseNote = null),
+        body: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                // «كلمة طيبة»: a moment delivered by نور — it stays until the
+                // child taps it away or six seconds pass. It is not a dialog
+                // and not a gate — the card and its buttons are usable from
+                // the first frame.
+                if (_praiseNote != null)
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 12),
+                    child: PraiseHeader(
+                      note: _praiseNote!,
+                      display: _praiseDisplay,
+                      onGone: () => setState(() => _praiseNote = null),
+                    ),
+                  ),
+                const Spacer(),
+                // The mission mark, drawn (جولة الحرفة): one illustration
+                // language, no vendor emoji.
+                Center(
+                  child: ExcludeSemantics(
+                    child: GlyphHero(
+                      BrandIcon.path,
+                      size: 72,
+                      color: context.colors.primary,
+                      background: context.colors.primary.withValues(alpha: .08),
+                    ),
                   ),
                 ),
-              const Spacer(),
-              Text('🧭', style: theme.textTheme.displayLarge,
-                  textAlign: TextAlign.center),
-              const SizedBox(height: 12),
-              Text(
-                l10n.missionTodayLabel,
-                textAlign: TextAlign.center,
-                style: theme.textTheme.labelLarge
-                    ?.copyWith(color: theme.colorScheme.outline),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                card['title_ar'] as String? ?? '',
-                textAlign: TextAlign.center,
-                style: theme.textTheme.headlineSmall
-                    ?.copyWith(fontWeight: FontWeight.w700),
-              ),
-              const SizedBox(height: 16),
-              Text(
-                card['instruction_ar'] as String? ?? '',
-                textAlign: TextAlign.center,
-                style: theme.textTheme.titleMedium?.copyWith(height: 1.6),
-              ),
-              if (card['needs_outdoors'] == true) ...[
                 const SizedBox(height: 12),
                 Text(
-                  l10n.missionOutdoorsHint,
+                  l10n.missionTodayLabel,
                   textAlign: TextAlign.center,
-                  style: theme.textTheme.bodySmall
-                      ?.copyWith(color: theme.colorScheme.outline),
-                ),
-              ],
-              const Spacer(),
-              if (claimed)
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 12),
-                  child: Text(
-                    l10n.missionClaimedNote,
-                    textAlign: TextAlign.center,
-                    style: theme.textTheme.bodyMedium
-                        ?.copyWith(color: theme.colorScheme.outline),
+                  style: theme.textTheme.labelLarge?.copyWith(
+                    color: theme.colorScheme.outline,
                   ),
                 ),
-              FilledButton(
-                onPressed: _understood,
-                style: FilledButton.styleFrom(
-                  minimumSize: const Size.fromHeight(64),
-                  textStyle: theme.textTheme.titleMedium,
+                const SizedBox(height: 8),
+                Text(
+                  card['title_ar'] as String? ?? '',
+                  textAlign: TextAlign.center,
+                  style: theme.textTheme.headlineSmall?.copyWith(
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
-                child: Text(l10n.missionUnderstoodGoing),
-              ),
-              const SizedBox(height: 8),
-              // Deliberately the smaller of the two. Finishing is reported
-              // later, from wherever the child actually was; the button that
-              // matters right now is the one that ends the screen.
-              TextButton(
-                onPressed: claimed || _claiming ? null : _claim,
-                child: Text(claimed ? l10n.missionAlreadyDone : l10n.missionDone),
-              ),
-            ],
+                const SizedBox(height: 16),
+                Text(
+                  card['instruction_ar'] as String? ?? '',
+                  textAlign: TextAlign.center,
+                  style: theme.textTheme.titleMedium?.copyWith(height: 1.6),
+                ),
+                if (card['needs_outdoors'] == true) ...[
+                  const SizedBox(height: 12),
+                  Text(
+                    l10n.missionOutdoorsHint,
+                    textAlign: TextAlign.center,
+                    style: theme.textTheme.bodySmall?.copyWith(
+                      color: theme.colorScheme.outline,
+                    ),
+                  ),
+                ],
+                const Spacer(),
+                if (claimed)
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 12),
+                    child: Text(
+                      l10n.missionClaimedNote,
+                      textAlign: TextAlign.center,
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                        color: theme.colorScheme.outline,
+                      ),
+                    ),
+                  ),
+                FilledButton(
+                  onPressed: _understood,
+                  style: FilledButton.styleFrom(
+                    minimumSize: const Size.fromHeight(64),
+                    textStyle: theme.textTheme.titleMedium,
+                  ),
+                  child: Text(l10n.missionUnderstoodGoing),
+                ),
+                const SizedBox(height: 8),
+                // Deliberately the smaller of the two. Finishing is reported
+                // later, from wherever the child actually was; the button that
+                // matters right now is the one that ends the screen.
+                TextButton(
+                  onPressed: claimed || _claiming ? null : _claim,
+                  child: Text(
+                    claimed ? l10n.missionAlreadyDone : l10n.missionDone,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
-    ),
     );
   }
 }

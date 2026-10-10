@@ -77,8 +77,8 @@ name: gallery/shoot
 - waitForAnimationToEnd:
     timeout: 3000
 - takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__settings'
-# ── the app's own dark mode (Settings → Appearance cycles), then back to
-# light so Today and lessons shoot in light mode.
+# ── the app's own dark mode (Settings → Appearance cycles), then return to Today
+# in dark mode to photograph NoorFace, the gift moment, and Home before restoring light.
 - scrollUntilVisible:
     element:
       text: '${output.lead.settingsTheme}'
@@ -95,11 +95,20 @@ name: gallery/shoot
 - waitForAnimationToEnd:
     timeout: 2000
 - takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__settings_dark'
-- back
+# Navigate to Today in dark mode
+- runFlow: ../common/home.yaml
+- extendedWaitUntil:
+    visible: '${output.lead.navToday}'
+    timeout: 20000
+- waitForAnimationToEnd:
+    timeout: 2000
+- takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__home_dark_noor_face'
+- takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__home_dark_gift'
 - runFlow:
     file: today_shot.yaml
     env:
       SHOT: '${GALLERY_TAG}__${GALLERY_VARIANT}__home_dark'
+# Restore light theme in Settings
 - runFlow: ../common/open_settings.yaml
 - scrollUntilVisible:
     element:
@@ -114,45 +123,35 @@ name: gallery/shoot
       - tapOn: '${output.lead.settingsTheme}'
       - waitForAnimationToEnd:
           timeout: 3000
-- back
 # ── Today ────────────────────────────────────────────────────────────────
 - runFlow: ../common/home.yaml
+- extendedWaitUntil:
+    visible: '${output.lead.navToday}'
+    timeout: 20000
+- waitForAnimationToEnd:
+    timeout: 2000
+- takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__noor_face_today'
+# Gift moment burst captures (0ms, 150ms, 400ms)
+- takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__gift_moment_0ms'
+- waitForAnimationToEnd:
+    timeout: 150
+- takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__gift_moment_150ms'
+- waitForAnimationToEnd:
+    timeout: 250
+- takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__gift_moment_400ms'
+- takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__gift_moment'
 - runFlow:
     file: today_shot.yaml
     env:
       SHOT: '${GALLERY_TAG}__${GALLERY_VARIANT}__home'
-# A due follow-up, if the server happens to have one for this child: the card
-# on Today, then the sheet with an answer chosen.
-- runFlow:
-    when:
-      visible: '${output.c.followupTitle}'
-    commands:
-      - takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__followup_card'
-      - tapOn:
-          text: '${output.t.followupWorked}'
-          optional: true
-      - extendedWaitUntil:
-          visible: '${output.c.followupThanksTitle}'
-          timeout: 15000
-          optional: true
-      - runFlow:
-          when:
-            visible: '${output.c.followupThanksTitle}'
-          commands:
-            - takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__followup'
-            - back
-# Still-open sheet (the answer never reached the thanks view): close it so the
-# lesson leg below finds Today.
-- runFlow:
-    when:
-      visible: '${output.c.followupTitleFor}'
-    commands:
-      - back
-      - waitForAnimationToEnd:
-          timeout: 2000
-# ── the lesson: first run opens Today's first lesson; after a completion the
-# card offers Continue → path detail, whose primary button opens the NEXT
-# incomplete lesson — so every shoot photographs a fresh completion.
+# ── The Lesson FIRST: complete the lesson before visiting child missions so Today
+# stays near the top and the 200% font pass easily reaches the lesson button.
+- scrollUntilVisible:
+    element:
+      text: '(?:${output.t.startThisLesson}|${output.t.continueBtn})'
+    direction: DOWN
+    timeout: 20000
+    optional: true
 - runFlow:
     when:
       visible: '${output.t.startThisLesson}'
@@ -283,3 +282,276 @@ name: gallery/shoot
     file: today_shot.yaml
     env:
       SHOT: '${GALLERY_TAG}__${GALLERY_VARIANT}__home_after_lesson'
+# A due follow-up, if the server happens to have one for this child: the card
+# on Today, then the sheet with an answer chosen.
+- runFlow:
+    when:
+      visible: '${output.c.followupTitle}'
+    commands:
+      - takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__followup_card'
+      - tapOn:
+          text: '${output.t.followupWorked}'
+          optional: true
+      - extendedWaitUntil:
+          visible: '${output.c.followupThanksTitle}'
+          timeout: 15000
+          optional: true
+      - runFlow:
+          when:
+            visible: '${output.c.followupThanksTitle}'
+          commands:
+            - takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__followup'
+            - back
+# Still-open sheet (the answer never reached the thanks view): close it so Today is clear
+- runFlow:
+    when:
+      visible: '${output.c.followupTitleFor}'
+    commands:
+      - back
+      - waitForAnimationToEnd:
+          timeout: 2000
+# ── Praise Card: Praise moment from family, both 7–12 (sticker+text) and 4–6 (sticker only).
+# Step 1: Child 1 (7-9) opens child mode and marks mission done.
+- tapOn: '${output.lead.navToday}'
+- waitForAnimationToEnd:
+    timeout: 2000
+- scrollUntilVisible:
+    element:
+      text: '${output.t.todayMissionOpen}'
+    direction: DOWN
+    timeout: 20000
+    optional: true
+- runFlow:
+    when:
+      visible: '${output.t.todayMissionOpen}'
+    commands:
+      - tapOn: '${output.t.todayMissionOpen}'
+      - runFlow: ../common/unlock_child_mode.yaml
+      - extendedWaitUntil:
+          visible: '(?:${output.t.missionDone}|${output.t.missionTodayLabel})'
+          timeout: 15000
+          optional: true
+      - runFlow:
+          when:
+            visible: '${output.t.missionDone}'
+          commands:
+            - tapOn: '${output.t.missionDone}'
+            - waitForAnimationToEnd:
+                timeout: 2000
+      - runFlow: ../common/exit_child_mode.yaml
+
+# Step 2: Parent opens claimed mission and confirms with kind words ("فخورون بك")
+- tapOn: '${output.lead.navToday}'
+- waitForAnimationToEnd:
+    timeout: 2000
+- scrollUntilVisible:
+    element:
+      text: '.*(?:أنجزها|did it|اليوم مع|Today with).*'
+    direction: DOWN
+    timeout: 15000
+    optional: true
+- runFlow:
+    when:
+      visible: '.*(?:أنجزها|did it|اليوم مع|Today with).*'
+    commands:
+      - tapOn: '.*(?:أنجزها|did it|اليوم مع|Today with).*'
+      - extendedWaitUntil:
+          visible: '(?:أكّدها|Confirm)'
+          timeout: 15000
+          optional: true
+      - runFlow:
+          when:
+            visible: '(?:أكّدها|Confirm)'
+          commands:
+            - tapOn: '(?:أكّدها|Confirm)'
+            - extendedWaitUntil:
+                visible: '${output.t.missionConfirmAll}'
+                timeout: 15000
+                optional: true
+            - scrollUntilVisible:
+                element:
+                  text: '${output.t.praiseChipProud}'
+                direction: DOWN
+                timeout: 15000
+                optional: true
+            - tapOn:
+                text: '${output.t.praiseChipProud}'
+                optional: true
+            - tapOn: '${output.t.missionConfirmAll}'
+            - waitForAnimationToEnd:
+                timeout: 3000
+            - back
+            - waitForAnimationToEnd:
+                timeout: 2000
+
+# Step 3: Child 1 (7-9) re-opens child mode: PraiseHeader appears with sticker AND text!
+- tapOn: '${output.lead.navToday}'
+- waitForAnimationToEnd:
+    timeout: 2000
+- scrollUntilVisible:
+    element:
+      text: '${output.t.todayMissionOpen}'
+    direction: DOWN
+    timeout: 20000
+    optional: true
+- runFlow:
+    when:
+      visible: '${output.t.todayMissionOpen}'
+    commands:
+      - tapOn: '${output.t.todayMissionOpen}'
+      - runFlow: ../common/unlock_child_mode.yaml
+      - extendedWaitUntil:
+          visible: '(?:${output.c.praiseFromFamily}|${output.t.missionTodayLabel})'
+          timeout: 15000
+          optional: true
+      # Burst captures for praise card entrance and tilt (0ms, 150ms, 400ms)
+      - takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__praise_card_0ms'
+      - waitForAnimationToEnd:
+          timeout: 150
+      - takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__praise_card_150ms'
+      - waitForAnimationToEnd:
+          timeout: 250
+      - takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__praise_card_400ms'
+      # 7-12 Praise card: sticker AND text
+      - takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__praise_child_sticker_and_text'
+      # Initial fallback for praise_child_sticker
+      - takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__praise_child_sticker'
+      - runFlow: ../common/exit_child_mode.yaml
+
+# Step 4: Add/switch to a 4-6 child so praise_child_sticker is truly for the 4-6 band (sticker only)
+- runFlow: ../common/open_settings.yaml
+- scrollUntilVisible:
+    element:
+      text: '${output.lead.settingsSwitchChild}'
+    direction: DOWN
+    timeout: 20000
+    optional: true
+- runFlow:
+    when:
+      visible: '${output.lead.settingsSwitchChild}'
+    commands:
+      - tapOn: '${output.lead.settingsSwitchChild}'
+      - extendedWaitUntil:
+          visible: '${output.t.childrenAddNew}'
+          timeout: 15000
+          optional: true
+      - runFlow:
+          when:
+            visible: '${output.t.childrenAddNew}'
+          commands:
+            - tapOn: '${output.t.childrenAddNew}'
+            - extendedWaitUntil:
+                visible: '${output.t.add}'
+                timeout: 15000
+                optional: true
+            - inputText: 'Salma'
+            - scrollUntilVisible:
+                element:
+                  text: '${output.t.ageGroup4to6}'
+                direction: DOWN
+                timeout: 15000
+                optional: true
+            - tapOn:
+                text: '${output.t.ageGroup4to6}'
+                optional: true
+            - tapOn: '${output.t.add}'
+            - waitForAnimationToEnd:
+                timeout: 3000
+- runFlow: ../common/home.yaml
+
+# Step 5: Child 2 (4-6) marks their mission done
+- tapOn: '${output.lead.navToday}'
+- waitForAnimationToEnd:
+    timeout: 2000
+- scrollUntilVisible:
+    element:
+      text: '${output.t.todayMissionOpen}'
+    direction: DOWN
+    timeout: 20000
+    optional: true
+- runFlow:
+    when:
+      visible: '${output.t.todayMissionOpen}'
+    commands:
+      - tapOn: '${output.t.todayMissionOpen}'
+      - runFlow: ../common/unlock_child_mode.yaml
+      - extendedWaitUntil:
+          visible: '(?:${output.t.missionDone}|${output.t.missionTodayLabel})'
+          timeout: 15000
+          optional: true
+      - runFlow:
+          when:
+            visible: '${output.t.missionDone}'
+          commands:
+            - tapOn: '${output.t.missionDone}'
+            - waitForAnimationToEnd:
+                timeout: 2000
+      - runFlow: ../common/exit_child_mode.yaml
+
+# Step 6: Parent confirms Child 2's mission with kind words
+- tapOn: '${output.lead.navToday}'
+- waitForAnimationToEnd:
+    timeout: 2000
+- scrollUntilVisible:
+    element:
+      text: '.*(?:أنجزها|did it|اليوم مع|Today with).*'
+    direction: DOWN
+    timeout: 15000
+    optional: true
+- runFlow:
+    when:
+      visible: '.*(?:أنجزها|did it|اليوم مع|Today with).*'
+    commands:
+      - tapOn: '.*(?:أنجزها|did it|اليوم مع|Today with).*'
+      - extendedWaitUntil:
+          visible: '(?:أكّدها|Confirm)'
+          timeout: 15000
+          optional: true
+      - runFlow:
+          when:
+            visible: '(?:أكّدها|Confirm)'
+          commands:
+            - tapOn: '(?:أكّدها|Confirm)'
+            - extendedWaitUntil:
+                visible: '${output.t.missionConfirmAll}'
+                timeout: 15000
+                optional: true
+            - scrollUntilVisible:
+                element:
+                  text: '${output.t.praiseChipProud}'
+                direction: DOWN
+                timeout: 15000
+                optional: true
+            - tapOn:
+                text: '${output.t.praiseChipProud}'
+                optional: true
+            - tapOn: '${output.t.missionConfirmAll}'
+            - waitForAnimationToEnd:
+                timeout: 3000
+            - back
+            - waitForAnimationToEnd:
+                timeout: 2000
+
+# Step 7: Child 2 (4-6) re-opens child mode: PraiseHeader appears with STICKER ONLY!
+- tapOn: '${output.lead.navToday}'
+- waitForAnimationToEnd:
+    timeout: 2000
+- scrollUntilVisible:
+    element:
+      text: '${output.t.todayMissionOpen}'
+    direction: DOWN
+    timeout: 20000
+    optional: true
+- runFlow:
+    when:
+      visible: '${output.t.todayMissionOpen}'
+    commands:
+      - tapOn: '${output.t.todayMissionOpen}'
+      - runFlow: ../common/unlock_child_mode.yaml
+      - extendedWaitUntil:
+          visible: '(?:${output.c.praiseFromFamily}|${output.t.missionTodayLabel})'
+          timeout: 15000
+          optional: true
+      # 4-6 Praise card: sticker ONLY
+      - takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__praise_child_sticker'
+      - runFlow: ../common/exit_child_mode.yaml

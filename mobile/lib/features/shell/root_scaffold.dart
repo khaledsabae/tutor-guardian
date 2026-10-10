@@ -170,10 +170,22 @@ class _RootScaffoldState extends ConsumerState<RootScaffold> with RouteAware {
       body: IndexedStack(
         index: _index,
         children: [
-          HomeScreen(onGoToTab: _onSelect, focusCardKey: _focusCardKey),
-          const PathsScreen(),
-          const ChatScreen(),
-          const HubScreen(),
+          TickerMode(
+            enabled: _index == RootTab.today,
+            child: HomeScreen(onGoToTab: _onSelect, focusCardKey: _focusCardKey),
+          ),
+          TickerMode(
+            enabled: _index == RootTab.learn,
+            child: const PathsScreen(),
+          ),
+          TickerMode(
+            enabled: _index == RootTab.assistant,
+            child: const ChatScreen(),
+          ),
+          TickerMode(
+            enabled: _index == RootTab.more,
+            child: const HubScreen(),
+          ),
         ],
       ),
       bottomNavigationBar: NavigationBar(

@@ -100,10 +100,14 @@ void main() {
     }
   });
 
-  test('every item has an emoji', () {
+  test('every item has a glyph or icon', () {
     for (final group in kHubGroups) {
       for (final item in group.items) {
-        expect(item.emoji, isNotEmpty, reason: '"${item.id}" has no emoji');
+        expect(
+          item.glyph != null || item.icon != null,
+          isTrue,
+          reason: '"${item.id}" has neither a glyph nor an icon',
+        );
       }
     }
   });

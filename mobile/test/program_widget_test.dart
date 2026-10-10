@@ -657,7 +657,13 @@ void main() {
 
       // Every label is static. The old 4th tab renamed itself by child age
       // («حساب اليوم» / «ميزان العادات»), which is why it no longer lives here.
-      expect(find.text('اليوم'), findsOneWidget);
+      expect(
+        find.descendant(
+          of: find.byType(NavigationBar),
+          matching: find.text('اليوم'),
+        ),
+        findsOneWidget,
+      );
       expect(find.text('التعلّم'), findsOneWidget);
       expect(find.text('المساعد'), findsOneWidget);
       expect(find.text('المزيد'), findsOneWidget);

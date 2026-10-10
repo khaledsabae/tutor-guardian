@@ -1,4 +1,5 @@
-/// Stats: 🔥 login streak / 📚 completed lessons / 🏅 badges / 🪙 coins.
+/// Stats: flame login streak / open-book completed lessons / medal badges /
+/// coin balance — drawn brand glyphs (جولة الحرفة), not emoji.
 ///
 /// The coin balance used to be an AppBar chip; it lives here because the
 /// AppBar was carrying five actions and none of them read as important.
@@ -15,7 +16,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/app_routes.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../../theme/app_colors.dart';
 import '../../../theme/design_tokens.dart';
+import '../../../widgets/ui/brand_glyph.dart';
 import '../../../widgets/ui/count_up_text.dart';
 import '../../../widgets/ui/stat_chip.dart';
 import '../../../widgets/ui/two_column_rows.dart';
@@ -30,7 +33,8 @@ class HomeStatsRow extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
-    final completed = bundle?.lessons
+    final completed =
+        bundle?.lessons
             .where((l) => l.status == ProgressStatus.completed)
             .length ??
         0;
@@ -43,27 +47,27 @@ class HomeStatsRow extends ConsumerWidget {
     return TwoColumnRows(
       children: [
         StatChip(
-          emoji: '🔥',
+          icon: BrandGlyph(BrandIcon.flame, color: context.colors.accent),
           value: CountUpText(streak),
           label: l10n.consecutiveDays,
           color: Dt.accent,
           pulse: streak > 0,
         ),
         StatChip(
-          emoji: '📚',
+          icon: BrandGlyph(BrandIcon.openBook, color: context.colors.primary),
           value: CountUpText(completed),
           label: l10n.completedLesson,
           color: Dt.primary,
         ),
         StatChip(
-          emoji: '🏅',
+          icon: BrandGlyph(BrandIcon.medal, color: context.violetText),
           value: CountUpText(earned),
           label: l10n.achievements,
           color: const Color(0xFF8B5CF6),
           onTap: () => Navigator.of(context).push(AppRoutes.badges()),
         ),
         StatChip(
-          emoji: '🪙',
+          icon: BrandGlyph(BrandIcon.coin, color: context.colors.accent),
           value: CountUpText(coins.balance),
           label: l10n.coins,
           color: Dt.accent,
@@ -73,4 +77,3 @@ class HomeStatsRow extends ConsumerWidget {
     );
   }
 }
-

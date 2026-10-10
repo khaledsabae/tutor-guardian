@@ -16,10 +16,15 @@ import '../../../l10n/app_localizations.dart';
 import '../../../theme/app_theme.dart';
 import '../../../theme/design_tokens.dart';
 import '../../program/widgets/coach_tip_card.dart';
+import '../../../widgets/ui/brand_glyph.dart';
 import 'today_section.dart';
 
 class TodayAskBlock extends StatelessWidget {
-  const TodayAskBlock({super.key, required this.childName, required this.onAsk});
+  const TodayAskBlock({
+    super.key,
+    required this.childName,
+    required this.onAsk,
+  });
 
   /// The active child's name, or null before one is chosen.
   final String? childName;
@@ -32,15 +37,21 @@ class TodayAskBlock extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final name = childName;
-    final body = name == null ? l10n.todayAskBodyNoName : l10n.todayAskBody(name);
+    final body = name == null
+        ? l10n.todayAskBodyNoName
+        : l10n.todayAskBody(name);
     void ask() {
       unawaited(Analytics.todayBlockTapped('ask', 'compose'));
       onAsk();
     }
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        TodaySectionHeader(emoji: '💬', title: l10n.todayAskTitle),
+        TodaySectionHeader(
+          icon: BrandIcon.speechBubble,
+          title: l10n.todayAskTitle,
+        ),
         CoachTipCard(
           padding: const EdgeInsets.only(bottom: 10),
           onAsk: () {
@@ -64,10 +75,7 @@ class TodayAskBlock extends StatelessWidget {
               onTap: ask,
               child: Padding(
                 padding: const EdgeInsets.all(14),
-                child: _ComposeRow(
-                  body: body,
-                  cta: l10n.todayAskCta,
-                ),
+                child: _ComposeRow(body: body, cta: l10n.todayAskCta),
               ),
             ),
           ),
@@ -115,44 +123,50 @@ class _ComposeRow extends StatelessWidget {
         Icon(Icons.arrow_forward, color: AppTheme.primary, size: 16),
       ],
     );
-    final icon = Icon(Icons.chat_bubble_outline_rounded,
-        color: AppTheme.primary, size: 22);
+    final icon = Icon(
+      Icons.chat_bubble_outline_rounded,
+      color: AppTheme.primary,
+      size: 22,
+    );
 
-    return LayoutBuilder(builder: (context, constraints) {
-      final scale = MediaQuery.textScalerOf(context).scale(1);
-      final stacked = scale > 1.3 || constraints.maxWidth < 300;
-      if (!stacked) {
-        return Row(
-          children: [
-            icon,
-            const SizedBox(width: 12),
-            Expanded(child: bodyText),
-            const SizedBox(width: 8),
-            // Capped, not flexed: a Flexible beside the Expanded body would
-            // take half the row however short the label is.
-            ConstrainedBox(
-              constraints:
-                  BoxConstraints(maxWidth: constraints.maxWidth * 0.4),
-              child: action,
-            ),
-          ],
-        );
-      }
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final scale = MediaQuery.textScalerOf(context).scale(1);
+        final stacked = scale > 1.3 || constraints.maxWidth < 300;
+        if (!stacked) {
+          return Row(
             children: [
               icon,
               const SizedBox(width: 12),
               Expanded(child: bodyText),
+              const SizedBox(width: 8),
+              // Capped, not flexed: a Flexible beside the Expanded body would
+              // take half the row however short the label is.
+              ConstrainedBox(
+                constraints: BoxConstraints(
+                  maxWidth: constraints.maxWidth * 0.4,
+                ),
+                child: action,
+              ),
             ],
-          ),
-          const SizedBox(height: 8),
-          Align(alignment: AlignmentDirectional.centerEnd, child: action),
-        ],
-      );
-    });
+          );
+        }
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                icon,
+                const SizedBox(width: 12),
+                Expanded(child: bodyText),
+              ],
+            ),
+            const SizedBox(height: 8),
+            Align(alignment: AlignmentDirectional.centerEnd, child: action),
+          ],
+        );
+      },
+    );
   }
 }

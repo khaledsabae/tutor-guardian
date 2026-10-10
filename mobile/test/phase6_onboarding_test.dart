@@ -214,7 +214,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Instant value page: curated tip for 4-6 + what's-inside preview.
-      expect(find.text('أول نصيحة مخصّصة لك 🎁'), findsOneWidget);
+      expect(find.text('أول نصيحة مخصّصة لك'), findsOneWidget);
       expect(find.textContaining('حبّب طفلك في الصلاة'), findsOneWidget);
       // Sample mentor question matches the age band.
       expect(

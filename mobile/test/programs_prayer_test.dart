@@ -17,6 +17,8 @@ import 'package:almorabbi/features/programs/screens/prayer_journey_screen.dart';
 import 'package:almorabbi/features/programs/widgets/child_prayer_card.dart';
 import 'package:almorabbi/features/routine/screens/child_mode_lock_screen.dart';
 
+import 'package:almorabbi/widgets/ui/brand_glyph.dart';
+
 import 'programs_support.dart';
 
 final _harshWords = RegExp(r'miss|fail|behind|punish|lazy|فات|تقصير|عقوبة|كسول', caseSensitive: false);
@@ -235,7 +237,8 @@ void main() {
       final before = (await CoinsService.instance.read()).balance;
       await tester.tap(find.text('open'));
       await settle(tester);
-      expect(find.textContaining('🪙 10 coins'), findsOneWidget); // the prayer card
+      expect(find.textContaining('10 coins'), findsOneWidget); // the prayer card
+      expect(find.byWidgetPredicate((w) => w is BrandGlyph && w.icon == BrandIcon.coin), findsWidgets);
       expect(find.textContaining('Green hunter'), findsOneWidget);
       await tester.tap(find.byType(FilledButton));
       await settle(tester);

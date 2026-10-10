@@ -10,6 +10,8 @@ import 'package:almorabbi/api/tg_client.dart';
 import 'package:almorabbi/features/missions/mission_confirmations.dart';
 import 'package:almorabbi/features/missions/pending_missions_screen.dart';
 import 'package:almorabbi/features/missions/praise_header.dart';
+import 'package:almorabbi/features/companion/widgets/noor_face.dart';
+import 'package:almorabbi/widgets/ui/brand_glyph.dart';
 import 'package:almorabbi/l10n/app_localizations.dart';
 import 'package:almorabbi/state/chat_notifier.dart';
 import 'package:flutter/material.dart';
@@ -47,69 +49,95 @@ void main() {
   });
 
   group('the header on the child card', () {
-    Future<void> pumpBand(WidgetTester tester, String band,
-        {void Function()? onGone}) async {
-      await tester.pumpWidget(MaterialApp(
-        locale: const Locale('ar'),
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
-        supportedLocales: AppLocalizations.supportedLocales,
-        home: Scaffold(
-          body: PraiseHeader(
-            note: 'أحسنت',
-            display: praiseDisplayFor(band),
-            onGone: onGone,
+    Future<void> pumpBand(
+      WidgetTester tester,
+      String band, {
+      void Function()? onGone,
+    }) async {
+      await tester.pumpWidget(
+        MaterialApp(
+          locale: const Locale('ar'),
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          home: Scaffold(
+            body: PraiseHeader(
+              note: 'أحسنت',
+              display: praiseDisplayFor(band),
+              onGone: onGone,
+            ),
           ),
         ),
-      ));
-      await tester.pumpAndSettle(const Duration(milliseconds: 400));
+      );
+      // The face breathes forever — pumpAndSettle would time out by design.
+      await tester.pump(const Duration(milliseconds: 400));
     }
 
     testWidgets('4-6: the sticker, and no sentence to decode', (tester) async {
       await pumpBand(tester, '4-6');
-      expect(find.text('🌟'), findsOneWidget);
+      expect(find.byType(BrandGlyph), findsWidgets);
       expect(find.text('أحسنت'), findsNothing);
       expect(find.text('أهلك يقولون لك'), findsNothing);
     });
 
     testWidgets('7-9: the sticker and the text', (tester) async {
       await pumpBand(tester, '7-9');
-      expect(find.text('🌟'), findsOneWidget);
+      expect(find.byType(BrandGlyph), findsWidgets);
       expect(find.text('أحسنت'), findsOneWidget);
       expect(find.text('أهلك يقولون لك'), findsOneWidget);
     });
 
     testWidgets('13-15: one text line, no sticker', (tester) async {
       await pumpBand(tester, '13-15');
-      expect(find.text('🌟'), findsNothing);
+      expect(find.byType(BrandGlyph), findsNothing);
       expect(find.text('أحسنت'), findsOneWidget);
+      // نور delivers it regardless of band.
+      expect(find.byType(NoorFace), findsOneWidget);
     });
 
-    testWidgets('gone in three seconds, by itself', (tester) async {
+    testWidgets('stays until the child taps it away', (tester) async {
       var gone = false;
       await pumpBand(tester, '7-9', onGone: () => gone = true);
       await tester.pump(const Duration(seconds: 2));
-      expect(gone, isFalse, reason: 'three seconds means three seconds');
-      await tester.pump(const Duration(seconds: 1));
+      expect(gone, isFalse, reason: 'the tap is the honoured way out');
+      await tester.tap(find.byType(NoorFace));
+      await tester.pump();
       expect(gone, isTrue);
     });
 
-    testWidgets('the button under it was tappable the whole time',
-        (tester) async {
+    testWidgets('gone by itself after six seconds at most', (tester) async {
+      var gone = false;
+      await pumpBand(tester, '7-9', onGone: () => gone = true);
+      await tester.pump(const Duration(seconds: 5));
+      expect(gone, isFalse, reason: 'six seconds means six seconds');
+      await tester.pump(const Duration(seconds: 1, milliseconds: 100));
+      expect(gone, isTrue);
+    });
+
+    testWidgets('the button under it was tappable the whole time', (
+      tester,
+    ) async {
       var pressed = 0;
-      await tester.pumpWidget(MaterialApp(
-        locale: const Locale('ar'),
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
-        supportedLocales: AppLocalizations.supportedLocales,
-        home: Scaffold(
-          body: Column(
-            children: [
-              const PraiseHeader(
-                  note: 'أحسنت', display: PraiseDisplay.stickerAndText),
-              TextButton(onPressed: () => pressed++, child: const Text('اذهب')),
-            ],
+      await tester.pumpWidget(
+        MaterialApp(
+          locale: const Locale('ar'),
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          home: Scaffold(
+            body: Column(
+              children: [
+                const PraiseHeader(
+                  note: 'أحسنت',
+                  display: PraiseDisplay.stickerAndText,
+                ),
+                TextButton(
+                  onPressed: () => pressed++,
+                  child: const Text('اذهب'),
+                ),
+              ],
+            ),
           ),
         ),
-      ));
+      );
       await tester.tap(find.text('اذهب'));
       expect(pressed, 1, reason: 'the praise must never gate the main action');
     });
@@ -121,19 +149,20 @@ void main() {
       expect(await PraiseMemory.alreadyShown(prefs, 41), isFalse);
       await PraiseMemory.markShown(prefs, 41);
       expect(await PraiseMemory.alreadyShown(prefs, 41), isTrue);
-      expect(await PraiseMemory.alreadyShown(prefs, 42), isFalse,
-          reason: 'a second child\'s praise is not spent by the first');
+      expect(
+        await PraiseMemory.alreadyShown(prefs, 42),
+        isFalse,
+        reason: 'a second child\'s praise is not spent by the first',
+      );
     });
   });
 
   group('the chips ride the evening batch', () {
-    testWidgets('a chip becomes the note on every confirmed card',
-        (tester) async {
+    testWidgets('a chip becomes the note on every confirmed card', (
+      tester,
+    ) async {
       final client = _RecordingClient()
-        ..pending = [
-          _card(41, '7-9'),
-          _card(42, '13-15'),
-        ];
+        ..pending = [_card(41, '7-9'), _card(42, '13-15')];
       await _openEvening(tester, client);
       await tester.tap(find.text('أحسنت'));
       await tester.pump();
@@ -149,13 +178,14 @@ void main() {
       final client = _RecordingClient()..pending = [_card(41, '7-9')];
       await _openEvening(tester, client);
       await tester.tap(find.text('بارك الله فيك'));
-      await tester.enterText(
-          find.byType(TextField), 'أدّيتها دون أن أذكّرك');
+      await tester.enterText(find.byType(TextField), 'أدّيتها دون أن أذكّرك');
       await tester.tap(find.text('أكّد الكل'));
       await tester.pumpAndSettle();
 
-      expect(client.settled.single['note'],
-          'بارك الله فيك — أدّيتها دون أن أذكّرك');
+      expect(
+        client.settled.single['note'],
+        'بارك الله فيك — أدّيتها دون أن أذكّرك',
+      );
     });
 
     testWidgets('no praise chosen means no note at all', (tester) async {
@@ -167,13 +197,9 @@ void main() {
       expect(client.settled.single.containsKey('note'), isFalse);
     });
 
-    testWidgets('a card marked "not yet" carries no kind word',
-        (tester) async {
+    testWidgets('a card marked "not yet" carries no kind word', (tester) async {
       final client = _RecordingClient()
-        ..pending = [
-          _card(41, '7-9'),
-          _card(42, '7-9'),
-        ];
+        ..pending = [_card(41, '7-9'), _card(42, '7-9')];
       await _openEvening(tester, client);
       await tester.tap(find.text('أحسنت'));
       await tester.pump();
@@ -186,20 +212,22 @@ void main() {
       final withNote = client.settled.where((e) => e['confirmed'] == false);
       expect(withNote, hasLength(1));
       expect(withNote.single.containsKey('note'), isFalse);
-      expect(client.settled.firstWhere((e) => e['mission_id'] == 41)['note'],
-          'أحسنت');
+      expect(
+        client.settled.firstWhere((e) => e['mission_id'] == 41)['note'],
+        'أحسنت',
+      );
     });
   });
 
   group('the note survives the outbox', () {
-    test('a lost answer resends the note with the confirmation',
-        () async {
+    test('a lost answer resends the note with the confirmation', () async {
       final client = _FlakyClient();
       await expectLater(
-          MissionConfirmations.send(client, [
-            {'mission_id': 41, 'confirmed': true, 'note': 'أحسنت'}
-          ]),
-          throwsA(isA<TgApiError>()));
+        MissionConfirmations.send(client, [
+          {'mission_id': 41, 'confirmed': true, 'note': 'أحسنت'},
+        ]),
+        throwsA(isA<TgApiError>()),
+      );
       final waiting = await MissionConfirmations.outbox();
       expect(waiting.single['note'], 'أحسنت');
 
@@ -212,36 +240,40 @@ void main() {
 }
 
 Map<String, dynamic> _card(int id, String band) => {
-      'mission_id': id,
-      'child_id': 7,
-      'child_name': 'أحمد',
-      'title_ar': 'مهمة',
-      'estimated_minutes': 20,
-      'coins': 0,
-      'age_band': band,
-    };
+  'mission_id': id,
+  'child_id': 7,
+  'child_name': 'أحمد',
+  'title_ar': 'مهمة',
+  'estimated_minutes': 20,
+  'coins': 0,
+  'age_band': band,
+};
 
 Future<void> _openEvening(WidgetTester tester, TgClient client) async {
-  await tester.pumpWidget(ProviderScope(
-    overrides: [tgClientProvider.overrideWithValue(client)],
-    child: MaterialApp(
-      locale: const Locale('ar'),
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
-      supportedLocales: AppLocalizations.supportedLocales,
-      home: Scaffold(
-        body: Center(
-          child: Builder(
-            builder: (context) => FilledButton(
-              onPressed: () => Navigator.of(context).push<bool>(
+  await tester.pumpWidget(
+    ProviderScope(
+      overrides: [tgClientProvider.overrideWithValue(client)],
+      child: MaterialApp(
+        locale: const Locale('ar'),
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        home: Scaffold(
+          body: Center(
+            child: Builder(
+              builder: (context) => FilledButton(
+                onPressed: () => Navigator.of(context).push<bool>(
                   MaterialPageRoute(
-                      builder: (_) => const PendingMissionsScreen())),
-              child: const Text('افتح'),
+                    builder: (_) => const PendingMissionsScreen(),
+                  ),
+                ),
+                child: const Text('افتح'),
+              ),
             ),
           ),
         ),
       ),
     ),
-  ));
+  );
   await tester.tap(find.text('افتح'));
   await tester.pumpAndSettle();
 }
@@ -255,7 +287,8 @@ class _RecordingClient extends TgClient {
 
   @override
   Future<({int settled, List<Map<String, dynamic>> coins})> settleMissions(
-      List<Map<String, dynamic>> items) async {
+    List<Map<String, dynamic>> items,
+  ) async {
     settled.addAll(items.map((e) => Map<String, dynamic>.from(e)));
     return (settled: items.length, coins: const <Map<String, dynamic>>[]);
   }
@@ -267,7 +300,8 @@ class _FlakyClient extends TgClient {
 
   @override
   Future<({int settled, List<Map<String, dynamic>> coins})> settleMissions(
-      List<Map<String, dynamic>> items) async {
+    List<Map<String, dynamic>> items,
+  ) async {
     attempts.add(items.map((e) => Map<String, dynamic>.from(e)).toList());
     if (fail) throw const TgApiError(503, 'unreachable');
     return (settled: items.length, coins: const <Map<String, dynamic>>[]);

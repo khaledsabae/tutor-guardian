@@ -489,6 +489,101 @@ class GalleryTest(unittest.TestCase):
             self.assertEqual(rc, 0)
             self.assertIn("Gallery قبل/بعد: complete=1", out.getvalue())
 
+    def test_praise_screens_are_ungarded_and_fail_if_missing(self):
+        # praise_child_sticker and praise_child_sticker_and_text must NOT be guarded
+        self.assertNotIn("praise_child_sticker", t.GALLERY_GUARDED)
+        self.assertNotIn("praise_child_sticker_and_text", t.GALLERY_GUARDED)
+        rc, stdout, _, _ = self.run_gallery(
+            self.complete_shots(drop=("gallery__05_after_ar__after__ar__praise_child_sticker.png",)),
+            extra=("--require-after",),
+        )
+        self.assertEqual(rc, 1)
+        self.assertIn("ar:praise_child_sticker", stdout)
+
+
+class HierarchyVerificationTest(unittest.TestCase):
+    def test_matching_hierarchy_passes(self):
+        sample = '<node text="الإعدادات" resource-id="settings_title"/>'
+        errors = t.verify_screen_hierarchy("settings", sample)
+        self.assertEqual(errors, [])
+
+    def test_missing_required_marker_fails(self):
+        sample = '<node text="شاشة عشوائية"/>'
+        errors = t.verify_screen_hierarchy("settings", sample)
+        self.assertTrue(errors)
+        self.assertIn("Missing expected markers", errors[0])
+
+    def test_forbidden_marker_fails_home_dark_noor_face(self):
+        # A shot on "المزيد" mistakenly taken as home_dark_noor_face must fail
+        sample = '<node text="اليوم"/><node text="المزيد"/>'
+        errors = t.verify_screen_hierarchy("home_dark_noor_face", sample)
+        self.assertTrue(errors)
+        self.assertIn("Found forbidden marker 'المزيد'", errors[0])
+
+    def test_forbidden_marker_fails_settings(self):
+        # A settings shot mistakenly on tab root
+        sample = '<node text="الإعدادات"/><node text="علامة التبويب 1 من 4"/>'
+        errors = t.verify_screen_hierarchy("settings", sample)
+        self.assertTrue(errors)
+        self.assertIn("Found forbidden marker", errors[0])
+
+    def test_cli_verify_hierarchy(self):
+        with tempfile.TemporaryDirectory() as d:
+            dump_file = Path(d) / "dump.xml"
+            dump_file.write_text('<node text="اليوم"/>', encoding="utf-8")
+            out = io.StringIO()
+            with contextlib.redirect_stdout(out), contextlib.redirect_stderr(out):
+                rc = t.main(["verify-hierarchy", "home", str(dump_file)])
+            self.assertEqual(rc, 0)
+
+            dump_bad = Path(d) / "bad.xml"
+            dump_bad.write_text('<node text="المزيد"/>', encoding="utf-8")
+            err = io.StringIO()
+            with contextlib.redirect_stdout(err), contextlib.redirect_stderr(err):
+                rc_bad = t.main(["verify-hierarchy", "home_dark_noor_face", str(dump_bad)])
+            self.assertEqual(rc_bad, 1)
+            self.assertIn("Found forbidden marker 'المزيد'", err.getvalue())
+
+    def test_pin_pad_hierarchy_fails_when_labeled_praise_child_sticker(self):
+        # Exact PIN setup hierarchy text from run 37974593492 where camera captured
+        # the PIN keypad instead of the child's praise card.
+        sample_pin_hierarchy = (
+            '{"accessibilityText": "وضع الطفل"}, '
+            '{"accessibilityText": "اختر رمزًا من أربعة أرقام يحمي وضع الطفل. ستحتاج إليه للخروج منه."}, '
+            '{"accessibilityText": "1"}, {"accessibilityText": "2"}, {"accessibilityText": "3"}, '
+            '{"accessibilityText": "4"}, {"accessibilityText": "5"}, {"accessibilityText": "6"}, '
+            '{"accessibilityText": "7"}, {"accessibilityText": "8"}, {"accessibilityText": "9"}, '
+            '{"accessibilityText": "0"}, {"accessibilityText": "⌫"}'
+        )
+        errors = t.verify_screen_hierarchy(
+            "praise_child_sticker", sample_pin_hierarchy, lang="ar"
+        )
+        self.assertTrue(errors)
+        self.assertTrue(any("Missing expected markers" in e for e in errors))
+        self.assertTrue(any("Found forbidden marker 'وضع الطفل'" in e for e in errors))
+
+    def test_ordinary_mission_hierarchy_without_praise_fails_praise_marker(self):
+        # Ordinary child mission card without praiseFromFamily must fail
+        # the praise screen marker check.
+        sample_mission_hierarchy = (
+            '{"text": "مهمة اليوم"}, '
+            '{"text": "رتّب غرفتك"}, '
+            '{"text": "رتّب سريرك وضع الألعاب في الصندوق"}, '
+            '{"text": "فهمت وسأنطلق"}, '
+            '{"text": "أنجزتها"}'
+        )
+        errors_ar = t.verify_screen_hierarchy(
+            "praise_child_sticker", sample_mission_hierarchy, lang="ar"
+        )
+        self.assertTrue(errors_ar)
+        self.assertTrue(any("Missing expected markers" in e for e in errors_ar))
+
+        errors_en = t.verify_screen_hierarchy(
+            "praise_child_sticker", sample_mission_hierarchy, lang="en"
+        )
+        self.assertTrue(errors_en)
+        self.assertTrue(any("Missing expected markers" in e for e in errors_en))
+
 
 if __name__ == "__main__":
     unittest.main()

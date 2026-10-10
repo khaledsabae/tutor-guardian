@@ -174,9 +174,11 @@ fi
 # ── lineage 3: the before/after gallery (informational) ─────────────────
 # Phase 0 of docs/NOOR_WAL_QANADIL_PLAN.md: every run photographs the same
 # screens on the baseline build («before» — what users have now) and the PR
-# head («after»), in Arabic and English, plus one 200%-font pass. One child,
-# one install: the baseline is upgraded in place with install -r, exactly
-# like the upgrade lineage, so the head shoots see the same child's state.
+# head («after»), in Arabic and English, plus one 200%-font pass. Each pass
+# gets its own fresh install + onboarding (see gpass): a pass completes a
+# lesson to photograph the celebration, and shared state drained the path
+# dry for the third pass once — fresh state also gives every pass the gift
+# moment and a first-run home, which is what the gallery exists to show.
 # The font scale is a runtime system setting (settings put system font_scale),
 # NOT AVD configuration — the avd cache key is untouched, and -no-snapshot-save
 # keeps the change out of the snapshot. It is reset after each pass.
@@ -191,29 +193,44 @@ shoot() {  # name lang tag variant [extra -e args...]
   shift 4
   run_flow info gallery "$name" gallery/shoot.yaml -e UI_LANG="$lang" \
     -e GALLERY_TAG="$tag" -e GALLERY_VARIANT="$variant" "$@" || true
+  python3 "$E2E/e2e_tool.py" verify-hierarchy --report-dir "$OUT/maestro/gallery/$name" --lang "$lang" || true
 }
-if install_fresh baseline && l10n_for baseline \
-   && run_flow gate gallery 00_onboarding fresh/01_onboarding.yaml -e UI_LANG=ar; then
-  shoot 01_before_ar ar before ar
-  shoot 02_before_en en before en
+# Every pass gets its OWN fresh install + onboarding. The pass's lesson leg
+# completes a lesson to photograph the celebration — with one shared install
+# the passes (plus the journeys before them) drained the four-lesson path dry,
+# the third pass found no lesson left to open, and the require-after gate
+# failed on empty lesson cells (2026-10-09). A pass that cannot install or
+# re-onboard is skipped as a warning, like a failed shoot.
+gpass() {  # name lang tag variant apk
+  if install_fresh "$5" \
+     && run_flow info gallery "${1}_onboard" fresh/01_onboarding.yaml -e UI_LANG=ar; then
+    shoot "$1" "$2" "$3" "$4"
+  else
+    echo "::warning title=E2E gallery::$1 skipped (install/onboarding failed)"
+    skip gallery "$1" "install/onboarding failed"
+  fi
+}
+if l10n_for baseline; then
+  gpass 01_before_ar ar before ar baseline
+  gpass 02_before_en en before en baseline
   font2x 2.0
-  shoot 03_before_font2x ar before ar_font2x
+  gpass 03_before_font2x ar before ar_font2x baseline
   font2x 1.0
-  if install_fresh head && l10n_for head \
-     && run_flow gate gallery_head 00_onboarding fresh/01_onboarding.yaml -e UI_LANG=ar; then
-    shoot 04_after_ar ar after ar
-    shoot 05_after_en en after en
+  if l10n_for head; then
+    gpass 04_after_ar ar after ar head
+    gpass 05_after_en en after en head
     font2x 2.0
-    shoot 06_after_font2x ar after ar_font2x
+    gpass 06_after_font2x ar after ar_font2x head
     font2x 1.0
   else
-    echo "::warning title=E2E gallery::install_fresh head failed — no «after» shots"
-    for f in 04_after_ar 05_after_en 06_after_font2x; do skip gallery "$f" "install_fresh head failed"; done
+    echo "::warning title=E2E gallery::selector generation for head failed — no «after» shots"
+    for f in 04_after_ar 05_after_en 06_after_font2x; do skip gallery "$f" "l10n head failed"; done
   fi
 else
+  echo "::warning title=E2E gallery::selector generation for baseline failed"
   for f in 00_onboarding 01_before_ar 02_before_en 03_before_font2x \
            04_after_ar 05_after_en 06_after_font2x; do
-    skip gallery "$f" "baseline onboarding failed"
+    skip gallery "$f" "baseline l10n failed"
   done
 fi
 

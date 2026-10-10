@@ -9,6 +9,7 @@ import '../../../core/analytics.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../theme/app_theme.dart';
 import '../../../theme/design_tokens.dart';
+import '../../../widgets/ui/brand_glyph.dart';
 import '../../../widgets/ui/two_column_rows.dart';
 import '../data/hub_catalog.dart';
 
@@ -95,7 +96,12 @@ class _HubTile extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
           child: Row(
             children: [
-              Text(item.emoji, style: const TextStyle(fontSize: 20)),
+              if (item.glyph != null)
+                BrandGlyph(item.glyph!, size: 20)
+              else if (item.icon != null)
+                Icon(item.icon, size: 20, color: AppTheme.textSecondary)
+              else
+                const BrandGlyph(BrandIcon.star, size: 20),
               const SizedBox(width: 10),
               Expanded(
                 child: Text(
