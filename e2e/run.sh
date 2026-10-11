@@ -193,7 +193,14 @@ shoot() {  # name lang tag variant [extra -e args...]
   shift 4
   run_flow info gallery "$name" gallery/shoot.yaml -e UI_LANG="$lang" \
     -e GALLERY_TAG="$tag" -e GALLERY_VARIANT="$variant" "$@" || true
-  python3 "$E2E/e2e_tool.py" verify-hierarchy --report-dir "$OUT/maestro/gallery/$name" --lang "$lang" || true
+  if [ "$tag" = "after" ]; then
+    if ! python3 "$E2E/e2e_tool.py" verify-hierarchy --report-dir "$OUT/maestro/gallery/$name" --lang "$lang" --require; then
+      echo "::error title=E2E gallery hierarchy::$name hierarchy verification failed for after pass"
+      FAILED=1
+    fi
+  else
+    python3 "$E2E/e2e_tool.py" verify-hierarchy --report-dir "$OUT/maestro/gallery/$name" --lang "$lang" || true
+  fi
 }
 # Every pass gets its OWN fresh install + onboarding. The pass's lesson leg
 # completes a lesson to photograph the celebration — with one shared install

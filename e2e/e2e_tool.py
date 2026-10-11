@@ -115,7 +115,7 @@ KEYS = [
     "reviewPromptTitle", "reviewPromptLater", "settingsThemeLight",
     "todayMissionOpen", "praiseFromFamily", "dailyGiftLabel", "missionTodayLabel",
     "ageGroup4to6", "missionDone", "missionConfirmAll", "praiseChipAhsant",
-    "settingsSwitchChild", "childrenAddNew", "add",
+    "settingsSwitchChild", "childrenAddNew", "add", "missionOpenForChild",
 ]
 
 # Strings the app hardcodes outside the ARB files.
@@ -644,12 +644,19 @@ EXPECTED_SCREEN_MARKERS: dict[str, dict[str, list[str]]] = {
     "praise_child_sticker": {
         "required_ar": ["أهلك يقولون لك"],
         "required_en": ["Your family says to you"],
-        "forbidden": ["الإعدادات", "Settings", "وضع الطفل", "اختر رمز", "أدخل رمز"],
+        "forbidden": [
+            "الإعدادات", "Settings", "وضع الطفل", "اختر رمز", "أدخل رمز",
+            "أكّد الكل", "Confirm all", "كلمة طيبة مع التأكيد", "فخورون بك",
+            "We are proud of you", "أحسنت", "Well done",
+        ],
     },
     "praise_child_sticker_and_text": {
-        "required_ar": ["أهلك يقولون لك"],
-        "required_en": ["Your family says to you"],
-        "forbidden": ["الإعدادات", "Settings", "وضع الطفل", "اختر رمز", "أدخل رمز"],
+        "required_ar": ["أهلك يقولون لك", "فخورون بك"],
+        "required_en": ["Your family says to you", "We are proud of you"],
+        "forbidden": [
+            "الإعدادات", "Settings", "وضع الطفل", "اختر رمز", "أدخل رمز",
+            "أكّد الكل", "Confirm all", "كلمة طيبة مع التأكيد",
+        ],
     },
     "lesson": {
         "required_ar": ["أكملت الدرس", "إكمال الدرس", "الدرس", "رجوع"],
@@ -674,8 +681,8 @@ def verify_screen_hierarchy(
 ) -> list[str]:
     """Check that the view hierarchy text matches expected markers for screen.
 
-    Requires at least one marker for the given language (or either language if
-    omitted), and ensures no forbidden markers are present.
+    Requires ALL markers in required list for the given language,
+    and ensures no forbidden markers are present.
     Returns list of error descriptions (empty if valid).
     """
     rules = EXPECTED_SCREEN_MARKERS.get(screen)
@@ -690,13 +697,26 @@ def verify_screen_hierarchy(
         required = rules["required_en"]
     elif "required" in rules:
         required = rules["required"]
-    elif "required_ar" in rules or "required_en" in rules:
-        required = rules.get("required_ar", []) + rules.get("required_en", [])
-
-    if required:
-        if not any(req in hierarchy_text for req in required):
+    elif lang is None:
+        req_ar = rules.get("required_ar", [])
+        req_en = rules.get("required_en", [])
+        ar_matches = all(req in hierarchy_text for req in req_ar) if req_ar else False
+        en_matches = all(req in hierarchy_text for req in req_en) if req_en else False
+        if not (ar_matches or en_matches):
             errors.append(
-                f"Missing expected markers (at least one of {required}) for screen '{screen}'"
+                f"Missing expected markers for screen '{screen}' (requires all AR {req_ar} or all EN {req_en})"
+            )
+        for forbidden in rules.get("forbidden", []):
+            if forbidden in hierarchy_text:
+                errors.append(
+                    f"Found forbidden marker '{forbidden}' in screen '{screen}' hierarchy"
+                )
+        return errors
+
+    for req in required:
+        if req not in hierarchy_text:
+            errors.append(
+                f"Missing expected markers (required '{req}') for screen '{screen}'"
             )
     for forbidden in rules.get("forbidden", []):
         if forbidden in hierarchy_text:
@@ -708,27 +728,33 @@ def verify_screen_hierarchy(
 
 def cmd_verify_hierarchy(args: argparse.Namespace) -> int:
     lang = getattr(args, "lang", "ar")
+    require = getattr(args, "require", False)
     if getattr(args, "report_dir", None):
         report_dir = Path(args.report_dir)
         if not report_dir.is_dir():
+            if require:
+                print(f"::error title=Hierarchy check::Report dir '{report_dir}' does not exist", file=sys.stderr)
+                return 1
             return 0
         dump_files = list(report_dir.rglob("screen-hierarchy/*.json")) + list(
             report_dir.rglob("screen-hierarchy/*.xml")
         )
         if not dump_files:
+            if require:
+                print(f"::error title=Hierarchy check::No screen hierarchy dump files found in '{report_dir}'", file=sys.stderr)
+                return 1
             return 0
         total_errors = []
+        verified_screens = set()
         for path in dump_files:
             text = path.read_text(encoding="utf-8", errors="replace")
             matched_screen = None
-            for screen in EXPECTED_SCREEN_MARKERS:
+            for screen in sorted(EXPECTED_SCREEN_MARKERS.keys(), key=len, reverse=True):
                 if screen in path.name:
                     matched_screen = screen
                     break
             if not matched_screen:
-                if "praise" in path.name or "praiseFromFa" in path.name:
-                    matched_screen = "praise_child_sticker"
-                elif "home" in path.name:
+                if "home" in path.name:
                     matched_screen = "home"
                 elif "lesson" in path.name:
                     matched_screen = "lesson"
@@ -739,6 +765,15 @@ def cmd_verify_hierarchy(args: argparse.Namespace) -> int:
                 if errs:
                     total_errors.extend(
                         [f"{path.name} ({matched_screen}): {e}" for e in errs]
+                    )
+                else:
+                    verified_screens.add(matched_screen)
+        if require:
+            required_screens = ["praise_child_sticker", "praise_child_sticker_and_text"]
+            for req in required_screens:
+                if req not in verified_screens:
+                    total_errors.append(
+                        f"Required screen '{req}' was not captured or verified in '{report_dir}'"
                     )
         if total_errors:
             for err in total_errors:
@@ -801,6 +836,7 @@ def main(argv: list[str] | None = None) -> int:
     s.add_argument("hierarchy", nargs="?", help="path to hierarchy dump file")
     s.add_argument("--report-dir", help="dir with maestro test reports to scan")
     s.add_argument("--lang", default="ar", help="screen language (ar or en)")
+    s.add_argument("--require", action="store_true", help="fail if report-dir or dump files are missing")
     s.set_defaults(func=cmd_verify_hierarchy)
 
     args = p.parse_args(argv)
