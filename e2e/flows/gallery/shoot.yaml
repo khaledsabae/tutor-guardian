@@ -379,6 +379,9 @@ name: gallery/shoot
       - tapOn: '${output.t.missionConfirmAll}'
       - waitForAnimationToEnd:
           timeout: 3000
+- back
+- waitForAnimationToEnd:
+    timeout: 2000
 - runFlow: ../common/home.yaml
 
 # Step 3: Child 1 (7-9) re-opens child mode: PraiseHeader appears with sticker AND text!
@@ -541,6 +544,9 @@ name: gallery/shoot
       - tapOn: '${output.t.missionConfirmAll}'
       - waitForAnimationToEnd:
           timeout: 3000
+- back
+- waitForAnimationToEnd:
+    timeout: 2000
 - runFlow: ../common/home.yaml
 
 # Step 7: Child 2 (4-6) re-opens child mode: PraiseHeader appears with STICKER ONLY!
