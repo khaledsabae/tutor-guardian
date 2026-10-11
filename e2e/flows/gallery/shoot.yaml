@@ -486,24 +486,20 @@ name: gallery/shoot
 - runFlow: ../common/home.yaml
 
 # Step 5: Child 2 (4-6) marks their mission done
-- tapOn: '${output.lead.navMore}'
+- tapOn: '${output.lead.navToday}'
+- waitForAnimationToEnd:
+    timeout: 2000
 - scrollUntilVisible:
     element:
-      text: '${output.tile.routineTitle}'
-    direction: UP
-    timeout: 20000
-- tapOn: '${output.tile.routineTitle}'
-- scrollUntilVisible:
-    element:
-      text: '${output.t.missionOpenForChild}'
+      text: '${output.t.todayMissionOpen}'
     direction: DOWN
     timeout: 20000
     optional: true
 - runFlow:
     when:
-      visible: '${output.t.missionOpenForChild}'
+      visible: '${output.t.todayMissionOpen}'
     commands:
-      - tapOn: '${output.t.missionOpenForChild}'
+      - tapOn: '${output.t.todayMissionOpen}'
       - runFlow: ../common/unlock_child_mode.yaml
       - extendedWaitUntil:
           visible: '(?:${output.t.missionDone}|${output.t.missionTodayLabel})'
@@ -523,21 +519,15 @@ name: gallery/shoot
 - tapOn: '${output.lead.navMore}'
 - scrollUntilVisible:
     element:
-      text: '${output.tile.routineTitle}'
-    direction: UP
-    timeout: 20000
-- tapOn: '${output.tile.routineTitle}'
-- scrollUntilVisible:
-    element:
-      text: '${output.t.parentDayTitle}'
+      text: '${output.tile.hubParentDay}'
     direction: DOWN
     timeout: 20000
     optional: true
 - runFlow:
     when:
-      visible: '${output.t.parentDayTitle}'
+      visible: '${output.tile.hubParentDay}'
     commands:
-      - tapOn: '${output.t.parentDayTitle}'
+      - tapOn: '${output.tile.hubParentDay}'
       - extendedWaitUntil:
           visible: '(?:أكّدها|Confirm)'
           timeout: 15000
@@ -569,24 +559,20 @@ name: gallery/shoot
 - runFlow: ../common/home.yaml
 
 # Step 7: Child 2 (4-6) re-opens child mode: PraiseHeader appears with STICKER ONLY!
-- tapOn: '${output.lead.navMore}'
+- tapOn: '${output.lead.navToday}'
+- waitForAnimationToEnd:
+    timeout: 2000
 - scrollUntilVisible:
     element:
-      text: '${output.tile.routineTitle}'
-    direction: UP
-    timeout: 20000
-- tapOn: '${output.tile.routineTitle}'
-- scrollUntilVisible:
-    element:
-      text: '${output.t.missionOpenForChild}'
+      text: '${output.t.todayMissionOpen}'
     direction: DOWN
     timeout: 20000
     optional: true
 - runFlow:
     when:
-      visible: '${output.t.missionOpenForChild}'
+      visible: '${output.t.todayMissionOpen}'
     commands:
-      - tapOn: '${output.t.missionOpenForChild}'
+      - tapOn: '${output.t.todayMissionOpen}'
       - runFlow: ../common/unlock_child_mode.yaml
       - extendedWaitUntil:
           visible: '${output.c.praiseFromFamily}'
