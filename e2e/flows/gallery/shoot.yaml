@@ -559,26 +559,38 @@ name: gallery/shoot
 - runFlow: ../common/home.yaml
 
 # Step 7: Child 2 (4-6) re-opens child mode: PraiseHeader appears with STICKER ONLY!
-- tapOn: '${output.lead.navToday}'
-- waitForAnimationToEnd:
-    timeout: 2000
+- tapOn: '${output.lead.navMore}'
 - scrollUntilVisible:
     element:
-      text: '${output.t.todayMissionOpen}'
+      text: '${output.tile.hubParentDay}'
     direction: DOWN
     timeout: 20000
     optional: true
 - runFlow:
     when:
-      visible: '${output.t.todayMissionOpen}'
+      visible: '${output.tile.hubParentDay}'
     commands:
-      - tapOn: '${output.t.todayMissionOpen}'
-      - runFlow: ../common/unlock_child_mode.yaml
-      - extendedWaitUntil:
-          visible: '${output.c.praiseFromFamily}'
-          timeout: 15000
+      - tapOn: '${output.tile.hubParentDay}'
+      - scrollUntilVisible:
+          element:
+            text: '${output.t.missionOpenForChild}'
+          direction: DOWN
+          timeout: 20000
           optional: true
-      # 4-6 Praise card: sticker ONLY
-      - takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__praise_child_sticker'
-      - runFlow: ../common/exit_child_mode.yaml
+      - runFlow:
+          when:
+            visible: '${output.t.missionOpenForChild}'
+          commands:
+            - tapOn: '${output.t.missionOpenForChild}'
+            - runFlow: ../common/unlock_child_mode.yaml
+            - extendedWaitUntil:
+                visible: '${output.c.praiseFromFamily}'
+                timeout: 15000
+                optional: true
+            # 4-6 Praise card: sticker ONLY
+            - takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__praise_child_sticker'
+            - runFlow: ../common/exit_child_mode.yaml
+      - back
+      - waitForAnimationToEnd:
+          timeout: 2000
 - runFlow: ../common/home.yaml
