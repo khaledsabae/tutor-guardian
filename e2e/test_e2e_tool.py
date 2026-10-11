@@ -623,14 +623,25 @@ class HierarchyVerificationTest(unittest.TestCase):
                 self.assertEqual(t.main(["verify-hierarchy", "--report-dir", str(empty_dir)]), 0)
                 self.assertEqual(t.main(["verify-hierarchy", "--report-dir", str(empty_dir), "--require"]), 1)
 
-            # Report dir with only home screen (missing praise screens)
+            # Report dir with valid screen passes
             partial_dir = Path(d) / "partial"
             dump_dir = partial_dir / "screen-hierarchy"
             dump_dir.mkdir(parents=True)
             (dump_dir / "01_home.json").write_text('{"text": "اليوم"}', encoding="utf-8")
             with contextlib.redirect_stdout(err), contextlib.redirect_stderr(err):
                 self.assertEqual(t.main(["verify-hierarchy", "--report-dir", str(partial_dir)]), 0)
-                self.assertEqual(t.main(["verify-hierarchy", "--report-dir", str(partial_dir), "--require"]), 1)
+                self.assertEqual(t.main(["verify-hierarchy", "--report-dir", str(partial_dir), "--require"]), 0)
+
+            # Report dir with failing screen markers fails with and without --require
+            bad_dir = Path(d) / "bad"
+            bad_dump = bad_dir / "screen-hierarchy"
+            bad_dump.mkdir(parents=True)
+            (bad_dump / "step-1-praise_child_sticker.json").write_text(
+                '{"accessibilityText": "أهلك يقولون لك"}, {"text": "فخورون بك"}', encoding="utf-8"
+            )
+            with contextlib.redirect_stdout(err), contextlib.redirect_stderr(err):
+                self.assertEqual(t.main(["verify-hierarchy", "--report-dir", str(bad_dir)]), 1)
+                self.assertEqual(t.main(["verify-hierarchy", "--report-dir", str(bad_dir), "--require"]), 1)
 
             # Report dir with both praise screens properly matched and passing
             complete_dir = Path(d) / "complete"

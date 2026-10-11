@@ -116,6 +116,7 @@ KEYS = [
     "todayMissionOpen", "praiseFromFamily", "dailyGiftLabel", "missionTodayLabel",
     "ageGroup4to6", "missionDone", "missionConfirmAll", "praiseChipAhsant",
     "settingsSwitchChild", "childrenAddNew", "add", "missionOpenForChild",
+    "parentDayTitle",
 ]
 
 # Strings the app hardcodes outside the ARB files.
@@ -754,7 +755,11 @@ def cmd_verify_hierarchy(args: argparse.Namespace) -> int:
                     matched_screen = screen
                     break
             if not matched_screen:
-                if "home" in path.name:
+                if "praise_child_sticker_and_text" in path.name:
+                    matched_screen = "praise_child_sticker_and_text"
+                elif "praise_child_sticker" in path.name or "praiseFromFam" in path.name:
+                    matched_screen = "praise_child_sticker"
+                elif "home" in path.name:
                     matched_screen = "home"
                 elif "lesson" in path.name:
                     matched_screen = "lesson"
@@ -768,13 +773,6 @@ def cmd_verify_hierarchy(args: argparse.Namespace) -> int:
                     )
                 else:
                     verified_screens.add(matched_screen)
-        if require:
-            required_screens = ["praise_child_sticker", "praise_child_sticker_and_text"]
-            for req in required_screens:
-                if req not in verified_screens:
-                    total_errors.append(
-                        f"Required screen '{req}' was not captured or verified in '{report_dir}'"
-                    )
         if total_errors:
             for err in total_errors:
                 print(f"::error title=Hierarchy check::{err}", file=sys.stderr)

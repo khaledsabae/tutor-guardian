@@ -341,48 +341,45 @@ name: gallery/shoot
       - runFlow: ../common/exit_child_mode.yaml
 
 # Step 2: Parent opens claimed mission and confirms with kind words ("فخورون بك")
-- tapOn: '${output.lead.navToday}'
-- waitForAnimationToEnd:
-    timeout: 2000
+- tapOn: '${output.lead.navMore}'
 - scrollUntilVisible:
     element:
-      text: '.*(?:أنجزها|did it|اليوم مع|Today with).*'
+      text: '${output.tile.routineTitle}'
+    direction: UP
+    timeout: 20000
+- tapOn: '${output.tile.routineTitle}'
+- scrollUntilVisible:
+    element:
+      text: '${output.t.parentDayTitle}'
     direction: DOWN
+    timeout: 20000
+- tapOn: '${output.t.parentDayTitle}'
+- extendedWaitUntil:
+    visible: '(?:أكّدها|Confirm)'
     timeout: 15000
     optional: true
 - runFlow:
     when:
-      visible: '.*(?:أنجزها|did it|اليوم مع|Today with).*'
+      visible: '(?:أكّدها|Confirm)'
     commands:
-      - tapOn: '.*(?:أنجزها|did it|اليوم مع|Today with).*'
+      - tapOn: '(?:أكّدها|Confirm)'
       - extendedWaitUntil:
-          visible: '(?:أكّدها|Confirm)'
+          visible: '${output.t.missionConfirmAll}'
           timeout: 15000
           optional: true
-      - runFlow:
-          when:
-            visible: '(?:أكّدها|Confirm)'
-          commands:
-            - tapOn: '(?:أكّدها|Confirm)'
-            - extendedWaitUntil:
-                visible: '${output.t.missionConfirmAll}'
-                timeout: 15000
-                optional: true
-            - scrollUntilVisible:
-                element:
-                  text: '${output.t.praiseChipProud}'
-                direction: DOWN
-                timeout: 15000
-                optional: true
-            - tapOn:
-                text: '${output.t.praiseChipProud}'
-                optional: true
-            - tapOn: '${output.t.missionConfirmAll}'
-            - waitForAnimationToEnd:
-                timeout: 3000
-            - back
-            - waitForAnimationToEnd:
-                timeout: 2000
+      - scrollUntilVisible:
+          element:
+            text: '${output.t.praiseChipProud}'
+          direction: DOWN
+          timeout: 15000
+          optional: true
+      - tapOn:
+          text: '${output.t.praiseChipProud}'
+          optional: true
+      - tapOn: '${output.t.missionConfirmAll}'
+      - waitForAnimationToEnd:
+          timeout: 3000
+- runFlow: ../common/home.yaml
 
 # Step 3: Child 1 (7-9) re-opens child mode: PraiseHeader appears with sticker AND text!
 - tapOn: '${output.lead.navMore}'
@@ -460,53 +457,35 @@ name: gallery/shoot
             - tapOn: '${output.t.add}'
             - waitForAnimationToEnd:
                 timeout: 3000
+            - extendedWaitUntil:
+                visible: 'Salma'
+                timeout: 15000
+                optional: true
+            - tapOn:
+                text: 'Salma'
+                optional: true
+            - waitForAnimationToEnd:
+                timeout: 2000
 - runFlow: ../common/home.yaml
 
 # Step 5: Child 2 (4-6) marks their mission done
-- tapOn: '${output.lead.navToday}'
-- waitForAnimationToEnd:
-    timeout: 2000
+- tapOn: '${output.lead.navMore}'
 - scrollUntilVisible:
     element:
-      text: '${output.t.todayMissionOpen}'
+      text: '${output.tile.routineTitle}'
+    direction: UP
+    timeout: 20000
+- tapOn: '${output.tile.routineTitle}'
+- scrollUntilVisible:
+    element:
+      text: '${output.t.missionOpenForChild}'
     direction: DOWN
     timeout: 20000
     optional: true
 - runFlow:
     when:
-      visible: '${output.t.todayMissionOpen}'
+      visible: '${output.t.missionOpenForChild}'
     commands:
-      - tapOn: '${output.t.todayMissionOpen}'
-      - runFlow: ../common/unlock_child_mode.yaml
-      - extendedWaitUntil:
-          visible: '(?:${output.t.missionDone}|${output.t.missionTodayLabel})'
-          timeout: 15000
-          optional: true
-      - runFlow:
-          when:
-            visible: '${output.t.missionDone}'
-          commands:
-            - tapOn: '${output.t.missionDone}'
-            - waitForAnimationToEnd:
-                timeout: 2000
-      - runFlow: ../common/exit_child_mode.yaml
-- runFlow:
-    when:
-      notVisible: '${output.t.todayMissionOpen}'
-    commands:
-      - tapOn: '${output.lead.navMore}'
-      - scrollUntilVisible:
-          element:
-            text: '${output.tile.routineTitle}'
-          direction: UP
-          timeout: 20000
-      - tapOn: '${output.tile.routineTitle}'
-      - scrollUntilVisible:
-          element:
-            text: '${output.t.missionOpenForChild}'
-          direction: DOWN
-          timeout: 20000
-          optional: true
       - tapOn: '${output.t.missionOpenForChild}'
       - runFlow: ../common/unlock_child_mode.yaml
       - extendedWaitUntil:
@@ -524,48 +503,45 @@ name: gallery/shoot
 - runFlow: ../common/home.yaml
 
 # Step 6: Parent confirms Child 2's mission with kind words
-- tapOn: '${output.lead.navToday}'
-- waitForAnimationToEnd:
-    timeout: 2000
+- tapOn: '${output.lead.navMore}'
 - scrollUntilVisible:
     element:
-      text: '.*(?:أنجزها|did it|اليوم مع|Today with).*'
+      text: '${output.tile.routineTitle}'
+    direction: UP
+    timeout: 20000
+- tapOn: '${output.tile.routineTitle}'
+- scrollUntilVisible:
+    element:
+      text: '${output.t.parentDayTitle}'
     direction: DOWN
+    timeout: 20000
+- tapOn: '${output.t.parentDayTitle}'
+- extendedWaitUntil:
+    visible: '(?:أكّدها|Confirm)'
     timeout: 15000
     optional: true
 - runFlow:
     when:
-      visible: '.*(?:أنجزها|did it|اليوم مع|Today with).*'
+      visible: '(?:أكّدها|Confirm)'
     commands:
-      - tapOn: '.*(?:أنجزها|did it|اليوم مع|Today with).*'
+      - tapOn: '(?:أكّدها|Confirm)'
       - extendedWaitUntil:
-          visible: '(?:أكّدها|Confirm)'
+          visible: '${output.t.missionConfirmAll}'
           timeout: 15000
           optional: true
-      - runFlow:
-          when:
-            visible: '(?:أكّدها|Confirm)'
-          commands:
-            - tapOn: '(?:أكّدها|Confirm)'
-            - extendedWaitUntil:
-                visible: '${output.t.missionConfirmAll}'
-                timeout: 15000
-                optional: true
-            - scrollUntilVisible:
-                element:
-                  text: '${output.t.praiseChipProud}'
-                direction: DOWN
-                timeout: 15000
-                optional: true
-            - tapOn:
-                text: '${output.t.praiseChipProud}'
-                optional: true
-            - tapOn: '${output.t.missionConfirmAll}'
-            - waitForAnimationToEnd:
-                timeout: 3000
-            - back
-            - waitForAnimationToEnd:
-                timeout: 2000
+      - scrollUntilVisible:
+          element:
+            text: '${output.t.praiseChipProud}'
+          direction: DOWN
+          timeout: 15000
+          optional: true
+      - tapOn:
+          text: '${output.t.praiseChipProud}'
+          optional: true
+      - tapOn: '${output.t.missionConfirmAll}'
+      - waitForAnimationToEnd:
+          timeout: 3000
+- runFlow: ../common/home.yaml
 
 # Step 7: Child 2 (4-6) re-opens child mode: PraiseHeader appears with STICKER ONLY!
 - tapOn: '${output.lead.navMore}'
