@@ -408,21 +408,21 @@ name: gallery/shoot
           commands:
             - tapOn: '${output.t.missionOpenForChild}'
             - runFlow: ../common/unlock_child_mode.yaml
-      - extendedWaitUntil:
-          visible: '${output.c.praiseFromFamily}'
-          timeout: 15000
-          optional: true
-      # Burst captures for praise card entrance and tilt (0ms, 150ms, 400ms)
-      - takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__praise_card_0ms'
-      - waitForAnimationToEnd:
-          timeout: 150
-      - takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__praise_card_150ms'
-      - waitForAnimationToEnd:
-          timeout: 250
-      - takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__praise_card_400ms'
-      # 7-12 Praise card: sticker AND text
-      - takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__praise_child_sticker_and_text'
-      - runFlow: ../common/exit_child_mode.yaml
+            - extendedWaitUntil:
+                visible: '${output.c.praiseFromFamily}'
+                timeout: 15000
+                optional: true
+            # Burst captures for praise card entrance and tilt (0ms, 150ms, 400ms)
+            - takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__praise_card_0ms'
+            - waitForAnimationToEnd:
+                timeout: 150
+            - takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__praise_card_150ms'
+            - waitForAnimationToEnd:
+                timeout: 250
+            - takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__praise_card_400ms'
+            # 7-12 Praise card: sticker AND text
+            - takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__praise_child_sticker_and_text'
+            - runFlow: ../common/exit_child_mode.yaml
 - runFlow: ../common/home.yaml
 
 # Step 4: Add and switch to a 4-6 child (Salma) so praise_child_sticker is truly for the 4-6 band (sticker only)
