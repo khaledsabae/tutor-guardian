@@ -353,35 +353,40 @@ name: gallery/shoot
       text: '${output.t.parentDayTitle}'
     direction: DOWN
     timeout: 20000
-- tapOn: '${output.t.parentDayTitle}'
-- extendedWaitUntil:
-    visible: '(?:أكّدها|Confirm)'
-    timeout: 15000
     optional: true
 - runFlow:
     when:
-      visible: '(?:أكّدها|Confirm)'
+      visible: '${output.t.parentDayTitle}'
     commands:
-      - tapOn: '(?:أكّدها|Confirm)'
+      - tapOn: '${output.t.parentDayTitle}'
       - extendedWaitUntil:
-          visible: '${output.t.missionConfirmAll}'
+          visible: '(?:أكّدها|Confirm)'
           timeout: 15000
           optional: true
-      - scrollUntilVisible:
-          element:
-            text: '${output.t.praiseChipProud}'
-          direction: DOWN
-          timeout: 15000
-          optional: true
-      - tapOn:
-          text: '${output.t.praiseChipProud}'
-          optional: true
-      - tapOn: '${output.t.missionConfirmAll}'
+      - runFlow:
+          when:
+            visible: '(?:أكّدها|Confirm)'
+          commands:
+            - tapOn: '(?:أكّدها|Confirm)'
+            - extendedWaitUntil:
+                visible: '${output.t.missionConfirmAll}'
+                timeout: 15000
+                optional: true
+            - scrollUntilVisible:
+                element:
+                  text: '${output.t.praiseChipProud}'
+                direction: DOWN
+                timeout: 15000
+                optional: true
+            - tapOn:
+                text: '${output.t.praiseChipProud}'
+                optional: true
+            - tapOn: '${output.t.missionConfirmAll}'
+            - waitForAnimationToEnd:
+                timeout: 3000
+      - back
       - waitForAnimationToEnd:
-          timeout: 3000
-- back
-- waitForAnimationToEnd:
-    timeout: 2000
+          timeout: 2000
 - runFlow: ../common/home.yaml
 
 # Step 3: Child 1 (7-9) re-opens child mode: PraiseHeader appears with sticker AND text!
@@ -444,9 +449,10 @@ name: gallery/shoot
           commands:
             - tapOn: '${output.t.childrenAddNew}'
             - extendedWaitUntil:
-                visible: '${output.t.add}'
+                visible: '${output.t.childName}'
                 timeout: 15000
                 optional: true
+            - tapOn: '${output.t.childName}'
             - inputText: 'Salma'
             - scrollUntilVisible:
                 element:
@@ -457,7 +463,12 @@ name: gallery/shoot
             - tapOn:
                 text: '${output.t.ageGroup4to6}'
                 optional: true
-            - tapOn: '${output.t.add}'
+            - tapOn:
+                text: '${output.t.addChildBtn}'
+                optional: true
+            - tapOn:
+                text: '${output.t.add}'
+                optional: true
             - waitForAnimationToEnd:
                 timeout: 3000
             - extendedWaitUntil:
@@ -518,35 +529,40 @@ name: gallery/shoot
       text: '${output.t.parentDayTitle}'
     direction: DOWN
     timeout: 20000
-- tapOn: '${output.t.parentDayTitle}'
-- extendedWaitUntil:
-    visible: '(?:أكّدها|Confirm)'
-    timeout: 15000
     optional: true
 - runFlow:
     when:
-      visible: '(?:أكّدها|Confirm)'
+      visible: '${output.t.parentDayTitle}'
     commands:
-      - tapOn: '(?:أكّدها|Confirm)'
+      - tapOn: '${output.t.parentDayTitle}'
       - extendedWaitUntil:
-          visible: '${output.t.missionConfirmAll}'
+          visible: '(?:أكّدها|Confirm)'
           timeout: 15000
           optional: true
-      - scrollUntilVisible:
-          element:
-            text: '${output.t.praiseChipProud}'
-          direction: DOWN
-          timeout: 15000
-          optional: true
-      - tapOn:
-          text: '${output.t.praiseChipProud}'
-          optional: true
-      - tapOn: '${output.t.missionConfirmAll}'
+      - runFlow:
+          when:
+            visible: '(?:أكّدها|Confirm)'
+          commands:
+            - tapOn: '(?:أكّدها|Confirm)'
+            - extendedWaitUntil:
+                visible: '${output.t.missionConfirmAll}'
+                timeout: 15000
+                optional: true
+            - scrollUntilVisible:
+                element:
+                  text: '${output.t.praiseChipProud}'
+                direction: DOWN
+                timeout: 15000
+                optional: true
+            - tapOn:
+                text: '${output.t.praiseChipProud}'
+                optional: true
+            - tapOn: '${output.t.missionConfirmAll}'
+            - waitForAnimationToEnd:
+                timeout: 3000
+      - back
       - waitForAnimationToEnd:
-          timeout: 3000
-- back
-- waitForAnimationToEnd:
-    timeout: 2000
+          timeout: 2000
 - runFlow: ../common/home.yaml
 
 # Step 7: Child 2 (4-6) re-opens child mode: PraiseHeader appears with STICKER ONLY!

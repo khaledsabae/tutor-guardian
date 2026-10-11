@@ -116,7 +116,7 @@ KEYS = [
     "todayMissionOpen", "praiseFromFamily", "dailyGiftLabel", "missionTodayLabel",
     "ageGroup4to6", "missionDone", "missionConfirmAll", "praiseChipAhsant",
     "settingsSwitchChild", "childrenAddNew", "add", "missionOpenForChild",
-    "parentDayTitle",
+    "parentDayTitle", "childName", "addChildBtn",
 ]
 
 # Strings the app hardcodes outside the ARB files.
