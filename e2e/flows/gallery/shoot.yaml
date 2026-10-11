@@ -377,6 +377,7 @@ name: gallery/shoot
                 optional: true
             - tapOn: '${output.t.missionConfirmAll}'
             - waitForAnimationToEnd:
+                timeout: 2000
       # Step 3: Child 1 (7-9) re-opens child mode: PraiseHeader appears with sticker AND text!
       - scrollUntilVisible:
           element:
@@ -533,6 +534,7 @@ name: gallery/shoot
                 optional: true
             - tapOn: '${output.t.missionConfirmAll}'
             - waitForAnimationToEnd:
+                timeout: 2000
       # Step 7: Child 2 (4-6) re-opens child mode: PraiseHeader appears with STICKER ONLY!
       - scrollUntilVisible:
           element:
