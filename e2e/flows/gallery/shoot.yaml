@@ -344,21 +344,15 @@ name: gallery/shoot
 - tapOn: '${output.lead.navMore}'
 - scrollUntilVisible:
     element:
-      text: '${output.tile.routineTitle}'
-    direction: UP
-    timeout: 20000
-- tapOn: '${output.tile.routineTitle}'
-- scrollUntilVisible:
-    element:
-      text: '${output.t.parentDayTitle}'
+      text: '${output.tile.hubParentDay}'
     direction: DOWN
     timeout: 20000
     optional: true
 - runFlow:
     when:
-      visible: '${output.t.parentDayTitle}'
+      visible: '${output.tile.hubParentDay}'
     commands:
-      - tapOn: '${output.t.parentDayTitle}'
+      - tapOn: '${output.tile.hubParentDay}'
       - extendedWaitUntil:
           visible: '(?:أكّدها|Confirm)'
           timeout: 15000
@@ -393,22 +387,27 @@ name: gallery/shoot
 - tapOn: '${output.lead.navMore}'
 - scrollUntilVisible:
     element:
-      text: '${output.tile.routineTitle}'
-    direction: UP
-    timeout: 20000
-- tapOn: '${output.tile.routineTitle}'
-- scrollUntilVisible:
-    element:
-      text: '${output.t.missionOpenForChild}'
+      text: '${output.tile.hubParentDay}'
     direction: DOWN
     timeout: 20000
     optional: true
 - runFlow:
     when:
-      visible: '${output.t.missionOpenForChild}'
+      visible: '${output.tile.hubParentDay}'
     commands:
-      - tapOn: '${output.t.missionOpenForChild}'
-      - runFlow: ../common/unlock_child_mode.yaml
+      - tapOn: '${output.tile.hubParentDay}'
+      - scrollUntilVisible:
+          element:
+            text: '${output.t.missionOpenForChild}'
+          direction: DOWN
+          timeout: 20000
+          optional: true
+      - runFlow:
+          when:
+            visible: '${output.t.missionOpenForChild}'
+          commands:
+            - tapOn: '${output.t.missionOpenForChild}'
+            - runFlow: ../common/unlock_child_mode.yaml
       - extendedWaitUntil:
           visible: '${output.c.praiseFromFamily}'
           timeout: 15000
@@ -590,7 +589,4 @@ name: gallery/shoot
             # 4-6 Praise card: sticker ONLY
             - takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__praise_child_sticker'
             - runFlow: ../common/exit_child_mode.yaml
-      - back
-      - waitForAnimationToEnd:
-          timeout: 2000
 - runFlow: ../common/home.yaml

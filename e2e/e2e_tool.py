@@ -647,7 +647,7 @@ EXPECTED_SCREEN_MARKERS: dict[str, dict[str, list[str]]] = {
         "required_ar": ["أهلك يقولون لك"],
         "required_en": ["Your family says to you"],
         "forbidden": [
-            "الإعدادات", "Settings", "وضع الطفل", "اختر رمز", "أدخل رمز",
+            "الإعدادات", "Settings", "اختر رمز", "أدخل رمز",
             "أكّد الكل", "Confirm all", "كلمة طيبة مع التأكيد", "فخورون بك",
             "We are proud of you", "أحسنت", "Well done",
         ],
@@ -656,7 +656,7 @@ EXPECTED_SCREEN_MARKERS: dict[str, dict[str, list[str]]] = {
         "required_ar": ["أهلك يقولون لك", "فخورون بك"],
         "required_en": ["Your family says to you", "We are proud of you"],
         "forbidden": [
-            "الإعدادات", "Settings", "وضع الطفل", "اختر رمز", "أدخل رمز",
+            "الإعدادات", "Settings", "اختر رمز", "أدخل رمز",
             "أكّد الكل", "Confirm all", "كلمة طيبة مع التأكيد",
         ],
     },
