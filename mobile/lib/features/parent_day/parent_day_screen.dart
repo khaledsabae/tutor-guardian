@@ -67,7 +67,7 @@ class _ParentDayScreenState extends ConsumerState<ParentDayScreen> {
     // the widget in MaterialApp and hands it the Material the real app never
     // did. The tests were testing a tree the user does not get.
     return Scaffold(
-      appBar: AppBar(title: const Text('اليوم مع طفلي')),
+      appBar: AppBar(title: Text(AppLocalizations.of(context).parentDayTitle)),
       body: _body(context),
     );
   }
