@@ -426,7 +426,7 @@ name: gallery/shoot
       - runFlow: ../common/exit_child_mode.yaml
 - runFlow: ../common/home.yaml
 
-# Step 4: Add/switch to a 4-6 child so praise_child_sticker is truly for the 4-6 band (sticker only)
+# Step 4: Add and switch to a 4-6 child (Salma) so praise_child_sticker is truly for the 4-6 band (sticker only)
 - runFlow: ../common/open_settings.yaml
 - scrollUntilVisible:
     element:
@@ -449,10 +449,13 @@ name: gallery/shoot
           commands:
             - tapOn: '${output.t.childrenAddNew}'
             - extendedWaitUntil:
-                visible: '${output.t.childName}'
+                visible: '${output.t.addChildNameHint}'
                 timeout: 15000
                 optional: true
-            - tapOn: '${output.t.childName}'
+            - runFlow:
+                file: ../common/tap_field_end.yaml
+                env:
+                  FIELD: '${output.t.addChildNameHint}'
             - inputText: 'Salma'
             - scrollUntilVisible:
                 element:
