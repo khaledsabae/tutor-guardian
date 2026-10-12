@@ -34,6 +34,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../l10n/app_localizations.dart';
 
 import '../features/home/greeting.dart';
+import '../features/companion/widgets/noor_presence.dart';
+import '../features/home/widgets/daily_gift_moment.dart';
 import '../features/home/widgets/home_app_bar.dart';
 import '../features/home/widgets/home_community_note.dart';
 import '../features/home/widgets/home_shortcuts_grid.dart';
@@ -56,7 +58,7 @@ import '../features/coins/coins_providers.dart';
 import '../features/shell/root_tab.dart';
 import '../theme/app_theme.dart';
 import '../theme/design_tokens.dart';
-import '../widgets/ui/noor_mascot.dart';
+import '../widgets/ui/brand_glyph.dart';
 import '../features/whats_new/widgets/whats_new_card.dart';
 
 import '../core/analytics.dart';
@@ -98,10 +100,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     if (!mounted) return;
     final notifier = ref.read(coinsProvider.notifier);
     unawaited(notifier.claimDaily());
-    final earnedBadgeIds = computeBadges(bundle)
-        .where((b) => b.earned)
-        .map((b) => b.id)
-        .toList();
+    final earnedBadgeIds = computeBadges(
+      bundle,
+    ).where((b) => b.earned).map((b) => b.id).toList();
     if (earnedBadgeIds.isNotEmpty) {
       // Idempotent per badge id: passing every earned badge each time is how
       // a badge that did not fit under the day's ceiling gets paid later.
@@ -120,10 +121,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   Widget build(BuildContext context) {
     final profile = ref.watch(activeChildProfileProvider);
     final ageGroup = ref.watch(selectedAgeGroupProvider);
-    final bundle = ref.watch(activeChildProgressProvider)?.maybeWhen(
-          data: (b) => b,
-          orElse: () => null,
-        );
+    final bundle = ref
+        .watch(activeChildProgressProvider)
+        ?.maybeWhen(data: (b) => b, orElse: () => null);
     final coins = ref.watch(coinsProvider);
     final gift = ref.watch(dailyGiftProvider).valueOrNull;
 
@@ -135,7 +135,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         children: [
           Row(
             children: [
-              const NoorMascot(size: 44)
+              // «نور» as a presence beside the greeting (جولة الحرفة):
+              // the drawn face in its breathing moon window, not a loose
+              // square illustration.
+              const NoorPresence(size: 56)
                   .animate()
                   .fadeIn(duration: Dt.slow)
                   .scale(
@@ -158,28 +161,21 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                           firstDay: coins.dailyStreak <= 1,
                         ),
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        color: AppTheme.textSecondary,
-                        fontWeight: FontWeight.w600,
-                        height: 1.4,
-                      ),
+                    color: AppTheme.textSecondary,
+                    fontWeight: FontWeight.w600,
+                    height: 1.4,
+                  ),
                 ).animate().fadeIn(duration: Dt.base),
               ),
             ],
           ),
           const SizedBox(height: 12),
-          // «هدية اليوم» as a line in the page, not a silent credit: the
-          // child's login reward is the one coin flow the parent never saw.
+          // «هدية اليوم» — once a day it lands as a moment; afterwards it
+          // stays as a quiet line (جولة الحرفة, item 2).
           if (gift != null && gift > 0)
             Padding(
-              padding: const EdgeInsets.only(bottom: 10),
-              child: Text(
-                l10n.dailyGiftLine(gift),
-                style: TextStyle(
-                  fontSize: 12.5,
-                  fontWeight: FontWeight.w600,
-                  color: AppTheme.textMuted,
-                ),
-              ),
+              padding: const EdgeInsets.only(bottom: 2),
+              child: DailyGiftMoment(gift: gift),
             ),
           // Whose day this is — and the one-tap way to change it.
           _ActiveChildBanner(profile: profile),
@@ -187,7 +183,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
           // ① خطوة اليوم
           TodaySectionHeader(
-            emoji: '🎯',
+            icon: BrandIcon.lightDot,
             title: profile == null
                 ? l10n.todayStepTitleNoName
                 : l10n.todayStepTitle(profile.name),
@@ -289,10 +285,18 @@ class _ActiveChildBanner extends StatelessWidget {
                     shape: BoxShape.circle,
                   ),
                   alignment: Alignment.center,
-                  child: Text(
-                    profile?.avatarEmoji ?? '👶',
-                    style: const TextStyle(fontSize: 20),
-                  ),
+                  // The child's chosen avatar, or the drawn crescent —
+                  // a data emoji is content; the fallback is brand art.
+                  child: profile?.avatarEmoji != null
+                      ? Text(
+                          profile!.avatarEmoji!,
+                          style: const TextStyle(fontSize: 20),
+                        )
+                      : BrandGlyph(
+                          BrandIcon.crescent,
+                          size: 20,
+                          color: AppTheme.primary,
+                        ),
                 ),
                 const SizedBox(width: 12),
                 Expanded(
@@ -319,7 +323,9 @@ class _ActiveChildBanner extends StatelessWidget {
                             const SizedBox(width: 6),
                             Container(
                               padding: const EdgeInsets.symmetric(
-                                  horizontal: 6, vertical: 2),
+                                horizontal: 6,
+                                vertical: 2,
+                              ),
                               decoration: BoxDecoration(
                                 color: AppTheme.accent.withValues(alpha: 0.15),
                                 borderRadius: BorderRadius.circular(6),

@@ -34,6 +34,7 @@ import '../../../theme/app_theme.dart';
 import '../../../theme/design_tokens.dart';
 import '../../../theme/app_colors.dart';
 import '../../../widgets/ui/bouncy_button.dart';
+import '../../../widgets/ui/brand_glyph.dart';
 import '../../../widgets/ui/night_sky.dart';
 import '../../program/providers/progress_providers.dart';
 import '../../program/providers/program_providers.dart'
@@ -156,7 +157,11 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(AppLocalizations.of(context).onbChildError(describeFailure(AppLocalizations.of(context), e))),
+            content: Text(
+              AppLocalizations.of(
+                context,
+              ).onbChildError(describeFailure(AppLocalizations.of(context), e)),
+            ),
             backgroundColor: AppTheme.dangerFg,
           ),
         );
@@ -178,9 +183,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
           // The night sky behind the whole first-run flow — the app's night
           // identity from the very first frame. TwinklingStars holds itself
           // still under reduceMotion (night_sky.dart setStill).
-          Positioned.fill(
-            child: ColoredBox(color: AppTheme.background),
-          ),
+          Positioned.fill(child: ColoredBox(color: AppTheme.background)),
           const Positioned.fill(child: TwinklingStars(count: 28)),
           Scaffold(
             backgroundColor: Colors.transparent,
@@ -194,14 +197,13 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                       children: [
                         _LanguageSelectionPage(
                           onChoose: (lang) {
-                            ref.read(appLocaleProvider.notifier).setLocale(lang);
+                            ref
+                                .read(appLocaleProvider.notifier)
+                                .setLocale(lang);
                             _goTo(1);
                           },
                         ),
-                        _AgeQuestionPage(
-                          selected: _ageGroup,
-                          onPick: _pickAge,
-                        ),
+                        _AgeQuestionPage(selected: _ageGroup, onPick: _pickAge),
                         _InstantValuePage(
                           ageGroup: _ageGroup,
                           onChangeAge: () => _goTo(1),
@@ -225,8 +227,9 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                               for (var i = 0; i < _pageCount; i++)
                                 AnimatedContainer(
                                   duration: Dt.fast,
-                                  margin:
-                                      const EdgeInsets.symmetric(horizontal: 3),
+                                  margin: const EdgeInsets.symmetric(
+                                    horizontal: 3,
+                                  ),
                                   width: _page == i ? 24 : 8,
                                   height: 8,
                                   decoration: BoxDecoration(
@@ -262,9 +265,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                           Text(
                             AppLocalizations.of(context).onbDeferredHint,
                             textAlign: TextAlign.center,
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodySmall
+                            style: Theme.of(context).textTheme.bodySmall
                                 ?.copyWith(color: AppTheme.textMuted),
                           ),
                         ],
@@ -408,32 +409,53 @@ class _AgeQuestionPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Image.asset(
-              'assets/images/generated/mascot_reading.webp',
-              height: 120,
-              fit: BoxFit.contain,
-              errorBuilder: (_, _, _) => const Text(
-                '🌙',
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 64),
-              ),
-            ).animate().fadeIn(duration: Dt.base).scale(
-                  begin: const Offset(.9, .9),
-                  curve: Curves.easeOutBack,
+            Center(
+              child: Container(
+                width: 120,
+                height: 120,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: const Color(0xFF0F1E2E),
+                  border: Border.all(
+                    color: const Color(0xFFE89838).withValues(alpha: 0.45),
+                    width: 2,
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: const Color(0xFFE89838).withValues(alpha: 0.25),
+                      blurRadius: 18,
+                      spreadRadius: 2,
+                    ),
+                  ],
                 ),
+                child: ClipOval(
+                  child: Padding(
+                    padding: const EdgeInsets.all(6),
+                    child: Image.asset(
+                      'assets/images/generated/mascot_reading.webp',
+                      fit: BoxFit.contain,
+                      errorBuilder: (_, _, _) => const Center(
+                        child: BrandGlyph(BrandIcon.crescent, size: 64),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            )
+            .animate()
+            .fadeIn(duration: Dt.base)
+            .scale(begin: const Offset(.9, .9), curve: Curves.easeOutBack),
             const SizedBox(height: 12),
             Text(
               l10n.onbWelcome,
               textAlign: TextAlign.center,
-              style: Theme.of(context)
-                  .textTheme
-                  .headlineSmall
-                  ?.copyWith(fontWeight: FontWeight.w800),
+              style: Theme.of(
+                context,
+              ).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w800),
             ).animate(delay: 100.ms).fadeIn(duration: Dt.base),
             const SizedBox(height: 10),
             Container(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
               decoration: BoxDecoration(
                 color: Dt.primary.withValues(alpha: 0.08),
                 borderRadius: BorderRadius.circular(Dt.rCard),
@@ -452,36 +474,42 @@ class _AgeQuestionPage extends StatelessWidget {
             ).animate(delay: 200.ms).fadeIn(duration: Dt.base),
             const SizedBox(height: 28),
             Text(
-              l10n.onbAgeQuestion,
-              textAlign: TextAlign.center,
-              style: Theme.of(context)
-                  .textTheme
-                  .titleLarge
-                  ?.copyWith(fontWeight: FontWeight.w800),
-            ).animate(delay: 300.ms).fadeIn(duration: Dt.base).slideY(begin: .15),
+                  l10n.onbAgeQuestion,
+                  textAlign: TextAlign.center,
+                  style: Theme.of(
+                    context,
+                  ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w800),
+                )
+                .animate(delay: 300.ms)
+                .fadeIn(duration: Dt.base)
+                .slideY(begin: .15),
             const SizedBox(height: 6),
             Text(
               l10n.onbAgeQuestionSub,
               textAlign: TextAlign.center,
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyMedium
-                  ?.copyWith(color: AppTheme.textSecondary),
+              style: Theme.of(
+                context,
+              ).textTheme.bodyMedium?.copyWith(color: AppTheme.textSecondary),
             ).animate(delay: 380.ms).fadeIn(duration: Dt.base),
             const SizedBox(height: 16),
             Wrap(
-              alignment: WrapAlignment.center,
-              spacing: 8,
-              runSpacing: 8,
-              children: AgeGroup.values
-                  .where((a) => a != AgeGroup.unspecified)
-                  .map((a) => _AgeChip(
-                        label: a.label(l10n),
-                        selected: selected == a.wire,
-                        onTap: () => onPick(a.wire),
-                      ))
-                  .toList(),
-            ).animate(delay: 450.ms).fadeIn(duration: Dt.base).slideY(begin: .1),
+                  alignment: WrapAlignment.center,
+                  spacing: 8,
+                  runSpacing: 8,
+                  children: AgeGroup.values
+                      .where((a) => a != AgeGroup.unspecified)
+                      .map(
+                        (a) => _AgeChip(
+                          label: a.label(l10n),
+                          selected: selected == a.wire,
+                          onTap: () => onPick(a.wire),
+                        ),
+                      )
+                      .toList(),
+                )
+                .animate(delay: 450.ms)
+                .fadeIn(duration: Dt.base)
+                .slideY(begin: .1),
           ],
         ),
       ),
@@ -576,10 +604,9 @@ class _InstantValuePage extends StatelessWidget {
             Text(
               l10n.onbFirstTipTitle,
               textAlign: TextAlign.center,
-              style: Theme.of(context)
-                  .textTheme
-                  .titleLarge
-                  ?.copyWith(fontWeight: FontWeight.w800),
+              style: Theme.of(
+                context,
+              ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w800),
             ).animate().fadeIn(duration: Dt.base),
             if (ageLabel != null) ...[
               const SizedBox(height: 6),
@@ -588,7 +615,9 @@ class _InstantValuePage extends StatelessWidget {
                 children: [
                   Container(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 12, vertical: 4),
+                      horizontal: 12,
+                      vertical: 4,
+                    ),
                     decoration: BoxDecoration(
                       color: AppTheme.primary.withValues(alpha: 0.10),
                       borderRadius: BorderRadius.circular(20),
@@ -621,46 +650,46 @@ class _InstantValuePage extends StatelessWidget {
             const SizedBox(height: 16),
             // ── The tip itself ──
             Container(
-              padding: const EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                color: AppTheme.surface,
-                borderRadius: BorderRadius.circular(20),
-                boxShadow: Dt.cardShadow,
-                border:
-                    Border.all(color: Dt.primary.withValues(alpha: 0.20)),
-              ),
-              child: Column(
-                children: [
-                  NoorPresence(
-                    size: 64,
-                    semanticLabel: l10n.noorName,
+                  padding: const EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    color: AppTheme.surface,
+                    borderRadius: BorderRadius.circular(20),
+                    boxShadow: Dt.cardShadow,
+                    border: Border.all(
+                      color: Dt.primary.withValues(alpha: 0.20),
+                    ),
                   ),
-                  const SizedBox(height: 12),
-                  Text(
-                    _tipFor(l10n),
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                  child: Column(
+                    children: [
+                      NoorPresence(size: 64, semanticLabel: l10n.noorName),
+                      const SizedBox(height: 12),
+                      Text(
+                        _tipFor(l10n),
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                           height: 1.8,
                           fontWeight: FontWeight.w600,
                         ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            )
+                )
                 .animate(delay: 150.ms)
                 .fadeIn(duration: Dt.base)
-                .scale(begin: const Offset(.95, .95), curve: Curves.easeOutBack),
+                .scale(
+                  begin: const Offset(.95, .95),
+                  curve: Curves.easeOutBack,
+                ),
             const SizedBox(height: 24),
             // ── What's waiting inside ──
             Text(
               l10n.onbReadyForYou,
-              style: Theme.of(context)
-                  .textTheme
-                  .titleSmall
-                  ?.copyWith(fontWeight: FontWeight.w700),
+              style: Theme.of(
+                context,
+              ).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700),
             ).animate(delay: 300.ms).fadeIn(duration: Dt.base),
             const SizedBox(height: 10),
-            _PreviewRow(emoji: '🛤️', text: l10n.onbReadyPath)
+            _PreviewRow(icon: BrandIcon.path, text: l10n.onbReadyPath)
                 .animate(delay: 380.ms)
                 .fadeIn(duration: Dt.base)
                 .slideY(begin: .15),
@@ -669,13 +698,13 @@ class _InstantValuePage extends StatelessWidget {
             // deferred ask — after onboarding, the shell lands on the
             // assistant tab with this question already seeding the chat.
             _SampleQuestionRow(
-              label: l10n.onbReadyChat,
-              question: '«${sampleQuestionFor(l10n, ageGroup)}»',
-              armed: askArmed,
-              armedHint: l10n.onbAskSampleArmed,
-              hint: l10n.onbAskSampleHint,
-              onTap: onAskSample,
-            )
+                  label: l10n.onbReadyChat,
+                  question: '«${sampleQuestionFor(l10n, ageGroup)}»',
+                  armed: askArmed,
+                  armedHint: l10n.onbAskSampleArmed,
+                  hint: l10n.onbAskSampleHint,
+                  onTap: onAskSample,
+                )
                 .animate(delay: 460.ms)
                 .fadeIn(duration: Dt.base)
                 .slideY(begin: .15),
@@ -687,9 +716,9 @@ class _InstantValuePage extends StatelessWidget {
 }
 
 class _PreviewRow extends StatelessWidget {
-  const _PreviewRow({required this.emoji, required this.text});
+  const _PreviewRow({required this.icon, required this.text});
 
-  final String emoji;
+  final BrandIcon icon;
   final String text;
 
   @override
@@ -703,7 +732,7 @@ class _PreviewRow extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Text(emoji, style: const TextStyle(fontSize: 28)),
+          BrandGlyph(icon, size: 30, color: context.colors.primary),
           const SizedBox(width: 12),
           Expanded(
             child: Column(
@@ -768,7 +797,11 @@ class _SampleQuestionRow extends StatelessWidget {
         ),
         child: Row(
           children: [
-            const Text('💬', style: TextStyle(fontSize: 28)),
+            BrandGlyph(
+              BrandIcon.speechBubble,
+              size: 30,
+              color: context.colors.primary,
+            ),
             const SizedBox(width: 12),
             Expanded(
               child: Column(
@@ -804,12 +837,11 @@ class _SampleQuestionRow extends StatelessWidget {
                         child: Text(
                           armed ? armedHint : hint,
                           style: TextStyle(
-                            color: armed
-                                ? Dt.primaryDeep
-                                : AppTheme.textMuted,
+                            color: armed ? Dt.primaryDeep : AppTheme.textMuted,
                             fontSize: 12,
-                            fontWeight:
-                                armed ? FontWeight.w700 : FontWeight.w500,
+                            fontWeight: armed
+                                ? FontWeight.w700
+                                : FontWeight.w500,
                             height: 1.4,
                           ),
                         ),
@@ -870,17 +902,22 @@ class _LanguageSelectionPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Image.asset(
-                'assets/images/generated/onboarding_welcome.webp',
-                height: 140,
-                fit: BoxFit.contain,
-                errorBuilder: (_, _, _) => const Text(
-                  // The hero is bundled; if it is ever missing the layout
-                  // keeps its anchor instead of collapsing.
-                  '🌍',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 64),
-                ),
-              ).animate().fadeIn(duration: Dt.base).scale(
+                    'assets/images/generated/onboarding_welcome.webp',
+                    height: 140,
+                    fit: BoxFit.contain,
+                    errorBuilder: (_, _, _) => const SizedBox(
+                      // The hero is bundled; if it is ever missing the layout
+                      // keeps a drawn anchor instead of collapsing (a globe:
+                      // this is the language page).
+                      height: 140,
+                      child: Center(
+                        child: BrandGlyph(BrandIcon.globe, size: 64),
+                      ),
+                    ),
+                  )
+                  .animate()
+                  .fadeIn(duration: Dt.base)
+                  .scale(
                     begin: const Offset(.9, .9),
                     curve: Curves.easeOutBack,
                   ),
@@ -922,7 +959,6 @@ class _LanguageSelectionPage extends StatelessWidget {
     );
   }
 }
-
 
 // Note: we don't import `progress_providers.dart` from the form code
 // — the create call is the only side effect. The exports come

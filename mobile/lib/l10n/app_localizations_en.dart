@@ -498,13 +498,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get continuePath => 'Continue';
 
   @override
-  String get todaySun => 'Today ☀️';
+  String get todaySun => 'Today';
 
   @override
-  String get todaySunDay => 'Today ☀️';
+  String get todaySunDay => 'Today';
 
   @override
-  String get todaySunNight => 'Today 🌙';
+  String get todaySunNight => 'Today';
 
   @override
   String get shareOpinion => 'Share your opinion';
@@ -525,28 +525,31 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String greetingMorningName(Object name) {
-    return 'Good morning 🌤️\n$name\'s journey continues';
+    return 'Good morning\n$name\'s journey continues';
   }
 
   @override
   String greetingEveningName(Object name) {
-    return 'Good evening 🌙\n$name\'s journey continues';
+    return 'Good evening\n$name\'s journey continues';
   }
 
   @override
   String greetingMorningFirst(Object name) {
-    return 'Good morning 🌤️\nToday is day one of $name\'s journey';
+    return 'Good morning\nToday is day one of $name\'s journey';
   }
 
   @override
   String greetingEveningFirst(Object name) {
-    return 'Good evening 🌙\nToday is day one of $name\'s journey';
+    return 'Good evening\nToday is day one of $name\'s journey';
   }
 
   @override
   String dailyGiftLine(Object n) {
     return 'Today\'s gift: $n 🪙';
   }
+
+  @override
+  String get dailyGiftLabel => 'Today\'s gift';
 
   @override
   String get feedbackMessage =>
@@ -953,7 +956,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Just one question — and we\'ll tailor the experience for you right away.';
 
   @override
-  String get onbFirstTipTitle => 'Your first personalized tip 🎁';
+  String get onbFirstTipTitle => 'Your first personalized tip';
 
   @override
   String onbTipForAge(String ageLabel) {

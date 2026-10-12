@@ -98,7 +98,8 @@ KEYS = [
     "a11yExitChildMode",
     "habitChildModeExitTitle", "childModeHandoff", "childModePinMismatch",
     "childModePinIncorrect", "childModeEnterFailed", "childModeBudgetSpent",
-    "childModeOffline",
+    "childModeOffline", "childModePinSetupSubtitle", "childModePinConfirmSubtitle",
+    "childModePinEnterSubtitle",
     # failure screens
     "bootError", "forceUpdateTitle",
     # family programs (fresh/09)
@@ -112,6 +113,11 @@ KEYS = [
     "lessonCelebrationTitle", "lessonNextStepTitle", "lessonNextStepConfirm",
     "followupTitle", "followupTitleFor", "followupWorked", "followupThanksTitle",
     "reviewPromptTitle", "reviewPromptLater", "settingsThemeLight",
+    "todayMissionOpen", "praiseFromFamily", "dailyGiftLabel", "missionTodayLabel",
+    "ageGroup4to6", "missionDone", "missionConfirmAll", "praiseChipAhsant",
+    "settingsSwitchChild", "childrenAddNew", "add", "missionOpenForChild",
+    "parentDayTitle", "childName", "addChildBtn", "addChildNameHint",
+    "hubParentDay", "parentDayWith",
 ]
 
 # Strings the app hardcodes outside the ARB files.
@@ -120,6 +126,7 @@ LITERALS = {
     "lit_langTitle": ("اختر لغة التطبيق", "Choose App Language"),
     "lit_langArabic": ("العربية", "العربية"),
     "lit_langEnglish": ("English", "English"),
+    "praiseChipProud": ("فخورون بك", "We are proud of you"),
     # main.dart, ErrorWidget.builder — what a parent sees when a build throws
     "lit_errorWidget": (
         "تعذّر عرض هذا الجزء. حاول مرة أخرى، وإن تكرّر أرسل لنا ملاحظة.",
@@ -391,6 +398,18 @@ GALLERY_SCREENS = [
     ("settings", "الإعدادات"),
     ("settings_dark", "الإعدادات — داكن"),
     ("home_dark", "اليوم — داكن"),
+    ("noor_face_today", "NoorFace في «اليوم»"),
+    ("gift_moment", "لحظة الهدية على «اليوم»"),
+    ("gift_moment_0ms", "لحظة الهدية — ٠ms (البداية)"),
+    ("gift_moment_150ms", "لحظة الهدية — ١٥٠ms (الانفجار)"),
+    ("gift_moment_400ms", "لحظة الهدية — ٤٠٠ms (الاستقرار)"),
+    ("praise_child_sticker", "كلمة الأب على شاشة الطفل — ٤–٦ (ملصق)"),
+    ("praise_child_sticker_and_text", "كلمة الأب على شاشة الطفل — ٧–١٢ (ملصق ونص)"),
+    ("praise_card_0ms", "كارت كلمة الأب — ٠ms (الظهور)"),
+    ("praise_card_150ms", "كارت كلمة الأب — ١٥٠ms (الحركة)"),
+    ("praise_card_400ms", "كارت كلمة الأب — ٤٠٠ms (الميل والاستقرار)"),
+    ("home_dark_noor_face", "NoorFace في «اليوم» — داكن"),
+    ("home_dark_gift", "لحظة الهدية على «اليوم» — داكن"),
 ]
 
 GALLERY_ONBOARDING = [
@@ -404,7 +423,23 @@ GALLERY_ONBOARDING = [
 # path. Every OTHER screen must have an «after» shot in every variant — with
 # --require-after (what run.sh passes on CI) a missing one fails the build, so
 # the gallery can never go green while blind again.
-GALLERY_GUARDED = {"followup_card", "followup", "quiz", "quiz_summary", "path_detail"}
+GALLERY_GUARDED = {
+    "followup_card",
+    "followup",
+    "quiz",
+    "quiz_summary",
+    "path_detail",
+    "noor_face_today",
+    "gift_moment",
+    "gift_moment_0ms",
+    "gift_moment_150ms",
+    "gift_moment_400ms",
+    "praise_card_0ms",
+    "praise_card_150ms",
+    "praise_card_400ms",
+    "home_dark_noor_face",
+    "home_dark_gift",
+}
 
 # gallery__01_before_ar__before__ar__home.png — the flow name is matched
 # lazily so renaming a flow cannot break the pairing. The optional trailing
@@ -567,6 +602,202 @@ def cmd_summary(args: argparse.Namespace) -> int:
     return 0
 
 
+# ── hierarchy verification ───────────────────────────────────────────────
+
+EXPECTED_SCREEN_MARKERS: dict[str, dict[str, list[str]]] = {
+    "settings": {
+        "required_ar": ["الإعدادات"],
+        "required_en": ["Settings"],
+        "forbidden": ["علامة التبويب 1 من", "المزيد", "Tab 1 of"],
+    },
+    "settings_dark": {
+        "required_ar": ["الإعدادات"],
+        "required_en": ["Settings"],
+    },
+    "home": {
+        "required_ar": ["اليوم"],
+        "required_en": ["Today"],
+        "forbidden": ["الإعدادات", "Settings"],
+    },
+    "home_dark": {
+        "required_ar": ["اليوم"],
+        "required_en": ["Today"],
+        "forbidden": ["الإعدادات", "Settings"],
+    },
+    "home_dark_noor_face": {
+        "required_ar": ["اليوم"],
+        "required_en": ["Today"],
+        "forbidden": ["الإعدادات", "Settings", "المزيد"],
+    },
+    "home_dark_gift": {
+        "required_ar": ["اليوم"],
+        "required_en": ["Today"],
+        "forbidden": ["الإعدادات", "Settings", "المزيد"],
+    },
+    "noor_face_today": {
+        "required_ar": ["اليوم"],
+        "required_en": ["Today"],
+        "forbidden": ["الإعدادات", "Settings"],
+    },
+    "gift_moment": {
+        "required_ar": ["اليوم"],
+        "required_en": ["Today"],
+    },
+    "praise_child_sticker": {
+        "required_ar": ["أهلك يقولون لك"],
+        "required_en": ["Your family says to you"],
+        "forbidden": [
+            "الإعدادات", "Settings", "وضع الطفل", "اختر رمز", "أدخل رمز",
+            "أكّد الكل", "Confirm all", "كلمة طيبة مع التأكيد", "فخورون بك",
+            "We are proud of you", "أحسنت", "Well done",
+        ],
+    },
+    "praise_child_sticker_and_text": {
+        "required_ar": ["أهلك يقولون لك", "فخورون بك"],
+        "required_en": ["Your family says to you", "We are proud of you"],
+        "forbidden": [
+            "الإعدادات", "Settings", "وضع الطفل", "اختر رمز", "أدخل رمز",
+            "أكّد الكل", "Confirm all", "كلمة طيبة مع التأكيد",
+        ],
+    },
+    "lesson": {
+        "required_ar": ["أكملت الدرس", "إكمال الدرس", "الدرس", "رجوع"],
+        "required_en": ["Lesson", "Complete Lesson", "Back"],
+        "forbidden": ["الإعدادات", "Settings"],
+    },
+    "onboarding_1_language": {
+        "required_ar": ["اختر لغة التطبيق"],
+        "required_en": ["Choose App Language", "Language"],
+        "forbidden": ["الإعدادات", "Settings"],
+    },
+    "onboarding_2_first_tip": {
+        "required_ar": ["ابدأ رحلتك", "7–9"],
+        "required_en": ["Start your journey", "7–9"],
+        "forbidden": ["الإعدادات", "Settings"],
+    },
+}
+
+
+def verify_screen_hierarchy(
+    screen: str, hierarchy_text: str, lang: str | None = None
+) -> list[str]:
+    """Check that the view hierarchy text matches expected markers for screen.
+
+    Requires ALL markers in required list for the given language,
+    and ensures no forbidden markers are present.
+    Returns list of error descriptions (empty if valid).
+    """
+    rules = EXPECTED_SCREEN_MARKERS.get(screen)
+    if not rules:
+        return []
+    errors = []
+
+    required: list[str] = []
+    if lang == "ar" and "required_ar" in rules:
+        required = rules["required_ar"]
+    elif lang == "en" and "required_en" in rules:
+        required = rules["required_en"]
+    elif "required" in rules:
+        required = rules["required"]
+    elif lang is None:
+        req_ar = rules.get("required_ar", [])
+        req_en = rules.get("required_en", [])
+        ar_matches = all(req in hierarchy_text for req in req_ar) if req_ar else False
+        en_matches = all(req in hierarchy_text for req in req_en) if req_en else False
+        if not (ar_matches or en_matches):
+            errors.append(
+                f"Missing expected markers for screen '{screen}' (requires all AR {req_ar} or all EN {req_en})"
+            )
+        for forbidden in rules.get("forbidden", []):
+            if forbidden in hierarchy_text:
+                errors.append(
+                    f"Found forbidden marker '{forbidden}' in screen '{screen}' hierarchy"
+                )
+        return errors
+
+    for req in required:
+        if req not in hierarchy_text:
+            errors.append(
+                f"Missing expected markers (required '{req}') for screen '{screen}'"
+            )
+    for forbidden in rules.get("forbidden", []):
+        if forbidden in hierarchy_text:
+            errors.append(
+                f"Found forbidden marker '{forbidden}' in screen '{screen}' hierarchy"
+            )
+    return errors
+
+
+def cmd_verify_hierarchy(args: argparse.Namespace) -> int:
+    lang = getattr(args, "lang", "ar")
+    require = getattr(args, "require", False)
+    if getattr(args, "report_dir", None):
+        report_dir = Path(args.report_dir)
+        if not report_dir.is_dir():
+            if require:
+                print(f"::error title=Hierarchy check::Report dir '{report_dir}' does not exist", file=sys.stderr)
+                return 1
+            return 0
+        dump_files = list(report_dir.rglob("screen-hierarchy/*.json")) + list(
+            report_dir.rglob("screen-hierarchy/*.xml")
+        )
+        if not dump_files:
+            if require:
+                print(f"::error title=Hierarchy check::No screen hierarchy dump files found in '{report_dir}'", file=sys.stderr)
+                return 1
+            return 0
+        total_errors = []
+        verified_screens = set()
+        for path in dump_files:
+            text = path.read_text(encoding="utf-8", errors="replace")
+            matched_screen = None
+            for screen in sorted(EXPECTED_SCREEN_MARKERS.keys(), key=len, reverse=True):
+                if screen in path.name:
+                    matched_screen = screen
+                    break
+            if not matched_screen:
+                if "praise_child_sticker_and_text" in path.name:
+                    matched_screen = "praise_child_sticker_and_text"
+                elif "praise_child_sticker" in path.name or "praiseFromFam" in path.name:
+                    matched_screen = "praise_child_sticker"
+                elif "home" in path.name:
+                    matched_screen = "home"
+                elif "lesson" in path.name:
+                    matched_screen = "lesson"
+                elif "settings" in path.name:
+                    matched_screen = "settings"
+            if matched_screen:
+                errs = verify_screen_hierarchy(matched_screen, text, lang=lang)
+                if errs:
+                    total_errors.extend(
+                        [f"{path.name} ({matched_screen}): {e}" for e in errs]
+                    )
+                else:
+                    verified_screens.add(matched_screen)
+        if total_errors:
+            for err in total_errors:
+                print(f"::error title=Hierarchy check::{err}", file=sys.stderr)
+            return 1
+        return 0
+
+    if not getattr(args, "hierarchy", None) or not getattr(args, "screen", None):
+        print(
+            "verify-hierarchy requires screen and hierarchy file (or --report-dir)",
+            file=sys.stderr,
+        )
+        return 2
+
+    path = Path(args.hierarchy)
+    text = path.read_text(encoding="utf-8", errors="replace")
+    errors = verify_screen_hierarchy(args.screen, text, lang=lang)
+    if errors:
+        for err in errors:
+            print(f"::error title=Hierarchy check::{err}", file=sys.stderr)
+        return 1
+    print(f"PASS  screen '{args.screen}' matches hierarchy in {path}")
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = p.add_subparsers(dest="cmd", required=True)
@@ -598,6 +829,14 @@ def main(argv: list[str] | None = None) -> int:
     s = sub.add_parser("summary", help="render the Markdown summary")
     s.add_argument("out_dir")
     s.set_defaults(func=cmd_summary)
+
+    s = sub.add_parser("verify-hierarchy", help="check view hierarchy text matches expected screen")
+    s.add_argument("screen", nargs="?", help="screen id")
+    s.add_argument("hierarchy", nargs="?", help="path to hierarchy dump file")
+    s.add_argument("--report-dir", help="dir with maestro test reports to scan")
+    s.add_argument("--lang", default="ar", help="screen language (ar or en)")
+    s.add_argument("--require", action="store_true", help="fail if report-dir or dump files are missing")
+    s.set_defaults(func=cmd_verify_hierarchy)
 
     args = p.parse_args(argv)
     return args.func(args)

@@ -15,6 +15,7 @@ import '../../../theme/app_colors.dart';
 import '../../../theme/design_tokens.dart';
 import '../../../widgets/ui/animated_progress_bar.dart';
 import '../../../widgets/ui/bouncy_button.dart';
+import '../../../widgets/ui/brand_glyph.dart';
 import '../../../widgets/ui/emoji_hero.dart';
 import '../../program/data/models.dart';
 import '../../program/data/progress_models.dart';
@@ -35,8 +36,9 @@ class TodayFocusCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
-    final asyncPaths =
-        ref.watch(pathsListProvider(PathsListArgs(ageGroup: ageGroup)));
+    final asyncPaths = ref.watch(
+      pathsListProvider(PathsListArgs(ageGroup: ageGroup)),
+    );
     final paths = asyncPaths.maybeWhen(
       data: (env) => env.paths,
       orElse: () => const <CurriculumPath>[],
@@ -47,13 +49,13 @@ class TodayFocusCard extends ConsumerWidget {
     int done = 0;
     if (bundle != null && paths.isNotEmpty) {
       for (final lesson in bundle!.lessons.reversed) {
-        final match =
-            paths.where((p) => p.id == lesson.pathId).toList();
+        final match = paths.where((p) => p.id == lesson.pathId).toList();
         if (match.isEmpty) continue;
         final p = match.first;
         final completedInPath = bundle!.lessons
-            .where((l) =>
-                l.pathId == p.id && l.status == ProgressStatus.completed)
+            .where(
+              (l) => l.pathId == p.id && l.status == ProgressStatus.completed,
+            )
             .length;
         if (completedInPath < p.lessonIds.length) {
           resume = p;
@@ -71,7 +73,9 @@ class TodayFocusCard extends ConsumerWidget {
       // So: ask the server which lesson to open, and open it.
       final childId = ref.watch(activeChildIdProvider);
       final asyncNext = ref.watch(
-        nextLessonProvider(NextLessonArgs(ageGroup: ageGroup, childId: childId)),
+        nextLessonProvider(
+          NextLessonArgs(ageGroup: ageGroup, childId: childId),
+        ),
       );
       // Only the happy path changes. While loading, or if the endpoint is
       // missing (older backend) or unreachable, the original browse nudge
@@ -97,7 +101,9 @@ class TodayFocusCard extends ConsumerWidget {
             children: [
               Row(
                 children: [
-                  const EmojiHero(emoji: '🏁', size: 48),
+                  // A finished path earns its medal — drawn, not an emoji
+                  // (جولة الحرفة).
+                  const GlyphHero(BrandIcon.medal, size: 48),
                   const SizedBox(width: 12),
                   Expanded(
                     child: Text(
@@ -148,7 +154,9 @@ class TodayFocusCard extends ConsumerWidget {
           children: [
             Row(
               children: [
-                const EmojiHero(emoji: '🚀', size: 48),
+                // Starting the journey lights the lantern — the drawn
+                // successor of the 🚀 this card carried (جولة الحرفة).
+                const GlyphHero(BrandIcon.lantern, size: 48),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Text(
@@ -294,7 +302,9 @@ class TodayFocusCard extends ConsumerWidget {
           ),
           const SizedBox(height: 6),
           Text(
-            remaining == 1 ? l10n.lessonsRemaining_one : l10n.lessonsRemaining_other(remaining),
+            remaining == 1
+                ? l10n.lessonsRemaining_one
+                : l10n.lessonsRemaining_other(remaining),
             style: TextStyle(
               color: Colors.white.withValues(alpha: .9),
               fontSize: 12,
@@ -308,9 +318,9 @@ class TodayFocusCard extends ConsumerWidget {
             edgeColor: Colors.white.withValues(alpha: .35),
             onTap: () {
               Analytics.todayBlockTapped('step', 'continue');
-              Navigator.of(context).push(
-                AppRoutes.pathDetail(resume!.id, ageGroup),
-              );
+              Navigator.of(
+                context,
+              ).push(AppRoutes.pathDetail(resume!.id, ageGroup));
             },
           ),
         ],

@@ -28,8 +28,9 @@ Widget _host(Widget child, {AppPalette? palette}) {
 }
 
 void main() {
-  testWidgets('calm mood shows the serene mascot inside an oval window',
-      (tester) async {
+  testWidgets('calm mood shows the serene mascot inside an oval window', (
+    tester,
+  ) async {
     await tester.pumpWidget(_host(const NoorPresence(size: 96)));
     // The halo loops forever — pumpAndSettle would time out by design.
     await tester.pump(const Duration(milliseconds: 300));
@@ -49,10 +50,10 @@ void main() {
     expect(find.byType(ClipOval), findsOneWidget);
   });
 
-  testWidgets('proud mood switches to the celebrate mascot',
-      (tester) async {
-    await tester
-        .pumpWidget(_host(const NoorPresence(size: 96, mood: NoorMood.proud)));
+  testWidgets('proud mood switches to the celebrate mascot', (tester) async {
+    await tester.pumpWidget(
+      _host(const NoorPresence(size: 96, mood: NoorMood.proud)),
+    );
     await tester.pump(const Duration(milliseconds: 300));
 
     final image = tester.widget<Image>(find.byType(Image));
@@ -62,8 +63,9 @@ void main() {
     );
   });
 
-  testWidgets('the halo is a CustomPaint that changes with the mood',
-      (tester) async {
+  testWidgets('the halo is a CustomPaint that changes with the mood', (
+    tester,
+  ) async {
     await tester.pumpWidget(_host(const NoorPresence(size: 96)));
     // The halo loops forever — pumpAndSettle would time out by design.
     await tester.pump(const Duration(milliseconds: 300));
@@ -76,19 +78,23 @@ void main() {
     expect(haloFinder, findsOneWidget);
 
     await tester.pumpWidget(
-        _host(const NoorPresence(size: 96, mood: NoorMood.proud)));
+      _host(const NoorPresence(size: 96, mood: NoorMood.proud)),
+    );
     await tester.pump(const Duration(milliseconds: 300));
     expect(haloFinder, findsOneWidget);
   });
 
-  testWidgets('window ground and rim follow the dark palette',
-      (tester) async {
+  testWidgets('window ground and rim follow the dark palette', (tester) async {
     await tester.pumpWidget(
-        _host(const NoorPresence(size: 96), palette: AppPalette.dark));
+      _host(const NoorPresence(size: 96), palette: AppPalette.dark),
+    );
     await tester.pump(const Duration(milliseconds: 300));
 
     final container = tester.widget<Container>(
-      find.ancestor(of: find.byType(ClipOval), matching: find.byType(Container)),
+      find.ancestor(
+        of: find.byType(ClipOval),
+        matching: find.byType(Container),
+      ),
     );
     final decoration = container.decoration! as BoxDecoration;
     expect(decoration.color, AppPalette.dark.surfaceAlt);
@@ -102,9 +108,7 @@ void main() {
         home: Builder(
           builder: (context) => MediaQuery(
             data: MediaQuery.of(context).copyWith(disableAnimations: true),
-            child: const Scaffold(
-              body: Center(child: NoorPresence(size: 96)),
-            ),
+            child: const Scaffold(body: Center(child: NoorPresence(size: 96))),
           ),
         ),
       ),
@@ -113,8 +117,11 @@ void main() {
     await tester.pump(const Duration(seconds: 1));
 
     final state = tester.state<NoorPresenceState>(find.byType(NoorPresence));
-    expect(state.haloLooping, isFalse,
-        reason: 'reduceMotion must hold the halo still, not flicker it');
+    expect(
+      state.haloLooping,
+      isFalse,
+      reason: 'reduceMotion must hold the halo still, not flicker it',
+    );
   });
 
   testWidgets('halo loops when motion is allowed', (tester) async {

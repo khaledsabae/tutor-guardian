@@ -15,9 +15,11 @@ library;
 import 'package:flutter/material.dart';
 
 import '../../../l10n/app_localizations.dart';
+import '../../../theme/app_colors.dart';
 import '../../../theme/app_theme.dart';
 import '../../../theme/design_tokens.dart';
 import '../../../widgets/ui/bouncy_button.dart';
+import '../../../widgets/ui/brand_glyph.dart';
 
 /// Shows the lesson's concrete action. Returns true when the parent
 /// acknowledged it, false when they dismissed the sheet instead.
@@ -65,11 +67,7 @@ class _NextStepSheet extends StatelessWidget {
             const SizedBox(height: 6),
             Text(
               l10n.lessonNextStepIntro,
-              style: TextStyle(
-                fontSize: 13,
-                color: Dt.inkSoft,
-                height: 1.4,
-              ),
+              style: TextStyle(fontSize: 13, color: Dt.inkSoft, height: 1.4),
             ),
             const SizedBox(height: 16),
             Container(
@@ -82,7 +80,13 @@ class _NextStepSheet extends StatelessWidget {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text('💡', style: TextStyle(fontSize: 22)),
+                  // The lit lantern is the drawn successor of the 💡 this
+                  // card carried (جولة الحرفة) — gold, like the tint behind.
+                  BrandGlyph(
+                    BrandIcon.lantern,
+                    size: 26,
+                    color: context.colors.accent,
+                  ),
                   const SizedBox(width: 12),
                   Expanded(
                     child: Text(

@@ -1,0 +1,29 @@
+# Exit child mode cleanly back to Today using the PIN.
+appId: com.alsaba.almorabbi
+---
+- tapOn:
+    text: '${output.t.a11yExitChildMode}'
+    optional: true
+- extendedWaitUntil:
+    visible: '${output.t.habitChildModeExitTitle}'
+    timeout: 10000
+    optional: true
+- runFlow:
+    when:
+      visible: '${output.t.habitChildModeExitTitle}'
+    commands:
+      - tapOn: '${output.t.habitChildModeExit}'
+      - waitForAnimationToEnd:
+          timeout: 2000
+      - runFlow: enter_pin.yaml
+- extendedWaitUntil:
+    visible: '${output.lead.navToday}'
+    timeout: 20000
+    optional: true
+- runFlow:
+    when:
+      notVisible: '${output.lead.navToday}'
+    commands:
+      - back
+      - waitForAnimationToEnd:
+          timeout: 2000

@@ -9,13 +9,21 @@ library;
 
 import 'package:flutter/material.dart';
 
+import '../../../theme/app_colors.dart';
 import '../../../theme/app_theme.dart';
+import '../../../widgets/ui/brand_glyph.dart';
 
 /// A numbered stop on the page — title above the block's own card.
 class TodaySectionHeader extends StatelessWidget {
-  const TodaySectionHeader({super.key, required this.emoji, required this.title});
+  const TodaySectionHeader({
+    super.key,
+    required this.icon,
+    required this.title,
+  });
 
-  final String emoji;
+  /// The drawn mark of the stop — a [BrandIcon], never an emoji string
+  /// (جولة الحرفة: one illustration language, identical on every device).
+  final BrandIcon icon;
   final String title;
 
   @override
@@ -28,7 +36,7 @@ class TodaySectionHeader extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ExcludeSemantics(
-              child: Text(emoji, style: const TextStyle(fontSize: 18)),
+              child: BrandGlyph(icon, size: 20, color: context.colors.primary),
             ),
             const SizedBox(width: 8),
             // Expanded + no maxLines: at 200% text a child's name must wrap,
@@ -37,10 +45,10 @@ class TodaySectionHeader extends StatelessWidget {
               child: Text(
                 title,
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.w800,
-                      color: AppTheme.textPrimary,
-                      height: 1.3,
-                    ),
+                  fontWeight: FontWeight.w800,
+                  color: AppTheme.textPrimary,
+                  height: 1.3,
+                ),
               ),
             ),
           ],
@@ -69,9 +77,9 @@ class TodayMoreDivider extends StatelessWidget {
             child: Text(
               label,
               style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                    color: color,
-                    fontWeight: FontWeight.w700,
-                  ),
+                color: color,
+                fontWeight: FontWeight.w700,
+              ),
             ),
           ),
           Expanded(child: Divider(color: color.withValues(alpha: .35))),

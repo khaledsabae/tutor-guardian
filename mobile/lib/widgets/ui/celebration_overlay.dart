@@ -6,9 +6,11 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../core/motion.dart';
+import '../../features/companion/widgets/noor_presence.dart';
 import '../../l10n/app_localizations.dart';
 import '../../theme/design_tokens.dart';
 import 'bouncy_button.dart';
+import 'brand_glyph.dart';
 import 'package:almorabbi/core/haptics.dart';
 
 /// How loud a celebration is («نور والقناديل» phase 1 — مستويات الاحتفال).
@@ -31,10 +33,12 @@ enum CelebrationTier {
 typedef CelebrationBadge = ({String emoji, String title});
 
 /// Full-screen celebration: confetti burst + scale-in dialog with a big
-/// emoji. The reward moment for completing a lesson / acing a quiz.
+/// drawn glyph (or, from callers not yet migrated, a big emoji). The reward
+/// moment for completing a lesson / acing a quiz.
 Future<void> showCelebration(
   BuildContext context, {
-  required String emoji,
+  String emoji = '',
+  BrandIcon? glyph,
   required String title,
   required String message,
   String? buttonLabel,
@@ -51,8 +55,7 @@ Future<void> showCelebration(
   // confetti burst and star rain are decoration — decoration is what the
   // setting asks to drop. The entrance transitions collapse on their own
   // (Flutter runs controllers at 5% under the setting).
-  final effects =
-      tier == CelebrationTier.milestone && !reduceMotion(context);
+  final effects = tier == CelebrationTier.milestone && !reduceMotion(context);
   return showGeneralDialog<void>(
     context: context,
     barrierColor: Colors.black54,
@@ -61,6 +64,7 @@ Future<void> showCelebration(
     transitionDuration: Dt.base,
     pageBuilder: (dialogContext, _, _) => _CelebrationDialog(
       emoji: emoji,
+      glyph: glyph,
       title: title,
       message: message,
       buttonLabel: buttonLabel,
@@ -79,6 +83,10 @@ Future<void> showCelebration(
 
 class _CelebrationDialog extends StatefulWidget {
   final String emoji;
+
+  /// The drawn hero (جولة الحرفة). When set it replaces the [emoji] text;
+  /// [emoji] remains only as the imageAsset error fallback.
+  final BrandIcon? glyph;
   final String title;
   final String message;
   final String? buttonLabel;
@@ -92,7 +100,8 @@ class _CelebrationDialog extends StatefulWidget {
   final CelebrationBadge? badge;
 
   const _CelebrationDialog({
-    required this.emoji,
+    this.emoji = '',
+    this.glyph,
     required this.title,
     required this.message,
     required this.buttonLabel,
@@ -108,8 +117,9 @@ class _CelebrationDialog extends StatefulWidget {
 }
 
 class _CelebrationDialogState extends State<_CelebrationDialog> {
-  late final ConfettiController _confetti =
-      ConfettiController(duration: const Duration(milliseconds: 1500));
+  late final ConfettiController _confetti = ConfettiController(
+    duration: const Duration(milliseconds: 1500),
+  );
   bool _sharing = false;
 
   Future<void> _handleShare() async {
@@ -134,6 +144,12 @@ class _CelebrationDialogState extends State<_CelebrationDialog> {
     super.dispose();
   }
 
+  /// The big moment-mark: a drawn brand glyph when the caller migrated,
+  /// the legacy emoji text otherwise.
+  Widget _hero() => widget.glyph != null
+      ? BrandGlyph(widget.glyph!, size: 84, color: Dt.accent)
+      : Text(widget.emoji, style: const TextStyle(fontSize: 80));
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -151,19 +167,12 @@ class _CelebrationDialogState extends State<_CelebrationDialog> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   (widget.imageAsset != null
-                          ? Image.asset(
-                              widget.imageAsset!,
-                              width: 110,
-                              height: 110,
-                              fit: BoxFit.contain,
-                              filterQuality: FilterQuality.medium,
-                              errorBuilder: (_, _, _) => Text(
-                                widget.emoji,
-                                style: const TextStyle(fontSize: 80),
-                              ),
+                          ? NoorPresence(
+                              size: 96,
+                              mood: NoorMood.proud,
+                              semanticLabel: widget.title,
                             )
-                          : Text(widget.emoji,
-                              style: const TextStyle(fontSize: 80)))
+                          : _hero())
                       .animate()
                       .scale(
                         begin: const Offset(.3, .3),
@@ -201,7 +210,9 @@ class _CelebrationDialogState extends State<_CelebrationDialog> {
                     // sees (phase 1: هدية اليوم والشارات).
                     Container(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 12, vertical: 6),
+                        horizontal: 12,
+                        vertical: 6,
+                      ),
                       decoration: BoxDecoration(
                         color: Dt.accent.withValues(alpha: 0.15),
                         borderRadius: BorderRadius.circular(Dt.rChip),
@@ -209,8 +220,13 @@ class _CelebrationDialogState extends State<_CelebrationDialog> {
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Text(widget.badge!.emoji,
-                              style: const TextStyle(fontSize: 16)),
+                          if (widget.badge!.emoji.isNotEmpty)
+                            Text(
+                              widget.badge!.emoji,
+                              style: const TextStyle(fontSize: 16),
+                            )
+                          else
+                            const BrandGlyph(BrandIcon.sprig, size: 16),
                           const SizedBox(width: 6),
                           Flexible(
                             child: Text(
@@ -234,14 +250,15 @@ class _CelebrationDialogState extends State<_CelebrationDialog> {
                       label: _sharing
                           ? AppLocalizations.of(context).sharePreparing
                           : widget.shareLabel ??
-                              AppLocalizations.of(context).shareThisMoment,
+                                AppLocalizations.of(context).shareThisMoment,
                       color: Dt.primary,
                       onTap: _sharing ? () {} : _handleShare,
                     ),
                     const SizedBox(height: 10),
                   ],
                   BouncyButton(
-                    label: widget.buttonLabel ??
+                    label:
+                        widget.buttonLabel ??
                         AppLocalizations.of(context).continueBtn,
                     color: Dt.accent,
                     onTap: () => Navigator.of(context).pop(),

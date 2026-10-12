@@ -4,22 +4,28 @@ import 'package:flutter_animate/flutter_animate.dart';
 import '../../theme/design_tokens.dart';
 import 'bouncy_button.dart';
 
-/// Friendly empty/error state: big emoji, bold title, soft subtitle,
-/// optional action button. Replaces the bare icon+text placeholders.
+/// Friendly empty/error state: big drawn icon (or legacy emoji), bold
+/// title, soft subtitle, optional action button. Replaces the bare
+/// icon+text placeholders.
 class EmptyState extends StatelessWidget {
+  /// Leading graphic, drawn (BrandGlyph) — the emoji-free successor to
+  /// [emoji] (جولة الحرفة). Falls back to the emoji when null.
+  final Widget? icon;
+
   final String emoji;
   final String title;
   final String? subtitle;
   final String? actionLabel;
   final VoidCallback? onAction;
 
-  /// Optional illustration shown instead of [emoji] (falls back to the emoji
-  /// if the asset is missing).
+  /// Optional illustration shown instead of [icon]/[emoji] (falls back to
+  /// the emoji if the asset is missing).
   final String? imageAsset;
 
   const EmptyState({
     super.key,
-    required this.emoji,
+    this.icon,
+    this.emoji = '',
     required this.title,
     this.subtitle,
     this.actionLabel,
@@ -29,6 +35,7 @@ class EmptyState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final fallback = icon ?? Text(emoji, style: const TextStyle(fontSize: 72));
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(32),
@@ -36,22 +43,22 @@ class EmptyState extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             ExcludeSemantics(
-              child: (imageAsset != null
-                      ? Image.asset(
-                          imageAsset!,
-                          excludeFromSemantics: true,
-                          height: 160,
-                          fit: BoxFit.contain,
-                          errorBuilder: (_, _, _) =>
-                              Text(emoji, style: const TextStyle(fontSize: 72)),
-                        )
-                      : Text(emoji, style: const TextStyle(fontSize: 72)))
-                  .animate()
-                  .scale(
-                    begin: const Offset(.6, .6),
-                    duration: Dt.slow,
-                    curve: Curves.easeOutBack,
-                  ),
+              child:
+                  (imageAsset != null
+                          ? Image.asset(
+                              imageAsset!,
+                              excludeFromSemantics: true,
+                              height: 160,
+                              fit: BoxFit.contain,
+                              errorBuilder: (_, _, _) => fallback,
+                            )
+                          : fallback)
+                      .animate()
+                      .scale(
+                        begin: const Offset(.6, .6),
+                        duration: Dt.slow,
+                        curve: Curves.easeOutBack,
+                      ),
             ),
             const SizedBox(height: 16),
             Text(
@@ -68,11 +75,7 @@ class EmptyState extends StatelessWidget {
               Text(
                 subtitle!,
                 textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Dt.inkSoft,
-                  height: 1.5,
-                ),
+                style: TextStyle(fontSize: 14, color: Dt.inkSoft, height: 1.5),
               ),
             ],
             if (actionLabel != null && onAction != null) ...[

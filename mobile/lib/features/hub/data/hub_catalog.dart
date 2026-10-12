@@ -15,10 +15,11 @@
 /// through «أطفالي», where a child has actually been chosen.
 library;
 
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 
 import '../../../core/app_routes.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../../widgets/ui/brand_glyph.dart';
 import '../../routine/screens/daily_routine_screen.dart' show habitTabLabel;
 
 /// A server capability a tile depends on. The hub shows such a tile only once
@@ -34,7 +35,8 @@ enum HubRequirement {
 class HubItem {
   const HubItem({
     required this.id,
-    required this.emoji,
+    this.glyph,
+    this.icon,
     required this.label,
     required this.route,
     this.requires,
@@ -45,7 +47,8 @@ class HubItem {
 
   /// Stable analytics id — reported via `hub_item_tapped`. Never translated.
   final String id;
-  final String emoji;
+  final BrandIcon? glyph;
+  final IconData? icon;
 
   /// [ageGroup] is the active child's, for the one label that legitimately
   /// depends on it (the 0-6 routine tracker vs the 7-18 habit balance).
@@ -72,7 +75,7 @@ final List<HubGroup> kHubGroups = [
     items: [
       HubItem(
         id: 'children_list',
-        emoji: '👨‍👩‍👧',
+        icon: Icons.people_outline,
         label: (l10n, _) => l10n.hubMyChildren,
         route: AppRoutes.childrenList,
       ),
@@ -80,14 +83,14 @@ final List<HubGroup> kHubGroups = [
       // until the server answers `GET /api/programs`.
       HubItem(
         id: 'programs',
-        emoji: '✨',
+        glyph: BrandIcon.star,
         label: (l10n, _) => l10n.programsTitle,
         route: AppRoutes.programs,
         requires: HubRequirement.programs,
       ),
       HubItem(
         id: 'daily_routine',
-        emoji: '📊',
+        icon: Icons.today_outlined,
         // The only age-dependent label in the app. It used to sit on a bottom
         // nav tab, where switching child silently relabelled the tab under the
         // user's thumb; here it is harmless.
@@ -96,13 +99,13 @@ final List<HubGroup> kHubGroups = [
       ),
       HubItem(
         id: 'habit_customize',
-        emoji: '🎯',
+        icon: Icons.tune_outlined,
         label: (l10n, _) => l10n.hubCustomizeHabits,
         route: AppRoutes.habitCustomize,
       ),
       HubItem(
         id: 'parenting_insights',
-        emoji: '🧠',
+        glyph: BrandIcon.sprig,
         label: (l10n, _) => l10n.hubInsights,
         route: AppRoutes.parentingInsights,
       ),
@@ -114,7 +117,7 @@ final List<HubGroup> kHubGroups = [
       // A feature nobody can find measures as a feature nobody wants.
       HubItem(
         id: 'parent_day',
-        emoji: '🧭',
+        icon: Icons.explore_outlined,
         label: (l10n, _) => l10n.hubParentDay,
         route: AppRoutes.parentDay,
       ),
@@ -136,13 +139,13 @@ final List<HubGroup> kHubGroups = [
     items: [
       HubItem(
         id: 'games',
-        emoji: '🎮',
+        icon: Icons.sports_esports_outlined,
         label: (l10n, _) => l10n.educationalGames,
         route: AppRoutes.games,
       ),
       HubItem(
         id: 'quiz_game',
-        emoji: '❓',
+        icon: Icons.quiz_outlined,
         label: (l10n, _) => l10n.quizzes,
         route: AppRoutes.quizGame,
       ),
@@ -154,31 +157,31 @@ final List<HubGroup> kHubGroups = [
     items: [
       HubItem(
         id: 'badges',
-        emoji: '🏅',
+        glyph: BrandIcon.medal,
         label: (l10n, _) => l10n.badges,
         route: AppRoutes.badges,
       ),
       HubItem(
         id: 'coins',
-        emoji: '🪙',
+        glyph: BrandIcon.coin,
         label: (l10n, _) => l10n.coins,
         route: AppRoutes.coins,
       ),
       HubItem(
         id: 'exclusive_badges',
-        emoji: '✨',
+        glyph: BrandIcon.star,
         label: (l10n, _) => l10n.coinsRedeemBadges,
         route: AppRoutes.exclusiveBadges,
       ),
       HubItem(
         id: 'covenant',
-        emoji: '📜',
+        glyph: BrandIcon.openBook,
         label: (l10n, _) => l10n.covenant,
         route: AppRoutes.covenant,
       ),
       HubItem(
         id: 'favorites',
-        emoji: '⭐',
+        glyph: BrandIcon.star,
         label: (l10n, _) => l10n.favoritesTitle,
         route: AppRoutes.favorites,
       ),
@@ -190,25 +193,25 @@ final List<HubGroup> kHubGroups = [
     items: [
       HubItem(
         id: 'story_bookshelf',
-        emoji: '🌙',
+        glyph: BrandIcon.crescent,
         label: (l10n, _) => l10n.bedtimeStories,
         route: AppRoutes.storyBookshelf,
       ),
       HubItem(
         id: 'story_generator',
-        emoji: '📖',
+        glyph: BrandIcon.openBook,
         label: (l10n, _) => l10n.hubCreateStory,
         route: AppRoutes.storyGenerator,
       ),
       HubItem(
         id: 'quran',
-        emoji: '📗',
+        icon: Icons.menu_book_outlined,
         label: (l10n, _) => l10n.holyQuran,
         route: AppRoutes.quran,
       ),
       HubItem(
         id: 'search',
-        emoji: '🔍',
+        icon: Icons.search_outlined,
         label: (l10n, _) => l10n.search,
         route: AppRoutes.search,
       ),
@@ -223,19 +226,19 @@ final List<HubGroup> kHubGroups = [
     items: [
       HubItem(
         id: 'adhkar',
-        emoji: '🤲',
+        glyph: BrandIcon.lantern,
         label: (l10n, _) => l10n.adhkarTitle,
         route: AppRoutes.adhkar,
       ),
       HubItem(
         id: 'tasbeeh',
-        emoji: '📿',
+        glyph: BrandIcon.lightDot,
         label: (l10n, _) => l10n.tasbeehTitle,
         route: AppRoutes.tasbeeh,
       ),
       HubItem(
         id: 'hijri_converter',
-        emoji: '🗓️',
+        icon: Icons.calendar_today_outlined,
         label: (l10n, _) => l10n.hijriTitle,
         route: AppRoutes.hijriConverter,
       ),
@@ -250,25 +253,25 @@ final List<HubGroup> kHubGroups = [
     items: [
       HubItem(
         id: 'settings',
-        emoji: '⚙️',
+        icon: Icons.settings_outlined,
         label: (l10n, _) => l10n.settings,
         route: AppRoutes.settings,
       ),
       HubItem(
         id: 'identity',
-        emoji: '👤',
+        icon: Icons.account_circle_outlined,
         label: (l10n, _) => l10n.hubAccount,
         route: AppRoutes.identity,
       ),
       HubItem(
         id: 'invite',
-        emoji: '🤍',
+        icon: Icons.favorite_border_outlined,
         label: (l10n, _) => l10n.inviteFriend,
         route: AppRoutes.invite,
       ),
       HubItem(
         id: 'feedback',
-        emoji: '💬',
+        icon: Icons.chat_bubble_outline,
         label: (l10n, _) => l10n.feedbackTitle,
         route: AppRoutes.feedback,
       ),

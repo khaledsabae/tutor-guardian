@@ -29,6 +29,7 @@ import '../../../l10n/app_localizations.dart';
 import '../../../theme/app_theme.dart';
 import '../../../theme/design_tokens.dart';
 import '../../../widgets/ui/bouncy_button.dart';
+import '../../../widgets/ui/brand_glyph.dart';
 import '../../../widgets/ui/celebration_overlay.dart';
 import '../../../widgets/ui/empty_state.dart';
 import '../../reflections/widgets/reflection_note_card.dart';
@@ -145,7 +146,7 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
         // the snackbar+delay version had).
         await showCelebration(
           context,
-          emoji: '🎉',
+          glyph: BrandIcon.star,
           imageAsset: 'assets/images/generated/mascot_celebrate.webp',
           title: AppLocalizations.of(context).lessonCelebrationTitle,
           message: AppLocalizations.of(context).lessonCelebrationMsg(
@@ -154,7 +155,7 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
                 position.path,
               ),
           badge: paidBadges.contains('first_step')
-              ? (emoji: '🌱',
+              ? (emoji: '',
                   title: AppLocalizations.of(context).badgeFirstStepTitle)
               : null,
         );
@@ -319,7 +320,7 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
           child: LoadingView(count: 4, itemHeight: 130),
         ),
         error: (err, _) => EmptyState(
-          emoji: '📡',
+          icon: const BrandGlyph(BrandIcon.sprig, size: 64),
           title: AppLocalizations.of(context).lessonErrorLoading,
           subtitle: userFacingError(context, err).body,
           actionLabel: AppLocalizations.of(context).retry,
@@ -358,13 +359,13 @@ class _Body extends ConsumerWidget {
         _InteractiveAssetsSection(lessonId: lesson.id, domain: lesson.domain),
         const SizedBox(height: 16),
         _Section(
-          emoji: '📖',
+          glyph: BrandIcon.openBook,
           title: AppLocalizations.of(context).lessonSummary,
           body: lesson.summary,
         ),
         const SizedBox(height: 16),
         _Section(
-          emoji: '💡',
+          glyph: BrandIcon.lightDot,
           title: AppLocalizations.of(context).lessonTryThis,
           body: lesson.tryThis,
           accent: Dt.accentDeep,
@@ -567,13 +568,13 @@ class _HeroBadge extends StatelessWidget {
 
 class _Section extends StatelessWidget {
   const _Section({
-    required this.emoji,
+    required this.glyph,
     required this.title,
     required this.body,
     this.accent,
     this.background,
   });
-  final String emoji;
+  final BrandIcon glyph;
   final String title;
   final String body;
   final Color? accent;
@@ -594,7 +595,7 @@ class _Section extends StatelessWidget {
         children: [
           Row(
             children: [
-              Text(emoji, style: const TextStyle(fontSize: 20)),
+              BrandGlyph(glyph, size: 20, color: accent),
               const SizedBox(width: 8),
               Expanded(
                 child: Text(
@@ -643,7 +644,7 @@ class _ReflectionCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              const Text('🧠', style: TextStyle(fontSize: 20)),
+              const BrandGlyph(BrandIcon.sprig, size: 20),
               const SizedBox(width: 8),
               Text(
                 AppLocalizations.of(context).lessonReflections,
@@ -972,7 +973,7 @@ class _InteractiveAssetsSection extends ConsumerWidget {
             const SizedBox(height: 16),
             Row(
               children: [
-                const Text('🎬', style: TextStyle(fontSize: 20)),
+                const Icon(Icons.play_circle_outline, size: 20),
                 const SizedBox(width: 8),
                 Expanded(
                   child: Text(

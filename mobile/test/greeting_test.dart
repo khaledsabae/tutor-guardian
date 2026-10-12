@@ -50,19 +50,19 @@ void main() {
 
       // A continuing journey says صباح/مساء and keeps «مستمرة».
       expect(greetingFor(l10n, 'سارة', morning, firstDay: false),
-          'صباح الخير 🌤️\nرحلة سارة مستمرة');
+          'صباح الخير\nرحلة سارة مستمرة');
       expect(greetingFor(l10n, 'سارة', evening, firstDay: false),
-          'مساء الخير 🌙\nرحلة سارة مستمرة');
+          'مساء الخير\nرحلة سارة مستمرة');
 
       // Day one says so, and never claims continuity.
       expect(greetingFor(l10n, 'سارة', morning, firstDay: true),
-          'صباح الخير 🌤️\nاليوم أول يوم في رحلة سارة');
+          'صباح الخير\nاليوم أول يوم في رحلة سارة');
       expect(greetingFor(l10n, 'سارة', evening, firstDay: true),
-          'مساء الخير 🌙\nاليوم أول يوم في رحلة سارة');
+          'مساء الخير\nاليوم أول يوم في رحلة سارة');
 
-      // The AppBar title follows the sun, not the greeting's clock.
-      expect(todayTitle(l10n, DateTime(2026, 1, 1, 12)), 'اليوم ☀️');
-      expect(todayTitle(l10n, DateTime(2026, 1, 1, 20)), 'اليوم 🌙');
+      // The AppBar title copy without emojis.
+      expect(todayTitle(l10n, DateTime(2026, 1, 1, 12)), 'اليوم');
+      expect(todayTitle(l10n, DateTime(2026, 1, 1, 20)), 'اليوم');
     });
   });
 }

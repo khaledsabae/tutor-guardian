@@ -67,7 +67,7 @@ class _ParentDayScreenState extends ConsumerState<ParentDayScreen> {
     // the widget in MaterialApp and hands it the Material the real app never
     // did. The tests were testing a tree the user does not get.
     return Scaffold(
-      appBar: AppBar(title: const Text('اليوم مع طفلي')),
+      appBar: AppBar(title: Text(AppLocalizations.of(context).parentDayTitle)),
       body: _body(context),
     );
   }
@@ -175,6 +175,23 @@ class _ParentDayScreenState extends ConsumerState<ParentDayScreen> {
                 ),
               ),
             ],
+            const SizedBox(height: 12),
+            OutlinedButton.icon(
+              icon: const Icon(Icons.explore_outlined, size: 18),
+              label: Text(AppLocalizations.of(context).missionOpenForChild),
+              onPressed: () {
+                final childId = ref.read(activeChildIdProvider);
+                if (childId != null) {
+                  Navigator.of(context).push(
+                    AppRoutes.childModeLock<void>(
+                      childId: childId,
+                      childName: '${day['child_name'] ?? ''}',
+                      surface: 'mission',
+                    ),
+                  );
+                }
+              },
+            ),
             const Divider(height: 32),
           ],
 

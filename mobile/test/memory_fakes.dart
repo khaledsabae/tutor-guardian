@@ -493,11 +493,16 @@ Map<String, dynamic> followupJson(
     };
 
 Map<String, dynamic> planJson(int childId,
-        {String lang = 'ar', bool withLesson = true}) =>
-    {
-      'child_id': childId,
-      'week': '2026-W41',
-      'week_start': '2026-10-05',
+        {String lang = 'ar', bool withLesson = true}) {
+  final now = DateTime.now();
+  // Monday of the current week (DateTime.monday is 1)
+  final monday = DateTime(now.year, now.month, now.day)
+      .subtract(Duration(days: now.weekday - DateTime.monday));
+  final mStr = '${monday.year}-${monday.month.toString().padLeft(2, '0')}-${monday.day.toString().padLeft(2, '0')}';
+  return {
+    'child_id': childId,
+    'week': 'current-week',
+    'week_start': mStr,
       'lang': lang,
       'band': '7-9',
       'focus': {
@@ -530,6 +535,7 @@ Map<String, dynamic> planJson(int childId,
       'source': 'bank',
       'generated_at': '2026-10-05T06:12:40Z',
     };
+}
 
 /// A proof service over [server] whose codes arrive the way FCM would, wired
 /// as the client's proof hook — without ports (no isolate plumbing in a

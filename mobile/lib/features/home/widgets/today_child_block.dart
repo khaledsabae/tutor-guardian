@@ -32,6 +32,7 @@ import '../../../theme/design_tokens.dart';
 import '../../onboarding/providers/onboarding_providers.dart';
 import '../../parent_day/child_day_card.dart';
 import '../../routine/screens/daily_routine_screen.dart' show habitTabLabel;
+import '../../../widgets/ui/brand_glyph.dart';
 import 'today_section.dart';
 
 /// Bands with a published mission bank. Keep in step with
@@ -52,7 +53,10 @@ class TodayChildBlock extends StatelessWidget {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          TodaySectionHeader(emoji: '🧭', title: l10n.todayMissionTitleNoName),
+          TodaySectionHeader(
+            icon: BrandIcon.path,
+            title: l10n.todayMissionTitleNoName,
+          ),
           _ActionTile(
             body: l10n.todayAddChildBody,
             cta: l10n.addChild,
@@ -74,11 +78,13 @@ class TodayChildBlock extends StatelessWidget {
             icon: Icons.explore_outlined,
             onTap: () {
               unawaited(Analytics.todayBlockTapped('mission', 'child_mode'));
-              Navigator.of(context).push(AppRoutes.childModeLock<void>(
-                childId: p.id,
-                childName: p.name,
-                surface: 'mission',
-              ));
+              Navigator.of(context).push(
+                AppRoutes.childModeLock<void>(
+                  childId: p.id,
+                  childName: p.name,
+                  surface: 'mission',
+                ),
+              );
             },
           )
         : _ActionTile(
@@ -96,7 +102,7 @@ class TodayChildBlock extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         TodaySectionHeader(
-          emoji: hasMissions ? '🧭' : '🌱',
+          icon: hasMissions ? BrandIcon.path : BrandIcon.sprig,
           title: hasMissions
               ? l10n.todayMissionTitle(p.name)
               : l10n.todayDayTitle(p.name),

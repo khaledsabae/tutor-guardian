@@ -2,17 +2,18 @@
 /// shown to the child the next time they hold the phone.
 ///
 /// Three rules from the plan shape this file:
-///  * **Once, briefly.** The header appears for at most three seconds and
-///    never twice for the same note ([PraiseMemory] keys on the mission row
-///    the praise settled, which is unique across the device's children).
+///  * **Once, as a moment.** The header stays until the child taps it away
+///    or six seconds pass, and never shows twice for the same note
+///    ([PraiseMemory] keys on the mission row the praise settled, which is
+///    unique across the device's children).
 ///  * **By band.** 4–6 read a sticker and nothing else — the warmth arrives
 ///    without a sentence they must decode; 7–12 get the sticker and the text;
 ///    13–18 get one text line, because a teenager knows what a star sticker
 ///    means and would rather not say. Prenatal–3 are unaffected (no mission
 ///    bank, no praise to show).
-///  * **Never in the way.** It is a quiet header above the card, not a dialog
-///    and not an animation loop; the child's main action stays reachable and
-///    the only motion is a one-shot entrance that stops by itself.
+///  * **Never in the way.** It is a header above the card, not a dialog and
+///    not a gate; the child's main action stays reachable from the first
+///    frame, and the only motion is a one-shot entrance that stops by itself.
 library;
 
 import 'dart:async';
@@ -22,6 +23,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../l10n/app_localizations.dart';
 import '../../theme/app_colors.dart';
+import '../companion/widgets/noor_face.dart';
+import '../../widgets/ui/brand_glyph.dart';
 
 /// How a band sees the praise. [none] for prenatal–3 and anything unreadable.
 enum PraiseDisplay { none, sticker, stickerAndText, textOnly }
@@ -52,20 +55,26 @@ abstract final class PraiseMemory {
   /// small enough that the list never grows without end.
   static const _keep = 20;
 
-  static Future<bool> alreadyShown(SharedPreferences prefs, int missionId) async =>
-      prefs.getStringList(_key)?.contains('$missionId') ?? false;
+  static Future<bool> alreadyShown(
+    SharedPreferences prefs,
+    int missionId,
+  ) async => prefs.getStringList(_key)?.contains('$missionId') ?? false;
 
   static Future<void> markShown(SharedPreferences prefs, int missionId) async {
     final ids = prefs.getStringList(_key) ?? <String>[];
     ids.add('$missionId');
     await prefs.setStringList(
-        _key, ids.length > _keep ? ids.sublist(ids.length - _keep) : ids);
+      _key,
+      ids.length > _keep ? ids.sublist(ids.length - _keep) : ids,
+    );
   }
 }
 
-/// The header itself: [note] in the form [display] picks, gone in three
-/// seconds via [onGone]. It never blocks the child's main action — the caller
-/// places it above the card and removes it when it says so.
+/// The moment itself (جولة الحرفة, item 3): «نور» delivers the note — a
+/// small drawn face beside a tilted paper card carrying the words, big.
+/// It stays until the child taps it away or six seconds pass, whichever
+/// comes first. It never blocks the child's main action — the caller
+/// places it above the card and the card is usable from the first frame.
 class PraiseHeader extends StatefulWidget {
   const PraiseHeader({
     super.key,
@@ -88,7 +97,9 @@ class _PraiseHeaderState extends State<PraiseHeader> {
   @override
   void initState() {
     super.initState();
-    _expiry = Timer(const Duration(seconds: 3), _gone);
+    // Six seconds, tops — the tap is the honoured way out; the timer only
+    // guarantees the header cannot linger over a child who walked away.
+    _expiry = Timer(const Duration(seconds: 6), _gone);
   }
 
   @override
@@ -105,56 +116,104 @@ class _PraiseHeaderState extends State<PraiseHeader> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final colors = context.colors;
-    final showSticker = widget.display == PraiseDisplay.sticker ||
+    final theme = Theme.of(context);
+    final showSticker =
+        widget.display == PraiseDisplay.sticker ||
         widget.display == PraiseDisplay.stickerAndText;
-    final showText = widget.display == PraiseDisplay.stickerAndText ||
+    final showText =
+        widget.display == PraiseDisplay.stickerAndText ||
         widget.display == PraiseDisplay.textOnly;
 
-    final content = Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        if (showSticker)
-          // One-shot entrance: it scales in once and stops. Nothing here
-          // loops, so a CI journey with animations disabled loses nothing.
-          TweenAnimationBuilder<double>(
-            tween: Tween(begin: 0.6, end: 1),
-            duration: const Duration(milliseconds: 300),
-            curve: Curves.easeOutBack,
-            builder: (context, scale, child) =>
-                Transform.scale(scale: scale, child: child),
-            child: const Text('🌟', style: TextStyle(fontSize: 40)),
-          ),
-        if (showSticker && showText) const SizedBox(height: 4),
-        if (showText) ...[
-          Text(
-            l10n.praiseFromFamily,
-            textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                color: colors.textSecondary),
-          ),
-          const SizedBox(height: 2),
-          Text(
-            widget.note,
-            textAlign: TextAlign.center,
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-            style: Theme.of(context)
-                .textTheme
-                .titleMedium
-                ?.copyWith(color: colors.primary, fontWeight: FontWeight.w700),
+    // The paper card: surface-coloured, softly squared, tilted like a note
+    // someone propped against the screen. The tilt is static — it is the
+    // paper's character, not motion, so reduce-motion keeps it whole.
+    final paper = Container(
+      padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 14),
+      decoration: BoxDecoration(
+        color: colors.surface,
+        borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(14),
+          topRight: Radius.circular(18),
+          bottomLeft: Radius.circular(18),
+          bottomRight: Radius.circular(10),
+        ),
+        border: Border.all(color: colors.accent.withValues(alpha: .35)),
+        boxShadow: [
+          BoxShadow(
+            color: colors.primary.withValues(alpha: .10),
+            blurRadius: 10,
+            offset: const Offset(0, 3),
           ),
         ],
-      ],
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (showSticker)
+            // One-shot entrance: it scales in once and stops. Nothing here
+            // loops, so a CI journey with animations disabled loses nothing.
+            TweenAnimationBuilder<double>(
+              tween: Tween(begin: 0.6, end: 1),
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.easeOutBack,
+              builder: (context, scale, child) =>
+                  Transform.scale(scale: scale, child: child),
+              child: BrandGlyph(
+                BrandIcon.star,
+                size: 40,
+                color: colors.accent,
+                semanticLabel: l10n.praiseFromFamily,
+              ),
+            ),
+          if (showSticker && showText) const SizedBox(height: 6),
+          if (showText) ...[
+            Text(
+              l10n.praiseFromFamily,
+              textAlign: TextAlign.center,
+              style: theme.textTheme.labelMedium?.copyWith(
+                color: colors.textSecondary,
+              ),
+            ),
+            const SizedBox(height: 4),
+            Text(
+              widget.note,
+              textAlign: TextAlign.center,
+              // Big: this is the moment a child reads about themselves.
+              maxLines: 3,
+              overflow: TextOverflow.ellipsis,
+              style: theme.textTheme.headlineSmall?.copyWith(
+                color: colors.primary,
+                fontWeight: FontWeight.w800,
+                height: 1.35,
+              ),
+            ),
+          ],
+        ],
+      ),
     );
 
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      decoration: BoxDecoration(
-        color: colors.surfaceAlt,
-        borderRadius: BorderRadius.circular(16),
+    return Semantics(
+      label: l10n.praiseFromFamily,
+      button: true,
+      child: GestureDetector(
+        // A tap anywhere on the moment thanks نور and clears the way.
+        onTap: _gone,
+        behavior: HitTestBehavior.opaque,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            // «نور» delivers it — the tender amber face, small.
+            NoorFace(size: 44, state: NoorFaceState.tender),
+            const SizedBox(width: 10),
+            Expanded(
+              child: Transform.rotate(
+                angle: -0.035, // ≈2°: propped, not falling over
+                child: paper,
+              ),
+            ),
+          ],
+        ),
       ),
-      child: content,
     );
   }
 }

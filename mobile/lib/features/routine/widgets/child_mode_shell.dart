@@ -100,7 +100,7 @@ class _ChildModeShellState extends ConsumerState<ChildModeShell> {
     }
     final l10n = AppLocalizations.of(context);
     final name = profile?.name ?? l10n.childFallbackName;
-    final avatar = profile?.avatarEmoji ?? '🧒';
+    final avatar = profile?.avatarEmoji ?? '';
     final reduce = MediaQuery.maybeDisableAnimationsOf(context) ?? false;
 
     return Theme(
@@ -122,11 +122,6 @@ class _ChildModeShellState extends ConsumerState<ChildModeShell> {
                         children: [
                           Row(
                             children: [
-                              ExcludeSemantics(
-                                child: Text(avatar,
-                                    style: const TextStyle(fontSize: 26)),
-                              ),
-                              const SizedBox(width: 10),
                               Expanded(
                                 child: Semantics(
                                   header: true,
@@ -209,8 +204,10 @@ class _HandoffCard extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(avatar, style: const TextStyle(fontSize: 96)),
-              const SizedBox(height: 16),
+              if (avatar.isNotEmpty) ...[
+                Text(avatar, style: const TextStyle(fontSize: 96)),
+                const SizedBox(height: 16),
+              ],
               Text(
                 l10n.childModeHandoff(name),
                 textAlign: TextAlign.center,
