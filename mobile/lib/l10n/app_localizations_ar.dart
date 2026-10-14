@@ -3604,10 +3604,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get missionDone => 'أنجزتها';
 
   @override
-  String get missionAlreadyDone => 'قلت إنك أنجزتها ✅';
+  String get missionAlreadyDone => 'قلت إنك أنجزتها';
 
   @override
-  String get missionClaimedNote => 'بابا سيراها في المساء.';
+  String get missionClaimedNote => 'سيراها أهلك في المساء.';
 
   @override
   String get missionOutdoorsHint => 'هذه تحتاج أن تخرج من البيت.';

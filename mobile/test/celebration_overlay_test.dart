@@ -16,6 +16,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:lottie/lottie.dart';
 
 import 'package:almorabbi/l10n/app_localizations.dart';
+import 'package:almorabbi/features/companion/widgets/noor_presence.dart';
 import 'package:almorabbi/widgets/ui/celebration_overlay.dart';
 
 Future<void> _pump(
@@ -23,6 +24,7 @@ Future<void> _pump(
   bool disableAnimations = false,
   CelebrationTier tier = CelebrationTier.milestone,
   CelebrationBadge? badge,
+  String? imageAsset,
 }) async {
   await tester.pumpWidget(
     MaterialApp(
@@ -44,6 +46,7 @@ Future<void> _pump(
                 message: 'message',
                 tier: tier,
                 badge: badge,
+                imageAsset: imageAsset,
               ),
               child: const Text('fire'),
             ),
@@ -94,5 +97,29 @@ void main() {
     );
     expect(find.text('أول خطوة'), findsOneWidget);
     expect(find.text('🌱'), findsOneWidget);
+  });
+
+  group('the picture at the top', () {
+    testWidgets('mascot art becomes Noor', (tester) async {
+      await _pump(tester,
+          tier: CelebrationTier.quiet,
+          imageAsset: 'assets/images/generated/mascot_celebrate.webp');
+      expect(find.byType(NoorPresence), findsOneWidget);
+    });
+
+    testWidgets('milestone art is shown, not swapped for Noor',
+        (tester) async {
+      const art = 'assets/images/generated/milestone_first_prayer.webp';
+      await _pump(tester, tier: CelebrationTier.quiet, imageAsset: art);
+      expect(find.byType(NoorPresence), findsNothing);
+      final images = tester.widgetList<Image>(find.byType(Image));
+      expect(
+        images.any((i) =>
+            i.image is ResizeImage &&
+            ((i.image as ResizeImage).imageProvider as AssetImage).assetName ==
+                art),
+        isTrue,
+      );
+    });
   });
 }

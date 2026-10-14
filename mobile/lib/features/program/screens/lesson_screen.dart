@@ -166,6 +166,7 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
         var committed = false;
         if (mounted && tryThis.isNotEmpty) {
           committed = await showNextStepSheet(context, tryThis: tryThis);
+          if (committed) unawaited(Analytics.nextStepCommitted());
         }
         // Finishing a lesson is the strongest positive moment in the app, and
         // until now it recorded none: ReviewPrompt was reachable only from the

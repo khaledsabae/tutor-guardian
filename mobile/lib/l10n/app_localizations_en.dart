@@ -3655,7 +3655,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get missionDone => 'I did it';
 
   @override
-  String get missionAlreadyDone => 'You said you did it ✅';
+  String get missionAlreadyDone => 'You said you did it';
 
   @override
   String get missionClaimedNote => 'A parent will see it tonight.';
