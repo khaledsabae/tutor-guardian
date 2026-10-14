@@ -238,6 +238,12 @@ class Analytics {
   static Future<void> praiseSent(String ageBand) =>
       _log('praise_sent', {'age_band': ageBand});
 
+  /// The parent committed to the lesson's one doable step («تمام، سأفعلها»).
+  /// `when` is the slot they chose; the sheet offers only tonight until the
+  /// promise loop (phase 2) adds tomorrow / this week.
+  static Future<void> nextStepCommitted({String when = 'tonight'}) =>
+      _log('next_step_committed', {'when': when});
+
   /// A Google identity was linked — data now survives reinstall.
   static Future<void> identityLinked() => _log('identity_linked');
 

@@ -6509,13 +6509,13 @@ abstract class AppLocalizations {
   /// No description provided for @missionAlreadyDone.
   ///
   /// In ar, this message translates to:
-  /// **'قلت إنك أنجزتها ✅'**
+  /// **'قلت إنك أنجزتها'**
   String get missionAlreadyDone;
 
   /// No description provided for @missionClaimedNote.
   ///
   /// In ar, this message translates to:
-  /// **'بابا سيراها في المساء.'**
+  /// **'سيراها أهلك في المساء.'**
   String get missionClaimedNote;
 
   /// No description provided for @missionOutdoorsHint.

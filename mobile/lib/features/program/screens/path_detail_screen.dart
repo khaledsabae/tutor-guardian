@@ -407,7 +407,10 @@ class _Header extends ConsumerWidget {
                           Expanded(
                             child: AnimatedProgressBar(
                               value: progress!.fraction,
-                              color: Dt.surface,
+                              // onPrimary, not Dt.surface: the bar sits on the
+                              // domain gradient, and surface turns dark (and
+                              // invisible) in the dark theme.
+                              color: context.colors.onPrimary,
                               trackColor:
                                   Colors.white.withValues(alpha: .25),
                               height: 12,

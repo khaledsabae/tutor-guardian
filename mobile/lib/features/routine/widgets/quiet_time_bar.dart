@@ -14,6 +14,7 @@ library;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../widgets/ui/brand_glyph.dart';
 import '../providers/child_mode_providers.dart';
 
 class QuietTimeBar extends ConsumerStatefulWidget {
@@ -73,12 +74,15 @@ class _QuietTimeBarState extends ConsumerState<QuietTimeBar> {
       child: Row(
         children: [
           if (widget.showCandle) ...[
-            Text(
-              remaining <= 0 ? '🕯️' : '🔥',
-              style: TextStyle(
-                fontSize: 18,
-                color: remaining <= 0 ? theme.colorScheme.outline : null,
-              ),
+            // A lantern, not a flame emoji: the brand's own light. Lit (gold)
+            // while time remains, unlit outline when it has run out — a
+            // flame read as a streak counter beside the child's name.
+            BrandGlyph(
+              BrandIcon.lantern,
+              size: 20,
+              color: remaining <= 0
+                  ? theme.colorScheme.outline
+                  : theme.colorScheme.tertiary,
             ),
             const SizedBox(width: 8),
           ],
