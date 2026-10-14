@@ -828,11 +828,13 @@ class _AdhkarSettingsRowState extends State<_AdhkarSettingsRow> {
             await NotificationService.instance.setWirdEnabled(val);
           },
         ),
-        // One switch for every vibration in the app (UX_UI_ROADMAP E5).
+        // One switch for every vibration and every interface sound in the
+        // app (UX_UI_ROADMAP E5; core/sound_fx.dart). Same preference key as
+        // when it was vibration only, so an existing choice carries over.
         _row(
           title: AppLocalizations.of(context).settingsHaptics,
           subtitle: AppLocalizations.of(context).settingsHapticsDesc,
-          icon: Icons.vibration,
+          icon: Icons.volume_up_outlined,
           value: _haptics,
           onChanged: (val) async {
             setState(() => _haptics = val);

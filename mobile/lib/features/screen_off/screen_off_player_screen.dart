@@ -30,6 +30,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:just_audio/just_audio.dart';
 
+import '../../core/sound_fx.dart';
 import '../../main.dart' show messengerKey;
 import '../routine/providers/child_mode_providers.dart';
 
@@ -75,6 +76,8 @@ class _ScreenOffPlayerScreenState extends ConsumerState<ScreenOffPlayerScreen>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+    // Listening in the dark: no interface sound for as long as this is open.
+    SoundFx.screenOffBegan();
     // The system bars are part of "not worth looking at".
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
     _open();
@@ -196,6 +199,7 @@ class _ScreenOffPlayerScreenState extends ConsumerState<ScreenOffPlayerScreen>
 
   @override
   void dispose() {
+    SoundFx.screenOffEnded();
     _holdTimer?.cancel();
     WidgetsBinding.instance.removeObserver(this);
     _player.dispose();

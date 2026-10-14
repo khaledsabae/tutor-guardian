@@ -9,10 +9,22 @@
 /// for a habit logged, a lesson completed, a mission confirmed, a milestone;
 /// warning for a failed action or a wrong PIN; never on scroll, keystrokes or
 /// streaming tokens.
+///
+/// Sound rides on the same helpers (core/sound_fx.dart), so every place that
+/// already buzzes for a choice or an achievement also gets its soft sound,
+/// and the one switch governs both: selection → a tiny tick, success → a
+/// water drop. warning and strong stay silent — a wrong answer or a wrong PIN
+/// gets a buzz, not a noise. The helpers are only called from what a person
+/// does; a pulse that fires on its own (the daily gift landing on Home)
+/// passes `sound: false`.
 library;
+
+import 'dart:async';
 
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'sound_fx.dart';
 
 abstract final class Haptics {
   static const _prefKey = 'haptics_enabled';
@@ -29,24 +41,42 @@ abstract final class Haptics {
       final prefs = await SharedPreferences.getInstance();
       _enabled = prefs.getBool(_prefKey) ?? true;
     } catch (_) {}
+    SoundFx.switchOn = _enabled;
   }
 
+  /// The one switch: vibration and sound together («الأصوات والاهتزاز»).
   static Future<void> setEnabled(bool value) async {
     _enabled = value;
+    SoundFx.switchOn = value;
     try {
       final prefs = await SharedPreferences.getInstance();
       await prefs.setBool(_prefKey, value);
     } catch (_) {}
   }
 
-  static Future<void> _run(Future<void> Function() pulse) =>
-      _enabled ? pulse() : Future.value();
+  static Future<void> _run(
+    Future<void> Function() pulse, [
+    Future<void> Function()? sound,
+  ]) {
+    if (!_enabled) return Future.value();
+    // Never awaited: the sound must not hold up the pulse or the caller, and
+    // SoundFx swallows its own failures.
+    if (sound != null) unawaited(sound());
+    return pulse();
+  }
 
   /// A choice was made: a tab, a chip, a message sent.
-  static Future<void> selection() => _run(HapticFeedback.selectionClick);
+  static Future<void> selection() =>
+      _run(HapticFeedback.selectionClick, SoundFx.select);
 
   /// Something was saved or earned: a habit logged, a lesson completed.
-  static Future<void> success() => _run(HapticFeedback.lightImpact);
+  ///
+  /// [sound] false keeps the pulse and drops the water drop — for a moment
+  /// the app arrives at by itself, like the daily gift landing on Home.
+  static Future<void> success({bool sound = true}) => _run(
+        HapticFeedback.lightImpact,
+        sound ? SoundFx.success : null,
+      );
 
   /// The action did not go through and needs attention.
   static Future<void> warning() => _run(HapticFeedback.mediumImpact);

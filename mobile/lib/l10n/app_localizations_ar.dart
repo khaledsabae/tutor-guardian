@@ -4097,10 +4097,11 @@ class AppLocalizationsAr extends AppLocalizations {
   String get loadingCancel => 'رجوع';
 
   @override
-  String get settingsHaptics => 'الاهتزاز عند اللمس';
+  String get settingsHaptics => 'الأصوات والاهتزاز';
 
   @override
-  String get settingsHapticsDesc => 'اهتزاز خفيف عند التسجيل والإنجاز والتنبيه';
+  String get settingsHapticsDesc =>
+      'أصوات هادئة بلا موسيقى، واهتزاز خفيف عند الاختيار والإنجاز';
 
   @override
   String childModeHandoff(String name) {
