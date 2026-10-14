@@ -5677,4 +5677,43 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get praiseFromFamily => 'أهلك يقولون لك';
+
+  @override
+  String get handoverTitle => 'تسليم الجهاز';
+
+  @override
+  String handoverChoose(String name) {
+    return 'ماذا سيفعل $name الآن؟';
+  }
+
+  @override
+  String get handoverHint => 'اختر نشاطًا، ثم أدخل الرمز، وسلّم الجهاز.';
+
+  @override
+  String get handoverNoSurface =>
+      'في هذا السن لا نسلّم الجهاز للطفل. جرّبوا معًا نشاطًا بلا شاشة.';
+
+  @override
+  String handoverYourTurn(String name) {
+    return 'يا $name، دورك الآن';
+  }
+
+  @override
+  String get handoverHabitBody => 'يسجّل عادات يومه بنفسه';
+
+  @override
+  String get handoverMissionBody => 'مهمة قصيرة يقرؤها ثم ينطلق لتنفيذها';
+
+  @override
+  String get handoverLicenseBody => 'مواقف قصيرة يختار فيها ما يفعل';
+
+  @override
+  String get handoverScreenOffBody => 'قصة أو تلاوة والشاشة مطفية';
+
+  @override
+  String get childModeSurfaceNotAllowed =>
+      'هذا النشاط ليس لهذا العمر. اختر نشاطًا آخر.';
+
+  @override
+  String get childReturnDevice => 'أعِد الجهاز إلى أهلك — شكرًا لك';
 }

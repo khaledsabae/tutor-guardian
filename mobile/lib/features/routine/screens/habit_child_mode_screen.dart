@@ -10,10 +10,12 @@ import '../../../theme/app_theme.dart';
 import '../../../theme/design_tokens.dart';
 import '../models/habit_models.dart';
 import '../../agreement/child_agreement_screen.dart';
+import '../../handover/child_hand_back.dart';
 import '../../license/child_license_screen.dart';
 import '../../missions/child_mission_screen.dart';
 import '../../programs/widgets/child_prayer_card.dart';
 import '../providers/child_mode_providers.dart';
+import 'child_mode_lock_screen.dart' show localizedChildModeError;
 import '../../../widgets/ui/brand_glyph.dart';
 import '../../../widgets/ui/celebration_overlay.dart';
 import 'package:almorabbi/widgets/ui/loading_view.dart';
@@ -66,6 +68,26 @@ class HabitChildModeScreen extends ConsumerWidget {
     // agree to.
     if (state.agreementAwaitsChild) {
       return const ChildAgreementScreen();
+    }
+
+    // The session closed under the child: the day's time is spent, or the
+    // connection went. Whatever surface this was, it is over — and leaving
+    // its screen up was worse than it looked. The token died with the
+    // session, so the habit checklist's next tap came back 401, which clears
+    // child mode and hands the child the parent's app with no PIN. Close on
+    // the hand-back screen instead; the frame's Exit, behind the PIN, is the
+    // way out.
+    //
+    // Not the mission card: its own exit closes the app («فهمت، سأذهب»), it
+    // swallows a dead token without a 401, and it is three minutes long.
+    if (state.surface != 'mission' &&
+        state.sessionId == null &&
+        (state.error == kChildModeBudgetSpent ||
+            state.error == kChildModeOffline)) {
+      return ChildHandBackScreen(
+        message: localizedChildModeError(
+            state.error, AppLocalizations.of(context)),
+      );
     }
 
     // Surfaces other than `habit` have their own screen and never load the

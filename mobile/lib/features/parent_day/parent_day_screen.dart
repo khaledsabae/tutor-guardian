@@ -182,8 +182,9 @@ class _ParentDayScreenState extends ConsumerState<ParentDayScreen> {
               onPressed: () {
                 final childId = ref.read(activeChildIdProvider);
                 if (childId != null) {
+                  // No age group here: the gate reads the active child's.
                   Navigator.of(context).push(
-                    AppRoutes.childModeLock<void>(
+                    AppRoutes.handoverGate(
                       childId: childId,
                       childName: '${day['child_name'] ?? ''}',
                       surface: 'mission',

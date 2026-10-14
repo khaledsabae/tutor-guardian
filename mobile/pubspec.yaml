@@ -108,6 +108,10 @@ dev_dependencies:
   flutter_lints: ^6.0.0
   flutter_launcher_icons: ^0.14.1
   flutter_native_splash: ^2.4.0
+  # Reads backend/guardrails/child_surface.v1.yaml in a test, so the app's copy
+  # of the age gate cannot drift from the server's (already in the lock as a
+  # transitive dependency).
+  yaml: ^3.1.3
 
 flutter:
   generate: true

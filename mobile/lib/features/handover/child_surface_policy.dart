@@ -1,0 +1,91 @@
+/// Which child surfaces a band may be handed — the client's copy of the
+/// server's age gate.
+///
+/// The server is the authority: `backend/guardrails/child_surface.v1.yaml`
+/// decides, and `child_budget.open_session` refuses anything else with
+/// `age_not_allowed` or `surface_not_allowed`. This copy exists so the app
+/// never *offers* what the server will refuse. Before it, every entry point
+/// carried its own hand-written band check — or none, when the profile had not
+/// loaded — and a refusal reached the parent as «فشل الدخول لوضع الطفل» after
+/// they had typed their PIN.
+///
+/// `test/child_surface_policy_test.dart` parses the YAML and fails when the two
+/// disagree, so a policy change cannot ship with a stale client.
+library;
+
+/// `age_bands.<band>.allowed_surfaces`, band for band.
+const Map<String, Set<String>> kChildSurfacePolicy = {
+  'under-2': {},
+  '2-3': {'screen_off'},
+  '4-6': {'screen_off', 'agreement', 'mission', 'story'},
+  '7-9': {'screen_off', 'agreement', 'mission', 'story', 'game', 'habit'},
+  '10-12': {
+    'screen_off', 'agreement', 'mission', 'story', 'game', 'habit', 'drill',
+    'license',
+  },
+  '13-15': {
+    'screen_off', 'agreement', 'mission', 'story', 'game', 'habit', 'drill',
+    'license',
+  },
+  '16-18': {
+    'screen_off', 'agreement', 'mission', 'story', 'game', 'habit', 'drill',
+    'license',
+  },
+};
+
+/// The band a child falls into when the profile cannot say.
+///
+/// Same direction as `FALLBACK_CHILD_SURFACE_BAND` on the server: the cost of
+/// being wrong is a parent reading an explanation, versus an infant handed a
+/// screen.
+const String kFallbackChildSurfaceBand = 'under-2';
+
+/// A profile's age group → its child-surface band.
+///
+/// Mirrors `core/taxonomy.map_profile_age_to_band`: `prenatal-1` and the
+/// legacy `0-3` (which aliases onto it) both land on `under-2`, and anything
+/// unrecognised fails closed to the same band.
+String childSurfaceBand(String? profileAgeGroup) {
+  final value = (profileAgeGroup ?? '').trim();
+  if (value == 'prenatal-1' || value == '0-3') return 'under-2';
+  return kChildSurfacePolicy.containsKey(value)
+      ? value
+      : kFallbackChildSurfaceBand;
+}
+
+/// Whether the policy lets this child open [surface].
+bool childSurfaceAllowed(String? profileAgeGroup, String surface) =>
+    kChildSurfacePolicy[childSurfaceBand(profileAgeGroup)]!.contains(surface);
+
+/// The surfaces this build can hand to a child, in the order the gate lists
+/// them.
+///
+/// Narrower than the policy on purpose. `agreement` is not chosen — it opens
+/// on its own when a parent has signed and the child has not. `story`, `game`
+/// and `drill` are in the policy but have no child-mode screen in the app yet,
+/// so offering them would open nothing.
+const List<String> kHandoverSurfaces = [
+  'habit',
+  'mission',
+  'license',
+  'screen_off',
+];
+
+/// Bands with an internet-licence scenario bank
+/// (`knowledge_base/curriculum/license/scenarios_*_<band>.json`). 16-18 has the
+/// surface in policy but no bank, so its tile stays hidden rather than opening
+/// an empty screen.
+const Set<String> kLicenseBankBands = {'10-12', '13-15'};
+
+/// What the hand-over gate offers this child: allowed by the policy, and
+/// something this build can actually open.
+List<String> handoverSurfacesFor(String? profileAgeGroup) {
+  final band = childSurfaceBand(profileAgeGroup);
+  final allowed = kChildSurfacePolicy[band]!;
+  return [
+    for (final surface in kHandoverSurfaces)
+      if (allowed.contains(surface) &&
+          (surface != 'license' || kLicenseBankBands.contains(band)))
+        surface,
+  ];
+}

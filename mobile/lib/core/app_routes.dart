@@ -27,6 +27,7 @@ import 'package:flutter/material.dart';
 import '../features/coins/coins_screen.dart';
 import '../features/agreement/agreement_screen.dart';
 import '../features/missions/pending_missions_screen.dart';
+import '../features/handover/handover_gate_screen.dart';
 import '../features/license/parent_license_screen.dart';
 import '../features/offscreen/offscreen_activities_screen.dart';
 import '../features/screen_off/screen_off_picker_screen.dart';
@@ -146,6 +147,7 @@ abstract final class Screens {
   static const childJourney = 'child_journey';
   static const childModeLock = 'child_mode_lock';
   static const childModeExpired = 'child_mode_expired';
+  static const handoverGate = 'handover_gate';
 
   // Routine & habits
   static const dailyRoutine = 'daily_routine';
@@ -390,6 +392,7 @@ abstract final class AppRoutes {
     required String childName,
     bool isExit = false,
     String surface = 'habit',
+    bool verifyOnly = false,
   }) =>
       _r<T>(
         Screens.childModeLock,
@@ -397,6 +400,28 @@ abstract final class AppRoutes {
           childId: childId,
           childName: childName,
           isExit: isExit,
+          surface: surface,
+          verifyOnly: verifyOnly,
+        ),
+      );
+
+  /// «باب التسليم»: where a parent hands the device to a child.
+  ///
+  /// Every way into a child surface comes through here. [surface] skips the
+  /// choice when the caller already knows it (today's mission, the prayer
+  /// card); [ageGroup] is the profile's, and filters what is offered.
+  static Route<void> handoverGate({
+    required int childId,
+    required String childName,
+    String? ageGroup,
+    String? surface,
+  }) =>
+      _r(
+        Screens.handoverGate,
+        (_) => HandoverGateScreen(
+          childId: childId,
+          childName: childName,
+          ageGroup: ageGroup,
           surface: surface,
         ),
       );

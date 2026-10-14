@@ -6,12 +6,13 @@
 ///  * keeps one bar on top for the whole session: «وضع الطفل», the child's
 ///    name and avatar, the quiet time bar (never digits), and Exit, which
 ///    still goes through the parent PIN;
-///  * opens with a short hand-over card showing the child's avatar, so the
-///    moment the device changes hands is unmistakable. Reduced motion keeps
-///    the card but drops the fade.
+///
+/// It used to open with a 1.1-second hand-over card as well. That card ran
+/// inside the session — on the child's clock, and swallowing their first taps.
+/// The moment of handing over now belongs to the hand-over gate
+/// (`features/handover/handover_gate_screen.dart`), whose doors open in parent
+/// mode before the session exists; the frame shows the surface straight away.
 library;
-
-import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -29,8 +30,7 @@ class ChildModeShell extends ConsumerStatefulWidget {
 
   final Widget child;
 
-  /// How long the hand-over card stays before fading to the surface.
-  static const handoffHold = Duration(milliseconds: 1100);
+  /// The fade between the parent app and the child surface (main.dart).
   static const fade = Duration(milliseconds: 300);
 
   @override
@@ -38,23 +38,6 @@ class ChildModeShell extends ConsumerStatefulWidget {
 }
 
 class _ChildModeShellState extends ConsumerState<ChildModeShell> {
-  bool _handoff = true;
-  Timer? _timer;
-
-  @override
-  void initState() {
-    super.initState();
-    _timer = Timer(ChildModeShell.handoffHold, () {
-      if (mounted) setState(() => _handoff = false);
-    });
-  }
-
-  @override
-  void dispose() {
-    _timer?.cancel();
-    super.dispose();
-  }
-
   Future<void> _askExit() async {
     final childId = ref.read(childModeProvider).childId;
     if (childId == null) return;
@@ -100,126 +83,72 @@ class _ChildModeShellState extends ConsumerState<ChildModeShell> {
     }
     final l10n = AppLocalizations.of(context);
     final name = profile?.name ?? l10n.childFallbackName;
-    final avatar = profile?.avatarEmoji ?? '';
-    final reduce = MediaQuery.maybeDisableAnimationsOf(context) ?? false;
 
     return Theme(
       data: theme,
       child: Builder(builder: (context) {
         final c = context.colors;
-        return Stack(
+        return Column(
           children: [
-            Column(
-              children: [
-                Material(
-                  color: c.primary,
-                  child: SafeArea(
-                    bottom: false,
-                    child: Padding(
-                      padding: const EdgeInsetsDirectional.fromSTEB(16, 4, 4, 8),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
+            Material(
+              color: c.primary,
+              child: SafeArea(
+                bottom: false,
+                child: Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(16, 4, 4, 8),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Row(
                         children: [
-                          Row(
-                            children: [
-                              Expanded(
-                                child: Semantics(
-                                  header: true,
-                                  child: Text(
-                                    '${l10n.childMode} · $name',
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: theme.textTheme.titleMedium
-                                        ?.copyWith(
-                                      color: c.onPrimary,
-                                      fontWeight: FontWeight.w800,
-                                    ),
-                                  ),
+                          Expanded(
+                            child: Semantics(
+                              header: true,
+                              child: Text(
+                                '${l10n.childMode} · $name',
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: theme.textTheme.titleMedium
+                                    ?.copyWith(
+                                  color: c.onPrimary,
+                                  fontWeight: FontWeight.w800,
                                 ),
                               ),
-                              Semantics(
-                                container: true,
-                                button: true,
-                                label: l10n.a11yExitChildMode,
-                                onTap: _askExit,
-                                excludeSemantics: true,
-                                child: IconButton(
-                                  tooltip: l10n.a11yExitChildMode,
-                                  icon: Icon(Icons.logout, color: c.onPrimary),
-                                  onPressed: _askExit,
-                                ),
-                              ),
-                            ],
+                            ),
                           ),
-                          const Padding(
-                            padding: EdgeInsetsDirectional.only(end: 12),
-                            child: QuietTimeBar(),
+                          Semantics(
+                            container: true,
+                            button: true,
+                            label: l10n.a11yExitChildMode,
+                            onTap: _askExit,
+                            excludeSemantics: true,
+                            child: IconButton(
+                              tooltip: l10n.a11yExitChildMode,
+                              icon: Icon(Icons.logout, color: c.onPrimary),
+                              onPressed: _askExit,
+                            ),
                           ),
                         ],
                       ),
-                    ),
+                      const Padding(
+                        padding: EdgeInsetsDirectional.only(end: 12),
+                        child: QuietTimeBar(),
+                      ),
+                    ],
                   ),
                 ),
-                Expanded(
-                  child: MediaQuery.removePadding(
-                    context: context,
-                    removeTop: true,
-                    child: widget.child,
-                  ),
-                ),
-              ],
+              ),
             ),
-            IgnorePointer(
-              ignoring: !_handoff,
-              child: AnimatedOpacity(
-                opacity: _handoff ? 1 : 0,
-                duration: reduce ? Duration.zero : ChildModeShell.fade,
-                child: _HandoffCard(avatar: avatar, name: name),
+            Expanded(
+              child: MediaQuery.removePadding(
+                context: context,
+                removeTop: true,
+                child: widget.child,
               ),
             ),
           ],
         );
       }),
-    );
-  }
-}
-
-class _HandoffCard extends StatelessWidget {
-  const _HandoffCard({required this.avatar, required this.name});
-
-  final String avatar;
-  final String name;
-
-  @override
-  Widget build(BuildContext context) {
-    final c = context.colors;
-    final l10n = AppLocalizations.of(context);
-    return Semantics(
-      liveRegion: true,
-      label: l10n.childModeHandoff(name),
-      excludeSemantics: true,
-      child: ColoredBox(
-        color: c.primary,
-        child: Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              if (avatar.isNotEmpty) ...[
-                Text(avatar, style: const TextStyle(fontSize: 96)),
-                const SizedBox(height: 16),
-              ],
-              Text(
-                l10n.childModeHandoff(name),
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                      color: c.onPrimary,
-                      fontWeight: FontWeight.w800,
-                    ),
-              ),
-            ],
-          ),
-        ),
-      ),
     );
   }
 }

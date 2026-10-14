@@ -1874,5 +1874,51 @@
   },
   "@a11yChooseAChild": {
     "description": "Screen-reader label for the active-child chip when no child is active yet; a tap opens the children list."
+  },
+  "handoverTitle": "تسليم الجهاز",
+  "@handoverTitle": {
+    "description": "Hand-over gate (parent side): app bar title of the one screen a parent opens to hand the device to a child."
+  },
+  "handoverChoose": "ماذا سيفعل {name} الآن؟",
+  "@handoverChoose": {
+    "description": "Hand-over gate: question above the list of activities the child's age allows. {name} is the child's name.",
+    "placeholders": {"name": {"type": "String"}}
+  },
+  "handoverHint": "اختر نشاطًا، ثم أدخل الرمز، وسلّم الجهاز.",
+  "@handoverHint": {
+    "description": "Hand-over gate: the three steps, for the parent, under the question."
+  },
+  "handoverNoSurface": "في هذا السن لا نسلّم الجهاز للطفل. جرّبوا معًا نشاطًا بلا شاشة.",
+  "@handoverNoSurface": {
+    "description": "Hand-over gate for a child under two (no child surface at all by policy). Calm, not a refusal; points to off-screen activities."
+  },
+  "handoverYourTurn": "يا {name}، دورك الآن",
+  "@handoverYourTurn": {
+    "description": "Revealed when the two paper doors open, read by the child as the device changes hands. {name} is the child's name.",
+    "placeholders": {"name": {"type": "String"}}
+  },
+  "handoverHabitBody": "يسجّل عادات يومه بنفسه",
+  "@handoverHabitBody": {
+    "description": "Hand-over gate: one line under the habit-tracker activity."
+  },
+  "handoverMissionBody": "مهمة قصيرة يقرؤها ثم ينطلق لتنفيذها",
+  "@handoverMissionBody": {
+    "description": "Hand-over gate: one line under today's mission activity."
+  },
+  "handoverLicenseBody": "مواقف قصيرة يختار فيها ما يفعل",
+  "@handoverLicenseBody": {
+    "description": "Hand-over gate: one line under the internet-licence activity."
+  },
+  "handoverScreenOffBody": "قصة أو تلاوة والشاشة مطفية",
+  "@handoverScreenOffBody": {
+    "description": "Hand-over gate: one line under listening with the screen off."
+  },
+  "childModeSurfaceNotAllowed": "هذا النشاط ليس لهذا العمر. اختر نشاطًا آخر.",
+  "@childModeSurfaceNotAllowed": {
+    "description": "Calm copy when the server refuses a child surface for the child's age band (surface_not_allowed). Never an error tone."
+  },
+  "childReturnDevice": "أعِد الجهاز إلى أهلك — شكرًا لك",
+  "@childReturnDevice": {
+    "description": "Return line on the child's last screen when a session ends. Neutral family wording (أهلك), never بابا/ماما."
   }
 }

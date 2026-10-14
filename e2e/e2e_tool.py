@@ -93,10 +93,13 @@ KEYS = [
     "lessonMarkComplete", "lessonCompleted", "lessonErrorLoading", "retry",
     # assistant
     "chatTypeHint", "a11ySendQuestion", "chatStop", "feedbackHelpful", "chatRetry",
-    # child mode
+    # child mode — handed over through «باب التسليم» (handoverTitle: the gate;
+    # habitChildModeTitle: its habit-tracker tile; handoverYourTurn: what the
+    # doors open on, in parent mode, before the session)
     "routineTitle", "routineChildMode", "childMode", "habitChildModeExit",
-    "a11yExitChildMode",
-    "habitChildModeExitTitle", "childModeHandoff", "childModePinMismatch",
+    "a11yExitChildMode", "handoverTitle", "habitChildModeTitle",
+    "handoverYourTurn",
+    "habitChildModeExitTitle", "childModePinMismatch",
     "childModePinIncorrect", "childModeEnterFailed", "childModeBudgetSpent",
     "childModeOffline", "childModePinSetupSubtitle", "childModePinConfirmSubtitle",
     "childModePinEnterSubtitle",

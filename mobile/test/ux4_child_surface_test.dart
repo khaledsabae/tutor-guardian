@@ -53,8 +53,7 @@ void main() {
             home: const ChildModeShell(child: Scaffold(body: Text('surface'))),
           ),
         ));
-        await t.pump(ChildModeShell.handoffHold);
-        await t.pump(ChildModeShell.fade);
+        await t.pump();
         final exit = find.bySemanticsLabel(locale.languageCode == 'ar'
             ? 'الخروج من وضع الطفل' : 'Exit child mode');
         expect(exit, findsOneWidget);
@@ -68,8 +67,8 @@ void main() {
     });
   }
 
-  testWidgets('frame: hand-over card first, then the surface under a '
-      'persistent child-mode bar', (t) async {
+  testWidgets('frame: the surface straight away under a persistent '
+      'child-mode bar — no hand-over card on the child\'s clock', (t) async {
     // The app only enters child mode once preferences are loaded; so here.
     SharedPreferences.setMockInitialValues({});
     final prefs = await SharedPreferences.getInstance();
@@ -88,15 +87,11 @@ void main() {
       ),
     ));
     await t.pump();
-    expect(find.textContaining('This is your time'), findsOneWidget);
-
-    await t.pump(ChildModeShell.handoffHold);
-    await t.pump(ChildModeShell.fade);
-    final card = t.widget<AnimatedOpacity>(find.ancestor(
-      of: find.textContaining('This is your time'),
-      matching: find.byType(AnimatedOpacity),
-    ));
-    expect(card.opacity, 0);
+    // The hand-over card used to cover the surface for 1.1 s here, inside the
+    // session and on the child's minutes. The gate's doors do that job now,
+    // in parent mode, before the session exists.
+    expect(find.textContaining('This is your time'), findsNothing);
+    expect(find.text('surface').hitTestable(), findsOneWidget);
     expect(find.textContaining('Child Mode'), findsOneWidget);
     expect(find.byTooltip('Exit child mode'), findsOneWidget);
     expect(find.text('surface'), findsOneWidget);
