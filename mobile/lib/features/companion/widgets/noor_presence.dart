@@ -41,7 +41,12 @@ class NoorPresence extends StatefulWidget {
     this.size = 96,
     this.mood = NoorMood.calm,
     this.semanticLabel,
+    this.face,
   });
+
+  /// The drawn face's state, when the caller knows more than calm/proud
+  /// («نور يتذكّر»: awake while asking, night after dark). Null → from [mood].
+  final NoorFaceState? face;
 
   /// Diameter of the moon window itself. The halo paints slightly outside
   /// it (×1.3), so callers size the window, not the whole footprint.
@@ -94,10 +99,12 @@ class NoorPresenceState extends State<NoorPresence>
     NoorMood.proud => 'assets/images/generated/mascot_celebrate.webp',
   };
 
-  NoorFaceState get _faceState => switch (widget.mood) {
-    NoorMood.calm => NoorFaceState.calm,
-    NoorMood.proud => NoorFaceState.happy,
-  };
+  NoorFaceState get _faceState =>
+      widget.face ??
+      switch (widget.mood) {
+        NoorMood.calm => NoorFaceState.calm,
+        NoorMood.proud => NoorFaceState.happy,
+      };
 
   @override
   Widget build(BuildContext context) {

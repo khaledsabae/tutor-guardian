@@ -270,6 +270,11 @@ name: gallery/shoot
       - tapOn:
           text: '${output.t.lessonNextStepConfirm}'
           optional: true
+      # Head builds ask «متى ستجرّبها؟» with three slots instead of one
+      # confirm (phase 2, حلقة الوعد); the baseline never shows them.
+      - tapOn:
+          text: '${output.t.promiseTonight}'
+          optional: true
 - runFlow:
     when:
       visible: '${output.c.reviewPromptTitle}'

@@ -222,10 +222,15 @@ class Followup {
     this.note,
     this.createdAt,
     this.answeredAt,
+    this.source = 'chat',
   });
 
   final int id;
   final int childId;
+
+  /// Where it came from: `chat` (the follow-up engine), `lesson` (a promise
+  /// made after a lesson). Servers before v36 send nothing → `chat`.
+  final String source;
 
   /// The advice being followed up, with the child's placeholder.
   final String strategy;
@@ -254,6 +259,7 @@ class Followup {
         note: _strOrNull(j['note']),
         createdAt: parseServerTime(j['created_at']),
         answeredAt: parseServerTime(j['answered_at']),
+        source: _str(j['source']).isEmpty ? 'chat' : j['source'] as String,
       );
 }
 

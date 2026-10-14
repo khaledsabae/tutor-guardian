@@ -244,6 +244,20 @@ class Analytics {
   static Future<void> nextStepCommitted({String when = 'tonight'}) =>
       _log('next_step_committed', {'when': when});
 
+  /// «نور يتذكّر»: a promise was answered from Noor's line. `linked` says
+  /// whether it rode a server follow-up (then memory learns from it too).
+  static Future<void> promiseChecked(String outcome, {required bool linked}) =>
+      _log('promise_checked', {'outcome': outcome, 'linked': linked ? 1 : 0});
+
+  /// Noor's line was shown on Today — once per line key per day.
+  static Future<void> companionShown(String kind) =>
+      _log('companion_shown', {'kind': kind});
+
+  /// The parent acted on Noor's line: a chip, or `dismiss` (hide for today).
+  /// shown vs dismiss is the «< 30% dismiss» gate of phase 2.
+  static Future<void> companionReply(String kind, String action) =>
+      _log('companion_reply', {'kind': kind, 'action': action});
+
   /// A Google identity was linked — data now survives reinstall.
   static Future<void> identityLinked() => _log('identity_linked');
 

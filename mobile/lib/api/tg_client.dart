@@ -1857,6 +1857,15 @@ class TgClient {
             if (note != null && note.trim().isNotEmpty) 'note': note.trim(),
           });
 
+  /// `POST /api/children/{id}/followups` — a lesson promise («متى ستجرّبها
+  /// مع …؟») becomes a follow-up with source='lesson'. 201 on success; 409
+  /// `followup_exists` / `followups_full` / `memory_off` are not failures for
+  /// the caller — the promise is still kept on the device.
+  Future<Map<String, dynamic>> openPromiseFollowup(int childId,
+          {required String step, required String when, String topic = 'other'}) =>
+      _authedJson('POST', '/api/children/$childId/followups',
+          body: {'strategy': step, 'when': when, 'topic': topic}, ok: const {201});
+
   /// `POST /api/children/followups/{id}/dismiss`.
   Future<Map<String, dynamic>> dismissFollowup(int followupId) =>
       _authedJson('POST', '/api/children/followups/$followupId/dismiss');
