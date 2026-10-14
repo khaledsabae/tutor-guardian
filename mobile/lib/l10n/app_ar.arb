@@ -1874,5 +1874,17 @@
   },
   "@a11yChooseAChild": {
     "description": "Screen-reader label for the active-child chip when no child is active yet; a tap opens the children list."
+  },
+  "ramadanStreetHint": "يضيء قنديل اليوم حين تعلّمون فيه أيّ شيء. اضغط أيّ يوم لتفتحه.",
+  "@ramadanStreetHint": {
+    "description": "Caption under the Ramadan lantern street (30 paper lanterns, one per day). A day's lantern is lit when the family ticked anything that day. Never mention missed days, counts or comparison."
+  },
+  "ramadanLanternLit": "قنديله مضاء",
+  "@ramadanLanternLit": {
+    "description": "Screen-reader value added to a day of the lantern street when the family ticked anything that day. Unlit days get no value at all — never 'missed'."
+  },
+  "ramadanDayComplete": "الحمد لله",
+  "@ramadanDayComplete": {
+    "description": "The quiet line that glows when every mark of a Ramadan day is ticked. No confetti, no count."
   }
 }

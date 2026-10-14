@@ -3,8 +3,8 @@
 /// What the screen shows follows the family's calendar:
 ///   upcoming  the countdown, how to get ready, each child's fasting step
 ///   ramadan   today's card (challenge, the child's part, the note, the Quran
-///             portion, tonight's story, the family's «تمّ»), the fasting
-///             step, and every other day of the month
+///             portion, tonight's story, the family's «تمّ» lanterns), the
+///             fasting step, and the street of the month's thirty lanterns
 ///   eid       the day's activities and the «رمضان عائلتنا» card
 ///   after     the four bridge weeks and the habits worth keeping
 ///   off_season a short goodbye, and last season's card if there is one
@@ -13,6 +13,7 @@
 library;
 
 import 'dart:async';
+import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -22,6 +23,7 @@ import '../../../core/app_routes.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../theme/app_colors.dart';
 import '../../../widgets/ui/loading_view.dart';
+import '../../../widgets/ui/paper_lantern.dart';
 import '../data/programs_models.dart';
 import '../providers/programs_providers.dart';
 import '../widgets/program_widgets.dart';
@@ -37,6 +39,28 @@ class RamadanScreen extends ConsumerStatefulWidget {
 
 class _RamadanScreenState extends ConsumerState<RamadanScreen> {
   late int _childId = widget.childId;
+
+  /// Today's marks as the parent just left them — the street lights today's
+  /// lantern on the tap, not after the refetch.
+  ({int day, RamadanMarks marks})? _live;
+
+  /// The lit days of the street: what the server says the family marked,
+  /// with today taken from the marks on screen.
+  Set<int> _litDays(RamadanToday t) {
+    final lit = {...t.daysMarked};
+    final day = t.state == RamadanState.ramadan ? t.day : null;
+    if (day == null) return lit;
+    final live = _live;
+    final marks = live != null && live.day == day ? live.marks : t.marks;
+    if (marks != null) {
+      if (marks.anyDone) {
+        lit.add(day);
+      } else {
+        lit.remove(day);
+      }
+    }
+    return lit;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -127,11 +151,18 @@ class _RamadanScreenState extends ConsumerState<RamadanScreen> {
               content: content,
               marks: t.marks,
               markable: t.marks != null,
+              onMarksChanged: (m) =>
+                  setState(() => _live = (day: content.day, marks: m)),
             ),
           if (t.day == 29) _EidTomorrowCard(season: t.season),
           ?fastingCard,
           if (t.season != null)
-            _DayStrip(childId: _childId, season: t.season!, today: t.day),
+            RamadanLanternStreet(
+              childId: _childId,
+              season: t.season!,
+              today: t.day,
+              lit: _litDays(t),
+            ),
           _RecapLink(soFar: true),
         ];
       case RamadanState.eid:
@@ -139,14 +170,24 @@ class _RamadanScreenState extends ConsumerState<RamadanScreen> {
           if (t.eid != null) _EidCard(eid: t.eid!, childName: name),
           _RecapLink(soFar: false, prominent: true),
           if (t.season != null)
-            _DayStrip(childId: _childId, season: t.season!, today: null),
+            RamadanLanternStreet(
+              childId: _childId,
+              season: t.season!,
+              today: null,
+              lit: _litDays(t),
+            ),
         ];
       case RamadanState.after:
         return [
           if (t.after != null) _AfterCard(after: t.after!, childId: _childId),
           if (t.recapAvailable) _RecapLink(soFar: false),
           if (t.season != null)
-            _DayStrip(childId: _childId, season: t.season!, today: null),
+            RamadanLanternStreet(
+              childId: _childId,
+              season: t.season!,
+              today: null,
+              lit: _litDays(t),
+            ),
         ];
       case RamadanState.offSeason:
         return [
@@ -299,17 +340,48 @@ class _EidTomorrowCard extends ConsumerWidget {
   }
 }
 
-/// Every day of the month — tomorrow may need something bought today, and
-/// yesterday's «تمّ» may have been forgotten. No day is marked as missed.
-class _DayStrip extends StatelessWidget {
-  const _DayStrip({
+/// The month as a street of paper lanterns, strung in rows across it — every
+/// day reachable, because tomorrow may need something bought today and
+/// yesterday's «تمّ» may have been forgotten.
+///
+/// A day the family marked anything on is lit; every other day — before
+/// today or after it — is the same quiet paper. Nothing is greyed, crossed or
+/// counted: there is no missed day on this street (plan, fixed rules), and it
+/// is the family's own calendar, never shared or compared. Today's lantern
+/// hangs a little larger.
+///
+/// Each day keeps `ValueKey('ramadan_day_$d')` and says "Day N" (and
+/// ", today") to a screen reader, as the chips it replaces did.
+class RamadanLanternStreet extends StatelessWidget {
+  const RamadanLanternStreet({
+    super.key,
     required this.childId,
     required this.season,
     required this.today,
+    this.lit = const {},
   });
+
   final int childId;
   final RamadanSeason season;
+
+  /// The day of the month today, or null outside the month (Eid, after).
   final int? today;
+
+  /// The days the family marked anything on.
+  final Set<int> lit;
+
+  /// A day is never narrower than a 48dp tap target.
+  static const double minCell = 48;
+
+  /// How many lanterns a string holds at [width]: ten (the month's three
+  /// tens) on a wide screen, six on a phone, five on a small one — always a
+  /// divisor of thirty so the rows come out even.
+  static int columnsFor(double width) {
+    for (final cols in const [10, 6, 5]) {
+      if (width >= cols * minCell) return cols;
+    }
+    return math.max(1, (width / minCell).floor());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -317,35 +389,240 @@ class _DayStrip extends StatelessWidget {
     final c = context.colors;
     return ProgramSection(
       title: l10n.ramadanOtherDays,
-      emoji: '🗓️',
-      child: Wrap(
-        spacing: 6,
-        runSpacing: 6,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          // Action chips, not choice chips: a tap opens the day, it selects
-          // nothing — a choice chip was read out as a toggle. Each says "Day
-          // N" rather than a bare number, and today's says so too.
-          for (var d = 1; d <= season.days; d++)
-            ActionChip(
-              key: ValueKey('ramadan_day_$d'),
-              label: Text(
-                '$d',
-                semanticsLabel: d == today
-                    ? l10n.ramadanDayToday(d)
-                    : l10n.ramadanDayN(d),
-                style: d == today
-                    ? TextStyle(color: c.primary, fontWeight: FontWeight.w800)
-                    : null,
-              ),
-              side: d == today
-                  ? BorderSide(color: c.primary, width: 1.5)
-                  : null,
-              onPressed: () {
-                unawaited(Analytics.programAction('ramadan', 'day'));
-                Navigator.of(context).push(AppRoutes.ramadanDay(childId, d));
-              },
+          Text(
+            l10n.ramadanStreetHint,
+            style: TextStyle(
+              color: c.textSecondary,
+              fontSize: 12.5,
+              height: 1.5,
             ),
+          ),
+          const SizedBox(height: 6),
+          LayoutBuilder(
+            builder: (context, box) {
+              final cols = columnsFor(box.maxWidth);
+              final cell = box.maxWidth / cols;
+              return Column(
+                children: [
+                  for (var first = 1; first <= season.days; first += cols)
+                    _LanternString(
+                      days: [
+                        for (
+                          var d = first;
+                          d < first + cols && d <= season.days;
+                          d++
+                        )
+                          d,
+                      ],
+                      cols: cols,
+                      cell: cell,
+                      row: (first - 1) ~/ cols,
+                      today: today,
+                      lit: lit,
+                      onOpen: (d) {
+                        unawaited(Analytics.programAction('ramadan', 'day'));
+                        Navigator.of(
+                          context,
+                        ).push(AppRoutes.ramadanDay(childId, d));
+                      },
+                    ),
+                ],
+              );
+            },
+          ),
         ],
+      ),
+    );
+  }
+}
+
+/// One string of lanterns across the street: a rope that sags a little, and
+/// each lantern on its own thread at its own length.
+class _LanternString extends StatelessWidget {
+  const _LanternString({
+    required this.days,
+    required this.cols,
+    required this.cell,
+    required this.row,
+    required this.today,
+    required this.lit,
+    required this.onOpen,
+  });
+
+  final List<int> days;
+  final int cols;
+  final double cell;
+  final int row;
+  final int? today;
+  final Set<int> lit;
+  final ValueChanged<int> onOpen;
+
+  /// Thread lengths, so the lanterns do not hang in a ruler-straight line.
+  static const _threads = [6.0, 13.0, 9.0, 15.0, 7.0, 12.0, 5.0, 14.0, 8.0, 11.0];
+  static const double _ropeTop = 3;
+  static const double _sag = 7;
+
+  /// The rope's height at a fraction of the street's width.
+  static double ropeAt(double t) => _ropeTop + _sag * 4 * t * (1 - t);
+
+  @override
+  Widget build(BuildContext context) {
+    final c = context.colors;
+    final width = cell * cols;
+    final drops = [
+      for (var i = 0; i < days.length; i++)
+        ropeAt((i + .5) / cols) + _threads[(i + row * 3) % _threads.length],
+    ];
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 4),
+      child: Stack(
+        children: [
+          Positioned.fill(
+            child: CustomPaint(
+              painter: _RopePainter(
+                cols: cols,
+                count: days.length,
+                drops: drops,
+                ropeAt: ropeAt,
+                rtl: Directionality.of(context) == TextDirection.rtl,
+                color: c.paperEmerald,
+              ),
+            ),
+          ),
+          SizedBox(
+            width: width,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                for (var i = 0; i < days.length; i++)
+                  _StreetLantern(
+                    day: days[i],
+                    width: cell,
+                    drop: drops[i],
+                    isToday: days[i] == today,
+                    lit: lit.contains(days[i]),
+                    onTap: () => onOpen(days[i]),
+                  ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _RopePainter extends CustomPainter {
+  const _RopePainter({
+    required this.cols,
+    required this.count,
+    required this.drops,
+    required this.ropeAt,
+    required this.rtl,
+    required this.color,
+  });
+
+  final int cols;
+  final int count;
+  final List<double> drops;
+  final double Function(double) ropeAt;
+  final bool rtl;
+  final Color color;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final rope = Paint()
+      ..color = color
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1.6
+      ..strokeCap = StrokeCap.round;
+    final path = Path()..moveTo(0, ropeAt(0));
+    for (var x = 4.0; x <= size.width; x += 4) {
+      path.lineTo(x, ropeAt(x / size.width));
+    }
+    canvas.drawPath(path, rope);
+    final thread = Paint()
+      ..color = color
+      ..strokeWidth = 1.1;
+    final cell = size.width / cols;
+    for (var i = 0; i < count; i++) {
+      final t = (i + .5) / cols;
+      final x = rtl ? size.width - (i + .5) * cell : (i + .5) * cell;
+      // Down to the lantern's ring (4/48 of the lantern below its top).
+      canvas.drawLine(Offset(x, ropeAt(t)), Offset(x, drops[i] + 3), thread);
+    }
+  }
+
+  @override
+  bool shouldRepaint(_RopePainter old) =>
+      old.cols != cols ||
+      old.count != count ||
+      old.rtl != rtl ||
+      old.color != color ||
+      old.drops.length != drops.length;
+}
+
+/// One day on the street: a lantern on its thread and the day's number. A
+/// button that opens the day; to a screen reader, "Day N" (", today"), and
+/// "lantern lit" when it is — an unlit day says nothing more.
+class _StreetLantern extends StatelessWidget {
+  const _StreetLantern({
+    required this.day,
+    required this.width,
+    required this.drop,
+    required this.isToday,
+    required this.lit,
+    required this.onTap,
+  });
+
+  final int day;
+  final double width;
+  final double drop;
+  final bool isToday;
+  final bool lit;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final c = context.colors;
+    return Semantics(
+      key: ValueKey('ramadan_day_$day'),
+      container: true,
+      button: true,
+      label: isToday ? l10n.ramadanDayToday(day) : l10n.ramadanDayN(day),
+      value: lit ? l10n.ramadanLanternLit : null,
+      onTap: onTap,
+      excludeSemantics: true,
+      child: SizedBox(
+        width: width,
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(12),
+          child: Padding(
+            padding: EdgeInsets.only(top: drop, bottom: 4),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                PaperLantern(lit: lit, height: isToday ? 50 : 40),
+                const SizedBox(height: 2),
+                Text(
+                  '$day',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: isToday ? c.primary : c.ink,
+                    fontWeight: isToday ? FontWeight.w800 : FontWeight.w600,
+                    fontSize: 12.5,
+                    height: 1.2,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }

@@ -573,6 +573,10 @@ class RamadanMarks {
 
   bool isDone(String mark) => ticks[mark] == true;
 
+  /// Whether anything at all is marked — what lights the day's lantern.
+  bool get anyDone =>
+      ticks.values.any((v) => v) || familyWordIndex != null || familyWord != null;
+
   static RamadanMarks? fromJson(Object? v) {
     final j = _map(v);
     if (j == null) return null;
@@ -808,6 +812,7 @@ class RamadanToday {
     this.marks,
     this.fasting,
     this.recapAvailable = false,
+    this.daysMarked = const {},
   });
 
   final int childId;
@@ -833,6 +838,11 @@ class RamadanToday {
   final FastingSummary? fasting;
   final bool recapAvailable;
 
+  /// The lantern street: the days of the season the family marked anything
+  /// on. Days only, never a count; a day not in the set is simply not lit.
+  /// Empty from a server older than the street.
+  final Set<int> daysMarked;
+
   factory RamadanToday.fromJson(Map<String, dynamic> j) => RamadanToday(
     childId: _int(j['child_id']) ?? -1,
     state: RamadanState.fromWire(_str(j['state'])),
@@ -852,6 +862,12 @@ class RamadanToday {
     marks: RamadanMarks.fromJson(j['marks']),
     fasting: FastingSummary.fromJson(j['fasting']),
     recapAvailable: _bool(j['recap_available']),
+    daysMarked: {
+      for (final d in j['days_marked'] is List
+          ? j['days_marked'] as List
+          : const <Object?>[])
+        ?_int(d),
+    },
   );
 }
 
