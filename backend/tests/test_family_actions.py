@@ -27,7 +27,7 @@ def _report_module():
 
 
 def _sources() -> set[tuple[str, str]]:
-    return {(table, col) for table, col, _extra in ACTION_SOURCES}
+    return {(src.table, src.column) for src in ACTION_SOURCES}
 
 
 def test_registry_covers_lessons_missions_and_followups():
@@ -39,6 +39,29 @@ def test_registry_covers_lessons_missions_and_followups():
     # Family programs (v34) stay counted too.
     assert ("ramadan_marks", "created_at") in _sources()
     assert ("prayer_journeys", "created_at") in _sources()
+    # A step of the weekly plan ticked (Phase 3).
+    assert ("weekly_plan_marks", "created_at") in _sources()
+
+
+def test_every_source_names_its_lantern_kind():
+    """/api/family/week labels each act by kind; the app draws the lantern by it."""
+    kinds = {src.kind for src in ACTION_SOURCES}
+    assert kinds == {"lesson", "habit", "mission", "challenge", "ramadan_mark",
+                     "prayer_journey", "followup", "plan_tick"}
+    by_source = {(src.table, src.column): src.kind for src in ACTION_SOURCES}
+    assert by_source[("weekly_plan_marks", "created_at")] == "plan_tick"
+    assert by_source[("followups", "answered_at")] == "followup"
+
+
+def test_worship_acts_are_declared_on_the_registry_not_hidden_in_a_query():
+    """The plan's rule — worship never lights the weekly lanterns — is a
+    property of each source, so the counter and any later reader see it."""
+    worship = {src.table: src.worship for src in ACTION_SOURCES if src.worship}
+    assert worship["ramadan_marks"] == worship["prayer_journeys"] == "ALL"
+    assert "prayer_journey" in worship["child_missions"]
+    assert "worship" in worship["habits_value_events"]
+    assert "worship_" in worship["weekly_plan_marks"]
+    assert "lesson_progress" not in worship and "followups" not in worship
 
 
 def test_registry_never_lights_lanterns_for_worship_acts():
@@ -92,6 +115,41 @@ def test_report_counts_a_followup_answered_in_window(tmp_path):
     assert "dev-lesson" in devices        # the lift kept the old sources
     assert "dev-old" not in devices
     assert "dev-pending" not in devices
+
+
+def test_report_counts_a_plan_tick(tmp_path):
+    """A family whose only act this week was ticking a plan step is active —
+    the report and the lanterns read the same registry."""
+    report = _report_module()
+    db = tmp_path / "plan_tick.db"
+    now = datetime.utcnow()
+    conn = sqlite3.connect(db)
+    # Copied from backend/app/db/init_db.py v36 (_CREATE_WEEKLY_PLAN_MARKS),
+    # the schema production runs since Phase 0 deployed.
+    conn.executescript(
+        """
+        CREATE TABLE IF NOT EXISTS weekly_plan_marks (
+            id          INTEGER PRIMARY KEY AUTOINCREMENT,
+            device_id   TEXT NOT NULL,
+            child_id    INTEGER NOT NULL,
+            item_id     TEXT NOT NULL,
+            marked_on   TEXT NOT NULL,
+            created_at  TEXT NOT NULL DEFAULT (datetime('now')),
+            UNIQUE (device_id, child_id, item_id, marked_on),
+            FOREIGN KEY (child_id) REFERENCES child_profiles(id) ON DELETE CASCADE
+        );
+        """
+    )
+    conn.execute(
+        "INSERT INTO weekly_plan_marks (device_id, child_id, item_id, marked_on, created_at) "
+        "VALUES ('dev-tick', 1, 'sleep_school_1', ?, ?)",
+        ((now - timedelta(days=1)).date().isoformat(),
+         (now - timedelta(days=1)).strftime("%Y-%m-%d %H:%M:%S")))
+    conn.commit()
+    conn.close()
+
+    events = report.get_action_events(db, since=now - timedelta(days=7))
+    assert {device for device, _ts in events} == {"dev-tick"}
 
 
 def test_report_skips_missing_tables_and_columns(tmp_path):

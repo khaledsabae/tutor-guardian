@@ -205,7 +205,10 @@ def test_v30_tables_are_created_on_a_db_already_stamped_higher(tmp_path, monkeyp
 def test_every_v30_table_is_in_the_privacy_delete_all():
     from app.routers.privacy import MEMORY_SETTINGS_TABLE
     covered = {t for t, _ in MEMORY_TABLES} | {MEMORY_SETTINGS_TABLE}
-    assert covered == {"child_facts", "followups", "weekly_plans", "child_memory_settings"}
+    # weekly_plan_marks (v36, نور والقناديل Phase 3): the ticks on a plan go
+    # with the plan.
+    assert covered == {"child_facts", "followups", "weekly_plans", "weekly_plan_marks",
+                       "child_memory_settings"}
     conn = get_conn()
     for table, column in MEMORY_TABLES:
         cols = {r[1] for r in conn.execute(f"PRAGMA table_info({table})")}
@@ -335,7 +338,10 @@ def _seed_everything(client, h, device) -> int:
                  (device, cid))
     conn.commit()
     conn.close()
-    client.get(f"/api/children/{cid}/weekly-plan", headers=_headers(h))
+    plan = client.get(f"/api/children/{cid}/weekly-plan", headers=_headers(h)).json()
+    assert client.put(f"/api/children/{cid}/weekly-plan/marks", headers=_headers(h),
+                      json={"week_start": plan["week_start"],
+                            "item_key": plan["actions"][0]["key"]}).status_code == 200
     client.put("/api/children/memory/settings", headers=_headers(h), json={"enabled": True})
     return cid
 
@@ -353,10 +359,12 @@ def test_delete_all_for_a_child(client):
     cid = _seed_everything(client, h, "dev-del-child")
     before = _count("dev-del-child")
     assert before["child_facts"] and before["followups"] and before["weekly_plans"]
+    assert before["weekly_plan_marks"]
     r = client.delete(f"/api/children/{cid}/memory", headers=_headers(h))
     assert r.status_code == 200
     after = _count("dev-del-child")
     assert after["child_facts"] == after["followups"] == after["weekly_plans"] == 0
+    assert after["weekly_plan_marks"] == 0
 
 
 def test_privacy_delete_all_removes_every_memory_row_of_the_device_only(client):
@@ -372,6 +380,7 @@ def test_privacy_delete_all_removes_every_memory_row_of_the_device_only(client):
     assert all(v == 0 for v in _count("dev-wipe").values())
     kept = _count("dev-keep")
     assert kept["child_facts"] and kept["followups"] and kept["weekly_plans"]
+    assert kept["weekly_plan_marks"]
 
 
 def test_deleting_the_child_cascades_its_memory(client):

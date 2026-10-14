@@ -749,13 +749,14 @@ def delete_fact(device_id: str, child_id: int, fact_id: int) -> bool:
 
 
 def delete_child_memory(device_id: str, child_id: int) -> dict:
-    """Everything remembered about one child: facts, follow-ups, weekly plans.
-    Bumps the erase generation, so nothing in flight writes it back."""
+    """Everything remembered about one child: facts, follow-ups, weekly plans
+    and the steps ticked on them (weekly_plan_marks, v36 — they go with the
+    plan). Bumps the erase generation, so nothing in flight writes it back."""
     conn = get_conn()
     try:
         conn.execute("BEGIN IMMEDIATE")
         counts = {}
-        for table in ("child_facts", "followups", "weekly_plans"):
+        for table in ("child_facts", "followups", "weekly_plans", "weekly_plan_marks"):
             cur = conn.execute(
                 f"DELETE FROM {table} WHERE device_id = ? AND child_id = ?",
                 (device_id, child_id),
