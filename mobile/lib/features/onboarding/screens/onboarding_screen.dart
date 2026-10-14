@@ -6,9 +6,11 @@
 ///      renders with zero network) + a preview of the age-tailored path and
 ///      a sample mentor question, then a single CTA.
 ///
-/// Everything else (child name, avatar, gender) is deferred to
-/// [EditChildScreen] — the CTA creates the child with a localized default
-/// name so the funnel has exactly one required decision.
+/// Everything else (avatar, gender) is deferred to [EditChildScreen] — the
+/// CTA creates the child with a localized default name so the funnel has
+/// exactly one required decision. The name is asked, optionally, *while* the
+/// child is being created (see [_WaitingOverlay]): the wait gets a personal
+/// touch, and the funnel gets no new step.
 ///
 /// On submit:
 ///   * POST /api/children (via `createChildProvider`)
@@ -36,7 +38,11 @@ import '../../../theme/app_colors.dart';
 import '../../../widgets/ui/bouncy_button.dart';
 import '../../../widgets/ui/brand_glyph.dart';
 import '../../../widgets/ui/night_sky.dart';
+import '../../program/data/child_name.dart';
+import '../../program/data/progress_models.dart' show ChildProfile;
 import '../../program/providers/progress_providers.dart';
+import '../../program/providers/settings_providers.dart'
+    show updateChildProvider;
 import '../../program/providers/program_providers.dart'
     show pendingChatQuestionProvider;
 import '../data/onboarding_storage.dart';
@@ -63,10 +69,141 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
 
   static const _pageCount = 3;
 
+  // ── The name, asked on the creation wait (plan phase 2, «الاسم») ──────
+  // Owned here, not by the overlay: a failed create takes the overlay down
+  // and a retry brings it back, and what the parent typed must survive that.
+  final _nameController = TextEditingController();
+  final _nameFocus = FocusNode();
+
+  /// «لاحقًا»: the field is gone and the default name stays.
+  bool _nameDeclined = false;
+
+  /// A name the parent confirmed — trimmed and valid.
+  String? _confirmedName;
+  String? _nameError;
+
+  /// From the CTA until the shell takes over, or the create fails: the
+  /// overlay's lifetime. Not `createChildProvider.isLoading` alone — the child
+  /// exists a few awaits before the gate flips, and a parent mid-name must not
+  /// see the overlay (and the keyboard) blink out in between.
+  bool _creating = false;
+
+  /// The child exists; the overlay may still be up for the name.
+  bool _created = false;
+
+  /// Completed by «تمّ» / «لاحقًا» while a parent who was mid-name when the
+  /// child came back is held. A parent who never touched the field is never
+  /// held.
+  Completer<void>? _nameHold;
+
+  bool get _nameEngaged =>
+      _nameFocus.hasFocus || _nameController.text.trim().isNotEmpty;
+
   @override
   void dispose() {
     _pageController.dispose();
+    _nameController.dispose();
+    _nameFocus.dispose();
     super.dispose();
+  }
+
+  void _confirmName() {
+    final name = _nameController.text.trim();
+    if (name.isEmpty) {
+      _declineName();
+      return;
+    }
+    final error = onboardingNameError(AppLocalizations.of(context), name);
+    setState(() {
+      _nameError = error;
+      if (error == null) _confirmedName = name;
+    });
+    if (error != null) return;
+    _nameFocus.unfocus();
+    _releaseNameHold();
+  }
+
+  void _declineName() {
+    _nameController.clear();
+    _nameFocus.unfocus();
+    setState(() {
+      _nameDeclined = true;
+      _confirmedName = null;
+      _nameError = null;
+    });
+    _releaseNameHold();
+  }
+
+  void _releaseNameHold() {
+    final hold = _nameHold;
+    if (hold != null && !hold.isCompleted) hold.complete();
+  }
+
+  /// After the child exists: wait for a parent who is mid-name, then save
+  /// what they confirmed. Ignoring the field costs nothing — no wait at all.
+  ///
+  /// Never throws: the child exists by now, and an error reaching `_submit`
+  /// would read as a failed create — and a retry would make a second child.
+  Future<void> _settleName(ChildProfile child) async {
+    try {
+      if (_confirmedName == null && !_nameDeclined && _nameEngaged) {
+        final hold = _nameHold = Completer<void>();
+        await hold.future;
+        if (!mounted) return;
+      }
+      final name = _confirmedName;
+      unawaited(
+        Analytics.onboardingName(
+          name != null ? 'named' : (_nameDeclined ? 'later' : 'ignored'),
+        ),
+      );
+      if (name == null || name == child.name) return;
+      // Today greets by the new name at once: the on-disk profile changes
+      // now, and the server learns it through the edit screen's own PATCH in
+      // the background, so a slow network never holds the parent here.
+      final container = ProviderScope.containerOf(context, listen: false);
+      final storage = container.read(onboardingStorageProvider);
+      await storage.setActiveChild(
+        id: child.id,
+        name: name,
+        ageGroup: child.ageGroup,
+      );
+      container.invalidate(activeChildProfileProvider);
+      unawaited(_saveNameOnServer(container, child, name));
+    } catch (_) {
+      // The default name stays; Settings can still change it.
+    }
+  }
+
+  /// Outlives this screen (the gate flips right after), so it runs on the
+  /// container, never on `ref`. If the server refuses, the name goes back to
+  /// what the server has: a greeting that disagrees with Settings is worse
+  /// than «طفلي», which the parent can still change there.
+  static Future<void> _saveNameOnServer(
+    ProviderContainer container,
+    ChildProfile child,
+    String name,
+  ) async {
+    // The notifier is autoDispose; keep it alive for the length of the call.
+    final keepAlive = container.listen(updateChildProvider, (_, _) {});
+    try {
+      await container
+          .read(updateChildProvider.notifier)
+          .call(childId: child.id, name: name, ageGroup: child.ageGroup);
+    } catch (_) {
+      final storage = container.read(onboardingStorageProvider);
+      if (storage.activeChildId == child.id &&
+          storage.activeChildName == name) {
+        await storage.setActiveChild(
+          id: child.id,
+          name: child.name,
+          ageGroup: child.ageGroup,
+        );
+        container.invalidate(activeChildProfileProvider);
+      }
+    } finally {
+      keepAlive.close();
+    }
   }
 
   void _goTo(int page) {
@@ -97,17 +234,25 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
       _goTo(1);
       return;
     }
-    final defaultName = AppLocalizations.of(context).onbDefaultChildName;
+    // A name confirmed during an attempt that failed goes straight into this
+    // one — no second request needed for it.
+    final name =
+        _confirmedName ?? AppLocalizations.of(context).onbDefaultChildName;
+    setState(() {
+      _creating = true;
+      _created = false;
+    });
     try {
       // Make sure prefs are hydrated before anything reads
       // onboardingStorageProvider (requireValue would throw during boot).
       await ref.read(sharedPreferencesProvider.future);
       final child = await ref
           .read(createChildProvider.notifier)
-          .create(name: defaultName, ageGroup: ageGroup)
+          .create(name: name, ageGroup: ageGroup)
           // Guard against a hung backend — surface a clear error instead
           // of leaving the user on a blank/loading screen indefinitely.
           .timeout(const Duration(seconds: 45));
+      if (mounted) setState(() => _created = true);
       // Persist locally and flip the gate.
       final storage = ref.read(onboardingStorageProvider);
       await storage.setActiveChild(
@@ -124,6 +269,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
       // registered a child; 1,283 ever opened a lesson. This sits on that path.
       await storage.markUpdateSeen(updateSplashVersion);
       unawaited(Analytics.onboardingDone());
+      if (!mounted) return;
+      await _settleName(child);
       // The deferred ask, armed on the value page: seed the question and the
       // target tab BEFORE the gate flips, because the shell (and ChatScreen
       // inside it) mounts on the next build. ChatScreen consumes a question
@@ -144,7 +291,12 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
       if (mounted) {
         await ref.read(onboardingCompletedProvider.notifier).markCompleted();
       }
+      // Same frame as main.dart's swap to the shell, so nothing blinks; it
+      // only shows where this screen outlives the gate (tests, a pushed
+      // onboarding).
+      if (mounted) setState(() => _creating = false);
     } on TimeoutException {
+      if (mounted) setState(() => _creating = false);
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -154,6 +306,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
         );
       }
     } catch (e) {
+      if (mounted) setState(() => _creating = false);
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -172,7 +325,9 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   @override
   Widget build(BuildContext context) {
     final createState = ref.watch(createChildProvider);
-    final busy = createState.isLoading;
+    // Creating, or created and on the way to the shell (perhaps held by the
+    // name — see _settleName).
+    final busy = createState.isLoading || _creating;
     final isLastPage = _page == _pageCount - 1;
     final showCta = isLastPage || (_page == 1 && _ageGroup != null);
 
@@ -278,18 +433,41 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
           ),
           // Full-screen loading overlay — keeps the wait from ever
           // looking like a frozen/black screen (child creation can be
-          // slow on first cold backend hit).
+          // slow on first cold backend hit). The scrim is opaque to taps
+          // (ColoredBox), so nothing behind it can be pressed; only the
+          // card's name field and its two buttons take input.
           if (busy)
             Positioned.fill(
-              child: AbsorbPointer(
-                child: ColoredBox(
-                  color: Colors.black.withValues(alpha: 0.55),
-                  child: Center(
-                    child: _WaitingOverlay(
-                      lines: [
-                        AppLocalizations.of(context).onbPreparingStep1,
-                        AppLocalizations.of(context).onbPreparingStep2,
-                      ],
+              child: ColoredBox(
+                color: Colors.black.withValues(alpha: 0.55),
+                // The overlay sits beside the Scaffold, not in it; the name
+                // field needs a Material above it.
+                child: Material(
+                  type: MaterialType.transparency,
+                  child: SafeArea(
+                    child: Padding(
+                      // Lift the card above the keyboard the name field opens.
+                      padding: EdgeInsets.only(
+                        bottom: MediaQuery.viewInsetsOf(context).bottom,
+                      ),
+                      child: Center(
+                        child: SingleChildScrollView(
+                          padding: const EdgeInsets.all(20),
+                          child: _WaitingOverlay(
+                            lines: [
+                              AppLocalizations.of(context).onbPreparingStep1,
+                              AppLocalizations.of(context).onbPreparingStep2,
+                            ],
+                            created: _created,
+                            nameController: _nameController,
+                            nameFocus: _nameFocus,
+                            askName: !_nameDeclined && _confirmedName == null,
+                            nameError: _nameError,
+                            onNameDone: _confirmName,
+                            onNameLater: _declineName,
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -306,10 +484,37 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
 /// while the create call is in flight. The overlay's lifetime is bounded by
 /// `_submit`'s existing 45s timeout — this widget only ever adds lines,
 /// never decides when to stop.
+///
+/// It also asks the child's name — optionally («الاسم», plan phase 2). The
+/// title follows the field as the parent types («درب طفلك» → «درب سارة»).
+/// Nothing here waits for an answer: a parent who ignores the field is on
+/// Today the moment the child exists, exactly as before. Only a parent who
+/// is mid-name when it does ([created]) is held, with the lines all ticked,
+/// until «تمّ» or «لاحقًا».
 class _WaitingOverlay extends StatefulWidget {
-  const _WaitingOverlay({required this.lines});
+  const _WaitingOverlay({
+    required this.lines,
+    required this.created,
+    required this.nameController,
+    required this.nameFocus,
+    required this.askName,
+    required this.nameError,
+    required this.onNameDone,
+    required this.onNameLater,
+  });
 
   final List<String> lines;
+
+  /// The child exists; the overlay is only still up for the name.
+  final bool created;
+  final TextEditingController nameController;
+  final FocusNode nameFocus;
+
+  /// False once the parent confirmed a name or chose «لاحقًا».
+  final bool askName;
+  final String? nameError;
+  final VoidCallback onNameDone;
+  final VoidCallback onNameLater;
 
   @override
   State<_WaitingOverlay> createState() => _WaitingOverlayState();
@@ -345,6 +550,9 @@ class _WaitingOverlayState extends State<_WaitingOverlay> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
+    // Once the child exists every line is true, whatever the timer reached.
+    final shown = widget.created ? widget.lines.length : _revealed;
+    final done = widget.created ? shown : shown - 1;
     return Container(
       padding: const EdgeInsets.all(28),
       decoration: BoxDecoration(
@@ -355,22 +563,41 @@ class _WaitingOverlayState extends State<_WaitingOverlay> {
         mainAxisSize: MainAxisSize.min,
         children: [
           NoorPresence(size: 84, semanticLabel: l10n.noorName),
-          const SizedBox(height: 18),
-          for (var i = 0; i < _revealed; i++) ...[
+          const SizedBox(height: 14),
+          // The live title: the field's text as the parent types it.
+          ValueListenableBuilder<TextEditingValue>(
+            valueListenable: widget.nameController,
+            builder: (context, value, _) {
+              final name = value.text.trim();
+              return Text(
+                name.isEmpty
+                    ? l10n.onbNameTitleDefault
+                    : l10n.onbNameTitle(name),
+                textAlign: TextAlign.center,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w800,
+                  color: AppTheme.textPrimary,
+                ),
+              );
+            },
+          ),
+          const SizedBox(height: 14),
+          for (var i = 0; i < shown; i++) ...[
             if (i > 0) const SizedBox(height: 8),
             Row(
               mainAxisSize: MainAxisSize.min,
               children: [
                 Icon(
                   // Every visible line except the last is done; the last one
-                  // is the work in progress.
-                  i < _revealed - 1
+                  // is the work in progress — until the child exists.
+                  i < done
                       ? Icons.check_circle_outline
                       : Icons.radio_button_checked,
                   size: 18,
-                  color: i < _revealed - 1
-                      ? AppTheme.primary
-                      : AppTheme.textSecondary,
+                  color: i < done ? AppTheme.primary : AppTheme.textSecondary,
                 ),
                 const SizedBox(width: 8),
                 Flexible(
@@ -387,6 +614,93 @@ class _WaitingOverlayState extends State<_WaitingOverlay> {
               ],
             ),
           ],
+          if (widget.askName) ...[
+            const SizedBox(height: 22),
+            _NameField(
+              controller: widget.nameController,
+              focusNode: widget.nameFocus,
+              error: widget.nameError,
+              onDone: widget.onNameDone,
+              onLater: widget.onNameLater,
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+/// «ما اسم طفلك؟» — one optional line and its two ways out. Never autofocused:
+/// a keyboard that opens by itself would hold every parent on this overlay.
+class _NameField extends StatelessWidget {
+  const _NameField({
+    required this.controller,
+    required this.focusNode,
+    required this.error,
+    required this.onDone,
+    required this.onLater,
+  });
+
+  final TextEditingController controller;
+  final FocusNode focusNode;
+  final String? error;
+  final VoidCallback onDone;
+  final VoidCallback onLater;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    return SizedBox(
+      width: 320,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            l10n.onbNameQuestion,
+            style: TextStyle(
+              fontWeight: FontWeight.w700,
+              color: AppTheme.textPrimary,
+            ),
+          ),
+          const SizedBox(height: 8),
+          TextField(
+            controller: controller,
+            focusNode: focusNode,
+            maxLength: onboardingNameMaxLength,
+            textInputAction: TextInputAction.done,
+            textCapitalization: TextCapitalization.words,
+            onSubmitted: (_) => onDone(),
+            decoration: InputDecoration(
+              hintText: l10n.onbNameHint,
+              errorText: error,
+              // The cap is enforced as they type; a running count would only
+              // turn a name into a form.
+              counterText: '',
+              prefixIcon: const Icon(Icons.person_outline),
+            ),
+          ),
+          const SizedBox(height: 10),
+          Row(
+            children: [
+              TextButton(
+                onPressed: onLater,
+                child: Text(
+                  l10n.onbNameLater,
+                  style: TextStyle(
+                    fontWeight: FontWeight.w700,
+                    color: AppTheme.textSecondary,
+                  ),
+                ),
+              ),
+              const Spacer(),
+              BouncyButton(
+                label: l10n.onbNameDone,
+                expanded: false,
+                onTap: onDone,
+              ),
+            ],
+          ),
         ],
       ),
     );

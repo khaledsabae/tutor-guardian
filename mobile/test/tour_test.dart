@@ -4,16 +4,29 @@
 /// that swallows taps, so if it ever ran under `flutter test` it would break
 /// every widget test that touches the nav bar — starting with
 /// `program_widget_test.dart`.
+///
+/// Version 3 («نور والقناديل», phase 2) is one mark on Today's ① card, and
+/// tapping it opens the lesson; «تخطّي» stays (e2e/flows/common/skip_tour.yaml
+/// taps it). It runs once, and only for parents who never finished version 2.
 library;
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:almorabbi/api/tg_client.dart';
+import 'package:almorabbi/core/app_routes.dart' show Screens;
+import 'package:almorabbi/features/home/widgets/today_focus_card.dart';
 import 'package:almorabbi/features/onboarding/data/onboarding_storage.dart';
+import 'package:almorabbi/features/onboarding/providers/onboarding_providers.dart';
 import 'package:almorabbi/features/tour/tour_controller.dart';
+import 'package:almorabbi/features/tour/tour_overlay.dart';
 import 'package:almorabbi/features/tour/tour_step.dart';
 import 'package:almorabbi/l10n/app_localizations.dart';
+import 'package:almorabbi/state/chat_notifier.dart' show tgClientProvider;
 
 void main() {
   group('test guard', () {
@@ -51,10 +64,39 @@ void main() {
     });
   });
 
+  group('who sees version 3', () {
+    test('it is version 3', () => expect(kTourVersion, 3));
+
+    test('never toured, or rewound by the replay row: yes', () {
+      expect(tourIsDue(0), isTrue);
+    });
+
+    test('finished version 1 (before the rewrite): yes', () {
+      expect(tourIsDue(1), isTrue);
+    });
+
+    test('finished version 2: no — it already ended on ①', () {
+      expect(tourIsDue(2), isFalse);
+    });
+
+    test('finished version 3: no — once is enough', () {
+      expect(tourIsDue(kTourVersion), isFalse);
+    });
+
+    test('the shell asks tourIsDue, and waits for Today', () {
+      final source =
+          File('lib/features/shell/root_scaffold.dart').readAsStringSync();
+      expect(source, contains('tourIsDue(ref.read(tourVersionProvider))'));
+      expect(source, contains('if (_index != RootTab.today) return;'));
+      expect(source, isNot(contains('>= kTourVersion')),
+          reason: 'a bare version compare would re-show it to v2 parents');
+    });
+  });
+
   group('steps', () {
-    final tabKeys = List.generate(4, (_) => GlobalKey());
     final focusKey = GlobalKey();
-    final steps = buildTourSteps(tabKeys: tabKeys, focusKey: focusKey);
+    var opened = 0;
+    final steps = buildTourSteps(focusKey: focusKey, onOpen: () => opened++);
 
     // Both shipped locales: a key can exist in Arabic and be missing in
     // English, and the tour is the first thing a new user sees.
@@ -63,28 +105,23 @@ void main() {
       'en': lookupAppLocalizations(const Locale('en')),
     };
 
-    test('there are five stops, in nav order then the focus card', () {
-      expect(steps.length, 5);
-      for (var i = 0; i < 4; i++) {
-        expect(steps[i].key, same(tabKeys[i]),
-            reason: 'step $i must point at destination $i');
-      }
-      expect(steps.last.key, same(focusKey));
+    test('one mark, on the ① card, that opens it', () {
+      expect(steps, hasLength(1));
+      expect(steps.single.key, same(focusKey));
+      steps.single.onTargetTap!();
+      expect(opened, 1);
     });
 
-    test('every target key is distinct', () {
-      expect(steps.map((s) => s.key).toSet().length, steps.length);
-    });
-
-    test('every caption and title resolves in every locale', () {
+    test('its copy resolves in every locale', () {
       for (final entry in locales.entries) {
-        for (var i = 0; i < steps.length; i++) {
-          expect(steps[i].caption(entry.value), isNotEmpty,
-              reason: 'step $i has no ${entry.key} caption');
-          expect(steps[i].title!(entry.value), isNotEmpty,
-              reason: 'step $i has no ${entry.key} title');
-        }
+        final step = steps.single;
+        expect(step.title!(entry.value), isNotEmpty, reason: entry.key);
+        expect(step.caption(entry.value), isNotEmpty, reason: entry.key);
+        expect(step.actionLabel!(entry.value), isNotEmpty, reason: entry.key);
       }
+      final ar = locales['ar']!;
+      expect(ar.tourStartHereTitle, 'ابدأ من هنا');
+      expect(ar.tourStartHereBody, 'درس قصير لعمر طفلك');
     });
 
     test('the action labels resolve in every locale', () {
@@ -95,66 +132,155 @@ void main() {
         expect(l.tourReplay, isNotEmpty);
       }
     });
+
+    test('version 2\'s five captions are gone from both locales', () {
+      for (final file in ['lib/l10n/app_ar.arb', 'lib/l10n/app_en.arb']) {
+        final arb = File(file).readAsStringSync();
+        for (final key in ['tourTodayTitle', 'tourLearnBody', 'tourFocusBody']) {
+          expect(arb, isNot(contains('"$key"')), reason: '$file: $key');
+        }
+      }
+    });
   });
 
-  // The tour never runs under FLUTTER_TEST, so the overlay's geometry is
-  // otherwise untested. This exercises the one thing it depends on: that a
-  // GlobalKey on a KeyedSubtree wrapping a NavigationDestination measures that
-  // destination's own slot, and that RTL mirroring comes for free from the
-  // framework's layout rather than from index arithmetic we'd have to write.
-  group('destination measurement', () {
-    Future<List<Rect>> layOut(WidgetTester tester, TextDirection dir) async {
-      final keys = List.generate(4, (_) => GlobalKey());
-      await tester.pumpWidget(MaterialApp(
-        home: Directionality(
-          textDirection: dir,
-          child: Scaffold(
-            bottomNavigationBar: NavigationBar(
-              selectedIndex: 0,
-              destinations: [
-                for (var i = 0; i < 4; i++)
-                  KeyedSubtree(
-                    key: keys[i],
-                    child: NavigationDestination(
-                      icon: const Icon(Icons.home),
-                      label: 'tab$i',
-                    ),
+  group('the version-3 mark on ①', () {
+    late SharedPreferences prefs;
+    late List<String?> pushed;
+    late GlobalKey focusKey;
+    late ValueNotifier<double> above;
+
+    /// Today in miniature: something above ① that can grow (the gift line,
+    /// the child banner), then the real ① card on a first lesson, and a
+    /// button standing in for the shell's post-frame start.
+    Future<void> pumpToday(WidgetTester tester) async {
+      SharedPreferences.setMockInitialValues({});
+      prefs = await SharedPreferences.getInstance();
+      pushed = [];
+      focusKey = GlobalKey();
+      above = ValueNotifier(40);
+      final container = ProviderContainer(overrides: [
+        tgClientProvider.overrideWithValue(_FirstLessonClient()),
+        sharedPreferencesProvider.overrideWith((_) async => prefs),
+      ]);
+      addTearDown(container.dispose);
+      await container.read(sharedPreferencesProvider.future);
+      await tester.pumpWidget(UncontrolledProviderScope(
+        container: container,
+        child: MaterialApp(
+          locale: const Locale('ar'),
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          navigatorObservers: [_PushLog(pushed)],
+          builder: (context, child) => MediaQuery(
+            data: MediaQuery.of(context).copyWith(disableAnimations: true),
+            child: child!,
+          ),
+          home: Consumer(
+            builder: (context, ref, _) => Scaffold(
+              body: ListView(
+                children: [
+                  ValueListenableBuilder<double>(
+                    valueListenable: above,
+                    builder: (_, h, _) => SizedBox(height: h),
                   ),
-              ],
+                  TodayFocusCard(
+                    key: focusKey,
+                    bundle: null,
+                    ageGroup: '7-9',
+                    onStartFirstPath: () => pushed.add('browse'),
+                  ),
+                  TextButton(
+                    onPressed: () => showTour(
+                      context,
+                      ref,
+                      buildTourSteps(
+                        focusKey: focusKey,
+                        onOpen: () =>
+                            ref.read(todayFocusOpenProvider.notifier).state++,
+                      ),
+                    ),
+                    child: const Text('start-tour'),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
       ));
       await tester.pumpAndSettle();
-      return keys.map((k) {
-        final box = k.currentContext!.findRenderObject() as RenderBox;
-        return box.localToGlobal(Offset.zero) & box.size;
-      }).toList();
+      expect(find.text('ابدأ هذا الدرس'), findsOneWidget,
+          reason: 'the card offers the first lesson');
+      await tester.tap(find.text('start-tour'));
+      await tester.pumpAndSettle();
     }
 
-    testWidgets('each key measures one whole, distinct destination',
+    /// Unmounts everything a pushed lesson screen may have started.
+    Future<void> finish(WidgetTester tester) async {
+      await tester.pumpWidget(const SizedBox());
+      await tester.pump(const Duration(seconds: 2));
+    }
+
+    int stored() => prefs.getInt(OnboardingStorage.keyTourVersion) ?? 0;
+
+    testWidgets('shows the copy and «تخطّي», and no meter for one step',
         (tester) async {
-      final rects = await layOut(tester, TextDirection.ltr);
-      expect(rects.toSet().length, 4, reason: 'rects must not overlap');
-      final width = tester.view.physicalSize.width / tester.view.devicePixelRatio;
-      for (final r in rects) {
-        expect(r.width, closeTo(width / 4, 0.5));
-        expect(r.height, greaterThan(0));
-      }
+      await pumpToday(tester);
+      expect(find.text('ابدأ من هنا'), findsOneWidget);
+      expect(find.text('درس قصير لعمر طفلك'), findsOneWidget);
+      expect(find.text('تخطّي'), findsOneWidget);
+      expect(find.text('ابدأ'), findsOneWidget);
+      expect(find.byType(FractionallySizedBox), findsNothing,
+          reason: 'a meter that starts full measures nothing');
+      await tester.tap(find.text('تخطّي'));
+      await tester.pumpAndSettle();
+      await finish(tester);
     });
 
-    testWidgets('RTL mirrors the destinations without any index flipping',
+    testWidgets('tapping the card under the mark opens the lesson',
         (tester) async {
-      final rtl = await layOut(tester, TextDirection.rtl);
-      final ltr = await layOut(tester, TextDirection.ltr);
-      // Destination 0 is on the right in RTL and on the left in LTR — read
-      // straight off localToGlobal, with no direction-aware maths anywhere.
-      expect(rtl.first.center.dx, greaterThan(rtl.last.center.dx));
-      expect(ltr.first.center.dx, lessThan(ltr.last.center.dx));
-      // ...and it is a true mirror, not merely reversed.
-      for (var i = 0; i < 4; i++) {
-        expect(rtl[i].center.dx, closeTo(ltr[3 - i].center.dx, 0.5));
-      }
+      await pumpToday(tester);
+      await tester.tapAt(tester.getCenter(find.byKey(focusKey)));
+      await tester.pumpAndSettle();
+      expect(pushed, [Screens.lesson]);
+      expect(find.text('ابدأ من هنا'), findsNothing, reason: 'the tour ended');
+      expect(stored(), kTourVersion);
+      expect(tourIsDue(stored()), isFalse, reason: 'shown once');
+      await finish(tester);
+    });
+
+    testWidgets('its «ابدأ» button opens the lesson too', (tester) async {
+      await pumpToday(tester);
+      await tester.tap(find.text('ابدأ'));
+      await tester.pumpAndSettle();
+      expect(pushed, [Screens.lesson]);
+      expect(tourIsDue(stored()), isFalse);
+      await finish(tester);
+    });
+
+    testWidgets('«تخطّي» ends it without opening anything', (tester) async {
+      await pumpToday(tester);
+      await tester.tap(find.text('تخطّي'));
+      await tester.pumpAndSettle();
+      expect(pushed, isEmpty);
+      expect(find.text('ابدأ من هنا'), findsNothing);
+      expect(tourIsDue(stored()), isFalse, reason: 'skipping counts as seen');
+      await finish(tester);
+    });
+
+    testWidgets('the mark follows ① when Today fills in above it',
+        (tester) async {
+      await pumpToday(tester);
+      final before = tester.getCenter(find.byKey(focusKey));
+      above.value = 160; // e.g. the gift line arrives after the tour is up
+      await tester.pumpAndSettle();
+      final after = tester.getCenter(find.byKey(focusKey));
+      expect(after.dy, greaterThan(before.dy + 100));
+      // A hole left at the old spot would hand this tap to the veil, which
+      // only closes the tour.
+      await tester.tapAt(after);
+      await tester.pumpAndSettle();
+      expect(pushed, [Screens.lesson]);
+      await finish(tester);
     });
   });
 
@@ -193,4 +319,52 @@ void main() {
       expect(c.state.active, isFalse);
     });
   });
+}
+
+/// The ① card's first-run state: no progress, one path, a first lesson.
+class _FirstLessonClient extends TgClient {
+  @override
+  Future<Map<String, dynamic>> getChildProgress(int childId,
+          {String? pathId}) async =>
+      {'child_id': childId, 'lessons': []};
+
+  @override
+  Future<Map<String, dynamic>> getPathsList(
+          {String? ageGroup, String? domain}) async =>
+      {
+        'paths': [
+          {
+            'id': 'p1',
+            'title': 'مسار الصلاة',
+            'age_group': '7-9',
+            'domain': 'worship',
+            'lesson_ids': ['l1', 'l2'],
+          },
+        ],
+        'count': 1,
+      };
+
+  @override
+  Future<Map<String, dynamic>> getNextLesson(String ageGroup,
+          {int? childId}) async =>
+      {
+        'lesson_id': 'l1',
+        'path_id': 'p1',
+        'path_title': 'مسار الصلاة',
+        'title': 'أسماء الصلاة',
+        'order': 1,
+        'resumed': false,
+      };
+}
+
+class _PushLog extends NavigatorObserver {
+  _PushLog(this.names);
+
+  final List<String?> names;
+
+  @override
+  void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) {
+    // The home route is not a push anyone made.
+    if (previousRoute != null) names.add(route.settings.name);
+  }
 }

@@ -901,13 +901,13 @@ class AppLocalizationsAr extends AppLocalizations {
   String get onbChildName => 'اسم طفلك';
 
   @override
-  String get onbNameHint => 'مثلاً: سارة، أحمد، ليلى';
+  String get onbNameHint => 'مثلًا: سارة، أحمد، ليلى';
 
   @override
   String get onbNameRequired => 'الاسم مطلوب';
 
   @override
-  String get onbNameTooLong => 'الاسم طويل جداً (الحد الأقصى 80 حرفاً)';
+  String get onbNameTooLong => 'الاسم طويل (الحد الأقصى 30 حرفًا)';
 
   @override
   String get onbAgeGroup => 'المرحلة العمرية';
@@ -3514,41 +3514,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get tourDone => 'تم';
 
   @override
-  String get tourTodayTitle => 'اليوم';
-
-  @override
-  String get tourTodayBody =>
-      'ابدأ من هنا كل يوم: خطوتك التالية، وحال طفلك، ونصيحة قصيرة.';
-
-  @override
-  String get tourLearnTitle => 'التعلّم';
-
-  @override
-  String get tourLearnBody =>
-      'دروس تقرؤها أنت كمربٍّ — مرتّبة في مسارات حسب عمر طفلك.';
-
-  @override
-  String get tourAssistantTitle => 'المساعد';
-
-  @override
-  String get tourAssistantBody =>
-      'اسأل بكلامك عن موقف حيّرك مع طفلك، وتصلك إجابة مؤصَّلة.';
-
-  @override
-  String get tourMoreTitle => 'المزيد';
-
-  @override
-  String get tourMoreBody =>
-      'قصص وألعاب وقرآن وإعدادات — ومن هنا زر «مساعدة» لو تُهت.';
-
-  @override
-  String get tourFocusTitle => 'خطوتك التالية';
-
-  @override
-  String get tourFocusBody =>
-      'اضغط هنا وسنفتح لك الدرس المناسب — لا قائمة تختار منها.';
-
-  @override
   String get tourReplay => 'الجولة التعريفية';
 
   @override
@@ -5677,4 +5642,33 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get praiseFromFamily => 'أهلك يقولون لك';
+
+  @override
+  String get onbNameQuestion => 'ما اسم طفلك؟';
+
+  @override
+  String get onbNameTitleDefault => 'درب طفلك';
+
+  @override
+  String onbNameTitle(String name) {
+    return 'درب $name';
+  }
+
+  @override
+  String get onbNameLater => 'لاحقًا';
+
+  @override
+  String get onbNameDone => 'تمّ';
+
+  @override
+  String get onbNameDigitsOnly => 'اكتب اسمًا لا أرقامًا';
+
+  @override
+  String get tourStartHereTitle => 'ابدأ من هنا';
+
+  @override
+  String get tourStartHereBody => 'درس قصير لعمر طفلك';
+
+  @override
+  String get tourStartHereGo => 'ابدأ';
 }

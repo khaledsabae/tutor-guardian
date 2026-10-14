@@ -1,8 +1,9 @@
 /// The spotlight veil itself.
 ///
 /// Lives in the root [Overlay] rather than inside `RootScaffold.body`, because
-/// four of the five stops are nav-bar destinations and `body` cannot paint
-/// over `bottomNavigationBar`.
+/// the veil has to cover the nav bar too — `body` cannot paint over
+/// `bottomNavigationBar`, and a live nav bar under a spotlight is a way out
+/// of the tour that skips its bookkeeping.
 ///
 /// RTL rule: every rectangle here comes from `RenderBox.localToGlobal`, and
 /// the caption card is placed with [PositionedDirectional]. There is not one
@@ -66,9 +67,33 @@ class _TourBody extends ConsumerStatefulWidget {
 }
 
 class _TourBodyState extends ConsumerState<_TourBody> {
-  /// Set while we are waiting a frame for a target to finish layout, so we
-  /// schedule at most one retry per frame.
-  bool _retrying = false;
+  /// The rect the veil was last built around.
+  Rect? _shownRect;
+
+  @override
+  void initState() {
+    super.initState();
+    _followTarget();
+  }
+
+  /// Re-measures the target after every frame and rebuilds only when it
+  /// moved. Version 3's one mark goes up on the shell's first frame, while
+  /// Today is still filling in above ① (the gift line, the child banner) and
+  /// the card itself slides in — a rect read once would leave the hole where
+  /// the card *was*.
+  ///
+  /// A post-frame callback never schedules a frame of its own, so this costs
+  /// nothing on a still screen, keeps `pumpAndSettle` settling, and needs no
+  /// exemption from `disableAnimations`.
+  void _followTarget() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      final step = _currentStep(ref.read(tourControllerProvider));
+      final rect = step == null ? null : _rectOf(step.key);
+      if (rect != _shownRect) setState(() {});
+      _followTarget();
+    });
+  }
 
   /// The target's rect in global coordinates, or null if it is not laid out
   /// yet. This is the ONLY source of position in the whole overlay.
@@ -78,15 +103,6 @@ class _TourBodyState extends ConsumerState<_TourBody> {
     final box = ctx.findRenderObject() as RenderBox?;
     if (box == null || !box.attached || !box.hasSize) return null;
     return box.localToGlobal(Offset.zero) & box.size;
-  }
-
-  void _retryNextFrame() {
-    if (_retrying) return;
-    _retrying = true;
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _retrying = false;
-      if (mounted) setState(() {});
-    });
   }
 
   /// Deliberately synchronous in its use of [ref]: the callers remove the
@@ -111,6 +127,20 @@ class _TourBodyState extends ConsumerState<_TourBody> {
     widget.onClose();
   }
 
+  /// The spotlight (or its primary button) was used as the thing it frames:
+  /// the tour is done, and the target's own action runs.
+  void _open(TourStep step) {
+    final state = ref.read(tourControllerProvider);
+    final open = step.onTargetTap;
+    if (!state.active || open == null) return;
+    unawaited(Analytics.tourStep(state.index, 'open'));
+    unawaited(Analytics.tourCompleted());
+    ref.read(tourControllerProvider.notifier).stop();
+    _finish();
+    widget.onClose();
+    open();
+  }
+
   void _skip() {
     final state = ref.read(tourControllerProvider);
     if (!state.active) return;
@@ -125,13 +155,11 @@ class _TourBodyState extends ConsumerState<_TourBody> {
   Widget build(BuildContext context) {
     final state = ref.watch(tourControllerProvider);
     final step = _currentStep(state);
-    if (step == null) return const SizedBox.shrink();
-
-    final rect = _rectOf(step.key);
-    if (rect == null) {
-      _retryNextFrame();
-      return const SizedBox.shrink();
-    }
+    // Recorded even when there is nothing to show, so [_followTarget] compares
+    // like with like and goes quiet. A target not laid out yet shows nothing
+    // until the frame it appears.
+    final rect = _shownRect = step == null ? null : _rectOf(step.key);
+    if (step == null || rect == null) return const SizedBox.shrink();
 
     final screen = MediaQuery.sizeOf(context);
     final hole = RRect.fromRectAndRadius(
@@ -147,6 +175,7 @@ class _TourBodyState extends ConsumerState<_TourBody> {
       child: Stack(
         children: [
           _veil(hole),
+          if (step.onTargetTap != null) _target(rect, step),
           // Only `start`/`end` — never `left`/`right`.
           PositionedDirectional(
             start: Dt.pad,
@@ -159,8 +188,9 @@ class _TourBodyState extends ConsumerState<_TourBody> {
               key: ValueKey(state.index),
               step: step,
               progress: (state.index + 1) / state.total,
+              showProgress: state.total > 1,
               isLast: state.isLast,
-              onNext: _next,
+              onNext: step.onTargetTap == null ? _next : () => _open(step),
               onSkip: _skip,
             ),
           ),
@@ -180,6 +210,23 @@ class _TourBodyState extends ConsumerState<_TourBody> {
           behavior: HitTestBehavior.opaque,
           onTap: _next,
           child: CustomPaint(painter: _VeilPainter(hole)),
+        ),
+      ),
+    );
+  }
+
+  /// The cut-out as a button: over the target's own rect (not the inflated
+  /// hole, whose rim belongs to the veil), above the veil so it wins the tap.
+  Widget _target(Rect rect, TourStep step) {
+    final l10n = AppLocalizations.of(context);
+    return Positioned.fromRect(
+      rect: rect,
+      child: Semantics(
+        button: true,
+        label: step.actionLabel?.call(l10n) ?? step.caption(l10n),
+        child: GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: () => _open(step),
         ),
       ),
     );
@@ -216,6 +263,7 @@ class _TourCard extends StatelessWidget {
     super.key,
     required this.step,
     required this.progress,
+    required this.showProgress,
     required this.isLast,
     required this.onNext,
     required this.onSkip,
@@ -225,6 +273,9 @@ class _TourCard extends StatelessWidget {
 
   /// 0..1 — how far through the tour this step is.
   final double progress;
+
+  /// False for a one-step tour: a meter that starts full measures nothing.
+  final bool showProgress;
   final bool isLast;
   final VoidCallback onNext;
   final VoidCallback onSkip;
@@ -311,7 +362,8 @@ class _TourCard extends StatelessWidget {
         ),
         const Spacer(),
         BouncyButton(
-          label: isLast ? l10n.tourDone : l10n.tourNext,
+          label: step.actionLabel?.call(l10n) ??
+              (isLast ? l10n.tourDone : l10n.tourNext),
           expanded: false,
           onTap: onNext,
         ),
@@ -336,8 +388,10 @@ class _TourCard extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _meter(),
-            const SizedBox(height: Dt.pad),
+            if (showProgress) ...[
+              _meter(),
+              const SizedBox(height: Dt.pad),
+            ],
             _copy(l10n),
             const SizedBox(height: Dt.pad),
             _actions(l10n),
