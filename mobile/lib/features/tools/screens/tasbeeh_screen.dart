@@ -67,7 +67,8 @@ class _TasbeehScreenState extends ConsumerState<TasbeehScreen> {
     if (!wasComplete && _state.isComplete) {
       Haptics.strong();
     } else {
-      Haptics.selection();
+      // Quiet on purpose: a tick per bead turns dhikr into a clicker.
+      Haptics.selection(sound: false);
     }
     _persist();
   }

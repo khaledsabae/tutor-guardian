@@ -66,8 +66,10 @@ abstract final class Haptics {
   }
 
   /// A choice was made: a tab, a chip, a message sent.
-  static Future<void> selection() =>
-      _run(HapticFeedback.selectionClick, SoundFx.select);
+  /// [sound] false keeps the vibration and drops the tick — for surfaces
+  /// that should stay quiet, like the tasbeeh counter (dhikr is not a game).
+  static Future<void> selection({bool sound = true}) =>
+      _run(HapticFeedback.selectionClick, sound ? SoundFx.select : null);
 
   /// Something was saved or earned: a habit logged, a lesson completed.
   ///

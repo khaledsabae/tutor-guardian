@@ -137,6 +137,14 @@ void main() {
       expect(pulses, hasLength(4), reason: 'every pulse still fires');
     });
 
+    test('the tasbeeh keeps its vibration and stays quiet', () async {
+      final fake = _FakeBackend();
+      await SoundFx.init(backend: fake);
+      await Haptics.selection(sound: false);
+      expect(fake.played, isEmpty);
+      expect(pulses, hasLength(1));
+    });
+
     test('success(sound: false) keeps the pulse and drops the drop', () async {
       final fake = _FakeBackend();
       await SoundFx.init(backend: fake);
