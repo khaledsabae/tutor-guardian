@@ -5971,4 +5971,33 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get promiseReminderBody =>
       'Your small step with your child is waiting.';
+
+  @override
+  String noorPrayerAdvance(String name) {
+    return '$name seems ready for a new stage in the Prayer Journey.';
+  }
+
+  @override
+  String noorPrayerInvite(String name) {
+    return 'As $name nears seven, it may be a gentle time to begin the Prayer Journey, step by step.';
+  }
+
+  @override
+  String noorMilestoneDue(String name) {
+    return 'A new moment is waiting to be recorded in $name\'s journey.';
+  }
+
+  @override
+  String noorBirthMonthAsk(String name) {
+    return 'Tell me $name\'s birth month so I remember each stage on time.';
+  }
+
+  @override
+  String get noorChipPrayerJourney => 'Prayer Journey';
+
+  @override
+  String get noorChipChildJourney => 'My child\'s journey';
+
+  @override
+  String get noorChipAddBirthMonth => 'Add birth month';
 }

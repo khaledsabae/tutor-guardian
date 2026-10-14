@@ -1853,5 +1853,19 @@
   "promiseReminderTitle": "A gentle reminder from Noor",
   "@promiseReminderTitle": {"description": "Local notification title for a promise. No child name on the lock screen."},
   "promiseReminderBody": "Your small step with your child is waiting.",
-  "@promiseReminderBody": {"description": "Local notification body. No child name on the lock screen."}
+  "@promiseReminderBody": {"description": "Local notification body. No child name on the lock screen."},
+  "noorPrayerAdvance": "{name} seems ready for a new stage in the Prayer Journey.",
+  "@noorPrayerAdvance": {"description": "Noor's line on «اليوم» (CompanionBrain). Easy MSA, warm, never names one parent, no emoji, no promise of reward.", "placeholders": {"name": {"type": "String"}}},
+  "noorPrayerInvite": "As {name} nears seven, it may be a gentle time to begin the Prayer Journey, step by step.",
+  "@noorPrayerInvite": {"description": "Noor's line on «اليوم» (CompanionBrain). Easy MSA, warm, never names one parent, no emoji, no promise of reward.", "placeholders": {"name": {"type": "String"}}},
+  "noorMilestoneDue": "A new moment is waiting to be recorded in {name}'s journey.",
+  "@noorMilestoneDue": {"description": "Noor's line on «اليوم» (CompanionBrain). Easy MSA, warm, never names one parent, no emoji, no promise of reward.", "placeholders": {"name": {"type": "String"}}},
+  "noorBirthMonthAsk": "Tell me {name}'s birth month so I remember each stage on time.",
+  "@noorBirthMonthAsk": {"description": "Noor's line on «اليوم» (CompanionBrain). Easy MSA, warm, never names one parent, no emoji, no promise of reward.", "placeholders": {"name": {"type": "String"}}},
+  "noorChipPrayerJourney": "Prayer Journey",
+  "@noorChipPrayerJourney": {"description": "Noor's line on «اليوم» (CompanionBrain). Easy MSA, warm, never names one parent, no emoji, no promise of reward."},
+  "noorChipChildJourney": "My child's journey",
+  "@noorChipChildJourney": {"description": "Noor's line on «اليوم» (CompanionBrain). Easy MSA, warm, never names one parent, no emoji, no promise of reward."},
+  "noorChipAddBirthMonth": "Add birth month",
+  "@noorChipAddBirthMonth": {"description": "Noor's line on «اليوم» (CompanionBrain). Easy MSA, warm, never names one parent, no emoji, no promise of reward."}
 }

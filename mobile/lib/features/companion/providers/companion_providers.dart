@@ -124,7 +124,11 @@ final companionLineProvider = Provider.autoDispose<CompanionLine?>((ref) {
   final family = ref.watch(familyMembersProvider);
   final due = ref.watch(dueFollowupsProvider).valueOrNull ?? const [];
   final missions = ref.watch(missionsWaitingProvider).valueOrNull;
-  final ramadan = ref.watch(programsOverviewProvider).valueOrNull?.ramadan;
+  final overview = ref.watch(programsOverviewProvider).valueOrNull;
+  final ramadan = overview?.ramadan;
+  final mine = overview?.children
+      .where((c) => c.childId == profile.id)
+      .firstOrNull;
   final coins = ref.watch(coinsProvider);
 
   String? nameOf(int childId) =>
@@ -170,6 +174,17 @@ final companionLineProvider = Provider.autoDispose<CompanionLine?>((ref) {
               .valueOrNull !=
           null,
       firstDay: coins.dailyStreak <= 1,
+      notices: mine == null
+          ? const ChildNotices()
+          : ChildNotices(
+              prayerEligible: mine.prayer.eligibleTrack != null,
+              prayerEnrolled: mine.prayer.enrolled,
+              prayerAdvance: mine.prayer.advanceSuggested,
+              ageYears: mine.age.years,
+              ageFromBirthMonth: mine.age.fromBirthMonth,
+              milestonesDue: mine.milestonesServed ? mine.milestonesDue : 0,
+              needsBirthMonth: mine.needsProfile.contains('birth_month'),
+            ),
     ),
   );
 });

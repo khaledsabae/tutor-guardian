@@ -27,6 +27,8 @@ import '../../child_memory/providers/memory_providers.dart';
 import '../../child_memory/widgets/followup_sheet.dart';
 import '../../onboarding/providers/onboarding_providers.dart';
 import '../../program/providers/program_providers.dart';
+import '../../program/providers/settings_providers.dart';
+import '../../programs/providers/programs_providers.dart';
 import '../../shell/root_tab.dart';
 import '../logic/companion_brain.dart';
 import '../providers/companion_providers.dart';
@@ -215,6 +217,10 @@ class _NoorTodayHeaderState extends ConsumerState<NoorTodayHeader> {
         _ => l10n.noorRamadan1,
       },
       CompanionKind.mondayPlan => l10n.noorMondayPlan(name),
+      CompanionKind.prayerAdvance => l10n.noorPrayerAdvance(name),
+      CompanionKind.prayerInvite => l10n.noorPrayerInvite(name),
+      CompanionKind.milestoneDue => l10n.noorMilestoneDue(name),
+      CompanionKind.birthMonthAsk => l10n.noorBirthMonthAsk(name),
       CompanionKind.firstDay => l10n.noorFirstDay(name),
       CompanionKind.greeting => _greetingText(l10n, line, name),
     };
@@ -271,6 +277,9 @@ class _NoorTodayHeaderState extends ConsumerState<NoorTodayHeader> {
     CompanionAction.outcomeDidntWork => l10n.followupDidntWork,
     CompanionAction.outcomeDidntTry => l10n.followupDidntTry,
     CompanionAction.openRamadan => l10n.noorChipRamadan,
+    CompanionAction.openPrayerJourney => l10n.noorChipPrayerJourney,
+    CompanionAction.openChildJourney => l10n.noorChipChildJourney,
+    CompanionAction.editChild => l10n.noorChipAddBirthMonth,
   };
 
   NoorFaceState _face(CompanionMood m) => switch (m) {
@@ -307,6 +316,37 @@ class _NoorTodayHeaderState extends ConsumerState<NoorTodayHeader> {
         final child = ref.read(activeChildProfileProvider);
         if (child != null) {
           await Navigator.of(context).push(AppRoutes.ramadan(child.id));
+        }
+      case CompanionAction.openPrayerJourney:
+        final child = ref.read(activeChildProfileProvider);
+        if (child != null) {
+          await Navigator.of(context).push(AppRoutes.prayerJourney(child.id));
+          ref.invalidate(programsOverviewProvider);
+        }
+      case CompanionAction.openChildJourney:
+        final child = ref.read(activeChildProfileProvider);
+        if (child != null) {
+          await Navigator.of(context).push(
+            AppRoutes.childJourney(
+              childId: child.id,
+              childName: child.name,
+              ageGroup: child.ageGroup,
+            ),
+          );
+          ref.invalidate(programsOverviewProvider);
+        }
+      case CompanionAction.editChild:
+        final active = ref.read(activeChildProfileProvider);
+        final full = ref
+            .read(childrenListProvider)
+            .valueOrNull
+            ?.children
+            .where((c) => c.id == active?.id)
+            .firstOrNull;
+        if (full != null) {
+          await Navigator.of(context).push(AppRoutes.editChild(full));
+          ref.invalidate(programsOverviewProvider);
+          ref.invalidate(childrenListProvider);
         }
       case _:
         if (outcome != null) await _answer(line, outcome);
