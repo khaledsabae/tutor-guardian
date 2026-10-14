@@ -5,19 +5,24 @@
 /// to the time-of-day greeting, so Noor never blocks or breaks «اليوم».
 library;
 
+import 'dart:async';
 import 'dart:ui' show PlatformDispatcher;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/analytics.dart';
 import '../../../main.dart' show appConfigProvider;
 import '../../../state/chat_notifier.dart' show tgClientProvider;
+import '../../adhkar/services/notification_service.dart';
 import '../../child_memory/data/placeholder_names.dart';
 import '../../child_memory/providers/memory_providers.dart';
 import '../../coins/coins_providers.dart';
 import '../../onboarding/providers/onboarding_providers.dart';
+import '../../program/providers/settings_providers.dart' show childrenListProvider;
 import '../../programs/data/programs_models.dart';
 import '../../programs/providers/programs_providers.dart';
 import '../data/companion_store.dart';
+import '../logic/answer_step.dart' show trimStep;
 import '../logic/companion_brain.dart';
 
 /// The server's kill switch (`/api/app-config` → `noor_header_enabled`).
@@ -59,6 +64,67 @@ class CompanionMemoryNotifier extends AsyncNotifier<CompanionMemory> {
     );
     state = AsyncData(s.read());
     return p;
+  }
+
+  /// «متى ستجرّبها مع …؟» answered — after a lesson, or under an answer
+  /// («سأجرّبها مع …»): keep the promise on the device, queue one gentle
+  /// reminder, and ask the server to follow it up. The one way a promise is
+  /// kept, so both places behave alike.
+  ///
+  /// The device keeps the step as the parent read it. What goes to the server
+  /// names no one ([redactFamilyNames]) and fits its 120 characters — the
+  /// server redacts too, but a name should not leave the phone to be
+  /// redacted. A 409 or a failure leaves the device promise standing (Noor
+  /// asks either way), and nothing here throws: a lost promise must never
+  /// surface as an error on the parent's best moment. [source] tells the
+  /// analytics where the promise was made (`lesson` / `chat`).
+  Future<Promise?> keepPromise({
+    required int childId,
+    required String step,
+    required PromiseSlot slot,
+    String? lessonId,
+    String source = 'lesson',
+  }) async {
+    unawaited(Analytics.nextStepCommitted(when: slot.wire, source: source));
+    final repo = ref.read(memoryRepositoryProvider);
+    // The family as loaded — read only when something already loaded it, so
+    // keeping a promise never starts a fetch of its own.
+    final family = [
+      if (ref.exists(childrenListProvider)) ...ref.read(familyMembersProvider),
+    ];
+    if (!family.any((m) => m.id == childId)) {
+      ActiveChildProfile? active;
+      try {
+        active = ref.read(activeChildProfileProvider);
+      } catch (_) {
+        // Preferences not loaded: nothing on disk to name, nothing to hide.
+      }
+      if (active != null && active.id == childId) {
+        family.add(FamilyMember(id: childId, name: active.name));
+      }
+    }
+    final wire = trimStep(
+      redactFamilyNames(step, family: family, subjectId: childId),
+    );
+    try {
+      final p = await addPromise(
+        childId: childId,
+        step: step,
+        slot: slot,
+        lessonId: lessonId,
+      );
+      unawaited(
+        NotificationService.instance.schedulePromiseReminder(
+          promiseId: p.id,
+          slotWire: slot.wire,
+        ),
+      );
+      final fid = await repo.openPromise(childId, step: wire, when: slot.wire);
+      if (fid != null) await linkFollowup(p.id, fid);
+      return p;
+    } catch (_) {
+      return null;
+    }
   }
 
   Future<void> linkFollowup(int promiseId, int followupId) =>

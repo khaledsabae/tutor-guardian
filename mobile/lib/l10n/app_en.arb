@@ -1853,5 +1853,13 @@
   "promiseReminderTitle": "A gentle reminder from Noor",
   "@promiseReminderTitle": {"description": "Local notification title for a promise. No child name on the lock screen."},
   "promiseReminderBody": "Your small step with your child is waiting.",
-  "@promiseReminderBody": {"description": "Local notification body. No child name on the lock screen."}
+  "@promiseReminderBody": {"description": "Local notification body. No child name on the lock screen."},
+  "chatTryWith": "I'll try it with {name}",
+  "@chatTryWith": {"description": "Chip under the latest assistant answer, in the parent's voice: keep one step from the answer as a promise. {name} is the active child's real name.", "placeholders": {"name": {"type": "String"}}},
+  "chatTryWithMyChild": "I'll try it with my child",
+  "@chatTryWithMyChild": {"description": "The same chip while the child still has the default name — the parent speaks, so «my child», not «your child»."},
+  "chatTryTitle": "Your step from this answer",
+  "@chatTryTitle": {"description": "Title of the slot sheet opened from an answer's chip."},
+  "chatTryIntro": "I picked one step from the answer for you to start with.",
+  "@chatTryIntro": {"description": "Noor, first person, under the sheet title: the step shown is the first one in the answer."}
 }

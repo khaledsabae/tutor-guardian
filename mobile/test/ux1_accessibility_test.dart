@@ -184,7 +184,7 @@ void main() {
 
   group('200% text scale: no overflow', () {
     for (final locale in const [Locale('ar'), Locale('en')]) {
-      testWidgets('answer bubble with follow-ups (${locale.languageCode})', (t) async {
+      testWidgets('answer bubble with follow-ups and «سأجرّبها» (${locale.languageCode})', (t) async {
         _phone(t);
         final m = ChatMessageUI(
           id: '2',
@@ -198,6 +198,11 @@ void main() {
               followUps: const ['أعطني مثالاً عملياً', 'ماذا لو كان عمره أصغر؟'],
               onFollowUp: (_) {},
               onFeedback: (_) {},
+              // The longest the chip gets: a two-word name, in both languages.
+              tryLabel: locale.languageCode == 'ar'
+                  ? 'سأجرّبها مع عبد الرحمن'
+                  : "I'll try it with Abdulrahman",
+              onTry: () {},
             ),
           ),
           textScale: 2,

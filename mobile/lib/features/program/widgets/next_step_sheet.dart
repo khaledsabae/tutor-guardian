@@ -25,10 +25,15 @@ import '../../companion/data/companion_store.dart';
 /// Shows the lesson's concrete action and asks when the parent will try it
 /// («نور يتذكّر», حلقة الوعد). Returns the slot picked, or null when the
 /// sheet was dismissed instead. Noor asks back on the slot's due day.
+///
+/// [title] and [intro] replace the lesson's copy when the step comes from
+/// somewhere else — an assistant answer's «سأجرّبها مع …» (phase 4).
 Future<PromiseSlot?> showNextStepSheet(
   BuildContext context, {
   required String tryThis,
   required String childName,
+  String? title,
+  String? intro,
 }) async {
   return showModalBottomSheet<PromiseSlot>(
     context: context,
@@ -38,14 +43,26 @@ Future<PromiseSlot?> showNextStepSheet(
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.vertical(top: Radius.circular(Dt.rSheet)),
     ),
-    builder: (ctx) => _NextStepSheet(tryThis: tryThis, childName: childName),
+    builder: (ctx) => _NextStepSheet(
+      tryThis: tryThis,
+      childName: childName,
+      title: title,
+      intro: intro,
+    ),
   );
 }
 
 class _NextStepSheet extends StatelessWidget {
-  const _NextStepSheet({required this.tryThis, required this.childName});
+  const _NextStepSheet({
+    required this.tryThis,
+    required this.childName,
+    this.title,
+    this.intro,
+  });
 
   final String tryThis;
+  final String? title;
+  final String? intro;
 
   /// The child's name, or «طفلك» when it is still the default.
   final String childName;
@@ -61,7 +78,7 @@ class _NextStepSheet extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              l10n.lessonNextStepTitle,
+              title ?? l10n.lessonNextStepTitle,
               style: TextStyle(
                 fontSize: 19,
                 fontWeight: FontWeight.w800,
@@ -71,7 +88,7 @@ class _NextStepSheet extends StatelessWidget {
             ),
             const SizedBox(height: 6),
             Text(
-              l10n.lessonNextStepIntro,
+              intro ?? l10n.lessonNextStepIntro,
               style: TextStyle(fontSize: 13, color: Dt.inkSoft, height: 1.4),
             ),
             const SizedBox(height: 16),

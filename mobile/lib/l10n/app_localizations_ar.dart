@@ -5893,4 +5893,18 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get promiseReminderBody => 'خطوتك الصغيرة مع طفلك تنتظرك.';
+
+  @override
+  String chatTryWith(String name) {
+    return 'سأجرّبها مع $name';
+  }
+
+  @override
+  String get chatTryWithMyChild => 'سأجرّبها مع طفلي';
+
+  @override
+  String get chatTryTitle => 'خطوتك من هذه الإجابة';
+
+  @override
+  String get chatTryIntro => 'اخترتُ لك من الإجابة خطوةً واحدة تبدأ بها.';
 }
