@@ -9,6 +9,7 @@ import '../../core/motion.dart';
 import '../../features/companion/widgets/noor_presence.dart';
 import '../../l10n/app_localizations.dart';
 import '../../theme/design_tokens.dart';
+import 'art_image.dart';
 import 'bouncy_button.dart';
 import 'brand_glyph.dart';
 import 'package:almorabbi/core/haptics.dart';
@@ -81,6 +82,12 @@ Future<void> showCelebration(
   );
 }
 
+/// Whether a celebration's [showCelebration] `imageAsset` names Noor rather
+/// than a moment's art: the «ورق مقصوص» faces live in assets/svg/noor/, and
+/// the dialog shows him framed and proud ([NoorPresence]) instead of as a
+/// loose picture.
+bool _isNoorAsset(String asset) => asset.startsWith('assets/svg/noor/');
+
 class _CelebrationDialog extends StatefulWidget {
   final String emoji;
 
@@ -150,30 +157,29 @@ class _CelebrationDialogState extends State<_CelebrationDialog> {
       ? BrandGlyph(widget.glyph!, size: 84, color: Dt.accent)
       : Text(widget.emoji, style: const TextStyle(fontSize: 80));
 
-  /// The picture at the top. The mascot art becomes Noor himself; any other
-  /// art (a first-prayer or first-surah milestone) is the moment, so it is
-  /// shown — swapping it for Noor too hid every milestone illustration.
+  /// The picture at the top. A Noor face (assets/svg/noor/…) becomes Noor
+  /// himself, in his window; any other art (a first-prayer or first-surah
+  /// milestone) is the moment, so it is shown — swapping it for Noor too hid
+  /// every milestone illustration.
   Widget _picture(BuildContext context) {
     final asset = widget.imageAsset;
     if (asset == null) return _hero();
-    if (asset.contains('mascot_')) {
+    if (_isNoorAsset(asset)) {
       return NoorPresence(
         size: 96,
         mood: NoorMood.proud,
         semanticLabel: widget.title,
       );
     }
-    final px = (120 * MediaQuery.devicePixelRatioOf(context)).round();
     return ClipRRect(
       borderRadius: BorderRadius.circular(Dt.rCard),
-      child: Image.asset(
+      child: ArtImage(
         asset,
         width: 120,
         height: 120,
         fit: BoxFit.cover,
-        cacheWidth: px,
         semanticLabel: widget.title,
-        errorBuilder: (_, _, _) => NoorPresence(size: 96, mood: NoorMood.proud),
+        fallback: (_) => NoorPresence(size: 96, mood: NoorMood.proud),
       ),
     );
   }

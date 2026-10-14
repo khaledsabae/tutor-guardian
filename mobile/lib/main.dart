@@ -53,6 +53,7 @@ import 'features/tour/tour_overlay.dart';
 import 'theme/app_palette.dart';
 import 'theme/app_theme.dart';
 import 'theme/bundled_fonts.dart';
+import 'widgets/ui/art_image.dart';
 import 'theme/design_tokens.dart';
 import 'features/push/notification_channels.dart';
 import 'core/haptics.dart';
@@ -677,12 +678,14 @@ class _SplashScreen extends StatelessWidget {
             // fixed the same day (ee770ee), but the boot sequence still ran:
             // correct crescent on the native splash, then a shield emoji here.
             // The reporter was describing something real that outlived the fix
-            // they were given.
-            Image.asset(
-              'assets/images/logo.png',
+            // they were given. Since 2026-10-14 the mark is the «ورق مقصوص»
+            // logo (crescent, open book, sprout) — vector, so it is crisp at
+            // any density without a 250 KB PNG.
+            ArtImage(
+              'assets/svg/art/logo_mark.svg',
               width: 96,
               height: 96,
-              errorBuilder: (_, _, _) =>
+              fallback: (_) =>
                   const Text('🌙', style: TextStyle(fontSize: 64)),
             )
                 .animate()

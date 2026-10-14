@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+<g transform="translate(-.8 -1.2)" stroke-linejoin="round">
+<g transform="translate(1.5 2)" fill="#094A40">
+<path stroke="#094A40" stroke-width="4" d="M24 15C21.5 9 14 6.5 14.5 11.5C15 14 19.5 15 24 15ZM24 15C26.5 9 34 6.5 33.5 11.5C33 14 28.5 15 24 15Z"/>
+<rect x="6" y="15" width="36" height="8" rx="1.5"/>
+<rect x="8.5" y="22" width="31" height="19.5" rx="1.5"/>
+</g>
+<path fill="#0F6B5C" stroke="#0F6B5C" stroke-width="4" d="M24 15C21.5 9 14 6.5 14.5 11.5C15 14 19.5 15 24 15ZM24 15C26.5 9 34 6.5 33.5 11.5C33 14 28.5 15 24 15Z"/>
+<rect x="8.5" y="22" width="31" height="19.5" rx="1.5" fill="#0F6B5C"/>
+<rect x="21.5" y="22" width="5" height="19.5" fill="#F4A492"/>
+<rect x="8.5" y="23" width="31" height="2" fill="#094A40"/>
+<rect x="6" y="15" width="36" height="8" rx="1.5" fill="#0F6B5C"/>
+<rect x="21.5" y="15" width="5" height="8" fill="#F4A492"/>
+<path fill="#F4A492" d="M24 15C21.5 9 14 6.5 14.5 11.5C15 14 19.5 15 24 15ZM24 15C26.5 9 34 6.5 33.5 11.5C33 14 28.5 15 24 15Z"/>
+<circle cx="24" cy="14.5" r="2.5" fill="#F4A492"/>
+</g>
+</svg>

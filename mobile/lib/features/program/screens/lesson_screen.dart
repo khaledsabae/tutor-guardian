@@ -180,7 +180,7 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
         await showCelebration(
           context,
           glyph: BrandIcon.star,
-          imageAsset: 'assets/images/generated/mascot_celebrate.webp',
+          imageAsset: 'assets/svg/noor/noor_happy.svg',
           title: AppLocalizations.of(context).lessonCelebrationTitle,
           message: AppLocalizations.of(
             context,

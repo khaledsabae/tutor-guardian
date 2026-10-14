@@ -31,11 +31,11 @@ void main() {
   test('the three "first" milestones build the asset names that exist',
       () async {
     expect(milestoneBadgeAsset('first_prayer'),
-        'assets/images/generated/milestone_first_prayer.webp');
+        'assets/svg/art/milestone_first_prayer.svg');
     expect(milestoneBadgeAsset('first_surah'),
-        'assets/images/generated/milestone_first_surah.webp');
+        'assets/svg/art/milestone_first_surah.svg');
     expect(milestoneBadgeAsset('first_fast'),
-        'assets/images/generated/milestone_first_fast.webp');
+        'assets/svg/art/milestone_first_fast.svg');
   });
 
   test('every branded milestone asset the builder names is in the bundle',
@@ -43,8 +43,8 @@ void main() {
     for (final key in _brandedKeys) {
       final asset = milestoneBadgeAsset(key);
       expect(asset, isNotNull, reason: '$key is a badge milestone key');
-      expect(asset!.startsWith('assets/images/generated/'), isTrue,
-          reason: '$key must resolve into the generated set');
+      expect(asset!.startsWith('assets/svg/art/'), isTrue,
+          reason: '$key must resolve into the «ورق مقصوص» set');
       await rootBundle.load(asset); // throws if the file is not shipped
     }
   });

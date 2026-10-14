@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
 import '../../theme/design_tokens.dart';
+import 'art_image.dart';
 import 'bouncy_button.dart';
 
 /// Friendly empty/error state: big drawn icon (or legacy emoji), bold
@@ -18,8 +19,9 @@ class EmptyState extends StatelessWidget {
   final String? actionLabel;
   final VoidCallback? onAction;
 
-  /// Optional illustration shown instead of [icon]/[emoji] (falls back to
-  /// the emoji if the asset is missing).
+  /// Optional illustration shown instead of [icon]/[emoji] — an
+  /// assets/svg/art/ scene, or any bundled image ([ArtImage] picks the
+  /// renderer). Falls back to [icon]/[emoji] if the asset is missing.
   final String? imageAsset;
 
   const EmptyState({
@@ -45,12 +47,10 @@ class EmptyState extends StatelessWidget {
             ExcludeSemantics(
               child:
                   (imageAsset != null
-                          ? Image.asset(
+                          ? ArtImage(
                               imageAsset!,
-                              excludeFromSemantics: true,
                               height: 160,
-                              fit: BoxFit.contain,
-                              errorBuilder: (_, _, _) => fallback,
+                              fallback: (_) => fallback,
                             )
                           : fallback)
                       .animate()

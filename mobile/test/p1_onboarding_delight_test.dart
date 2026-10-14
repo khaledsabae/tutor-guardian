@@ -1,7 +1,9 @@
 /// Phase 1 «التطبيق يصحو» — first-run cheap touches (NOOR_WAL_QANADIL_PLAN).
 ///
 /// Pins the onboarding half of the phase:
-///   * the welcome hero is the bundled `onboarding_welcome.webp`, not 🌍;
+///   * the welcome hero is the «ورق مقصوص» scene (`onboarding_welcome.svg`)
+///     with Noor himself — a NoorPresence — in the patch of sky it leaves
+///     for him, not 🌍;
 ///   * `TwinklingStars` sit behind the start page (still under reduceMotion,
 ///     which the sky itself enforces);
 ///   * picking an age band fires a selection haptic;
@@ -22,6 +24,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -30,6 +33,7 @@ import 'package:almorabbi/api/tg_client.dart';
 import 'package:almorabbi/features/companion/widgets/noor_presence.dart';
 import 'package:almorabbi/features/onboarding/providers/onboarding_providers.dart';
 import 'package:almorabbi/features/onboarding/screens/onboarding_screen.dart';
+import 'package:almorabbi/features/onboarding/widgets/welcome_hero.dart';
 import 'package:almorabbi/features/program/providers/program_providers.dart';
 import 'package:almorabbi/features/shell/root_tab.dart';
 import 'package:almorabbi/l10n/app_localizations.dart';
@@ -102,12 +106,25 @@ void main() {
       (tester) async {
     await pumpOnboarding(tester, fake: newFake());
 
-    final image = tester.widget<Image>(find.byType(Image).first);
+    final hero = find.byType(WelcomeHero);
+    expect(hero, findsOneWidget);
+    final scene = tester.widget<SvgPicture>(
+      find.descendant(of: hero, matching: find.byType(SvgPicture)).first,
+    );
     expect(
-      (image.image as AssetImage).assetName,
-      'assets/images/generated/onboarding_welcome.webp',
+      (scene.bytesLoader as SvgAssetLoader).assetName,
+      'assets/svg/art/onboarding_welcome.svg',
       reason: 'the bundled hero exists and must replace the emoji',
     );
+    // Noor sits in the sky the scene leaves for him: its top-right, inside
+    // the hero's box.
+    final noor = find.descendant(of: hero, matching: find.byType(NoorPresence));
+    expect(noor, findsOneWidget);
+    final box = tester.getRect(hero);
+    final centre = tester.getCenter(noor);
+    expect(centre.dx, closeTo(box.left + box.width * 280 / 360, 1));
+    expect(centre.dy, closeTo(box.top + box.height * 70 / 240, 1));
+    expect(find.byType(Image), findsNothing, reason: 'no raster hero left');
     expect(find.text('🌍'), findsNothing);
     await drainStars(tester);
   });

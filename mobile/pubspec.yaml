@@ -99,6 +99,11 @@ dependencies:
   flutter_timezone: ^5.1.0
   in_app_purchase: ^3.3.1
   in_app_purchase_android: ^0.5.3
+  # «ورق مقصوص» art (2026-10-14): Noor, the BrandGlyph icon set and every
+  # in-app illustration are hand-written SVG under assets/svg/ — ~100 KB in
+  # place of ~15 MB of Recraft webp. test/svg_assets_test.dart parses every
+  # file through this package, so one it cannot read fails CI, not a screen.
+  flutter_svg: ^2.3.0
 
 dev_dependencies:
   flutter_test:
@@ -121,13 +126,22 @@ flutter:
     # invisible at runtime is worth making visible here.
     - assets/data/stories_en.json
     - assets/images/
+    # Still a PNG on purpose: the infographic watermark needs raw PNG bytes
+    # (infographic_screen.dart). Nothing else in the app paints it any more.
     - assets/images/logo.png
-    # Milestones that still use legacy art (kept until regenerated).
-    # Unified brand visual set — logo-centric (crescent+book+sprout+star),
-    # generated via ops/tools/gen_visuals.py (Recraft V3). Replaces the old
-    # mascot/empty/domains/onboarding directories.
-    - assets/images/generated/
     - assets/images/stories/
+    # «ورق مقصوص» (2026-10-14) — the whole in-app art set, as SVG. Rules in
+    # assets/svg/STYLE.md; test/svg_assets_test.dart parses every file.
+    #   noor/  — «نور» in seven expressions (NoorFace, NoorPresence, NoorMascot)
+    #   icons/ — one file per BrandIcon value, named after it
+    #   art/   — milestones, badges, domains, empty states, onboarding hero,
+    #            the share-card ground and the logo mark
+    # assets/images/generated/ is no longer bundled: what is left in it is
+    # store/marketing art that ops tools read from disk (generate_tip_cards.py,
+    # gen_visuals.py), not anything the app paints.
+    - assets/svg/noor/
+    - assets/svg/icons/
+    - assets/svg/art/
     # Brand-aligned Lottie celebrations (generated via ops/tools/gen_lottie.py)
     - assets/animations/
     - assets/audio/
