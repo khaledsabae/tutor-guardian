@@ -17,6 +17,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../features/companion/providers/companion_providers.dart';
 
 import '../core/haptics.dart';
 import '../models/api_models.dart';
@@ -33,13 +34,18 @@ import '../widgets/message_bubble.dart';
 import '../l10n/app_localizations.dart';
 import 'package:almorabbi/widgets/ui/loading_view.dart';
 
-final chatNotifierProvider =
-    StateNotifierProvider<ChatNotifier, ChatState>((ref) {
+final chatNotifierProvider = StateNotifierProvider<ChatNotifier, ChatState>((
+  ref,
+) {
   final client = ref.watch(tgClientProvider);
   // Read at send time, not watched: switching child must not rebuild the
   // notifier and drop the conversation on screen.
-  return ChatNotifier(client,
-      activeChildId: () => ref.read(activeChildIdProvider));
+  return ChatNotifier(
+    client,
+    activeChildId: () => ref.read(activeChildIdProvider),
+    onSent: () =>
+        markTodayStop(ref.read(companionMemoryProvider.notifier), 'ask'),
+  );
 });
 
 class ChatScreen extends ConsumerStatefulWidget {
@@ -77,7 +83,9 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final notifier = ref.read(chatNotifierProvider.notifier);
       notifier.setOnline(
-        ref.read(connectivityProvider).maybeWhen(data: (v) => v, orElse: () => true),
+        ref
+            .read(connectivityProvider)
+            .maybeWhen(data: (v) => v, orElse: () => true),
       );
       notifier.bootstrap();
       // A question seeded before this screen existed (onboarding's deferred
@@ -224,7 +232,8 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
     // One error surface per failure: when the failed turn already shows its
     // error inline (with Retry), the top banner would repeat the same text.
     final lastError = state.messages.isEmpty ? null : state.messages.last.error;
-    final showBanner = state.errorBanner != null && state.errorBanner != lastError;
+    final showBanner =
+        state.errorBanner != null && state.errorBanner != lastError;
 
     return Scaffold(
       key: _scaffoldKey,
@@ -268,7 +277,9 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
                     borderRadius: BorderRadius.circular(Dt.rChip),
                   ),
                   child: Text(
-                    AppLocalizations.of(context).chatTurnsCount(state.turnCount),
+                    AppLocalizations.of(
+                      context,
+                    ).chatTurnsCount(state.turnCount),
                     style: TextStyle(
                       color: AppTheme.primary,
                       fontSize: 12,
@@ -287,16 +298,24 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
                     final confirm = await showDialog<bool>(
                       context: context,
                       builder: (ctx) => AlertDialog(
-                        title: Text(AppLocalizations.of(context).chatNewConfirmTitle),
-                        content: Text(AppLocalizations.of(context).chatNewConfirmDesc),
+                        title: Text(
+                          AppLocalizations.of(context).chatNewConfirmTitle,
+                        ),
+                        content: Text(
+                          AppLocalizations.of(context).chatNewConfirmDesc,
+                        ),
                         actions: [
                           TextButton(
                             onPressed: () => Navigator.pop(ctx, false),
-                            child: Text(AppLocalizations.of(context).chatCancel),
+                            child: Text(
+                              AppLocalizations.of(context).chatCancel,
+                            ),
                           ),
                           FilledButton(
                             onPressed: () => Navigator.pop(ctx, true),
-                            child: Text(AppLocalizations.of(context).chatContinue),
+                            child: Text(
+                              AppLocalizations.of(context).chatContinue,
+                            ),
                           ),
                         ],
                       ),
@@ -313,98 +332,109 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
           // Offline is shown app-wide now (AppStatusBanner, E2).
           // Daily tip moved to the Home tab (اليوم) — chat is now a
           // pure conversation surface.
-          if (showBanner) _ErrorBanner(
-            message: state.errorBanner!,
-            onRetry: notifier.retryLastTurn,
-          ),
+          if (showBanner)
+            _ErrorBanner(
+              message: state.errorBanner!,
+              onRetry: notifier.retryLastTurn,
+            ),
           Expanded(
             child: state.sessionId == null
                 ? const _BootSplash()
                 : state.messages.isEmpty
-                    ? _EmptyState(
-                        ageGroup: ref
-                            .watch(activeChildProfileProvider)
-                            ?.ageGroup,
-                        // One tap = question sent — the fastest path to the
-                        // first "wow" answer (no typing, no second tap).
-                        onSuggest: (q) => notifier.sendMessage(q),
-                      )
-                    : Stack(
+                ? _EmptyState(
+                    ageGroup: ref.watch(activeChildProfileProvider)?.ageGroup,
+                    // One tap = question sent — the fastest path to the
+                    // first "wow" answer (no typing, no second tap).
+                    onSuggest: (q) => notifier.sendMessage(q),
+                  )
+                : Stack(
                     children: [
-                    ListView.builder(
-                    controller: _scroll,
-                    padding: const EdgeInsets.symmetric(vertical: 8),
-                    itemCount: state.messages.length,
-                    itemBuilder: (context, i) {
-                      final m = state.messages[i];
-                      final prev = i > 0 ? state.messages[i - 1] : null;
-                      final next = i + 1 < state.messages.length
-                          ? state.messages[i + 1]
-                          : null;
-                      // Keyed by message id so the entrance animation
-                      // plays exactly once per message — token-by-token
-                      // rebuilds of the streaming bubble keep the same
-                      // element (and its finished animation state).
-                      return KeyedSubtree(
-                        key: ValueKey(m.id),
-                        child: MessageBubble(
-                          message: m,
-                          isFirstInGroup:
-                              prev == null || prev.role != m.role,
-                          isLastInGroup:
-                              next == null || next.role != m.role,
-                          onFeedback: (rating) {
-                            notifier.submitFeedback(m.id, rating);
-                          },
-                          onRetry: next == null && m.error != null
-                              ? notifier.retryLastTurn
-                              : null,
-                          followUps: next == null &&
-                                  state.phase == ChatPhase.idle
-                              ? _followUpsFor(m, AppLocalizations.of(context))
-                              : const [],
-                          onFollowUp: (q) {
-                            unawaited(Haptics.selection());
-                            notifier.sendMessage(q);
-                          },
-                        )
-                            .animate()
-                            .fadeIn(duration: 250.ms)
-                            .slideY(begin: .06, curve: Curves.easeOutCubic),
-                      );
-                    },
-                  ),
-                    PositionedDirectional(
-                      bottom: Dt.s12,
-                      start: 0,
-                      end: 0,
-                      child: ValueListenableBuilder<bool>(
-                        valueListenable: _showJump,
-                        builder: (context, show, _) => IgnorePointer(
-                          ignoring: !show,
-                          child: AnimatedOpacity(
-                            opacity: show ? 1 : 0,
-                            duration: Dt.fast,
-                            child: Center(
-                              child: ActionChip(
-                                avatar: Icon(Icons.arrow_downward_rounded,
-                                    size: 16, color: AppTheme.onPrimary),
-                                label: Text(
-                                    AppLocalizations.of(context).chatJumpLatest),
-                                labelStyle: TextStyle(
-                                  color: AppTheme.onPrimary,
-                                  fontWeight: FontWeight.w700,
+                      ListView.builder(
+                        controller: _scroll,
+                        padding: const EdgeInsets.symmetric(vertical: 8),
+                        itemCount: state.messages.length,
+                        itemBuilder: (context, i) {
+                          final m = state.messages[i];
+                          final prev = i > 0 ? state.messages[i - 1] : null;
+                          final next = i + 1 < state.messages.length
+                              ? state.messages[i + 1]
+                              : null;
+                          // Keyed by message id so the entrance animation
+                          // plays exactly once per message — token-by-token
+                          // rebuilds of the streaming bubble keep the same
+                          // element (and its finished animation state).
+                          return KeyedSubtree(
+                            key: ValueKey(m.id),
+                            child:
+                                MessageBubble(
+                                      message: m,
+                                      isFirstInGroup:
+                                          prev == null || prev.role != m.role,
+                                      isLastInGroup:
+                                          next == null || next.role != m.role,
+                                      onFeedback: (rating) {
+                                        notifier.submitFeedback(m.id, rating);
+                                      },
+                                      onRetry: next == null && m.error != null
+                                          ? notifier.retryLastTurn
+                                          : null,
+                                      followUps:
+                                          next == null &&
+                                              state.phase == ChatPhase.idle
+                                          ? _followUpsFor(
+                                              m,
+                                              AppLocalizations.of(context),
+                                            )
+                                          : const [],
+                                      onFollowUp: (q) {
+                                        unawaited(Haptics.selection());
+                                        notifier.sendMessage(q);
+                                      },
+                                    )
+                                    .animate()
+                                    .fadeIn(duration: 250.ms)
+                                    .slideY(
+                                      begin: .06,
+                                      curve: Curves.easeOutCubic,
+                                    ),
+                          );
+                        },
+                      ),
+                      PositionedDirectional(
+                        bottom: Dt.s12,
+                        start: 0,
+                        end: 0,
+                        child: ValueListenableBuilder<bool>(
+                          valueListenable: _showJump,
+                          builder: (context, show, _) => IgnorePointer(
+                            ignoring: !show,
+                            child: AnimatedOpacity(
+                              opacity: show ? 1 : 0,
+                              duration: Dt.fast,
+                              child: Center(
+                                child: ActionChip(
+                                  avatar: Icon(
+                                    Icons.arrow_downward_rounded,
+                                    size: 16,
+                                    color: AppTheme.onPrimary,
+                                  ),
+                                  label: Text(
+                                    AppLocalizations.of(context).chatJumpLatest,
+                                  ),
+                                  labelStyle: TextStyle(
+                                    color: AppTheme.onPrimary,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                  backgroundColor: AppTheme.primary,
+                                  side: BorderSide.none,
+                                  shape: const StadiumBorder(),
+                                  onPressed: _scrollToBottom,
                                 ),
-                                backgroundColor: AppTheme.primary,
-                                side: BorderSide.none,
-                                shape: const StadiumBorder(),
-                                onPressed: _scrollToBottom,
                               ),
                             ),
                           ),
                         ),
                       ),
-                    ),
                     ],
                   ),
           ),
@@ -416,8 +446,9 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
             enabled: true,
             isStreaming: state.phase == ChatPhase.streaming,
             onSend: _onSend,
-            onStop: () =>
-                ref.read(chatNotifierProvider.notifier).stopStreaming(notifyServer: true),
+            onStop: () => ref
+                .read(chatNotifierProvider.notifier)
+                .stopStreaming(notifyServer: true),
             behaviorType: state.behaviorType,
             onEditContext: () => _editContext(state.behaviorType),
             onClearContext: () => notifier.setBehaviorType(''),
@@ -456,8 +487,9 @@ class _ContextSheet extends StatefulWidget {
 }
 
 class _ContextSheetState extends State<_ContextSheet> {
-  late final TextEditingController _ctrl =
-      TextEditingController(text: widget.initial);
+  late final TextEditingController _ctrl = TextEditingController(
+    text: widget.initial,
+  );
 
   @override
   void dispose() {
@@ -479,8 +511,10 @@ class _ContextSheetState extends State<_ContextSheet> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text(l10n.chatContextTitle,
-              style: Theme.of(context).textTheme.titleMedium),
+          Text(
+            l10n.chatContextTitle,
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
           const SizedBox(height: Dt.s8),
           TextField(
             controller: _ctrl,
@@ -527,16 +561,12 @@ class _ErrorBanner extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(16, 8, 8, 8),
       child: Row(
         children: [
-          Icon(Icons.warning_amber_rounded,
-              color: AppTheme.dangerFg, size: 18),
+          Icon(Icons.warning_amber_rounded, color: AppTheme.dangerFg, size: 18),
           const SizedBox(width: 8),
           Expanded(
             child: Text(
               message,
-              style: TextStyle(
-                color: AppTheme.dangerFg,
-                fontSize: 13,
-              ),
+              style: TextStyle(color: AppTheme.dangerFg, fontSize: 13),
             ),
           ),
           TextButton.icon(
@@ -605,29 +635,52 @@ class _EmptyState extends StatelessWidget {
 
   String _resolveKey(AppLocalizations l10n, String key) {
     switch (key) {
-      case 'chatQ_sleep': return l10n.chatQ_sleep;
-      case 'chatQ_stubborn': return l10n.chatQ_stubborn;
-      case 'chatQ_eating': return l10n.chatQ_eating;
-      case 'chatQ_speech': return l10n.chatQ_speech;
-      case 'chatQ_pray5': return l10n.chatQ_pray5;
-      case 'chatQ_tantrums': return l10n.chatQ_tantrums;
-      case 'chatQ_screens': return l10n.chatQ_screens;
-      case 'chatQ_study': return l10n.chatQ_study;
-      case 'chatQ_prayRegular': return l10n.chatQ_prayRegular;
-      case 'chatQ_lying': return l10n.chatQ_lying;
-      case 'chatQ_gaming': return l10n.chatQ_gaming;
-      case 'chatQ_online': return l10n.chatQ_online;
-      case 'chatQ_homework': return l10n.chatQ_homework;
-      case 'chatQ_teenDefiant': return l10n.chatQ_teenDefiant;
-      case 'chatQ_socialMedia': return l10n.chatQ_socialMedia;
-      case 'chatQ_teenPray': return l10n.chatQ_teenPray;
-      case 'chatQ_talkOlder': return l10n.chatQ_talkOlder;
-      case 'chatQ_university': return l10n.chatQ_university;
-      case 'chatQ_friends': return l10n.chatQ_friends;
-      case 'chatQ_fears': return l10n.chatQ_fears;
-      case 'chatQ_siblings': return l10n.chatQ_siblings;
-      case 'chatQ_bodyChanges': return l10n.chatQ_bodyChanges;
-      default: return key;
+      case 'chatQ_sleep':
+        return l10n.chatQ_sleep;
+      case 'chatQ_stubborn':
+        return l10n.chatQ_stubborn;
+      case 'chatQ_eating':
+        return l10n.chatQ_eating;
+      case 'chatQ_speech':
+        return l10n.chatQ_speech;
+      case 'chatQ_pray5':
+        return l10n.chatQ_pray5;
+      case 'chatQ_tantrums':
+        return l10n.chatQ_tantrums;
+      case 'chatQ_screens':
+        return l10n.chatQ_screens;
+      case 'chatQ_study':
+        return l10n.chatQ_study;
+      case 'chatQ_prayRegular':
+        return l10n.chatQ_prayRegular;
+      case 'chatQ_lying':
+        return l10n.chatQ_lying;
+      case 'chatQ_gaming':
+        return l10n.chatQ_gaming;
+      case 'chatQ_online':
+        return l10n.chatQ_online;
+      case 'chatQ_homework':
+        return l10n.chatQ_homework;
+      case 'chatQ_teenDefiant':
+        return l10n.chatQ_teenDefiant;
+      case 'chatQ_socialMedia':
+        return l10n.chatQ_socialMedia;
+      case 'chatQ_teenPray':
+        return l10n.chatQ_teenPray;
+      case 'chatQ_talkOlder':
+        return l10n.chatQ_talkOlder;
+      case 'chatQ_university':
+        return l10n.chatQ_university;
+      case 'chatQ_friends':
+        return l10n.chatQ_friends;
+      case 'chatQ_fears':
+        return l10n.chatQ_fears;
+      case 'chatQ_siblings':
+        return l10n.chatQ_siblings;
+      case 'chatQ_bodyChanges':
+        return l10n.chatQ_bodyChanges;
+      default:
+        return key;
     }
   }
 
@@ -639,13 +692,11 @@ class _EmptyState extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Text('💬', style: TextStyle(fontSize: 64))
-                .animate()
-                .scale(
-                  begin: const Offset(.6, .6),
-                  duration: Dt.slow,
-                  curve: Curves.easeOutBack,
-                ),
+            const Text('💬', style: TextStyle(fontSize: 64)).animate().scale(
+              begin: const Offset(.6, .6),
+              duration: Dt.slow,
+              curve: Curves.easeOutBack,
+            ),
             const SizedBox(height: 12),
             Text(
               AppLocalizations.of(context).chatEmptyWelcome,
@@ -663,35 +714,40 @@ class _EmptyState extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 20),
-            Builder(builder: (context) {
-              final suggestions = _suggestionsFor(AppLocalizations.of(context));
-              return Wrap(
-              spacing: 8,
-              runSpacing: 8,
-              alignment: WrapAlignment.center,
-              children: [
-                for (var i = 0; i < suggestions.length; i++)
-                  ActionChip(
-                    label: Text(suggestions[i]),
-                    labelStyle: TextStyle(
-                      color: AppTheme.primary,
-                      fontWeight: FontWeight.w700,
-                      fontSize: 13,
-                    ),
-                    backgroundColor:
-                        AppTheme.primary.withValues(alpha: .08),
-                    side: BorderSide(
-                      color: AppTheme.primary.withValues(alpha: .3),
-                    ),
-                    shape: const StadiumBorder(),
-                    onPressed: () => onSuggest(suggestions[i]),
-                  )
-                      .animate(delay: (100 * i).ms)
-                      .fadeIn(duration: Dt.base)
-                      .slideY(begin: .2, curve: Curves.easeOutCubic),
-              ],
-            );
-            }),
+            Builder(
+              builder: (context) {
+                final suggestions = _suggestionsFor(
+                  AppLocalizations.of(context),
+                );
+                return Wrap(
+                  spacing: 8,
+                  runSpacing: 8,
+                  alignment: WrapAlignment.center,
+                  children: [
+                    for (var i = 0; i < suggestions.length; i++)
+                      ActionChip(
+                            label: Text(suggestions[i]),
+                            labelStyle: TextStyle(
+                              color: AppTheme.primary,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 13,
+                            ),
+                            backgroundColor: AppTheme.primary.withValues(
+                              alpha: .08,
+                            ),
+                            side: BorderSide(
+                              color: AppTheme.primary.withValues(alpha: .3),
+                            ),
+                            shape: const StadiumBorder(),
+                            onPressed: () => onSuggest(suggestions[i]),
+                          )
+                          .animate(delay: (100 * i).ms)
+                          .fadeIn(duration: Dt.base)
+                          .slideY(begin: .2, curve: Curves.easeOutCubic),
+                  ],
+                );
+              },
+            ),
           ],
         ),
       ),
@@ -725,17 +781,18 @@ class _HistoryDrawer extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(20, 20, 20, 8),
               child: Text(
                 AppLocalizations.of(context).chatMyChats,
-                style: Theme.of(context)
-                    .textTheme
-                    .titleLarge
-                    ?.copyWith(fontWeight: FontWeight.w800),
+                style: Theme.of(
+                  context,
+                ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w800),
               ),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12),
               child: ListTile(
-                leading: Icon(Icons.add_circle_outline,
-                    color: AppTheme.primary),
+                leading: Icon(
+                  Icons.add_circle_outline,
+                  color: AppTheme.primary,
+                ),
                 title: Text(
                   AppLocalizations.of(context).chatNewChatBtn,
                   style: TextStyle(
@@ -777,17 +834,24 @@ class _HistoryDrawer extends StatelessWidget {
                       final active = s.id == currentSessionId;
                       return ListTile(
                         selected: active,
-                        selectedTileColor:
-                            AppTheme.primary.withValues(alpha: .08),
-                        leading:
-                            const Icon(Icons.chat_bubble_outline, size: 20),
+                        selectedTileColor: AppTheme.primary.withValues(
+                          alpha: .08,
+                        ),
+                        leading: const Icon(
+                          Icons.chat_bubble_outline,
+                          size: 20,
+                        ),
                         title: Text(
                           s.title,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                           style: const TextStyle(fontSize: 14),
                         ),
-                        subtitle: Text(AppLocalizations.of(context).chatSessionMessages(s.messageCount)),
+                        subtitle: Text(
+                          AppLocalizations.of(
+                            context,
+                          ).chatSessionMessages(s.messageCount),
+                        ),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(14),
                         ),
@@ -836,112 +900,120 @@ class _Composer extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.fromLTRB(12, 8, 12, 12),
         child: Column(
-         mainAxisSize: MainAxisSize.min,
-         crossAxisAlignment: CrossAxisAlignment.start,
-         children: [
-          // Takes space only while a context is set.
-          if (hasContext)
-            Padding(
-              padding: const EdgeInsets.only(bottom: Dt.s8),
-              child: InputChip(
-                avatar: Icon(Icons.tune_rounded,
-                    size: 16, color: AppTheme.primary),
-                label: ConstrainedBox(
-                  constraints: BoxConstraints(
-                    maxWidth: MediaQuery.sizeOf(context).width * 0.6,
-                  ),
-                  child: Text(behaviorType,
-                      maxLines: 1, overflow: TextOverflow.ellipsis),
-                ),
-                tooltip: l10n.chatBehaviorOptional,
-                onPressed: onEditContext,
-                onDeleted: onClearContext,
-                deleteButtonTooltipMessage: l10n.chatContextClear,
-              ),
-            ),
-          Row(
-          crossAxisAlignment: CrossAxisAlignment.end,
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            IconButton(
-              tooltip: l10n.chatContextAdd,
-              onPressed: onEditContext,
-              icon: Icon(Icons.tune_rounded,
-                  color: hasContext ? AppTheme.primary : AppTheme.textMuted),
-            ),
-            Expanded(
-              child: Container(
-                decoration: BoxDecoration(
-                  color: AppTheme.surface,
-                  borderRadius: BorderRadius.circular(Dt.rSheet),
-                  boxShadow: Dt.cardShadow,
-                ),
-                child: TextField(
-                  controller: controller,
-                  focusNode: focusNode,
-                  enabled: enabled,
-                  minLines: 1,
-                  maxLines: 5,
-                  textInputAction: TextInputAction.send,
-                  onSubmitted: enabled ? (_) => onSend() : null,
-                  decoration: InputDecoration(
-                    hintText: AppLocalizations.of(context).chatTypeHint,
-                    filled: false,
-                    border: InputBorder.none,
-                    enabledBorder: InputBorder.none,
-                    focusedBorder: InputBorder.none,
-                    contentPadding:
-                        const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
-                    isDense: true,
+            // Takes space only while a context is set.
+            if (hasContext)
+              Padding(
+                padding: const EdgeInsets.only(bottom: Dt.s8),
+                child: InputChip(
+                  avatar: Icon(
+                    Icons.tune_rounded,
+                    size: 16,
+                    color: AppTheme.primary,
                   ),
-                  inputFormatters: [
-                    LengthLimitingTextInputFormatter(2000),
-                  ],
+                  label: ConstrainedBox(
+                    constraints: BoxConstraints(
+                      maxWidth: MediaQuery.sizeOf(context).width * 0.6,
+                    ),
+                    child: Text(
+                      behaviorType,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                  tooltip: l10n.chatBehaviorOptional,
+                  onPressed: onEditContext,
+                  onDeleted: onClearContext,
+                  deleteButtonTooltipMessage: l10n.chatContextClear,
                 ),
               ),
-            ),
-            const SizedBox(width: 8),
-            // While streaming → red stop button; otherwise → send.
-            // A bare GestureDetector is unnamed to a screen reader and has no
-            // long-press hint; Semantics + Tooltip give it both.
-            Semantics(
-              button: true,
-              enabled: isStreaming || enabled,
-              onTap: isStreaming ? onStop : (enabled ? onSend : null),
-              excludeSemantics: true,
-              label: isStreaming
-                  ? AppLocalizations.of(context).chatStop
-                  : l10n.a11ySendQuestion,
-              child: Tooltip(
-                message: isStreaming
-                    ? AppLocalizations.of(context).chatStop
-                    : l10n.a11ySendQuestion,
-                child: GestureDetector(
-                  onTap: isStreaming ? onStop : (enabled ? onSend : null),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                IconButton(
+                  tooltip: l10n.chatContextAdd,
+                  onPressed: onEditContext,
+                  icon: Icon(
+                    Icons.tune_rounded,
+                    color: hasContext ? AppTheme.primary : AppTheme.textMuted,
+                  ),
+                ),
+                Expanded(
                   child: Container(
-                    width: 48,
-                    height: 48,
                     decoration: BoxDecoration(
-                      gradient: isStreaming ? null : Dt.primaryGradient,
-                      color: isStreaming ? AppTheme.dangerFg : null,
-                      shape: BoxShape.circle,
-                      boxShadow: Dt.softShadow(
-                        isStreaming ? AppTheme.dangerFg : Dt.primary,
-                        alpha: .3,
+                      color: AppTheme.surface,
+                      borderRadius: BorderRadius.circular(Dt.rSheet),
+                      boxShadow: Dt.cardShadow,
+                    ),
+                    child: TextField(
+                      controller: controller,
+                      focusNode: focusNode,
+                      enabled: enabled,
+                      minLines: 1,
+                      maxLines: 5,
+                      textInputAction: TextInputAction.send,
+                      onSubmitted: enabled ? (_) => onSend() : null,
+                      decoration: InputDecoration(
+                        hintText: AppLocalizations.of(context).chatTypeHint,
+                        filled: false,
+                        border: InputBorder.none,
+                        enabledBorder: InputBorder.none,
+                        focusedBorder: InputBorder.none,
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 18,
+                          vertical: 12,
+                        ),
+                        isDense: true,
+                      ),
+                      inputFormatters: [LengthLimitingTextInputFormatter(2000)],
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 8),
+                // While streaming → red stop button; otherwise → send.
+                // A bare GestureDetector is unnamed to a screen reader and has no
+                // long-press hint; Semantics + Tooltip give it both.
+                Semantics(
+                  button: true,
+                  enabled: isStreaming || enabled,
+                  onTap: isStreaming ? onStop : (enabled ? onSend : null),
+                  excludeSemantics: true,
+                  label: isStreaming
+                      ? AppLocalizations.of(context).chatStop
+                      : l10n.a11ySendQuestion,
+                  child: Tooltip(
+                    message: isStreaming
+                        ? AppLocalizations.of(context).chatStop
+                        : l10n.a11ySendQuestion,
+                    child: GestureDetector(
+                      onTap: isStreaming ? onStop : (enabled ? onSend : null),
+                      child: Container(
+                        width: 48,
+                        height: 48,
+                        decoration: BoxDecoration(
+                          gradient: isStreaming ? null : Dt.primaryGradient,
+                          color: isStreaming ? AppTheme.dangerFg : null,
+                          shape: BoxShape.circle,
+                          boxShadow: Dt.softShadow(
+                            isStreaming ? AppTheme.dangerFg : Dt.primary,
+                            alpha: .3,
+                          ),
+                        ),
+                        child: Icon(
+                          // Icons.send auto-mirrors under RTL Directionality.
+                          isStreaming ? Icons.stop_rounded : Icons.send,
+                          color: Dt.surface,
+                          size: 22,
+                        ),
                       ),
                     ),
-                    child: Icon(
-                      // Icons.send auto-mirrors under RTL Directionality.
-                      isStreaming ? Icons.stop_rounded : Icons.send,
-                      color: Dt.surface,
-                      size: 22,
-                    ),
                   ),
                 ),
-              ),
+              ],
             ),
           ],
-          ),
-         ],
         ),
       ),
     );

@@ -10141,6 +10141,12 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'خطوتك الصغيرة مع طفلك تنتظرك.'**
   String get promiseReminderBody;
+
+  /// No description provided for @todayRoadReached.
+  ///
+  /// In ar, this message translates to:
+  /// **'تمّت هذه المحطة اليوم'**
+  String get todayRoadReached;
 }
 
 class _AppLocalizationsDelegate

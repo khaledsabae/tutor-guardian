@@ -1980,5 +1980,6 @@
   "promiseReminderTitle": "تذكير لطيف من نور",
   "@promiseReminderTitle": {"description": "Local notification title for a promise. No child name on the lock screen."},
   "promiseReminderBody": "خطوتك الصغيرة مع طفلك تنتظرك.",
-  "@promiseReminderBody": {"description": "Local notification body. No child name on the lock screen."}
+  "@promiseReminderBody": {"description": "Local notification body. No child name on the lock screen."},
+  "todayRoadReached": "تمّت هذه المحطة اليوم"
 }

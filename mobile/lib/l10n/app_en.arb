@@ -1853,5 +1853,9 @@
   "promiseReminderTitle": "A gentle reminder from Noor",
   "@promiseReminderTitle": {"description": "Local notification title for a promise. No child name on the lock screen."},
   "promiseReminderBody": "Your small step with your child is waiting.",
-  "@promiseReminderBody": {"description": "Local notification body. No child name on the lock screen."}
+  "@promiseReminderBody": {"description": "Local notification body. No child name on the lock screen."},
+  "todayRoadReached": "Reached today",
+  "@todayRoadReached": {
+    "description": "Screen-reader label of a lit station on the Today road: the parent reached this stop today."
+  }
 }

@@ -16,6 +16,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../companion/providers/companion_providers.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../api/tg_client.dart';
@@ -161,6 +162,14 @@ class _ChildMissionScreenState extends ConsumerState<ChildMissionScreen> {
     }
     if (!mounted) return;
     unawaited(Haptics.success());
+    // «درب اليوم»: ③ lit on the parent's Today when the device comes back.
+    final childId = ref.read(childModeProvider).childId;
+    if (childId != null) {
+      markTodayStop(
+        ref.read(companionMemoryProvider.notifier),
+        'mission:$childId',
+      );
+    }
     setState(() {
       _claiming = false;
       _mission = {...card, 'status': 'claimed'};

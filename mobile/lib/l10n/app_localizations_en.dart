@@ -5971,4 +5971,7 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get promiseReminderBody =>
       'Your small step with your child is waiting.';
+
+  @override
+  String get todayRoadReached => 'Reached today';
 }

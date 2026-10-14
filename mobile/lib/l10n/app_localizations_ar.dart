@@ -5893,4 +5893,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get promiseReminderBody => 'خطوتك الصغيرة مع طفلك تنتظرك.';
+
+  @override
+  String get todayRoadReached => 'تمّت هذه المحطة اليوم';
 }

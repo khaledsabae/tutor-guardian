@@ -5,6 +5,7 @@
 /// to the time-of-day greeting, so Noor never blocks or breaks «اليوم».
 library;
 
+import 'dart:async';
 import 'dart:ui' show PlatformDispatcher;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -72,7 +73,29 @@ class CompanionMemoryNotifier extends AsyncNotifier<CompanionMemory> {
       _write((s) => s.markQuestionShown(key));
   Future<void> hideForToday(String key) => _write((s) => s.hideForToday(key));
   Future<void> setQuietMode(bool on) => _write((s) => s.setQuietMode(on));
+  Future<void> markStop(String key) => _write((s) => s.markStop(key));
 }
+
+/// «درب اليوم»: mark a stop reached, fire-and-forget —
+/// `markTodayStop(ref.read(companionMemoryProvider.notifier), 'ask')`.
+/// Never throws: a lost mark only leaves a station unlit for today.
+void markTodayStop(CompanionMemoryNotifier memory, String key) {
+  unawaited(memory.markStop(key).catchError((Object _) {}));
+}
+
+/// Which of the day's three stops the active child has reached today.
+typedef TodayStops = ({bool step, bool ask, bool mission});
+
+final todayStopsProvider = Provider.autoDispose<TodayStops>((ref) {
+  final childId = ref.watch(activeChildProfileProvider)?.id;
+  final memory = ref.watch(companionMemoryProvider).valueOrNull;
+  final stops = memory?.stopsOn(DateTime.now()) ?? const <String>{};
+  return (
+    step: childId != null && stops.contains('step:$childId'),
+    ask: stops.contains('ask'),
+    mission: childId != null && stops.contains('mission:$childId'),
+  );
+});
 
 final companionMemoryProvider =
     AsyncNotifierProvider<CompanionMemoryNotifier, CompanionMemory>(

@@ -168,6 +168,11 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
           .read(markLessonProgressProvider(widget.lessonId).notifier)
           .markProgress(ProgressStatus.completed, childId: childId);
       unawaited(Analytics.lessonCompleted(widget.lessonId));
+      // «درب اليوم»: ① lit for this child today.
+      markTodayStop(
+        ref.read(companionMemoryProvider.notifier),
+        'step:$childId',
+      );
       // Idempotent by badge id: crediting here means the badge is paid in
       // the moment that earned it, and Today's claim can never double-pay.
       final paidBadges = firstCompletion
