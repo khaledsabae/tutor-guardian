@@ -12,6 +12,7 @@ import {Layout, portrait, SheetName, wide} from './layouts';
 import {LanternG, NoorArt, SprigG, StarShape, WalkersG} from './art';
 import {TeaserSound} from './sound';
 import {T} from './timeline';
+import {QR, QrCut} from './qr';
 
 const {fontFamily} = loadFont('normal', {
 	weights: ['700', '900'],
@@ -84,7 +85,8 @@ export const NoorTeaser: React.FC<TeaserProps> = ({lang, shape}) => {
 	// On the end card, stars that would sit under the logo, Noor or the text
 	// pop away (so nothing twinkles through the title).
 	const E0 = L.end;
-	const endTextH = E0.title * 1.3 + E0.tagline * 3 + E0.free * 1.5 + E0.play * 2.2 + E0.gap * 4;
+	const qrStackH = E0.qr.place === 'stack' ? E0.qr.size + E0.qr.scan * 1.6 + E0.gap * 2 : 0;
+	const endTextH = E0.title * 1.3 + E0.tagline * 3 + E0.free * 1.5 + E0.play * 2.2 + E0.gap * 4 + qrStackH;
 	const keepOut = [
 		[E0.logoCx - E0.logoSize / 2 - 70, E0.logoCy - E0.logoSize / 2 - 70, E0.logoCx + E0.logoSize / 2 + 70, E0.logoCy + E0.logoSize / 2 + 70],
 		[E0.textCx - E0.textWidth / 2 - 30, E0.textTop - 40, E0.textCx + E0.textWidth / 2 + 30, E0.textTop + endTextH],
@@ -94,8 +96,16 @@ export const NoorTeaser: React.FC<TeaserProps> = ({lang, shape}) => {
 			? [E0.logoCx - E0.logoSize / 2 - E0.noorSize * 0.85, E0.logoCx - E0.logoSize / 2]
 			: [E0.logoCx + E0.logoSize / 2, E0.logoCx + E0.logoSize / 2 + E0.noorSize * 0.85];
 	keepOut.push([noorSideX[0], E0.logoCy - E0.logoSize / 2 - 70, noorSideX[1], E0.logoCy + E0.logoSize / 2 + 40]);
+	if (E0.qr.place === 'abs') {
+		const h = E0.qr.size / 2 + 50;
+		keepOut.push([E0.qr.cx - h, E0.qr.cy - h, E0.qr.cx + h, E0.qr.cy + h + E0.qr.scan * 2]);
+	}
+	const Wm = L.watermark;
+	const underWatermark = (x: number, y: number) =>
+		x > Wm.x - 30 && x < Wm.x + Wm.size + 30 && y > Wm.y - 30 && y < Wm.y + Wm.size + 30;
 	const starAway = springAt(frame, T.exit + 10, fps, 14, 120);
 	const starEls = L.stars.map((s, i) => {
+		if (underWatermark(s.x, s.y)) return null;
 		const hidden = keepOut.some(([x0, y0, x1, y1]) => s.x > x0 && s.x < x1 && s.y > y0 && s.y < y1);
 		const pop = springAt(frame, 2 + i * 3, fps, 10, 120) * (hidden ? 1 - starAway : 1);
 		const tw = 1 + (s.gold ? 0.12 : 0.08) * Math.sin((frame * 2 * Math.PI) / (64 + (i % 5) * 9) + i * 1.3);
@@ -182,11 +192,16 @@ export const NoorTeaser: React.FC<TeaserProps> = ({lang, shape}) => {
 	const E = L.end;
 	const eS = E.noorSize;
 	const eSc = eS / 240;
+	// The real logo is round (with an ivory paper rim), so Noor sits on the
+	// same ground line and keeps a small gap to the circle at his own height.
+	const logoMat = 10 * k;
+	const logoR = E.logoSize / 2 + logoMat;
+	const eNoorY = E.logoCy + logoR - 194 * eSc;
+	const circleHalfWidthAt = (y: number) => Math.sqrt(Math.max(0, logoR * logoR - (y - E.logoCy) * (y - E.logoCy)));
 	const eNoorX =
 		E.noorSide === 'left'
-			? E.logoCx - E.logoSize / 2 - 186 * eSc - 18 * k
-			: E.logoCx + E.logoSize / 2 - 50 * eSc + 22 * k;
-	const eNoorY = E.logoCy + E.logoSize / 2 - 194 * eSc;
+			? E.logoCx - circleHalfWidthAt(eNoorY + 156 * eSc) - 16 * k - 177.5 * eSc
+			: E.logoCx + circleHalfWidthAt(eNoorY + 132 * eSc) + 16 * k - 57.6 * eSc;
 
 	if (frame >= T.exit) {
 		const p = eased(frame, T.exit, T.land, Easing.inOut(Easing.cubic));
@@ -319,6 +334,31 @@ export const NoorTeaser: React.FC<TeaserProps> = ({lang, shape}) => {
 		return {opacity: s, transform: `translateY(${(1 - s) * 34 * k}px)`};
 	};
 	const playS = springAt(frame, T.play, fps, 11, 160);
+	const qrS = springAt(frame, T.qr, fps, 12, 140);
+	const qrCut: QrCut = lang === 'en' ? 'en' : shape === 'wide' ? 'wide' : 'ar';
+	const qr = QR[qrCut];
+	// whole pixels per module keep the code crisp
+	const qrPx = Math.max(1, Math.round(E.qr.size / qr.n)) * qr.n;
+	const qrCard = (
+		<div style={{position: 'relative', width: qrPx, height: qrPx, transform: `scale(${qrS})`}}>
+			<div
+				style={{
+					position: 'absolute',
+					inset: 0,
+					borderRadius: (qrPx / qr.n) * 1.6,
+					background: C.shadow,
+					transform: `translate(${8 * k}px, ${10 * k}px)`,
+				}}
+			/>
+			<svg width={qrPx} height={qrPx} viewBox={`0 0 ${qr.n} ${qr.n}`} shapeRendering="crispEdges" style={{position: 'absolute', inset: 0}}>
+				<rect width={qr.n} height={qr.n} rx={1.6} fill={C.ivory} />
+				<path d={qr.d} fill={C.ink} />
+			</svg>
+		</div>
+	);
+	const scanLine = (
+		<p style={{...textBase, ...fadeRise(T.scan), fontWeight: 700, fontSize: E.qr.scan, lineHeight: 1.4, color: C.ivory2}}>{copy.scan}</p>
+	);
 	const endHillY = (i: number) => (H * 0.35 + 80 * i) * (1 - springAt(frame, T.endHills + i * 6, fps, 12, 80));
 
 	// one hill sheet with its road piece (clipped to the sheet) and lanterns
@@ -477,32 +517,28 @@ export const NoorTeaser: React.FC<TeaserProps> = ({lang, shape}) => {
 						<div
 							style={{
 								position: 'absolute',
-								left: E.logoCx - E.logoSize / 2,
-								top: E.logoCy - E.logoSize / 2,
-								width: E.logoSize,
-								height: E.logoSize,
+								left: E.logoCx - logoR,
+								top: E.logoCy - logoR,
+								width: logoR * 2,
+								height: logoR * 2,
 								transform: `scale(${logoS})`,
 							}}
 						>
-							{/* paper mat behind the tile so its edge reads on the emerald card */}
+							{/* paper shadow, then an ivory rim so the teal disc reads on the emerald card */}
 							<div
 								style={{
 									position: 'absolute',
-									inset: -14 * k,
-									borderRadius: (52 / 240) * E.logoSize + 14 * k,
+									inset: 0,
+									borderRadius: '50%',
 									background: C.shadow,
 									transform: `translate(${14 * k}px, ${18 * k}px)`,
 								}}
 							/>
-							<div
-								style={{
-									position: 'absolute',
-									inset: -14 * k,
-									borderRadius: (52 / 240) * E.logoSize + 14 * k,
-									background: C.hill2,
-								}}
+							<div style={{position: 'absolute', inset: 0, borderRadius: '50%', background: C.ivory}} />
+							<Img
+								src={staticFile('noor/app_logo_round.png')}
+								style={{position: 'absolute', left: logoMat, top: logoMat, width: E.logoSize, height: E.logoSize}}
 							/>
-							<Img src={staticFile('noor/logo_mark.svg')} style={{position: 'absolute', inset: 0, width: '100%', height: '100%'}} />
 						</div>
 					)}
 					<div
@@ -543,9 +579,56 @@ export const NoorTeaser: React.FC<TeaserProps> = ({lang, shape}) => {
 						>
 							{copy.play}
 						</div>
+						{E.qr.place === 'stack' && (
+							<div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', gap: E.gap * 0.6, marginTop: E.gap * 0.5}}>
+								{qrCard}
+								{scanLine}
+							</div>
+						)}
 					</div>
+					{E.qr.place === 'abs' && (
+						<div
+							style={{
+								position: 'absolute',
+								left: E.qr.cx - 300,
+								top: E.qr.cy - qrPx / 2,
+								width: 600,
+								display: 'flex',
+								flexDirection: 'column',
+								alignItems: 'center',
+								gap: E.gap * 0.8,
+							}}
+						>
+							{qrCard}
+							{scanLine}
+						</div>
+					)}
 				</>
 			)}
+
+			{/* the real app logo, small, in a corner clear of the platform UI, whole video */}
+			<div
+				style={{
+					position: 'absolute',
+					left: Wm.x,
+					top: Wm.y,
+					width: Wm.size,
+					height: Wm.size,
+					opacity: 0.85,
+					transform: `scale(${springAt(frame, 8, fps, 12, 120)})`,
+				}}
+			>
+				<div
+					style={{
+						position: 'absolute',
+						inset: 0,
+						borderRadius: '50%',
+						background: C.shadow,
+						transform: `translate(${3 * k}px, ${4 * k}px)`,
+					}}
+				/>
+				<Img src={staticFile('noor/app_logo_round.png')} style={{position: 'absolute', inset: 0, width: '100%', height: '100%'}} />
+			</div>
 
 			<TeaserSound />
 		</AbsoluteFill>

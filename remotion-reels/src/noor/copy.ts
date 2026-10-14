@@ -9,6 +9,7 @@ export type Copy = {
 	tagline: string;
 	free: string;
 	play: string;
+	scan: string;
 };
 
 export const COPY: Record<Lang, Copy> = {
@@ -20,6 +21,7 @@ export const COPY: Record<Lang, Copy> = {
 		tagline: 'مربٍّ يعرف ابنك… خطوة بخطوة',
 		free: 'مجاني لوجه الله — بلا إعلانات',
 		play: 'متاح على Google Play',
+		scan: 'امسح للتنزيل',
 	},
 	en: {
 		caption: ['Every small step with your child…', 'a lantern lights up.'],
@@ -29,5 +31,6 @@ export const COPY: Record<Lang, Copy> = {
 		tagline: 'A guide who knows your child, step by step',
 		free: 'Free, for the sake of Allah — no ads',
 		play: 'Available on Google Play',
+		scan: 'Scan to download',
 	},
 };

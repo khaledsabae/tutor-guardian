@@ -13,7 +13,10 @@ quiet night bed underneath.
   air         soft air swell       a lantern being lit
   drop        one water drop       Noor turns happy
   night       night ambience       filtered-noise bed, seamless 8 s loop; file peak
-                                   -26.5 dBFS so it sits at about -30 dBFS in the stereo mix
+                                   -20.5 dBFS, about -24 dBFS in the stereo mix
+
+Levels: files peak near full scale (the mix volumes in src/noor/sound.tsx
+are all < 1); the whole mix lands near -23 LUFS with peaks around -6 dBFS.
 
 Every file is an output of this script (fixed seeds) — never edited by hand.
 
@@ -111,11 +114,11 @@ def _paper(ms: float, peak_at: float, grain_rate: float, seed: int,
 
 
 def rustle() -> np.ndarray:
-    return _paper(420, 0.35, 150.0, 501, -7.0)
+    return _paper(420, 0.35, 150.0, 501, -1.0)
 
 
 def rustle_long() -> np.ndarray:
-    return _paper(1_400, 0.45, 90.0, 511, -8.0)
+    return _paper(1_400, 0.45, 90.0, 511, -2.0)
 
 
 def air() -> np.ndarray:
@@ -125,7 +128,7 @@ def air() -> np.ndarray:
     cutoff = 280.0 + 1_500.0 * env
     air_ = _hp(_lp_sweep(_lp_sweep(_noise(n, 401), cutoff), cutoff), 130.0)
     flutter = np.clip(1.0 + 6.0 * _lp(_noise(n, 402), 25.0), 0.7, 1.3)
-    return _finish(air_ * env * flutter, -7.0, 8.0, 80.0)
+    return _finish(air_ * env * flutter, -1.0, 8.0, 80.0)
 
 
 def drop() -> np.ndarray:
@@ -136,7 +139,7 @@ def drop() -> np.ndarray:
     phase = 2.0 * math.pi * np.cumsum(freq) / SR
     body = np.sin(phase) * np.exp(-t / 0.042)
     plip = _hp(_noise(t.size, 301), 2_500.0) * np.exp(-t / 0.0015)
-    return _finish(body + 0.12 * plip, -6.0, 2.0, 40.0)
+    return _finish(body + 0.12 * plip, -0.5, 2.0, 40.0)
 
 
 NIGHT_SR = 22_050
@@ -173,7 +176,7 @@ def night() -> np.ndarray:
     # Slow level wander whose periods divide the loop length (8 s, 4 s).
     wander = 0.84 + 0.10 * np.sin(2 * math.pi * tl / 8.0) + 0.06 * np.sin(2 * math.pi * tl / 4.0 + 1.1)
     loop = (loop - loop.mean()) * wander
-    return loop / np.max(np.abs(loop)) * 10 ** (-26.5 / 20.0)
+    return loop / np.max(np.abs(loop)) * 10 ** (-20.5 / 20.0)
 
 
 SOUNDS = {

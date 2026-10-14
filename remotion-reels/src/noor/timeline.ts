@@ -1,6 +1,6 @@
 // ── timeline (frames @ 30 fps) ─────────────────────────────────────────────
 export const T = {
-	total: 630,
+	total: 702, // 23.4 s; the end card holds ~6 s so a viewer can scan the QR
 	hills: [6, 16, 26, 36], // far, mid, near, mound slide up
 	noorRise: 92, // peek (eyes over the hill)
 	look: [118, 128, 142, 154, 166, 174], // left … hold … right … hold … centre
@@ -17,11 +17,13 @@ export const T = {
 	exit: 490,
 	land: 526,
 	endHills: 520,
-	logo: 516,
-	title: 536,
-	tagline: 550,
-	free: 564,
-	play: 578,
-	endBlink: 600,
+	logo: 512,
+	title: 530,
+	tagline: 542,
+	free: 552,
+	play: 560,
+	qr: 568, // Play QR card pops in
+	scan: 578, // «امسح للتنزيل»
+	endBlink: 636,
 };
 

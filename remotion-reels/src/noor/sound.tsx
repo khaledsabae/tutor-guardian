@@ -8,6 +8,9 @@ type Cue = {file: 'rustle' | 'rustle_long' | 'air' | 'drop'; at: number; vol: nu
 
 const LEN: Record<Cue['file'], number> = {rustle: 14, rustle_long: 44, air: 18, drop: 9};
 
+// One trim for all cues: lands the mix near -23 LUFS, peaks about -5.5 dBFS.
+const MIX_GAIN = 1.05;
+
 const CUES: Cue[] = [
 	// hill sheets slide up
 	{file: 'rustle', at: T.hills[0], vol: 0.5},
@@ -43,7 +46,7 @@ export const TeaserSound: React.FC = () => (
 		/>
 		{CUES.map((c, i) => (
 			<Sequence key={i} from={c.at} durationInFrames={LEN[c.file] + 2} layout="none">
-				<Audio src={staticFile(`noor/sfx/${c.file}.wav`)} volume={c.vol} />
+				<Audio src={staticFile(`noor/sfx/${c.file}.wav`)} volume={Math.min(1, c.vol * MIX_GAIN)} />
 			</Sequence>
 		))}
 	</>
