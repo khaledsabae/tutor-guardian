@@ -51,6 +51,15 @@ OPEN = {
                                               "require_device_proof inside the handler",
     ("GET", "/api/children/{child_id}/weekly-plan"): "memory shapes it, and the offset is "
                                                      "recorded, only for a confirmed session",
+    # نور والقناديل Phase 3. A tick is a positive step on a plan the route
+    # above serves unproven; it carries a plan item key from the bank, never
+    # memory text — so it stays as open as the plan it marks.
+    ("PUT", "/api/children/{child_id}/weekly-plan/marks"): "ticks one bank item of the "
+                                                           "plan; no memory text",
+    ("DELETE", "/api/children/{child_id}/weekly-plan/marks"): "the tick's undo: deletes that "
+                                                              "one tick, nothing else",
+    ("GET", "/api/family/week"): "reads when a follow-up was answered (time and child id) "
+                                 "to light a lantern — never its text, nor any fact",
     ("POST", "/api/identity/link-google"): "records whether the link is confirmed; a bare "
                                            "session cannot move a confirmed link",
     ("DELETE", "/api/daily-routine/events/{event_id}"): "pre-PR: one routine event the "

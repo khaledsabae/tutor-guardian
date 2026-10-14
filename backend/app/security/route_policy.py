@@ -415,8 +415,19 @@ _add(
     "child",
     """
     GET /api/children/{child_id}/weekly-plan get_weekly_plan
+    PUT /api/children/{child_id}/weekly-plan/marks put_weekly_plan_mark
+    DELETE /api/children/{child_id}/weekly-plan/marks delete_weekly_plan_mark
 """,
     exception="Parent Bearer; handler checks owned child (progress permits legacy child_id=0)",
+)
+
+_add(
+    "app.routers.family",
+    "device",
+    "device",
+    """
+    GET /api/family/week family_week
+""",
 )
 
 _add(

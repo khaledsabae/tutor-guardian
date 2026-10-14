@@ -308,8 +308,10 @@ def build_plan(device_id: str, child_id: int, *, today: date,
     }
 
 
-def _stored_offset(device_id: str) -> Optional[int]:
-    """The UTC offset the app last reported for this device (child_memory)."""
+def stored_offset(device_id: str) -> Optional[int]:
+    """The UTC offset the app last reported for this device (child_memory).
+    The lantern counter (family_actions.family_week) reads the same clock, so
+    the lanterns' week is the plan's week."""
     conn = get_conn()
     try:
         row = conn.execute("SELECT tz_offset_minutes FROM child_memory_settings "
@@ -336,10 +338,10 @@ def get_weekly_plan(device_id: str, child_id: int, *, lang: Optional[str] = None
     code = content_lang.normalise(lang) or "ar"
     now = now or datetime.now(timezone.utc)
     if tz_offset_minutes is None:
-        tz_offset_minutes = _stored_offset(device_id)
+        tz_offset_minutes = stored_offset(device_id)
     offset = max(-14 * 60, min(14 * 60, int(tz_offset_minutes or 0)))
     local_day = (now + timedelta(minutes=offset)).date()
-    week, _ = iso_week(local_day)
+    week, monday = iso_week(local_day)
     conn = get_conn()
     try:
         row = conn.execute(
@@ -353,6 +355,7 @@ def get_weekly_plan(device_id: str, child_id: int, *, lang: Optional[str] = None
         try:
             plan = json.loads(row["plan_json"])
             plan["generated_at"] = iso_z(row["created_at"])
+            plan["marks"] = marks_for_week(device_id, child_id, monday)
             return plan
         except (json.JSONDecodeError, TypeError):
             logger.warning("weekly plan: unreadable cached row — rebuilding")
@@ -378,4 +381,107 @@ def get_weekly_plan(device_id: str, child_id: int, *, lang: Optional[str] = None
     # Two first readers racing: the row that won is the plan, for both.
     stored = json.loads(row["plan_json"]) if row else plan
     stored["generated_at"] = iso_z(row["created_at"]) if row else None
+    stored["marks"] = marks_for_week(device_id, child_id, monday)
     return stored
+
+
+# ── Marks: a plan you can tick (نور والقناديل, Phase 3; table v36) ──────────
+#
+# A mark says "this step of this week's plan was done". It is positive only:
+# un-marking deletes the row, and nothing ever records a step not taken. The
+# API marks by plan week, so `weekly_plan_marks.marked_on` holds the plan
+# week's Monday (`week_start`) and the table's UNIQUE (device, child, item,
+# marked_on) makes a second tick of the same step that week the same mark.
+# `created_at` is when it was ticked — the moment the lantern counter
+# (family_actions, kind `plan_tick`) lights for it.
+
+
+@lru_cache(maxsize=1)
+def plan_item_keys() -> frozenset[str]:
+    """Every tickable item key of every bank: the actions and the worship
+    acts. Structure comes from the Arabic banks (load_bank's rule)."""
+    keys: set[str] = set()
+    for group in sorted(set(BAND_GROUP.values())):
+        bank = _load(group, None)
+        keys |= {a["key"] for t in bank["topics"] for a in t["actions"]}
+        keys |= {w["key"] for w in bank["worship"]}
+    return frozenset(keys)
+
+
+def item_text(item_key: str, lang: Optional[str]) -> Optional[str]:
+    """The bank text of an action or worship item, in `lang`; None if unknown.
+    Keys name their bank: <topic>_<group>_<n> / worship_<group>_<n>."""
+    parts = item_key.split("_")
+    group = parts[-2] if len(parts) >= 3 else ""
+    if group not in set(BAND_GROUP.values()):
+        return None
+    bank = load_bank(group, content_lang.normalise(lang))
+    for t in bank["topics"]:
+        for a in t["actions"]:
+            if a["key"] == item_key:
+                return a["text"]
+    for w in bank["worship"]:
+        if w["key"] == item_key:
+            return w["text"]
+    return None
+
+
+def valid_mark_week(week_start: date, *, now: Optional[datetime] = None) -> bool:
+    """A Monday that is this plan week or the one before it, for SOME clock
+    on Earth (UTC-12 … UTC+14): the app sends the week of the plan it shows,
+    and may tick last week's steps on the Monday it turns over."""
+    if week_start.weekday() != 0:
+        return False
+    moment = now or datetime.now(timezone.utc)
+    if moment.tzinfo is not None:
+        moment = moment.astimezone(timezone.utc).replace(tzinfo=None)
+    _, earliest = iso_week((moment - timedelta(hours=12)).date())
+    _, latest = iso_week((moment + timedelta(hours=14)).date())
+    return earliest - timedelta(days=7) <= week_start <= latest
+
+
+def marks_for_week(device_id: str, child_id: int, week_start: date) -> list[str]:
+    """The item keys ticked for this child's plan week, in the order ticked."""
+    conn = get_conn()
+    try:
+        rows = conn.execute(
+            "SELECT item_id FROM weekly_plan_marks WHERE device_id = ? AND child_id = ? "
+            "AND marked_on = ? ORDER BY created_at, id",
+            (device_id, child_id, week_start.isoformat()),
+        ).fetchall()
+    except sqlite3.Error:
+        logger.warning("weekly plan: marks unreadable", exc_info=True)
+        return []
+    finally:
+        conn.close()
+    return [r["item_id"] for r in rows]
+
+
+def mark_item(device_id: str, child_id: int, week_start: date, item_key: str) -> list[str]:
+    """Tick one step (idempotent). Returns the week's marks."""
+    conn = get_conn()
+    try:
+        conn.execute(
+            "INSERT OR IGNORE INTO weekly_plan_marks (device_id, child_id, item_id, marked_on) "
+            "VALUES (?, ?, ?, ?)",
+            (device_id, child_id, item_key, week_start.isoformat()),
+        )
+        conn.commit()
+    finally:
+        conn.close()
+    return marks_for_week(device_id, child_id, week_start)
+
+
+def unmark_item(device_id: str, child_id: int, week_start: date, item_key: str) -> list[str]:
+    """Un-tick one step: the row is deleted (idempotent). Returns the week's marks."""
+    conn = get_conn()
+    try:
+        conn.execute(
+            "DELETE FROM weekly_plan_marks WHERE device_id = ? AND child_id = ? "
+            "AND item_id = ? AND marked_on = ?",
+            (device_id, child_id, item_key, week_start.isoformat()),
+        )
+        conn.commit()
+    finally:
+        conn.close()
+    return marks_for_week(device_id, child_id, week_start)
