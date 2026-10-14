@@ -525,6 +525,44 @@ def test_any_day_can_be_previewed_but_only_past_days_carry_marks(monkeypatch):
     assert early["state"] == "upcoming" and early["markable"] is False
 
 
+def test_days_marked_lights_a_day_once_for_any_family_mark(monkeypatch):
+    """The lantern street: the days of the season on which the family made
+    any «تمّ» mark — each day once, in order, never a count per day. A day
+    with nothing is just absent: there is no "missed" list to read."""
+    freeze(monkeypatch, "2027-02-10T12:00:00")                   # day 3
+    c = client()
+    cid = add_child(c, birth_month="2019-06")
+    assert _today(c, cid, tz_offset_minutes=0)["days_marked"] == []
+    assert _mark(c, "challenge_done", day=1).status_code == 200
+    assert _mark(c, "challenge_done").status_code == 200
+    assert _mark(c, "wird_done").status_code == 200              # a second mark on day 3
+    # Another family's marks and a child's own fasting practice are not the
+    # family's street.
+    other = add_child(c, device=OTHER)
+    assert c.post("/api/programs/ramadan/marks", params={"tz_offset_minutes": 0},
+                  json={"mark": "wird_done", "day": 2},
+                  headers={"X-Test-Device": OTHER}).status_code == 200
+    _set_step(c, cid, step_key="morning_hours")
+    assert c.post(f"/api/children/{cid}/ramadan/fasting/practice",
+                  params={"tz_offset_minutes": 0}, json={"day": 2}).status_code == 200
+    body = _today(c, cid, tz_offset_minutes=0)
+    assert body["days_marked"] == [1, 3]
+    assert all(isinstance(d, int) for d in body["days_marked"])
+    assert c.get(f"/api/children/{other}/ramadan/today", params={"tz_offset_minutes": 0},
+                 headers={"X-Test-Device": OTHER}).json()["days_marked"] == [2]
+    # Unticking the only mark of a day puts its lantern out — quietly.
+    assert _mark(c, "challenge_done", day=1, done=False).status_code == 200
+    assert _today(c, cid, tz_offset_minutes=0)["days_marked"] == [3]
+    # The street stays on Eid and through the bridge; before the month it is empty.
+    freeze(monkeypatch, "2027-03-10T12:00:00")                   # Eid
+    assert _mark(c, "night_joined", day=20).status_code == 200
+    assert _today(c, cid, tz_offset_minutes=0)["days_marked"] == [3, 20]
+    freeze(monkeypatch, "2027-03-20T12:00:00")                   # the bridge
+    assert _today(c, cid, tz_offset_minutes=0)["days_marked"] == [3, 20]
+    freeze(monkeypatch, "2027-01-20T12:00:00")                   # before the month
+    assert _today(c, cid, tz_offset_minutes=0)["days_marked"] == []
+
+
 def test_past_days_stay_markable_until_the_bridge_ends(monkeypatch):
     c = client()
     freeze(monkeypatch, "2027-03-10T12:00:00")                   # Eid

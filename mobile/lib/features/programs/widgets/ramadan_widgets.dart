@@ -3,7 +3,8 @@
 ///
 /// Marks are tick-only. A day not ticked is not a "missed" day anywhere on
 /// screen — no red, no cross, no "0 of 4" — because a shame metric is the one
-/// thing this program must never become (MOBILE_API §11.0).
+/// thing this program must never become (MOBILE_API §11.0). Each mark is a
+/// paper lantern that lights when ticked; an unticked one is plain paper.
 library;
 
 import 'dart:async';
@@ -13,10 +14,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/analytics.dart';
 import '../../../core/app_routes.dart';
+import '../../../core/haptics.dart';
+import '../../../core/motion.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../state/chat_notifier.dart';
 import '../../../theme/app_colors.dart';
 import '../../../theme/design_tokens.dart';
+import '../../../widgets/ui/paper_lantern.dart';
 import '../../program/data/story_models.dart';
 import '../data/programs_models.dart';
 import '../providers/programs_providers.dart';
@@ -73,6 +77,7 @@ class RamadanDayCard extends ConsumerWidget {
     required this.content,
     this.marks,
     this.markable = false,
+    this.onMarksChanged,
   });
 
   final int childId;
@@ -82,6 +87,10 @@ class RamadanDayCard extends ConsumerWidget {
   /// Null when the day cannot be ticked (a future day).
   final RamadanMarks? marks;
   final bool markable;
+
+  /// The day's marks as the parent leaves them, on every tap (and again if
+  /// the server refuses one and it is put back).
+  final ValueChanged<RamadanMarks>? onMarksChanged;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -181,6 +190,7 @@ class RamadanDayCard extends ConsumerWidget {
             tracks: content.tracks,
             initial: marks!,
             wordChoices: content.familyWordChoices,
+            onChanged: onMarksChanged,
           ),
       ],
     );
@@ -303,8 +313,10 @@ class _StoryRow extends ConsumerWidget {
   }
 }
 
-/// The family's «تمّ» toggles for one day. Ticks only: an unticked mark is
-/// drawn exactly like a mark not yet reached — never as missed.
+/// The family's «تمّ» toggles for one day, as paper lanterns. Ticks only: an
+/// unticked mark is drawn exactly like a mark not yet reached — never as
+/// missed. When every mark of the day is ticked the panel glows a quiet
+/// «الحمد لله»: no confetti, no count.
 class RamadanMarksPanel extends ConsumerStatefulWidget {
   const RamadanMarksPanel({
     super.key,
@@ -312,12 +324,14 @@ class RamadanMarksPanel extends ConsumerStatefulWidget {
     required this.tracks,
     required this.initial,
     this.wordChoices = const [],
+    this.onChanged,
   });
 
   final int day;
   final List<String> tracks;
   final RamadanMarks initial;
   final List<String> wordChoices;
+  final ValueChanged<RamadanMarks>? onChanged;
 
   @override
   ConsumerState<RamadanMarksPanel> createState() => _RamadanMarksPanelState();
@@ -333,19 +347,25 @@ class _RamadanMarksPanelState extends ConsumerState<RamadanMarksPanel> {
     if (old.initial != widget.initial && _busy.isEmpty) _marks = widget.initial;
   }
 
+  void _set(RamadanMarks marks) {
+    setState(() => _marks = marks);
+    widget.onChanged?.call(marks);
+  }
+
   Future<void> _toggle(String mark) async {
     if (_busy.contains(mark)) return;
+    unawaited(Haptics.selection());
     final l10n = AppLocalizations.of(context);
     final container = programsContainerOf(context);
     final done = !_marks.isDone(mark);
-    setState(() {
-      _busy.add(mark);
-      _marks = RamadanMarks(
+    setState(() => _busy.add(mark));
+    _set(
+      RamadanMarks(
         ticks: {..._marks.ticks, mark: done},
         familyWord: _marks.familyWord,
         familyWordIndex: _marks.familyWordIndex,
-      );
-    });
+      ),
+    );
     try {
       final json = await ref
           .read(tgClientProvider)
@@ -357,11 +377,11 @@ class _RamadanMarksPanelState extends ConsumerState<RamadanMarksPanel> {
       // made on another day's page is there when the parent comes back.
       container.invalidate(ramadanTodayProvider);
       if (!mounted) return;
-      setState(() => _marks = fresh ?? _marks);
+      _set(fresh ?? _marks);
     } catch (e) {
       if (!mounted) return;
-      setState(
-        () => _marks = RamadanMarks(
+      _set(
+        RamadanMarks(
           ticks: {..._marks.ticks, mark: !done},
           familyWord: _marks.familyWord,
           familyWordIndex: _marks.familyWordIndex,
@@ -390,7 +410,7 @@ class _RamadanMarksPanelState extends ConsumerState<RamadanMarksPanel> {
       unawaited(Analytics.programAction('ramadan', 'family_word'));
       container.invalidate(ramadanTodayProvider);
       if (!mounted) return;
-      setState(() => _marks = fresh ?? _marks);
+      _set(fresh ?? _marks);
     } catch (e) {
       if (mounted) showProgramSnack(context, programChangeError(l10n, e));
     } finally {
@@ -409,6 +429,11 @@ class _RamadanMarksPanelState extends ConsumerState<RamadanMarksPanel> {
     final hasWord =
         widget.tracks.contains('family_word') && widget.wordChoices.isNotEmpty;
     if (ticks.isEmpty && !hasWord) return const SizedBox.shrink();
+    final wordChosen =
+        _marks.familyWordIndex != null || _marks.familyWord != null;
+    final complete =
+        ticks.every(_marks.isDone) && (!hasWord || wordChosen) &&
+        (ticks.isNotEmpty || hasWord);
 
     return ProgramSection(
       title: l10n.ramadanMarksTitle,
@@ -416,19 +441,21 @@ class _RamadanMarksPanelState extends ConsumerState<RamadanMarksPanel> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Wrap(
-            spacing: 8,
-            runSpacing: 8,
-            children: [
-              for (final m in ticks)
-                FilterChip(
-                  key: ValueKey('ramadan_mark_$m'),
-                  label: Text(ramadanMarkLabel(l10n, m)),
-                  selected: _marks.isDone(m),
-                  showCheckmark: true,
-                  onSelected: _busy.contains(m) ? null : (_) => _toggle(m),
-                ),
-            ],
+          _DayGlow(
+            complete: complete,
+            child: Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: [
+                for (final m in ticks)
+                  RamadanLanternToggle(
+                    key: ValueKey('ramadan_mark_$m'),
+                    label: ramadanMarkLabel(l10n, m),
+                    lit: _marks.isDone(m),
+                    onChanged: _busy.contains(m) ? null : (_) => _toggle(m),
+                  ),
+              ],
+            ),
           ),
           const SizedBox(height: 8),
           Text(
@@ -473,6 +500,147 @@ class _RamadanMarksPanelState extends ConsumerState<RamadanMarksPanel> {
               ],
             ),
           ],
+        ],
+      ),
+    );
+  }
+}
+
+/// One «تمّ» mark as a paper lantern: lit when ticked, plain paper when not.
+/// To a screen reader, a toggle button named after the mark.
+class RamadanLanternToggle extends StatelessWidget {
+  const RamadanLanternToggle({
+    super.key,
+    required this.label,
+    required this.lit,
+    required this.onChanged,
+  });
+
+  final String label;
+  final bool lit;
+
+  /// Null while the change is on its way.
+  final ValueChanged<bool>? onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    final c = context.colors;
+    final change = onChanged;
+    final tap = change == null ? null : () => change(!lit);
+    final shape = RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(16),
+      side: BorderSide(
+        color: lit ? c.paperGold : c.track,
+        width: lit ? 1.5 : 1,
+      ),
+    );
+    return Semantics(
+      container: true,
+      button: true,
+      toggled: lit,
+      enabled: tap != null,
+      label: label,
+      onTap: tap,
+      excludeSemantics: true,
+      child: Material(
+        color: lit
+            ? c.paperGold.withValues(alpha: c.isDark ? .14 : .2)
+            : c.surface,
+        shape: shape,
+        clipBehavior: Clip.antiAlias,
+        child: InkWell(
+          onTap: tap,
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(minHeight: 48),
+            child: Padding(
+              padding: const EdgeInsetsDirectional.fromSTEB(8, 6, 14, 6),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  PaperLantern(lit: lit, height: 32),
+                  const SizedBox(width: 6),
+                  Flexible(
+                    child: Text(
+                      label,
+                      style: TextStyle(
+                        color: c.ink,
+                        fontWeight: lit ? FontWeight.w700 : FontWeight.w500,
+                        height: 1.35,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// The quiet glow round a day whose every mark is ticked: the lanterns' ground
+/// warms and «الحمد لله» appears under them. Once, softly; nothing loops,
+/// nothing bursts, and under reduced motion it simply is there.
+class _DayGlow extends StatelessWidget {
+  const _DayGlow({required this.complete, required this.child});
+  final bool complete;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    final c = context.colors;
+    final l10n = AppLocalizations.of(context);
+    final duration = reduceMotion(context)
+        ? Duration.zero
+        : const Duration(milliseconds: 600);
+    return AnimatedContainer(
+      duration: duration,
+      curve: Curves.easeOut,
+      padding: const EdgeInsets.all(8),
+      decoration: BoxDecoration(
+        color: c.paperGold.withValues(
+          alpha: complete ? (c.isDark ? .10 : .14) : 0,
+        ),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(
+          color: c.paperGold.withValues(alpha: complete ? .55 : 0),
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          child,
+          AnimatedSwitcher(
+            duration: duration,
+            child: complete
+                ? Padding(
+                    key: const ValueKey('ramadan_day_complete'),
+                    padding: const EdgeInsets.only(top: 10),
+                    child: Semantics(
+                      liveRegion: true,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const PaperLantern(lit: true, height: 24),
+                          const SizedBox(width: 6),
+                          Flexible(
+                            child: Text(
+                              l10n.ramadanDayComplete,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: c.ink,
+                                fontWeight: FontWeight.w800,
+                                fontSize: 15,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                : const SizedBox(width: double.infinity),
+          ),
         ],
       ),
     );

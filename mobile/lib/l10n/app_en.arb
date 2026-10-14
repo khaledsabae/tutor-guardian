@@ -1857,5 +1857,17 @@
   "todayRoadReached": "Reached today",
   "@todayRoadReached": {
     "description": "Screen-reader label of a lit station on the Today road: the parent reached this stop today."
+  },
+  "ramadanStreetHint": "A day's lantern lights up when you tick anything on it. Tap any day to open it.",
+  "@ramadanStreetHint": {
+    "description": "Caption under the Ramadan lantern street (30 paper lanterns, one per day). A day's lantern is lit when the family ticked anything that day. Never mention missed days, counts or comparison."
+  },
+  "ramadanLanternLit": "lantern lit",
+  "@ramadanLanternLit": {
+    "description": "Screen-reader value added to a day of the lantern street when the family ticked anything that day. Unlit days get no value at all — never 'missed'."
+  },
+  "ramadanDayComplete": "Alhamdulillah",
+  "@ramadanDayComplete": {
+    "description": "The quiet line that glows when every mark of a Ramadan day is ticked. No confetti, no count."
   }
 }

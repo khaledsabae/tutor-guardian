@@ -5974,4 +5974,14 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get todayRoadReached => 'Reached today';
+
+  @override
+  String get ramadanStreetHint =>
+      'A day\'s lantern lights up when you tick anything on it. Tap any day to open it.';
+
+  @override
+  String get ramadanLanternLit => 'lantern lit';
+
+  @override
+  String get ramadanDayComplete => 'Alhamdulillah';
 }

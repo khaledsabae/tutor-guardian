@@ -12,6 +12,7 @@ import 'package:almorabbi/features/programs/screens/ramadan_day_screen.dart';
 import 'package:almorabbi/features/programs/screens/ramadan_recap_screen.dart';
 import 'package:almorabbi/features/programs/screens/ramadan_screen.dart';
 import 'package:almorabbi/features/programs/widgets/ramadan_recap_card.dart';
+import 'package:almorabbi/features/programs/widgets/ramadan_widgets.dart';
 
 import 'programs_support.dart';
 
@@ -55,15 +56,15 @@ void main() {
       await settle(tester);
       final chip = find.byKey(const ValueKey('ramadan_mark_challenge_done'));
       await scrollTo(tester, chip);
-      expect(tester.widget<FilterChip>(chip).selected, isFalse);
+      expect(tester.widget<RamadanLanternToggle>(chip).lit, isFalse);
       await tester.tap(chip);
       await settle(tester);
       expect(client.bodies.last, {'mark': 'challenge_done', 'day': 3, 'done': true, 'choice_index': null});
-      expect(tester.widget<FilterChip>(chip).selected, isTrue);
+      expect(tester.widget<RamadanLanternToggle>(chip).lit, isTrue);
       await tester.tap(chip);
       await settle(tester);
       expect(client.bodies.last['done'], isFalse);
-      expect(tester.widget<FilterChip>(chip).selected, isFalse);
+      expect(tester.widget<RamadanLanternToggle>(chip).lit, isFalse);
       expect(find.text("Tick only what you did — anything else simply isn't recorded."), findsOneWidget);
       expectNoMissLanguage(tester);
     });
@@ -172,7 +173,7 @@ void main() {
       await settle(tester);
       final chip = find.byKey(const ValueKey('ramadan_mark_challenge_done'));
       await scrollTo(tester, chip);
-      expect(tester.widget<FilterChip>(chip).selected, isTrue);
+      expect(tester.widget<RamadanLanternToggle>(chip).lit, isTrue);
       final wird = find.byKey(const ValueKey('ramadan_mark_wird_done'));
       await tester.tap(wird);
       await settle(tester);

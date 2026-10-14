@@ -146,6 +146,7 @@ Map<String, dynamic> ramadanTodayJson({
   bool recap = false,
   Map<String, dynamic>? fasting,
   bool noFasting = false,
+  List<int>? daysMarked,
 }) =>
     {
       'program': 'ramadan_family',
@@ -203,6 +204,8 @@ Map<String, dynamic> ramadanTodayJson({
           : null,
       'fasting': noFasting ? null : (fasting ?? fastingSummaryJson()),
       'recap_available': recap,
+      // The lantern street: day 2 carries a mark in the fake's past days.
+      'days_marked': daysMarked ?? (const {'ramadan', 'eid', 'after'}.contains(state) ? [2] : <int>[]),
     };
 
 Map<String, dynamic> ladderJson({String? current, bool puberty = false, String state = 'ramadan'}) => {
