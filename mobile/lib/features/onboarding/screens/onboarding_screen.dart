@@ -412,41 +412,45 @@ class _AgeQuestionPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Center(
-              child: Container(
-                width: 120,
-                height: 120,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  // The art's own emerald, like every Noor window.
-                  color: kNoorWindowGround,
-                  border: Border.all(
-                    color: const Color(0xFFE89838).withValues(alpha: 0.45),
-                    width: 2,
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: const Color(0xFFE89838).withValues(alpha: 0.25),
-                      blurRadius: 18,
-                      spreadRadius: 2,
+                  child: Container(
+                    width: 120,
+                    height: 120,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      // The art's own emerald, like every Noor window.
+                      color: kNoorWindowGround,
+                      // A solid gold paper ring: a translucent orange over the
+                      // emerald read as olive.
+                      border: Border.all(
+                        color: const Color(0xFFF7C548),
+                        width: 3,
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: const Color(
+                            0xFFF7C548,
+                          ).withValues(alpha: 0.25),
+                          blurRadius: 18,
+                          spreadRadius: 2,
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-                child: ClipOval(
-                  child: Padding(
-                    padding: const EdgeInsets.all(6),
-                    child: ArtImage(
-                      'assets/svg/noor/noor_reading.svg',
-                      fallback: (_) => const Center(
-                        child: BrandGlyph(BrandIcon.crescent, size: 64),
+                    child: ClipOval(
+                      child: Padding(
+                        padding: const EdgeInsets.all(6),
+                        child: ArtImage(
+                          'assets/svg/noor/noor_reading.svg',
+                          fallback: (_) => const Center(
+                            child: BrandGlyph(BrandIcon.crescent, size: 64),
+                          ),
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ),
-            )
-            .animate()
-            .fadeIn(duration: Dt.base)
-            .scale(begin: const Offset(.9, .9), curve: Curves.easeOutBack),
+                )
+                .animate()
+                .fadeIn(duration: Dt.base)
+                .scale(begin: const Offset(.9, .9), curve: Curves.easeOutBack),
             const SizedBox(height: 12),
             Text(
               l10n.onbWelcome,
