@@ -46,6 +46,10 @@ class AppPalette {
     required this.dangerFg,
     required this.tipGradient,
     required this.tipInk,
+    required this.paperIvory,
+    required this.paperEmerald,
+    required this.paperShadow,
+    required this.paperGold,
   });
 
   final Brightness brightness;
@@ -88,6 +92,22 @@ class AppPalette {
   final List<Color> tipGradient;
   final Color tipInk;
 
+  /// «ورق مقصوص» — the paper-cut illustration style (STYLE.md, 2026-10-14).
+  /// The paper is a physical object, so it keeps its colours on both grounds
+  /// the way the SVG art does; only the shadow deepens on the dark ground.
+  ///
+  /// The ivory paper of a lantern pane or a crescent.
+  final Color paperIvory;
+
+  /// The emerald paper of a frame or a card.
+  final Color paperEmerald;
+
+  /// The solid offset shadow under a paper shape (never a blur).
+  final Color paperShadow;
+
+  /// The gold of a lit lantern's flame — a lit lantern and a glowing star only.
+  final Color paperGold;
+
   bool get isDark => brightness == Brightness.dark;
 
   /// The identity: Modern Islamic Luxury (Royal Emerald & Warm Gold).
@@ -114,6 +134,10 @@ class AppPalette {
     dangerFg: Color(0xFFB91C1C),
     tipGradient: [Color(0xFFFEF3C7), Color(0xFFFDE68A)],
     tipInk: Color(0xFF92400E),
+    paperIvory: Color(0xFFFBF1DE),
+    paperEmerald: Color(0xFF0F6B5C),
+    paperShadow: Color(0xFF094A40),
+    paperGold: Color(0xFFF7C548),
   );
 
   /// Modern Islamic Luxury — Dark (Deep Obsidian Emerald & Radiant Gold).
@@ -140,6 +164,10 @@ class AppPalette {
     dangerFg: Color(0xFFFCA5A5),
     tipGradient: [Color(0xFF3B2E10), Color(0xFF4D3C14)],
     tipInk: Color(0xFFFDE68A),
+    paperIvory: Color(0xFFFBF1DE),
+    paperEmerald: Color(0xFF12806D),
+    paperShadow: Color(0xFF04211B),
+    paperGold: Color(0xFFF7C548),
   );
 
   /// Blend two palettes — what `AppColors.lerp` hands `AnimatedTheme`, so a
@@ -172,6 +200,10 @@ class AppPalette {
           c(a.tipGradient[i], b.tipGradient[i]),
       ],
       tipInk: c(a.tipInk, b.tipInk),
+      paperIvory: c(a.paperIvory, b.paperIvory),
+      paperEmerald: c(a.paperEmerald, b.paperEmerald),
+      paperShadow: c(a.paperShadow, b.paperShadow),
+      paperGold: c(a.paperGold, b.paperGold),
     );
   }
 

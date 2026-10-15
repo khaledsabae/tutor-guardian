@@ -5894,4 +5894,14 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get promiseReminderBody => 'خطوتك الصغيرة مع طفلك تنتظرك.';
+
+  @override
+  String get ramadanStreetHint =>
+      'يضيء قنديل اليوم حين تعلّمون فيه أيّ شيء. اضغط أيّ يوم لتفتحه.';
+
+  @override
+  String get ramadanLanternLit => 'قنديله مضاء';
+
+  @override
+  String get ramadanDayComplete => 'الحمد لله';
 }

@@ -927,7 +927,8 @@ see «requires_feature» below).
               "current_step": {"key": "morning_hours", "label": "Morning hours", "until": "mid_morning",
                                "approx_hours": 3, "max_days_per_week": 3},
               "practised_today": false, "practised_this_week": 0, "rest_suggested": false},
-  "recap_available": false
+  "recap_available": false,
+  "days_marked": [1, 3]
 }
 ```
 
@@ -940,6 +941,11 @@ see «requires_feature» below).
 * **`marks`** has one boolean per entry of `content.tracks` (the day card's «تمّ» toggles), plus
   `family_word: {"choice_index": 3, "word": "Joy"} | null` on day 28. Marks are the **family's**: the
   same on every child's card.
+* **`days_marked`** (additive) — the lantern street: every day of this season on which the family
+  made **any** family mark, each day once, ascending (`[]` before the month and off-season; filled
+  during the month, on Eid and through the bridge). Days only — never a count per day, and a day not
+  listed is simply not lit (never shown as missed). Family marks only: a child's own
+  `fasting_practised` is not on the street. Older servers omit it — treat as `[]`.
 * `upcoming` → `"kickoff": {"title", "text", "setup_steps": [...]}` (and let the parent set each
   child's fasting step now).
 * `eid` → `"eid": {"title", "activities": [...], "parent_note": {text, evidence}, "variant": {...}|null,

@@ -10141,6 +10141,24 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'خطوتك الصغيرة مع طفلك تنتظرك.'**
   String get promiseReminderBody;
+
+  /// Caption under the Ramadan lantern street (30 paper lanterns, one per day). A day's lantern is lit when the family ticked anything that day. Never mention missed days, counts or comparison.
+  ///
+  /// In ar, this message translates to:
+  /// **'يضيء قنديل اليوم حين تعلّمون فيه أيّ شيء. اضغط أيّ يوم لتفتحه.'**
+  String get ramadanStreetHint;
+
+  /// Screen-reader value added to a day of the lantern street when the family ticked anything that day. Unlit days get no value at all — never 'missed'.
+  ///
+  /// In ar, this message translates to:
+  /// **'قنديله مضاء'**
+  String get ramadanLanternLit;
+
+  /// The quiet line that glows when every mark of a Ramadan day is ticked. No confetti, no count.
+  ///
+  /// In ar, this message translates to:
+  /// **'الحمد لله'**
+  String get ramadanDayComplete;
 }
 
 class _AppLocalizationsDelegate

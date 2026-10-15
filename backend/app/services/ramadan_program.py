@@ -622,6 +622,25 @@ def day_marks(doc: dict, device_id: str, season: Season, day_no: int) -> dict[st
     return out
 
 
+def days_marked(device_id: str, season: Season) -> list[int]:
+    """The lantern street: every day of the season the family made any «تمّ»
+    mark on, each once and in order. One `SELECT DISTINCT` — never a count per
+    day, so nothing here can be read as "how much" or "what was missed".
+
+    Family marks only (child_id 0): a child's own fasting practice is that
+    child's, not the family's street."""
+    conn = get_conn()
+    try:
+        rows = conn.execute(
+            "SELECT DISTINCT day FROM ramadan_marks WHERE device_id = ? AND child_id = ? "
+            "AND hijri_year = ? AND day BETWEEN 1 AND ? ORDER BY day",
+            (device_id, FAMILY, season.hijri_year, season.days),
+        ).fetchall()
+    finally:
+        conn.close()
+    return [int(r["day"]) for r in rows]
+
+
 def set_family_mark(doc: dict, device_id: str, where: dict[str, Any], *, mark: str,
                     day: Optional[int], done: bool,
                     choice_index: Optional[int]) -> int:

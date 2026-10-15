@@ -191,6 +191,9 @@ def ramadan_today(child_id: int, request: Request, lang: Optional[str] = Query(N
         "marks": None, "fasting": None,
         "recap_available": bool(where.get("season") is not None
                                 and today >= where["season"].eid),
+        # The lantern street (additive): the days the family marked anything.
+        "days_marked": (rp.days_marked(device_id, where["season"])
+                        if state in ("ramadan", "eid", "after") else []),
     }
     if state == "upcoming":
         out["kickoff"] = rp.kickoff_payload(doc)
