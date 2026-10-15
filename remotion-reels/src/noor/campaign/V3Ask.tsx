@@ -55,6 +55,32 @@ const NOOR = {cx: 230, by: 1528, size: 400};
 const Q1 = V3.question.slice(0, V3.question.indexOf('…') + 1);
 const Q2 = V3.question.slice(Q1.length).trim();
 
+// Sound cues (source frames); exported so the voice-over cut can retime and duck them.
+export const V3_CUES: Cue[] = [
+	{file: 'rustle', at: 0, vol: 0.5},
+	...Array.from({length: Math.ceil((Q1.length + Q2.length) / 2)}, (_, i) => ({
+		file: 'tick' as const,
+		at: T.type + i * 2 * T.perChar,
+		vol: 0.16 + (0.1 * ((i * 7) % 3)) / 2,
+	})),
+	{file: 'rustle', at: 10, vol: 0.3},
+	{file: 'tick', at: T.tapSend, vol: 0.55},
+	{file: 'air', at: T.send, vol: 0.5},
+	{file: 'rustle', at: T.think[0], vol: 0.3},
+	{file: 'rustle', at: T.answer, vol: 0.5},
+	...T.steps.map((at) => ({file: 'rustle' as const, at, vol: 0.3})),
+	{file: 'rustle', at: T.calm, vol: 0.25},
+	{file: 'tick', at: T.button, vol: 0.35},
+	{file: 'tick', at: T.tapTry, vol: 0.55},
+	{file: 'drop', at: T.tapTry + 3, vol: 0.55},
+	{file: 'rustle', at: T.qOut, vol: 0.35},
+	{file: 'air', at: T.message + 32, vol: 0.35},
+	...endCues(FROM),
+];
+
+/** Mix trim of this reel (lands the silent cut near -23 LUFS). */
+export const V3_GAIN = 1.42;
+
 export const V3Ask: React.FC<{safe?: boolean}> = ({safe = false}) => {
 	const frame = useCurrentFrame();
 	const {fps} = useVideoConfig();
@@ -120,28 +146,6 @@ export const V3Ask: React.FC<{safe?: boolean}> = ({safe = false}) => {
 	const btnH = btnFont * 1.3 + btnFont * 0.54;
 	const tapTry = {x: bLeft + BW / 2, y: head.y - 36 - 26 * 0.8 - btnH / 2};
 	const trySel = springAt(frame, T.tapTry, fps, 10, 180);
-
-	const cues: Cue[] = [
-		{file: 'rustle', at: 0, vol: 0.5},
-		...Array.from({length: Math.ceil((Q1.length + Q2.length) / 2)}, (_, i) => ({
-			file: 'tick' as const,
-			at: T.type + i * 2 * T.perChar,
-			vol: 0.16 + (0.1 * ((i * 7) % 3)) / 2,
-		})),
-		{file: 'rustle', at: 10, vol: 0.3},
-		{file: 'tick', at: T.tapSend, vol: 0.55},
-		{file: 'air', at: T.send, vol: 0.5},
-		{file: 'rustle', at: T.think[0], vol: 0.3},
-		{file: 'rustle', at: T.answer, vol: 0.5},
-		...T.steps.map((at) => ({file: 'rustle' as const, at, vol: 0.3})),
-		{file: 'rustle', at: T.calm, vol: 0.25},
-		{file: 'tick', at: T.button, vol: 0.35},
-		{file: 'tick', at: T.tapTry, vol: 0.55},
-		{file: 'drop', at: T.tapTry + 3, vol: 0.55},
-		{file: 'rustle', at: T.qOut, vol: 0.35},
-		{file: 'air', at: T.message + 32, vol: 0.35},
-		...endCues(FROM),
-	];
 
 	return (
 		<AbsoluteFill style={{background: C.emerald, overflow: 'hidden'}}>
@@ -258,7 +262,7 @@ export const V3Ask: React.FC<{safe?: boolean}> = ({safe = false}) => {
 			<EndCard frame={frame} fps={fps} from={FROM} slug="v3_ask" tagline={V3.tagline} noorFrom={pose} />
 			<Watermark frame={frame} fps={fps} hideAt={FROM} />
 			{safe ? <SafeZones /> : null}
-			<ReelSound cues={cues} total={V3_TOTAL} gain={1.42} />
+			<ReelSound cues={V3_CUES} total={V3_TOTAL} gain={V3_GAIN} />
 		</AbsoluteFill>
 	);
 };

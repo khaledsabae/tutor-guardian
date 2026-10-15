@@ -53,6 +53,28 @@ const T = {
 const DEV = {w: 560, h: 960, top: 500, r: 64};
 const SCR = {x: 26, y: 74, w: DEV.w - 52, h: DEV.h - 74 - 64, r: 30};
 
+// Sound cues (source frames); exported so the voice-over cut can retime and duck them.
+export const V4_CUES: Cue[] = [
+	{file: 'rustle', at: 0, vol: 0.5},
+	{file: 'rustle', at: T.device + 4, vol: 0.4},
+	...T.pin.map((at) => ({file: 'tick' as const, at, vol: 0.45})),
+	{file: 'rustle', at: T.doorsIn, vol: 0.5},
+	{file: 'rustle_long', at: T.handTo[0] - 2, vol: 0.4},
+	{file: 'swish', at: T.doorsOpen, vol: 0.45},
+	{file: 'drop', at: T.doorsOpen + 10, vol: 0.4},
+	{file: 'rustle', at: T.mission[0], vol: 0.45},
+	{file: 'tick', at: T.tapDone, vol: 0.55},
+	{file: 'drop', at: T.tapDone + 3, vol: 0.5},
+	{file: 'rustle', at: T.back[0], vol: 0.45},
+	{file: 'rustle_long', at: T.handBack[0] - 2, vol: 0.4},
+	{file: 'tick', at: T.lock, vol: 0.45},
+	{file: 'air', at: T.lock + 4, vol: 0.4},
+	...endCues(FROM),
+];
+
+/** Mix trim of this reel (lands the silent cut near -23 LUFS). */
+export const V4_GAIN = 1.34;
+
 export const V4Handover: React.FC<{safe?: boolean}> = ({safe = false}) => {
 	const frame = useCurrentFrame();
 	const {fps} = useVideoConfig();
@@ -116,24 +138,6 @@ export const V4Handover: React.FC<{safe?: boolean}> = ({safe = false}) => {
 		by: DEV.top + DEV.h + (SCR.y + noorState.by - DEV.h) * shrink,
 		size: noorState.size * shrink,
 	};
-
-	const cues: Cue[] = [
-		{file: 'rustle', at: 0, vol: 0.5},
-		{file: 'rustle', at: T.device + 4, vol: 0.4},
-		...T.pin.map((at) => ({file: 'tick' as const, at, vol: 0.45})),
-		{file: 'rustle', at: T.doorsIn, vol: 0.5},
-		{file: 'rustle_long', at: T.handTo[0] - 2, vol: 0.4},
-		{file: 'swish', at: T.doorsOpen, vol: 0.45},
-		{file: 'drop', at: T.doorsOpen + 10, vol: 0.4},
-		{file: 'rustle', at: T.mission[0], vol: 0.45},
-		{file: 'tick', at: T.tapDone, vol: 0.55},
-		{file: 'drop', at: T.tapDone + 3, vol: 0.5},
-		{file: 'rustle', at: T.back[0], vol: 0.45},
-		{file: 'rustle_long', at: T.handBack[0] - 2, vol: 0.4},
-		{file: 'tick', at: T.lock, vol: 0.45},
-		{file: 'air', at: T.lock + 4, vol: 0.4},
-		...endCues(FROM),
-	];
 
 	const lockS = springAt(frame, T.lock, fps, 10, 170);
 
@@ -308,7 +312,7 @@ export const V4Handover: React.FC<{safe?: boolean}> = ({safe = false}) => {
 			<EndCard frame={frame} fps={fps} from={FROM} slug="v4_handover" tagline={V4.tagline} noorFrom={endNoor} />
 			<Watermark frame={frame} fps={fps} hideAt={FROM} />
 			{safe ? <SafeZones /> : null}
-			<ReelSound cues={cues} total={V4_TOTAL} gain={1.34} />
+			<ReelSound cues={V4_CUES} total={V4_TOTAL} gain={V4_GAIN} />
 		</AbsoluteFill>
 	);
 };

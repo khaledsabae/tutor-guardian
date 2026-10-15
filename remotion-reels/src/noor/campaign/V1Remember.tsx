@@ -59,6 +59,31 @@ const T = {
 const NOOR = {cx: 250, by: 1528, size: 460};
 const FAMILY = {x: 702, y: 1534, size: 320};
 
+// Sound cues (source frames); exported so the voice-over cut can retime and duck them.
+export const V1_CUES: Cue[] = [
+	{file: 'rustle', at: 0, vol: 0.45},
+	{file: 'rustle', at: T.note, vol: 0.5},
+	...T.lines.map((at) => ({file: 'tick' as const, at: at + 2, vol: 0.3})),
+	{file: 'air', at: T.blow, vol: 0.6},
+	{file: 'rustle', at: T.card, vol: 0.5},
+	{file: 'rustle', at: T.ask[0], vol: 0.4},
+	{file: 'tick', at: T.tapWhen, vol: 0.55},
+	{file: 'drop', at: T.tapWhen + 3, vol: 0.5},
+	{file: 'rustle', at: 200, vol: 0.35},
+	{file: 'rustle_long', at: T.dawn, vol: 0.6},
+	{file: 'air', at: T.dawn + 22, vol: 0.45},
+	{file: 'rustle', at: T.family, vol: 0.4},
+	{file: 'rustle', at: T.follow[0], vol: 0.4},
+	{file: 'tick', at: T.tapWorked, vol: 0.55},
+	{file: 'rustle', at: T.thanks[0], vol: 0.35},
+	{file: 'drop', at: T.thanks[0] + 6, vol: 0.55},
+	{file: 'air', at: T.lantern + 6, vol: 0.55},
+	...endCues(FROM),
+];
+
+/** Mix trim of this reel (lands the silent cut near -23 LUFS). */
+export const V1_GAIN = 1.15;
+
 export const V1Remember: React.FC<{safe?: boolean}> = ({safe = false}) => {
 	const frame = useCurrentFrame();
 	const {fps} = useVideoConfig();
@@ -142,27 +167,6 @@ export const V1Remember: React.FC<{safe?: boolean}> = ({safe = false}) => {
 		glow: springAt(frame, T.lantern + 9, fps, 18, 70),
 		flicker: 0.6 * Math.sin(frame * 0.33) + 0.4 * Math.sin(frame * 0.13),
 	};
-
-	const cues: Cue[] = [
-		{file: 'rustle', at: 0, vol: 0.45},
-		{file: 'rustle', at: T.note, vol: 0.5},
-		...T.lines.map((at) => ({file: 'tick' as const, at: at + 2, vol: 0.3})),
-		{file: 'air', at: T.blow, vol: 0.6},
-		{file: 'rustle', at: T.card, vol: 0.5},
-		{file: 'rustle', at: T.ask[0], vol: 0.4},
-		{file: 'tick', at: T.tapWhen, vol: 0.55},
-		{file: 'drop', at: T.tapWhen + 3, vol: 0.5},
-		{file: 'rustle', at: 200, vol: 0.35},
-		{file: 'rustle_long', at: T.dawn, vol: 0.6},
-		{file: 'air', at: T.dawn + 22, vol: 0.45},
-		{file: 'rustle', at: T.family, vol: 0.4},
-		{file: 'rustle', at: T.follow[0], vol: 0.4},
-		{file: 'tick', at: T.tapWorked, vol: 0.55},
-		{file: 'rustle', at: T.thanks[0], vol: 0.35},
-		{file: 'drop', at: T.thanks[0] + 6, vol: 0.55},
-		{file: 'air', at: T.lantern + 6, vol: 0.55},
-		...endCues(FROM),
-	];
 
 	return (
 		<AbsoluteFill style={{background: C.emerald, overflow: 'hidden'}}>
@@ -295,7 +299,7 @@ export const V1Remember: React.FC<{safe?: boolean}> = ({safe = false}) => {
 			<EndCard frame={frame} fps={fps} from={FROM} slug="v1_remember" tagline={V1.tagline} noorFrom={pose} />
 			<Watermark frame={frame} fps={fps} hideAt={FROM} />
 			{safe ? <SafeZones /> : null}
-			<ReelSound cues={cues} total={V1_TOTAL} gain={1.15} />
+			<ReelSound cues={V1_CUES} total={V1_TOTAL} gain={V1_GAIN} />
 		</AbsoluteFill>
 	);
 };
