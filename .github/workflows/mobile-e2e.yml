@@ -113,10 +113,12 @@ name: Mobile E2E (emulator)
 # The stage dates come from the server's own season (as-of-preflight), which
 # also proves, before any emulator, that the candidate answers each date.
 # Then, on the same emulator, the sound × recitation check of the plan's
-# phase-2 gate: a recitation in the Quran reader, three interface ticks
-# through the probe, and `dumpsys audio` as the witness — the recitation's
-# player is still started and no tick asked for audio focus. Its verdict is
-# the «SOUND×RECITATION CHECKPOINT» line in the log and the job summary.
+# phase-2 gate: a recitation in the Quran reader, interface ticks through
+# the probe (a system light/dark change — `cmd uimode night` — reaches the app
+# whatever holds the focus; F12 did not), and `dumpsys audio` as the witness:
+# the recitation's player is still started and no tick asked for audio focus.
+# Its verdict is the «SOUND×RECITATION CHECKPOINT» line in the log and the job
+# summary.
 # Artifact: e2e-rehearsal (stage gallery, screenshots, proxy log, audio
 # dumps, preflight, backend log, logcat, Maestro reports).
 

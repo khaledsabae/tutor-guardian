@@ -80,6 +80,27 @@ void main() {
     expect(pulses, ['HapticFeedbackType.selectionClick']);
   });
 
+  testWidgets('installed, a system light/dark change is one tick',
+      (tester) async {
+    E2eProbes.install();
+    await tester.pumpWidget(const SizedBox());
+    tester.platformDispatcher.platformBrightnessTestValue = Brightness.dark;
+    await tester.pump();
+    tester.platformDispatcher.clearPlatformBrightnessTestValue();
+    await tester.pump();
+    expect(backend.played, [Sfx.select, Sfx.select]);
+  });
+
+  testWidgets('without the probe, a light/dark change is silent',
+      (tester) async {
+    E2eProbes.installIfEnabled();
+    await tester.pumpWidget(const SizedBox());
+    tester.platformDispatcher.platformBrightnessTestValue = Brightness.dark;
+    await tester.pump();
+    tester.platformDispatcher.clearPlatformBrightnessTestValue();
+    expect(backend.played, isEmpty);
+  });
+
   testWidgets('installed, every other key passes through', (tester) async {
     E2eProbes.install();
     await tester.pumpWidget(const SizedBox());

@@ -14,6 +14,7 @@ FAKES = {
     # from a file would lose its remaining lines to them.
     'adb': '''#!/bin/bash
 cat > /dev/null
+echo "$*" >> "$ADB_LOG"
 case "$*" in
   'shell dumpsys package '*) echo 'versionCode=120 minSdk=24'; echo 'firstInstallTime=2026-10-15 10:00:00'; echo 'userId=10190' ;;
   'shell cmd package list packages -U '*) echo 'package:com.alsaba.almorabbi uid:10190' ;;
@@ -71,7 +72,7 @@ class RehearsalRunnerTest(unittest.TestCase):
             log = root / 'maestro.log'
             env = dict(os.environ, PATH=f'{bins}:{os.environ["PATH"]}',
                        E2E_APKS=str(root / 'apks'), E2E_OUT=str(root / 'out'),
-                       MAESTRO_LOG=str(log), FAIL_FLOW='')
+                       MAESTRO_LOG=str(log), ADB_LOG=str(root / 'adb.log'), FAIL_FLOW='')
             env.update(env_extra)
             proc = subprocess.run(['bash', str(root / 'e2e/rehearsal.sh')], env=env,
                                   stdin=subprocess.DEVNULL, capture_output=True, text=True, timeout=30)
@@ -86,6 +87,8 @@ class RehearsalRunnerTest(unittest.TestCase):
                 calls[name] = dict(e.split('=', 1) for e in envs)
             expected = root / 'out/rehearsal/expected_stages.txt'
             stages = expected.read_text().split() if expected.exists() else []
+            adb = root / 'adb.log'
+            self.adb_calls = adb.read_text().splitlines() if adb.exists() else []
             return proc.returncode, rows, calls, stages, proc.stdout + proc.stderr
 
     def test_the_whole_walk(self):
@@ -120,6 +123,14 @@ class RehearsalRunnerTest(unittest.TestCase):
         # The Play build's tick must still be there after the upgrade.
         self.assertEqual(calls['ar_day1']['EXPECT_BASELINE_MARK'], 'true')
         self.assertEqual(calls['en_day1']['EXPECT_BASELINE_MARK'], 'false')
+
+    def test_the_ticks_sound_between_the_dumps_and_dark_mode_is_undone(self):
+        self.run_runner()
+        dumps = [i for i, c in enumerate(self.adb_calls) if c == 'shell dumpsys audio']
+        self.assertEqual(len(dumps), 4)  # one before, three after
+        night = [self.adb_calls.index(c) for c in ('shell cmd uimode night yes', 'shell cmd uimode night no')]
+        self.assertTrue(dumps[0] < night[0] < night[1] < dumps[1], self.adb_calls[dumps[0]:dumps[1] + 1])
+        self.assertIn('shell input keyevent KEYCODE_F12', self.adb_calls[dumps[0]:dumps[1]])
 
     def test_no_play_build_tick_no_expectation(self):
         rc, rows, calls, _, output = self.run_runner(FAIL_FLOW='b_day1')

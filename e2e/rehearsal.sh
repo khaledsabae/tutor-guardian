@@ -236,14 +236,23 @@ if [ "$HEAD_INSTALLED" = yes ] && l10n_for rehearsal-head \
   [ -n "$uid" ] || uid=$(adb shell dumpsys package "$PKG" | tr -d '\r' | grep -m1 -oE '(userId|appId)=[0-9]+' | cut -d= -f2)
   say "app uid: $uid"
   audio_dump "$R/audio_before.txt"
-  for _ in 1 2 3; do
-    adb shell input keyevent KEYCODE_F12 || true
-    sleep 1
-  done
+  # The ticks. F12 reaches the probe only if the key reaches the Flutter view
+  # (on run 38714154049 three presses produced none), so it stays as a
+  # witness; the system light/dark mode, there and back, reaches the app
+  # whatever holds the focus (MainActivity handles uiMode itself: no restart).
+  adb shell input keyevent KEYCODE_F12 || true
+  sleep 1
+  adb shell cmd uimode night yes || true
+  sleep 2
+  adb shell cmd uimode night no || true
+  sleep 2
   for n in 1 2 3; do
     audio_dump "$R/audio_after_$n.txt"
     sleep 1
   done
+  # The app's own account of what it was asked to sound (core/e2e_probes.dart).
+  echo "- the probe's own log: $(grep -o 'tg.e2e: tick ([^)]*)' "$OUT/logcat/logcat.txt" 2>/dev/null | sort | uniq -c | sed 's/^ *//' | paste -sd';' - || true)" \
+    > "$R/probe.md"
   verdict=0
   python3 "$E2E/e2e_tool.py" audio-focus --uid "$uid" --before "$R/audio_before.txt" \
     --after "$R/audio_after_1.txt" --after "$R/audio_after_2.txt" --after "$R/audio_after_3.txt" \
@@ -289,6 +298,7 @@ fi
   cat "$R/as_of.md" 2>/dev/null
   echo
   cat "$R/sound.md" 2>/dev/null || echo "### SOUND×RECITATION CHECKPOINT: NOT RUN"
+  cat "$R/probe.md" 2>/dev/null
 } > "$OUT/meta.md"
 python3 "$E2E/e2e_tool.py" summary "$OUT" --title "Ramadan rehearsal (G2) + sound × recitation" || true
 exit "$FAILED"
