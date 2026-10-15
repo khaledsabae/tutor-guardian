@@ -20,6 +20,7 @@ import '../../../widgets/ui/bouncy_button.dart';
 import '../../../widgets/ui/empty_state.dart';
 import '../../../widgets/ui/error_retry_view.dart';
 import '../../../widgets/ui/emoji_hero.dart';
+import '../../family_road/widgets/family_road_entry.dart';
 import '../data/models.dart';
 import '../providers/program_providers.dart';
 import '../widgets/active_child_chip.dart';
@@ -155,9 +156,12 @@ class _PathsScreenState extends ConsumerState<PathsScreen> {
       child: ListView.separated(
         physics: const AlwaysScrollableScrollPhysics(),
         padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
-        itemCount: paths.length,
+        // «درب {الاسم}» (عالم الأسرة) heads the list and scrolls with it.
+        itemCount: paths.length + 1,
         separatorBuilder: (_, _) => const SizedBox(height: 16),
-        itemBuilder: (context, i) {
+        itemBuilder: (context, index) {
+          if (index == 0) return const FamilyRoadEntry();
+          final i = index - 1;
           final card = _PathCard(path: paths[i], ageGroup: ageGroup);
           if (i >= Dt.maxStaggeredItems) return card;
           return card

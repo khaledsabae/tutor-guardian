@@ -14,6 +14,7 @@ import 'package:flutter/foundation.dart' show visibleForTesting;
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'engagement_signal.dart';
+import 'horizon_attribution.dart';
 import 'notification_permission_gate.dart';
 
 class Analytics {
@@ -30,6 +31,10 @@ class Analytics {
       await _fa.logEvent(name: name, parameters: params);
     } catch (_) {
       // analytics must never affect UX
+    }
+    // A parenting act may close a horizon tap (`horizon_to_action_48h`).
+    if (HorizonAttribution.acts.contains(name)) {
+      unawaited(HorizonAttribution.onEvent(name));
     }
   }
 
@@ -276,6 +281,40 @@ class Analytics {
   /// view on «اليوم» and lit. [days] is how many burn this week now (1–7).
   static Future<void> lanternLit(int days) =>
       _log('lantern_lit', {'days': days});
+
+  // ── «عالم الأسرة»: درب {الاسم} و«على الأفق» ─────────────────────────────
+
+  /// «درب {الاسم}» opened. `from` ∈ today_strip · learn_tab · noor.
+  static Future<void> familyRoadOpened(String from) =>
+      _log('family_road_opened', {'from': from});
+
+  /// A gate on the road was tapped. `gate` is a `GateKind.wire`
+  /// (next_path · milestone_due · ramadan_now · ramadan · age_seven ·
+  /// milestone · birth_month).
+  static Future<void> horizonGateTapped(String gate) =>
+      _log('horizon_gate_tapped', {'gate': gate});
+
+  /// The «على الأفق» strip was on Today — once a day per device, so shown vs
+  /// tapped is the experiment's ≥15% gate.
+  static Future<void> horizonStripShown(String gate) =>
+      _log('horizon_strip_shown', {'gate': gate});
+
+  /// The strip was tapped (it opens the road).
+  static Future<void> horizonStripTapped(String gate) =>
+      _log('horizon_strip_tapped', {'gate': gate});
+
+  /// A parenting act within 48 hours of a horizon tap (HorizonAttribution).
+  /// `gate` is what was tapped (a gate kind, or `strip`), `action` the act's
+  /// own event name, `hours` how long after.
+  static Future<void> horizonToAction48h(
+    String gate,
+    String action,
+    int hours,
+  ) => _log('horizon_to_action_48h', {
+    'gate': gate,
+    'action': action,
+    'hours': hours,
+  });
 
   /// The Friday harvest card was opened, from Noor's line (`noor`) or from
   /// the week's acts sheet (`sheet`).

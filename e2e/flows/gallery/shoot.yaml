@@ -608,6 +608,42 @@ name: gallery/shoot
             - runFlow: ../common/exit_child_mode.yaml
 - runFlow: ../common/home.yaml
 
+# ── «درب {الاسم}» (عالم الأسرة): the family road, opened from its row at the
+# top of «تعلّم» (not from Today's strip — that would move Today's scroll for
+# the tour below). Head builds only: the baseline has no row, its selector
+# never matches, and both shots are in GALLERY_GUARDED. The lesson above lit
+# a lantern, so «ما أضأتموه» has something on it.
+- tapOn: '${output.lead.navLearn}'
+- extendedWaitUntil:
+    visible: '${output.t.pathsTitle}'
+    timeout: 30000
+- runFlow:
+    when:
+      visible: '${output.c.familyRoadEntryBody}'
+    commands:
+      - tapOn: '${output.c.familyRoadEntryBody}'
+      - extendedWaitUntil:
+          visible: '${output.c.familyRoadHorizon}'
+          timeout: 30000
+      - waitForAnimationToEnd:
+          timeout: 3000
+      - takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__family_road'
+      - scrollUntilVisible:
+          element:
+            text: '${output.c.familyRoadLit}'
+          direction: DOWN
+          timeout: 15000
+          optional: true
+      - runFlow:
+          when:
+            visible: '${output.c.familyRoadLit}'
+          commands:
+            - waitForAnimationToEnd:
+                timeout: 2000
+            - takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__family_road_lit'
+      - back
+- runFlow: ../common/home.yaml
+
 # ── «ركن الطفل»: the gate's first tile, the corner, a page of the day's
 # story, and the task the session ends on — for the 4-6 child the praise leg
 # left active, so a corner with no game. Head only — the baseline has no

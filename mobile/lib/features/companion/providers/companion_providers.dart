@@ -283,6 +283,9 @@ final companionLineProvider = Provider.autoDispose<CompanionLine?>((ref) {
       // server) leaves Friday to the greeting.
       weekActs: ref.watch(familyWeekProvider).valueOrNull?.acts.length ?? 0,
       firstDay: coins.dailyStreak <= 1,
+      seasonMonth: overview?.hijriSeason?.month.wire,
+      seasonDay: overview?.hijriSeason?.day,
+      seasonYear: overview?.hijriSeason?.hijriYear,
       notices: mine == null
           ? const ChildNotices()
           : ChildNotices(
