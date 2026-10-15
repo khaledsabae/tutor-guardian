@@ -122,6 +122,9 @@ KEYS = [
     "settingsSwitchChild", "childrenAddNew", "add", "missionOpenForChild",
     "parentDayTitle", "childName", "addChildBtn", "addChildNameHint",
     "hubParentDay", "parentDayWith",
+    # «قناديل الأسبوع» (phase 3) — head builds only; the baseline's selector
+    # never matches, and the shot is guarded.
+    "weekLanternsTitle",
 ]
 
 # Strings the app hardcodes outside the ARB files.
@@ -414,6 +417,7 @@ GALLERY_SCREENS = [
     ("praise_card_400ms", "كارت كلمة الأب — ٤٠٠ms (الميل والاستقرار)"),
     ("home_dark_noor_face", "NoorFace في «اليوم» — داكن"),
     ("home_dark_gift", "لحظة الهدية على «اليوم» — داكن"),
+    ("week_lanterns", "قناديل الأسبوع تحت ① على «اليوم»"),
 ]
 
 GALLERY_ONBOARDING = [
@@ -443,6 +447,8 @@ GALLERY_GUARDED = {
     "praise_card_400ms",
     "home_dark_noor_face",
     "home_dark_gift",
+    # Needs a server with /api/family/week, and a head build.
+    "week_lanterns",
 }
 
 # gallery__01_before_ar__before__ar__home.png — the flow name is matched

@@ -138,6 +138,22 @@ class MemoryRepository {
     }
   }
 
+  /// Tick ([marked] true) or untick one step of the week's plan (§9.5.1).
+  /// Returns the week's full `marks` list after the change. No proof: like
+  /// the plan itself. Errors are the caller's to show — it marked
+  /// optimistically and puts the mark back.
+  Future<List<String>> setPlanMark(int childId,
+      {required String weekStart,
+      required String itemKey,
+      required bool marked}) async {
+    final json = marked
+        ? await _client.putWeeklyPlanMark(childId,
+            weekStart: weekStart, itemKey: itemKey)
+        : await _client.deleteWeeklyPlanMark(childId,
+            weekStart: weekStart, itemKey: itemKey);
+    return WeeklyPlan.parseMarks(json['marks']);
+  }
+
   /// Memory of every child of this device (§9.6).
   Future<void> eraseAll() =>
       _client.withDeviceProof(() => _client.deleteAllMemory());

@@ -1878,6 +1878,33 @@ class TgClient {
         if (tzOffsetMinutes != null) 'tz_offset_minutes': '$tzOffsetMinutes',
       });
 
+  /// `PUT /api/children/{id}/weekly-plan/marks` (§9.5.1) — tick one step of
+  /// the week's plan. Idempotent; no proof needed. Answers the week's full
+  /// `marks` list after the change.
+  Future<Map<String, dynamic>> putWeeklyPlanMark(int childId,
+          {required String weekStart, required String itemKey}) =>
+      _authedJson('PUT', '/api/children/$childId/weekly-plan/marks',
+          body: {'week_start': weekStart, 'item_key': itemKey});
+
+  /// `DELETE /api/children/{id}/weekly-plan/marks` — the undo. Same body as
+  /// the PUT (sent with the DELETE); a step not marked answers 200 too.
+  Future<Map<String, dynamic>> deleteWeeklyPlanMark(int childId,
+          {required String weekStart, required String itemKey}) =>
+      _authedJson('DELETE', '/api/children/$childId/weekly-plan/marks',
+          body: {'week_start': weekStart, 'item_key': itemKey});
+
+  /// `GET /api/family/week` (§12) — «قناديل الأسبوع»: the family's parenting
+  /// acts in its local week, `lit_weeks_total` and `last_8`. An older server
+  /// answers FastAPI's bare 404 ([TgApiError.isMissingEndpoint]); the caller
+  /// hides the lanterns on that and on any other failure. The offset is
+  /// clamped to the server's range (-720…840), which every real zone is in.
+  Future<Map<String, dynamic>> fetchFamilyWeek(int tzOffsetMinutes,
+          {String? lang}) =>
+      _authedJson('GET', '/api/family/week', query: {
+        'tz_offset_minutes': '${tzOffsetMinutes.clamp(-720, 840)}',
+        'lang': ?lang,
+      });
+
   /// `DELETE /api/privacy/memory` — memory of every child of this device.
   Future<Map<String, dynamic>> deleteAllMemory() =>
       _authedJson('DELETE', '/api/privacy/memory');

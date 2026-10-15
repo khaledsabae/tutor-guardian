@@ -160,6 +160,20 @@ class CompanionMemory {
   final Map<String, Set<String>> stopsByDay;
   final bool quietMode;
 
+  /// This memory with [keys] treated as not seen yet — for once-only lines
+  /// already shown in this run of the app, which must stay put until the
+  /// next open (see `heldOnceLinesProvider`).
+  CompanionMemory withoutSeen(Set<String> keys) => keys.isEmpty
+      ? this
+      : CompanionMemory(
+          promises: promises,
+          seenKeys: seenKeys.difference(keys),
+          questionsByDay: questionsByDay,
+          hiddenByDay: hiddenByDay,
+          stopsByDay: stopsByDay,
+          quietMode: quietMode,
+        );
+
   Set<String> questionsOn(DateTime now) =>
       questionsByDay[_dayKey(now)] ?? const {};
   Set<String> hiddenOn(DateTime now) => hiddenByDay[_dayKey(now)] ?? const {};

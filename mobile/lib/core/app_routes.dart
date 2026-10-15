@@ -198,6 +198,10 @@ abstract final class Screens {
   // «المربّي يعرف ابنك» (MOBILE_API §9)
   static const childMemory = 'child_memory';
   static const followup = 'followup';
+
+  // «قناديل الأسبوع» (نور والقناديل, phase 3)
+  static const weekLanterns = 'week_lanterns';
+  static const fridayHarvest = 'friday_harvest';
   static const invite = 'invite';
   static const support = 'support';
   static const feedback = 'feedback';

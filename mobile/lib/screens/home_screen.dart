@@ -50,6 +50,7 @@ import '../features/home/widgets/today_rituals_row.dart';
 import '../features/home/widgets/sky_band.dart';
 import '../features/home/widgets/today_road.dart';
 import '../features/home/widgets/today_section.dart';
+import '../features/lanterns/widgets/week_lantern_string.dart';
 import '../features/onboarding/providers/onboarding_providers.dart';
 import '../features/program/data/badges.dart';
 import '../features/program/providers/program_providers.dart';
@@ -202,6 +203,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           profile: profile,
           hideFollowup: ref.watch(companionHostsFollowupProvider),
         ),
+        // «قناديل الأسبوع» (phase 3): the week's lit lanterns, last in ① —
+        // under the step and its weekly loop, never above the ① button.
+        // Nothing at all on a server without lanterns or on any failure.
+        if (profile != null) const WeekLanternString(),
       ],
     );
     // ② اسأل المربّي

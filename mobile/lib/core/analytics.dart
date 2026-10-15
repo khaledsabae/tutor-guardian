@@ -260,6 +260,16 @@ class Analytics {
   static Future<void> companionReply(String kind, String action) =>
       _log('companion_reply', {'kind': kind, 'action': action});
 
+  /// «قناديل الأسبوع»: lanterns this phone had not shown lit yet came into
+  /// view on «اليوم» and lit. [days] is how many burn this week now (1–7).
+  static Future<void> lanternLit(int days) =>
+      _log('lantern_lit', {'days': days});
+
+  /// The Friday harvest card was opened, from Noor's line (`noor`) or from
+  /// the week's acts sheet (`sheet`).
+  static Future<void> harvestOpened(String from) =>
+      _log('harvest_opened', {'from': from});
+
   /// A Google identity was linked — data now survives reinstall.
   static Future<void> identityLinked() => _log('identity_linked');
 

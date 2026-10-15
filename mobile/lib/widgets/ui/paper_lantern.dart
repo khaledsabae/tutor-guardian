@@ -20,7 +20,12 @@ import '../../core/motion.dart';
 import '../../theme/app_colors.dart';
 
 class PaperLantern extends StatelessWidget {
-  const PaperLantern({super.key, required this.lit, this.height = 40});
+  const PaperLantern({
+    super.key,
+    required this.lit,
+    this.height = 40,
+    this.lightDuration = const Duration(milliseconds: 420),
+  });
 
   /// Whether the flame burns.
   final bool lit;
@@ -28,15 +33,17 @@ class PaperLantern extends StatelessWidget {
   /// The lantern's height; it is three quarters as wide.
   final double height;
 
+  /// How long the flame takes to rise when [lit] turns on (the week's
+  /// lanterns on «اليوم» light in 350ms). Ignored under reduced motion.
+  final Duration lightDuration;
+
   @override
   Widget build(BuildContext context) {
     final c = context.colors;
     return ExcludeSemantics(
       child: TweenAnimationBuilder<double>(
         tween: Tween(end: lit ? 1 : 0),
-        duration: reduceMotion(context)
-            ? Duration.zero
-            : const Duration(milliseconds: 420),
+        duration: reduceMotion(context) ? Duration.zero : lightDuration,
         curve: Curves.easeOutCubic,
         builder: (context, glow, _) => SizedBox(
           width: height * .75,

@@ -11,14 +11,18 @@ import 'dart:ui' show PlatformDispatcher;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/analytics.dart';
+import '../../../core/clock.dart';
 import '../../../main.dart' show appConfigProvider;
 import '../../../state/chat_notifier.dart' show tgClientProvider;
 import '../../adhkar/services/notification_service.dart';
 import '../../child_memory/data/placeholder_names.dart';
 import '../../child_memory/providers/memory_providers.dart';
 import '../../coins/coins_providers.dart';
+import '../../lanterns/providers/lantern_providers.dart'
+    show familyWeekProvider;
 import '../../onboarding/providers/onboarding_providers.dart';
-import '../../program/providers/settings_providers.dart' show childrenListProvider;
+import '../../program/providers/settings_providers.dart'
+    show childrenListProvider;
 import '../../programs/data/programs_models.dart';
 import '../../programs/providers/programs_providers.dart';
 import '../data/companion_store.dart';
@@ -167,6 +171,16 @@ final companionMemoryProvider =
       CompanionMemoryNotifier.new,
     );
 
+/// Once-only lines (a Ramadan countdown day, Monday's reveal, Friday's
+/// harvest) already shown in this run of the app.
+///
+/// Showing one records it on the device at once, so that it never comes
+/// back on a later open. Within this open it has to stay put: the record
+/// re-reads the memory, and the line would otherwise give way to the
+/// greeting a frame after it appeared — before the parent could read it, let
+/// alone tap its chip. The header adds the key here before recording it.
+final heldOnceLinesProvider = StateProvider<Set<String>>((ref) => const {});
+
 /// Claimed-but-unconfirmed missions across the family, and — when they all
 /// belong to one child — whose. Zero on any failure.
 final missionsWaitingProvider =
@@ -208,6 +222,7 @@ final companionLineProvider = Provider.autoDispose<CompanionLine?>((ref) {
   final profile = ref.watch(activeChildProfileProvider);
   final memory = ref.watch(companionMemoryProvider).valueOrNull;
   if (profile == null || memory == null) return null;
+  final held = ref.watch(heldOnceLinesProvider);
 
   final family = ref.watch(familyMembersProvider);
   final due = ref.watch(dueFollowupsProvider).valueOrNull ?? const [];
@@ -224,8 +239,8 @@ final companionLineProvider = Provider.autoDispose<CompanionLine?>((ref) {
 
   return pickLine(
     CompanionInputs(
-      now: DateTime.now(),
-      memory: memory,
+      now: ref.watch(clockProvider)(),
+      memory: memory.withoutSeen(held),
       childId: profile.id,
       childName: _realName(profile.name),
       missionsWaiting: missions?.count ?? 0,
@@ -261,6 +276,9 @@ final companionLineProvider = Provider.autoDispose<CompanionLine?>((ref) {
               )
               .valueOrNull !=
           null,
+      // Friday's harvest needs a week with lanterns; none (or an older
+      // server) leaves Friday to the greeting.
+      weekActs: ref.watch(familyWeekProvider).valueOrNull?.acts.length ?? 0,
       firstDay: coins.dailyStreak <= 1,
       notices: mine == null
           ? const ChildNotices()

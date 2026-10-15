@@ -25,6 +25,8 @@ import '../../../theme/design_tokens.dart';
 import '../../child_memory/data/memory_models.dart';
 import '../../child_memory/providers/memory_providers.dart';
 import '../../child_memory/widgets/followup_sheet.dart';
+import '../../lanterns/providers/lantern_providers.dart';
+import '../../lanterns/widgets/friday_harvest.dart';
 import '../../onboarding/providers/onboarding_providers.dart';
 import '../../program/providers/program_providers.dart';
 import '../../program/providers/settings_providers.dart';
@@ -58,7 +60,14 @@ class _NoorTodayHeaderState extends ConsumerState<NoorTodayHeader> {
     unawaited(Analytics.companionShown(line.kind.name));
     final mem = ref.read(companionMemoryProvider.notifier);
     if (line.isQuestion) unawaited(mem.markQuestionShown(line.key));
-    if (line.onceOnly) unawaited(mem.markSeen(line.key));
+    if (line.onceOnly) {
+      // Held first, recorded second: the line stays for this open and
+      // never comes back on the next.
+      ref
+          .read(heldOnceLinesProvider.notifier)
+          .update((held) => {...held, line.key});
+      unawaited(mem.markSeen(line.key));
+    }
   }
 
   @override
@@ -221,6 +230,7 @@ class _NoorTodayHeaderState extends ConsumerState<NoorTodayHeader> {
       CompanionKind.prayerInvite => l10n.noorPrayerInvite(name),
       CompanionKind.milestoneDue => l10n.noorMilestoneDue(name),
       CompanionKind.birthMonthAsk => l10n.noorBirthMonthAsk(name),
+      CompanionKind.fridayHarvest => l10n.noorFridayHarvest,
       CompanionKind.firstDay => l10n.noorFirstDay(name),
       CompanionKind.greeting => _greetingText(l10n, line, name),
     };
@@ -280,6 +290,7 @@ class _NoorTodayHeaderState extends ConsumerState<NoorTodayHeader> {
     CompanionAction.openPrayerJourney => l10n.noorChipPrayerJourney,
     CompanionAction.openChildJourney => l10n.noorChipChildJourney,
     CompanionAction.editChild => l10n.noorChipAddBirthMonth,
+    CompanionAction.openHarvest => l10n.noorChipHarvest,
   };
 
   NoorFaceState _face(CompanionMood m) => switch (m) {
@@ -347,6 +358,12 @@ class _NoorTodayHeaderState extends ConsumerState<NoorTodayHeader> {
           await Navigator.of(context).push(AppRoutes.editChild(full));
           ref.invalidate(programsOverviewProvider);
           ref.invalidate(childrenListProvider);
+        }
+      case CompanionAction.openHarvest:
+        final week = ref.read(familyWeekProvider).valueOrNull;
+        if (week != null) {
+          unawaited(Analytics.harvestOpened('noor'));
+          await showFridayHarvest(context, week);
         }
       case _:
         if (outcome != null) await _answer(line, outcome);
