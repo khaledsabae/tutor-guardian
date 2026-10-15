@@ -29,7 +29,14 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'package:almorabbi/widgets/ui/brand_glyph.dart';
 
-const _folders = ['assets/svg/noor', 'assets/svg/icons', 'assets/svg/art'];
+const _folders = [
+  'assets/svg/noor',
+  'assets/svg/icons',
+  'assets/svg/art',
+  // The story scenes' paper pieces (tool/story_art.py): 240² props and
+  // 360×240 backdrops, the bg_ files.
+  'assets/svg/stories',
+];
 
 /// What is on disk — the source of truth for "every file".
 List<String> _onDisk() {
@@ -48,6 +55,7 @@ const _viewBoxes = <String, String>{
   'assets/svg/noor': '0 0 240 240',
   'assets/svg/icons': '0 0 48 48',
   'assets/svg/art': '0 0 240 240',
+  'assets/svg/stories': '0 0 240 240',
 };
 const _viewBoxExceptions = <String, String>{
   'assets/svg/art/onboarding_welcome.svg': '0 0 360 240',
@@ -56,7 +64,9 @@ const _viewBoxExceptions = <String, String>{
 
 /// The drawing size [path] declares, by folder unless it is an exception.
 Size _viewBox(String path) {
-  final viewBox = _viewBoxExceptions[path] ??
+  final viewBox =
+      _viewBoxExceptions[path] ??
+      (path.startsWith('assets/svg/stories/bg_') ? '0 0 360 240' : null) ??
       _viewBoxes[path.substring(0, path.lastIndexOf('/'))]!;
   final parts = viewBox.split(' ').map(double.parse).toList();
   return Size(parts[2], parts[3]);
@@ -157,10 +167,9 @@ void main() {
     for (final path in files) {
       test(path, () {
         final source = File(path).readAsStringSync();
-        final tags = RegExp(r'<\s*([A-Za-z][\w:-]*)')
-            .allMatches(source)
-            .map((m) => m.group(1)!)
-            .toSet();
+        final tags = RegExp(
+          r'<\s*([A-Za-z][\w:-]*)',
+        ).allMatches(source).map((m) => m.group(1)!).toSet();
         final foreign = tags.difference(_allowedElements);
         expect(
           foreign,

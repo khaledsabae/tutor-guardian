@@ -1169,7 +1169,7 @@ abstract class AppLocalizations {
   /// No description provided for @bedtimeStoriesDesc.
   ///
   /// In ar, this message translates to:
-  /// **'قصص قصيرة وهادئة مع صوت طبيعي للنوم 🐦'**
+  /// **'قصص قصيرة هادئة نقرؤها معًا قبل النوم 🌙'**
   String get bedtimeStoriesDesc;
 
   /// No description provided for @consecutiveDays.
@@ -10597,6 +10597,156 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'كل عام وأنتم بخير.'**
   String get eidMomentBody;
+
+  /// Noor's opening line on the first page of a story (the narrator introduces the story).
+  ///
+  /// In ar, this message translates to:
+  /// **'أنا نور، وهذه حكايتنا الليلة.'**
+  String get storyNoorIntro;
+
+  /// Button on a story's first page: the story is read aloud page by page. Shown only when a recording exists.
+  ///
+  /// In ar, this message translates to:
+  /// **'اسمعها من نور'**
+  String get storyListenWithNoor;
+
+  /// Button on a story's first page: open the story to be read by a parent (no recording).
+  ///
+  /// In ar, this message translates to:
+  /// **'نقرؤها معًا'**
+  String get storyReadTogether;
+
+  /// Story reader position, for the screen reader and under the page dots.
+  ///
+  /// In ar, this message translates to:
+  /// **'صفحة {n} من {total}'**
+  String storyPageOf(int n, int total);
+
+  /// Story reader: turn to the next page.
+  ///
+  /// In ar, this message translates to:
+  /// **'الصفحة التالية'**
+  String get storyNextPage;
+
+  /// Story reader: turn back a page.
+  ///
+  /// In ar, this message translates to:
+  /// **'الصفحة السابقة'**
+  String get storyPrevPage;
+
+  /// Story reader: cycles the story text size.
+  ///
+  /// In ar, this message translates to:
+  /// **'حجم الخط'**
+  String get storyTextSize;
+
+  /// Story reader: play this page's recording.
+  ///
+  /// In ar, this message translates to:
+  /// **'استمع'**
+  String get storyListen;
+
+  /// Story reader: pause the recording.
+  ///
+  /// In ar, this message translates to:
+  /// **'إيقاف الاستماع'**
+  String get storyPauseListening;
+
+  /// Title of the mid-story card where Noor asks the child what they would do.
+  ///
+  /// In ar, this message translates to:
+  /// **'وقفة مع نور'**
+  String get storyPauseTitle;
+
+  /// Noor's reply after the child picks an option at the mid-story pause. Neutral on purpose: the reader never grades a child's choice.
+  ///
+  /// In ar, this message translates to:
+  /// **'فكرة تستحق التفكير! هيا نرى ماذا حدث بعد ذلك.'**
+  String get storyPauseThanks;
+
+  /// Button after the mid-story pause.
+  ///
+  /// In ar, this message translates to:
+  /// **'نكمل الحكاية'**
+  String get storyContinue;
+
+  /// Title of a story's last page.
+  ///
+  /// In ar, this message translates to:
+  /// **'انتهت الحكاية'**
+  String get storyTheEnd;
+
+  /// Heading over the ayah/hadith that anchors a story's lesson (content comes from the guarded story file).
+  ///
+  /// In ar, this message translates to:
+  /// **'من هدي ديننا'**
+  String get storyValueTitle;
+
+  /// Heading over the parent-child discussion questions at the end of a story.
+  ///
+  /// In ar, this message translates to:
+  /// **'اقرؤوها معًا: أسئلة للحوار'**
+  String get storyTalkTitle;
+
+  /// Reveals one more discussion question at the end of a story.
+  ///
+  /// In ar, this message translates to:
+  /// **'سؤال آخر'**
+  String get storyMoreQuestion;
+
+  /// Heading over a story's practical challenge for the child.
+  ///
+  /// In ar, this message translates to:
+  /// **'تحدّي الغد'**
+  String get storyChallengeTitle;
+
+  /// Optional button at the end of a story: opens the bedtime adhkar.
+  ///
+  /// In ar, this message translates to:
+  /// **'أذكار النوم'**
+  String get storyBedtimeAdhkar;
+
+  /// Story shelf filter: every story.
+  ///
+  /// In ar, this message translates to:
+  /// **'الكل ({count})'**
+  String storyFilterAll(int count);
+
+  /// Story shelf filter: stories written for ages from 3–4.
+  ///
+  /// In ar, this message translates to:
+  /// **'للصغار'**
+  String get storyFilterYoung;
+
+  /// Story shelf filter: stories that reach age 7 and up.
+  ///
+  /// In ar, this message translates to:
+  /// **'للأكبر سنًّا'**
+  String get storyFilterOlder;
+
+  /// Closing button of the bedtime adhkar when opened on its own from a story's end.
+  ///
+  /// In ar, this message translates to:
+  /// **'تصبحون على خير'**
+  String get storyGoodNight;
+
+  /// How many times a bedtime dhikr is said.
+  ///
+  /// In ar, this message translates to:
+  /// **'مرة واحدة'**
+  String get bedtimeOnce;
+
+  /// How many times a bedtime dhikr is said.
+  ///
+  /// In ar, this message translates to:
+  /// **'٣ مرات'**
+  String get bedtimeThreeTimes;
+
+  /// After Noor's gentle question at the mid-story pause: clears the child's choice so they can pick again. Never required — «Continue the story» sits under it.
+  ///
+  /// In ar, this message translates to:
+  /// **'أختار مرة أخرى'**
+  String get storyPauseChooseAgain;
 
   /// Hand-over gate tile title for the child's corner. «ركن الطفل» (child corner after the hand-over gate). Child-facing: easy MSA, family-neutral («أهلك»), no gendered verbs, no coins/points/streak, no 'come back tomorrow', no religious text, no promise of reward.
   ///
