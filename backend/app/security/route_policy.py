@@ -399,6 +399,7 @@ _add(
     "child",
     """
     GET /api/children/{child_id}/followups child_followups
+    POST /api/children/{child_id}/followups open_promise
     GET /api/children/{child_id}/memory list_memory
     POST /api/children/{child_id}/memory add_memory
     PATCH /api/children/{child_id}/memory/{fact_id} patch_memory
