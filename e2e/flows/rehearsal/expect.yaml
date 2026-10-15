@@ -1,0 +1,23 @@
+# Wait for PATTERN: a hard expectation on the PR head (TAG == 'after'), a
+# best-effort wait on the Play build — its pass is the gallery's «before» and
+# informational, and one missing line there must not cost the rest of its
+# shots. Env: PATTERN, TAG.
+appId: com.alsaba.almorabbi
+---
+- runFlow:
+    when:
+      true: "${TAG == 'after'}"
+    commands:
+      - scrollUntilVisible:
+          element:
+            text: '${PATTERN}'
+          direction: DOWN
+          timeout: 30000
+- runFlow:
+    when:
+      true: "${TAG != 'after'}"
+    commands:
+      - extendedWaitUntil:
+          visible: '${PATTERN}'
+          timeout: 20000
+          optional: true

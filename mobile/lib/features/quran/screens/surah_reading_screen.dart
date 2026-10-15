@@ -51,9 +51,17 @@ class _SurahReadingScreenState extends ConsumerState<SurahReadingScreen> {
   late int _wirdStart; // verse the daily wird began at this session
   Timer? _saveDebounce;
 
+  // Read once, while the element is alive. dispose() makes the final save,
+  // and Riverpod refuses `ref` once the widget is unmounting: every exit from
+  // the reader threw «Cannot use "ref" after the widget was disposed» and the
+  // final save never ran (found by the CI rehearsal's logcat gate,
+  // 2026-10-15). The provider is app-wide, so the notifier outlives us.
+  late final LastReadNotifier _lastRead;
+
   @override
   void initState() {
     super.initState();
+    _lastRead = ref.read(lastReadProvider.notifier);
     _currentChapter = widget.chapterNumber;
     _currentVerse = widget.initialVerse.clamp(1, 1 << 20);
     _wirdStart = _currentVerse;
@@ -102,9 +110,7 @@ class _SurahReadingScreenState extends ConsumerState<SurahReadingScreen> {
 
   void _persist() {
     if (!mounted) return;
-    ref
-        .read(lastReadProvider.notifier)
-        .saveProgress(_currentChapter, _currentVerse);
+    _lastRead.saveProgress(_currentChapter, _currentVerse);
   }
 
   @override

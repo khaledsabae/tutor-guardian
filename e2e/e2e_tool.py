@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Helpers for the emulator E2E gate (.github/workflows/mobile-e2e.yml).
 
-Five subcommands, all stdlib-only so they run on a bare GitHub runner:
+Subcommands, all stdlib-only so they run on a bare GitHub runner:
 
   deactivate-analytics  Permanently disable Firebase Analytics in a CI manifest.
   l10n         Build flows/common/l10n.js from the app's ARB files, so every
@@ -16,18 +16,40 @@ Five subcommands, all stdlib-only so they run on a bare GitHub runner:
                run.sh) into gallery-summary.md + an images/ folder, uploaded
                as the e2e-gallery artifact — one download, every pair side
                by side.
+
+The Ramadan rehearsal (job `rehearsal`, e2e/rehearsal.sh):
+  as-of-proxy      Stand between the CI-only APKs and the candidate backend
+                   and add the stage's `as_of` to every family-programs call.
+  as-of-preflight  Prove the candidate honours `as_of` for each stage (and
+                   the proxy adds it) before an emulator is involved; write
+                   the stage dates, derived from the server's own season.
+  as-of-report     Every stage's programs calls carried `as_of` and none was
+                   refused.
+  audio-focus      Judge two `dumpsys audio` dumps: the recitation still
+                   plays after the interface ticks, and no tick took focus.
+  rehearsal-gallery  The stage × variant gallery (Play build vs PR head).
 """
 from __future__ import annotations
 
 import argparse
+import http.client
 import json
 import os
 import shutil
 import tempfile
+import threading
+import time
+import urllib.error
+import urllib.request
+import uuid
 import xml.etree.ElementTree as ET
 import re
 import sys
+from collections import Counter
+from datetime import date, timedelta
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
+from urllib.parse import parse_qsl, quote, urlsplit
 
 # Firebase Android configuration: this build-time deactivation cannot be
 # re-enabled through setAnalyticsCollectionEnabled at runtime.
@@ -131,6 +153,23 @@ KEYS = [
     # «قناديل الأسبوع» (phase 3) — head builds only; the baseline's selector
     # never matches, and the shot is guarded.
     "weekLanternsTitle",
+    # The Ramadan rehearsal (e2e/flows/rehearsal/stage.yaml, job `rehearsal`).
+    # Every key below exists in the Play build the rehearsal upgrades from
+    # (v1.0.72+117) EXCEPT the street's ramadanStreetHint, ramadanLanternLit
+    # and ramadanDayComplete and Noor's noorRamadan30 — those are only used
+    # behind TAG == 'after' (the PR head). ramadanCountdown is an ICU plural,
+    # which to_pattern cannot render, so the countdown is never a selector.
+    "programsOpenRamadan", "ramadanStartsOnEstimate", "ramadanDayOf",
+    "programsRamadanEid", "programsRamadanAfterWeek",
+    "ramadanMarksTitle", "ramadanMarkChallenge", "ramadanMarkWird",
+    "ramadanMarkStory", "ramadanMarkJuz", "ramadanMarkNight",
+    "ramadanDayComplete", "ramadanOtherDays", "ramadanStreetHint",
+    "ramadanDayN", "ramadanDayToday", "ramadanLanternLit",
+    "ramadanRecapOpen", "recapTitle", "ramadanAfterWeeks",
+    "noorRamadan30",
+    # sound × recitation (e2e/flows/rehearsal/sound_*.yaml): the Quran
+    # reader's surah list and its bottom «استماع / إيقاف» pill.
+    "holyQuran", "quranVerseCount", "quranListen", "quranStop",
 ]
 
 # Strings the app hardcodes outside the ARB files.
@@ -588,7 +627,7 @@ def cmd_summary(args: argparse.Namespace) -> int:
             parts = line.split("\t")
             if len(parts) >= 4:
                 rows.append(parts)
-    md = ["## Mobile E2E (emulator)", ""]
+    md = [f"## {getattr(args, 'title', None) or 'Mobile E2E (emulator)'}", ""]
     meta = out / "meta.md"
     if meta.exists():
         md += [meta.read_text(encoding="utf-8").strip(), ""]
@@ -795,8 +834,15 @@ def cmd_verify_hierarchy(args: argparse.Namespace) -> int:
                 else:
                     verified_screens.add(matched_screen)
         if total_errors:
+            # Without --require this is the informational «before» pass: the
+            # baseline build, which may predate the screen being checked (the
+            # 4-6 praise card's «أهلك يقولون لك» is not in 1.0.71 at all). A
+            # mismatch there is worth a look, not a red ##[error] that reads
+            # like the reason a job failed (PR #121, 2026-10-15). The rc stays
+            # 1 either way; run.sh decides what it means.
+            level = "error" if require else "warning"
             for err in total_errors:
-                print(f"::error title=Hierarchy check::{err}", file=sys.stderr)
+                print(f"::{level} title=Hierarchy check::{err}", file=sys.stderr)
             return 1
         return 0
 
@@ -815,6 +861,551 @@ def cmd_verify_hierarchy(args: argparse.Namespace) -> int:
             print(f"::error title=Hierarchy check::{err}", file=sys.stderr)
         return 1
     print(f"PASS  screen '{args.screen}' matches hierarchy in {path}")
+    return 0
+
+
+# ── the Ramadan rehearsal: `as_of` on a candidate server ─────────────────
+#
+# Phase 5 of docs/NOOR_WAL_QANADIL_PLAN.md (gate G2): walk the family through
+# Ramadan — before it, days 1/15/27, Eid, after — on the emulator, months
+# ahead. The backend has a QA date override for exactly this: `as_of` on every
+# family-programs route, honoured only where PROGRAMS_AS_OF_ENABLED is set
+# (403 `as_of_disabled` otherwise). It is NEVER set on production.
+#
+# So job `rehearsal` runs the PR head's backend image on the runner with the
+# switch on, and points two CI-only APKs at it (--dart-define=API_BASE_URL):
+# the PR head, and the build on Play now. Neither app knows about `as_of` —
+# the Play build cannot be taught, and the head must not ship a date knob — so
+# this proxy adds it: every programs call passing through gets the stage's
+# date, read from a one-line file the runner rewrites between stages.
+
+# Every route of backend/app/routers/family_programs.py that takes `as_of`
+# (test_e2e_tool.py derives that list from the router and holds this to it).
+AS_OF_ROUTE = re.compile(
+    r"^/api/(?:programs(?:/.*)?|children/\d+/(?:ramadan|prayer-journey|milestones)(?:/.*)?)$"
+)
+_ISO_DATE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+# Hop-by-hop headers, plus the two the proxy sets itself.
+_HOP_HEADERS = {
+    "connection", "keep-alive", "proxy-authenticate", "proxy-authorization",
+    "te", "trailer", "trailers", "transfer-encoding", "upgrade", "host",
+    "content-length",
+}
+
+
+def as_of_applies(path: str) -> bool:
+    """Is `path` (no query) a family-programs route that takes `as_of`?"""
+    return bool(AS_OF_ROUTE.match(path))
+
+
+def with_as_of(query: str, as_of: str | None) -> tuple[str, bool]:
+    """The raw query with `as_of` appended — never replacing one the caller
+    sent, never re-encoding what was there. Returns (query, added)."""
+    if not as_of:
+        return query, False
+    if any(k == "as_of" for k, _ in parse_qsl(query, keep_blank_values=True)):
+        return query, False
+    return (f"{query}&" if query else "") + "as_of=" + quote(as_of), True
+
+
+def read_stage(path: Path) -> tuple[str | None, str]:
+    """The stage file — `<YYYY-MM-DD> <label>` — as (date or None, label).
+    Missing, empty or malformed: no date, so nothing is added."""
+    try:
+        parts = path.read_text(encoding="utf-8").split()
+    except OSError:
+        return None, "-"
+    if not parts or not _ISO_DATE.match(parts[0]):
+        return None, "-"
+    try:
+        date.fromisoformat(parts[0])
+    except ValueError:
+        return None, "-"
+    return parts[0], (parts[1] if len(parts) > 1 else parts[0])
+
+
+def make_as_of_proxy(listen: tuple[str, int], upstream: str, stage_file: Path,
+                     log: Path | None = None) -> ThreadingHTTPServer:
+    """A plain HTTP/1.1 forwarder. Bodies are buffered, which is fine for the
+    rehearsal (it never streams an answer from the assistant)."""
+    up = urlsplit(upstream)
+    lock = threading.Lock()
+
+    class Handler(BaseHTTPRequestHandler):
+        protocol_version = "HTTP/1.1"
+
+        def log_message(self, *args) -> None:  # the TSV below is the log
+            return
+
+        def _forward(self) -> None:
+            target = urlsplit(self.path)
+            as_of, label = read_stage(stage_file)
+            query, added = target.query, False
+            if as_of_applies(target.path):
+                query, added = with_as_of(query, as_of)
+            length = int(self.headers.get("Content-Length") or 0)
+            body = self.rfile.read(length) if length else None
+            headers = {k: v for k, v in self.headers.items() if k.lower() not in _HOP_HEADERS}
+            conn = http.client.HTTPConnection(up.hostname, up.port or 80, timeout=330)
+            try:
+                conn.request(self.command, target.path + (f"?{query}" if query else ""),
+                             body=body, headers=headers)
+                resp = conn.getresponse()
+                status, data, rheaders = resp.status, resp.read(), resp.getheaders()
+            except OSError as exc:
+                status = 502
+                data = f"as-of proxy: upstream unreachable ({exc})".encode()
+                rheaders = [("Content-Type", "text/plain; charset=utf-8")]
+            finally:
+                conn.close()
+            # Logged before the answer goes out: once the app has its answer,
+            # the record of it exists.
+            if log is not None:
+                row = "\t".join([f"{time.time():.3f}", label, self.command, target.path,
+                                 as_of if added else "-", str(status)])
+                with lock, log.open("a", encoding="utf-8") as fh:
+                    fh.write(row + "\n")
+            self.send_response_only(status)
+            for k, v in rheaders:
+                if k.lower() not in _HOP_HEADERS:
+                    self.send_header(k, v)
+            self.send_header("Content-Length", str(len(data)))
+            self.end_headers()
+            if self.command != "HEAD":
+                self.wfile.write(data)
+
+        do_GET = do_POST = do_PUT = do_DELETE = do_PATCH = do_HEAD = do_OPTIONS = _forward
+
+    server = ThreadingHTTPServer(listen, Handler)
+    server.daemon_threads = True
+    return server
+
+
+def _host_port(value: str) -> tuple[str, int]:
+    host, _, port = value.rpartition(":")
+    return host or "127.0.0.1", int(port)
+
+
+def cmd_as_of_proxy(args: argparse.Namespace) -> int:
+    server = make_as_of_proxy(_host_port(args.listen), args.upstream, Path(args.as_of_file),
+                              Path(args.log) if args.log else None)
+    print(f"as-of proxy: {args.listen} → {args.upstream} (stage file {args.as_of_file})", flush=True)
+    try:
+        server.serve_forever()
+    except KeyboardInterrupt:
+        pass
+    finally:
+        server.server_close()
+    return 0
+
+
+# The stages, from the season the server itself knows (its estimate, or the
+# configured RAMADAN_START_<year>): nothing here hardcodes a Hijri date.
+# before = 30 days out (Noor's first countdown line), the month's first day,
+# the middle, an odd last-ten night, Eid, and the first bridge week.
+def rehearsal_stages(season: dict) -> list[dict]:
+    start = date.fromisoformat(season["starts_on"])
+    eid = date.fromisoformat(season["eid_on"])
+    return [
+        {"label": "before", "date": start - timedelta(days=30), "day": 0,
+         "state": "upcoming", "days_until_start": 30},
+        {"label": "day1", "date": start, "day": 1, "state": "ramadan"},
+        {"label": "day15", "date": start + timedelta(days=14), "day": 15, "state": "ramadan"},
+        {"label": "day27", "date": start + timedelta(days=26), "day": 27, "state": "ramadan"},
+        {"label": "eid", "date": eid, "day": 0, "state": "eid"},
+        {"label": "after", "date": eid + timedelta(days=5), "day": 0, "state": "after"},
+    ]
+
+
+def check_stage_answer(stage: dict, body: object) -> str | None:
+    """What is wrong with GET /api/programs's answer for `stage`, or None."""
+    if not isinstance(body, dict):
+        return f"not JSON: {str(body)[:120]}"
+    if body.get("date") != stage["date"].isoformat():
+        return f"date {body.get('date')!r}, expected {stage['date'].isoformat()}"
+    ramadan = body.get("ramadan") or {}
+    if ramadan.get("state") != stage["state"]:
+        return f"ramadan.state {ramadan.get('state')!r}, expected {stage['state']!r}"
+    if stage["day"] and ramadan.get("day") != stage["day"]:
+        return f"ramadan.day {ramadan.get('day')!r}, expected {stage['day']}"
+    if "days_until_start" in stage and ramadan.get("days_until_start") != stage["days_until_start"]:
+        return (f"ramadan.days_until_start {ramadan.get('days_until_start')!r}, "
+                f"expected {stage['days_until_start']}")
+    return None
+
+
+_NO_PROXY = urllib.request.build_opener(urllib.request.ProxyHandler({}))
+
+
+def http_json(method: str, url: str, token: str | None = None, body: object = None,
+              timeout: float = 30) -> tuple[int, object]:
+    data = None if body is None else json.dumps(body).encode()
+    req = urllib.request.Request(url, data=data, method=method)
+    req.add_header("Content-Type", "application/json")
+    if token:
+        req.add_header("Authorization", f"Bearer {token}")
+    try:
+        with _NO_PROXY.open(req, timeout=timeout) as resp:
+            status, raw = resp.status, resp.read()
+    except urllib.error.HTTPError as exc:
+        status, raw = exc.code, exc.read()
+    try:
+        return status, json.loads(raw.decode("utf-8") or "null")
+    except ValueError:
+        return status, raw.decode("utf-8", "replace")
+
+
+def as_of_preflight(upstream: str, proxy: str | None, stage_file: Path | None) -> tuple[list[str], list[str], list[dict]]:
+    """(failures, report lines, stages). Mints one throwaway session on the
+    CANDIDATE (never production), then asks it about every stage."""
+    fails: list[str] = []
+    lines: list[str] = []
+    status, minted = http_json("POST", f"{upstream}/api/chat/sessions",
+                               body={"device_id": str(uuid.uuid4())})
+    token = minted.get("token") if isinstance(minted, dict) else None
+    if status != 201 or not token:
+        return [f"session mint answered {status}"], lines, []
+    status, today = http_json("GET", f"{upstream}/api/programs?tz_offset_minutes=0", token)
+    season = ((today or {}).get("ramadan") or {}).get("season") if isinstance(today, dict) else None
+    if status != 200 or not season:
+        return [f"GET /api/programs answered {status} with no Ramadan season: {str(today)[:160]}"], lines, []
+    lines.append(f"- season {season.get('hijri_year')}: starts {season.get('starts_on')} "
+                 f"({season.get('start_source')}), {season.get('days')} days, Eid {season.get('eid_on')}; "
+                 f"server date today {today.get('date')} → {today['ramadan'].get('state')}")
+    stages = rehearsal_stages(season)
+    for stage in stages:
+        url = f"{upstream}/api/programs?tz_offset_minutes=0&as_of={stage['date'].isoformat()}"
+        status, body = http_json("GET", url, token)
+        if status == 403:
+            fails.append(f"{stage['label']}: as_of refused (403 {body}) — PROGRAMS_AS_OF_ENABLED is off on the candidate")
+            continue
+        problem = f"answered {status}" if status != 200 else check_stage_answer(stage, body)
+        if problem:
+            fails.append(f"{stage['label']} ({stage['date']}): {problem}")
+        else:
+            r = body["ramadan"]
+            lines.append(f"- {stage['label']:<6} as_of={stage['date']} → {r.get('state')}"
+                         + (f" day {r.get('day')}" if r.get("day") else "")
+                         + (f", {r.get('days_until_start')} days to go" if r.get("days_until_start") else ""))
+    if proxy and stage_file is not None and stages:
+        probe = stages[2]  # day15
+        previous = stage_file.read_text(encoding="utf-8") if stage_file.exists() else None
+        stage_file.write_text(f"{probe['date'].isoformat()} preflight\n", encoding="utf-8")
+        try:
+            status, body = http_json("GET", f"{proxy}/api/programs?tz_offset_minutes=0", token)
+        finally:
+            if previous is None:
+                stage_file.unlink(missing_ok=True)
+            else:
+                stage_file.write_text(previous, encoding="utf-8")
+        problem = f"answered {status}" if status != 200 else check_stage_answer(probe, body)
+        if problem:
+            fails.append(f"through the proxy, no as_of in the URL: {problem}")
+        else:
+            lines.append(f"- through the proxy, no as_of in the URL → day {body['ramadan'].get('day')} "
+                         "(the proxy adds it)")
+    return fails, lines, stages
+
+
+def cmd_as_of_preflight(args: argparse.Namespace) -> int:
+    fails, lines, stages = as_of_preflight(
+        args.upstream.rstrip("/"), args.proxy.rstrip("/") if args.proxy else None,
+        Path(args.as_of_file) if args.as_of_file else None)
+    if stages and args.stages_out:
+        Path(args.stages_out).write_text(
+            "".join(f"{s['label']}\t{s['date'].isoformat()}\t{s['day']}\n" for s in stages),
+            encoding="utf-8")
+    verdict = "FAIL" if fails else "PASS"
+    report = [f"### as_of preflight on the candidate: {verdict}", ""] + lines
+    report += [f"- FAIL {f}" for f in fails]
+    text = "\n".join(report) + "\n"
+    if args.out:
+        Path(args.out).write_text(text, encoding="utf-8")
+    sys.stdout.write(text)
+    for f in fails:
+        print(f"::error title=Ramadan rehearsal preflight::{f}")
+    return 1 if fails else 0
+
+
+def as_of_report(rows: list[str], expected: list[str]) -> tuple[list[str], list[str]]:
+    """(failures, Markdown table) from the proxy's TSV log. Each expected
+    stage label needs at least one programs call that carried its date and
+    was answered 2xx; no call may have been refused or crashed."""
+    per: dict[str, Counter] = {}
+    fails: list[str] = []
+    for row in rows:
+        parts = row.split("\t")
+        if len(parts) < 6 or parts[4] == "-":
+            continue
+        _, label, method, path, as_of, status = parts[:6]
+        code = int(status) if status.isdigit() else 0
+        per.setdefault(label, Counter())["2xx" if 200 <= code < 300 else str(code)] += 1
+        if code == 403:
+            fails.append(f"{label}: {method} {path} as_of={as_of} refused (403)")
+        elif code >= 500 or code == 0:
+            fails.append(f"{label}: {method} {path} as_of={as_of} answered {status}")
+    table = ["| stage | programs calls with as_of | answers |", "|---|---|---|"]
+    for label in expected + sorted(set(per) - set(expected)):
+        counts = per.get(label, Counter())
+        table.append(f"| {label} | {sum(counts.values())} | "
+                     + (", ".join(f"{k}×{v}" for k, v in sorted(counts.items())) or "—") + " |")
+        if label in expected and counts["2xx"] == 0:
+            fails.append(f"{label}: no programs call carried the stage's as_of — the stage proved nothing")
+    return fails, table
+
+
+def cmd_as_of_report(args: argparse.Namespace) -> int:
+    log = Path(args.log)
+    rows = log.read_text(encoding="utf-8").splitlines() if log.exists() else []
+    expected = [l.strip() for l in Path(args.expect).read_text(encoding="utf-8").splitlines()
+                if l.strip()] if args.expect and Path(args.expect).exists() else []
+    fails, table = as_of_report(rows, expected)
+    text = "\n".join([f"### as_of per stage: {'FAIL' if fails else 'PASS'}", ""] + table
+                     + [f"- FAIL {f}" for f in fails]) + "\n"
+    if args.out:
+        Path(args.out).write_text(text, encoding="utf-8")
+    sys.stdout.write(text)
+    for f in fails:
+        print(f"::error title=Ramadan rehearsal as_of::{f}")
+    return 1 if fails else 0
+
+
+# ── sound × recitation: `dumpsys audio`, before and after the ticks ───────
+#
+# Plan phase 2 gate: the interface sounds (audioplayers, low-latency, focus
+# NONE, UI sonification) must never stop a recitation (just_audio). The
+# runner starts a recitation in the Quran reader, takes a dump, sounds three
+# ticks, takes more dumps. The audio service is the witness — not the app:
+#   players   «AudioPlaybackConfiguration piid:N … type:T u/pid:U/P state:S
+#             attr:AudioAttributes: usage=X …»  (one line per player)
+#   focus     the stack («-- pack: … -- loss: L -- uid: U -- attr: … usage=X»)
+#             and its log («requestAudioFocus() from uid/pid U/P AA=X/…»)
+#   events    «<time> player piid:N event:started» per start (SoundPool
+#             reports one per play), in a ring buffer: judged by time
+
+_AUDIO_PLAYER = re.compile(
+    r"AudioPlaybackConfiguration\s+piid:(?P<piid>\d+)\b.*?\btype:(?P<type>\S+).*?"
+    r"\bu/pid:(?P<uid>\d+)/(?P<pid>\d+).*?\bstate:(?P<state>\w+).*?\busage=(?P<usage>\w+)"
+)
+_AUDIO_NEW_PLAYER = re.compile(
+    r"new player piid:(?P<piid>\d+)\b.*?\buid/pid:(?P<uid>\d+)/\d+.*?\busage=(?P<usage>\w+)"
+)
+# Event-log lines carry their time; the logs are ring buffers, so «new since
+# the dump before the ticks» is decided by time, never by counting lines — in
+# run 38722537691 older processes' starts fell out of the buffer between the
+# two dumps (39 → 37) while two new ticks went in.
+_AUDIO_TS = r"(?P<ts>\d\d-\d\d \d\d:\d\d:\d\d:\d{3})"
+_AUDIO_ANY_TS = re.compile(r"^\s*" + _AUDIO_TS + r"\s", re.M)
+_AUDIO_STARTED = re.compile(_AUDIO_TS + r"\s+player piid:(?P<piid>\d+)\s+event:started\b")
+_AUDIO_FOCUS_REQUEST = re.compile(
+    _AUDIO_TS + r"\s+requestAudioFocus\(\)\s+from uid/pid (?P<uid>\d+)/\d+\s+AA=(?P<usage>\w+)"
+)
+_AUDIO_FOCUS_ENTRY = re.compile(
+    r"--\s*loss:\s*(?P<loss>\w+).*?--\s*uid:\s*(?P<uid>\d+).*?\busage=(?P<usage>\w+)"
+)
+SONIFICATION = {"USAGE_ASSISTANCE_SONIFICATION"}
+MEDIA = {"USAGE_MEDIA"}
+
+
+def parse_audio_dump(text: str) -> dict:
+    players = [m.groupdict() for m in _AUDIO_PLAYER.finditer(text)]
+    usage_of = {p["piid"]: (p["uid"], p["usage"]) for p in players}
+    for m in _AUDIO_NEW_PLAYER.finditer(text):
+        usage_of.setdefault(m["piid"], (m["uid"], m["usage"]))
+    return {
+        "players": players,
+        "usage_of": usage_of,
+        "started": [m.groupdict() for m in _AUDIO_STARTED.finditer(text)],
+        "focus_requests": [m.groupdict() for m in _AUDIO_FOCUS_REQUEST.finditer(text)],
+        "last_ts": max((m["ts"] for m in _AUDIO_ANY_TS.finditer(text)), default=""),
+        "focus_stack": [m.groupdict() for m in _AUDIO_FOCUS_ENTRY.finditer(text)],
+    }
+
+
+def _playing(dump: dict, uid: str, usages: set[str]) -> list[dict]:
+    return [p for p in dump["players"]
+            if p["uid"] == uid and p["usage"] in usages and p["state"] == "started"]
+
+
+def _tick_starts(dump: dict, uid: str, since: str) -> int:
+    """Interface-sound starts of the app logged after `since`."""
+    return sum(1 for e in dump["started"]
+               if e["ts"] > since and dump["usage_of"].get(e["piid"], ("", ""))[0] == uid
+               and dump["usage_of"][e["piid"]][1] in SONIFICATION)
+
+
+def audio_verdict(before: str, afters: list[str], uid: int | str) -> tuple[str, list[str]]:
+    """PASS · FAIL · INCONCLUSIVE, with the evidence. A check that cannot
+    show the recitation playing, or cannot show a tick sounding, proves
+    nothing — that is INCONCLUSIVE, never PASS."""
+    uid = str(uid)
+    b = parse_audio_dump(before)
+    a = [parse_audio_dump(t) for t in afters]
+    notes: list[str] = []
+    reciting = _playing(b, uid, MEDIA)
+    if not reciting:
+        return "INCONCLUSIVE", ["no media player of the app was playing before the ticks — "
+                                "the recitation never started, so there was nothing to protect"]
+    notes.append("before: recitation playing — " + ", ".join(
+        f"piid {p['piid']} ({p['type']})" for p in reciting))
+    fails: list[str] = []
+    since = b["last_ts"]
+    focus_before = [r for r in b["focus_requests"] if r["uid"] == uid and r["usage"] in SONIFICATION]
+    for i, d in enumerate(a, 1):
+        now = _playing(d, uid, MEDIA)
+        notes.append(f"after #{i}: " + ("recitation playing — " + ", ".join(
+            f"piid {p['piid']}" for p in now) if now else "no media player of the app playing"))
+        asked = [r for r in d["focus_requests"]
+                 if r["uid"] == uid and r["usage"] in SONIFICATION and r["ts"] > since]
+        if asked:
+            fails.append(f"after #{i}: a tick asked for audio focus "
+                         f"({len(asked)} new request(s), usage {asked[-1]['usage']})")
+        lost = [e for e in d["focus_stack"] if e["uid"] == uid and e["usage"] in MEDIA
+                and e["loss"].lower() not in ("none", "null")]
+        if lost:
+            fails.append(f"after #{i}: the recitation's focus was taken ({lost[0]['loss']})")
+    if focus_before:
+        fails.append(f"an interface sound asked for audio focus earlier in this run "
+                     f"({len(focus_before)} request(s))")
+    if not any(_playing(d, uid, MEDIA) for d in a):
+        fails.append("the recitation stopped: no media player of the app was playing in any dump after the ticks")
+    starts = max((_tick_starts(d, uid, since) for d in a), default=0)
+    heard = starts > 0 or any(
+        _playing(d, uid, SONIFICATION) and not _playing(b, uid, SONIFICATION) for d in a)
+    notes.append(f"ticks seen by the audio service: {starts} new start(s)"
+                 if heard else "ticks seen by the audio service: none")
+    holds = [e for e in b["focus_stack"] if e["uid"] == uid]
+    notes.append("the recitation holds audio focus (usage " + holds[0]["usage"] + ")" if holds
+                 else "the app holds no audio focus at all (the recitation plays without requesting it)")
+    if fails:
+        return "FAIL", fails + notes
+    if not heard:
+        return "INCONCLUSIVE", ["no tick reached the audio service — the probe did not sound, "
+                                "so this run says nothing about a tick over a recitation"] + notes
+    return "PASS", notes
+
+
+def cmd_audio_focus(args: argparse.Namespace) -> int:
+    read = lambda p: Path(p).read_text(encoding="utf-8", errors="replace")
+    verdict, evidence = audio_verdict(read(args.before), [read(p) for p in args.after], args.uid)
+    line = f"SOUND×RECITATION CHECKPOINT: {verdict}"
+    text = "\n".join([f"### {line}", ""] + [f"- {e}" for e in evidence]) + "\n"
+    if args.out:
+        Path(args.out).write_text(text, encoding="utf-8")
+    sys.stdout.write(text)
+    if verdict == "FAIL":
+        print(f"::error title=Sound × recitation::{evidence[0]}")
+    elif verdict == "INCONCLUSIVE":
+        print(f"::error title=Sound × recitation (inconclusive)::{evidence[0]}")
+    else:
+        print("::notice title=Sound × recitation::PASS — " + "; ".join(evidence))
+    return {"PASS": 0, "FAIL": 1}.get(verdict, 2)
+
+
+# ── the rehearsal gallery: each stage, Play build vs PR head ──────────────
+#
+# e2e/flows/rehearsal/stage.yaml names every shot
+#   ${TAG}__${VARIANT}__<stage>_<screen>   tag before = the Play build,
+# after = the PR head; run_flow prefixes rehearsal__<flow>__. One table per
+# stage: the Play build in Arabic beside the head in Arabic, English and dark.
+
+REHEARSAL_COLUMNS = [
+    ("before", "ar", "Play v1.0.72 · عربي"),
+    ("after", "ar", "الـPR · عربي"),
+    ("after", "en", "الـPR · English"),
+    ("after", "ar_dark", "الـPR · عربي داكن"),
+]
+REHEARSAL_STAGES = [
+    ("before", "قبل رمضان (٣٠ يومًا)", [
+        ("before_today", "«اليوم»"),
+        ("before_today_noor", "نور يعدّ الأيام (أول مرة فقط)"),
+        ("before_programs", "برامج الأسرة"),
+        ("before_ramadan", "رمضان العائلة — العدّ التنازلي"),
+    ]),
+    ("day1", "اليوم ١", [
+        ("day1_programs", "برامج الأسرة"),
+        ("day1_marks", "علامات اليوم"),
+        ("day1_street", "شارع القناديل"),
+    ]),
+    ("day15", "اليوم ١٥", [
+        ("day15_programs", "برامج الأسرة"),
+        ("day15_marks", "علامات اليوم"),
+        ("day15_street", "شارع القناديل"),
+    ]),
+    ("day27", "اليوم ٢٧ (ليلة وترية)", [
+        ("day27_programs", "برامج الأسرة"),
+        ("day27_marks", "علامات اليوم — اكتمال اليوم «الحمد لله»"),
+        ("day27_street", "شارع القناديل"),
+    ]),
+    ("eid", "العيد", [
+        ("eid_programs", "برامج الأسرة"),
+        ("eid_ramadan", "بطاقة العيد"),
+        ("eid_street", "شارع القناديل"),
+        ("eid_recap", "الملخّص — «رمضان عائلتنا»"),
+    ]),
+    ("after", "بعد رمضان (الأسبوع ١)", [
+        ("after_programs", "برامج الأسرة"),
+        ("after_ramadan", "أسابيع الاستمرار"),
+        ("after_street", "شارع القناديل"),
+    ]),
+]
+# Noor's countdown line shows once per countdown day per install: only the
+# first pass to open Today on that date can photograph it.
+REHEARSAL_GUARDED = {"before_today_noor"}
+_REHEARSAL_FILE = re.compile(
+    r"^rehearsal__.*?__(?P<tag>before|after)__(?P<variant>ar_dark|ar|en)"
+    r"__(?P<screen>[a-z0-9_]+?)(?:_\d+)?\.png$"
+)
+
+
+def index_rehearsal(screens: Path) -> dict[tuple[str, str, str], str]:
+    known = {s for _, _, rows in REHEARSAL_STAGES for s, _ in rows}
+    index: dict[tuple[str, str, str], str] = {}
+    for png in sorted(screens.glob("rehearsal__*.png")):
+        m = _REHEARSAL_FILE.match(png.name)
+        if m and m["screen"] in known:
+            index.setdefault((m["tag"], m["variant"], m["screen"]), png.name)
+    return index
+
+
+def cmd_rehearsal_gallery(args: argparse.Namespace) -> int:
+    screens, out = Path(args.screens), Path(args.out)
+    images = out / "images"
+    images.mkdir(parents=True, exist_ok=True)
+    index = index_rehearsal(screens) if screens.exists() else {}
+
+    def cell(name: str | None, caption: str) -> str:
+        if name is None:
+            return "—"
+        shutil.copy(screens / name, images / name)
+        return f'<img src="images/{name}" width="200" alt="{caption}">'
+
+    md = ["## بروفة رمضان — معرض المراحل", "",
+          "الخادم مرشّح على الـrunner (صورة باكند الـPR، `PROGRAMS_AS_OF_ENABLED=1`)، "
+          "وكل مرحلة تاريخها من `as_of`. العمود الأول نسخة Play الحالية، والباقي رأس الـPR.", ""]
+    counts = Counter()
+    blind = []
+    head = "| الشاشة | " + " | ".join(c[2] for c in REHEARSAL_COLUMNS) + " |"
+    for _stage, title, rows in REHEARSAL_STAGES:
+        md += [f"### {title}", "", head, "|---" * (len(REHEARSAL_COLUMNS) + 1) + "|"]
+        for screen, caption in rows:
+            cells = []
+            for tag, variant, _ in REHEARSAL_COLUMNS:
+                name = index.get((tag, variant, screen))
+                counts["shot" if name else "missing"] += 1
+                if name is None and tag == "after" and screen not in REHEARSAL_GUARDED:
+                    blind.append(f"{variant}:{screen}")
+                cells.append(cell(name, caption))
+            md.append(f"| {caption} | " + " | ".join(cells) + " |")
+        md.append("")
+    stats = f"shots={counts['shot']} missing={counts['missing']} blind-after={len(blind)}"
+    md.append(f"<!-- gallery: {stats} -->")
+    out.mkdir(parents=True, exist_ok=True)
+    (out / "gallery-summary.md").write_text("\n".join(md) + "\n", encoding="utf-8")
+    print(f"rehearsal gallery: {stats} → {out / 'gallery-summary.md'}")
+    if args.require_after and blind:
+        print("::error title=Ramadan rehearsal gallery::خانة الـPR فاضية: " + ", ".join(blind))
+        return 1
     return 0
 
 
@@ -848,7 +1439,43 @@ def main(argv: list[str] | None = None) -> int:
 
     s = sub.add_parser("summary", help="render the Markdown summary")
     s.add_argument("out_dir")
+    s.add_argument("--title", help="heading (default: Mobile E2E (emulator))")
     s.set_defaults(func=cmd_summary)
+
+    s = sub.add_parser("as-of-proxy", help="forward to the candidate, adding the stage's as_of")
+    s.add_argument("--listen", default="127.0.0.1:8090", help="host:port")
+    s.add_argument("--upstream", required=True, help="the candidate backend, e.g. http://127.0.0.1:8091")
+    s.add_argument("--as-of-file", required=True, help="one line: <YYYY-MM-DD> <stage label>")
+    s.add_argument("--log", help="TSV: time, stage, method, path, as_of added (or -), status")
+    s.set_defaults(func=cmd_as_of_proxy)
+
+    s = sub.add_parser("as-of-preflight", help="prove the candidate honours as_of for every stage")
+    s.add_argument("--upstream", required=True)
+    s.add_argument("--proxy", help="the as-of proxy, checked to add as_of itself")
+    s.add_argument("--as-of-file", help="the proxy's stage file (restored afterwards)")
+    s.add_argument("--stages-out", help="TSV: label, date, day — what the runner walks")
+    s.add_argument("--out", help="Markdown report")
+    s.set_defaults(func=cmd_as_of_preflight)
+
+    s = sub.add_parser("as-of-report", help="every stage's programs calls carried as_of")
+    s.add_argument("--log", required=True, help="the proxy's TSV log")
+    s.add_argument("--expect", help="file with the stage labels that must appear, one per line")
+    s.add_argument("--out", help="Markdown report")
+    s.set_defaults(func=cmd_as_of_report)
+
+    s = sub.add_parser("audio-focus", help="judge dumpsys audio before/after the ticks")
+    s.add_argument("--before", required=True)
+    s.add_argument("--after", required=True, action="append", help="one or more dumps after the ticks")
+    s.add_argument("--uid", required=True, help="the app's uid")
+    s.add_argument("--out", help="Markdown verdict")
+    s.set_defaults(func=cmd_audio_focus)
+
+    s = sub.add_parser("rehearsal-gallery", help="the Ramadan rehearsal's stage gallery")
+    s.add_argument("screens")
+    s.add_argument("--out", required=True)
+    s.add_argument("--require-after", action="store_true",
+                   help="fail if any non-guarded stage screen lacks a PR-head shot")
+    s.set_defaults(func=cmd_rehearsal_gallery)
 
     s = sub.add_parser("verify-hierarchy", help="check view hierarchy text matches expected screen")
     s.add_argument("screen", nargs="?", help="screen id")
