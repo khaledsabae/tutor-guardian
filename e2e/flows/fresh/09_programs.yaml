@@ -35,6 +35,19 @@ name: fresh/09 Family programs
     direction: DOWN
     timeout: 20000
 - tapOn: '${output.lead.programsPrayerTitle}'
+# Either outcome ends the wait: the journey, or its error page (every
+# ErrorRetryView here offers Retry).
+- extendedWaitUntil:
+    visible: '(?:${output.c.prayerStagesTitle}|${output.t.retry})'
+    timeout: 30000
+    optional: true
+# A 5xx is the server's moment, not this build's (2026-10-14: a 502 on this
+# screen failed the run) — see common/server_retry.yaml.
+- runFlow:
+    file: ../common/server_retry.yaml
+    env:
+      READY: '${output.c.prayerStagesTitle}'
+      SHOT: programs_prayer_server_error_retry
 - extendedWaitUntil:
     visible: '${output.c.prayerStagesTitle}'
     timeout: 30000
