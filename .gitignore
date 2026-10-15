@@ -89,6 +89,9 @@ ops/data/*checkpoint.json
 docs/*.mp3
 docs/*.mp4
 docs/lesson_videos/
+# Story narration (mobile/tool/gen_story_narration.py): m4a + manifests, rsynced
+# with the rest of the media — the app reads them from the server.
+docs/stories/narration/
 docs/podcast_artifacts/
 docs/screenshots/
 docs/lesson_assets/infographics/
