@@ -105,7 +105,7 @@ class EmptyState extends StatelessWidget {
       alignment: Alignment.center,
       decoration: const BoxDecoration(
         shape: BoxShape.circle,
-        color: Color(0xE6FBF1DE),
+        color: Color(0xE6FBF1DE), // audit-ok: a cream paper moon behind dark-cut art on a dark page — deliberate, dark mode only
       ),
       child: SizedBox(width: 150, child: art),
     );
