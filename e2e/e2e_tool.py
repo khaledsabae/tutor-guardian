@@ -795,8 +795,15 @@ def cmd_verify_hierarchy(args: argparse.Namespace) -> int:
                 else:
                     verified_screens.add(matched_screen)
         if total_errors:
+            # Without --require this is the informational «before» pass: the
+            # baseline build, which may predate the screen being checked (the
+            # 4-6 praise card's «أهلك يقولون لك» is not in 1.0.71 at all). A
+            # mismatch there is worth a look, not a red ##[error] that reads
+            # like the reason a job failed (PR #121, 2026-10-15). The rc stays
+            # 1 either way; run.sh decides what it means.
+            level = "error" if require else "warning"
             for err in total_errors:
-                print(f"::error title=Hierarchy check::{err}", file=sys.stderr)
+                print(f"::{level} title=Hierarchy check::{err}", file=sys.stderr)
             return 1
         return 0
 
