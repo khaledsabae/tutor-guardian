@@ -56,6 +56,9 @@ import '../features/program/data/badges.dart';
 import '../features/program/providers/program_providers.dart';
 import '../features/program/data/progress_models.dart';
 import '../features/program/providers/progress_providers.dart';
+import '../features/programs/data/programs_models.dart';
+import '../features/programs/providers/programs_providers.dart';
+import '../features/programs/widgets/eid_moment.dart';
 import '../features/programs/widgets/programs_home_card.dart';
 import '../features/referral/pride_invite_card.dart';
 import '../features/journey/widgets/child_journey_card.dart';
@@ -135,6 +138,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
     final l10n = AppLocalizations.of(context);
     final noorOn = ref.watch(noorHeaderEnabledProvider);
+    final inRamadan =
+        ref.watch(programsOverviewProvider).valueOrNull?.ramadan.state ==
+        RamadanState.ramadan;
     final stops = ref.watch(todayStopsProvider);
     // Time-aware, and honest on day one («النصوص»): the hour picks صباح/مساء,
     // and a first-day streak (≤1) drops the «مستمرة» — nothing has continued
@@ -221,7 +227,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         ? BrandIcon.sprig
         : BrandIcon.path;
 
-    return Scaffold(
+    final today = Scaffold(
       appBar: const HomeAppBar(),
       body: ListView(
         padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
@@ -233,6 +239,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           // kill switch off there is no sky and no road either.
           if (noorOn)
             SkyBand(
+              // In the month itself (plan phase 5) the maghrib and night
+              // skies hang a quiet lantern string — the server's state, so
+              // the family's own sighting decides the first night too.
+              ramadan: inRamadan,
               child: NoorTodayHeader(fallback: _SkyGreeting(text: greeting)),
             )
           else
@@ -312,6 +322,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         ],
       ),
     );
+    // «عيدكم مبارك» (plan phase 5): on the first open of Eid, once a year, a
+    // quiet moment over Today. The gate draws nothing itself.
+    return EidMomentGate(child: today);
   }
 }
 
