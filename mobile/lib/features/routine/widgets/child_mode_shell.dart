@@ -39,8 +39,11 @@ class ChildModeShell extends ConsumerStatefulWidget {
 
 class _ChildModeShellState extends ConsumerState<ChildModeShell> {
   Future<void> _askExit() async {
-    final childId = ref.read(childModeProvider).childId;
-    if (childId == null) return;
+    // The exit checks the PIN and nothing else, so it must not wait on the
+    // child id: a restart can bring child mode back without one (the flag and
+    // the id live in different stores), and an Exit that did nothing would
+    // leave the device on the hand-back screen for good.
+    final childId = ref.read(childModeProvider).childId ?? 0;
     final l10n = AppLocalizations.of(context);
     final ok = await showDialog<bool>(
       context: context,
