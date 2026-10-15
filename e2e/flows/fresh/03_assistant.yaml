@@ -20,6 +20,19 @@ name: fresh/03 assistant answers
 - extendedWaitUntil:
     notVisible: '${output.t.chatStop}'
     timeout: 180000
+# A 5xx ends the turn with errorServerBody under the question and a Retry
+# beside it — the server's moment, not this build's (2026-10-15: one failed
+# the run). Retry as a parent would; see common/server_retry.yaml. A retried
+# question streams again, so wait it out once more (instant when nothing was
+# retried).
+- runFlow:
+    file: ../common/server_retry.yaml
+    env:
+      READY: '${output.t.feedbackHelpful}'
+      SHOT: assistant_server_error_retry
+- extendedWaitUntil:
+    notVisible: '${output.t.chatStop}'
+    timeout: 180000
 # The feedback buttons render only under a completed reply (message_bubble.dart).
 - scrollUntilVisible:
     element:
