@@ -77,6 +77,10 @@ def api_key() -> str:
     sys.exit("GEMINI_API_KEY not found")
 
 
+class QuotaHit(Exception):
+    """TTS answered 429: the day's quota is spent. Retrying only burns time, so the run stops."""
+
+
 def tts(text: str, model: str, voice: str, out: Path) -> None:
     body = {
         "contents": [{"parts": [{"text": STYLE + text}]}],
@@ -98,6 +102,8 @@ def tts(text: str, model: str, voice: str, out: Path) -> None:
             return
         except (urllib.error.URLError, KeyError, IndexError, ConnectionError) as e:
             code = getattr(e, "code", "")
+            if code == 429:
+                raise QuotaHit(model) from None
             print(f"  retry {attempt + 1}: {type(e).__name__} {code}", file=sys.stderr)
             time.sleep(4 * (attempt + 1))
     sys.exit(f"TTS failed for: {text}")
@@ -161,6 +167,7 @@ def main() -> int:
     table: dict[str, dict] = {}
     manifest_path = OUT / "takes.json"
     manifest = json.loads(manifest_path.read_text()) if manifest_path.exists() else {}
+    recorded: set[str] = set()
     for reel, lines in spec["reels"].items():
         table[reel] = {"stretch": [], "lines": []}
         stretch: list[tuple[int, int, int]] = []
@@ -180,9 +187,24 @@ def main() -> int:
                 if f"{reel}:{i}" in retake and raw.exists():
                     raw.rename(raw.with_suffix(f".old{int(time.time())}.wav"))
                 if not raw.exists():
-                    tts(line["text"], model, voice, raw)
+                    try:
+                        tts(line["text"], model, voice, raw)
+                    except QuotaHit:
+                        manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=1, sort_keys=True) + "\n",
+                                                 encoding="utf-8")
+                        left = [f"{r}:{n}" for r, ls in spec["reels"].items() if not only or r in only
+                                for n, ln in enumerate(ls, 1)
+                                if manifest.get(f"{r}_{n}") != {"text": ln["text"], "voice": voice,
+                                                                "model": spec.get("model_by_reel", {}).get(r, spec["voice"]["model"])}
+                                or (f"{r}:{n}" in retake and f"{r}:{n}" not in recorded)]
+                        print(f"\nTTS quota hit (429) on {model} at {reel}:{i} — stopping, no retry.", file=sys.stderr)
+                        print(f"Lines still to record: {', '.join(left)}", file=sys.stderr)
+                        print("Finish later with: python3 scripts/gen_vo.py" + (f" --only {args.only}" if args.only else "")
+                              + (f" --retake {args.retake}" if args.retake else ""), file=sys.stderr)
+                        return 2
                 process(raw, mp3)
                 manifest[f"{reel}_{i}"] = take
+                recorded.add(f"{reel}:{i}")
             dur = float(subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", str(mp3)],
                                        capture_output=True, text=True).stdout)
             frames = math.ceil(dur * FPS)

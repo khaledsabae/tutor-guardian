@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Render the voice-over cuts (`_vo`): the Arabic teaser and the five campaign
+# Render the voice-over cuts (`_vo`): the Arabic teaser and the six campaign
 # reels, with the narrator on top of the soft generated sounds (no music).
 # scripts/gen_vo.py only calls TTS for a line whose text/voice changed (the
 # checked takes are committed under public/noor/vo/); it also re-plans the
@@ -10,11 +10,12 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
-python3 scripts/gen_vo.py
+scripts/sync_app_art.sh
+python3 scripts/gen_vo.py  # stops (exit 2) on a 429 and lists the lines still to record
 OUT=out/vo
 mkdir -p "$OUT"
 for spec in NoorTeaserArVo:noor_teaser_ar_vo CampaignV1RememberVo:v1_remember_vo CampaignV2RoadVo:v2_road_vo \
-	CampaignV3AskVo:v3_ask_vo CampaignV4HandoverVo:v4_handover_vo CampaignV5RamadanVo:v5_ramadan_vo; do
+	CampaignV3AskVo:v3_ask_vo CampaignV4HandoverVo:v4_handover_vo CampaignV5RamadanVo:v5_ramadan_vo CampaignV6StoriesVo:v6_stories_vo; do
 	npx remotion render src/Root.tsx "${spec%%:*}" "$OUT/${spec##*:}.mp4" --codec=h264 --crf=18 --concurrency=8 --log=error
 done
 for f in "$OUT"/*.mp4; do
