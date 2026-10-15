@@ -95,9 +95,9 @@ class _ChildLicenseScreenState extends ConsumerState<ChildLicenseScreen> {
   /// nothing — a child surface is the root widget, there is nothing under it
   /// — and `exitWithoutPin` flipped that root to the parent's app. So a child
   /// who finished the licence was handed the parent's whole app — the
-  /// assistant, settings, every child's profile — with no PIN in the way. The
-  /// mission card can afford a PIN-less exit because it closes the app; this
-  /// screen did not, and landed somewhere the child should never be.
+  /// assistant, settings, every child's profile — with no PIN in the way.
+  /// (The mission card's PIN-less exit, which closed the app, did the same one
+  /// launch later; it hands back too now.)
   ///
   /// Now the session ends (nothing is billed while the device waits), child
   /// mode stays on, and the screen asks for the device back. The only way out

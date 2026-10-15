@@ -10,6 +10,7 @@ import 'dart:ui' show Tristate;
 import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -621,6 +622,10 @@ void main() {
       };
 
       SharedPreferences.setMockInitialValues({});
+      // The boot reads the child-mode flag before it builds the parent's app
+      // (ChildModeGate). An unmocked plugin call never answers inside a
+      // widget test, so without this the app would wait on its splash.
+      FlutterSecureStorage.setMockInitialValues({});
       final prefs = await SharedPreferences.getInstance();
       final storage = OnboardingStorage(prefs);
       await storage.setActiveChild(id: 1, name: 'سارة', ageGroup: '4-6');
