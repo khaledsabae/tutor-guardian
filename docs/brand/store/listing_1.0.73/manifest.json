@@ -5,11 +5,11 @@
     "38783241487": {
       "what": "main proxy — PR #126 noor/stories @ b540986b, the head merged as origin/main 575c7141 (mobile-e2e runs on PRs only)"
     },
-    "38777734035": {
-      "what": "PR #129 noor/child-corner @ 39b6bfa2 (latest run with a gallery; head 543517fc still in CI)"
-    },
     "38798911874": {
       "what": "PR #130 noor/family-road @ 4852a2b0 (head, green)"
+    },
+    "38799420141": {
+      "what": "PR #129 noor/child-corner @ 543517fc (head, green)"
     }
   },
   "slots": [
@@ -74,16 +74,16 @@
       "frame": "frame_3_bubble",
       "source": {
         "ar": {
-          "run": 38777734035,
+          "run": 38799420141,
           "artifact": "e2e-gallery",
           "file": "images/gallery__04_after_ar__after__ar__child_corner.png",
-          "sha256": "cacc6caff222d2154da995a6dec2f85ff8c4c11808ad69aac18704f8dcf660f0"
+          "sha256": "5091beb3912e2145647ca017625e09e11b7d39df18ad0a6a47f90b9a56243f7a"
         },
         "en": {
-          "run": 38777734035,
+          "run": 38799420141,
           "artifact": "e2e-gallery",
           "file": "images/gallery__05_after_en__after__en__child_corner.png",
-          "sha256": "adf70a68a5b58bc78fe0168886ecca23c53ba304ebb24f9b2fe72c98c75afef7"
+          "sha256": "3bb57417f4e632beddd42acc45ed6291a666f6aac05daa48d7281a80ee65c57d"
         }
       },
       "text": {
