@@ -560,7 +560,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get bedtimeStoriesDesc =>
-      'Short, calm stories with natural sleep sounds 🐦';
+      'Short, calm stories to share before sleep 🌙';
 
   @override
   String get consecutiveDays => 'Consecutive Days';
@@ -6331,4 +6331,81 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get eidMomentBody => 'Wishing you and your family a joyful Eid.';
+
+  @override
+  String get storyNoorIntro => 'I\'m Noor, and here is our story tonight.';
+
+  @override
+  String get storyListenWithNoor => 'Listen with Noor';
+
+  @override
+  String get storyReadTogether => 'Read it together';
+
+  @override
+  String storyPageOf(int n, int total) {
+    return 'Page $n of $total';
+  }
+
+  @override
+  String get storyNextPage => 'Next page';
+
+  @override
+  String get storyPrevPage => 'Previous page';
+
+  @override
+  String get storyTextSize => 'Text size';
+
+  @override
+  String get storyListen => 'Listen';
+
+  @override
+  String get storyPauseListening => 'Pause';
+
+  @override
+  String get storyPauseTitle => 'A pause with Noor';
+
+  @override
+  String get storyPauseThanks =>
+      'That\'s worth thinking about! Let\'s see what happened next.';
+
+  @override
+  String get storyContinue => 'Continue the story';
+
+  @override
+  String get storyTheEnd => 'The end';
+
+  @override
+  String get storyValueTitle => 'From our faith';
+
+  @override
+  String get storyTalkTitle => 'Read it together: questions to talk about';
+
+  @override
+  String get storyMoreQuestion => 'Another question';
+
+  @override
+  String get storyChallengeTitle => 'Tomorrow\'s challenge';
+
+  @override
+  String get storyBedtimeAdhkar => 'Bedtime adhkar';
+
+  @override
+  String storyFilterAll(int count) {
+    return 'All ($count)';
+  }
+
+  @override
+  String get storyFilterYoung => 'Little ones';
+
+  @override
+  String get storyFilterOlder => 'Older children';
+
+  @override
+  String get storyGoodNight => 'Good night';
+
+  @override
+  String get bedtimeOnce => 'Once';
+
+  @override
+  String get bedtimeThreeTimes => '3 times';
 }

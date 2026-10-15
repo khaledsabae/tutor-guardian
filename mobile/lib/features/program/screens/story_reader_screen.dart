@@ -1,861 +1,1364 @@
+/// The story reader — «ورق مقصوص» (2026-10, docs/STORIES_AUDIT.md).
+///
+/// A story is a short stack of paper leaves:
+///
+///   1. Noor's opening leaf — the cover scene, the title, and two ways in:
+///      «اسمعها من نور» (only when a recording exists) or «نقرؤها معًا»;
+///   2. the story's pages — a drawn scene of layered paper above large text;
+///      while a recording plays, the sentence being heard is lit;
+///   3. «وقفة مع نور» after the page the story names — the child picks what
+///      they would do, and nothing is graded;
+///   4. the end leaf — the story's anchor text, questions to talk about, and
+///      its challenge, kept as a promise through «سأجرّبها» like a lesson's.
+///
+/// What it deliberately is not: no music and no ambient soundtrack (a soft
+/// paper sound on a turn is the only sound effect — Khaled's standing rule),
+/// no gate in front of the story (the bedtime adhkar are offered at the end,
+/// not demanded at the start), and no network video.
+library;
+
 import 'dart:async';
-import 'dart:math';
+import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
-import 'package:page_flip/page_flip.dart';
-import 'package:video_player/video_player.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../config/app_config.dart';
 import '../../../core/analytics.dart';
 import '../../../core/app_routes.dart';
-import '../data/story_models.dart';
-import '../services/bedtime_audio_service.dart';
+import '../../../core/haptics.dart';
+import '../../../core/motion.dart';
+import '../../../core/sound_fx.dart';
 import '../../../l10n/app_localizations.dart';
-import '../../../theme/app_colors.dart';
 import '../../../l10n/content_direction.dart';
-import '../../../widgets/ui/night_sky.dart';
-import '../../../theme/design_tokens.dart';
-import 'package:almorabbi/core/motion.dart';
-import 'package:almorabbi/core/haptics.dart';
+import '../../../theme/app_colors.dart';
+import '../../child_memory/data/placeholder_names.dart';
+import '../../companion/providers/companion_providers.dart';
+import '../../companion/widgets/noor_face.dart';
+import '../../companion/widgets/noor_presence.dart';
+import '../../onboarding/providers/onboarding_providers.dart';
+import '../../screen_off/narration_store.dart';
+import '../../stories/narration/story_narration.dart';
+import '../../stories/scene/story_scene.dart';
+import '../../stories/scene/story_scene_catalog.dart';
+import '../data/story_models.dart';
+import '../providers/progress_providers.dart';
+import '../services/bedtime_audio_service.dart';
+import '../widgets/next_step_sheet.dart';
 
-/// Immersive bedtime story reader: looping ambient video background,
-/// smooth 3D page-flip navigation, parallax illustration, soft text, and a
-/// gentle sleep-mode dimmer. No TTS — the parent reads to the child.
-class StoryReaderScreen extends StatefulWidget {
-  final Story story;
+/// Text sizes the reader cycles through, on top of the system's own scale.
+const kStoryTextSizes = [1.0, 1.18, 1.36];
 
-  const StoryReaderScreen({super.key, required this.story});
-
-  @override
-  State<StoryReaderScreen> createState() => _StoryReaderScreenState();
+/// One leaf of the reader.
+sealed class StoryLeaf {
+  const StoryLeaf();
 }
 
-class _StoryReaderScreenState extends State<StoryReaderScreen> {
-  late final PageFlipController _pageFlipController;
-  VideoPlayerController? _bgVideoController;
+class IntroLeaf extends StoryLeaf {
+  const IntroLeaf();
+}
 
-  int _currentPage = 0;
-  bool _audioMuted = false;
-  bool _sleepMode = false;
-  bool _audioReady = false;
-  double _fontSizeMultiplier = 1.0;
-  bool _challengeAccepted = false;
+class PageLeaf extends StoryLeaf {
+  const PageLeaf(this.index);
+
+  /// 0-based index into `story.pages`.
+  final int index;
+}
+
+class PauseLeaf extends StoryLeaf {
+  const PauseLeaf(this.pause);
+  final StoryPause pause;
+}
+
+class EndLeaf extends StoryLeaf {
+  const EndLeaf();
+}
+
+/// The leaves of [story], in reading order. Pure, so the order is testable.
+List<StoryLeaf> storyLeaves(Story story) {
+  final pause = story.pause;
+  final pauseAfter = pause == null
+      ? -1
+      : story.pages.indexWhere((p) => p.pageNumber == pause.afterPage);
+  return [
+    const IntroLeaf(),
+    for (var i = 0; i < story.pages.length; i++) ...[
+      PageLeaf(i),
+      if (i == pauseAfter && i < story.pages.length - 1) PauseLeaf(pause!),
+    ],
+    const EndLeaf(),
+  ];
+}
+
+class StoryReaderScreen extends ConsumerStatefulWidget {
+  const StoryReaderScreen({
+    super.key,
+    required this.story,
+    this.narrationLoader = loadNarration,
+    this.playerFactory,
+  });
+
+  final Story story;
+  final NarrationLoader narrationLoader;
+
+  /// Null → just_audio. Tests hand in a fake.
+  final NarrationPlayerFactory? playerFactory;
+
+  @override
+  ConsumerState<StoryReaderScreen> createState() => StoryReaderScreenState();
+}
+
+class StoryReaderScreenState extends ConsumerState<StoryReaderScreen> {
+  late final List<StoryLeaf> _leaves = storyLeaves(widget.story);
+  final PageController _pager = PageController();
+
+  int _leaf = 0;
+  int _textSize = 0;
+
+  StoryNarration? _narration;
+  NarrationPlayer? _player;
+  StreamSubscription<Duration>? _positionSub;
+  StreamSubscription<void>? _completedSub;
+
+  /// The reader is in «اسمعها من نور»: pages play, and turn when they end.
+  bool _listening = false;
+  bool _playing = false;
+  int? _sentence;
+
+  int? _pauseChoice;
+  int _questionsShown = 2;
+  bool _tried = false;
+  String? _parentRecording;
+
+  @visibleForTesting
+  int get leaf => _leaf;
+  @visibleForTesting
+  bool get listening => _listening;
+  @visibleForTesting
+  int? get litSentence => _sentence;
+  @visibleForTesting
+  List<StoryLeaf> get leaves => _leaves;
+
+  List<String> get _pageTexts => [for (final p in widget.story.pages) p.text];
+
+  bool get _canListen => _narration?.covers(_pageTexts) ?? false;
 
   @override
   void initState() {
     super.initState();
-    _pageFlipController = PageFlipController();
-    _initAudio();
-    _initBackgroundVideo();
     StoryWakeLock.keepAwake();
+    unawaited(_loadNarration());
+    unawaited(_findParentRecording());
   }
 
-  Future<void> _initAudio() async {
-    await BedtimeAudioService.instance.initialize(
-      assetPath: 'assets/audio/nature_ambient.mp3',
-      initialVolume: 0.45,
+  Future<void> _loadNarration() async {
+    final n = await widget.narrationLoader(
+      widget.story.id,
+      widget.story.language,
     );
-    await BedtimeAudioService.instance.play();
-    if (mounted) setState(() => _audioReady = true);
+    if (!mounted || n == null) return;
+    setState(() => _narration = n);
   }
 
-  Future<void> _initBackgroundVideo() async {
+  Future<void> _findParentRecording() async {
     try {
-      if (widget.story.hasVideo) {
-        _bgVideoController = VideoPlayerController.networkUrl(
-          Uri.parse('${AppConfig.apiBaseUrl}/docs/stories/night_loop.mp4'),
-        );
-        await _bgVideoController!.initialize();
-        await _bgVideoController!.setLooping(true);
-        await _bgVideoController!.setVolume(0);
-        await _bgVideoController!.play();
-        if (mounted) setState(() {});
+      final found = await NarrationStore.instance.find(
+        narrationKeyFor(widget.story.id),
+      );
+      if (mounted && found != null) {
+        setState(() => _parentRecording = found.path);
       }
-    } catch (e) {
-      debugPrint('Background video error: $e');
+    } catch (_) {
+      // No recordings store (tests, a first run): nothing to offer.
     }
   }
 
   @override
   void dispose() {
-    BedtimeAudioService.instance.dimForSleep();
-    _bgVideoController?.dispose();
+    _positionSub?.cancel();
+    _completedSub?.cancel();
+    unawaited(_player?.dispose());
+    _pager.dispose();
     StoryWakeLock.allowSleep();
     super.dispose();
   }
 
-  void _nextPage() {
-    _pageFlipController.nextPage();
-  }
-
-  void _prevPage() {
-    _pageFlipController.previousPage();
-  }
-
-  void _toggleAudio() {
-    setState(() {
-      _audioMuted = !_audioMuted;
-      _audioMuted
-          ? BedtimeAudioService.instance.pause()
-          : BedtimeAudioService.instance.play();
-    });
-  }
-
-  void _toggleSleepMode() {
-    setState(() => _sleepMode = !_sleepMode);
-    if (_sleepMode) {
-      BedtimeAudioService.instance.dimForSleep();
+  // ── turning ───────────────────────────────────────────────────────────
+  void goTo(int leaf) {
+    if (leaf < 0 || leaf >= _leaves.length) return;
+    if (!_pager.hasClients) return;
+    if (reduceMotion(context)) {
+      _pager.jumpToPage(leaf);
     } else {
-      BedtimeAudioService.instance.setVolume(0.45);
+      _pager.animateToPage(
+        leaf,
+        duration: const Duration(milliseconds: 520),
+        curve: Curves.easeInOutCubic,
+      );
     }
   }
 
+  void _onLeafChanged(int leaf) {
+    setState(() {
+      _leaf = leaf;
+      _sentence = null;
+    });
+    unawaited(SoundFx.page());
+    unawaited(_playCurrent());
+  }
+
+  // ── narration ─────────────────────────────────────────────────────────
+  NarrationPage? _recordingFor(int leaf) {
+    final l = _leaves[leaf];
+    if (l is! PageLeaf) return null;
+    return _narration?.pageFor(l.index, widget.story.pages[l.index].text);
+  }
+
+  NarrationPlayer _ensurePlayer() {
+    final existing = _player;
+    if (existing != null) return existing;
+    final p = (widget.playerFactory ?? JustAudioNarrationPlayer.new)();
+    _positionSub = p.position.listen((pos) {
+      final rec = _recordingFor(_leaf);
+      final s = rec?.sentenceAt(pos);
+      if (mounted && s != _sentence) setState(() => _sentence = s);
+    });
+    _completedSub = p.completed.listen((_) => _onPageHeard());
+    return _player = p;
+  }
+
+  Future<void> _playCurrent() async {
+    final rec = _recordingFor(_leaf);
+    if (!_listening || rec == null) {
+      if (_playing) {
+        await _player?.stop();
+        if (mounted) setState(() => _playing = false);
+      }
+      return;
+    }
+    final player = _ensurePlayer();
+    final leafAtStart = _leaf;
+    try {
+      await player.load(rec.uri);
+      if (!mounted || _leaf != leafAtStart || !_listening) return;
+      await player.play();
+      if (mounted) setState(() => _playing = true);
+    } catch (_) {
+      // A page that will not load is skipped in silence; the text is there.
+      if (mounted) setState(() => _playing = false);
+    }
+  }
+
+  void _onPageHeard() {
+    if (!mounted) return;
+    setState(() {
+      _playing = false;
+      _sentence = null;
+    });
+    if (!_listening) return;
+    final heard = _leaf;
+    Future.delayed(const Duration(milliseconds: 900), () {
+      if (!mounted || !_listening || _leaf != heard) return;
+      // A recording carries the child to the next leaf — but never past the
+      // pause: that question is the child's to answer, not the narrator's.
+      if (heard + 1 < _leaves.length && _leaves[heard + 1] is PageLeaf) {
+        goTo(heard + 1);
+      } else if (heard + 1 < _leaves.length) {
+        goTo(heard + 1);
+        setState(() => _listening = _leaves[heard + 1] is! EndLeaf);
+      }
+    });
+  }
+
+  Future<void> _toggleListening() async {
+    if (!_canListen) return;
+    unawaited(Haptics.selection());
+    if (_listening && _playing) {
+      await _player?.pause();
+      setState(() {
+        _listening = false;
+        _playing = false;
+      });
+      return;
+    }
+    setState(() => _listening = true);
+    if (_leaves[_leaf] is IntroLeaf) {
+      goTo(1);
+    } else {
+      await _playCurrent();
+    }
+  }
+
+  void _startReading({required bool listen}) {
+    setState(() => _listening = listen && _canListen);
+    if (_leaf == 1) {
+      unawaited(_playCurrent());
+    } else {
+      goTo(1);
+    }
+  }
+
+  // ── the end leaf's actions ────────────────────────────────────────────
+  Future<void> _tryChallenge(String challenge) async {
+    final childId = ref.read(activeChildIdProvider);
+    if (childId == null) return;
+    unawaited(Haptics.selection());
+    final l10n = AppLocalizations.of(context);
+    final name = _childName();
+    final slot = await showNextStepSheet(
+      context,
+      tryThis: challenge,
+      childName: name == null || isDefaultChildName(name)
+          ? l10n.noorYourChild
+          : name,
+    );
+    if (slot == null || !mounted) return;
+    setState(() => _tried = true);
+    unawaited(
+      ref
+          .read(companionMemoryProvider.notifier)
+          .keepPromise(
+            childId: childId,
+            step: challenge,
+            slot: slot,
+            source: 'story',
+          ),
+    );
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(l10n.promiseSaved)));
+  }
+
+  /// The active child's name, or null (none yet, or preferences not loaded).
+  String? _childName() {
+    try {
+      return ref.read(activeChildProfileProvider)?.name;
+    } catch (_) {
+      return null;
+    }
+  }
+
+  Future<void> _recordNarration() async {
+    final saved = await Navigator.of(context).push(
+      AppRoutes.recordNarration(
+        storyKey: narrationKeyFor(widget.story.id),
+        storyText: _pageTexts.join('\n\n'),
+      ),
+    );
+    if (saved == true && mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(AppLocalizations.of(context).storyNarrationSaved),
+        ),
+      );
+      unawaited(_findParentRecording());
+    }
+  }
+
+  void _listenInParentVoice() {
+    final path = _parentRecording;
+    if (path == null) return;
+    Navigator.of(
+      context,
+    ).push(AppRoutes.screenOffPlayer(title: widget.story.title, source: path));
+  }
+
+  // ── build ─────────────────────────────────────────────────────────────
   @override
   Widget build(BuildContext context) {
-    final themeColor = Color(
-      int.tryParse(widget.story.themeColor) ?? 0xFF0D9488,
-    );
-    final totalPages = widget.story.pages.length;
-    final pageCount = totalPages + 1; // +1 for end card.
+    final colors = context.colors;
+    final l10n = AppLocalizations.of(context);
+    final storyDir = directionOfLanguage(widget.story.language);
+    final appDir = Directionality.of(context);
 
     return Scaffold(
-      backgroundColor: const Color(0xFF0B3B3B),
-      body: Stack(
-        children: [
-          // Ambient looping video or static illustration.
-          Positioned.fill(
-            child: widget.story.hasVideo &&
-                    _bgVideoController != null &&
-                    _bgVideoController!.value.isInitialized
-                ? VideoPlayer(_bgVideoController!)
-                : (widget.story.coverImage.startsWith('docs/')
-                    ? Image.network(
-                        '${AppConfig.apiBaseUrl}/${widget.story.coverImage}',
-                        fit: BoxFit.cover,
-                        errorBuilder: (_, _, _) => const SizedBox.shrink(),
-                      )
-                    : Image.asset(
-                        widget.story.coverImage,
-                        fit: BoxFit.cover,
-                        errorBuilder: (_, _, _) => const SizedBox.shrink(),
-                      )),
-          ),
-          // Dark scrim so text always readable.
-          Positioned.fill(
-            child: Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    const Color(0xFF0B3B3B).withValues(alpha: 0.70),
-                    const Color(0xFF0B3B3B).withValues(alpha: 0.88),
-                    const Color(0xFF0B3B3B).withValues(alpha: 0.95),
-                  ],
-                ),
+      backgroundColor: colors.background,
+      body: SafeArea(
+        child: Column(
+          children: [
+            _TopBar(
+              title: widget.story.title,
+              language: widget.story.language,
+              canListen: _canListen && _leaves[_leaf] is PageLeaf,
+              playing: _listening && _playing,
+              onListen: _toggleListening,
+              onTextSize: () => setState(
+                () => _textSize = (_textSize + 1) % kStoryTextSizes.length,
               ),
             ),
-          ),
-
-          // Cozy ambient fireflies in background
-          const Positioned.fill(
-            child: FloatingFireflies(count: 25),
-          ),
-          // Page reader.
-          SafeArea(
-            child: Column(
-              children: [
-                const SizedBox(height: 68), // Spacer to leave room for floating top bar (12 + 44 + 12 = 68)
-                // Progress.
-                LinearProgressIndicator(
-                  value: (_currentPage + 1) / pageCount,
-                  backgroundColor: Colors.white.withValues(alpha: 0.15),
-                  valueColor: AlwaysStoppedAnimation(themeColor),
-                  minHeight: 4,
-                ).animate().scaleX(),
-                const SizedBox(height: 16),
-                // Story pages.
-                Expanded(
-                  child: PageFlipWidget(
-                    controller: _pageFlipController,
-                    backgroundColor: Colors.transparent,
-                    isRightSwipe: true,
-                    onPageFlipped: (pageIndex) {
-                      setState(() => _currentPage = pageIndex);
+            Expanded(
+              child: Directionality(
+                // Pages turn the way the story's language reads.
+                textDirection: storyDir,
+                child: PageView.builder(
+                  controller: _pager,
+                  itemCount: _leaves.length,
+                  onPageChanged: _onLeafChanged,
+                  itemBuilder: (context, i) => AnimatedBuilder(
+                    animation: _pager,
+                    builder: (context, child) {
+                      final page =
+                          _pager.hasClients && _pager.position.haveDimensions
+                          ? (_pager.page ?? _leaf.toDouble())
+                          : _leaf.toDouble();
+                      return _PaperTurn(
+                        offset: i - page,
+                        rtl: storyDir == TextDirection.rtl,
+                        child: _buildLeaf(i, i - page, appDir),
+                      );
                     },
-                    children: [
-                      ...widget.story.pages.map(
-                        (page) => _StoryPage(
-                          page: page,
-                          themeColor: themeColor,
-                          allPages: widget.story.pages,
-                          fontSizeMultiplier: _fontSizeMultiplier,
-                          storyLanguage: widget.story.language,
-                        ),
-                      ),
-                      _buildEndCard(themeColor),
-                    ],
                   ),
                 ),
-                const SizedBox(height: 84), // Spacer to leave room for floating bottom controls (20 + 44 + 20 = 84)
-              ],
+              ),
             ),
+            _BottomBar(
+              leaf: _leaf,
+              leafCount: _leaves.length,
+              pageLabel: switch (_leaves[_leaf]) {
+                PageLeaf(:final index) => l10n.storyPageOf(
+                  index + 1,
+                  widget.story.pages.length,
+                ),
+                _ => null,
+              },
+              onPrev: _leaf > 0 ? () => goTo(_leaf - 1) : null,
+              onNext: _leaf < _leaves.length - 1 ? () => goTo(_leaf + 1) : null,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildLeaf(int i, double offset, TextDirection appDir) {
+    final leaf = _leaves[i];
+    final view = switch (leaf) {
+      IntroLeaf() => _IntroLeafView(
+        story: widget.story,
+        canListen: _canListen,
+        hasParentRecording: _parentRecording != null,
+        onListen: () => _startReading(listen: true),
+        onRead: () => _startReading(listen: false),
+        onRecord: _recordNarration,
+        onParentVoice: _listenInParentVoice,
+      ),
+      PageLeaf(:final index) => _StoryPageView(
+        story: widget.story,
+        index: index,
+        parallax: offset,
+        textScale: kStoryTextSizes[_textSize],
+        recording: i == _leaf ? _recordingFor(i) : null,
+        litSentence: i == _leaf ? _sentence : null,
+      ),
+      PauseLeaf(:final pause) => _PauseLeafView(
+        pause: pause,
+        language: widget.story.language,
+        choice: _pauseChoice,
+        onChoose: (c) {
+          unawaited(Haptics.selection());
+          setState(() => _pauseChoice = c);
+        },
+        onContinue: () {
+          setState(() => _listening = _listening && _canListen);
+          goTo(i + 1);
+        },
+      ),
+      EndLeaf() => _EndLeafView(
+        story: widget.story,
+        childName: _childName(),
+        questionsShown: _questionsShown,
+        onMoreQuestion: () => setState(() => _questionsShown++),
+        canTry: ref.watch(activeChildIdProvider) != null,
+        tried: _tried,
+        onTry: _tryChallenge,
+        onAdhkar: () => Navigator.of(context).push(AppRoutes.bedtimeAdhkar()),
+        onAnother: () => Navigator.of(context).maybePop(),
+        onInvite: () {
+          unawaited(Analytics.prideInviteTapped('story_end'));
+          Navigator.of(context).push(AppRoutes.invite());
+        },
+      ),
+    };
+    // Noor's leaves are the app speaking, in the app's direction; a page is
+    // the story's, and the PageView around it already reads that way.
+    return leaf is PageLeaf
+        ? view
+        : Directionality(textDirection: appDir, child: view);
+  }
+}
+
+/// A leaf leans like turning paper while it is between rest positions.
+class _PaperTurn extends StatelessWidget {
+  const _PaperTurn({
+    required this.offset,
+    required this.rtl,
+    required this.child,
+  });
+
+  /// This leaf's distance from rest: 0 at rest, ±1 a full leaf away.
+  final double offset;
+  final bool rtl;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    if (reduceMotion(context) || offset.abs() < .001) return child;
+    final d = offset.clamp(-1.0, 1.0);
+    // The leaf hinges on the edge nearest the spine — the side it is
+    // leaving towards — and dims as it folds.
+    final towardsEnd = (d < 0) != rtl;
+    return Opacity(
+      opacity: (1 - d.abs() * .35).clamp(0.0, 1.0),
+      child: Transform(
+        alignment: towardsEnd ? Alignment.centerRight : Alignment.centerLeft,
+        transform: Matrix4.identity()
+          ..setEntry(3, 2, .0012)
+          ..rotateY((rtl ? -d : d) * .55),
+        child: child,
+      ),
+    );
+  }
+}
+
+/// The scene, framed as a paper card on its solid offset shadow.
+class _SceneCard extends StatelessWidget {
+  const _SceneCard({
+    required this.scene,
+    this.parallax = 0,
+    this.heroTag,
+    this.label,
+  });
+
+  final StoryScene scene;
+  final double parallax;
+  final String? heroTag;
+  final String? label;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.colors;
+    Widget card = DecoratedBox(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(22),
+        boxShadow: [
+          BoxShadow(color: colors.paperShadow, offset: const Offset(4, 5)),
+        ],
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(22),
+        child: StorySceneView(
+          scene: scene,
+          parallax: parallax,
+          semanticLabel: label,
+        ),
+      ),
+    );
+    if (heroTag != null) card = Hero(tag: heroTag!, child: card);
+    return card;
+  }
+}
+
+class _TopBar extends StatelessWidget {
+  const _TopBar({
+    required this.title,
+    required this.language,
+    required this.canListen,
+    required this.playing,
+    required this.onListen,
+    required this.onTextSize,
+  });
+
+  final String title;
+  final String language;
+  final bool canListen;
+  final bool playing;
+  final VoidCallback onListen;
+  final VoidCallback onTextSize;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final colors = context.colors;
+    return Padding(
+      padding: const EdgeInsetsDirectional.fromSTEB(4, 4, 8, 0),
+      child: Row(
+        children: [
+          IconButton(
+            tooltip: l10n.storyClose,
+            icon: const Icon(Icons.close_rounded),
+            color: colors.ink,
+            onPressed: () => Navigator.of(context).maybePop(),
           ),
-          // Floating Top Bar (placed at the end of the Stack list to guarantee clickability)
-          Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            child: SafeArea(
-              bottom: false,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                child: Row(
-                  children: [
-                    _RoundButton(
-                      icon: Icons.arrow_back,
-                      onTap: () => Navigator.of(context).pop(),
-                    ),
-                    const Spacer(),
-                    // Font size cycle button
-                    _RoundButton(
-                      icon: Icons.text_fields,
-                      onTap: () {
-                        setState(() {
-                          if (_fontSizeMultiplier == 1.0) {
-                            _fontSizeMultiplier = 1.25;
-                          } else if (_fontSizeMultiplier == 1.25) {
-                            _fontSizeMultiplier = 1.5;
-                          } else {
-                            _fontSizeMultiplier = 1.0;
-                          }
-                        });
-                      },
-                    ),
-                    const SizedBox(width: 10),
-                    _RoundButton(
-                      icon: _audioMuted ? Icons.volume_off : Icons.volume_up,
-                      onTap: _audioReady ? _toggleAudio : null,
-                    ),
-                    const SizedBox(width: 10),
-                    _RoundButton(
-                      icon: Icons.brightness_2,
-                      filled: _sleepMode,
-                      onTap: _toggleSleepMode,
-                    ),
-                  ],
+          Expanded(
+            child: ContentDirectionality(
+              languageCode: language,
+              text: title,
+              child: Text(
+                title,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  color: colors.ink,
+                  fontWeight: FontWeight.w800,
                 ),
               ),
             ),
           ),
-          // Floating Bottom Controls
-          Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: SafeArea(
-              top: false,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    _RoundButton(
-                      icon: Icons.arrow_back_ios,
-                      onTap: _currentPage > 0 ? _prevPage : null,
-                    ),
-                    Text(
-                      '${min(_currentPage + 1, pageCount)} / $pageCount',
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    _RoundButton(
-                      icon: Icons.arrow_forward_ios,
-                      onTap: _currentPage < pageCount - 1
-                          ? _nextPage
-                          : null,
-                    ),
-                  ],
-                ),
+          if (canListen)
+            IconButton(
+              tooltip: playing ? l10n.storyPauseListening : l10n.storyListen,
+              icon: Icon(
+                playing ? Icons.pause_circle_rounded : Icons.headphones_rounded,
               ),
+              color: colors.primary,
+              onPressed: onListen,
             ),
-          ),
-          // Sleep-mode overlay (covers everything to dim the screen, but ignored for touches)
-          Positioned.fill(
-            child: IgnorePointer(
-              ignoring: true,
-              child: AnimatedOpacity(
-                opacity: _sleepMode ? 0.55 : 0,
-                duration: const Duration(seconds: 2),
-                child: Container(color: const Color(0xFF001F1F)),
-              ),
-            ),
+          IconButton(
+            tooltip: l10n.storyTextSize,
+            icon: const Icon(Icons.format_size_rounded),
+            color: colors.ink,
+            onPressed: onTextSize,
           ),
         ],
       ),
     );
   }
+}
 
-  Widget _buildEndCard(Color themeColor) {
-    if (!widget.story.hasDebrief) {
-      return Container(
-        margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 48),
-        padding: const EdgeInsets.all(28),
-        decoration: BoxDecoration(
-          color: Dt.surface,
-          borderRadius: BorderRadius.circular(28),
+class _BottomBar extends StatelessWidget {
+  const _BottomBar({
+    required this.leaf,
+    required this.leafCount,
+    required this.pageLabel,
+    required this.onPrev,
+    required this.onNext,
+  });
+
+  final int leaf;
+  final int leafCount;
+  final String? pageLabel;
+  final VoidCallback? onPrev;
+  final VoidCallback? onNext;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final colors = context.colors;
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(12, 6, 12, 10),
+      child: Row(
+        children: [
+          IconButton.filledTonal(
+            tooltip: l10n.storyPrevPage,
+            onPressed: onPrev,
+            icon: const Icon(Icons.arrow_back_rounded),
+          ),
+          Expanded(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                _LeafDots(leaf: leaf, count: leafCount),
+                if (pageLabel != null) ...[
+                  const SizedBox(height: 4),
+                  Text(
+                    pageLabel!,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: colors.textSecondary,
+                      fontSize: 12.5,
+                    ),
+                  ),
+                ],
+              ],
+            ),
+          ),
+          IconButton.filled(
+            tooltip: l10n.storyNextPage,
+            onPressed: onNext,
+            icon: const Icon(Icons.arrow_forward_rounded),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _LeafDots extends StatelessWidget {
+  const _LeafDots({required this.leaf, required this.count});
+  final int leaf;
+  final int count;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.colors;
+    return ExcludeSemantics(
+      child: Wrap(
+        alignment: WrapAlignment.center,
+        spacing: 5,
+        runSpacing: 4,
+        children: [
+          for (var i = 0; i < count; i++)
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 220),
+              width: i == leaf ? 18 : 7,
+              height: 7,
+              decoration: BoxDecoration(
+                color: i == leaf ? colors.primary : colors.track,
+                borderRadius: BorderRadius.circular(4),
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+}
+
+/// A rounded paper sheet for text: the live surface, so dark mode is dark.
+class _Sheet extends StatelessWidget {
+  const _Sheet({required this.child, this.padding = const EdgeInsets.all(18)});
+  final Widget child;
+  final EdgeInsets padding;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.colors;
+    return Container(
+      width: double.infinity,
+      padding: padding,
+      decoration: BoxDecoration(
+        color: colors.surface,
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: colors.track),
+        boxShadow: [BoxShadow(color: colors.track, offset: const Offset(3, 4))],
+      ),
+      child: child,
+    );
+  }
+}
+
+class _IntroLeafView extends StatelessWidget {
+  const _IntroLeafView({
+    required this.story,
+    required this.canListen,
+    required this.hasParentRecording,
+    required this.onListen,
+    required this.onRead,
+    required this.onRecord,
+    required this.onParentVoice,
+  });
+
+  final Story story;
+  final bool canListen;
+  final bool hasParentRecording;
+  final VoidCallback onListen;
+  final VoidCallback onRead;
+  final VoidCallback onRecord;
+  final VoidCallback onParentVoice;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final colors = context.colors;
+    return ListView(
+      padding: const EdgeInsets.fromLTRB(18, 8, 18, 24),
+      children: [
+        // The picture leads, but never pushes the two ways in off a short
+        // screen: at most about a third of the height.
+        Center(
+          child: SizedBox(
+            width: math.min(
+              MediaQuery.sizeOf(context).width,
+              MediaQuery.sizeOf(context).height * .32 * kSceneAspect,
+            ),
+            child: _SceneCard(
+              scene: coverSceneFor(story.id),
+              heroTag: 'story-cover-${story.id}',
+              label: story.title,
+            ),
+          ),
         ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+        const SizedBox(height: 18),
+        ContentDirectionality(
+          languageCode: story.language,
+          text: story.title,
+          child: Text(
+            story.title,
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+              color: colors.ink,
+              fontWeight: FontWeight.w800,
+            ),
+          ),
+        ),
+        if (story.ageGroup != null || story.category != null) ...[
+          const SizedBox(height: 8),
+          Wrap(
+            alignment: WrapAlignment.center,
+            spacing: 8,
+            runSpacing: 6,
+            children: [
+              for (final t in [story.category, story.ageGroup])
+                if (t != null && t.isNotEmpty)
+                  _Tag(text: t, language: story.language),
+            ],
+          ),
+        ],
+        const SizedBox(height: 18),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const Text(
-              '🌟',
-              style: TextStyle(fontSize: 72),
-            )
-                .animate(onPlay: loopUnlessReduced(context))
-                .scaleXY(begin: 0.9, end: 1.1, duration: 1200.ms)
-                .then()
-                .scaleXY(begin: 1.1, end: 0.9, duration: 1200.ms),
-            const SizedBox(height: 20),
-            Text(
-              AppLocalizations.of(context).storyWellDone,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: themeColor,
-                fontSize: 24,
-                fontWeight: FontWeight.w800,
-              ),
-            ),
-            const SizedBox(height: 10),
-            Text(
-              AppLocalizations.of(context).storyRelaxNow,
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                color: Color(0xFF4A4A4A),
-                fontSize: 16,
-                height: 1.6,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-            const SizedBox(height: 24),
-            FilledButton.icon(
-              onPressed: () => Navigator.of(context).pop(),
-              icon: const Icon(Icons.check),
-              label: Text(AppLocalizations.of(context).storyClose),
-              style: FilledButton.styleFrom(
-                backgroundColor: themeColor,
+            const NoorPresence(size: 56, face: NoorFaceState.calm),
+            const SizedBox(width: 12),
+            Expanded(
+              child: _Sheet(
                 padding: const EdgeInsets.symmetric(
-                  horizontal: 28,
-                  vertical: 14,
+                  horizontal: 14,
+                  vertical: 12,
                 ),
-              ),
-            ),
-            const SizedBox(height: 8),
-            TextButton(
-              onPressed: () {
-                unawaited(Analytics.prideInviteTapped('story_end'));
-                Navigator.of(context).push(AppRoutes.invite());
-              },
-              child: Text(
-                AppLocalizations.of(context).prideStoryInvite,
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                  color: Color(0xFF4A4A4A),
-                  fontSize: 13,
-                  fontWeight: FontWeight.w600,
+                child: Text(
+                  l10n.storyNoorIntro,
+                  style: TextStyle(
+                    color: colors.ink,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w700,
+                    height: 1.5,
+                  ),
                 ),
               ),
             ),
           ],
         ),
-      );
-    }
-
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 28),
-      padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 22),
-      decoration: BoxDecoration(
-        color: Dt.surface,
-        borderRadius: BorderRadius.circular(28),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.15),
-            blurRadius: 20,
-            offset: const Offset(0, 8),
+        const SizedBox(height: 18),
+        if (canListen) ...[
+          FilledButton.icon(
+            onPressed: onListen,
+            icon: const Icon(Icons.headphones_rounded),
+            label: Text(l10n.storyListenWithNoor),
+            style: FilledButton.styleFrom(
+              minimumSize: const Size.fromHeight(52),
+            ),
           ),
+          const SizedBox(height: 10),
         ],
-      ),
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+        (canListen ? OutlinedButton.icon : FilledButton.icon)(
+          onPressed: onRead,
+          icon: const Icon(Icons.menu_book_rounded),
+          label: Text(l10n.storyReadTogether),
+          style: ButtonStyle(
+            minimumSize: WidgetStateProperty.all(const Size.fromHeight(52)),
+          ),
+        ),
+        const SizedBox(height: 8),
+        Wrap(
+          alignment: WrapAlignment.center,
           children: [
-            Center(
-              child: Container(
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: themeColor.withValues(alpha: 0.12),
-                  shape: BoxShape.circle,
-                ),
-                child: const Text('🌟', style: TextStyle(fontSize: 40)),
-              ),
+            TextButton.icon(
+              onPressed: onRecord,
+              icon: const Icon(Icons.mic_none_rounded),
+              label: Text(l10n.storyRecordInYourVoice),
             ),
-            const SizedBox(height: 10),
-            Text(
-              'أحسنت يا بطل! جلسة الحوار التربوي',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: themeColor,
-                fontSize: 19,
-                fontWeight: FontWeight.w800,
+            if (hasParentRecording)
+              TextButton.icon(
+                onPressed: onParentVoice,
+                icon: const Icon(Icons.record_voice_over_rounded),
+                label: Text(l10n.storyListenInParentVoice),
               ),
-            ),
-            const SizedBox(height: 4),
-            const Text(
-              'وقت الحوار والتفكير والتواصل بين الأهل والطفل',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Color(0xFF6B7280),
-                fontSize: 12,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-            const SizedBox(height: 16),
+          ],
+        ),
+      ],
+    );
+  }
+}
 
-            // 1. Discussion Questions
-            if (widget.story.discussionQuestions.isNotEmpty) ...[
-              Container(
-                padding: const EdgeInsets.all(14),
-                decoration: BoxDecoration(
-                  color: themeColor.withValues(alpha: 0.06),
-                  borderRadius: BorderRadius.circular(18),
-                  border: Border.all(
-                    color: themeColor.withValues(alpha: 0.20),
+class _Tag extends StatelessWidget {
+  const _Tag({required this.text, required this.language});
+  final String text;
+  final String language;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.colors;
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+      decoration: BoxDecoration(
+        color: colors.surfaceAlt,
+        borderRadius: BorderRadius.circular(14),
+      ),
+      child: ContentDirectionality(
+        languageCode: language,
+        text: text,
+        child: Text(
+          text,
+          style: TextStyle(
+            color: colors.textSecondary,
+            fontSize: 12.5,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _StoryPageView extends StatelessWidget {
+  const _StoryPageView({
+    required this.story,
+    required this.index,
+    required this.parallax,
+    required this.textScale,
+    required this.recording,
+    required this.litSentence,
+  });
+
+  final Story story;
+  final int index;
+  final double parallax;
+  final double textScale;
+  final NarrationPage? recording;
+  final int? litSentence;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.colors;
+    final text = story.pages[index].text;
+    final style = TextStyle(
+      fontSize: 20 * textScale,
+      height: 1.85,
+      fontWeight: FontWeight.w600,
+      color: colors.ink,
+    );
+    final lit = litSentence == null || recording == null
+        ? null
+        : recording!.sentences[litSentence!];
+    final span = lit == null
+        ? TextSpan(text: text, style: style)
+        : TextSpan(
+            style: style,
+            children: [
+              TextSpan(text: text.substring(0, lit.from)),
+              TextSpan(
+                text: text.substring(lit.from, lit.to),
+                style: TextStyle(
+                  backgroundColor: colors.paperGold.withValues(
+                    alpha: colors.isDark ? .28 : .45,
                   ),
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
+              ),
+              TextSpan(text: text.substring(lit.to)),
+            ],
+          );
+    // Large text (the system's, or the reader's own size button) needs the
+    // room more than the picture does.
+    final bigText =
+        MediaQuery.textScalerOf(context).scale(1) * textScale > 1.25;
+    return LayoutBuilder(
+      builder: (context, box) {
+        final sceneWidth = math.min(
+          box.maxWidth - 32,
+          box.maxHeight * (bigText ? .26 : .46) * kSceneAspect,
+        );
+        return Column(
+          children: [
+            const SizedBox(height: 6),
+            SizedBox(
+              width: sceneWidth,
+              child: _SceneCard(
+                scene: sceneFor(story.id, index),
+                parallax: parallax,
+              ),
+            ),
+            const SizedBox(height: 14),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(16, 0, 16, 6),
+                child: _Sheet(
+                  padding: const EdgeInsets.fromLTRB(20, 16, 20, 16),
+                  child: SingleChildScrollView(
+                    child: ContentDirectionality(
+                      languageCode: story.language,
+                      text: text,
+                      child: Text.rich(
+                        span,
+                        key: ValueKey('story-text-$index'),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+}
+
+class _PauseLeafView extends StatelessWidget {
+  const _PauseLeafView({
+    required this.pause,
+    required this.language,
+    required this.choice,
+    required this.onChoose,
+    required this.onContinue,
+  });
+
+  final StoryPause pause;
+  final String language;
+  final int? choice;
+  final ValueChanged<int> onChoose;
+  final VoidCallback onContinue;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final colors = context.colors;
+    return ListView(
+      padding: const EdgeInsets.fromLTRB(20, 16, 20, 24),
+      children: [
+        Center(
+          child: NoorPresence(
+            size: 96,
+            face: choice == null ? NoorFaceState.thinking : NoorFaceState.happy,
+          ),
+        ),
+        const SizedBox(height: 14),
+        Text(
+          l10n.storyPauseTitle,
+          textAlign: TextAlign.center,
+          style: Theme.of(context).textTheme.titleMedium?.copyWith(
+            color: colors.primary,
+            fontWeight: FontWeight.w800,
+          ),
+        ),
+        const SizedBox(height: 10),
+        ContentDirectionality(
+          languageCode: language,
+          text: pause.question,
+          child: Text(
+            pause.question,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: colors.ink,
+              fontSize: 21,
+              height: 1.6,
+              fontWeight: FontWeight.w800,
+            ),
+          ),
+        ),
+        const SizedBox(height: 18),
+        for (var i = 0; i < pause.options.length; i++) ...[
+          _ChoiceButton(
+            text: pause.options[i],
+            language: language,
+            selected: choice == i,
+            onTap: () => onChoose(i),
+          ),
+          const SizedBox(height: 10),
+        ],
+        if (choice != null) ...[
+          const SizedBox(height: 6),
+          Text(
+            l10n.storyPauseThanks,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: colors.textSecondary,
+              fontSize: 16,
+              height: 1.5,
+            ),
+          ),
+          const SizedBox(height: 14),
+          FilledButton.icon(
+            onPressed: onContinue,
+            icon: const Icon(Icons.auto_stories_rounded),
+            label: Text(l10n.storyContinue),
+            style: FilledButton.styleFrom(
+              minimumSize: const Size.fromHeight(50),
+            ),
+          ),
+        ],
+      ],
+    );
+  }
+}
+
+class _ChoiceButton extends StatelessWidget {
+  const _ChoiceButton({
+    required this.text,
+    required this.language,
+    required this.selected,
+    required this.onTap,
+  });
+
+  final String text;
+  final String language;
+  final bool selected;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.colors;
+    return Semantics(
+      button: true,
+      selected: selected,
+      child: Material(
+        color: selected ? colors.primary : colors.surface,
+        borderRadius: BorderRadius.circular(18),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(18),
+          onTap: onTap,
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 14),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(18),
+              border: Border.all(
+                color: selected ? colors.primary : colors.track,
+                width: 2,
+              ),
+            ),
+            child: ContentDirectionality(
+              languageCode: language,
+              text: text,
+              child: Text(
+                text,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: selected ? colors.onPrimary : colors.ink,
+                  fontSize: 17,
+                  fontWeight: FontWeight.w700,
+                  height: 1.4,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _EndLeafView extends StatelessWidget {
+  const _EndLeafView({
+    required this.story,
+    required this.questionsShown,
+    required this.onMoreQuestion,
+    required this.canTry,
+    required this.tried,
+    required this.onTry,
+    required this.onAdhkar,
+    required this.onAnother,
+    required this.onInvite,
+    this.childName,
+  });
+
+  final Story story;
+  final String? childName;
+  final int questionsShown;
+  final VoidCallback onMoreQuestion;
+  final bool canTry;
+  final bool tried;
+  final ValueChanged<String> onTry;
+  final VoidCallback onAdhkar;
+  final VoidCallback onAnother;
+  final VoidCallback onInvite;
+
+  Widget _heading(BuildContext context, IconData icon, String text) {
+    final colors = context.colors;
+    return Row(
+      children: [
+        Icon(icon, size: 20, color: colors.primary),
+        const SizedBox(width: 8),
+        Expanded(
+          child: Text(
+            text,
+            style: TextStyle(
+              color: colors.primary,
+              fontSize: 15,
+              fontWeight: FontWeight.w800,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _content(BuildContext context, String text, {double size = 16}) {
+    final colors = context.colors;
+    return ContentDirectionality(
+      languageCode: story.language,
+      text: text,
+      child: Text(
+        text,
+        style: TextStyle(
+          color: colors.ink,
+          fontSize: size,
+          height: 1.6,
+          fontWeight: FontWeight.w600,
+        ),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final colors = context.colors;
+    final questions = story.discussionQuestions;
+    final value = story.islamicValue;
+    final challenge = story.actionChallenge;
+    final name = childName;
+    final tryLabel = name == null || isDefaultChildName(name)
+        ? l10n.chatTryWithMyChild
+        : l10n.chatTryWith(name);
+    return ListView(
+      padding: const EdgeInsets.fromLTRB(18, 12, 18, 24),
+      children: [
+        const Center(child: NoorPresence(size: 96, mood: NoorMood.proud)),
+        const SizedBox(height: 12),
+        Text(
+          l10n.storyTheEnd,
+          textAlign: TextAlign.center,
+          style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+            color: colors.ink,
+            fontWeight: FontWeight.w800,
+          ),
+        ),
+        const SizedBox(height: 16),
+        if (value != null && value.isNotEmpty) ...[
+          _Sheet(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                _heading(
+                  context,
+                  Icons.auto_awesome_rounded,
+                  l10n.storyValueTitle,
+                ),
+                const SizedBox(height: 8),
+                _content(context, value),
+              ],
+            ),
+          ),
+          const SizedBox(height: 12),
+        ],
+        if (questions.isNotEmpty) ...[
+          _Sheet(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                _heading(context, Icons.forum_rounded, l10n.storyTalkTitle),
+                const SizedBox(height: 10),
+                for (
+                  var i = 0;
+                  i < math.min(questionsShown, questions.length);
+                  i++
+                )
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 10),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text('💬', style: TextStyle(fontSize: 18)),
-                        const SizedBox(width: 8),
-                        Text(
-                          'حوار المربي مع طفلك (اسأله وناقشه):',
-                          style: TextStyle(
-                            color: themeColor,
-                            fontSize: 13,
-                            fontWeight: FontWeight.w800,
+                        Container(
+                          width: 26,
+                          height: 26,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            color: colors.primary,
+                            shape: BoxShape.circle,
+                          ),
+                          child: Text(
+                            '${i + 1}',
+                            style: TextStyle(
+                              color: colors.onPrimary,
+                              fontWeight: FontWeight.w800,
+                            ),
                           ),
                         ),
+                        const SizedBox(width: 10),
+                        Expanded(child: _content(context, questions[i])),
                       ],
                     ),
-                    const SizedBox(height: 10),
-                    for (int i = 0; i < widget.story.discussionQuestions.length; i++)
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 8),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                  ),
+                if (questionsShown < questions.length)
+                  Align(
+                    alignment: AlignmentDirectional.centerStart,
+                    child: TextButton.icon(
+                      onPressed: onMoreQuestion,
+                      icon: const Icon(Icons.add_comment_rounded),
+                      label: Text(l10n.storyMoreQuestion),
+                    ),
+                  ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 12),
+        ],
+        if (challenge != null && challenge.isNotEmpty) ...[
+          _Sheet(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                _heading(context, Icons.flag_rounded, l10n.storyChallengeTitle),
+                const SizedBox(height: 8),
+                _content(context, challenge),
+                if (canTry) ...[
+                  const SizedBox(height: 12),
+                  tried
+                      ? Row(
                           children: [
-                            Container(
-                              width: 20,
-                              height: 20,
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                color: themeColor,
-                                shape: BoxShape.circle,
-                              ),
-                              child: Text(
-                                '${i + 1}',
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 11,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
+                            Icon(
+                              Icons.check_circle_rounded,
+                              color: colors.successText,
                             ),
                             const SizedBox(width: 8),
                             Expanded(
                               child: Text(
-                                widget.story.discussionQuestions[i],
-                                style: const TextStyle(
-                                  color: Color(0xFF1F2937),
-                                  fontSize: 13,
-                                  height: 1.5,
-                                  fontWeight: FontWeight.w600,
+                                l10n.promiseSaved,
+                                style: TextStyle(
+                                  color: colors.successText,
+                                  fontWeight: FontWeight.w700,
                                 ),
                               ),
                             ),
                           ],
+                        )
+                      : FilledButton.tonalIcon(
+                          onPressed: () => onTry(challenge),
+                          icon: const Icon(Icons.handshake_rounded),
+                          label: Text(tryLabel),
                         ),
-                      ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 10),
-            ],
-
-            // 2. Islamic Value anchor
-            if (widget.story.islamicValue != null && widget.story.islamicValue!.isNotEmpty) ...[
-              Container(
-                padding: const EdgeInsets.all(14),
-                decoration: BoxDecoration(
-                  color: context.colors.warningBg,
-                  borderRadius: BorderRadius.circular(18),
-                  border: Border.all(
-                    color: context.colors.warningFg.withValues(alpha: 0.35),
-                  ),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        const Text('🕌', style: TextStyle(fontSize: 18)),
-                        const SizedBox(width: 8),
-                        Text(
-                          'المرساة القيمية والأثر النبوي:',
-                          style: TextStyle(
-                            color: context.colors.warningFg,
-                            fontSize: 13,
-                            fontWeight: FontWeight.w800,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 6),
-                    Text(
-                      widget.story.islamicValue!,
-                      style: TextStyle(
-                        color: context.colors.warningFg,
-                        fontSize: 13,
-                        height: 1.6,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 10),
-            ],
-
-            // 3. Action Challenge
-            if (widget.story.actionChallenge != null && widget.story.actionChallenge!.isNotEmpty) ...[
-              Container(
-                padding: const EdgeInsets.all(14),
-                decoration: BoxDecoration(
-                  color: context.colors.success.withValues(alpha: 0.10),
-                  borderRadius: BorderRadius.circular(18),
-                  border: Border.all(
-                    color: context.colors.success.withValues(alpha: 0.35),
-                  ),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        const Text('🎯', style: TextStyle(fontSize: 18)),
-                        const SizedBox(width: 8),
-                        Text(
-                          'تحدي الغد للطفل البطل:',
-                          style: TextStyle(
-                            color: context.colors.successText,
-                            fontSize: 13,
-                            fontWeight: FontWeight.w800,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 6),
-                    Text(
-                      widget.story.actionChallenge!,
-                      style: TextStyle(
-                        color: context.colors.successText,
-                        fontSize: 13,
-                        height: 1.5,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    InkWell(
-                      onTap: () {
-                        Haptics.warning();
-                        setState(() {
-                          _challengeAccepted = !_challengeAccepted;
-                        });
-                      },
-                      borderRadius: BorderRadius.circular(12),
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 9),
-                        decoration: BoxDecoration(
-                          color: _challengeAccepted
-                              ? const Color(0xFF10B981)
-                              : const Color(0xFF10B981).withValues(alpha: 0.12),
-                          borderRadius: BorderRadius.circular(12),
-                          border: Border.all(
-                            color: const Color(0xFF10B981),
-                          ),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              _challengeAccepted ? Icons.check_circle : Icons.emoji_events_outlined,
-                              color: _challengeAccepted ? Colors.white : const Color(0xFF065F46),
-                              size: 18,
-                            ),
-                            const SizedBox(width: 6),
-                            Text(
-                              _challengeAccepted
-                                  ? '✓ قبلنا التحدي يا بطل! بارك الله فيك'
-                                  : 'قبلنا التحدي معاً! 👏',
-                              style: TextStyle(
-                                color: _challengeAccepted ? Colors.white : const Color(0xFF065F46),
-                                fontSize: 12,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 14),
-            ],
-
-            // Action buttons
-            FilledButton.icon(
-              onPressed: () => Navigator.of(context).pop(),
-              icon: const Icon(Icons.done_all),
-              label: const Text('أتممنا قراءة القصة والحوار المبارك ✓'),
-              style: FilledButton.styleFrom(
-                backgroundColor: themeColor,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 12,
-                ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(14),
-                ),
-              ),
-            ),
-            const SizedBox(height: 6),
-            TextButton(
-              onPressed: () {
-                unawaited(Analytics.prideInviteTapped('story_end'));
-                Navigator.of(context).push(AppRoutes.invite());
-              },
-              child: Text(
-                AppLocalizations.of(context).prideStoryInvite,
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                  color: Color(0xFF6B7280),
-                  fontSize: 12,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _StoryPage extends StatelessWidget {
-  const _StoryPage({
-    required this.page,
-    required this.themeColor,
-    required this.allPages,
-    required this.fontSizeMultiplier,
-    required this.storyLanguage,
-  });
-
-  final StoryPage page;
-  final Color themeColor;
-  final List<StoryPage> allPages;
-  final double fontSizeMultiplier;
-
-  /// The language of *this story's text*, which is not necessarily the app's.
-  /// See [ContentDirectionality].
-  final String storyLanguage;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 12),
-      child: Column(
-        children: [
-          // Parallax illustration card.
-          Expanded(
-            flex: 5,
-            child: _ParallaxImage(
-              image: page.image,
-              themeColor: themeColor,
-              emoji: allPages.firstWhere((p) => p.pageNumber == 1).image.contains('hope')
-                  ? '🌱'
-                  : '🐱',
-            ),
-          ),
-          const SizedBox(height: 12),
-          // Text card with a subtle "page paper" texture.
-          Expanded(
-            flex: 4,
-            child: Container(
-              width: double.infinity,
-              padding: const EdgeInsets.all(22),
-              decoration: BoxDecoration(
-                color: Dt.surface,
-                borderRadius: BorderRadius.circular(26),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.2),
-                    blurRadius: 18,
-                    offset: const Offset(0, 8),
-                  ),
                 ],
-              ),
-              child: SingleChildScrollView(
-                // Direction follows the story, not the app. Hard-coding RTL
-                // here was right while every story was Arabic and became wrong
-                // the day English stories shipped — an English page rendered
-                // right-aligned with its full stops on the wrong side. The
-                // story carries its own language tag; the page text is the
-                // fallback signal, which matters because these pages embed
-                // Arabic ayat inside English prose and the paragraph must not
-                // flip around them.
-                child: ContentDirectionality(
-                  languageCode: storyLanguage,
-                  text: page.text,
-                  child: Text(
-                    page.text,
-                    style: TextStyle(
-                      fontSize: 18 * fontSizeMultiplier,
-                      fontWeight: FontWeight.w600,
-                      height: 1.85,
-                      color: const Color(0xFF2D2D2D),
-                    ),
-                  ),
-                ),
-              ),
+              ],
             ),
           ),
+          const SizedBox(height: 16),
         ],
-      ),
-    );
-  }
-}
-
-class _ParallaxImage extends StatelessWidget {
-  const _ParallaxImage({
-    required this.image,
-    required this.themeColor,
-    required this.emoji,
-  });
-  final String image;
-  final Color themeColor;
-  final String emoji;
-
-  @override
-  Widget build(BuildContext context) {
-    return Hero(
-      tag: 'story-illustration-$image',
-      child: Container(
-        decoration: BoxDecoration(
-          color: themeColor.withValues(alpha: 0.12),
-          borderRadius: BorderRadius.circular(28),
-          boxShadow: [
-            BoxShadow(
-              color: themeColor.withValues(alpha: 0.25),
-              blurRadius: 20,
-              offset: const Offset(0, 10),
+        Wrap(
+          alignment: WrapAlignment.center,
+          spacing: 10,
+          runSpacing: 10,
+          children: [
+            OutlinedButton.icon(
+              onPressed: onAdhkar,
+              icon: const Icon(Icons.nights_stay_rounded),
+              label: Text(l10n.storyBedtimeAdhkar),
+            ),
+            FilledButton.icon(
+              onPressed: onAnother,
+              icon: const Icon(Icons.auto_stories_rounded),
+              label: Text(l10n.storyAnother),
             ),
           ],
         ),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(28),
-          child: Stack(
-            fit: StackFit.expand,
-            children: [
-              image.startsWith('docs/')
-                  ? Image.network(
-                      '${AppConfig.apiBaseUrl}/$image',
-                      fit: BoxFit.cover,
-                      errorBuilder: (_, _, _) => Center(
-                        child: Text(
-                          emoji,
-                          style: const TextStyle(fontSize: 120),
-                        ),
-                      ),
-                    )
-                  : Image.asset(
-                      image,
-                      fit: BoxFit.cover,
-                      errorBuilder: (_, _, _) => Center(
-                        child: Text(
-                          emoji,
-                          style: const TextStyle(fontSize: 120),
-                        ),
-                      ),
-                    ),
-              // Soft vignette around the illustration.
-              Container(
-                decoration: BoxDecoration(
-                  gradient: RadialGradient(
-                    colors: [
-                      Colors.transparent,
-                      Colors.black.withValues(alpha: 0.22),
-                    ],
-                    stops: const [0.75, 1.0],
-                    radius: 1.1,
-                  ),
-                ),
-              ),
-            ],
+        const SizedBox(height: 6),
+        TextButton(
+          onPressed: onInvite,
+          child: Text(
+            l10n.prideStoryInvite,
+            textAlign: TextAlign.center,
+            style: TextStyle(color: colors.textSecondary, fontSize: 13),
           ),
         ),
-      ),
-    );
-  }
-}
-
-class _RoundButton extends StatelessWidget {
-  const _RoundButton({
-    required this.icon,
-    required this.onTap,
-    this.filled = false,
-  });
-
-  final IconData icon;
-  final VoidCallback? onTap;
-  final bool filled;
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: filled
-          ? const Color(0xFFE0D5C1)
-          : Colors.white.withValues(alpha: 0.14),
-      borderRadius: BorderRadius.circular(30),
-      child: InkWell(
-        borderRadius: BorderRadius.circular(30),
-        onTap: onTap,
-        child: Container(
-          width: 44,
-          height: 44,
-          alignment: Alignment.center,
-          child: Icon(
-            icon,
-            color: filled ? const Color(0xFF0B3B3B) : Colors.white,
-            size: 20,
-          ),
-        ),
-      ),
+      ],
     );
   }
 }

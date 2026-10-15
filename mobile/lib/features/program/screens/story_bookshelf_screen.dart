@@ -1,689 +1,315 @@
+/// The story shelf — «ورق مقصوص» (2026-10, docs/STORIES_AUDIT.md).
+///
+/// Every cover is drawn in the app from the story's own scene pieces, so the
+/// shelf opens with pictures and no network: the old covers were 1024² PNGs
+/// and 2–3.7 MB looping videos fetched per book, and five of the nineteen
+/// stories had no picture on the server at all (404) — those showed an emoji.
+///
+/// Cards size to their content (title, age) rather than to a fixed box, so
+/// the system's 200% text grows the card instead of spilling out of it.
+library;
 
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:video_player/video_player.dart';
 
-import '../../../config/app_config.dart';
 import '../../../core/app_routes.dart';
+import '../../../core/haptics.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../l10n/content_direction.dart';
-import '../../../theme/design_tokens.dart';
+import '../../../theme/app_colors.dart';
 import '../../../widgets/ui/empty_state.dart';
 import '../../../widgets/ui/error_retry_view.dart';
-import '../data/story_models.dart';
+import '../../companion/widgets/noor_face.dart';
+import '../../companion/widgets/noor_presence.dart';
 import '../../screen_off/narration_store.dart';
-import '../../../widgets/ui/night_sky.dart';
-import 'package:almorabbi/core/motion.dart';
+import '../../stories/scene/story_scene.dart' show StorySceneView;
+import '../../stories/scene/story_scene_catalog.dart';
+import '../data/story_models.dart';
 import 'package:almorabbi/widgets/ui/loading_view.dart';
-import 'package:almorabbi/core/haptics.dart';
 
-/// A magical bedtime bookshelf: 3D books, twinkling stars, and looping
-/// ambient cover videos when available. Replaces the old vertical list card.
+/// The shelf's age filters.
+enum StoryShelfFilter { all, young, older }
+
+/// Whether [story] belongs under [filter]. Ranges overlap on purpose: a
+/// 4–7 story is right for both a four-year-old and a seven-year-old.
+bool storyMatchesFilter(Story story, StoryShelfFilter filter) {
+  if (filter == StoryShelfFilter.all) return true;
+  final range = ageRangeOf(story.ageGroup);
+  if (range == null) return true; // unlabelled: never hidden
+  return switch (filter) {
+    StoryShelfFilter.young => range.min <= 4,
+    StoryShelfFilter.older => range.max >= 7,
+    StoryShelfFilter.all => true,
+  };
+}
+
 class StoryBookshelfScreen extends ConsumerWidget {
   const StoryBookshelfScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final storiesAsync = ref.watch(storiesProvider);
-
+    final l10n = AppLocalizations.of(context);
     return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [Color(0xFF0B3B3B), Color(0xFF134E4E), Color(0xFF1F5E5E)],
-          ),
+      backgroundColor: context.colors.background,
+      appBar: AppBar(title: Text(l10n.bedtimeStories)),
+      body: storiesAsync.when(
+        loading: () => const SingleChildScrollView(
+          physics: NeverScrollableScrollPhysics(),
+          child: LoadingView(count: 3, itemHeight: 220),
         ),
-        child: SafeArea(
-          child: storiesAsync.when(
-            loading: () => const SingleChildScrollView(
-              physics: NeverScrollableScrollPhysics(),
-              child: LoadingView(count: 3, itemHeight: 220),
-            ),
-            error: (e, _) => EmptyState(
-              emoji: '⚠️',
-              title: AppLocalizations.of(context).storyLoadError,
-              subtitle: userFacingError(context, e).body,
-            ),
-            data: (stories) {
-              if (stories.isEmpty) {
-                return EmptyState(
-                  emoji: '📚',
-                  title: AppLocalizations.of(context).storyEmpty,
-                  subtitle: AppLocalizations.of(context).storyEmptyDesc,
-                );
-              }
-              return _BookshelfBody(stories: stories);
-            },
-          ),
+        error: (e, _) => EmptyState(
+          emoji: '⚠️',
+          title: l10n.storyLoadError,
+          subtitle: userFacingError(context, e).body,
         ),
+        data: (stories) => stories.isEmpty
+            ? EmptyState(
+                emoji: '📚',
+                title: l10n.storyEmpty,
+                subtitle: l10n.storyEmptyDesc,
+              )
+            : StoryShelf(stories: stories),
       ),
     );
   }
 }
 
-/// Which story indices should hold a live video controller.
-///
-/// Every story used to get one the moment the shelf opened: with ten stories
-/// that is ten concurrent network decoders, each holding a MediaCodec instance
-/// and a surface texture, all downloading and looping at once — more than
-/// low-end Android devices allow, for books the reader cannot see. Only the
-/// centred book and its immediate neighbours are worth keeping warm.
-///
-/// Pure so the policy can be tested without mounting the shelf, whose shimmer
-/// animation never settles.
-Set<int> videoWindowFor({
-  required int centered,
-  required List<Story> stories,
-  int radius = 1,
-}) {
-  return {
-    for (var i = centered - radius; i <= centered + radius; i++)
-      if (i >= 0 && i < stories.length && stories[i].hasVideo) i,
-  };
-}
-
-class _BookshelfBody extends StatefulWidget {
-  const _BookshelfBody({required this.stories});
+class StoryShelf extends StatefulWidget {
+  const StoryShelf({super.key, required this.stories});
   final List<Story> stories;
 
   @override
-  State<_BookshelfBody> createState() => _BookshelfBodyState();
+  State<StoryShelf> createState() => _StoryShelfState();
 }
 
-class _BookshelfBodyState extends State<_BookshelfBody>
-    with SingleTickerProviderStateMixin {
-  late final PageController _controller;
-  double _currentPage = 0;
-  int _centeredPage = 0;
-  final Map<int, VideoPlayerController> _videoControllers = {};
+class _StoryShelfState extends State<StoryShelf> {
+  StoryShelfFilter _filter = StoryShelfFilter.all;
 
-  /// Narration keys with a recording that still exists on disk.
-  ///
-  /// Read once on open rather than per card: `find` touches the filesystem to
-  /// verify each file, and doing that inside a builder would hit the disk on
-  /// every frame of the carousel.
+  /// Narration keys with a parent's recording still on disk — read once on
+  /// open, not per card (`find` touches the filesystem).
   Set<String> _narrated = const {};
 
   @override
   void initState() {
     super.initState();
-    _controller = PageController(viewportFraction: 0.55);
-    _controller.addListener(_onScroll);
-    _syncVideoWindow(0);
     _loadNarrations();
   }
 
   Future<void> _loadNarrations() async {
-    final keys = await NarrationStore.instance.available();
-    if (mounted) setState(() => _narrated = keys);
-  }
-
-  String _selectedFilter = 'all';
-
-  List<Story> get _visibleStories {
-    if (_selectedFilter == 'kindergarten') {
-      return widget.stories
-          .where((s) =>
-              s.ageGroup != null &&
-              (s.ageGroup!.contains('3') ||
-                  s.ageGroup!.contains('الروضة') ||
-                  s.ageGroup!.contains('4-7')))
-          .toList();
-    } else if (_selectedFilter == 'school') {
-      return widget.stories
-          .where((s) =>
-              s.ageGroup != null &&
-              (s.ageGroup!.contains('5') ||
-                  s.ageGroup!.contains('7') ||
-                  s.ageGroup!.contains('8')))
-          .toList();
-    }
-    return widget.stories;
-  }
-
-  void _setFilter(String filter) {
-    if (_selectedFilter == filter) return;
-    Haptics.selection();
-    for (final vc in _videoControllers.values) {
-      vc.dispose();
-    }
-    _videoControllers.clear();
-    setState(() {
-      _selectedFilter = filter;
-      _currentPage = 0;
-      _centeredPage = 0;
-    });
-    if (_controller.hasClients) {
-      _controller.jumpToPage(0);
-    }
-    _syncVideoWindow(0);
-  }
-
-  /// Create controllers inside the window around [centered], drop the rest.
-  void _syncVideoWindow(int centered) {
-    final stories = _visibleStories;
-    final wanted = videoWindowFor(centered: centered, stories: stories);
-
-    for (final index in _videoControllers.keys.toList()) {
-      if (!wanted.contains(index)) {
-        _videoControllers.remove(index)!.dispose();
-      }
-    }
-
-    for (final index in wanted) {
-      if (_videoControllers.containsKey(index)) continue;
-      final file = stories[index].videoFile!;
-      final controller = file.startsWith('docs/')
-          ? VideoPlayerController.networkUrl(
-              Uri.parse('${AppConfig.apiBaseUrl}/$file'),
-            )
-          : VideoPlayerController.asset(file);
-      _videoControllers[index] = controller;
-      controller
-        ..setLooping(true)
-        ..setVolume(0)
-        ..initialize().then((_) {
-          // The window may have moved on, or the screen closed, while this
-          // was loading.
-          if (!mounted || _videoControllers[index] != controller) return;
-          setState(() {});
-          if (index == _centeredPage) controller.play();
-        }).catchError((_) {
-          // A cover video that will not load is cosmetic — the shelf falls
-          // back to the cover image. Without this, the failure escapes as an
-          // unhandled async error instead of being ignored.
-        });
+    try {
+      final keys = await NarrationStore.instance.available();
+      if (mounted) setState(() => _narrated = keys);
+    } catch (_) {
+      // No store: no marks.
     }
   }
 
-  void _onScroll() {
-    final page = _controller.page ?? 0;
-    final centered = (page + 0.5).floor();
-    final windowMoved = centered != _centeredPage;
-
-    setState(() {
-      _currentPage = page;
-      _centeredPage = centered;
-    });
-
-    if (windowMoved) _syncVideoWindow(centered);
-
-    // Only the centred book plays.
-    for (final entry in _videoControllers.entries) {
-      final vc = entry.value;
-      if (!vc.value.isInitialized) continue;
-      if (entry.key == centered && !vc.value.isPlaying) {
-        vc.play();
-      } else if (entry.key != centered && vc.value.isPlaying) {
-        vc.pause();
-      }
-    }
-  }
-
-  @override
-  void dispose() {
-    _controller.removeListener(_onScroll);
-    _controller.dispose();
-    for (final vc in _videoControllers.values) {
-      vc.dispose();
-    }
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        const SizedBox(height: 20),
-        Text(
-          AppLocalizations.of(context).bedtimeStories,
-          textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                color: Dt.surface,
-                fontWeight: FontWeight.w800,
-                fontSize: 26,
-              ),
-        ).animate().fadeIn(duration: Dt.slow).slideY(begin: -0.1),
-        const SizedBox(height: 6),
-        Text(
-          AppLocalizations.of(context).bedtimeStoriesDesc,
-          textAlign: TextAlign.center,
-          style: const TextStyle(
-            color: Color(0xFFE0D5C1),
-            fontSize: 13,
-            fontWeight: FontWeight.w600,
-          ),
-        ).animate(delay: 150.ms).fadeIn(duration: Dt.base),
-        const SizedBox(height: 12),
-        // Age group & category filter pills
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              _BookshelfFilterChip(
-                label: 'الكل (${widget.stories.length})',
-                selected: _selectedFilter == 'all',
-                onTap: () => _setFilter('all'),
-              ),
-              const SizedBox(width: 8),
-              _BookshelfFilterChip(
-                label: '🍼 قصص الروضة (٣-٦)',
-                selected: _selectedFilter == 'kindergarten',
-                onTap: () => _setFilter('kindergarten'),
-              ),
-              const SizedBox(width: 8),
-              _BookshelfFilterChip(
-                label: '⭐ ٧ سنوات فأكثر',
-                selected: _selectedFilter == 'school',
-                onTap: () => _setFilter('school'),
-              ),
-            ],
-          ),
-        ),
-        const SizedBox(height: 16),
-        Expanded(
-          child: Stack(
-            children: [
-              const Positioned.fill(child: TwinklingStars(count: 55)),
-              PageView.builder(
-                controller: _controller,
-                itemCount: _visibleStories.length,
-                physics: const BouncingScrollPhysics(),
-                itemBuilder: (context, index) {
-                  final story = _visibleStories[index];
-                  final distance = (_currentPage - index).abs();
-                  final scale = 1 - (distance * 0.18).clamp(0.0, 0.45);
-                  final angle = (index - _currentPage) * 0.18;
-                  final videoController = _videoControllers[index];
-                  return Center(
-                    child: Transform.scale(
-                      scale: scale,
-                      child: Transform(
-                        transform: Matrix4.identity()
-                          ..setEntry(3, 2, 0.001)
-                          ..rotateY(angle),
-                        alignment: Alignment.center,
-                        child: _BookCover(
-                          story: story,
-                          videoController: videoController,
-                          onTap: () => _openStory(story),
-                          hasNarration: _narrated
-                              .contains(narrationKeyFor(story.id)),
-                          onListen: () => _listenInParentVoice(story),
-                        ),
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ],
-          ),
-        ),
-        const SizedBox(height: 20),
-        _PageDots(count: _visibleStories.length, page: _currentPage),
-        const SizedBox(height: 24),
-      ],
-    );
-  }
-
-  void _openStory(Story story) {
-    Navigator.of(context).push(AppRoutes.bedtimeRoutine(story));
-  }
-
-  /// Play the parent's own recording of this story, screen dark.
-  ///
-  /// Recording has existed since sprint 2 and was reachable from exactly one
-  /// place — the generated-story screen — so a story recorded once could never
-  /// be found again. The library is where a child looks for a story, so it is
-  /// where the microphone mark belongs.
   Future<void> _listenInParentVoice(Story story) async {
     final found = await NarrationStore.instance.find(narrationKeyFor(story.id));
     if (found == null || !mounted) return;
-    await Navigator.of(context).push(
-      AppRoutes.screenOffPlayer(title: story.title, source: found.path),
-    );
+    await Navigator.of(
+      context,
+    ).push(AppRoutes.screenOffPlayer(title: story.title, source: found.path));
   }
-}
-
-class _BookCover extends StatelessWidget {
-  const _BookCover({
-    required this.story,
-    this.videoController,
-    required this.onTap,
-    this.hasNarration = false,
-    this.onListen,
-  });
-
-  final Story story;
-  final VideoPlayerController? videoController;
-  final VoidCallback onTap;
-
-  /// A parent has recorded themselves reading this one.
-  final bool hasNarration;
-  final VoidCallback? onListen;
 
   @override
   Widget build(BuildContext context) {
-    final themeColor = Color(
-      int.tryParse(story.themeColor) ?? 0xFF0D9488,
-    );
-
-    return Hero(
-      tag: 'story-cover-${story.id}',
-      child: Semantics(
-        button: true,
-        child: GestureDetector(
-        onTap: onTap,
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 350),
-          width: 220,
-          height: 320,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-                themeColor,
-                Color.lerp(themeColor, Colors.black, 0.25)!,
-              ],
-            ),
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: [
-              BoxShadow(
-                color: themeColor.withValues(alpha: 0.45),
-                blurRadius: 28,
-                offset: const Offset(0, 18),
-              ),
-              BoxShadow(
-                color: Colors.black.withValues(alpha: 0.35),
-                blurRadius: 12,
-                offset: const Offset(0, 8),
-              ),
-            ],
-          ),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: Stack(
+    final l10n = AppLocalizations.of(context);
+    final colors = context.colors;
+    final visible = [
+      for (final s in widget.stories)
+        if (storyMatchesFilter(s, _filter)) s,
+    ];
+    return LayoutBuilder(
+      builder: (context, box) {
+        final textScale = MediaQuery.textScalerOf(context).scale(1);
+        final columns = box.maxWidth >= 600 ? 3 : (textScale > 1.5 ? 1 : 2);
+        const gap = 14.0;
+        final cardWidth = (box.maxWidth - 32 - gap * (columns - 1)) / columns;
+        return ListView(
+          padding: const EdgeInsets.fromLTRB(16, 4, 16, 28),
+          children: [
+            Row(
               children: [
-                // Spine highlight.
-                Positioned(
-                  left: 0,
-                  top: 0,
-                  bottom: 0,
-                  width: 18,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [
-                          Colors.white.withValues(alpha: 0.22),
-                          Colors.white.withValues(alpha: 0.0),
-                        ],
-                      ),
-                      borderRadius: const BorderRadius.horizontal(
-                        left: Radius.circular(20),
-                      ),
-                    ),
-                  ),
-                ),
-                // Cover video or illustration.
-                if (videoController != null &&
-                    videoController!.value.isInitialized)
-                  Positioned.fill(
-                    child: FittedBox(
-                      fit: BoxFit.cover,
-                      child: SizedBox(
-                        width: videoController!.value.size.width,
-                        height: videoController!.value.size.height,
-                        child: VideoPlayer(videoController!),
-                      ),
-                    ),
-                  )
-                else
-                  Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        (story.coverImage.startsWith('docs/')
-                            ? Image.network(
-                                '${AppConfig.apiBaseUrl}/${story.coverImage}',
-                                width: 130,
-                                height: 130,
-                                fit: BoxFit.cover,
-                                errorBuilder: (_, _, _) => Text(
-                                  _emojiForStory(story.id),
-                                  style: const TextStyle(fontSize: 72),
-                                ),
-                              )
-                            : Image.asset(
-                                story.coverImage,
-                                width: 130,
-                                height: 130,
-                                fit: BoxFit.cover,
-                                errorBuilder: (_, _, _) => Text(
-                                  _emojiForStory(story.id),
-                                  style: const TextStyle(fontSize: 72),
-                                ),
-                              )).animate(onPlay: loopUnlessReduced(context)).shimmer(
-                              duration: const Duration(seconds: 3),
-                              color: Colors.white.withValues(alpha: 0.25),
-                            ),
-                        const SizedBox(height: 14),
-                        // Centred, so direction is invisible on one line — but
-                        // a wrapped bidi title reorders its runs by the ambient
-                        // direction, and the ambient direction here belongs to
-                        // the app, not to the story.
-                        ContentDirectionality(
-                          languageCode: story.language,
-                          text: story.title,
-                          child: Text(
-                            story.title,
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 19,
-                              fontWeight: FontWeight.w800,
-                              height: 1.25,
-                            ),
-                          ),
-                        ),
-                        if (story.category != null || story.ageGroup != null) ...[
-                          const SizedBox(height: 8),
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 10,
-                              vertical: 3,
-                            ),
-                            decoration: BoxDecoration(
-                              color: Colors.black.withValues(alpha: 0.35),
-                              borderRadius: BorderRadius.circular(12),
-                              border: Border.all(
-                                color: Colors.white.withValues(alpha: 0.25),
-                              ),
-                            ),
-                            child: Text(
-                              story.category != null
-                                  ? '${story.category} · ${story.ageGroup ?? ""}'
-                                  : story.ageGroup!,
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 11,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ],
-                    ),
-                  ),
-                // Soft tap hint.
-                Positioned(
-                  bottom: 14,
-                  left: 0,
-                  right: 0,
+                const NoorPresence(size: 48, face: NoorFaceState.night),
+                const SizedBox(width: 12),
+                Expanded(
                   child: Text(
-                    AppLocalizations.of(context).storyTapToOpen,
-                    textAlign: TextAlign.center,
+                    l10n.bedtimeStoriesDesc,
                     style: TextStyle(
-                      color: Colors.white.withValues(alpha: 0.85),
-                      fontSize: 12,
+                      color: colors.textSecondary,
+                      fontSize: 14.5,
+                      height: 1.5,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
                 ),
-                // «🎙️» — a parent recorded this one. Its own tap target, so
-                // listening in the dark is one press from the shelf rather
-                // than a path through the reader; the story text is not what
-                // a child wants when the point is to hear their parent.
-                if (hasNarration)
-                  Positioned(
-                    top: 10,
-                    right: 10,
-                    child: Semantics(
-                      button: true,
-                      label: AppLocalizations.of(context).storyListenInParentVoice,
-                      child: GestureDetector(
-                        onTap: onListen,
-                        child: Container(
-                          padding: const EdgeInsets.all(8),
-                          decoration: BoxDecoration(
-                            color: Colors.black.withValues(alpha: 0.45),
-                            shape: BoxShape.circle,
-                          ),
-                          child: const Text('🎙️',
-                              style: TextStyle(fontSize: 16)),
-                        ),
+              ],
+            ),
+            const SizedBox(height: 14),
+            Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: [
+                for (final f in StoryShelfFilter.values)
+                  ChoiceChip(
+                    label: Text(switch (f) {
+                      StoryShelfFilter.all => l10n.storyFilterAll(
+                        widget.stories.length,
                       ),
+                      StoryShelfFilter.young => l10n.storyFilterYoung,
+                      StoryShelfFilter.older => l10n.storyFilterOlder,
+                    }),
+                    selected: _filter == f,
+                    onSelected: (_) {
+                      Haptics.selection();
+                      setState(() => _filter = f);
+                    },
+                  ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            Wrap(
+              spacing: gap,
+              runSpacing: gap + 4,
+              children: [
+                for (final story in visible)
+                  SizedBox(
+                    width: cardWidth,
+                    child: StoryBookCard(
+                      story: story,
+                      hasParentRecording: _narrated.contains(
+                        narrationKeyFor(story.id),
+                      ),
+                      onOpen: () => Navigator.of(
+                        context,
+                      ).push(AppRoutes.storyReader(story)),
+                      onListen: () => _listenInParentVoice(story),
                     ),
                   ),
+              ],
+            ),
+          ],
+        );
+      },
+    );
+  }
+}
+
+/// One book on the shelf: its drawn cover, its title, its ages.
+class StoryBookCard extends StatelessWidget {
+  const StoryBookCard({
+    super.key,
+    required this.story,
+    required this.onOpen,
+    this.hasParentRecording = false,
+    this.onListen,
+  });
+
+  final Story story;
+  final VoidCallback onOpen;
+  final bool hasParentRecording;
+  final VoidCallback? onListen;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.colors;
+    final l10n = AppLocalizations.of(context);
+    return Semantics(
+      button: true,
+      label: story.title,
+      hint: l10n.storyTapToOpen,
+      excludeSemantics: true,
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: [
+            BoxShadow(color: colors.paperShadow, offset: const Offset(4, 5)),
+          ],
+        ),
+        child: Material(
+          color: colors.surface,
+          borderRadius: BorderRadius.circular(20),
+          clipBehavior: Clip.antiAlias,
+          child: InkWell(
+            onTap: onOpen,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Stack(
+                  children: [
+                    Hero(
+                      tag: 'story-cover-${story.id}',
+                      child: StorySceneView(
+                        scene: coverSceneFor(story.id),
+                        animate: false,
+                      ),
+                    ),
+                    if (hasParentRecording)
+                      PositionedDirectional(
+                        top: 6,
+                        end: 6,
+                        child: Material(
+                          color: colors.paperEmerald,
+                          shape: const CircleBorder(),
+                          child: IconButton(
+                            tooltip: l10n.storyListenInParentVoice,
+                            visualDensity: VisualDensity.compact,
+                            icon: Icon(
+                              Icons.record_voice_over_rounded,
+                              color: colors.paperIvory,
+                              size: 18,
+                            ),
+                            onPressed: onListen,
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(12, 10, 12, 12),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ContentDirectionality(
+                        languageCode: story.language,
+                        text: story.title,
+                        child: Text(
+                          story.title,
+                          maxLines: 3,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            color: colors.ink,
+                            fontSize: 15.5,
+                            height: 1.35,
+                            fontWeight: FontWeight.w800,
+                          ),
+                        ),
+                      ),
+                      if (story.ageGroup != null) ...[
+                        const SizedBox(height: 6),
+                        ContentDirectionality(
+                          languageCode: story.language,
+                          text: story.ageGroup!,
+                          child: Text(
+                            story.ageGroup!,
+                            style: TextStyle(
+                              color: colors.textSecondary,
+                              fontSize: 12.5,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
         ),
       ),
-    ),
     );
   }
 }
-
-class _PageDots extends StatelessWidget {
-  const _PageDots({required this.count, required this.page});
-  final int count;
-  final double page;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: List.generate(count, (i) {
-        final active = i == page.round();
-        return AnimatedContainer(
-          duration: const Duration(milliseconds: 250),
-          margin: const EdgeInsets.symmetric(horizontal: 5),
-          width: active ? 22 : 8,
-          height: 8,
-          decoration: BoxDecoration(
-            color: active
-                ? const Color(0xFFE0D5C1)
-                : Colors.white.withValues(alpha: 0.35),
-            borderRadius: BorderRadius.circular(4),
-          ),
-        );
-      }),
-    );
-  }
-}
-
-class _BookshelfFilterChip extends StatelessWidget {
-  const _BookshelfFilterChip({
-    required this.label,
-    required this.selected,
-    required this.onTap,
-  });
-
-  final String label;
-  final bool selected;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(16),
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
-        decoration: BoxDecoration(
-          color: selected
-              ? Dt.accent
-              : Colors.white.withValues(alpha: 0.12),
-          borderRadius: BorderRadius.circular(16),
-          border: Border.all(
-            color: selected
-                ? Dt.accent
-                : Colors.white.withValues(alpha: 0.25),
-          ),
-        ),
-        child: Text(
-          label,
-          style: TextStyle(
-            color: selected ? Colors.black : Colors.white,
-            fontSize: 12,
-            fontWeight: selected ? FontWeight.w800 : FontWeight.w600,
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-String _emojiForStory(String id) {
-  switch (id) {
-    case 'badr_broken_toy':
-      return '🏎️';
-    case 'sarah_basil_sprout':
-      return '🌱';
-    case 'tamim_anger_volcano':
-      return '🌋';
-    case 'noura_sharing_box':
-      return '🎨';
-    case 'salman_secret_trust':
-      return '⌚';
-    case 'hope_sprout':
-      return '🌱';
-    case 'kitten_kindness':
-      return '🐱';
-    case 'layla_star':
-      return '⭐';
-    case 'saleh_bird':
-      return '🐦';
-    case 'noor_clean':
-      return '🌳';
-    case 'maryam_toys':
-      return '🎁';
-    case 'omar_prayer':
-      return '🕌';
-    case 'khadija_neighbor':
-      return '🍲';
-    case 'abdullah_bismillah':
-      return '🍇';
-    case 'hamza_truth':
-      return '💬';
-    case 'aisha_permission':
-      return '🚪';
-    case 'yaseen_creation':
-      return '🌿';
-    case 'fatima_parents':
-      return '🌹';
-    case 'bilal_forgiveness':
-      return '🤝';
-    default:
-      return '📖';
-  }
-}
-
