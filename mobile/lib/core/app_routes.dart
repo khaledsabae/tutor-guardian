@@ -360,8 +360,9 @@ abstract final class AppRoutes {
   static Route<void> storyBookshelf() =>
       _r(Screens.storyBookshelf, (_) => const StoryBookshelfScreen());
 
-  static Route<void> bedtimeRoutine(Story story) =>
-      _r(Screens.bedtimeRoutine, (_) => BedtimeRoutineScreen(story: story));
+  /// The bedtime adhkar — offered at a story's end, never in front of it.
+  static Route<void> bedtimeAdhkar() =>
+      _r(Screens.bedtimeRoutine, (_) => const BedtimeRoutineScreen());
 
   static Route<void> storyReader(Story story) =>
       _r(Screens.storyReader, (_) => StoryReaderScreen(story: story));

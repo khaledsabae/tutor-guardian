@@ -150,6 +150,7 @@ flutter:
     - assets/svg/noor/
     - assets/svg/icons/
     - assets/svg/art/
+    - assets/svg/stories/
     # Brand-aligned Lottie celebrations (generated via ops/tools/gen_lottie.py)
     - assets/animations/
     - assets/audio/

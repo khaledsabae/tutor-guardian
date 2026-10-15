@@ -93,6 +93,28 @@ const T = {
 	message: 360,
 };
 
+/** The frame a stop is reached (Noor has landed on it). */
+const done = (i: number) => T.hops[i] + T.hopLen;
+
+// Sound cues (source frames); exported so the voice-over cut can retime and duck them.
+export const V2_CUES: Cue[] = [
+	{file: 'rustle', at: 0, vol: 0.45},
+	{file: 'rustle', at: T.rise, vol: 0.35},
+	...TOPICS.map((_, i) => ({file: 'tick' as const, at: T.topics[0] + i * 4, vol: 0.28})),
+	{file: 'air', at: T.topics[1], vol: 0.45},
+	...T.road.map(([a]) => ({file: 'rustle_long' as const, at: a, vol: 0.5})),
+	...T.hops.map((a) => ({file: 'air' as const, at: a, vol: 0.3})),
+	...[0, 1, 2].map((i) => ({file: 'drop' as const, at: done(i) + 1, vol: 0.5})),
+	...[0, 1, 2].map((i) => ({file: 'tick' as const, at: done(i) + 4, vol: 0.35})),
+	...T.sky.map((a) => ({file: 'rustle' as const, at: a, vol: 0.5})),
+	{file: 'rustle_long', at: T.roadEnd[0], vol: 0.4},
+	...T.lanterns.map((a, i) => ({file: 'air' as const, at: a + 4, vol: 0.5 - i * 0.05})),
+	...endCues(FROM),
+];
+
+/** Mix trim of this reel (lands the silent cut near -23 LUFS). */
+export const V2_GAIN = 1.13;
+
 export const V2Road: React.FC<{safe?: boolean}> = ({safe = false}) => {
 	const frame = useCurrentFrame();
 	const {fps} = useVideoConfig();
@@ -165,7 +187,6 @@ export const V2Road: React.FC<{safe?: boolean}> = ({safe = false}) => {
 		const [a, b, c, d, e, f] = T.look;
 		return interpolate(frame, [a, b, c, d, e, f], [0, -1, -1, 1, 1, 0], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
 	})();
-	const done = (i: number) => T.hops[i] + T.hopLen;
 	let eyes = blinkEyes(frame, 'open', [140, 250]);
 	let mouth: 'smile' | 'open' | 'calm' = 'smile';
 	let sparkles = 0;
@@ -195,21 +216,6 @@ export const V2Road: React.FC<{safe?: boolean}> = ({safe = false}) => {
 		const off = s.w / 2 + 40;
 		return {x: s.x + side * s.nx * off, y: s.y + side * s.ny * off, size: 140 - i * 14};
 	});
-
-	const cues: Cue[] = [
-		{file: 'rustle', at: 0, vol: 0.45},
-		{file: 'rustle', at: T.rise, vol: 0.35},
-		...TOPICS.map((_, i) => ({file: 'tick' as const, at: T.topics[0] + i * 4, vol: 0.28})),
-		{file: 'air', at: T.topics[1], vol: 0.45},
-		...T.road.map(([a]) => ({file: 'rustle_long' as const, at: a, vol: 0.5})),
-		...T.hops.map((a) => ({file: 'air' as const, at: a, vol: 0.3})),
-		...[0, 1, 2].map((i) => ({file: 'drop' as const, at: done(i) + 1, vol: 0.5})),
-		...[0, 1, 2].map((i) => ({file: 'tick' as const, at: done(i) + 4, vol: 0.35})),
-		...T.sky.map((a) => ({file: 'rustle' as const, at: a, vol: 0.5})),
-		{file: 'rustle_long', at: T.roadEnd[0], vol: 0.4},
-		...T.lanterns.map((a, i) => ({file: 'air' as const, at: a + 4, vol: 0.5 - i * 0.05})),
-		...endCues(FROM),
-	];
 
 	return (
 		<AbsoluteFill style={{background: C.ivory3, overflow: 'hidden'}}>
@@ -340,7 +346,7 @@ export const V2Road: React.FC<{safe?: boolean}> = ({safe = false}) => {
 			<EndCard frame={frame} fps={fps} from={FROM} slug="v2_road" tagline={V2.tagline} noorFrom={pose} />
 			<Watermark frame={frame} fps={fps} hideAt={FROM} />
 			{safe ? <SafeZones /> : null}
-			<ReelSound cues={cues} total={V2_TOTAL} gain={1.13} />
+			<ReelSound cues={V2_CUES} total={V2_TOTAL} gain={V2_GAIN} />
 		</AbsoluteFill>
 	);
 };

@@ -66,6 +66,25 @@ const litAt = (k: number) => (k < 4 ? T.moments[k] + T.litDelay : T.ripple + (k 
 
 const NOOR = {cx: 200, by: 1500, size: 360};
 
+// Sound cues (source frames); exported so the voice-over cut can retime and duck them.
+export const V5_CUES: Cue[] = [
+	{file: 'rustle', at: T.houses, vol: 0.45},
+	...ROWS.map((r) => ({file: 'rustle' as const, at: r.at, vol: 0.45})),
+	{file: 'rustle', at: T.noorRise, vol: 0.3},
+	...T.moments.map((a) => ({file: 'rustle' as const, at: a, vol: 0.4})),
+	...[0, 1, 2, 3].map((k) => ({file: 'air' as const, at: litAt(k) - 14, vol: 0.3})),
+	...[0, 1, 2, 3].map((k) => ({file: 'drop' as const, at: litAt(k), vol: 0.45})),
+	{file: 'rustle', at: T.dayByDay[0], vol: 0.35},
+	...Array.from({length: 26}, (_, i) => i)
+		.filter((i) => i % 4 === 0)
+		.map((i) => ({file: 'air' as const, at: litAt(4 + i), vol: 0.32})),
+	{file: 'drop', at: T.ripple + 104, vol: 0.5},
+	...endCues(FROM),
+];
+
+/** Mix trim of this reel (lands the silent cut near -23 LUFS). */
+export const V5_GAIN = 1.14;
+
 export const V5Ramadan: React.FC<{safe?: boolean}> = ({safe = false}) => {
 	const frame = useCurrentFrame();
 	const {fps} = useVideoConfig();
@@ -140,21 +159,6 @@ export const V5Ramadan: React.FC<{safe?: boolean}> = ({safe = false}) => {
 	const phase = walkE * 22 * Math.PI;
 	const famX = 760 - 300 * walkE;
 	const famPop = springAt(frame, T.walk[0] - 10, fps, 11, 150);
-
-	const cues: Cue[] = [
-		{file: 'rustle', at: T.houses, vol: 0.45},
-		...ROWS.map((r) => ({file: 'rustle' as const, at: r.at, vol: 0.45})),
-		{file: 'rustle', at: T.noorRise, vol: 0.3},
-		...T.moments.map((a) => ({file: 'rustle' as const, at: a, vol: 0.4})),
-		...[0, 1, 2, 3].map((k) => ({file: 'air' as const, at: litAt(k) - 14, vol: 0.3})),
-		...[0, 1, 2, 3].map((k) => ({file: 'drop' as const, at: litAt(k), vol: 0.45})),
-		{file: 'rustle', at: T.dayByDay[0], vol: 0.35},
-		...Array.from({length: 26}, (_, i) => i)
-			.filter((i) => i % 4 === 0)
-			.map((i) => ({file: 'air' as const, at: litAt(4 + i), vol: 0.32})),
-		{file: 'drop', at: T.ripple + 104, vol: 0.5},
-		...endCues(FROM),
-	];
 
 	return (
 		<AbsoluteFill style={{background: C.emerald, overflow: 'hidden'}}>
@@ -267,7 +271,7 @@ export const V5Ramadan: React.FC<{safe?: boolean}> = ({safe = false}) => {
 			<EndCard frame={frame} fps={fps} from={FROM} slug="v5_ramadan" tagline={V5.tagline} noorFrom={pose} />
 			<Watermark frame={frame} fps={fps} hideAt={FROM} />
 			{safe ? <SafeZones /> : null}
-			<ReelSound cues={cues} total={V5_TOTAL} gain={1.14} />
+			<ReelSound cues={V5_CUES} total={V5_TOTAL} gain={V5_GAIN} />
 		</AbsoluteFill>
 	);
 };
