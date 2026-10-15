@@ -11,6 +11,8 @@ import tempfile
 import unittest
 from pathlib import Path
 
+import yaml
+
 import e2e_tool as t
 
 PKG = "com.alsaba.almorabbi"
@@ -107,6 +109,118 @@ class FlowReferencesTest(unittest.TestCase):
                 self.assertIn(name, maps, f"{flow.name}: no map output.{name}")
                 self.assertIn(key, maps[name], f"{flow.name}: no key output.{name}.{key}")
         self.assertGreater(refs, 50)
+
+
+FLOWS = Path(__file__).resolve().parent / "flows"
+ARB_DIR = Path(__file__).resolve().parent.parent / "mobile" / "lib" / "l10n"
+SERVER_RETRY = "common/server_retry.yaml"
+
+
+def _selector(pattern: str, maps: dict) -> re.Pattern:
+    """A flow selector as Maestro matches it: `${output.m.k}` filled in, and
+    Java's mid-pattern `(?s)` (Python refuses it) widened to the whole pattern
+    — every literal dot in these patterns is escaped, so the two agree."""
+    filled = re.sub(r"\$\{output\.(\w+)\.(\w+)\}",
+                    lambda m: maps[m.group(1)][m.group(2)], pattern)
+    return re.compile(filled.replace("(?s)", ""), re.DOTALL)
+
+
+def _run_flows(node, found):
+    """Every `runFlow` mapping anywhere in a parsed flow."""
+    if isinstance(node, dict):
+        if isinstance(node.get("runFlow"), dict):
+            found.append(node["runFlow"])
+        for value in node.values():
+            _run_flows(value, found)
+    elif isinstance(node, list):
+        for value in node:
+            _run_flows(value, found)
+    return found
+
+
+class ServerRetryGuardTest(unittest.TestCase):
+    """common/server_retry.yaml, the 5xx guard. It used to wait for the raw
+    "TgApiError(5xx)" that friendlyError stopped printing on 2026-10-08, so it
+    never fired and one 502 failed whole journeys (gallery/05_after_en,
+    fresh/09, fresh/03). Pin it to the text the app shows."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.ar = json.loads((ARB_DIR / "app_ar.arb").read_text(encoding="utf-8"))
+        cls.en = json.loads((ARB_DIR / "app_en.arb").read_text(encoding="utf-8"))
+        cls.maps, _ = t.build_l10n(cls.ar, cls.en)
+        docs = list(yaml.safe_load_all((FLOWS / SERVER_RETRY).read_text(encoding="utf-8")))
+        cls.loop = docs[1][0]["repeat"]
+        cls.cmds = cls.loop["commands"]
+        cls.when = next(c["runFlow"] for c in cls.cmds if "runFlow" in c)
+        cls.server_down = _selector(cls.loop["while"]["visible"], cls.maps)
+
+    def texts(self, key):
+        return self.ar[key], self.en[key]
+
+    def test_while_and_when_ask_the_same_question(self):
+        self.assertEqual(self.loop["while"]["visible"], self.when["when"]["visible"])
+
+    def test_fires_on_the_server_line_friendly_error_shows(self):
+        for body in self.texts("errorServerBody"):
+            self.assertTrue(self.server_down.fullmatch(body), body)  # its own node
+            self.assertTrue(self.server_down.fullmatch(f"🛠️\n{body}\nRetry"), body)  # merged
+        for wrap, body in zip(self.texts("chatSessionStartFailed"), self.texts("errorServerBody")):
+            line = wrap.replace("{error}", body)
+            self.assertTrue(self.server_down.fullmatch(line), line)
+
+    def test_fires_on_the_raw_error_of_builds_before_friendly_error(self):
+        # efaa740f — the workflow's baseline default — printed '$err'.
+        self.assertTrue(self.server_down.fullmatch(
+            "TgApiError(502): The origin web server returned an invalid or "
+            "incomplete response to Cloudflare"))
+        self.assertTrue(self.server_down.fullmatch("TgApiError(503)"))
+
+    def test_leaves_every_other_failure_to_fail(self):
+        for key in ("errorOfflineBody", "errorUnknownBody", "errorNotFoundBody",
+                    "errorSessionBody", "errorRateLimitedBody",
+                    "chatConnectionInterrupted", "lessonErrorLoading"):
+            for text in self.texts(key):
+                self.assertIsNone(self.server_down.fullmatch(text), f"{key}: {text}")
+        for raw in ("TgApiError(404): Not Found", "TgApiError(429)", "TgApiError(null): timeout"):
+            self.assertIsNone(self.server_down.fullmatch(raw), raw)
+
+    def test_taps_the_retry_of_every_5xx_surface(self):
+        tap = _selector(self.when["commands"][0]["tapOn"], self.maps)
+        for key in ("retry", "chatRetry"):  # EmptyState/ErrorRetryView, chat turn
+            for label in self.texts(key):
+                self.assertTrue(tap.fullmatch(label), f"{key}: {label}")
+
+    def test_is_bounded_to_two_retries_about_a_minute_apart(self):
+        # A restart or deploy holds the server ~50 s; a real outage must still
+        # fail, so: two retries, each after a pause, ~60 s in all.
+        self.assertEqual(self.loop["times"], 2)
+        pause = next(c["extendedWaitUntil"] for c in self.cmds if "extendedWaitUntil" in c)
+        self.assertTrue(pause["optional"])
+        self.assertGreaterEqual(self.loop["times"] * int(pause["timeout"]), 50_000)
+        self.assertLessEqual(self.loop["times"] * int(pause["timeout"]), 70_000)
+
+    def test_incident_sites_use_it_and_nothing_waits_for_the_raw_error(self):
+        callers = {}
+        for flow in sorted(FLOWS.rglob("*.yaml")):
+            rel = flow.relative_to(FLOWS).as_posix()
+            text = flow.read_text(encoding="utf-8")
+            if rel != SERVER_RETRY:
+                self.assertNotIn("TgApiError", text, f"{rel}: wait for the shown text, not the raw error")
+            for run in _run_flows(list(yaml.safe_load_all(text)), []):
+                if str(run.get("file", "")).endswith(SERVER_RETRY):
+                    callers[rel] = run.get("env", {})
+        self.assertLessEqual(
+            {"fresh/02_today_lesson.yaml", "gallery/shoot.yaml",
+             "fresh/09_programs.yaml", "fresh/03_assistant.yaml"}, set(callers))
+        for rel, env in callers.items():
+            self.assertIn("retry", env.get("SHOT", ""), f"{rel}: run.sh warns on *retry* shots")
+            # A retried page keeps its error up while it reloads, so READY must
+            # be the content alone or the pause ends at once.
+            ready = env.get("READY", "")
+            self.assertTrue(ready, f"{rel}: READY missing")
+            for err in ("errorServerBody", "lessonErrorLoading", "output.t.retry", "chatRetry"):
+                self.assertNotIn(err, ready, f"{rel}: READY must not match the error page")
 
 
 class LogcatGateTest(unittest.TestCase):
