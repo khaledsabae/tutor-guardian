@@ -615,6 +615,38 @@ class GalleryTest(unittest.TestCase):
         self.assertIn("ar:praise_child_sticker", stdout)
 
 
+class ShootOrderTest(unittest.TestCase):
+    """What one leg of gallery/shoot.yaml leaves on screen is where the next starts."""
+
+    @staticmethod
+    def scroll(cmd):
+        s = cmd.get("scrollUntilVisible") if isinstance(cmd, dict) else None
+        return (s["element"]["text"], s.get("direction")) if s else None
+
+    def test_lantern_search_scrolls_back_up_to_the_mission(self):
+        # Run 38688818497 (#112): production has no /api/family/week, so the
+        # lantern search ran Today to its bottom. Tapping the Today tab keeps
+        # that offset, the praise leg's DOWN search for ③ («افتح مهمة اليوم»)
+        # never found it, and every 7–12 praise shot (and at 200% font the
+        # 4–6 one too) came out blank in both lineages.
+        import yaml
+        flow = Path(__file__).resolve().parent / "flows" / "gallery" / "shoot.yaml"
+        steps = list(yaml.safe_load_all(flow.read_text(encoding="utf-8")))[-1]
+        lanterns = "${output.c.weekLanternsTitle}"
+        mission = "${output.t.todayMissionOpen}"
+        start = next(i for i, c in enumerate(steps) if self.scroll(c) == (lanterns, "DOWN"))
+        praise = next(i for i, c in enumerate(steps)
+                      if i > start and self.scroll(c) == (mission, "DOWN"))
+        restores = [
+            c for c in steps[start + 1:praise]
+            if isinstance(c, dict) and "runFlow" in c
+            and c["runFlow"].get("when", {}).get("notVisible") == lanterns
+            and any(self.scroll(x) == (mission, "UP") for x in c["runFlow"].get("commands", []))
+        ]
+        self.assertTrue(restores, "a missed lantern row must scroll Today back UP to ③ "
+                        "before the praise leg searches DOWN for it")
+
+
 class HierarchyVerificationTest(unittest.TestCase):
     def test_matching_hierarchy_passes(self):
         sample = '<node text="الإعدادات" resource-id="settings_title"/>'

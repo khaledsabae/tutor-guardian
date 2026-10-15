@@ -322,8 +322,7 @@ name: gallery/shoot
 # ── «قناديل الأسبوع» (نور والقناديل phase 3): the lantern row under ① on
 # Today, the lesson above having lit one. Guarded twice: a server without
 # /api/family/week shows no row, and the baseline build has no such ARB key
-# (its selector never matches) — the screen is in GALLERY_GUARDED. The
-# praise leg below starts with its own navToday tap and scroll.
+# (its selector never matches) — the screen is in GALLERY_GUARDED.
 - tapOn: '${output.lead.navToday}'
 - scrollUntilVisible:
     element:
@@ -338,6 +337,20 @@ name: gallery/shoot
       - waitForAnimationToEnd:
           timeout: 2000
       - takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__week_lanterns'
+# No row: the search above ran Today to its bottom, past ③. Tapping the Today
+# tab keeps that offset, and the praise leg only searches DOWN — run
+# 38688818497 lost every 7–12 praise shot (and at 200% font the 4–6 one) to
+# it. Bring ③'s button back into view first. With a row, ③ is still below it.
+- runFlow:
+    when:
+      notVisible: '${output.c.weekLanternsTitle}'
+    commands:
+      - scrollUntilVisible:
+          element:
+            text: '${output.t.todayMissionOpen}'
+          direction: UP
+          timeout: 20000
+          optional: true
 # ── Praise Card: Praise moment from family, both 7–12 (sticker+text) and 4–6 (sticker only).
 # Step 1: Child 1 (7-9) opens child mode and marks mission done.
 - tapOn: '${output.lead.navToday}'
