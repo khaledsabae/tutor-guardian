@@ -309,6 +309,28 @@ void main() {
       expect(find.textContaining('على الأفق'), findsOneWidget);
     });
 
+    testWidgets('its tap target is the strip itself, not the sky', (
+      tester,
+    ) async {
+      // Run 38754954265: the strip's node spanned the whole sky band, so a
+      // tap on its centre (what Maestro and TalkBack do) landed on Noor's
+      // bubble and opened nothing.
+      final semantics = tester.ensureSemantics();
+      try {
+        await pumpHome(tester, programs: upcoming());
+        final node = tester.getSemantics(
+          find.bySemanticsLabel(RegExp('على الأفق')),
+        );
+        final strip = tester.getRect(find.byType(HorizonStrip));
+        final rect = node.transform == null
+            ? node.rect
+            : MatrixUtils.transformRect(node.transform!, node.rect);
+        expect(rect.height, lessThanOrEqualTo(strip.height + 1));
+      } finally {
+        semantics.dispose();
+      }
+    });
+
     testWidgets('a tap opens «درب {الاسم}»', (tester) async {
       await pumpHome(tester, programs: upcoming());
       await tester.tap(find.byType(HorizonStrip));
@@ -333,29 +355,55 @@ void main() {
       expect(find.byType(HorizonStrip), findsNothing);
     });
 
-    for (final scale in [1.0, 2.0]) {
-      testWidgets('① keeps its place under it — 360dp, ${scale}x text', (
+    testWidgets('① keeps its place under it — 360dp', (tester) async {
+      await pumpHome(tester, programs: upcoming(), phone: const Size(360, 800));
+      expect(find.byType(HorizonStrip), findsOneWidget);
+      // The strip lies on the hills, inside the sky (the band grows by less
+      // than the strip — sky_band_test), and ① follows the sky.
+      final sky = tester.getRect(find.byType(SkyBand));
+      final strip = tester.getRect(find.byType(HorizonStrip));
+      expect(strip.bottom, lessThanOrEqualTo(sky.bottom));
+      final step = tester.getTopLeft(find.byType(TodayFocusCard)).dy;
+      expect(step, greaterThan(sky.bottom));
+      expect(step, lessThan(800 - 200));
+    });
+
+    for (final size in const [Size(411, 914), Size(360, 800)]) {
+      testWidgets('200% text: ①\'s button stays on the first screen, the '
+          'strip waits under the road — ${size.width.toInt()}dp', (
         tester,
       ) async {
+        // CI run 38754954265: on the hills the strip wrapped to two lines at
+        // 200% and pushed ①'s button below a 411×914 phone's fold.
         await pumpHome(
           tester,
           programs: upcoming(),
-          textScale: scale,
-          phone: const Size(360, 800),
+          textScale: 2.0,
+          phone: size,
         );
-        expect(find.byType(HorizonStrip), findsOneWidget);
         expect(tester.takeException(), isNull);
-        // The strip lies on the hills, inside the sky (the band grows by
-        // less than the strip — sky_band_test), and ① follows the sky.
+        expect(
+          find.descendant(
+            of: find.byType(SkyBand),
+            matching: find.byType(HorizonStrip),
+          ),
+          findsNothing,
+        );
+        // Nothing new stands above ①: the band keeps its own height (the
+        // test font is wider than Cairo, so the fold itself is pinned on the
+        // device by fresh/01's ① assertion, which this protects).
         final sky = tester.getRect(find.byType(SkyBand));
-        final strip = tester.getRect(find.byType(HorizonStrip));
-        expect(strip.bottom, lessThanOrEqualTo(sky.bottom));
-        final step = tester.getTopLeft(find.byType(TodayFocusCard)).dy;
-        expect(step, greaterThan(sky.bottom));
-        if (scale == 1.0) {
-          // On a 360×800 phone the ① card begins well within the first screen.
-          expect(step, lessThan(800 - 200));
-        }
+        final step = tester.getRect(find.byType(TodayFocusCard));
+        expect(step.top, greaterThan(sky.bottom));
+        await tester.scrollUntilVisible(
+          find.byType(HorizonStrip),
+          300,
+          scrollable: find.byType(Scrollable).first,
+        );
+        expect(
+          tester.getRect(find.byType(HorizonStrip)).top,
+          greaterThan(tester.getRect(find.byType(TodayFocusCard)).bottom),
+        );
       });
     }
 

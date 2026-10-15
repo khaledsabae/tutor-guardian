@@ -586,6 +586,7 @@ class _LanternsCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(18),
                 onTap: onTap,
                 child: Semantics(
+                  container: true,
                   button: true,
                   hint: l10n.familyRoadOpenWeek,
                   child: body,

@@ -170,7 +170,7 @@ KEYS = [
     # sound × recitation (e2e/flows/rehearsal/sound_*.yaml): the Quran
     # reader's surah list and its bottom «استماع / إيقاف» pill.
     "holyQuran", "quranVerseCount", "quranListen", "quranStop",
-    # «درب {الاسم}» and «على الأفق» (عالم الأسرة): fresh/10 and the gallery's
+    # «درب {الاسم}» and «على الأفق» (عالم الأسرة): fresh/11 and the gallery's
     # family_road shots — head builds only; the gallery guards its shots.
     "familyRoadHorizon", "familyRoadHere", "familyRoadLit",
     "familyRoadEntryBody",

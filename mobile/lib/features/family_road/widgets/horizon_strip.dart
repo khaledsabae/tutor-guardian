@@ -76,7 +76,11 @@ class _HorizonStripState extends ConsumerState<HorizonStrip> {
     final what = when == null
         ? gateTitle(l10n, g, name: name)
         : '${gateTitle(l10n, g, name: name)} $when';
+    // Its own node (container): without it the label merged into the sky
+    // band's node, and a tap on that node's centre — what TalkBack and
+    // Maestro do — landed on Noor's bubble (CI run 38754954265).
     return Semantics(
+      container: true,
       button: true,
       hint: l10n.horizonStripHint,
       child: Material(

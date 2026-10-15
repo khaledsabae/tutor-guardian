@@ -1,4 +1,4 @@
-# Checkpoint 10 — «درب {الاسم}» and «على الأفق» (عالم الأسرة).
+# Checkpoint 11 — «درب {الاسم}» and «على الأفق» (عالم الأسرة).
 #
 # Read-only: it opens screens and taps nothing that writes.
 # «تعلّم» → the road's entry row at the top of the paths → the road opens on
@@ -7,7 +7,7 @@
 # Ramadan estimate is one until the season — and the strip's switch on), the
 # strip opens the same road.
 appId: com.alsaba.almorabbi
-name: fresh/10 Family road
+name: fresh/11 Family road
 ---
 - runScript: ../common/l10n.js
 - runFlow: ../common/home.yaml
@@ -46,10 +46,17 @@ name: fresh/10 Family road
       visible: '${output.c.familyRoadHorizon}'
     commands:
       - takeScreenshot: family_road_3_strip
+      # The strip is its own semantics node (run 38754954265: merged into
+      # the sky band, its centre was Noor's bubble and the tap opened
+      # nothing). «أنتم هنا» is only on the road, never on Today.
       - tapOn: '${output.c.familyRoadHorizon}'
-      - extendedWaitUntil:
-          visible: '${output.c.familyRoadHere}'
-          timeout: 30000
+      - waitForAnimationToEnd:
+          timeout: 3000
+      - scrollUntilVisible:
+          element:
+            text: '${output.c.familyRoadHere}'
+          direction: DOWN
+          timeout: 20000
       - assertNotVisible: '${output.c.lit_errorWidget}'
       - back
 - runFlow: ../common/home.yaml
