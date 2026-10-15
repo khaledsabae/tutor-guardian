@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Resources the release resource shrinker cannot see being used.
+
+     Dart names these by string (lib/features/adhkar/services/notification_service.dart:
+     AndroidInitializationSettings('@mipmap/ic_launcher')), and the shrinker reads
+     the manifest and dex, never the Dart snapshot. While the manifest's
+     android:icon pointed at ic_launcher that hid the problem; the moment it pointed
+     elsewhere (PR #121, the paper-cut icon) ic_launcher left the APK, the
+     notification plugin answered invalid_icon on every launch and no reminder was
+     ever scheduled. Guarded by test/android_resources_named_from_dart_test.dart.
+     The build does not package this file. -->
+<resources xmlns:tools="http://schemas.android.com/tools"
+    tools:keep="@mipmap/ic_launcher" />

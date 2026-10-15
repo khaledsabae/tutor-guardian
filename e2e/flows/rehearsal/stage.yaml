@@ -1,0 +1,297 @@
+# One stage of the Ramadan rehearsal (docs/NOOR_WAL_QANADIL_PLAN.md, phase 5,
+# gate G2). The app talks to the CANDIDATE backend on the runner, never to
+# production; e2e/rehearsal.sh has just written this stage's date into the
+# as-of proxy's file, so every family-programs answer is «as of» that day.
+#
+# The family's way in, every stage: a cold start (nothing cached from the
+# previous date — this is also the «إعادة فتح» of G2) → Today → «المزيد» →
+# «برامج الأسرة» (the family card names the stage) → «افتح البرنامج» →
+# «رمضان العائلة» → back to Today («الخروج»).
+#
+# Env (rehearsal.sh passes every one, always):
+#   STAGE   before | day1 | day15 | day27 | eid | after
+#   DAY     the day of the month for day stages, 0 otherwise
+#   TAG     before = the build on Play now (v1.0.72+117), after = the PR head
+#   VARIANT ar | en | ar_dark — names the shots only; the language and theme
+#           were set by variant.yaml before the pass
+#   MARK    none | challenge | all — what this stage ticks among «ما أتممناه»
+#           (ticks only what is not ticked yet, so a rerun never unticks)
+#   EXPECT_BASELINE_MARK  true when the Play build ticked day 1's challenge
+#           before the upgrade: the head must show it ticked before touching it
+#
+# Shots: ${TAG}__${VARIANT}__<stage>_<screen>, paired by e2e_tool.py
+# rehearsal-gallery. Head-only selectors (the lantern street, «الحمد لله»,
+# Noor's countdown) sit behind TAG == 'after': the Play build lacks those ARB
+# keys, and its pass is informational anyway — it is the gallery's «before».
+appId: com.alsaba.almorabbi
+name: rehearsal/stage
+---
+- runScript: ../common/l10n.js
+- launchApp:
+    stopApp: true
+- runFlow: ../common/system_dialogs.yaml
+
+# ── Eid: «عيدكم مبارك» over Today (head; once a Hijri year per install) ─────
+# EidMomentGate opens it on the first open of Eid, as soon as /api/programs
+# answers. Its modal barrier hides the nav bar from the hierarchy, so it is
+# closed before Today is awaited. Only the first head pass of the stage (ar)
+# meets it; en and ar_dark follow on the same install, the year already seen.
+- runFlow:
+    when:
+      true: "${STAGE == 'eid' && TAG == 'after'}"
+    commands:
+      - extendedWaitUntil:
+          visible: '(?:${output.lead.navToday}|${output.t.eidMomentTitle})'
+          timeout: 60000
+      # Today may draw before /api/programs answers; the moment follows it.
+      - extendedWaitUntil:
+          visible: '${output.t.eidMomentTitle}'
+          timeout: 15000
+          optional: true
+      - runFlow:
+          when:
+            visible: '${output.t.eidMomentTitle}'
+          commands:
+            - waitForAnimationToEnd:
+                timeout: 3000
+            - assertNotVisible: '${output.c.lit_errorWidget}'
+            - takeScreenshot: '${TAG}__${VARIANT}__eid_moment'
+            - tapOn: '${output.t.close}'
+            - extendedWaitUntil:
+                notVisible: '${output.t.eidMomentTitle}'
+                timeout: 10000
+
+- extendedWaitUntil:
+    visible: '${output.lead.navToday}'
+    timeout: 60000
+- runFlow: ../common/skip_tour.yaml
+
+# ── Today, 30 days before: Noor's countdown (head; once per install) ───────
+- runFlow:
+    when:
+      true: "${STAGE == 'before'}"
+    commands:
+      - tapOn: '${output.lead.navToday}'
+      - waitForAnimationToEnd:
+          timeout: 3000
+      - assertNotVisible: '${output.c.lit_errorWidget}'
+      - takeScreenshot: '${TAG}__${VARIANT}__before_today'
+      - runFlow:
+          when:
+            true: "${TAG == 'after'}"
+            visible: '${output.c.noorRamadan30}'
+          commands:
+            - takeScreenshot: '${TAG}__${VARIANT}__before_today_noor'
+
+# ── «برامج الأسرة»: the family card names the stage ───────────────────────
+- tapOn: '${output.lead.navMore}'
+- extendedWaitUntil:
+    visible: '${output.t.hubTitle}'
+    timeout: 30000
+- scrollUntilVisible:
+    element:
+      text: '${output.tile.programsTitle}'
+    direction: DOWN
+    timeout: 20000
+- tapOn: '${output.tile.programsTitle}'
+- extendedWaitUntil:
+    visible: '${output.c.programsIntro}'
+    timeout: 30000
+- runFlow:
+    when:
+      true: "${STAGE == 'before'}"
+    file: expect.yaml
+    env:
+      PATTERN: '${output.c.ramadanStartsOnEstimate}'
+- runFlow:
+    when:
+      true: "${DAY != '0'}"
+    file: expect.yaml
+    env:
+      PATTERN: '${output.c.ramadanDayOf}'
+- runFlow:
+    when:
+      true: "${STAGE == 'eid'}"
+    file: expect.yaml
+    env:
+      PATTERN: '${output.c.programsRamadanEid}'
+- runFlow:
+    when:
+      true: "${STAGE == 'after'}"
+    file: expect.yaml
+    env:
+      PATTERN: '${output.c.programsRamadanAfterWeek}'
+- assertNotVisible: '${output.c.lit_errorWidget}'
+- takeScreenshot: '${TAG}__${VARIANT}__${STAGE}_programs'
+- tapOn: '${output.t.programsOpenRamadan}'
+- waitForAnimationToEnd:
+    timeout: 3000
+
+# ── before: the countdown ────────────────────────────────────────────────
+- runFlow:
+    when:
+      true: "${STAGE == 'before'}"
+    commands:
+      - runFlow:
+          file: expect.yaml
+          env:
+            PATTERN: '${output.c.ramadanStartsOnEstimate}'
+      - assertNotVisible: '${output.c.lit_errorWidget}'
+      - takeScreenshot: '${TAG}__${VARIANT}__before_ramadan'
+
+# ── a day of the month: «ما أتممناه», then the street ─────────────────────
+- runFlow:
+    when:
+      true: "${DAY != '0'}"
+    commands:
+      - scrollUntilVisible:
+          element:
+            text: '${output.t.ramadanMarkChallenge}'
+          direction: DOWN
+          timeout: 30000
+          centerElement: true
+      # Ticked by the Play build before the upgrade → still ticked on the head.
+      - runFlow:
+          when:
+            true: "${TAG == 'after' && EXPECT_BASELINE_MARK == 'true'}"
+          commands:
+            - assertVisible:
+                text: '${output.t.ramadanMarkChallenge}'
+                checked: true
+      # The Play build's marks are FilterChips (selected), the head's are
+      # lantern toggles (checked).
+      - runFlow:
+          when:
+            true: "${TAG == 'before' && MARK != 'none'}"
+            visible:
+              text: '${output.t.ramadanMarkChallenge}'
+              selected: false
+          commands:
+            - tapOn:
+                text: '${output.t.ramadanMarkChallenge}'
+                selected: false
+            - extendedWaitUntil:
+                visible:
+                  text: '${output.t.ramadanMarkChallenge}'
+                  selected: true
+                timeout: 15000
+      - runFlow:
+          when:
+            true: "${TAG == 'after' && MARK != 'none'}"
+            visible:
+              text: '${output.t.ramadanMarkChallenge}'
+              checked: false
+          commands:
+            - tapOn:
+                text: '${output.t.ramadanMarkChallenge}'
+                checked: false
+            - extendedWaitUntil:
+                visible:
+                  text: '${output.t.ramadanMarkChallenge}'
+                  checked: true
+                timeout: 15000
+      # MARK=all: every lantern of the day → the quiet «الحمد لله» glow.
+      - runFlow:
+          when:
+            true: "${TAG == 'after' && MARK == 'all'}"
+          commands:
+            - repeat:
+                times: 6
+                while:
+                  visible:
+                    text: '(?:${output.t.ramadanMarkChallenge}|${output.t.ramadanMarkWird}|${output.t.ramadanMarkStory}|${output.t.ramadanMarkJuz}|${output.t.ramadanMarkNight})'
+                    checked: false
+                commands:
+                  - tapOn:
+                      text: '(?:${output.t.ramadanMarkChallenge}|${output.t.ramadanMarkWird}|${output.t.ramadanMarkStory}|${output.t.ramadanMarkJuz}|${output.t.ramadanMarkNight})'
+                      checked: false
+                  - waitForAnimationToEnd:
+                      timeout: 3000
+      - runFlow:
+          when:
+            true: "${TAG == 'after' && STAGE == 'day27'}"
+          commands:
+            - scrollUntilVisible:
+                element:
+                  text: '${output.c.ramadanDayComplete}'
+                direction: DOWN
+                timeout: 20000
+                centerElement: true
+      - waitForAnimationToEnd:
+          timeout: 2000
+      - assertNotVisible: '${output.c.lit_errorWidget}'
+      - takeScreenshot: '${TAG}__${VARIANT}__${STAGE}_marks'
+      # The street: today's lantern lit — the family marked something today.
+      - runFlow:
+          when:
+            true: "${TAG == 'after'}"
+          commands:
+            - scrollUntilVisible:
+                element:
+                  text: '(?s)(?=.*${output.t.ramadanLanternLit})(?=.*${output.t.ramadanDayToday.split(".*").join(DAY)}).*'
+                direction: DOWN
+                timeout: 30000
+                centerElement: true
+      - runFlow:
+          when:
+            true: "${TAG == 'before'}"
+          commands:
+            - scrollUntilVisible:
+                element:
+                  text: '${output.c.ramadanOtherDays}'
+                direction: DOWN
+                timeout: 30000
+                centerElement: true
+      - waitForAnimationToEnd:
+          timeout: 2000
+      - takeScreenshot: '${TAG}__${VARIANT}__${STAGE}_street'
+
+# ── Eid: the card, the street of the whole month, the family's recap ──────
+- runFlow:
+    when:
+      true: "${STAGE == 'eid'}"
+    commands:
+      # The Eid card ends on the prominent «افتح رمضان عائلتنا».
+      - runFlow:
+          file: expect.yaml
+          env:
+            PATTERN: '${output.c.ramadanRecapOpen}'
+      - waitForAnimationToEnd:
+          timeout: 2000
+      - assertNotVisible: '${output.c.lit_errorWidget}'
+      - takeScreenshot: '${TAG}__${VARIANT}__eid_ramadan'
+      - runFlow: street_month.yaml
+      - takeScreenshot: '${TAG}__${VARIANT}__eid_street'
+      - scrollUntilVisible:
+          element:
+            text: '${output.c.ramadanRecapOpen}'
+          direction: UP
+          timeout: 20000
+      - tapOn: '${output.c.ramadanRecapOpen}'
+      - runFlow:
+          file: expect.yaml
+          env:
+            PATTERN: '${output.c.recapTitle}'
+      - waitForAnimationToEnd:
+          timeout: 3000
+      - assertNotVisible: '${output.c.lit_errorWidget}'
+      - takeScreenshot: '${TAG}__${VARIANT}__eid_recap'
+      - back
+
+# ── After: the bridge weeks, and the street stays lit ────────────────────
+- runFlow:
+    when:
+      true: "${STAGE == 'after'}"
+    commands:
+      - runFlow:
+          file: expect.yaml
+          env:
+            PATTERN: '${output.c.ramadanAfterWeeks}'
+      - waitForAnimationToEnd:
+          timeout: 2000
+      - assertNotVisible: '${output.c.lit_errorWidget}'
+      - takeScreenshot: '${TAG}__${VARIANT}__after_ramadan'
+      - runFlow: street_month.yaml
+      - takeScreenshot: '${TAG}__${VARIANT}__after_street'
+
+- runFlow: ../common/home.yaml

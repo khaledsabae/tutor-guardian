@@ -4,37 +4,35 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../config/app_config.dart';
-import '../../../core/app_routes.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../coins/coins_providers.dart';
-import '../data/story_models.dart';
-import '../../screen_off/narration_store.dart';
 import '../services/bedtime_audio_service.dart';
 import '../../../widgets/ui/night_sky.dart';
 import '../../../theme/design_tokens.dart';
 import '../../../theme/app_colors.dart';
 import 'package:almorabbi/core/motion.dart';
 
+/// The bedtime adhkar, three to say before sleep.
+///
+/// Until 2026-10 this screen stood in front of every story: a tap on a book
+/// opened five taps of adhkar first, at any hour, with no way past, and its
+/// last button («ابدأ التعلّم») led into the story. Now a story opens on its
+/// own and offers this at its end, and this screen ends the night instead.
+/// The three texts are the ones it always carried (checked by the scripture
+/// guards as Dart literals); nothing was added.
 class BedtimeRoutineScreen extends ConsumerStatefulWidget {
-  final Story story;
-
-  const BedtimeRoutineScreen({super.key, required this.story});
+  const BedtimeRoutineScreen({super.key});
 
   @override
-  ConsumerState<BedtimeRoutineScreen> createState() => _BedtimeRoutineScreenState();
+  ConsumerState<BedtimeRoutineScreen> createState() =>
+      _BedtimeRoutineScreenState();
 }
 
 class _DhikrItem {
   final String text;
-  final String translation;
   final int count;
 
-  const _DhikrItem({
-    required this.text,
-    required this.translation,
-    required this.count,
-  });
+  const _DhikrItem({required this.text, required this.count});
 }
 
 class _StarParticle {
@@ -49,19 +47,13 @@ class _BedtimeRoutineScreenState extends ConsumerState<BedtimeRoutineScreen> {
   final List<_DhikrItem> _adhkar = const [
     _DhikrItem(
       text: 'بِاسْمِكَ رَبِّي وَضَعْتُ جَنْبِي، وَبِكَ أَرْفَعُهُ',
-      translation: 'مرة واحدة',
       count: 1,
     ),
     _DhikrItem(
       text: 'اللَّهُمَّ قِنِي عَذَابَكَ يَوْمَ تَبْعَثُ عِبَادَكَ',
-      translation: '٣ مرات',
       count: 3,
     ),
-    _DhikrItem(
-      text: 'بِاسْمِكَ اللَّهُمَّ أَمُوتُ وَأَحْيَا',
-      translation: 'مرة واحدة',
-      count: 1,
-    ),
+    _DhikrItem(text: 'بِاسْمِكَ اللَّهُمَّ أَمُوتُ وَأَحْيَا', count: 1),
   ];
 
   int _currentIndex = 0;
@@ -72,19 +64,7 @@ class _BedtimeRoutineScreenState extends ConsumerState<BedtimeRoutineScreen> {
   void initState() {
     super.initState();
     _remainingCount = _adhkar[0].count;
-    _initAudio();
     StoryWakeLock.keepAwake();
-  }
-
-  Future<void> _initAudio() async {
-    if (BedtimeAudioService.instance.isPlaying) {
-      return;
-    }
-    await BedtimeAudioService.instance.initialize(
-      assetPath: 'assets/audio/nature_ambient.mp3',
-      initialVolume: 0.18,
-    );
-    await BedtimeAudioService.instance.play();
   }
 
   @override
@@ -134,56 +114,14 @@ class _BedtimeRoutineScreenState extends ConsumerState<BedtimeRoutineScreen> {
     }
   }
 
-  void _startStory() {
-    Navigator.of(context).pushReplacement(
-      AppRoutes.storyReader(widget.story),
-    );
-  }
-
-  Future<void> _recordNarration(BuildContext context) async {
-    final saved = await Navigator.of(context).push(
-      AppRoutes.recordNarration(
-        storyKey: narrationKeyFor(widget.story.id),
-        storyText: widget.story.pages.map((p) => p.text).join('\n\n'),
-      ),
-    );
-    if (saved == true && context.mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(AppLocalizations.of(context).storyNarrationSaved),
-        ),
-      );
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    final themeColor = Color(
-      int.tryParse(widget.story.themeColor) ?? 0xFF0D9488,
-    );
+    final themeColor = context.colors.paperEmerald;
 
     return Scaffold(
       backgroundColor: const Color(0xFF0B3B3B),
       body: Stack(
         children: [
-          // Background night visual
-          Positioned.fill(
-            child: widget.story.hasVideo
-                ? Container(color: const Color(0xFF0B3B3B))
-                : (widget.story.coverImage.startsWith('docs/')
-                    ? Image.network(
-                        '${AppConfig.apiBaseUrl}/${widget.story.coverImage}',
-                        fit: BoxFit.cover,
-                        opacity: const AlwaysStoppedAnimation(0.2),
-                        errorBuilder: (_, _, _) => const SizedBox.shrink(),
-                      )
-                    : Image.asset(
-                        widget.story.coverImage,
-                        fit: BoxFit.cover,
-                        opacity: const AlwaysStoppedAnimation(0.2),
-                        errorBuilder: (_, _, _) => const SizedBox.shrink(),
-                      )),
-          ),
           Positioned.fill(
             child: Container(
               decoration: BoxDecoration(
@@ -216,7 +154,7 @@ class _BedtimeRoutineScreenState extends ConsumerState<BedtimeRoutineScreen> {
                       ),
                       const Spacer(),
                       Text(
-                        AppLocalizations.of(context).bedtimeStories,
+                        AppLocalizations.of(context).storyBedtimeAdhkar,
                         style: const TextStyle(
                           color: Colors.white,
                           fontSize: 20,
@@ -224,16 +162,7 @@ class _BedtimeRoutineScreenState extends ConsumerState<BedtimeRoutineScreen> {
                         ),
                       ),
                       const Spacer(),
-                      // Record this story in a parent's own voice.
-                      //
-                      // The recorder shipped in sprint 2 reachable from one
-                      // place only — the generated-story screen — so none of
-                      // the written stories could ever be narrated, and the
-                      // 🎙️ mark on the shelf had nothing to light up.
-                      _RoundButton(
-                        icon: Icons.mic_none,
-                        onTap: () => _recordNarration(context),
-                      ),
+                      const SizedBox(width: 44),
                     ],
                   ),
                 ),
@@ -249,8 +178,10 @@ class _BedtimeRoutineScreenState extends ConsumerState<BedtimeRoutineScreen> {
                           return FadeTransition(
                             opacity: animation,
                             child: ScaleTransition(
-                              scale: Tween<double>(begin: 0.95, end: 1.0)
-                                  .animate(animation),
+                              scale: Tween<double>(
+                                begin: 0.95,
+                                end: 1.0,
+                              ).animate(animation),
                               child: child,
                             ),
                           );
@@ -298,7 +229,9 @@ class _BedtimeRoutineScreenState extends ConsumerState<BedtimeRoutineScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                AppLocalizations.of(context).bedtimeAdhkarCounter(_currentIndex + 1, _adhkar.length),
+                AppLocalizations.of(
+                  context,
+                ).bedtimeAdhkarCounter(_currentIndex + 1, _adhkar.length),
                 style: TextStyle(
                   color: themeColor,
                   fontWeight: FontWeight.w800,
@@ -306,7 +239,9 @@ class _BedtimeRoutineScreenState extends ConsumerState<BedtimeRoutineScreen> {
                 ),
               ),
               Text(
-                dhikr.translation,
+                dhikr.count == 1
+                    ? AppLocalizations.of(context).bedtimeOnce
+                    : AppLocalizations.of(context).bedtimeThreeTimes,
                 style: TextStyle(
                   color: context.colors.textSecondary,
                   fontWeight: FontWeight.w600,
@@ -329,52 +264,49 @@ class _BedtimeRoutineScreenState extends ConsumerState<BedtimeRoutineScreen> {
             button: true,
             hint: AppLocalizations.of(context).tasbeehTapHint,
             child: GestureDetector(
-            behavior: HitTestBehavior.opaque,
-            onTapUp: _onTapDhikr,
-            child: Container(
-              width: double.infinity,
-              constraints: const BoxConstraints(minHeight: 180),
-              child: Stack(
-                alignment: Alignment.center,
-                children: [
-                  Directionality(
-                    textDirection: TextDirection.rtl,
-                    child: Text(
-                      dhikr.text,
-                      textAlign: TextAlign.center,
-                      // The card is Dt.surface, which is dark in dark mode;
-                      // a fixed near-black here made the dhikr itself unreadable.
-                      style: TextStyle(
-                        fontSize: 22,
-                        fontWeight: FontWeight.w800,
-                        height: 1.85,
-                        color: context.colors.ink,
+              behavior: HitTestBehavior.opaque,
+              onTapUp: _onTapDhikr,
+              child: Container(
+                width: double.infinity,
+                constraints: const BoxConstraints(minHeight: 180),
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    Directionality(
+                      textDirection: TextDirection.rtl,
+                      child: Text(
+                        dhikr.text,
+                        textAlign: TextAlign.center,
+                        // The card is Dt.surface, which is dark in dark mode;
+                        // a fixed near-black here made the dhikr itself unreadable.
+                        style: TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.w800,
+                          height: 1.85,
+                          color: context.colors.ink,
+                        ),
                       ),
                     ),
-                  ),
-                  // Render tap star particles inside this card
-                  ..._starParticles.map((star) {
-                    return Positioned(
-                      left: star.x - 20,
-                      top: star.y - 20,
-                      child: const Text(
-                        '⭐',
-                        style: TextStyle(fontSize: 28),
-                      )
-                          .animate()
-                          .fadeOut(delay: 400.ms, duration: 400.ms)
-                          .slideY(begin: 0, end: -3, duration: 700.ms)
-                          .scale(
-                            begin: const Offset(1.0, 1.0),
-                            end: const Offset(0.3, 0.3),
-                            duration: 700.ms,
-                          ),
-                    );
-                  }),
-                ],
+                    // Render tap star particles inside this card
+                    ..._starParticles.map((star) {
+                      return Positioned(
+                        left: star.x - 20,
+                        top: star.y - 20,
+                        child: const Text('⭐', style: TextStyle(fontSize: 28))
+                            .animate()
+                            .fadeOut(delay: 400.ms, duration: 400.ms)
+                            .slideY(begin: 0, end: -3, duration: 700.ms)
+                            .scale(
+                              begin: const Offset(1.0, 1.0),
+                              end: const Offset(0.3, 0.3),
+                              duration: 700.ms,
+                            ),
+                      );
+                    }),
+                  ],
+                ),
               ),
             ),
-          ),
           ),
           const SizedBox(height: 24),
 
@@ -392,7 +324,9 @@ class _BedtimeRoutineScreenState extends ConsumerState<BedtimeRoutineScreen> {
                 const Icon(Icons.touch_app, color: Colors.white, size: 20),
                 const SizedBox(width: 8),
                 Text(
-                  AppLocalizations.of(context).bedtimeTapToRepeat(_remainingCount),
+                  AppLocalizations.of(
+                    context,
+                  ).bedtimeTapToRepeat(_remainingCount),
                   style: const TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
@@ -426,10 +360,7 @@ class _BedtimeRoutineScreenState extends ConsumerState<BedtimeRoutineScreen> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Text(
-            '🪙',
-            style: TextStyle(fontSize: 72),
-          )
+          const Text('🪙', style: TextStyle(fontSize: 72))
               .animate(onPlay: loopUnlessReduced(context))
               .scaleXY(begin: 0.9, end: 1.1, duration: 1000.ms)
               .then()
@@ -446,7 +377,7 @@ class _BedtimeRoutineScreenState extends ConsumerState<BedtimeRoutineScreen> {
           ),
           const SizedBox(height: 10),
           Text(
-            AppLocalizations.of(context).bedtimeStoriesDesc,
+            AppLocalizations.of(context).storyRelaxNow,
             textAlign: TextAlign.center,
             style: TextStyle(
               color: context.colors.textSecondary,
@@ -457,18 +388,15 @@ class _BedtimeRoutineScreenState extends ConsumerState<BedtimeRoutineScreen> {
           ),
           const SizedBox(height: 28),
           FilledButton.icon(
-            onPressed: _startStory,
-            icon: const Icon(Icons.menu_book),
+            onPressed: () => Navigator.of(context).maybePop(),
+            icon: const Icon(Icons.nights_stay_rounded),
             label: Text(
-              AppLocalizations.of(context).startLearning,
+              AppLocalizations.of(context).storyGoodNight,
               style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
             style: FilledButton.styleFrom(
               backgroundColor: themeColor,
-              padding: const EdgeInsets.symmetric(
-                horizontal: 32,
-                vertical: 16,
-              ),
+              padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(24),
               ),
@@ -481,10 +409,7 @@ class _BedtimeRoutineScreenState extends ConsumerState<BedtimeRoutineScreen> {
 }
 
 class _RoundButton extends StatelessWidget {
-  const _RoundButton({
-    required this.icon,
-    required this.onTap,
-  });
+  const _RoundButton({required this.icon, required this.onTap});
 
   final IconData icon;
   final VoidCallback onTap;
@@ -501,11 +426,7 @@ class _RoundButton extends StatelessWidget {
           width: 44,
           height: 44,
           alignment: Alignment.center,
-          child: Icon(
-            icon,
-            color: Colors.white,
-            size: 20,
-          ),
+          child: Icon(icon, color: Colors.white, size: 20),
         ),
       ),
     );

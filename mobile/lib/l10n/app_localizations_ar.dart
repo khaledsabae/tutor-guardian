@@ -558,7 +558,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get bedtimeStories => 'حكايات قبل النوم';
 
   @override
-  String get bedtimeStoriesDesc => 'قصص قصيرة وهادئة مع صوت طبيعي للنوم 🐦';
+  String get bedtimeStoriesDesc => 'قصص قصيرة هادئة نقرؤها معًا قبل النوم 🌙';
 
   @override
   String get consecutiveDays => 'أيام متتالية';
@@ -6266,4 +6266,95 @@ class AppLocalizationsAr extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String noorRamadanStart(String name) {
+    return 'هلّ هلال رمضان، مبارك عليكم الشهر! في كل يوم منه قنديل تضيئونه مع $name.';
+  }
+
+  @override
+  String get eidMomentTitle => 'عيدكم مبارك';
+
+  @override
+  String get eidMomentBody => 'كل عام وأنتم بخير.';
+
+  @override
+  String get storyNoorIntro => 'أنا نور، وهذه حكايتنا الليلة.';
+
+  @override
+  String get storyListenWithNoor => 'اسمعها من نور';
+
+  @override
+  String get storyReadTogether => 'نقرؤها معًا';
+
+  @override
+  String storyPageOf(int n, int total) {
+    return 'صفحة $n من $total';
+  }
+
+  @override
+  String get storyNextPage => 'الصفحة التالية';
+
+  @override
+  String get storyPrevPage => 'الصفحة السابقة';
+
+  @override
+  String get storyTextSize => 'حجم الخط';
+
+  @override
+  String get storyListen => 'استمع';
+
+  @override
+  String get storyPauseListening => 'إيقاف الاستماع';
+
+  @override
+  String get storyPauseTitle => 'وقفة مع نور';
+
+  @override
+  String get storyPauseThanks =>
+      'فكرة تستحق التفكير! هيا نرى ماذا حدث بعد ذلك.';
+
+  @override
+  String get storyContinue => 'نكمل الحكاية';
+
+  @override
+  String get storyTheEnd => 'انتهت الحكاية';
+
+  @override
+  String get storyValueTitle => 'من هدي ديننا';
+
+  @override
+  String get storyTalkTitle => 'اقرؤوها معًا: أسئلة للحوار';
+
+  @override
+  String get storyMoreQuestion => 'سؤال آخر';
+
+  @override
+  String get storyChallengeTitle => 'تحدّي الغد';
+
+  @override
+  String get storyBedtimeAdhkar => 'أذكار النوم';
+
+  @override
+  String storyFilterAll(int count) {
+    return 'الكل ($count)';
+  }
+
+  @override
+  String get storyFilterYoung => 'للصغار';
+
+  @override
+  String get storyFilterOlder => 'للأكبر سنًّا';
+
+  @override
+  String get storyGoodNight => 'تصبحون على خير';
+
+  @override
+  String get bedtimeOnce => 'مرة واحدة';
+
+  @override
+  String get bedtimeThreeTimes => '٣ مرات';
+
+  @override
+  String get storyPauseChooseAgain => 'أختار مرة أخرى';
 }

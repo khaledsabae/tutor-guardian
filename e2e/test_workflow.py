@@ -12,7 +12,7 @@ import yaml
 
 
 WORKFLOW = Path(__file__).resolve().parent.parent / '.github/workflows/mobile-e2e.yml'
-MANDATORY = {'keystore', 'build', 'e2e'}
+MANDATORY = {'keystore', 'build', 'e2e', 'rehearsal'}
 
 
 class DeliveryWorkflowTest(unittest.TestCase):
@@ -41,6 +41,7 @@ class DeliveryWorkflowTest(unittest.TestCase):
         self.assertTrue(MANDATORY.issubset(self.workflow['jobs']))
         self.assertEqual(self.workflow['jobs']['build']['needs'], 'keystore')
         self.assertEqual(self.workflow['jobs']['e2e']['needs'], 'build')
+        self.assertEqual(self.workflow['jobs']['rehearsal']['needs'], 'build')
 
     def test_jobs_are_hosted_and_failures_are_not_allowed(self):
         for job_id, job in self.workflow['jobs'].items():
@@ -60,7 +61,7 @@ class DeliveryWorkflowTest(unittest.TestCase):
                               env=env, capture_output=True, text=True, timeout=5)
 
     def test_only_all_success_is_green(self):
-        for statuses in itertools.product(('success', 'failure', 'cancelled', 'skipped'), repeat=3):
+        for statuses in itertools.product(('success', 'failure', 'cancelled', 'skipped'), repeat=len(MANDATORY)):
             results = {job: {'result': status} for job, status in zip(sorted(MANDATORY), statuses)}
             with self.subTest(statuses=statuses):
                 proc = self.verdict(results)
@@ -126,7 +127,7 @@ class UnitTestStepTest(unittest.TestCase):
     def test_the_tooling_tests_leak_no_workflow_command(self):
         # The pause is the backstop; the tests themselves should not need it.
         e2e = Path(__file__).resolve().parent
-        proc = subprocess.run([sys.executable, '-m', 'unittest', 'test_e2e_tool', 'test_run', 'test_install_system_image'],
+        proc = subprocess.run([sys.executable, '-m', 'unittest', 'test_e2e_tool', 'test_run', 'test_rehearsal', 'test_install_system_image'],
                               cwd=e2e, capture_output=True, text=True, timeout=120)
         self.assertEqual(proc.returncode, 0, proc.stderr[-2000:])
         leaked = [l for l in (proc.stdout + proc.stderr).splitlines() if l.startswith('::')]
@@ -211,3 +212,98 @@ class GalleryArtifactTest(unittest.TestCase):
         # 75 covered the 13 journeys; the gallery lineage (a third onboarding
         # and six shoots) needs the headroom the workflow now grants.
         self.assertGreaterEqual(int(self.e2e['timeout-minutes']), 90)
+
+
+class RehearsalJobTest(unittest.TestCase):
+    """Job `rehearsal` (the Ramadan rehearsal, gate G2, and the sound ×
+    recitation check) brings its own server: it must never point an APK at
+    production, never ship its knobs in another build, and drive exactly the
+    emulator the journeys drive."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.workflow = yaml.load(WORKFLOW.read_text(), Loader=yaml.BaseLoader)
+        cls.job = cls.workflow['jobs']['rehearsal']
+        cls.matrix = {m['variant']: m for m in cls.workflow['jobs']['build']['strategy']['matrix']['include']}
+
+    def step(self, name):
+        found = [s for s in self.job['steps'] if s.get('name') == name]
+        self.assertEqual(len(found), 1, name)
+        return found[0]
+
+    def test_needs_the_builds_and_reads_packages_only(self):
+        self.assertEqual(self.job['needs'], 'build')
+        self.assertEqual(self.job['permissions'], {'contents': 'read', 'packages': 'read'})
+
+    def test_the_journey_apks_carry_no_define_at_all(self):
+        # head/baseline are the release gate: built exactly as for Play.
+        for variant in ('head', 'baseline'):
+            self.assertEqual(self.matrix[variant]['dart_defines'], '', variant)
+
+    def test_the_rehearsal_apks_talk_to_the_runner_not_production(self):
+        for variant in ('rehearsal-head', 'rehearsal-baseline'):
+            defines = self.matrix[variant]['dart_defines'].split()
+            self.assertIn('--dart-define=API_BASE_URL=http://10.0.2.2:8090', defines, variant)
+        self.assertEqual(self.matrix['rehearsal-head']['ref'], self.matrix['head']['ref'])
+        # The Play build (v1.0.72+117) unless a manual run names another.
+        self.assertIn('c30870145dda59acffd63b68784ad6f9e0974ca5', self.matrix['rehearsal-baseline']['ref'])
+        self.assertIn('inputs.rehearsal_baseline_ref', self.matrix['rehearsal-baseline']['ref'])
+        downloaded = sorted(s['with']['name'] for s in self.job['steps']
+                            if s.get('uses', '').startswith('actions/download-artifact@'))
+        self.assertEqual(downloaded, ['e2e-apk-rehearsal-baseline', 'e2e-apk-rehearsal-head'])
+        self.assertNotIn('tg-api.alsaba.cloud', WORKFLOW.read_text().split('  rehearsal:\n', 1)[1])
+
+    def test_the_build_step_passes_the_matrix_defines(self):
+        build = [s for s in self.workflow['jobs']['build']['steps']
+                 if s.get('name', '').startswith('Build the release APK')][0]
+        self.assertEqual(build['env']['DART_DEFINES'], '${{ matrix.dart_defines }}')
+        self.assertTrue(build['run'].rstrip().endswith('$DART_DEFINES'))
+
+    def test_the_key_probe_is_only_in_the_rehearsal_head(self):
+        for variant, entry in self.matrix.items():
+            has = 'E2E_PROBES' in entry['dart_defines']
+            self.assertEqual(has, variant == 'rehearsal-head', variant)
+        for wf in sorted(WORKFLOW.parent.glob('*.yml')):
+            if wf != WORKFLOW:
+                self.assertNotIn('E2E_PROBES', wf.read_text(), wf.name)
+
+    def test_the_as_of_switch_lives_in_the_container_on_loopback(self):
+        start = self.step('Start the candidate with PROGRAMS_AS_OF_ENABLED=1 (runner loopback only)')['run']
+        self.assertIn('-p 127.0.0.1:8091:8000', start)
+        self.assertIn('-e PROGRAMS_AS_OF_ENABLED', start)
+        self.assertNotIn('--env-file', start)
+        text = WORKFLOW.read_text()
+        self.assertEqual(text.count('PROGRAMS_AS_OF_ENABLED=1 \\'), 1,
+                         'the switch is set in exactly one place: the candidate container')
+        self.assertNotIn('ssh ', text)
+
+    def test_the_candidate_is_built_here_and_pushed_nowhere(self):
+        run = self.step('Build the candidate — the PR head\'s backend image')['run']
+        self.assertIn('--load -t tg-rehearsal:ci', run)
+        self.assertNotIn('--push', run)
+        self.assertNotIn('cache-to', run)
+        self.assertIn('--password-stdin', run)
+
+    def test_same_emulator_as_the_journeys(self):
+        e2e = {s.get('name'): s for s in self.workflow['jobs']['e2e']['steps']}
+        mine = {s.get('name'): s for s in self.job['steps']}
+        self.assertEqual(mine['Create the AVD and a boot snapshot']['with'],
+                         e2e['Create the AVD and a boot snapshot']['with'])
+        self.assertEqual(mine['Restore the AVD']['with'], e2e['Restore the AVD']['with'])
+        run, journeys = mine['Run the rehearsal and the sound check']['with'], e2e['Run the journeys']['with']
+        self.assertEqual({k: v for k, v in run.items() if k != 'script'},
+                         {k: v for k, v in journeys.items() if k != 'script'})
+        self.assertEqual(run['script'], 'bash e2e/rehearsal.sh')
+        names = [s.get('name') or s.get('uses', '') for s in self.job['steps']]
+        install = names.index('Install the system image (retried, verified)')
+        runners = [i for i, s in enumerate(self.job['steps'])
+                   if s.get('uses', '').startswith('reactivecircus/android-emulator-runner@')]
+        self.assertLess(install, min(runners))
+
+    def test_evidence_is_uploaded_even_from_a_red_run(self):
+        uploads = [s for s in self.job['steps'] if s.get('uses', '').startswith('actions/upload-artifact@')]
+        self.assertEqual([s['with']['name'] for s in uploads], ['e2e-rehearsal'])
+        self.assertEqual(uploads[0]['if'], 'always()')
+        for part in ('/gallery', '/rehearsal', '/screens', '/logcat', '/summary.md'):
+            self.assertIn(part, uploads[0]['with']['path'])
+        self.assertEqual(self.step('Candidate backend log')['if'], 'always()')

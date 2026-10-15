@@ -39,6 +39,7 @@ import 'package:almorabbi/theme/app_palette.dart';
 import 'package:almorabbi/theme/app_theme.dart';
 
 import 'lantern_fakes.dart';
+import 'programs_support.dart' show programsJson;
 
 void main() {
   tearDown(() => AppPalette.current = AppPalette.light);
@@ -56,6 +57,7 @@ void main() {
     Size phone = const Size(360, 800),
     List<String> stops = const [],
     bool noorOn = true,
+    Map<String, dynamic>? programs,
   }) async {
     tester.view.physicalSize = phone * 3.0;
     tester.view.devicePixelRatio = 3.0;
@@ -64,7 +66,8 @@ void main() {
     final fake = _FakeTgClient()
       ..day = day
       ..progress = progress
-      ..week = week;
+      ..week = week
+      ..programs = programs;
     SharedPreferences.setMockInitialValues({
       if (ageGroup != null) ...{
         OnboardingStorage.keyActiveChildId: 1,
@@ -223,6 +226,58 @@ void main() {
     );
     final askTop = topOf(tester, find.text('اسأل المربّي'));
     expect((topOf(tester, noor) - askTop).abs(), lessThan(24));
+  });
+
+  // «نور والقناديل» phase 5: the month itself hangs the lanterns in the sky
+  // over Noor; before it, at Eid, and on a server without the programs the
+  // sky is the plain sky of the hour.
+  for (final dark in [false, true]) {
+    testWidgets('in Ramadan the sky over Noor takes the lantern skin '
+        '(${dark ? 'dark' : 'light'})', (tester) async {
+      bool skin() => tester.widget<SkyBand>(find.byType(SkyBand)).ramadan;
+      await pumpHome(tester, dark: dark, programs: programsJson());
+      expect(skin(), isTrue);
+      for (final state in ['upcoming', 'eid', 'after', 'off_season']) {
+        await tester.pumpWidget(const SizedBox());
+        await pumpHome(
+          tester,
+          dark: dark,
+          programs: programsJson(state: state, day: null),
+        );
+        expect(skin(), isFalse, reason: state);
+        // Eid has its own moment; close it so the next pump starts clean.
+        final close = find.byKey(const ValueKey('eid_moment_close'));
+        if (close.evaluate().isNotEmpty) {
+          await tester.tap(close);
+          await tester.pump(const Duration(milliseconds: 400));
+        }
+      }
+      await tester.pumpWidget(const SizedBox());
+      await pumpHome(tester, dark: dark);
+      expect(skin(), isFalse, reason: 'no programs on this server');
+    });
+  }
+
+  testWidgets('the first nights of Ramadan: Noor says «هلّ هلال رمضان»', (
+    tester,
+  ) async {
+    await pumpHome(tester, programs: programsJson(day: 1));
+    expect(find.textContaining('هلّ هلال رمضان'), findsOneWidget);
+    expect(find.text('برنامج رمضان'), findsOneWidget);
+    // Mid-month the server says day 15: no crescent line.
+    await tester.pumpWidget(const SizedBox());
+    await pumpHome(tester, programs: programsJson(day: 15));
+    expect(find.textContaining('هلّ هلال رمضان'), findsNothing);
+  });
+
+  testWidgets('Eid: «عيدكم مبارك» opens over Today once', (tester) async {
+    await pumpHome(tester, programs: programsJson(state: 'eid', day: null));
+    expect(find.text('عيدكم مبارك'), findsOneWidget);
+    await tester.tap(find.byKey(const ValueKey('eid_moment_close')));
+    // Today breathes (Noor), so it never settles: wait out the dialog.
+    await tester.pump(const Duration(milliseconds: 400));
+    expect(find.text('عيدكم مبارك'), findsNothing);
+    expect(find.text('خطوة اليوم مع سارة'), findsOneWidget);
   });
 
   testWidgets('kill switch off: no sky and no road, the plain blocks stay', (
@@ -542,6 +597,13 @@ void main() {
 class _FakeTgClient extends TgClient {
   Map<String, dynamic>? day;
   Map<String, dynamic>? progress;
+
+  /// `/api/programs`; null answers like a server without the programs.
+  Map<String, dynamic>? programs;
+
+  @override
+  Future<Map<String, dynamic>> fetchPrograms() async =>
+      programs ?? (throw const TgApiError(404, 'Not Found'));
 
   /// `/api/family/week`; null answers like a server without lanterns.
   Map<String, dynamic>? week;

@@ -5,6 +5,7 @@ import {NoorTeaser} from './noor/NoorTeaser';
 import {T} from './noor/timeline';
 import {NoorDevSheet} from './noor/DevSheet';
 import {CampaignCompositions} from './noor/campaign/reels';
+import {VoCompositions} from './noor/campaign/VoReels';
 
 export const RemotionRoot: React.FC = () => {
 	return (
@@ -61,6 +62,7 @@ export const RemotionRoot: React.FC = () => {
 				}}
 			/>
 			<CampaignCompositions />
+			<VoCompositions />
 		</>
 	);
 };
