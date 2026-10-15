@@ -53,6 +53,8 @@ ALLOWED = {
     "ops/scripts/weekly_kb_gap_report.py": "docstring; runs kb_gap_judge.py",
     "ops/tools/deploy_gate.py": "stdlib copy of the price table and model aliases for the "
                                 "--check-env preflight; sends no requests",
+    "ops/tools/eval_ollama_models.py": "blanks the key so the local-model run can never reach "
+                                       "DeepSeek; sends no chat-completion requests",
 }
 # Files that send chat-completion requests themselves but never to DeepSeek's
 # wallet: Ollama Cloud (its own key) or Azure. They must not name DeepSeek.
