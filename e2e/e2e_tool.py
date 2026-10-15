@@ -1170,8 +1170,8 @@ def cmd_as_of_report(args: argparse.Namespace) -> int:
 #             attr:AudioAttributes: usage=X …»  (one line per player)
 #   focus     the stack («-- pack: … -- loss: L -- uid: U -- attr: … usage=X»)
 #             and its log («requestAudioFocus() from uid/pid U/P AA=X/…»)
-#   events    «player piid:N event:started» per start (SoundPool reports one
-#             per play)
+#   events    «<time> player piid:N event:started» per start (SoundPool
+#             reports one per play), in a ring buffer: judged by time
 
 _AUDIO_PLAYER = re.compile(
     r"AudioPlaybackConfiguration\s+piid:(?P<piid>\d+)\b.*?\btype:(?P<type>\S+).*?"
@@ -1180,9 +1180,15 @@ _AUDIO_PLAYER = re.compile(
 _AUDIO_NEW_PLAYER = re.compile(
     r"new player piid:(?P<piid>\d+)\b.*?\buid/pid:(?P<uid>\d+)/\d+.*?\busage=(?P<usage>\w+)"
 )
-_AUDIO_STARTED = re.compile(r"\bpiid:(?P<piid>\d+)\s+event:started\b")
+# Event-log lines carry their time; the logs are ring buffers, so «new since
+# the dump before the ticks» is decided by time, never by counting lines — in
+# run 38722537691 older processes' starts fell out of the buffer between the
+# two dumps (39 → 37) while two new ticks went in.
+_AUDIO_TS = r"(?P<ts>\d\d-\d\d \d\d:\d\d:\d\d:\d{3})"
+_AUDIO_ANY_TS = re.compile(r"^\s*" + _AUDIO_TS + r"\s", re.M)
+_AUDIO_STARTED = re.compile(_AUDIO_TS + r"\s+player piid:(?P<piid>\d+)\s+event:started\b")
 _AUDIO_FOCUS_REQUEST = re.compile(
-    r"requestAudioFocus\(\)\s+from uid/pid (?P<uid>\d+)/\d+\s+AA=(?P<usage>\w+)"
+    _AUDIO_TS + r"\s+requestAudioFocus\(\)\s+from uid/pid (?P<uid>\d+)/\d+\s+AA=(?P<usage>\w+)"
 )
 _AUDIO_FOCUS_ENTRY = re.compile(
     r"--\s*loss:\s*(?P<loss>\w+).*?--\s*uid:\s*(?P<uid>\d+).*?\busage=(?P<usage>\w+)"
@@ -1199,8 +1205,9 @@ def parse_audio_dump(text: str) -> dict:
     return {
         "players": players,
         "usage_of": usage_of,
-        "started": Counter(m["piid"] for m in _AUDIO_STARTED.finditer(text)),
+        "started": [m.groupdict() for m in _AUDIO_STARTED.finditer(text)],
         "focus_requests": [m.groupdict() for m in _AUDIO_FOCUS_REQUEST.finditer(text)],
+        "last_ts": max((m["ts"] for m in _AUDIO_ANY_TS.finditer(text)), default=""),
         "focus_stack": [m.groupdict() for m in _AUDIO_FOCUS_ENTRY.finditer(text)],
     }
 
@@ -1210,10 +1217,11 @@ def _playing(dump: dict, uid: str, usages: set[str]) -> list[dict]:
             if p["uid"] == uid and p["usage"] in usages and p["state"] == "started"]
 
 
-def _tick_starts(dump: dict, uid: str) -> int:
-    return sum(n for piid, n in dump["started"].items()
-               if dump["usage_of"].get(piid, ("", ""))[0] == uid
-               and dump["usage_of"][piid][1] in SONIFICATION)
+def _tick_starts(dump: dict, uid: str, since: str) -> int:
+    """Interface-sound starts of the app logged after `since`."""
+    return sum(1 for e in dump["started"]
+               if e["ts"] > since and dump["usage_of"].get(e["piid"], ("", ""))[0] == uid
+               and dump["usage_of"][e["piid"]][1] in SONIFICATION)
 
 
 def audio_verdict(before: str, afters: list[str], uid: int | str) -> tuple[str, list[str]]:
@@ -1231,15 +1239,17 @@ def audio_verdict(before: str, afters: list[str], uid: int | str) -> tuple[str, 
     notes.append("before: recitation playing — " + ", ".join(
         f"piid {p['piid']} ({p['type']})" for p in reciting))
     fails: list[str] = []
+    since = b["last_ts"]
     focus_before = [r for r in b["focus_requests"] if r["uid"] == uid and r["usage"] in SONIFICATION]
     for i, d in enumerate(a, 1):
         now = _playing(d, uid, MEDIA)
         notes.append(f"after #{i}: " + ("recitation playing — " + ", ".join(
             f"piid {p['piid']}" for p in now) if now else "no media player of the app playing"))
-        asked = [r for r in d["focus_requests"] if r["uid"] == uid and r["usage"] in SONIFICATION]
-        if len(asked) > len(focus_before):
+        asked = [r for r in d["focus_requests"]
+                 if r["uid"] == uid and r["usage"] in SONIFICATION and r["ts"] > since]
+        if asked:
             fails.append(f"after #{i}: a tick asked for audio focus "
-                         f"({len(asked) - len(focus_before)} new request(s), usage {asked[-1]['usage']})")
+                         f"({len(asked)} new request(s), usage {asked[-1]['usage']})")
         lost = [e for e in d["focus_stack"] if e["uid"] == uid and e["usage"] in MEDIA
                 and e["loss"].lower() not in ("none", "null")]
         if lost:
@@ -1249,10 +1259,10 @@ def audio_verdict(before: str, afters: list[str], uid: int | str) -> tuple[str, 
                      f"({len(focus_before)} request(s))")
     if not any(_playing(d, uid, MEDIA) for d in a):
         fails.append("the recitation stopped: no media player of the app was playing in any dump after the ticks")
-    heard = any(_tick_starts(d, uid) > _tick_starts(b, uid) for d in a) or any(
+    starts = max((_tick_starts(d, uid, since) for d in a), default=0)
+    heard = starts > 0 or any(
         _playing(d, uid, SONIFICATION) and not _playing(b, uid, SONIFICATION) for d in a)
-    notes.append(f"ticks seen by the audio service: "
-                 f"{max((_tick_starts(d, uid) for d in a), default=0) - _tick_starts(b, uid)} new start(s)"
+    notes.append(f"ticks seen by the audio service: {starts} new start(s)"
                  if heard else "ticks seen by the audio service: none")
     holds = [e for e in b["focus_stack"] if e["uid"] == uid]
     notes.append("the recitation holds audio focus (usage " + holds[0]["usage"] + ")" if holds

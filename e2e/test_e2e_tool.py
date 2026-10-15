@@ -990,8 +990,9 @@ class AsOfReportTest(unittest.TestCase):
             self.assertIn("::error title=Ramadan rehearsal as_of::en_after", out.getvalue())
 
 
-def audio_dump(players=(), focus_stack=(), focus_log=(), events=()):
-    """A `dumpsys audio` excerpt in the shape Android 15 prints."""
+def audio_dump(players=(), focus_stack=(), focus_log=(), events=(), at="12:00:00:000"):
+    """A `dumpsys audio` excerpt in the shape Android 15 prints. Log lines
+    are stamped `at`; an event may be (piid, its own time)."""
     out = ["MediaFocusControl dump time: 12:00:00:000", "",
            "Audio Focus stack entries (last is top of stack):"]
     for uid, usage, loss in focus_stack:
@@ -1001,7 +1002,7 @@ def audio_dump(players=(), focus_stack=(), focus_log=(), events=()):
                    f"bundle=null -- sdk:35")
     out += ["", "  focus commands as seen by MediaFocusControl:"]
     for uid, usage in focus_log:
-        out.append(f"  10-15 12:00:00:000 requestAudioFocus() from uid/pid {uid}/4321 AA={usage}/CONTENT_TYPE_SONIFICATION "
+        out.append(f"  10-15 {at} requestAudioFocus() from uid/pid {uid}/4321 AA={usage}/CONTENT_TYPE_SONIFICATION "
                    f"clientId=android.media.AudioManager@3 callingPack={PKG} req=1 flags=0x0 sdk=35")
     out += ["", "PlaybackActivityMonitor dump time: 12:00:00:000", "", "  players:"]
     for piid, typ, uid, state, usage in players:
@@ -1009,8 +1010,9 @@ def audio_dump(players=(), focus_stack=(), focus_log=(), events=()):
                    f"state:{state} attr:AudioAttributes: usage={usage} content=CONTENT_TYPE_MUSIC flags=0x800 "
                    f"tags= bundle=null session:17 mutedState:none")
     out += ["", "  playback activity as reported through PlayerBase:"]
-    for piid in events:
-        out.append(f"  10-15 12:00:00:000 player piid:{piid} event:started DeviceId:2")
+    for event in events:
+        piid, when = event if isinstance(event, tuple) else (event, at)
+        out.append(f"  10-15 {when} player piid:{piid} event:started DeviceId:2")
     return "\n".join(out) + "\n"
 
 
@@ -1020,32 +1022,39 @@ TICKS_IDLE = (23, "android.media.SoundPool", UID, "idle", "USAGE_ASSISTANCE_SONI
 TICKS_ON = (23, "android.media.SoundPool", UID, "started", "USAGE_ASSISTANCE_SONIFICATION")
 
 
+LATER = "12:00:05:000"
+
+
+def after_dump(**kw):
+    return audio_dump(at=LATER, **kw)
+
+
 class AudioVerdictTest(unittest.TestCase):
     def before(self, **kw):
         return audio_dump(players=kw.get("players", (RECITING, TICKS_IDLE)),
                           focus_stack=kw.get("focus_stack", ()), events=kw.get("events", ()))
 
     def test_recitation_survives_three_ticks(self):
-        after = audio_dump(players=(RECITING, TICKS_ON), events=(23, 23, 23))
+        after = after_dump(players=(RECITING, TICKS_ON), events=(23, 23, 23))
         verdict, notes = t.audio_verdict(self.before(), [after], UID)
         self.assertEqual(verdict, "PASS", notes)
         self.assertIn("ticks seen by the audio service: 3 new start(s)", notes)
 
     def test_one_sample_between_two_ayat_is_not_a_stop(self):
-        gap = audio_dump(players=(TICKS_ON,), events=(23,))
-        playing = audio_dump(players=((32, "android.media.AudioTrack", UID, "started", "USAGE_MEDIA"), TICKS_ON),
+        gap = after_dump(players=(TICKS_ON,), events=(23,))
+        playing = after_dump(players=((32, "android.media.AudioTrack", UID, "started", "USAGE_MEDIA"), TICKS_ON),
                              events=(23, 23))
         self.assertEqual(t.audio_verdict(self.before(), [gap, playing], UID)[0], "PASS")
 
     def test_a_paused_recitation_fails(self):
         paused = (31, "android.media.AudioTrack", UID, "paused", "USAGE_MEDIA")
-        after = audio_dump(players=(paused, TICKS_ON), events=(23,))
+        after = after_dump(players=(paused, TICKS_ON), events=(23,))
         verdict, notes = t.audio_verdict(self.before(), [after, after], UID)
         self.assertEqual(verdict, "FAIL")
         self.assertIn("the recitation stopped", notes[0])
 
     def test_a_tick_that_asks_for_focus_fails_even_if_nothing_paused(self):
-        after = audio_dump(players=(RECITING, TICKS_ON), events=(23,),
+        after = after_dump(players=(RECITING, TICKS_ON), events=(23,),
                            focus_log=((UID, "USAGE_ASSISTANCE_SONIFICATION"),))
         verdict, notes = t.audio_verdict(self.before(), [after], UID)
         self.assertEqual(verdict, "FAIL")
@@ -1053,7 +1062,7 @@ class AudioVerdictTest(unittest.TestCase):
 
     def test_the_recitation_losing_its_focus_fails(self):
         before = self.before(focus_stack=((UID, "USAGE_MEDIA", "none"),))
-        after = audio_dump(players=(RECITING, TICKS_ON), events=(23,),
+        after = after_dump(players=(RECITING, TICKS_ON), events=(23,),
                            focus_stack=((UID, "USAGE_MEDIA", "LOSS_TRANSIENT"),))
         verdict, notes = t.audio_verdict(before, [after], UID)
         self.assertEqual(verdict, "FAIL")
@@ -1061,19 +1070,50 @@ class AudioVerdictTest(unittest.TestCase):
 
     def test_nothing_reciting_is_inconclusive_not_pass(self):
         before = self.before(players=(TICKS_IDLE,))
-        after = audio_dump(players=(TICKS_ON,), events=(23,))
+        after = after_dump(players=(TICKS_ON,), events=(23,))
         self.assertEqual(t.audio_verdict(before, [after], UID)[0], "INCONCLUSIVE")
 
     def test_no_tick_heard_is_inconclusive_not_pass(self):
-        after = audio_dump(players=(RECITING, TICKS_IDLE))
+        after = after_dump(players=(RECITING, TICKS_IDLE))
         verdict, notes = t.audio_verdict(self.before(), [after], UID)
         self.assertEqual(verdict, "INCONCLUSIVE")
         self.assertIn("the probe did not sound", notes[0])
 
+    def test_old_starts_leaving_the_ring_buffer_are_not_ticks(self):
+        # Run 38722537691: between the two dumps the buffer dropped older
+        # starts of the same uid (39 → 37) while two new ticks went in.
+        before = self.before(events=((23, "11:59:00:000"), (23, "11:59:30:000"), (23, "12:00:00:000")))
+        same_old = after_dump(players=(RECITING, TICKS_IDLE), events=((23, "12:00:00:000"),))
+        self.assertEqual(t.audio_verdict(before, [same_old], UID)[0], "INCONCLUSIVE")
+        two_new = after_dump(players=(RECITING, TICKS_IDLE),
+                             events=((23, "12:00:00:000"), (23, "12:00:03:000"), (23, "12:00:04:000")))
+        verdict, notes = t.audio_verdict(before, [two_new], UID)
+        self.assertEqual(verdict, "PASS", notes)
+        self.assertIn("ticks seen by the audio service: 2 new start(s)", notes)
+
+    def test_the_real_dumps_of_run_38722537691(self):
+        """Copied verbatim from that run's e2e-rehearsal artifact: two ticks
+        (11:39:42, 11:39:44) over Al-Fatiha, recitation playing throughout,
+        holding GAIN with no loss, and no tick asked for focus."""
+        data = Path(__file__).resolve().parent / "testdata"
+        before = (data / "dumpsys_audio_run38722537691_before.txt").read_text(encoding="utf-8")
+        after = (data / "dumpsys_audio_run38722537691_after.txt").read_text(encoding="utf-8")
+        verdict, notes = t.audio_verdict(before, [after], "10209")
+        self.assertEqual(verdict, "PASS", notes)
+        self.assertIn("ticks seen by the audio service: 2 new start(s)", notes)
+        self.assertIn("the recitation holds audio focus (usage USAGE_MEDIA)", notes)
+        # The same dumps, read as if the ticks had paused it, must fail.
+        paused = after.replace("u/pid:10209/17741 state:started attr:AudioAttributes: usage=USAGE_MEDIA",
+                               "u/pid:10209/17741 state:paused attr:AudioAttributes: usage=USAGE_MEDIA")
+        self.assertEqual(t.audio_verdict(before, [paused], "10209")[0], "FAIL")
+        lost = after.replace("-- loss: none -- notified: true -- limbofalse -- uid: 10209",
+                             "-- loss: LOSS_TRANSIENT -- notified: true -- limbofalse -- uid: 10209")
+        self.assertEqual(t.audio_verdict(before, [lost], "10209")[0], "FAIL")
+
     def test_other_apps_are_not_the_app(self):
         other = (40, "android.media.AudioTrack", "10055", "started", "USAGE_MEDIA")
         before = self.before(players=(other, TICKS_IDLE))
-        after = audio_dump(players=(other, TICKS_ON), events=(23,),
+        after = after_dump(players=(other, TICKS_ON), events=(23,),
                            focus_log=(("10055", "USAGE_ASSISTANCE_SONIFICATION"),))
         self.assertEqual(t.audio_verdict(before, [after], UID)[0], "INCONCLUSIVE")
 
@@ -1081,9 +1121,9 @@ class AudioVerdictTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as d:
             b, a, o = Path(d) / "b.txt", Path(d) / "a.txt", Path(d) / "v.md"
             b.write_text(self.before(), encoding="utf-8")
-            cases = ((audio_dump(players=(RECITING, TICKS_ON), events=(23,)), 0, "PASS"),
-                     (audio_dump(players=(TICKS_ON,), events=(23,)), 1, "FAIL"),
-                     (audio_dump(players=(RECITING, TICKS_IDLE)), 2, "INCONCLUSIVE"))
+            cases = ((after_dump(players=(RECITING, TICKS_ON), events=(23,)), 0, "PASS"),
+                     (after_dump(players=(TICKS_ON,), events=(23,)), 1, "FAIL"),
+                     (after_dump(players=(RECITING, TICKS_IDLE)), 2, "INCONCLUSIVE"))
             for text, code, word in cases:
                 with self.subTest(word):
                     a.write_text(text, encoding="utf-8")
