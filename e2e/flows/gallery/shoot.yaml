@@ -598,6 +598,54 @@ name: gallery/shoot
             - runFlow: ../common/exit_child_mode.yaml
 - runFlow: ../common/home.yaml
 
+# ── «القصص» (docs/STORIES_AUDIT.md): the shelf, then what a tap on the
+# first book opens — the baseline's adhkar gate, the head's own first leaf
+# with Noor — then the head's first page. Reached from المزيد → the hub's
+# «قصص قبل النوم» tile in both lineages; the first book's title is content,
+# not ARB, so it is a literal. Every shot after the shelf is guarded: the
+# baseline's carousel may centre another book, and the page shot is head-only.
+- runFlow: ../common/home.yaml
+- tapOn: '${output.lead.navMore}'
+- scrollUntilVisible:
+    element:
+      text: '${output.tile.bedtimeStories}'
+    direction: DOWN
+    timeout: 20000
+    optional: true
+- runFlow:
+    when:
+      visible: '${output.tile.bedtimeStories}'
+    commands:
+      - tapOn: '${output.tile.bedtimeStories}'
+      - extendedWaitUntil:
+          visible: '${output.c.lit_storyFirstTitle}'
+          timeout: 20000
+          optional: true
+      - waitForAnimationToEnd:
+          timeout: 3000
+      - takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__stories_shelf'
+      - runFlow:
+          when:
+            visible: '${output.c.lit_storyFirstTitle}'
+          commands:
+            - tapOn: '${output.c.lit_storyFirstTitle}'
+            - waitForAnimationToEnd:
+                timeout: 3000
+            - takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__stories_open'
+            - runFlow:
+                when:
+                  visible: '${output.t.storyReadTogether}'
+                commands:
+                  - tapOn: '${output.t.storyReadTogether}'
+                  - waitForAnimationToEnd:
+                      timeout: 3000
+                  - takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__stories_page'
+            - back
+            - waitForAnimationToEnd:
+                timeout: 2000
+      - back
+      - waitForAnimationToEnd:
+          timeout: 2000
 # ── the tour's first mark: before = version 2 on the Today tab, after =
 # version 3 on ① ─────────────────────────────────────────────────────────
 # Re-armed through Settings → «الجولة التعريفية», the parent's own replay row

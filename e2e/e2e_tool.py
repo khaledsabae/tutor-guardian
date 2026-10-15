@@ -131,6 +131,9 @@ KEYS = [
     # «قناديل الأسبوع» (phase 3) — head builds only; the baseline's selector
     # never matches, and the shot is guarded.
     "weekLanternsTitle",
+    # «القصص» leg: the hub tile (both lineages), and the head's way into a
+    # story from its first leaf (head only — the baseline opens an adhkar gate).
+    "bedtimeStories", "storyReadTogether",
 ]
 
 # Strings the app hardcodes outside the ARB files.
@@ -148,6 +151,9 @@ LITERALS = {
     # quiz_screen.dart, _OptionTile — the option letters are Arabic whatever
     # the interface language (String.fromCharCode('أ' + index)).
     "lit_quizOptionA": ("أ", "أ"),
+    # The first story in mobile/assets/data/stories*.json (content, not ARB):
+    # the «القصص» leg opens it from the shelf.
+    "lit_storyFirstTitle": ("يوسف وغرسة الأمل", "Yusuf and the Seed of Hope"),
 }
 
 _PLACEHOLDER = re.compile(r"(\{\w+\})")
@@ -424,6 +430,9 @@ GALLERY_SCREENS = [
     ("home_dark_noor_face", "NoorFace في «اليوم» — داكن"),
     ("home_dark_gift", "لحظة الهدية على «اليوم» — داكن"),
     ("week_lanterns", "قناديل الأسبوع تحت ① على «اليوم»"),
+    ("stories_shelf", "القصص — الرف"),
+    ("stories_open", "القصص — أول ما تفتح قصة (قبل: بوابة الأذكار، بعد: صفحة نور)"),
+    ("stories_page", "القصص — أول صفحة"),
     ("tour_mark", "الجولة — أول إشارة (قبل: v2 على «اليوم»، بعد: v3 على ①)"),
 ]
 
@@ -459,6 +468,10 @@ GALLERY_GUARDED = {
     # Last in shoot.yaml, through the settings replay row; never seen on an
     # emulator before it shipped, so a miss is a blank cell, not a red gate.
     "tour_mark",
+    # «القصص»: only the shelf is required. What a tap opens depends on which
+    # book the baseline's carousel centres, and the first page is head-only.
+    "stories_open",
+    "stories_page",
 }
 
 # gallery__01_before_ar__before__ar__home.png — the flow name is matched
