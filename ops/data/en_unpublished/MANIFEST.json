@@ -3534,5 +3534,205 @@
     "to": "ops/data/en_unpublished/kb_units_source/isl-7349e59c.json",
     "reason": "Nonknowledge source quarantine: isl-23c2dd25 is the author collection/assessment method (PDF9); isl-7349e59c is table-of-contents headings (PDF184-185). These facts are not substantive parenting evidence. Zero curriculum references were confirmed across 934 JSON documents. No scholar, human or verified approval; proofs retained in ops/data/kb_fidelity/source_recovery.",
     "on": "2026-10-07"
+  },
+  {
+    "key": "gap-v6-arabic-letter-positions-46",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/gap-v6-arabic-letter-positions-46.json",
+    "to": "ops/data/en_unpublished/kb_units_source/gap-v6-arabic-letter-positions-46.json",
+    "reason": "gap-v6 review 2026-10-15 (commit 0d18e5ec, pushed to main unreviewed): Cites «فريق المربّي» (the app itself) — no such document exists in the repo or anywhere; text_original is model-written, so fidelity cannot be checked. Addresses the mother only.",
+    "on": "2026-10-15"
+  },
+  {
+    "key": "gap-v6-bad-words-school-age-79",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/gap-v6-bad-words-school-age-79.json",
+    "to": "ops/data/en_unpublished/kb_units_source/gap-v6-bad-words-school-age-79.json",
+    "reason": "gap-v6 review 2026-10-15 (commit 0d18e5ec, pushed to main unreviewed): Self-cited «فريق المربّي» source that does not exist. Invokes «هدي النبي ﷺ» with no text or takhrij. Addresses the mother only.",
+    "on": "2026-10-15"
+  },
+  {
+    "key": "gap-v6-bedtime-stories-selection-46",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/gap-v6-bedtime-stories-selection-46.json",
+    "to": "ops/data/en_unpublished/kb_units_source/gap-v6-bedtime-stories-selection-46.json",
+    "reason": "gap-v6 review 2026-10-15 (commit 0d18e5ec, pushed to main unreviewed): Self-cited «فريق المربّي» source that does not exist; advice is model-written with no source to check it against.",
+    "on": "2026-10-15"
+  },
+  {
+    "key": "gap-v6-child-taking-money-confessed-79",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/gap-v6-child-taking-money-confessed-79.json",
+    "to": "ops/data/en_unpublished/kb_units_source/gap-v6-child-taking-money-confessed-79.json",
+    "reason": "gap-v6 review 2026-10-15 (commit 0d18e5ec, pushed to main unreviewed): Self-cited «فريق المربّي» source that does not exist. States a ruling (حرمة أخذ مال الغير) and a punishment recipe with no evidence. Addresses the mother only.",
+    "on": "2026-10-15"
+  },
+  {
+    "key": "gap-v6-disrespect-early-teen-1012",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/gap-v6-disrespect-early-teen-1012.json",
+    "to": "ops/data/en_unpublished/kb_units_source/gap-v6-disrespect-early-teen-1012.json",
+    "reason": "gap-v6 review 2026-10-15 (commit 0d18e5ec, pushed to main unreviewed): Self-cited «فريق المربّي» source that does not exist; model-written advice. Addresses the mother only.",
+    "on": "2026-10-15"
+  },
+  {
+    "key": "gap-v6-early-teen-porn-habit-1315",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/gap-v6-early-teen-porn-habit-1315.json",
+    "to": "ops/data/en_unpublished/kb_units_source/gap-v6-early-teen-porn-habit-1315.json",
+    "reason": "gap-v6 review 2026-10-15 (commit 0d18e5ec, pushed to main unreviewed): Self-cited «فريق المربّي» source; names «تربية الأولاد في الإسلام» with no page. Presents «الوضوء فورًا، ركعتان» as the Sharia steps of tawba with no hadith or grading. English in brackets (SafeSearch, DNS). Addresses the mother while saying the father should talk to a son.",
+    "on": "2026-10-15"
+  },
+  {
+    "key": "gap-v6-infant-startle-sleep-01",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/gap-v6-infant-startle-sleep-01.json",
+    "to": "ops/data/en_unpublished/kb_units_source/gap-v6-infant-startle-sleep-01.json",
+    "reason": "gap-v6 review 2026-10-15 (commit 0d18e5ec, pushed to main unreviewed): Attributed to a generic «AAP Safe Sleep & Newborn Reflexes», not a findable document; the 4-6 month Moro window and teething-as-night-waking cause are not traceable to it. Sends «تشنج مستمر أو تغير في لون الوجه» to a routine consult, not emergency care. English in brackets (Moro Reflex).",
+    "on": "2026-10-15"
+  },
+  {
+    "key": "gap-v6-late-teen-isolation-stubborn-1618",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/gap-v6-late-teen-isolation-stubborn-1618.json",
+    "to": "ops/data/en_unpublished/kb_units_source/gap-v6-late-teen-isolation-stubborn-1618.json",
+    "reason": "gap-v6 review 2026-10-15 (commit 0d18e5ec, pushed to main unreviewed): Source «منظمة الصحة العالمية ومنهج المربّي» names no WHO document; the rest is the non-existent «فريق المربّي». Model-written. Assumes a daughter and addresses the mother.",
+    "on": "2026-10-15"
+  },
+  {
+    "key": "gap-v6-love-writing-prewriting-46",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/gap-v6-love-writing-prewriting-46.json",
+    "to": "ops/data/en_unpublished/kb_units_source/gap-v6-love-writing-prewriting-46.json",
+    "reason": "gap-v6 review 2026-10-15 (commit 0d18e5ec, pushed to main unreviewed): Source «AAP / منهج المربّي» names no AAP document; author «فريق المربّي» does not exist. Model-written.",
+    "on": "2026-10-15"
+  },
+  {
+    "key": "gap-v6-mahram-rules-cousins-1618",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/gap-v6-mahram-rules-cousins-1618.json",
+    "to": "ops/data/en_unpublished/kb_units_source/gap-v6-mahram-rules-cousins-1618.json",
+    "reason": "gap-v6 review 2026-10-15 (commit 0d18e5ec, pushed to main unreviewed): Fiqh rulings (who is mahram, handshake, «يُستحب» from age 10-12) with no evidence, scholar or real book; source is the non-existent «فريق المربّي».",
+    "on": "2026-10-15"
+  },
+  {
+    "key": "gap-v6-maternal-anger-compliant-child-79",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/gap-v6-maternal-anger-compliant-child-79.json",
+    "to": "ops/data/en_unpublished/kb_units_source/gap-v6-maternal-anger-compliant-child-79.json",
+    "reason": "gap-v6 review 2026-10-15 (commit 0d18e5ec, pushed to main unreviewed): Attributed to WHO Parenting for Lifelong Health, but the 10-second rule, leaving the room and the apology script do not correspond to any identifiable PLH text. Addresses the mother about a daughter.",
+    "on": "2026-10-15"
+  },
+  {
+    "key": "gap-v6-nap-transition-23",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/gap-v6-nap-transition-23.json",
+    "to": "ops/data/en_unpublished/kb_units_source/gap-v6-nap-transition-23.json",
+    "reason": "gap-v6 review 2026-10-15 (commit 0d18e5ec, pushed to main unreviewed): Generic AAP attribution («When Do Kids Stop Napping?») not traceable. 11-14 h/day is the AASM/AAP band for ages 1-2; for age 3 it is 10-13 h. The «45 دقيقة قبل الثانية» and «لأسبوع متواصل» rules have no source.",
+    "on": "2026-10-15"
+  },
+  {
+    "key": "gap-v6-older-sister-guiding-siblings-1618",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/gap-v6-older-sister-guiding-siblings-1618.json",
+    "to": "ops/data/en_unpublished/kb_units_source/gap-v6-older-sister-guiding-siblings-1618.json",
+    "reason": "gap-v6 review 2026-10-15 (commit 0d18e5ec, pushed to main unreviewed): Addresses a teenage sister, not the parent the app serves. English in brackets (SafeSearch, YouTube Kids). Source is the non-existent «فريق المربّي».",
+    "on": "2026-10-15"
+  },
+  {
+    "key": "gap-v6-peer-overattachment-teens-1618",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/gap-v6-peer-overattachment-teens-1618.json",
+    "to": "ops/data/en_unpublished/kb_units_source/gap-v6-peer-overattachment-teens-1618.json",
+    "reason": "gap-v6 review 2026-10-15 (commit 0d18e5ec, pushed to main unreviewed): Self-cited «فريق المربّي» source that does not exist. Assumes a daughter and addresses the mother.",
+    "on": "2026-10-15"
+  },
+  {
+    "key": "gap-v6-preschool-peer-boundaries-46",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/gap-v6-preschool-peer-boundaries-46.json",
+    "to": "ops/data/en_unpublished/kb_units_source/gap-v6-preschool-peer-boundaries-46.json",
+    "reason": "gap-v6 review 2026-10-15 (commit 0d18e5ec, pushed to main unreviewed): Self-cited «فريق المربّي» source that does not exist; model-written advice. Addresses the mother only.",
+    "on": "2026-10-15"
+  },
+  {
+    "key": "gap-v6-protecting-toddler-boundaries-relatives-23",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/gap-v6-protecting-toddler-boundaries-relatives-23.json",
+    "to": "ops/data/en_unpublished/kb_units_source/gap-v6-protecting-toddler-boundaries-relatives-23.json",
+    "reason": "gap-v6 review 2026-10-15 (commit 0d18e5ec, pushed to main unreviewed): Self-cited «فريق المربّي» source that does not exist. Assumes a married mother («اتفقي مع زوجكِ»), so the wording is not family-neutral.",
+    "on": "2026-10-15"
+  },
+  {
+    "key": "gap-v6-quran-memorization-boredom-79",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/gap-v6-quran-memorization-boredom-79.json",
+    "to": "ops/data/en_unpublished/kb_units_source/gap-v6-quran-memorization-boredom-79.json",
+    "reason": "gap-v6 review 2026-10-15 (commit 0d18e5ec, pushed to main unreviewed): Asserts attention «لا تتجاوز 10 إلى 15 دقيقة» at 7-9 with no source; the same batch's study-schedule unit prescribes 25-minute sessions for the same age. Source «فريق المربّي» does not exist.",
+    "on": "2026-10-15"
+  },
+  {
+    "key": "gap-v6-salat-al-zawal-sunan-1315",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/gap-v6-salat-al-zawal-sunan-1315.json",
+    "to": "ops/data/en_unpublished/kb_units_source/gap-v6-salat-al-zawal-sunan-1315.json",
+    "reason": "gap-v6 review 2026-10-15 (commit 0d18e5ec, pushed to main unreviewed): «تفتح فيها أبواب السماء كما ثبت في السنة» and «كان النبي ﷺ يحافظ على أربع» are hadith claims with no text, takhrij or grading. «بتسليمتين» is a disputed point given as the only way. The «10-15 دقيقة» prohibited window is an unsourced estimate. Source «فريق المربّي» does not exist.",
+    "on": "2026-10-15"
+  },
+  {
+    "key": "gap-v6-school-fights-conflict-79",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/gap-v6-school-fights-conflict-79.json",
+    "to": "ops/data/en_unpublished/kb_units_source/gap-v6-school-fights-conflict-79.json",
+    "reason": "gap-v6 review 2026-10-15 (commit 0d18e5ec, pushed to main unreviewed): «كما علمنا النبي ﷺ» with no text or takhrij. Source «فريق المربّي» does not exist; model-written.",
+    "on": "2026-10-15"
+  },
+  {
+    "key": "gap-v6-sibling-crying-sensitivity-1315",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/gap-v6-sibling-crying-sensitivity-1315.json",
+    "to": "ops/data/en_unpublished/kb_units_source/gap-v6-sibling-crying-sensitivity-1315.json",
+    "reason": "gap-v6 review 2026-10-15 (commit 0d18e5ec, pushed to main unreviewed): Self-cited «فريق المربّي» source that does not exist; model-written advice.",
+    "on": "2026-10-15"
+  },
+  {
+    "key": "gap-v6-study-schedule-elementary-79",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/gap-v6-study-schedule-elementary-79.json",
+    "to": "ops/data/en_unpublished/kb_units_source/gap-v6-study-schedule-elementary-79.json",
+    "reason": "gap-v6 review 2026-10-15 (commit 0d18e5ec, pushed to main unreviewed): Self-cited «فريق المربّي» source that does not exist. 25-minute sessions at 7-9 contradict the same batch's Quran unit (10-15 min).",
+    "on": "2026-10-15"
+  },
+  {
+    "key": "gap-v6-teen-horror-action-stories-1315",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/gap-v6-teen-horror-action-stories-1315.json",
+    "to": "ops/data/en_unpublished/kb_units_source/gap-v6-teen-horror-action-stories-1315.json",
+    "reason": "gap-v6 review 2026-10-15 (commit 0d18e5ec, pushed to main unreviewed): Self-cited «فريق المربّي» source that does not exist; model-written. Assumes a daughter and addresses the mother.",
+    "on": "2026-10-15"
+  },
+  {
+    "key": "gap-v6-teen-impulsivity-regulation-1315",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/gap-v6-teen-impulsivity-regulation-1315.json",
+    "to": "ops/data/en_unpublished/kb_units_source/gap-v6-teen-impulsivity-regulation-1315.json",
+    "reason": "gap-v6 review 2026-10-15 (commit 0d18e5ec, pushed to main unreviewed): A neuroscience claim (amygdala vs prefrontal cortex) attributed to «منظمة الصحة العالمية ومنهج المربّي» with no document; the author does not exist. Assumes a daughter and addresses the mother.",
+    "on": "2026-10-15"
+  },
+  {
+    "key": "gap-v6-teen-productive-time-1015",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/gap-v6-teen-productive-time-1015.json",
+    "to": "ops/data/en_unpublished/kb_units_source/gap-v6-teen-productive-time-1015.json",
+    "reason": "gap-v6 review 2026-10-15 (commit 0d18e5ec, pushed to main unreviewed): Age band mismatch: the id and text say 10-15 but it is tagged 13-15. Assumes a boy («الرجولة»). English in brackets (Arduino). Source «فريق المربّي» does not exist.",
+    "on": "2026-10-15"
+  },
+  {
+    "key": "gap-v6-teen-school-resentment-1315",
+    "kind": "kb_units",
+    "from": "knowledge_base/units/gap-v6-teen-school-resentment-1315.json",
+    "to": "ops/data/en_unpublished/kb_units_source/gap-v6-teen-school-resentment-1315.json",
+    "reason": "gap-v6 review 2026-10-15 (commit 0d18e5ec, pushed to main unreviewed): Self-cited «فريق المربّي» source that does not exist; model-written. Addresses the mother only.",
+    "on": "2026-10-15"
   }
 ]
