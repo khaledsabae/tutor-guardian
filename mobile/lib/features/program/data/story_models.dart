@@ -30,20 +30,44 @@ class StoryPage {
 /// «وقفة» — the moment inside a story where Noor stops and asks the child
 /// what they would do, before the page that answers it.
 ///
-/// Optional per story (`pause` in stories.json). There is no right answer to
-/// tap: the story itself shows what its hero did, and the reader never grades
-/// a child's choice — so both options are offered the same way.
+/// Optional per story (`pause` in stories.json). Gentle guidance, never a
+/// score (Khaled, 2026-10-15): no right/wrong, no points, no ✓/✗. The caring
+/// choice ([caring]) is met with [affirm], warm and naming the value; the
+/// other with [nudge] — the feeling acknowledged, then a question that points
+/// back at the story's value — and the child may choose again or read on.
+/// A question with no caring option (a "what did you love today?") has
+/// [caring] null and every answer meets [affirm].
 class StoryPause {
   /// The question appears after this page (1-based, as `pageNumber`).
   final int afterPage;
   final String question;
   final List<String> options;
 
+  /// Index of the caring/prosocial option, or null when every answer is one.
+  final int? caring;
+
+  /// Noor's reply to the caring choice (or to any choice when [caring] is null).
+  final String? affirm;
+
+  /// Noor's reply to the other choice: understanding, then a question.
+  final String? nudge;
+
   const StoryPause({
     required this.afterPage,
     required this.question,
     required this.options,
+    this.caring,
+    this.affirm,
+    this.nudge,
   });
+
+  /// Whether choosing [option] is met with the gentle nudge rather than the
+  /// affirmation. Never true without a nudge to say.
+  bool nudges(int option) =>
+      caring != null && option != caring && (nudge?.isNotEmpty ?? false);
+
+  /// What Noor says to [option]; null → the reader's generic line.
+  String? replyTo(int option) => nudges(option) ? nudge : affirm;
 
   /// Null when the block is malformed — a broken pause must never cost the
   /// reader the story around it.
@@ -61,10 +85,16 @@ class StoryPause {
         if (o is String && o.trim().isNotEmpty) o.trim(),
     ];
     if (opts.length < 2) return null;
+    final caring = json['caring'];
+    String? text(Object? v) =>
+        v is String && v.trim().isNotEmpty ? v.trim() : null;
     return StoryPause(
       afterPage: after,
       question: question.trim(),
       options: opts,
+      caring: caring is int && caring >= 0 && caring < opts.length ? caring : null,
+      affirm: text(json['affirm']),
+      nudge: text(json['nudge']),
     );
   }
 }

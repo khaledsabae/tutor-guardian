@@ -2124,5 +2124,7 @@
   "bedtimeOnce": "Once",
   "@bedtimeOnce": {"description": "How many times a bedtime dhikr is said."},
   "bedtimeThreeTimes": "3 times",
-  "@bedtimeThreeTimes": {"description": "How many times a bedtime dhikr is said."}
+  "@bedtimeThreeTimes": {"description": "How many times a bedtime dhikr is said."},
+  "storyPauseChooseAgain": "Choose again",
+  "@storyPauseChooseAgain": {"description": "After Noor's gentle question at the mid-story pause: clears the child's choice so they can pick again. Never required — «Continue the story» sits under it."}
 }

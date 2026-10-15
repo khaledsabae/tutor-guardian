@@ -41,8 +41,21 @@
         "quran_ayah": false,
         "reviewer_model": false
       },
-      "review_verdict": "clean",
-      "review_defects": [],
+      "review_verdict": "low_only",
+      "review_defects": [
+        {
+          "model": "glm-5.2",
+          "field": "title",
+          "type": "meaning",
+          "why": "«غرسة» means a planted sapling/plant, not a seed (بذرة); the English title shifts the metaphor slightly."
+        },
+        {
+          "model": "glm-5.2",
+          "field": "pages[2].text",
+          "type": "source_corruption",
+          "why": "«مربتاً» is not standard MSA; the intended word is likely «يربت» (and pats) or the hal form «رابِتًا»."
+        }
+      ],
       "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-15",
       "english_authors": [
         "mistral-large-3:675b",
@@ -66,14 +79,27 @@
         "fixer": null,
         "rounds": 1,
         "prompt_version": "dfa8a5f39718",
-        "content_sha256": "86523a640699f21d1916f9a719039820c2f14e140367140054b7b5d22637c5ff",
-        "reviewed_at": "2026-10-15T12:55:55+00:00",
-        "residual_low": [],
+        "content_sha256": "06e4b3ee8808a5d143450b58507136491b741d1a11cb00a4901bb15a0e192110",
+        "reviewed_at": "2026-10-15T18:01:49+00:00",
+        "residual_low": [
+          {
+            "model": "glm-5.2",
+            "field": "title",
+            "type": "meaning",
+            "why": "«غرسة» means a planted sapling/plant, not a seed (بذرة); the English title shifts the metaphor slightly."
+          },
+          {
+            "model": "glm-5.2",
+            "field": "pages[2].text",
+            "type": "source_corruption",
+            "why": "«مربتاً» is not standard MSA; the intended word is likely «يربت» (and pats) or the hal form «رابِتًا»."
+          }
+        ],
         "adjudicated": [],
         "tool": "ops/tools/review_en_parity.py",
         "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
       },
-      "revalidated_at": "2026-10-15T12:55:55+00:00"
+      "revalidated_at": "2026-10-15T18:01:49+00:00"
     },
     "ageGroup": "4-7 years",
     "category": "Patience and trusting Allah",
@@ -90,7 +116,10 @@
       "options": [
         "Be patient and keep watering it",
         "Leave it and go and play"
-      ]
+      ],
+      "caring": 0,
+      "affirm": "What lovely patience! Plants need time and care, just like Yusuf's seed.",
+      "nudge": "I know waiting is hard… what do you think would happen to the seed if we left it without water?"
     }
   },
   {
@@ -135,8 +164,27 @@
         "quran_ayah": false,
         "reviewer_model": true
       },
-      "review_verdict": "clean",
-      "review_defects": [],
+      "review_verdict": "low_only",
+      "review_defects": [
+        {
+          "model": "glm-5.2",
+          "field": "description",
+          "type": "addition",
+          "why": "The Arabic does not include ﷺ after «رسولنا الكريم»; the English adds it."
+        },
+        {
+          "model": "glm-5.2",
+          "field": "pages[0].text",
+          "type": "addition",
+          "why": "«One day» is added in English; the Arabic begins with «بينما» (while)."
+        },
+        {
+          "model": "glm-5.2",
+          "field": "pages[3].text",
+          "type": "addition",
+          "why": "The Arabic «ورسوله» has no ﷺ; the English inserts it."
+        }
+      ],
       "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-15",
       "auto_review": {
         "reviewers": [
@@ -156,14 +204,33 @@
         "fixer": null,
         "rounds": 1,
         "prompt_version": "dfa8a5f39718",
-        "content_sha256": "47c28c73b886c44418840a775bcca6377e6e933507048043c807de63aa441688",
-        "reviewed_at": "2026-10-15T12:55:55+00:00",
-        "residual_low": [],
+        "content_sha256": "474b9ad9d325b02c25bbbb4b4968b304d36f38a43bb975665e6664630fab97f0",
+        "reviewed_at": "2026-10-15T18:01:49+00:00",
+        "residual_low": [
+          {
+            "model": "glm-5.2",
+            "field": "description",
+            "type": "addition",
+            "why": "The Arabic does not include ﷺ after «رسولنا الكريم»; the English adds it."
+          },
+          {
+            "model": "glm-5.2",
+            "field": "pages[0].text",
+            "type": "addition",
+            "why": "«One day» is added in English; the Arabic begins with «بينما» (while)."
+          },
+          {
+            "model": "glm-5.2",
+            "field": "pages[3].text",
+            "type": "addition",
+            "why": "The Arabic «ورسوله» has no ﷺ; the English inserts it."
+          }
+        ],
         "adjudicated": [],
         "tool": "ops/tools/review_en_parity.py",
         "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
       },
-      "revalidated_at": "2026-10-15T12:55:55+00:00"
+      "revalidated_at": "2026-10-15T18:01:49+00:00"
     },
     "ageGroup": "3-6 years",
     "category": "Kindness to animals and mercy",
@@ -180,7 +247,10 @@
       "options": [
         "Help it gently",
         "Keep walking home"
-      ]
+      ],
+      "caring": 0,
+      "affirm": "What a kind heart! Being gentle with animals is a beautiful way to be.",
+      "nudge": "I understand you want to get home… how do you think the little cat feels, shivering all alone?"
     }
   },
   {
@@ -235,15 +305,8 @@
         "quran_ayah": false,
         "reviewer_model": false
       },
-      "review_verdict": "low_only",
-      "review_defects": [
-        {
-          "model": "deepseek-v4-pro",
-          "field": "pages[4].text",
-          "type": "meaning",
-          "why": "The Arabic says 'my cat' (قطة), not 'kitten'; the English changes the noun and shifts the possessive."
-        }
-      ],
+      "review_verdict": "clean",
+      "review_defects": [],
       "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-15",
       "auto_review": {
         "reviewers": [
@@ -263,21 +326,22 @@
         "fixer": null,
         "rounds": 1,
         "prompt_version": "dfa8a5f39718",
-        "content_sha256": "1d90d66b6b9719e63dbdcecd3ae331c087686d7e7a0bf1189bce72bd61dd579a",
-        "reviewed_at": "2026-10-15T12:55:55+00:00",
-        "residual_low": [
+        "content_sha256": "d767cd06f1d4363c29fd700a153836cb71488dd7a0e0c1a0730bdfdd4098c2f8",
+        "reviewed_at": "2026-10-15T18:02:35+00:00",
+        "residual_low": [],
+        "adjudicated": [
           {
-            "model": "deepseek-v4-pro",
             "field": "pages[4].text",
-            "type": "meaning",
-            "why": "The Arabic says 'my cat' (قطة), not 'kitten'; the English changes the noun and shifts the possessive."
+            "type": "source_corruption",
+            "reason": "After the colon Layla counts her blessings in her own voice (قطتي/جدي/أمي) — a direct listing, standard in children's narrative. The English renders the same list in the narrator's voice; the meaning is identical.",
+            "by": "claude-opus-5.5 (stories PR #126)",
+            "on": "2026-10-15"
           }
         ],
-        "adjudicated": [],
         "tool": "ops/tools/review_en_parity.py",
         "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
       },
-      "revalidated_at": "2026-10-15T12:55:55+00:00"
+      "revalidated_at": "2026-10-15T18:02:35+00:00"
     },
     "ageGroup": "3-6 years",
     "category": "Gratitude for blessings and calm before sleep",
@@ -294,7 +358,8 @@
       "options": [
         "I played with someone I love",
         "I learned something new"
-      ]
+      ],
+      "affirm": "How lovely! Remembering small blessings fills the heart with calm."
     }
   },
   {
@@ -352,34 +417,10 @@
       "review_verdict": "low_only",
       "review_defects": [
         {
-          "model": "deepseek-v4-pro",
-          "field": "title",
-          "type": "addition",
-          "why": "English adds \"Little\" which is not in the Arabic title."
-        },
-        {
-          "model": "deepseek-v4-pro",
-          "field": "discussionQuestions[0]",
-          "type": "meaning",
-          "why": "Arabic says amanah (trustworthiness), not merely honesty."
-        },
-        {
-          "model": "deepseek-v4-pro",
-          "field": "discussionQuestions[1]",
-          "type": "meaning",
-          "why": "Arabic asks about verifying ownership, while English asks about ensuring delivery."
-        },
-        {
-          "model": "glm-5.2",
-          "field": "pages[3].text",
-          "type": "addition",
-          "why": "The Arabic says 'searching for his belongings' without explicitly stating he lost them; the English adds 'he had lost' which is implied but not stated."
-        },
-        {
           "model": "glm-5.2",
           "field": "actionChallenge",
           "type": "addition",
-          "why": "The Arabic says 'إخوانك' (your brothers) without mentioning sisters; the English adds 'and sisters'' for inclusivity."
+          "why": "The Arabic says only 'إخوانك' (your brothers); 'and sisters'' is added in English, though it is a reasonable inclusive adaptation."
         }
       ],
       "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-15",
@@ -401,45 +442,29 @@
         "fixer": null,
         "rounds": 1,
         "prompt_version": "dfa8a5f39718",
-        "content_sha256": "800c3d9fe1896c2e19f3f2b5f4e4e3c6e32e5ad01ed6828678b44f72e47f7c7a",
-        "reviewed_at": "2026-10-15T12:55:55+00:00",
+        "content_sha256": "fa786fda904cc79f18c35fc39aed3ee45f148b5ea9688f522c633fed1d426bb0",
+        "reviewed_at": "2026-10-15T18:02:35+00:00",
         "residual_low": [
-          {
-            "model": "deepseek-v4-pro",
-            "field": "title",
-            "type": "addition",
-            "why": "English adds \"Little\" which is not in the Arabic title."
-          },
-          {
-            "model": "deepseek-v4-pro",
-            "field": "discussionQuestions[0]",
-            "type": "meaning",
-            "why": "Arabic says amanah (trustworthiness), not merely honesty."
-          },
-          {
-            "model": "deepseek-v4-pro",
-            "field": "discussionQuestions[1]",
-            "type": "meaning",
-            "why": "Arabic asks about verifying ownership, while English asks about ensuring delivery."
-          },
-          {
-            "model": "glm-5.2",
-            "field": "pages[3].text",
-            "type": "addition",
-            "why": "The Arabic says 'searching for his belongings' without explicitly stating he lost them; the English adds 'he had lost' which is implied but not stated."
-          },
           {
             "model": "glm-5.2",
             "field": "actionChallenge",
             "type": "addition",
-            "why": "The Arabic says 'إخوانك' (your brothers) without mentioning sisters; the English adds 'and sisters'' for inclusivity."
+            "why": "The Arabic says only 'إخوانك' (your brothers); 'and sisters'' is added in English, though it is a reasonable inclusive adaptation."
           }
         ],
-        "adjudicated": [],
+        "adjudicated": [
+          {
+            "field": "pages[0].text",
+            "type": "source_corruption",
+            "reason": "«يلعب بكرته» is بِـ + كُرَتِه — 'with his ball', exactly as the English has it. It is not بَكَرَة (pulley); unvocalised Arabic reads it as the ball from context.",
+            "by": "claude-opus-5.5 (stories PR #126)",
+            "on": "2026-10-15"
+          }
+        ],
         "tool": "ops/tools/review_en_parity.py",
         "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
       },
-      "revalidated_at": "2026-10-15T12:55:55+00:00"
+      "revalidated_at": "2026-10-15T18:02:35+00:00"
     },
     "ageGroup": "4-7 years",
     "category": "Trustworthiness and mindfulness of Allah",
@@ -456,7 +481,10 @@
       "options": [
         "Look for its owner",
         "Keep it for myself"
-      ]
+      ],
+      "caring": 0,
+      "affirm": "That is trustworthiness! The owner will be so happy to get it back.",
+      "nudge": "I understand money can be tempting… how would its owner feel while he searches for it?"
     }
   },
   {
@@ -515,27 +543,15 @@
       "review_defects": [
         {
           "model": "deepseek-v4-pro",
-          "field": "discussionQuestions[0]",
+          "field": "pages[0].text",
           "type": "meaning",
-          "why": "Arabic says initiative (mubadara), not just idea."
+          "why": "Arabic 'الأوراق' here likely means papers/litter, not tree leaves, so 'leaves' changes the kind of litter."
         },
         {
           "model": "deepseek-v4-pro",
-          "field": "discussionQuestions[1]",
+          "field": "pages[1].text",
           "type": "meaning",
-          "why": "Arabic uses a command verb (amarna), while English softens it to \"tell us\"."
-        },
-        {
-          "model": "deepseek-v4-pro",
-          "field": "pause.options[0]",
-          "type": "meaning",
-          "why": "Arabic says basket (salla), not bin."
-        },
-        {
-          "model": "glm-5.2",
-          "field": "discussionQuestions[0]",
-          "type": "meaning",
-          "why": "الحديقة is translated as 'park' here but consistently rendered as 'garden' throughout the rest of the story, creating an inconsistency."
+          "why": "Same issue: 'الأوراق' in this litter context means papers, not leaves."
         }
       ],
       "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-15",
@@ -557,39 +573,27 @@
         "fixer": null,
         "rounds": 1,
         "prompt_version": "dfa8a5f39718",
-        "content_sha256": "0547fae27f6f3f17ec48da8f757eec97ee23e3f99931fecb9520c9faac7c8b31",
-        "reviewed_at": "2026-10-15T12:55:55+00:00",
+        "content_sha256": "553ecdcea51ad4ae5896bb367b3f6cfda07f7ebfd24af84803f3d1f57a966fe0",
+        "reviewed_at": "2026-10-15T18:01:49+00:00",
         "residual_low": [
           {
             "model": "deepseek-v4-pro",
-            "field": "discussionQuestions[0]",
+            "field": "pages[0].text",
             "type": "meaning",
-            "why": "Arabic says initiative (mubadara), not just idea."
+            "why": "Arabic 'الأوراق' here likely means papers/litter, not tree leaves, so 'leaves' changes the kind of litter."
           },
           {
             "model": "deepseek-v4-pro",
-            "field": "discussionQuestions[1]",
+            "field": "pages[1].text",
             "type": "meaning",
-            "why": "Arabic uses a command verb (amarna), while English softens it to \"tell us\"."
-          },
-          {
-            "model": "deepseek-v4-pro",
-            "field": "pause.options[0]",
-            "type": "meaning",
-            "why": "Arabic says basket (salla), not bin."
-          },
-          {
-            "model": "glm-5.2",
-            "field": "discussionQuestions[0]",
-            "type": "meaning",
-            "why": "الحديقة is translated as 'park' here but consistently rendered as 'garden' throughout the rest of the story, creating an inconsistency."
+            "why": "Same issue: 'الأوراق' in this litter context means papers, not leaves."
           }
         ],
         "adjudicated": [],
         "tool": "ops/tools/review_en_parity.py",
         "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
       },
-      "revalidated_at": "2026-10-15T12:55:55+00:00"
+      "revalidated_at": "2026-10-15T18:01:49+00:00"
     },
     "ageGroup": "3-6 years",
     "category": "Cleanliness and removing harm",
@@ -606,7 +610,10 @@
       "options": [
         "Pick it up and put it in the bin",
         "Leave it and play"
-      ]
+      ],
+      "caring": 0,
+      "affirm": "Wonderful! When we tidy up, the place becomes lovely for everyone.",
+      "nudge": "I know playing is fun… what would the garden look like if everyone left it like this?"
     }
   },
   {
@@ -669,7 +676,7 @@
         "gpt-6"
       ],
       "reviewer_model": "deepseek-v4-pro+glm-5.2",
-      "revalidated_at": "2026-10-15T12:59:00+00:00",
+      "revalidated_at": "2026-10-15T18:01:49+00:00",
       "fixer_model": "mistral-large-3:675b",
       "fixed_at": "2026-10-15T12:58:31+00:00",
       "auto_review": {
@@ -687,11 +694,11 @@
             "model": "glm-5.2"
           }
         },
-        "fixer": "mistral-large-3:675b",
-        "rounds": 2,
+        "fixer": null,
+        "rounds": 1,
         "prompt_version": "dfa8a5f39718",
-        "content_sha256": "72402d3c83134da3e91f4a1c748ba478a031ad9671a0bb8ac3c19aa813231ff1",
-        "reviewed_at": "2026-10-15T12:59:00+00:00",
+        "content_sha256": "62c5be02e9aeb49ad5851233e233ce6ef6d09c590774774d6a005a84c1417fb4",
+        "reviewed_at": "2026-10-15T18:01:49+00:00",
         "residual_low": [],
         "adjudicated": [],
         "tool": "ops/tools/review_en_parity.py",
@@ -713,7 +720,10 @@
       "options": [
         "Share them and play together",
         "Hide my toys"
-      ]
+      ],
+      "caring": 0,
+      "affirm": "Sharing doubles the joy! Your friend will be so happy.",
+      "nudge": "I understand you love your toys and want to keep them safe… how would your friend feel if you shared them?"
     }
   },
   {
@@ -771,16 +781,28 @@
       "review_verdict": "low_only",
       "review_defects": [
         {
-          "model": "deepseek-v4-pro",
-          "field": "discussionQuestions[0]",
-          "type": "meaning",
-          "why": "Name transliteration inconsistent: title and story use Umar, this question uses Omar."
-        },
-        {
           "model": "glm-5.2",
           "field": "discussionQuestions[0]",
           "type": "meaning",
-          "why": "The protagonist's name is transliterated 'Umar' everywhere else in the story but appears as 'Omar' here, creating an inconsistency."
+          "why": "The protagonist's name is transliterated 'Umar' in the title and story pages but 'Omar' here, creating an inconsistency."
+        },
+        {
+          "model": "glm-5.2",
+          "field": "discussionQuestions[1]",
+          "type": "meaning",
+          "why": "The story pages consistently use the transliterated 'masjid', but here 'mosque' is used instead, creating an inconsistency in Islamic terminology."
+        },
+        {
+          "model": "glm-5.2",
+          "field": "discussionQuestions[2]",
+          "type": "meaning",
+          "why": "'خشوع' is rendered 'khushu'' consistently elsewhere but 'focus' here, creating a transliteration inconsistency."
+        },
+        {
+          "model": "glm-5.2",
+          "field": "actionChallenge",
+          "type": "omission",
+          "why": "The word 'جماعة' (in congregation) is dropped; 'together with' partially conveys the idea but the specific Islamic concept of jama'ah is lost."
         }
       ],
       "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-15",
@@ -806,27 +828,39 @@
         "fixer": null,
         "rounds": 1,
         "prompt_version": "dfa8a5f39718",
-        "content_sha256": "d48abe6098cf8d7ad2352bc8f6ec7119e795dca0d9c29bb433a56287a82094bd",
-        "reviewed_at": "2026-10-15T12:55:55+00:00",
+        "content_sha256": "545fdb84bc71321813a6baf07438459dc09222031ec4d49c61511bd6ae6ac4b2",
+        "reviewed_at": "2026-10-15T18:01:49+00:00",
         "residual_low": [
-          {
-            "model": "deepseek-v4-pro",
-            "field": "discussionQuestions[0]",
-            "type": "meaning",
-            "why": "Name transliteration inconsistent: title and story use Umar, this question uses Omar."
-          },
           {
             "model": "glm-5.2",
             "field": "discussionQuestions[0]",
             "type": "meaning",
-            "why": "The protagonist's name is transliterated 'Umar' everywhere else in the story but appears as 'Omar' here, creating an inconsistency."
+            "why": "The protagonist's name is transliterated 'Umar' in the title and story pages but 'Omar' here, creating an inconsistency."
+          },
+          {
+            "model": "glm-5.2",
+            "field": "discussionQuestions[1]",
+            "type": "meaning",
+            "why": "The story pages consistently use the transliterated 'masjid', but here 'mosque' is used instead, creating an inconsistency in Islamic terminology."
+          },
+          {
+            "model": "glm-5.2",
+            "field": "discussionQuestions[2]",
+            "type": "meaning",
+            "why": "'خشوع' is rendered 'khushu'' consistently elsewhere but 'focus' here, creating a transliteration inconsistency."
+          },
+          {
+            "model": "glm-5.2",
+            "field": "actionChallenge",
+            "type": "omission",
+            "why": "The word 'جماعة' (in congregation) is dropped; 'together with' partially conveys the idea but the specific Islamic concept of jama'ah is lost."
           }
         ],
         "adjudicated": [],
         "tool": "ops/tools/review_en_parity.py",
         "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
       },
-      "revalidated_at": "2026-10-15T12:55:55+00:00"
+      "revalidated_at": "2026-10-15T18:01:49+00:00"
     },
     "ageGroup": "5-8 years",
     "category": "Love of prayer and its light",
@@ -843,7 +877,10 @@
       "options": [
         "Stop and get ready to pray",
         "Keep playing a bit longer"
-      ]
+      ],
+      "caring": 0,
+      "affirm": "Lovely! Answering the adhan without delay is a wonderful habit.",
+      "nudge": "I know playing is fun… what if we went back to playing after we pray?"
     }
   },
   {
@@ -904,7 +941,19 @@
           "model": "deepseek-v4-pro",
           "field": "discussionQuestions[0]",
           "type": "meaning",
-          "why": "Transliteration of the same name is inconsistent with the title and story text, which use 'Khadijah'."
+          "why": "The same Arabic name خديجة is transliterated as 'Khadijah' in the title and story pages but as 'Khadija' here, creating inconsistency."
+        },
+        {
+          "model": "glm-5.2",
+          "field": "pages[1].text",
+          "type": "hadith",
+          "why": "A well-known hadith is quoted without any source citation; per policy this is low at most and no source should be invented."
+        },
+        {
+          "model": "glm-5.2",
+          "field": "discussionQuestions[0]",
+          "type": "meaning",
+          "why": "The name is transliterated 'Khadija' here while the title and story body consistently use 'Khadijah', a minor inconsistency."
         }
       ],
       "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-15",
@@ -930,21 +979,33 @@
         "fixer": null,
         "rounds": 1,
         "prompt_version": "dfa8a5f39718",
-        "content_sha256": "32374d4a3fe25ebae201b7eddacd50b5d260a023f3804d5192dd22f4ebb0a7d8",
-        "reviewed_at": "2026-10-15T12:55:55+00:00",
+        "content_sha256": "95f68c158815e6c37b1ac354990fb2e51110edd28d0eebe1642aaf3ffcd381c4",
+        "reviewed_at": "2026-10-15T18:01:49+00:00",
         "residual_low": [
           {
             "model": "deepseek-v4-pro",
             "field": "discussionQuestions[0]",
             "type": "meaning",
-            "why": "Transliteration of the same name is inconsistent with the title and story text, which use 'Khadijah'."
+            "why": "The same Arabic name خديجة is transliterated as 'Khadijah' in the title and story pages but as 'Khadija' here, creating inconsistency."
+          },
+          {
+            "model": "glm-5.2",
+            "field": "pages[1].text",
+            "type": "hadith",
+            "why": "A well-known hadith is quoted without any source citation; per policy this is low at most and no source should be invented."
+          },
+          {
+            "model": "glm-5.2",
+            "field": "discussionQuestions[0]",
+            "type": "meaning",
+            "why": "The name is transliterated 'Khadija' here while the title and story body consistently use 'Khadijah', a minor inconsistency."
           }
         ],
         "adjudicated": [],
         "tool": "ops/tools/review_en_parity.py",
         "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
       },
-      "revalidated_at": "2026-10-15T12:55:55+00:00"
+      "revalidated_at": "2026-10-15T18:01:49+00:00"
     },
     "ageGroup": "4-7 years",
     "category": "The neighbour's right and ihsan (doing good)",
@@ -961,7 +1022,8 @@
       "options": [
         "A plate of food",
         "A smile and a salam"
-      ]
+      ],
+      "affirm": "How kind of you! A small gift brings neighbours' hearts closer."
     }
   },
   {
@@ -1019,10 +1081,22 @@
       "review_verdict": "low_only",
       "review_defects": [
         {
+          "model": "deepseek-v4-pro",
+          "field": "description",
+          "type": "meaning",
+          "why": "The English softens 'instills' to 'gently shows' and narrows 'Shariah etiquettes' to 'Sunnah manners'."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "field": "pages[5].text",
+          "type": "meaning",
+          "why": "The English drops 'noble' and the sense of commitment (يلتزم بها)."
+        },
+        {
           "model": "glm-5.2",
           "field": "description",
           "type": "meaning",
-          "why": "The Arabic 'مشوقة' (engaging) is dropped, 'warm' and 'gently' are added, and 'ترسّخ' (instills/establishes) is understated as 'shows'."
+          "why": "«مشوقة» means engaging/captivating, not 'warm'; the English softens the source's emphasis on the story being compelling."
         }
       ],
       "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-15",
@@ -1048,21 +1122,33 @@
         "fixer": null,
         "rounds": 1,
         "prompt_version": "dfa8a5f39718",
-        "content_sha256": "b0ad867b4def2a2beb7caae97329ebcceb0794f39939026aa4620d25ed3b233d",
-        "reviewed_at": "2026-10-15T12:55:56+00:00",
+        "content_sha256": "d5612d27dd2d7c14a4cb355c52f63872bac8fa8b1f14ee7ba4c88fbd7f797c86",
+        "reviewed_at": "2026-10-15T18:01:49+00:00",
         "residual_low": [
+          {
+            "model": "deepseek-v4-pro",
+            "field": "description",
+            "type": "meaning",
+            "why": "The English softens 'instills' to 'gently shows' and narrows 'Shariah etiquettes' to 'Sunnah manners'."
+          },
+          {
+            "model": "deepseek-v4-pro",
+            "field": "pages[5].text",
+            "type": "meaning",
+            "why": "The English drops 'noble' and the sense of commitment (يلتزم بها)."
+          },
           {
             "model": "glm-5.2",
             "field": "description",
             "type": "meaning",
-            "why": "The Arabic 'مشوقة' (engaging) is dropped, 'warm' and 'gently' are added, and 'ترسّخ' (instills/establishes) is understated as 'shows'."
+            "why": "«مشوقة» means engaging/captivating, not 'warm'; the English softens the source's emphasis on the story being compelling."
           }
         ],
         "adjudicated": [],
         "tool": "ops/tools/review_en_parity.py",
         "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
       },
-      "revalidated_at": "2026-10-15T12:55:56+00:00"
+      "revalidated_at": "2026-10-15T18:01:49+00:00"
     },
     "ageGroup": "3-6 years",
     "category": "Barakah and remembering Allah",
@@ -1079,7 +1165,10 @@
       "options": [
         "We say: Bismillah",
         "We just start eating"
-      ]
+      ],
+      "caring": 0,
+      "affirm": "Well done! We begin our food with «Bismillah», just as Abdullah learned.",
+      "nudge": "I know you're hungry… do you remember what Abdullah said before he ate?"
     }
   },
   {
@@ -1092,12 +1181,12 @@
     "pages": [
       {
         "pageNumber": 1,
-        "text": "On a beautiful afternoon, Aisha wanted to enter her mother’s room to get her reading book. She ran and raised her hand to push the door suddenly.",
+        "text": "At midday, while Aisha's mother was resting in her room, Aisha wanted to go in to get her reading book. She ran and raised her hand to push the door suddenly.",
         "image": "docs/stories/aisha_permission_1.png"
       },
       {
         "pageNumber": 2,
-        "text": "Aisha remembered her father’s words when they had memorized together the words of Allah: ﴿يَا أَيُّهَا الَّذِينَ آمَنُوا لَا تَدْخُلُوا بُيُوتًا غَيْرَ بُيُوتِكُمْ حَتَّىٰ تَسْتَأْنِسُوا وَتُسَلِّمُوا عَلَىٰ أَهْلِهَا﴾. Interpretation of the meaning: 'O you who have believed, do not enter houses other than your own houses until you ask permission and greet their inhabitants.'",
+        "text": "Aisha remembered her father’s words when they had memorized together the words of Allah: ﴿يَـٰٓأَيُّهَا ٱلَّذِينَ ءَامَنُواْ لِيَسۡتَـٔۡذِنكُمُ ٱلَّذِينَ مَلَكَتۡ أَيۡمَٰنُكُمۡ وَٱلَّذِينَ لَمۡ يَبۡلُغُواْ ٱلۡحُلُمَ مِنكُمۡ ثَلَٰثَ مَرَّـٰتٖ﴾. Interpretation of the meaning: 'O believers, let those in your service and your children who have not yet reached maturity ask your permission at three times.'",
         "image": "docs/stories/aisha_permission_2.png"
       },
       {
@@ -1112,7 +1201,7 @@
       },
       {
         "pageNumber": 5,
-        "text": "Her mother taught Aisha that isti'dhan preserves privacy and is a sign of refined Islamic akhlaq that protects hearts and increases love among family.",
+        "text": "Her mother taught Aisha that young children ask permission before coming in at three times: before the dawn prayer, at the midday rest, and after the night prayer — and that asking permission keeps everyone at home comfortable and increases the love between them.",
         "image": "docs/stories/aisha_permission_5.png"
       },
       {
@@ -1134,17 +1223,10 @@
         "quran_ayah": true,
         "reviewer_model": true
       },
-      "review_verdict": "low_only",
-      "review_defects": [
-        {
-          "model": "deepseek-v4-pro",
-          "field": "actionChallenge",
-          "type": "addition",
-          "why": "English adds 'bedroom', narrowing the Arabic 'your parents' room' to a specific room type."
-        }
-      ],
+      "review_verdict": "clean",
+      "review_defects": [],
       "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-15",
-      "revalidated_at": "2026-10-15T12:56:54+00:00",
+      "revalidated_at": "2026-10-15T18:01:49+00:00",
       "english_authors": [
         "mistral-large-3:675b"
       ],
@@ -1165,19 +1247,12 @@
             "model": "glm-5.2"
           }
         },
-        "fixer": "mistral-large-3:675b",
-        "rounds": 2,
+        "fixer": null,
+        "rounds": 1,
         "prompt_version": "dfa8a5f39718",
-        "content_sha256": "8625616ee27f649a523f6f134de0e4a27996e49c209eb24051c09a0e1d4cb765",
-        "reviewed_at": "2026-10-15T12:56:54+00:00",
-        "residual_low": [
-          {
-            "model": "deepseek-v4-pro",
-            "field": "actionChallenge",
-            "type": "addition",
-            "why": "English adds 'bedroom', narrowing the Arabic 'your parents' room' to a specific room type."
-          }
-        ],
+        "content_sha256": "116200051975eae73875a177ca459b81edd7e4b0c2f0eaa01dd6d894484b4bf3",
+        "reviewed_at": "2026-10-15T18:01:49+00:00",
+        "residual_low": [],
         "adjudicated": [],
         "tool": "ops/tools/review_en_parity.py",
         "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
@@ -1188,17 +1263,20 @@
     "discussionQuestions": [
       "Why did Aisha knock on the door and ask permission before going in?",
       "What is the right thing to do if the person in the room does not give you permission to come in?",
-      "How does asking permission protect the privacy and comfort of everyone in the family?"
+      "At which three times do we ask permission before going in to our parents?"
     ],
-    "islamicValue": "Allah says: ﴿يَا أَيُّهَا الَّذِينَ آمَنُوا لَا تَدْخُلُوا بُيُوتًا غَيْرَ بُيُوتِكُمْ حَتَّىٰ تَسْتَأْنِسُوا وَتُسَلِّمُوا عَلَىٰ أَهْلِهَا﴾ (An-Nur: 27) — interpretation of the meaning: 'O you who have believed, do not enter houses other than your own houses until you ask permission and greet their inhabitants.'",
-    "actionChallenge": "Permission challenge: today, knock on your parents' bedroom door and politely ask permission before going in.",
+    "islamicValue": "Allah says: ﴿يَـٰٓأَيُّهَا ٱلَّذِينَ ءَامَنُواْ لِيَسۡتَـٔۡذِنكُمُ ٱلَّذِينَ مَلَكَتۡ أَيۡمَٰنُكُمۡ وَٱلَّذِينَ لَمۡ يَبۡلُغُواْ ٱلۡحُلُمَ مِنكُمۡ ثَلَٰثَ مَرَّـٰتٖۚ مِّن قَبۡلِ صَلَوٰةِ ٱلۡفَجۡرِ وَحِينَ تَضَعُونَ ثِيَابَكُم مِّنَ ٱلظَّهِيرَةِ وَمِنۢ بَعۡدِ صَلَوٰةِ ٱلۡعِشَآءِۚ ثَلَٰثُ عَوۡرَٰتٖ لَّكُمۡ﴾ (An-Nur: 58) — interpretation of the meaning: 'O believers, let those in your service and your children who have not yet reached maturity ask your permission at three times: before the dawn prayer, when you lay aside your clothes at midday, and after the night prayer — three times of privacy for you.'",
+    "actionChallenge": "Permission challenge: today, knock on your parents' bedroom door and politely ask permission before going in, especially at the three times of rest.",
     "pause": {
       "afterPage": 1,
       "question": "If you wanted to go into your parents' room, what would you do?",
       "options": [
         "Knock and ask permission",
         "Open the door and go in"
-      ]
+      ],
+      "caring": 0,
+      "affirm": "What lovely manners! Asking permission keeps everyone at home comfortable.",
+      "nudge": "I understand you're in a hurry… how would someone in the room feel if the door suddenly opened?"
     }
   },
   {
@@ -1252,15 +1330,8 @@
         "quran_ayah": true,
         "reviewer_model": true
       },
-      "review_verdict": "low_only",
-      "review_defects": [
-        {
-          "model": "glm-5.2",
-          "field": "pages[0].text",
-          "type": "addition",
-          "why": "The Arabic says \"with steadiness\" (بثبات) without mentioning steps; \"steady steps\" adds a detail not present in the source."
-        }
-      ],
+      "review_verdict": "clean",
+      "review_defects": [],
       "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-15",
       "english_authors": [
         "mistral-large-3:675b",
@@ -1285,22 +1356,15 @@
         "fixer": null,
         "rounds": 1,
         "prompt_version": "dfa8a5f39718",
-        "content_sha256": "501b8a203b1d77f5de116acd7185debe5516f2673bfa66205b32d6162822d00a",
-        "reviewed_at": "2026-10-15T12:55:56+00:00",
-        "residual_low": [
-          {
-            "model": "glm-5.2",
-            "field": "pages[0].text",
-            "type": "addition",
-            "why": "The Arabic says \"with steadiness\" (بثبات) without mentioning steps; \"steady steps\" adds a detail not present in the source."
-          }
-        ],
+        "content_sha256": "701abcd9cc37dfcf3b789d6546834ae4fefa170dedb70b565ccf2400de0eb821",
+        "reviewed_at": "2026-10-15T18:01:49+00:00",
+        "residual_low": [],
         "adjudicated": [],
         "tool": "ops/tools/review_en_parity.py",
         "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
       },
       "reviewer_model": "deepseek-v4-pro+glm-5.2",
-      "revalidated_at": "2026-10-15T12:55:56+00:00"
+      "revalidated_at": "2026-10-15T18:01:49+00:00"
     },
     "ageGroup": "5-8 years",
     "category": "Reflecting on Allah's creation and greatness",
@@ -1317,7 +1381,8 @@
       "options": [
         "The sky and the stars",
         "The trees and the flowers"
-      ]
+      ],
+      "affirm": "What a beautiful choice! Reflecting on Allah's creation fills the heart with wonder and love."
     }
   },
   {
@@ -1397,14 +1462,14 @@
         "fixer": null,
         "rounds": 1,
         "prompt_version": "dfa8a5f39718",
-        "content_sha256": "c71f4c825740d07257bf6f7e1ffd17244d66c292f55bfb381365531359163228",
-        "reviewed_at": "2026-10-15T12:55:56+00:00",
+        "content_sha256": "2ce6c81406a998fee60f38475665e8594fe176234818b61acf4677722ff4c2f8",
+        "reviewed_at": "2026-10-15T18:01:49+00:00",
         "residual_low": [],
         "adjudicated": [],
         "tool": "ops/tools/review_en_parity.py",
         "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
       },
-      "revalidated_at": "2026-10-15T12:55:56+00:00"
+      "revalidated_at": "2026-10-15T18:01:49+00:00"
     },
     "ageGroup": "3-6 years",
     "category": "Birr al-walidayn (kindness to parents) and bringing smiles",
@@ -1421,7 +1486,10 @@
       "options": [
         "Help her with something small",
         "Ask her to play with me"
-      ]
+      ],
+      "caring": 0,
+      "affirm": "What lovely kindness! A small help makes your mother's heart very happy.",
+      "nudge": "I understand you love playing with her… how could you help her first so she can rest?"
     }
   },
   {
@@ -1476,8 +1544,39 @@
         "quran_ayah": true,
         "reviewer_model": true
       },
-      "review_verdict": "clean",
-      "review_defects": [],
+      "review_verdict": "low_only",
+      "review_defects": [
+        {
+          "model": "deepseek-v4-pro",
+          "field": "description",
+          "type": "meaning",
+          "why": "The Arabic says 'with a good example/model' (القدوة الحسنة), not 'good character'."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "field": "pages[3].text",
+          "type": "meaning",
+          "why": "يسامح means forgives/pardons, not 'shows kindness'."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "field": "pages[4].text",
+          "type": "meaning",
+          "why": "تساهله means his leniency/ease, not forgiveness."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "field": "pages[5].text",
+          "type": "meaning",
+          "why": "رضا كبير is great contentment/satisfaction and سلام is peace, not harmony."
+        },
+        {
+          "model": "glm-5.2",
+          "field": "description",
+          "type": "meaning",
+          "why": "«القدوة الحسنة» means 'a good example/role model,' not 'good character' (أخلاق حسنة); the nuance of setting a good example is lost."
+        }
+      ],
       "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-15",
       "english_authors": [
         "mistral-large-3:675b",
@@ -1501,14 +1600,45 @@
         "fixer": null,
         "rounds": 1,
         "prompt_version": "dfa8a5f39718",
-        "content_sha256": "c46035bf18d51795a86fdc711432e0b3f5fe07971290f2219bcb2dc899c917fd",
-        "reviewed_at": "2026-10-15T12:55:56+00:00",
-        "residual_low": [],
+        "content_sha256": "e6dd6bc54ec3141bc3045841c930b0da0a55862528f833b676d699fb95b2752c",
+        "reviewed_at": "2026-10-15T18:01:49+00:00",
+        "residual_low": [
+          {
+            "model": "deepseek-v4-pro",
+            "field": "description",
+            "type": "meaning",
+            "why": "The Arabic says 'with a good example/model' (القدوة الحسنة), not 'good character'."
+          },
+          {
+            "model": "deepseek-v4-pro",
+            "field": "pages[3].text",
+            "type": "meaning",
+            "why": "يسامح means forgives/pardons, not 'shows kindness'."
+          },
+          {
+            "model": "deepseek-v4-pro",
+            "field": "pages[4].text",
+            "type": "meaning",
+            "why": "تساهله means his leniency/ease, not forgiveness."
+          },
+          {
+            "model": "deepseek-v4-pro",
+            "field": "pages[5].text",
+            "type": "meaning",
+            "why": "رضا كبير is great contentment/satisfaction and سلام is peace, not harmony."
+          },
+          {
+            "model": "glm-5.2",
+            "field": "description",
+            "type": "meaning",
+            "why": "«القدوة الحسنة» means 'a good example/role model,' not 'good character' (أخلاق حسنة); the nuance of setting a good example is lost."
+          }
+        ],
         "adjudicated": [],
         "tool": "ops/tools/review_en_parity.py",
         "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
       },
-      "revalidated_at": "2026-10-15T12:55:56+00:00"
+      "revalidated_at": "2026-10-15T18:01:49+00:00"
     },
     "ageGroup": "4-7 years",
     "category": "Forgiveness and a clean heart",
@@ -1525,7 +1655,10 @@
       "options": [
         "Forgive him",
         "Get angry with him"
-      ]
+      ],
+      "caring": 0,
+      "affirm": "Forgiving takes strength! Your friend didn't mean it, and you put his heart at ease.",
+      "nudge": "I understand you're sad about your drawing… did your friend mean it? How would he feel if you forgave him?"
     }
   },
   {
@@ -1580,27 +1713,8 @@
         "quran_ayah": true,
         "reviewer_model": true
       },
-      "review_verdict": "low_only",
-      "review_defects": [
-        {
-          "model": "deepseek-v4-pro",
-          "field": "category",
-          "type": "meaning",
-          "why": "The Arabic 'أمانة الكلمة' means trustworthiness/faithfulness of speech, not merely truthful words; the Islamic term is lost."
-        },
-        {
-          "model": "deepseek-v4-pro",
-          "field": "actionChallenge",
-          "type": "meaning",
-          "why": "The Arabic 'أمانة الكلمة' is rendered as 'Truthful-words' and 'صدق خالص' as 'sincere truth', losing the trust/truthfulness nuance."
-        },
-        {
-          "model": "glm-5.2",
-          "field": "pages[2].text",
-          "type": "omission",
-          "why": "The Arabic has two near-synonymous terms 'rifq' and 'lin' (gentleness and softness); the English drops 'lin'."
-        }
-      ],
+      "review_verdict": "clean",
+      "review_defects": [],
       "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-15",
       "english_authors": [
         "mistral-large-3:675b",
@@ -1624,33 +1738,14 @@
         "fixer": null,
         "rounds": 1,
         "prompt_version": "dfa8a5f39718",
-        "content_sha256": "3b118d37795dbb35f5ad6e106d14176df521b3034a3ad2e533a4d0c77706873b",
-        "reviewed_at": "2026-10-15T12:58:27+00:00",
-        "residual_low": [
-          {
-            "model": "deepseek-v4-pro",
-            "field": "category",
-            "type": "meaning",
-            "why": "The Arabic 'أمانة الكلمة' means trustworthiness/faithfulness of speech, not merely truthful words; the Islamic term is lost."
-          },
-          {
-            "model": "deepseek-v4-pro",
-            "field": "actionChallenge",
-            "type": "meaning",
-            "why": "The Arabic 'أمانة الكلمة' is rendered as 'Truthful-words' and 'صدق خالص' as 'sincere truth', losing the trust/truthfulness nuance."
-          },
-          {
-            "model": "glm-5.2",
-            "field": "pages[2].text",
-            "type": "omission",
-            "why": "The Arabic has two near-synonymous terms 'rifq' and 'lin' (gentleness and softness); the English drops 'lin'."
-          }
-        ],
+        "content_sha256": "ce5a9846cef9f0ad398501ccc981e7de55c8b65650e767daab5e8124087238db",
+        "reviewed_at": "2026-10-15T18:01:49+00:00",
+        "residual_low": [],
         "adjudicated": [],
         "tool": "ops/tools/review_en_parity.py",
         "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
       },
-      "revalidated_at": "2026-10-15T12:58:27+00:00"
+      "revalidated_at": "2026-10-15T18:01:49+00:00"
     },
     "ageGroup": "5-8 years",
     "category": "Truthful words and courage",
@@ -1667,7 +1762,10 @@
       "options": [
         "Help him get up",
         "Laugh with them"
-      ]
+      ],
+      "caring": 0,
+      "affirm": "That is a true friend! Helping someone who fell makes them feel better.",
+      "nudge": "I understand it might look funny… how does the child who fell feel when he hears the laughing?"
     }
   },
   {
@@ -1705,8 +1803,15 @@
       "translator_model": "claude-opus-5.5",
       "reviewer_model": "deepseek-v4-pro+glm-5.2",
       "needs_scholar_review": true,
-      "review_verdict": "clean",
-      "review_defects": [],
+      "review_verdict": "low_only",
+      "review_defects": [
+        {
+          "model": "glm-5.2",
+          "field": "description",
+          "type": "omission",
+          "why": "The adjective «تربوية» (educational/tarbiyah-focused) is dropped from the English."
+        }
+      ],
       "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-15",
       "auto_review": {
         "reviewers": [
@@ -1726,14 +1831,21 @@
         "fixer": null,
         "rounds": 1,
         "prompt_version": "dfa8a5f39718",
-        "content_sha256": "d5e68afea1b50df22a0dc4eed6941451653e19ef85b9b4f541cbce5e66b5c6b3",
-        "reviewed_at": "2026-10-15T12:55:56+00:00",
-        "residual_low": [],
+        "content_sha256": "6dec6a6268c9200e4c0ef9ebcd73e3f79fb66257a6ed788b04a16216f1230dcc",
+        "reviewed_at": "2026-10-15T18:01:49+00:00",
+        "residual_low": [
+          {
+            "model": "glm-5.2",
+            "field": "description",
+            "type": "omission",
+            "why": "The adjective «تربوية» (educational/tarbiyah-focused) is dropped from the English."
+          }
+        ],
         "adjudicated": [],
         "tool": "ops/tools/review_en_parity.py",
         "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
       },
-      "revalidated_at": "2026-10-15T12:55:56+00:00"
+      "revalidated_at": "2026-10-15T18:01:49+00:00"
     },
     "ageGroup": "3-6 years",
     "category": "Honesty and courage",
@@ -1750,7 +1862,10 @@
       "options": [
         "Tell the truth and say sorry",
         "Hide it"
-      ]
+      ],
+      "caring": 0,
+      "affirm": "Telling the truth takes courage! And saying sorry mends things between brothers.",
+      "nudge": "I understand you're scared… how would your brother feel if he found his toy hidden? And if you told him the truth?"
     }
   },
   {
@@ -1809,14 +1924,22 @@
         "fixer": null,
         "rounds": 1,
         "prompt_version": "dfa8a5f39718",
-        "content_sha256": "21c2c1fcaf2d8e8ab1d8a68537232ec2451808273616ad71e3ddacaa6b55a451",
-        "reviewed_at": "2026-10-15T12:55:56+00:00",
+        "content_sha256": "d56f7c84ed2c156c36a08209876cffb72a4f6b3ee7107a7bdabc7c2e9cf0b11d",
+        "reviewed_at": "2026-10-15T18:02:35+00:00",
         "residual_low": [],
-        "adjudicated": [],
+        "adjudicated": [
+          {
+            "field": "islamicValue",
+            "type": "source_corruption",
+            "reason": "«ويميط الأذى عن الطريق صدقة» IS the wording of Sahih al-Bukhari 2989 (Kitab al-Jihad); «وتميط» is Muslim 1009's. check_scripture_coverage.py confirms the Bukhari match and rejects «وتميط» under 2989 — the reviewer's 'fix' would break the citation.",
+            "by": "claude-opus-5.5 (stories PR #126)",
+            "on": "2026-10-15"
+          }
+        ],
         "tool": "ops/tools/review_en_parity.py",
         "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
       },
-      "revalidated_at": "2026-10-15T12:55:56+00:00"
+      "revalidated_at": "2026-10-15T18:02:35+00:00"
     },
     "ageGroup": "3-6 years",
     "category": "Cleanliness and caring for the environment",
@@ -1833,7 +1956,10 @@
       "options": [
         "Clean around it and water it",
         "Leave it as it is"
-      ]
+      ],
+      "caring": 0,
+      "affirm": "Wonderful! The plant needs someone to care for it, and you did.",
+      "nudge": "I know break time is short… what would happen to the plant if nobody cared for it?"
     }
   },
   {
@@ -1874,16 +2000,40 @@
       "review_verdict": "low_only",
       "review_defects": [
         {
+          "model": "deepseek-v4-pro",
+          "field": "actionChallenge",
+          "type": "meaning",
+          "why": "The Arabic instructs the child to stand up immediately, while the English says to stop what they are doing."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "field": "description",
+          "type": "addition",
+          "why": "The English adds 'simple' which is not in the Arabic."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "field": "discussionQuestions[1]",
+          "type": "meaning",
+          "why": "The Arabic uses singular 'word' and present-tense 'do you say', while the English uses plural 'words' and future 'will you say'."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "field": "pages[0].text",
+          "type": "source_corruption",
+          "why": "The Arabic repeats 'مسابقة' awkwardly; the first occurrence is likely a typo for 'جائزة'."
+        },
+        {
           "model": "glm-5.2",
           "field": "description",
           "type": "addition",
-          "why": "The English adds 'simple' which is not present in the Arabic."
+          "why": "The English adds \"simple\" which is not present in the Arabic."
         },
         {
           "model": "glm-5.2",
           "field": "discussionQuestions[1]",
           "type": "meaning",
-          "why": "The Arabic uses the singular 'الكلمة' (the word/phrase) while the English uses the plural 'words'."
+          "why": "The Arabic uses singular «الكلمة» (the word) but the English uses plural \"words\"."
         }
       ],
       "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-15",
@@ -1905,27 +2055,51 @@
         "fixer": null,
         "rounds": 1,
         "prompt_version": "dfa8a5f39718",
-        "content_sha256": "79112037a7aa6df54c44373789907cf010e081670123051ce45105fed16ff6c4",
-        "reviewed_at": "2026-10-15T12:55:56+00:00",
+        "content_sha256": "e0a5ce7a9f05237760c584c30021395322e05208c38b1fa9a3dce0fff4c4fa18",
+        "reviewed_at": "2026-10-15T18:01:49+00:00",
         "residual_low": [
+          {
+            "model": "deepseek-v4-pro",
+            "field": "actionChallenge",
+            "type": "meaning",
+            "why": "The Arabic instructs the child to stand up immediately, while the English says to stop what they are doing."
+          },
+          {
+            "model": "deepseek-v4-pro",
+            "field": "description",
+            "type": "addition",
+            "why": "The English adds 'simple' which is not in the Arabic."
+          },
+          {
+            "model": "deepseek-v4-pro",
+            "field": "discussionQuestions[1]",
+            "type": "meaning",
+            "why": "The Arabic uses singular 'word' and present-tense 'do you say', while the English uses plural 'words' and future 'will you say'."
+          },
+          {
+            "model": "deepseek-v4-pro",
+            "field": "pages[0].text",
+            "type": "source_corruption",
+            "why": "The Arabic repeats 'مسابقة' awkwardly; the first occurrence is likely a typo for 'جائزة'."
+          },
           {
             "model": "glm-5.2",
             "field": "description",
             "type": "addition",
-            "why": "The English adds 'simple' which is not present in the Arabic."
+            "why": "The English adds \"simple\" which is not present in the Arabic."
           },
           {
             "model": "glm-5.2",
             "field": "discussionQuestions[1]",
             "type": "meaning",
-            "why": "The Arabic uses the singular 'الكلمة' (the word/phrase) while the English uses the plural 'words'."
+            "why": "The Arabic uses singular «الكلمة» (the word) but the English uses plural \"words\"."
           }
         ],
         "adjudicated": [],
         "tool": "ops/tools/review_en_parity.py",
         "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
       },
-      "revalidated_at": "2026-10-15T12:55:56+00:00"
+      "revalidated_at": "2026-10-15T18:01:49+00:00"
     },
     "ageGroup": "4-7 years",
     "category": "Managing feelings and staying calm",
@@ -1942,7 +2116,10 @@
       "options": [
         "Calm down and breathe deeply",
         "Shout and throw the blocks"
-      ]
+      ],
+      "caring": 0,
+      "affirm": "Well done! Breathing calmly puts out the volcano of anger.",
+      "nudge": "I understand you're angry, and anger is a hard feeling… what would happen to the blocks and your friends if you threw them?"
     }
   },
   {
@@ -1986,31 +2163,37 @@
           "model": "deepseek-v4-pro",
           "field": "actionChallenge",
           "type": "meaning",
-          "why": "The Arabic says 'your friend' (صديقك) but the English drops the possessive and says 'a friend'."
+          "why": "The Arabic says 'your friend' but the English drops the possessive."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "field": "description",
+          "type": "meaning",
+          "why": "The Arabic addresses a singular child, while the English uses plural 'children'."
+        },
+        {
+          "model": "deepseek-v4-pro",
+          "field": "discussionQuestions[1]",
+          "type": "meaning",
+          "why": "The Arabic plural 'greater things' is rendered as singular 'something greater'."
         },
         {
           "model": "deepseek-v4-pro",
           "field": "pages[2].text",
           "type": "meaning",
-          "why": "The Arabic uses plural 'hearts' (قلوب) while the English uses singular 'heart'."
-        },
-        {
-          "model": "deepseek-v4-pro",
-          "field": "pages[3].text",
-          "type": "omission",
-          "why": "The phrase 'تجمعنا' (that brings us together) is not fully conveyed by 'together' alone."
+          "why": "The Arabic plural 'hearts' is rendered as singular 'heart'."
         },
         {
           "model": "glm-5.2",
-          "field": "discussionQuestions[1]",
-          "type": "meaning",
-          "why": "The Arabic plural «أشياء أعظم» (greater things) is rendered as singular 'something greater', slightly understating the scope."
+          "field": "description",
+          "type": "addition",
+          "why": "The Arabic says «إخوانه» (his brothers) without mentioning sisters; the English adds \"sisters\"."
         },
         {
           "model": "glm-5.2",
           "field": "pages[3].text",
           "type": "omission",
-          "why": "The word «تجمعنا» (that brings us together / unites us) is dropped; 'together' alone does not fully convey the sense of the picture uniting them."
+          "why": "The Arabic includes «تجمعنا» (that brings us together / unites us) which is dropped in the English."
         }
       ],
       "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-15",
@@ -2032,45 +2215,51 @@
         "fixer": null,
         "rounds": 1,
         "prompt_version": "dfa8a5f39718",
-        "content_sha256": "c4b11032ec962938a7b6ce95b614cdeb18ac0e956b6bb540180381a3fa6a4600",
-        "reviewed_at": "2026-10-15T12:55:56+00:00",
+        "content_sha256": "7982baa369a3320769885a5252fe33cf80daa6bf37782771b17535d04074b9c8",
+        "reviewed_at": "2026-10-15T18:01:49+00:00",
         "residual_low": [
           {
             "model": "deepseek-v4-pro",
             "field": "actionChallenge",
             "type": "meaning",
-            "why": "The Arabic says 'your friend' (صديقك) but the English drops the possessive and says 'a friend'."
+            "why": "The Arabic says 'your friend' but the English drops the possessive."
+          },
+          {
+            "model": "deepseek-v4-pro",
+            "field": "description",
+            "type": "meaning",
+            "why": "The Arabic addresses a singular child, while the English uses plural 'children'."
+          },
+          {
+            "model": "deepseek-v4-pro",
+            "field": "discussionQuestions[1]",
+            "type": "meaning",
+            "why": "The Arabic plural 'greater things' is rendered as singular 'something greater'."
           },
           {
             "model": "deepseek-v4-pro",
             "field": "pages[2].text",
             "type": "meaning",
-            "why": "The Arabic uses plural 'hearts' (قلوب) while the English uses singular 'heart'."
-          },
-          {
-            "model": "deepseek-v4-pro",
-            "field": "pages[3].text",
-            "type": "omission",
-            "why": "The phrase 'تجمعنا' (that brings us together) is not fully conveyed by 'together' alone."
+            "why": "The Arabic plural 'hearts' is rendered as singular 'heart'."
           },
           {
             "model": "glm-5.2",
-            "field": "discussionQuestions[1]",
-            "type": "meaning",
-            "why": "The Arabic plural «أشياء أعظم» (greater things) is rendered as singular 'something greater', slightly understating the scope."
+            "field": "description",
+            "type": "addition",
+            "why": "The Arabic says «إخوانه» (his brothers) without mentioning sisters; the English adds \"sisters\"."
           },
           {
             "model": "glm-5.2",
             "field": "pages[3].text",
             "type": "omission",
-            "why": "The word «تجمعنا» (that brings us together / unites us) is dropped; 'together' alone does not fully convey the sense of the picture uniting them."
+            "why": "The Arabic includes «تجمعنا» (that brings us together / unites us) which is dropped in the English."
           }
         ],
         "adjudicated": [],
         "tool": "ops/tools/review_en_parity.py",
         "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
       },
-      "revalidated_at": "2026-10-15T12:55:56+00:00"
+      "revalidated_at": "2026-10-15T18:01:49+00:00"
     },
     "ageGroup": "3-6 years",
     "category": "Generosity and putting others first",
@@ -2087,7 +2276,10 @@
       "options": [
         "Share my pencils",
         "Draw on my own"
-      ]
+      ],
+      "caring": 0,
+      "affirm": "Sharing is lovely! Now you can draw together and be happy together.",
+      "nudge": "I understand your pencils are new and special to you… how would your friend feel with nothing to draw with?"
     }
   },
   {
@@ -2131,19 +2323,7 @@
           "model": "deepseek-v4-pro",
           "field": "pages[0].text",
           "type": "meaning",
-          "why": "The Arabic 'بطاقة تعريف' means an ID card, not a name card, and 'مصروف مدرسي' specifies school pocket money."
-        },
-        {
-          "model": "deepseek-v4-pro",
-          "field": "actionChallenge",
-          "type": "meaning",
-          "why": "The Arabic says 'your friend' (صديقك) but the English drops the possessive and says 'a friend'."
-        },
-        {
-          "model": "glm-5.2",
-          "field": "pages[1].text",
-          "type": "meaning",
-          "why": "The phrase «لا تحل لي» carries the Islamic permissibility concept (it is not lawful/halal for me), which is softened to a general 'not mine to keep'."
+          "why": "بطاقة تعريف means an ID card, not a name card."
         }
       ],
       "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-15",
@@ -2165,33 +2345,21 @@
         "fixer": null,
         "rounds": 1,
         "prompt_version": "dfa8a5f39718",
-        "content_sha256": "63cc3db7a9b93fd16cc8b6ec27803723907777edc9ec88eb31eb7b3befccb48f",
-        "reviewed_at": "2026-10-15T12:55:56+00:00",
+        "content_sha256": "65e1d270c510eedf8d1e7dcb1cb90c6a11049546bc27df916776d8f42cc264c5",
+        "reviewed_at": "2026-10-15T18:01:49+00:00",
         "residual_low": [
           {
             "model": "deepseek-v4-pro",
             "field": "pages[0].text",
             "type": "meaning",
-            "why": "The Arabic 'بطاقة تعريف' means an ID card, not a name card, and 'مصروف مدرسي' specifies school pocket money."
-          },
-          {
-            "model": "deepseek-v4-pro",
-            "field": "actionChallenge",
-            "type": "meaning",
-            "why": "The Arabic says 'your friend' (صديقك) but the English drops the possessive and says 'a friend'."
-          },
-          {
-            "model": "glm-5.2",
-            "field": "pages[1].text",
-            "type": "meaning",
-            "why": "The phrase «لا تحل لي» carries the Islamic permissibility concept (it is not lawful/halal for me), which is softened to a general 'not mine to keep'."
+            "why": "بطاقة تعريف means an ID card, not a name card."
           }
         ],
         "adjudicated": [],
         "tool": "ops/tools/review_en_parity.py",
         "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
       },
-      "revalidated_at": "2026-10-15T12:55:56+00:00"
+      "revalidated_at": "2026-10-15T18:01:49+00:00"
     },
     "ageGroup": "4-7 years",
     "category": "Trustworthiness and giving back what belongs to others",
@@ -2208,7 +2376,10 @@
       "options": [
         "Give it to the teacher",
         "Keep it for myself"
-      ]
+      ],
+      "caring": 0,
+      "affirm": "That is trustworthiness! Its owner will be happy to get it back.",
+      "nudge": "I understand it's shiny and lovely… how would its owner feel while searching for it?"
     }
   }
 ]

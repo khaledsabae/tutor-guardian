@@ -6408,4 +6408,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get bedtimeThreeTimes => '3 times';
+
+  @override
+  String get storyPauseChooseAgain => 'Choose again';
 }

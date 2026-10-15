@@ -10741,6 +10741,12 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'٣ مرات'**
   String get bedtimeThreeTimes;
+
+  /// After Noor's gentle question at the mid-story pause: clears the child's choice so they can pick again. Never required — «Continue the story» sits under it.
+  ///
+  /// In ar, this message translates to:
+  /// **'أختار مرة أخرى'**
+  String get storyPauseChooseAgain;
 }
 
 class _AppLocalizationsDelegate

@@ -457,6 +457,7 @@ class StoryReaderScreenState extends ConsumerState<StoryReaderScreen> {
           unawaited(Haptics.selection());
           setState(() => _pauseChoice = c);
         },
+        onChooseAgain: () => setState(() => _pauseChoice = null),
         onContinue: () {
           setState(() => _listening = _listening && _canListen);
           goTo(i + 1);
@@ -999,6 +1000,7 @@ class _PauseLeafView extends StatelessWidget {
     required this.language,
     required this.choice,
     required this.onChoose,
+    required this.onChooseAgain,
     required this.onContinue,
   });
 
@@ -1006,19 +1008,29 @@ class _PauseLeafView extends StatelessWidget {
   final String language;
   final int? choice;
   final ValueChanged<int> onChoose;
+  final VoidCallback onChooseAgain;
   final VoidCallback onContinue;
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final colors = context.colors;
+    final picked = choice;
+    final nudged = picked != null && pause.nudges(picked);
+    final reply = picked == null ? null : pause.replyTo(picked);
     return ListView(
       padding: const EdgeInsets.fromLTRB(20, 16, 20, 24),
       children: [
         Center(
           child: NoorPresence(
             size: 96,
-            face: choice == null ? NoorFaceState.thinking : NoorFaceState.happy,
+            // Thinking while the child decides; tender when Noor gently asks
+            // them to think again; happy at a caring choice.
+            face: picked == null
+                ? NoorFaceState.thinking
+                : nudged
+                ? NoorFaceState.tender
+                : NoorFaceState.happy,
           ),
         ),
         const SizedBox(height: 14),
@@ -1055,18 +1067,37 @@ class _PauseLeafView extends StatelessWidget {
           ),
           const SizedBox(height: 10),
         ],
-        if (choice != null) ...[
+        if (picked != null) ...[
           const SizedBox(height: 6),
-          Text(
-            l10n.storyPauseThanks,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: colors.textSecondary,
-              fontSize: 16,
-              height: 1.5,
+          ContentDirectionality(
+            languageCode: reply == null ? l10n.localeName : language,
+            text: reply ?? l10n.storyPauseThanks,
+            child: Text(
+              reply ?? l10n.storyPauseThanks,
+              key: const ValueKey('story-pause-reply'),
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: colors.ink,
+                fontSize: 17,
+                height: 1.6,
+                fontWeight: FontWeight.w700,
+              ),
             ),
           ),
           const SizedBox(height: 14),
+          // Never a wall: after a nudge the child may choose again, or simply
+          // read on and let the story show what its hero did.
+          if (nudged) ...[
+            OutlinedButton.icon(
+              onPressed: onChooseAgain,
+              icon: const Icon(Icons.replay_rounded),
+              label: Text(l10n.storyPauseChooseAgain),
+              style: OutlinedButton.styleFrom(
+                minimumSize: const Size.fromHeight(48),
+              ),
+            ),
+            const SizedBox(height: 10),
+          ],
           FilledButton.icon(
             onPressed: onContinue,
             icon: const Icon(Icons.auto_stories_rounded),

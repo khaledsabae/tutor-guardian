@@ -6354,4 +6354,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get bedtimeThreeTimes => '٣ مرات';
+
+  @override
+  String get storyPauseChooseAgain => 'أختار مرة أخرى';
 }

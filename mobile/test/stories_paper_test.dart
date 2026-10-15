@@ -146,6 +146,19 @@ void main() {
       expect(StoryPause.tryParse({'afterPage': '1', 'question': 'x', 'options': ['a', 'b']}), isNull);
       expect(StoryPause.tryParse({'afterPage': 1, 'question': 'x', 'options': ['a']}), isNull);
       expect(StoryPause.tryParse({'afterPage': 1, 'question': 'x', 'options': ['a', 'b']}), isNotNull);
+      // A caring index outside the options is dropped, not trusted.
+      expect(StoryPause.tryParse({'afterPage': 1, 'question': 'x', 'options': ['a', 'b'], 'caring': 5})!.caring, isNull);
+    });
+
+    test('the nudge needs a caring option and words to say', () {
+      const p = StoryPause(afterPage: 1, question: 'q', options: ['a', 'b'], caring: 0, affirm: 'yes', nudge: 'hmm?');
+      expect(p.nudges(0), isFalse);
+      expect(p.nudges(1), isTrue);
+      expect(p.replyTo(0), 'yes');
+      expect(p.replyTo(1), 'hmm?');
+      const open = StoryPause(afterPage: 1, question: 'q', options: ['a', 'b'], affirm: 'yes');
+      expect(open.nudges(1), isFalse);
+      expect(open.replyTo(1), 'yes');
     });
   });
 
@@ -190,6 +203,31 @@ void main() {
         final twin = enById[s.id]!.pause;
         expect(twin?.afterPage, p.afterPage, reason: s.id);
         expect(twin?.options.length, p.options.length, reason: s.id);
+        // Gentle guidance, the same in both languages.
+        expect(twin?.caring, p.caring, reason: s.id);
+        expect(p.affirm, isNotNull, reason: '${s.id}: no affirmation');
+        expect(twin?.affirm, isNotNull, reason: '${s.id}: no English affirmation');
+        if (p.caring != null) {
+          expect(p.nudge, isNotNull, reason: '${s.id}: a caring option needs a nudge');
+          expect(twin?.nudge, isNotNull, reason: s.id);
+          expect(p.nudge!.contains('؟'), isTrue, reason: '${s.id}: the nudge asks');
+          expect(twin!.nudge!.contains('?'), isTrue, reason: s.id);
+        }
+      }
+    });
+
+    test('Noor never scores a child or promises a reward at the pause', () {
+      for (final s in [...ar, ...en]) {
+        final p = s.pause!;
+        for (final line in [p.affirm, p.nudge]) {
+          if (line == null) continue;
+          for (final banned in [
+            'خطأ', 'خاطئ', 'صح', 'صحيح', '✓', '✗', 'نقطة', 'نقاط', 'أجر', 'ثواب', 'الجنة',
+            'wrong', 'correct', 'right answer', 'point', 'reward', 'Paradise',
+          ]) {
+            expect(line.contains(banned), isFalse, reason: '${s.id}: «$banned» in «$line»');
+          }
+        }
       }
     });
 
@@ -316,29 +354,78 @@ void main() {
       expect(player.loaded.last.path, endsWith('layla_star_p2.m4a'));
     });
 
-    testWidgets('the pause asks, takes any answer, and lets the story go on',
-        (tester) async {
-      final story = _story(
-        pause: const StoryPause(afterPage: 1, question: 'ماذا ستفعل؟', options: ['أساعده', 'أمضي']),
-      );
+    Future<StoryReaderScreenState> openPause(WidgetTester tester, StoryPause pause) async {
       _phone(tester);
       await tester.pumpWidget(_host(
-        StoryReaderScreen(story: story, narrationLoader: (_, _) async => null),
+        StoryReaderScreen(story: _story(pause: pause), narrationLoader: (_, _) async => null),
         still: true,
       ));
       await tester.pump(const Duration(milliseconds: 300));
       final state = tester.state<StoryReaderScreenState>(find.byType(StoryReaderScreen));
       state.goTo(2);
       await tester.pumpAndSettle(const Duration(milliseconds: 100));
-      expect(find.text('ماذا ستفعل؟'), findsOneWidget);
+      return state;
+    }
+
+    const guided = StoryPause(
+      afterPage: 1,
+      question: 'ماذا ستفعل؟',
+      options: ['أساعده', 'أمضي'],
+      caring: 0,
+      affirm: 'ما أرحم قلبك!',
+      nudge: 'أفهم أنك مستعجل… كيف يشعر هو؟',
+    );
+
+    testWidgets('a caring choice is affirmed by name, and the story goes on', (tester) async {
+      final state = await openPause(tester, guided);
       final l10n = await AppLocalizations.delegate.load(const Locale('ar'));
+      expect(find.text('ماذا ستفعل؟'), findsOneWidget);
       expect(find.text(l10n.storyContinue), findsNothing);
-      await tester.tap(find.text('أمضي'));
+      await tester.tap(find.text('أساعده'));
       await tester.pump();
-      expect(find.text(l10n.storyPauseThanks), findsOneWidget);
+      expect(find.text('ما أرحم قلبك!'), findsOneWidget);
+      expect(find.text(l10n.storyPauseChooseAgain), findsNothing);
       await tester.tap(find.text(l10n.storyContinue));
       await tester.pumpAndSettle(const Duration(milliseconds: 100));
       expect(state.leaf, 3);
+    });
+
+    testWidgets('the other choice gets a gentle question — choose again or read on, never a wall',
+        (tester) async {
+      final state = await openPause(tester, guided);
+      final l10n = await AppLocalizations.delegate.load(const Locale('ar'));
+      await tester.tap(find.text('أمضي'));
+      await tester.pump();
+      expect(find.text('أفهم أنك مستعجل… كيف يشعر هو؟'), findsOneWidget);
+      expect(find.text('ما أرحم قلبك!'), findsNothing);
+      // Choose again clears the answer…
+      await tester.tap(find.text(l10n.storyPauseChooseAgain));
+      await tester.pump();
+      expect(find.byKey(const ValueKey('story-pause-reply')), findsNothing);
+      // …and reading on after a nudge is always allowed.
+      await tester.tap(find.text('أمضي'));
+      await tester.pump();
+      await tester.tap(find.text(l10n.storyContinue));
+      await tester.pumpAndSettle(const Duration(milliseconds: 100));
+      expect(state.leaf, 3);
+    });
+
+    testWidgets('an open question affirms every answer',
+        (tester) async {
+      await openPause(tester, const StoryPause(
+        afterPage: 1, question: 'ماذا أحببت؟', options: ['أ', 'ب'], affirm: 'ما أجمل هذا!'));
+      await tester.tap(find.text('ب'));
+      await tester.pump();
+      expect(find.text('ما أجمل هذا!'), findsOneWidget);
+      expect(find.text('أختار مرة أخرى'), findsNothing);
+    });
+
+    testWidgets('a pause with no words of its own falls back to the generic line', (tester) async {
+      await openPause(tester, const StoryPause(afterPage: 1, question: '؟', options: ['أ', 'ب']));
+      final l10n = await AppLocalizations.delegate.load(const Locale('ar'));
+      await tester.tap(find.text('ب'));
+      await tester.pump();
+      expect(find.text(l10n.storyPauseThanks), findsOneWidget);
     });
 
     testWidgets('page text is the palette ink — readable in dark mode', (tester) async {

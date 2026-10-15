@@ -171,7 +171,7 @@
     ]
   },
   "story:sarah_basil_sprout": {
-    "content_sha256": "7c6f98734d6cd401f67826d26edd7b5c050bdaa623b56437c8a70c72fbcd533b",
+    "content_sha256": "d56f7c84ed2c156c36a08209876cffb72a4f6b3ee7107a7bdabc7c2e9cf0b11d",
     "overrides": [
       {
         "field": "islamicValue",
@@ -184,7 +184,8 @@
           "sha256": "2b128ea71b6d037c12bc28adf715524ad48e992733909efd6ea305083d30f91a",
           "consult": "ops/data/en_parity_pending/review-2026-10-07-held/sarah-evidence-consult.json",
           "consult_sha256": "7a6fed336536cbe4732d74518eb8d8d33415489e9cc0e6ee2b50e54f79147531"
-        }
+        },
+        "note_2026_10_15": "Re-bound to the new text fingerprint in PR #126 (pause guidance added; the hadith line is unchanged)."
       }
     ]
   },
@@ -233,6 +234,30 @@
         "reason": "The English summary contains the clause it is said to omit, word for word: «When his practice ends, serve him his food and complete your own fast until sunset» renders «فإذا انتهت تجربته فقدّم له طعامه، وأكمل أنت صيامك إلى غروب الشمس»; the reviewer's own suggestion is identical to the current text. glm-5.2 found nothing here.",
         "by": "claude-opus-5.5 (worship-review fixes R02, oct8)",
         "on": "2026-10-08"
+      }
+    ]
+  },
+  "story:saleh_bird": {
+    "content_sha256": "fa786fda904cc79f18c35fc39aed3ee45f148b5ea9688f522c633fed1d426bb0",
+    "overrides": [
+      {
+        "field": "pages[0].text",
+        "type": "source_corruption",
+        "reason": "«يلعب بكرته» is بِـ + كُرَتِه — 'with his ball', exactly as the English has it. It is not بَكَرَة (pulley); unvocalised Arabic reads it as the ball from context.",
+        "by": "claude-opus-5.5 (stories PR #126)",
+        "on": "2026-10-15"
+      }
+    ]
+  },
+  "story:layla_star": {
+    "content_sha256": "d767cd06f1d4363c29fd700a153836cb71488dd7a0e0c1a0730bdfdd4098c2f8",
+    "overrides": [
+      {
+        "field": "pages[4].text",
+        "type": "source_corruption",
+        "reason": "After the colon Layla counts her blessings in her own voice (قطتي/جدي/أمي) — a direct listing, standard in children's narrative. The English renders the same list in the narrator's voice; the meaning is identical.",
+        "by": "claude-opus-5.5 (stories PR #126)",
+        "on": "2026-10-15"
       }
     ]
   }
