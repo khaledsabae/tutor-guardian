@@ -132,7 +132,9 @@ const Set<String> _badgeMilestoneKeys = {
 /// (the caller then shows [JourneyMilestone.emoji] / [MilestoneEntry.emoji]).
 String? milestoneBadgeAsset(String key) {
   if (!_badgeMilestoneKeys.contains(key)) return null;
-  // Unified brand set (logo-centric) — replaces the old PNGs.
+  // The «ورق مقصوص» SVG set (2026-10-14) — replaced the Recraft webp, which
+  // had replaced the old PNGs. Rendered through ArtImage, which picks
+  // SvgPicture for these.
   const branded = {
     'first_prayer', 'first_surah', 'first_fast',
     'first_dua', 'good_manner', 'helped_others',
@@ -144,9 +146,9 @@ String? milestoneBadgeAsset(String key) {
     // here, producing `milestone_first_first_prayer.webp`: a path matching
     // no file, which quietly cost all three illustrations.
     if ({'first_prayer', 'first_surah', 'first_fast'}.contains(key)) {
-      return 'assets/images/generated/milestone_$key.webp';
+      return 'assets/svg/art/milestone_$key.svg';
     }
-    return 'assets/images/generated/badge_$key.webp';
+    return 'assets/svg/art/badge_$key.svg';
   }
   // No PNG fallback: `assets/images/milestones/` has not existed since the
   // brand set replaced the old PNGs, so the "fallback" was a broken path on

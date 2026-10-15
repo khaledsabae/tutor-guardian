@@ -188,7 +188,19 @@ void main() {
 
       // Progress now lives in the gradient header: "1/2 (50%)"
       expect(find.textContaining('1/2'), findsOneWidget);
-      // Completed trail node renders a check icon
+      // Completed trail node renders a check icon — below the fold on the
+      // test's 800×600 screen, under the domain art that holds its height
+      // from the first frame.
+      await tester.scrollUntilVisible(
+        find.byIcon(Icons.check_rounded),
+        200,
+        scrollable: find
+            .descendant(
+              of: find.byType(ListView),
+              matching: find.byType(Scrollable),
+            )
+            .first,
+      );
       expect(find.byIcon(Icons.check_rounded), findsOneWidget);
     });
 

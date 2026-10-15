@@ -28,6 +28,7 @@ import '../providers/journey_providers.dart';
 import '../widgets/milestone_icon.dart';
 import '../../../widgets/ui/error_retry_view.dart';
 import 'package:almorabbi/widgets/ui/loading_view.dart';
+import '../../../widgets/ui/art_image.dart';
 
 class ChildJourneyScreen extends ConsumerWidget {
   const ChildJourneyScreen({
@@ -517,11 +518,10 @@ class _EmptyTimeline extends StatelessWidget {
       ),
       child: Column(
         children: [
-          Image.asset(
-            'assets/images/generated/empty_journey.webp',
+          ArtImage(
+            'assets/svg/art/empty_journey.svg',
             height: 130,
-            fit: BoxFit.contain,
-            errorBuilder: (_, _, _) =>
+            fallback: (_) =>
                 const Text('🕊️', style: TextStyle(fontSize: 40)),
           ),
           const SizedBox(height: 10),

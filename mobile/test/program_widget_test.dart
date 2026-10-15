@@ -573,6 +573,20 @@ void main() {
       await tester.pump(const Duration(milliseconds: 100));
       await tester.pump(const Duration(milliseconds: 100));
 
+      // The domain art holds its height above the lessons from the first
+      // frame (an SVG reserves its box while it parses), so on the test's
+      // 800×600 screen the list starts below the fold — as it always did on
+      // a phone, under the 1024² art this replaced. Scroll to it.
+      await tester.scrollUntilVisible(
+        find.text('اللعب النبوي'),
+        200,
+        scrollable: find
+            .descendant(
+              of: find.byType(ListView),
+              matching: find.byType(Scrollable),
+            )
+            .first,
+      );
       expect(find.text('الرفق'), findsOneWidget);
       expect(find.text('اللعب النبوي'), findsOneWidget);
       expect(find.text('الدروس (2)'), findsOneWidget);

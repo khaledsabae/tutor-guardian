@@ -32,10 +32,11 @@ import '../../share/share_service.dart';
 import '../../share/shareable_moment_card.dart';
 import 'package:almorabbi/core/motion.dart';
 import 'package:almorabbi/widgets/ui/loading_view.dart';
+import '../../../widgets/ui/art_image.dart';
 
 
-/// Domain → header illustration (solid cream-bg JPGs that blend with the
-/// page background). Curriculum domain `medical` maps to the `health` art.
+/// Domain → header illustration: the «ورق مقصوص» domain scenes, each its own
+/// emerald card. Curriculum domain `medical` maps to the `health` art.
 String? _domainIllustration(String domain) {
   const map = {
     'islamic_parenting': 'domain_islamic_parenting',
@@ -45,7 +46,7 @@ String? _domainIllustration(String domain) {
     'medical': 'domain_health',
   };
   final name = map[domain];
-  return name == null ? null : 'assets/images/generated/$name.webp';
+  return name == null ? null : 'assets/svg/art/$name.svg';
 }
 
 class PathDetailScreen extends ConsumerWidget {
@@ -144,11 +145,9 @@ class _Body extends ConsumerWidget {
         ),
         const SizedBox(height: 16),
         if (_domainIllustration(path.domain) != null) ...[
-          Image.asset(
-            _domainIllustration(path.domain)!,
-            fit: BoxFit.contain,
-            errorBuilder: (_, _, _) => const SizedBox.shrink(),
-          ),
+          // A square card: full width would be a screen of art above the
+          // lessons, so it is held to a header's height.
+          ArtImage(_domainIllustration(path.domain)!, height: 180),
           const SizedBox(height: 16),
         ],
         // Prominent video preview for the whole unit (the path's intro video).

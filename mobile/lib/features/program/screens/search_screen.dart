@@ -127,7 +127,7 @@ class _Body extends ConsumerWidget {
         if (results.isEmpty) {
           return EmptyState(
             emoji: '🤷',
-            imageAsset: 'assets/images/generated/empty_search.webp',
+            imageAsset: 'assets/svg/art/empty_search.svg',
             title: AppLocalizations.of(context).noResultsFound,
             subtitle: AppLocalizations.of(context).chatHint,
           );

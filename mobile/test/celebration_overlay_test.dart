@@ -12,6 +12,7 @@ library;
 
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:lottie/lottie.dart';
 
@@ -100,25 +101,25 @@ void main() {
   });
 
   group('the picture at the top', () {
-    testWidgets('mascot art becomes Noor', (tester) async {
+    testWidgets('a Noor face becomes Noor, in his window', (tester) async {
       await _pump(tester,
           tier: CelebrationTier.quiet,
-          imageAsset: 'assets/images/generated/mascot_celebrate.webp');
+          imageAsset: 'assets/svg/noor/noor_happy.svg');
       expect(find.byType(NoorPresence), findsOneWidget);
     });
 
     testWidgets('milestone art is shown, not swapped for Noor',
         (tester) async {
-      const art = 'assets/images/generated/milestone_first_prayer.webp';
+      const art = 'assets/svg/art/milestone_first_prayer.svg';
       await _pump(tester, tier: CelebrationTier.quiet, imageAsset: art);
       expect(find.byType(NoorPresence), findsNothing);
-      final images = tester.widgetList<Image>(find.byType(Image));
+      final pictures = tester.widgetList<SvgPicture>(find.byType(SvgPicture));
       expect(
-        images.any((i) =>
-            i.image is ResizeImage &&
-            ((i.image as ResizeImage).imageProvider as AssetImage).assetName ==
-                art),
+        pictures.any(
+          (p) => (p.bytesLoader as SvgAssetLoader).assetName == art,
+        ),
         isTrue,
+        reason: 'the milestone SVG is the picture at the top',
       );
     });
   });

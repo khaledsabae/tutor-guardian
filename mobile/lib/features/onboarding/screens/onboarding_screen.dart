@@ -43,6 +43,8 @@ import '../data/onboarding_storage.dart';
 import '../providers/onboarding_providers.dart';
 import 'update_splash_screen.dart' show updateSplashVersion;
 import '../../../widgets/ui/error_retry_view.dart';
+import '../../../widgets/ui/art_image.dart';
+import '../widgets/welcome_hero.dart';
 
 class OnboardingScreen extends ConsumerStatefulWidget {
   const OnboardingScreen({super.key});
@@ -410,41 +412,45 @@ class _AgeQuestionPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Center(
-              child: Container(
-                width: 120,
-                height: 120,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: const Color(0xFF0F1E2E),
-                  border: Border.all(
-                    color: const Color(0xFFE89838).withValues(alpha: 0.45),
-                    width: 2,
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: const Color(0xFFE89838).withValues(alpha: 0.25),
-                      blurRadius: 18,
-                      spreadRadius: 2,
+                  child: Container(
+                    width: 120,
+                    height: 120,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      // The art's own emerald, like every Noor window.
+                      color: kNoorWindowGround,
+                      // A solid gold paper ring: a translucent orange over the
+                      // emerald read as olive.
+                      border: Border.all(
+                        color: const Color(0xFFF7C548),
+                        width: 3,
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: const Color(
+                            0xFFF7C548,
+                          ).withValues(alpha: 0.25),
+                          blurRadius: 18,
+                          spreadRadius: 2,
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-                child: ClipOval(
-                  child: Padding(
-                    padding: const EdgeInsets.all(6),
-                    child: Image.asset(
-                      'assets/images/generated/mascot_reading.webp',
-                      fit: BoxFit.contain,
-                      errorBuilder: (_, _, _) => const Center(
-                        child: BrandGlyph(BrandIcon.crescent, size: 64),
+                    child: ClipOval(
+                      child: Padding(
+                        padding: const EdgeInsets.all(6),
+                        child: ArtImage(
+                          'assets/svg/noor/noor_reading.svg',
+                          fallback: (_) => const Center(
+                            child: BrandGlyph(BrandIcon.crescent, size: 64),
+                          ),
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ),
-            )
-            .animate()
-            .fadeIn(duration: Dt.base)
-            .scale(begin: const Offset(.9, .9), curve: Curves.easeOutBack),
+                )
+                .animate()
+                .fadeIn(duration: Dt.base)
+                .scale(begin: const Offset(.9, .9), curve: Curves.easeOutBack),
             const SizedBox(height: 12),
             Text(
               l10n.onbWelcome,
@@ -901,17 +907,16 @@ class _LanguageSelectionPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Image.asset(
-                    'assets/images/generated/onboarding_welcome.webp',
+              SizedBox(
                     height: 140,
-                    fit: BoxFit.contain,
-                    errorBuilder: (_, _, _) => const SizedBox(
-                      // The hero is bundled; if it is ever missing the layout
-                      // keeps a drawn anchor instead of collapsing (a globe:
-                      // this is the language page).
-                      height: 140,
-                      child: Center(
-                        child: BrandGlyph(BrandIcon.globe, size: 64),
+                    child: Center(
+                      child: WelcomeHero(
+                        // The hero is bundled; if it is ever missing the
+                        // layout keeps a drawn anchor instead of collapsing
+                        // (a globe: this is the language page).
+                        fallback: (_) => const Center(
+                          child: BrandGlyph(BrandIcon.globe, size: 64),
+                        ),
                       ),
                     ),
                   )

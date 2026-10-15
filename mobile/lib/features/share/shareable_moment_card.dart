@@ -10,6 +10,7 @@
 library;
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
@@ -119,8 +120,11 @@ class ShareableMomentCard extends StatelessWidget {
   }
 }
 
-/// The 1080×1080 branded ground every shared card sits on: the generated
-/// background art, a soft overlay so text stays readable, 64px of padding.
+/// The share cards' background art.
+const kShareCardBackground = 'assets/svg/art/share_bg_celebration.svg';
+
+/// The 1080×1080 branded ground every shared card sits on: the background
+/// art, a soft overlay so text stays readable, 64px of padding.
 ///
 /// Shared so a new kind of card (the «رمضان عائلتنا» recap) carries exactly
 /// the same frame and QR as every other moment, rather than a near-copy.
@@ -152,14 +156,19 @@ class ShareCardFrame extends StatelessWidget {
           ),
           child: Stack(
             children: [
-              // Unified brand background — logo-centric decorative frame
-              // (crescent + book + sprout + star) generated via Recraft V3.
+              // The «ورق مقصوص» ground: emerald sky, stars, hills with
+              // sprouts (assets/svg/art/share_bg_celebration.svg, 360×640,
+              // cropped to the square). SvgPicture parses asynchronously; the
+              // capture (ShareService → captureFromWidget) re-renders until
+              // nothing is dirty, so the PNG is taken after it arrives —
+              // test/share_card_layout_test.dart checks the pixels.
               Positioned.fill(
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(24),
-                  child: Image.asset(
-                    'assets/images/generated/share_bg_celebration.webp',
+                  child: SvgPicture.asset(
+                    kShareCardBackground,
                     fit: BoxFit.cover,
+                    excludeFromSemantics: true,
                     errorBuilder: (_, _, _) => CustomPaint(
                       painter: _PatternPainter(),
                       size: size,

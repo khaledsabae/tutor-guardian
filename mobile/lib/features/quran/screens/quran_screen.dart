@@ -9,6 +9,7 @@ import '../../../theme/design_tokens.dart';
 import '../models/surah_names.dart';
 import '../providers/quran_providers.dart';
 import 'package:almorabbi/widgets/ui/loading_view.dart';
+import '../../../widgets/ui/art_image.dart';
 
 class QuranScreen extends ConsumerWidget {
   const QuranScreen({super.key});
@@ -33,14 +34,13 @@ class QuranScreen extends ConsumerWidget {
         data: (quranData) {
           return Column(
             children: [
-              // Reverent header illustration (cream bg blends with the page).
-              Padding(
-                padding: const EdgeInsets.only(top: 12),
-                child: Image.asset(
-                  'assets/images/generated/milestone_first_surah.webp',
+              // Reverent header illustration — the first-surah milestone of
+              // the «ورق مقصوص» set, its own emerald card on either theme.
+              const Padding(
+                padding: EdgeInsets.only(top: 12),
+                child: ArtImage(
+                  'assets/svg/art/milestone_first_surah.svg',
                   height: 120,
-                  fit: BoxFit.contain,
-                  errorBuilder: (_, _, _) => const SizedBox.shrink(),
                 ),
               ),
               // Last Read Banner

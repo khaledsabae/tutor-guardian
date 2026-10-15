@@ -1,19 +1,24 @@
-/// BrandGlyph — the drawn icon set (جولة الحرفة, item 1).
+/// BrandGlyph — the brand icon set (جولة الحرفة, item 1; «ورق مقصوص» SVG
+/// since 2026-10-14).
 ///
 /// Pinned here:
-///   1. Every glyph paints: pumped at two sizes in BOTH palettes without an
-///      exception, and its painter actually issues draw calls (golden-lite:
-///      a recording canvas that counts — an empty painter must not pass).
-///   2. The glyph follows the live palette: light and dark hosts paint
-///      different colours.
-///   3. Emoji-as-graphics never come back: the files this tour migrated are
+///   1. Every glyph draws: its own SVG (`assets/svg/icons/<name>.svg`),
+///      pumped at two sizes in BOTH palettes, arrives as a picture (not the
+///      placeholder, not the error box) at exactly the asked size.
+///   2. The icons are never tinted — a ColorFilter would flatten the paper
+///      layers — whatever `color:` a call site still passes.
+///   3. `color:` now means only "quiet": a muted role (outline,
+///      textSecondary, disabled…) or a colour under 60% alpha draws the icon
+///      at 45%; anything else draws it in its own colours. The quiet-time
+///      lantern still reads lit vs. out through it.
+///   4. Emoji-as-graphics never come back: the files this tour migrated are
 ///      scanned (comments stripped) and any emoji in code fails the test.
 library;
 
 import 'dart:io';
-import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:almorabbi/theme/app_colors.dart';
@@ -30,106 +35,58 @@ Widget _host(Widget child, AppPalette palette) {
   );
 }
 
-/// A [Canvas] that forwards the draw calls the glyph painters use and counts
-/// them, so "the painter ran" is provable without golden files.
-class _CountingCanvas implements Canvas {
-  _CountingCanvas(this._inner);
-
-  final Canvas _inner;
-  int draws = 0;
-
-  void _mark() => draws++;
-
-  @override
-  void drawPath(ui.Path path, Paint paint) {
-    _mark();
-    _inner.drawPath(path, paint);
+/// Pumps real time until every SvgPicture has its picture (a FittedBox is
+/// built only then) — the parse runs in an isolate, outside fake time.
+Future<void> _untilDrawn(WidgetTester tester) async {
+  for (var i = 0; i < 100; i++) {
+    final pictures = find.byType(SvgPicture).evaluate().length;
+    final drawn = find
+        .descendant(
+          of: find.byType(SvgPicture),
+          matching: find.byType(FittedBox),
+        )
+        .evaluate()
+        .length;
+    if (pictures > 0 && drawn == pictures) return;
+    await tester.runAsync(
+      () => Future<void>.delayed(const Duration(milliseconds: 20)),
+    );
+    await tester.pump();
   }
+  fail('the glyph never produced a picture');
+}
 
-  @override
-  void drawCircle(Offset c, double radius, Paint paint) {
-    _mark();
-    _inner.drawCircle(c, radius, paint);
-  }
-
-  @override
-  void drawLine(Offset p1, Offset p2, Paint paint) {
-    _mark();
-    _inner.drawLine(p1, p2, paint);
-  }
-
-  @override
-  void drawRect(Rect rect, Paint paint) {
-    _mark();
-    _inner.drawRect(rect, paint);
-  }
-
-  @override
-  void drawRRect(RRect rrect, Paint paint) {
-    _mark();
-    _inner.drawRRect(rrect, paint);
-  }
-
-  @override
-  void drawOval(Rect rect, Paint paint) {
-    _mark();
-    _inner.drawOval(rect, paint);
-  }
-
-  // The transform plumbing the painter uses; not draws, just forwarded.
-  @override
-  void save() => _inner.save();
-  @override
-  void restore() => _inner.restore();
-  @override
-  void translate(double dx, double dy) => _inner.translate(dx, dy);
-  @override
-  void scale(double sx, [double? sy]) => _inner.scale(sx, sy);
-
-  @override
-  dynamic noSuchMethod(Invocation invocation) => throw StateError(
-    'BrandGlyph painter used ${invocation.memberName}, '
-    'which the counting canvas does not forward',
+/// The opacity BrandGlyph applies to its picture (1 when it adds none).
+double _opacityOf(WidgetTester tester, Finder glyph) {
+  final opacities = tester.widgetList<Opacity>(
+    find.descendant(of: glyph, matching: find.byType(Opacity)),
   );
+  return opacities.isEmpty ? 1 : opacities.single.opacity;
 }
 
 void main() {
-  group('every glyph paints', () {
+  group('every glyph draws its own SVG', () {
     for (final icon in BrandIcon.values) {
       for (final palette in [AppPalette.light, AppPalette.dark]) {
-        final sizeNames = [16.0, 96.0];
-        for (final size in sizeNames) {
+        for (final size in const [16.0, 96.0]) {
           testWidgets(
             '${icon.name} @ ${size.toStringAsFixed(0)}px '
-            '(${palette.isDark ? 'dark' : 'light'}) paints and records draws',
+            '(${palette.isDark ? 'dark' : 'light'})',
             (tester) async {
               await tester.pumpWidget(
                 _host(BrandGlyph(icon, size: size), palette),
               );
+              await _untilDrawn(tester);
 
               expect(tester.takeException(), isNull);
-              final glyphPaint = find
-                  .descendant(
-                    of: find.byType(BrandGlyph),
-                    matching: find.byType(CustomPaint),
-                  )
-                  .first;
-              expect(glyphPaint, findsOneWidget);
-              expect(tester.getSize(glyphPaint), Size(size, size));
-
-              // Golden-lite: re-run the painter against a counting canvas.
-              final customPaint = tester.widget<CustomPaint>(glyphPaint);
-              final painter = customPaint.painter!;
-              final recorder = ui.PictureRecorder();
-              final counting = _CountingCanvas(Canvas(recorder));
-              painter.paint(counting, Size(size, size));
+              final svg = tester.widget<SvgPicture>(find.byType(SvgPicture));
               expect(
-                counting.draws,
-                greaterThan(0),
-                reason:
-                    '${icon.name} recorded no draw calls — an empty '
-                    'glyph slipped into the set',
+                (svg.bytesLoader as SvgAssetLoader).assetName,
+                'assets/svg/icons/${icon.name}.svg',
               );
+              expect(BrandGlyph.assetFor(icon), 'assets/svg/icons/${icon.name}.svg');
+              expect(tester.getSize(find.byType(BrandGlyph)), Size(size, size));
+              expect(tester.getSize(find.byType(SvgPicture)), Size(size, size));
             },
           );
         }
@@ -137,32 +94,109 @@ void main() {
     }
   });
 
-  testWidgets('the default colour follows the live palette', (tester) async {
-    final key = UniqueKey();
-    await tester.pumpWidget(
-      _host(BrandGlyph(key: key, BrandIcon.crescent), AppPalette.light),
-    );
-    final glyphPaint = find
-        .descendant(
-          of: find.byType(BrandGlyph),
-          matching: find.byType(CustomPaint),
-        )
-        .first;
-    final lightPainter = (tester.widget<CustomPaint>(glyphPaint).painter!);
-    await tester.pumpWidget(
-      _host(BrandGlyph(key: key, BrandIcon.crescent), AppPalette.dark),
-    );
-    // MaterialApp animates the theme (AnimatedTheme, ~200ms) — the glyph
-    // only sees the dark palette after the lerp.
-    await tester.pump(const Duration(milliseconds: 400));
+  group('colour no longer tints; it only says "quiet"', () {
+    testWidgets('no colour filter, whatever colour is passed', (tester) async {
+      for (final color in [null, Colors.red, Colors.white, Colors.black]) {
+        await tester.pumpWidget(
+          _host(BrandGlyph(BrandIcon.star, color: color), AppPalette.light),
+        );
+        final svg = tester.widget<SvgPicture>(find.byType(SvgPicture));
+        expect(svg.colorFilter, isNull, reason: 'tinted by $color');
+        expect(
+          find.descendant(
+            of: find.byType(BrandGlyph),
+            matching: find.byType(ColorFiltered),
+          ),
+          findsNothing,
+        );
+      }
+    });
 
-    final darkPainter = tester.widget<CustomPaint>(glyphPaint).painter!;
-    expect(
-      lightPainter,
-      isNot(darkPainter),
-      reason: 'palette change must repaint',
-    );
-    expect(lightPainter.shouldRepaint(darkPainter), isTrue);
+    for (final palette in [AppPalette.light, AppPalette.dark]) {
+      final theme = palette.isDark ? 'dark' : 'light';
+      testWidgets('muted roles draw at 45%, vivid ones in full ($theme)', (
+        tester,
+      ) async {
+        late BuildContext context;
+        await tester.pumpWidget(
+          _host(
+            Builder(
+              builder: (c) {
+                context = c;
+                return const SizedBox();
+              },
+            ),
+            palette,
+          ),
+        );
+        // MaterialApp animates the theme in; read the settled one.
+        await tester.pump(const Duration(milliseconds: 400));
+        final scheme = Theme.of(context).colorScheme;
+        final quiet = <String, Color>{
+          'outline': scheme.outline,
+          'outlineVariant': scheme.outlineVariant,
+          'disabled': Theme.of(context).disabledColor,
+          'textSecondary': palette.textSecondary,
+          'inkSoft': palette.inkSoft,
+          'translucent primary': palette.primary.withValues(alpha: .4),
+        };
+        final vivid = <String, Color?>{
+          'none': null,
+          'primary': palette.primary,
+          'accent': palette.accent,
+          'accentDeep': palette.accentDeep,
+          'onPrimary': palette.onPrimary,
+          'tertiary': scheme.tertiary,
+          'success': palette.success,
+          'dangerFg': palette.dangerFg,
+        };
+        // Read off the live context before it is replaced by the pumps below.
+        for (final MapEntry(key: name, value: color) in quiet.entries) {
+          expect(BrandGlyph.isMuted(context, color), isTrue, reason: name);
+        }
+        for (final MapEntry(key: name, value: color) in vivid.entries) {
+          expect(BrandGlyph.isMuted(context, color), isFalse, reason: name);
+        }
+        for (final MapEntry(key: name, value: color) in quiet.entries) {
+          await tester.pumpWidget(
+            _host(BrandGlyph(BrandIcon.lantern, color: color), palette),
+          );
+          expect(
+            _opacityOf(tester, find.byType(BrandGlyph)),
+            BrandGlyph.mutedOpacity,
+            reason: name,
+          );
+        }
+        for (final MapEntry(key: name, value: color) in vivid.entries) {
+          await tester.pumpWidget(
+            _host(BrandGlyph(BrandIcon.lantern, color: color), palette),
+          );
+          expect(_opacityOf(tester, find.byType(BrandGlyph)), 1, reason: name);
+        }
+      });
+    }
+
+    testWidgets('the quiet-time lantern still reads lit vs. out', (
+      tester,
+    ) async {
+      // quiet_time_bar.dart: lit = colorScheme.tertiary, out = outline.
+      Widget lantern({required bool out}) => Builder(
+        builder: (context) {
+          final scheme = Theme.of(context).colorScheme;
+          return BrandGlyph(
+            BrandIcon.lantern,
+            size: 20,
+            color: out ? scheme.outline : scheme.tertiary,
+          );
+        },
+      );
+      await tester.pumpWidget(_host(lantern(out: false), AppPalette.light));
+      final lit = _opacityOf(tester, find.byType(BrandGlyph));
+      await tester.pumpWidget(_host(lantern(out: true), AppPalette.light));
+      final out = _opacityOf(tester, find.byType(BrandGlyph));
+      expect(lit, 1);
+      expect(out, lessThan(lit));
+    });
   });
 
   testWidgets('a semantic label is exposed when given', (tester) async {

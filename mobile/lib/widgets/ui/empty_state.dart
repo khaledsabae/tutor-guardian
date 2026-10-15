@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
 import '../../theme/design_tokens.dart';
+import 'art_image.dart';
 import 'bouncy_button.dart';
 
 /// Friendly empty/error state: big drawn icon (or legacy emoji), bold
@@ -18,8 +19,9 @@ class EmptyState extends StatelessWidget {
   final String? actionLabel;
   final VoidCallback? onAction;
 
-  /// Optional illustration shown instead of [icon]/[emoji] (falls back to
-  /// the emoji if the asset is missing).
+  /// Optional illustration shown instead of [icon]/[emoji] — an
+  /// assets/svg/art/ scene, or any bundled image ([ArtImage] picks the
+  /// renderer). Falls back to [icon]/[emoji] if the asset is missing.
   final String? imageAsset;
 
   const EmptyState({
@@ -45,12 +47,13 @@ class EmptyState extends StatelessWidget {
             ExcludeSemantics(
               child:
                   (imageAsset != null
-                          ? Image.asset(
-                              imageAsset!,
-                              excludeFromSemantics: true,
-                              height: 160,
-                              fit: BoxFit.contain,
-                              errorBuilder: (_, _, _) => fallback,
+                          ? _paperDisc(
+                              context,
+                              ArtImage(
+                                imageAsset!,
+                                height: 160,
+                                fallback: (_) => fallback,
+                              ),
                             )
                           : fallback)
                       .animate()
@@ -89,6 +92,22 @@ class EmptyState extends StatelessWidget {
           ],
         ).animate().fadeIn(duration: 400.ms).slideY(begin: .06),
       ),
+    );
+  }
+
+  /// The paper art is cut in deep emerald, which sinks into a dark page; at
+  /// night it sits on a cream paper moon so its outlines still read.
+  static Widget _paperDisc(BuildContext context, Widget art) {
+    if (Theme.of(context).brightness != Brightness.dark) return art;
+    return Container(
+      width: 184,
+      height: 184,
+      alignment: Alignment.center,
+      decoration: const BoxDecoration(
+        shape: BoxShape.circle,
+        color: Color(0xE6FBF1DE), // audit-ok: a cream paper moon behind dark-cut art on a dark page — deliberate, dark mode only
+      ),
+      child: SizedBox(width: 150, child: art),
     );
   }
 }

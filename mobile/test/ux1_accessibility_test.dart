@@ -6,6 +6,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:almorabbi/api/tg_client.dart';
@@ -141,9 +142,9 @@ void main() {
           title: AppLocalizations.of(context).childFallbackName,
           imageAsset: image,
         )), locale: locale);
-        await t.pumpWidget(empty(image: 'assets/images/generated/empty_children.webp'));
+        await t.pumpWidget(empty(image: 'assets/svg/art/empty_children.svg'));
         await t.pumpAndSettle();
-        expect(t.getSemantics(find.byType(Image)).getSemanticsData().flagsCollection.isImage, isFalse);
+        expect(t.getSemantics(find.byType(SvgPicture)).getSemanticsData().flagsCollection.isImage, isFalse);
         await t.pumpWidget(empty());
         await t.pumpAndSettle();
         expect(find.bySemanticsLabel(RegExp('👶')), findsNothing);

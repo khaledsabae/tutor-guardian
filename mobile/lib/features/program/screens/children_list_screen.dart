@@ -20,6 +20,7 @@ import '../providers/progress_providers.dart';
 import '../providers/settings_providers.dart';
 import '../../../widgets/ui/error_retry_view.dart';
 import 'package:almorabbi/widgets/ui/loading_view.dart';
+import '../../../widgets/ui/art_image.dart';
 
 class ChildrenListScreen extends ConsumerWidget {
   const ChildrenListScreen({super.key});
@@ -54,12 +55,10 @@ class ChildrenListScreen extends ConsumerWidget {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Image.asset(
-                      'assets/images/generated/empty_children.webp',
-                      height: 150,
-                      fit: BoxFit.contain,
-                      errorBuilder: (_, _, _) => const SizedBox.shrink(),
-                    ),
+                      const ArtImage(
+                        'assets/svg/art/empty_children.svg',
+                        height: 150,
+                      ),
                       const SizedBox(height: 12),
                       Text(
                         AppLocalizations.of(context).childrenEmpty,
