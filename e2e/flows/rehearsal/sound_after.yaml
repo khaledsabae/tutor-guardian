@@ -1,0 +1,15 @@
+# Sound × recitation, part 2: after the ticks the reader is still reciting —
+# the app's own view of it (just_audio's `playing`), beside the audio
+# service's view that rehearsal.sh judged from `dumpsys audio`. No launchApp:
+# this continues the process sound_start.yaml left open.
+appId: com.alsaba.almorabbi
+name: rehearsal/sound — still reciting after the ticks
+---
+- runScript: ../common/l10n.js
+- assertVisible: '${output.t.quranStop}'
+- takeScreenshot: sound_2_still_reciting
+- tapOn: '${output.t.quranStop}'
+- extendedWaitUntil:
+    visible: '${output.t.quranListen}'
+    timeout: 15000
+- runFlow: ../common/home.yaml

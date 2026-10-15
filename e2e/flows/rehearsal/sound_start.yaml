@@ -1,0 +1,49 @@
+# Sound × recitation, part 1 (plan phase 2 gate: «الأصوات مابتوقفش التلاوة»).
+# Start a recitation the way a parent does — «المزيد» → «القرآن الكريم» →
+# the first surah → «استماع» — and leave the reader open and reciting.
+# e2e/rehearsal.sh then reads `dumpsys audio`, sounds interface ticks through
+# the CI-only probe (mobile/lib/core/e2e_probes.dart: a system light/dark
+# change, or F12 → Haptics.selection → SoundFx.select, the production sound
+# path), reads it again, and sound_after.yaml checks the reader still says
+# «إيقاف».
+# The reader's player is just_audio streaming everyayah.com; the bottom pill
+# reads «إيقاف» only while that player is playing.
+appId: com.alsaba.almorabbi
+name: rehearsal/sound — recitation playing
+---
+- runScript: ../common/l10n.js
+- launchApp:
+    stopApp: true
+- runFlow: ../common/system_dialogs.yaml
+- extendedWaitUntil:
+    visible: '${output.lead.navToday}'
+    timeout: 60000
+- runFlow: ../common/skip_tour.yaml
+- tapOn: '${output.lead.navMore}'
+- extendedWaitUntil:
+    visible: '${output.t.hubTitle}'
+    timeout: 30000
+- scrollUntilVisible:
+    element:
+      text: '${output.tile.holyQuran}'
+    direction: DOWN
+    timeout: 20000
+- tapOn: '${output.tile.holyQuran}'
+- extendedWaitUntil:
+    visible: '${output.c.quranVerseCount}'
+    timeout: 30000
+- tapOn:
+    text: '${output.c.quranVerseCount}'
+    index: 0
+- extendedWaitUntil:
+    visible: '${output.t.quranListen}'
+    timeout: 30000
+- tapOn: '${output.t.quranListen}'
+- extendedWaitUntil:
+    visible: '${output.t.quranStop}'
+    timeout: 45000
+# Into the recitation, past the first fetch.
+- waitForAnimationToEnd:
+    timeout: 5000
+- assertVisible: '${output.t.quranStop}'
+- takeScreenshot: sound_1_reciting
