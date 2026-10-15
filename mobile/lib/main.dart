@@ -56,6 +56,7 @@ import 'theme/bundled_fonts.dart';
 import 'widgets/ui/art_image.dart';
 import 'theme/design_tokens.dart';
 import 'features/push/notification_channels.dart';
+import 'core/e2e_probes.dart';
 import 'core/haptics.dart';
 import 'core/sound_fx.dart';
 import 'features/routine/widgets/child_mode_shell.dart';
@@ -247,6 +248,10 @@ void main() async {
     // Soft interface sounds load after the first frame, off the launch path;
     // until they do, every tick is a no-op. Never throws (core/sound_fx.dart).
     unawaited(SoundFx.init());
+    // The CI rehearsal's key probe (core/e2e_probes.dart). kE2eProbes is a
+    // const false in every build but the rehearsal APK, so this line and the
+    // probe itself are compiled out of what ships.
+    if (kE2eProbes) E2eProbes.installIfEnabled();
     // Reminders are queued after the first frame now, not before it. The
     // adhkar pack they are built from is already loaded above. A launch from a
     // tapped notification is read inside init(), so the tap is handled once

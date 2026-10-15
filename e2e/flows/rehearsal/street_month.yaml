@@ -1,0 +1,45 @@
+# The lantern street outside the month (Eid, after): every day the family
+# marked stays lit — day 1 (the Play build ticked it before the upgrade, or
+# the head's first pass did), 15 and 27 (the head's Arabic pass). Each lit
+# lantern is searched for, so a lantern that is there but dark fails here.
+# The Play build has the old chip strip instead: just bring it on screen.
+# Env: TAG. Requires l10n.js from the calling flow.
+appId: com.alsaba.almorabbi
+---
+- runFlow:
+    when:
+      true: "${TAG == 'after'}"
+    commands:
+      - scrollUntilVisible:
+          element:
+            text: '(?s)(?=.*${output.t.ramadanLanternLit})(?=.*${output.t.ramadanDayN.split(".*").join("1")}(?![0-9])).*'
+          direction: DOWN
+          timeout: 30000
+      - scrollUntilVisible:
+          element:
+            text: '(?s)(?=.*${output.t.ramadanLanternLit})(?=.*${output.t.ramadanDayN.split(".*").join("15")}(?![0-9])).*'
+          direction: DOWN
+          timeout: 20000
+      - scrollUntilVisible:
+          element:
+            text: '(?s)(?=.*${output.t.ramadanLanternLit})(?=.*${output.t.ramadanDayN.split(".*").join("27")}(?![0-9])).*'
+          direction: DOWN
+          timeout: 20000
+      - scrollUntilVisible:
+          element:
+            text: '${output.c.ramadanStreetHint}'
+          direction: UP
+          timeout: 20000
+          centerElement: true
+- runFlow:
+    when:
+      true: "${TAG != 'after'}"
+    commands:
+      - scrollUntilVisible:
+          element:
+            text: '${output.c.ramadanOtherDays}'
+          direction: DOWN
+          timeout: 30000
+          centerElement: true
+- waitForAnimationToEnd:
+    timeout: 2000
