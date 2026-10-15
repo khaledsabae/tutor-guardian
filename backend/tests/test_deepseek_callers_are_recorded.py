@@ -61,6 +61,7 @@ OTHER_PROVIDERS = {
     "ops/tools/review_en_parity.py": "Ollama Cloud",
     "ops/tools/translate_curriculum.py": "Ollama Cloud",
     "ops/tools/build_golden_set.py": "Azure",
+    "ops/tools/run_gemma4_31b_real_questions_teacher.py": "Ollama Cloud (gemma4:31b teacher)",
 }
 GATEWAY = "backend/app/services/ai_gateway.py"
 
