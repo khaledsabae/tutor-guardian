@@ -10291,6 +10291,12 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'اخترتُ لك من الإجابة خطوةً واحدة تبدأ بها.'**
   String get chatTryIntro;
+
+  /// No description provided for @todayRoadReached.
+  ///
+  /// In ar, this message translates to:
+  /// **'تمّت هذه المحطة اليوم'**
+  String get todayRoadReached;
 }
 
 class _AppLocalizationsDelegate

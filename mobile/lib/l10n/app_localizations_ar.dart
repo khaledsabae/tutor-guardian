@@ -5986,4 +5986,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get chatTryIntro => 'اخترتُ لك من الإجابة خطوةً واحدة تبدأ بها.';
+
+  @override
+  String get todayRoadReached => 'تمّت هذه المحطة اليوم';
 }

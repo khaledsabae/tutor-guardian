@@ -1933,5 +1933,9 @@
   "chatTryTitle": "Your step from this answer",
   "@chatTryTitle": {"description": "Title of the slot sheet opened from an answer's chip."},
   "chatTryIntro": "I picked one step from the answer for you to start with.",
-  "@chatTryIntro": {"description": "Noor, first person, under the sheet title: the step shown is the first one in the answer."}
+  "@chatTryIntro": {"description": "Noor, first person, under the sheet title: the step shown is the first one in the answer."},
+  "todayRoadReached": "Reached today",
+  "@todayRoadReached": {
+    "description": "Screen-reader label of a lit station on the Today road: the parent reached this stop today."
+  }
 }

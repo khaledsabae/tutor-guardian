@@ -6068,4 +6068,7 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get chatTryIntro =>
       'I picked one step from the answer for you to start with.';
+
+  @override
+  String get todayRoadReached => 'Reached today';
 }

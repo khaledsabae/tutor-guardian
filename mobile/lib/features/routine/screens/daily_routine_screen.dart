@@ -11,6 +11,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import '../../../core/analytics.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../companion/providers/companion_providers.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 import 'package:almorabbi/api/tg_client.dart';
@@ -629,10 +630,14 @@ class _AddEventSheetState extends State<_AddEventSheet> {
     setState(() => _saving = true);
     final navigator = Navigator.of(context);
     final messenger = ScaffoldMessenger.of(context);
-    ProviderScope.containerOf(context)
+    final container = ProviderScope.containerOf(context);
+    container
         .read(tgClientProvider)
         .createRoutineEvent(widget.childId, body: event.toJson())
         .then((_) {
+          // «درب اليوم»: ③ lit — the day of a little one is logged.
+          markTodayStop(container.read(companionMemoryProvider.notifier),
+              'mission:${widget.childId}');
           navigator.pop();
         })
         .catchError((e) {
@@ -1158,6 +1163,12 @@ class _HabitCardState extends State<_HabitCard> {
         },
       );
       unawaited(Analytics.habitCheckIn(status.wireName));
+      if (mounted) {
+        markTodayStop(
+            ProviderScope.containerOf(context)
+                .read(companionMemoryProvider.notifier),
+            'mission:${widget.childId}');
+      }
       widget.onRecorded();
     } on TgApiError catch (e) {
       if (mounted) {

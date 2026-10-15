@@ -46,7 +46,9 @@ final chatNotifierProvider =
   // Read at send time, not watched: switching child must not rebuild the
   // notifier and drop the conversation on screen.
   return ChatNotifier(client,
-      activeChildId: () => ref.read(activeChildIdProvider));
+      activeChildId: () => ref.read(activeChildIdProvider),
+      onSent: () =>
+          markTodayStop(ref.read(companionMemoryProvider.notifier), 'ask'));
 });
 
 class ChatScreen extends ConsumerStatefulWidget {
