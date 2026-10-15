@@ -10165,6 +10165,246 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'الحمد لله'**
   String get ramadanDayComplete;
+
+  /// Label over the row of this week's lit lanterns under ① on «اليوم». «قناديل الأسبوع» (نور والقناديل phase 3). Easy MSA, family-neutral plural (أتممتم), no promise of reward, no missed/lost wording.
+  ///
+  /// In ar, this message translates to:
+  /// **'قناديل أسبوعكم'**
+  String get weekLanternsTitle;
+
+  /// Caption under the lantern row before any lantern is lit this week. Never 'you missed'. «قناديل الأسبوع» (نور والقناديل phase 3). Easy MSA, family-neutral plural (أتممتم), no promise of reward, no missed/lost wording.
+  ///
+  /// In ar, this message translates to:
+  /// **'كل خطوة تربوية هذا الأسبوع تضيء قنديلًا.'**
+  String get weekLanternsHint;
+
+  /// Screen-reader value of the lantern row: how many days of this week have a lantern (1–7). «قناديل الأسبوع» (نور والقناديل phase 3). Easy MSA, family-neutral plural (أتممتم), no promise of reward, no missed/lost wording.
+  ///
+  /// In ar, this message translates to:
+  /// **'{count, plural, =1{يوم واحد مضيء} =2{يومان مضيئان} few{{count} أيام مضيئة} other{{count} يومًا مضيئًا}}'**
+  String weekLanternsLitDays(int count);
+
+  /// Screen-reader hint of the lantern row: a tap opens the week's acts. «قناديل الأسبوع» (نور والقناديل phase 3). Easy MSA, family-neutral plural (أتممتم), no promise of reward, no missed/lost wording.
+  ///
+  /// In ar, this message translates to:
+  /// **'اعرض خطوات الأسبوع'**
+  String get weekLanternsOpenHint;
+
+  /// Screen-reader label of the dashed lantern after the lit ones: the next one a parenting step will light. An invitation, never a missed day. «قناديل الأسبوع» (نور والقناديل phase 3). Easy MSA, family-neutral plural (أتممتم), no promise of reward, no missed/lost wording.
+  ///
+  /// In ar, this message translates to:
+  /// **'القنديل التالي'**
+  String get weekLanternNext;
+
+  /// Title of the sheet listing the week's parenting acts, one lantern each. «قناديل الأسبوع» (نور والقناديل phase 3). Easy MSA, family-neutral plural (أتممتم), no promise of reward, no missed/lost wording.
+  ///
+  /// In ar, this message translates to:
+  /// **'خطوات هذا الأسبوع'**
+  String get weekActsTitle;
+
+  /// Subtitle of the week's acts sheet. «قناديل الأسبوع» (نور والقناديل phase 3). Easy MSA, family-neutral plural (أتممتم), no promise of reward, no missed/lost wording.
+  ///
+  /// In ar, this message translates to:
+  /// **'كل قنديل خطوة تربوية قمتم بها.'**
+  String get weekActsSubtitle;
+
+  /// Stats chip on «اليوم» replacing the login-streak flame: every week that had at least one parenting act. It never resets. «قناديل الأسبوع» (نور والقناديل phase 3). Easy MSA, family-neutral plural (أتممتم), no promise of reward, no missed/lost wording.
+  ///
+  /// In ar, this message translates to:
+  /// **'أسابيع مضيئة'**
+  String get litWeeks;
+
+  /// Footer of the week's acts sheet: the family's lit weeks so far. «قناديل الأسبوع» (نور والقناديل phase 3). Easy MSA, family-neutral plural (أتممتم), no promise of reward, no missed/lost wording.
+  ///
+  /// In ar, this message translates to:
+  /// **'{count, plural, =1{أسبوع مضيء واحد} =2{أسبوعان مضيئان} few{{count} أسابيع مضيئة} many{{count} أسبوعًا مضيئًا} other{{count} أسبوع مضيء}}'**
+  String litWeeksCount(int count);
+
+  /// Kind of a week's act in the acts sheet. «قناديل الأسبوع» (نور والقناديل phase 3). Easy MSA, family-neutral plural (أتممتم), no promise of reward, no missed/lost wording.
+  ///
+  /// In ar, this message translates to:
+  /// **'درس'**
+  String get actKindLesson;
+
+  /// Kind of a week's act: a question asked to the assistant (one a day at most). «قناديل الأسبوع» (نور والقناديل phase 3). Easy MSA, family-neutral plural (أتممتم), no promise of reward, no missed/lost wording.
+  ///
+  /// In ar, this message translates to:
+  /// **'سؤال'**
+  String get actKindQuestion;
+
+  /// Kind of a week's act: a follow-up answered. «قناديل الأسبوع» (نور والقناديل phase 3). Easy MSA, family-neutral plural (أتممتم), no promise of reward, no missed/lost wording.
+  ///
+  /// In ar, this message translates to:
+  /// **'متابعة'**
+  String get actKindFollowup;
+
+  /// Kind of a week's act: a child's daily mission. «قناديل الأسبوع» (نور والقناديل phase 3). Easy MSA, family-neutral plural (أتممتم), no promise of reward, no missed/lost wording.
+  ///
+  /// In ar, this message translates to:
+  /// **'مهمة'**
+  String get actKindMission;
+
+  /// Kind of a week's act: a step of the weekly plan ticked. «قناديل الأسبوع» (نور والقناديل phase 3). Easy MSA, family-neutral plural (أتممتم), no promise of reward, no missed/lost wording.
+  ///
+  /// In ar, this message translates to:
+  /// **'خطوة من الخطة'**
+  String get actKindPlanTick;
+
+  /// Kind of a week's act: a habit-tracker entry. «قناديل الأسبوع» (نور والقناديل phase 3). Easy MSA, family-neutral plural (أتممتم), no promise of reward, no missed/lost wording.
+  ///
+  /// In ar, this message translates to:
+  /// **'عادة'**
+  String get actKindHabit;
+
+  /// Kind of a week's act: a «رحلة الطفل» challenge chosen. «قناديل الأسبوع» (نور والقناديل phase 3). Easy MSA, family-neutral plural (أتممتم), no promise of reward, no missed/lost wording.
+  ///
+  /// In ar, this message translates to:
+  /// **'تحدٍّ'**
+  String get actKindChallenge;
+
+  /// Kind of a week's act this build does not know yet. «قناديل الأسبوع» (نور والقناديل phase 3). Easy MSA, family-neutral plural (أتممتم), no promise of reward, no missed/lost wording.
+  ///
+  /// In ar, this message translates to:
+  /// **'خطوة تربوية'**
+  String get actKindOther;
+
+  /// One item of the Friday harvest summary (nominative, listed with commas). «قناديل الأسبوع» (نور والقناديل phase 3). Easy MSA, family-neutral plural (أتممتم), no promise of reward, no missed/lost wording.
+  ///
+  /// In ar, this message translates to:
+  /// **'{count, plural, =1{درس واحد} =2{درسان} few{{count} دروس} many{{count} درسًا} other{{count} درس}}'**
+  String harvestLessons(int count);
+
+  /// One item of the Friday harvest summary. «قناديل الأسبوع» (نور والقناديل phase 3). Easy MSA, family-neutral plural (أتممتم), no promise of reward, no missed/lost wording.
+  ///
+  /// In ar, this message translates to:
+  /// **'{count, plural, =1{سؤال واحد} =2{سؤالان} few{{count} أسئلة} many{{count} سؤالًا} other{{count} سؤال}}'**
+  String harvestQuestions(int count);
+
+  /// One item of the Friday harvest summary. «قناديل الأسبوع» (نور والقناديل phase 3). Easy MSA, family-neutral plural (أتممتم), no promise of reward, no missed/lost wording.
+  ///
+  /// In ar, this message translates to:
+  /// **'{count, plural, =1{متابعة واحدة} =2{متابعتان} few{{count} متابعات} many{{count} متابعةً} other{{count} متابعة}}'**
+  String harvestFollowups(int count);
+
+  /// One item of the Friday harvest summary. «قناديل الأسبوع» (نور والقناديل phase 3). Easy MSA, family-neutral plural (أتممتم), no promise of reward, no missed/lost wording.
+  ///
+  /// In ar, this message translates to:
+  /// **'{count, plural, =1{مهمة واحدة} =2{مهمتان} few{{count} مهام} many{{count} مهمةً} other{{count} مهمة}}'**
+  String harvestMissions(int count);
+
+  /// One item of the Friday harvest summary. «قناديل الأسبوع» (نور والقناديل phase 3). Easy MSA, family-neutral plural (أتممتم), no promise of reward, no missed/lost wording.
+  ///
+  /// In ar, this message translates to:
+  /// **'{count, plural, =1{خطوة واحدة من الخطة} =2{خطوتان من الخطة} few{{count} خطوات من الخطة} many{{count} خطوةً من الخطة} other{{count} خطوة من الخطة}}'**
+  String harvestPlanTicks(int count);
+
+  /// One item of the Friday harvest summary. «قناديل الأسبوع» (نور والقناديل phase 3). Easy MSA, family-neutral plural (أتممتم), no promise of reward, no missed/lost wording.
+  ///
+  /// In ar, this message translates to:
+  /// **'{count, plural, =1{عادة واحدة} =2{عادتان} few{{count} عادات} many{{count} عادةً} other{{count} عادة}}'**
+  String harvestHabits(int count);
+
+  /// One item of the Friday harvest summary. «قناديل الأسبوع» (نور والقناديل phase 3). Easy MSA, family-neutral plural (أتممتم), no promise of reward, no missed/lost wording.
+  ///
+  /// In ar, this message translates to:
+  /// **'{count, plural, =1{تحدٍّ واحد} =2{تحدّيان} few{{count} تحدّيات} many{{count} تحدّيًا} other{{count} تحدٍّ}}'**
+  String harvestChallenges(int count);
+
+  /// One item of the Friday harvest summary: acts of a kind this build does not know. «قناديل الأسبوع» (نور والقناديل phase 3). Easy MSA, family-neutral plural (أتممتم), no promise of reward, no missed/lost wording.
+  ///
+  /// In ar, this message translates to:
+  /// **'{count, plural, =1{خطوة تربوية أخرى} =2{خطوتان تربويتان أخريان} few{{count} خطوات تربوية أخرى} many{{count} خطوةً تربويةً أخرى} other{{count} خطوة تربوية أخرى}}'**
+  String harvestOthers(int count);
+
+  /// Joins the items of the Friday harvest summary («٣ دروس، سؤالان، مهمة واحدة»). Keep the trailing space.
+  ///
+  /// In ar, this message translates to:
+  /// **'، '**
+  String get harvestListSeparator;
+
+  /// Title of Noor's Friday card, gathered on the phone from the week's lanterns. «قناديل الأسبوع» (نور والقناديل phase 3). Easy MSA, family-neutral plural (أتممتم), no promise of reward, no missed/lost wording.
+  ///
+  /// In ar, this message translates to:
+  /// **'حصاد الأسبوع'**
+  String get harvestTitle;
+
+  /// Small line under the Friday card's title. «قناديل الأسبوع» (نور والقناديل phase 3). Easy MSA, family-neutral plural (أتممتم), no promise of reward, no missed/lost wording.
+  ///
+  /// In ar, this message translates to:
+  /// **'من نور'**
+  String get harvestFromNoor;
+
+  /// Line above the Friday card's lanterns, which light again one by one. «قناديل الأسبوع» (نور والقناديل phase 3). Easy MSA, family-neutral plural (أتممتم), no promise of reward, no missed/lost wording.
+  ///
+  /// In ar, this message translates to:
+  /// **'هذه قناديل أسبوعكم، واحدًا تلو الآخر.'**
+  String get harvestIntro;
+
+  /// The Friday card's summary; {summary} is the harvest items joined («٣ دروس، سؤالان، مهمة واحدة»). «قناديل الأسبوع» (نور والقناديل phase 3). Easy MSA, family-neutral plural (أتممتم), no promise of reward, no missed/lost wording.
+  ///
+  /// In ar, this message translates to:
+  /// **'في أسبوعكم: {summary}'**
+  String harvestSummary(String summary);
+
+  /// Lead-in to the closing du'a of the Friday card. The du'a itself is the guarded verse v_025_074 from family_adhkar, picked by id — never typed here. «قناديل الأسبوع» (نور والقناديل phase 3). Easy MSA, family-neutral plural (أتممتم), no promise of reward, no missed/lost wording.
+  ///
+  /// In ar, this message translates to:
+  /// **'ونختم الأسبوع بدعاء من القرآن الكريم:'**
+  String get harvestDuaLead;
+
+  /// Button on the Friday card: shares an image with no child names. «قناديل الأسبوع» (نور والقناديل phase 3). Easy MSA, family-neutral plural (أتممتم), no promise of reward, no missed/lost wording.
+  ///
+  /// In ar, this message translates to:
+  /// **'شارك الحصاد'**
+  String get harvestShare;
+
+  /// Label on the shared Friday image. No child names. «قناديل الأسبوع» (نور والقناديل phase 3). Easy MSA, family-neutral plural (أتممتم), no promise of reward, no missed/lost wording.
+  ///
+  /// In ar, this message translates to:
+  /// **'حصاد أسبوعنا'**
+  String get harvestShareEyebrow;
+
+  /// Text that travels with the shared Friday image; {summary} as in harvestSummary. No child names. «قناديل الأسبوع» (نور والقناديل phase 3). Easy MSA, family-neutral plural (أتممتم), no promise of reward, no missed/lost wording.
+  ///
+  /// In ar, this message translates to:
+  /// **'قناديل أسبوعنا: {summary}'**
+  String harvestShareMessage(String summary);
+
+  /// Noor's line on «اليوم» (CompanionBrain). Easy MSA, warm, never names one parent, no emoji, no promise of reward. Friday only, once a week, when the week has lanterns.
+  ///
+  /// In ar, this message translates to:
+  /// **'جمعة مباركة. جمعتُ لكم قناديل هذا الأسبوع في بطاقة صغيرة.'**
+  String get noorFridayHarvest;
+
+  /// Chip under Noor's Friday line: opens the week's harvest card.
+  ///
+  /// In ar, this message translates to:
+  /// **'افتح البطاقة'**
+  String get noorChipHarvest;
+
+  /// Snack bar after a step of the week's plan is ticked; its action is planMarkUndo. «قناديل الأسبوع» (نور والقناديل phase 3). Easy MSA, family-neutral plural (أتممتم), no promise of reward, no missed/lost wording.
+  ///
+  /// In ar, this message translates to:
+  /// **'تمّت الخطوة. أحسنتم!'**
+  String get planMarkDone;
+
+  /// Action on the plan-tick snack bar: takes the mark back.
+  ///
+  /// In ar, this message translates to:
+  /// **'تراجع'**
+  String get planMarkUndo;
+
+  /// Screen-reader hint on a step of the week's plan that is not ticked yet.
+  ///
+  /// In ar, this message translates to:
+  /// **'اضغط للتعليم عليها'**
+  String get planMarkHint;
+
+  /// Line on the collapsed weekly-plan card once a step is ticked. Positive only — never 'steps left'. «قناديل الأسبوع» (نور والقناديل phase 3). Easy MSA, family-neutral plural (أتممتم), no promise of reward, no missed/lost wording.
+  ///
+  /// In ar, this message translates to:
+  /// **'{count, plural, =1{أتممتم خطوة واحدة هذا الأسبوع} =2{أتممتم خطوتين هذا الأسبوع} few{أتممتم {count} خطوات هذا الأسبوع} many{أتممتم {count} خطوةً هذا الأسبوع} other{أتممتم {count} خطوة هذا الأسبوع}}'**
+  String planMarkedCount(int count);
 }
 
 class _AppLocalizationsDelegate

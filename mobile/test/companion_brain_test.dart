@@ -5,6 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 final _wed = DateTime(2026, 10, 14, 9); // a Wednesday morning
 final _mon = DateTime(2026, 10, 19, 9); // a Monday
+final _fri = DateTime(2026, 10, 16, 9); // a Friday
 
 Promise _promise({int id = 1, int child = 7, PromiseSlot slot = PromiseSlot.tonight,
         DateTime? made, int? followupId, String? outcome}) =>
@@ -27,6 +28,7 @@ CompanionInputs _in({
   int? ramadan,
   bool plan = false,
   bool firstDay = false,
+  int weekActs = 0,
 }) =>
     CompanionInputs(
       now: now ?? _wed,
@@ -38,6 +40,7 @@ CompanionInputs _in({
       ramadanDaysUntil: ramadan,
       ramadanYear: 2027,
       hasWeeklyPlan: plan,
+      weekActs: weekActs,
       firstDay: firstDay,
     );
 
@@ -154,6 +157,88 @@ void main() {
         pickLine(_in(now: _mon, plan: true, memory: CompanionMemory(seenKeys: {line.key})))!
             .kind,
         CompanionKind.greeting);
+  });
+
+  group('Friday harvest («حصاد الجمعة», phase 3)', () {
+    test('Friday with lanterns: the harvest line, once, with its chip', () {
+      final line = pickLine(_in(now: _fri, weekActs: 4))!;
+      expect(line.kind, CompanionKind.fridayHarvest);
+      expect(line.key, 'harvest:2026-10-16T00:00:00.000');
+      expect(line.onceOnly, isTrue);
+      expect(line.isQuestion, isFalse);
+      expect(line.actions, [CompanionAction.openHarvest]);
+      expect(line.mood, CompanionMood.happy);
+      final seen = CompanionMemory(seenKeys: {line.key});
+      expect(pickLine(_in(now: _fri, weekActs: 4, memory: seen))!.kind,
+          CompanionKind.greeting);
+    });
+
+    test('a week with no lantern has no harvest — never an empty one', () {
+      expect(pickLine(_in(now: _fri))!.kind, CompanionKind.greeting);
+    });
+
+    test('Friday only', () {
+      for (var d = 0; d < 7; d++) {
+        final day = DateTime(2026, 10, 12 + d, 9); // Mon 12 … Sun 18
+        final kind = pickLine(_in(now: day, weekActs: 3))!.kind;
+        expect(kind == CompanionKind.fridayHarvest,
+            day.weekday == DateTime.friday, reason: '$day');
+      }
+    });
+
+    test('the anti-nag rules hold: hidden for today, quiet mode', () {
+      final line = pickLine(_in(now: _fri, weekActs: 2))!;
+      final hidden = CompanionMemory(hiddenByDay: {
+        '2026-10-16': {line.key},
+      });
+      expect(pickLine(_in(now: _fri, weekActs: 2, memory: hidden))!.kind,
+          CompanionKind.greeting);
+      const quiet = CompanionMemory(quietMode: true);
+      expect(pickLine(_in(now: _fri, weekActs: 2, memory: quiet))!.kind,
+          CompanionKind.greeting);
+    });
+
+    test('not a question: two questions asked today do not hold it back', () {
+      final asked = CompanionMemory(questionsByDay: {
+        '2026-10-16': {'followup:1', 'followup:2'},
+      });
+      expect(pickLine(_in(now: _fri, weekActs: 2, memory: asked))!.kind,
+          CompanionKind.fridayHarvest);
+    });
+
+    test('the order above it is unchanged', () {
+      // 1. a waiting mission
+      expect(pickLine(_in(now: _fri, weekActs: 2, missions: 1))!.kind,
+          CompanionKind.missionsWaiting);
+      // 2. a due promise (made Thursday night)
+      final promise = CompanionMemory(
+          promises: [_promise(made: DateTime(2026, 10, 15))]);
+      expect(pickLine(_in(now: _fri, weekActs: 2, memory: promise))!.kind,
+          CompanionKind.promiseDue);
+      // 3. a due follow-up
+      expect(
+          pickLine(_in(
+                  now: _fri,
+                  weekActs: 2,
+                  followups: const [DueFollowup(id: 3, childId: 7, step: 'x')]))!
+              .kind,
+          CompanionKind.followupDue);
+      // 4. a Ramadan countdown day
+      expect(pickLine(_in(now: _fri, weekActs: 2, ramadan: 7))!.kind,
+          CompanionKind.ramadanCountdown);
+      // 5. Monday's plan still speaks on Monday, lanterns or not.
+      expect(pickLine(_in(now: _mon, plan: true, weekActs: 5))!.kind,
+          CompanionKind.mondayPlan);
+    });
+
+    test('a once-only line held for this open stays put after it is seen', () {
+      final line = pickLine(_in(now: _fri, weekActs: 2))!;
+      final seen = CompanionMemory(seenKeys: {line.key});
+      expect(
+          pickLine(_in(now: _fri, weekActs: 2, memory: seen.withoutSeen({line.key})))!
+              .kind,
+          CompanionKind.fridayHarvest);
+    });
   });
 
   test('the greeting changes by day and holds within the day', () {

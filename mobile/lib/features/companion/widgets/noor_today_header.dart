@@ -25,6 +25,8 @@ import '../../../theme/design_tokens.dart';
 import '../../child_memory/data/memory_models.dart';
 import '../../child_memory/providers/memory_providers.dart';
 import '../../child_memory/widgets/followup_sheet.dart';
+import '../../lanterns/providers/lantern_providers.dart';
+import '../../lanterns/widgets/friday_harvest.dart';
 import '../../onboarding/providers/onboarding_providers.dart';
 import '../../program/providers/program_providers.dart';
 import '../../shell/root_tab.dart';
@@ -56,7 +58,14 @@ class _NoorTodayHeaderState extends ConsumerState<NoorTodayHeader> {
     unawaited(Analytics.companionShown(line.kind.name));
     final mem = ref.read(companionMemoryProvider.notifier);
     if (line.isQuestion) unawaited(mem.markQuestionShown(line.key));
-    if (line.onceOnly) unawaited(mem.markSeen(line.key));
+    if (line.onceOnly) {
+      // Held first, recorded second: the line stays for this open and
+      // never comes back on the next.
+      ref
+          .read(heldOnceLinesProvider.notifier)
+          .update((held) => {...held, line.key});
+      unawaited(mem.markSeen(line.key));
+    }
   }
 
   @override
@@ -215,6 +224,7 @@ class _NoorTodayHeaderState extends ConsumerState<NoorTodayHeader> {
         _ => l10n.noorRamadan1,
       },
       CompanionKind.mondayPlan => l10n.noorMondayPlan(name),
+      CompanionKind.fridayHarvest => l10n.noorFridayHarvest,
       CompanionKind.firstDay => l10n.noorFirstDay(name),
       CompanionKind.greeting => _greetingText(l10n, line, name),
     };
@@ -271,6 +281,7 @@ class _NoorTodayHeaderState extends ConsumerState<NoorTodayHeader> {
     CompanionAction.outcomeDidntWork => l10n.followupDidntWork,
     CompanionAction.outcomeDidntTry => l10n.followupDidntTry,
     CompanionAction.openRamadan => l10n.noorChipRamadan,
+    CompanionAction.openHarvest => l10n.noorChipHarvest,
   };
 
   NoorFaceState _face(CompanionMood m) => switch (m) {
@@ -307,6 +318,12 @@ class _NoorTodayHeaderState extends ConsumerState<NoorTodayHeader> {
         final child = ref.read(activeChildProfileProvider);
         if (child != null) {
           await Navigator.of(context).push(AppRoutes.ramadan(child.id));
+        }
+      case CompanionAction.openHarvest:
+        final week = ref.read(familyWeekProvider).valueOrNull;
+        if (week != null) {
+          unawaited(Analytics.harvestOpened('noor'));
+          await showFridayHarvest(context, week);
         }
       case _:
         if (outcome != null) await _answer(line, outcome);

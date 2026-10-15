@@ -5984,4 +5984,220 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get ramadanDayComplete => 'Alhamdulillah';
+
+  @override
+  String get weekLanternsTitle => 'Your week\'s lanterns';
+
+  @override
+  String get weekLanternsHint =>
+      'Every parenting step this week lights a lantern.';
+
+  @override
+  String weekLanternsLitDays(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count lit days',
+      one: '1 lit day',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get weekLanternsOpenHint => 'Show the week\'s steps';
+
+  @override
+  String get weekLanternNext => 'The next lantern';
+
+  @override
+  String get weekActsTitle => 'This week\'s steps';
+
+  @override
+  String get weekActsSubtitle => 'Each lantern is a parenting step you took.';
+
+  @override
+  String get litWeeks => 'Lit weeks';
+
+  @override
+  String litWeeksCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count lit weeks',
+      one: '1 lit week',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get actKindLesson => 'Lesson';
+
+  @override
+  String get actKindQuestion => 'Question';
+
+  @override
+  String get actKindFollowup => 'Follow-up';
+
+  @override
+  String get actKindMission => 'Mission';
+
+  @override
+  String get actKindPlanTick => 'Plan step';
+
+  @override
+  String get actKindHabit => 'Habit';
+
+  @override
+  String get actKindChallenge => 'Challenge';
+
+  @override
+  String get actKindOther => 'Parenting step';
+
+  @override
+  String harvestLessons(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count lessons',
+      one: '1 lesson',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String harvestQuestions(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count questions',
+      one: '1 question',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String harvestFollowups(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count follow-ups',
+      one: '1 follow-up',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String harvestMissions(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count missions',
+      one: '1 mission',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String harvestPlanTicks(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count plan steps',
+      one: '1 plan step',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String harvestHabits(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count habits',
+      one: '1 habit',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String harvestChallenges(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count challenges',
+      one: '1 challenge',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String harvestOthers(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count other parenting steps',
+      one: '1 other parenting step',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get harvestListSeparator => ', ';
+
+  @override
+  String get harvestTitle => 'The week\'s harvest';
+
+  @override
+  String get harvestFromNoor => 'From Noor';
+
+  @override
+  String get harvestIntro =>
+      'Here are your week\'s lanterns, one after another.';
+
+  @override
+  String harvestSummary(String summary) {
+    return 'Your week: $summary';
+  }
+
+  @override
+  String get harvestDuaLead =>
+      'And we close the week with a du\'a from the Qur\'an:';
+
+  @override
+  String get harvestShare => 'Share the harvest';
+
+  @override
+  String get harvestShareEyebrow => 'Our week\'s harvest';
+
+  @override
+  String harvestShareMessage(String summary) {
+    return 'Our week\'s lanterns: $summary';
+  }
+
+  @override
+  String get noorFridayHarvest =>
+      'Jumu\'ah Mubarak. I gathered this week\'s lanterns into a small card for you.';
+
+  @override
+  String get noorChipHarvest => 'Open the card';
+
+  @override
+  String get planMarkDone => 'Step done. Well done!';
+
+  @override
+  String get planMarkUndo => 'Undo';
+
+  @override
+  String get planMarkHint => 'Tap to tick it';
+
+  @override
+  String planMarkedCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'You did $count steps this week',
+      one: 'You did 1 step this week',
+    );
+    return '$_temp0';
+  }
 }

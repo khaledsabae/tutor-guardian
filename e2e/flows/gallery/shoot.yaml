@@ -315,6 +315,25 @@ name: gallery/shoot
       - back
       - waitForAnimationToEnd:
           timeout: 2000
+# ── «قناديل الأسبوع» (نور والقناديل phase 3): the lantern row under ① on
+# Today, the lesson above having lit one. Guarded twice: a server without
+# /api/family/week shows no row, and the baseline build has no such ARB key
+# (its selector never matches) — the screen is in GALLERY_GUARDED. The
+# praise leg below starts with its own navToday tap and scroll.
+- tapOn: '${output.lead.navToday}'
+- scrollUntilVisible:
+    element:
+      text: '${output.c.weekLanternsTitle}'
+    direction: DOWN
+    timeout: 15000
+    optional: true
+- runFlow:
+    when:
+      visible: '${output.c.weekLanternsTitle}'
+    commands:
+      - waitForAnimationToEnd:
+          timeout: 2000
+      - takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__week_lanterns'
 # ── Praise Card: Praise moment from family, both 7–12 (sticker+text) and 4–6 (sticker only).
 # Step 1: Child 1 (7-9) opens child mode and marks mission done.
 - tapOn: '${output.lead.navToday}'

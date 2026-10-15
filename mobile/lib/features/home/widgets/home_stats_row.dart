@@ -1,5 +1,12 @@
-/// Stats: flame login streak / open-book completed lessons / medal badges /
-/// coin balance — drawn brand glyphs (جولة الحرفة), not emoji.
+/// Stats: lit weeks / open-book completed lessons / medal badges / coin
+/// balance — drawn glyphs (جولة الحرفة), not emoji.
+///
+/// «أسابيع مضيئة» (نور والقناديل, phase 3) took the flame's place: the flame
+/// counted app opens in a row and fell back to zero after one quiet day — the
+/// one shape the plan rules out. The lit-weeks count only grows: every week
+/// with at least one parenting act, ever (`lit_weeks_total`). On a server
+/// without lanterns, or while it loads, the chip is simply not there; the
+/// login streak is not put back in its place.
 ///
 /// The coin balance used to be an AppBar chip; it lives here because the
 /// AppBar was carrying five actions and none of them read as important.
@@ -21,8 +28,10 @@ import '../../../theme/design_tokens.dart';
 import '../../../widgets/ui/brand_glyph.dart';
 import '../../../widgets/ui/count_up_text.dart';
 import '../../../widgets/ui/stat_chip.dart';
+import '../../../widgets/ui/paper_lantern.dart';
 import '../../../widgets/ui/two_column_rows.dart';
 import '../../coins/coins_providers.dart';
+import '../../lanterns/providers/lantern_providers.dart';
 import '../../program/data/badges.dart';
 import '../../program/data/progress_models.dart';
 
@@ -38,7 +47,7 @@ class HomeStatsRow extends ConsumerWidget {
             .where((l) => l.status == ProgressStatus.completed)
             .length ??
         0;
-    final streak = bundle?.dailyLoginStreak ?? 0;
+    final litWeeks = ref.watch(familyWeekProvider).valueOrNull?.litWeeksTotal;
     final badges = computeBadges(bundle);
     final earned = earnedCount(badges);
     final coins = ref.watch(coinsProvider);
@@ -46,13 +55,13 @@ class HomeStatsRow extends ConsumerWidget {
     // Not GridView.count — see TwoColumnRows for the overflow that caused.
     return TwoColumnRows(
       children: [
-        StatChip(
-          icon: BrandGlyph(BrandIcon.flame, color: context.colors.accent),
-          value: CountUpText(streak),
-          label: l10n.consecutiveDays,
-          color: Dt.accent,
-          pulse: streak > 0,
-        ),
+        if (litWeeks != null)
+          StatChip(
+            icon: const PaperLantern(lit: true, height: 24),
+            value: CountUpText(litWeeks),
+            label: l10n.litWeeks,
+            color: Dt.accent,
+          ),
         StatChip(
           icon: BrandGlyph(BrandIcon.openBook, color: context.colors.primary),
           value: CountUpText(completed),

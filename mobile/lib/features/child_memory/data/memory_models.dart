@@ -362,6 +362,7 @@ class WeeklyPlan {
     this.worship,
     this.lesson,
     this.adaptedFromOutcomes = false,
+    this.marks = const [],
   });
 
   final int childId;
@@ -384,6 +385,36 @@ class WeeklyPlan {
   final PlanItem? worship;
   final PlanLesson? lesson;
   final bool adaptedFromOutcomes;
+
+  /// The item keys ticked this plan week (§9.5.1), in the order ticked. An
+  /// older server omits the field: read as none.
+  final List<String> marks;
+
+  /// The plan's `week_start` as the server wrote it (`2026-10-05`) — what
+  /// the marks routes take back.
+  String? get weekStartWire {
+    final d = weekStart;
+    if (d == null) return null;
+    return '${d.year.toString().padLeft(4, '0')}-'
+        '${d.month.toString().padLeft(2, '0')}-${d.day.toString().padLeft(2, '0')}';
+  }
+
+  WeeklyPlan withMarks(List<String> next) => WeeklyPlan(
+        childId: childId,
+        week: week,
+        focusTitle: focusTitle,
+        actions: actions,
+        weekStart: weekStart,
+        lang: lang,
+        band: band,
+        focusTopic: focusTopic,
+        focusReason: focusReason,
+        focusReasonText: focusReasonText,
+        worship: worship,
+        lesson: lesson,
+        adaptedFromOutcomes: adaptedFromOutcomes,
+        marks: next,
+      );
 
   /// The first day after this plan's week, on the family's calendar.
   DateTime? get nextWeekStart => weekStart?.add(const Duration(days: 7));
@@ -410,8 +441,17 @@ class WeeklyPlan {
       worship: PlanItem.fromJson(j['worship']),
       lesson: PlanLesson.fromJson(j['lesson']),
       adaptedFromOutcomes: j['adapted_from_outcomes'] == true,
+      marks: parseMarks(j['marks']),
     );
   }
+
+  /// `marks` as the plan and the marks routes send it; anything malformed
+  /// (or absent, from an older server) is no marks.
+  static List<String> parseMarks(Object? raw) => [
+        if (raw is List)
+          for (final m in raw)
+            if (m is String && m.isNotEmpty) m,
+      ];
 }
 
 /// `GET /api/device-proof` (§9.0.1).

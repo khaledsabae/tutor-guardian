@@ -10,7 +10,8 @@
 ///   2. a lesson promise that has fallen due («كيف جرت؟»);
 ///   3. a server follow-up that has fallen due (then the Today card hides);
 ///   4. something Noor noticed — the Ramadan countdown at 30/14/7/1 days;
-///   5. the week's rhythm — Monday's plan reveal;
+///   5. the week's rhythm — Monday's plan reveal; Friday's harvest of the
+///      week's lanterns («حصاد الجمعة», phase 3);
 ///   6. a greeting for the time of day, rotated by date.
 ///
 /// Anti-nag (also plan §2): one line per open; at most two *questions* (2–3)
@@ -40,6 +41,7 @@ enum CompanionKind {
   followupDue,
   ramadanCountdown,
   mondayPlan,
+  fridayHarvest,
   firstDay,
   greeting,
 }
@@ -51,6 +53,7 @@ enum CompanionAction {
   outcomeDidntWork,
   outcomeDidntTry,
   openRamadan,
+  openHarvest,
 }
 
 /// The server follow-up as the brain needs it (kept free of the model class
@@ -80,6 +83,7 @@ class CompanionInputs {
     this.ramadanDaysUntil,
     this.ramadanYear,
     this.hasWeeklyPlan = false,
+    this.weekActs = 0,
     this.firstDay = false,
   });
 
@@ -106,6 +110,10 @@ class CompanionInputs {
   /// The Hijri/Gregorian season id the countdown belongs to (once-only key).
   final int? ramadanYear;
   final bool hasWeeklyPlan;
+
+  /// This week's lantern-lighting acts (`/api/family/week`); 0 when there
+  /// are none or the server has no lanterns — then Friday has no harvest.
+  final int weekActs;
 
   /// The coins login streak has not left day one.
   final bool firstDay;
@@ -261,6 +269,23 @@ CompanionLine? pickLine(CompanionInputs i) {
         kind: CompanionKind.mondayPlan,
         mood: CompanionMood.calm,
         name: i.childName,
+        onceOnly: true,
+      );
+    }
+  }
+
+  // 5 ── Friday: the week's harvest — once, and only for a week with
+  // lanterns (an empty week is never pointed at).
+  if (i.now.weekday == DateTime.friday && i.weekActs > 0) {
+    final key = 'harvest:${dayOf(i.now).toIso8601String()}';
+    if (open(key) && !mem.seenKeys.contains(key)) {
+      return CompanionLine(
+        key: key,
+        kind: CompanionKind.fridayHarvest,
+        mood: CompanionMood.happy,
+        name: i.childName,
+        count: i.weekActs,
+        actions: const [CompanionAction.openHarvest],
         onceOnly: true,
       );
     }

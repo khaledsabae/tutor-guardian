@@ -38,6 +38,8 @@ import 'package:almorabbi/state/chat_notifier.dart';
 import 'package:almorabbi/theme/app_palette.dart';
 import 'package:almorabbi/theme/app_theme.dart';
 
+import 'lantern_fakes.dart';
+
 void main() {
   tearDown(() => AppPalette.current = AppPalette.light);
 
@@ -47,6 +49,7 @@ void main() {
     String childName = 'سارة',
     Map<String, dynamic>? day,
     Map<String, dynamic>? progress,
+    Map<String, dynamic>? week,
     Locale locale = const Locale('ar'),
     bool dark = false,
     double textScale = 1.0,
@@ -60,7 +63,8 @@ void main() {
 
     final fake = _FakeTgClient()
       ..day = day
-      ..progress = progress;
+      ..progress = progress
+      ..week = week;
     SharedPreferences.setMockInitialValues({
       if (ageGroup != null) ...{
         OnboardingStorage.keyActiveChildId: 1,
@@ -295,6 +299,14 @@ void main() {
       locale: const Locale('en'),
       dark: true,
       textScale: 2.0,
+      // The week's lanterns are drawn at this scale too (phase 3).
+      week: familyWeekJson(
+        acts: [
+          act('lesson', 0, title: 'Sleep and focus'),
+          act('question', 1),
+          act('mission', 2, title: 'Green hunter'),
+        ],
+      ),
     );
     expect(tester.takeException(), isNull);
     expect(find.text("Today's step with سارة"), findsOneWidget);
@@ -304,10 +316,12 @@ void main() {
       'Ask your question',
       "سارة's mission today",
       "Open today's mission",
+      "Your week's lanterns",
       'More for today',
       // Below the divider: the stats chips overflowed here at 200% before
-      // they moved off a fixed-aspect grid.
-      'Consecutive Days',
+      // they moved off a fixed-aspect grid. «أسابيع مضيئة» took the login
+      // streak's place (phase 3).
+      'Lit weeks',
       'Educational Games',
     ]) {
       await tester.scrollUntilVisible(
@@ -528,6 +542,15 @@ void main() {
 class _FakeTgClient extends TgClient {
   Map<String, dynamic>? day;
   Map<String, dynamic>? progress;
+
+  /// `/api/family/week`; null answers like a server without lanterns.
+  Map<String, dynamic>? week;
+
+  @override
+  Future<Map<String, dynamic>> fetchFamilyWeek(
+    int tzOffsetMinutes, {
+    String? lang,
+  }) async => week ?? (throw const TgApiError(404, 'Not Found'));
 
   /// When set, fetchChildDay answers each child only when the test says so.
   Map<int, Completer<Map<String, dynamic>>>? pendingDays;
