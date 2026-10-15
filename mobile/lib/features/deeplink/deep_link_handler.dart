@@ -79,9 +79,9 @@ class DeepLinkHandler {
   ProviderSubscription<bool>? _heldWatch;
 
   /// Keeps [uri] — the latest one wins — and opens it as soon as child mode
-  /// ends. That also covers a cold start: `restore()` reports child mode as
-  /// active while it checks the network, and a push tapped to launch the app
-  /// arrives in exactly that window; it used to be dropped.
+  /// ends. That also covers a cold start: a launch with child mode left on
+  /// lands on the hand-back screen (`restore()`), and a push tapped to launch
+  /// the app waits there for the parent's PIN; it used to be dropped.
   void _holdUntilChildModeEnds(
       BuildContext context, Uri uri, GlobalKey<NavigatorState> key) {
     _held = uri;

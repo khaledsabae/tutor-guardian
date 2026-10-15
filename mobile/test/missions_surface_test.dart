@@ -341,22 +341,26 @@ void _regressionTests() {
       expect(enterBranch, contains('popUntil'));
     });
 
-    test('restore refuses to enter child mode without a token', () {
+    test('restore lands on the hand-back screen, never on a spinner', () {
       // The "child mode is on" flag survives a restart; the session does not.
       // A mission that closed the app left the flag set, and the next launch
       // rebuilt child mode with no session and no habit day — a spinner with
       // nothing on the way to resolve it. The app was bricked on the launcher.
+      // Ending child mode instead opened the parent's app with no PIN; the
+      // restart now lands on a screen that needs no session at all
+      // (behaviour: child_mode_restart_lock_test.dart).
       final source =
           _codeOnly('lib/features/routine/providers/child_mode_providers.dart');
       final restore = source.split('Future<void> restore()')[1].split('Future<void> _leaveChildMode')[0];
-      expect(restore, contains('getChildToken'));
-      expect(restore, contains('_leaveChildMode'));
+      expect(restore, contains('kChildModeHandedBack'));
+      expect(restore, isNot(contains('fetchChildTodayHabits')));
     });
 
-    test('the mission exit clears child mode, not just the session', () {
+    test('the mission exit hands the device back, it does not leave child '
+        'mode', () {
       final source =
           _codeOnly('lib/features/missions/child_mission_screen.dart');
-      expect(source, contains('exitWithoutPin'));
+      expect(source, contains('handBack()'));
       expect(source, contains('PopScope'));
     });
 

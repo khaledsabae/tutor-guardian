@@ -70,8 +70,10 @@ class _NextStepSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
+    // Scrolls when it must: at 200% text the step, the question and three
+    // full-width slots are taller than a 360dp phone.
     return SafeArea(
-      child: Padding(
+      child: SingleChildScrollView(
         padding: const EdgeInsets.fromLTRB(20, 4, 20, 20),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -135,20 +137,23 @@ class _NextStepSheet extends StatelessWidget {
             const SizedBox(height: 10),
             // Three slots, not one «تمام»: the slot is the promise, and the
             // promise is what Noor asks back about (plan §2, حلقة الوعد).
-            Row(
+            // Stacked full-width, not side by side: three in a row cut
+            // «Tomorrow» to «Tomorro…» on a 360dp phone in English (CI
+            // gallery, 2026-10-15), and longer languages and 200% text only
+            // make that worse.
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 for (final (i, slot) in PromiseSlot.values.indexed) ...[
-                  if (i > 0) const SizedBox(width: 8),
-                  Expanded(
-                    child: BouncyButton(
-                      label: switch (slot) {
-                        PromiseSlot.tonight => l10n.promiseTonight,
-                        PromiseSlot.tomorrow => l10n.promiseTomorrow,
-                        PromiseSlot.week => l10n.promiseThisWeek,
-                      },
-                      color: i == 0 ? AppTheme.success : context.colors.primary,
-                      onTap: () => Navigator.of(context).pop(slot),
-                    ),
+                  if (i > 0) const SizedBox(height: 8),
+                  BouncyButton(
+                    label: switch (slot) {
+                      PromiseSlot.tonight => l10n.promiseTonight,
+                      PromiseSlot.tomorrow => l10n.promiseTomorrow,
+                      PromiseSlot.week => l10n.promiseThisWeek,
+                    },
+                    color: i == 0 ? AppTheme.success : context.colors.primary,
+                    onTap: () => Navigator.of(context).pop(slot),
                   ),
                 ],
               ],

@@ -177,20 +177,14 @@ name: gallery/shoot
     optional: true
 # A 5xx from production is the server's moment (see fresh/02): retry twice,
 # only for a server status.
-- repeat:
-    times: 2
-    while:
-      visible: '(?s).*TgApiError\(5\d\d\).*'
-    commands:
-      - takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__lesson_server_error'
-      - tapOn: '${output.t.retry}'
-      - extendedWaitUntil:
-          visible: '(?:${output.t.lessonMarkComplete}|${output.t.lessonCompleted}|${output.t.lessonErrorLoading})'
-          timeout: 45000
-          optional: true
+- runFlow:
+    file: ../common/server_retry.yaml
+    env:
+      READY: '(?:${output.t.lessonMarkComplete}|${output.t.lessonCompleted})'
+      SHOT: '${GALLERY_TAG}__${GALLERY_VARIANT}__lesson_server_error_retry'
 - extendedWaitUntil:
     visible: '(?:${output.t.lessonMarkComplete}|${output.t.lessonCompleted})'
-    timeout: 10000
+    timeout: 30000
 - takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__lesson'
 # ── the lesson's quiz, when the lesson has one: answer with the first option
 # (the letter circle stays Arabic in both languages) until the summary. The

@@ -31,6 +31,8 @@ CompanionInputs _in({
   int missions = 0,
   List<DueFollowup> followups = const [],
   int? ramadan,
+  int? ramadanDay,
+  int ramadanYear = 2027,
   bool plan = false,
   bool firstDay = false,
   ChildNotices notices = const ChildNotices(),
@@ -43,7 +45,8 @@ CompanionInputs _in({
   missionsWaiting: missions,
   dueFollowups: followups,
   ramadanDaysUntil: ramadan,
-  ramadanYear: 2027,
+  ramadanYear: ramadanYear,
+  ramadanDay: ramadanDay,
   hasWeeklyPlan: plan,
   weekActs: weekActs,
   firstDay: firstDay,
@@ -419,6 +422,157 @@ void main() {
         _in(missions: 1, notices: const ChildNotices(milestonesDue: 1)),
       )!;
       expect(line.kind, CompanionKind.missionsWaiting);
+    });
+  });
+
+  group('«هلّ هلال رمضان» (phase 5)', () {
+    // 1 Ramadan 1448 ≈ 8 February 2027, a Monday.
+    final day1 = DateTime(2027, 2, 8, 20);
+    CompanionInputs hilal({
+      int? day = 1,
+      int year = 1448,
+      DateTime? now,
+      CompanionMemory memory = const CompanionMemory(),
+      int missions = 0,
+      ChildNotices notices = const ChildNotices(),
+      bool plan = false,
+      int weekActs = 0,
+      List<DueFollowup> followups = const [],
+    }) => _in(
+      now: now ?? day1,
+      ramadanDay: day,
+      ramadanYear: year,
+      memory: memory,
+      missions: missions,
+      notices: notices,
+      plan: plan,
+      weekActs: weekActs,
+      followups: followups,
+    );
+
+    test('the first night of the month: once-only, happy, one chip', () {
+      final line = pickLine(hilal())!;
+      expect(line.kind, CompanionKind.ramadanStart);
+      expect(line.key, 'ramadan-start:1448');
+      expect(line.onceOnly, isTrue);
+      expect(line.isQuestion, isFalse);
+      expect(line.mood, CompanionMood.happy);
+      expect(line.actions, [CompanionAction.openRamadan]);
+      expect(line.name, 'سارة');
+    });
+
+    test('the month\'s first nights only — not before it, not on day four', () {
+      for (var d = 1; d <= kRamadanStartDays; d++) {
+        expect(
+          pickLine(hilal(day: d))!.kind,
+          CompanionKind.ramadanStart,
+          reason: 'day $d',
+        );
+      }
+      for (final d in [kRamadanStartDays + 1, 15, 27, 30]) {
+        expect(
+          pickLine(hilal(day: d))!.kind,
+          isNot(CompanionKind.ramadanStart),
+          reason: 'day $d',
+        );
+      }
+      // Outside the month the brain is given no day at all.
+      expect(
+        pickLine(hilal(day: null))!.kind,
+        isNot(CompanionKind.ramadanStart),
+      );
+    });
+
+    test('once a Hijri year: seen on day one, silent on days two and three; '
+        'back next Ramadan', () {
+      final line = pickLine(hilal())!;
+      final seen = CompanionMemory(seenKeys: {line.key});
+      for (var d = 1; d <= kRamadanStartDays; d++) {
+        expect(
+          pickLine(hilal(day: d, memory: seen))!.kind,
+          CompanionKind.greeting,
+          reason: 'day $d',
+        );
+      }
+      final next = pickLine(
+        hilal(year: 1449, now: DateTime(2028, 1, 28, 20), memory: seen),
+      )!;
+      expect(next.kind, CompanionKind.ramadanStart);
+      expect(next.key, 'ramadan-start:1449');
+    });
+
+    test('a line held for this open stays put after it is seen', () {
+      final line = pickLine(hilal())!;
+      final seen = CompanionMemory(seenKeys: {line.key});
+      expect(
+        pickLine(hilal(memory: seen.withoutSeen({line.key})))!.kind,
+        CompanionKind.ramadanStart,
+      );
+    });
+
+    test('the anti-nag rules hold: hidden for today, quiet mode', () {
+      final hidden = CompanionMemory(
+        hiddenByDay: {
+          '2027-02-08': {'ramadan-start:1448'},
+        },
+      );
+      expect(pickLine(hilal(memory: hidden))!.kind, CompanionKind.greeting);
+      expect(
+        pickLine(hilal(memory: const CompanionMemory(quietMode: true)))!.kind,
+        CompanionKind.greeting,
+      );
+    });
+
+    test('the order around it is unchanged', () {
+      // 1–3: a waiting mission, a due promise, a due follow-up still first.
+      expect(pickLine(hilal(missions: 1))!.kind, CompanionKind.missionsWaiting);
+      final promise = CompanionMemory(
+        promises: [_promise(made: DateTime(2027, 2, 7))],
+      );
+      expect(pickLine(hilal(memory: promise))!.kind, CompanionKind.promiseDue);
+      expect(
+        pickLine(
+          hilal(followups: const [DueFollowup(id: 3, childId: 7, step: 'x')]),
+        )!.kind,
+        CompanionKind.followupDue,
+      );
+      // 4: a notice about the child speaks first — and the crescent waits
+      // for the next night instead of being lost for the year.
+      const milestone = ChildNotices(milestonesDue: 1);
+      final notice = pickLine(hilal(notices: milestone))!;
+      expect(notice.kind, CompanionKind.milestoneDue);
+      expect(
+        pickLine(
+          hilal(
+            day: 2,
+            now: DateTime(2027, 2, 9, 20),
+            notices: milestone,
+            memory: CompanionMemory(seenKeys: {notice.key}),
+          ),
+        )!.kind,
+        CompanionKind.ramadanStart,
+      );
+      // 5–6: Monday's plan and Friday's harvest come after it.
+      expect(pickLine(hilal(plan: true))!.kind, CompanionKind.ramadanStart);
+      expect(
+        pickLine(
+          hilal(day: 5, now: DateTime(2027, 2, 12, 20), weekActs: 3),
+        )!.kind,
+        CompanionKind.fridayHarvest,
+      );
+      expect(
+        pickLine(
+          hilal(day: 3, now: DateTime(2027, 2, 12, 20), weekActs: 3),
+        )!.kind,
+        CompanionKind.ramadanStart,
+      );
+    });
+
+    test('the countdown before the month is untouched by it', () {
+      expect(
+        pickLine(_in(ramadan: 1, ramadanYear: 1448))!.kind,
+        CompanionKind.ramadanCountdown,
+      );
     });
   });
 }

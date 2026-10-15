@@ -11,7 +11,8 @@
 ///   3. a server follow-up that has fallen due (then the Today card hides);
 ///   4. something Noor noticed — a Prayer Journey stage ready, the Journey
 ///      opening for a child near seven, a milestone due, a birth month he
-///      does not know yet, then the Ramadan countdown at 30/14/7/1 days;
+///      does not know yet, then the Ramadan countdown at 30/14/7/1 days, or
+///      «هلّ هلال رمضان» in the month's first nights (once a Hijri year);
 ///   5. the week's rhythm — Monday's plan reveal; Friday's harvest of the
 ///      week's lanterns («حصاد الجمعة», phase 3);
 ///   6. a greeting for the time of day, rotated by date.
@@ -46,6 +47,7 @@ enum CompanionKind {
   milestoneDue,
   birthMonthAsk,
   ramadanCountdown,
+  ramadanStart,
   mondayPlan,
   fridayHarvest,
   firstDay,
@@ -117,6 +119,7 @@ class CompanionInputs {
     this.dueFollowups = const [],
     this.ramadanDaysUntil,
     this.ramadanYear,
+    this.ramadanDay,
     this.hasWeeklyPlan = false,
     this.weekActs = 0,
     this.firstDay = false,
@@ -147,6 +150,10 @@ class CompanionInputs {
 
   /// The Hijri/Gregorian season id the countdown belongs to (once-only key).
   final int? ramadanYear;
+
+  /// `ramadan.day` from /api/programs while the month is on (1–30), with
+  /// the family's own sighting already applied by the server.
+  final int? ramadanDay;
   final bool hasWeeklyPlan;
 
   /// This week's lantern-lighting acts (`/api/family/week`); 0 when there
@@ -204,6 +211,11 @@ class CompanionLine {
 
 const maxQuestionsPerDay = 2;
 const _countdownDays = {30, 14, 7, 1};
+
+/// «هلّ هلال رمضان» may speak on the month's first nights — the moon is
+/// called هلال for its first nights — so a family that did not open on day
+/// one, or whose day one went to a notice above it, still hears it once.
+const kRamadanStartDays = 3;
 const _outcomeActions = [
   CompanionAction.outcomeWorked,
   CompanionAction.outcomeDidntWork,
@@ -344,6 +356,25 @@ CompanionLine? pickLine(CompanionInputs i) {
         mood: CompanionMood.happy,
         name: i.childName,
         ramadanDays: d,
+        actions: const [CompanionAction.openRamadan],
+        onceOnly: true,
+      );
+    }
+  }
+
+  // 5 ── and when it comes: «هلّ هلال رمضان», once a Hijri year. In the
+  // countdown's place — the countdown is before the month, this is in it,
+  // so the two never meet and nothing above moves.
+  final day = i.ramadanDay;
+  final hijri = i.ramadanYear;
+  if (day != null && hijri != null && day >= 1 && day <= kRamadanStartDays) {
+    final key = 'ramadan-start:$hijri';
+    if (open(key) && !mem.seenKeys.contains(key)) {
+      return CompanionLine(
+        key: key,
+        kind: CompanionKind.ramadanStart,
+        mood: CompanionMood.happy,
+        name: i.childName,
         actions: const [CompanionAction.openRamadan],
         onceOnly: true,
       );

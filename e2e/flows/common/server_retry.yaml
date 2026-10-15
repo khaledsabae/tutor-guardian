@@ -1,0 +1,43 @@
+# A 5xx from production is the server's moment, not this build's: a restart or
+# a deploy holds tg-api for ~50 s and Cloudflare answers 502 meanwhile. Retry as
+# a parent would — wait a little, then tap Retry — at most twice (~60 s), and
+# only for a server status: offline, a timeout, a 4xx or a client-side error is
+# left to fail on the caller's next step.
+#
+# What a 5xx looks like on screen. Since 6ab5a9ec (2026-10-08) friendlyError
+# never prints the error; a 5xx is its category's line, errorServerBody, beside
+# a Retry button — under «تعذّر تحميل الدرس» on the lesson, under
+# errorServerTitle in an ErrorRetryView (family programs), and under the
+# answer in the chat (chatRetry). Older builds — the workflow's efaa740f
+# baseline default — printed "TgApiError(502): …" instead. Both are matched;
+# the guard once matched only the raw form and never fired on a newer build
+# (gallery/05_after_en, fresh/09, fresh/03 — 2026-10-14/15).
+#
+# A retried page keeps showing its error while it reloads (Riverpod's when()
+# skips loading on refresh), so "the error page is back" is not a signal here:
+# READY is the content alone.
+#
+# Env: READY — the screen's content once it loaded;
+#      SHOT  — screenshot name; keep "retry" in it (run.sh warns on *retry*).
+# Keep the 5xx pattern identical in `while` and `when` (test_e2e_tool pins it).
+appId: com.alsaba.almorabbi
+---
+- repeat:
+    times: 2
+    while:
+      visible: '(?:${output.c.errorServerBody}|(?s).*TgApiError\(5\d\d\).*)'
+    commands:
+      - takeScreenshot: '${SHOT}'
+      # Give the server time to come back: a Retry tapped at once only fetches
+      # the same 502. The page does not reload by itself, so this is a pause
+      # that ends early only if the content shows up after all — or, on the
+      # second pass, as soon as the first Retry's reload lands.
+      - extendedWaitUntil:
+          visible: '${READY}'
+          timeout: 30000
+          optional: true
+      - runFlow:
+          when:
+            visible: '(?:${output.c.errorServerBody}|(?s).*TgApiError\(5\d\d\).*)'
+          commands:
+            - tapOn: '(?:${output.t.retry}|${output.t.chatRetry})'

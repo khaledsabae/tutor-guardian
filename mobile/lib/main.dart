@@ -42,7 +42,7 @@ import 'features/push/push_service.dart';
 import 'features/referral/referral_service.dart';
 import 'firebase_options.dart';
 import 'features/routine/providers/child_mode_providers.dart';
-import 'features/routine/screens/habit_child_mode_screen.dart';
+import 'features/routine/widgets/child_mode_gate.dart';
 import 'features/adhkar/data/family_adhkar.dart';
 import 'features/adhkar/services/notification_service.dart';
 import 'features/whats_new/data/whats_new.dart';
@@ -56,9 +56,9 @@ import 'theme/bundled_fonts.dart';
 import 'widgets/ui/art_image.dart';
 import 'theme/design_tokens.dart';
 import 'features/push/notification_channels.dart';
+import 'core/e2e_probes.dart';
 import 'core/haptics.dart';
 import 'core/sound_fx.dart';
-import 'features/routine/widgets/child_mode_shell.dart';
 import 'core/failures.dart';
 
 // FCM background handler lives in features/push/push_service.dart
@@ -247,6 +247,10 @@ void main() async {
     // Soft interface sounds load after the first frame, off the launch path;
     // until they do, every tick is a no-op. Never throws (core/sound_fx.dart).
     unawaited(SoundFx.init());
+    // The CI rehearsal's key probe (core/e2e_probes.dart). kE2eProbes is a
+    // const false in every build but the rehearsal APK, so this line and the
+    // probe itself are compiled out of what ships.
+    if (kE2eProbes) E2eProbes.installIfEnabled();
     // Reminders are queued after the first frame now, not before it. The
     // adhkar pack they are built from is already loaded above. A launch from a
     // tapped notification is read inside init(), so the tap is handled once
@@ -573,64 +577,19 @@ class ForceUpdateScreen extends ConsumerWidget {
 class _AppBootstrapper extends ConsumerWidget {
   const _AppBootstrapper();
 
-  /// Entering and leaving child mode is a fade-through (UX_UI_ROADMAP §4.3):
-  /// the parent app and the child surface never cut hard into each other.
-  Widget _buildNormalApp(WidgetRef ref, dynamic childMode) {
-    final bool active = childMode.active;
-    return AnimatedSwitcher(
-      duration: ChildModeShell.fade,
-      child: KeyedSubtree(
-        key: ValueKey<bool>(active),
-        child: _buildAppFor(ref, childMode),
-      ),
-    );
-  }
-
-  Widget _buildAppFor(WidgetRef ref, dynamic childMode) {
-    if (childMode.active) {
-      return const ChildModeShell(child: HabitChildModeScreen());
-    }
-    // First, sync the onboardingCompletedProvider from disk.
-    final completed = ref.watch(onboardingCompletedProvider);
-    if (!completed) {
-      return const OnboardingScreen();
-    }
-    // Re-hydrate active child id from disk so all the existing
-    // `ref.watch(activeChildIdProvider)` consumers pick it up.
-    final profile = ref.watch(activeChildProfileProvider);
-    if (profile != null) {
-      // Push the id into the runtime provider used everywhere.
-      Future(() {
-        if (ref.read(activeChildIdProvider) != profile.id) {
-          ref.read(activeChildIdProvider.notifier).state = profile.id;
-        }
-      });
-    }
-    // Also restore child mode from secure storage if a token exists.
-    Future(() async {
-      await ref.read(childModeProvider.notifier).restore();
-    });
-    // The stored child may no longer exist on the server — deleted from another
-    // device, or removed while this one was offline. Nothing used to notice, so
-    // the app kept asking for a dead id and quietly showed less on every screen
-    // keyed by it. Once per launch, and only when the list actually answers.
-    if (profile != null) {
-      Future(() => ref.read(activeChildReconcileProvider.future));
-    }
-    // If the user just updated the app, show the what's-new splash
-    // once before entering the main screen.
-    ref.watch(updateSplashDismissedProvider);
-    final seenVersion = ref.read(onboardingStorageProvider).lastSeenVersion;
-    if (seenVersion != updateSplashVersion) {
-      return const UpdateSplashScreen();
-    }
-    return const RootScaffold();
-  }
+  /// The child surface or the parent's app — and, between a restart and
+  /// restore() answering, neither (see [ChildModeGate]).
+  Widget _buildNormalApp() => const ChildModeGate(
+        parentApp: _ParentApp(),
+        waiting: _SplashScreen(),
+      );
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final asyncPrefs = ref.watch(sharedPreferencesProvider);
-    final childMode = ref.watch(childModeProvider);
+    // Start looking for a child mode the last run left on, alongside the
+    // config fetch rather than after it: the gate below waits on the answer.
+    ref.watch(childModeRestoreProvider);
     // The child surface is silent: no interface sounds while it is open
     // (SoundPolicy). Mirrored on every change, starting from the default
     // (inactive) both sides agree on.
@@ -658,19 +617,61 @@ class _AppBootstrapper extends ConsumerWidget {
                 if (currentBuild < minBuild) {
                   return ForceUpdateScreen(storeUrl: storeUrl);
                 }
-                return _buildNormalApp(ref, childMode);
+                return _buildNormalApp();
               },
               loading: () => const _SplashScreen(),
-              error: (_, _) => _buildNormalApp(ref, childMode),
+              error: (_, _) => _buildNormalApp(),
             );
           },
           loading: () => const _SplashScreen(),
-          error: (_, _) => _buildNormalApp(ref, childMode),
+          error: (_, _) => _buildNormalApp(),
         );
       },
       loading: () => const _SplashScreen(),
       error: (e, _) => _BootErrorScreen(error: e),
     );
+  }
+}
+
+/// The parent's app: onboarding, the what's-new splash, or the home tabs.
+///
+/// Built only by [ChildModeGate], and only once no child has the device.
+class _ParentApp extends ConsumerWidget {
+  const _ParentApp();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    // First, sync the onboardingCompletedProvider from disk.
+    final completed = ref.watch(onboardingCompletedProvider);
+    if (!completed) {
+      return const OnboardingScreen();
+    }
+    // Re-hydrate active child id from disk so all the existing
+    // `ref.watch(activeChildIdProvider)` consumers pick it up.
+    final profile = ref.watch(activeChildProfileProvider);
+    if (profile != null) {
+      // Push the id into the runtime provider used everywhere.
+      Future(() {
+        if (ref.read(activeChildIdProvider) != profile.id) {
+          ref.read(activeChildIdProvider.notifier).state = profile.id;
+        }
+      });
+    }
+    // The stored child may no longer exist on the server — deleted from another
+    // device, or removed while this one was offline. Nothing used to notice, so
+    // the app kept asking for a dead id and quietly showed less on every screen
+    // keyed by it. Once per launch, and only when the list actually answers.
+    if (profile != null) {
+      Future(() => ref.read(activeChildReconcileProvider.future));
+    }
+    // If the user just updated the app, show the what's-new splash
+    // once before entering the main screen.
+    ref.watch(updateSplashDismissedProvider);
+    final seenVersion = ref.read(onboardingStorageProvider).lastSeenVersion;
+    if (seenVersion != updateSplashVersion) {
+      return const UpdateSplashScreen();
+    }
+    return const RootScaffold();
   }
 }
 

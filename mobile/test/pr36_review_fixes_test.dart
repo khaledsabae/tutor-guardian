@@ -819,7 +819,7 @@ void main() {
       DeepLinkHandler.instance.handleForTest(Uri.parse('/followup/7'), key);
       await settle(tester);
       expect(find.byType(FollowupSheet), findsNothing);
-      mode.leave(); // the PIN exit — or restore() ending a cold start
+      mode.leave(); // the PIN exit
       await settle(tester);
       expect(find.byType(FollowupSheet), findsOneWidget);
       expect(server.calls, contains('GET /api/children/followups/7'));

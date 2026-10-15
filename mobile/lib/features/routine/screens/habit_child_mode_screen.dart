@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../core/app_routes.dart';
 import '../../../core/haptics.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../theme/app_theme.dart';
@@ -40,12 +39,19 @@ class HabitChildModeScreen extends ConsumerWidget {
     // dead session or an unsigned agreement is true whatever the child came
     // here to do.
 
-    // Expired UX Guard: if the child session died and the notifier surfaced
-    // an explicit expiry message, take the child back to the lock screen so
-    // the parent can re-issue a token. This avoids leaving the child in a
-    // hung screen or showing a raw HTTP error.
-    if (state.error == kChildModeErrorSessionExpired) {
-      return _ExpiredGuard(childId: state.childId);
+    // No session behind this screen, and nothing to explain: the app was
+    // restarted while a child had it (restore), the mission card closed it,
+    // or the server stopped accepting the child's token. The device goes back
+    // by hand; the frame's Exit, behind the PIN, is the way out.
+    //
+    // The expired token used to get a guard that pushed the PIN screen in
+    // *entry* mode — a new session for the child, not an exit — and, with no
+    // child id, a page of text with no way off it. It was never reached: the
+    // 401 that set the code also cleared child mode, so the parent's app
+    // opened instead.
+    if (state.error == kChildModeHandedBack ||
+        state.error == kChildModeErrorSessionExpired) {
+      return const ChildHandBackScreen();
     }
 
     // The server refuses every other surface until the family agreement is
@@ -150,48 +156,6 @@ class HabitChildModeScreen extends ConsumerWidget {
           ],
         ),
       ),
-    );
-  }
-}
-
-class _ExpiredGuard extends StatefulWidget {
-  final int? childId;
-  const _ExpiredGuard({this.childId});
-
-  @override
-  State<_ExpiredGuard> createState() => _ExpiredGuardState();
-}
-
-class _ExpiredGuardState extends State<_ExpiredGuard> {
-  @override
-  void initState() {
-    super.initState();
-    // Let the frame settle, then push the lock screen as a modal replacement.
-    WidgetsBinding.instance.addPostFrameCallback((_) => _redirect());
-  }
-
-  Future<void> _redirect() async {
-    if (!mounted) return;
-    final childId = widget.childId;
-    final l10n = AppLocalizations.of(context);
-    // Two genuinely different destinations, so they get two named routes
-    // rather than one route that switches its own body — otherwise both
-    // report as the same screen in analytics.
-    await Navigator.of(context).pushReplacement(
-      childId == null
-          ? AppRoutes.childModeExpired<void>(l10n.habitChildModeExpired)
-          : AppRoutes.childModeLock<void>(
-              childId: childId,
-              childName: l10n.childFallbackName,
-              isExit: false,
-            ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-      body: LoadingView.spinner(),
     );
   }
 }
