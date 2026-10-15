@@ -218,7 +218,12 @@ void main() {
     expect(tester.takeException(), isNull);
   });
 
-  testWidgets('on Today the loop sits between ① and ②', (tester) async {
+  testWidgets('on Today Noor asks the due follow-up once, at the top',
+      (tester) async {
+    // «نور يتذكّر» (phase 2): the question moved from a card between ① and
+    // ② into Noor's line above ①. The card hides while Noor hosts it — the
+    // parent is asked once, in one place — and the week's plan keeps its
+    // place between ① and ②.
     final server = _HomeServer()..proven = true;
     server.due = [followupJson(7, 12)];
     server.plans[12] = planJson(12);
@@ -227,18 +232,16 @@ void main() {
     await settle(tester);
 
     double top(Finder f) => tester.getTopLeft(f).dy;
-    final step = find.text('خطوة اليوم مع أحمد');
-    final followup = find.text('متابعة مع أحمد');
+    final noor = find.textContaining('هل جرّبتها مع أحمد');
+    final card = find.text('متابعة مع أحمد');
     final plan = find.text('خطة أحمد هذا الأسبوع');
     final ask = find.text('اسأل المربّي');
+    expect(noor, findsOneWidget);
+    expect(card, findsNothing);
     await tester.scrollUntilVisible(ask, 200,
         scrollable: find.byType(Scrollable).first);
-    for (final f in [followup, plan, ask]) {
-      expect(f, findsOneWidget);
-    }
-    expect(top(followup), lessThan(top(plan)));
+    expect(plan, findsOneWidget);
     expect(top(plan), lessThan(top(ask)));
-    if (step.evaluate().isNotEmpty) expect(top(step), lessThan(top(followup)));
   });
 
   group('the /followup/{id} deep link', () {

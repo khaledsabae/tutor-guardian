@@ -455,7 +455,11 @@ void main() {
         find.textContaining('اختر وقتاً يومياً واحداً تتحدث فيه مع طفلك'),
         findsNWidgets(2),
       );
-      expect(find.text('تمام، سأفعلها 🤍'), findsOneWidget);
+      // «متى ستجرّبها؟» (phase 2, حلقة الوعد): three slots, not one «تمام».
+      expect(find.textContaining('متى ستجرّبها مع'), findsOneWidget);
+      for (final slot in ['الليلة', 'غدًا', 'هذا الأسبوع']) {
+        expect(find.text(slot), findsOneWidget);
+      }
     });
 
     // `test` not `testWidgets`: no widget is pumped, and riverpod's

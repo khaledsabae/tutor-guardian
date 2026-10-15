@@ -1188,6 +1188,7 @@ def store_extraction(
 def _open_followup(
     conn: sqlite3.Connection, device_id: str, child_id: int, followup: dict,
     *, lang: str, family: FamilyOrNames, source_message_id: Optional[int],
+    source: Optional[str] = None,
 ) -> Optional[int]:
     strategy = clean_fact_text(followup["strategy"], family, child_id)
     if strategy is None or len(strategy) > 120 or must_not_remember(strategy):
@@ -1210,14 +1211,73 @@ def _open_followup(
     try:
         cur = conn.execute(
             "INSERT INTO followups (device_id, child_id, strategy, topic, lang, "
-            "source_message_id, due_at, status, created_at, updated_at) "
-            "VALUES (?, ?, ?, ?, ?, ?, ?, 'pending', ?, ?)",
+            "source_message_id, due_at, status, created_at, updated_at, source) "
+            "VALUES (?, ?, ?, ?, ?, ?, ?, 'pending', ?, ?, ?)",
             (device_id, child_id, strategy, followup["topic"], lang_of(strategy) or lang,
-             source_message_id, _ts(due), _ts(now), _ts(now)),
+             source_message_id, _ts(due), _ts(now), _ts(now), source),
         )
     except sqlite3.IntegrityError:      # ux_followups_pending_topic: another worker won
         return None
     return cur.lastrowid
+
+
+# «متى ستجرّبها مع …؟» — the slot the parent picked, and the day we ask back.
+PROMISE_DUE_DAYS = {"tonight": 1, "tomorrow": 2, "week": 7}
+
+
+class FollowupRefused(RuntimeError):
+    """The promise was not opened: `followup_exists` (one open question per
+    topic, or the same step already pending) or `followups_full` (the cap)."""
+
+
+def open_promise_followup(
+    device_id: str, child_id: int, strategy: str, *, when: str, topic: str, lang: str,
+) -> dict:
+    """A lesson promise becomes a follow-up (source='lesson').
+
+    Same queue and limits as the chat follow-ups — MAX_PENDING_FOLLOWUPS, one
+    open question per topic, names redacted, sensitive text refused — so a
+    promise can never nag harder than a question did. The parent's memory
+    switch is honoured (MemoryOffError); the build gate is not, because the
+    promise comes from the app's own lesson screen, not from the chat.
+    """
+    if when not in PROMISE_DUE_DAYS or topic not in FOLLOWUP_TOPICS:
+        raise FactValidationError("strategy")
+    conn = get_conn()
+    try:
+        conn.execute("BEGIN IMMEDIATE")
+        if not _switch_on(conn, device_id):
+            conn.rollback()
+            raise MemoryOffError()
+        family = family_from_conn(conn, device_id)
+        cleaned = clean_fact_text(strategy, family, child_id)
+        if cleaned is None or len(cleaned) > 120 or must_not_remember(cleaned):
+            conn.rollback()
+            raise FactValidationError("strategy")
+        pending = conn.execute(
+            "SELECT COUNT(*) FROM followups WHERE device_id = ? AND child_id = ? "
+            "AND status = 'pending'", (device_id, child_id),
+        ).fetchone()[0]
+        if pending >= MAX_PENDING_FOLLOWUPS:
+            conn.rollback()
+            raise FollowupRefused("followups_full")
+        fid = _open_followup(
+            conn, device_id, child_id,
+            {"strategy": cleaned, "topic": topic, "days": PROMISE_DUE_DAYS[when]},
+            lang=lang, family=family, source_message_id=None, source="lesson",
+        )
+        if fid is None:
+            conn.rollback()
+            raise FollowupRefused("followup_exists")
+        row = conn.execute("SELECT * FROM followups WHERE id = ?", (fid,)).fetchone()
+        conn.commit()
+        return followup_to_dict(row)
+    except Exception:
+        if conn.in_transaction:
+            conn.rollback()
+        raise
+    finally:
+        conn.close()
 
 
 # Messages worth learning from talk about the parent's own child and how the
@@ -1417,6 +1477,8 @@ def followup_to_dict(row: sqlite3.Row) -> dict:
         "note": row["note"],
         "created_at": iso_z(row["created_at"]),
         "answered_at": iso_z(row["answered_at"]),
+        # NULL for rows from before v36 = the chat engine, the only source then.
+        "source": row["source"] or "chat",
     }
 
 

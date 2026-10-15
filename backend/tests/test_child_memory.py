@@ -919,3 +919,82 @@ def test_concurrent_extractions_write_each_fact_and_followup_once(client, monkey
         t.join()
     assert len(cm.list_facts("dev-race", cid, "all")) == 1
     assert len(cm.list_followups("dev-race", cid)) == 1
+
+
+# ── Lesson promises (phase 2: حلقة الوعد) ─────────────────────────────────
+#
+# After a lesson the parent says when they will try its one step («الليلة /
+# غدًا / هذا الأسبوع»). That promise becomes a follow-up with source='lesson',
+# asked back when it falls due — the same queue, limits and switch as the
+# chat follow-ups, so a promise can never nag harder than a question did.
+
+
+def _promise(client, h, cid, **body):
+    payload = {"strategy": "امدح صدقه أولًا قبل معالجة الخطأ", "when": "tomorrow",
+               "topic": "lying"}
+    payload.update(body)
+    return client.post(f"/api/children/{cid}/followups", headers=_headers(h), json=payload)
+
+
+def _hours_from_now(iso: str) -> float:
+    due = datetime.strptime(iso.rstrip("Z"), "%Y-%m-%dT%H:%M:%S").replace(tzinfo=timezone.utc)
+    return (due - datetime.now(timezone.utc)).total_seconds() / 3600
+
+
+def test_lesson_promise_opens_a_lesson_followup(client):
+    h = _session(client, "dev-promise")
+    cid = _child(client, h)
+    r = _promise(client, h, cid)
+    assert r.status_code == 201, r.text
+    fu = r.json()["followup"]
+    assert fu["source"] == "lesson" and fu["status"] == "pending"
+    assert fu["topic"] == "lying" and fu["child_id"] == cid
+    assert 47 <= _hours_from_now(fu["due_at"]) <= 49          # «غدًا» → asked the day after
+    listed = client.get(f"/api/children/{cid}/followups", headers=_headers(h)).json()
+    assert [f["id"] for f in listed["followups"]] == [fu["id"]]
+
+
+@pytest.mark.parametrize("when,hours", [("tonight", 24), ("tomorrow", 48), ("week", 168)])
+def test_lesson_promise_due_follows_the_chosen_slot(client, when, hours):
+    h = _session(client, f"dev-slot-{when}")
+    cid = _child(client, h)
+    fu = _promise(client, h, cid, when=when).json()["followup"]
+    assert hours - 1 <= _hours_from_now(fu["due_at"]) <= hours + 1
+
+
+def test_lesson_promise_validation_and_ownership(client):
+    h = _session(client, "dev-promise-val")
+    cid = _child(client, h)
+    assert _promise(client, h, cid, when="someday").status_code == 422
+    assert _promise(client, h, cid, topic="politics").status_code == 422
+    long = _promise(client, h, cid, strategy="ا" * 121)
+    assert long.status_code == 422 and long.json()["detail"]["code"] == "strategy"
+    other = _session(client, "dev-promise-other")
+    assert _promise(client, other, cid).status_code == 404
+
+
+def test_lesson_promise_never_stores_the_child_name(client):
+    h = _session(client, "dev-promise-name")
+    cid = _child(client, h)
+    fu = _promise(client, h, cid, strategy=f"امدح صدق {CHILD_NAME} أولًا").json()["followup"]
+    assert CHILD_NAME not in fu["strategy"]
+
+
+def test_lesson_promise_respects_the_memory_switch(client):
+    h = _session(client, "dev-promise-off")
+    cid = _child(client, h)
+    client.put("/api/children/memory/settings", headers=_headers(h), json={"enabled": False})
+    r = _promise(client, h, cid)
+    assert r.status_code == 409 and r.json()["detail"]["code"] == "memory_off"
+
+
+def test_lesson_promise_keeps_one_question_per_topic_and_the_cap(client):
+    h = _session(client, "dev-promise-cap")
+    cid = _child(client, h)
+    assert _promise(client, h, cid).status_code == 201
+    dup = _promise(client, h, cid, strategy="قل له إن الصدق ينجيه")
+    assert dup.status_code == 409 and dup.json()["detail"]["code"] == "followup_exists"
+    for topic, text in (("sleep", "روتين نوم ثابت"), ("anger", "ركن الهدوء")):
+        assert _promise(client, h, cid, topic=topic, strategy=text).status_code == 201
+    full = _promise(client, h, cid, topic="screens", strategy="ساعة بلا شاشات")
+    assert full.status_code == 409 and full.json()["detail"]["code"] == "followups_full"

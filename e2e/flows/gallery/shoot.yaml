@@ -267,9 +267,24 @@ name: gallery/shoot
       - waitForAnimationToEnd:
           timeout: 2000
       - takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__next_step'
-      - tapOn:
-          text: '${output.t.lessonNextStepConfirm}'
-          optional: true
+      # Head builds ask «متى ستجرّبها؟» with three slots instead of one
+      # confirm (phase 2, حلقة الوعد); the baseline never shows the slots.
+      # Each tap is gated on its own button, NOT `optional: true`: a failed
+      # optional step makes Maestro dump the hierarchy under a file named
+      # after the selector (step-N-tapOnElement-<selector>.json), and
+      # verify-hierarchy reads «lesson» in that name as the lesson screen —
+      # the after passes went red on run 38610466087 while the flow passed.
+      # A `when` that is false is SKIPPED and dumps nothing.
+      - runFlow:
+          when:
+            visible: '${output.t.lessonNextStepConfirm}'
+          commands:
+            - tapOn: '${output.t.lessonNextStepConfirm}'
+      - runFlow:
+          when:
+            visible: '${output.t.promiseTonight}'
+          commands:
+            - tapOn: '${output.t.promiseTonight}'
 - runFlow:
     when:
       visible: '${output.c.reviewPromptTitle}'

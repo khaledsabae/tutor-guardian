@@ -40,6 +40,12 @@ import '../models/lesson_assets.dart';
 import '../providers/lesson_assets_provider.dart';
 import '../providers/favorites_provider.dart';
 import '../widgets/next_step_sheet.dart';
+import '../../adhkar/services/notification_service.dart';
+import '../../child_memory/data/placeholder_names.dart';
+import '../../child_memory/providers/memory_providers.dart';
+import '../../companion/data/companion_store.dart';
+import '../../companion/providers/companion_providers.dart';
+import '../../onboarding/providers/onboarding_providers.dart';
 import '../../../config/app_config.dart';
 import '../providers/program_providers.dart';
 import '../../coins/coins_providers.dart';
@@ -89,7 +95,8 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
   /// not merely that something was recorded.
   ({int n, int total, String path}) _lessonPosition() {
     final lesson = ref.read(lessonProvider(widget.lessonId)).valueOrNull;
-    final paths = ref
+    final paths =
+        ref
             .read(pathsListProvider(PathsListArgs(ageGroup: widget.ageGroup)))
             .valueOrNull
             ?.paths ??
@@ -109,16 +116,41 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
     return (n: n, total: total > 0 ? total : n, path: path?.title ?? '');
   }
 
+  /// «متى ستجرّبها مع …؟» answered: keep the promise on the device, queue
+  /// one gentle reminder, and ask the server to follow it up (a 409 or a
+  /// failure leaves the device promise standing — Noor asks either way).
+  Future<void> _keepPromise(int childId, String step, PromiseSlot slot) async {
+    unawaited(Analytics.nextStepCommitted(when: slot.wire));
+    final mem = ref.read(companionMemoryProvider.notifier);
+    final repo = ref.read(memoryRepositoryProvider);
+    try {
+      final p = await mem.addPromise(
+        childId: childId,
+        step: step,
+        slot: slot,
+        lessonId: widget.lessonId,
+      );
+      unawaited(
+        NotificationService.instance.schedulePromiseReminder(
+          promiseId: p.id,
+          slotWire: slot.wire,
+        ),
+      );
+      final fid = await repo.openPromise(childId, step: step, when: slot.wire);
+      if (fid != null) await mem.linkFollowup(p.id, fid);
+    } catch (_) {
+      // The lesson is done either way; a lost promise must never surface as
+      // an error on the parent's best moment.
+    }
+  }
+
   Future<void> _markComplete() async {
     final childId = _childId;
     if (childId == null) return;
     // Read before the awaits — reaching for a provider across an async gap on
     // a widget that may have been disposed is how this screen would crash.
-    final tryThis = ref
-            .read(lessonProvider(widget.lessonId))
-            .valueOrNull
-            ?.tryThis
-            .trim() ??
+    final tryThis =
+        ref.read(lessonProvider(widget.lessonId)).valueOrNull?.tryThis.trim() ??
         '';
     // «أول خطوة 🌱» merges into the lesson's own celebration (phase 1: هدية
     // اليوم والشارات) instead of a separate, silent credit on Today. This is
@@ -126,13 +158,14 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
     // the PATCH, which invalidates and refetches it.
     final firstCompletion =
         (ref.read(childProgressProvider(childId)).valueOrNull?.completedCount ??
-                0) ==
-            0;
+            0) ==
+        0;
     final coins = ref.read(coinsProvider.notifier);
     final position = _lessonPosition();
     setState(() => _marking = true);
     try {
-      await ref.read(markLessonProgressProvider(widget.lessonId).notifier)
+      await ref
+          .read(markLessonProgressProvider(widget.lessonId).notifier)
           .markProgress(ProgressStatus.completed, childId: childId);
       unawaited(Analytics.lessonCompleted(widget.lessonId));
       // Idempotent by badge id: crediting here means the badge is paid in
@@ -149,14 +182,14 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
           glyph: BrandIcon.star,
           imageAsset: 'assets/images/generated/mascot_celebrate.webp',
           title: AppLocalizations.of(context).lessonCelebrationTitle,
-          message: AppLocalizations.of(context).lessonCelebrationMsg(
-                position.n,
-                position.total,
-                position.path,
-              ),
+          message: AppLocalizations.of(
+            context,
+          ).lessonCelebrationMsg(position.n, position.total, position.path),
           badge: paidBadges.contains('first_step')
-              ? (emoji: '',
-                  title: AppLocalizations.of(context).badgeFirstStepTitle)
+              ? (
+                  emoji: '',
+                  title: AppLocalizations.of(context).badgeFirstStepTitle,
+                )
               : null,
         );
         // «كيفية تنفيذ القيمة» — the complaint this answers. The lesson's
@@ -165,8 +198,24 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
         // finished reading and is asking "so what do I do?".
         var committed = false;
         if (mounted && tryThis.isNotEmpty) {
-          committed = await showNextStepSheet(context, tryThis: tryThis);
-          if (committed) unawaited(Analytics.nextStepCommitted());
+          final l10n = AppLocalizations.of(context);
+          final name = ref.read(activeChildProfileProvider)?.name;
+          final slot = await showNextStepSheet(
+            context,
+            tryThis: tryThis,
+            childName: name == null || isDefaultChildName(name)
+                ? l10n.noorYourChild
+                : name,
+          );
+          committed = slot != null;
+          if (slot != null) {
+            unawaited(_keepPromise(childId, tryThis, slot));
+            if (mounted) {
+              ScaffoldMessenger.of(
+                context,
+              ).showSnackBar(SnackBar(content: Text(l10n.promiseSaved)));
+            }
+          }
         }
         // Finishing a lesson is the strongest positive moment in the app, and
         // until now it recorded none: ReviewPrompt was reachable only from the
@@ -188,7 +237,11 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(AppLocalizations.of(context).lessonErrorMarking(describeFailure(AppLocalizations.of(context), e))),
+            content: Text(
+              AppLocalizations.of(context).lessonErrorMarking(
+                describeFailure(AppLocalizations.of(context), e),
+              ),
+            ),
             backgroundColor: AppTheme.dangerFg,
           ),
         );
@@ -202,7 +255,8 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
     final childId = _childId;
     if (childId == null) return;
     try {
-      await ref.read(markLessonProgressProvider(widget.lessonId).notifier)
+      await ref
+          .read(markLessonProgressProvider(widget.lessonId).notifier)
           .markProgress(ProgressStatus.inProgress, childId: childId);
     } catch (_) {
       // Silent — the in_progress marker is best-effort.
@@ -264,7 +318,9 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
                 child: BouncyButton(
                   label: status == ProgressStatus.completed
                       ? AppLocalizations.of(context).lessonCompleted
-                      : (_marking ? AppLocalizations.of(context).lessonMarking : AppLocalizations.of(context).lessonMarkComplete),
+                      : (_marking
+                            ? AppLocalizations.of(context).lessonMarking
+                            : AppLocalizations.of(context).lessonMarkComplete),
                   color: status == ProgressStatus.completed
                       ? AppTheme.success
                       : Dt.accent,
@@ -301,7 +357,8 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
           // waiting for the bundle is what stops a re-opened COMPLETED lesson
           // being downgraded to in_progress, which was silently zeroing path
           // progress on the server.
-          final bundleReady = childId == null ||
+          final bundleReady =
+              childId == null ||
               ref.watch(childProgressProvider(childId)).hasValue;
           if (childId != null && !_markedInProgress && bundleReady) {
             _markedInProgress = true;
@@ -401,23 +458,23 @@ class _StatusChip extends StatelessWidget {
   Widget build(BuildContext context) {
     final (icon, label, color, bg) = switch (status) {
       ProgressStatus.completed => (
-          Icons.check_circle,
-          AppLocalizations.of(context).lessonStatusCompleted,
-          AppTheme.successText,
-          AppTheme.success.withValues(alpha: .15),
-        ),
+        Icons.check_circle,
+        AppLocalizations.of(context).lessonStatusCompleted,
+        AppTheme.successText,
+        AppTheme.success.withValues(alpha: .15),
+      ),
       ProgressStatus.inProgress => (
-          Icons.play_circle_outline,
-          AppLocalizations.of(context).lessonStatusInProgress,
-          AppTheme.primary,
-          AppTheme.surfaceAlt,
-        ),
+        Icons.play_circle_outline,
+        AppLocalizations.of(context).lessonStatusInProgress,
+        AppTheme.primary,
+        AppTheme.surfaceAlt,
+      ),
       ProgressStatus.notStarted => (
-          Icons.circle_outlined,
-          AppLocalizations.of(context).lessonStatusNotStarted,
-          AppTheme.textSecondary,
-          AppTheme.surfaceAlt,
-        ),
+        Icons.circle_outlined,
+        AppLocalizations.of(context).lessonStatusNotStarted,
+        AppTheme.textSecondary,
+        AppTheme.surfaceAlt,
+      ),
     };
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
@@ -456,8 +513,8 @@ class _Hero extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isFav = ref.watch(favoritesProvider)['lessons']
-            ?.contains(lesson.id) ?? false;
+    final isFav =
+        ref.watch(favoritesProvider)['lessons']?.contains(lesson.id) ?? false;
     return Container(
       decoration: BoxDecoration(
         gradient: style.gradient,
@@ -473,10 +530,7 @@ class _Hero extends ConsumerWidget {
               bottom: -20,
               child: Opacity(
                 opacity: .15,
-                child: Text(
-                  style.emoji,
-                  style: const TextStyle(fontSize: 100),
-                ),
+                child: Text(style.emoji, style: const TextStyle(fontSize: 100)),
               ),
             ),
             Padding(
@@ -486,9 +540,17 @@ class _Hero extends ConsumerWidget {
                 children: [
                   Row(
                     children: [
-                      _HeroBadge(text: AppLocalizations.of(context).lessonNumberBadge(lesson.order)),
+                      _HeroBadge(
+                        text: AppLocalizations.of(
+                          context,
+                        ).lessonNumberBadge(lesson.order),
+                      ),
                       const SizedBox(width: 8),
-                      _HeroBadge(text: AppLocalizations.of(context).lessonMinutesBadge(lesson.estimatedMinutes)),
+                      _HeroBadge(
+                        text: AppLocalizations.of(
+                          context,
+                        ).lessonMinutesBadge(lesson.estimatedMinutes),
+                      ),
                       const Spacer(),
                       Semantics(
                         container: true,
@@ -601,10 +663,10 @@ class _Section extends StatelessWidget {
               Expanded(
                 child: Text(
                   title,
-                  style: Theme.of(context)
-                      .textTheme
-                      .titleSmall
-                      ?.copyWith(fontWeight: FontWeight.w800, color: accent),
+                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                    fontWeight: FontWeight.w800,
+                    color: accent,
+                  ),
                 ),
               ),
             ],
@@ -612,10 +674,7 @@ class _Section extends StatelessWidget {
           const SizedBox(height: 8),
           Text(
             body,
-            style: Theme.of(context)
-                .textTheme
-                .bodyLarge
-                ?.copyWith(height: 1.6),
+            style: Theme.of(context).textTheme.bodyLarge?.copyWith(height: 1.6),
           ),
         ],
       ),
@@ -684,10 +743,7 @@ class _ReflectionCard extends StatelessWidget {
                   Expanded(
                     child: Text(
                       prompts[i],
-                      style: TextStyle(
-                        color: context.colors.ink,
-                        height: 1.55,
-                      ),
+                      style: TextStyle(color: context.colors.ink, height: 1.55),
                     ),
                   ),
                 ],
@@ -715,12 +771,13 @@ class _UnitIdsCard extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Icon(Icons.source_outlined,
-              size: 16, color: AppTheme.textSecondary),
+          Icon(Icons.source_outlined, size: 16, color: AppTheme.textSecondary),
           const SizedBox(width: 6),
           Expanded(
             child: Text(
-              AppLocalizations.of(context).lessonUnitRefs(lesson.unitIds.length),
+              AppLocalizations.of(
+                context,
+              ).lessonUnitRefs(lesson.unitIds.length),
               style: TextStyle(color: AppTheme.textSecondary),
             ),
           ),
@@ -746,16 +803,16 @@ class _WarningCard extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(Icons.medical_services_outlined,
-              color: AppTheme.dangerFg, size: 18),
+          Icon(
+            Icons.medical_services_outlined,
+            color: AppTheme.dangerFg,
+            size: 18,
+          ),
           const SizedBox(width: 8),
           Expanded(
             child: Text(
               text,
-              style: TextStyle(
-                color: AppTheme.dangerFg,
-                height: 1.5,
-              ),
+              style: TextStyle(color: AppTheme.dangerFg, height: 1.5),
             ),
           ),
         ],
@@ -767,7 +824,10 @@ class _WarningCard extends StatelessWidget {
 class _InteractiveAssetsSection extends ConsumerWidget {
   final String lessonId;
   final String domain;
-  const _InteractiveAssetsSection({required this.lessonId, required this.domain});
+  const _InteractiveAssetsSection({
+    required this.lessonId,
+    required this.domain,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -781,142 +841,143 @@ class _InteractiveAssetsSection extends ConsumerWidget {
         // button below is domain-based and shows even without any assets.
         if (assets != null) {
           if (assets.podcastMp3 != null) {
-          // The backend returns either a full URL or a relative path
-          // (e.g. "docs/lesson_01_podcast.mp3" — pre-R2 era). We accept
-          // both: full URLs pass through, relative paths are joined
-          // against [AppConfig.apiBaseUrl]. Until the R2 migration
-          // lands, the relative path will 404 in production and the
-          // player shows a friendly "not yet available" message.
-          final raw = assets.podcastMp3!;
-          final url = raw.startsWith('http://') || raw.startsWith('https://')
-              ? raw
-              : '${AppConfig.apiBaseUrl}/$raw';
-          buttons.add(
-            _AssetButton(
-              icon: Icons.headset,
-              label: AppLocalizations.of(context).lessonListenPodcast,
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  AppRoutes.podcast(
-                    url,
-                    AppLocalizations.of(context).lessonPodcastTitle,
-                  ),
-                );
-              },
-            ),
-          );
-        }
+            // The backend returns either a full URL or a relative path
+            // (e.g. "docs/lesson_01_podcast.mp3" — pre-R2 era). We accept
+            // both: full URLs pass through, relative paths are joined
+            // against [AppConfig.apiBaseUrl]. Until the R2 migration
+            // lands, the relative path will 404 in production and the
+            // player shows a friendly "not yet available" message.
+            final raw = assets.podcastMp3!;
+            final url = raw.startsWith('http://') || raw.startsWith('https://')
+                ? raw
+                : '${AppConfig.apiBaseUrl}/$raw';
+            buttons.add(
+              _AssetButton(
+                icon: Icons.headset,
+                label: AppLocalizations.of(context).lessonListenPodcast,
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    AppRoutes.podcast(
+                      url,
+                      AppLocalizations.of(context).lessonPodcastTitle,
+                    ),
+                  );
+                },
+              ),
+            );
+          }
 
-        if (assets.videoMp4 != null) {
-          final raw = assets.videoMp4!;
-          final url = raw.startsWith('http')
-              ? raw
-              : '${AppConfig.apiBaseUrl}/$raw';
-          buttons.add(
-            _VideoCard(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  AppRoutes.video(
-                    url,
-                    AppLocalizations.of(context).lessonWatchVideo,
-                  ),
-                );
-              },
-            ),
-          );
-        }
+          if (assets.videoMp4 != null) {
+            final raw = assets.videoMp4!;
+            final url = raw.startsWith('http')
+                ? raw
+                : '${AppConfig.apiBaseUrl}/$raw';
+            buttons.add(
+              _VideoCard(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    AppRoutes.video(
+                      url,
+                      AppLocalizations.of(context).lessonWatchVideo,
+                    ),
+                  );
+                },
+              ),
+            );
+          }
 
-        final flashcardsCount = assets.flashcards.fold<int>(
-          0,
-          (sum, item) {
+          final flashcardsCount = assets.flashcards.fold<int>(0, (sum, item) {
             final map = item as Map<String, dynamic>?;
             return sum + ((map?['item_count'] as num?)?.toInt() ?? 0);
-          },
-        );
-        if (flashcardsCount > 0) {
-          final deckIds = assets.flashcards
-              .map((item) => (item as Map<String, dynamic>?)?['id'] as String?)
-              .whereType<String>()
-              .toList();
-          buttons.add(
-            _AssetButton(
-              icon: Icons.style,
-              label: AppLocalizations.of(context).lessonFlashcards(flashcardsCount),
-              onPressed: () {
-                Navigator.push(context, AppRoutes.flashcards(deckIds));
-              },
-            ),
-          );
-        }
+          });
+          if (flashcardsCount > 0) {
+            final deckIds = assets.flashcards
+                .map(
+                  (item) => (item as Map<String, dynamic>?)?['id'] as String?,
+                )
+                .whereType<String>()
+                .toList();
+            buttons.add(
+              _AssetButton(
+                icon: Icons.style,
+                label: AppLocalizations.of(
+                  context,
+                ).lessonFlashcards(flashcardsCount),
+                onPressed: () {
+                  Navigator.push(context, AppRoutes.flashcards(deckIds));
+                },
+              ),
+            );
+          }
 
-        final quizzesCount = assets.quizzes.fold<int>(
-          0,
-          (sum, item) {
+          final quizzesCount = assets.quizzes.fold<int>(0, (sum, item) {
             final map = item as Map<String, dynamic>?;
             return sum + ((map?['item_count'] as num?)?.toInt() ?? 0);
-          },
-        );
-        if (quizzesCount > 0) {
-          final quizIds = assets.quizzes
-              .map((item) => (item as Map<String, dynamic>?)?['id'] as String?)
-              .whereType<String>()
-              .toList();
-          buttons.add(
-            _AssetButton(
-              icon: Icons.quiz,
-              label: AppLocalizations.of(context).lessonQuiz(quizzesCount),
-              onPressed: () {
-                Navigator.push(context, AppRoutes.quiz(quizIds));
-              },
-            ),
-          );
-        }
+          });
+          if (quizzesCount > 0) {
+            final quizIds = assets.quizzes
+                .map(
+                  (item) => (item as Map<String, dynamic>?)?['id'] as String?,
+                )
+                .whereType<String>()
+                .toList();
+            buttons.add(
+              _AssetButton(
+                icon: Icons.quiz,
+                label: AppLocalizations.of(context).lessonQuiz(quizzesCount),
+                onPressed: () {
+                  Navigator.push(context, AppRoutes.quiz(quizIds));
+                },
+              ),
+            );
+          }
 
-        // ── Visual assets: infographic / report / data-table ──
-        if (assets.infographic != null) {
-          final raw = assets.infographic!;
-          final url =
-              raw.startsWith('http') ? raw : '${AppConfig.apiBaseUrl}/$raw';
-          buttons.add(_AssetButton(
-            icon: Icons.image,
-            label: AppLocalizations.of(context).lessonInfographic,
-            onPressed: () => Navigator.push(
-              context,
-              AppRoutes.infographic(url),
-            ),
-          ));
-        }
+          // ── Visual assets: infographic / report / data-table ──
+          if (assets.infographic != null) {
+            final raw = assets.infographic!;
+            final url = raw.startsWith('http')
+                ? raw
+                : '${AppConfig.apiBaseUrl}/$raw';
+            buttons.add(
+              _AssetButton(
+                icon: Icons.image,
+                label: AppLocalizations.of(context).lessonInfographic,
+                onPressed: () =>
+                    Navigator.push(context, AppRoutes.infographic(url)),
+              ),
+            );
+          }
 
-        if (assets.report != null) {
-          final raw = assets.report!;
-          final url =
-              raw.startsWith('http') ? raw : '${AppConfig.apiBaseUrl}/$raw';
-          buttons.add(_AssetButton(
-            icon: Icons.description,
-            label: AppLocalizations.of(context).lessonReport,
-            onPressed: () => Navigator.push(
-              context,
-              AppRoutes.report(url),
-            ),
-          ));
-        }
+          if (assets.report != null) {
+            final raw = assets.report!;
+            final url = raw.startsWith('http')
+                ? raw
+                : '${AppConfig.apiBaseUrl}/$raw';
+            buttons.add(
+              _AssetButton(
+                icon: Icons.description,
+                label: AppLocalizations.of(context).lessonReport,
+                onPressed: () => Navigator.push(context, AppRoutes.report(url)),
+              ),
+            );
+          }
 
-        if (assets.dataTable != null) {
-          final raw = assets.dataTable!;
-          final url =
-              raw.startsWith('http') ? raw : '${AppConfig.apiBaseUrl}/$raw';
-          buttons.add(_AssetButton(
-            icon: Icons.table_chart,
-            label: AppLocalizations.of(context).lessonDataTable,
-            onPressed: () => Navigator.push(
-              context,
-              AppRoutes.dataTable(url),
-            ),
-          ));
-        }
-
+          if (assets.dataTable != null) {
+            final raw = assets.dataTable!;
+            final url = raw.startsWith('http')
+                ? raw
+                : '${AppConfig.apiBaseUrl}/$raw';
+            buttons.add(
+              _AssetButton(
+                icon: Icons.table_chart,
+                label: AppLocalizations.of(context).lessonDataTable,
+                onPressed: () =>
+                    Navigator.push(context, AppRoutes.dataTable(url)),
+              ),
+            );
+          }
         } // end assets != null
 
         // ── Game button — domain-based, ALWAYS available (even with no assets) ──
@@ -942,7 +1003,9 @@ class _InteractiveAssetsSection extends ConsumerWidget {
               ),
             ),
           );
-        } else if (domain == 'islamic_parenting' || domain == 'aqeedah' || domain == 'islamic') {
+        } else if (domain == 'islamic_parenting' ||
+            domain == 'aqeedah' ||
+            domain == 'islamic') {
           buttons.add(
             _AssetButton(
               icon: Icons.nature_people,
@@ -980,8 +1043,8 @@ class _InteractiveAssetsSection extends ConsumerWidget {
                   child: Text(
                     AppLocalizations.of(context).lessonStartInteractive,
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                          fontWeight: FontWeight.w800,
-                        ),
+                      fontWeight: FontWeight.w800,
+                    ),
                   ),
                 ),
               ],
@@ -989,9 +1052,9 @@ class _InteractiveAssetsSection extends ConsumerWidget {
             const SizedBox(height: 4),
             Text(
               AppLocalizations.of(context).lessonInteractiveHint,
-              style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: AppTheme.textMuted,
-                  ),
+              style: Theme.of(
+                context,
+              ).textTheme.bodySmall?.copyWith(color: AppTheme.textMuted),
             ),
             // Asking for English and getting Arabic audio is expected while
             // English media is still being produced — but silence about it
@@ -1002,8 +1065,10 @@ class _InteractiveAssetsSection extends ConsumerWidget {
               const SizedBox(height: 10),
               Container(
                 width: double.infinity,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 10,
+                ),
                 decoration: BoxDecoration(
                   color: AppTheme.warningBg,
                   borderRadius: BorderRadius.circular(Dt.rButton),
@@ -1019,10 +1084,12 @@ class _InteractiveAssetsSection extends ConsumerWidget {
               ),
             ],
             const SizedBox(height: 10),
-            ...buttons.map((btn) => Padding(
-                  padding: const EdgeInsets.only(bottom: 8.0),
-                  child: btn,
-                )),
+            ...buttons.map(
+              (btn) => Padding(
+                padding: const EdgeInsets.only(bottom: 8.0),
+                child: btn,
+              ),
+            ),
           ],
         );
       },
@@ -1067,8 +1134,11 @@ class _VideoCard extends StatelessWidget {
                   shape: BoxShape.circle,
                   boxShadow: Dt.softShadow(AppTheme.primary),
                 ),
-                child: const Icon(Icons.play_arrow,
-                    color: Colors.white, size: 38),
+                child: const Icon(
+                  Icons.play_arrow,
+                  color: Colors.white,
+                  size: 38,
+                ),
               ),
             ),
             PositionedDirectional(
@@ -1136,4 +1206,3 @@ class _AssetButton extends StatelessWidget {
     );
   }
 }
-

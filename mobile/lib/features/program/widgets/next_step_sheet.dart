@@ -20,14 +20,17 @@ import '../../../theme/app_theme.dart';
 import '../../../theme/design_tokens.dart';
 import '../../../widgets/ui/bouncy_button.dart';
 import '../../../widgets/ui/brand_glyph.dart';
+import '../../companion/data/companion_store.dart';
 
-/// Shows the lesson's concrete action. Returns true when the parent
-/// acknowledged it, false when they dismissed the sheet instead.
-Future<bool> showNextStepSheet(
+/// Shows the lesson's concrete action and asks when the parent will try it
+/// («نور يتذكّر», حلقة الوعد). Returns the slot picked, or null when the
+/// sheet was dismissed instead. Noor asks back on the slot's due day.
+Future<PromiseSlot?> showNextStepSheet(
   BuildContext context, {
   required String tryThis,
+  required String childName,
 }) async {
-  final taken = await showModalBottomSheet<bool>(
+  return showModalBottomSheet<PromiseSlot>(
     context: context,
     isScrollControlled: true,
     showDragHandle: true,
@@ -35,15 +38,17 @@ Future<bool> showNextStepSheet(
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.vertical(top: Radius.circular(Dt.rSheet)),
     ),
-    builder: (ctx) => _NextStepSheet(tryThis: tryThis),
+    builder: (ctx) => _NextStepSheet(tryThis: tryThis, childName: childName),
   );
-  return taken ?? false;
 }
 
 class _NextStepSheet extends StatelessWidget {
-  const _NextStepSheet({required this.tryThis});
+  const _NextStepSheet({required this.tryThis, required this.childName});
 
   final String tryThis;
+
+  /// The child's name, or «طفلك» when it is still the default.
+  final String childName;
 
   @override
   Widget build(BuildContext context) {
@@ -102,11 +107,34 @@ class _NextStepSheet extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
-            BouncyButton(
-              label: l10n.lessonNextStepConfirm,
-              color: AppTheme.success,
-              icon: const Icon(Icons.check_rounded, color: Colors.white),
-              onTap: () => Navigator.of(context).pop(true),
+            Text(
+              l10n.promiseWhenTitle(childName),
+              style: TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.w700,
+                color: Dt.ink,
+              ),
+            ),
+            const SizedBox(height: 10),
+            // Three slots, not one «تمام»: the slot is the promise, and the
+            // promise is what Noor asks back about (plan §2, حلقة الوعد).
+            Row(
+              children: [
+                for (final (i, slot) in PromiseSlot.values.indexed) ...[
+                  if (i > 0) const SizedBox(width: 8),
+                  Expanded(
+                    child: BouncyButton(
+                      label: switch (slot) {
+                        PromiseSlot.tonight => l10n.promiseTonight,
+                        PromiseSlot.tomorrow => l10n.promiseTomorrow,
+                        PromiseSlot.week => l10n.promiseThisWeek,
+                      },
+                      color: i == 0 ? AppTheme.success : context.colors.primary,
+                      onTap: () => Navigator.of(context).pop(slot),
+                    ),
+                  ),
+                ],
+              ],
             ),
           ],
         ),

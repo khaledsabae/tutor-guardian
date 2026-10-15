@@ -171,3 +171,13 @@ def test_app_config_endpoint_is_public(client):
     assert "minimum_build_number" in data
     assert "store_url" in data
 
+
+
+def test_app_config_carries_the_noor_header_kill_switch(client, monkeypatch):
+    """«نور يتذكّر»: on by default; NOOR_HEADER_ENABLED=0 turns it off for
+    every installed build without a release."""
+    monkeypatch.delenv("NOOR_HEADER_ENABLED", raising=False)
+    assert client.get("/api/app-config").json()["noor_header_enabled"] is True
+    for off in ("0", "false", "OFF"):
+        monkeypatch.setenv("NOOR_HEADER_ENABLED", off)
+        assert client.get("/api/app-config").json()["noor_header_enabled"] is False

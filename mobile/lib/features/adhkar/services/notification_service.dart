@@ -569,6 +569,63 @@ class NotificationService {
         _ => AppL10n.current.notifWird6,
       };
 
+  /// Lesson promises («متى ستجرّبها مع …؟», phase 2) — one-shot reminders.
+  /// 5000–5049: clear of every other series (1000 adhkar, 2000/3000 retired,
+  /// 4000 wird). One slot per promise, reused round-robin; never a repeat.
+  static const _promiseBaseId = 5000;
+  static const _promiseSlots = 50;
+
+  /// When to remind for a promise made [now] with slot [slotWire], or null
+  /// for no reminder. «الليلة» → 20:30 today if still ahead (else none —
+  /// the evening has passed); «غدًا» → 18:30 tomorrow; «هذا الأسبوع» → none,
+  /// Noor asks on day seven. Pure so the rule is testable without a plugin.
+  @visibleForTesting
+  static DateTime? promiseReminderAt(DateTime now, String slotWire) {
+    switch (slotWire) {
+      case 'tonight':
+        final at = DateTime(now.year, now.month, now.day, 20, 30);
+        return at.isAfter(now.add(const Duration(minutes: 15))) ? at : null;
+      case 'tomorrow':
+        return DateTime(now.year, now.month, now.day + 1, 18, 30);
+      default:
+        return null;
+    }
+  }
+
+  /// Queue the reminder for promise [promiseId]. No child name on the lock
+  /// screen — the copy says «طفلك». Silently a no-op when the OS refuses.
+  Future<void> schedulePromiseReminder({
+    required int promiseId,
+    required String slotWire,
+    DateTime? now,
+  }) async {
+    final at = promiseReminderAt(now ?? DateTime.now(), slotWire);
+    if (at == null) return;
+    try {
+      await _ready();
+      const androidDetails = AndroidNotificationDetails(
+        'noor_promise_channel',
+        'تذكير نور',
+        channelDescription: 'تذكير واحد بالخطوة التي اخترت تجربتها',
+        importance: Importance.defaultImportance,
+        priority: Priority.defaultPriority,
+      );
+      await _plugin.zonedSchedule(
+        _promiseBaseId + promiseId % _promiseSlots,
+        AppL10n.current.promiseReminderTitle,
+        AppL10n.current.promiseReminderBody,
+        tz.TZDateTime.from(at, tz.local),
+        const NotificationDetails(android: androidDetails),
+        androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
+        uiLocalNotificationDateInterpretation:
+            UILocalNotificationDateInterpretation.absoluteTime,
+        payload: 'promise',
+      );
+    } catch (_) {
+      // A reminder is a courtesy; the promise itself is already kept.
+    }
+  }
+
   Future<void> _cancelWird() async {
     for (int i = 0; i < 30; i++) {
       await _plugin.cancel(_wirdBaseId + i);
