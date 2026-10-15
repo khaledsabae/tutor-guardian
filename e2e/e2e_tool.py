@@ -176,6 +176,10 @@ KEYS = [
     # sound × recitation (e2e/flows/rehearsal/sound_*.yaml): the Quran
     # reader's surah list and its bottom «استماع / إيقاف» pill.
     "holyQuran", "quranVerseCount", "quranListen", "quranStop",
+    # «درب {الاسم}» and «على الأفق» (عالم الأسرة): fresh/11 and the gallery's
+    # family_road shots — head builds only; the gallery guards its shots.
+    "familyRoadHorizon", "familyRoadHere", "familyRoadLit",
+    "familyRoadEntryBody",
 ]
 
 # Strings the app hardcodes outside the ARB files.
@@ -476,6 +480,8 @@ GALLERY_SCREENS = [
     ("stories_open", "القصص — أول ما تفتح قصة (قبل: بوابة الأذكار، بعد: صفحة نور)"),
     ("stories_page", "القصص — أول صفحة"),
     ("tour_mark", "الجولة — أول إشارة (قبل: v2 على «اليوم»، بعد: v3 على ①)"),
+    ("family_road", "«درب {الاسم}» — الأفق و«أنتم هنا»"),
+    ("family_road_lit", "«درب {الاسم}» — ما أضأتموه"),
 ]
 
 GALLERY_ONBOARDING = [
@@ -510,6 +516,10 @@ GALLERY_GUARDED = {
     # Last in shoot.yaml, through the settings replay row; never seen on an
     # emulator before it shipped, so a miss is a blank cell, not a red gate.
     "tour_mark",
+    # «عالم الأسرة»: the baseline has no road; and the lit part needs a lantern
+    # from /api/family/week.
+    "family_road",
+    "family_road_lit",
     # «القصص»: only the shelf is required. What a tap opens depends on which
     # book the baseline's carousel centres, and the first page is head-only.
     "stories_open",

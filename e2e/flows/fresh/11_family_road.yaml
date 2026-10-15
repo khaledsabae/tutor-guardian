@@ -1,0 +1,62 @@
+# Checkpoint 11 — «درب {الاسم}» and «على الأفق» (عالم الأسرة).
+#
+# Read-only: it opens screens and taps nothing that writes.
+# «تعلّم» → the road's entry row at the top of the paths → the road opens on
+# the horizon («على الأفق») with «أنتم هنا» below it → back. Then, when Today
+# shows the «على الأفق» strip on its hills (a server with a dated gate — the
+# Ramadan estimate is one until the season — and the strip's switch on), the
+# strip opens the same road.
+appId: com.alsaba.almorabbi
+name: fresh/11 Family road
+---
+- runScript: ../common/l10n.js
+- runFlow: ../common/home.yaml
+- tapOn: '${output.lead.navLearn}'
+- extendedWaitUntil:
+    visible: '${output.t.pathsTitle}'
+    timeout: 30000
+- extendedWaitUntil:
+    visible: '${output.c.familyRoadEntryBody}'
+    timeout: 30000
+- tapOn: '${output.c.familyRoadEntryBody}'
+- extendedWaitUntil:
+    visible: '${output.c.familyRoadHorizon}'
+    timeout: 30000
+- assertNotVisible: '${output.c.lit_errorWidget}'
+- waitForAnimationToEnd:
+    timeout: 3000
+- takeScreenshot: family_road_1_horizon
+- scrollUntilVisible:
+    element:
+      text: '${output.c.familyRoadHere}'
+    direction: DOWN
+    timeout: 20000
+- assertNotVisible: '${output.c.lit_errorWidget}'
+- takeScreenshot: family_road_2_here
+- back
+- runFlow: ../common/home.yaml
+- scrollUntilVisible:
+    element:
+      text: '${output.c.familyRoadHorizon}'
+    direction: UP
+    timeout: 10000
+    optional: true
+- runFlow:
+    when:
+      visible: '${output.c.familyRoadHorizon}'
+    commands:
+      - takeScreenshot: family_road_3_strip
+      # The strip is its own semantics node (run 38754954265: merged into
+      # the sky band, its centre was Noor's bubble and the tap opened
+      # nothing). «أنتم هنا» is only on the road, never on Today.
+      - tapOn: '${output.c.familyRoadHorizon}'
+      - waitForAnimationToEnd:
+          timeout: 3000
+      - scrollUntilVisible:
+          element:
+            text: '${output.c.familyRoadHere}'
+          direction: DOWN
+          timeout: 20000
+      - assertNotVisible: '${output.c.lit_errorWidget}'
+      - back
+- runFlow: ../common/home.yaml

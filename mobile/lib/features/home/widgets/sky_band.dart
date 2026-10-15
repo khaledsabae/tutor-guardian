@@ -10,6 +10,15 @@
 /// hills, no crescent of its own (the crescent in that sky is Noor), and
 /// never by day.
 ///
+/// In the three quiet seasons («سماوات المواسم», عالم الأسرة) every sky of
+/// the day carries one paper touch more, from the server's `hijri_season`,
+/// all of it along the top edge — the bottom may hold the «على الأفق» strip:
+/// Rajab hangs three small eight-point paper stars, Sha'ban strings paper
+/// bunting overhead (the street getting ready), and the first days of Dhu
+/// al-Hijjah send three small paper birds across the sky, with a row of
+/// white tents on the far hill when nothing covers it. Never two at once,
+/// never with the Ramadan string, and never a word.
+///
 /// Decoration only. Every word on it sits in Noor's bubble on the surface
 /// colour, so the sky never carries text and its contrast never matters to
 /// reading.
@@ -18,6 +27,8 @@ library;
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+
+import '../../programs/data/programs_models.dart' show HijriSeasonMonth;
 
 enum SkyTime { dawn, day, maghrib, night }
 
@@ -146,6 +157,28 @@ const _lanterns = <double>[.1, .3, .5, .7, .9];
 /// At most this many lanterns on the Ramadan string.
 const kMaxSkyLanterns = 5;
 
+/// Rajab's paper stars, Sha'ban's flags and Dhu al-Hijjah's tents: at most
+/// this many marks of one season in one sky.
+const kMaxSeasonMarks = 9;
+
+/// Where Rajab's stars hang, as fractions of the width — clear of the sun's
+/// corner at both ends.
+const _rajabStarXs = <double>[.3, .5, .7];
+
+/// Sha'ban's bunting: this many flags across the band.
+const _shabanFlags = 9;
+
+/// Dhu al-Hijjah's tents on the far hill, as fractions of the width.
+const _hijjahTents = <double>[.16, .24, .32, .4];
+
+/// Dhu al-Hijjah's birds: (x as a fraction of the width, y, size), toward the
+/// middle of the band, clear of the sun's corner.
+const _hijjahBirds = <(double, double, double)>[
+  (.42, 8, 6),
+  (.5, 12, 5),
+  (.58, 7, 5.5),
+];
+
 /// Whether [time]'s sky takes the Ramadan skin: maghrib and night only.
 bool skyTakesRamadanSkin(SkyTime time) =>
     time == SkyTime.maghrib || time == SkyTime.night;
@@ -157,9 +190,19 @@ class SkyBand extends StatelessWidget {
     required this.child,
     this.now,
     this.ramadan = false,
+    this.season,
+    this.footer,
   });
 
   final Widget child;
+
+  /// The server's `hijri_season`, when today is in one of the three — every
+  /// sky of the day takes its quiet paper touch. Ignored in Ramadan.
+  final HijriSeasonMonth? season;
+
+  /// A slim line laid on the hills under [child] («على الأفق»). It takes the
+  /// band's bottom margin, so the band grows by little more than the line.
+  final Widget? footer;
 
   /// Defaults to the device's local time; tests pin it.
   final DateTime? now;
@@ -180,11 +223,21 @@ class SkyBand extends StatelessWidget {
           time: time,
           textDirection: Directionality.of(context),
           ramadan: ramadan,
+          season: ramadan ? null : season,
         ),
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(12, 18, 12, 34),
-          child: child,
-        ),
+        child: footer == null
+            ? Padding(
+                padding: const EdgeInsets.fromLTRB(12, 18, 12, 34),
+                child: child,
+              )
+            : Padding(
+                padding: const EdgeInsets.fromLTRB(12, 18, 12, 10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [child, const SizedBox(height: 12), footer!],
+                ),
+              ),
       ),
     );
   }
@@ -196,12 +249,18 @@ class SkyPainter extends CustomPainter {
     required this.time,
     required this.textDirection,
     this.ramadan = false,
+    this.season,
   });
 
   final SkyPaper paper;
   final SkyTime time;
   final TextDirection textDirection;
   final bool ramadan;
+  final HijriSeasonMonth? season;
+
+  /// Season marks painted on the last [paint] (stars, flags or tents) — the
+  /// test holds «one season at a time, never in Ramadan».
+  int seasonMarksPainted = 0;
 
   /// Stars painted on the last [paint] — exposed for the test that holds the
   /// «twelve at most, night only» rule.
@@ -246,18 +305,185 @@ class SkyPainter extends CustomPainter {
       canvas.drawCircle(c, r, Paint()..color = sun);
     }
 
+    seasonMarksPainted = 0;
+    final season = ramadan ? null : this.season;
+    if (season == HijriSeasonMonth.rajab) {
+      _rajabStars(canvas, size);
+    }
+
     // Two paper hills, each a little shadow on the layer behind it.
-    final far = _hill(size, base: h - 20, amp: 9, phase: rtl ? .9 : .1);
+    final farPhase = rtl ? .9 : .1;
+    final far = _hill(size, base: h - 20, amp: 9, phase: farPhase);
     final near = _hill(size, base: h - 9, amp: 6, phase: rtl ? .25 : .7);
     canvas.drawPath(far.shift(const Offset(0, -2)), Paint()..color = _shadow);
     canvas.drawPath(far, Paint()..color = paper.farHill);
+    if (season == HijriSeasonMonth.dhulHijjah) {
+      // On the far hill, in front of it and behind the near one.
+      _tents(canvas, size, farPhase: farPhase, rtl: rtl);
+    }
     canvas.drawPath(near.shift(const Offset(0, -2)), Paint()..color = _shadow);
     canvas.drawPath(near, Paint()..color = paper.nearHill);
+
+    if (season == HijriSeasonMonth.shaban) {
+      _bunting(canvas, size, sun: sun != null && paper.sunHigh ? endX(34) : null);
+    }
+    if (season == HijriSeasonMonth.dhulHijjah) {
+      _birds(canvas, size, rtl: rtl);
+    }
 
     lanternsPainted = 0;
     if (ramadan && skyTakesRamadanSkin(time)) {
       _lanternString(canvas, size, sun: sun == null ? null : endX(64));
     }
+  }
+
+  bool get _darkSky => paper.sky.computeLuminance() < .2;
+
+  /// Rajab: three small eight-point paper stars on short threads from the
+  /// top edge, above the bubble — ivory on a dark sky, emerald on a pale one.
+  void _rajabStars(Canvas canvas, Size size) {
+    final w = size.width;
+    final dark = _darkSky;
+    final fill = Paint()
+      ..color = dark ? const Color(0xFFFBF1DE) : const Color(0xFF12806D);
+    final shade = Paint()
+      ..color = dark ? const Color(0xFF062B26) : _shadow;
+    final thread = Paint()
+      ..strokeWidth = 1
+      ..color = dark ? const Color(0xFFEADBC0) : const Color(0xFF0D6A5A);
+    for (final (i, fx) in _rajabStarXs.indexed) {
+      if (seasonMarksPainted >= kMaxSeasonMarks) break;
+      final x = fx * w;
+      // The middle star hangs a little lower: a garland, not a ruler.
+      final cy = i == 1 ? 11.0 : 9.0;
+      canvas.drawLine(Offset(x, 0), Offset(x, cy - 5), thread);
+      final star = _eightPoint(Offset(x, cy), 5.2);
+      canvas
+        ..drawPath(star.shift(const Offset(1, 1.4)), shade)
+        ..drawPath(star, fill);
+      seasonMarksPainted++;
+    }
+  }
+
+  /// Sha'ban: paper bunting on a thread hung overhead along the top edge —
+  /// small flags, ivory and coral (emerald and coral on a pale sky), no glow,
+  /// none in front of a high sun.
+  void _bunting(Canvas canvas, Size size, {double? sun}) {
+    final w = size.width;
+    final dark = _darkSky;
+    const swags = 3;
+    const sag = 5.0;
+    final span = w / swags;
+    double ropeY(double x) {
+      final t = (x % span) / span;
+      return 1 + sag * 4 * t * (1 - t);
+    }
+
+    final rope = Path()..moveTo(0, 1);
+    for (var i = 1; i <= 60; i++) {
+      final x = w * i / 60;
+      rope.lineTo(x, i % 20 == 0 ? 1 : ropeY(x));
+    }
+    canvas.drawPath(
+      rope,
+      Paint()
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 1.1
+        ..color = dark ? const Color(0xFFEADBC0) : const Color(0xFF0D6A5A),
+    );
+    final a = Paint()
+      ..color = dark ? const Color(0xFFFBF1DE) : const Color(0xFF12806D);
+    final b = Paint()..color = const Color(0xFFF4A492);
+    final shade = Paint()..color = dark ? const Color(0xFF062B26) : _shadow;
+    for (var i = 0; i < _shabanFlags; i++) {
+      if (seasonMarksPainted >= kMaxSeasonMarks) break;
+      final x = w * (i + .5) / _shabanFlags;
+      if (sun != null && (x - sun).abs() < 30) continue;
+      final y = ropeY(x);
+      final flag = Path()
+        ..moveTo(x - 5, y)
+        ..lineTo(x + 5, y)
+        ..lineTo(x, y + 9)
+        ..close();
+      canvas
+        ..drawPath(flag.shift(const Offset(1, 1.4)), shade)
+        ..drawPath(flag, i.isEven ? a : b);
+      seasonMarksPainted++;
+    }
+  }
+
+  /// Dhu al-Hijjah: three small paper birds high in the sky, flying away
+  /// from Noor's side — travellers, not a flock.
+  void _birds(Canvas canvas, Size size, {required bool rtl}) {
+    final w = size.width;
+    final dark = _darkSky;
+    final fill = Paint()
+      ..color = dark ? const Color(0xFFFBF1DE) : const Color(0xFF0D6A5A);
+    final shade = Paint()..color = dark ? const Color(0xFF062B26) : _shadow;
+    for (final (fx, y, r) in _hijjahBirds) {
+      if (seasonMarksPainted >= kMaxSeasonMarks) break;
+      final x = (rtl ? 1 - fx : fx) * w;
+      // Two paper wings meeting at the body, the tips raised.
+      final bird = Path()
+        ..moveTo(x - r, y - r * .45)
+        ..quadraticBezierTo(x - r * .45, y - r * .2, x, y + r * .25)
+        ..quadraticBezierTo(x + r * .45, y - r * .2, x + r, y - r * .45)
+        ..quadraticBezierTo(x + r * .4, y + r * .15, x, y + r * .6)
+        ..quadraticBezierTo(x - r * .4, y + r * .15, x - r, y - r * .45)
+        ..close();
+      canvas
+        ..drawPath(bird.shift(const Offset(1, 1.2)), shade)
+        ..drawPath(bird, fill);
+      seasonMarksPainted++;
+    }
+  }
+
+  /// Dhu al-Hijjah: a row of small white paper tents standing on the far
+  /// hill, toward Noor's side (the sun keeps the far corner).
+  void _tents(
+    Canvas canvas,
+    Size size, {
+    required double farPhase,
+    required bool rtl,
+  }) {
+    final w = size.width, h = size.height;
+    double hillY(double x) =>
+        h - 20 - 9 * math.sin((x / w + farPhase) * math.pi * 2);
+    final cloth = Paint()..color = const Color(0xFFFBF1DE);
+    final shade = Paint()..color = _darkSky ? const Color(0xFF062B26) : _shadow;
+    final door = Paint()..color = const Color(0xFFD9C7A7);
+    for (final fx in _hijjahTents) {
+      if (seasonMarksPainted >= kMaxSeasonMarks) break;
+      final x = (rtl ? 1 - fx : fx) * w;
+      final base = hillY(x) + 2;
+      final tent = Path()
+        ..moveTo(x - 7, base)
+        ..lineTo(x, base - 10)
+        ..lineTo(x + 7, base)
+        ..close();
+      final flap = Path()
+        ..moveTo(x - 1.6, base)
+        ..lineTo(x, base - 5)
+        ..lineTo(x + 1.6, base)
+        ..close();
+      canvas
+        ..drawPath(tent.shift(const Offset(1, 1.4)), shade)
+        ..drawPath(tent, cloth)
+        ..drawPath(flap, door);
+      seasonMarksPainted++;
+    }
+  }
+
+  /// The eight-point star of STYLE.md: two squares, one turned 45°.
+  Path _eightPoint(Offset c, double r) {
+    final p = Path();
+    for (var i = 0; i < 16; i++) {
+      final a = -math.pi / 2 + i * math.pi / 8;
+      final rr = i.isEven ? r : r * .62;
+      final pt = Offset(c.dx + rr * math.cos(a), c.dy + rr * math.sin(a));
+      i == 0 ? p.moveTo(pt.dx, pt.dy) : p.lineTo(pt.dx, pt.dy);
+    }
+    return p..close();
   }
 
   /// The Ramadan string: five shallow swags of thread across the horizon,
@@ -375,5 +601,6 @@ class SkyPainter extends CustomPainter {
       old.paper != paper ||
       old.time != time ||
       old.textDirection != textDirection ||
-      old.ramadan != ramadan;
+      old.ramadan != ramadan ||
+      old.season != season;
 }

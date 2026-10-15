@@ -19,6 +19,7 @@ from typing import Any, Optional
 from fastapi import APIRouter, HTTPException, Query, Request
 from pydantic import BaseModel, Field
 
+from app.services import hijri_seasons as hs
 from app.services import milestones as ms
 from app.services import prayer_journey as pj
 from app.services import programs_common as pc
@@ -153,6 +154,10 @@ def programs_overview(request: Request, lang: Optional[str] = Query(None),
             "recap_available": bool(where.get("season") is not None
                                     and today >= where["season"].eid),
         },
+        # «سماوات المواسم» (additive): rajab · shaban · dhul_hijjah, or null —
+        # worked out from the same family seasons as `ramadan`, so the sky and
+        # the Ramadan street never disagree. Decoration only; no text.
+        "hijri_season": hs.locate(today, seasons) if ramadan else None,
         "children": children,
     }
 

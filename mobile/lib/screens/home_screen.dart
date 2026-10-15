@@ -47,6 +47,8 @@ import '../features/home/widgets/today_ask_block.dart';
 import '../features/home/widgets/today_child_block.dart';
 import '../features/home/widgets/today_loop_cards.dart';
 import '../features/home/widgets/today_rituals_row.dart';
+import '../features/family_road/providers/family_road_providers.dart';
+import '../features/family_road/widgets/horizon_strip.dart';
 import '../features/home/widgets/sky_band.dart';
 import '../features/home/widgets/today_road.dart';
 import '../features/home/widgets/today_section.dart';
@@ -142,6 +144,16 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         ref.watch(programsOverviewProvider).valueOrNull?.ramadan.state ==
         RamadanState.ramadan;
     final stops = ref.watch(todayStopsProvider);
+    // «سماوات المواسم» and «على الأفق» (عالم الأسرة): the season's paper
+    // touch in the sky, and the nearest gate of the family road on its hills.
+    final season = ref.watch(skySeasonProvider);
+    final horizon = ref.watch(horizonStripGateProvider);
+    // At large text the strip wraps and would push ①'s button below the fold
+    // (CI run 38754954265, 200% on a 411dp phone) — the button that took
+    // lesson_opened/child_added from 39% to 54% wins: the strip then waits
+    // under the road instead of on the hills.
+    final largeText = MediaQuery.textScalerOf(context).scale(10) > 13;
+    final stripOnHills = horizon != null && !largeText;
     // Time-aware, and honest on day one («النصوص»): the hour picks صباح/مساء,
     // and a first-day streak (≤1) drops the «مستمرة» — nothing has continued
     // yet.
@@ -243,6 +255,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               // skies hang a quiet lantern string — the server's state, so
               // the family's own sighting decides the first night too.
               ramadan: inRamadan,
+              season: season,
+              footer: stripOnHills ? HorizonStrip(gate: horizon) : null,
               child: NoorTodayHeader(fallback: _SkyGreeting(text: greeting)),
             )
           else
@@ -298,6 +312,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           // not a fourth numbered stop, so it has no section header. It renders
           // nothing while loading, on any failure, and on a server without the
           // programs (`GET /api/programs` → 404).
+          if (noorOn && horizon != null && !stripOnHills)
+            Padding(
+              padding: const EdgeInsets.only(bottom: 16),
+              child: HorizonStrip(gate: horizon),
+            ),
           const ProgramsHomeCard(),
 
           // ── Everything else. Every destination below is also in «المزيد». ──

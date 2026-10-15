@@ -75,6 +75,7 @@ import '../features/program/screens/settings_screen.dart';
 import '../features/program/screens/story_bookshelf_screen.dart';
 import '../features/program/screens/story_reader_screen.dart';
 import '../features/program/screens/video_player_screen.dart';
+import '../features/family_road/screens/family_road_screen.dart';
 import '../features/programs/screens/fasting_ladder_screen.dart';
 import '../features/programs/screens/milestones_screen.dart';
 import '../features/programs/screens/prayer_journey_screen.dart';
@@ -187,6 +188,9 @@ abstract final class Screens {
   static const prayerJourney = 'prayer_journey';
   static const milestones = 'milestones';
   static const milestoneDetail = 'milestone_detail';
+
+  // «عالم الأسرة»
+  static const familyRoad = 'family_road';
 
   // Account & meta
   static const settings = 'settings';
@@ -569,6 +573,11 @@ abstract final class AppRoutes {
         Screens.milestoneDetail,
         (_) => MilestoneDetailScreen(childId: childId, milestoneKey: milestoneKey),
       );
+
+  /// «درب {الاسم}» — the family road (عالم الأسرة). [from] is GA4's
+  /// `family_road_opened.from`: today_strip · learn_tab · noor.
+  static Route<void> familyRoad({String from = 'unknown'}) =>
+      _r(Screens.familyRoad, (_) => FamilyRoadScreen(from: from));
 
   // ── Account & meta ──────────────────────────────────────────────────────
   static Route<void> settings() =>

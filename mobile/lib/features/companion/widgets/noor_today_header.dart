@@ -226,6 +226,11 @@ class _NoorTodayHeaderState extends ConsumerState<NoorTodayHeader> {
         _ => l10n.noorRamadan1,
       },
       CompanionKind.ramadanStart => l10n.noorRamadanStart(name),
+      CompanionKind.seasonStart => switch (line.season) {
+        'rajab' => l10n.noorSeasonRajab,
+        'shaban' => l10n.noorSeasonShaban,
+        _ => l10n.noorSeasonDhulHijjah,
+      },
       CompanionKind.mondayPlan => l10n.noorMondayPlan(name),
       CompanionKind.prayerAdvance => l10n.noorPrayerAdvance(name),
       CompanionKind.prayerInvite => l10n.noorPrayerInvite(name),
@@ -292,6 +297,7 @@ class _NoorTodayHeaderState extends ConsumerState<NoorTodayHeader> {
     CompanionAction.openChildJourney => l10n.noorChipChildJourney,
     CompanionAction.editChild => l10n.noorChipAddBirthMonth,
     CompanionAction.openHarvest => l10n.noorChipHarvest,
+    CompanionAction.openFamilyRoad => l10n.noorChipFamilyRoad,
   };
 
   NoorFaceState _face(CompanionMood m) => switch (m) {
@@ -360,6 +366,8 @@ class _NoorTodayHeaderState extends ConsumerState<NoorTodayHeader> {
           ref.invalidate(programsOverviewProvider);
           ref.invalidate(childrenListProvider);
         }
+      case CompanionAction.openFamilyRoad:
+        await Navigator.of(context).push(AppRoutes.familyRoad(from: 'noor'));
       case CompanionAction.openHarvest:
         final week = ref.read(familyWeekProvider).valueOrNull;
         if (week != null) {
