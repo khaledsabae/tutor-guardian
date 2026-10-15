@@ -146,9 +146,10 @@ def main():
         item.pop("priority", None)
 
     print(f"[DPO] Valid formatted DPO pairs: {len(formatted_rows)}", flush=True)
-    eval_size = min(48, max(16, len(formatted_rows) // 20))
+    eval_size = 24
+    max_train_pairs = 320  # 40 steps * batch_size 8 (100% utilized, zero wasted ref precomputation)
     eval_rows = formatted_rows[:eval_size]
-    train_rows = formatted_rows[eval_size:]
+    train_rows = formatted_rows[eval_size : eval_size + max_train_pairs]
     train_ds = Dataset.from_list(train_rows)
     eval_ds = Dataset.from_list(eval_rows)
     print(f"[DPO] Train pairs: {len(train_ds)} | Eval pairs: {len(eval_ds)}", flush=True)
@@ -173,23 +174,43 @@ def main():
         trust_remote_code=True,
     )
     base_model.config.use_cache = False
+    base_model.config.torch_dtype = torch.float16
 
-    dpo_sig = inspect.signature(DPOConfig.__init__).parameters
-    supports_dual_adapter = "model_adapter_name" in dpo_sig and "ref_adapter_name" in dpo_sig
+    valid_dpo_fields = set(getattr(DPOConfig, "__dataclass_fields__", {}).keys()) | set(
+        inspect.signature(DPOConfig.__init__).parameters.keys()
+    )
+    print(f"[DPO] Detected {len(valid_dpo_fields)} DPOConfig fields.", flush=True)
 
-    if supports_dual_adapter:
-        print("[DPO] Loading dual adapters ('dpo' trainable + 'ref' frozen SFT reference)...", flush=True)
-        model = PeftModel.from_pretrained(
-            base_model, str(sft_lora_dir), is_trainable=True, adapter_name="dpo"
-        )
-        model.load_adapter(str(sft_lora_dir), adapter_name="ref", is_trainable=False)
-        model.set_adapter("dpo")
-    else:
-        print("[DPO] Loading trainable SFT LoRA adapter with precomputed reference logprobs...", flush=True)
-        model = PeftModel.from_pretrained(base_model, str(sft_lora_dir), is_trainable=True)
+    print("[DPO] Loading trainable SFT LoRA adapter with precomputed reference logprobs...", flush=True)
+    model = PeftModel.from_pretrained(
+        base_model, str(sft_lora_dir), is_trainable=True, torch_dtype=torch.float16
+    )
+
+    # Critical for PyTorch AMP GradScaler on T4 (fp16=True):
+    # Trainable LoRA weights MUST be float32, and no bfloat16 tensors may remain.
+    bf16_fixed = 0
+    trainable_fp32 = 0
+    for _, param in model.named_parameters():
+        if param.requires_grad:
+            param.data = param.data.to(torch.float32)
+            trainable_fp32 += 1
+        elif param.dtype == torch.bfloat16:
+            param.data = param.data.to(torch.float16)
+            bf16_fixed += 1
+    for _, buf in model.named_buffers():
+        if buf.dtype == torch.bfloat16:
+            buf.data = buf.data.to(torch.float16)
+            bf16_fixed += 1
+    print(
+        f"[DPO] Cast {trainable_fp32} trainable LoRA tensors to float32 and {bf16_fixed} bf16 tensors to float16.",
+        flush=True,
+    )
+
+    if hasattr(model, "enable_input_require_grads"):
+        model.enable_input_require_grads()
 
     out_dir = Path("/kaggle/working/dpo_checkpoints")
-    cfg_kwargs = dict(
+    raw_cfg = dict(
         output_dir=str(out_dir),
         beta=0.1,
         learning_rate=5e-6,
@@ -198,32 +219,30 @@ def main():
         per_device_train_batch_size=1,
         per_device_eval_batch_size=1,
         gradient_accumulation_steps=8,
-        max_steps=85,
+        max_steps=40,
         logging_steps=5,
         save_strategy="steps",
-        save_steps=40,
+        save_steps=20,
         fp16=True,
+        bf16=False,
         optim="paged_adamw_8bit",
         gradient_checkpointing=True,
+        gradient_checkpointing_kwargs={"use_reentrant": False},
         max_length=768,
-        max_prompt_length=256,
+        precompute_ref_log_probs=True,
         remove_unused_columns=False,
         report_to="none",
         seed=42,
     )
-    if "eval_strategy" in dpo_sig:
-        cfg_kwargs["eval_strategy"] = "steps"
-        cfg_kwargs["eval_steps"] = 40
-    elif "evaluation_strategy" in dpo_sig:
-        cfg_kwargs["evaluation_strategy"] = "steps"
-        cfg_kwargs["eval_steps"] = 40
+    if "eval_strategy" in valid_dpo_fields:
+        raw_cfg["eval_strategy"] = "steps"
+        raw_cfg["eval_steps"] = 20
+    elif "evaluation_strategy" in valid_dpo_fields:
+        raw_cfg["evaluation_strategy"] = "steps"
+        raw_cfg["eval_steps"] = 20
 
-    if supports_dual_adapter:
-        cfg_kwargs["model_adapter_name"] = "dpo"
-        cfg_kwargs["ref_adapter_name"] = "ref"
-    elif "precompute_ref_log_probs" in dpo_sig:
-        cfg_kwargs["precompute_ref_log_probs"] = True
-
+    cfg_kwargs = {k: v for k, v in raw_cfg.items() if k in valid_dpo_fields}
+    print(f"[DPO] Active DPOConfig keys: {sorted(cfg_kwargs.keys())}", flush=True)
     dpo_args = DPOConfig(**cfg_kwargs)
 
     trainer_sig = inspect.signature(DPOTrainer.__init__).parameters
@@ -240,7 +259,13 @@ def main():
         trainer_kwargs["tokenizer"] = tokenizer
 
     trainer = DPOTrainer(**trainer_kwargs)
-    print("[DPO] Starting DPO training (85 steps, batch_size=8, beta=0.1, lr=5e-6)...", flush=True)
+    for _, param in trainer.model.named_parameters():
+        if param.requires_grad and param.dtype != torch.float32:
+            param.data = param.data.to(torch.float32)
+        elif not param.requires_grad and param.dtype == torch.bfloat16:
+            param.data = param.data.to(torch.float16)
+
+    print("[DPO] Starting DPO training (40 steps, batch_size=8, beta=0.1, lr=5e-6)...", flush=True)
     train_res = trainer.train()
     print(f"[DPO] Training finished! Metrics: {train_res.metrics}", flush=True)
 
@@ -249,8 +274,9 @@ def main():
 
     final_dir = Path("/kaggle/working/tg_tutor_v6_dpo_lora")
     final_dir.mkdir(parents=True, exist_ok=True)
-    if supports_dual_adapter:
-        model.set_adapter("dpo")
+    for _, param in model.named_parameters():
+        if param.requires_grad:
+            param.data = param.data.to(torch.float16)
     model.save_pretrained(str(final_dir))
     tokenizer.save_pretrained(str(final_dir))
 
