@@ -40,10 +40,7 @@ import '../models/lesson_assets.dart';
 import '../providers/lesson_assets_provider.dart';
 import '../providers/favorites_provider.dart';
 import '../widgets/next_step_sheet.dart';
-import '../../adhkar/services/notification_service.dart';
 import '../../child_memory/data/placeholder_names.dart';
-import '../../child_memory/providers/memory_providers.dart';
-import '../../companion/data/companion_store.dart';
 import '../../companion/providers/companion_providers.dart';
 import '../../onboarding/providers/onboarding_providers.dart';
 import '../../../config/app_config.dart';
@@ -116,34 +113,6 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
     return (n: n, total: total > 0 ? total : n, path: path?.title ?? '');
   }
 
-  /// «متى ستجرّبها مع …؟» answered: keep the promise on the device, queue
-  /// one gentle reminder, and ask the server to follow it up (a 409 or a
-  /// failure leaves the device promise standing — Noor asks either way).
-  Future<void> _keepPromise(int childId, String step, PromiseSlot slot) async {
-    unawaited(Analytics.nextStepCommitted(when: slot.wire));
-    final mem = ref.read(companionMemoryProvider.notifier);
-    final repo = ref.read(memoryRepositoryProvider);
-    try {
-      final p = await mem.addPromise(
-        childId: childId,
-        step: step,
-        slot: slot,
-        lessonId: widget.lessonId,
-      );
-      unawaited(
-        NotificationService.instance.schedulePromiseReminder(
-          promiseId: p.id,
-          slotWire: slot.wire,
-        ),
-      );
-      final fid = await repo.openPromise(childId, step: step, when: slot.wire);
-      if (fid != null) await mem.linkFollowup(p.id, fid);
-    } catch (_) {
-      // The lesson is done either way; a lost promise must never surface as
-      // an error on the parent's best moment.
-    }
-  }
-
   Future<void> _markComplete() async {
     final childId = _childId;
     if (childId == null) return;
@@ -209,7 +178,16 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
           );
           committed = slot != null;
           if (slot != null) {
-            unawaited(_keepPromise(childId, tryThis, slot));
+            unawaited(
+              ref
+                  .read(companionMemoryProvider.notifier)
+                  .keepPromise(
+                    childId: childId,
+                    step: tryThis,
+                    slot: slot,
+                    lessonId: widget.lessonId,
+                  ),
+            );
             if (mounted) {
               ScaffoldMessenger.of(
                 context,

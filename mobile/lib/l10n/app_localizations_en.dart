@@ -6053,4 +6053,19 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get noorChipAddBirthMonth => 'Add birth month';
+
+  @override
+  String chatTryWith(String name) {
+    return 'I\'ll try it with $name';
+  }
+
+  @override
+  String get chatTryWithMyChild => 'I\'ll try it with my child';
+
+  @override
+  String get chatTryTitle => 'Your step from this answer';
+
+  @override
+  String get chatTryIntro =>
+      'I picked one step from the answer for you to start with.';
 }

@@ -285,3 +285,77 @@ String renderMemoryText(
             subjectId: subjectId,
             lang: lang)
         .text;
+
+/// The server's placeholder for the child a text is about (`CHILD_PLACEHOLDER`
+/// in backend/app/services/privacy.py) — Arabic in every language.
+const String childPlaceholder = 'طفلي';
+
+/// [text] with every whole-word use of a family name replaced by the
+/// placeholder the server stores in its place: [childPlaceholder] for
+/// [subjectId] (and for an only child), «الطفل أ», «الطفل ب»… for siblings by
+/// [placeholderOrder].
+///
+/// For text the app did not render from placeholders — an answer's step on
+/// its way into a promise — so there is no record of inserted spans to
+/// [RenderedMemoryText.restore]. Strict like the server's memory redaction:
+/// «نور» goes wherever it stands as a word, harakat and alef/ta marbuta/ya
+/// spellings folded, an attached و/ف then ب/ل/ك kept in front. Default names
+/// and one-letter names are left alone. The server redacts again; this is so
+/// the name never leaves the phone in the first place.
+String redactFamilyNames(
+  String text, {
+  required List<FamilyMember> family,
+  int? subjectId,
+}) {
+  final ordered = placeholderOrder(family);
+  final named = [
+    for (var i = 0; i < ordered.length; i++)
+      if (!isDefaultChildName(ordered[i].name))
+        (
+          name: ordered[i].name,
+          placeholder: ordered.length <= 1 || ordered[i].id == subjectId
+              ? childPlaceholder
+              : 'الطفل ${i < siblingLetters.length ? siblingLetters[i] : '${i + 1}'}',
+        ),
+  ]..sort((a, b) => b.name.length.compareTo(a.name.length)); // «عبد الرحمن» before «عبد»
+  var out = text;
+  for (final n in named) {
+    out = out.replaceAllMapped(
+      _namePattern(n.name),
+      (m) => '${m.group(1) ?? ''}${n.placeholder}',
+    );
+  }
+  return out;
+}
+
+final RegExp _arabicLetter = RegExp('[ء-يٮ-ۓ]');
+
+/// A name as a whole word, spelled any of the ways the server folds together.
+RegExp _namePattern(String name) {
+  const marks = '[ً-ْٰـ]*';
+  final parts = <String>[];
+  for (final ch in name.trim().replaceAll(_tashkeel, '').split('')) {
+    if (RegExp(r'\s').hasMatch(ch)) {
+      if (parts.isEmpty || parts.last != r'\s+') parts.add(r'\s+');
+      continue;
+    }
+    parts.add(switch (ch) {
+      'ا' || 'أ' || 'إ' || 'آ' || 'ٱ' => '[اأإآٱ]',
+      'ة' || 'ه' => '[ةه]',
+      'ى' || 'ي' || 'ئ' => '[ىيئ]',
+      'ؤ' || 'و' => '[ؤو]',
+      _ => RegExp.escape(ch),
+    });
+  }
+  // Marks may also trail the name («أحمدُ») — part of the word, not after it.
+  final body = '${parts.join(marks)}$marks';
+  final arabic = _arabicLetter.hasMatch(name);
+  // Before the name: no letter (or an attached و/ف then ب/ل/ك); after: no
+  // letter and no mark — «أحمدي» is another word.
+  final prefix = arabic ? '([وف]?[بلك]?)' : '()';
+  return RegExp(
+    '(?<![\\p{L}\\p{M}])$prefix$body(?![\\p{L}\\p{M}])',
+    unicode: true,
+    caseSensitive: false,
+  );
+}

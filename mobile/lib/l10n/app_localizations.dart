@@ -10267,6 +10267,30 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'أضف شهر الميلاد'**
   String get noorChipAddBirthMonth;
+
+  /// Chip under the latest assistant answer, in the parent's voice: keep one step from the answer as a promise. {name} is the active child's real name.
+  ///
+  /// In ar, this message translates to:
+  /// **'سأجرّبها مع {name}'**
+  String chatTryWith(String name);
+
+  /// The same chip while the child still has the default name — the parent speaks, so «طفلي», not «طفلك».
+  ///
+  /// In ar, this message translates to:
+  /// **'سأجرّبها مع طفلي'**
+  String get chatTryWithMyChild;
+
+  /// Title of the slot sheet opened from an answer's chip.
+  ///
+  /// In ar, this message translates to:
+  /// **'خطوتك من هذه الإجابة'**
+  String get chatTryTitle;
+
+  /// Noor, first person, under the sheet title: the step shown is the first one in the answer.
+  ///
+  /// In ar, this message translates to:
+  /// **'اخترتُ لك من الإجابة خطوةً واحدة تبدأ بها.'**
+  String get chatTryIntro;
 }
 
 class _AppLocalizationsDelegate

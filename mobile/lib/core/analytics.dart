@@ -238,11 +238,13 @@ class Analytics {
   static Future<void> praiseSent(String ageBand) =>
       _log('praise_sent', {'age_band': ageBand});
 
-  /// The parent committed to the lesson's one doable step («تمام، سأفعلها»).
-  /// `when` is the slot they chose; the sheet offers only tonight until the
-  /// promise loop (phase 2) adds tomorrow / this week.
-  static Future<void> nextStepCommitted({String when = 'tonight'}) =>
-      _log('next_step_committed', {'when': when});
+  /// The parent committed to one doable step («تمام، سأفعلها»). `when` is the
+  /// slot they chose; `source` is where: the lesson's step (`lesson`) or a
+  /// step taken from an assistant answer (`chat`, «سأجرّبها مع …»).
+  static Future<void> nextStepCommitted({
+    String when = 'tonight',
+    String source = 'lesson',
+  }) => _log('next_step_committed', {'when': when, 'source': source});
 
   /// «نور يتذكّر»: a promise was answered from Noor's line. `linked` says
   /// whether it rode a server follow-up (then memory learns from it too).
