@@ -21,6 +21,7 @@ import 'package:almorabbi/features/missions/mission_confirmations.dart';
 import 'package:almorabbi/features/missions/pending_missions_screen.dart';
 import 'package:almorabbi/features/programs/screens/ramadan_screen.dart';
 import 'package:almorabbi/features/routine/providers/child_mode_providers.dart';
+import 'package:almorabbi/features/routine/services/child_mode_secure_storage.dart';
 import 'package:almorabbi/models/api_models.dart';
 
 import 'programs_support.dart';
@@ -47,17 +48,6 @@ class _Gated extends FakeProgramsClient {
     bodies.add({'items': items});
     await gate.future;
     return applySettle(items);
-  }
-}
-
-/// Restoring child mode on a cold start: the old surface is checked on the
-/// network until [gate] opens.
-class _SlowRestore extends FakeProgramsClient {
-  final gate = Completer<void>();
-  @override
-  Future<Map<String, dynamic>> fetchChildTodayHabits({required String childToken}) async {
-    await gate.future;
-    throw const TgApiError(401, 'expired');
   }
 }
 
@@ -368,7 +358,7 @@ void main() {
       DeepLinkHandler.instance.handleForTest(Uri.parse('/missions'), key);
       await settle(tester);
       expect(find.byType(PendingMissionsScreen), findsNothing);
-      mode.leave(); // exit with the PIN — or restore() ending a cold start
+      mode.leave(); // exit with the PIN
       await settle(tester);
       expect(find.byType(PendingMissionsScreen), findsOneWidget);
     });
@@ -390,24 +380,27 @@ void main() {
       expect(client.calls, contains('milestone:prayer_start'));
     });
 
-    testWidgets('a link landing while a cold start restores child mode is not dropped',
+    testWidgets('a link that launches the app into child mode waits for the PIN exit',
         (tester) async {
+      // A cold start with child mode on disk lands on the hand-back screen,
+      // not the parent's app — so a push tapped to launch the app is held
+      // until the parent leaves child mode with their PIN, then opens.
       FlutterSecureStorage.setMockInitialValues(
           {'tg_child_mode_active': '1', 'tg_child_session_token': 'old'});
+      await setChildModePin('1234');
       final key = GlobalKey<NavigatorState>();
-      final client = _SlowRestore()..pending = [_card(41)];
+      final client = FakeProgramsClient()..pending = [_card(41)];
       final container = await pumpPrograms(tester, const Scaffold(body: Text('home')),
           client: client, navigatorKey: key);
       final prefs = await SharedPreferences.getInstance();
       await prefs.setInt(kChildModeChildIdKey, kChildId);
-      final restoring = container.read(childModeProvider.notifier).restore();
+      await container.read(childModeProvider.notifier).restore();
       await tester.pump();
-      expect(container.read(childModeProvider).active, isTrue); // checking the old surface
+      expect(container.read(childModeProvider).active, isTrue);
       DeepLinkHandler.instance.handleForTest(Uri.parse('/missions'), key);
       await settle(tester);
       expect(find.byType(PendingMissionsScreen), findsNothing);
-      client.gate.complete(); // the old surface is gone: back to the parent app
-      await restoring;
+      expect(await container.read(childModeProvider.notifier).exit('1234'), isTrue);
       await settle(tester);
       expect(container.read(childModeProvider).active, isFalse);
       expect(find.byType(PendingMissionsScreen), findsOneWidget);

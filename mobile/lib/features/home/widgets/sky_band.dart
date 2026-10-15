@@ -4,6 +4,12 @@
 /// blur, two hills and a sun, or at night up to twelve stars and no sun (the
 /// moon in that sky is Noor).
 ///
+/// In Ramadan (plan phase 5, «جلد ليل رمضاني») the maghrib and night skies
+/// carry one quiet touch more: a thin string of paper lanterns on the
+/// horizon, lit gold. Nothing else changes — the same palette, the same
+/// hills, no crescent of its own (the crescent in that sky is Noor), and
+/// never by day.
+///
 /// Decoration only. Every word on it sits in Noor's bubble on the surface
 /// colour, so the sky never carries text and its contrast never matters to
 /// reading.
@@ -132,14 +138,35 @@ const _stars = <(double, double, double)>[
   (.03, .45, 1.4),
 ];
 
+/// Where the Ramadan lanterns hang along the band, as fractions of its
+/// width — fixed like the stars. Five, spread out: a string, not a crowd.
+/// Each hangs at the low point of its own swag of thread.
+const _lanterns = <double>[.1, .3, .5, .7, .9];
+
+/// At most this many lanterns on the Ramadan string.
+const kMaxSkyLanterns = 5;
+
+/// Whether [time]'s sky takes the Ramadan skin: maghrib and night only.
+bool skyTakesRamadanSkin(SkyTime time) =>
+    time == SkyTime.maghrib || time == SkyTime.night;
+
 /// Wraps Today's top (Noor and the bubble) in the sky of [now].
 class SkyBand extends StatelessWidget {
-  const SkyBand({super.key, required this.child, this.now});
+  const SkyBand({
+    super.key,
+    required this.child,
+    this.now,
+    this.ramadan = false,
+  });
 
   final Widget child;
 
   /// Defaults to the device's local time; tests pin it.
   final DateTime? now;
+
+  /// The month itself is on (the server's `ramadan.state == ramadan`): the
+  /// maghrib and night skies hang their lantern string.
+  final bool ramadan;
 
   @override
   Widget build(BuildContext context) {
@@ -152,6 +179,7 @@ class SkyBand extends StatelessWidget {
           paper: paper,
           time: time,
           textDirection: Directionality.of(context),
+          ramadan: ramadan,
         ),
         child: Padding(
           padding: const EdgeInsets.fromLTRB(12, 18, 12, 34),
@@ -167,15 +195,21 @@ class SkyPainter extends CustomPainter {
     required this.paper,
     required this.time,
     required this.textDirection,
+    this.ramadan = false,
   });
 
   final SkyPaper paper;
   final SkyTime time;
   final TextDirection textDirection;
+  final bool ramadan;
 
   /// Stars painted on the last [paint] — exposed for the test that holds the
   /// «twelve at most, night only» rule.
   int starsPainted = 0;
+
+  /// Ramadan lanterns painted on the last [paint] — the test holds «in
+  /// Ramadan, maghrib and night only».
+  int lanternsPainted = 0;
 
   static const _shadow = Color(0x220F3D36);
 
@@ -219,6 +253,89 @@ class SkyPainter extends CustomPainter {
     canvas.drawPath(far, Paint()..color = paper.farHill);
     canvas.drawPath(near.shift(const Offset(0, -2)), Paint()..color = _shadow);
     canvas.drawPath(near, Paint()..color = paper.nearHill);
+
+    lanternsPainted = 0;
+    if (ramadan && skyTakesRamadanSkin(time)) {
+      _lanternString(canvas, size, sun: sun == null ? null : endX(64));
+    }
+  }
+
+  /// The Ramadan string: five shallow swags of thread across the horizon,
+  /// under the bubble, with a small paper lantern hanging from the low point
+  /// of each — lit gold, a solid paper shadow, no glow. [sun] is the x of a low sun on the
+  /// horizon; no lantern hangs in front of it (gold on gold reads as a blot).
+  void _lanternString(Canvas canvas, Size size, {double? sun}) {
+    final w = size.width, h = size.height;
+    final dark = paper.sky.computeLuminance() < .2;
+    // On a dark sky the thread is ivory paper; on maghrib's pale one, ink.
+    final thread = dark ? const Color(0xFFEADBC0) : const Color(0xFF0D6A5A);
+    final cap = dark ? const Color(0xFFEADBC0) : const Color(0xFF0F3D36);
+    final shadow = dark ? const Color(0xFF062B26) : _shadow;
+
+    final top = h - 31;
+    const sag = 5.0;
+    final swag = w / _lanterns.length;
+    double ropeY(double x) {
+      // Each swag a parabola, hung between two neighbouring tie points.
+      final t = (x % swag) / swag;
+      return top + sag * 4 * t * (1 - t);
+    }
+
+    final rope = Path()..moveTo(0, top);
+    for (var i = 1; i <= 60; i++) {
+      final x = w * i / 60;
+      rope.lineTo(x, i % 12 == 0 ? top : ropeY(x));
+    }
+    canvas.drawPath(
+      rope,
+      Paint()
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 1.2
+        ..strokeCap = StrokeCap.round
+        ..color = thread,
+    );
+
+    final gold = Paint()..color = const Color(0xFFF7C548);
+    for (final fx in _lanterns.take(kMaxSkyLanterns)) {
+      final x = fx * w;
+      if (sun != null && (x - sun).abs() < 26) continue;
+      final y = ropeY(x);
+      final body = _lantern(Offset(x, y + 3));
+      canvas
+        ..drawLine(
+          Offset(x, y),
+          Offset(x, y + 3),
+          Paint()
+            ..strokeWidth = 1
+            ..color = thread,
+        )
+        ..drawPath(body.shift(const Offset(1, 1.5)), Paint()..color = shadow)
+        ..drawPath(body, gold)
+        ..drawRRect(
+          RRect.fromRectAndRadius(
+            Rect.fromCenter(center: Offset(x, y + 3.8), width: 6, height: 2),
+            const Radius.circular(1),
+          ),
+          Paint()..color = cap,
+        );
+      lanternsPainted++;
+    }
+  }
+
+  /// A small paper lantern hanging from [top]: a waisted body, wider in the
+  /// middle, with a short point underneath.
+  Path _lantern(Offset top) {
+    final x = top.dx, y = top.dy;
+    return Path()
+      ..moveTo(x - 2.8, y + 1)
+      ..lineTo(x + 2.8, y + 1)
+      ..quadraticBezierTo(x + 5.6, y + 6.5, x + 3.1, y + 12)
+      ..lineTo(x + 1, y + 12)
+      ..lineTo(x, y + 14.4)
+      ..lineTo(x - 1, y + 12)
+      ..lineTo(x - 3.1, y + 12)
+      ..quadraticBezierTo(x - 5.6, y + 6.5, x - 2.8, y + 1)
+      ..close();
   }
 
   /// A soft rolling hill across the width: two bumps, closed at the bottom.
@@ -257,5 +374,6 @@ class SkyPainter extends CustomPainter {
   bool shouldRepaint(SkyPainter old) =>
       old.paper != paper ||
       old.time != time ||
-      old.textDirection != textDirection;
+      old.textDirection != textDirection ||
+      old.ramadan != ramadan;
 }

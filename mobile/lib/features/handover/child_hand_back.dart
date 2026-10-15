@@ -10,6 +10,10 @@
 /// billed while the device waits; child mode is still on, so the only way out
 /// is the frame's Exit, behind the parent's PIN. And the screen says what to
 /// do next, in family words — «أهلك», never one parent.
+///
+/// A restart lands here too. Child mode outlives the process, so a child who
+/// force-closes the app on this screen — or anywhere in a session — opens it
+/// again to this screen, not to the parent's app (`ChildModeNotifier.restore`).
 library;
 
 import 'package:flutter/material.dart';

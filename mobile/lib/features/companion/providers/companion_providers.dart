@@ -267,6 +267,9 @@ final companionLineProvider = Provider.autoDispose<CompanionLine?>((ref) {
           ? ramadan.daysUntilStart
           : null,
       ramadanYear: ramadan?.season?.hijriYear,
+      ramadanDay: ramadan != null && ramadan.state == RamadanState.ramadan
+          ? ramadan.day
+          : null,
       // Monday's line points at the plan card below; it shows only when the
       // card does (a plan this week) — read from the same provider.
       hasWeeklyPlan:

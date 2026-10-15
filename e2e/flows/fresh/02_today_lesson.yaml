@@ -19,21 +19,16 @@ name: fresh/02 Today → first lesson → back
 # on 2026-10-08 Cloudflare answered 502 and the page offered Retry. Retry as a
 # parent would, at most twice, and only for a server status — a client-side
 # error, a timeout or a 4xx is left to fail below.
-- repeat:
-    times: 2
-    while:
-      visible: '(?s).*TgApiError\(5\d\d\).*'
-    commands:
-      - takeScreenshot: lesson_server_error_retry
-      - tapOn: '${output.t.retry}'
-      - extendedWaitUntil:
-          visible: '(?:${output.t.lessonMarkComplete}|${output.t.lessonCompleted}|${output.t.lessonErrorLoading})'
-          timeout: 45000
-          optional: true
+- runFlow:
+    file: ../common/server_retry.yaml
+    env:
+      READY: '(?:${output.t.lessonMarkComplete}|${output.t.lessonCompleted})'
+      SHOT: lesson_server_error_retry
 # The bottom button exists only once the lesson payload loaded for this child.
+# 30 s: room for the last Retry's reload; a loaded lesson passes at once.
 - extendedWaitUntil:
     visible: '(?:${output.t.lessonMarkComplete}|${output.t.lessonCompleted})'
-    timeout: 10000
+    timeout: 30000
 - assertNotVisible: '${output.c.lit_errorWidget}'
 - takeScreenshot: lesson_first
 - back

@@ -2070,5 +2070,11 @@
   "planMarkHint": "Tap to tick it",
   "@planMarkHint": {"description": "Screen-reader hint on a step of the week's plan that is not ticked yet."},
   "planMarkedCount": "{count, plural, =1{You did 1 step this week} other{You did {count} steps this week}}",
-  "@planMarkedCount": {"description": "Line on the collapsed weekly-plan card once a step is ticked. Positive only — never 'steps left'. «قناديل الأسبوع» (نور والقناديل phase 3). Easy MSA, family-neutral plural (أتممتم), no promise of reward, no missed/lost wording.", "placeholders": {"count": {"type": "int"}}}
+  "@planMarkedCount": {"description": "Line on the collapsed weekly-plan card once a step is ticked. Positive only — never 'steps left'. «قناديل الأسبوع» (نور والقناديل phase 3). Easy MSA, family-neutral plural (أتممتم), no promise of reward, no missed/lost wording.", "placeholders": {"count": {"type": "int"}}},
+  "noorRamadanStart": "Ramadan's crescent is here — Ramadan Mubarak to your family! Each day of it has a lantern to light with {name}.",
+  "@noorRamadanStart": {"description": "Noor's line in the first nights of Ramadan (days 1–3), once a Hijri year («هلّ هلال رمضان», نور والقناديل phase 5). Chip: noorChipRamadan. Easy MSA, family-neutral plural, no ayah/hadith/dua text, no promise of reward.", "placeholders": {"name": {"type": "String"}}},
+  "eidMomentTitle": "Eid Mubarak",
+  "@eidMomentTitle": {"description": "Title of the quiet Eid al-Fitr moment on Today, shown once a Hijri year on the first open of Eid (نور والقناديل phase 5)."},
+  "eidMomentBody": "Wishing you and your family a joyful Eid.",
+  "@eidMomentBody": {"description": "The line under «عيدكم مبارك» in the Eid moment. A customary greeting only: no ayah/hadith/dua text, no promise of reward, no count."}
 }

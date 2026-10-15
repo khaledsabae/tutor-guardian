@@ -108,6 +108,9 @@ KEYS = [
     "childModePinEnterSubtitle",
     # failure screens
     "bootError", "forceUpdateTitle",
+    # a 5xx as friendlyError shows it (lesson, ErrorRetryView, chat turn) —
+    # the condition of common/server_retry.yaml
+    "errorServerBody",
     # family programs (fresh/09)
     "programsTitle", "programsIntro", "programsPrayerTitle", "prayerStagesTitle",
     # gallery (e2e/flows/gallery/shoot.yaml) — must exist in the BASELINE ARBs

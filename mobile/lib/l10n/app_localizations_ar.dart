@@ -6266,4 +6266,15 @@ class AppLocalizationsAr extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String noorRamadanStart(String name) {
+    return 'هلّ هلال رمضان، مبارك عليكم الشهر! في كل يوم منه قنديل تضيئونه مع $name.';
+  }
+
+  @override
+  String get eidMomentTitle => 'عيدكم مبارك';
+
+  @override
+  String get eidMomentBody => 'كل عام وأنتم بخير.';
 }

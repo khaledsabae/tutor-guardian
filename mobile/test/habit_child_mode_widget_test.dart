@@ -5,6 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:almorabbi/api/tg_client.dart';
+import 'package:almorabbi/features/handover/child_hand_back.dart';
 import 'package:almorabbi/l10n/app_localizations.dart';
 import 'package:almorabbi/features/routine/models/habit_models.dart';
 import 'package:almorabbi/features/routine/providers/child_mode_providers.dart';
@@ -278,7 +279,7 @@ void main() {
       expect(find.byType(ChildModeLockScreen), findsOneWidget);
     });
 
-    testWidgets('expired session renders the ExpiredGuard loading state',
+    testWidgets('expired session asks for the device back, not a spinner',
         (tester) async {
       final fake = _FakeTgClient();
 
@@ -309,9 +310,13 @@ void main() {
       );
       await tester.pump();
 
-      // The screen should replace itself with the ExpiredGuard, which renders
-      // a loading spinner while it redirects to the lock screen.
-      expect(find.byType(CircularProgressIndicator), findsOneWidget);
+      // A dead token is the end of the surface, not of child mode: the
+      // hand-back screen, whose way out is the frame's Exit and the PIN. (It
+      // used to be a guard that pushed the PIN pad in *entry* mode — and was
+      // never reached, because the 401 behind it had already cleared child
+      // mode and opened the parent's app.)
+      expect(find.byType(ChildHandBackScreen), findsOneWidget);
+      expect(find.byType(CircularProgressIndicator), findsNothing);
       expect(find.text('ميزان العادات'), findsNothing);
     });
   });
