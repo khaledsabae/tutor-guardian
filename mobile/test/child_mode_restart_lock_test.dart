@@ -8,6 +8,8 @@
 // flip happened when the server stopped accepting the child's token (a 401
 // cleared child mode), and one launch after the mission card's "I'm going".
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -158,6 +160,20 @@ void main() {
         }
       },
     );
+  });
+
+  testWidgets('secure storage that never answers does not hold the launch',
+      (t) async {
+    t.binding.defaultBinaryMessenger.setMockMethodCallHandler(
+      const MethodChannel('plugins.it_nomads.com/flutter_secure_storage'),
+      (call) => Completer<Object?>().future,
+    );
+    await _boot(t, _Server());
+    await t.pump();
+    expect(find.text(_waiting), findsOneWidget);
+    await t.pump(kChildModeRestoreTimeout + const Duration(milliseconds: 50));
+    await t.pumpAndSettle();
+    expect(find.text(_parentApp), findsOneWidget);
   });
 
   group('restore() after a restart', () {

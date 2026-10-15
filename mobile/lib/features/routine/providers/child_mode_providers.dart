@@ -59,9 +59,19 @@ const kChildModeHandedBack = 'child_mode_handed_back';
 /// frame after a restart was the parent's app whatever restore() went on to
 /// decide — and a route a child pushed from it in that moment would have
 /// stayed on top of the child surface that replaced it.
+///
+/// Bounded by [kChildModeRestoreTimeout]: secure storage that never answers
+/// (a wedged keystore) must not leave every launch on the splash forever.
+/// Past it the parent's app opens — the same as a storage read that fails.
 final childModeRestoreProvider = FutureProvider<void>(
-  (ref) => ref.read(childModeProvider.notifier).restore(),
+  (ref) => ref
+      .read(childModeProvider.notifier)
+      .restore()
+      .timeout(kChildModeRestoreTimeout, onTimeout: () {}),
 );
+
+/// How long a launch waits for the last run's child mode before giving up.
+const kChildModeRestoreTimeout = Duration(seconds: 4);
 
 class ChildModeState {
   const ChildModeState({
