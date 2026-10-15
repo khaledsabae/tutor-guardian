@@ -146,8 +146,12 @@ class _HandoverGateScreenState extends ConsumerState<HandoverGateScreen>
     // It needs a known band — the corner shows only what that band may see —
     // so an unknown one is refused here rather than guessed.
     final corner = surface == kChildCornerSurface;
-    final String? opening =
-        corner ? childCornerOpeningSurface(ageGroup) : surface;
+    final String? opening = corner
+        ? childCornerOpeningSurface(
+            ageGroup,
+            withGame: ref.read(childCornerGameEnabledProvider),
+          )
+        : surface;
     if (opening == null) {
       _refuse(l10n.childModeSurfaceNotAllowed);
       return;
@@ -353,14 +357,16 @@ class _HandoverGateScreenState extends ConsumerState<HandoverGateScreen>
     final theme = Theme.of(context);
     final c = context.colors;
     final ageGroup = _ageGroup;
+    final withGame = ref.read(childCornerGameEnabledProvider);
     final offered = [
       // The corner first: one calm place with an ending, rather than a list.
-      if (childCornerOffered(ageGroup)) kChildCornerSurface,
+      if (childCornerOffered(ageGroup, withGame: withGame)) kChildCornerSurface,
       ...handoverSurfacesFor(ageGroup),
     ];
     // The same two checks the corner makes: the band has a game, and the
     // games' questions are in the language the child reads the app in.
-    final cornerHasGame = childCornerActivitiesFor(ageGroup).contains('game') &&
+    final cornerHasGame = childCornerActivitiesFor(ageGroup, withGame: withGame)
+            .contains('game') &&
         cornerGamesSpeak(contentLanguageFor(Localizations.localeOf(context)));
 
     return Scaffold(

@@ -7,7 +7,9 @@
 ///
 ///  * **the story** is the day's story from the existing library
 ///    (`storiesProvider`), read in [CornerStoryView];
-///  * **the game** is one level of one of the four existing games, played in
+///  * **the game** — switched off for this launch
+///    ([kChildCornerGameEnabled]: the games' questions are written for
+///    parents) — is one level of one of the four existing games, played in
 ///    their own [EduGameRunner] with `quiet: true` — no score, no star burst,
 ///    no results dialog, no coins credited;
 ///  * **the task** is today's card from `child_missions`, fetched once when the
@@ -104,7 +106,10 @@ class ChildCornerScreenState extends ConsumerState<ChildCornerScreen> {
     super.initState();
     final state = ref.read(childModeProvider);
     _band = state.cornerBand ?? kFallbackChildSurfaceBand;
-    _activities = childCornerActivitiesFor(_band);
+    _activities = childCornerActivitiesFor(
+      _band,
+      withGame: ref.read(childCornerGameEnabledProvider),
+    );
     _observe(state);
     if (state.error == kChildModeHandedBack) _phase = CornerPhase.done;
     unawaited(Analytics.childCornerOpened(_band));

@@ -3,6 +3,9 @@
 // What has to hold (scratch/game-study/REPORT.md, the brief of 2026-10-15):
 //  * only what the child's band is allowed is in the corner — no game for a
 //    4-6 child, and no corner at all under four;
+//  * for this launch no game for anyone (kChildCornerGameEnabled: the games'
+//    questions are written for parents) — the game's path stays covered
+//    with the switch turned on;
 //  * no coins and no points anywhere in it, the game included;
 //  * the session ends on the task away from the screen, then «أعِد الجهاز
 //    إلى أهلك» — whether the child chose it, finished everything, or ran out
@@ -101,6 +104,7 @@ Future<ProviderContainer> _pump(
   Locale locale = const Locale('ar'),
   _FakeClient? client,
   bool reduceMotion = false,
+  bool gameOn = false,
   int? sessionId = 11,
   int? remaining = 600,
   List<Story>? stories,
@@ -115,6 +119,7 @@ Future<ProviderContainer> _pump(
     activeChildProfileProvider.overrideWithValue(
         ActiveChildProfile(id: 7, name: 'سارة', ageGroup: band)),
     childCornerNowProvider.overrideWithValue(() => DateTime(2026, 10, 15)),
+    childCornerGameEnabledProvider.overrideWithValue(gameOn),
   ]);
   addTearDown(container.dispose);
   container.read(childModeProvider.notifier).state = ChildModeState(
@@ -205,9 +210,12 @@ void main() {
 
   group('the policy decides what is in the corner', () {
     test('band by band', () {
-      expect(childCornerActivitiesFor('4-6'), ['story', 'mission']);
-      expect(childCornerActivitiesFor('7-9'), ['story', 'game', 'mission']);
-      expect(childCornerActivitiesFor('13-15'), ['story', 'game', 'mission']);
+      expect(childCornerActivitiesFor('4-6', withGame: true),
+          ['story', 'mission']);
+      expect(childCornerActivitiesFor('7-9', withGame: true),
+          ['story', 'game', 'mission']);
+      expect(childCornerActivitiesFor('13-15', withGame: true),
+          ['story', 'game', 'mission']);
       for (final age in ['prenatal-1', '0-3', '2-3', null, 'nonsense']) {
         expect(childCornerOffered(age), isFalse, reason: '$age');
         expect(childCornerOpeningSurface(age), isNull, reason: '$age');
@@ -215,9 +223,23 @@ void main() {
       expect(childCornerOpeningSurface('4-6'), 'story');
     });
 
+    test('this launch: the game is off — every corner is story, then task',
+        () {
+      expect(kChildCornerGameEnabled, isFalse,
+          reason: 'the games\' questions are written for parents');
+      for (final band in kChildSurfacePolicy.keys) {
+        if (!childCornerOffered(band)) continue;
+        expect(childCornerActivitiesFor(band), ['story', 'mission'],
+            reason: band);
+      }
+      expect(childCornerOffered('4-6'), isTrue);
+      expect(childCornerOffered('16-18'), isTrue);
+    });
+
     test('never more than the band allows, for every band', () {
       for (final entry in kChildSurfacePolicy.entries) {
-        expect(entry.value, containsAll(childCornerActivitiesFor(entry.key)),
+        expect(entry.value,
+            containsAll(childCornerActivitiesFor(entry.key, withGame: true)),
             reason: entry.key);
       }
     });
@@ -233,16 +255,28 @@ void main() {
           findsOneWidget);
     });
 
-    testWidgets('a 7-9 child has the story, the game and the task', (t) async {
+    testWidgets('this launch: a 7-9 child gets the story and the task only',
+        (t) async {
       await _pump(t);
+      expect(find.byKey(const ValueKey('child_corner_story')), findsOneWidget);
+      expect(find.byKey(const ValueKey('child_corner_game')), findsNothing);
+      expect(find.text('لعبة قصيرة'), findsNothing);
+      expect(find.text('هنا حكاية قصيرة، ثم مهمة صغيرة بعيدًا عن الشاشة.'),
+          findsOneWidget);
+    });
+
+    testWidgets('game switched on: a 7-9 child has story, game and task',
+        (t) async {
+      await _pump(t, gameOn: true);
       expect(find.byKey(const ValueKey('child_corner_story')), findsOneWidget);
       expect(find.byKey(const ValueKey('child_corner_game')), findsOneWidget);
       expect(find.byKey(const ValueKey('child_corner_mission_card')),
           findsOneWidget);
     });
 
-    testWidgets('in English the Arabic-only games stay out', (t) async {
-      await _pump(t, locale: const Locale('en'));
+    testWidgets('game switched on, English: the Arabic-only games stay out',
+        (t) async {
+      await _pump(t, locale: const Locale('en'), gameOn: true);
       expect(find.byKey(const ValueKey('child_corner_story')), findsOneWidget);
       expect(find.byKey(const ValueKey('child_corner_game')), findsNothing);
     });
@@ -292,14 +326,25 @@ void main() {
 
     testWidgets('its line promises a game only when the corner has one',
         (t) async {
-      for (final (locale, band, line) in const [
-        (Locale('ar'), '7-9', 'حكاية قصيرة أو لعبة، ثم مهمة بعيدًا عن الشاشة'),
-        (Locale('ar'), '4-6', 'حكاية قصيرة، ثم مهمة بعيدًا عن الشاشة'),
-        (Locale('en'), '7-9', 'A short story, then a task away from the screen'),
+      for (final (locale, band, gameOn, line) in const [
+        // This launch: no game, so no band's line promises one.
+        (Locale('ar'), '7-9', false, 'حكاية قصيرة، ثم مهمة بعيدًا عن الشاشة'),
+        (Locale('ar'), '13-15', false, 'حكاية قصيرة، ثم مهمة بعيدًا عن الشاشة'),
+        (Locale('en'), '7-9', false,
+            'A short story, then a task away from the screen'),
+        // With the game switched on.
+        (Locale('ar'), '7-9', true,
+            'حكاية قصيرة أو لعبة، ثم مهمة بعيدًا عن الشاشة'),
+        (Locale('ar'), '4-6', true, 'حكاية قصيرة، ثم مهمة بعيدًا عن الشاشة'),
+        (Locale('en'), '7-9', true,
+            'A short story, then a task away from the screen'),
       ]) {
         await t.pumpWidget(ProviderScope(
-          key: ValueKey('$locale$band'),
-          overrides: [tgClientProvider.overrideWithValue(_FakeClient())],
+          key: ValueKey('$locale$band$gameOn'),
+          overrides: [
+            tgClientProvider.overrideWithValue(_FakeClient()),
+            childCornerGameEnabledProvider.overrideWithValue(gameOn),
+          ],
           child: MaterialApp(
             locale: locale,
             localizationsDelegates: AppLocalizations.localizationsDelegates,
@@ -309,7 +354,8 @@ void main() {
           ),
         ));
         await t.pump();
-        expect(find.text(line), findsOneWidget, reason: '$locale $band');
+        expect(find.text(line), findsOneWidget,
+            reason: '$locale $band game=$gameOn');
       }
     });
 
@@ -362,7 +408,7 @@ void main() {
   group('no coins, no points', () {
     testWidgets('the corner shows neither, and its game counts nothing',
         (t) async {
-      final container = await _pump(t);
+      final container = await _pump(t, gameOn: true);
       final corner = find.byType(ChildCornerScreen);
       expect(_textsUnder(t, corner).where(_digits.hasMatch), isEmpty);
       expect(
@@ -428,9 +474,26 @@ void main() {
       expect(find.byKey(const ValueKey('child_corner_game')), findsNothing);
     });
 
-    testWidgets('story and game done → the task comes up on its own',
+    testWidgets('this launch: the story read → the task comes up on its own',
         (t) async {
       await _pump(t);
+      await _tap(t, 'child_corner_story');
+      while (find.byKey(const ValueKey('child_corner_story_next'))
+          .evaluate()
+          .isNotEmpty) {
+        await _tap(t, 'child_corner_story_next');
+      }
+      await _tap(t, 'child_corner_story_back');
+      expect(find.byKey(const ValueKey('child_corner_mission_step')),
+          findsOneWidget);
+      expect(
+          events.where((e) => e.$1 == 'child_corner_mission').single.$2,
+          {'reason': 'all_done'});
+    });
+
+    testWidgets('game on: story and game done → the task comes up on its own',
+        (t) async {
+      await _pump(t, gameOn: true);
       await _tap(t, 'child_corner_story');
       while (find.byKey(const ValueKey('child_corner_story_next'))
           .evaluate()

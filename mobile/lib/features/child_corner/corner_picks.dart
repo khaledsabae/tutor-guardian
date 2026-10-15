@@ -7,6 +7,8 @@
 /// calendar, never with how much the child played.
 library;
 
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import '../../l10n/app_localizations.dart';
 import '../../widgets/ui/brand_glyph.dart';
 import '../games/data_defender/data_defender_game.dart';
@@ -16,7 +18,15 @@ import '../games/healthy_hero/healthy_hero_game.dart';
 import '../games/shared/edu_game_models.dart';
 import '../games/shared/edu_game_shell.dart';
 import '../games/tree_of_deeds/tree_of_deeds_game.dart';
+import '../handover/child_surface_policy.dart';
 import '../program/data/story_models.dart';
+
+/// [kChildCornerGameEnabled] as a provider, so a test can switch the game on
+/// and keep its path — no score, no coins, back to the corner — covered while
+/// the launch has it off.
+final childCornerGameEnabledProvider = Provider<bool>(
+  (_) => kChildCornerGameEnabled,
+);
 
 /// A stable number for the local calendar day.
 int cornerDayIndex(DateTime now) => DateTime.utc(

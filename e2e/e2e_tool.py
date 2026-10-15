@@ -132,10 +132,9 @@ KEYS = [
     # builds only: the baseline has no corner, its selectors never match, and
     # the gallery shots are guarded.
     "childCornerTileTitle", "childCornerGreeting", "childCornerStoryHint",
-    "childCornerStoryNext", "childCornerBackToCorner", "childCornerStoryDone",
-    "childCornerGameHint", "childCornerMissionNow", "childCornerMissionGo",
-    "childCornerToMission", "childReturnDevice", "eduGameLevelTitle",
-    "eduGameQuit", "routineDailyTracker",
+    "childCornerStoryNext", "childCornerBackToCorner",
+    "childCornerMissionNow", "childCornerMissionGo",
+    "childCornerToMission", "childReturnDevice", "routineDailyTracker",
     # failure screens
     "bootError", "forceUpdateTitle",
     # a 5xx as friendlyError shows it (lesson, ErrorRetryView, chat turn) —
@@ -481,7 +480,7 @@ GALLERY_SCREENS = [
     ("praise_card_0ms", "كارت كلمة الأب — ٠ms (الظهور)"),
     ("praise_card_150ms", "كارت كلمة الأب — ١٥٠ms (الحركة)"),
     ("praise_card_400ms", "كارت كلمة الأب — ٤٠٠ms (الميل والاستقرار)"),
-    ("child_corner", "ركن الطفل — حكاية ولعبة ثم مهمة (بعد فقط)"),
+    ("child_corner", "ركن الطفل — حكاية ثم مهمة (بعد فقط)"),
     ("child_corner_story", "ركن الطفل — صفحة من الحكاية (بعد فقط)"),
     ("child_corner_task", "ركن الطفل — المهمة بعيدًا عن الشاشة (بعد فقط)"),
     ("home_dark_noor_face", "NoorFace في «اليوم» — داكن"),

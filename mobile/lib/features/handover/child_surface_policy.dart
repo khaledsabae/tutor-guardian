@@ -103,27 +103,50 @@ const List<String> kChildCornerActivities = ['story', 'game', 'mission'];
 /// What the hand-over gate calls the corner. Never sent to the server.
 const String kChildCornerSurface = 'corner';
 
-/// The corner's activities this child's band allows.
-List<String> childCornerActivitiesFor(String? profileAgeGroup) {
+/// Whether the corner offers its game. **Off for this launch** (decision of
+/// 2026-10-16): the four games' questions are written for parents — 159 of
+/// 200 say «طفلك/ابنك/بنتك», in Egyptian dialect, to a mother — so they are
+/// not something to hand a child. The whole path (the quiet runner, the
+/// card, the surface switch) stays in place; once child-facing questions
+/// exist, flipping this is the only change. Off, every band's corner is the
+/// day's story, then the task away from the screen.
+const bool kChildCornerGameEnabled = false;
+
+/// The corner's activities this child's band allows. [withGame] is the
+/// switch above; tests pass it to keep the game's path covered.
+List<String> childCornerActivitiesFor(
+  String? profileAgeGroup, {
+  bool withGame = kChildCornerGameEnabled,
+}) {
   final allowed = kChildSurfacePolicy[childSurfaceBand(profileAgeGroup)]!;
   return [
     for (final activity in kChildCornerActivities)
-      if (allowed.contains(activity)) activity,
+      if (allowed.contains(activity) && (withGame || activity != 'game'))
+        activity,
   ];
 }
 
 /// Whether the gate offers the corner: it always ends on the task away from
 /// the screen, so `mission` is required, and there must be something to do
 /// before it.
-bool childCornerOffered(String? profileAgeGroup) {
-  final activities = childCornerActivitiesFor(profileAgeGroup);
+bool childCornerOffered(
+  String? profileAgeGroup, {
+  bool withGame = kChildCornerGameEnabled,
+}) {
+  final activities = childCornerActivitiesFor(
+    profileAgeGroup,
+    withGame: withGame,
+  );
   return activities.contains('mission') &&
       (activities.contains('story') || activities.contains('game'));
 }
 
 /// The server surface the corner's session opens on — the first thing in it
 /// the band allows. Null when the corner is not offered.
-String? childCornerOpeningSurface(String? profileAgeGroup) {
-  if (!childCornerOffered(profileAgeGroup)) return null;
-  return childCornerActivitiesFor(profileAgeGroup).first;
+String? childCornerOpeningSurface(
+  String? profileAgeGroup, {
+  bool withGame = kChildCornerGameEnabled,
+}) {
+  if (!childCornerOffered(profileAgeGroup, withGame: withGame)) return null;
+  return childCornerActivitiesFor(profileAgeGroup, withGame: withGame).first;
 }
