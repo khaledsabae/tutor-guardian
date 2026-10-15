@@ -170,6 +170,9 @@ KEYS = [
     "ramadanDayN", "ramadanDayToday", "ramadanLanternLit",
     "ramadanRecapOpen", "recapTitle", "ramadanAfterWeeks",
     "noorRamadan30",
+    # «عيدكم مبارك» (head only, behind TAG == 'after'): the Eid moment over
+    # Today and its «إغلاق».
+    "eidMomentTitle", "close",
     # sound × recitation (e2e/flows/rehearsal/sound_*.yaml): the Quran
     # reader's surah list and its bottom «استماع / إيقاف» pill.
     "holyQuran", "quranVerseCount", "quranListen", "quranStop",
@@ -1351,6 +1354,7 @@ REHEARSAL_STAGES = [
         ("day27_street", "شارع القناديل"),
     ]),
     ("eid", "العيد", [
+        ("eid_moment", "«عيدكم مبارك» فوق «اليوم» (أول مرة فقط)"),
         ("eid_programs", "برامج الأسرة"),
         ("eid_ramadan", "بطاقة العيد"),
         ("eid_street", "شارع القناديل"),
@@ -1362,9 +1366,10 @@ REHEARSAL_STAGES = [
         ("after_street", "شارع القناديل"),
     ]),
 ]
-# Noor's countdown line shows once per countdown day per install: only the
-# first pass to open Today on that date can photograph it.
-REHEARSAL_GUARDED = {"before_today_noor"}
+# Noor's countdown line shows once per countdown day per install, and the Eid
+# moment once per Hijri year: only the first pass to open Today on that date
+# can photograph them.
+REHEARSAL_GUARDED = {"before_today_noor", "eid_moment"}
 _REHEARSAL_FILE = re.compile(
     r"^rehearsal__.*?__(?P<tag>before|after)__(?P<variant>ar_dark|ar|en)"
     r"__(?P<screen>[a-z0-9_]+?)(?:_\d+)?\.png$"
