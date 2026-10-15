@@ -1,42 +1,55 @@
 #!/usr/bin/env python3
 """
-make_round_logo — the real app logo, cut to a circle for the teaser.
+make_round_logo — the app icon, cut to a circle, for the teaser and the
+campaign reels (end card + small corner mark).
 
-Source: mobile/assets/images/logo.png (512², teal square, white ring). Its
-bottom-right corner carries a small generator mark (✦ at about (452, 452)),
-so the logo is cut to a circle of radius 228 around the centre: that keeps a
-teal margin round the white ring and leaves the mark (≥ 260 px from the
-centre) outside the cut, so it can never appear. Anti-aliased edge (4×
-supersampled mask). Writes public/noor/app_logo_round.png (456², RGBA).
+Source: public/noor/brand/icon_c_hills.svg — the paper-cut icon C «الطبقات»
+(Noor rising behind paper hills) that Khaled chose on 2026-10-15. It is a
+verbatim copy of docs/brand/icon/icon_c_hills.svg from the brand PR #121
+(branch noor/brand-paper @ 01e9257d); copy it again if that file changes.
 
+The SVG's 0 0 240 240 box is the visible part of the adaptive icon, and a
+round launcher mask is the circle inscribed in it, so the whole box is
+rendered (background + foreground; the monochrome layer stays hidden) at
+SIZE px with Rsvg/cairo and cut to that circle with an anti-aliased edge
+(4× supersampled mask). Writes public/noor/app_logo_round.png (RGBA).
+
+Needs python3-gi (Rsvg 2.0), pycairo, Pillow.
 Usage: python3 scripts/make_round_logo.py   (run from remotion-reels/)
 """
+import io
 from pathlib import Path
 
+import cairo
+import gi
 from PIL import Image, ImageDraw
 
+gi.require_version("Rsvg", "2.0")
+from gi.repository import Rsvg  # noqa: E402
+
 HERE = Path(__file__).resolve().parents[1]
-SRC = HERE.parent / "mobile" / "assets" / "images" / "logo.png"
+SRC = HERE / "public" / "noor" / "brand" / "icon_c_hills.svg"
 OUT = HERE / "public" / "noor" / "app_logo_round.png"
-CX = CY = 256
-R = 228
+SIZE = 912  # ≥ 3× the largest on-screen logo (300 px in the teaser)
 SS = 4
 
-src = Image.open(SRC).convert("RGBA")
-assert src.size == (512, 512), src.size
-box = (CX - R, CY - R, CX + R, CY + R)
-crop = src.crop(box)
-mask_big = Image.new("L", (2 * R * SS, 2 * R * SS), 0)
-ImageDraw.Draw(mask_big).ellipse((0, 0, 2 * R * SS - 1, 2 * R * SS - 1), fill=255)
-mask = mask_big.resize((2 * R, 2 * R), Image.LANCZOS)
-crop.putalpha(mask)
-crop.save(OUT, optimize=True)
+handle = Rsvg.Handle.new_from_data(SRC.read_bytes())
+surf = cairo.ImageSurface(cairo.FORMAT_ARGB32, SIZE, SIZE)
+rect = Rsvg.Rectangle()
+rect.x, rect.y, rect.width, rect.height = 0, 0, SIZE, SIZE
+handle.render_document(cairo.Context(surf), rect)
+surf.flush()
+buf = io.BytesIO()
+surf.write_to_png(buf)
+buf.seek(0)
+icon = Image.open(buf).convert("RGBA")
 
-# The generator mark must be fully outside the circle.
-mark = (452 - (CX - R), 452 - (CY - R))
-for dx in range(-14, 15):
-    for dy in range(-14, 15):
-        x, y = mark[0] + dx, mark[1] + dy
-        if 0 <= x < 2 * R and 0 <= y < 2 * R:
-            assert crop.getpixel((x, y))[3] == 0, ("mark visible at", x, y)
-print(f"wrote {OUT} {crop.size}, mark region transparent")
+mask_big = Image.new("L", (SIZE * SS, SIZE * SS), 0)
+ImageDraw.Draw(mask_big).ellipse((0, 0, SIZE * SS - 1, SIZE * SS - 1), fill=255)
+icon.putalpha(mask_big.resize((SIZE, SIZE), Image.LANCZOS))
+
+# sanity: opaque inside (the paper icon has no holes), clear in the corners
+assert icon.getpixel((SIZE // 2, SIZE // 2))[3] == 255
+assert icon.getpixel((2, 2))[3] == 0 and icon.getpixel((SIZE - 3, SIZE - 3))[3] == 0
+icon.save(OUT, optimize=True)
+print(f"wrote {OUT} {icon.size} from {SRC.name}")
