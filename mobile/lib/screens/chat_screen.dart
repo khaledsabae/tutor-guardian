@@ -21,8 +21,15 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../core/haptics.dart';
 import '../models/api_models.dart';
 import '../models/enums.dart';
+import '../features/child_memory/data/placeholder_names.dart'
+    show isDefaultChildName;
+import '../features/child_memory/providers/memory_providers.dart'
+    show childNameProvider;
+import '../features/companion/logic/answer_step.dart';
+import '../features/companion/providers/companion_providers.dart';
 import '../features/onboarding/providers/onboarding_providers.dart';
 import '../features/program/providers/program_providers.dart';
+import '../features/program/widgets/next_step_sheet.dart';
 import '../features/program/providers/progress_providers.dart'
     show activeChildIdProvider;
 import '../state/chat_notifier.dart';
@@ -39,7 +46,9 @@ final chatNotifierProvider =
   // Read at send time, not watched: switching child must not rebuild the
   // notifier and drop the conversation on screen.
   return ChatNotifier(client,
-      activeChildId: () => ref.read(activeChildIdProvider));
+      activeChildId: () => ref.read(activeChildIdProvider),
+      onSent: () =>
+          markTodayStop(ref.read(companionMemoryProvider.notifier), 'ask'));
 });
 
 class ChatScreen extends ConsumerStatefulWidget {
@@ -61,6 +70,10 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
   /// the bottom (UX_UI_ROADMAP C10).
   static const double _jumpThreshold = 300;
   final ValueNotifier<bool> _showJump = ValueNotifier(false);
+
+  /// Answers a promise was kept from in this visit — their chip says so
+  /// instead of offering a second one.
+  final Set<String> _promised = {};
 
   void _onScroll() {
     if (!_scroll.hasClients) return;
@@ -162,6 +175,31 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
     _scrollToBottom();
   }
 
+  /// «سأجرّبها مع …» tapped: the lesson's slot sheet with the answer's step,
+  /// then the same promise loop the lesson keeps
+  /// ([CompanionMemoryNotifier.keepPromise]) — a reminder, and Noor asking
+  /// back on the slot's day.
+  Future<void> _keepStep(
+      ChatMessageUI m, String step, int childId, String? name) async {
+    unawaited(Haptics.selection());
+    final l10n = AppLocalizations.of(context);
+    final slot = await showNextStepSheet(
+      context,
+      tryThis: step,
+      childName: name ?? l10n.noorYourChild,
+      title: l10n.chatTryTitle,
+      intro: l10n.chatTryIntro,
+    );
+    if (slot == null || !mounted) return;
+    setState(() => _promised.add(m.id));
+    unawaited(ref.read(companionMemoryProvider.notifier).keepPromise(
+          childId: childId,
+          step: step,
+          slot: slot,
+          source: 'chat',
+        ));
+  }
+
   /// The optional behaviour type ("context") used to sit in a permanent
   /// field above the conversation, ~64 dp that mattered most with the
   /// keyboard up. It is now a sheet opened from the composer (C6).
@@ -180,6 +218,24 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
   Widget build(BuildContext context) {
     final state = ref.watch(chatNotifierProvider);
     final notifier = ref.read(chatNotifierProvider.notifier);
+
+    // «سأجرّبها مع …» — the latest finished answer only, and only when it has
+    // a step to promise and a child to promise it for: the child the answer
+    // was for when the server says, else the active one. Worked out here,
+    // once, not per list item (and never `ref.watch` from an item builder).
+    final activeChild = ref.watch(activeChildProfileProvider);
+    final last = state.messages.isEmpty ? null : state.messages.last;
+    final tryChildId = last?.reply?.memoryChildId ?? activeChild?.id;
+    final tryStep = last != null &&
+            tryChildId != null &&
+            state.phase == ChatPhase.idle
+        ? _promiseStepFor(last)
+        : null;
+    final tryName = tryStep == null
+        ? null
+        : _realName(tryChildId == activeChild?.id
+            ? activeChild?.name
+            : ref.watch(childNameProvider(tryChildId!)));
 
     // The active child's age drives the question — there's no manual age
     // selector. Keep the chat state in sync whenever the active child changes.
@@ -341,6 +397,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
                       final next = i + 1 < state.messages.length
                           ? state.messages[i + 1]
                           : null;
+                      final offerTry = next == null && tryStep != null;
                       // Keyed by message id so the entrance animation
                       // plays exactly once per message — token-by-token
                       // rebuilds of the streaming bubble keep the same
@@ -367,6 +424,18 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
                             unawaited(Haptics.selection());
                             notifier.sendMessage(q);
                           },
+                          tryLabel: !offerTry
+                              ? null
+                              : tryName == null
+                                  ? AppLocalizations.of(context)
+                                      .chatTryWithMyChild
+                                  : AppLocalizations.of(context)
+                                      .chatTryWith(tryName),
+                          tryKept: _promised.contains(m.id),
+                          onTry: !offerTry
+                              ? null
+                              : () => _keepStep(
+                                  m, tryStep, tryChildId!, tryName),
                         )
                             .animate()
                             .fadeIn(duration: 250.ms)
@@ -443,6 +512,29 @@ List<String> _followUpsFor(ChatMessageUI m, AppLocalizations l10n) {
   if (r.followUps.isNotEmpty) return r.followUps;
   return [l10n.chatFollowExample, l10n.chatFollowForAge, l10n.chatFollowShort];
 }
+
+/// The step an answer offers to promise («سأجرّبها مع …»), or null.
+///
+/// Only a finished, generated answer: not a safety escalation, a refusal, an
+/// emergency, or the retrieval-only fallback (passages quoted from the
+/// library, not advice written for this parent). The step itself is
+/// [promiseStepFromAnswer]'s — null when the answer has none worth keeping.
+String? _promiseStepFor(ChatMessageUI m) {
+  final r = m.reply;
+  if (m.role != 'assistant' || r == null) return null;
+  if (m.error != null || m.isStreaming) return null;
+  if (r.isEmergency || r.isBanned || r.severity == Severity.emergency) {
+    return null;
+  }
+  if (r.mode != ReplyMode.llmGenerated) return null;
+  return promiseStepFromAnswer(m.content);
+}
+
+/// The name to say, or null while it is still the default «طفلي».
+String? _realName(String? name) =>
+    name == null || name.trim().isEmpty || isDefaultChildName(name)
+        ? null
+        : name.trim();
 
 /// Bottom sheet for the optional behaviour type. Pops with the new value
 /// (empty = cleared), or null when dismissed without a change.

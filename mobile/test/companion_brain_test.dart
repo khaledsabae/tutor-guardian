@@ -5,18 +5,24 @@ import 'package:flutter_test/flutter_test.dart';
 
 final _wed = DateTime(2026, 10, 14, 9); // a Wednesday morning
 final _mon = DateTime(2026, 10, 19, 9); // a Monday
+final _fri = DateTime(2026, 10, 16, 9); // a Friday
 
-Promise _promise({int id = 1, int child = 7, PromiseSlot slot = PromiseSlot.tonight,
-        DateTime? made, int? followupId, String? outcome}) =>
-    Promise(
-      id: id,
-      childId: child,
-      step: 'امدح صدقه أولًا',
-      slot: slot,
-      madeOn: made ?? DateTime(2026, 10, 13),
-      followupId: followupId,
-      outcome: outcome,
-    );
+Promise _promise({
+  int id = 1,
+  int child = 7,
+  PromiseSlot slot = PromiseSlot.tonight,
+  DateTime? made,
+  int? followupId,
+  String? outcome,
+}) => Promise(
+  id: id,
+  childId: child,
+  step: 'امدح صدقه أولًا',
+  slot: slot,
+  madeOn: made ?? DateTime(2026, 10, 13),
+  followupId: followupId,
+  outcome: outcome,
+);
 
 CompanionInputs _in({
   DateTime? now,
@@ -27,19 +33,22 @@ CompanionInputs _in({
   int? ramadan,
   bool plan = false,
   bool firstDay = false,
-}) =>
-    CompanionInputs(
-      now: now ?? _wed,
-      memory: memory,
-      childId: childId,
-      childName: 'سارة',
-      missionsWaiting: missions,
-      dueFollowups: followups,
-      ramadanDaysUntil: ramadan,
-      ramadanYear: 2027,
-      hasWeeklyPlan: plan,
-      firstDay: firstDay,
-    );
+  ChildNotices notices = const ChildNotices(),
+  int weekActs = 0,
+}) => CompanionInputs(
+  now: now ?? _wed,
+  memory: memory,
+  childId: childId,
+  childName: 'سارة',
+  missionsWaiting: missions,
+  dueFollowups: followups,
+  ramadanDaysUntil: ramadan,
+  ramadanYear: 2027,
+  hasWeeklyPlan: plan,
+  weekActs: weekActs,
+  firstDay: firstDay,
+  notices: notices,
+);
 
 void main() {
   test('no active child → no line (the plain greeting row stays)', () {
@@ -47,11 +56,13 @@ void main() {
   });
 
   test('a waiting mission comes first', () {
-    final line = pickLine(_in(
-      missions: 2,
-      memory: CompanionMemory(promises: [_promise()]),
-      followups: const [DueFollowup(id: 3, childId: 7, step: 'x')],
-    ))!;
+    final line = pickLine(
+      _in(
+        missions: 2,
+        memory: CompanionMemory(promises: [_promise()]),
+        followups: const [DueFollowup(id: 3, childId: 7, step: 'x')],
+      ),
+    )!;
     expect(line.kind, CompanionKind.missionsWaiting);
     expect(line.count, 2);
     expect(line.actions, [CompanionAction.confirmMissions]);
@@ -60,8 +71,10 @@ void main() {
   test('a promise made last night is asked this morning, not before', () {
     final made = DateTime(2026, 10, 13); // «الليلة» on Tuesday
     final memory = CompanionMemory(promises: [_promise(made: made)]);
-    expect(pickLine(_in(now: DateTime(2026, 10, 13, 22), memory: memory))!.kind,
-        isNot(CompanionKind.promiseDue));
+    expect(
+      pickLine(_in(now: DateTime(2026, 10, 13, 22), memory: memory))!.kind,
+      isNot(CompanionKind.promiseDue),
+    );
     final line = pickLine(_in(memory: memory))!;
     expect(line.kind, CompanionKind.promiseDue);
     expect(line.step, 'امدح صدقه أولًا');
@@ -70,10 +83,18 @@ void main() {
 
   test('«هذا الأسبوع» waits seven days', () {
     final memory = CompanionMemory(
-        promises: [_promise(slot: PromiseSlot.week, made: DateTime(2026, 10, 10))]);
-    expect(pickLine(_in(memory: memory))!.kind, isNot(CompanionKind.promiseDue));
-    expect(pickLine(_in(now: DateTime(2026, 10, 17, 9), memory: memory))!.kind,
-        CompanionKind.promiseDue);
+      promises: [
+        _promise(slot: PromiseSlot.week, made: DateTime(2026, 10, 10)),
+      ],
+    );
+    expect(
+      pickLine(_in(memory: memory))!.kind,
+      isNot(CompanionKind.promiseDue),
+    );
+    expect(
+      pickLine(_in(now: DateTime(2026, 10, 17, 9), memory: memory))!.kind,
+      CompanionKind.promiseDue,
+    );
   });
 
   test('an answered promise is never asked again', () {
@@ -87,17 +108,25 @@ void main() {
   });
 
   test('a due follow-up is hosted when no promise carries it', () {
-    final line = pickLine(_in(
-        followups: const [DueFollowup(id: 3, childId: 7, step: 'ركن الهدوء')]))!;
+    final line = pickLine(
+      _in(
+        followups: const [DueFollowup(id: 3, childId: 7, step: 'ركن الهدوء')],
+      ),
+    )!;
     expect(line.kind, CompanionKind.followupDue);
     expect(line.followup!.id, 3);
   });
 
   test('a follow-up that a promise carries is asked once, as the promise', () {
     final memory = CompanionMemory(promises: [_promise(followupId: 3)]);
-    final line = pickLine(_in(
+    final line = pickLine(
+      _in(
         memory: memory,
-        followups: const [DueFollowup(id: 3, childId: 7, step: 'x', source: 'lesson')]))!;
+        followups: const [
+          DueFollowup(id: 3, childId: 7, step: 'x', source: 'lesson'),
+        ],
+      ),
+    )!;
     expect(line.kind, CompanionKind.promiseDue);
   });
 
@@ -129,10 +158,12 @@ void main() {
   });
 
   test('quiet mode only greets', () {
-    final line = pickLine(_in(
-      missions: 1,
-      memory: CompanionMemory(promises: [_promise()], quietMode: true),
-    ))!;
+    final line = pickLine(
+      _in(
+        missions: 1,
+        memory: CompanionMemory(promises: [_promise()], quietMode: true),
+      ),
+    )!;
     expect(line.kind, CompanionKind.greeting);
     expect(line.actions, isEmpty);
   });
@@ -143,7 +174,10 @@ void main() {
     expect(line.kind, CompanionKind.ramadanCountdown);
     expect(line.onceOnly, isTrue);
     final seen = CompanionMemory(seenKeys: {line.key});
-    expect(pickLine(_in(ramadan: 7, memory: seen))!.kind, CompanionKind.greeting);
+    expect(
+      pickLine(_in(ramadan: 7, memory: seen))!.kind,
+      CompanionKind.greeting,
+    );
   });
 
   test('Monday reveals the plan once', () {
@@ -151,9 +185,126 @@ void main() {
     expect(line.kind, CompanionKind.mondayPlan);
     expect(pickLine(_in(now: _wed, plan: true))!.kind, CompanionKind.greeting);
     expect(
-        pickLine(_in(now: _mon, plan: true, memory: CompanionMemory(seenKeys: {line.key})))!
-            .kind,
-        CompanionKind.greeting);
+      pickLine(
+        _in(
+          now: _mon,
+          plan: true,
+          memory: CompanionMemory(seenKeys: {line.key}),
+        ),
+      )!.kind,
+      CompanionKind.greeting,
+    );
+  });
+
+  group('Friday harvest («حصاد الجمعة», phase 3)', () {
+    test('Friday with lanterns: the harvest line, once, with its chip', () {
+      final line = pickLine(_in(now: _fri, weekActs: 4))!;
+      expect(line.kind, CompanionKind.fridayHarvest);
+      expect(line.key, 'harvest:2026-10-16T00:00:00.000');
+      expect(line.onceOnly, isTrue);
+      expect(line.isQuestion, isFalse);
+      expect(line.actions, [CompanionAction.openHarvest]);
+      expect(line.mood, CompanionMood.happy);
+      final seen = CompanionMemory(seenKeys: {line.key});
+      expect(
+        pickLine(_in(now: _fri, weekActs: 4, memory: seen))!.kind,
+        CompanionKind.greeting,
+      );
+    });
+
+    test('a week with no lantern has no harvest — never an empty one', () {
+      expect(pickLine(_in(now: _fri))!.kind, CompanionKind.greeting);
+    });
+
+    test('Friday only', () {
+      for (var d = 0; d < 7; d++) {
+        final day = DateTime(2026, 10, 12 + d, 9); // Mon 12 … Sun 18
+        final kind = pickLine(_in(now: day, weekActs: 3))!.kind;
+        expect(
+          kind == CompanionKind.fridayHarvest,
+          day.weekday == DateTime.friday,
+          reason: '$day',
+        );
+      }
+    });
+
+    test('the anti-nag rules hold: hidden for today, quiet mode', () {
+      final line = pickLine(_in(now: _fri, weekActs: 2))!;
+      final hidden = CompanionMemory(
+        hiddenByDay: {
+          '2026-10-16': {line.key},
+        },
+      );
+      expect(
+        pickLine(_in(now: _fri, weekActs: 2, memory: hidden))!.kind,
+        CompanionKind.greeting,
+      );
+      const quiet = CompanionMemory(quietMode: true);
+      expect(
+        pickLine(_in(now: _fri, weekActs: 2, memory: quiet))!.kind,
+        CompanionKind.greeting,
+      );
+    });
+
+    test('not a question: two questions asked today do not hold it back', () {
+      final asked = CompanionMemory(
+        questionsByDay: {
+          '2026-10-16': {'followup:1', 'followup:2'},
+        },
+      );
+      expect(
+        pickLine(_in(now: _fri, weekActs: 2, memory: asked))!.kind,
+        CompanionKind.fridayHarvest,
+      );
+    });
+
+    test('the order above it is unchanged', () {
+      // 1. a waiting mission
+      expect(
+        pickLine(_in(now: _fri, weekActs: 2, missions: 1))!.kind,
+        CompanionKind.missionsWaiting,
+      );
+      // 2. a due promise (made Thursday night)
+      final promise = CompanionMemory(
+        promises: [_promise(made: DateTime(2026, 10, 15))],
+      );
+      expect(
+        pickLine(_in(now: _fri, weekActs: 2, memory: promise))!.kind,
+        CompanionKind.promiseDue,
+      );
+      // 3. a due follow-up
+      expect(
+        pickLine(
+          _in(
+            now: _fri,
+            weekActs: 2,
+            followups: const [DueFollowup(id: 3, childId: 7, step: 'x')],
+          ),
+        )!.kind,
+        CompanionKind.followupDue,
+      );
+      // 4. a Ramadan countdown day
+      expect(
+        pickLine(_in(now: _fri, weekActs: 2, ramadan: 7))!.kind,
+        CompanionKind.ramadanCountdown,
+      );
+      // 5. Monday's plan still speaks on Monday, lanterns or not.
+      expect(
+        pickLine(_in(now: _mon, plan: true, weekActs: 5))!.kind,
+        CompanionKind.mondayPlan,
+      );
+    });
+
+    test('a once-only line held for this open stays put after it is seen', () {
+      final line = pickLine(_in(now: _fri, weekActs: 2))!;
+      final seen = CompanionMemory(seenKeys: {line.key});
+      expect(
+        pickLine(
+          _in(now: _fri, weekActs: 2, memory: seen.withoutSeen({line.key})),
+        )!.kind,
+        CompanionKind.fridayHarvest,
+      );
+    });
   });
 
   test('the greeting changes by day and holds within the day', () {
@@ -168,10 +319,106 @@ void main() {
     expect(slotOf(DateTime(2026, 1, 1, 5)), TimeSlot.dawn);
     expect(slotOf(DateTime(2026, 1, 1, 13)), TimeSlot.noon);
     expect(slotOf(DateTime(2026, 1, 1, 23)), TimeSlot.night);
-    expect(pickLine(_in(now: DateTime(2026, 10, 14, 23)))!.mood, CompanionMood.night);
+    expect(
+      pickLine(_in(now: DateTime(2026, 10, 14, 23)))!.mood,
+      CompanionMood.night,
+    );
   });
 
   test('day one introduces Noor instead of rotating', () {
     expect(pickLine(_in(firstDay: true))!.kind, CompanionKind.firstDay);
+  });
+
+  group('Noor notices', () {
+    test(
+      'a child of six or seven, by birth month, is invited to the Journey',
+      () {
+        final line = pickLine(
+          _in(
+            notices: const ChildNotices(
+              prayerEligible: true,
+              ageYears: 6,
+              ageFromBirthMonth: true,
+            ),
+          ),
+        )!;
+        expect(line.kind, CompanionKind.prayerInvite);
+        expect(line.actions, [CompanionAction.openPrayerJourney]);
+        expect(line.onceOnly, isTrue);
+      },
+    );
+
+    test('no invite from an age-band guess, once enrolled, or at nine', () {
+      for (final n in const [
+        ChildNotices(prayerEligible: true, ageYears: 6),
+        ChildNotices(
+          prayerEligible: true,
+          prayerEnrolled: true,
+          ageYears: 7,
+          ageFromBirthMonth: true,
+        ),
+        ChildNotices(
+          prayerEligible: true,
+          ageYears: 9,
+          ageFromBirthMonth: true,
+        ),
+      ]) {
+        expect(
+          pickLine(_in(notices: n))!.kind,
+          isNot(CompanionKind.prayerInvite),
+        );
+      }
+    });
+
+    test('a stage ready outranks the rest of the notices', () {
+      final line = pickLine(
+        _in(
+          notices: const ChildNotices(
+            prayerEligible: true,
+            prayerEnrolled: true,
+            prayerAdvance: true,
+            milestonesDue: 2,
+            needsBirthMonth: true,
+          ),
+        ),
+      )!;
+      expect(line.kind, CompanionKind.prayerAdvance);
+    });
+
+    test('a milestone due, then a missing birth month', () {
+      expect(
+        pickLine(_in(notices: const ChildNotices(milestonesDue: 1)))!.kind,
+        CompanionKind.milestoneDue,
+      );
+      final ask = pickLine(
+        _in(notices: const ChildNotices(needsBirthMonth: true)),
+      )!;
+      expect(ask.kind, CompanionKind.birthMonthAsk);
+      expect(ask.actions, [CompanionAction.editChild]);
+    });
+
+    test('a notice speaks once a month, then falls through', () {
+      const n = ChildNotices(needsBirthMonth: true);
+      final ask = pickLine(_in(notices: n))!;
+      final seen = CompanionMemory(seenKeys: {ask.key});
+      expect(
+        pickLine(_in(notices: n, memory: seen))!.kind,
+        CompanionKind.greeting,
+      );
+      // next month it may ask again
+      expect(
+        pickLine(
+          _in(now: DateTime(2026, 11, 14, 9), notices: n, memory: seen),
+        )!.kind,
+        CompanionKind.birthMonthAsk,
+      );
+    });
+
+    test('promises and waiting missions still come first', () {
+      final line = pickLine(
+        _in(missions: 1, notices: const ChildNotices(milestonesDue: 1)),
+      )!;
+      expect(line.kind, CompanionKind.missionsWaiting);
+    });
   });
 }

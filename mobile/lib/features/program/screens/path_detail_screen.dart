@@ -1,15 +1,24 @@
 /// Path detail screen — shows the full path description + the lessons
-/// rendered as a Duolingo-style zigzag trail, then a "start" button.
+/// as «درب المسار» (a zigzag of stations on a paper road under a paper sky),
+/// then a "start" button.
 ///
 /// Reads [pathDetailProvider] (with `?include=lessons`). Each lesson
-/// is a tappable trail node that navigates to [LessonScreen]. The
+/// is a tappable station that navigates to [LessonScreen]. The
 /// active child's completion ratio (via [pathProgressMapProvider])
-/// drives both the header progress bar and the node states.
+/// drives both the header progress bar and the stations: a finished lesson
+/// is a lit lantern, Noor waits on the next one, the road between two
+/// finished lessons is gold. When the last lesson is finished from here,
+/// «اكتمل البدر» shows once for the path ([showFullMoonMoment]).
 library;
 
+
+import 'dart:async';
+
+import 'package:flutter/foundation.dart' show listEquals;
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 
 import '../../../l10n/app_localizations.dart';
 import '../../../theme/app_theme.dart';
@@ -32,10 +41,19 @@ import '../../share/share_service.dart';
 import '../../share/shareable_moment_card.dart';
 import 'package:almorabbi/core/motion.dart';
 import 'package:almorabbi/widgets/ui/loading_view.dart';
+import '../../../widgets/ui/art_image.dart';
+import '../../../widgets/ui/brand_glyph.dart';
+import '../../companion/widgets/noor_face.dart';
+import '../../companion/widgets/noor_presence.dart';
+import '../../home/widgets/sky_band.dart';
+import '../../home/widgets/today_road.dart';
+import '../../onboarding/providers/onboarding_providers.dart';
+import '../widgets/full_moon_moment.dart';
 
 
-/// Domain → header illustration (solid cream-bg JPGs that blend with the
-/// page background). Curriculum domain `medical` maps to the `health` art.
+
+/// Domain → header illustration: the «ورق مقصوص» domain scenes, each its own
+/// emerald card. Curriculum domain `medical` maps to the `health` art.
 String? _domainIllustration(String domain) {
   const map = {
     'islamic_parenting': 'domain_islamic_parenting',
@@ -45,7 +63,7 @@ String? _domainIllustration(String domain) {
     'medical': 'domain_health',
   };
   final name = map[domain];
-  return name == null ? null : 'assets/images/generated/$name.webp';
+  return name == null ? null : 'assets/svg/art/$name.svg';
 }
 
 class PathDetailScreen extends ConsumerWidget {
@@ -96,7 +114,7 @@ class PathDetailScreen extends ConsumerWidget {
   }
 }
 
-class _Body extends ConsumerWidget {
+class _Body extends ConsumerStatefulWidget {
   const _Body({
     required this.detail,
     required this.ageGroup,
@@ -107,17 +125,84 @@ class _Body extends ConsumerWidget {
   final int? childId;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<_Body> createState() => _BodyState();
+}
+
+class _BodyState extends ConsumerState<_Body> {
+  /// A path just went from not-all to all lessons done while this screen was
+  /// open. «اكتمل البدر» waits for the screen to be on top again — the parent
+  /// is usually still inside the last lesson when the progress arrives.
+  bool _moonDue = false;
+
+  PathDetail get detail => widget.detail;
+
+  bool _allDone(PathProgressMap? m) =>
+      m != null &&
+      detail.lessons.isNotEmpty &&
+      detail.lessons
+          .every((l) => m.statusFor(l.id) == ProgressStatus.completed);
+
+  void _onProgress(
+    AsyncValue<PathProgressMap>? prev,
+    AsyncValue<PathProgressMap> next,
+  ) {
+    // Only a change seen here counts: a path opened already finished has no
+    // «before» on this screen, and stays quiet.
+    final before = prev?.valueOrNull;
+    final after = next.valueOrNull;
+    if (before == null || after == null) return;
+    if (!_allDone(before) && _allDone(after)) {
+      _moonDue = true;
+      unawaited(_maybeShowMoon());
+    }
+  }
+
+  /// Shows the full moon if one is due, this screen is on top, and this
+  /// path has not had its moon on this device before.
+  Future<void> _maybeShowMoon() async {
+    if (!_moonDue || !mounted) return;
+    if (ModalRoute.of(context)?.isCurrent == false) return;
+    _moonDue = false;
     final path = detail.path;
+    final prefs = await ref.read(sharedPreferencesProvider.future);
+    final shown = prefs.getStringList(kFullMoonShownKey) ?? const <String>[];
+    if (shown.contains(path.id)) return;
+    await prefs.setStringList(kFullMoonShownKey, [...shown, path.id]);
+    if (!mounted) return;
+    await showFullMoonMoment(
+      context,
+      pathTitle: path.title,
+      onShare: () => _sharePathCompletion(context, path),
+    );
+  }
+
+  Future<void> _openLesson(String lessonId) async {
+    await Navigator.of(context).push(
+      AppRoutes.lesson(lessonId, widget.ageGroup, childId: widget.childId),
+    );
+    // Back from the lesson: the moon, if finishing it finished the path.
+    unawaited(_maybeShowMoon());
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final path = detail.path;
+    final childId = widget.childId;
     final total = detail.lessons.length;
     // Drive the progress map from the active child.
     final progressArgs = childId == null
         ? null
         : PathProgressArgs(
-            childId: childId!,
+            childId: childId,
             pathId: path.id,
             totalLessonsInPath: total,
           );
+    if (progressArgs != null) {
+      ref.listen<AsyncValue<PathProgressMap>>(
+        pathProgressMapProvider(progressArgs),
+        _onProgress,
+      );
+    }
     final asyncProgress = progressArgs == null
         ? null
         : ref.watch(pathProgressMapProvider(progressArgs));
@@ -126,12 +211,14 @@ class _Body extends ConsumerWidget {
       orElse: () => null,
     );
     final style = styleFor(path.domain);
-
-    void openLesson(String lessonId) {
-      Navigator.of(context).push(
-        AppRoutes.lesson(lessonId, ageGroup, childId: childId),
-      );
-    }
+    final statuses = [
+      for (final l in detail.lessons)
+        progressMap?.statusFor(l.id) ?? ProgressStatus.notStarted,
+    ];
+    // Noor waits on the first lesson not yet finished — not while the
+    // child's progress is still on its way (she would hop on arrival).
+    final firstOpen = statuses.indexWhere((s) => s != ProgressStatus.completed);
+    final noorAt = childId != null && progressMap == null ? null : firstOpen;
 
     return ListView(
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
@@ -144,11 +231,9 @@ class _Body extends ConsumerWidget {
         ),
         const SizedBox(height: 16),
         if (_domainIllustration(path.domain) != null) ...[
-          Image.asset(
-            _domainIllustration(path.domain)!,
-            fit: BoxFit.contain,
-            errorBuilder: (_, _, _) => const SizedBox.shrink(),
-          ),
+          // A square card: full width would be a screen of art above the
+          // lessons, so it is held to a header's height.
+          ArtImage(_domainIllustration(path.domain)!, height: 180),
           const SizedBox(height: 16),
         ],
         // Prominent video preview for the whole unit (the path's intro video).
@@ -183,7 +268,7 @@ class _Body extends ConsumerWidget {
               .titleMedium
               ?.copyWith(fontWeight: FontWeight.w800),
         ),
-        const SizedBox(height: 4),
+        const SizedBox(height: 8),
         if (detail.lessons.isEmpty)
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 24),
@@ -192,20 +277,22 @@ class _Body extends ConsumerWidget {
               title: AppLocalizations.of(context).pathDetailEmpty,
             ),
           )
-        else
-          for (var i = 0; i < detail.lessons.length; i++)
-            _TrailRow(
-              index: i,
-              lesson: detail.lessons[i],
-              style: style,
-              status: progressMap?.statusFor(detail.lessons[i].id) ??
-                  ProgressStatus.notStarted,
-              prevStatus: i == 0
-                  ? null
-                  : progressMap?.statusFor(detail.lessons[i - 1].id) ??
-                      ProgressStatus.notStarted,
-              onTap: () => openLesson(detail.lessons[i].id),
+        else ...[
+          // The sky the road comes down from — the same paper sky of the hour
+          // as on «اليوم». Decoration only: no words on it.
+          const ExcludeSemantics(
+            child: SkyBand(
+              key: ValueKey('path_trail_sky'),
+              child: SizedBox(width: double.infinity, height: 6),
             ),
+          ),
+          _Trail(
+            lessons: detail.lessons,
+            statuses: statuses,
+            noorAt: noorAt,
+            onTap: (i) => _openLesson(detail.lessons[i].id),
+          ),
+        ],
         const SizedBox(height: 16),
         // The primary button was hard-wired to `lessons.first` no matter what
         // the parent had already done, so finishing lesson 1 and coming back
@@ -233,7 +320,7 @@ class _Body extends ConsumerWidget {
                 : AppLocalizations.of(context).pathDetailStart,
             color: style.base,
             icon: const Icon(Icons.play_arrow, color: Colors.white),
-            onTap: next == null ? null : () => openLesson(next!.id),
+            onTap: next == null ? null : () => _openLesson(next!.id),
           );
         }),
         if (progressMap != null && progressMap.completedCount == total) ...[
@@ -331,6 +418,7 @@ class _Header extends ConsumerWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         // The age band belongs to the child; the lessons below
                         // it are addressed to the parent. Say so on the badge
@@ -340,20 +428,33 @@ class _Header extends ConsumerWidget {
                         // as the list card does, overflowed this header into
                         // three wrapped lines on a real screen — caught on an
                         // emulator, invisible to every test.
-                        _Badge(
-                          text: AppLocalizations.of(context)
-                              .pathAudienceAge(path.ageLabel(
-                                  AppLocalizations.of(context))),
+                        //
+                        // The two wrap under each other rather than push the
+                        // streak chip off the card at large text (200%).
+                        Expanded(
+                          child: Wrap(
+                            spacing: 8,
+                            runSpacing: 6,
+                            children: [
+                              _Badge(
+                                text: AppLocalizations.of(context)
+                                    .pathAudienceAge(path.ageLabel(
+                                        AppLocalizations.of(context))),
+                              ),
+                              _Badge(
+                                text: path.domainLabel(
+                                    AppLocalizations.of(context)),
+                              ),
+                            ],
+                          ),
                         ),
-                        const SizedBox(width: 8),
-                        _Badge(
-                          text: path.domainLabel(AppLocalizations.of(context)),
-                        ),
-                        const Spacer(),
-                        if (childId != null)
+                        if (childId != null) ...[
+                          const SizedBox(width: 8),
                           StreakChip(streakDays: streak, dark: true),
+                        ],
                       ],
                     ),
+
                     const SizedBox(height: 14),
                     Text(
                       path.title,
@@ -492,9 +593,12 @@ class _ClickableBadge extends StatelessWidget {
   }
 }
 
-/// Streak chip — "🔥 X يوم متتالي" — surfaces the device's
-/// consecutive-day completion streak. When [dark] is true the chip
-/// is meant to be placed on a coloured background (header card).
+/// Streak chip — "X يوم متتالي" — the device's consecutive-day completion
+/// streak, said quietly: no flame and no warm badge colours. The lanterns on
+/// the road are the app's language of progress now (NOOR_WAL_QANADIL_PLAN),
+/// so this chip only states the fact, and says nothing at zero — the old
+/// «ابدأ سلسلتك اليوم» nudge was a push, not a fact. When [dark] is true the
+/// chip sits on a coloured background (the header card).
 class StreakChip extends StatelessWidget {
   const StreakChip({
     super.key,
@@ -506,49 +610,22 @@ class StreakChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (streakDays <= 0) {
-      // Empty state — don't show a "0-day streak" chip (it would
-      // feel punitive). A short nudge is friendlier.
-      return Container(
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-        decoration: BoxDecoration(
-          color: dark
-              ? Colors.white.withValues(alpha: 0.18)
-              : AppTheme.surfaceAlt,
-          borderRadius: BorderRadius.circular(Dt.rChip),
-        ),
-        child: Text(
-          AppLocalizations.of(context).pathDetailStreakStart,
-          style: TextStyle(
-            color: dark ? Colors.white : AppTheme.textSecondary,
-            fontSize: 12,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-      );
-    }
+    if (streakDays <= 0) return const SizedBox.shrink();
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
       decoration: BoxDecoration(
         color: dark
-            ? Colors.white.withValues(alpha: 0.20)
-            : const Color(0xFFFFE9C7),
+            ? Colors.white.withValues(alpha: 0.18)
+            : context.colors.surfaceAlt,
         borderRadius: BorderRadius.circular(Dt.rChip),
       ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const Text('🔥', style: TextStyle(fontSize: 14)),
-          const SizedBox(width: 4),
-          Text(
-            '$streakDays ${_daysLabel(AppLocalizations.of(context), streakDays)}',
-            style: TextStyle(
-              color: dark ? Colors.white : const Color(0xFF8A5A0F),
-              fontSize: 12,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-        ],
+      child: Text(
+        '$streakDays ${_daysLabel(AppLocalizations.of(context), streakDays)}',
+        style: TextStyle(
+          color: dark ? Colors.white : context.colors.textSecondary,
+          fontSize: 12,
+          fontWeight: FontWeight.w600,
+        ),
       ),
     );
   }
@@ -623,37 +700,96 @@ class _ReferenceCard extends StatelessWidget {
   }
 }
 
-// ── Duolingo-style zigzag trail ──────────────────────────────────────────
+// ── «درب المسار»: the lessons as stations on one paper road ──────────────
+//
+// The road is cut from the paper of «درب اليوم» ([RoadRailPainter.paintStrip]):
+// a flat strip with an offset shadow, gold where it was walked. A finished
+// lesson is a lit lantern; Noor waits, small, on the next one; the rest are
+// quiet paper. The zigzag and the row height are the trail's old geometry.
 
 const double _kTrailRowHeight = 120;
 const double _kNodeSize = 72;
 const double _kNodeInset = 36; // node-center distance from row edge
+const double _kStationSize = 64;
+
+/// The trail: one road painted under all the rows, then the rows.
+class _Trail extends StatelessWidget {
+  const _Trail({
+    required this.lessons,
+    required this.statuses,
+    required this.noorAt,
+    required this.onTap,
+  });
+
+  final List<CurriculumLesson> lessons;
+  final List<ProgressStatus> statuses;
+
+  /// The station Noor stands on; null for none (every lesson finished, or
+  /// the progress still loading).
+  final int? noorAt;
+  final void Function(int index) onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    bool done(int i) => statuses[i] == ProgressStatus.completed;
+    return Stack(
+      children: [
+        Positioned.fill(
+          child: CustomPaint(
+            key: const ValueKey('path_trail_road'),
+            painter: PathTrailPainter(
+              walked: [
+                for (var i = 0; i < lessons.length; i++)
+                  // Into the first station once it is finished; after that,
+                  // only the road between two finished lessons is walked.
+                  i == 0 ? done(0) : done(i - 1) && done(i),
+              ],
+              paper: RoadRailPainter.paperFor(Theme.of(context).brightness),
+              textDirection: Directionality.of(context),
+            ),
+          ),
+        ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            for (var i = 0; i < lessons.length; i++)
+              _TrailRow(
+                index: i,
+                lesson: lessons[i],
+                status: statuses[i],
+                noorHere: i == noorAt,
+                onTap: () => onTap(i),
+              ),
+          ],
+        ),
+      ],
+    );
+  }
+}
 
 class _TrailRow extends StatelessWidget {
   const _TrailRow({
     required this.index,
     required this.lesson,
     required this.status,
-    required this.prevStatus,
-    required this.style,
+    required this.noorHere,
     required this.onTap,
   });
 
   final int index;
   final CurriculumLesson lesson;
   final ProgressStatus status;
-  final ProgressStatus? prevStatus; // null for the first row
-  final DomainStyle style;
+  final bool noorHere;
   final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
     final alignEnd = index.isOdd; // zigzag
     final node = _LessonNode(
+      index: index,
       lesson: lesson,
       status: status,
-      style: style,
-      order: index + 1,
+      noorHere: noorHere,
       alignEnd: alignEnd,
       onTap: onTap,
     );
@@ -665,33 +801,14 @@ class _TrailRow extends StatelessWidget {
       excludeSemantics: true,
       child: SizedBox(
         height: _kTrailRowHeight,
-        child: Stack(
-          clipBehavior: Clip.none,
-          children: [
-            if (index > 0)
-              Positioned.fill(
-                child: CustomPaint(
-                  painter: _ConnectorPainter(
-                    fromEnd: (index - 1).isOdd,
-                    toEnd: alignEnd,
-                    color: prevStatus == ProgressStatus.completed
-                        ? style.base
-                        : context.colors.track,
-                    dashed: prevStatus != ProgressStatus.completed,
-                    textDirection: Directionality.of(context),
-                  ),
-                ),
-              ),
-            Align(
-              alignment: alignEnd
-                  ? AlignmentDirectional.centerEnd
-                  : AlignmentDirectional.centerStart,
-              child: Padding(
-                padding: const EdgeInsetsDirectional.only(start: 12, end: 12),
-                child: node,
-              ),
-            ),
-          ],
+        child: Align(
+          alignment: alignEnd
+              ? AlignmentDirectional.centerEnd
+              : AlignmentDirectional.centerStart,
+          child: Padding(
+            padding: const EdgeInsetsDirectional.only(start: 12, end: 12),
+            child: node,
+          ),
         ),
       ),
     );
@@ -700,80 +817,58 @@ class _TrailRow extends StatelessWidget {
 
 class _LessonNode extends StatelessWidget {
   const _LessonNode({
+    required this.index,
     required this.lesson,
     required this.status,
-    required this.style,
-    required this.order,
+    required this.noorHere,
     required this.alignEnd,
     required this.onTap,
   });
 
+  final int index;
   final CurriculumLesson lesson;
   final ProgressStatus status;
-  final DomainStyle style;
-  final int order;
-  final bool alignEnd; // circle must hug the row edge for the connector
+  final bool noorHere;
+  final bool alignEnd; // the station must hug the row edge for the road
   final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
-    final Widget circle;
-    switch (status) {
-      case ProgressStatus.completed:
-        circle = Container(
-          width: _kNodeSize,
-          height: _kNodeSize,
-          decoration: BoxDecoration(
-            gradient: style.gradient,
-            shape: BoxShape.circle,
-            boxShadow: Dt.softShadow(style.base),
+    final Widget station;
+    if (status == ProgressStatus.completed) {
+      station = _LanternStation(key: ValueKey('trail_lantern_$index'));
+    } else if (noorHere) {
+      // Gentle two-pulse on appear, then static (performance budget) — and
+      // Noor herself rests too: a list of lessons is no place for a loop.
+      station = SizedBox.square(
+        key: ValueKey('trail_noor_$index'),
+        dimension: _kNodeSize,
+        child: const Center(
+          child: TickerMode(
+            enabled: false,
+            child: NoorPresence(size: 52, face: NoorFaceState.awake),
           ),
-          child: const Icon(Icons.check_rounded,
-              color: Colors.white, size: 36),
-        );
-      case ProgressStatus.inProgress:
-        // Gentle two-pulse on appear, then static (performance budget).
-        circle = Container(
-          width: _kNodeSize,
-          height: _kNodeSize,
-          decoration: BoxDecoration(
-            color: Dt.surface,
-            shape: BoxShape.circle,
-            border: Border.all(color: style.base, width: 4),
-            boxShadow: Dt.softShadow(style.base, alpha: .2),
-          ),
-          child: Icon(Icons.play_arrow_rounded, color: style.base, size: 36),
-        )
-            .animate(onPlay: loopUnlessReduced(context, count: 2))
-            .scale(
-              begin: const Offset(1, 1),
-              end: const Offset(1.06, 1.06),
-              duration: 600.ms,
-              curve: Curves.easeInOut,
-            )
-            .then()
-            .scale(
-              begin: const Offset(1.06, 1.06),
-              end: const Offset(1, 1),
-              duration: 600.ms,
-              curve: Curves.easeInOut,
-            );
-      case ProgressStatus.notStarted:
-        // Available (not locked): white circle with the domain-colored ring
-        // so every lesson reads as openable, not a greyed-out locked step.
-        circle = Container(
-          width: _kNodeSize,
-          height: _kNodeSize,
-          decoration: BoxDecoration(
-            color: Dt.surface,
-            shape: BoxShape.circle,
-            border: Border.all(color: style.base.withValues(alpha: .55), width: 3),
-            boxShadow: Dt.softShadow(style.base, alpha: .15),
-          ),
-          child: const Center(
-            child: Text('📖', style: TextStyle(fontSize: 28)),
-          ),
-        );
+        ),
+      )
+          .animate(onPlay: loopUnlessReduced(context, count: 2))
+          .scale(
+            begin: const Offset(1, 1),
+            end: const Offset(1.06, 1.06),
+            duration: 600.ms,
+            curve: Curves.easeInOut,
+          )
+          .then()
+          .scale(
+            begin: const Offset(1.06, 1.06),
+            end: const Offset(1, 1),
+            duration: 600.ms,
+            curve: Curves.easeInOut,
+          );
+    } else {
+      station = _PaperStation(
+        key: ValueKey('trail_paper_$index'),
+        started: status == ProgressStatus.inProgress,
+      );
     }
 
     final info = Expanded(
@@ -821,94 +916,155 @@ class _LessonNode extends StatelessWidget {
       ),
     );
 
-    // The circle hugs the row edge so the connector painter's
-    // node-center math holds for both zigzag sides.
+    final node = SizedBox.square(
+      dimension: _kNodeSize,
+      child: Center(child: station),
+    );
+
+    // The station hugs the row edge so the road painter's node-center math
+    // holds for both zigzag sides.
     return BouncyTap(
       onTap: onTap,
       child: SizedBox(
         width: 200,
         child: Row(
           children: alignEnd
-              ? [info, const SizedBox(width: 10), circle]
-              : [circle, const SizedBox(width: 10), info],
+              ? [info, const SizedBox(width: 10), node]
+              : [node, const SizedBox(width: 10), info],
         ),
       ),
     );
   }
 }
 
-/// Curved connector between two consecutive trail nodes. Solid in the
-/// domain color when the previous lesson is completed; dashed grey
-/// otherwise. Mirrors correctly under RTL via [textDirection].
-class _ConnectorPainter extends CustomPainter {
-  final bool fromEnd;
-  final bool toEnd;
-  final Color color;
-  final bool dashed;
-  final TextDirection textDirection;
+/// A cut-paper drop under a station: flat, offset, no blur (STYLE.md).
+const _kStationShadow = [
+  BoxShadow(color: Color(0x330F3D36), offset: Offset(2, 3)),
+];
 
-  _ConnectorPainter({
-    required this.fromEnd,
-    required this.toEnd,
-    required this.color,
-    required this.dashed,
+/// A finished lesson: a lit lantern on a disc of its own light.
+class _LanternStation extends StatelessWidget {
+  const _LanternStation({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: _kStationSize,
+      height: _kStationSize,
+      alignment: Alignment.center,
+      decoration: const BoxDecoration(
+        shape: BoxShape.circle,
+        color: RoadRailPainter.gold,
+        boxShadow: _kStationShadow,
+      ),
+      child: const BrandGlyph(BrandIcon.lantern, size: 40),
+    );
+  }
+}
+
+/// A lesson not reached yet: quiet paper, its book glyph muted until begun.
+class _PaperStation extends StatelessWidget {
+  const _PaperStation({super.key, required this.started});
+
+  final bool started;
+
+  @override
+  Widget build(BuildContext context) {
+    final dark = Theme.of(context).brightness == Brightness.dark;
+    return Container(
+      width: _kStationSize,
+      height: _kStationSize,
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: dark ? _kPaperDark : _kPaperLight,
+        border: started
+            ? Border.all(color: RoadRailPainter.gold, width: 2.5)
+            : dark
+                ? null
+                : Border.all(color: _kPaperEdge, width: 1.5),
+        boxShadow: _kStationShadow,
+      ),
+      child: BrandGlyph(
+        BrandIcon.openBook,
+        size: 30,
+        color: started ? null : context.colors.textSecondary,
+      ),
+    );
+  }
+}
+
+// The station paper (assets/svg/STYLE.md), the same sheets as «اليوم».
+const _kPaperLight = Color(0xFFFBF1DE);
+const _kPaperEdge = Color(0xFFD9C7A7);
+const _kPaperDark = Color(0xFF1F4A43);
+
+/// The road under «درب المسار»: down from the sky to the first station, then
+/// a soft curve from each station to the next on the zigzag. [walked] has one
+/// entry per stretch — the way into station i — and is gold only between two
+/// finished lessons (and into the first, once it is finished).
+class PathTrailPainter extends CustomPainter {
+  PathTrailPainter({
+    required this.walked,
+    required this.paper,
     required this.textDirection,
   });
 
-  double _x(bool end, double width) {
+  final List<bool> walked;
+  final Color paper;
+  final TextDirection textDirection;
+
+  /// The strip is wider than «اليوم»'s: the stations here are 64, not 28.
+  static const width = 10.0;
+
+  Offset _station(int i, double w) {
     // "start"/"end" are directional; resolve to pixels.
-    final logicalEnd = textDirection == TextDirection.rtl ? !end : end;
+    final logicalEnd =
+        textDirection == TextDirection.rtl ? !i.isOdd : i.isOdd;
     const inset = 12 + _kNodeInset;
-    return logicalEnd ? width - inset : inset;
+    return Offset(
+      logicalEnd ? w - inset : inset,
+      i * _kTrailRowHeight + _kTrailRowHeight / 2,
+    );
   }
 
   @override
   void paint(Canvas canvas, Size size) {
-    final xFrom = _x(fromEnd, size.width);
-    final xTo = _x(toEnd, size.width);
-    final yCenter = size.height / 2;
-    // From just below the previous node to just above this node.
-    final from = Offset(xFrom, yCenter - _kTrailRowHeight + _kNodeSize / 2 + 6);
-    final to = Offset(xTo, yCenter - _kNodeSize / 2 - 6);
-
-    final path = Path()
-      ..moveTo(from.dx, from.dy)
-      ..cubicTo(
-        from.dx,
-        from.dy + (to.dy - from.dy) * .7,
-        to.dx,
-        to.dy - (to.dy - from.dy) * .7,
-        to.dx,
-        to.dy,
-      );
-
-    final paint = Paint()
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 4
-      ..strokeCap = StrokeCap.round
-      ..color = color;
-
-    if (!dashed) {
-      canvas.drawPath(path, paint);
-      return;
-    }
-    // Dashed: walk the path metrics in 8px-on / 7px-off segments.
-    for (final metric in path.computeMetrics()) {
-      var distance = 0.0;
-      while (distance < metric.length) {
-        final next = (distance + 8).clamp(0.0, metric.length);
-        canvas.drawPath(metric.extractPath(distance, next), paint);
-        distance = next + 7;
+    for (var i = 0; i < walked.length; i++) {
+      final to = _station(i, size.width);
+      final Path path;
+      if (i == 0) {
+        path = Path()
+          ..moveTo(to.dx, 0)
+          ..lineTo(to.dx, to.dy);
+      } else {
+        final from = _station(i - 1, size.width);
+        final dy = to.dy - from.dy;
+        path = Path()
+          ..moveTo(from.dx, from.dy)
+          ..cubicTo(
+            from.dx,
+            from.dy + dy * .7,
+            to.dx,
+            to.dy - dy * .7,
+            to.dx,
+            to.dy,
+          );
       }
+      RoadRailPainter.paintStrip(
+        canvas,
+        path,
+        walked: walked[i],
+        paper: paper,
+        width: width,
+      );
     }
   }
 
   @override
-  bool shouldRepaint(_ConnectorPainter old) =>
-      old.color != color ||
-      old.dashed != dashed ||
-      old.fromEnd != fromEnd ||
-      old.toEnd != toEnd ||
+  bool shouldRepaint(PathTrailPainter old) =>
+      !listEquals(old.walked, walked) ||
+      old.paper != paper ||
       old.textDirection != textDirection;
 }
 

@@ -47,7 +47,10 @@ import '../features/home/widgets/today_ask_block.dart';
 import '../features/home/widgets/today_child_block.dart';
 import '../features/home/widgets/today_loop_cards.dart';
 import '../features/home/widgets/today_rituals_row.dart';
+import '../features/home/widgets/sky_band.dart';
+import '../features/home/widgets/today_road.dart';
 import '../features/home/widgets/today_section.dart';
+import '../features/lanterns/widgets/week_lantern_string.dart';
 import '../features/onboarding/providers/onboarding_providers.dart';
 import '../features/program/data/badges.dart';
 import '../features/program/providers/program_providers.dart';
@@ -58,6 +61,7 @@ import '../features/referral/pride_invite_card.dart';
 import '../features/journey/widgets/child_journey_card.dart';
 import '../features/coins/coins_providers.dart';
 import '../features/shell/root_tab.dart';
+import '../theme/app_colors.dart';
 import '../theme/app_theme.dart';
 import '../theme/design_tokens.dart';
 import '../widgets/ui/brand_glyph.dart';
@@ -130,53 +134,109 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     final gift = ref.watch(dailyGiftProvider).valueOrNull;
 
     final l10n = AppLocalizations.of(context);
+    final noorOn = ref.watch(noorHeaderEnabledProvider);
+    final stops = ref.watch(todayStopsProvider);
+    // Time-aware, and honest on day one («النصوص»): the hour picks صباح/مساء,
+    // and a first-day streak (≤1) drops the «مستمرة» — nothing has continued
+    // yet.
+    final greeting = profile == null
+        ? l10n.greetingPeace
+        : greetingFor(
+            l10n,
+            profile.name,
+            DateTime.now(),
+            firstDay: coins.dailyStreak <= 1,
+          );
+    final greetingRow = Row(
+      children: [
+        // «نور» as a presence beside the greeting (جولة الحرفة):
+        // the drawn face in its breathing moon window, not a loose
+        // square illustration.
+        const NoorPresence(size: 56)
+            .animate()
+            .fadeIn(duration: Dt.slow)
+            .scale(
+              begin: const Offset(.7, .7),
+              curve: Curves.easeOutBack,
+              duration: Dt.slow,
+            ),
+        const SizedBox(width: 10),
+        Expanded(
+          child: Text(
+            // Time-aware, and honest on day one («النصوص»): the hour
+            // picks صباح/مساء, and a first-day streak (≤1) drops the
+            // «مستمرة» — nothing has continued yet.
+            greeting,
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+              color: AppTheme.textSecondary,
+              fontWeight: FontWeight.w600,
+              height: 1.4,
+            ),
+          ).animate().fadeIn(duration: Dt.base),
+        ),
+      ],
+    );
+
+    // ① خطوة اليوم
+    final stepStop = Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        TodaySectionHeader(
+          icon: BrandIcon.lightDot,
+          title: profile == null
+              ? l10n.todayStepTitleNoName
+              : l10n.todayStepTitle(profile.name),
+        ),
+        TodayFocusCard(
+          key: widget.focusCardKey,
+          bundle: bundle,
+          ageGroup: ageGroup,
+          onStartFirstPath: () => widget.onGoToTab(RootTab.learn),
+        ),
+        // «المتابعة» then «خطة الأسبوع» (plan §1.2, §1.3), between ① and ②:
+        // the weekly plan is the week-sized version of today's step, and a
+        // follow-up is time-sensitive — but neither goes above ①, the card
+        // that took lesson_opened/child_added from 39% to 54%. Each hides
+        // itself while loading, on any failure, and on an older server, and
+        // logs today_block_tapped('loop', <action>).
+        TodayLoopCards(
+          profile: profile,
+          hideFollowup: ref.watch(companionHostsFollowupProvider),
+        ),
+        // «قناديل الأسبوع» (phase 3): the week's lit lanterns, last in ① —
+        // under the step and its weekly loop, never above the ① button.
+        // Nothing at all on a server without lanterns or on any failure.
+        if (profile != null) const WeekLanternString(),
+      ],
+    );
+    // ② اسأل المربّي
+    final askStop = TodayAskBlock(
+      childName: profile?.name,
+      onAsk: () => widget.onGoToTab(RootTab.assistant),
+    );
+    // ③ مهمة الطفل
+    final missionStop = TodayChildBlock(profile: profile);
+    final missionIcon =
+        profile != null && !kMissionBands.contains(profile.ageGroup)
+        ? BrandIcon.sprig
+        : BrandIcon.path;
+
     return Scaffold(
       appBar: const HomeAppBar(),
       body: ListView(
         padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
         children: [
           // «نور يتذكّر» (phase 2): Noor's one line for this open — a
-          // promise to ask back, a mission waiting, the time of day. The
-          // old greeting row stays as the fallback (no child yet, or the
-          // server's NOOR_HEADER_ENABLED kill switch is off).
-          NoorTodayHeader(
-            fallback: Row(
-              children: [
-                // «نور» as a presence beside the greeting (جولة الحرفة):
-                // the drawn face in its breathing moon window, not a loose
-                // square illustration.
-                const NoorPresence(size: 56)
-                    .animate()
-                    .fadeIn(duration: Dt.slow)
-                    .scale(
-                      begin: const Offset(.7, .7),
-                      curve: Curves.easeOutBack,
-                      duration: Dt.slow,
-                    ),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: Text(
-                    // Time-aware, and honest on day one («النصوص»): the hour
-                    // picks صباح/مساء, and a first-day streak (≤1) drops the
-                    // «مستمرة» — nothing has continued yet.
-                    profile == null
-                        ? l10n.greetingPeace
-                        : greetingFor(
-                            l10n,
-                            profile.name,
-                            DateTime.now(),
-                            firstDay: coins.dailyStreak <= 1,
-                          ),
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      color: AppTheme.textSecondary,
-                      fontWeight: FontWeight.w600,
-                      height: 1.4,
-                    ),
-                  ).animate().fadeIn(duration: Dt.base),
-                ),
-              ],
-            ),
-          ),
+          // promise to ask back, a mission waiting, the time of day — under
+          // the sky of the hour (SkyBand). The old greeting row stays as the
+          // fallback (no child yet); with the server's NOOR_HEADER_ENABLED
+          // kill switch off there is no sky and no road either.
+          if (noorOn)
+            SkyBand(
+              child: NoorTodayHeader(fallback: _SkyGreeting(text: greeting)),
+            )
+          else
+            NoorTodayHeader(fallback: greetingRow),
           const SizedBox(height: 12),
           // «هدية اليوم» — once a day it lands as a moment; afterwards it
           // stays as a quiet line (جولة الحرفة, item 2).
@@ -185,45 +245,43 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               padding: const EdgeInsets.only(bottom: 2),
               child: DailyGiftMoment(gift: gift),
             ),
-          // Whose day this is — and the one-tap way to change it.
-          _ActiveChildBanner(profile: profile),
+          // Whose day this is — and the one-tap way to change it. Under the
+          // sky Noor already says the name and the app bar's chip switches
+          // child, so the banner would only repeat them (plan phase 2).
+          if (!noorOn) _ActiveChildBanner(profile: profile),
           const SizedBox(height: 20),
 
-          // ① خطوة اليوم
-          TodaySectionHeader(
-            icon: BrandIcon.lightDot,
-            title: profile == null
-                ? l10n.todayStepTitleNoName
-                : l10n.todayStepTitle(profile.name),
-          ),
-          TodayFocusCard(
-            key: widget.focusCardKey,
-            bundle: bundle,
-            ageGroup: ageGroup,
-            onStartFirstPath: () => widget.onGoToTab(RootTab.learn),
-          ),
-          // «المتابعة» then «خطة الأسبوع» (plan §1.2, §1.3), between ① and ②:
-          // the weekly plan is the week-sized version of today's step, and a
-          // follow-up is time-sensitive — but neither goes above ①, the card
-          // that took lesson_opened/child_added from 39% to 54%. Each hides
-          // itself while loading, on any failure, and on an older server, and
-          // logs today_block_tapped('loop', <action>).
-          TodayLoopCards(
-            profile: profile,
-            hideFollowup: ref.watch(companionHostsFollowupProvider),
-          ),
-          const SizedBox(height: 24),
-
-          // ② اسأل المربّي
-          TodayAskBlock(
-            childName: profile?.name,
-            onAsk: () => widget.onGoToTab(RootTab.assistant),
-          ),
-          const SizedBox(height: 24),
-
-          // ③ مهمة الطفل
-          TodayChildBlock(profile: profile),
-          const SizedBox(height: 28),
+          // «درب اليوم» (phase 2): the three stops as stations on one road.
+          // Same blocks, same order; the road only frames them.
+          if (noorOn) ...[
+            TodayRoad(
+              stops: [
+                RoadStop(
+                  icon: BrandIcon.lightDot,
+                  reached: stops.step,
+                  child: stepStop,
+                ),
+                RoadStop(
+                  icon: BrandIcon.speechBubble,
+                  reached: stops.ask,
+                  child: askStop,
+                ),
+                RoadStop(
+                  icon: missionIcon,
+                  reached: stops.mission,
+                  child: missionStop,
+                ),
+              ],
+            ),
+            const SizedBox(height: 28),
+          ] else ...[
+            stepStop,
+            const SizedBox(height: 24),
+            askStop,
+            const SizedBox(height: 24),
+            missionStop,
+            const SizedBox(height: 28),
+          ],
 
           // «برامج الأسرة» (plan phase 2: Ramadan, the Prayer Journey,
           // milestones) — below the three blocks, never between them. A card,
@@ -377,6 +435,44 @@ class _ActiveChildBanner extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+/// The plain greeting, set on the sky: Noor's window and the words in a paper
+/// bubble, like Noor's own line — never text straight on the sky.
+class _SkyGreeting extends StatelessWidget {
+  const _SkyGreeting({required this.text});
+
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.colors;
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const NoorPresence(size: 56),
+        const SizedBox(width: 10),
+        Expanded(
+          child: Container(
+            padding: const EdgeInsets.fromLTRB(14, 12, 14, 12),
+            decoration: BoxDecoration(
+              color: colors.surface,
+              borderRadius: BorderRadius.circular(18),
+              border: Border.all(color: colors.primary.withValues(alpha: .18)),
+            ),
+            child: Text(
+              text,
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                color: colors.ink,
+                fontWeight: FontWeight.w700,
+                height: 1.4,
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

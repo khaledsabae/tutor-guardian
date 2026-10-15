@@ -1,7 +1,7 @@
-/// One chat bubble. User bubbles are a teal gradient (right in RTL);
-/// assistant bubbles are white cards with a leading avatar (left in
-/// RTL). Assistant messages render their content as Markdown (light
-/// subset) and show streaming/typing states.
+/// One chat bubble. User bubbles are a teal gradient at the end (left in
+/// RTL); assistant bubbles are white cards at the start with Noor beside
+/// them (right in RTL). Assistant messages render their content as Markdown
+/// (light subset) and show streaming/typing states.
 library;
 
 import 'dart:async';
@@ -12,6 +12,7 @@ import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 // Domain enum is used implicitly via the .labelAr getters on AssistantReply
 // — keep the import live.
 import '../models/api_models.dart';
+import '../models/enums.dart';
 import '../state/chat_notifier.dart';
 import '../theme/app_theme.dart';
 import '../theme/design_tokens.dart';
@@ -19,6 +20,19 @@ import 'safety_banner.dart';
 import '../l10n/app_localizations.dart';
 import '../core/motion.dart';
 import '../features/child_memory/widgets/personalised_chip.dart';
+import '../features/companion/widgets/noor_face.dart';
+import '../features/companion/widgets/noor_presence.dart';
+import '../theme/app_colors.dart';
+import 'ui/brand_glyph.dart';
+
+/// Noor's moon window beside an answer. The halo paints ×1.3 around it, so
+/// the avatar column is that footprint plus a hair of space.
+const double _kNoorWindow = 36;
+const double _kAvatarColumn = _kNoorWindow * 1.3 + 4;
+
+/// Where the text of a bubble starts: past the row padding and the avatar —
+/// what the chips under an answer line up with.
+const double _kUnderAnswerIndent = 12 + _kAvatarColumn;
 
 /// The answer text without its «📚 المصدر: …» lines.
 ///
@@ -49,6 +63,18 @@ class MessageBubble extends StatelessWidget {
   final List<String> followUps;
   final ValueChanged<String>? onFollowUp;
 
+  /// «سأجرّبها مع …» under this (finished) answer: the chip's label, already
+  /// carrying the child's name. Null hides it — the chat gives it only to its
+  /// last answer, and only when the answer has a step to promise.
+  final String? tryLabel;
+
+  /// What tapping the chip does. Ignored once [tryKept].
+  final VoidCallback? onTry;
+
+  /// The promise was kept from this answer: the chip says so and no longer
+  /// taps, so one answer never makes two promises.
+  final bool tryKept;
+
   const MessageBubble({
     super.key,
     required this.message,
@@ -58,6 +84,9 @@ class MessageBubble extends StatelessWidget {
     this.onRetry,
     this.followUps = const [],
     this.onFollowUp,
+    this.tryLabel,
+    this.onTry,
+    this.tryKept = false,
   });
 
   @override
@@ -99,8 +128,8 @@ class MessageBubble extends StatelessWidget {
             ),
     );
 
-    // Assistant rows get a leading avatar (only on the first bubble of
-    // a group); subsequent bubbles keep the indent so text aligns.
+    // Assistant rows get Noor (only on the first bubble of a group);
+    // subsequent bubbles keep the indent so text aligns.
     final body = isUser
         ? Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -113,21 +142,9 @@ class MessageBubble extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 if (isFirstInGroup)
-                  Container(
-                    width: 34,
-                    height: 34,
-                    margin: const EdgeInsetsDirectional.only(
-                        end: 8, top: 4),
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      color: AppTheme.primary.withValues(alpha: .12),
-                      shape: BoxShape.circle,
-                    ),
-                    child: const Text('🧑‍🏫',
-                        style: TextStyle(fontSize: 18)),
-                  )
+                  _NoorAvatar(thinking: message.isStreaming)
                 else
-                  const SizedBox(width: 42),
+                  const SizedBox(width: _kAvatarColumn),
                 Flexible(child: bubble),
               ],
             ),
@@ -168,6 +185,15 @@ class MessageBubble extends StatelessWidget {
                     ),
                 ],
               ),
+            ),
+          if (!isUser &&
+              tryLabel != null &&
+              !message.isStreaming &&
+              message.error == null)
+            _TryChip(
+              label: tryLabel!,
+              kept: tryKept,
+              onTap: tryKept ? null : onTry,
             ),
           if (!isUser &&
               followUps.isNotEmpty &&
@@ -311,6 +337,77 @@ class _ThinkingIndicatorState extends State<_ThinkingIndicator> {
   }
 }
 
+/// Noor beside an answer: «thinking» while it is written, calm once done.
+///
+/// Only a thinking Noor moves. A finished answer's Noor rests on a still
+/// calm frame (its tickers muted), so a long conversation is not a column of
+/// blinking faces and nothing loops once the chat is idle. Reduced motion
+/// holds the thinking face still too — both loops go through `syncLoop`.
+/// Decorative: the answer itself is what a screen reader should read.
+class _NoorAvatar extends StatelessWidget {
+  const _NoorAvatar({required this.thinking});
+
+  final bool thinking;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsetsDirectional.only(end: 4),
+      child: TickerMode(
+        enabled: thinking,
+        child: NoorPresence(
+          size: _kNoorWindow,
+          face: thinking ? NoorFaceState.thinking : NoorFaceState.calm,
+        ),
+      ),
+    );
+  }
+}
+
+/// «سأجرّبها مع …» — one step from the answer, kept as a promise (phase 4).
+/// Gold like the lesson's step card, so the two read as the same act.
+class _TryChip extends StatelessWidget {
+  const _TryChip({required this.label, required this.kept, this.onTap});
+
+  final String label;
+  final bool kept;
+  final VoidCallback? onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.colors;
+    final style = TextStyle(
+      color: AppTheme.primary,
+      fontWeight: FontWeight.w700,
+      fontSize: 13,
+    );
+    return Padding(
+      padding: const EdgeInsetsDirectional.only(
+          start: _kUnderAnswerIndent, end: 12, top: 4),
+      child: kept
+          ? Chip(
+              avatar: Icon(Icons.check_rounded,
+                  size: 18, color: AppTheme.success),
+              label: Text(AppLocalizations.of(context).promiseSaved),
+              labelStyle: style,
+              backgroundColor: AppTheme.success.withValues(alpha: .10),
+              side: BorderSide(color: AppTheme.success.withValues(alpha: .35)),
+              shape: const StadiumBorder(),
+            )
+          : ActionChip(
+              avatar: BrandGlyph(BrandIcon.lantern,
+                  size: 18, color: colors.accent),
+              label: Text(label),
+              labelStyle: style,
+              backgroundColor: colors.accent.withValues(alpha: .12),
+              side: BorderSide(color: colors.accent.withValues(alpha: .45)),
+              shape: const StadiumBorder(),
+              onPressed: onTap,
+            ),
+    );
+  }
+}
+
 /// Suggested follow-up questions under the latest answer (UX_UI_ROADMAP §2.3).
 class _FollowUps extends StatelessWidget {
   const _FollowUps({required this.questions, required this.onTap});
@@ -322,7 +419,8 @@ class _FollowUps extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       // Indented to line up with the bubble text, past the avatar column.
-      padding: const EdgeInsetsDirectional.only(start: 54, end: 12, top: 4),
+      padding: const EdgeInsetsDirectional.only(
+          start: _kUnderAnswerIndent, end: 12, top: 4),
       child: Semantics(
         label: AppLocalizations.of(context).chatFollowUpsLabel,
         container: true,
@@ -422,7 +520,12 @@ class _MetadataChips extends StatelessWidget {
     // something a parent can act on — dropped from the visible chips.
     final chips = <String>[
       reply.domain.label(l10n),
-      reply.severity.label(l10n),
+      // «خفيف» and «متوسط» change nothing a parent should do — and «متوسط» is
+      // also what a missing severity decodes to. Only the two that do are
+      // shown (NOOR_WAL_QANADIL_PLAN, phase 4).
+      if (reply.severity == Severity.severe ||
+          reply.severity == Severity.emergency)
+        reply.severity.label(l10n),
     ];
     return Wrap(
       spacing: 6,

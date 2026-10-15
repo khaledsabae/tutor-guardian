@@ -1,5 +1,8 @@
-// Phase 10 widget test — HomeScreen "days in a row" streak uses the
-// new backend field `daily_login_streak`, not the lesson streak.
+// «اليوم»'s first stats chip — phase 10 put the login streak there
+// (`daily_login_streak`, not the lesson streak); نور والقناديل phase 3 took it
+// away. The flame counted app opens in a row and fell to zero after one quiet
+// day, the one shape the plan rules out. «أسابيع مضيئة» (`lit_weeks_total`)
+// stands in its place: every week with a parenting act, ever — it only grows.
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -15,74 +18,99 @@ import 'package:almorabbi/screens/home_screen.dart';
 import 'package:almorabbi/state/chat_notifier.dart';
 import 'package:almorabbi/widgets/ui/stat_chip.dart';
 
+import 'lantern_fakes.dart';
+
+Future<void> _pumpHome(WidgetTester tester, _FakeTgClient fake) async {
+  fake.childProgressJson = {
+    'child_id': 1,
+    'lessons': [],
+    'streak_days': 2, // lesson streak
+    'daily_login_streak': 5, // login streak
+    'last_completed_at': null,
+  };
+
+  SharedPreferences.setMockInitialValues({
+    OnboardingStorage.keyActiveChildId: 1,
+    OnboardingStorage.keyActiveChildName: 'سارة',
+    OnboardingStorage.keyActiveChildAgeGroup: '4-6',
+    OnboardingStorage.keyOnboardingCompleted: true,
+  });
+  final prefs = await SharedPreferences.getInstance();
+
+  final container = ProviderContainer(
+    overrides: [
+      tgClientProvider.overrideWithValue(fake),
+      sharedPreferencesProvider.overrideWith((_) async => prefs),
+    ],
+  );
+  addTearDown(container.dispose);
+  await container.read(sharedPreferencesProvider.future);
+  container.read(activeChildIdProvider.notifier).state = 1;
+
+  await tester.pumpWidget(
+    UncontrolledProviderScope(
+      container: container,
+      child: MaterialApp(
+        locale: const Locale('ar'),
+        home: HomeScreen(onGoToTab: (_) {}),
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+      ),
+    ),
+  );
+  await tester.pump();
+  await tester.pump(const Duration(seconds: 1));
+
+  // The stats row sits below the three «اليوم» blocks since 2026-10, so it
+  // is built only once scrolled near.
+  await tester.scrollUntilVisible(
+    find.text('درس مكتمل'),
+    300,
+    scrollable: find.byType(Scrollable).first,
+  );
+  // Freshly built by the scroll, so its CountUpText starts again from 0.
+  await tester.pump(const Duration(seconds: 2));
+}
+
 void main() {
-  testWidgets('HomeScreen stats row shows daily_login_streak from backend',
-      (tester) async {
-    final fake = _FakeTgClient();
-    fake.childProgressJson = {
-      'child_id': 1,
-      'lessons': [],
-      'streak_days': 2, // lesson streak
-      'daily_login_streak': 5, // login streak
-      'last_completed_at': null,
-    };
+  testWidgets('«أسابيع مضيئة» stands where the login streak was', (
+    tester,
+  ) async {
+    final fake = _FakeTgClient()
+      ..week = familyWeekJson(acts: [act('lesson', 0)], litWeeksTotal: 4);
+    await _pumpHome(tester, fake);
 
-    SharedPreferences.setMockInitialValues({
-      OnboardingStorage.keyActiveChildId: 1,
-      OnboardingStorage.keyActiveChildName: 'سارة',
-      OnboardingStorage.keyActiveChildAgeGroup: '4-6',
-      OnboardingStorage.keyOnboardingCompleted: true,
-    });
-    final prefs = await SharedPreferences.getInstance();
-
-    final container = ProviderContainer(
-      overrides: [
-        tgClientProvider.overrideWithValue(fake),
-        sharedPreferencesProvider.overrideWith((_) async => prefs),
-      ],
+    expect(find.text('أيام متتالية'), findsNothing);
+    expect(find.text('أسابيع مضيئة'), findsOneWidget);
+    final chip = find.ancestor(
+      of: find.text('أسابيع مضيئة'),
+      matching: find.byType(StatChip),
     );
-    addTearDown(container.dispose);
-    await container.read(sharedPreferencesProvider.future);
-    container.read(activeChildIdProvider.notifier).state = 1;
-
-    await tester.pumpWidget(
-      UncontrolledProviderScope(
-        container: container,
-        child: MaterialApp(
-          locale: const Locale('ar'),
-          home: HomeScreen(onGoToTab: (_) {}),
-          localizationsDelegates: AppLocalizations.localizationsDelegates,
-          supportedLocales: AppLocalizations.supportedLocales,
-        ),
-      ),
-    );
-    await tester.pump();
-    await tester.pump(const Duration(seconds: 1));
-
-    // The stats row sits below the three «اليوم» blocks since 2026-10, so it
-    // is built only once scrolled near.
-    await tester.scrollUntilVisible(
-      find.text('أيام متتالية'),
-      300,
-      scrollable: find.byType(Scrollable).first,
-    );
-    // Freshly built by the scroll, so its CountUpText starts again from 0.
-    await tester.pump(const Duration(seconds: 2));
-
-    // The "أيام متتالية" chip must reflect dailyLoginStreak (5), not streakDays (2).
-    expect(find.text('أيام متتالية'), findsOneWidget);
     expect(
-      find.descendant(
-        of: find.ancestor(of: find.text('أيام متتالية'), matching: find.byType(StatChip)),
-        matching: find.text('5'),
-      ),
+      find.descendant(of: chip, matching: find.text('4')),
       findsOneWidget,
+      reason: 'lit_weeks_total, not the login streak (5)',
     );
+    expect(find.descendant(of: chip, matching: find.text('5')), findsNothing);
+    // First in the row, where the flame was.
+    final first = tester.widgetList<StatChip>(find.byType(StatChip)).first;
+    expect(first.label, 'أسابيع مضيئة');
+  });
+
+  testWidgets('an older server: no lit-weeks chip, and no flame put back', (
+    tester,
+  ) async {
+    await _pumpHome(tester, _FakeTgClient()); // /api/family/week → 404
+    expect(find.text('أسابيع مضيئة'), findsNothing);
+    expect(find.text('أيام متتالية'), findsNothing);
+    expect(find.byType(StatChip), findsNWidgets(3));
+    expect(tester.takeException(), isNull);
   });
 }
 
 class _FakeTgClient extends TgClient {
   Map<String, dynamic>? childProgressJson;
+  Map<String, dynamic>? week;
 
   @override
   Future<Map<String, dynamic>> getChildProgress(
@@ -90,4 +118,10 @@ class _FakeTgClient extends TgClient {
     String? pathId,
   }) async =>
       childProgressJson ?? {'child_id': childId, 'lessons': []};
+
+  @override
+  Future<Map<String, dynamic>> fetchFamilyWeek(
+    int tzOffsetMinutes, {
+    String? lang,
+  }) async => week ?? (throw const TgApiError(404, 'Not Found'));
 }

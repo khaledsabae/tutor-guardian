@@ -901,13 +901,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get onbChildName => 'اسم طفلك';
 
   @override
-  String get onbNameHint => 'مثلاً: سارة، أحمد، ليلى';
-
-  @override
   String get onbNameRequired => 'الاسم مطلوب';
-
-  @override
-  String get onbNameTooLong => 'الاسم طويل جداً (الحد الأقصى 80 حرفاً)';
 
   @override
   String get onbAgeGroup => 'المرحلة العمرية';
@@ -3514,41 +3508,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get tourDone => 'تم';
 
   @override
-  String get tourTodayTitle => 'اليوم';
-
-  @override
-  String get tourTodayBody =>
-      'ابدأ من هنا كل يوم: خطوتك التالية، وحال طفلك، ونصيحة قصيرة.';
-
-  @override
-  String get tourLearnTitle => 'التعلّم';
-
-  @override
-  String get tourLearnBody =>
-      'دروس تقرؤها أنت كمربٍّ — مرتّبة في مسارات حسب عمر طفلك.';
-
-  @override
-  String get tourAssistantTitle => 'المساعد';
-
-  @override
-  String get tourAssistantBody =>
-      'اسأل بكلامك عن موقف حيّرك مع طفلك، وتصلك إجابة مؤصَّلة.';
-
-  @override
-  String get tourMoreTitle => 'المزيد';
-
-  @override
-  String get tourMoreBody =>
-      'قصص وألعاب وقرآن وإعدادات — ومن هنا زر «مساعدة» لو تُهت.';
-
-  @override
-  String get tourFocusTitle => 'خطوتك التالية';
-
-  @override
-  String get tourFocusBody =>
-      'اضغط هنا وسنفتح لك الدرس المناسب — لا قائمة تختار منها.';
-
-  @override
   String get tourReplay => 'الجولة التعريفية';
 
   @override
@@ -4097,10 +4056,11 @@ class AppLocalizationsAr extends AppLocalizations {
   String get loadingCancel => 'رجوع';
 
   @override
-  String get settingsHaptics => 'الاهتزاز عند اللمس';
+  String get settingsHaptics => 'الأصوات والاهتزاز';
 
   @override
-  String get settingsHapticsDesc => 'اهتزاز خفيف عند التسجيل والإنجاز والتنبيه';
+  String get settingsHapticsDesc =>
+      'أصوات هادئة بلا موسيقى، واهتزاز خفيف عند الاختيار والإنجاز';
 
   @override
   String childModeHandoff(String name) {
@@ -5679,6 +5639,41 @@ class AppLocalizationsAr extends AppLocalizations {
   String get praiseFromFamily => 'أهلك يقولون لك';
 
   @override
+  String get onbNameQuestion => 'ما اسم طفلك؟';
+
+  @override
+  String get onbNameHint => 'مثلًا: سارة، أحمد، ليلى';
+
+  @override
+  String get onbNameTitleDefault => 'درب طفلك';
+
+  @override
+  String onbNameTitle(String name) {
+    return 'درب $name';
+  }
+
+  @override
+  String get onbNameLater => 'لاحقًا';
+
+  @override
+  String get onbNameDone => 'تمّ';
+
+  @override
+  String get onbNameTooLong => 'الاسم طويل (الحد الأقصى 30 حرفًا)';
+
+  @override
+  String get onbNameDigitsOnly => 'اكتب اسمًا لا أرقامًا';
+
+  @override
+  String get tourStartHereTitle => 'ابدأ من هنا';
+
+  @override
+  String get tourStartHereBody => 'درس قصير لعمر طفلك';
+
+  @override
+  String get tourStartHereGo => 'ابدأ';
+
+  @override
   String get noorHelloDawn => 'صباح النور';
 
   @override
@@ -5893,4 +5888,382 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get promiseReminderBody => 'خطوتك الصغيرة مع طفلك تنتظرك.';
+
+  @override
+  String get ramadanStreetHint =>
+      'يضيء قنديل اليوم حين تعلّمون فيه أيّ شيء. اضغط أيّ يوم لتفتحه.';
+
+  @override
+  String get ramadanLanternLit => 'قنديله مضاء';
+
+  @override
+  String get ramadanDayComplete => 'الحمد لله';
+
+  @override
+  String get handoverTitle => 'تسليم الجهاز';
+
+  @override
+  String handoverChoose(String name) {
+    return 'ماذا سيفعل $name الآن؟';
+  }
+
+  @override
+  String get handoverHint => 'اختر نشاطًا، ثم أدخل الرمز، وسلّم الجهاز.';
+
+  @override
+  String get handoverNoSurface =>
+      'في هذا السن لا نسلّم الجهاز للطفل. جرّبوا معًا نشاطًا بلا شاشة.';
+
+  @override
+  String handoverYourTurn(String name) {
+    return 'يا $name، دورك الآن';
+  }
+
+  @override
+  String get handoverHabitBody => 'يسجّل عادات يومه بنفسه';
+
+  @override
+  String get handoverMissionBody => 'مهمة قصيرة يقرؤها ثم ينطلق لتنفيذها';
+
+  @override
+  String get handoverLicenseBody => 'مواقف قصيرة يختار فيها ما يفعل';
+
+  @override
+  String get handoverScreenOffBody => 'قصة أو تلاوة والشاشة مطفية';
+
+  @override
+  String get childModeSurfaceNotAllowed =>
+      'هذا النشاط ليس لهذا العمر. اختر نشاطًا آخر.';
+
+  @override
+  String get childReturnDevice => 'أعِد الجهاز إلى أهلك — شكرًا لك';
+
+  @override
+  String noorPrayerAdvance(String name) {
+    return 'يبدو أن منزلة جديدة في رحلة الصلاة تنتظر $name.';
+  }
+
+  @override
+  String noorPrayerInvite(String name) {
+    return 'مع اقتراب $name من سنّ السابعة، لعلها فرصة لبدء رحلة الصلاة بلطف، خطوة خطوة.';
+  }
+
+  @override
+  String noorMilestoneDue(String name) {
+    return 'في رحلة $name مناسبة جديدة تنتظر أن تسجّلها.';
+  }
+
+  @override
+  String noorBirthMonthAsk(String name) {
+    return 'أخبرني بشهر ميلاد $name لأتذكّر مراحله في وقتها.';
+  }
+
+  @override
+  String get noorChipPrayerJourney => 'رحلة الصلاة';
+
+  @override
+  String get noorChipChildJourney => 'رحلة طفلي';
+
+  @override
+  String get noorChipAddBirthMonth => 'أضف شهر الميلاد';
+
+  @override
+  String chatTryWith(String name) {
+    return 'سأجرّبها مع $name';
+  }
+
+  @override
+  String get chatTryWithMyChild => 'سأجرّبها مع طفلي';
+
+  @override
+  String get chatTryTitle => 'خطوتك من هذه الإجابة';
+
+  @override
+  String get chatTryIntro => 'اخترتُ لك من الإجابة خطوةً واحدة تبدأ بها.';
+
+  @override
+  String get todayRoadReached => 'تمّت هذه المحطة اليوم';
+
+  @override
+  String get pathFullMoonTitle => 'اكتمل البدر';
+
+  @override
+  String pathFullMoonBody(String title) {
+    return 'أتممتم «$title» كاملًا، درسًا بعد درس.';
+  }
+
+  @override
+  String get pathFullMoonShare => 'شاركوا البطاقة';
+
+  @override
+  String prayerStageMomentChild(String gender, String name, String stage) {
+    String _temp0 = intl.Intl.selectLogic(gender, {
+      'female': 'انتقلت $name إلى «$stage».',
+      'other': 'انتقل $name إلى «$stage».',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String prayerStageMomentFamily(String stage) {
+    return 'انتقلتم إلى «$stage».';
+  }
+
+  @override
+  String get prayerStageMomentDua => 'أعانكم الله وتقبّل منكم';
+
+  @override
+  String prayerAdvanceBodyNamed(String stage, String name) {
+    return 'انتقلوا إلى «$stage» حين ترون $name مستعدًّا؛ القرار لكم.';
+  }
+
+  @override
+  String prayerAdvanceButtonNamed(String stage) {
+    return 'إلى «$stage»';
+  }
+
+  @override
+  String get weekLanternsTitle => 'قناديل أسبوعكم';
+
+  @override
+  String get weekLanternsHint => 'كل خطوة تربوية هذا الأسبوع تضيء قنديلًا.';
+
+  @override
+  String weekLanternsLitDays(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count يومًا مضيئًا',
+      few: '$count أيام مضيئة',
+      two: 'يومان مضيئان',
+      one: 'يوم واحد مضيء',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get weekLanternsOpenHint => 'اعرض خطوات الأسبوع';
+
+  @override
+  String get weekLanternNext => 'القنديل التالي';
+
+  @override
+  String get weekActsTitle => 'خطوات هذا الأسبوع';
+
+  @override
+  String get weekActsSubtitle => 'كل قنديل خطوة تربوية قمتم بها.';
+
+  @override
+  String get litWeeks => 'أسابيع مضيئة';
+
+  @override
+  String litWeeksCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count أسبوع مضيء',
+      many: '$count أسبوعًا مضيئًا',
+      few: '$count أسابيع مضيئة',
+      two: 'أسبوعان مضيئان',
+      one: 'أسبوع مضيء واحد',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get actKindLesson => 'درس';
+
+  @override
+  String get actKindQuestion => 'سؤال';
+
+  @override
+  String get actKindFollowup => 'متابعة';
+
+  @override
+  String get actKindMission => 'مهمة';
+
+  @override
+  String get actKindPlanTick => 'خطوة من الخطة';
+
+  @override
+  String get actKindHabit => 'عادة';
+
+  @override
+  String get actKindChallenge => 'تحدٍّ';
+
+  @override
+  String get actKindOther => 'خطوة تربوية';
+
+  @override
+  String harvestLessons(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count درس',
+      many: '$count درسًا',
+      few: '$count دروس',
+      two: 'درسان',
+      one: 'درس واحد',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String harvestQuestions(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count سؤال',
+      many: '$count سؤالًا',
+      few: '$count أسئلة',
+      two: 'سؤالان',
+      one: 'سؤال واحد',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String harvestFollowups(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count متابعة',
+      many: '$count متابعةً',
+      few: '$count متابعات',
+      two: 'متابعتان',
+      one: 'متابعة واحدة',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String harvestMissions(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count مهمة',
+      many: '$count مهمةً',
+      few: '$count مهام',
+      two: 'مهمتان',
+      one: 'مهمة واحدة',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String harvestPlanTicks(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count خطوة من الخطة',
+      many: '$count خطوةً من الخطة',
+      few: '$count خطوات من الخطة',
+      two: 'خطوتان من الخطة',
+      one: 'خطوة واحدة من الخطة',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String harvestHabits(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count عادة',
+      many: '$count عادةً',
+      few: '$count عادات',
+      two: 'عادتان',
+      one: 'عادة واحدة',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String harvestChallenges(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count تحدٍّ',
+      many: '$count تحدّيًا',
+      few: '$count تحدّيات',
+      two: 'تحدّيان',
+      one: 'تحدٍّ واحد',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String harvestOthers(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count خطوة تربوية أخرى',
+      many: '$count خطوةً تربويةً أخرى',
+      few: '$count خطوات تربوية أخرى',
+      two: 'خطوتان تربويتان أخريان',
+      one: 'خطوة تربوية أخرى',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get harvestListSeparator => '، ';
+
+  @override
+  String get harvestTitle => 'حصاد الأسبوع';
+
+  @override
+  String get harvestFromNoor => 'من نور';
+
+  @override
+  String get harvestIntro => 'هذه قناديل أسبوعكم، واحدًا تلو الآخر.';
+
+  @override
+  String harvestSummary(String summary) {
+    return 'في أسبوعكم: $summary';
+  }
+
+  @override
+  String get harvestDuaLead => 'ونختم الأسبوع بدعاء من القرآن الكريم:';
+
+  @override
+  String get harvestShare => 'شارك الحصاد';
+
+  @override
+  String get harvestShareEyebrow => 'حصاد أسبوعنا';
+
+  @override
+  String harvestShareMessage(String summary) {
+    return 'قناديل أسبوعنا: $summary';
+  }
+
+  @override
+  String get noorFridayHarvest =>
+      'جمعة مباركة. جمعتُ لكم قناديل هذا الأسبوع في بطاقة صغيرة.';
+
+  @override
+  String get noorChipHarvest => 'افتح البطاقة';
+
+  @override
+  String get planMarkDone => 'تمّت الخطوة. أحسنتم!';
+
+  @override
+  String get planMarkUndo => 'تراجع';
+
+  @override
+  String get planMarkHint => 'اضغط للتعليم عليها';
+
+  @override
+  String planMarkedCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'أتممتم $count خطوة هذا الأسبوع',
+      many: 'أتممتم $count خطوةً هذا الأسبوع',
+      few: 'أتممتم $count خطوات هذا الأسبوع',
+      two: 'أتممتم خطوتين هذا الأسبوع',
+      one: 'أتممتم خطوة واحدة هذا الأسبوع',
+    );
+    return '$_temp0';
+  }
 }

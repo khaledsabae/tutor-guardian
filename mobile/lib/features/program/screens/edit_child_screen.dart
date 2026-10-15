@@ -14,6 +14,7 @@ import '../../onboarding/screens/avatar_picker_sheet.dart';
 import '../../programs/providers/programs_providers.dart';
 import '../../programs/widgets/birth_month_field.dart';
 import '../data/progress_models.dart';
+import '../data/child_name.dart';
 import '../providers/settings_providers.dart';
 import '../../../theme/design_tokens.dart';
 
@@ -163,15 +164,8 @@ class _EditChildScreenState extends ConsumerState<EditChildScreen> {
                 decoration: const InputDecoration(
                   prefixIcon: Icon(Icons.person_outline),
                 ),
-                validator: (v) {
-                  if (v == null || v.trim().isEmpty) {
-                    return AppLocalizations.of(context).addChildNameRequired;
-                  }
-                  if (v.trim().length > 80) {
-                    return AppLocalizations.of(context).addChildNameTooLong;
-                  }
-                  return null;
-                },
+                validator: (v) =>
+                    childNameError(AppLocalizations.of(context), v),
               ),
               const SizedBox(height: 24),
 

@@ -79,9 +79,10 @@ class TodayChildBlock extends StatelessWidget {
             onTap: () {
               unawaited(Analytics.todayBlockTapped('mission', 'child_mode'));
               Navigator.of(context).push(
-                AppRoutes.childModeLock<void>(
+                AppRoutes.handoverGate(
                   childId: p.id,
                   childName: p.name,
+                  ageGroup: p.ageGroup,
                   surface: 'mission',
                 ),
               );

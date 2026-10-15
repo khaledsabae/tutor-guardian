@@ -26,6 +26,13 @@ const kChildModeBudgetSpent = 'child_mode_budget_spent';
 /// agreement itself. The child-mode screen renders it rather than an error.
 const kChildModeAgreementRequired = 'child_mode_agreement_required';
 
+/// The server refused this surface for this child's age band
+/// (`surface_not_allowed`). The hand-over gate filters by the same policy, so
+/// this should not happen — but a stale profile, or a policy tightened after
+/// the build shipped, still can, and a parent who just typed their PIN gets a
+/// calm sentence rather than «فشل الدخول لوضع الطفل».
+const kChildModeSurfaceNotAllowed = 'child_mode_surface_not_allowed';
+
 /// Two heartbeats in a row failed to reach the server, so the surface closes.
 ///
 /// The budget is enforced server-side, which is only true while the client is
@@ -282,6 +289,32 @@ class ChildModeNotifier extends StateNotifier<ChildModeState> {
     state = const ChildModeState();
   }
 
+  /// Prove a parent is holding the device — and, on first use, set the PIN.
+  ///
+  /// Opens nothing. The hand-over gate asks for the PIN first, plays its doors
+  /// while the device is still in parent mode, and only then calls [enter]
+  /// with the same PIN: the moment of handing over is not billed to the
+  /// child's minutes. [enter] checks the PIN again, so this is never a way in
+  /// on its own.
+  Future<bool> checkPin(String? pin) async {
+    if (pin == null || pin.isEmpty) {
+      state = state.copyWith(loading: false, error: kChildModeErrorPinRequired);
+      return false;
+    }
+    if (await hasChildModePin()) {
+      if (!await verifyChildModePin(pin)) {
+        state = state.copyWith(
+          loading: false,
+          error: kChildModeErrorPinIncorrect,
+        );
+        return false;
+      }
+    } else {
+      await setChildModePin(pin);
+    }
+    return true;
+  }
+
   /// The only way into a child surface.
   ///
   /// Every screen a child can reach goes through here: the PIN proves a parent
@@ -295,23 +328,7 @@ class ChildModeNotifier extends StateNotifier<ChildModeState> {
   }) async {
     state = state.copyWith(loading: true, error: null);
     try {
-      if (pin == null || pin.isEmpty) {
-        state = state.copyWith(loading: false, error: kChildModeErrorPinRequired);
-        return false;
-      }
-      final hasPin = await hasChildModePin();
-      if (hasPin) {
-        final ok = await verifyChildModePin(pin);
-        if (!ok) {
-          state = state.copyWith(
-            loading: false,
-            error: kChildModeErrorPinIncorrect,
-          );
-          return false;
-        }
-      } else {
-        await setChildModePin(pin);
-      }
+      if (!await checkPin(pin)) return false;
       final session = await _client.createChildSession(childId, surface: surface);
       // Not a hard cast: this lands inside a catch whose message is rendered
       // verbatim on the PIN screen, so a missing field would show a parent
@@ -414,6 +431,11 @@ class ChildModeNotifier extends StateNotifier<ChildModeState> {
     final text = e.toString();
     if (text.contains('agreement_required')) {
       return kChildModeAgreementRequired;
+    }
+    // Before the age gate below: both are 403s from the same check, and this
+    // one has a way forward — another surface — where the age gate has none.
+    if (text.contains('surface_not_allowed')) {
+      return kChildModeSurfaceNotAllowed;
     }
     if (text.contains('age_not_allowed') ||
         text.contains('budget_exhausted')) {

@@ -5,19 +5,28 @@
 /// to the time-of-day greeting, so Noor never blocks or breaks «اليوم».
 library;
 
+import 'dart:async';
 import 'dart:ui' show PlatformDispatcher;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/analytics.dart';
+import '../../../core/clock.dart';
 import '../../../main.dart' show appConfigProvider;
 import '../../../state/chat_notifier.dart' show tgClientProvider;
+import '../../adhkar/services/notification_service.dart';
 import '../../child_memory/data/placeholder_names.dart';
 import '../../child_memory/providers/memory_providers.dart';
 import '../../coins/coins_providers.dart';
+import '../../lanterns/providers/lantern_providers.dart'
+    show familyWeekProvider;
 import '../../onboarding/providers/onboarding_providers.dart';
+import '../../program/providers/settings_providers.dart'
+    show childrenListProvider;
 import '../../programs/data/programs_models.dart';
 import '../../programs/providers/programs_providers.dart';
 import '../data/companion_store.dart';
+import '../logic/answer_step.dart' show trimStep;
 import '../logic/companion_brain.dart';
 
 /// The server's kill switch (`/api/app-config` → `noor_header_enabled`).
@@ -61,6 +70,67 @@ class CompanionMemoryNotifier extends AsyncNotifier<CompanionMemory> {
     return p;
   }
 
+  /// «متى ستجرّبها مع …؟» answered — after a lesson, or under an answer
+  /// («سأجرّبها مع …»): keep the promise on the device, queue one gentle
+  /// reminder, and ask the server to follow it up. The one way a promise is
+  /// kept, so both places behave alike.
+  ///
+  /// The device keeps the step as the parent read it. What goes to the server
+  /// names no one ([redactFamilyNames]) and fits its 120 characters — the
+  /// server redacts too, but a name should not leave the phone to be
+  /// redacted. A 409 or a failure leaves the device promise standing (Noor
+  /// asks either way), and nothing here throws: a lost promise must never
+  /// surface as an error on the parent's best moment. [source] tells the
+  /// analytics where the promise was made (`lesson` / `chat`).
+  Future<Promise?> keepPromise({
+    required int childId,
+    required String step,
+    required PromiseSlot slot,
+    String? lessonId,
+    String source = 'lesson',
+  }) async {
+    unawaited(Analytics.nextStepCommitted(when: slot.wire, source: source));
+    final repo = ref.read(memoryRepositoryProvider);
+    // The family as loaded — read only when something already loaded it, so
+    // keeping a promise never starts a fetch of its own.
+    final family = [
+      if (ref.exists(childrenListProvider)) ...ref.read(familyMembersProvider),
+    ];
+    if (!family.any((m) => m.id == childId)) {
+      ActiveChildProfile? active;
+      try {
+        active = ref.read(activeChildProfileProvider);
+      } catch (_) {
+        // Preferences not loaded: nothing on disk to name, nothing to hide.
+      }
+      if (active != null && active.id == childId) {
+        family.add(FamilyMember(id: childId, name: active.name));
+      }
+    }
+    final wire = trimStep(
+      redactFamilyNames(step, family: family, subjectId: childId),
+    );
+    try {
+      final p = await addPromise(
+        childId: childId,
+        step: step,
+        slot: slot,
+        lessonId: lessonId,
+      );
+      unawaited(
+        NotificationService.instance.schedulePromiseReminder(
+          promiseId: p.id,
+          slotWire: slot.wire,
+        ),
+      );
+      final fid = await repo.openPromise(childId, step: wire, when: slot.wire);
+      if (fid != null) await linkFollowup(p.id, fid);
+      return p;
+    } catch (_) {
+      return null;
+    }
+  }
+
   Future<void> linkFollowup(int promiseId, int followupId) =>
       _write((s) => s.linkFollowup(promiseId, followupId));
   Future<void> answer(int promiseId, String outcome) =>
@@ -72,12 +142,44 @@ class CompanionMemoryNotifier extends AsyncNotifier<CompanionMemory> {
       _write((s) => s.markQuestionShown(key));
   Future<void> hideForToday(String key) => _write((s) => s.hideForToday(key));
   Future<void> setQuietMode(bool on) => _write((s) => s.setQuietMode(on));
+  Future<void> markStop(String key) => _write((s) => s.markStop(key));
 }
+
+/// «درب اليوم»: mark a stop reached, fire-and-forget —
+/// `markTodayStop(ref.read(companionMemoryProvider.notifier), 'ask')`.
+/// Never throws: a lost mark only leaves a station unlit for today.
+void markTodayStop(CompanionMemoryNotifier memory, String key) {
+  unawaited(memory.markStop(key).catchError((Object _) {}));
+}
+
+/// Which of the day's three stops the active child has reached today.
+typedef TodayStops = ({bool step, bool ask, bool mission});
+
+final todayStopsProvider = Provider.autoDispose<TodayStops>((ref) {
+  final childId = ref.watch(activeChildProfileProvider)?.id;
+  final memory = ref.watch(companionMemoryProvider).valueOrNull;
+  final stops = memory?.stopsOn(DateTime.now()) ?? const <String>{};
+  return (
+    step: childId != null && stops.contains('step:$childId'),
+    ask: stops.contains('ask'),
+    mission: childId != null && stops.contains('mission:$childId'),
+  );
+});
 
 final companionMemoryProvider =
     AsyncNotifierProvider<CompanionMemoryNotifier, CompanionMemory>(
       CompanionMemoryNotifier.new,
     );
+
+/// Once-only lines (a Ramadan countdown day, Monday's reveal, Friday's
+/// harvest) already shown in this run of the app.
+///
+/// Showing one records it on the device at once, so that it never comes
+/// back on a later open. Within this open it has to stay put: the record
+/// re-reads the memory, and the line would otherwise give way to the
+/// greeting a frame after it appeared — before the parent could read it, let
+/// alone tap its chip. The header adds the key here before recording it.
+final heldOnceLinesProvider = StateProvider<Set<String>>((ref) => const {});
 
 /// Claimed-but-unconfirmed missions across the family, and — when they all
 /// belong to one child — whose. Zero on any failure.
@@ -120,11 +222,16 @@ final companionLineProvider = Provider.autoDispose<CompanionLine?>((ref) {
   final profile = ref.watch(activeChildProfileProvider);
   final memory = ref.watch(companionMemoryProvider).valueOrNull;
   if (profile == null || memory == null) return null;
+  final held = ref.watch(heldOnceLinesProvider);
 
   final family = ref.watch(familyMembersProvider);
   final due = ref.watch(dueFollowupsProvider).valueOrNull ?? const [];
   final missions = ref.watch(missionsWaitingProvider).valueOrNull;
-  final ramadan = ref.watch(programsOverviewProvider).valueOrNull?.ramadan;
+  final overview = ref.watch(programsOverviewProvider).valueOrNull;
+  final ramadan = overview?.ramadan;
+  final mine = overview?.children
+      .where((c) => c.childId == profile.id)
+      .firstOrNull;
   final coins = ref.watch(coinsProvider);
 
   String? nameOf(int childId) =>
@@ -132,8 +239,8 @@ final companionLineProvider = Provider.autoDispose<CompanionLine?>((ref) {
 
   return pickLine(
     CompanionInputs(
-      now: DateTime.now(),
-      memory: memory,
+      now: ref.watch(clockProvider)(),
+      memory: memory.withoutSeen(held),
       childId: profile.id,
       childName: _realName(profile.name),
       missionsWaiting: missions?.count ?? 0,
@@ -169,7 +276,21 @@ final companionLineProvider = Provider.autoDispose<CompanionLine?>((ref) {
               )
               .valueOrNull !=
           null,
+      // Friday's harvest needs a week with lanterns; none (or an older
+      // server) leaves Friday to the greeting.
+      weekActs: ref.watch(familyWeekProvider).valueOrNull?.acts.length ?? 0,
       firstDay: coins.dailyStreak <= 1,
+      notices: mine == null
+          ? const ChildNotices()
+          : ChildNotices(
+              prayerEligible: mine.prayer.eligibleTrack != null,
+              prayerEnrolled: mine.prayer.enrolled,
+              prayerAdvance: mine.prayer.advanceSuggested,
+              ageYears: mine.age.years,
+              ageFromBirthMonth: mine.age.fromBirthMonth,
+              milestonesDue: mine.milestonesServed ? mine.milestonesDue : 0,
+              needsBirthMonth: mine.needsProfile.contains('birth_month'),
+            ),
     ),
   );
 });

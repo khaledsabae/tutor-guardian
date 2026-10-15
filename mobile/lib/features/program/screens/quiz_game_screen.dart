@@ -148,10 +148,14 @@ class _QuizGameScreenState extends ConsumerState<QuizGameScreen> {
     final correct = _questions[_currentIndex]['answer'] as int?;
     if (correct == null) return;
     final isCorrect = index == correct;
+    // Right → success (a drop), wrong or time-up → warning (a buzz, silent).
+    // The E5 rename had these crossed (mediumImpact became warning on the
+    // *right* answer); with sound on the same helpers that would have played
+    // the success drop on every miss — and on the timer's `_onAnswer(-1)`.
     if (isCorrect) {
-      Haptics.warning();
-    } else {
       Haptics.success();
+    } else {
+      Haptics.warning();
     }
     setState(() {
       _selectedAnswer = index;

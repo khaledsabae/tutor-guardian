@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../widgets/ui/art_image.dart';
 import '../data/journey_milestones.dart';
 
 /// Shows a milestone's custom badge illustration when one exists
@@ -24,14 +25,11 @@ class MilestoneIcon extends StatelessWidget {
     if (asset == null) {
       return Text(emoji, style: TextStyle(fontSize: size * 0.62));
     }
-    return Image.asset(
+    return ArtImage(
       asset,
       width: size,
       height: size,
-      fit: BoxFit.contain,
-      filterQuality: FilterQuality.medium,
-      errorBuilder: (_, _, _) =>
-          Text(emoji, style: TextStyle(fontSize: size * 0.62)),
+      fallback: (_) => Text(emoji, style: TextStyle(fontSize: size * 0.62)),
     );
   }
 }

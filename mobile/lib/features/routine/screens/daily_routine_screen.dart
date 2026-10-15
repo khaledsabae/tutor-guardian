@@ -11,6 +11,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import '../../../core/analytics.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../companion/providers/companion_providers.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 import 'package:almorabbi/api/tg_client.dart';
@@ -25,6 +26,7 @@ import 'package:almorabbi/features/routine/providers/habit_providers.dart';
 import 'package:almorabbi/features/routine/widgets/habit_week_strip.dart';
 import 'package:almorabbi/state/chat_notifier.dart';
 import 'package:almorabbi/core/app_routes.dart';
+import 'package:almorabbi/features/handover/child_surface_policy.dart';
 import '../../../widgets/ui/error_retry_view.dart';
 import 'package:almorabbi/widgets/ui/loading_view.dart';
 
@@ -206,9 +208,33 @@ class _RoutineBody extends ConsumerWidget {
         ? const AsyncData(RoutineDay(routineId: 0, childId: 0, routineDate: '', events: []))
         : ref.watch(todayRoutineProvider(childId));
 
+    final profile = ref.watch(activeChildProfileProvider);
     return Column(
       children: [
         const _SummaryCard(),
+        // The younger bands hand over too — 2-3 to listening with the screen
+        // off, 4-6 to that and today's mission — through the same gate. Under
+        // two there is nothing to hand over, so no button.
+        if (childId != null &&
+            profile != null &&
+            handoverSurfacesFor(profile.ageGroup).isNotEmpty)
+          Padding(
+            padding: const EdgeInsets.fromLTRB(Dt.pad, 0, Dt.pad, 8),
+            child: SizedBox(
+              width: double.infinity,
+              child: OutlinedButton.icon(
+                onPressed: () => Navigator.of(context).push(
+                  AppRoutes.handoverGate(
+                    childId: childId,
+                    childName: profile.name,
+                    ageGroup: profile.ageGroup,
+                  ),
+                ),
+                icon: const Icon(Icons.child_care),
+                label: Text(AppLocalizations.of(context).routineChildMode),
+              ),
+            ),
+          ),
         Expanded(
           child: routineAsync.when(
             data: (day) => _EventsList(day: day),
@@ -604,10 +630,14 @@ class _AddEventSheetState extends State<_AddEventSheet> {
     setState(() => _saving = true);
     final navigator = Navigator.of(context);
     final messenger = ScaffoldMessenger.of(context);
-    ProviderScope.containerOf(context)
+    final container = ProviderScope.containerOf(context);
+    container
         .read(tgClientProvider)
         .createRoutineEvent(widget.childId, body: event.toJson())
         .then((_) {
+          // «درب اليوم»: ③ lit — the day of a little one is logged.
+          markTodayStop(container.read(companionMemoryProvider.notifier),
+              'mission:${widget.childId}');
           navigator.pop();
         })
         .catchError((e) {
@@ -744,10 +774,13 @@ class _HabitBalanceBodyState extends ConsumerState<_HabitBalanceBody>
     );
   }
 
-  Future<void> _enterChildMode(int childId, String childName, {String surface = 'habit'}) async {
-    await Navigator.of(
-      context,
-    ).push(AppRoutes.childModeLock<void>(childId: childId, childName: childName, surface: surface));
+  Future<void> _openHandover(int childId) async {
+    final profile = ref.read(activeChildProfileProvider);
+    await Navigator.of(context).push(AppRoutes.handoverGate(
+      childId: childId,
+      childName: profile?.name ?? AppLocalizations.of(context).childFallbackName,
+      ageGroup: widget.ageGroup,
+    ));
   }
 
   /// The parent's day, and the agreement behind it.
@@ -910,90 +943,29 @@ class _HabitBalanceBodyState extends ConsumerState<_HabitBalanceBody>
                     ),
                   if (widget.ageGroup == '13-15' || widget.ageGroup == '16-18')
                     const SizedBox(height: 8),
+                  // One way to hand the device over: «باب التسليم». It used
+                  // to be four buttons here — habits, mission, screen-off,
+                  // licence — each opening its own surface behind its own
+                  // hand-written age check. The gate lists what the policy
+                  // allows this band, and plays its doors before the session
+                  // exists.
                   FilledButton.icon(
-                    onPressed: () {
-                      final profile = ref.read(activeChildProfileProvider);
-                      _enterChildMode(
-                        childId,
-                        profile?.name ?? AppLocalizations.of(context).childFallbackName,
-                      );
-                    },
+                    onPressed: () => _openHandover(childId),
                     icon: const Icon(Icons.child_care),
                     label: Text(AppLocalizations.of(context).routineChildMode),
                   ),
                   const SizedBox(height: 8),
-                  // Two surfaces, side by side to keep this column's height —
-                  // stacking them overflowed the card on a small screen.
-                  //
-                  // Both are opened directly rather than reached from inside
-                  // another screen. The server budgets each surface separately,
-                  // so arriving at the mission through the habit screen spends
-                  // the habit allowance to get there, and arriving at screen-off
-                  // listening that way spends screen budget on the way into the
-                  // one mode whose entire point is not spending any.
-                  Row(
-                    children: [
-                      Expanded(
-                        child: OutlinedButton.icon(
-                          onPressed: () {
-                            final profile = ref.read(activeChildProfileProvider);
-                            _enterChildMode(
-                              childId,
-                              profile?.name ?? AppLocalizations.of(context).childFallbackName,
-                              surface: 'mission',
-                            );
-                          },
-                          icon: const Icon(Icons.explore_outlined),
-                          label: Text(AppLocalizations.of(context).missionOpenForChild),
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-                      Expanded(
-                        child: OutlinedButton.icon(
-                          onPressed: () => Navigator.of(context).push(AppRoutes.screenOffPicker()),
-                          icon: const Icon(Icons.nightlight_outlined),
-                          label: Text(AppLocalizations.of(context).screenOffOpen),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 8),
-                  // The internet licence. Shown for the bands that have a
-                  // scenario bank written for them — 10-12 and 13-15 today.
-                  //
-                  // The banks are separate on purpose: "a stranger asked for
-                  // your photo" is a different situation at ten and at fourteen,
-                  // and at fourteen the stranger is usually a friend of a friend.
-                  // 16-18 has the surface in policy but no bank yet, so its
-                  // button stays hidden rather than opening an empty screen.
-                  if (widget.ageGroup == '10-12' || widget.ageGroup == '13-15')
-                    Row(
-                      children: [
-                        Expanded(
-                          child: OutlinedButton.icon(
-                            onPressed: () {
-                              final profile = ref.read(activeChildProfileProvider);
-                              _enterChildMode(
-                                childId,
-                                profile?.name ?? AppLocalizations.of(context).childFallbackName,
-                                surface: 'license',
-                              );
-                            },
-                            icon: const Icon(Icons.shield_outlined),
-                            label: Text(AppLocalizations.of(context).licenseOpenForChild),
-                          ),
-                        ),
-                        const SizedBox(width: 8),
-                        Expanded(
-                          child: OutlinedButton.icon(
-                            onPressed: () => Navigator.of(context).push(AppRoutes.parentLicense()),
-                            icon: const Icon(Icons.menu_book_outlined),
-                            label: Text(AppLocalizations.of(context).licenseOpenForParent),
-                          ),
-                        ),
-                      ],
+                  // The licence's parent side: talking points and the grant.
+                  // Shown where the child side has a scenario bank (10-12,
+                  // 13-15); the child side itself is in the gate.
+                  if (widget.ageGroup == '10-12' || widget.ageGroup == '13-15') ...[
+                    OutlinedButton.icon(
+                      onPressed: () => Navigator.of(context).push(AppRoutes.parentLicense()),
+                      icon: const Icon(Icons.menu_book_outlined),
+                      label: Text(AppLocalizations.of(context).licenseTitle),
                     ),
-                  const SizedBox(height: 8),
+                    const SizedBox(height: 8),
+                  ],
                   Row(
                     children: [
                       Expanded(
@@ -1191,6 +1163,12 @@ class _HabitCardState extends State<_HabitCard> {
         },
       );
       unawaited(Analytics.habitCheckIn(status.wireName));
+      if (mounted) {
+        markTodayStop(
+            ProviderScope.containerOf(context)
+                .read(companionMemoryProvider.notifier),
+            'mission:${widget.childId}');
+      }
       widget.onRecorded();
     } on TgApiError catch (e) {
       if (mounted) {

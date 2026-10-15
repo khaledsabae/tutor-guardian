@@ -916,13 +916,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get onbChildName => 'Your child\'s name';
 
   @override
-  String get onbNameHint => 'e.g. Sara, Ahmed, Layla';
-
-  @override
   String get onbNameRequired => 'Name is required';
-
-  @override
-  String get onbNameTooLong => 'Name is too long (max 80 characters)';
 
   @override
   String get onbAgeGroup => 'Age Group';
@@ -3561,41 +3555,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tourDone => 'Done';
 
   @override
-  String get tourTodayTitle => 'Today';
-
-  @override
-  String get tourTodayBody =>
-      'Start here each day: your next step, your child’s day, and one short tip.';
-
-  @override
-  String get tourLearnTitle => 'Learn';
-
-  @override
-  String get tourLearnBody =>
-      'Lessons for you to read as a parent — grouped into paths by your child’s age.';
-
-  @override
-  String get tourAssistantTitle => 'Assistant';
-
-  @override
-  String get tourAssistantBody =>
-      'Ask in your own words about a situation with your child, and get a grounded answer.';
-
-  @override
-  String get tourMoreTitle => 'More';
-
-  @override
-  String get tourMoreBody =>
-      'Stories, games, Qur’an and settings — and the Help button if you get lost.';
-
-  @override
-  String get tourFocusTitle => 'Your next step';
-
-  @override
-  String get tourFocusBody =>
-      'Tap here and we open the right lesson for you — not a list to pick from.';
-
-  @override
   String get tourReplay => 'Guided tour';
 
   @override
@@ -4154,11 +4113,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get loadingCancel => 'Go back';
 
   @override
-  String get settingsHaptics => 'Haptic feedback';
+  String get settingsHaptics => 'Sounds & vibration';
 
   @override
   String get settingsHapticsDesc =>
-      'A light vibration when you log, complete or get an alert';
+      'Soft sounds with no music, and a light vibration when you choose or complete something';
 
   @override
   String childModeHandoff(String name) {
@@ -5753,6 +5712,41 @@ class AppLocalizationsEn extends AppLocalizations {
   String get praiseFromFamily => 'Your family says to you';
 
   @override
+  String get onbNameQuestion => 'What\'s your child\'s name?';
+
+  @override
+  String get onbNameHint => 'e.g. Sara, Ahmed, Layla';
+
+  @override
+  String get onbNameTitleDefault => 'Your child\'s path';
+
+  @override
+  String onbNameTitle(String name) {
+    return '$name\'s path';
+  }
+
+  @override
+  String get onbNameLater => 'Later';
+
+  @override
+  String get onbNameDone => 'Done';
+
+  @override
+  String get onbNameTooLong => 'Name is too long (30 characters max)';
+
+  @override
+  String get onbNameDigitsOnly => 'Type a name, not numbers';
+
+  @override
+  String get tourStartHereTitle => 'Start here';
+
+  @override
+  String get tourStartHereBody => 'A short lesson for your child\'s age';
+
+  @override
+  String get tourStartHereGo => 'Start';
+
+  @override
   String get noorHelloDawn => 'Good early morning';
 
   @override
@@ -5971,4 +5965,359 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get promiseReminderBody =>
       'Your small step with your child is waiting.';
+
+  @override
+  String get ramadanStreetHint =>
+      'A day\'s lantern lights up when you tick anything on it. Tap any day to open it.';
+
+  @override
+  String get ramadanLanternLit => 'lantern lit';
+
+  @override
+  String get ramadanDayComplete => 'Alhamdulillah';
+
+  @override
+  String get handoverTitle => 'Hand over the phone';
+
+  @override
+  String handoverChoose(String name) {
+    return 'What will $name do now?';
+  }
+
+  @override
+  String get handoverHint =>
+      'Choose an activity, enter your PIN, then hand the phone over.';
+
+  @override
+  String get handoverNoSurface =>
+      'At this age we don\'t hand the phone to the child. Try an activity together, away from the screen.';
+
+  @override
+  String handoverYourTurn(String name) {
+    return '$name, it\'s your turn';
+  }
+
+  @override
+  String get handoverHabitBody => 'Logs the day\'s habits on their own';
+
+  @override
+  String get handoverMissionBody => 'A short task to read, then off to do it';
+
+  @override
+  String get handoverLicenseBody =>
+      'Short situations where they choose what to do';
+
+  @override
+  String get handoverScreenOffBody =>
+      'A story or recitation with the screen dark';
+
+  @override
+  String get childModeSurfaceNotAllowed =>
+      'This activity isn\'t for this age. Please choose another one.';
+
+  @override
+  String get childReturnDevice =>
+      'Please hand the phone back to your family — thank you';
+
+  @override
+  String noorPrayerAdvance(String name) {
+    return '$name seems ready for a new stage in the Prayer Journey.';
+  }
+
+  @override
+  String noorPrayerInvite(String name) {
+    return 'As $name nears seven, it may be a gentle time to begin the Prayer Journey, step by step.';
+  }
+
+  @override
+  String noorMilestoneDue(String name) {
+    return 'A new moment is waiting to be recorded in $name\'s journey.';
+  }
+
+  @override
+  String noorBirthMonthAsk(String name) {
+    return 'Tell me $name\'s birth month so I remember each stage on time.';
+  }
+
+  @override
+  String get noorChipPrayerJourney => 'Prayer Journey';
+
+  @override
+  String get noorChipChildJourney => 'My child\'s journey';
+
+  @override
+  String get noorChipAddBirthMonth => 'Add birth month';
+
+  @override
+  String chatTryWith(String name) {
+    return 'I\'ll try it with $name';
+  }
+
+  @override
+  String get chatTryWithMyChild => 'I\'ll try it with my child';
+
+  @override
+  String get chatTryTitle => 'Your step from this answer';
+
+  @override
+  String get chatTryIntro =>
+      'I picked one step from the answer for you to start with.';
+
+  @override
+  String get todayRoadReached => 'Reached today';
+
+  @override
+  String get pathFullMoonTitle => 'A full moon';
+
+  @override
+  String pathFullMoonBody(String title) {
+    return 'You\'ve finished “$title” in full, one lesson at a time.';
+  }
+
+  @override
+  String get pathFullMoonShare => 'Share the card';
+
+  @override
+  String prayerStageMomentChild(String gender, String name, String stage) {
+    String _temp0 = intl.Intl.selectLogic(gender, {
+      'female': '$name has moved on to “$stage”.',
+      'other': '$name has moved on to “$stage”.',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String prayerStageMomentFamily(String stage) {
+    return 'You\'ve moved on to “$stage”.';
+  }
+
+  @override
+  String get prayerStageMomentDua =>
+      'May Allah help you, and accept it from you.';
+
+  @override
+  String prayerAdvanceBodyNamed(String stage, String name) {
+    return 'Move on to “$stage” when you feel $name is ready — it\'s your call.';
+  }
+
+  @override
+  String prayerAdvanceButtonNamed(String stage) {
+    return 'Go to “$stage”';
+  }
+
+  @override
+  String get weekLanternsTitle => 'Your week\'s lanterns';
+
+  @override
+  String get weekLanternsHint =>
+      'Every parenting step this week lights a lantern.';
+
+  @override
+  String weekLanternsLitDays(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count lit days',
+      one: '1 lit day',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get weekLanternsOpenHint => 'Show the week\'s steps';
+
+  @override
+  String get weekLanternNext => 'The next lantern';
+
+  @override
+  String get weekActsTitle => 'This week\'s steps';
+
+  @override
+  String get weekActsSubtitle => 'Each lantern is a parenting step you took.';
+
+  @override
+  String get litWeeks => 'Lit weeks';
+
+  @override
+  String litWeeksCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count lit weeks',
+      one: '1 lit week',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get actKindLesson => 'Lesson';
+
+  @override
+  String get actKindQuestion => 'Question';
+
+  @override
+  String get actKindFollowup => 'Follow-up';
+
+  @override
+  String get actKindMission => 'Mission';
+
+  @override
+  String get actKindPlanTick => 'Plan step';
+
+  @override
+  String get actKindHabit => 'Habit';
+
+  @override
+  String get actKindChallenge => 'Challenge';
+
+  @override
+  String get actKindOther => 'Parenting step';
+
+  @override
+  String harvestLessons(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count lessons',
+      one: '1 lesson',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String harvestQuestions(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count questions',
+      one: '1 question',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String harvestFollowups(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count follow-ups',
+      one: '1 follow-up',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String harvestMissions(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count missions',
+      one: '1 mission',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String harvestPlanTicks(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count plan steps',
+      one: '1 plan step',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String harvestHabits(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count habits',
+      one: '1 habit',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String harvestChallenges(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count challenges',
+      one: '1 challenge',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String harvestOthers(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count other parenting steps',
+      one: '1 other parenting step',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get harvestListSeparator => ', ';
+
+  @override
+  String get harvestTitle => 'The week\'s harvest';
+
+  @override
+  String get harvestFromNoor => 'From Noor';
+
+  @override
+  String get harvestIntro =>
+      'Here are your week\'s lanterns, one after another.';
+
+  @override
+  String harvestSummary(String summary) {
+    return 'Your week: $summary';
+  }
+
+  @override
+  String get harvestDuaLead =>
+      'And we close the week with a du\'a from the Qur\'an:';
+
+  @override
+  String get harvestShare => 'Share the harvest';
+
+  @override
+  String get harvestShareEyebrow => 'Our week\'s harvest';
+
+  @override
+  String harvestShareMessage(String summary) {
+    return 'Our week\'s lanterns: $summary';
+  }
+
+  @override
+  String get noorFridayHarvest =>
+      'Jumu\'ah Mubarak. I gathered this week\'s lanterns into a small card for you.';
+
+  @override
+  String get noorChipHarvest => 'Open the card';
+
+  @override
+  String get planMarkDone => 'Step done. Well done!';
+
+  @override
+  String get planMarkUndo => 'Undo';
+
+  @override
+  String get planMarkHint => 'Tap to tick it';
+
+  @override
+  String planMarkedCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'You did $count steps this week',
+      one: 'You did 1 step this week',
+    );
+    return '$_temp0';
+  }
 }

@@ -188,9 +188,23 @@ void main() {
 
       // Progress now lives in the gradient header: "1/2 (50%)"
       expect(find.textContaining('1/2'), findsOneWidget);
-      // Completed trail node renders a check icon
-      expect(find.byIcon(Icons.check_rounded), findsOneWidget);
+      // The completed lesson is a lit lantern on the road («درب المسار») —
+      // below the fold on the test's 800×600 screen, under the domain art
+      // that holds its height from the first frame.
+      await tester.scrollUntilVisible(
+        find.byKey(const ValueKey('trail_lantern_0')),
+        200,
+        scrollable: find
+            .descendant(
+              of: find.byType(ListView),
+              matching: find.byType(Scrollable),
+            )
+            .first,
+      );
+      expect(find.byKey(const ValueKey('trail_lantern_0')), findsOneWidget);
+      expect(find.byKey(const ValueKey('trail_noor_1')), findsOneWidget);
     });
+
 
     // The primary CTA used to be wired to `lessons.first` unconditionally, so
     // a parent who finished lesson 1 and came back pressed the big button and

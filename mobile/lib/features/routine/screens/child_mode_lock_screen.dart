@@ -17,11 +17,19 @@ class ChildModeLockScreen extends ConsumerStatefulWidget {
     required this.childName,
     this.isExit = false,
     this.surface = 'habit',
+    this.verifyOnly = false,
   });
 
   final int childId;
   final String childName;
   final bool isExit;
+
+  /// Check the PIN and hand it back to the caller, opening nothing.
+  ///
+  /// The hand-over gate uses this: it plays its doors in parent mode after
+  /// the PIN and before the session exists, then opens the session itself
+  /// through [ChildModeNotifier.enter] — which checks the PIN again.
+  final bool verifyOnly;
 
   /// Which surface the parent is opening. The server budgets each one
   /// separately and refuses any the child's age band does not allow, so it has
@@ -32,7 +40,8 @@ class ChildModeLockScreen extends ConsumerStatefulWidget {
   ConsumerState<ChildModeLockScreen> createState() => _ChildModeLockScreenState();
 }
 
-String _localizedChildModeError(String? code, AppLocalizations l10n) {
+/// A child-mode error code, as a parent should read it.
+String localizedChildModeError(String? code, AppLocalizations l10n) {
   return switch (code) {
     kChildModeErrorPinRequired => l10n.childModePinRequired,
     kChildModeErrorPinIncorrect => l10n.childModePinIncorrect,
@@ -41,6 +50,7 @@ String _localizedChildModeError(String? code, AppLocalizations l10n) {
     // neither should ever surface as a raw code.
     kChildModeBudgetSpent => l10n.childModeBudgetSpent,
     kChildModeOffline => l10n.childModeOffline,
+    kChildModeSurfaceNotAllowed => l10n.childModeSurfaceNotAllowed,
     // Anything else is a failure's own text (the provider keeps it for
     // diagnostics) — never something to put in front of a child.
     _ => l10n.childModeEnterFailed,
@@ -108,6 +118,19 @@ class _ChildModeLockScreenState extends ConsumerState<ChildModeLockScreen> {
           });
         }
       }
+    } else if (widget.verifyOnly) {
+      final ok = await notifier.checkPin(pin);
+      if (!mounted) return;
+      if (ok) {
+        Navigator.of(context).pop(pin);
+      } else {
+        unawaited(Haptics.warning());
+        setState(() {
+          _pin.clear();
+          _error = localizedChildModeError(
+              ref.read(childModeProvider).error, l10n);
+        });
+      }
     } else {
       final ok = await notifier.enter(
           childId: widget.childId, pin: pin, surface: widget.surface);
@@ -127,7 +150,7 @@ class _ChildModeLockScreenState extends ConsumerState<ChildModeLockScreen> {
         } else {
           setState(() {
             _pin.clear();
-            _error = _localizedChildModeError(
+            _error = localizedChildModeError(
                 ref.read(childModeProvider).error, l10n);
           });
         }

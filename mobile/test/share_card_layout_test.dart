@@ -21,6 +21,7 @@
 library;
 
 import 'dart:io';
+import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -310,6 +311,35 @@ void main() {
           Size(image.width.toDouble(), image.height.toDouble()),
           ShareableMomentCard.size,
         );
+        // The ground is in the PNG, not only in the tree. The SVG parses
+        // asynchronously and the capture re-renders once it lands; a capture
+        // taken before that — or the pattern fallback — has a top that is
+        // little more than a translucent wash. The top of the card is the
+        // art's emerald sky under a 25% wash: opaque, dark, green over red.
+        final rgba = (await tester.runAsync(
+          () => image.toByteData(format: ui.ImageByteFormat.rawStraightRgba),
+        ))!;
+        Color pixel(int x, int y) {
+          final i = (y * image.width + x) * 4;
+          return Color.fromARGB(
+            rgba.getUint8(i + 3),
+            rgba.getUint8(i),
+            rgba.getUint8(i + 1),
+            rgba.getUint8(i + 2),
+          );
+        }
+
+        for (final at in const [(540, 40), (160, 140), (920, 140)]) {
+          final sky = pixel(at.$1, at.$2);
+          expect(
+            sky.computeLuminance(),
+            lessThan(.4),
+            reason: '$name: no background art at $at ($sky) — captured '
+                'before the SVG was painted, or it failed to parse',
+          );
+          expect(sky.a, greaterThan(.99), reason: '$name at $at: see-through');
+          expect(sky.g - sky.r, greaterThan(.15), reason: '$name at $at');
+        }
         if (_pngPrefix.isNotEmpty) {
           File('$_pngPrefix$name.png').writeAsBytesSync(png);
         }

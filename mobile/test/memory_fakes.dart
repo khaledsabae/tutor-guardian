@@ -389,7 +389,67 @@ class FakeMemoryServer extends TgClient {
     _guardMemory(); // no proof needed
     final p = plans[childId];
     if (p == null) throw const TgApiError(404, 'الطفل غير موجود.');
-    return p;
+    final m = marks[childId];
+    return m == null ? p : {...p, 'marks': List.of(m)};
+  }
+
+  // ── «خطة أسبوع بتتعلّم عليها» (§9.5.1) ────────────────────────────────
+  /// Ticked keys by child, as the server holds them (set by the routes).
+  final Map<int, List<String>> marks = {};
+
+  /// The error the marks routes answer with, if any.
+  TgApiError? markError;
+
+  /// When set, the marks routes wait for it — the tick must show before the
+  /// server answers.
+  Completer<void>? markGate;
+
+  Future<Map<String, dynamic>> _mark(
+      String method, int childId, String weekStart, String itemKey) async {
+    calls.add('$method /api/children/$childId/weekly-plan/marks '
+        '$weekStart $itemKey');
+    _guardMemory(); // no proof needed
+    await markGate?.future;
+    if (markError != null) throw markError!;
+    final m = marks.putIfAbsent(
+        childId,
+        () => [
+              for (final k in (plans[childId]?['marks'] as List? ?? const []))
+                '$k'
+            ]);
+    final on = method == 'PUT';
+    if (on && !m.contains(itemKey)) m.add(itemKey);
+    if (!on) m.remove(itemKey);
+    return {
+      'child_id': childId,
+      'week_start': weekStart,
+      'item_key': itemKey,
+      'marked': on,
+      'marks': List.of(m),
+    };
+  }
+
+  @override
+  Future<Map<String, dynamic>> putWeeklyPlanMark(int childId,
+          {required String weekStart, required String itemKey}) =>
+      _mark('PUT', childId, weekStart, itemKey);
+
+  @override
+  Future<Map<String, dynamic>> deleteWeeklyPlanMark(int childId,
+          {required String weekStart, required String itemKey}) =>
+      _mark('DELETE', childId, weekStart, itemKey);
+
+  // ── «قناديل الأسبوع» (§12) ───────────────────────────────────────────
+  /// `/api/family/week`; null answers like a server without lanterns.
+  Map<String, dynamic>? familyWeek;
+
+  @override
+  Future<Map<String, dynamic>> fetchFamilyWeek(int tzOffsetMinutes,
+      {String? lang}) async {
+    calls.add('GET /api/family/week tz=$tzOffsetMinutes lang=$lang');
+    final w = familyWeek;
+    if (w == null) throw notFound();
+    return w;
   }
 
   @override

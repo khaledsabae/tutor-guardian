@@ -5,6 +5,17 @@
 /// it (`week_start`). Collapsed to the focus by default: Today was cut to three
 /// stops because «مش عارف أبدأ منين», and the week's plan must not undo that.
 ///
+/// Every step can be ticked with one tap (نور والقناديل phase 3, §9.5.1): the
+/// tick shows at once, a snack bar offers «تراجع» (the DELETE), and the
+/// server's `marks` then replace the local copy. A ticked action lights a
+/// lantern of the week; the worship item shows ticked but lights none — the
+/// server decides that, not this card. Only what was done is drawn: no step
+/// is ever shown as missed.
+///
+/// The Monday reveal: the first open of the new plan's Monday opens the card
+/// and brings its steps in one after another — once a week per child, and
+/// with no motion under reduced motion.
+///
 /// Every band has a plan (the server's banks cover prenatal-1 … 16-18), so
 /// nothing here is band-gated. Hides itself while loading, on any failure, on
 /// an older server, and when the plan has no focus or actions.
@@ -13,17 +24,25 @@ library;
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/analytics.dart';
 import '../../../core/app_routes.dart';
+import '../../../core/clock.dart';
+import '../../../core/haptics.dart';
+import '../../../core/motion.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../l10n/content_direction.dart';
 import '../../../theme/app_colors.dart';
 import '../../../theme/design_tokens.dart';
 import '../../../widgets/ui/directional_chevron.dart';
+import '../../lanterns/providers/lantern_providers.dart';
+import '../../onboarding/providers/onboarding_providers.dart'
+    show sharedPreferencesProvider;
 import '../data/memory_models.dart';
 import '../providers/memory_providers.dart';
+import 'memory_errors.dart';
 
 class TodayWeeklyPlanCard extends ConsumerStatefulWidget {
   const TodayWeeklyPlanCard({
@@ -37,6 +56,9 @@ class TodayWeeklyPlanCard extends ConsumerStatefulWidget {
   final String childName;
   final String ageGroup;
 
+  /// Where the phone remembers the week it revealed for a child (Monday).
+  static String revealKey(int childId) => 'plan.reveal.v1.$childId';
+
   @override
   ConsumerState<TodayWeeklyPlanCard> createState() =>
       _TodayWeeklyPlanCardState();
@@ -49,6 +71,19 @@ class _TodayWeeklyPlanCardState extends ConsumerState<TodayWeeklyPlanCard> {
   /// The week whose rollover was already asked for, so a stale plan is
   /// refetched once — not on every frame until the new one arrives.
   String? _refreshedWeek;
+
+  /// The ticks as drawn: the plan's, then each tap applied at once, then the
+  /// server's answer to the latest request.
+  List<String> _marks = const [];
+  String? _marksWeek;
+
+  /// Only the answer to the newest tick may overwrite [_marks]: a PUT and its
+  /// undo can come back in either order.
+  int _seq = 0;
+
+  /// This open brings the steps in one by one (Monday's reveal).
+  bool _revealing = false;
+  String? _revealChecked;
 
   WeeklyPlanKey _key(BuildContext context) => (
         childId: widget.childId,
@@ -81,17 +116,118 @@ class _TodayWeeklyPlanCardState extends ConsumerState<TodayWeeklyPlanCard> {
     }
   }
 
+  /// Monday, and this is the new week's plan, and this phone has not shown
+  /// it yet: open the card and bring the steps in one after another.
+  void _checkReveal(WeeklyPlan plan) {
+    if (!mounted || _revealChecked == plan.week) return;
+    _revealChecked = plan.week;
+    final now = ref.read(clockProvider)();
+    final start = plan.weekStart;
+    if (now.weekday != DateTime.monday ||
+        start == null ||
+        !DateUtils.isSameDay(start, now)) {
+      return;
+    }
+    final prefs = ref.read(sharedPreferencesProvider).valueOrNull;
+    final week = plan.weekStartWire;
+    final key = TodayWeeklyPlanCard.revealKey(widget.childId);
+    if (prefs == null || week == null || prefs.getString(key) == week) return;
+    unawaited(prefs.setString(key, week));
+    setState(() {
+      _expanded = true;
+      _revealing = true;
+    });
+  }
+
+  Future<void> _setMark(WeeklyPlan plan, PlanItem item, bool marked) async {
+    final week = plan.weekStartWire;
+    if (week == null || item.key.isEmpty) return;
+    final seq = ++_seq;
+    setState(() {
+      _marks = [
+        for (final m in _marks)
+          if (m != item.key) m,
+        if (marked) item.key,
+      ];
+    });
+    try {
+      final marks = await ref.read(memoryRepositoryProvider).setPlanMark(
+            widget.childId,
+            weekStart: week,
+            itemKey: item.key,
+            marked: marked,
+          );
+      if (!mounted) return;
+      if (seq == _seq) setState(() => _marks = marks);
+      // A ticked action lights a lantern of the week (§12).
+      ref.invalidate(familyWeekProvider);
+    } catch (e) {
+      if (!mounted || seq != _seq) return;
+      // The tap did not reach the server: put the step back as it was.
+      setState(() {
+        _marks = [
+          for (final m in _marks)
+            if (m != item.key) m,
+          if (!marked) item.key,
+        ];
+      });
+      // The «done» line (and its undo) no longer holds: say why instead.
+      ScaffoldMessenger.maybeOf(context)
+        ?..removeCurrentSnackBar()
+        ..showSnackBar(
+            SnackBar(content: Text(describeActionFailure(context, e))));
+    }
+  }
+
+  void _tap(WeeklyPlan plan, PlanItem item) {
+    final l10n = AppLocalizations.of(context);
+    final marked = !_marks.contains(item.key);
+    unawaited(Analytics.todayBlockTapped(
+        'loop', marked ? 'plan_mark' : 'plan_unmark'));
+    if (marked) {
+      Haptics.success();
+      final messenger = ScaffoldMessenger.maybeOf(context);
+      messenger?.hideCurrentSnackBar();
+      messenger?.showSnackBar(SnackBar(
+        content: Text(l10n.planMarkDone),
+        action: SnackBarAction(
+          label: l10n.planMarkUndo,
+          onPressed: () {
+            if (!mounted) return;
+            unawaited(Analytics.todayBlockTapped('loop', 'plan_undo'));
+            unawaited(_setMark(plan, item, false));
+          },
+        ),
+      ));
+    } else {
+      Haptics.selection();
+    }
+    unawaited(_setMark(plan, item, marked));
+  }
+
   @override
   Widget build(BuildContext context) {
     final key = _key(context);
     final plan = ref.watch(weeklyPlanProvider(key)).valueOrNull;
     if (plan == null) return const SizedBox.shrink();
-    WidgetsBinding.instance.addPostFrameCallback((_) => _checkWeek());
+    if (_marksWeek != plan.week) {
+      _marksWeek = plan.week;
+      _marks = List.of(plan.marks);
+    }
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _checkWeek();
+      _checkReveal(plan);
+    });
 
     final l10n = AppLocalizations.of(context);
     final colors = context.colors;
     final dir = directionOfLanguage(plan.lang);
     final range = _weekRange(context, plan);
+    final planKeys = {
+      for (final a in plan.actions) a.key,
+      if (plan.worship != null) plan.worship!.key,
+    };
+    final done = _marks.where(planKeys.contains).length;
 
     return Padding(
       padding: const EdgeInsets.only(top: 16),
@@ -146,6 +282,26 @@ class _TodayWeeklyPlanCardState extends ConsumerState<TodayWeeklyPlanCard> {
                     color: colors.textSecondary, fontSize: 12.5, height: 1.5),
               ),
             ],
+            if (done > 0) ...[
+              const SizedBox(height: 6),
+              Row(
+                children: [
+                  Icon(Icons.check_circle_rounded,
+                      color: colors.success, size: 16),
+                  const SizedBox(width: 6),
+                  Expanded(
+                    child: Text(
+                      l10n.planMarkedCount(done),
+                      style: TextStyle(
+                        color: colors.successText,
+                        fontWeight: FontWeight.w700,
+                        fontSize: 12.5,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
             if (_expanded) ..._details(context, plan, dir),
             Align(
               alignment: AlignmentDirectional.centerEnd,
@@ -154,7 +310,10 @@ class _TodayWeeklyPlanCardState extends ConsumerState<TodayWeeklyPlanCard> {
                   if (!_expanded) {
                     unawaited(Analytics.todayBlockTapped('loop', 'plan_expand'));
                   }
-                  setState(() => _expanded = !_expanded);
+                  setState(() {
+                    _expanded = !_expanded;
+                    _revealing = false;
+                  });
                 },
                 child: Text(_expanded ? l10n.planShowLess : l10n.planShowAll),
               ),
@@ -165,10 +324,18 @@ class _TodayWeeklyPlanCardState extends ConsumerState<TodayWeeklyPlanCard> {
     );
   }
 
+  /// Monday's reveal brings each row in after the one before it.
+  Widget _reveal(Widget child, int index) {
+    if (!_revealing || reduceMotion(context)) return child;
+    return child
+        .animate(delay: Duration(milliseconds: 140 * index))
+        .fadeIn(duration: Dt.base)
+        .slideY(begin: .25, end: 0, duration: Dt.base, curve: Curves.easeOut);
+  }
+
   List<Widget> _details(BuildContext context, WeeklyPlan plan, TextDirection dir) {
     final l10n = AppLocalizations.of(context);
     final colors = context.colors;
-    final itemStyle = TextStyle(color: colors.ink, fontSize: 14, height: 1.5);
     Widget heading(String text) => Padding(
           padding: const EdgeInsets.only(top: 14, bottom: 6),
           child: Text(text,
@@ -177,56 +344,51 @@ class _TodayWeeklyPlanCardState extends ConsumerState<TodayWeeklyPlanCard> {
                   fontWeight: FontWeight.w700,
                   fontSize: 12.5)),
         );
+    var row = 0;
     return [
       heading(l10n.planSteps),
       for (var i = 0; i < plan.actions.length; i++)
-        Padding(
-          padding: const EdgeInsets.only(bottom: 6),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                width: 22,
-                height: 22,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: colors.primary.withValues(alpha: colors.isDark ? .25 : .12),
-                  shape: BoxShape.circle,
-                ),
-                child: Text('${i + 1}',
-                    style: TextStyle(
-                        color: colors.primary,
-                        fontWeight: FontWeight.w800,
-                        fontSize: 12)),
-              ),
-              const SizedBox(width: 10),
-              Expanded(
-                child: Text(plan.actions[i].text,
-                    textDirection: dir, style: itemStyle),
-              ),
-            ],
+        _reveal(
+          _MarkRow(
+            item: plan.actions[i],
+            number: i + 1,
+            marked: _marks.contains(plan.actions[i].key),
+            dir: dir,
+            onTap: () => _tap(plan, plan.actions[i]),
           ),
+          row++,
         ),
       if (plan.adaptedFromOutcomes)
         Text(l10n.planAdapted,
             style: TextStyle(color: colors.inkSoft, fontSize: 12, height: 1.5)),
       if (plan.worship != null) ...[
         heading(l10n.planWorship),
-        Text(plan.worship!.text, textDirection: dir, style: itemStyle),
+        _reveal(
+          _MarkRow(
+            item: plan.worship!,
+            marked: _marks.contains(plan.worship!.key),
+            dir: dir,
+            onTap: () => _tap(plan, plan.worship!),
+          ),
+          row++,
+        ),
       ],
       if (plan.lesson != null) ...[
         heading(l10n.planLesson),
-        _LessonRow(
-          lesson: plan.lesson!,
-          dir: dir,
-          onTap: () {
-            unawaited(Analytics.todayBlockTapped('loop', 'plan_lesson'));
-            Navigator.of(context).push(AppRoutes.lesson(
-              plan.lesson!.id,
-              widget.ageGroup,
-              childId: widget.childId,
-            ));
-          },
+        _reveal(
+          _LessonRow(
+            lesson: plan.lesson!,
+            dir: dir,
+            onTap: () {
+              unawaited(Analytics.todayBlockTapped('loop', 'plan_lesson'));
+              Navigator.of(context).push(AppRoutes.lesson(
+                plan.lesson!.id,
+                widget.ageGroup,
+                childId: widget.childId,
+              ));
+            },
+          ),
+          row++,
         ),
       ],
       const SizedBox(height: 4),
@@ -240,6 +402,90 @@ class _TodayWeeklyPlanCardState extends ConsumerState<TodayWeeklyPlanCard> {
     final m = MaterialLocalizations.of(context);
     final end = start.add(const Duration(days: 6));
     return '${m.formatShortMonthDay(start)} – ${m.formatShortMonthDay(end)}';
+  }
+}
+
+/// One step of the plan, ticked with a tap. Unticked it shows its number (or
+/// a plain ring for the worship act); ticked, a filled check. Nothing marks a
+/// step not taken.
+class _MarkRow extends StatelessWidget {
+  const _MarkRow({
+    required this.item,
+    required this.marked,
+    required this.dir,
+    required this.onTap,
+    this.number,
+  });
+
+  final PlanItem item;
+  final bool marked;
+  final TextDirection dir;
+  final VoidCallback onTap;
+  final int? number;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final colors = context.colors;
+    final Widget mark = AnimatedSwitcher(
+      duration: reduceMotion(context) ? Duration.zero : Dt.fast,
+      child: marked
+          ? Container(
+              key: const ValueKey('marked'),
+              width: 24,
+              height: 24,
+              decoration:
+                  BoxDecoration(color: colors.success, shape: BoxShape.circle),
+              child: Icon(Icons.check_rounded, size: 16, color: colors.onPrimary),
+            )
+          : Container(
+              key: const ValueKey('open'),
+              width: 24,
+              height: 24,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                color: colors.primary.withValues(alpha: colors.isDark ? .25 : .12),
+                shape: BoxShape.circle,
+              ),
+              child: number == null
+                  ? null
+                  : Text('$number',
+                      style: TextStyle(
+                          color: colors.primary,
+                          fontWeight: FontWeight.w800,
+                          fontSize: 12)),
+            ),
+    );
+    return Semantics(
+      checked: marked,
+      hint: marked ? null : l10n.planMarkHint,
+      child: Material(
+        type: MaterialType.transparency,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(12),
+          onTap: onTap,
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(minHeight: Dt.minTouch),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 2),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  mark,
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: Text(item.text,
+                        textDirection: dir,
+                        style: TextStyle(
+                            color: colors.ink, fontSize: 14, height: 1.5)),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
 

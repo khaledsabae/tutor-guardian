@@ -283,9 +283,7 @@
   "onbTellUs": "حدّثنا عن طفلك",
   "onbPersonalize": "لنخصّص له تجربة تربوية مناسبة.",
   "onbChildName": "اسم طفلك",
-  "onbNameHint": "مثلاً: سارة، أحمد، ليلى",
   "onbNameRequired": "الاسم مطلوب",
-  "onbNameTooLong": "الاسم طويل جداً (الحد الأقصى 80 حرفاً)",
   "onbAgeGroup": "المرحلة العمرية",
   "onbChildAvatar": "صورة الطفل (اختياري)",
   "onbTapEmoji": "اضغط لاختيار إيموجي",
@@ -1086,16 +1084,6 @@
   "tourNext": "التالي",
   "tourSkip": "تخطّي",
   "tourDone": "تم",
-  "tourTodayTitle": "اليوم",
-  "tourTodayBody": "ابدأ من هنا كل يوم: خطوتك التالية، وحال طفلك، ونصيحة قصيرة.",
-  "tourLearnTitle": "التعلّم",
-  "tourLearnBody": "دروس تقرؤها أنت كمربٍّ — مرتّبة في مسارات حسب عمر طفلك.",
-  "tourAssistantTitle": "المساعد",
-  "tourAssistantBody": "اسأل بكلامك عن موقف حيّرك مع طفلك، وتصلك إجابة مؤصَّلة.",
-  "tourMoreTitle": "المزيد",
-  "tourMoreBody": "قصص وألعاب وقرآن وإعدادات — ومن هنا زر «مساعدة» لو تُهت.",
-  "tourFocusTitle": "خطوتك التالية",
-  "tourFocusBody": "اضغط هنا وسنفتح لك الدرس المناسب — لا قائمة تختار منها.",
   "tourReplay": "الجولة التعريفية",
   "tourReplayDesc": "أعِد عرض الجولة عند العودة للشاشة الرئيسية",
   "tourReplayQueued": "ستظهر الجولة عند عودتك إلى الشاشة الرئيسية.",
@@ -1341,8 +1329,8 @@
   "loadingSlow": "الاتصال بطيء… ما زلنا نحاول",
   "loadingRetry": "إعادة المحاولة",
   "loadingCancel": "رجوع",
-  "settingsHaptics": "الاهتزاز عند اللمس",
-  "settingsHapticsDesc": "اهتزاز خفيف عند التسجيل والإنجاز والتنبيه",
+  "settingsHaptics": "الأصوات والاهتزاز",
+  "settingsHapticsDesc": "أصوات هادئة بلا موسيقى، واهتزاز خفيف عند الاختيار والإنجاز",
   "childModeHandoff": "أهلًا {name}! هذا وقتك 🌟",
   "@childModeHandoff": {"placeholders": {"name": {"type": "String"}}},
   "todayStepTitle": "خطوة اليوم مع {name}",
@@ -1875,6 +1863,55 @@
   "@a11yChooseAChild": {
     "description": "Screen-reader label for the active-child chip when no child is active yet; a tap opens the children list."
   },
+  "onbNameQuestion": "ما اسم طفلك؟",
+  "@onbNameQuestion": {
+    "description": "Optional name field shown on the child-creation wait overlay during onboarding."
+  },
+  "onbNameHint": "مثلًا: سارة، أحمد، ليلى",
+  "@onbNameHint": {
+    "description": "Hint inside the optional onboarding name field."
+  },
+  "onbNameTitleDefault": "درب طفلك",
+  "@onbNameTitleDefault": {
+    "description": "Title of the onboarding wait overlay before a name is typed."
+  },
+  "onbNameTitle": "درب {name}",
+  "@onbNameTitle": {
+    "description": "Title of the onboarding wait overlay; changes live as the parent types the child's name.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "onbNameLater": "لاحقًا",
+  "@onbNameLater": {
+    "description": "Keeps the default child name and leaves the onboarding name field."
+  },
+  "onbNameDone": "تمّ",
+  "@onbNameDone": {
+    "description": "Confirms the name typed in the onboarding name field."
+  },
+  "onbNameTooLong": "الاسم طويل (الحد الأقصى 30 حرفًا)",
+  "@onbNameTooLong": {
+    "description": "Validation: the onboarding child name is longer than 30 characters."
+  },
+  "onbNameDigitsOnly": "اكتب اسمًا لا أرقامًا",
+  "@onbNameDigitsOnly": {
+    "description": "Validation: the onboarding child name is made of digits only."
+  },
+  "tourStartHereTitle": "ابدأ من هنا",
+  "@tourStartHereTitle": {
+    "description": "Title of the single first-run coach mark on Today's first card (tour v3)."
+  },
+  "tourStartHereBody": "درس قصير لعمر طفلك",
+  "@tourStartHereBody": {
+    "description": "Caption of the first-run coach mark on Today's first card (tour v3)."
+  },
+  "tourStartHereGo": "ابدأ",
+  "@tourStartHereGo": {
+    "description": "Primary button of the first-run coach mark; does what tapping the card does."
+  },
   "noorHelloDawn": "صباح النور",
   "@noorHelloDawn": {"description": "Noor's line on «اليوم» (CompanionBrain). Easy MSA, warm, never names one parent, no emoji, no promise of reward."},
   "noorHelloMorning": "صباح الخير",
@@ -1980,5 +2017,182 @@
   "promiseReminderTitle": "تذكير لطيف من نور",
   "@promiseReminderTitle": {"description": "Local notification title for a promise. No child name on the lock screen."},
   "promiseReminderBody": "خطوتك الصغيرة مع طفلك تنتظرك.",
-  "@promiseReminderBody": {"description": "Local notification body. No child name on the lock screen."}
+  "@promiseReminderBody": {"description": "Local notification body. No child name on the lock screen."},
+  "ramadanStreetHint": "يضيء قنديل اليوم حين تعلّمون فيه أيّ شيء. اضغط أيّ يوم لتفتحه.",
+  "@ramadanStreetHint": {
+    "description": "Caption under the Ramadan lantern street (30 paper lanterns, one per day). A day's lantern is lit when the family ticked anything that day. Never mention missed days, counts or comparison."
+  },
+  "ramadanLanternLit": "قنديله مضاء",
+  "@ramadanLanternLit": {
+    "description": "Screen-reader value added to a day of the lantern street when the family ticked anything that day. Unlit days get no value at all — never 'missed'."
+  },
+  "ramadanDayComplete": "الحمد لله",
+  "@ramadanDayComplete": {
+    "description": "The quiet line that glows when every mark of a Ramadan day is ticked. No confetti, no count."
+  },
+  "handoverTitle": "تسليم الجهاز",
+  "@handoverTitle": {
+    "description": "Hand-over gate (parent side): app bar title of the one screen a parent opens to hand the device to a child."
+  },
+  "handoverChoose": "ماذا سيفعل {name} الآن؟",
+  "@handoverChoose": {
+    "description": "Hand-over gate: question above the list of activities the child's age allows. {name} is the child's name.",
+    "placeholders": {"name": {"type": "String"}}
+  },
+  "handoverHint": "اختر نشاطًا، ثم أدخل الرمز، وسلّم الجهاز.",
+  "@handoverHint": {
+    "description": "Hand-over gate: the three steps, for the parent, under the question."
+  },
+  "handoverNoSurface": "في هذا السن لا نسلّم الجهاز للطفل. جرّبوا معًا نشاطًا بلا شاشة.",
+  "@handoverNoSurface": {
+    "description": "Hand-over gate for a child under two (no child surface at all by policy). Calm, not a refusal; points to off-screen activities."
+  },
+  "handoverYourTurn": "يا {name}، دورك الآن",
+  "@handoverYourTurn": {
+    "description": "Revealed when the two paper doors open, read by the child as the device changes hands. {name} is the child's name.",
+    "placeholders": {"name": {"type": "String"}}
+  },
+  "handoverHabitBody": "يسجّل عادات يومه بنفسه",
+  "@handoverHabitBody": {
+    "description": "Hand-over gate: one line under the habit-tracker activity."
+  },
+  "handoverMissionBody": "مهمة قصيرة يقرؤها ثم ينطلق لتنفيذها",
+  "@handoverMissionBody": {
+    "description": "Hand-over gate: one line under today's mission activity."
+  },
+  "handoverLicenseBody": "مواقف قصيرة يختار فيها ما يفعل",
+  "@handoverLicenseBody": {
+    "description": "Hand-over gate: one line under the internet-licence activity."
+  },
+  "handoverScreenOffBody": "قصة أو تلاوة والشاشة مطفية",
+  "@handoverScreenOffBody": {
+    "description": "Hand-over gate: one line under listening with the screen off."
+  },
+  "childModeSurfaceNotAllowed": "هذا النشاط ليس لهذا العمر. اختر نشاطًا آخر.",
+  "@childModeSurfaceNotAllowed": {
+    "description": "Calm copy when the server refuses a child surface for the child's age band (surface_not_allowed). Never an error tone."
+  },
+  "childReturnDevice": "أعِد الجهاز إلى أهلك — شكرًا لك",
+  "@childReturnDevice": {
+    "description": "Return line on the child's last screen when a session ends. Neutral family wording (أهلك), never بابا/ماما."
+  },
+  "noorPrayerAdvance": "يبدو أن منزلة جديدة في رحلة الصلاة تنتظر {name}.",
+  "@noorPrayerAdvance": {"description": "Noor's line on «اليوم» (CompanionBrain). Easy MSA, warm, never names one parent, no emoji, no promise of reward.", "placeholders": {"name": {"type": "String"}}},
+  "noorPrayerInvite": "مع اقتراب {name} من سنّ السابعة، لعلها فرصة لبدء رحلة الصلاة بلطف، خطوة خطوة.",
+  "@noorPrayerInvite": {"description": "Noor's line on «اليوم» (CompanionBrain). Easy MSA, warm, never names one parent, no emoji, no promise of reward.", "placeholders": {"name": {"type": "String"}}},
+  "noorMilestoneDue": "في رحلة {name} مناسبة جديدة تنتظر أن تسجّلها.",
+  "@noorMilestoneDue": {"description": "Noor's line on «اليوم» (CompanionBrain). Easy MSA, warm, never names one parent, no emoji, no promise of reward.", "placeholders": {"name": {"type": "String"}}},
+  "noorBirthMonthAsk": "أخبرني بشهر ميلاد {name} لأتذكّر مراحله في وقتها.",
+  "@noorBirthMonthAsk": {"description": "Noor's line on «اليوم» (CompanionBrain). Easy MSA, warm, never names one parent, no emoji, no promise of reward.", "placeholders": {"name": {"type": "String"}}},
+  "noorChipPrayerJourney": "رحلة الصلاة",
+  "@noorChipPrayerJourney": {"description": "Noor's line on «اليوم» (CompanionBrain). Easy MSA, warm, never names one parent, no emoji, no promise of reward."},
+  "noorChipChildJourney": "رحلة طفلي",
+  "@noorChipChildJourney": {"description": "Noor's line on «اليوم» (CompanionBrain). Easy MSA, warm, never names one parent, no emoji, no promise of reward."},
+  "noorChipAddBirthMonth": "أضف شهر الميلاد",
+  "@noorChipAddBirthMonth": {"description": "Noor's line on «اليوم» (CompanionBrain). Easy MSA, warm, never names one parent, no emoji, no promise of reward."},
+  "chatTryWith": "سأجرّبها مع {name}",
+  "@chatTryWith": {"description": "Chip under the latest assistant answer, in the parent's voice: keep one step from the answer as a promise. {name} is the active child's real name.", "placeholders": {"name": {"type": "String"}}},
+  "chatTryWithMyChild": "سأجرّبها مع طفلي",
+  "@chatTryWithMyChild": {"description": "The same chip while the child still has the default name — the parent speaks, so «طفلي», not «طفلك»."},
+  "chatTryTitle": "خطوتك من هذه الإجابة",
+  "@chatTryTitle": {"description": "Title of the slot sheet opened from an answer's chip."},
+  "chatTryIntro": "اخترتُ لك من الإجابة خطوةً واحدة تبدأ بها.",
+  "@chatTryIntro": {"description": "Noor, first person, under the sheet title: the step shown is the first one in the answer."},
+  "todayRoadReached": "تمّت هذه المحطة اليوم",
+  "pathFullMoonTitle": "اكتمل البدر",
+  "@pathFullMoonTitle": {"description": "Title of the moment shown once when every lesson of a path is done (Noor's crescent fills to a full moon)."},
+  "pathFullMoonBody": "أتممتم «{title}» كاملًا، درسًا بعد درس.",
+  "@pathFullMoonBody": {"description": "The full-moon moment's line. Family-neutral plural; no promise of reward.", "placeholders": {"title": {"type": "String"}}},
+  "pathFullMoonShare": "شاركوا البطاقة",
+  "@pathFullMoonShare": {"description": "Button on the full-moon moment: share the existing path-completion card."},
+  "prayerStageMomentChild": "{gender, select, female{انتقلت {name} إلى «{stage}».} other{انتقل {name} إلى «{stage}».}}",
+  "@prayerStageMomentChild": {"description": "Quiet moment after the parent moves the Prayer Journey up a stage. {stage} is the stage's title, never its number.", "placeholders": {"gender": {"type": "String"}, "name": {"type": "String"}, "stage": {"type": "String"}}},
+  "prayerStageMomentFamily": "انتقلتم إلى «{stage}».",
+  "@prayerStageMomentFamily": {"description": "The same moment when the child has no name of its own (the default «طفلي»).", "placeholders": {"stage": {"type": "String"}}},
+  "prayerStageMomentDua": "أعانكم الله وتقبّل منكم",
+  "@prayerStageMomentDua": {"description": "General du'a under the stage moment. Not attributed to any text."},
+  "prayerAdvanceBodyNamed": "انتقلوا إلى «{stage}» حين ترون {name} مستعدًّا؛ القرار لكم.",
+  "@prayerAdvanceBodyNamed": {"description": "prayerAdvanceBody for a 4–6 child: the next stage by its title, with no stage number.", "placeholders": {"stage": {"type": "String"}, "name": {"type": "String"}}},
+  "prayerAdvanceButtonNamed": "إلى «{stage}»",
+  "@prayerAdvanceButtonNamed": {"description": "prayerAdvanceButton for a 4–6 child: the next stage by its title.", "placeholders": {"stage": {"type": "String"}}},
+  "weekLanternsTitle": "قناديل أسبوعكم",
+  "@weekLanternsTitle": {"description": "Label over the row of this week's lit lanterns under ① on «اليوم». «قناديل الأسبوع» (نور والقناديل phase 3). Easy MSA, family-neutral plural (أتممتم), no promise of reward, no missed/lost wording."},
+  "weekLanternsHint": "كل خطوة تربوية هذا الأسبوع تضيء قنديلًا.",
+  "@weekLanternsHint": {"description": "Caption under the lantern row before any lantern is lit this week. Never 'you missed'. «قناديل الأسبوع» (نور والقناديل phase 3). Easy MSA, family-neutral plural (أتممتم), no promise of reward, no missed/lost wording."},
+  "weekLanternsLitDays": "{count, plural, =1{يوم واحد مضيء} =2{يومان مضيئان} few{{count} أيام مضيئة} other{{count} يومًا مضيئًا}}",
+  "@weekLanternsLitDays": {"description": "Screen-reader value of the lantern row: how many days of this week have a lantern (1–7). «قناديل الأسبوع» (نور والقناديل phase 3). Easy MSA, family-neutral plural (أتممتم), no promise of reward, no missed/lost wording.", "placeholders": {"count": {"type": "int"}}},
+  "weekLanternsOpenHint": "اعرض خطوات الأسبوع",
+  "@weekLanternsOpenHint": {"description": "Screen-reader hint of the lantern row: a tap opens the week's acts. «قناديل الأسبوع» (نور والقناديل phase 3). Easy MSA, family-neutral plural (أتممتم), no promise of reward, no missed/lost wording."},
+  "weekLanternNext": "القنديل التالي",
+  "@weekLanternNext": {"description": "Screen-reader label of the dashed lantern after the lit ones: the next one a parenting step will light. An invitation, never a missed day. «قناديل الأسبوع» (نور والقناديل phase 3). Easy MSA, family-neutral plural (أتممتم), no promise of reward, no missed/lost wording."},
+  "weekActsTitle": "خطوات هذا الأسبوع",
+  "@weekActsTitle": {"description": "Title of the sheet listing the week's parenting acts, one lantern each. «قناديل الأسبوع» (نور والقناديل phase 3). Easy MSA, family-neutral plural (أتممتم), no promise of reward, no missed/lost wording."},
+  "weekActsSubtitle": "كل قنديل خطوة تربوية قمتم بها.",
+  "@weekActsSubtitle": {"description": "Subtitle of the week's acts sheet. «قناديل الأسبوع» (نور والقناديل phase 3). Easy MSA, family-neutral plural (أتممتم), no promise of reward, no missed/lost wording."},
+  "litWeeks": "أسابيع مضيئة",
+  "@litWeeks": {"description": "Stats chip on «اليوم» replacing the login-streak flame: every week that had at least one parenting act. It never resets. «قناديل الأسبوع» (نور والقناديل phase 3). Easy MSA, family-neutral plural (أتممتم), no promise of reward, no missed/lost wording."},
+  "litWeeksCount": "{count, plural, =1{أسبوع مضيء واحد} =2{أسبوعان مضيئان} few{{count} أسابيع مضيئة} many{{count} أسبوعًا مضيئًا} other{{count} أسبوع مضيء}}",
+  "@litWeeksCount": {"description": "Footer of the week's acts sheet: the family's lit weeks so far. «قناديل الأسبوع» (نور والقناديل phase 3). Easy MSA, family-neutral plural (أتممتم), no promise of reward, no missed/lost wording.", "placeholders": {"count": {"type": "int"}}},
+  "actKindLesson": "درس",
+  "@actKindLesson": {"description": "Kind of a week's act in the acts sheet. «قناديل الأسبوع» (نور والقناديل phase 3). Easy MSA, family-neutral plural (أتممتم), no promise of reward, no missed/lost wording."},
+  "actKindQuestion": "سؤال",
+  "@actKindQuestion": {"description": "Kind of a week's act: a question asked to the assistant (one a day at most). «قناديل الأسبوع» (نور والقناديل phase 3). Easy MSA, family-neutral plural (أتممتم), no promise of reward, no missed/lost wording."},
+  "actKindFollowup": "متابعة",
+  "@actKindFollowup": {"description": "Kind of a week's act: a follow-up answered. «قناديل الأسبوع» (نور والقناديل phase 3). Easy MSA, family-neutral plural (أتممتم), no promise of reward, no missed/lost wording."},
+  "actKindMission": "مهمة",
+  "@actKindMission": {"description": "Kind of a week's act: a child's daily mission. «قناديل الأسبوع» (نور والقناديل phase 3). Easy MSA, family-neutral plural (أتممتم), no promise of reward, no missed/lost wording."},
+  "actKindPlanTick": "خطوة من الخطة",
+  "@actKindPlanTick": {"description": "Kind of a week's act: a step of the weekly plan ticked. «قناديل الأسبوع» (نور والقناديل phase 3). Easy MSA, family-neutral plural (أتممتم), no promise of reward, no missed/lost wording."},
+  "actKindHabit": "عادة",
+  "@actKindHabit": {"description": "Kind of a week's act: a habit-tracker entry. «قناديل الأسبوع» (نور والقناديل phase 3). Easy MSA, family-neutral plural (أتممتم), no promise of reward, no missed/lost wording."},
+  "actKindChallenge": "تحدٍّ",
+  "@actKindChallenge": {"description": "Kind of a week's act: a «رحلة الطفل» challenge chosen. «قناديل الأسبوع» (نور والقناديل phase 3). Easy MSA, family-neutral plural (أتممتم), no promise of reward, no missed/lost wording."},
+  "actKindOther": "خطوة تربوية",
+  "@actKindOther": {"description": "Kind of a week's act this build does not know yet. «قناديل الأسبوع» (نور والقناديل phase 3). Easy MSA, family-neutral plural (أتممتم), no promise of reward, no missed/lost wording."},
+  "harvestLessons": "{count, plural, =1{درس واحد} =2{درسان} few{{count} دروس} many{{count} درسًا} other{{count} درس}}",
+  "@harvestLessons": {"description": "One item of the Friday harvest summary (nominative, listed with commas). «قناديل الأسبوع» (نور والقناديل phase 3). Easy MSA, family-neutral plural (أتممتم), no promise of reward, no missed/lost wording.", "placeholders": {"count": {"type": "int"}}},
+  "harvestQuestions": "{count, plural, =1{سؤال واحد} =2{سؤالان} few{{count} أسئلة} many{{count} سؤالًا} other{{count} سؤال}}",
+  "@harvestQuestions": {"description": "One item of the Friday harvest summary. «قناديل الأسبوع» (نور والقناديل phase 3). Easy MSA, family-neutral plural (أتممتم), no promise of reward, no missed/lost wording.", "placeholders": {"count": {"type": "int"}}},
+  "harvestFollowups": "{count, plural, =1{متابعة واحدة} =2{متابعتان} few{{count} متابعات} many{{count} متابعةً} other{{count} متابعة}}",
+  "@harvestFollowups": {"description": "One item of the Friday harvest summary. «قناديل الأسبوع» (نور والقناديل phase 3). Easy MSA, family-neutral plural (أتممتم), no promise of reward, no missed/lost wording.", "placeholders": {"count": {"type": "int"}}},
+  "harvestMissions": "{count, plural, =1{مهمة واحدة} =2{مهمتان} few{{count} مهام} many{{count} مهمةً} other{{count} مهمة}}",
+  "@harvestMissions": {"description": "One item of the Friday harvest summary. «قناديل الأسبوع» (نور والقناديل phase 3). Easy MSA, family-neutral plural (أتممتم), no promise of reward, no missed/lost wording.", "placeholders": {"count": {"type": "int"}}},
+  "harvestPlanTicks": "{count, plural, =1{خطوة واحدة من الخطة} =2{خطوتان من الخطة} few{{count} خطوات من الخطة} many{{count} خطوةً من الخطة} other{{count} خطوة من الخطة}}",
+  "@harvestPlanTicks": {"description": "One item of the Friday harvest summary. «قناديل الأسبوع» (نور والقناديل phase 3). Easy MSA, family-neutral plural (أتممتم), no promise of reward, no missed/lost wording.", "placeholders": {"count": {"type": "int"}}},
+  "harvestHabits": "{count, plural, =1{عادة واحدة} =2{عادتان} few{{count} عادات} many{{count} عادةً} other{{count} عادة}}",
+  "@harvestHabits": {"description": "One item of the Friday harvest summary. «قناديل الأسبوع» (نور والقناديل phase 3). Easy MSA, family-neutral plural (أتممتم), no promise of reward, no missed/lost wording.", "placeholders": {"count": {"type": "int"}}},
+  "harvestChallenges": "{count, plural, =1{تحدٍّ واحد} =2{تحدّيان} few{{count} تحدّيات} many{{count} تحدّيًا} other{{count} تحدٍّ}}",
+  "@harvestChallenges": {"description": "One item of the Friday harvest summary. «قناديل الأسبوع» (نور والقناديل phase 3). Easy MSA, family-neutral plural (أتممتم), no promise of reward, no missed/lost wording.", "placeholders": {"count": {"type": "int"}}},
+  "harvestOthers": "{count, plural, =1{خطوة تربوية أخرى} =2{خطوتان تربويتان أخريان} few{{count} خطوات تربوية أخرى} many{{count} خطوةً تربويةً أخرى} other{{count} خطوة تربوية أخرى}}",
+  "@harvestOthers": {"description": "One item of the Friday harvest summary: acts of a kind this build does not know. «قناديل الأسبوع» (نور والقناديل phase 3). Easy MSA, family-neutral plural (أتممتم), no promise of reward, no missed/lost wording.", "placeholders": {"count": {"type": "int"}}},
+  "harvestListSeparator": "، ",
+  "@harvestListSeparator": {"description": "Joins the items of the Friday harvest summary («٣ دروس، سؤالان، مهمة واحدة»). Keep the trailing space."},
+  "harvestTitle": "حصاد الأسبوع",
+  "@harvestTitle": {"description": "Title of Noor's Friday card, gathered on the phone from the week's lanterns. «قناديل الأسبوع» (نور والقناديل phase 3). Easy MSA, family-neutral plural (أتممتم), no promise of reward, no missed/lost wording."},
+  "harvestFromNoor": "من نور",
+  "@harvestFromNoor": {"description": "Small line under the Friday card's title. «قناديل الأسبوع» (نور والقناديل phase 3). Easy MSA, family-neutral plural (أتممتم), no promise of reward, no missed/lost wording."},
+  "harvestIntro": "هذه قناديل أسبوعكم، واحدًا تلو الآخر.",
+  "@harvestIntro": {"description": "Line above the Friday card's lanterns, which light again one by one. «قناديل الأسبوع» (نور والقناديل phase 3). Easy MSA, family-neutral plural (أتممتم), no promise of reward, no missed/lost wording."},
+  "harvestSummary": "في أسبوعكم: {summary}",
+  "@harvestSummary": {"description": "The Friday card's summary; {summary} is the harvest items joined («٣ دروس، سؤالان، مهمة واحدة»). «قناديل الأسبوع» (نور والقناديل phase 3). Easy MSA, family-neutral plural (أتممتم), no promise of reward, no missed/lost wording.", "placeholders": {"summary": {"type": "String"}}},
+  "harvestDuaLead": "ونختم الأسبوع بدعاء من القرآن الكريم:",
+  "@harvestDuaLead": {"description": "Lead-in to the closing du'a of the Friday card. The du'a itself is the guarded verse v_025_074 from family_adhkar, picked by id — never typed here. «قناديل الأسبوع» (نور والقناديل phase 3). Easy MSA, family-neutral plural (أتممتم), no promise of reward, no missed/lost wording."},
+  "harvestShare": "شارك الحصاد",
+  "@harvestShare": {"description": "Button on the Friday card: shares an image with no child names. «قناديل الأسبوع» (نور والقناديل phase 3). Easy MSA, family-neutral plural (أتممتم), no promise of reward, no missed/lost wording."},
+  "harvestShareEyebrow": "حصاد أسبوعنا",
+  "@harvestShareEyebrow": {"description": "Label on the shared Friday image. No child names. «قناديل الأسبوع» (نور والقناديل phase 3). Easy MSA, family-neutral plural (أتممتم), no promise of reward, no missed/lost wording."},
+  "harvestShareMessage": "قناديل أسبوعنا: {summary}",
+  "@harvestShareMessage": {"description": "Text that travels with the shared Friday image; {summary} as in harvestSummary. No child names. «قناديل الأسبوع» (نور والقناديل phase 3). Easy MSA, family-neutral plural (أتممتم), no promise of reward, no missed/lost wording.", "placeholders": {"summary": {"type": "String"}}},
+  "noorFridayHarvest": "جمعة مباركة. جمعتُ لكم قناديل هذا الأسبوع في بطاقة صغيرة.",
+  "@noorFridayHarvest": {"description": "Noor's line on «اليوم» (CompanionBrain). Easy MSA, warm, never names one parent, no emoji, no promise of reward. Friday only, once a week, when the week has lanterns."},
+  "noorChipHarvest": "افتح البطاقة",
+  "@noorChipHarvest": {"description": "Chip under Noor's Friday line: opens the week's harvest card."},
+  "planMarkDone": "تمّت الخطوة. أحسنتم!",
+  "@planMarkDone": {"description": "Snack bar after a step of the week's plan is ticked; its action is planMarkUndo. «قناديل الأسبوع» (نور والقناديل phase 3). Easy MSA, family-neutral plural (أتممتم), no promise of reward, no missed/lost wording."},
+  "planMarkUndo": "تراجع",
+  "@planMarkUndo": {"description": "Action on the plan-tick snack bar: takes the mark back."},
+  "planMarkHint": "اضغط للتعليم عليها",
+  "@planMarkHint": {"description": "Screen-reader hint on a step of the week's plan that is not ticked yet."},
+  "planMarkedCount": "{count, plural, =1{أتممتم خطوة واحدة هذا الأسبوع} =2{أتممتم خطوتين هذا الأسبوع} few{أتممتم {count} خطوات هذا الأسبوع} many{أتممتم {count} خطوةً هذا الأسبوع} other{أتممتم {count} خطوة هذا الأسبوع}}",
+  "@planMarkedCount": {"description": "Line on the collapsed weekly-plan card once a step is ticked. Positive only — never 'steps left'. «قناديل الأسبوع» (نور والقناديل phase 3). Easy MSA, family-neutral plural (أتممتم), no promise of reward, no missed/lost wording.", "placeholders": {"count": {"type": "int"}}}
 }

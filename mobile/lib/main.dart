@@ -53,9 +53,11 @@ import 'features/tour/tour_overlay.dart';
 import 'theme/app_palette.dart';
 import 'theme/app_theme.dart';
 import 'theme/bundled_fonts.dart';
+import 'widgets/ui/art_image.dart';
 import 'theme/design_tokens.dart';
 import 'features/push/notification_channels.dart';
 import 'core/haptics.dart';
+import 'core/sound_fx.dart';
 import 'features/routine/widgets/child_mode_shell.dart';
 import 'core/failures.dart';
 
@@ -242,6 +244,9 @@ void main() async {
   // Phase 0/1 deep links.
   WidgetsBinding.instance.addPostFrameCallback((_) {
     DeepLinkHandler.instance.init(appNavigatorKey);
+    // Soft interface sounds load after the first frame, off the launch path;
+    // until they do, every tick is a no-op. Never throws (core/sound_fx.dart).
+    unawaited(SoundFx.init());
     // Reminders are queued after the first frame now, not before it. The
     // adhkar pack they are built from is already loaded above. A launch from a
     // tapped notification is read inside init(), so the tap is handled once
@@ -626,6 +631,13 @@ class _AppBootstrapper extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final asyncPrefs = ref.watch(sharedPreferencesProvider);
     final childMode = ref.watch(childModeProvider);
+    // The child surface is silent: no interface sounds while it is open
+    // (SoundPolicy). Mirrored on every change, starting from the default
+    // (inactive) both sides agree on.
+    ref.listen<bool>(
+      childModeProvider.select((s) => s.active),
+      (_, active) => SoundFx.childMode = active,
+    );
     return asyncPrefs.when(
       data: (_) {
         final configAsync = ref.watch(appConfigProvider);
@@ -677,12 +689,14 @@ class _SplashScreen extends StatelessWidget {
             // fixed the same day (ee770ee), but the boot sequence still ran:
             // correct crescent on the native splash, then a shield emoji here.
             // The reporter was describing something real that outlived the fix
-            // they were given.
-            Image.asset(
-              'assets/images/logo.png',
+            // they were given. Since 2026-10-14 the mark is the «ورق مقصوص»
+            // logo (crescent, open book, sprout) — vector, so it is crisp at
+            // any density without a 250 KB PNG.
+            ArtImage(
+              'assets/svg/art/logo_mark.svg',
               width: 96,
               height: 96,
-              errorBuilder: (_, _, _) =>
+              fallback: (_) =>
                   const Text('🌙', style: TextStyle(fontSize: 64)),
             )
                 .animate()

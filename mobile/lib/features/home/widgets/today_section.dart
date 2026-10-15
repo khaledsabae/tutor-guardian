@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import '../../../theme/app_colors.dart';
 import '../../../theme/app_theme.dart';
 import '../../../widgets/ui/brand_glyph.dart';
+import 'today_road.dart';
 
 /// A numbered stop on the page — title above the block's own card.
 class TodaySectionHeader extends StatelessWidget {
@@ -35,10 +36,17 @@ class TodaySectionHeader extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ExcludeSemantics(
-              child: BrandGlyph(icon, size: 20, color: context.colors.primary),
-            ),
-            const SizedBox(width: 8),
+            // On «درب اليوم» the station beside the header carries the glyph.
+            if (!TodayRoadScope.of(context)) ...[
+              ExcludeSemantics(
+                child: BrandGlyph(
+                  icon,
+                  size: 20,
+                  color: context.colors.primary,
+                ),
+              ),
+              const SizedBox(width: 8),
+            ],
             // Expanded + no maxLines: at 200% text a child's name must wrap,
             // not ellipsize away the only word that says whose step it is.
             Expanded(

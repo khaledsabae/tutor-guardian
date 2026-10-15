@@ -1,21 +1,21 @@
-/// NoorPresence v0 — «نور» in a moon window (NOOR_WAL_QANADIL_PLAN, Phase 1).
+/// NoorPresence — «نور» in a moon window (NOOR_WAL_QANADIL_PLAN, Phase 1).
 ///
-/// The mascot already exists as three near-identical images on dark tiles;
-/// what was missing is a *presence*: a framed, breathing character rather
-/// than a loose illustration. v0 keeps it pure code around the existing
-/// assets — no new art:
+/// A framed, breathing character rather than a loose illustration:
 ///
-///   * a [ClipOval] moon window (rim + night ground from the live palette)
-///     around the existing mascot image, `calm` → serene, `proud` → celebrate;
-///   * `cacheWidth` matching the window so the 1024² source is never decoded
-///     at full size for a 44 dp tour avatar;
-///   * a drawn halo (CustomPainter) with two states — calm is one soft
-///     breathing ring, proud adds rays and twin stars;
+///   * a [ClipOval] moon window around [NoorFace] — the «ورق مقصوص» SVG
+///     face, at every size (2026-10-14: the 1024² Recraft webp it showed at
+///     hero sizes were rejected, and an SVG costs the same at 44 dp and 160);
+///   * the window ground is the brand emerald #0F6B5C in BOTH themes — the
+///     art's own card colour, so the ivory moon reads on a light page and a
+///     dark one alike — with a rim in the live palette's accent;
+///   * a drawn halo (CustomPainter), theme-driven, with two states — calm is
+///     one soft breathing ring, proud adds rays and twin stars;
 ///   * the halo loop goes through `syncLoop`, so `reduceMotion` holds it
-///     still instead of flickering at 20× speed.
+///     still instead of flickering at 20× speed (the face inside does the
+///     same with its own breath and blink).
 ///
-/// Used by the onboarding waiting overlay, the tour card and the first-tip
-/// card. Home and the celebration overlay adopt it later (Phase 1 continues).
+/// Used by the onboarding pages and waiting overlay, the tour card, Today's
+/// header, the celebration overlay and the first-tip card.
 library;
 
 import 'dart:math' as math;
@@ -26,14 +26,18 @@ import '../../../core/motion.dart';
 import '../../../theme/app_colors.dart';
 import 'noor_face.dart';
 
-/// The two halo states of v0. Calm is the default; proud marks a moment
-/// that was earned (the last tour stop, a completed first lesson later).
+/// The two halo states. Calm is the default; proud marks a moment that was
+/// earned (the last tour stop, a completed first lesson).
 enum NoorMood { calm, proud }
 
-/// Below this window size the drawn [NoorFace] replaces the mascot image:
-/// a 1024² decode for a 44 dp avatar is waste, and the drawn face can
-/// blink. Hero placements (96+) keep the illustrations for their paint.
-const _kDrawnFaceBelow = 64.0;
+/// The art's card colour (assets/svg/STYLE.md): the ground every «ورق مقصوص»
+/// illustration is cut from. Fixed, not a palette role — it is the paper.
+const kNoorWindowGround = Color(0xFF0F6B5C);
+
+/// Below this window size a light-mode calm window keeps to one ring — its
+/// rim — instead of rim plus breathing halo ring; at avatar sizes two rings
+/// read as a target, not a moon.
+const _kCompactBelow = 64.0;
 
 class NoorPresence extends StatefulWidget {
   const NoorPresence({
@@ -44,7 +48,7 @@ class NoorPresence extends StatefulWidget {
     this.face,
   });
 
-  /// The drawn face's state, when the caller knows more than calm/proud
+  /// The face's state, when the caller knows more than calm/proud
   /// («نور يتذكّر»: awake while asking, night after dark). Null → from [mood].
   final NoorFaceState? face;
 
@@ -94,11 +98,6 @@ class NoorPresenceState extends State<NoorPresence>
     super.dispose();
   }
 
-  String get _asset => switch (widget.mood) {
-    NoorMood.calm => 'assets/images/generated/mascot_serene.webp',
-    NoorMood.proud => 'assets/images/generated/mascot_celebrate.webp',
-  };
-
   NoorFaceState get _faceState =>
       widget.face ??
       switch (widget.mood) {
@@ -111,45 +110,25 @@ class NoorPresenceState extends State<NoorPresence>
     final colors = context.colors;
     final size = widget.size;
     final rim = math.max(1.5, size * .028);
-    // Decode at the window's physical pixels — never the 1024² source.
-    final dpr = MediaQuery.devicePixelRatioOf(context);
-    final cacheWidth = (size * dpr).round();
 
-    final bool useDrawnFace = size < _kDrawnFaceBelow;
     final window = Container(
       width: size,
       height: size,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        // The night ground the mascot tiles already sit on, and the gold rim
-        // — both palette roles, so the window survives a theme flip.
-        color: colors.surfaceAlt,
-        border: useDrawnFace
-            ? null // NoorFace draws its own single delicate rim
-            : Border.all(color: colors.accent, width: rim),
+        color: kNoorWindowGround,
+        // The rim is the live palette's gold, so the window still belongs
+        // to the theme it sits in.
+        border: Border.all(color: colors.accent, width: rim),
       ),
       child: ClipOval(
-        // Small windows take the drawn face — no asset decode, and it
-        // blinks. Large windows keep the illustration art.
-        child: useDrawnFace
-            ? Center(
-                child: NoorFace(size: size * 0.92, state: _faceState),
-              )
-            : Image.asset(
-                _asset,
-                fit: BoxFit.cover,
-                cacheWidth: cacheWidth,
-                filterQuality: FilterQuality.medium,
-                excludeFromSemantics: true,
-                // The mascot is bundled; a missing file is a build defect. The
-                // crescent fallback keeps the window — and the layout around it —
-                // intact instead of collapsing to an empty oval.
-                errorBuilder: (_, _, _) => Icon(
-                  Icons.nightlight_round,
-                  size: size * .6,
-                  color: colors.primary,
-                ),
-              ),
+        // The crescent fills ~55% of the SVG's square; ×1.1 sets it at a
+        // little under two thirds of the window, the paper shadow inside.
+        child: OverflowBox(
+          maxWidth: size * 1.1,
+          maxHeight: size * 1.1,
+          child: NoorFace(size: size * 1.1, state: _faceState),
+        ),
       ),
     );
 
@@ -168,7 +147,7 @@ class NoorPresenceState extends State<NoorPresence>
               halo: colors.accent,
               glow: colors.primary,
               isDark: colors.isDark,
-              useDrawnFace: useDrawnFace,
+              compact: size < _kCompactBelow,
             ),
             child: Center(child: window),
           ),
@@ -188,7 +167,7 @@ class _HaloPainter extends CustomPainter {
     required this.halo,
     required this.glow,
     required this.isDark,
-    required this.useDrawnFace,
+    required this.compact,
   });
 
   final NoorMood mood;
@@ -196,7 +175,7 @@ class _HaloPainter extends CustomPainter {
   final Color halo;
   final Color glow;
   final bool isDark;
-  final bool useDrawnFace;
+  final bool compact;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -214,9 +193,9 @@ class _HaloPainter extends CustomPainter {
         ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 14),
     );
 
-    // The breathing ring. In light mode calm state with a drawn face,
-    // the single delicate rim on the face disc is the only ring.
-    if (mood == NoorMood.proud || isDark || !useDrawnFace) {
+    // The breathing ring. A compact light-mode calm window keeps to its rim
+    // alone — one clean ring at avatar size.
+    if (mood == NoorMood.proud || isDark || !compact) {
       canvas.drawCircle(
         center,
         radius * (1.0 + 0.045 * breathe),
@@ -262,5 +241,5 @@ class _HaloPainter extends CustomPainter {
       old.progress != progress ||
       old.halo != halo ||
       old.isDark != isDark ||
-      old.useDrawnFace != useDrawnFace;
+      old.compact != compact;
 }

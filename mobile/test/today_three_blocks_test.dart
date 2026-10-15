@@ -19,7 +19,13 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:almorabbi/api/tg_client.dart';
+import 'package:almorabbi/features/companion/data/companion_store.dart';
+import 'package:almorabbi/features/companion/widgets/noor_presence.dart';
 import 'package:almorabbi/features/home/widgets/home_stats_row.dart';
+import 'package:almorabbi/features/home/widgets/sky_band.dart';
+import 'package:almorabbi/features/home/widgets/today_road.dart';
+import 'package:almorabbi/main.dart' show appConfigProvider;
+import 'package:almorabbi/widgets/ui/brand_glyph.dart';
 import 'package:almorabbi/features/home/widgets/today_section.dart';
 import 'package:almorabbi/features/onboarding/data/onboarding_storage.dart';
 import 'package:almorabbi/features/onboarding/providers/onboarding_providers.dart';
@@ -32,6 +38,8 @@ import 'package:almorabbi/state/chat_notifier.dart';
 import 'package:almorabbi/theme/app_palette.dart';
 import 'package:almorabbi/theme/app_theme.dart';
 
+import 'lantern_fakes.dart';
+
 void main() {
   tearDown(() => AppPalette.current = AppPalette.light);
 
@@ -41,10 +49,13 @@ void main() {
     String childName = 'سارة',
     Map<String, dynamic>? day,
     Map<String, dynamic>? progress,
+    Map<String, dynamic>? week,
     Locale locale = const Locale('ar'),
     bool dark = false,
     double textScale = 1.0,
     Size phone = const Size(360, 800),
+    List<String> stops = const [],
+    bool noorOn = true,
   }) async {
     tester.view.physicalSize = phone * 3.0;
     tester.view.devicePixelRatio = 3.0;
@@ -52,7 +63,8 @@ void main() {
 
     final fake = _FakeTgClient()
       ..day = day
-      ..progress = progress;
+      ..progress = progress
+      ..week = week;
     SharedPreferences.setMockInitialValues({
       if (ageGroup != null) ...{
         OnboardingStorage.keyActiveChildId: 1,
@@ -62,13 +74,24 @@ void main() {
       OnboardingStorage.keyOnboardingCompleted: true,
     });
     final prefs = await SharedPreferences.getInstance();
-    final container = ProviderContainer(overrides: [
-      tgClientProvider.overrideWithValue(fake),
-      sharedPreferencesProvider.overrideWith((_) async => prefs),
-    ]);
+    for (final stop in stops) {
+      await CompanionStore(prefs).markStop(stop);
+    }
+    final container = ProviderContainer(
+      overrides: [
+        tgClientProvider.overrideWithValue(fake),
+        sharedPreferencesProvider.overrideWith((_) async => prefs),
+        if (!noorOn)
+          appConfigProvider.overrideWith(
+            (_) async => {'noor_header_enabled': false},
+          ),
+      ],
+    );
     addTearDown(container.dispose);
     await container.read(sharedPreferencesProvider.future);
-    if (ageGroup != null) container.read(activeChildIdProvider.notifier).state = 1;
+    if (ageGroup != null) {
+      container.read(activeChildIdProvider.notifier).state = 1;
+    }
 
     if (dark) AppPalette.current = AppPalette.dark;
     final tabs = <int>[];
@@ -81,8 +104,9 @@ void main() {
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
           builder: (context, child) => MediaQuery(
-            data: MediaQuery.of(context)
-                .copyWith(textScaler: TextScaler.linear(textScale)),
+            data: MediaQuery.of(
+              context,
+            ).copyWith(textScaler: TextScaler.linear(textScale)),
             child: child!,
           ),
           home: HomeScreen(onGoToTab: tabs.add),
@@ -97,28 +121,34 @@ void main() {
   double topOf(WidgetTester tester, Finder f) => tester.getTopLeft(f).dy;
 
   for (final locale in const [Locale('ar'), Locale('en')]) {
-    testWidgets('Today actions have localized button semantics (${locale.languageCode})', (t) async {
-      final semantics = t.ensureSemantics();
-      try {
-        await pumpHome(t, locale: locale);
-        final l10n = AppLocalizations.of(t.element(find.byType(HomeScreen)));
-        final ask = find.bySemanticsLabel(l10n.todayAskCta);
-        expect(ask, findsOneWidget);
-        final data = t.getSemantics(ask).getSemanticsData();
-        expect(data.flagsCollection.isButton, isTrue);
-        expect(data.hasAction(SemanticsAction.tap), isTrue);
-        final child = find.byType(ActiveChildChip);
-        final childData = t.getSemantics(child).getSemanticsData();
-        expect(childData.label, locale.languageCode == 'ar'
-            ? 'الطفل الحالي: سارة، اضغط للتبديل'
-            : 'Current child: سارة, tap to switch');
-        expect(childData.flagsCollection.isButton, isTrue);
-        expect(t.getSize(child).height, greaterThanOrEqualTo(48));
-        expect(t.getSize(child).width, greaterThanOrEqualTo(48));
-      } finally {
-        semantics.dispose();
-      }
-    });
+    testWidgets(
+      'Today actions have localized button semantics (${locale.languageCode})',
+      (t) async {
+        final semantics = t.ensureSemantics();
+        try {
+          await pumpHome(t, locale: locale);
+          final l10n = AppLocalizations.of(t.element(find.byType(HomeScreen)));
+          final ask = find.bySemanticsLabel(l10n.todayAskCta);
+          expect(ask, findsOneWidget);
+          final data = t.getSemantics(ask).getSemanticsData();
+          expect(data.flagsCollection.isButton, isTrue);
+          expect(data.hasAction(SemanticsAction.tap), isTrue);
+          final child = find.byType(ActiveChildChip);
+          final childData = t.getSemantics(child).getSemanticsData();
+          expect(
+            childData.label,
+            locale.languageCode == 'ar'
+                ? 'الطفل الحالي: سارة، اضغط للتبديل'
+                : 'Current child: سارة, tap to switch',
+          );
+          expect(childData.flagsCollection.isButton, isTrue);
+          expect(t.getSize(child).height, greaterThanOrEqualTo(48));
+          expect(t.getSize(child).width, greaterThanOrEqualTo(48));
+        } finally {
+          semantics.dispose();
+        }
+      },
+    );
   }
 
   testWidgets('three blocks, in order, all above the divider', (tester) async {
@@ -135,13 +165,80 @@ void main() {
     expect(topOf(tester, step), lessThan(topOf(tester, ask)));
     expect(topOf(tester, ask), lessThan(topOf(tester, mission)));
     // The divider is below the fold on a phone — which is the point.
-    await tester.scrollUntilVisible(divider, 300,
-        scrollable: find.byType(Scrollable).first);
+    await tester.scrollUntilVisible(
+      divider,
+      300,
+      scrollable: find.byType(Scrollable).first,
+    );
     expect(topOf(tester, mission), lessThan(topOf(tester, divider)));
   });
 
-  testWidgets('the ask entry is there even when the tip cannot load',
-      (tester) async {
+  testWidgets('«درب اليوم»: the stops stand on one road under the sky', (
+    tester,
+  ) async {
+    await pumpHome(tester);
+    expect(find.byType(SkyBand), findsOneWidget);
+    expect(find.byType(TodayRoad), findsOneWidget);
+    // The stations carry the stop glyphs: the headers drop their own.
+    for (final h in tester.widgetList<TodaySectionHeader>(
+      find.byType(TodaySectionHeader),
+    )) {
+      expect(
+        find.descendant(
+          of: find.byWidget(h),
+          matching: find.byType(BrandGlyph),
+        ),
+        findsNothing,
+      );
+    }
+    // Nothing reached yet: Noor waits on ①, beside its header.
+    final road = find.byType(TodayRoad);
+    final noor = find.descendant(of: road, matching: find.byType(NoorPresence));
+    expect(noor, findsOneWidget);
+    final stepTop = topOf(tester, find.text('خطوة اليوم مع سارة'));
+    expect((topOf(tester, noor) - stepTop).abs(), lessThan(24));
+    expect(
+      find.descendant(
+        of: find.byType(TodayRoad),
+        matching: find.byIcon(Icons.check_rounded),
+      ),
+      findsNothing,
+    );
+  });
+
+  testWidgets('a lesson done today lights ① and Noor moves on to ②', (
+    tester,
+  ) async {
+    await pumpHome(tester, stops: ['step:1', 'mission:2']);
+    expect(
+      find.descendant(
+        of: find.byType(TodayRoad),
+        matching: find.byIcon(Icons.check_rounded),
+      ),
+      findsOneWidget,
+    );
+    final noor = find.descendant(
+      of: find.byType(TodayRoad),
+      matching: find.byType(NoorPresence),
+    );
+    final askTop = topOf(tester, find.text('اسأل المربّي'));
+    expect((topOf(tester, noor) - askTop).abs(), lessThan(24));
+  });
+
+  testWidgets('kill switch off: no sky and no road, the plain blocks stay', (
+    tester,
+  ) async {
+    await pumpHome(tester, noorOn: false);
+    expect(find.byType(SkyBand), findsNothing);
+    expect(find.byType(TodayRoad), findsNothing);
+    expect(find.byType(TodaySectionHeader), findsNWidgets(3));
+    expect(find.text('خطوة اليوم مع سارة'), findsOneWidget);
+    expect(find.text('اضغط للتبديل أو إضافة طفل آخر'), findsOneWidget);
+  });
+
+  testWidgets('the ask entry is there even when the tip cannot load', (
+    tester,
+  ) async {
     final tabs = await pumpHome(tester);
     // The fake has no coach tip — the tip card hides itself — and the block
     // must still offer a way to ask.
@@ -149,46 +246,68 @@ void main() {
     expect(tabs, [RootTab.assistant]);
   });
 
-  testWidgets('a mission band with no mission yet is invited to open one',
-      (tester) async {
+  testWidgets('a mission band with no mission yet is invited to open one', (
+    tester,
+  ) async {
     await pumpHome(tester, ageGroup: '7-9');
     expect(find.text('افتح مهمة اليوم'), findsOneWidget);
   });
 
-  testWidgets('a mission the child already opened shows the day instead',
-      (tester) async {
-    await pumpHome(tester, ageGroup: '7-9', day: {
-      'child_id': 1,
-      'child_name': 'سارة',
-      'screen': {'counted_seconds': 0, 'budget_seconds': 1800},
-      'listening': {'counted_seconds': 0, 'budget_seconds': 3600},
-      'mission': {'status': 'assigned', 'title_ar': 'صيّاد الأخضر'},
-    });
+  testWidgets('a mission the child already opened shows the day instead', (
+    tester,
+  ) async {
+    await pumpHome(
+      tester,
+      ageGroup: '7-9',
+      day: {
+        'child_id': 1,
+        'child_name': 'سارة',
+        'screen': {'counted_seconds': 0, 'budget_seconds': 1800},
+        'listening': {'counted_seconds': 0, 'budget_seconds': 3600},
+        'mission': {'status': 'assigned', 'title_ar': 'صيّاد الأخضر'},
+      },
+    );
     await tester.pump(const Duration(milliseconds: 100));
     expect(find.textContaining('صيّاد الأخضر'), findsOneWidget);
     expect(find.text('افتح مهمة اليوم'), findsNothing);
   });
 
-  testWidgets('a band with no mission bank gets the day tracker, not a mission',
-      (tester) async {
-    await pumpHome(tester, ageGroup: '2-3');
-    expect(find.text('يوم سارة'), findsOneWidget);
-    expect(find.text('سجّل الآن'), findsOneWidget);
-    expect(find.text('افتح مهمة اليوم'), findsNothing);
-  });
+  testWidgets(
+    'a band with no mission bank gets the day tracker, not a mission',
+    (tester) async {
+      await pumpHome(tester, ageGroup: '2-3');
+      expect(find.text('يوم سارة'), findsOneWidget);
+      expect(find.text('سجّل الآن'), findsOneWidget);
+      expect(find.text('افتح مهمة اليوم'), findsNothing);
+    },
+  );
 
-  testWidgets('no child yet: the blocks speak generically and ask for one',
-      (tester) async {
+  testWidgets('no child yet: the blocks speak generically and ask for one', (
+    tester,
+  ) async {
     await pumpHome(tester, ageGroup: null);
     expect(find.text('خطوة اليوم مع طفلك'), findsOneWidget);
     expect(find.text('مهمة الطفل اليوم'), findsOneWidget);
     expect(find.text('أضف طفلك'), findsOneWidget);
   });
 
-  testWidgets('English, dark, 200% text: lays out without overflow',
-      (tester) async {
-    await pumpHome(tester,
-        locale: const Locale('en'), dark: true, textScale: 2.0);
+  testWidgets('English, dark, 200% text: lays out without overflow', (
+    tester,
+  ) async {
+    await pumpHome(
+      tester,
+      locale: const Locale('en'),
+      dark: true,
+      textScale: 2.0,
+      // The week's lanterns are drawn at this scale too (phase 3).
+      week: familyWeekJson(
+        acts: [
+          act('lesson', 0, title: 'Sleep and focus'),
+          act('question', 1),
+          act('mission', 2, title: 'Green hunter'),
+        ],
+      ),
+    );
     expect(tester.takeException(), isNull);
     expect(find.text("Today's step with سارة"), findsOneWidget);
     // Further down at this scale; scroll to each and check it built cleanly.
@@ -197,43 +316,59 @@ void main() {
       'Ask your question',
       "سارة's mission today",
       "Open today's mission",
+      "Your week's lanterns",
       'More for today',
       // Below the divider: the stats chips overflowed here at 200% before
-      // they moved off a fixed-aspect grid.
-      'Consecutive Days',
+      // they moved off a fixed-aspect grid. «أسابيع مضيئة» took the login
+      // streak's place (phase 3).
+      'Lit weeks',
       'Educational Games',
     ]) {
-      await tester.scrollUntilVisible(find.text(text), 300,
-          scrollable: find.byType(Scrollable).first);
+      await tester.scrollUntilVisible(
+        find.text(text),
+        300,
+        scrollable: find.byType(Scrollable).first,
+      );
       await tester.pump();
       expect(tester.takeException(), isNull, reason: text);
       expect(find.text(text), findsOneWidget);
     }
   });
 
-  testWidgets('English, dark: no Arabic script anywhere on the screen',
-      (tester) async {
+  testWidgets('English, dark: no Arabic script anywhere on the screen', (
+    tester,
+  ) async {
     // E2E run 37203122941 (English, dark) showed Arabic on «اليوم»: the switch
     // hint and the games card were literals in home_screen.dart. The hint
     // moved to the ARB files and the card went with the three-block cut; this
     // pins the whole screen so the next literal is caught here, not on a
     // device. The child gets a Latin name — a parent's Arabic name is no leak.
-    await pumpHome(tester,
-        locale: const Locale('en'), dark: true, childName: 'Sara');
-    expect(find.text('Tap to switch or add another child'), findsOneWidget);
+    await pumpHome(
+      tester,
+      locale: const Locale('en'),
+      dark: true,
+      childName: 'Sara',
+    );
+    // Under the sky the child banner gives way to Noor and the app bar chip
+    // (its hint is pinned by the kill-switch test below).
+    expect(find.text('Tap to switch or add another child'), findsNothing);
 
     // The list builds lazily: walk it to the end, reading every text on the way.
     final seen = <String>{};
-    final position =
-        tester.state<ScrollableState>(find.byType(Scrollable).first).position;
-    for (var step = 0;; step++) {
+    final position = tester
+        .state<ScrollableState>(find.byType(Scrollable).first)
+        .position;
+    for (var step = 0; ; step++) {
       for (final rich in tester.widgetList<RichText>(
-          find.byType(RichText, skipOffstage: false))) {
+        find.byType(RichText, skipOffstage: false),
+      )) {
         seen.add(rich.text.toPlainText());
       }
       if (position.pixels >= position.maxScrollExtent) break;
       expect(step, lessThan(100), reason: 'the list never ended');
-      position.jumpTo(math.min(position.pixels + 300, position.maxScrollExtent));
+      position.jumpTo(
+        math.min(position.pixels + 300, position.maxScrollExtent),
+      );
       await tester.pump();
     }
     // The walk really got below the divider, to the last cards.
@@ -241,15 +376,17 @@ void main() {
 
     // The four the E2E run caught, by name — and then any other.
     expect(
-        seen.intersection({
-          'اضغط للتبديل أو إضافة طفل آخر',
-          'الألعاب والمسابقات التعليمية',
-          'ألعاب تفاعلية ومسابقات قيم وتربية لطفلك',
-          'العب الآن',
-        }),
-        isEmpty);
+      seen.intersection({
+        'اضغط للتبديل أو إضافة طفل آخر',
+        'الألعاب والمسابقات التعليمية',
+        'ألعاب تفاعلية ومسابقات قيم وتربية لطفلك',
+        'العب الآن',
+      }),
+      isEmpty,
+    );
     final arabic = RegExp(
-        r'[\u0600-\u06ff\u0750-\u077f\u08a0-\u08ff\ufb50-\ufdff\ufe70-\ufefc]');
+      r'[\u0600-\u06ff\u0750-\u077f\u08a0-\u08ff\ufb50-\ufdff\ufe70-\ufefc]',
+    );
     expect(seen.where(arabic.hasMatch).toList(), isEmpty);
   });
 
@@ -257,56 +394,73 @@ void main() {
     required int childId,
     int screenSeconds = 0,
     Map<String, dynamic>? mission,
-  }) =>
-      {
-        'child_id': childId,
-        'child_name': 'سارة',
-        'screen': {'counted_seconds': screenSeconds, 'budget_seconds': 1800},
-        'listening': {'counted_seconds': 0, 'budget_seconds': 3600},
-        'mission': mission,
-      };
+  }) => {
+    'child_id': childId,
+    'child_name': 'سارة',
+    'screen': {'counted_seconds': screenSeconds, 'budget_seconds': 1800},
+    'listening': {'counted_seconds': 0, 'budget_seconds': 3600},
+    'mission': mission,
+  };
 
-  testWidgets('minutes on the screen are not a mission: the hand-over stays',
-      (tester) async {
+  testWidgets('minutes on the screen are not a mission: the hand-over stays', (
+    tester,
+  ) async {
     // Item 10: twenty minutes of screen and no mission used to show only the
     // minutes, hiding the one thing the block exists to offer.
-    await pumpHome(tester, ageGroup: '7-9',
-        day: dayWith(childId: 1, screenSeconds: 1200));
+    await pumpHome(
+      tester,
+      ageGroup: '7-9',
+      day: dayWith(childId: 1, screenSeconds: 1200),
+    );
     await tester.pump(const Duration(milliseconds: 100));
-    await tester.scrollUntilVisible(find.text('افتح مهمة اليوم'), 200,
-        scrollable: find.byType(Scrollable).first);
+    await tester.scrollUntilVisible(
+      find.text('افتح مهمة اليوم'),
+      200,
+      scrollable: find.byType(Scrollable).first,
+    );
     expect(find.text('افتح مهمة اليوم'), findsOneWidget);
     expect(find.textContaining('20 دقيقة شاشة من 30'), findsOneWidget);
   });
 
-  testWidgets('a young band with minutes keeps its summary and no mission CTA',
-      (tester) async {
-    await pumpHome(tester, ageGroup: '2-3',
-        day: dayWith(childId: 1, screenSeconds: 600));
-    await tester.pump(const Duration(milliseconds: 100));
-    await tester.scrollUntilVisible(find.textContaining('10 دقيقة شاشة'), 200,
-        scrollable: find.byType(Scrollable).first);
-    expect(find.text('افتح مهمة اليوم'), findsNothing);
-  });
+  testWidgets(
+    'a young band with minutes keeps its summary and no mission CTA',
+    (tester) async {
+      await pumpHome(
+        tester,
+        ageGroup: '2-3',
+        day: dayWith(childId: 1, screenSeconds: 600),
+      );
+      await tester.pump(const Duration(milliseconds: 100));
+      await tester.scrollUntilVisible(
+        find.textContaining('10 دقيقة شاشة'),
+        200,
+        scrollable: find.byType(Scrollable).first,
+      );
+      expect(find.text('افتح مهمة اليوم'), findsNothing);
+    },
+  );
 
-  testWidgets('switching child mid-load never shows the older child\'s day',
-      (tester) async {
+  testWidgets('switching child mid-load never shows the older child\'s day', (
+    tester,
+  ) async {
     // Item 16: the slower, older answer used to overwrite the newer child's.
     final fake = _FakeTgClient()..pendingDays = {};
-    final container = ProviderContainer(overrides: [
-      tgClientProvider.overrideWithValue(fake),
-    ]);
+    final container = ProviderContainer(
+      overrides: [tgClientProvider.overrideWithValue(fake)],
+    );
     addTearDown(container.dispose);
     container.read(activeChildIdProvider.notifier).state = 1;
-    await tester.pumpWidget(UncontrolledProviderScope(
-      container: container,
-      child: MaterialApp(
-        locale: const Locale('ar'),
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
-        supportedLocales: AppLocalizations.supportedLocales,
-        home: const Scaffold(body: ChildDayCard(whenEmpty: Text('EMPTY'))),
+    await tester.pumpWidget(
+      UncontrolledProviderScope(
+        container: container,
+        child: MaterialApp(
+          locale: const Locale('ar'),
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          home: const Scaffold(body: ChildDayCard(whenEmpty: Text('EMPTY'))),
+        ),
       ),
-    ));
+    );
     await tester.pump();
     expect(fake.pendingDays!.keys, [1]);
 
@@ -315,29 +469,45 @@ void main() {
     await tester.pump();
     expect(fake.pendingDays!.keys, [1, 2]);
 
-    fake.pendingDays![2]!.complete(dayWith(
-        childId: 2, mission: {'status': 'assigned', 'title_ar': 'مهمة الثاني'}));
+    fake.pendingDays![2]!.complete(
+      dayWith(
+        childId: 2,
+        mission: {'status': 'assigned', 'title_ar': 'مهمة الثاني'},
+      ),
+    );
     await tester.pump();
     await tester.pump();
     expect(find.textContaining('مهمة الثاني'), findsOneWidget);
 
-    fake.pendingDays![1]!.complete(dayWith(
-        childId: 1, mission: {'status': 'assigned', 'title_ar': 'مهمة الأول'}));
+    fake.pendingDays![1]!.complete(
+      dayWith(
+        childId: 1,
+        mission: {'status': 'assigned', 'title_ar': 'مهمة الأول'},
+      ),
+    );
     await tester.pump();
     await tester.pump();
     expect(find.textContaining('مهمة الثاني'), findsOneWidget);
     expect(find.textContaining('مهمة الأول'), findsNothing);
   });
 
-  testWidgets('the ask entry stays compact at 200% English on a 320dp phone',
-      (tester) async {
+  testWidgets('the ask entry stays compact at 200% English on a 320dp phone', (
+    tester,
+  ) async {
     // Item 12: a fixed-width CTA beside the body left the body a sliver, and
     // it wrapped one word per line into a card taller than the screen.
-    await pumpHome(tester,
-        locale: const Locale('en'), textScale: 2.0, phone: const Size(320, 640));
+    await pumpHome(
+      tester,
+      locale: const Locale('en'),
+      textScale: 2.0,
+      phone: const Size(320, 640),
+    );
     final cta = find.text('Ask your question');
-    await tester.scrollUntilVisible(cta, 200,
-        scrollable: find.byType(Scrollable).first);
+    await tester.scrollUntilVisible(
+      cta,
+      200,
+      scrollable: find.byType(Scrollable).first,
+    );
     expect(tester.takeException(), isNull);
     final card = find.ancestor(of: cta, matching: find.byType(InkWell)).first;
     expect(tester.getSize(card).height, lessThan(320));
@@ -346,19 +516,22 @@ void main() {
     expect(tester.getSize(body).width, greaterThan(160));
   });
 
-  testWidgets('habit_streak_3 fires without the stats row being scrolled to',
-      (tester) async {
+  testWidgets('habit_streak_3 fires without the stats row being scrolled to', (
+    tester,
+  ) async {
     // Item 14: the event was fired from HomeStatsRow, which since the stats
     // moved below the divider is built only when a parent scrolls down.
-    await pumpHome(tester,
-        phone: const Size(360, 640),
-        progress: {
-          'child_id': 1,
-          'lessons': [],
-          'streak_days': 3,
-          'daily_login_streak': 3,
-          'last_completed_at': null,
-        });
+    await pumpHome(
+      tester,
+      phone: const Size(360, 640),
+      progress: {
+        'child_id': 1,
+        'lessons': [],
+        'streak_days': 3,
+        'daily_login_streak': 3,
+        'last_completed_at': null,
+      },
+    );
     await tester.pump(const Duration(milliseconds: 100));
     expect(find.byType(HomeStatsRow), findsNothing); // never built
     final prefs = await SharedPreferences.getInstance();
@@ -370,25 +543,37 @@ class _FakeTgClient extends TgClient {
   Map<String, dynamic>? day;
   Map<String, dynamic>? progress;
 
+  /// `/api/family/week`; null answers like a server without lanterns.
+  Map<String, dynamic>? week;
+
+  @override
+  Future<Map<String, dynamic>> fetchFamilyWeek(
+    int tzOffsetMinutes, {
+    String? lang,
+  }) async => week ?? (throw const TgApiError(404, 'Not Found'));
+
   /// When set, fetchChildDay answers each child only when the test says so.
   Map<int, Completer<Map<String, dynamic>>>? pendingDays;
 
   @override
-  Future<Map<String, dynamic>> getChildProgress(int childId,
-          {String? pathId}) async =>
-      progress ?? {'child_id': childId, 'lessons': []};
+  Future<Map<String, dynamic>> getChildProgress(
+    int childId, {
+    String? pathId,
+  }) async => progress ?? {'child_id': childId, 'lessons': []};
 
   // Everything else the screen reads fails fast, the way an unreachable
   // server does — the blocks must still render and still end in an action.
   @override
-  Future<Map<String, dynamic>> getPathsList(
-          {String? ageGroup, String? domain}) async =>
-      throw const TgApiError(503, 'offline');
+  Future<Map<String, dynamic>> getPathsList({
+    String? ageGroup,
+    String? domain,
+  }) async => throw const TgApiError(503, 'offline');
 
   @override
-  Future<Map<String, dynamic>> getNextLesson(String ageGroup,
-          {int? childId}) async =>
-      throw const TgApiError(503, 'offline');
+  Future<Map<String, dynamic>> getNextLesson(
+    String ageGroup, {
+    int? childId,
+  }) async => throw const TgApiError(503, 'offline');
 
   @override
   Future<Map<String, dynamic>> getCoachTip(int childId) async =>

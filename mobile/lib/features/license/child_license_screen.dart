@@ -19,6 +19,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../api/tg_client.dart';
 import '../../l10n/app_localizations.dart';
 import '../../state/chat_notifier.dart';
+import '../handover/child_hand_back.dart';
 import '../routine/providers/child_mode_providers.dart';
 import '../routine/services/child_mode_secure_storage.dart';
 import 'package:almorabbi/widgets/ui/loading_view.dart';
@@ -37,6 +38,10 @@ class _ChildLicenseScreenState extends ConsumerState<ChildLicenseScreen> {
 
   /// Shown after an answer: an acknowledgement, not a verdict.
   bool _acknowledged = false;
+
+  /// The child said they are done: the session is closed and the device is
+  /// on its way back.
+  bool _handedBack = false;
 
   @override
   void initState() {
@@ -83,20 +88,32 @@ class _ChildLicenseScreenState extends ConsumerState<ChildLicenseScreen> {
     await _load();
   }
 
+  /// "I'm done": close the session, keep child mode, and say where the
+  /// device goes next.
+  ///
+  /// This used to be `exitWithoutPin()` then `maybePop()`. The pop did
+  /// nothing — a child surface is the root widget, there is nothing under it
+  /// — and `exitWithoutPin` flipped that root to the parent's app. So a child
+  /// who finished the licence was handed the parent's whole app — the
+  /// assistant, settings, every child's profile — with no PIN in the way. The
+  /// mission card can afford a PIN-less exit because it closes the app; this
+  /// screen did not, and landed somewhere the child should never be.
+  ///
+  /// Now the session ends (nothing is billed while the device waits), child
+  /// mode stays on, and the screen asks for the device back. The only way out
+  /// is the frame's Exit, behind the parent's PIN — the same as every other
+  /// child surface.
   Future<void> _leave() async {
-    // Same exit as the mission card, for the same reason: a child surface is
-    // the root widget, so `maybePop` on it does nothing at all — the child
-    // presses "I'm done", the session closes, and they stay on a dead screen
-    // whose timer will never move again. Leaving child mode is what actually
-    // changes what is on the display.
-    await ref.read(childModeProvider.notifier).exitWithoutPin();
-    if (mounted) Navigator.of(context).maybePop();
+    await ref.read(childModeProvider.notifier).endSession(reason: 'completed');
+    if (mounted) setState(() => _handedBack = true);
   }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final l10n = AppLocalizations.of(context);
+
+    if (_handedBack) return const ChildHandBackScreen();
 
     if (_loading) {
       return const Scaffold(body: SafeArea(child: LoadingView(count: 2, itemHeight: 200)));

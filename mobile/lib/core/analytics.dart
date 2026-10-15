@@ -10,6 +10,7 @@ library;
 import 'dart:async';
 
 import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:flutter/foundation.dart' show visibleForTesting;
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'engagement_signal.dart';
@@ -18,7 +19,13 @@ import 'notification_permission_gate.dart';
 class Analytics {
   static FirebaseAnalytics get _fa => FirebaseAnalytics.instance;
 
+  /// Sees every event as it is logged, so a test can pin the funnel — e.g.
+  /// `child_added` exactly once per created child. Null in the app.
+  @visibleForTesting
+  static void Function(String name, Map<String, Object>? params)? debugSink;
+
   static Future<void> _log(String name, [Map<String, Object>? params]) async {
+    debugSink?.call(name, params);
     try {
       await _fa.logEvent(name: name, parameters: params);
     } catch (_) {
@@ -50,6 +57,11 @@ class Analytics {
   /// A child profile was successfully created on the backend.
   static Future<void> childAdded(String ageGroup) =>
       _log('child_added', {'age_group': ageGroup});
+
+  /// What became of the optional name on the child-creation wait: `named`,
+  /// `later` («لاحقًا»), or `ignored` (never touched — the default stays).
+  static Future<void> onboardingName(String outcome) =>
+      _log('onboarding_name', {'outcome': outcome});
 
   /// A chat message was actually submitted (first one also logs first_chat).
   static Future<void> chatSent() async {
@@ -238,11 +250,13 @@ class Analytics {
   static Future<void> praiseSent(String ageBand) =>
       _log('praise_sent', {'age_band': ageBand});
 
-  /// The parent committed to the lesson's one doable step («تمام، سأفعلها»).
-  /// `when` is the slot they chose; the sheet offers only tonight until the
-  /// promise loop (phase 2) adds tomorrow / this week.
-  static Future<void> nextStepCommitted({String when = 'tonight'}) =>
-      _log('next_step_committed', {'when': when});
+  /// The parent committed to one doable step («تمام، سأفعلها»). `when` is the
+  /// slot they chose; `source` is where: the lesson's step (`lesson`) or a
+  /// step taken from an assistant answer (`chat`, «سأجرّبها مع …»).
+  static Future<void> nextStepCommitted({
+    String when = 'tonight',
+    String source = 'lesson',
+  }) => _log('next_step_committed', {'when': when, 'source': source});
 
   /// «نور يتذكّر»: a promise was answered from Noor's line. `linked` says
   /// whether it rode a server follow-up (then memory learns from it too).
@@ -257,6 +271,16 @@ class Analytics {
   /// shown vs dismiss is the «< 30% dismiss» gate of phase 2.
   static Future<void> companionReply(String kind, String action) =>
       _log('companion_reply', {'kind': kind, 'action': action});
+
+  /// «قناديل الأسبوع»: lanterns this phone had not shown lit yet came into
+  /// view on «اليوم» and lit. [days] is how many burn this week now (1–7).
+  static Future<void> lanternLit(int days) =>
+      _log('lantern_lit', {'days': days});
+
+  /// The Friday harvest card was opened, from Noor's line (`noor`) or from
+  /// the week's acts sheet (`sheet`).
+  static Future<void> harvestOpened(String from) =>
+      _log('harvest_opened', {'from': from});
 
   /// A Google identity was linked — data now survives reinstall.
   static Future<void> identityLinked() => _log('identity_linked');

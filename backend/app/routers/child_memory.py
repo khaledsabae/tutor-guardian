@@ -10,6 +10,7 @@ the app is expected to branch on carry a stable `code`:
 """
 from __future__ import annotations
 
+from datetime import date
 from typing import Literal, Optional
 
 from fastapi import APIRouter, Depends, HTTPException, Query, Request
@@ -312,8 +313,8 @@ def delete_memory_fact(child_id: int, fact_id: int, request: Request):
                summary="Forget everything about this child",
             dependencies=[Depends(require_device_proof)])
 def delete_child_memory(child_id: int, request: Request):
-    """Facts, follow-ups and cached weekly plans for this child. The child
-    profile itself is untouched (that is DELETE /api/children/{id})."""
+    """Facts, follow-ups, cached weekly plans and their marks for this child.
+    The child profile itself is untouched (that is DELETE /api/children/{id})."""
     device_id = _owned_child(request, child_id)
     counts = cm.delete_child_memory(device_id, child_id)
     return {"child_id": child_id, "deleted": counts}
@@ -340,3 +341,46 @@ def get_weekly_plan(child_id: int, request: Request,
         device_id, child_id, lang=lang, tz_offset_minutes=tz_offset_minutes,
         personal=cm.memory_in_use(device_id, proven=confirmed),
     )
+
+
+# ── Weekly plan marks (نور والقناديل, Phase 3) ─────────────────────────────
+
+
+class PlanMarkIn(BaseModel):
+    week_start: str      # the plan's week_start (a Monday), YYYY-MM-DD
+    item_key: str        # an `actions[].key` or the `worship.key` of the plan
+
+
+def _plan_mark(request: Request, child_id: int, body: PlanMarkIn) -> tuple[str, date, str]:
+    """Owner first (another device's child is a 404, like every child route),
+    then the body: a recent Monday, and a step that exists in the banks."""
+    device_id = _owned_child(request, child_id)
+    try:
+        week_start = date.fromisoformat(body.week_start.strip())
+    except ValueError:
+        week_start = None
+    if week_start is None or not weekly_plan.valid_mark_week(week_start):
+        raise _err(422, "week_start",
+                   "أرسل تاريخ الاثنين لأسبوع الخطة الحالي أو الأسبوع الذي قبله.")
+    item_key = body.item_key.strip()
+    if item_key not in weekly_plan.plan_item_keys():
+        raise _err(422, "item_key", "هذه الخطوة ليست من خطة الأسبوع.")
+    return device_id, week_start, item_key
+
+
+@router.put("/children/{child_id}/weekly-plan/marks",
+            summary="Tick one step of the week's plan (idempotent)")
+def put_weekly_plan_mark(child_id: int, body: PlanMarkIn, request: Request):
+    device_id, week_start, item_key = _plan_mark(request, child_id, body)
+    marks = weekly_plan.mark_item(device_id, child_id, week_start, item_key)
+    return {"child_id": child_id, "week_start": week_start.isoformat(),
+            "item_key": item_key, "marked": True, "marks": marks}
+
+
+@router.delete("/children/{child_id}/weekly-plan/marks",
+               summary="Un-tick one step of the week's plan (idempotent)")
+def delete_weekly_plan_mark(child_id: int, body: PlanMarkIn, request: Request):
+    device_id, week_start, item_key = _plan_mark(request, child_id, body)
+    marks = weekly_plan.unmark_item(device_id, child_id, week_start, item_key)
+    return {"child_id": child_id, "week_start": week_start.isoformat(),
+            "item_key": item_key, "marked": False, "marks": marks}

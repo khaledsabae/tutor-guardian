@@ -25,6 +25,7 @@ import '../../core/app_routes.dart';
 import '../../l10n/app_localizations.dart';
 import '../../screens/chat_screen.dart';
 import '../../screens/home_screen.dart';
+import '../home/widgets/today_focus_card.dart' show todayFocusOpenProvider;
 import '../hub/screens/hub_screen.dart';
 import '../onboarding/providers/onboarding_providers.dart';
 import '../program/screens/paths_screen.dart';
@@ -60,22 +61,21 @@ class _RootScaffoldState extends ConsumerState<RootScaffold> with RouteAware {
     Screens.tabMore,
   ];
 
-  /// Tour targets. The destination keys are attached to the destinations
-  /// themselves (via [KeyedSubtree]) rather than derived by slicing the nav
-  /// bar's width into quarters. Slicing would force us to flip the index by
-  /// hand under RTL — precisely the direction-assuming arithmetic that makes
-  /// the off-the-shelf tour packages misfire in this app. Letting the
-  /// framework's own `Row` place each destination and then reading back its
-  /// `localToGlobal` rect means mirroring is already correct, and it stays
-  /// correct if the destination count or their padding ever changes.
-  final List<GlobalKey> _tabKeys = List.generate(4, (_) => GlobalKey());
+  /// The tour's one target: Today's ① card. Attached to the card itself and
+  /// read back through `localToGlobal`, so RTL mirroring is the framework's
+  /// layout, never index arithmetic of ours.
   final GlobalKey _focusCardKey = GlobalKey();
+
+  /// Today's own primary scroll controller, so the tour can bring ① back
+  /// when Today is scrolled so far down that the card is not even built.
+  /// (Without it Today's list would share the route's with every other tab.)
+  final ScrollController _todayScroll = ScrollController();
 
   @override
   void initState() {
     super.initState();
-    // Post-frame, not in `_AppBootstrapper`: the tour measures the laid-out
-    // NavigationBar, which does not exist until this scaffold's first frame.
+    // Post-frame, not in `_AppBootstrapper`: the tour measures Today's laid-out
+    // ① card, which does not exist until this scaffold's first frame.
     //
     // A tab armed before the shell existed — onboarding's deferred «ask the
     // mentor» — is consumed on the same frame, so the parent lands on the
@@ -98,6 +98,7 @@ class _RootScaffoldState extends ConsumerState<RootScaffold> with RouteAware {
   @override
   void dispose() {
     if (kTourEnabled) tourRouteObserver.unsubscribe(this);
+    _todayScroll.dispose();
     super.dispose();
   }
 
@@ -105,23 +106,64 @@ class _RootScaffoldState extends ConsumerState<RootScaffold> with RouteAware {
   @override
   void didPopNext() => _maybeStartTour();
 
-  void _maybeStartTour() {
+  void _maybeStartTour({bool retried = false}) {
     if (!kTourEnabled || !mounted) return;
     if (ref.read(tourControllerProvider).active) return;
     final onboarded = ref.read(onboardingCompletedProvider);
     if (!onboarded) return;
-    if (ref.read(tourVersionProvider) >= kTourVersion) return;
+    if (!tourIsDue(ref.read(tourVersionProvider))) return;
+    // The mark is on ①, which only Today shows. A parent the deferred ask
+    // sent to the assistant is not pulled back: the tour waits for their
+    // first visit to Today — which is also what the settings replay row
+    // promises («ستظهر الجولة عند عودتك إلى الشاشة الرئيسية»).
+    if (_index != RootTab.today) return;
+    if (_focusCardKey.currentContext == null) {
+      // Today is scrolled so far down that the list has not built ① (the
+      // replay row can be used from anywhere). Bring the top back and look
+      // once more next frame — never start a tour with nothing to point at:
+      // it would wait invisibly and drop its veil whenever ① scrolls by.
+      if (retried || !_todayScroll.hasClients) return;
+      _todayScroll.jumpTo(0);
+      WidgetsBinding.instance.addPostFrameCallback(
+        (_) => _maybeStartTour(retried: true),
+      );
+      return;
+    }
+    _revealFocusCard();
     showTour(
       context,
       ref,
-      buildTourSteps(tabKeys: _tabKeys, focusKey: _focusCardKey),
+      buildTourSteps(
+        focusKey: _focusCardKey,
+        // The card runs its own primary action — see todayFocusOpenProvider.
+        onOpen: () => ref.read(todayFocusOpenProvider.notifier).state++,
+      ),
     );
+  }
+
+  /// Brings ① wholly on screen before the veil measures it. Nothing moves on
+  /// a first run at normal text size; at 200% the card's lower edge can sit
+  /// under the fold, and after the replay row Today may be scrolled anywhere.
+  void _revealFocusCard() {
+    final ctx = _focusCardKey.currentContext;
+    if (ctx == null) return;
+    for (final policy in const [
+      ScrollPositionAlignmentPolicy.keepVisibleAtEnd,
+      ScrollPositionAlignmentPolicy.keepVisibleAtStart,
+    ]) {
+      unawaited(Scrollable.ensureVisible(ctx, alignmentPolicy: policy));
+    }
   }
 
   void _onSelect(int i) {
     Haptics.selection();
     if (i != _index) _recordSwitch(i);
     setState(() => _index = i);
+    // A tour that was waiting for Today (see _maybeStartTour) starts once
+    // Today has laid out.
+    if (i == RootTab.today && kTourEnabled) {
+      WidgetsBinding.instance.addPostFrameCallback((_) => _maybeStartTour());
+    }
   }
 
   void _recordSwitch(int i) {
@@ -172,7 +214,13 @@ class _RootScaffoldState extends ConsumerState<RootScaffold> with RouteAware {
         children: [
           TickerMode(
             enabled: _index == RootTab.today,
-            child: HomeScreen(onGoToTab: _onSelect, focusCardKey: _focusCardKey),
+            child: PrimaryScrollController(
+              controller: _todayScroll,
+              child: HomeScreen(
+                onGoToTab: _onSelect,
+                focusCardKey: _focusCardKey,
+              ),
+            ),
           ),
           TickerMode(
             enabled: _index == RootTab.learn,
@@ -196,9 +244,6 @@ class _RootScaffoldState extends ConsumerState<RootScaffold> with RouteAware {
     );
   }
 
-  /// Each destination is wrapped in a [KeyedSubtree]: inert layout-wise —
-  /// NavigationBar still receives one widget per destination — but it gives
-  /// the destination an element whose render object the tour can measure.
   List<Widget> _destinations(AppLocalizations l10n) {
     final specs = <(IconData, IconData, String)>[
       (Icons.home_outlined, Icons.home_rounded, l10n.navToday),
@@ -207,14 +252,11 @@ class _RootScaffoldState extends ConsumerState<RootScaffold> with RouteAware {
       (Icons.grid_view_outlined, Icons.grid_view_rounded, l10n.navMore),
     ];
     return [
-      for (var i = 0; i < specs.length; i++)
-        KeyedSubtree(
-          key: _tabKeys[i],
-          child: NavigationDestination(
-            icon: Icon(specs[i].$1),
-            selectedIcon: Icon(specs[i].$2),
-            label: specs[i].$3,
-          ),
+      for (final (icon, selectedIcon, label) in specs)
+        NavigationDestination(
+          icon: Icon(icon),
+          selectedIcon: Icon(selectedIcon),
+          label: label,
         ),
     ];
   }

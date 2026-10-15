@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
-/// «نور» — the app mascot, now the unified brand identity: the serene
-/// crescent-moon face (crescent + book + sprout + star), replacing the old
-/// lantern. Square 1024² source, `BoxFit.contain`; degrades gracefully to an
-/// empty box if the asset is ever missing so the layout never breaks.
+/// «نور» — the app mascot, still and at rest: the calm face of the
+/// «ورق مقصوص» set (assets/svg/noor/noor_calm.svg), on a transparent ground.
+/// For a Noor that breathes, blinks and changes expression use NoorFace or
+/// NoorPresence; this one is for quiet placements (settings, backup).
+///
+/// Decorative: the text beside it carries the meaning. A file that fails to
+/// parse leaves an empty box of the same size, so the layout never breaks.
 class NoorMascot extends StatelessWidget {
   const NoorMascot({super.key, this.size = 56});
 
@@ -14,11 +18,11 @@ class NoorMascot extends StatelessWidget {
     return SizedBox(
       width: size,
       height: size,
-      child: Image.asset(
-        'assets/images/generated/mascot_serene.webp',
+      child: SvgPicture.asset(
+        'assets/svg/noor/noor_calm.svg',
+        width: size,
+        height: size,
         excludeFromSemantics: true,
-        fit: BoxFit.contain,
-        filterQuality: FilterQuality.medium,
         errorBuilder: (_, _, _) => const SizedBox.shrink(),
       ),
     );

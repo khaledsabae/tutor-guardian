@@ -116,19 +116,23 @@ void main() {
       ));
       // The streak text is one widget: "5 أيام متتالية"
       expect(find.text('5 أيام متتالية'), findsOneWidget);
-      expect(find.text('🔥'), findsOneWidget);
+      // Quiet: no flame — the lanterns on the road carry progress now.
+      expect(find.textContaining('🔥'), findsNothing);
     });
 
-    testWidgets('shows the nudge when streak = 0', (tester) async {
+    testWidgets('says nothing at zero (no «start your streak» push)', (tester) async {
+
       await tester.pumpWidget(const MaterialApp(
         locale: Locale('ar'),
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
         home: Scaffold(body: StreakChip(streakDays: 0)),
       ));
-      expect(find.text('🔥 ابدأ سلسلتك اليوم'), findsOneWidget);
+      expect(find.textContaining('ابدأ سلسلتك'), findsNothing);
+      expect(find.textContaining('🔥'), findsNothing);
       // Day count should NOT be rendered when streak is zero.
       expect(find.text('0'), findsNothing);
+
     });
 
     testWidgets('singular vs plural Arabic label', (tester) async {

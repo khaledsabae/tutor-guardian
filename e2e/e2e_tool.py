@@ -82,6 +82,9 @@ KEYS = [
     # onboarding + tour
     "onbAgeQuestion", "onbStartJourney", "onbDefaultChildName", "onbPreparing",
     "onbServerSlow", "ageGroup7to9", "tourSkip",
+    # head only (noor phase 2): the staged wait line and the optional name on
+    # it; the tour's replay row (both lineages) for the gallery's tour shot
+    "onbPreparingStep1", "onbNameQuestion", "tourReplay",
     # shell
     "navToday", "navLearn", "navAssistant", "navMore", "hubTitle", "pathsTitle",
     # settings / child profile
@@ -93,10 +96,13 @@ KEYS = [
     "lessonMarkComplete", "lessonCompleted", "lessonErrorLoading", "retry",
     # assistant
     "chatTypeHint", "a11ySendQuestion", "chatStop", "feedbackHelpful", "chatRetry",
-    # child mode
+    # child mode — handed over through «باب التسليم» (handoverTitle: the gate;
+    # habitChildModeTitle: its habit-tracker tile; handoverYourTurn: what the
+    # doors open on, in parent mode, before the session)
     "routineTitle", "routineChildMode", "childMode", "habitChildModeExit",
-    "a11yExitChildMode",
-    "habitChildModeExitTitle", "childModeHandoff", "childModePinMismatch",
+    "a11yExitChildMode", "handoverTitle", "habitChildModeTitle",
+    "handoverYourTurn",
+    "habitChildModeExitTitle", "childModePinMismatch",
     "childModePinIncorrect", "childModeEnterFailed", "childModeBudgetSpent",
     "childModeOffline", "childModePinSetupSubtitle", "childModePinConfirmSubtitle",
     "childModePinEnterSubtitle",
@@ -119,6 +125,9 @@ KEYS = [
     "settingsSwitchChild", "childrenAddNew", "add", "missionOpenForChild",
     "parentDayTitle", "childName", "addChildBtn", "addChildNameHint",
     "hubParentDay", "parentDayWith",
+    # «قناديل الأسبوع» (phase 3) — head builds only; the baseline's selector
+    # never matches, and the shot is guarded.
+    "weekLanternsTitle",
 ]
 
 # Strings the app hardcodes outside the ARB files.
@@ -411,6 +420,8 @@ GALLERY_SCREENS = [
     ("praise_card_400ms", "كارت كلمة الأب — ٤٠٠ms (الميل والاستقرار)"),
     ("home_dark_noor_face", "NoorFace في «اليوم» — داكن"),
     ("home_dark_gift", "لحظة الهدية على «اليوم» — داكن"),
+    ("week_lanterns", "قناديل الأسبوع تحت ① على «اليوم»"),
+    ("tour_mark", "الجولة — أول إشارة (قبل: v2 على «اليوم»، بعد: v3 على ①)"),
 ]
 
 GALLERY_ONBOARDING = [
@@ -440,6 +451,11 @@ GALLERY_GUARDED = {
     "praise_card_400ms",
     "home_dark_noor_face",
     "home_dark_gift",
+    # Needs a server with /api/family/week, and a head build.
+    "week_lanterns",
+    # Last in shoot.yaml, through the settings replay row; never seen on an
+    # emulator before it shipped, so a miss is a blank cell, not a red gate.
+    "tour_mark",
 }
 
 # gallery__01_before_ar__before__ar__home.png — the flow name is matched

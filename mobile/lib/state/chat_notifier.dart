@@ -174,7 +174,11 @@ class ChatNotifier extends StateNotifier<ChatState> {
     this.recoveryDelay = const Duration(seconds: 2),
     this.recoveryDeadline = answerDeadline,
     this.activeChildId,
+    this.onSent,
   }) : super(const ChatState());
+
+  /// Called once per question the parent sends («درب اليوم»: ② lit).
+  final void Function()? onSent;
 
   final TgClient _client;
   int _localId = 0;
@@ -240,14 +244,11 @@ class ChatNotifier extends StateNotifier<ChatState> {
 
   // ── Settings (Phase 3 settings bar) ──────────────────────────────────
 
-  void setAgeGroup(AgeGroup g) =>
-      state = state.copyWith(ageGroup: g);
+  void setAgeGroup(AgeGroup g) => state = state.copyWith(ageGroup: g);
 
-  void setSeverity(Severity s) =>
-      state = state.copyWith(severity: s);
+  void setSeverity(Severity s) => state = state.copyWith(severity: s);
 
-  void setBehaviorType(String t) =>
-      state = state.copyWith(behaviorType: t);
+  void setBehaviorType(String t) => state = state.copyWith(behaviorType: t);
 
   // ── Session lifecycle (Phase 4) ──────────────────────────────────────
 
@@ -289,7 +290,8 @@ class ChatNotifier extends StateNotifier<ChatState> {
       state = state.copyWith(
         phase: ChatPhase.error,
         errorBanner: AppL10n.current.chatSessionStartFailed(
-            describeFailure(AppL10n.current, e)),
+          describeFailure(AppL10n.current, e),
+        ),
       );
     }
   }
@@ -323,7 +325,8 @@ class ChatNotifier extends StateNotifier<ChatState> {
       state = state.copyWith(
         phase: ChatPhase.error,
         errorBanner: AppL10n.current.chatNewChatFailed(
-            describeFailure(AppL10n.current, e)),
+          describeFailure(AppL10n.current, e),
+        ),
       );
     }
   }
@@ -386,6 +389,7 @@ class ChatNotifier extends StateNotifier<ChatState> {
       clearBanner: true,
     );
     unawaited(Analytics.chatSent());
+    onSent?.call();
 
     // Ensure we have a session (may have expired).
     String? sid = state.sessionId;
@@ -448,62 +452,70 @@ class ChatNotifier extends StateNotifier<ChatState> {
     _streamCompleter = completer;
     _streamingAssistantId = assistantId;
 
-    _sub = _client.streamQuery(query).listen(
-      (ev) {
-        switch (ev) {
-          case TgTurnEvent(:final messageId):
-            _updateAssistant(assistantId, (m) => m.turnId = messageId);
-          case TgTokenEvent(:final delta):
-            _pendingDelta.write(delta);
-            _flushTimer ??= Timer(_flushEvery, _flushPending);
-          case TgDoneEvent(:final reply):
-            // The reply text is authoritative; drop any batched remainder.
-            _flushTimer?.cancel();
-            _flushTimer = null;
-            _pendingDelta.clear();
-            _updateAssistant(assistantId, (m) {
-              m
-                ..content = reply.replyText
-                ..reply = reply
-                ..isStreaming = false
-                ..error = null;
-            });
-            state = state.copyWith(
-              phase: ChatPhase.idle,
-              turnCount: state.turnCount + 1,
-            );
-            _finishStream();
-            unawaited(_persistLocal());
-            if (!completer.isCompleted) completer.complete();
-          case TgStreamError(:final detail, :final fromServer):
+    _sub = _client
+        .streamQuery(query)
+        .listen(
+          (ev) {
+            switch (ev) {
+              case TgTurnEvent(:final messageId):
+                _updateAssistant(assistantId, (m) => m.turnId = messageId);
+              case TgTokenEvent(:final delta):
+                _pendingDelta.write(delta);
+                _flushTimer ??= Timer(_flushEvery, _flushPending);
+              case TgDoneEvent(:final reply):
+                // The reply text is authoritative; drop any batched remainder.
+                _flushTimer?.cancel();
+                _flushTimer = null;
+                _pendingDelta.clear();
+                _updateAssistant(assistantId, (m) {
+                  m
+                    ..content = reply.replyText
+                    ..reply = reply
+                    ..isStreaming = false
+                    ..error = null;
+                });
+                state = state.copyWith(
+                  phase: ChatPhase.idle,
+                  turnCount: state.turnCount + 1,
+                );
+                _finishStream();
+                unawaited(_persistLocal());
+                if (!completer.isCompleted) completer.complete();
+              case TgStreamError(:final detail, :final fromServer):
+                _flushPending();
+                // A connection that died here may have left an answer the server
+                // went on to finish; an `error` event from the server did not.
+                _failLastTurn(
+                  detail,
+                  assistantId: assistantId,
+                  interrupted: !fromServer,
+                );
+                _finishStream();
+                if (!completer.isCompleted) completer.complete();
+                if (!fromServer) unawaited(_recoverWithBackoff());
+            }
+          },
+          onError: (Object e) {
             _flushPending();
-            // A connection that died here may have left an answer the server
-            // went on to finish; an `error` event from the server did not.
-            _failLastTurn(detail,
-                assistantId: assistantId, interrupted: !fromServer);
+            _finishStream();
+            if (!completer.isCompleted) completer.completeError(e);
+          },
+          onDone: () {
+            _flushPending();
+            // Stream closed without a terminal event → connection drop.
+            final dropped = state.phase == ChatPhase.streaming;
+            if (dropped) {
+              _failLastTurn(
+                AppL10n.current.chatConnectionInterrupted,
+                assistantId: assistantId,
+                interrupted: true,
+              );
+            }
             _finishStream();
             if (!completer.isCompleted) completer.complete();
-            if (!fromServer) unawaited(_recoverWithBackoff());
-        }
-      },
-      onError: (Object e) {
-        _flushPending();
-        _finishStream();
-        if (!completer.isCompleted) completer.completeError(e);
-      },
-      onDone: () {
-        _flushPending();
-        // Stream closed without a terminal event → connection drop.
-        final dropped = state.phase == ChatPhase.streaming;
-        if (dropped) {
-          _failLastTurn(AppL10n.current.chatConnectionInterrupted,
-              assistantId: assistantId, interrupted: true);
-        }
-        _finishStream();
-        if (!completer.isCompleted) completer.complete();
-        if (dropped) unawaited(_recoverWithBackoff());
-      },
-    );
+            if (dropped) unawaited(_recoverWithBackoff());
+          },
+        );
 
     return completer.future;
   }
@@ -535,9 +547,11 @@ class ChatNotifier extends StateNotifier<ChatState> {
     final turnId = id == null
         ? null
         : state.messages
-            .firstWhere((m) => m.id == id,
-                orElse: () => ChatMessageUI(id: '', role: '', content: ''))
-            .turnId;
+              .firstWhere(
+                (m) => m.id == id,
+                orElse: () => ChatMessageUI(id: '', role: '', content: ''),
+              )
+              .turnId;
     final sub = _sub;
     _sub = null;
     if (notifyServer && sid != null && turnId == null && sub != null) {
@@ -554,7 +568,9 @@ class ChatNotifier extends StateNotifier<ChatState> {
       _updateAssistant(id, (m) {
         m
           ..isStreaming = false
-          ..content = m.content.isEmpty ? AppL10n.current.chatResponseStopped : m.content
+          ..content = m.content.isEmpty
+              ? AppL10n.current.chatResponseStopped
+              : m.content
           ..error = null;
       });
     }
@@ -603,10 +619,7 @@ class ChatNotifier extends StateNotifier<ChatState> {
     sub?.cancel();
   }
 
-  void _updateAssistant(
-    String id,
-    void Function(ChatMessageUI m) mutate,
-  ) {
+  void _updateAssistant(String id, void Function(ChatMessageUI m) mutate) {
     final msgs = [...state.messages];
     final idx = msgs.indexWhere((m) => m.id == id);
     if (idx < 0) return;
@@ -616,11 +629,18 @@ class ChatNotifier extends StateNotifier<ChatState> {
     state = state.copyWith(messages: msgs);
   }
 
-  void _failLastTurn(String message,
-      {String? assistantId, bool interrupted = false}) {
-    final targetId = assistantId ??
+  void _failLastTurn(
+    String message, {
+    String? assistantId,
+    bool interrupted = false,
+  }) {
+    final targetId =
+        assistantId ??
         [...state.messages]
-            .lastWhere((m) => m.role == 'assistant', orElse: () => state.messages.last)
+            .lastWhere(
+              (m) => m.role == 'assistant',
+              orElse: () => state.messages.last,
+            )
             .id;
     _updateAssistant(targetId, (m) {
       m
@@ -641,17 +661,15 @@ class ChatNotifier extends StateNotifier<ChatState> {
     // Update UI immediately for snappy feedback.
     _updateAssistant(assistantId, (m) => m.feedback = rating);
     try {
-      await _client.sendFeedback(
-        rating: rating,
-        sessionId: state.sessionId,
-      );
+      await _client.sendFeedback(rating: rating, sessionId: state.sessionId);
     } on TgApiError catch (e) {
       // Roll back the UI and show a banner.
       _updateAssistant(assistantId, (m) {
         m
           ..feedback = null
           ..error = AppL10n.current.chatRatingSaveFailed(
-              describeFailure(AppL10n.current, e));
+            describeFailure(AppL10n.current, e),
+          );
       });
     }
   }
@@ -671,8 +689,9 @@ class ChatNotifier extends StateNotifier<ChatState> {
         return;
       }
     }
-    final lastUserIdx = state.messages
-        .lastIndexWhere((m) => m.role == 'user' && m.error == null);
+    final lastUserIdx = state.messages.lastIndexWhere(
+      (m) => m.role == 'user' && m.error == null,
+    );
     if (lastUserIdx < 0) return;
     final text = state.messages[lastUserIdx].content;
     // Drop the failed assistant turn, if any.
@@ -715,7 +734,8 @@ class ChatNotifier extends StateNotifier<ChatState> {
       state = state.copyWith(
         phase: ChatPhase.error,
         errorBanner: AppL10n.current.chatOpenFailed(
-            describeFailure(AppL10n.current, e)),
+          describeFailure(AppL10n.current, e),
+        ),
       );
     }
   }
@@ -737,19 +757,25 @@ class ChatNotifier extends StateNotifier<ChatState> {
           'messages': state.messages
               // An answer still waiting for its first word is not saved: on a
               // cold start it would come back as an empty bubble.
-              .where((m) =>
-                  !(m.role == 'assistant' && m.isStreaming && m.content.isEmpty))
-              .map((m) => {
-                    'role': m.role,
-                    'content': m.content,
-                    'feedback': m.feedback,
-                    // A cut turn stays recoverable across a cold start (T4) —
-                    // and so does one still streaming: if the process dies
-                    // now, it was cut.
-                    if (m.turnId != null) 'turn_id': m.turnId,
-                    if (m.interrupted || (m.role == 'assistant' && m.isStreaming))
-                      'interrupted': true,
-                  })
+              .where(
+                (m) =>
+                    !(m.role == 'assistant' &&
+                        m.isStreaming &&
+                        m.content.isEmpty),
+              )
+              .map(
+                (m) => {
+                  'role': m.role,
+                  'content': m.content,
+                  'feedback': m.feedback,
+                  // A cut turn stays recoverable across a cold start (T4) —
+                  // and so does one still streaming: if the process dies
+                  // now, it was cut.
+                  if (m.turnId != null) 'turn_id': m.turnId,
+                  if (m.interrupted || (m.role == 'assistant' && m.isStreaming))
+                    'interrupted': true,
+                },
+              )
               .toList(),
         }),
       );
@@ -870,8 +896,10 @@ class ChatNotifier extends StateNotifier<ChatState> {
     // says so, with its Retry.
     final turn = mounted ? _interruptedTurn() : null;
     if (turn != null) {
-      _updateAssistant(turn.assistantId,
-          (m) => m.error = AppL10n.current.chatConnectionInterrupted);
+      _updateAssistant(
+        turn.assistantId,
+        (m) => m.error = AppL10n.current.chatConnectionInterrupted,
+      );
     }
     return false;
   }
@@ -919,8 +947,10 @@ class ChatNotifier extends StateNotifier<ChatState> {
         _cutAt = null;
         unawaited(_persistLocal());
       case _Look.pending:
-        _updateAssistant(turn.assistantId,
-            (m) => m.error = AppL10n.current.chatAnswerStillComing);
+        _updateAssistant(
+          turn.assistantId,
+          (m) => m.error = AppL10n.current.chatAnswerStillComing,
+        );
       case _Look.unknown:
       case _Look.cut:
         break;
@@ -933,8 +963,9 @@ class ChatNotifier extends StateNotifier<ChatState> {
   /// stopped, and for any other kind of error (a rating that failed to save
   /// is not a lost answer).
   ({String question, String assistantId, int? turnId, String partial})?
-      _interruptedTurn() {
-    if (state.phase == ChatPhase.streaming || state.phase == ChatPhase.waiting) {
+  _interruptedTurn() {
+    if (state.phase == ChatPhase.streaming ||
+        state.phase == ChatPhase.waiting) {
       return null;
     }
     final msgs = state.messages;
@@ -1012,25 +1043,29 @@ class ChatNotifier extends StateNotifier<ChatState> {
     int? questionId;
     for (final m in server) {
       if (m.role == 'user') questionId = m.id;
-      out.add(ChatMessageUI(
-        id: _nextId(),
-        role: m.role,
-        content: m.content,
-        turnId: m.role == 'assistant' ? questionId : null,
-      ));
+      out.add(
+        ChatMessageUI(
+          id: _nextId(),
+          role: m.role,
+          content: m.content,
+          turnId: m.role == 'assistant' ? questionId : null,
+        ),
+      );
     }
     if (server.isEmpty) return out;
     final last = server.last;
     final l10n = AppL10n.current;
     if (last.role == 'user') {
-      out.add(ChatMessageUI(
-        id: _nextId(),
-        role: 'assistant',
-        content: '',
-        turnId: last.id,
-        interrupted: true,
-        error: l10n.chatAnswerStillComing,
-      ));
+      out.add(
+        ChatMessageUI(
+          id: _nextId(),
+          role: 'assistant',
+          content: '',
+          turnId: last.id,
+          interrupted: true,
+          error: l10n.chatAnswerStillComing,
+        ),
+      );
     } else if (last.modeWire == 'pending' || last.modeWire == 'interrupted') {
       out.last
         ..interrupted = true

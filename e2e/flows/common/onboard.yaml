@@ -49,7 +49,15 @@ appId: com.alsaba.almorabbi
 # tap or a transient network error; the app's error snackbar lasts seconds).
 # Retry once, as a parent would — but only after the app's own 45 s create
 # timeout, when an attempt has surely resolved: success has replaced the page,
-# failure has left it idle. Never while the busy overlay shows (a second child).
+# failure has left it idle. Never while the busy overlay shows (a second child):
+# the baseline's overlay says onbPreparing; the head's says onbPreparingStep1
+# and asks the child's name (onbNameQuestion, noor phase 2). A key the build
+# lacks never matches, so each lineage is guarded by its own text.
+#
+# The name field is left alone on purpose: ignoring it is the path that must
+# never cost a parent a step — the head goes to Today as soon as the child
+# exists, exactly like the baseline. Typing in it would race the create
+# (the field leaves with the overlay) and could land a tap on Today.
 - extendedWaitUntil:
     visible: '${output.lead.navToday}'
     timeout: 50000
@@ -59,7 +67,7 @@ appId: com.alsaba.almorabbi
 - runFlow:
     when:
       visible: '${output.t.onbStartJourney}'
-      notVisible: '${output.c.onbPreparing}'
+      notVisible: '(?:${output.c.onbPreparing}|${output.c.onbPreparingStep1}|${output.c.onbNameQuestion})'
     commands:
       - takeScreenshot: onboarding_2b_cta_retry
       - tapOn:

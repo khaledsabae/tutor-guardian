@@ -1,7 +1,8 @@
 /// Update splash screen — «إيه الجديد؟» shown once after each version bump.
 ///
-/// Plays the welcome video and lists what's new. The user taps «ابدأ»
-/// to proceed. The version is recorded so this screen doesn't show again
+/// Shows the welcome hero — the «ورق مقصوص» scene with a proud «نور» in
+/// its sky (it looped an mp4 of the old Recraft art until 2026-10-14) — and
+/// lists what's new. The user taps «ابدأ» to proceed. The version is recorded so this screen doesn't show again
 /// until the next update.
 library;
 
@@ -9,13 +10,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:video_player/video_player.dart';
 
 import '../../../l10n/app_localizations.dart';
 import '../../../theme/app_theme.dart';
 import '../../../theme/design_tokens.dart';
 import '../../../widgets/ui/bouncy_button.dart';
+import '../../companion/widgets/noor_presence.dart';
 import '../data/onboarding_storage.dart';
+import '../widgets/welcome_hero.dart';
 
 /// The app version tag displayed in the what's-new list.
 /// Bump this whenever a new update-splash is warranted.
@@ -33,8 +35,6 @@ class UpdateSplashScreen extends ConsumerStatefulWidget {
 }
 
 class _UpdateSplashScreenState extends ConsumerState<UpdateSplashScreen> {
-  late final VideoPlayerController _controller;
-  bool _videoReady = false;
 
   static List<(String, String, String)> _features(BuildContext context) => [
     ('📖', AppLocalizations.of(context).updateSplashFeature1,
@@ -46,34 +46,6 @@ class _UpdateSplashScreenState extends ConsumerState<UpdateSplashScreen> {
     ('🔗', AppLocalizations.of(context).updateSplashFeature4,
         AppLocalizations.of(context).updateSplashFeature4Desc),
   ];
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = VideoPlayerController.asset(
-      'assets/images/generated/onboarding_welcome.mp4',
-    );
-    WidgetsBinding.instance.addPostFrameCallback((_) => _initVideo());
-  }
-
-  Future<void> _initVideo() async {
-    try {
-      await _controller.initialize();
-      if (!mounted) return;
-      _controller.setLooping(true);
-      _controller.setVolume(0);
-      _controller.play();
-      setState(() => _videoReady = true);
-    } catch (_) {
-      // Video unavailable — proceed without it.
-    }
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
 
   Future<void> _dismiss() async {
     // Record this version in SharedPreferences.
@@ -95,25 +67,11 @@ class _UpdateSplashScreenState extends ConsumerState<UpdateSplashScreen> {
           padding: const EdgeInsets.fromLTRB(24, 32, 24, 24),
           child: Column(
             children: [
-              // ── Video ──
-              ClipRRect(
-                borderRadius: BorderRadius.circular(18),
-                child: _videoReady
-                    ? AspectRatio(
-                        aspectRatio: _controller.value.aspectRatio,
-                        child: VideoPlayer(_controller),
-                      )
-                    : AspectRatio(
-                        aspectRatio: 1280 / 720,
-                        child: Container(
-                          color: Colors.black12,
-                          child: const Center(
-                            child: Icon(Icons.play_circle_outline,
-                                size: 48, color: Colors.white24),
-                          ),
-                        ),
-                      ),
-              )
+              // ── Hero ──
+              // A one-shot entrance: under remove-animations Flutter runs it
+              // at 5% and it lands in a frame; Noor's own breath and halo
+              // rest there (syncLoop).
+              const WelcomeHero(mood: NoorMood.proud)
                   .animate()
                   .scale(
                     begin: const Offset(.85, .85),

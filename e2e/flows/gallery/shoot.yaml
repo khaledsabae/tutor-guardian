@@ -325,6 +325,38 @@ name: gallery/shoot
       - back
       - waitForAnimationToEnd:
           timeout: 2000
+# ── «قناديل الأسبوع» (نور والقناديل phase 3): the lantern row under ① on
+# Today, the lesson above having lit one. Guarded twice: a server without
+# /api/family/week shows no row, and the baseline build has no such ARB key
+# (its selector never matches) — the screen is in GALLERY_GUARDED.
+- tapOn: '${output.lead.navToday}'
+- scrollUntilVisible:
+    element:
+      text: '${output.c.weekLanternsTitle}'
+    direction: DOWN
+    timeout: 15000
+    optional: true
+- runFlow:
+    when:
+      visible: '${output.c.weekLanternsTitle}'
+    commands:
+      - waitForAnimationToEnd:
+          timeout: 2000
+      - takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__week_lanterns'
+# No row: the search above ran Today to its bottom, past ③. Tapping the Today
+# tab keeps that offset, and the praise leg only searches DOWN — run
+# 38688818497 lost every 7–12 praise shot (and at 200% font the 4–6 one) to
+# it. Bring ③'s button back into view first. With a row, ③ is still below it.
+- runFlow:
+    when:
+      notVisible: '${output.c.weekLanternsTitle}'
+    commands:
+      - scrollUntilVisible:
+          element:
+            text: '${output.t.todayMissionOpen}'
+          direction: UP
+          timeout: 20000
+          optional: true
 # ── Praise Card: Praise moment from family, both 7–12 (sticker+text) and 4–6 (sticker only).
 # Step 1: Child 1 (7-9) opens child mode and marks mission done.
 - tapOn: '${output.lead.navToday}'
@@ -571,3 +603,41 @@ name: gallery/shoot
             - takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__praise_child_sticker'
             - runFlow: ../common/exit_child_mode.yaml
 - runFlow: ../common/home.yaml
+
+# ── the tour's first mark: before = version 2 on the Today tab, after =
+# version 3 on ① ─────────────────────────────────────────────────────────
+# Re-armed through Settings → «الجولة التعريفية», the parent's own replay row
+# (both lineages have it). The baseline starts version 2 the moment Settings
+# pops; the head waits for Today («ستظهر الجولة عند عودتك إلى الشاشة
+# الرئيسية»), so Today is tapped only while nothing is up yet — a tap on the
+# baseline's veil would move its tour on a stop. Last in the flow on purpose:
+# nothing here can cost another shot (tour_mark is guarded in e2e_tool.py).
+- runFlow: ../common/open_settings.yaml
+- scrollUntilVisible:
+    element:
+      text: '${output.lead.tourReplay}'
+    direction: DOWN
+    timeout: 20000
+- tapOn: '${output.lead.tourReplay}'
+- back
+- waitForAnimationToEnd:
+    timeout: 3000
+- runFlow:
+    when:
+      notVisible: '${output.t.tourSkip}'
+    commands:
+      - tapOn: '${output.lead.navToday}'
+- extendedWaitUntil:
+    visible: '${output.t.tourSkip}'
+    timeout: 15000
+- waitForAnimationToEnd:
+    timeout: 3000
+- takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__tour_mark'
+- repeat:
+    times: 6
+    while:
+      visible: '${output.t.tourSkip}'
+    commands:
+      - tapOn: '${output.t.tourSkip}'
+      - waitForAnimationToEnd:
+          timeout: 3000

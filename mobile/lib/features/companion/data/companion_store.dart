@@ -140,6 +140,7 @@ class CompanionMemory {
     this.seenKeys = const {},
     this.questionsByDay = const {},
     this.hiddenByDay = const {},
+    this.stopsByDay = const {},
     this.quietMode = false,
   });
 
@@ -153,11 +154,30 @@ class CompanionMemory {
 
   /// Day key → line keys the parent hid that day.
   final Map<String, Set<String>> hiddenByDay;
+
+  /// Day key → «درب اليوم» stops reached that day: `step:<child>`, `ask`,
+  /// `mission:<child>`.
+  final Map<String, Set<String>> stopsByDay;
   final bool quietMode;
+
+  /// This memory with [keys] treated as not seen yet — for once-only lines
+  /// already shown in this run of the app, which must stay put until the
+  /// next open (see `heldOnceLinesProvider`).
+  CompanionMemory withoutSeen(Set<String> keys) => keys.isEmpty
+      ? this
+      : CompanionMemory(
+          promises: promises,
+          seenKeys: seenKeys.difference(keys),
+          questionsByDay: questionsByDay,
+          hiddenByDay: hiddenByDay,
+          stopsByDay: stopsByDay,
+          quietMode: quietMode,
+        );
 
   Set<String> questionsOn(DateTime now) =>
       questionsByDay[_dayKey(now)] ?? const {};
   Set<String> hiddenOn(DateTime now) => hiddenByDay[_dayKey(now)] ?? const {};
+  Set<String> stopsOn(DateTime now) => stopsByDay[_dayKey(now)] ?? const {};
 }
 
 class CompanionStore {
@@ -169,6 +189,7 @@ class CompanionStore {
   static const _kSeen = 'noor.seen.v1';
   static const _kQuestions = 'noor.questions.v1';
   static const _kHidden = 'noor.hidden.v1';
+  static const _kStops = 'noor.stops.v1';
   static const _kQuiet = 'noor.quiet_mode';
 
   /// Answered promises older than this are dropped; unanswered ones expire
@@ -189,6 +210,7 @@ class CompanionStore {
       },
       questionsByDay: _dayMap(_kQuestions, today),
       hiddenByDay: _dayMap(_kHidden, today),
+      stopsByDay: _dayMap(_kStops, today),
       quietMode: _prefs.getBool(_kQuiet) ?? false,
     );
   }
@@ -255,6 +277,13 @@ class CompanionStore {
 
   Future<void> hideForToday(String key, {DateTime? now}) =>
       _addToDay(_kHidden, key, now ?? DateTime.now());
+
+  /// A «درب اليوم» stop reached on this device today. Idempotent.
+  Future<void> markStop(String key, {DateTime? now}) async {
+    final t = now ?? DateTime.now();
+    if (read(now: t).stopsOn(t).contains(key)) return;
+    await _addToDay(_kStops, key, t);
+  }
 
   Future<void> setQuietMode(bool on) => _prefs.setBool(_kQuiet, on);
 

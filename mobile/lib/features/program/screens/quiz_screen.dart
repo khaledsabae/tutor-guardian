@@ -18,7 +18,6 @@ import '../../../theme/design_tokens.dart';
 import '../../../theme/app_colors.dart';
 import '../../../widgets/ui/animated_progress_bar.dart';
 import '../../../widgets/ui/count_up_text.dart';
-import '../../../core/haptics.dart';
 import '../../../widgets/ui/brand_glyph.dart';
 import '../../../widgets/ui/celebration_overlay.dart';
 import '../../../widgets/ui/empty_state.dart';
@@ -487,9 +486,10 @@ class _SummaryState extends State<_Summary> {
     super.initState();
     // ≥80%: one quiet celebration (phase 1: مستويات الاحتفال) — the dialog
     // and the haptic, without this screen's own hand-rolled confetti, which
-    // played with no haptic and no reduce-motion escape.
+    // played with no haptic and no reduce-motion escape. The haptic (and its
+    // water drop) comes from showCelebration itself; a second call here made
+    // it fire twice, a frame apart.
     if (_pct >= 80) {
-      Haptics.success();
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (!mounted) return;
         final l10n = AppLocalizations.of(context);

@@ -6,6 +6,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:almorabbi/api/tg_client.dart';
@@ -141,9 +142,9 @@ void main() {
           title: AppLocalizations.of(context).childFallbackName,
           imageAsset: image,
         )), locale: locale);
-        await t.pumpWidget(empty(image: 'assets/images/generated/empty_children.webp'));
+        await t.pumpWidget(empty(image: 'assets/svg/art/empty_children.svg'));
         await t.pumpAndSettle();
-        expect(t.getSemantics(find.byType(Image)).getSemanticsData().flagsCollection.isImage, isFalse);
+        expect(t.getSemantics(find.byType(SvgPicture)).getSemanticsData().flagsCollection.isImage, isFalse);
         await t.pumpWidget(empty());
         await t.pumpAndSettle();
         expect(find.bySemanticsLabel(RegExp('👶')), findsNothing);
@@ -184,7 +185,7 @@ void main() {
 
   group('200% text scale: no overflow', () {
     for (final locale in const [Locale('ar'), Locale('en')]) {
-      testWidgets('answer bubble with follow-ups (${locale.languageCode})', (t) async {
+      testWidgets('answer bubble with follow-ups and «سأجرّبها» (${locale.languageCode})', (t) async {
         _phone(t);
         final m = ChatMessageUI(
           id: '2',
@@ -198,6 +199,11 @@ void main() {
               followUps: const ['أعطني مثالاً عملياً', 'ماذا لو كان عمره أصغر؟'],
               onFollowUp: (_) {},
               onFeedback: (_) {},
+              // The longest the chip gets: a two-word name, in both languages.
+              tryLabel: locale.languageCode == 'ar'
+                  ? 'سأجرّبها مع عبد الرحمن'
+                  : "I'll try it with Abdulrahman",
+              onTry: () {},
             ),
           ),
           textScale: 2,

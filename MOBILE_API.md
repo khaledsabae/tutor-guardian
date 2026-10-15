@@ -275,7 +275,8 @@ are additive; older builds keep working and simply never call them.
   "support_email": "support@alsaba.cloud"}}`. **Client flow:** on
   `device_proof_required`, run §9.0.1 once, then retry the request once.
   **Always allowed without a proof:** `GET /api/children/memory/settings`,
-  switching memory **off** (`PUT … {"enabled": false}`), and the weekly plan (§9.5).
+  switching memory **off** (`PUT … {"enabled": false}`), the weekly plan and
+  its marks (§9.5, §9.5.1), and the week's lanterns (§12).
 - **Destructive child routes** — `DELETE /api/children/{id}`,
   `DELETE /api/children/{id}/progress`, and `PATCH /api/children/{id}` **when it
   changes `name`** (a rename rewrites the siblings' memory, see *Placeholders*) —
@@ -528,7 +529,8 @@ one cannot.
 
 **Forget this child** — `DELETE /api/children/{child_id}/memory`
 ```json
-→ 200 {"child_id": 12, "deleted": {"child_facts": 7, "followups": 2, "weekly_plans": 3}}
+→ 200 {"child_id": 12, "deleted": {"child_facts": 7, "followups": 2, "weekly_plans": 3,
+                                   "weekly_plan_marks": 1}}
 ```
 Deleting the child profile (`DELETE /api/children/{id}`) removes all of it too.
 
@@ -657,9 +659,13 @@ recorded.
     "completed": false
   },
   "source": "bank",
-  "generated_at": "2026-10-05T06:12:40Z"
+  "generated_at": "2026-10-05T06:12:40Z",
+  "marks": ["sleep_school_2"]
 }
 ```
+- `marks` (added in نور والقناديل Phase 3 — additive; an older server omits it,
+  so read a missing `marks` as `[]`): the item keys ticked for **this** plan week
+  (§9.5.1), in the order ticked. Show those steps as done.
 - Exactly **3** `actions`, one `worship` act, one `focus`. `lesson` may be
   `null` — hide the lesson row then. `lesson.id` is a real curriculum lesson for
   the child's band: open it with the existing lesson route.
@@ -679,12 +685,48 @@ recorded.
   `13-15`/`16-18` → prayer, anger, study, screens, sleep, worry, siblings.
 - Errors: `404` child not on this device.
 
+#### 9.5.1 Ticking the plan — `PUT` / `DELETE /api/children/{child_id}/weekly-plan/marks`
+
+Marks one step of the week's plan as done (`PUT`) or takes the mark back
+(`DELETE` — the undo). Same body for both, JSON (send it with the `DELETE` too):
+
+```json
+{"week_start": "2026-10-05", "item_key": "sleep_school_2"}
+```
+- `week_start` — the plan's own `week_start` (a Monday). The current plan week
+  and the one before it are accepted (tick last week's steps on the Monday it
+  turns over); anything else is `422 week_start`.
+- `item_key` — one of the plan's `actions[].key` or its `worship.key`. A key
+  from no plan bank is `422 item_key`. (The lesson is not ticked here: opening
+  and finishing it records progress already.)
+- No proven session needed, like the plan itself. Wrong device → `404`.
+
+```json
+PUT    → 200 {"child_id": 12, "week_start": "2026-10-05", "item_key": "sleep_school_2",
+              "marked": true,  "marks": ["sleep_school_2"]}
+DELETE → 200 {"child_id": 12, "week_start": "2026-10-05", "item_key": "sleep_school_2",
+              "marked": false, "marks": []}
+```
+- **Idempotent both ways.** A second `PUT` of the same step that week is the same
+  mark (still one row); a `DELETE` of a step not marked answers `200` too. So mark
+  optimistically, and retry freely.
+- `marks` is the week's full list after the change — replace your local copy with it.
+- A mark is positive only: un-marking deletes it, and nothing records a step not
+  taken. Don't draw "missed" steps.
+- A ticked **action** lights a `plan_tick` lantern in §12; the **worship** item
+  never does (worship never lights the weekly lanterns), though it shows as
+  marked here.
+- Marks go with the plan: §9.3's "forget everything about this child", §9.6,
+  deleting the child, and account deletion (§10) all delete them.
+
 ### 9.6 Delete-all for memory — `DELETE /api/privacy/memory`
 
-Forgets everything about **every** child of this device (facts, follow-ups and
-weekly plans). The memory switch keeps its setting. Requires a proven session (§9.0).
+Forgets everything about **every** child of this device (facts, follow-ups,
+weekly plans and their marks). The memory switch keeps its setting. Requires a
+proven session (§9.0).
 ```json
-→ 200 {"deleted": {"child_facts": 12, "followups": 3, "weekly_plans": 4},
+→ 200 {"deleted": {"child_facts": 12, "followups": 3, "weekly_plans": 4,
+                   "weekly_plan_marks": 2},
        "deleted_at": "2026-10-04T18:30:00Z"}
 ```
 
@@ -927,7 +969,8 @@ see «requires_feature» below).
               "current_step": {"key": "morning_hours", "label": "Morning hours", "until": "mid_morning",
                                "approx_hours": 3, "max_days_per_week": 3},
               "practised_today": false, "practised_this_week": 0, "rest_suggested": false},
-  "recap_available": false
+  "recap_available": false,
+  "days_marked": [1, 3]
 }
 ```
 
@@ -940,6 +983,11 @@ see «requires_feature» below).
 * **`marks`** has one boolean per entry of `content.tracks` (the day card's «تمّ» toggles), plus
   `family_word: {"choice_index": 3, "word": "Joy"} | null` on day 28. Marks are the **family's**: the
   same on every child's card.
+* **`days_marked`** (additive) — the lantern street: every day of this season on which the family
+  made **any** family mark, each day once, ascending (`[]` before the month and off-season; filled
+  during the month, on Eid and through the bridge). Days only — never a count per day, and a day not
+  listed is simply not lit (never shown as missed). Family marks only: a child's own
+  `fasting_practised` is not on the street. Older servers omit it — treat as `[]`.
 * `upcoming` → `"kickoff": {"title", "text", "setup_steps": [...]}` (and let the parent set each
   child's fasting step now).
 * `eid` → `"eid": {"title", "activities": [...], "parent_note": {text, evidence}, "variant": {...}|null,
@@ -1317,3 +1365,69 @@ programs"). The recap card never carries names, ages, photos or typed text.
 | `RAMADAN_DAYS_<hijri year>` | 30 (unconfirmed) | `29` or `30` once announced |
 | `MILESTONES_MIN_BUILD` | unset = no milestone push | first build that routes `/milestones/…` |
 | `PROGRAMS_AS_OF_ENABLED` | off | lets QA pass `as_of` |
+
+---
+
+## 12. «قناديل الأسبوع» — `GET /api/family/week` (نور والقناديل, Phase 3)
+
+The family's parenting acts in **its local week**: one lantern per act. What
+counts is the same registry the weekly report reads
+(`backend/app/services/family_actions.py`), so the in-app lanterns and the
+report agree on which acts a family did. **Worship never lights a lantern.**
+
+Query: `tz_offset_minutes` (optional, `-720…840`, e.g. `180` for Riyadh — out of
+range is `422`; when absent, the offset last sent with §9.4/§9.5 is used, else
+UTC; nothing is recorded) and `lang` (`en` → English titles; else Arabic;
+`Accept-Language` when absent). Bearer auth (§1); no proven session needed.
+
+```json
+{
+  "week_start": "2026-10-12",
+  "acts": [
+    {"kind": "mission",   "at": "2026-10-13T09:00:00Z", "child_id": 12, "title": "صيّاد الأخضر"},
+    {"kind": "lesson",    "at": "2026-10-13T11:00:00Z", "child_id": 12, "title": "النوم، التركيز، ومتى تطلب المساعدة"},
+    {"kind": "question",  "at": "2026-10-13T12:00:00Z", "child_id": null, "title": null},
+    {"kind": "followup",  "at": "2026-10-14T09:00:00Z", "child_id": 12, "title": null},
+    {"kind": "plan_tick", "at": "2026-10-14T10:00:00Z", "child_id": 12, "title": "ثبّت موعد النوم في أيام الدراسة، ولا تؤخّره كثيرًا في العطلة."}
+  ],
+  "lit_this_week": true,
+  "lit_weeks_total": 3,
+  "last_8": [
+    {"week_start": "2026-08-24", "lit": false}, {"week_start": "2026-08-31", "lit": false},
+    {"week_start": "2026-09-07", "lit": false}, {"week_start": "2026-09-14", "lit": true},
+    {"week_start": "2026-09-21", "lit": false}, {"week_start": "2026-09-28", "lit": false},
+    {"week_start": "2026-10-05", "lit": true},  {"week_start": "2026-10-12", "lit": true}
+  ]
+}
+```
+- **The week** is the parent's local ISO week, Monday to Sunday — the same week
+  as the weekly plan (§9.5). `week_start` is its Monday.
+- **`acts`** — this week only, oldest first. `at` is UTC (§9.0); the lantern's
+  day is `at` in the device's time. `child_id` is `null` for the family's own
+  acts (a question; a lesson opened before per-child progress).
+- **`kind`** (stable — safe to hard-code; draw an unknown kind as a plain lantern):
+
+  | kind | the act | title |
+  |---|---|---|
+  | `lesson` | a lesson started, progressed or completed | the lesson's title |
+  | `question` | a question asked to the assistant — **at most one a day** | `null` |
+  | `followup` | a follow-up answered (§9.4) | `null` |
+  | `mission` | a daily mission assigned, done by the child or confirmed | the mission's title |
+  | `plan_tick` | a step of the weekly plan ticked (§9.5.1) | the step's text |
+  | `habit` | a habit-tracker entry | `null` |
+  | `challenge` | a «رحلة الطفل» challenge chosen | `null` |
+
+  One lantern per act **per day**: a lesson started and finished the same day,
+  or a mission assigned, done and confirmed the same day, is one lantern.
+- **Never a lantern (worship):** Ramadan «تمّ» marks, the Prayer Journey (its
+  enrolment and its prayer tasks), a habit in the worship category, and the
+  weekly plan's worship item. A week with only those is not lit.
+- `title` is curriculum text in `lang`, or `null`. The response never carries a
+  child's name, a question, a fact or a follow-up's text.
+- **`lit_this_week`** — at least one act this week. **`lit_weeks_total`** — every
+  week ever lit, up to this one: «أسابيع مضيئة». It never resets; only deleting
+  the acts themselves (memory erase, child or account deletion) can lower it.
+- **`last_8`** — the last eight weeks, **oldest first**, the last element being
+  this week. Show the lit ones; per the plan's rules, never draw an unlit week
+  as a missed one.
+- **Older server:** `404` — hide the lanterns.
