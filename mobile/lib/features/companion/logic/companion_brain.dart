@@ -9,7 +9,9 @@
 ///   1. a child's mission waiting for the parent's word (bands 4–18);
 ///   2. a lesson promise that has fallen due («كيف جرت؟»);
 ///   3. a server follow-up that has fallen due (then the Today card hides);
-///   4. something Noor noticed — the Ramadan countdown at 30/14/7/1 days;
+///   4. something Noor noticed — a Prayer Journey stage ready, the Journey
+///      opening for a child near seven, a milestone due, a birth month he
+///      does not know yet, then the Ramadan countdown at 30/14/7/1 days;
 ///   5. the week's rhythm — Monday's plan reveal;
 ///   6. a greeting for the time of day, rotated by date.
 ///
@@ -38,6 +40,10 @@ enum CompanionKind {
   missionsWaiting,
   promiseDue,
   followupDue,
+  prayerAdvance,
+  prayerInvite,
+  milestoneDue,
+  birthMonthAsk,
   ramadanCountdown,
   mondayPlan,
   firstDay,
@@ -51,6 +57,35 @@ enum CompanionAction {
   outcomeDidntWork,
   outcomeDidntTry,
   openRamadan,
+  openPrayerJourney,
+  openChildJourney,
+  editChild,
+}
+
+/// What /api/programs says about the active child, flattened for the brain.
+class ChildNotices {
+  const ChildNotices({
+    this.prayerEligible = false,
+    this.prayerEnrolled = false,
+    this.prayerAdvance = false,
+    this.ageYears,
+    this.ageFromBirthMonth = false,
+    this.milestonesDue = 0,
+    this.needsBirthMonth = false,
+  });
+
+  /// The Prayer Journey has a track for this child (server decides).
+  final bool prayerEligible;
+  final bool prayerEnrolled;
+
+  /// The server suggests the next stage (parent confirms — never automatic).
+  final bool prayerAdvance;
+  final int? ageYears;
+  final bool ageFromBirthMonth;
+  final int milestonesDue;
+
+  /// Milestones need a birth month the profile does not have.
+  final bool needsBirthMonth;
 }
 
 /// The server follow-up as the brain needs it (kept free of the model class
@@ -81,7 +116,10 @@ class CompanionInputs {
     this.ramadanYear,
     this.hasWeeklyPlan = false,
     this.firstDay = false,
+    this.notices = const ChildNotices(),
   });
+
+  final ChildNotices notices;
 
   final DateTime now;
   final CompanionMemory memory;
@@ -235,7 +273,59 @@ CompanionLine? pickLine(CompanionInputs i) {
     }
   }
 
-  // 4 ── the Ramadan countdown, on its four days only, once each.
+  // 4 ── what Noor noticed about this child. Each speaks at most once a
+  // month (a stage ready: once a week) — a nudge, never a nag.
+  final n = i.notices;
+  final month = '${i.now.year}-${i.now.month}';
+  final week = dayOf(
+    i.now,
+  ).subtract(Duration(days: i.now.weekday - 1)).toIso8601String();
+  CompanionLine? notice(String key, CompanionKind kind, CompanionAction a) =>
+      open(key) && !mem.seenKeys.contains(key)
+      ? CompanionLine(
+          key: key,
+          kind: kind,
+          mood: CompanionMood.happy,
+          name: i.childName,
+          actions: [a],
+          onceOnly: true,
+        )
+      : null;
+  final noticed = [
+    if (n.prayerEnrolled && n.prayerAdvance)
+      notice(
+        'prayer-advance:${i.childId}:$week',
+        CompanionKind.prayerAdvance,
+        CompanionAction.openPrayerJourney,
+      ),
+    // Seven is when the Journey's own content begins in earnest; a child of
+    // six already counts so the family can start gently. Only from a real
+    // birth month — an age-band guess is too coarse to say «near seven».
+    if (n.prayerEligible &&
+        !n.prayerEnrolled &&
+        n.ageFromBirthMonth &&
+        (n.ageYears == 6 || n.ageYears == 7))
+      notice(
+        'prayer-invite:${i.childId}:$month',
+        CompanionKind.prayerInvite,
+        CompanionAction.openPrayerJourney,
+      ),
+    if (n.milestonesDue > 0)
+      notice(
+        'milestone:${i.childId}:$month',
+        CompanionKind.milestoneDue,
+        CompanionAction.openChildJourney,
+      ),
+    if (n.needsBirthMonth)
+      notice(
+        'birth-month:${i.childId}:$month',
+        CompanionKind.birthMonthAsk,
+        CompanionAction.editChild,
+      ),
+  ].whereType<CompanionLine>();
+  if (noticed.isNotEmpty) return noticed.first;
+
+  // 5 ── the Ramadan countdown, on its four days only, once each.
   final d = i.ramadanDaysUntil;
   if (d != null && _countdownDays.contains(d)) {
     final key = 'ramadan:${i.ramadanYear ?? i.now.year}:$d';
@@ -252,7 +342,7 @@ CompanionLine? pickLine(CompanionInputs i) {
     }
   }
 
-  // 5 ── Monday: the week's plan is new.
+  // 6 ── Monday: the week's plan is new.
   if (i.now.weekday == DateTime.monday && i.hasWeeklyPlan) {
     final key = 'monday:${dayOf(i.now).toIso8601String()}';
     if (open(key) && !mem.seenKeys.contains(key)) {

@@ -10225,6 +10225,48 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'أعِد الجهاز إلى أهلك — شكرًا لك'**
   String get childReturnDevice;
+
+  /// Noor's line on «اليوم» (CompanionBrain). Easy MSA, warm, never names one parent, no emoji, no promise of reward.
+  ///
+  /// In ar, this message translates to:
+  /// **'يبدو أن منزلة جديدة في رحلة الصلاة تنتظر {name}.'**
+  String noorPrayerAdvance(String name);
+
+  /// Noor's line on «اليوم» (CompanionBrain). Easy MSA, warm, never names one parent, no emoji, no promise of reward.
+  ///
+  /// In ar, this message translates to:
+  /// **'مع اقتراب {name} من سنّ السابعة، لعلها فرصة لبدء رحلة الصلاة بلطف، خطوة خطوة.'**
+  String noorPrayerInvite(String name);
+
+  /// Noor's line on «اليوم» (CompanionBrain). Easy MSA, warm, never names one parent, no emoji, no promise of reward.
+  ///
+  /// In ar, this message translates to:
+  /// **'في رحلة {name} مناسبة جديدة تنتظر أن تسجّلها.'**
+  String noorMilestoneDue(String name);
+
+  /// Noor's line on «اليوم» (CompanionBrain). Easy MSA, warm, never names one parent, no emoji, no promise of reward.
+  ///
+  /// In ar, this message translates to:
+  /// **'أخبرني بشهر ميلاد {name} لأتذكّر مراحله في وقتها.'**
+  String noorBirthMonthAsk(String name);
+
+  /// Noor's line on «اليوم» (CompanionBrain). Easy MSA, warm, never names one parent, no emoji, no promise of reward.
+  ///
+  /// In ar, this message translates to:
+  /// **'رحلة الصلاة'**
+  String get noorChipPrayerJourney;
+
+  /// Noor's line on «اليوم» (CompanionBrain). Easy MSA, warm, never names one parent, no emoji, no promise of reward.
+  ///
+  /// In ar, this message translates to:
+  /// **'رحلة طفلي'**
+  String get noorChipChildJourney;
+
+  /// Noor's line on «اليوم» (CompanionBrain). Easy MSA, warm, never names one parent, no emoji, no promise of reward.
+  ///
+  /// In ar, this message translates to:
+  /// **'أضف شهر الميلاد'**
+  String get noorChipAddBirthMonth;
 }
 
 class _AppLocalizationsDelegate

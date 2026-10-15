@@ -5943,4 +5943,33 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get childReturnDevice => 'أعِد الجهاز إلى أهلك — شكرًا لك';
+
+  @override
+  String noorPrayerAdvance(String name) {
+    return 'يبدو أن منزلة جديدة في رحلة الصلاة تنتظر $name.';
+  }
+
+  @override
+  String noorPrayerInvite(String name) {
+    return 'مع اقتراب $name من سنّ السابعة، لعلها فرصة لبدء رحلة الصلاة بلطف، خطوة خطوة.';
+  }
+
+  @override
+  String noorMilestoneDue(String name) {
+    return 'في رحلة $name مناسبة جديدة تنتظر أن تسجّلها.';
+  }
+
+  @override
+  String noorBirthMonthAsk(String name) {
+    return 'أخبرني بشهر ميلاد $name لأتذكّر مراحله في وقتها.';
+  }
+
+  @override
+  String get noorChipPrayerJourney => 'رحلة الصلاة';
+
+  @override
+  String get noorChipChildJourney => 'رحلة طفلي';
+
+  @override
+  String get noorChipAddBirthMonth => 'أضف شهر الميلاد';
 }

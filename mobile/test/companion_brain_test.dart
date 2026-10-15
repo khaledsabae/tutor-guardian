@@ -27,6 +27,7 @@ CompanionInputs _in({
   int? ramadan,
   bool plan = false,
   bool firstDay = false,
+  ChildNotices notices = const ChildNotices(),
 }) =>
     CompanionInputs(
       now: now ?? _wed,
@@ -39,6 +40,7 @@ CompanionInputs _in({
       ramadanYear: 2027,
       hasWeeklyPlan: plan,
       firstDay: firstDay,
+      notices: notices,
     );
 
 void main() {
@@ -173,5 +175,69 @@ void main() {
 
   test('day one introduces Noor instead of rotating', () {
     expect(pickLine(_in(firstDay: true))!.kind, CompanionKind.firstDay);
+  });
+
+  group('Noor notices', () {
+    test('a child of six or seven, by birth month, is invited to the Journey',
+        () {
+      final line = pickLine(_in(
+          notices: const ChildNotices(
+              prayerEligible: true, ageYears: 6, ageFromBirthMonth: true)))!;
+      expect(line.kind, CompanionKind.prayerInvite);
+      expect(line.actions, [CompanionAction.openPrayerJourney]);
+      expect(line.onceOnly, isTrue);
+    });
+
+    test('no invite from an age-band guess, once enrolled, or at nine', () {
+      for (final n in const [
+        ChildNotices(prayerEligible: true, ageYears: 6),
+        ChildNotices(
+            prayerEligible: true, prayerEnrolled: true, ageYears: 7,
+            ageFromBirthMonth: true),
+        ChildNotices(prayerEligible: true, ageYears: 9, ageFromBirthMonth: true),
+      ]) {
+        expect(pickLine(_in(notices: n))!.kind, isNot(CompanionKind.prayerInvite));
+      }
+    });
+
+    test('a stage ready outranks the rest of the notices', () {
+      final line = pickLine(_in(
+          notices: const ChildNotices(
+              prayerEligible: true,
+              prayerEnrolled: true,
+              prayerAdvance: true,
+              milestonesDue: 2,
+              needsBirthMonth: true)))!;
+      expect(line.kind, CompanionKind.prayerAdvance);
+    });
+
+    test('a milestone due, then a missing birth month', () {
+      expect(
+          pickLine(_in(notices: const ChildNotices(milestonesDue: 1)))!.kind,
+          CompanionKind.milestoneDue);
+      final ask = pickLine(_in(notices: const ChildNotices(needsBirthMonth: true)))!;
+      expect(ask.kind, CompanionKind.birthMonthAsk);
+      expect(ask.actions, [CompanionAction.editChild]);
+    });
+
+    test('a notice speaks once a month, then falls through', () {
+      const n = ChildNotices(needsBirthMonth: true);
+      final ask = pickLine(_in(notices: n))!;
+      final seen = CompanionMemory(seenKeys: {ask.key});
+      expect(pickLine(_in(notices: n, memory: seen))!.kind,
+          CompanionKind.greeting);
+      // next month it may ask again
+      expect(
+          pickLine(_in(now: DateTime(2026, 11, 14, 9), notices: n, memory: seen))!
+              .kind,
+          CompanionKind.birthMonthAsk);
+    });
+
+    test('promises and waiting missions still come first', () {
+      final line = pickLine(_in(
+          missions: 1,
+          notices: const ChildNotices(milestonesDue: 1)))!;
+      expect(line.kind, CompanionKind.missionsWaiting);
+    });
   });
 }
