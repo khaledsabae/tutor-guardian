@@ -23,6 +23,11 @@
 ///
 /// A caller that already knows the surface (today's mission, the prayer card)
 /// passes it and skips step 1.
+///
+/// «ركن الطفل» ([kChildCornerSurface]) is listed first when the band allows
+/// it. It is not a server surface: its session opens on the first part of
+/// the corner the band allows (`story`), with [ChildModeState.cornerBand] set
+/// so the child lands in `features/child_corner/` instead of a single screen.
 library;
 
 import 'dart:async';
@@ -34,7 +39,9 @@ import '../../core/app_routes.dart';
 import '../../core/motion.dart';
 import '../../l10n/app_localizations.dart';
 import '../../theme/app_colors.dart';
+import '../child_corner/corner_picks.dart';
 import '../onboarding/providers/onboarding_providers.dart';
+import '../program/data/story_models.dart' show contentLanguageFor;
 import '../routine/providers/child_mode_providers.dart';
 import '../routine/screens/child_mode_lock_screen.dart';
 import 'child_surface_policy.dart';
@@ -134,10 +141,22 @@ class _HandoverGateScreenState extends ConsumerState<HandoverGateScreen>
     final navigator = Navigator.of(context);
     final ageGroup = _ageGroup;
 
+    // «ركن الطفل» is not a server surface: its session opens on the first
+    // thing in it the band allows, and the corner moves it along from there.
+    // It needs a known band — the corner shows only what that band may see —
+    // so an unknown one is refused here rather than guessed.
+    final corner = surface == kChildCornerSurface;
+    final String? opening =
+        corner ? childCornerOpeningSurface(ageGroup) : surface;
+    if (opening == null) {
+      _refuse(l10n.childModeSurfaceNotAllowed);
+      return;
+    }
+
     // A known band that the policy does not allow this surface: say so now,
     // before a PIN is asked for. An unknown band (a preset from a screen that
     // could not read the profile) goes on and lets the server decide.
-    if (ageGroup != null && !childSurfaceAllowed(ageGroup, surface)) {
+    if (ageGroup != null && !childSurfaceAllowed(ageGroup, opening)) {
       _refuse(l10n.childModeSurfaceNotAllowed);
       return;
     }
@@ -157,7 +176,7 @@ class _HandoverGateScreenState extends ConsumerState<HandoverGateScreen>
     final pin = await navigator.push<String>(AppRoutes.childModeLock<String>(
       childId: widget.childId,
       childName: widget.childName,
-      surface: surface,
+      surface: opening,
       verifyOnly: true,
     ));
     if (!mounted) return;
@@ -182,7 +201,8 @@ class _HandoverGateScreenState extends ConsumerState<HandoverGateScreen>
     final ok = await ref.read(childModeProvider.notifier).enter(
           childId: widget.childId,
           pin: pin,
-          surface: surface,
+          surface: opening,
+          cornerBand: corner ? childSurfaceBand(ageGroup) : null,
         );
     if (!mounted) return;
     if (ok) {
@@ -333,7 +353,15 @@ class _HandoverGateScreenState extends ConsumerState<HandoverGateScreen>
     final theme = Theme.of(context);
     final c = context.colors;
     final ageGroup = _ageGroup;
-    final offered = handoverSurfacesFor(ageGroup);
+    final offered = [
+      // The corner first: one calm place with an ending, rather than a list.
+      if (childCornerOffered(ageGroup)) kChildCornerSurface,
+      ...handoverSurfacesFor(ageGroup),
+    ];
+    // The same two checks the corner makes: the band has a game, and the
+    // games' questions are in the language the child reads the app in.
+    final cornerHasGame = childCornerActivitiesFor(ageGroup).contains('game') &&
+        cornerGamesSpeak(contentLanguageFor(Localizations.localeOf(context)));
 
     return Scaffold(
       appBar: AppBar(title: Text(l10n.handoverTitle)),
@@ -382,6 +410,7 @@ class _HandoverGateScreenState extends ConsumerState<HandoverGateScreen>
               for (final surface in offered)
                 _SurfaceTile(
                   surface: surface,
+                  cornerHasGame: cornerHasGame,
                   onTap: () => _start(surface),
                 ),
           ],
@@ -392,16 +421,30 @@ class _HandoverGateScreenState extends ConsumerState<HandoverGateScreen>
 }
 
 class _SurfaceTile extends StatelessWidget {
-  const _SurfaceTile({required this.surface, required this.onTap});
+  const _SurfaceTile({
+    required this.surface,
+    required this.onTap,
+    this.cornerHasGame = false,
+  });
 
   final String surface;
   final VoidCallback onTap;
+
+  /// The corner's line names a game only when the band has one.
+  final bool cornerHasGame;
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final c = context.colors;
     final (icon, title, body) = switch (surface) {
+      kChildCornerSurface => (
+          Icons.auto_stories_outlined,
+          l10n.childCornerTileTitle,
+          cornerHasGame
+              ? l10n.childCornerTileBody
+              : l10n.childCornerTileBodyNoGame,
+        ),
       'habit' => (
           Icons.checklist_rounded,
           l10n.habitChildModeTitle,

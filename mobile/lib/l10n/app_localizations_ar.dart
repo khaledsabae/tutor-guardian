@@ -6277,4 +6277,111 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get eidMomentBody => 'كل عام وأنتم بخير.';
+
+  @override
+  String get childCornerTileTitle => 'ركن الطفل';
+
+  @override
+  String get childCornerTileBody =>
+      'حكاية قصيرة أو لعبة، ثم مهمة بعيدًا عن الشاشة';
+
+  @override
+  String get childCornerTileBodyNoGame =>
+      'حكاية قصيرة، ثم مهمة بعيدًا عن الشاشة';
+
+  @override
+  String childCornerGreeting(String name) {
+    return 'يا $name، هذا ركنك';
+  }
+
+  @override
+  String get childCornerNoorLine =>
+      'هنا حكاية ولعبة قصيرة، ثم مهمة صغيرة بعيدًا عن الشاشة.';
+
+  @override
+  String get childCornerNoorLineNoGame =>
+      'هنا حكاية قصيرة، ثم مهمة صغيرة بعيدًا عن الشاشة.';
+
+  @override
+  String get childCornerNoorAfterStory => 'أحببت القراءة معك.';
+
+  @override
+  String get childCornerNoorAfterGame => 'كان لعبك جميلًا ومركّزًا.';
+
+  @override
+  String get childCornerStoryLabel => 'حكاية';
+
+  @override
+  String get childCornerStoryHint => 'نقرؤها معًا';
+
+  @override
+  String get childCornerStoryDone => 'قرأناها معًا';
+
+  @override
+  String get childCornerGameLabel => 'لعبة قصيرة';
+
+  @override
+  String get childCornerGameHint => 'أسئلة قليلة ثم نستريح';
+
+  @override
+  String get childCornerGameDone => 'لعبناها معًا';
+
+  @override
+  String get childCornerMissionLabel => 'ثم مهمتك';
+
+  @override
+  String get childCornerToMission => 'إلى مهمتي';
+
+  @override
+  String get childCornerMissionNow => 'مهمتك الآن';
+
+  @override
+  String get childCornerMissionGo => 'فهمت، سأذهب إليها';
+
+  @override
+  String get childCornerMissionFallbackTitle => 'سأرسم شيئًا رأيته اليوم';
+
+  @override
+  String get childCornerMissionFallbackBody =>
+      'بورقة وقلم، ثم أُري رسمتي لأهلي.';
+
+  @override
+  String get childCornerCandleLabel => 'شمعة وقتك';
+
+  @override
+  String get childCornerCandleBright => 'ما زالت مضيئة';
+
+  @override
+  String get childCornerCandleLow => 'بقي قليل';
+
+  @override
+  String get childCornerCandleOut => 'حان وقت المهمة';
+
+  @override
+  String get childCornerTimeUp => 'اكتملت شمعتك، والآن إلى مهمتك.';
+
+  @override
+  String get childCornerStoryNext => 'التالي';
+
+  @override
+  String get childCornerStoryPrevious => 'السابق';
+
+  @override
+  String get childCornerStoryEnd => 'انتهت الحكاية';
+
+  @override
+  String get childCornerBackToCorner => 'عودة إلى ركني';
+
+  @override
+  String get childCornerStoryClose => 'إغلاق الحكاية';
+
+  @override
+  String childCornerStoryPage(int page, int count) {
+    return 'صفحة $page من $count';
+  }
+
+  @override
+  String childCornerDoneMission(String title) {
+    return 'مهمتك: $title';
+  }
 }

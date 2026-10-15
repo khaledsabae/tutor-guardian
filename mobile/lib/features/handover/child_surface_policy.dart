@@ -89,3 +89,41 @@ List<String> handoverSurfacesFor(String? profileAgeGroup) {
         surface,
   ];
 }
+
+/// «ركن الطفل» — what the child's corner may hold, in the order it shows them.
+///
+/// The corner is not a server surface. It is one paper scene that opens a
+/// short story (`story`), a short game (`game`) and ends on the day's task
+/// away from the screen (`mission`) — each billed on its own server surface
+/// as the child moves between them. So it obeys the same policy, item by item:
+/// whatever the band is not allowed is not in the corner at all, not shown
+/// greyed or locked.
+const List<String> kChildCornerActivities = ['story', 'game', 'mission'];
+
+/// What the hand-over gate calls the corner. Never sent to the server.
+const String kChildCornerSurface = 'corner';
+
+/// The corner's activities this child's band allows.
+List<String> childCornerActivitiesFor(String? profileAgeGroup) {
+  final allowed = kChildSurfacePolicy[childSurfaceBand(profileAgeGroup)]!;
+  return [
+    for (final activity in kChildCornerActivities)
+      if (allowed.contains(activity)) activity,
+  ];
+}
+
+/// Whether the gate offers the corner: it always ends on the task away from
+/// the screen, so `mission` is required, and there must be something to do
+/// before it.
+bool childCornerOffered(String? profileAgeGroup) {
+  final activities = childCornerActivitiesFor(profileAgeGroup);
+  return activities.contains('mission') &&
+      (activities.contains('story') || activities.contains('game'));
+}
+
+/// The server surface the corner's session opens on — the first thing in it
+/// the band allows. Null when the corner is not offered.
+String? childCornerOpeningSurface(String? profileAgeGroup) {
+  if (!childCornerOffered(profileAgeGroup)) return null;
+  return childCornerActivitiesFor(profileAgeGroup).first;
+}

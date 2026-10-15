@@ -73,6 +73,10 @@ final childModeRestoreProvider = FutureProvider<void>(
 /// How long a launch waits for the last run's child mode before giving up.
 const kChildModeRestoreTimeout = Duration(seconds: 4);
 
+/// [ChildModeState.copyWith]'s "leave the corner as it is" — so that a new
+/// hand-over can also set it back to null, which `??` cannot.
+const Object _keepCorner = Object();
+
 class ChildModeState {
   const ChildModeState({
     this.active = false,
@@ -86,6 +90,7 @@ class ChildModeState {
     this.remainingSeconds,
     this.exitRitual = false,
     this.agreementAwaitsChild = false,
+    this.cornerBand,
   });
 
   final bool active;
@@ -124,6 +129,20 @@ class ChildModeState {
   /// the door that does not need the gate.
   final bool agreementAwaitsChild;
 
+  /// «ركن الطفل»: the child's band when this hand-over opened the corner —
+  /// one paper scene holding a story, a game and the day's task — rather than
+  /// a single surface. Null for every other hand-over.
+  ///
+  /// Client-only. The server still sees plain surfaces (`story`, `game`,
+  /// `mission`), opened one after another through [switchSurface]; this is
+  /// what keeps the child in the corner while they change underneath it.
+  /// The band is kept rather than a flag so the corner shows exactly what the
+  /// gate checked against the policy.
+  final String? cornerBand;
+
+  /// Whether the child is in the corner.
+  bool get corner => cornerBand != null;
+
   ChildModeState copyWith({
     bool? active,
     bool? loading,
@@ -136,8 +155,12 @@ class ChildModeState {
     int? remainingSeconds,
     bool? exitRitual,
     bool? agreementAwaitsChild,
+    Object? cornerBand = _keepCorner,
   }) =>
       ChildModeState(
+        cornerBand: identical(cornerBand, _keepCorner)
+            ? this.cornerBand
+            : cornerBand as String?,
         active: active ?? this.active,
         loading: loading ?? this.loading,
         error: error,
@@ -351,6 +374,7 @@ class ChildModeNotifier extends StateNotifier<ChildModeState> {
     required int childId,
     String? pin,
     String surface = 'habit',
+    String? cornerBand,
   }) async {
     state = state.copyWith(loading: true, error: null);
     try {
@@ -368,6 +392,7 @@ class ChildModeNotifier extends StateNotifier<ChildModeState> {
       await setChildModeActive(true);
       await _saveChildId(childId);
       state = state.copyWith(
+        cornerBand: cornerBand,
         active: true,
         loading: false,
         childId: childId,
@@ -561,6 +586,7 @@ class ChildModeNotifier extends StateNotifier<ChildModeState> {
       remainingSeconds: 0,
       exitRitual: false,
       error: code,
+      cornerBand: state.cornerBand,
     );
   }
 
@@ -675,6 +701,7 @@ class ChildModeNotifier extends StateNotifier<ChildModeState> {
       childId: state.childId,
       surface: state.surface,
       error: kChildModeErrorSessionExpired,
+      cornerBand: state.cornerBand,
     );
   }
 

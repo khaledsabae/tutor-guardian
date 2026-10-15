@@ -50,6 +50,7 @@ class AppPalette {
     required this.paperEmerald,
     required this.paperShadow,
     required this.paperGold,
+    required this.corner,
   });
 
   final Brightness brightness;
@@ -108,6 +109,9 @@ class AppPalette {
   /// The gold of a lit lantern's flame — a lit lantern and a glowing star only.
   final Color paperGold;
 
+  /// «ركن الطفل» — the child's corner scene, one set per ground.
+  final CornerPaper corner;
+
   bool get isDark => brightness == Brightness.dark;
 
   /// The identity: Modern Islamic Luxury (Royal Emerald & Warm Gold).
@@ -138,6 +142,18 @@ class AppPalette {
     paperEmerald: Color(0xFF0F6B5C),
     paperShadow: Color(0xFF094A40),
     paperGold: Color(0xFFF7C548),
+    // A warm coral sky over emerald hills — the study's «كبير» phone
+    // (scratch/game-study/mockup_world_3_levels.png), all STYLE.md colours.
+    corner: CornerPaper(
+      sky: Color(0xFFF4A492),
+      hillFar: Color(0xFF12806D),
+      hillNear: Color(0xFF0D6A5A),
+      ground: Color(0xFF094A40),
+      card: Color(0xFFFBF1DE),
+      cardShadow: Color(0xFFD9C7A7),
+      ink: Color(0xFF0F3D36),
+      onGold: Color(0xFF0F3D36),
+    ),
   );
 
   /// Modern Islamic Luxury — Dark (Deep Obsidian Emerald & Radiant Gold).
@@ -168,6 +184,19 @@ class AppPalette {
     paperEmerald: Color(0xFF12806D),
     paperShadow: Color(0xFF04211B),
     paperGold: Color(0xFFF7C548),
+    // The same hills at night: the sky and the valley in the art's ink, the
+    // cards cut from the deeper emerald with ivory writing — no ivory sheet
+    // glaring on a dark ground.
+    corner: CornerPaper(
+      sky: Color(0xFF0F3D36),
+      hillFar: Color(0xFF0D6A5A),
+      hillNear: Color(0xFF094A40),
+      ground: Color(0xFF0F3D36),
+      card: Color(0xFF0D6A5A),
+      cardShadow: Color(0xFF04211B),
+      ink: Color(0xFFFBF1DE),
+      onGold: Color(0xFF0F3D36),
+    ),
   );
 
   /// Blend two palettes — what `AppColors.lerp` hands `AnimatedTheme`, so a
@@ -204,6 +233,7 @@ class AppPalette {
       paperEmerald: c(a.paperEmerald, b.paperEmerald),
       paperShadow: c(a.paperShadow, b.paperShadow),
       paperGold: c(a.paperGold, b.paperGold),
+      corner: CornerPaper.lerp(a.corner, b.corner, t),
     );
   }
 
@@ -250,5 +280,58 @@ class AppPalette {
     }
 
     WidgetsBinding.instance.rootElement?.visitChildren(visit);
+  }
+}
+
+/// The colours of «ركن الطفل» (features/child_corner): a paper scene of sky,
+/// two hills and a valley, with cards cut from paper on it. Grouped in one
+/// object so the scene's roles travel together and the palette gains one
+/// field, not eight. Every colour is from `assets/svg/STYLE.md` except the
+/// dark card shadow, which is [AppPalette.paperShadow] on the dark ground.
+@immutable
+class CornerPaper {
+  const CornerPaper({
+    required this.sky,
+    required this.hillFar,
+    required this.hillNear,
+    required this.ground,
+    required this.card,
+    required this.cardShadow,
+    required this.ink,
+    required this.onGold,
+  });
+
+  /// Behind the greeting and the candle.
+  final Color sky;
+
+  /// The far hill, then the near one.
+  final Color hillFar;
+  final Color hillNear;
+
+  /// The valley the cards stand in.
+  final Color ground;
+
+  /// A card's paper, and its solid offset shadow (never a blur).
+  final Color card;
+  final Color cardShadow;
+
+  /// Writing on the sky and on the cards.
+  final Color ink;
+
+  /// Writing on a gold paper button.
+  final Color onGold;
+
+  static CornerPaper lerp(CornerPaper a, CornerPaper b, double t) {
+    Color c(Color x, Color y) => Color.lerp(x, y, t)!;
+    return CornerPaper(
+      sky: c(a.sky, b.sky),
+      hillFar: c(a.hillFar, b.hillFar),
+      hillNear: c(a.hillNear, b.hillNear),
+      ground: c(a.ground, b.ground),
+      card: c(a.card, b.card),
+      cardShadow: c(a.cardShadow, b.cardShadow),
+      ink: c(a.ink, b.ink),
+      onGold: c(a.onGold, b.onGold),
+    );
   }
 }
