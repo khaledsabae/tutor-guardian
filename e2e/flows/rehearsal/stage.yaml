@@ -30,6 +30,37 @@ name: rehearsal/stage
 - launchApp:
     stopApp: true
 - runFlow: ../common/system_dialogs.yaml
+
+# ── Eid: «عيدكم مبارك» over Today (head; once a Hijri year per install) ─────
+# EidMomentGate opens it on the first open of Eid, as soon as /api/programs
+# answers. Its modal barrier hides the nav bar from the hierarchy, so it is
+# closed before Today is awaited. Only the first head pass of the stage (ar)
+# meets it; en and ar_dark follow on the same install, the year already seen.
+- runFlow:
+    when:
+      true: "${STAGE == 'eid' && TAG == 'after'}"
+    commands:
+      - extendedWaitUntil:
+          visible: '(?:${output.lead.navToday}|${output.t.eidMomentTitle})'
+          timeout: 60000
+      # Today may draw before /api/programs answers; the moment follows it.
+      - extendedWaitUntil:
+          visible: '${output.t.eidMomentTitle}'
+          timeout: 15000
+          optional: true
+      - runFlow:
+          when:
+            visible: '${output.t.eidMomentTitle}'
+          commands:
+            - waitForAnimationToEnd:
+                timeout: 3000
+            - assertNotVisible: '${output.c.lit_errorWidget}'
+            - takeScreenshot: '${TAG}__${VARIANT}__eid_moment'
+            - tapOn: '${output.t.close}'
+            - extendedWaitUntil:
+                notVisible: '${output.t.eidMomentTitle}'
+                timeout: 10000
+
 - extendedWaitUntil:
     visible: '${output.lead.navToday}'
     timeout: 60000
