@@ -1865,5 +1865,51 @@
   "ramadanDayComplete": "Alhamdulillah",
   "@ramadanDayComplete": {
     "description": "The quiet line that glows when every mark of a Ramadan day is ticked. No confetti, no count."
+  },
+  "handoverTitle": "Hand over the phone",
+  "@handoverTitle": {
+    "description": "Hand-over gate (parent side): app bar title of the one screen a parent opens to hand the device to a child."
+  },
+  "handoverChoose": "What will {name} do now?",
+  "@handoverChoose": {
+    "description": "Hand-over gate: question above the list of activities the child's age allows. {name} is the child's name.",
+    "placeholders": {"name": {"type": "String"}}
+  },
+  "handoverHint": "Choose an activity, enter your PIN, then hand the phone over.",
+  "@handoverHint": {
+    "description": "Hand-over gate: the three steps, for the parent, under the question."
+  },
+  "handoverNoSurface": "At this age we don't hand the phone to the child. Try an activity together, away from the screen.",
+  "@handoverNoSurface": {
+    "description": "Hand-over gate for a child under two (no child surface at all by policy). Calm, not a refusal; points to off-screen activities."
+  },
+  "handoverYourTurn": "{name}, it's your turn",
+  "@handoverYourTurn": {
+    "description": "Revealed when the two paper doors open, read by the child as the device changes hands. {name} is the child's name.",
+    "placeholders": {"name": {"type": "String"}}
+  },
+  "handoverHabitBody": "Logs the day's habits on their own",
+  "@handoverHabitBody": {
+    "description": "Hand-over gate: one line under the habit-tracker activity."
+  },
+  "handoverMissionBody": "A short task to read, then off to do it",
+  "@handoverMissionBody": {
+    "description": "Hand-over gate: one line under today's mission activity."
+  },
+  "handoverLicenseBody": "Short situations where they choose what to do",
+  "@handoverLicenseBody": {
+    "description": "Hand-over gate: one line under the internet-licence activity."
+  },
+  "handoverScreenOffBody": "A story or recitation with the screen dark",
+  "@handoverScreenOffBody": {
+    "description": "Hand-over gate: one line under listening with the screen off."
+  },
+  "childModeSurfaceNotAllowed": "This activity isn't for this age. Please choose another one.",
+  "@childModeSurfaceNotAllowed": {
+    "description": "Calm copy when the server refuses a child surface for the child's age band (surface_not_allowed). Never an error tone."
+  },
+  "childReturnDevice": "Please hand the phone back to your family — thank you",
+  "@childReturnDevice": {
+    "description": "Return line on the child's last screen when a session ends. Neutral family wording, never dad/mum."
   }
 }

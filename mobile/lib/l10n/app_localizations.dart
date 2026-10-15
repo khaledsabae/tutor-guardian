@@ -10159,6 +10159,72 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'الحمد لله'**
   String get ramadanDayComplete;
+
+  /// Hand-over gate (parent side): app bar title of the one screen a parent opens to hand the device to a child.
+  ///
+  /// In ar, this message translates to:
+  /// **'تسليم الجهاز'**
+  String get handoverTitle;
+
+  /// Hand-over gate: question above the list of activities the child's age allows. {name} is the child's name.
+  ///
+  /// In ar, this message translates to:
+  /// **'ماذا سيفعل {name} الآن؟'**
+  String handoverChoose(String name);
+
+  /// Hand-over gate: the three steps, for the parent, under the question.
+  ///
+  /// In ar, this message translates to:
+  /// **'اختر نشاطًا، ثم أدخل الرمز، وسلّم الجهاز.'**
+  String get handoverHint;
+
+  /// Hand-over gate for a child under two (no child surface at all by policy). Calm, not a refusal; points to off-screen activities.
+  ///
+  /// In ar, this message translates to:
+  /// **'في هذا السن لا نسلّم الجهاز للطفل. جرّبوا معًا نشاطًا بلا شاشة.'**
+  String get handoverNoSurface;
+
+  /// Revealed when the two paper doors open, read by the child as the device changes hands. {name} is the child's name.
+  ///
+  /// In ar, this message translates to:
+  /// **'يا {name}، دورك الآن'**
+  String handoverYourTurn(String name);
+
+  /// Hand-over gate: one line under the habit-tracker activity.
+  ///
+  /// In ar, this message translates to:
+  /// **'يسجّل عادات يومه بنفسه'**
+  String get handoverHabitBody;
+
+  /// Hand-over gate: one line under today's mission activity.
+  ///
+  /// In ar, this message translates to:
+  /// **'مهمة قصيرة يقرؤها ثم ينطلق لتنفيذها'**
+  String get handoverMissionBody;
+
+  /// Hand-over gate: one line under the internet-licence activity.
+  ///
+  /// In ar, this message translates to:
+  /// **'مواقف قصيرة يختار فيها ما يفعل'**
+  String get handoverLicenseBody;
+
+  /// Hand-over gate: one line under listening with the screen off.
+  ///
+  /// In ar, this message translates to:
+  /// **'قصة أو تلاوة والشاشة مطفية'**
+  String get handoverScreenOffBody;
+
+  /// Calm copy when the server refuses a child surface for the child's age band (surface_not_allowed). Never an error tone.
+  ///
+  /// In ar, this message translates to:
+  /// **'هذا النشاط ليس لهذا العمر. اختر نشاطًا آخر.'**
+  String get childModeSurfaceNotAllowed;
+
+  /// Return line on the child's last screen when a session ends. Neutral family wording (أهلك), never بابا/ماما.
+  ///
+  /// In ar, this message translates to:
+  /// **'أعِد الجهاز إلى أهلك — شكرًا لك'**
+  String get childReturnDevice;
 }
 
 class _AppLocalizationsDelegate

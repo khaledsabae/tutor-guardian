@@ -24,6 +24,7 @@ import '../../../state/chat_notifier.dart';
 import '../../../theme/app_colors.dart';
 import '../../../widgets/ui/celebration_overlay.dart';
 import '../../../widgets/ui/loading_view.dart';
+import '../../handover/child_surface_policy.dart';
 import '../data/programs_models.dart';
 import '../providers/programs_providers.dart';
 import '../widgets/program_widgets.dart';
@@ -231,18 +232,21 @@ class _JourneyBodyState extends ConsumerState<_JourneyBody> {
   /// The child surface policy keys on the profile's age group, not on the
   /// birth month: a profile still set to 4-6 is refused the habit surface even
   /// when the month already makes the child seven. Unknown (list not loaded)
-  /// is given the benefit of the doubt — the lock screen explains a refusal.
+  /// is given the benefit of the doubt — the gate explains a refusal calmly.
+  String? get _ageGroup => programChildProfile(ref, _childId)?.profile?.ageGroup;
+
   bool get _habitSurfaceAllowed {
-    final band = programChildProfile(ref, _childId)?.profile?.ageGroup;
-    return band == null || const {'7-9', '10-12', '13-15', '16-18'}.contains(band);
+    final band = _ageGroup;
+    return band == null || childSurfaceAllowed(band, 'habit');
   }
 
   void _handOver() {
     unawaited(Analytics.programAction('prayer', 'hand_over'));
     Navigator.of(context).push(
-      AppRoutes.childModeLock<void>(
+      AppRoutes.handoverGate(
         childId: _childId,
         childName: _name,
+        ageGroup: _ageGroup,
         // The habit surface carries the prayer card in child mode; every band
         // with a prayer task (7+) is allowed it.
         surface: 'habit',

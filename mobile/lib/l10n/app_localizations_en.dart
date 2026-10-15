@@ -5981,4 +5981,47 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get ramadanDayComplete => 'Alhamdulillah';
+
+  @override
+  String get handoverTitle => 'Hand over the phone';
+
+  @override
+  String handoverChoose(String name) {
+    return 'What will $name do now?';
+  }
+
+  @override
+  String get handoverHint =>
+      'Choose an activity, enter your PIN, then hand the phone over.';
+
+  @override
+  String get handoverNoSurface =>
+      'At this age we don\'t hand the phone to the child. Try an activity together, away from the screen.';
+
+  @override
+  String handoverYourTurn(String name) {
+    return '$name, it\'s your turn';
+  }
+
+  @override
+  String get handoverHabitBody => 'Logs the day\'s habits on their own';
+
+  @override
+  String get handoverMissionBody => 'A short task to read, then off to do it';
+
+  @override
+  String get handoverLicenseBody =>
+      'Short situations where they choose what to do';
+
+  @override
+  String get handoverScreenOffBody =>
+      'A story or recitation with the screen dark';
+
+  @override
+  String get childModeSurfaceNotAllowed =>
+      'This activity isn\'t for this age. Please choose another one.';
+
+  @override
+  String get childReturnDevice =>
+      'Please hand the phone back to your family — thank you';
 }

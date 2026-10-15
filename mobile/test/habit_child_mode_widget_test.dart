@@ -265,8 +265,8 @@ void main() {
           ),
         ),
       );
-      // Past the hand-over card, which covers the surface while it shows.
-      await tester.pump(ChildModeShell.handoffHold);
+      // No hand-over card to wait out: that moment is the gate's now, in
+      // parent mode, before the session.
       await tester.pumpAndSettle();
       expect(find.textContaining('وضع الطفل'), findsOneWidget);
 
