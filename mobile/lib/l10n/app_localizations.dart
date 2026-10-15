@@ -10147,6 +10147,54 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'تمّت هذه المحطة اليوم'**
   String get todayRoadReached;
+
+  /// Title of the moment shown once when every lesson of a path is done (Noor's crescent fills to a full moon).
+  ///
+  /// In ar, this message translates to:
+  /// **'اكتمل البدر'**
+  String get pathFullMoonTitle;
+
+  /// The full-moon moment's line. Family-neutral plural; no promise of reward.
+  ///
+  /// In ar, this message translates to:
+  /// **'أتممتم «{title}» كاملًا، درسًا بعد درس.'**
+  String pathFullMoonBody(String title);
+
+  /// Button on the full-moon moment: share the existing path-completion card.
+  ///
+  /// In ar, this message translates to:
+  /// **'شاركوا البطاقة'**
+  String get pathFullMoonShare;
+
+  /// Quiet moment after the parent moves the Prayer Journey up a stage. {stage} is the stage's title, never its number.
+  ///
+  /// In ar, this message translates to:
+  /// **'{gender, select, female{انتقلت {name} إلى «{stage}».} other{انتقل {name} إلى «{stage}».}}'**
+  String prayerStageMomentChild(String gender, String name, String stage);
+
+  /// The same moment when the child has no name of its own (the default «طفلي»).
+  ///
+  /// In ar, this message translates to:
+  /// **'انتقلتم إلى «{stage}».'**
+  String prayerStageMomentFamily(String stage);
+
+  /// General du'a under the stage moment. Not attributed to any text.
+  ///
+  /// In ar, this message translates to:
+  /// **'أعانكم الله وتقبّل منكم'**
+  String get prayerStageMomentDua;
+
+  /// prayerAdvanceBody for a 4–6 child: the next stage by its title, with no stage number.
+  ///
+  /// In ar, this message translates to:
+  /// **'انتقلوا إلى «{stage}» حين ترون {name} مستعدًّا؛ القرار لكم.'**
+  String prayerAdvanceBodyNamed(String stage, String name);
+
+  /// prayerAdvanceButton for a 4–6 child: the next stage by its title.
+  ///
+  /// In ar, this message translates to:
+  /// **'إلى «{stage}»'**
+  String prayerAdvanceButtonNamed(String stage);
 }
 
 class _AppLocalizationsDelegate

@@ -5974,4 +5974,43 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get todayRoadReached => 'Reached today';
+
+  @override
+  String get pathFullMoonTitle => 'A full moon';
+
+  @override
+  String pathFullMoonBody(String title) {
+    return 'You\'ve finished “$title” in full, one lesson at a time.';
+  }
+
+  @override
+  String get pathFullMoonShare => 'Share the card';
+
+  @override
+  String prayerStageMomentChild(String gender, String name, String stage) {
+    String _temp0 = intl.Intl.selectLogic(gender, {
+      'female': '$name has moved on to “$stage”.',
+      'other': '$name has moved on to “$stage”.',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String prayerStageMomentFamily(String stage) {
+    return 'You\'ve moved on to “$stage”.';
+  }
+
+  @override
+  String get prayerStageMomentDua =>
+      'May Allah help you, and accept it from you.';
+
+  @override
+  String prayerAdvanceBodyNamed(String stage, String name) {
+    return 'Move on to “$stage” when you feel $name is ready — it\'s your call.';
+  }
+
+  @override
+  String prayerAdvanceButtonNamed(String stage) {
+    return 'Go to “$stage”';
+  }
 }

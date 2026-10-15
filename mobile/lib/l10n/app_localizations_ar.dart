@@ -5896,4 +5896,42 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get todayRoadReached => 'تمّت هذه المحطة اليوم';
+
+  @override
+  String get pathFullMoonTitle => 'اكتمل البدر';
+
+  @override
+  String pathFullMoonBody(String title) {
+    return 'أتممتم «$title» كاملًا، درسًا بعد درس.';
+  }
+
+  @override
+  String get pathFullMoonShare => 'شاركوا البطاقة';
+
+  @override
+  String prayerStageMomentChild(String gender, String name, String stage) {
+    String _temp0 = intl.Intl.selectLogic(gender, {
+      'female': 'انتقلت $name إلى «$stage».',
+      'other': 'انتقل $name إلى «$stage».',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String prayerStageMomentFamily(String stage) {
+    return 'انتقلتم إلى «$stage».';
+  }
+
+  @override
+  String get prayerStageMomentDua => 'أعانكم الله وتقبّل منكم';
+
+  @override
+  String prayerAdvanceBodyNamed(String stage, String name) {
+    return 'انتقلوا إلى «$stage» حين ترون $name مستعدًّا؛ القرار لكم.';
+  }
+
+  @override
+  String prayerAdvanceButtonNamed(String stage) {
+    return 'إلى «$stage»';
+  }
 }
