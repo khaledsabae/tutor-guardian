@@ -4154,11 +4154,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get loadingCancel => 'Go back';
 
   @override
-  String get settingsHaptics => 'Haptic feedback';
+  String get settingsHaptics => 'Sounds & vibration';
 
   @override
   String get settingsHapticsDesc =>
-      'A light vibration when you log, complete or get an alert';
+      'Soft sounds with no music, and a light vibration when you choose or complete something';
 
   @override
   String childModeHandoff(String name) {

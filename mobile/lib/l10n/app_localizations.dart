@@ -7349,13 +7349,13 @@ abstract class AppLocalizations {
   /// No description provided for @settingsHaptics.
   ///
   /// In ar, this message translates to:
-  /// **'الاهتزاز عند اللمس'**
+  /// **'الأصوات والاهتزاز'**
   String get settingsHaptics;
 
   /// No description provided for @settingsHapticsDesc.
   ///
   /// In ar, this message translates to:
-  /// **'اهتزاز خفيف عند التسجيل والإنجاز والتنبيه'**
+  /// **'أصوات هادئة بلا موسيقى، واهتزاز خفيف عند الاختيار والإنجاز'**
   String get settingsHapticsDesc;
 
   /// No description provided for @childModeHandoff.

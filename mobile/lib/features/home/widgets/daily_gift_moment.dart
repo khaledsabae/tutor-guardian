@@ -79,8 +79,10 @@ class _DailyGiftMomentState extends State<DailyGiftMoment>
     }
     await prefs.setString(_shownKey, today);
     if (!mounted) return;
-    // One haptic with the landing, never with the quiet line.
-    Haptics.success();
+    // One haptic with the landing, never with the quiet line. No sound: the
+    // gift arrives when Home opens, not because the parent did something,
+    // and the app does not make noise on its own (core/sound_fx.dart).
+    Haptics.success(sound: false);
     setState(() => _phase = _GiftMomentPhase.moment);
     if (!reduceMotion(context)) {
       _bounceController.forward(from: 0);
