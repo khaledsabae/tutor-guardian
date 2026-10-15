@@ -2,13 +2,33 @@
 # corner, the day's story read to its end, a level of the day's game left from
 # its pause menu, and the session ending on the task away from the screen —
 # then «أعِد الجهاز إلى أهلك» and the PIN out.
-# The child onboarding created is 7-9, so the corner may hold all three parts
-# (story, game, task) — the game only when the interface is Arabic, and 06
-# leaves it in English. The PIN was set by 04_child_mode.
+# The child onboarding created is 7-9, so the corner holds all three parts
+# (story, game, task) — the game only when the interface is Arabic, which is
+# why the flow switches back from 06's English first. The PIN was set by
+# 04_child_mode. The steps still follow what the corner shows, so a corner
+# without its game (an English run) ends on the task all the same.
 appId: com.alsaba.almorabbi
 name: fresh/10 child corner — story, game, task, hand back
 ---
 - runScript: ../common/l10n.js
+- runFlow: ../common/home.yaml
+# Back to Arabic first (06 left the interface in English): the game packs are
+# Arabic-only, so only an Arabic corner has the game to walk through.
+- runFlow: ../common/open_settings.yaml
+- scrollUntilVisible:
+    element:
+      text: '${output.lead.language}'
+    direction: DOWN
+    timeout: 20000
+- runFlow:
+    when:
+      notVisible: '${output.ar.settingsTitle}'
+    commands:
+      - tapOn: '${output.lead.language}'
+- extendedWaitUntil:
+    visible: '${output.ar.settingsTitle}'
+    timeout: 20000
+- back
 - runFlow: ../common/home.yaml
 - tapOn: '${output.lead.navMore}'
 - scrollUntilVisible:
