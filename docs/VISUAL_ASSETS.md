@@ -1,87 +1,113 @@
-# المربّي — دليل الأصول البصرية (Visual Assets Spec)
+# المربّي — دليل الأصول البصرية
 
-قائمة الصور المخصّصة المطلوبة لإثراء التطبيق بصريًا. **إنت تولّدها، وأنا أركّبها** بمجرد ما تبعتها.
+النظام البصري كله **«ورق مقصوص»**: طبقات ورق مسطّحة بألوان ثابتة، وكل شكل له ظل ورقي مزاح من غير blur.
+خالد اختاره يوم 2026-10-14 من ٣ عيّنات. طقم «الفانوس» القديم (برومبتات Recraft، صور PNG بتدرّجات)
+**اتلغى** — ماترجعلوش، ولا تولّد صور بالذكاء الاصطناعي للتطبيق.
 
-## كيفية التسليم
-- صيغة **PNG بخلفية شفافة** (إلا ما يُذكر غير ذلك).
-- ضع كل ملف في مجلده بالاسم المحدّد بالظبط — التركيب وقتها تلقائي.
-- لو مولّد الصور بيطلّع SVG، PNG عالي الدقة كافٍ ومفضّل.
-
-## ستايل موحّد (الصق ده في بداية كل برومبت)
-```
-Flat modern vector illustration, soft rounded shapes, warm and friendly,
-child-and-parent friendly, modest and appropriate for an Islamic family app,
-NO realistic human faces (use simple symbolic or abstract figures, or none),
-clean professional, consistent set style, transparent background.
-Color palette: teal #0D9488, amber/gold #F59E0B, warm cream #FAF7F2,
-emerald #10B981, ink #1E293B.
-```
+| الطبقة | المكان | الحالة |
+|---|---|---|
+| رسومات جوه التطبيق | `mobile/assets/svg/` | ✅ شغّالة (d3feb863) |
+| أيقونة التطبيق | `docs/brand/icon/` ← `mobile/android/app/src/main/res/` | ⏳ مستنية اعتماد خالد |
+| صور المتجر | `docs/brand/store/` | ⏳ مستنية اعتماد خالد — **مارفعتش حاجة على Play** |
 
 ---
 
-## 1) التميمة «نور» (فانوس) — `assets/images/mascot/`
-الهوية البصرية الأساسية. شخصية رفيقة تظهر في كل التطبيق. **١٠٢٤×١٠٢٤**.
+## ١) الرسومات جوه التطبيق — `mobile/assets/svg/`
 
-البرومبت الأساسي (+ الستايل الموحّد فوق):
-```
-A cute friendly glowing Ramadan lantern (fanoos) mascot, simple geometric
-body, soft rounded edges, two small dot eyes and a tiny gentle smile,
-NO human face, warm golden inner glow, teal and amber color scheme,
-centered, soft long shadow. POSE: <…>
-```
-الملفات (نفس البرومبت، بدّل POSE):
-| الملف | POSE | الاستخدام |
-|---|---|---|
-| `noor_idle.png` | `standing calmly, gentle glow` | الهوم / الترويسة |
-| `noor_wave.png` | `waving hello with one little arm` | الترحيب / الأونبوردنج |
-| `noor_celebrate.png` | `arms up, surrounded by sparkles, joyful` | الاحتفال بالمحطات |
-| `noor_think.png` | `tilting with a small question mark above` | المساعد / لا نتائج |
-| `noor_sleep.png` | `sleeping peacefully with Zzz` | الحالات الهادئة/المسائية |
+**الدليل الملزم: [`mobile/assets/svg/STYLE.md`](../mobile/assets/svg/STYLE.md)** — الألوان بالـhex، العناصر
+المسموحة في flutter_svg، إزاحة الظل، مسار هلال نور المرجعي، وقواعد رسم البشر.
 
-## 2) رسومات الحالات الفارغة — `assets/images/empty/` (**٨٠٠×٦٠٠**)
-| الملف | البرومبت (+ الستايل) | الاستخدام |
-|---|---|---|
-| `empty_children.png` | `an empty cozy nameplate / open door with a small star, inviting to add a first child profile` | شاشة «مفيش أطفال» |
-| `empty_journey.png` | `an open blank journal with a tiny growing plant and a star, symbolizing a child's journey beginning` | الرحلة الفارغة |
-| `empty_search.png` | `a friendly magnifying glass with a small dotted path, no results found` | البحث بدون نتائج |
-
-## 3) أيقونات المحطات الإيمانية — `assets/images/milestones/` (**٥١٢×٥١٢**, badge شكل دائري)
-البرومبت (+ الستايل): `Flat rounded circular badge icon with a soft gradient and a thin gold rim, emerald and amber accents, single centered symbol: <SYMBOL>, minimal modern Islamic style.`
-| الملف | SYMBOL | المحطة |
-|---|---|---|
-| `shahada.png` | `a glowing white heart with a subtle crescent` | نطق الشهادة |
-| `first_dua.png` | `two small raised duaa hands` | حفظ أول دعاء |
-| `first_prayer.png` | `a small prayer rug` | أول صلاة |
-| `keeps_prayer.png` | `a prayer rug with a shining star` | يحافظ على الصلاة |
-| `first_surah.png` | `an open Quran with a soft light` | حفظ أول سورة |
-| `first_fast.png` | `a crescent moon with a date fruit` | أول يوم صيام |
-| `good_manner.png` | `a heart with a small star (good character)` | موقف خُلق حسن |
-| `helped_others.png` | `two hands helping / a small gift` | ساعد غيره |
-| `quran_khatma.png` | `a closed Quran with a golden ribbon and a trophy glow` | ختمة قرآن |
-
-## 4) رسومات المجالات — `assets/images/domains/` (**٨٠٠×٦٠٠**)
-البرومبت (+ الستايل): `Flat illustration scene representing <THEME>, simple symbolic figures (no realistic faces), <COLOR> dominant palette.`
-| الملف | THEME | COLOR |
-|---|---|---|
-| `islamic_parenting.png` | `Islamic upbringing — a parent and child near a mosque silhouette and an open book` | emerald #10B981 |
-| `development.png` | `child growth & development — a growing plant, building blocks, a brain-star` | purple #8B5CF6 |
-| `cyber.png` | `digital safety — a friendly shield over a tablet` | blue #3B82F6 |
-| `health.png` | `child health & wellbeing — a heart, an apple, a water drop` | rose #FB7185 |
-
-## 5) مشاهد الأونبوردنج — `assets/images/onboarding/` (**٩٠٠×٧٠٠**)
-| الملف | البرومبت (+ الستايل) |
+| المجلد | فيه إيه |
 |---|---|
-| `ob_welcome.png` | `warm welcome scene — the lantern mascot Noor waving beside an open book, soft sunrise` |
-| `ob_journey.png` | `a winding path with milestone stars leading up, a small plant growing, symbolizing the child's journey` |
-| `ob_quran.png` | `an open Quran radiating soft light with floating stars and a crescent` |
+| `noor/` | نور (الهلال) بـ٧ حالات: awake, calm, happy, reading, sleepy, tender, thinking |
+| `icons/` | ١٧ أيقونة صغيرة (`viewBox 0 0 48 48`) |
+| `art/` | الشارات (٦)، المجالات (٥)، الحالات الفاضية (٣)، المحطات (٣)، `onboarding_welcome`، `share_bg_celebration`، `logo_mark` |
 
----
+- كل ملف SVG مكتوب باليد، ≤ 12KB، من غير نص ولا تدرّجات ولا filters.
+- `test/svg_assets_test.dart` بيفتح كل ملف؛ المجلدات متسجّلة في `pubspec.yaml`.
+- رسم جديد = ملف SVG على نفس القواعد. لو مجلد جديد سجّله في `pubspec.yaml`.
 
-## حالة التركيب (يحدّثها كلود)
-- [ ] التميمة «نور» (٥)
-- [ ] الحالات الفارغة (٣)
-- [ ] محطات إيمانية (٩)
-- [ ] رسومات المجالات (٤)
-- [ ] أونبوردنج (٣)
+## ٢) الهوية برّه التطبيق — `docs/brand/`
 
-> **المسار المفتوح المصدر** (كونفيتي الاحتفال) ✅ اتعمل بالفعل (إعادة استخدام `widgets/ui/celebration_overlay.dart`).
+```
+docs/brand/
+  icon/    icon_a_seal.svg  icon_b_noor.svg  icon_c_hills.svg   ← مصادر الأيقونة (٣ اتجاهات)
+  review/  icon_compare_sizes.png  icon_compare_masks.png  icon_home_screen.png
+  store/   feature_graphic.svg/.png  frame_{1,2,3}_*.svg/.png  play_icon_512.png  example_*.png
+  tools/   brand_build.py   ← كل الـPNG والـXML بتطلع منه؛ الـSVG هو المصدر
+```
+
+`brand_build.py` محتاج بس اللي على اللابتوب أصلًا (python3-gi: Rsvg + Pango، pycairo، Pillow)، وبيقرا خط
+Cairo من `mobile/assets/google_fonts/` من غير ما يسطّب حاجة على النظام:
+
+```bash
+python3 docs/brand/tools/brand_build.py review        # لوحات المقارنة
+python3 docs/brand/tools/brand_build.py android b     # أيقونة Android من الاتجاه b (أو a / c)
+python3 docs/brand/tools/brand_build.py store         # صور المتجر + أمثلة الإطارات
+python3 docs/brand/tools/brand_build.py frame --frame frame_1_rising \
+        --shot shot.png --title "يومك مع طفلك" --subtitle "خطوة صغيرة كل يوم" --out out.png
+```
+
+## ٣) أيقونة التطبيق
+
+### الفكرة
+نفس هوية الأيقونة اللي الناس شايفاها على Play — **هلال بوجه نائم + كتاب طالع منه نبتة + نجمة، فاتح على
+زمردي** — مترجمة للورق المقصوص. الوش هو وش نور (`noor_sleepy`) فالأيقونة والتميمة بقوا شخص واحد.
+
+| الاتجاه | الملف | الفرق |
+|---|---|---|
+| A «الختم» | `icon_a_seal.svg` | الحلقة باقية — الأقرب للحالية، بس المحتوى جوه الحلقة صغير على 48px |
+| **B «نور» ★ المُوصى به** | `icon_b_noor.svg` | من غير حلقة — نفس العناصر أكبر؛ الأوضح على 48px |
+| C «الطبقات» | `icon_c_hills.svg` | نور طالع ورا تلال ورقية زي كروت التطبيق — الأدفى، بس التلال بتعمل دوشة تحت على 48px |
+
+### شكل ملف المصدر
+كل ملف فيه ٣ مجموعات عليا: `background` و`foreground` و`monochrome` (مخفية). مساحة الرسم `0 0 240 240` =
+الـ72dp **الظاهرة** من الأيقونة التكيّفية (108dp)، فالمنطقة الآمنة (دايرة 66dp) = نصف قطر 110 حوالين
+(120,120) — أي حاجة مهمة لازم تفضل جواها. الخلفية مرسومة من −60 لـ300 عشان تغطي الـ108dp كلها.
+مسموح بس `translate()`/`scale()` وعناصر STYLE.md، عشان الملف يتحوّل لـVectorDrawable بالظبط.
+
+`monochrome` = نسخة لون واحد لأيقونات Android 13 الملوّنة بالثيم: من غير تداخل، والتفاصيل (العينين، فاصل
+الكتاب) ثقوب `evenodd` مش رسم فوق رسم.
+
+### على Android (ورا الاعتماد)
+- الأيقونة الجديدة باسم جديد: `ic_launcher_paper` — `drawable/ic_launcher_paper_{background,foreground,monochrome}.xml`
+  (VectorDrawable) + `mipmap-anydpi-v26/ic_launcher_paper{,_round}.xml` + PNG لكل كثافة لـAPI 24–25.
+- الأيقونة القديمة (`ic_launcher*`) **ماتلمستش**.
+- التفعيل في commit لوحده اسمه **«تفعيل الأيقونة الجديدة»**: بيوجّه `android:icon`/`android:roundIcon` في
+  `AndroidManifest.xml` للجديدة، وبيقفل الجزء بتاع Android في `flutter_launcher_icons` (لأنه لو اتشغّل بيرجّع
+  `android:icon` لـ`ic_launcher` من غير ما حد ياخد باله).
+- **الرجوع:** `git revert` لـcommit التفعيل بس — والأيقونة القديمة ترجع زي ما هي.
+- **اتجاه تاني؟** `brand_build.py android a` (أو c) بيعيد كتابة نفس الملفات؛ الأمر بيرفض يكتب لو الـVectorDrawable
+  مش مطابق للـSVG بكسل ببكسل، وبيعدّي كل XML على `aapt2 compile`.
+
+### فخاخ لازم تعرفها
+- `notification_service.dart` بيستخدم `@mipmap/ic_launcher` (القديمة) — **ماتمسحش الموارد القديمة** من غير ما تغيّره.
+- شاشة البداية (`flutter_native_splash`) لسه بالشعار القديم من `frontend/icons/icon-512.png`، و`assets/images/logo.png`
+  (علامة الإنفوجرافيك) قديم برضه، وأيقونات iOS قديمة (iOS لسه مانزلش). دول خطوة بعدين.
+- أيقونة Play (512×512) **مش بتطلع من البناء** — بتترفع باليد في Play Console: `docs/brand/store/play_icon_512.png`
+  (مربّع كامل؛ Play بيقصّه بنفسه).
+
+## ٤) صور المتجر — `docs/brand/store/`
+
+### Feature graphic (1024×500)
+`feature_graphic.svg` ← `.png`: نور على الشمال، وعلى اليمين الأيقونة + «المربّي» + «رفيقك في تربية طفلك».
+النص `<text>` حقيقي بخط Cairo (سهل يتعدّل). المهم بعيد عن الحواف.
+
+### إطارات لقطات الشاشة (1080×1920)
+**ليه إطارات أصلًا:** لقطات معرض الـCI من محاكي Pixel 7 مقاسها 1080×2400 (نسبة 2.22)، وPlay بيرفض أي لقطة ضلعها
+الطويل أكتر من ضعف القصير. الإطار 9:16 بيحلّها ويضيف عنوان.
+
+| الإطار | الشكل |
+|---|---|
+| `frame_1_rising` | زمردي، العنوان فوق، الشاشة طالعة من ورا التلال (الجزء التحتاني من اللقطة بيتقص) |
+| `frame_2_ivory` | ورق عاجي، الشاشة **كاملة** على كارت زمردي، ونور بيبص من الركن |
+| `frame_3_bubble` | نور بيقول العنوان في فقاعة ورق، والشاشة طالعة من تحت |
+
+- مكان اللقطة = `<rect id="slot">`؛ العنوان `id="title"` والسطر التاني `id="subtitle"`؛ الطبقات `under` / `placeholder` / `over`.
+- العنوان بيصغر لوحده لو أطول من `data-max-width`.
+- اللقطات: artifact اسمه `e2e-gallery` من workflow «Mobile E2E (emulator)» ← `brand_build.py frame ...`.
+- `example_*.png` معمولة بلقطات يونيو القديمة من `docs/marketing/screenshots/raw/` **عشان تبيّن المقاس بس** — بدّلها بلقطات جديدة قبل أي رفع.
+
+### قواعد الكلام على الصور
+وصف، مش ادعاء. ممنوع «مجاني» و«الأفضل» و«رقم ١» و«حمّل الآن» وأي سعر/عرض — سياسة بيانات Play بتمنعها على الصور.
+مثال مقبول: «اسأل عن تربية طفلك». مثال مرفوض: «إجابات موثوقة ١٠٠٪».
