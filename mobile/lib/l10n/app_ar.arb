@@ -283,9 +283,7 @@
   "onbTellUs": "حدّثنا عن طفلك",
   "onbPersonalize": "لنخصّص له تجربة تربوية مناسبة.",
   "onbChildName": "اسم طفلك",
-  "onbNameHint": "مثلاً: سارة، أحمد، ليلى",
   "onbNameRequired": "الاسم مطلوب",
-  "onbNameTooLong": "الاسم طويل جداً (الحد الأقصى 80 حرفاً)",
   "onbAgeGroup": "المرحلة العمرية",
   "onbChildAvatar": "صورة الطفل (اختياري)",
   "onbTapEmoji": "اضغط لاختيار إيموجي",
@@ -1086,16 +1084,6 @@
   "tourNext": "التالي",
   "tourSkip": "تخطّي",
   "tourDone": "تم",
-  "tourTodayTitle": "اليوم",
-  "tourTodayBody": "ابدأ من هنا كل يوم: خطوتك التالية، وحال طفلك، ونصيحة قصيرة.",
-  "tourLearnTitle": "التعلّم",
-  "tourLearnBody": "دروس تقرؤها أنت كمربٍّ — مرتّبة في مسارات حسب عمر طفلك.",
-  "tourAssistantTitle": "المساعد",
-  "tourAssistantBody": "اسأل بكلامك عن موقف حيّرك مع طفلك، وتصلك إجابة مؤصَّلة.",
-  "tourMoreTitle": "المزيد",
-  "tourMoreBody": "قصص وألعاب وقرآن وإعدادات — ومن هنا زر «مساعدة» لو تُهت.",
-  "tourFocusTitle": "خطوتك التالية",
-  "tourFocusBody": "اضغط هنا وسنفتح لك الدرس المناسب — لا قائمة تختار منها.",
   "tourReplay": "الجولة التعريفية",
   "tourReplayDesc": "أعِد عرض الجولة عند العودة للشاشة الرئيسية",
   "tourReplayQueued": "ستظهر الجولة عند عودتك إلى الشاشة الرئيسية.",
@@ -1874,6 +1862,55 @@
   },
   "@a11yChooseAChild": {
     "description": "Screen-reader label for the active-child chip when no child is active yet; a tap opens the children list."
+  },
+  "onbNameQuestion": "ما اسم طفلك؟",
+  "@onbNameQuestion": {
+    "description": "Optional name field shown on the child-creation wait overlay during onboarding."
+  },
+  "onbNameHint": "مثلًا: سارة، أحمد، ليلى",
+  "@onbNameHint": {
+    "description": "Hint inside the optional onboarding name field."
+  },
+  "onbNameTitleDefault": "درب طفلك",
+  "@onbNameTitleDefault": {
+    "description": "Title of the onboarding wait overlay before a name is typed."
+  },
+  "onbNameTitle": "درب {name}",
+  "@onbNameTitle": {
+    "description": "Title of the onboarding wait overlay; changes live as the parent types the child's name.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "onbNameLater": "لاحقًا",
+  "@onbNameLater": {
+    "description": "Keeps the default child name and leaves the onboarding name field."
+  },
+  "onbNameDone": "تمّ",
+  "@onbNameDone": {
+    "description": "Confirms the name typed in the onboarding name field."
+  },
+  "onbNameTooLong": "الاسم طويل (الحد الأقصى 30 حرفًا)",
+  "@onbNameTooLong": {
+    "description": "Validation: the onboarding child name is longer than 30 characters."
+  },
+  "onbNameDigitsOnly": "اكتب اسمًا لا أرقامًا",
+  "@onbNameDigitsOnly": {
+    "description": "Validation: the onboarding child name is made of digits only."
+  },
+  "tourStartHereTitle": "ابدأ من هنا",
+  "@tourStartHereTitle": {
+    "description": "Title of the single first-run coach mark on Today's first card (tour v3)."
+  },
+  "tourStartHereBody": "درس قصير لعمر طفلك",
+  "@tourStartHereBody": {
+    "description": "Caption of the first-run coach mark on Today's first card (tour v3)."
+  },
+  "tourStartHereGo": "ابدأ",
+  "@tourStartHereGo": {
+    "description": "Primary button of the first-run coach mark; does what tapping the card does."
   },
   "noorHelloDawn": "صباح النور",
   "@noorHelloDawn": {"description": "Noor's line on «اليوم» (CompanionBrain). Easy MSA, warm, never names one parent, no emoji, no promise of reward."},

@@ -916,13 +916,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get onbChildName => 'Your child\'s name';
 
   @override
-  String get onbNameHint => 'e.g. Sara, Ahmed, Layla';
-
-  @override
   String get onbNameRequired => 'Name is required';
-
-  @override
-  String get onbNameTooLong => 'Name is too long (max 80 characters)';
 
   @override
   String get onbAgeGroup => 'Age Group';
@@ -3561,41 +3555,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tourDone => 'Done';
 
   @override
-  String get tourTodayTitle => 'Today';
-
-  @override
-  String get tourTodayBody =>
-      'Start here each day: your next step, your child’s day, and one short tip.';
-
-  @override
-  String get tourLearnTitle => 'Learn';
-
-  @override
-  String get tourLearnBody =>
-      'Lessons for you to read as a parent — grouped into paths by your child’s age.';
-
-  @override
-  String get tourAssistantTitle => 'Assistant';
-
-  @override
-  String get tourAssistantBody =>
-      'Ask in your own words about a situation with your child, and get a grounded answer.';
-
-  @override
-  String get tourMoreTitle => 'More';
-
-  @override
-  String get tourMoreBody =>
-      'Stories, games, Qur’an and settings — and the Help button if you get lost.';
-
-  @override
-  String get tourFocusTitle => 'Your next step';
-
-  @override
-  String get tourFocusBody =>
-      'Tap here and we open the right lesson for you — not a list to pick from.';
-
-  @override
   String get tourReplay => 'Guided tour';
 
   @override
@@ -5751,6 +5710,41 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get praiseFromFamily => 'Your family says to you';
+
+  @override
+  String get onbNameQuestion => 'What\'s your child\'s name?';
+
+  @override
+  String get onbNameHint => 'e.g. Sara, Ahmed, Layla';
+
+  @override
+  String get onbNameTitleDefault => 'Your child\'s path';
+
+  @override
+  String onbNameTitle(String name) {
+    return '$name\'s path';
+  }
+
+  @override
+  String get onbNameLater => 'Later';
+
+  @override
+  String get onbNameDone => 'Done';
+
+  @override
+  String get onbNameTooLong => 'Name is too long (30 characters max)';
+
+  @override
+  String get onbNameDigitsOnly => 'Type a name, not numbers';
+
+  @override
+  String get tourStartHereTitle => 'Start here';
+
+  @override
+  String get tourStartHereBody => 'A short lesson for your child\'s age';
+
+  @override
+  String get tourStartHereGo => 'Start';
 
   @override
   String get noorHelloDawn => 'Good early morning';

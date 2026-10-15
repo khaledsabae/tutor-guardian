@@ -10,6 +10,7 @@ library;
 import 'dart:async';
 
 import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:flutter/foundation.dart' show visibleForTesting;
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'engagement_signal.dart';
@@ -18,7 +19,13 @@ import 'notification_permission_gate.dart';
 class Analytics {
   static FirebaseAnalytics get _fa => FirebaseAnalytics.instance;
 
+  /// Sees every event as it is logged, so a test can pin the funnel — e.g.
+  /// `child_added` exactly once per created child. Null in the app.
+  @visibleForTesting
+  static void Function(String name, Map<String, Object>? params)? debugSink;
+
   static Future<void> _log(String name, [Map<String, Object>? params]) async {
+    debugSink?.call(name, params);
     try {
       await _fa.logEvent(name: name, parameters: params);
     } catch (_) {
@@ -50,6 +57,11 @@ class Analytics {
   /// A child profile was successfully created on the backend.
   static Future<void> childAdded(String ageGroup) =>
       _log('child_added', {'age_group': ageGroup});
+
+  /// What became of the optional name on the child-creation wait: `named`,
+  /// `later` («لاحقًا»), or `ignored` (never touched — the default stays).
+  static Future<void> onboardingName(String outcome) =>
+      _log('onboarding_name', {'outcome': outcome});
 
   /// A chat message was actually submitted (first one also logs first_chat).
   static Future<void> chatSent() async {

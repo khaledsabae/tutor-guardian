@@ -22,6 +22,14 @@ import '../../program/data/progress_models.dart';
 import '../../program/providers/program_providers.dart';
 import '../../program/providers/progress_providers.dart';
 
+/// Raised to make the card do what its own primary button does.
+///
+/// The first-run tour's mark (tour v3) is a stand-in for this card: «ابدأ من
+/// هنا», and tapping it must start, not dismiss. Only the card knows what its
+/// button means right now — the first lesson, browsing while that loads, or
+/// continuing a path — so the tour asks the card instead of guessing.
+final todayFocusOpenProvider = StateProvider<int>((_) => 0);
+
 class TodayFocusCard extends ConsumerWidget {
   const TodayFocusCard({
     super.key,
@@ -36,6 +44,15 @@ class TodayFocusCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
+    // Every branch below names its primary action once and hands it both to
+    // its button and to [todayFocusOpenProvider].
+    void primary(VoidCallback action) =>
+        ref.listen<int>(todayFocusOpenProvider, (_, _) => action());
+    void browse() {
+      Analytics.todayBlockTapped('step', 'browse');
+      onStartFirstPath();
+    }
+
     final asyncPaths = ref.watch(
       pathsListProvider(PathsListArgs(ageGroup: ageGroup)),
     );
@@ -89,6 +106,7 @@ class TodayFocusCard extends ConsumerWidget {
       // finished the path that they were at its beginning («أعطال اتلقت في
       // الطريق»). The card says what happened, and points at what is next.
       if (next != null && next.resumed) {
+        primary(browse);
         return Container(
           padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
@@ -132,16 +150,23 @@ class TodayFocusCard extends ConsumerWidget {
               BouncyButton(
                 label: l10n.browsePaths,
                 color: Dt.accent,
-                onTap: () {
-                  Analytics.todayBlockTapped('step', 'browse');
-                  onStartFirstPath();
-                },
+                onTap: browse,
               ),
             ],
           ),
         ).animate().fadeIn(duration: Dt.base).slideY(begin: .06);
       }
 
+      final VoidCallback start = next == null
+          ? browse
+          : () {
+              Analytics.homeCardTapped('focus_first_lesson');
+              Analytics.todayBlockTapped('step', 'first_lesson');
+              Navigator.of(context).push(
+                AppRoutes.lesson(next.lessonId, ageGroup, childId: childId),
+              );
+            };
+      primary(start);
       return Container(
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
@@ -186,32 +211,14 @@ class TodayFocusCard extends ConsumerWidget {
             BouncyButton(
               label: next == null ? l10n.browsePaths : l10n.startThisLesson,
               color: Dt.accent,
-              onTap: next == null
-                  ? () {
-                      Analytics.todayBlockTapped('step', 'browse');
-                      onStartFirstPath();
-                    }
-                  : () {
-                      Analytics.homeCardTapped('focus_first_lesson');
-                      Analytics.todayBlockTapped('step', 'first_lesson');
-                      Navigator.of(context).push(
-                        AppRoutes.lesson(
-                          next.lessonId,
-                          ageGroup,
-                          childId: childId,
-                        ),
-                      );
-                    },
+              onTap: start,
             ),
             // Browsing stays reachable — demoted, not removed.
             if (next != null)
               Align(
                 alignment: AlignmentDirectional.centerStart,
                 child: TextButton(
-                  onPressed: () {
-                    Analytics.todayBlockTapped('step', 'browse');
-                    onStartFirstPath();
-                  },
+                  onPressed: browse,
                   child: Text(
                     l10n.browsePaths,
                     style: TextStyle(
@@ -227,6 +234,13 @@ class TodayFocusCard extends ConsumerWidget {
       ).animate().fadeIn(duration: Dt.base).slideY(begin: .06);
     }
 
+    final path = resume;
+    void continuePath() {
+      Analytics.todayBlockTapped('step', 'continue');
+      Navigator.of(context).push(AppRoutes.pathDetail(path.id, ageGroup));
+    }
+
+    primary(continuePath);
     final style = styleFor(resume.domain);
     final total = resume.lessonIds.length;
     final fraction = total == 0 ? 0.0 : done / total;
@@ -316,12 +330,7 @@ class TodayFocusCard extends ConsumerWidget {
             label: l10n.continueBtn,
             color: Colors.white.withValues(alpha: .22),
             edgeColor: Colors.white.withValues(alpha: .35),
-            onTap: () {
-              Analytics.todayBlockTapped('step', 'continue');
-              Navigator.of(
-                context,
-              ).push(AppRoutes.pathDetail(resume!.id, ageGroup));
-            },
+            onTap: continuePath,
           ),
         ],
       ),

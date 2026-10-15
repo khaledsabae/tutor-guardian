@@ -1802,23 +1802,11 @@ abstract class AppLocalizations {
   /// **'اسم طفلك'**
   String get onbChildName;
 
-  /// No description provided for @onbNameHint.
-  ///
-  /// In ar, this message translates to:
-  /// **'مثلاً: سارة، أحمد، ليلى'**
-  String get onbNameHint;
-
   /// No description provided for @onbNameRequired.
   ///
   /// In ar, this message translates to:
   /// **'الاسم مطلوب'**
   String get onbNameRequired;
-
-  /// No description provided for @onbNameTooLong.
-  ///
-  /// In ar, this message translates to:
-  /// **'الاسم طويل جداً (الحد الأقصى 80 حرفاً)'**
-  String get onbNameTooLong;
 
   /// No description provided for @onbAgeGroup.
   ///
@@ -6338,66 +6326,6 @@ abstract class AppLocalizations {
   /// **'تم'**
   String get tourDone;
 
-  /// No description provided for @tourTodayTitle.
-  ///
-  /// In ar, this message translates to:
-  /// **'اليوم'**
-  String get tourTodayTitle;
-
-  /// No description provided for @tourTodayBody.
-  ///
-  /// In ar, this message translates to:
-  /// **'ابدأ من هنا كل يوم: خطوتك التالية، وحال طفلك، ونصيحة قصيرة.'**
-  String get tourTodayBody;
-
-  /// No description provided for @tourLearnTitle.
-  ///
-  /// In ar, this message translates to:
-  /// **'التعلّم'**
-  String get tourLearnTitle;
-
-  /// No description provided for @tourLearnBody.
-  ///
-  /// In ar, this message translates to:
-  /// **'دروس تقرؤها أنت كمربٍّ — مرتّبة في مسارات حسب عمر طفلك.'**
-  String get tourLearnBody;
-
-  /// No description provided for @tourAssistantTitle.
-  ///
-  /// In ar, this message translates to:
-  /// **'المساعد'**
-  String get tourAssistantTitle;
-
-  /// No description provided for @tourAssistantBody.
-  ///
-  /// In ar, this message translates to:
-  /// **'اسأل بكلامك عن موقف حيّرك مع طفلك، وتصلك إجابة مؤصَّلة.'**
-  String get tourAssistantBody;
-
-  /// No description provided for @tourMoreTitle.
-  ///
-  /// In ar, this message translates to:
-  /// **'المزيد'**
-  String get tourMoreTitle;
-
-  /// No description provided for @tourMoreBody.
-  ///
-  /// In ar, this message translates to:
-  /// **'قصص وألعاب وقرآن وإعدادات — ومن هنا زر «مساعدة» لو تُهت.'**
-  String get tourMoreBody;
-
-  /// No description provided for @tourFocusTitle.
-  ///
-  /// In ar, this message translates to:
-  /// **'خطوتك التالية'**
-  String get tourFocusTitle;
-
-  /// No description provided for @tourFocusBody.
-  ///
-  /// In ar, this message translates to:
-  /// **'اضغط هنا وسنفتح لك الدرس المناسب — لا قائمة تختار منها.'**
-  String get tourFocusBody;
-
   /// No description provided for @tourReplay.
   ///
   /// In ar, this message translates to:
@@ -9823,6 +9751,72 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'أهلك يقولون لك'**
   String get praiseFromFamily;
+
+  /// Optional name field shown on the child-creation wait overlay during onboarding.
+  ///
+  /// In ar, this message translates to:
+  /// **'ما اسم طفلك؟'**
+  String get onbNameQuestion;
+
+  /// Hint inside the optional onboarding name field.
+  ///
+  /// In ar, this message translates to:
+  /// **'مثلًا: سارة، أحمد، ليلى'**
+  String get onbNameHint;
+
+  /// Title of the onboarding wait overlay before a name is typed.
+  ///
+  /// In ar, this message translates to:
+  /// **'درب طفلك'**
+  String get onbNameTitleDefault;
+
+  /// Title of the onboarding wait overlay; changes live as the parent types the child's name.
+  ///
+  /// In ar, this message translates to:
+  /// **'درب {name}'**
+  String onbNameTitle(String name);
+
+  /// Keeps the default child name and leaves the onboarding name field.
+  ///
+  /// In ar, this message translates to:
+  /// **'لاحقًا'**
+  String get onbNameLater;
+
+  /// Confirms the name typed in the onboarding name field.
+  ///
+  /// In ar, this message translates to:
+  /// **'تمّ'**
+  String get onbNameDone;
+
+  /// Validation: the onboarding child name is longer than 30 characters.
+  ///
+  /// In ar, this message translates to:
+  /// **'الاسم طويل (الحد الأقصى 30 حرفًا)'**
+  String get onbNameTooLong;
+
+  /// Validation: the onboarding child name is made of digits only.
+  ///
+  /// In ar, this message translates to:
+  /// **'اكتب اسمًا لا أرقامًا'**
+  String get onbNameDigitsOnly;
+
+  /// Title of the single first-run coach mark on Today's first card (tour v3).
+  ///
+  /// In ar, this message translates to:
+  /// **'ابدأ من هنا'**
+  String get tourStartHereTitle;
+
+  /// Caption of the first-run coach mark on Today's first card (tour v3).
+  ///
+  /// In ar, this message translates to:
+  /// **'درس قصير لعمر طفلك'**
+  String get tourStartHereBody;
+
+  /// Primary button of the first-run coach mark; does what tapping the card does.
+  ///
+  /// In ar, this message translates to:
+  /// **'ابدأ'**
+  String get tourStartHereGo;
 
   /// Noor's line on «اليوم» (CompanionBrain). Easy MSA, warm, never names one parent, no emoji, no promise of reward.
   ///
