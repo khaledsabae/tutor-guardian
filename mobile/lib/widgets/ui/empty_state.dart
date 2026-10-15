@@ -47,10 +47,13 @@ class EmptyState extends StatelessWidget {
             ExcludeSemantics(
               child:
                   (imageAsset != null
-                          ? ArtImage(
-                              imageAsset!,
-                              height: 160,
-                              fallback: (_) => fallback,
+                          ? _paperDisc(
+                              context,
+                              ArtImage(
+                                imageAsset!,
+                                height: 160,
+                                fallback: (_) => fallback,
+                              ),
                             )
                           : fallback)
                       .animate()
@@ -89,6 +92,22 @@ class EmptyState extends StatelessWidget {
           ],
         ).animate().fadeIn(duration: 400.ms).slideY(begin: .06),
       ),
+    );
+  }
+
+  /// The paper art is cut in deep emerald, which sinks into a dark page; at
+  /// night it sits on a cream paper moon so its outlines still read.
+  static Widget _paperDisc(BuildContext context, Widget art) {
+    if (Theme.of(context).brightness != Brightness.dark) return art;
+    return Container(
+      width: 184,
+      height: 184,
+      alignment: Alignment.center,
+      decoration: const BoxDecoration(
+        shape: BoxShape.circle,
+        color: Color(0xE6FBF1DE),
+      ),
+      child: SizedBox(width: 150, child: art),
     );
   }
 }
