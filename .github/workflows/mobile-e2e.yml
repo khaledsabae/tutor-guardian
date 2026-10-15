@@ -90,6 +90,37 @@ name: Mobile E2E (emulator)
 # docs/NOOR_WAL_QANADIL_PLAN.md Phase 0: the baseline build and the PR head
 # photographed side by side, Arabic/English plus a 200%-font pass; run.sh's
 # gallery lineage is informational and never gates the run).
+#
+# ── Ramadan rehearsal (job `rehearsal`, e2e/rehearsal.sh) — gate G2 ──────
+# docs/NOOR_WAL_QANADIL_PLAN.md phase 5: walk a family through Ramadan on the
+# emulator months ahead — 30 days before, days 1/15/27, Eid, after — in
+# Arabic, English and dark, upgrading from the build on Play. The backend's
+# date override (`as_of`, honoured only with PROGRAMS_AS_OF_ENABLED) must
+# NEVER be switched on in production, so this job brings its own server: the
+# PR head's backend image, built here from the GHCR layer cache and run on the
+# runner's loopback with the switch on (a fresh SQLite DB, a throwaway
+# CHILD_MODE_SECRET, no .env, no production anything). Two more APK variants
+# point at it with --dart-define=API_BASE_URL=http://10.0.2.2:8090 (cleartext
+# to 10.0.2.2 is allowed by network_security_config):
+#   rehearsal-head      the PR head (+ E2E_PROBES=true, the sound check's key
+#                       probe — mobile/lib/core/e2e_probes.dart; compiled out
+#                       of every other build)
+#   rehearsal-baseline  the build on Play: v1.0.72+117 (c3087014) unless the
+#                       manual input `rehearsal_baseline_ref` says otherwise
+# Neither app sends `as_of` — the Play build cannot, and the head must not
+# ship a date knob — so `e2e_tool.py as-of-proxy` on :8090 adds the stage's
+# date to every family-programs call on its way to the candidate on :8091.
+# The stage dates come from the server's own season (as-of-preflight), which
+# also proves, before any emulator, that the candidate answers each date.
+# Then, on the same emulator, the sound × recitation check of the plan's
+# phase-2 gate: a recitation in the Quran reader, interface ticks through
+# the probe (a system light/dark change — `cmd uimode night` — reaches the app
+# whatever holds the focus; F12 did not), and `dumpsys audio` as the witness:
+# the recitation's player is still started and no tick asked for audio focus.
+# Its verdict is the «SOUND×RECITATION CHECKPOINT» line in the log and the job
+# summary.
+# Artifact: e2e-rehearsal (stage gallery, screenshots, proxy log, audio
+# dumps, preflight, backend log, logcat, Maestro reports).
 
 on:
   pull_request:
@@ -98,6 +129,11 @@ on:
     inputs:
       baseline_ref:
         description: 'Commit/tag of the build users run now (upgrade test starts there). Empty = E2E_BASELINE_REF or efaa740f (1.0.68+113).'
+        required: false
+        type: string
+        default: ''
+      rehearsal_baseline_ref:
+        description: 'The Play build the Ramadan rehearsal upgrades from. Empty = c3087014 (v1.0.72+117).'
         required: false
         type: string
         default: ''
@@ -167,8 +203,19 @@ jobs:
         include:
           - variant: head
             ref: ${{ github.event.pull_request.head.sha || github.sha }}
+            dart_defines: ''
           - variant: baseline
             ref: ${{ inputs.baseline_ref || vars.E2E_BASELINE_REF || 'efaa740f48389636ea4bf06b6a71bbe3f324e8bc' }}
+            dart_defines: ''
+          # The Ramadan rehearsal's pair (job `rehearsal`): both talk to the
+          # candidate backend on the runner, never to production. Only the
+          # rehearsal head carries the sound check's key probe.
+          - variant: rehearsal-head
+            ref: ${{ github.event.pull_request.head.sha || github.sha }}
+            dart_defines: '--dart-define=API_BASE_URL=http://10.0.2.2:8090 --dart-define=E2E_PROBES=true'
+          - variant: rehearsal-baseline
+            ref: ${{ inputs.rehearsal_baseline_ref || 'c30870145dda59acffd63b68784ad6f9e0974ca5' }}
+            dart_defines: '--dart-define=API_BASE_URL=http://10.0.2.2:8090'
     defaults:
       run:
         working-directory: mobile
@@ -223,8 +270,11 @@ jobs:
 
       - name: Build the release APK (x86_64, as the emulator runs it)
         # R8 full mode + shrinkResources run exactly as for Play; only the ABI
-        # is narrowed to the emulator's.
-        run: flutter build apk --release --target-platform android-x64
+        # is narrowed to the emulator's. head/baseline pass no define at all;
+        # the rehearsal pair's defines are in the matrix above.
+        env:
+          DART_DEFINES: ${{ matrix.dart_defines }}
+        run: flutter build apk --release --target-platform android-x64 $DART_DEFINES
 
       - name: Check the signer is the run's keystore
         run: |
@@ -239,13 +289,14 @@ jobs:
       - name: Package APK + its ARB strings
         env:
           VARIANT: ${{ matrix.variant }}
+          DART_DEFINES: ${{ matrix.dart_defines }}
         run: |
           OUT="$RUNNER_TEMP/e2e-apk"
           mkdir -p "$OUT/l10n"
           cp build/app/outputs/flutter-apk/app-release.apk "$OUT/app.apk"
           cp lib/l10n/app_ar.arb lib/l10n/app_en.arb "$OUT/l10n/"
           echo "$VARIANT $(git rev-parse --short HEAD) $(grep -m1 '^version:' pubspec.yaml | awk '{print $2}')" > "$OUT/ref.txt"
-          printf '%s\n' 'signing=ci-debug-keystore' 'firebase_analytics_collection_deactivated=true' > "$OUT/ci-config.txt"
+          printf '%s\n' 'signing=ci-debug-keystore' 'firebase_analytics_collection_deactivated=true' "dart_defines=$DART_DEFINES" > "$OUT/ci-config.txt"
           cat "$OUT/ref.txt"; ls -la "$OUT"
 
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
@@ -424,10 +475,193 @@ jobs:
           if-no-files-found: warn
           retention-days: 14
 
+  rehearsal:
+    name: Ramadan rehearsal + sound × recitation (API 35)
+    needs: build
+    runs-on: ubuntu-latest
+    # Backend image (~3 min from the layer cache), boot, then ~24 stage walks
+    # and the sound check on one emulator.
+    timeout-minutes: 100
+    permissions:
+      contents: read
+      packages: read   # the backend image's layer cache in GHCR (read only)
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+
+      - name: Paths
+        run: |
+          echo "E2E_APKS=$RUNNER_TEMP/e2e/apks" >> "$GITHUB_ENV"
+          echo "E2E_OUT=$RUNNER_TEMP/e2e/out" >> "$GITHUB_ENV"
+
+      - name: Room for a backend image beside the emulator
+        # The image is ~3 GB unpacked, the AVD and system image a few more.
+        # Toolchains this job never uses go first.
+        run: |
+          df -h / | tail -1
+          sudo rm -rf /usr/share/dotnet /opt/ghc /usr/local/.ghcup /usr/share/swift \
+            /usr/local/share/boost "${AGENT_TOOLSDIRECTORY:-/nonexistent}/CodeQL" || true
+          df -h / | tail -1
+
+      - name: Set up Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f # v3
+        with:
+          use: false
+
+      - name: Build the candidate — the PR head's backend image
+        # The same Dockerfile and layer cache as the deploy's image
+        # (.github/actions/backend-image); loaded locally, pushed nowhere.
+        env:
+          BUILDER: ${{ steps.buildx.outputs.name }}
+          GHCR_TOKEN: ${{ github.token }}
+          ACTOR: ${{ github.actor }}
+          IMAGE: ghcr.io/khaledsabae/tutor-guardian-backend
+        run: |
+          set -euo pipefail
+          # Read-only access to the cache. Without it the build is slower, not different.
+          printf '%s' "$GHCR_TOKEN" | docker login ghcr.io -u "$ACTOR" --password-stdin \
+            || echo "::warning::GHCR login failed — building without the layer cache"
+          docker buildx build -f backend/Dockerfile --builder "$BUILDER" --provenance=false \
+            --cache-from "type=registry,ref=$IMAGE:buildcache" --load -t tg-rehearsal:ci .
+          docker logout ghcr.io || true
+          echo "image size: $(numfmt --to=iec --suffix=B "$(docker image inspect --format '{{.Size}}' tg-rehearsal:ci)") unpacked"
+
+      - name: Start the candidate with PROGRAMS_AS_OF_ENABLED=1 (runner loopback only)
+        # A fresh SQLite DB inside the container, a throwaway child-mode
+        # secret, no .env and no volume: nothing of production's, and nothing
+        # outside this runner can reach it. The emulator does, through the
+        # as-of proxy on :8090 that e2e/rehearsal.sh starts.
+        run: |
+          set -euo pipefail
+          CHILD_MODE_SECRET=$(openssl rand -hex 16) PROGRAMS_AS_OF_ENABLED=1 \
+            docker run -d --name tg-rehearsal -p 127.0.0.1:8091:8000 \
+              -e CHILD_MODE_SECRET -e PROGRAMS_AS_OF_ENABLED tg-rehearsal:ci
+          for i in $(seq 1 180); do
+            if curl -fsS -o /dev/null http://127.0.0.1:8091/health; then
+              echo "candidate healthy after ~${i}s"
+              exit 0
+            fi
+            sleep 1
+          done
+          docker logs tg-rehearsal 2>&1 | tail -80
+          echo "::error::the candidate backend never answered /health"
+          exit 1
+
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      - uses: actions/setup-java@de7274f081f381c8f8158605e0321c36c376e2e6 # v6.0.1
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: e2e-apk-rehearsal-head
+          path: ${{ env.E2E_APKS }}/rehearsal-head
+
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: e2e-apk-rehearsal-baseline
+          path: ${{ env.E2E_APKS }}/rehearsal-baseline
+
+      - name: Install Maestro ${{ env.MAESTRO_VERSION }}
+        run: |
+          curl -fsSL -o "$RUNNER_TEMP/maestro.zip" \
+            "https://github.com/mobile-dev-inc/Maestro/releases/download/cli-${MAESTRO_VERSION}/maestro.zip"
+          echo "${MAESTRO_SHA256}  $RUNNER_TEMP/maestro.zip" | sha256sum -c -
+          unzip -q "$RUNNER_TEMP/maestro.zip" -d "$RUNNER_TEMP/maestro-cli"
+          BIN=$(dirname "$(find "$RUNNER_TEMP/maestro-cli" -path '*/bin/maestro' -type f | head -1)")
+          echo "$BIN" >> "$GITHUB_PATH"
+          "$BIN/maestro" --version
+
+      - name: Install the system image (retried, verified)
+        run: bash e2e/install_system_image.sh "$SYSTEM_IMAGE"
+
+      # The AVD the journeys use, from the same cache key. A miss builds it
+      # here; saving is left to the e2e job and e2e-avd-cache.yml.
+      - name: Restore the AVD
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        id: avd-cache
+        with:
+          path: |
+            ~/.android/avd/*
+            ~/.android/adb*
+          key: ${{ env.AVD_CACHE_KEY }}
+
+      - name: Create the AVD and a boot snapshot
+        if: steps.avd-cache.outputs.cache-hit != 'true'
+        uses: reactivecircus/android-emulator-runner@a421e43855164a8197daf9d8d40fe71c6996bb0d # v2.38.0
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          profile: pixel_7
+          ram-size: 4096M
+          cores: 3
+          disk-size: 6000M
+          force-avd-creation: false
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          disable-animations: false
+          emulator-boot-timeout: 900
+          script: echo "AVD snapshot generated for caching."
+
+      - name: Run the rehearsal and the sound check
+        uses: reactivecircus/android-emulator-runner@a421e43855164a8197daf9d8d40fe71c6996bb0d # v2.38.0
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          profile: pixel_7
+          ram-size: 4096M
+          cores: 3
+          disk-size: 6000M
+          force-avd-creation: false
+          emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          disable-animations: true
+          disable-spellchecker: true
+          emulator-boot-timeout: 900
+          script: bash e2e/rehearsal.sh
+
+      - name: Candidate backend log
+        if: always()
+        run: |
+          mkdir -p "$E2E_OUT/rehearsal"
+          docker logs tg-rehearsal > "$E2E_OUT/rehearsal/backend.log" 2>&1 || true
+          docker rm -f tg-rehearsal >/dev/null 2>&1 || true
+
+      - name: Job summary
+        if: always()
+        run: |
+          if [ -f "$E2E_OUT/summary.md" ]; then cat "$E2E_OUT/summary.md" >> "$GITHUB_STEP_SUMMARY"; fi
+
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        if: always()
+        with:
+          name: e2e-rehearsal
+          path: |
+            ${{ env.E2E_OUT }}/gallery
+            ${{ env.E2E_OUT }}/rehearsal
+            ${{ env.E2E_OUT }}/screens
+            ${{ env.E2E_OUT }}/maestro
+            ${{ env.E2E_OUT }}/logcat
+            ${{ env.E2E_OUT }}/device
+            ${{ env.E2E_OUT }}/summary.md
+            ${{ env.E2E_OUT }}/meta.md
+            ${{ env.E2E_OUT }}/results.tsv
+          if-no-files-found: warn
+          retention-days: 14
+
   delivery_gate:
     name: Mobile delivery gate
     if: ${{ always() }}
-    needs: [keystore, build, e2e]
+    needs: [keystore, build, e2e, rehearsal]
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
@@ -443,7 +677,7 @@ jobs:
           results = json.loads(os.environ["NEEDS_JSON"])
           failed = [
               f"{job}={results.get(job, {}).get('result', 'missing')}"
-              for job in ("keystore", "build", "e2e")
+              for job in ("keystore", "build", "e2e", "rehearsal")
               if results.get(job, {}).get("result") != "success"
           ]
           if failed:

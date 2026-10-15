@@ -1,0 +1,86 @@
+# Set the app's language and theme for the next rehearsal pass, through
+# Settings as a parent would (the same steps as gallery/shoot.yaml — the
+# app's own theme, not `cmd uimode`, so the AVD image stays untouched).
+# The language row and the theme row each cycle on a tap.
+# Env: UI_LANG (ar|en), THEME (light|dark).
+appId: com.alsaba.almorabbi
+name: rehearsal/variant
+---
+- runScript: ../common/l10n.js
+- launchApp:
+    stopApp: true
+- runFlow: ../common/system_dialogs.yaml
+- extendedWaitUntil:
+    visible: '${output.lead.navToday}'
+    timeout: 60000
+- runFlow: ../common/skip_tour.yaml
+- runFlow: ../common/open_settings.yaml
+- runFlow:
+    when:
+      true: "${UI_LANG == 'en'}"
+      notVisible: '${output.en.settingsTitle}'
+    commands:
+      - scrollUntilVisible:
+          element:
+            text: '${output.lead.language}'
+          direction: DOWN
+          timeout: 20000
+      - tapOn: '${output.lead.language}'
+- runFlow:
+    when:
+      true: "${UI_LANG != 'en'}"
+      notVisible: '${output.ar.settingsTitle}'
+    commands:
+      - scrollUntilVisible:
+          element:
+            text: '${output.lead.language}'
+          direction: DOWN
+          timeout: 20000
+      - tapOn: '${output.lead.language}'
+- runFlow:
+    when:
+      true: "${UI_LANG == 'en'}"
+    commands:
+      - extendedWaitUntil:
+          visible: '${output.en.settingsTitle}'
+          timeout: 20000
+- runFlow:
+    when:
+      true: "${UI_LANG != 'en'}"
+    commands:
+      - extendedWaitUntil:
+          visible: '${output.ar.settingsTitle}'
+          timeout: 20000
+- scrollUntilVisible:
+    element:
+      text: '${output.lead.settingsTheme}'
+    direction: DOWN
+    timeout: 20000
+- runFlow:
+    when:
+      true: "${THEME == 'dark'}"
+    commands:
+      - repeat:
+          times: 3
+          while:
+            notVisible: '${output.tile.settingsThemeDark}'
+          commands:
+            - tapOn: '${output.lead.settingsTheme}'
+            - waitForAnimationToEnd:
+                timeout: 3000
+      - assertVisible: '${output.tile.settingsThemeDark}'
+- runFlow:
+    when:
+      true: "${THEME != 'dark'}"
+    commands:
+      - repeat:
+          times: 3
+          while:
+            notVisible: '${output.tile.settingsThemeLight}'
+          commands:
+            - tapOn: '${output.lead.settingsTheme}'
+            - waitForAnimationToEnd:
+                timeout: 3000
+      - assertVisible: '${output.tile.settingsThemeLight}'
+- takeScreenshot: 'variant_${UI_LANG}_${THEME}'
+- runFlow: ../common/home.yaml
