@@ -18,8 +18,19 @@ import time
 
 logger = logging.getLogger(__name__)
 
+from pathlib import Path
+
+_FINETUNED_RERANKER_DIR = Path(
+    os.environ.get(
+        "TG_RERANKER_V2_DIR",
+        str(Path(__file__).resolve().parents[3] / "ops" / "models" / "tg-reranker-v2"),
+    )
+)
 RERANKER_MODEL = os.environ.get(
-    "RERANKER_MODEL", "cross-encoder/mmarco-mMiniLMv2-L12-H384-v1"
+    "RERANKER_MODEL",
+    str(_FINETUNED_RERANKER_DIR)
+    if (_FINETUNED_RERANKER_DIR / "config.json").exists()
+    else "cross-encoder/mmarco-mMiniLMv2-L12-H384-v1",
 )
 # Calibrated on the golden set: relevant Arabic passages score ≈ -0.8…-5
 # with mmarco-MiniLM logits; below ≈ -6 is reliably off-topic.
@@ -45,12 +56,23 @@ def _get_model():
     if _model is None:
         with _lock:
             if _model is None:
+                import torch
                 from sentence_transformers import CrossEncoder
 
                 t0 = time.monotonic()
-                _model = CrossEncoder(RERANKER_MODEL, max_length=256)
+                model_path = (
+                    str(_FINETUNED_RERANKER_DIR)
+                    if not os.environ.get("RERANKER_MODEL")
+                    and (_FINETUNED_RERANKER_DIR / "config.json").exists()
+                    else RERANKER_MODEL
+                )
+                _model = CrossEncoder(
+                    model_path,
+                    max_length=256,
+                    activation_fn=torch.nn.Identity(),
+                )
                 logger.info("reranker %s loaded in %.1fs",
-                            RERANKER_MODEL, time.monotonic() - t0)
+                            model_path, time.monotonic() - t0)
     return _model
 
 
