@@ -599,19 +599,22 @@ name: gallery/shoot
 - runFlow: ../common/home.yaml
 
 # ── «ركن الطفل»: the gate's first tile, the corner, a page of the day's
-# story, and the task the session ends on. Head only — the baseline has no
+# story, and the task the session ends on — for the 4-6 child the praise leg
+# left active, so a corner with no game. Head only — the baseline has no
 # corner, so every shot is guarded and the gate is simply left. Ends back on
 # Today through the PIN. After the praise leg and before the tour, so a corner
 # that goes wrong can cost no shot but the tour's.
 - tapOn: '${output.lead.navMore}'
+# The hub's routine tile is named by the active child's age, and the praise
+# leg above left a 4-6 child active: «حساب اليوم», not «ميزان العادات».
 - scrollUntilVisible:
     element:
-      text: '${output.tile.routineTitle}'
+      text: '(?:${output.tile.routineTitle}|${output.tile.routineDailyTracker})'
     direction: UP
     timeout: 20000
     optional: true
 - tapOn:
-    text: '${output.tile.routineTitle}'
+    text: '(?:${output.tile.routineTitle}|${output.tile.routineDailyTracker})'
     optional: true
 - extendedWaitUntil:
     visible: '${output.t.routineChildMode}'

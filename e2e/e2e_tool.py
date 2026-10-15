@@ -135,7 +135,7 @@ KEYS = [
     "childCornerStoryNext", "childCornerBackToCorner", "childCornerStoryDone",
     "childCornerGameHint", "childCornerMissionNow", "childCornerMissionGo",
     "childCornerToMission", "childReturnDevice", "eduGameLevelTitle",
-    "eduGameQuit",
+    "eduGameQuit", "routineDailyTracker",
     # failure screens
     "bootError", "forceUpdateTitle",
     # a 5xx as friendlyError shows it (lesson, ErrorRetryView, chat turn) —

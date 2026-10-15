@@ -2,8 +2,9 @@
 # corner, the day's story read to its end, a level of the day's game left from
 # its pause menu, and the session ending on the task away from the screen —
 # then «أعِد الجهاز إلى أهلك» and the PIN out.
-# The child onboarding created is 7-9, so the corner holds all three parts
-# (story, game, task); the PIN was set by 04_child_mode.
+# The child onboarding created is 7-9, so the corner may hold all three parts
+# (story, game, task) — the game only when the interface is Arabic, and 06
+# leaves it in English. The PIN was set by 04_child_mode.
 appId: com.alsaba.almorabbi
 name: fresh/10 child corner — story, game, task, hand back
 ---
@@ -50,32 +51,41 @@ name: fresh/10 child corner — story, game, task, hand back
     visible: '${output.t.childCornerBackToCorner}'
     timeout: 10000
 - tapOn: '${output.t.childCornerBackToCorner}'
+# Back in the corner the story card says «قرأناها معًا» — unless the story was
+# all there was (an English interface has no game: the packs are Arabic), in
+# which case the task has come up on its own already.
 - extendedWaitUntil:
-    visible: '${output.c.childCornerStoryDone}'
+    visible: '(?:${output.c.childCornerStoryDone}|${output.c.childCornerMissionNow})'
     timeout: 15000
 - takeScreenshot: child_corner_3_after_story
-# The game: one level of the day's game, no score. Back pauses it; «خروج»
-# leaves it — and with the story read too, the task comes up on its own.
+# The game, when the corner has one: a level of the day's game, no score.
+# Back pauses it; «خروج» leaves it — and with the story read too, the task
+# comes up on its own.
 - scrollUntilVisible:
     element:
       text: '${output.c.childCornerGameHint}'
     direction: DOWN
-    timeout: 10000
-- tapOn: '${output.c.childCornerGameHint}'
+    timeout: 8000
+    optional: true
+- runFlow:
+    when:
+      visible: '${output.c.childCornerGameHint}'
+    commands:
+      - tapOn: '${output.c.childCornerGameHint}'
+      - extendedWaitUntil:
+          visible: '${output.c.eduGameLevelTitle}'
+          timeout: 20000
+      - waitForAnimationToEnd:
+          timeout: 2000
+      - takeScreenshot: child_corner_4_game
+      - back
+      - extendedWaitUntil:
+          visible: '${output.t.eduGameQuit}'
+          timeout: 10000
+      - tapOn: '${output.t.eduGameQuit}'
+# Whatever was left, the session ends on the task.
 - extendedWaitUntil:
-    visible: '${output.c.eduGameLevelTitle}'
-    timeout: 20000
-- waitForAnimationToEnd:
-    timeout: 2000
-- takeScreenshot: child_corner_4_game
-- back
-- extendedWaitUntil:
-    visible: '${output.t.eduGameQuit}'
-    timeout: 10000
-- tapOn: '${output.t.eduGameQuit}'
-# The session ends on the task.
-- extendedWaitUntil:
-    visible: '${output.t.childCornerMissionNow}'
+    visible: '${output.c.childCornerMissionNow}'
     timeout: 20000
 - takeScreenshot: child_corner_5_task
 - scrollUntilVisible:
