@@ -43,6 +43,26 @@ const kChildModeSurfaceNotAllowed = 'child_mode_surface_not_allowed';
 const kChildModeOffline = 'child_mode_offline';
 const _kMaxHeartbeatFailures = 2;
 
+/// The session is over and the device is waiting for a parent: the hand-back
+/// screen, with no reason to give beyond «أعِد الجهاز إلى أهلك».
+///
+/// Where a restart lands when child mode was on (see [ChildModeNotifier.restore]),
+/// and where the mission card's "I'm going" leaves the device before it closes
+/// the app. Not an error, and never a way out — that is the frame's Exit,
+/// behind the parent's PIN.
+const kChildModeHandedBack = 'child_mode_handed_back';
+
+/// Runs [ChildModeNotifier.restore] once per launch.
+///
+/// The boot screen waits on this before it builds anything of the parent's.
+/// restore() used to be fired from the parent app's own build, so the first
+/// frame after a restart was the parent's app whatever restore() went on to
+/// decide — and a route a child pushed from it in that moment would have
+/// stayed on top of the child surface that replaced it.
+final childModeRestoreProvider = FutureProvider<void>(
+  (ref) => ref.read(childModeProvider.notifier).restore(),
+);
+
 class ChildModeState {
   const ChildModeState({
     this.active = false,
@@ -227,58 +247,54 @@ class ChildModeNotifier extends StateNotifier<ChildModeState> {
         StageResult(StageOutcome.committed, milestone: milestone));
   }
 
-  /// Re-enter child mode after a restart — but only if there is still a
-  /// session to re-enter.
+  /// After a restart: if a child had the device, they still have it.
   ///
-  /// This used to trust the "child mode is on" flag alone. That flag survives
-  /// the process; the session id does not, and neither does the surface. So a
-  /// child surface that closed the app — which the mission card does on
-  /// purpose, `SystemNavigator.pop()` being the whole point of "I'm going" —
-  /// left the flag set and everything else gone. On the next launch the app
-  /// rebuilt as child mode with no session, no surface (so it defaulted to
-  /// `habit`) and no habit day, and HabitChildModeScreen sat on its spinner
-  /// with nothing on the way to resolve it. The app was bricked, on the
-  /// launcher, for every user who finished a mission.
+  /// The "child mode is on" flag survives the process; the session id does
+  /// not, so nothing can heartbeat and nothing is being counted. That much was
+  /// always true, and restore() used to answer it by ending child mode — which
+  /// opened the parent's app, the assistant, settings and every child's
+  /// profile, with no PIN. A child on the hand-back screen («أعِد الجهاز إلى
+  /// أهلك») only had to force-close the app and open it again; so did a child
+  /// whose time ran out, whose connection dropped, or who swiped the app away
+  /// in the middle of a session.
   ///
-  /// The token is the evidence. If it is gone, or the server no longer
-  /// recognises it, child mode is over and the parent gets their app back.
+  /// Now a restart lands on the hand-back screen. Child mode stays on, on
+  /// screen and on disk; no surface runs, so nothing is unmetered; and the way
+  /// out is the frame's Exit, behind the parent's PIN — the same as every
+  /// other child surface.
   ///
-  /// And even when the token is still good, child mode ends here: the session
-  /// id died with the process, so nothing can heartbeat, so nothing is being
-  /// counted. Restoring the *screen* without the ledger behind it would hand
-  /// a child unlimited unmetered time and call it a restored session. The
-  /// fetch is kept only to distinguish "token still valid" from "token dead",
-  /// because the two deserve different silences — neither of them a spinner.
+  /// The old token is not asked about. Alive or dead on the server, the answer
+  /// is the same screen, so a network round trip could only add a spinner in
+  /// front of it — and its 401 handling renewed the token, opening a fresh
+  /// session only to abandon it. The exit is local (the PIN is checked on the
+  /// device, and there is no session to end), so a dead token or no
+  /// connection at all never keeps a parent out.
+  ///
+  /// The one exception is a device with no PIN to check: nothing could ever
+  /// open that lock, so child mode ends rather than brick the app.
   Future<void> restore() async {
-    final active = await isChildModeActive();
-    final childId = await _loadChildId();
-    if (!active || childId == null) return;
-
-    final token = await getChildToken();
-    if (token == null) {
+    // A session opened in this process outranks anything left on disk.
+    if (state.active) return;
+    if (!await isChildModeActive()) return;
+    if (!await hasChildModePin()) {
       await _leaveChildMode();
       return;
     }
-
-    state = state.copyWith(active: true, childId: childId);
+    // May be null (the id is in preferences, the flag in secure storage, and
+    // only one of them survives an iOS reinstall). Exit does not need it, so
+    // failing to read it is no reason to open the parent's app.
+    int? childId;
     try {
-      final day = await _client.fetchChildTodayHabits(childToken: token);
-      state = state.copyWith(day: HabitDay.fromJson(day), loading: false);
-      // A restored surface with no heartbeat is a surface off the ledger.
-      //
-      // The session id does not survive the process, so there is nothing to
-      // beat against — which means the server reaps the old session after
-      // ninety seconds while the app keeps showing the child a working
-      // screen with no time being counted. The honest answer is that a
-      // restored child mode is not a running session: end it and let the
-      // parent open a new one, rather than serve unlimited unmetered time.
-      await _leaveChildMode();
+      childId = await _loadChildId();
     } catch (_) {
-      // Expired, closed, or unreachable. Any of the three means there is no
-      // live surface to restore, and none of them is worth trapping a parent
-      // behind a spinner for.
-      await _leaveChildMode();
+      childId = null;
     }
+    if (state.active) return;
+    state = ChildModeState(
+      active: true,
+      childId: childId,
+      error: kChildModeHandedBack,
+    );
   }
 
   /// Drop out of child mode entirely and clear what is on disk.
@@ -547,16 +563,16 @@ class ChildModeNotifier extends StateNotifier<ChildModeState> {
     super.dispose();
   }
 
-  /// Leave child mode without a PIN.
+  /// Close the session and leave the device on the hand-back screen.
   ///
-  /// For surfaces that end by closing the app rather than by handing the
-  /// device back — the mission card's "I'm going". There is nothing to
-  /// protect here: the child is leaving, not gaining access, and requiring a
-  /// parent's PIN to *stop* being in child mode is the wrong way round.
-  Future<void> exitWithoutPin() async {
-    await endSession(reason: 'completed');
-    await _leaveChildMode();
-  }
+  /// For a surface that ends with the app closing — the mission card's "I'm
+  /// going". It used to leave child mode without a PIN, on the reasoning that
+  /// the child was leaving rather than gaining access. But the launcher icon
+  /// is right there: the next launch opened the parent's app, and the mission
+  /// card's Back gesture took the same exit. Child mode stays on instead, and
+  /// whoever opens the app next meets the hand-back screen.
+  Future<void> handBack() =>
+      endSession(reason: 'completed', code: kChildModeHandedBack);
 
   Future<bool> exit(String pin) async {
     final ok = await verifyChildModePin(pin);
@@ -571,8 +587,7 @@ class ChildModeNotifier extends StateNotifier<ChildModeState> {
   Future<void> refresh() async {
     final token = await getChildToken();
     if (token == null) {
-      await clearChildMode();
-      state = const ChildModeState();
+      _sessionExpired();
       return;
     }
     state = state.copyWith(loading: true);
@@ -591,9 +606,7 @@ class ChildModeNotifier extends StateNotifier<ChildModeState> {
       );
     } on TgApiError catch (e) {
       if (e.statusCode == 401) {
-        await clearChildMode();
-        await _clearChildId();
-        state = const ChildModeState(error: kChildModeErrorSessionExpired);
+        _sessionExpired();
       } else {
         state = state.copyWith(loading: false, error: e.toString());
       }
@@ -627,9 +640,7 @@ class ChildModeNotifier extends StateNotifier<ChildModeState> {
       return true;
     } on TgApiError catch (e) {
       if (e.statusCode == 401) {
-        await clearChildMode();
-        await _clearChildId();
-        state = const ChildModeState(error: kChildModeErrorSessionExpired);
+        _sessionExpired();
       } else {
         state = state.copyWith(error: e.toString());
       }
@@ -638,6 +649,23 @@ class ChildModeNotifier extends StateNotifier<ChildModeState> {
       state = state.copyWith(error: e.toString());
       return false;
     }
+  }
+
+  /// The server no longer accepts the child's token: the session behind it is
+  /// over, and so is the surface.
+  ///
+  /// This used to clear child mode, which flipped the root to the parent's
+  /// app with no PIN — so a token that expired under a child handed them the
+  /// whole app. Child mode stays on; the screen asks for the device back, and
+  /// the way out is the parent's PIN, which needs no token at all.
+  void _sessionExpired() {
+    _stopHeartbeat();
+    state = ChildModeState(
+      active: true,
+      childId: state.childId,
+      surface: state.surface,
+      error: kChildModeErrorSessionExpired,
+    );
   }
 
   Future<int?> _loadChildId() async {

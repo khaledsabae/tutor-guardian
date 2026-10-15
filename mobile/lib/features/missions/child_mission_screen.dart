@@ -127,19 +127,19 @@ class _ChildMissionScreenState extends ConsumerState<ChildMissionScreen> {
   /// so the parent's dashboard shows a finished session rather than one that
   /// timed out.
   Future<void> _understood() async {
-    // Leave child mode *before* closing, not just the session.
+    // Close the session, keep child mode, then close the app.
     //
-    // endSession closes the server session but leaves the on-disk "child mode
-    // is on" flag set. Combined with SystemNavigator.pop() — which is the
-    // point of this button, rule 1 made literal — the next launch restored a
-    // child mode with no session, no surface and no habit day, and sat on a
-    // spinner forever. Every child who finished a mission bricked the app on
-    // their parent's phone.
+    // This used to leave child mode here, without a PIN: the child was
+    // leaving, not gaining access. But SystemNavigator.pop() leaves the
+    // launcher icon right where it was, so the next launch — by the same
+    // child, a moment later — opened the parent's app. And this is also the
+    // Back gesture's exit (the PopScope below), so Back did the same.
     //
-    // restore() now verifies the token too, so this is the second of two
-    // guards rather than the only one; a child mode that ends should end on
-    // disk as well as on the server.
-    await ref.read(childModeProvider.notifier).exitWithoutPin();
+    // Child mode stays on instead, on the hand-back screen: a restart lands
+    // there too (restore), and the frame's Exit, behind the PIN, is the way
+    // out. It is no longer the spinner it once was — restore() used to rebuild
+    // a child mode with no session and no habit day and wait on it forever.
+    await ref.read(childModeProvider.notifier).handBack();
     await SystemNavigator.pop();
   }
 
