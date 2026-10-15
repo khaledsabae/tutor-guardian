@@ -5,11 +5,11 @@
     "38783241487": {
       "what": "main proxy — PR #126 noor/stories @ b540986b, the head merged as origin/main 575c7141 (mobile-e2e runs on PRs only)"
     },
-    "38784442414": {
-      "what": "PR #130 noor/family-road @ a54c4ce0 (latest green; head 4852a2b0 still in CI)"
-    },
     "38777734035": {
       "what": "PR #129 noor/child-corner @ 39b6bfa2 (latest run with a gallery; head 543517fc still in CI)"
+    },
+    "38798911874": {
+      "what": "PR #130 noor/family-road @ 4852a2b0 (head, green)"
     }
   },
   "slots": [
@@ -18,16 +18,16 @@
       "frame": "frame_1_rising",
       "source": {
         "ar": {
-          "run": 38784442414,
+          "run": 38798911874,
           "artifact": "e2e-gallery",
           "file": "images/gallery__04_after_ar__after__ar__home.png",
-          "sha256": "2b35f86f8e32234aa5c3c9b02270f221e66dc5d2fe198e98a4650dbb24e1e8c0"
+          "sha256": "9910905e32f12cf59d56734a9ebaafa7ea0821f780982d5a8525ba67733e8673"
         },
         "en": {
-          "run": 38784442414,
+          "run": 38798911874,
           "artifact": "e2e-gallery",
           "file": "images/gallery__05_after_en__after__en__home.png",
-          "sha256": "ff6604a497583964143886da48c5e38b37a061860b8c2d3d6c8ea497a5e73441"
+          "sha256": "b5bf119b74fb996ad1df6ca6fe7ddf2d37ab95807f5f2d9c81f8e53002a3ca18"
         }
       },
       "text": {
@@ -46,16 +46,16 @@
       "frame": "frame_2_ivory",
       "source": {
         "ar": {
-          "run": 38784442414,
+          "run": 38798911874,
           "artifact": "e2e-gallery",
           "file": "images/gallery__04_after_ar__after__ar__family_road.png",
-          "sha256": "a0e2882f4d7a778684ca518219b93612f7d6b7ba4916b10d4eb0f01373fe4617"
+          "sha256": "cf6cec64ad60c5b19998432bf6a130f2d926e407edaae74e9be325e778ac2673"
         },
         "en": {
-          "run": 38784442414,
+          "run": 38798911874,
           "artifact": "e2e-gallery",
           "file": "images/gallery__05_after_en__after__en__family_road.png",
-          "sha256": "1bd5508e26274ce880dcf588fd6af48304c9c56be586a6e864f2b2adf96b6d09"
+          "sha256": "714e5d2610ff7bf39d16e6925c8f3355e8c2a7d1eef0fccd99867d8ee6e01a9a"
         }
       },
       "text": {
