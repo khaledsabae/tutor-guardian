@@ -1,4 +1,4 @@
-// Voice-over cuts of the Arabic teaser and the five campaign reels (`_vo`).
+// Voice-over cuts of the Arabic teaser and the six campaign reels (`_vo`).
 // The picture is the silent reel itself, played through <Freeze> on a
 // remapped clock: where a spoken line needs more time than its scene had,
 // that scene plays a little slower (the plan is in vo_lines.ts, made by
@@ -7,9 +7,6 @@
 // Still no music: the voice sits on the same soft generated sounds.
 import React from 'react';
 import {AbsoluteFill, Audio, Composition, Freeze, Sequence, staticFile, useCurrentFrame} from 'remotion';
-import {NoorTeaser} from '../NoorTeaser';
-import {CUES as TEASER_CUES, MIX_GAIN as TEASER_GAIN} from '../sound';
-import {T as TEASER_T} from '../timeline';
 import {SoundMute} from '../mix';
 import {Cue, ReelSound} from './sound';
 import {V1Remember, V1_CUES, V1_GAIN, V1_TOTAL} from './V1Remember';
@@ -17,11 +14,11 @@ import {V2Road, V2_CUES, V2_GAIN, V2_TOTAL} from './V2Road';
 import {V3Ask, V3_CUES, V3_GAIN, V3_TOTAL} from './V3Ask';
 import {V4Handover, V4_CUES, V4_GAIN, V4_TOTAL} from './V4Handover';
 import {V5Ramadan, V5_CUES, V5_GAIN, V5_TOTAL} from './V5Ramadan';
+import {V6Stories, V6_CUES, V6_GAIN, V6_TOTAL} from './V6Stories';
 import {VO, VoPlan} from './vo_lines';
+import {TeaserWorld, TEASER_WORLD_CUES, TEASER_WORLD_GAIN, TEASER_WORLD_TOTAL} from './TeaserWorld';
 
-type VoId = 'v1' | 'v2' | 'v3' | 'v4' | 'v5' | 'teaser';
-
-const TeaserAr: React.FC = () => <NoorTeaser lang="ar" shape="portrait" />;
+type VoId = 'v1' | 'v2' | 'v3' | 'v4' | 'v5' | 'v6' | 'teaser';
 
 const SRC: Record<VoId, {id: string; Comp: React.FC; cues: Cue[]; gain: number; total: number}> = {
 	v1: {id: 'CampaignV1RememberVo', Comp: V1Remember, cues: V1_CUES, gain: V1_GAIN, total: V1_TOTAL},
@@ -29,7 +26,9 @@ const SRC: Record<VoId, {id: string; Comp: React.FC; cues: Cue[]; gain: number; 
 	v3: {id: 'CampaignV3AskVo', Comp: V3Ask, cues: V3_CUES, gain: V3_GAIN, total: V3_TOTAL},
 	v4: {id: 'CampaignV4HandoverVo', Comp: V4Handover, cues: V4_CUES, gain: V4_GAIN, total: V4_TOTAL},
 	v5: {id: 'CampaignV5RamadanVo', Comp: V5Ramadan, cues: V5_CUES, gain: V5_GAIN, total: V5_TOTAL},
-	teaser: {id: 'NoorTeaserArVo', Comp: TeaserAr, cues: TEASER_CUES, gain: TEASER_GAIN, total: TEASER_T.total},
+	v6: {id: 'CampaignV6StoriesVo', Comp: V6Stories, cues: V6_CUES, gain: V6_GAIN, total: V6_TOTAL},
+	// the Arabic teaser with the new world cut in (TeaserWorld)
+	teaser: {id: 'NoorTeaserArVo', Comp: TeaserWorld, cues: TEASER_WORLD_CUES, gain: TEASER_WORLD_GAIN, total: TEASER_WORLD_TOTAL},
 };
 
 /** Source frame -> output frame: each window [a, b] plays over (b - a + add) frames. */
@@ -87,7 +86,8 @@ const VoReel: React.FC<{reel: VoId}> = ({reel}) => {
 
 export const VoCompositions: React.FC = () => (
 	<>
-		{(Object.keys(SRC) as VoId[]).map((k) => (
+		{/* a reel whose lines are not recorded yet has no voice-over cut */}
+		{(Object.keys(SRC) as VoId[]).filter((k) => VO[k]).map((k) => (
 			<Composition
 				key={k}
 				id={SRC[k].id}

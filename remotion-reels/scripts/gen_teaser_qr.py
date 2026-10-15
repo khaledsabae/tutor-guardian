@@ -34,7 +34,7 @@ URLS = {
 }
 CAMPAIGN_BASE = ("https://play.google.com/store/apps/details?id=com.alsaba.almorabbi"
                  "&referrer=utm_source%3Dcampaign_video%26utm_medium%3Dqr%26utm_campaign%3D")
-CAMPAIGN_SLUGS = ["v1_remember", "v2_road", "v3_ask", "v4_handover", "v5_ramadan"]
+CAMPAIGN_SLUGS = ["v1_remember", "v2_road", "v3_ask", "v4_handover", "v5_ramadan", "v6_stories"]
 BORDER = 4
 OUT = Path(__file__).resolve().parents[1] / "src" / "noor" / "qr.ts"
 CAMPAIGN_OUT = Path(__file__).resolve().parents[1] / "src" / "noor" / "campaign" / "qr.ts"

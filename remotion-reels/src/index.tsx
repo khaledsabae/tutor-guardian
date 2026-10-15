@@ -6,6 +6,7 @@ import {T} from './noor/timeline';
 import {NoorDevSheet} from './noor/DevSheet';
 import {CampaignCompositions} from './noor/campaign/reels';
 import {VoCompositions} from './noor/campaign/VoReels';
+import {TeaserWorldComposition} from './noor/campaign/TeaserWorld';
 
 export const RemotionRoot: React.FC = () => {
 	return (
@@ -62,6 +63,7 @@ export const RemotionRoot: React.FC = () => {
 				}}
 			/>
 			<CampaignCompositions />
+			<TeaserWorldComposition />
 			<VoCompositions />
 		</>
 	);

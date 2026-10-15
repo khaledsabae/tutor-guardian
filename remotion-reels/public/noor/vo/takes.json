@@ -24,6 +24,11 @@
   "text": "المربّي… مربٍّ يعرف طفلك، خطوة بخطوة. مجاني، وبلا إعلانات.",
   "voice": "Achird"
  },
+ "teaser_7": {
+  "model": "gemini-2.5-pro-preview-tts",
+  "text": "المربّي… مربٍّ يعرف طفلك، خطوة بخطوة. مجاني، وبلا إعلانات.",
+  "voice": "Achird"
+ },
  "v1_1": {
   "model": "gemini-2.5-pro-preview-tts",
   "text": "نصيحة سمعتَها… ثم نسيتَها؟",
@@ -185,6 +190,11 @@
   "voice": "Achird"
  },
  "v5_7": {
+  "model": "gemini-2.5-pro-preview-tts",
+  "text": "المربّي… مجاني، وبلا إعلانات، على غوغل بلاي.",
+  "voice": "Achird"
+ },
+ "v6_6": {
   "model": "gemini-2.5-pro-preview-tts",
   "text": "المربّي… مجاني، وبلا إعلانات، على غوغل بلاي.",
   "voice": "Achird"

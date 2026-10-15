@@ -28,13 +28,22 @@ export const V1 = {
 export const V2 = {
 	hook: ['لا تعرف', 'من أين تبدأ؟'],
 	topics: ['النوم', 'العناد', 'الشاشات', 'الغضب', 'الطعام', 'الدراسة'],
-	stations: [
-		{n: '١', title: 'خطوة اليوم', sub: 'درس في دقائق'}, // app: noorChipStep
-		{n: '٢', title: 'اسأل المربّي', sub: 'عن أي موقف مع طفلك'}, // app: todayAskTitle
-		{n: '٣', title: 'مهمة الطفل', sub: 'مهمة صغيرة له اليوم'}, // app: todayMissionTitleNoName
-	],
-	message: ['ثلاث خطوات صغيرة…', 'كل يوم'],
-	tagline: 'درب واضح لكل يوم',
+	// «درب {الاسم}» (#130) — the app's own words
+	title: 'درب مريم', // app: familyRoadTitle
+	horizon: 'على الأفق', // app: familyRoadHorizon
+	// far … near, top to bottom, as the screen lists them
+	gates: [
+		{title: 'سنّ السابعة', line: 'تبدأ رحلة الصلاة هنا، خطوة بعد خطوة.', action: ''}, // app: gateAgeSeven / gateAgeSevenNote
+		{title: 'رمضان', line: '', action: 'برنامج رمضان'}, // app: gateRamadan / noorChipRamadan
+		{eyebrow: 'المسار التالي', title: 'بذور العقيدة: أول تعريف بالله', line: '', action: 'افتح المسار'}, // app: gateNextPath / gateOpenPath
+	] as {eyebrow?: string; title: string; line: string; action: string}[],
+	here: 'أنتم هنا', // app: familyRoadHere
+	hereHint: 'كل خطوة تربوية تضيء قنديلًا على هذا الدرب.', // app: familyRoadHereHint
+	lit: 'ما أضأتموه', // app: familyRoadLit
+	thisWeek: 'هذا الأسبوع', // app: familyRoadThisWeek
+	start: 'من هنا بدأ دربكم', // app: familyRoadStart
+	message: ['ما أضأتموه…', 'وما ينتظركم'],
+	tagline: 'درب أسرتكم… خطوة بخطوة',
 };
 
 export const V3 = {
@@ -53,13 +62,26 @@ export const V4 = {
 	hook: ['الشاشة…', 'بنيّة.'],
 	gate: 'تسليم الجهاز', // app: handoverTitle
 	pin: 'أدخل الرمز',
-	yourTurn: ['يا يوسف،', 'دورك الآن'], // app: handoverYourTurn
-	missionLabel: 'مهمتك الآن',
-	mission: ['اسقِ النبتة،', 'ثم عُد إلينا'],
-	done: 'تمّت',
+	// «ركن الطفل» (#129), a 4–6 child: a story, then the task (no game at this age)
+	greeting: 'يا عمر، هذا ركنك', // app: childCornerGreeting
+	candleLabel: 'شمعة وقتك', // app: childCornerCandleLabel
+	candleBright: 'ما زالت مضيئة', // app: childCornerCandleBright
+	noorLine: 'هنا حكاية قصيرة، ثم مهمة صغيرة بعيدًا عن الشاشة.', // app: childCornerNoorLineNoGame
+	storyLabel: 'حكاية', // app: childCornerStoryLabel
+	storyTitle: 'يوسف وغرسة الأمل', // the stories library (hope_sprout)
+	storyHint: 'نقرؤها معًا', // app: childCornerStoryHint
+	missionLabel: 'ثم مهمتك', // app: childCornerMissionLabel
+	toMission: 'إلى مهمتي', // app: childCornerToMission
+	storyText: 'يوسف ولد طيب يحب الطبيعة ومساعدة والديه. في صباح يوم مشرق، أعطاه والده بذرة صغيرة ذهبية اللون.', // hope_sprout p.1
+	next: 'التالي', // app: childCornerStoryNext
+	missionNow: 'مهمتك الآن', // app: childCornerMissionNow
+	missionTitle: 'صيّاد الألوان', // child_missions: mission_4-6_color_hunt
+	missionBody: 'ابحث في البيت عن ثلاثة أشياء حمراء وثلاثة زرقاء، ثم رتّبها على الطاولة واحكِ لأمك أو أبيك ما وجدت.',
+	missionGo: 'فهمت، سأذهب إليها', // app: childCornerMissionGo
 	giveBack: ['أعِد الجهاز إلى أهلك', 'شكرًا لك'], // app: childReturnDevice
-	message: ['وقت شاشة له هدف…', 'وبرمز يحميه'],
-	tagline: 'وقت شاشة له هدف',
+	exitPin: 'أدخل الرمز للخروج من وضع الطفل.', // app: childModePinExitSubtitle
+	message: ['حكاية، ثم مهمة…', 'بعيدًا عن الشاشة'],
+	tagline: 'ركن لطفلك… وقت له نهاية',
 };
 
 export const V5 = {
@@ -68,4 +90,23 @@ export const V5 = {
 	dayByDay: 'ويومًا بعد يوم…',
 	message: ['رمضان عائلي…', 'خطوة بخطوة'],
 	tagline: 'رمضان عائلي… خطوة بخطوة',
+};
+
+export const V6 = {
+	hook: ['حكاية قبل النوم…', 'يرويها نور'],
+	intro: 'أنا نور، وهذه حكايتنا الليلة.', // app: storyNoorIntro
+	title: 'يوسف وغرسة الأمل', // the stories library (hope_sprout), #126
+	// pages 1 and 2 of the story, as the app shows them (first sentences)
+	pages: [
+		'يوسف ولد طيب يحب الطبيعة ومساعدة والديه. في صباح يوم مشرق، أعطاه والده بذرة صغيرة ذهبية اللون.',
+		'حفر يوسف في الأرض برفق ووضع البذرة، ثم غطاها بالتراب وسقاها بماء عذب.',
+	],
+	pageOf: (n: number, total: number) => `صفحة ${n} من ${total}`, // app: storyPageOf
+	pauseTitle: 'وقفة مع نور', // app: storyPauseTitle
+	question: 'لو كنت مكان يوسف ولم تنبت البذرة بعد، ماذا ستفعل؟', // hope_sprout pause
+	options: ['أصبر وأستمر في سقايتها', 'أتركها وأذهب للعب'],
+	affirm: 'صبرك جميل! الزرع يحتاج وقتًا ورعاية، تمامًا مثل غرسة يوسف.',
+	continue: 'نكمل الحكاية', // app: storyContinue
+	message: ['سؤال صغير…', 'وحديث بينكما'],
+	tagline: 'حكاية الليلة… مع نور',
 };
