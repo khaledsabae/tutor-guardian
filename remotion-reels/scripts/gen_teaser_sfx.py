@@ -15,6 +15,11 @@ quiet night bed underneath.
   night       night ambience       filtered-noise bed, seamless 8 s loop; file peak
                                    -20.5 dBFS, about -24 dBFS in the stereo mix
 
+Added for the campaign reels (src/noor/campaign/), same rules:
+
+  tick        soft paper tap       a fingertip on a card: a chip, a PIN dot, typing
+  swish       paper door swing     the two paper doors of the hand-over gate open
+
 Levels: files peak near full scale (the mix volumes in src/noor/sound.tsx
 are all < 1); the whole mix lands near -23 LUFS with peaks around -6 dBFS.
 
@@ -142,6 +147,26 @@ def drop() -> np.ndarray:
     return _finish(body + 0.12 * plip, -0.5, 2.0, 40.0)
 
 
+def tick() -> np.ndarray:
+    """A soft paper tap: a short bright touch over a low, damped knock."""
+    t = _t(90)
+    tap = _lp(_hp(_noise(t.size, 601), 1_200.0), 5_000.0) * np.exp(-t / 0.006)
+    knock = np.sin(2.0 * math.pi * 210.0 * t) * np.exp(-t / 0.018) * 0.5
+    return _finish(tap + knock, -1.0, 0.5, 30.0)
+
+
+def swish() -> np.ndarray:
+    """A paper door swinging open: a slow airy sweep with a little paper grain."""
+    t = _t(700)
+    n = t.size
+    env = _swell(n, 0.45)
+    cutoff = 400.0 + 2_600.0 * env
+    sweep = _hp(_lp_sweep(_lp_sweep(_noise(n, 611), cutoff), cutoff), 200.0) * env
+    sweep = sweep / max(1e-12, float(np.max(np.abs(sweep))))
+    grain = _paper(700, 0.45, 60.0, 621, 0.0)
+    return _finish(sweep + 0.35 * grain, -1.0, 10.0, 90.0)
+
+
 NIGHT_SR = 22_050
 NIGHT_LOOP_S = 8.0
 
@@ -185,6 +210,8 @@ SOUNDS = {
     "air": air,
     "drop": drop,
     "night": night,
+    "tick": tick,
+    "swish": swish,
 }
 
 

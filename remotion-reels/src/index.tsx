@@ -4,6 +4,7 @@ import reelData from '../data/reel.json';
 import {NoorTeaser} from './noor/NoorTeaser';
 import {T} from './noor/timeline';
 import {NoorDevSheet} from './noor/DevSheet';
+import {CampaignCompositions} from './noor/campaign/reels';
 
 export const RemotionRoot: React.FC = () => {
 	return (
@@ -59,6 +60,7 @@ export const RemotionRoot: React.FC = () => {
 					scale: 1 / 3,
 				}}
 			/>
+			<CampaignCompositions />
 		</>
 	);
 };
