@@ -540,6 +540,16 @@ name: gallery/shoot
 
 # Step 6: Parent confirms Child 2's mission with kind words
 - tapOn: '${output.lead.navMore}'
+# The hub can keep the offset Step 4's Settings visit left it at — its
+# bottom, below «يوم الطفل ومهامه» — and a DOWN search from there finds
+# nothing (run 38777734035 lost ar_font2x's praise_child_sticker to it). Look
+# UP first; from the top, the DOWN search below still does the work.
+- scrollUntilVisible:
+    element:
+      text: '${output.tile.hubParentDay}'
+    direction: UP
+    timeout: 10000
+    optional: true
 - scrollUntilVisible:
     element:
       text: '${output.tile.hubParentDay}'
