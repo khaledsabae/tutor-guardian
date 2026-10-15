@@ -27,7 +27,7 @@ from app.routers import (
     health, assistant, chat, feedback, privacy, program, children, referral, push, identity,
     web, stats, daily_routine, value_tracking, habit_templates, child_mode, child_mode_web, sync,
     insights, methodology, seo, tafsir, quranic_linguistics, support, child_memory, device_proof,
-    family_programs,
+    family_programs, family,
 )
 from app.services import (
     ai_gateway, child_token, device_alerts, followup_push, milestone_push, mission_digest,
@@ -245,6 +245,7 @@ app.include_router(children.router, prefix="/api")  # child profiles + progress 
 app.include_router(child_memory.router, prefix="/api")  # child memory, follow-ups, weekly plan (auth; v30)
 app.include_router(device_proof.router, prefix="/api")  # FCM challenge behind the protected routes (auth; v30)
 app.include_router(family_programs.router, prefix="/api")  # Ramadan, prayer journey, milestones (auth; v34)
+app.include_router(family.router, prefix="/api")  # «قناديل الأسبوع» /family/week (auth; نور والقناديل P3)
 app.include_router(referral.router, prefix="/api")  # referral codes + attribution (auth)
 app.include_router(support.router, prefix="/api")  # «ادعم المربّي»: transparency (public) + verify (auth)
 app.include_router(stats.router, prefix="/api")  # community social-proof (public; Phase 3)

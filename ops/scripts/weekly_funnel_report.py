@@ -186,7 +186,10 @@ def get_action_events(db_path: Path, since: datetime) -> list[tuple[str, datetim
                 events.append((r["device_id"], ts))
 
     cols_cache: dict[str, set[str]] = {}
-    for table, col, extra in _ACTION_SOURCES:
+    # Every row of every source counts here — worship included (a Ramadan
+    # «تمّ» makes a family active); only the in-app lanterns leave worship out.
+    for src in _ACTION_SOURCES:
+        table, col, extra = src.table, src.column, src.where
         if table not in cols_cache:
             cols_cache[table] = _columns(db_path, table) if _has_table(db_path, table) else set()
         if col not in cols_cache[table] or "device_id" not in cols_cache[table]:

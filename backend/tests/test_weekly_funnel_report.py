@@ -346,6 +346,37 @@ def test_north_star_counts_each_action_source_once_per_device(mock_db: Path):
     assert [w["families"] for w in weeks] == [5, 1, 0]
 
 
+def test_north_star_counts_a_family_whose_only_act_was_a_plan_tick(mock_db: Path):
+    """نور والقناديل Phase 3: a weekly-plan step ticked is a parenting act, in
+    the report exactly as on the in-app lanterns (same registry)."""
+    now = datetime(2026, 10, 4, 12, 0, 0)
+    conn = sqlite3.connect(mock_db)
+    # v36 as production runs it (backend/app/db/init_db.py _CREATE_WEEKLY_PLAN_MARKS).
+    conn.executescript(
+        """
+        CREATE TABLE weekly_plan_marks (
+            id          INTEGER PRIMARY KEY AUTOINCREMENT,
+            device_id   TEXT NOT NULL,
+            child_id    INTEGER NOT NULL,
+            item_id     TEXT NOT NULL,
+            marked_on   TEXT NOT NULL,
+            created_at  TEXT NOT NULL DEFAULT (datetime('now')),
+            UNIQUE (device_id, child_id, item_id, marked_on),
+            FOREIGN KEY (child_id) REFERENCES child_profiles(id) ON DELETE CASCADE
+        );
+        """
+    )
+    conn.execute(
+        "INSERT INTO weekly_plan_marks (device_id, child_id, item_id, marked_on, created_at) "
+        "VALUES ('ticker', 1, 'anger_school_2', '2026-09-28', ?)",
+        (_sql(now - timedelta(days=2)),),
+    )
+    conn.commit()
+    conn.close()
+
+    assert [w["families"] for w in get_north_star(mock_db, weeks=2, now=now)] == [1, 0]
+
+
 def test_action_events_normalise_iso_timestamps(mock_db: Path):
     """Missions are stored ISO-with-'T'; compared raw against 'YYYY-MM-DD HH:MM'
     they sort after every same-day timestamp and leak across the cut-off."""

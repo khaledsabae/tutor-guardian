@@ -52,6 +52,9 @@ MEMORY_TABLES: tuple[tuple[str, str], ...] = (
     ("child_facts", "device_id"),
     ("followups", "device_id"),
     ("weekly_plans", "device_id"),
+    # The steps ticked on those plans (v36, نور والقناديل Phase 3): they go
+    # with the plan they mark.
+    ("weekly_plan_marks", "device_id"),
 )
 MEMORY_SETTINGS_TABLE = "child_memory_settings"
 
@@ -80,9 +83,9 @@ def erase_device_memory(device_id: str) -> dict[str, int]:
 @api_router.delete("/privacy/memory", summary="Forget everything about my children",
                    dependencies=[Depends(require_device_proof)])
 def delete_my_memory(request: Request):
-    """The privacy delete-all for child memory: facts, follow-ups and weekly
-    plans, for every child of the calling device. The memory switch keeps its
-    setting."""
+    """The privacy delete-all for child memory: facts, follow-ups, weekly
+    plans and their marks, for every child of the calling device. The memory
+    switch keeps its setting."""
     device_id = getattr(request.state, "device_id", None)
     if not device_id:
         raise HTTPException(status_code=401, detail="مطلوب توثيق.")

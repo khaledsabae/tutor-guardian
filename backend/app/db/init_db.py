@@ -1561,10 +1561,12 @@ def _ensure_erased_devices_v35(conn: sqlite3.Connection) -> None:
 # light lantern counters, and a mark is a parenting step taken, never a
 # judgement on the child.
 _CREATE_WEEKLY_PLAN_MARKS: str = """
--- One «تمّ» per child per plan item per day. Plain rowid table with a UNIQUE
--- pair, like every user table here (the account-erase and twin-fold sweeps
--- assume rowid tables that carry device_id). Positive only: un-marking is a
--- DELETE of the row; nothing records a "missed" day.
+-- One «تمّ» per child per plan item per marked_on. The API (Phase 3,
+-- services/weekly_plan.py mark_item) marks by plan week, so marked_on holds
+-- the plan week's Monday. Plain rowid table with a UNIQUE pair, like every
+-- user table here (the account-erase and twin-fold sweeps assume rowid tables
+-- that carry device_id). Positive only: un-marking is a DELETE of the row;
+-- nothing records a "missed" day.
 CREATE TABLE IF NOT EXISTS weekly_plan_marks (
     id          INTEGER PRIMARY KEY AUTOINCREMENT,
     device_id   TEXT NOT NULL,
