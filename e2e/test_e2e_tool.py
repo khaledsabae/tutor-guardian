@@ -802,6 +802,24 @@ class HierarchyVerificationTest(unittest.TestCase):
             with contextlib.redirect_stdout(err), contextlib.redirect_stderr(err):
                 self.assertEqual(t.main(["verify-hierarchy", "--report-dir", str(complete_dir), "--require"]), 0)
 
+    def test_informational_pass_annotates_a_warning_not_an_error(self):
+        # PR #121: the «before» gallery pass (baseline 1.0.71, no praise card
+        # text yet) printed ##[error] «Missing expected markers» on every run —
+        # green ones too — and it read like the reason the job failed.
+        with tempfile.TemporaryDirectory() as d:
+            dump = Path(d) / "screen-hierarchy"
+            dump.mkdir(parents=True)
+            (dump / "step-219-praiseFromFam.json").write_text('{"text": "اليوم"}', encoding="utf-8")
+            for extra, level, other in (([], "::warning ", "::error "),
+                                        (["--require"], "::error ", "::warning ")):
+                err = io.StringIO()
+                with contextlib.redirect_stdout(err), contextlib.redirect_stderr(err):
+                    rc = t.main(["verify-hierarchy", "--report-dir", d, *extra])
+                self.assertEqual(rc, 1)
+                self.assertIn(level + "title=Hierarchy check::", err.getvalue())
+                self.assertIn("Missing expected markers", err.getvalue())
+                self.assertNotIn(other, err.getvalue())
+
 
 if __name__ == "__main__":
     unittest.main()
