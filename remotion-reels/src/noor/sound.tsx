@@ -1,17 +1,18 @@
 // Soft generated sounds only — no music, no instruments, no bells.
 // Files come from scripts/gen_teaser_sfx.py (seeded, reproducible).
-import React from 'react';
+import React, {useContext} from 'react';
 import {Audio, interpolate, Sequence, staticFile} from 'remotion';
 import {T} from './timeline';
+import {SoundMute} from './mix';
 
-type Cue = {file: 'rustle' | 'rustle_long' | 'air' | 'drop'; at: number; vol: number};
+export type Cue = {file: 'rustle' | 'rustle_long' | 'air' | 'drop'; at: number; vol: number};
 
 const LEN: Record<Cue['file'], number> = {rustle: 14, rustle_long: 44, air: 18, drop: 9};
 
 // One trim for all cues: lands the mix near -23 LUFS, peaks about -5.5 dBFS.
-const MIX_GAIN = 1.05;
+export const MIX_GAIN = 1.05;
 
-const CUES: Cue[] = [
+export const CUES: Cue[] = [
 	// hill sheets slide up
 	{file: 'rustle', at: T.hills[0], vol: 0.5},
 	{file: 'rustle', at: T.hills[1], vol: 0.55},
@@ -32,7 +33,9 @@ const CUES: Cue[] = [
 	{file: 'rustle', at: T.endHills, vol: 0.5},
 ];
 
-export const TeaserSound: React.FC = () => (
+export const TeaserSound: React.FC = () => {
+	if (useContext(SoundMute)) return null;
+	return (
 	<>
 		<Audio
 			src={staticFile('noor/sfx/night.wav')}
@@ -51,3 +54,4 @@ export const TeaserSound: React.FC = () => (
 		))}
 	</>
 );
+};
