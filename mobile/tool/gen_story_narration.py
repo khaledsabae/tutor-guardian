@@ -3,8 +3,15 @@
 
 Run from the repo root:
 
-    python3 mobile/tool/gen_story_narration.py layla_star --lang ar --voice Sulafat
-    python3 mobile/tool/gen_story_narration.py --all --lang ar --voice Sulafat
+    python3 mobile/tool/gen_story_narration.py layla_star --lang ar
+    for l in ar en; do python3 mobile/tool/gen_story_narration.py --all --lang $l; done
+
+Resumable: a story whose manifest is current (same model/voice, same page
+texts, audio on disk) is skipped, and in a story whose text changed only the
+changed pages are re-recorded — so re-running the same command after a text
+fix, or after the daily quota ran out, records only what is missing. A 429
+that outlives the retries stops the whole run (exit 3) instead of failing
+story after story. `--force` re-records everything chosen.
 
 Writes, per story:
     docs/stories/narration/<lang>/<id>.json      the manifest the reader reads
@@ -102,6 +109,15 @@ def api_key() -> str:
     return key
 
 
+class QuotaExhausted(Exception):
+    """A 429 that outlived the retries: the day's quota is spent."""
+
+
+QUOTA_MESSAGE = ("الحصة اليومية خلصت — كمّل بكرة بنفس الأمر.\n"
+                 "Daily quota spent — run the same command again tomorrow; "
+                 "finished stories are kept and skipped.")
+
+
 def synth(text: str, lang: str, voice: str, model: str, key: str, usage: dict) -> bytes:
     """16-bit mono PCM at 24 kHz for one sentence."""
     body = {
@@ -122,6 +138,8 @@ def synth(text: str, lang: str, voice: str, model: str, key: str, usage: dict) -
             if e.code in (429, 500, 502, 503) and attempt < 4:
                 time.sleep(4 * (attempt + 1))
                 continue
+            if e.code == 429:
+                raise QuotaExhausted(e.read()[:200].decode("utf-8", "replace"))
             raise SystemExit(f"TTS failed: HTTP {e.code} {e.read()[:200]!r}")
     meta = data.get("usageMetadata", {})
     usage["audio_tokens"] = usage.get("audio_tokens", 0) + meta.get("candidatesTokenCount", 0)
@@ -231,14 +249,46 @@ def encode_m4a(pcm: bytes, out: Path) -> None:
     os.unlink(tmp.name)
 
 
+def reusable_pages(story: dict, out_dir: Path, voice_tag: str) -> dict[int, dict]:
+    """Pages of [story] already recorded and still current, by 0-based index.
+
+    A page is reused when the story's manifest exists, was recorded in the
+    same model/voice, holds the page's text verbatim (the same test the app
+    applies before playing it) and its audio file is on disk. A story with
+    pages but no manifest — a run cut short inside it — reuses nothing.
+    """
+    path = out_dir / f"{story['id']}.json"
+    if not path.exists():
+        return {}
+    try:
+        manifest = json.loads(path.read_text(encoding="utf-8"))
+    except ValueError:
+        return {}
+    if manifest.get("voice") != voice_tag:
+        return {}
+    reuse = {}
+    for i, page in enumerate(story["pages"]):
+        old = manifest.get("pages", [])
+        if i < len(old) and old[i].get("text") == page["text"] \
+                and (out_dir / Path(old[i]["audio"]).name).exists():
+            reuse[i] = old[i]
+    return reuse
+
+
 def record_story(story: dict, lang: str, voice: str, model: str, out_dir: Path,
-                 server_prefix: str, key: str, verify: bool = True) -> dict:
+                 server_prefix: str, key: str, verify: bool = True,
+                 reuse: dict[int, dict] | None = None) -> dict:
     out_dir.mkdir(parents=True, exist_ok=True)
     usage: dict = {}
     pages = []
+    reuse = reuse or {}
     for n, page in enumerate(story["pages"], start=1):
         text = page["text"]
         name = f"{story['id']}_p{n}.m4a"
+        if n - 1 in reuse:
+            pages.append(reuse[n - 1])
+            print(f"  {story['id']} p{n}: unchanged, kept")
+            continue
         for attempt in range(1, ATTEMPTS + 1):
             pcm = b""
             spans = []
@@ -278,9 +328,11 @@ def main() -> None:
     ap.add_argument("ids", nargs="*")
     ap.add_argument("--all", action="store_true")
     ap.add_argument("--lang", choices=["ar", "en"], default="ar")
-    ap.add_argument("--voice", default="Sulafat")
+    ap.add_argument("--voice", default="Algieba")  # Khaled's choice, 2026-10-15
     ap.add_argument("--model", default=DEFAULT_MODEL)
     ap.add_argument("--out", type=Path, help="default docs/stories/narration/<lang>")
+    ap.add_argument("--force", action="store_true",
+                    help="re-record every chosen page, even ones already up to date")
     ap.add_argument("--skip-verify", action="store_true",
                     help="do not transcribe pages back (only for a quick listen, never for the app)")
     args = ap.parse_args()
@@ -293,19 +345,43 @@ def main() -> None:
     if not args.skip_verify and subprocess.run(["which", "whisper"], capture_output=True).returncode:
         sys.exit("whisper is needed to verify every page (or pass --skip-verify for a draft)")
     key = api_key()
+    sys.exit(run(chosen, args.lang, args.voice, args.model, out, prefix, key,
+                 verify=not args.skip_verify, force=args.force))
+
+
+def run(chosen: list[dict], lang: str, voice: str, model: str, out: Path, prefix: str,
+        key: str, verify: bool = True, force: bool = False) -> int:
+    """Record [chosen]; 0 done · 3 the day's quota ran out (resume tomorrow)."""
     total = {"audio_tokens": 0, "text_tokens": 0}
-    for story in chosen:
-        u = record_story(story, args.lang, args.voice, args.model, out, prefix, key,
-                         verify=not args.skip_verify)
-        for k in total:
-            total[k] += u.get(k, 0)
-    print(f"usage: {total['audio_tokens']} audio tokens, {total['text_tokens']} text tokens")
-    if REPORT:
-        rep = out / f"verify_{args.lang}_{'_'.join(s['id'] for s in chosen) if not args.all else 'all'}.json"
-        rep.write_text(json.dumps({"usage": total, "pages": REPORT}, ensure_ascii=False, indent=1),
-                       encoding="utf-8")
-        failed = sum(1 for r in REPORT if r["problems"])
-        print(f"verification: {len(REPORT)} transcripts, {failed} failed attempts → {rep}")
+    voice_tag = f"{model}/{voice}"
+    code = 0
+    done = skipped = 0
+    try:
+        for story in chosen:
+            reuse = {} if force else reusable_pages(story, out, voice_tag)
+            if len(reuse) == len(story["pages"]):
+                skipped += 1
+                print(f"  {story['id']}: up to date, skipped")
+                continue
+            u = record_story(story, lang, voice, model, out, prefix, key,
+                             verify=verify, reuse=reuse)
+            done += 1
+            for k in total:
+                total[k] += u.get(k, 0)
+    except QuotaExhausted as e:
+        print(f"\n⏸  {QUOTA_MESSAGE}\n   ({e})")
+        code = 3
+    finally:
+        print(f"stories recorded: {done} · skipped (up to date): {skipped}")
+        print(f"usage: {total['audio_tokens']} audio tokens, {total['text_tokens']} text tokens")
+        if REPORT:
+            stamp = time.strftime("%Y%m%d-%H%M%S")
+            rep = out / f"verify_{lang}_{stamp}.json"
+            rep.write_text(json.dumps({"usage": total, "pages": REPORT}, ensure_ascii=False,
+                                      indent=1), encoding="utf-8")
+            failed = sum(1 for r in REPORT if r["problems"])
+            print(f"verification: {len(REPORT)} transcripts, {failed} failed attempts → {rep}")
+    return code
 
 
 if __name__ == "__main__":
