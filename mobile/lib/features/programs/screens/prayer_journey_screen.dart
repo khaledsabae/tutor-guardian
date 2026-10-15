@@ -24,11 +24,14 @@ import '../../../state/chat_notifier.dart';
 import '../../../theme/app_colors.dart';
 import '../../../widgets/ui/celebration_overlay.dart';
 import '../../../widgets/ui/loading_view.dart';
+import '../../child_memory/data/placeholder_names.dart';
 import '../../handover/child_surface_policy.dart';
 import '../data/programs_models.dart';
 import '../providers/programs_providers.dart';
+import '../widgets/prayer_stage_moment.dart';
 import '../widgets/program_widgets.dart';
 import '../widgets/programs_text.dart';
+
 
 class PrayerJourneyScreen extends ConsumerWidget {
   const PrayerJourneyScreen({super.key, required this.childId});
@@ -70,6 +73,34 @@ class _JourneyBodyState extends ConsumerState<_JourneyBody> {
   String get _name =>
       programChildProfile(ref, _childId)?.name ??
       AppLocalizations.of(context).childFallbackName;
+
+  /// The 4–6 band sees no stage numbers on this screen: the preparation track
+  /// has no stages, and a profile still set to 4–6 that is on the journey
+  /// reads its stages by name. The profile's band first — the child surface
+  /// keys on it too — then the server's.
+  bool get _noStageNumbers {
+    final band =
+        programChildProfile(ref, _childId)?.profile?.ageGroup ?? j.age.band;
+    return band == '4-6' ||
+        j.eligibleTrack == PrayerTrack.preparation ||
+        j.enrolment?.track == PrayerTrack.preparation;
+  }
+
+  /// «انتقلت سارة إلى «الوضوء».» — or, for a child with no name of its own
+  /// (the default «طفلي»), the family: «انتقلتم إلى «الوضوء».»
+  String _stageMomentLine(AppLocalizations l10n, String stage) {
+    final child = programChildProfile(ref, _childId);
+    final name = child?.name.trim() ?? '';
+    if (name.isEmpty || isDefaultChildName(name)) {
+      return l10n.prayerStageMomentFamily(stage);
+    }
+    return l10n.prayerStageMomentChild(
+      child?.profile?.gender ?? 'other',
+      name,
+      stage,
+    );
+  }
+
 
   /// Runs a change, shows the refusal in words if there is one, and refreshes
   /// every summary that shows this child's journey.
@@ -147,27 +178,43 @@ class _JourneyBodyState extends ConsumerState<_JourneyBody> {
             SimpleDialogOption(
               onPressed: () => Navigator.of(ctx).pop(n),
               child: Text(
-                '${l10n.prayerStageN(n)}${_stageTitle(n) == null ? '' : ' — ${_stageTitle(n)}'}',
+                _noStageNumbers && _stageTitle(n) != null
+                    ? _stageTitle(n)!
+                    : '${l10n.prayerStageN(n)}${_stageTitle(n) == null ? '' : ' — ${_stageTitle(n)}'}',
               ),
+
             ),
         ],
       ),
     );
   }
 
-  String? _stageTitle(int n) {
-    for (final s in j.stages) {
+  String? _stageTitle(int n, [PrayerJourney? of]) {
+    for (final s in (of ?? j).stages) {
       if (s.stage == n) return s.title;
     }
     return null;
   }
 
   Future<void> _setStage(int stage, String action) async {
-    await _change(
+    final before = j.enrolment;
+    final l10n = AppLocalizations.of(context);
+    final next = await _change(
       () => ref.read(tgClientProvider).setPrayerJourneyStage(_childId, stage),
       action,
     );
+    final after = next?.enrolment;
+    if (next == null || after == null || before == null || !mounted) return;
+    // Moving up is a quiet moment; moving back says nothing at all.
+    final up = before.track == PrayerTrack.journey &&
+        after.track == PrayerTrack.journey &&
+        (after.stage ?? 0) > (before.stage ?? 0);
+    if (!up) return;
+    final title = _stageTitle(after.stage!, next) ?? next.stage?.title;
+    if (title == null) return;
+    await showPrayerStageMoment(context, line: _stageMomentLine(l10n, title));
   }
+
 
   Future<void> _goBack() async {
     final current = j.enrolment?.stage ?? 1;
@@ -416,18 +463,24 @@ class _JourneyBodyState extends ConsumerState<_JourneyBody> {
     final adv = j.advancement;
     final total = j.stages.isEmpty ? 6 : j.stages.length;
     final stageNo = enrolment.stage ?? stage?.stage ?? 1;
+    // 4–6: the stage by its name, which then heads the card on its own.
+    final named = _noStageNumbers;
+    final nextTitle = adv?.nextStage == null ? null : _stageTitle(adv!.nextStage!);
     return [
       ProgramSection(
         tone: SectionTone.highlight,
         emoji: '🕌',
-        title: l10n.prayerStageOf(stageNo, total),
+        title: named
+            ? stage?.title ?? _stageTitle(stageNo) ?? l10n.prayerTrackJourney
+            : l10n.prayerStageOf(stageNo, total),
         trailing: enrolment.week == null
             ? null
             : CountBadge(l10n.prayerWeekN(enrolment.week!)),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            if (stage != null)
+            if (stage != null && !named)
+
               ContentText(
                 stage.title,
                 style: TextStyle(
@@ -479,9 +532,12 @@ class _JourneyBodyState extends ConsumerState<_JourneyBody> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(
-                l10n.prayerAdvanceBody(adv.nextStage!, _name),
+                named && nextTitle != null
+                    ? l10n.prayerAdvanceBodyNamed(nextTitle, _name)
+                    : l10n.prayerAdvanceBody(adv.nextStage!, _name),
                 style: TextStyle(color: c.ink, height: 1.6),
               ),
+
               const SizedBox(height: 8),
               Align(
                 alignment: AlignmentDirectional.centerStart,
@@ -490,7 +546,12 @@ class _JourneyBodyState extends ConsumerState<_JourneyBody> {
                   onPressed: _busy
                       ? null
                       : () => _setStage(adv.nextStage!, 'stage_next'),
-                  child: Text(l10n.prayerAdvanceButton(adv.nextStage!)),
+                  child: Text(
+                    named && nextTitle != null
+                        ? l10n.prayerAdvanceButtonNamed(nextTitle)
+                        : l10n.prayerAdvanceButton(adv.nextStage!),
+                  ),
+
                 ),
               ),
             ],
@@ -787,7 +848,23 @@ class _JourneyBodyState extends ConsumerState<_JourneyBody> {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    CountBadge('${s.stage}', accent: s.stage == current),
+                    if (_noStageNumbers)
+                      // 4–6: a mark, not a number.
+                      Padding(
+                        key: ValueKey('prayer_stage_mark_${s.stage}'),
+                        padding: const EdgeInsets.only(top: 7),
+                        child: Container(
+                          width: 10,
+                          height: 10,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: s.stage == current ? c.accent : c.track,
+                          ),
+                        ),
+                      )
+                    else
+                      CountBadge('${s.stage}', accent: s.stage == current),
+
                     const SizedBox(width: 10),
                     Expanded(
                       child: Column(

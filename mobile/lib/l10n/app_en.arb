@@ -1937,5 +1937,21 @@
   "todayRoadReached": "Reached today",
   "@todayRoadReached": {
     "description": "Screen-reader label of a lit station on the Today road: the parent reached this stop today."
-  }
+  },
+  "pathFullMoonTitle": "A full moon",
+  "@pathFullMoonTitle": {"description": "Title of the moment shown once when every lesson of a path is done (Noor's crescent fills to a full moon)."},
+  "pathFullMoonBody": "You've finished “{title}” in full, one lesson at a time.",
+  "@pathFullMoonBody": {"description": "The full-moon moment's line. No promise of reward.", "placeholders": {"title": {"type": "String"}}},
+  "pathFullMoonShare": "Share the card",
+  "@pathFullMoonShare": {"description": "Button on the full-moon moment: share the existing path-completion card."},
+  "prayerStageMomentChild": "{gender, select, female{{name} has moved on to “{stage}”.} other{{name} has moved on to “{stage}”.}}",
+  "@prayerStageMomentChild": {"description": "Quiet moment after the parent moves the Prayer Journey up a stage. {stage} is the stage's title, never its number.", "placeholders": {"gender": {"type": "String"}, "name": {"type": "String"}, "stage": {"type": "String"}}},
+  "prayerStageMomentFamily": "You've moved on to “{stage}”.",
+  "@prayerStageMomentFamily": {"description": "The same moment when the child has no name of its own.", "placeholders": {"stage": {"type": "String"}}},
+  "prayerStageMomentDua": "May Allah help you, and accept it from you.",
+  "@prayerStageMomentDua": {"description": "General du'a under the stage moment. Not attributed to any text."},
+  "prayerAdvanceBodyNamed": "Move on to “{stage}” when you feel {name} is ready — it's your call.",
+  "@prayerAdvanceBodyNamed": {"description": "prayerAdvanceBody for a 4–6 child: the next stage by its title, with no stage number.", "placeholders": {"stage": {"type": "String"}, "name": {"type": "String"}}},
+  "prayerAdvanceButtonNamed": "Go to “{stage}”",
+  "@prayerAdvanceButtonNamed": {"description": "prayerAdvanceButton for a 4–6 child: the next stage by its title.", "placeholders": {"stage": {"type": "String"}}}
 }

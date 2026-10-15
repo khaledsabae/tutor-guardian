@@ -2061,5 +2061,21 @@
   "@chatTryTitle": {"description": "Title of the slot sheet opened from an answer's chip."},
   "chatTryIntro": "اخترتُ لك من الإجابة خطوةً واحدة تبدأ بها.",
   "@chatTryIntro": {"description": "Noor, first person, under the sheet title: the step shown is the first one in the answer."},
-  "todayRoadReached": "تمّت هذه المحطة اليوم"
+  "todayRoadReached": "تمّت هذه المحطة اليوم",
+  "pathFullMoonTitle": "اكتمل البدر",
+  "@pathFullMoonTitle": [["description", "Title of the moment shown once when every lesson of a path is done (Noor's crescent fills to a full moon)."]],
+  "pathFullMoonBody": "أتممتم «{title}» كاملًا، درسًا بعد درس.",
+  "@pathFullMoonBody": [["description", "The full-moon moment's line. Family-neutral plural; no promise of reward."], ["placeholders", [["title", [["type", "String"]]]]]],
+  "pathFullMoonShare": "شاركوا البطاقة",
+  "@pathFullMoonShare": [["description", "Button on the full-moon moment: share the existing path-completion card."]],
+  "prayerStageMomentChild": "{gender, select, female{انتقلت {name} إلى «{stage}».} other{انتقل {name} إلى «{stage}».}}",
+  "@prayerStageMomentChild": [["description", "Quiet moment after the parent moves the Prayer Journey up a stage. {stage} is the stage's title, never its number."], ["placeholders", [["gender", [["type", "String"]]], ["name", [["type", "String"]]], ["stage", [["type", "String"]]]]]],
+  "prayerStageMomentFamily": "انتقلتم إلى «{stage}».",
+  "@prayerStageMomentFamily": [["description", "The same moment when the child has no name of its own (the default «طفلي»)."], ["placeholders", [["stage", [["type", "String"]]]]]],
+  "prayerStageMomentDua": "أعانكم الله وتقبّل منكم",
+  "@prayerStageMomentDua": [["description", "General du'a under the stage moment. Not attributed to any text."]],
+  "prayerAdvanceBodyNamed": "انتقلوا إلى «{stage}» حين ترون {name} مستعدًّا؛ القرار لكم.",
+  "@prayerAdvanceBodyNamed": [["description", "prayerAdvanceBody for a 4–6 child: the next stage by its title, with no stage number."], ["placeholders", [["stage", [["type", "String"]]], ["name", [["type", "String"]]]]]],
+  "prayerAdvanceButtonNamed": "إلى «{stage}»",
+  "@prayerAdvanceButtonNamed": [["description", "prayerAdvanceButton for a 4–6 child: the next stage by its title."], ["placeholders", [["stage", [["type", "String"]]]]]]
 }

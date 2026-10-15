@@ -114,8 +114,8 @@ class _StopRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dark = Theme.of(context).brightness == Brightness.dark;
     return Stack(
+
       children: [
         PositionedDirectional(
           start: 0,
@@ -129,7 +129,8 @@ class _StopRow extends StatelessWidget {
               walkedIn: walkedIn,
               walkedOut: walkedOut,
               bendLeft: index.isEven,
-              paper: dark ? const Color(0xFF1F4A43) : const Color(0xFFD9C7A7),
+              paper: RoadRailPainter.paperFor(Theme.of(context).brightness),
+
             ),
           ),
         ),
@@ -265,6 +266,34 @@ class RoadRailPainter extends CustomPainter {
   static const _shadow = Color(0x260F3D36);
   static const _width = 7.0;
 
+  /// The unwalked paper of the road on a page of [brightness].
+  static Color paperFor(Brightness brightness) => brightness == Brightness.dark
+      ? const Color(0xFF1F4A43)
+      : const Color(0xFFD9C7A7);
+
+  /// One strip of paper road along [path]: a flat offset shadow, then the
+  /// strip — gold where it was walked. Shared with «درب المسار» so both roads
+  /// are cut from the same paper; the shadow's offset grows with [width].
+  static void paintStrip(
+    Canvas canvas,
+    Path path, {
+    required bool walked,
+    required Color paper,
+    double width = _width,
+  }) {
+    final stroke = Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = width
+      ..strokeCap = StrokeCap.round;
+    final k = width / _width;
+    canvas.drawPath(
+      path.shift(Offset(1.5 * k, 2 * k)),
+      stroke..color = _shadow,
+    );
+    canvas.drawPath(path, stroke..color = walked ? gold : paper);
+  }
+
+
   @override
   void paint(Canvas canvas, Size size) {
     final cx = size.width / 2;
@@ -299,14 +328,9 @@ class RoadRailPainter extends CustomPainter {
     }
   }
 
-  void _strip(Canvas canvas, Path path, bool walked) {
-    final stroke = Paint()
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = _width
-      ..strokeCap = StrokeCap.round;
-    canvas.drawPath(path.shift(const Offset(1.5, 2)), stroke..color = _shadow);
-    canvas.drawPath(path, stroke..color = walked ? gold : paper);
-  }
+  void _strip(Canvas canvas, Path path, bool walked) =>
+      paintStrip(canvas, path, walked: walked, paper: paper);
+
 
   @override
   bool shouldRepaint(RoadRailPainter old) =>
