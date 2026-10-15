@@ -500,10 +500,13 @@ class TgClient {
     DeviceIdClaim? deviceIdClaim,
     this.onNeedActiveChildId,
     Duration? streamIdleTimeout,
+    List<Duration>? transientRetryDelays,
   })  : _raw = httpClient ?? http.Client(),
         _auth = _AuthStore(storage ?? createDefaultSecureStorage(),
             deviceIdClaim ?? DeviceIdClaim.inAppCache()),
         _ownsHttpClient = httpClient == null,
+        _retryDelays = transientRetryDelays ??
+            (httpClient == null ? kTransientRetryDelays : const []),
         _baseUrlOverride = null,
         streamIdleTimeout = streamIdleTimeout ?? AppConfig.streamIdleTimeout;
 
@@ -516,10 +519,13 @@ class TgClient {
     DeviceIdClaim? deviceIdClaim,
     this.onNeedActiveChildId,
     Duration? streamIdleTimeout,
+    List<Duration>? transientRetryDelays,
   })  : _raw = httpClient ?? http.Client(),
         _auth = _AuthStore(storage ?? createDefaultSecureStorage(),
             deviceIdClaim ?? DeviceIdClaim.inAppCache()),
         _ownsHttpClient = httpClient == null,
+        _retryDelays = transientRetryDelays ??
+            (httpClient == null ? kTransientRetryDelays : const []),
         _baseUrlOverride = baseUrl,
         streamIdleTimeout = streamIdleTimeout ?? AppConfig.streamIdleTimeout;
 
@@ -553,8 +559,16 @@ class TgClient {
   final http.Client _raw;
 
   /// Everything else goes through this: it renews an expired session once
-  /// and replays the request (see [_SessionRecoveringClient]).
-  late final http.Client _http = _SessionRecoveringClient(_raw, _recoverSession);
+  /// and replays the request (see [_SessionRecoveringClient]), and a read
+  /// that meets the server mid-restart is tried again (see
+  /// [TransientRetryClient]).
+  late final http.Client _http = _SessionRecoveringClient(
+      TransientRetryClient(_raw, _retryDelays), _recoverSession);
+
+  /// The waits between tries of a read that met a restarting server. Empty
+  /// for an injected transport unless a test asks, so existing tests that
+  /// stub a 502 still see it on the first try.
+  final List<Duration> _retryDelays;
 
   final _AuthStore _auth;
 
@@ -3364,6 +3378,85 @@ class _SessionRecoveringClient extends http.BaseClient {
     replay.headers['Authorization'] = 'Bearer $fresh';
     return _inner.send(replay);
   }
+
+  @override
+  void close() => _inner.close();
+}
+
+/// How long a read waits before trying again after the server answered as a
+/// restarting one: ~30 s in all, inside [AppConfig.httpTimeout]. A restart
+/// or deploy of the backend refuses connections for ~50 s (20 s graceful
+/// stop + ~30 s start-up), which Cloudflare turns into 502s — on 2026-10-14
+/// two manual restarts and one deploy failed live requests that a few
+/// seconds' patience would have answered.
+const List<Duration> kTransientRetryDelays = [
+  Duration(seconds: 1),
+  Duration(seconds: 2),
+  Duration(seconds: 4),
+  Duration(seconds: 8),
+  Duration(seconds: 15),
+];
+
+/// Retries GET/HEAD when the answer means "the server is restarting", never
+/// anything that writes (a POST may already have been applied).
+///
+/// Transient: 502/504 and Cloudflare's origin errors (520–524, 530) — the
+/// backend never raises those itself — and a 503 that is not JSON. The app's
+/// own 503s are JSON with a reason (`program_unavailable`,
+/// `verification_unavailable`…) and stay immediate: waiting would only delay
+/// the honest message. A `Retry-After` longer than the longest wait is
+/// respected by not retrying at all.
+class TransientRetryClient extends http.BaseClient {
+  TransientRetryClient(this._inner, this._delays);
+
+  final http.Client _inner;
+  final List<Duration> _delays;
+
+  static bool isTransient(int status, Map<String, String> headers) {
+    if (status == 502 || status == 504 || status == 530) return true;
+    if (status >= 520 && status <= 524) return true;
+    if (status == 503) {
+      return !(headers['content-type'] ?? '').contains('json');
+    }
+    return false;
+  }
+
+  @override
+  Future<http.StreamedResponse> send(http.BaseRequest request) async {
+    final readOnly = request.method == 'GET' || request.method == 'HEAD';
+    if (!readOnly || _delays.isEmpty || request is! http.Request) {
+      return _inner.send(request);
+    }
+    http.Request next = request;
+    for (var attempt = 0;; attempt++) {
+      final spare = _copy(request);
+      final response = await _inner.send(next);
+      if (attempt >= _delays.length ||
+          !isTransient(response.statusCode, response.headers)) {
+        return response;
+      }
+      var wait = _delays[attempt];
+      final retryAfter = int.tryParse(response.headers['retry-after'] ?? '');
+      if (retryAfter != null) {
+        if (Duration(seconds: retryAfter) > _delays.last) return response;
+        if (Duration(seconds: retryAfter) > wait) {
+          wait = Duration(seconds: retryAfter);
+        }
+      }
+      await response.stream.drain<void>();
+      debugPrint('[transientRetry] ${request.method} ${request.url.path} → '
+          '${response.statusCode}; try ${attempt + 2} in ${wait.inSeconds}s');
+      await Future<void>.delayed(wait);
+      next = spare;
+    }
+  }
+
+  static http.Request _copy(http.Request r) => http.Request(r.method, r.url)
+    ..headers.addAll(r.headers)
+    ..bodyBytes = r.bodyBytes
+    ..followRedirects = r.followRedirects
+    ..maxRedirects = r.maxRedirects
+    ..persistentConnection = r.persistentConnection;
 
   @override
   void close() => _inner.close();
