@@ -1802,23 +1802,11 @@ abstract class AppLocalizations {
   /// **'اسم طفلك'**
   String get onbChildName;
 
-  /// Hint inside the optional onboarding name field.
-  ///
-  /// In ar, this message translates to:
-  /// **'مثلًا: سارة، أحمد، ليلى'**
-  String get onbNameHint;
-
   /// No description provided for @onbNameRequired.
   ///
   /// In ar, this message translates to:
   /// **'الاسم مطلوب'**
   String get onbNameRequired;
-
-  /// Validation: the onboarding child name is longer than 30 characters.
-  ///
-  /// In ar, this message translates to:
-  /// **'الاسم طويل (الحد الأقصى 30 حرفًا)'**
-  String get onbNameTooLong;
 
   /// No description provided for @onbAgeGroup.
   ///
@@ -6449,13 +6437,13 @@ abstract class AppLocalizations {
   /// No description provided for @missionAlreadyDone.
   ///
   /// In ar, this message translates to:
-  /// **'قلت إنك أنجزتها ✅'**
+  /// **'قلت إنك أنجزتها'**
   String get missionAlreadyDone;
 
   /// No description provided for @missionClaimedNote.
   ///
   /// In ar, this message translates to:
-  /// **'بابا سيراها في المساء.'**
+  /// **'سيراها أهلك في المساء.'**
   String get missionClaimedNote;
 
   /// No description provided for @missionOutdoorsHint.
@@ -9770,6 +9758,12 @@ abstract class AppLocalizations {
   /// **'ما اسم طفلك؟'**
   String get onbNameQuestion;
 
+  /// Hint inside the optional onboarding name field.
+  ///
+  /// In ar, this message translates to:
+  /// **'مثلًا: سارة، أحمد، ليلى'**
+  String get onbNameHint;
+
   /// Title of the onboarding wait overlay before a name is typed.
   ///
   /// In ar, this message translates to:
@@ -9794,6 +9788,12 @@ abstract class AppLocalizations {
   /// **'تمّ'**
   String get onbNameDone;
 
+  /// Validation: the onboarding child name is longer than 30 characters.
+  ///
+  /// In ar, this message translates to:
+  /// **'الاسم طويل (الحد الأقصى 30 حرفًا)'**
+  String get onbNameTooLong;
+
   /// Validation: the onboarding child name is made of digits only.
   ///
   /// In ar, this message translates to:
@@ -9817,6 +9817,324 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'ابدأ'**
   String get tourStartHereGo;
+
+  /// Noor's line on «اليوم» (CompanionBrain). Easy MSA, warm, never names one parent, no emoji, no promise of reward.
+  ///
+  /// In ar, this message translates to:
+  /// **'صباح النور'**
+  String get noorHelloDawn;
+
+  /// Noor's line on «اليوم» (CompanionBrain). Easy MSA, warm, never names one parent, no emoji, no promise of reward.
+  ///
+  /// In ar, this message translates to:
+  /// **'صباح الخير'**
+  String get noorHelloMorning;
+
+  /// Noor's line on «اليوم» (CompanionBrain). Easy MSA, warm, never names one parent, no emoji, no promise of reward.
+  ///
+  /// In ar, this message translates to:
+  /// **'طاب يومك'**
+  String get noorHelloNoon;
+
+  /// Noor's line on «اليوم» (CompanionBrain). Easy MSA, warm, never names one parent, no emoji, no promise of reward.
+  ///
+  /// In ar, this message translates to:
+  /// **'مساء الخير'**
+  String get noorHelloEvening;
+
+  /// Noor's line on «اليوم» (CompanionBrain). Easy MSA, warm, never names one parent, no emoji, no promise of reward.
+  ///
+  /// In ar, this message translates to:
+  /// **'مساء النور'**
+  String get noorHelloNight;
+
+  /// Stands in for the child's name when the parent has not given one yet.
+  ///
+  /// In ar, this message translates to:
+  /// **'طفلك'**
+  String get noorYourChild;
+
+  /// Noor's line on «اليوم» (CompanionBrain). Easy MSA, warm, never names one parent, no emoji, no promise of reward.
+  ///
+  /// In ar, this message translates to:
+  /// **'يومٌ جديد مع {name}، وخطوة صغيرة تكفي.'**
+  String noorLineDawn1(String name);
+
+  /// Noor's line on «اليوم» (CompanionBrain). Easy MSA, warm, never names one parent, no emoji, no promise of reward.
+  ///
+  /// In ar, this message translates to:
+  /// **'الصباح الباكر هادئ؛ دقيقة لك قبل أن يستيقظ {name}.'**
+  String noorLineDawn2(String name);
+
+  /// Noor's line on «اليوم» (CompanionBrain). Easy MSA, warm, never names one parent, no emoji, no promise of reward.
+  ///
+  /// In ar, this message translates to:
+  /// **'ابدأ بنيّة طيبة، والباقي يأتي.'**
+  String get noorLineDawn3;
+
+  /// Noor's line on «اليوم» (CompanionBrain). Easy MSA, warm, never names one parent, no emoji, no promise of reward.
+  ///
+  /// In ar, this message translates to:
+  /// **'صباحٌ مبارك لك ولـ{name}.'**
+  String noorLineDawn4(String name);
+
+  /// Noor's line on «اليوم» (CompanionBrain). Easy MSA, warm, never names one parent, no emoji, no promise of reward.
+  ///
+  /// In ar, this message translates to:
+  /// **'ابدأ يوم {name} بكلمة طيبة؛ أثرها يبقى.'**
+  String noorLineMorning1(String name);
+
+  /// Noor's line on «اليوم» (CompanionBrain). Easy MSA, warm, never names one parent, no emoji, no promise of reward.
+  ///
+  /// In ar, this message translates to:
+  /// **'صباحٌ هادئ يصنع يومًا هادئًا.'**
+  String get noorLineMorning2;
+
+  /// Noor's line on «اليوم» (CompanionBrain). Easy MSA, warm, never names one parent, no emoji, no promise of reward.
+  ///
+  /// In ar, this message translates to:
+  /// **'ابتسامتك أول ما يراه {name} اليوم.'**
+  String noorLineMorning3(String name);
+
+  /// Noor's line on «اليوم» (CompanionBrain). Easy MSA, warm, never names one parent, no emoji, no promise of reward.
+  ///
+  /// In ar, this message translates to:
+  /// **'خطوة اليوم مع {name} تنتظرك أدناه.'**
+  String noorLineMorning4(String name);
+
+  /// Noor's line on «اليوم» (CompanionBrain). Easy MSA, warm, never names one parent, no emoji, no promise of reward.
+  ///
+  /// In ar, this message translates to:
+  /// **'لحظة قصيرة مع {name} الآن تساوي الكثير.'**
+  String noorLineNoon1(String name);
+
+  /// Noor's line on «اليوم» (CompanionBrain). Easy MSA, warm, never names one parent, no emoji, no promise of reward.
+  ///
+  /// In ar, this message translates to:
+  /// **'اسأل {name}: ما أجمل شيء حدث لك اليوم؟'**
+  String noorLineNoon2(String name);
+
+  /// Noor's line on «اليوم» (CompanionBrain). Easy MSA, warm, never names one parent, no emoji, no promise of reward.
+  ///
+  /// In ar, this message translates to:
+  /// **'دقيقتان من الإصغاء تكفيان في منتصف اليوم.'**
+  String get noorLineNoon3;
+
+  /// Noor's line on «اليوم» (CompanionBrain). Easy MSA, warm, never names one parent, no emoji, no promise of reward.
+  ///
+  /// In ar, this message translates to:
+  /// **'كيف يومكما؟ خطوتك الصغيرة أدناه.'**
+  String get noorLineNoon4;
+
+  /// Noor's line on «اليوم» (CompanionBrain). Easy MSA, warm, never names one parent, no emoji, no promise of reward.
+  ///
+  /// In ar, this message translates to:
+  /// **'المساء وقت القرب؛ اجلس مع {name} قليلًا.'**
+  String noorLineEvening1(String name);
+
+  /// Noor's line on «اليوم» (CompanionBrain). Easy MSA, warm, never names one parent, no emoji, no promise of reward.
+  ///
+  /// In ar, this message translates to:
+  /// **'قبل النوم، أخبر {name} بشيء أحسنه اليوم.'**
+  String noorLineEvening2(String name);
+
+  /// Noor's line on «اليوم» (CompanionBrain). Easy MSA, warm, never names one parent, no emoji, no promise of reward.
+  ///
+  /// In ar, this message translates to:
+  /// **'كلمة دافئة في آخر اليوم تبقى في ذاكرة {name}.'**
+  String noorLineEvening3(String name);
+
+  /// Noor's line on «اليوم» (CompanionBrain). Easy MSA, warm, never names one parent, no emoji, no promise of reward.
+  ///
+  /// In ar, this message translates to:
+  /// **'لعل الليلة فرصة لخطوة صغيرة مع {name}.'**
+  String noorLineEvening4(String name);
+
+  /// Noor's line on «اليوم» (CompanionBrain). Easy MSA, warm, never names one parent, no emoji, no promise of reward.
+  ///
+  /// In ar, this message translates to:
+  /// **'تصبح على خير، وغدًا خطوة جديدة مع {name}.'**
+  String noorLineNight1(String name);
+
+  /// Noor's line on «اليوم» (CompanionBrain). Easy MSA, warm, never names one parent, no emoji, no promise of reward.
+  ///
+  /// In ar, this message translates to:
+  /// **'يكفي اليوم ما بذلت. أراك غدًا.'**
+  String get noorLineNight2;
+
+  /// Noor's line on «اليوم» (CompanionBrain). Easy MSA, warm, never names one parent, no emoji, no promise of reward.
+  ///
+  /// In ar, this message translates to:
+  /// **'هدوء الليل وقت لتسأل نفسك: ما الذي نفع اليوم؟'**
+  String get noorLineNight3;
+
+  /// Noor's line on «اليوم» (CompanionBrain). Easy MSA, warm, never names one parent, no emoji, no promise of reward.
+  ///
+  /// In ar, this message translates to:
+  /// **'ليلة هادئة لك ولـ{name}.'**
+  String noorLineNight4(String name);
+
+  /// Noor's line on «اليوم» (CompanionBrain). Easy MSA, warm, never names one parent, no emoji, no promise of reward.
+  ///
+  /// In ar, this message translates to:
+  /// **'اليوم أول يوم لنا مع {name}. أنا نور، وسأمشي معك خطوة خطوة.'**
+  String noorFirstDay(String name);
+
+  /// Noor's line on «اليوم» (CompanionBrain). Easy MSA, warm, never names one parent, no emoji, no promise of reward.
+  ///
+  /// In ar, this message translates to:
+  /// **'مهمة {name} أُنجزت، وتنتظر كلمتك.'**
+  String noorMissionsOne(String name);
+
+  /// Noor's line on «اليوم» (CompanionBrain). Easy MSA, warm, never names one parent, no emoji, no promise of reward.
+  ///
+  /// In ar, this message translates to:
+  /// **'{count, plural, =2{مهمتان أُنجزتا وتنتظران كلمتك.} few{{count} مهام أُنجزت وتنتظر كلمتك.} other{{count} مهمة أُنجزت وتنتظر كلمتك.}}'**
+  String noorMissionsMany(int count);
+
+  /// Noor's line on «اليوم» (CompanionBrain). Easy MSA, warm, never names one parent, no emoji, no promise of reward.
+  ///
+  /// In ar, this message translates to:
+  /// **'أكّد بكلمة طيبة'**
+  String get noorChipConfirm;
+
+  /// Noor's line on «اليوم» (CompanionBrain). Easy MSA, warm, never names one parent, no emoji, no promise of reward.
+  ///
+  /// In ar, this message translates to:
+  /// **'جاء موعد خطوتك مع {name}:\n«{step}»\nكيف جرت؟'**
+  String noorPromiseDue(String name, String step);
+
+  /// Noor's line on «اليوم» (CompanionBrain). Easy MSA, warm, never names one parent, no emoji, no promise of reward.
+  ///
+  /// In ar, this message translates to:
+  /// **'تحدّثنا قبل أيام عن:\n«{step}»\nهل جرّبتها مع {name}؟'**
+  String noorFollowupDue(String name, String step);
+
+  /// Noor's line on «اليوم» (CompanionBrain). Easy MSA, warm, never names one parent, no emoji, no promise of reward.
+  ///
+  /// In ar, this message translates to:
+  /// **'الحمد لله، نفعت! سأتذكّر أن هذا ينفع مع {name}.'**
+  String noorThanksWorked(String name);
+
+  /// Noor's line on «اليوم» (CompanionBrain). Easy MSA, warm, never names one parent, no emoji, no promise of reward.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا بأس، لكل طفل مفتاحه. لنبحث عن طريقة أخرى.'**
+  String get noorThanksDidntWork;
+
+  /// Noor's line on «اليوم» (CompanionBrain). Easy MSA, warm, never names one parent, no emoji, no promise of reward.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا بأس، الخطوة تنتظرك متى شئت.'**
+  String get noorThanksDidntTry;
+
+  /// Noor's line on «اليوم» (CompanionBrain). Easy MSA, warm, never names one parent, no emoji, no promise of reward.
+  ///
+  /// In ar, this message translates to:
+  /// **'اسأل عن بديل'**
+  String get noorChipAskAlternative;
+
+  /// Noor's line on «اليوم» (CompanionBrain). Easy MSA, warm, never names one parent, no emoji, no promise of reward.
+  ///
+  /// In ar, this message translates to:
+  /// **'بقي شهر على رمضان. لنجهّز {name} بخطوة صغيرة كل يوم.'**
+  String noorRamadan30(String name);
+
+  /// Noor's line on «اليوم» (CompanionBrain). Easy MSA, warm, never names one parent, no emoji, no promise of reward.
+  ///
+  /// In ar, this message translates to:
+  /// **'أسبوعان على رمضان، وبرنامج الأسرة جاهز حين تريد.'**
+  String get noorRamadan14;
+
+  /// Noor's line on «اليوم» (CompanionBrain). Easy MSA, warm, never names one parent, no emoji, no promise of reward.
+  ///
+  /// In ar, this message translates to:
+  /// **'أسبوع على رمضان. هل نبدأ تهيئة {name}؟'**
+  String noorRamadan7(String name);
+
+  /// Noor's line on «اليوم» (CompanionBrain). Easy MSA, warm, never names one parent, no emoji, no promise of reward.
+  ///
+  /// In ar, this message translates to:
+  /// **'غدًا رمضان، بلّغنا الله وإياكم.'**
+  String get noorRamadan1;
+
+  /// Noor's line on «اليوم» (CompanionBrain). Easy MSA, warm, never names one parent, no emoji, no promise of reward.
+  ///
+  /// In ar, this message translates to:
+  /// **'برنامج رمضان'**
+  String get noorChipRamadan;
+
+  /// Noor's line on «اليوم» (CompanionBrain). Easy MSA, warm, never names one parent, no emoji, no promise of reward.
+  ///
+  /// In ar, this message translates to:
+  /// **'خطة هذا الأسبوع لـ{name} جاهزة أدناه: تحدٍّ واحد وثلاث خطوات صغيرة.'**
+  String noorMondayPlan(String name);
+
+  /// Noor's line on «اليوم» (CompanionBrain). Easy MSA, warm, never names one parent, no emoji, no promise of reward.
+  ///
+  /// In ar, this message translates to:
+  /// **'خطوة اليوم'**
+  String get noorChipStep;
+
+  /// Tooltip/semantics of the small close button on Noor's line.
+  ///
+  /// In ar, this message translates to:
+  /// **'إخفاء لليوم'**
+  String get noorDismiss;
+
+  /// Settings switch: Noor only greets, never asks.
+  ///
+  /// In ar, this message translates to:
+  /// **'وضع هادئ'**
+  String get noorQuietMode;
+
+  /// Settings switch subtitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'نور يحيّيك فقط، ولا يسأل عن المتابعات.'**
+  String get noorQuietModeHint;
+
+  /// Next-step sheet: the parent picks a slot; Noor asks back when it falls due.
+  ///
+  /// In ar, this message translates to:
+  /// **'متى ستجرّبها مع {name}؟'**
+  String promiseWhenTitle(String name);
+
+  /// Promise slot chip.
+  ///
+  /// In ar, this message translates to:
+  /// **'الليلة'**
+  String get promiseTonight;
+
+  /// Promise slot chip.
+  ///
+  /// In ar, this message translates to:
+  /// **'غدًا'**
+  String get promiseTomorrow;
+
+  /// Promise slot chip.
+  ///
+  /// In ar, this message translates to:
+  /// **'هذا الأسبوع'**
+  String get promiseThisWeek;
+
+  /// Shown after the parent picks a slot.
+  ///
+  /// In ar, this message translates to:
+  /// **'سأسألك كيف جرت.'**
+  String get promiseSaved;
+
+  /// Local notification title for a promise. No child name on the lock screen.
+  ///
+  /// In ar, this message translates to:
+  /// **'تذكير لطيف من نور'**
+  String get promiseReminderTitle;
+
+  /// Local notification body. No child name on the lock screen.
+  ///
+  /// In ar, this message translates to:
+  /// **'خطوتك الصغيرة مع طفلك تنتظرك.'**
+  String get promiseReminderBody;
 }
 
 class _AppLocalizationsDelegate

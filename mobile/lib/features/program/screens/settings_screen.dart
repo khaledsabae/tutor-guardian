@@ -37,6 +37,7 @@ import '../widgets/follow_us_row.dart';
 import 'package:almorabbi/widgets/ui/directional_chevron.dart';
 import 'package:almorabbi/widgets/ui/loading_view.dart';
 import 'package:almorabbi/core/haptics.dart';
+import 'package:almorabbi/features/companion/providers/companion_providers.dart';
 import '../../child_memory/providers/memory_providers.dart';
 import '../../child_memory/widgets/memory_errors.dart';
 import 'package:almorabbi/core/failures.dart';
@@ -839,6 +840,19 @@ class _AdhkarSettingsRowState extends State<_AdhkarSettingsRow> {
             await Haptics.setEnabled(val);
             if (val) await Haptics.selection();
           },
+        ),
+        // «وضع هادئ» (phase 2, anti-nag): Noor only greets on «اليوم» —
+        // no promise or follow-up questions in the header.
+        Consumer(
+          builder: (context, ref, _) => _row(
+            title: AppLocalizations.of(context).noorQuietMode,
+            subtitle: AppLocalizations.of(context).noorQuietModeHint,
+            icon: Icons.bedtime_outlined,
+            value: ref.watch(companionMemoryProvider).valueOrNull?.quietMode ??
+                false,
+            onChanged: (val) =>
+                ref.read(companionMemoryProvider.notifier).setQuietMode(val),
+          ),
         ),
       ],
     );

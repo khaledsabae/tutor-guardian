@@ -92,4 +92,9 @@ async def get_app_config():
         # NOT erased — what settling a lost account deletion relies on.
         "erased_device_410_min_build": erased_devices.min_build(),
         **_support_config(),
+        # «نور يتذكّر» kill switch (phase 2): the companion header on Today.
+        # Default on; NOOR_HEADER_ENABLED=0 in .env turns every installed
+        # build back to the plain greeting row — no release needed.
+        "noor_header_enabled": os.environ.get(
+            "NOOR_HEADER_ENABLED", "1").strip().lower() not in ("0", "false", "no", "off"),
     }

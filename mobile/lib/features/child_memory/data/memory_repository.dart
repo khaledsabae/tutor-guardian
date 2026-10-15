@@ -86,6 +86,23 @@ class MemoryRepository {
     }
   }
 
+  /// A lesson promise as a server follow-up. The follow-up id, or null when
+  /// the server did not open one (an older server, the switch off, the cap,
+  /// a duplicate topic, offline) — never an error: the device keeps the
+  /// promise and Noor asks it back either way.
+  Future<int?> openPromise(int childId,
+      {required String step, required String when, String topic = 'other'}) async {
+    try {
+      final json = await _client.withDeviceProof(() => _client
+          .openPromiseFollowup(childId, step: step, when: when, topic: topic));
+      final f = json['followup'];
+      final id = f is Map ? f['id'] : null;
+      return id is int ? id : null;
+    } catch (_) {
+      return null;
+    }
+  }
+
   Future<FollowupView> followup(int followupId) async {
     final json = await _client
         .withDeviceProof(() => _client.getFollowup(followupId));

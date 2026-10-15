@@ -34,6 +34,9 @@ GUARDED = {
     ("POST", "/api/children/followups/{followup_id}/answer"): "require_device_proof",
     ("POST", "/api/children/followups/{followup_id}/dismiss"): "require_device_proof",
     ("GET", "/api/children/{child_id}/followups"): "require_device_proof",
+    # A lesson promise opens a follow-up (phase 2, حلقة الوعد) — it writes
+    # into the same memory loop, so it carries the same proof.
+    ("POST", "/api/children/{child_id}/followups"): "require_device_proof",
     ("GET", "/api/children/{child_id}/memory"): "require_device_proof",
     ("POST", "/api/children/{child_id}/memory"): "require_device_proof",
     ("PATCH", "/api/children/{child_id}/memory/{fact_id}"): "require_device_proof",

@@ -14,10 +14,18 @@ import '../../child_memory/widgets/today_weekly_plan_card.dart';
 import '../../onboarding/providers/onboarding_providers.dart';
 
 class TodayLoopCards extends StatelessWidget {
-  const TodayLoopCards({super.key, required this.profile});
+  const TodayLoopCards({
+    super.key,
+    required this.profile,
+    this.hideFollowup = false,
+  });
 
   /// The active child, or null before one is chosen (then: nothing).
   final ActiveChildProfile? profile;
+
+  /// True while Noor's header on «اليوم» is asking this follow-up already
+  /// (phase 2): the parent is asked once, in one place.
+  final bool hideFollowup;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +34,7 @@ class TodayLoopCards extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        TodayFollowupCard(activeChildId: child.id),
+        if (!hideFollowup) TodayFollowupCard(activeChildId: child.id),
         TodayWeeklyPlanCard(
           childId: child.id,
           childName: child.name,

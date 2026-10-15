@@ -114,6 +114,7 @@ KEYS = [
     "lessonQuiz", "quizYourResult", "quizNextQuestion", "quizShowResult",
     "quizErrorLoading",
     "lessonCelebrationTitle", "lessonNextStepTitle", "lessonNextStepConfirm",
+    "promiseTonight",
     "followupTitle", "followupTitleFor", "followupWorked", "followupThanksTitle",
     "reviewPromptTitle", "reviewPromptLater", "settingsThemeLight",
     "todayMissionOpen", "praiseFromFamily", "dailyGiftLabel", "missionTodayLabel",

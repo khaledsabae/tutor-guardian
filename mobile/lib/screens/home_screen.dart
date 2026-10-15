@@ -33,6 +33,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../l10n/app_localizations.dart';
 
+import '../features/companion/providers/companion_providers.dart';
+import '../features/companion/widgets/noor_today_header.dart';
 import '../features/home/greeting.dart';
 import '../features/companion/widgets/noor_presence.dart';
 import '../features/home/widgets/daily_gift_moment.dart';
@@ -133,41 +135,47 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       body: ListView(
         padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
         children: [
-          Row(
-            children: [
-              // «نور» as a presence beside the greeting (جولة الحرفة):
-              // the drawn face in its breathing moon window, not a loose
-              // square illustration.
-              const NoorPresence(size: 56)
-                  .animate()
-                  .fadeIn(duration: Dt.slow)
-                  .scale(
-                    begin: const Offset(.7, .7),
-                    curve: Curves.easeOutBack,
-                    duration: Dt.slow,
-                  ),
-              const SizedBox(width: 10),
-              Expanded(
-                child: Text(
-                  // Time-aware, and honest on day one («النصوص»): the hour
-                  // picks صباح/مساء, and a first-day streak (≤1) drops the
-                  // «مستمرة» — nothing has continued yet.
-                  profile == null
-                      ? l10n.greetingPeace
-                      : greetingFor(
-                          l10n,
-                          profile.name,
-                          DateTime.now(),
-                          firstDay: coins.dailyStreak <= 1,
-                        ),
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    color: AppTheme.textSecondary,
-                    fontWeight: FontWeight.w600,
-                    height: 1.4,
-                  ),
-                ).animate().fadeIn(duration: Dt.base),
-              ),
-            ],
+          // «نور يتذكّر» (phase 2): Noor's one line for this open — a
+          // promise to ask back, a mission waiting, the time of day. The
+          // old greeting row stays as the fallback (no child yet, or the
+          // server's NOOR_HEADER_ENABLED kill switch is off).
+          NoorTodayHeader(
+            fallback: Row(
+              children: [
+                // «نور» as a presence beside the greeting (جولة الحرفة):
+                // the drawn face in its breathing moon window, not a loose
+                // square illustration.
+                const NoorPresence(size: 56)
+                    .animate()
+                    .fadeIn(duration: Dt.slow)
+                    .scale(
+                      begin: const Offset(.7, .7),
+                      curve: Curves.easeOutBack,
+                      duration: Dt.slow,
+                    ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: Text(
+                    // Time-aware, and honest on day one («النصوص»): the hour
+                    // picks صباح/مساء, and a first-day streak (≤1) drops the
+                    // «مستمرة» — nothing has continued yet.
+                    profile == null
+                        ? l10n.greetingPeace
+                        : greetingFor(
+                            l10n,
+                            profile.name,
+                            DateTime.now(),
+                            firstDay: coins.dailyStreak <= 1,
+                          ),
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      color: AppTheme.textSecondary,
+                      fontWeight: FontWeight.w600,
+                      height: 1.4,
+                    ),
+                  ).animate().fadeIn(duration: Dt.base),
+                ),
+              ],
+            ),
           ),
           const SizedBox(height: 12),
           // «هدية اليوم» — once a day it lands as a moment; afterwards it
@@ -200,7 +208,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           // that took lesson_opened/child_added from 39% to 54%. Each hides
           // itself while loading, on any failure, and on an older server, and
           // logs today_block_tapped('loop', <action>).
-          TodayLoopCards(profile: profile),
+          TodayLoopCards(
+            profile: profile,
+            hideFollowup: ref.watch(companionHostsFollowupProvider),
+          ),
           const SizedBox(height: 24),
 
           // ② اسأل المربّي

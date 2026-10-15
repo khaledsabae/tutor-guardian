@@ -192,6 +192,43 @@ def child_followups(
             "followups": cm.list_followups(device_id, child_id, status)}
 
 
+class PromiseIn(BaseModel):
+    """«متى ستجرّبها مع …؟» — the lesson's one step and the slot picked."""
+    strategy: str = Field(min_length=1, max_length=400)
+    when: Literal["tonight", "tomorrow", "week"]
+    topic: Literal["prayer", "anger", "sleep", "study", "screens", "fear",
+                   "siblings", "eating", "lying", "other"] = "other"
+
+
+_PROMISE_REFUSED = {
+    "followup_exists": "هناك سؤال متابعة مفتوح عن هذا الأمر بالفعل.",
+    "followups_full": "لديك ثلاث متابعات مفتوحة لهذا الطفل؛ أجب عن إحداها أولًا.",
+}
+
+
+@router.post("/children/{child_id}/followups", status_code=201,
+             summary="A lesson promise becomes a follow-up (source='lesson')",
+             dependencies=[Depends(require_device_proof)])
+def open_promise(child_id: int, body: PromiseIn, request: Request):
+    """Same queue, limits and memory switch as the chat follow-ups.
+    `409 followup_exists` / `409 followups_full` are not errors for the app:
+    the promise is still kept on the device and the parent is not told off."""
+    device_id = _owned_child(request, child_id)
+    lang = "en" if (request.headers.get("accept-language") or "")[:2] == "en" else "ar"
+    try:
+        fu = cm.open_promise_followup(device_id, child_id, body.strategy,
+                                      when=body.when, topic=body.topic, lang=lang)
+    except cm.FactValidationError as exc:
+        raise _err(422, "strategy",
+                   "الخطوة فارغة أو طويلة أو مما لا يحفظه المربّي.") from exc
+    except cm.MemoryOffError as exc:
+        raise _memory_off() from exc
+    except cm.FollowupRefused as exc:
+        code = str(exc)
+        raise _err(409, code, _PROMISE_REFUSED.get(code, "لم تُفتح المتابعة.")) from exc
+    return {"followup": fu}
+
+
 # ── Facts ─────────────────────────────────────────────────────────────────
 
 

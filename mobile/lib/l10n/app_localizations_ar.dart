@@ -901,13 +901,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get onbChildName => 'اسم طفلك';
 
   @override
-  String get onbNameHint => 'مثلًا: سارة، أحمد، ليلى';
-
-  @override
   String get onbNameRequired => 'الاسم مطلوب';
-
-  @override
-  String get onbNameTooLong => 'الاسم طويل (الحد الأقصى 30 حرفًا)';
 
   @override
   String get onbAgeGroup => 'المرحلة العمرية';
@@ -3569,10 +3563,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get missionDone => 'أنجزتها';
 
   @override
-  String get missionAlreadyDone => 'قلت إنك أنجزتها ✅';
+  String get missionAlreadyDone => 'قلت إنك أنجزتها';
 
   @override
-  String get missionClaimedNote => 'بابا سيراها في المساء.';
+  String get missionClaimedNote => 'سيراها أهلك في المساء.';
 
   @override
   String get missionOutdoorsHint => 'هذه تحتاج أن تخرج من البيت.';
@@ -5647,6 +5641,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get onbNameQuestion => 'ما اسم طفلك؟';
 
   @override
+  String get onbNameHint => 'مثلًا: سارة، أحمد، ليلى';
+
+  @override
   String get onbNameTitleDefault => 'درب طفلك';
 
   @override
@@ -5661,6 +5658,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get onbNameDone => 'تمّ';
 
   @override
+  String get onbNameTooLong => 'الاسم طويل (الحد الأقصى 30 حرفًا)';
+
+  @override
   String get onbNameDigitsOnly => 'اكتب اسمًا لا أرقامًا';
 
   @override
@@ -5671,4 +5671,220 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get tourStartHereGo => 'ابدأ';
+
+  @override
+  String get noorHelloDawn => 'صباح النور';
+
+  @override
+  String get noorHelloMorning => 'صباح الخير';
+
+  @override
+  String get noorHelloNoon => 'طاب يومك';
+
+  @override
+  String get noorHelloEvening => 'مساء الخير';
+
+  @override
+  String get noorHelloNight => 'مساء النور';
+
+  @override
+  String get noorYourChild => 'طفلك';
+
+  @override
+  String noorLineDawn1(String name) {
+    return 'يومٌ جديد مع $name، وخطوة صغيرة تكفي.';
+  }
+
+  @override
+  String noorLineDawn2(String name) {
+    return 'الصباح الباكر هادئ؛ دقيقة لك قبل أن يستيقظ $name.';
+  }
+
+  @override
+  String get noorLineDawn3 => 'ابدأ بنيّة طيبة، والباقي يأتي.';
+
+  @override
+  String noorLineDawn4(String name) {
+    return 'صباحٌ مبارك لك ولـ$name.';
+  }
+
+  @override
+  String noorLineMorning1(String name) {
+    return 'ابدأ يوم $name بكلمة طيبة؛ أثرها يبقى.';
+  }
+
+  @override
+  String get noorLineMorning2 => 'صباحٌ هادئ يصنع يومًا هادئًا.';
+
+  @override
+  String noorLineMorning3(String name) {
+    return 'ابتسامتك أول ما يراه $name اليوم.';
+  }
+
+  @override
+  String noorLineMorning4(String name) {
+    return 'خطوة اليوم مع $name تنتظرك أدناه.';
+  }
+
+  @override
+  String noorLineNoon1(String name) {
+    return 'لحظة قصيرة مع $name الآن تساوي الكثير.';
+  }
+
+  @override
+  String noorLineNoon2(String name) {
+    return 'اسأل $name: ما أجمل شيء حدث لك اليوم؟';
+  }
+
+  @override
+  String get noorLineNoon3 => 'دقيقتان من الإصغاء تكفيان في منتصف اليوم.';
+
+  @override
+  String get noorLineNoon4 => 'كيف يومكما؟ خطوتك الصغيرة أدناه.';
+
+  @override
+  String noorLineEvening1(String name) {
+    return 'المساء وقت القرب؛ اجلس مع $name قليلًا.';
+  }
+
+  @override
+  String noorLineEvening2(String name) {
+    return 'قبل النوم، أخبر $name بشيء أحسنه اليوم.';
+  }
+
+  @override
+  String noorLineEvening3(String name) {
+    return 'كلمة دافئة في آخر اليوم تبقى في ذاكرة $name.';
+  }
+
+  @override
+  String noorLineEvening4(String name) {
+    return 'لعل الليلة فرصة لخطوة صغيرة مع $name.';
+  }
+
+  @override
+  String noorLineNight1(String name) {
+    return 'تصبح على خير، وغدًا خطوة جديدة مع $name.';
+  }
+
+  @override
+  String get noorLineNight2 => 'يكفي اليوم ما بذلت. أراك غدًا.';
+
+  @override
+  String get noorLineNight3 => 'هدوء الليل وقت لتسأل نفسك: ما الذي نفع اليوم؟';
+
+  @override
+  String noorLineNight4(String name) {
+    return 'ليلة هادئة لك ولـ$name.';
+  }
+
+  @override
+  String noorFirstDay(String name) {
+    return 'اليوم أول يوم لنا مع $name. أنا نور، وسأمشي معك خطوة خطوة.';
+  }
+
+  @override
+  String noorMissionsOne(String name) {
+    return 'مهمة $name أُنجزت، وتنتظر كلمتك.';
+  }
+
+  @override
+  String noorMissionsMany(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count مهمة أُنجزت وتنتظر كلمتك.',
+      few: '$count مهام أُنجزت وتنتظر كلمتك.',
+      two: 'مهمتان أُنجزتا وتنتظران كلمتك.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get noorChipConfirm => 'أكّد بكلمة طيبة';
+
+  @override
+  String noorPromiseDue(String name, String step) {
+    return 'جاء موعد خطوتك مع $name:\n«$step»\nكيف جرت؟';
+  }
+
+  @override
+  String noorFollowupDue(String name, String step) {
+    return 'تحدّثنا قبل أيام عن:\n«$step»\nهل جرّبتها مع $name؟';
+  }
+
+  @override
+  String noorThanksWorked(String name) {
+    return 'الحمد لله، نفعت! سأتذكّر أن هذا ينفع مع $name.';
+  }
+
+  @override
+  String get noorThanksDidntWork =>
+      'لا بأس، لكل طفل مفتاحه. لنبحث عن طريقة أخرى.';
+
+  @override
+  String get noorThanksDidntTry => 'لا بأس، الخطوة تنتظرك متى شئت.';
+
+  @override
+  String get noorChipAskAlternative => 'اسأل عن بديل';
+
+  @override
+  String noorRamadan30(String name) {
+    return 'بقي شهر على رمضان. لنجهّز $name بخطوة صغيرة كل يوم.';
+  }
+
+  @override
+  String get noorRamadan14 =>
+      'أسبوعان على رمضان، وبرنامج الأسرة جاهز حين تريد.';
+
+  @override
+  String noorRamadan7(String name) {
+    return 'أسبوع على رمضان. هل نبدأ تهيئة $name؟';
+  }
+
+  @override
+  String get noorRamadan1 => 'غدًا رمضان، بلّغنا الله وإياكم.';
+
+  @override
+  String get noorChipRamadan => 'برنامج رمضان';
+
+  @override
+  String noorMondayPlan(String name) {
+    return 'خطة هذا الأسبوع لـ$name جاهزة أدناه: تحدٍّ واحد وثلاث خطوات صغيرة.';
+  }
+
+  @override
+  String get noorChipStep => 'خطوة اليوم';
+
+  @override
+  String get noorDismiss => 'إخفاء لليوم';
+
+  @override
+  String get noorQuietMode => 'وضع هادئ';
+
+  @override
+  String get noorQuietModeHint => 'نور يحيّيك فقط، ولا يسأل عن المتابعات.';
+
+  @override
+  String promiseWhenTitle(String name) {
+    return 'متى ستجرّبها مع $name؟';
+  }
+
+  @override
+  String get promiseTonight => 'الليلة';
+
+  @override
+  String get promiseTomorrow => 'غدًا';
+
+  @override
+  String get promiseThisWeek => 'هذا الأسبوع';
+
+  @override
+  String get promiseSaved => 'سأسألك كيف جرت.';
+
+  @override
+  String get promiseReminderTitle => 'تذكير لطيف من نور';
+
+  @override
+  String get promiseReminderBody => 'خطوتك الصغيرة مع طفلك تنتظرك.';
 }

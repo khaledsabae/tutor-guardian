@@ -315,8 +315,23 @@ class _ChildMissionScreenState extends ConsumerState<ChildMissionScreen> {
                 // matters right now is the one that ends the screen.
                 TextButton(
                   onPressed: claimed || _claiming ? null : _claim,
-                  child: Text(
-                    claimed ? l10n.missionAlreadyDone : l10n.missionDone,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      if (claimed) ...[
+                        BrandGlyph(
+                          BrandIcon.star,
+                          size: 16,
+                          color: theme.colorScheme.primary,
+                        ),
+                        const SizedBox(width: 6),
+                      ],
+                      Flexible(
+                        child: Text(
+                          claimed ? l10n.missionAlreadyDone : l10n.missionDone,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],
