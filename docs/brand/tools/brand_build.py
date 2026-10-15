@@ -73,7 +73,7 @@ DIRECTIONS = {
     'b': ('icon_b_noor.svg', 'B «نور»', 'من غير حلقة — العناصر أكبر'),
     'c': ('icon_c_hills.svg', 'C «الطبقات»', 'نور طالع ورا تلال ورقية'),
 }
-RECOMMENDED = 'b'
+RECOMMENDED = 'c'  # خالد اختار C «الطبقات» 2026-10-15
 
 PALETTE = dict(E='#0F6B5C', E2='#12806D', E3='#0D6A5A', SH='#094A40', DECO='#13806C', IV='#FBF1DE',
                IV2='#EADBC0', IV3='#D9C7A7', CORAL='#F4A492', GOLD='#F7C548', G1='#7ED3A6', G2='#A8E6C4',
