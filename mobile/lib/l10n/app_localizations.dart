@@ -10579,6 +10579,24 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'{count, plural, =1{أتممتم خطوة واحدة هذا الأسبوع} =2{أتممتم خطوتين هذا الأسبوع} few{أتممتم {count} خطوات هذا الأسبوع} many{أتممتم {count} خطوةً هذا الأسبوع} other{أتممتم {count} خطوة هذا الأسبوع}}'**
   String planMarkedCount(int count);
+
+  /// Noor's line in the first nights of Ramadan (days 1–3), once a Hijri year («هلّ هلال رمضان», نور والقناديل phase 5). Chip: noorChipRamadan. Easy MSA, family-neutral plural, no ayah/hadith/dua text, no promise of reward.
+  ///
+  /// In ar, this message translates to:
+  /// **'هلّ هلال رمضان، مبارك عليكم الشهر! في كل يوم منه قنديل تضيئونه مع {name}.'**
+  String noorRamadanStart(String name);
+
+  /// Title of the quiet Eid al-Fitr moment on Today, shown once a Hijri year on the first open of Eid (نور والقناديل phase 5).
+  ///
+  /// In ar, this message translates to:
+  /// **'عيدكم مبارك'**
+  String get eidMomentTitle;
+
+  /// The line under «عيدكم مبارك» in the Eid moment. A customary greeting only: no ayah/hadith/dua text, no promise of reward, no count.
+  ///
+  /// In ar, this message translates to:
+  /// **'كل عام وأنتم بخير.'**
+  String get eidMomentBody;
 }
 
 class _AppLocalizationsDelegate

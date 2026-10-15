@@ -115,6 +115,37 @@ void main() {
     expect(find.text('نجحت'), findsNothing);
   });
 
+  testWidgets('«هلّ هلال رمضان»: the line, the name, one Ramadan chip',
+      (tester) async {
+    final container = await _pump(
+      tester,
+      const CompanionLine(
+        key: 'ramadan-start:1448',
+        kind: CompanionKind.ramadanStart,
+        mood: CompanionMood.happy,
+        name: 'سارة',
+        actions: [CompanionAction.openRamadan],
+        onceOnly: true,
+      ),
+    );
+    expect(
+      find.text(
+        'هلّ هلال رمضان، مبارك عليكم الشهر! في كل يوم منه قنديل تضيئونه مع سارة.',
+      ),
+      findsOneWidget,
+    );
+    expect(find.text('برنامج رمضان'), findsOneWidget);
+    expect(find.byTooltip('إخفاء لليوم'), findsOneWidget);
+    // Once-only: held for this open, recorded for every open after it.
+    await tester.pump();
+    expect(container.read(heldOnceLinesProvider), contains('ramadan-start:1448'));
+    final prefs = await SharedPreferences.getInstance();
+    expect(
+      CompanionStore(prefs).read().seenKeys,
+      contains('ramadan-start:1448'),
+    );
+  });
+
   testWidgets('the next-step sheet returns the slot the parent picked',
       (tester) async {
     PromiseSlot? picked;

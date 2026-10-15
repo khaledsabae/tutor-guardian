@@ -225,6 +225,7 @@ class _NoorTodayHeaderState extends ConsumerState<NoorTodayHeader> {
         7 => l10n.noorRamadan7(name),
         _ => l10n.noorRamadan1,
       },
+      CompanionKind.ramadanStart => l10n.noorRamadanStart(name),
       CompanionKind.mondayPlan => l10n.noorMondayPlan(name),
       CompanionKind.prayerAdvance => l10n.noorPrayerAdvance(name),
       CompanionKind.prayerInvite => l10n.noorPrayerInvite(name),

@@ -6320,4 +6320,15 @@ class AppLocalizationsEn extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String noorRamadanStart(String name) {
+    return 'Ramadan\'s crescent is here — Ramadan Mubarak to your family! Each day of it has a lantern to light with $name.';
+  }
+
+  @override
+  String get eidMomentTitle => 'Eid Mubarak';
+
+  @override
+  String get eidMomentBody => 'Wishing you and your family a joyful Eid.';
 }
