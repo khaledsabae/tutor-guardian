@@ -121,7 +121,7 @@ install_fresh() {  # variant
 # One process from onboarding through 06 (no restarts), so the checkpoints that
 # need the child do not depend on the identity surviving a cold start; 07/08
 # then restart and check exactly that.
-FRESH=(02_today_lesson 03_assistant 04_child_mode 05_dark_mode 06_english 07_cold_start 08_child_survives_restart 09_programs)
+FRESH=(02_today_lesson 03_assistant 04_child_mode 05_dark_mode 06_english 07_cold_start 08_child_survives_restart 09_programs 10_family_road)
 if install_fresh head && l10n_for head \
    && run_flow gate fresh 01_onboarding fresh/01_onboarding.yaml -e UI_LANG=ar; then
   for f in "${FRESH[@]}"; do

@@ -575,4 +575,66 @@ void main() {
       );
     });
   });
+
+  group('«دخل شهر …» (سماوات المواسم)', () {
+    CompanionInputs season(
+      String? month,
+      int? day, {
+      int year = 1448,
+      CompanionMemory memory = const CompanionMemory(),
+      int? ramadan,
+    }) => CompanionInputs(
+      now: _wed,
+      memory: memory,
+      childId: 7,
+      childName: 'سارة',
+      ramadanDaysUntil: ramadan,
+      seasonMonth: month,
+      seasonDay: day,
+      seasonYear: year,
+    );
+
+    test('days two to four of each season, once a Hijri year, one chip', () {
+      for (final m in kSeasonMonths) {
+        final line = pickLine(season(m, 2))!;
+        expect(line.kind, CompanionKind.seasonStart, reason: m);
+        expect(line.season, m);
+        expect(line.key, 'season:$m:1448');
+        expect(line.onceOnly, isTrue);
+        expect(line.isQuestion, isFalse);
+        expect(line.actions, [CompanionAction.openFamilyRoad]);
+        for (final d in [1, 5, 13, null]) {
+          expect(
+            pickLine(season(m, d))!.kind,
+            CompanionKind.greeting,
+            reason: '$m day $d',
+          );
+        }
+        final seen = CompanionMemory(seenKeys: {line.key});
+        expect(pickLine(season(m, 3, memory: seen))!.kind,
+            CompanionKind.greeting);
+        expect(
+          pickLine(season(m, 3, memory: seen, year: 1449))!.kind,
+          CompanionKind.seasonStart,
+        );
+      }
+    });
+
+    test('an unknown month, quiet mode and a hidden line say nothing', () {
+      expect(pickLine(season('muharram', 2))!.kind, CompanionKind.greeting);
+      expect(
+        pickLine(
+          season('rajab', 2, memory: const CompanionMemory(quietMode: true)),
+        )!.kind,
+        CompanionKind.greeting,
+      );
+    });
+
+    test('the Ramadan countdown keeps its place', () {
+      expect(
+        pickLine(season('shaban', 2, ramadan: 30))!.kind,
+        CompanionKind.ramadanCountdown,
+      );
+    });
+  });
 }

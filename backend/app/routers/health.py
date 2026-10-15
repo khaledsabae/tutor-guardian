@@ -97,4 +97,9 @@ async def get_app_config():
         # build back to the plain greeting row — no release needed.
         "noor_header_enabled": os.environ.get(
             "NOOR_HEADER_ENABLED", "1").strip().lower() not in ("0", "false", "no", "off"),
+        # «على الأفق» kill switch («عالم الأسرة»): the one-line strip on Today
+        # that points at the family road's nearest gate. Default on;
+        # HORIZON_STRIP_ENABLED=0 hides it on every installed build.
+        "horizon_strip_enabled": os.environ.get(
+            "HORIZON_STRIP_ENABLED", "1").strip().lower() not in ("0", "false", "no", "off"),
     }

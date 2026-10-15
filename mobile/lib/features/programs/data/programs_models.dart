@@ -355,6 +355,51 @@ class ChildPrograms {
   }
 }
 
+/// `hijri_season` (MOBILE_API §11.2, «سماوات المواسم»): which of the three
+/// quiet seasons the sky marks today. The server works it out from the same
+/// family season as Ramadan; the app only paints it — no text comes from it.
+enum HijriSeasonMonth {
+  rajab,
+  shaban,
+  dhulHijjah;
+
+  /// The GA4 / wire spelling.
+  String get wire => switch (this) {
+    HijriSeasonMonth.rajab => 'rajab',
+    HijriSeasonMonth.shaban => 'shaban',
+    HijriSeasonMonth.dhulHijjah => 'dhul_hijjah',
+  };
+
+  /// Null for anything else (a value a newer server may add is ignored).
+  static HijriSeasonMonth? fromWire(String? s) => switch (s) {
+    'rajab' => HijriSeasonMonth.rajab,
+    'shaban' => HijriSeasonMonth.shaban,
+    'dhul_hijjah' => HijriSeasonMonth.dhulHijjah,
+    _ => null,
+  };
+}
+
+class HijriSeason {
+  const HijriSeason({required this.month, this.hijriYear, this.day});
+
+  final HijriSeasonMonth month;
+  final int? hijriYear;
+
+  /// Day of the Hijri month, 1-based (derived starts can be a day off).
+  final int? day;
+
+  static HijriSeason? fromJson(Object? v) {
+    final j = _map(v);
+    final month = HijriSeasonMonth.fromWire(_str(j?['month']));
+    if (month == null) return null;
+    return HijriSeason(
+      month: month,
+      hijriYear: _int(j?['hijri_year']),
+      day: _int(j?['day']),
+    );
+  }
+}
+
 /// `GET /api/programs`.
 class ProgramsOverview {
   const ProgramsOverview({
@@ -363,10 +408,14 @@ class ProgramsOverview {
     required this.children,
     this.serverFeatures = const [],
     this.unavailable = const [],
+    this.hijriSeason,
   });
 
   final DateTime? date;
   final RamadanOverview ramadan;
+
+  /// Null on a quiet day, and from a server older than «سماوات المواسم».
+  final HijriSeason? hijriSeason;
   final List<ChildPrograms> children;
   final List<String> serverFeatures;
 
@@ -397,6 +446,7 @@ class ProgramsOverview {
     ],
     serverFeatures: _strings(j['server_features']),
     unavailable: _strings(j['unavailable']),
+    hijriSeason: HijriSeason.fromJson(j['hijri_season']),
   );
 }
 

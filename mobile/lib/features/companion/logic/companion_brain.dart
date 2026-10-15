@@ -48,6 +48,7 @@ enum CompanionKind {
   birthMonthAsk,
   ramadanCountdown,
   ramadanStart,
+  seasonStart,
   mondayPlan,
   fridayHarvest,
   firstDay,
@@ -65,6 +66,7 @@ enum CompanionAction {
   openChildJourney,
   editChild,
   openHarvest,
+  openFamilyRoad,
 }
 
 /// What /api/programs says about the active child, flattened for the brain.
@@ -124,7 +126,16 @@ class CompanionInputs {
     this.weekActs = 0,
     this.firstDay = false,
     this.notices = const ChildNotices(),
+    this.seasonMonth,
+    this.seasonDay,
+    this.seasonYear,
   });
+
+  /// `hijri_season.month` from /api/programs (`rajab` · `shaban` ·
+  /// `dhul_hijjah`), its day and Hijri year — «سماوات المواسم».
+  final String? seasonMonth;
+  final int? seasonDay;
+  final int? seasonYear;
 
   final ChildNotices notices;
 
@@ -178,7 +189,11 @@ class CompanionLine {
     this.promise,
     this.followup,
     this.onceOnly = false,
+    this.season,
   });
+
+  /// The season a [CompanionKind.seasonStart] line names.
+  final String? season;
 
   /// Stable id: anti-nag bookkeeping, analytics, hide-for-today.
   final String key;
@@ -216,6 +231,13 @@ const _countdownDays = {30, 14, 7, 1};
 /// called هلال for its first nights — so a family that did not open on day
 /// one, or whose day one went to a notice above it, still hears it once.
 const kRamadanStartDays = 3;
+
+/// «دخل شهر …» speaks on days 2–4 of a season the server *derived* — a day
+/// later than Ramadan's line, so a derived first day that is really the last
+/// day of the month before never makes Noor say the month has come early.
+const kSeasonLineFirstDay = 2;
+const kSeasonLineLastDay = 4;
+const kSeasonMonths = {'rajab', 'shaban', 'dhul_hijjah'};
 const _outcomeActions = [
   CompanionAction.outcomeWorked,
   CompanionAction.outcomeDidntWork,
@@ -376,6 +398,30 @@ CompanionLine? pickLine(CompanionInputs i) {
         mood: CompanionMood.happy,
         name: i.childName,
         actions: const [CompanionAction.openRamadan],
+        onceOnly: true,
+      );
+    }
+  }
+
+  // 5 ── «دخل شهر رجب / شعبان / ذي الحجة»: once a Hijri year each, in the
+  // Ramadan lines' place: Sha'ban's days 2–4 are 27–28 days before the
+  // month, so the seasons never meet the month or its countdown days.
+  final sm = i.seasonMonth;
+  final sd = i.seasonDay;
+  if (sm != null &&
+      kSeasonMonths.contains(sm) &&
+      sd != null &&
+      sd >= kSeasonLineFirstDay &&
+      sd <= kSeasonLineLastDay) {
+    final key = 'season:$sm:${i.seasonYear ?? i.now.year}';
+    if (open(key) && !mem.seenKeys.contains(key)) {
+      return CompanionLine(
+        key: key,
+        kind: CompanionKind.seasonStart,
+        mood: CompanionMood.calm,
+        name: i.childName,
+        season: sm,
+        actions: const [CompanionAction.openFamilyRoad],
         onceOnly: true,
       );
     }

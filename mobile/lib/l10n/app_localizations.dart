@@ -10597,6 +10597,210 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'كل عام وأنتم بخير.'**
   String get eidMomentBody;
+
+  /// Title of «درب {الاسم}» (عالم الأسرة): the family's paper road with the active child. {name} is the child's real name.
+  ///
+  /// In ar, this message translates to:
+  /// **'درب {name}'**
+  String familyRoadTitle(String name);
+
+  /// Title of the family road while the child is still the default «طفلي».
+  ///
+  /// In ar, this message translates to:
+  /// **'درب الأسرة'**
+  String get familyRoadTitleNoName;
+
+  /// Label over the gates ahead on the family road, and the lead of the strip on Today. Easy MSA.
+  ///
+  /// In ar, this message translates to:
+  /// **'على الأفق'**
+  String get familyRoadHorizon;
+
+  /// The 'you are here' stop on the family road, where Noor stands. Family-neutral plural.
+  ///
+  /// In ar, this message translates to:
+  /// **'أنتم هنا'**
+  String get familyRoadHere;
+
+  /// Under «أنتم هنا»: the path being resumed and its finished lessons. Positive only — never 'left'.
+  ///
+  /// In ar, this message translates to:
+  /// **'في «{title}»: أتممتم {done} من {total}'**
+  String familyRoadHereResume(String title, int done, int total);
+
+  /// Under «أنتم هنا» when no path is in progress. No 'you missed', no reward.
+  ///
+  /// In ar, this message translates to:
+  /// **'كل خطوة تربوية تضيء قنديلًا على هذا الدرب.'**
+  String get familyRoadHereHint;
+
+  /// Button under «أنتم هنا»: opens the path being resumed.
+  ///
+  /// In ar, this message translates to:
+  /// **'أكمل'**
+  String get familyRoadContinue;
+
+  /// Label over what the family has done, below «أنتم هنا». Only what was done; never what was not.
+  ///
+  /// In ar, this message translates to:
+  /// **'ما أضأتموه'**
+  String get familyRoadLit;
+
+  /// Row of this week's lit lanterns on the family road. Tapping opens the week's acts.
+  ///
+  /// In ar, this message translates to:
+  /// **'هذا الأسبوع'**
+  String get familyRoadThisWeek;
+
+  /// Row of earlier lit weeks (lit lanterns only) on the family road.
+  ///
+  /// In ar, this message translates to:
+  /// **'قبل ذلك'**
+  String get familyRoadBefore;
+
+  /// The family's own lit weeks since the start (never resets, never compared).
+  ///
+  /// In ar, this message translates to:
+  /// **'{count, plural, =1{أسبوع مضيء واحد منذ البداية} =2{أسبوعان مضيئان منذ البداية} few{{count} أسابيع مضيئة منذ البداية} many{{count} أسبوعًا مضيئًا منذ البداية} other{{count} أسبوع مضيء منذ البداية}}'**
+  String familyRoadSinceStart(int count);
+
+  /// A finished path on the family road (every lesson done).
+  ///
+  /// In ar, this message translates to:
+  /// **'اكتمل البدر: «{title}»'**
+  String familyRoadFullMoon(String title);
+
+  /// The bottom end of the family road, shown only when something is lit above it.
+  ///
+  /// In ar, this message translates to:
+  /// **'من هنا بدأ دربكم'**
+  String get familyRoadStart;
+
+  /// Screen-reader hint on the week's lantern row: opens the week's acts.
+  ///
+  /// In ar, this message translates to:
+  /// **'اعرض خطوات الأسبوع'**
+  String get familyRoadOpenWeek;
+
+  /// Entry row at the top of the Learn tab that opens the family road.
+  ///
+  /// In ar, this message translates to:
+  /// **'درب {name}'**
+  String familyRoadEntryTitle(String name);
+
+  /// Line under the Learn tab's entry to the family road. Family-neutral plural.
+  ///
+  /// In ar, this message translates to:
+  /// **'ما ينتظركم على الأفق، وما أضأتموه معًا.'**
+  String get familyRoadEntryBody;
+
+  /// When a gate on the horizon comes, in days. Follows the gate's title («رمضان بعد ١١٦ يومًا»).
+  ///
+  /// In ar, this message translates to:
+  /// **'{days, plural, =0{اليوم} =1{بعد يوم واحد} =2{بعد يومين} few{بعد {days} أيام} many{بعد {days} يومًا} other{بعد {days} يوم}}'**
+  String gateInDays(int days);
+
+  /// When a gate on the horizon comes, in months. Follows the gate's title («سنّ السابعة بعد ٤ أشهر»).
+  ///
+  /// In ar, this message translates to:
+  /// **'{months, plural, =1{بعد شهر واحد} =2{بعد شهرين} few{بعد {months} أشهر} many{بعد {months} شهرًا} other{بعد {months} شهر}}'**
+  String gateInMonths(int months);
+
+  /// Gate on the family road: the next path to begin. Its title follows under it.
+  ///
+  /// In ar, this message translates to:
+  /// **'المسار التالي'**
+  String get gateNextPath;
+
+  /// Button of the next-path gate.
+  ///
+  /// In ar, this message translates to:
+  /// **'افتح المسار'**
+  String get gateOpenPath;
+
+  /// When-line of a milestone the server says is due now («سنّ التمييز — حان وقتها»).
+  ///
+  /// In ar, this message translates to:
+  /// **'حان وقتها'**
+  String get gateMilestoneDue;
+
+  /// Title of a due milestone gate when its title is not loaded yet.
+  ///
+  /// In ar, this message translates to:
+  /// **'محطة جديدة في عمر {name}'**
+  String gateMilestoneFallback(String name);
+
+  /// Button of a milestone gate: opens its cards.
+  ///
+  /// In ar, this message translates to:
+  /// **'اقرأ عنها'**
+  String get gateReadMilestone;
+
+  /// Title of the Ramadan gate on the horizon; the when-line follows («بعد ١١٦ يومًا»).
+  ///
+  /// In ar, this message translates to:
+  /// **'رمضان'**
+  String get gateRamadan;
+
+  /// When-line of the Ramadan gate during the month itself.
+  ///
+  /// In ar, this message translates to:
+  /// **'اليوم {day} من الشهر'**
+  String gateRamadanDay(int day);
+
+  /// Title of the age-seven gate, from a real birth month.
+  ///
+  /// In ar, this message translates to:
+  /// **'سنّ السابعة'**
+  String get gateAgeSeven;
+
+  /// Line under the age-seven gate. Names the app's Prayer Journey program; no hadith text, no promise of reward.
+  ///
+  /// In ar, this message translates to:
+  /// **'تبدأ رحلة الصلاة هنا، خطوة بعد خطوة.'**
+  String get gateAgeSevenNote;
+
+  /// Gate when the child has no birth month: the dated gates cannot be placed yet.
+  ///
+  /// In ar, this message translates to:
+  /// **'مواعيد {name} القادمة'**
+  String gateBirthMonth(String name);
+
+  /// Line under the birth-month gate. Family-neutral plural.
+  ///
+  /// In ar, this message translates to:
+  /// **'أضيفوا شهر الميلاد لتظهر على الدرب.'**
+  String get gateBirthMonthNote;
+
+  /// Noor's line on «اليوم» in the first days of Rajab (سماوات المواسم), once a Hijri year. A customary greeting only: no ayah/hadith text, no virtue or reward claimed.
+  ///
+  /// In ar, this message translates to:
+  /// **'دخل شهر رجب، كل عام وأنتم بخير.'**
+  String get noorSeasonRajab;
+
+  /// Noor's line in the first days of Sha'ban, once a Hijri year. No ayah/hadith text, no virtue or reward claimed.
+  ///
+  /// In ar, this message translates to:
+  /// **'دخل شهر شعبان، ورمضان صار قريبًا.'**
+  String get noorSeasonShaban;
+
+  /// Noor's line in the first days of Dhu al-Hijjah, once a Hijri year. A customary greeting only: no ayah/hadith text, no virtue or reward claimed.
+  ///
+  /// In ar, this message translates to:
+  /// **'دخلت أيام ذي الحجة، كل عام وأنتم بخير.'**
+  String get noorSeasonDhulHijjah;
+
+  /// Chip under Noor's season line: opens «درب {الاسم}».
+  ///
+  /// In ar, this message translates to:
+  /// **'افتح الدرب'**
+  String get noorChipFamilyRoad;
+
+  /// Screen-reader hint on the «على الأفق» strip on Today.
+  ///
+  /// In ar, this message translates to:
+  /// **'يفتح درب الأسرة'**
+  String get horizonStripHint;
 }
 
 class _AppLocalizationsDelegate

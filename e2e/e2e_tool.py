@@ -170,6 +170,10 @@ KEYS = [
     # sound × recitation (e2e/flows/rehearsal/sound_*.yaml): the Quran
     # reader's surah list and its bottom «استماع / إيقاف» pill.
     "holyQuran", "quranVerseCount", "quranListen", "quranStop",
+    # «درب {الاسم}» and «على الأفق» (عالم الأسرة): fresh/10 and the gallery's
+    # family_road shots — head builds only; the gallery guards its shots.
+    "familyRoadHorizon", "familyRoadHere", "familyRoadLit",
+    "familyRoadEntryBody",
 ]
 
 # Strings the app hardcodes outside the ARB files.
@@ -464,6 +468,8 @@ GALLERY_SCREENS = [
     ("home_dark_gift", "لحظة الهدية على «اليوم» — داكن"),
     ("week_lanterns", "قناديل الأسبوع تحت ① على «اليوم»"),
     ("tour_mark", "الجولة — أول إشارة (قبل: v2 على «اليوم»، بعد: v3 على ①)"),
+    ("family_road", "«درب {الاسم}» — الأفق و«أنتم هنا»"),
+    ("family_road_lit", "«درب {الاسم}» — ما أضأتموه"),
 ]
 
 GALLERY_ONBOARDING = [
@@ -498,6 +504,10 @@ GALLERY_GUARDED = {
     # Last in shoot.yaml, through the settings replay row; never seen on an
     # emulator before it shipped, so a miss is a blank cell, not a red gate.
     "tour_mark",
+    # «عالم الأسرة»: the baseline has no road; and the lit part needs a lantern
+    # from /api/family/week.
+    "family_road",
+    "family_road_lit",
 }
 
 # gallery__01_before_ar__before__ar__home.png — the flow name is matched

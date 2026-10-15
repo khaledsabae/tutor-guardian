@@ -6331,4 +6331,152 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get eidMomentBody => 'Wishing you and your family a joyful Eid.';
+
+  @override
+  String familyRoadTitle(String name) {
+    return '$name\'s road';
+  }
+
+  @override
+  String get familyRoadTitleNoName => 'Your family\'s road';
+
+  @override
+  String get familyRoadHorizon => 'On the horizon';
+
+  @override
+  String get familyRoadHere => 'You are here';
+
+  @override
+  String familyRoadHereResume(String title, int done, int total) {
+    return 'In «$title»: $done of $total done';
+  }
+
+  @override
+  String get familyRoadHereHint =>
+      'Every parenting step lights a lantern on this road.';
+
+  @override
+  String get familyRoadContinue => 'Continue';
+
+  @override
+  String get familyRoadLit => 'What you have lit';
+
+  @override
+  String get familyRoadThisWeek => 'This week';
+
+  @override
+  String get familyRoadBefore => 'Before that';
+
+  @override
+  String familyRoadSinceStart(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count lit weeks since the start',
+      one: '1 lit week since the start',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String familyRoadFullMoon(String title) {
+    return 'Full moon: «$title»';
+  }
+
+  @override
+  String get familyRoadStart => 'Your road began here';
+
+  @override
+  String get familyRoadOpenWeek => 'See the week\'s steps';
+
+  @override
+  String familyRoadEntryTitle(String name) {
+    return '$name\'s road';
+  }
+
+  @override
+  String get familyRoadEntryBody =>
+      'What lies ahead, and what you have lit together.';
+
+  @override
+  String gateInDays(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'in $days days',
+      one: 'in 1 day',
+      zero: 'today',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String gateInMonths(int months) {
+    String _temp0 = intl.Intl.pluralLogic(
+      months,
+      locale: localeName,
+      other: 'in $months months',
+      one: 'in 1 month',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get gateNextPath => 'The next path';
+
+  @override
+  String get gateOpenPath => 'Open the path';
+
+  @override
+  String get gateMilestoneDue => 'is here';
+
+  @override
+  String gateMilestoneFallback(String name) {
+    return 'A new stage for $name';
+  }
+
+  @override
+  String get gateReadMilestone => 'Read about it';
+
+  @override
+  String get gateRamadan => 'Ramadan';
+
+  @override
+  String gateRamadanDay(int day) {
+    return 'day $day of the month';
+  }
+
+  @override
+  String get gateAgeSeven => 'Age seven';
+
+  @override
+  String get gateAgeSevenNote =>
+      'The prayer journey begins here, one step at a time.';
+
+  @override
+  String gateBirthMonth(String name) {
+    return '$name\'s coming dates';
+  }
+
+  @override
+  String get gateBirthMonthNote =>
+      'Add the birth month to place them on the road.';
+
+  @override
+  String get noorSeasonRajab =>
+      'The month of Rajab has begun. May every year find you well.';
+
+  @override
+  String get noorSeasonShaban =>
+      'The month of Sha\'ban has begun, and Ramadan is near.';
+
+  @override
+  String get noorSeasonDhulHijjah =>
+      'The days of Dhu al-Hijjah have begun. May every year find you well.';
+
+  @override
+  String get noorChipFamilyRoad => 'Open the road';
+
+  @override
+  String get horizonStripHint => 'Opens the family road';
 }

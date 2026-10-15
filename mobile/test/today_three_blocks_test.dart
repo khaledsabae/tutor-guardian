@@ -22,7 +22,10 @@ import 'package:almorabbi/api/tg_client.dart';
 import 'package:almorabbi/features/companion/data/companion_store.dart';
 import 'package:almorabbi/features/companion/widgets/noor_presence.dart';
 import 'package:almorabbi/features/home/widgets/home_stats_row.dart';
+import 'package:almorabbi/features/family_road/screens/family_road_screen.dart';
+import 'package:almorabbi/features/family_road/widgets/horizon_strip.dart';
 import 'package:almorabbi/features/home/widgets/sky_band.dart';
+import 'package:almorabbi/features/home/widgets/today_focus_card.dart';
 import 'package:almorabbi/features/home/widgets/today_road.dart';
 import 'package:almorabbi/main.dart' show appConfigProvider;
 import 'package:almorabbi/widgets/ui/brand_glyph.dart';
@@ -58,6 +61,7 @@ void main() {
     List<String> stops = const [],
     bool noorOn = true,
     Map<String, dynamic>? programs,
+    Map<String, dynamic>? appConfig,
   }) async {
     tester.view.physicalSize = phone * 3.0;
     tester.view.devicePixelRatio = 3.0;
@@ -84,9 +88,12 @@ void main() {
       overrides: [
         tgClientProvider.overrideWithValue(fake),
         sharedPreferencesProvider.overrideWith((_) async => prefs),
-        if (!noorOn)
+        if (!noorOn || appConfig != null)
           appConfigProvider.overrideWith(
-            (_) async => {'noor_header_enabled': false},
+            (_) async => {
+              if (!noorOn) 'noor_header_enabled': false,
+              ...?appConfig,
+            },
           ),
       ],
     );
@@ -278,6 +285,100 @@ void main() {
     await tester.pump(const Duration(milliseconds: 400));
     expect(find.text('عيدكم مبارك'), findsNothing);
     expect(find.text('خطوة اليوم مع سارة'), findsOneWidget);
+  });
+
+  group('«على الأفق» (عالم الأسرة)', () {
+    Map<String, dynamic> upcoming() => programsJson(
+      state: 'upcoming',
+      day: null,
+      daysUntil: 116,
+      due: 0,
+    );
+
+    testWidgets('the strip names the nearest dated gate on the hills', (
+      tester,
+    ) async {
+      await pumpHome(tester, programs: upcoming());
+      final strip = find.byType(HorizonStrip);
+      expect(strip, findsOneWidget);
+      expect(
+        find.descendant(of: find.byType(SkyBand), matching: strip),
+        findsOneWidget,
+      );
+      expect(find.textContaining('رمضان بعد 116 يومًا'), findsOneWidget);
+      expect(find.textContaining('على الأفق'), findsOneWidget);
+    });
+
+    testWidgets('a tap opens «درب {الاسم}»', (tester) async {
+      await pumpHome(tester, programs: upcoming());
+      await tester.tap(find.byType(HorizonStrip));
+      await tester.pump();
+      await tester.pump(const Duration(seconds: 1));
+      expect(find.byType(FamilyRoadScreen), findsOneWidget);
+      expect(find.text('درب سارة'), findsOneWidget);
+    });
+
+    testWidgets('the server can hide it', (tester) async {
+      await pumpHome(
+        tester,
+        programs: upcoming(),
+        appConfig: {'horizon_strip_enabled': false},
+      );
+      expect(find.byType(HorizonStrip), findsNothing);
+      expect(find.byType(SkyBand), findsOneWidget);
+    });
+
+    testWidgets('no dated gate (an older server), no strip', (tester) async {
+      await pumpHome(tester);
+      expect(find.byType(HorizonStrip), findsNothing);
+    });
+
+    for (final scale in [1.0, 2.0]) {
+      testWidgets('① keeps its place under it — 360dp, ${scale}x text', (
+        tester,
+      ) async {
+        await pumpHome(
+          tester,
+          programs: upcoming(),
+          textScale: scale,
+          phone: const Size(360, 800),
+        );
+        expect(find.byType(HorizonStrip), findsOneWidget);
+        expect(tester.takeException(), isNull);
+        // The strip lies on the hills, inside the sky (the band grows by
+        // less than the strip — sky_band_test), and ① follows the sky.
+        final sky = tester.getRect(find.byType(SkyBand));
+        final strip = tester.getRect(find.byType(HorizonStrip));
+        expect(strip.bottom, lessThanOrEqualTo(sky.bottom));
+        final step = tester.getTopLeft(find.byType(TodayFocusCard)).dy;
+        expect(step, greaterThan(sky.bottom));
+        if (scale == 1.0) {
+          // On a 360×800 phone the ① card begins well within the first screen.
+          expect(step, lessThan(800 - 200));
+        }
+      });
+    }
+
+    testWidgets('in a season the sky takes its touch', (tester) async {
+      await pumpHome(
+        tester,
+        programs: {
+          ...upcoming(),
+          'hijri_season': {'month': 'rajab', 'day': 5, 'hijri_year': 1448},
+        },
+      );
+      final painter =
+          tester
+                  .widget<CustomPaint>(
+                    find.descendant(
+                      of: find.byType(SkyBand),
+                      matching: find.byType(CustomPaint),
+                    ).first,
+                  )
+                  .painter!
+              as SkyPainter;
+      expect(painter.season, isNotNull);
+    });
   });
 
   testWidgets('kill switch off: no sky and no road, the plain blocks stay', (
