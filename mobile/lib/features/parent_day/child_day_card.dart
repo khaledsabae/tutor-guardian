@@ -17,6 +17,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/app_routes.dart';
 import '../../l10n/app_localizations.dart';
 import '../../state/chat_notifier.dart' show tgClientProvider;
+import '../program/providers/lesson_assets_provider.dart'
+    show contentLanguageProvider;
 import '../program/providers/progress_providers.dart' show activeChildIdProvider;
 
 class ChildDayCard extends ConsumerStatefulWidget {
@@ -50,20 +52,25 @@ class ChildDayCard extends ConsumerStatefulWidget {
 class _ChildDayCardState extends ConsumerState<ChildDayCard> {
   Map<String, dynamic>? _day;
   bool _failed = false;
-  int? _loadedFor;
 
-  Future<void> _load(int childId) async {
-    _loadedFor = childId;
+  /// The child and the language the shown day was fetched for. The mission's
+  /// title arrives in the language of the request (`?lang=`), so switching
+  /// the app to English must fetch again — keyed on the child alone, the
+  /// card kept the Arabic title until the next cold start.
+  (int, String)? _loadedFor;
+
+  Future<void> _load((int, String) key) async {
+    _loadedFor = key;
     try {
-      final day = await ref.read(tgClientProvider).fetchChildDay(childId);
-      // Switching child while a request is in flight: the slower, older
-      // answer must not overwrite the newer child's day.
-      if (!mounted || _loadedFor != childId) return;
+      final day = await ref.read(tgClientProvider).fetchChildDay(key.$1);
+      // Switching child (or language) while a request is in flight: the
+      // slower, older answer must not overwrite the newer one.
+      if (!mounted || _loadedFor != key) return;
       setState(() { _day = day; _failed = false; });
     } catch (_) {
       // The home tab must survive a backend that is down. A card that cannot
       // load hides; it does not put an error in the middle of the day.
-      if (!mounted || _loadedFor != childId) return;
+      if (!mounted || _loadedFor != key) return;
       setState(() => _failed = true);
     }
   }
@@ -73,14 +80,15 @@ class _ChildDayCardState extends ConsumerState<ChildDayCard> {
     final empty = widget.whenEmpty ?? const SizedBox.shrink();
     final childId = ref.watch(activeChildIdProvider);
     if (childId == null) return empty;
-    if (_loadedFor != childId) {
+    final key = (childId, ref.watch(contentLanguageProvider));
+    if (_loadedFor != key) {
       // A new child: the previous child's day is not shown for a single
       // frame, and its late answer is discarded by _load.
-      _loadedFor = childId;
+      _loadedFor = key;
       _day = null;
       _failed = false;
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (mounted && _loadedFor == childId) _load(childId);
+        if (mounted && _loadedFor == key) _load(key);
       });
     }
 
@@ -109,7 +117,7 @@ class _ChildDayCardState extends ConsumerState<ChildDayCard> {
         onTap: () async {
           widget.onOpened?.call();
           await Navigator.of(context).push(AppRoutes.parentDay());
-          if (mounted) _load(childId);
+          if (mounted) _load(key);
         },
         child: Padding(
           padding: const EdgeInsets.all(16),
