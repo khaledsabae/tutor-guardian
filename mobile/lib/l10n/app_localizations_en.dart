@@ -1922,7 +1922,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get inviteDesc =>
-      'Sharing Al-Murabbi with a friend is ongoing charity — every child who benefits adds to your good deeds, inshaAllah 🌿';
+      'Sharing Al-Murabbi with a friend opens a door of good for their child 🌿';
 
   @override
   String get inviteSharePreparing => 'Preparing…';
@@ -3527,7 +3527,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get reviewPromptBody =>
-      'Your store review helps other parents find the app — and counts among your good deeds, insha\'Allah.';
+      'Your store review helps other parents find the app.';
 
   @override
   String get reviewPromptLater => 'Later';
@@ -4191,7 +4191,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Tap to choose or add a child and follow their path';
 
   @override
-  String get inviteReachedTitle => 'Your ongoing reward';
+  String get inviteReachedTitle => 'Your invitation\'s reach';
 
   @override
   String inviteReachedCount(int count) {

@@ -95,7 +95,7 @@ void main() {
 
   test('the invite keys this branch replaced are gone from both locales', () {
     // inviteTitle / inviteCodeUsed lost their last caller when the screen
-    // became «أجرك الجاري»; an orphaned key is a string nobody will update.
+    // became «أثر دعوتك»; an orphaned key is a string nobody will update.
     for (final file in ['lib/l10n/app_ar.arb', 'lib/l10n/app_en.arb']) {
       final arb = File(file).readAsStringSync();
       expect(arb, isNot(contains('"inviteTitle"')), reason: file);
