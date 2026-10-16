@@ -151,9 +151,8 @@ void main() {
       expect(
         lines,
         containsAll([
-          'Al-Murabbi — your partner on the parenting journey',
-          '📲 Free, for the sake of Allah — scan the code or search for '
-              '“Al-Murabbi”',
+          'Al-Murabbi — a guide who knows your child, step by step',
+          'Completely free — scan the code or search for “Al-Murabbi”',
         ]),
       );
     });
@@ -171,8 +170,8 @@ void main() {
       expect(
         lines,
         containsAll([
-          'المربّي — شريكك في رحلة التربية',
-          '📲 مجانًا لوجه الله — امسح الكود أو ابحث: «المربّي»',
+          'المربّي — مربٍّ يعرف طفلك، خطوة بخطوة',
+          'مجاني بالكامل — امسح الكود أو ابحث عن «المربّي»',
         ]),
       );
     });

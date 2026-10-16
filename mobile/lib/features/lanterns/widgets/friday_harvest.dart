@@ -325,7 +325,6 @@ class HarvestShareCard extends StatelessWidget {
             ],
             const SizedBox(height: 24),
             const ShareCardBrandFooter(
-              icon: Icons.light_mode_outlined,
               qrSize: 96,
             ),
           ],

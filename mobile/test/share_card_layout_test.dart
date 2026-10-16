@@ -53,7 +53,6 @@ ShareableMomentCard _quiz(AppLocalizations l10n) => ShareableMomentCard(
   eyebrow: l10n.quizResultTitle,
   headline: l10n.quizScorePoints(40, 50),
   body: l10n.quizPraiseExcellent,
-  icon: Icons.quiz_outlined,
 );
 
 const _longTip =
@@ -342,6 +341,61 @@ void main() {
         }
         if (_pngPrefix.isNotEmpty) {
           File('$_pngPrefix$name.png').writeAsBytesSync(png);
+        }
+      });
+    }
+  });
+
+  group('Noor rises on the footer of the PNG', () {
+    // 1.0.74: the footer's gradient circle became Noor behind paper hills.
+    // Noor is an SVG that parses asynchronously, like the background art, so
+    // only the captured pixels show it arrived: the strip's emerald sheet and
+    // hills, and Noor's ivory crescent on them. Where the strip sits is read
+    // off the same card pumped at the same size, in the same font.
+    final cards = <String, (Widget, AppLocalizations)>{
+      'quiz-ar': (_quiz(_ar), _ar),
+      'coach-tip-long-ar': (coachTipShare(_ar, _longTip).card, _ar),
+      'ramadan-en': (const RamadanRecapShareCard(card: _englishRecap), _en),
+    };
+    for (final MapEntry(key: name, value: (card, l10n)) in cards.entries) {
+      testWidgets(name, (tester) async {
+        await _pump(tester, card, l10n);
+        final strip = tester.getTopLeft(find.byType(ShareCardNoorStrip));
+        final sheet = strip & ShareCardNoorStrip.size;
+        expect(
+          sheet.left,
+          closeTo((ShareableMomentCard.size.width - sheet.width - 6) / 2, 0.5),
+          reason: 'the strip, shadow included, is centred',
+        );
+
+        final png = (await tester.runAsync(
+          () => ScreenshotController().captureFromWidget(
+            card,
+            targetSize: ShareableMomentCard.size,
+            delay: const Duration(milliseconds: 400),
+          ),
+        ))!;
+        expect(tester.takeException(), isNull);
+        final image = (await tester.runAsync(() => decodeImageFromList(png)))!;
+        addTearDown(image.dispose);
+        final rgba = (await tester.runAsync(
+          () => image.toByteData(format: ui.ImageByteFormat.rawStraightRgba),
+        ))!;
+        var green = 0, ivory = 0, total = 0;
+        // Inside the sheet, clear of its rounded corners.
+        for (var y = sheet.top.ceil() + 10; y < sheet.bottom.floor() - 10; y += 2) {
+          for (var x = sheet.left.ceil() + 12; x < sheet.right.floor() - 12; x += 2) {
+            final i = (y * image.width + x) * 4;
+            final r = rgba.getUint8(i), g = rgba.getUint8(i + 1), b = rgba.getUint8(i + 2);
+            total++;
+            if (g - r > 40 && g > 60 && r < 40) green++;
+            if (r > 225 && g > 215 && b > 185) ivory++;
+          }
+        }
+        expect(green / total, greaterThan(.55), reason: '$name: no emerald sheet');
+        expect(ivory / total, greaterThan(.06), reason: '$name: Noor is not in the PNG');
+        if (_pngPrefix.isNotEmpty) {
+          File('${_pngPrefix}footer-$name.png').writeAsBytesSync(png);
         }
       });
     }

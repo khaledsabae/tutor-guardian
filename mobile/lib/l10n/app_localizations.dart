@@ -5387,13 +5387,13 @@ abstract class AppLocalizations {
   /// No description provided for @shareCardBrandLine.
   ///
   /// In ar, this message translates to:
-  /// **'المربّي — شريكك في رحلة التربية'**
+  /// **'المربّي — مربٍّ يعرف طفلك، خطوة بخطوة'**
   String get shareCardBrandLine;
 
   /// No description provided for @shareCardInstallHint.
   ///
   /// In ar, this message translates to:
-  /// **'📲 مجانًا لوجه الله — امسح الكود أو ابحث: «المربّي»'**
+  /// **'مجاني بالكامل — امسح الكود أو ابحث عن «المربّي»'**
   String get shareCardInstallHint;
 
   /// No description provided for @sharePathCompleteEyebrow.

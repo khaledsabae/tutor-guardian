@@ -308,7 +308,6 @@ class _QuizGameScreenState extends ConsumerState<QuizGameScreen> {
         eyebrow: l10n.quizResultTitle,
         headline: l10n.quizScorePoints(_score, total),
         body: praiseBody,
-        icon: Icons.quiz_outlined,
       ),
     );
   }
