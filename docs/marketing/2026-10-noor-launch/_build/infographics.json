@@ -426,6 +426,115 @@
         "text": "Each day, let your child choose one deed that pleases Allah, and talk about it in the evening."
       },
       "source": "knowledge_base/curriculum/i18n/en/lessons — lesson_7-9_aqeedah_fundamentals_01/03/11/12 + lesson_10-12_islamic_parenting_identity_04"
+    },
+    "teen_prayer_ownership": {
+      "art": "milestone_first_prayer",
+      "kicker": "من برنامج «رحلة الصلاة» في تطبيق المربّي",
+      "title": "صلاة المراهق عن قناعة",
+      "subtitle": "«صلاتي مسؤوليتي» — من الحادية عشرة فما فوق",
+      "items": [
+        {
+          "lead": "صحبة لا رقابة",
+          "text": "الغاية أن يحافظ على صلاته بدافع منه، ويكون والداه صحبة وحوارًا."
+        },
+        {
+          "lead": "لقاء أسبوعي من عشر دقائق",
+          "text": "كيف كانت صلاته؟ ما الذي أعانه؟ ما الذي صعب عليه؟ استمعوا أكثر مما تتكلّمون."
+        },
+        {
+          "lead": "حوار في المعنى",
+          "text": "أجيبوا عن أسئلته بصدق، واطلبوا الجواب من أهل العلم حين لا تعرفون."
+        },
+        {
+          "lead": "سندٌ أمام أصدقائه",
+          "text": "إن واجه سخرية أو ضغطًا بسبب صلاته، فاسمعوه أولًا، وكونوا سنده لا لائميه."
+        },
+        {
+          "lead": "ثقة لا استجواب",
+          "text": "ما يسجّله بنفسه ثبّتوه دون استجواب؛ فالثقة جزء من هذه المرحلة."
+        }
+      ],
+      "try": {
+        "label": "ابدؤوا هذا الأسبوع",
+        "text": "لقاءً من عشر دقائق، واسألوه: ما الذي أعانك على صلاتك؟ وما الذي صعب عليك؟"
+      },
+      "footnote": "بلا عقاب ولا تعيير • وبعد البلوغ تصير الصلاة فريضة عليه، ودوركم الصحبة والتذكير بلطف",
+      "source": "knowledge_base/curriculum/programs/prayer_journey.json — ownership (goal, text, parent_assignments, confirmation) + principles"
+    },
+    "emotions_7_9": {
+      "art": "domain_health",
+      "kicker": "من مسار «الصحة النفسية والعاطفية» في تطبيق المربّي",
+      "title": "طفلٌ يعرف ماذا يفعل بغضبه",
+      "subtitle": "الغضب والقلق وتنظيم الانفعال — من ٧ إلى ٩ سنوات",
+      "items": [
+        {
+          "lead": "الغضب طبيعي، والضرب لا",
+          "text": "المشاعر كلها طبيعية، لكن بعض التصرّفات غير مقبولة."
+        },
+        {
+          "lead": "سمّوا الشعور",
+          "text": "«أنا غاضب»، «أنا قلق»، «أنا حزين». التسمية أول خطوة."
+        },
+        {
+          "lead": "محطات تهدئة",
+          "text": "مكان هادئ، وتنفّس، وعدّ، ورسم ما يشعر به."
+        },
+        {
+          "lead": "تدرّبوا وقت الهدوء",
+          "text": "لا وقت الانفجار. وكونوا أنتم القدوة في ضبط النفس."
+        },
+        {
+          "lead": "الخوف بلا استهزاء",
+          "text": "أنصتوا وسمّوا خوفه، ثم فكرة مطمئنة واقعية، ومواجهة تدريجية مع مدح شجاعته."
+        },
+        {
+          "lead": "متى تطلبون المساعدة",
+          "text": "إن عطّل القلق أو الغضب نومه أو دراسته أو حياته، فراجعوا طبيب الأطفال أو مختصًا."
+        }
+      ],
+      "try": {
+        "label": "جرّبوا هذا الأسبوع",
+        "text": "اصنعوا معه «ركن تهدئة» صغيرًا: وسادة وكتاب وأداة تنفّس، ودرّبوه عليه وقت الهدوء."
+      },
+      "source": "path_7-9_medical_emotional_health — الدروس ٠١، b03، b04"
+    },
+    "ramadan_family_en": {
+      "lang": "en",
+      "art": "lanterns",
+      "kicker": "From the “Family Ramadan” program in Al-Morabbi",
+      "title": "Family Ramadan",
+      "subtitle": "Thirty days, one family challenge a day, 15 minutes or less",
+      "items": [
+        {
+          "lead": "The intentions board",
+          "text": "Parents share their intention first, then the oldest child down to the youngest."
+        },
+        {
+          "lead": "The charity box",
+          "text": "Decorate it together; everyone puts in something, however little."
+        },
+        {
+          "lead": "A plate for the neighbour",
+          "text": "The children carry it with a parent, with a kind word."
+        },
+        {
+          "lead": "The gratitude jar",
+          "text": "Everyone writes or draws three small blessings from their day."
+        },
+        {
+          "lead": "A gentle fasting ladder",
+          "text": "No fasting before seven in this program. Breaking the fast when tired is not failure."
+        },
+        {
+          "lead": "Our Ramadan harvest",
+          "text": "Each person names one thing they achieved and one thing that changed in them."
+        }
+      ],
+      "try": {
+        "label": "Before Ramadan begins",
+        "text": "Choose a fixed time for the daily challenge, such as after iftar."
+      },
+      "source": "knowledge_base/curriculum/i18n/en/programs/ramadan_family.json — kickoff + fasting_ladder + days 1, 6, 9, 10, 28"
     }
   }
 }

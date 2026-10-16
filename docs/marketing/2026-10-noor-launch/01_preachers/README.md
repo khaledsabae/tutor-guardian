@@ -23,7 +23,13 @@
 |---|---|---|---|---|
 | `DA01` | د. هيثم طلعت | الرد على الشبهات، والمراهقون | [`DA01_haitham_talaat/`](DA01_haitham_talaat/) | الموجة ٢: الرسالة ١١–١٥ يناير، والنشر ≈ ٢٥ يناير |
 | `DA02` + `EN01` | م. فاضل سليمان | التعريف بالإسلام، ومقارنة الأديان، وجمهور الجاليات | [`DA02_fadel_soliman/`](DA02_fadel_soliman/) (عربي + إنجليزي) | الموجة ١: من أول نوفمبر. ⚠️ يحتاج قرار خالد (انظر notes.md) |
-| `DA03`… | — | — | من [`DA_template/`](DA_template/) | داعية كل أسبوعين في الموجة ١، و٥–١٠ في الموجة ٢ |
+| `DA03` | د. جاسم المطوع | الأسرة والمراهقون | [`DA03_jasem_al_mutawa/`](DA03_jasem_al_mutawa/): «صلاة المراهق عن قناعة» | الموجة ١ |
+| `DA04` | د. عبد الرحمن ذاكر الهاشمي | علم النفس التربوي («فقه النفس») | [`DA04_abdulrahman_zaker_alhashemi/`](DA04_abdulrahman_zaker_alhashemi/): «طفلٌ يعرف ماذا يفعل بغضبه». **الطلب رأي لا منشور** | الموجة ١ |
+| `DA05` | أ. ياسين العمري | وعظ الشباب والأسرة، والهواتف (المغرب) | [`DA05_yassine_el_amri/`](DA05_yassine_el_amri/): «الشاشة في بيتنا» + ركن الطفل | الموجة ١. ⚠️ قرار خالد |
+| `DA06` | د. هالة سمير | الإرشاد الأسري، والأمهات، وتربية البنات | [`DA06_hala_samir/`](DA06_hala_samir/): «قبل عاصفة المراهقة» + حكايات نور | الموجة ١. ⚠️ قرار خالد |
+| `EN02` | Ustadha Fatima Barkatulla | Raising Believers (UK) | [`EN02_fatima_barkatulla/`](EN02_fatima_barkatulla/): "When your child asks about Allah" | **⏸️ أرسِل بعد 1.0.74** |
+| `EN03` | Shaykh Ali Hammuda | التربية، Islam21c (UK) | [`EN03_ali_hammuda/`](EN03_ali_hammuda/): "Family Ramadan" | **⏸️ أرسِل بعد 1.0.74**. الموجة ٢ (≈ ٢٥ يناير) |
+| `DA07`… / `EN04`… | — | — | من [`DA_template/`](DA_template/) | — |
 
 **قائمة المرشّحين:** يعدّها بحث خالد. وكل اسم جديد يأخذ نسخة من `DA_template/`.
 
