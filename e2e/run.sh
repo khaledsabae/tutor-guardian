@@ -7,7 +7,7 @@
 #   E2E_OUT   dir for everything uploaded as artifacts
 #
 # Two install lineages, each = one device_id + one child named $CHILD_NAME:
-#   fresh    PR head, fresh install, Arabic: nine checkpoints
+#   fresh    PR head, fresh install, Arabic: eleven checkpoints
 #   upgrade  baseline build, English onboarding → restart (control) →
 #            `adb install -r` PR head
 # plus a third, informational lineage (see the gallery block below):
@@ -124,7 +124,7 @@ install_fresh() {  # variant
 # One process from onboarding through 06 (no restarts), so the checkpoints that
 # need the child do not depend on the identity surviving a cold start; 07/08
 # then restart and check exactly that.
-FRESH=(02_today_lesson 03_assistant 04_child_mode 05_dark_mode 06_english 07_cold_start 08_child_survives_restart 09_programs 11_family_road)
+FRESH=(02_today_lesson 03_assistant 04_child_mode 05_dark_mode 06_english 07_cold_start 08_child_survives_restart 09_programs 10_child_corner 11_family_road)
 if install_fresh head && l10n_for head \
    && run_flow gate fresh 01_onboarding fresh/01_onboarding.yaml -e UI_LANG=ar; then
   for f in "${FRESH[@]}"; do

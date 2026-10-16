@@ -542,6 +542,16 @@ name: gallery/shoot
 
 # Step 6: Parent confirms Child 2's mission with kind words
 - tapOn: '${output.lead.navMore}'
+# The hub can keep the offset Step 4's Settings visit left it at — its
+# bottom, below «يوم الطفل ومهامه» — and a DOWN search from there finds
+# nothing (run 38777734035 lost ar_font2x's praise_child_sticker to it). Look
+# UP first; from the top, the DOWN search below still does the work.
+- scrollUntilVisible:
+    element:
+      text: '${output.tile.hubParentDay}'
+    direction: UP
+    timeout: 10000
+    optional: true
 - scrollUntilVisible:
     element:
       text: '${output.tile.hubParentDay}'
@@ -579,6 +589,15 @@ name: gallery/shoot
             - waitForAnimationToEnd:
                 timeout: 2000
       # Step 7: Child 2 (4-6) re-opens child mode: PraiseHeader appears with STICKER ONLY!
+      # The confirm sheet can still be up (run 38815483981: the DOWN search
+      # below then ran inside it and missed the button). Close it first.
+      - runFlow:
+          when:
+            visible: '${output.t.missionConfirmAll}'
+          commands:
+            - back
+            - waitForAnimationToEnd:
+                timeout: 2000
       - scrollUntilVisible:
           element:
             text: '${output.t.missionOpenForChild}'
@@ -598,6 +617,16 @@ name: gallery/shoot
             # 4-6 Praise card: sticker ONLY
             - takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__praise_child_sticker'
             - runFlow: ../common/exit_child_mode.yaml
+# Still on «يوم الطفل» if Step 7 found no button: leave it by hand. home.yaml
+# cannot — its «اليوم» check also matches this screen's «اليوم مع …», so it
+# taps that line and stays (run 38815483981 lost every shot after it).
+- runFlow:
+    when:
+      visible: '${output.t.parentDayTitle}'
+    commands:
+      - back
+      - waitForAnimationToEnd:
+          timeout: 2000
 - runFlow: ../common/home.yaml
 
 # ── «درب {الاسم}» (عالم الأسرة): the family road, opened from its row at the
@@ -634,6 +663,104 @@ name: gallery/shoot
                 timeout: 2000
             - takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__family_road_lit'
       - back
+- runFlow: ../common/home.yaml
+
+# ── «ركن الطفل»: the gate's first tile, the corner, a page of the day's
+# story, and the task the session ends on (no game in the corner for this
+# launch), for the 4-6 child the praise leg left active. Head only — the baseline has no
+# corner, so every shot is guarded and the gate is simply left. Ends back on
+# Today through the PIN. After the praise leg and before the tour, so a corner
+# that goes wrong can cost no shot but the tour's.
+- tapOn: '${output.lead.navMore}'
+# The hub's routine tile is named by the active child's age, and the praise
+# leg above left a 4-6 child active: «حساب اليوم», not «ميزان العادات».
+- scrollUntilVisible:
+    element:
+      text: '(?:${output.tile.routineTitle}|${output.tile.routineDailyTracker})'
+    direction: UP
+    timeout: 20000
+    optional: true
+- tapOn:
+    text: '(?:${output.tile.routineTitle}|${output.tile.routineDailyTracker})'
+    optional: true
+- extendedWaitUntil:
+    visible: '${output.t.routineChildMode}'
+    timeout: 20000
+    optional: true
+- tapOn:
+    text: '${output.t.routineChildMode}'
+    optional: true
+- extendedWaitUntil:
+    visible: '${output.t.handoverTitle}'
+    timeout: 15000
+    optional: true
+- runFlow:
+    when:
+      visible: '${output.lead.childCornerTileTitle}'
+    commands:
+      - tapOn: '${output.lead.childCornerTileTitle}'
+      - runFlow: ../common/unlock_child_mode.yaml
+      - extendedWaitUntil:
+          visible: '${output.c.childCornerGreeting}'
+          timeout: 30000
+          optional: true
+      - waitForAnimationToEnd:
+          timeout: 3000
+      - takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__child_corner'
+      - tapOn:
+          text: '${output.c.childCornerStoryHint}'
+          optional: true
+      - extendedWaitUntil:
+          visible: '${output.t.childCornerStoryNext}'
+          timeout: 15000
+          optional: true
+      - runFlow:
+          when:
+            visible: '${output.t.childCornerStoryNext}'
+          commands:
+            - tapOn: '${output.t.childCornerStoryNext}'
+            - waitForAnimationToEnd:
+                timeout: 1500
+            - takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__child_corner_story'
+            # Back in a story closes it, back to the corner.
+            - back
+            - waitForAnimationToEnd:
+                timeout: 2000
+      - scrollUntilVisible:
+          element:
+            text: '${output.t.childCornerToMission}'
+          direction: DOWN
+          timeout: 10000
+          optional: true
+      - tapOn:
+          text: '${output.t.childCornerToMission}'
+          optional: true
+      - extendedWaitUntil:
+          visible: '${output.t.childCornerMissionNow}'
+          timeout: 15000
+          optional: true
+      - waitForAnimationToEnd:
+          timeout: 2000
+      - takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__child_corner_task'
+      - scrollUntilVisible:
+          element:
+            text: '${output.t.childCornerMissionGo}'
+          direction: DOWN
+          timeout: 10000
+          optional: true
+      - tapOn:
+          text: '${output.t.childCornerMissionGo}'
+          optional: true
+      - waitForAnimationToEnd:
+          timeout: 2000
+      - runFlow: ../common/exit_child_mode.yaml
+- runFlow:
+    when:
+      visible: '${output.t.handoverTitle}'
+    commands:
+      - back
+      - waitForAnimationToEnd:
+          timeout: 2000
 - runFlow: ../common/home.yaml
 
 # ── «القصص» (docs/STORIES_AUDIT.md): the shelf, then what a tap on the
