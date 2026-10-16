@@ -128,6 +128,13 @@ KEYS = [
     "childModePinIncorrect", "childModeEnterFailed", "childModeBudgetSpent",
     "childModeOffline", "childModePinSetupSubtitle", "childModePinConfirmSubtitle",
     "childModePinEnterSubtitle",
+    # «ركن الطفل» (fresh/10_child_corner + the gallery's corner shots) — head
+    # builds only: the baseline has no corner, its selectors never match, and
+    # the gallery shots are guarded.
+    "childCornerTileTitle", "childCornerGreeting", "childCornerStoryHint",
+    "childCornerStoryNext", "childCornerBackToCorner",
+    "childCornerMissionNow", "childCornerMissionGo",
+    "childCornerToMission", "childReturnDevice", "routineDailyTracker",
     # failure screens
     "bootError", "forceUpdateTitle",
     # a 5xx as friendlyError shows it (lesson, ErrorRetryView, chat turn) —
@@ -473,6 +480,9 @@ GALLERY_SCREENS = [
     ("praise_card_0ms", "كارت كلمة الأب — ٠ms (الظهور)"),
     ("praise_card_150ms", "كارت كلمة الأب — ١٥٠ms (الحركة)"),
     ("praise_card_400ms", "كارت كلمة الأب — ٤٠٠ms (الميل والاستقرار)"),
+    ("child_corner", "ركن الطفل — حكاية ثم مهمة (بعد فقط)"),
+    ("child_corner_story", "ركن الطفل — صفحة من الحكاية (بعد فقط)"),
+    ("child_corner_task", "ركن الطفل — المهمة بعيدًا عن الشاشة (بعد فقط)"),
     ("home_dark_noor_face", "NoorFace في «اليوم» — داكن"),
     ("home_dark_gift", "لحظة الهدية على «اليوم» — داكن"),
     ("week_lanterns", "قناديل الأسبوع تحت ① على «اليوم»"),
@@ -509,6 +519,10 @@ GALLERY_GUARDED = {
     "praise_card_0ms",
     "praise_card_150ms",
     "praise_card_400ms",
+    # «ركن الطفل»: the baseline has no corner, so there is never a «before».
+    "child_corner",
+    "child_corner_story",
+    "child_corner_task",
     "home_dark_noor_face",
     "home_dark_gift",
     # Needs a server with /api/family/week, and a head build.

@@ -9,6 +9,7 @@ import '../../../theme/app_theme.dart';
 import '../../../theme/design_tokens.dart';
 import '../models/habit_models.dart';
 import '../../agreement/child_agreement_screen.dart';
+import '../../child_corner/child_corner_screen.dart';
 import '../../handover/child_hand_back.dart';
 import '../../license/child_license_screen.dart';
 import '../../missions/child_mission_screen.dart';
@@ -33,6 +34,17 @@ class HabitChildModeScreen extends ConsumerWidget {
       return const Scaffold(
         body: LoadingView.spinner(),
       );
+    }
+
+    // «ركن الطفل» owns its whole session — the story, the game, the task, and
+    // how it ends (time spent, a lost connection, the hand-back) — so it is
+    // routed before the guards below, which would each replace it with a
+    // screen of their own. Only the family agreement outranks it, for the
+    // same reason it outranks every surface.
+    if (state.corner &&
+        !state.agreementAwaitsChild &&
+        state.error != kChildModeAgreementRequired) {
+      return const ChildCornerScreen();
     }
 
     // Precedence, highest first. The two error guards outrank the surface: a

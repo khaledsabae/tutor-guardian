@@ -190,12 +190,27 @@ class EduGameRunner extends ConsumerStatefulWidget {
   final List<EduQuestion> questions;
   final void Function(EduGameResult result) onComplete;
 
+  /// «ركن الطفل»: the same game with nothing to count. No score in the HUD,
+  /// no star burst on a right answer, no results dialog with stars and a
+  /// score, and no closing of the session — the corner owns the session and
+  /// ends it on the day's task. The level ends by calling [onQuietLeave]
+  /// instead: with the result when it was played out (or the time ran out),
+  /// with null when the child quit from the pause menu.
+  final bool quiet;
+  final ValueChanged<EduGameResult?>? onQuietLeave;
+
+  /// Drawn where the session's time bar goes. Null → [QuietTimeBar].
+  final Widget? clock;
+
   const EduGameRunner({
     super.key,
     required this.theme,
     required this.level,
     required this.questions,
     required this.onComplete,
+    this.quiet = false,
+    this.onQuietLeave,
+    this.clock,
   });
 
   @override
@@ -278,8 +293,9 @@ class _EduGameRunnerState extends ConsumerState<EduGameRunner> {
       final points = 10 + (widget.level - 1); // slight scaling per level
       _score += points;
       lightHaptic();
-      // small brand-aligned celebration on each correct answer
-      _playMiniStarBurst();
+      // small brand-aligned celebration on each correct answer — not in the
+      // corner, where a right answer is not a prize.
+      if (!widget.quiet) _playMiniStarBurst();
     } else {
       _lives--;
       errorHaptic();
@@ -337,6 +353,11 @@ class _EduGameRunnerState extends ConsumerState<EduGameRunner> {
     setState(() => _finished = true);
     _capTimer?.cancel();
     _elapsed.stop();
+
+    if (widget.quiet) {
+      widget.onQuietLeave?.call(result);
+      return;
+    }
 
     // The exit ritual. A game that ends by dropping the child back to a menu
     // teaches that the way out of a screen is another screen, and a game that
@@ -443,6 +464,7 @@ class _EduGameRunnerState extends ConsumerState<EduGameRunner> {
                     _Hud(
                       lives: _lives,
                       score: _score,
+                      showScore: !widget.quiet,
                       progress: progress,
                       theme: widget.theme,
                     ),
@@ -454,7 +476,7 @@ class _EduGameRunnerState extends ConsumerState<EduGameRunner> {
                     // it. No candle glyph here: it would compete with the
                     // game's artwork, and the bar alone carries it.
                     const SizedBox(height: 10),
-                    const QuietTimeBar(showCandle: false),
+                    widget.clock ?? const QuietTimeBar(showCandle: false),
                     const SizedBox(height: 16),
                     Expanded(
                       child: SingleChildScrollView(
@@ -488,7 +510,9 @@ class _EduGameRunnerState extends ConsumerState<EduGameRunner> {
                     _togglePause();
                     _resetGame();
                   },
-                  onQuit: () => Navigator.of(context).pop(),
+                  onQuit: widget.quiet
+                      ? () => widget.onQuietLeave?.call(null)
+                      : () => Navigator.of(context).pop(),
                 ),
             ],
           ),
@@ -501,6 +525,7 @@ class _EduGameRunnerState extends ConsumerState<EduGameRunner> {
 class _Hud extends StatelessWidget {
   final int lives;
   final int score;
+  final bool showScore;
   final double progress;
   final EduGameTheme theme;
 
@@ -509,6 +534,7 @@ class _Hud extends StatelessWidget {
     required this.score,
     required this.progress,
     required this.theme,
+    this.showScore = true,
   });
 
   @override
@@ -543,15 +569,17 @@ class _Hud extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(width: 16),
-          Text(
-            '$score',
-            style: TextStyle(
-              color: theme.textColor,
-              fontWeight: FontWeight.bold,
-              fontSize: 20,
+          if (showScore) ...[
+            const SizedBox(width: 16),
+            Text(
+              '$score',
+              style: TextStyle(
+                color: theme.textColor,
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              ),
             ),
-          ),
+          ],
         ],
       ),
     );

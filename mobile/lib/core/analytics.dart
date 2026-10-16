@@ -517,6 +517,36 @@ class Analytics {
   static Future<void> tourSkipped(int atStep) =>
       _logOnce('tour_skipped', {'at_step': atStep});
 
+  // ── «ركن الطفل» — the child's corner after the hand-over gate ─────────────
+  // No personal data: the band, a story or game id from the bundled
+  // catalogue, and why the task came up. Never the child's name or id.
+
+  /// The corner opened on the child's device. [band] is the policy band.
+  static Future<void> childCornerOpened(String band) =>
+      _log('child_corner_opened', {'band': band});
+
+  /// The child chose the corner's story or game. [kind] = story / game;
+  /// [item] = the story id or the game id.
+  static Future<void> childCornerPicked(String kind, String item) =>
+      _log('child_corner_pick', {'kind': kind, 'item': item});
+
+  /// The task away from the screen came up. [reason] = chosen (the child
+  /// tapped it), all_done (story and game were done) or time (the candle
+  /// ran out, or the session closed).
+  static Future<void> childCornerMission(String reason) =>
+      _log('child_corner_mission', {'reason': reason});
+
+  /// The child left for the task and the device went back to the family.
+  /// [story] / [game]: whether each was done (1) or not (0) in this visit.
+  static Future<void> childCornerEnded({
+    required bool story,
+    required bool game,
+  }) =>
+      _log('child_corner_ended', {
+        'story': story ? 1 : 0,
+        'game': game ? 1 : 0,
+      });
+
   /// Catch-all user property setter (best-effort).
   static Future<void> setAnalyticsUserProperty(String name, String value) async {
     try {

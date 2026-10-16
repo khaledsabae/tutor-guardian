@@ -10951,6 +10951,198 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'يفتح درب الأسرة'**
   String get horizonStripHint;
+
+  /// Hand-over gate tile title for the child's corner. «ركن الطفل» (child corner after the hand-over gate). Child-facing: easy MSA, family-neutral («أهلك»), no gendered verbs, no coins/points/streak, no 'come back tomorrow', no religious text, no promise of reward.
+  ///
+  /// In ar, this message translates to:
+  /// **'ركن الطفل'**
+  String get childCornerTileTitle;
+
+  /// Hand-over gate tile line (parent-facing) when the band has a game. «ركن الطفل» (child corner after the hand-over gate). Child-facing: easy MSA, family-neutral («أهلك»), no gendered verbs, no coins/points/streak, no 'come back tomorrow', no religious text, no promise of reward.
+  ///
+  /// In ar, this message translates to:
+  /// **'حكاية قصيرة أو لعبة، ثم مهمة بعيدًا عن الشاشة'**
+  String get childCornerTileBody;
+
+  /// Hand-over gate tile line when the band has no game (4-6). «ركن الطفل» (child corner after the hand-over gate). Child-facing: easy MSA, family-neutral («أهلك»), no gendered verbs, no coins/points/streak, no 'come back tomorrow', no religious text, no promise of reward.
+  ///
+  /// In ar, this message translates to:
+  /// **'حكاية قصيرة، ثم مهمة بعيدًا عن الشاشة'**
+  String get childCornerTileBodyNoGame;
+
+  /// Corner header. «ركن الطفل» (child corner after the hand-over gate). Child-facing: easy MSA, family-neutral («أهلك»), no gendered verbs, no coins/points/streak, no 'come back tomorrow', no religious text, no promise of reward.
+  ///
+  /// In ar, this message translates to:
+  /// **'يا {name}، هذا ركنك'**
+  String childCornerGreeting(String name);
+
+  /// Noor's first line in the corner. «ركن الطفل» (child corner after the hand-over gate). Child-facing: easy MSA, family-neutral («أهلك»), no gendered verbs, no coins/points/streak, no 'come back tomorrow', no religious text, no promise of reward.
+  ///
+  /// In ar, this message translates to:
+  /// **'هنا حكاية ولعبة قصيرة، ثم مهمة صغيرة بعيدًا عن الشاشة.'**
+  String get childCornerNoorLine;
+
+  /// Noor's first line when the band has no game. «ركن الطفل» (child corner after the hand-over gate). Child-facing: easy MSA, family-neutral («أهلك»), no gendered verbs, no coins/points/streak, no 'come back tomorrow', no religious text, no promise of reward.
+  ///
+  /// In ar, this message translates to:
+  /// **'هنا حكاية قصيرة، ثم مهمة صغيرة بعيدًا عن الشاشة.'**
+  String get childCornerNoorLineNoGame;
+
+  /// Noor's line after the story. Verbal praise only. «ركن الطفل» (child corner after the hand-over gate). Child-facing: easy MSA, family-neutral («أهلك»), no gendered verbs, no coins/points/streak, no 'come back tomorrow', no religious text, no promise of reward.
+  ///
+  /// In ar, this message translates to:
+  /// **'أحببت القراءة معك.'**
+  String get childCornerNoorAfterStory;
+
+  /// Noor's line after the game. Praises effort, never a score. «ركن الطفل» (child corner after the hand-over gate). Child-facing: easy MSA, family-neutral («أهلك»), no gendered verbs, no coins/points/streak, no 'come back tomorrow', no religious text, no promise of reward.
+  ///
+  /// In ar, this message translates to:
+  /// **'كان لعبك جميلًا ومركّزًا.'**
+  String get childCornerNoorAfterGame;
+
+  /// Label on the story card. «ركن الطفل» (child corner after the hand-over gate). Child-facing: easy MSA, family-neutral («أهلك»), no gendered verbs, no coins/points/streak, no 'come back tomorrow', no religious text, no promise of reward.
+  ///
+  /// In ar, this message translates to:
+  /// **'حكاية'**
+  String get childCornerStoryLabel;
+
+  /// Hint under the story title. «ركن الطفل» (child corner after the hand-over gate). Child-facing: easy MSA, family-neutral («أهلك»), no gendered verbs, no coins/points/streak, no 'come back tomorrow', no religious text, no promise of reward.
+  ///
+  /// In ar, this message translates to:
+  /// **'نقرؤها معًا'**
+  String get childCornerStoryHint;
+
+  /// The story card once read. Not a reward, no tick count. «ركن الطفل» (child corner after the hand-over gate). Child-facing: easy MSA, family-neutral («أهلك»), no gendered verbs, no coins/points/streak, no 'come back tomorrow', no religious text, no promise of reward.
+  ///
+  /// In ar, this message translates to:
+  /// **'قرأناها معًا'**
+  String get childCornerStoryDone;
+
+  /// Label on the game card. «ركن الطفل» (child corner after the hand-over gate). Child-facing: easy MSA, family-neutral («أهلك»), no gendered verbs, no coins/points/streak, no 'come back tomorrow', no religious text, no promise of reward.
+  ///
+  /// In ar, this message translates to:
+  /// **'لعبة قصيرة'**
+  String get childCornerGameLabel;
+
+  /// Hint under the game name. «ركن الطفل» (child corner after the hand-over gate). Child-facing: easy MSA, family-neutral («أهلك»), no gendered verbs, no coins/points/streak, no 'come back tomorrow', no religious text, no promise of reward.
+  ///
+  /// In ar, this message translates to:
+  /// **'أسئلة قليلة ثم نستريح'**
+  String get childCornerGameHint;
+
+  /// The game card once played. No score. «ركن الطفل» (child corner after the hand-over gate). Child-facing: easy MSA, family-neutral («أهلك»), no gendered verbs, no coins/points/streak, no 'come back tomorrow', no religious text, no promise of reward.
+  ///
+  /// In ar, this message translates to:
+  /// **'لعبناها معًا'**
+  String get childCornerGameDone;
+
+  /// Label on the corner's last card. «ركن الطفل» (child corner after the hand-over gate). Child-facing: easy MSA, family-neutral («أهلك»), no gendered verbs, no coins/points/streak, no 'come back tomorrow', no religious text, no promise of reward.
+  ///
+  /// In ar, this message translates to:
+  /// **'ثم مهمتك'**
+  String get childCornerMissionLabel;
+
+  /// Button on the last card: go to the task now. «ركن الطفل» (child corner after the hand-over gate). Child-facing: easy MSA, family-neutral («أهلك»), no gendered verbs, no coins/points/streak, no 'come back tomorrow', no religious text, no promise of reward.
+  ///
+  /// In ar, this message translates to:
+  /// **'إلى مهمتي'**
+  String get childCornerToMission;
+
+  /// Heading of the task step. «ركن الطفل» (child corner after the hand-over gate). Child-facing: easy MSA, family-neutral («أهلك»), no gendered verbs, no coins/points/streak, no 'come back tomorrow', no religious text, no promise of reward.
+  ///
+  /// In ar, this message translates to:
+  /// **'مهمتك الآن'**
+  String get childCornerMissionNow;
+
+  /// The task step's button: ends the session and asks for the device back. «ركن الطفل» (child corner after the hand-over gate). Child-facing: easy MSA, family-neutral («أهلك»), no gendered verbs, no coins/points/streak, no 'come back tomorrow', no religious text, no promise of reward.
+  ///
+  /// In ar, this message translates to:
+  /// **'فهمت، سأذهب إليها'**
+  String get childCornerMissionGo;
+
+  /// Task shown when the server has no mission card (offline / empty bank). First person to stay gender-neutral. «ركن الطفل» (child corner after the hand-over gate). Child-facing: easy MSA, family-neutral («أهلك»), no gendered verbs, no coins/points/streak, no 'come back tomorrow', no religious text, no promise of reward.
+  ///
+  /// In ar, this message translates to:
+  /// **'سأرسم شيئًا رأيته اليوم'**
+  String get childCornerMissionFallbackTitle;
+
+  /// Body of the fallback task. «ركن الطفل» (child corner after the hand-over gate). Child-facing: easy MSA, family-neutral («أهلك»), no gendered verbs, no coins/points/streak, no 'come back tomorrow', no religious text, no promise of reward.
+  ///
+  /// In ar, this message translates to:
+  /// **'بورقة وقلم، ثم أُري رسمتي لأهلي.'**
+  String get childCornerMissionFallbackBody;
+
+  /// Label beside the paper candle that shows the session's time. Never a number. «ركن الطفل» (child corner after the hand-over gate). Child-facing: easy MSA, family-neutral («أهلك»), no gendered verbs, no coins/points/streak, no 'come back tomorrow', no religious text, no promise of reward.
+  ///
+  /// In ar, this message translates to:
+  /// **'شمعة وقتك'**
+  String get childCornerCandleLabel;
+
+  /// Candle state: plenty of time. «ركن الطفل» (child corner after the hand-over gate). Child-facing: easy MSA, family-neutral («أهلك»), no gendered verbs, no coins/points/streak, no 'come back tomorrow', no religious text, no promise of reward.
+  ///
+  /// In ar, this message translates to:
+  /// **'ما زالت مضيئة'**
+  String get childCornerCandleBright;
+
+  /// Candle state: the last part of the time. «ركن الطفل» (child corner after the hand-over gate). Child-facing: easy MSA, family-neutral («أهلك»), no gendered verbs, no coins/points/streak, no 'come back tomorrow', no religious text, no promise of reward.
+  ///
+  /// In ar, this message translates to:
+  /// **'بقي قليل'**
+  String get childCornerCandleLow;
+
+  /// Candle state: time is over. «ركن الطفل» (child corner after the hand-over gate). Child-facing: easy MSA, family-neutral («أهلك»), no gendered verbs, no coins/points/streak, no 'come back tomorrow', no religious text, no promise of reward.
+  ///
+  /// In ar, this message translates to:
+  /// **'حان وقت المهمة'**
+  String get childCornerCandleOut;
+
+  /// Noor's line when the time ends before the child chose the task. Calm, no loss wording. «ركن الطفل» (child corner after the hand-over gate). Child-facing: easy MSA, family-neutral («أهلك»), no gendered verbs, no coins/points/streak, no 'come back tomorrow', no religious text, no promise of reward.
+  ///
+  /// In ar, this message translates to:
+  /// **'اكتملت شمعتك، والآن إلى مهمتك.'**
+  String get childCornerTimeUp;
+
+  /// Story page: next. «ركن الطفل» (child corner after the hand-over gate). Child-facing: easy MSA, family-neutral («أهلك»), no gendered verbs, no coins/points/streak, no 'come back tomorrow', no religious text, no promise of reward.
+  ///
+  /// In ar, this message translates to:
+  /// **'التالي'**
+  String get childCornerStoryNext;
+
+  /// Story page: previous. «ركن الطفل» (child corner after the hand-over gate). Child-facing: easy MSA, family-neutral («أهلك»), no gendered verbs, no coins/points/streak, no 'come back tomorrow', no religious text, no promise of reward.
+  ///
+  /// In ar, this message translates to:
+  /// **'السابق'**
+  String get childCornerStoryPrevious;
+
+  /// Last story page heading. «ركن الطفل» (child corner after the hand-over gate). Child-facing: easy MSA, family-neutral («أهلك»), no gendered verbs, no coins/points/streak, no 'come back tomorrow', no religious text, no promise of reward.
+  ///
+  /// In ar, this message translates to:
+  /// **'انتهت الحكاية'**
+  String get childCornerStoryEnd;
+
+  /// Button back from the story or game to the corner. «ركن الطفل» (child corner after the hand-over gate). Child-facing: easy MSA, family-neutral («أهلك»), no gendered verbs, no coins/points/streak, no 'come back tomorrow', no religious text, no promise of reward.
+  ///
+  /// In ar, this message translates to:
+  /// **'عودة إلى ركني'**
+  String get childCornerBackToCorner;
+
+  /// Tooltip / screen-reader label of the story's close button. «ركن الطفل» (child corner after the hand-over gate). Child-facing: easy MSA, family-neutral («أهلك»), no gendered verbs, no coins/points/streak, no 'come back tomorrow', no religious text, no promise of reward.
+  ///
+  /// In ar, this message translates to:
+  /// **'إغلاق الحكاية'**
+  String get childCornerStoryClose;
+
+  /// Screen-reader label of the story's page dots. «ركن الطفل» (child corner after the hand-over gate). Child-facing: easy MSA, family-neutral («أهلك»), no gendered verbs, no coins/points/streak, no 'come back tomorrow', no religious text, no promise of reward.
+  ///
+  /// In ar, this message translates to:
+  /// **'صفحة {page} من {count}'**
+  String childCornerStoryPage(int page, int count);
+
+  /// Reminder above «أعِد الجهاز إلى أهلك» at the end of the corner. «ركن الطفل» (child corner after the hand-over gate). Child-facing: easy MSA, family-neutral («أهلك»), no gendered verbs, no coins/points/streak, no 'come back tomorrow', no religious text, no promise of reward.
+  ///
+  /// In ar, this message translates to:
+  /// **'مهمتك: {title}'**
+  String childCornerDoneMission(String title);
 }
 
 class _AppLocalizationsDelegate
