@@ -126,6 +126,14 @@ def test_the_marketing_kit_codes_are_campaign_codes(code):
     assert at.is_campaign_code(code)
 
 
+def test_c_is_an_alias_of_ref_and_ref_wins():
+    assert at.landing_attribution({"c": "ma-01"})[1] == "MA01"
+    assert at.landing_attribution({"ref": "VD01", "c": "MA01"})[1] == "VD01"
+    assert at.is_tagged({"c": "MA01"})
+    assert at.cache_control({"c": "MA01"}) == "private, no-store"
+    assert at.landing_attribution({"c": ""}) == (at.PLAY_URL, None)
+
+
 @pytest.mark.parametrize("code,source,medium", [
     # The videos' QR carried exactly this utm when it pointed straight at Play.
     ("VD03", "campaign_video", "qr"),

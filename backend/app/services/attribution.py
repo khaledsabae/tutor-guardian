@@ -197,15 +197,31 @@ def play_install_url(code: str | None = None, utm: Mapping[str, str] | None = No
     return f"{PLAY_URL}&referrer={quote(referrer, safe='')}"
 
 
+# The query parameters a landing URL carries its code in. `ref` is canonical:
+# the app's own deep-link handler (deep_link_handler.dart) reads only `ref`,
+# and every QR and kit link is printed with it. `c` is accepted as a short
+# alias — the launch kit drafted `/go?c=<CODE>` links, and those reached Play
+# without a code until this. When both are present, `ref` wins.
+CODE_PARAMS = ("ref", "c")
+
+
+def query_code(query: Mapping[str, str]) -> str | None:
+    """The raw code a landing URL carries: `?ref=`, else `?c=`."""
+    for name in CODE_PARAMS:
+        if query.get(name):
+            return query.get(name)
+    return None
+
+
 def landing_attribution(query: Mapping[str, str]) -> tuple[str, str | None]:
     """(Play link, normalised ref code or None) for a landing page's query string."""
-    code = normalize_code(query.get("ref"))
+    code = normalize_code(query_code(query))
     return play_install_url(code, attribution_utm(code, query)), code
 
 
 def is_tagged(query: Mapping[str, str]) -> bool:
-    """True when the URL carries attribution (?ref= or utm_*)."""
-    return bool(query.get("ref")) or any(k.startswith("utm_") for k in query.keys())
+    """True when the URL carries attribution (?ref=, ?c= or utm_*)."""
+    return bool(query_code(query)) or any(k.startswith("utm_") for k in query.keys())
 
 
 def cache_control(query: Mapping[str, str]) -> str:
