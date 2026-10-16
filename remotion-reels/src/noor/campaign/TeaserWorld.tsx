@@ -20,7 +20,8 @@ import {V4Handover, V4_CUES, V4_GAIN} from './V4Handover';
 // `mix`: the glimpses play their reels' cues faster and closer together, so they sit lower in the teaser's mix
 type Seg = {Comp: React.FC; a: number; b: number; speed: number; cues: Cue[]; gain: number; mix: number};
 
-const Teaser: React.FC = () => <NoorTeaser lang="ar" shape="portrait" />;
+// Its own QR code (VD08), so the world cut's scans are told apart from the plain Arabic cut's.
+const Teaser: React.FC = () => <NoorTeaser lang="ar" shape="portrait" qrCut="world" />;
 const Road: React.FC = () => <V2Road />;
 const Corner: React.FC = () => <V4Handover />;
 

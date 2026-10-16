@@ -482,7 +482,9 @@ export const EndCard: React.FC<{
 	const landed = frame >= T.land;
 	const eyes: Eyes = !landed ? 'happy' : blinkEyes(frame, 'open', [T.blink]);
 	const qr = QR[slug];
-	const qrPx = 6 * qr.n; // whole pixels per module keep the code crisp
+	// Whole pixels per module keep the code crisp; about 340 px whatever the
+	// code's version (a short /go?ref= link needs far fewer modules).
+	const qrPx = Math.max(6, Math.round(340 / qr.n)) * qr.n;
 	const qrS = springAt(frame, T.qr, fps, 12, 140);
 	const playS = springAt(frame, T.play, fps, 11, 160);
 	const hillY = (i: number) => (700 + 80 * i) * (1 - springAt(frame, T.hills + i * 6, fps, 12, 80));

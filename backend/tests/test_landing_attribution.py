@@ -262,6 +262,36 @@ def test_a_campaign_click_is_recorded_on_every_landing_page(client):
         assert (ip, "WA01") in _clicks(), url
 
 
+def test_c_is_an_alias_of_ref_on_every_landing_page(client):
+    # The launch kit drafted /go?c=<CODE>; until this the page ignored `c` and
+    # sent the visitor to Play with no code at all.
+    params = _path_params()
+    pages = ["/go", "/", "/ui/", f"/l/{params['lesson_id']}", f"/p/{params['path_id']}",
+             f"/seo/{params['slug']}", "/methodology"]
+    for i, url in enumerate(pages):
+        ip = f"203.0.113.{40 + i}"
+        r = client.get(url, params={"c": "ma01"}, headers={"cf-connecting-ip": ip})
+        assert r.status_code == 200, url
+        assert "referrer=ref_MA01%26utm_source%3Dfacebook" in _html.unescape(r.text), url
+        # a shared cache must never keep one visitor's tagged Play link
+        assert "public" not in r.headers.get("cache-control", ""), url
+        assert (ip, "MA01") in _clicks(), url
+
+
+def test_ref_wins_when_a_link_carries_both(client):
+    r = client.get("/go", params={"ref": "VD01", "c": "MA01"},
+                   headers={"cf-connecting-ip": "203.0.113.60"})
+    body = _html.unescape(r.text)
+    assert "referrer=ref_VD01" in body and "ref_MA01" not in body
+    assert _clicks() == [("203.0.113.60", "VD01")]
+
+
+def test_the_canonical_never_echoes_the_c_alias(client):
+    body = client.get("/go", params={"c": "MA01"}).text
+    canon = re.search(r'<link rel="canonical" href="([^"]*)"', body)
+    assert canon and "MA01" not in canon.group(1)
+
+
 @pytest.mark.parametrize("fetcher", [
     "facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)",
     "WhatsApp/2.23.20.0 A",

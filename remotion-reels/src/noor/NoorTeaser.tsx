@@ -34,9 +34,11 @@ const exitDrop = (frame: number, start: number, dist: number) =>
 
 const SHEET_COLOR: Record<SheetName, string> = {far: C.hill2, mid: C.hill3, near: C.shadow};
 
-export type TeaserProps = {lang: Lang; shape: 'portrait' | 'wide'};
+// `qrCut`: which campaign code the end card's QR carries (src/noor/qr.ts);
+// by default the cut's own — en, wide, or ar.
+export type TeaserProps = {lang: Lang; shape: 'portrait' | 'wide'; qrCut?: QrCut};
 
-export const NoorTeaser: React.FC<TeaserProps> = ({lang, shape}) => {
+export const NoorTeaser: React.FC<TeaserProps> = ({lang, shape, qrCut: qrCutProp}) => {
 	const frame = useCurrentFrame();
 	const {fps} = useVideoConfig();
 	const L: Layout = shape === 'wide' ? wide : portrait;
@@ -335,7 +337,7 @@ export const NoorTeaser: React.FC<TeaserProps> = ({lang, shape}) => {
 	};
 	const playS = springAt(frame, T.play, fps, 11, 160);
 	const qrS = springAt(frame, T.qr, fps, 12, 140);
-	const qrCut: QrCut = lang === 'en' ? 'en' : shape === 'wide' ? 'wide' : 'ar';
+	const qrCut: QrCut = qrCutProp ?? (lang === 'en' ? 'en' : shape === 'wide' ? 'wide' : 'ar');
 	const qr = QR[qrCut];
 	// whole pixels per module keep the code crisp
 	const qrPx = Math.max(1, Math.round(E.qr.size / qr.n)) * qr.n;

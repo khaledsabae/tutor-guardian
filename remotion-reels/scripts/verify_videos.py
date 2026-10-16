@@ -7,7 +7,7 @@ For every MP4 given (or every MP4 in the directories given):
   * integrated loudness and true peak (ffmpeg ebur128, peak=true -> dBTP);
   * the end card's QR code, decoded with OpenCV from the last seconds of the
     video, must equal the URL in src/noor/campaign/qr.ts (campaign reels, by
-    slug) or src/noor/qr.ts (teaser cuts: ar / en / wide);
+    slug) or src/noor/qr.ts (teaser cuts: ar / world / en / wide);
   * a strip of frames (every few seconds) written next to --frames DIR, to
     look at by eye.
 
@@ -44,7 +44,9 @@ def expected(name: str, table: dict[str, str]) -> str | None:
             return table[slug]
     if name.startswith("noor_teaser_"):
         cut = name.removeprefix("noor_teaser_")
-        cut = "wide" if cut.startswith("ar_wide") else "en" if cut.startswith("en") else "ar"
+        # ar_world and ar_vo are both TeaserWorld, which carries the `world` code
+        cut = ("wide" if cut.startswith("ar_wide") else "en" if cut.startswith("en")
+               else "world" if cut.startswith(("ar_world", "ar_vo")) else "ar")
         return table.get(cut)
     return None
 
