@@ -587,6 +587,15 @@ name: gallery/shoot
             - waitForAnimationToEnd:
                 timeout: 2000
       # Step 7: Child 2 (4-6) re-opens child mode: PraiseHeader appears with STICKER ONLY!
+      # The confirm sheet can still be up (run 38815483981: the DOWN search
+      # below then ran inside it and missed the button). Close it first.
+      - runFlow:
+          when:
+            visible: '${output.t.missionConfirmAll}'
+          commands:
+            - back
+            - waitForAnimationToEnd:
+                timeout: 2000
       - scrollUntilVisible:
           element:
             text: '${output.t.missionOpenForChild}'
@@ -606,6 +615,16 @@ name: gallery/shoot
             # 4-6 Praise card: sticker ONLY
             - takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__praise_child_sticker'
             - runFlow: ../common/exit_child_mode.yaml
+# Still on «يوم الطفل» if Step 7 found no button: leave it by hand. home.yaml
+# cannot — its «اليوم» check also matches this screen's «اليوم مع …», so it
+# taps that line and stays (run 38815483981 lost every shot after it).
+- runFlow:
+    when:
+      visible: '${output.t.parentDayTitle}'
+    commands:
+      - back
+      - waitForAnimationToEnd:
+          timeout: 2000
 - runFlow: ../common/home.yaml
 
 # ── «درب {الاسم}» (عالم الأسرة): the family road, opened from its row at the
