@@ -35,9 +35,17 @@ logger = logging.getLogger(__name__)
 router = APIRouter(tags=["web"])
 
 _CINEMATIC = Path(__file__).resolve().parents[3] / "frontend" / "cinematic.html"
-_TEAL = "#01696F"
-# Branded hero (JPG for reliable WhatsApp/social preview), served via /docs.
-_OG_IMAGE = "/docs/marketing/launch_graphics/landing_hero.jpg"
+_EMERALD = "#0F6B5C"  # «نور والقناديل» sky (docs/brand, mobile/assets/svg/STYLE.md)
+# The share image of every public page: 1200x630, cut from the Play feature
+# graphic by `docs/brand/tools/brand_build.py web`. PNG — flat paper-cut art is
+# smaller as PNG than as JPG, and WhatsApp previews both.
+_OG_IMAGE = "/ui/assets/og_noor.png"
+# Self-hosted, subset Cairo (frontend/assets/fonts/): no third-party font request.
+_FONT_FACES = "".join(
+    f'@font-face{{font-family:Cairo;font-weight:{w};font-display:swap;'
+    f'src:url(/ui/assets/fonts/cairo-{n}.woff2) format("woff2")}}'
+    for w, n in ((400, "regular"), (600, "semibold"), (800, "extrabold"))
+)
 
 
 def _abs(canonical: str, path: str) -> str:
@@ -73,26 +81,31 @@ def _page(*, title: str, desc: str, body: str, install_url: str,
 <title>{t} — المربّي</title>
 <meta name="description" content="{d}">
 <link rel="canonical" href="{canonical}">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" sizes="32x32" href="/ui/icons/favicon-32.png">
+<meta name="theme-color" content="{_EMERALD}">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="المربّي">
 <meta property="og:title" content="{t}">
 <meta property="og:description" content="{d}">
 <meta property="og:image" content="{og_image}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta property="og:url" content="{canonical}">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="{og_image}">
 <style>
+  {_FONT_FACES}
   :root {{
-    --teal: {_TEAL};
-    --teal-light: rgba(1,105,111,.08);
-    --teal-glow: rgba(1,105,111,.15);
+    --teal: {_EMERALD};
+    --teal-light: rgba(15,107,92,.08);
+    --teal-glow: rgba(15,107,92,.15);
     --cream: #FAF7F2;
     --charcoal: #1c1c1c;
     --muted: #6b6b6b;
   }}
   * {{ box-sizing: border-box; margin: 0; padding: 0; }}
   body {{
-    font-family: 'Cairo', 'Inter', -apple-system, system-ui, sans-serif;
+    font-family: 'Cairo', Tahoma, system-ui, sans-serif;
     background: var(--cream);
     color: var(--charcoal);
     line-height: 1.7;
@@ -103,7 +116,7 @@ def _page(*, title: str, desc: str, body: str, install_url: str,
     position: sticky; top: 0; z-index: 50;
     background: rgba(250,247,242,.92);
     backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(1,105,111,.08);
+    border-bottom: 1px solid rgba(15,107,92,.08);
   }}
   .nav-inner {{
     max-width: 780px; margin: 0 auto; padding: 14px 18px;
@@ -113,7 +126,7 @@ def _page(*, title: str, desc: str, body: str, install_url: str,
     display: flex; align-items: center; gap: 8px;
     font-weight: 800; font-size: 20px; color: var(--teal);
   }}
-  .brand img {{ width: 32px; height: 32px; border-radius: 50%; }}
+  .brand img {{ width: 34px; height: 34px; border-radius: 10px; }}
   .nav-tag {{
     font-size: 12px; color: var(--muted);
     display: none;
@@ -122,7 +135,7 @@ def _page(*, title: str, desc: str, body: str, install_url: str,
   .hero {{
     width: 100%; height: auto; border-radius: 20px;
     margin: 22px 0 18px;
-    box-shadow: 0 18px 48px rgba(1,105,111,.18);
+    box-shadow: 0 18px 48px rgba(15,107,92,.18);
   }}
   .eyebrow {{
     display: inline-block;
@@ -142,7 +155,7 @@ def _page(*, title: str, desc: str, body: str, install_url: str,
   }}
   .content {{
     font-size: 17px; color: var(--charcoal);
-    background: #fff; border: 1px solid rgba(1,105,111,.08);
+    background: #fff; border: 1px solid rgba(15,107,92,.08);
     border-radius: 18px; padding: 22px;
     box-shadow: 0 4px 20px rgba(0,0,0,.04);
     margin-bottom: 22px;
@@ -150,21 +163,21 @@ def _page(*, title: str, desc: str, body: str, install_url: str,
   .content p + p {{ margin-top: 14px; }}
   .lessons a {{
     display: block; padding: 14px 16px; margin: 10px 0;
-    background: #fff; border: 1px solid rgba(1,105,111,.10);
+    background: #fff; border: 1px solid rgba(15,107,92,.10);
     border-radius: 14px; color: var(--charcoal);
     text-decoration: none; font-weight: 600;
     transition: transform .15s ease, box-shadow .15s ease;
   }}
   .lessons a:hover {{
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(1,105,111,.10);
+    box-shadow: 0 6px 20px rgba(15,107,92,.10);
   }}
   .feature-grid {{
     display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
     gap: 12px; margin: 24px 0;
   }}
   .feature-card {{
-    background: #fff; border: 1px solid rgba(1,105,111,.08);
+    background: #fff; border: 1px solid rgba(15,107,92,.08);
     border-radius: 14px; padding: 16px; text-align: center;
   }}
   .feature-card .icon {{ font-size: 28px; margin-bottom: 8px; }}
@@ -173,7 +186,7 @@ def _page(*, title: str, desc: str, body: str, install_url: str,
     position: fixed; bottom: 0; left: 0; right: 0;
     background: rgba(255,255,255,.96);
     backdrop-filter: blur(12px);
-    border-top: 1px solid rgba(1,105,111,.10);
+    border-top: 1px solid rgba(15,107,92,.10);
     padding: 14px 18px 18px; text-align: center; z-index: 100;
   }}
   .cta a {{
@@ -181,10 +194,10 @@ def _page(*, title: str, desc: str, body: str, install_url: str,
     background: var(--teal); color: #fff;
     text-decoration: none; padding: 15px 32px;
     border-radius: 999px; font-weight: 800; font-size: 17px;
-    box-shadow: 0 8px 24px rgba(1,105,111,.25);
+    box-shadow: 0 8px 24px rgba(15,107,92,.25);
     transition: transform .15s ease, box-shadow .15s ease;
   }}
-  .cta a:hover {{ transform: translateY(-2px); box-shadow: 0 10px 28px rgba(1,105,111,.32); }}
+  .cta a:hover {{ transform: translateY(-2px); box-shadow: 0 10px 28px rgba(15,107,92,.32); }}
   .free {{
     color: var(--muted); font-size: 13px; margin-top: 8px;
   }}
@@ -198,7 +211,7 @@ def _page(*, title: str, desc: str, body: str, install_url: str,
 <div class="nav">
   <div class="nav-inner">
     <div class="brand">
-      <img src="/assets/images/logo.png" alt="المربّي">
+      <img src="/ui/icons/icon-192.png" width="34" height="34" alt="">
       المربّي
     </div>
     <div class="nav-tag">مساعد تربية إسلامية ذكي</div>
@@ -210,9 +223,9 @@ def _page(*, title: str, desc: str, body: str, install_url: str,
 <div class="cta">
   <a href="{install}">
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-    حمّل «المربّي» مجانًا
+    حمّله من Google Play
   </a>
-  <div class="free">بلا إعلانات · بلا اشتراكات · لوجه الله</div>
+  <div class="free">مجاني بالكامل — بلا إعلانات ولا اشتراكات</div>
 </div>
 </body>
 </html>"""
@@ -239,7 +252,7 @@ def landing(request: Request) -> HTMLResponse:
     html_content = _CINEMATIC.read_text(encoding="utf-8")
 
     install_url = attribute_visit(request)
-    og_image = _abs(str(request.url), "/ui/assets/banner.png")
+    og_image = _abs(str(request.url), _OG_IMAGE)
     # One canonical for every copy of this page, and never the tracking query:
     # each shared ?ref= / utm_* variant would otherwise index as its own page.
     canonical = _abs(str(request.url), "/go")
