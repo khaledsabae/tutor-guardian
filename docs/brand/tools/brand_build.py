@@ -10,6 +10,9 @@ things from them:
                     is untouched until the manifest is pointed at them
   store             feature graphic, empty screenshot frames, Play 512 icon,
                     example filled frames -> docs/brand/store/
+  web               landing-page art from the same sources: the 1200x630 share
+                    image (og:image) from the feature graphic, the PWA / favicon
+                    icons from icon C -> frontend/assets/, frontend/icons/
   frame             fill one frame with a screenshot (e.g. from the CI e2e-gallery)
 
 Needs only what the laptop already has: python3-gi (Rsvg 2, Pango), pycairo, Pillow.
@@ -699,6 +702,42 @@ def store():
     print('  store art written to', STORE_DIR.relative_to(ROOT))
 
 
+FRONTEND = ROOT / 'frontend'
+OG_IMAGE = FRONTEND / 'assets' / 'og_noor.png'
+OG_SIZE = (1200, 630)
+# name -> (px, maskable). Maskable icons get their art inside the 80% safe zone.
+WEB_ICONS = {
+    'icon-192.png': (192, False),
+    'icon-512.png': (512, False),
+    'icon-maskable-512.png': (512, True),
+    'apple-touch-icon.png': (180, False),
+    'favicon-32.png': (32, False),
+}
+
+
+def web():
+    """og:image + PWA icons for the landing (frontend/), all from docs/brand/ SVG."""
+    # The feature graphic is 1024x500 (2.05:1); og:image wants 1200x630 (1.9:1).
+    # Fill the height and trim the sky at both sides — the crescent, the title and
+    # the icon tile all sit inside the middle 1200 px.
+    w, h = OG_SIZE
+    fg = (STORE_DIR / 'feature_graphic.svg').read_text()
+    full_w = 1024 * h / 500
+    surf = svg_surface(fg, w, h, viewport=(-(full_w - w) / 2, 0, full_w, h))
+    surface_to_pil(surf).convert('RGB').save(OG_IMAGE, optimize=True)
+    icons = FRONTEND / 'icons'
+    src = layer_svg(ICON_DIR / DIRECTIONS[RECOMMENDED][0], ('background', 'foreground'))
+    for name, (px, maskable) in WEB_ICONS.items():
+        if maskable:
+            # The background layer overhangs the 240 box by 60 on every side, so a
+            # wider viewBox shows more sky and hill, not a border: art at 80%.
+            img = surface_to_pil(svg_surface(src.replace('viewBox="0 0 240 240"', 'viewBox="-30 -30 300 300"', 1), px))
+        else:
+            img = surface_to_pil(svg_surface(src, px))
+        img.convert('RGB').save(icons / name, optimize=True)
+    print('  web art written to', OG_IMAGE.relative_to(ROOT), 'and', icons.relative_to(ROOT))
+
+
 # ---------------------------------------------------------------- cli
 
 def main():
@@ -709,6 +748,7 @@ def main():
     a.add_argument('direction', choices=sorted(DIRECTIONS))
     a.add_argument('--verify-only', action='store_true')
     sub.add_parser('store')
+    sub.add_parser('web')
     fr = sub.add_parser('frame')
     fr.add_argument('--frame', choices=FRAMES, required=True)
     fr.add_argument('--shot', required=True, help='screenshot PNG, e.g. from the CI e2e-gallery artifact')
@@ -726,6 +766,8 @@ def main():
         android(args.direction, args.verify_only)
     elif args.cmd == 'store':
         store()
+    elif args.cmd == 'web':
+        web()
     elif args.cmd == 'frame':
         fill_frame(args.frame, args.shot, args.title, args.subtitle, args.out)
         print('  wrote', args.out)

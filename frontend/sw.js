@@ -1,4 +1,4 @@
-const CACHE = 'tutor-guardian-v1';
+const CACHE = 'tutor-guardian-v2';  // v2: icon C «الطبقات» (Oct 2026)
 const ASSETS = ['./', 'index.html', 'manifest.json', 'icons/icon-192.png', 'icons/icon-512.png'];
 
 self.addEventListener('install', e => {

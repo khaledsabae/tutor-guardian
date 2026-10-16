@@ -136,7 +136,7 @@ def test_the_ui_page_has_no_dead_end_buttons(client):
     body = client.get("/ui/").text
     assert 'href="#cta"' not in body
     assert "{{" not in body  # every template placeholder was filled
-    assert "hero-canvas-section" in body  # same cinematic page, same design
+    assert 'id="hero"' in body  # the landing itself, not the fallback
 
 
 def test_ui_without_a_slash_keeps_the_query(client):
