@@ -30,6 +30,45 @@ import '../../program/providers/progress_providers.dart';
 /// continuing a path — so the tour asks the card instead of guessing.
 final todayFocusOpenProvider = StateProvider<int>((_) => 0);
 
+/// The lessons of [path] this child has completed — only ids the path still
+/// lists. A progress row for a lesson since removed from the path (or a
+/// duplicate row) used to count toward «2/4», so the bar could run ahead of
+/// the path and a path with one lesson left could read as finished.
+Set<String> completedLessonIdsIn(
+  CurriculumPath path,
+  ChildProgressBundle? bundle,
+) {
+  if (bundle == null) return const {};
+  final listed = path.lessonIds.toSet();
+  return {
+    for (final l in bundle.lessons)
+      if (l.pathId == path.id &&
+          l.status == ProgressStatus.completed &&
+          listed.contains(l.lessonId))
+        l.lessonId,
+  };
+}
+
+/// The lesson «متابعة» opens: the first lesson of [path], in curriculum
+/// order, this child has not completed. An `inProgress` lesson is simply
+/// "not completed", so a half-read lesson wins only when it is also the
+/// earliest open one — a later lesson opened out of order does not jump the
+/// queue. This is the rule the path's own «واصل المسار» button uses
+/// (path_detail_screen.dart) and the server's `/next-lesson` applies to the
+/// starter path, so the card, the path and the server agree on "next".
+///
+/// `null` when there is nothing to open — progress not loaded yet, a path
+/// that lists no lessons, or every lesson done — and the caller falls back
+/// to the path overview rather than to nothing.
+String? dueLessonIdIn(CurriculumPath path, ChildProgressBundle? bundle) {
+  if (bundle == null) return null;
+  final completed = completedLessonIdsIn(path, bundle);
+  for (final id in path.lessonIds) {
+    if (!completed.contains(id)) return id;
+  }
+  return null;
+}
+
 class TodayFocusCard extends ConsumerWidget {
   const TodayFocusCard({
     super.key,
@@ -69,11 +108,10 @@ class TodayFocusCard extends ConsumerWidget {
         final match = paths.where((p) => p.id == lesson.pathId).toList();
         if (match.isEmpty) continue;
         final p = match.first;
-        final completedInPath = bundle!.lessons
-            .where(
-              (l) => l.pathId == p.id && l.status == ProgressStatus.completed,
-            )
-            .length;
+        final completed = completedLessonIdsIn(p, bundle);
+        // Counted against the path's own list, so «done» never exceeds what
+        // the bar can show and a stale row cannot finish a path early.
+        final completedInPath = p.lessonIds.where(completed.contains).length;
         if (completedInPath < p.lessonIds.length) {
           resume = p;
           done = completedInPath;
@@ -235,9 +273,26 @@ class TodayFocusCard extends ConsumerWidget {
     }
 
     final path = resume;
-    void continuePath() {
-      Analytics.todayBlockTapped('step', 'continue');
+    // «متابعة» used to push the path overview, so a parent who tapped
+    // "continue" landed on a list and had to find the lesson again (1.0.73,
+    // Khaled's phone). It now opens the lesson that is due. The child is the
+    // bundle's: the due lesson was worked out from that child's progress.
+    final due = dueLessonIdIn(path, bundle);
+    final childId = bundle?.childId;
+    void openOverview() {
+      Analytics.todayBlockTapped('step', 'path_overview');
       Navigator.of(context).push(AppRoutes.pathDetail(path.id, ageGroup));
+    }
+
+    void continuePath() {
+      Analytics.todayBlockTapped('step', 'continue', lessonId: due);
+      Navigator.of(context).push(
+        due == null
+            // Nothing left to open (or nothing known yet): the overview,
+            // never a dead button.
+            ? AppRoutes.pathDetail(path.id, ageGroup)
+            : AppRoutes.lesson(due, ageGroup, childId: childId),
+      );
     }
 
     primary(continuePath);
@@ -331,6 +386,21 @@ class TodayFocusCard extends ConsumerWidget {
             color: Colors.white.withValues(alpha: .22),
             edgeColor: Colors.white.withValues(alpha: .35),
             onTap: continuePath,
+          ),
+          // The overview stays one tap away — demoted, not removed.
+          Align(
+            alignment: AlignmentDirectional.centerStart,
+            child: TextButton(
+              onPressed: openOverview,
+              child: Text(
+                l10n.focusViewPath,
+                style: TextStyle(
+                  color: Colors.white.withValues(alpha: .92),
+                  decoration: TextDecoration.underline,
+                  decorationColor: Colors.white.withValues(alpha: .6),
+                ),
+              ),
+            ),
           ),
         ],
       ),

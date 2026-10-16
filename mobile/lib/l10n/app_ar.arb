@@ -192,6 +192,7 @@
   "lessonsRemaining_one": "🏆 درس واحد باقٍ!",
   "lessonsRemaining_other": "🏆 {count} دروس باقية",
   "continueBtn": "متابعة",
+  "focusViewPath": "عرض المسار",
   "quizTitle": "اختبر معلوماتك التربوية",
   "quizDesc": "10 أسئلة سريعة • تعلّم وأنت تلعب",
   "askQuestion": "عندك سؤال تربوي؟",

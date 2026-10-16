@@ -1256,6 +1256,12 @@ abstract class AppLocalizations {
   /// **'متابعة'**
   String get continueBtn;
 
+  /// No description provided for @focusViewPath.
+  ///
+  /// In ar, this message translates to:
+  /// **'عرض المسار'**
+  String get focusViewPath;
+
   /// No description provided for @quizTitle.
   ///
   /// In ar, this message translates to:
