@@ -456,16 +456,33 @@ class TutorGuardianApp extends ConsumerWidget {
         // We use Directionality here to ensure transitions and widgets inherit it.
         final locale = Localizations.localeOf(context);
         final isRtl = locale.languageCode == 'ar';
-        return Directionality(
-          textDirection: isRtl ? TextDirection.rtl : TextDirection.ltr,
-          // Translucent so it observes taps without consuming any: this feeds
-          // TgNavObserver's idle detection, which otherwise cannot tell
-          // "reading the screen" from "stuck on the screen".
-          child: Listener(
-            behavior: HitTestBehavior.translucent,
-            onPointerDown: TgNavObserver.recordTap,
-            // Offline and "saved copy" in one place for every route (E2).
-            child: AppStatusBanner(child: child ?? const SizedBox.shrink()),
+        // Bar icons follow the resolved theme. main() sets dark icons once,
+        // which is right for the light theme only: on a dark-theme screen
+        // with no AppBar (an AppBar annotates its own strip and wins over
+        // this one) the clock and the gesture handle went dark on dark.
+        // Icon brightness only — no bar colours, which would mean the
+        // deprecated Window.setStatusBarColor / setNavigationBarColor.
+        final iconBrightness = Theme.of(context).brightness == Brightness.dark
+            ? Brightness.light
+            : Brightness.dark;
+        return AnnotatedRegion<SystemUiOverlayStyle>(
+          value: SystemUiOverlayStyle(
+            statusBarIconBrightness: iconBrightness,
+            systemNavigationBarIconBrightness: iconBrightness,
+            // iOS names the bar's background, not its icons.
+            statusBarBrightness: Theme.of(context).brightness,
+          ),
+          child: Directionality(
+            textDirection: isRtl ? TextDirection.rtl : TextDirection.ltr,
+            // Translucent so it observes taps without consuming any: this
+            // feeds TgNavObserver's idle detection, which otherwise cannot
+            // tell "reading the screen" from "stuck on the screen".
+            child: Listener(
+              behavior: HitTestBehavior.translucent,
+              onPointerDown: TgNavObserver.recordTap,
+              // Offline and "saved copy" in one place for every route (E2).
+              child: AppStatusBanner(child: child ?? const SizedBox.shrink()),
+            ),
           ),
         );
       },

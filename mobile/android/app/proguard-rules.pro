@@ -63,3 +63,17 @@
 -dontwarn androidx.window.**
 -dontwarn org.slf4j.**
 -dontwarn com.facebook.**
+
+# --- androidx.activity edge-to-edge: visible to Play's static scan ---
+# Play reads the bundle as shipped, obfuscated. With full R8 the whole of
+# EdgeToEdge.enable() was inlined into MainActivity.onCreate and its class
+# renamed (androidx.activity.EdgeToEdge -> d.p), so Play found no call to
+# enableEdgeToEdge() and flagged "Edge-to-edge may not be enabled for all
+# users" on 1.0.73 — though it was enabled since +69. Its backports
+# (EdgeToEdgeApi23/26/29 -> d.q/d.r/d.t, setUp -> o0) are the only source of
+# the "deprecated Window.setStatusBarColor / setNavigationBarColor" flag:
+# androidx's own pre-Android-15 compatibility path, still present in the
+# latest androidx.activity, not app code. Keeping the names lets Play see the
+# enable() call and attribute those calls to androidx. A few hundred bytes.
+-keep class androidx.activity.EdgeToEdge { *; }
+-keepnames class androidx.activity.EdgeToEdge* { *; }
