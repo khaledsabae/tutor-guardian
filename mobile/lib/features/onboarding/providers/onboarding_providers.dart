@@ -113,10 +113,12 @@ class AppLocaleNotifier extends StateNotifier<Locale?> {
   }
 
   Future<void> setLocale(String languageCode) async {
-    state = Locale(languageCode);
     // Curriculum reads carry this so lessons arrive in the chosen language;
-    // without it the UI switched and the content stayed Arabic.
+    // without it the UI switched and the content stayed Arabic. Set before
+    // `state`, so the refetch the change triggers in the curriculum providers
+    // (which watch the language) can never go out with the old `?lang=`.
     TgClient.uiLanguage = languageCode;
+    state = Locale(languageCode);
     if (_prefs != null) {
       await _prefs.setString('tg.ui_language', languageCode);
     }
