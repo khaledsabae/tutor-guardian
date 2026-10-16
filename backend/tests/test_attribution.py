@@ -118,10 +118,26 @@ def test_utm_values_are_bounded_and_unknown_params_ignored():
 # ── Campaign codes ───────────────────────────────────────────────────────────
 
 @pytest.mark.parametrize("code", ["DA01", "DA10", "EN05", "WA01", "WA02", "KT01",
-                                  "KT99", "CM01", "PD01", "OT01"])
+                                  "KT99", "CM01", "PD01", "OT01",
+                                  "VD01", "VD10", "MA04", "SV04", "OT99"])
 def test_the_marketing_kit_codes_are_campaign_codes(code):
-    # docs/marketing/2026-10-ramadan/00_README.md hands these out.
+    # docs/marketing/2026-10-ramadan/00_README.md and
+    # docs/marketing/campaign_codes.md hand these out.
     assert at.is_campaign_code(code)
+
+
+@pytest.mark.parametrize("code,source,medium", [
+    # The videos' QR carried exactly this utm when it pointed straight at Play.
+    ("VD03", "campaign_video", "qr"),
+    ("MA02", "facebook", "paid"),
+    ("SV01", "short_video", "social"),
+])
+def test_launch_wave_prefixes_tell_ga4_their_channel(code, source, medium):
+    assert at.attribution_utm(code, {}) == {
+        "utm_source": source, "utm_medium": medium, "utm_campaign": code}
+    url, claimed = at.landing_attribution({"ref": code.lower()})
+    assert claimed == code
+    assert _app_claims(url) == code
 
 
 @pytest.mark.parametrize("code", [
