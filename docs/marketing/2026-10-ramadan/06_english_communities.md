@@ -3,13 +3,17 @@
 > Markers ⏳ / 🔧 are defined in [`00_README.md`](00_README.md). Khaled posts and writes himself — no automation, no second accounts.
 > Researched 2026-10-04. Sizes are what the source showed on that day and are self-reported where marked; rules must be
 > re-read on the day of posting.
+> **(2026-10-16)** Copy updated to the 1.0.73 "Noor and the Lanterns" identity (approved store text: `listing_1.0.73/listing.json`
+> on `origin/noor/store-capture`). Public copy never names Khaled; sign as "Al-Morabbi". New vertical videos (v1–v6 + teaser)
+> are listed in `00` §1.
 
 ## 1. Three honest constraints before anything else
 
 1. **Android only.** StatCounter (mobile web, volatile month to month) puts iOS at roughly half of US and UK mobile traffic.
    Every English post says "Android only for now". Anything else spends goodwill on people who cannot install.
-2. **Not everything is in English yet.** Lessons, paths and the assistant are fully English. The adhkar, the daily reminder,
-   the games and the story library are **Arabic only** (⏳ F-EN-CONTENT). Say so if asked — the Play listing already does.
+2. **Not everything is in English yet.** The app, the curriculum, the stories and the assistant are in English, and the adhkar
+   come with English explanations (verses and hadith stay in Arabic, as revealed and as narrated). The interactive games are
+   **Arabic only** for now (⏳ F-EN-CONTENT, games only). Say so if asked — the Play listing already does.
 3. **No English landing page.** Every web page (`/go`, `/l/…`) is Arabic, so English links go straight to Play with a
    referral code: `https://play.google.com/store/apps/details?id=com.alsaba.almorabbi&referrer=ref_CM01&hl=en`.
    This counts installs per code but not clicks (README §3).
@@ -50,7 +54,7 @@
 
 ## 4. Templates
 
-### Group post (only after the admin says yes) ⏳ F-RAMADAN
+### Group post (only after the admin says yes) — F-RAMADAN live in 1.0.73
 
 ```
 Salaam everyone — with the admins' permission.
@@ -61,8 +65,9 @@ a fasting goal together and celebrate when they reach it. The aim this year is t
 fasting and love it — not the number of hours.
 
 Full disclosure: I built a free app for Muslim parents called Al-Morabbi. This Ramadan it has a
-30-day family program — one small challenge a day and fasting practice matched to each child's age.
-No ads, nothing to buy. Android only for now, and a few parts (adhkar, games, stories) are still Arabic-only.
+30-day Family Ramadan program — one small challenge a day, fasting practice matched to each child's age,
+and a lantern street that lights up with what you do together.
+No ads, nothing to buy. Android only for now, and the interactive games are still Arabic-only.
 https://play.google.com/store/apps/details?id=com.alsaba.almorabbi&referrer=ref_[CODE]&hl=en
 
 Happy to hear what would make it more useful.
@@ -73,12 +78,12 @@ Happy to hear what would make it more useful.
 > `lesson_10-12_islamic_parenting_worship_love_02` (agree a goal, celebrate it), English versions under
 > `knowledge_base/curriculum/i18n/en/lessons/`. If those lessons change, change this post with them.
 
-### Before the program ships (true today)
+### Outside the Ramadan season (true today)
 
 ```
 Salaam — a resource that may help with Ramadan prep: Al-Morabbi, a free app for Muslim parents with short lessons
-on preparing children for their first fasts and on helping them love prayer, plus an assistant you can ask about your
-own child. Full disclosure: I built it. No ads, nothing to buy. Android only for now.
+on preparing children for their first fasts and on helping them love prayer, a Prayer Journey for ages 7–10, plus an
+assistant you can ask about your own child. Full disclosure: I built it. No ads, nothing to buy. Android only for now.
 https://play.google.com/store/apps/details?id=com.alsaba.almorabbi&referrer=ref_[CODE]&hl=en
 ```
 
@@ -86,7 +91,8 @@ https://play.google.com/store/apps/details?id=com.alsaba.almorabbi&referrer=ref_
 
 ```
 Not sure it fits what you need, but I built a free app for exactly this — Al-Morabbi (Android only for now).
-It has short lessons by age on prayer, tantrums, sleep and screens, and you can ask about your own child.
+It has a short daily parenting path and lessons by age on prayer, tantrums, sleep and screens, and you can ask about
+your own child.
 No ads, nothing to buy. Happy to answer questions here rather than in DMs.
 ```
 
@@ -97,14 +103,14 @@ Subject: A topic for your listeners before Ramadan — preparing young kids for 
 
 Assalamu alaikum [Name],
 
-I'm Khaled. I build Al-Morabbi, a free parenting app for Muslim parents (no ads, nothing to sell).
+I build Al-Morabbi, a free parenting app for Muslim parents (no ads, nothing to sell).
 I'd love to suggest a topic rather than the app: how parents can prepare children of different ages for their first
 fasts without turning it into a battle — what tends to work at 7 and at 11.
 
 If it fits your show, I'm glad to share what we learned writing the app's lessons, or simply to point you to them.
 If not, no reply needed — jazakAllahu khayran for what you do.
 
-Khaled
+Al-Morabbi
 ```
 
 ## 5. What we measure

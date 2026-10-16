@@ -13,9 +13,9 @@
 | البند | القيمة |
 |---|---|
 | **القناتان** | عربية «المربّي \| تربية الأطفال» + إنجليزية «Al-Morabbi — Muslim Parenting». قناتان لا قناة ثنائية: المنشور المختلط اللغة يُزعج الجمهورين، ودليل القنوات يرتّب بحسب البلد |
-| **الصورة** | `frontend/icons/icon-512.png` |
-| **الوصف (عربي)** | «منشور تربوي قصير كل يوم: نصيحة لعمر طفلك، ودرس أسبوعي، واستطلاع. من تطبيق المربّي — مجاني لوجه الله. https://tg-api.alsaba.cloud/go?ref=WA01» |
-| **Description (EN)** | "A short, practical Muslim parenting tip three times a week. From the Al-Morabbi app — free, for the sake of Allah. Android: https://play.google.com/store/apps/details?id=com.alsaba.almorabbi&referrer=ref_WA02&hl=en" |
+| **الصورة** | أيقونة «نور والقناديل»: `docs/brand/store/listing_1.0.73/ar/icon.png` (على `origin/noor/store-capture`). `frontend/icons/icon-512.png` هوية قديمة |
+| **الوصف (عربي)** | «منشور تربوي قصير كل يوم: نصيحة لعمر طفلكم، ودرس أسبوعي، واستطلاع. من تطبيق «المربّي»: درب تربوي يومي لأسرتكم، يرافقكم فيه نور — مجاني لوجه الله. https://tg-api.alsaba.cloud/go?ref=WA01» |
+| **Description (EN)** | "A short, practical Muslim parenting tip three times a week. From the Al-Morabbi app — a daily parenting path for your family, with Noor along the way. Free, for the sake of Allah. Android: https://play.google.com/store/apps/details?id=com.alsaba.almorabbi&referrer=ref_WA02&hl=en" |
 | **الظهور في الدليل** | مفعّل (الدليل يصفّي بالبلد ويعرض الأنشط والأكثر متابعة) |
 | **إعادة التوجيه** | **مسموحة** — الانتشار هو الهدف. لا حظر للقطات الشاشة |
 | **التفاعلات** | مجموعة محدودة (🤍 👍 🤲) — المتابعون لا يستطيعون الرد نصيًا، فلا شيء يحتاج إشرافًا |
@@ -71,7 +71,7 @@
 • [سطر من نصيحة الأحد]
 • [عنوان درس الاثنين]
 • [سطر من نصيحة الخميس]
-إن نفعتك القناة، فشاركها مع أسرة واحدة 🤍
+إن نفعتكم القناة، فشاركوها مع أسرة واحدة 🤍
 [رابط القناة]
 ```
 
@@ -89,26 +89,26 @@
 
 | # | السؤال | الخيارات | English |
 |---|---|---|---|
-| P1 | ما أصعب ما تواجهه في صلاة طفلك؟ | ينسى · يتكاسل · يرفض · ما زال صغيرًا | What's hardest about your child's prayer? — Forgets · Drags their feet · Refuses · Still too young |
-| P2 | متى تشتد نوبات الغضب عند طفلك؟ | قبل الخروج صباحًا · بعد المدرسة · عند إطفاء الشاشة · قبل النوم | When are tantrums worst? — Morning rush · After school · Screen-off time · Bedtime |
-| P3 | متى ينام طفلك عادةً؟ | قبل ٨ · ٨–٩ · ٩–١٠ · بعد ١٠ | When does your child usually fall asleep? — Before 8 · 8–9 · 9–10 · After 10 |
-| P4 | كم ساعة شاشة يقضي طفلك يوميًا؟ | أقل من ساعة · ١–٢ · ٢–٤ · أكثر من ٤ | Daily screen time? — Under 1h · 1–2h · 2–4h · Over 4h |
+| P1 | ما أصعب ما تواجهونه في صلاة طفلكم؟ | ينسى · يتكاسل · يرفض · ما زال صغيرًا | What's hardest about your child's prayer? — Forgets · Drags their feet · Refuses · Still too young |
+| P2 | متى تشتد نوبات الغضب عند طفلكم؟ | قبل الخروج صباحًا · بعد المدرسة · عند إطفاء الشاشة · قبل النوم | When are tantrums worst? — Morning rush · After school · Screen-off time · Bedtime |
+| P3 | متى ينام طفلكم عادةً؟ | قبل ٨ · ٨–٩ · ٩–١٠ · بعد ١٠ | When does your child usually fall asleep? — Before 8 · 8–9 · 9–10 · After 10 |
+| P4 | كم ساعة شاشة يقضي طفلكم يوميًا؟ | أقل من ساعة · ١–٢ · ٢–٤ · أكثر من ٤ | Daily screen time? — Under 1h · 1–2h · 2–4h · Over 4h |
 | P5 | أكبر معركة في المذاكرة؟ | البدء · التركيز · الواجبات الطويلة · الامتحانات | Biggest homework battle? — Getting started · Focus · Long assignments · Exams |
-| P6 | علاقة طفلك بالقرآن الآن؟ | يحفظ مع معلّم · يستمع معنا · نقرأ معًا أحيانًا · لم نبدأ بعد | Your child and the Qur'an right now? — With a teacher · Listens with us · We read together sometimes · Not started yet |
-| P7 | ممّ يخاف طفلك أكثر؟ | الظلام · النوم وحده · الجديد والمدرسة · فراقك | What does your child fear most? — The dark · Sleeping alone · New things/school · Being apart from you |
-| P8 | ما أكثر ما يُشعل الغيرة بين أبنائك؟ | المولود الجديد · المقارنة · الألعاب · الوقت معك | What sparks sibling jealousy most? — A new baby · Comparison · Toys · Time with you |
-| P9 | حين يخطئ طفلك، ماذا يفعل غالبًا؟ | يعترف · يُنكر · يلوم غيره · يبكي | When your child makes a mistake, they usually… — Admit it · Deny it · Blame someone · Cry |
-| P10 | هل سيصوم طفلك هذا رمضان؟ | يومًا كاملًا · نصف يوم · ساعات للتدريب · لم يحن وقته | Will your child fast this Ramadan? — Full days · Half days · A few hours to practise · Not yet |
-| P11 | هل يحفظ طفلك دعاءً؟ | أكثر من دعاء · دعاء واحد · نتعلّم الآن · ليس بعد | Does your child know a du'a by heart? — Several · One · Learning now · Not yet |
-| P12 | ماذا تريد لأطفالك أكثر في رمضان؟ | حب الصيام · الصلاة في وقتها · القرآن · الأخلاق | What do you most want for your kids this Ramadan? — Love of fasting · Praying on time · Qur'an · Character |
+| P6 | علاقة طفلكم بالقرآن الآن؟ | يحفظ مع معلّم · يستمع معنا · نقرأ معًا أحيانًا · لم نبدأ بعد | Your child and the Qur'an right now? — With a teacher · Listens with us · We read together sometimes · Not started yet |
+| P7 | ممّ يخاف طفلكم أكثر؟ | الظلام · النوم وحده · الجديد والمدرسة · فراقكم | What does your child fear most? — The dark · Sleeping alone · New things/school · Being apart from you |
+| P8 | ما أكثر ما يُشعل الغيرة بين أبنائكم؟ | المولود الجديد · المقارنة · الألعاب · الوقت معكم | What sparks sibling jealousy most? — A new baby · Comparison · Toys · Time with you |
+| P9 | حين يخطئ طفلكم، ماذا يفعل غالبًا؟ | يعترف · يُنكر · يلوم غيره · يبكي | When your child makes a mistake, they usually… — Admit it · Deny it · Blame someone · Cry |
+| P10 | هل سيصوم طفلكم هذا رمضان؟ | يومًا كاملًا · نصف يوم · ساعات للتدريب · لم يحن وقته | Will your child fast this Ramadan? — Full days · Half days · A few hours to practise · Not yet |
+| P11 | هل يحفظ طفلكم دعاءً؟ | أكثر من دعاء · دعاء واحد · نتعلّم الآن · ليس بعد | Does your child know a du'a by heart? — Several · One · Learning now · Not yet |
+| P12 | ماذا تريدون لأطفالكم أكثر في رمضان؟ | حب الصيام · الصلاة في وقتها · القرآن · الأخلاق | What do you most want for your kids this Ramadan? — Love of fasting · Praying on time · Qur'an · Character |
 | P13 | هل وضعتم خطة للأسرة في رمضان؟ | مكتوبة · في الذهن · سنبدأ اليوم · لا نحتاج | Do you have a family plan for Ramadan? — Written down · In our heads · Starting today · Don't need one |
 
-نتائج الاستطلاعات **مدخل لمحتوى**: نتيجة P10 تحدد أي درس صيام نبرزه في أسبوع ١٢، وP1 تُرسل لمن يبني ⏳ F-PRAYER.
+نتائج الاستطلاعات **مدخل لمحتوى**: نتيجة P10 تحدد أي درس صيام نبرزه في أسبوع ١٢، وP1 مدخل لتحسين رحلة الصلاة (F-PRAYER حيّة في 1.0.73).
 
 ## ٥. التقويم — ٩١ يومًا (الأحد ٨ نوفمبر 2026 → السبت ٦ فبراير 2027)
 
 قبل ٨ نوفمبر: **٨ نوفمبر هو الإطلاق**؛ بين ١١ أكتوبر و٧ نوفمبر ينشئ خالد القناتين ويجهّز بطاقات أول أسبوعين ويضع الرابط
-في توقيعه وحالة واتساب (الأسابيع ٢–٥ في [`05`](05_ramadan_campaign_timeline.md)). **الأحد ٧ فبراير** (ليلة رمضان تقريبًا): منشور إطلاق البرنامج ⏳ F-RAMADAN — خارج هذا الجدول وفي [`05`](05_ramadan_campaign_timeline.md).
+في توقيعه وحالة واتساب (الأسابيع ٢–٥ في [`05`](05_ramadan_campaign_timeline.md)). **الأحد ٧ فبراير** (ليلة رمضان تقريبًا): منشور إطلاق «رمضان العائلة» (F-RAMADAN حيّ في 1.0.73؛ مع فيديو v5_ramadan «شارع القناديل») — خارج هذا الجدول وفي [`05`](05_ramadan_campaign_timeline.md).
 
 تواريخ هجرية تقريبية: **رجب ≈ ١١ ديسمبر**، **شعبان ≈ ٩ يناير**، **رمضان ≈ ٨ فبراير** (تتأكد بالرؤية).
 
@@ -201,14 +201,14 @@
 | 75 | 2027-01-21 | الخميس | نصيحة | `tip_2-3_025` | 2-3 | ✅ |  |
 | 76 | 2027-01-22 | الجمعة | نصيحة | `tip_0-3_029` | 0-3 | ✅ |  |
 | 77 | 2027-01-23 | السبت | خلاصة + طلب مشاركة | — | — | — |  |
-| 78 | 2027-01-24 | الأحد | نصيحة | `tip_13-15_003` | 13-15 | ✅ | **أول صيام: نستعد معًا** ⏳ F-RAMADAN |
+| 78 | 2027-01-24 | الأحد | نصيحة | `tip_13-15_003` | 13-15 | ✅ | **أول صيام: نستعد معًا** (F-RAMADAN) |
 | 79 | 2027-01-25 | الاثنين | درس الأسبوع | `lesson_10-12_islamic_parenting_worship_love_02` | 10-12 | ✅ (الصفحة عربية) |  |
 | 80 | 2027-01-26 | الثلاثاء | نصيحة | `tip_2-3_022` | 2-3 | ✅ |  |
 | 81 | 2027-01-27 | الأربعاء | استطلاع | P12 | — | — |  |
 | 82 | 2027-01-28 | الخميس | نصيحة | `tip_0-3_009` | 0-3 | ✅ |  |
 | 83 | 2027-01-29 | الجمعة | نصيحة | `tip_10-12_004` | 10-12 | ✅ |  |
 | 84 | 2027-01-30 | السبت | خلاصة + طلب مشاركة | — | — | — |  |
-| 85 | 2027-01-31 | الأحد | نصيحة | `tip_7-9_002` | 7-9 | ✅ | **أسبوع العدّ التنازلي** ⏳ F-RAMADAN |
+| 85 | 2027-01-31 | الأحد | نصيحة | `tip_7-9_002` | 7-9 | ✅ | **أسبوع العدّ التنازلي** (F-RAMADAN) |
 | 86 | 2027-02-01 | الاثنين | درس الأسبوع | `lesson_10-12_islamic_parenting_worship_love_01` | 10-12 | ✅ (الصفحة عربية) |  |
 | 87 | 2027-02-02 | الثلاثاء | نصيحة | `tip_7-9_006` | 7-9 | ✅ |  |
 | 88 | 2027-02-03 | الأربعاء | استطلاع | P13 | — | — |  |
@@ -216,8 +216,9 @@
 | 90 | 2027-02-05 | الجمعة | نصيحة | `tip_16-18_018` | 16-18 | ✅ |  |
 | 91 | 2027-02-06 | السبت | خلاصة + طلب مشاركة | — | — | — |  |
 
-**بعد ليلة رمضان** (في [`05`](05_ramadan_campaign_timeline.md)): ٨ فبراير → العيد: منشور يومي = تحدّي اليوم من البرنامج ⏳ F-RAMADAN
-كبطاقة. العيد: دعوة لمشاركة «رمضان عائلتنا» ⏳ F-RECAP. ٣٠ يومًا بعد العيد: ٣ منشورات أسبوعيًا «كمّل مع طفلك» نحو خطة الأسبوع ⏳ F-WEEKLY،
+**بعد ليلة رمضان** (في [`05`](05_ramadan_campaign_timeline.md)): ٨ فبراير → العيد: منشور يومي = تحدّي اليوم من «رمضان العائلة»
+كبطاقة. العيد: دعوة لمشاركة «رمضان عائلتنا». ٣٠ يومًا بعد العيد: ٣ منشورات أسبوعيًا «أكملوا مع طفلكم» نحو خطة الأسبوع وقناديله
+(الثلاث حيّة في 1.0.73)،
 وإلا فالعودة إلى إيقاع ما قبل رمضان بنفس قواعد الاختيار.
 
 ## ٦. خطة بطاقات المشاركة
@@ -225,9 +226,9 @@
 | البند | القرار |
 |---|---|
 | **المقاسات** | 1080×1080 للقناة، و1080×1920 لحالة واتساب (خالد والدعاة) |
-| **المولّد** | `ops/tools/generate_tip_cards.py` موجود (خط Cairo، خلفية الهوية، QR) **لكنه يقرأ من `02_content_arsenal.md`** (فيه عامية). يحتاج تعديلًا صغيرًا لاحقًا: خيار `--ids tip_7-9_001,…` يقرأ النص من `knowledge_base/curriculum/daily_tips/` (والإنجليزي من `i18n/en/`)، وQR إلى `/go?ref=WA01` أو رابط Play بـ`ref_WA02`. **ليس في هذه الحزمة** (وثائق فقط) |
+| **المولّد** | `ops/tools/generate_tip_cards.py` موجود (خط Cairo، خلفية الهوية **القديمة** — تحتاج إطار «نور والقناديل» من ورق مقصوص كإطارات `docs/brand/store/frame_*.svg`، QR) **لكنه يقرأ من `02_content_arsenal.md`** (فيه عامية). يحتاج تعديلًا صغيرًا لاحقًا: خيار `--ids tip_7-9_001,…` يقرأ النص من `knowledge_base/curriculum/daily_tips/` (والإنجليزي من `i18n/en/`)، وQR إلى `/go?ref=WA01` أو رابط Play بـ`ref_WA02`. **ليس في هذه الحزمة** (وثائق فقط) |
 | **محتوى البطاقة** | نص النصيحة حرفيًا + «لعمر [الفئة]» + الشعار + QR. بلا آيات ولا أحاديث ولا «مجاني» داخل الصورة |
 | **الإيقاع** | يوم السبت: ٤ بطاقات نصائح + بطاقة درس للأسبوع التالي |
-| **رمضان** ⏳ F-RAMADAN | بطاقة يومية من تحدّي اليوم في البرنامج — المحتوى من المرحلة ٢ نفسها لا يُكتب هنا |
-| **الحلقة الفيروسية** ⏳ F-RECAP | بطاقة «رمضان عائلتنا» يولّدها التطبيق لكل أسرة وتشاركها الأسرة بنفسها؛ القناة تدعو إليها فقط ولا تنشر بطاقات أسر |
+| **رمضان** (F-RAMADAN حيّ) | بطاقة يومية من تحدّي اليوم في «رمضان العائلة» — المحتوى من `ramadan_family.json` نفسه لا يُكتب هنا؛ ومنشور الإطلاق بفيديو v5_ramadan |
+| **الحلقة الفيروسية** (F-RECAP حيّ) | بطاقة «رمضان عائلتنا» يولّدها التطبيق لكل أسرة وتشاركها الأسرة بنفسها؛ القناة تدعو إليها فقط ولا تنشر بطاقات أسر |
 | **قديم لا يُعاد استعماله** | `docs/marketing/daily_tips_cards/tip_*.png` مولّدة من الترسانة القديمة، وبعضها بعامية مصرية |
