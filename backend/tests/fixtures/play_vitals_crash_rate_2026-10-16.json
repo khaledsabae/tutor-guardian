@@ -1,0 +1,172 @@
+{
+ "_source": "Play Developer Reporting API v1beta1 crashRateMetricSet:query, com.alsaba.almorabbi, DAILY 2026-10-09..2026-10-14 (America/Los_Angeles), metrics crashRate+distinctUsers, 2026-10-16 — the real response, unedited.",
+ "response": {
+  "rows": [
+   {
+    "aggregationPeriod": "DAILY",
+    "startTime": {
+     "year": 2026,
+     "month": 10,
+     "day": 9,
+     "timeZone": {
+      "id": "America/Los_Angeles"
+     }
+    },
+    "metrics": [
+     {
+      "metric": "crashRate",
+      "decimalValue": {
+       "value": "0.0000"
+      },
+      "decimalValueConfidenceInterval": {
+       "lowerBound": {
+        "value": "0.0000"
+       },
+       "upperBound": {
+        "value": "0.0414"
+       }
+      }
+     },
+     {
+      "metric": "distinctUsers",
+      "decimalValue": {
+       "value": "70"
+      }
+     }
+    ]
+   },
+   {
+    "aggregationPeriod": "DAILY",
+    "startTime": {
+     "year": 2026,
+     "month": 10,
+     "day": 10,
+     "timeZone": {
+      "id": "America/Los_Angeles"
+     }
+    },
+    "metrics": [
+     {
+      "metric": "crashRate",
+      "decimalValue": {
+       "value": "0.0000"
+      },
+      "decimalValueConfidenceInterval": {
+       "lowerBound": {
+        "value": "0.0000"
+       },
+       "upperBound": {
+        "value": "0.0437"
+       }
+      }
+     },
+     {
+      "metric": "distinctUsers",
+      "decimalValue": {
+       "value": "60"
+      }
+     }
+    ]
+   },
+   {
+    "aggregationPeriod": "DAILY",
+    "startTime": {
+     "year": 2026,
+     "month": 10,
+     "day": 11,
+     "timeZone": {
+      "id": "America/Los_Angeles"
+     }
+    },
+    "metrics": [
+     {
+      "metric": "crashRate",
+      "decimalValue": {
+       "value": "0.0000"
+      },
+      "decimalValueConfidenceInterval": {
+       "lowerBound": {
+        "value": "0.0000"
+       },
+       "upperBound": {
+        "value": "0.0442"
+       }
+      }
+     },
+     {
+      "metric": "distinctUsers",
+      "decimalValue": {
+       "value": "60"
+      }
+     }
+    ]
+   },
+   {
+    "aggregationPeriod": "DAILY",
+    "startTime": {
+     "year": 2026,
+     "month": 10,
+     "day": 12,
+     "timeZone": {
+      "id": "America/Los_Angeles"
+     }
+    },
+    "metrics": [
+     {
+      "metric": "crashRate",
+      "decimalValue": {
+       "value": "0.0000"
+      },
+      "decimalValueConfidenceInterval": {
+       "lowerBound": {
+        "value": "0.0000"
+       },
+       "upperBound": {
+        "value": "0.0335"
+       }
+      }
+     },
+     {
+      "metric": "distinctUsers",
+      "decimalValue": {
+       "value": "80"
+      }
+     }
+    ]
+   },
+   {
+    "aggregationPeriod": "DAILY",
+    "startTime": {
+     "year": 2026,
+     "month": 10,
+     "day": 13,
+     "timeZone": {
+      "id": "America/Los_Angeles"
+     }
+    },
+    "metrics": [
+     {
+      "metric": "crashRate",
+      "decimalValue": {
+       "value": "0.0000"
+      },
+      "decimalValueConfidenceInterval": {
+       "lowerBound": {
+        "value": "0.0000"
+       },
+       "upperBound": {
+        "value": "0.0372"
+       }
+      }
+     },
+     {
+      "metric": "distinctUsers",
+      "decimalValue": {
+       "value": "70"
+      }
+     }
+    ]
+   }
+  ]
+ }
+}
