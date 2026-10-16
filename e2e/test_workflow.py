@@ -273,8 +273,11 @@ class RehearsalJobTest(unittest.TestCase):
         self.assertIn('-e PROGRAMS_AS_OF_ENABLED', start)
         self.assertNotIn('--env-file', start)
         text = WORKFLOW.read_text()
-        self.assertEqual(text.count('PROGRAMS_AS_OF_ENABLED=1 \\'), 1,
-                         'the switch is set in exactly one place: the candidate container')
+        # Two candidate containers set it: this job's, and job store_capture's
+        # (dispatch only) — both on the runner's loopback, never elsewhere.
+        self.assertEqual(text.count('PROGRAMS_AS_OF_ENABLED=1 \\'), 2,
+                         'the switch is set only in the candidate containers')
+        self.assertEqual(text.count('-p 127.0.0.1:8091:8000'), 2)
         self.assertNotIn('ssh ', text)
 
     def test_the_candidate_is_built_here_and_pushed_nowhere(self):
@@ -307,3 +310,36 @@ class RehearsalJobTest(unittest.TestCase):
         for part in ('/gallery', '/rehearsal', '/screens', '/logcat', '/summary.md'):
             self.assertIn(part, uploads[0]['with']['path'])
         self.assertEqual(self.step('Candidate backend log')['if'], 'always()')
+
+
+class StoreCaptureJobTest(unittest.TestCase):
+    """Job `store_capture`: the Play listing's screens with a natural family.
+    Natural names are not production's test marker, so the job must never run
+    on a PR, never gate one, and never talk to production."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.text = WORKFLOW.read_text()
+        cls.workflow = yaml.load(cls.text, Loader=yaml.BaseLoader)
+        cls.job = cls.workflow['jobs']['store_capture']
+
+    def test_dispatch_only_and_off_by_default(self):
+        self.assertIn("github.event_name == 'workflow_dispatch'", self.job['if'])
+        self.assertIn('inputs.store_capture', self.job['if'])
+        self.assertEqual(self.workflow['on']['workflow_dispatch']['inputs']['store_capture']['default'], 'false')
+
+    def test_not_part_of_the_delivery_gate(self):
+        self.assertNotIn('store_capture', self.workflow['jobs']['delivery_gate']['needs'])
+        self.assertNotIn('store_capture', MANDATORY)
+
+    def test_only_the_runner_backend_apk_and_never_production(self):
+        downloaded = [s['with']['name'] for s in self.job['steps'] if 'download-artifact' in s.get('uses', '')]
+        self.assertEqual(downloaded, ['e2e-apk-rehearsal-head'])
+        block = self.text.split('  store_capture:\n', 1)[1].split('  delivery_gate:\n', 1)[0]
+        self.assertNotIn('tg-api.alsaba.cloud', block)
+        script = (Path(__file__).resolve().parent / 'store_capture.sh').read_text()
+        self.assertNotIn('tg-api.alsaba.cloud', script)
+        families = next(l for l in script.splitlines() if l.startswith('FAMILIES='))
+        self.assertNotIn('E2E', families)
+        run = next(s for s in self.job['steps'] if s.get('name') == 'Shoot the store-listing screens')
+        self.assertEqual(run['with']['script'], 'bash e2e/store_capture.sh')

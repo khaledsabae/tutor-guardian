@@ -25,6 +25,9 @@ OUT="${E2E_OUT:?set E2E_OUT}"
 PKG=com.alsaba.almorabbi
 CHILD_NAME="${E2E_CHILD_NAME:-E2E-Maestro}"
 QUESTION="${E2E_QUESTION:-E2E test how can I teach my child to be honest}"
+# The gallery's second child (band 4-6). A plain name: production's test filter
+# keys on the first child's name, and this one shares its device.
+SECOND_CHILD=Salma
 export MAESTRO_CLI_NO_ANALYTICS=1 MAESTRO_CLI_ANALYSIS_NOTIFICATION_DISABLED=true
 
 mkdir -p "$OUT/logcat" "$OUT/maestro" "$OUT/screens" "$OUT/device"
@@ -79,7 +82,7 @@ run_flow() {  # severity(gate|info) lineage name file [extra maestro args...]
   mark "BEGIN $lineage/$name"
   start=$(date +%s)
   maestro test --format junit --output "$dir/report.xml" --test-output-dir "$dir" \
-    -e CHILD_NAME="$CHILD_NAME" -e QUESTION="$QUESTION" "$@" "$FLOWS/$file"
+    -e CHILD_NAME="$CHILD_NAME" -e QUESTION="$QUESTION" -e SECOND_CHILD="$SECOND_CHILD" "$@" "$FLOWS/$file"
   rc=$?
   mark "END $lineage/$name rc=$rc"
   printf '%s\t%s\t%s\t%s\t%s\n' "$lineage" "$name" "$rc" "$(( $(date +%s) - start ))" \

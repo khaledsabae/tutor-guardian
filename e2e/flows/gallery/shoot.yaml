@@ -20,7 +20,9 @@
 # it needs AVD config (`wm density 360` at boot-time scale or a new profile),
 # so adding it means a new AVD_CACHE_KEY suffix in BOTH workflow files.
 # Env: UI_LANG (ar|en), GALLERY_TAG (before|after), GALLERY_VARIANT (ar|en|ar_font2x),
-#      CHILD_NAME (inherited, unused since today_shot dropped the name wait).
+#      CHILD_NAME (inherited, unused since today_shot dropped the name wait),
+#      SECOND_CHILD (the 4-6 child step 4 adds: run.sh passes Salma; e2e/store_capture.sh
+#      a natural name, against the runner's backend only).
 appId: com.alsaba.almorabbi
 name: gallery/shoot
 ---
@@ -449,7 +451,7 @@ name: gallery/shoot
             - runFlow: ../common/exit_child_mode.yaml
 - runFlow: ../common/home.yaml
 
-# Step 4: Add and switch to a 4-6 child (Salma) so praise_child_sticker is truly for the 4-6 band (sticker only)
+# Step 4: Add and switch to a 4-6 child (SECOND_CHILD, default Salma) so praise_child_sticker is truly for the 4-6 band (sticker only)
 - runFlow: ../common/open_settings.yaml
 - scrollUntilVisible:
     element:
@@ -479,7 +481,7 @@ name: gallery/shoot
                 file: ../common/tap_field_end.yaml
                 env:
                   FIELD: '${output.t.addChildNameHint}'
-            - inputText: 'Salma'
+            - inputText: '${SECOND_CHILD}'
             - scrollUntilVisible:
                 element:
                   text: '${output.t.ageGroup4to6}'
@@ -498,11 +500,11 @@ name: gallery/shoot
             - waitForAnimationToEnd:
                 timeout: 3000
             - extendedWaitUntil:
-                visible: 'Salma'
+                visible: '${SECOND_CHILD}'
                 timeout: 15000
                 optional: true
             - tapOn:
-                text: 'Salma'
+                text: '${SECOND_CHILD}'
                 optional: true
             - waitForAnimationToEnd:
                 timeout: 2000
