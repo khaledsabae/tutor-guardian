@@ -730,7 +730,7 @@ def _metric_values(doc: dict, device_id: str, hijri_year: int) -> dict[str, Any]
 
 def _app_link(device_id: str, hijri_year: int) -> str:
     """The Play link the shared card carries — with the family's own invite
-    code, so an install it brings is credited to them («أجرك الجاري»)."""
+    code, so an install it brings is credited to them («أثر دعوتك»)."""
     from app.services.attribution import PLAY_URL, play_install_url
     # Hyphens, not underscores: attribution percent-encodes '_' in a utm value
     # (so a value can never pass for a ref_ code), which reads badly in a link.

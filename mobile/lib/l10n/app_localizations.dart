@@ -3551,7 +3551,7 @@ abstract class AppLocalizations {
   /// No description provided for @inviteDesc.
   ///
   /// In ar, this message translates to:
-  /// **'دلالتك صديقًا على «المربّي» صدقة جارية — كل ما ينفع به طفله في ميزان حسناتك بإذن الله 🌿'**
+  /// **'دلالتك صديقًا على «المربّي» تفتح لطفله بابًا من الخير 🌿'**
   String get inviteDesc;
 
   /// No description provided for @inviteSharePreparing.
@@ -6287,7 +6287,7 @@ abstract class AppLocalizations {
   /// No description provided for @reviewPromptBody.
   ///
   /// In ar, this message translates to:
-  /// **'تقييمك على المتجر يساعد آباءً غيرك يجدون التطبيق — وفي ميزان حسناتك إن شاء الله.'**
+  /// **'تقييمك على المتجر يساعد آباءً غيرك يجدون التطبيق.'**
   String get reviewPromptBody;
 
   /// No description provided for @reviewPromptLater.
@@ -7403,7 +7403,7 @@ abstract class AppLocalizations {
   /// No description provided for @inviteReachedTitle.
   ///
   /// In ar, this message translates to:
-  /// **'أجرك الجاري'**
+  /// **'أثر دعوتك'**
   String get inviteReachedTitle;
 
   /// No description provided for @inviteReachedCount.

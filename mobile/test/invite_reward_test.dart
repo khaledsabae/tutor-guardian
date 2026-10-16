@@ -1,10 +1,12 @@
-/// «أجرك الجاري» — the invite screen says only what is true.
+/// «أثر دعوتك» — the invite screen says only what is true.
 ///
 /// The screen leads with how many families the parent's sharing reached, and
 /// keeps the coins to one line. That line used to promise the server's
 /// `reward_coins` (100 «لك ولصديقك») — a number this device never paid: the
 /// client credits one badge reward each side, under the daily coin cap.
 library;
+
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -60,5 +62,21 @@ void main() {
     expect(line, contains('${CoinsService.badgeReward} عملة لك'));
     expect(line, isNot(contains('100')));
     expect(line, contains('حدّ العملات اليومي'));
+  });
+
+  test('app copy never promises the parent reward or ajr', () {
+    // The title was «أجرك الجاري» / "Your ongoing reward"; the invite and
+    // review prompts said «في ميزان حسناتك». The app may hope, never promise.
+    for (final file in ['lib/l10n/app_ar.arb', 'lib/l10n/app_en.arb']) {
+      final arb = File(file).readAsStringSync();
+      for (final phrase in [
+        'أجرك الجاري',
+        'في ميزان حسناتك',
+        'Your ongoing reward',
+        'your good deeds',
+      ]) {
+        expect(arb, isNot(contains(phrase)), reason: '$file: $phrase');
+      }
+    }
   });
 }

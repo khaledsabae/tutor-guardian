@@ -1896,7 +1896,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get inviteDesc =>
-      'دلالتك صديقًا على «المربّي» صدقة جارية — كل ما ينفع به طفله في ميزان حسناتك بإذن الله 🌿';
+      'دلالتك صديقًا على «المربّي» تفتح لطفله بابًا من الخير 🌿';
 
   @override
   String get inviteSharePreparing => 'جاري التحضير…';
@@ -3483,7 +3483,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get reviewPromptBody =>
-      'تقييمك على المتجر يساعد آباءً غيرك يجدون التطبيق — وفي ميزان حسناتك إن شاء الله.';
+      'تقييمك على المتجر يساعد آباءً غيرك يجدون التطبيق.';
 
   @override
   String get reviewPromptLater => 'لاحقًا';
@@ -4135,7 +4135,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get todayPickChildHint => 'اضغط لاختيار طفل أو إضافته لمتابعة مساره';
 
   @override
-  String get inviteReachedTitle => 'أجرك الجاري';
+  String get inviteReachedTitle => 'أثر دعوتك';
 
   @override
   String inviteReachedCount(int count) {

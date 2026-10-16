@@ -1,4 +1,4 @@
-/// «أجرك الجاري» — the dedicated referral surface (Phase 0.2, reframed 2026-10).
+/// «أثر دعوتك» — the dedicated referral surface (Phase 0.2, reframed 2026-10).
 ///
 /// Leads with what the parent's sharing has already done — «وصل المربّي إلى
 /// N أسرة بسببك» — because the motive this audience acts on is the ongoing
