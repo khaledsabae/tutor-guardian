@@ -27,6 +27,7 @@ import '../../../state/chat_notifier.dart';
 import '../../onboarding/providers/onboarding_providers.dart';
 import '../data/models.dart';
 import '../data/program_repository.dart';
+import 'lesson_assets_provider.dart' show contentLanguageProvider;
 
 /// The repository itself — overridable in tests so we can stub the
 /// network layer without a real [TgClient].
@@ -41,6 +42,16 @@ final programRepositoryProvider = Provider<ProgramRepository>((ref) {
 /// The producer sets the text and switches to the chat tab; [ChatScreen]
 /// listens, sends it through [ChatNotifier.sendMessage], and clears it back to
 /// null so it fires exactly once.
+/// Curriculum reads are server-localised: `TgClient` sends `?lang=` and the
+/// server answers with the English title, or the Arabic one where no
+/// translation exists. That only helps if the read happens again when the
+/// language changes. These providers did not depend on the language at all, so
+/// a list fetched in Arabic stayed cached after the switch to English: Today's
+/// first-lesson card and «Continue your path» kept their Arabic titles on an
+/// English screen, while the lesson screen — fetched afresh — read English
+/// (store captures of 1.0.73). Watching the language makes the switch refetch.
+void _watchContentLanguage(Ref ref) => ref.watch(contentLanguageProvider);
+
 final pendingChatQuestionProvider = StateProvider<String?>((ref) => null);
 
 // ── pathsListProvider ────────────────────────────────────────────────────
@@ -65,6 +76,7 @@ class PathsListNotifier
   @override
   Future<PathListEnvelope> build(PathsListArgs arg) {
     final repo = ref.watch(programRepositoryProvider);
+    _watchContentLanguage(ref);
     return repo.listPaths(ageGroup: arg.ageGroup, domain: arg.domain);
   }
 
@@ -102,6 +114,7 @@ class PathDetailArgs {
 final pathDetailProvider =
     FutureProvider.autoDispose.family<PathDetail, PathDetailArgs>((ref, args) {
   final repo = ref.watch(programRepositoryProvider);
+  _watchContentLanguage(ref);
   return repo.getPathDetail(args.pathId, includeLessons: args.includeLessons);
 });
 
@@ -110,6 +123,7 @@ final pathDetailProvider =
 final lessonProvider = FutureProvider.autoDispose
     .family<CurriculumLesson, String>((ref, lessonId) {
   final repo = ref.watch(programRepositoryProvider);
+  _watchContentLanguage(ref);
   return repo.getLesson(lessonId);
 });
 
@@ -121,6 +135,7 @@ class CoachTipNotifier extends AutoDisposeFamilyAsyncNotifier<CoachTip, int> {
   @override
   Future<CoachTip> build(int childId) {
     final repo = ref.watch(programRepositoryProvider);
+    _watchContentLanguage(ref);
     return repo.getCoachTip(childId);
   }
 }
@@ -150,6 +165,7 @@ class NextLessonNotifier
   @override
   Future<NextLesson> build(NextLessonArgs arg) {
     final repo = ref.watch(programRepositoryProvider);
+    _watchContentLanguage(ref);
     return repo.getNextLesson(arg.ageGroup, childId: arg.childId);
   }
 }
