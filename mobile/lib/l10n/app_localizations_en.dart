@@ -2991,11 +2991,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get shareCardBrandLine =>
-      'Al-Murabbi — your partner on the parenting journey';
+      'Al-Murabbi — a guide who knows your child, step by step';
 
   @override
   String get shareCardInstallHint =>
-      '📲 Free, for the sake of Allah — scan the code or search for “Al-Murabbi”';
+      'Completely free — scan the code or search for “Al-Murabbi”';
 
   @override
   String get sharePathCompleteEyebrow => 'Path completed';

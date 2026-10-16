@@ -105,7 +105,6 @@ class _BadgeTile extends StatelessWidget {
         eyebrow: l10n.badgeShareEyebrow,
         headline: badge.title(l10n),
         body: badge.description(l10n),
-        icon: Icons.emoji_events_outlined,
       ),
     );
   }

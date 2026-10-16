@@ -93,7 +93,6 @@ MomentShare coachTipShare(AppLocalizations l10n, String tip) => (
         eyebrow: l10n.shareCoachTipEyebrow,
         headline: l10n.shareCoachTipHeadline,
         body: tip,
-        icon: Icons.lightbulb_outline,
       ),
     );
 

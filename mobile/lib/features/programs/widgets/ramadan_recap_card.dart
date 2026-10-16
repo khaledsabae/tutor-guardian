@@ -100,7 +100,6 @@ class RamadanRecapShareCard extends StatelessWidget {
             ],
             const SizedBox(height: 26),
             const ShareCardBrandFooter(
-              icon: Icons.nightlight_round,
               qrSize: 96,
             ),
           ],

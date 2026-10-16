@@ -362,7 +362,6 @@ MomentShare pathCompletionShare(
         eyebrow: l10n.sharePathCompleteEyebrow,
         headline: title,
         body: description,
-        icon: Icons.route_outlined,
       ),
     );
 

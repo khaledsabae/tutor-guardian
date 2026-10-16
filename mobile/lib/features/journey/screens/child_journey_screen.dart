@@ -235,7 +235,6 @@ MomentShare milestoneShare(
         eyebrow: l10n.shareMilestoneEyebrow(childName),
         headline: title,
         body: note.trim().isNotEmpty ? note : l10n.shareMilestoneDua,
-        icon: Icons.celebration_outlined,
       ),
     );
 

@@ -190,6 +190,5 @@ MomentShare firstSurahShare(
         eyebrow: l10n.shareFirstSurahEyebrow(childName),
         headline: l10n.shareFirstSurahHeadline(surah),
         body: l10n.shareFirstSurahDua,
-        icon: Icons.menu_book_outlined,
       ),
     );

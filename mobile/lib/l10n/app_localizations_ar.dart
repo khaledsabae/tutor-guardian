@@ -2947,11 +2947,11 @@ class AppLocalizationsAr extends AppLocalizations {
   String get shareInstallLine => '📲 «المربّي» مجانًا لوجه الله:';
 
   @override
-  String get shareCardBrandLine => 'المربّي — شريكك في رحلة التربية';
+  String get shareCardBrandLine => 'المربّي — مربٍّ يعرف طفلك، خطوة بخطوة';
 
   @override
   String get shareCardInstallHint =>
-      '📲 مجانًا لوجه الله — امسح الكود أو ابحث: «المربّي»';
+      'مجاني بالكامل — امسح الكود أو ابحث عن «المربّي»';
 
   @override
   String get sharePathCompleteEyebrow => 'مسار مكتمل';

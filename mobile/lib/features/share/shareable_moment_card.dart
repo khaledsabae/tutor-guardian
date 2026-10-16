@@ -36,7 +36,6 @@ class ShareableMomentCard extends StatelessWidget {
     required this.eyebrow,
     required this.headline,
     this.body,
-    this.icon = Icons.auto_awesome,
   });
 
   /// Big emoji at the top (e.g. 🤍 🌟 🕌 📖) — carries the emotional tone.
@@ -50,9 +49,6 @@ class ShareableMomentCard extends StatelessWidget {
 
   /// Optional supporting text (a dua, a tip, an encouragement).
   final String? body;
-
-  /// Footer brand icon.
-  final IconData icon;
 
   static const Size size = Size(1080, 1080);
 
@@ -112,7 +108,7 @@ class ShareableMomentCard extends StatelessWidget {
               ),
             ],
             const SizedBox(height: 40),
-            ShareCardBrandFooter(icon: icon),
+            const ShareCardBrandFooter(),
           ],
         ),
       ),
@@ -238,12 +234,15 @@ class ShareCardEyebrow extends StatelessWidget {
   }
 }
 
-/// Brand line, install CTA and the QR — the attributed install driver every
-/// shared card carries.
+/// Noor, the brand line, the install hint and the QR — the attributed install
+/// driver every shared card carries (1.0.74: «نور والقناديل»).
+///
+/// Noor rises behind a strip of paper hills, as on the app icon (C «الطبقات»,
+/// docs/brand/icon/icon_c_hills.svg). The QR still carries the install link
+/// with the sharer's own referral code.
 class ShareCardBrandFooter extends StatelessWidget {
-  const ShareCardBrandFooter({super.key, this.icon = Icons.auto_awesome, this.qrSize = 116});
+  const ShareCardBrandFooter({super.key, this.qrSize = 116});
 
-  final IconData icon;
   final double qrSize;
 
   @override
@@ -259,36 +258,25 @@ class ShareCardBrandFooter extends StatelessWidget {
       textDirection: directionOfLanguage(l10n.localeName),
       child: Column(
         children: [
-          Container(
-            width: 64,
-            height: 64,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [AppTheme.primary, AppTheme.accent],
-              ),
-              shape: BoxShape.circle,
-            ),
-            child: Icon(icon, color: Colors.white, size: 32),
-          ),
-          const SizedBox(height: 14),
+          const ShareCardNoorStrip(),
+          const SizedBox(height: 12),
           Text(
             l10n.shareCardBrandLine,
+            textAlign: TextAlign.center,
             style: GoogleFonts.cairo(
               fontSize: 24,
               fontWeight: FontWeight.w700,
-              color: AppTheme.primary,
+              color: PaperCut.ink,
             ),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 6),
           Text(
             l10n.shareCardInstallHint,
             textAlign: TextAlign.center,
             style: GoogleFonts.cairo(
               fontSize: 16,
               fontWeight: FontWeight.w600,
-              color: AppTheme.primary,
+              color: PaperCut.emerald,
             ),
           ),
           const SizedBox(height: 12),
@@ -297,7 +285,10 @@ class ShareCardBrandFooter extends StatelessWidget {
             decoration: BoxDecoration(
               color: Dt.surface,
               borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: AppTheme.primary.withValues(alpha: 0.15)),
+              border: Border.all(color: PaperCut.emerald.withValues(alpha: 0.25)),
+              boxShadow: const [
+                BoxShadow(color: PaperCut.ivoryShadow, offset: Offset(3, 4)),
+              ],
             ),
             child: QrImageView(
               data: ShareService.installUrlFor(
@@ -305,13 +296,13 @@ class ShareCardBrandFooter extends StatelessWidget {
               ),
               size: qrSize,
               gapless: true,
-              eyeStyle: QrEyeStyle(
+              eyeStyle: const QrEyeStyle(
                 eyeShape: QrEyeShape.square,
-                color: AppTheme.primary,
+                color: PaperCut.shadow,
               ),
-              dataModuleStyle: QrDataModuleStyle(
+              dataModuleStyle: const QrDataModuleStyle(
                 dataModuleShape: QrDataModuleShape.square,
-                color: AppTheme.primary,
+                color: PaperCut.shadow,
               ),
             ),
           ),
@@ -319,6 +310,135 @@ class ShareCardBrandFooter extends StatelessWidget {
       ),
     );
   }
+}
+
+/// The «ورق مقصوص» palette the footer is cut from (assets/svg/STYLE.md).
+abstract final class PaperCut {
+  static const emerald = Color(0xFF0F6B5C);
+  static const hill = Color(0xFF12806D);
+  static const hillFar = Color(0xFF0D6A5A);
+  static const shadow = Color(0xFF094A40);
+  static const deco = Color(0xFF13806C);
+  static const ivoryShadow = Color(0xFFEADBC0);
+  static const ink = Color(0xFF0F3D36);
+}
+
+/// Noor rising behind three paper hills on an emerald sheet — the footer's
+/// mark, in place of the old gradient circle and icon.
+///
+/// Drawn in the order the paper is stacked: the sheet, the far hill, Noor,
+/// then the two near hills over Noor's lower edge. Noor is an SVG and parses
+/// asynchronously; the capture re-renders until nothing is dirty, so it is in
+/// the PNG (test/share_card_layout_test.dart reads the pixels).
+class ShareCardNoorStrip extends StatelessWidget {
+  const ShareCardNoorStrip({super.key});
+
+  static const Size size = Size(320, 92);
+  static const _noor = 'assets/svg/noor/noor_happy.svg';
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: size.width + 6,
+      height: size.height + 7,
+      child: Stack(
+        children: [
+          // The sheet's paper shadow: a solid offset copy, never a blur.
+          Positioned(
+            left: 6,
+            top: 7,
+            child: Container(
+              width: size.width,
+              height: size.height,
+              decoration: BoxDecoration(
+                color: PaperCut.shadow,
+                borderRadius: BorderRadius.circular(24),
+              ),
+            ),
+          ),
+          Positioned(
+            left: 0,
+            top: 0,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(24),
+              child: SizedBox.fromSize(
+                size: size,
+                child: Stack(
+                  children: [
+                    const Positioned.fill(child: ColoredBox(color: PaperCut.emerald)),
+                    Positioned.fill(
+                      child: CustomPaint(painter: _PaperHillsPainter(front: false)),
+                    ),
+                    // In its 240 box the crescent spans x 50–178, y 69–195:
+                    // at 160 px that is x 33–119, y 46–130. Centre the
+                    // crescent, not the box, and let the near hills cover
+                    // its lower half, as on the app icon.
+                    Positioned(
+                      left: size.width / 2 - 76,
+                      top: -38,
+                      width: 160,
+                      height: 160,
+                      child: SvgPicture.asset(
+                        _noor,
+                        excludeFromSemantics: true,
+                        errorBuilder: (_, _, _) => const SizedBox.shrink(),
+                      ),
+                    ),
+                    Positioned.fill(
+                      child: CustomPaint(painter: _PaperHillsPainter(front: true)),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// The hills of icon C, scaled to the strip: one far hill behind Noor
+/// ([front] false), two near ones in front of it — each over its own shadow.
+class _PaperHillsPainter extends CustomPainter {
+  _PaperHillsPainter({required this.front});
+
+  final bool front;
+
+  Path _hill(Size s, double base, double amp, double phase) {
+    final w = s.width;
+    return Path()
+      ..moveTo(0, base + amp * phase)
+      ..cubicTo(w * .25, base - amp, w * .45, base - amp * .4, w * .62, base)
+      ..cubicTo(w * .78, base + amp * .6, w * .9, base - amp * .2, w, base - amp * phase)
+      ..lineTo(w, s.height)
+      ..lineTo(0, s.height)
+      ..close();
+  }
+
+  void _layer(Canvas canvas, Path path, Color color) {
+    canvas.drawPath(path.shift(const Offset(0, 4)), Paint()..color = PaperCut.shadow);
+    canvas.drawPath(path, Paint()..color = color);
+  }
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final h = size.height;
+    if (!front) {
+      // Two small stars of the set on the sheet, then the far hill.
+      final star = Paint()..color = PaperCut.deco;
+      for (final c in [Offset(size.width * .12, h * .28), Offset(size.width * .86, h * .22)]) {
+        canvas.drawCircle(c, 3.2, star);
+      }
+      _layer(canvas, _hill(size, h * .56, 7, .6), PaperCut.hill);
+      return;
+    }
+    _layer(canvas, _hill(size, h * .74, 6, -.4), PaperCut.hillFar);
+    _layer(canvas, _hill(size, h * .9, 4, .3), PaperCut.shadow);
+  }
+
+  @override
+  bool shouldRepaint(covariant _PaperHillsPainter old) => old.front != front;
 }
 
 class _PatternPainter extends CustomPainter {

@@ -80,7 +80,6 @@ class _InviteScreenState extends State<InviteScreen> {
           eyebrow: l10n.inviteCardEyebrow,
           headline: l10n.inviteCardHeadline,
           body: l10n.inviteCardBody,
-          icon: Icons.favorite_outline,
         ),
       );
       if (!ok && mounted) {
