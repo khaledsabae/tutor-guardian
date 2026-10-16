@@ -440,13 +440,26 @@ class Analytics {
   /// so their tap shares are the measure of whether that worked.
   ///
   /// `block` ∈ step · ask · mission · loop · programs.
-  /// `action` ∈ first_lesson · browse · continue (step) · tip · compose (ask) ·
+  /// `action` ∈ first_lesson · browse · continue · path_overview (step) · tip ·
+  /// compose (ask) ·
   /// open_day · child_mode · routine · add_child (mission) ·
   /// followup_answer · followup_dismiss · plan_expand · plan_lesson (loop —
   /// the follow-up and weekly-plan cards between ① and ②) ·
   /// open · ramadan · prayer · milestones (programs — the card under the three).
-  static Future<void> todayBlockTapped(String block, String action) =>
-      _log('today_block_tapped', {'block': block, 'action': action});
+  ///
+  /// [lessonId], when the tap opens a specific lesson (the step block's
+  /// «متابعة»), rides along so the funnel can tell which lesson a resume
+  /// landed on. Same event name and same two keys as before — it only adds.
+  static Future<void> todayBlockTapped(
+    String block,
+    String action, {
+    String? lessonId,
+  }) =>
+      _log('today_block_tapped', {
+        'block': block,
+        'action': action,
+        'lesson_id': ?lessonId,
+      });
 
   /// Something done in a family program (MOBILE_API §11). [program] is one of
   /// `ramadan` · `prayer` · `milestones`; [action] is a fixed snake_case verb

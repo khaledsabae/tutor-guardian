@@ -610,6 +610,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get continueBtn => 'Continue';
 
   @override
+  String get focusViewPath => 'View path';
+
+  @override
   String get quizTitle => 'Test Your Knowledge';
 
   @override

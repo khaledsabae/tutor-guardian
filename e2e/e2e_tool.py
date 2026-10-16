@@ -146,6 +146,8 @@ KEYS = [
     # too, or the «before» runs lose every step that uses them (verified for
     # efaa740f / 1.0.68+113 on 2026-10-08).
     "pathDetailStart", "pathDetailContinue",
+    # head only (1.0.74): «عرض المسار» under «متابعة» on the «واصل مسارك» card
+    "focusViewPath",
     "lessonQuiz", "quizYourResult", "quizNextQuestion", "quizShowResult",
     "quizErrorLoading",
     "lessonCelebrationTitle", "lessonNextStepTitle", "lessonNextStepConfirm",

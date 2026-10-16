@@ -192,6 +192,7 @@
   "lessonsRemaining_one": "🏆 1 lesson remaining!",
   "lessonsRemaining_other": "🏆 {count} lessons remaining",
   "continueBtn": "Continue",
+  "focusViewPath": "View path",
   "quizTitle": "Test Your Knowledge",
   "quizDesc": "10 quick questions • Learn while you play",
   "askQuestion": "Have a parenting question?",

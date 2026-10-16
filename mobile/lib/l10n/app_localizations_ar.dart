@@ -607,6 +607,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get continueBtn => 'متابعة';
 
   @override
+  String get focusViewPath => 'عرض المسار';
+
+  @override
   String get quizTitle => 'اختبر معلوماتك التربوية';
 
   @override

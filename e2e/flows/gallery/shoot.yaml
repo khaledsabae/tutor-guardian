@@ -157,8 +157,13 @@ name: gallery/shoot
       visible: '${output.t.startThisLesson}'
     commands:
       - tapOn: '${output.t.startThisLesson}'
+# «متابعة» on the «واصل مسارك» card. The baseline (what users have, up to
+# 1.0.73) opens the path overview and needs a second tap there; the PR head
+# opens the due lesson itself and keeps the overview behind «عرض المسار»
+# (focusViewPath — a key the baseline's ARB does not have, hence the split).
 - runFlow:
     when:
+      true: "${GALLERY_TAG != 'after'}"
       visible: '${output.t.continueBtn}'
     commands:
       - tapOn: '${output.t.continueBtn}'
@@ -171,6 +176,29 @@ name: gallery/shoot
           direction: DOWN
           timeout: 30000
       - tapOn: '(?:${output.t.pathDetailStart}|${output.t.pathDetailContinue})'
+- runFlow:
+    when:
+      true: "${GALLERY_TAG == 'after'}"
+      visible: '${output.t.continueBtn}'
+    commands:
+      # The overview is still one tap away, and still photographed.
+      - tapOn: '${output.t.focusViewPath}'
+      - extendedWaitUntil:
+          visible: '(?:${output.t.pathDetailStart}|${output.t.pathDetailContinue})'
+          timeout: 30000
+      - takeScreenshot: '${GALLERY_TAG}__${GALLERY_VARIANT}__path_detail'
+      - back
+      - scrollUntilVisible:
+          element:
+            text: '${output.t.continueBtn}'
+          direction: DOWN
+          timeout: 20000
+      - tapOn: '${output.t.continueBtn}'
+      # «متابعة» lands on the lesson (or its error page) — not the overview.
+      - extendedWaitUntil:
+          visible: '(?:${output.t.lessonMarkComplete}|${output.t.lessonCompleted}|${output.t.lessonErrorLoading})'
+          timeout: 45000
+      - assertNotVisible: '(?:${output.t.pathDetailStart}|${output.t.pathDetailContinue})'
 - extendedWaitUntil:
     visible: '(?:${output.t.lessonMarkComplete}|${output.t.lessonCompleted}|${output.t.lessonErrorLoading})'
     timeout: 45000
