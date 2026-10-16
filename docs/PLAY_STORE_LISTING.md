@@ -24,7 +24,7 @@
 |---|---|---|---|---|
 | 1 | `today` | خطوة صغيرة كل يوم — مجاني 100% — بلا إعلانات ولا اشتراكات | One small step a day — 100% free — no ads, no subscriptions | `frame_1_rising` |
 | 2 | `family_road` | درب أسرتكم — أين أنتم الآن، وما ينتظركم على الأفق | Your family road — Where you are, and what's on the horizon | `frame_2_ivory` |
-| 3 | `child_corner` | ركن الطفل — حكاية أو لعبة، ثم مهمة بعيدًا عن الشاشة | A child's corner — A story or game, then a task off-screen | `frame_3_bubble` |
+| 3 | `child_corner` | ركن الطفل — حكاية قصيرة، ثم مهمة بعيدًا عن الشاشة | A child's corner — A short story, then a task away from the screen | `frame_3_bubble` |
 | 4 | `week_lanterns` | كل خطوة تضيء قنديلًا — قناديل الأسبوع — بلا مقارنة ولا لوم | Every step lights a lantern — The week's lanterns — no streaks, no comparisons | `frame_2_ivory` |
 | 5 | `story_reader` | حكايات يرويها نور — وفيها وقفة حوار مع طفلكم | Stories narrated by Noor — With a pause to talk together | `frame_1_rising` |
 | 6 | `noor_follow_up` | نور يتذكّر معكم — اختاروا موعد التجربة، ثم يسألكم كيف جرت | Noor remembers with you — Pick when to try it; Noor asks how it went | `frame_2_ivory` |
@@ -70,7 +70,7 @@
 • «درب الأسرة»: أين أنتم الآن، وما ينتظركم «على الأفق» — رمضان، ومحطات العمر، والمسار التالي.
 • قناديل الأسبوع: كل خطوة تربوية تتمّونها تضيء قنديلًا، بلا عدّاد يلومكم ولا مقارنة بأحد.
 • شارع القناديل في رمضان: يضيء بما تفعلونه معًا يومًا بعد يوم.
-• «ركن الطفل»: حكاية قصيرة أو لعبة، ثم مهمة بعيدًا عن الشاشة. الوقت شمعة ورقية تقصر، ولا يعود الجهاز إلا برمز الأهل.
+• «ركن الطفل»: حكاية قصيرة، ثم مهمة بعيدًا عن الشاشة. الوقت شمعة ورقية تقصر، ولا يعود الجهاز إلا برمز الأهل.
 • حكايات قبل النوم يرويها نور، وفيها وقفة حوار مع الطفل.
 • نور يتذكّر ما قررتم تجربته، ثم يسألكم كيف جرى.
 
@@ -458,7 +458,7 @@ Al-Morabbi is an Islamic parenting companion that walks with your family from pr
 • Your family road: where you are now, and what's on the horizon — Ramadan, age milestones, the next path.
 • The week's lanterns: each parenting step you complete lights a lantern. No streak to break, no comparison with anyone.
 • A Ramadan lantern street for your family, lit by what you do together, day by day.
-• A child's corner: a short story or game, then a task away from the screen. Time is a paper candle that burns down, and only your PIN unlocks the device again.
+• A child's corner: a short story, then a task away from the screen. Time is a paper candle that burns down, and only your PIN unlocks the device again.
 • Bedtime stories narrated by Noor, with a pause to talk together.
 • Noor remembers what you planned to try, and later asks how it went.
 
