@@ -1,9 +1,9 @@
 {
   "release": "1.0.73+118",
-  "note": "Real CI captures (Mobile E2E «Emulator journeys» + rehearsal), all from one green run that contains #126, #129 and #130; framed by docs/brand/tools/store_listing.py.",
+  "note": "Real app captures from the dispatch-only store_capture job (e2e/store_capture.sh): a natural family, against the runner's backend only. Framed by docs/brand/tools/store_listing.py.",
   "runs": {
-    "38827338826": {
-      "what": "PR #129 noor/child-corner @ 2d6548ac — its green run on the merge ref with main after #126 (stories), #130 (family road) and #132; the run that tests what #129 merges as"
+    "38845173531": {
+      "what": "mobile-e2e.yml dispatch on noor/store-capture with store_capture=true: job store_capture — the PR-head app and backend image on the runner (never production), family «سارة»+«يوسف» / «Sara»+«Yusuf»"
     }
   },
   "slots": [
@@ -12,16 +12,16 @@
       "frame": "frame_1_rising",
       "source": {
         "ar": {
-          "run": 38827338826,
-          "artifact": "e2e-gallery",
-          "file": "images/gallery__04_after_ar__after__ar__home.png",
-          "sha256": "eedb2f63c1a88eb3e78dcfaff38ff79fa9d89a87d4f076edea0f1f6c95d15b96"
+          "run": 38845173531,
+          "artifact": "e2e-store-capture",
+          "file": "screens/ar__shoot__after__ar__home.png",
+          "sha256": "e0d844aad4d1f8e5b0a73ca49be9b59d04877370f9d9ce5e2f37229b6457a82b"
         },
         "en": {
-          "run": 38827338826,
-          "artifact": "e2e-gallery",
-          "file": "images/gallery__05_after_en__after__en__home.png",
-          "sha256": "17168db24d8d2f99670a93b786f2bf7125101929a671cf121bc9e96693279e4a"
+          "run": 38845173531,
+          "artifact": "e2e-store-capture",
+          "file": "screens/en__shoot__after__en__home.png",
+          "sha256": "7c9f72c125a054793d7aaf0e151d46fda2f2b49ab39bf0a4d0434526e4832794"
         }
       },
       "text": {
@@ -40,16 +40,16 @@
       "frame": "frame_2_ivory",
       "source": {
         "ar": {
-          "run": 38827338826,
-          "artifact": "e2e-gallery",
-          "file": "images/gallery__04_after_ar__after__ar__family_road.png",
-          "sha256": "c264bd80d5e5d98e2a0fa764fc39b1e5568405d589ef631b672aebe7a6b2dacb"
+          "run": 38845173531,
+          "artifact": "e2e-store-capture",
+          "file": "screens/ar__shoot__after__ar__family_road.png",
+          "sha256": "d93441c37f469e2dfc5667c5bfa473d30142e531048d82492b4eda12693d5ba2"
         },
         "en": {
-          "run": 38827338826,
-          "artifact": "e2e-gallery",
-          "file": "images/gallery__05_after_en__after__en__family_road.png",
-          "sha256": "c4f22ad61d659daed48c595a701e2abd34c2a28288c51af699f0bbd6c470a39f"
+          "run": 38845173531,
+          "artifact": "e2e-store-capture",
+          "file": "screens/en__shoot__after__en__family_road.png",
+          "sha256": "dc1e4345ba5c7644536889e0bc7efa9d213397ac424b53a3457a20d710100900"
         }
       },
       "text": {
@@ -68,16 +68,16 @@
       "frame": "frame_3_bubble",
       "source": {
         "ar": {
-          "run": 38827338826,
-          "artifact": "e2e-gallery",
-          "file": "images/gallery__04_after_ar__after__ar__child_corner.png",
-          "sha256": "f337a0e9285333b04a62fdbc8225c5b834e60ad8498e3e2b4039cda46f6c26a7"
+          "run": 38845173531,
+          "artifact": "e2e-store-capture",
+          "file": "screens/ar__shoot__after__ar__child_corner.png",
+          "sha256": "2a2d97b31de42dc4f2b6f6e0480263ec7a30e52126315c2958cbd930914b2d00"
         },
         "en": {
-          "run": 38827338826,
-          "artifact": "e2e-gallery",
-          "file": "images/gallery__05_after_en__after__en__child_corner.png",
-          "sha256": "616005bd0d38eb8764e49664b3bca11fe6394c4efb13e7a3b27cd230e9e0ae39"
+          "run": 38845173531,
+          "artifact": "e2e-store-capture",
+          "file": "screens/en__shoot__after__en__child_corner.png",
+          "sha256": "6710eb7f3a6b8513d54583b87221c5c9941e75c263c84ba0fba11153d478b301"
         }
       },
       "text": {
@@ -96,16 +96,16 @@
       "frame": "frame_2_ivory",
       "source": {
         "ar": {
-          "run": 38827338826,
-          "artifact": "e2e-gallery",
-          "file": "images/gallery__04_after_ar__after__ar__week_lanterns.png",
-          "sha256": "32b88d93ffdce5de3cda52633a4e4552bc0b7adac304b4b7acbced871c6941ba"
+          "run": 38845173531,
+          "artifact": "e2e-store-capture",
+          "file": "screens/ar__shoot__after__ar__week_lanterns.png",
+          "sha256": "b19ffbd92f7e4cba3bcda68a12b4b8a6086cba3f275b382d06918872c85565a5"
         },
         "en": {
-          "run": 38827338826,
-          "artifact": "e2e-gallery",
-          "file": "images/gallery__05_after_en__after__en__week_lanterns.png",
-          "sha256": "84ad219665c82cf8679e22e5f0977c6b50da3d3f568dcc35a5bb55d576ec5564"
+          "run": 38845173531,
+          "artifact": "e2e-store-capture",
+          "file": "screens/en__shoot__after__en__week_lanterns.png",
+          "sha256": "3c2412dd34e8d518d1562f129ec49716b805b7de8cb06c40812818a5a93e316c"
         }
       },
       "text": {
@@ -124,16 +124,16 @@
       "frame": "frame_1_rising",
       "source": {
         "ar": {
-          "run": 38827338826,
-          "artifact": "e2e-gallery",
-          "file": "images/gallery__04_after_ar__after__ar__stories_open.png",
-          "sha256": "cf1fc929840fbfdd4ff6a52596130a0621ff838a6ffaaa8cb1b8c91d145aa4ca"
+          "run": 38845173531,
+          "artifact": "e2e-store-capture",
+          "file": "screens/ar__shoot__after__ar__stories_open.png",
+          "sha256": "056659b635d518f8a587ecfbe0e075d13c212a121fac01774423fbd8900c7230"
         },
         "en": {
-          "run": 38827338826,
-          "artifact": "e2e-gallery",
-          "file": "images/gallery__05_after_en__after__en__stories_open.png",
-          "sha256": "d25a110bdb383a16098027f9a2206250e09a0eafe52bc3b8a6b89d0ceb785e71"
+          "run": 38845173531,
+          "artifact": "e2e-store-capture",
+          "file": "screens/en__shoot__after__en__stories_open.png",
+          "sha256": "01a6901f3baaec473498abcda967a0ec066dad3aa84ef22ceae04b085a492e89"
         }
       },
       "text": {
@@ -152,16 +152,16 @@
       "frame": "frame_2_ivory",
       "source": {
         "ar": {
-          "run": 38827338826,
-          "artifact": "e2e-gallery",
-          "file": "images/gallery__04_after_ar__after__ar__next_step.png",
-          "sha256": "73118d1a6b371dc155ceda32e62037a176b130cbd9a52829c4512682af5f9f7f"
+          "run": 38845173531,
+          "artifact": "e2e-store-capture",
+          "file": "screens/ar__shoot__after__ar__next_step.png",
+          "sha256": "f467b5b35a40c4a7c431db87d2b38cd43ce3c075c4167fdccaf3aef29fc6d2be"
         },
         "en": {
-          "run": 38827338826,
-          "artifact": "e2e-gallery",
-          "file": "images/gallery__05_after_en__after__en__next_step.png",
-          "sha256": "2850daa0a5e4f56badfcbf1d9c2263accde40bbeb5824ed9ef07e6b633069382"
+          "run": 38845173531,
+          "artifact": "e2e-store-capture",
+          "file": "screens/en__shoot__after__en__next_step.png",
+          "sha256": "450ff81201e943fcfd4c3d75bf20445299e39d6fc8e1177c4db8ccfd34a64ea1"
         }
       },
       "text": {
@@ -180,16 +180,16 @@
       "frame": "frame_1_rising",
       "source": {
         "ar": {
-          "run": 38827338826,
-          "artifact": "e2e-rehearsal",
-          "file": "screens/rehearsal__ar_day27__after__ar__day27_street.png",
-          "sha256": "0a1f8031103ba08c9f6db30b4b9563f0e25ad6b14e2b9bedc1c155850e66fac9"
+          "run": 38845173531,
+          "artifact": "e2e-store-capture",
+          "file": "screens/ar__street_day27__after__ar__day27_street.png",
+          "sha256": "73b9924f39e2dab54611a485a7f0981e54c096081f5ce8894208b4434a624e95"
         },
         "en": {
-          "run": 38827338826,
-          "artifact": "e2e-rehearsal",
-          "file": "screens/rehearsal__en_day27__after__en__day27_street.png",
-          "sha256": "d31a2c514fa3e78fd8517b2b981708917e9068e7f10dc6df8bb7012f141a0b7c"
+          "run": 38845173531,
+          "artifact": "e2e-store-capture",
+          "file": "screens/en__street_day27__after__en__day27_street.png",
+          "sha256": "9abaf52c557a68ce1af4c602939fbd5287a11be622f866c48306ea3ad32032d8"
         }
       },
       "text": {
@@ -204,33 +204,30 @@
       }
     },
     {
-      "id": "assistant",
+      "id": "family_programs",
       "frame": "frame_3_bubble",
       "source": {
         "ar": {
-          "run": 38827338826,
-          "artifact": "e2e-screenshots",
-          "file": "fresh__03_assistant__assistant_2_answered.png",
-          "keep_top": 1508,
-          "note": "system keyboard cropped away",
-          "sha256": "ebef89ae4c6d6b46077da233cd531cc877fc778074cf60b42c67ef5a0fe91bfd"
+          "run": 38845173531,
+          "artifact": "e2e-store-capture",
+          "file": "screens/ar__street_day27__after__ar__day27_programs.png",
+          "sha256": "c298002c6631cfed48d048969ae726966bda6cff998b4d1cbed8fc881f906e69"
         },
         "en": {
-          "run": 38827338826,
-          "artifact": "e2e-screenshots",
-          "file": "fresh__06_english__english_4_assistant.png",
-          "note": "dark mode: no light-mode English assistant capture exists (the English journey runs after the dark-mode one)",
-          "sha256": "5de5694d3425d4cd7871233922d849f019ab82115442bc68f826a41ce692ffd7"
+          "run": 38845173531,
+          "artifact": "e2e-store-capture",
+          "file": "screens/en__street_day27__after__en__day27_programs.png",
+          "sha256": "26c718944c3d01fdf4b6d212b40ba37988f8a431ac48085182b7ed3d0c60dd17"
         }
       },
       "text": {
         "ar": {
-          "title": "اسألوا عن تربية طفلكم",
-          "subtitle": "إجابة عملية وخطوة تجرّبونها"
+          "title": "برامج قصيرة لأسرتكم",
+          "subtitle": "رمضان والصلاة، خطوة بخطوة"
         },
         "en": {
-          "title": "Ask about raising your child",
-          "subtitle": "A practical answer, in your language"
+          "title": "Short family programs",
+          "subtitle": "Ramadan and prayer, step by step"
         }
       }
     }
