@@ -86,6 +86,7 @@ class _ChildModeShellState extends ConsumerState<ChildModeShell> {
     }
     final l10n = AppLocalizations.of(context);
     final name = profile?.name ?? l10n.childFallbackName;
+    final corner = ref.watch(childModeProvider.select((s) => s.corner));
 
     return Theme(
       data: theme,
@@ -133,10 +134,13 @@ class _ChildModeShellState extends ConsumerState<ChildModeShell> {
                           ),
                         ],
                       ),
-                      const Padding(
-                        padding: EdgeInsetsDirectional.only(end: 12),
-                        child: QuietTimeBar(),
-                      ),
+                      // The corner draws its own clock — a paper candle in
+                      // the scene — so the frame does not draw a second one.
+                      if (!corner)
+                        const Padding(
+                          padding: EdgeInsetsDirectional.only(end: 12),
+                          child: QuietTimeBar(),
+                        ),
                     ],
                   ),
                 ),

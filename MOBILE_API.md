@@ -890,6 +890,21 @@ One call for the Today screen. Query: `tz_offset_minutes`, `lang`.
 }
 ```
 
+**`hijri_season`** (additive, «سماوات المواسم»): one of three quiet seasons the Today sky marks,
+or `null` on every other day (and when the Ramadan file cannot be read):
+
+```json
+"hijri_season": {"month": "rajab", "hijri_year": 1448, "day": 5,
+                 "starts_on": "2026-12-11", "ends_on": "2027-01-09", "start_source": "derived"}
+```
+
+`month` ∈ `rajab` · `shaban` · `dhul_hijjah` (clients ignore any other value). It is worked out
+from the same family season as `ramadan` (the family's own sighting included): Rajab starts 59
+days before the first day of Ramadan, Sha'ban 29 days before (both run up to the next month), and
+Dhu al-Hijjah 59 days after Eid al-Fitr — its first 13 days only. `start_source: "derived"` can
+be a day off a sighted month; `"configured"` = announced by the server (§11.8). Decoration only:
+the app draws a paper touch in the sky and writes no text from it.
+
 `season` is `null` when the server knows no Ramadan. `prayer_journey.eligible_track: null`
 = the Journey is not for this child (under 4, over 15, or an unknown band) — hide it.
 
@@ -1365,6 +1380,8 @@ programs"). The recap card never carries names, ages, photos or typed text.
 | `RAMADAN_DAYS_<hijri year>` | 30 (unconfirmed) | `29` or `30` once announced |
 | `MILESTONES_MIN_BUILD` | unset = no milestone push | first build that routes `/milestones/…` |
 | `PROGRAMS_AS_OF_ENABLED` | off | lets QA pass `as_of` |
+| `RAJAB_START_<hijri year>` · `SHABAN_START_<…>` · `DHUL_HIJJAH_START_<…>` | derived from the Ramadan season | the announced first day of that month (`hijri_season`) |
+| `HORIZON_STRIP_ENABLED` | on | `GET /api/app-config` → `horizon_strip_enabled`: `0` hides the «على الأفق» strip on Today for every installed build (the family road screen itself stays) |
 
 ---
 

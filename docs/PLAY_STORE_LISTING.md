@@ -1,5 +1,33 @@
 # المربّي الذكي — حزمة ASO كاملة (Play Console)
 
+> **مصدر الحقيقة من 1.0.73 «نور والقناديل»:** `docs/brand/store/listing_1.0.73/listing.json`
+> (العنوان والوصفان بالعربية وen-US) + الصور في `docs/brand/store/listing_1.0.73/{ar,en}/`.
+> الأقسام ١–٣ والقائمة الإنجليزية تحت منسوخة منه — **عدّل الملف أولًا ثم انسخ هنا.**
+> الرفع: `scripts/play_listing_upload.py` — `--validate-only` آمن ويُعاد، و`--commit` وقت الإصدار فقط
+> (بعد commit تعديل الإصدار نفسه، لأن commit أي edit يُبطل الـedits المفتوحة الأخرى).
+>
+> ```bash
+> PLAY_SERVICE_ACCOUNT=~/projects/tutor-guardian/scripts/play_service_account.json \
+>   python3 scripts/play_listing_upload.py --commit; echo "rc=$?"
+> ```
+> لو مرّرت الناتج في `tee`/`tail` فاقرأ `${PIPESTATUS[0]}` لا `$?`.
+
+### لقطات 1.0.73 — ٨ لكل لغة، لقطات CI حقيقية في إطارات «ورق مقصوص»
+
+مولّدة بـ`docs/brand/tools/store_listing.py build` من `manifest.json` (رقم التشغيل والملف وبصمته لكل لقطة).
+التعديل الوحيد على أي لقطة قصّ لوحة المفاتيح من لقطة المساعد العربية.
+
+| # | الشاشة | العنوان (ar) | Headline (en) | الإطار |
+|---|---|---|---|---|
+| 1 | `today` | خطوة صغيرة كل يوم — مجاني 100% — بلا إعلانات ولا اشتراكات | One small step a day — 100% free — no ads, no subscriptions | `frame_1_rising` |
+| 2 | `family_road` | درب أسرتكم — أين أنتم الآن، وما ينتظركم على الأفق | Your family road — Where you are, and what's on the horizon | `frame_2_ivory` |
+| 3 | `child_corner` | ركن الطفل — حكاية أو لعبة، ثم مهمة بعيدًا عن الشاشة | A child's corner — A story or game, then a task off-screen | `frame_3_bubble` |
+| 4 | `week_lanterns` | كل خطوة تضيء قنديلًا — قناديل الأسبوع — بلا مقارنة ولا لوم | Every step lights a lantern — The week's lanterns — no streaks, no comparisons | `frame_2_ivory` |
+| 5 | `story_reader` | حكايات يرويها نور — وفيها وقفة حوار مع طفلكم | Stories narrated by Noor — With a pause to talk together | `frame_1_rising` |
+| 6 | `noor_follow_up` | نور يتذكّر معكم — اختاروا موعد التجربة، ثم يسألكم كيف جرت | Noor remembers with you — Pick when to try it; Noor asks how it went | `frame_2_ivory` |
+| 7 | `ramadan_street` | شارع القناديل في رمضان — يضيء بما تفعلونه معًا يومًا بعد يوم | A Ramadan lantern street — Lit by what you do together, day by day | `frame_1_rising` |
+| 8 | `assistant` | اسألوا عن تربية طفلكم — إجابة عملية وخطوة تجرّبونها | Ask about raising your child — A practical answer, in your language | `frame_3_bubble` |
+
 > **أول سطر في أي نسخة:** «مجاني 100% — بلا إعلانات ولا اشتراكات، مدى الحياة.»
 > هذه الجملة هي أقوى ميزة تنافسية (كل المنافسين المدفوعين) وكلمة «مجاني» كلمة بحث عالية الحجم.
 
@@ -8,7 +36,7 @@
 ## 1) العنوان (App title — ≤ 30 حرفًا)
 
 ```
-المربّي — تربية إسلامية متكاملة
+المربّي الذكي — تربية إسلامية
 ```
 
 > **بدائل للاختبار A/B:**
@@ -20,7 +48,7 @@
 ## 2) الوصف القصير (Short description — ≤ 80 حرفًا)
 
 ```
-مجاني 100%: منهج تربية إسلامية متكامل + مساعد ذكي — من الحمل لـ ١٨ سنة
+مجاني 100%: درب تربوي يومي لأسرتك ومساعد ذكي — من الحمل حتى ١٨ سنة
 ```
 
 ---
@@ -30,35 +58,37 @@
 > الصق هذا في Play Console → Store listing → Full description.
 
 ```
-مجاني بالكامل — بلا إعلانات ولا اشتراكات، مدى الحياة. صدقة جارية لوجه الله.
+مجاني 100% — بلا إعلانات ولا اشتراكات.
 
-«المربّي الذكي» هو أول مساعد تربية إسلامي بالذكاء الاصطناعي يرافقك من الحمل حتى ١٨ سنة — لا تطبيق نصائح سريع، بل منهج تربوي متكامل تعيشه مع طفلك.
+«المربّي» رفيق تربوي إسلامي يسير مع أسرتكم من الحمل حتى ١٨ سنة: خطوة صغيرة كل يوم، تفهمونها وتطبّقونها مع طفلكم.
 
-📚 منهج تربوي متكامل لكل مرحلة عمرية
-مسارات تربوية يومية متدرّجة لكل فئة عمرية (الحمل–سنة، ٢–٣، ٤–٦، ٧–٩، ١٠–١٢، ١٣–١٥، ١٦–١٨) تغطي:
-• التربية الإسلامية وغرس الإيمان والأخلاق النبوية
-• تطور الطفل وسلوكه وعاداته اليومية
-• الأمان الرقمي وإدارة وقت الشاشة
-• بناء العادات والمهارات الحياتية
+🌙 جديد: «نور والقناديل»
+• «اليوم» دربٌ من ثلاث محطات تحت سماء تتبع ساعة اليوم والمواسم، برسوم الورق المقصوص.
+• «درب الأسرة»: أين أنتم الآن، وما ينتظركم «على الأفق» — رمضان، ومحطات العمر، والمسار التالي.
+• قناديل الأسبوع: كل خطوة تربوية تتمّونها تضيء قنديلًا، بلا عدّاد يلومكم ولا مقارنة بأحد.
+• شارع القناديل في رمضان: يضيء بما تفعلونه معًا يومًا بعد يوم.
+• «ركن الطفل»: حكاية قصيرة أو لعبة، ثم مهمة بعيدًا عن الشاشة. الوقت شمعة ورقية تقصر، ولا يعود الجهاز إلا برمز الأهل.
+• حكايات قبل النوم يرويها نور، وفيها وقفة حوار مع الطفل.
+• نور يتذكّر ما قررتم تجربته، ثم يسألكم كيف جرى.
 
-💬 مساعد ذكي يجيبك فورًا
-اسأل عن أي تحدّي تربوي وتحصل على إجابة عملية مبنية على الأدلة الشرعية الموثّقة — عن عناد الطفل، رفض الصلاة، إدمان الشاشات، خوف الطفل، أو أي سؤال يrekّك يوميًا.
+📚 منهج لكل مرحلة عمرية
+مسارات يومية متدرّجة لكل فئة عمرية (الحمل–سنة، ٢–٣، ٤–٦، ٧–٩، ١٠–١٢، ١٣–١٥، ١٦–١٨) تشمل:
+• التربية الإيمانية والعبادة والأخلاق
+• سلوك الطفل وعاداته اليومية
+• الأمان الرقمي ووقت الشاشة
+• المهارات الحياتية
 
-🎧 محتوى تعيشه بطرق متعددة
-دروس مكتوبة + بودكاست صوتي + فيديو تعريفي + بطاقات تعليمية + اختبارات تفاعلية — المحتوى اللي يناسبك أنت وطفلك.
+💬 مساعد تربوي يجيبكم فورًا
+اسألوا عن العناد، أو التهاون في الصلاة، أو التعلّق بالشاشات، أو الغيرة بين الإخوة، وستجدون إجابة عملية مبنية على مصادر موثّقة، مع خطوة واحدة تجرّبونها مع طفلكم.
 
-🌟 رحلة طفلك
-سجّل محطات نموّ طفلك الإيمانية (أول صلاة، أول صيام، حفظ القرآن)، وتابع تقدّمه في سجلٍّ تعتزّ به.
+🎧 محتوى بأكثر من طريقة
+دروس مكتوبة، وبودكاست صوتي، وبطاقات تعليمية، واختبارات قصيرة.
 
-📖 ركن القرآن والأذكار
-قراءة وتلاوة القرآن، وأذكار وأدعية للطفل — كل يوم في مكان واحد.
-
-🎮 ألعاب تعليمية
-٤ ألعاب تفاعلية تزرع الأخلاق والقيم الإسلامية في صورة ممتعة.
+📖 القرآن والأذكار
+تلاوة القرآن، وأذكار وأدعية للطفل في مكان واحد.
 
 —
-💡 ابدأ بسؤال واحد فقط: «ابني عنيد»، «طفلي لا يصلي»، «نوبات غضب الطفل»…
-المربّي يعطيك خطة عملية في ثوانٍ — مجانًا.
+ابدؤوا بسؤال واحد: «طفلي عنيد»، «طفلي لا يصلي»، «نوبات الغضب»… وستجدون خطة عملية في ثوانٍ، مجانًا.
 ```
 
 > **ملاحظة سياسة المحتوى الصحي (Google Play):** هذا التطبيق تعليمي/تربوي وليس تطبيقًا صحيًا. في نموذج بيانات التطبيقات المختصة بالصحة اختر «لا توجد ميزات متعلقة بالصحة».
@@ -395,6 +425,9 @@ Scroll سريع عبر: مسارات تربوية → بودكاست → اخت�
 نُشرت عبر `androidpublisher` (`edits().listings().update(language='en-US')`)،
 والصور تُورَث من القائمة العربية إذ لا صور إنجليزية بعد.
 
+**من 1.0.73:** للقائمة الإنجليزية صورها — أيقونة وصورة مميزة إنجليزية و٨ لقطات من رحلات CI الإنجليزية
+(`docs/brand/store/listing_1.0.73/en/`). لقطة المساعد الإنجليزية داكنة: لا توجد لقطة فاتحة له في الـCI.
+
 **لم تُنشر قبل اليوم عن قصد:** المساعد كان يجيب بالعربية على السؤال الإنجليزي
 حتى `0f709b09`. الإعلان بالإنجليزية قبل ذلك كان وعدًا لا يفي به التطبيق.
 
@@ -404,45 +437,50 @@ Scroll سريع عبر: مسارات تربوية → بودكاست → اخت�
 Al-Morabbi: Islamic Parenting
 ```
 
-### الوصف القصير (72/80)
+### الوصف القصير (73/80)
 
 ```
-100% free: Islamic parenting curriculum + AI guide — pregnancy to age 18
+100% free: a daily Islamic parenting path + AI guide, pregnancy to age 18
 ```
 
-### الوصف الكامل (1842/4000)
+### الوصف الكامل (2177/4000)
 
 ```
-Completely free — no ads, no subscriptions, ever. Built as a sadaqah jariyah.
+100% free — no ads, no subscriptions.
 
-Al-Morabbi is an Islamic parenting companion that walks with you from pregnancy through age 18 — not a tips app, but a curriculum you live alongside your child.
+Al-Morabbi is an Islamic parenting companion that walks with your family from pregnancy to age 18: one small step a day that you understand and can try with your child.
+
+🌙 New: Noor and the Lanterns
+• Today is a path of three stops under a sky that follows the hour and the seasons, in paper-cut art.
+• Your family road: where you are now, and what's on the horizon — Ramadan, age milestones, the next path.
+• The week's lanterns: each parenting step you complete lights a lantern. No streak to break, no comparison with anyone.
+• A Ramadan lantern street for your family, lit by what you do together, day by day.
+• A child's corner: a short story or game, then a task away from the screen. Time is a paper candle that burns down, and only your PIN unlocks the device again.
+• Bedtime stories narrated by Noor, with a pause to talk together.
+• Noor remembers what you planned to try, and later asks how it went.
 
 📚 A curriculum for every stage
-Step-by-step daily guided paths for each age band (pregnancy–1, 2–3, 4–6, 7–9, 10–12, 13–15, 16–18), covering:
-• Islamic upbringing — iman, worship and prophetic character
-• Child development, behaviour and daily habits
+Step-by-step daily paths for each age band (pregnancy–1, 2–3, 4–6, 7–9, 10–12, 13–15, 16–18), covering:
+• Faith, worship and prophetic character
+• Behaviour and daily habits
 • Digital safety and screen time
-• Habit-building and life skills
+• Life skills
 
 💬 An assistant that answers in your language
-Ask about any parenting difficulty and get a practical answer grounded in documented sources — defiance, refusing to pray, screen addiction, fear, sibling jealousy, or whatever today has brought. Write in English and the answer comes back in English.
+Ask about defiance, missed prayers, screen habits or sibling jealousy, and get a practical answer grounded in documented sources, with one small step to try with your child. Write in English and the answer comes back in English.
 
-Qur'an and hadith are always quoted in Arabic, as revealed and as narrated, with the meaning explained alongside. A translation is never presented to you as scripture.
+Qur'an and hadith are always quoted in Arabic, as revealed and as narrated, with the meaning explained alongside. A translation is never presented as scripture.
 
-🎧 More than one way to take it in
-Written lessons, audio podcasts, flashcards and quizzes. English audio and visual companions are being produced lesson by lesson; the written curriculum is complete in English today.
+🎧 More than one way to learn
+Written lessons, audio podcasts, flashcards and short quizzes. English audio is being produced lesson by lesson; the written curriculum is complete in English.
 
-🌟 Your child's journey
-Record the milestones that matter — first prayer, first fast, Qur'an memorised — and watch the record grow.
-
-🕌 Qur'an corner
+📖 Qur'an and adhkar
 Recitation, and adhkar and du'a for children, in one place.
 
 —
-💡 Start with a single question: "my son is defiant", "my child won't pray", "tantrums"…
-Al-Morabbi gives you a practical plan in seconds — free.
+Start with one question: "my child is defiant", "my child won't pray", "tantrums"… and get a practical plan in seconds, free.
 
-Note on language: the written curriculum, the paths and the assistant are available in English. The adhkar and du'a texts, the daily reminder, the interactive games and the story library are currently Arabic only — translation is under way, band by band.
+Note on language: the app, the curriculum, the stories and the assistant are in English. The interactive games are Arabic only for now.
 ```
 
 ### ما لا يجوز ادّعاؤه بالإنجليزية — تحقّق قبل أي تعديل
@@ -454,7 +492,8 @@ Note on language: the written curriculum, the paths and the assistant are availa
 | البودكاست والإنفوجرافيك | ⚠️ **جزئي** — ٧٨ ملف صوت و١١ إنفوجرافيك | عدّ الملفات على الـVPS |
 | الفلاش كاردز والاختبارات | ✅ موجودة في أصول الدرس الإنجليزية | `GET /api/program/lesson-assets/{id}?lang=en` |
 | الأذكار والإشعار اليومي | ❌ **عربي فقط** — `family_adhkar.ar.json` وحده | ملفات الحزمة |
-| الألعاب والقصص | ❌ **عربي فقط** — وRTL فيها صحيح لا عيب | `[[tutor-guardian-users-are-not-all-arabic]]` |
+| الألعاب | ❌ **عربي فقط** — وRTL فيها صحيح لا عيب | `mobile/assets/content/games/*.ar.json` وحدها |
+| القصص و«ركن الطفل» وشارع رمضان | ✅ إنجليزي (1.0.73) | لقطات CI الإنجليزية في `listing_1.0.73/manifest.json` |
 
 الصفّان الأخيران مذكوران صراحةً في آخر الوصف. **من يترجم محتوى جديدًا يحدّث هذا
 الجدول والوصف معًا** — وإلا صار الوصف يعِد بما لا يوجد، أو يعتذر عمّا صار موجودًا.

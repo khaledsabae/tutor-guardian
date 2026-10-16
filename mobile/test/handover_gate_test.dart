@@ -125,6 +125,11 @@ void main() {
   group('offers only what the band allows', () {
     Future<void> open(WidgetTester t, String ageGroup,
         {Locale locale = const Locale('en')}) async {
+      // Tall enough that every tile is built: the list is lazy, and with
+      // «ركن الطفل» on top the last tile falls below the default 600 dp.
+      // Reaching them on a short screen is the scroll test's job below.
+      t.view.physicalSize = const Size(800, 1400) * t.view.devicePixelRatio;
+      addTearDown(t.view.reset);
       await _pump(
         t,
         HandoverGateScreen(childId: 7, childName: 'Yusuf', ageGroup: ageGroup),

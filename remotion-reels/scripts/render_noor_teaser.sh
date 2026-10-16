@@ -8,11 +8,13 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
+scripts/sync_app_art.sh
 python3 scripts/gen_teaser_sfx.py
 python3 scripts/gen_teaser_qr.py
 python3 scripts/make_round_logo.py
 
-for id in NoorTeaserAr NoorTeaserEn NoorTeaserArWide; do
+# NoorTeaserArWorld: the Arabic cut with the new world (road + corner) cut in — TeaserWorld.tsx
+for id in NoorTeaserAr NoorTeaserEn NoorTeaserArWide NoorTeaserArWorld; do
 	name=$(echo "$id" | sed -E 's/NoorTeaser//; s/([A-Z])/_\L\1/g; s/^_//')
 	npx remotion render src/Root.tsx "$id" "out/noor_teaser_${name}.mp4" \
 		--codec=h264 --crf=18 --concurrency=8 --log=error

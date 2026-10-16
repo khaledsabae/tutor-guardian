@@ -6357,4 +6357,261 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get storyPauseChooseAgain => 'أختار مرة أخرى';
+
+  @override
+  String familyRoadTitle(String name) {
+    return 'درب $name';
+  }
+
+  @override
+  String get familyRoadTitleNoName => 'درب الأسرة';
+
+  @override
+  String get familyRoadHorizon => 'على الأفق';
+
+  @override
+  String get familyRoadHere => 'أنتم هنا';
+
+  @override
+  String familyRoadHereResume(String title, int done, int total) {
+    return 'في «$title»: أتممتم $done من $total';
+  }
+
+  @override
+  String get familyRoadHereHint => 'كل خطوة تربوية تضيء قنديلًا على هذا الدرب.';
+
+  @override
+  String get familyRoadContinue => 'أكمل';
+
+  @override
+  String get familyRoadLit => 'ما أضأتموه';
+
+  @override
+  String get familyRoadThisWeek => 'هذا الأسبوع';
+
+  @override
+  String get familyRoadBefore => 'قبل ذلك';
+
+  @override
+  String familyRoadSinceStart(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count أسبوع مضيء منذ البداية',
+      many: '$count أسبوعًا مضيئًا منذ البداية',
+      few: '$count أسابيع مضيئة منذ البداية',
+      two: 'أسبوعان مضيئان منذ البداية',
+      one: 'أسبوع مضيء واحد منذ البداية',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String familyRoadFullMoon(String title) {
+    return 'اكتمل البدر: «$title»';
+  }
+
+  @override
+  String get familyRoadStart => 'من هنا بدأ دربكم';
+
+  @override
+  String get familyRoadOpenWeek => 'اعرض خطوات الأسبوع';
+
+  @override
+  String familyRoadEntryTitle(String name) {
+    return 'درب $name';
+  }
+
+  @override
+  String get familyRoadEntryBody => 'ما ينتظركم على الأفق، وما أضأتموه معًا.';
+
+  @override
+  String gateInDays(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'بعد $days يوم',
+      many: 'بعد $days يومًا',
+      few: 'بعد $days أيام',
+      two: 'بعد يومين',
+      one: 'بعد يوم واحد',
+      zero: 'اليوم',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String gateInMonths(int months) {
+    String _temp0 = intl.Intl.pluralLogic(
+      months,
+      locale: localeName,
+      other: 'بعد $months شهر',
+      many: 'بعد $months شهرًا',
+      few: 'بعد $months أشهر',
+      two: 'بعد شهرين',
+      one: 'بعد شهر واحد',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get gateNextPath => 'المسار التالي';
+
+  @override
+  String get gateOpenPath => 'افتح المسار';
+
+  @override
+  String get gateMilestoneDue => 'حان وقتها';
+
+  @override
+  String gateMilestoneFallback(String name) {
+    return 'محطة جديدة في عمر $name';
+  }
+
+  @override
+  String get gateReadMilestone => 'اقرأ عنها';
+
+  @override
+  String get gateRamadan => 'رمضان';
+
+  @override
+  String gateRamadanDay(int day) {
+    return 'اليوم $day من الشهر';
+  }
+
+  @override
+  String get gateAgeSeven => 'سنّ السابعة';
+
+  @override
+  String get gateAgeSevenNote => 'تبدأ رحلة الصلاة هنا، خطوة بعد خطوة.';
+
+  @override
+  String gateBirthMonth(String name) {
+    return 'مواعيد $name القادمة';
+  }
+
+  @override
+  String get gateBirthMonthNote => 'أضيفوا شهر الميلاد لتظهر على الدرب.';
+
+  @override
+  String get noorSeasonRajab => 'دخل شهر رجب، كل عام وأنتم بخير.';
+
+  @override
+  String get noorSeasonShaban => 'دخل شهر شعبان، ورمضان صار قريبًا.';
+
+  @override
+  String get noorSeasonDhulHijjah => 'دخلت أيام ذي الحجة، كل عام وأنتم بخير.';
+
+  @override
+  String get noorChipFamilyRoad => 'افتح الدرب';
+
+  @override
+  String get horizonStripHint => 'يفتح درب الأسرة';
+
+  @override
+  String get childCornerTileTitle => 'ركن الطفل';
+
+  @override
+  String get childCornerTileBody =>
+      'حكاية قصيرة أو لعبة، ثم مهمة بعيدًا عن الشاشة';
+
+  @override
+  String get childCornerTileBodyNoGame =>
+      'حكاية قصيرة، ثم مهمة بعيدًا عن الشاشة';
+
+  @override
+  String childCornerGreeting(String name) {
+    return 'يا $name، هذا ركنك';
+  }
+
+  @override
+  String get childCornerNoorLine =>
+      'هنا حكاية ولعبة قصيرة، ثم مهمة صغيرة بعيدًا عن الشاشة.';
+
+  @override
+  String get childCornerNoorLineNoGame =>
+      'هنا حكاية قصيرة، ثم مهمة صغيرة بعيدًا عن الشاشة.';
+
+  @override
+  String get childCornerNoorAfterStory => 'أحببت القراءة معك.';
+
+  @override
+  String get childCornerNoorAfterGame => 'كان لعبك جميلًا ومركّزًا.';
+
+  @override
+  String get childCornerStoryLabel => 'حكاية';
+
+  @override
+  String get childCornerStoryHint => 'نقرؤها معًا';
+
+  @override
+  String get childCornerStoryDone => 'قرأناها معًا';
+
+  @override
+  String get childCornerGameLabel => 'لعبة قصيرة';
+
+  @override
+  String get childCornerGameHint => 'أسئلة قليلة ثم نستريح';
+
+  @override
+  String get childCornerGameDone => 'لعبناها معًا';
+
+  @override
+  String get childCornerMissionLabel => 'ثم مهمتك';
+
+  @override
+  String get childCornerToMission => 'إلى مهمتي';
+
+  @override
+  String get childCornerMissionNow => 'مهمتك الآن';
+
+  @override
+  String get childCornerMissionGo => 'فهمت، سأذهب إليها';
+
+  @override
+  String get childCornerMissionFallbackTitle => 'سأرسم شيئًا رأيته اليوم';
+
+  @override
+  String get childCornerMissionFallbackBody =>
+      'بورقة وقلم، ثم أُري رسمتي لأهلي.';
+
+  @override
+  String get childCornerCandleLabel => 'شمعة وقتك';
+
+  @override
+  String get childCornerCandleBright => 'ما زالت مضيئة';
+
+  @override
+  String get childCornerCandleLow => 'بقي قليل';
+
+  @override
+  String get childCornerCandleOut => 'حان وقت المهمة';
+
+  @override
+  String get childCornerTimeUp => 'اكتملت شمعتك، والآن إلى مهمتك.';
+
+  @override
+  String get childCornerStoryNext => 'التالي';
+
+  @override
+  String get childCornerStoryPrevious => 'السابق';
+
+  @override
+  String get childCornerStoryEnd => 'انتهت الحكاية';
+
+  @override
+  String get childCornerBackToCorner => 'عودة إلى ركني';
+
+  @override
+  String get childCornerStoryClose => 'إغلاق الحكاية';
+
+  @override
+  String childCornerStoryPage(int page, int count) {
+    return 'صفحة $page من $count';
+  }
+
+  @override
+  String childCornerDoneMission(String title) {
+    return 'مهمتك: $title';
+  }
 }

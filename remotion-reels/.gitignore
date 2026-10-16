@@ -2,3 +2,5 @@ node_modules/
 out/
 .DS_Store
 *.log
+# copied from ../mobile/assets/svg by scripts/sync_app_art.sh
+public/noor/app/

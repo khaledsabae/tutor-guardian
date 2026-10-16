@@ -1,0 +1,72 @@
+# Checkpoint 10 — «ركن الطفل»: through the hand-over gate into the child's
+# corner, the day's story read to its end, and the session ending on the task
+# away from the screen — then «أعِد الجهاز إلى أهلك» and the PIN out.
+# The corner has no game for this launch (kChildCornerGameEnabled — the
+# games' questions are written for parents), so with the story read the task
+# comes up on its own. The PIN was set by 04_child_mode.
+appId: com.alsaba.almorabbi
+name: fresh/10 child corner — story, task, hand back
+---
+- runScript: ../common/l10n.js
+- runFlow: ../common/home.yaml
+- tapOn: '${output.lead.navMore}'
+- scrollUntilVisible:
+    element:
+      text: '${output.tile.routineTitle}'
+    direction: UP
+    timeout: 20000
+- tapOn: '${output.tile.routineTitle}'
+- extendedWaitUntil:
+    visible: '${output.t.routineChildMode}'
+    timeout: 30000
+- tapOn: '${output.t.routineChildMode}'
+- extendedWaitUntil:
+    visible: '${output.t.handoverTitle}'
+    timeout: 20000
+# The corner is the gate's first tile; title + one-line description merge.
+- tapOn: '${output.lead.childCornerTileTitle}'
+- runFlow: ../common/unlock_child_mode.yaml
+- extendedWaitUntil:
+    visible: '${output.c.childCornerGreeting}'
+    timeout: 30000
+- waitForAnimationToEnd:
+    timeout: 3000
+- takeScreenshot: child_corner_1_home
+# The story card merges label, title and hint into one tappable node.
+- tapOn: '${output.c.childCornerStoryHint}'
+- extendedWaitUntil:
+    visible: '${output.t.childCornerStoryNext}'
+    timeout: 20000
+- takeScreenshot: child_corner_2_story
+- repeat:
+    times: 10
+    while:
+      visible: '${output.t.childCornerStoryNext}'
+    commands:
+      - tapOn: '${output.t.childCornerStoryNext}'
+      - waitForAnimationToEnd:
+          timeout: 1500
+- extendedWaitUntil:
+    visible: '${output.t.childCornerBackToCorner}'
+    timeout: 10000
+- tapOn: '${output.t.childCornerBackToCorner}'
+# The story was all there was before the task: it comes up on its own.
+- extendedWaitUntil:
+    visible: '${output.c.childCornerMissionNow}'
+    timeout: 20000
+- takeScreenshot: child_corner_3_task
+- scrollUntilVisible:
+    element:
+      text: '${output.t.childCornerMissionGo}'
+    direction: DOWN
+    timeout: 10000
+- tapOn: '${output.t.childCornerMissionGo}'
+- extendedWaitUntil:
+    visible: '${output.c.childReturnDevice}'
+    timeout: 15000
+- takeScreenshot: child_corner_4_hand_back
+# The device goes back: the frame's Exit, behind the parent's PIN.
+- runFlow: ../common/exit_child_mode.yaml
+- extendedWaitUntil:
+    visible: '${output.lead.navToday}'
+    timeout: 30000

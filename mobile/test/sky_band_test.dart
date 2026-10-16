@@ -5,6 +5,7 @@
 import 'dart:ui' as ui;
 
 import 'package:almorabbi/features/home/widgets/sky_band.dart';
+import 'package:almorabbi/features/programs/data/programs_models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -199,5 +200,89 @@ void main() {
         }
       });
     }
+  });
+
+  group('«سماوات المواسم»', () {
+    int marks(
+      SkyTime time,
+      Brightness b,
+      HijriSeasonMonth? season, {
+      bool ramadan = false,
+      TextDirection dir = TextDirection.rtl,
+    }) {
+      final painter = SkyPainter(
+        paper: SkyPaper.of(time, b),
+        time: time,
+        textDirection: dir,
+        ramadan: ramadan,
+        season: ramadan ? null : season,
+      );
+      final recorder = ui.PictureRecorder();
+      painter.paint(Canvas(recorder), const Size(360, 160));
+      recorder.endRecording().dispose();
+      return painter.seasonMarksPainted;
+    }
+
+    test('each season marks every sky of the day, quietly', () {
+      for (final b in Brightness.values) {
+        for (final t in SkyTime.values) {
+          for (final dir in TextDirection.values) {
+            for (final s in HijriSeasonMonth.values) {
+              expect(
+                marks(t, b, s, dir: dir),
+                inInclusiveRange(3, kMaxSeasonMarks),
+                reason: '$s $t $b $dir',
+              );
+            }
+          }
+        }
+      }
+    });
+
+    test('a quiet day has none, and Ramadan keeps its own string', () {
+      for (final t in SkyTime.values) {
+        expect(marks(t, Brightness.light, null), 0);
+        for (final s in HijriSeasonMonth.values) {
+          expect(
+            marks(t, Brightness.light, s, ramadan: true),
+            0,
+            reason: '$s $t',
+          );
+        }
+      }
+    });
+
+    testWidgets('the band hands the season to its sky, never in Ramadan, '
+        'and lays the footer on the hills', (tester) async {
+      Future<SkyPainter> pump({bool ramadan = false, Widget? footer}) async {
+        await tester.pumpWidget(
+          MaterialApp(
+            home: Scaffold(
+              body: SkyBand(
+                now: DateTime(2026, 12, 15, 10),
+                ramadan: ramadan,
+                season: HijriSeasonMonth.rajab,
+                footer: footer,
+                child: const Text('BUBBLE'),
+              ),
+            ),
+          ),
+        );
+        return _painterIn(tester);
+      }
+
+      expect((await pump()).season, HijriSeasonMonth.rajab);
+      expect((await pump(ramadan: true)).season, isNull);
+      final plain = tester.getSize(find.byType(SkyBand)).height;
+      await pump(footer: const SizedBox(height: 48, child: Text('STRIP')));
+      final withStrip = tester.getSize(find.byType(SkyBand)).height;
+      expect(find.text('STRIP'), findsOneWidget);
+      // The strip takes the hills' margin: the band grows by less than it.
+      expect(withStrip - plain, lessThan(48));
+      expect(
+        tester.getTopLeft(find.text('STRIP')).dy,
+        greaterThan(tester.getBottomLeft(find.text('BUBBLE')).dy),
+      );
+    });
   });
 }

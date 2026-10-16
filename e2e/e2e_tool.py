@@ -128,6 +128,13 @@ KEYS = [
     "childModePinIncorrect", "childModeEnterFailed", "childModeBudgetSpent",
     "childModeOffline", "childModePinSetupSubtitle", "childModePinConfirmSubtitle",
     "childModePinEnterSubtitle",
+    # «ركن الطفل» (fresh/10_child_corner + the gallery's corner shots) — head
+    # builds only: the baseline has no corner, its selectors never match, and
+    # the gallery shots are guarded.
+    "childCornerTileTitle", "childCornerGreeting", "childCornerStoryHint",
+    "childCornerStoryNext", "childCornerBackToCorner",
+    "childCornerMissionNow", "childCornerMissionGo",
+    "childCornerToMission", "childReturnDevice", "routineDailyTracker",
     # failure screens
     "bootError", "forceUpdateTitle",
     # a 5xx as friendlyError shows it (lesson, ErrorRetryView, chat turn) —
@@ -176,6 +183,10 @@ KEYS = [
     # sound × recitation (e2e/flows/rehearsal/sound_*.yaml): the Quran
     # reader's surah list and its bottom «استماع / إيقاف» pill.
     "holyQuran", "quranVerseCount", "quranListen", "quranStop",
+    # «درب {الاسم}» and «على الأفق» (عالم الأسرة): fresh/11 and the gallery's
+    # family_road shots — head builds only; the gallery guards its shots.
+    "familyRoadHorizon", "familyRoadHere", "familyRoadLit",
+    "familyRoadEntryBody",
 ]
 
 # Strings the app hardcodes outside the ARB files.
@@ -469,6 +480,9 @@ GALLERY_SCREENS = [
     ("praise_card_0ms", "كارت كلمة الأب — ٠ms (الظهور)"),
     ("praise_card_150ms", "كارت كلمة الأب — ١٥٠ms (الحركة)"),
     ("praise_card_400ms", "كارت كلمة الأب — ٤٠٠ms (الميل والاستقرار)"),
+    ("child_corner", "ركن الطفل — حكاية ثم مهمة (بعد فقط)"),
+    ("child_corner_story", "ركن الطفل — صفحة من الحكاية (بعد فقط)"),
+    ("child_corner_task", "ركن الطفل — المهمة بعيدًا عن الشاشة (بعد فقط)"),
     ("home_dark_noor_face", "NoorFace في «اليوم» — داكن"),
     ("home_dark_gift", "لحظة الهدية على «اليوم» — داكن"),
     ("week_lanterns", "قناديل الأسبوع تحت ① على «اليوم»"),
@@ -476,6 +490,8 @@ GALLERY_SCREENS = [
     ("stories_open", "القصص — أول ما تفتح قصة (قبل: بوابة الأذكار، بعد: صفحة نور)"),
     ("stories_page", "القصص — أول صفحة"),
     ("tour_mark", "الجولة — أول إشارة (قبل: v2 على «اليوم»، بعد: v3 على ①)"),
+    ("family_road", "«درب {الاسم}» — الأفق و«أنتم هنا»"),
+    ("family_road_lit", "«درب {الاسم}» — ما أضأتموه"),
 ]
 
 GALLERY_ONBOARDING = [
@@ -503,6 +519,10 @@ GALLERY_GUARDED = {
     "praise_card_0ms",
     "praise_card_150ms",
     "praise_card_400ms",
+    # «ركن الطفل»: the baseline has no corner, so there is never a «before».
+    "child_corner",
+    "child_corner_story",
+    "child_corner_task",
     "home_dark_noor_face",
     "home_dark_gift",
     # Needs a server with /api/family/week, and a head build.
@@ -510,6 +530,10 @@ GALLERY_GUARDED = {
     # Last in shoot.yaml, through the settings replay row; never seen on an
     # emulator before it shipped, so a miss is a blank cell, not a red gate.
     "tour_mark",
+    # «عالم الأسرة»: the baseline has no road; and the lit part needs a lantern
+    # from /api/family/week.
+    "family_road",
+    "family_road_lit",
     # «القصص»: only the shelf is required. What a tap opens depends on which
     # book the baseline's carousel centres, and the first page is head-only.
     "stories_open",
