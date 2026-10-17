@@ -1,202 +1,232 @@
 {
  "teaser_1": {
-  "model": "gemini-2.5-pro-preview-tts",
+  "model": "eleven_multilingual_v2",
   "text": "في ليلة هادئة…",
-  "voice": "Achird"
+  "voice": "EzoxNTKsg4JNN7wxAgut"
  },
  "teaser_2": {
-  "model": "gemini-2.5-pro-preview-tts",
+  "model": "eleven_multilingual_v2",
   "text": "يطلّ نور… رفيقك في تربية طفلك.",
-  "voice": "Achird"
+  "voice": "EzoxNTKsg4JNN7wxAgut"
  },
  "teaser_3": {
-  "model": "gemini-2.5-pro-preview-tts",
+  "model": "eleven_multilingual_v2",
   "text": "كل خطوة صغيرة مع طفلك… قنديل يضيء.",
-  "voice": "Achird"
+  "voice": "EzoxNTKsg4JNN7wxAgut"
  },
  "teaser_4": {
-  "model": "gemini-2.5-pro-preview-tts",
+  "model": "eleven_multilingual_v2",
   "text": "ونور يسألك: جرّبتها؟ كيف جرت؟",
-  "voice": "Achird"
+  "voice": "EzoxNTKsg4JNN7wxAgut"
  },
  "teaser_5": {
-  "model": "gemini-2.5-pro-preview-tts",
-  "text": "المربّي… مربٍّ يعرف طفلك، خطوة بخطوة. مجاني، وبلا إعلانات.",
-  "voice": "Achird"
+  "model": "eleven_multilingual_v2",
+  "text": "ودربٌ لأسرتكم… فيه ما أضأتم، وما ينتظركم.",
+  "voice": "EzoxNTKsg4JNN7wxAgut"
+ },
+ "teaser_6": {
+  "model": "eleven_multilingual_v2",
+  "text": "ولطفلك ركنه: حكاية، ثم مهمة بعيدًا عن الشاشة.",
+  "voice": "EzoxNTKsg4JNN7wxAgut"
  },
  "teaser_7": {
-  "model": "gemini-2.5-pro-preview-tts",
+  "model": "eleven_multilingual_v2",
   "text": "المربّي… مربٍّ يعرف طفلك، خطوة بخطوة. مجاني، وبلا إعلانات.",
-  "voice": "Achird"
+  "voice": "EzoxNTKsg4JNN7wxAgut"
  },
  "v1_1": {
-  "model": "gemini-2.5-pro-preview-tts",
+  "model": "eleven_multilingual_v2",
   "text": "نصيحة سمعتَها… ثم نسيتَها؟",
-  "voice": "Achird"
+  "voice": "EzoxNTKsg4JNN7wxAgut"
  },
  "v1_2": {
-  "model": "gemini-2.5-pro-preview-tts",
+  "model": "eleven_multilingual_v2",
   "text": "في المربّي، تقرأ خطوة اليوم…",
-  "voice": "Achird"
+  "voice": "EzoxNTKsg4JNN7wxAgut"
  },
  "v1_3": {
-  "model": "gemini-2.5-pro-preview-tts",
+  "model": "eleven_multilingual_v2",
   "text": "ثم يسألك نور: متى ستجرّبها؟",
-  "voice": "Achird"
+  "voice": "EzoxNTKsg4JNN7wxAgut"
  },
  "v1_4": {
-  "model": "gemini-2.5-pro-preview-tts",
+  "model": "eleven_multilingual_v2",
   "text": "وفي اليوم التالي…",
-  "voice": "Achird"
+  "voice": "EzoxNTKsg4JNN7wxAgut"
  },
  "v1_5": {
-  "model": "gemini-2.5-pro-preview-tts",
+  "model": "eleven_multilingual_v2",
   "text": "يعود ليسألك: كيف جرت؟",
-  "voice": "Achird"
+  "voice": "EzoxNTKsg4JNN7wxAgut"
  },
  "v1_6": {
-  "model": "gemini-2.5-pro-preview-tts",
+  "model": "eleven_multilingual_v2",
   "text": "مربٍّ يتذكّر معك.",
-  "voice": "Achird"
+  "voice": "EzoxNTKsg4JNN7wxAgut"
  },
  "v1_7": {
-  "model": "gemini-2.5-pro-preview-tts",
+  "model": "eleven_multilingual_v2",
   "text": "المربّي… مجاني، وبلا إعلانات، على غوغل بلاي.",
-  "voice": "Achird"
+  "voice": "EzoxNTKsg4JNN7wxAgut"
  },
  "v2_1": {
-  "model": "gemini-2.5-pro-preview-tts",
+  "model": "eleven_multilingual_v2",
   "text": "لا تعرف من أين تبدأ؟",
-  "voice": "Achird"
+  "voice": "EzoxNTKsg4JNN7wxAgut"
  },
  "v2_2": {
-  "model": "gemini-2.5-pro-preview-tts",
-  "text": "ابدأ بخطوة صغيرة… كل يوم.",
-  "voice": "Achird"
+  "model": "eleven_multilingual_v2",
+  "text": "في المربّي… لأسرتكم درب.",
+  "voice": "EzoxNTKsg4JNN7wxAgut"
  },
  "v2_3": {
-  "model": "gemini-2.5-pro-preview-tts",
-  "text": "أولًا: درس في دقائق.",
-  "voice": "Achird"
+  "model": "eleven_multilingual_v2",
+  "text": "كل خطوة تربوية… تضيء فيه قنديلًا.",
+  "voice": "EzoxNTKsg4JNN7wxAgut"
  },
  "v2_4": {
-  "model": "gemini-2.5-pro-preview-tts",
-  "text": "ثم تسأل المربّي عن أيّ موقف.",
-  "voice": "Achird"
+  "model": "eleven_multilingual_v2",
+  "text": "ونور يريك: أنتم هنا.",
+  "voice": "EzoxNTKsg4JNN7wxAgut"
  },
  "v2_5": {
-  "model": "gemini-2.5-pro-preview-tts",
-  "text": "ثم مهمة صغيرة لطفلك.",
-  "voice": "Achird"
+  "model": "eleven_multilingual_v2",
+  "text": "وعلى الأفق… ما ينتظركم.",
+  "voice": "EzoxNTKsg4JNN7wxAgut"
  },
  "v2_6": {
-  "model": "gemini-2.5-pro-preview-tts",
-  "text": "ثلاث خطوات صغيرة… كل يوم.",
-  "voice": "Achird"
+  "model": "eleven_multilingual_v2",
+  "text": "وفي رجب، وشعبان، وذي الحجة… تتزيّن سماء دربكم.",
+  "voice": "EzoxNTKsg4JNN7wxAgut"
  },
  "v2_7": {
-  "model": "gemini-2.5-pro-preview-tts",
+  "model": "eleven_multilingual_v2",
   "text": "المربّي… مجاني، وبلا إعلانات، على غوغل بلاي.",
-  "voice": "Achird"
+  "voice": "EzoxNTKsg4JNN7wxAgut"
  },
  "v3_1": {
-  "model": "gemini-2.5-pro-preview-tts",
+  "model": "eleven_multilingual_v2",
   "text": "طفلي يعاند وقت النوم… ماذا أفعل؟",
-  "voice": "Achird"
+  "voice": "EzoxNTKsg4JNN7wxAgut"
  },
  "v3_2": {
-  "model": "gemini-2.5-pro-preview-tts",
+  "model": "eleven_multilingual_v2",
   "text": "يجيبك المربّي بخطوات هادئة تناسب عمره:",
-  "voice": "Achird"
+  "voice": "EzoxNTKsg4JNN7wxAgut"
  },
  "v3_3": {
-  "model": "gemini-2.5-pro-preview-tts",
+  "model": "eleven_multilingual_v2",
   "text": "روتين ثابت، وتنبيه قبل النوم، وخيار صغير له.",
-  "voice": "Achird"
+  "voice": "EzoxNTKsg4JNN7wxAgut"
  },
  "v3_4": {
-  "model": "gemini-2.5-pro-preview-tts",
+  "model": "eleven_multilingual_v2",
   "text": "إجابة تعرف عمر طفلك.",
-  "voice": "Achird"
+  "voice": "EzoxNTKsg4JNN7wxAgut"
  },
  "v3_5": {
-  "model": "gemini-2.5-pro-preview-tts",
+  "model": "eleven_multilingual_v2",
   "text": "المربّي… مجاني، وبلا إعلانات، على غوغل بلاي.",
-  "voice": "Achird"
+  "voice": "EzoxNTKsg4JNN7wxAgut"
  },
  "v4_1": {
-  "model": "gemini-2.5-flash-preview-tts",
+  "model": "eleven_multilingual_v2",
   "text": "الشاشة… لكن بنيّة.",
-  "voice": "Achird"
+  "voice": "EzoxNTKsg4JNN7wxAgut"
  },
  "v4_2": {
-  "model": "gemini-2.5-flash-preview-tts",
+  "model": "eleven_multilingual_v2",
   "text": "تُدخِل رمزَك… وتُسلِّم الجهاز.",
-  "voice": "Achird"
+  "voice": "EzoxNTKsg4JNN7wxAgut"
  },
  "v4_3": {
-  "model": "gemini-2.5-flash-preview-tts",
-  "text": "يا يوسف، دورك الآن!",
-  "voice": "Achird"
+  "model": "eleven_multilingual_v2",
+  "text": "يا عمر، هذا ركنك!",
+  "voice": "EzoxNTKsg4JNN7wxAgut"
  },
  "v4_4": {
-  "model": "gemini-2.5-flash-preview-tts",
-  "text": "مهمة قصيرة… بعيدًا عن الشاشة.",
-  "voice": "Achird"
+  "model": "eleven_multilingual_v2",
+  "text": "حكاية قصيرة… وشمعة بدل العدّاد.",
+  "voice": "EzoxNTKsg4JNN7wxAgut"
  },
  "v4_5": {
-  "model": "gemini-2.5-flash-preview-tts",
-  "text": "ثم يُعيد الجهازَ إليك… شكرًا لك.",
-  "voice": "Achird"
+  "model": "eleven_multilingual_v2",
+  "text": "ثم مهمة صغيرة… بعيدًا عن الشاشة.",
+  "voice": "EzoxNTKsg4JNN7wxAgut"
  },
  "v4_6": {
-  "model": "gemini-2.5-flash-preview-tts",
-  "text": "وقت شاشة له هدف… وبرمز يحميه.",
-  "voice": "Achird"
+  "model": "eleven_multilingual_v2",
+  "text": "والخروج من ركنه… برمزك أنت.",
+  "voice": "EzoxNTKsg4JNN7wxAgut"
  },
  "v4_7": {
-  "model": "gemini-2.5-flash-preview-tts",
+  "model": "eleven_multilingual_v2",
   "text": "المربّي… مجاني، وبلا إعلانات، على غوغل بلاي.",
-  "voice": "Achird"
+  "voice": "EzoxNTKsg4JNN7wxAgut"
  },
  "v5_1": {
-  "model": "gemini-2.5-pro-preview-tts",
+  "model": "eleven_multilingual_v2",
   "text": "رمضان هذا العام… مختلف.",
-  "voice": "Achird"
+  "voice": "EzoxNTKsg4JNN7wxAgut"
  },
  "v5_2": {
-  "model": "gemini-2.5-pro-preview-tts",
+  "model": "eleven_multilingual_v2",
   "text": "كل شيء تفعلونه معًا…",
-  "voice": "Achird"
+  "voice": "EzoxNTKsg4JNN7wxAgut"
  },
  "v5_3": {
-  "model": "gemini-2.5-pro-preview-tts",
+  "model": "eleven_multilingual_v2",
   "text": "يُضيء قنديلًا في شارعكم.",
-  "voice": "Achird"
+  "voice": "EzoxNTKsg4JNN7wxAgut"
  },
  "v5_4": {
-  "model": "gemini-2.5-pro-preview-tts",
+  "model": "eleven_multilingual_v2",
   "text": "بلا عدّادات… ولا لوم.",
-  "voice": "Achird"
+  "voice": "EzoxNTKsg4JNN7wxAgut"
  },
  "v5_5": {
-  "model": "gemini-2.5-pro-preview-tts",
+  "model": "eleven_multilingual_v2",
   "text": "ويومًا بعد يوم…",
-  "voice": "Achird"
+  "voice": "EzoxNTKsg4JNN7wxAgut"
  },
  "v5_6": {
-  "model": "gemini-2.5-pro-preview-tts",
+  "model": "eleven_multilingual_v2",
   "text": "رمضان عائلي… خطوة بخطوة.",
-  "voice": "Achird"
+  "voice": "EzoxNTKsg4JNN7wxAgut"
  },
  "v5_7": {
-  "model": "gemini-2.5-pro-preview-tts",
+  "model": "eleven_multilingual_v2",
   "text": "المربّي… مجاني، وبلا إعلانات، على غوغل بلاي.",
-  "voice": "Achird"
+  "voice": "EzoxNTKsg4JNN7wxAgut"
+ },
+ "v6_1": {
+  "model": "eleven_multilingual_v2",
+  "text": "حكاية قبل النوم… يرويها نور.",
+  "voice": "EzoxNTKsg4JNN7wxAgut"
+ },
+ "v6_2": {
+  "model": "eleven_multilingual_v2",
+  "text": "صفحات مرسومة… يقرؤها معكم، صفحةً بعد صفحة.",
+  "voice": "EzoxNTKsg4JNN7wxAgut"
+ },
+ "v6_3": {
+  "model": "eleven_multilingual_v2",
+  "text": "وفي منتصفها… يتوقّف ليسأل طفلك:",
+  "voice": "EzoxNTKsg4JNN7wxAgut"
+ },
+ "v6_4": {
+  "model": "eleven_multilingual_v2",
+  "text": "لو كنت مكان يوسف… ماذا ستفعل؟",
+  "voice": "EzoxNTKsg4JNN7wxAgut"
+ },
+ "v6_5": {
+  "model": "eleven_multilingual_v2",
+  "text": "سؤال صغير… يفتح بينكما حديثًا.",
+  "voice": "EzoxNTKsg4JNN7wxAgut"
  },
  "v6_6": {
-  "model": "gemini-2.5-pro-preview-tts",
+  "model": "eleven_multilingual_v2",
   "text": "المربّي… مجاني، وبلا إعلانات، على غوغل بلاي.",
-  "voice": "Achird"
+  "voice": "EzoxNTKsg4JNN7wxAgut"
  }
 }
