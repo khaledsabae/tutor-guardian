@@ -24,9 +24,14 @@ manifest stores each page's text verbatim; the app plays a page only when the
 text still matches (lib/features/stories/narration/story_narration.dart), so
 correcting a story silences the corrected page instead of reading old words.
 
-Engine: Gemini TTS, key GEMINI_API_KEY from the project .env (never printed).
-edge-tts is not an option — tried and rejected. No music, ever: the files are
-voice only.
+Engines (picked by --engine, default $TTS_ENGINE or gemini):
+  gemini      Gemini TTS, key GEMINI_API_KEY from the project .env.
+  elevenlabs  ElevenLabs TTS (pcm_24000), key ELEVENLABS_API_KEY from the
+              environment or the project .env.elevenlabs. Default voice is
+              George on eleven_v3 — Khaled's choice for the English library,
+              2026-10-17. The engine follows the model: eleven_* is ElevenLabs.
+Keys are never printed. edge-tts is not an option — tried and rejected. No
+music, ever: the files are voice only.
 
 ⚠️ This calls a paid API. Generating the whole library is Khaled's decision
 (voice + cost); one story was sampled first (see the PR).
@@ -55,6 +60,15 @@ STORIES = {"ar": ROOT / "mobile/assets/data/stories.json",
 RATE = 24000
 GAP_S = 0.45  # silence between sentences
 DEFAULT_MODEL = "gemini-3.8-flash-tts"
+ENGINES = {  # engine -> (default model, default voice)
+    "gemini": (DEFAULT_MODEL, "Algieba"),  # Khaled's choice, 2026-10-15
+    "elevenlabs": ("eleven_v3", "JBFqnCBsd6RMkjVDRZzb"),  # George; Khaled's choice for English, 2026-10-17
+}
+EL_SETTINGS = {  # the settings the chosen samples were recorded with
+    "eleven_v3": {"stability": 0.5, "similarity_boost": 0.75},
+    "eleven_multilingual_v2": {"stability": 0.55, "similarity_boost": 0.75, "style": 0.15,
+                               "use_speaker_boost": True, "speed": 0.92},
+}
 
 STYLE = {
     "ar": """# AUDIO PROFILE: راوية قصص أطفال
@@ -95,17 +109,23 @@ def sentences(text: str) -> list[tuple[int, int]]:
     return trimmed
 
 
-def api_key() -> str:
-    key = os.environ.get("GEMINI_API_KEY")
+def engine_of(model: str) -> str:
+    return "elevenlabs" if model.startswith("eleven_") else "gemini"
+
+
+def api_key(engine: str = "gemini") -> str:
+    var, name = (("ELEVENLABS_API_KEY", ".env.elevenlabs") if engine == "elevenlabs"
+                 else ("GEMINI_API_KEY", ".env"))
+    key = os.environ.get(var)
     # A worktree has no .env of its own; the main checkout's is the one.
-    for env in (ROOT / ".env", Path.home() / "projects/tutor-guardian/.env"):
+    for env in (ROOT / name, Path.home() / "projects/tutor-guardian" / name):
         if key or not env.exists():
             continue
         for line in env.read_text(encoding="utf-8").splitlines():
-            if line.startswith("GEMINI_API_KEY="):
+            if line.startswith(var + "="):
                 key = line.split("=", 1)[1].strip().strip("'\"")
     if not key:
-        sys.exit("GEMINI_API_KEY is not set (project .env)")
+        sys.exit(f"{var} is not set (project {name})")
     return key
 
 
@@ -120,6 +140,8 @@ QUOTA_MESSAGE = ("الحصة اليومية خلصت — كمّل بكرة بن�
 
 def synth(text: str, lang: str, voice: str, model: str, key: str, usage: dict) -> bytes:
     """16-bit mono PCM at 24 kHz for one sentence."""
+    if engine_of(model) == "elevenlabs":
+        return synth_elevenlabs(text, lang, voice, model, key, usage)
     body = {
         "contents": [{"parts": [{"text": STYLE[lang].replace("{TEXT}", text)}]}],
         "generationConfig": {
@@ -150,6 +172,41 @@ def synth(text: str, lang: str, voice: str, model: str, key: str, usage: dict) -
             assert w.getframerate() == RATE and w.getnchannels() == 1 and w.getsampwidth() == 2
             return w.readframes(w.getnframes())
     return raw
+
+
+def synth_elevenlabs(text: str, lang: str, voice: str, model: str, key: str, usage: dict) -> bytes:
+    """ElevenLabs: the same 16-bit mono 24 kHz PCM. No style notes — the voice is the style."""
+    body = {"text": text, "model_id": model}
+    if model in EL_SETTINGS:
+        body["voice_settings"] = EL_SETTINGS[model]
+    if model != "eleven_multilingual_v2":  # v2 takes no language_code
+        body["language_code"] = lang
+    url = f"https://api.elevenlabs.io/v1/text-to-speech/{voice}?output_format=pcm_24000"
+    for attempt in range(5):
+        req = urllib.request.Request(url, data=json.dumps(body).encode(),
+                                     headers={"xi-api-key": key, "Content-Type": "application/json"})
+        try:
+            with urllib.request.urlopen(req, timeout=180) as resp:
+                pcm, cost = resp.read(), resp.headers.get("character-cost")
+            break
+        except urllib.error.HTTPError as e:
+            detail = e.read()[:300].decode("utf-8", "replace")
+            if "quota_exceeded" in detail or e.code == 402:
+                raise QuotaExhausted(detail)
+            if e.code in (429, 500, 502, 503) and attempt < 4:
+                time.sleep(4 * (attempt + 1))
+                continue
+            if e.code == 429:
+                raise QuotaExhausted(detail)
+            raise SystemExit(f"TTS failed: HTTP {e.code} {detail!r}")
+        except urllib.error.URLError as e:  # DNS/connection blips
+            if attempt < 4:
+                time.sleep(4 * (attempt + 1))
+                continue
+            raise SystemExit(f"TTS failed: {e.reason}")
+    usage["characters"] = usage.get("characters", 0) + len(text)
+    usage["credits"] = usage.get("credits", 0) + int(cost or 0)
+    return pcm[: len(pcm) // 2 * 2]
 
 
 def trim_silence(pcm: bytes, threshold: int = 300) -> bytes:
@@ -328,14 +385,18 @@ def main() -> None:
     ap.add_argument("ids", nargs="*")
     ap.add_argument("--all", action="store_true")
     ap.add_argument("--lang", choices=["ar", "en"], default="ar")
-    ap.add_argument("--voice", default="Algieba")  # Khaled's choice, 2026-10-15
-    ap.add_argument("--model", default=DEFAULT_MODEL)
+    ap.add_argument("--engine", choices=sorted(ENGINES), default=os.environ.get("TTS_ENGINE", "gemini"),
+                    help="sets the default --model/--voice (default $TTS_ENGINE or gemini)")
+    ap.add_argument("--voice", help="default: the engine's (Algieba · George)")
+    ap.add_argument("--model", help="default: the engine's; eleven_* models go to ElevenLabs")
     ap.add_argument("--out", type=Path, help="default docs/stories/narration/<lang>")
     ap.add_argument("--force", action="store_true",
                     help="re-record every chosen page, even ones already up to date")
     ap.add_argument("--skip-verify", action="store_true",
                     help="do not transcribe pages back (only for a quick listen, never for the app)")
     args = ap.parse_args()
+    args.model = args.model or ENGINES[args.engine][0]
+    args.voice = args.voice or ENGINES[args.engine][1]
     library = json.loads(STORIES[args.lang].read_text(encoding="utf-8"))
     chosen = library if args.all else [s for s in library if s["id"] in args.ids]
     if not chosen:
@@ -344,7 +405,7 @@ def main() -> None:
     prefix = f"docs/stories/narration/{args.lang}"
     if not args.skip_verify and subprocess.run(["which", "whisper"], capture_output=True).returncode:
         sys.exit("whisper is needed to verify every page (or pass --skip-verify for a draft)")
-    key = api_key()
+    key = api_key(engine_of(args.model))
     sys.exit(run(chosen, args.lang, args.voice, args.model, out, prefix, key,
                  verify=not args.skip_verify, force=args.force))
 
@@ -352,7 +413,7 @@ def main() -> None:
 def run(chosen: list[dict], lang: str, voice: str, model: str, out: Path, prefix: str,
         key: str, verify: bool = True, force: bool = False) -> int:
     """Record [chosen]; 0 done · 3 the day's quota ran out (resume tomorrow)."""
-    total = {"audio_tokens": 0, "text_tokens": 0}
+    total = {"audio_tokens": 0, "text_tokens": 0, "characters": 0, "credits": 0}
     voice_tag = f"{model}/{voice}"
     code = 0
     done = skipped = 0
@@ -373,7 +434,10 @@ def run(chosen: list[dict], lang: str, voice: str, model: str, out: Path, prefix
         code = 3
     finally:
         print(f"stories recorded: {done} · skipped (up to date): {skipped}")
-        print(f"usage: {total['audio_tokens']} audio tokens, {total['text_tokens']} text tokens")
+        if engine_of(model) == "elevenlabs":
+            print(f"usage: {total['characters']} characters, {total['credits']} credits")
+        else:
+            print(f"usage: {total['audio_tokens']} audio tokens, {total['text_tokens']} text tokens")
         if REPORT:
             stamp = time.strftime("%Y%m%d-%H%M%S")
             rep = out / f"verify_{lang}_{stamp}.json"
