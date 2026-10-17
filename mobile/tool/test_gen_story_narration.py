@@ -194,3 +194,142 @@ class QuotaFromTheApi(unittest.TestCase):
         with mock.patch.object(g.urllib.request, "urlopen", side_effect=always_400):
             with self.assertRaises(SystemExit):
                 g.synth("نص.", "ar", "Algieba", "m", "key", {})
+
+
+class ElevenLabsEngine(unittest.TestCase):
+    """eleven_* models go to ElevenLabs, return the same PCM, and stop on a spent quota."""
+
+    def test_the_model_picks_the_engine(self):
+        self.assertEqual(g.engine_of("eleven_v3"), "elevenlabs")
+        self.assertEqual(g.engine_of("gemini-3.8-flash-tts"), "gemini")
+        self.assertEqual(g.ENGINES["gemini"][1], "Algieba")
+
+    def test_pcm_comes_back_and_usage_is_counted(self):
+        sent = {}
+
+        class Resp:
+            headers = {"character-cost": "7"}
+
+            def __enter__(self):
+                return self
+
+            def __exit__(self, *a):
+                return False
+
+            def read(self):
+                return b"\x01\x00" * 10 + b"\x02"  # an odd trailing byte is dropped
+
+        def fake_urlopen(req, timeout):
+            sent["url"], sent["body"] = req.full_url, _json.loads(req.data)
+            sent["key"] = req.get_header("Xi-api-key")
+            return Resp()
+
+        usage = {}
+        with mock.patch.object(g.urllib.request, "urlopen", side_effect=fake_urlopen):
+            pcm = g.synth("Hello there.", "en", "VOICE", "eleven_v3", "k", usage)
+        self.assertEqual(len(pcm), 20)
+        self.assertIn("/text-to-speech/VOICE?output_format=pcm_24000", sent["url"])
+        self.assertEqual(sent["body"]["model_id"], "eleven_v3")
+        self.assertEqual(sent["body"]["language_code"], "en")
+        self.assertEqual(sent["key"], "k")
+        self.assertEqual(usage, {"characters": 12, "credits": 7})
+
+    def test_multilingual_v2_gets_no_language_code(self):
+        bodies = []
+
+        class Resp:
+            headers = {}
+
+            def __enter__(self):
+                return self
+
+            def __exit__(self, *a):
+                return False
+
+            def read(self):
+                return b"\x00\x00"
+
+        def fake_urlopen(req, timeout):
+            bodies.append(_json.loads(req.data))
+            return Resp()
+
+        with mock.patch.object(g.urllib.request, "urlopen", side_effect=fake_urlopen):
+            g.synth("نص.", "ar", "V", "eleven_multilingual_v2", "k", {})
+        self.assertNotIn("language_code", bodies[0])
+
+    def test_a_spent_quota_is_quota_exhausted(self):
+        import io
+        import urllib.error
+
+        def quota(*a, **k):
+            raise urllib.error.HTTPError("u", 401, "q", {}, io.BytesIO(b'{"detail":{"status":"quota_exceeded"}}'))
+
+        with mock.patch.object(g.urllib.request, "urlopen", side_effect=quota):
+            with self.assertRaises(g.QuotaExhausted):
+                g.synth("Hi.", "en", "V", "eleven_v3", "k", {})
+
+    def test_an_unknown_voice_stops_loudly(self):
+        import io
+        import urllib.error
+
+        def missing(*a, **k):
+            raise urllib.error.HTTPError("u", 404, "nf", {}, io.BytesIO(b'{"detail":"voice_not_found"}'))
+
+        with mock.patch.object(g.urllib.request, "urlopen", side_effect=missing):
+            with self.assertRaises(SystemExit):
+                g.synth("Hi.", "en", "V", "eleven_v3", "k", {})
+
+
+class VersesInAnotherVoice(unittest.TestCase):
+    """A ﴿verse﴾ in an English story goes to the Arabic verse voice and is checked in Arabic."""
+
+    PAGE = "She remembered the words of Allah: ﴿وَبِالْوَالِدَيْنِ إِحْسَانًا﴾. So she helped ﷺ."
+
+    def test_parts_split_out_the_verse_and_drop_bare_punctuation(self):
+        self.assertEqual(g.parts("She remembered: ﴿صُنْعَ اللَّهِ﴾."),
+                         [(False, "She remembered:"), (True, "صُنْعَ اللَّهِ")])
+        self.assertEqual(g.parts("No verse here."), [(False, "No verse here.")])
+
+    def test_the_symbol_is_said_not_spelled(self):
+        self.assertEqual(g.spoken("His Messenger ﷺ.", "en"), "His Messenger sallallahu alayhi wa sallam.")
+        self.assertEqual(g.spoken("رسول الله ﷺ.", "ar"), "رسول الله ﷺ.")
+
+    def test_a_verse_page_is_recorded_in_two_voices_and_checked_in_two_languages(self):
+        tmp = Path(_tempfile.mkdtemp())
+        calls, heard_by = [], {}
+
+        def fake_synth(text, lang, voice, model, key, usage):
+            calls.append((text, lang, voice))
+            return b"\x10\x00" * 2400
+
+        def fake_encode(pcm, out):
+            Path(out).write_bytes(b"m4a")
+
+        def fake_transcribe(path, lang):
+            heard_by.setdefault(lang, 0)
+            heard_by[lang] += 1
+            if lang == "ar":
+                return "وبالوالدين إحسانا"
+            return "She remembered the words of Allah. So she helped sallallahu alayhi wa sallam."
+
+        g.REPORT.clear()
+        with mock.patch.object(g, "synth", side_effect=fake_synth), \
+                mock.patch.object(g, "encode_m4a", side_effect=fake_encode), \
+                mock.patch.object(g, "transcribe", side_effect=fake_transcribe):
+            code = g.run([_story([self.PAGE])], "en", "GEORGE", "eleven_v3", tmp, "docs/x", "k",
+                         verse_voice=("eleven_multilingual_v2", "HAKIM"))
+        self.assertEqual(code, 0)
+        self.assertIn(("وَبِالْوَالِدَيْنِ إِحْسَانًا", "ar", "HAKIM"), calls)
+        self.assertIn(("She remembered the words of Allah:", "en", "GEORGE"), calls)
+        self.assertIn(("So she helped sallallahu alayhi wa sallam.", "en", "GEORGE"), calls)
+        self.assertFalse(any("﴿" in t or "ﷺ" in t for t, _, _ in calls))
+        self.assertEqual(heard_by, {"en": 1, "ar": 1})
+        self.assertEqual(g.REPORT[-1]["problems"], [])
+        manifest = _json.loads((tmp / "s1.json").read_text(encoding="utf-8"))
+        self.assertEqual(manifest["pages"][0]["text"], self.PAGE)  # the page keeps its symbols
+
+    def test_a_mangled_verse_fails_the_page(self):
+        # George's real reading of the verse: it passes the loose Arabic bar, not the verse bar
+        self.assertFalse(g.verify_page("وَبِالْوَالِدَيْنِ إِحْسَانًا", "وبيلوال إيذين إحسانة", "ar"))
+        self.assertTrue(g.verify_page("وَبِالْوَالِدَيْنِ إِحْسَانًا", "وبيلوال إيذين إحسانة", "quran"))
+        self.assertFalse(g.verify_page("وَبِالْوَالِدَيْنِ إِحْسَانًا", "وبالوالدين إحسانا", "quran"))

@@ -24,9 +24,14 @@ manifest stores each page's text verbatim; the app plays a page only when the
 text still matches (lib/features/stories/narration/story_narration.dart), so
 correcting a story silences the corrected page instead of reading old words.
 
-Engine: Gemini TTS, key GEMINI_API_KEY from the project .env (never printed).
-edge-tts is not an option — tried and rejected. No music, ever: the files are
-voice only.
+Engines (picked by --engine, default $TTS_ENGINE or gemini):
+  gemini      Gemini TTS, key GEMINI_API_KEY from the project .env.
+  elevenlabs  ElevenLabs TTS (pcm_24000), key ELEVENLABS_API_KEY from the
+              environment or the project .env.elevenlabs. Default voice is
+              George on eleven_v3 — Khaled's choice for the English library,
+              2026-10-17. The engine follows the model: eleven_* is ElevenLabs.
+Keys are never printed. edge-tts is not an option — tried and rejected. No
+music, ever: the files are voice only.
 
 ⚠️ This calls a paid API. Generating the whole library is Khaled's decision
 (voice + cost); one story was sampled first (see the PR).
@@ -55,6 +60,49 @@ STORIES = {"ar": ROOT / "mobile/assets/data/stories.json",
 RATE = 24000
 GAP_S = 0.45  # silence between sentences
 DEFAULT_MODEL = "gemini-3.8-flash-tts"
+# A Qur'anic verse quoted in Arabic inside a non-Arabic story (﴿…﴾) is never
+# given to the story's voice: an English narrator mangles it (George on
+# eleven_v3 read «وَبِالْوَالِدَيْنِ إِحْسَانًا» as "Wabil Wali Dain Ehsana").
+# With a verse voice set, each verse is spoken by that Arabic voice and checked
+# on its own by an Arabic transcript; the rest of the page is checked in the
+# page's language without it.
+VERSE = re.compile(r"﴿([^﴾]*)﴾")
+VERSE_VOICE = {  # engine -> (model, voice) for verses in non-Arabic stories; None = the story voice reads them
+    "gemini": None,
+    "elevenlabs": ("eleven_multilingual_v2", "EzoxNTKsg4JNN7wxAgut"),  # Hakim, the campaign's Arabic voice
+}
+# How a symbol is said. The page keeps the symbol; only the TTS input and the
+# transcript check use the spoken form ("ﷺ" alone came out as "Salolullah Salimum").
+SPOKEN = {"en": {"ﷺ": "sallallahu alayhi wa sallam"}}
+VERSE_GAP_S = 0.3
+
+
+def spoken(text: str, lang: str) -> str:
+    for sym, said in SPOKEN.get(lang, {}).items():
+        text = text.replace(sym, said)
+    return text
+
+
+def parts(text: str) -> list[tuple[bool, str]]:
+    """[(is_verse, text)] of one sentence; punctuation-only bits between them dropped."""
+    out, at = [], 0
+    for m in VERSE.finditer(text):
+        out.append((False, text[at:m.start()]))
+        out.append((True, m.group(1)))
+        at = m.end()
+    out.append((False, text[at:]))
+    return [(v, t.strip()) for v, t in out if re.search(r"\w", t)]
+
+
+ENGINES = {  # engine -> (default model, default voice)
+    "gemini": (DEFAULT_MODEL, "Algieba"),  # Khaled's choice, 2026-10-15
+    "elevenlabs": ("eleven_v3", "JBFqnCBsd6RMkjVDRZzb"),  # George; Khaled's choice for English, 2026-10-17
+}
+EL_SETTINGS = {  # the settings the chosen samples were recorded with
+    "eleven_v3": {"stability": 0.5, "similarity_boost": 0.75},
+    "eleven_multilingual_v2": {"stability": 0.55, "similarity_boost": 0.75, "style": 0.15,
+                               "use_speaker_boost": True, "speed": 0.92},
+}
 
 STYLE = {
     "ar": """# AUDIO PROFILE: راوية قصص أطفال
@@ -95,17 +143,23 @@ def sentences(text: str) -> list[tuple[int, int]]:
     return trimmed
 
 
-def api_key() -> str:
-    key = os.environ.get("GEMINI_API_KEY")
+def engine_of(model: str) -> str:
+    return "elevenlabs" if model.startswith("eleven_") else "gemini"
+
+
+def api_key(engine: str = "gemini") -> str:
+    var, name = (("ELEVENLABS_API_KEY", ".env.elevenlabs") if engine == "elevenlabs"
+                 else ("GEMINI_API_KEY", ".env"))
+    key = os.environ.get(var)
     # A worktree has no .env of its own; the main checkout's is the one.
-    for env in (ROOT / ".env", Path.home() / "projects/tutor-guardian/.env"):
+    for env in (ROOT / name, Path.home() / "projects/tutor-guardian" / name):
         if key or not env.exists():
             continue
         for line in env.read_text(encoding="utf-8").splitlines():
-            if line.startswith("GEMINI_API_KEY="):
+            if line.startswith(var + "="):
                 key = line.split("=", 1)[1].strip().strip("'\"")
     if not key:
-        sys.exit("GEMINI_API_KEY is not set (project .env)")
+        sys.exit(f"{var} is not set (project {name})")
     return key
 
 
@@ -120,6 +174,8 @@ QUOTA_MESSAGE = ("الحصة اليومية خلصت — كمّل بكرة بن�
 
 def synth(text: str, lang: str, voice: str, model: str, key: str, usage: dict) -> bytes:
     """16-bit mono PCM at 24 kHz for one sentence."""
+    if engine_of(model) == "elevenlabs":
+        return synth_elevenlabs(text, lang, voice, model, key, usage)
     body = {
         "contents": [{"parts": [{"text": STYLE[lang].replace("{TEXT}", text)}]}],
         "generationConfig": {
@@ -152,6 +208,41 @@ def synth(text: str, lang: str, voice: str, model: str, key: str, usage: dict) -
     return raw
 
 
+def synth_elevenlabs(text: str, lang: str, voice: str, model: str, key: str, usage: dict) -> bytes:
+    """ElevenLabs: the same 16-bit mono 24 kHz PCM. No style notes — the voice is the style."""
+    body = {"text": text, "model_id": model}
+    if model in EL_SETTINGS:
+        body["voice_settings"] = EL_SETTINGS[model]
+    if model != "eleven_multilingual_v2":  # v2 takes no language_code
+        body["language_code"] = lang
+    url = f"https://api.elevenlabs.io/v1/text-to-speech/{voice}?output_format=pcm_24000"
+    for attempt in range(5):
+        req = urllib.request.Request(url, data=json.dumps(body).encode(),
+                                     headers={"xi-api-key": key, "Content-Type": "application/json"})
+        try:
+            with urllib.request.urlopen(req, timeout=180) as resp:
+                pcm, cost = resp.read(), resp.headers.get("character-cost")
+            break
+        except urllib.error.HTTPError as e:
+            detail = e.read()[:300].decode("utf-8", "replace")
+            if "quota_exceeded" in detail or e.code == 402:
+                raise QuotaExhausted(detail)
+            if e.code in (429, 500, 502, 503) and attempt < 4:
+                time.sleep(4 * (attempt + 1))
+                continue
+            if e.code == 429:
+                raise QuotaExhausted(detail)
+            raise SystemExit(f"TTS failed: HTTP {e.code} {detail!r}")
+        except urllib.error.URLError as e:  # DNS/connection blips
+            if attempt < 4:
+                time.sleep(4 * (attempt + 1))
+                continue
+            raise SystemExit(f"TTS failed: {e.reason}")
+    usage["characters"] = usage.get("characters", 0) + len(text)
+    usage["credits"] = usage.get("credits", 0) + int(cost or 0)
+    return pcm[: len(pcm) // 2 * 2]
+
+
 def trim_silence(pcm: bytes, threshold: int = 300) -> bytes:
     """Drop leading/trailing near-silence so the gaps are ours, not the model's."""
     import array
@@ -174,7 +265,10 @@ def trim_silence(pcm: bytes, threshold: int = 300) -> bytes:
 INSTRUCTION_WORDS = ["اقرأ", "اقرا", "تعليمات", "بصوت", "راوي", "راوٍ", "راويه", "راوية",
                      "فصحى", "audio profile", "director", "transcript", "storyteller",
                      "instructions", "style", "pace"]
-MIN_SIMILARITY = {"ar": 0.72, "en": 0.80}
+# "quran": a verse spoken inside a non-Arabic story, held to a far stricter bar —
+# a mangled reading («وبيلوال إيذين إحسانة») still scores 0.77 against the verse,
+# a correct one 1.0, and a correct one against Uthmani spelling about 0.95.
+MIN_SIMILARITY = {"ar": 0.72, "en": 0.80, "quran": 0.90}
 ATTEMPTS = 3
 REPORT: list[dict] = []
 
@@ -277,7 +371,8 @@ def reusable_pages(story: dict, out_dir: Path, voice_tag: str) -> dict[int, dict
 
 def record_story(story: dict, lang: str, voice: str, model: str, out_dir: Path,
                  server_prefix: str, key: str, verify: bool = True,
-                 reuse: dict[int, dict] | None = None) -> dict:
+                 reuse: dict[int, dict] | None = None,
+                 verse_voice: tuple[str, str] | None = None) -> dict:
     out_dir.mkdir(parents=True, exist_ok=True)
     usage: dict = {}
     pages = []
@@ -289,12 +384,25 @@ def record_story(story: dict, lang: str, voice: str, model: str, out_dir: Path,
             pages.append(reuse[n - 1])
             print(f"  {story['id']} p{n}: unchanged, kept")
             continue
+        split = verse_voice is not None and lang != "ar" and VERSE.search(text) is not None
         for attempt in range(1, ATTEMPTS + 1):
             pcm = b""
+            own = b""  # the page without its verses: what the page-language check hears
+            verses: list[tuple[str, bytes]] = []
             spans = []
             gap = b"\0\0" * int(RATE * GAP_S)
+            vgap = b"\0\0" * int(RATE * VERSE_GAP_S)
             for a, b in sentences(text):
-                clip = trim_silence(synth(text[a:b], lang, voice, model, key, usage))
+                clip = b""
+                for is_verse, bit in (parts(text[a:b]) if split else [(False, text[a:b])]):
+                    if is_verse:
+                        piece = trim_silence(synth(bit, "ar", verse_voice[1], verse_voice[0],
+                                                   key, usage))
+                        verses.append((bit, piece))
+                    else:
+                        piece = trim_silence(synth(spoken(bit, lang), lang, voice, model, key, usage))
+                        own += (vgap if own else b"") + piece
+                    clip += (vgap if clip else b"") + piece
                 if pcm:
                     pcm += gap
                 start = len(pcm) / 2 / RATE
@@ -304,8 +412,20 @@ def record_story(story: dict, lang: str, voice: str, model: str, out_dir: Path,
             encode_m4a(pcm, out_dir / name)
             if not verify:
                 break
-            heard = transcribe(out_dir / name, lang)
-            problems = verify_page(text, heard, lang)
+            if split:
+                with tempfile.TemporaryDirectory() as tmp:
+                    encode_m4a(own, Path(tmp) / name)
+                    heard = transcribe(Path(tmp) / name, lang)
+                    problems = verify_page(spoken(VERSE.sub(" ", text), lang), heard, lang)
+                    for k, (verse, piece) in enumerate(verses, 1):
+                        vfile = Path(tmp) / f"verse{k}.m4a"
+                        encode_m4a(piece, vfile)
+                        vheard = transcribe(vfile, "ar")
+                        problems += [f"verse {k}: {x}" for x in verify_page(verse, vheard, "quran")]
+                        heard += f"\n[verse {k}] {vheard.strip()}"
+            else:
+                heard = transcribe(out_dir / name, lang)
+                problems = verify_page(spoken(text, lang), heard, lang)
             REPORT.append({"story": story["id"], "page": n, "lang": lang, "attempt": attempt,
                            "problems": problems, "heard": heard.strip()})
             if not problems:
@@ -328,14 +448,22 @@ def main() -> None:
     ap.add_argument("ids", nargs="*")
     ap.add_argument("--all", action="store_true")
     ap.add_argument("--lang", choices=["ar", "en"], default="ar")
-    ap.add_argument("--voice", default="Algieba")  # Khaled's choice, 2026-10-15
-    ap.add_argument("--model", default=DEFAULT_MODEL)
+    ap.add_argument("--engine", choices=sorted(ENGINES), default=os.environ.get("TTS_ENGINE", "gemini"),
+                    help="sets the default --model/--voice (default $TTS_ENGINE or gemini)")
+    ap.add_argument("--voice", help="default: the engine's (Algieba · George)")
+    ap.add_argument("--model", help="default: the engine's; eleven_* models go to ElevenLabs")
+    ap.add_argument("--verse-voice", metavar="MODEL/VOICE",
+                    help="who reads ﴿verses﴾ in a non-Arabic story (default: the engine's; 'none' = the story voice)")
     ap.add_argument("--out", type=Path, help="default docs/stories/narration/<lang>")
     ap.add_argument("--force", action="store_true",
                     help="re-record every chosen page, even ones already up to date")
     ap.add_argument("--skip-verify", action="store_true",
                     help="do not transcribe pages back (only for a quick listen, never for the app)")
     args = ap.parse_args()
+    args.model = args.model or ENGINES[args.engine][0]
+    args.voice = args.voice or ENGINES[args.engine][1]
+    verse_voice = (None if args.verse_voice == "none" else tuple(args.verse_voice.split("/", 1))
+                   if args.verse_voice else VERSE_VOICE[args.engine])
     library = json.loads(STORIES[args.lang].read_text(encoding="utf-8"))
     chosen = library if args.all else [s for s in library if s["id"] in args.ids]
     if not chosen:
@@ -344,15 +472,18 @@ def main() -> None:
     prefix = f"docs/stories/narration/{args.lang}"
     if not args.skip_verify and subprocess.run(["which", "whisper"], capture_output=True).returncode:
         sys.exit("whisper is needed to verify every page (or pass --skip-verify for a draft)")
-    key = api_key()
+    if verse_voice and engine_of(verse_voice[0]) != engine_of(args.model):
+        sys.exit("the verse voice must be on the same engine as the story voice")
+    key = api_key(engine_of(args.model))
     sys.exit(run(chosen, args.lang, args.voice, args.model, out, prefix, key,
-                 verify=not args.skip_verify, force=args.force))
+                 verify=not args.skip_verify, force=args.force, verse_voice=verse_voice))
 
 
 def run(chosen: list[dict], lang: str, voice: str, model: str, out: Path, prefix: str,
-        key: str, verify: bool = True, force: bool = False) -> int:
+        key: str, verify: bool = True, force: bool = False,
+        verse_voice: tuple[str, str] | None = None) -> int:
     """Record [chosen]; 0 done · 3 the day's quota ran out (resume tomorrow)."""
-    total = {"audio_tokens": 0, "text_tokens": 0}
+    total = {"audio_tokens": 0, "text_tokens": 0, "characters": 0, "credits": 0}
     voice_tag = f"{model}/{voice}"
     code = 0
     done = skipped = 0
@@ -364,7 +495,7 @@ def run(chosen: list[dict], lang: str, voice: str, model: str, out: Path, prefix
                 print(f"  {story['id']}: up to date, skipped")
                 continue
             u = record_story(story, lang, voice, model, out, prefix, key,
-                             verify=verify, reuse=reuse)
+                             verify=verify, reuse=reuse, verse_voice=verse_voice)
             done += 1
             for k in total:
                 total[k] += u.get(k, 0)
@@ -373,7 +504,10 @@ def run(chosen: list[dict], lang: str, voice: str, model: str, out: Path, prefix
         code = 3
     finally:
         print(f"stories recorded: {done} · skipped (up to date): {skipped}")
-        print(f"usage: {total['audio_tokens']} audio tokens, {total['text_tokens']} text tokens")
+        if engine_of(model) == "elevenlabs":
+            print(f"usage: {total['characters']} characters, {total['credits']} credits")
+        else:
+            print(f"usage: {total['audio_tokens']} audio tokens, {total['text_tokens']} text tokens")
         if REPORT:
             stamp = time.strftime("%Y%m%d-%H%M%S")
             rep = out / f"verify_{lang}_{stamp}.json"
