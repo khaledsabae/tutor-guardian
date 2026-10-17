@@ -60,6 +60,40 @@ STORIES = {"ar": ROOT / "mobile/assets/data/stories.json",
 RATE = 24000
 GAP_S = 0.45  # silence between sentences
 DEFAULT_MODEL = "gemini-3.8-flash-tts"
+# A Qur'anic verse quoted in Arabic inside a non-Arabic story (﴿…﴾) is never
+# given to the story's voice: an English narrator mangles it (George on
+# eleven_v3 read «وَبِالْوَالِدَيْنِ إِحْسَانًا» as "Wabil Wali Dain Ehsana").
+# With a verse voice set, each verse is spoken by that Arabic voice and checked
+# on its own by an Arabic transcript; the rest of the page is checked in the
+# page's language without it.
+VERSE = re.compile(r"﴿([^﴾]*)﴾")
+VERSE_VOICE = {  # engine -> (model, voice) for verses in non-Arabic stories; None = the story voice reads them
+    "gemini": None,
+    "elevenlabs": ("eleven_multilingual_v2", "EzoxNTKsg4JNN7wxAgut"),  # Hakim, the campaign's Arabic voice
+}
+# How a symbol is said. The page keeps the symbol; only the TTS input and the
+# transcript check use the spoken form ("ﷺ" alone came out as "Salolullah Salimum").
+SPOKEN = {"en": {"ﷺ": "sallallahu alayhi wa sallam"}}
+VERSE_GAP_S = 0.3
+
+
+def spoken(text: str, lang: str) -> str:
+    for sym, said in SPOKEN.get(lang, {}).items():
+        text = text.replace(sym, said)
+    return text
+
+
+def parts(text: str) -> list[tuple[bool, str]]:
+    """[(is_verse, text)] of one sentence; punctuation-only bits between them dropped."""
+    out, at = [], 0
+    for m in VERSE.finditer(text):
+        out.append((False, text[at:m.start()]))
+        out.append((True, m.group(1)))
+        at = m.end()
+    out.append((False, text[at:]))
+    return [(v, t.strip()) for v, t in out if re.search(r"\w", t)]
+
+
 ENGINES = {  # engine -> (default model, default voice)
     "gemini": (DEFAULT_MODEL, "Algieba"),  # Khaled's choice, 2026-10-15
     "elevenlabs": ("eleven_v3", "JBFqnCBsd6RMkjVDRZzb"),  # George; Khaled's choice for English, 2026-10-17
@@ -231,7 +265,10 @@ def trim_silence(pcm: bytes, threshold: int = 300) -> bytes:
 INSTRUCTION_WORDS = ["اقرأ", "اقرا", "تعليمات", "بصوت", "راوي", "راوٍ", "راويه", "راوية",
                      "فصحى", "audio profile", "director", "transcript", "storyteller",
                      "instructions", "style", "pace"]
-MIN_SIMILARITY = {"ar": 0.72, "en": 0.80}
+# "quran": a verse spoken inside a non-Arabic story, held to a far stricter bar —
+# a mangled reading («وبيلوال إيذين إحسانة») still scores 0.77 against the verse,
+# a correct one 1.0, and a correct one against Uthmani spelling about 0.95.
+MIN_SIMILARITY = {"ar": 0.72, "en": 0.80, "quran": 0.90}
 ATTEMPTS = 3
 REPORT: list[dict] = []
 
@@ -334,7 +371,8 @@ def reusable_pages(story: dict, out_dir: Path, voice_tag: str) -> dict[int, dict
 
 def record_story(story: dict, lang: str, voice: str, model: str, out_dir: Path,
                  server_prefix: str, key: str, verify: bool = True,
-                 reuse: dict[int, dict] | None = None) -> dict:
+                 reuse: dict[int, dict] | None = None,
+                 verse_voice: tuple[str, str] | None = None) -> dict:
     out_dir.mkdir(parents=True, exist_ok=True)
     usage: dict = {}
     pages = []
@@ -346,12 +384,25 @@ def record_story(story: dict, lang: str, voice: str, model: str, out_dir: Path,
             pages.append(reuse[n - 1])
             print(f"  {story['id']} p{n}: unchanged, kept")
             continue
+        split = verse_voice is not None and lang != "ar" and VERSE.search(text) is not None
         for attempt in range(1, ATTEMPTS + 1):
             pcm = b""
+            own = b""  # the page without its verses: what the page-language check hears
+            verses: list[tuple[str, bytes]] = []
             spans = []
             gap = b"\0\0" * int(RATE * GAP_S)
+            vgap = b"\0\0" * int(RATE * VERSE_GAP_S)
             for a, b in sentences(text):
-                clip = trim_silence(synth(text[a:b], lang, voice, model, key, usage))
+                clip = b""
+                for is_verse, bit in (parts(text[a:b]) if split else [(False, text[a:b])]):
+                    if is_verse:
+                        piece = trim_silence(synth(bit, "ar", verse_voice[1], verse_voice[0],
+                                                   key, usage))
+                        verses.append((bit, piece))
+                    else:
+                        piece = trim_silence(synth(spoken(bit, lang), lang, voice, model, key, usage))
+                        own += (vgap if own else b"") + piece
+                    clip += (vgap if clip else b"") + piece
                 if pcm:
                     pcm += gap
                 start = len(pcm) / 2 / RATE
@@ -361,8 +412,20 @@ def record_story(story: dict, lang: str, voice: str, model: str, out_dir: Path,
             encode_m4a(pcm, out_dir / name)
             if not verify:
                 break
-            heard = transcribe(out_dir / name, lang)
-            problems = verify_page(text, heard, lang)
+            if split:
+                with tempfile.TemporaryDirectory() as tmp:
+                    encode_m4a(own, Path(tmp) / name)
+                    heard = transcribe(Path(tmp) / name, lang)
+                    problems = verify_page(spoken(VERSE.sub(" ", text), lang), heard, lang)
+                    for k, (verse, piece) in enumerate(verses, 1):
+                        vfile = Path(tmp) / f"verse{k}.m4a"
+                        encode_m4a(piece, vfile)
+                        vheard = transcribe(vfile, "ar")
+                        problems += [f"verse {k}: {x}" for x in verify_page(verse, vheard, "quran")]
+                        heard += f"\n[verse {k}] {vheard.strip()}"
+            else:
+                heard = transcribe(out_dir / name, lang)
+                problems = verify_page(spoken(text, lang), heard, lang)
             REPORT.append({"story": story["id"], "page": n, "lang": lang, "attempt": attempt,
                            "problems": problems, "heard": heard.strip()})
             if not problems:
@@ -389,6 +452,8 @@ def main() -> None:
                     help="sets the default --model/--voice (default $TTS_ENGINE or gemini)")
     ap.add_argument("--voice", help="default: the engine's (Algieba · George)")
     ap.add_argument("--model", help="default: the engine's; eleven_* models go to ElevenLabs")
+    ap.add_argument("--verse-voice", metavar="MODEL/VOICE",
+                    help="who reads ﴿verses﴾ in a non-Arabic story (default: the engine's; 'none' = the story voice)")
     ap.add_argument("--out", type=Path, help="default docs/stories/narration/<lang>")
     ap.add_argument("--force", action="store_true",
                     help="re-record every chosen page, even ones already up to date")
@@ -397,6 +462,8 @@ def main() -> None:
     args = ap.parse_args()
     args.model = args.model or ENGINES[args.engine][0]
     args.voice = args.voice or ENGINES[args.engine][1]
+    verse_voice = (None if args.verse_voice == "none" else tuple(args.verse_voice.split("/", 1))
+                   if args.verse_voice else VERSE_VOICE[args.engine])
     library = json.loads(STORIES[args.lang].read_text(encoding="utf-8"))
     chosen = library if args.all else [s for s in library if s["id"] in args.ids]
     if not chosen:
@@ -405,13 +472,16 @@ def main() -> None:
     prefix = f"docs/stories/narration/{args.lang}"
     if not args.skip_verify and subprocess.run(["which", "whisper"], capture_output=True).returncode:
         sys.exit("whisper is needed to verify every page (or pass --skip-verify for a draft)")
+    if verse_voice and engine_of(verse_voice[0]) != engine_of(args.model):
+        sys.exit("the verse voice must be on the same engine as the story voice")
     key = api_key(engine_of(args.model))
     sys.exit(run(chosen, args.lang, args.voice, args.model, out, prefix, key,
-                 verify=not args.skip_verify, force=args.force))
+                 verify=not args.skip_verify, force=args.force, verse_voice=verse_voice))
 
 
 def run(chosen: list[dict], lang: str, voice: str, model: str, out: Path, prefix: str,
-        key: str, verify: bool = True, force: bool = False) -> int:
+        key: str, verify: bool = True, force: bool = False,
+        verse_voice: tuple[str, str] | None = None) -> int:
     """Record [chosen]; 0 done · 3 the day's quota ran out (resume tomorrow)."""
     total = {"audio_tokens": 0, "text_tokens": 0, "characters": 0, "credits": 0}
     voice_tag = f"{model}/{voice}"
@@ -425,7 +495,7 @@ def run(chosen: list[dict], lang: str, voice: str, model: str, out: Path, prefix
                 print(f"  {story['id']}: up to date, skipped")
                 continue
             u = record_story(story, lang, voice, model, out, prefix, key,
-                             verify=verify, reuse=reuse)
+                             verify=verify, reuse=reuse, verse_voice=verse_voice)
             done += 1
             for k in total:
                 total[k] += u.get(k, 0)

@@ -278,3 +278,58 @@ class ElevenLabsEngine(unittest.TestCase):
         with mock.patch.object(g.urllib.request, "urlopen", side_effect=missing):
             with self.assertRaises(SystemExit):
                 g.synth("Hi.", "en", "V", "eleven_v3", "k", {})
+
+
+class VersesInAnotherVoice(unittest.TestCase):
+    """A ﴿verse﴾ in an English story goes to the Arabic verse voice and is checked in Arabic."""
+
+    PAGE = "She remembered the words of Allah: ﴿وَبِالْوَالِدَيْنِ إِحْسَانًا﴾. So she helped ﷺ."
+
+    def test_parts_split_out_the_verse_and_drop_bare_punctuation(self):
+        self.assertEqual(g.parts("She remembered: ﴿صُنْعَ اللَّهِ﴾."),
+                         [(False, "She remembered:"), (True, "صُنْعَ اللَّهِ")])
+        self.assertEqual(g.parts("No verse here."), [(False, "No verse here.")])
+
+    def test_the_symbol_is_said_not_spelled(self):
+        self.assertEqual(g.spoken("His Messenger ﷺ.", "en"), "His Messenger sallallahu alayhi wa sallam.")
+        self.assertEqual(g.spoken("رسول الله ﷺ.", "ar"), "رسول الله ﷺ.")
+
+    def test_a_verse_page_is_recorded_in_two_voices_and_checked_in_two_languages(self):
+        tmp = Path(_tempfile.mkdtemp())
+        calls, heard_by = [], {}
+
+        def fake_synth(text, lang, voice, model, key, usage):
+            calls.append((text, lang, voice))
+            return b"\x10\x00" * 2400
+
+        def fake_encode(pcm, out):
+            Path(out).write_bytes(b"m4a")
+
+        def fake_transcribe(path, lang):
+            heard_by.setdefault(lang, 0)
+            heard_by[lang] += 1
+            if lang == "ar":
+                return "وبالوالدين إحسانا"
+            return "She remembered the words of Allah. So she helped sallallahu alayhi wa sallam."
+
+        g.REPORT.clear()
+        with mock.patch.object(g, "synth", side_effect=fake_synth), \
+                mock.patch.object(g, "encode_m4a", side_effect=fake_encode), \
+                mock.patch.object(g, "transcribe", side_effect=fake_transcribe):
+            code = g.run([_story([self.PAGE])], "en", "GEORGE", "eleven_v3", tmp, "docs/x", "k",
+                         verse_voice=("eleven_multilingual_v2", "HAKIM"))
+        self.assertEqual(code, 0)
+        self.assertIn(("وَبِالْوَالِدَيْنِ إِحْسَانًا", "ar", "HAKIM"), calls)
+        self.assertIn(("She remembered the words of Allah:", "en", "GEORGE"), calls)
+        self.assertIn(("So she helped sallallahu alayhi wa sallam.", "en", "GEORGE"), calls)
+        self.assertFalse(any("﴿" in t or "ﷺ" in t for t, _, _ in calls))
+        self.assertEqual(heard_by, {"en": 1, "ar": 1})
+        self.assertEqual(g.REPORT[-1]["problems"], [])
+        manifest = _json.loads((tmp / "s1.json").read_text(encoding="utf-8"))
+        self.assertEqual(manifest["pages"][0]["text"], self.PAGE)  # the page keeps its symbols
+
+    def test_a_mangled_verse_fails_the_page(self):
+        # George's real reading of the verse: it passes the loose Arabic bar, not the verse bar
+        self.assertFalse(g.verify_page("وَبِالْوَالِدَيْنِ إِحْسَانًا", "وبيلوال إيذين إحسانة", "ar"))
+        self.assertTrue(g.verify_page("وَبِالْوَالِدَيْنِ إِحْسَانًا", "وبيلوال إيذين إحسانة", "quran"))
+        self.assertFalse(g.verify_page("وَبِالْوَالِدَيْنِ إِحْسَانًا", "وبالوالدين إحسانا", "quran"))
