@@ -15,18 +15,21 @@
 ### لقطات 1.0.73 — ٨ لكل لغة، لقطات CI حقيقية في إطارات «ورق مقصوص»
 
 مولّدة بـ`docs/brand/tools/store_listing.py build` من `manifest.json` (رقم التشغيل والملف وبصمته لكل لقطة).
-التعديل الوحيد على أي لقطة قصّ لوحة المفاتيح من لقطة المساعد العربية.
+كلها من الوظيفة `store_capture` (يدويّة فقط: `gh workflow run mobile-e2e.yml --ref <فرع> -f store_capture=true`):
+أسرة طبيعية («سارة» و«يوسف» / «Sara» و«Yusuf») على خادم الـPR داخل الـrunner — **لا إنتاج أبدًا**، لأن
+الأسماء الطبيعية ليست علامة اختبار في `backend/app/core/real_traffic.py`، فلو كُتبت في الإنتاج لعُدّت أسرة حقيقية.
+لا تعديل على أي لقطة. شاشة المساعد خرجت من المجموعة: إجابته تحتاج نموذجًا، والـCI بلا أسرار عن قصد.
 
 | # | الشاشة | العنوان (ar) | Headline (en) | الإطار |
 |---|---|---|---|---|
 | 1 | `today` | خطوة صغيرة كل يوم — مجاني 100% — بلا إعلانات ولا اشتراكات | One small step a day — 100% free — no ads, no subscriptions | `frame_1_rising` |
 | 2 | `family_road` | درب أسرتكم — أين أنتم الآن، وما ينتظركم على الأفق | Your family road — Where you are, and what's on the horizon | `frame_2_ivory` |
-| 3 | `child_corner` | ركن الطفل — حكاية أو لعبة، ثم مهمة بعيدًا عن الشاشة | A child's corner — A story or game, then a task off-screen | `frame_3_bubble` |
+| 3 | `child_corner` | ركن الطفل — حكاية قصيرة، ثم مهمة بعيدًا عن الشاشة | A child's corner — A short story, then a task away from the screen | `frame_3_bubble` |
 | 4 | `week_lanterns` | كل خطوة تضيء قنديلًا — قناديل الأسبوع — بلا مقارنة ولا لوم | Every step lights a lantern — The week's lanterns — no streaks, no comparisons | `frame_2_ivory` |
 | 5 | `story_reader` | حكايات يرويها نور — وفيها وقفة حوار مع طفلكم | Stories narrated by Noor — With a pause to talk together | `frame_1_rising` |
 | 6 | `noor_follow_up` | نور يتذكّر معكم — اختاروا موعد التجربة، ثم يسألكم كيف جرت | Noor remembers with you — Pick when to try it; Noor asks how it went | `frame_2_ivory` |
 | 7 | `ramadan_street` | شارع القناديل في رمضان — يضيء بما تفعلونه معًا يومًا بعد يوم | A Ramadan lantern street — Lit by what you do together, day by day | `frame_1_rising` |
-| 8 | `assistant` | اسألوا عن تربية طفلكم — إجابة عملية وخطوة تجرّبونها | Ask about raising your child — A practical answer, in your language | `frame_3_bubble` |
+| 8 | `family_programs` | برامج قصيرة لأسرتكم — رمضان والصلاة، خطوة بخطوة | Short family programs — Ramadan and prayer, step by step | `frame_3_bubble` |
 
 > **أول سطر في أي نسخة:** «مجاني 100% — بلا إعلانات ولا اشتراكات، مدى الحياة.»
 > هذه الجملة هي أقوى ميزة تنافسية (كل المنافسين المدفوعين) وكلمة «مجاني» كلمة بحث عالية الحجم.
@@ -67,7 +70,7 @@
 • «درب الأسرة»: أين أنتم الآن، وما ينتظركم «على الأفق» — رمضان، ومحطات العمر، والمسار التالي.
 • قناديل الأسبوع: كل خطوة تربوية تتمّونها تضيء قنديلًا، بلا عدّاد يلومكم ولا مقارنة بأحد.
 • شارع القناديل في رمضان: يضيء بما تفعلونه معًا يومًا بعد يوم.
-• «ركن الطفل»: حكاية قصيرة أو لعبة، ثم مهمة بعيدًا عن الشاشة. الوقت شمعة ورقية تقصر، ولا يعود الجهاز إلا برمز الأهل.
+• «ركن الطفل»: حكاية قصيرة، ثم مهمة بعيدًا عن الشاشة. الوقت شمعة ورقية تقصر، ولا يعود الجهاز إلا برمز الأهل.
 • حكايات قبل النوم يرويها نور، وفيها وقفة حوار مع الطفل.
 • نور يتذكّر ما قررتم تجربته، ثم يسألكم كيف جرى.
 
@@ -426,7 +429,7 @@ Scroll سريع عبر: مسارات تربوية → بودكاست → اخت�
 والصور تُورَث من القائمة العربية إذ لا صور إنجليزية بعد.
 
 **من 1.0.73:** للقائمة الإنجليزية صورها — أيقونة وصورة مميزة إنجليزية و٨ لقطات من رحلات CI الإنجليزية
-(`docs/brand/store/listing_1.0.73/en/`). لقطة المساعد الإنجليزية داكنة: لا توجد لقطة فاتحة له في الـCI.
+(`docs/brand/store/listing_1.0.73/en/`).
 
 **لم تُنشر قبل اليوم عن قصد:** المساعد كان يجيب بالعربية على السؤال الإنجليزي
 حتى `0f709b09`. الإعلان بالإنجليزية قبل ذلك كان وعدًا لا يفي به التطبيق.
@@ -455,7 +458,7 @@ Al-Morabbi is an Islamic parenting companion that walks with your family from pr
 • Your family road: where you are now, and what's on the horizon — Ramadan, age milestones, the next path.
 • The week's lanterns: each parenting step you complete lights a lantern. No streak to break, no comparison with anyone.
 • A Ramadan lantern street for your family, lit by what you do together, day by day.
-• A child's corner: a short story or game, then a task away from the screen. Time is a paper candle that burns down, and only your PIN unlocks the device again.
+• A child's corner: a short story, then a task away from the screen. Time is a paper candle that burns down, and only your PIN unlocks the device again.
 • Bedtime stories narrated by Noor, with a pause to talk together.
 • Noor remembers what you planned to try, and later asks how it went.
 
@@ -493,7 +496,7 @@ Note on language: the app, the curriculum, the stories and the assistant are in 
 | الفلاش كاردز والاختبارات | ✅ موجودة في أصول الدرس الإنجليزية | `GET /api/program/lesson-assets/{id}?lang=en` |
 | الأذكار والإشعار اليومي | ❌ **عربي فقط** — `family_adhkar.ar.json` وحده | ملفات الحزمة |
 | الألعاب | ❌ **عربي فقط** — وRTL فيها صحيح لا عيب | `mobile/assets/content/games/*.ar.json` وحدها |
-| القصص و«ركن الطفل» وشارع رمضان | ✅ إنجليزي (1.0.73) | لقطات CI الإنجليزية في `listing_1.0.73/manifest.json` |
+| القصص و«ركن الطفل» وشارع رمضان | ✅ إنجليزي (1.0.73) | لقطات `store_capture` الإنجليزية في `listing_1.0.73/manifest.json` |
 
 الصفّان الأخيران مذكوران صراحةً في آخر الوصف. **من يترجم محتوى جديدًا يحدّث هذا
 الجدول والوصف معًا** — وإلا صار الوصف يعِد بما لا يوجد، أو يعتذر عمّا صار موجودًا.
