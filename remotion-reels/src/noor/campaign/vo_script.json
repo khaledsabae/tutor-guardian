@@ -1,12 +1,9 @@
 {
 	"_about": "Voice-over lines: reel -> lines. `at` = the frame the line is cued at (source frames, 30 fps); it starts there, or a breath after the previous line. `until` = the frame its scene must not end before the line does; if it would, the window [from, until] is played slower (scripts/gen_vo.py). Spoken in simple neutral Arabic.",
+	"_voice": "ElevenLabs Hakim (wisdom, fun & confidence), eleven_multilingual_v2 — Khaled's pick from the 2026-10-17 samples; one voice for every reel and the teaser, replacing Gemini Achird. `name` is the ElevenLabs voice ID; the engine follows the model (eleven_* = ElevenLabs, scripts/gen_vo.py).",
 	"voice": {
-		"model": "gemini-2.5-pro-preview-tts",
-		"name": "Achird"
-	},
-	"_model_by_reel": "v4 was re-voiced on the flash model of the same voice when the pro model hit its 50-a-day quota, so that one reel never mixes two models.",
-	"model_by_reel": {
-		"v4": "gemini-2.5-flash-preview-tts"
+		"model": "eleven_multilingual_v2",
+		"name": "EzoxNTKsg4JNN7wxAgut"
 	},
 	"reels": {
 		"v1": [

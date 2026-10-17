@@ -8,125 +8,130 @@ export const VO: Record<string, VoPlan> = {
 			{
 				"a": 0,
 				"b": 88,
-				"add": 20
+				"add": 8
 			},
 			{
 				"a": 88,
 				"b": 212,
-				"add": 82
+				"add": 64
 			},
 			{
 				"a": 256,
 				"b": 346,
-				"add": 14
-			},
-			{
-				"a": 340,
-				"b": 420,
-				"add": 4
+				"add": 3
 			},
 			{
 				"a": 420,
 				"b": 560,
-				"add": 9
+				"add": 49
 			}
 		],
 		"lines": [
 			{
 				"file": "noor/vo/v1_1.mp3",
-				"at": 5,
-				"frames": 98
+				"at": 4,
+				"frames": 86
 			},
 			{
 				"file": "noor/vo/v1_2.mp3",
-				"at": 112,
-				"frames": 77
+				"at": 100,
+				"frames": 79
 			},
 			{
 				"file": "noor/vo/v1_3.mp3",
-				"at": 211,
-				"frames": 98
+				"at": 190,
+				"frames": 89
 			},
 			{
 				"file": "noor/vo/v1_4.mp3",
-				"at": 318,
-				"frames": 39
+				"at": 288,
+				"frames": 40
 			},
 			{
 				"file": "noor/vo/v1_5.mp3",
-				"at": 379,
-				"frames": 78
+				"at": 347,
+				"frames": 69
 			},
 			{
 				"file": "noor/vo/v1_6.mp3",
-				"at": 469,
-				"frames": 66
+				"at": 427,
+				"frames": 50
 			},
 			{
 				"file": "noor/vo/v1_7.mp3",
-				"at": 553,
-				"frames": 131
+				"at": 511,
+				"frames": 167
 			}
 		]
 	},
 	"v2": {
 		"stretch": [
 			{
-				"a": 40,
-				"b": 126,
-				"add": 27
-			},
-			{
-				"a": 296,
-				"b": 382,
-				"add": 32
-			},
-			{
-				"a": 350,
-				"b": 450,
+				"a": 66,
+				"b": 150,
 				"add": 11
+			},
+			{
+				"a": 92,
+				"b": 196,
+				"add": 55
+			},
+			{
+				"a": 148,
+				"b": 200,
+				"add": 64
+			},
+			{
+				"a": 196,
+				"b": 290,
+				"add": 3
+			},
+			{
+				"a": 290,
+				"b": 446,
+				"add": 30
 			},
 			{
 				"a": 450,
 				"b": 590,
-				"add": 14
+				"add": 31
 			}
 		],
 		"lines": [
 			{
 				"file": "noor/vo/v2_1.mp3",
 				"at": 4,
-				"frames": 50
+				"frames": 40
 			},
 			{
 				"file": "noor/vo/v2_2.mp3",
-				"at": 64,
-				"frames": 84
+				"at": 73,
+				"frames": 83
 			},
 			{
 				"file": "noor/vo/v2_3.mp3",
-				"at": 154,
-				"frames": 72
+				"at": 162,
+				"frames": 95
 			},
 			{
 				"file": "noor/vo/v2_4.mp3",
-				"at": 247,
-				"frames": 85
+				"at": 263,
+				"frames": 62
 			},
 			{
 				"file": "noor/vo/v2_5.mp3",
-				"at": 350,
-				"frames": 85
+				"at": 336,
+				"frames": 81
 			},
 			{
 				"file": "noor/vo/v2_6.mp3",
-				"at": 441,
-				"frames": 73
+				"at": 430,
+				"frames": 173
 			},
 			{
 				"file": "noor/vo/v2_7.mp3",
-				"at": 533,
-				"frames": 135
+				"at": 628,
+				"frames": 151
 			}
 		]
 	},
@@ -135,39 +140,39 @@ export const VO: Record<string, VoPlan> = {
 			{
 				"a": 122,
 				"b": 300,
-				"add": 92
+				"add": 95
 			},
 			{
 				"a": 420,
 				"b": 560,
-				"add": 32
+				"add": 21
 			}
 		],
 		"lines": [
 			{
 				"file": "noor/vo/v3_1.mp3",
 				"at": 6,
-				"frames": 87
+				"frames": 100
 			},
 			{
 				"file": "noor/vo/v3_2.mp3",
 				"at": 126,
-				"frames": 129
+				"frames": 104
 			},
 			{
 				"file": "noor/vo/v3_3.mp3",
-				"at": 261,
-				"frames": 126
+				"at": 254,
+				"frames": 136
 			},
 			{
 				"file": "noor/vo/v3_4.mp3",
-				"at": 396,
-				"frames": 58
+				"at": 399,
+				"frames": 57
 			},
 			{
 				"file": "noor/vo/v3_5.mp3",
-				"at": 527,
-				"frames": 152
+				"at": 529,
+				"frames": 142
 			}
 		]
 	},
@@ -176,69 +181,69 @@ export const VO: Record<string, VoPlan> = {
 			{
 				"a": 0,
 				"b": 64,
-				"add": 28
+				"add": 10
 			},
 			{
 				"a": 40,
 				"b": 130,
-				"add": 28
+				"add": 41
 			},
 			{
-				"a": 104,
-				"b": 196,
+				"a": 190,
+				"b": 266,
+				"add": 60
+			},
+			{
+				"a": 266,
+				"b": 352,
+				"add": 25
+			},
+			{
+				"a": 352,
+				"b": 436,
 				"add": 13
 			},
 			{
-				"a": 292,
-				"b": 370,
-				"add": 30
-			},
-			{
-				"a": 292,
-				"b": 450,
-				"add": 21
-			},
-			{
-				"a": 450,
-				"b": 590,
-				"add": 17
+				"a": 480,
+				"b": 620,
+				"add": 23
 			}
 		],
 		"lines": [
 			{
 				"file": "noor/vo/v4_1.mp3",
-				"at": 9,
-				"frames": 78
+				"at": 7,
+				"frames": 62
 			},
 			{
 				"file": "noor/vo/v4_2.mp3",
-				"at": 99,
-				"frames": 81
+				"at": 85,
+				"frames": 91
 			},
 			{
 				"file": "noor/vo/v4_3.mp3",
-				"at": 190,
-				"frames": 70
+				"at": 183,
+				"frames": 57
 			},
 			{
 				"file": "noor/vo/v4_4.mp3",
-				"at": 266,
-				"frames": 83
+				"at": 270,
+				"frames": 102
 			},
 			{
 				"file": "noor/vo/v4_5.mp3",
-				"at": 367,
-				"frames": 97
+				"at": 382,
+				"frames": 100
 			},
 			{
 				"file": "noor/vo/v4_6.mp3",
-				"at": 470,
-				"frames": 95
+				"at": 493,
+				"frames": 87
 			},
 			{
 				"file": "noor/vo/v4_7.mp3",
-				"at": 583,
-				"frames": 138
+				"at": 643,
+				"frames": 144
 			}
 		]
 	},
@@ -247,7 +252,7 @@ export const VO: Record<string, VoPlan> = {
 			{
 				"a": 88,
 				"b": 212,
-				"add": 46
+				"add": 19
 			},
 			{
 				"a": 396,
@@ -257,80 +262,166 @@ export const VO: Record<string, VoPlan> = {
 			{
 				"a": 465,
 				"b": 605,
-				"add": 14
+				"add": 20
 			}
 		],
 		"lines": [
 			{
 				"file": "noor/vo/v5_1.mp3",
 				"at": 6,
-				"frames": 77
+				"frames": 71
 			},
 			{
 				"file": "noor/vo/v5_2.mp3",
 				"at": 94,
-				"frames": 65
+				"frames": 50
 			},
 			{
 				"file": "noor/vo/v5_3.mp3",
-				"at": 176,
-				"frames": 77
+				"at": 162,
+				"frames": 64
 			},
 			{
 				"file": "noor/vo/v5_4.mp3",
-				"at": 259,
-				"frames": 77
+				"at": 232,
+				"frames": 67
 			},
 			{
 				"file": "noor/vo/v5_5.mp3",
-				"at": 380,
-				"frames": 46
+				"at": 353,
+				"frames": 41
 			},
 			{
 				"file": "noor/vo/v5_6.mp3",
-				"at": 451,
+				"at": 424,
 				"frames": 87
 			},
 			{
 				"file": "noor/vo/v5_7.mp3",
-				"at": 555,
-				"frames": 136
+				"at": 529,
+				"frames": 142
 			}
 		]
 	},
 	"teaser": {
 		"stretch": [
 			{
-				"a": 490,
-				"b": 690,
-				"add": 27
+				"a": 488,
+				"b": 593,
+				"add": 48
+			},
+			{
+				"a": 593,
+				"b": 681,
+				"add": 80
+			},
+			{
+				"a": 683,
+				"b": 883,
+				"add": 69
 			}
 		],
 		"lines": [
 			{
 				"file": "noor/vo/teaser_1.mp3",
 				"at": 40,
-				"frames": 41
+				"frames": 37
 			},
 			{
 				"file": "noor/vo/teaser_2.mp3",
 				"at": 100,
-				"frames": 103
+				"frames": 94
 			},
 			{
 				"file": "noor/vo/teaser_3.mp3",
 				"at": 222,
-				"frames": 130
+				"frames": 101
 			},
 			{
 				"file": "noor/vo/teaser_4.mp3",
 				"at": 380,
-				"frames": 95
+				"frames": 93
 			},
 			{
 				"file": "noor/vo/teaser_5.mp3",
-				"at": 529,
-				"frames": 183
+				"at": 500,
+				"frames": 136
+			},
+			{
+				"file": "noor/vo/teaser_6.mp3",
+				"at": 654,
+				"frames": 149
+			},
+			{
+				"file": "noor/vo/teaser_7.mp3",
+				"at": 857,
+				"frames": 218
+			}
+		]
+	},
+	"v6": {
+		"stretch": [
+			{
+				"a": 0,
+				"b": 84,
+				"add": 16
+			},
+			{
+				"a": 126,
+				"b": 256,
+				"add": 48
+			},
+			{
+				"a": 276,
+				"b": 336,
+				"add": 117
+			},
+			{
+				"a": 324,
+				"b": 404,
+				"add": 28
+			},
+			{
+				"a": 470,
+				"b": 540,
+				"add": 49
+			},
+			{
+				"a": 540,
+				"b": 690,
+				"add": 35
+			}
+		],
+		"lines": [
+			{
+				"file": "noor/vo/v6_1.mp3",
+				"at": 7,
+				"frames": 87
+			},
+			{
+				"file": "noor/vo/v6_2.mp3",
+				"at": 161,
+				"frames": 153
+			},
+			{
+				"file": "noor/vo/v6_3.mp3",
+				"at": 411,
+				"frames": 101
+			},
+			{
+				"file": "noor/vo/v6_4.mp3",
+				"at": 524,
+				"frames": 84
+			},
+			{
+				"file": "noor/vo/v6_5.mp3",
+				"at": 696,
+				"frames": 97
+			},
+			{
+				"file": "noor/vo/v6_6.mp3",
+				"at": 813,
+				"frames": 165
 			}
 		]
 	}
