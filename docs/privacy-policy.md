@@ -1,6 +1,6 @@
 # سياسة الخصوصية — المربّي
 
-**آخر تحديث:** 2026-10-04
+**آخر تحديث:** 2026-10-17
 
 ## عربي
 
@@ -112,7 +112,11 @@
 - **Cloudflare** — شبكة تنقل الاتصال بين التطبيق وخادمنا وتحميه.
 - **Hostinger** — شركة الاستضافة التي يعمل عليها خادمنا. ويحتفظ الخادم **بنسخ احتياطية
   من قاعدة البيانات لمدة 14 يومًا**، فما تحذفه يختفي من النسخ الاحتياطية خلال 14 يومًا.
-- صفحات الويب التي نعرضها (صفحة الدعوة ونحوها) تحمّل الخطوط من **Google Fonts**.
+- صفحة التطبيق على الويب (صفحة الدعوة) تستعمل **Cloudflare Web Analytics** لعدّ الزيارات،
+  دون ملفات تعريف الارتباط (cookies) ودون تتبّع الأفراد عبر المواقع، ولا نرى منها إلا أرقامًا
+  إجمالية. وخطوطها محفوظة على خادمنا.
+- صفحة «منهجيتنا ومصادرنا» وصفحات النصائح التربوية وصفحة وضع الطفل على الويب تحمّل
+  الخطوط من **Google Fonts**.
 
 لا نستعمل أسئلتك لتدريب نماذج ذكاء اصطناعي. وقد نختبر جودة الإجابات أحيانًا على عيّنة
 من الأسئلة بعد حذف الأسماء ووسائل التواصل منها.
@@ -183,7 +187,7 @@
 
 # Privacy Policy — Almorabbi (المربّي)
 
-**Last updated:** 2026-10-04
+**Last updated:** 2026-10-17
 
 ## English
 
@@ -328,7 +332,11 @@ non-personal answers, with the question they answer, reused for repeated questio
 - **Hostinger** — the hosting company our server runs on. The server keeps
   **backups of the database for 14 days**, so data you delete is gone from the
   backups within 14 days.
-- Web pages we serve (the invite page and similar) load fonts from **Google Fonts**.
+- The app's web page (the invite page) uses **Cloudflare Web Analytics** to count
+  visits, without cookies and without tracking individuals across sites; we see
+  aggregate numbers only. Its fonts are served from our own server.
+- The "Our methodology and sources" page, the parenting-tips pages and the web
+  child-mode page load fonts from **Google Fonts**.
 
 We do not use your questions to train AI models. We may occasionally test answer
 quality on a sample of questions with names and contact details removed.
