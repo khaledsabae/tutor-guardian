@@ -4,7 +4,8 @@ The landing page in the «نور والقناديل» identity (Oct 2026 launch)
 Attribution — every Play link carrying ref/utm_* — is tests/test_landing_attribution.py;
 this file holds the page to what the launch plan asked of it: Noor and the paper
 hills, the approved headline, «مجاني بالكامل» before any feature, one call to
-action, the new share image and icons, and nothing loaded from a third party.
+action, the new share image and icons, and nothing loaded from a third party
+but the Cloudflare Web Analytics beacon.
 """
 import json
 import re
@@ -21,6 +22,8 @@ _HEADLINE = "مربٍّ يعرف طفلك، خطوة بخطوة"
 _FREE = "مجاني بالكامل"
 _CTA = "حمّله من Google Play"
 _OG_PATH = "/ui/assets/og_noor.png"
+_CF_BEACON = (r'<script defer src="https://static\.cloudflareinsights\.com/beacon\.min\.js/[^"]+"'
+              r'[^>]*data-cf-beacon=\'\{[^\']*"token":"7a8db528beef4fe1be0eadf9d6490d25"[^>]*></script>')
 
 
 @pytest.fixture
@@ -103,6 +106,11 @@ def test_nothing_loads_from_a_third_party(client):
         html = client.get(path).text
         # The canonical names this page; it loads nothing.
         loads = re.sub(r'<link rel="canonical"[^>]*>', "", html)
+        # The one exception Khaled approved (2026-10-17): the Cloudflare Web
+        # Analytics beacon — cookieless, deferred, on the zone we already run.
+        beacons = re.findall(_CF_BEACON, loads)
+        assert len(beacons) == 1, (path, len(beacons))
+        loads = re.sub(_CF_BEACON, "", loads)
         assert not re.search(
             r'<(?:link|script|img|iframe)[^>]+(?:src|href)="(?:https?:)?//', loads), path
         for host in ("fonts.googleapis", "cdn.tailwindcss", "cdnjs", "jsdelivr"):
