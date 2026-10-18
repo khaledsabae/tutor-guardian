@@ -187,6 +187,7 @@ HOST_DISCLOSURE = {
     "fonts.googleapis.com": "Google Fonts",
     "play.google.com": "Google Play",
     "www.cloudflare.com": "Cloudflare",
+    "static.cloudflareinsights.com": "Cloudflare Web Analytics",  # beacon on /ui/cinematic.html
     # Support purchases (#21): the Play Developer API verifies a purchase, and
     # www.googleapis.com is that API's OAuth scope — both Google Play Billing.
     "androidpublisher.googleapis.com": "Google Play Billing",
@@ -197,9 +198,25 @@ _OWN_OR_INERT = {"tg-api.alsaba.cloud", "schema.org", "www.w3.org", "json-schema
                  "support.google.com"}  # Play help-centre links in comments (#21)
 
 
+# What the backend serves besides its Python: /ui/ (frontend/) and the teen
+# QR page /child-mode/web/ (backend/static/). A script or stylesheet there is
+# fetched by every visitor's browser — the Tailwind CDN on the child-mode page
+# was, unnamed, because this scan once stopped at *.py.
+_SERVED_WEB_DIRS = (ROOT / "frontend", ROOT / "backend" / "static")
+_SERVED_WEB_SUFFIXES = {".html", ".js", ".mjs", ".css"}
+
+
+def _served_web_files() -> list[Path]:
+    return [f for d in _SERVED_WEB_DIRS for f in d.rglob("*")
+            if f.suffix in _SERVED_WEB_SUFFIXES and "node_modules" not in f.parts]
+
+
 def test_every_external_host_in_the_backend_is_disclosed():
+    files = list((ROOT / "backend" / "app").rglob("*.py")) + _served_web_files()
+    served = {f.relative_to(ROOT).as_posix() for f in files}
+    assert {"backend/static/child_mode/index.html", "frontend/cinematic.html"} <= served
     hosts: set[str] = set()
-    for f in (ROOT / "backend" / "app").rglob("*.py"):
+    for f in files:
         for m in re.finditer(r"https?://([a-zA-Z0-9.-]+\.[a-z]{2,})", f.read_text(encoding="utf-8")):
             hosts.add(m.group(1).lower())
     hosts = {h for h in hosts if h not in _OWN_OR_INERT and not h.endswith(".local")
