@@ -212,7 +212,10 @@
 
     async function init() {
       const hasToken = localStorage.getItem(TOKEN_KEY);
-      if (location.pathname.includes('/claim-session/')) {
+      // The QR the parent's app shows is {base}/child-mode/web/?claim={code}
+      // (routers/child_mode.py). A fresh code wins over any stored token: the
+      // teen just scanned, so loading the old session would ignore the scan.
+      if (new URLSearchParams(location.search).get('claim')) {
         await claimFromUrl();
       } else if (hasToken) {
         await loadHabits();
