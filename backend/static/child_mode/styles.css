@@ -1,0 +1,69 @@
+/* Self-hosted replacement for the Tailwind CDN script on this page: a
+   third party the privacy policy never named, fetched on every load of a
+   page that a child opens. These are the Tailwind v3 preflight rules and
+   utility values for exactly the classes index.html uses (including the
+   ones its script adds: tg-card's rounded-2xl/shadow-lg, opacity-50).
+   Adding a class to index.html? Add its rule here, or it renders unstyled. */
+
+/* ── Preflight (the subset that touches this page's elements) ── */
+*, ::before, ::after { box-sizing: border-box; border-width: 0; border-style: solid; border-color: #e5e7eb; }
+html {
+  line-height: 1.5; -webkit-text-size-adjust: 100%; tab-size: 4;
+  font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  -webkit-tap-highlight-color: transparent;
+}
+body { margin: 0; line-height: inherit; }
+h1, h2, h3, p { margin: 0; font-size: inherit; font-weight: inherit; }
+button {
+  font-family: inherit; font-size: 100%; font-weight: inherit; line-height: inherit;
+  letter-spacing: inherit; color: inherit; margin: 0; padding: 0; text-transform: none;
+  -webkit-appearance: button; background-color: transparent; background-image: none; cursor: pointer;
+}
+:disabled { cursor: default; }
+svg { display: block; vertical-align: middle; }
+
+/* ── Utilities (Tailwind v3 values, in Tailwind's order) ── */
+.mx-auto { margin-left: auto; margin-right: auto; }
+.mb-3 { margin-bottom: .75rem; }
+.mb-6 { margin-bottom: 1.5rem; }
+.flex { display: flex; }
+.grid { display: grid; }
+.hidden { display: none; }            /* after .flex/.grid: "hidden flex" is hidden */
+.h-10 { height: 2.5rem; }
+.h-20 { height: 5rem; }
+.min-h-screen { min-height: 100vh; }
+.w-10 { width: 2.5rem; }
+.w-20 { width: 5rem; }
+.max-w-md { max-width: 28rem; }
+.flex-1 { flex: 1 1 0%; }
+.grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.flex-col { flex-direction: column; }
+.items-center { align-items: center; }
+.justify-center { justify-content: center; }
+.justify-between { justify-content: space-between; }
+.gap-2 { gap: .5rem; }
+.gap-3 { gap: .75rem; }
+.space-y-3 > :not([hidden]) ~ :not([hidden]) { margin-top: .75rem; margin-bottom: 0; }
+.space-y-4 > :not([hidden]) ~ :not([hidden]) { margin-top: 1rem; margin-bottom: 0; }
+.rounded-2xl { border-radius: 1rem; }
+.rounded-full { border-radius: 9999px; }
+.rounded-lg { border-radius: .5rem; }
+.p-4 { padding: 1rem; }
+.px-5 { padding-left: 1.25rem; padding-right: 1.25rem; }
+.py-3 { padding-top: .75rem; padding-bottom: .75rem; }
+.py-4 { padding-top: 1rem; padding-bottom: 1rem; }
+.pt-2 { padding-top: .5rem; }
+.text-center { text-align: center; }
+.text-2xl { font-size: 1.5rem; line-height: 2rem; }
+.text-5xl { font-size: 3rem; line-height: 1; }
+.text-lg { font-size: 1.125rem; line-height: 1.75rem; }
+.text-sm { font-size: .875rem; line-height: 1.25rem; }
+.text-xs { font-size: .75rem; line-height: 1rem; }
+.font-bold { font-weight: 700; }
+.font-medium { font-weight: 500; }
+.opacity-50 { opacity: .5; }
+.shadow-lg { box-shadow: 0 10px 15px -3px rgb(0 0 0 / .1), 0 4px 6px -4px rgb(0 0 0 / .1); }
+.transition {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+  transition-timing-function: cubic-bezier(.4, 0, .2, 1); transition-duration: 150ms;
+}
