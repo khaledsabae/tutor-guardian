@@ -43,3 +43,33 @@ def test_missed_is_neutral_and_the_palette_is_the_apps():
     assert "rose" not in missed and "red" not in missed
     assert "--tg-primary: #10B981" in PAGE  # AppPalette.dark.primary
     assert "family=Cairo" in PAGE
+
+
+def test_the_page_redeems_the_qr_url_the_backend_builds():
+    # The QR is {base}/child-mode/web/?claim={code}, but init() used to redeem
+    # only when the *path* contained /claim-session/ — so every fresh scan
+    # landed on "امسح رمز QR" and the code was never spent.
+    router = (Path(__file__).resolve().parents[1] / "app" / "routers" / "child_mode.py").read_text(
+        encoding="utf-8"
+    )
+    built = re.search(r'claim_url = f"\{base\}(/[^"?]*)\?(\w+)=\{code\}"', router)
+    assert built, "child_mode.py no longer builds the claim URL as expected"
+    path, param = built.groups()
+    assert path == "/child-mode/web/"
+
+    init = PAGE.split("async function init()", 1)[1].split("\n    }\n", 1)[0]
+    trigger = init.split("await claimFromUrl()", 1)[0]
+    assert f"URLSearchParams(location.search).get('{param}')" in trigger
+    assert "if (hasToken)" not in trigger  # a fresh scan beats a stored token
+    assert "pathname" not in trigger
+
+    claim_fn = PAGE.split("async function claimFromUrl()", 1)[1].split("\n    }\n", 1)[0]
+    assert f"params.get('{param}')" in claim_fn
+    assert f"/api/child-web/claim-session?{param}=" in claim_fn
+    assert f"history.replaceState({{}}, '', '{path}')" in claim_fn
+
+    # ...and the endpoint reads the code from that same query parameter.
+    web = (Path(__file__).resolve().parents[1] / "app" / "routers" / "child_mode_web.py").read_text(
+        encoding="utf-8"
+    )
+    assert re.search(rf"def claim_session\([^)]*\b{param}: str \| None = Query\(", web)
