@@ -287,6 +287,15 @@ def scan_text(text: str) -> list[Finding]:
         return []
     out: list[Finding] = []
     quotes = list(QUOTE.finditer(text))
+    # A ﴿verse﴾ inside another quotation («…﴿…﴾…», "…﴿…﴾…", or after an apostrophe
+    # such as "Qur'an" that opens a '…' match) was swallowed by the outer match and
+    # never checked (yaseen_creation and hamza_truth in stories_en.json, 2026-10-18).
+    # Every ﴿ is matched on its own as well.
+    seen = {m.start() for m in quotes}
+    for b in re.finditer("﴿", text):
+        if b.start() not in seen and (inner := QUOTE.match(text, b.start())) and inner.group(5) is not None:
+            quotes.append(inner)
+    quotes.sort(key=lambda m: m.start())
     for i, m in enumerate(quotes):
         q = next(g for g in m.groups() if g is not None)
         is_ayah_brackets = m.group(5) is not None
@@ -403,6 +412,10 @@ def ar_citations(text: str) -> set[tuple[str, int]]:
 
 # ── self-tests: what shipped must be caught, what is sound must pass ───────
 MUST_FLAG = [
+    # a verse that is not the mushaf's, nested in an English quotation (the outer "…" match swallowed it)
+    'He said, "Remember the words of Allah: ﴿صُنْعَ اللَّهِ الَّذِي أَحْسَنَ كُلَّ شَيْءٍ﴾ — the work of Allah."',
+    # …and after an apostrophe that opens a \'…\' match ("Qur'an")
+    "In his Qur'an circle: ﴿يَا أَيُّهَا الَّذِينَ آمَنُوا لَا يَضْحَكْ قَوْمٌ مِّن قَوْمٍ﴾. Meaning: 'O believers…'",
     # lesson_7-9_islamic_parenting_akhlaq_02 summary, as shipped (Abu Dawud / al-Tirmidhi)
     "«الراحمون يرحمهم الرحمن». علّم طفلك الرفق بإخوته والحيوان والخادم.",
     # lesson_4-6_islamic_parenting_bond_03 summary (al-Tirmidhi), single quotes
