@@ -1,6 +1,6 @@
 # سياسة الخصوصية — المربّي
 
-**آخر تحديث:** 2026-10-17
+**آخر تحديث:** 2026-10-18
 
 ## عربي
 
@@ -97,6 +97,11 @@
   إلى محرّك البحث القرآني لديهم لمعرفة ما إذا كان السؤال يقتبس آية، ثم نجلب تفسيرها
   الموثّق. وحين تفتح التحليل اللغوي يُرسَل إلى خدمة «البحوث» لديهم الآية أو الجذر الذي
   تبحث عنه فقط.
+- **EveryAyah.com** — التلاوات التي تستمع إليها في التطبيق، والآيات في القصص المسموعة، هي
+  تلاوة الشيخ محمود خليل الحصري من EveryAyah.com (مع الشكر لـ VerseByVerseQuran.com).
+  يحمّل التطبيق التلاوة من خوادمهم مباشرة، فيرون عنوان IP لجهازك. أما مواضع الكلمات التي
+  تُقطَع عندها الآية في القصص فمن واجهة Quran Foundation (quran.com)، وتُستعمل عند إعداد
+  التسجيلات فقط، ولا يُرسَل إليها شيء منك.
 - **Google Firebase:** **Analytics** (أحداث الاستعمال مثل فتح درس، ومعرّف تثبيت التطبيق،
   وطراز الجهاز ونظامه، والبلد التقريبي) دون أسمائك أو أسئلتك؛ و**Crashlytics** (تقارير
   الأعطال التقنية)؛ و**Cloud Messaging** (توصيل الإشعارات). يمرّ نص الإشعار عبر Google،
@@ -187,7 +192,7 @@
 
 # Privacy Policy — Almorabbi (المربّي)
 
-**Last updated:** 2026-10-17
+**Last updated:** 2026-10-18
 
 ## English
 
@@ -311,6 +316,12 @@ non-personal answers, with the question they answer, reused for repeated questio
   verse, so we can fetch that verse's authenticated tafsir. When you open the
   linguistic analysis, only the verse or Arabic root you look up is sent to their
   "Bahouth" service.
+- **EveryAyah.com** — the Qur'an recitations you play in the app, and the verses in
+  story narration, are Sheikh Mahmoud Khalil al-Husary's recitation from EveryAyah.com
+  (with thanks to VerseByVerseQuran.com). The app downloads that audio directly from
+  their servers, so they see your device's IP address. The word timings used to cut
+  a verse for a story come from the Quran Foundation API (quran.com) and are used only
+  when the recordings are prepared; nothing of yours is sent to it.
 - **Google Firebase:** **Analytics** (usage events such as opening a lesson, an
   app-install ID, device model and OS, approximate country) without your names or
   questions; **Crashlytics** (technical crash reports); and **Cloud Messaging**
