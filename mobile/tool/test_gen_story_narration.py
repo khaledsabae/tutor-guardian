@@ -280,8 +280,8 @@ class ElevenLabsEngine(unittest.TestCase):
                 g.synth("Hi.", "en", "V", "eleven_v3", "k", {})
 
 
-class VersesInAnotherVoice(unittest.TestCase):
-    """A ﴿verse﴾ in an English story goes to the Arabic verse voice and is checked in Arabic."""
+class NoTtsVoiceRecitesTheQuran(unittest.TestCase):
+    """A ﴿verse﴾ gets al-Husary's real recitation; Qur'an text never reaches a TTS engine."""
 
     PAGE = "She remembered the words of Allah: ﴿وَبِالْوَالِدَيْنِ إِحْسَانًا﴾. So she helped ﷺ."
 
@@ -294,41 +294,81 @@ class VersesInAnotherVoice(unittest.TestCase):
         self.assertEqual(g.spoken("His Messenger ﷺ.", "en"), "His Messenger sallallahu alayhi wa sallam.")
         self.assertEqual(g.spoken("رسول الله ﷺ.", "ar"), "رسول الله ﷺ.")
 
-    def test_a_verse_page_is_recorded_in_two_voices_and_checked_in_two_languages(self):
+    def test_synth_refuses_a_verse_for_every_engine(self):
+        for model in ("eleven_v3", "gemini-3.8-flash-tts"):
+            with self.assertRaises(g.QuranToTts):
+                g.synth("﴿وَبِالْوَالِدَيْنِ إِحْسَانًا﴾", "ar", "V", model, "k", {})
+
+    def test_a_verse_is_located_word_for_word_in_the_mushaf(self):
+        R = g.real_recitation
+        self.assertEqual(R.locate("صُنْعَ اللَّهِ الَّذِي أَتْقَنَ كُلَّ شَيْءٍ"), (27, 88, 9, 14))
+        # imla'i spelling, two words for the mushaf's one «يَـٰٓأَيُّهَا»
+        self.assertEqual(R.locate("يَا أَيُّهَا الَّذِينَ آمَنُوا لَا يَسْخَرْ قَوْمٌ مِّن قَوْمٍ")[:3], (49, 11, 1))
+        with self.assertRaises(R.RecitationError):        # four ayahs: never guessed
+            R.locate("وَبِالْوَالِدَيْنِ إِحْسَانًا")
+        self.assertEqual(R.locate("وَبِالْوَالِدَيْنِ إِحْسَانًا", "6:151"), (6, 151, 12, 13))
+        with self.assertRaises(R.RecitationError):        # a word changed: not the mushaf
+            R.locate("صُنْعَ اللَّهِ الَّذِي أَحْسَنَ كُلَّ شَيْءٍ")
+        self.assertEqual(R.place_for("fatima_parents", 2), "6:151")
+
+    def test_a_cut_in_connected_speech_lands_next_to_the_word_boundary(self):
+        import array
+        R = g.real_recitation
+        pcm = array.array("h", [8000] * (R.RATE * 3))
+        q = int((1000 + R.OFFSET_MS + 10) * R.RATE / 1000)  # the quiet spot, 10 ms after the boundary
+        for k in range(q - 60, q + 60):
+            pcm[k] = 0
+        seg = {1: (0, 990), 2: (1000, 2000), 3: (2010, 2900)}
+        clip, info = R.cut(pcm, seg, 2, 2)
+        a, b = info["cut_ms"]
+        self.assertLessEqual(abs(a - (1000 + R.OFFSET_MS + 10)), 3)
+        self.assertTrue(2000 + R.OFFSET_MS - 31 <= b <= 2000 + R.OFFSET_MS + 50)
+
+    def test_a_verse_page_takes_the_recitation_and_checks_it_against_the_mushaf(self):
         tmp = Path(_tempfile.mkdtemp())
-        calls, heard_by = [], {}
+        calls, heard_by, places = [], {}, []
 
         def fake_synth(text, lang, voice, model, key, usage):
             calls.append((text, lang, voice))
             return b"\x10\x00" * 2400
 
-        def fake_encode(pcm, out):
-            Path(out).write_bytes(b"m4a")
+        def fake_recitation(quote, place, target, trim):
+            places.append(place)
+            return b"\x20\x00" * 4800, {"ref": "6:151", "mushaf": "وَبِٱلۡوَٰلِدَيۡنِ إِحۡسَٰنٗاۖ"}
 
         def fake_transcribe(path, lang):
-            heard_by.setdefault(lang, 0)
-            heard_by[lang] += 1
+            heard_by[lang] = heard_by.get(lang, 0) + 1
             if lang == "ar":
                 return "وبالوالدين إحسانا"
             return "She remembered the words of Allah. So she helped sallallahu alayhi wa sallam."
 
         g.REPORT.clear()
         with mock.patch.object(g, "synth", side_effect=fake_synth), \
-                mock.patch.object(g, "encode_m4a", side_effect=fake_encode), \
-                mock.patch.object(g, "transcribe", side_effect=fake_transcribe):
-            code = g.run([_story([self.PAGE])], "en", "GEORGE", "eleven_v3", tmp, "docs/x", "k",
-                         verse_voice=("eleven_multilingual_v2", "HAKIM"))
+                mock.patch.object(g, "encode_m4a", side_effect=lambda pcm, out: Path(out).write_bytes(b"m4a")), \
+                mock.patch.object(g, "transcribe", side_effect=fake_transcribe), \
+                mock.patch.object(g.real_recitation, "recitation", side_effect=fake_recitation), \
+                mock.patch.object(g.real_recitation, "lufs", return_value=-19.0):
+            code = g.run([_story([self.PAGE], sid="fatima_parents")], "en", "GEORGE", "eleven_v3",
+                         tmp, "docs/x", "k")
         self.assertEqual(code, 0)
-        self.assertIn(("وَبِالْوَالِدَيْنِ إِحْسَانًا", "ar", "HAKIM"), calls)
-        self.assertIn(("She remembered the words of Allah:", "en", "GEORGE"), calls)
-        self.assertIn(("So she helped sallallahu alayhi wa sallam.", "en", "GEORGE"), calls)
-        self.assertFalse(any("﴿" in t or "ﷺ" in t for t, _, _ in calls))
+        self.assertEqual(places, [None])  # page 1 of this test story has no entry in recitation_refs.json
+        self.assertEqual([t for t, _, _ in calls],
+                         ["She remembered the words of Allah:", "So she helped sallallahu alayhi wa sallam."])
+        self.assertFalse(any("﴿" in t or "وَبِالْوَالِدَيْنِ" in t for t, _, _ in calls))
         self.assertEqual(heard_by, {"en": 1, "ar": 1})
         self.assertEqual(g.REPORT[-1]["problems"], [])
-        manifest = _json.loads((tmp / "s1.json").read_text(encoding="utf-8"))
+        manifest = _json.loads((tmp / "fatima_parents.json").read_text(encoding="utf-8"))
         self.assertEqual(manifest["pages"][0]["text"], self.PAGE)  # the page keeps its symbols
 
-    def test_a_mangled_verse_fails_the_page(self):
+    def test_quran_quoted_outside_brackets_stops_the_run(self):
+        page = "قالت أمها: قال الله تعالى: «وَبِالْوَالِدَيْنِ إِحْسَانًا»، فابتسمت فاطمة."
+        self.assertTrue(g.quran_outside_brackets(page))
+        with mock.patch.object(g, "synth") as synth:
+            with self.assertRaises(g.QuranToTts):
+                g.run([_story([page])], "ar", "Algieba", "m", Path(_tempfile.mkdtemp()), "docs/x", "k")
+            synth.assert_not_called()
+
+    def test_a_mangled_verse_fails_the_verse_bar(self):
         # George's real reading of the verse: it passes the loose Arabic bar, not the verse bar
         self.assertFalse(g.verify_page("وَبِالْوَالِدَيْنِ إِحْسَانًا", "وبيلوال إيذين إحسانة", "ar"))
         self.assertTrue(g.verify_page("وَبِالْوَالِدَيْنِ إِحْسَانًا", "وبيلوال إيذين إحسانة", "quran"))

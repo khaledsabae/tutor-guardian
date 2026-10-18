@@ -1,0 +1,4 @@
+{
+  "_about": "story_id/page -> surah:ayah, for a ﴿quote﴾ whose words occur in more than one ayah (real_recitation.locate refuses to guess). fatima_parents p2 «وَبِالْوَالِدَيْنِ إِحْسَانًا» is in 2:83, 4:36, 6:151 and 17:23; Khaled chose 6:151 (2026-10-18), where al-Husary pauses on both sides of it.",
+  "fatima_parents/2": "6:151"
+}
