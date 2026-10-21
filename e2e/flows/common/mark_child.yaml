@@ -1,45 +1,29 @@
-# Mark this install as test traffic: rename the onboarding child (created with the
-# localized default name) to the fixed CHILD_NAME. Every production row the run
-# writes hangs off this child's device_id, so
+# Check this install is marked as test traffic: the CI APK creates the
+# onboarding child under the fixed CHILD_NAME (mobile-e2e.yml, "Create the
+# onboarding child as test traffic"), so every production row the run writes
+# hangs off this child's device_id:
 #   child_profiles.name = CHILD_NAME  →  device_id  →  exclude.
-# Runs immediately after onboarding to keep the unmarked window to seconds.
-# Env: CHILD_NAME.
+# Until 2026-10-21 this flow RENAMED the child. Production answers a rename with
+# 403 device_proof_required unless the session proved itself through an FCM
+# push, which a CI emulator receives only now and then; the save never left the
+# edit screen and the journeys failed at random. Creating needs no proof.
+# Runs immediately after onboarding. Env: CHILD_NAME.
 appId: com.alsaba.almorabbi
 ---
 - runFlow: open_settings.yaml
-- tapOn: '${output.lead.settingsEditChild}'
+# The header is read from GET /api/children: the server has the name. Not
+# there = an APK built without ci-child-name — unmarked traffic, so stop.
+- extendedWaitUntil:
+    visible: '(?s)(?:.*\s)?${CHILD_NAME}(?:\s.*)?'
+    timeout: 30000
+- tapOn: '${output.t.settingsEditChild}'
 - extendedWaitUntil:
     visible: '${output.t.editChildTitle}'
     timeout: 20000
-# Replace the default name. eraseText is backspace, so the caret goes to the
-# end first, and the backspaces go one per command: a burst of 40 left the
-# default name's last letter behind in Arabic, on two runs and two tap
-# positions ('E2E-Maestroي'). Anything still left over is cleared again.
-- runFlow:
-    file: tap_field_end.yaml
-    env:
-      FIELD: '${output.t.onbDefaultChildName}'
-- repeat:
-    times: 12
-    commands:
-      - eraseText: 1
-- inputText: '${CHILD_NAME}'
-- repeat:
-    times: 2
-    while:
-      notVisible: '${CHILD_NAME}'
-    commands:
-      - takeScreenshot: mark_child_0_retry
-      - runFlow:
-          file: tap_field_end.yaml
-          env:
-            FIELD: '(?s).*${CHILD_NAME}.*'
-      - repeat:
-          times: 30
-          commands:
-            - eraseText: 1
-      - inputText: '${CHILD_NAME}'
+- assertVisible: '(?s)(?:.*\s)?${CHILD_NAME}(?:\s.*)?'
 - takeScreenshot: mark_child_1_edit
+# Save unchanged: still a PATCH /api/children/{id} (the edit screen's path),
+# but the same name never asks for a proof.
 # The app-bar Save: the bottom "Save changes" button can sit under the keyboard.
 - tapOn: '${output.t.save}'
 # A lost tap leaves the edit screen up; saving twice is the same PATCH.
@@ -55,13 +39,9 @@ appId: com.alsaba.almorabbi
     commands:
       - takeScreenshot: mark_child_1b_save_retry
       - tapOn: '${output.t.save}'
-# Save even if a letter was left over (see below). Back on Settings, the header
-# is re-read from GET /api/children — the server has the new name.
 - extendedWaitUntil:
     visible: '${output.t.settingsTitle}'
     timeout: 30000
-# The name as a whole word: a leftover letter fails here — after Save, so even a
-# flawed rename leaves the device caught by LIKE 'E2E-Maestro%'.
 - extendedWaitUntil:
     visible: '(?s)(?:.*\s)?${CHILD_NAME}(?:\s.*)?'
     timeout: 30000
