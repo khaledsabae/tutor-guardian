@@ -9,7 +9,8 @@ Referrer (free attribution). This turns shared links into a content + install
 surface and a slow-but-durable organic-search channel.
 
 Routes (mounted at root):
-  GET /, /go, /ui/     → install / landing page (?ref=<code>, utm_* attribution)
+  GET /, /go, /ui/     → install / landing page (?ref=<code>, utm_* attribution),
+                         Arabic or English (?lang=, the code, Accept-Language)
   GET /l/{lesson_id}   → a single lesson, indexable
   GET /p/{path_id}     → a path overview + its lessons, indexable
   GET /sitemap.xml     → all lesson + path URLs for crawlers
@@ -24,17 +25,30 @@ from __future__ import annotations
 import html
 import logging
 from pathlib import Path
+from urllib.parse import urlencode
 
 from fastapi import APIRouter, Request
 from fastapi.responses import HTMLResponse, PlainTextResponse, Response
 
 from app import curriculum_loader as cl
-from app.services.attribution import attribute_visit
+from app.services.attribution import (
+    attribute_visit,
+    clean_utm,
+    is_campaign_code,
+    normalize_code,
+    query_code,
+)
 
 logger = logging.getLogger(__name__)
 router = APIRouter(tags=["web"])
 
 _CINEMATIC = Path(__file__).resolve().parents[3] / "frontend" / "cinematic.html"
+# The English landing: the same page, the same art, laid out left to right.
+_CINEMATIC_EN = _CINEMATIC.with_name("cinematic.en.html")
+_LANDING_LANGS = ("ar", "en")
+# Campaign channels whose audience reads English (attribution.CAMPAIGN_CHANNELS):
+# EN01… preachers and educators in English, CM01… English community groups.
+_EN_CAMPAIGN_PREFIXES = ("EN", "CM")
 _EMERALD = "#0F6B5C"  # «نور والقناديل» sky (docs/brand, mobile/assets/svg/STYLE.md)
 # The share image of every public page: 1200x630, cut from the Play feature
 # graphic by `docs/brand/tools/brand_build.py web`. PNG — flat paper-cut art is
@@ -245,23 +259,97 @@ def _page(*, title: str, desc: str, body: str, install_url: str,
 # The template itself sits in the static mount too; served raw, its buttons
 # were literal {{DOWNLOAD_URL}} links — dead, and carrying no attribution.
 @router.get("/ui/cinematic.html", response_class=HTMLResponse, include_in_schema=False)
+@router.get("/ui/cinematic.en.html", response_class=HTMLResponse, include_in_schema=False)
 def landing(request: Request) -> HTMLResponse:
     """Share/install landing — where shared cards, referral and campaign links arrive."""
-    if not _CINEMATIC.is_file():
+    lang = landing_language(request)
+    template = _CINEMATIC_EN if lang == "en" else _CINEMATIC
+    if not template.is_file():
         return HTMLResponse("<h1>المربّي — صفحة الهبوط تحت الصيانة</h1>", status_code=503)
-    html_content = _CINEMATIC.read_text(encoding="utf-8")
+    html_content = template.read_text(encoding="utf-8")
 
-    install_url = attribute_visit(request)
-    og_image = _abs(str(request.url), _OG_IMAGE)
-    # One canonical for every copy of this page, and never the tracking query:
-    # each shared ?ref= / utm_* variant would otherwise index as its own page.
-    canonical = _abs(str(request.url), "/go")
+    # The English page opens the store in English; the referrer is unchanged.
+    install_url = attribute_visit(request, hl="en" if lang == "en" else None)
+    url = str(request.url)
+    og_image = _abs(url, _OG_IMAGE)
+    # One canonical per language, and never the tracking query: each shared
+    # ?ref= / utm_* variant would otherwise index as its own page. /go is the
+    # Arabic page (Googlebot sends no Accept-Language) and the x-default.
+    alternates = {"ar": _abs(url, "/go"), "en": _abs(url, "/go?lang=en")}
+    canonical = alternates[lang]
 
-    html_content = html_content.replace("{{DOWNLOAD_URL}}", html.escape(install_url))
-    html_content = html_content.replace("{{OG_IMAGE}}", html.escape(og_image))
-    html_content = html_content.replace("{{CANONICAL_URL}}", html.escape(canonical))
+    for key, value in (
+        ("{{DOWNLOAD_URL}}", install_url),
+        ("{{OG_IMAGE}}", og_image),
+        ("{{CANONICAL_URL}}", canonical),
+        ("{{ALT_AR_URL}}", alternates["ar"]),
+        ("{{ALT_EN_URL}}", alternates["en"]),
+        ("{{LANG_TOGGLE_URL}}", _toggle_url(request, "ar" if lang == "en" else "en")),
+    ):
+        html_content = html_content.replace(key, html.escape(value))
 
-    return HTMLResponse(content=html_content, status_code=200)
+    # The language can follow Accept-Language: no cache may hand one
+    # visitor's language to the next.
+    return HTMLResponse(content=html_content, status_code=200,
+                        headers={"Vary": "Accept-Language"})
+
+
+def landing_language(request: Request) -> str:
+    """`en` or `ar`, in this order: an explicit ?lang=, an English campaign code
+    (EN01…, CM01…), Accept-Language whose preferred language is English, else Arabic.
+
+    Only campaign codes count: a personal code is six random characters, and
+    one that happens to start with EN says nothing about its reader.
+    """
+    lang = (request.query_params.get("lang") or "").strip().lower()
+    if lang in _LANDING_LANGS:
+        return lang
+    if request.url.path == "/ui/cinematic.en.html":
+        return "en"
+    code = normalize_code(query_code(request.query_params))
+    if is_campaign_code(code) and code[:2] in _EN_CAMPAIGN_PREFIXES:
+        return "en"
+    if _preferred_language(request.headers.get("accept-language", "")) == "en":
+        return "en"
+    return "ar"
+
+
+def _preferred_language(header: str) -> str | None:
+    """The primary subtag of the highest-q range: `en-GB,ar;q=0.8` → `en`.
+
+    Equal weights keep the header's order. `*` and malformed weights are skipped.
+    """
+    best: tuple[float, int, str] | None = None
+    for i, part in enumerate(header.split(",")[:20]):
+        tag, _, params = part.strip().partition(";")
+        primary = tag.strip().split("-", 1)[0].lower()
+        if not primary or primary == "*":
+            continue
+        q = 1.0
+        params = params.strip().lower()
+        if params.startswith("q="):
+            try:
+                q = float(params[2:])
+            except ValueError:
+                continue
+        if q > 0 and (best is None or (-q, i) < (-best[0], best[1])):
+            best = (q, i, primary)
+    return best[2] if best else None
+
+
+def _toggle_url(request: Request, lang: str) -> str:
+    """/go in the other language, keeping the visit's code and utm_*.
+
+    Following it is the same visitor and code again: record_click writes
+    nothing within a minute and only refreshes the row within ten, so the
+    switch is never a second click.
+    """
+    params = [("lang", lang)]
+    code = normalize_code(query_code(request.query_params))
+    if code:
+        params.append(("ref", code))
+    params += list(clean_utm(request.query_params).items())
+    return "/go?" + urlencode(params)
 
 
 def _canonical(request: Request) -> str:
