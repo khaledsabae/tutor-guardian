@@ -6,9 +6,10 @@ art, the same attributed Play link, the same single beacon — with English copy
 from the en-US store listing, laid out left to right, and a Play link that
 opens the store in English.
 
-Order of the rules (web.landing_language): an explicit ?lang=, then an English
-campaign code, then an Accept-Language whose preferred language is English,
-else Arabic.
+Order of the rules (web.landing_language): an explicit ?lang=; then a campaign
+code, which decides on its own (EN…, CM…, WA02 English, every other Arabic:
+the visitor clicked a post in that language); only with no campaign code, an
+Accept-Language whose preferred language is English; else Arabic.
 """
 import html as _html
 import re
@@ -65,18 +66,28 @@ def _clicks() -> list[tuple[str, str]]:
     ({"lang": "en", "ref": "DA01"}, "ar-EG,ar;q=0.9", "en"),
     ({"lang": "fr"}, None, "ar"),                      # unknown: the next rules decide
     ({"lang": "fr", "ref": "EN02"}, None, "en"),
-    # 2 · an English campaign code, however it was typed or carried
+    # 2 · a campaign code decides, however it was typed or carried
     ({"ref": "EN01"}, None, "en"),
     ({"ref": "en-07"}, None, "en"),
     ({"c": "cm03"}, None, "en"),
     ({"ref": "CM01"}, "ar-EG,ar;q=0.9", "en"),         # the code beats the header
+    ({"ref": "WA02"}, None, "en"),                     # the English WhatsApp channel
+    ({"ref": "wa-02"}, "ar-EG,ar;q=0.9", "en"),
+    ({"ref": "WA01"}, "en-US,en;q=0.9", "ar"),         # the Arabic one
+    ({"ref": "WA03"}, "en-GB", "ar"),
+    ({"ref": "DA01"}, "en-US,en;q=0.9", "ar"),         # an Arabic post, an English phone
+    ({"ref": "DA01"}, "en-GB", "ar"),
+    ({"c": "kt01"}, "en", "ar"),
+    ({"ref": "OT99"}, "en-US,en;q=0.9", "ar"),
     ({"ref": "DA01"}, None, "ar"),
     ({"ref": "OT99"}, None, "ar"),
     ({"ref": "ENV9Z5"}, None, "ar"),                   # a personal code: random letters
-    # 3 · the visitor's preferred language
+    # 3 · no campaign code: the visitor's preferred language
+    ({"ref": "ABC234"}, "en-US,en;q=0.9", "en"),       # a personal code + English
+    ({"ref": "ENV9Z5"}, "ar-EG,ar;q=0.9", "ar"),
+    ({"ref": "ZZ99"}, "en-GB", "en"),                  # not a channel: no campaign code
     ({}, "en-US,en;q=0.9,ar;q=0.8", "en"),
     ({}, "en-GB", "en"),
-    ({"ref": "DA01"}, "en-US,en;q=0.9", "en"),
     ({}, "ar-EG,ar;q=0.9,en-US;q=0.8", "ar"),
     ({}, "ar;q=0.5, en;q=0.9", "en"),                  # by weight, not by position
     ({}, "fr-FR,fr;q=0.9,en;q=0.8", "ar"),             # only the preferred one counts

@@ -10,7 +10,7 @@ surface and a slow-but-durable organic-search channel.
 
 Routes (mounted at root):
   GET /, /go, /ui/     → install / landing page (?ref=<code>, utm_* attribution),
-                         Arabic or English (?lang=, the code, Accept-Language)
+                         Arabic or English (?lang=, a campaign code, Accept-Language)
   GET /l/{lesson_id}   → a single lesson, indexable
   GET /p/{path_id}     → a path overview + its lessons, indexable
   GET /sitemap.xml     → all lesson + path URLs for crawlers
@@ -46,9 +46,14 @@ _CINEMATIC = Path(__file__).resolve().parents[3] / "frontend" / "cinematic.html"
 # The English landing: the same page, the same art, laid out left to right.
 _CINEMATIC_EN = _CINEMATIC.with_name("cinematic.en.html")
 _LANDING_LANGS = ("ar", "en")
-# Campaign channels whose audience reads English (attribution.CAMPAIGN_CHANNELS):
-# EN01… preachers and educators in English, CM01… English community groups.
+# A campaign code decides the language: its visitor clicked a post written in
+# that code's language. English: EN01… preachers and educators in English,
+# CM01… English community groups (attribution.CAMPAIGN_CHANNELS); every other
+# campaign code is Arabic.
 _EN_CAMPAIGN_PREFIXES = ("EN", "CM")
+# Single English codes under an Arabic prefix — docs/marketing/campaign_codes.md:
+# WA02 is the English WhatsApp channel (WA01 the Arabic one, WA03+ groups).
+_EN_CAMPAIGN_CODES = frozenset({"WA02"})
 _EMERALD = "#0F6B5C"  # «نور والقناديل» sky (docs/brand, mobile/assets/svg/STYLE.md)
 # The share image of every public page: 1200x630, cut from the Play feature
 # graphic by `docs/brand/tools/brand_build.py web`. PNG — flat paper-cut art is
@@ -295,11 +300,15 @@ def landing(request: Request) -> HTMLResponse:
 
 
 def landing_language(request: Request) -> str:
-    """`en` or `ar`, in this order: an explicit ?lang=, an English campaign code
-    (EN01…, CM01…), Accept-Language whose preferred language is English, else Arabic.
+    """`en` or `ar`, in this order:
 
-    Only campaign codes count: a personal code is six random characters, and
-    one that happens to start with EN says nothing about its reader.
+    1. an explicit ?lang=;
+    2. a campaign code: EN…, CM… and WA02 are English, every other one Arabic —
+       the visitor clicked a post in that code's language, whatever the phone's;
+    3. with no campaign code (none, or a six-character personal code, whose
+       random letters say nothing about its reader): Accept-Language, when its
+       preferred language is English;
+    4. else Arabic.
     """
     lang = (request.query_params.get("lang") or "").strip().lower()
     if lang in _LANDING_LANGS:
@@ -307,8 +316,9 @@ def landing_language(request: Request) -> str:
     if request.url.path == "/ui/cinematic.en.html":
         return "en"
     code = normalize_code(query_code(request.query_params))
-    if is_campaign_code(code) and code[:2] in _EN_CAMPAIGN_PREFIXES:
-        return "en"
+    if is_campaign_code(code):
+        english = code[:2] in _EN_CAMPAIGN_PREFIXES or code in _EN_CAMPAIGN_CODES
+        return "en" if english else "ar"
     if _preferred_language(request.headers.get("accept-language", "")) == "en":
         return "en"
     return "ar"
