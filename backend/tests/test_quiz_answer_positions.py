@@ -23,6 +23,7 @@ ROOT = Path(__file__).resolve().parents[2]
 QUIZ_DIR = ROOT / "docs" / "lesson_assets" / "quizzes"
 LICENSE_DIR = ROOT / "knowledge_base" / "curriculum" / "license"
 LICENSE_EN_DIR = ROOT / "knowledge_base" / "curriculum" / "i18n" / "en" / "license"
+GAMES_DIR = ROOT / "mobile" / "assets" / "content" / "games"
 MAX_SHARE_AT_INDEX_0 = 0.40
 
 
@@ -135,6 +136,44 @@ def test_licence_translation_serves_choices_in_the_arabic_order():
             if s["key"] in en:
                 assert [c["key"] for c in en[s["key"]]["choices"]] == \
                        [c["key"] for c in s["choices"]], (f.name, s["key"])
+
+
+# ── app-bundled game packs ─────────────────────────────────────────────────
+# First in 200 of 200 until 2026-10-21. Levels are five questions played in
+# fixed order with no shuffle, so a level that keeps one slot is a tell too.
+
+def _game_levels():
+    files = sorted(GAMES_DIR.glob("*.json"))
+    if not files:
+        pytest.skip("mobile/assets/content/games not present in this checkout")
+    for f in files:
+        pack = json.loads(f.read_text(encoding="utf-8"))
+        for lv in pack.get("levels", []):
+            yield f.name, lv["level"], [
+                [i for i, o in enumerate(q["options"]) if o.get("is_correct") is True]
+                for q in lv["questions"]]
+
+
+def test_every_game_question_has_exactly_one_correct_answer():
+    bad = [(f, lv, i) for f, lv, qs in _game_levels()
+           for i, ok in enumerate(qs) if len(ok) != 1]
+    assert not bad, bad
+
+
+def test_game_correct_answer_has_no_favourite_slot():
+    pos = collections.Counter(ok[0] for _, _, qs in _game_levels() for ok in qs)
+    total = sum(pos.values())
+    assert total > 0
+    worst = max(pos.values()) / total
+    assert worst <= MAX_SHARE_AT_INDEX_0, (
+        f"distribution {dict(sorted(pos.items()))} of {total}. "
+        "Run: python3 ops/tools/balance_quiz_answer_positions.py --write")
+
+
+def test_no_game_level_uses_one_slot_throughout():
+    mono = {(f, lv): [ok[0] for ok in qs] for f, lv, qs in _game_levels()
+            if len(qs) >= 3 and len({ok[0] for ok in qs}) == 1}
+    assert not mono, mono
 
 
 def test_balancer_is_a_no_op_on_the_committed_data():

@@ -59,20 +59,48 @@ void main() {
 
     test('correctness is carried by key, not by position', () async {
       // A translated pack will carry key + text and no verdict; correctness is
-      // merged in from here by key. That only holds if the keys are present,
-      // distinct and ordered, and exactly one option is right.
+      // merged in from here by key. That only holds if the keys are present
+      // and distinct, and exactly one option is right. Not ordered: the list
+      // order is deliberately spread (balance_quiz_answer_positions.py) and
+      // each key travels with its option.
       for (final game in _games) {
         final pack = await EduGameContent.load(game);
         for (var level = 1; level <= 10; level++) {
           for (final q in pack.forLevel(level)) {
             expect(q.options.length, 4, reason: q.id);
-            expect(q.options.map((o) => o.key).toList(), ['a', 'b', 'c', 'd'],
+            expect(q.options.map((o) => o.key).toSet(), {'a', 'b', 'c', 'd'},
                 reason: q.id);
             expect(q.options.where((o) => o.isCorrect).length, 1, reason: q.id);
             expect(q.options.every((o) => o.text.trim().isNotEmpty), isTrue,
                 reason: q.id);
           }
         }
+      }
+    });
+
+    test('the right answer has no favourite slot', () async {
+      // Until 2026-10-21 it was first in 200 of 200: a child tapping the top
+      // option won every game without reading. Options render in pack order.
+      final slots = <int, int>{};
+      for (final game in _games) {
+        final pack = await EduGameContent.load(game);
+        for (var level = 1; level <= 10; level++) {
+          final inLevel = [
+            for (final q in pack.forLevel(level))
+              q.options.indexWhere((o) => o.isCorrect),
+          ];
+          for (final s in inLevel) {
+            slots[s] = (slots[s] ?? 0) + 1;
+          }
+          expect(inLevel.toSet().length, greaterThan(1),
+              reason: '$game level $level: one slot for every question');
+        }
+      }
+      final total = slots.values.fold(0, (a, b) => a + b);
+      expect(total, 200);
+      for (final e in slots.entries) {
+        expect(e.value / total, lessThanOrEqualTo(0.40),
+            reason: 'slot ${e.key}: ${e.value}/$total — $slots');
       }
     });
 

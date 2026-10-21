@@ -301,7 +301,11 @@ def render_game(pack: dict) -> str:
             out.append(f"      category: '{dart_escape(q['category'])}',\n")
             out.append(f"      context: '{dart_escape(q['context'])}',\n")
             out.append("      options: [\n")
-            for o in q["options"]:
+            # Key order, not list order: keys were assigned a..d in Dart order
+            # ("positional-once"), and the pack's list order is rebalanced since
+            # 2026-10-21 (ops/tools/balance_quiz_answer_positions.py) — the
+            # round-trip proves the content, and position is not content.
+            for o in sorted(q["options"], key=lambda o: o["key"]):
                 out.append(
                     f"        EduOption(text: '{dart_escape(o['text'])}', "
                     f"isCorrect: {'true' if o['is_correct'] else 'false'}, "
@@ -536,7 +540,16 @@ def dumps(pack: dict) -> str:
 
 def cmd_extract(rev: str | None) -> int:
     packs = build_all(rev)
+    # The Dart had the right answer first in every question; write the packs
+    # in the order the balancer would, so a re-extract is not a regression.
+    sys.path.insert(0, str(TOOLS))
+    from balance_quiz_answer_positions import balance_game_pack
     for rel, pack in packs.items():
+        if pack.get("schema") == "tg.game_pack/1":
+            errs = balance_game_pack(Path(rel).name, pack)
+            if errs:
+                print("\n".join(errs))
+                return 1
         path = ASSETS / rel
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(dumps(pack), encoding="utf-8")
