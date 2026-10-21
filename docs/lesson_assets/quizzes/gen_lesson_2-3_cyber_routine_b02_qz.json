@@ -10,14 +10,14 @@
           "rationale": "تتحوّل لجسر لغوي."
         },
         {
-          "text": "أن يشاهد وحده",
-          "isCorrect": false,
-          "rationale": "بثّ سلبي بلا تفاعل."
-        },
-        {
           "text": "أن يشاهد محتوى سريعاً مثيراً",
           "isCorrect": false,
           "rationale": "يربك دماغه."
+        },
+        {
+          "text": "أن يشاهد وحده",
+          "isCorrect": false,
+          "rationale": "بثّ سلبي بلا تفاعل."
         }
       ],
       "hint": "مشاهدة مشتركة."
@@ -26,14 +26,14 @@
       "question": "ما الذي يقلّل ضرر الشاشة ويزيد فائدتها؟",
       "answerOptions": [
         {
-          "text": "تعليقك وتسميتك لما يراه (مشاهدة مشتركة)",
-          "isCorrect": true,
-          "rationale": "تفاعل لغوي حقيقي."
-        },
-        {
           "text": "زيادة المدة",
           "isCorrect": false,
           "rationale": "العكس يضرّ."
+        },
+        {
+          "text": "تعليقك وتسميتك لما يراه (مشاهدة مشتركة)",
+          "isCorrect": true,
+          "rationale": "تفاعل لغوي حقيقي."
         },
         {
           "text": "محتوى بلغة لا يفهمها",
@@ -47,11 +47,6 @@
       "question": "محتوى الشاشة المناسب لطفل 2-3؟",
       "answerOptions": [
         {
-          "text": "بطيء هادئ بلا إعلانات يناسب عمره",
-          "isCorrect": true,
-          "rationale": "السريع المثير يربكه."
-        },
-        {
           "text": "سريع ومثير",
           "isCorrect": false,
           "rationale": "يربك دماغه."
@@ -60,6 +55,11 @@
           "text": "بلغة لا يفهمها",
           "isCorrect": false,
           "rationale": "بلا فائدة."
+        },
+        {
+          "text": "بطيء هادئ بلا إعلانات يناسب عمره",
+          "isCorrect": true,
+          "rationale": "السريع المثير يربكه."
         }
       ],
       "hint": "هادئ وبطيء."

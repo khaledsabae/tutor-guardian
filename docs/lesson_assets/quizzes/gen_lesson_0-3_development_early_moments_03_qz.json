@@ -5,11 +5,6 @@
       "question": "ما 'منطقة التطور القريب'؟",
       "answerOptions": [
         {
-          "text": "المسافة بين ما يفعله وحده وما يفعله بمساعدتك، حيث التعلّم الأمثل",
-          "isCorrect": true,
-          "rationale": "هنا ينمو بأفضل صورة."
-        },
-        {
           "text": "ما يعرفه تماماً",
           "isCorrect": false,
           "rationale": "هذا أسهل من اللازم."
@@ -18,6 +13,11 @@
           "text": "ما يستحيل عليه",
           "isCorrect": false,
           "rationale": "هذا أصعب من اللازم."
+        },
+        {
+          "text": "المسافة بين ما يفعله وحده وما يفعله بمساعدتك، حيث التعلّم الأمثل",
+          "isCorrect": true,
+          "rationale": "هنا ينمو بأفضل صورة."
         }
       ],
       "hint": "بين السهل والصعب."
@@ -31,14 +31,14 @@
           "rationale": "تدعمه حتى يستقل."
         },
         {
-          "text": "فعل كل شيء بدلاً عنه",
-          "isCorrect": false,
-          "rationale": "يحرمه التعلّم."
-        },
-        {
           "text": "تركه بلا أي دعم",
           "isCorrect": false,
           "rationale": "قد يُحبطه."
+        },
+        {
+          "text": "فعل كل شيء بدلاً عنه",
+          "isCorrect": false,
+          "rationale": "يحرمه التعلّم."
         }
       ],
       "hint": "دعم ثم انسحاب."
@@ -46,6 +46,11 @@
     {
       "question": "ما الخطأ في فعل المهمة بدلاً عن الطفل؟",
       "answerOptions": [
+        {
+          "text": "يجعله أذكى",
+          "isCorrect": false,
+          "rationale": "بل يحرمه التجربة."
+        },
         {
           "text": "يحرمه فرصة التعلّم والإتقان",
           "isCorrect": true,
@@ -55,11 +60,6 @@
           "text": "لا خطأ فيه",
           "isCorrect": false,
           "rationale": "يعطّل نموه."
-        },
-        {
-          "text": "يجعله أذكى",
-          "isCorrect": false,
-          "rationale": "بل يحرمه التجربة."
         }
       ],
       "hint": "دعم لا إنابة."

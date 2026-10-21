@@ -5,11 +5,6 @@
       "question": "أيٌّ من التالي علامة تواصل طبيعية في عمر الشهرين؟",
       "answerOptions": [
         {
-          "text": "الابتسام عند ابتسامتك ومتابعة وجهك بالنظر",
-          "isCorrect": true,
-          "rationale": "أول علامات التواصل الاجتماعي."
-        },
-        {
           "text": "المشي والكلام",
           "isCorrect": false,
           "rationale": "أبكر بكثير من قدرته."
@@ -18,6 +13,11 @@
           "text": "لا تواصل في هذا السن",
           "isCorrect": false,
           "rationale": "التواصل يبدأ مبكراً."
+        },
+        {
+          "text": "الابتسام عند ابتسامتك ومتابعة وجهك بالنظر",
+          "isCorrect": true,
+          "rationale": "أول علامات التواصل الاجتماعي."
         }
       ],
       "hint": "ابتسامة ونظرة."
@@ -47,6 +47,11 @@
       "question": "ما فائدة وقت البطن (Tummy time)؟",
       "answerOptions": [
         {
+          "text": "يؤخّر نموه",
+          "isCorrect": false,
+          "rationale": "بل يسرّعه."
+        },
+        {
           "text": "يقوّي عضلات الرقبة ويساعده على رفع رأسه",
           "isCorrect": true,
           "rationale": "يدعم نموه الحركي."
@@ -55,11 +60,6 @@
           "text": "يزعجه بلا فائدة",
           "isCorrect": false,
           "rationale": "مفيد لنموه."
-        },
-        {
-          "text": "يؤخّر نموه",
-          "isCorrect": false,
-          "rationale": "بل يسرّعه."
         }
       ],
       "hint": "يقوّي الرقبة."
