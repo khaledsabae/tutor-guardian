@@ -190,11 +190,13 @@ def install_referrer(code: str | None, utm: Mapping[str, str] | None = None) -> 
     return "&".join(parts)
 
 
-def play_install_url(code: str | None = None, utm: Mapping[str, str] | None = None) -> str:
+def play_install_url(code: str | None = None, utm: Mapping[str, str] | None = None,
+                     hl: str | None = None) -> str:
+    """The Play link. `hl` sets the store's language (`&hl=en` on the English
+    landing); it goes after the referrer, which it leaves untouched."""
     referrer = install_referrer(code, utm)
-    if not referrer:
-        return PLAY_URL
-    return f"{PLAY_URL}&referrer={quote(referrer, safe='')}"
+    url = f"{PLAY_URL}&referrer={quote(referrer, safe='')}" if referrer else PLAY_URL
+    return f"{url}&hl={hl}" if hl else url
 
 
 # The query parameters a landing URL carries its code in. `ref` is canonical:
@@ -213,10 +215,11 @@ def query_code(query: Mapping[str, str]) -> str | None:
     return None
 
 
-def landing_attribution(query: Mapping[str, str]) -> tuple[str, str | None]:
+def landing_attribution(query: Mapping[str, str],
+                        hl: str | None = None) -> tuple[str, str | None]:
     """(Play link, normalised ref code or None) for a landing page's query string."""
     code = normalize_code(query_code(query))
-    return play_install_url(code, attribution_utm(code, query)), code
+    return play_install_url(code, attribution_utm(code, query), hl), code
 
 
 def is_tagged(query: Mapping[str, str]) -> bool:
@@ -256,13 +259,13 @@ def ip_bucket(ip: str) -> str:
     return str(addr)
 
 
-def attribute_visit(request) -> str:
+def attribute_visit(request, hl: str | None = None) -> str:
     """The Play link for a public page visit; records the click if it carries a code.
 
     `request.client.host` is the visitor's address as ClientIPMiddleware
     resolved it — from trusted proxies only, never from a caller's header.
     """
-    install_url, code = landing_attribution(request.query_params)
+    install_url, code = landing_attribution(request.query_params, hl)
     if code and not is_prefetch(request.headers):
         ip = request.client.host if request.client else "unknown"
         record_click(ip, request.headers.get("user-agent", ""), code)

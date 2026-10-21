@@ -18,6 +18,8 @@ from app import curriculum_loader as cl
 from app.main import app
 
 _PAGES = ["/", "/go", "/ui/", "/ui/cinematic.html"]
+# The English landing (tests/test_landing_language.py holds its language rules).
+_EN_PAGES = ["/go?lang=en", "/go?ref=EN01", "/ui/cinematic.en.html"]
 _HEADLINE = "مربٍّ يعرف طفلك، خطوة بخطوة"
 _FREE = "مجاني بالكامل"
 _CTA = "حمّله من Google Play"
@@ -78,7 +80,7 @@ def test_copy_rules(client):
 
 
 def test_share_image_is_the_new_1200x630(client):
-    for path in _PAGES:
+    for path in _PAGES + _EN_PAGES:
         html = client.get(path).text
         for key in ("og:image", "twitter:image"):
             url = _meta(html, key)
@@ -102,10 +104,16 @@ def test_lesson_and_path_pages_share_the_new_image(client):
 
 
 def test_nothing_loads_from_a_third_party(client):
-    for path in _PAGES:
+    for path in _PAGES + _EN_PAGES:
         html = client.get(path).text
-        # The canonical names this page; it loads nothing.
-        loads = re.sub(r'<link rel="canonical"[^>]*>', "", html)
+        # The canonical and the hreflang alternates name this page in its two
+        # languages, on this host; they load nothing.
+        loads = re.sub(r'<link rel="canonical" href="http://testserver/[^"]*">', "", html)
+        alternates = re.findall(r'<link rel="alternate" hreflang="[^"]+" href="([^"]*)">', loads)
+        assert len(alternates) == 3, (path, alternates)
+        assert all(a.startswith("http://testserver/go") for a in alternates), (path, alternates)
+        loads = re.sub(r'<link rel="alternate" hreflang="[^"]+" href="http://testserver/[^"]*">',
+                       "", loads)
         # The one exception Khaled approved (2026-10-17): the Cloudflare Web
         # Analytics beacon — cookieless, deferred, on the zone we already run.
         beacons = re.findall(_CF_BEACON, loads)
@@ -139,7 +147,7 @@ def test_pwa_icons_are_icon_c_at_their_sizes(client):
 def test_the_3d_shield_section_stays_removed(client):
     # Khaled, 2026-10-04: «٠٢ — مجسم درع الأمان التفاعلي» was useless,
     # incomplete and wrong — removed with its model-viewer script and asset.
-    for path in _PAGES:
+    for path in _PAGES + _EN_PAGES:
         html = client.get(path).text
         for gone in ("model-3d-section", "model-viewer", "guardian_shield", "مجسم"):
             assert gone not in html, f"{path}: {gone}"
@@ -147,7 +155,7 @@ def test_the_3d_shield_section_stays_removed(client):
 
 
 def test_every_in_page_link_has_a_target(client):
-    for path in _PAGES:
+    for path in _PAGES + _EN_PAGES:
         html = client.get(path).text
         ids = set(re.findall(r'\bid="([^"]+)"', html))
         anchors = set(re.findall(r'href="#([^"]+)"', html))
