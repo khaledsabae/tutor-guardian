@@ -171,17 +171,26 @@ class CiChildNameTest(unittest.TestCase):
 
     def test_workflow_builds_head_and_baseline_with_the_run_name(self):
         workflow = (self.ROOT / ".github/workflows/mobile-e2e.yml").read_text()
-        name = re.search(r"^  E2E_CHILD_NAME: (\S+)$", workflow, re.M).group(1)
-        run_sh = (self.ROOT / "e2e/run.sh").read_text()
-        self.assertIn('CHILD_NAME="${E2E_CHILD_NAME:-%s}"' % name, run_sh)
+        # Every variant is built with the CHILD_NAME default of the script that
+        # drives it; nothing in the workflow overrides those defaults.
+        self.assertNotIn("E2E_CHILD_NAME", workflow)
+        names = dict(re.findall(r"- variant: (\S+)\n(?:            .*\n)*?            child_name: (\S+)\n", workflow))
+        self.assertEqual(set(names), {"head", "baseline", "rehearsal-head", "rehearsal-baseline"})
+        for script, variants in (("run.sh", ("head", "baseline")),
+                                 ("rehearsal.sh", ("rehearsal-head", "rehearsal-baseline"))):
+            default = re.search(r'^CHILD_NAME="\$\{E2E_CHILD_NAME:-([^}]+)\}"$',
+                                (self.ROOT / "e2e" / script).read_text(), re.M).group(1)
+            for v in variants:
+                self.assertEqual(names[v], default, v)
         marker = "      - name: Create the onboarding child as test traffic\n"
         self.assertIn(marker, workflow)
         self.assertLess(workflow.index(marker), workflow.index("      - name: Build the release APK"))
         section = workflow.split(marker, 1)[1].split("      - ", 1)[0]
         self.assertNotIn("continue-on-error", section)
-        self.assertIn("head|baseline)", section)
-        self.assertIn('ci-child-name --l10n-dir lib/l10n --name "$E2E_CHILD_NAME"', section)
-        self.assertIn('"onboarding_child_name=$CHILD"', workflow)
+        self.assertNotIn("if:", section)
+        self.assertIn("CHILD_NAME: ${{ matrix.child_name }}", section)
+        self.assertIn('ci-child-name --l10n-dir lib/l10n --name "$CHILD_NAME"', section)
+        self.assertIn('"onboarding_child_name=$CHILD_NAME"', workflow)
 
     def test_no_flow_renames_the_onboarding_child(self):
         mark = (FLOWS / "common" / "mark_child.yaml").read_text(encoding="utf-8")
@@ -190,6 +199,8 @@ class CiChildNameTest(unittest.TestCase):
         text = json.dumps(body)
         self.assertNotIn("inputText", text)
         self.assertNotIn("eraseText", text)
+        # The Settings tile is a merged node (title + subtitle): `lead`, not `t`.
+        self.assertIn("tapOn: '${output.lead.settingsEditChild}'", mark)
         for flow in FLOWS.rglob("*.yaml"):
             self.assertNotIn("onbDefaultChildName", flow.read_text(encoding="utf-8"), flow.name)
 

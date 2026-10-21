@@ -16,7 +16,7 @@ appId: com.alsaba.almorabbi
 - extendedWaitUntil:
     visible: '(?s)(?:.*\s)?${CHILD_NAME}(?:\s.*)?'
     timeout: 30000
-- tapOn: '${output.t.settingsEditChild}'
+- tapOn: '${output.lead.settingsEditChild}'
 - extendedWaitUntil:
     visible: '${output.t.editChildTitle}'
     timeout: 20000
