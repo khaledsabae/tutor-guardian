@@ -11,9 +11,9 @@
       "source_unit_id": "cyb-3144e18d",
       "alerts_parent": true,
       "choices": [
-        {"key": "answer_some", "text_ar": "أرد على ما ليس شخصيًّا جدًّا وأتجنّب الباقي.", "outcome": "critical"},
+        {"key": "tell", "text_ar": "أوقف الكلام وأخبرهم في البيت.", "outcome": "safe", "tells_parent": true},
         {"key": "block", "text_ar": "أحظره وانتهى الأمر.", "outcome": "unsafe"},
-        {"key": "tell", "text_ar": "أوقف الكلام وأخبرهم في البيت.", "outcome": "safe", "tells_parent": true}
+        {"key": "answer_some", "text_ar": "أرد على ما ليس شخصيًّا جدًّا وأتجنّب الباقي.", "outcome": "critical"}
       ],
       "talking_point_ar": "«يبدو أني أعرفه» ليست تأكيدًا — هذه هي الطريقة التي يدخل بها شخص على مجموعة أصدقاء كاملة. اجعل أول سؤال منك عن الشخص الآخر لا عن ابنك: «كيف دخل عليك؟» المراهق في هذا السنّ يشعر أنه انخدع، وهذا الشعور هو الذي يمنعه أن يحكي — فتكلّم عن ذكاء الطريقة، لا عن غفلته."
     },
@@ -23,9 +23,9 @@
       "source_unit_id": "cyb-e93ba81b",
       "alerts_parent": true,
       "choices": [
-        {"key": "send", "text_ar": "أرسل، فهو أرسل أولًا، إذن لا خطر.", "outcome": "critical"},
         {"key": "refuse_stay", "text_ar": "أرفض لكن أظل أتكلم معه عاديًّا.", "outcome": "unsafe"},
-        {"key": "tell", "text_ar": "أوقف الكلام كله وأخبر شخصًا كبيرًا.", "outcome": "safe", "tells_parent": true}
+        {"key": "tell", "text_ar": "أوقف الكلام كله وأخبر شخصًا كبيرًا.", "outcome": "safe", "tells_parent": true},
+        {"key": "send", "text_ar": "أرسل، فهو أرسل أولًا، إذن لا خطر.", "outcome": "critical"}
       ],
       "talking_point_ar": "«أنا أرسلت أولًا» أقدم أسلوب في الابتزاز، والصورة التي أرسلها ليست صورته غالبًا. وأصعب ما هنا أن ابنك قد يكون أرسل فعلًا ويسمعك الآن وهو خائف — فقل هذه الجملة بصوت عالٍ مرة واحدة على الأقل: «إن كنت قد أرسلت، تعال قل لي، لن تُعاقَب.» هذا هو الفرق بين أن تعرف بعد ساعة أو بعد شهر."
     },
@@ -48,9 +48,9 @@
       "source_unit_id": "cyb-c3862bd9",
       "alerts_parent": true,
       "choices": [
+        {"key": "tell", "text_ar": "أخرج من اللعبة وأخبر أبي أو أمي.", "outcome": "safe", "tells_parent": true},
         {"key": "vague", "text_ar": "أرد بإجابات غير دقيقة حتى لا ينزعج.", "outcome": "critical"},
-        {"key": "mute", "text_ar": "أكتم صوته وأكمل اللعب.", "outcome": "unsafe"},
-        {"key": "tell", "text_ar": "أخرج من اللعبة وأخبر أبي أو أمي.", "outcome": "safe", "tells_parent": true}
+        {"key": "mute", "text_ar": "أكتم صوته وأكمل اللعب.", "outcome": "unsafe"}
       ],
       "talking_point_ar": "الأسئلة عن مواعيد الأهل ليست فضولًا — هي المعلومة الوحيدة التي تُحدث فرقًا. وابنك غالبًا سيدافع عنه («هذا صديقي منذ شهور») وهذا طبيعي، فهو فعلًا منذ شهور. لا تهاجم الشخص، بل اسأل عن السؤال نفسه: «لماذا سأل عن مواعيدنا نحن؟»"
     },
@@ -61,8 +61,8 @@
       "alerts_parent": true,
       "choices": [
         {"key": "open_it", "text_ar": "أفتحه، فليس بيني وبينه شيء خطأ.", "outcome": "critical"},
-        {"key": "refuse_silent", "text_ar": "أرفض ولا أخبر أحدًا.", "outcome": "unsafe"},
-        {"key": "tell", "text_ar": "أرفض وأخبرهم أن أحدًا طلب مني ذلك.", "outcome": "safe", "tells_parent": true}
+        {"key": "tell", "text_ar": "أرفض وأخبرهم أن أحدًا طلب مني ذلك.", "outcome": "safe", "tells_parent": true},
+        {"key": "refuse_silent", "text_ar": "أرفض ولا أخبر أحدًا.", "outcome": "unsafe"}
       ],
       "talking_point_ar": "الحساب الآخر هو الخطوة التي يصير بعدها كل شيء غير مرئي. ولاحظ أن ابنك قد يكون فتح واحدًا فعلًا لأسباب عادية تمامًا، فلا تجعل الكلام تحقيقًا. الجملة التي تفتح الباب: «هل طلب منك أحد أن تخفي شيئًا عنّا من قبل؟» — وهذه مختلفة تمامًا عن «هل عندك حساب آخر؟»"
     }

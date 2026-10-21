@@ -106,8 +106,10 @@ def test_answering_returns_no_verdict(child):
 
     cid = child()
     scenario = cl.load_scenarios("stranger")[0]
-    result = cl.answer(DEVICE, cid, "stranger", scenario["key"],
-                       scenario["choices"][0]["key"])
+    # By outcome, never by slot: the bank's choice order is deliberately
+    # spread (ops/tools/balance_quiz_answer_positions.py).
+    unsafe = next(c for c in scenario["choices"] if c["outcome"] != "safe")
+    result = cl.answer(DEVICE, cid, "stranger", scenario["key"], unsafe["key"])
     # The service layer carries `outcome` for the alert path. What must not
     # leak is the router's response — asserted in the router test below.
     assert result["ok"] is True
@@ -456,7 +458,10 @@ def test_the_attempt_counter_is_scoped_to_the_level(child):
     """Two levels sharing a scenario key used to share an attempt counter."""
     cid = child()
     s = cl.next_scenario(cid, "stranger")
-    cl.answer(DEVICE, cid, "stranger", s["key"], s["choices"][0]["key"])
+    # A non-safe choice, picked by outcome: a safe one closes the scenario and
+    # the second answer would come back `already` with no attempt counted.
+    unsafe = next(c for c in s["choices"] if c["outcome"] != "safe")
+    cl.answer(DEVICE, cid, "stranger", s["key"], unsafe["key"])
     conn = get_conn()
     try:
         conn.execute(
@@ -468,7 +473,7 @@ def test_the_attempt_counter_is_scoped_to_the_level(child):
         conn.commit()
     finally:
         conn.close()
-    result = cl.answer(DEVICE, cid, "stranger", s["key"], s["choices"][0]["key"])
+    result = cl.answer(DEVICE, cid, "stranger", s["key"], unsafe["key"])
     # 2, not 10: the other level's attempt 9 is not this level's history.
     assert result["attempt"] == 2
 

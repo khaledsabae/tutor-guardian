@@ -24,6 +24,11 @@ ROOT = Path(__file__).resolve().parents[1]
 FC_DIR = ROOT / "docs" / "lesson_assets" / "flashcards"
 QZ_DIR = ROOT / "docs" / "lesson_assets" / "quizzes"
 INDEX = ROOT / "docs" / "lesson_index.json"
+# Correct answer goes to a spread, deterministic slot — the same one
+# ops/tools/balance_quiz_answer_positions.py would pick, so a rerun of it
+# is a no-op. Models write it first; the app never shuffles.
+sys.path.insert(0, str(ROOT / "ops" / "tools"))
+from balance_quiz_answer_positions import balance_quiz  # noqa: E402
 
 CJK_CYR = re.compile(r"[一-鿿぀-ヿ가-힯Ѐ-ӿ]")
 
@@ -2128,6 +2133,8 @@ def main():
         qz = build_quiz(spec)
         assert_clean(fc, f"{short_id} flashcards")
         assert_clean(qz, f"{short_id} quiz")
+        errs = balance_quiz(f"gen_{short_id}_qz.json", qz)
+        assert not errs, f"{short_id} quiz: {errs}"
 
         fc_id = f"gen_{short_id}_fc"
         qz_id = f"gen_{short_id}_qz"
