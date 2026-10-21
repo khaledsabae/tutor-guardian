@@ -5,6 +5,11 @@
       "question": "ما أثر الشاشة في الساعة التي تسبق النوم؟",
       "answerOptions": [
         {
+          "text": "لا أثر لها",
+          "isCorrect": false,
+          "rationale": "أثرها واضح على النوم."
+        },
+        {
           "text": "تؤخّر النوم وتقلّل عمقه بسبب الضوء والإثارة",
           "isCorrect": true,
           "rationale": "النوم وقود نمو الدماغ."
@@ -13,11 +18,6 @@
           "text": "تساعد على النوم",
           "isCorrect": false,
           "rationale": "العكس تماماً."
-        },
-        {
-          "text": "لا أثر لها",
-          "isCorrect": false,
-          "rationale": "أثرها واضح على النوم."
         }
       ],
       "hint": "ضوء أزرق + إثارة."
@@ -25,11 +25,6 @@
     {
       "question": "أين يجب ألّا توجد الشاشة أبداً؟",
       "answerOptions": [
-        {
-          "text": "في غرفة نوم الطفل",
-          "isCorrect": true,
-          "rationale": "تحمي نومه."
-        },
         {
           "text": "في الصالة",
           "isCorrect": false,
@@ -39,6 +34,11 @@
           "text": "في المطبخ",
           "isCorrect": false,
           "rationale": "غرفة النوم تحديداً."
+        },
+        {
+          "text": "في غرفة نوم الطفل",
+          "isCorrect": true,
+          "rationale": "تحمي نومه."
         }
       ],
       "hint": "غرفة النوم خالية."
@@ -52,14 +52,14 @@
           "rationale": "النوم وقود نمو دماغه."
         },
         {
-          "text": "لتوفير الكهرباء",
-          "isCorrect": false,
-          "rationale": "السبب هو جودة النوم."
-        },
-        {
           "text": "لا فائدة",
           "isCorrect": false,
           "rationale": "الأثر كبير على النوم."
+        },
+        {
+          "text": "لتوفير الكهرباء",
+          "isCorrect": false,
+          "rationale": "السبب هو جودة النوم."
         }
       ],
       "hint": "ضوء + إثارة."

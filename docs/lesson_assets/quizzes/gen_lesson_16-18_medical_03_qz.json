@@ -10,14 +10,14 @@
           "rationale": "حالة بناء إيجابي مستمر."
         },
         {
-          "text": "مجرد عدم وجود مرض",
-          "isCorrect": false,
-          "rationale": "تعريف ناقص."
-        },
-        {
           "text": "الثراء المادي",
           "isCorrect": false,
           "rationale": "المال لا يضمن الصحة النفسية."
+        },
+        {
+          "text": "مجرد عدم وجود مرض",
+          "isCorrect": false,
+          "rationale": "تعريف ناقص."
         }
       ],
       "hint": "غياب مرض أم بناء؟"
@@ -25,6 +25,11 @@
     {
       "question": "لماذا يحمي 'المعنى' الصحة النفسية؟",
       "answerOptions": [
+        {
+          "text": "يسبب التعاسة",
+          "isCorrect": false,
+          "rationale": "بل يمنح رضاً."
+        },
         {
           "text": "لأن وجود هدف يحمي من الفراغ ويقود الطاقة",
           "isCorrect": true,
@@ -34,11 +39,6 @@
           "text": "لا علاقة له بالنفسية",
           "isCorrect": false,
           "rationale": "المعنى عامل حماية قوي."
-        },
-        {
-          "text": "يسبب التعاسة",
-          "isCorrect": false,
-          "rationale": "بل يمنح رضاً."
         }
       ],
       "hint": "ما الذي يحمي من الفراغ؟"
@@ -46,11 +46,6 @@
     {
       "question": "كيف ينظر الدرس إلى طلب المساعدة؟",
       "answerOptions": [
-        {
-          "text": "علامة نضج وقوة لا ضعف",
-          "isCorrect": true,
-          "rationale": "الاعتراف بالحاجة شجاعة."
-        },
         {
           "text": "عيب وضعف",
           "isCorrect": false,
@@ -60,6 +55,11 @@
           "text": "غير ضروري أبداً",
           "isCorrect": false,
           "rationale": "قد يكون منقذاً."
+        },
+        {
+          "text": "علامة نضج وقوة لا ضعف",
+          "isCorrect": true,
+          "rationale": "الاعتراف بالحاجة شجاعة."
         }
       ],
       "hint": "قوة أم ضعف؟"
