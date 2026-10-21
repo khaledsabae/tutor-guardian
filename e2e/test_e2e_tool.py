@@ -205,6 +205,20 @@ class CiChildNameTest(unittest.TestCase):
             self.assertNotIn("onbDefaultChildName", flow.read_text(encoding="utf-8"), flow.name)
 
 
+class HubScrollTest(unittest.TestCase):
+    def test_every_down_search_for_the_parent_day_tile_looks_up_first(self):
+        """The hub keeps the offset the Settings shots left (its bottom); a DOWN
+        search alone missed «يوم الطفل» at 200% font (runs 38777734035 and
+        39649673035), and the praise shots after it were never taken."""
+        steps = list(yaml.safe_load_all((FLOWS / "gallery" / "shoot.yaml").read_text(encoding="utf-8")))[-1]
+        searches = [s["scrollUntilVisible"] for s in steps
+                    if isinstance(s, dict) and "scrollUntilVisible" in s
+                    and s["scrollUntilVisible"]["element"]["text"] == "${output.tile.hubParentDay}"]
+        self.assertGreaterEqual(len(searches), 4)
+        for up, down in zip(searches[::2], searches[1::2]):
+            self.assertEqual((up["direction"], down["direction"]), ("UP", "DOWN"))
+
+
 class FlowReferencesTest(unittest.TestCase):
     def test_every_selector_reference_exists(self):
         """A typo in `${output.t.someKey}` must fail here, not 20 minutes into CI."""
