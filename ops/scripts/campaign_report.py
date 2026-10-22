@@ -39,6 +39,7 @@ from __future__ import annotations
 
 import argparse
 import bisect
+import html
 import json
 import os
 import re
@@ -55,6 +56,11 @@ _HERE = Path(globals().get("__file__", "")).resolve()
 # there is no file to resolve from; the container's working dir is /app.
 _ROOT = _HERE.parents[2] if _HERE.is_file() else Path.cwd()
 _DB = Path(os.environ.get("CONVERSATIONS_DB", str(_ROOT / "ops" / "conversations.db")))
+# The code registry: who holds each code. In production docs/ is the host
+# checkout bind-mounted read-only, reset to the deployed commit on every deploy.
+_REGISTRY = _ROOT / "docs" / "marketing" / "campaign_codes.md"
+# | `DA03` | د. جاسم المطوع | … — the second cell, up to the first « — ».
+_REGISTRY_ROW = re.compile(r"^\|\s*`([A-Z]{2}[0-9]{2})`\s*\|([^|\n]*)\|", re.M)
 
 # Mirror of CAMPAIGN_CHANNELS in backend/app/services/attribution.py, copied so
 # this script runs on its own (and on a host whose backend predates it).
@@ -149,6 +155,25 @@ def is_campaign_code(code: str | None) -> bool:
 
 def channel_of(code: str) -> str:
     return CAMPAIGN_CHANNELS[code[:2]][0]
+
+
+def code_names(path: Path = _REGISTRY) -> dict[str, str]:
+    """`{'DA03': 'د. جاسم المطوع', …}` from docs/marketing/campaign_codes.md.
+
+    Names and channel types only — the repository is public. Markdown emphasis
+    and backticks are dropped, and anything after « — » is a note, not the
+    name. A missing registry gives {}: the report then shows bare codes.
+    """
+    try:
+        text = path.read_text(encoding="utf-8")
+    except OSError:
+        return {}
+    names: dict[str, str] = {}
+    for code, cell in _REGISTRY_ROW.findall(text):
+        name = cell.split(" — ", 1)[0].replace("**", "").replace("`", "").strip()
+        if name and code not in names:
+            names[code] = name
+    return names
 
 
 def _connect_ro(db_path: Path) -> sqlite3.Connection:
@@ -358,7 +383,9 @@ def _line(c: Cohort, with_clicks: bool = True) -> str:
     return " · ".join(parts)
 
 
-def format_report(data: dict, days: int, now: datetime) -> str:
+def format_report(data: dict, days: int, now: datetime,
+                  names: dict[str, str] | None = None) -> str:
+    names = code_names() if names is None else names
     out = [f"📣 <b>تقرير الحملات</b> — آخر {days} يومًا (حتى {now:%Y-%m-%d %H:%M} UTC)", ""]
     campaigns: dict[str, Cohort] = data["campaigns"]
     ranked = sorted(campaigns.items(), key=lambda kv: (-kv[1].new, -kv[1].clicks, kv[0]))
@@ -366,7 +393,8 @@ def format_report(data: dict, days: int, now: datetime) -> str:
         out.append("لا كود حملة له نقرة أو تثبيت في هذه الفترة.")
     for code, c in ranked[:_MAX_CODES_LISTED]:
         since = f" · منذ {c.first_seen[:10]}" if c.first_seen else ""
-        out.append(f"<b>{code}</b> · {channel_of(code)}{since}")
+        name = f" · {html.escape(names[code])}" if code in names else ""
+        out.append(f"<b>{code}</b> · {channel_of(code)}{name}{since}")
         out.append("  " + _line(c))
     rest = ranked[_MAX_CODES_LISTED:]
     if rest:

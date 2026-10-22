@@ -152,6 +152,8 @@ def test_dry_run_prints_aggregates_only(report_db, capsys, monkeypatch):
     assert cr.main(["--db", str(report_db), "--dry-run", "--days", "365"]) == 0
     out = capsys.readouterr().out
     assert "<b>DA01</b> · preacher_ar" in out and "WA01" in out
+    # The holder's name from docs/marketing/campaign_codes.md, beside the code.
+    assert "<b>DA01</b> · preacher_ar · د. هيثم طلعت" in out
     assert "تثبيت 5 [بالكود 3 · بمطابقة IP 1 · قبل التتبّع 1]" in out  # + the June claim
     # D7 here counts five kinds of action; say so, or it gets compared with
     # weekly_funnel_report's chat + lesson figure.
@@ -373,3 +375,23 @@ def test_the_test_devices_are_found_once_per_report(report_db, monkeypatch):
     monkeypatch.setattr(cr, "e2e_devices_sql", lambda tables: calls.append(1) or sql(tables))
     _data(report_db)
     assert len(calls) == 1
+
+
+def test_code_names_reads_the_registry_and_drops_notes(tmp_path):
+    reg = tmp_path / "codes.md"
+    reg.write_text("| الكود | الاسم |\n|---|---|\n"
+                   "| `DA01` | د. هيثم طلعت — **في التداول** منذ 2026-10-04 |\n"
+                   "| `VD01` | الفيديو ١ «نور يتذكّر» | `v1_remember` | `x.mp4` |\n"
+                   "| `OT99` | **كود اختبار** — لا يُعطى لأحد |\n"
+                   "| `XX` | not a code |\n", encoding="utf-8")
+    assert cr.code_names(reg) == {"DA01": "د. هيثم طلعت", "VD01": "الفيديو ١ «نور يتذكّر»",
+                                  "OT99": "كود اختبار"}
+    assert cr.code_names(tmp_path / "missing.md") == {}
+
+
+def test_a_name_is_html_escaped_in_the_telegram_report():
+    data = {"campaigns": {"DA18": cr.Cohort(clicks=1)}, "channels": {},
+            "invites": cr.Cohort(), "everyone": cr.Cohort()}
+    out = cr.format_report(data, 30, datetime(2026, 10, 25, tzinfo=timezone.utc),
+                           names={"DA18": "<أمومة & لايف>"})
+    assert "<b>DA18</b> · preacher_ar · &lt;أمومة &amp; لايف&gt;" in out

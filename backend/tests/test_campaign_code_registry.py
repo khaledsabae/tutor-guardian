@@ -86,3 +86,35 @@ def test_no_teaser_cut_reaches_play_without_a_campaign(cut):
     play = at.play_install_url(code, at.attribution_utm(code, {}))
     assert f"referrer=ref_{code}%26" in play
     assert f"utm_campaign%3D{code}" in play
+
+
+def _names() -> dict[str, str]:
+    import sys
+    if str(_ROOT) not in sys.path:
+        sys.path.insert(0, str(_ROOT))
+    import ops.scripts.campaign_report as cr  # noqa: PLC0415
+    return cr.code_names(_REGISTRY)
+
+
+def test_every_preacher_code_handed_out_has_a_name_for_the_weekly_report():
+    names = _names()
+    wanted = [f"DA{n:02d}" for n in range(1, 20)] + [f"EN{n:02d}" for n in range(1, 11)]
+    missing = [c for c in wanted if c not in names]
+    assert not missing, f"not in {_REGISTRY.name}: {missing}"
+    assert all(at.is_campaign_code(c) for c in wanted)
+    # A name, not the old «داعية ٣» placeholder.
+    placeholders = {c: names[c] for c in wanted if names[c].startswith("داعية")}
+    assert not placeholders, placeholders
+    assert names["DA01"] == "د. هيثم طلعت"        # the note after « — » is not the name
+    assert names["DA03"] == "د. جاسم المطوع"
+    assert names["EN10"] == "Ruzi Khatun (Umm Talha)"
+
+
+def test_the_public_registry_holds_no_contact_details():
+    # The repository is public: names and channel types only.
+    text = _REGISTRY.read_text(encoding="utf-8")
+    # (root@72.62.44.131 in «التحقق» is an ssh host, not an address: no letter TLD)
+    assert not re.search(r"[\w.+-]+@[\w-]+(?:\.[\w-]+)*\.[A-Za-z]{2,}\b", text), "an e-mail address"
+    assert not re.search(r"(?<![\w/])@[A-Za-z0-9_.]{2,}", text), "a social handle"
+    assert not re.search(r"\+\d[\d\s-]{7,}\d|(?<!\d)\d{9,}(?!\d)", text), "a phone number"
+    assert not re.search(r"(wa\.me|t\.me|instagram\.com|tiktok\.com|x\.com|twitter\.com)/", text)
