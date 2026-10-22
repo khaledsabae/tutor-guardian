@@ -96,6 +96,52 @@ def cmd_deactivate_analytics(args: argparse.Namespace) -> int:
     return 0
 
 
+# ── ci-child-name ────────────────────────────────────────────────────────
+
+# The onboarding creates the child under this ARB string (POST /api/children).
+# A CI APK carries the test-traffic name there, so the child is BORN marked:
+# renaming it afterwards is a PATCH that production refuses (403
+# device_proof_required) unless the session proved itself through an FCM push,
+# which a CI emulator receives only now and then (2026-10-21).
+_CHILD_NAME_KEY = "onbDefaultChildName"
+_CHILD_NAME_OK = re.compile(r"[A-Za-z0-9-]{2,40}")
+
+
+def cmd_ci_child_name(args: argparse.Namespace) -> int:
+    """Rewrite onbDefaultChildName in every ARB and its generated Dart getter.
+
+    Both are rewritten: `flutter build` regenerates the Dart from the ARB, but
+    a checkout whose generated files are newer must not keep the old string.
+    Each file must hold the key exactly once, or nothing is written."""
+    name = args.name
+    if not _CHILD_NAME_OK.fullmatch(name):
+        print(f"::error::CI child name {name!r} must match {_CHILD_NAME_OK.pattern}", file=sys.stderr)
+        return 1
+    l10n = Path(args.l10n_dir)
+    arb_re = re.compile(r'("%s"\s*:\s*)"(?:[^"\\]|\\.)*"' % _CHILD_NAME_KEY)
+    dart_re = re.compile(r"(String get %s => )'(?:[^'\\]|\\.)*';" % _CHILD_NAME_KEY)
+    plan: list[tuple[Path, str]] = []
+    try:
+        arbs = sorted(l10n.glob("app_*.arb"))
+        darts = sorted(l10n.glob("app_localizations_*.dart"))
+        if not arbs or not darts:
+            raise ValueError(f"no app_*.arb / app_localizations_*.dart in {l10n}")
+        for files, rx, repl in ((arbs, arb_re, r'\1"%s"' % name),
+                                (darts, dart_re, r"\1'%s';" % name)):
+            for path in files:
+                text, n = rx.subn(repl, path.read_text(encoding="utf-8"))
+                if n != 1:
+                    raise ValueError(f"{path.name}: {_CHILD_NAME_KEY} found {n} times, want 1")
+                plan.append((path, text))
+        for path, text in plan:
+            path.write_text(text, encoding="utf-8")
+    except (OSError, ValueError) as exc:
+        print(f"::error::CI child name failed: {exc}", file=sys.stderr)
+        return 1
+    print(f"{_CHILD_NAME_KEY}={name} in {len(plan)} files under {l10n}")
+    return 0
+
+
 # ── l10n ─────────────────────────────────────────────────────────────────
 
 # Every ARB key a flow uses. A key missing from the ARB becomes a pattern that
@@ -1460,6 +1506,11 @@ def main(argv: list[str] | None = None) -> int:
     s = sub.add_parser("deactivate-analytics", help="disable Analytics in a disposable CI manifest")
     s.add_argument("--manifest", required=True)
     s.set_defaults(func=cmd_deactivate_analytics)
+
+    s = sub.add_parser("ci-child-name", help="create the onboarding child under the test-traffic name")
+    s.add_argument("--l10n-dir", required=True)
+    s.add_argument("--name", required=True)
+    s.set_defaults(func=cmd_ci_child_name)
 
     s = sub.add_parser("l10n", help="generate flows/common/l10n.js")
     s.add_argument("--arb-dir", required=True)

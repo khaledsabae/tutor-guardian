@@ -55,7 +55,7 @@ name: Mobile E2E (emulator)
 # ── Test traffic in PRODUCTION — how to exclude it ──────────────────────
 # A release build talks to https://tg-api.alsaba.cloud. Each lineage creates one
 # child (fresh, upgrade, gallery — three per run since the gallery lineage),
-# renamed seconds after onboarding to the fixed name below:
+# created under the fixed name below (built into the CI APK, no rename):
 #   column  child_profiles.name      value  LIKE 'E2E-Maestro%'
 #   devices WITH e2e AS (SELECT device_id FROM child_profiles WHERE name LIKE 'E2E-Maestro%')
 #           SELECT device_id FROM e2e
@@ -204,18 +204,22 @@ jobs:
           - variant: head
             ref: ${{ github.event.pull_request.head.sha || github.sha }}
             dart_defines: ''
+            child_name: E2E-Maestro
           - variant: baseline
             ref: ${{ inputs.baseline_ref || vars.E2E_BASELINE_REF || 'efaa740f48389636ea4bf06b6a71bbe3f324e8bc' }}
             dart_defines: ''
+            child_name: E2E-Maestro
           # The Ramadan rehearsal's pair (job `rehearsal`): both talk to the
           # candidate backend on the runner, never to production. Only the
           # rehearsal head carries the sound check's key probe.
           - variant: rehearsal-head
             ref: ${{ github.event.pull_request.head.sha || github.sha }}
             dart_defines: '--dart-define=API_BASE_URL=http://10.0.2.2:8090 --dart-define=E2E_PROBES=true'
+            child_name: E2E-Rehearsal
           - variant: rehearsal-baseline
             ref: ${{ inputs.rehearsal_baseline_ref || 'c30870145dda59acffd63b68784ad6f9e0974ca5' }}
             dart_defines: '--dart-define=API_BASE_URL=http://10.0.2.2:8090'
+            child_name: E2E-Rehearsal
     defaults:
       run:
         working-directory: mobile
@@ -268,6 +272,21 @@ jobs:
           set -euo pipefail
           python3 -S "$RUNNER_TEMP/ci-helper/e2e_tool.py" deactivate-analytics --manifest android/app/src/main/AndroidManifest.xml
 
+      - name: Create the onboarding child as test traffic
+        # The onboarding child is created as matrix.child_name — the CHILD_NAME
+        # default of e2e/run.sh (head/baseline: the name every production
+        # exclusion query keys on) or e2e/rehearsal.sh — instead of being
+        # renamed after onboarding. Production answers a rename with 403
+        # device_proof_required until the session proves itself through an FCM
+        # push (MOBILE_API §9.0.1), which a CI emulator receives only now and
+        # then; creating a child needs no proof.
+        shell: bash
+        env:
+          CHILD_NAME: ${{ matrix.child_name }}
+        run: |
+          set -euo pipefail
+          python3 -S "$RUNNER_TEMP/ci-helper/e2e_tool.py" ci-child-name --l10n-dir lib/l10n --name "$CHILD_NAME"
+
       - name: Build the release APK (x86_64, as the emulator runs it)
         # R8 full mode + shrinkResources run exactly as for Play; only the ABI
         # is narrowed to the emulator's. head/baseline pass no define at all;
@@ -290,13 +309,14 @@ jobs:
         env:
           VARIANT: ${{ matrix.variant }}
           DART_DEFINES: ${{ matrix.dart_defines }}
+          CHILD_NAME: ${{ matrix.child_name }}
         run: |
           OUT="$RUNNER_TEMP/e2e-apk"
           mkdir -p "$OUT/l10n"
           cp build/app/outputs/flutter-apk/app-release.apk "$OUT/app.apk"
           cp lib/l10n/app_ar.arb lib/l10n/app_en.arb "$OUT/l10n/"
           echo "$VARIANT $(git rev-parse --short HEAD) $(grep -m1 '^version:' pubspec.yaml | awk '{print $2}')" > "$OUT/ref.txt"
-          printf '%s\n' 'signing=ci-debug-keystore' 'firebase_analytics_collection_deactivated=true' "dart_defines=$DART_DEFINES" > "$OUT/ci-config.txt"
+          printf '%s\n' 'signing=ci-debug-keystore' 'firebase_analytics_collection_deactivated=true' "dart_defines=$DART_DEFINES" "onboarding_child_name=$CHILD_NAME" > "$OUT/ci-config.txt"
           cat "$OUT/ref.txt"; ls -la "$OUT"
 
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
