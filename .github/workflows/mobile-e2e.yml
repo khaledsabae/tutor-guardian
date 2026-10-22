@@ -11,14 +11,30 @@ name: Mobile E2E (emulator)
 # production VPS. Nothing in this workflow runs on Khaled's machine either.
 #
 # ── Stable required check ────────────────────────────────────────────────
-# Every PR targeting main runs this workflow, including backend/docs-only PRs.
-# This deliberately pays for two release APK builds and emulator journeys on
-# GitHub-hosted runners so requiring "Mobile delivery gate" cannot leave a
-# path-filtered PR waiting forever for a check that was never reported.
-# The final job uses always() and requires keystore, the complete build matrix,
-# and e2e to succeed. Failure, cancellation, skipped jobs, or missing results
-# cannot produce a green gate. Branch protection is configured separately by
-# the parent after the first green hosted gate; this workflow does not set it.
+# Every PR targeting main runs this workflow, and "Mobile delivery gate" (the
+# one required status check on main) always reports. There is deliberately NO
+# workflow-level `paths:` filter: a filtered-out PR would wait forever for a
+# required check that never comes. Instead the first job, `changes`, reads the
+# PR's file list and decides what the change can reach:
+#   app        → everything below (four APKs, journeys, rehearsal). The APK
+#                is built from mobile/ alone, so: mobile/**, e2e/**,
+#                frontend/icons/** (the launcher-icon source pubspec.yaml
+#                names), this workflow and e2e-avd-cache.yml.
+#   candidate  → the rehearsal pair only (keystore, the two rehearsal APKs,
+#                the rehearsal). The rehearsal builds the PR head's backend
+#                image and the app talks to it, so whatever that image serves
+#                to the app counts: backend/** (not backend/tests/**),
+#                knowledge_base/**, docs/** (not docs/marketing/**),
+#                .well-known/**, .github/ci/requirements-prod.lock,
+#                .dockerignore. The journeys are skipped: their APK talks to
+#                PRODUCTION, so they never see a PR's backend.
+#   neither    → every heavy job is skipped; the gate passes in a minute.
+# workflow_dispatch, an empty file list and a list at the API's 3000-file cap
+# all count as `app` (the full suite). The gate (always()) requires `changes`
+# to succeed with an explicit verdict, every job that verdict needs to
+# succeed, and every other job to be skipped — so a failure, a cancellation,
+# a missing result or a broken `changes` job still cannot make it green.
+# e2e/test_workflow.py executes both the classifier and the gate.
 # Manual workflow_dispatch remains available for baseline/upgrade validation.
 #
 # ── What it checks (e2e/run.sh, flows in e2e/flows/) ──────────────────────
@@ -158,8 +174,107 @@ env:
   SYSTEM_IMAGE: 'system-images;android-35;google_apis;x86_64'
 
 jobs:
+  changes:
+    name: What the change can reach
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      pull-requests: read   # the PR's file list, nothing else
+    outputs:
+      app: ${{ steps.classify.outputs.app }}
+      candidate: ${{ steps.classify.outputs.candidate }}
+    steps:
+      # The API's list is the PR's own diff (merge base → head), renames with
+      # both names. It stops at 3000 files; the classifier treats that as app.
+      - name: List the PR's files
+        if: github.event_name == 'pull_request'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          PR: ${{ github.event.pull_request.number }}
+        run: |
+          set -uo pipefail
+          for attempt in 1 2 3; do
+            if gh api --paginate "repos/$REPO/pulls/$PR/files?per_page=100" \
+                 --jq '.[] | .filename, (.previous_filename // empty)' > "$RUNNER_TEMP/pr-files.txt"; then
+              echo "$(wc -l < "$RUNNER_TEMP/pr-files.txt") paths listed"
+              exit 0
+            fi
+            sleep $((attempt * 10))
+          done
+          echo "::error::could not list the PR's files"
+          exit 1
+
+      - name: Decide which suites the change can reach
+        id: classify
+        env:
+          EVENT: ${{ github.event_name }}
+          FILES: ${{ runner.temp }}/pr-files.txt
+        run: |
+          python3 - <<'PY'
+          import os
+
+          # The release APK is built from mobile/ alone (flutter build reads
+          # nothing outside it); e2e/ drives it; frontend/icons/ is the icon
+          # source pubspec.yaml names; the two workflows are this suite.
+          APP_PREFIXES = ('mobile/', 'e2e/', 'frontend/icons/')
+          APP_FILES = {'.github/workflows/mobile-e2e.yml', '.github/workflows/e2e-avd-cache.yml'}
+          # What backend/Dockerfile puts in the rehearsal's candidate image and
+          # the app can reach through it (the app fetches /docs/ — stories,
+          # lesson assets). Not runtime: backend tests, marketing copy; the
+          # landing pages (frontend/) and ops/ scripts are never on the app's path.
+          CANDIDATE_PREFIXES = ('backend/', 'knowledge_base/', 'docs/', '.well-known/')
+          CANDIDATE_FILES = {'.github/ci/requirements-prod.lock', '.dockerignore'}
+          NOT_CANDIDATE = ('backend/tests/', 'docs/marketing/')
+          API_CAP = 3000
+
+          def reaches_app(p):
+              return p in APP_FILES or p.startswith(APP_PREFIXES)
+
+          def reaches_candidate(p):
+              return p in CANDIDATE_FILES or (p.startswith(CANDIDATE_PREFIXES)
+                                              and not p.startswith(NOT_CANDIDATE))
+
+          event = os.environ['EVENT']
+          if event != 'pull_request':
+              app, why = True, f'{event}: always the full suite'
+              cand, cand_hits = True, []
+              app_hits = []
+          else:
+              with open(os.environ['FILES'], encoding='utf-8') as f:
+                  files = [l for l in f.read().splitlines() if l]
+              app_hits = [p for p in files if reaches_app(p)]
+              cand_hits = [p for p in files if reaches_candidate(p)]
+              if not files:
+                  app, why = True, 'empty file list: full suite to be safe'
+              elif len(files) >= API_CAP:
+                  app, why = True, f'{len(files)} paths (API cap {API_CAP}): full suite to be safe'
+              else:
+                  app = bool(app_hits)
+                  why = f'{len(files)} paths, {len(app_hits)} reach the app, {len(cand_hits)} the candidate backend'
+              cand = app or bool(cand_hits)
+
+          verdict = 'app' if app else ('candidate' if cand else 'neither')
+          lines = [f'Change detection: **{verdict}** ({why})']
+          for label, hits in (('app', app_hits), ('candidate backend', cand_hits)):
+              if hits:
+                  lines.append(f'- reaches the {label}: ' + ', '.join(f'`{p}`' for p in hits[:20])
+                               + (f' … +{len(hits) - 20}' if len(hits) > 20 else ''))
+          print('\n'.join(lines))
+          with open(os.environ['GITHUB_OUTPUT'], 'a', encoding='utf-8') as out:
+              out.write(f"app={'true' if app else 'false'}\n")
+              out.write(f"candidate={'true' if cand else 'false'}\n")
+          summary = os.environ.get('GITHUB_STEP_SUMMARY')
+          if summary:
+              with open(summary, 'a', encoding='utf-8') as s:
+                  s.write('\n'.join(lines) + '\n')
+          PY
+
   keystore:
     name: CI debug keystore
+    needs: changes
+    if: needs.changes.outputs.candidate == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
@@ -194,7 +309,8 @@ jobs:
 
   build:
     name: Release APK (${{ matrix.variant }})
-    needs: keystore
+    needs: [changes, keystore]
+    if: needs.changes.outputs.app == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 45
     strategy:
@@ -209,6 +325,124 @@ jobs:
             ref: ${{ inputs.baseline_ref || vars.E2E_BASELINE_REF || 'efaa740f48389636ea4bf06b6a71bbe3f324e8bc' }}
             dart_defines: ''
             child_name: E2E-Maestro
+    defaults:
+      run:
+        working-directory: mobile
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ matrix.ref }}
+          persist-credentials: false
+
+      - uses: actions/setup-java@de7274f081f381c8f8158605e0321c36c376e2e6 # v6.0.1
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: gradle
+
+      - uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2.23.0
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: stable
+          cache: true
+
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: e2e-debug-keystore
+          path: ${{ runner.temp }}/keystore
+
+      - name: Sign with it
+        # android/app/key.properties is the project's own signing switch
+        # (build.gradle.kts). Pointing it at the run's keystore is explicit;
+        # relying on AGP's default debug keystore was not — on the runner AGP
+        # signed with a key of its own, which would break `install -r`.
+        run: |
+          {
+            echo "storeFile=$RUNNER_TEMP/keystore/debug.keystore"
+            echo "storePassword=android"
+            echo "keyAlias=androiddebugkey"
+            echo "keyPassword=android"
+          } > android/app/key.properties
+
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: e2e-ci-helper
+          path: ${{ runner.temp }}/ci-helper
+
+      - name: Deactivate Firebase Analytics for CI APKs
+        # Pure stdlib head helper, applied to BOTH matrix checkout manifests.
+        # https://firebase.google.com/docs/analytics/android/configure-data-collection
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -S "$RUNNER_TEMP/ci-helper/e2e_tool.py" deactivate-analytics --manifest android/app/src/main/AndroidManifest.xml
+
+      - name: Create the onboarding child as test traffic
+        # The onboarding child is created as matrix.child_name — the CHILD_NAME
+        # default of e2e/run.sh (head/baseline: the name every production
+        # exclusion query keys on) or e2e/rehearsal.sh — instead of being
+        # renamed after onboarding. Production answers a rename with 403
+        # device_proof_required until the session proves itself through an FCM
+        # push (MOBILE_API §9.0.1), which a CI emulator receives only now and
+        # then; creating a child needs no proof.
+        shell: bash
+        env:
+          CHILD_NAME: ${{ matrix.child_name }}
+        run: |
+          set -euo pipefail
+          python3 -S "$RUNNER_TEMP/ci-helper/e2e_tool.py" ci-child-name --l10n-dir lib/l10n --name "$CHILD_NAME"
+
+      - name: Build the release APK (x86_64, as the emulator runs it)
+        # R8 full mode + shrinkResources run exactly as for Play; only the ABI
+        # is narrowed to the emulator's. head/baseline pass no define at all;
+        # the rehearsal pair's defines are in the matrix above.
+        env:
+          DART_DEFINES: ${{ matrix.dart_defines }}
+        run: flutter build apk --release --target-platform android-x64 $DART_DEFINES
+
+      - name: Check the signer is the run's keystore
+        run: |
+          APK=build/app/outputs/flutter-apk/app-release.apk
+          APKSIGNER=$(ls -d "$ANDROID_HOME"/build-tools/* | sort -V | tail -1)/apksigner
+          got=$("$APKSIGNER" verify --print-certs "$APK" | grep -m1 'certificate SHA-256 digest' | awk '{print $NF}')
+          want=$(keytool -list -v -keystore "$RUNNER_TEMP/keystore/debug.keystore" -storepass android -alias androiddebugkey \
+                 | grep -m1 'SHA256:' | awk '{print $2}' | tr -d ':' | tr 'A-F' 'a-f')
+          echo "signer $got"
+          [ -n "$got" ] && [ "$got" = "$want" ] || { echo "::error::APK signer $got is not the run keystore $want"; exit 1; }
+
+      - name: Package APK + its ARB strings
+        env:
+          VARIANT: ${{ matrix.variant }}
+          DART_DEFINES: ${{ matrix.dart_defines }}
+          CHILD_NAME: ${{ matrix.child_name }}
+        run: |
+          OUT="$RUNNER_TEMP/e2e-apk"
+          mkdir -p "$OUT/l10n"
+          cp build/app/outputs/flutter-apk/app-release.apk "$OUT/app.apk"
+          cp lib/l10n/app_ar.arb lib/l10n/app_en.arb "$OUT/l10n/"
+          echo "$VARIANT $(git rev-parse --short HEAD) $(grep -m1 '^version:' pubspec.yaml | awk '{print $2}')" > "$OUT/ref.txt"
+          printf '%s\n' 'signing=ci-debug-keystore' 'firebase_analytics_collection_deactivated=true' "dart_defines=$DART_DEFINES" "onboarding_child_name=$CHILD_NAME" > "$OUT/ci-config.txt"
+          cat "$OUT/ref.txt"; ls -la "$OUT"
+
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: e2e-apk-${{ matrix.variant }}
+          path: ${{ runner.temp }}/e2e-apk
+          retention-days: 7
+
+  # The rehearsal pair: the same steps as `build` (e2e/test_workflow.py
+  # checks they stay identical), a job of its own so a backend-only change can
+  # run the rehearsal without the journeys' two APKs.
+  build_rehearsal:
+    name: Release APK (${{ matrix.variant }})
+    needs: [changes, keystore]
+    if: needs.changes.outputs.candidate == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    strategy:
+      fail-fast: true
+      matrix:
+        include:
           # The Ramadan rehearsal's pair (job `rehearsal`): both talk to the
           # candidate backend on the runner, never to production. Only the
           # rehearsal head carries the sound check's key probe.
@@ -327,7 +561,8 @@ jobs:
 
   e2e:
     name: Emulator journeys (API 35)
-    needs: build
+    needs: [changes, build]
+    if: needs.changes.outputs.app == 'true'
     runs-on: ubuntu-latest
     # 75 min covered the 13 journeys; the informational gallery lineage (a
     # third onboarding plus six shoots, two of them at 200% font) needs
@@ -497,7 +732,8 @@ jobs:
 
   rehearsal:
     name: Ramadan rehearsal + sound × recitation (API 35)
-    needs: build
+    needs: [changes, build_rehearsal]
+    if: needs.changes.outputs.candidate == 'true'
     runs-on: ubuntu-latest
     # Backend image (~3 min from the layer cache), boot, then ~24 stage walks
     # and the sound check on one emulator.
@@ -681,11 +917,11 @@ jobs:
   delivery_gate:
     name: Mobile delivery gate
     if: ${{ always() }}
-    needs: [keystore, build, e2e, rehearsal]
+    needs: [changes, keystore, build, build_rehearsal, e2e, rehearsal]
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - name: Require every mandatory job to succeed
+      - name: Require every job the change needs to succeed
         env:
           NEEDS_JSON: ${{ toJSON(needs) }}
         run: |
@@ -695,13 +931,30 @@ jobs:
           import sys
 
           results = json.loads(os.environ["NEEDS_JSON"])
-          failed = [
-              f"{job}={results.get(job, {}).get('result', 'missing')}"
-              for job in ("keystore", "build", "e2e", "rehearsal")
-              if results.get(job, {}).get("result") != "success"
-          ]
+          changes = results.get("changes") or {}
+          outputs = changes.get("outputs") or {}
+          verdict = (outputs.get("app"), outputs.get("candidate"))
+          if changes.get("result") != "success" or not set(verdict) <= {"true", "false"}:
+              print("::error::Change detection did not decide: "
+                    f"changes={changes.get('result', 'missing')}, app={verdict[0]}, candidate={verdict[1]}")
+              sys.exit(1)
+          app = verdict[0] == "true"
+          candidate = app or verdict[1] == "true"
+          required = set()
+          if candidate:
+              required |= {"keystore", "build_rehearsal", "rehearsal"}
+          if app:
+              required |= {"build", "e2e"}
+          failed = []
+          for job in ("keystore", "build", "build_rehearsal", "e2e", "rehearsal"):
+              result = (results.get(job) or {}).get("result", "missing")
+              if job in required and result != "success":
+                  failed.append(f"{job}={result}")
+              elif job not in required and result != "skipped":
+                  failed.append(f"{job}={result} (expected skipped)")
           if failed:
               print("::error::Mandatory mobile delivery jobs did not succeed: " + ", ".join(failed))
               sys.exit(1)
-          print("All mandatory mobile delivery jobs succeeded.")
+          scope = "app: full suite" if app else ("candidate backend: rehearsal only" if candidate else "neither: nothing to run")
+          print(f"Change reaches {scope}; every job it needs succeeded ({', '.join(sorted(required)) or 'none'}).")
           PY
