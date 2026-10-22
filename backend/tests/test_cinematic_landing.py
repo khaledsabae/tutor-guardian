@@ -161,3 +161,40 @@ def test_every_in_page_link_has_a_target(client):
         anchors = set(re.findall(r'href="#([^"]+)"', html))
         assert anchors, path
         assert anchors <= ids, f"{path}: dangling {sorted(anchors - ids)}"
+
+
+# The official accounts (Khaled, 2026-10-22): linked from our own pages, never
+# embedded — plain anchors in the footer, nothing fetched from their hosts.
+_SOCIAL = (
+    "https://www.facebook.com/profile.php?id=61595291327160",
+    "https://www.instagram.com/almorabbi",
+    "https://www.youtube.com/@AlmorabbiApp",
+    "https://www.tiktok.com/@almorabbiapp",
+    "https://x.com/almorabbiapp",
+)
+
+
+def test_official_accounts_are_footer_anchors_not_loads(client):
+    for path, lang in [(p, "ar") for p in _PAGES] + [(p, "en") for p in _EN_PAGES]:
+        html = client.get(path).text
+        assert f'<html lang="{lang}"' in html, path
+        footer = html[html.index("<footer>"):html.index("</footer>")]
+        assert ("تابعونا" if lang == "ar" else "Follow us") in footer, path
+        for url in _SOCIAL:
+            # Exactly one anchor per account, in the footer, opening a new tab
+            # without handing over our page or its tracking query.
+            anchors = re.findall(rf'<a [^>]*href="{re.escape(url)}"[^>]*>', html)
+            assert len(anchors) == 1, (path, url, anchors)
+            assert anchors[0] in footer, (path, url)
+            assert 'target="_blank"' in anchors[0], (path, url)
+            assert 'rel="noopener noreferrer"' in anchors[0], (path, url)
+            # The host appears in that href and nowhere else: no script, image,
+            # iframe, embed, preconnect or stylesheet from it.
+            host = url.split("/")[2]
+            assert len(re.findall(rf'(?<![\w.-]){re.escape(host)}', html)) == 1, (path, host)
+            assert not re.search(
+                rf'<(?!a\b)\w+[^>]+(?:src|href|data|srcset|action)="[^"]*{re.escape(host)}', html), (path, host)
+        # Icons are inline SVG, not an icon font or a fetched image.
+        social = footer[footer.index('class="social"'):]
+        assert social.count("<svg") == len(_SOCIAL), path
+        assert "<img" not in social and "<i " not in social, path

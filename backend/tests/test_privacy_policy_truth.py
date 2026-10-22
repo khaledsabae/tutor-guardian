@@ -196,6 +196,12 @@ HOST_DISCLOSURE = {
 _OWN_OR_INERT = {"tg-api.alsaba.cloud", "schema.org", "www.w3.org", "json-schema.org",
                  "www.sitemaps.org",   # XML namespaces and our own domain: no call leaves
                  "support.google.com"}  # Play help-centre links in comments (#21)
+# Our official social accounts (2026-10-22): the landing footer links to them
+# and loads nothing from them — a visitor's browser contacts the host only on
+# a click, with rel="noreferrer". Not processors, so long as every mention is
+# an outbound anchor (checked below; a script or embed would name a processor).
+_OUTBOUND_ONLY = {"www.facebook.com", "www.instagram.com", "www.youtube.com",
+                  "www.tiktok.com", "x.com"}
 
 
 # What the backend serves besides its Python: /ui/ (frontend/) and the teen
@@ -217,9 +223,15 @@ def test_every_external_host_in_the_backend_is_disclosed():
     assert {"backend/static/child_mode/index.html", "frontend/cinematic.html"} <= served
     hosts: set[str] = set()
     for f in files:
-        for m in re.finditer(r"https?://([a-zA-Z0-9.-]+\.[a-z]{2,})", f.read_text(encoding="utf-8")):
+        text = f.read_text(encoding="utf-8")
+        for m in re.finditer(r"https?://([a-zA-Z0-9.-]+\.[a-z]{2,})", text):
             hosts.add(m.group(1).lower())
-    hosts = {h for h in hosts if h not in _OWN_OR_INERT and not h.endswith(".local")
+            if m.group(1).lower() in _OUTBOUND_ONLY:
+                tag = text[text.rfind("<", 0, m.start()):text.find(">", m.start()) + 1]
+                assert tag.startswith("<a ") and 'rel="noopener noreferrer"' in tag, \
+                    (f.name, m.group(0))
+    hosts = {h for h in hosts if h not in _OWN_OR_INERT and h not in _OUTBOUND_ONLY
+             and not h.endswith(".local")
              and h not in ("localhost",) and "example" not in h}
     unknown = sorted(hosts - set(HOST_DISCLOSURE))
     assert unknown == [], f"name these processors in the policy and map them here: {unknown}"
