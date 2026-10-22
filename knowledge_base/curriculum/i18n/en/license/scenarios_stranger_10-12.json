@@ -17,15 +17,15 @@
           "outcome": "critical"
         },
         {
-          "key": "refuse_silent",
-          "text_ar": "I say no and just keep playing.",
-          "outcome": "unsafe"
-        },
-        {
           "key": "tell",
           "text_ar": "I say no, and I tell my dad or my mom that someone asked me for that.",
           "outcome": "safe",
           "tells_parent": true
+        },
+        {
+          "key": "refuse_silent",
+          "text_ar": "I say no and just keep playing.",
+          "outcome": "unsafe"
         }
       ],
       "talking_point_ar": "Start by thanking them for telling you, even if the whole thing happened a while ago. Someone who wants a photo from a child starts with a small request that looks ordinary — and what protects a child is not refusing once, but knowing they can tell you without being blamed. Ask them: \"What exactly did he say?\" and keep your question about the other person, not about your child."
@@ -37,14 +37,14 @@
       "alerts_parent": true,
       "choices": [
         {
-          "key": "answer",
-          "text_ar": "I answer him, because maybe I really do know him.",
-          "outcome": "critical"
-        },
-        {
           "key": "block_silent",
           "text_ar": "I block him and don't tell anyone.",
           "outcome": "unsafe"
+        },
+        {
+          "key": "answer",
+          "text_ar": "I answer him, because maybe I really do know him.",
+          "outcome": "critical"
         },
         {
           "key": "ask_parent",
@@ -62,9 +62,10 @@
       "alerts_parent": true,
       "choices": [
         {
-          "key": "accept",
-          "text_ar": "I say yes, it's a gift and nothing more.",
-          "outcome": "critical"
+          "key": "tell",
+          "text_ar": "I tell my dad or my mom, especially since he said not to tell anyone.",
+          "outcome": "safe",
+          "tells_parent": true
         },
         {
           "key": "decline_silent",
@@ -72,10 +73,9 @@
           "outcome": "unsafe"
         },
         {
-          "key": "tell",
-          "text_ar": "I tell my dad or my mom, especially since he said not to tell anyone.",
-          "outcome": "safe",
-          "tells_parent": true
+          "key": "accept",
+          "text_ar": "I say yes, it's a gift and nothing more.",
+          "outcome": "critical"
         }
       ],
       "talking_point_ar": "\"Let's keep this between us\" is the sign, not the gift. The gift may well be a real gift, but anyone who asks a child to hide something from their parents is building something else. Agree on a clear rule together: anyone who asks you to keep a secret from us — that is exactly the moment you come and tell us."
@@ -87,11 +87,6 @@
       "alerts_parent": true,
       "choices": [
         {
-          "key": "open_camera",
-          "text_ar": "I turn it on for a bit, nothing will happen.",
-          "outcome": "critical"
-        },
-        {
           "key": "voice_only",
           "text_ar": "I talk with voice only, no camera.",
           "outcome": "unsafe"
@@ -101,6 +96,11 @@
           "text_ar": "I hang up, and I tell my dad or my mom.",
           "outcome": "safe",
           "tells_parent": true
+        },
+        {
+          "key": "open_camera",
+          "text_ar": "I turn it on for a bit, nothing will happen.",
+          "outcome": "critical"
         }
       ],
       "talking_point_ar": "\"For a bit\" is what makes the request sound small. And voice only isn't safety, because the one asking is measuring the reaction, not the picture. The most important thing to say to your child here: nothing has happened that can't be walked back — whenever they tell you, we're still early."
@@ -132,39 +132,52 @@
     }
   ],
   "translation": {
-    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
-    "auto_review": {
-      "reviewers": [
-        "deepseek-v4-pro",
-        "glm-5.2"
-      ],
-      "fixer": null,
-      "rounds": 1,
-      "prompt_version": "dfa8a5f39718",
-      "content_sha256": "1821ec9500e892355f6713922f132a071edb3682aec6eeb975fdb220f0abc85e",
-      "reviewed_at": "2026-10-04T11:18:18+00:00",
-      "residual_low": [
-        {
-          "model": "deepseek-v4-pro",
-          "field": "scenarios[4].talking_point_ar",
-          "type": "meaning",
-          "why": "The English adds 'on its own', which contradicts the Arabic point that the neighborhood is sufficient only when combined with other details."
-        }
-      ],
-      "adjudicated": [],
-      "tool": "ops/tools/review_en_parity.py",
-      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
-    },
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-21",
     "reviewer_model": "deepseek-v4-pro+glm-5.2",
     "review_verdict": "low_only",
     "review_defects": [
       {
         "model": "deepseek-v4-pro",
-        "field": "scenarios[4].talking_point_ar",
+        "field": "scenarios[1].situation_ar",
         "type": "meaning",
-        "why": "The English adds 'on its own', which contradicts the Arabic point that the neighborhood is sufficient only when combined with other details."
+        "why": "The Arabic specifies the maternal cousin (son of the maternal aunt), while the English genericizes to any cousin."
       }
     ],
-    "revalidated_at": "2026-10-04T11:18:18+00:00"
+    "revalidated_at": "2026-10-21T11:42:01+00:00",
+    "auto_review": {
+      "reviewers": [
+        "deepseek-v4-pro",
+        "glm-5.2"
+      ],
+      "providers": {
+        "deepseek-v4-pro": {
+          "provider": "ollama-cloud",
+          "model": "deepseek-v4-pro"
+        },
+        "glm-5.2": {
+          "provider": "ollama-cloud",
+          "model": "glm-5.2"
+        }
+      },
+      "fixer": null,
+      "rounds": 1,
+      "prompt_version": "dfa8a5f39718",
+      "content_sha256": "07b15b711ac7b89fbd89fc6e11c8bef4951cf0f9d8c77c3317e95654f957602b",
+      "reviewed_at": "2026-10-21T11:42:01+00:00",
+      "residual_low": [
+        {
+          "model": "deepseek-v4-pro",
+          "field": "scenarios[1].situation_ar",
+          "type": "meaning",
+          "why": "The Arabic specifies the maternal cousin (son of the maternal aunt), while the English genericizes to any cousin."
+        }
+      ],
+      "adjudicated": [],
+      "tool": "ops/tools/review_en_parity.py",
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
+    },
+    "english_authors": [
+      "claude-opus"
+    ]
   }
 }

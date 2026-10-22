@@ -6,12 +6,18 @@ Wired into docs/lesson_index.json and docs/lesson_assets/.
 """
 import json
 import pathlib
+import sys
 
 BASE = pathlib.Path(__file__).resolve().parent.parent
 FC_DIR = BASE / "docs" / "lesson_assets" / "flashcards"
 QZ_DIR = BASE / "docs" / "lesson_assets" / "quizzes"
 INDEX = BASE / "docs" / "lesson_index.json"
 SRC_MAP = BASE / "source_to_lesson.json"
+# Correct answer goes to a spread, deterministic slot — the same one
+# ops/tools/balance_quiz_answer_positions.py would pick, so a rerun of it
+# is a no-op. Models write it first; the app never shuffles.
+sys.path.insert(0, str(BASE / "ops" / "tools"))
+from balance_quiz_answer_positions import balance_quiz  # noqa: E402
 
 def Q(question, opts, hint):
     return {
@@ -195,8 +201,11 @@ def main():
             json.dumps({"title": f"{title} — بطاقات", "cards": cards}, ensure_ascii=False, indent=2) + "\n",
             encoding="utf-8"
         )
+        qz = {"title": f"{title} — اختبار", "questions": quiz}
+        errs = balance_quiz(f"{qz_id}.json", qz)
+        assert not errs, f"{lid} quiz: {errs}"
         (QZ_DIR / f"{qz_id}.json").write_text(
-            json.dumps({"title": f"{title} — اختبار", "questions": quiz}, ensure_ascii=False, indent=2) + "\n",
+            json.dumps(qz, ensure_ascii=False, indent=2) + "\n",
             encoding="utf-8"
         )
 

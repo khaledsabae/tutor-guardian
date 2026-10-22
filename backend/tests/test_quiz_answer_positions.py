@@ -19,7 +19,10 @@ import pytest
 
 from app.quiz_data import QUESTIONS
 
-QUIZ_DIR = Path(__file__).resolve().parents[2] / "docs" / "lesson_assets" / "quizzes"
+ROOT = Path(__file__).resolve().parents[2]
+QUIZ_DIR = ROOT / "docs" / "lesson_assets" / "quizzes"
+LICENSE_DIR = ROOT / "knowledge_base" / "curriculum" / "license"
+LICENSE_EN_DIR = ROOT / "knowledge_base" / "curriculum" / "i18n" / "en" / "license"
 MAX_SHARE_AT_INDEX_0 = 0.40
 
 
@@ -77,3 +80,72 @@ def test_program_quiz_bank_answers_are_valid_and_spread():
         pos[q["answer"]] += 1
     top_share = max(pos.values()) / len(QUESTIONS)
     assert top_share <= MAX_SHARE_AT_INDEX_0, dict(sorted(pos.items()))
+
+
+# ── child licence scenarios ────────────────────────────────────────────────
+# Until 2026-10-21 the `safe` choice was last in 10 of 10 scenarios, so a
+# child learned "the long answer at the bottom" rather than the judgement.
+# The app renders choices in served order and scores by `key`.
+
+def _license_banks():
+    files = sorted(LICENSE_DIR.glob("scenarios_*.json"))
+    assert files, "licence banks missing"
+    return [(f, json.loads(f.read_text(encoding="utf-8"))) for f in files]
+
+
+def _safe_slot(scenario):
+    slots = [i for i, c in enumerate(scenario["choices"]) if c.get("outcome") == "safe"]
+    assert len(slots) == 1, scenario["key"]
+    return slots[0]
+
+
+def test_licence_safe_choice_has_no_favourite_slot():
+    pos = collections.Counter()
+    n_choices = set()
+    for _, bank in _license_banks():
+        for s in bank["scenarios"]:
+            pos[_safe_slot(s)] += 1
+            n_choices.add(len(s["choices"]))
+    total = sum(pos.values())
+    # With three choices a fair split is a third each; half is the ceiling.
+    assert max(pos.values()) / total <= 0.5, dict(sorted(pos.items()))
+    last = min(n_choices) - 1
+    assert pos[last] / total <= 0.5, f"safe last in {pos[last]}/{total}"
+
+
+def test_no_licence_bank_always_puts_safe_in_one_slot():
+    mono = {}
+    for f, bank in _license_banks():
+        slots = [_safe_slot(s) for s in bank["scenarios"]]
+        if len(slots) >= 3 and len(set(slots)) == 1:
+            mono[f.name] = slots
+    assert not mono, mono
+
+
+def test_licence_translation_serves_choices_in_the_arabic_order():
+    """The English bank is served wholesale (content_lang.localised), so it
+    must carry the same order — else the two languages disagree on where the
+    safe answer sits, and one of them drifts back to always-last."""
+    for f, bank in _license_banks():
+        en_path = LICENSE_EN_DIR / f.name
+        if not en_path.exists():
+            continue
+        en = {s["key"]: s for s in json.loads(en_path.read_text(encoding="utf-8"))["scenarios"]}
+        for s in bank["scenarios"]:
+            if s["key"] in en:
+                assert [c["key"] for c in en[s["key"]]["choices"]] == \
+                       [c["key"] for c in s["choices"]], (f.name, s["key"])
+
+
+def test_balancer_is_a_no_op_on_the_committed_data():
+    """The committed files are exactly what the balancer writes — so a
+    generator that calls balance_quiz() and this tool cannot disagree."""
+    import subprocess
+    import sys
+    tool = ROOT / "ops" / "tools" / "balance_quiz_answer_positions.py"
+    if not tool.exists() or not QUIZ_DIR.exists():
+        pytest.skip("ops/tools or docs/lesson_assets not in this checkout")
+    out = subprocess.run([sys.executable, str(tool)], capture_output=True,
+                         text=True, check=False)
+    assert out.returncode == 0, out.stdout + out.stderr
+    assert "files that would change: 0" in out.stdout, out.stdout
