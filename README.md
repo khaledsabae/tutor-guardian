@@ -139,3 +139,4 @@ Deploy automation **مفصول** عمداً (Phase 8-A) — الـ VPS rebuild �
 #### GitHub Environment
 
 الـ deploy job بيستخدم environment `production` — يـ allow الـ GitHub UI يـ show deploy history + يـ enable reviewer approvals لو حبيت تضيفها لاحقاً (Settings → Environments → production).
+
