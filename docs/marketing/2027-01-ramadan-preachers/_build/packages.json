@@ -1,0 +1,153 @@
+{
+ "_about": "Package folder -> infographic file name -> topic in topics.json. render.py reads this.",
+ "packages": [
+  {
+   "folder": "DA01_haitham_talaat",
+   "infographics": [
+    {
+     "name": "infographic",
+     "topic": "ramadan_teen"
+    }
+   ]
+  },
+  {
+   "folder": "DA02_EN01_fadel_soliman",
+   "infographics": [
+    {
+     "name": "infographic",
+     "topic": "ramadan_akhlaq"
+    },
+    {
+     "name": "infographic_en",
+     "topic": "ramadan_akhlaq_en"
+    }
+   ]
+  },
+  {
+   "folder": "DA03_jasem_al_mutawa",
+   "infographics": [
+    {
+     "name": "infographic",
+     "topic": "ramadan_family"
+    }
+   ]
+  },
+  {
+   "folder": "DA04_abdulrahman_zaker_alhashemi",
+   "infographics": [
+    {
+     "name": "infographic",
+     "topic": "fasting_ladder_love"
+    }
+   ]
+  },
+  {
+   "folder": "DA05_yassine_el_amri",
+   "infographics": [
+    {
+     "name": "infographic",
+     "topic": "ramadan_phone"
+    }
+   ]
+  },
+  {
+   "folder": "DA06_hala_samir",
+   "infographics": [
+    {
+     "name": "infographic",
+     "topic": "ramadan_10_12"
+    }
+   ]
+  },
+  {
+   "folder": "DA07_slot_pediatrician",
+   "infographics": [
+    {
+     "name": "infographic",
+     "topic": "fasting_safety"
+    }
+   ]
+  },
+  {
+   "folder": "DA08_slot_mother_account",
+   "infographics": [
+    {
+     "name": "infographic",
+     "topic": "ramadan_little_ones"
+    }
+   ]
+  },
+  {
+   "folder": "DA09_slot_channel_admin",
+   "infographics": [
+    {
+     "name": "infographic",
+     "topic": "ramadan_prepare"
+    }
+   ]
+  },
+  {
+   "folder": "DA10_slot_young_preacher",
+   "infographics": [
+    {
+     "name": "infographic",
+     "topic": "ramadan_stories"
+    }
+   ]
+  },
+  {
+   "folder": "DA11_slot_open",
+   "infographics": [
+    {
+     "name": "infographic",
+     "topic": "ramadan_last_ten"
+    }
+   ]
+  },
+  {
+   "folder": "DA12_slot_open",
+   "infographics": [
+    {
+     "name": "infographic",
+     "topic": "ramadan_7_9"
+    }
+   ]
+  },
+  {
+   "folder": "EN02_fatima_barkatulla",
+   "infographics": [
+    {
+     "name": "infographic_en",
+     "topic": "first_fasts_en"
+    }
+   ]
+  },
+  {
+   "folder": "EN03_ali_hammuda",
+   "infographics": [
+    {
+     "name": "infographic_en",
+     "topic": "last_ten_en"
+    }
+   ]
+  },
+  {
+   "folder": "EN04_slot_weekend_school",
+   "infographics": [
+    {
+     "name": "infographic_en",
+     "topic": "ramadan_7_9_en"
+    }
+   ]
+  },
+  {
+   "folder": "EN05_slot_child_health",
+   "infographics": [
+    {
+     "name": "infographic_en",
+     "topic": "fasting_safety_en"
+    }
+   ]
+  }
+ ]
+}

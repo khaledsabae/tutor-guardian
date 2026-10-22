@@ -1,0 +1,641 @@
+{
+  "_about": "Infographic text for the Ramadan wave-2 preacher packages. Every line is taken from the app's «رمضان العائلة» program (knowledge_base/curriculum/programs/ramadan_family.json, English: knowledge_base/curriculum/i18n/en/programs/ramadan_family.json), shortened but not reworded in meaning; `source` names the exact days/fields. No Qur'an, no hadith, no reward promises. Render: python3 docs/marketing/2027-01-ramadan-preachers/_build/render.py",
+  "topics": {
+    "ramadan_teen": {
+      "art": "lanterns",
+      "kicker": "من برنامج «رمضان العائلة» في تطبيق المربّي",
+      "title": "المراهق في رمضان",
+      "subtitle": "دورٌ في البيت، لا مقعدُ متفرّج",
+      "items": [
+        {
+          "lead": "يدير جلسة النيّات",
+          "text": "يوزّع الأوراق، ويساعد الصغار على كتابة نيّاتهم، ويختار لنفسه نيّة بينه وبين الله."
+        },
+        {
+          "lead": "يدير حلقة القرآن العائلية",
+          "text": "من يبدأ، ومن يقرأ بعده، ومتى ننتهي. والصغير يحتاج إلى التشجيع أكثر من التصحيح."
+        },
+        {
+          "lead": "صدقة بوقته ومهارته",
+          "text": "يدرّس أخًا صغيرًا، أو يساعد جارًا كبيرًا في السن."
+        },
+        {
+          "lead": "الصدق على الشاشة أيضًا",
+          "text": "لا يشارك في نشر كذبٍ رآه ينتشر على الإنترنت."
+        },
+        {
+          "lead": "هدفٌ خاص للعشر الأواخر",
+          "text": "ختم جزء، أو صلاة قصيرة في الليل، أو ترك عادة."
+        },
+        {
+          "lead": "رسالة إلى نفسه",
+          "text": "يكتبها في آخر رمضان، ويقرؤها في رمضان القادم."
+        }
+      ],
+      "try": {
+        "label": "جرّبوا من الليلة الأولى",
+        "text": "اجعلوه هو من يدير جلسة النيّات بعد الإفطار، واكتفوا أنتم بالمساندة."
+      },
+      "source": "ramadan_family.json — variants 13-15 of days 1, 6, 8, 15, 19, 30 (same text as the wave-1 bank topic `ramadan_teen`)"
+    },
+    "ramadan_akhlaq": {
+      "art": "art/badge_helped_others",
+      "kicker": "من برنامج «رمضان العائلة» في تطبيق المربّي",
+      "title": "أخلاق الصائم يراها الناس",
+      "subtitle": "رمضان في البيت والحيّ، بأيدي الأطفال",
+      "items": [
+        {
+          "lead": "لسان الصائم",
+          "text": "من يُستفَزّ يقول الجملة الهادئة التي اتفقت عليها العائلة، ثم يبتعد بهدوء."
+        },
+        {
+          "lead": "طبق للجار",
+          "text": "يحمله الأطفال مع أحد الوالدين، مع كلمة طيبة وتهنئة برمضان."
+        },
+        {
+          "lead": "إماطة الأذى",
+          "text": "ربع ساعة لنظافة مكان يستعمله الناس: مدخل البيت أو درج البناية."
+        },
+        {
+          "lead": "صلة الرحم",
+          "text": "اتصال بقريب لم تكلّموه منذ مدة، ويهنّئه الأطفال برمضان أو يُرونه رسمة."
+        },
+        {
+          "lead": "الرحمة بالخلق",
+          "text": "إناء ماء وقليل من الحبوب للطيور، يُغيَّر ماؤه كل يوم."
+        },
+        {
+          "lead": "شكرًا لمن يخدمنا",
+          "text": "بطاقات شكر لحارس البناية، أو عامل النظافة، أو المعلّم، أو الممرّض."
+        }
+      ],
+      "try": {
+        "label": "جرّبوه في الأسبوع الأول",
+        "text": "جهّزوا طبقًا صغيرًا من إفطاركم أو بعض التمر، ودعوا الأطفال يحملونه إلى الجار مع أحدكم."
+      },
+      "source": "ramadan_family.json — family_challenge of days 5, 9, 13, 16, 17, 23"
+    },
+    "ramadan_family": {
+      "art": "lanterns",
+      "kicker": "من برنامج «رمضان العائلة» في تطبيق المربّي",
+      "title": "رمضان العائلة",
+      "subtitle": "ثلاثون يومًا، وتحدٍّ واحد كل يوم لا يزيد على ربع ساعة",
+      "items": [
+        {
+          "lead": "لوحة نيّات العائلة",
+          "text": "يبدأ الوالدان بنيّتهما، ثم الأكبر فالأصغر، وتُعلَّق حيث يراها الجميع."
+        },
+        {
+          "lead": "صندوق الصدقة",
+          "text": "تصنعونه معًا من أول الشهر."
+        },
+        {
+          "lead": "طبق للجار",
+          "text": "تهدونه من إفطاركم، ويقدّمه الكبار من الأبناء بأنفسهم."
+        },
+        {
+          "lead": "جرّة الشكر",
+          "text": "ثلاث نعم من يومكم، تكتبونها أو يرسمها الصغار."
+        },
+        {
+          "lead": "سلّم صيام متدرّج",
+          "text": "لا إمساك في البرنامج قبل السابعة، والإفطار عند التعب ليس فشلًا."
+        },
+        {
+          "lead": "حصاد رمضان",
+          "text": "تختارون معًا عادتين تستمران بعد العيد."
+        }
+      ],
+      "try": {
+        "label": "قبل أن يبدأ رمضان",
+        "text": "اختاروا وقتًا ثابتًا للتحدّي اليومي، كبعد الإفطار، وجهّزوا صندوقًا وجرّة وأوراقًا ملوّنة."
+      },
+      "source": "ramadan_family.json — kickoff + fasting_ladder + days 1, 6, 9, 10, 28 (same text as the wave-1 bank topic `ramadan_family`)"
+    },
+    "fasting_ladder_love": {
+      "art": "art/milestone_first_fast",
+      "kicker": "من برنامج «رمضان العائلة» في تطبيق المربّي",
+      "title": "سلّم الصيام",
+      "subtitle": "أن يحبّ الطفل الصيام، لا أن يصمد أطول مدة",
+      "items": [
+        {
+          "lead": "تدريب لا فريضة",
+          "text": "الصيام قبل البلوغ تدريب، والغاية أن يحب الطفل الصيام."
+        },
+        {
+          "lead": "لا إمساك قبل السابعة",
+          "text": "الصغار يشاركون أجواء رمضان دون إمساك."
+        },
+        {
+          "lead": "ساعات لا يوم كامل",
+          "text": "من السابعة: نحو ثلاث ساعات بعد السحور، ثم يزيد بالتدريج، وأيام الراحة أولًا."
+        },
+        {
+          "lead": "درجة بعد درجة",
+          "text": "الصعود بعد يومين أو ثلاثة مريحة على الدرجة الحالية، وبرغبة الطفل."
+        },
+        {
+          "lead": "الإفطار عند التعب ليس فشلًا",
+          "text": "امدحوا المحاولة دائمًا، ولا تقارنوا بين الإخوة."
+        },
+        {
+          "lead": "كلمة عند التوقف",
+          "text": "«أحسنت المحاولة، وغدًا يوم جديد»، بلا لوم ولا مقارنة."
+        }
+      ],
+      "try": {
+        "label": "قبل أن يبدأ رمضان",
+        "text": "حدّدوا درجة كل طفل في سلّم الصيام بحسب عمره وصحته، واجعلوا أيام الراحة أيام التجربة."
+      },
+      "source": "ramadan_family.json — fasting_ladder.principles 1, 2, 4, 5, 6 + bands.7-9.summary/steps[0] + stop_action + kickoff.setup_steps[1]"
+    },
+    "ramadan_phone": {
+      "art": "art/domain_cyber",
+      "kicker": "من أدوار المراهق في برنامج «رمضان العائلة»",
+      "title": "الهاتف في رمضان",
+      "subtitle": "من التصفّح إلى الحضور",
+      "items": [
+        {
+          "lead": "الذكر بدل التصفّح",
+          "text": "يجعل الذكر رفيقه في الطريق وبين الدروس بدل تصفّح الهاتف، ويلاحظ كيف يتغيّر شعوره."
+        },
+        {
+          "lead": "الصدق على الشاشة",
+          "text": "الصدق يشمل ما يكتبه وينشره على الإنترنت، فلا يشارك في نشر كذبٍ رآه ينتشر."
+        },
+        {
+          "lead": "الأمانة على الهاتف أيضًا",
+          "text": "الأمانة تشمل الأسرار وكلمات المرور وما يُعار له."
+        },
+        {
+          "lead": "رسالة رحمة",
+          "text": "يختار شخصًا يمرّ بوقت صعب، ويرسل له رسالة لطيفة."
+        },
+        {
+          "lead": "للعائلة لا للنشر",
+          "text": "يصوّر المكان قبل تنظيفه وبعده لتراه العائلة وحدها."
+        },
+        {
+          "lead": "ليلة الاستماع",
+          "text": "تُطفأ الأضواء القوية، وتوضع الهواتف بعيدًا، وتستمع العائلة إلى تلاوة هادئة."
+        }
+      ],
+      "try": {
+        "label": "جرّبوه في الليلة الخامسة والعشرين",
+        "text": "ضعوا الهواتف بعيدًا، واستمعوا معًا إلى تلاوة هادئة لسورة قصيرة تعرفونها."
+      },
+      "source": "ramadan_family.json — variants 13-15 of days 21, 15, 18, 17; variant 10-12 of day 13; family_challenge of day 24"
+    },
+    "ramadan_10_12": {
+      "art": "art/domain_development",
+      "kicker": "من برنامج «رمضان العائلة» في تطبيق المربّي",
+      "title": "بين العاشرة والثانية عشرة في رمضان",
+      "subtitle": "مسؤولية تكبر معه، وصيام بالتدرّج",
+      "items": [
+        {
+          "lead": "منسّق المائدة",
+          "text": "يوزّع المهام على إخوته، ويتأكد أن كل شيء جاهز قبل الأذان بخمس دقائق."
+        },
+        {
+          "lead": "صيام بالتدرّج",
+          "text": "نصف يوم، ثم أغلب اليوم، ثم يوم كامل في أيام الراحة، دون أن يصير كل يوم صيامًا."
+        },
+        {
+          "lead": "عند البلوغ",
+          "text": "من بلغ بالحيض أو الاحتلام فالصيام فريضة عليه أيًّا كان عمره."
+        },
+        {
+          "lead": "والبنت في أيام حيضها",
+          "text": "لا تصوم، وتقضيها بعد رمضان دون أن تُحرَج، وتفاصيل الأحكام من أهل العلم."
+        },
+        {
+          "lead": "بطاقة الهدوء",
+          "text": "يكتب ثلاثة أشياء تغضبه، وبجانب كل منها طريقة يهدأ بها، ويحتفظ بها لنفسه."
+        },
+        {
+          "lead": "مراجعة النيّة",
+          "text": "في آخر الشهر: هل ثبتُّ عليها؟ وماذا تعلّمت حين صعب الأمر؟"
+        }
+      ],
+      "try": {
+        "label": "من اليوم الأول",
+        "text": "يختار نيّة تُتعبه قليلًا لكنها ممكنة، ويكتب بجانبها متى سيفعلها بالضبط."
+      },
+      "source": "ramadan_family.json — variants 10-12 of days 3, 12, 28, 1; fasting_ladder.bands.10-12.summary; fasting_ladder.bands.13-15.summary (the girl's period)"
+    },
+    "fasting_safety": {
+      "art": "art/domain_health",
+      "kicker": "من «سلّم الصيام» في برنامج «رمضان العائلة»",
+      "title": "صيام الأطفال بأمان",
+      "subtitle": "متى تستشيرون الطبيب، ومتى يفطر الطفل فورًا",
+      "items": [
+        {
+          "lead": "الطبيب أولًا",
+          "text": "مع السكري أو أي مرض مزمن، أو دواء يُؤخذ بانتظام في النهار."
+        },
+        {
+          "lead": "وأيضًا",
+          "text": "النحافة الشديدة أو تأخر النمو، أو مرض حديث كالحمّى أو الإسهال أو القيء."
+        },
+        {
+          "lead": "علامات التوقف",
+          "text": "دوخة أو شحوب أو عرق بارد، أو صداع شديد، أو قيء، أو بول قليل جدًا أو داكن."
+        },
+        {
+          "lead": "عند التوقف",
+          "text": "يفطر فورًا على ماء وتمرة أو عصير، ثم يستريح، بلا لوم ولا مقارنة."
+        },
+        {
+          "lead": "السحور",
+          "text": "ماء وطعام بطيء الهضم، كالخبز الأسمر والشوفان والبيض والزبادي، لا حلويات وحدها."
+        },
+        {
+          "lead": "الماء على دفعات",
+          "text": "من الإفطار إلى النوم، لا كمية كبيرة دفعة واحدة."
+        }
+      ],
+      "try": {
+        "label": "قاعدة البرنامج",
+        "text": "لا إمساك قبل السابعة، والإفطار عند التعب ليس فشلًا."
+      },
+      "footnote": "عند الإغماء أو التشنّج أو التشوّش أو صعوبة الاستيقاظ: اتصلوا بالإسعاف فورًا.",
+      "source": "ramadan_family.json — fasting_ladder.doctor_first 1-4, stop_signs 1-3 and 5, stop_action, tips 1-2, principles 2 and 5, urgent_action"
+    },
+    "ramadan_little_ones": {
+      "art": "lanterns",
+      "kicker": "من برنامج «رمضان العائلة» في تطبيق المربّي",
+      "title": "الصغار في رمضان",
+      "subtitle": "أجواء رمضان بلا إمساك، حتى السادسة",
+      "items": [
+        {
+          "lead": "معنا على المائدة",
+          "text": "يجلس مع العائلة على الإفطار بطعام يناسب عمره، ويسمع «بسم الله» قبل أن يأكل."
+        },
+        {
+          "lead": "سحور صغير",
+          "text": "لا يوقَظ للسحور، ويصير فطوره الصباحي «سحورًا صغيرًا» يختار طعامه معكم."
+        },
+        {
+          "lead": "ننتظر الأذان معًا",
+          "text": "يحتفظ بتمرة منزوعة النوى ومقطّعة حتى أذان المغرب، ليأكلها مع العائلة."
+        },
+        {
+          "lead": "جرّة الكلمات الطيبة",
+          "text": "يتعلّم «شكرًا» و«من فضلك»، وتوضع قصاصة في الجرّة كلما قالها."
+        },
+        {
+          "lead": "نَفَس البالون",
+          "text": "نفس عميق ثم إخراجه ببطء، يتدرّب عليه وهو هادئ ليستعمله حين يغضب."
+        },
+        {
+          "lead": "حكاية قبل النوم",
+          "text": "يستمع معكم إلى حكاية يرويها نور، مثل «يوسف وغرسة الأمل»."
+        }
+      ],
+      "try": {
+        "label": "دور صغير كل يوم",
+        "text": "هو من يعلن بداية حلقة القرآن العائلية، وتصفّقون له حين يكمل."
+      },
+      "source": "ramadan_family.json — fasting_ladder.bands.0-3 and 4-6; variants 0-3/4-6 of days 3, 4, 5, 12, 11, 8"
+    },
+    "ramadan_prepare": {
+      "art": "lanterns",
+      "kicker": "من برنامج «رمضان العائلة» في تطبيق المربّي",
+      "title": "قبل أن يبدأ رمضان",
+      "subtitle": "تجهيز البيت لبرنامج الثلاثين يومًا",
+      "items": [
+        {
+          "lead": "وقت ثابت",
+          "text": "اختاروا وقتًا ثابتًا للتحدّي اليومي، كبعد الإفطار."
+        },
+        {
+          "lead": "درجة لكل طفل",
+          "text": "حدّدوا درجته في سلّم الصيام بحسب عمره وصحته، ولا إمساك في البرنامج قبل السابعة."
+        },
+        {
+          "lead": "صندوق وجرّة",
+          "text": "جهّزوا صندوقًا للصدقة، وجرّة صغيرة، وأوراقًا ملوّنة."
+        },
+        {
+          "lead": "ركن رمضان",
+          "text": "زاوية هادئة فيها لوحة النيّات وسجادة صغيرة وجدول بثلاثين خانة."
+        },
+        {
+          "lead": "إضاءة آمنة",
+          "text": "أضواء تعمل بالبطارية أو ورق لامع فقط، دون شموع أو نار."
+        },
+        {
+          "lead": "لوحة النيّات",
+          "text": "في اليوم الأول يبدأ الوالدان بنيّتهما، ثم الأكبر فالأصغر."
+        }
+      ],
+      "try": {
+        "label": "ثم كل يوم",
+        "text": "تحدٍّ عائلي لا يزيد على ربع ساعة، وملاحظة قصيرة لكم، ودور لكل طفل حسب عمره."
+      },
+      "source": "ramadan_family.json — kickoff.text and setup_steps 1-3; family_challenge of days 2 and 1"
+    },
+    "ramadan_stories": {
+      "art": "noor/noor_reading",
+      "kicker": "من برنامج «رمضان العائلة» في تطبيق المربّي",
+      "title": "حكاية مع كل قيمة",
+      "subtitle": "تحدّي اليوم للصغار، ثم حكاية يرويها نور",
+      "items": [
+        {
+          "lead": "صندوق الصدقة",
+          "text": "يختار لعبة أو كتابًا يُفرح به طفلًا آخر، ثم حكاية «مريم وصندوق الألعاب»."
+        },
+        {
+          "lead": "برّ الوالدين",
+          "text": "يرسم بطاقة لأحد الوالدين أو الأجداد، ثم حكاية «فاطمة وزهرة البر»."
+        },
+        {
+          "lead": "طبق للجار",
+          "text": "يحمل التمر ويقول للجار: «رمضان كريم»، ثم حكاية «خديجة وحق الجار»."
+        },
+        {
+          "lead": "بذرة الصبر",
+          "text": "يسقي البذور كل صباح بملعقة ماء، ثم حكاية «يوسف وغرسة الأمل»."
+        },
+        {
+          "lead": "يوم الصدق",
+          "text": "إن اعترف بخطأ فاشكروه أولًا، ثم حكاية «حمزة وأمانة الكلمة»."
+        },
+        {
+          "lead": "الرحمة بالخلق",
+          "text": "يضع الفتات للطيور وأنتم معه، ثم حكاية «أنس والهر الصغير»."
+        }
+      ],
+      "try": {
+        "label": "في كل حكاية",
+        "text": "وقفة حوار يُسأل فيها الطفل سؤالًا، فيبدأ حديث بينه وبين أهله."
+      },
+      "source": "ramadan_family.json — variants 4-6 and story_id of days 6, 7, 9, 11, 15, 17; story titles from mobile/assets/data/stories.json"
+    },
+    "ramadan_last_ten": {
+      "art": "noor/noor_calm",
+      "kicker": "من برنامج «رمضان العائلة» في تطبيق المربّي",
+      "title": "العشر الأواخر مع الأبناء",
+      "subtitle": "ليلة عائلية قصيرة، من عشر دقائق إلى عشرين بحسب الأعمار",
+      "items": [
+        {
+          "lead": "خطة العائلة",
+          "text": "صلاة ودعاء وقرآن؛ الصغار في أول الليل ثم ينامون في موعدهم، والكبار يكملون إن أرادوا."
+        },
+        {
+          "lead": "أول ليلة",
+          "text": "ركعتان قصيرتان في البيت، ويختار الطفل مكانه في الصف بجانب أحد والديه."
+        },
+        {
+          "lead": "جدار الدعاء",
+          "text": "يكتب كل واحد أدعية لنفسه ولعائلته وللمحتاجين، والوالدان يكتبان عن الصغار."
+        },
+        {
+          "lead": "ليلة الاستماع",
+          "text": "أطفئوا الأضواء القوية، وضعوا الهواتف بعيدًا، واستمعوا إلى تلاوة هادئة."
+        },
+        {
+          "lead": "ليلة الرجاء",
+          "text": "يكتب كل فرد أمنية للعام القادم يرجوها من الله، ويضعها في ركن رمضان."
+        },
+        {
+          "lead": "حصاد رمضان",
+          "text": "عادتان من رمضان تستمرون عليهما بعد العيد، على «بطاقة وعد العائلة»."
+        }
+      ],
+      "try": {
+        "label": "في ليلة الدعاء",
+        "text": "يختم أحد الوالدين بالدعاء لكل طفل باسمه."
+      },
+      "source": "ramadan_family.json — family_challenge of days 19, 20, 22, 24, 26, 28"
+    },
+    "ramadan_7_9": {
+      "art": "art/badge_good_manner",
+      "kicker": "من برنامج «رمضان العائلة» في تطبيق المربّي",
+      "title": "من السابعة إلى التاسعة في رمضان",
+      "subtitle": "مهمة صغيرة كل يوم، وصيام بالساعات",
+      "items": [
+        {
+          "lead": "مصمّم ركن رمضان",
+          "text": "يرسم الأهلّة والنجوم، ويصنع جدولًا بثلاثين خانة يضع فيه علامة كل يوم."
+        },
+        {
+          "lead": "مهمته على المائدة",
+          "text": "الماء والأكواب قبل الأذان، ويبدأ طعامه بـ«بسم الله»."
+        },
+        {
+          "lead": "صيام بالساعات",
+          "text": "نحو ثلاث ساعات بعد السحور، ثم حتى الظهر بعد أسبوع مريح."
+        },
+        {
+          "lead": "ثلاث كلمات طيبة",
+          "text": "يقولها لأفراد عائلته، وإذا غضب ابتعد قليلًا حتى يهدأ."
+        },
+        {
+          "lead": "من مصروفه",
+          "text": "يضع في صندوق الصدقة جزءًا من مصروفه ولو كان قليلًا."
+        },
+        {
+          "lead": "دفتر البذرة",
+          "text": "يرسم البذرة كل يوم، ويكتب بجانبها شيئًا صبر عليه."
+        }
+      ],
+      "try": {
+        "label": "هذا الأسبوع",
+        "text": "اتفقوا معه على درجته في سلّم الصيام، واجعلوا أيام الراحة أيام التجربة."
+      },
+      "source": "ramadan_family.json — variants 7-9 of days 2, 3, 5, 6, 11, 4; fasting_ladder.bands.7-9.steps 0-1"
+    },
+    "ramadan_akhlaq_en": {
+      "lang": "en",
+      "art": "art/badge_helped_others",
+      "kicker": "From the “Family Ramadan” program in Al-Morabbi",
+      "title": "A Ramadan the neighbours can see",
+      "subtitle": "Good character at home and on your street",
+      "items": [
+        {
+          "lead": "The fasting tongue",
+          "text": "Whoever is provoked says the family's agreed calm phrase, then walks away."
+        },
+        {
+          "lead": "A plate for the neighbour",
+          "text": "The children carry it with a parent, with a kind word and Ramadan greetings."
+        },
+        {
+          "lead": "Clearing harm from the way",
+          "text": "Fifteen minutes to tidy a shared place: the entrance or the stairs."
+        },
+        {
+          "lead": "Keeping family ties",
+          "text": "Call a relative you haven't spoken to for a while; the children greet them."
+        },
+        {
+          "lead": "Mercy to all creatures",
+          "text": "A small dish of water and a few grains for the birds, refreshed every day."
+        },
+        {
+          "lead": "Thanking those who serve us",
+          "text": "Cards for the building guard, the cleaner, a teacher or a nurse."
+        }
+      ],
+      "try": {
+        "label": "Try it in the first week",
+        "text": "Let the children carry a small plate from your iftar, or a few dates, to a neighbour with one of you."
+      },
+      "source": "i18n/en/programs/ramadan_family.json — family_challenge of days 5, 9, 13, 16, 17, 23"
+    },
+    "first_fasts_en": {
+      "lang": "en",
+      "art": "art/milestone_first_fast",
+      "kicker": "From the “Family Ramadan” program in Al-Morabbi",
+      "title": "Your child's first fasts",
+      "subtitle": "A gentle fasting ladder: love of fasting, not endurance",
+      "items": [
+        {
+          "lead": "Training, not obligation",
+          "text": "Before puberty, fasting is training. The aim is for the child to love fasting."
+        },
+        {
+          "lead": "No fasting before seven",
+          "text": "Little ones share the atmosphere of Ramadan without fasting."
+        },
+        {
+          "lead": "Ages 4–6: waiting for the adhan",
+          "text": "He saves a pitted date until maghrib to eat with the family; his meals stay complete."
+        },
+        {
+          "lead": "Ages 7–9: hours, not days",
+          "text": "About three hours after suhoor at first, building up gradually, rest days first."
+        },
+        {
+          "lead": "One step at a time",
+          "text": "Move up only after two or three comfortable days, and only if the child wants to."
+        },
+        {
+          "lead": "Breaking the fast is not failure",
+          "text": "“Well done for trying; tomorrow is a new day.” No blame, no comparing siblings."
+        }
+      ],
+      "try": {
+        "label": "Before Ramadan begins",
+        "text": "Set each child's step on the fasting ladder according to age and health."
+      },
+      "source": "i18n/en/programs/ramadan_family.json — fasting_ladder.principles 1, 2, 4, 5; bands.4-6.steps[0]; bands.7-9.summary/steps[0]; stop_action; kickoff.setup_steps[1]"
+    },
+    "last_ten_en": {
+      "lang": "en",
+      "art": "noor/noor_calm",
+      "kicker": "From the “Family Ramadan” program in Al-Morabbi",
+      "title": "The last ten nights with your children",
+      "subtitle": "A short family night: ten to twenty minutes, depending on ages",
+      "items": [
+        {
+          "lead": "The family plan",
+          "text": "Prayer, du'a and Quran. Little ones join early and sleep on time; older ones carry on if they wish."
+        },
+        {
+          "lead": "The first night",
+          "text": "Two short rak'ahs at home; the child chooses his place in the row beside a parent."
+        },
+        {
+          "lead": "The du'a wall",
+          "text": "Du'as for yourselves, your family and people in need; parents write for the little ones."
+        },
+        {
+          "lead": "A night of listening",
+          "text": "Bright lights off, phones away, and a calm recitation of a short surah you know."
+        },
+        {
+          "lead": "A night of hope",
+          "text": "Everyone writes a hope for the coming year and puts it in the Ramadan corner."
+        },
+        {
+          "lead": "Our Ramadan harvest",
+          "text": "Choose two Ramadan habits to keep after Eid, on a “family promise card”."
+        }
+      ],
+      "try": {
+        "label": "On the night of du'a",
+        "text": "One parent ends by making du'a for each child by name."
+      },
+      "source": "i18n/en/programs/ramadan_family.json — family_challenge of days 19, 20, 22, 24, 26, 28"
+    },
+    "ramadan_7_9_en": {
+      "lang": "en",
+      "art": "art/badge_good_manner",
+      "kicker": "From the “Family Ramadan” program in Al-Morabbi",
+      "title": "Ramadan at seven to nine",
+      "subtitle": "A small job every day, and fasting by the hour",
+      "items": [
+        {
+          "lead": "Ramadan corner designer",
+          "text": "Draws the crescents and stars, and makes a chart with thirty boxes to tick off each day."
+        },
+        {
+          "lead": "A job at the table",
+          "text": "Water and cups before the adhan, and he starts his food with “Bismillah”."
+        },
+        {
+          "lead": "Fasting by the hour",
+          "text": "About three hours after suhoor, then until dhuhr after a comfortable week."
+        },
+        {
+          "lead": "Three kind words",
+          "text": "Says them to his family today; if he gets angry, he steps away until he calms down."
+        },
+        {
+          "lead": "From his pocket money",
+          "text": "Puts part of it in the family charity box, even a little."
+        },
+        {
+          "lead": "The seed notebook",
+          "text": "Draws the seeds every day, and writes something he was patient about."
+        }
+      ],
+      "try": {
+        "label": "This week",
+        "text": "Agree with him on his step on the fasting ladder, and keep rest days for trying."
+      },
+      "source": "i18n/en/programs/ramadan_family.json — variants 7-9 of days 2, 3, 5, 6, 11, 4; fasting_ladder.bands.7-9.steps 0-1"
+    },
+    "fasting_safety_en": {
+      "lang": "en",
+      "art": "art/domain_health",
+      "kicker": "From the fasting ladder in Al-Morabbi's “Family Ramadan”",
+      "title": "Children fasting safely",
+      "subtitle": "When to ask the doctor first, and when to break the fast at once",
+      "items": [
+        {
+          "lead": "Doctor first",
+          "text": "With diabetes or any chronic illness, or a medicine taken regularly during the day."
+        },
+        {
+          "lead": "Also",
+          "text": "Being very underweight or slow growth, or a recent illness such as fever, diarrhoea or vomiting."
+        },
+        {
+          "lead": "Stop signs",
+          "text": "Dizziness, paleness or a cold sweat; a severe headache; vomiting; very little or very dark urine."
+        },
+        {
+          "lead": "When a sign appears",
+          "text": "He breaks the fast at once with water and a date or juice, then rests. No blame, no comparison."
+        },
+        {
+          "lead": "Suhoor",
+          "text": "Water plus slow-digesting food: wholemeal bread, oats, eggs, yoghurt. Not sweets on their own."
+        },
+        {
+          "lead": "Water little and often",
+          "text": "From iftar to bedtime, not a large amount all at once."
+        }
+      ],
+      "try": {
+        "label": "The program's rule",
+        "text": "No fasting before seven, and breaking the fast when tired is not failure."
+      },
+      "footnote": "Fainting, a seizure, confusion or difficulty waking: call an ambulance at once.",
+      "source": "i18n/en/programs/ramadan_family.json — fasting_ladder.doctor_first 1-4, stop_signs 1-3 and 5, stop_action, tips 1-2, principles 2 and 5, urgent_action"
+    }
+  }
+}

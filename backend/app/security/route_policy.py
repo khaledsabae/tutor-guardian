@@ -285,6 +285,7 @@ _add(
     "public",
     """
     GET /ui/cinematic.html landing
+    GET /ui/cinematic.en.html landing
     GET /ui/index.html landing
     GET /ui/ landing
 """,
