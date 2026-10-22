@@ -511,7 +511,7 @@ class AnalyticsIsolationTest(unittest.TestCase):
         self.assertIn("path: e2e/e2e_tool.py", producer)
         self.assertIn("if-no-files-found: error", producer)
         build = workflow.split("  build:\n", 1)[1].split("  e2e:\n", 1)[0]
-        self.assertIn("needs: keystore", build)
+        self.assertIn("needs: [changes, keystore]", build)
         self.assertIn("- variant: head", build)
         self.assertIn("- variant: baseline", build)
         self.assertIn("ref: ${{ matrix.ref }}", build)
