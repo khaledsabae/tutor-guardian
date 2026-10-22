@@ -3,6 +3,13 @@ import os
 import json
 import asyncio
 import re
+import sys
+
+# Correct answer goes to a spread, deterministic slot — the same one
+# ops/tools/balance_quiz_answer_positions.py would pick, so a rerun of it
+# is a no-op. Models write it first; the app never shuffles.
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "ops", "tools"))
+from balance_quiz_answer_positions import balance_quiz  # noqa: E402
 
 NOTEBOOK_ID = "94f191e6-cfbc-4655-a0d7-c8f7ad0f2287"
 INDEX_PATH = "docs/lesson_index.json"
@@ -145,6 +152,9 @@ async def generate_lesson_assets(lesson):
     os.makedirs(os.path.dirname(qz_path), exist_ok=True)
     try:
         qz_data = json.loads(qz_clean, strict=False)
+        errs = balance_quiz(os.path.basename(qz_path), qz_data)
+        if errs:
+            raise ValueError(f"invalid quiz: {errs}")
         with open(qz_path, "w", encoding="utf-8") as f:
             json.dump(qz_data, f, indent=2, ensure_ascii=False)
         print(f" -> Saved Quiz to {qz_path}")

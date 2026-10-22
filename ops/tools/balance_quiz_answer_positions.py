@@ -7,10 +7,25 @@ questions (84%). The app renders options in file order and never shuffles
 (mobile/lib/features/program/models/quiz_deck.dart), and the app is frozen,
 so the fix lives in the data the backend serves.
 
-Two sources are handled:
+Sources handled:
   * docs/lesson_assets/quizzes/*.json   (GET /api/program/asset-content/{id})
   * backend/app/quiz_data.py QUESTIONS  (GET /api/program/quiz) — the
     correct choice sat second in 24 of 29.
+  * knowledge_base/curriculum/license/scenarios_*.json and their
+    i18n/en/license/ translations (GET /api/child-mode/license/today) — the
+    `safe` choice sat last in 10 of 10. Scoring is by choice `key`
+    (services/child_license._outcome_of), never by position; the English
+    bank is put in the Arabic bank's order so both languages agree.
+
+  * mobile/assets/content/games/*.json   (bundled in the app — ships only
+    with a release) — the correct option sat first in 200 of 200. The app
+    merges translations and correctness by option `key`
+    (edu_game_models.dart), and draws the letter from the display index, so
+    the `key` travels with its option and only the list order moves.
+
+Generators import `balance_quiz()` and call it before writing a quiz, so a
+freshly generated file is already in its final order (and a rerun of this
+tool over it is a no-op).
 
 Deterministic and idempotent: the output depends only on the *set* of
 options, never on their current order, so a rerun is a no-op.
@@ -39,6 +54,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 QUIZ_DIR = ROOT / "docs" / "lesson_assets" / "quizzes"
 QUIZ_DATA_PY = ROOT / "backend" / "app" / "quiz_data.py"
+LICENSE_DIR = ROOT / "knowledge_base" / "curriculum" / "license"
+LICENSE_EN_DIR = ROOT / "knowledge_base" / "curriculum" / "i18n" / "en" / "license"
+GAMES_DIR = ROOT / "mobile" / "assets" / "content" / "games"
 
 # Whole-option matches only: «كلاهما» inside a sentence that names two things
 # from the question is not a reference to other options.
@@ -73,7 +91,7 @@ def _h(*parts: str) -> int:
 
 
 def plan_order(seed: str, qtext: str, index: int, texts: list[str],
-               correct: int) -> list[int]:
+               correct: int, target: int | None = None) -> list[int]:
     """Return the new order as a list of old indices."""
     n = len(texts)
     pinned = [i for i in range(n) if PINNED.match(texts[i])]
@@ -84,7 +102,9 @@ def plan_order(seed: str, qtext: str, index: int, texts: list[str],
         return body + pinned
     distractors = sorted((i for i in free if i != correct),
                          key=lambda i: _h(seed, qtext, texts[i]))
-    target = (_h(seed) + index) % len(free)
+    if target is None:
+        target = (_h(seed) + index) % len(free)
+    target %= len(free)
     return distractors[:target] + [correct] + distractors[target:] + pinned
 
 
@@ -100,49 +120,70 @@ def validate_quiz(path: Path, data: dict) -> list[str]:
     return errs
 
 
+def _new_report() -> dict:
+    return {"before": collections.Counter(), "after": collections.Counter(),
+            "py_before": collections.Counter(), "py_after": collections.Counter(),
+            "lic_before": collections.Counter(), "lic_after": collections.Counter(),
+            "game_before": collections.Counter(), "game_after": collections.Counter(),
+            "per_file": collections.defaultdict(list), "pinned": [],
+            "positional": [], "changed": 0}
+
+
+def balance_quiz(name: str, data: dict, report: dict | None = None) -> list[str]:
+    """Reorder `data["questions"][*]["answerOptions"]` in place.
+
+    `name` is the quiz file's base name (`gen_x_qz.json`) — it seeds the
+    order, so calling this from a generator gives exactly what a later run of
+    this tool would. Returns validation errors; on error `data` is untouched.
+    """
+    report = report if report is not None else _new_report()
+    errs = validate_quiz(Path(name), data)
+    if errs:
+        return errs
+    orig = json.loads(json.dumps(data))
+    for qi, q in enumerate(data["questions"]):
+        opts = q["answerOptions"]
+        texts = [o["text"] for o in opts]
+        correct = next(i for i, o in enumerate(opts) if o["isCorrect"])
+        report["before"][correct] += 1
+        for i, t in enumerate(texts):
+            if PINNED.match(t):
+                report["pinned"].append(f"{name} q{qi} opt{i}: {t}")
+        for label, t in [("hint", q.get("hint") or ""),
+                         ("question", q["question"])] + \
+                        [(f"rationale{i}", o.get("rationale") or "")
+                         for i, o in enumerate(opts)]:
+            if t and POSITIONAL.search(t):
+                report["positional"].append(f"{name} q{qi} {label}: {t}")
+        order = plan_order(name, q["question"], qi, texts, correct)
+        q["answerOptions"] = [opts[i] for i in order]
+        new_correct = order.index(correct)
+        report["after"][new_correct] += 1
+        report["per_file"][name].append(new_correct)
+    errs = validate_quiz(Path(name), data)
+    # Same questions, same option objects — only the order moved.
+    key = lambda o: json.dumps(o, ensure_ascii=False, sort_keys=True)  # noqa: E731
+    for a, b in zip(data["questions"], orig["questions"]):
+        if sorted(map(key, a["answerOptions"])) != sorted(map(key, b["answerOptions"])):
+            errs.append(f"{name}: option set changed")
+        if {k: v for k, v in a.items() if k != "answerOptions"} != \
+           {k: v for k, v in b.items() if k != "answerOptions"}:
+            errs.append(f"{name}: question fields changed")
+    if errs:
+        data.clear()
+        data.update(orig)
+    return errs
+
+
 def process_lesson_quizzes(write: bool, report: dict) -> int:
     errors = 0
     for path in sorted(QUIZ_DIR.glob("*.json")):
         raw = path.read_text(encoding="utf-8")
         data = json.loads(raw)
-        before_errs = validate_quiz(path, data)
-        if before_errs:
-            print("\n".join("BEFORE " + e for e in before_errs))
-            errors += len(before_errs)
-            continue
-        for qi, q in enumerate(data["questions"]):
-            opts = q["answerOptions"]
-            texts = [o["text"] for o in opts]
-            correct = next(i for i, o in enumerate(opts) if o["isCorrect"])
-            report["before"][correct] += 1
-            for i, t in enumerate(texts):
-                if PINNED.match(t):
-                    report["pinned"].append(f"{path.name} q{qi} opt{i}: {t}")
-            for label, t in [("hint", q.get("hint") or ""),
-                             ("question", q["question"])] + \
-                            [(f"rationale{i}", o.get("rationale") or "")
-                             for i, o in enumerate(opts)]:
-                if t and POSITIONAL.search(t):
-                    report["positional"].append(f"{path.name} q{qi} {label}: {t}")
-            order = plan_order(path.name, q["question"], qi, texts, correct)
-            q["answerOptions"] = [opts[i] for i in order]
-            new_correct = order.index(correct)
-            report["after"][new_correct] += 1
-            report["per_file"][path.name].append(new_correct)
-        after_errs = validate_quiz(path, data)
-        # Same questions, same option objects — only the order moved.
-        resorted = json.loads(json.dumps(data))
-        orig = json.loads(raw)
-        for a, b in zip(resorted["questions"], orig["questions"]):
-            key = lambda o: json.dumps(o, ensure_ascii=False, sort_keys=True)
-            if sorted(map(key, a["answerOptions"])) != sorted(map(key, b["answerOptions"])):
-                after_errs.append(f"{path.name}: option set changed")
-            if {k: v for k, v in a.items() if k != "answerOptions"} != \
-               {k: v for k, v in b.items() if k != "answerOptions"}:
-                after_errs.append(f"{path.name}: question fields changed")
-        if after_errs:
-            print("\n".join("AFTER " + e for e in after_errs))
-            errors += len(after_errs)
+        errs = balance_quiz(path.name, data, report)
+        if errs:
+            print("\n".join(errs))
+            errors += len(errs)
             continue
         out = json.dumps(data, ensure_ascii=False, indent=2)
         if raw.endswith("\n"):
@@ -151,6 +192,197 @@ def process_lesson_quizzes(write: bool, report: dict) -> int:
             report["changed"] += 1
             if write:
                 path.write_text(out, encoding="utf-8")
+    return errors
+
+
+# ── app-bundled game packs ─────────────────────────────────────────────────
+
+def balance_game_pack(name: str, pack: dict, report: dict | None = None) -> list[str]:
+    """Reorder every question's `options` in place (tg.game_pack/1).
+
+    Not the quizzes' (offset + index) rule: a level is five questions played
+    in a fixed order, and a 0,1,2,3,0 cycle hands over the rest of the level
+    once the first is known. Here the slot is a hash of the question id,
+    nudged one along when it would repeat the previous question's.
+    Returns errors; on error `pack` is untouched."""
+    report = report if report is not None else _new_report()
+    orig = json.loads(json.dumps(pack))
+    errs: list[str] = []
+    qi = 0
+    prev = -1
+    for lv in pack.get("levels", []):
+        for q in lv.get("questions", []):
+            opts = q.get("options") or []
+            ok = [i for i, o in enumerate(opts) if o.get("is_correct") is True]
+            if len(ok) != 1 or len(opts) < 2 or \
+               len({o.get("key") for o in opts}) != len(opts):
+                errs.append(f"{name} {q.get('id')}: {len(ok)} correct of "
+                            f"{len(opts)} / duplicate keys")
+                continue
+            texts = [o["text"] for o in opts]
+            report["game_before"][ok[0]] += 1
+            for i, t in enumerate(texts):
+                if PINNED.match(t):
+                    report["pinned"].append(f"{name} {q['id']} opt{i}: {t}")
+            for label, t in [("question", q.get("question") or ""),
+                             ("context", q.get("context") or "")] + \
+                            [(f"rationale{i}", o.get("rationale") or "")
+                             for i, o in enumerate(opts)]:
+                if t and POSITIONAL.search(t):
+                    report["positional"].append(f"{name} {q['id']} {label}: {t}")
+            slot = _h(name, q["id"]) % len(opts)
+            if slot == prev:
+                slot = (slot + 1) % len(opts)
+            order = plan_order(name, q["id"], qi, texts, ok[0], target=slot)
+            prev = order.index(ok[0])
+            qi += 1
+            q["options"] = [opts[i] for i in order]
+            report["game_after"][order.index(ok[0])] += 1
+            report["per_file"][name].append(order.index(ok[0]))
+    key = lambda o: json.dumps(o, ensure_ascii=False, sort_keys=True)  # noqa: E731
+    for la, lb in zip(pack.get("levels", []), orig.get("levels", [])):
+        for a, b in zip(la["questions"], lb["questions"]):
+            if sorted(map(key, a["options"])) != sorted(map(key, b["options"])) or \
+               {k: v for k, v in a.items() if k != "options"} != \
+               {k: v for k, v in b.items() if k != "options"}:
+                errs.append(f"{name} {a.get('id')}: validation failed")
+    if errs:
+        pack.clear()
+        pack.update(orig)
+    return errs
+
+
+def process_game_packs(write: bool, report: dict) -> int:
+    errors = 0
+    for path in sorted(GAMES_DIR.glob("*.json")):
+        raw = path.read_text(encoding="utf-8")
+        pack = json.loads(raw)
+        if pack.get("schema") != "tg.game_pack/1":
+            continue
+        errs = balance_game_pack(path.name, pack, report)
+        if errs:
+            print("\n".join(errs))
+            errors += len(errs)
+            continue
+        out = json.dumps(pack, ensure_ascii=False, indent=2)
+        if raw.endswith("\n"):
+            out += "\n"
+        if out != raw:
+            report["changed"] += 1
+            if write:
+                path.write_text(out, encoding="utf-8")
+    return errors
+
+
+# ── child licence scenarios ────────────────────────────────────────────────
+
+_CHOICES_BLOCK = re.compile(r'("choices":\s*\[\n)(.*?)(\n[ \t]*\])', re.DOTALL)
+
+
+def _rewrite_choice_lines(raw: str, orders: list[list[str]]) -> str | None:
+    """Reorder the one-choice-per-line blocks of a hand-formatted bank,
+    keeping every other byte. None when the file isn't laid out that way."""
+    blocks = list(_CHOICES_BLOCK.finditer(raw))
+    if len(blocks) != len(orders):
+        return None
+    out, last = [], 0
+    for m, order in zip(blocks, orders):
+        lines = m.group(2).split("\n")
+        try:
+            by_key = {json.loads(ln.rstrip().rstrip(","))["key"]: ln.rstrip().rstrip(",")
+                      for ln in lines}
+        except (ValueError, KeyError, TypeError):
+            return None
+        if sorted(by_key) != sorted(order) or len(by_key) != len(lines):
+            return None
+        body = ",\n".join(by_key[k] for k in order)
+        out.append(raw[last:m.start(2)] + body)
+        last = m.end(2)
+    out.append(raw[last:])
+    return "".join(out)
+
+
+def _dump_bank(raw: str, data: dict, orders: list[list[str]]) -> str:
+    new = _rewrite_choice_lines(raw, orders)
+    if new is not None and json.loads(new) == data:
+        return new
+    out = json.dumps(data, ensure_ascii=False, indent=2)
+    return out + "\n" if raw.endswith("\n") else out
+
+
+def license_choice_order(seed: str, index: int, scenario: dict) -> list[str]:
+    """Choice keys in serving order; `safe` lands at a spread position."""
+    choices = scenario["choices"]
+    safe = [i for i, c in enumerate(choices) if c.get("outcome") == "safe"]
+    if len(safe) != 1 or len({c["key"] for c in choices}) != len(choices):
+        raise ValueError(f"{seed} {scenario.get('key')}: "
+                         f"{len(safe)} safe choices / duplicate keys")
+    order = plan_order(seed, scenario["key"], index,
+                       [c["text_ar"] for c in choices], safe[0])
+    return [choices[i]["key"] for i in order]
+
+
+def process_license_scenarios(write: bool, report: dict) -> int:
+    errors = 0
+    for path in sorted(LICENSE_DIR.glob("scenarios_*.json")):
+        raw = path.read_text(encoding="utf-8")
+        data = json.loads(raw)
+        orig = json.loads(raw)
+        orders: list[list[str]] = []
+        try:
+            for si, s in enumerate(data["scenarios"]):
+                keys = [c["key"] for c in s["choices"]]
+                report["lic_before"][next(i for i, c in enumerate(s["choices"])
+                                          if c.get("outcome") == "safe")] += 1
+                order = license_choice_order(path.name, si, s)
+                by_key = {c["key"]: c for c in s["choices"]}
+                s["choices"] = [by_key[k] for k in order]
+                orders.append(order)
+                report["lic_after"][order.index(
+                    next(k for k in keys if by_key[k]["outcome"] == "safe"))] += 1
+                report["per_file"][path.name].append(
+                    next(i for i, c in enumerate(s["choices"]) if c["outcome"] == "safe"))
+        except (ValueError, KeyError, StopIteration) as e:
+            print(f"licence {path.name}: {e}")
+            errors += 1
+            continue
+        targets = [(path, raw, data, orders)]
+
+        # The translation follows the Arabic order, choice by choice key.
+        en_path = LICENSE_EN_DIR / path.name
+        if en_path.exists():
+            en_raw = en_path.read_text(encoding="utf-8")
+            en = json.loads(en_raw)
+            en_scen = {s["key"]: s for s in en.get("scenarios", [])}
+            for s, order in zip(data["scenarios"], orders):
+                es = en_scen.get(s["key"])
+                if es is None:
+                    continue  # the loader falls back per bank; nothing to align
+                ek = {c["key"]: c for c in es["choices"]}
+                if sorted(ek) != sorted(order):
+                    print(f"licence en/{path.name} {s['key']}: choice keys differ from ar")
+                    errors += 1
+                    continue
+                es["choices"] = [ek[k] for k in order]
+            en_orders = [[c["key"] for c in s["choices"]] for s in en["scenarios"]]
+            targets.append((en_path, en_raw, en, en_orders))
+
+        # Validate: same scenarios, same choice objects, only order moved.
+        key = lambda o: json.dumps(o, ensure_ascii=False, sort_keys=True)  # noqa: E731
+        for a, b in zip(data["scenarios"], orig["scenarios"]):
+            if sorted(map(key, a["choices"])) != sorted(map(key, b["choices"])) or \
+               {k: v for k, v in a.items() if k != "choices"} != \
+               {k: v for k, v in b.items() if k != "choices"}:
+                print(f"licence {path.name} {a['key']}: validation failed")
+                errors += 1
+        if errors:
+            continue
+        for p, r, d, o in targets:
+            out = _dump_bank(r, d, o)
+            if out != r:
+                report["changed"] += 1
+                if write:
+                    p.write_text(out, encoding="utf-8")
     return errors
 
 
@@ -249,17 +481,20 @@ def main() -> int:
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--write", action="store_true", help="rewrite files")
     args = ap.parse_args()
-    report = {"before": collections.Counter(), "after": collections.Counter(),
-              "py_before": collections.Counter(), "py_after": collections.Counter(),
-              "per_file": collections.defaultdict(list), "pinned": [],
-              "positional": [], "changed": 0}
+    report = _new_report()
     errors = process_lesson_quizzes(args.write, report)
     errors += process_quiz_data_py(args.write, report)
+    errors += process_license_scenarios(args.write, report)
+    errors += process_game_packs(args.write, report)
 
     print(f"lesson quizzes  before: {_dist(report['before'])}")
     print(f"lesson quizzes  after:  {_dist(report['after'])}")
     print(f"quiz_data.py    before: {_dist(report['py_before'])}")
     print(f"quiz_data.py    after:  {_dist(report['py_after'])}")
+    print(f"licence safe    before: {_dist(report['lic_before'])}")
+    print(f"licence safe    after:  {_dist(report['lic_after'])}")
+    print(f"game packs      before: {_dist(report['game_before'])}")
+    print(f"game packs      after:  {_dist(report['game_after'])}")
     mono = [f for f, p in report["per_file"].items() if len(p) > 1 and len(set(p)) == 1]
     print(f"multi-question quizzes with a single correct position after: {len(mono)}")
     for f in mono:

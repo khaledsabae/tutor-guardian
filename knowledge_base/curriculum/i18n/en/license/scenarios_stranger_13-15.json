@@ -12,9 +12,10 @@
       "alerts_parent": true,
       "choices": [
         {
-          "key": "answer_some",
-          "text_ar": "I answer what isn't too personal and dodge the rest.",
-          "outcome": "critical"
+          "key": "tell",
+          "text_ar": "I stop talking to him and tell them at home.",
+          "outcome": "safe",
+          "tells_parent": true
         },
         {
           "key": "block",
@@ -22,10 +23,9 @@
           "outcome": "unsafe"
         },
         {
-          "key": "tell",
-          "text_ar": "I stop talking to him and tell them at home.",
-          "outcome": "safe",
-          "tells_parent": true
+          "key": "answer_some",
+          "text_ar": "I answer what isn't too personal and dodge the rest.",
+          "outcome": "critical"
         }
       ],
       "talking_point_ar": "\"Yeah, I think I know him\" is not confirmation — that is exactly how one person gets into a whole circle of friends. Make your first question about the other person, not about your kid: \"how did he get to you?\" A teenager this age feels they were fooled, and that feeling is what stops them from talking — so talk about how clever the method was, not about how they missed it."
@@ -37,11 +37,6 @@
       "alerts_parent": true,
       "choices": [
         {
-          "key": "send",
-          "text_ar": "I send it, he sent one first, so there's no risk.",
-          "outcome": "critical"
-        },
-        {
           "key": "refuse_stay",
           "text_ar": "I say no but keep talking to him like normal.",
           "outcome": "unsafe"
@@ -51,6 +46,11 @@
           "text_ar": "I stop the whole conversation and tell an adult.",
           "outcome": "safe",
           "tells_parent": true
+        },
+        {
+          "key": "send",
+          "text_ar": "I send it, he sent one first, so there's no risk.",
+          "outcome": "critical"
         }
       ],
       "talking_point_ar": "\"I sent you one first\" is the oldest move in blackmail, and the picture he sent is probably not his. The hardest part here is that your kid may have already sent one and is listening to you right now, scared — so say this sentence out loud at least once: \"if you've already sent one, come and tell me, you will not be punished.\" That is the difference between finding out in an hour and finding out in a month."
@@ -88,6 +88,12 @@
       "alerts_parent": true,
       "choices": [
         {
+          "key": "tell",
+          "text_ar": "I leave the game and tell my dad or my mom.",
+          "outcome": "safe",
+          "tells_parent": true
+        },
+        {
           "key": "vague",
           "text_ar": "I give answers that aren't exact so he doesn't get upset.",
           "outcome": "critical"
@@ -96,12 +102,6 @@
           "key": "mute",
           "text_ar": "I mute him and keep playing.",
           "outcome": "unsafe"
-        },
-        {
-          "key": "tell",
-          "text_ar": "I leave the game and tell my dad or my mom.",
-          "outcome": "safe",
-          "tells_parent": true
         }
       ],
       "talking_point_ar": "The questions about the parents' schedules aren't curiosity — they're the one piece of information that makes a difference. And your kid will probably defend him (\"he's been my friend for months\") and that's natural, because he really has been, for months. Don't attack the person; ask about the question itself: \"why did he ask about our schedules?\""
@@ -118,40 +118,53 @@
           "outcome": "critical"
         },
         {
-          "key": "refuse_silent",
-          "text_ar": "I say no and don't tell anyone.",
-          "outcome": "unsafe"
-        },
-        {
           "key": "tell",
           "text_ar": "I say no and tell them that someone asked me to.",
           "outcome": "safe",
           "tells_parent": true
+        },
+        {
+          "key": "refuse_silent",
+          "text_ar": "I say no and don't tell anyone.",
+          "outcome": "unsafe"
         }
       ],
       "talking_point_ar": "The second account is the step after which everything becomes invisible. And keep in mind that your kid may have opened one already for completely ordinary reasons, so don't turn the conversation into an interrogation. The sentence that opens the door: \"has anyone ever asked you to hide something from us before?\" — and that is a completely different question from \"do you have another account?\""
     }
   ],
   "translation": {
-    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-04",
+    "approved_by": "auto-review:deepseek-v4-pro+glm-5.2:2026-10-21",
+    "reviewer_model": "deepseek-v4-pro+glm-5.2",
+    "review_verdict": "clean",
+    "review_defects": [],
+    "revalidated_at": "2026-10-21T11:42:01+00:00",
     "auto_review": {
       "reviewers": [
         "deepseek-v4-pro",
         "glm-5.2"
       ],
+      "providers": {
+        "deepseek-v4-pro": {
+          "provider": "ollama-cloud",
+          "model": "deepseek-v4-pro"
+        },
+        "glm-5.2": {
+          "provider": "ollama-cloud",
+          "model": "glm-5.2"
+        }
+      },
       "fixer": null,
       "rounds": 1,
       "prompt_version": "dfa8a5f39718",
-      "content_sha256": "d4a4ae791011b62c80029b92636452881b4e74c9db3cbe61d7990cb38b46293f",
-      "reviewed_at": "2026-10-04T11:18:18+00:00",
+      "content_sha256": "856c60716e2e933e3a379b1bf24bc28f49e376b1e9cf08daba5e357856306358",
+      "reviewed_at": "2026-10-21T11:42:01+00:00",
       "residual_low": [],
       "adjudicated": [],
       "tool": "ops/tools/review_en_parity.py",
-      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; not a scholar's ijazah"
+      "meaning": "deterministic guards passed and two different-family model reviewers found no medium/high defect in this exact text; certifies that the English matches the Arabic, not that the Arabic is faithful to its own source; not a scholar's ijazah"
     },
-    "reviewer_model": "deepseek-v4-pro+glm-5.2",
-    "review_verdict": "clean",
-    "review_defects": [],
-    "revalidated_at": "2026-10-04T11:18:18+00:00"
+    "english_authors": [
+      "claude-opus"
+    ]
   }
 }
