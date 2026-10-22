@@ -211,7 +211,9 @@ def test_compose_writes_every_section_and_the_decisions(db_numbers):
         assert section in text
     assert "هذا الأسبوع 2 · الماضي 1" in text
     # D1 from GA4 (n=30) beats the 3 measurable claims.
-    assert "DA01: D1 7% (GA4، n=30) < 10% ⇒ أوقف" in text
+    # The holder's name, from docs/marketing/campaign_codes.md, on both lines.
+    assert "DA01 (د. هيثم طلعت): D1 7% (GA4، n=30) < 10% ⇒ أوقف" in text
+    assert "DA01 (د. هيثم طلعت): نقرات" in text
     # spend 10 ÷ 1 family with a D7 action
     assert "صرف 10$ · 10 للأسرة الباقية (D7) · 2 للتثبيت" in text
     assert "(direct) 40% ≥ 30% ⇒ فيه لينكات من غير كود" in text
@@ -222,6 +224,13 @@ def test_compose_writes_every_section_and_the_decisions(db_numbers):
     # Sessions are not measurable here, and the report says so every week.
     assert "crash-free sessions): غير مقيسة" in text
     assert "D7 فعل تربوي 50.0% ≥ 12% ⇒ بوابة الموجة الثانية مفتوحة" in text
+
+
+def test_compose_shows_a_bare_code_when_the_registry_has_no_name(db_numbers):
+    text = lwr.compose(db_numbers, _ga4_bundle(), None, None, names={})
+    assert "DA01: نقرات" in text and "DA01: D1 7%" in text
+    assert lwr.decide_code("PD01", {"d1_retained": 9, "d1_eligible": 30}, None,
+                           "PD01 (x)").endswith("كمّل — ويجوز رفع الميزانية")
 
 
 def test_compose_without_ga4_says_so(db_numbers):

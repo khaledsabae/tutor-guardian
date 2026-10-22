@@ -420,8 +420,15 @@ def collect_db(db_path: Path, now: datetime, cohort_days: int) -> dict:
 
 # ── compose ──────────────────────────────────────────────────────────────────
 
-def decide_code(code: str, db: dict | None, ga4: list[int] | None) -> str:
+def code_label(code: str, names: dict[str, str]) -> str:
+    """`DA03 (د. جاسم المطوع)` — the registry name beside the code, when known."""
+    return f"{code} ({names[code]})" if names.get(code) else code
+
+
+def decide_code(code: str, db: dict | None, ga4: list[int] | None,
+                label: str | None = None) -> str:
     """One decision line for a code, from whichever D1 sample is larger."""
+    code, prefix = (label or code), code[:2]
     samples = []
     if db and db.get("d1_eligible"):
         samples.append((db["d1_retained"], db["d1_eligible"], "قاعدة"))
@@ -438,7 +445,7 @@ def decide_code(code: str, db: dict | None, ga4: list[int] | None) -> str:
         return f"{code}: {tag} < {D1_STOP:.0f}% ⇒ أوقف"
     if d1 < D1_KEEP:
         return f"{code}: {tag} بين {D1_STOP:.0f}% و{D1_KEEP:.0f}% ⇒ راقب أسبوعًا ولا تزد الصرف"
-    more = " — ويجوز رفع الميزانية" if code.startswith("PD") else ""
+    more = " — ويجوز رفع الميزانية" if prefix == "PD" else ""
     return f"{code}: {tag} ≥ {D1_KEEP:.0f}% ⇒ كمّل{more}"
 
 
@@ -447,12 +454,16 @@ def _money(x: float) -> str:
 
 
 def compose(db: dict, ga4: dict | None, spend: list[list] | None,
-            spend_source: str | None) -> str:
+            spend_source: str | None, names: dict[str, str] | None = None) -> str:
     cr_re = re.compile(r"^(?:DA|EN|WA|KT|CM|PD|OT)[0-9]{2}$")
+    loaded: dict[str, str] = {}
     try:
-        cr_re = _cr().CAMPAIGN_RE
+        cr = _cr()
+        cr_re = cr.CAMPAIGN_RE
+        loaded = cr.code_names()   # who holds each code: docs/marketing/campaign_codes.md
     except Exception:  # noqa: BLE001 — the laptop half has no campaign_report
         pass
+    names = loaded if names is None else names
     ga4 = ga4 or {}
     ws, we = db["north_star"][0]["start"], db["north_star"][0]["end"]
     out = [f"🚀 تقرير الإطلاق الأسبوعي — المربّي", f"الأسبوع {ws} ← {we} (UTC)", ""]
@@ -488,7 +499,7 @@ def compose(db: dict, ga4: dict | None, spend: list[list] | None,
         c = db["campaigns"].get(code) or {}
         coh = ga_coh.get(code, {})
         d1g, d7g = coh.get("d1"), coh.get("d7")
-        line = [f"{code}: نقرات {c.get('clicks', 0)}",
+        line = [f"{code_label(code, names)}: نقرات {c.get('clicks', 0)}",
                 f"تثبيت {c.get('new', 0)} (بالكود {c.get('exact', 0)} · IP {c.get('auto', 0)})",
                 f"GA4 جدد {ga_new.get(code, 0)}"]
         out.append(" · ".join(line))
@@ -507,7 +518,7 @@ def compose(db: dict, ga4: dict | None, spend: list[list] | None,
                 cost = "D7 لم يكتمل بعد"
             per_install = f" · {_money(s / c['new'])} للتثبيت" if c.get("new") else ""
             out.append(f"   صرف {_money(s)}$ · {cost}{per_install}")
-        decisions.append(decide_code(code, c or None, d1g))
+        decisions.append(decide_code(code, c or None, d1g, code_label(code, names)))
     if spend_by:
         out.append(f"(الصرف من {spend_source})")
     inv, g = db["invites"], db["gate"]
