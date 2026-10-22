@@ -97,6 +97,128 @@ class L10nTest(unittest.TestCase):
         self.assertEqual(missing, [])
 
 
+class CiChildNameTest(unittest.TestCase):
+    """The onboarding child is created as test traffic, never renamed into it:
+    production refuses a rename without an FCM device proof (2026-10-21)."""
+    ROOT = Path(__file__).resolve().parents[1]
+    L10N = ROOT / "mobile" / "lib" / "l10n"
+    FILES = ("app_ar.arb", "app_en.arb", "app_localizations_ar.dart", "app_localizations_en.dart")
+
+    def run_helper(self, l10n_dir, name="E2E-Maestro"):
+        return subprocess.run(
+            [sys.executable, "-S", str(Path(t.__file__).resolve()),
+             "ci-child-name", "--l10n-dir", str(l10n_dir), "--name", name],
+            capture_output=True, text=True,
+        )
+
+    def copy_l10n(self, tmp, source=None):
+        out = Path(tmp)
+        for f in self.FILES:
+            (out / f).write_bytes((source or self.L10N).joinpath(f).read_bytes())
+        return out
+
+    def test_head_strings_become_the_test_name_and_nothing_else(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            l10n = self.copy_l10n(tmp)
+            before = {f: (l10n / f).read_text(encoding="utf-8") for f in self.FILES}
+            proc = self.run_helper(l10n)
+            self.assertEqual(proc.returncode, 0, proc.stderr)
+            for lang in ("ar", "en"):
+                arb = json.loads((l10n / f"app_{lang}.arb").read_text(encoding="utf-8"))
+                self.assertEqual(arb["onbDefaultChildName"], "E2E-Maestro")
+                dart = (l10n / f"app_localizations_{lang}.dart").read_text(encoding="utf-8")
+                self.assertIn("String get onbDefaultChildName => 'E2E-Maestro';", dart)
+            for f in self.FILES:
+                old = before[f].splitlines()
+                new = (l10n / f).read_text(encoding="utf-8").splitlines()
+                self.assertEqual(len(old), len(new), f)
+                changed = [a for a, b in zip(old, new) if a != b]
+                self.assertEqual(len(changed), 1, f)
+                self.assertIn("onbDefaultChildName", changed[0])
+
+    def test_the_baseline_ref_is_patchable_too(self):
+        workflow = (self.ROOT / ".github/workflows/mobile-e2e.yml").read_text()
+        ref = re.search(r"vars\.E2E_BASELINE_REF \|\| '([0-9a-f]{40})'", workflow).group(1)
+        with tempfile.TemporaryDirectory() as src, tempfile.TemporaryDirectory() as tmp:
+            for f in self.FILES:
+                show = subprocess.run(["git", "-C", str(self.ROOT), "show", f"{ref}:mobile/lib/l10n/{f}"],
+                                      capture_output=True)
+                if show.returncode != 0:
+                    self.skipTest(f"baseline {ref[:8]} not in this clone")
+                Path(src, f).write_bytes(show.stdout)
+            l10n = self.copy_l10n(tmp, Path(src))
+            proc = self.run_helper(l10n)
+            self.assertEqual(proc.returncode, 0, proc.stderr)
+
+    def test_refuses_and_writes_nothing(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            l10n = self.copy_l10n(tmp)
+            before = {f: (l10n / f).read_bytes() for f in self.FILES}
+            for bad in ("E2E'x", 'E2E"x', "E2E Maestro", "x", ""):
+                with self.subTest(name=bad):
+                    proc = self.run_helper(l10n, bad)
+                    self.assertEqual(proc.returncode, 1)
+                    self.assertIn("::error::", proc.stderr)
+            # A key missing from one file: no file is touched, not even the others.
+            dart = l10n / "app_localizations_en.dart"
+            dart.write_text(dart.read_text(encoding="utf-8").replace("onbDefaultChildName", "x"),
+                            encoding="utf-8")
+            before[dart.name] = dart.read_bytes()
+            proc = self.run_helper(l10n)
+            self.assertEqual(proc.returncode, 1)
+            for f in self.FILES:
+                self.assertEqual((l10n / f).read_bytes(), before[f], f)
+
+    def test_workflow_builds_head_and_baseline_with_the_run_name(self):
+        workflow = (self.ROOT / ".github/workflows/mobile-e2e.yml").read_text()
+        # Every variant is built with the CHILD_NAME default of the script that
+        # drives it; nothing in the workflow overrides those defaults.
+        self.assertNotIn("E2E_CHILD_NAME", workflow)
+        names = dict(re.findall(r"- variant: (\S+)\n(?:            .*\n)*?            child_name: (\S+)\n", workflow))
+        self.assertEqual(set(names), {"head", "baseline", "rehearsal-head", "rehearsal-baseline"})
+        for script, variants in (("run.sh", ("head", "baseline")),
+                                 ("rehearsal.sh", ("rehearsal-head", "rehearsal-baseline"))):
+            default = re.search(r'^CHILD_NAME="\$\{E2E_CHILD_NAME:-([^}]+)\}"$',
+                                (self.ROOT / "e2e" / script).read_text(), re.M).group(1)
+            for v in variants:
+                self.assertEqual(names[v], default, v)
+        marker = "      - name: Create the onboarding child as test traffic\n"
+        self.assertIn(marker, workflow)
+        self.assertLess(workflow.index(marker), workflow.index("      - name: Build the release APK"))
+        section = workflow.split(marker, 1)[1].split("      - ", 1)[0]
+        self.assertNotIn("continue-on-error", section)
+        self.assertNotIn("if:", section)
+        self.assertIn("CHILD_NAME: ${{ matrix.child_name }}", section)
+        self.assertIn('ci-child-name --l10n-dir lib/l10n --name "$CHILD_NAME"', section)
+        self.assertIn('"onboarding_child_name=$CHILD_NAME"', workflow)
+
+    def test_no_flow_renames_the_onboarding_child(self):
+        mark = (FLOWS / "common" / "mark_child.yaml").read_text(encoding="utf-8")
+        steps = yaml.safe_load_all(mark)
+        body = [s for s in steps][-1]
+        text = json.dumps(body)
+        self.assertNotIn("inputText", text)
+        self.assertNotIn("eraseText", text)
+        # The Settings tile is a merged node (title + subtitle): `lead`, not `t`.
+        self.assertIn("tapOn: '${output.lead.settingsEditChild}'", mark)
+        for flow in FLOWS.rglob("*.yaml"):
+            self.assertNotIn("onbDefaultChildName", flow.read_text(encoding="utf-8"), flow.name)
+
+
+class HubScrollTest(unittest.TestCase):
+    def test_every_down_search_for_the_parent_day_tile_looks_up_first(self):
+        """The hub keeps the offset the Settings shots left (its bottom); a DOWN
+        search alone missed «يوم الطفل» at 200% font (runs 38777734035 and
+        39649673035), and the praise shots after it were never taken."""
+        steps = list(yaml.safe_load_all((FLOWS / "gallery" / "shoot.yaml").read_text(encoding="utf-8")))[-1]
+        searches = [s["scrollUntilVisible"] for s in steps
+                    if isinstance(s, dict) and "scrollUntilVisible" in s
+                    and s["scrollUntilVisible"]["element"]["text"] == "${output.tile.hubParentDay}"]
+        self.assertGreaterEqual(len(searches), 4)
+        for up, down in zip(searches[::2], searches[1::2]):
+            self.assertEqual((up["direction"], down["direction"]), ("UP", "DOWN"))
+
+
 class FlowReferencesTest(unittest.TestCase):
     def test_every_selector_reference_exists(self):
         """A typo in `${output.t.someKey}` must fail here, not 20 minutes into CI."""

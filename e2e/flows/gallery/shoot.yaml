@@ -411,6 +411,16 @@ name: gallery/shoot
 
 # Step 2: Parent opens claimed mission and confirms with kind words ("فخورون بك")
 - tapOn: '${output.lead.navMore}'
+# UP first, as in Step 6: the hub can keep the offset the Settings shots left
+# it at (its bottom), and a DOWN search from there finds nothing — run
+# 39649673035 lost ar_font2x's praise_card_* and praise_child_sticker_and_text
+# to it (no shot of Steps 2–3 at all).
+- scrollUntilVisible:
+    element:
+      text: '${output.tile.hubParentDay}'
+    direction: UP
+    timeout: 10000
+    optional: true
 - scrollUntilVisible:
     element:
       text: '${output.tile.hubParentDay}'
@@ -448,6 +458,14 @@ name: gallery/shoot
             - waitForAnimationToEnd:
                 timeout: 2000
       # Step 3: Child 1 (7-9) re-opens child mode: PraiseHeader appears with sticker AND text!
+      # The confirm sheet can still be up (Step 7, run 38815483981). Close it first.
+      - runFlow:
+          when:
+            visible: '${output.t.missionConfirmAll}'
+          commands:
+            - back
+            - waitForAnimationToEnd:
+                timeout: 2000
       - scrollUntilVisible:
           element:
             text: '${output.t.missionOpenForChild}'
