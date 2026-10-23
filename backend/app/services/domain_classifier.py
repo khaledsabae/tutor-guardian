@@ -384,16 +384,33 @@ _CHILD_PAST_HEARING_RE = re.compile(
 # Pattern: (regex_pattern, domain, confidence_description)
 # «ليه ربنا خلق الشر؟» and its variants — a child's question about evil and
 # suffering, i.e. a question about the Creator (aqeedah). Phrases only, anchored
-# on «شر» next to «خلق»/«ليه», or on «ليه ربنا» + a permission verb: bare «شر» is also
-# «شرح», «شرب», «شريط». The two lookaheads end the word without eating a longer
-# one (شرح، شروق).
+# on «شر» next to the Creator + «خلق», or on «ليه ربنا» + a permission verb: bare «شر»
+# is also «شرح», «شرب», «شريط». Every alternative has a left AND a right word
+# boundary — an unanchored «خلق» matched the idiom «ابني بيخلق شر» (causing
+# trouble), and an unbounded noun matched «يسيب عيالي» / «يسمح بالشرك».
+_AR = r"[\u0621-\u064a]"  # an Arabic letter (diacritics, U+064B+, are not letters here)
 _EVIL_QUESTION = (
-    r"خلق\s*(?:الله\s*)?(?:ال)?شر(?:ور)?(?![\u0621-\u064a])"
-    r"|(?:ليه|ليش|لماذا)\s*(?:ربنا\s*|الله\s*)?(?:في|فيه|يوجد|موجود|فى)\s*(?:ال)?شر(?:ور)?(?![\u0621-\u064a])"
-    r"|(?:ليه|ليش|لماذا)\s*(?:ربنا|الله)\s*(?:بيسيب|يسيب|بيسمح|يسمح|بيترك|يترك|بيخلي|يخلي|بيسكت|يسكت)"
-    r"\s*(?:على\s*|ب)?(?:ال)?(?:ناس|أطفال|اطفال|عيال|ظلم|شر|مظلومين|أبرياء|ابرياء)"
-    r"|(?:مشكلة|وجود)\s*(?:ال)?شر(?![\u0621-\u064a])|الشر\s*والألم|الشر\s*في\s*العالم"
+    # Anchored on the CREATOR doing the creating (or on «خلق الشر» with «ال»):
+    # the Egyptian idiom «ابني بيخلق شر» (causing trouble) has no Creator in it
+    # and «بيخلق» is preceded by a letter, so neither shape matches it.
+    r"(?<!" + _AR + r")(?:(?:الله|ربنا)\s*(?:بي|ي)?خلق\s*(?:ال)?"
+    r"|(?:ب)?يخلق\s*(?:الله|ربنا)\s*(?:ال)?"
+    r"|خلق\s*(?:الله|ربنا)\s*(?:ال)?"
+    r"|خلق\s*ال)شر(?:ور)?(?!" + _AR + r")"
+    # «ليه ربنا خلق الشيطان / إبليس» — the same creed question about Iblis.
+    r"|(?<!" + _AR + r")(?:(?:الله|ربنا)\s*(?:بي|ي)?خلق|(?:ب)?يخلق\s*(?:الله|ربنا)"
+    r"|خلق\s*(?:الله|ربنا))\s*(?:ال)?(?:شيطان|إبليس|ابليس)(?!" + _AR + r")"
+    # «ليه في شر» — but «ليه في شر بين أخواتي / عند / مع» is a sibling or peer
+    # conflict, not a question about the world.
+    r"|(?<!" + _AR + r")[وف]?(?:ليه|ليش|لماذا)\s*(?:ربنا\s*|الله\s*)?(?:في|فيه|يوجد|موجود|فى)\s*(?:ال)?شر(?:ور)?(?!" + _AR + r")"
+    r"(?!\s*(?:بين|بيني|بيننا|عند|مع)(?!" + _AR + r"))"
+    # The noun needs its own right boundary: «يسيب عيالي» (my kids) and
+    # «يسمح بالشرك» are not «يسيب عيال» / «يسمح بالشر».
+    r"|(?<!" + _AR + r")[وف]?(?:ليه|ليش|لماذا)\s*(?:ربنا|الله)\s*(?:بيسيب|يسيب|بيسمح|يسمح|بيترك|يترك|بيخلي|يخلي|بيسكت|يسكت)"
+    r"\s*(?:على\s*|ب)?(?:ال)?(?:ناس|أطفال|اطفال|عيال|ظلم|شر|مظلومين|أبرياء|ابرياء)(?!" + _AR + r")"
+    r"|(?:مشكلة|وجود)\s*(?:ال)?شر(?!" + _AR + r")|الشر\s*والألم|الشر\s*في\s*العالم"
 )
+_EVIL_QUESTION_RE = re.compile(_EVIL_QUESTION, re.UNICODE)
 
 KEYWORD_RULES: List[Tuple[str, str]] = [
     # Fiqh / Islamic parenting — clear religious terms (incl. verb forms) (expanded: behavior+ritual phrases)
@@ -729,6 +746,14 @@ def _keyword_fast_path(question: str) -> Optional[List[str]]:
     for _pattern, domain in _COMPILED_RULES:
         if domain in found and domain not in matched:
             matched.append(domain)
+    if "aqeedah" in matched and matched[0] != "aqeedah" and _EVIL_QUESTION_RE.search(rule_text):
+        # «ليه ربنا خلق الشر؟» is a question about the Creator. Rule order puts
+        # `fiqh` first (its broad rule is listed earlier), and the reply is
+        # labelled and guardrailed with domains[0] (assistant._label_domain) —
+        # so without this the creed question carried the fiqh label. Both
+        # domains are still searched.
+        matched.remove("aqeedah")
+        matched.insert(0, "aqeedah")
     hearing_text = re.sub(r"[\u064b-\u065f\u0670\u0640]", "", question)
     if "development" not in matched and (
             _CHILD_PAST_HEARING_RE.search(hearing_text)
