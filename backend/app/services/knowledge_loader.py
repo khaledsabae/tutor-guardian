@@ -3,6 +3,7 @@ Load knowledge units from JSON files on disk.
 Normalizes age_group metadata before instantiating KnowledgeUnit.
 """
 import json
+import os
 from pathlib import Path
 
 from app.models.knowledge import KnowledgeUnit
@@ -47,8 +48,53 @@ EXCLUDED_SOURCES = (
 )
 
 
+# ── Unapproved drafts are not served ─────────────────────────────────────────
+#
+# A unit whose draft status is "awaiting-review" has been written but not yet
+# signed off by a scholar. It stays on disk, in git, in the integrity guards and
+# in the review package — it is only kept out of the index, so merging it can
+# never put unapproved text in front of a parent.
+#
+# PUBLISHING = flipping the status after the sign-off: edit the unit's
+# `translation.draft_status` (or a top-level `draft_status`) to anything else
+# (e.g. "approved") and restart the backend — the index fingerprint changes and
+# the index rebuilds itself on boot, exactly as for EXCLUDED_SOURCES.
+#
+# Units WITHOUT the field are untouched (every legacy unit), and so are the
+# other draft values already in use ("draft", …): only this exact status gates.
+#
+# Tools that must see drafts (golden/eval runs, the scholar's local preview) set
+# TG_ALLOW_DRAFT_UNITS=1 before the first load; the flag is read on every load,
+# so it also works when set after import.
+UNPUBLISHED_DRAFT_STATUSES = frozenset({"awaiting-review"})
+ALLOW_DRAFTS_ENV = "TG_ALLOW_DRAFT_UNITS"
+
+# Already live on main with this status before the gate existed (lesson 11,
+# d6ae3ff8). The gate must not silently withdraw a served unit; drop the id from
+# this set to gate it too.
+SERVED_BEFORE_GATE = frozenset({"aqe-who-created-allah-source-01"})
+
+
+def _drafts_allowed() -> bool:
+    return os.environ.get(ALLOW_DRAFTS_ENV, "").strip().lower() in {"1", "true", "yes", "on"}
+
+
+def _draft_status(data: dict) -> str:
+    translation = data.get("translation")
+    nested = translation.get("draft_status") if isinstance(translation, dict) else None
+    return str(nested or data.get("draft_status") or "").strip().lower()
+
+
+def _is_unpublished_draft(data: dict) -> bool:
+    if _draft_status(data) not in UNPUBLISHED_DRAFT_STATUSES:
+        return False
+    return (data.get("id") or "") not in SERVED_BEFORE_GATE
+
+
 def _is_excluded(data: dict) -> bool:
-    return (data.get("source_file") or "") in EXCLUDED_SOURCES
+    if (data.get("source_file") or "") in EXCLUDED_SOURCES:
+        return True
+    return _is_unpublished_draft(data) and not _drafts_allowed()
 
 
 def load_knowledge_units_from_dir(dir_path: Path) -> list[KnowledgeUnit]:

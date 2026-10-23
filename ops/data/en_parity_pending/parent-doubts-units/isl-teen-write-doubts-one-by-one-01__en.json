@@ -1,0 +1,59 @@
+{
+  "id": "isl-teen-write-doubts-one-by-one-01__en",
+  "domain": "islamic_parenting",
+  "source_file": "parent_doubts_2026-10",
+  "title": "Your son has many doubts: write his questions down and take them one by one over several days",
+  "language": "en",
+  "age_group": "13-15",
+  "behavior_type": "حوار على أيام: اتفاق على إطار ثم كتابة الأسئلة وأخذها واحدًا واحدًا",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "حديث",
+  "reference_info": "القرآن الكريم: الإسراء ٣٦، النحل ٤٣؛ صحيح البخاري — حديث ٦٩",
+  "text_original": "المصادر التي بُنيت عليها الوحدة (منقولة بلفظها من المصحف ومن الصحيحين، دون ترجمة ولا تفسير مولَّد):\n\nالقرآن الكريم\n﴿وَلَا تَقْفُ مَا لَيْسَ لَكَ بِهِ عِلْمٌ﴾ [الإسراء: ٣٦]\n﴿فَاسْأَلُوا أَهْلَ الذِّكْرِ إِن كُنتُمْ لَا تَعْلَمُونَ﴾ [النحل: ٤٣]\n\nالسنة\n«يسروا ولا تعسروا، وبشروا ولا تنفروا» (صحيح البخاري — حديث ٦٩)\n\nأصل الفكرة التربوية (مصدر داخلي، يُستفاد منه المرحلتان الأولى والثانية فقط، وتُحذف كل ما بعدهما): في الحوار الطويل يتفق الطرفان أولًا على إطار الحوار (ما موضوعه وما حدوده)، ثم تُحصر الشكوك المحددة في قائمة، وتُؤخذ واحدة واحدة، وكل شبهة تُردّ إلى سياقها الكامل وقاعدتها الكلية بدل المقطع المبتور. لم يُنقل من المرحلة الأولى تقنية «التعاقد» التي تطلب من المحاور التزامًا بقبول الإسلام إذا أُجيب عن النقطة، ولا شيء من المراحل ٣–٥ (ضغط القرار، التلقين، الاستعجال، الجمهور)؛ فلا مكان لها بين الوالد وولده.\n\nإرشاد التطبيق للأهل (غير منسوب إلى لفظ آية ولا حديث): جلسات قصيرة، وقوائم مكتوبة بكلمات الابن، وسؤال واحد لكل جلسة، وتأجيل الجواب إلى ما بعد السؤال، وتدوين ما وصلتم إليه.",
+  "text_simplified": "When your son or daughter has many mixed-up doubts, the worst thing that can happen is for the sitting to turn into a debate where everything piles up and everyone leaves exhausted. A better way is a conversation over days, in this order:\n\n• Agree on the frame before the content. When? A calm time, not during anger, not before an exam, not right before sleep. How long? A short sitting that tires no one. What rules? No raised voices, no mockery, and either of us can say, “Let’s pause now.” Every question is welcome.\n\n• Write the questions down. Ask him to put each question on its own line, in his own words, not yours. Then ask gently, “Any other questions? Write those too.” This is a list to arrange the picture, not a pledge or a bargain: do not say, “If I answer this one, will you be convinced?”, and do not ask for a commitment, a decision or a deadline. Having the questions written down comforts him when he sees they are limited and known, and it spares you from getting lost among many overlapping questions.\n\n• Take one question per sitting and leave the rest for the following days. If you do not know the answer, say, “I’ll ask and get back to you tomorrow,” and really do get back to him.\n\n• Go back to the whole text with its context. Many doubts arrive cut out of their context in a short clip. Read the full verse or passage, what comes before and after it, together with the trusted scholars’ explanation, rather than settling for the clip that reached you. ﴿وَلَا تَقْفُ مَا لَيْسَ لَكَ بِهِ عِلْمٌ﴾ [Al-Isra 17:36] (interpretation of the meaning: do not pursue what you have no knowledge of). The aim is to understand, not to win.\n\n• Note beside each question what you reached, what is still open, and whom you will ask: ﴿فَاسْأَلُوا أَهْلَ الذِّكْرِ إِن كُنتُمْ لَا تَعْلَمُونَ﴾ [An-Nahl 16:43] (interpretation of the meaning: ask the people of knowledge if you do not know). It takes courage to write, “We still don’t know.”\n\nWhat not to do: no deadlines, no “you must decide now,” no frightening, no siblings or relatives present, and no tying your love for him to his agreement. After each sitting, do something pleasant together (a meal, a walk, a game). The Prophet ﷺ said: “Make things easy and do not make them difficult, give glad tidings and do not drive people away.” (Sahih al-Bukhari 69).\n\nIf the doubts grow alarmingly, or come with deep sadness or isolation, involve a trustworthy scholar and a mental-health professional.",
+  "labels": [
+    "المراهق",
+    "الشكوك",
+    "الحوار",
+    "إرشاد التطبيق"
+  ],
+  "keywords": [
+    "write the questions",
+    "my teen's questions about religion",
+    "conversation over days",
+    "many doubts",
+    "ordering doubts",
+    "one question at a time"
+  ],
+  "created_at": "2026-10-22T12:00:00+00:00",
+  "updated_at": "2026-10-22T12:00:00+00:00",
+  "version": "1.0.0",
+  "needs_ocr": false,
+  "source_meta": {
+    "source_title": "Parent-doubts units 2026-10 (Quran + Sahihayn + app-authored guidance)",
+    "source_author": "Tutor Guardian content team (pending Khaled + scholar review)",
+    "source_year": 2026
+  },
+  "source_language": "ar",
+  "translated_from": "isl-teen-write-doubts-one-by-one-01",
+  "source_kind": "authored_guidance",
+  "authored_references": [
+    "القرآن الكريم: الإسراء ٣٦، النحل ٤٣",
+    "صحيح البخاري — حديث ٦٩"
+  ],
+  "source_note": "أُخذت المرحلتان ١–٢ فقط (الاتفاق على إطار، ثم حصر الشكوك المحددة وأخذها واحدة واحدة) من دليل حواري داخلي كُتب لمحاورين بالغين، وأُعيدت صياغتهما لعلاقة الوالد بولده؛ وحُذفت تقنية الالتزام المسبق وكل المراحل ٣–٥ لأنها تقنيات ضغط. لم تُنقل أرقام ولا أزمنة ولا أسماء من الدراسة. الآيتان والحديث فحصها حارس الأحاديث وحارس المصحف. المدة والترتيب اجتهاد تربوي من التطبيق. 2026-10-22. لا اعتماد بشري ولا شرعي؛ بانتظار مراجعة خالد وعالم قبل أي دفع إلى main.",
+  "translation": {
+    "translator_model": "claude-sonnet-5-5",
+    "needs_scholar_review": true,
+    "review_verdict": "pending",
+    "approved_by": null,
+    "draft_status": "awaiting-review",
+    "scholar_review_items": [
+      "الوحدة مبنية على مرحلتين فقط من دليل حواري داخلي (الاتفاق على إطار، ثم حصر الشكوك وأخذها واحدة واحدة). حُذفت تقنية «هل يبقى حاجز آخر بينك وبين القبول» لأنها ضغط، وكل ما بعد المرحلة ٢. المطلوب: التأكد أن ما بقي لا يحمل ضغطًا خفيًّا.",
+      "الاستدلال بـ﴿وَلَا تَقْفُ مَا لَيْسَ لَكَ بِهِ عِلْمٌ﴾ (الإسراء ٣٦) على التحقق من سياق الشبهة قبل الحكم: هل هو في موضعه؟",
+      "عبارة «ومن الشجاعة أن تكتب ما زلنا لا نعرف» وإقرار التأجيل في الجواب: هل تتفق مع منهج التطبيق في الإحالة إلى أهل العلم؟",
+      "اختيار جلسات قصيرة، ووقت هادئ لها، وسؤال واحد في كل جلسة: اجتهاد تربوي من التطبيق، وليس مأخوذًا من أي دراسة ولا من أزمنة الحوار في الدليل الداخلي."
+    ]
+  }
+}

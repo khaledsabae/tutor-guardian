@@ -1,13 +1,13 @@
 {
-  "total_units": 1391,
-  "generated_at": "2026-10-15T06:02:00.833425+00:00",
+  "total_units": 1398,
+  "generated_at": "2026-10-23T05:35:42.355010+00:00",
   "by_domain": {
     "medical": 362,
-    "cyber": 283,
-    "islamic_parenting": 578,
+    "cyber": 284,
+    "islamic_parenting": 581,
     "development": 134,
     "app_help": 12,
-    "aqeedah": 22
+    "aqeedah": 25
   },
   "units": [
     {
@@ -1559,6 +1559,18 @@
       "size_chars": 315
     },
     {
+      "id": "aqe-child-asks-allah-exists-10-12-01",
+      "domain": "aqeedah",
+      "title": "ابني ١٢ سنة بيسأل: هل الله موجود؟ وكيف بدأ الخلق؟",
+      "source_file": "parent_doubts_2026-10",
+      "language": "ar",
+      "original_age_group": "10-12",
+      "normalized_age_group": "10-12",
+      "behavior_type": "ابني ١٢ سنة يسأل عن وجود الله وكيف بدأ الخلق",
+      "needs_ocr": false,
+      "size_chars": 1209
+    },
+    {
       "id": "aqe-d0f14b8c",
       "domain": "aqeedah",
       "title": "ما بعد الموت؟",
@@ -1689,6 +1701,30 @@
       "behavior_type": "التعامل الهادئ مع أسئلة الطفل عن الله",
       "needs_ocr": false,
       "size_chars": 293
+    },
+    {
+      "id": "aqe-why-evil-13-15-01",
+      "domain": "aqeedah",
+      "title": "«ليه ربنا خلق الشر؟» — حوار مع مراهق (١٣–١٥)",
+      "source_file": "parent_doubts_2026-10",
+      "language": "ar",
+      "original_age_group": "13-15",
+      "normalized_age_group": "13-15",
+      "behavior_type": "سؤال المراهق عن الشر والألم: ليه ربنا خلق الشر؟",
+      "needs_ocr": false,
+      "size_chars": 1113
+    },
+    {
+      "id": "aqe-why-evil-7-9-01",
+      "domain": "aqeedah",
+      "title": "«ليه ربنا خلق الشر؟» — جواب يناسب طفل من ٧ إلى ٩ سنوات",
+      "source_file": "parent_doubts_2026-10",
+      "language": "ar",
+      "original_age_group": "7-9",
+      "normalized_age_group": "7-9",
+      "behavior_type": "أسئلة الطفل عن الشر والألم: ليه ربنا خلق الشر؟",
+      "needs_ocr": false,
+      "size_chars": 743
     },
     {
       "id": "b08d70af-9008-41cc-97f5-cfeba46ba327",
@@ -5001,6 +5037,18 @@
       "behavior_type": "حماية الطفل الرقمية",
       "needs_ocr": false,
       "size_chars": 1729
+    },
+    {
+      "id": "cyb-teen-debate-doubt-streams-01",
+      "domain": "cyber",
+      "title": "ابنك بيتابع بثوث المناظرات والشبهات: إيه تعمل؟ (١٣–١٨)",
+      "source_file": "parent_doubts_2026-10",
+      "language": "ar",
+      "original_age_group": "13-15",
+      "normalized_age_group": "13-15",
+      "behavior_type": "ابني يتابع بثوث المناظرات والشبهات على الإنترنت",
+      "needs_ocr": false,
+      "size_chars": 872
     },
     {
       "id": "cyb-who-screen-under5-2019",
@@ -13185,6 +13233,42 @@
       "behavior_type": "مرجع_قرآني",
       "needs_ocr": false,
       "size_chars": 626
+    },
+    {
+      "id": "isl-teen-calm-not-mockery-01",
+      "domain": "islamic_parenting",
+      "title": "هدوء لا سخرية: نبرة صوتك حين يشكّك ابنك في دينه",
+      "source_file": "parent_doubts_2026-10",
+      "language": "ar",
+      "original_age_group": "13-15",
+      "normalized_age_group": "13-15",
+      "behavior_type": "حوار الأب مع ابنه المتشكّك في دينه: الهدوء لا السخرية",
+      "needs_ocr": false,
+      "size_chars": 1246
+    },
+    {
+      "id": "isl-teen-western-ideas-doubts-01",
+      "domain": "islamic_parenting",
+      "title": "أفكار غربية وثوابت الدين: ابني ١٥ سنة بيتأثر بها، كيف أحاوره",
+      "source_file": "parent_doubts_2026-10",
+      "language": "ar",
+      "original_age_group": "13-15",
+      "normalized_age_group": "13-15",
+      "behavior_type": "ابني ١٥ سنة يتأثر بأفكار غربية ويشكك في بعض الثوابت",
+      "needs_ocr": false,
+      "size_chars": 746
+    },
+    {
+      "id": "isl-teen-write-doubts-one-by-one-01",
+      "domain": "islamic_parenting",
+      "title": "ابنك عنده شكوك كتير: اكتبوا أسئلته واحدًا واحدًا وناقشوها عل",
+      "source_file": "parent_doubts_2026-10",
+      "language": "ar",
+      "original_age_group": "13-15",
+      "normalized_age_group": "13-15",
+      "behavior_type": "حوار على أيام: اتفاق على إطار ثم كتابة الأسئلة وأخذها واحدًا واحدًا",
+      "needs_ocr": false,
+      "size_chars": 986
     },
     {
       "id": "isl-toddler-prayer",

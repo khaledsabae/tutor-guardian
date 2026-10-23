@@ -382,6 +382,36 @@ _CHILD_PAST_HEARING_RE = re.compile(
 # Maps clear Arabic keywords directly to domains. The key insight:
 # these are unambiguous terms that an LLM would always classify the same way.
 # Pattern: (regex_pattern, domain, confidence_description)
+# «ليه ربنا خلق الشر؟» and its variants — a child's question about evil and
+# suffering, i.e. a question about the Creator (aqeedah). Phrases only, anchored
+# on «شر» next to the Creator + «خلق», or on «ليه ربنا» + a permission verb: bare «شر»
+# is also «شرح», «شرب», «شريط». Every alternative has a left AND a right word
+# boundary — an unanchored «خلق» matched the idiom «ابني بيخلق شر» (causing
+# trouble), and an unbounded noun matched «يسيب عيالي» / «يسمح بالشرك».
+_AR = r"[\u0621-\u064a]"  # an Arabic letter (diacritics, U+064B+, are not letters here)
+_EVIL_QUESTION = (
+    # Anchored on the CREATOR doing the creating (or on «خلق الشر» with «ال»):
+    # the Egyptian idiom «ابني بيخلق شر» (causing trouble) has no Creator in it
+    # and «بيخلق» is preceded by a letter, so neither shape matches it.
+    r"(?<!" + _AR + r")(?:(?:الله|ربنا)\s*(?:بي|ي)?خلق\s*(?:ال)?"
+    r"|(?:ب)?يخلق\s*(?:الله|ربنا)\s*(?:ال)?"
+    r"|خلق\s*(?:الله|ربنا)\s*(?:ال)?"
+    r"|خلق\s*ال)شر(?:ور)?(?!" + _AR + r")"
+    # «ليه ربنا خلق الشيطان / إبليس» — the same creed question about Iblis.
+    r"|(?<!" + _AR + r")(?:(?:الله|ربنا)\s*(?:بي|ي)?خلق|(?:ب)?يخلق\s*(?:الله|ربنا)"
+    r"|خلق\s*(?:الله|ربنا))\s*(?:ال)?(?:شيطان|إبليس|ابليس)(?!" + _AR + r")"
+    # «ليه في شر» — but «ليه في شر بين أخواتي / عند / مع» is a sibling or peer
+    # conflict, not a question about the world.
+    r"|(?<!" + _AR + r")[وف]?(?:ليه|ليش|لماذا)\s*(?:ربنا\s*|الله\s*)?(?:في|فيه|يوجد|موجود|فى)\s*(?:ال)?شر(?:ور)?(?!" + _AR + r")"
+    r"(?!\s*(?:بين|بيني|بيننا|عند|مع)(?!" + _AR + r"))"
+    # The noun needs its own right boundary: «يسيب عيالي» (my kids) and
+    # «يسمح بالشرك» are not «يسيب عيال» / «يسمح بالشر».
+    r"|(?<!" + _AR + r")[وف]?(?:ليه|ليش|لماذا)\s*(?:ربنا|الله)\s*(?:بيسيب|يسيب|بيسمح|يسمح|بيترك|يترك|بيخلي|يخلي|بيسكت|يسكت)"
+    r"\s*(?:على\s*|ب)?(?:ال)?(?:ناس|أطفال|اطفال|عيال|ظلم|شر|مظلومين|أبرياء|ابرياء)(?!" + _AR + r")"
+    r"|(?:مشكلة|وجود)\s*(?:ال)?شر(?!" + _AR + r")|الشر\s*والألم|الشر\s*في\s*العالم"
+)
+_EVIL_QUESTION_RE = re.compile(_EVIL_QUESTION, re.UNICODE)
+
 KEYWORD_RULES: List[Tuple[str, str]] = [
     # Fiqh / Islamic parenting — clear religious terms (incl. verb forms) (expanded: behavior+ritual phrases)
     #
@@ -418,7 +448,13 @@ KEYWORD_RULES: List[Tuple[str, str]] = [
      r"|أركان\s*الإيمان|القضاء\s*والقدر|أسماء\s*الله|صفات\s*الله"
      r"|ليه\s*خلقنا|لماذا\s*خلقنا|مين\s*خلق|من\s*خلق\s*(الله|الكون|الناس)"
      r"|وجود\s*الله|يشك\s*في\s*(الله|الدين)|تشك\s*في\s*(الله|الدين)"
-     r"|الملائكة|شبهات|إلحاد|ملحد|مراقبة\s*الله|يراقبنا", "aqeedah"),
+     r"|الملائكة|شبهات|إلحاد|ملحد|مراقبة\s*الله|يراقبنا"
+     r"|" + _EVIL_QUESTION, "aqeedah"),
+    # The same question also searches the parenting side of the faith (`fiqh`,
+    # stored as `islamic_parenting`): the golden pair for g-115 is
+    # [aqeedah, islamic_parenting], and a rule that fired for `development`
+    # alone on «٩ سنين» would otherwise hide both.
+    (_EVIL_QUESTION, "fiqh"),
     # Cyber — digital/screen/gaming terms (expanded: streaming, social, platform names)
     (r"إدمان\s*(ألعاب|إنترنت|شاشة|هاتف|موبايل|تيك\s*توك|يوتيوب|فيديو|بلاي\s*ستيشن|xbox|نيتفلكس|نتفلكس|يوتيوب|سوشال|ألعاب)|تيك\s*توك|يوتيوب|شاشة|هاتف|موبايل|إنترنت|سوشيال|سوشال\s*ميديا|فيسبوك|واتساب|سناب|تويتر|إنستغرام|انستقرام|انستا|فايبر|فكونتاكت|واتس\s*اب|تليجرام|تلجرام|تويت|ريلز|لايك|followers|تنمر\s*إلكتروني|تنمر\s*رقمي|أمان\s*رقمي|خصوصية|محتوى\s*غير\s*لائق|محتويات\s*إباحية|إباحية|العاب\s*إلكترونية|بلايستيشن|screen|تلفزيون|أندرويد|ios|تطبيقات|porn|محتوى.*رقمي|رقمي|سيبراني|إلكتروني|محتوى\s*عنيف|ألعاب\s*مخيفة|قناة\s*سيئة|مواقع|أونلاين|تواصل\s*مع\s*غريب|غريب\s*على\s*النت|إرسال\s*صور|ترسل\s*صور|رسائل\s*لولد|حدود\s*لاستخدام\s*الشاشة|ساعات\s*على\s*الموبايل|كلمات\s*من\s*النت|إنستغرام|يسكرولين|فيس\s*بوك|واتس\s*أب", "cyber"),
     # Medical — clear health/psychological terms (incl. verb forms) (expanded: more clinical terms)
@@ -710,6 +746,14 @@ def _keyword_fast_path(question: str) -> Optional[List[str]]:
     for _pattern, domain in _COMPILED_RULES:
         if domain in found and domain not in matched:
             matched.append(domain)
+    if "aqeedah" in matched and matched[0] != "aqeedah" and _EVIL_QUESTION_RE.search(rule_text):
+        # «ليه ربنا خلق الشر؟» is a question about the Creator. Rule order puts
+        # `fiqh` first (its broad rule is listed earlier), and the reply is
+        # labelled and guardrailed with domains[0] (assistant._label_domain) —
+        # so without this the creed question carried the fiqh label. Both
+        # domains are still searched.
+        matched.remove("aqeedah")
+        matched.insert(0, "aqeedah")
     hearing_text = re.sub(r"[\u064b-\u065f\u0670\u0640]", "", question)
     if "development" not in matched and (
             _CHILD_PAST_HEARING_RE.search(hearing_text)
