@@ -397,3 +397,157 @@ def test_colloquial_death_wish_escalates(text):
 @pytest.mark.parametrize("text", COLLOQUIAL_NOT_EMERGENCY)
 def test_colloquial_death_words_without_a_wish_do_not_escalate(text):
     assert check_emergency_keywords(text) is False, f"{text!r} falsely escalated"
+
+
+# --- Noun forms of self-harm (2026-10-23, round 2) ----------------------------
+#
+# «بيتكلم عن إيذاء نفسه» never escalated: only the verb («يؤذي نفسه») and the
+# noun «إيذاء النفس» were keywords. The normalizer deletes hamza, so إيذاء is
+# "ايذا" and أذية is "اذيه". The past verb («أذى نفسه») is NOT a keyword: it is
+# how a play accident is told.
+
+SELF_HARM_NOUN_CRISIS = [
+    "ابني بيتكلم عن إيذاء نفسه",
+    "بنتي بتتكلم عن أذية نفسها",
+    "ابني يتحدث عن إيذاء نفسه",
+    "ابني يتحدث عن ايذاء نفسه",
+    "بنتي بتتكلم عن اذيه نفسها",
+    "بنتي بتفكر في أذيّة نفسها",
+    "ابني حاول إيذاء نفسه امبارح",
+    "حاولت ايذاء نفسي",
+    "الإصابة بأذى بنفسه",
+    "ابني عنده ميل لـ أذى بنفسه",
+    "بنتي بتقول عايزة اذي بنفسها",
+    "بنتي بتأذي نفسها",
+    "ابني بيأذي نفسه",
+    "ابني بيؤذي نفسه",
+    "إيذاء النفس عند المراهقين",
+]
+
+SELF_HARM_NOUN_NOT_EMERGENCY = [
+    "ابني وقع وأذى نفسه وهو بيلعب",
+    "ابني اتزحلق وأذى نفسه",
+    "ابني ضرب إيذاء نفسه بالغلط",
+    "ابني جرى وإيذاء نفسه وهو بيلعب مش مقصود",
+    "ابني بيأذي اخوه الصغير",
+    "ازاي أعلم ابني ما يؤذيش زمايله",
+    "بنتي بتقول الحياة جميلة",
+    "ابني بيتكلم عن نفسه كتير",
+    "إيذاء الاخرين وطريقة التعامل معه",
+    "ابني زعلان من أذى زميله",
+]
+
+
+@pytest.mark.parametrize("text", SELF_HARM_NOUN_CRISIS)
+def test_self_harm_noun_forms_escalate(text):
+    assert check_banned_intent(text)[0] is False, f"{text!r} refused at a crisis moment"
+    assert check_emergency_keywords(text) is True, f"{text!r} did not escalate"
+
+
+@pytest.mark.parametrize("text", SELF_HARM_NOUN_NOT_EMERGENCY)
+def test_accidents_and_harm_to_others_do_not_escalate(text):
+    assert check_emergency_keywords(text) is False, f"{text!r} falsely escalated"
+
+
+# --- Latin diacritics (2026-10-23, round 2) -----------------------------------
+#
+# `_NON_LETTER` kept only ASCII Latin, so every accented letter was deleted:
+# "électrocuté" -> "lectrocut", "réveille" -> "rveille". French typed with
+# accents (the normal way) never matched the unaccented keywords.
+
+FR_ACCENTED_EMERGENCY = [
+    "il ne se réveille pas",
+    "mon enfant ne se réveille pas",
+    "elle s'est électrocutée",
+    "il s’est électrocuté",
+    "il a avalé de l'eau de javel",
+    "elle a avalé une pile",
+    "mon fils s'étouffe avec un raisin",
+    "il est inconscient depuis une minute",
+    "Elle a perdu connaissance",
+    "une hémorragie importante",
+    "il est empoisonné",
+    "elle est empoisonnée",
+    "ma fille a bu de l’eau de javel",
+    "IL NE SE RÉVEILLE PAS",
+    "mon fils veut se suicider",
+    "elle ne veut plus vivre",
+    "mon ado a envie de mourir",
+]
+
+FR_ACCENTED_NOT_EMERGENCY = [
+    "mon fils est très énergique le matin",
+    "comment réveiller mon enfant doucement pour l'école",
+    "il se réveille souvent la nuit",
+    "mon enfant a des cauchemars et un sommeil agité",
+    "à quel âge un bébé peut-il manger des œufs",
+    "elle veut se tuer à la tâche",
+    "mon fils est déçu après l'école",
+    "quelle électricité statique pour les cheveux de ma fille",
+    "il a envie de mourir de rire",
+    "comment préparer un goûter équilibré pour un élève de 8 ans",
+    "mon enfant est stressé avant l'examen",
+]
+
+
+@pytest.mark.parametrize("text", FR_ACCENTED_EMERGENCY)
+def test_accented_french_emergency_escalates(text):
+    assert check_emergency_keywords(text) is True, f"{text!r} did not escalate"
+
+
+@pytest.mark.parametrize("text", FR_ACCENTED_NOT_EMERGENCY)
+def test_accented_french_ordinary_questions_are_not_emergencies(text):
+    assert check_emergency_keywords(text) is False, f"{text!r} falsely escalated"
+
+
+def test_latin_fold_covers_ligatures_and_leaves_ascii_alone():
+    from app.services.intent_guard import _normalize, _normalize_word
+
+    assert _normalize_word("électrocuté") == "electrocute"
+    assert _normalize_word("cœur") == "coeur"
+    assert _normalize_word("Ça") == "ca"
+    assert _normalize_word("garçon") == "garcon"
+    assert _normalize_word("bébé") == "bebe"
+    assert _normalize("Où est l’hôpital") == "ou est lhopital"
+    assert _normalize("plain ascii") == "plain ascii"
+
+
+def _legacy_normalize_word(word: str) -> str:
+    """The normalizer exactly as it was before the Latin fold (origin/main)."""
+    import re
+    from app.services.intent_guard import _FRANCO, _NON_LETTER, _REPEATED, _TASHKEEL
+
+    word = word.lower()
+    word = _TASHKEEL.sub("", word)
+    word = word.replace("\u0622", "\u0627").replace("\u0623", "\u0627").replace("\u0625", "\u0627").replace("\u0671", "\u0627")
+    word = word.replace("\u0626", "\u064A").replace("\u0624", "\u0648")
+    word = word.replace("\u0621", "")
+    word = _REPEATED.sub(r"\1", word)
+    word = word.translate(_FRANCO)
+    return _NON_LETTER.sub("", word)
+
+
+def test_arabic_normalization_is_byte_identical_to_before_the_latin_fold():
+    import json
+    import pathlib
+    from app.services.intent_guard import _normalize_word
+
+    golden = pathlib.Path(__file__).resolve().parents[2] / "ops" / "eval" / "golden_set.jsonl"
+    if not golden.exists():
+        pytest.skip("golden_set.jsonl not available")
+    texts = []
+    for line in golden.read_text(encoding="utf-8").splitlines():
+        if not line.strip():
+            continue
+        row = json.loads(line)
+        texts.append(row.get("question", ""))
+        for turn in row.get("conversation_history") or []:
+            if isinstance(turn, dict):
+                texts.append(str(turn.get("content", "")))
+    tokens = {w for t in texts for w in t.split()}
+    assert len(tokens) > 1000, "sample is too small to prove anything"
+    # Hamza carriers, alif variants, tashkeel and tatweel are all in the sample;
+    # add them explicitly so the proof does not depend on the corpus alone.
+    tokens |= {"إيذاء", "أذية", "طائر", "طارئ", "مسؤول", "القرآن", "صلاةٌ", "ﷲ", "الله", "يـأذي", "ءاخر", "٣٤٥", "؟", "،"}
+    differing = [w for w in tokens if _normalize_word(w) != _legacy_normalize_word(w)]
+    assert differing == []

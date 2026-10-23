@@ -9,6 +9,7 @@ Two lines of defense:
    privacy invasion).
 """
 import re
+import unicodedata
 
 
 # ---------------------------------------------------------------------------
@@ -24,6 +25,39 @@ _NON_LETTER = re.compile(
     r"\u0750-\u077Fa-zA-Z0-9]"
 )
 
+# Latin letters that NFKD does not decompose into base + combining mark.
+_LATIN_LIGATURES = str.maketrans({
+    "\u0153": "oe", "\u0152": "oe", "\u00e6": "ae", "\u00c6": "ae",
+    "\u00df": "ss", "\u00f8": "o", "\u00d8": "o", "\u0142": "l",
+    "\u0141": "l", "\u0111": "d", "\u0110": "d",
+})
+
+
+def _fold_latin(word: str) -> str:
+    """Drop accents from Latin-script letters: électrocuté -> electrocute.
+
+    Only characters in the Latin-1 Supplement / Latin Extended blocks are
+    touched (U+00C0-U+024F, U+1E00-U+1EFF). Arabic is never decomposed: its
+    hamza and alif handling below depends on the code points staying as typed.
+    Without this the `_NON_LETTER` filter below deleted every accented letter
+    ("réveille" -> "rveille"), so French emergencies typed correctly never
+    matched the unaccented keywords.
+    """
+    if word.isascii():
+        return word
+    out = []
+    for ch in word:
+        cp = ord(ch)
+        if 0x00C0 <= cp <= 0x024F or 0x1E00 <= cp <= 0x1EFF:
+            ch = ch.translate(_LATIN_LIGATURES)
+            ch = "".join(
+                c for c in unicodedata.normalize("NFKD", ch)
+                if not unicodedata.combining(c)
+            )
+        out.append(ch)
+    return "".join(out)
+
+
 _FRANCO = str.maketrans({
     "2": "أ",
     "3": "ع",
@@ -38,7 +72,7 @@ _FRANCO = str.maketrans({
 
 def _normalize_word(word: str) -> str:
     """Apply all char-level normalization to a single token."""
-    word = word.lower()
+    word = _fold_latin(word.lower())
     word = _TASHKEEL.sub("", word)
     # Alif variants collapse to bare alif.
     word = word.replace("\u0622", "\u0627").replace("\u0623", "\u0627").replace("\u0625", "\u0627").replace("\u0671", "\u0627")
@@ -514,6 +548,21 @@ _EMERGENCY_KEYWORDS = {
     "انهي حياتي",
     "يأذي نفسه",
     "تأذي نفسها",
+    # Noun forms: «بيتكلم عن إيذاء نفسه», «بتتكلم عن أذية نفسها». The
+    # normalizer deletes hamza, so إيذاء -> "ايذا" and أذية -> "اذيه" (the
+    # existing "إيذاء النفس" is "ايذا النفس"). The reflexive pronoun is
+    # required: "إيذاء" alone is also "hurting others". The PAST verb
+    # («أذى نفسه وهو بيلعب») is deliberately not here — that is a play
+    # accident, not intent; the noun carries the wish or the plan.
+    "إيذاء نفسه",
+    "إيذاء نفسها",
+    "إيذاء نفسي",
+    "أذية نفسه",
+    "أذية نفسها",
+    "أذية نفسي",
+    "أذى بنفسه",
+    "أذى بنفسها",
+    "أذى بنفسي",
     "الحياة ملهاش لازمة",
     "الحياة مالهاش لازمة",
     "حياتي ملهاش لازمة",
@@ -637,9 +686,11 @@ _EMERGENCY_KEYWORDS = {
     "a bu de leau de javel",
     "a avale du poison",
     "empoisonne",
+    "empoisonnee",
     "hemorragie",
     "saigne beaucoup",
     "electrocute",
+    "electrocutee",      # feminine: «elle s'est électrocutée»
     "appelez une ambulance",
     "appeler une ambulance",
     "se suicider",
@@ -721,6 +772,10 @@ _HYPERBOLE: tuple[tuple[str, ...], ...] = (
     ("من", "العياط"), ("في", "العياط"), ("من", "الضحك"),
     ("من", "الكسوف"), ("من", "الجوع"), ("من", "الخضة"),
 )
+_ACCIDENTAL: tuple[tuple[str, ...], ...] = (
+    ("بالغلط",), ("بالصدفه",), ("بالصدفة",), ("بدون", "قصد"), ("من", "غير", "قصد"),
+    ("وهو", "بيلعب"), ("وهي", "بتلعب"), ("اثناء", "اللعب"),
+)
 _WHERE_TO_LIVE: tuple[tuple[str, ...], ...] = (
     ("في",), ("مع",), ("عند",), ("هنا",), ("هناك",), ("بره",), ("برا",),
     ("لوحده",), ("لوحدها",), ("لوحدي",), ("معانا",), ("معاهم",), ("معاها",),
@@ -756,10 +811,17 @@ _EMERGENCY_EXCLUSIONS: dict[tuple[str, ...], tuple[tuple[str, ...], ...]] = {
         ("شهيد",), ("شهيدة",), ("على", "الاسلام"), ("مسلم",), ("مسلمة",),
         ("وانا", "ساجد"), ("وانا", "ساجدة"), ("في", "سبيل"),
     ),
+    # The noun phrase is not a death wish when the incident was explicitly
+    # accidental: «ايذاء نفسه بالغلط / بالصدفة / وهو بيلعب».
+    **{key: _ACCIDENTAL for key in (
+        ("ايذا", "نفسه"), ("ايذا", "نفسها"), ("ايذا", "نفسي"),
+        ("اذيه", "نفسه"), ("اذيه", "نفسها"), ("اذيه", "نفسي"),
+        ("اذى", "بنفسه"), ("اذى", "بنفسها"), ("اذى", "بنفسي"),
+    )},
     ("envie", "de", "mourir"): (("de", "rire"), ("de", "honte"), ("de", "faim")),
-    # "se tuer à la tâche" = to work oneself to the bone. The normalizer drops
-    # accented letters, and a bare "à" disappears with its word, so the
-    # accented and unaccented spellings leave different tails.
+    # "se tuer à la tâche" = to work oneself to the bone. Accents are folded
+    # now ("à la tâche" -> "a la tache"); the "la tache" / "tche" tails are
+    # kept for text that reached the normalizer already stripped.
     ("veut", "se", "tuer"): (
         ("a", "la", "tache"), ("la", "tache"), ("a", "la", "tche"), ("la", "tche"),
         ("au", "travail"),
