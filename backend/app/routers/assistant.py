@@ -21,7 +21,7 @@ from app.services.guardrails import (
 )
 from app.services.retrieval import (retrieve_hybrid, _ensure_index,
                                     log_retrieval, detect_query_language)
-from app.services.reranker import RERANK_MIN_SCORE
+from app.services.reranker import RERANK_MIN_SCORE, NoConfidentMatch
 from app.services.query_rewriter import rewrite_query
 from app.services.llm_service import (
     generate_reply, build_full_prompt, generate_general_pivot, build_pivot_prompt,
@@ -333,14 +333,22 @@ def _label_domain(domains: list[str], units: list[dict]) -> str:
 
 def _off_topic(units: list[dict]) -> tuple[bool, float | None]:
     """A question is off-topic when even the best reranked unit falls below
-    the reranker's calibrated relevance floor (RERANK_MIN_SCORE). The reranker
-    returns the single best unit even when everything is below the floor (so it
-    never returns nothing), so we re-check the floor here to catch those."""
+    the reranker's calibrated relevance floor.
+
+    The reranker now says so itself: when no candidate clears the floor it
+    returns an empty NoConfidentMatch (it used to return the single best unit,
+    however irrelevant, and this function re-checked the floor to catch it).
+    Both shapes route the same way, to the off-topic pivot. A genuinely empty
+    result (no candidates at all, reranker off) is not off-topic: it takes the
+    "no sufficient information" reply. A unit with a score of its own (the
+    tafsir enrichment, rerank_score 1.0) still counts as evidence."""
     scores = [
         u["rerank_score"] for u in units
         if isinstance(u.get("rerank_score"), (int, float))
     ]
     if not scores:
+        if isinstance(units, NoConfidentMatch):
+            return True, units.best_rerank_score
         return False, None
     top = max(scores)
     return top < RERANK_MIN_SCORE, top
