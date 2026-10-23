@@ -278,3 +278,60 @@ FR_NOT_EMERGENCY = [
 @pytest.mark.parametrize("text", FR_NOT_EMERGENCY)
 def test_french_ordinary_questions_are_not_emergencies(text):
     assert check_emergency_keywords(text) is False, f"{text!r} falsely escalated"
+
+
+# --- Colloquial death wishes (2026-10-23) ------------------------------------
+#
+# Only the noun and the masculine verb were keywords, so the way parents
+# actually write it — "بنتي عايزة تنتحر", "مش عايز يعيش", "نفسي أموت" — went
+# to the normal advice path. Spelling variants (ة/ه، ى/ي) are part of the case.
+
+COLLOQUIAL_CRISIS = [
+    "بنتي عايزة تنتحر",
+    "بنتي حاولت تنتحر امبارح",
+    "ابني بيقول مش عايز يعيش",
+    "بنتي بتقول مش عايزة تعيش",
+    "ابني قال مش عاوز اعيش تاني",
+    "ابني مش عايز يعيش في الدنيا دي",
+    "ابني بيقول نفسي أموت",
+    "بنتي بتقول عايزه تموت",
+    "ابنى عايز يموت",
+    "ابني بيتمني الموت",
+    "بنتي كتبت إنها تتمنى تموت",
+    "ابني قال هموّت نفسي",
+    "ابني عايز يخلص على نفسه",
+    "بنتي قالت الحياة ملهاش لازمة",
+    "ابني لا يريد أن يعيش",
+    "my daughter says she wants to die",
+    "my son doesnt want to live anymore",
+]
+
+# Same words, ordinary meaning: hyperbole, a religious wish, where to live,
+# and talk about death itself.
+COLLOQUIAL_NOT_EMERGENCY = [
+    "ابني بيموّت نفسه من العياط",
+    "بنتي عايزة تموت من الضحك",
+    "بنتي عايزة تموت من الكسوف",
+    "هموت من الضحك",
+    "نفسي أموت شهيد",
+    "نفسي اموت على الاسلام",
+    "ابني مش عايز يعيش في الغربة",
+    "بنتي مش عايزة تعيش مع ابوها بعد الطلاق",
+    "ابني مش عايز يعيش لوحده",
+    "ابني بيسأل عن موت جده",
+    "ابني بيخاف من الموت",
+    "ازاي اشرح لابني ان جده مات",
+    "ابني نفسه يبقى دكتور",
+    "I want to die laughing",
+]
+
+
+@pytest.mark.parametrize("text", COLLOQUIAL_CRISIS)
+def test_colloquial_death_wish_escalates(text):
+    assert check_banned_intent(text)[0] is False, f"{text!r} refused at a crisis moment"
+    assert check_emergency_keywords(text) is True, f"{text!r} did not escalate"
+
+
+@pytest.mark.parametrize("text", COLLOQUIAL_NOT_EMERGENCY)
+def test_colloquial_death_words_without_a_wish_do_not_escalate(text):
+    assert check_emergency_keywords(text) is False, f"{text!r} falsely escalated"
