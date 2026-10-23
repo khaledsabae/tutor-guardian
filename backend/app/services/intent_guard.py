@@ -774,7 +774,6 @@ _HYPERBOLE: tuple[tuple[str, ...], ...] = (
 )
 _ACCIDENTAL: tuple[tuple[str, ...], ...] = (
     ("بالغلط",), ("بالصدفه",), ("بالصدفة",), ("بدون", "قصد"), ("من", "غير", "قصد"),
-    ("وهو", "بيلعب"), ("وهي", "بتلعب"), ("اثناء", "اللعب"),
 )
 _WHERE_TO_LIVE: tuple[tuple[str, ...], ...] = (
     ("في",), ("مع",), ("عند",), ("هنا",), ("هناك",), ("بره",), ("برا",),
@@ -811,8 +810,10 @@ _EMERGENCY_EXCLUSIONS: dict[tuple[str, ...], tuple[tuple[str, ...], ...]] = {
         ("شهيد",), ("شهيدة",), ("على", "الاسلام"), ("مسلم",), ("مسلمة",),
         ("وانا", "ساجد"), ("وانا", "ساجدة"), ("في", "سبيل"),
     ),
-    # The noun phrase is not a death wish when the incident was explicitly
-    # accidental: «ايذاء نفسه بالغلط / بالصدفة / وهو بيلعب».
+    # The noun phrase is not a wish to self-harm when the incident was
+    # explicitly accidental: «ايذاء نفسه بالغلط / بالصدفة / بدون قصد». Play
+    # tails («وهو بيلعب») are NOT excluded: a child who talks about hurting
+    # himself while playing is still a child talking about hurting himself.
     **{key: _ACCIDENTAL for key in (
         ("ايذا", "نفسه"), ("ايذا", "نفسها"), ("ايذا", "نفسي"),
         ("اذيه", "نفسه"), ("اذيه", "نفسها"), ("اذيه", "نفسي"),
