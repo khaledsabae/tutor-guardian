@@ -17,7 +17,7 @@ from fastapi.responses import StreamingResponse
 from app.models.api import ConversationTurn, UserMessage, AssistantReply
 from app.services.guardrails import (
     apply_guardrails, is_emergency, emergency_reply, evaluate_guardrails,
-    _build_fallback_message,
+    _build_fallback_message, medical_referral_text,
 )
 from app.services.retrieval import (retrieve_hybrid, _ensure_index,
                                     log_retrieval, detect_query_language)
@@ -329,6 +329,23 @@ def _label_domain(domains: list[str], units: list[dict]) -> str:
     if is_uncertain(domains) and units:
         return units[0].get("source_domain") or domains[0]
     return domains[0]
+
+
+def _is_medical_no_match(units: list[dict], domains: list[str],
+                         primary_domain: str, is_general: bool) -> bool:
+    """The reranker looked and found nothing relevant, and the question is
+    medical: the parent is referred to a doctor instead of the off-topic pivot.
+
+    The pivot answers "briefly, from general knowledge, then an activity",
+    which is right for a recipe and wrong for "how many units of insulin
+    before lunch" (nothing in the knowledge base, but a real health question).
+    Needs a real classification: with the uncertain all-domains list
+    domains[0] is just "medical" by position (see _label_domain), so that stays
+    on the pivot. A unit with a score of its own (tafsir) makes `units`
+    non-empty and is evidence, so it never reaches here.
+    """
+    return (isinstance(units, NoConfidentMatch) and not units and not is_general
+            and not is_uncertain(domains) and primary_domain == "medical")
 
 
 def _off_topic(units: list[dict]) -> tuple[bool, float | None]:
@@ -765,7 +782,9 @@ async def _draft_answer(
     draft = ""
 
     score_off_topic, top_rerank = _off_topic(retrieved_units)
-    off_topic = is_general or score_off_topic
+    medical_referral = score_off_topic and _is_medical_no_match(
+        retrieved_units, detected_domains, primary_domain, is_general)
+    off_topic = (is_general or score_off_topic) and not medical_referral
 
     if off_topic:
         # General/off-topic question (e.g. a recipe). Don't ground on the
@@ -814,10 +833,15 @@ async def _draft_answer(
             draft = _merge_retrieved(user_message, retrieved_units, detected_domains)
     else:
         logger.info("No relevant documents found for domains: %s", detected_domains)
-        draft = (
-            f"لا توجد معلومات كافية حاليًا حول '{query_text}'. "
-            f"نوصي باستشارة مختص."
-        )
+        if medical_referral:
+            draft = medical_referral_text(
+                policies, detect_reply_language(query_text),
+                user_message.behavior_type or "", user_message.age_group or "")
+        else:
+            draft = (
+                f"لا توجد معلومات كافية حاليًا حول '{query_text}'. "
+                f"نوصي باستشارة مختص."
+            )
 
     # Determine intervention type from retrieved units for guardrails
     intervention_type = None
@@ -1229,11 +1253,18 @@ async def _stream_answer(
     primary_domain = _label_domain(detected_domains, retrieved_units)
 
     score_off_topic, _top_rerank = _off_topic(retrieved_units)
-    off_topic = is_general or score_off_topic
+    medical_referral = score_off_topic and _is_medical_no_match(
+        retrieved_units, detected_domains, primary_domain, is_general)
+    off_topic = (is_general or score_off_topic) and not medical_referral
 
     # No relevant KB and not an off-topic pivot → non-streamed fallback
     if not retrieved_units and not off_topic:
-        draft = f"لا توجد معلومات كافية حاليًا حول '{query_text}'. نوصي باستشارة مختص."
+        if medical_referral:
+            draft = medical_referral_text(
+                policies, reply_lang,
+                user_message.behavior_type or "", user_message.age_group or "")
+        else:
+            draft = f"لا توجد معلومات كافية حاليًا حول '{query_text}'. نوصي باستشارة مختص."
         return await _single(apply_guardrails(
             user_message.model_copy(update={"domain": primary_domain}),
             draft, policies, mode="retrieval_only",

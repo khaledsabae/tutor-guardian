@@ -50,6 +50,31 @@ def _build_fallback_message(
     )
 
 
+_MEDICAL_REFERRAL_EN = (
+    "This assistant can't give medical diagnoses or advise on doses or "
+    "medication. Please speak directly with your child's doctor (or "
+    "pharmacist) about this."
+)
+
+
+def medical_referral_text(
+    policies: dict,
+    lang: str | None = "ar",
+    behavior_type: str = "",
+    age_group: str = "",
+) -> str:
+    """The reply for a medical question the knowledge base cannot answer.
+
+    Arabic is the policies' own high-risk fallback message (a human specialist,
+    no diagnosis), via the same builder the forced-fallback path uses, so the
+    wording is edited in one place. Other languages get a short English
+    sentence of the same meaning: the Arabic one would be unreadable to them.
+    """
+    if lang and lang != "ar":
+        return _MEDICAL_REFERRAL_EN
+    return _build_fallback_message("medical", behavior_type, age_group, policies)
+
+
 def is_emergency(user_message: UserMessage) -> bool:
     """Check if the severity signals an emergency requiring immediate fallback."""
     return user_message.severity == EMERGENCY_SEVERITY
