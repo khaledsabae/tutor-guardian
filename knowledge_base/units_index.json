@@ -1,6 +1,6 @@
 {
   "total_units": 1398,
-  "generated_at": "2026-10-22T16:55:46.561401+00:00",
+  "generated_at": "2026-10-23T05:35:42.355010+00:00",
   "by_domain": {
     "medical": 362,
     "cyber": 284,
@@ -13237,7 +13237,7 @@
     {
       "id": "isl-teen-calm-not-mockery-01",
       "domain": "islamic_parenting",
-      "title": "هدوء لا سخرية: تحاور ابنك المتشكّك من غير ما تخسره (١٣–١٨)",
+      "title": "هدوء لا سخرية: نبرة صوتك حين يشكّك ابنك في دينه",
       "source_file": "parent_doubts_2026-10",
       "language": "ar",
       "original_age_group": "13-15",
@@ -13249,7 +13249,7 @@
     {
       "id": "isl-teen-western-ideas-doubts-01",
       "domain": "islamic_parenting",
-      "title": "ابني ١٥ سنة بيتأثر بأفكار غربية ويشكّك في الثوابت: كيف أحاور",
+      "title": "أفكار غربية وثوابت الدين: ابني ١٥ سنة بيتأثر بها، كيف أحاوره",
       "source_file": "parent_doubts_2026-10",
       "language": "ar",
       "original_age_group": "13-15",
@@ -13261,7 +13261,7 @@
     {
       "id": "isl-teen-write-doubts-one-by-one-01",
       "domain": "islamic_parenting",
-      "title": "اكتبوا الأسئلة واحدًا واحدًا: حوار على أيام لا مناظرة في جلس",
+      "title": "ابنك عنده شكوك كتير: اكتبوا أسئلته واحدًا واحدًا وناقشوها عل",
       "source_file": "parent_doubts_2026-10",
       "language": "ar",
       "original_age_group": "13-15",
