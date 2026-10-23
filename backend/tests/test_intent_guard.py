@@ -978,3 +978,13 @@ def test_two_letter_needles_take_only_a_conjunction_on_the_negation_words():
     # the new «بال / وال / فال / وبال» proclitics work on longer needles
     for prefix in ("بال", "وال", "فال", "وبال", "ال"):
         assert _token_matches(prefix + "انتحار", "انتحار"), prefix
+
+
+def test_every_keyword_is_reachable_on_its_own():
+    """A keyword that can never fire (a typo, a spelling the normalizer rewrites)
+    is a silent hole. Each normalized keyword, said alone, must escalate."""
+    from app.services.intent_guard import _EMERGENCY_KEYWORDS_NORM
+
+    assert len(_EMERGENCY_KEYWORDS_NORM) > 3000
+    dead = [" ".join(k) for k in _EMERGENCY_KEYWORDS_NORM if not check_emergency_keywords(" ".join(k))]
+    assert dead == []
