@@ -9,7 +9,7 @@
   "intervention_type": "وقائي",
   "severity": "متوسط",
   "reference_type": "مقال_تربوي",
-  "reference_info": "القرآن الكريم: النحل ٤٣؛ صحيح البخاري — حديث ٦٠١٨؛ صحيح مسلم — حديث ٢٦٩٩. موقف التطبيق في الإحالة إلى أهل العلم: وحدة gap-isl-sunnah-rijal-01. باقي النص إرشاد رقمي وتربوي من التطبيق (مسودة بانتظار مراجعة خالد وعالم)",
+  "reference_info": "القرآن الكريم: النحل ٤٣؛ صحيح البخاري — حديث ٦٠١٨؛ صحيح مسلم — حديث ٢٦٩٩",
   "text_original": "المصادر التي بُنيت عليها الوحدة (منقولة بلفظها من المصحف ومن الصحيحين، دون ترجمة ولا تفسير مولَّد):\n\nالقرآن الكريم\n﴿فَاسْأَلُوا أَهْلَ الذِّكْرِ إِن كُنتُمْ لَا تَعْلَمُونَ﴾ [النحل: ٤٣]\n\nالسنة\n«من كان يؤمن بالله واليوم الآخر فليقل خيرا أو ليصمت» (صحيح البخاري — حديث ٦٠١٨)\n«من سلك طريقا يلتمس فيه علما سهل الله له به طريقا إلى الجنة» (صحيح مسلم — حديث ٢٦٩٩)\n\nموقف التطبيق المكتوب (وحدة gap-isl-sunnah-rijal-01): لا يُسجَّل الابن المتشكك في «قنوات رد الشبهات» مجهولة المصدر، ويُربط بعالم موثوق يعرفه الأب، ويكون الحوار معه بلا إدانة. التطبيق لا يرشّح قناة ولا داعية بالاسم.\n\nإرشاد التطبيق للأهل (غير منسوب إلى لفظ آية ولا حديث): الاستماع قبل المنع، ومشاهدة مقطع قصير مع الابن، والاتفاق على حدود مشتركة للوقت والمكان، وعدم المشاركة في التعليقات والدردشة مع غرباء، وعدم الظهور بالصوت أو الصورة في بث مباشر وعدم ذكر البيانات الشخصية، وسدّ الفراغ بما يبني (عبادة، صحبة، أنشطة).",
   "text_simplified": "If you discover that your teen follows debate and doubt live streams, the first question is not “How do I stop him?” but “What draws him to them?” Many teens follow out of curiosity, a search for answers, or a taste for confrontation, not necessarily out of doubt. This kind of stream carries risks worth noticing:\n\n• Clips cut out of context, and an algorithm that moves him from one clip to a sharper one.\n• The live-debate style rewards speed and embarrassing the other side, not understanding, and whoever wins the crowd is not necessarily right.\n• Fragmentary doubts put forward without an adequate answer, planting anxiety without knowledge.\n• Comments, live chat and private messages can let strangers in; see the app’s units on contact from strangers.\n\nWhat to do:\n• Sit with him, ask and listen without interrogating, and watch a short clip together. Ask: “What is the idea? What convinced you? What did they leave out?”\n• Agree on shared limits: a set time and place (not in bed at night), and no commenting or arguing with strangers. The Prophet ﷺ said: “Whoever believes in Allah and the Last Day, let him speak good or remain silent.” (Sahih al-Bukhari 6018); this works as a rule for comments.\n• Teach him not to appear with his voice or image in a live stream with strangers, and not to share his full name, school, country or family details.\n• Turn his curiosity into a conversation with you: ask him to write down the questions on his mind so you can take them one by one together (see the unit “Write the questions down one by one”).\n• The app’s position: we do not recommend channels or preachers by name, and we do not sign your teen up to “doubt-rebuttal” channels of unknown origin. Connect him with a scholar or student of knowledge you know and trust yourself; knowledge is taken from its people. The Prophet ﷺ said: “Whoever travels a path seeking knowledge, Allah makes easy for him a path to Paradise.” (Sahih Muslim 2699), and Allah says: ﴿فَاسْأَلُوا أَهْلَ الذِّكْرِ إِن كُنتُمْ لَا تَعْلَمُونَ﴾ [An-Nahl 16:43] (interpretation of the meaning: ask the people of knowledge if you do not know).\n• Fill the gap with what builds: worship, good company and an activity he enjoys; blocking alone is not enough.\n\nWatch for: severe sleeplessness, anxiety, contempt for his family and religion, unusual secrecy, or anger that is not like him. If you see these, involve a mental-health professional and a trusted scholar, and stay close to him rather than cutting him off.",
   "labels": [
@@ -23,10 +23,10 @@
     "debate streams",
     "doubt streams",
     "teen follows debates",
-    "teen watching atheism content",
+    "teen watching religious debate content",
     "doubt-answering channels",
-    "atheist debates",
-    "my teen follows atheism channels",
+    "online religious debates",
+    "my teen follows religious discussion channels",
     "religious debate streams"
   ],
   "created_at": "2026-10-22T12:00:00+00:00",
@@ -44,7 +44,7 @@
   "authored_references": [
     "القرآن الكريم: النحل ٤٣",
     "صحيح البخاري — حديث ٦٠١٨",
-    "صحيح مسلم — حديث ٢٦٩٩. موقف التطبيق في الإحالة إلى أهل العلم: وحدة gap-isl-sunnah-rijal-01. باقي النص إرشاد رقمي وتربوي من التطبيق (مسودة بانتظار مراجعة خالد وعالم)"
+    "صحيح مسلم — حديث ٢٦٩٩"
   ],
   "source_note": "مبنية على موقف التطبيق المكتوب في gap-isl-sunnah-rijal-01 وعلى وحدات السلامة الرقمية؛ ولم تُستعمل أي قناة ولا داعية ولا مقطع ولا نتيجة من دراسة الحوارات. الآيات والأحاديث فحصها حارس الأحاديث وحارس المصحف. النصائح الرقمية والتربوية اجتهاد من التطبيق. 2026-10-22. لا اعتماد بشري ولا شرعي؛ بانتظار مراجعة خالد وعالم قبل أي دفع إلى main.",
   "translation": {
