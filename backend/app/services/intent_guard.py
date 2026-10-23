@@ -647,6 +647,17 @@ _EMERGENCY_KEYWORDS = {
     "se fait du mal",
     "se scarifie",
     "veut mourir",
+    # Added 2026-10-23 with the Arabic colloquial set. Still only phrasings
+    # that are unambiguous; "mourir de rire / de honte / de faim" is excluded
+    # for "envie de mourir" in `_EMERGENCY_EXCLUSIONS`.
+    "ne veut plus vivre",
+    "ne veux plus vivre",
+    "ne veulent plus vivre",
+    "veut se tuer",
+    "veux me tuer",
+    "veut en finir avec la vie",
+    "envie de mourir",
+    "envie de se tuer",
 }
 
 
@@ -671,8 +682,37 @@ def _spelling_variants(phrase: str) -> set[str]:
     return results
 
 
+# Jumping or throwing oneself from a height. "يرمي نفسه" and "ينط" alone are
+# play ("بيرمي نفسه من على الكنبة", "بينط على السرير", "بيرمي نفسه في حضني"),
+# so no verb is a keyword by itself: every entry is verb + "من" (+ "على" /
+# "فوق") + a place that is actually high. A sofa, bed or chair is not in the
+# list, so those sentences never match and need no exclusion. Final-letter
+# spellings (ة/ه، ى/ي) come from `_spelling_variants` like every other entry.
+# "نفسه" is required for the throwing verbs: "يرمي الكورة من الشباك" is a ball.
+_JUMP_VERBS = (
+    # throw oneself (reflexive object required)
+    "يرمي نفسه", "ترمي نفسها", "ارمي نفسي", "هرمي نفسي",
+    "رمي نفسه", "رمت نفسها", "رميت نفسي",
+    "يلقي نفسه", "تلقي نفسها", "القي نفسي", "القى نفسه", "القت نفسها",
+    # Egyptian "نط" = jump, MSA "قفز"; the place carries the meaning
+    "ينط", "تنط", "انط", "هنط", "نط", "نطت",
+    "يقفز", "تقفز", "اقفز", "هقفز", "قفز", "قفزت",
+)
+_JUMP_FROM = ("من", "من على", "من فوق")
+_HEIGHT_PLACES = (
+    "شباك", "نافذة", "بلكونة", "شرفة", "سطح", "سطوح", "دور", "عمارة",
+)
+_JUMP_SELF_HARM = {
+    f"{verb} {frm} {place}"
+    for verb in _JUMP_VERBS
+    for frm in _JUMP_FROM
+    for place in _HEIGHT_PLACES
+}
+
 _EMERGENCY_KEYWORDS = {
-    variant for kw in _EMERGENCY_KEYWORDS for variant in _spelling_variants(kw)
+    variant
+    for kw in _EMERGENCY_KEYWORDS | _JUMP_SELF_HARM
+    for variant in _spelling_variants(kw)
 }
 
 # Emergency keywords whose meaning flips when a specific word follows.
@@ -716,6 +756,19 @@ _EMERGENCY_EXCLUSIONS: dict[tuple[str, ...], tuple[tuple[str, ...], ...]] = {
         ("شهيد",), ("شهيدة",), ("على", "الاسلام"), ("مسلم",), ("مسلمة",),
         ("وانا", "ساجد"), ("وانا", "ساجدة"), ("في", "سبيل"),
     ),
+    ("envie", "de", "mourir"): (("de", "rire"), ("de", "honte"), ("de", "faim")),
+    # "se tuer à la tâche" = to work oneself to the bone. The normalizer drops
+    # accented letters, and a bare "à" disappears with its word, so the
+    # accented and unaccented spellings leave different tails.
+    ("veut", "se", "tuer"): (
+        ("a", "la", "tache"), ("la", "tache"), ("a", "la", "tche"), ("la", "tche"),
+        ("au", "travail"),
+    ),
+    # "ne veut plus vivre chez son père" is where, not whether.
+    **{key: (("chez",), ("avec",), ("ici",), ("dans",), ("en",)) for key in (
+        ("ne", "veut", "plus", "vivre"), ("ne", "veux", "plus", "vivre"),
+        ("ne", "veulent", "plus", "vivre"),
+    )},
     ("want", "to", "die"): (("laughing",), ("of", "embarrassment"),),
     ("wants", "to", "die"): (("laughing",), ("of", "embarrassment"),),
 }
@@ -768,6 +821,12 @@ _EMERGENCY_EXCLUSIONS = {
     for variant in _spelling_variants(" ".join(kw))
 }
 
+# First word -> needles starting with it, for the lookup in
+# `check_emergency_keywords`.
+_EMERGENCY_BY_FIRST: dict[str, list[tuple[str, ...]]] = {}
+for _needle in _EMERGENCY_KEYWORDS_NORM:
+    _EMERGENCY_BY_FIRST.setdefault(_needle[0], []).append(_needle)
+
 _EMERGENCY_EXCLUSIONS_NORM = {
     tuple(_normalize_word(t) for t in kw): tuple(
         tuple(_normalize_word(t) for t in ex) for ex in exclusions
@@ -804,8 +863,21 @@ def check_emergency_keywords(text: str) -> bool:
     meaning flips with the following word (غرق السرير = bedwetting).
     """
     tokens = _normalize(text).split()
-    for needle in _EMERGENCY_KEYWORDS_NORM:
-        for start in _sequence_positions(tokens, needle):
-            if not _is_excluded(tokens, needle, start):
-                return True
+    for start, token in enumerate(tokens):
+        # Look up only the needles whose first word this token could be, with
+        # or without a proclitic, instead of scanning every needle. The jump
+        # phrases made the list ~2.5k entries; the full scan cost ~17ms.
+        bases = {token}
+        bases.update(token[len(p):] for p in _PROCLITICS if token.startswith(p))
+        for base in bases:
+            for needle in _EMERGENCY_BY_FIRST.get(base, ()):
+                if (
+                    start + len(needle) <= len(tokens)
+                    and all(
+                        _token_matches(tokens[start + j], needle[j])
+                        for j in range(len(needle))
+                    )
+                    and not _is_excluded(tokens, needle, start)
+                ):
+                    return True
     return False

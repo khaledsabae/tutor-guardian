@@ -255,6 +255,10 @@ FR_EMERGENCY = [
     "appelez une ambulance vite",
     "mon adolescent veut se suicider",
     "ma fille se scarifie",
+    "mon fils ne veut plus vivre",
+    "ma fille dit qu'elle ne veut plus vivre",
+    "mon adolescent veut se tuer",
+    "ma fille a envie de mourir",
 ]
 
 
@@ -272,6 +276,14 @@ FR_NOT_EMERGENCY = [
     "quels livres pour un enfant de 4 ans",
     "mon fils refuse de manger des legumes",
     "le temps d'ecran pour un enfant de 7 ans",
+    "mon fils a envie de mourir de rire",
+    "ma fille a envie de mourir de honte",
+    "mon enfant veut vivre chez son pere",
+    "il ne veut plus manger de legumes",
+    "elle veut se tuer a la tache",
+    "elle veut se tuer à la tâche",
+    "mon fils ne veut plus vivre chez son pere",
+    "ma fille ne veut plus vivre avec sa mere",
 ]
 
 
@@ -305,6 +317,56 @@ COLLOQUIAL_CRISIS = [
     "my daughter says she wants to die",
     "my son doesnt want to live anymore",
 ]
+
+# --- Jumping / throwing oneself from a height (2026-10-23) -------------------
+#
+# "يرمي نفسه" and "ينط" are everyday play verbs, so they only count together
+# with a place that is high (شباك، بلكونة، سطح، دور، عمارة). Spellings, a
+# proclitic on the verb, "من على" and "من فوق" are all part of the case.
+
+JUMP_CRISIS = [
+    "ابني بيرمي نفسه من الشباك",
+    "بنتي بترمي نفسها من البلكونة",
+    "بنتي قالت هرمي نفسي من السطح",
+    "بنتي قالت هرمي نفسي من الدور الخامس",
+    "ابني حاول يرمي نفسه من على السطح",
+    "ابنى يرمى نفسه من العماره",
+    "ابني بيرمي بنفسه من السطوح",
+    "بنتي رمت نفسها من الشباك",
+    "بنتي القت نفسها من النافذة",
+    "ابني بينط من الشباك",
+    "بنتي بتنط من البلكونه",
+    "ابني قال هنط من فوق السطح",
+    "ابني بيقفز من النافذة",
+]
+
+# Same verbs, play: no high place follows, or the object is not the child.
+JUMP_PLAY = [
+    "ابني بيرمي نفسه من على الكنبة",
+    "ابني بيرمي نفسه من على السرير",
+    "بنتي بترمي نفسها على الارض لما تزعل",
+    "ابني بيرمي نفسه في حضني",
+    "ابني بينط على السرير",
+    "ابني بينط من على الكرسي",
+    "ابني بينط من السرير للكنبة",
+    "بنتي بتنط من على الحبل",
+    "ابني بينط من الفرحة",
+    "ابني بيرمي الكورة من الشباك",
+    "ابني بيرمي اللعب من البلكونة",
+    "ابني بيطلع على السطح يلعب",
+    "احنا ساكنين في الدور الخامس",
+]
+
+
+@pytest.mark.parametrize("text", JUMP_CRISIS)
+def test_jump_from_height_escalates(text):
+    assert check_banned_intent(text)[0] is False, f"{text!r} refused at a crisis moment"
+    assert check_emergency_keywords(text) is True, f"{text!r} did not escalate"
+
+
+@pytest.mark.parametrize("text", JUMP_PLAY)
+def test_jumping_play_does_not_escalate(text):
+    assert check_emergency_keywords(text) is False, f"{text!r} falsely escalated"
 
 # Same words, ordinary meaning: hyperbole, a religious wish, where to live,
 # and talk about death itself.
