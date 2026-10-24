@@ -316,6 +316,13 @@ COLLOQUIAL_CRISIS = [
     "ابني لا يريد أن يعيش",
     "my daughter says she wants to die",
     "my son doesnt want to live anymore",
+    # Crying hyperbole is no longer exempt (Khaled, 2026-10-24)
+    "ابني بيموّت نفسه من العياط",
+    "ابني بيموت نفسه فى العياط",
+    "بنتي هتموت نفسها من العياط",
+    "ابني بيقول هموت نفسي من العياط",
+    "بنتي عايزة تموت من العياط",
+    "ابني عايز يموت من العياط",
 ]
 
 # --- Jumping / throwing oneself from a height (2026-10-23) -------------------
@@ -371,7 +378,6 @@ def test_jumping_play_does_not_escalate(text):
 # Same words, ordinary meaning: hyperbole, a religious wish, where to live,
 # and talk about death itself.
 COLLOQUIAL_NOT_EMERGENCY = [
-    "ابني بيموّت نفسه من العياط",
     "بنتي عايزة تموت من الضحك",
     "بنتي عايزة تموت من الكسوف",
     "هموت من الضحك",
@@ -707,11 +713,9 @@ ROUND4_NOT_EMERGENCY = [
     "نفسي اموت شهيده",
     "نفسي اموت وانا ساجده",
     "نفسي اموت فى سبيل الله",
-    "ابني بيموت نفسه فى العياط",
     # M3: the idiom alone
     "هموت من الضحك",
     "عايزة تموت من الكسوف",
-    "ابني بيموّت نفسه من العياط",
     # M5: where, not whether
     "my son doesnt want to live with his father",
     "she dont want to live in the city",
