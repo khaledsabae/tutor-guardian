@@ -1,0 +1,144 @@
+{
+  "voice": "eleven_v3/JBFqnCBsd6RMkjVDRZzb",
+  "language": "en",
+  "pages": [
+    {
+      "audio": "docs/stories/narration/en/maryam_toys_p1.m4a",
+      "text": "On her birthday, Maryam got a new toy box filled with colourful dolls and little cars. She was so happy with her new toys, hugging them with love and great delight.",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 86,
+          "start": 0.0,
+          "end": 5.489
+        },
+        {
+          "from": 87,
+          "to": 164,
+          "start": 5.939,
+          "end": 10.419
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/en/maryam_toys_p2.m4a",
+      "text": "Their little neighbour Fatimah came to visit. She looked at the new toys with longing, wishing she could play with them. But Maryam hesitated, afraid her favourite toys might break, so she hid them behind her back.",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 45,
+          "start": 0.0,
+          "end": 2.129
+        },
+        {
+          "from": 46,
+          "to": 120,
+          "start": 2.579,
+          "end": 6.333
+        },
+        {
+          "from": 121,
+          "to": 214,
+          "start": 6.783,
+          "end": 12.901
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/en/maryam_toys_p3.m4a",
+      "text": "Maryam stood there, unsure. She looked at Fatimah, who sat sadly beside the closed box. Maryam wondered to herself if hiding her toys was the right thing to do—would it make her friend happy?",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 27,
+          "start": 0.0,
+          "end": 2.64
+        },
+        {
+          "from": 28,
+          "to": 87,
+          "start": 3.09,
+          "end": 6.93
+        },
+        {
+          "from": 88,
+          "to": 191,
+          "start": 7.38,
+          "end": 13.457
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/en/maryam_toys_p4.m4a",
+      "text": "Maryam’s mother noticed what was happening. She came closer and said gently, \"Maryam, toys are more fun when we play with them together. Generosity and sharing joy bring Allah’s pleasure and make hearts happy.\" Maryam thought about it and decided to share.",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 43,
+          "start": 0.0,
+          "end": 1.92
+        },
+        {
+          "from": 44,
+          "to": 136,
+          "start": 2.37,
+          "end": 8.363
+        },
+        {
+          "from": 137,
+          "to": 210,
+          "start": 8.813,
+          "end": 14.573
+        },
+        {
+          "from": 211,
+          "to": 256,
+          "start": 15.023,
+          "end": 17.554
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/en/maryam_toys_p5.m4a",
+      "text": "Maryam’s heart felt at ease. She opened her wooden box and invited Fatimah, saying, \"Let’s play together!\" They took out the colourful blocks and started building a tall, beautiful tower, laughing out loud.",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 28,
+          "start": 0.0,
+          "end": 1.569
+        },
+        {
+          "from": 29,
+          "to": 106,
+          "start": 2.019,
+          "end": 6.648
+        },
+        {
+          "from": 107,
+          "to": 206,
+          "start": 7.098,
+          "end": 13.075
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/en/maryam_toys_p6.m4a",
+      "text": "Fatimah’s face lit up with a smile, and they had a wonderful time. Maryam learned that sharing doubles the joy, makes others happy, and builds the strongest, most beautiful friendships—filling life with happiness and blessings.",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 66,
+          "start": 0.0,
+          "end": 3.677
+        },
+        {
+          "from": 67,
+          "to": 227,
+          "start": 4.127,
+          "end": 14.527
+        }
+      ]
+    }
+  ]
+}
