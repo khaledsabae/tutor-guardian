@@ -1422,6 +1422,24 @@ class TgClient {
     return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
   }
 
+  /// The install's device id, for splitting an experiment's arms
+  /// (features/stories/experiment/). Pseudonymous, never shown.
+  Future<String> experimentDeviceId() => _auth.getOrCreateDeviceId();
+
+  /// `POST /api/stories/events` (auth) — the «صورة حيّة» experiment's
+  /// events. Callers ignore failures.
+  Future<void> postStoryEvents(List<Map<String, Object?>> events) async {
+    final session = await ensureSession();
+    final resp = await _http
+        .post(
+          Uri.parse('$_baseUrl/api/stories/events'),
+          headers: _authHeaders(session.token),
+          body: jsonEncode({'events': events}),
+        )
+        .timeout(AppConfig.httpTimeout);
+    if (resp.statusCode != 204 && resp.statusCode != 200) throw _wrap(resp);
+  }
+
   /// `GET /api/support/transparency` (public) → `{enabled, month, cost_usd,
   /// covered_usd, covered_pct, supports, breakdown, approximate}`.
   /// Older servers 404 — callers treat any failure as "nothing to show".

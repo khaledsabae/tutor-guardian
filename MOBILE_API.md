@@ -1382,6 +1382,13 @@ programs"). The recap card never carries names, ages, photos or typed text.
 | `PROGRAMS_AS_OF_ENABLED` | off | lets QA pass `as_of` |
 | `RAJAB_START_<hijri year>` · `SHABAN_START_<…>` · `DHUL_HIJJAH_START_<…>` | derived from the Ramadan season | the announced first day of that month (`hijri_season`) |
 | `HORIZON_STRIP_ENABLED` | on | `GET /api/app-config` → `horizon_strip_enabled`: `0` hides the «على الأفق» strip on Today for every installed build (the family road screen itself stays) |
+| `STORY_MOTION_MODE` | `ab` | `GET /api/app-config` → `story_motion_mode` («صورة حيّة» experiment): `ab` = each device keeps the arm its id hashes to (living pictures vs the same paintings still); `motion` / `static` = everyone gets that arm. Anything else reads as `ab`. Set the winner here after the month (`ops/scripts/story_motion_verdict.py`) |
+
+---
+
+### 11.9 «صورة حيّة» experiment events — `POST /api/stories/events` (auth)
+
+`{"events": [{name, story_id, lang, variant, narration_on, reduce_motion, page_index?, rating?}]}`, 1–50 per call → `204`. `name` ∈ `story_opened` · `story_page_viewed` (page_index) · `story_finished` · `story_rated` (rating 1–3: 😐 · 🙂 · 😍) · `story_closed_early` (page_index = last page read); `variant` ∈ `motion` · `static`; `story_id` `[a-z0-9_]{1,64}`; `lang` two letters. Anything else refuses the whole batch (`422`) — no free text can ride in. Rows land in `story_events` (conversations.db) for the weekly report's «تجربة صورة حيّة» section. The app also sends each event to GA4 under the same name.
 
 ---
 

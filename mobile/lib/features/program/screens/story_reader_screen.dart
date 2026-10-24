@@ -39,6 +39,9 @@ import '../../onboarding/providers/onboarding_providers.dart';
 import '../../screen_off/narration_store.dart';
 import '../../stories/living/living_picture.dart';
 import '../../stories/living/living_picture_catalog.dart';
+import '../../../state/chat_notifier.dart' show tgClientProvider;
+import '../../stories/experiment/story_experiment.dart';
+import '../../stories/experiment/story_rating_card.dart';
 import '../../stories/living/story_cover.dart';
 import '../../stories/narration/story_narration.dart';
 import '../../stories/narration/word_cues.dart';
@@ -99,6 +102,8 @@ class StoryReaderScreen extends ConsumerStatefulWidget {
     required this.story,
     this.narrationLoader = loadNarration,
     this.playerFactory,
+    this.motionArm,
+    this.storyEvents,
   });
 
   final Story story;
@@ -106,6 +111,13 @@ class StoryReaderScreen extends ConsumerStatefulWidget {
 
   /// Null → just_audio. Tests hand in a fake.
   final NarrationPlayerFactory? playerFactory;
+
+  /// The «صورة حيّة» arm (`motion` / `static`). Null → this device's arm
+  /// (story_experiment.dart). Tests pin one.
+  final String? motionArm;
+
+  /// Where the experiment's events go. Null → GA4 + the backend.
+  final StoryEventSink? storyEvents;
 
   @override
   ConsumerState<StoryReaderScreen> createState() => StoryReaderScreenState();
@@ -156,12 +168,72 @@ class StoryReaderScreenState extends ConsumerState<StoryReaderScreen> {
 
   bool get _canListen => _narration?.covers(_pageTexts) ?? false;
 
+  // ── «صورة حيّة» experiment ─────────────────────────────────────────────
+  /// This device's arm, once known; until then the picture keeps still and
+  /// events wait in [_pendingEvents].
+  String? _arm;
+  final List<(String, Map<String, Object?>)> _pendingEvents = [];
+  late final StoryEventSink _events =
+      widget.storyEvents ?? storyEventsTo(ref.read(tgClientProvider));
+  bool _finished = false;
+  int? _lastPage;
+
+  @visibleForTesting
+  String? get motionArm => _arm;
+
+  bool get _pictureMoves => _arm == 'motion';
+
+  /// dispose() may not read the context; the last value it had is kept.
+  bool _reduceMotionAtClose = false;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _reduceMotionAtClose = reduceMotion(context);
+  }
+
+  void _event(String name, {int? page, int? rating}) {
+    final params = <String, Object?>{
+      'story_id': widget.story.id,
+      'lang': widget.story.language,
+      'narration_on': _listening,
+      'reduce_motion': reduceMotion(context),
+      'page_index': ?page,
+      'rating': ?rating,
+    };
+    if (_arm == null) {
+      _pendingEvents.add((name, params));
+    } else {
+      _events(name, {...params, 'variant': _arm});
+    }
+  }
+
+  Future<void> _resolveArm() async {
+    String arm;
+    try {
+      arm = widget.motionArm ?? await ref.read(storyMotionArmProvider.future);
+    } catch (_) {
+      arm = 'static';
+    }
+    if (!mounted) return;
+    setState(() => _arm = arm);
+    for (final (name, params) in _pendingEvents) {
+      _events(name, {...params, 'variant': arm});
+    }
+    _pendingEvents.clear();
+  }
+
   @override
   void initState() {
     super.initState();
     StoryWakeLock.keepAwake();
     unawaited(_loadNarration());
     unawaited(_findParentRecording());
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      _event('story_opened');
+      unawaited(_resolveArm());
+    });
   }
 
   Future<void> _loadNarration() async {
@@ -188,6 +260,16 @@ class StoryReaderScreenState extends ConsumerState<StoryReaderScreen> {
 
   @override
   void dispose() {
+    if (!_finished && _arm != null) {
+      _events('story_closed_early', {
+        'story_id': widget.story.id,
+        'lang': widget.story.language,
+        'narration_on': _listening,
+        'reduce_motion': _reduceMotionAtClose,
+        'page_index': _lastPage,
+        'variant': _arm,
+      });
+    }
     _positionSub?.cancel();
     _completedSub?.cancel();
     unawaited(_player?.dispose());
@@ -217,6 +299,14 @@ class StoryReaderScreenState extends ConsumerState<StoryReaderScreen> {
       _leaf = leaf;
       _sentence = null;
     });
+    final l = _leaves[leaf];
+    if (l is PageLeaf) {
+      _lastPage = l.index;
+      _event('story_page_viewed', page: l.index);
+    } else if (l is EndLeaf && !_finished) {
+      _finished = true;
+      _event('story_finished', page: _lastPage);
+    }
     _clockLeaf = null;
     _clock.value = Duration.zero;
     unawaited(SoundFx.page());
@@ -485,7 +575,8 @@ class StoryReaderScreenState extends ConsumerState<StoryReaderScreen> {
         story: widget.story,
         index: index,
         parallax: offset,
-        livingCues: _livingCuesFor(i, index),
+        livingCues: _pictureMoves ? _livingCuesFor(i, index) : null,
+        pictureMoves: _pictureMoves,
         textScale: kStoryTextSizes[_textSize],
         recording: i == _leaf ? _recordingFor(i) : null,
         litSentence: i == _leaf ? _sentence : null,
@@ -506,6 +597,10 @@ class StoryReaderScreenState extends ConsumerState<StoryReaderScreen> {
       ),
       EndLeaf() => _EndLeafView(
         story: widget.story,
+        rating: StoryRatingCard(
+          storyId: widget.story.id,
+          onRated: (r) => _event('story_rated', rating: r, page: _lastPage),
+        ),
         childName: _childName(),
         questionsShown: _questionsShown,
         onMoreQuestion: () => setState(() => _questionsShown++),
@@ -563,11 +658,17 @@ class _PaperTurn extends StatelessWidget {
 
 /// A living painted page, framed like the scene card.
 class _LivingCard extends StatelessWidget {
-  const _LivingCard({required this.picture, this.cues, this.fallback});
+  const _LivingCard({
+    required this.picture,
+    this.cues,
+    this.fallback,
+    this.moves = true,
+  });
 
   final LivingPicture picture;
   final LivingCues? cues;
   final Widget? fallback;
+  final bool moves;
 
   @override
   Widget build(BuildContext context) {
@@ -584,6 +685,7 @@ class _LivingCard extends StatelessWidget {
         child: LivingPictureView(
           picture: picture,
           cues: cues,
+          animate: moves,
           fallback: fallback,
         ),
       ),
@@ -995,12 +1097,16 @@ class _StoryPageView extends StatelessWidget {
     required this.recording,
     required this.litSentence,
     this.livingCues,
+    this.pictureMoves = true,
   });
 
   final Story story;
   final int index;
   final double parallax;
   final LivingCues? livingCues;
+
+  /// The «صورة حيّة» arm: false → the same painting, still.
+  final bool pictureMoves;
   final double textScale;
   final NarrationPage? recording;
   final int? litSentence;
@@ -1058,6 +1164,7 @@ class _StoryPageView extends StatelessWidget {
                   ? _LivingCard(
                       picture: living,
                       cues: livingCues,
+                      moves: pictureMoves,
                       // Offline, or a server without the painting: the
                       // page's paper-cut scene.
                       fallback: StorySceneView(
@@ -1280,10 +1387,14 @@ class _EndLeafView extends StatelessWidget {
     required this.onAnother,
     required this.onInvite,
     this.childName,
+    this.rating,
   });
 
   final Story story;
   final String? childName;
+
+  /// «هل أعجبتك الحكاية؟» (story_rating_card.dart), first on the leaf.
+  final Widget? rating;
   final int questionsShown;
   final VoidCallback onMoreQuestion;
   final bool canTry;
@@ -1344,6 +1455,7 @@ class _EndLeafView extends StatelessWidget {
     return ListView(
       padding: const EdgeInsets.fromLTRB(18, 12, 18, 24),
       children: [
+        ?rating,
         const Center(child: NoorPresence(size: 96, mood: NoorMood.proud)),
         const SizedBox(height: 12),
         Text(

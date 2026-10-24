@@ -64,6 +64,8 @@ _PROTECTED_PREFIXES = (
     # in production (the tests stub the middleware and could not see it) — and
     # an anonymous 50 MB body was parsed before that 401.
     "/api/sync",
+    # «صورة حيّة» experiment events: every row is the calling device's.
+    "/api/stories/events",
     # Recording a support purchase. The transparency GET beside it is public.
     "/api/support/verify",
     # The child-memory delete-all (routers/privacy.py api_router). Without an

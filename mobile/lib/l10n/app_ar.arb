@@ -2383,5 +2383,25 @@
   "childCornerStoryPage": "صفحة {page} من {count}",
   "@childCornerStoryPage": {"description": "Screen-reader label of the story's page dots. «ركن الطفل» (child corner after the hand-over gate). Child-facing: easy MSA, family-neutral («أهلك»), no gendered verbs, no coins/points/streak, no 'come back tomorrow', no religious text, no promise of reward.", "placeholders": {"page": {"type": "int"}, "count": {"type": "int"}}},
   "childCornerDoneMission": "مهمتك: {title}",
-  "@childCornerDoneMission": {"description": "Reminder above «أعِد الجهاز إلى أهلك» at the end of the corner. «ركن الطفل» (child corner after the hand-over gate). Child-facing: easy MSA, family-neutral («أهلك»), no gendered verbs, no coins/points/streak, no 'come back tomorrow', no religious text, no promise of reward.", "placeholders": {"title": {"type": "String"}}}
+  "@childCornerDoneMission": {"description": "Reminder above «أعِد الجهاز إلى أهلك» at the end of the corner. «ركن الطفل» (child corner after the hand-over gate). Child-facing: easy MSA, family-neutral («أهلك»), no gendered verbs, no coins/points/streak, no 'come back tomorrow', no religious text, no promise of reward.", "placeholders": {"title": {"type": "String"}}},
+  "storyRateQuestion": "هل أعجبتك الحكاية؟",
+  "@storyRateQuestion": {
+    "description": "«صورة حيّة» experiment: the one question at a story's end (same in both arms); never about the motion."
+  },
+  "storyRateThanks": "شكرًا لك!",
+  "@storyRateThanks": {
+    "description": "«صورة حيّة» experiment: the one question at a story's end (same in both arms); never about the motion."
+  },
+  "storyRateLoved": "أحببتها كثيرًا",
+  "@storyRateLoved": {
+    "description": "«صورة حيّة» experiment: the one question at a story's end (same in both arms); never about the motion."
+  },
+  "storyRateLiked": "أعجبتني",
+  "@storyRateLiked": {
+    "description": "«صورة حيّة» experiment: the one question at a story's end (same in both arms); never about the motion."
+  },
+  "storyRateOkay": "عادية",
+  "@storyRateOkay": {
+    "description": "«صورة حيّة» experiment: the one question at a story's end (same in both arms); never about the motion."
+  }
 }

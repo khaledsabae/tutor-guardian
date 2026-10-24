@@ -6671,4 +6671,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String childCornerDoneMission(String title) {
     return 'Your mission: $title';
   }
+
+  @override
+  String get storyRateQuestion => 'Did you like the story?';
+
+  @override
+  String get storyRateThanks => 'Thank you!';
+
+  @override
+  String get storyRateLoved => 'Loved it';
+
+  @override
+  String get storyRateLiked => 'Liked it';
+
+  @override
+  String get storyRateOkay => 'It was okay';
 }

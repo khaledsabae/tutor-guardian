@@ -27,7 +27,7 @@ from app.routers import (
     health, assistant, chat, feedback, privacy, program, children, referral, push, identity,
     web, stats, daily_routine, value_tracking, habit_templates, child_mode, child_mode_web, sync,
     insights, methodology, seo, tafsir, quranic_linguistics, support, child_memory, device_proof,
-    family_programs, family,
+    family_programs, family, story_events,
 )
 from app.services import (
     ai_gateway, child_token, device_alerts, followup_push, milestone_push, mission_digest,
@@ -254,6 +254,7 @@ app.include_router(identity.router, prefix="/api")  # optional Google Sign-In (a
 app.include_router(sync.router, prefix="/api")  # Zero-Knowledge user backups/sync (auth)
 app.include_router(daily_routine.router, prefix="/api")  # حساب اليوم routine tracker (auth)
 app.include_router(value_tracking.router, prefix="/api")  # ميزان العادات habit tracker (auth)
+app.include_router(story_events.router, prefix="/api")  # «صورة حيّة» experiment events (auth)
 app.include_router(habit_templates.router, prefix="/api")  # قوالب العادات المخصصة (auth)
 app.include_router(child_mode.router, prefix="/api")  # وضع الطفل للتقرير الذاتي (child auth)
 app.include_router(child_mode_web.router, prefix="/api")  # QR Web App للمراهقين (child auth)

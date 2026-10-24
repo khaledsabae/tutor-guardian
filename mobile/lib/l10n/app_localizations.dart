@@ -11149,6 +11149,36 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'مهمتك: {title}'**
   String childCornerDoneMission(String title);
+
+  /// «صورة حيّة» experiment: the one question at a story's end (same in both arms); never about the motion.
+  ///
+  /// In ar, this message translates to:
+  /// **'هل أعجبتك الحكاية؟'**
+  String get storyRateQuestion;
+
+  /// «صورة حيّة» experiment: the one question at a story's end (same in both arms); never about the motion.
+  ///
+  /// In ar, this message translates to:
+  /// **'شكرًا لك!'**
+  String get storyRateThanks;
+
+  /// «صورة حيّة» experiment: the one question at a story's end (same in both arms); never about the motion.
+  ///
+  /// In ar, this message translates to:
+  /// **'أحببتها كثيرًا'**
+  String get storyRateLoved;
+
+  /// «صورة حيّة» experiment: the one question at a story's end (same in both arms); never about the motion.
+  ///
+  /// In ar, this message translates to:
+  /// **'أعجبتني'**
+  String get storyRateLiked;
+
+  /// «صورة حيّة» experiment: the one question at a story's end (same in both arms); never about the motion.
+  ///
+  /// In ar, this message translates to:
+  /// **'عادية'**
+  String get storyRateOkay;
 }
 
 class _AppLocalizationsDelegate

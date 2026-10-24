@@ -590,6 +590,15 @@ _add(
 )
 
 _add(
+    "app.routers.story_events",
+    "device",
+    "device",
+    """
+    POST /api/stories/events record_story_events
+""",
+)
+
+_add(
     "app.routers.habit_templates",
     "device",
     "device",

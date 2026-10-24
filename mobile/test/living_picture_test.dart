@@ -369,6 +369,8 @@ void main() {
             story: s,
             narrationLoader: (_, _) async => n,
             playerFactory: _SilentPlayer.new,
+            motionArm: 'motion',
+            storyEvents: (_, _) {},
           ),
           still: true,
         ),

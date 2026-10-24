@@ -102,4 +102,15 @@ async def get_app_config():
         # HORIZON_STRIP_ENABLED=0 hides it on every installed build.
         "horizon_strip_enabled": os.environ.get(
             "HORIZON_STRIP_ENABLED", "1").strip().lower() not in ("0", "false", "no", "off"),
+        # «صورة حيّة» experiment (2026-10-24): "ab" = every device keeps the
+        # arm its id hashes to (living pictures vs the same paintings still);
+        # "motion" / "static" = everyone gets that one. After the month the
+        # winner is set with STORY_MOTION_MODE in .env — no release needed.
+        "story_motion_mode": story_motion_mode(),
     }
+
+
+def story_motion_mode() -> str:
+    """STORY_MOTION_MODE, or "ab" for anything unset or unknown."""
+    mode = os.environ.get("STORY_MOTION_MODE", "ab").strip().lower()
+    return mode if mode in ("ab", "motion", "static") else "ab"
