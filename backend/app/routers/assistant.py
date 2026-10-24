@@ -17,11 +17,11 @@ from fastapi.responses import StreamingResponse
 from app.models.api import ConversationTurn, UserMessage, AssistantReply
 from app.services.guardrails import (
     apply_guardrails, is_emergency, emergency_reply, evaluate_guardrails,
-    _build_fallback_message,
+    _build_fallback_message, is_medical_query, medical_referral_reply,
 )
 from app.services.retrieval import (retrieve_hybrid, _ensure_index,
                                     log_retrieval, detect_query_language)
-from app.services.reranker import RERANK_MIN_SCORE
+from app.services.reranker import RERANK_MIN_SCORE, NoConfidentMatch
 from app.services.query_rewriter import rewrite_query
 from app.services.llm_service import (
     generate_reply, build_full_prompt, generate_general_pivot, build_pivot_prompt,
@@ -331,16 +331,48 @@ def _label_domain(domains: list[str], units: list[dict]) -> str:
     return domains[0]
 
 
+def _is_medical_no_match(units: list[dict], domains: list[str],
+                         primary_domain: str, is_general: bool,
+                         query_text: str = "") -> bool:
+    """The reranker looked and found nothing relevant, and the question is
+    medical: the parent is referred to a doctor instead of the off-topic pivot.
+
+    The pivot answers "briefly, from general knowledge, then an activity",
+    which is right for a recipe and wrong for "how many units of insulin
+    before lunch" (nothing in the knowledge base, but a real health question).
+    Needs a real classification: with the uncertain all-domains list
+    domains[0] is just "medical" by position (see _label_domain), so that stays
+    on the pivot. A unit with a score of its own (tafsir) makes `units`
+    non-empty and is evidence, so it never reaches here.
+
+    The domain is not enough on its own: `medical` is also where the
+    classifier files a child's behaviour and feelings (jealousy, fear of the
+    dark, sleep, lying), and "no diagnosis, no doses" is the wrong answer to
+    those. So the wording must also be a health question (is_medical_query).
+    """
+    return (isinstance(units, NoConfidentMatch) and not units and bool(domains)
+            and not is_general and not is_uncertain(domains)
+            and primary_domain == "medical" and is_medical_query(query_text))
+
+
 def _off_topic(units: list[dict]) -> tuple[bool, float | None]:
     """A question is off-topic when even the best reranked unit falls below
-    the reranker's calibrated relevance floor (RERANK_MIN_SCORE). The reranker
-    returns the single best unit even when everything is below the floor (so it
-    never returns nothing), so we re-check the floor here to catch those."""
+    the reranker's calibrated relevance floor.
+
+    The reranker now says so itself: when no candidate clears the floor it
+    returns an empty NoConfidentMatch (it used to return the single best unit,
+    however irrelevant, and this function re-checked the floor to catch it).
+    Both shapes route the same way, to the off-topic pivot. A genuinely empty
+    result (no candidates at all, reranker off) is not off-topic: it takes the
+    "no sufficient information" reply. A unit with a score of its own (the
+    tafsir enrichment, rerank_score 1.0) still counts as evidence."""
     scores = [
         u["rerank_score"] for u in units
         if isinstance(u.get("rerank_score"), (int, float))
     ]
     if not scores:
+        if isinstance(units, NoConfidentMatch):
+            return True, units.best_rerank_score
         return False, None
     top = max(scores)
     return top < RERANK_MIN_SCORE, top
@@ -757,7 +789,9 @@ async def _draft_answer(
     draft = ""
 
     score_off_topic, top_rerank = _off_topic(retrieved_units)
-    off_topic = is_general or score_off_topic
+    medical_referral = score_off_topic and _is_medical_no_match(
+        retrieved_units, detected_domains, primary_domain, is_general, query_text)
+    off_topic = (is_general or score_off_topic) and not medical_referral
 
     if off_topic:
         # General/off-topic question (e.g. a recipe). Don't ground on the
@@ -825,10 +859,17 @@ async def _draft_answer(
     user_message_for_guardrails = user_message.model_copy(
         update={"domain": primary_domain}
     )
-    reply = apply_guardrails(
-        user_message_for_guardrails, draft, policies, mode=mode,
-        intervention_type=intervention_type
-    )
+    if medical_referral:
+        # A medical question the KB has no answer to: referral to a doctor, or
+        # the emergency fallback when the wording describes an emergency.
+        reply = medical_referral_reply(
+            user_message_for_guardrails, policies,
+            detect_reply_language(query_text), query_text)
+    else:
+        reply = apply_guardrails(
+            user_message_for_guardrails, draft, policies, mode=mode,
+            intervention_type=intervention_type
+        )
     reply.metadata = {
         **(reply.metadata or {}),
         "top_rerank": round(top_rerank, 2) if top_rerank is not None else None,
@@ -1221,10 +1262,24 @@ async def _stream_answer(
     primary_domain = _label_domain(detected_domains, retrieved_units)
 
     score_off_topic, _top_rerank = _off_topic(retrieved_units)
-    off_topic = is_general or score_off_topic
+    medical_referral = score_off_topic and _is_medical_no_match(
+        retrieved_units, detected_domains, primary_domain, is_general, query_text)
+    off_topic = (is_general or score_off_topic) and not medical_referral
 
     # No relevant KB and not an off-topic pivot → non-streamed fallback
     if not retrieved_units and not off_topic:
+        if medical_referral:
+            ref = medical_referral_reply(
+                user_message.model_copy(update={"domain": primary_domain}),
+                policies, reply_lang, query_text)
+            # Same metadata as /draft, so a client reads one shape from both.
+            ref.metadata = {
+                **(ref.metadata or {}),
+                "top_rerank": round(_top_rerank, 2) if _top_rerank is not None else None,
+                "off_topic": False,
+                "sources": [],
+            }
+            return await _single(ref)
         draft = f"لا توجد معلومات كافية حاليًا حول '{query_text}'. نوصي باستشارة مختص."
         return await _single(apply_guardrails(
             user_message.model_copy(update={"domain": primary_domain}),
