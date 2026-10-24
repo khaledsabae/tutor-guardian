@@ -989,12 +989,13 @@ _EMERGENCY_KEYWORDS = {
 # Checked after a keyword hits: a match here cancels the escalation.
 #
 # Idioms of exaggeration. Each tail is cancelled again when the text also holds
-# a distress marker (`_DISTRESS_MARKERS`): «هموت نفسي من العياط ومحدش حاسس بيا»
-# is the sentence, not the idiom. «من الجوع» and «من الخضة» are not listed at
-# all: a child who wants to die "of hunger" and has stopped eating is exactly
-# the case an exclusion must not hide.
+# a distress marker (`_DISTRESS_MARKERS`): «هموت نفسي من الضحك اللي الناس
+# بتضحكه عليا» is the sentence, not the idiom. «من الجوع» and «من الخضة» are not
+# listed at all: a child who wants to die "of hunger" and has stopped eating is
+# exactly the case an exclusion must not hide. Crying is NOT listed either
+# (Khaled, 2026-10-24): «بيموّت نفسه من العياط» escalates to an emergency check.
 _HYPERBOLE: tuple[tuple[str, ...], ...] = (
-    ("من", "العياط"), ("في", "العياط"), ("من", "الضحك"), ("من", "الكسوف"),
+    ("من", "الضحك"), ("من", "الكسوف"),
     ("من", "التعب"), ("من", "الحر"), ("من", "الزهق"), ("من", "الغيظ"),
     ("من", "الفرحة"),
 )
@@ -1053,8 +1054,8 @@ _EXCLUSION_RULES: tuple[tuple[tuple[tuple[str, ...], ...], tuple[tuple[str, ...]
     ((("غرق",),), (("السرير",), ("الفرش",), ("المرتبة",), ("سريره",))),
     # Sleep apnea is chronic and belongs in a normal consultation.
     ((("انقطاع", "تنفس"),), (("النوم",), ("نومه",), ("نومها",))),
-    # Egyptian hyperbole: "بيموّت نفسه من العياط" = cries a lot,
-    # "عايزة تموت من الكسوف" = embarrassed. The wish is literal otherwise.
+    # Egyptian hyperbole: "عايزة تموت من الكسوف" = embarrassed,
+    # "هموت من الضحك" = laughing. The wish is literal otherwise (crying included).
     # Keys and tails are expanded over ة/ه and ى/ي by `_spelling_variants`.
     (
         (
