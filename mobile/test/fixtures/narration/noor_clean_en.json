@@ -1,0 +1,126 @@
+{
+  "voice": "eleven_v3/JBFqnCBsd6RMkjVDRZzb",
+  "language": "en",
+  "pages": [
+    {
+      "audio": "docs/stories/narration/en/noor_clean_p1.m4a",
+      "text": "Noor was an energetic little girl who loved playing in the neighborhood garden after Asr. One day, she noticed some trash and scattered leaves on the beautiful green grass, making the garden look sad.",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 89,
+          "start": 0.0,
+          "end": 4.88
+        },
+        {
+          "from": 90,
+          "to": 200,
+          "start": 5.33,
+          "end": 12.05
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/en/noor_clean_p2.m4a",
+      "text": "Noor remembered her teacher’s words at school: \"Cleanliness is beautiful, and the environment is an *amanah* (trust) in our hands.\" She decided not to just stand by. She brought big bags and started collecting the leaves and plastic bottles with energy and enthusiasm.",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 131,
+          "start": 0.0,
+          "end": 8.64
+        },
+        {
+          "from": 132,
+          "to": 165,
+          "start": 9.09,
+          "end": 11.073
+        },
+        {
+          "from": 166,
+          "to": 268,
+          "start": 11.523,
+          "end": 17.923
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/en/noor_clean_p3.m4a",
+      "text": "Noor worked alone at first, full of energy. She put up a small wooden sign at the garden’s entrance, writing in her pretty handwriting: \"Our environment is an *amanah*—let’s keep it clean and beautiful together.\"",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 43,
+          "start": 0.0,
+          "end": 2.72
+        },
+        {
+          "from": 44,
+          "to": 212,
+          "start": 3.17,
+          "end": 13.89
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/en/noor_clean_p4.m4a",
+      "text": "Noor’s friends in the neighborhood saw what she was doing. They hurried to help her, bringing extra tools and saying, \"We want our garden to be the prettiest!\" Everyone worked together with team spirit and love.",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 58,
+          "start": 0.0,
+          "end": 2.8
+        },
+        {
+          "from": 59,
+          "to": 159,
+          "start": 3.25,
+          "end": 8.85
+        },
+        {
+          "from": 160,
+          "to": 211,
+          "start": 9.3,
+          "end": 12.095
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/en/noor_clean_p5.m4a",
+      "text": "To make the garden even more beautiful, the children teamed up to plant a small, colorful flower in the middle of the garden. They watered it carefully and hoped it would grow and bloom quickly to bring joy to those who passed by.",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 125,
+          "start": 0.0,
+          "end": 6.773
+        },
+        {
+          "from": 126,
+          "to": 230,
+          "start": 7.223,
+          "end": 13.273
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/en/noor_clean_p6.m4a",
+      "text": "The children sat on the wooden bench, enjoying the lovely view and the gentle breeze. Noor felt proud and happy because, by working together, they had made their playground clean, beautiful, and healthy for everyone.",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 85,
+          "start": 0.0,
+          "end": 4.772
+        },
+        {
+          "from": 86,
+          "to": 216,
+          "start": 5.222,
+          "end": 12.982
+        }
+      ]
+    }
+  ]
+}

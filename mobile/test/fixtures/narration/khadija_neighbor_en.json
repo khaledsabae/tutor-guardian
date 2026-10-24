@@ -1,0 +1,108 @@
+{
+  "voice": "eleven_v3/JBFqnCBsd6RMkjVDRZzb",
+  "language": "en",
+  "pages": [
+    {
+      "audio": "docs/stories/narration/en/khadija_neighbor_p1.m4a",
+      "text": "On a cold evening, Khadijah was helping her mother prepare a warm, delicious soup that filled the air with a lovely smell. When the cooking was done, her mother took a big plate and said, 'Khadijah, prepare this plate for our neighbor, Grandma Aisha.'",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 122,
+          "start": 0.0,
+          "end": 6.93
+        },
+        {
+          "from": 123,
+          "to": 251,
+          "start": 7.38,
+          "end": 14.798
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/en/khadija_neighbor_p2.m4a",
+      "text": "Khadijah looked surprised and said, 'Mama, are we sending them food when they have their own?' Her mother smiled and said, 'My dear, our noble Prophet ﷺ taught us, saying: *O Abu Dharr, if you cook a broth, increase its water and look after your neighbors.*'",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 94,
+          "start": 0.0,
+          "end": 6.059
+        },
+        {
+          "from": 95,
+          "to": 258,
+          "start": 6.509,
+          "end": 19.549
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/en/khadija_neighbor_p3.m4a",
+      "text": "Khadijah carried the warm plate carefully and knocked softly on Grandma Aisha’s door. The old lady opened the door, and when she saw Khadijah with the warm plate, her face lit up with joy and happiness.",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 85,
+          "start": 0.0,
+          "end": 4.949
+        },
+        {
+          "from": 86,
+          "to": 202,
+          "start": 5.399,
+          "end": 12.679
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/en/khadija_neighbor_p4.m4a",
+      "text": "Grandma Aisha prayed for Khadijah’s blessings and success, gently patting her head. She gave her a piece of candy to thank her for her kindness and care.",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 83,
+          "start": 0.0,
+          "end": 4.939
+        },
+        {
+          "from": 84,
+          "to": 153,
+          "start": 5.389,
+          "end": 8.829
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/en/khadija_neighbor_p5.m4a",
+      "text": "Khadijah returned home with her heart dancing with happiness. She learned that Islamic law gives neighbors a great right, and that a simple, kind gift brings hearts closer and plants love in the community.",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 61,
+          "start": 0.0,
+          "end": 3.173
+        },
+        {
+          "from": 62,
+          "to": 205,
+          "start": 3.623,
+          "end": 12.103
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/en/khadija_neighbor_p6.m4a",
+      "text": "The next day, Grandma Aisha sent Khadijah a plate full of fresh fruits with a sweet thank-you note, teaching Khadijah that exchanging gifts between neighbors brings love and blessings.",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 184,
+          "start": 0.0,
+          "end": 11.538
+        }
+      ]
+    }
+  ]
+}

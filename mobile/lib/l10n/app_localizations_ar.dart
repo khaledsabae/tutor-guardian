@@ -6617,4 +6617,19 @@ class AppLocalizationsAr extends AppLocalizations {
   String childCornerDoneMission(String title) {
     return 'مهمتك: $title';
   }
+
+  @override
+  String get storyRateQuestion => 'هل أعجبتك الحكاية؟';
+
+  @override
+  String get storyRateThanks => 'شكرًا لك!';
+
+  @override
+  String get storyRateLoved => 'أحببتها كثيرًا';
+
+  @override
+  String get storyRateLiked => 'أعجبتني';
+
+  @override
+  String get storyRateOkay => 'عادية';
 }

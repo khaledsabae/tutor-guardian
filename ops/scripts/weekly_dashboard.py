@@ -36,6 +36,7 @@ sys.path.insert(0, str(_backend_root))
 sys.path.insert(1, str(_backend_root / "backend"))
 
 from app.core.real_traffic import e2e_devices_sql, real_device_sql  # noqa: E402
+from app.services import story_experiment  # noqa: E402
 
 # All product tables queried below (chat_sessions, lesson_progress,
 # child_profiles, daily_login_streaks) live in conversations.db — same
@@ -180,7 +181,47 @@ def _db_stats() -> dict:
     return stats
 
 
-def _format_report(ops: dict, retention: dict, db: dict) -> str:
+def _story_experiment() -> dict | None:
+    """«صورة حيّة»: the two arms over the last 7 days (and, for re-opens, the
+    week before with its 7 days after). None until the app has sent any."""
+    tables = {r["name"] for r in _query_db("SELECT name FROM sqlite_master WHERE type='table'")}
+    if "story_events" not in tables:
+        return None
+    now = datetime.now(timezone.utc).replace(tzinfo=None)
+    rows = _query_db(
+        f"SELECT * FROM story_events WHERE created_at >= ? AND {_real()}",
+        ((now - timedelta(days=14)).strftime("%Y-%m-%d %H:%M:%S"),))
+    week = [r for r in rows if r["created_at"] >= (now - timedelta(days=7)).strftime("%Y-%m-%d %H:%M:%S")]
+    out = {}
+    for arm in story_experiment.ARMS:
+        s = story_experiment.arm_summary(week, arm)
+        s["reopened_7d"] = story_experiment.reopen_rate(
+            rows, arm, now - timedelta(days=14), now - timedelta(days=7))
+        out[arm] = s
+    return out
+
+
+def _story_lines(exp: dict | None) -> list[str]:
+    if exp is None:
+        return []
+
+    def pct(x):
+        return "—" if x is None else f"{x * 100:.0f}%"
+
+    lines = ["📖 تجربة «صورة حيّة» (7 أيام، من غير أجهزة تقليل الحركة):"]
+    for arm, label in (("motion", "متحركة"), ("static", "ثابتة")):
+        s = exp[arm]
+        r = s["ratings"]
+        ppo = "—" if s["pages_per_open"] is None else f"{s['pages_per_open']:.1f}"
+        lines.append(
+            f"  • {label}: فتح {s['opens']} · إكمال {pct(s['completion'])} · صفحات/فتحة {ppo}"
+            f" · تقييم 😍{r[3]} 🙂{r[2]} 😐{r[1]} · رجوع خلال 7 أيام {pct(s['reopened_7d'])}"
+            f" · سماع للآخر {pct(s['listen_through'])}")
+    lines.append("")
+    return lines
+
+
+def _format_report(ops: dict, retention: dict, db: dict, stories: dict | None = None) -> str:
     """Format the weekly report as a Telegram-friendly message."""
     now = datetime.now(timezone.utc)
     week_start = (now - timedelta(days=7)).strftime("%Y-%m-%d")
@@ -243,6 +284,8 @@ def _format_report(ops: dict, retention: dict, db: dict) -> str:
     lines.append(f"  • تسجيلات دخول اليوم: {db['logins_today']}")
     lines.append("")
 
+    lines.extend(_story_lines(stories))
+
     lines.append("— المربّي الذكي · مجاني لوجه الله 🤍")
 
     return "\n".join(lines)
@@ -286,8 +329,15 @@ def main():
     print("Collecting DB stats...")
     db = _db_stats()
 
+    print("Collecting story experiment...")
+    try:
+        stories = _story_experiment()
+    except Exception as e:  # the experiment must never cost the report
+        print(f"story experiment unavailable: {e}", file=sys.stderr)
+        stories = None
+
     # Format report
-    report = _format_report(ops, retention, db)
+    report = _format_report(ops, retention, db, stories)
 
     if args.dry_run:
         print(report)

@@ -217,6 +217,12 @@ class Analytics {
 
   /// A shareable moment card was successfully shared. [kind] = milestone /
   /// quran / invite / tip, so we can see which surface drives the loop.
+  /// «صورة حيّة» experiment events (features/stories/experiment/): story_opened,
+  /// story_page_viewed, story_finished, story_rated, story_closed_early —
+  /// each with variant, story_id, lang, narration_on, reduce_motion.
+  static Future<void> storyEvent(String name, Map<String, Object> params) =>
+      _log(name, params);
+
   static Future<void> shareMoment(String kind) =>
       _log('share_moment', {'kind': kind});
 

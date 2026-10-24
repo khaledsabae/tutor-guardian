@@ -1,0 +1,102 @@
+{
+  "voice": "eleven_v3/JBFqnCBsd6RMkjVDRZzb",
+  "language": "en",
+  "pages": [
+    {
+      "audio": "docs/stories/narration/en/aisha_permission_p1.m4a",
+      "text": "At midday, while Aisha's mother was resting in her room, Aisha wanted to go in to get her reading book. She ran and raised her hand to push the door suddenly.",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 103,
+          "start": 0.0,
+          "end": 5.84
+        },
+        {
+          "from": 104,
+          "to": 158,
+          "start": 6.29,
+          "end": 9.09
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/en/aisha_permission_p2.m4a",
+      "text": "Aisha remembered her father’s words when they had memorized together the words of Allah: ﴿يَـٰٓأَيُّهَا ٱلَّذِينَ ءَامَنُواْ لِيَسۡتَـٔۡذِنكُمُ ٱلَّذِينَ مَلَكَتۡ أَيۡمَٰنُكُمۡ وَٱلَّذِينَ لَمۡ يَبۡلُغُواْ ٱلۡحُلُمَ مِنكُمۡ ثَلَٰثَ مَرَّـٰتٖ﴾. Interpretation of the meaning: 'O believers, let those in your service and your children who have not yet reached maturity ask your permission at three times.'",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 243,
+          "start": 0.0,
+          "end": 30.905
+        },
+        {
+          "from": 244,
+          "to": 403,
+          "start": 31.355,
+          "end": 41.392
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/en/aisha_permission_p3.m4a",
+      "text": "Aisha stood calmly at the door, knocked three gentle and polite knocks, and said in a clear, sweet voice: 'Assalamu alaykum, may I come in, Mama?'",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 146,
+          "start": 0.0,
+          "end": 10.48
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/en/aisha_permission_p4.m4a",
+      "text": "Her mother gave permission with a warm smile and said, 'Come in, my dear. May Allah bless you and your adab.' So Aisha entered with dignity and joy.",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 73,
+          "start": 0.0,
+          "end": 4.8
+        },
+        {
+          "from": 74,
+          "to": 109,
+          "start": 5.25,
+          "end": 7.31
+        },
+        {
+          "from": 110,
+          "to": 148,
+          "start": 7.76,
+          "end": 10.16
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/en/aisha_permission_p5.m4a",
+      "text": "Her mother taught Aisha that young children ask permission before coming in at three times: before the dawn prayer, at the midday rest, and after the night prayer — and that asking permission keeps everyone at home comfortable and increases the love between them.",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 263,
+          "start": 0.0,
+          "end": 16.319
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/en/aisha_permission_p6.m4a",
+      "text": "Aisha always sought permission before entering any room or house, and she became a role model for her sisters and friends in practicing the beautiful akhlaq of isti'dhan.",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 170,
+          "start": 0.0,
+          "end": 9.52
+        }
+      ]
+    }
+  ]
+}

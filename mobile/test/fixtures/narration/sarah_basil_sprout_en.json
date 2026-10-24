@@ -1,0 +1,78 @@
+{
+  "voice": "eleven_v3/JBFqnCBsd6RMkjVDRZzb",
+  "language": "en",
+  "pages": [
+    {
+      "audio": "docs/stories/narration/en/sarah_basil_sprout_p1.m4a",
+      "text": "In the bright nursery yard, Sarah was running between the trees at break time when she noticed a small plant pot in the corner. Its leaves were drooping, and dry leaves and blown-about tissues had gathered around it.",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 127,
+          "start": 0.0,
+          "end": 7.272
+        },
+        {
+          "from": 128,
+          "to": 216,
+          "start": 7.722,
+          "end": 12.842
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/en/sarah_basil_sprout_p2.m4a",
+      "text": "Sarah felt sad to see the plant, and she said to her friend Hind, «This plant is a living thing, and it needs us to look after it — and cleanliness is beautiful.» She decided not to leave until the corner looked lovely again.",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 162,
+          "start": 0.0,
+          "end": 11.12
+        },
+        {
+          "from": 163,
+          "to": 225,
+          "start": 11.57,
+          "end": 14.832
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/en/sarah_basil_sprout_p3.m4a",
+      "text": "Sarah put on a pair of small gloves, eagerly picked up the leaves and litter and threw them in the bin. Then she brought a watering can and watered the dry soil with love and care.",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 103,
+          "start": 0.0,
+          "end": 6.72
+        },
+        {
+          "from": 104,
+          "to": 180,
+          "start": 7.17,
+          "end": 11.709
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/en/sarah_basil_sprout_p4.m4a",
+      "text": "A few days later, the basil plant perked up, its leaves turned green again, and its sweet, fragrant smell filled the whole nursery yard! The teacher gave Sarah the title «Friend of Nature», and Sarah was happy because she had left a good mark.",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 136,
+          "start": 0.0,
+          "end": 8.528
+        },
+        {
+          "from": 137,
+          "to": 243,
+          "start": 8.978,
+          "end": 15.365
+        }
+      ]
+    }
+  ]
+}

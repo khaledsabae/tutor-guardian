@@ -1,0 +1,138 @@
+{
+  "voice": "eleven_v3/JBFqnCBsd6RMkjVDRZzb",
+  "language": "en",
+  "pages": [
+    {
+      "audio": "docs/stories/narration/en/hamza_truth_p1.m4a",
+      "text": "Hamza was playing with his friends in the playground. While they were playing, one of the children fell and lost his balance in a funny way. Some of the children started laughing and mocking him, and the child felt shy and sad.",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 53,
+          "start": 0.0,
+          "end": 2.4
+        },
+        {
+          "from": 54,
+          "to": 140,
+          "start": 2.85,
+          "end": 7.297
+        },
+        {
+          "from": 141,
+          "to": 227,
+          "start": 7.747,
+          "end": 12.707
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/en/hamza_truth_p2.m4a",
+      "text": "Hamza hesitated for a moment, then remembered the noble ayah he had memorized in his Qur'an circle: ﴿يَا أَيُّهَا الَّذِينَ آمَنُوا لَا يَسْخَرْ قَوْمٌ مِّن قَوْمٍ عَسَىٰ أَن يَكُونُوا خَيْرًا مِّنْهُمْ﴾. Interpretation of the meaning: 'O you who have believed, let not a people ridicule [another] people; perhaps they may be better than them.'",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 204,
+          "start": 0.0,
+          "end": 28.158
+        },
+        {
+          "from": 205,
+          "to": 344,
+          "start": 28.608,
+          "end": 37.408
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/en/hamza_truth_p3.m4a",
+      "text": "Hamza stepped forward firmly and said to his friends with rifq (gentleness): 'My friends, a Muslim does not mock his brother. A kind word is sadaqah (charity).' Then he stretched out his hand to the child, helped him up, and brushed the dust off his clothes.",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 125,
+          "start": 0.0,
+          "end": 8.16
+        },
+        {
+          "from": 126,
+          "to": 160,
+          "start": 8.61,
+          "end": 11.17
+        },
+        {
+          "from": 161,
+          "to": 258,
+          "start": 11.62,
+          "end": 17.202
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/en/hamza_truth_p4.m4a",
+      "text": "The children felt ashamed of their behavior and realized their mistake. They quickly apologized to their friend and joined together to play with a spirit of cooperation and love.",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 71,
+          "start": 0.0,
+          "end": 3.742
+        },
+        {
+          "from": 72,
+          "to": 178,
+          "start": 4.192,
+          "end": 10.032
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/en/hamza_truth_p5.m4a",
+      "text": "Hamza returned home feeling proud. He had defended his brother and guarded his tongue. He knew that our deen teaches us to use our tongues and our hands for good.",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 34,
+          "start": 0.0,
+          "end": 2.24
+        },
+        {
+          "from": 35,
+          "to": 86,
+          "start": 2.69,
+          "end": 5.212
+        },
+        {
+          "from": 87,
+          "to": 162,
+          "start": 5.662,
+          "end": 9.711
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/en/hamza_truth_p6.m4a",
+      "text": "Hamza and his friends became a good example at school. They spread kind words and were careful to advise one another with truth and rifq. Their friendship became a wonderful example of brotherhood in faith.",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 54,
+          "start": 0.0,
+          "end": 2.72
+        },
+        {
+          "from": 55,
+          "to": 137,
+          "start": 3.17,
+          "end": 8.045
+        },
+        {
+          "from": 138,
+          "to": 206,
+          "start": 8.495,
+          "end": 11.911
+        }
+      ]
+    }
+  ]
+}

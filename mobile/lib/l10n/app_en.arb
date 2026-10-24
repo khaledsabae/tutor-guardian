@@ -2259,5 +2259,10 @@
   "childCornerStoryPage": "Page {page} of {count}",
   "@childCornerStoryPage": {"description": "Screen-reader label of the story's page dots. «ركن الطفل» (child corner after the hand-over gate). Child-facing: easy MSA, family-neutral («أهلك»), no gendered verbs, no coins/points/streak, no 'come back tomorrow', no religious text, no promise of reward.", "placeholders": {"page": {"type": "int"}, "count": {"type": "int"}}},
   "childCornerDoneMission": "Your mission: {title}",
-  "@childCornerDoneMission": {"description": "Reminder above «أعِد الجهاز إلى أهلك» at the end of the corner. «ركن الطفل» (child corner after the hand-over gate). Child-facing: easy MSA, family-neutral («أهلك»), no gendered verbs, no coins/points/streak, no 'come back tomorrow', no religious text, no promise of reward.", "placeholders": {"title": {"type": "String"}}}
+  "@childCornerDoneMission": {"description": "Reminder above «أعِد الجهاز إلى أهلك» at the end of the corner. «ركن الطفل» (child corner after the hand-over gate). Child-facing: easy MSA, family-neutral («أهلك»), no gendered verbs, no coins/points/streak, no 'come back tomorrow', no religious text, no promise of reward.", "placeholders": {"title": {"type": "String"}}},
+  "storyRateQuestion": "Did you like the story?",
+  "storyRateThanks": "Thank you!",
+  "storyRateLoved": "Loved it",
+  "storyRateLiked": "Liked it",
+  "storyRateOkay": "It was okay"
 }

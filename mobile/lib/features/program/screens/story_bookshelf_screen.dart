@@ -22,6 +22,7 @@ import '../../../widgets/ui/error_retry_view.dart';
 import '../../companion/widgets/noor_face.dart';
 import '../../companion/widgets/noor_presence.dart';
 import '../../screen_off/narration_store.dart';
+import '../../stories/living/story_cover.dart';
 import '../../stories/scene/story_scene.dart' show StorySceneView;
 import '../../stories/scene/story_scene_catalog.dart';
 import '../data/story_models.dart';
@@ -241,9 +242,12 @@ class StoryBookCard extends StatelessWidget {
                   children: [
                     Hero(
                       tag: 'story-cover-${story.id}',
-                      child: StorySceneView(
-                        scene: coverSceneFor(story.id),
-                        animate: false,
+                      child: StoryCoverPicture(
+                        storyId: story.id,
+                        fallback: StorySceneView(
+                          scene: coverSceneFor(story.id),
+                          animate: false,
+                        ),
                       ),
                     ),
                     if (hasParentRecording)
