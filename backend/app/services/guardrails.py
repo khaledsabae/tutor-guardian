@@ -3,6 +3,8 @@ Guardrails service — applies domain/severity policies to a draft reply.
 Reads policies.v1.yaml dynamically on every request via the policies dict
 passed from app.state.guardrails_config.
 """
+import re
+
 from app.models.api import UserMessage, AssistantReply
 
 
@@ -47,6 +49,143 @@ def _build_fallback_message(
         f"نظرًا لخطورة الحالة ({behavior_type}، {age_group})، "
         f"نوصي بشدة بالتواصل الفوري مع مختص في مجال {domain}. "
         "هذا المساعد لا يقدم تشخيصًا طبيًا ولا فتوى ملزمة."
+    )
+
+
+# A "medical no-match" is only a medical question when the words say so: the
+# classifier's `medical` domain is also the catch-all for a child's behaviour
+# and feelings (jealousy, fear of the dark, sleep, lying), and those must keep
+# the gentle off-topic pivot rather than an alarming "no diagnosis / no doses"
+# referral. Matched on text normalised by _norm_ar (diacritics and tatweel
+# gone, alef forms folded, ى -> ي), so the Arabic patterns are written with a
+# bare alef. No bare «أعراض»: it is just as common in «أعراض إدمان الشاشات»
+# (cyber) and no bare "symptoms" for the same reason.
+_ARABIC_MARKS = re.compile("[\u064b-\u065f\u0670\u0640]")
+_ARABIC_FOLD = str.maketrans({"أ": "ا", "إ": "ا", "آ": "ا", "ى": "ي"})
+
+
+def _norm_ar(text: str) -> str:
+    return _ARABIC_MARKS.sub("", text or "").translate(_ARABIC_FOLD)
+
+
+# Arabic has no usable \b for a prefixed word (الربو, وبالدوا), so the short
+# or ambiguous stems get an explicit "not inside a longer word" guard instead:
+# ربو must not fire on الربوبية (aqeedah), nor صرع on مصرع, nor قرص on قرصان.
+_W_START = r"(?<![\u0621-\u064a])(?:ال|لل|بال|وال|فال|كال)?"
+_W_END = r"(?![\u0621-\u064a])"
+
+_MEDICAL_QUERY_RE = re.compile(
+    r"جرع[هة]|جرعات|ادوي[هة]|دواء|ادويت|"
+    + _W_START + r"(?:دوا|قرص|اقراص|ربو|صرع|سكري|سكر\s*الدم)" + _W_END
+    + r"|انسولين|مضاد(?:ات)?\s*حيو|كورتيزون|ريتالين|بنادول|باراسيتامول|بروفين"
+    r"|مسكن|منوم|ميلاتونين|حقن[هة]|تحاميل|بخاخ|فيتامين|مكملات|مكمل\s*غذائ"
+    r"|تطعيم|لقاح|تشخيص|[تين]شخ\w*ص"
+    r"|حرارة\s*(?:عالي|مرتفع)|حرارته|حرارتها|سخون[هة]|سخن[هة]|سخنان"
+    r"|تشنج|اغماء|قيء|قيئ|استفراغ|اسهال|طفح|ضغط\s*الدم"
+    r"|\b(?:doses?|dosage|dosing|medic(?:ation|ine)s?|drugs?|pills?|tablets?"
+    r"|insulin|antibiotics?|ibuprofen|paracetamol|acetaminophen|tylenol|calpol"
+    r"|melatonin|ritalin|prescri\w+|diagnos\w+|fever|seizures?|vaccin\w+"
+    r"|supplements?)\b",
+    re.I,
+)
+
+# Something that cannot wait for a pharmacist: overdose / wrong medicine /
+# swallowed pills or chemicals / a seizure / not responding / not breathing.
+_URGENT_QUERY_RE = re.compile(
+    r"ابتلا?ع\w*|" + r"(?<![\u0621-\u064a])(?:بيبلع|ببلع|يبلع|بلع)\w{0,3}" + _W_END
+    + r"|جرع[هة]\s*(?:زياد|زايد|قاتل)|القاتل[هة]|جرع[هة]\s*زايدة"
+    r"|ا[خذ][ذد]\w*.{0,15}(?:زياد|زايد|غلط)|شرب\w*.{0,15}(?:زياد|زايد|غلط)"
+    r"|تسمم|تشنج|اغماء|مش\s*بيرد|مبيرد|مش\s*بيستجيب|مش\s*بيفوق|فاقد\w*\s*الوعي"
+    r"|مش\s*بيتنفس|مش\s*قادر\s*يتنفس|صعوب[هة]\s*(?:في\s*)?(?:ال)?تنفس|زرقان|ازرق"
+    r"|\b(?:overdos\w*|swallow\w*|seizures?|convuls\w*|unresponsive|unconscious"
+    r"|not\s+breathing|can'?t\s+breathe|stopped\s+breathing|poison\w*"
+    r"|wrong\s+(?:medicine|medication|dose|drug)"
+    r"|too\s+much\s+(?:medicine|medication|insulin)"
+    r"|(?:gave|took|given)\b.{0,20}\b(?:double|too\s+much))\b",
+    re.I,
+)
+
+
+def is_medical_query(text: str | None) -> bool:
+    """True when the wording is a real health question (a medicine, a dose, a
+    vaccine, a diagnosis, a clear medical symptom), not a behaviour question
+    that merely landed in the `medical` domain."""
+    return bool(_MEDICAL_QUERY_RE.search(_norm_ar(text or "")))
+
+
+def is_urgent_medical_query(text: str | None) -> bool:
+    """True for wording that describes a possible emergency right now."""
+    return bool(_URGENT_QUERY_RE.search(_norm_ar(text or "")))
+
+
+_MEDICAL_REFERRAL_EN = (
+    "I can't answer this from the app's knowledge base, and I don't give "
+    "medical diagnoses or advise on doses or medication. Please check with "
+    "your child's doctor or pharmacist. If your child seems seriously unwell "
+    "right now (a seizure, trouble breathing, unresponsive, swallowed "
+    "medicine), call your local emergency number immediately."
+)
+
+# Appended to the Arabic referral (the English text carries its own).
+_URGENCY_LINE_AR = (
+    "إذا ظهرت على طفلك أعراض شديدة الآن (تشنج، إغماء، صعوبة تنفس، ابتلاع دواء) "
+    "فاتصل بالإسعاف فورًا."
+)
+
+_MEDICAL_EMERGENCY_EN = (
+    "This could be an emergency. Call your local emergency number now "
+    "(Egypt: 123, Saudi Arabia: 997 or 911, anywhere: 112 or 911) or go to the "
+    "nearest emergency department right away. This assistant can't give medical "
+    "diagnoses or advise on doses or medication."
+)
+
+
+def medical_referral_text(
+    policies: dict,
+    lang: str | None = "ar",
+    behavior_type: str = "",
+    age_group: str = "",
+) -> str:
+    """The reply for a medical question the knowledge base cannot answer.
+
+    Arabic is the policies' own high-risk fallback message (a human specialist,
+    no diagnosis), via the same builder the forced-fallback path uses, so the
+    wording is edited in one place, followed by one short urgency line. Other
+    languages get an English text of the same meaning (the Arabic one would be
+    unreadable to them) that already carries its urgency sentence.
+    """
+    if lang and lang != "ar":
+        return _MEDICAL_REFERRAL_EN
+    base = _build_fallback_message("medical", behavior_type, age_group, policies)
+    return f"{base}\n\n{_URGENCY_LINE_AR}"
+
+
+def medical_referral_reply(
+    user_message: UserMessage,
+    policies: dict,
+    lang: str | None,
+    query_text: str,
+) -> AssistantReply:
+    """The reply to a medical question the knowledge base has no answer to.
+
+    An urgent one (overdose, swallowed medicine, seizure, unresponsive...)
+    gets the emergency fallback (emergency numbers, escalation to emergency
+    services) instead of a "ask your doctor" referral that a parent in a
+    crisis would read as "nothing to do right now". Anything else gets the
+    referral text through the normal guardrails, so a severity override
+    (شديد -> pediatrician) still applies.
+    """
+    if is_urgent_medical_query(query_text):
+        reply = emergency_reply(user_message, policies)
+        if lang and lang != "ar":
+            reply.reply_text = _MEDICAL_EMERGENCY_EN
+        return reply
+    return apply_guardrails(
+        user_message,
+        medical_referral_text(
+            policies, lang, user_message.behavior_type or "",
+            user_message.age_group or ""),
+        policies, mode="retrieval_only",
     )
 
 

@@ -1022,7 +1022,9 @@ def retrieve_hybrid(
     # units are not in this list — RERANK_MIN_SCORE removed them.
     scored = rerank(query_text, candidates, top_n=len(candidates))
     if len(scored) <= 1:
-        return scored[:top_n]
+        # Returned as is, not sliced: an empty NoConfidentMatch must keep its
+        # marker (slicing a list subclass yields a plain list).
+        return scored
 
     # Scaled to the spread of this result set rather than a fixed constant:
     # rerank scores are cross-encoder logits with no stable range, so any
