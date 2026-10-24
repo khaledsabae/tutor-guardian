@@ -151,8 +151,6 @@ flutter:
     - assets/svg/icons/
     - assets/svg/art/
     - assets/svg/stories/
-    # The original painted story pages, alive (lib/features/stories/living/).
-    - assets/stories_art/
     # Brand-aligned Lottie celebrations (generated via ops/tools/gen_lottie.py)
     - assets/animations/
     - assets/audio/

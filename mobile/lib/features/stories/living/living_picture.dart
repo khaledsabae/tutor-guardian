@@ -27,8 +27,16 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
+import '../../../config/app_config.dart';
 import '../../../core/motion.dart';
 import '../narration/word_cues.dart';
+
+/// A picture path as the story library writes it: `docs/…` is served by the
+/// backend (the same files the reader showed before the paper-cut scenes),
+/// anything else is a bundled asset.
+ImageProvider livingImage(String path) => path.startsWith('docs/')
+    ? NetworkImage('${AppConfig.apiBaseUrl}/$path')
+    : AssetImage(path) as ImageProvider;
 
 /// The camera never goes closer than this (1 = the whole picture).
 const kMaxLivingZoom = 1.25;
@@ -111,12 +119,17 @@ class LivingPictureView extends StatefulWidget {
     required this.picture,
     this.cues,
     this.animate = true,
+    this.fallback,
     this.semanticLabel,
   });
 
   final LivingPicture picture;
   final LivingCues? cues;
   final bool animate;
+
+  /// Shown instead when the painting cannot be loaded (offline, a server
+  /// without the file) — the reader passes the page's paper-cut scene.
+  final Widget? fallback;
   final String? semanticLabel;
 
   @override
@@ -151,6 +164,12 @@ class LivingPictureViewState extends State<LivingPictureView>
   int? get focus => _isFocused ? _focus : null;
   @visibleForTesting
   int get particles => _particles.length;
+
+  bool _failed = false;
+
+  /// Visible for tests: the painting could not be loaded.
+  @visibleForTesting
+  bool get failed => _failed;
 
   bool get _isFocused => _focus != null && _t - _focusSince < _hold;
   bool get _alive => widget.animate && !_still;
@@ -281,16 +300,36 @@ class LivingPictureViewState extends State<LivingPictureView>
     super.dispose();
   }
 
+  Widget _image(String path) => Image(
+    image: livingImage(path),
+    fit: BoxFit.cover,
+    excludeFromSemantics: true,
+    gaplessPlayback: true,
+    frameBuilder: (context, child, frame, sync) => sync
+        ? child
+        : AnimatedOpacity(
+            opacity: frame == null ? 0 : 1,
+            duration: const Duration(milliseconds: 300),
+            child: child,
+          ),
+    errorBuilder: (context, error, stack) {
+      if (!_failed) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (mounted) setState(() => _failed = true);
+        });
+      }
+      return const SizedBox.expand();
+    },
+  );
+
   @override
   Widget build(BuildContext context) {
     final pic = widget.picture;
+    final fallback = widget.fallback;
+    if (_failed && fallback != null) return fallback;
     final Widget body;
     if (!_alive) {
-      body = Image.asset(
-        pic.image,
-        fit: BoxFit.cover,
-        excludeFromSemantics: true,
-      );
+      body = _image(pic.image);
     } else {
       body = LayoutBuilder(
         builder: (context, box) {
@@ -307,19 +346,19 @@ class LivingPictureViewState extends State<LivingPictureView>
             stage = Stack(
               fit: StackFit.expand,
               children: [
-                Image.asset(pic.background!, fit: BoxFit.cover),
+                _image(pic.background!),
                 Transform.translate(
                   offset: par + Offset(0, -h * .004 * breath),
                   child: Transform.scale(
                     scale: 1 + .006 * breath,
                     alignment: Alignment.bottomCenter,
-                    child: Image.asset(pic.foreground!, fit: BoxFit.cover),
+                    child: _image(pic.foreground!),
                   ),
                 ),
               ],
             );
           } else {
-            stage = Image.asset(pic.image, fit: BoxFit.cover);
+            stage = _image(pic.image);
           }
           return Stack(
             fit: StackFit.expand,

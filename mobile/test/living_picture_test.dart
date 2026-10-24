@@ -152,87 +152,115 @@ void main() {
     });
   });
 
-  group('the sample pages, on their real recordings', () {
-    final ar = _manifest('maryam_toys', 'ar');
-    final en = _manifest('maryam_toys', 'en');
+  group('every living story, on its real recordings', () {
+    final library = [
+      for (final s
+          in (jsonDecode(File('assets/data/stories.json').readAsStringSync())
+              as List))
+        s as Map<String, dynamic>,
+    ];
+    final en = {
+      for (final s
+          in (jsonDecode(File('assets/data/stories_en.json').readAsStringSync())
+              as List))
+        (s as Map)['id']: s,
+    };
 
-    test('the bundled text is what the recordings read', () {
-      for (final (file, n) in [('stories.json', ar), ('stories_en.json', en)]) {
-        final s =
-            (jsonDecode(File('assets/data/$file').readAsStringSync()) as List)
-                .cast<Map<String, dynamic>>()
-                .firstWhere((s) => s['id'] == 'maryam_toys');
+    // A real painting is ~0.5–2 MB; the placeholder frames are ~8 KB.
+    bool painted(String path) {
+      final f = File('../$path');
+      return f.existsSync() && f.lengthSync() > 100000;
+    }
+
+    test('a story is living exactly when all its pages and its cover are '
+        'painted', () {
+      for (final s in library) {
+        final id = s['id'] as String;
         final pages = s['pages'] as List;
-        for (var i = 0; i < pages.length; i++) {
-          expect(n.pageFor(i, (pages[i] as Map)['text'] as String), isNotNull);
-        }
+        final allPainted =
+            painted('docs/stories/${id}_cover.png') &&
+            [
+              for (var i = 1; i <= pages.length; i++)
+                painted('docs/stories/${id}_$i.png'),
+            ].every((p) => p);
+        expect(livingStories.contains(id), allPainted, reason: id);
       }
+      expect(livingStories.length, greaterThanOrEqualTo(14));
     });
 
-    for (final page in [1, 4]) {
-      test('page ${page + 1}: every cue word is said (ar or en), '
-          'every region is named', () {
-        final picture = livingPictureFor('maryam_toys', page)!;
-        expect(picture.regions, isNotEmpty);
-        for (final r in picture.regions) {
-          for (final w in r.cue) {
-            final said = [ar, en].any(
-              (n) => wordCuesFor(
-                [
-                  [w],
-                ],
-                n.pages[page].text,
-                n.pages[page].sentences,
-              ).isNotEmpty,
-            );
-            expect(said, isTrue, reason: '${r.name}: «$w» is never said');
-          }
-        }
-        for (final n in [ar, en]) {
-          final cues = wordCuesFor(
-            [for (final r in picture.regions) r.cue],
-            n.pages[page].text,
-            n.pages[page].sentences,
+    for (final s in library) {
+      final id = s['id'] as String;
+      if (!livingStories.contains(id)) continue;
+      test('$id: every page has its painting, every region its words — '
+          'each said on the page in ar or en', () {
+        final ar = _manifest(id, 'ar'), enN = _manifest(id, 'en');
+        final pages = s['pages'] as List;
+        final enPages = en[id]!['pages'] as List;
+        expect(livingPictureFor(id, pages.length), isNull);
+        expect(livingCoverFor(id), 'docs/stories/${id}_cover.png');
+        for (var i = 0; i < pages.length; i++) {
+          // The recordings read the bundled text.
+          expect(ar.pageFor(i, (pages[i] as Map)['text'] as String), isNotNull);
+          expect(
+            enN.pageFor(i, (enPages[i] as Map)['text'] as String),
+            isNotNull,
           );
-          expect(cues, isNotEmpty);
-          for (final c in cues) {
-            expect(c.at, inInclusiveRange(0, n.pages[page].sentences.last.end));
+          final picture = livingPictureFor(id, i)!;
+          expect(picture.image, 'docs/stories/${id}_${i + 1}.png');
+          expect(picture.image, (pages[i] as Map)['image']);
+          expect(picture.regions, isNotEmpty, reason: '$id page ${i + 1}');
+          for (final r in picture.regions) {
+            expect(r.cue, isNotEmpty, reason: '$id page ${i + 1} ${r.name}');
+            for (final w in r.cue) {
+              final said = [ar, enN].any(
+                (n) => wordCuesFor(
+                  [
+                    [w],
+                  ],
+                  n.pages[i].text,
+                  n.pages[i].sentences,
+                ).isNotEmpty,
+              );
+              expect(
+                said,
+                isTrue,
+                reason: '$id page ${i + 1} ${r.name}: «$w» is never said',
+              );
+            }
           }
         }
       });
     }
 
-    test(
-      'every page image is bundled, and nothing past the story is drawn',
-      () {
-        final pubspec = File('pubspec.yaml').readAsStringSync();
-        expect(pubspec, contains('- assets/stories_art/'));
-        for (var i = 0; i < 6; i++) {
-          final p = livingPictureFor('maryam_toys', i)!;
-          expect(File(p.image).existsSync(), isTrue, reason: p.image);
-          if (p.layered) {
-            expect(File(p.background!).existsSync(), isTrue);
-            expect(File(p.foreground!).existsSync(), isTrue);
-          }
-        }
-        expect(livingPictureFor('maryam_toys', 6), isNull);
-        expect(livingPictureFor('not_a_story', 0), isNull);
-        expect(livingPictureFor('kitten_kindness', 0), isNull);
-      },
-    );
+    test('stories without paintings keep their paper-cut scenes', () {
+      for (final id in [
+        'aisha_permission',
+        'bilal_forgiveness',
+        'fatima_parents',
+        'yaseen_creation',
+        'hamza_truth',
+        'not_a_story',
+      ]) {
+        expect(livingPictureFor(id, 0), isNull, reason: id);
+        expect(livingCoverFor(id), isNull, reason: id);
+      }
+    });
   });
 
   test('the camera frames every region within the picture, ≤ max zoom', () {
-    for (var i = 0; i < 6; i++) {
-      for (final r in livingPictureFor('maryam_toys', i)!.regions) {
-        final f = LivingPicture.frame(r.rect);
-        expect(f.zoom, lessThanOrEqualTo(kMaxLivingZoom));
-        expect(f.zoom, greaterThanOrEqualTo(1));
-        final half = .5 / f.zoom;
-        expect(f.centre.dx - half, greaterThanOrEqualTo(-1e-9));
-        expect(f.centre.dx + half, lessThanOrEqualTo(1 + 1e-9));
-        expect(f.centre.dy - half, greaterThanOrEqualTo(-1e-9));
-        expect(f.centre.dy + half, lessThanOrEqualTo(1 + 1e-9));
+    expect(livingStories, isNotEmpty);
+    for (final id in livingStories) {
+      for (var i = 0; livingPictureFor(id, i) != null; i++) {
+        for (final r in livingPictureFor(id, i)!.regions) {
+          final f = LivingPicture.frame(r.rect);
+          expect(f.zoom, lessThanOrEqualTo(kMaxLivingZoom));
+          expect(f.zoom, greaterThanOrEqualTo(1));
+          final half = .5 / f.zoom;
+          expect(f.centre.dx - half, greaterThanOrEqualTo(-1e-9));
+          expect(f.centre.dx + half, lessThanOrEqualTo(1 + 1e-9));
+          expect(f.centre.dy - half, greaterThanOrEqualTo(-1e-9));
+          expect(f.centre.dy + half, lessThanOrEqualTo(1 + 1e-9));
+        }
       }
     }
   });

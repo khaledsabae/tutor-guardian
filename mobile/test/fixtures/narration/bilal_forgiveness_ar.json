@@ -1,0 +1,78 @@
+{
+  "voice": "gemini-3.8-flash-tts/Algieba",
+  "language": "ar",
+  "pages": [
+    {
+      "audio": "docs/stories/narration/ar/bilal_forgiveness_p1.m4a",
+      "text": "بينما كان بلال يرسم لوحته الملونة بشغف في فصل الرسم، تعثر زميله طارق وأسقط العصير بالخطأ على لوحة بلال الجميلة.",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 111,
+          "start": 0.0,
+          "end": 12.583
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/ar/bilal_forgiveness_p2.m4a",
+      "text": "حزن بلال للحظة وخاف أن يغضب، لكن طارق أسرع خائفاً ومعتذراً بصوت مرتجف: «آسف يا بلال، لم أقصد ذلك!».",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 99,
+          "start": 0.0,
+          "end": 14.834
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/ar/bilal_forgiveness_p3.m4a",
+      "text": "تذكر بلال وصف القرآن للمتقين: ﴿وَالْكَاظِمِينَ الْغَيْظَ وَالْعَافِينَ عَنِ النَّاسِ وَاللَّهُ يُحِبُّ الْمُحْسِنِينَ﴾.",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 119,
+          "start": 0.0,
+          "end": 23.702
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/ar/bilal_forgiveness_p4.m4a",
+      "text": "ابتسم بلال بصفاء وقال: «لا بأس يا طارق، الحمد لله، المسلم يعفو ويسامح، يمكننا رسم لوحة جديدة أجمل معاً!».",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 105,
+          "start": 0.0,
+          "end": 15.313
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/ar/bilal_forgiveness_p5.m4a",
+      "text": "تفاجأ طارق من لطف بلال وتساهله، وقاما بتنظيف الطاولة معاً وتشاركا الألوان لرسم لوحة جديدة أروع.",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 95,
+          "start": 0.0,
+          "end": 14.355
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/ar/bilal_forgiveness_p6.m4a",
+      "text": "شعر بلال برضا كبير في قلبه، وعلم أن العفو يرفع صاحبه قدرًا ومنزلة، ويعمر القلوب بالمحبة والسلام.",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 96,
+          "start": 0.0,
+          "end": 13.164
+        }
+      ]
+    }
+  ]
+}

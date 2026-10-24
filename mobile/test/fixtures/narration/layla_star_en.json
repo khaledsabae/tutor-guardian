@@ -1,0 +1,108 @@
+{
+  "voice": "gemini-3.8-flash-tts/Algieba",
+  "language": "en",
+  "pages": [
+    {
+      "audio": "docs/stories/narration/en/layla_star_p1.m4a",
+      "text": "Layla was a little girl who loved gazing at the sky before bedtime. In her cozy room, she opened the window and looked up at the clear sky filled with stars. She whispered, 'Oh shining stars of the sky, do you sleep like we do?'",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 67,
+          "start": 0.0,
+          "end": 6.008
+        },
+        {
+          "from": 68,
+          "to": 157,
+          "start": 6.458,
+          "end": 15.025
+        },
+        {
+          "from": 158,
+          "to": 228,
+          "start": 15.475,
+          "end": 22.144
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/en/layla_star_p2.m4a",
+      "text": "A small star twinkled on the horizon, seeming to smile at Layla. She sat on her soft bed and remembered her mother’s advice: 'Layla, before you close your eyes, remember three beautiful things that happened today and thank Allah for them.'",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 64,
+          "start": 0.0,
+          "end": 8.008
+        },
+        {
+          "from": 65,
+          "to": 239,
+          "start": 8.458,
+          "end": 22.355
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/en/layla_star_p3.m4a",
+      "text": "The little star twinkled even more gently, as if inviting Layla to imagine a peaceful journey with it above the soft, silver clouds, to learn how quiet and calm fill the hearts of little ones.",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 192,
+          "start": 0.0,
+          "end": 19.562
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/en/layla_star_p4.m4a",
+      "text": "Layla felt deep gratitude to Allah, who created this vast and wondrous universe and guarded it with its shining stars. She felt in her heart the greatness of the Creator and His mercy for all His servants.",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 118,
+          "start": 0.0,
+          "end": 11.893
+        },
+        {
+          "from": 119,
+          "to": 205,
+          "start": 12.343,
+          "end": 20.059
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/en/layla_star_p5.m4a",
+      "text": "Layla’s mind returned to her warm bed, and she began counting her three blessings with a smile: first, playing with her sweet kitten; second, helping her grandfather water the garden; and third, her mother’s delicious and warm food.",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 232,
+          "start": 0.0,
+          "end": 22.537
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/en/layla_star_p6.m4a",
+      "text": "Layla felt complete peace. She recited Ayat al-Kursi and the du'a for sleep, then snuggled under her warm blanket and closed her eyes, seeing her little star shining softly far away.",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 26,
+          "start": 0.0,
+          "end": 2.953
+        },
+        {
+          "from": 27,
+          "to": 182,
+          "start": 3.403,
+          "end": 17.4
+        }
+      ]
+    }
+  ]
+}

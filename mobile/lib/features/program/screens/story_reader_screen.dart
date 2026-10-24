@@ -39,6 +39,7 @@ import '../../onboarding/providers/onboarding_providers.dart';
 import '../../screen_off/narration_store.dart';
 import '../../stories/living/living_picture.dart';
 import '../../stories/living/living_picture_catalog.dart';
+import '../../stories/living/story_cover.dart';
 import '../../stories/narration/story_narration.dart';
 import '../../stories/narration/word_cues.dart';
 import '../../stories/scene/story_scene.dart';
@@ -562,10 +563,11 @@ class _PaperTurn extends StatelessWidget {
 
 /// A living painted page, framed like the scene card.
 class _LivingCard extends StatelessWidget {
-  const _LivingCard({required this.picture, this.cues});
+  const _LivingCard({required this.picture, this.cues, this.fallback});
 
   final LivingPicture picture;
   final LivingCues? cues;
+  final Widget? fallback;
 
   @override
   Widget build(BuildContext context) {
@@ -579,7 +581,11 @@ class _LivingCard extends StatelessWidget {
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(22),
-        child: LivingPictureView(picture: picture, cues: cues),
+        child: LivingPictureView(
+          picture: picture,
+          cues: cues,
+          fallback: fallback,
+        ),
       ),
     );
   }
@@ -592,10 +598,14 @@ class _SceneCard extends StatelessWidget {
     this.parallax = 0,
     this.heroTag,
     this.label,
+    this.coverOf,
   });
 
   final StoryScene scene;
   final double parallax;
+
+  /// Show this story's painted cover when it has one (story_cover.dart).
+  final String? coverOf;
   final String? heroTag;
   final String? label;
 
@@ -611,11 +621,20 @@ class _SceneCard extends StatelessWidget {
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(22),
-        child: StorySceneView(
-          scene: scene,
-          parallax: parallax,
-          semanticLabel: label,
-        ),
+        child: coverOf == null
+            ? StorySceneView(
+                scene: scene,
+                parallax: parallax,
+                semanticLabel: label,
+              )
+            : Semantics(
+                image: true,
+                label: label,
+                child: StoryCoverPicture(
+                  storyId: coverOf!,
+                  fallback: StorySceneView(scene: scene, parallax: parallax),
+                ),
+              ),
       ),
     );
     if (heroTag != null) card = Hero(tag: heroTag!, child: card);
@@ -838,6 +857,7 @@ class _IntroLeafView extends StatelessWidget {
             ),
             child: _SceneCard(
               scene: coverSceneFor(story.id),
+              coverOf: story.id,
               heroTag: 'story-cover-${story.id}',
               label: story.title,
             ),
@@ -1035,7 +1055,15 @@ class _StoryPageView extends StatelessWidget {
             SizedBox(
               width: sceneWidth,
               child: living != null
-                  ? _LivingCard(picture: living, cues: livingCues)
+                  ? _LivingCard(
+                      picture: living,
+                      cues: livingCues,
+                      // Offline, or a server without the painting: the
+                      // page's paper-cut scene.
+                      fallback: StorySceneView(
+                        scene: sceneFor(story.id, index),
+                      ),
+                    )
                   : _SceneCard(
                       scene: sceneFor(story.id, index),
                       parallax: parallax,

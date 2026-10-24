@@ -1,0 +1,72 @@
+{
+  "voice": "eleven_v3/JBFqnCBsd6RMkjVDRZzb",
+  "language": "en",
+  "pages": [
+    {
+      "audio": "docs/stories/narration/en/tamim_anger_volcano_p1.m4a",
+      "text": "Tamim was building a tall, tall tower of coloured blocks to win the class competition for the most beautiful building. Suddenly, the table shook, the whole tower fell down, and the blocks scattered all over the floor!",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 118,
+          "start": 0.0,
+          "end": 6.837
+        },
+        {
+          "from": 119,
+          "to": 217,
+          "start": 7.287,
+          "end": 12.807
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/en/tamim_anger_volcano_p2.m4a",
+      "text": "Tamim felt a strong heat in his chest and his face, as if a red volcano was about to erupt. He clenched his fists tightly and wanted to scream and throw the rest of the blocks everywhere because he was so cross.",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 91,
+          "start": 0.0,
+          "end": 5.84
+        },
+        {
+          "from": 92,
+          "to": 211,
+          "start": 6.29,
+          "end": 12.93
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/en/tamim_anger_volcano_p3.m4a",
+      "text": "His mother came over to him gently, stroked his head and whispered to him: «Tamim, remember the secret of the patient hero: say A'udhu billahi min ash-shaytan ir-rajim, take a deep breath, and wash your face with cool water.»",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 225,
+          "start": 0.0,
+          "end": 16.872
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/en/tamim_anger_volcano_p4.m4a",
+      "text": "Tamim followed his mother's advice step by step: he sought refuge in Allah, breathed calmly and washed his face — and he felt wonderfully refreshed, and the volcano went out. He came back with a confident smile and said, «I'll build the tower again, and it will be stronger and more beautiful, in sha' Allah!»",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 174,
+          "start": 0.0,
+          "end": 11.52
+        },
+        {
+          "from": 175,
+          "to": 309,
+          "start": 11.97,
+          "end": 20.352
+        }
+      ]
+    }
+  ]
+}
