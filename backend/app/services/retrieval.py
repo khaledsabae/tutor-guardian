@@ -784,6 +784,62 @@ def _rrf_merge(*ranked_lists: list[dict]) -> list[dict]:
     return sorted(fused.values(), key=lambda c: -c["rrf_score"])
 
 
+# How the legs of several domains are fused. "global" (default) merges each
+# leg *type* across the domains by its own score — vector distance, BM25 score,
+# both comparable across domains because they come from one embedding and one
+# corpus-wide index — so N domains behave like one search over their union.
+# "per_domain" is the earlier behaviour: every domain keeps its own three legs.
+# An environment switch rather than a constant so a regression can be rolled
+# back on a running deploy without a rebuild.
+_DOMAIN_FUSION = os.environ.get("RETRIEVAL_DOMAIN_FUSION", "global").strip().lower()
+
+
+def _merge_leg_across_domains(
+    per_domain: list[list[dict]], score_key: str, ascending: bool, depth: int,
+) -> list[dict]:
+    """One leg out of N domain-filtered ones: best-scoring first, deduped by
+    unit_id, cut to the depth a single domain's leg has.
+
+    Why this exists. With a leg-triple per domain, every domain's top hit
+    earns the same rank-0 credit however weak it is, so the pool the
+    cross-encoder scores is "each domain's best, in turn" rather than "the best
+    across the domains" — and a unit that is the best match in the right domain
+    but has no lexical hit (two credits) loses to a weak neighbour's three. On
+    the five-domain fallback list that is 15 equal legs. Measured on the 128
+    golden questions with the real index: the expected unit reached the 12-wide
+    pool for 37 → 42 (origin/main index) and 39 → 45 (with the 7 teen-doubts
+    units) of ~102 questions, «الإسلام دين قديم» (g-003) went from fused
+    position 33 to 8, and with one domain nothing moves (that case never
+    reaches this function).
+
+    The depth is deliberately the single-domain depth, not N times it: a
+    merged leg that grew with the number of domains handed the cross-encoder
+    the same 40-candidate crowd and measured worse (+3 instead of +5 net top-4
+    hits at five domains, -1 at N-deep).
+    """
+    flat = [
+        (c, di, ri)
+        for di, hits in enumerate(per_domain)
+        for ri, c in enumerate(hits)
+        if c.get("unit_id")
+    ]
+    inf = float("inf")
+    sign = 1.0 if ascending else -1.0
+    missing = inf if ascending else -inf
+    flat.sort(key=lambda t: (sign * float(t[0].get(score_key, missing)), t[1], t[2]))
+    out: list[dict] = []
+    seen: set[str] = set()
+    for c, _di, _ri in flat:
+        uid = c["unit_id"]
+        if uid in seen:
+            continue
+        seen.add(uid)
+        out.append(c)
+        if len(out) >= depth:
+            break
+    return out
+
+
 def retrieve_hybrid(
     query_text: str,
     domains: list[str],
@@ -797,9 +853,13 @@ def retrieve_hybrid(
 ) -> list[dict]:
     """The quality-first retrieval path.
 
-    Per domain and per query: three legs — vector filtered to the child's age
-    band, vector across the domain regardless of band, and BM25 → RRF fusion →
-    cross-encoder rerank → top_n.
+    Per query: three legs — vector filtered to the child's age band, vector
+    across the domain regardless of band, and BM25 → RRF fusion → cross-encoder
+    rerank → top_n. With several domains each leg is searched per domain and the
+    per-domain results are merged by score into ONE leg of that type
+    (_merge_leg_across_domains), so N domains fuse as one search over their
+    union rather than as 3N equal legs. RETRIEVAL_DOMAIN_FUSION=per_domain
+    restores the earlier behaviour.
 
     The band-free vector leg is additive, never a replacement: a unit written
     for the child's own band appears in both vector legs and so accumulates
@@ -891,8 +951,11 @@ def retrieve_hybrid(
                 keep.append(c)
         return keep
 
+    any_depth = max(1, candidates_per_leg // 2)
+    per_domain_legs: list[list[tuple[list[dict], list[dict], list[dict]]]] = []
     for domain in domains:
         db_domain = canonical_domain(domain)
+        row = []
         for q in queries:
             vec = retrieve_relevant_units(
                 query_text=q, domain=domain, age_group=age_group,
@@ -900,18 +963,15 @@ def retrieve_hybrid(
             )
             for r in vec:
                 r.setdefault("source_domain", domain)
-            legs.append(vec)
             # Half depth on purpose: this leg only has to rescue the units
             # the age filter hid, and every extra candidate it adds is one
             # more pair the cross-encoder has to score. At full depth it
             # bought nothing extra and cost ~875ms per answer.
             any_age = within_span(retrieve_domain_only(
-                query_text=q, domain=domain,
-                top_k=max(1, candidates_per_leg // 2), embed=embed,
+                query_text=q, domain=domain, top_k=any_depth, embed=embed,
             ))
             for r in any_age:
                 r.setdefault("source_domain", domain)
-            legs.append(any_age)
             # Over-fetch before bounding, or the bound silently shortens the
             # leg: the wrong-band hits it removes were occupying slots the
             # right-band ones never got a chance at.
@@ -920,7 +980,23 @@ def retrieve_hybrid(
             )[:candidates_per_leg]
             for r in lex:
                 r.setdefault("source_domain", domain)
-            legs.append(lex)
+            row.append((vec, any_age, lex))
+        per_domain_legs.append(row)
+
+    if _DOMAIN_FUSION == "per_domain" or len(domains) <= 1:
+        # One domain: its own legs ARE the merged legs — keep them untouched.
+        for row in per_domain_legs:
+            for vec, any_age, lex in row:
+                legs.extend((vec, any_age, lex))
+    else:
+        for qi in range(len(queries)):
+            col = [row[qi] for row in per_domain_legs]
+            legs.append(_merge_leg_across_domains(
+                [c[0] for c in col], "distance", True, candidates_per_leg))
+            legs.append(_merge_leg_across_domains(
+                [c[1] for c in col], "distance", True, any_depth))
+            legs.append(_merge_leg_across_domains(
+                [c[2] for c in col], "bm25_score", False, candidates_per_leg))
 
     # The cross-encoder is the expensive step and its cost is linear in the
     # pool, so the extra leg must not be allowed to grow the pool — it is
