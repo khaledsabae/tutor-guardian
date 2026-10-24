@@ -1,0 +1,78 @@
+{
+  "voice": "gemini-3.8-flash-tts/Algieba",
+  "language": "ar",
+  "pages": [
+    {
+      "audio": "docs/stories/narration/ar/fatima_parents_p1.m4a",
+      "text": "عادت والدة فاطمة من العمل متعبة بعد يوم حافل، فجلست على الأريكة لتستريح قليلاً.",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 79,
+          "start": 0.0,
+          "end": 11.223
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/ar/fatima_parents_p2.m4a",
+      "text": "لاحظت فاطمة تعب أمها، فتذكرت الآية الكريمة: ﴿وَبِالْوَالِدَيْنِ إِحْسَانًا﴾، وقررت أن تدخل السرور على قلب أمها.",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 111,
+          "start": 0.0,
+          "end": 16.547
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/ar/fatima_parents_p3.m4a",
+      "text": "أسرعت فاطمة وأحضرت كوب ماء دافئ، وساعدت في ترتيب ألعابها وتنظيف صالة المعيشة بهمة ونشاط دون أن يطلب منها أحد.",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 109,
+          "start": 0.0,
+          "end": 15.83
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/ar/fatima_parents_p4.m4a",
+      "text": "عندما فتحت الأم عينها ورأت ترتيب الغرفة ولطف فاطمة، ابتسمت بفرح وضمت فاطمة إلى صدرها بحنان ودعت لها بالبركة.",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 108,
+          "start": 0.0,
+          "end": 16.893
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/ar/fatima_parents_p5.m4a",
+      "text": "شعر والد فاطمة بالفخر بها وقدم لها زهرة جوري جميلة تقديراً لإحسانها وبرها بوالدتها.",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 83,
+          "start": 0.0,
+          "end": 12.125
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/ar/fatima_parents_p6.m4a",
+      "text": "علمت فاطمة أن بر الوالدين عمل يحبه الله ويملأ البيت محبة، وواصلت إحسانها إلى أبيها وأمها بابتسامة دائمة.",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 104,
+          "start": 0.0,
+          "end": 15.938
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,108 @@
+{
+  "voice": "gemini-3.8-flash-tts/Algieba",
+  "language": "en",
+  "pages": [
+    {
+      "audio": "docs/stories/narration/en/hope_sprout_p1.m4a",
+      "text": "Yusuf was a kind boy who loved nature and helping his parents. One bright morning, his father gave him a small golden seed and said, \"This is a blessed seed, my son. Plant it, take care of it, and it will teach you a great secret.\"",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 62,
+          "start": 0.0,
+          "end": 6.268
+        },
+        {
+          "from": 63,
+          "to": 165,
+          "start": 6.718,
+          "end": 16.392
+        },
+        {
+          "from": 166,
+          "to": 231,
+          "start": 16.842,
+          "end": 23.341
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/en/hope_sprout_p2.m4a",
+      "text": "Yusuf dug gently into the earth and placed the seed inside. Then he covered it with soil and watered it with sweet water. Every morning, he waited beside it, hoping the little plant would sprout quickly—but the earth stayed still.",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 59,
+          "start": 0.0,
+          "end": 5.4
+        },
+        {
+          "from": 60,
+          "to": 121,
+          "start": 5.85,
+          "end": 11.901
+        },
+        {
+          "from": 122,
+          "to": 230,
+          "start": 12.351,
+          "end": 21.046
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/en/hope_sprout_p3.m4a",
+      "text": "Yusuf felt sad and went to his father, wanting to give up. His father laughed and patted his shoulder. \"Yusuf, planting is like tarbiyah—both need patience, rifq, and trust in Allah. Keep watering it, and leave the rest to the Creator.\"",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 58,
+          "start": 0.0,
+          "end": 5.09
+        },
+        {
+          "from": 59,
+          "to": 102,
+          "start": 5.54,
+          "end": 9.112
+        },
+        {
+          "from": 103,
+          "to": 182,
+          "start": 9.562,
+          "end": 17.27
+        },
+        {
+          "from": 183,
+          "to": 236,
+          "start": 17.72,
+          "end": 22.283
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/en/hope_sprout_p4.m4a",
+      "text": "After days of care, patience, and du'a, Yusuf saw a tiny green shoot pushing through the earth, rising toward the morning sun. He was so happy! He knew now that every good deed needs patience to bloom and bear fruit.",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 126,
+          "start": 0.0,
+          "end": 12.567
+        },
+        {
+          "from": 127,
+          "to": 143,
+          "start": 13.017,
+          "end": 15.062
+        },
+        {
+          "from": 144,
+          "to": 216,
+          "start": 15.511,
+          "end": 22.568
+        }
+      ]
+    }
+  ]
+}

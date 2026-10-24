@@ -1,0 +1,114 @@
+{
+  "voice": "eleven_v3/JBFqnCBsd6RMkjVDRZzb",
+  "language": "en",
+  "pages": [
+    {
+      "audio": "docs/stories/narration/en/saleh_bird_p1.m4a",
+      "text": "One day, Saleh was playing with his ball in the neighborhood garden when he saw a little bird building its nest in a blessed olive tree. Suddenly, something shiny fell from the hand of a man passing under the tree.",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 136,
+          "start": 0.0,
+          "end": 7.12
+        },
+        {
+          "from": 137,
+          "to": 214,
+          "start": 7.57,
+          "end": 11.97
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/en/saleh_bird_p2.m4a",
+      "text": "Saleh ran quickly toward the tree and found a small wallet full of money. He thought for a moment: *I wonder who this wallet belongs to? I must find its owner quickly—amanah is a trait loved by Allah and His Messenger ﷺ.*",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 73,
+          "start": 0.0,
+          "end": 4.16
+        },
+        {
+          "from": 74,
+          "to": 136,
+          "start": 4.61,
+          "end": 8.57
+        },
+        {
+          "from": 137,
+          "to": 221,
+          "start": 9.02,
+          "end": 17.9
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/en/saleh_bird_p3.m4a",
+      "text": "Saleh politely and gently asked the kind garden guard and his neighbor, Uncle Ahmad, if they knew the owner of the lost wallet. Everyone could see how eager he was to return the amanah to its rightful owner.",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 127,
+          "start": 0.0,
+          "end": 8.08
+        },
+        {
+          "from": 128,
+          "to": 207,
+          "start": 8.53,
+          "end": 12.69
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/en/saleh_bird_p4.m4a",
+      "text": "After a few steps, Saleh saw a man searching anxiously and sadly at the other end of the garden. He looked tired and worried as he rummaged through the grass, looking for something he had lost.",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 96,
+          "start": 0.0,
+          "end": 6.56
+        },
+        {
+          "from": 97,
+          "to": 193,
+          "start": 7.01,
+          "end": 12.091
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/en/saleh_bird_p5.m4a",
+      "text": "Saleh approached the man with gentle manners and asked him about the features of his lost wallet to be sure. When the man described it correctly, Saleh took it out and handed it to him with a warm smile.",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 108,
+          "start": 0.0,
+          "end": 5.68
+        },
+        {
+          "from": 109,
+          "to": 203,
+          "start": 6.13,
+          "end": 11.549
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/en/saleh_bird_p6.m4a",
+      "text": "The man’s face lit up with joy, and he prayed for Saleh’s blessings and goodness, saying, *‘Thank you for your amanah, my son.’* Saleh returned home happy, knowing that keeping amanah brings Allah’s pleasure and the love of all people.",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 235,
+          "start": 0.0,
+          "end": 15.037
+        }
+      ]
+    }
+  ]
+}

@@ -38,6 +38,7 @@ import '../../companion/widgets/noor_presence.dart';
 import '../../onboarding/providers/onboarding_providers.dart';
 import '../../screen_off/narration_store.dart';
 import '../../stories/narration/story_narration.dart';
+import '../../stories/scene/scene_cues.dart';
 import '../../stories/scene/story_scene.dart';
 import '../../stories/scene/story_scene_catalog.dart';
 import '../data/story_models.dart';
@@ -124,6 +125,17 @@ class StoryReaderScreenState extends ConsumerState<StoryReaderScreen> {
   bool _playing = false;
   int? _sentence;
 
+  /// The page recording's position, for the scene to follow — fed only once
+  /// the current leaf's recording has loaded ([_clockLeaf]), so a position
+  /// left over from the page before never reaches the new page's picture.
+  final ValueNotifier<Duration> _clock = ValueNotifier(Duration.zero);
+  int? _clockLeaf;
+
+  /// A leaf whose recording would not load: its picture stops waiting for
+  /// the narrator.
+  int? _silentLeaf;
+  final Map<int, List<SceneBeat>> _beats = {};
+
   int? _pauseChoice;
   int _questionsShown = 2;
   bool _tried = false;
@@ -177,6 +189,7 @@ class StoryReaderScreenState extends ConsumerState<StoryReaderScreen> {
     _positionSub?.cancel();
     _completedSub?.cancel();
     unawaited(_player?.dispose());
+    _clock.dispose();
     _pager.dispose();
     StoryWakeLock.allowSleep();
     super.dispose();
@@ -202,6 +215,8 @@ class StoryReaderScreenState extends ConsumerState<StoryReaderScreen> {
       _leaf = leaf;
       _sentence = null;
     });
+    _clockLeaf = null;
+    _clock.value = Duration.zero;
     unawaited(SoundFx.page());
     unawaited(_playCurrent());
   }
@@ -220,6 +235,7 @@ class StoryReaderScreenState extends ConsumerState<StoryReaderScreen> {
     _positionSub = p.position.listen((pos) {
       final rec = _recordingFor(_leaf);
       final s = rec?.sentenceAt(pos);
+      if (_clockLeaf == _leaf) _clock.value = pos;
       if (mounted && s != _sentence) setState(() => _sentence = s);
     });
     _completedSub = p.completed.listen((_) => _onPageHeard());
@@ -240,16 +256,32 @@ class StoryReaderScreenState extends ConsumerState<StoryReaderScreen> {
     try {
       await player.load(rec.uri);
       if (!mounted || _leaf != leafAtStart || !_listening) return;
+      _clock.value = Duration.zero;
+      _clockLeaf = leafAtStart;
       await player.play();
       if (mounted) setState(() => _playing = true);
     } catch (_) {
-      // A page that will not load is skipped in silence; the text is there.
-      if (mounted) setState(() => _playing = false);
+      // A page that will not load is skipped in silence; the text is there,
+      // and so is every piece of the picture.
+      if (mounted) {
+        setState(() {
+          _playing = false;
+          _silentLeaf = leafAtStart;
+        });
+      }
     }
   }
 
   void _onPageHeard() {
     if (!mounted) return;
+    // Whatever the last position ticks missed, the page is heard: every
+    // piece the narrator was to bring in is on it now.
+    final rec = _recordingFor(_leaf);
+    if (rec != null && rec.sentences.isNotEmpty && _clockLeaf == _leaf) {
+      _clock.value = Duration(
+        milliseconds: ((rec.sentences.last.end + 1) * 1000).round(),
+      );
+    }
     setState(() {
       _playing = false;
       _sentence = null;
@@ -429,6 +461,20 @@ class StoryReaderScreenState extends ConsumerState<StoryReaderScreen> {
     );
   }
 
+  /// The narrator for the picture on leaf [i] to follow — while one is
+  /// reading it, and only then.
+  SceneCues? _cuesFor(int i, int page) {
+    if (i != _leaf || !_listening || _silentLeaf == i) return null;
+    final rec = _recordingFor(i);
+    if (rec == null) return null;
+    final beats = _beats[page] ??= beatsFor(
+      sceneFor(widget.story.id, page),
+      rec.text,
+      rec.sentences,
+    );
+    return beats.isEmpty ? null : SceneCues(beats: beats, clock: _clock);
+  }
+
   Widget _buildLeaf(int i, double offset, TextDirection appDir) {
     final leaf = _leaves[i];
     final view = switch (leaf) {
@@ -445,6 +491,8 @@ class StoryReaderScreenState extends ConsumerState<StoryReaderScreen> {
         story: widget.story,
         index: index,
         parallax: offset,
+        active: i == _leaf,
+        cues: _cuesFor(i, index),
         textScale: kStoryTextSizes[_textSize],
         recording: i == _leaf ? _recordingFor(i) : null,
         litSentence: i == _leaf ? _sentence : null,
@@ -527,10 +575,16 @@ class _SceneCard extends StatelessWidget {
     this.parallax = 0,
     this.heroTag,
     this.label,
+    this.staged = false,
+    this.active = true,
+    this.cues,
   });
 
   final StoryScene scene;
   final double parallax;
+  final bool staged;
+  final bool active;
+  final SceneCues? cues;
   final String? heroTag;
   final String? label;
 
@@ -549,6 +603,9 @@ class _SceneCard extends StatelessWidget {
         child: StorySceneView(
           scene: scene,
           parallax: parallax,
+          staged: staged,
+          active: active,
+          cues: cues,
           semanticLabel: label,
         ),
       ),
@@ -909,11 +966,15 @@ class _StoryPageView extends StatelessWidget {
     required this.textScale,
     required this.recording,
     required this.litSentence,
+    this.active = true,
+    this.cues,
   });
 
   final Story story;
   final int index;
   final double parallax;
+  final bool active;
+  final SceneCues? cues;
   final double textScale;
   final NarrationPage? recording;
   final int? litSentence;
@@ -966,6 +1027,9 @@ class _StoryPageView extends StatelessWidget {
               child: _SceneCard(
                 scene: sceneFor(story.id, index),
                 parallax: parallax,
+                staged: true,
+                active: active,
+                cues: cues,
               ),
             ),
             const SizedBox(height: 14),

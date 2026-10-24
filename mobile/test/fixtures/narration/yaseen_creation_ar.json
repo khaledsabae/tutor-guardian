@@ -1,0 +1,78 @@
+{
+  "voice": "gemini-3.8-flash-tts/Algieba",
+  "language": "ar",
+  "pages": [
+    {
+      "audio": "docs/stories/narration/ar/yaseen_creation_p1.m4a",
+      "text": "خرج ياسين مع والده في نزهة إلى الحديقة الخضراء، ورأى نملة صغيرة تحمل حبة قمح أكبر من حجمها وتتسلق بها غصناً بثبات.",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 114,
+          "start": 0.0,
+          "end": 17.006
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/ar/yaseen_creation_p2.m4a",
+      "text": "تعجب ياسين وقال: «يا أبي، كيف تملك هذه النملة الصغيرة كل هذه القوة والتنظيم؟».",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 78,
+          "start": 0.0,
+          "end": 10.589
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/ar/yaseen_creation_p3.m4a",
+      "text": "ابتسم الوالد وقال: «يا ياسين، هذا صنع الله الذي أتقن كل شيء، تذكر قول الله تعالى: ﴿صُنْعَ اللَّهِ الَّذِي أَتْقَنَ كُلَّ شَيْءٍ﴾».",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 130,
+          "start": 0.0,
+          "end": 28.503
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/ar/yaseen_creation_p4.m4a",
+      "text": "نظر ياسين إلى النجوم والأشجار والأزهار الملونة، واستشعر في قلبه قدرة الخالق العظيم الذي ينظم هذا الكون البديع بدقة وحكمة.",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 121,
+          "start": 0.0,
+          "end": 16.696
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/ar/yaseen_creation_p5.m4a",
+      "text": "رفع ياسين يديه الصغيرتين وقال: «سبحان الله والحمد لله»، وعلم أن كل مخلوق في الطبيعة يسبح بحمد الله ويدل على وحدانيته.",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 117,
+          "start": 0.0,
+          "end": 17.481
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/ar/yaseen_creation_p6.m4a",
+      "text": "أصبح ياسين يحب التأمل في مخلوقات الله، ويكثر من التسبيح والذكر، ليزداد إيمانه وحبه للخالق سبحانه في كل يوم.",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 107,
+          "start": 0.0,
+          "end": 14.571
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,120 @@
+{
+  "voice": "eleven_v3/JBFqnCBsd6RMkjVDRZzb",
+  "language": "en",
+  "pages": [
+    {
+      "audio": "docs/stories/narration/en/abdullah_bismillah_p1.m4a",
+      "text": "Abdullah sat at the lunch table, hungry after a busy school day. The table was filled with delicious food—everything looked so good. He quickly reached out with his left hand to grab a piece of fruit.",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 64,
+          "start": 0.0,
+          "end": 3.68
+        },
+        {
+          "from": 65,
+          "to": 132,
+          "start": 4.13,
+          "end": 8.433
+        },
+        {
+          "from": 133,
+          "to": 200,
+          "start": 8.883,
+          "end": 12.403
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/en/abdullah_bismillah_p2.m4a",
+      "text": "His father stopped him gently and said, \"Abdullah, do you remember the advice of the Messenger of Allah ﷺ to the young boy?\" Abdullah immediately remembered the Prophet's ﷺ advice: to say Bismillah, eat with his right hand, and eat from what is in front of him.",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 124,
+          "start": 0.0,
+          "end": 8.786
+        },
+        {
+          "from": 125,
+          "to": 261,
+          "start": 9.236,
+          "end": 20.033
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/en/abdullah_bismillah_p3.m4a",
+      "text": "Abdullah smiled, pulled his hand back, and said in a clear voice, \"Bismillah.\" Then he began to eat with his right hand, taking food from what was in front of him—calmly and politely, without rushing or wasting.",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 78,
+          "start": 0.0,
+          "end": 5.68
+        },
+        {
+          "from": 79,
+          "to": 211,
+          "start": 6.13,
+          "end": 14.584
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/en/abdullah_bismillah_p4.m4a",
+      "text": "As they ate, his father told him that saying 'Bismillah' keeps the Shaytan away and brings barakah (blessing) to the food. Eating with the right hand follows the example of the noble Prophet ﷺ and shows good Islamic manners.",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 122,
+          "start": 0.0,
+          "end": 8.08
+        },
+        {
+          "from": 123,
+          "to": 224,
+          "start": 8.53,
+          "end": 16.281
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/en/abdullah_bismillah_p5.m4a",
+      "text": "When Abdullah was full, he wiped his hands and said, \"Alhamdulillah.\" He felt content, knowing that the small Sunnahs are beautiful habits that Allah loves.",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 69,
+          "start": 0.0,
+          "end": 4.503
+        },
+        {
+          "from": 70,
+          "to": 156,
+          "start": 4.953,
+          "end": 10.146
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/en/abdullah_bismillah_p6.m4a",
+      "text": "Saying 'Bismillah' and 'Alhamdulillah' became a beautiful habit for Abdullah at every meal. And every day, barakah and happiness filled the table of his kind family.",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 91,
+          "start": 0.0,
+          "end": 6.08
+        },
+        {
+          "from": 92,
+          "to": 165,
+          "start": 6.53,
+          "end": 10.986
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,90 @@
+{
+  "voice": "gemini-3.8-flash-tts/Algieba",
+  "language": "en",
+  "pages": [
+    {
+      "audio": "docs/stories/narration/en/kitten_kindness_p1.m4a",
+      "text": "One day, as Anas was walking home from school, he heard a faint sound coming from behind an old tree. He tiptoed closer and found a tiny cat, shivering with cold and fear, its beautiful fur all dirty.",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 101,
+          "start": 0.0,
+          "end": 9.231
+        },
+        {
+          "from": 102,
+          "to": 200,
+          "start": 9.681,
+          "end": 21.292
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/en/kitten_kindness_p2.m4a",
+      "text": "Anas felt a deep pity for the little creature. He remembered what his father had taught him: that mercy to animals is a trait Allah loves. So he decided to help this small, weak creature.",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 46,
+          "start": 0.0,
+          "end": 4.185
+        },
+        {
+          "from": 47,
+          "to": 138,
+          "start": 4.635,
+          "end": 11.836
+        },
+        {
+          "from": 139,
+          "to": 187,
+          "start": 12.286,
+          "end": 17.506
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/en/kitten_kindness_p3.m4a",
+      "text": "Anas hurried home and brought back a bowl of clean water and a clean cloth. He approached the cat gently, offering the water. Then he carefully wiped its wet fur until the little cat felt safe and warm.",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 75,
+          "start": 0.0,
+          "end": 6.492
+        },
+        {
+          "from": 76,
+          "to": 125,
+          "start": 6.942,
+          "end": 10.743
+        },
+        {
+          "from": 126,
+          "to": 202,
+          "start": 11.193,
+          "end": 18.356
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/en/kitten_kindness_p4.m4a",
+      "text": "The little cat looked up at Anas with shining eyes and began to purr softly, showing its happiness and gratitude. Anas’s heart filled with joy because he had practiced a great virtue that Allah and His Messenger ﷺ love.",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 113,
+          "start": 0.0,
+          "end": 9.714
+        },
+        {
+          "from": 114,
+          "to": 219,
+          "start": 10.164,
+          "end": 22.027
+        }
+      ]
+    }
+  ]
+}
