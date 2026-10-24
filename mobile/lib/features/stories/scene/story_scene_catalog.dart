@@ -7,6 +7,13 @@
 ///
 /// Placement is physical (x 0 = left), the same picture in Arabic and English.
 /// People share one size (.8) so a child is always smaller than a parent.
+///
+/// A piece's `cue` is the words that name it, Arabic and English in one list
+/// (scene_cues.dart): the narrator saying one makes it hop; `enters` keeps
+/// it off the page, while the narrator reads, until it is named. Cued so far:
+/// kitten_kindness and maryam_toys — the «صور أغنى» prototype, drawn with
+/// more things a child can point at and name. The other stories have no cues
+/// yet and only come on stage and breathe.
 library;
 
 import 'story_scene.dart';
@@ -23,6 +30,8 @@ SceneLayer _p(
   SceneMotion motion = SceneMotion.still,
   bool flip = false,
   double phase = 0,
+  List<String> cue = const [],
+  bool enters = false,
 }) => SceneLayer(
   piece,
   x: x,
@@ -32,6 +41,8 @@ SceneLayer _p(
   motion: motion,
   flip: flip,
   phase: phase,
+  cue: cue,
+  entersOnCue: enters,
 );
 
 /// Something floating above the ground: a heart, a star, a bird in the air.
@@ -42,7 +53,26 @@ SceneLayer _air(
   double size, {
   SceneMotion motion = SceneMotion.bob,
   double phase = 0,
-}) => _p(piece, x, y: y, size: size, depth: .9, motion: motion, phase: phase);
+  List<String> cue = const [],
+}) => _p(
+  piece,
+  x,
+  y: y,
+  size: size,
+  depth: .9,
+  motion: motion,
+  phase: phase,
+  cue: cue,
+);
+
+// Cue words shared by several pages (stems — see scene_cues.dart).
+const _cat = ['هر', 'قط', 'مخلوق', 'cat', 'kitten', 'creature'];
+const _tree = ['شجر', 'tree'];
+const _anas = ['انس', 'anas'];
+const _school = ['مدرس', 'school'];
+const _maryam = ['مريم', 'maryam'];
+const _fatimah = ['فاطم', 'fatimah'];
+const _box = ['صندوق', 'box', 'chest'];
 
 StoryScene _s(String backdrop, List<SceneLayer> layers) =>
     StoryScene(backdrop, layers);
@@ -114,27 +144,120 @@ final Map<String, List<StoryScene>> _catalog = {
       _air('bird', .84, .5, .26),
     ]),
   ],
-  // أنس والهر الصغير
+  // أنس والهر الصغير — prototype: richer pages, cued to the narrator.
   'kitten_kindness': [
-    _s('bg_street', [
-      _p('tree', .14, size: .95, depth: .2, motion: SceneMotion.sway),
-      _p('boy', .45),
-      _p('kitten', .76, size: .42, depth: .85, motion: SceneMotion.breathe),
+    // Walking home from school, a faint sound behind an old tree.
+    _s('bg_lane', [
+      _p(
+        'tree',
+        .17,
+        size: 1.0,
+        depth: .2,
+        motion: SceneMotion.sway,
+        cue: _tree,
+      ),
+      _p(
+        'kitten',
+        .33,
+        size: .34,
+        depth: .3,
+        motion: SceneMotion.breathe,
+        cue: _cat,
+      ),
+      _p('flower', .06, y: 1, size: .3, depth: .7, motion: SceneMotion.sway),
+      _p('boy', .6, cue: _anas),
+      _p('school_bag', .74, size: .3, depth: .7, cue: _school),
+      _p(
+        'rose',
+        .9,
+        y: 1,
+        size: .3,
+        depth: .8,
+        motion: SceneMotion.sway,
+        phase: .3,
+      ),
+      _air('butterfly', .48, .42, .16, motion: SceneMotion.drift),
+      _air('bird', .2, .22, .18, phase: .5),
     ]),
-    _s('bg_street', [
-      _p('boy', .4),
-      _air('heart', .55, .45, .2),
-      _p('kitten', .7, size: .42, depth: .85, motion: SceneMotion.breathe),
+    // Pity, and what his father taught him: mercy to animals.
+    _s('bg_lane', [
+      _p('bush', .1, size: .5, depth: .3),
+      _p('boy', .38, cue: _anas),
+      _air(
+        'heart',
+        .52,
+        .42,
+        .2,
+        cue: const ['شفق', 'رحم', 'قلب', 'pity', 'mercy'],
+      ),
+      _p(
+        'kitten',
+        .66,
+        size: .38,
+        depth: .85,
+        motion: SceneMotion.breathe,
+        cue: _cat,
+      ),
+      _p('school_bag', .22, size: .28, depth: .7),
+      _p('flower', .86, y: 1, size: .3, depth: .8, motion: SceneMotion.sway),
+      _air('butterfly', .8, .36, .15, motion: SceneMotion.drift, phase: .4),
     ]),
-    _s('bg_street', [
-      _p('boy_hold', .38),
-      _p('water_bowl', .58, size: .34, depth: .85),
-      _p('kitten', .78, size: .42, depth: .85, motion: SceneMotion.breathe),
+    // A clean bowl of water and a cloth, brought from home.
+    _s('bg_lane', [
+      _p('flower_pot', .08, size: .32, depth: .6),
+      _p('boy_hold', .32, cue: _anas),
+      _p(
+        'cloth',
+        .44,
+        y: .99,
+        size: .22,
+        depth: .85,
+        cue: const ['منديل', 'cloth'],
+      ),
+      _p(
+        'water_bowl',
+        .56,
+        y: 1,
+        size: .28,
+        depth: .85,
+        cue: const ['وعاء', 'bowl', 'water'],
+      ),
+      _p(
+        'kitten',
+        .74,
+        size: .4,
+        depth: .85,
+        motion: SceneMotion.breathe,
+        cue: _cat,
+      ),
+      _p('school_bag', .92, size: .26, depth: .7),
+      _air('butterfly', .62, .34, .14, motion: SceneMotion.drift),
     ]),
+    // The kitten's shining eyes and soft purr; Anas's heart full of joy.
     _s('bg_garden_evening', [
-      _p('boy', .36),
-      _air('heart', .5, .42, .2),
-      _p('kitten', .64, size: .46, depth: .85, motion: SceneMotion.breathe),
+      _p('tree', .1, size: .95, depth: .2, motion: SceneMotion.sway),
+      _p('boy', .36, cue: _anas),
+      _p(
+        'kitten',
+        .58,
+        size: .44,
+        depth: .85,
+        motion: SceneMotion.breathe,
+        cue: const [..._cat, 'صوت', 'purr'],
+      ),
+      _air('heart', .47, .38, .2, cue: const ['قلب', 'سرور', 'heart', 'joy']),
+      _p('bench', .84, size: .42, depth: .5),
+      _p('flower', .7, y: 1, size: .28, depth: .8, motion: SceneMotion.sway),
+      _p(
+        'rose',
+        .96,
+        y: 1,
+        size: .26,
+        depth: .8,
+        motion: SceneMotion.sway,
+        phase: .5,
+      ),
+      _air('bird', .82, .3, .16, phase: .2),
     ]),
   ],
   // ليلى ونجمتها الصغيرة
@@ -238,36 +361,94 @@ final Map<String, List<StoryScene>> _catalog = {
       _p('flower', .86, size: .42, depth: .7, motion: SceneMotion.sway),
     ]),
   ],
-  // مريم وصندوق الألعاب
+  // مريم وصندوق الألعاب — prototype: a room full of toys, cued.
   'maryam_toys': [
-    _s('bg_room_day', [
-      _p('girl_hold', .36),
-      _p('toy_chest_open', .64, size: .45, depth: .8),
-      _p('gift', .86, size: .3, depth: .8),
+    // Her birthday: a new toy box full of dolls and little cars.
+    _s('bg_bedroom', [
+      _p('teddy', .1, size: .3, depth: .6),
+      _p('girl_hold', .3, cue: _maryam),
+      _p(
+        'doll',
+        .44,
+        size: .28,
+        depth: .8,
+        motion: SceneMotion.sway,
+        cue: const ['دمي', 'doll'],
+      ),
+      _p('toy_chest_open', .6, size: .42, depth: .8, cue: _box),
+      _p(
+        'toy_car',
+        .78,
+        y: 1,
+        size: .24,
+        depth: .9,
+        cue: const ['سيار', 'car'],
+      ),
+      _p('gift', .91, size: .26, depth: .8, cue: const ['ميلاد', 'birthday']),
     ]),
-    _s('bg_room_day', [
-      _p('girl', .32),
-      _p('toy_chest', .52, size: .36, depth: .8),
-      _p('girl_friend', .74, flip: true),
+    // Fatimah comes to visit; Maryam hides her toys behind her back.
+    _s('bg_bedroom', [
+      _p('doll', .19, size: .32, depth: .6, cue: const ['اخفت', 'hid']),
+      _p('girl_hold', .3, flip: true, cue: _maryam),
+      _p('toy_chest', .5, size: .34, depth: .8),
+      _p('girl_friend', .74, flip: true, cue: _fatimah, enters: true),
+      _p('ball', .9, y: 1, size: .2, depth: .9),
+      _p('teddy', .06, size: .28, depth: .5),
     ]),
-    _s('bg_room_day', [
-      _p('girl', .28),
-      _p('toy_chest', .5, size: .36, depth: .8),
-      _p('girl_friend', .76),
+    // Unsure; Fatimah sits sadly beside the closed box.
+    _s('bg_bedroom', [
+      _p('girl', .26, cue: _maryam),
+      _p('toy_chest', .5, size: .34, depth: .8, cue: _box),
+      _p('girl_friend', .72, cue: _fatimah),
+      _p('books', .9, size: .24, depth: .8),
+      _p('cushion', .97, y: 1, size: .26, depth: .9),
+      _p('teddy', .08, size: .28, depth: .6),
     ]),
-    _s('bg_room_day', [
-      _p('girl', .34),
-      _p('mother', .64, size: _adult, flip: true),
+    // Her mother comes closer and speaks gently.
+    _s('bg_bedroom', [
+      _p('girl', .3, cue: _maryam),
+      _p(
+        'mother',
+        .64,
+        size: _adult,
+        flip: true,
+        cue: const ['والد', 'mother'],
+        enters: true,
+      ),
+      _air('heart', .47, .36, .17, cue: const ['قلوب', 'قلب', 'hearts']),
+      _p('toy_chest', .9, size: .32, depth: .8),
+      _p('toy_duck', .1, y: 1, size: .24, depth: .9),
     ]),
-    _s('bg_room_day', [
-      _p('girl', .24),
-      _p('blocks', .5, size: .48, depth: .8, motion: SceneMotion.breathe),
-      _p('girl_friend', .76, flip: true),
+    // The box opens; a tall tower of coloured blocks, and laughter.
+    _s('bg_bedroom', [
+      _p('girl_up', .2, cue: _maryam),
+      _p('toy_chest_open', .38, size: .34, depth: .7, cue: _box),
+      _p(
+        'blocks',
+        .55,
+        size: .48,
+        depth: .8,
+        motion: SceneMotion.breathe,
+        cue: const ['مكعب', 'برج', 'block', 'tower'],
+      ),
+      _p('girl_friend', .76, flip: true, cue: _fatimah),
+      _p('ball', .93, y: 1, size: .2, depth: .9),
+      _p('toy_duck', .05, y: 1, size: .2, depth: .9),
     ]),
-    _s('bg_room_day', [
-      _p('girl_wave', .3),
-      _air('heart', .5, .4, .18),
-      _p('girl_friend_hold', .7),
+    // Fatimah's smile; sharing doubles the joy.
+    _s('bg_bedroom', [
+      _p('teddy', .1, size: .28, depth: .6),
+      _p('girl_wave', .3, cue: _maryam),
+      _air(
+        'heart',
+        .5,
+        .38,
+        .19,
+        cue: const ['صداق', 'فرح', 'friendship', 'joy'],
+      ),
+      _p('girl_friend_hold', .68, cue: _fatimah),
+      _p('blocks_fallen', .5, y: 1, size: .36, depth: .9),
+      _p('doll', .88, size: .32, depth: .8, motion: SceneMotion.sway),
     ]),
   ],
   // عمر ونور الصلاة

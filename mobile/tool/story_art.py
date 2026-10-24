@@ -37,6 +37,31 @@ LEAF = "#7ED3A6"
 LEAF_L = "#A8E6C4"
 INK = "#0F3D36"
 
+# The story palette (STYLE.md § «ألوان القصص»). The brand set above alone made
+# every page ivory-on-ivory — two Play reviewers called the pictures «باهتة»
+# (washed out) after the paper-cut update, against the colourful pages they
+# had before. Stories get the colours a child's picture book has: a blue sky,
+# green grass, wooden furniture, clothes and toys in clear hues. Still flat
+# paper — no gradients, no blur — and still the brand emerald for the hills.
+SKY = "#A9DDF3"
+SKY_D = "#7CC7EA"
+GRASS = "#74C46B"
+GRASS_D = "#4FA65A"
+WOOD = "#C98A4B"
+WOOD_D = "#9A6233"
+WOOD_L = "#E8BE86"
+WALL = "#FCE6C6"
+WALL_D = "#F5D3A6"
+RED = "#E9534F"
+ORANGE = "#F59B42"
+ORANGE_D = "#D97A26"
+BLUE = "#3E86DA"
+BLUE_D = "#2B63AD"
+PURPLE = "#9370D8"
+PURPLE_D = "#7656BC"
+PINK = "#F48FB1"
+PINK_D = "#E0678F"
+
 SKIN = CORAL
 
 
@@ -227,43 +252,46 @@ def person(kind: str, cloth: str, cloth2: str, head_cover: str | None = None,
 
 
 PEOPLE = {
-    "boy": lambda: person("child", IVORY, IVORY_D, kufi=HILL_DEEP),
-    "boy_wave": lambda: person("child", IVORY, IVORY_D, kufi=HILL_DEEP, arms="wave"),
-    "boy_hold": lambda: person("child", IVORY, IVORY_D, kufi=HILL_DEEP, arms="hold"),
-    "boy_up": lambda: person("child", IVORY, IVORY_D, kufi=HILL_DEEP, arms="up"),
-    "boy_friend": lambda: person("child", LEAF, HILL, hair=True),
-    "boy_friend_out": lambda: person("child", LEAF, HILL, hair=True, arms="out"),
-    "boy_friend2": lambda: person("child", IVORY_D, IVORY_S, hair=True),
-    "girl": lambda: person("child", HILL, HILL_DEEP, head_cover=IVORY),
-    "girl_wave": lambda: person("child", HILL, HILL_DEEP, head_cover=IVORY, arms="wave"),
-    "girl_hold": lambda: person("child", HILL, HILL_DEEP, head_cover=IVORY, arms="hold"),
-    "girl_up": lambda: person("child", HILL, HILL_DEEP, head_cover=IVORY, arms="up"),
-    "girl_friend": lambda: person("child", IVORY, IVORY_D, head_cover=LEAF_L),
-    "girl_friend_hold": lambda: person("child", IVORY, IVORY_D, head_cover=LEAF_L, arms="hold"),
-    "mother": lambda: person("adult", HILL_DEEP, SHADOW_EM, head_cover=IVORY_D),
-    "mother_out": lambda: person("adult", HILL_DEEP, SHADOW_EM, head_cover=IVORY_D, arms="out"),
+    # Clothes in clear colours, so a child in a robe is not ivory on an ivory
+    # wall. The two children of a story keep apart by colour: the hero's blue
+    # (boys) or pink (girls), the friend's orange or gold.
+    "boy": lambda: person("child", BLUE, BLUE_D, kufi=HILL_DEEP),
+    "boy_wave": lambda: person("child", BLUE, BLUE_D, kufi=HILL_DEEP, arms="wave"),
+    "boy_hold": lambda: person("child", BLUE, BLUE_D, kufi=HILL_DEEP, arms="hold"),
+    "boy_up": lambda: person("child", BLUE, BLUE_D, kufi=HILL_DEEP, arms="up"),
+    "boy_friend": lambda: person("child", ORANGE, ORANGE_D, hair=True),
+    "boy_friend_out": lambda: person("child", ORANGE, ORANGE_D, hair=True, arms="out"),
+    "boy_friend2": lambda: person("child", GRASS_D, HILL, hair=True),
+    "girl": lambda: person("child", PINK, PINK_D, head_cover=HILL),
+    "girl_wave": lambda: person("child", PINK, PINK_D, head_cover=HILL, arms="wave"),
+    "girl_hold": lambda: person("child", PINK, PINK_D, head_cover=HILL, arms="hold"),
+    "girl_up": lambda: person("child", PINK, PINK_D, head_cover=HILL, arms="up"),
+    "girl_friend": lambda: person("child", GOLD, ORANGE, head_cover=PURPLE),
+    "girl_friend_hold": lambda: person("child", GOLD, ORANGE, head_cover=PURPLE, arms="hold"),
+    "mother": lambda: person("adult", PURPLE, PURPLE_D, head_cover=IVORY_D),
+    "mother_out": lambda: person("adult", PURPLE, PURPLE_D, head_cover=IVORY_D, arms="out"),
     "father": lambda: person("adult", IVORY, IVORY_D, beard=True, kufi=IVORY_D),
     "father_out": lambda: person("adult", IVORY, IVORY_D, beard=True, kufi=IVORY_D, arms="out"),
     "grandma": lambda: person("adult", SHADOW_EM, HILL_DEEP, head_cover=IVORY, cane=True),
-    "man": lambda: person("adult", LEAF_L, HILL, hair=True, beard=True),
+    "man": lambda: person("adult", SKY_D, BLUE_D, hair=True, beard=True),
     "teacher": lambda: person("adult", HILL, HILL_DEEP, head_cover=LEAF_L),
 }
 
 
 # ── animals & nature ────────────────────────────────────────────────────────
 def kitten():
-    """A small ginger cat, sitting — coral so it reads on ivory and emerald."""
+    """A small ginger cat, sitting — orange, with a cream chest and paws."""
     b = [
-        path("M78 206 Q70 150 112 146 Q156 146 160 204 Q160 222 120 222 Q80 222 78 206 Z", CORAL),
-        path("M150 200 Q190 196 186 160 Q184 150 176 156 Q178 186 148 188 Z", CORAL),  # tail
-        circle(122, 128, 30, CORAL),
-        poly([(96, 116), (98, 86), (116, 104)], CORAL),
-        poly([(148, 116), (146, 86), (128, 104)], CORAL),
+        path("M78 206 Q70 150 112 146 Q156 146 160 204 Q160 222 120 222 Q80 222 78 206 Z", ORANGE),
+        path("M150 200 Q190 196 186 160 Q184 150 176 156 Q178 186 148 188 Z", ORANGE),  # tail
+        circle(122, 128, 30, ORANGE),
+        poly([(96, 116), (98, 86), (116, 104)], ORANGE),
+        poly([(148, 116), (146, 86), (128, 104)], ORANGE),
         poly([(101, 110), (102, 95), (111, 104)], IVORY),
         poly([(143, 110), (142, 95), (133, 104)], IVORY),
         path("M100 182 Q120 170 140 182 L140 214 Q120 220 100 214 Z", IVORY),  # chest
-        path("M112 104 L118 98 L126 98 L132 104 Q122 100 112 104 Z", IVORY_D),
-        path("M150 168 Q160 166 164 174 L160 178 Q156 172 150 174 Z", IVORY_D),
+        path("M112 104 L118 98 L126 98 L132 104 Q122 100 112 104 Z", WALL_D),
+        path("M150 168 Q160 166 164 174 L160 178 Q156 172 150 174 Z", WALL_D),
         ellipse(104, 220, 11, 6, IVORY), ellipse(136, 220, 11, 6, IVORY),
     ]
     face = (eyes(122, 128, spread=10, size=4.5) + circle(122, 137, 2.6, INK)
@@ -273,11 +301,11 @@ def kitten():
 
 def bird():
     b = [
-        ellipse(118, 130, 34, 26, LEAF),
-        path("M92 130 L60 118 L70 138 Z", LEAF),  # tail
-        circle(146, 112, 18, LEAF),
+        ellipse(118, 130, 34, 26, SKY_D),
+        path("M92 130 L60 118 L70 138 Z", SKY_D),  # tail
+        circle(146, 112, 18, SKY_D),
         poly([(162, 110), (180, 115), (162, 120)], CORAL),
-        path("M100 126 Q122 104 140 128 Q122 140 100 126 Z", HILL),  # wing
+        path("M100 126 Q122 104 140 128 Q122 140 100 126 Z", BLUE),  # wing
         rect(112, 154, 3, 14, SHADOW_EM), rect(124, 154, 3, 14, SHADOW_EM),
     ]
     return piece(*b) + stroke("M144 110 Q148 106 152 110", INK, 2.4)
@@ -294,13 +322,13 @@ def ant():
 
 
 def tree(fill=HILL, fill2=LEAF, nest=False):
-    b = [rect(110, 130, 20, 100, IVORY_S, 4), circle(120, 96, 56, fill),
+    b = [rect(110, 130, 20, 100, WOOD, 4), circle(120, 96, 56, fill),
          circle(84, 118, 34, fill), circle(156, 118, 34, fill), circle(108, 80, 30, fill2)]
     out = piece(*b)
     for cx, cy in ((92, 104), (146, 92), (132, 128)):
         out += circle(cx, cy, 5, LEAF_L)
     if nest:
-        n = [path("M138 74 Q156 92 174 74 Z", IVORY_S), rect(136, 70, 40, 6, IVORY_D, 3)]
+        n = [path("M138 74 Q156 92 174 74 Z", WOOD), rect(136, 70, 40, 6, WOOD_L, 3)]
         out += piece(*n)
     return out
 
@@ -308,7 +336,7 @@ def tree(fill=HILL, fill2=LEAF, nest=False):
 def bush():
     b = [circle(90, 190, 30, HILL), circle(130, 180, 38, HILL), circle(168, 196, 26, HILL),
          rect(66, 196, 128, 32, HILL, 14)]
-    return piece(*b) + circle(122, 168, 6, CORAL) + circle(152, 186, 5, IVORY) + circle(96, 182, 5, CORAL)
+    return piece(*b) + circle(122, 168, 6, CORAL) + circle(152, 186, 5, GOLD) + circle(96, 182, 5, CORAL)
 
 
 def flower(color=CORAL):
@@ -321,7 +349,7 @@ def flower(color=CORAL):
 
 
 def sprout(stage: int):
-    soil = [ellipse(120, 214, 62, 18, IVORY_S), path("M58 214 Q120 186 182 214 Z", IVORY_D)]
+    soil = [ellipse(120, 214, 62, 18, WOOD), path("M58 214 Q120 186 182 214 Z", WOOD_L)]
     out = piece(*soil)
     if stage == 0:  # the golden seed
         out += piece(ellipse(120, 200, 11, 8, GOLD))
@@ -340,7 +368,7 @@ def sprout(stage: int):
 
 
 def basil(wilted: bool):
-    pot = [path("M84 170 L156 170 L146 226 L94 226 Z", CORAL), rect(78, 162, 84, 14, CORAL, 4)]
+    pot = [path("M84 170 L156 170 L146 226 L94 226 Z", ORANGE), rect(78, 162, 84, 14, ORANGE, 4)]
     out = piece(*pot) + rect(78, 162, 84, 5, IVORY_D, 2)
     if wilted:
         stems = stroke("M120 164 Q118 140 104 128", HILL_DEEP, 5) + stroke("M122 164 Q130 142 146 136", HILL_DEEP, 5)
@@ -384,7 +412,7 @@ def heart():
 
 # ── objects ─────────────────────────────────────────────────────────────────
 def water_bowl():
-    b = [path("M70 180 L170 180 Q166 222 120 222 Q74 222 70 180 Z", HILL), ellipse(120, 180, 50, 10, LEAF_L)]
+    b = [path("M70 180 L170 180 Q166 222 120 222 Q74 222 70 180 Z", BLUE), ellipse(120, 180, 50, 10, SKY)]
     return piece(*b) + ellipse(120, 180, 40, 6, IVORY, ' opacity="0.6"')
 
 
@@ -397,8 +425,8 @@ def wallet(motif=False):
 
 
 def toy_car(broken=False):
-    b = [path("M58 186 L72 156 L150 152 L176 172 L186 186 Z", CORAL), rect(52, 182, 140, 20, CORAL, 8),
-         path("M84 158 L100 136 L140 136 L152 156 Z", CORAL)]
+    b = [path("M58 186 L72 156 L150 152 L176 172 L186 186 Z", RED), rect(52, 182, 140, 20, RED, 8),
+         path("M84 158 L100 136 L140 136 L152 156 Z", RED)]
     out = piece(*b) + path("M90 156 L102 142 L118 142 L118 156 Z", IVORY) + path("M124 156 L124 142 L138 142 L146 156 Z", IVORY)
     wheels = [(84, 204), (160, 204)]
     if broken:
@@ -410,7 +438,7 @@ def toy_car(broken=False):
     return out
 
 
-BLOCK_COLORS = [CORAL, LEAF, IVORY_D, HILL, GOLD, LEAF_L]
+BLOCK_COLORS = [RED, BLUE, GOLD, GRASS, ORANGE, PURPLE]
 
 
 def blocks(tower=True):
@@ -430,29 +458,29 @@ def blocks(tower=True):
 
 
 def toy_chest(open_=False):
-    b = [rect(56, 150, 128, 74, CORAL, 8), rect(56, 150, 128, 14, IVORY_D, 4)]
+    b = [rect(56, 150, 128, 74, WOOD, 8), rect(56, 150, 128, 14, WOOD_D, 4)]
     out = piece(*b) + rect(112, 160, 16, 14, GOLD, 3)
     if open_:
-        out = piece(path("M56 150 L72 112 L184 112 L184 150 Z", IVORY_D)) + out
-        for i, (x, c) in enumerate(((84, LEAF), (110, GOLD), (138, HILL), (160, LEAF_L))):
+        out = piece(path("M56 150 L72 112 L184 112 L184 150 Z", WOOD_D)) + out
+        for i, (x, c) in enumerate(((84, RED), (110, GOLD), (138, BLUE), (160, PINK))):
             out += piece(circle(x, 144, 12, c)) if i % 2 else piece(rect(x - 11, 132, 22, 22, c, 4))
-        out += piece(rect(56, 160, 128, 64, CORAL, 8)) + rect(112, 168, 16, 14, GOLD, 3)
+        out += piece(rect(56, 160, 128, 64, WOOD, 8)) + rect(112, 168, 16, 14, GOLD, 3)
     return out
 
 
 def pencils():
-    out = piece(rect(60, 150, 120, 66, IVORY_D, 8))
-    for i, c in enumerate((CORAL, LEAF, HILL, GOLD, LEAF_L, HILL_DEEP)):
+    out = piece(rect(60, 150, 120, 66, SKY_D, 8))
+    for i, c in enumerate((RED, ORANGE, GOLD, GRASS, BLUE, PURPLE)):
         x = 70 + i * 18
         out += piece(rect(x, 112, 12, 60, c, 2), poly([(x, 112), (x + 6, 98), (x + 12, 112)], IVORY_S))
-    out += piece(rect(60, 160, 120, 56, IVORY_D, 8))
+    out += piece(rect(60, 160, 120, 56, SKY_D, 8))
     return out
 
 
 def canvas(spill=False):
-    legs = stroke("M88 228 L104 80", IVORY_S, 7) + stroke("M152 228 L136 80", IVORY_S, 7) + stroke("M120 228 L120 150", IVORY_S, 6)
+    legs = stroke("M88 228 L104 80", WOOD, 7) + stroke("M152 228 L136 80", WOOD, 7) + stroke("M120 228 L120 150", WOOD, 6)
     board = [rect(66, 70, 108, 90, IVORY, 6)]
-    art = (path("M76 150 Q100 110 120 136 Q140 104 164 150 Z", LEAF) + circle(146, 96, 12, GOLD)
+    art = (path("M76 150 Q100 110 120 136 Q140 104 164 150 Z", GRASS) + circle(146, 96, 12, GOLD)
            + path("M80 150 Q100 132 112 150 Z", HILL))
     out = legs + piece(*board) + art
     if spill:
@@ -464,50 +492,50 @@ def canvas(spill=False):
 def juice_cup(tipped=False):
     if tipped:
         b = [path("M70 196 L150 176 L156 200 L76 220 Z", IVORY_D)]
-        return piece(*b) + path("M156 188 Q190 196 198 214 Q170 220 156 200 Z", CORAL)
+        return piece(*b) + path("M156 188 Q190 196 198 214 Q170 220 156 200 Z", ORANGE)
     b = [path("M92 120 L148 120 L140 220 L100 220 Z", IVORY_D)]
-    return piece(*b) + path("M95 150 L145 150 L140 216 L100 216 Z", CORAL) + stroke("M132 120 L146 84", LEAF, 5)
+    return piece(*b) + path("M95 150 L145 150 L140 216 L100 216 Z", ORANGE) + stroke("M132 120 L146 84", LEAF, 5)
 
 
 def soup_pot():
-    b = [rect(60, 140, 120, 80, HILL_DEEP, 12), rect(50, 134, 140, 16, HILL, 8),
+    b = [rect(60, 140, 120, 80, RED, 12), rect(50, 134, 140, 16, ORANGE_D, 8),
          rect(40, 156, 22, 10, HILL_DEEP, 5), rect(178, 156, 22, 10, HILL_DEEP, 5)]
     steam = "".join(stroke(f"M{x} 124 q-8 -14 0 -26 q8 -12 0 -24", IVORY_D, 4) for x in (96, 120, 144))
     return steam + piece(*b)
 
 
 def soup_bowl():
-    b = [path("M60 160 L180 160 Q176 214 120 214 Q64 214 60 160 Z", IVORY), ellipse(120, 160, 60, 12, CORAL)]
+    b = [path("M60 160 L180 160 Q176 214 120 214 Q64 214 60 160 Z", IVORY), ellipse(120, 160, 60, 12, ORANGE)]
     steam = "".join(stroke(f"M{x} 144 q-6 -12 0 -22 q6 -10 0 -20", IVORY_D, 4) for x in (104, 136))
     return steam + piece(*b) + rect(100, 196, 40, 6, IVORY_D, 3)
 
 
 def fruit_plate():
     out = piece(ellipse(120, 196, 72, 18, IVORY))
-    for x, y, r, c in ((96, 178, 18, CORAL), (126, 172, 20, GOLD), (152, 182, 16, LEAF), (112, 160, 14, LEAF_L)):
+    for x, y, r, c in ((96, 178, 18, RED), (126, 172, 20, GOLD), (152, 182, 16, GRASS), (112, 160, 14, LEAF_L)):
         out += piece(circle(x, y, r, c))
     return out + stroke("M126 152 L130 142", HILL, 3)
 
 
 def sweets():
     out = piece(ellipse(120, 200, 60, 14, IVORY))
-    for x, c in ((92, CORAL), (120, LEAF), (148, GOLD)):
+    for x, c in ((92, PINK), (120, GRASS), (148, GOLD)):
         out += piece(rect(x - 12, 172, 24, 24, c, 6))
     return out
 
 
 def table(with_food=False):
-    b = [rect(30, 140, 180, 16, IVORY_S, 4), rect(44, 156, 12, 70, IVORY_S, 3), rect(184, 156, 12, 70, IVORY_S, 3)]
-    out = piece(*b) + rect(30, 140, 180, 5, IVORY_D, 2)
+    b = [rect(30, 140, 180, 16, WOOD, 4), rect(44, 156, 12, 70, WOOD_D, 3), rect(184, 156, 12, 70, WOOD_D, 3)]
+    out = piece(*b) + rect(30, 140, 180, 5, WOOD_L, 2)
     if with_food:
         out += piece(ellipse(80, 136, 26, 7, IVORY), ellipse(160, 136, 26, 7, IVORY))
-        out += piece(circle(72, 128, 9, CORAL), circle(86, 126, 8, GOLD), circle(160, 126, 10, LEAF))
+        out += piece(circle(72, 128, 9, RED), circle(86, 126, 8, GOLD), circle(160, 126, 10, LEAF))
         out += piece(rect(114, 108, 14, 28, LEAF_L, 3))
     return out
 
 
 def door(open_=False):
-    frame = [rect(62, 30, 116, 200, IVORY_S, 6)]
+    frame = [rect(62, 30, 116, 200, WOOD_D, 6)]
     out = piece(*frame)
     if open_:
         out += rect(70, 38, 100, 192, INK, 4)
@@ -522,13 +550,13 @@ def door(open_=False):
 
 
 def bench():
-    b = [rect(36, 150, 168, 14, IVORY_S, 4), rect(36, 126, 168, 12, IVORY_S, 4),
-         rect(50, 164, 10, 60, SHADOW_EM, 3), rect(180, 164, 10, 60, SHADOW_EM, 3)]
+    b = [rect(36, 150, 168, 14, WOOD, 4), rect(36, 126, 168, 12, WOOD, 4),
+         rect(50, 164, 10, 60, WOOD_D, 3), rect(180, 164, 10, 60, WOOD_D, 3)]
     return piece(*b)
 
 
 def sign():
-    b = [rect(114, 120, 12, 108, IVORY_S, 3), rect(56, 70, 128, 66, IVORY_D, 8)]
+    b = [rect(114, 120, 12, 108, WOOD, 3), rect(56, 70, 128, 66, IVORY_D, 8)]
     out = piece(*b)
     # Strokes, not letters: STYLE.md forbids text, so the sign reads as "written on".
     for y, w in ((90, 88), (104, 70), (118, 80)):
@@ -551,13 +579,13 @@ def trash_bag():
 
 
 def watering_can():
-    b = [rect(74, 140, 80, 70, HILL, 10), path("M154 160 L196 128 L202 136 L158 176 Z", HILL),
-         path("M88 140 Q114 104 140 140", "none", f' stroke="{HILL}" stroke-width="10" stroke-linecap="round"')]
-    return piece(*b) + rect(74, 160, 80, 8, LEAF, 3)
+    b = [rect(74, 140, 80, 70, BLUE, 10), path("M154 160 L196 128 L202 136 L158 176 Z", BLUE),
+         path("M88 140 Q114 104 140 140", "none", f' stroke="{BLUE}" stroke-width="10" stroke-linecap="round"')]
+    return piece(*b) + rect(74, 160, 80, 8, SKY, 3)
 
 
 def prayer_rug():
-    b = [path("M40 196 L200 196 L216 226 L24 226 Z", CORAL)]
+    b = [path("M40 196 L200 196 L216 226 L24 226 Z", RED)]
     out = piece(*b)
     out += path("M60 200 L180 200 L190 222 L50 222 Z", "none", f' stroke="{IVORY}" stroke-width="3"')
     out += path("M104 222 L104 210 Q120 198 136 210 L136 222", "none", f' stroke="{IVORY}" stroke-width="3"')
@@ -575,9 +603,9 @@ def water_tap():
 
 
 def sofa():
-    b = [rect(30, 140, 180, 60, CORAL, 14), rect(30, 116, 180, 40, CORAL, 14),
-         rect(20, 140, 30, 66, CORAL, 10), rect(190, 140, 30, 66, CORAL, 10),
-         rect(48, 200, 10, 22, SHADOW_EM, 3), rect(182, 200, 10, 22, SHADOW_EM, 3)]
+    b = [rect(30, 140, 180, 60, BLUE, 14), rect(30, 116, 180, 40, BLUE_D, 14),
+         rect(20, 140, 30, 66, BLUE_D, 10), rect(190, 140, 30, 66, BLUE_D, 10),
+         rect(48, 200, 10, 22, WOOD_D, 3), rect(182, 200, 10, 22, WOOD_D, 3)]
     return piece(*b) + rect(54, 156, 132, 6, IVORY_D, 3)
 
 
@@ -597,7 +625,7 @@ def volcano():
 
 
 def gift():
-    b = [rect(66, 130, 108, 90, CORAL, 6), rect(58, 112, 124, 26, CORAL, 6)]
+    b = [rect(66, 130, 108, 90, RED, 6), rect(58, 112, 124, 26, RED, 6)]
     out = piece(*b) + rect(112, 112, 16, 108, GOLD)
     out += path("M120 112 Q96 82 92 100 Q92 112 120 112 Z", GOLD) + path("M120 112 Q144 82 148 100 Q148 112 120 112 Z", GOLD)
     return out
@@ -605,12 +633,12 @@ def gift():
 
 def bed_girl():
     """A bed with a girl tucked in — head in her khimar on the pillow."""
-    b = [rect(24, 150, 192, 56, IVORY_S, 10), rect(16, 112, 22, 112, IVORY_S, 6), rect(206, 132, 18, 92, IVORY_S, 6)]
+    b = [rect(24, 150, 192, 56, WOOD, 10), rect(16, 112, 22, 112, WOOD_D, 6), rect(206, 132, 18, 92, WOOD_D, 6)]
     out = piece(*b)
     out += piece(ellipse(70, 146, 34, 16, IVORY))  # pillow
-    out += piece(circle(76, 136, 21, IVORY), circle(76, 136, 14, SKIN))
+    out += piece(circle(76, 136, 21, HILL), circle(76, 136, 14, SKIN))
     out += eyes(76, 137, spread=5, size=3, width=2.2)
-    out += piece(path("M88 146 Q150 128 210 142 L210 190 L40 190 Q46 160 88 146 Z", HILL))  # blanket
+    out += piece(path("M88 146 Q150 128 210 142 L210 190 L40 190 Q46 160 88 146 Z", PURPLE))  # blanket
     for x in (120, 160, 196):
         out += star8(x, 168, 6, LEAF_L)
     return out
@@ -625,7 +653,7 @@ def minaret():
 def lantern():
     b = [path("M92 96 L148 96 L156 186 L84 186 Z", IVORY), rect(84, 186, 72, 12, HILL_DEEP, 4),
          path("M92 96 Q120 60 148 96 Z", HILL_DEEP)]
-    return (stroke("M120 30 L120 64", IVORY_S, 3) + piece(*b)
+    return (stroke("M120 30 L120 64", WOOD_D, 3) + piece(*b)
             + path("M108 176 Q102 150 120 128 Q138 150 132 176 Z", GOLD))
 
 
@@ -636,6 +664,108 @@ def boy_sujood():
             path("M164 184 A14 12 0 0 1 190 184 Z", HILL_DEEP),
             ellipse(64, 198, 12, 6, SHADOW_EM)]
     return out + piece(*body)
+
+
+# ── things a child points at and names (the picture-book vocabulary) ───────
+def school_bag():
+    """A school backpack standing on the ground."""
+    b = [rect(70, 92, 100, 132, BLUE, 22), rect(80, 150, 80, 60, BLUE_D, 12),
+         path("M96 96 Q120 60 144 96", "none", f' stroke="{BLUE_D}" stroke-width="9" stroke-linecap="round"')]
+    return (piece(*b) + rect(80, 150, 80, 10, GOLD, 4) + rect(114, 162, 12, 10, GOLD, 3)
+            + rect(70, 118, 100, 8, BLUE_D, 3))
+
+
+def butterfly():
+    wings = [ellipse(96, 104, 30, 36, PINK, ' transform="rotate(-20 96 104)"'),
+             ellipse(144, 104, 30, 36, PINK, ' transform="rotate(20 144 104)"'),
+             ellipse(100, 150, 22, 24, PURPLE), ellipse(140, 150, 22, 24, PURPLE)]
+    body = [rect(114, 92, 12, 76, INK, 6)]
+    spots = (circle(92, 100, 9, GOLD) + circle(148, 100, 9, GOLD)
+             + circle(100, 152, 6, IVORY) + circle(140, 152, 6, IVORY))
+    feelers = stroke("M118 94 Q108 70 100 66", INK, 2.6) + stroke("M122 94 Q132 70 140 66", INK, 2.6)
+    return piece(*wings) + spots + piece(*body) + feelers
+
+
+def flower_pot():
+    pot = [path("M84 170 L156 170 L146 226 L94 226 Z", ORANGE), rect(78, 162, 84, 14, ORANGE_D, 4)]
+    stems = (stroke("M120 164 Q118 130 104 112", GRASS_D, 5) + stroke("M120 164 Q122 124 120 96", GRASS_D, 5)
+             + stroke("M120 164 Q126 132 142 116", GRASS_D, 5))
+    out = piece(*pot) + stems
+    for (x, y), c in zip(((104, 108), (120, 92), (142, 112)), (RED, GOLD, PINK)):
+        petals = [circle(x + 11 * math.cos(a), y + 11 * math.sin(a), 8, c) for a in [k * math.pi / 3 for k in range(6)]]
+        out += piece(*petals) + circle(x, y, 6, IVORY)
+    out += ellipse(104, 140, 12, 6, GRASS, ' transform="rotate(-30 104 140)"') + ellipse(136, 138, 12, 6, GRASS, ' transform="rotate(30 136 138)"')
+    return out
+
+
+def cloth():
+    """A folded cloth (a towel) with two stripes."""
+    b = [rect(64, 178, 112, 42, SKY_D, 8), path("M64 178 L176 178 L168 160 L72 160 Z", SKY)]
+    return piece(*b) + rect(64, 192, 112, 5, IVORY) + rect(64, 204, 112, 5, IVORY)
+
+
+def teddy():
+    """A teddy bear sitting, its eyes closed arcs like the people's."""
+    b = [ellipse(120, 186, 44, 40, WOOD), circle(120, 124, 34, WOOD),
+         circle(92, 96, 14, WOOD), circle(148, 96, 14, WOOD),
+         ellipse(80, 168, 14, 22, WOOD_D), ellipse(160, 168, 14, 22, WOOD_D),
+         ellipse(94, 222, 18, 12, WOOD_D), ellipse(146, 222, 18, 12, WOOD_D)]
+    out = piece(*b)
+    out += circle(92, 96, 7, WOOD_L) + circle(148, 96, 7, WOOD_L) + ellipse(120, 192, 26, 24, WOOD_L)
+    out += ellipse(120, 136, 15, 11, WOOD_L) + ellipse(120, 131, 5, 3.5, INK)
+    out += eyes(120, 120, spread=12, size=4.4)
+    out += path("M104 154 L120 162 L136 154 L136 168 L120 162 L104 168 Z", RED)  # a bow
+    return out
+
+
+def doll():
+    """A rag doll in a dress and khimar — no face beyond closed-eye arcs."""
+    b = [path("M92 222 L104 140 L136 140 L148 222 Z", PINK), circle(120, 112, 24, IVORY),
+         path("M92 112 A28 28 0 0 1 148 112 L150 146 Q120 154 90 146 Z", GOLD)]
+    out = piece(*b) + circle(120, 112, 17, SKIN) + eyes(120, 113, spread=6, size=3, width=2.2)
+    out += arm(106, 150, 90, 186, PINK, 9) + arm(134, 150, 150, 186, PINK, 9)
+    out += circle(90, 188, 5, SKIN) + circle(150, 188, 5, SKIN)
+    out += rect(96, 196, 48, 6, IVORY, 3)
+    for x in (108, 132):
+        out += circle(x, 172, 4, IVORY)
+    return out
+
+
+def ball():
+    out = piece(circle(120, 176, 46, RED))
+    out += path("M74 176 Q120 140 166 176 Q120 160 74 176 Z", IVORY)
+    out += path("M120 130 Q104 176 120 222 Q132 176 120 130 Z", GOLD)
+    out += path("M80 196 Q120 206 160 196 Q120 222 80 196 Z", BLUE)
+    return out
+
+
+def books():
+    """A stack of three books."""
+    b = [rect(66, 196, 112, 26, RED, 4), rect(74, 172, 96, 24, BLUE, 4), rect(62, 150, 104, 22, GOLD, 4)]
+    out = piece(*b)
+    for y, w0 in ((200, 66), (176, 74), (154, 62)):
+        out += rect(w0 + 8, y + 6, 6, 12, IVORY, 1.5)
+    return out + rect(70, 214, 104, 3, IVORY_D) + rect(66, 166, 96, 3, IVORY_D)
+
+
+def cushion():
+    b = [rect(48, 178, 144, 46, PURPLE, 20)]
+    out = piece(*b) + rect(60, 194, 120, 6, GOLD, 3)
+    for x in (80, 120, 160):
+        out += star8(x, 212, 5, PINK)
+    return out
+
+
+def toy_duck():
+    """A yellow toy duck on little wheels."""
+    b = [path("M64 186 Q66 146 112 152 Q132 154 140 168 L176 160 Q182 196 150 206 L86 206 Q64 204 64 186 Z", GOLD),
+         circle(150, 132, 24, GOLD)]
+    out = piece(*b) + poly([(170, 128), (196, 136), (170, 142)], ORANGE)
+    out += path("M90 170 Q110 160 130 176 Q110 186 90 178 Z", ORANGE)  # wing
+    out += stroke("M146 128 Q152 122 158 128", INK, 2.4)
+    for x in (92, 144):
+        out += piece(circle(x, 214, 12, BLUE)) + circle(x, 214, 4, IVORY)
+    return out
 
 
 PROPS = {
@@ -659,10 +789,42 @@ PROPS = {
     "sofa": sofa, "water_glass": water_glass, "shield": shield, "volcano": volcano,
     "gift": gift, "bed_girl": bed_girl, "minaret": minaret, "lantern": lantern,
     "sujood": boy_sujood,
+    "school_bag": school_bag, "butterfly": butterfly, "flower_pot": flower_pot, "cloth": cloth,
+    "teddy": teddy, "doll": doll, "ball": ball, "books": books, "cushion": cushion,
+    "toy_duck": toy_duck,
 }
 
 
 # ── backdrops (360×240) ─────────────────────────────────────────────────────
+def window(x, y, w, h, night: bool, curtains: str | None = None):
+    frame = HILL_DEEP if night else WOOD_L
+    out = rect(x + 4, y + 5, w, h, SHADOW_EM if night else WALL_D, 10)
+    out += rect(x, y, w, h, frame, 10)
+    inner = SHADOW_EM if night else SKY
+    out += rect(x + 8, y + 8, w - 16, h - 16, inner, 6)
+    if night:
+        out += crescent(x + w * .66, y + h * .36, h * .16, IVORY)
+        out += star8(x + w * .3, y + h * .3, 4, GOLD) + star8(x + w * .42, y + h * .64, 3, GOLD)
+    else:
+        out += circle(x + w * .68, y + h * .38, h * .14, GOLD)
+        out += cloud_small(x + w * .34, y + h * .62, w * .16)
+    out += rect(x + w / 2 - 2, y + 8, 4, h - 16, frame)
+    out += rect(x + 8, y + h / 2 - 2, w - 16, 4, frame)
+    if curtains:
+        # Tied-back curtains: a paper strip each side, pinched at the middle.
+        for side in (-1, 1):
+            ox = x - 6 if side < 0 else x + w - 14
+            out += path(f"M{f(ox)} {f(y - 6)} L{f(ox + 20)} {f(y - 6)} Q{f(ox + 10 - side * 6)} {f(y + h * .55)} "
+                        f"{f(ox + 20)} {f(y + h + 8)} L{f(ox)} {f(y + h + 8)} Z", curtains)
+        out += rect(x - 10, y - 10, w + 20, 7, WOOD_D, 3)
+    return out
+
+
+def cloud_small(cx, cy, w, color=IVORY):
+    return (circle(cx - w * .3, cy, w * .28, color) + circle(cx + w * .05, cy - w * .14, w * .36, color)
+            + circle(cx + w * .38, cy, w * .24, color))
+
+
 def hills(base=172, colors=(HILL, HILL_DEEP, SHADOW_EM)):
     out = ""
     for i, c in enumerate(colors):
@@ -675,39 +837,24 @@ def stars_scatter(points, color=STAR_EM, r=6):
     return "".join(star8(x, y, r, color) for x, y in points)
 
 
-def window(x, y, w, h, night: bool):
-    out = rect(x + 4, y + 5, w, h, SHADOW_EM if night else IVORY_S, 10)
-    out += rect(x, y, w, h, IVORY_D if not night else HILL_DEEP, 10)
-    inner = SHADOW_EM if night else IVORY
-    out += rect(x + 8, y + 8, w - 16, h - 16, inner, 6)
-    if night:
-        out += crescent(x + w * .66, y + h * .36, h * .16, IVORY)
-        out += star8(x + w * .3, y + h * .3, 4, GOLD) + star8(x + w * .42, y + h * .64, 3, GOLD)
-    else:
-        out += circle(x + w * .68, y + h * .38, h * .14, GOLD)
-        out += cloud_small(x + w * .34, y + h * .62, w * .16)
-    out += rect(x + w / 2 - 2, y + 8, 4, h - 16, IVORY_D if not night else HILL_DEEP)
-    out += rect(x + 8, y + h / 2 - 2, w - 16, 4, IVORY_D if not night else HILL_DEEP)
+def sky_day(sun_x=292, sun_y=54, sun_r=26):
+    out = rect(0, 0, 360, 240, SKY)
+    out += solid_shadow(SKY_D, circle(sun_x, sun_y, sun_r, GOLD), dx=3, dy=4) + circle(sun_x, sun_y, sun_r, GOLD)
     return out
 
 
-def cloud_small(cx, cy, w):
-    return (circle(cx - w * .3, cy, w * .28, IVORY_D) + circle(cx + w * .05, cy - w * .14, w * .36, IVORY_D)
-            + circle(cx + w * .38, cy, w * .24, IVORY_D))
-
-
 def bg_garden_day():
-    out = rect(0, 0, 360, 240, IVORY)
-    out += solid_shadow(IVORY_S, circle(292, 54, 26, GOLD), dx=3, dy=4) + circle(292, 54, 26, GOLD)
+    out = sky_day()
     out += cloud_small(80, 52, 60) + cloud_small(200, 34, 44)
-    out += hills(150, (LEAF_L, LEAF, HILL))
-    out += rect(0, 206, 360, 34, HILL)
+    out += hills(150, (LEAF_L, LEAF, GRASS))
+    out += rect(0, 206, 360, 34, GRASS_D)
     return out
 
 
 def bg_garden_evening():
-    out = rect(0, 0, 360, 240, IVORY_D)
-    out += solid_shadow(IVORY_S, circle(84, 92, 30, CORAL), dx=3, dy=4) + circle(84, 92, 30, CORAL)
+    out = rect(0, 0, 360, 240, "#FFD7A8")
+    out += solid_shadow(WALL_D, circle(84, 92, 30, CORAL), dx=3, dy=4) + circle(84, 92, 30, CORAL)
+    out += cloud_small(250, 60, 50, WALL)
     out += hills(150, (LEAF, HILL, HILL_DEEP))
     out += rect(0, 210, 360, 30, HILL_DEEP)
     return out
@@ -721,37 +868,50 @@ def bg_night_sky():
     return out
 
 
+def rug(y=222, colors=(RED, GOLD, BLUE)):
+    out = path(f"M60 {y} L300 {y} L286 {y + 14} L74 {y + 14} Z", colors[0])
+    out += path(f"M70 {y + 4} L290 {y + 4} L285 {y + 9} L75 {y + 9} Z", colors[1])
+    for k in range(7):
+        out += star8(96 + k * 28, y + 6.5, 3, colors[2])
+    return out
+
+
 def bg_room(night: bool):
-    wall = HILL_DEEP if night else IVORY
-    floor = SHADOW_EM if night else IVORY_S
+    wall = HILL_DEEP if night else WALL
+    floor = SHADOW_EM if night else WOOD_L
     out = rect(0, 0, 360, 240, wall)
     if night:
         out += stars_scatter([(30, 30), (330, 40), (300, 150)], STAR_EM, 5)
     else:
         # A soft wallpaper of eight-point stars.
-        out += stars_scatter([(34, 30), (330, 36), (34, 150), (326, 140)], IVORY_D, 6)
-    out += window(214, 34, 104, 92, night)
+        out += stars_scatter([(34, 30), (330, 36), (34, 150), (326, 140), (150, 24), (180, 150)], WALL_D, 6)
+    out += window(214, 34, 104, 92, night, None if night else PINK)
     out += rect(0, 196, 360, 44, floor)
-    out += rect(0, 192, 360, 6, SHADOW_EM if night else IVORY_D)
-    out += path("M60 222 L300 222 L286 236 L74 236 Z", CORAL if not night else HILL)  # rug
+    out += rect(0, 192, 360, 6, SHADOW_EM if night else WOOD)
+    if not night:
+        for x in (60, 150, 240, 330):
+            out += line(x, 200, x - 8, 240, WOOD, 2)
+        out += rug()
+    else:
+        out += path("M60 222 L300 222 L286 236 L74 236 Z", HILL)
     return out
 
 
 def bg_classroom():
-    out = rect(0, 0, 360, 240, IVORY)
-    out += rect(64, 30, 236, 104, IVORY_S, 8) + rect(60, 26, 236, 104, HILL_DEEP, 8)
-    out += line(84, 60, 180, 60, HILL, 4) + line(84, 82, 220, 82, HILL, 4) + line(84, 104, 150, 104, HILL, 4)
+    out = rect(0, 0, 360, 240, WALL)
+    out += rect(64, 30, 236, 104, WOOD, 8) + rect(60, 26, 236, 104, HILL_DEEP, 8)
+    out += line(84, 60, 180, 60, LEAF_L, 4) + line(84, 82, 220, 82, LEAF_L, 4) + line(84, 104, 150, 104, LEAF_L, 4)
     out += star8(260, 64, 9, GOLD)
-    out += rect(0, 196, 360, 44, IVORY_S) + rect(0, 192, 360, 6, IVORY_D)
+    out += rect(0, 196, 360, 44, WOOD_L) + rect(0, 192, 360, 6, WOOD)
     return out
 
 
 def bg_hallway():
-    out = rect(0, 0, 360, 240, IVORY)
-    for x in (30, 150, 270):
-        out += rect(x + 4, 69, 60, 128, IVORY_S, 4) + rect(x, 64, 60, 128, LEAF, 4) + circle(x + 48, 130, 3, GOLD)
-    out += path("M0 196 L360 196 L360 240 L0 240 Z", IVORY_S)
-    out += path("M150 196 L210 196 L250 240 L110 240 Z", IVORY_D)
+    out = rect(0, 0, 360, 240, WALL)
+    for x, c in ((30, BLUE), (150, GRASS), (270, ORANGE)):
+        out += rect(x + 4, 69, 60, 128, WALL_D, 4) + rect(x, 64, 60, 128, c, 4) + circle(x + 48, 130, 3, GOLD)
+    out += path("M0 196 L360 196 L360 240 L0 240 Z", WOOD_L)
+    out += path("M150 196 L210 196 L250 240 L110 240 Z", RED)
     return out
 
 
@@ -762,10 +922,10 @@ def bg_mosque():
         out += path(f"M{x + 4} 205 L{x + 4} 95 Q{x + 34} 52 {x + 64} 95 L{x + 64} 205 Z", SHADOW_EM)
         out += path(f"M{x} 200 L{x} 90 Q{x + 30} 48 {x + 60} 90 L{x + 60} 200 Z", HILL_DEEP)
         out += lantern_small(x + 30, 112)
-    out += rect(0, 200, 360, 40, CORAL)
+    out += rect(0, 200, 360, 40, RED)
     for x in range(0, 360, 60):
         out += path(f"M{x + 12} 240 L{x + 12} 222 Q{x + 30} 206 {x + 48} 222 L{x + 48} 240", "none",
-                    f' stroke="{IVORY}" stroke-width="2.5"')
+                    f' stroke="{GOLD}" stroke-width="2.5"')
     return out
 
 
@@ -775,29 +935,118 @@ def lantern_small(cx, cy):
 
 
 def bg_kitchen():
-    out = rect(0, 0, 360, 240, IVORY)
+    out = rect(0, 0, 360, 240, WALL)
     out += window(40, 34, 96, 80, False)
-    out += rect(164, 50, 160, 54, IVORY_S, 6) + rect(160, 46, 160, 54, IVORY_D, 6)
-    out += line(240, 52, 240, 94, IVORY_S, 3)
-    out += rect(0, 150, 360, 90, HILL_DEEP) + rect(0, 144, 360, 12, IVORY_S)
+    out += rect(164, 50, 160, 54, WOOD_D, 6) + rect(160, 46, 160, 54, WOOD, 6)
+    out += line(240, 52, 240, 94, WOOD_D, 3)
+    out += rect(0, 150, 360, 90, BLUE_D) + rect(0, 144, 360, 12, WOOD_L)
     for x in range(20, 360, 80):
-        out += rect(x, 168, 56, 54, HILL, 6)
+        out += rect(x, 168, 56, 54, BLUE, 6) + circle(x + 28, 178, 3, GOLD)
+    return out
+
+
+def house(x, w, h, wall, door, shutter, ground=200):
+    top = ground - h
+    out = rect(x + 4, top + 5, w, h, WALL_D, 4) + rect(x, top, w, h, wall, 4)
+    out += rect(x - 4, top - 6, w + 8, 10, WOOD_D, 3)  # flat roof edge
+    for wx in (x + 14, x + w - 38):
+        out += rect(wx - 4, top + 18, 32, 26, shutter, 3) + rect(wx, top + 20, 24, 22, SKY, 3)
+        out += rect(wx + 11, top + 20, 2, 22, WOOD_L)
+    out += rect(x + w / 2 - 12, ground - 40, 24, 40, door, 3) + circle(x + w / 2 + 6, ground - 20, 2.4, GOLD)
     return out
 
 
 def bg_street():
-    out = rect(0, 0, 360, 240, IVORY)
-    out += cloud_small(70, 40, 50) + solid_shadow(IVORY_S, circle(310, 40, 18, GOLD), dx=3, dy=4) + circle(310, 40, 18, GOLD)
-    for x, w, h, c in ((10, 90, 110, IVORY_D), (110, 100, 130, LEAF_L), (220, 120, 100, IVORY_D)):
-        out += rect(x + 4, 205 - h, w, h, IVORY_S, 4) + rect(x, 200 - h, w, h, c, 4)
-        out += rect(x + 16, 220 - h, 20, 22, HILL_DEEP, 3) + rect(x + w - 36, 220 - h, 20, 22, HILL_DEEP, 3)
+    out = sky_day(310, 40, 18)
+    out += cloud_small(70, 40, 50)
+    out += house(10, 90, 110, WALL, BLUE, ORANGE) + house(118, 96, 128, PINK, HILL, BLUE_D)
+    out += house(226, 120, 100, GOLD, RED, GRASS_D)
     out += rect(0, 200, 360, 40, IVORY_S) + rect(0, 214, 360, 6, IVORY_D)
+    return out
+
+
+def bg_lane():
+    """A lane home from school: two houses, a fence, a path through grass."""
+    out = sky_day(300, 44, 20)
+    out += cloud_small(64, 40, 54) + cloud_small(190, 28, 40)
+    out += hills(120, (LEAF_L, LEAF, GRASS))
+    out += house(150, 96, 92, WALL, BLUE, ORANGE, 176) + house(256, 90, 104, PINK, HILL, BLUE_D, 176)
+    out += rect(0, 172, 360, 68, GRASS)
+    for x in range(0, 360, 22):  # the picket fence in front of the houses
+        out += path(f"M{x + 4} 186 L{x + 4} 166 L{x + 9} 160 L{x + 14} 166 L{x + 14} 186 Z", IVORY)
+    out += rect(0, 172, 360, 4, IVORY_D)
+    out += path("M0 214 Q120 196 200 206 Q290 216 360 200 L360 240 L0 240 Z", WOOD_L)  # the path
+    for x, y, c in ((30, 196, RED), (52, 200, GOLD), (300, 190, PINK), (326, 194, RED), (110, 232, GOLD)):
+        out += circle(x, y, 4, c) + circle(x, y, 1.6, IVORY)
+    return out
+
+
+def bookshelf(x, y):
+    """A wall bookshelf: two shelves of book spines in every colour."""
+    out = rect(x + 3, y + 4, 92, 86, WOOD_D, 4) + rect(x, y, 92, 86, WOOD, 4)
+    spines = (RED, BLUE, GOLD, GRASS, PURPLE, ORANGE, PINK, SKY_D)
+    for row, sy in enumerate((y + 8, y + 48)):
+        out += rect(x + 6, sy, 80, 32, WOOD_D, 2)
+        bx = x + 8
+        for k in range(7):
+            c = spines[(k + row * 3) % len(spines)]
+            w = 9 + (k * 5 + row) % 4
+            hgt = 24 + (k * 7 + row * 3) % 7
+            if row == 1 and k == 5:  # one book leaning
+                out += rect(bx, sy + 32 - hgt, w, hgt, c, 1.5, f' transform="rotate(-14 {f(bx)} {f(sy + 32)})"')
+            else:
+                out += rect(bx, sy + 32 - hgt, w, hgt, c, 1.5)
+            bx += w + 1.5
+            if bx > x + 80:
+                break
+    return out
+
+
+def frame_picture(x, y, w, h, kind):
+    out = rect(x + 2, y + 3, w, h, WALL_D, 3) + rect(x, y, w, h, WOOD, 3) + rect(x + 4, y + 4, w - 8, h - 8, IVORY, 2)
+    if kind == "moon":
+        out += rect(x + 4, y + 4, w - 8, h - 8, BLUE_D, 2) + crescent(x + w * .5, y + h * .5, h * .26, GOLD)
+    else:  # a tree on a hill
+        out += path(f"M{f(x + 4)} {f(y + h - 4)} Q{f(x + w / 2)} {f(y + h * .55)} {f(x + w - 4)} {f(y + h - 4)} Z", GRASS)
+        out += circle(x + w * .5, y + h * .42, h * .2, GRASS_D)
+    return out
+
+
+def bunting(x0, x1, y, sag=16):
+    out = stroke(f"M{f(x0)} {f(y)} Q{f((x0 + x1) / 2)} {f(y + sag * 2)} {f(x1)} {f(y)}", WOOD_D, 1.6)
+    colors = (RED, GOLD, BLUE, GRASS, PINK, ORANGE, PURPLE)
+    n = 9
+    for k in range(n):
+        t = (k + .5) / n
+        px = x0 + (x1 - x0) * t
+        py = (1 - t) ** 2 * y + 2 * (1 - t) * t * (y + sag * 2) + t * t * y
+        out += poly([(px - 7, py), (px + 7, py), (px, py + 14)], colors[k % len(colors)])
+    return out
+
+
+def bg_bedroom():
+    """A child's room full of things to name: a window with curtains, books,
+    pictures, a garland, a plant, a striped rug on a wooden floor."""
+    out = rect(0, 0, 360, 240, WALL)
+    out += stars_scatter([(150, 120), (190, 150), (24, 150), (338, 160)], WALL_D, 5)
+    out += bunting(8, 200, 10)
+    out += window(232, 40, 96, 84, False, PINK)
+    out += bookshelf(18, 66)
+    out += frame_picture(132, 40, 40, 32, "moon") + frame_picture(182, 56, 34, 28, "tree")
+    # a little wall shelf with a pot plant
+    out += rect(132, 122, 70, 7, WOOD_D, 3)
+    out += path("M150 122 L170 122 L167 108 L153 108 Z", ORANGE)
+    out += ellipse(154, 100, 7, 10, GRASS) + ellipse(166, 100, 7, 10, GRASS_D) + ellipse(160, 96, 6, 11, GRASS)
+    out += rect(0, 196, 360, 44, WOOD_L) + rect(0, 192, 360, 6, WOOD)
+    for x in (60, 150, 240, 330):
+        out += line(x, 200, x - 8, 240, WOOD, 2)
+    out += rug(220, (PURPLE, GOLD, PINK))
     return out
 
 
 def bg_playground():
     out = bg_garden_day()
-    return out + rect(0, 214, 360, 26, IVORY_S)
+    return out + rect(0, 214, 360, 26, WOOD_L)
 
 
 BACKDROPS = {
@@ -805,6 +1054,7 @@ BACKDROPS = {
     "bg_room_day": lambda: bg_room(False), "bg_room_night": lambda: bg_room(True),
     "bg_classroom": bg_classroom, "bg_hallway": bg_hallway, "bg_mosque": bg_mosque,
     "bg_kitchen": bg_kitchen, "bg_street": bg_street, "bg_playground": bg_playground,
+    "bg_lane": bg_lane, "bg_bedroom": bg_bedroom,
 }
 
 
