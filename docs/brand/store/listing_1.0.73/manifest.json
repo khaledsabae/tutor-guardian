@@ -1,15 +1,9 @@
 {
   "release": "1.0.73+118",
-  "note": "Real CI captures (Mobile E2E «Emulator journeys»), framed by docs/brand/tools/store_listing.py. Re-take from main once #129/#130 merge.",
+  "note": "Real app captures from the dispatch-only store_capture job (e2e/store_capture.sh): a natural family, against the runner's backend only. Framed by docs/brand/tools/store_listing.py.",
   "runs": {
-    "38783241487": {
-      "what": "main proxy — PR #126 noor/stories @ b540986b, the head merged as origin/main 575c7141 (mobile-e2e runs on PRs only)"
-    },
-    "38798911874": {
-      "what": "PR #130 noor/family-road @ 4852a2b0 (head, green)"
-    },
-    "38799420141": {
-      "what": "PR #129 noor/child-corner @ 543517fc (head, green)"
+    "38845173531": {
+      "what": "mobile-e2e.yml dispatch on noor/store-capture with store_capture=true: job store_capture — the PR-head app and backend image on the runner (never production), family «سارة»+«يوسف» / «Sara»+«Yusuf»"
     }
   },
   "slots": [
@@ -18,16 +12,16 @@
       "frame": "frame_1_rising",
       "source": {
         "ar": {
-          "run": 38798911874,
-          "artifact": "e2e-gallery",
-          "file": "images/gallery__04_after_ar__after__ar__home.png",
-          "sha256": "9910905e32f12cf59d56734a9ebaafa7ea0821f780982d5a8525ba67733e8673"
+          "run": 38845173531,
+          "artifact": "e2e-store-capture",
+          "file": "screens/ar__shoot__after__ar__home.png",
+          "sha256": "e0d844aad4d1f8e5b0a73ca49be9b59d04877370f9d9ce5e2f37229b6457a82b"
         },
         "en": {
-          "run": 38798911874,
-          "artifact": "e2e-gallery",
-          "file": "images/gallery__05_after_en__after__en__home.png",
-          "sha256": "b5bf119b74fb996ad1df6ca6fe7ddf2d37ab95807f5f2d9c81f8e53002a3ca18"
+          "run": 38845173531,
+          "artifact": "e2e-store-capture",
+          "file": "screens/en__shoot__after__en__home.png",
+          "sha256": "7c9f72c125a054793d7aaf0e151d46fda2f2b49ab39bf0a4d0434526e4832794"
         }
       },
       "text": {
@@ -46,16 +40,16 @@
       "frame": "frame_2_ivory",
       "source": {
         "ar": {
-          "run": 38798911874,
-          "artifact": "e2e-gallery",
-          "file": "images/gallery__04_after_ar__after__ar__family_road.png",
-          "sha256": "cf6cec64ad60c5b19998432bf6a130f2d926e407edaae74e9be325e778ac2673"
+          "run": 38845173531,
+          "artifact": "e2e-store-capture",
+          "file": "screens/ar__shoot__after__ar__family_road.png",
+          "sha256": "d93441c37f469e2dfc5667c5bfa473d30142e531048d82492b4eda12693d5ba2"
         },
         "en": {
-          "run": 38798911874,
-          "artifact": "e2e-gallery",
-          "file": "images/gallery__05_after_en__after__en__family_road.png",
-          "sha256": "714e5d2610ff7bf39d16e6925c8f3355e8c2a7d1eef0fccd99867d8ee6e01a9a"
+          "run": 38845173531,
+          "artifact": "e2e-store-capture",
+          "file": "screens/en__shoot__after__en__family_road.png",
+          "sha256": "dc1e4345ba5c7644536889e0bc7efa9d213397ac424b53a3457a20d710100900"
         }
       },
       "text": {
@@ -74,26 +68,26 @@
       "frame": "frame_3_bubble",
       "source": {
         "ar": {
-          "run": 38799420141,
-          "artifact": "e2e-gallery",
-          "file": "images/gallery__04_after_ar__after__ar__child_corner.png",
-          "sha256": "5091beb3912e2145647ca017625e09e11b7d39df18ad0a6a47f90b9a56243f7a"
+          "run": 38845173531,
+          "artifact": "e2e-store-capture",
+          "file": "screens/ar__shoot__after__ar__child_corner.png",
+          "sha256": "2a2d97b31de42dc4f2b6f6e0480263ec7a30e52126315c2958cbd930914b2d00"
         },
         "en": {
-          "run": 38799420141,
-          "artifact": "e2e-gallery",
-          "file": "images/gallery__05_after_en__after__en__child_corner.png",
-          "sha256": "3bb57417f4e632beddd42acc45ed6291a666f6aac05daa48d7281a80ee65c57d"
+          "run": 38845173531,
+          "artifact": "e2e-store-capture",
+          "file": "screens/en__shoot__after__en__child_corner.png",
+          "sha256": "6710eb7f3a6b8513d54583b87221c5c9941e75c263c84ba0fba11153d478b301"
         }
       },
       "text": {
         "ar": {
           "title": "ركن الطفل",
-          "subtitle": "حكاية أو لعبة، ثم مهمة بعيدًا عن الشاشة"
+          "subtitle": "حكاية قصيرة، ثم مهمة بعيدًا عن الشاشة"
         },
         "en": {
           "title": "A child's corner",
-          "subtitle": "A story or game, then a task off-screen"
+          "subtitle": "A short story, then a task away from the screen"
         }
       }
     },
@@ -102,16 +96,16 @@
       "frame": "frame_2_ivory",
       "source": {
         "ar": {
-          "run": 38783241487,
-          "artifact": "e2e-gallery",
-          "file": "images/gallery__04_after_ar__after__ar__week_lanterns.png",
-          "sha256": "91e71978debec86f2f30946b334f393991dada492da2f4473e1350bf7818b202"
+          "run": 38845173531,
+          "artifact": "e2e-store-capture",
+          "file": "screens/ar__shoot__after__ar__week_lanterns.png",
+          "sha256": "b19ffbd92f7e4cba3bcda68a12b4b8a6086cba3f275b382d06918872c85565a5"
         },
         "en": {
-          "run": 38783241487,
-          "artifact": "e2e-gallery",
-          "file": "images/gallery__05_after_en__after__en__week_lanterns.png",
-          "sha256": "a7d8c2009ab16a343ebbe9170457c87840d9013644beb180753e4d2a2db1ed9d"
+          "run": 38845173531,
+          "artifact": "e2e-store-capture",
+          "file": "screens/en__shoot__after__en__week_lanterns.png",
+          "sha256": "3c2412dd34e8d518d1562f129ec49716b805b7de8cb06c40812818a5a93e316c"
         }
       },
       "text": {
@@ -130,16 +124,16 @@
       "frame": "frame_1_rising",
       "source": {
         "ar": {
-          "run": 38783241487,
-          "artifact": "e2e-gallery",
-          "file": "images/gallery__04_after_ar__after__ar__stories_open.png",
-          "sha256": "0cb8cc0b19a7b567f2c84a7edc87dd5b99e217fc8a34aecebe354fcb47fb9255"
+          "run": 38845173531,
+          "artifact": "e2e-store-capture",
+          "file": "screens/ar__shoot__after__ar__stories_open.png",
+          "sha256": "056659b635d518f8a587ecfbe0e075d13c212a121fac01774423fbd8900c7230"
         },
         "en": {
-          "run": 38783241487,
-          "artifact": "e2e-gallery",
-          "file": "images/gallery__05_after_en__after__en__stories_open.png",
-          "sha256": "0fda467ef8a09d5ba8b10dba3cb251ac7eea6cdd3aa616cfaa9d6c7b6ffb9293"
+          "run": 38845173531,
+          "artifact": "e2e-store-capture",
+          "file": "screens/en__shoot__after__en__stories_open.png",
+          "sha256": "01a6901f3baaec473498abcda967a0ec066dad3aa84ef22ceae04b085a492e89"
         }
       },
       "text": {
@@ -158,16 +152,16 @@
       "frame": "frame_2_ivory",
       "source": {
         "ar": {
-          "run": 38783241487,
-          "artifact": "e2e-gallery",
-          "file": "images/gallery__04_after_ar__after__ar__next_step.png",
-          "sha256": "b3934c9bdcb2af726f8221139d914376418638e65a4c6fe5e9c4219bfdfda8d3"
+          "run": 38845173531,
+          "artifact": "e2e-store-capture",
+          "file": "screens/ar__shoot__after__ar__next_step.png",
+          "sha256": "f467b5b35a40c4a7c431db87d2b38cd43ce3c075c4167fdccaf3aef29fc6d2be"
         },
         "en": {
-          "run": 38783241487,
-          "artifact": "e2e-gallery",
-          "file": "images/gallery__05_after_en__after__en__next_step.png",
-          "sha256": "65ec2326b38c376806ae485abd61008e7849017704f50683b4a56f9b0d98b7dc"
+          "run": 38845173531,
+          "artifact": "e2e-store-capture",
+          "file": "screens/en__shoot__after__en__next_step.png",
+          "sha256": "450ff81201e943fcfd4c3d75bf20445299e39d6fc8e1177c4db8ccfd34a64ea1"
         }
       },
       "text": {
@@ -186,16 +180,16 @@
       "frame": "frame_1_rising",
       "source": {
         "ar": {
-          "run": 38783241487,
-          "artifact": "e2e-rehearsal",
-          "file": "screens/rehearsal__ar_day27__after__ar__day27_street.png",
-          "sha256": "e591238e567d0ce3a1ee1b11271964bcab498940e1582f1e8b6685386244a3a3"
+          "run": 38845173531,
+          "artifact": "e2e-store-capture",
+          "file": "screens/ar__street_day27__after__ar__day27_street.png",
+          "sha256": "73b9924f39e2dab54611a485a7f0981e54c096081f5ce8894208b4434a624e95"
         },
         "en": {
-          "run": 38783241487,
-          "artifact": "e2e-rehearsal",
-          "file": "screens/rehearsal__en_day27__after__en__day27_street.png",
-          "sha256": "79b40c685926956a66b89215c2b70453301770e529cebc43a30b8bf10b897673"
+          "run": 38845173531,
+          "artifact": "e2e-store-capture",
+          "file": "screens/en__street_day27__after__en__day27_street.png",
+          "sha256": "9abaf52c557a68ce1af4c602939fbd5287a11be622f866c48306ea3ad32032d8"
         }
       },
       "text": {
@@ -210,33 +204,30 @@
       }
     },
     {
-      "id": "assistant",
+      "id": "family_programs",
       "frame": "frame_3_bubble",
       "source": {
         "ar": {
-          "run": 38783241487,
-          "artifact": "e2e-screenshots",
-          "file": "fresh__03_assistant__assistant_2_answered.png",
-          "keep_top": 1508,
-          "note": "system keyboard cropped away",
-          "sha256": "672de624b8ddf2540861961d9db0be9fcbd5cf1499e13d6397dd56406352c97a"
+          "run": 38845173531,
+          "artifact": "e2e-store-capture",
+          "file": "screens/ar__street_day27__after__ar__day27_programs.png",
+          "sha256": "c298002c6631cfed48d048969ae726966bda6cff998b4d1cbed8fc881f906e69"
         },
         "en": {
-          "run": 38783241487,
-          "artifact": "e2e-screenshots",
-          "file": "fresh__06_english__english_4_assistant.png",
-          "note": "dark mode: no light-mode English assistant capture exists (the English journey runs after the dark-mode one)",
-          "sha256": "ec144401c6db7ad4d17fd4f4ae283ed4b923fc2bae0e395e6fb43ea70d934bee"
+          "run": 38845173531,
+          "artifact": "e2e-store-capture",
+          "file": "screens/en__street_day27__after__en__day27_programs.png",
+          "sha256": "26c718944c3d01fdf4b6d212b40ba37988f8a431ac48085182b7ed3d0c60dd17"
         }
       },
       "text": {
         "ar": {
-          "title": "اسألوا عن تربية طفلكم",
-          "subtitle": "إجابة عملية وخطوة تجرّبونها"
+          "title": "برامج قصيرة لأسرتكم",
+          "subtitle": "رمضان والصلاة، خطوة بخطوة"
         },
         "en": {
-          "title": "Ask about raising your child",
-          "subtitle": "A practical answer, in your language"
+          "title": "Short family programs",
+          "subtitle": "Ramadan and prayer, step by step"
         }
       }
     }
