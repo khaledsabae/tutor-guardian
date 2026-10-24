@@ -1,4 +1,4 @@
-/// A preview build of the story reader alone — to see the «صور أغنى»
+/// A preview build of the story reader alone — every bundled story — to see the «صور أغنى»
 /// prototype (richer palette, more things to name, scenes that follow the
 /// narrator) on an emulator or a phone without onboarding a child, and so
 /// without writing anything to the production backend. The narration it
@@ -22,8 +22,6 @@ import 'package:almorabbi/features/program/screens/story_reader_screen.dart';
 import 'package:almorabbi/l10n/app_localizations.dart';
 import 'package:almorabbi/l10n/l10n_global.dart';
 import 'package:almorabbi/theme/app_theme.dart';
-
-const _shown = ['kitten_kindness', 'maryam_toys', 'hope_sprout'];
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -77,7 +75,7 @@ class _Picker extends StatelessWidget {
     final stories = [
       for (final j in list) Story.fromJson(j as Map<String, dynamic>),
     ];
-    return [for (final id in _shown) stories.firstWhere((s) => s.id == id)];
+    return stories;
   }
 
   @override
@@ -100,7 +98,7 @@ class _Picker extends StatelessWidget {
         children: [
           for (final s in snap.data ?? const <Story>[])
             Padding(
-              padding: const EdgeInsets.only(bottom: 12),
+              padding: const EdgeInsets.only(bottom: 4),
               child: FilledButton(
                 onPressed: () => Navigator.of(context).push(
                   MaterialPageRoute<void>(
@@ -108,8 +106,8 @@ class _Picker extends StatelessWidget {
                   ),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.all(14),
-                  child: Text(s.title, style: const TextStyle(fontSize: 18)),
+                  padding: const EdgeInsets.all(2),
+                  child: Text(s.title, style: const TextStyle(fontSize: 14)),
                 ),
               ),
             ),

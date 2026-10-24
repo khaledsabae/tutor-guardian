@@ -1,0 +1,108 @@
+{
+  "voice": "eleven_v3/JBFqnCBsd6RMkjVDRZzb",
+  "language": "en",
+  "pages": [
+    {
+      "audio": "docs/stories/narration/en/yaseen_creation_p1.m4a",
+      "text": "Yaseen went out with his father for a walk in the green garden. He saw a tiny ant carrying a grain of wheat bigger than itself, climbing a branch with steady steps.",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 63,
+          "start": 0.0,
+          "end": 3.016
+        },
+        {
+          "from": 64,
+          "to": 164,
+          "start": 3.466,
+          "end": 9.866
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/en/yaseen_creation_p2.m4a",
+      "text": "Yaseen marveled and said, \"Father, how does this little ant have all this strength and order?\"",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 94,
+          "start": 0.0,
+          "end": 6.044
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/en/yaseen_creation_p3.m4a",
+      "text": "His father smiled and said, \"Oh Yaseen, this is the work of Allah, who has perfected all things. Remember the words of Allah: ﴿صُنْعَ اللَّهِ الَّذِي أَتْقَنَ كُلَّ شَيْءٍ﴾ — interpretation of the meaning: *The work of Allah, who perfected all things.*\"",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 96,
+          "start": 0.0,
+          "end": 6.538
+        },
+        {
+          "from": 97,
+          "to": 253,
+          "start": 6.988,
+          "end": 24.877
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/en/yaseen_creation_p4.m4a",
+      "text": "Yaseen looked at the stars, the trees, and the colorful flowers. In his heart, he felt the power of the Great Creator, who arranges this wondrous universe with precision and wisdom.",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 64,
+          "start": 0.0,
+          "end": 3.724
+        },
+        {
+          "from": 65,
+          "to": 181,
+          "start": 4.174,
+          "end": 11.374
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/en/yaseen_creation_p5.m4a",
+      "text": "Yaseen raised his little hands and said, \"SubhanAllah, Alhamdulillah.\" He knew that every creature in nature glorifies Allah with His praise and points to His Oneness.",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 70,
+          "start": 0.0,
+          "end": 4.88
+        },
+        {
+          "from": 71,
+          "to": 167,
+          "start": 5.33,
+          "end": 11.73
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/en/yaseen_creation_p6.m4a",
+      "text": "Yaseen grew to love reflecting on Allah’s creations. He often praised and remembered Him, so his faith and love for the Creator grew stronger every day.",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 52,
+          "start": 0.0,
+          "end": 2.923
+        },
+        {
+          "from": 53,
+          "to": 152,
+          "start": 3.373,
+          "end": 9.182
+        }
+      ]
+    }
+  ]
+}

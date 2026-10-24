@@ -33,13 +33,12 @@ import 'package:almorabbi/features/program/data/story_models.dart';
 import 'package:almorabbi/features/program/screens/story_reader_screen.dart';
 import 'package:almorabbi/features/stories/narration/story_narration.dart';
 import 'package:almorabbi/features/stories/scene/scene_cues.dart';
+import 'package:almorabbi/features/stories/scene/scene_people.g.dart';
 import 'package:almorabbi/features/stories/scene/story_scene.dart';
 import 'package:almorabbi/features/stories/scene/story_scene_catalog.dart';
 import 'package:almorabbi/l10n/app_localizations.dart';
 import 'package:almorabbi/theme/app_colors.dart';
 import 'package:almorabbi/theme/app_palette.dart';
-
-const _prototypes = ['kitten_kindness', 'maryam_toys'];
 
 StoryNarration _manifest(String id, String lang) => StoryNarration.tryParse(
   jsonDecode(
@@ -115,31 +114,79 @@ void main() {
     });
   });
 
-  group('the prototype stories, on their real recordings', () {
-    for (final id in _prototypes) {
-      for (final lang in ['ar', 'en']) {
-        test('$id ($lang): every cued piece is named on its page', () {
-          final n = _manifest(id, lang);
-          expect(n.pages.length, scenePageCount(id));
-          for (var i = 0; i < n.pages.length; i++) {
-            final scene = sceneFor(id, i);
+  group('every story, on its real recordings', () {
+    final ids = [for (final s in _bundled('stories.json')) s.id];
+
+    test('the library is all here: 19 stories, both languages', () {
+      expect(ids.length, 19);
+      for (final id in ids) {
+        expect(hasScenesFor(id), isTrue, reason: id);
+      }
+    });
+
+    for (final id in ids) {
+      test('$id: every cue word is said on its page (ar or en), '
+          'and every face turn in both', () {
+        final ar = _manifest(id, 'ar'), en = _manifest(id, 'en');
+        expect(ar.pages.length, scenePageCount(id));
+        expect(en.pages.length, scenePageCount(id));
+        for (var i = 0; i < scenePageCount(id); i++) {
+          final scene = sceneFor(id, i);
+          for (final l in scene.layers) {
+            for (final w in l.cue) {
+              final probe = StoryScene(scene.backdrop, [
+                SceneLayer(l.piece, x: .5, cue: [w]),
+              ]);
+              final said = [ar, en].any(
+                (n) => _pieceBeats(
+                  beatsFor(probe, n.pages[i].text, n.pages[i].sentences),
+                ).isNotEmpty,
+              );
+              expect(
+                said,
+                isTrue,
+                reason: '$id page ${i + 1}: ${l.piece} «$w» is never said',
+              );
+            }
+            if (l.faceTo != null) {
+              expect(
+                l.isPerson,
+                isTrue,
+                reason: '$id page ${i + 1} ${l.piece}',
+              );
+              expect(l.faceCue, isNotEmpty);
+              for (final n in [ar, en]) {
+                final turns =
+                    beatsFor(
+                      scene,
+                      n.pages[i].text,
+                      n.pages[i].sentences,
+                    ).where(
+                      (b) =>
+                          b.kind == SceneBeatKind.face &&
+                          scene.layers[b.layer] == l,
+                    );
+                expect(
+                  turns.length,
+                  1,
+                  reason:
+                      '$id page ${i + 1}: ${l.piece} turns once, '
+                      'in every language',
+                );
+              }
+            }
+            if (l.face != SceneFace.neutral) {
+              expect(l.isPerson, isTrue, reason: '$id: ${l.piece} has a face');
+            }
+          }
+          for (final n in [ar, en]) {
             final page = n.pages[i];
             final beats = beatsFor(scene, page.text, page.sentences);
-            final hit = {
-              for (final b in _pieceBeats(beats)) scene.layers[b.layer].piece,
-            };
-            final cued = {
-              for (final l in scene.layers)
-                if (l.cue.isNotEmpty) l.piece,
-            };
-            expect(hit, cued, reason: '$id $lang page ${i + 1}');
-            // In time order, each inside the recording's sentences.
             for (var k = 1; k < beats.length; k++) {
               expect(beats[k].at, greaterThanOrEqualTo(beats[k - 1].at));
             }
-            final end = page.sentences.last.end;
             for (final b in beats) {
-              expect(b.at, inInclusiveRange(0, end));
+              expect(b.at, inInclusiveRange(0, page.sentences.last.end));
             }
             // One lean per sentence, whatever the count in this language.
             expect(
@@ -147,9 +194,18 @@ void main() {
               page.sentences.length,
             );
           }
-        });
-      }
+        }
+      });
     }
+
+    test('5–8 pieces a page — something to point at and name', () {
+      for (final id in ids) {
+        for (var i = 0; i < scenePageCount(id); i++) {
+          final n = sceneFor(id, i).layers.length;
+          expect(n, inInclusiveRange(5, 8), reason: '$id page ${i + 1}');
+        }
+      }
+    });
 
     test('the bundled text is what the recordings read', () {
       // If a story is corrected, the reader stops playing the old recording
@@ -158,9 +214,7 @@ void main() {
         ('stories.json', 'ar'),
         ('stories_en.json', 'en'),
       ]) {
-        for (final s in _bundled(
-          file,
-        ).where((s) => _prototypes.contains(s.id))) {
+        for (final s in _bundled(file)) {
           final n = _manifest(s.id, lang);
           for (var i = 0; i < s.pages.length; i++) {
             expect(
@@ -318,6 +372,102 @@ void main() {
       await tester.pump(const Duration(seconds: 2));
       expect(state.entrance, 1);
       await tester.pumpWidget(const SizedBox());
+    });
+  });
+
+  group('faces', () {
+    test('every person has every face, and nothing else gets one', () {
+      for (final MapEntry(key: piece) in scenePeople.entries) {
+        expect(
+          File(scenePieceAsset(piece)).existsSync(),
+          isTrue,
+          reason: piece,
+        );
+        for (final f in SceneFace.values) {
+          final asset = sceneFaceAsset(piece, f)!;
+          expect(File(asset).existsSync(), isTrue, reason: asset);
+        }
+      }
+      for (final piece in [
+        'kitten',
+        'tree',
+        'toy_chest',
+        'bed_girl',
+        'sujood',
+      ]) {
+        expect(sceneFaceAsset(piece, SceneFace.happy), isNull, reason: piece);
+      }
+    });
+
+    const turning = StoryScene('bg_bedroom', [
+      SceneLayer(
+        'girl',
+        x: .3,
+        face: SceneFace.sad,
+        faceTo: SceneFace.happy,
+        faceCue: ['قررت', 'decided'],
+      ),
+      SceneLayer('toy_chest', x: .6, size: .34),
+    ]);
+    const said = 'كانت حزينة ثم فكرت وقررت أن تشارك.';
+    SceneCues turnCues(ValueNotifier<Duration> clock) =>
+        SceneCues(beats: beatsFor(turning, said, _even(said, 8)), clock: clock);
+
+    Future<void> runTo(
+      WidgetTester tester,
+      ValueNotifier<Duration> clock,
+      double seconds,
+    ) async {
+      for (var t = 0.0; t <= seconds; t += .25) {
+        clock.value = Duration(milliseconds: (t * 1000).round());
+        await tester.pump(const Duration(milliseconds: 250));
+      }
+    }
+
+    test('the turn is timed at its word', () {
+      final turn = turnCues(
+        ValueNotifier(Duration.zero),
+      ).beats.singleWhere((b) => b.kind == SceneBeatKind.face);
+      expect(turn.layer, 0);
+      expect(turn.at, closeTo(8 * said.indexOf('وقررت') / said.length, .01));
+    });
+
+    testWidgets('with motion: sad until the word, then happy; '
+        'the narrator stops → the page’s own face', (tester) async {
+      final clock = ValueNotifier(Duration.zero);
+      addTearDown(clock.dispose);
+      await tester.pumpWidget(
+        _host(StorySceneView(scene: turning, cues: turnCues(clock))),
+      );
+      final state = tester.state<StorySceneViewState>(
+        find.byType(StorySceneView),
+      );
+      expect(state.faceOf(0), SceneFace.sad);
+      await runTo(tester, clock, 3);
+      expect(state.faceOf(0), SceneFace.sad);
+      await runTo(tester, clock, 7);
+      expect(state.faceOf(0), SceneFace.happy);
+
+      await tester.pumpWidget(_host(const StorySceneView(scene: turning)));
+      expect(state.faceOf(0), SceneFace.sad);
+      await tester.pumpWidget(const SizedBox());
+    });
+
+    testWidgets('reduced motion: the face never turns', (tester) async {
+      final clock = ValueNotifier(Duration.zero);
+      addTearDown(clock.dispose);
+      await tester.pumpWidget(
+        _host(
+          StorySceneView(scene: turning, cues: turnCues(clock)),
+          still: true,
+        ),
+      );
+      final state = tester.state<StorySceneViewState>(
+        find.byType(StorySceneView),
+      );
+      await runTo(tester, clock, 8);
+      expect(state.faceOf(0), SceneFace.sad);
+      expect(state.cueing, isFalse);
     });
   });
 

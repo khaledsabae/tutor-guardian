@@ -1,0 +1,120 @@
+{
+  "voice": "eleven_v3/JBFqnCBsd6RMkjVDRZzb",
+  "language": "en",
+  "pages": [
+    {
+      "audio": "docs/stories/narration/en/omar_prayer_p1.m4a",
+      "text": "Umar was a lively child who loved playing in his garden with his friends. In the middle of their play, he heard the adhan echoing sweetly across the sky: 'Allahu Akbar, Allahu Akbar.' Umar stopped at once and looked at his friends with a smile.",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 73,
+          "start": 0.0,
+          "end": 4.062
+        },
+        {
+          "from": 74,
+          "to": 183,
+          "start": 4.512,
+          "end": 12.975
+        },
+        {
+          "from": 184,
+          "to": 244,
+          "start": 13.425,
+          "end": 16.515
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/en/omar_prayer_p2.m4a",
+      "text": "He remembered that the Messenger of Allah ﷺ was asked about the deeds most beloved to Allah, and he answered that it is prayer on time. Umar said to his friends, 'My friends, the call of the Creator is more important than any play. Let’s go to the masjid to pray together.'",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 135,
+          "start": 0.0,
+          "end": 10.183
+        },
+        {
+          "from": 136,
+          "to": 231,
+          "start": 10.633,
+          "end": 16.953
+        },
+        {
+          "from": 232,
+          "to": 273,
+          "start": 17.403,
+          "end": 19.483
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/en/omar_prayer_p3.m4a",
+      "text": "Umar hurried to the wudu area and performed wudu slowly and carefully: washing his hands, rinsing his mouth and nose, washing his face and arms, wiping his head and ears, and washing his feet, remembering that wudu washes away sins and brightens the face with light and barakah.",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 278,
+          "start": 0.0,
+          "end": 18.935
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/en/omar_prayer_p4.m4a",
+      "text": "Umar stood in the first row in the masjid beside his father, feeling the greatness of standing before Allah, the Most High. He performed his salah with steadiness and khushu', without rushing, reciting the Qur'an with a present heart.",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 123,
+          "start": 0.0,
+          "end": 7.575
+        },
+        {
+          "from": 124,
+          "to": 234,
+          "start": 8.025,
+          "end": 14.717
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/en/omar_prayer_p5.m4a",
+      "text": "After the salah ended, Umar felt a peace and tranquility fill his chest. He realized that salah is not just movements—it is a light that brightens the Muslim’s day and a great pillar that brings him closer to his Lord.",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 72,
+          "start": 0.0,
+          "end": 4.48
+        },
+        {
+          "from": 73,
+          "to": 218,
+          "start": 4.93,
+          "end": 13.41
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/en/omar_prayer_p6.m4a",
+      "text": "When Umar returned to his friends in the garden, he lovingly invited them to join him in performing salah always. The friends all pledged to respond immediately to the light of the adhan every time.",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 113,
+          "start": 0.0,
+          "end": 6.355
+        },
+        {
+          "from": 114,
+          "to": 198,
+          "start": 6.805,
+          "end": 11.365
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,72 @@
+{
+  "voice": "eleven_v3/JBFqnCBsd6RMkjVDRZzb",
+  "language": "en",
+  "pages": [
+    {
+      "audio": "docs/stories/narration/en/noura_sharing_box_p1.m4a",
+      "text": "Noura had bought a special box of wooden colouring pencils, full of sparkle and bright colours, and she was very excited for art class at nursery so she could draw a wonderful rainbow.",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 184,
+          "start": 0.0,
+          "end": 10.8
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/en/noura_sharing_box_p2.m4a",
+      "text": "Noura looked at the seat next to her and saw her classmate Layla sitting silently, her eyes full of sadness, because she had left her pencil box on the school bus and had nothing to draw with.",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 192,
+          "start": 0.0,
+          "end": 10.844
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/en/noura_sharing_box_p3.m4a",
+      "text": "Noura hesitated for a moment and thought, «Should I give her some of my new pencils?» Then she remembered her teacher's words: «When we share what we love, the joy grows in everyone's heart.»",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 85,
+          "start": 0.0,
+          "end": 4.689
+        },
+        {
+          "from": 86,
+          "to": 191,
+          "start": 5.139,
+          "end": 11.779
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/en/noura_sharing_box_p4.m4a",
+      "text": "Noura held out her hand with a big smile, split the pencils into two halves and said to Layla, «These are for you, my friend. We'll draw one picture together.» Layla wiped away her tear and laughed — and it was the most beautiful picture in the exhibition!",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 125,
+          "start": 0.0,
+          "end": 7.994
+        },
+        {
+          "from": 126,
+          "to": 159,
+          "start": 8.444,
+          "end": 10.112
+        },
+        {
+          "from": 160,
+          "to": 256,
+          "start": 10.562,
+          "end": 16.562
+        }
+      ]
+    }
+  ]
+}

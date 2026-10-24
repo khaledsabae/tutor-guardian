@@ -29,6 +29,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../core/motion.dart';
 import 'scene_cues.dart';
+import 'scene_people.g.dart';
 
 /// How a piece moves while the page rests.
 enum SceneMotion {
@@ -51,6 +52,9 @@ enum SceneMotion {
   drift,
 }
 
+/// What a person's face shows (`face_<kind>_<name>.svg`, tool/story_art.py).
+enum SceneFace { neutral, happy, sad, surprised, shy, cross }
+
 /// One paper piece on a scene.
 @immutable
 class SceneLayer {
@@ -65,6 +69,9 @@ class SceneLayer {
     this.phase = 0,
     this.cue = const [],
     this.entersOnCue = false,
+    this.face = SceneFace.neutral,
+    this.faceTo,
+    this.faceCue = const [],
   });
 
   /// The file name under assets/svg/stories/, without `.svg`.
@@ -101,6 +108,27 @@ class SceneLayer {
   /// While the narrator reads, the piece waits off the page until its first
   /// [cue] word, then walks in. Read silently, it is simply there.
   final bool entersOnCue;
+
+  /// For a person: the face the page's text gives them. The picture shows it
+  /// whenever nobody is reading aloud.
+  final SceneFace face;
+
+  /// For a person whose feeling turns on the page: the face they turn to
+  /// when the narrator reaches a [faceCue] word (a sad child cheering up at
+  /// «قررت» / "decided"). Only while the narrator reads; a word the
+  /// recording does not say simply leaves [face] in place.
+  final SceneFace? faceTo;
+  final List<String> faceCue;
+
+  bool get isPerson => scenePeople.containsKey(piece);
+}
+
+/// The face sheet laid over person [piece] — null for anything else.
+String? sceneFaceAsset(String piece, SceneFace face) {
+  final kind = scenePeople[piece];
+  return kind == null
+      ? null
+      : 'assets/svg/stories/face_${kind}_${face.name}.svg';
 }
 
 @immutable
@@ -183,6 +211,9 @@ class StorySceneViewState extends State<StorySceneView>
   /// Entering pieces the narrator has brought in.
   final Set<int> _entered = {};
 
+  /// People whose face the narrator has turned (to their `faceTo`).
+  final Set<int> _turned = {};
+
   late final AnimationController _camera = AnimationController(
     vsync: this,
     duration: const Duration(milliseconds: 1400),
@@ -205,6 +236,17 @@ class StorySceneViewState extends State<StorySceneView>
   /// Visible for tests: how far the pieces' entrance has run, 0 … 1.
   @visibleForTesting
   double get entrance => _intro.value;
+
+  /// Visible for tests: the face piece [i] shows now.
+  @visibleForTesting
+  SceneFace faceOf(int i) => _faceOf(i);
+
+  SceneFace _faceOf(int i) {
+    final l = widget.scene.layers[i];
+    return _cuesOn && _turned.contains(i) && l.faceTo != null
+        ? l.faceTo!
+        : l.face;
+  }
 
   /// Visible for tests: whether piece [i] is on the page at all.
   @visibleForTesting
@@ -316,10 +358,13 @@ class StorySceneViewState extends State<StorySceneView>
     final step = prev != null && now >= prev && now - prev <= 1.5;
     var changed = false;
     if (prev != null && now < prev - .5) {
-      // Played again from earlier: entrances still ahead wait again.
+      // Played again from earlier: entrances and turns still ahead wait.
       for (final b in cues.beats) {
         if (b.kind == SceneBeatKind.enter && b.at > now) {
           changed |= _entered.remove(b.layer);
+        }
+        if (b.kind == SceneBeatKind.face && b.at > now) {
+          changed |= _turned.remove(b.layer);
         }
       }
     }
@@ -340,6 +385,8 @@ class StorySceneViewState extends State<StorySceneView>
           if (crossed) _hopOf(b.layer).forward(from: 0);
         case SceneBeatKind.camera:
           lean = b;
+        case SceneBeatKind.face:
+          changed |= _turned.add(b.layer);
       }
     }
     if (lean != null && (lean.focus != _camToFocus || _camToScale == 1)) {
@@ -435,6 +482,27 @@ class StorySceneViewState extends State<StorySceneView>
       height: side,
       excludeFromSemantics: true,
     );
+    final faceAsset = sceneFaceAsset(layer.piece, _faceOf(i));
+    if (faceAsset != null) {
+      final face = SvgPicture.asset(
+        faceAsset,
+        key: ValueKey(faceAsset),
+        width: side,
+        height: side,
+        excludeFromSemantics: true,
+      );
+      piece = Stack(
+        children: [
+          piece,
+          _still || !widget.animate
+              ? face
+              : AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 350),
+                  child: face,
+                ),
+        ],
+      );
+    }
     if (layer.flip) {
       piece = Transform.flip(flipX: true, child: piece);
     }

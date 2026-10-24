@@ -1,0 +1,114 @@
+{
+  "voice": "eleven_v3/JBFqnCBsd6RMkjVDRZzb",
+  "language": "en",
+  "pages": [
+    {
+      "audio": "docs/stories/narration/en/bilal_forgiveness_p1.m4a",
+      "text": "Bilal was happily painting his colorful picture in art class when his classmate Tariq tripped and accidentally spilled juice all over Bilal’s beautiful painting.",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 161,
+          "start": 0.0,
+          "end": 9.834
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/en/bilal_forgiveness_p2.m4a",
+      "text": "Bilal felt sad for a moment and worried he might get angry, but Tariq rushed over, trembling and apologizing, 'I’m sorry, Bilal! I didn’t mean to!'",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 128,
+          "start": 0.0,
+          "end": 9.015
+        },
+        {
+          "from": 129,
+          "to": 147,
+          "start": 9.465,
+          "end": 10.561
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/en/bilal_forgiveness_p3.m4a",
+      "text": "Bilal remembered the Qur’an’s description of the righteous: ﴿وَالْكَاظِمِينَ الْغَيْظَ وَالْعَافِينَ عَنِ النَّاسِ وَاللَّهُ يُحِبُّ الْمُحْسِنِينَ﴾. Interpretation of the meaning: 'Those who restrain anger and pardon the people—and Allah loves the doers of good.'",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 149,
+          "start": 0.0,
+          "end": 22.312
+        },
+        {
+          "from": 150,
+          "to": 264,
+          "start": 22.762,
+          "end": 30.042
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/en/bilal_forgiveness_p4.m4a",
+      "text": "Bilal smiled warmly and said, 'It’s okay, Tariq. Alhamdulillah, a Muslim forgives and shows kindness. We can paint a new picture together, even better!'",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 48,
+          "start": 0.0,
+          "end": 3.556
+        },
+        {
+          "from": 49,
+          "to": 101,
+          "start": 4.006,
+          "end": 7.366
+        },
+        {
+          "from": 102,
+          "to": 152,
+          "start": 7.816,
+          "end": 10.449
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/en/bilal_forgiveness_p5.m4a",
+      "text": "Tariq was surprised by Bilal’s gentleness and forgiveness. They cleaned the table together and shared their colors to paint a new, even more beautiful picture.",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 58,
+          "start": 0.0,
+          "end": 3.04
+        },
+        {
+          "from": 59,
+          "to": 159,
+          "start": 3.49,
+          "end": 9.003
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/en/bilal_forgiveness_p6.m4a",
+      "text": "Bilal felt a deep peace in his heart. He knew that forgiveness lifts a person’s rank and fills hearts with love and harmony.",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 37,
+          "start": 0.0,
+          "end": 2.233
+        },
+        {
+          "from": 38,
+          "to": 124,
+          "start": 2.683,
+          "end": 7.643
+        }
+      ]
+    }
+  ]
+}

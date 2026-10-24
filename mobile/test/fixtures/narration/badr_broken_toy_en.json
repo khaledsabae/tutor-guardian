@@ -1,0 +1,108 @@
+{
+  "voice": "eleven_v3/JBFqnCBsd6RMkjVDRZzb",
+  "language": "en",
+  "pages": [
+    {
+      "audio": "docs/stories/narration/en/badr_broken_toy_p1.m4a",
+      "text": "Badr was playing in the living room with a beautiful blue racing car that belonged to his big brother, Omar. He drove it eagerly across the carpet, happily copying the sound of the engine.",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 108,
+          "start": 0.0,
+          "end": 5.427
+        },
+        {
+          "from": 109,
+          "to": 188,
+          "start": 5.877,
+          "end": 10.117
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/en/badr_broken_toy_p2.m4a",
+      "text": "Suddenly, the car crashed hard into the edge of the table, and one of its little wheels broke! Badr's heart pounded. He felt scared and thought about quickly hiding the car behind the sofa so that no one would know.",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 94,
+          "start": 0.0,
+          "end": 5.04
+        },
+        {
+          "from": 95,
+          "to": 116,
+          "start": 5.49,
+          "end": 6.944
+        },
+        {
+          "from": 117,
+          "to": 215,
+          "start": 7.394,
+          "end": 13.043
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/en/badr_broken_toy_p3.m4a",
+      "text": "But Badr remembered his father's advice: «A believer is truthful and brave, my son, and truthfulness brings peace of heart and blessing.» So Badr stopped, took a deep breath, and decided to tell the truth, whatever happened.",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 137,
+          "start": 0.0,
+          "end": 8.88
+        },
+        {
+          "from": 138,
+          "to": 224,
+          "start": 9.33,
+          "end": 14.69
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/en/badr_broken_toy_p4.m4a",
+      "text": "Badr picked up the car and walked over to his brother Omar with his head held high. He said honestly, «I'm sorry, brother. The wheel broke by accident while I was playing with it.» Omar smiled, hugged him and said, «Thank you for your honesty and your courage, Badr. Truthfulness is worth more than any toy. Come on, let's fix it together with Dad's help.»",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 83,
+          "start": 0.0,
+          "end": 4.64
+        },
+        {
+          "from": 84,
+          "to": 122,
+          "start": 5.09,
+          "end": 7.81
+        },
+        {
+          "from": 123,
+          "to": 180,
+          "start": 8.26,
+          "end": 11.031
+        },
+        {
+          "from": 181,
+          "to": 266,
+          "start": 11.481,
+          "end": 16.521
+        },
+        {
+          "from": 267,
+          "to": 307,
+          "start": 16.971,
+          "end": 19.444
+        },
+        {
+          "from": 308,
+          "to": 356,
+          "start": 19.894,
+          "end": 22.507
+        }
+      ]
+    }
+  ]
+}

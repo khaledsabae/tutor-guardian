@@ -34,6 +34,10 @@ enum SceneBeatKind {
 
   /// The picture leans towards [SceneBeat.focus] — once per sentence.
   camera,
+
+  /// A person's face turns to their `faceTo` (sad → happy as the sentence
+  /// turns).
+  face,
 }
 
 @immutable
@@ -88,10 +92,27 @@ List<SceneBeat> beatsFor(
     for (final layer in scene.layers)
       [for (final w in layer.cue) normalizeCueWord(w)],
   ];
+  final faceStems = [
+    for (final layer in scene.layers)
+      layer.faceTo == null
+          ? const <String>[]
+          : [for (final w in layer.faceCue) normalizeCueWord(w)],
+  ];
+  final turnedAt = <int>{};
   final beats = <SceneBeat>[];
   final lastAt = <int, double>{};
   for (final token in _word.allMatches(text)) {
     final candidates = _candidates(normalizeCueWord(token.group(0)!));
+    for (var i = 0; i < faceStems.length; i++) {
+      if (faceStems[i].isEmpty || turnedAt.contains(i)) continue;
+      if (!candidates.any((c) => faceStems[i].any((s) => _matches(c, s)))) {
+        continue;
+      }
+      final at = _timeOf(token.start, timed);
+      if (at == null) continue;
+      turnedAt.add(i);
+      beats.add(SceneBeat(at, SceneBeatKind.face, layer: i));
+    }
     for (var i = 0; i < stems.length; i++) {
       if (stems[i].isEmpty) continue;
       if (!candidates.any((c) => stems[i].any((s) => _matches(c, s)))) continue;
@@ -120,6 +141,7 @@ List<SceneBeat> beatsFor(
     final s = timed[k];
     SceneBeat? named;
     for (final b in beats) {
+      if (b.kind == SceneBeatKind.face) continue;
       if (b.at >= s.start && b.at < s.end) {
         named = b;
         break;
@@ -173,7 +195,13 @@ const _endings = {
   's', 'es',
 };
 
-bool _matches(String candidate, String stem) =>
+/// A stem written `=word` matches that word only — «=والد» is the father,
+/// never «والدة», the mother.
+bool _matches(String candidate, String stem) => stem.startsWith('=')
+    ? candidate == stem.substring(1)
+    : _stemmed(candidate, stem);
+
+bool _stemmed(String candidate, String stem) =>
     candidate == stem ||
     (candidate.startsWith(stem) &&
         _endings.contains(candidate.substring(stem.length)));

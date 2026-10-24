@@ -1,0 +1,120 @@
+{
+  "voice": "eleven_v3/JBFqnCBsd6RMkjVDRZzb",
+  "language": "en",
+  "pages": [
+    {
+      "audio": "docs/stories/narration/en/fatima_parents_p1.m4a",
+      "text": "Fatima’s mother came home from work tired after a long day. She sat down on the sofa to rest for a little while.",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 59,
+          "start": 0.0,
+          "end": 3.36
+        },
+        {
+          "from": 60,
+          "to": 112,
+          "start": 3.81,
+          "end": 6.53
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/en/fatima_parents_p2.m4a",
+      "text": "Fatima noticed how tired her mother was. She remembered the words of Allah: ﴿وَبِالْوَالِدَيْنِ إِحْسَانًا﴾ — interpretation of the meaning: 'And do ihsan to parents.' So she decided to bring happiness to her mother’s heart.",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 40,
+          "start": 0.0,
+          "end": 2.192
+        },
+        {
+          "from": 41,
+          "to": 167,
+          "start": 2.642,
+          "end": 15.38
+        },
+        {
+          "from": 168,
+          "to": 224,
+          "start": 15.83,
+          "end": 18.536
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/en/fatima_parents_p3.m4a",
+      "text": "Quickly, Fatima brought a warm cup of water. She helped tidy up her toys and cleaned the living room with energy and care, without anyone even asking.",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 44,
+          "start": 0.0,
+          "end": 2.8
+        },
+        {
+          "from": 45,
+          "to": 150,
+          "start": 3.25,
+          "end": 9.73
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/en/fatima_parents_p4.m4a",
+      "text": "When her mother opened her eyes and saw the neat room and Fatima’s kindness, she smiled with joy. She hugged Fatima close to her chest with tenderness and made du’a for her, asking for blessings.",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 97,
+          "start": 0.0,
+          "end": 6.24
+        },
+        {
+          "from": 98,
+          "to": 195,
+          "start": 6.69,
+          "end": 12.77
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/en/fatima_parents_p5.m4a",
+      "text": "Fatima’s father felt so proud of her. He gave her a beautiful damask rose as a gift for her ihsan and her birr al-walidayn.",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 37,
+          "start": 0.0,
+          "end": 2.24
+        },
+        {
+          "from": 38,
+          "to": 123,
+          "start": 2.69,
+          "end": 8.313
+        }
+      ]
+    },
+    {
+      "audio": "docs/stories/narration/en/fatima_parents_p6.m4a",
+      "text": "Fatima learned that birr al-walidayn is a deed Allah loves, and that it fills a home with love. She kept on doing ihsan to her father and mother with a smile that never faded.",
+      "sentences": [
+        {
+          "from": 0,
+          "to": 95,
+          "start": 0.0,
+          "end": 6.48
+        },
+        {
+          "from": 96,
+          "to": 175,
+          "start": 6.93,
+          "end": 11.49
+        }
+      ]
+    }
+  ]
+}

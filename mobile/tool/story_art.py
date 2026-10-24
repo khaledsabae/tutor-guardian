@@ -21,6 +21,7 @@ import math
 from pathlib import Path
 
 OUT = Path(__file__).resolve().parents[1] / "assets" / "svg" / "stories"
+DART_PEOPLE = Path(__file__).resolve().parents[1] / "lib" / "features" / "stories" / "scene" / "scene_people.g.dart"
 
 # STYLE.md palette — nothing else.
 EMERALD = "#0F6B5C"
@@ -182,7 +183,7 @@ def arm(x_sh, y_sh, x_hand, y_hand, fill, w=9.0):
 
 
 def person(kind: str, cloth: str, cloth2: str, head_cover: str | None = None,
-           beard: bool = False, hair: bool = False, kufi: str | None = None,
+           beard: bool | str = False, hair: bool = False, kufi: str | None = None,
            arms: str = "down", cane: bool = False):
     """kind: child|adult. arms: down|out|up|hold|wave."""
     if kind == "child":
@@ -241,14 +242,89 @@ def person(kind: str, cloth: str, cloth2: str, head_cover: str | None = None,
         parts.append(path(f"M{f(cx - head_r)} {f(head_y + 2)} Q{f(cx - head_r + 2)} {f(head_y + head_r + 12)} "
                           f"{f(cx)} {f(head_y + head_r + 14)} Q{f(cx + head_r - 2)} {f(head_y + head_r + 12)} "
                           f"{f(cx + head_r)} {f(head_y + 2)} Q{f(cx)} {f(head_y + head_r - 2)} "
-                          f"{f(cx - head_r)} {f(head_y + 2)} Z", INK))
+                          f"{f(cx - head_r)} {f(head_y + 2)} Z", beard if isinstance(beard, str) else INK))
     body = "".join(parts)
-    face = eyes(cx, head_y + (2 if not beard else -1), spread=head_r * .36, size=head_r * .2,
-                width=2.4 if kind == "child" else 2.6)
-    if head_cover:
-        # The hood's own inner fold, a shade deeper, so the face sits inside it.
-        pass
-    return shadow(body) + body + face
+    # No face here: the scene lays a face_<kind>_<expression> sheet over the
+    # piece (FACES below), so a page can show what the text says a person
+    # feels — and change it when the narrator gets there.
+    return shadow(body) + body
+
+
+# Where a person's face sits in its 240-box, by build. A bearded face keeps
+# its eyes a little higher, above the beard.
+FACE_SPOTS = {
+    "child": (120, 104, 19, 2),
+    "adult": (120, 50, 22, 2),
+    "adult_beard": (120, 50, 22, -1),
+}
+BLUSH = "#EC7F73"
+TEAR = "#7CC7EA"
+
+
+def face(kind: str, expr: str) -> str:
+    """One expression, drawn as paper-cut marks only: closed or dot eyes,
+    brows, a mouth curve, cheeks, a tear. Never more than that (STYLE.md:
+    simple, quiet faces)."""
+    cx, hy, r, lift = FACE_SPOTS[kind]
+    ey = hy + lift
+    sp, sz = r * .36, r * .2
+    w = 2.4 if kind == "child" else 2.6
+    my = hy + r * .5 if kind == "child" else hy + r * .45
+    # A bearded mouth sits on the beard: a warm line, not the ink.
+    mouth = "#E26D5A" if kind == "adult_beard" else INK
+    by = ey - r * .42
+    out = ""
+
+    def brows(inner_up: bool, outer_up: bool = False, gap=1.0):
+        d = r * .14
+        b = ""
+        for side in (-1, 1):
+            x_in, x_out = cx + side * sp * .45 * gap, cx + side * (sp + sz * 1.1)
+            y_in = by - (d if inner_up else 0) + (d * .6 if outer_up else 0)
+            y_out = by - (d if outer_up else 0) + (d * .6 if inner_up else 0)
+            b += stroke(f"M{f(x_in)} {f(y_in)} L{f(x_out)} {f(y_out)}", INK, w * .8)
+        return b
+
+    if expr == "neutral":
+        return eyes(cx, ey, spread=sp, size=sz, width=w)
+    if expr == "happy":
+        out += eyes(cx, ey, spread=sp, size=sz, width=w)
+        out += stroke(f"M{f(cx - r * .3)} {f(my - 1)} Q{f(cx)} {f(my + r * .3)} {f(cx + r * .3)} {f(my - 1)}", mouth, w)
+        out += circle(cx - sp - sz * .4, ey + r * .32, r * .15, BLUSH) + circle(cx + sp + sz * .4, ey + r * .32, r * .15, BLUSH)
+        return out
+    if expr == "sad":
+        for side in (-1, 1):  # lids down
+            ex = cx + side * sp
+            out += stroke(f"M{f(ex - sz)} {f(ey - 1)} Q{f(ex)} {f(ey + sz * 1.2)} {f(ex + sz)} {f(ey - 1)}", INK, w)
+        out += brows(inner_up=True)
+        out += stroke(f"M{f(cx - r * .24)} {f(my + 3)} Q{f(cx)} {f(my - r * .18)} {f(cx + r * .24)} {f(my + 3)}", mouth, w)
+        out += path(f"M{f(cx + sp + 1)} {f(ey + 3)} q-3 5 0 7.5 q3 -2.5 0 -7.5 Z", TEAR)
+        return out
+    if expr == "surprised":
+        out += circle(cx - sp, ey, sz * .62, INK) + circle(cx + sp, ey, sz * .62, INK)
+        for side in (-1, 1):  # brows raised high, arched
+            ex = cx + side * sp
+            out += stroke(f"M{f(ex - sz)} {f(by - 1)} Q{f(ex)} {f(by - r * .2)} {f(ex + sz)} {f(by - 1)}", INK, w * .8)
+        out += ellipse(cx, my + 1, r * .11, r * .15, mouth)
+        return out
+    if expr == "shy":
+        for side in (-1, 1):  # eyes looking down, half closed
+            ex = cx + side * sp
+            out += stroke(f"M{f(ex - sz)} {f(ey + 1)} Q{f(ex)} {f(ey + sz * .9)} {f(ex + sz)} {f(ey + 1)}", INK, w)
+        out += ellipse(cx - sp - sz * .3, ey + r * .34, r * .2, r * .13, BLUSH)
+        out += ellipse(cx + sp + sz * .3, ey + r * .34, r * .2, r * .13, BLUSH)
+        out += stroke(f"M{f(cx - r * .14)} {f(my + 1)} Q{f(cx - r * .05)} {f(my - 1)} {f(cx)} {f(my + 1)} "
+                      f"Q{f(cx + r * .05)} {f(my + 3)} {f(cx + r * .14)} {f(my + 1)}", mouth, w * .8)
+        return out
+    if expr == "cross":
+        out += circle(cx - sp, ey + 1, sz * .5, INK) + circle(cx + sp, ey + 1, sz * .5, INK)
+        out += brows(inner_up=False, outer_up=True, gap=.8)
+        out += stroke(f"M{f(cx - r * .22)} {f(my + 2)} L{f(cx + r * .22)} {f(my + 2)}", mouth, w)
+        return out
+    raise ValueError(expr)
+
+
+EXPRESSIONS = ("neutral", "happy", "sad", "surprised", "shy", "cross")
 
 
 PEOPLE = {
@@ -274,8 +350,19 @@ PEOPLE = {
     "father_out": lambda: person("adult", IVORY, IVORY_D, beard=True, kufi=IVORY_D, arms="out"),
     "grandma": lambda: person("adult", SHADOW_EM, HILL_DEEP, head_cover=IVORY, cane=True),
     "man": lambda: person("adult", SKY_D, BLUE_D, hair=True, beard=True),
+    "grandpa": lambda: person("adult", WALL_D, WOOD, beard=IVORY_S, kufi=IVORY, cane=True),
     "teacher": lambda: person("adult", HILL, HILL_DEEP, head_cover=LEAF_L),
 }
+
+
+# Which face sheet each person takes (the scene reads this through the
+# generated lib/features/stories/scene/scene_people.g.dart).
+def face_kind(name: str) -> str:
+    if name.startswith(("father", "man", "grandpa")):
+        return "adult_beard"
+    if name.startswith(("mother", "grandma", "teacher")):
+        return "adult"
+    return "child"
 
 
 # ── animals & nature ────────────────────────────────────────────────────────
@@ -768,6 +855,118 @@ def toy_duck():
     return out
 
 
+def lamp():
+    """A table lamp, its shade lit gold."""
+    b = [path("M86 70 L154 70 L172 132 L68 132 Z", GOLD), rect(114, 132, 12, 70, WOOD_D, 3),
+         ellipse(120, 214, 40, 12, WOOD)]
+    return piece(*b) + rect(68, 124, 104, 8, ORANGE, 3) + ellipse(120, 206, 30, 6, WOOD_L)
+
+
+def shovel():
+    b = [rect(114, 60, 12, 110, WOOD, 5), rect(100, 54, 40, 12, WOOD_D, 6),
+         path("M92 168 L148 168 L144 206 Q120 228 96 206 Z", SKY_D)]
+    return piece(*b) + rect(110, 160, 20, 12, BLUE_D, 3)
+
+
+def coins():
+    out = ""
+    for x, y in ((92, 206), (120, 200), (148, 208), (120, 182), (104, 188)):
+        out += piece(ellipse(x, y, 18, 8, GOLD)) + ellipse(x, y - 1.5, 11, 4, ORANGE)
+    return out
+
+
+def leaves():
+    out = ""
+    for x, y, r, c in ((70, 214, -20, ORANGE), (112, 220, 30, GOLD), (156, 212, -40, WOOD), (190, 220, 15, ORANGE_D)):
+        out += piece(ellipse(x, y, 18, 9, c, f' transform="rotate({r} {x} {y})"'))
+        out += line(x - 14, y, x + 14, y, WOOD_D, 1.6)
+    return out
+
+
+def bottles():
+    out = ""
+    for x, c in ((88, SKY_D), (124, GRASS), (162, SKY)):
+        out += piece(rect(x - 12, 160, 24, 60, c, 8), rect(x - 5, 146, 10, 16, c, 3))
+        out += rect(x - 12, 180, 24, 10, IVORY) + rect(x - 6, 142, 12, 6, RED, 2)
+    return out
+
+
+def broom():
+    b = [rect(116, 40, 8, 140, WOOD, 4), path("M92 176 L148 176 L162 226 L78 226 Z", GOLD)]
+    out = piece(*b) + rect(96, 172, 48, 10, RED, 4)
+    for x in (92, 106, 120, 134, 148):
+        out += line(x, 186, x + (x - 120) * .25, 222, WOOD_L, 2)
+    return out
+
+
+def bed():
+    """An empty bed with a pillow and a starry blanket."""
+    b = [rect(20, 150, 200, 54, WOOD, 10), rect(14, 110, 22, 114, WOOD_D, 6), rect(204, 130, 20, 94, WOOD_D, 6)]
+    out = piece(*b) + piece(ellipse(66, 146, 34, 16, IVORY))
+    out += piece(path("M96 144 Q156 132 206 140 L206 190 L40 190 Q50 160 96 144 Z", PURPLE))
+    for x in (120, 160, 196):
+        out += star8(x, 168, 6, GOLD)
+    return out
+
+
+def letter():
+    """A thank-you card: an envelope with a heart seal."""
+    b = [rect(60, 150, 120, 74, IVORY, 6)]
+    out = piece(*b) + path("M60 152 L120 194 L180 152", "none", f' stroke="{WALL_D}" stroke-width="4" stroke-linejoin="round"')
+    d = "M120 196 C102 182 104 168 114 168 C118 168 120 172 120 174 C120 172 122 168 126 168 C136 168 138 182 120 196 Z"
+    return out + path(d, RED)
+
+
+def race_car(broken=False):
+    b = [path("M50 190 L70 166 L150 160 L182 178 L192 190 Z", BLUE), rect(44, 186, 156, 20, BLUE, 8),
+         path("M92 166 L108 146 L140 146 L150 164 Z", BLUE_D), rect(176, 160, 26, 8, BLUE_D, 3)]
+    out = piece(*b) + rect(52, 192, 140, 5, IVORY) + circle(120, 186, 9, IVORY) + circle(120, 186, 5, RED)
+    if broken:
+        out += piece(circle(80, 208, 15, INK)) + circle(80, 208, 6, IVORY_S)
+        out += piece(circle(196, 224, 15, INK)) + circle(196, 224, 6, IVORY_S)
+        out += stroke("M156 206 l6 6 l-4 4 l6 6", INK, 2.4)
+        return out
+    for x in (80, 164):
+        out += piece(circle(x, 208, 15, INK)) + circle(x, 208, 6, IVORY_S)
+    return out
+
+
+def toolbox():
+    b = [rect(56, 150, 128, 72, RED, 8), path("M96 150 L96 128 Q120 116 144 128 L144 150", "none",
+                                               f' stroke="{INK}" stroke-width="8" stroke-linecap="round"')]
+    out = piece(*b) + rect(56, 172, 128, 8, ORANGE_D, 2) + rect(112, 168, 16, 14, GOLD, 3)
+    out += stroke("M150 144 L170 112", WOOD_D, 6) + rect(160, 100, 22, 14, IVORY_S, 3)  # a hammer
+    return out
+
+
+def gloves():
+    out = ""
+    for dx, c in ((-34, PINK), (34, PURPLE)):
+        x = 120 + dx
+        b = [rect(x - 22, 150, 44, 58, c, 14), rect(x - 22, 200, 44, 20, c, 4)]
+        fingers = [rect(x - 22 + k * 11, 128 + (k % 3) * 4, 10, 30, c, 5) for k in range(4)]
+        thumb = rect(x + (22 if dx > 0 else -32), 160, 10, 26, c, 5)
+        out += piece(*b, *fingers, thumb) + rect(x - 22, 204, 44, 6, IVORY, 2)
+    return out
+
+
+def bin_():
+    b = [path("M74 120 L166 120 L156 224 L84 224 Z", GRASS_D), rect(66, 110, 108, 16, HILL, 6)]
+    out = piece(*b)
+    for x in (100, 120, 140):
+        out += line(x, 136, x - (x - 120) * .1, 210, HILL, 3)
+    return out + rect(108, 102, 24, 10, HILL, 4)
+
+
+def rainbow():
+    out = ""
+    for k, c in enumerate((RED, ORANGE, GOLD, GRASS, BLUE, PURPLE)):
+        rr = 96 - k * 11
+        out += path(f"M{f(120 - rr)} 190 A{f(rr)} {f(rr)} 0 0 1 {f(120 + rr)} 190 L{f(120 + rr - 11)} 190 "
+                    f"A{f(rr - 11)} {f(rr - 11)} 0 0 0 {f(120 - rr + 11)} 190 Z", c)
+    return cloud_small(40, 186, 44) + cloud_small(200, 186, 44) + out
+
+
 PROPS = {
     "kitten": kitten, "bird": bird, "ant": ant,
     "tree": lambda: tree(), "tree_nest": lambda: tree(nest=True), "tree_olive": lambda: tree(HILL_DEEP, HILL),
@@ -791,7 +990,10 @@ PROPS = {
     "sujood": boy_sujood,
     "school_bag": school_bag, "butterfly": butterfly, "flower_pot": flower_pot, "cloth": cloth,
     "teddy": teddy, "doll": doll, "ball": ball, "books": books, "cushion": cushion,
-    "toy_duck": toy_duck,
+    "toy_duck": toy_duck, "lamp": lamp, "shovel": shovel, "coins": coins, "leaves": leaves,
+    "bottles": bottles, "broom": broom, "bed": bed, "letter": letter,
+    "race_car": lambda: race_car(), "race_car_broken": lambda: race_car(True),
+    "toolbox": toolbox, "gloves": gloves, "bin": bin_, "rainbow": rainbow,
 }
 
 
@@ -843,6 +1045,35 @@ def sky_day(sun_x=292, sun_y=54, sun_r=26):
     return out
 
 
+def wall_clock(cx, cy, r=14):
+    return (circle(cx + 2, cy + 3, r, WALL_D) + circle(cx, cy, r, WOOD) + circle(cx, cy, r - 3, IVORY)
+            + line(cx, cy, cx, cy - r * .6, INK, 2) + line(cx, cy, cx + r * .45, cy + 2, INK, 2) + circle(cx, cy, 1.6, RED))
+
+
+def wall_shelf(x, y, w=64):
+    out = rect(x, y, w, 6, WOOD_D, 3)
+    out += path(f"M{f(x + 8)} {f(y)} L{f(x + 24)} {f(y)} L{f(x + 22)} {f(y - 12)} L{f(x + 10)} {f(y - 12)} Z", ORANGE)
+    out += ellipse(x + 13, y - 18, 5, 8, GRASS) + ellipse(x + 19, y - 18, 5, 8, GRASS_D)
+    for k, c in enumerate((RED, BLUE, GOLD)):
+        out += rect(x + 32 + k * 9, y - 22, 8, 22, c, 1.5)
+    return out
+
+
+def slide(x):
+    out = rect(x + 4, 120, 6, 90, WOOD_D) + rect(x + 34, 120, 6, 90, WOOD_D)
+    for y in range(132, 206, 16):
+        out += rect(x + 4, y, 36, 4, WOOD)
+    out += path(f"M{f(x + 40)} 120 L{f(x + 52)} 120 L{f(x + 112)} 204 L{f(x + 96)} 208 Z", RED)
+    return out + rect(x, 114, 44, 8, BLUE, 3)
+
+
+def swing(x):
+    out = path(f"M{f(x)} 206 L{f(x + 16)} 110 L{f(x + 76)} 110 L{f(x + 92)} 206", "none",
+               f' stroke="{BLUE_D}" stroke-width="6" stroke-linejoin="round"')
+    out += line(x + 34, 112, x + 34, 172, IVORY_S, 2) + line(x + 58, 112, x + 58, 172, IVORY_S, 2)
+    return out + rect(x + 28, 170, 36, 7, ORANGE, 3)
+
+
 def bg_garden_day():
     out = sky_day()
     out += cloud_small(80, 52, 60) + cloud_small(200, 34, 44)
@@ -886,6 +1117,10 @@ def bg_room(night: bool):
         # A soft wallpaper of eight-point stars.
         out += stars_scatter([(34, 30), (330, 36), (34, 150), (326, 140), (150, 24), (180, 150)], WALL_D, 6)
     out += window(214, 34, 104, 92, night, None if night else PINK)
+    if night:
+        out += frame_picture(40, 40, 40, 32, "moon")
+    else:
+        out += frame_picture(40, 44, 40, 32, "tree") + wall_clock(130, 52)
     out += rect(0, 196, 360, 44, floor)
     out += rect(0, 192, 360, 6, SHADOW_EM if night else WOOD)
     if not night:
@@ -902,6 +1137,8 @@ def bg_classroom():
     out += rect(64, 30, 236, 104, WOOD, 8) + rect(60, 26, 236, 104, HILL_DEEP, 8)
     out += line(84, 60, 180, 60, LEAF_L, 4) + line(84, 82, 220, 82, LEAF_L, 4) + line(84, 104, 150, 104, LEAF_L, 4)
     out += star8(260, 64, 9, GOLD)
+    out += wall_clock(326, 40) + wall_shelf(18, 160, 60) + wall_shelf(296, 160, 60)
+    out += bunting(64, 296, 4, 6)
     out += rect(0, 196, 360, 44, WOOD_L) + rect(0, 192, 360, 6, WOOD)
     return out
 
@@ -910,6 +1147,9 @@ def bg_hallway():
     out = rect(0, 0, 360, 240, WALL)
     for x, c in ((30, BLUE), (150, GRASS), (270, ORANGE)):
         out += rect(x + 4, 69, 60, 128, WALL_D, 4) + rect(x, 64, 60, 128, c, 4) + circle(x + 48, 130, 3, GOLD)
+    for x, c in ((104, BLUE_D), (224, RED)):  # coat hooks with school bags
+        out += rect(x, 70, 30, 5, WOOD_D, 2) + rect(x + 3, 80, 24, 30, c, 7) + rect(x + 7, 92, 16, 10, GOLD, 3)
+    out += frame_picture(102, 24, 34, 28, "tree") + frame_picture(222, 24, 34, 28, "moon")
     out += path("M0 196 L360 196 L360 240 L0 240 Z", WOOD_L)
     out += path("M150 196 L210 196 L250 240 L110 240 Z", RED)
     return out
@@ -939,6 +1179,11 @@ def bg_kitchen():
     out += window(40, 34, 96, 80, False)
     out += rect(164, 50, 160, 54, WOOD_D, 6) + rect(160, 46, 160, 54, WOOD, 6)
     out += line(240, 52, 240, 94, WOOD_D, 3)
+    for k, c in enumerate((RED, GOLD, GRASS, ORANGE)):  # jars on the cupboard
+        x = 176 + k * 36
+        out += rect(x, 28, 22, 18, c, 4) + rect(x - 2, 24, 26, 6, WOOD_D, 2)
+    out += path("M60 136 Q60 118 80 118 Q100 118 100 136 Z", RED) + rect(56, 134, 48, 6, INK, 3)  # kettle
+    out += path("M100 124 L114 116", "none", f' stroke="{RED}" stroke-width="5" stroke-linecap="round"')
     out += rect(0, 150, 360, 90, BLUE_D) + rect(0, 144, 360, 12, WOOD_L)
     for x in range(20, 360, 80):
         out += rect(x, 168, 56, 54, BLUE, 6) + circle(x + 28, 178, 3, GOLD)
@@ -1045,7 +1290,11 @@ def bg_bedroom():
 
 
 def bg_playground():
-    out = bg_garden_day()
+    out = sky_day()
+    out += cloud_small(80, 52, 60) + cloud_small(200, 34, 44)
+    out += hills(150, (LEAF_L, LEAF, GRASS))
+    out += slide(20) + swing(236)
+    out += rect(0, 206, 360, 34, GRASS_D)
     return out + rect(0, 214, 360, 26, WOOD_L)
 
 
@@ -1064,6 +1313,19 @@ def main() -> None:
     for name, fn in {**PEOPLE, **PROPS}.items():
         (OUT / f"{name}.svg").write_text(svg(fn()), encoding="utf-8")
         written.add(f"{name}.svg")
+    for kind in FACE_SPOTS:
+        for expr in EXPRESSIONS:
+            name = f"face_{kind}_{expr}.svg"
+            (OUT / name).write_text(svg(face(kind, expr)), encoding="utf-8")
+            written.add(name)
+    people = "\n".join(f"  '{n}': '{face_kind(n)}'," for n in PEOPLE)
+    DART_PEOPLE.write_text(
+        "// GENERATED by tool/story_art.py — do not edit by hand.\n"
+        "//\n"
+        "// The person pieces, and which face sheet (face_<kind>_<expression>.svg)\n"
+        "// the scene lays over each one.\n"
+        "const scenePeople = <String, String>{\n" + people + "\n};\n",
+        encoding="utf-8")
     for name, fn in BACKDROPS.items():
         (OUT / f"{name}.svg").write_text(svg(fn(), 360, 240), encoding="utf-8")
         written.add(f"{name}.svg")
