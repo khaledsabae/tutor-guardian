@@ -185,7 +185,9 @@ void main() {
             ].every((p) => p);
         expect(livingStories.contains(id), allPainted, reason: id);
       }
-      expect(livingStories.length, greaterThanOrEqualTo(14));
+      // Every bundled story is painted now.
+      expect(livingStories.length, library.length);
+      expect(library.length, 19);
     });
 
     for (final s in library) {
@@ -232,18 +234,9 @@ void main() {
       });
     }
 
-    test('stories without paintings keep their paper-cut scenes', () {
-      for (final id in [
-        'aisha_permission',
-        'bilal_forgiveness',
-        'fatima_parents',
-        'yaseen_creation',
-        'hamza_truth',
-        'not_a_story',
-      ]) {
-        expect(livingPictureFor(id, 0), isNull, reason: id);
-        expect(livingCoverFor(id), isNull, reason: id);
-      }
+    test('a story the app does not know keeps the paper-cut scenes', () {
+      expect(livingPictureFor('not_a_story', 0), isNull);
+      expect(livingCoverFor('not_a_story'), isNull);
     });
   });
 

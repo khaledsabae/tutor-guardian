@@ -4,12 +4,9 @@
 ///
 /// A story is here only when every one of its pages has a real painting in
 /// docs/stories/ (served by the backend, the same files the reader showed
-/// before the paper-cut scenes). Five stories still have placeholder frames
-/// instead of paintings there (aisha_permission, bilal_forgiveness,
-/// fatima_parents, yaseen_creation, and hamza_truth pages 4–6): they keep
-/// their paper-cut scenes, and so does any story the server adds before the
-/// app knows it. The paper-cut scene is also the fallback when a painting
-/// cannot be loaded (offline).
+/// before the paper-cut scenes) — all 19 bundled stories since 2026-10-24.
+/// The paper-cut scenes stay for a story the server adds before the app
+/// knows it, and as the fallback when a painting cannot be loaded (offline).
 ///
 /// Regions are normalised to the 1024² painting. Cue words are Arabic and
 /// English in one list (narration/word_cues.dart); every word here is one the
@@ -1146,6 +1143,641 @@ final Map<String, List<LivingPicture>> _catalog = {
           Rect.fromLTRB(0.18, 0.58, 0.96, 0.96),
           cue: ['مائد', 'table'],
           burst: PictureBurst.sparkles,
+        ),
+      ],
+    ),
+  ],
+  // عائشة وأدب الاستئذان — Aisha and the Adab of Isti'dhan
+  'aisha_permission': [
+    LivingPicture(
+      image: _page('aisha_permission', 1),
+      regions: [
+        PictureRegion(
+          'aisha',
+          Rect.fromLTRB(0.22, 0.15, 0.6, 0.95),
+          cue: ['عائش', 'aisha'],
+        ),
+        PictureRegion(
+          'the door',
+          Rect.fromLTRB(0.52, 0, 0.8, 0.95),
+          cue: ['باب', 'door'],
+        ),
+        PictureRegion(
+          'the books',
+          Rect.fromLTRB(0.82, 0.55, 1, 0.95),
+          cue: ['كتاب', 'book'],
+          burst: PictureBurst.sparkles,
+        ),
+      ],
+    ),
+    LivingPicture(
+      image: _page('aisha_permission', 2),
+      ambient: PictureAmbient.sparkles,
+      regions: [
+        PictureRegion(
+          'remembering her father',
+          Rect.fromLTRB(0.3, 0, 0.72, 0.38),
+          cue: ['ابي', 'father'],
+          burst: PictureBurst.sparkles,
+        ),
+        PictureRegion(
+          'aisha',
+          Rect.fromLTRB(0.3, 0.38, 0.6, 0.9),
+          cue: ['عائش', 'aisha'],
+        ),
+      ],
+    ),
+    LivingPicture(
+      image: _page('aisha_permission', 3),
+      regions: [
+        PictureRegion(
+          'aisha',
+          Rect.fromLTRB(0.2, 0.12, 0.6, 0.95),
+          cue: ['عائش', 'aisha'],
+        ),
+        PictureRegion(
+          'the door, knocked gently',
+          Rect.fromLTRB(0.5, 0, 0.92, 0.95),
+          cue: ['باب', '=طرقات', 'door', 'knocked'],
+          burst: PictureBurst.sparkles,
+        ),
+      ],
+    ),
+    LivingPicture(
+      image: _page('aisha_permission', 4),
+      ambient: PictureAmbient.sparkles,
+      regions: [
+        PictureRegion(
+          'her mother',
+          Rect.fromLTRB(0.5, 0.24, 0.9, 0.86),
+          cue: ['ام', 'mother'],
+          burst: PictureBurst.hearts,
+        ),
+        PictureRegion(
+          'aisha',
+          Rect.fromLTRB(0.12, 0.3, 0.42, 0.95),
+          cue: ['عائش', 'aisha'],
+        ),
+        PictureRegion(
+          'the open door',
+          Rect.fromLTRB(0, 0, 0.22, 0.95),
+          cue: ['=دخلت', 'entered'],
+        ),
+      ],
+    ),
+    LivingPicture(
+      image: _page('aisha_permission', 5),
+      ambient: PictureAmbient.sparkles,
+      regions: [
+        PictureRegion(
+          'her mother',
+          Rect.fromLTRB(0.44, 0.14, 0.86, 0.95),
+          cue: ['ام', 'mother'],
+        ),
+        PictureRegion(
+          'aisha',
+          Rect.fromLTRB(0.28, 0.3, 0.56, 0.9),
+          cue: ['عائش', 'aisha'],
+        ),
+        PictureRegion(
+          'the midday sun',
+          Rect.fromLTRB(0, 0, 0.46, 0.4),
+          cue: ['ظهير', 'midday'],
+          burst: PictureBurst.sparkles,
+        ),
+        PictureRegion(
+          'the two of them',
+          Rect.fromLTRB(0.26, 0.14, 0.86, 0.7),
+          cue: ['محب', 'love'],
+          burst: PictureBurst.hearts,
+        ),
+      ],
+    ),
+    LivingPicture(
+      image: _page('aisha_permission', 6),
+      ambient: PictureAmbient.sparkles,
+      regions: [
+        PictureRegion(
+          'aisha',
+          Rect.fromLTRB(0.48, 0.14, 0.74, 0.92),
+          cue: ['عائش', 'aisha'],
+        ),
+        PictureRegion(
+          'her sisters',
+          Rect.fromLTRB(0.16, 0.34, 0.52, 0.95),
+          cue: ['اخوات', 'sisters'],
+          burst: PictureBurst.hearts,
+        ),
+        PictureRegion(
+          'the door',
+          Rect.fromLTRB(0.55, 0, 0.9, 0.95),
+          cue: ['غرف', 'room'],
+        ),
+      ],
+    ),
+  ],
+  // ياسين وعجائب الخالق — Yaseen and the Wonders of the Creator
+  'yaseen_creation': [
+    LivingPicture(
+      image: _page('yaseen_creation', 1),
+      regions: [
+        PictureRegion(
+          'his father',
+          Rect.fromLTRB(0.54, 0.04, 0.96, 0.9),
+          cue: ['والده', 'father'],
+        ),
+        PictureRegion(
+          'yaseen',
+          Rect.fromLTRB(0.24, 0.36, 0.56, 0.86),
+          cue: ['ياسين', 'yaseen'],
+        ),
+        PictureRegion(
+          'the ant and its grain',
+          Rect.fromLTRB(0.44, 0.58, 0.64, 0.76),
+          cue: ['نمل', 'قمح', 'ant', 'wheat'],
+          burst: PictureBurst.sparkles,
+        ),
+        PictureRegion(
+          'the garden',
+          Rect.fromLTRB(0, 0, 1, 0.4),
+          cue: ['حديق', 'garden'],
+        ),
+      ],
+    ),
+    LivingPicture(
+      image: _page('yaseen_creation', 2),
+      regions: [
+        PictureRegion(
+          'yaseen',
+          Rect.fromLTRB(0.14, 0.34, 0.56, 0.86),
+          cue: ['ياسين', 'yaseen'],
+        ),
+        PictureRegion(
+          'the ant',
+          Rect.fromLTRB(0.4, 0.58, 0.64, 0.76),
+          cue: ['نمل', 'ant'],
+          burst: PictureBurst.sparkles,
+        ),
+        PictureRegion(
+          'his father',
+          Rect.fromLTRB(0.44, 0.08, 0.96, 0.86),
+          cue: ['ابي', 'father'],
+        ),
+      ],
+    ),
+    LivingPicture(
+      image: _page('yaseen_creation', 3),
+      ambient: PictureAmbient.sparkles,
+      regions: [
+        PictureRegion(
+          'his father, smiling',
+          Rect.fromLTRB(0.5, 0.08, 0.96, 0.86),
+          cue: ['=والد', 'father'],
+          burst: PictureBurst.hearts,
+        ),
+        PictureRegion(
+          'yaseen',
+          Rect.fromLTRB(0.14, 0.24, 0.52, 0.86),
+          cue: ['ياسين', 'yaseen'],
+        ),
+      ],
+    ),
+    LivingPicture(
+      image: _page('yaseen_creation', 4),
+      ambient: PictureAmbient.sparkles,
+      regions: [
+        PictureRegion(
+          'the stars',
+          Rect.fromLTRB(0.24, 0, 1, 0.46),
+          cue: ['نجوم', 'stars'],
+          burst: PictureBurst.sparkles,
+        ),
+        PictureRegion(
+          'the trees',
+          Rect.fromLTRB(0, 0, 0.32, 0.62),
+          cue: ['اشجار', 'trees'],
+        ),
+        PictureRegion(
+          'the flowers',
+          Rect.fromLTRB(0.68, 0.54, 1, 1),
+          cue: ['ازهار', 'flowers'],
+        ),
+        PictureRegion(
+          'yaseen',
+          Rect.fromLTRB(0.24, 0.48, 0.56, 0.96),
+          cue: ['ياسين', 'yaseen'],
+        ),
+      ],
+    ),
+    LivingPicture(
+      image: _page('yaseen_creation', 5),
+      ambient: PictureAmbient.sparkles,
+      regions: [
+        PictureRegion(
+          'yaseen',
+          Rect.fromLTRB(0.18, 0.38, 0.62, 0.96),
+          cue: ['ياسين', 'yaseen'],
+          burst: PictureBurst.hearts,
+        ),
+        PictureRegion(
+          'the birds',
+          Rect.fromLTRB(0.3, 0, 1, 0.42),
+          cue: ['مخلوق', 'creature'],
+          burst: PictureBurst.sparkles,
+        ),
+      ],
+    ),
+    LivingPicture(
+      image: _page('yaseen_creation', 6),
+      ambient: PictureAmbient.sparkles,
+      regions: [
+        PictureRegion(
+          'yaseen',
+          Rect.fromLTRB(0.38, 0.54, 0.96, 0.96),
+          cue: ['ياسين', 'yaseen'],
+        ),
+        PictureRegion(
+          'allah\'s creations',
+          Rect.fromLTRB(0, 0.2, 1, 0.62),
+          cue: ['مخلوقات', 'creations'],
+          burst: PictureBurst.sparkles,
+        ),
+      ],
+    ),
+  ],
+  // فاطمة وزهرة البر — Fatima and the Flower of Birr
+  'fatima_parents': [
+    LivingPicture(
+      image: _page('fatima_parents', 1),
+      regions: [
+        PictureRegion(
+          'her mother, tired',
+          Rect.fromLTRB(0.14, 0.14, 0.6, 0.86),
+          cue: ['والدة', 'mother'],
+        ),
+        PictureRegion(
+          'the sofa',
+          Rect.fromLTRB(0, 0.24, 0.76, 0.9),
+          cue: ['اريك', 'sofa'],
+        ),
+        PictureRegion(
+          'fatima',
+          Rect.fromLTRB(0.6, 0.54, 0.9, 0.94),
+          cue: ['فاطم', 'fatima'],
+        ),
+      ],
+    ),
+    LivingPicture(
+      image: _page('fatima_parents', 2),
+      regions: [
+        PictureRegion(
+          'fatima',
+          Rect.fromLTRB(0.54, 0.14, 0.86, 0.86),
+          cue: ['فاطم', 'fatima', 'سرور', 'happiness'],
+          burst: PictureBurst.hearts,
+        ),
+        PictureRegion(
+          'her mother',
+          Rect.fromLTRB(0.06, 0.1, 0.56, 0.88),
+          cue: ['امها', 'mother'],
+        ),
+      ],
+    ),
+    LivingPicture(
+      image: _page('fatima_parents', 3),
+      ambient: PictureAmbient.sparkles,
+      regions: [
+        PictureRegion(
+          'fatima',
+          Rect.fromLTRB(0.18, 0.4, 0.56, 0.92),
+          cue: ['فاطم', 'fatima'],
+        ),
+        PictureRegion(
+          'the toy basket',
+          Rect.fromLTRB(0.18, 0.66, 0.52, 0.96),
+          cue: ['العاب', 'toys'],
+          burst: PictureBurst.sparkles,
+        ),
+        PictureRegion(
+          'the warm cup',
+          Rect.fromLTRB(0.86, 0.48, 0.99, 0.64),
+          cue: ['كوب', 'cup'],
+          burst: PictureBurst.sparkles,
+        ),
+      ],
+    ),
+    LivingPicture(
+      image: _page('fatima_parents', 4),
+      ambient: PictureAmbient.sparkles,
+      regions: [
+        PictureRegion(
+          'the hug',
+          Rect.fromLTRB(0.18, 0.14, 0.72, 0.9),
+          cue: ['ضمت', 'ام', 'hugged', 'mother'],
+          burst: PictureBurst.hearts,
+        ),
+      ],
+    ),
+    LivingPicture(
+      image: _page('fatima_parents', 5),
+      ambient: PictureAmbient.sparkles,
+      regions: [
+        PictureRegion(
+          'her father',
+          Rect.fromLTRB(0.18, 0.14, 0.66, 0.95),
+          cue: ['=والد', 'father', 'فخر', 'proud'],
+        ),
+        PictureRegion(
+          'the rose',
+          Rect.fromLTRB(0.45, 0.4, 0.6, 0.6),
+          cue: ['زهر', 'rose'],
+          burst: PictureBurst.sparkles,
+        ),
+        PictureRegion(
+          'fatima',
+          Rect.fromLTRB(0.48, 0.4, 0.74, 0.94),
+          cue: ['فاطم', 'fatima'],
+          burst: PictureBurst.hearts,
+        ),
+      ],
+    ),
+    LivingPicture(
+      image: _page('fatima_parents', 6),
+      ambient: PictureAmbient.sparkles,
+      regions: [
+        PictureRegion(
+          'fatima',
+          Rect.fromLTRB(0.14, 0.3, 0.46, 0.95),
+          cue: ['فاطم', 'fatima'],
+          burst: PictureBurst.hearts,
+        ),
+        PictureRegion(
+          'her parents',
+          Rect.fromLTRB(0.44, 0.14, 0.96, 0.9),
+          cue: ['ابيها', 'امها', 'father', 'mother'],
+        ),
+        PictureRegion(
+          'the rose',
+          Rect.fromLTRB(0.84, 0.44, 0.99, 0.66),
+          cue: ['محب', 'love'],
+          burst: PictureBurst.sparkles,
+        ),
+      ],
+    ),
+  ],
+  // بلال وقلب التسامح — Bilal and the Heart of Forgiveness
+  'bilal_forgiveness': [
+    LivingPicture(
+      image: _page('bilal_forgiveness', 1),
+      regions: [
+        PictureRegion(
+          'bilal',
+          Rect.fromLTRB(0.06, 0.24, 0.46, 0.92),
+          cue: ['بلال', 'bilal'],
+        ),
+        PictureRegion(
+          'his painting',
+          Rect.fromLTRB(0.2, 0.54, 0.56, 0.7),
+          cue: ['لوح', 'painting'],
+          burst: PictureBurst.sparkles,
+        ),
+        PictureRegion(
+          'tariq',
+          Rect.fromLTRB(0.46, 0.2, 0.9, 0.9),
+          cue: ['طارق', 'tariq'],
+        ),
+        PictureRegion(
+          'the juice',
+          Rect.fromLTRB(0.44, 0.48, 0.64, 0.66),
+          cue: ['عصير', 'juice'],
+        ),
+      ],
+    ),
+    LivingPicture(
+      image: _page('bilal_forgiveness', 2),
+      regions: [
+        PictureRegion(
+          'bilal',
+          Rect.fromLTRB(0.1, 0.2, 0.46, 0.86),
+          cue: ['بلال', 'bilal'],
+        ),
+        PictureRegion(
+          'tariq, sorry',
+          Rect.fromLTRB(0.52, 0.14, 0.86, 0.9),
+          cue: ['طارق', 'اسف', 'tariq', 'sorry'],
+        ),
+      ],
+    ),
+    LivingPicture(
+      image: _page('bilal_forgiveness', 3),
+      regions: [
+        PictureRegion(
+          'bilal, calm',
+          Rect.fromLTRB(0.08, 0.2, 0.56, 0.95),
+          cue: ['بلال', 'bilal'],
+        ),
+      ],
+    ),
+    LivingPicture(
+      image: _page('bilal_forgiveness', 4),
+      ambient: PictureAmbient.sparkles,
+      regions: [
+        PictureRegion(
+          'bilal smiling',
+          Rect.fromLTRB(0.14, 0.14, 0.52, 0.9),
+          cue: ['بلال', 'ابتسم', 'bilal', 'smiled'],
+          burst: PictureBurst.hearts,
+        ),
+        PictureRegion(
+          'tariq',
+          Rect.fromLTRB(0.54, 0.2, 0.88, 0.9),
+          cue: ['طارق', 'tariq'],
+        ),
+        PictureRegion(
+          'a new sheet',
+          Rect.fromLTRB(0.28, 0.66, 0.76, 0.96),
+          cue: ['لوح', 'picture'],
+          burst: PictureBurst.sparkles,
+        ),
+      ],
+    ),
+    LivingPicture(
+      image: _page('bilal_forgiveness', 5),
+      ambient: PictureAmbient.sparkles,
+      regions: [
+        PictureRegion(
+          'tariq, surprised',
+          Rect.fromLTRB(0.56, 0.14, 0.96, 0.9),
+          cue: ['طارق', 'tariq'],
+        ),
+        PictureRegion(
+          'bilal',
+          Rect.fromLTRB(0.08, 0.2, 0.5, 0.9),
+          cue: ['بلال', 'bilal'],
+        ),
+        PictureRegion(
+          'the table',
+          Rect.fromLTRB(0.22, 0.66, 0.86, 0.96),
+          cue: ['طاول', 'table'],
+        ),
+        PictureRegion(
+          'the shared colours',
+          Rect.fromLTRB(0.44, 0.48, 0.72, 0.66),
+          cue: ['الوان', 'colors'],
+          burst: PictureBurst.sparkles,
+        ),
+      ],
+    ),
+    LivingPicture(
+      image: _page('bilal_forgiveness', 6),
+      ambient: PictureAmbient.sparkles,
+      regions: [
+        PictureRegion(
+          'bilal',
+          Rect.fromLTRB(0.14, 0.14, 0.56, 0.95),
+          cue: ['بلال', 'bilal', 'قلب', 'heart'],
+          burst: PictureBurst.hearts,
+        ),
+        PictureRegion(
+          'their new painting',
+          Rect.fromLTRB(0.38, 0.54, 0.88, 0.86),
+          cue: ['محب', 'love'],
+          burst: PictureBurst.sparkles,
+        ),
+      ],
+    ),
+  ],
+  // حمزة وأمانة الكلمة — Hamza and the Amanah of the Word
+  'hamza_truth': [
+    LivingPicture(
+      image: _page('hamza_truth', 1),
+      regions: [
+        PictureRegion(
+          'hamza',
+          Rect.fromLTRB(0.66, 0.26, 0.92, 0.82),
+          cue: ['حمز', 'hamza'],
+        ),
+        PictureRegion(
+          'the boy who fell',
+          Rect.fromLTRB(0.24, 0.6, 0.64, 0.86),
+          cue: ['طفل', 'child'],
+        ),
+        PictureRegion(
+          'the children laughing',
+          Rect.fromLTRB(0, 0.24, 0.5, 0.66),
+          cue: ['اطفال', 'children'],
+        ),
+        PictureRegion(
+          'the playground',
+          Rect.fromLTRB(0.3, 0.08, 0.82, 0.5),
+          cue: ['ملعب', 'playground'],
+          burst: PictureBurst.sparkles,
+        ),
+      ],
+    ),
+    LivingPicture(
+      image: _page('hamza_truth', 2),
+      regions: [
+        PictureRegion(
+          'hamza',
+          Rect.fromLTRB(0.28, 0.24, 0.66, 1),
+          cue: ['حمز', 'hamza'],
+        ),
+        PictureRegion(
+          'his quran circle',
+          Rect.fromLTRB(0.58, 0, 1, 0.4),
+          cue: ['حلقت', 'circle'],
+          burst: PictureBurst.sparkles,
+        ),
+      ],
+    ),
+    LivingPicture(
+      image: _page('hamza_truth', 3),
+      ambient: PictureAmbient.sparkles,
+      regions: [
+        PictureRegion(
+          'hamza',
+          Rect.fromLTRB(0.38, 0.14, 0.8, 0.86),
+          cue: ['حمز', 'hamza'],
+        ),
+        PictureRegion(
+          'the boy he helps up',
+          Rect.fromLTRB(0.16, 0.44, 0.56, 0.9),
+          cue: ['طفل', 'child'],
+          burst: PictureBurst.hearts,
+        ),
+        PictureRegion(
+          'his friends',
+          Rect.fromLTRB(0, 0.2, 1, 0.82),
+          cue: ['اصدقائ', 'friends'],
+        ),
+        PictureRegion(
+          'his hand',
+          Rect.fromLTRB(0.4, 0.48, 0.62, 0.66),
+          cue: ['=يده', 'hand'],
+          burst: PictureBurst.sparkles,
+        ),
+      ],
+    ),
+    LivingPicture(
+      image: _page('hamza_truth', 4),
+      ambient: PictureAmbient.sparkles,
+      regions: [
+        PictureRegion(
+          'the children',
+          Rect.fromLTRB(0, 0.3, 0.66, 0.95),
+          cue: ['اطفال', 'children'],
+        ),
+        PictureRegion(
+          'their friend',
+          Rect.fromLTRB(0.46, 0.3, 0.72, 0.9),
+          cue: ['صديق', 'friend'],
+          burst: PictureBurst.hearts,
+        ),
+        PictureRegion(
+          'the ball',
+          Rect.fromLTRB(0.44, 0.74, 0.62, 0.92),
+          cue: ['لعب', 'play'],
+        ),
+      ],
+    ),
+    LivingPicture(
+      image: _page('hamza_truth', 5),
+      ambient: PictureAmbient.sparkles,
+      regions: [
+        PictureRegion(
+          'hamza, proud',
+          Rect.fromLTRB(0.28, 0.1, 0.72, 0.95),
+          cue: ['حمز', 'hamza'],
+          burst: PictureBurst.hearts,
+        ),
+        PictureRegion(
+          'home',
+          Rect.fromLTRB(0, 0, 1, 0.6),
+          cue: ['منزل', 'home'],
+        ),
+      ],
+    ),
+    LivingPicture(
+      image: _page('hamza_truth', 6),
+      ambient: PictureAmbient.sparkles,
+      regions: [
+        PictureRegion(
+          'hamza and his friends',
+          Rect.fromLTRB(0.04, 0.4, 0.96, 0.95),
+          cue: ['اصدقاؤ', 'friends'],
+          burst: PictureBurst.hearts,
+        ),
+        PictureRegion(
+          'the school',
+          Rect.fromLTRB(0.3, 0.08, 1, 0.46),
+          cue: ['مدرس', 'school'],
+          burst: PictureBurst.sparkles,
+        ),
+        PictureRegion(
+          'hamza',
+          Rect.fromLTRB(0.26, 0.4, 0.46, 0.9),
+          cue: ['حمز', 'hamza'],
         ),
       ],
     ),
